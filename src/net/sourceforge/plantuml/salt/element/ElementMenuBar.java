@@ -52,7 +52,7 @@ import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 
 public class ElementMenuBar extends AbstractElement {
 
-	private final Collection<ElementMenuEntry> entries = new ArrayList<ElementMenuEntry>();
+	private final Collection<ElementMenuEntry> entries = new ArrayList<>();
 	private final Map<ElementMenuEntry, ElementMenuPopup> popups = new HashMap<ElementMenuEntry, ElementMenuPopup>();
 	private final UFont font;
 	private final ISkinSimple spriteContainer;

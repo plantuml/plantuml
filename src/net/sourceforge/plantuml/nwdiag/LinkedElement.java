@@ -108,7 +108,7 @@ public class LinkedElement {
 
 		final double xMiddle = width / 2;
 
-		final TreeSet<Double> skip = new TreeSet<Double>();
+		final TreeSet<Double> skip = new TreeSet<>();
 
 		for (Network n : networks) {
 			if (xstart + xMiddle > n.getXmin() && xstart + xMiddle < n.getXmax())

@@ -41,7 +41,7 @@ import java.util.List;
 
 public class SmallestEnclosingCircle {
 
-	private final List<Point2D> all = new ArrayList<Point2D>();
+	private final List<Point2D> all = new ArrayList<>();
 	private Circle lastSolution;
 
 	public void append(Point2D pt) {
@@ -53,7 +53,7 @@ public class SmallestEnclosingCircle {
 
 	public Circle getCircle() {
 		if (lastSolution == null) {
-			lastSolution = findSec(all.size(), all, 0, new ArrayList<Point2D>(all));
+			lastSolution = findSec(all.size(), all, 0, new ArrayList<>(all));
 		}
 		return lastSolution;
 	}

@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.salt.element.Element;
 public abstract class AbstractElementFactoryComplex implements ElementFactory {
 
 	final private DataSource dataSource;
-	final private Collection<ElementFactory> factories = new ArrayList<ElementFactory>();
+	final private Collection<ElementFactory> factories = new ArrayList<>();
 	final private Dictionary dictionary;
 	
 

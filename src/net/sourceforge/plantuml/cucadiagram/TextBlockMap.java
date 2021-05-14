@@ -65,7 +65,7 @@ public class TextBlockMap extends AbstractTextBlock implements WithPorts {
 	private final FontParam fontParam;
 	private final ISkinParam skinParam;
 	private final Map<TextBlock, TextBlock> blocksMap = new LinkedHashMap<TextBlock, TextBlock>();
-	private final List<String> keys = new ArrayList<String>();
+	private final List<String> keys = new ArrayList<>();
 	private double totalWidth;
 
 	public TextBlockMap(FontParam fontParam, ISkinParam skinParam, Map<String, String> map) {

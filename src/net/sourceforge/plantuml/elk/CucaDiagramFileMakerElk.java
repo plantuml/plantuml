@@ -343,7 +343,7 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 	}
 
 	private Collection<ILeaf> getUnpackagedEntities() {
-		final List<ILeaf> result = new ArrayList<ILeaf>();
+		final List<ILeaf> result = new ArrayList<>();
 		for (ILeaf ent : diagram.getLeafsvalues()) {
 			if (diagram.getEntityFactory().getRootGroup() == ent.getParentContainer()) {
 				result.add(ent);
@@ -528,7 +528,7 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 
 	static private List<String> getFailureText3(Throwable exception) {
 		exception.printStackTrace();
-		final List<String> strings = new ArrayList<String>();
+		final List<String> strings = new ArrayList<>();
 		strings.add("An error has occured : " + exception);
 		final String quote = StringUtils.rot(QuoteUtils.getSomeQuote());
 		strings.add("<i>" + quote);

@@ -205,7 +205,7 @@ public class Snake implements UShape {
 		final double move = 2 + colorArrowSeparationSpace;
 		final WormMutation mutation = WormMutation.create(worm, move);
 		if (mutation.isDxNegative()) {
-			colors = new ArrayList<HtmlColorAndStyle>(colors);
+			colors = new ArrayList<>(colors);
 			Collections.reverse(colors);
 		}
 		final double globalMove = -1.0 * (colors.size() - 1) / 2.0;
@@ -270,7 +270,7 @@ public class Snake implements UShape {
 	}
 
 	public List<Line2D> getHorizontalLines() {
-		final List<Line2D> result = new ArrayList<Line2D>();
+		final List<Line2D> result = new ArrayList<>();
 		for (int i = 0; i < worm.size() - 1; i++) {
 			final Point2D pt1 = worm.get(i);
 			final Point2D pt2 = worm.get(i + 1);

@@ -170,7 +170,7 @@ public class NotesTile extends AbstractTile implements Tile {
 	}
 
 	public Real getMinX() {
-		final List<Real> reals = new ArrayList<Real>();
+		final List<Real> reals = new ArrayList<>();
 		for (Note note : notes) {
 			reals.add(getX(getStringBounder(), note));
 		}
@@ -182,7 +182,7 @@ public class NotesTile extends AbstractTile implements Tile {
 	}
 
 	public Real getMaxX() {
-		final List<Real> reals = new ArrayList<Real>();
+		final List<Real> reals = new ArrayList<>();
 		for (Note note : notes) {
 			reals.add(getX2(getStringBounder(), note));
 		}

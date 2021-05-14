@@ -41,7 +41,7 @@ import java.util.List;
 
 public class TimeLineSimple implements TimeLine {
 
-	private final List<Long> events = new ArrayList<Long>();
+	private final List<Long> events = new ArrayList<>();
 
 	public long getNext(long moment) {
 		for (long e : events) {

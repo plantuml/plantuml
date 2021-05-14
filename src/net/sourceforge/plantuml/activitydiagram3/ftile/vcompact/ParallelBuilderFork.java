@@ -82,7 +82,7 @@ public class ParallelBuilderFork extends AbstractParallelFtilesBuilder {
 		final double maxHeight = computeMaxHeight(all);
 		final double ymargin1 = getSuppSpace1(all, getStringBounder());
 		final double ymargin2 = getSuppSpace2(all, getStringBounder());
-		final List<Ftile> result = new ArrayList<Ftile>();
+		final List<Ftile> result = new ArrayList<>();
 		for (Ftile ftile : all) {
 			final Ftile newFtile = computeNewFtile(ftile, maxHeight, ymargin1, ymargin2);
 			result.add(newFtile);
@@ -128,7 +128,7 @@ public class ParallelBuilderFork extends AbstractParallelFtilesBuilder {
 	@Override
 	protected Ftile doStep1(Ftile middle) {
 		Ftile result = middle;
-		final List<Connection> conns = new ArrayList<Connection>();
+		final List<Connection> conns = new ArrayList<>();
 		final Swimlane swimlaneBlack = in;
 		final Ftile black = new FtileBlackBlock(skinParam(),
 				getRose().getHtmlColor(skinParam(), ColorParam.activityBar), swimlaneBlack);
@@ -196,7 +196,7 @@ public class ParallelBuilderFork extends AbstractParallelFtilesBuilder {
 			((FtileBlackBlock) out).setLabel(getTextBlock(Display.getWithNewlines(label)));
 		}
 		result = new FtileAssemblySimple(result, out);
-		final List<Connection> conns = new ArrayList<Connection>();
+		final List<Connection> conns = new ArrayList<>();
 		double x = 0;
 		for (Ftile tmp : list99) {
 			final Dimension2D dim = tmp.calculateDimension(getStringBounder());

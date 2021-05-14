@@ -83,7 +83,7 @@ public class GanttDiagramFactory extends PSystemCommandFactory {
 
 	@Override
 	protected List<Command> createCommands() {
-		final List<Command> cmds = new ArrayList<Command>();
+		final List<Command> cmds = new ArrayList<>();
 		addTitleCommands(cmds);
 		addCommonCommands2(cmds);
 
@@ -117,7 +117,7 @@ public class GanttDiagramFactory extends PSystemCommandFactory {
 		return cmds;
 	}
 
-	static private final Collection<Command> cache = new ArrayList<Command>();
+	static private final Collection<Command> cache = new ArrayList<>();
 
 	private static Collection<Command> getLanguageCommands() {
 		synchronized (cache) {

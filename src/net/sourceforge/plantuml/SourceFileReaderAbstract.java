@@ -139,7 +139,7 @@ public abstract class SourceFileReaderAbstract {
 		Log.info("Reading file: " + file);
 
 		cpt = 0;
-		final List<GeneratedImage> result = new ArrayList<GeneratedImage>();
+		final List<GeneratedImage> result = new ArrayList<>();
 
 		for (BlockUml blockUml : builder.getBlockUmls()) {
 			final SuggestedFile suggested = getSuggestedFile(blockUml);

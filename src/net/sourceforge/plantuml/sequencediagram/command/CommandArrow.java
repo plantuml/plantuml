@@ -126,7 +126,7 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 	private List<Participant> getMulticasts(SequenceDiagram system, RegexResult arg2) {
 		final String multicast = arg2.get("MULTICAST", 0);
 		if (multicast != null) {
-			final List<Participant> result = new ArrayList<Participant>();
+			final List<Participant> result = new ArrayList<>();
 			for (String s : multicast.split("&")) {
 				s = s.trim();
 				if (s.length() == 0) {

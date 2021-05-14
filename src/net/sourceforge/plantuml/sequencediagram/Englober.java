@@ -65,7 +65,7 @@ import net.sourceforge.plantuml.ugraphic.color.HColor;
 public class Englober implements WithStyle {
 
 	final private ParticipantEnglober participantEnglober;
-	final private List<Participant> participants = new ArrayList<Participant>();
+	final private List<Participant> participants = new ArrayList<>();
 	final private TileArguments tileArguments;
 	final private StyleBuilder styleBuilder;
 	final private Real core1;
@@ -104,12 +104,11 @@ public class Englober implements WithStyle {
 
 	private Englober(ParticipantEnglober participantEnglober, Participant first, TileArguments tileArguments,
 			boolean isTeoz, StyleBuilder styleBuilder) {
-		Objects.requireNonNull(tileArguments);
 		this.styleBuilder = styleBuilder;
 		this.isTeoz = isTeoz;
 		this.participantEnglober = participantEnglober;
 		this.participants.add(first);
-		this.tileArguments = tileArguments;
+		this.tileArguments = Objects.requireNonNull(tileArguments);
 		final double preferredWidth = getPreferredWidth();
 		if (tileArguments.getLivingSpaces() == null) {
 			this.core1 = null;

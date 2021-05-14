@@ -89,7 +89,7 @@ class GraphvizWindowsOld extends AbstractGraphviz {
 		if (dir.exists() == false || dir.isDirectory() == false) {
 			return null;
 		}
-		final List<File> dots = new ArrayList<File>();
+		final List<File> dots = new ArrayList<>();
 		final File[] files = dir.listFiles(new FileFilter() {
 			public boolean accept(java.io.File pathname) {
 				return pathname.isDirectory() && StringUtils.goLowerCase(pathname.getName()).startsWith("graphviz");

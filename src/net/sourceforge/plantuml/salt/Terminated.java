@@ -43,9 +43,8 @@ public class Terminated<O> {
 	private final Terminator terminator;
 
 	public Terminated(O element, Terminator terminator) {
-		Objects.requireNonNull(terminator);
 		this.element = element;
-		this.terminator = terminator;
+		this.terminator = Objects.requireNonNull(terminator);
 	}
 
 	public O getElement() {

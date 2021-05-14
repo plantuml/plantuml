@@ -84,7 +84,7 @@ public class BlocLines implements Iterable<StringLocated> {
 	}
 
 	private static BlocLines loadInternal(final BufferedReader br, LineLocation location) throws IOException {
-		final List<StringLocated> result = new ArrayList<StringLocated>();
+		final List<StringLocated> result = new ArrayList<>();
 		String s;
 		try {
 			while ((s = br.readLine()) != null) {
@@ -105,19 +105,19 @@ public class BlocLines implements Iterable<StringLocated> {
 	}
 
 	public static BlocLines single(StringLocated single) {
-		final List<StringLocated> result = new ArrayList<StringLocated>();
+		final List<StringLocated> result = new ArrayList<>();
 		result.add(single);
 		return new BlocLines(result);
 	}
 
 	public static BlocLines singleString(String single) {
-		final List<StringLocated> result = new ArrayList<StringLocated>();
+		final List<StringLocated> result = new ArrayList<>();
 		result.add(new StringLocated(single, null));
 		return new BlocLines(result);
 	}
 
 	public static BlocLines fromArray(String[] array) {
-		final List<StringLocated> result = new ArrayList<StringLocated>();
+		final List<StringLocated> result = new ArrayList<>();
 		for (String single : array) {
 			result.add(new StringLocated(single, null));
 		}
@@ -125,7 +125,7 @@ public class BlocLines implements Iterable<StringLocated> {
 	}
 
 	public static BlocLines getWithNewlines(String s) {
-		final List<StringLocated> result = new ArrayList<StringLocated>();
+		final List<StringLocated> result = new ArrayList<>();
 		for (String cs : BackSlash.getWithNewlines(s)) {
 			result.add(new StringLocated(cs, null));
 		}
@@ -137,19 +137,19 @@ public class BlocLines implements Iterable<StringLocated> {
 	}
 
 	public BlocLines add(StringLocated s) {
-		final List<StringLocated> copy = new ArrayList<StringLocated>(lines);
+		final List<StringLocated> copy = new ArrayList<>(lines);
 		copy.add(s);
 		return new BlocLines(copy);
 	}
 
 	public BlocLines addString(String s) {
-		final List<StringLocated> copy = new ArrayList<StringLocated>(lines);
+		final List<StringLocated> copy = new ArrayList<>(lines);
 		copy.add(new StringLocated(s, null));
 		return new BlocLines(copy);
 	}
 
 	public List<String> getLinesAsStringForSprite() {
-		final List<String> result = new ArrayList<String>();
+		final List<String> result = new ArrayList<>();
 		for (StringLocated s : lines) {
 			result.add(s.getString());
 		}
@@ -176,13 +176,13 @@ public class BlocLines implements Iterable<StringLocated> {
 	}
 
 	public BlocLines cleanList(MultilinesStrategy strategy) {
-		final List<StringLocated> copy = new ArrayList<StringLocated>(lines);
+		final List<StringLocated> copy = new ArrayList<>(lines);
 		strategy.cleanList(copy);
 		return new BlocLines(copy);
 	}
 
 	public BlocLines trim() {
-		final List<StringLocated> copy = new ArrayList<StringLocated>(lines);
+		final List<StringLocated> copy = new ArrayList<>(lines);
 		for (int i = 0; i < copy.size(); i++) {
 			final StringLocated s = copy.get(i);
 			copy.set(i, s.getTrimmed());
@@ -191,7 +191,7 @@ public class BlocLines implements Iterable<StringLocated> {
 	}
 
 	public BlocLines removeEmptyLines() {
-		final List<StringLocated> copy = new ArrayList<StringLocated>(lines);
+		final List<StringLocated> copy = new ArrayList<>(lines);
 		for (final Iterator<StringLocated> it = copy.iterator(); it.hasNext();) {
 			if (it.next().getString().length() == 0) {
 				it.remove();
@@ -201,7 +201,7 @@ public class BlocLines implements Iterable<StringLocated> {
 	}
 
 //	public BlocLines trimRight() {
-//		final List<StringLocated> copy = new ArrayList<StringLocated>(lines);
+//		final List<StringLocated> copy = new ArrayList<>(lines);
 //		for (int i = 0; i < copy.size(); i++) {
 //			final StringLocated s = copy.get(i);
 //			copy.set(i, s.getTrimmedRight());
@@ -213,7 +213,7 @@ public class BlocLines implements Iterable<StringLocated> {
 		if (firstColumnRemovable(lines) == false) {
 			return this;
 		}
-		final List<StringLocated> copy = new ArrayList<StringLocated>(lines);
+		final List<StringLocated> copy = new ArrayList<>(lines);
 		do {
 			for (int i = 0; i < copy.size(); i++) {
 				final StringLocated s = copy.get(i);
@@ -249,7 +249,7 @@ public class BlocLines implements Iterable<StringLocated> {
 		if (lines.size() == 0) {
 			return this;
 		}
-		final List<StringLocated> copy = new ArrayList<StringLocated>(lines);
+		final List<StringLocated> copy = new ArrayList<>(lines);
 		copy.set(0, new StringLocated(data, null));
 		final int n = copy.size() - 1;
 		final StringLocated s = copy.get(n);
@@ -261,7 +261,7 @@ public class BlocLines implements Iterable<StringLocated> {
 		if (lines.size() == 0) {
 			return this;
 		}
-		final List<StringLocated> copy = new ArrayList<StringLocated>(lines);
+		final List<StringLocated> copy = new ArrayList<>(lines);
 		final int n = copy.size() - 1;
 		final StringLocated currentLast = copy.get(n);
 		copy.set(n, new StringLocated(last, currentLast.getLocation()));
@@ -281,7 +281,7 @@ public class BlocLines implements Iterable<StringLocated> {
 		if (lines.size() <= referenceLine) {
 			return this;
 		}
-		final List<StringLocated> copy = new ArrayList<StringLocated>(lines);
+		final List<StringLocated> copy = new ArrayList<>(lines);
 		final int nbStartingSpace = nbStartingSpace(copy.get(referenceLine).getString());
 		for (int i = referenceLine; i < copy.size(); i++) {
 			final StringLocated s = copy.get(i);
@@ -317,7 +317,7 @@ public class BlocLines implements Iterable<StringLocated> {
 	}
 
 	public BlocLines subExtract(int margeStart, int margeEnd) {
-		List<StringLocated> copy = new ArrayList<StringLocated>(lines);
+		List<StringLocated> copy = new ArrayList<>(lines);
 		copy = copy.subList(margeStart, copy.size() - margeEnd);
 		return new BlocLines(copy);
 	}
@@ -338,7 +338,7 @@ public class BlocLines implements Iterable<StringLocated> {
 		final String second = getAt(1).getTrimmed().getString();
 		if (first.endsWith("{") == false && second.equals("{")) {
 			final StringLocated vline = getFirst().append(" {");
-			final List<StringLocated> result = new ArrayList<StringLocated>();
+			final List<StringLocated> result = new ArrayList<>();
 			result.add(vline);
 			result.addAll(this.lines.subList(2, this.lines.size()));
 			return new BlocLines(result);
@@ -347,7 +347,7 @@ public class BlocLines implements Iterable<StringLocated> {
 	}
 
 	public BlocLines eventuallyMoveAllEmptyBracket() {
-		final List<StringLocated> result = new ArrayList<StringLocated>();
+		final List<StringLocated> result = new ArrayList<>();
 		for (StringLocated line : lines) {
 			if (line.getTrimmed().toString().equals("{")) {
 				if (result.size() > 0) {

@@ -65,7 +65,7 @@ public class Fission {
 		if (valueMaxWidth == 0) {
 			return Arrays.asList(stripe);
 		}
-		final List<Stripe> result = new ArrayList<Stripe>();
+		final List<Stripe> result = new ArrayList<>();
 		StripeSimpleInternal current = new StripeSimpleInternal(stripe.getLHeader());
 		double remainingSpace = valueMaxWidth;
 		for (Atom atom : noHeader()) {
@@ -135,7 +135,7 @@ public class Fission {
 
 	static class StripeSimpleInternal implements Stripe {
 
-		private final List<Atom> atoms = new ArrayList<Atom>();
+		private final List<Atom> atoms = new ArrayList<>();
 		private double totalWidth;
 
 		private StripeSimpleInternal(Atom header) {

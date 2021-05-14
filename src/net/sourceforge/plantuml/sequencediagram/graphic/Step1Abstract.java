@@ -58,17 +58,16 @@ abstract class Step1Abstract {
 
 	private ArrowConfiguration config;
 
-	private final List<Component> notes = new ArrayList<Component>();
+	private final List<Component> notes = new ArrayList<>();
 
 	private ParticipantRange range;
 
 	Step1Abstract(ParticipantRange range, StringBounder stringBounder, AbstractMessage message, DrawableSet drawingSet,
 			Frontier freeY2) {
-		Objects.requireNonNull(freeY2);
 		this.range = range;
 		this.stringBounder = stringBounder;
 		this.message = message;
-		this.freeY2 = freeY2;
+		this.freeY2 = Objects.requireNonNull(freeY2);
 		this.drawingSet = drawingSet;
 	}
 

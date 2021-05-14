@@ -80,7 +80,7 @@ public final class EntityFactory {
 	/* private */final Map<Ident, ILeaf> leafs2 = new LinkedHashMap<Ident, ILeaf>();
 	/* private */final Map<Ident, IGroup> groups2 = new LinkedHashMap<Ident, IGroup>();
 
-	private final List<Link> links = new ArrayList<Link>();
+	private final List<Link> links = new ArrayList<>();
 
 	private int rawLayout;
 
@@ -109,7 +109,7 @@ public final class EntityFactory {
 	}
 
 	public void buildSuperGroups() {
-		superGroups = new HashSet<SuperGroup>();
+		superGroups = new HashSet<>();
 		for (IGroup g : groups2.values()) {
 			final SuperGroup sg = new SuperGroup(g);
 			superGroups.add(sg);
@@ -145,7 +145,7 @@ public final class EntityFactory {
 	}
 
 	public Display getIntricatedDisplay(Ident ident) {
-		final Set<Ident> known = new HashSet<Ident>(groups2.keySet());
+		final Set<Ident> known = new HashSet<>(groups2.keySet());
 		known.removeAll(hiddenBecauseOfIntrication);
 		String sep = namespaceSeparator.getNamespaceSeparator();
 		if (sep == null) {
@@ -161,7 +161,7 @@ public final class EntityFactory {
 		return Display.getWithNewlines(ident.toString(sep)).withCreoleMode(CreoleMode.SIMPLE_LINE);
 	}
 
-	private final Collection<Ident> hiddenBecauseOfIntrication = new ArrayList<Ident>();
+	private final Collection<Ident> hiddenBecauseOfIntrication = new ArrayList<>();
 
 	public IGroup isIntricated(IGroup parent) {
 		final int leafs = parent.getLeafsDirect().size();
@@ -281,7 +281,7 @@ public final class EntityFactory {
 	}
 
 	void removeGroup(Ident ident) {
-		Objects.requireNonNull(groups2.remove(ident));
+		Objects.requireNonNull(groups2.remove(Objects.requireNonNull(ident)));
 	}
 
 	public static void bigError() {
@@ -293,7 +293,7 @@ public final class EntityFactory {
 	void removeLeaf(String name) {
 		if (namespaceSeparator.V1972())
 			throw new UnsupportedOperationException();
-		final IEntity removed = Objects.requireNonNull(leafsByCode.remove(name));
+		final IEntity removed = Objects.requireNonNull(leafsByCode.remove(Objects.requireNonNull(name)));
 		final IEntity removed2 = leafs2.remove(removed.getIdent());
 		if (removed != removed2) {
 			bigError();
@@ -301,7 +301,7 @@ public final class EntityFactory {
 	}
 
 	void removeLeaf(Ident ident) {
-		final IEntity removed = leafs2.remove(ident);
+		final IEntity removed = leafs2.remove(Objects.requireNonNull(ident));
 		if (removed == null) {
 			System.err.println("leafs2=" + leafs2.keySet());
 			throw new IllegalArgumentException(ident.toString());
@@ -432,7 +432,7 @@ public final class EntityFactory {
 		if (namespaceSeparator.V1972())
 			return leafs2();
 		final Collection<ILeaf> result = Collections.unmodifiableCollection(leafsByCode.values());
-		if (new ArrayList<ILeaf>(result).equals(new ArrayList<ILeaf>(leafs2())) == false) {
+		if (new ArrayList<>(result).equals(new ArrayList<>(leafs2())) == false) {
 			bigError();
 		}
 		return result;
@@ -442,7 +442,7 @@ public final class EntityFactory {
 		if (namespaceSeparator.V1972())
 			return groups2();
 		final Collection<IGroup> result = Collections.unmodifiableCollection(groupsByCode.values());
-		if (new ArrayList<IGroup>(result).equals(new ArrayList<IGroup>(groups2())) == false) {
+		if (new ArrayList<>(result).equals(new ArrayList<>(groups2())) == false) {
 			bigError();
 		}
 		return result;

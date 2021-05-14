@@ -50,7 +50,7 @@ public class IconLoader {
 	private static final int NUMBER_OF_ICONS = 30;
 
 	private final static Map<String, BufferedImage> all = new ConcurrentHashMap<String, BufferedImage>();
-	static private final List<String> tmp = new ArrayList<String>();
+	static private final List<String> tmp = new ArrayList<>();
 
 	public static BufferedImage getRandom() {
 		// return addTransparent(getIcon("sprite029.png"));

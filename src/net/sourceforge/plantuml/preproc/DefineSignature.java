@@ -44,7 +44,7 @@ public class DefineSignature {
 
 	private final String key;
 	private final String fonctionName;
-	private final List<Variables> variables = new ArrayList<Variables>();
+	private final List<Variables> variables = new ArrayList<>();
 	private final boolean isMethod;
 
 	public DefineSignature(String key, String definitionQuoted) {

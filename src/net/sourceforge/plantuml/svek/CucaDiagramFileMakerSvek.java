@@ -127,7 +127,7 @@ public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 	}
 
 	private List<Link> getOrderedLinks() {
-		final List<Link> result = new ArrayList<Link>();
+		final List<Link> result = new ArrayList<>();
 		for (Link l : diagram.getLinks()) {
 			addLinkNew(result, l);
 		}

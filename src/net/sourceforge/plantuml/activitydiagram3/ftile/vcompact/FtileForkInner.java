@@ -54,7 +54,7 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 class FtileForkInner extends AbstractFtile {
 
-	private final List<Ftile> forks = new ArrayList<Ftile>();
+	private final List<Ftile> forks = new ArrayList<>();
 
 	public FtileForkInner(List<Ftile> forks) {
 		super(forks.get(0).skinParam());
@@ -82,7 +82,7 @@ class FtileForkInner extends AbstractFtile {
 	}
 
 	public static Set<Swimlane> mergeSwimlanes(List<Ftile> tiles) {
-		final Set<Swimlane> result = new HashSet<Swimlane>();
+		final Set<Swimlane> result = new HashSet<>();
 		for (Ftile tile : tiles) {
 			result.addAll(tile.getSwimlanes());
 		}

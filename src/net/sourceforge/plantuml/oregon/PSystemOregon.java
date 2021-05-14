@@ -72,7 +72,7 @@ public class PSystemOregon extends PlainDiagram {
 	}
 
 	public PSystemOregon() {
-		this.inputs = new ArrayList<String>();
+		this.inputs = new ArrayList<>();
 	}
 
 	public void add(String line) {

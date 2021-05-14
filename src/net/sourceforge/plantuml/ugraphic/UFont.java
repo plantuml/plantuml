@@ -47,7 +47,7 @@ public class UFont {
 	private final Font font;
 	private final String family;
 
-	private static final Set<String> names = new HashSet<String>();
+	private static final Set<String> names = new HashSet<>();
 
 	static {
 		for (String name : GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames()) {

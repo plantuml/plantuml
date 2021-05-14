@@ -58,7 +58,7 @@ public abstract class AbstractEntityDiagram extends CucaDiagram {
 			return def;
 		}
 		final String attribute = getPragma().getValue("graphattributes");
-		final List<String> result = new ArrayList<String>(def);
+		final List<String> result = new ArrayList<>(def);
 		result.add(attribute);
 		return Collections.unmodifiableList(result);
 	}

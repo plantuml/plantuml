@@ -97,7 +97,7 @@ public class SheetBlock1 extends AbstractTextBlock implements TextBlock, Atom, S
 		if (positions != null) {
 			return;
 		}
-		stripes = new ArrayList<Stripe>();
+		stripes = new ArrayList<>();
 		for (Stripe stripe : sheet) {
 			stripes.addAll(new Fission(stripe, maxWidth).getSplitted(stringBounder));
 		}

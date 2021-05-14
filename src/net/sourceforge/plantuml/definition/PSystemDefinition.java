@@ -53,7 +53,7 @@ import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class PSystemDefinition extends PlainDiagram implements UDrawable {
 
-	private final List<String> lines = new ArrayList<String>();
+	private final List<String> lines = new ArrayList<>();
 	private final String startLine;
 
 	public PSystemDefinition(String startLine) {

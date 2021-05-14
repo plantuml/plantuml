@@ -28,7 +28,7 @@ public class ElkNode extends ElkWithProperty {
 	}
 
 	public Collection<ElkLabel> getLabels() {
-		final Collection<ElkLabel> result = new ArrayList<ElkLabel>();
+		final Collection<ElkLabel> result = new ArrayList<>();
 		final Collection internal = (Collection) Reflect.call(obj, "getLabels");
 		for (Object element : internal) {
 			result.add(new ElkLabel(element));

@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class JsonCurve {
 
-	private final List<Point2D> points = new ArrayList<Point2D>();
+	private final List<Point2D> points = new ArrayList<>();
 	private double maxX, maxY;
 	private final Mirror xMirror;
 	private final double veryFirstLine;

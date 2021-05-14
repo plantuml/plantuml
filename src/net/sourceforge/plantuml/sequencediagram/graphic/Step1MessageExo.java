@@ -119,7 +119,7 @@ class Step1MessageExo extends Step1Abstract {
 		if (getMessage().getNoteOnMessages().size() == 0) {
 			return messageArrow;
 		}
-		final List<NoteBox> noteBoxes = new ArrayList<NoteBox>();
+		final List<NoteBox> noteBoxes = new ArrayList<>();
 		for (int i = 0; i < getNotes().size(); i++) {
 			final Component note = getNotes().get(i);
 			final Note noteOnMessage = getMessage().getNoteOnMessages().get(i);

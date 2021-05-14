@@ -49,8 +49,7 @@ public class TFunctionSignature {
 	}
 
 	public TFunctionSignature(String functionName, int nbArg, Set<String> namedArguments) {
-		Objects.requireNonNull(functionName);
-		this.functionName = functionName;
+		this.functionName = Objects.requireNonNull(functionName);
 		this.nbArg = nbArg;
 		this.namedArguments = namedArguments;
 	}

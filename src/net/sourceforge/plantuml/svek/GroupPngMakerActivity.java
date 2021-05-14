@@ -104,7 +104,7 @@ public final class GroupPngMakerActivity {
 	}
 
 	private List<Link> getPureInnerLinks() {
-		final List<Link> result = new ArrayList<Link>();
+		final List<Link> result = new ArrayList<>();
 		for (Link link : diagram.getLinks()) {
 			final IEntity e1 = (IEntity) link.getEntity1();
 			final IEntity e2 = (IEntity) link.getEntity2();

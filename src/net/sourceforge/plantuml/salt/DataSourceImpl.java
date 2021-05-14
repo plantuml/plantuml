@@ -89,7 +89,7 @@ public class DataSourceImpl implements DataSource {
 	private void addInternal(String s, Terminator t) {
 		s = StringUtils.trin(s);
 		if (s.length() > 0) {
-			data.add(new Terminated<String>(s, t));
+			data.add(new Terminated<>(s, t));
 		}
 	}
 

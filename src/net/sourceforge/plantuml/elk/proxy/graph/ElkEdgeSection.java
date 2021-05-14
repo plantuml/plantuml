@@ -42,7 +42,7 @@ public class ElkEdgeSection {
 	}
 
 	public Collection<ElkBendPoint> getBendPoints() {
-		final List<ElkBendPoint> result = new ArrayList<ElkBendPoint>();
+		final List<ElkBendPoint> result = new ArrayList<>();
 		Collection internal = (Collection) Reflect.call(obj, "getBendPoints");
 		for (Object element : internal) {
 			result.add(new ElkBendPoint(element));

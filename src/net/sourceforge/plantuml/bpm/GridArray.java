@@ -53,7 +53,7 @@ public class GridArray implements UDrawable {
 	private final Placeable data[][];
 	private final ISkinParam skinParam;
 
-	// private final List<GridEdge> edges = new ArrayList<GridEdge>();
+	// private final List<GridEdge> edges = new ArrayList<>();
 
 	public GridArray(ISkinParam skinParam, int lines, int cols) {
 		this.skinParam = skinParam;

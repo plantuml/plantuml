@@ -54,7 +54,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 public class Body3 extends AbstractTextBlock implements TextBlock, WithPorts {
 
-	private final List<CharSequence> rawBody = new ArrayList<CharSequence>();
+	private final List<CharSequence> rawBody = new ArrayList<>();
 	private final FontParam fontParam;
 	private final ISkinParam skinParam;
 	private final Stereotype stereotype;

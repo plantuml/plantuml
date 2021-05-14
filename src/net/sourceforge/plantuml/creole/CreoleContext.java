@@ -40,7 +40,7 @@ import java.util.List;
 
 public class CreoleContext {
 
-	private final List<Integer> stack = new ArrayList<Integer>();
+	private final List<Integer> stack = new ArrayList<>();
 
 	public int getLocalNumber(int order) {
 		ensureStackOk(order);

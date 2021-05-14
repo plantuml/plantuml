@@ -78,8 +78,7 @@ class FrontierComplex implements Frontier {
 	}
 
 	public FrontierComplex add(double delta, ParticipantRange range) {
-		Objects.requireNonNull(range);
-		return new FrontierComplex(freeY, delta, range);
+		return new FrontierComplex(freeY, delta, Objects.requireNonNull(range));
 	}
 
 	FrontierComplex copy() {

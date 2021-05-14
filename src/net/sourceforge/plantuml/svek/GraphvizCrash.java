@@ -83,7 +83,7 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 	}
 
 	public static List<String> anErrorHasOccured(Throwable exception, String text) {
-		final List<String> strings = new ArrayList<String>();
+		final List<String> strings = new ArrayList<>();
 		if (exception == null) {
 			strings.add("An error has occured!");
 		} else {
@@ -164,7 +164,7 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 	}
 
 	private List<String> getText2() {
-		final List<String> strings = new ArrayList<String>();
+		final List<String> strings = new ArrayList<>();
 		strings.add(" ");
 		strings.add("<b>It looks like you are running GraphViz 2.44 under Windows.");
 		strings.add("If you have just installed GraphViz, you <i>may</i> have to execute");
@@ -173,7 +173,7 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 	}
 
 	private List<String> getText3() {
-		final List<String> strings = new ArrayList<String>();
+		final List<String> strings = new ArrayList<>();
 		strings.add(" ");
 		strings.add("You may have to have <i>Administrator rights</i> to avoid the following error message:");
 		return strings;

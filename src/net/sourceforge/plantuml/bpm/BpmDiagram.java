@@ -66,8 +66,8 @@ public class BpmDiagram extends UmlDiagram {
 
 	private final BpmElement start = new BpmElement(null, BpmElementType.START);
 
-	private List<BpmEvent> events = new ArrayList<BpmEvent>();
-	private Deque<BpmBranch> branches = new ArrayDeque<BpmBranch>();
+	private List<BpmEvent> events = new ArrayList<>();
+	private Deque<BpmBranch> branches = new ArrayDeque<>();
 
 	public DiagramDescription getDescription() {
 		return new DiagramDescription("(Bpm Diagram)");

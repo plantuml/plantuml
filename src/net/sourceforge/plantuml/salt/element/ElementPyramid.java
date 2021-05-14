@@ -130,7 +130,7 @@ public class ElementPyramid extends AbstractElement {
 			rowsStart[i] = titleHeight / 2;
 		}
 		colsStart = new double[cols + 1];
-		final List<Cell> all = new ArrayList<Cell>(positions1.values());
+		final List<Cell> all = new ArrayList<>(positions1.values());
 		Collections.sort(all, new LeftFirst());
 		for (Cell cell : all) {
 			final Element elt = positions2.get(cell);

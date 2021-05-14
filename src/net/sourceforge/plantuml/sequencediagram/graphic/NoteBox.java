@@ -64,11 +64,10 @@ final class NoteBox extends GraphicalElement implements InGroupable {
 	public NoteBox(double startingY, Component comp, LivingParticipantBox p1, LivingParticipantBox p2,
 			NotePosition position, Url url) {
 		super(startingY);
-		Objects.requireNonNull(p1);
 		if (p2 != null ^ position == NotePosition.OVER_SEVERAL) {
 			throw new IllegalArgumentException();
 		}
-		this.p1 = p1;
+		this.p1 = Objects.requireNonNull(p1);
 		this.p2 = p2;
 		this.position = position;
 		this.url = url;

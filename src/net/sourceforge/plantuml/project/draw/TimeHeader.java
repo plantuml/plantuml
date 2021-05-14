@@ -76,11 +76,10 @@ public abstract class TimeHeader {
 	protected final Day max;
 
 	public TimeHeader(Day min, Day max, TimeScale timeScale, Style style, HColorSet colorSet, ThemeStyle themeStyle) {
-		Objects.requireNonNull(style);
 		this.timeScale = timeScale;
 		this.min = min;
 		this.max = max;
-		this.style = style;
+		this.style = Objects.requireNonNull(style);
 		this.colorSet = colorSet;
 		this.themeStyle = themeStyle;
 	}

@@ -48,7 +48,7 @@ public abstract class PlainStringsDiagram extends PlainDiagram {
 	protected BufferedImage image = null;
 	protected GraphicPosition imagePosition = null;
 
-	protected final List<String> strings = new ArrayList<String>();
+	protected final List<String> strings = new ArrayList<>();
 
 	@Override
 	public UDrawable getRootDrawable(FileFormatOption fileFormatOption) {

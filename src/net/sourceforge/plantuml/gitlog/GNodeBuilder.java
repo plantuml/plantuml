@@ -45,7 +45,7 @@ import java.util.Map;
 
 public class GNodeBuilder {
 
-	private final List<GNode> all = new ArrayList<GNode>();
+	private final List<GNode> all = new ArrayList<>();
 
 	public GNodeBuilder(List<Commit> allCommits) {
 

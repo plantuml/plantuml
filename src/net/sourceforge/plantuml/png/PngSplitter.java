@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.security.SFile;
 
 public class PngSplitter {
 
-	private final List<SFile> files = new ArrayList<SFile>();
+	private final List<SFile> files = new ArrayList<>();
 
 	public PngSplitter(SuggestedFile pngFile, int horizontalPages, int verticalPages, String source, int dpi,
 			boolean isWithMetadata, SplitParam splitParam) throws IOException {

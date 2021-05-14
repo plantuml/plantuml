@@ -60,7 +60,7 @@ public class TikzGraphics {
 	// https://www.sharelatex.com/blog/2013/08/27/tikz-series-pt1.html
 	// http://cremeronline.com/LaTeX/minimaltikz.pdf
 
-	private final List<String> cmd = new ArrayList<String>();
+	private final List<String> cmd = new ArrayList<>();
 	private final boolean withPreamble;
 
 	private Color color = Color.BLACK;
@@ -109,8 +109,7 @@ public class TikzGraphics {
 			return "black";
 		}
 		final String result = colornames.get(c);
-		Objects.requireNonNull(result);
-		return result;
+		return Objects.requireNonNull(result);
 	}
 
 	public void createData(OutputStream os) throws IOException {
@@ -626,10 +625,9 @@ public class TikzGraphics {
 	private boolean hasUrl = false;
 
 	public void openLink(String url, String title) {
-		Objects.requireNonNull(url);
 		this.hasUrl = true;
 		this.urlIgnoreText = false;
-		this.pendingUrl = url;
+		this.pendingUrl = Objects.requireNonNull(url);
 		//
 		// if (pendingLink2.size() > 0) {
 		// closeLink();

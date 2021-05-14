@@ -70,10 +70,13 @@ public class CompressionZlib implements Compression {
 		return copyArray(output, compressedDataLength);
 	}
 
-	public ByteArray decompress(byte[] in) throws NoPlantumlCompressionException {
-		final ByteBitInputStream in2 = new ByteBitInputStream(new ByteArrayInputStream(in));
+	public ByteArray decompress(byte[] input) throws NoPlantumlCompressionException {
+		final byte padded[] = new byte[input.length + 256];
+		System.arraycopy(input, 0, padded, 0, input.length);
+
+		final ByteBitInputStream inputStream = new ByteBitInputStream(new ByteArrayInputStream(padded));
 		try {
-			return ByteArray.from(Decompressor.decompress(in2));
+			return ByteArray.from(Decompressor.decompress(inputStream));
 		} catch (Exception e) {
 			throw new NoPlantumlCompressionException(e);
 		}

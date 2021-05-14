@@ -35,22 +35,14 @@
  */
 package net.sourceforge.plantuml.anim;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
-
-import javax.script.ScriptContext;
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
-
 public class AnimationScript {
 
-	private final ScriptEngine engine;
+//	private final ScriptEngine engine;
 
 	public AnimationScript() {
 
-		final ScriptEngineManager manager = new ScriptEngineManager();
-		engine = manager.getEngineByName("js");
+//		final ScriptEngineManager manager = new ScriptEngineManager();
+//		engine = manager.getEngineByName("js");
 
 		// ScriptEngineManager manager = new ScriptEngineManager();
 		// List<ScriptEngineFactory> factories = manager.getEngineFactories();
@@ -67,12 +59,13 @@ public class AnimationScript {
 
 	}
 
-	public String eval(String line) throws ScriptException {
-		final ScriptContext context = engine.getContext();
-		final StringWriter sw = new StringWriter();
-		context.setWriter(new PrintWriter(sw));
-		engine.eval(line, context);
-		final String result = sw.toString();
-		return result;
+	public String eval(String line) {
+		throw new UnsupportedOperationException();
+//		final ScriptContext context = engine.getContext();
+//		final StringWriter sw = new StringWriter();
+//		context.setWriter(new PrintWriter(sw));
+//		engine.eval(line, context);
+//		final String result = sw.toString();
+//		return result;
 	}
 }

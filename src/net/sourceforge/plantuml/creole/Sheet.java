@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 
 public class Sheet implements Iterable<Stripe> {
 
-	private final List<Stripe> stripes = new ArrayList<Stripe>();
+	private final List<Stripe> stripes = new ArrayList<>();
 	private final HorizontalAlignment horizontalAlignment;
 
 	public Sheet(HorizontalAlignment horizontalAlignment) {

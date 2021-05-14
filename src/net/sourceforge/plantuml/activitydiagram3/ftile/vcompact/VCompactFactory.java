@@ -181,7 +181,7 @@ public class VCompactFactory implements FtileFactory {
 
 	public Ftile createIf(Swimlane swimlane, List<Branch> thens, Branch elseBranch, LinkRendering afterEndwhile,
 			LinkRendering topInlinkRendering, Url url) {
-		final List<Ftile> ftiles = new ArrayList<Ftile>();
+		final List<Ftile> ftiles = new ArrayList<>();
 		for (Branch branch : thens) {
 			ftiles.add(branch.getFtile());
 		}
@@ -191,7 +191,7 @@ public class VCompactFactory implements FtileFactory {
 
 	public Ftile createSwitch(Swimlane swimlane, List<Branch> branches, LinkRendering afterEndwhile,
 			LinkRendering topInlinkRendering, Display labelTest) {
-		final List<Ftile> ftiles = new ArrayList<Ftile>();
+		final List<Ftile> ftiles = new ArrayList<>();
 		for (Branch branch : branches) {
 			ftiles.add(branch.getFtile());
 		}

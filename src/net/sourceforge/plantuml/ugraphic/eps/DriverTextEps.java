@@ -226,7 +226,7 @@ public class DriverTextEps implements UDriver<EpsGraphics> {
 	private static List<Integer> analyze(Shape shape) {
 		int count = PathIteratorLimited.count(shape);
 		final List<Integer> closings = getClosings(shape.getPathIterator(null));
-		final List<Integer> result = new ArrayList<Integer>();
+		final List<Integer> result = new ArrayList<>();
 		for (Integer cl : closings) {
 			if (cl + 2 >= count) {
 				break;
@@ -243,7 +243,7 @@ public class DriverTextEps implements UDriver<EpsGraphics> {
 	}
 
 	private static List<Integer> getClosings(PathIterator path) {
-		final List<Integer> result = new ArrayList<Integer>();
+		final List<Integer> result = new ArrayList<>();
 		int current = 0;
 		final double coord[] = new double[6];
 		while (path.isDone() == false) {

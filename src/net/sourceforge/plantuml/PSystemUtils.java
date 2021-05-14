@@ -99,7 +99,7 @@ public class PSystemUtils {
 
 	private static List<FileImageData> exportDiagramsNewpaged(NewpagedDiagram system, SuggestedFile suggestedFile,
 			FileFormatOption fileFormat) throws IOException {
-		final List<FileImageData> result = new ArrayList<FileImageData>();
+		final List<FileImageData> result = new ArrayList<>();
 		final int nbImages = system.getNbImages();
 		for (int i = 0; i < nbImages; i++) {
 
@@ -187,7 +187,7 @@ public class PSystemUtils {
 
 	private static List<FileImageData> exportDiagramsSequence(SequenceDiagram system, SuggestedFile suggestedFile,
 			FileFormatOption fileFormat) throws IOException {
-		final List<FileImageData> result = new ArrayList<FileImageData>();
+		final List<FileImageData> result = new ArrayList<>();
 		final int nbImages = system.getNbImages();
 		for (int i = 0; i < nbImages; i++) {
 
@@ -248,7 +248,7 @@ public class PSystemUtils {
 					system.getMetadata(), dpi, fileFormat.isWithMetadata(), system.getSkinParam().getSplitParam())
 							.getFiles();
 		}
-		final List<FileImageData> result2 = new ArrayList<FileImageData>();
+		final List<FileImageData> result2 = new ArrayList<>();
 		for (SFile f : result) {
 			result2.add(new FileImageData(f, cmap));
 		}
@@ -283,7 +283,7 @@ public class PSystemUtils {
 					system.getMetadata(), system.getDpi(fileFormat), fileFormat.isWithMetadata(), splitParam)
 							.getFiles();
 		}
-		final List<FileImageData> result2 = new ArrayList<FileImageData>();
+		final List<FileImageData> result2 = new ArrayList<>();
 		for (SFile f : result) {
 			result2.add(new FileImageData(f, cmap));
 		}

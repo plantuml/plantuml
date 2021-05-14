@@ -106,7 +106,7 @@ public class ImportedFiles {
 	}
 
 	public List<SFile> getPath() {
-		final List<SFile> result = new ArrayList<SFile>(imported);
+		final List<SFile> result = new ArrayList<>(imported);
 		result.addAll(includePath());
 		result.addAll(SecurityUtils.getPath("java.class.path"));
 		return result;

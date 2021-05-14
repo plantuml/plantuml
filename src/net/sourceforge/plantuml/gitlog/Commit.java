@@ -75,7 +75,7 @@ public class Commit {
 	}
 
 	public List<CursorPosition> getCandidatesForDown() {
-		final List<CursorPosition> result = new ArrayList<CursorPosition>();
+		final List<CursorPosition> result = new ArrayList<>();
 		if (position.move(0, 1).matches("*")) {
 			result.add(position.move(0, 1));
 		}
@@ -106,7 +106,7 @@ public class Commit {
 	}
 
 	public List<Commit> getAncestors() {
-		final List<Commit> result = new ArrayList<Commit>();
+		final List<Commit> result = new ArrayList<>();
 
 		for (CursorPosition pos : getCandidatesForDown()) {
 			final CursorPosition down = pos.getDownFromHere();

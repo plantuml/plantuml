@@ -110,7 +110,7 @@ public final class GroupPngMakerState {
 	}
 
 	private List<Link> getPureInnerLinks() {
-		final List<Link> result = new ArrayList<Link>();
+		final List<Link> result = new ArrayList<>();
 		for (Link link : diagram.getLinks()) {
 			if (EntityUtils.isPureInnerLink12(group, link)) {
 				result.add(link);
@@ -173,7 +173,7 @@ public final class GroupPngMakerState {
 	}
 
 	private IEntityImage buildImageForConcurrentState(DotData dotData) {
-		final List<IEntityImage> inners = new ArrayList<IEntityImage>();
+		final List<IEntityImage> inners = new ArrayList<>();
 		for (ILeaf inner : dotData.getLeafs()) {
 			inners.add(inner.getSvekImage());
 		}

@@ -56,7 +56,7 @@ public class JsonDiagramFactory extends PSystemAbstractFactory {
 	}
 
 	public Diagram createSystem(UmlSource source) {
-		final List<String> highlighted = new ArrayList<String>();
+		final List<String> highlighted = new ArrayList<>();
 		StyleExtractor styleExtractor = null;
 		JsonValue json;
 		try {

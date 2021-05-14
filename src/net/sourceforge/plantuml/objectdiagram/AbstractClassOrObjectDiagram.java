@@ -113,7 +113,7 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 		return result;
 	}
 
-	private final List<Association> associations = new ArrayList<Association>();
+	private final List<Association> associations = new ArrayList<>();
 
 	public CommandExecutionResult associationClass(String name1A, String name1B, String name2A, String name2B,
 			LinkType linkType, Display label) {
@@ -216,7 +216,7 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 	}
 
 	private List<Association> getExistingAssociatedPoints(final IEntity entity1, final IEntity entity2) {
-		final List<Association> same = new ArrayList<Association>();
+		final List<Association> same = new ArrayList<>();
 		for (Association existing : associations) {
 			if (existing.sameCouple(entity1, entity2)) {
 				same.add(existing);

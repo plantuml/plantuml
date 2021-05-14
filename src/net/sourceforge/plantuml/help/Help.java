@@ -58,7 +58,7 @@ import net.sourceforge.plantuml.ugraphic.UFont;
 
 public class Help extends UmlDiagram {
 
-	private final List<CharSequence> lines = new ArrayList<CharSequence>();
+	private final List<CharSequence> lines = new ArrayList<>();
 
 	public DiagramDescription getDescription() {
 		return new DiagramDescription("(Help)");

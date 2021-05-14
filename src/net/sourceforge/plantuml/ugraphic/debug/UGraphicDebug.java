@@ -99,7 +99,7 @@ public class UGraphicDebug extends AbstractCommonUGraphic implements ClipContain
 	public UGraphicDebug(double scaleFactor, Dimension2D dim, String svgLinkTarget, String hoverPathColorRGB, long seed,
 			String preserveAspectRatio) {
 		super(HColorUtils.WHITE, new ColorMapperIdentity());
-		this.output = new ArrayList<String>();
+		this.output = new ArrayList<>();
 		this.scaleFactor = scaleFactor;
 		this.dim = dim;
 		this.svgLinkTarget = svgLinkTarget;

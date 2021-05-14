@@ -55,7 +55,7 @@ public class FlowDiagramFactory extends PSystemCommandFactory {
 
 	@Override
 	protected List<Command> createCommands() {
-		final List<Command> cmds = new ArrayList<Command>();
+		final List<Command> cmds = new ArrayList<>();
 		cmds.add(new CommandLineSimple());
 		cmds.add(new CommandLink());
 		return cmds;

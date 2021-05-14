@@ -46,7 +46,7 @@ public enum SingleStrategy {
 //	}
 
 //	private Collection<Link> putInSquare(List<ILeaf> standalones) {
-//		final List<Link> result = new ArrayList<Link>();
+//		final List<Link> result = new ArrayList<>();
 //		final LinkType linkType = new LinkType(LinkDecor.NONE, LinkDecor.NONE).getInvisible();
 //		final int branch = computeBranch(standalones.size());
 //		int headBranch = 0;

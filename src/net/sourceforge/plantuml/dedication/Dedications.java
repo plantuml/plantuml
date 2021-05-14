@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.FileUtils;
 
 public class Dedications {
 
-	private static final List<Dedication> all = new ArrayList<Dedication>();
+	private static final List<Dedication> all = new ArrayList<>();
 
 	static {
 		try {

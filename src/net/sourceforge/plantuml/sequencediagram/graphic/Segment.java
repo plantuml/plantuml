@@ -95,9 +95,9 @@ public class Segment {
 	}
 
 	public Collection<Segment> cutSegmentIfNeed(Collection<Segment> allDelays) {
-		final List<Segment> sortedDelay = new ArrayList<Segment>(allDelays);
+		final List<Segment> sortedDelay = new ArrayList<>(allDelays);
 		Collections.sort(sortedDelay, new SortPos1());
-		final List<Segment> result2 = new ArrayList<Segment>();
+		final List<Segment> result2 = new ArrayList<>();
 		double pendingStart = pos1;
 		for (Segment pause : sortedDelay) {
 			if (pause.pos1 == pendingStart) {

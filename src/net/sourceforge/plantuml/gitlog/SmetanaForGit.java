@@ -78,7 +78,7 @@ public class SmetanaForGit {
 	private StringBounder stringBounder;
 
 	private final Map<GNode, ST_Agnode_s> nodes = new LinkedHashMap<GNode, ST_Agnode_s>();
-	private final List<ST_Agedge_s> edges = new ArrayList<ST_Agedge_s>();
+	private final List<ST_Agedge_s> edges = new ArrayList<>();
 	private Mirror yMirror;
 
 	public SmetanaForGit(UGraphic ug, ISkinParam skinParam) {

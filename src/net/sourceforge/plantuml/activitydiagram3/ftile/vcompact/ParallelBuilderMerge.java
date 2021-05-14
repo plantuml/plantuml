@@ -72,7 +72,7 @@ public class ParallelBuilderMerge extends AbstractParallelFtilesBuilder {
 	@Override
 	protected Ftile doStep1(Ftile inner) {
 		Ftile result = inner;
-		final List<Connection> conns = new ArrayList<Connection>();
+		final List<Connection> conns = new ArrayList<>();
 		final HColor colorBar = getRose().getHtmlColor(skinParam(), ColorParam.activityBar);
 
 		final Ftile black = new FtileBlackBlock(skinParam(), colorBar, list99.get(0).getSwimlaneIn());
@@ -104,7 +104,7 @@ public class ParallelBuilderMerge extends AbstractParallelFtilesBuilder {
 		final HColor backColor = getRose().getHtmlColor(skinParam(), ColorParam.activityDiamondBackground);
 		final Ftile out = new FtileDiamond(skinParam(), backColor, borderColor, swimlaneOutForStep2());
 		result = new FtileAssemblySimple(result, out);
-		final List<Connection> conns = new ArrayList<Connection>();
+		final List<Connection> conns = new ArrayList<>();
 		final UTranslate diamondTranslate = result.getTranslateFor(out, getStringBounder());
 		int i = 0;
 		double x = 0;

@@ -61,8 +61,8 @@ final class WElement {
 	private final String stereotype;
 	private final WElement parent;
 	private final StyleBuilder styleBuilder;
-	private final List<WElement> childrenLeft = new ArrayList<WElement>();
-	private final List<WElement> childrenRight = new ArrayList<WElement>();
+	private final List<WElement> childrenLeft = new ArrayList<>();
+	private final List<WElement> childrenRight = new ArrayList<>();
 	private final IdeaShape shape;
 
 	private StyleSignature getDefaultStyleDefinitionNode(int level) {

@@ -73,8 +73,8 @@ class ITFComposed extends WBSTextBlock implements ITF {
 		if (idea.isLeaf()) {
 			return new ITFLeaf(idea.getStyle(), idea.withBackColor(skinParam), idea.getLabel(), idea.getShape());
 		}
-		final List<ITF> left = new ArrayList<ITF>();
-		final List<ITF> right = new ArrayList<ITF>();
+		final List<ITF> left = new ArrayList<>();
+		final List<ITF> right = new ArrayList<>();
 		for (WElement child : idea.getChildren(Direction.LEFT)) {
 			left.add(build2(skinParam, child));
 		}

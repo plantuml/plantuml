@@ -101,7 +101,7 @@ public class PSystemKeycheck extends PlainDiagram {
 	}
 
 	private ArrayList<String> header() {
-		final ArrayList<String> strings = new ArrayList<String>();
+		final ArrayList<String> strings = new ArrayList<>();
 		strings.add("<b>PlantUML version " + Version.versionString() + "</b> (" + Version.compileTimeString() + ")");
 		strings.add("(" + License.getCurrent() + " source distribution)");
 //		if (OptionFlags.ALLOW_INCLUDE) {

@@ -342,7 +342,7 @@ public enum License {
 	}
 
 	public List<String> getJavaHeader(List<String> contributors) {
-		final List<String> h = new ArrayList<String>();
+		final List<String> h = new ArrayList<>();
 		h.add("/* ========================================================================");
 		h.add(" * PlantUML : a free UML diagram generator");
 		h.add(" * ========================================================================");
@@ -478,7 +478,7 @@ public enum License {
 
 	public List<String> getTextFull() {
 		final LicenseInfo licenseInfo = LicenseInfo.retrieveQuick();
-		final List<String> text = new ArrayList<String>();
+		final List<String> text = new ArrayList<>();
 		header1(text, licenseInfo);
 		header2(text, licenseInfo, false);
 		end3(text, licenseInfo);
@@ -486,13 +486,13 @@ public enum License {
 	}
 
 	public List<String> getText1(LicenseInfo licenseInfo) {
-		final List<String> text = new ArrayList<String>();
+		final List<String> text = new ArrayList<>();
 		header1(text, licenseInfo);
 		return text;
 	}
 
 	public List<String> getText2(LicenseInfo licenseInfo) {
-		final List<String> text = new ArrayList<String>();
+		final List<String> text = new ArrayList<>();
 		header2(text, licenseInfo, true);
 		end3(text, licenseInfo);
 		return text;

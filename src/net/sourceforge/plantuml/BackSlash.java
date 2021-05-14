@@ -68,7 +68,7 @@ public class BackSlash {
 		if (s == null) {
 			return null;
 		}
-		final List<String> result = new ArrayList<String>();
+		final List<String> result = new ArrayList<>();
 		final StringBuilder current = new StringBuilder();
 		for (int i = 0; i < s.length(); i++) {
 			final char c = s.charAt(i);

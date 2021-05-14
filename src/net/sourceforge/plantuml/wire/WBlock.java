@@ -65,7 +65,7 @@ public class WBlock {
 	private final double forcedHeight;
 	private final HColor color;
 
-	private final List<WBlock> children = new ArrayList<WBlock>();
+	private final List<WBlock> children = new ArrayList<>();
 	private final UTranslate position;
 	private WBlock parent;
 
@@ -75,7 +75,7 @@ public class WBlock {
 	private UTranslate futureOutHorizontal;
 	private UTranslate futureOutVertical;
 
-	private final List<WPrint> prints = new ArrayList<WPrint>();
+	private final List<WPrint> prints = new ArrayList<>();
 
 	public UTranslate getAbsolutePosition(String supx, String supy) {
 		if (parent == null) {

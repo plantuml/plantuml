@@ -85,8 +85,8 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> implements EnsureV
 
 	private UAntiAliasing antiAliasing = UAntiAliasing.ANTI_ALIASING_ON;
 
-	private/* final */List<Url> urls = new ArrayList<Url>();
-	private Set<Url> allUrls = new HashSet<Url>();
+	private/* final */List<Url> urls = new ArrayList<>();
+	private Set<Url> allUrls = new HashSet<>();
 
 	private final boolean hasAffineTransform;
 
@@ -187,8 +187,7 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> implements EnsureV
 	}
 
 	public void startUrl(Url url) {
-		Objects.requireNonNull(url);
-		urls.add(url);
+		urls.add(Objects.requireNonNull(url));
 		allUrls.add(url);
 	}
 

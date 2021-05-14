@@ -54,7 +54,7 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 public class StripeCode implements Stripe, Atom {
 
 	final private FontConfiguration fontConfiguration;
-	private final List<String> raw = new ArrayList<String>();
+	private final List<String> raw = new ArrayList<>();
 
 	private boolean terminated;
 

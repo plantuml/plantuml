@@ -37,8 +37,6 @@ package net.sourceforge.plantuml;
 
 import java.io.IOException;
 
-import javax.script.ScriptException;
-
 import net.sourceforge.plantuml.anim.Animation;
 import net.sourceforge.plantuml.anim.AnimationDecoder;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -237,13 +235,12 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 	}
 
 	final public void setAnimation(Iterable<CharSequence> animationData) {
-		try {
-			final AnimationDecoder animationDecoder = new AnimationDecoder(animationData);
-			this.animation = Animation.create(animationDecoder.decode());
-		} catch (ScriptException e) {
-			e.printStackTrace();
-		}
-
+//		try {
+		final AnimationDecoder animationDecoder = new AnimationDecoder(animationData);
+		this.animation = Animation.create(animationDecoder.decode());
+//		} catch (ScriptException e) {
+//			e.printStackTrace();
+//		}
 	}
 
 	final public Animation getAnimation() {

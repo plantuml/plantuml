@@ -76,13 +76,13 @@ public class PSystemLicense extends PlainDiagram implements UDrawable {
 		final BufferedImage logo = LicenseInfo.retrieveDistributorImage(licenseInfo);
 
 		if (logo == null) {
-			final List<String> strings = new ArrayList<String>();
+			final List<String> strings = new ArrayList<>();
 			strings.addAll(License.getCurrent().getText1(licenseInfo));
 			strings.addAll(License.getCurrent().getText2(licenseInfo));
 			getGraphicStrings(strings).drawU(ug);
 		} else {
-			final List<String> strings1 = new ArrayList<String>();
-			final List<String> strings2 = new ArrayList<String>();
+			final List<String> strings1 = new ArrayList<>();
+			final List<String> strings2 = new ArrayList<>();
 
 			strings1.addAll(License.getCurrent().getText1(licenseInfo));
 			strings2.addAll(License.getCurrent().getText2(licenseInfo));

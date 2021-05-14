@@ -68,7 +68,7 @@ public class UnusedSpace {
 	private double meanX2;
 	private double meanY2;
 
-	private final List<Point> points = new ArrayList<Point>();
+	private final List<Point> points = new ArrayList<>();
 
 	final private static Map<Object, UnusedSpace> cache = new HashMap<Object, UnusedSpace>();
 

@@ -76,8 +76,8 @@ public class NwDiagram extends UmlDiagram {
 
 	private boolean initDone;
 	private final Map<String, Square> squares = new LinkedHashMap<String, Square>();
-	private final List<Network> networks = new ArrayList<Network>();
-	private final List<NwGroup> groups = new ArrayList<NwGroup>();
+	private final List<Network> networks = new ArrayList<>();
+	private final List<NwGroup> groups = new ArrayList<>();
 	private NwGroup currentGroup = null;
 
 	public DiagramDescription getDescription() {

@@ -61,8 +61,7 @@ public class Dictionary implements SpriteContainer, ISkinSimple {
 	}
 
 	public Element get(String name) {
-		final Element result = data.get(name);
-		Objects.requireNonNull(result);
+		final Element result = Objects.requireNonNull(data.get(Objects.requireNonNull(name)));
 		return new WrappedElement(result);
 	}
 

@@ -66,7 +66,7 @@ public class StyledString {
 	}
 
 	public static List<StyledString> build(String s) {
-		final List<StyledString> result = new ArrayList<StyledString>();
+		final List<StyledString> result = new ArrayList<>();
 		while (s.length() > 0) {
 			final int i1 = s.indexOf(StringUtils.BOLD_START);
 			if (i1 == -1) {

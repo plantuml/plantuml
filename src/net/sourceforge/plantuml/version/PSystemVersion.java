@@ -158,7 +158,7 @@ public class PSystemVersion extends PlainStringsDiagram {
 	}
 
 	public static PSystemVersion createShowVersion() {
-		final List<String> strings = new ArrayList<String>();
+		final List<String> strings = new ArrayList<>();
 		strings.add("<b>PlantUML version " + Version.versionString() + "</b> (" + Version.compileTimeString() + ")");
 		strings.add("(" + License.getCurrent() + " source distribution)");
 		GraphvizCrash.checkOldVersionWarning(strings);
@@ -191,7 +191,7 @@ public class PSystemVersion extends PlainStringsDiagram {
 	}
 
 	public static PSystemVersion createStdLib() {
-		final List<String> strings = new ArrayList<String>();
+		final List<String> strings = new ArrayList<>();
 		Stdlib.addInfoVersion(strings, true);
 		strings.add(" ");
 
@@ -205,7 +205,7 @@ public class PSystemVersion extends PlainStringsDiagram {
 	}
 
 	public static List<String> getAuthorsStrings(boolean withTag) {
-		final List<String> strings = new ArrayList<String>();
+		final List<String> strings = new ArrayList<>();
 		add(strings, "<b>PlantUML version " + Version.versionString() + "</b> (" + Version.compileTimeString() + ")",
 				withTag);
 		add(strings, "(" + License.getCurrent() + " source distribution)", withTag);
@@ -238,14 +238,14 @@ public class PSystemVersion extends PlainStringsDiagram {
 	}
 
 	public static PSystemVersion createTestDot() throws IOException {
-		final List<String> strings = new ArrayList<String>();
+		final List<String> strings = new ArrayList<>();
 		strings.add(Version.fullDescription());
 		GraphvizUtils.addDotStatus(strings, true);
 		return new PSystemVersion(false, strings);
 	}
 
 	public static PSystemVersion createDumpStackTrace() throws IOException {
-		final List<String> strings = new ArrayList<String>();
+		final List<String> strings = new ArrayList<>();
 		final Throwable creationPoint = new Throwable();
 		creationPoint.fillInStackTrace();
 		for (StackTraceElement ste : creationPoint.getStackTrace()) {
@@ -257,7 +257,7 @@ public class PSystemVersion extends PlainStringsDiagram {
 	public static PSystemVersion createKeyDistributor() throws IOException {
 		final LicenseInfo license = LicenseInfo.retrieveDistributor();
 		BufferedImage im = null;
-		final List<String> strings = new ArrayList<String>();
+		final List<String> strings = new ArrayList<>();
 		if (license == null) {
 			strings.add("No license found");
 		} else {
@@ -271,7 +271,7 @@ public class PSystemVersion extends PlainStringsDiagram {
 	}
 
 	public static PSystemVersion createPath() throws IOException {
-		final List<String> strings = new ArrayList<String>();
+		final List<String> strings = new ArrayList<>();
 		strings.add("<u>Current Dir</u>: " + new SFile(".").getPrintablePath());
 		strings.add(" ");
 		strings.add("<u>Default path</u>:");

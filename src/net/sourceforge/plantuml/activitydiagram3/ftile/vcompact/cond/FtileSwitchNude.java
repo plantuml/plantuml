@@ -69,7 +69,7 @@ public class FtileSwitchNude extends FtileDimensionMemoize {
 	}
 
 	public Set<Swimlane> getSwimlanes() {
-		final Set<Swimlane> result = new HashSet<Swimlane>();
+		final Set<Swimlane> result = new HashSet<>();
 		if (getSwimlaneIn() != null) {
 			result.add(getSwimlaneIn());
 		}
@@ -115,7 +115,7 @@ public class FtileSwitchNude extends FtileDimensionMemoize {
 	}
 
 	@Override
-	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
+	final protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
 		final FtileGeometry dimTotal = calculateDimensionInternal(stringBounder);
 		for (Ftile tile : tiles)
 			if (tile.calculateDimension(stringBounder).hasPointOut()) {

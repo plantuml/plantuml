@@ -138,7 +138,7 @@ public class StatsImpl implements Stats {
 
 	private StatsTable getByDiagramType(String name, Map<String, ParsedGenerated> data) {
 		final StatsTableImpl result = new StatsTableImpl(name);
-		final TreeSet<String> keys = new TreeSet<String>(data.keySet());
+		final TreeSet<String> keys = new TreeSet<>(data.keySet());
 		final NumberAnalyzed totalParsing = new NumberAnalyzed();
 		final NumberAnalyzed totalGenerating = new NumberAnalyzed();
 		for (String key : keys) {

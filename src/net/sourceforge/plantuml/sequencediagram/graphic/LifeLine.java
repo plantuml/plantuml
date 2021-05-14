@@ -78,7 +78,7 @@ public class LifeLine {
 	private final Pushable participant;
 	private final double nominalPreferredWidth;
 
-	private final List<Variation> events = new ArrayList<Variation>();
+	private final List<Variation> events = new ArrayList<>();
 	private final Stairs stairs = new Stairs();
 	private int maxLevel = 0;
 	private final boolean shadowing;

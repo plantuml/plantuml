@@ -62,7 +62,7 @@ import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class BoardDiagram extends UmlDiagram {
 
-	private final List<Activity> activities = new ArrayList<Activity>();
+	private final List<Activity> activities = new ArrayList<>();
 
 	public DiagramDescription getDescription() {
 		return new DiagramDescription("Board");

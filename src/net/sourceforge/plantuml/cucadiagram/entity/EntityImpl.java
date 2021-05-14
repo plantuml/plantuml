@@ -110,7 +110,7 @@ final public class EntityImpl implements ILeaf, IGroup {
 
 	// Other
 	private boolean nearDecoration = false;
-	private final Collection<String> portShortNames = new HashSet<String>();
+	private final Collection<String> portShortNames = new HashSet<>();
 	private int xposition;
 	private IEntityImage svekImage;
 
@@ -119,7 +119,7 @@ final public class EntityImpl implements ILeaf, IGroup {
 	private char concurrentSeparator;
 	private LineLocation codeLine;
 
-	private Set<Stereotag> tags = new LinkedHashSet<Stereotag>();
+	private Set<Stereotag> tags = new LinkedHashSet<>();
 
 	public void addStereotag(Stereotag tag) {
 		this.tags.add(tag);
@@ -142,15 +142,13 @@ final public class EntityImpl implements ILeaf, IGroup {
 
 	private EntityImpl(Ident ident, EntityFactory entityFactory, Code code, Bodier bodier, IGroup parentContainer,
 			String namespaceSeparator, int rawLayout) {
-		Objects.requireNonNull(ident);
+		this.ident = Objects.requireNonNull(ident);
 		if (entityFactory.namespaceSeparator.V1972()) {
 			code = ident;
 		}
-		Objects.requireNonNull(code);
-		this.ident = ident;
+		this.code = Objects.requireNonNull(code);
 		this.entityFactory = entityFactory;
 		this.bodier = bodier;
-		this.code = code;
 		this.parentContainer = parentContainer;
 		this.rawLayout = rawLayout;
 	}
@@ -360,8 +358,7 @@ final public class EntityImpl implements ILeaf, IGroup {
 	}
 
 	public boolean containsLeafRecurse(ILeaf leaf) {
-		Objects.requireNonNull(leaf);
-		if (leaf.isGroup()) {
+		if (Objects.requireNonNull(leaf).isGroup()) {
 			throw new IllegalArgumentException();
 		}
 		checkGroup();
@@ -378,7 +375,7 @@ final public class EntityImpl implements ILeaf, IGroup {
 
 	public Collection<ILeaf> getLeafsDirect() {
 		checkGroup();
-		final List<ILeaf> result = new ArrayList<ILeaf>();
+		final List<ILeaf> result = new ArrayList<>();
 		for (ILeaf ent : entityFactory.leafs()) {
 			if (ent.isGroup()) {
 				throw new IllegalStateException();
@@ -392,7 +389,7 @@ final public class EntityImpl implements ILeaf, IGroup {
 
 	public Collection<IGroup> getChildren() {
 		checkGroup();
-		final Collection<IGroup> result = new ArrayList<IGroup>();
+		final Collection<IGroup> result = new ArrayList<>();
 		for (IGroup g : entityFactory.groups()) {
 			if (g != this && g.getParentContainer() == this) {
 				result.add(g);
@@ -443,7 +440,7 @@ final public class EntityImpl implements ILeaf, IGroup {
 		}
 		// System.err.println("moveEntitiesTo1972::before2::groups2=" +
 		// entityFactory.groups2());
-		for (ILeaf ent : new ArrayList<ILeaf>(entityFactory.leafs2())) {
+		for (ILeaf ent : new ArrayList<>(entityFactory.leafs2())) {
 			Ident ident = ent.getIdent();
 			if (ident.equals(firstIdent) == false && ident.startsWith(firstIdent)
 					&& ident.startsWith(destIdent) == false) {
@@ -458,7 +455,7 @@ final public class EntityImpl implements ILeaf, IGroup {
 		}
 		// System.err.println("moveEntitiesTo1972::before3::groups2=" +
 		// entityFactory.groups2());
-		for (IGroup ent : new ArrayList<IGroup>(entityFactory.groups2())) {
+		for (IGroup ent : new ArrayList<>(entityFactory.groups2())) {
 			Ident ident = ent.getIdent();
 			// System.err.println("found=" + ident + " " + ident.startsWith(firstIdent) + "
 			// "
@@ -535,7 +532,7 @@ final public class EntityImpl implements ILeaf, IGroup {
 		this.svekImage = img;
 		this.url = null;
 
-		for (final Link link : new ArrayList<Link>(entityFactory.getLinks())) {
+		for (final Link link : new ArrayList<>(entityFactory.getLinks())) {
 			if (EntityUtils.isPureInnerLink12(this, link)) {
 				entityFactory.removeLink(link);
 			}
@@ -543,14 +540,14 @@ final public class EntityImpl implements ILeaf, IGroup {
 
 		if (entityFactory.namespaceSeparator.V1972()) {
 			entityFactory.removeGroup(getIdent());
-			for (ILeaf ent : new ArrayList<ILeaf>(entityFactory.leafs())) {
+			for (ILeaf ent : new ArrayList<>(entityFactory.leafs())) {
 				if (this != ent && getIdent().equals(ent.getIdent().parent())) {
 					entityFactory.removeLeaf(ent.getIdent());
 				}
 			}
 		} else {
 			entityFactory.removeGroup(getCodeGetName());
-			for (ILeaf ent : new ArrayList<ILeaf>(entityFactory.leafs())) {
+			for (ILeaf ent : new ArrayList<>(entityFactory.leafs())) {
 				if (this != ent && this == ent.getParentContainer()) {
 					entityFactory.removeLeaf(ent.getCodeGetName());
 				}

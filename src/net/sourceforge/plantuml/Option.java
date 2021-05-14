@@ -57,8 +57,8 @@ import net.sourceforge.plantuml.stats.StatsUtils;
 
 public class Option {
 
-	private final List<String> excludes = new ArrayList<String>();
-	private final List<String> config = new ArrayList<String>();
+	private final List<String> excludes = new ArrayList<>();
+	private final List<String> config = new ArrayList<>();
 	private final Map<String, String> defines = new LinkedHashMap<String, String>();
 	private String charset;
 	private boolean computeurl = false;
@@ -91,7 +91,7 @@ public class Option {
 	private File outputFile = null;
 	private String filename;
 
-	private final List<String> result = new ArrayList<String>();
+	private final List<String> result = new ArrayList<>();
 
 	public Option() {
 	}

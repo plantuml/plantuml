@@ -39,9 +39,11 @@ package net.sourceforge.plantuml.preproc2;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.StringUtils;
@@ -113,27 +115,32 @@ public class PreprocessorUtils {
 		}
 	}
 
-	public static ReadLine getReaderIncludeUrl2(final SURL url, StringLocated s, String suf, String charset)
+	public static ReadLine getReaderIncludeUrl(final SURL url, StringLocated s, String suf, String charset)
 			throws EaterException {
 		try {
 			if (StartDiagramExtractReader.containsStartDiagram(url, s, charset)) {
 				return StartDiagramExtractReader.build(url, s, suf, charset);
 			}
-			final InputStream is = url.openStream();
-			if (is == null) {
-				throw EaterException.located("Cannot open URL");
-			}
-			if (charset == null) {
-				Log.info("Using default charset");
-				return ReadLineReader.create(new InputStreamReader(is), url.toString(), s.getLocation());
-			}
-			Log.info("Using charset " + charset);
-			return ReadLineReader.create(new InputStreamReader(is, charset), url.toString(), s.getLocation());
+			return getReaderInclude(url, s.getLocation(), charset);
 		} catch (IOException e) {
 			e.printStackTrace();
 			throw EaterException.located("Cannot open URL " + e.getMessage());
 		}
 
+	}
+
+	public static ReadLine getReaderInclude(SURL url, LineLocation lineLocation, String charset)
+			throws EaterException, UnsupportedEncodingException {
+		final InputStream is = url.openStream();
+		if (is == null) {
+			throw EaterException.located("Cannot open URL");
+		}
+		if (charset == null) {
+			Log.info("Using default charset");
+			return ReadLineReader.create(new InputStreamReader(is), url.toString(), lineLocation);
+		}
+		Log.info("Using charset " + charset);
+		return ReadLineReader.create(new InputStreamReader(is, charset), url.toString(), lineLocation);
 	}
 
 }

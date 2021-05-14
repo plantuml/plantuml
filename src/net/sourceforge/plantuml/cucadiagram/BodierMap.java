@@ -51,7 +51,7 @@ import net.sourceforge.plantuml.style.Style;
 
 public class BodierMap implements Bodier {
 
-	private final List<CharSequence> rawBody = new ArrayList<CharSequence>();
+	private final List<CharSequence> rawBody = new ArrayList<>();
 	private final Map<String, String> map = new LinkedHashMap<String, String>();
 	private ILeaf leaf;
 

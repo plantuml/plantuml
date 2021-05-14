@@ -410,7 +410,7 @@ public class Run {
 			multithread(option, error);
 			return;
 		}
-		final List<File> files = new ArrayList<File>();
+		final List<File> files = new ArrayList<>();
 		for (String s : option.getResult()) {
 			if (option.isDecodeurl()) {
 				error.goOk();

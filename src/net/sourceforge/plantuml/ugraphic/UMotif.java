@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.posimo.DotPath;
 
 public class UMotif {
 
-	private final List<Point2D> points = new ArrayList<Point2D>();
+	private final List<Point2D> points = new ArrayList<>();
 
 	public UMotif(int... data) {
 		assert data.length % 2 == 0;

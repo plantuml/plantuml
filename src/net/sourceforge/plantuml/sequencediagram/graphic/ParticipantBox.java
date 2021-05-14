@@ -198,7 +198,7 @@ public class ParticipantBox implements Pushable {
 		return startingX;
 	}
 
-	private final List<GraphicalDelayText> delays = new ArrayList<GraphicalDelayText>();
+	private final List<GraphicalDelayText> delays = new ArrayList<>();
 
 	public void addDelay(GraphicalDelayText delay) {
 		this.delays.add(delay);

@@ -79,7 +79,7 @@ public class FingerImpl implements Finger, UDrawable {
 	private double marginTop = 10;
 	private double marginBottom = 10;
 
-	private final List<FingerImpl> nail = new ArrayList<FingerImpl>();
+	private final List<FingerImpl> nail = new ArrayList<>();
 	private Tetris tetris = null;
 
 	private StyleSignature getDefaultStyleDefinitionNode() {

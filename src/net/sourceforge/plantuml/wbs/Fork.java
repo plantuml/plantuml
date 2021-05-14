@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 class Fork extends WBSTextBlock {
 
 	private final TextBlock main;
-	private final List<ITF> right = new ArrayList<ITF>();
+	private final List<ITF> right = new ArrayList<>();
 
 	public Fork(ISkinParam skinParam, WElement idea) {
 		super(idea.withBackColor(skinParam), idea.getStyleBuilder(), idea.getLevel());

@@ -48,7 +48,7 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 class SingleLine extends AbstractTextBlock implements Line {
 
-	private final List<TextBlock> blocs = new ArrayList<TextBlock>();
+	private final List<TextBlock> blocs = new ArrayList<>();
 	private final HorizontalAlignment horizontalAlignment;
 
 	public static SingleLine withSomeHtmlTag(String text, FontConfiguration fontConfiguration,

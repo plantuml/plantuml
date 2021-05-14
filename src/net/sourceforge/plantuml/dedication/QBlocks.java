@@ -44,7 +44,7 @@ import java.util.List;
 
 public class QBlocks {
 
-	private final List<QBlock> all = new ArrayList<QBlock>();
+	private final List<QBlock> all = new ArrayList<>();
 
 	private QBlocks() {
 

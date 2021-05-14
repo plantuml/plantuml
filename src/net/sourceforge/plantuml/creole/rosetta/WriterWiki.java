@@ -18,7 +18,7 @@ public class WriterWiki {
 		if (syntaxDestination == WikiLanguage.UNICODE) {
 			return data;
 		}
-		final List<String> result = new ArrayList<String>();
+		final List<String> result = new ArrayList<>();
 		for (String s : data) {
 			result.add(WikiLanguage.toHtmlDebug(s));
 		}

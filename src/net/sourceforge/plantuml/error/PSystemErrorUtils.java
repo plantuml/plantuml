@@ -55,9 +55,9 @@ public class PSystemErrorUtils {
 
 	public static PSystemError merge(Collection<PSystemError> ps) {
 		UmlSource source = null;
-		final List<ErrorUml> errors = new ArrayList<ErrorUml>();
-		// final List<String> debugs = new ArrayList<String>();
-		final List<PSystemErrorV2> errorsV2 = new ArrayList<PSystemErrorV2>();
+		final List<ErrorUml> errors = new ArrayList<>();
+		// final List<String> debugs = new ArrayList<>();
+		final List<PSystemErrorV2> errorsV2 = new ArrayList<>();
 		for (PSystemError system : ps) {
 			if (system == null) {
 				continue;

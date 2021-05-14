@@ -104,7 +104,7 @@ public abstract class Log {
 		// }
 	}
 
-	// private static final ThreadLocal<String> header2 = new ThreadLocal<String>();
+	// private static final ThreadLocal<String> header2 = new ThreadLocal<>();
 	//
 	public static void header(String s) {
 		// header2.set(s);

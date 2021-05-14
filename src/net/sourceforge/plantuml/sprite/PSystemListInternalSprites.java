@@ -52,7 +52,7 @@ public class PSystemListInternalSprites extends PlainDiagram {
 
 	@Override
 	protected UDrawable getRootDrawable(FileFormatOption fileFormatOption) throws IOException {
-		final List<String> lines = new ArrayList<String>();
+		final List<String> lines = new ArrayList<>();
 		lines.add("<b>List Current Sprites");
 		lines.add("<i>Credit to");
 		lines.add("http://www.archimatetool.com");

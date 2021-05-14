@@ -61,7 +61,7 @@ import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class PlayerBinary extends Player {
 
-	private final List<TimeConstraint> constraints = new ArrayList<TimeConstraint>();
+	private final List<TimeConstraint> constraints = new ArrayList<>();
 	private final SortedMap<TimeTick, Boolean> values = new TreeMap<TimeTick, Boolean>();
 	private Boolean initialState;
 

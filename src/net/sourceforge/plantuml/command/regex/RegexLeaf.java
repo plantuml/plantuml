@@ -119,7 +119,7 @@ public class RegexLeaf implements IRegex {
 		throw new UnsupportedOperationException();
 	}
 
-	static private final Set<String> UNKNOWN = new HashSet<String>();
+	static private final Set<String> UNKNOWN = new HashSet<>();
 
 	static private final Pattern p1 = Pattern.compile("^[-0A-Za-z_!:@;/=,\"]+$");
 	static private final Pattern p2 = Pattern.compile("^[-0A-Za-z_!:@;/=,\"]+\\?$");

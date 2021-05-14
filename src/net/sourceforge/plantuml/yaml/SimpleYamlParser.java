@@ -48,7 +48,7 @@ import net.sourceforge.plantuml.json.JsonValue;
 public class SimpleYamlParser {
 
 	private JsonValue result;
-	private final List<Integer> pendingIndents = new ArrayList<Integer>();
+	private final List<Integer> pendingIndents = new ArrayList<>();
 
 	public JsonValue parse(List<String> lines) {
 		result = new JsonObject();

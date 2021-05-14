@@ -60,7 +60,7 @@ public class ElementFactoryImage implements ElementFactory {
 		}
 		final String header = dataSource.next().getElement();
 		final String name = header.length() > 2 ? header.substring(2) : null;
-		final List<String> img = new ArrayList<String>();
+		final List<String> img = new ArrayList<>();
 		while (dataSource.peek(0).getElement().equals(">>") == false) {
 			img.add(dataSource.next().getElement());
 		}

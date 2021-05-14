@@ -77,7 +77,7 @@ public class SvgCommandLetter implements SvgCommand {
 
 //	public UGraphic drawMe(UGraphic ug, Iterator<SvgCommand> it) {
 //		System.err.println("drawMe " + letter);
-//		final List<SvgCommandNumber> numbers = new ArrayList<SvgCommandNumber>();
+//		final List<SvgCommandNumber> numbers = new ArrayList<>();
 //		for (int i = 0; i < argumentNumber(); i++) {
 //			numbers.add((SvgCommandNumber) it.next());
 //		}

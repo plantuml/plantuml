@@ -186,8 +186,7 @@ public class Colors {
 	public Colors applyStereotype(Stereotype stereotype, ISkinParam skinParam, ColorParam param)
 			throws NoSuchColorException {
 		Objects.requireNonNull(stereotype);
-		Objects.requireNonNull(param);
-		final ColorType colorType = Objects.requireNonNull(param.getColorType());
+		final ColorType colorType = Objects.requireNonNull(Objects.requireNonNull(param).getColorType());
 		if (getColor(colorType) != null) {
 			return this;
 		}

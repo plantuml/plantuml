@@ -80,10 +80,10 @@ public class Block extends AbstractTextBlock {
 	private final Dimension2DDouble fixedDim;
 	private final ISkinParam skinParam;
 
-	private final List<String> left = new ArrayList<String>();
-	private final List<String> right = new ArrayList<String>();
-	private final List<String> top = new ArrayList<String>();
-	private final List<String> bottom = new ArrayList<String>();
+	private final List<String> left = new ArrayList<>();
+	private final List<String> right = new ArrayList<>();
+	private final List<String> top = new ArrayList<>();
+	private final List<String> bottom = new ArrayList<>();
 
 	private double x = 10;
 	private double y = 10;

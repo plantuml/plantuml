@@ -89,8 +89,8 @@ public class StripeSimple implements Stripe {
 
 	final private Atom header;
 
-	final private List<Atom> atoms = new ArrayList<Atom>();
-	final private List<Command> commands = new ArrayList<Command>();
+	final private List<Atom> atoms = new ArrayList<>();
+	final private List<Command> commands = new ArrayList<>();
 	private HorizontalAlignment align = HorizontalAlignment.LEFT;
 
 	public void setCellAlignment(HorizontalAlignment align) {

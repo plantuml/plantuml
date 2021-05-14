@@ -72,7 +72,7 @@ abstract class XmiClassDiagramAbstract implements IXmiClassDiagram {
 	protected final Document document;
 	protected Element ownedElement;
 
-	protected final Set<IEntity> done = new HashSet<IEntity>();
+	protected final Set<IEntity> done = new HashSet<>();
 
 	public XmiClassDiagramAbstract(ClassDiagram classDiagram) throws ParserConfigurationException {
 		this.classDiagram = classDiagram;

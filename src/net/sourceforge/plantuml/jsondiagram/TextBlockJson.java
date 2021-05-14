@@ -68,7 +68,7 @@ import net.sourceforge.plantuml.ugraphic.color.HColor;
 //See TextBlockMap
 public class TextBlockJson extends AbstractTextBlock implements TextBlockBackcolored {
 
-	private final List<Line> lines = new ArrayList<Line>();
+	private final List<Line> lines = new ArrayList<>();
 
 	private final Style style;
 	private final Style styleHightlight;
@@ -185,7 +185,7 @@ public class TextBlockJson extends AbstractTextBlock implements TextBlockBackcol
 	}
 
 	public List<JsonValue> children() {
-		final List<JsonValue> result = new ArrayList<JsonValue>();
+		final List<JsonValue> result = new ArrayList<>();
 		if (root instanceof JsonObject) {
 			for (Member member : (JsonObject) root) {
 				final JsonValue value = member.getValue();
@@ -209,7 +209,7 @@ public class TextBlockJson extends AbstractTextBlock implements TextBlockBackcol
 	}
 
 	public List<String> keys() {
-		final List<String> result = new ArrayList<String>();
+		final List<String> result = new ArrayList<>();
 		if (root instanceof JsonObject) {
 			for (Member member : (JsonObject) root) {
 				final String key = member.getName();

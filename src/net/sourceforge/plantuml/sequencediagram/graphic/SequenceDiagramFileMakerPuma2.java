@@ -107,7 +107,7 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 			// }
 		}
 		drawableSet = initializer.createDrawableSet(stringBounder);
-		final List<Newpage> newpages = new ArrayList<Newpage>();
+		final List<Newpage> newpages = new ArrayList<>();
 		for (Event ev : drawableSet.getAllEvents()) {
 			if (ev instanceof Newpage) {
 				newpages.add((Newpage) ev);

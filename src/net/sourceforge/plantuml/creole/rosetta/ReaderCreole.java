@@ -29,7 +29,7 @@ public class ReaderCreole extends ReaderAbstractWiki implements ReaderWiki {
 	}
 
 	public List<String> transform(List<String> raw) {
-		final List<String> uhtml = new ArrayList<String>();
+		final List<String> uhtml = new ArrayList<>();
 		for (int i = 0; i < raw.size(); i++) {
 			String current = raw.get(i);
 			uhtml.add(singleLineFormat(current));

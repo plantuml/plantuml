@@ -54,7 +54,7 @@ public abstract class WithLinkType {
 
 	private Colors colors = Colors.empty();
 
-	private List<Colors> supplementary = new ArrayList<Colors>();
+	private List<Colors> supplementary = new ArrayList<>();
 
 	public final HColor getSpecificColor() {
 		return colors.getColor(ColorType.LINE);

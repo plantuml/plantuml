@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 public class Englobers {
 
-	private final List<Englober> englobers = new ArrayList<Englober>();
+	private final List<Englober> englobers = new ArrayList<>();
 
 	public Englobers(TileArguments tileArguments) {
 		Englober pending = null;
@@ -106,7 +106,7 @@ public class Englobers {
 		if (size() == 0) {
 			throw new IllegalStateException();
 		}
-		final List<Real> all = new ArrayList<Real>();
+		final List<Real> all = new ArrayList<>();
 		for (Englober englober : englobers) {
 			all.add(englober.getMinX(stringBounder));
 		}
@@ -117,7 +117,7 @@ public class Englobers {
 		if (size() == 0) {
 			throw new IllegalStateException();
 		}
-		final List<Real> all = new ArrayList<Real>();
+		final List<Real> all = new ArrayList<>();
 		for (Englober englober : englobers) {
 			all.add(englober.getMaxX(stringBounder));
 		}

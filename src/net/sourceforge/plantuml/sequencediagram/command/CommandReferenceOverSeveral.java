@@ -90,7 +90,7 @@ public class CommandReferenceOverSeveral extends SingleLineCommand2<SequenceDiag
 		final String title = arg.get("URL", 1);
 		final String text = StringUtils.trin(arg.get("TEXT", 0));
 
-		final List<Participant> p = new ArrayList<Participant>();
+		final List<Participant> p = new ArrayList<>();
 		for (String s : participants) {
 			p.add(diagram.getOrCreateParticipant(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(s)));
 		}

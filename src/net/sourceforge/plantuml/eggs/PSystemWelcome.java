@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.version.PSystemVersion;
 
 public class PSystemWelcome extends PlainDiagram {
 
-	private final List<String> strings = new ArrayList<String>();
+	private final List<String> strings = new ArrayList<>();
 	private final GraphicPosition position;
 
 	public PSystemWelcome(GraphicPosition position) {

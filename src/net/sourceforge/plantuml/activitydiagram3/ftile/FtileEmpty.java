@@ -103,7 +103,7 @@ public class FtileEmpty extends AbstractFtile {
 	}
 
 	public Set<Swimlane> getSwimlanes() {
-		final Set<Swimlane> result = new HashSet<Swimlane>();
+		final Set<Swimlane> result = new HashSet<>();
 		if (swimlaneIn != null) {
 			result.add(swimlaneIn);
 		}

@@ -49,7 +49,7 @@ public class StatsTableImpl implements StatsTable {
 
 	private final String name;
 	private final Collection<StatsColumn> columnHeaders;
-	private final List<StatsLine> lines = new ArrayList<StatsLine>();
+	private final List<StatsLine> lines = new ArrayList<>();
 
 	public StatsTableImpl(String name) {
 		this.name = name;

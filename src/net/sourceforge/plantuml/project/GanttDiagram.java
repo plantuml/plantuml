@@ -111,7 +111,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 	private final Map<Task, TaskDraw> draws = new LinkedHashMap<Task, TaskDraw>();
 	private final Map<TaskCode, Task> tasks = new LinkedHashMap<TaskCode, Task>();
 	private final Map<String, Task> byShortName = new HashMap<String, Task>();
-	private final List<GanttConstraint> constraints = new ArrayList<GanttConstraint>();
+	private final List<GanttConstraint> constraints = new ArrayList<>();
 	private final HColorSet colorSet = HColorSet.instance();
 
 	private final OpenClose openClose = new OpenClose();
@@ -437,7 +437,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 	}
 
 	private Collection<GanttConstraint> getConstraints(Task task) {
-		final List<GanttConstraint> result = new ArrayList<GanttConstraint>();
+		final List<GanttConstraint> result = new ArrayList<>();
 		for (GanttConstraint constraint : constraints) {
 			if (constraint.isOn(task)) {
 				result.add(constraint);
@@ -455,7 +455,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 	}
 
 	private boolean magicPushOnce(StringBounder stringBounder) {
-		final List<FingerPrint> notes = new ArrayList<FingerPrint>();
+		final List<FingerPrint> notes = new ArrayList<>();
 		for (TaskDraw td : draws.values()) {
 			final FingerPrint taskPrint = td.getFingerPrint(stringBounder);
 			for (FingerPrint note : notes) {
@@ -554,8 +554,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 	}
 
 	public Task getExistingTask(String id) {
-		Objects.requireNonNull(id);
-		Task result = byShortName.get(id);
+		final Task result = byShortName.get(Objects.requireNonNull(id));
 		if (result != null) {
 			return result;
 		}
@@ -602,7 +601,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 	}
 
 	private Task getLastCreatedTask() {
-		final List<Task> all = new ArrayList<Task>(tasks.values());
+		final List<Task> all = new ArrayList<>(tasks.values());
 		for (int i = all.size() - 1; i >= 0; i--) {
 			if (all.get(i) instanceof TaskImpl) {
 				return all.get(i);

@@ -204,7 +204,7 @@ public final class CucaDiagramHtmlMaker {
 	}
 
 	private Collection<IEntity> getNotes(IEntity ent) {
-		final List<IEntity> result = new ArrayList<IEntity>();
+		final List<IEntity> result = new ArrayList<>();
 		for (Link link : diagram.getLinks()) {
 			if (link.contains(ent) == false) {
 				continue;
@@ -217,7 +217,7 @@ public final class CucaDiagramHtmlMaker {
 	}
 
 	private Collection<Link> getLinksButNotes(IEntity ent) {
-		final List<Link> result = new ArrayList<Link>();
+		final List<Link> result = new ArrayList<>();
 		for (Link link : diagram.getLinks()) {
 			if (link.contains(ent) == false) {
 				continue;

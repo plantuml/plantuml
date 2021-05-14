@@ -169,7 +169,7 @@ public class SFile implements Comparable<SFile> {
 
 	public Collection<SFile> listFiles() {
 		final File[] tmp = internal.listFiles();
-		final List<SFile> result = new ArrayList<SFile>(tmp.length);
+		final List<SFile> result = new ArrayList<>(tmp.length);
 		for (File f : tmp) {
 			result.add(new SFile(f));
 		}

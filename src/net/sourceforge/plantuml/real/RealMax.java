@@ -41,7 +41,7 @@ import java.util.List;
 
 class RealMax extends AbstractReal implements Real {
 
-	private final List<Real> all = new ArrayList<Real>();
+	private final List<Real> all = new ArrayList<>();
 	private final Throwable creationPoint;
 
 	RealMax(Collection<Real> reals) {

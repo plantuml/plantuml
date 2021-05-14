@@ -47,8 +47,7 @@ public class UImageSvg implements UShape {
 	private final double scale;
 
 	public UImageSvg(String svg, double scale) {
-		Objects.requireNonNull(svg);
-		this.svg = svg;
+		this.svg = Objects.requireNonNull(svg);
 		this.scale = scale;
 	}
 

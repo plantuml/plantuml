@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.graphic.FontStyle;
 
 public class StripeRow implements Stripe {
 
-	private final List<Atom> atoms = new ArrayList<Atom>();
+	private final List<Atom> atoms = new ArrayList<>();
 
 	public Atom getLHeader() {
 		return null;

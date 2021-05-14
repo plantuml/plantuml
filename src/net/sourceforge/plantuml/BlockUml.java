@@ -65,7 +65,7 @@ public class BlockUml {
 	private Diagram system;
 	private final Defines localDefines;
 	private final ISkinSimple skinParam;
-	private final Set<FileWithSuffix> included = new HashSet<FileWithSuffix>();
+	private final Set<FileWithSuffix> included = new HashSet<>();
 
 	public Set<FileWithSuffix> getIncluded() {
 		return Collections.unmodifiableSet(included);
@@ -97,7 +97,7 @@ public class BlockUml {
 	}
 
 	public static List<StringLocated> convert(List<String> strings) {
-		final List<StringLocated> result = new ArrayList<StringLocated>();
+		final List<StringLocated> result = new ArrayList<>();
 		LineLocationImpl location = new LineLocationImpl("block", null);
 		for (String s : strings) {
 			location = location.oneLineRead();
@@ -109,7 +109,7 @@ public class BlockUml {
 	private boolean preprocessorError;
 
 	public BlockUml(List<StringLocated> strings, Defines defines, ISkinSimple skinParam, PreprocessorModeSet mode) {
-		this.rawSource = new ArrayList<StringLocated>(strings);
+		this.rawSource = new ArrayList<>(strings);
 		this.localDefines = defines;
 		this.skinParam = skinParam;
 		final String s0 = strings.get(0).getTrimmed().getString();
@@ -117,7 +117,7 @@ public class BlockUml {
 			throw new IllegalArgumentException();
 		}
 		if (mode == null) {
-			this.data = new ArrayList<StringLocated>(strings);
+			this.data = new ArrayList<>(strings);
 		} else {
 			final TimLoader timLoader = new TimLoader(mode.getImportedFiles(), defines, mode.getCharset(),
 					(DefinitionsContainer) mode);
@@ -199,7 +199,7 @@ public class BlockUml {
 	}
 
 	public List<String> getDefinition(boolean withHeader) {
-		final List<String> result = new ArrayList<String>();
+		final List<String> result = new ArrayList<>();
 		for (StringLocated s : data) {
 			result.add(s.getString());
 		}

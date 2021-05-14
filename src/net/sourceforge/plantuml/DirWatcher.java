@@ -64,7 +64,7 @@ public class DirWatcher {
 
 	public List<GeneratedImage> buildCreatedFiles() throws IOException, InterruptedException {
 		boolean error = false;
-		final List<GeneratedImage> result = new ArrayList<GeneratedImage>();
+		final List<GeneratedImage> result = new ArrayList<>();
 		for (File f : dir.listFiles()) {
 			if (error) {
 				continue;

@@ -132,7 +132,7 @@ public class EmptyImageBuilder {
 
 	private List<String> withBreaks(String watermark, Font javaFont, FontMetrics fm, int maxWidth) {
 		final String[] words = watermark.split("\\s+");
-		final List<String> result = new ArrayList<String>();
+		final List<String> result = new ArrayList<>();
 		String pending = "";
 		for (String word : words) {
 			final String candidate = pending.length() == 0 ? word : pending + " " + word;

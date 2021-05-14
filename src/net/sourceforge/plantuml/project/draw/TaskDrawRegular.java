@@ -98,7 +98,7 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 		this.end = end;
 		this.oddStart = oddStart;
 		this.oddEnd = oddEnd;
-		this.paused = new TreeSet<Day>(((TaskImpl) task).getAllPaused());
+		this.paused = new TreeSet<>(((TaskImpl) task).getAllPaused());
 		for (Day tmp = start; tmp.compareTo(end) <= 0; tmp = tmp.increment()) {
 			final int load = toTaskDraw.getDefaultPlan().getLoadAt(tmp);
 			if (load == 0) {
@@ -281,7 +281,7 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 
 		final double round = style.value(PName.RoundCorner).asDouble();
 
-		final Collection<Segment> off = new ArrayList<Segment>();
+		final Collection<Segment> off = new ArrayList<>();
 		for (Day pause : paused) {
 			final double x1 = timeScale.getStartingPosition(pause);
 			final double x2 = timeScale.getEndingPosition(pause);

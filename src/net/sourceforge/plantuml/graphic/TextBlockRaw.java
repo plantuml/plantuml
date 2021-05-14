@@ -60,7 +60,7 @@ public class TextBlockRaw extends AbstractTextBlock implements TextBlock {
 			if (stringBounder == null) {
 				throw new IllegalStateException();
 			}
-			this.lines2 = new ArrayList<Line>();
+			this.lines2 = new ArrayList<>();
 			for (String s : strings) {
 				lines2.add(SingleLine.rawText(s, fontConfiguration));
 			}

@@ -93,7 +93,7 @@ public class SequenceDiagramTxtMaker implements FileMaker {
 			// }
 		}
 		drawableSet = initializer.createDrawableSet(dummyStringBounder);
-		// final List<Newpage> newpages = new ArrayList<Newpage>();
+		// final List<Newpage> newpages = new ArrayList<>();
 		// for (Event ev : drawableSet.getAllEvents()) {
 		// if (ev instanceof Newpage) {
 		// newpages.add((Newpage) ev);

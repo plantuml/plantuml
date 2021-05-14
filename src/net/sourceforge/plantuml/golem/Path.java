@@ -40,7 +40,7 @@ import java.util.List;
 
 public class Path {
 
-	private final List<TileArea> all = new ArrayList<TileArea>();
+	private final List<TileArea> all = new ArrayList<>();
 
 	public static Path build(TileArea start, TileArea dest) {
 		return new Path(start, dest);

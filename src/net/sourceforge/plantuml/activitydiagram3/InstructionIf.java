@@ -58,7 +58,7 @@ import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class InstructionIf extends WithNote implements Instruction, InstructionCollection {
 
-	private final List<Branch> thens = new ArrayList<Branch>();
+	private final List<Branch> thens = new ArrayList<>();
 	private Branch elseBranch;
 	private boolean endifCalled = false;
 	private final ISkinParam skinParam;
@@ -113,7 +113,7 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 		if (getPositionedNotes().size() > 0) {
 			result = FtileWithNoteOpale.create(result, getPositionedNotes(), skinParam, false);
 		}
-		final List<WeldingPoint> weldingPoints = new ArrayList<WeldingPoint>();
+		final List<WeldingPoint> weldingPoints = new ArrayList<>();
 		for (Branch branch : thens) {
 			weldingPoints.addAll(branch.getWeldingPoints());
 		}
@@ -191,7 +191,7 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 	}
 
 	public Set<Swimlane> getSwimlanes() {
-		final Set<Swimlane> result = new HashSet<Swimlane>();
+		final Set<Swimlane> result = new HashSet<>();
 		if (swimlane != null) {
 			result.add(swimlane);
 		}

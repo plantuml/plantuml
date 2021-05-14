@@ -137,7 +137,7 @@ public class GraphvizUtils {
 		return null;
 	}
 
-	private static final ThreadLocal<Integer> limitSize = new ThreadLocal<Integer>();
+	private static final ThreadLocal<Integer> limitSize = new ThreadLocal<>();
 
 	public static void removeLocalLimitSize() {
 		limitSize.remove();

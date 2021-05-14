@@ -66,7 +66,7 @@ public class InstructionRepeat implements Instruction {
 
 	private LinkRendering incoming1 = LinkRendering.none();
 	private LinkRendering incoming2 = LinkRendering.none();
-	private List<PositionedNote> backwardNotes = new ArrayList<PositionedNote>();
+	private List<PositionedNote> backwardNotes = new ArrayList<>();
 	private Display test = Display.NULL;
 	private Display yes = Display.NULL;
 	private Display out = Display.NULL;

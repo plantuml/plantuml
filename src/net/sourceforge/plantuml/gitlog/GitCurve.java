@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class GitCurve {
 
-	private final List<Point2D> points = new ArrayList<Point2D>();
+	private final List<Point2D> points = new ArrayList<>();
 
 	private final Mirror xMirror;
 

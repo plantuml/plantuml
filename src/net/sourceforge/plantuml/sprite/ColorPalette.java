@@ -65,8 +65,7 @@ public class ColorPalette {
 	}
 
 	private HColorSimple getHtmlColorSimpleFor(char c) {
-		final Color color = getColorFor(c);
-		Objects.requireNonNull(color);
+		final Color color = Objects.requireNonNull(getColorFor(c));
 		return new HColorSimple(color, false);
 	}
 

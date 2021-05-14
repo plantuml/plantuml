@@ -80,8 +80,8 @@ public class FtileSwitchWithOneLink extends FtileSwitchWithDiamonds {
 			final double x2 = p2.getX();
 			final double y2 = p2.getY();
 
-			final Snake snake = Snake.create(null, arrowColor, Arrows.asToDown())
-					.withLabel(getLabelPositive(branch), arrowHorizontalAlignment());
+			final Snake snake = Snake.create(null, arrowColor, Arrows.asToDown()).withLabel(getLabelPositive(branch),
+					arrowHorizontalAlignment());
 			// snake.addPoint(x1, y1);
 			snake.addPoint(x2, y1);
 			snake.addPoint(x2, y2);
@@ -134,10 +134,14 @@ public class FtileSwitchWithOneLink extends FtileSwitchWithDiamonds {
 		}
 	}
 
-	public Ftile addLinks() {
-		final List<Connection> conns = new ArrayList<Connection>();
-		conns.add(new ConnectionVerticalTop(tiles.get(0), branches.get(0)));
-		conns.add(new ConnectionVerticalBottom(tiles.get(0)));
+	public Ftile addLinks(StringBounder stringBounder) {
+		final List<Connection> conns = new ArrayList<>();
+		final Ftile single = tiles.get(0);
+		conns.add(new ConnectionVerticalTop(single, branches.get(0)));
+
+		if (single.calculateDimension(stringBounder).hasPointOut()) {
+			conns.add(new ConnectionVerticalBottom(single));
+		}
 
 		return FtileUtils.addConnection(this, conns);
 	}

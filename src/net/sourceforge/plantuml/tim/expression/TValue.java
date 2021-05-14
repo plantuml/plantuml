@@ -51,10 +51,9 @@ public class TValue {
 	}
 
 	private TValue(String stringValue) {
-		Objects.requireNonNull(stringValue);
 		this.intValue = 0;
 		this.jsonValue = null;
-		this.stringValue = stringValue;
+		this.stringValue = Objects.requireNonNull(stringValue);
 	}
 
 	public TValue(JsonValue json) {

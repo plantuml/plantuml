@@ -73,9 +73,9 @@ import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class SequenceDiagram extends UmlDiagram {
 
-	private final List<Participant> participantsList = new ArrayList<Participant>();
+	private final List<Participant> participantsList = new ArrayList<>();
 
-	private final List<Event> events = new ArrayList<Event>();
+	private final List<Event> events = new ArrayList<>();
 
 	private final Map<Participant, ParticipantEnglober> participantEnglobers2 = new HashMap<Participant, ParticipantEnglober>();
 
@@ -259,7 +259,7 @@ public class SequenceDiagram extends UmlDiagram {
 	}
 
 	// support for CommandReturn
-	private final Stack<AbstractMessage> activationState = new Stack<AbstractMessage>();
+	private final Stack<AbstractMessage> activationState = new Stack<>();
 
 	public AbstractMessage getActivatingMessage() {
 		if (activationState.empty()) {
@@ -309,7 +309,7 @@ public class SequenceDiagram extends UmlDiagram {
 		return "Activate/Deactivate already done on " + p.getCode();
 	}
 
-	private final List<GroupingStart> openGroupings = new ArrayList<GroupingStart>();
+	private final List<GroupingStart> openGroupings = new ArrayList<>();
 
 	public boolean grouping(String title, String comment, GroupingType type, HColor backColorGeneral,
 			HColor backColorElement, boolean parallel) {
@@ -426,7 +426,7 @@ public class SequenceDiagram extends UmlDiagram {
 	}
 
 	public void removeHiddenParticipants() {
-		for (Participant p : new ArrayList<Participant>(participantsList)) {
+		for (Participant p : new ArrayList<>(participantsList)) {
 			if (isAlone(p)) {
 				remove(p);
 			}
@@ -523,7 +523,7 @@ public class SequenceDiagram extends UmlDiagram {
 		return labels.replace("%autonumber%", autoNumber.getCurrentMessageNumber(false));
 	}
 
-	private final List<LinkAnchor> linkAnchors = new ArrayList<LinkAnchor>();
+	private final List<LinkAnchor> linkAnchors = new ArrayList<>();
 
 	public CommandExecutionResult linkAnchor(String anchor1, String anchor2, String message) {
 		this.linkAnchors.add(new LinkAnchor(anchor1, anchor2, message));

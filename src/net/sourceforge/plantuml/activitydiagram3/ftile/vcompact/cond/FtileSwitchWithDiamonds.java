@@ -96,7 +96,7 @@ public class FtileSwitchWithDiamonds extends FtileSwitchNude {
 
 	@Override
 	public Collection<Ftile> getMyChildren() {
-		final Collection<Ftile> result = new ArrayList<Ftile>(super.getMyChildren());
+		final Collection<Ftile> result = new ArrayList<>(super.getMyChildren());
 		result.add(diamond1);
 		result.add(diamond2);
 		return Collections.unmodifiableCollection(result);
@@ -111,7 +111,7 @@ public class FtileSwitchWithDiamonds extends FtileSwitchNude {
 	}
 
 	@Override
-	protected FtileGeometry calculateDimensionInternalSlow(StringBounder stringBounder) {
+	final protected FtileGeometry calculateDimensionInternalSlow(StringBounder stringBounder) {
 		final FtileGeometry dim1 = diamond1.calculateDimension(stringBounder);
 		final FtileGeometry dim2 = diamond2.calculateDimension(stringBounder);
 
@@ -145,7 +145,10 @@ public class FtileSwitchWithDiamonds extends FtileSwitchNude {
 		} else {
 			super.drawU(ug.apply(getTranslateMain(stringBounder)));
 		}
-		ug.apply(getTranslateDiamond2(stringBounder)).draw(diamond2);
+
+		if (calculateDimension(stringBounder).hasPointOut()) {
+			ug.apply(getTranslateDiamond2(stringBounder)).draw(diamond2);
+		}
 	}
 
 	protected UTranslate getTranslateOf(Ftile tile, StringBounder stringBounder) {
@@ -194,7 +197,8 @@ public class FtileSwitchWithDiamonds extends FtileSwitchNude {
 
 	protected TextBlock getLabelPositive(Branch branch) {
 		final FontConfiguration fcArrow = new FontConfiguration(skinParam(), FontParam.ARROW, null);
-		return branch.getLabelPositive().create7(fcArrow, HorizontalAlignment.LEFT, skinParam(), CreoleMode.SIMPLE_LINE);
+		return branch.getLabelPositive().create7(fcArrow, HorizontalAlignment.LEFT, skinParam(),
+				CreoleMode.SIMPLE_LINE);
 	}
 
 }

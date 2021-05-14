@@ -57,7 +57,7 @@ public class FtpConnexion {
 	private final String user;
 	private final Map<String, String> incoming = new HashMap<String, String>();
 	private final Map<String, byte[]> outgoing = new HashMap<String, byte[]>();
-	private final Set<String> futureOutgoing = new HashSet<String>();
+	private final Set<String> futureOutgoing = new HashSet<>();
 
 	private FileFormat fileFormat;
 
@@ -79,7 +79,7 @@ public class FtpConnexion {
 	}
 
 	public synchronized Collection<String> getFiles() {
-		final List<String> result = new ArrayList<String>(incoming.keySet());
+		final List<String> result = new ArrayList<>(incoming.keySet());
 		result.addAll(outgoing.keySet());
 		result.addAll(futureOutgoing);
 		return Collections.unmodifiableCollection(result);

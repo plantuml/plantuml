@@ -67,8 +67,8 @@ import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class Histogram implements PDrawing {
 
-	private final List<ChangeState> changes = new ArrayList<ChangeState>();
-	private final List<TimeConstraint> constraints = new ArrayList<TimeConstraint>();
+	private final List<ChangeState> changes = new ArrayList<>();
+	private final List<TimeConstraint> constraints = new ArrayList<>();
 
 	private List<String> allStates;
 
@@ -84,7 +84,7 @@ public class Histogram implements PDrawing {
 		this.suggestedHeight = suggestedHeight;
 		this.ruler = ruler;
 		this.skinParam = skinParam;
-		this.allStates = new ArrayList<String>(someStates);
+		this.allStates = new ArrayList<>(someStates);
 		this.compact = compact;
 		this.title = title;
 		Collections.reverse(allStates);

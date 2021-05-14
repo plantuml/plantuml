@@ -41,14 +41,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import javax.script.ScriptException;
-
 public class AnimationDecoder {
 
-	private final List<String> result = new ArrayList<String>();
+	private final List<String> result = new ArrayList<>();
 
-	public AnimationDecoder(Iterable<CharSequence> data) throws ScriptException {
-		
+	public AnimationDecoder(Iterable<CharSequence> data) {
+
 		for (final Iterator<CharSequence> it = data.iterator(); it.hasNext();) {
 			String line = it.next().toString();
 			if (line.matches("^\\s*\\[script\\]\\s*$")) {

@@ -63,7 +63,7 @@ import net.sourceforge.plantuml.skin.rose.Rose;
 public class TileBuilder {
 
 	public static List<Tile> buildSeveral(Iterator<Event> it, TileArguments tileArguments, Tile parent) {
-		final List<Tile> tiles = new ArrayList<Tile>();
+		final List<Tile> tiles = new ArrayList<>();
 		while (it.hasNext()) {
 			final Event ev = it.next();
 			for (Tile tile : TileBuilder.buildOne(it, tileArguments, ev, parent)) {
@@ -81,7 +81,7 @@ public class TileBuilder {
 		final ISkinParam skinParam = tileArguments.getSkinParam();
 		final LivingSpaces livingSpaces = tileArguments.getLivingSpaces();
 
-		final List<Tile> tiles = new ArrayList<Tile>();
+		final List<Tile> tiles = new ArrayList<>();
 		// System.err.println("TileBuilder::buildOne " + ev);
 		if (ev instanceof Message) {
 			final Message msg = (Message) ev;

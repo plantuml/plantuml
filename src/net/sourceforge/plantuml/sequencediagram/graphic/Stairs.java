@@ -43,13 +43,13 @@ import java.util.Map;
 
 public class Stairs {
 
-	private final List<Double> ys = new ArrayList<Double>();
-	private final List<Integer> values = new ArrayList<Integer>();
+	private final List<Double> ys = new ArrayList<>();
+	private final List<Integer> values = new ArrayList<>();
 	private final Map<Double, Integer> cache = new HashMap<Double, Integer>();
 
 	@Override
 	public String toString() {
-		final List<Double> copy = new ArrayList<Double>(ys);
+		final List<Double> copy = new ArrayList<>(ys);
 		Collections.sort(copy);
 		final StringBuilder sb = new StringBuilder("[");
 		for (Double y : copy) {

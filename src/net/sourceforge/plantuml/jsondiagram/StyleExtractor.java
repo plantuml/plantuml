@@ -48,8 +48,8 @@ import net.sourceforge.plantuml.style.StyleLoader;
 
 public class StyleExtractor {
 
-	private final List<String> list = new ArrayList<String>();
-	private final List<StringLocated> style = new ArrayList<StringLocated>();
+	private final List<String> list = new ArrayList<>();
+	private final List<StringLocated> style = new ArrayList<>();
 
 	public StyleExtractor(Iterator<StringLocated> data) {
 		while (data.hasNext()) {

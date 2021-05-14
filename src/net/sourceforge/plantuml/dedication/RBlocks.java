@@ -45,7 +45,7 @@ import java.util.List;
 
 public class RBlocks {
 
-	private final List<RBlock> all = new ArrayList<RBlock>();
+	private final List<RBlock> all = new ArrayList<>();
 
 	private RBlocks() {
 

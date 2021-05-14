@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class GroupingStart extends Grouping {
 
-	private final List<GroupingLeaf> children = new ArrayList<GroupingLeaf>();
+	private final List<GroupingLeaf> children = new ArrayList<>();
 	private final HColor backColorGeneral;
 
 	final private GroupingStart parent;

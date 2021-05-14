@@ -109,7 +109,7 @@ public class Jasic {
 	 * meaningful unit of program, like a variable name, a number, a string, or an operator.
 	 */
 	private static List<Token> tokenize(String source) {
-		List<Token> tokens = new ArrayList<Token>();
+		List<Token> tokens = new ArrayList<>();
 
 		String token = "";
 		TokenizeState state = TokenizeState.DEFAULT;
@@ -259,7 +259,7 @@ public class Jasic {
 		 * @return The list of parsed statements.
 		 */
 		public List<Statement> parse(Map<String, Integer> labels) {
-			List<Statement> statements = new ArrayList<Statement>();
+			List<Statement> statements = new ArrayList<>();
 
 			while (true) {
 				// Ignore empty lines.

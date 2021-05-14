@@ -51,7 +51,7 @@ public class SyntaxResult {
 	private UmlDiagramType umlDiagramType;
 	private boolean isError;
 	private String description;
-	private Collection<String> errors = new TreeSet<String>();
+	private Collection<String> errors = new TreeSet<>();
 	private boolean hasCmapData;
 	private PSystemError systemError;
 	private LineLocation lineLocation;

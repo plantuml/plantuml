@@ -54,7 +54,7 @@ public class TileParallel extends CommonTile {
 		super(stringBounder);
 	}
 
-	private final List<Tile> tiles = new ArrayList<Tile>();
+	private final List<Tile> tiles = new ArrayList<>();
 
 	@Override
 	final protected void callbackY_internal(double y) {

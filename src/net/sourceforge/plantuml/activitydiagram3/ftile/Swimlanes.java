@@ -93,9 +93,9 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock, Styleable
 	private final ISkinParam skinParam;;
 	private final Pragma pragma;
 
-	private final List<Swimlane> swimlanesRaw = new ArrayList<Swimlane>();
-	private final List<Swimlane> swimlanesSpecial = new ArrayList<Swimlane>();
-	private final List<LaneDivider> dividers = new ArrayList<LaneDivider>();
+	private final List<Swimlane> swimlanesRaw = new ArrayList<>();
+	private final List<Swimlane> swimlanesSpecial = new ArrayList<>();
+	private final List<LaneDivider> dividers = new ArrayList<>();
 	private Swimlane currentSwimlane = null;
 
 	private final Instruction root = new InstructionList();

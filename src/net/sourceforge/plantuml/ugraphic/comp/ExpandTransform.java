@@ -40,7 +40,7 @@ import java.util.TreeSet;
 
 public class ExpandTransform implements PiecewiseAffineTransform {
 
-	private final Set<Expand> all = new TreeSet<Expand>();
+	private final Set<Expand> all = new TreeSet<>();
 
 	@Override
 	public String toString() {

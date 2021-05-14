@@ -28,7 +28,7 @@ public class Rosetta {
 	}
 
 	private static List<String> from(Display display) {
-		final List<String> result = new ArrayList<String>();
+		final List<String> result = new ArrayList<>();
 		for (CharSequence cs : display) {
 			result.add(cs.toString());
 		}
@@ -36,7 +36,7 @@ public class Rosetta {
 	}
 
 	private Rosetta(List<String> lines) {
-		this.unicodeHtml = new ArrayList<String>(lines);
+		this.unicodeHtml = new ArrayList<>(lines);
 	}
 
 	private Rosetta(WikiLanguage syntaxSource, List<String> wiki) {
@@ -56,7 +56,7 @@ public class Rosetta {
 	}
 
 	public List<String> translateTo(WikiLanguage syntaxDestination) {
-		final List<String> html = new ArrayList<String>();
+		final List<String> html = new ArrayList<>();
 		final WriterWiki writer = new WriterWiki(syntaxDestination);
 		html.addAll(writer.transform(unicodeHtml));
 		return Collections.unmodifiableList(html);

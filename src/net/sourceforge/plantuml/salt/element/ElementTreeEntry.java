@@ -49,7 +49,7 @@ public class ElementTreeEntry {
 
 	private final Element firstElement;
 	private final int level;
-	private final List<Element> otherElements = new ArrayList<Element>();
+	private final List<Element> otherElements = new ArrayList<>();
 
 	public ElementTreeEntry(int level, Element elmt) {
 		this.firstElement = elmt;

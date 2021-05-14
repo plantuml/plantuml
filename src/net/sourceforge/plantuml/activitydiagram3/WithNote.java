@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.sequencediagram.NoteType;
 
 public class WithNote {
 
-	private final Collection<PositionedNote> notes = new ArrayList<PositionedNote>();
+	private final Collection<PositionedNote> notes = new ArrayList<>();
 
 	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote) {
 		this.notes.add(new PositionedNote(note, position, type, colors, swimlaneNote));

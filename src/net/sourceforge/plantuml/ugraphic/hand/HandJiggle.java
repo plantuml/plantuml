@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 
 public class HandJiggle {
-	private final Collection<Point2D> points = new ArrayList<Point2D>();
+	private final Collection<Point2D> points = new ArrayList<>();
 
 	private double startX;
 	private double startY;

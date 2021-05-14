@@ -57,7 +57,6 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
-import net.sourceforge.plantuml.graph2.GeomUtils;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -279,10 +278,10 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 	}
 
 	private Direction getOpaleStrategy(double width, double height, Point2D pt) {
-		final double d1 = GeomUtils.getOrthoDistance(new Line2D.Double(width, 0, width, height), pt);
-		final double d2 = GeomUtils.getOrthoDistance(new Line2D.Double(0, height, width, height), pt);
-		final double d3 = GeomUtils.getOrthoDistance(new Line2D.Double(0, 0, 0, height), pt);
-		final double d4 = GeomUtils.getOrthoDistance(new Line2D.Double(0, 0, width, 0), pt);
+		final double d1 = getOrthoDistance(new Line2D.Double(width, 0, width, height), pt);
+		final double d2 = getOrthoDistance(new Line2D.Double(0, height, width, height), pt);
+		final double d3 = getOrthoDistance(new Line2D.Double(0, 0, 0, height), pt);
+		final double d4 = getOrthoDistance(new Line2D.Double(0, 0, width, 0), pt);
 		if (d3 <= d1 && d3 <= d2 && d3 <= d4) {
 			return Direction.LEFT;
 		}
@@ -298,6 +297,26 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 		return null;
 
 	}
+	
+	private static double getOrthoDistance(Line2D.Double seg, Point2D pt) {
+		if (isHorizontal(seg)) {
+			return Math.abs(seg.getP1().getY() - pt.getY());
+		}
+		if (isVertical(seg)) {
+			return Math.abs(seg.getP1().getX() - pt.getX());
+		}
+		throw new IllegalArgumentException();
+	}
+	
+	private static boolean isHorizontal(Line2D.Double seg) {
+		return seg.getP1().getY() == seg.getP2().getY();
+	}
+
+	private static boolean isVertical(Line2D.Double seg) {
+		return seg.getP1().getX() == seg.getP2().getX();
+	}
+
+
 
 	public ShapeType getShapeType() {
 		return ShapeType.RECTANGLE;
@@ -308,10 +327,9 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 	private SvekNode other;
 
 	public void setOpaleLine(SvekLine line, SvekNode node, SvekNode other) {
-		Objects.requireNonNull(other);
 		this.opaleLine = line;
 		this.node = node;
-		this.other = other;
+		this.other = Objects.requireNonNull(other);
 	}
 
 	public double getStartingX(StringBounder stringBounder, double y) {

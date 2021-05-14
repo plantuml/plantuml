@@ -49,7 +49,7 @@ class Idea {
 	private final Display label;
 	private final int level;
 	private final Idea parent;
-	private final List<Idea> children = new ArrayList<Idea>();
+	private final List<Idea> children = new ArrayList<>();
 	private final IdeaShape shape;
 	private final HColor backColor;
 	private final StyleBuilder styleBuilder;

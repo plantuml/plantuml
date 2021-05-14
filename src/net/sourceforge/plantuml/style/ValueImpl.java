@@ -50,8 +50,7 @@ public class ValueImpl implements Value {
 	private final int priority;
 
 	public ValueImpl(String value, AutomaticCounter counter) {
-		Objects.requireNonNull(value);
-		this.value = value;
+		this.value = Objects.requireNonNull(value);
 		this.priority = counter.getNextInt();
 	}
 

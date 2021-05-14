@@ -53,9 +53,8 @@ public class LineLocationImpl implements LineLocation {
 	}
 
 	private LineLocationImpl(String desc, LineLocation parent, int position) {
-		Objects.requireNonNull(desc);
 		this.parent = parent;
-		this.desc = desc;
+		this.desc = Objects.requireNonNull(desc);
 		this.position = position;
 	}
 

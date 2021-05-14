@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.StringLocated;
 public class FunctionsSet {
 
 	private final Map<TFunctionSignature, TFunction> functions = new HashMap<TFunctionSignature, TFunction>();
-	private final Set<TFunctionSignature> functionsFinal = new HashSet<TFunctionSignature>();
+	private final Set<TFunctionSignature> functionsFinal = new HashSet<>();
 	private final Trie functions3 = new TrieImpl();
 	private TFunctionImpl pendingFunction;
 

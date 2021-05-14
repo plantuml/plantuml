@@ -59,7 +59,7 @@ public class RectangleTask {
 		this.round = round;
 		this.completion = completion;
 		if (startPos < endPos) {
-			this.segments = new ArrayList<Segment>(new Segment(startPos, endPos).cutSegmentIfNeed(paused));
+			this.segments = new ArrayList<>(new Segment(startPos, endPos).cutSegmentIfNeed(paused));
 		} else {
 			this.segments = Collections.singletonList(new Segment(startPos, startPos + 1));
 		}

@@ -44,7 +44,7 @@ public class FileSystem {
 
 	private final static FileSystem singleton = new FileSystem();
 
-	private ThreadLocal<String> currentDir = new ThreadLocal<String>();
+	private ThreadLocal<String> currentDir = new ThreadLocal<>();
 
 	private FileSystem() {
 		reset();

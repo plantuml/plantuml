@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.tim.expression.TokenStack;
 
 public class EaterFunctionCall extends Eater {
 
-	private final List<TValue> values = new ArrayList<TValue>();
+	private final List<TValue> values = new ArrayList<>();
 	private final Map<String, TValue> namedArguments = new HashMap<String, TValue>();
 	private final boolean isLegacyDefine;
 	private final boolean unquoted;

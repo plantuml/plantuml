@@ -52,7 +52,7 @@ import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class TextBlockVertical2 extends AbstractTextBlock implements TextBlock, WithPorts {
 
-	private final List<TextBlock> blocks = new ArrayList<TextBlock>();
+	private final List<TextBlock> blocks = new ArrayList<>();
 	private final HorizontalAlignment horizontalAlignment;
 
 	TextBlockVertical2(TextBlock b1, TextBlock b2, HorizontalAlignment horizontalAlignment) {

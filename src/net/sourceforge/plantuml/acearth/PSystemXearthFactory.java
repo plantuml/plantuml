@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.command.regex.Pattern2;
 public class PSystemXearthFactory extends PSystemBasicFactory<PSystemXearth> {
 
 	private final Map<String, String> config = new LinkedHashMap<String, String>();
-	private final List<Marker> markers = new ArrayList<Marker>();
+	private final List<Marker> markers = new ArrayList<>();
 	private int width;
 	private int height;
 

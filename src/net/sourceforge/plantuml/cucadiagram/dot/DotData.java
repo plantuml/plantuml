@@ -182,14 +182,14 @@ final public class DotData implements PortionShower {
 			final Integer value = sametails.get(sametail);
 			sametails.put(sametail, value == null ? 1 : value + 1);
 		}
-		final Collection<String> toremove = new HashSet<String>();
+		final Collection<String> toremove = new HashSet<>();
 		final int limit = skinParam.groupInheritance();
 		for (Map.Entry<String, Integer> ent : sametails.entrySet()) {
 			final String key = ent.getKey();
 			if (ent.getValue() < limit) {
 				toremove.add(key);
 			} else {
-				final List<Link> some = new ArrayList<Link>();
+				final List<Link> some = new ArrayList<>();
 				for (Link link : links) {
 					if (key.equals(link.getSametail())) {
 						some.add(link);
@@ -213,7 +213,7 @@ final public class DotData implements PortionShower {
 	}
 
 	private List<Link> getLinksOfThisLeaf(ILeaf leaf) {
-		final List<Link> result = new ArrayList<Link>();
+		final List<Link> result = new ArrayList<>();
 		for (Link link : links) {
 			if (link.contains(leaf)) {
 				result.add(link);

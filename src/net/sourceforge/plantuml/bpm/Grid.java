@@ -55,8 +55,8 @@ public class Grid {
 
 	public Grid() {
 		this.root = new Coord(new Line(), new Col());
-		this.lines = new ChainImpl<Line>(root.getLine());
-		this.cols = new ChainImpl<Col>(root.getCol());
+		this.lines = new ChainImpl<>(root.getLine());
+		this.cols = new ChainImpl<>(root.getCol());
 		this.cells.put(root, new Cell());
 	}
 
@@ -92,7 +92,7 @@ public class Grid {
 	}
 
 	// private Set<GridEdge> edgeWith(Cell someCell) {
-	// // final Set<GridEdge> result = new HashSet<GridEdge>();
+	// // final Set<GridEdge> result = new HashSet<>();
 	// // for (GridEdge edge : edges) {
 	// // if (edge.match(someCell)) {
 	// // result.add(edge);
@@ -104,7 +104,7 @@ public class Grid {
 	// }
 	//
 	// private Collection<Cell> getCellsConnectedTo(Cell someCell) {
-	// final Set<Cell> result = new HashSet<Cell>();
+	// final Set<Cell> result = new HashSet<>();
 	// final Set<GridEdge> myEdges = edgeWith(someCell);
 	// for (Cell cell : cells.values()) {
 	// for (GridEdge edge : myEdges) {
@@ -118,7 +118,7 @@ public class Grid {
 	// }
 	//
 	// private SortedSet<Col> getColsConnectedTo(Cell someCell) {
-	// final SortedSet<Col> result = new TreeSet<Col>(cols);
+	// final SortedSet<Col> result = new TreeSet<>(cols);
 	// final Set<GridEdge> myEdges = edgeWith(someCell);
 	// for (Map.Entry<Coord, Cell> ent : cells.entrySet()) {
 	// for (GridEdge edge : myEdges) {
@@ -132,7 +132,7 @@ public class Grid {
 	// }
 
 	// public SortedSet<Col> colsConnectedTo(Line line) {
-	// final SortedSet<Col> result = new TreeSet<Col>(cols);
+	// final SortedSet<Col> result = new TreeSet<>(cols);
 	// for (Map.Entry<Coord, Cell> ent : cells.entrySet()) {
 	// final Cell cell = ent.getValue();
 	// if (cell == null || cell.getData() == null) {
@@ -254,7 +254,7 @@ public class Grid {
 	// }
 
 	public Set<Col> usedColsOf(Line line) {
-		final Set<Col> result = new HashSet<Col>();
+		final Set<Col> result = new HashSet<>();
 		for (Map.Entry<Coord, Cell> ent : cells.entrySet()) {
 			final Cell cell = ent.getValue();
 			if (cell == null || cell.getData() == null) {

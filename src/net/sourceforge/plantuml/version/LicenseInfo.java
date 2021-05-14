@@ -190,7 +190,7 @@ public class LicenseInfo {
 	}
 
 	public static Collection<SFile> fileCandidates() {
-		final Set<SFile> result = new TreeSet<SFile>();
+		final Set<SFile> result = new TreeSet<>();
 		final String classpath = System.getProperty("java.class.path");
 		String[] classpathEntries = classpath.split(SFile.pathSeparator);
 		for (String s : classpathEntries) {

@@ -76,7 +76,7 @@ public class BodyEnhanced2 extends BodyEnhancedAbstract {
 			return area;
 		}
 		// urls.clear();
-		final List<TextBlock> blocks = new ArrayList<TextBlock>();
+		final List<TextBlock> blocks = new ArrayList<>();
 
 		char separator = 0;
 		TextBlock title = null;

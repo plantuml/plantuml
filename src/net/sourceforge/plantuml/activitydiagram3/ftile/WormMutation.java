@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class WormMutation {
 
-	private final List<UTranslate> translations = new ArrayList<UTranslate>();
+	private final List<UTranslate> translations = new ArrayList<>();
 
 	private WormMutation() {
 

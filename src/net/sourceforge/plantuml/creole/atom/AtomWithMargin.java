@@ -59,7 +59,7 @@ public class AtomWithMargin extends AbstractAtom implements Atom {
 
 	@Override
 	public List<Atom> splitInTwo(StringBounder stringBounder, double width) {
-		final List<Atom> result = new ArrayList<Atom>();
+		final List<Atom> result = new ArrayList<>();
 		final List<Atom> list = atom.splitInTwo(stringBounder, width);
 		for (Atom a : list) {
 			double y1 = marginY1;

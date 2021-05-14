@@ -72,7 +72,7 @@ public final class TextBlockSimple extends AbstractTextBlock implements TextBloc
 			if (stringBounder == null) {
 				throw new IllegalStateException();
 			}
-			this.lines = new ArrayList<Line>();
+			this.lines = new ArrayList<>();
 			for (CharSequence s : texts) {
 				if (s instanceof EmbeddedDiagram) {
 					lines.add(((EmbeddedDiagram) s).asDraw(null));

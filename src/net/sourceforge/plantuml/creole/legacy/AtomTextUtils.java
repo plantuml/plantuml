@@ -79,7 +79,7 @@ public class AtomTextUtils {
 		fontConfiguration = fontConfiguration.hyperlink();
 		final Display display = Display.getWithNewlines(url.getLabel());
 		if (display.size() > 1) {
-			final List<Atom> all = new ArrayList<Atom>();
+			final List<Atom> all = new ArrayList<>();
 			for (CharSequence s : display.asList()) {
 				all.add(createAtomText(s.toString(), url, fontConfiguration, skinSimple));
 			}
@@ -94,7 +94,7 @@ public class AtomTextUtils {
 		final Pattern p = Pattern.compile(
 				Splitter.openiconPattern + "|" + Splitter.spritePattern2 + "|" + Splitter.imgPatternNoSrcColon);
 		final Matcher m = p.matcher(text);
-		final List<Atom> result = new ArrayList<Atom>();
+		final List<Atom> result = new ArrayList<>();
 		while (m.find()) {
 			final StringBuffer sb = new StringBuffer();
 			m.appendReplacement(sb, "");

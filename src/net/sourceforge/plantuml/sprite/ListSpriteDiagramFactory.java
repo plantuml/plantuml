@@ -53,7 +53,7 @@ public class ListSpriteDiagramFactory extends PSystemCommandFactory {
 	@Override
 	protected List<Command> createCommands() {
 
-		final List<Command> cmds = new ArrayList<Command>();
+		final List<Command> cmds = new ArrayList<>();
 		addCommonCommands1(cmds);
 		addCommonCommands2(cmds);
 		cmds.add(new CommandListSprite());

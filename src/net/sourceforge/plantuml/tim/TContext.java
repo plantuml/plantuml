@@ -112,8 +112,8 @@ import net.sourceforge.plantuml.tim.stdlib.VariableExists;
 
 public class TContext {
 
-	private final List<StringLocated> resultList = new ArrayList<StringLocated>();
-	private final List<StringLocated> debug = new ArrayList<StringLocated>();
+	private final List<StringLocated> resultList = new ArrayList<>();
+	private final List<StringLocated> debug = new ArrayList<>();
 
 	public final FunctionsSet functionsSet = new FunctionsSet();
 
@@ -123,8 +123,8 @@ public class TContext {
 	private final Map<String, Sub> subs = new HashMap<String, Sub>();
 	private final DefinitionsContainer definitionsContainer;
 
-	// private final Set<FileWithSuffix> usedFiles = new HashSet<FileWithSuffix>();
-	private final Set<FileWithSuffix> filesUsedCurrent = new HashSet<FileWithSuffix>();
+	// private final Set<FileWithSuffix> usedFiles = new HashSet<>();
+	private final Set<FileWithSuffix> filesUsedCurrent = new HashSet<>();
 
 	public Set<FileWithSuffix> getFilesUsedCurrent() {
 		return Collections.unmodifiableSet(filesUsedCurrent);
@@ -480,6 +480,13 @@ public class TContext {
 		log.analyze(this, memory);
 	}
 
+	public FileWithSuffix getFileWithSuffix(String from, String realName) throws IOException {
+		final String s = ThemeUtils.getFullPath(from, realName);
+		final FileWithSuffix file = importedFiles.getFile(s, null);
+		return file;
+
+	}
+
 	private void executeIncludesub(TMemory memory, StringLocated s) throws EaterException, EaterExceptionLocated {
 		ImportedFiles saveImportedFiles = null;
 		try {
@@ -535,7 +542,7 @@ public class TContext {
 		final ReadLine reader2 = new ReadLineList(definition, s.getLocation());
 
 		try {
-			final List<StringLocated> body = new ArrayList<StringLocated>();
+			final List<StringLocated> body = new ArrayList<>();
 			do {
 				final StringLocated sl = reader2.readLine();
 				if (sl == null) {
@@ -557,15 +564,14 @@ public class TContext {
 	}
 
 	private void executeTheme(TMemory memory, StringLocated s) throws EaterException, EaterExceptionLocated {
-		final EaterTheme include = new EaterTheme(s.getTrimmed());
-		include.analyze(this, memory);
-		final String location = include.getLocation();
-		final ReadLine reader = ThemeUtils.getReaderTheme(s, location);
+		final EaterTheme eater = new EaterTheme(s.getTrimmed());
+		eater.analyze(this, memory);
+		final ReadLine reader = eater.getTheme();
 		if (reader == null) {
-			throw EaterException.located("No such theme " + location);
+			throw EaterException.located("No such theme " + eater.getName());
 		}
 		try {
-			final List<StringLocated> body = new ArrayList<StringLocated>();
+			final List<StringLocated> body = new ArrayList<>();
 			do {
 				final StringLocated sl = reader.readLine();
 				if (sl == null) {
@@ -606,7 +612,7 @@ public class TContext {
 				if (url == null) {
 					throw EaterException.located("Cannot open URL");
 				}
-				reader = PreprocessorUtils.getReaderIncludeUrl2(url, s, suf, charset);
+				reader = PreprocessorUtils.getReaderIncludeUrl(url, s, suf, charset);
 			} else if (location.startsWith("<") && location.endsWith(">")) {
 				reader = PreprocessorUtils.getReaderStdlibInclude(s, location.substring(1, location.length() - 1));
 			} else {
@@ -636,7 +642,7 @@ public class TContext {
 			}
 			if (reader != null) {
 				try {
-					final List<StringLocated> body = new ArrayList<StringLocated>();
+					final List<StringLocated> body = new ArrayList<>();
 					do {
 						final StringLocated sl = reader.readLine();
 						if (sl == null) {

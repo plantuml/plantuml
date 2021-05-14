@@ -47,7 +47,7 @@ public final class RegexConcat extends RegexComposed implements IRegex {
 	private static final ConcurrentMap<Object, RegexConcat> cache = new ConcurrentHashMap<Object, RegexConcat>();
 	private final AtomicLong foxRegex = new AtomicLong(-1L);
 
-	// private static final Set<String> PRINTED2 = new HashSet<String>();
+	// private static final Set<String> PRINTED2 = new HashSet<>();
 
 	public static void printCacheInfo() {
 		int nbCompiled = 0;

@@ -79,7 +79,7 @@ public class LiveBoxesDrawer {
 		this.context = context;
 		this.skin = skin;
 		this.skinParam = skinParam;
-		this.delays = new HashSet<Segment>();
+		this.delays = new HashSet<>();
 		for (Map.Entry<Double, Double> ent : delays.entrySet()) {
 			this.delays.add(new Segment(ent.getKey(), ent.getKey() + ent.getValue()));
 		}

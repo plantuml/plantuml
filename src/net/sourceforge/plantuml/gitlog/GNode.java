@@ -44,9 +44,9 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 
 public class GNode {
 
-	private final List<GNode> up = new ArrayList<GNode>();
-	private final List<GNode> down = new ArrayList<GNode>();
-	private final List<String> texts = new ArrayList<String>();
+	private final List<GNode> up = new ArrayList<>();
+	private final List<GNode> down = new ArrayList<>();
+	private final List<String> texts = new ArrayList<>();
 
 	private String comment;
 

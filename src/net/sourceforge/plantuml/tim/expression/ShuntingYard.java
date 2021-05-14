@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 public class ShuntingYard {
 
 	final private TokenStack ouputQueue = new TokenStack();
-	final private Deque<Token> operatorStack = new ArrayDeque<Token>();
+	final private Deque<Token> operatorStack = new ArrayDeque<>();
 
 	private static final boolean TRACE = false;
 

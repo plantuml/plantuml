@@ -61,12 +61,12 @@ public class Neighborhood {
 	public Neighborhood(ILeaf leaf, List<Link> sametailLinks, List<Link> all) {
 		this.leaf = leaf;
 		this.sametailLinks = sametailLinks;
-		this.allButSametails = new ArrayList<Link>(all);
+		this.allButSametails = new ArrayList<>(all);
 		allButSametails.removeAll(sametailLinks);
 	}
 
 	public void drawU(UGraphic ug, double minX, double minY, Bibliotekon bibliotekon, Dimension2D shapeDim) {
-		final Set<Point2D> contactPoints = new HashSet<Point2D>();
+		final Set<Point2D> contactPoints = new HashSet<>();
 		for (Link link : sametailLinks) {
 			final SvekLine line = bibliotekon.getLine(link);
 			final Point2D contact = line.getStartContactPoint();

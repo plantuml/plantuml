@@ -307,7 +307,7 @@ public abstract class Eater {
 	final protected TFunctionImpl eatDeclareFunction(TContext context, TMemory memory, boolean unquoted,
 			LineLocation location, boolean allowNoParenthesis, TFunctionType type)
 			throws EaterException, EaterExceptionLocated {
-		final List<TFunctionArgument> args = new ArrayList<TFunctionArgument>();
+		final List<TFunctionArgument> args = new ArrayList<>();
 		final String functionName = eatAndGetFunctionName();
 		skipSpaces();
 		if (safeCheckAndEatChar('(') == false) {

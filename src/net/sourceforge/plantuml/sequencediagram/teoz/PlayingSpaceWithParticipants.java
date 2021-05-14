@@ -61,8 +61,7 @@ public class PlayingSpaceWithParticipants extends AbstractTextBlock implements T
 	private double ymax;
 
 	public PlayingSpaceWithParticipants(PlayingSpace playingSpace) {
-		Objects.requireNonNull(playingSpace);
-		this.playingSpace = playingSpace;
+		this.playingSpace = Objects.requireNonNull(playingSpace);
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {

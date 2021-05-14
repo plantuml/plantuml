@@ -67,8 +67,7 @@ public class Ports {
 	}
 
 	public void add(String portName, double position, double height) {
-		Objects.requireNonNull(portName);
-		final String id = encodePortNameToId(portName);
+		final String id = encodePortNameToId(Objects.requireNonNull(portName));
 		ids.put(id, new PortGeometry(position, height));
 	}
 

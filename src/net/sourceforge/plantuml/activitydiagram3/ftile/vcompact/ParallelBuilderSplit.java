@@ -77,7 +77,7 @@ public class ParallelBuilderSplit extends AbstractParallelFtilesBuilder {
 	@Override
 	protected Ftile doStep1(Ftile inner) {
 		Ftile result = inner;
-		final List<Connection> conns = new ArrayList<Connection>();
+		final List<Connection> conns = new ArrayList<>();
 		final Rainbow thinColor;
 		if (UseStyle.useBetaStyle()) {
 			Style style = getDefaultStyleDefinition().getMergedStyle(skinParam().getCurrentStyleBuilder());
@@ -171,7 +171,7 @@ public class ParallelBuilderSplit extends AbstractParallelFtilesBuilder {
 
 		final Ftile out = new FtileThinSplit(skinParam(), thinColor.getColor(), swimlaneOutForStep2());
 		result = new FtileAssemblySimple(result, out);
-		final List<Connection> conns = new ArrayList<Connection>();
+		final List<Connection> conns = new ArrayList<>();
 		double x = 0;
 		double first = 0;
 		double last = 0;

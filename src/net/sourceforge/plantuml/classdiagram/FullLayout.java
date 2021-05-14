@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class FullLayout implements UDrawable {
 
-	private final List<RowLayout> all = new ArrayList<RowLayout>();
+	private final List<RowLayout> all = new ArrayList<>();
 
 	public void addRowLayout(RowLayout rawLayout) {
 		this.all.add(rawLayout);

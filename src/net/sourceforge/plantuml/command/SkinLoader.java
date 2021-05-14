@@ -50,7 +50,7 @@ public class SkinLoader {
 	public final static Pattern2 p1 = MyPattern
 			.cmpile("^([\\w.]*(?:\\<\\<.*\\>\\>)?[\\w.]*)[%s]+(?:(\\{)|(.*))$|^\\}?$");
 
-	final private List<String> context = new ArrayList<String>();
+	final private List<String> context = new ArrayList<>();
 	final private TitledDiagram diagram;
 
 	public SkinLoader(TitledDiagram diagram) {

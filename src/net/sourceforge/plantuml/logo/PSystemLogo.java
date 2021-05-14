@@ -56,7 +56,7 @@ import net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d;
 
 public class PSystemLogo extends AbstractPSystem {
 
-	private final List<String> lines = new ArrayList<String>();
+	private final List<String> lines = new ArrayList<>();
 
 	public PSystemLogo() {
 	}

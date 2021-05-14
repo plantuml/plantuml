@@ -47,8 +47,8 @@ import net.sourceforge.plantuml.project.time.DayOfWeek;
 public class OpenClose implements Histogram, LoadPlanable {
 
 	private final Collection<DayOfWeek> closedDayOfWeek = EnumSet.noneOf(DayOfWeek.class);
-	private final Collection<Day> closedDays = new HashSet<Day>();
-	private final Collection<Day> openedDays = new HashSet<Day>();
+	private final Collection<Day> closedDays = new HashSet<>();
+	private final Collection<Day> openedDays = new HashSet<>();
 	private Day calendar;
 
 	public int daysInWeek() {

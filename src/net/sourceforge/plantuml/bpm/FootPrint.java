@@ -40,6 +40,6 @@ import java.util.Set;
 
 public class FootPrint {
 
-	private final Set<Coord> cells = new HashSet<Coord>();
+	private final Set<Coord> cells = new HashSet<>();
 
 }

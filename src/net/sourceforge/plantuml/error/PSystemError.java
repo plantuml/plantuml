@@ -159,7 +159,7 @@ public abstract class PSystemError extends PlainDiagram {
 	}
 
 	private List<String> header() {
-		final List<String> result = new ArrayList<String>();
+		final List<String> result = new ArrayList<>();
 		result.add("PlantUML " + Version.versionString());
 		GraphvizCrash.checkOldVersionWarning(result);
 		return result;
@@ -175,7 +175,7 @@ public abstract class PSystemError extends PlainDiagram {
 
 	private List<String> getTextFromStack() {
 		LineLocation lineLocation = getLineLocation();
-		final List<String> result = new ArrayList<String>();
+		final List<String> result = new ArrayList<>();
 		if (lineLocation != null) {
 			append(result, lineLocation);
 			while (lineLocation.getParent() != null) {
@@ -187,7 +187,7 @@ public abstract class PSystemError extends PlainDiagram {
 	}
 
 	protected List<String> getTextFullBody() {
-		final List<String> result = new ArrayList<String>();
+		final List<String> result = new ArrayList<>();
 		result.add(" ");
 		final int traceSize = trace.size();
 		if (traceSize > 40) {

@@ -46,7 +46,7 @@ public class Html5Drawer {
 	private String strokeStyle = "black";
 	private String fillStyle = "black";
 
-	private List<String> data = new ArrayList<String>();
+	private List<String> data = new ArrayList<>();
 
 	final protected void ensureVisible(double x, double y) {
 		if (x > maxX) {

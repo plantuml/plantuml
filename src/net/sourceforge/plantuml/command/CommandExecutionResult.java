@@ -85,7 +85,7 @@ public class CommandExecutionResult {
 	}
 
 	public static List<String> getStackTrace(Throwable exception) {
-		final List<String> result = new ArrayList<String>();
+		final List<String> result = new ArrayList<>();
 		result.add(exception.toString());
 		for (StackTraceElement ste : exception.getStackTrace()) {
 			result.add("  " + ste.toString());

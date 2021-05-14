@@ -110,7 +110,7 @@ public class MagicTable {
 	}
 
 	public List<Integer> getAllFree() {
-		final List<Integer> result = new ArrayList<Integer>(10000);
+		final List<Integer> result = new ArrayList<>(10000);
 		for (int i = 0; i < number.length; i++) {
 			if (number[i] == null) {
 				result.add(i);
@@ -120,7 +120,7 @@ public class MagicTable {
 	}
 
 	public List<Integer> getAllUsed() {
-		final List<Integer> result = new ArrayList<Integer>(10000);
+		final List<Integer> result = new ArrayList<>(10000);
 		for (int i = 0; i < number.length; i++) {
 			if (number[i] == Oc.USED) {
 				result.add(i);

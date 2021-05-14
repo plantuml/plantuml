@@ -55,7 +55,7 @@ public class PlayingSpace implements Bordered {
 	private final Real max;
 	private final boolean isShowFootbox;
 
-	private final List<Tile> tiles = new ArrayList<Tile>();
+	private final List<Tile> tiles = new ArrayList<>();
 	private final LivingSpaces livingSpaces;
 	private final List<LinkAnchor> linkAnchors;
 	private final ISkinParam skinParam;
@@ -66,8 +66,8 @@ public class PlayingSpace implements Bordered {
 		this.linkAnchors = diagram.getLinkAnchors();
 		this.skinParam = diagram.getSkinParam();
 
-		final List<Real> min2 = new ArrayList<Real>();
-		final List<Real> max2 = new ArrayList<Real>();
+		final List<Real> min2 = new ArrayList<>();
+		final List<Real> max2 = new ArrayList<>();
 
 		min2.add(tileArguments.getOrigin());
 		max2.add(tileArguments.getOrigin());
@@ -107,8 +107,8 @@ public class PlayingSpace implements Bordered {
 
 	private double drawUInternal(UGraphic ug, boolean trace) {
 		final StringBounder stringBounder = ug.getStringBounder();
-		final List<CommonTile> local = new ArrayList<CommonTile>();
-		final List<CommonTile> full = new ArrayList<CommonTile>();
+		final List<CommonTile> local = new ArrayList<>();
+		final List<CommonTile> full = new ArrayList<>();
 		final double y = GroupingTile.fillPositionelTiles(stringBounder, startingY, tiles, local, full);
 		for (CommonTile tile : local) {
 			final UTranslate dy = UTranslate.dy(((CommonTile) tile).getY());
@@ -174,7 +174,7 @@ public class PlayingSpace implements Bordered {
 	}
 
 	public List<Double> yNewPages() {
-		final List<Double> yNewPages = new ArrayList<Double>();
+		final List<Double> yNewPages = new ArrayList<>();
 		yNewPages.add((double) 0);
 		for (Tile tile : tiles) {
 			if (tile instanceof GroupingTile) {

@@ -97,8 +97,8 @@ public class MainWindow2 extends JFrame {
 	private final JTextField extensions = new JTextField();
 	private final int period = 300;
 
-	final private List<SimpleLine2> currentDirectoryListing2 = new ArrayList<SimpleLine2>();
-	final private Set<ImageWindow2> openWindows2 = new HashSet<ImageWindow2>();
+	final private List<SimpleLine2> currentDirectoryListing2 = new ArrayList<>();
+	final private Set<ImageWindow2> openWindows2 = new HashSet<>();
 	final private Option option;
 
 	private DirWatcher2 dirWatcher;
@@ -311,7 +311,7 @@ public class MainWindow2 extends JFrame {
 		setTitle(dir.getAbsolutePath());
 		Log.info("Creating DirWatcher");
 		currentDirectoryListing2.clear();
-		jList1.setListData(new Vector<SimpleLine2>(currentDirectoryListing2));
+		jList1.setListData(new Vector<>(currentDirectoryListing2));
 		jList1.setVisible(true);
 	}
 
@@ -334,7 +334,7 @@ public class MainWindow2 extends JFrame {
 				try {
 					final boolean changed = refreshDir();
 					if (changed) {
-						jList1.setListData(new Vector<SimpleLine2>(currentDirectoryListing2));
+						jList1.setListData(new Vector<>(currentDirectoryListing2));
 						jList1.setVisible(true);
 					}
 				} catch (IOException e) {
@@ -361,7 +361,7 @@ public class MainWindow2 extends JFrame {
 			changed = true;
 		}
 
-		for (SimpleLine2 line : new ArrayList<SimpleLine2>(currentDirectoryListing2)) {
+		for (SimpleLine2 line : new ArrayList<>(currentDirectoryListing2)) {
 			if (line.pendingAndFinished()) {
 				currentDirectoryListing2.remove(line);
 				changed = true;

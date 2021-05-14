@@ -421,7 +421,7 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 			final StringBounder stringBounder = ug.getStringBounder();
 			final Dimension2D totalDim = calculateDimensionInternal(stringBounder);
 
-			final List<Ftile> allTiles = new ArrayList<Ftile>();
+			final List<Ftile> allTiles = new ArrayList<>();
 			allTiles.add(tile1);
 			allTiles.add(tile2);
 
@@ -533,7 +533,7 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 	}
 
 	public Ftile addLinks(Branch branch1, Branch branch2, StringBounder stringBounder) {
-		final List<Connection> conns = new ArrayList<Connection>();
+		final List<Connection> conns = new ArrayList<>();
 		conns.add(new ConnectionHorizontalThenVertical(tile1, branch1));
 		conns.add(new ConnectionHorizontalThenVertical(tile2, branch2));
 		final boolean hasPointOut1 = tile1.calculateDimension(stringBounder).hasPointOut();

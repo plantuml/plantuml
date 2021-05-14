@@ -65,7 +65,7 @@ public abstract class AbstractParallelFtilesBuilder {
 
 	private final ISkinParam skinParam;
 	private final StringBounder stringBounder;
-	protected final List<Ftile> list99 = new ArrayList<Ftile>();
+	protected final List<Ftile> list99 = new ArrayList<>();
 
 	public StyleSignature getDefaultStyleDefinition() {
 		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.activity);
@@ -83,7 +83,7 @@ public abstract class AbstractParallelFtilesBuilder {
 
 	protected List<Ftile> getFoo2(List<Ftile> all) {
 		final double maxHeight = computeMaxHeight(all);
-		final List<Ftile> result = new ArrayList<Ftile>();
+		final List<Ftile> result = new ArrayList<>();
 		for (Ftile ftile : all) {
 			final Ftile newFtile = computeNewFtile(ftile, maxHeight);
 			result.add(newFtile);

@@ -156,14 +156,14 @@ class DrawableSetInitializer {
 			}
 		}
 
-		final List<ParticipantBox> col = new ArrayList<ParticipantBox>();
+		final List<ParticipantBox> col = new ArrayList<>();
 		for (LivingParticipantBox livingParticipantBox : drawableSet.getAllLivingParticipantBox()) {
 			col.add(livingParticipantBox.getParticipantBox());
 		}
 
 		constraintSet = new ConstraintSet(col, freeX);
 
-		for (Event ev : new ArrayList<Event>(drawableSet.getAllEvents())) {
+		for (Event ev : new ArrayList<>(drawableSet.getAllEvents())) {
 			final ParticipantRange range = getParticipantRange(ev);
 			final double diffY = freeY2.getFreeY(range) - lastFreeY2.getFreeY(range);
 			// final double diffY = freeY2.diff(lastFreeY2);
@@ -248,8 +248,7 @@ class DrawableSetInitializer {
 	}
 
 	public double getYposition(StringBounder stringBounder, Newpage newpage) {
-		Objects.requireNonNull(newpage);
-		final GraphicalNewpage graphicalNewpage = (GraphicalNewpage) drawableSet.getEvent(newpage);
+		final GraphicalNewpage graphicalNewpage = (GraphicalNewpage) drawableSet.getEvent(Objects.requireNonNull(newpage));
 		return graphicalNewpage.getStartingY();
 	}
 
@@ -407,7 +406,7 @@ class DrawableSetInitializer {
 			// MODIF42
 			inGroupableStack.addElement((GroupingGraphicalElementElse) element);
 		} else if (m.getType() == GroupingType.END) {
-			final List<Component> notes = new ArrayList<Component>();
+			final List<Component> notes = new ArrayList<>();
 			for (Note noteOnMessage : m.getNoteOnMessages()) {
 				final ISkinParam sk = noteOnMessage.getSkinParamBackcolored(drawableSet.getSkinParam());
 				final Component note = drawableSet.getSkin().createComponent(noteOnMessage.getUsedStyles(),

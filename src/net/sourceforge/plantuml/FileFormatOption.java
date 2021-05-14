@@ -83,10 +83,9 @@ public final class FileFormatOption implements Serializable {
 		this.useRedForError = useRedForError;
 		this.svgLinkTarget = svgLinkTarget;
 		this.debugsvek = debugsvek;
-		this.tikzFontDistortion = tikzFontDistortion;
+		this.tikzFontDistortion = Objects.requireNonNull(tikzFontDistortion);
 		this.scale = scale;
 		this.preserveAspectRatio = preserveAspectRatio;
-		Objects.requireNonNull(tikzFontDistortion);
 	}
 
 	public StringBounder getDefaultStringBounder(SvgCharSizeHack charSizeHack) {

@@ -42,7 +42,7 @@ import java.util.List;
 
 public class Stairs {
 
-	private final List<Step> values = new ArrayList<Step>();
+	private final List<Step> values = new ArrayList<>();
 
 	public void addStep(Step step) {
 		if (step.getIndent() < 0) {

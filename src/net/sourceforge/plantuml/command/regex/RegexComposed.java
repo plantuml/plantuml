@@ -58,7 +58,7 @@ public abstract class RegexComposed implements IRegex {
 
 	abstract protected String getFullSlow();
 
-	private final AtomicReference<Pattern2> fullCached = new AtomicReference<Pattern2>();
+	private final AtomicReference<Pattern2> fullCached = new AtomicReference<>();
 
 	private Pattern2 getPattern2() {
 		Pattern2 result = fullCached.get();

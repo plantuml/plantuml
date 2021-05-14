@@ -43,7 +43,7 @@ import java.util.List;
 public class Tetris {
 
 	private final StripeFrontier frontier = new StripeFrontier();
-	private final List<SymetricalTeePositioned> elements = new ArrayList<SymetricalTeePositioned>();
+	private final List<SymetricalTeePositioned> elements = new ArrayList<>();
 	private double minY = Double.MAX_VALUE;
 	private double maxY = -Double.MAX_VALUE;
 	private String name;

@@ -54,8 +54,8 @@ public class Grid {
 	private final TableStrategy strategy;
 	private final TextBlock title;
 
-	private final Set<Segment> horizontals = new HashSet<Segment>();
-	private final Set<Segment> verticals = new HashSet<Segment>();
+	private final Set<Segment> horizontals = new HashSet<>();
+	private final Set<Segment> verticals = new HashSet<>();
 
 	public Grid(double[] rowsStart, double[] colsStart, TableStrategy strategy, TextBlock title) {
 		this.title = title;

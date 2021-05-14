@@ -58,7 +58,7 @@ public class TilesField extends AbstractTextBlock implements TextBlock {
 	private int size = 1;
 	private final Tile root = new Tile(0);
 	private final Map<Tile, Position> positions = new HashMap<Tile, Position>();
-	private final List<Path> paths = new ArrayList<Path>();
+	private final List<Path> paths = new ArrayList<>();
 
 	public TilesField() {
 		positions.put(root, new Position(0, 0, 1, 1));
@@ -156,7 +156,7 @@ public class TilesField extends AbstractTextBlock implements TextBlock {
 	}
 
 	private void moveAllToEast(Position startingPosition) {
-		final List<Position> toMove = new ArrayList<Position>();
+		final List<Position> toMove = new ArrayList<>();
 		for (Position p : positions.values()) {
 			if (p.getXmax() < startingPosition.getXmin()) {
 				continue;

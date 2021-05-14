@@ -27,6 +27,11 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
+ *
+ *
+ * Original Author:  Matthew Leather
+ *
+ *
  */
 package net.sourceforge.plantuml.theme;
 
@@ -40,7 +45,6 @@ import java.util.List;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.Log;
-import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.preproc.ReadLine;
 import net.sourceforge.plantuml.preproc.ReadLineReader;
 import net.sourceforge.plantuml.preproc.Stdlib;
@@ -66,7 +70,7 @@ public class ThemeUtils {
 		return result;
 	}
 
-	public static ReadLine getReaderTheme(StringLocated s, String filename) {
+	public static ReadLine getReaderTheme(String filename) {
 		Log.info("Loading theme " + filename);
 		final String res = "/" + THEME_PATH + "/" + THEME_FILE_PREFIX + filename + THEME_FILE_SUFFIX;
 		final String description = "<" + res + ">";
@@ -75,5 +79,13 @@ public class ThemeUtils {
 			return null;
 		}
 		return ReadLineReader.create(new InputStreamReader(is), description);
+	}
+
+	public static String getFullPath(String from, String filename) {
+		final StringBuilder sb = new StringBuilder(from);
+		if (from.endsWith("/") == false) {
+			sb.append("/");
+		}
+		return sb + THEME_FILE_PREFIX + filename + THEME_FILE_SUFFIX;
 	}
 }

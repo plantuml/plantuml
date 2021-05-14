@@ -96,7 +96,7 @@ public abstract class ReaderAbstractWiki implements ReaderWiki {
 		if (first.startsWith("@start")) {
 			return lines;
 		}
-		final List<String> copy = new ArrayList<String>(lines);
+		final List<String> copy = new ArrayList<>(lines);
 		copy.add(0, "@startuml");
 		copy.add("@enduml");
 		return copy;

@@ -71,8 +71,7 @@ final public class StringLocated {
 	}
 
 	public StringLocated(String s, LineLocation location, String preprocessorError) {
-		Objects.requireNonNull(s);
-		this.s = s;
+		this.s = Objects.requireNonNull(s);
 		this.location = location;
 		this.preprocessorError = preprocessorError;
 	}

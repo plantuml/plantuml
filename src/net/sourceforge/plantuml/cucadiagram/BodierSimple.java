@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public class BodierSimple implements Bodier {
 
-	private final List<CharSequence> rawBody = new ArrayList<CharSequence>();
+	private final List<CharSequence> rawBody = new ArrayList<>();
 	private ILeaf leaf;
 
 	public void muteClassToObject() {

@@ -58,8 +58,7 @@ public class SpriteImage implements Sprite {
 	private final UImage img;
 
 	public SpriteImage(BufferedImage img) {
-		Objects.requireNonNull(img);
-		this.img = new UImage(new PixelImage(img, AffineTransformType.TYPE_BILINEAR));
+		this.img = new UImage(new PixelImage(Objects.requireNonNull(img), AffineTransformType.TYPE_BILINEAR));
 	}
 
 	public TextBlock asTextBlock(final HColor color, final double scale) {

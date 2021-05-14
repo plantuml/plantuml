@@ -41,7 +41,7 @@ import java.util.TreeSet;
 
 public class StripeFrontier {
 
-	private final SortedSet<Stripe> stripes = new TreeSet<Stripe>();
+	private final SortedSet<Stripe> stripes = new TreeSet<>();
 
 	public StripeFrontier() {
 		this.stripes.add(new Stripe(-Double.MAX_VALUE, Double.MAX_VALUE, -Double.MAX_VALUE));
@@ -137,7 +137,7 @@ public class StripeFrontier {
 	}
 
 	private SortedSet<Stripe> collisionning(double x1, double x2) {
-		final SortedSet<Stripe> result = new TreeSet<Stripe>();
+		final SortedSet<Stripe> result = new TreeSet<>();
 		for (Iterator<Stripe> it = stripes.iterator(); it.hasNext();) {
 			Stripe stripe = it.next();
 			if (x1 >= stripe.getEnd()) {

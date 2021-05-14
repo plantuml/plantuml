@@ -46,7 +46,7 @@ public class YamlLines implements Iterable<String> {
 
 	public static final String KEY = "([^:\\s]+)";
 
-	private List<String> lines = new ArrayList<String>();
+	private List<String> lines = new ArrayList<>();
 
 	public YamlLines(List<String> rawLines) {
 		for (String s : rawLines) {
@@ -86,7 +86,7 @@ public class YamlLines implements Iterable<String> {
 	}
 
 	private void manageList() {
-		final List<String> result = new ArrayList<String>();
+		final List<String> result = new ArrayList<>();
 		for (String s : lines) {
 			final Pattern p1 = Pattern.compile("^(\\s*[-])(\\s*\\S.*)$");
 			final Matcher m1 = p1.matcher(s);
@@ -134,7 +134,7 @@ public class YamlLines implements Iterable<String> {
 	}
 
 	private void mergeMultiline() {
-		final List<String> result = new ArrayList<String>();
+		final List<String> result = new ArrayList<>();
 		for (int i = 0; i < lines.size(); i++) {
 			final String init = isMultilineStart(i);
 			if (init != null) {

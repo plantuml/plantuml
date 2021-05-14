@@ -216,8 +216,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 	private USymbol getUSymbol(ILeaf entity) {
 		final USymbol result = entity.getUSymbol() == null ? getSkinParam().componentStyle().toUSymbol()
 				: entity.getUSymbol();
-		Objects.requireNonNull(result);
-		return result;
+		return Objects.requireNonNull(result);
 	}
 
 	public Dimension2D getNameDimension(StringBounder stringBounder) {
@@ -270,7 +269,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 	}
 
 	private boolean isThereADoubleLink(ILeaf leaf, Collection<Link> links) {
-		final Set<IEntity> others = new HashSet<IEntity>();
+		final Set<IEntity> others = new HashSet<>();
 		for (Link link : links) {
 			if (link.contains(leaf)) {
 				final IEntity other = link.getOther(leaf);

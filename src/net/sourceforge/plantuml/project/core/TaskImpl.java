@@ -60,8 +60,8 @@ import net.sourceforge.plantuml.style.StyleBuilder;
 
 public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 
-	private final SortedSet<Day> pausedDay = new TreeSet<Day>();
-	private final Set<DayOfWeek> pausedDayOfWeek = new HashSet<DayOfWeek>();
+	private final SortedSet<Day> pausedDay = new TreeSet<>();
+	private final Set<DayOfWeek> pausedDayOfWeek = new HashSet<>();
 	private final Solver solver;
 	private final Map<Resource, Integer> resources = new LinkedHashMap<Resource, Integer>();
 	private final LoadPlanable defaultPlan;
@@ -244,7 +244,7 @@ public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 	}
 
 	public final Collection<Day> getAllPaused() {
-		final SortedSet<Day> result = new TreeSet<Day>(pausedDay);
+		final SortedSet<Day> result = new TreeSet<>(pausedDay);
 		for (DayOfWeek dayOfWeek : pausedDayOfWeek) {
 			addAll(result, dayOfWeek);
 		}

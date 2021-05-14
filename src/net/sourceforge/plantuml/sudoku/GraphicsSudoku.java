@@ -162,7 +162,7 @@ public class GraphicsSudoku {
 		}
 
 		ug = ug.apply(UTranslate.dy(sudoHeight));
-		final List<String> texts = new ArrayList<String>();
+		final List<String> texts = new ArrayList<>();
 		texts.add("http://plantuml.com");
 		texts.add("Seed " + Long.toString(sudoku.getSeed(), 36));
 		texts.add("Difficulty " + sudoku.getRatting());

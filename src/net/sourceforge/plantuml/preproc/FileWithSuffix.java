@@ -195,7 +195,7 @@ public class FileWithSuffix {
 	}
 
 	public static Set<File> convert(Set<FileWithSuffix> all) throws FileNotFoundException {
-		final Set<File> result = new HashSet<File>();
+		final Set<File> result = new HashSet<>();
 		for (FileWithSuffix f : all) {
 			result.add(f.file.getUnderlyingFile().conv());
 		}

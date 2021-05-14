@@ -62,7 +62,7 @@ class Cookie {
 
   //final Node[] leaves2 = new Node[288];
 
-  /*private final static Comparator<Node> wc = new Comparator<Node>() {
+  /*private final static Comparator<Node> wc = new Comparator<>() {
     @Override
     public int compare(Node node, Node node2) {
       int r = node.weight - node2.weight;

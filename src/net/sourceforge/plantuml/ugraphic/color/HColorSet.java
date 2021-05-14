@@ -54,7 +54,7 @@ public class HColorSet {
 	private final static HColorSet singleton = new HColorSet();
 
 	private final Map<String, String> htmlNames = new HashMap<String, String>();
-	private final Set<String> names = new TreeSet<String>();
+	private final Set<String> names = new TreeSet<>();
 
 	public static HColorSet instance() {
 		return singleton;
@@ -312,8 +312,7 @@ public class HColorSet {
 	}
 
 	public HColor getColorOrWhite(ThemeStyle themeStyle, String s, HColor background) {
-		Objects.requireNonNull(s);
-		if (isColorValid(s) == false) {
+		if (isColorValid(Objects.requireNonNull(s)) == false) {
 			return HColorUtils.WHITE;
 		}
 		try {
@@ -333,8 +332,7 @@ public class HColorSet {
 	}
 
 	public HColor getColor(ThemeStyle themeStyle, String s, HColor background) throws NoSuchColorException {
-		Objects.requireNonNull(s);
-		if (isColorValid(s) == false) {
+		if (isColorValid(Objects.requireNonNull(s)) == false) {
 			throw new NoSuchColorException();
 		}
 		final Automatic automatic = automaticFromString(s);
@@ -397,8 +395,7 @@ public class HColorSet {
 		} else if (s.matches("[0-9A-Fa-f]{8}")) {
 			color = fromRGBa(s);
 		} else {
-			final String value = htmlNames.get(s);
-			Objects.requireNonNull(value);
+			final String value = Objects.requireNonNull(htmlNames.get(s));
 			color = new Color(Integer.parseInt(value.substring(1), 16));
 		}
 		return new HColorSimple(color, false);

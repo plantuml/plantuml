@@ -79,17 +79,15 @@ public class DrawableSet {
 	private final Map<Event, GraphicalElement> events = new HashMap<Event, GraphicalElement>();
 	private final Map<Participant, ParticipantEnglober> participantEnglobers2 = new LinkedHashMap<Participant, ParticipantEnglober>();
 
-	private final List<Event> eventsList = new ArrayList<Event>();
+	private final List<Event> eventsList = new ArrayList<>();
 	private final Rose skin;
 	private final ISkinParam skinParam;
 	private Dimension2D dimension;
 	private double topStartingY;
 
 	DrawableSet(Rose skin, ISkinParam skinParam) {
-		Objects.requireNonNull(skin);
-		Objects.requireNonNull(skinParam);
-		this.skin = skin;
-		this.skinParam = skinParam;
+		this.skin = Objects.requireNonNull(skin);
+		this.skinParam = Objects.requireNonNull(skinParam);
 	}
 
 	public ParticipantBox getVeryfirst() {
@@ -117,7 +115,7 @@ public class DrawableSet {
 	}
 
 	public Collection<GraphicalElement> getAllGraphicalElements() {
-		final Collection<GraphicalElement> result = new ArrayList<GraphicalElement>();
+		final Collection<GraphicalElement> result = new ArrayList<>();
 		for (Event ev : eventsList) {
 			result.add(events.get(ev));
 		}
@@ -155,7 +153,7 @@ public class DrawableSet {
 	}
 
 	public List<Englober> getExistingParticipantEnglober(StringBounder stringBounder) {
-		final List<Englober> result = new ArrayList<Englober>();
+		final List<Englober> result = new ArrayList<>();
 		Englober pending = null;
 		for (Map.Entry<Participant, ParticipantEnglober> ent : participantEnglobers2.entrySet()) {
 			final ParticipantEnglober englober = ent.getValue();
@@ -432,7 +430,7 @@ public class DrawableSet {
 	}
 
 	Participant getFirst(Collection<Participant> someParticipants) {
-		final List<Participant> list = new ArrayList<Participant>(participants.keySet());
+		final List<Participant> list = new ArrayList<>(participants.keySet());
 		int min = -1;
 		for (Participant p : someParticipants) {
 			final int n = list.indexOf(p);
@@ -445,7 +443,7 @@ public class DrawableSet {
 	}
 
 	Participant getLast(Collection<Participant> someParticipants) {
-		final List<Participant> list = new ArrayList<Participant>(participants.keySet());
+		final List<Participant> list = new ArrayList<>(participants.keySet());
 		int max = -1;
 		for (Participant p : someParticipants) {
 			final int n = list.indexOf(p);

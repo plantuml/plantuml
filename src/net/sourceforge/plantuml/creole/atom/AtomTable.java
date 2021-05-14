@@ -56,8 +56,8 @@ import net.sourceforge.plantuml.ugraphic.color.HColorNone;
 public class AtomTable extends AbstractAtom implements Atom {
 
 	class Line {
-		private final List<Atom> cells = new ArrayList<Atom>();
-		private final List<HColor> cellsBackColor = new ArrayList<HColor>();
+		private final List<Atom> cells = new ArrayList<>();
+		private final List<HColor> cellsBackColor = new ArrayList<>();
 		private final HColor lineBackColor;
 
 		private Line(HColor lineBackColor) {
@@ -79,7 +79,7 @@ public class AtomTable extends AbstractAtom implements Atom {
 		}
 	}
 
-	private final List<Line> lines = new ArrayList<Line>();
+	private final List<Line> lines = new ArrayList<>();
 	private final Map<Atom, Position> positions = new HashMap<Atom, Position>();
 	private final HColor lineColor;
 

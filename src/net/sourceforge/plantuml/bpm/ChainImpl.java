@@ -43,8 +43,8 @@ import java.util.Objects;
 
 public class ChainImpl<O> implements Chain<O> {
 
-	private final List<O> positive = new ArrayList<O>();
-	private final List<O> negative = new ArrayList<O>();
+	private final List<O> positive = new ArrayList<>();
+	private final List<O> negative = new ArrayList<>();
 	private int currentVersion;
 
 	public boolean remove(O data) {
@@ -57,7 +57,7 @@ public class ChainImpl<O> implements Chain<O> {
 	}
 
 	public ChainImpl<O> cloneMe() {
-		final ChainImpl<O> result = new ChainImpl<O>();
+		final ChainImpl<O> result = new ChainImpl<>();
 		result.currentVersion = this.currentVersion;
 		result.positive.addAll(this.positive);
 		result.negative.addAll(this.negative);
@@ -88,7 +88,7 @@ public class ChainImpl<O> implements Chain<O> {
 	}
 
 	public List<O> toList() {
-		final List<O> result = new ArrayList<O>();
+		final List<O> result = new ArrayList<>();
 		for (O element : negative) {
 			if (element != null) {
 				result.add(0, element);

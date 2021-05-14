@@ -83,7 +83,7 @@ public class SecurityUtils {
 	}
 
 	public static List<SFile> getPath(String prop) {
-		final List<SFile> result = new ArrayList<SFile>();
+		final List<SFile> result = new ArrayList<>();
 		String paths = getenv(prop);
 		if (paths == null) {
 			return Collections.unmodifiableList(result);

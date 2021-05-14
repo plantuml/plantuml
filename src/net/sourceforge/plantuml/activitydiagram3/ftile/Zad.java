@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class Zad {
 
-	private final List<MinMax> rectangles = new ArrayList<MinMax>();
+	private final List<MinMax> rectangles = new ArrayList<>();
 
 	public void add(MinMax rect) {
 		// System.err.println("add " + rect);

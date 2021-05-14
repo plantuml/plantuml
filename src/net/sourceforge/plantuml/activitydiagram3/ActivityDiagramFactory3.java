@@ -99,7 +99,7 @@ public class ActivityDiagramFactory3 extends PSystemCommandFactory {
 	@Override
 	protected List<Command> createCommands() {
 
-		final List<Command> cmds = new ArrayList<Command>();
+		final List<Command> cmds = new ArrayList<>();
 		cmds.add(new CommandFootboxIgnored());
 
 		addCommonCommands1(cmds);

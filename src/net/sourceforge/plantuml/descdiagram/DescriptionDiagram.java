@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.descdiagram;
 
+import java.util.Objects;
+
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
@@ -70,7 +72,7 @@ public class DescriptionDiagram extends AbstractEntityDiagram {
 
 	@Override
 	public ILeaf getOrCreateLeaf(Ident ident, Code code, LeafType type, USymbol symbol) {
-		checkNotNull(ident);
+		Objects.requireNonNull(ident);
 		if (type == null) {
 			String codeString = code.getName();
 			if (codeString.startsWith("[") && codeString.endsWith("]")) {

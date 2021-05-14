@@ -51,13 +51,13 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 
 public class Bibliotekon {
 
-	private final List<Cluster> allCluster = new ArrayList<Cluster>();
+	private final List<Cluster> allCluster = new ArrayList<>();
 
 	private final Map<ILeaf, SvekNode> nodeMap = new LinkedHashMap<ILeaf, SvekNode>();;
 
-	private final List<SvekLine> lines0 = new ArrayList<SvekLine>();
-	private final List<SvekLine> lines1 = new ArrayList<SvekLine>();
-	private final List<SvekLine> allLines = new ArrayList<SvekLine>();
+	private final List<SvekLine> lines0 = new ArrayList<>();
+	private final List<SvekLine> lines1 = new ArrayList<>();
+	private final List<SvekLine> allLines = new ArrayList<>();
 
 	public SvekNode createNode(ILeaf ent, IEntityImage image, ColorSequence colorSequence, StringBounder stringBounder) {
 		final SvekNode node = new SvekNode(ent, image, colorSequence, stringBounder);
@@ -179,7 +179,7 @@ public class Bibliotekon {
 	}
 
 	public List<SvekLine> getAllLineConnectedTo(IEntity leaf) {
-		final List<SvekLine> result = new ArrayList<SvekLine>();
+		final List<SvekLine> result = new ArrayList<>();
 		for (SvekLine line : allLines) {
 			if (line.isLinkFromOrTo(leaf)) {
 				result.add(line);

@@ -64,7 +64,7 @@ public class SpriteColorBuilder4096 {
 		final int width = img.getWidth();
 		final int height = img.getHeight();
 
-		final List<String> result = new ArrayList<String>();
+		final List<String> result = new ArrayList<>();
 
 		for (int y = 0; y < height; y++) {
 			final StringBuilder sb = new StringBuilder();

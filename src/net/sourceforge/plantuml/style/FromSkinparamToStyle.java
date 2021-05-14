@@ -165,7 +165,7 @@ public class FromSkinparamToStyle {
 
 	}
 
-	private final List<Style> styles = new ArrayList<Style>();
+	private final List<Style> styles = new ArrayList<>();
 	private String stereo = null;
 
 	public FromSkinparamToStyle(String key, String value, final AutomaticCounter counter) {
@@ -219,7 +219,7 @@ public class FromSkinparamToStyle {
 		skinparam = skinparam.toLowerCase();
 		List<Data> datas = knowlegde.get(skinparam);
 		if (datas == null) {
-			datas = new ArrayList<Data>();
+			datas = new ArrayList<>();
 			knowlegde.put(skinparam, datas);
 		}
 		datas.add(new Data(propertyName, styleNames));

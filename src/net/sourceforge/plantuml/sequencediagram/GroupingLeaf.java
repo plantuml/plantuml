@@ -51,9 +51,8 @@ final public class GroupingLeaf extends Grouping implements EventWithDeactivate 
 	public GroupingLeaf(String title, String comment, GroupingType type, HColor backColorGeneral,
 			HColor backColorElement, GroupingStart start, StyleBuilder styleBuilder) {
 		super(title, comment, type, backColorElement, styleBuilder);
-		Objects.requireNonNull(start);
 		this.backColorGeneral = backColorGeneral;
-		this.start = start;
+		this.start = Objects.requireNonNull(start);
 		start.addChildren(this);
 	}
 
@@ -116,7 +115,7 @@ final public class GroupingLeaf extends Grouping implements EventWithDeactivate 
 		return true;
 	}
 
-	private List<Note> noteOnMessages = new ArrayList<Note>();
+	private List<Note> noteOnMessages = new ArrayList<>();
 
 	public final void setNote(Note note) {
 		if (note.getPosition() != NotePosition.LEFT && note.getPosition() != NotePosition.RIGHT) {

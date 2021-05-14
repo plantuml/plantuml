@@ -183,7 +183,7 @@ public class TokenStack {
 	}
 
 	public void guessFunctions() throws EaterException {
-		final Deque<Integer> open = new ArrayDeque<Integer>();
+		final Deque<Integer> open = new ArrayDeque<>();
 		final Map<Integer, Integer> parens = new HashMap<Integer, Integer>();
 		for (int i = 0; i < tokens.size(); i++) {
 			final Token token = tokens.get(i);

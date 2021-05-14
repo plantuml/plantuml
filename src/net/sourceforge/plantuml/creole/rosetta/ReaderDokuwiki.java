@@ -64,7 +64,7 @@ public class ReaderDokuwiki extends ReaderAbstractWiki implements ReaderWiki {
 	}
 
 	public List<String> transform(List<String> raw) {
-		final List<String> uhtml = new ArrayList<String>();
+		final List<String> uhtml = new ArrayList<>();
 		for (int i = 0; i < raw.size(); i++) {
 			String current = raw.get(i);
 
@@ -157,7 +157,7 @@ public class ReaderDokuwiki extends ReaderAbstractWiki implements ReaderWiki {
 
 	class AutoGroup {
 
-		private final List<String> lines = new ArrayList<String>();
+		private final List<String> lines = new ArrayList<>();
 		private int skip = 0;
 		private final String[] headers;
 
@@ -290,7 +290,7 @@ public class ReaderDokuwiki extends ReaderAbstractWiki implements ReaderWiki {
 
 	class StartEndGroup {
 
-		private final List<String> lines = new ArrayList<String>();
+		private final List<String> lines = new ArrayList<>();
 		private int skip = 0;
 		private final String first;
 

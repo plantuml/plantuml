@@ -95,7 +95,7 @@ class FtileIfAndStop extends AbstractFtile {
 	}
 
 	public Set<Swimlane> getSwimlanes() {
-		final Set<Swimlane> result = new HashSet<Swimlane>();
+		final Set<Swimlane> result = new HashSet<>();
 		if (getSwimlaneIn() != null) {
 			result.add(getSwimlaneIn());
 		}
@@ -160,7 +160,7 @@ class FtileIfAndStop extends AbstractFtile {
 		// }
 		final FtileIfAndStop result = new FtileIfAndStop(diamond1, tileNonStop, arrowColor, stopFtile);
 
-		final List<Connection> conns = new ArrayList<Connection>();
+		final List<Connection> conns = new ArrayList<>();
 		conns.add(result.new ConnectionHorizontal(arrowColor));
 		// conns.add(result.new ConnectionHorizontalThenVertical(tile2));
 		// if (tile1.calculateDimension(stringBounder).hasPointOut()

@@ -51,7 +51,7 @@ public class BrailleGrid {
 	private int maxY;
 
 	private final double quanta;
-	private final Set<Coords> on = new HashSet<Coords>();
+	private final Set<Coords> on = new HashSet<>();
 
 	public BrailleGrid(double quanta) {
 		this.quanta = quanta;

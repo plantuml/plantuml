@@ -67,7 +67,7 @@ public class GroupingTile extends AbstractTile {
 	private static final int MARGINX = 16;
 	// private static final int MARGINY = 10;
 	private static final int MARGINY_MAGIC = 20;
-	private List<Tile> tiles = new ArrayList<Tile>();
+	private List<Tile> tiles = new ArrayList<>();
 	private final Real min;
 	private final Real max;
 	private final GroupingStart start;
@@ -100,10 +100,10 @@ public class GroupingTile extends AbstractTile {
 		// this.skinParam = tileArgumentsOriginal.getSkinParam();
 		this.skinParam = tileArgumentsBackColorChanged.getSkinParam();
 
-		final List<Real> min2 = new ArrayList<Real>();
-		final List<Real> max2 = new ArrayList<Real>();
+		final List<Real> min2 = new ArrayList<>();
+		final List<Real> max2 = new ArrayList<>();
 
-		final List<Tile> allElses = new ArrayList<Tile>();
+		final List<Tile> allElses = new ArrayList<>();
 		final Dimension2D dim1 = getPreferredDimensionIfEmpty(stringBounder);
 
 		while (it.hasNext()) {
@@ -179,7 +179,7 @@ public class GroupingTile extends AbstractTile {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final double totalHeight = getTotalHeight(stringBounder);
 
-		final List<Double> ys = new ArrayList<Double>();
+		final List<Double> ys = new ArrayList<>();
 		for (Tile tile : tiles) {
 			if (tile instanceof ElseTile) {
 				final ElseTile elseTile = (ElseTile) tile;
@@ -227,7 +227,7 @@ public class GroupingTile extends AbstractTile {
 			if (tile instanceof GroupingTile) {
 				final GroupingTile groupingTile = (GroupingTile) tile;
 				final double headerHeight = groupingTile.getHeaderHeight(stringBounder);
-				final ArrayList<CommonTile> local2 = new ArrayList<CommonTile>();
+				final ArrayList<CommonTile> local2 = new ArrayList<>();
 				fillPositionelTiles(stringBounder, y + headerHeight, groupingTile.tiles, local2, full);
 			}
 			y += tile.getPreferredHeight();
@@ -243,7 +243,7 @@ public class GroupingTile extends AbstractTile {
 	private static List<Tile> mergeParallel(StringBounder stringBounder, List<Tile> tiles) {
 		TileParallel pending = null;
 		tiles = removeEmptyCloseToParallel(tiles);
-		final List<Tile> result = new ArrayList<Tile>();
+		final List<Tile> result = new ArrayList<>();
 		for (Tile tile : tiles) {
 			if (isParallel(tile)) {
 				if (pending == null) {
@@ -270,7 +270,7 @@ public class GroupingTile extends AbstractTile {
 	}
 
 	private static List<Tile> removeEmptyCloseToParallel(List<Tile> tiles) {
-		final List<Tile> result = new ArrayList<Tile>();
+		final List<Tile> result = new ArrayList<>();
 		for (Tile tile : tiles) {
 			if (isParallel(tile)) {
 				removeHeadEmpty(result);

@@ -61,9 +61,9 @@ import net.sourceforge.plantuml.ugraphic.color.HColor;
 public class WireDiagram extends UmlDiagram {
 
 	private final WBlock root = new WBlock("", new UTranslate(), 0, 0, null);
-	private final List<Spot> spots = new ArrayList<Spot>();
-	private final List<WLinkHorizontal> hlinks = new ArrayList<WLinkHorizontal>();
-	private final List<WLinkVertical> vlinks = new ArrayList<WLinkVertical>();
+	private final List<Spot> spots = new ArrayList<>();
+	private final List<WLinkHorizontal> hlinks = new ArrayList<>();
+	private final List<WLinkVertical> vlinks = new ArrayList<>();
 
 	public DiagramDescription getDescription() {
 		return new DiagramDescription("Wire Diagram");

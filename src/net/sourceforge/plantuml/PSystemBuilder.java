@@ -125,7 +125,7 @@ public class PSystemBuilder {
 			}
 
 			final DiagramType diagramType = umlSource.getDiagramType();
-			final List<PSystemError> errors = new ArrayList<PSystemError>();
+			final List<PSystemError> errors = new ArrayList<>();
 			final List<PSystemFactory> factories = getAllFactories(skinParam);
 			for (PSystemFactory systemFactory : factories) {
 				if (diagramType != systemFactory.getDiagramType()) {
@@ -152,7 +152,7 @@ public class PSystemBuilder {
 	}
 
 	private static List<PSystemFactory> getAllFactories(ISkinSimple skinParam) {
-		final List<PSystemFactory> factories = new ArrayList<PSystemFactory>();
+		final List<PSystemFactory> factories = new ArrayList<>();
 		factories.add(new PSystemWelcomeFactory());
 		factories.add(new PSystemColorsFactory());
 		factories.add(new SequenceDiagramFactory(skinParam));

@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.sequencediagram.InGroupableList;
 
 class InGroupablesStack {
 
-	final private List<InGroupableList> inGroupableStack = new ArrayList<InGroupableList>();
+	final private List<InGroupableList> inGroupableStack = new ArrayList<>();
 
 	public void addList(InGroupableList inGroupableList) {
 		for (InGroupableList other : inGroupableStack) {

@@ -39,9 +39,9 @@ import java.util.LinkedList;
 
 public abstract class ExecutionContexts {
 
-	private final Deque<ExecutionContextIf> allIfs = new LinkedList<ExecutionContextIf>();
-	private final Deque<ExecutionContextWhile> allWhiles = new LinkedList<ExecutionContextWhile>();
-	private final Deque<ExecutionContextForeach> allForeachs = new LinkedList<ExecutionContextForeach>();
+	private final Deque<ExecutionContextIf> allIfs = new LinkedList<>();
+	private final Deque<ExecutionContextWhile> allWhiles = new LinkedList<>();
+	private final Deque<ExecutionContextForeach> allForeachs = new LinkedList<>();
 
 	public void addIf(ExecutionContextIf value) {
 		allIfs.addLast(value);

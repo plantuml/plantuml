@@ -57,7 +57,7 @@ public class NwGroup {
 
 	private final String name;
 	private final Network network;
-	private final Set<String> elements = new HashSet<String>();
+	private final Set<String> elements = new HashSet<>();
 	private HColor color;
 	private String description;
 

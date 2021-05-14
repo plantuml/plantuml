@@ -42,11 +42,11 @@ import java.util.TreeSet;
 
 public class Tokens {
 
-	private final List<String> keywords = new ArrayList<String>();
+	private final List<String> keywords = new ArrayList<>();
 
 	public static void main(String[] args) {
 		System.err.println("keywords=" + new Tokens().keywords.size());
-		final Set<String> sorted = new TreeSet<String>(new Tokens().keywords);
+		final Set<String> sorted = new TreeSet<>(new Tokens().keywords);
 		for (String s : sorted) {
 			System.err.println(s);
 		}

@@ -58,7 +58,7 @@ import net.sourceforge.plantuml.version.Version;
 public class OptionPrint {
 
 	static public void printTestDot() throws InterruptedException {
-		final List<String> result = new ArrayList<String>();
+		final List<String> result = new ArrayList<>();
 		final int errorCode = GraphvizUtils.addDotStatus(result, false);
 		for (String s : result) {
 			if (errorCode == 0) {
@@ -187,7 +187,7 @@ public class OptionPrint {
 			System.out.println(v);
 		}
 		System.out.println();
-		final List<String> result = new ArrayList<String>();
+		final List<String> result = new ArrayList<>();
 		final int errorCode = GraphvizUtils.addDotStatus(result, false);
 		for (String s : result) {
 			System.out.println(s);
@@ -213,7 +213,7 @@ public class OptionPrint {
 			all = Arrays.asList("java.runtime.name", "Java Runtime", "java.vm.name", "JVM", "file.encoding",
 					"Default Encoding", "user.language", "Language", "user.country", "Country");
 		}
-		final List<String> result = new ArrayList<String>();
+		final List<String> result = new ArrayList<>();
 		for (int i = 0; i < all.size(); i += 2) {
 			result.add(all.get(i + 1) + ": " + p.getProperty(all.get(i)));
 		}
@@ -221,7 +221,7 @@ public class OptionPrint {
 	}
 
 	public static Collection<String> interestingValues() {
-		final List<String> strings = new ArrayList<String>();
+		final List<String> strings = new ArrayList<>();
 //		if (withIp() == false) {
 //			strings.add("Machine: " + getHostName());
 //		}

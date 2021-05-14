@@ -109,7 +109,7 @@ class FtileRepeat extends AbstractFtile {
 	}
 
 	public Set<Swimlane> getSwimlanes() {
-		final Set<Swimlane> result = new HashSet<Swimlane>(repeat.getSwimlanes());
+		final Set<Swimlane> result = new HashSet<>(repeat.getSwimlanes());
 		result.addAll(diamond1.getSwimlanes());
 		result.addAll(diamond2.getSwimlanes());
 		return Collections.unmodifiableSet(result);
@@ -158,7 +158,7 @@ class FtileRepeat extends AbstractFtile {
 			throw new IllegalStateException();
 		}
 
-		final List<Connection> conns = new ArrayList<Connection>();
+		final List<Connection> conns = new ArrayList<>();
 		final Display in1 = repeat.getInLinkRendering().getDisplay();
 		final TextBlock tbin1 = in1 == null ? null
 				: in1.create7(fcArrow, HorizontalAlignment.LEFT, spriteContainer, CreoleMode.SIMPLE_LINE);

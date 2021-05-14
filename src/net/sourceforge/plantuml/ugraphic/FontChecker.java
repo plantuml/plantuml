@@ -66,7 +66,7 @@ import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 public class FontChecker {
 
 	final private UFont font;
-	private static final Set<String> SQUARE = new HashSet<String>(
+	private static final Set<String> SQUARE = new HashSet<>(
 			Arrays.asList("MI=I=XM=I=IX", "MI=I=XM=I=IXMI=I=XM=I=IX"));
 
 	public FontChecker(UFont font) {

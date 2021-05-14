@@ -166,7 +166,7 @@ public class PSystemSalt extends TitledDiagram implements WithSprite {
 
 		final Command<WithSprite> cmd = new CommandFactorySprite().createMultiLine(false);
 
-		final List<String> result = new ArrayList<String>();
+		final List<String> result = new ArrayList<>();
 		for (Iterator<String> it = data.iterator(); it.hasNext();) {
 			String s = it.next();
 			if (s.equals("hide stereotype")) {
@@ -198,7 +198,7 @@ public class PSystemSalt extends TitledDiagram implements WithSprite {
 
 		final DataSourceImpl source = new DataSourceImpl(data);
 
-		final Collection<AbstractElementFactoryComplex> cpx = new ArrayList<AbstractElementFactoryComplex>();
+		final Collection<AbstractElementFactoryComplex> cpx = new ArrayList<>();
 
 		// cpx.add(new ElementFactorySimpleFrame(source, dictionnary));
 		cpx.add(new ElementFactoryPyramid(source, dictionary));

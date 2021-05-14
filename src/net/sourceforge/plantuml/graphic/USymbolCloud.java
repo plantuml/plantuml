@@ -71,7 +71,7 @@ class USymbolCloud extends USymbol {
 
 	private UPath getSpecificFrontierForCloudNew(double width, double height) {
 		final Random rnd = new Random((long) width + 7919L * (long) height);
-		final List<Point2D> points = new ArrayList<Point2D>();
+		final List<Point2D> points = new ArrayList<>();
 
 		double bubbleSize = 11;
 		if (Math.max(width, height) / bubbleSize > 16) {

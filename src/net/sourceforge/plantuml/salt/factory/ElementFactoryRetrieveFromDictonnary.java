@@ -62,7 +62,7 @@ public class ElementFactoryRetrieveFromDictonnary implements ElementFactory {
 		name = name.substring(2, name.length() - 2);
 		final Element retrieve = Objects.requireNonNull(dictionary.get(name), name);
 
-		return new Terminated<Element>(retrieve, next.getTerminator());
+		return new Terminated<>(retrieve, next.getTerminator());
 	}
 
 	public boolean ready() {

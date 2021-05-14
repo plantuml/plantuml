@@ -275,7 +275,7 @@ public class FtileSwitchWithManyLinks extends FtileSwitchWithDiamonds {
 	}
 
 	public Ftile addLinks() {
-		final List<Connection> conns = new ArrayList<Connection>();
+		final List<Connection> conns = new ArrayList<>();
 		conns.add(new ConnectionHorizontalThenVertical(tiles.get(0), branches.get(0)));
 		conns.add(new ConnectionHorizontalThenVertical(tiles.get(tiles.size() - 1), branches.get(tiles.size() - 1)));
 		conns.add(new ConnectionVerticalThenHorizontal(tiles.get(0)));

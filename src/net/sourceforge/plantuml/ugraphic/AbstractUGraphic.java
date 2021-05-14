@@ -50,9 +50,8 @@ public abstract class AbstractUGraphic<O> extends AbstractCommonUGraphic {
 	private final Map<Class<? extends UShape>, UDriver<O>> drivers = new HashMap<Class<? extends UShape>, UDriver<O>>();
 
 	public AbstractUGraphic(HColor defaultBackground, ColorMapper colorMapper, O graphic) {
-		super(defaultBackground, colorMapper);
+		super(Objects.requireNonNull(defaultBackground), colorMapper);
 		this.graphic = graphic;
-		Objects.requireNonNull(defaultBackground);
 	}
 
 	protected AbstractUGraphic(AbstractUGraphic<O> other) {

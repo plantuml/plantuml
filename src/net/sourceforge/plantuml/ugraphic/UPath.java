@@ -47,7 +47,7 @@ public class UPath extends AbstractShadowable implements Iterable<USegment>, USh
 
 	private final String comment;
 	private final String codeLine;
-	private final List<USegment> segments = new ArrayList<USegment>();
+	private final List<USegment> segments = new ArrayList<>();
 	private MinMax minmax = MinMax.getEmpty(false);
 
 	private boolean isOpenIconic;

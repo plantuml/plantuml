@@ -43,8 +43,7 @@ public class ColorMapperTransparentWrapper extends AbstractColorMapper implement
 	private final ColorMapper mapper;
 
 	public ColorMapperTransparentWrapper(ColorMapper mapper) {
-		Objects.requireNonNull(mapper);
-		this.mapper = mapper;
+		this.mapper = Objects.requireNonNull(mapper);
 	}
 
 	public Color toColor(HColor color) {

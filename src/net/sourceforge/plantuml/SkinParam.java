@@ -254,7 +254,7 @@ public class SkinParam implements ISkinParam {
 		key = key.replaceAll("sequencearrow", "arrow");
 		key = key.replaceAll("align$", "alignment");
 		final Matcher2 mm = stereoPattern.matcher(key);
-		final List<String> result = new ArrayList<String>();
+		final List<String> result = new ArrayList<>();
 		while (mm.find()) {
 			final String s = mm.group(1);
 			result.add(key.replaceAll(stereoPatternString, "") + "<<" + s + ">>");
@@ -357,8 +357,7 @@ public class SkinParam implements ISkinParam {
 	}
 
 	public char getCircledCharacter(Stereotype stereotype) {
-		Objects.requireNonNull(stereotype);
-		final String value2 = getValue("spotchar" + stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR));
+		final String value2 = getValue("spotchar" + Objects.requireNonNull(stereotype).getLabel(Guillemet.DOUBLE_COMPARATOR));
 		if (value2 != null && value2.length() > 0) {
 			return value2.charAt(0);
 		}
@@ -517,7 +516,7 @@ public class SkinParam implements ISkinParam {
 	}
 
 	public static Collection<String> getPossibleValues() {
-		final Set<String> result = new TreeSet<String>();
+		final Set<String> result = new TreeSet<>();
 		result.add("Monochrome");
 		// result.add("BackgroundColor");
 		result.add("CircledCharacterRadius");
@@ -760,8 +759,7 @@ public class SkinParam implements ISkinParam {
 	}
 
 	public boolean shadowing2(Stereotype stereotype, SkinParameter skinParameter) {
-		Objects.requireNonNull(skinParameter);
-		final String name = skinParameter.getUpperCaseName();
+		final String name = Objects.requireNonNull(skinParameter).getUpperCaseName();
 		if (stereotype != null) {
 			checkStereotype(stereotype);
 			final String value2 = getValue(name + "shadowing" + stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR));
@@ -789,7 +787,7 @@ public class SkinParam implements ISkinParam {
 	private final Map<String, Sprite> sprites = new HashMap<String, Sprite>();
 
 	public Collection<String> getAllSpriteNames() {
-		return Collections.unmodifiableCollection(new TreeSet<String>(sprites.keySet()));
+		return Collections.unmodifiableCollection(new TreeSet<>(sprites.keySet()));
 	}
 
 	public void addSprite(String name, Sprite sprite) {

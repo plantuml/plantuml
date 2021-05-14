@@ -127,7 +127,7 @@ public class Splitter {
 		tagOrText = MyPattern.cmpile(htmlTag + "|.+?(?=" + htmlTag + ")|.+$", Pattern.CASE_INSENSITIVE);
 	}
 
-	private final List<String> splitted = new ArrayList<String>();
+	private final List<String> splitted = new ArrayList<>();
 
 	public Splitter(String s) {
 		final Matcher2 matcher = tagOrText.matcher(s);
@@ -148,7 +148,7 @@ public class Splitter {
 
 	public List<HtmlCommand> getHtmlCommands(ThemeStyle themeStyle, boolean newLineAlone) {
 		final HtmlCommandFactory factory = new HtmlCommandFactory();
-		final List<HtmlCommand> result = new ArrayList<HtmlCommand>();
+		final List<HtmlCommand> result = new ArrayList<>();
 		for (String s : getSplittedInternal()) {
 			final HtmlCommand cmd = factory.getHtmlCommand(themeStyle, s);
 			if (newLineAlone && cmd instanceof Text) {
@@ -162,7 +162,7 @@ public class Splitter {
 
 	private Collection<Text> splitText(Text cmd) {
 		String s = cmd.getText();
-		final Collection<Text> result = new ArrayList<Text>();
+		final Collection<Text> result = new ArrayList<>();
 		while (true) {
 			final int x = s.indexOf(Text.TEXT_BS_BS_N.getText());
 			if (x == -1) {

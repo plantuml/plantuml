@@ -56,7 +56,7 @@ public class PSystemListOpenIconic extends PlainDiagram {
 
 	@Override
 	protected UDrawable getRootDrawable(FileFormatOption fileFormatOption) throws IOException {
-		final List<String> lines = new ArrayList<String>();
+		final List<String> lines = new ArrayList<>();
 		lines.add("<b>List Open Iconic");
 		lines.add("<i>Credit to");
 		lines.add("https://useiconic.com/open");

@@ -46,8 +46,7 @@ abstract class GroupingGraphicalElement extends GraphicalElement {
 
 	public GroupingGraphicalElement(double currentY, InGroupableList inGroupableList) {
 		super(currentY);
-		this.inGroupableList = inGroupableList;
-		Objects.requireNonNull(inGroupableList);
+		this.inGroupableList = Objects.requireNonNull(inGroupableList);
 	}
 
 	final public double getActualWidth(StringBounder stringBounder) {

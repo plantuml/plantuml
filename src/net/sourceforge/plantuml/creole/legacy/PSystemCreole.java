@@ -56,7 +56,7 @@ import net.sourceforge.plantuml.ugraphic.UFont;
 
 public class PSystemCreole extends PlainDiagram {
 
-	private final List<String> lines = new ArrayList<String>();
+	private final List<String> lines = new ArrayList<>();
 
 	public PSystemCreole() {
 	}

@@ -45,7 +45,7 @@ public class BNode {
 	private final int stage;
 	private int x = -1;
 	private BNode parent;
-	private final List<BNode> children = new ArrayList<BNode>();
+	private final List<BNode> children = new ArrayList<>();
 
 	public BNode(int stage, String name) {
 		this.name = name;

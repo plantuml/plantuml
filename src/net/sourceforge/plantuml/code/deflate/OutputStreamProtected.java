@@ -15,7 +15,7 @@ import java.io.IOException;
 
 public class OutputStreamProtected implements Closeable {
 
-	public static final int MAX_OUTPUT_SIZE = 5 * 1024 * 1024;
+	public static final int MAX_OUTPUT_SIZE = 1 * 1024 * 1024;
 
 	private final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 	private int counter = 0;

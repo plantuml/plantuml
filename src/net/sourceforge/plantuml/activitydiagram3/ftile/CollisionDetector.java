@@ -77,8 +77,8 @@ public class CollisionDetector extends UGraphicNo implements UGraphic {
 	private final Context context;
 
 	static class Context {
-		private final List<MinMax> rectangles = new ArrayList<MinMax>();
-		private final List<Snake> snakes = new ArrayList<Snake>();
+		private final List<MinMax> rectangles = new ArrayList<>();
+		private final List<Snake> snakes = new ArrayList<>();
 		private boolean manageSnakes;
 
 		public void drawDebug(UGraphic ug) {

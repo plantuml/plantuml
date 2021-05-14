@@ -206,7 +206,7 @@ public class Stereotype implements CharSequence {
 	}
 
 	public List<String> getMultipleLabels() {
-		final List<String> result = new ArrayList<String>();
+		final List<String> result = new ArrayList<>();
 		if (label != null) {
 			final Pattern p = Pattern.compile("\\<\\<\\s?((?:\\<&\\w+\\>|[^<>])+?)\\s?\\>\\>");
 			final Matcher m = p.matcher(label);
@@ -272,7 +272,7 @@ public class Stereotype implements CharSequence {
 	}
 
 	public List<Style> getStyles(StyleBuilder builder) {
-		final List<Style> result = new ArrayList<Style>();
+		final List<Style> result = new ArrayList<>();
 		for (String s : getStyleNames()) {
 			final Style style = builder.createStyle(s);
 			assert (style != null);
@@ -290,7 +290,7 @@ public class Stereotype implements CharSequence {
 	}
 
 	private static List<String> cutLabels(final String label, Guillemet guillemet) {
-		final List<String> result = new ArrayList<String>();
+		final List<String> result = new ArrayList<>();
 		final Pattern2 p = MyPattern.cmpile("\\<\\<.*?\\>\\>");
 		final Matcher2 m = p.matcher(label);
 		while (m.find()) {

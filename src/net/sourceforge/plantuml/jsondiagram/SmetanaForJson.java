@@ -80,8 +80,8 @@ public class SmetanaForJson {
 	private ST_Agraph_s g;
 	private StringBounder stringBounder;
 
-	private final List<InternalNode> nodes = new ArrayList<InternalNode>();
-	private final List<ST_Agedge_s> edges = new ArrayList<ST_Agedge_s>();
+	private final List<InternalNode> nodes = new ArrayList<>();
+	private final List<ST_Agedge_s> edges = new ArrayList<>();
 	private Mirror xMirror;
 
 	static class InternalNode {
@@ -148,7 +148,7 @@ public class SmetanaForJson {
 	}
 
 	private List<String> removeOneLevel(String key, List<String> list) {
-		final List<String> result = new ArrayList<String>();
+		final List<String> result = new ArrayList<>();
 		for (String tmp : list) {
 			if (tmp.startsWith("\"" + key + "\"") == false) {
 				continue;

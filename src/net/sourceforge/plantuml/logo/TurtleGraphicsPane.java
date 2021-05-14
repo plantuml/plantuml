@@ -65,7 +65,7 @@ class TurtleGraphicsPane {
 	private boolean showTurtle = true;
 	private HColor penColor = HColorUtils.BLACK;
 	private List<Rectangle2D.Double> lines = new ArrayList<Rectangle2D.Double>();
-	private List<HColor> colors = new ArrayList<HColor>();
+	private List<HColor> colors = new ArrayList<>();
 
 	private String message;
 

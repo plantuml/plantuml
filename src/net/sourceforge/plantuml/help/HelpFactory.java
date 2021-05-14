@@ -51,7 +51,7 @@ public class HelpFactory extends PSystemCommandFactory {
 	@Override
 	protected List<Command> createCommands() {
 
-		final List<Command> cmds = new ArrayList<Command>();
+		final List<Command> cmds = new ArrayList<>();
 
 		cmds.add(new CommandHelp());
 		cmds.add(new CommandHelpColor());

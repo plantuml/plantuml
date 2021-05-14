@@ -138,7 +138,7 @@ public class TextTable {
 		}
 	}
 
-	private final List<TextLine> lines = new ArrayList<TextLine>();
+	private final List<TextLine> lines = new ArrayList<>();
 
 	public void addLine(Object... cells) {
 		this.lines.add(new DataLine(cells));

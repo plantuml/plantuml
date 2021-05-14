@@ -68,7 +68,7 @@ public class BodyEnhanced1 extends BodyEnhancedAbstract implements TextBlock, Wi
 	private final FontParam fontParam;
 	private final ISkinParam skinParam;
 	private final boolean lineFirst;
-	private final List<Url> urls = new ArrayList<Url>();
+	private final List<Url> urls = new ArrayList<>();
 	private final Stereotype stereotype;
 	private final ILeaf entity;
 	private final boolean inEllipse;
@@ -127,7 +127,7 @@ public class BodyEnhanced1 extends BodyEnhancedAbstract implements TextBlock, Wi
 			return area;
 		}
 		urls.clear();
-		final List<TextBlock> blocks = new ArrayList<TextBlock>();
+		final List<TextBlock> blocks = new ArrayList<>();
 
 		char separator = lineFirst ? '_' : 0;
 		TextBlock title = null;
@@ -198,7 +198,7 @@ public class BodyEnhanced1 extends BodyEnhancedAbstract implements TextBlock, Wi
 	}
 
 	private static List<CharSequence> buildTreeOrTable(String init, ListIterator<CharSequence> it) {
-		final List<CharSequence> result = new ArrayList<CharSequence>();
+		final List<CharSequence> result = new ArrayList<>();
 		final Pattern p = Pattern.compile("^(\\s+)");
 		final Matcher m = p.matcher(init);
 		String start = "";

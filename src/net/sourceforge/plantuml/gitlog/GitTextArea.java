@@ -41,8 +41,8 @@ import java.util.List;
 
 public class GitTextArea {
 
-	private final List<String> lines = new ArrayList<String>();
-	private final List<Commit> commits = new ArrayList<Commit>();
+	private final List<String> lines = new ArrayList<>();
+	private final List<Commit> commits = new ArrayList<>();
 
 	public void add(String s) {
 		lines.add(s);

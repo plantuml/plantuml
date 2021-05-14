@@ -41,7 +41,7 @@ import java.util.List;
 
 public class ListWidth {
 
-	private final List<Double> allWidth = new ArrayList<Double>();
+	private final List<Double> allWidth = new ArrayList<>();
 
 	public void add(double width) {
 		this.allWidth.add(width);

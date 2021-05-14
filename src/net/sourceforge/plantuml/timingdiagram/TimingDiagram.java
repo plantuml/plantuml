@@ -76,8 +76,8 @@ public class TimingDiagram extends UmlDiagram implements Clocks {
 	private final Map<String, TimeTick> codes = new HashMap<String, TimeTick>();
 	private final Map<String, Player> players = new LinkedHashMap<String, Player>();
 	private final Map<String, PlayerClock> clocks = new HashMap<String, PlayerClock>();
-	private final List<TimeMessage> messages = new ArrayList<TimeMessage>();
-	private final List<Highlight> highlights = new ArrayList<Highlight>();
+	private final List<TimeMessage> messages = new ArrayList<>();
+	private final List<Highlight> highlights = new ArrayList<>();
 	private final TimingRuler ruler = new TimingRuler(getSkinParam());
 	private TimeTick now;
 	private Player lastPlayer;

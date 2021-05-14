@@ -156,7 +156,7 @@ public class BasicCharAreaImpl implements BasicCharArea {
 	}
 
 	public List<String> getLines() {
-		final List<String> result = new ArrayList<String>(height);
+		final List<String> result = new ArrayList<>(height);
 		for (int y = 0; y < height; y++) {
 			result.add(getLine(y));
 		}

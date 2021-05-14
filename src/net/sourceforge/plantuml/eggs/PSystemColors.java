@@ -196,7 +196,7 @@ public class PSystemColors extends PlainDiagram implements UDrawable {
 	}
 
 	private List<String> getColorsCloseTo(String other) {
-		final List<String> result = new ArrayList<String>(colors.names());
+		final List<String> result = new ArrayList<>(colors.names());
 		for (Iterator<String> it = result.iterator(); it.hasNext();) {
 			final String candidat = it.next();
 			final String similar = candidat.replaceAll("Gray", "Grey");

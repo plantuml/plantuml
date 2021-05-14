@@ -65,7 +65,7 @@ class Election {
 	}
 
 	private List<CharSequence> getAllCandidateContains(String shortName) {
-		final List<CharSequence> result = new ArrayList<CharSequence>();
+		final List<CharSequence> result = new ArrayList<>();
 		for (Map.Entry<String, CharSequence> ent : all.entrySet()) {
 			if (ent.getKey().contains(shortName)) {
 				result.add(ent.getValue());
@@ -75,7 +75,7 @@ class Election {
 	}
 
 	private List<CharSequence> getAllCandidateContainsStrict(String shortName) {
-		final List<CharSequence> result = new ArrayList<CharSequence>();
+		final List<CharSequence> result = new ArrayList<>();
 		for (Map.Entry<String, CharSequence> ent : all.entrySet()) {
 			final String key = ent.getKey();
 			if (key.matches(".*\\b" + shortName + "\\b.*")) {
@@ -87,7 +87,7 @@ class Election {
 
 	public Map<CharSequence, String> getAllElected(Collection<String> shortNames) {
 		final Map<CharSequence, String> memberWithPort = new HashMap<CharSequence, String>();
-		for (String shortName : new HashSet<String>(shortNames)) {
+		for (String shortName : new HashSet<>(shortNames)) {
 			final CharSequence m = getCandidate(shortName);
 			if (m != null) {
 				memberWithPort.put(m, shortName);

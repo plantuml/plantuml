@@ -42,8 +42,7 @@ public class TickInPlayer {
 	private final TimeTick tick;
 
 	public TickInPlayer(Player player, TimeTick tick) {
-		Objects.requireNonNull(player);
-		this.player = player;
+		this.player = Objects.requireNonNull(player);
 		this.tick = tick;
 	}
 

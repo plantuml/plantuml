@@ -70,7 +70,7 @@ final public class UmlSource {
 		if (hasInitialSkinparam(source) == false) {
 			return this;
 		}
-		final List<StringLocated> copy = new ArrayList<StringLocated>(source);
+		final List<StringLocated> copy = new ArrayList<>(source);
 		while (hasInitialSkinparam(copy)) {
 			copy.remove(1);
 		}

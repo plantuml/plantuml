@@ -42,7 +42,7 @@ import java.util.List;
 public class BrailleCharFactory {
 
 	public static List<BrailleChar> build(String s) {
-		final List<BrailleChar> result = new ArrayList<BrailleChar>();
+		final List<BrailleChar> result = new ArrayList<>();
 		for (int i = 0; i < s.length(); i++) {
 			result.add(BrailleChar.fromChar(s.charAt(i)));
 		}

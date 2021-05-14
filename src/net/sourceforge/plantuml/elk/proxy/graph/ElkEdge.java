@@ -17,7 +17,7 @@ public class ElkEdge extends ElkWithProperty {
 	}
 
 	public Collection<ElkLabel> getLabels() {
-		final List<ElkLabel> result = new ArrayList<ElkLabel>();
+		final List<ElkLabel> result = new ArrayList<>();
 		Collection internal = (Collection) Reflect.call(obj, "getLabels");
 		for (Object element : internal) {
 			result.add(new ElkLabel(element));
@@ -26,7 +26,7 @@ public class ElkEdge extends ElkWithProperty {
 	}
 
 	public List<ElkEdgeSection> getSections() {
-		final List<ElkEdgeSection> result = new ArrayList<ElkEdgeSection>();
+		final List<ElkEdgeSection> result = new ArrayList<>();
 		Collection internal = (Collection) Reflect.call(obj, "getSections");
 		for (Object element : internal) {
 			result.add(new ElkEdgeSection(element));

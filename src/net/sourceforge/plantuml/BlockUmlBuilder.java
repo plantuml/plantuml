@@ -55,8 +55,8 @@ import net.sourceforge.plantuml.utils.StartUtils;
 
 public final class BlockUmlBuilder implements DefinitionsContainer {
 
-	private final List<BlockUml> blocks = new ArrayList<BlockUml>();
-	private Set<FileWithSuffix> usedFiles = new HashSet<FileWithSuffix>();
+	private final List<BlockUml> blocks = new ArrayList<>();
+	private Set<FileWithSuffix> usedFiles = new HashSet<>();
 	private final UncommentReadLine reader;
 	private final Defines defines;
 	private final ImportedFiles importedFiles;
@@ -92,7 +92,7 @@ public final class BlockUmlBuilder implements DefinitionsContainer {
 
 		while ((s = includer.readLine()) != null) {
 			if (StartUtils.isArobaseStartDiagram(s.getString())) {
-				current = new ArrayList<StringLocated>();
+				current = new ArrayList<>();
 				paused = false;
 			}
 			if (StartUtils.isArobasePauseDiagram(s.getString())) {

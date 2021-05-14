@@ -55,10 +55,9 @@ public class PixelImage implements MutableImage {
 	}
 
 	private PixelImage(BufferedImage bufferedImage, AffineTransformType type, double scale) {
-		Objects.requireNonNull(type);
 		this.bufferedImageScale1 = bufferedImage;
 		this.scale = scale;
-		this.type = type;
+		this.type = Objects.requireNonNull(type);
 	}
 
 	public MutableImage withScale(double scale) {

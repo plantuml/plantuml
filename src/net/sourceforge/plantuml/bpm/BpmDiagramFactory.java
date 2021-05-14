@@ -51,7 +51,7 @@ public class BpmDiagramFactory extends PSystemCommandFactory {
 
 	@Override
 	protected List<Command> createCommands() {
-		final List<Command> result = new ArrayList<Command>();
+		final List<Command> result = new ArrayList<>();
 		result.add(new CommandDockedEvent());
 		result.add(new CommandMerge());
 		result.add(new CommandResume());

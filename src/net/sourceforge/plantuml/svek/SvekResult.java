@@ -96,7 +96,7 @@ public final class SvekResult extends AbstractTextBlock implements IEntityImage 
 			// shape.getImage().drawNeighborhood(ug2, minX, minY);
 		}
 
-		final Set<String> ids = new HashSet<String>();
+		final Set<String> ids = new HashSet<>();
 
 		for (SvekLine line : dotStringFactory.getBibliotekon().allLines()) {
 			final UGraphic ug2 = line.isHidden() ? ug.apply(UHidden.HIDDEN) : ug;

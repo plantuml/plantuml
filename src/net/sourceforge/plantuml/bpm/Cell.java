@@ -42,7 +42,7 @@ import java.util.List;
 public class Cell {
 
 	private Placeable data;
-	private final List<Placeable> destinations = new ArrayList<Placeable>();
+	private final List<Placeable> destinations = new ArrayList<>();
 
 	public final Placeable getData() {
 		return data;

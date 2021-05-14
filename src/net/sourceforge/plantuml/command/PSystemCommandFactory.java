@@ -274,7 +274,7 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 	}
 
 	final public List<String> getDescription() {
-		final List<String> result = new ArrayList<String>();
+		final List<String> result = new ArrayList<>();
 		for (Command cmd : createCommands()) {
 			result.addAll(Arrays.asList(cmd.getDescription()));
 		}

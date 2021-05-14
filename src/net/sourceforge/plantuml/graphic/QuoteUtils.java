@@ -300,7 +300,7 @@ public class QuoteUtils {
 	private QuoteUtils() {
 	}
 
-	static private final List<String> tmp = new ArrayList<String>();
+	static private final List<String> tmp = new ArrayList<>();
 
 	public static String getSomeQuote() {
 		synchronized (tmp) {

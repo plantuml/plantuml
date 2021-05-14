@@ -56,8 +56,8 @@ public class Cypher {
 
 	private final SecureRandom rnd = new SecureRandom();
 	private final Map<String, String> convert = new HashMap<String, String>();
-	private final Set<String> except = new HashSet<String>();
-	private final List<String> words = new ArrayList<String>();
+	private final Set<String> except = new HashSet<>();
+	private final List<String> words = new ArrayList<>();
 
 	public Cypher() {
 		final InputStream is = Cypher.class.getResourceAsStream("words.txt");

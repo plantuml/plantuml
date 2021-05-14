@@ -225,7 +225,7 @@ public final class AtomText extends AbstractAtom implements Atom {
 	}
 
 	private final Collection<String> splitted() {
-		final List<String> result = new ArrayList<String>();
+		final List<String> result = new ArrayList<>();
 		for (int i = 0; i < text.length(); i++) {
 			final char ch = text.charAt(i);
 			if (isOfWord(ch)) {
@@ -248,7 +248,7 @@ public final class AtomText extends AbstractAtom implements Atom {
 		if (maxWidth == 0) {
 			throw new IllegalStateException();
 		}
-		final List<Atom> result = new ArrayList<Atom>();
+		final List<Atom> result = new ArrayList<>();
 		final StringTokenizer st = new StringTokenizer(text, " ", true);
 		final StringBuilder currentLine = new StringBuilder();
 		while (st.hasMoreTokens()) {

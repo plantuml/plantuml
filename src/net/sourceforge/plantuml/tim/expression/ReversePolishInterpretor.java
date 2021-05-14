@@ -61,7 +61,7 @@ public class ReversePolishInterpretor {
 	public ReversePolishInterpretor(LineLocation location, TokenStack queue, Knowledge knowledge, TMemory memory,
 			TContext context) throws EaterException, EaterExceptionLocated {
 
-		final Deque<TValue> stack = new ArrayDeque<TValue>();
+		final Deque<TValue> stack = new ArrayDeque<>();
 		if (trace)
 			System.err.println("ReversePolishInterpretor::queue=" + queue);
 		for (TokenIterator it = queue.tokenIterator(); it.hasMoreTokens();) {
@@ -101,7 +101,7 @@ public class ReversePolishInterpretor {
 					throw EaterException
 							.unlocated("Bad number of arguments for " + function.getSignature().getFunctionName());
 				}
-				final List<TValue> args = new ArrayList<TValue>();
+				final List<TValue> args = new ArrayList<>();
 				for (int i = 0; i < nb; i++) {
 					args.add(0, stack.removeFirst());
 				}

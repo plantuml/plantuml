@@ -55,11 +55,11 @@ public class YamlDiagramFactory extends PSystemAbstractFactory {
 	}
 
 	public Diagram createSystem(UmlSource source) {
-		final List<String> highlighted = new ArrayList<String>();
+		final List<String> highlighted = new ArrayList<>();
 		JsonValue yaml = null;
 		StyleExtractor styleExtractor = null;
 		try {
-			final List<String> list = new ArrayList<String>();
+			final List<String> list = new ArrayList<>();
 			styleExtractor = new StyleExtractor(source.iterator2());
 			final Iterator<String> it = styleExtractor.getIterator();
 			it.next();

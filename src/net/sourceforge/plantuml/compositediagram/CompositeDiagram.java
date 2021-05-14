@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.compositediagram;
 
+import java.util.Objects;
+
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
@@ -52,7 +54,7 @@ public class CompositeDiagram extends AbstractEntityDiagram {
 
 	@Override
 	public IEntity getOrCreateLeaf(Ident ident, Code code, LeafType type, USymbol symbol) {
-		checkNotNull(ident);
+		Objects.requireNonNull(ident);
 		// final Ident idNewLong = buildLeafIdent(id);
 		if (type == null) {
 			if (isGroup(code)) {

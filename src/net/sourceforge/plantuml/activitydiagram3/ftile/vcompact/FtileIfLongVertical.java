@@ -85,7 +85,7 @@ class FtileIfLongVertical extends AbstractFtile {
 
 	@Override
 	public Collection<Ftile> getMyChildren() {
-		final List<Ftile> result = new ArrayList<Ftile>(tiles);
+		final List<Ftile> result = new ArrayList<>(tiles);
 		result.add(tile2);
 		return Collections.unmodifiableList(result);
 	}
@@ -98,15 +98,15 @@ class FtileIfLongVertical extends AbstractFtile {
 		}
 		this.lastDiamond = lastDiamond;
 		this.tile2 = tile2;
-		this.diamonds = new ArrayList<Ftile>(diamonds);
-		this.tiles = new ArrayList<Ftile>(tiles);
+		this.diamonds = new ArrayList<>(diamonds);
+		this.tiles = new ArrayList<>(tiles);
 
 		this.arrowColor = arrowColor;
 
 	}
 
 	public Set<Swimlane> getSwimlanes() {
-		final Set<Swimlane> result = new HashSet<Swimlane>();
+		final Set<Swimlane> result = new HashSet<>();
 		if (getSwimlaneIn() != null) {
 			result.add(getSwimlaneIn());
 		}
@@ -128,7 +128,7 @@ class FtileIfLongVertical extends AbstractFtile {
 	static Ftile create(Swimlane swimlane, HColor borderColor, HColor backColor, Rainbow arrowColor,
 			FtileFactory ftileFactory, ConditionStyle conditionStyle, List<Branch> thens, Branch branch2,
 			FontConfiguration fc, LinkRendering topInlinkRendering, LinkRendering afterEndwhile) {
-		final List<Ftile> tiles = new ArrayList<Ftile>();
+		final List<Ftile> tiles = new ArrayList<>();
 
 		for (Branch branch : thens) {
 			tiles.add(new FtileMinWidthCentered(branch.getFtile(), 30));
@@ -136,7 +136,7 @@ class FtileIfLongVertical extends AbstractFtile {
 
 		final Ftile tile2 = new FtileMinWidthCentered(branch2.getFtile(), 30);
 
-		List<Ftile> diamonds = new ArrayList<Ftile>();
+		List<Ftile> diamonds = new ArrayList<>();
 		for (Branch branch : thens) {
 			final TextBlock tb1 = branch.getLabelPositive().create(fc, HorizontalAlignment.LEFT,
 					ftileFactory.skinParam());
@@ -159,7 +159,7 @@ class FtileIfLongVertical extends AbstractFtile {
 
 		final FtileIfLongVertical result = new FtileIfLongVertical(diamonds, tiles, tile2, arrowColor, lastDiamond);
 
-		final List<Connection> conns = new ArrayList<Connection>();
+		final List<Connection> conns = new ArrayList<>();
 		for (int i = 0; i < thens.size(); i++) {
 			final Ftile ftile = tiles.get(i);
 			final Ftile diam = diamonds.get(i);
@@ -518,7 +518,7 @@ class FtileIfLongVertical extends AbstractFtile {
 	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
 		final Dimension2D dimTotal = calculateDimensionInternal(stringBounder);
 
-		final List<Ftile> all = new ArrayList<Ftile>(tiles);
+		final List<Ftile> all = new ArrayList<>(tiles);
 		all.add(tile2);
 		for (Ftile tmp : all) {
 			if (tmp.calculateDimension(stringBounder).hasPointOut()) {

@@ -55,7 +55,7 @@ public class Rainbow {
 
 	private final static Rose rose = new Rose();
 
-	private final List<HtmlColorAndStyle> colors = new ArrayList<HtmlColorAndStyle>();
+	private final List<HtmlColorAndStyle> colors = new ArrayList<>();
 	private final int colorArrowSeparationSpace;
 
 	private Rainbow(int colorArrowSeparationSpace) {
