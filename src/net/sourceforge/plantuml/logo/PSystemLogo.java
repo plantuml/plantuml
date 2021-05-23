@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.png.PngIO;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
@@ -58,7 +59,8 @@ public class PSystemLogo extends AbstractPSystem {
 
 	private final List<String> lines = new ArrayList<>();
 
-	public PSystemLogo() {
+	public PSystemLogo(UmlSource source) {
+		super(source);
 	}
 
 	@Override

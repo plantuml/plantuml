@@ -39,6 +39,8 @@ import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.command.PSystemBasicFactory;
 import net.sourceforge.plantuml.core.DiagramType;
+import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.definition.PSystemDefinition;
 
 public class PSystemDitaaFactory extends PSystemBasicFactory<PSystemDitaa> {
 
@@ -53,7 +55,8 @@ public class PSystemDitaaFactory extends PSystemBasicFactory<PSystemDitaa> {
 		super(diagramType);
 	}
 
-	public PSystemDitaa init(String startLine) {
+	@Override
+	public PSystemDitaa initDiagram(UmlSource source, String startLine) {
 		boolean performSeparationOfCommonEdges = true;
 		if (startLine != null && (startLine.contains("-E") || startLine.contains("--no-separation"))) {
 			performSeparationOfCommonEdges = false;
@@ -66,14 +69,14 @@ public class PSystemDitaaFactory extends PSystemBasicFactory<PSystemDitaa> {
 		if (getDiagramType() == DiagramType.UML) {
 			return null;
 		} else if (getDiagramType() == DiagramType.DITAA) {
-			return new PSystemDitaa("", performSeparationOfCommonEdges, dropShadows, scale);
+			return new PSystemDitaa(source, "", performSeparationOfCommonEdges, dropShadows, scale);
 		} else {
 			throw new IllegalStateException(getDiagramType().name());
 		}
 	}
 
 	@Override
-	public PSystemDitaa executeLine(PSystemDitaa system, String line) {
+	public PSystemDitaa executeLine(UmlSource source, PSystemDitaa system, String line) {
 		if (system == null && (line.equals("ditaa") || line.startsWith("ditaa("))) {
 			boolean performSeparationOfCommonEdges = true;
 			if (line.contains("-E") || line.contains("--no-separation")) {
@@ -84,7 +87,7 @@ public class PSystemDitaaFactory extends PSystemBasicFactory<PSystemDitaa> {
 				dropShadows = false;
 			}
 			final float scale = extractScale(line);
-			return new PSystemDitaa("", performSeparationOfCommonEdges, dropShadows, scale);
+			return new PSystemDitaa(source, "", performSeparationOfCommonEdges, dropShadows, scale);
 		}
 		if (system == null) {
 			return null;

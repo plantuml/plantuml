@@ -44,14 +44,13 @@ import net.sourceforge.plantuml.math.ScientificEquationSafe;
 
 public class CommandCreoleLatex implements Command {
 
-	private final Pattern2 pattern;
+	private static final Pattern2 pattern = MyPattern.cmpile("^(" + Splitter.latexPattern + ")");
 
-	private CommandCreoleLatex(String p) {
-		this.pattern = MyPattern.cmpile(p);
+	private CommandCreoleLatex() {
 	}
 
 	public static Command create() {
-		return new CommandCreoleLatex("^(?i)(" + Splitter.latexPattern + ")");
+		return new CommandCreoleLatex();
 	}
 
 	public int matchingSize(String line) {

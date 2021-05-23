@@ -77,11 +77,11 @@ public final class FactorySequenceNoteOverSeveralCommand implements SingleMultiF
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("over"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("P1", "([\\p{L}0-9_.@]+|[%g][^%g]+[%g])"), //
+				new RegexLeaf("P1", "([%pLN_.@]+|[%g][^%g]+[%g])"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(","), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("P2", "([\\p{L}0-9_.@]+|[%g][^%g]+[%g])"), //
+				new RegexLeaf("P2", "([%pLN_.@]+|[%g][^%g]+[%g])"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				color().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -100,11 +100,11 @@ public final class FactorySequenceNoteOverSeveralCommand implements SingleMultiF
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("over"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("P1", "([\\p{L}0-9_.@]+|[%g][^%g]+[%g])"), //
+				new RegexLeaf("P1", "([%pLN_.@]+|[%g][^%g]+[%g])"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(","), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("P2", "([\\p{L}0-9_.@]+|[%g][^%g]+[%g])"), //
+				new RegexLeaf("P2", "([%pLN_.@]+|[%g][^%g]+[%g])"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				color().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -139,7 +139,7 @@ public final class FactorySequenceNoteOverSeveralCommand implements SingleMultiF
 
 			@Override
 			public String getPatternEnd() {
-				return "(?i)^end[%s]?(note|hnote|rnote)$";
+				return "^end[%s]?(note|hnote|rnote)$";
 			}
 
 			protected CommandExecutionResult executeNow(final SequenceDiagram system, BlocLines lines)

@@ -124,7 +124,7 @@ public final class FactorySequenceNoteAcrossCommand implements SingleMultiFactor
 
 			@Override
 			public String getPatternEnd() {
-				return "(?i)^end[%s]?(note|hnote|rnote)$";
+				return "^end[%s]?(note|hnote|rnote)$";
 			}
 
 			protected CommandExecutionResult executeNow(final SequenceDiagram system, BlocLines lines)

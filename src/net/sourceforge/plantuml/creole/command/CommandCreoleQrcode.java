@@ -44,14 +44,13 @@ import net.sourceforge.plantuml.graphic.Splitter;
 
 public class CommandCreoleQrcode implements Command {
 
-	private final Pattern2 pattern;
+	private static final Pattern2 pattern = MyPattern.cmpile("^(" + Splitter.qrcodePattern + ")");
 
-	private CommandCreoleQrcode(String p) {
-		this.pattern = MyPattern.cmpile(p);
+	private CommandCreoleQrcode() {
 	}
 
 	public static Command create() {
-		return new CommandCreoleQrcode("^(?i)(" + Splitter.qrcodePattern + ")");
+		return new CommandCreoleQrcode();
 	}
 
 	public int matchingSize(String line) {

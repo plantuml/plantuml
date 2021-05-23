@@ -74,7 +74,7 @@ public class CommandAnalog extends SingleLineCommand2<TimingDiagram> {
 								RegexLeaf.spaceOneOrMore())), //
 				new RegexLeaf("as"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("CODE", "([\\p{L}0-9_.@]+)"), RegexLeaf.end());
+				new RegexLeaf("CODE", "([%pLN_.@]+)"), RegexLeaf.end());
 	}
 
 	@Override

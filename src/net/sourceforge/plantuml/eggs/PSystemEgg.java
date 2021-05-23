@@ -37,12 +37,14 @@ package net.sourceforge.plantuml.eggs;
 
 import net.sourceforge.plantuml.PlainStringsDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.UmlSource;
 
 import java.util.StringTokenizer;
 
 public class PSystemEgg extends PlainStringsDiagram {
 
-	PSystemEgg(String sentence) {
+	PSystemEgg(UmlSource source, String sentence) {
+		super(source);
 		final StringTokenizer st = new StringTokenizer(sentence, "|");
 		while (st.hasMoreTokens()) {
 			strings.add(st.nextToken());

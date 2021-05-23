@@ -52,6 +52,8 @@ import net.sourceforge.plantuml.openiconic.data.DummyIcon;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorAutomaticLegacy;
+import net.sourceforge.plantuml.ugraphic.color.HColorSimple;
 
 public class OpenIcon {
 
@@ -134,7 +136,11 @@ public class OpenIcon {
 	public TextBlock asTextBlock(final HColor color, final double factor) {
 		return new AbstractTextBlock() {
 			public void drawU(UGraphic ug) {
-				svgPath.drawMe(ug.apply(color), factor);
+				HColor textColor = color;
+				if (textColor instanceof HColorAutomaticLegacy && ug.getParam().getBackcolor() != null) {
+					textColor = ((HColorSimple) ug.getParam().getBackcolor()).opposite();
+				}
+				svgPath.drawMe(ug.apply(textColor), factor);
 			}
 
 			public Dimension2D calculateDimension(StringBounder stringBounder) {

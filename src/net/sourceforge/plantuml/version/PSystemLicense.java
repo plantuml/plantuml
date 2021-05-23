@@ -42,6 +42,7 @@ import java.util.List;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.PlainDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
@@ -58,8 +59,12 @@ public class PSystemLicense extends PlainDiagram implements UDrawable {
 		return this;
 	}
 
-	public static PSystemLicense create() throws IOException {
-		return new PSystemLicense();
+	public static PSystemLicense create(UmlSource source) throws IOException {
+		return new PSystemLicense(source);
+	}
+
+	public PSystemLicense(UmlSource source) {
+		super(source);
 	}
 
 	private TextBlockBackcolored getGraphicStrings(List<String> strings) {

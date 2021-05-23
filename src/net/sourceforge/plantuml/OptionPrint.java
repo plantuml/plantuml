@@ -133,7 +133,6 @@ public class OptionPrint {
 		System.out.println("    -checkonly\t\tTo check the syntax of files without generating images");
 		System.out.println("    -failfast\t\tTo stop processing as soon as a syntax error in diagram occurs");
 		System.out.println("    -failfast2\t\tTo do a first syntax check before processing files, to fail even faster");
-		System.out.println("    -pattern\t\tTo print the list of Regular Expression used by PlantUML");
 		System.out.println("    -duration\t\tTo print the duration of complete diagrams processing");
 		System.out.println("    -nbthread N\t\tTo use (N) threads for processing");
 		System.out.println("    -nbthread auto\tTo use " + Option.defaultNbThreads() + " threads for processing");

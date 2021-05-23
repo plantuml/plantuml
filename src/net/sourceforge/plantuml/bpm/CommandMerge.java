@@ -51,7 +51,7 @@ public class CommandMerge extends SingleLineCommand2<BpmDiagram> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandMerge.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("ID", "([\\p{L}0-9_.@]+)"), //
+				new RegexLeaf("ID", "([%pLN_.@]+)"), //
 				new RegexLeaf(":?"), //
 				new RegexLeaf("\\<\\+\\>"), //
 				RegexLeaf.end());

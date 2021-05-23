@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.DisplayPositionned;
@@ -58,8 +59,8 @@ import net.sourceforge.plantuml.utils.UniqueSequence;
 
 public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram {
 
-	public AbstractClassOrObjectDiagram(UmlDiagramType type, ISkinSimple orig) {
-		super(type, orig);
+	public AbstractClassOrObjectDiagram(UmlSource source, UmlDiagramType type, ISkinSimple orig) {
+		super(source, type, orig);
 	}
 
 	@Override

@@ -71,7 +71,7 @@ import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 
-	static final String ANCHOR = "(\\{([\\p{L}0-9_]+)\\}[%s]+)?";
+	static final String ANCHOR = "(\\{([%pLN_]+)\\}[%s]+)?";
 
 	public CommandArrow() {
 		super(getRegexConcat());
@@ -86,10 +86,10 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 				new RegexLeaf("PARALLEL", "(&[%s]*)?"), //
 				new RegexLeaf("ANCHOR", ANCHOR), //
 				new RegexOr("PART1", //
-						new RegexLeaf("PART1CODE", "([\\p{L}0-9_.@]+)"), //
+						new RegexLeaf("PART1CODE", "([%pLN_.@]+)"), //
 						new RegexLeaf("PART1LONG", "[%g]([^%g]+)[%g]"), //
-						new RegexLeaf("PART1LONGCODE", "[%g]([^%g]+)[%g][%s]*as[%s]+([\\p{L}0-9_.@]+)"), //
-						new RegexLeaf("PART1CODELONG", "([\\p{L}0-9_.@]+)[%s]+as[%s]*[%g]([^%g]+)[%g]")), //
+						new RegexLeaf("PART1LONGCODE", "[%g]([^%g]+)[%g][%s]*as[%s]+([%pLN_.@]+)"), //
+						new RegexLeaf("PART1CODELONG", "([%pLN_.@]+)[%s]+as[%s]*[%g]([^%g]+)[%g]")), //
 				new RegexLeaf("PART1ANCHOR", ANCHOR), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("ARROW_DRESSING1",
@@ -106,11 +106,11 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 						"(_?>>?(?:[ox][%s])?|//?(?:[ox][%s])?|\\\\\\\\?(?:[ox][%s])?|[ox][%s])?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOr("PART2", //
-						new RegexLeaf("PART2CODE", "([\\p{L}0-9_.@]+)"), //
+						new RegexLeaf("PART2CODE", "([%pLN_.@]+)"), //
 						new RegexLeaf("PART2LONG", "[%g]([^%g]+)[%g]"), //
-						new RegexLeaf("PART2LONGCODE", "[%g]([^%g]+)[%g][%s]*as[%s]+([\\p{L}0-9_.@]+)"), //
-						new RegexLeaf("PART2CODELONG", "([\\p{L}0-9_.@]+)[%s]+as[%s]*[%g]([^%g]+)[%g]")), //
-				new RegexLeaf("MULTICAST", "((?:\\s&\\s[\\p{L}0-9_.@]+)*)"), //
+						new RegexLeaf("PART2LONGCODE", "[%g]([^%g]+)[%g][%s]*as[%s]+([%pLN_.@]+)"), //
+						new RegexLeaf("PART2CODELONG", "([%pLN_.@]+)[%s]+as[%s]*[%g]([^%g]+)[%g]")), //
+				new RegexLeaf("MULTICAST", "((?:\\s&\\s[%pLN_.@]+)*)"), //
 				new RegexLeaf("PART2ANCHOR", ANCHOR), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("ACTIVATION", "(?:(\\+\\+|\\*\\*|!!|--|--\\+\\+|\\+\\+--)?)"), //

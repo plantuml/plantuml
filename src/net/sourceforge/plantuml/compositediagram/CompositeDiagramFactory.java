@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.compositediagram.command.CommandCreateBlock;
 import net.sourceforge.plantuml.compositediagram.command.CommandCreatePackageBlock;
 import net.sourceforge.plantuml.compositediagram.command.CommandEndPackageBlock;
 import net.sourceforge.plantuml.compositediagram.command.CommandLinkBlock;
+import net.sourceforge.plantuml.core.UmlSource;
 
 public class CompositeDiagramFactory extends PSystemCommandFactory {
 
@@ -67,7 +68,7 @@ public class CompositeDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	public CompositeDiagram createEmptyDiagram() {
-		return new CompositeDiagram(skinParam);
+	public CompositeDiagram createEmptyDiagram(UmlSource source, ISkinSimple skinParam) {
+		return new CompositeDiagram(source, skinParam);
 	}
 }

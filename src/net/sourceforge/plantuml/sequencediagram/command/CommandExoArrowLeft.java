@@ -69,7 +69,7 @@ public class CommandExoArrowLeft extends CommandExoArrowAny {
 								new RegexLeaf("ARROW_BODYA2", "(-+)"))), //
 				new RegexLeaf("ARROW_SUPPCIRCLE", "([ox][%s]+)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("PARTICIPANT", "([\\p{L}0-9_.@]+|[%g][^%g]+[%g])"), //
+				new RegexLeaf("PARTICIPANT", "([%pLN_.@]+|[%g][^%g]+[%g])"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("ACTIVATION", "(?:([+*!-]+)?)"), //
 				RegexLeaf.spaceZeroOrMore(), //

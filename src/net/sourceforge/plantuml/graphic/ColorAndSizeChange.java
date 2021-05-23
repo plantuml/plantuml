@@ -44,9 +44,9 @@ import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 
 class ColorAndSizeChange implements FontChange {
 
-	static final Pattern2 colorPattern = MyPattern.cmpile("(?i)color\\s*=\\s*[%g]?(#[0-9a-fA-F]{6}|\\w+)[%g]?");
+	static final Pattern2 colorPattern = MyPattern.cmpile("color\\s*=\\s*[%g]?(#[0-9a-fA-F]{6}|\\w+)[%g]?");
 
-	static final Pattern2 sizePattern = MyPattern.cmpile("(?i)size\\s*=\\s*[%g]?(\\d+)[%g]?");
+	static final Pattern2 sizePattern = MyPattern.cmpile("size\\s*=\\s*[%g]?(\\d+)[%g]?");
 
 	private final HColor color;
 	private final Integer size;

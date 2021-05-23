@@ -64,7 +64,7 @@ public class CommandNoteLong3 extends CommandMultilines2<ActivityDiagram3> {
 
 	@Override
 	public String getPatternEnd() {
-		return "(?i)^end[%s]?note$";
+		return "^end[%s]?note$";
 	}
 
 	@Override

@@ -180,9 +180,9 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 			@Override
 			public String getPatternEnd() {
 				if (withBracket) {
-					return "(?i)^(\\})$";
+					return "^(\\})$";
 				}
-				return "(?i)^[%s]*(end[%s]?note)$";
+				return "^[%s]*(end[%s]?note)$";
 			}
 
 			protected CommandExecutionResult executeNow(final AbstractEntityDiagram system, BlocLines lines)

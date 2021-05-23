@@ -68,7 +68,7 @@ public class CommandArchimateMultilines extends CommandMultilines2<AbstractEntit
 
 	@Override
 	public String getPatternEnd() {
-		return "(?i)^(.*)\\]$";
+		return "^(.*)\\]$";
 	}
 
 	private static IRegex getRegexConcat() {
@@ -77,7 +77,7 @@ public class CommandArchimateMultilines extends CommandMultilines2<AbstractEntit
 				RegexLeaf.spaceOneOrMore(), //
 				color().getRegex(), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("CODE", "([\\p{L}0-9_.]+)"), //
+				new RegexLeaf("CODE", "([%pLN_.]+)"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional( //
 						new RegexConcat( //

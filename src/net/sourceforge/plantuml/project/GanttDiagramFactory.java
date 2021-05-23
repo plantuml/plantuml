@@ -40,10 +40,12 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandNope;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.core.DiagramType;
+import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.project.command.CommandColorTask;
 import net.sourceforge.plantuml.project.command.CommandFootbox;
 import net.sourceforge.plantuml.project.command.CommandGanttArrow;
@@ -119,7 +121,12 @@ public class GanttDiagramFactory extends PSystemCommandFactory {
 
 	static private final Collection<Command> cache = new ArrayList<>();
 
+	public static void clearCache() {
+		cache.clear();
+	}
+
 	private static Collection<Command> getLanguageCommands() {
+		// Useless synchronized now
 		synchronized (cache) {
 			if (cache.size() == 0) {
 
@@ -154,8 +161,8 @@ public class GanttDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	public GanttDiagram createEmptyDiagram() {
-		return new GanttDiagram();
+	public GanttDiagram createEmptyDiagram(UmlSource source, ISkinSimple skinParam) {
+		return new GanttDiagram(source);
 	}
 
 }

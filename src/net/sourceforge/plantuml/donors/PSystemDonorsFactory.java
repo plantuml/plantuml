@@ -37,13 +37,14 @@ package net.sourceforge.plantuml.donors;
 
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
+import net.sourceforge.plantuml.core.UmlSource;
 
 public class PSystemDonorsFactory extends PSystemSingleLineFactory {
 
 	@Override
-	protected AbstractPSystem executeLine(String line) {
+	protected AbstractPSystem executeLine(UmlSource source, String line) {
 		if (line.matches("(?i)^(donors)\\s*$")) {
-			return PSystemDonors.create();
+			return PSystemDonors.create(source);
 		}
 		return null;
 	}

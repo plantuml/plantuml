@@ -34,20 +34,22 @@
  */
 package net.sourceforge.plantuml.stats;
 
+import java.io.IOException;
+
 import net.sourceforge.plantuml.PlainStringsDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
-
-import java.io.IOException;
+import net.sourceforge.plantuml.core.UmlSource;
 
 public class PSystemStats extends PlainStringsDiagram {
 
-	PSystemStats() {
+	PSystemStats(UmlSource source) {
+		super(source);
 		final StatsImpl stats = (StatsImpl) StatsUtils.getStats();
 		strings.addAll(new CreoleConverter(stats).toCreole());
 	}
 
-	public static PSystemStats create() throws IOException {
-		return new PSystemStats();
+	public static PSystemStats create(UmlSource source) throws IOException {
+		return new PSystemStats(source);
 	}
 
 	public DiagramDescription getDescription() {

@@ -78,7 +78,7 @@ public final class FactorySequenceNoteCommand implements SingleMultiFactoryComma
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("POSITION", "(right|left|over)"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("PARTICIPANT", "(?:of[%s]+)?([\\p{L}0-9_.@]+|[%g][^%g]+[%g])"), //
+				new RegexLeaf("PARTICIPANT", "(?:of[%s]+)?([%pLN_.@]+|[%g][^%g]+[%g])"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				color().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -96,7 +96,7 @@ public final class FactorySequenceNoteCommand implements SingleMultiFactoryComma
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("POSITION", "(right|left|over)"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("PARTICIPANT", "(?:of[%s])?([\\p{L}0-9_.@]+|[%g][^%g]+[%g])"), //
+				new RegexLeaf("PARTICIPANT", "(?:of[%s])?([%pLN_.@]+|[%g][^%g]+[%g])"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				color().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -117,7 +117,7 @@ public final class FactorySequenceNoteCommand implements SingleMultiFactoryComma
 
 			@Override
 			public String getPatternEnd() {
-				return "(?i)^end[%s]?(note|hnote|rnote)$";
+				return "^end[%s]?(note|hnote|rnote)$";
 			}
 
 			protected CommandExecutionResult executeNow(final SequenceDiagram system, BlocLines lines)

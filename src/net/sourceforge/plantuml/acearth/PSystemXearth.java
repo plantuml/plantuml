@@ -55,6 +55,7 @@ import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.UmlSource;
 
 public class PSystemXearth extends AbstractPSystem {
 
@@ -70,7 +71,8 @@ public class PSystemXearth extends AbstractPSystem {
 			"terminatorDiscontinuity", "gridDivision", "gridPixelDivision", "bigStars");
 	final private Collection<String> booleans = Arrays.asList("shadeP", "gridP", "starsP");
 
-	public PSystemXearth(int width, int height, Map<String, String> config, List<Marker> markers) {
+	public PSystemXearth(UmlSource source, int width, int height, Map<String, String> config, List<Marker> markers) {
+		super(source);
 		this.width = width;
 		this.height = height;
 		this.config = config;

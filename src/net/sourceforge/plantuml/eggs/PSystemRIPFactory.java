@@ -40,14 +40,15 @@ import java.io.IOException;
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
+import net.sourceforge.plantuml.core.UmlSource;
 
 public class PSystemRIPFactory extends PSystemSingleLineFactory {
 
 	@Override
-	protected AbstractPSystem executeLine(String line) {
+	protected AbstractPSystem executeLine(UmlSource source, String line) {
 		if (line.equalsIgnoreCase("jean canouet")) {
 			try {
-				return new PSystemRIP();
+				return new PSystemRIP(source);
 			} catch (IOException e) {
 				Log.error("Error " + e);
 				e.printStackTrace();

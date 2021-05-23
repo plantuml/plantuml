@@ -126,12 +126,11 @@ public class PSystemBuilder {
 
 			final DiagramType diagramType = umlSource.getDiagramType();
 			final List<PSystemError> errors = new ArrayList<>();
-			final List<PSystemFactory> factories = getAllFactories(skinParam);
 			for (PSystemFactory systemFactory : factories) {
 				if (diagramType != systemFactory.getDiagramType()) {
 					continue;
 				}
-				final Diagram sys = systemFactory.createSystem(umlSource);
+				final Diagram sys = systemFactory.createSystem(umlSource, skinParam);
 				if (isOk(sys)) {
 					result = sys;
 					return sys;
@@ -151,16 +150,17 @@ public class PSystemBuilder {
 		}
 	}
 
-	private static List<PSystemFactory> getAllFactories(ISkinSimple skinParam) {
-		final List<PSystemFactory> factories = new ArrayList<>();
+	private static final List<PSystemFactory> factories = new ArrayList<>();
+
+	static {
 		factories.add(new PSystemWelcomeFactory());
 		factories.add(new PSystemColorsFactory());
-		factories.add(new SequenceDiagramFactory(skinParam));
-		factories.add(new ClassDiagramFactory(skinParam));
-		factories.add(new ActivityDiagramFactory(skinParam));
-		factories.add(new DescriptionDiagramFactory(skinParam));
-		factories.add(new StateDiagramFactory(skinParam));
-		factories.add(new ActivityDiagramFactory3(skinParam));
+		factories.add(new SequenceDiagramFactory());
+		factories.add(new ClassDiagramFactory());
+		factories.add(new ActivityDiagramFactory());
+		factories.add(new DescriptionDiagramFactory());
+		factories.add(new StateDiagramFactory());
+		factories.add(new ActivityDiagramFactory3());
 		// factories.add(new CompositeDiagramFactory(skinParam));
 		factories.add(new BpmDiagramFactory(DiagramType.BPM));
 		// factories.add(new PostIdDiagramFactory());
@@ -176,7 +176,8 @@ public class PSystemBuilder {
 		factories.add(new PSystemSaltFactory2(DiagramType.UML));
 		factories.add(new PSystemDotFactory(DiagramType.DOT));
 		factories.add(new PSystemDotFactory(DiagramType.UML));
-		factories.add(new NwDiagramFactory());
+		factories.add(new NwDiagramFactory(DiagramType.NW));
+		factories.add(new NwDiagramFactory(DiagramType.UML));
 		factories.add(new MindMapDiagramFactory());
 		factories.add(new WBSDiagramFactory());
 		factories.add(new PSystemDitaaFactory(DiagramType.DITAA));
@@ -188,8 +189,8 @@ public class PSystemBuilder {
 			factories.add(new PSystemSudokuFactory());
 		}
 		factories.add(new PSystemDefinitionFactory());
-		factories.add(new ListSpriteDiagramFactory(skinParam));
-		factories.add(new StdlibDiagramFactory(skinParam));
+		factories.add(new ListSpriteDiagramFactory());
+		factories.add(new StdlibDiagramFactory());
 		factories.add(new PSystemMathFactory(DiagramType.MATH));
 		factories.add(new PSystemLatexFactory(DiagramType.LATEX));
 		// factories.add(new PSystemStatsFactory());
@@ -208,6 +209,7 @@ public class PSystemBuilder {
 		}
 		factories.add(new GanttDiagramFactory(DiagramType.GANTT));
 		factories.add(new GanttDiagramFactory(DiagramType.UML));
+		GanttDiagramFactory.clearCache();
 		factories.add(new FlowDiagramFactory());
 		// factories.add(new PSystemTreeFactory(DiagramType.JUNGLE));
 		// factories.add(new PSystemCuteFactory(DiagramType.CUTE));
@@ -219,7 +221,6 @@ public class PSystemBuilder {
 		factories.add(new GitDiagramFactory());
 		factories.add(new BoardDiagramFactory());
 		factories.add(new YamlDiagramFactory());
-		return factories;
 	}
 
 	private boolean isOk(Diagram ps) {

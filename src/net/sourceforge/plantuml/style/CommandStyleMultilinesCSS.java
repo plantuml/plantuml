@@ -53,7 +53,7 @@ public class CommandStyleMultilinesCSS extends CommandMultilines2<TitledDiagram>
 
 	@Override
 	public String getPatternEnd() {
-		return "(?i)^[%s]*\\</style\\>[%s]*$";
+		return "^[%s]*\\</style\\>[%s]*$";
 	}
 
 	private static IRegex getRegexConcat() {

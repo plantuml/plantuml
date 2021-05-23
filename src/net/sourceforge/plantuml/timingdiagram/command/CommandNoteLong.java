@@ -58,7 +58,7 @@ public class CommandNoteLong extends CommandMultilines2<TimingDiagram> {
 
 	@Override
 	public String getPatternEnd() {
-		return "(?i)^end[%s]?note$";
+		return "^end[%s]?note$";
 	}
 
 	@Override

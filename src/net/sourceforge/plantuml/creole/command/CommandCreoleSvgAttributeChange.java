@@ -45,24 +45,27 @@ import net.sourceforge.plantuml.graphic.SvgAttributes;
 
 public class CommandCreoleSvgAttributeChange implements Command {
 
-	private final Pattern2 pattern;
-
 	public static final String fontPattern = Splitter.svgAttributePattern;
 
+	private static final Pattern2 pattern = MyPattern.cmpile("^(" + fontPattern + "(.*?)\\</text\\>)");
+	private static final Pattern2 patternEol = MyPattern.cmpile("^(" + fontPattern + "(.*))$");
+
+	private final Pattern2 mypattern;
+
 	public static Command create() {
-		return new CommandCreoleSvgAttributeChange("^(?i)(" + fontPattern + "(.*?)\\</text\\>)");
+		return new CommandCreoleSvgAttributeChange(pattern);
 	}
 
 	public static Command createEol() {
-		return new CommandCreoleSvgAttributeChange("^(?i)(" + fontPattern + "(.*))$");
+		return new CommandCreoleSvgAttributeChange(patternEol);
 	}
 
-	private CommandCreoleSvgAttributeChange(String p) {
-		this.pattern = MyPattern.cmpile(p);
+	private CommandCreoleSvgAttributeChange(Pattern2 p) {
+		this.mypattern = p;
 	}
 
 	public int matchingSize(String line) {
-		final Matcher2 m = pattern.matcher(line);
+		final Matcher2 m = mypattern.matcher(line);
 		if (m.find() == false) {
 			return 0;
 		}
@@ -70,7 +73,7 @@ public class CommandCreoleSvgAttributeChange implements Command {
 	}
 
 	public String executeAndGetRemaining(String line, StripeSimple stripe) {
-		final Matcher2 m = pattern.matcher(line);
+		final Matcher2 m = mypattern.matcher(line);
 		if (m.find() == false) {
 			throw new IllegalStateException();
 		}

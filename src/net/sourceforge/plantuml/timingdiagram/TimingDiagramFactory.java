@@ -38,9 +38,11 @@ package net.sourceforge.plantuml.timingdiagram;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandFootboxIgnored;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
+import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.timingdiagram.command.CommandAnalog;
 import net.sourceforge.plantuml.timingdiagram.command.CommandAtPlayer;
 import net.sourceforge.plantuml.timingdiagram.command.CommandAtTime;
@@ -65,8 +67,8 @@ import net.sourceforge.plantuml.timingdiagram.command.CommandTimeMessage;
 public class TimingDiagramFactory extends PSystemCommandFactory {
 
 	@Override
-	public TimingDiagram createEmptyDiagram() {
-		return new TimingDiagram();
+	public TimingDiagram createEmptyDiagram(UmlSource source, ISkinSimple skinParam) {
+		return new TimingDiagram(source);
 	}
 
 	@Override

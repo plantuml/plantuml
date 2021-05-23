@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.UmlSource;
 
 public class PSystemSudoku extends AbstractPSystem {
 
@@ -69,7 +70,8 @@ public class PSystemSudoku extends AbstractPSystem {
 		return new DiagramDescription("(Sudoku)");
 	}
 
-	public PSystemSudoku(Long seed) {
+	public PSystemSudoku(UmlSource source, Long seed) {
+		super(source);
 		sudoku = new SudokuDLX(seed);
 	}
 

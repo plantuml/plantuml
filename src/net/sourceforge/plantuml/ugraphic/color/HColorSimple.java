@@ -83,6 +83,16 @@ public class HColorSimple extends HColorAbstract implements HColor {
 	}
 
 	@Override
+	public HColor reverseHsluv() {
+		return new HColorSimple(ColorUtils.reverseHsluv(color), false);
+	}
+
+	@Override
+	public HColor reverse() {
+		return new HColorSimple(ColorOrder.RGB.getReverse(color), false);
+	}
+
+	@Override
 	public boolean isDark() {
 		return ColorUtils.getGrayScale(color) < 128;
 	}

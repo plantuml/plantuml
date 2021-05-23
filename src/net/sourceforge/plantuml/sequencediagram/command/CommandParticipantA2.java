@@ -51,7 +51,7 @@ public class CommandParticipantA2 extends CommandParticipant {
 		return RegexConcat.build(CommandParticipantA2.class.getName(), RegexLeaf.start(), //
 				getRegexType(), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("CODE", "([\\p{L}0-9_.@]+)"), //
+				new RegexLeaf("CODE", "([%pLN_.@]+)"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("as"), //
 				RegexLeaf.spaceOneOrMore(), //

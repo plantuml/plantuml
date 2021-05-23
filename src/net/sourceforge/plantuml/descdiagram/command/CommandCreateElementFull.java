@@ -138,13 +138,13 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 		return ColorParser.simpleColor(ColorType.BACK, "COLOR2");
 	}
 
-	private static final String CODE_CORE = "[\\p{L}0-9_.]+|\\(\\)[%s]*[\\p{L}0-9_.]+|\\(\\)[%s]*[%g][^%g]+[%g]|:[^:]+:/?|\\([^()]+\\)/?|\\[[^\\[\\]]+\\]";
+	private static final String CODE_CORE = "[%pLN_.]+|\\(\\)[%s]*[%pLN_.]+|\\(\\)[%s]*[%g][^%g]+[%g]|:[^:]+:/?|\\([^()]+\\)/?|\\[[^\\[\\]]+\\]";
 	public static final String CODE = "(" + CODE_CORE + ")";
 	public static final String CODE_WITH_QUOTE = "(" + CODE_CORE + "|[%g].+?[%g])";
 
 	private static final String DISPLAY_CORE = "[%g].+?[%g]|:[^:]+:/?|\\([^()]+\\)/?|\\[[^\\[\\]]+\\]";
 	public static final String DISPLAY = "(" + DISPLAY_CORE + ")";
-	public static final String DISPLAY_WITHOUT_QUOTE = "(" + DISPLAY_CORE + "|[\\p{L}0-9_.]+)";
+	public static final String DISPLAY_WITHOUT_QUOTE = "(" + DISPLAY_CORE + "|[%pLN_.]+)";
 
 	@Override
 	final protected boolean isForbidden(CharSequence line) {

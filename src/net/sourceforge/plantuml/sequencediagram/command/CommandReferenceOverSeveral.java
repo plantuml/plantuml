@@ -68,7 +68,7 @@ public class CommandReferenceOverSeveral extends SingleLineCommand2<SequenceDiag
 				new RegexLeaf("over"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("PARTS",
-						"(([\\p{L}0-9_.@]+|[%g][^%g]+[%g])([%s]*,[%s]*([\\p{L}0-9_.@]+|[%g][^%g]+[%g]))*)"), //
+						"(([%pLN_.@]+|[%g][^%g]+[%g])([%s]*,[%s]*([%pLN_.@]+|[%g][^%g]+[%g]))*)"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(":"), //
 				RegexLeaf.spaceZeroOrMore(), //

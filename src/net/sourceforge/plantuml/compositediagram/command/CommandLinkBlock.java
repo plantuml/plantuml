@@ -57,13 +57,13 @@ public class CommandLinkBlock extends SingleLineCommand2<CompositeDiagram> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandLinkBlock.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("ENT1", "([\\p{L}0-9_.]+)"), //
+				new RegexLeaf("ENT1", "([%pLN_.]+)"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("DECO1", "(\\[\\]|\\*\\))?"), //
 				new RegexLeaf("QUEUE", "([=-]+|\\.+)"), //
 				new RegexLeaf("DECO2", "(\\[\\]|\\(\\*)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("ENT2", "([\\p{L}0-9_.]+)"), //
+				new RegexLeaf("ENT2", "([%pLN_.]+)"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional( //
 						new RegexConcat( //

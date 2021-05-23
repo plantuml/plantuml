@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.eggs;
 
+import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.api.PSystemFactory;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
@@ -43,9 +44,10 @@ import net.sourceforge.plantuml.graphic.GraphicPosition;
 
 public class PSystemWelcomeFactory implements PSystemFactory {
 
-	public Diagram createSystem(UmlSource source) {
+	@Override
+	public Diagram createSystem(UmlSource source, ISkinSimple skinParam) {
 		if (source.getTotalLineCount() == 2) {
-			return new PSystemWelcome(GraphicPosition.BACKGROUND_CORNER_BOTTOM_RIGHT);
+			return new PSystemWelcome(source, GraphicPosition.BACKGROUND_CORNER_BOTTOM_RIGHT);
 		}
 		return null;
 	}

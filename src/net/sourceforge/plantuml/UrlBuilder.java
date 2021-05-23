@@ -62,12 +62,12 @@ public class UrlBuilder {
 			+ "[%s]*\\]\\]";
 
 	private static final String S_LINK_TOOLTIP_NOLABEL = "\\[\\[[%s]*" + //
-			"([^\\s%g{}]+?)" + // Link
+			"([^\\s%g{}\\[\\]]+?)" + // Link
 			"[%s]*\\{(.+)\\}" + // Tooltip
 			"[%s]*\\]\\]";
 
 	private static final String S_LINK_WITH_OPTIONAL_TOOLTIP_WITH_OPTIONAL_LABEL = "\\[\\[[%s]*" + //
-			"([^%s%g]+?)" + // Link
+			"([^%s%g\\[\\]]+?)" + // Link
 			"(?:[%s]*\\{([^{}]*)\\})?" + // Optional tooltip
 			"(?:[%s]([^%s\\{\\}\\[\\]][^\\[\\]]*))?" + // Optional label
 			"[%s]*\\]\\]";

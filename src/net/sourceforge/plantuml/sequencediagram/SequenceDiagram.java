@@ -58,6 +58,7 @@ import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.EntityPortion;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
@@ -81,8 +82,8 @@ public class SequenceDiagram extends UmlDiagram {
 
 	private final Rose skin2 = new Rose();
 
-	public SequenceDiagram(ISkinSimple skinParam) {
-		super(UmlDiagramType.SEQUENCE, skinParam);
+	public SequenceDiagram(UmlSource source, ISkinSimple skinParam) {
+		super(source, UmlDiagramType.SEQUENCE, skinParam);
 	}
 
 	@Deprecated

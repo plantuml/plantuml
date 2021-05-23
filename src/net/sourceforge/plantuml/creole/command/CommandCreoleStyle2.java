@@ -37,15 +37,10 @@ package net.sourceforge.plantuml.creole.command;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.regex.Matcher2;
-import net.sourceforge.plantuml.command.regex.MyPattern;
-import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.creole.legacy.StripeSimple;
 import net.sourceforge.plantuml.graphic.FontStyle;
 
-public class CommandCreoleStyle2 implements Command {
-
-	private final Pattern2 p;
-	private final FontStyle style;
+public class CommandCreoleStyle2 extends CommandCreoleCache implements Command {
 
 	public static Command createCreole(FontStyle style) {
 		return new CommandCreoleStyle2("^(" + style.getCreoleSyntax() + "(.+?)" + style.getCreoleSyntax() + ")", style);
@@ -61,12 +56,11 @@ public class CommandCreoleStyle2 implements Command {
 	}
 
 	private CommandCreoleStyle2(String p, FontStyle style) {
-		this.p = MyPattern.cmpile(p);
-		this.style = style;
+		super(p);
 	}
 
 	public String executeAndGetRemaining(final String line, StripeSimple stripe) {
-		final Matcher2 m = p.matcher(line);
+		final Matcher2 m = mypattern.matcher(line);
 		if (m.find() == false) {
 			throw new IllegalStateException();
 		}
@@ -79,7 +73,7 @@ public class CommandCreoleStyle2 implements Command {
 	}
 
 	public int matchingSize(String line) {
-		final Matcher2 m = p.matcher(line);
+		final Matcher2 m = mypattern.matcher(line);
 		if (m.find() == false) {
 			return 0;
 		}

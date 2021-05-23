@@ -49,11 +49,11 @@ import net.sourceforge.plantuml.security.SURL;
 
 public class Img implements HtmlCommand {
 
-	final static private Pattern2 srcPattern = MyPattern.cmpile("(?i)src[%s]*=[%s]*[\"%q]?([^%s\">]+)[\"%q]?");
-	final static private Pattern2 vspacePattern = MyPattern.cmpile("(?i)vspace[%s]*=[%s]*[\"%q]?(\\d+)[\"%q]?");
+	final static private Pattern2 srcPattern = MyPattern.cmpile("src[%s]*=[%s]*[\"%q]?([^%s\">]+)[\"%q]?");
+	final static private Pattern2 vspacePattern = MyPattern.cmpile("vspace[%s]*=[%s]*[\"%q]?(\\d+)[\"%q]?");
 	final static private Pattern2 valignPattern = MyPattern
-			.cmpile("(?i)valign[%s]*=[%s]*[\"%q]?(top|bottom|middle)[\"%q]?");
-	final static private Pattern2 noSrcColonPattern = MyPattern.cmpile("(?i)" + Splitter.imgPatternNoSrcColon);
+			.cmpile("valign[%s]*=[%s]*[\"%q]?(top|bottom|middle)[\"%q]?");
+	final static private Pattern2 noSrcColonPattern = MyPattern.cmpile(Splitter.imgPatternNoSrcColon);
 
 	private final TextBlock tileImage;
 

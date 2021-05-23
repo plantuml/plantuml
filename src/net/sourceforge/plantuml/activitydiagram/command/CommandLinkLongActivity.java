@@ -80,7 +80,7 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 
 	@Override
 	public String getPatternEnd() {
-		return "(?i)^[%s]*([^%g]*)[%g](?:[%s]+as[%s]+([\\p{L}0-9][\\p{L}0-9_.]*))?[%s]*(\\<\\<.*\\>\\>)?[%s]*(?:in[%s]+([%g][^%g]+[%g]|\\S+))?[%s]*(#\\w+)?$";
+		return "^[%s]*([^%g]*)[%g](?:[%s]+as[%s]+([%pLN][%pLN_.]*))?[%s]*(\\<\\<.*\\>\\>)?[%s]*(?:in[%s]+([%g][^%g]+[%g]|\\S+))?[%s]*(#\\w+)?$";
 	}
 
 	static IRegex getRegexConcat() {
@@ -88,9 +88,9 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 				new RegexOptional(//
 						new RegexOr("FIRST", //
 								new RegexLeaf("STAR", "(\\(\\*(top)?\\))"), //
-								new RegexLeaf("CODE", "([\\p{L}0-9][\\p{L}0-9_.]*)"), //
-								new RegexLeaf("BAR", "(?:==+)[%s]*([\\p{L}0-9_.]+)[%s]*(?:==+)"), //
-								new RegexLeaf("QUOTED", "[%g]([^%g]+)[%g](?:[%s]+as[%s]+([\\p{L}0-9_.]+))?"))), //
+								new RegexLeaf("CODE", "([%pLN][%pLN_.]*)"), //
+								new RegexLeaf("BAR", "(?:==+)[%s]*([%pLN_.]+)[%s]*(?:==+)"), //
+								new RegexLeaf("QUOTED", "[%g]([^%g]+)[%g](?:[%s]+as[%s]+([%pLN_.]+))?"))), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("STEREOTYPE", "(\\<\\<.*\\>\\>)?"), //
 				RegexLeaf.spaceZeroOrMore(), //

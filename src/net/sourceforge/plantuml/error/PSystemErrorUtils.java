@@ -54,6 +54,9 @@ public class PSystemErrorUtils {
 	}
 
 	public static PSystemError merge(Collection<PSystemError> ps) {
+		if (ps.size() == 0) {
+			throw new IllegalStateException();
+		}
 		UmlSource source = null;
 		final List<ErrorUml> errors = new ArrayList<>();
 		// final List<String> debugs = new ArrayList<>();

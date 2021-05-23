@@ -54,7 +54,7 @@ public class CommandExoArrowRight extends CommandExoArrowAny {
 		return RegexConcat.build(CommandExoArrowRight.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("PARALLEL", "(&[%s]*)?"), //
 				new RegexLeaf("ANCHOR", CommandArrow.ANCHOR), //
-				new RegexLeaf("PARTICIPANT", "([\\p{L}0-9_.@]+|[%g][^%g]+[%g])"), //
+				new RegexLeaf("PARTICIPANT", "([%pLN_.@]+|[%g][^%g]+[%g])"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("ARROW_SUPPCIRCLE", "([%s]+[ox])?"), //
 				new RegexOr( //

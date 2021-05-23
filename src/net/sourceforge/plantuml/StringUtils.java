@@ -420,13 +420,8 @@ public class StringUtils {
 
 	public static List<String> splitComma(String s) {
 		s = trin(s);
-		// if
-		// (s.matches("([\\p{L}0-9_.]+|[%g][^%g]+[%g])(\\s*,\\s*([\\p{L}0-9_.]+|[%g][^%g]+[%g]))*")
-		// == false) {
-		// throw new IllegalArgumentException();
-		// }
 		final List<String> result = new ArrayList<>();
-		final Pattern2 p = MyPattern.cmpile("([\\p{L}0-9_.]+|[%g][^%g]+[%g])");
+		final Pattern2 p = MyPattern.cmpile("([%pLN_.]+|[%g][^%g]+[%g])");
 		final Matcher2 m = p.matcher(s);
 		while (m.find()) {
 			result.add(eventuallyRemoveStartingAndEndingDoubleQuote(m.group(0)));

@@ -59,7 +59,7 @@ public class CommandNewpage extends SingleLineCommand2<SequenceDiagram> {
 				new RegexOptional( //
 						new RegexConcat( //
 								new RegexLeaf("(?:[%s]*:[%s]*|[%s]+)"), //
-								new RegexLeaf("LABEL", "(.*[\\p{L}0-9_.].*)") //
+								new RegexLeaf("LABEL", "(.*[%pLN_.].*)") //
 						)), RegexLeaf.end()); //
 	}
 

@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
@@ -68,8 +69,8 @@ public class BoardDiagram extends UmlDiagram {
 		return new DiagramDescription("Board");
 	}
 
-	public BoardDiagram() {
-		super(UmlDiagramType.BOARD);
+	public BoardDiagram(UmlSource source) {
+		super(source, UmlDiagramType.BOARD);
 	}
 
 	@Override

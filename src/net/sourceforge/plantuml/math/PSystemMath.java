@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
@@ -55,7 +56,8 @@ public class PSystemMath extends AbstractPSystem {
 	private Color color = Color.BLACK;
 	private Color backColor = Color.WHITE;
 
-	public PSystemMath() {
+	public PSystemMath(UmlSource source) {
+		super(source);
 	}
 
 	public DiagramDescription getDescription() {

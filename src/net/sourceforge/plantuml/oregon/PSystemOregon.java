@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.PlainDiagram;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 
@@ -54,7 +55,8 @@ public class PSystemOregon extends PlainDiagram {
 	private List<String> inputs;
 
 	@Deprecated
-	public PSystemOregon(Keyboard keyboard) {
+	public PSystemOregon(UmlSource source, Keyboard keyboard) {
+		super(source);
 		final BasicGame game = new OregonBasicGame();
 		try {
 			game.run(keyboard);
@@ -71,7 +73,8 @@ public class PSystemOregon extends PlainDiagram {
 		return super.createImageBuilder(fileFormatOption).blackBackcolor();
 	}
 
-	public PSystemOregon() {
+	public PSystemOregon(UmlSource source) {
+		super(source);
 		this.inputs = new ArrayList<>();
 	}
 

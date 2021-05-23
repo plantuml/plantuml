@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.anim.Animation;
 import net.sourceforge.plantuml.anim.AnimationDecoder;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.DisplayPositionned;
 import net.sourceforge.plantuml.cucadiagram.DisplaySection;
@@ -81,7 +82,8 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 		return pragma;
 	}
 
-	public TitledDiagram(UmlDiagramType type) {
+	public TitledDiagram(UmlSource source, UmlDiagramType type) {
+		super(source);
 		this.type = type;
 		this.skinParam = SkinParam.create(type);
 	}
@@ -90,8 +92,8 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 		return skinParam.getCurrentStyleBuilder();
 	}
 
-	public TitledDiagram(UmlDiagramType type, ISkinSimple orig) {
-		this(type);
+	public TitledDiagram(UmlSource source, UmlDiagramType type, ISkinSimple orig) {
+		this(source, type);
 		if (orig != null) {
 			this.skinParam.copyAllFrom(orig);
 		}

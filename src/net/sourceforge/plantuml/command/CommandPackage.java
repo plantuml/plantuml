@@ -79,7 +79,7 @@ public class CommandPackage extends SingleLineCommand2<AbstractEntityDiagram> {
 								RegexLeaf.spaceOneOrMore(), //
 								new RegexLeaf("as"), //
 								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("AS", "([\\p{L}0-9_.]+)") //
+								new RegexLeaf("AS", "([%pLN_.]+)") //
 						)), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("STEREOTYPE", "(\\<\\<.*\\>\\>)?"), //

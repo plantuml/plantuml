@@ -45,12 +45,12 @@ import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 public class CommandNoteBottom extends CommandMultilines<GanttDiagram> {
 
 	public CommandNoteBottom() {
-		super("(?i)^note[%s]*bottom$");
+		super("^note[%s]*bottom$");
 	}
 
 	@Override
 	public String getPatternEnd() {
-		return "(?i)^end[%s]*note$";
+		return "^end[%s]*note$";
 	}
 
 	public CommandExecutionResult execute(GanttDiagram diagram, BlocLines lines) throws NoSuchColorException {

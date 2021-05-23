@@ -47,10 +47,11 @@ import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.OptionPrint;
 import net.sourceforge.plantuml.PlainStringsDiagram;
 import net.sourceforge.plantuml.Run;
+import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
 import net.sourceforge.plantuml.dedication.PSystemDedication;
-import net.sourceforge.plantuml.preproc.ImportedFiles;
 import net.sourceforge.plantuml.preproc.Stdlib;
 import net.sourceforge.plantuml.preproc2.PreprocessorUtils;
 import net.sourceforge.plantuml.security.ImageIO;
@@ -61,7 +62,8 @@ import net.sourceforge.plantuml.svek.GraphvizCrash;
 
 public class PSystemVersion extends PlainStringsDiagram {
 
-	PSystemVersion(boolean withImage, List<String> args) {
+	PSystemVersion(UmlSource source, boolean withImage, List<String> args) {
+		super(source);
 		this.strings.addAll(args);
 		if (withImage) {
 			this.image = getPlantumlImage();
@@ -69,7 +71,8 @@ public class PSystemVersion extends PlainStringsDiagram {
 		}
 	}
 
-	private PSystemVersion(List<String> args, BufferedImage image) {
+	private PSystemVersion(UmlSource source, List<String> args, BufferedImage image) {
+		super(source);
 		this.strings.addAll(args);
 		this.image = image;
 		this.imagePosition = BACKGROUND_CORNER_BOTTOM_RIGHT;
@@ -157,7 +160,7 @@ public class PSystemVersion extends PlainStringsDiagram {
 		return transparentIcon;
 	}
 
-	public static PSystemVersion createShowVersion() {
+	public static PSystemVersion createShowVersion2(UmlSource source) {
 		final List<String> strings = new ArrayList<>();
 		strings.add("<b>PlantUML version " + Version.versionString() + "</b> (" + Version.compileTimeString() + ")");
 		strings.add("(" + License.getCurrent() + " source distribution)");
@@ -186,22 +189,22 @@ public class PSystemVersion extends PlainStringsDiagram {
 		for (String v : OptionPrint.interestingValues()) {
 			strings.add(v);
 		}
-
-		return new PSystemVersion(true, strings);
+		
+		return new PSystemVersion(source, true, strings);
 	}
 
-	public static PSystemVersion createStdLib() {
+	public static PSystemVersion createStdLib(UmlSource source) {
 		final List<String> strings = new ArrayList<>();
 		Stdlib.addInfoVersion(strings, true);
 		strings.add(" ");
 
-		return new PSystemVersion(true, strings);
+		return new PSystemVersion(source, true, strings);
 	}
 
-	public static PSystemVersion createShowAuthors() {
+	public static PSystemVersion createShowAuthors2(UmlSource source) {
 		// Duplicate in OptionPrint
 		final List<String> strings = getAuthorsStrings(true);
-		return new PSystemVersion(true, strings);
+		return new PSystemVersion(source, true, strings);
 	}
 
 	public static List<String> getAuthorsStrings(boolean withTag) {
@@ -237,24 +240,24 @@ public class PSystemVersion extends PlainStringsDiagram {
 
 	}
 
-	public static PSystemVersion createTestDot() throws IOException {
+	public static PSystemVersion createTestDot(UmlSource source) throws IOException {
 		final List<String> strings = new ArrayList<>();
 		strings.add(Version.fullDescription());
 		GraphvizUtils.addDotStatus(strings, true);
-		return new PSystemVersion(false, strings);
+		return new PSystemVersion(source, false, strings);
 	}
 
-	public static PSystemVersion createDumpStackTrace() throws IOException {
-		final List<String> strings = new ArrayList<>();
-		final Throwable creationPoint = new Throwable();
-		creationPoint.fillInStackTrace();
-		for (StackTraceElement ste : creationPoint.getStackTrace()) {
-			strings.add(ste.toString());
-		}
-		return new PSystemVersion(false, strings);
-	}
+//	public static PSystemVersion createDumpStackTrace() throws IOException {
+//		final List<String> strings = new ArrayList<>();
+//		final Throwable creationPoint = new Throwable();
+//		creationPoint.fillInStackTrace();
+//		for (StackTraceElement ste : creationPoint.getStackTrace()) {
+//			strings.add(ste.toString());
+//		}
+//		return new PSystemVersion(false, strings);
+//	}
 
-	public static PSystemVersion createKeyDistributor() throws IOException {
+	public static PSystemVersion createKeyDistributor(UmlSource source) throws IOException {
 		final LicenseInfo license = LicenseInfo.retrieveDistributor();
 		BufferedImage im = null;
 		final List<String> strings = new ArrayList<>();
@@ -267,19 +270,19 @@ public class PSystemVersion extends PlainStringsDiagram {
 			strings.add(license.getExpirationDate().toString());
 			im = LicenseInfo.retrieveDistributorImage(license);
 		}
-		return new PSystemVersion(strings, im);
+		return new PSystemVersion(source, strings, im);
 	}
 
-	public static PSystemVersion createPath() throws IOException {
-		final List<String> strings = new ArrayList<>();
-		strings.add("<u>Current Dir</u>: " + new SFile(".").getPrintablePath());
-		strings.add(" ");
-		strings.add("<u>Default path</u>:");
-		for (SFile f : ImportedFiles.createImportedFiles(null).getPath()) {
-			strings.add(f.getPrintablePath());
-		}
-		return new PSystemVersion(true, strings);
-	}
+//	public static PSystemVersion createPath(UmlSource source) throws IOException {
+//		final List<String> strings = new ArrayList<>();
+//		strings.add("<u>Current Dir</u>: " + new SFile(".").getPrintablePath());
+//		strings.add(" ");
+//		strings.add("<u>Default path</u>:");
+//		for (SFile f : ImportedFiles.createImportedFiles(null).getPath()) {
+//			strings.add(f.getPrintablePath());
+//		}
+//		return new PSystemVersion(source, true, strings);
+//	}
 
 	public DiagramDescription getDescription() {
 		return new DiagramDescription("(Version)");

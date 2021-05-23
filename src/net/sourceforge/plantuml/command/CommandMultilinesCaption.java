@@ -45,12 +45,12 @@ import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 public class CommandMultilinesCaption extends CommandMultilines<TitledDiagram> {
 
 	public CommandMultilinesCaption() {
-		super("(?i)^caption$");
+		super("^caption$");
 	}
 
 	@Override
 	public String getPatternEnd() {
-		return "(?i)^end[%s]?caption$";
+		return "^end[%s]?caption$";
 	}
 
 	public CommandExecutionResult execute(final TitledDiagram diagram, BlocLines lines) throws NoSuchColorException {

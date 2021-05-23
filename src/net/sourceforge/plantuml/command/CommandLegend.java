@@ -60,7 +60,7 @@ public class CommandLegend extends SingleLineCommand2<TitledDiagram> {
 				new RegexLeaf("(?:[%s]*:[%s]*|[%s]+)"), //
 				new RegexOr(//
 						new RegexLeaf("LEGEND1", "[%g](.*)[%g]"), //
-						new RegexLeaf("LEGEND2", "(.*[\\p{L}0-9_.].*)")), //
+						new RegexLeaf("LEGEND2", "(.*[%pLN_.].*)")), //
 				RegexLeaf.end()); //
 	}
 

@@ -42,6 +42,7 @@ import java.util.List;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.PlainDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.graphic.GraphicPosition;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
 import net.sourceforge.plantuml.graphic.UDrawable;
@@ -53,7 +54,8 @@ public class PSystemWelcome extends PlainDiagram {
 	private final List<String> strings = new ArrayList<>();
 	private final GraphicPosition position;
 
-	public PSystemWelcome(GraphicPosition position) {
+	public PSystemWelcome(UmlSource source, GraphicPosition position) {
+		super(source);
 		this.position = position;
 		strings.add("<b>Welcome to PlantUML!");
 		strings.add(" ");

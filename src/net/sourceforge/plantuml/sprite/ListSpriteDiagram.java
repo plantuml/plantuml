@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -61,8 +62,8 @@ import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class ListSpriteDiagram extends UmlDiagram {
 
-	public ListSpriteDiagram(ISkinSimple skinParam) {
-		super(UmlDiagramType.HELP, skinParam);
+	public ListSpriteDiagram(UmlSource source, ISkinSimple skinParam) {
+		super(source, UmlDiagramType.HELP, skinParam);
 	}
 
 	public DiagramDescription getDescription() {

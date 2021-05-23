@@ -72,7 +72,7 @@ public class CommandCreateMap extends CommandMultilines2<AbstractClassOrObjectDi
 		return RegexConcat.build(CommandCreateMap.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("TYPE", "map"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("NAME", "(?:[%g]([^%g]+)[%g][%s]+as[%s]+)?([\\p{L}0-9_.]+)"), //
+				new RegexLeaf("NAME", "(?:[%g]([^%g]+)[%g][%s]+as[%s]+)?([%pLN_.]+)"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("STEREO", "(\\<\\<.+\\>\\>)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -86,7 +86,7 @@ public class CommandCreateMap extends CommandMultilines2<AbstractClassOrObjectDi
 
 	@Override
 	public String getPatternEnd() {
-		return "(?i)^[%s]*\\}[%s]*$";
+		return "^[%s]*\\}[%s]*$";
 	}
 
 	@Override

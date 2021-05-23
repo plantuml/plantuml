@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -74,8 +75,8 @@ public class MindMapDiagram extends UmlDiagram {
 		return new DiagramDescription("MindMap");
 	}
 
-	public MindMapDiagram() {
-		super(UmlDiagramType.MINDMAP);
+	public MindMapDiagram(UmlSource source) {
+		super(source, UmlDiagramType.MINDMAP);
 	}
 
 	@Override

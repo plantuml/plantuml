@@ -226,7 +226,7 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 
 	private static RegexLeaf getGroup(String name) {
 		return new RegexLeaf(name,
-				"([\\p{L}0-9_.]+|\\(\\)[%s]*[\\p{L}0-9_.]+|\\(\\)[%s]*[%g][^%g]+[%g]|:[^:]+:|(?!\\[\\*\\])\\[[^\\[\\]]+\\]|\\((?!\\*\\))[^)]+\\))");
+				"([%pLN_.]+|\\(\\)[%s]*[%pLN_.]+|\\(\\)[%s]*[%g][^%g]+[%g]|:[^:]+:|(?!\\[\\*\\])\\[[^\\[\\]]+\\]|\\((?!\\*\\))[^)]+\\))");
 	}
 
 	@Override

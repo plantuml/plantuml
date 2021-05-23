@@ -52,6 +52,7 @@ import net.sourceforge.plantuml.code.StringCompressorNone;
 import net.sourceforge.plantuml.code.Transcoder;
 import net.sourceforge.plantuml.code.TranscoderImpl;
 import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -97,6 +98,10 @@ public class PSystemDonors extends PlainDiagram {
 	 * 
 	 * - Noam Tamim
 	 */
+
+	public PSystemDonors(UmlSource source) {
+		super(source);
+	}
 
 	@Override
 	protected UDrawable getRootDrawable(FileFormatOption fileFormatOption) throws IOException {
@@ -155,8 +160,8 @@ public class PSystemDonors extends PlainDiagram {
 		return new DiagramDescription("(Donors)");
 	}
 
-	public static PSystemDonors create() {
-		return new PSystemDonors();
+	public static PSystemDonors create(UmlSource source) {
+		return new PSystemDonors(source);
 	}
 
 }

@@ -72,7 +72,7 @@ public class Option {
 	private OptionPreprocOutputMode preprocessorOutput = null;
 	private boolean failfast = false;
 	private boolean failfast2 = false;
-	private boolean pattern = false;
+
 	private boolean duration = false;
 	private boolean debugsvek = false;
 	private boolean splash = false;
@@ -263,8 +263,6 @@ public class Option {
 				pipeMap = true;
 			} else if (s.equalsIgnoreCase("-pipenostderr")) {
 				pipeNoStdErr = true;
-			} else if (s.equalsIgnoreCase("-pattern")) {
-				pattern = true;
 			} else if (s.equalsIgnoreCase("-syntax")) {
 				syntax = true;
 				OptionFlags.getInstance().setQuiet(true);
@@ -569,10 +567,6 @@ public class Option {
 
 	public final boolean isSyntax() {
 		return syntax;
-	}
-
-	public final boolean isPattern() {
-		return pattern;
 	}
 
 	public FileFormatOption getFileFormatOption() {

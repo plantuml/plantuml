@@ -51,7 +51,7 @@ import net.sourceforge.plantuml.timingdiagram.TimingDiagram;
 
 public class CommandTimeMessage extends SingleLineCommand2<TimingDiagram> {
 
-	public static final String PLAYER_CODE = "([\\p{L}_][\\p{L}0-9_.]*)";
+	public static final String PLAYER_CODE = "([\\p{L}_][%pLN_.]*)";
 
 	public CommandTimeMessage() {
 		super(getRegexConcat());

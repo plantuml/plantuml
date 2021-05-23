@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.flowdiagram;
 
+import static net.sourceforge.plantuml.ugraphic.ImageBuilder.imageBuilder;
+
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
@@ -49,6 +51,7 @@ import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.golem.MinMaxGolem;
 import net.sourceforge.plantuml.golem.Path;
 import net.sourceforge.plantuml.golem.Position;
@@ -69,8 +72,6 @@ import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
-import static net.sourceforge.plantuml.ugraphic.ImageBuilder.imageBuilder;
-
 public class FlowDiagram extends UmlDiagram implements TextBlock {
 
 	private static double SINGLE_SIZE_X = 100;
@@ -88,8 +89,8 @@ public class FlowDiagram extends UmlDiagram implements TextBlock {
 		return new DiagramDescription("Flow Diagram");
 	}
 
-	public FlowDiagram() {
-		super(UmlDiagramType.FLOW);
+	public FlowDiagram(UmlSource source) {
+		super(source, UmlDiagramType.FLOW);
 	}
 
 	public void lineSimple(TileGeometry orientation, String idDest, String label) {

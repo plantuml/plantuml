@@ -60,7 +60,7 @@ public class CommandTitle extends SingleLineCommand2<TitledDiagram> {
 				new RegexLeaf("(?:[%s]*:[%s]*|[%s]+)"), //
 				new RegexOr(//
 						new RegexLeaf("TITLE1", "[%g](.*)[%g]"), //
-						new RegexLeaf("TITLE2", "(.*[\\p{L}0-9_.].*)")), //
+						new RegexLeaf("TITLE2", "(.*[%pLN_.].*)")), //
 				RegexLeaf.end()); //
 	}
 

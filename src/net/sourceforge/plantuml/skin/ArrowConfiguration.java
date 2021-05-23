@@ -58,8 +58,8 @@ public class ArrowConfiguration {
 	private final boolean reverseDefine;
 
 	private ArrowConfiguration(ArrowBody body, ArrowDressing dressing1, ArrowDressing dressing2,
-			ArrowDecoration decoration1, ArrowDecoration decoration2, HColor color, boolean isSelf,
-			double thickness, boolean reverseDefine) {
+			ArrowDecoration decoration1, ArrowDecoration decoration2, HColor color, boolean isSelf, double thickness,
+			boolean reverseDefine) {
 		this.reverseDefine = reverseDefine;
 		this.thickness = thickness;
 		this.body = Objects.requireNonNull(body);
@@ -82,8 +82,9 @@ public class ArrowConfiguration {
 	}
 
 	public static ArrowConfiguration withDirectionNormal() {
-		return new ArrowConfiguration(ArrowBody.NORMAL, ArrowDressing.create(), ArrowDressing.create().withHead(
-				ArrowHead.NORMAL), ArrowDecoration.NONE, ArrowDecoration.NONE, null, false, 1, false);
+		return new ArrowConfiguration(ArrowBody.NORMAL, ArrowDressing.create(),
+				ArrowDressing.create().withHead(ArrowHead.NORMAL), ArrowDecoration.NONE, ArrowDecoration.NONE, null,
+				false, 1, false);
 	}
 
 	public static ArrowConfiguration withDirectionBoth() {
@@ -92,10 +93,10 @@ public class ArrowConfiguration {
 				false, 1, false);
 	}
 
-	public static ArrowConfiguration withDirectionSelf() {
-		return new ArrowConfiguration(ArrowBody.NORMAL, ArrowDressing.create().withHead(ArrowHead.NORMAL),
+	public static ArrowConfiguration withDirectionSelf(boolean reverseDefine) {
+		return new ArrowConfiguration(ArrowBody.NORMAL, ArrowDressing.create(),
 				ArrowDressing.create().withHead(ArrowHead.NORMAL), ArrowDecoration.NONE, ArrowDecoration.NONE, null,
-				true, 1, false);
+				true, 1, reverseDefine);
 	}
 
 	public static ArrowConfiguration withDirectionReverse() {

@@ -39,6 +39,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.command.PSystemAbstractFactory;
 import net.sourceforge.plantuml.core.Diagram;
@@ -54,7 +55,8 @@ public class YamlDiagramFactory extends PSystemAbstractFactory {
 		super(DiagramType.YAML);
 	}
 
-	public Diagram createSystem(UmlSource source) {
+	@Override
+	public Diagram createSystem(UmlSource source, ISkinSimple skinParam) {
 		final List<String> highlighted = new ArrayList<>();
 		JsonValue yaml = null;
 		StyleExtractor styleExtractor = null;
@@ -78,11 +80,10 @@ public class YamlDiagramFactory extends PSystemAbstractFactory {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		final JsonDiagram result = new JsonDiagram(UmlDiagramType.YAML, yaml, highlighted);
+		final JsonDiagram result = new JsonDiagram(source, UmlDiagramType.YAML, yaml, highlighted);
 		if (styleExtractor != null) {
 			styleExtractor.applyStyles(result.getSkinParam());
 		}
-		result.setSource(source);
 		return result;
 	}
 

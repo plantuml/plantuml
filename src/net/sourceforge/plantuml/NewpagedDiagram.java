@@ -47,13 +47,15 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public class NewpagedDiagram extends AbstractPSystem {
 
 	private final List<Diagram> diagrams = new ArrayList<>();
 
-	public NewpagedDiagram(AbstractPSystem diag1, AbstractPSystem diag2) {
+	public NewpagedDiagram(UmlSource source, AbstractPSystem diag1, AbstractPSystem diag2) {
+		super(source);
 		if (diag1 instanceof NewpagedDiagram) {
 			throw new IllegalArgumentException();
 		}

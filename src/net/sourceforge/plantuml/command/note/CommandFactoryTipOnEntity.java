@@ -117,9 +117,9 @@ public final class CommandFactoryTipOnEntity implements SingleMultiFactoryComman
 			@Override
 			public String getPatternEnd() {
 				if (withBracket) {
-					return "(?i)^(\\})$";
+					return "^(\\})$";
 				}
-				return "(?i)^[%s]*(end[%s]?note)$";
+				return "^[%s]*(end[%s]?note)$";
 			}
 
 			protected CommandExecutionResult executeNow(final AbstractEntityDiagram system, BlocLines lines) throws NoSuchColorException {

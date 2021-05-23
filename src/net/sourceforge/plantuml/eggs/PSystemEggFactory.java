@@ -41,6 +41,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
+import net.sourceforge.plantuml.core.UmlSource;
 
 public class PSystemEggFactory extends PSystemSingleLineFactory {
 
@@ -50,12 +51,12 @@ public class PSystemEggFactory extends PSystemSingleLineFactory {
 					EggUtils.toByteArrays("421e5b773c5df733a1194f716f18e8842155196b3b"));
 
 	@Override
-	protected AbstractPSystem executeLine(String line) {
+	protected AbstractPSystem executeLine(UmlSource source, String line) {
 		try {
 			for (byte[] crypted : all) {
 				final SentenceDecoder decoder = new SentenceDecoder(line, crypted);
 				if (decoder.isOk()) {
-					return new PSystemEgg(decoder.getSecret());
+					return new PSystemEgg(source, decoder.getSecret());
 				}
 			}
 		} catch (UnsupportedEncodingException e) {

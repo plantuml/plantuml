@@ -46,15 +46,14 @@ import net.sourceforge.plantuml.creole.legacy.StripeSimple;
 
 public class CommandCreoleUrl implements Command {
 
-	private final Pattern2 pattern;
+	private static final Pattern2 pattern = MyPattern.cmpile("^(" + UrlBuilder.getRegexp() + ")");
 	private final ISkinSimple skinParam;
 
 	public static Command create(ISkinSimple skinParam) {
-		return new CommandCreoleUrl(skinParam, "^(" + UrlBuilder.getRegexp() + ")");
+		return new CommandCreoleUrl(skinParam);
 	}
 
-	private CommandCreoleUrl(ISkinSimple skinParam, String p) {
-		this.pattern = MyPattern.cmpile(p);
+	private CommandCreoleUrl(ISkinSimple skinParam) {
 		this.skinParam = skinParam;
 
 	}

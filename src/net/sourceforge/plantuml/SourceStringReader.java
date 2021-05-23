@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml;
 
+import static net.sourceforge.plantuml.ugraphic.ImageBuilder.plainImageBuilder;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.StringReader;
@@ -49,8 +51,6 @@ import net.sourceforge.plantuml.graphic.GraphicStrings;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
-
-import static net.sourceforge.plantuml.ugraphic.ImageBuilder.plainImageBuilder;
 
 public class SourceStringReader {
 

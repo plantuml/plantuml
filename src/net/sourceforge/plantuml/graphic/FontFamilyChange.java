@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.command.regex.Pattern2;
 
 class FontFamilyChange implements FontChange {
 
-	static private final Pattern2 colorPattern = MyPattern.cmpile("(?i)" + Splitter.fontFamilyPattern);
+	static private final Pattern2 colorPattern = MyPattern.cmpile(Splitter.fontFamilyPattern);
 
 	private final String family;
 

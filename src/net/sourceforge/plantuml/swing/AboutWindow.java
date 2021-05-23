@@ -40,6 +40,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -54,6 +55,8 @@ import javax.swing.WindowConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.CompoundBorder;
 
+import net.sourceforge.plantuml.StringLocated;
+import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.version.PSystemVersion;
 import net.sourceforge.plantuml.version.Version;
 
@@ -118,12 +121,12 @@ class AboutWindow extends JFrame {
 	}
 
 	private JComponent getInfoVersion() {
-		final PSystemVersion p1 = PSystemVersion.createShowVersion();
+		final PSystemVersion p1 = PSystemVersion.createShowVersion2(new UmlSource(new ArrayList<StringLocated>(), false));
 		return getJComponent(skip(p1.getLines()));
 	}
 
 	private JComponent getInfoAuthors() {
-		final PSystemVersion p1 = PSystemVersion.createShowAuthors();
+		final PSystemVersion p1 = PSystemVersion.createShowAuthors2(new UmlSource(new ArrayList<StringLocated>(), false));
 		return getJComponent(skip(p1.getLines()));
 	}
 

@@ -60,7 +60,7 @@ public class CommandActivate extends SingleLineCommand2<SequenceDiagram> {
 		return RegexConcat.build(CommandActivate.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("TYPE", "(activate|deactivate|destroy|create)"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("WHO", "([\\p{L}0-9_.@]+|[%g][^%g]+[%g])"), //
+				new RegexLeaf("WHO", "([%pLN_.@]+|[%g][^%g]+[%g])"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("BACK", "(#\\w+)?"), //
 				new RegexOptional( //

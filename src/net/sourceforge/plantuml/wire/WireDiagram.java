@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -69,8 +70,8 @@ public class WireDiagram extends UmlDiagram {
 		return new DiagramDescription("Wire Diagram");
 	}
 
-	public WireDiagram() {
-		super(UmlDiagramType.WIRE);
+	public WireDiagram(UmlSource source) {
+		super(source, UmlDiagramType.WIRE);
 	}
 
 	@Override

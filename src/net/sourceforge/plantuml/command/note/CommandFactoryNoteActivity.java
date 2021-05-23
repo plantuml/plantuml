@@ -96,7 +96,7 @@ public final class CommandFactoryNoteActivity implements SingleMultiFactoryComma
 
 			@Override
 			public String getPatternEnd() {
-				return "(?i)^[%s]*end[%s]?note$";
+				return "^[%s]*end[%s]?note$";
 			}
 
 			public final CommandExecutionResult executeNow(final ActivityDiagram diagram, BlocLines lines)

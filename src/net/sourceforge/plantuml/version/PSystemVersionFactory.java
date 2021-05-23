@@ -41,50 +41,51 @@ import java.util.regex.Pattern;
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
+import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.security.SecurityProfile;
 import net.sourceforge.plantuml.security.SecurityUtils;
 
 public class PSystemVersionFactory extends PSystemSingleLineFactory {
 
 	@Override
-	protected AbstractPSystem executeLine(String line) {
+	protected AbstractPSystem executeLine(UmlSource source, String line) {
 		try {
 			if (line.matches("(?i)^(authors?|about)\\s*$")) {
-				return PSystemVersion.createShowAuthors();
+				return PSystemVersion.createShowAuthors2(source);
 			}
 			if (line.matches("(?i)^version\\s*$")) {
-				return PSystemVersion.createShowVersion();
+				return PSystemVersion.createShowVersion2(source);
 			}
 			if (line.matches("(?i)^stdlib\\s*$")) {
-				return PSystemVersion.createStdLib();
+				return PSystemVersion.createStdLib(source);
 			}
-			if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE && line.matches("(?i)^path\\s*$")) {
-				return PSystemVersion.createPath();
-			}
+//			if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE && line.matches("(?i)^path\\s*$")) {
+//				return PSystemVersion.createPath(source);
+//			}
 			if (line.matches("(?i)^testdot\\s*$")) {
-				return PSystemVersion.createTestDot();
+				return PSystemVersion.createTestDot(source);
 			}
-			if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE
-					&& line.matches("(?i)^dumpstacktrace\\s*$")) {
-				return PSystemVersion.createDumpStackTrace();
-			}
+//			if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE
+//					&& line.matches("(?i)^dumpstacktrace\\s*$")) {
+//				return PSystemVersion.createDumpStackTrace();
+//			}
 			if (line.matches("(?i)^keydistributor\\s*$")) {
-				return PSystemVersion.createKeyDistributor();
+				return PSystemVersion.createKeyDistributor(source);
 			}
 			if (line.matches("(?i)^keygen\\s*$")) {
 				line = line.trim();
-				return new PSystemKeygen("");
+				return new PSystemKeygen(source, "");
 			}
 			if (line.matches("(?i)^keyimport(\\s+[0-9a-z]+)?\\s*$")) {
 				line = line.trim();
 				final String key = line.substring("keyimport".length()).trim();
-				return new PSystemKeygen(key);
+				return new PSystemKeygen(source, key);
 			}
 			if (line.matches("(?i)^keycheck\\s+([0-9a-z]+)\\s+([0-9a-z]+)\\s*$")) {
 				final Pattern p = Pattern.compile("(?i)^keycheck\\s+([0-9a-z]+)\\s+([0-9a-z]+)\\s*$");
 				final Matcher m = p.matcher(line);
 				if (m.find()) {
-					return new PSystemKeycheck(m.group(1), m.group(2));
+					return new PSystemKeycheck(source, m.group(1), m.group(2));
 				}
 			}
 		} catch (IOException e) {

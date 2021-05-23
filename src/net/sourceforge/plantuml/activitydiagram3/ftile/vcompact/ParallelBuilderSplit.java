@@ -195,7 +195,9 @@ public class ParallelBuilderSplit extends AbstractParallelFtilesBuilder {
 				rainbow = outLinkRendering.getRainbow(Rainbow.build(skinParam()));
 			}
 
-			conns.add(new ConnectionOut(translate0, tmp, out, x, rainbow, getHeightOfMiddle(inner)));
+			if (tmp.calculateDimension(getStringBounder()).hasPointOut()) {
+				conns.add(new ConnectionOut(translate0, tmp, out, x, rainbow, getHeightOfMiddle(inner)));
+			}
 			x += dim.getWidth();
 		}
 		if (last < geom.getLeft()) {

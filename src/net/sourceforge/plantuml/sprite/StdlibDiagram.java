@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandFactorySprite;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -71,8 +72,8 @@ public class StdlibDiagram extends UmlDiagram {
 	private static final int WIDTH = 1800;
 	private String name;
 
-	public StdlibDiagram(ISkinSimple skinParam) {
-		super(UmlDiagramType.HELP, skinParam);
+	public StdlibDiagram(UmlSource source, ISkinSimple skinParam) {
+		super(source, UmlDiagramType.HELP, skinParam);
 	}
 
 	public DiagramDescription getDescription() {

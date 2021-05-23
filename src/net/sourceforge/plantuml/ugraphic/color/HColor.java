@@ -50,4 +50,8 @@ public interface HColor extends UChange {
 
 	public boolean isDark();
 
+	public HColor reverseHsluv();
+
+	public HColor reverse();
+
 }

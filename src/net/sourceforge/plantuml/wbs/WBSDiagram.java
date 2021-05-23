@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -67,8 +68,8 @@ public class WBSDiagram extends UmlDiagram {
 		return new DiagramDescription("Work Breakdown Structure");
 	}
 
-	public WBSDiagram() {
-		super(UmlDiagramType.WBS);
+	public WBSDiagram(UmlSource source) {
+		super(source, UmlDiagramType.WBS);
 	}
 
 	@Override

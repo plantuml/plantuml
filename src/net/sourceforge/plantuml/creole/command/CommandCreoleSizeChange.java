@@ -44,23 +44,26 @@ import net.sourceforge.plantuml.graphic.Splitter;
 
 public class CommandCreoleSizeChange implements Command {
 
-	private final Pattern2 pattern;
+	private final Pattern2 mypattern;
+
+	private static final Pattern2 pattern = MyPattern
+			.cmpile("^(" + Splitter.fontSizePattern2 + "(.*?)\\</size\\>)");
+	private static final Pattern2 patternEol = MyPattern.cmpile("^(" + Splitter.fontSizePattern2 + "(.*)$)");
 
 	public static Command create() {
-		return new CommandCreoleSizeChange("^(?i)(" + Splitter.fontSizePattern2 + "(.*?)\\</size\\>)");
+		return new CommandCreoleSizeChange(pattern);
 	}
 
 	public static Command createEol() {
-		return new CommandCreoleSizeChange("^(?i)(" + Splitter.fontSizePattern2 + "(.*)$)");
+		return new CommandCreoleSizeChange(patternEol);
 	}
 
-	private CommandCreoleSizeChange(String p) {
-		this.pattern = MyPattern.cmpile(p);
-
+	private CommandCreoleSizeChange(Pattern2 p) {
+		this.mypattern = p;
 	}
 
 	public int matchingSize(String line) {
-		final Matcher2 m = pattern.matcher(line);
+		final Matcher2 m = mypattern.matcher(line);
 		if (m.find() == false) {
 			return 0;
 		}
@@ -68,7 +71,7 @@ public class CommandCreoleSizeChange implements Command {
 	}
 
 	public String executeAndGetRemaining(String line, StripeSimple stripe) {
-		final Matcher2 m = pattern.matcher(line);
+		final Matcher2 m = mypattern.matcher(line);
 		if (m.find() == false) {
 			throw new IllegalStateException();
 		}

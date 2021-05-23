@@ -60,6 +60,7 @@ import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.asciiart.UmlCharArea;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.eggs.PSystemWelcome;
 import net.sourceforge.plantuml.flashcode.FlashCodeFactory;
@@ -100,12 +101,13 @@ public abstract class PSystemError extends PlainDiagram {
 	protected List<StringLocated> trace;
 	protected ErrorUml singleError;
 
+	public PSystemError(UmlSource source) {
+		super(source);
+	}
+
 	@Override
 	public ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) throws IOException {
-		return super.createImageBuilder(fileFormatOption)
-				.blackBackcolor()
-				.randomPixel()
-				.status(FileImageData.ERROR);
+		return super.createImageBuilder(fileFormatOption).blackBackcolor().randomPixel().status(FileImageData.ERROR);
 	}
 
 	final protected StringLocated getLastLine() {
@@ -278,7 +280,7 @@ public abstract class PSystemError extends PlainDiagram {
 	}
 
 	private TextBlockBackcolored getWelcome() throws IOException {
-		return new PSystemWelcome(GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT).getGraphicStrings();
+		return new PSystemWelcome(getSource(), GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT).getGraphicStrings();
 	}
 
 	private TextBlock addWelcome(final TextBlockBackcolored result) throws IOException {

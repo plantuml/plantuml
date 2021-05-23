@@ -47,18 +47,18 @@ import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 
 public class CommandCreoleSprite implements Command {
 
-	private final Pattern2 pattern;
+	private static final Pattern2 pattern = MyPattern.cmpile("^(" + Splitter.spritePattern2 + ")");
+
 	private final HColorSet colorSet;
 	private final ThemeStyle themeStyle;
 
-	private CommandCreoleSprite(ThemeStyle themeStyle, HColorSet colorSet, String p) {
-		this.pattern = MyPattern.cmpile(p);
+	private CommandCreoleSprite(ThemeStyle themeStyle, HColorSet colorSet) {
 		this.colorSet = colorSet;
 		this.themeStyle = themeStyle;
 	}
 
 	public static Command create(ThemeStyle themeStyle, HColorSet colorSet) {
-		return new CommandCreoleSprite(themeStyle, colorSet, "^(?i)(" + Splitter.spritePattern2 + ")");
+		return new CommandCreoleSprite(themeStyle, colorSet);
 	}
 
 	public int matchingSize(String line) {

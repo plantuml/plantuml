@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.salt;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.PSystemBasicFactory;
 import net.sourceforge.plantuml.core.DiagramType;
+import net.sourceforge.plantuml.core.UmlSource;
 
 public class PSystemSaltFactory extends PSystemBasicFactory<PSystemSalt> {
 
@@ -45,11 +46,12 @@ public class PSystemSaltFactory extends PSystemBasicFactory<PSystemSalt> {
 		super(diagramType);
 	}
 
-	public PSystemSalt init(String startLine) {
+	@Override
+	public PSystemSalt initDiagram(UmlSource source, String startLine) {
 		if (getDiagramType() == DiagramType.UML) {
 			return null;
 		} else if (getDiagramType() == DiagramType.SALT) {
-			return new PSystemSalt();
+			return new PSystemSalt(source);
 		} else {
 			throw new IllegalStateException(getDiagramType().name());
 		}
@@ -57,9 +59,9 @@ public class PSystemSaltFactory extends PSystemBasicFactory<PSystemSalt> {
 	}
 
 	@Override
-	public PSystemSalt executeLine(PSystemSalt system, String line) {
+	public PSystemSalt executeLine(UmlSource source, PSystemSalt system, String line) {
 		if (system == null && line.replace('\t', ' ').trim().equals("salt")) {
-			return new PSystemSalt();
+			return new PSystemSalt(source);
 		}
 		if (system == null) {
 			return null;

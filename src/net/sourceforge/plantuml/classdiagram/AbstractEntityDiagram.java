@@ -43,12 +43,13 @@ import java.util.List;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 
 public abstract class AbstractEntityDiagram extends CucaDiagram {
 
-	public AbstractEntityDiagram(UmlDiagramType type, ISkinSimple orig) {
-		super(type, orig);
+	public AbstractEntityDiagram(UmlSource source, UmlDiagramType type, ISkinSimple orig) {
+		super(source, type, orig);
 	}
 
 	final protected List<String> getDotStrings() {

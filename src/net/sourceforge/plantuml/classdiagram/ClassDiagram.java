@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -60,8 +61,8 @@ import net.sourceforge.plantuml.svek.image.EntityImageClass;
 
 public class ClassDiagram extends AbstractClassOrObjectDiagram {
 
-	public ClassDiagram(ISkinSimple skinParam) {
-		super(UmlDiagramType.CLASS, skinParam);
+	public ClassDiagram(UmlSource source, ISkinSimple skinParam) {
+		super(source, UmlDiagramType.CLASS, skinParam);
 	}
 
 	private Code getShortName1972(Code code) {

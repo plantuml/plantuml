@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 
 class ColorChange implements FontChange {
 
-	static private final Pattern2 colorPattern = MyPattern.cmpile("(?i)" + Splitter.fontColorPattern2);
+	static private final Pattern2 colorPattern = MyPattern.cmpile(Splitter.fontColorPattern2);
 
 	private final HColor color;
 

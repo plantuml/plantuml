@@ -3,11 +3,11 @@
 
 	Original Author: Andreas Gadermaier <up.gadermaier@gmail.com>
  */
-package ext.plantuml.com.at.gadermaier.argon2.algorithm;
+package net.sourceforge.plantuml.argon2.algorithm;
 
-import ext.plantuml.com.at.gadermaier.argon2.Argon2;
-import ext.plantuml.com.at.gadermaier.argon2.model.Block;
-import ext.plantuml.com.at.gadermaier.argon2.model.Instance;
+import net.sourceforge.plantuml.argon2.Argon2;
+import net.sourceforge.plantuml.argon2.model.Block;
+import net.sourceforge.plantuml.argon2.model.Instance;
 
 public class Finalize {
 

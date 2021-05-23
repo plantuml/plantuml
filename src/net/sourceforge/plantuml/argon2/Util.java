@@ -3,7 +3,7 @@
 
 	Original Author: Andreas Gadermaier <up.gadermaier@gmail.com>
  */
-package ext.plantuml.com.at.gadermaier.argon2;
+package net.sourceforge.plantuml.argon2;
 
 public class Util {
 

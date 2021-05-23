@@ -55,6 +55,9 @@ public class ColorMapperIdentity extends AbstractColorMapper implements ColorMap
 		if (color instanceof HColorAutomatic) {
 			throw new IllegalStateException();
 		}
+		if (color instanceof HColorAutomaticLegacy) {
+			throw new IllegalStateException();
+		}
 		return ((HColorSimple) color).getColor999();
 	}
 }

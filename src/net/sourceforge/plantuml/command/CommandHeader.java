@@ -67,7 +67,7 @@ public class CommandHeader extends SingleLineCommand2<TitledDiagram> {
 						RegexLeaf.spaceOneOrMore()), //
 				new RegexOr(//
 						new RegexLeaf("LABEL1", "[%g](.*)[%g]"), //
-						new RegexLeaf("LABEL2", "(.*[\\p{L}0-9_.].*)")), //
+						new RegexLeaf("LABEL2", "(.*[%pLN_.].*)")), //
 				RegexLeaf.end()); //
 	}
 

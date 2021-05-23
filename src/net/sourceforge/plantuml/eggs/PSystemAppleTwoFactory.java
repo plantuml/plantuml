@@ -40,16 +40,17 @@ import java.io.IOException;
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
+import net.sourceforge.plantuml.core.UmlSource;
 
 public class PSystemAppleTwoFactory extends PSystemSingleLineFactory {
 
 	@Override
-	protected AbstractPSystem executeLine(String line) {
+	protected AbstractPSystem executeLine(UmlSource source, String line) {
 		if (line.equalsIgnoreCase("apple //e") || line.equalsIgnoreCase("apple ][")
 				|| line.equalsIgnoreCase("apple II") || line.equalsIgnoreCase("Steve Jobs")
 				|| line.equalsIgnoreCase("Steve Wozniak")) {
 			try {
-				return new PSystemAppleTwo();
+				return new PSystemAppleTwo(source);
 			} catch (IOException e) {
 				Log.error("Error " + e);
 				e.printStackTrace();

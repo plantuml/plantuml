@@ -52,6 +52,7 @@ import net.sourceforge.plantuml.command.note.CommandFactoryNoteOnEntity;
 import net.sourceforge.plantuml.command.note.CommandFactoryNoteOnLink;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOr;
+import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.statediagram.command.CommandAddField;
 import net.sourceforge.plantuml.statediagram.command.CommandConcurrentState;
 import net.sourceforge.plantuml.statediagram.command.CommandCreatePackageState;
@@ -61,15 +62,9 @@ import net.sourceforge.plantuml.statediagram.command.CommandLinkState;
 
 public class StateDiagramFactory extends PSystemCommandFactory {
 
-	private final ISkinSimple skinParam;
-
-	public StateDiagramFactory(ISkinSimple skinParam) {
-		this.skinParam = skinParam;
-	}
-
 	@Override
-	public StateDiagram createEmptyDiagram() {
-		return new StateDiagram(skinParam);
+	public StateDiagram createEmptyDiagram(UmlSource source, ISkinSimple skinParam) {
+		return new StateDiagram(source, skinParam);
 	}
 
 	@Override
@@ -86,7 +81,7 @@ public class StateDiagramFactory extends PSystemCommandFactory {
 		cmds.add(new CommandConcurrentState());
 
 		final CommandFactoryNoteOnEntity factoryNoteOnEntityCommand = new CommandFactoryNoteOnEntity("state",
-				new RegexOr("ENTITY", new RegexLeaf("[\\p{L}0-9_.]+"), //
+				new RegexOr("ENTITY", new RegexLeaf("[%pLN_.]+"), //
 						new RegexLeaf("[%g][^%g]+[%g]") //
 				));
 		cmds.add(factoryNoteOnEntityCommand.createMultiLine(true));

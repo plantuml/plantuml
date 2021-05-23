@@ -3,17 +3,17 @@
 
 	Original Author: Andreas Gadermaier <up.gadermaier@gmail.com>
  */
-package ext.plantuml.com.at.gadermaier.argon2.algorithm;
+package net.sourceforge.plantuml.argon2.algorithm;
 
-import static ext.plantuml.com.at.gadermaier.argon2.Constants.ARGON2_ADDRESSES_IN_BLOCK;
-import static ext.plantuml.com.at.gadermaier.argon2.Constants.ARGON2_VERSION_10;
+import static net.sourceforge.plantuml.argon2.Constants.ARGON2_ADDRESSES_IN_BLOCK;
+import static net.sourceforge.plantuml.argon2.Constants.ARGON2_VERSION_10;
 
-import ext.plantuml.com.at.gadermaier.argon2.Constants;
-import ext.plantuml.com.at.gadermaier.argon2.Util;
-import ext.plantuml.com.at.gadermaier.argon2.model.Argon2Type;
-import ext.plantuml.com.at.gadermaier.argon2.model.Block;
-import ext.plantuml.com.at.gadermaier.argon2.model.Instance;
-import ext.plantuml.com.at.gadermaier.argon2.model.Position;
+import net.sourceforge.plantuml.argon2.Constants;
+import net.sourceforge.plantuml.argon2.Util;
+import net.sourceforge.plantuml.argon2.model.Argon2Type;
+import net.sourceforge.plantuml.argon2.model.Block;
+import net.sourceforge.plantuml.argon2.model.Instance;
+import net.sourceforge.plantuml.argon2.model.Position;
 
 
 class FillSegment {

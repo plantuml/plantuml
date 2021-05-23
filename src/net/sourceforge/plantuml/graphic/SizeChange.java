@@ -41,7 +41,7 @@ import net.sourceforge.plantuml.command.regex.Pattern2;
 
 class SizeChange implements FontChange {
 
-	static private final Pattern2 sizePattern = MyPattern.cmpile("(?i)" + Splitter.fontSizePattern2);
+	static private final Pattern2 sizePattern = MyPattern.cmpile(Splitter.fontSizePattern2);
 
 	private final Integer size;
 

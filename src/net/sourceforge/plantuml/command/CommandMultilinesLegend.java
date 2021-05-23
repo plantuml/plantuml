@@ -70,7 +70,7 @@ public class CommandMultilinesLegend extends CommandMultilines2<TitledDiagram> {
 
 	@Override
 	public String getPatternEnd() {
-		return "(?i)^end[%s]?legend$";
+		return "^end[%s]?legend$";
 	}
 
 	@Override

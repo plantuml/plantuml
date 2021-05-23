@@ -3,25 +3,25 @@
 
 	Original Author: Andreas Gadermaier <up.gadermaier@gmail.com>
  */
-package ext.plantuml.com.at.gadermaier.argon2;
+package net.sourceforge.plantuml.argon2;
 
-import static ext.plantuml.com.at.gadermaier.argon2.Constants.Defaults.LANES_DEF;
-import static ext.plantuml.com.at.gadermaier.argon2.Constants.Defaults.LOG_M_COST_DEF;
-import static ext.plantuml.com.at.gadermaier.argon2.Constants.Defaults.OUTLEN_DEF;
-import static ext.plantuml.com.at.gadermaier.argon2.Constants.Defaults.TYPE_DEF;
-import static ext.plantuml.com.at.gadermaier.argon2.Constants.Defaults.T_COST_DEF;
-import static ext.plantuml.com.at.gadermaier.argon2.Constants.Defaults.VERSION_DEF;
+import static net.sourceforge.plantuml.argon2.Constants.Defaults.LANES_DEF;
+import static net.sourceforge.plantuml.argon2.Constants.Defaults.LOG_M_COST_DEF;
+import static net.sourceforge.plantuml.argon2.Constants.Defaults.OUTLEN_DEF;
+import static net.sourceforge.plantuml.argon2.Constants.Defaults.TYPE_DEF;
+import static net.sourceforge.plantuml.argon2.Constants.Defaults.T_COST_DEF;
+import static net.sourceforge.plantuml.argon2.Constants.Defaults.VERSION_DEF;
 
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.charset.Charset;
 import java.util.Arrays;
 
-import ext.plantuml.com.at.gadermaier.argon2.algorithm.FillMemory;
-import ext.plantuml.com.at.gadermaier.argon2.algorithm.Finalize;
-import ext.plantuml.com.at.gadermaier.argon2.algorithm.Initialize;
-import ext.plantuml.com.at.gadermaier.argon2.model.Argon2Type;
-import ext.plantuml.com.at.gadermaier.argon2.model.Instance;
+import net.sourceforge.plantuml.argon2.algorithm.FillMemory;
+import net.sourceforge.plantuml.argon2.algorithm.Finalize;
+import net.sourceforge.plantuml.argon2.algorithm.Initialize;
+import net.sourceforge.plantuml.argon2.model.Argon2Type;
+import net.sourceforge.plantuml.argon2.model.Instance;
 
 public class Argon2 {
 

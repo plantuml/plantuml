@@ -39,11 +39,13 @@ import java.awt.GraphicsEnvironment;
 
 import net.sourceforge.plantuml.PlainStringsDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.UmlSource;
 
 
 public class PSystemListFonts extends PlainStringsDiagram {
 
-	public PSystemListFonts(String text) {
+	public PSystemListFonts(UmlSource source, String text) {
+		super(source);
 		strings.add("   <b><size:16>Fonts available:");
 		strings.add(" ");
 		// final Font fonts[] =

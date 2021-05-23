@@ -41,14 +41,9 @@ import java.util.List;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
+import net.sourceforge.plantuml.core.UmlSource;
 
 public class StdlibDiagramFactory extends PSystemCommandFactory {
-
-	private final ISkinSimple skinParam;
-
-	public StdlibDiagramFactory(ISkinSimple skinParam) {
-		this.skinParam = skinParam;
-	}
 
 	@Override
 	protected List<Command> createCommands() {
@@ -59,8 +54,8 @@ public class StdlibDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	public StdlibDiagram createEmptyDiagram() {
-		return new StdlibDiagram(skinParam);
+	public StdlibDiagram createEmptyDiagram(UmlSource source, ISkinSimple skinParam) {
+		return new StdlibDiagram(source, skinParam);
 	}
 
 }

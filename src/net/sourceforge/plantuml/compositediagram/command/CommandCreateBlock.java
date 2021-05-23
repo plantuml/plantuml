@@ -65,7 +65,7 @@ public class CommandCreateBlock extends SingleLineCommand2<CompositeDiagram> {
 								new RegexLeaf("as"), //
 								RegexLeaf.spaceOneOrMore() //
 						)), //
-				new RegexLeaf("CODE", "([\\p{L}0-9_.]+)"), RegexLeaf.end()); //
+				new RegexLeaf("CODE", "([%pLN_.]+)"), RegexLeaf.end()); //
 	}
 
 	@Override

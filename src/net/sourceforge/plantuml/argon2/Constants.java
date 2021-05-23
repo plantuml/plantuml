@@ -3,9 +3,9 @@
 
 	Original Author: Andreas Gadermaier <up.gadermaier@gmail.com>
  */
-package ext.plantuml.com.at.gadermaier.argon2;
+package net.sourceforge.plantuml.argon2;
 
-import ext.plantuml.com.at.gadermaier.argon2.model.Argon2Type;
+import net.sourceforge.plantuml.argon2.model.Argon2Type;
 
 public class Constants {
 

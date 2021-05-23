@@ -120,7 +120,7 @@ public final class FactorySequenceNoteOnArrowCommand implements SingleMultiFacto
 
 			@Override
 			public String getPatternEnd() {
-				return "(?i)^[%s]*end[%s]?note$";
+				return "^[%s]*end[%s]?note$";
 			}
 
 			protected CommandExecutionResult executeNow(final SequenceDiagram diagram, BlocLines lines)

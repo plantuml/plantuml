@@ -66,7 +66,7 @@ public class CommandNamespace extends SingleLineCommand2<ClassDiagram> {
 		return RegexConcat.build(CommandNamespace.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("namespace"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("NAME", "([\\p{L}0-9_][-\\p{L}0-9_.:\\\\]*)"), //
+				new RegexLeaf("NAME", "([%pLN_][-%pLN_.:\\\\]*)"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("STEREOTYPE", "(\\<\\<.*\\>\\>)?"), //
 				RegexLeaf.spaceZeroOrMore(), //

@@ -44,6 +44,9 @@ public class FtileUtils {
 	}
 
 	public static Ftile addConnection(Ftile ftile, Collection<Connection> connections) {
+		if (connections.size() == 0) {
+			return ftile;
+		}
 		return new FtileWithConnection(ftile, connections);
 	}
 

@@ -42,14 +42,13 @@ import net.sourceforge.plantuml.creole.legacy.StripeSimple;
 
 public class CommandCreoleSpace implements Command {
 
-	private final Pattern2 pattern;
+	private static final Pattern2 pattern = MyPattern.cmpile("^(\\<space:(\\d+)/?\\>)");
 
-	private CommandCreoleSpace(String p) {
-		this.pattern = MyPattern.cmpile(p);
+	private CommandCreoleSpace() {
 	}
 
 	public static Command create() {
-		return new CommandCreoleSpace("^(?i)(\\<space:(\\d+)/?\\>)");
+		return new CommandCreoleSpace();
 	}
 
 	public int matchingSize(String line) {

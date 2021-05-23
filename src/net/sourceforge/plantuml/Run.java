@@ -54,13 +54,9 @@ import java.util.concurrent.TimeUnit;
 
 import javax.swing.UIManager;
 
-import net.sourceforge.plantuml.activitydiagram.ActivityDiagramFactory;
-import net.sourceforge.plantuml.classdiagram.ClassDiagramFactory;
 import net.sourceforge.plantuml.code.NoPlantumlCompressionException;
 import net.sourceforge.plantuml.code.Transcoder;
 import net.sourceforge.plantuml.code.TranscoderUtil;
-import net.sourceforge.plantuml.command.PSystemCommandFactory;
-import net.sourceforge.plantuml.descdiagram.DescriptionDiagramFactory;
 import net.sourceforge.plantuml.ftp.FtpServer;
 import net.sourceforge.plantuml.picoweb.PicoWebServer;
 import net.sourceforge.plantuml.png.MetadataTag;
@@ -68,10 +64,8 @@ import net.sourceforge.plantuml.preproc.Stdlib;
 import net.sourceforge.plantuml.security.ImageIO;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SecurityUtils;
-import net.sourceforge.plantuml.sequencediagram.SequenceDiagramFactory;
 import net.sourceforge.plantuml.sprite.SpriteGrayLevel;
 import net.sourceforge.plantuml.sprite.SpriteUtils;
-import net.sourceforge.plantuml.statediagram.StateDiagramFactory;
 import net.sourceforge.plantuml.stats.StatsUtils;
 import net.sourceforge.plantuml.swing.MainWindow2;
 import net.sourceforge.plantuml.syntax.LanguageDescriptor;
@@ -156,9 +150,7 @@ public class Run {
 		}
 		final ErrorStatus error = ErrorStatus.init();
 		boolean forceQuit = false;
-		if (option.isPattern()) {
-			managePattern();
-		} else if (OptionFlags.getInstance().isGui()) {
+		if (OptionFlags.getInstance().isGui()) {
 			try {
 				UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
 			} catch (Exception e) {
@@ -356,25 +348,6 @@ public class Run {
 		final String name[] = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
 		for (String n : name) {
 			System.out.println("n=" + n);
-		}
-	}
-
-	private static void managePattern() {
-		printPattern(new SequenceDiagramFactory(null));
-		printPattern(new ClassDiagramFactory(null));
-		printPattern(new ActivityDiagramFactory(null));
-		printPattern(new DescriptionDiagramFactory(null));
-		// printPattern(new ComponentDiagramFactory());
-		printPattern(new StateDiagramFactory(null));
-		// printPattern(new ObjectDiagramFactory(null));
-	}
-
-	private static void printPattern(PSystemCommandFactory factory) {
-		System.out.println();
-		System.out.println(factory.getClass().getSimpleName().replaceAll("Factory", ""));
-		final List<String> descriptions = factory.getDescription();
-		for (String s : descriptions) {
-			System.out.println(s);
 		}
 	}
 

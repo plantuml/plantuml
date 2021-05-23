@@ -40,6 +40,7 @@ import java.io.IOException;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.PlainDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.ugraphic.AffineTransformType;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
@@ -52,7 +53,8 @@ public class PSystemCharlie extends PlainDiagram {
 
 	private BufferedImage image;
 
-	PSystemCharlie() {
+	PSystemCharlie(UmlSource source) {
+		super(source);
 		image = PSystemVersion.getCharlieImage();
 	}
 

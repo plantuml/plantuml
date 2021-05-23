@@ -76,6 +76,27 @@ public class ColorUtils {
 	 * https://www.boronine.com/2012/03/26/Color-Spaces-for-Human-Beings/
 	 * 
 	 */
+	public static synchronized Color reverseHsluv(Color color) {
+		final int red = color.getRed();
+		final int green = color.getGreen();
+		final int blue = color.getBlue();
+
+		final double hsluv[] = HUSLColorConverter.rgbToHsluv(new double[] { red / 256.0, green / 256.0, blue / 256.0 });
+
+		final double h = hsluv[0];
+		final double s = hsluv[1];
+		double l = (hsluv[2] + 50) % 100;
+		l += 0.25 * (50 - l);
+
+		final double rgb[] = HUSLColorConverter.hsluvToRgb(new double[] { h, s, l });
+
+		final int red2 = to255(rgb[0]);
+		final int green2 = to255(rgb[1]);
+		final int blue2 = to255(rgb[2]);
+
+		return new Color(red2, green2, blue2);
+	}
+
 	public static synchronized Color getReversed(Color color) {
 		final int red = color.getRed();
 		final int green = color.getGreen();

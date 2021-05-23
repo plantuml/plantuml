@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.command.regex.MyPattern;
 public class CommandSkinParamMultilines extends CommandMultilinesBracket<TitledDiagram> {
 
 	public CommandSkinParamMultilines() {
-		super("(?i)^skinparam[%s]*(?:[%s]+([\\w.]*(?:\\<\\<.*\\>\\>)?[\\w.]*))?[%s]*\\{$");
+		super("^skinparam[%s]*(?:[%s]+([\\w.]*(?:\\<\\<.*\\>\\>)?[\\w.]*))?[%s]*\\{$");
 	}
 
 	@Override

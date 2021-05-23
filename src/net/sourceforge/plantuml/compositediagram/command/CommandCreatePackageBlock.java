@@ -68,7 +68,7 @@ public class CommandCreatePackageBlock extends SingleLineCommand2<CompositeDiagr
 								new RegexLeaf("as"), //
 								RegexLeaf.spaceOneOrMore() //
 						)), //
-				new RegexLeaf("CODE", "([\\p{L}0-9_.]+)"), //
+				new RegexLeaf("CODE", "([%pLN_.]+)"), //
 				new RegexLeaf("(?:[%s]*\\{|[%s]+begin)"), RegexLeaf.end()); //
 	}
 

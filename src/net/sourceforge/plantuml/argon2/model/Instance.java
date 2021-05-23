@@ -3,11 +3,11 @@
 
 	Original Author: Andreas Gadermaier <up.gadermaier@gmail.com>
  */
-package ext.plantuml.com.at.gadermaier.argon2.model;
+package net.sourceforge.plantuml.argon2.model;
 
-import static ext.plantuml.com.at.gadermaier.argon2.Constants.ARGON2_SYNC_POINTS;
+import static net.sourceforge.plantuml.argon2.Constants.ARGON2_SYNC_POINTS;
 
-import ext.plantuml.com.at.gadermaier.argon2.Argon2;
+import net.sourceforge.plantuml.argon2.Argon2;
 
 public class Instance {
 

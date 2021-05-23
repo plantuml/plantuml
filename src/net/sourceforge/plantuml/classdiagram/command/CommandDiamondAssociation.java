@@ -58,7 +58,7 @@ public class CommandDiamondAssociation extends SingleLineCommand2<ClassDiagram> 
 		return RegexConcat.build(CommandDiamondAssociation.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("\\<\\>"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("CODE", "([\\p{L}0-9_.]+)"), //
+				new RegexLeaf("CODE", "([%pLN_.]+)"), //
 				RegexLeaf.end()); //
 	}
 

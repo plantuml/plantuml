@@ -3,15 +3,15 @@
 
 	Original Author: Andreas Gadermaier <up.gadermaier@gmail.com>
  */
-package ext.plantuml.com.at.gadermaier.argon2.algorithm;
+package net.sourceforge.plantuml.argon2.algorithm;
 
-import static ext.plantuml.com.at.gadermaier.argon2.Constants.ARGON2_BLOCK_SIZE;
-import static ext.plantuml.com.at.gadermaier.argon2.Constants.ARGON2_PREHASH_DIGEST_LENGTH;
-import static ext.plantuml.com.at.gadermaier.argon2.Constants.ARGON2_PREHASH_SEED_LENGTH;
+import static net.sourceforge.plantuml.argon2.Constants.ARGON2_BLOCK_SIZE;
+import static net.sourceforge.plantuml.argon2.Constants.ARGON2_PREHASH_DIGEST_LENGTH;
+import static net.sourceforge.plantuml.argon2.Constants.ARGON2_PREHASH_SEED_LENGTH;
 
-import ext.plantuml.com.at.gadermaier.argon2.Argon2;
-import ext.plantuml.com.at.gadermaier.argon2.Util;
-import ext.plantuml.com.at.gadermaier.argon2.model.Instance;
+import net.sourceforge.plantuml.argon2.Argon2;
+import net.sourceforge.plantuml.argon2.Util;
+import net.sourceforge.plantuml.argon2.model.Instance;
 
 public class Initialize {
 

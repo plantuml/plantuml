@@ -47,8 +47,8 @@ public class StartUtils {
 	public static final Pattern2 patternFilename = MyPattern
 			.cmpile("^[@\\\\]start[^%s{}%g]+[%s{][%s%g]*([^%g]*?)[%s}%g]*$");
 
-	public static final String PAUSE_PATTERN = "(?i)((?:\\W|\\<[^<>]*\\>)*)[@\\\\]unpause";
-	public static final String START_PATTERN = "(?i)((?:[^\\w~]|\\<[^<>]*\\>)*)[@\\\\]start";
+	public static final String PAUSE_PATTERN = "((?:\\W|\\<[^<>]*\\>)*)[@\\\\]unpause";
+	public static final String START_PATTERN = "((?:[^\\w~]|\\<[^<>]*\\>)*)[@\\\\]start";
 
 	public static String beforeStartUml(final String s) {
 		boolean inside = false;

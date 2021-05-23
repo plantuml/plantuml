@@ -73,14 +73,14 @@ public class CommandCreateState extends SingleLineCommand2<StateDiagram> {
 
 				new RegexOr(//
 						new RegexConcat(//
-								new RegexLeaf("CODE1", "([\\p{L}0-9_.]+)"), //
+								new RegexLeaf("CODE1", "([%pLN_.]+)"), //
 								RegexLeaf.spaceOneOrMore(), new RegexLeaf("as"), RegexLeaf.spaceOneOrMore(), //
 								new RegexLeaf("DISPLAY1", "[%g]([^%g]+)[%g]")), //
 						new RegexConcat(//
 								new RegexLeaf("DISPLAY2", "[%g]([^%g]+)[%g]"), //
 								RegexLeaf.spaceOneOrMore(), new RegexLeaf("as"), RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("CODE2", "([\\p{L}0-9_.]+)")), //
-						new RegexLeaf("CODE3", "([\\p{L}0-9_.]+)"), //
+								new RegexLeaf("CODE2", "([%pLN_.]+)")), //
+						new RegexLeaf("CODE3", "([%pLN_.]+)"), //
 						new RegexLeaf("CODE4", "[%g]([^%g]+)[%g]")), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("STEREOTYPE", "(\\<\\<.*\\>\\>)?"), //

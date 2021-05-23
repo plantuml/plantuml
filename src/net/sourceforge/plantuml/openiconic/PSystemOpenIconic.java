@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.openiconic;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.PlainDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
@@ -47,7 +48,8 @@ public class PSystemOpenIconic extends PlainDiagram {
 	private final String iconName;
 	private final double factor;
 
-	public PSystemOpenIconic(String iconName, double factor) {
+	public PSystemOpenIconic(UmlSource source, String iconName, double factor) {
+		super(source);
 		this.iconName = iconName;
 		this.factor = factor;
 	}

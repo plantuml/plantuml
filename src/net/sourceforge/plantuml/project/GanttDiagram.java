@@ -58,6 +58,7 @@ import net.sourceforge.plantuml.WithSprite;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
@@ -145,8 +146,8 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		this.weekNumberStrategy = new WeekNumberStrategy(firstDayOfWeek, minimalDaysInFirstWeek);
 	}
 
-	public GanttDiagram() {
-		super(UmlDiagramType.GANTT);
+	public GanttDiagram(UmlSource source) {
+		super(source, UmlDiagramType.GANTT);
 	}
 
 	private int horizontalPages = 1;

@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml;
 
+import static net.sourceforge.plantuml.ugraphic.ImageBuilder.plainImageBuilder;
+
 import java.awt.Color;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Dimension2D;
@@ -79,8 +81,6 @@ import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.version.Version;
 
-import static net.sourceforge.plantuml.ugraphic.ImageBuilder.plainImageBuilder;
-
 public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annotated, WithSprite {
 
 	private boolean rotation;
@@ -88,12 +88,12 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 
 	private int minwidth = Integer.MAX_VALUE;
 
-	public UmlDiagram(UmlDiagramType type) {
-		super(type);
+	public UmlDiagram(UmlSource source, UmlDiagramType type) {
+		super(source, type);
 	}
 
-	public UmlDiagram(UmlDiagramType type, ISkinSimple orig) {
-		super(type, orig);
+	public UmlDiagram(UmlSource source, UmlDiagramType type, ISkinSimple orig) {
+		super(source, type, orig);
 	}
 
 	final public int getMinwidth() {

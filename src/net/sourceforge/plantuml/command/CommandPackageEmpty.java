@@ -70,7 +70,7 @@ public class CommandPackageEmpty extends SingleLineCommand2<AbstractEntityDiagra
 								RegexLeaf.spaceOneOrMore(), //
 								new RegexLeaf("as"), //
 								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("CODE", "([\\p{L}0-9_.]+)") //
+								new RegexLeaf("CODE", "([%pLN_.]+)") //
 						)), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("COLOR", "(#[0-9a-fA-F]{6}|#?\\w+)?"), //

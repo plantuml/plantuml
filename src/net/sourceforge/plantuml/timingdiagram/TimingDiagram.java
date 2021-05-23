@@ -52,6 +52,7 @@ import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -88,8 +89,8 @@ public class TimingDiagram extends UmlDiagram implements Clocks {
 		return new DiagramDescription("(Timing Diagram)");
 	}
 
-	public TimingDiagram() {
-		super(UmlDiagramType.TIMING);
+	public TimingDiagram(UmlSource source) {
+		super(source, UmlDiagramType.TIMING);
 	}
 
 	@Override

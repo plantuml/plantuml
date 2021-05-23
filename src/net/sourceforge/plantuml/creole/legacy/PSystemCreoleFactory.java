@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.creole.legacy;
 
 import net.sourceforge.plantuml.command.PSystemBasicFactory;
 import net.sourceforge.plantuml.core.DiagramType;
+import net.sourceforge.plantuml.core.UmlSource;
 
 public class PSystemCreoleFactory extends PSystemBasicFactory<PSystemCreole> {
 
@@ -44,16 +45,16 @@ public class PSystemCreoleFactory extends PSystemBasicFactory<PSystemCreole> {
 		super(DiagramType.CREOLE);
 	}
 
-	public PSystemCreole init(String startLine) {
+	@Override
+	public PSystemCreole initDiagram(UmlSource source, String startLine) {
 		if (getDiagramType() == DiagramType.CREOLE) {
-			return new PSystemCreole();
+			return new PSystemCreole(source);
 		}
-
 		return null;
 	}
 
 	@Override
-	public PSystemCreole executeLine(PSystemCreole system, String line) {
+	public PSystemCreole executeLine(UmlSource source, PSystemCreole system, String line) {
 		system.doCommandLine(line);
 		return system;
 	}

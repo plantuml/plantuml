@@ -108,7 +108,7 @@ public class FtileFactoryDelegatorSwitch extends FtileFactoryDelegator {
 		}
 		final FtileSwitchWithManyLinks result = new FtileSwitchWithManyLinks(ftiles, branches, swimlane, diamond1,
 				diamond2, getStringBounder(), arrowColor);
-		return result.addLinks();
+		return result.addLinks(getStringBounder());
 
 	}
 

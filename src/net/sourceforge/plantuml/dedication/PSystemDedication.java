@@ -45,6 +45,7 @@ import javax.imageio.stream.ImageInputStream;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.PlainDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.security.ImageIO;
 import net.sourceforge.plantuml.ugraphic.AffineTransformType;
@@ -56,7 +57,8 @@ public class PSystemDedication extends PlainDiagram {
 
 	private final BufferedImage img;
 
-	public PSystemDedication(BufferedImage img) {
+	public PSystemDedication(UmlSource source, BufferedImage img) {
+		super(source);
 		this.img = Objects.requireNonNull(img);
 	}
 

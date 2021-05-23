@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.PlainDiagram;
 import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -52,6 +53,10 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class PSystemSkinparameterList extends PlainDiagram {
+
+	public PSystemSkinparameterList(UmlSource source) {
+		super(source);
+	}
 
 	@Override
 	protected UDrawable getRootDrawable(FileFormatOption fileFormatOption) throws IOException {
@@ -90,8 +95,8 @@ public class PSystemSkinparameterList extends PlainDiagram {
 		return new DiagramDescription("(Parameters)");
 	}
 
-	public static PSystemSkinparameterList create() {
-		return new PSystemSkinparameterList();
+	public static PSystemSkinparameterList create(UmlSource source) {
+		return new PSystemSkinparameterList(source);
 	}
 
 }

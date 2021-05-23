@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.PlainDiagram;
 import net.sourceforge.plantuml.SignatureUtils;
 import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.flashcode.FlashCodeFactory;
 import net.sourceforge.plantuml.flashcode.FlashCodeUtils;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
@@ -61,7 +62,8 @@ public class PSystemKeygen extends PlainDiagram {
 
 	final private String key;
 
-	public PSystemKeygen(String key) {
+	public PSystemKeygen(UmlSource source, String key) {
+		super(source);
 		this.key = key;
 	}
 

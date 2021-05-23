@@ -40,7 +40,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
-import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.ThemeStyle;
@@ -87,7 +86,7 @@ public class Splitter {
 	private static final Pattern2 tagOrText;
 
 	static {
-		final StringBuilder sb = new StringBuilder("(?i)");
+		final StringBuilder sb = new StringBuilder();
 
 		for (FontStyle style : EnumSet.allOf(FontStyle.class)) {
 			sb.append(style.getActivationPattern());
@@ -124,7 +123,7 @@ public class Splitter {
 		sb.append(svgAttributePattern);
 
 		htmlTag = sb.toString();
-		tagOrText = MyPattern.cmpile(htmlTag + "|.+?(?=" + htmlTag + ")|.+$", Pattern.CASE_INSENSITIVE);
+		tagOrText = MyPattern.cmpile(htmlTag + "|.+?(?=" + htmlTag + ")|.+$");
 	}
 
 	private final List<String> splitted = new ArrayList<>();

@@ -36,24 +36,20 @@
 package net.sourceforge.plantuml.oregon;
 
 import net.sourceforge.plantuml.command.PSystemBasicFactory;
+import net.sourceforge.plantuml.core.UmlSource;
 
 public class PSystemOregonFactory extends PSystemBasicFactory<PSystemOregon> {
 
-	// public PSystemOregon getSystem() {
-	// final Keyboard keyboard;
-	// if (inputs == null) {
-	// keyboard = new KeyboardList("");
-	// } else {
-	// keyboard = new KeyboardList(inputs);
-	// }
-	// system = new PSystemOregon(keyboard);
-	// return system;
-	// }
+	@Override
+	public PSystemOregon initDiagram(UmlSource source, String startLine) {
+		return null;
+	}
+
 
 	@Override
-	public PSystemOregon executeLine(PSystemOregon system, String line) {
+	public PSystemOregon executeLine(UmlSource source, PSystemOregon system, String line) {
 		if (system == null && line.equalsIgnoreCase("run oregon trail")) {
-			return new PSystemOregon();
+			return new PSystemOregon(source);
 		}
 		if (system == null) {
 			return null;

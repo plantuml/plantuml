@@ -66,8 +66,8 @@ import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrObjectDiagram> {
 
-	private static final String SINGLE = "[.\\\\]{0,2}[\\p{L}0-9_]+(?:[.\\\\]{1,2}[\\p{L}0-9_]+)*";
-	private static final String SINGLE_GUILLEMENT = "[%g][.\\\\]{0,2}[\\p{L}0-9_]+(?:[.\\\\]{1,2}[\\p{L}0-9_]+)*[%g]";
+	private static final String SINGLE = "[.\\\\]{0,2}[%pLN_]+(?:[.\\\\]{1,2}[%pLN_]+)*";
+	private static final String SINGLE_GUILLEMENT = "[%g][.\\\\]{0,2}[%pLN_]+(?:[.\\\\]{1,2}[%pLN_]+)*[%g]";
 	private static final String SINGLE2 = "(?:" + SINGLE + "|" + SINGLE_GUILLEMENT + ")";
 	private static final String COUPLE = "\\([%s]*(" + SINGLE2 + ")[%s]*,[%s]*(" + SINGLE2 + ")[%s]*\\)";
 
@@ -124,7 +124,7 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 	}
 
 	private static String getClassIdentifier() {
-		return "(" + getSeparator() + "?[\\p{L}0-9_$]+(?:" + getSeparator() + "[\\p{L}0-9_$]+)*|[%g][^%g]+[%g])";
+		return "(" + getSeparator() + "?[%pLN_$]+(?:" + getSeparator() + "[%pLN_$]+)*|[%g][^%g]+[%g])";
 	}
 
 	public static String getSeparator() {

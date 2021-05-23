@@ -38,9 +38,11 @@ package net.sourceforge.plantuml.board;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.core.DiagramType;
+import net.sourceforge.plantuml.core.UmlSource;
 
 public class BoardDiagramFactory extends PSystemCommandFactory {
 
@@ -65,8 +67,8 @@ public class BoardDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	public BoardDiagram createEmptyDiagram() {
-		return new BoardDiagram();
+	public BoardDiagram createEmptyDiagram(UmlSource source, ISkinSimple skinParam) {
+		return new BoardDiagram(source);
 	}
 
 }

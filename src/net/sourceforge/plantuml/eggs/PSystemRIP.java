@@ -41,12 +41,14 @@ import java.io.InputStream;
 
 import net.sourceforge.plantuml.PlainStringsDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.graphic.GraphicPosition;
 import net.sourceforge.plantuml.security.ImageIO;
 
 public class PSystemRIP extends PlainStringsDiagram {
 
-	public PSystemRIP() throws IOException {
+	public PSystemRIP(UmlSource source) throws IOException {
+		super(source);
 		strings.add(" To my Grandfather,");
 		strings.add(" A mon grand-pere,");
 		strings.add(" ");

@@ -51,11 +51,11 @@ public class CommandParticipantA3 extends CommandParticipant {
 		return RegexConcat.build(CommandParticipantA3.class.getName(), RegexLeaf.start(), //
 				getRegexType(), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("FULL", "([\\p{L}0-9_.@]+)"), //
+				new RegexLeaf("FULL", "([%pLN_.@]+)"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("as"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("CODE", "([\\p{L}0-9_.@]+)"), //
+				new RegexLeaf("CODE", "([%pLN_.@]+)"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("STEREO", "(\\<\\<.*\\>\\>)?"), //
 				RegexLeaf.spaceZeroOrMore(), //

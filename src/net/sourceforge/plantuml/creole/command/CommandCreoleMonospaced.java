@@ -47,7 +47,7 @@ public class CommandCreoleMonospaced implements Command {
 	private final String monospacedFamily;
 
 	public static Command create(String monospacedFamily) {
-		return new CommandCreoleMonospaced("^(?i)(\"\"(.*?)\"\")", monospacedFamily);
+		return new CommandCreoleMonospaced("^(\"\"(.*?)\"\")", monospacedFamily);
 	}
 
 	private CommandCreoleMonospaced(String p, String monospacedFamily) {

@@ -47,6 +47,8 @@ import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.core.DiagramType;
+import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.ditaa.PSystemDitaa;
 
 public class PSystemJcckitFactory extends PSystemBasicFactory<PSystemJcckit> {
 
@@ -58,7 +60,8 @@ public class PSystemJcckitFactory extends PSystemBasicFactory<PSystemJcckit> {
 		super(diagramType);
 	}
 
-	public PSystemJcckit init(String startLine) {
+	@Override
+	public PSystemJcckit initDiagram(UmlSource source, String startLine) {
 		this.data = null;
 		this.width = 640;
 		this.height = 400;
@@ -67,7 +70,7 @@ public class PSystemJcckitFactory extends PSystemBasicFactory<PSystemJcckit> {
 		} else if (getDiagramType() == DiagramType.JCCKIT) {
 			extractDimension(startLine);
 			data = new StringBuilder();
-			return createSystem();
+			return createSystem(source);
 		} else {
 			throw new IllegalStateException(getDiagramType().name());
 		}
@@ -88,7 +91,7 @@ public class PSystemJcckitFactory extends PSystemBasicFactory<PSystemJcckit> {
 		return "" + width + "-" + height;
 	}
 
-	private PSystemJcckit createSystem() {
+	private PSystemJcckit createSystem(UmlSource source) {
 		final Properties p = new Properties();
 		try {
 			p.load(new StringReader(data.toString()));
@@ -99,22 +102,22 @@ public class PSystemJcckitFactory extends PSystemBasicFactory<PSystemJcckit> {
 			e.printStackTrace();
 			return null;
 		}
-		return new PSystemJcckit(p, width, height);
+		return new PSystemJcckit(source, p, width, height);
 	}
 
 	@Override
-	public PSystemJcckit executeLine(PSystemJcckit system, String line) {
+	public PSystemJcckit executeLine(UmlSource source, PSystemJcckit system, String line) {
 		if (system == null && line.startsWith("jcckit")) {
 			data = new StringBuilder();
 			extractDimension(line);
-			return createSystem();
+			return createSystem(source);
 		}
 		if (data == null) {
 			return null;
 		}
 		data.append(StringUtils.trin(line));
 		data.append(BackSlash.NEWLINE);
-		return createSystem();
+		return createSystem(source);
 	}
 
 }

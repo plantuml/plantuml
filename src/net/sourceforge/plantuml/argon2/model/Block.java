@@ -3,15 +3,15 @@
 
 	Original Author: Andreas Gadermaier <up.gadermaier@gmail.com>
  */
-package ext.plantuml.com.at.gadermaier.argon2.model;
+package net.sourceforge.plantuml.argon2.model;
 
 
-import static ext.plantuml.com.at.gadermaier.argon2.Constants.ARGON2_BLOCK_SIZE;
-import static ext.plantuml.com.at.gadermaier.argon2.Constants.ARGON2_QWORDS_IN_BLOCK;
+import static net.sourceforge.plantuml.argon2.Constants.ARGON2_BLOCK_SIZE;
+import static net.sourceforge.plantuml.argon2.Constants.ARGON2_QWORDS_IN_BLOCK;
 
 import java.util.Arrays;
 
-import ext.plantuml.com.at.gadermaier.argon2.Util;
+import net.sourceforge.plantuml.argon2.Util;
 
 public class Block {
 

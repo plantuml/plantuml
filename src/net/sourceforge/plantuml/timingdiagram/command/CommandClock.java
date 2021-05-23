@@ -59,7 +59,7 @@ public class CommandClock extends SingleLineCommand2<TimingDiagram> {
 								RegexLeaf.spaceOneOrMore())), //
 				new RegexLeaf("TYPE", "clock"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("CODE", "([\\p{L}0-9_.@]+)"), //
+				new RegexLeaf("CODE", "([%pLN_.@]+)"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("with"), //
 				RegexLeaf.spaceOneOrMore(), //

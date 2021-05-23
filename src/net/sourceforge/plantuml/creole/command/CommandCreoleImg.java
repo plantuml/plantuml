@@ -45,14 +45,13 @@ import net.sourceforge.plantuml.graphic.Splitter;
 
 public class CommandCreoleImg implements Command {
 
-	private final Pattern2 pattern;
+	private static final Pattern2 pattern = MyPattern.cmpile("^(" + Splitter.imgPatternNoSrcColon + ")");
 
-	private CommandCreoleImg(String p) {
-		this.pattern = MyPattern.cmpile(p);
+	private CommandCreoleImg() {
 	}
 
 	public static Command create() {
-		return new CommandCreoleImg("^(?i)(" + Splitter.imgPatternNoSrcColon + ")");
+		return new CommandCreoleImg();
 	}
 
 	public int matchingSize(String line) {

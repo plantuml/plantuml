@@ -34,6 +34,8 @@
  */
 package net.sourceforge.plantuml.directdot;
 
+import static net.sourceforge.plantuml.ugraphic.ImageBuilder.plainImageBuilder;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Arrays;
@@ -46,6 +48,7 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.cucadiagram.dot.ExeState;
 import net.sourceforge.plantuml.cucadiagram.dot.Graphviz;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
@@ -53,13 +56,12 @@ import net.sourceforge.plantuml.cucadiagram.dot.ProcessState;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
 import net.sourceforge.plantuml.graphic.TextBlock;
 
-import static net.sourceforge.plantuml.ugraphic.ImageBuilder.plainImageBuilder;
-
 public class PSystemDot extends AbstractPSystem {
 
 	private final String data;
 
-	public PSystemDot(String data) {
+	public PSystemDot(UmlSource source, String data) {
+		super(source);
 		this.data = data;
 	}
 

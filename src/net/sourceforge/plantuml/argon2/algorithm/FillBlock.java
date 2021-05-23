@@ -3,9 +3,9 @@
 
 	Original Author: Andreas Gadermaier <up.gadermaier@gmail.com>
  */
-package ext.plantuml.com.at.gadermaier.argon2.algorithm;
+package net.sourceforge.plantuml.argon2.algorithm;
 
-import ext.plantuml.com.at.gadermaier.argon2.model.Block;
+import net.sourceforge.plantuml.argon2.model.Block;
 
 class FillBlock {
 

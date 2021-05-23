@@ -42,6 +42,7 @@ import java.util.List;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.PlainDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.donors.PSystemDonors;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockHorizontal;
@@ -49,6 +50,10 @@ import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
 
 public class PSystemListInternalSprites extends PlainDiagram {
+
+	public PSystemListInternalSprites(UmlSource source) {
+		super(source);
+	}
 
 	@Override
 	protected UDrawable getRootDrawable(FileFormatOption fileFormatOption) throws IOException {

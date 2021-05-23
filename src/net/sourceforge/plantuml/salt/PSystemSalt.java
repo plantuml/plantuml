@@ -59,6 +59,7 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandFactorySprite;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.salt.element.Element;
@@ -96,13 +97,13 @@ public class PSystemSalt extends TitledDiagram implements WithSprite {
 	private final Dictionary dictionary = new Dictionary();
 
 	@Deprecated
-	public PSystemSalt(List<String> data) {
-		super(UmlDiagramType.SALT);
+	public PSystemSalt(UmlSource source, List<String> data) {
+		super(source, UmlDiagramType.SALT);
 		this.data = data;
 	}
 
-	public PSystemSalt() {
-		this(new ArrayList<String>());
+	public PSystemSalt(UmlSource source) {
+		this(source, new ArrayList<String>());
 	}
 
 	public void add(String s) {

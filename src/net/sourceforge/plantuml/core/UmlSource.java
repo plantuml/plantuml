@@ -229,7 +229,7 @@ final public class UmlSource {
 	 * @return
 	 */
 	public Display getTitle() {
-		final Pattern2 p = MyPattern.cmpile("(?i)^[%s]*title[%s]+(.+)$");
+		final Pattern2 p = MyPattern.cmpile("^[%s]*title[%s]+(.+)$");
 		for (StringLocated s : source) {
 			final Matcher2 m = p.matcher(s.getString());
 			final boolean ok = m.matches();

@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.creole.Parser;
 import net.sourceforge.plantuml.creole.Sheet;
@@ -64,8 +65,8 @@ public class Help extends UmlDiagram {
 		return new DiagramDescription("(Help)");
 	}
 
-	public Help() {
-		super(UmlDiagramType.HELP);
+	public Help(UmlSource source) {
+		super(source, UmlDiagramType.HELP);
 	}
 
 	@Override

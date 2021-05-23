@@ -40,12 +40,12 @@ import net.sourceforge.plantuml.TitledDiagram;
 public class CommandAffineTransformMultiline extends CommandMultilines<TitledDiagram> {
 
 	public CommandAffineTransformMultiline() {
-		super("(?i)^!transformation[%s]+\\{[%s]*$");
+		super("^!transformation[%s]+\\{[%s]*$");
 	}
 
 	@Override
 	public String getPatternEnd() {
-		return "(?i)^[%s]*!\\}[%s]*$";
+		return "^[%s]*!\\}[%s]*$";
 	}
 
 	public CommandExecutionResult execute(final TitledDiagram diagram, BlocLines lines) {

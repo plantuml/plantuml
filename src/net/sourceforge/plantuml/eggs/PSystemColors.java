@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.PlainDiagram;
 import net.sourceforge.plantuml.SpriteContainerEmpty;
 import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -74,7 +75,8 @@ public class PSystemColors extends PlainDiagram implements UDrawable {
 	private final String paletteCentralColor;
 	private final double size = 60;
 
-	public PSystemColors(String option) {
+	public PSystemColors(UmlSource source, String option) {
+		super(source);
 		if (option == null) {
 			this.paletteCentralColor = null;
 		} else {

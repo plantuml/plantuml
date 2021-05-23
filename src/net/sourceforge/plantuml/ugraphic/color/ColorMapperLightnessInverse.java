@@ -52,6 +52,8 @@ public class ColorMapperLightnessInverse extends AbstractColorMapper implements 
 		if (color instanceof HColorMiddle) {
 			return ((HColorMiddle) color).getMappedColor(this);
 		}
+		// return ColorUtils.reverseHsluv(((HColorSimple) color).getColor999());
 		return ColorUtils.getReversed(((HColorSimple) color).getColor999());
+
 	}
 }

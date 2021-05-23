@@ -36,35 +36,26 @@
 package net.sourceforge.plantuml.creole.command;
 
 import net.sourceforge.plantuml.command.regex.Matcher2;
-import net.sourceforge.plantuml.command.regex.MyPattern;
-import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.creole.legacy.StripeSimple;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.FontPosition;
 
-public class CommandCreoleExposantChange implements Command {
+public class CommandCreoleExposantChange extends CommandCreoleCache implements Command {
 
-	private final Pattern2 pattern;
 	private final FontPosition position;
 
 	private CommandCreoleExposantChange(String p, FontPosition position) {
-		this.pattern = MyPattern.cmpile(p);
+		super(p);
 		this.position = position;
 	}
 
 	public static Command create(FontPosition position) {
 		return new CommandCreoleExposantChange(
-				"^(?i)(" + "\\<" + position.getHtmlTag() + "\\>" + "(.*?)\\</" + position.getHtmlTag() + "\\>)",
-				position);
+				"^(" + "\\<" + position.getHtmlTag() + "\\>" + "(.*?)\\</" + position.getHtmlTag() + "\\>)", position);
 	}
 
-	// public static Command createLegacyEol(FontStyle style) {
-	// return new CommandCreoleExposantChange("^(" + style.getActivationPattern() +
-	// "(.+))$", style);
-	// }
-
 	public int matchingSize(String line) {
-		final Matcher2 m = pattern.matcher(line);
+		final Matcher2 m = mypattern.matcher(line);
 		if (m.find() == false) {
 			return 0;
 		}
@@ -72,7 +63,7 @@ public class CommandCreoleExposantChange implements Command {
 	}
 
 	public String executeAndGetRemaining(String line, StripeSimple stripe) {
-		final Matcher2 m = pattern.matcher(line);
+		final Matcher2 m = mypattern.matcher(line);
 		if (m.find() == false) {
 			throw new IllegalStateException();
 		}

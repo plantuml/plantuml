@@ -52,11 +52,11 @@ public class CommandLinkAnchor extends SingleLineCommand2<SequenceDiagram> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandLinkAnchor.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("ANCHOR1", "\\{([\\p{L}0-9_]+)\\}"), //
+				new RegexLeaf("ANCHOR1", "\\{([%pLN_]+)\\}"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("LINK", "\\<-\\>"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("ANCHOR2", "\\{([\\p{L}0-9_]+)\\}"), //
+				new RegexLeaf("ANCHOR2", "\\{([%pLN_]+)\\}"), //
 				RegexLeaf.spaceZeroOrMore(), new RegexLeaf("MESSAGE", "(?::[%s]*(.*))?"), RegexLeaf.end());
 	}
 

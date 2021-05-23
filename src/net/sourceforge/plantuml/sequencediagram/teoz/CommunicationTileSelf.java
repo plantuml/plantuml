@@ -148,19 +148,36 @@ public class CommunicationTileSelf extends AbstractTile {
 	}
 
 	public void addConstraints() {
-		// final Component comp = getComponent(stringBounder);
-		// final Dimension2D dim = comp.getPreferredDimension(stringBounder);
-		// final double width = dim.getWidth();
+		if (isReverseDefine()) {
+			final LivingSpace previous = getPrevious();
+			if (previous != null) {
+				livingSpace1.getPosC(getStringBounder())
+						.ensureBiggerThan(previous.getPosC(getStringBounder()).addFixed(getCompWidth()));
 
-		final LivingSpace next = getNext();
-		if (next != null) {
-			next.getPosC(getStringBounder()).ensureBiggerThan(getMaxX());
+			}
+		} else {
+			final LivingSpace next = getNext();
+			if (next != null) {
+				next.getPosC(getStringBounder()).ensureBiggerThan(getMaxX());
+			}
 		}
 	}
 
-	// private boolean isSelf() {
-	// return livingSpace1 == livingSpace2;
-	// }
+	private boolean isReverseDefine() {
+		return message.getArrowConfiguration().isReverseDefine();
+	}
+
+	private LivingSpace getPrevious() {
+		LivingSpace previous = null;
+		for (Iterator<LivingSpace> it = livingSpaces.values().iterator(); it.hasNext();) {
+			final LivingSpace current = it.next();
+			if (current == livingSpace1) {
+				return previous;
+			}
+			previous = current;
+		}
+		return null;
+	}
 
 	private LivingSpace getNext() {
 		for (Iterator<LivingSpace> it = livingSpaces.values().iterator(); it.hasNext();) {
@@ -177,14 +194,22 @@ public class CommunicationTileSelf extends AbstractTile {
 	}
 
 	public Real getMinX() {
+		if (isReverseDefine()) {
+			return getPoint1(getStringBounder());
+		}
 		return getPoint1(getStringBounder());
 	}
 
 	public Real getMaxX() {
+		if (isReverseDefine()) {
+			return livingSpace1.getPosC2(getStringBounder());
+		}
+		return livingSpace1.getPosC2(getStringBounder()).addFixed(getCompWidth());
+	}
+
+	private double getCompWidth() {
 		final Component comp = getComponent(getStringBounder());
-		final Dimension2D dim = comp.getPreferredDimension(getStringBounder());
-		final double width = dim.getWidth();
-		return livingSpace1.getPosC2(getStringBounder()).addFixed(width);
+		return comp.getPreferredDimension(getStringBounder()).getWidth();
 	}
 
 }

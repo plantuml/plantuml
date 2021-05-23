@@ -38,16 +38,17 @@ package net.sourceforge.plantuml.font;
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
+import net.sourceforge.plantuml.core.UmlSource;
 
 public class PSystemListFontsFactory extends PSystemSingleLineFactory {
 
 	@Override
-	protected AbstractPSystem executeLine(String line) {
+	protected AbstractPSystem executeLine(UmlSource source, String line) {
 		final String lineLower = StringUtils.goLowerCase(line);
 		if (lineLower.equals("listfont") || lineLower.equals("listfonts") || lineLower.startsWith("listfont ")
 				|| lineLower.startsWith("listfonts ")) {
 			final int idx = line.indexOf(' ');
-			return new PSystemListFonts(idx == -1 ? "This is a test" : StringUtils.trin(line.substring(idx)));
+			return new PSystemListFonts(source, idx == -1 ? "This is a test" : StringUtils.trin(line.substring(idx)));
 		}
 		return null;
 	}

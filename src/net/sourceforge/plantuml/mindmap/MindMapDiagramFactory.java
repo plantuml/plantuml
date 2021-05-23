@@ -38,9 +38,11 @@ package net.sourceforge.plantuml.mindmap;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.core.DiagramType;
+import net.sourceforge.plantuml.core.UmlSource;
 
 public class MindMapDiagramFactory extends PSystemCommandFactory {
 
@@ -64,8 +66,8 @@ public class MindMapDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	public MindMapDiagram createEmptyDiagram() {
-		return new MindMapDiagram();
+	public MindMapDiagram createEmptyDiagram(UmlSource source, ISkinSimple skinParam) {
+		return new MindMapDiagram(source);
 	}
 
 }

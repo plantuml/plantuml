@@ -73,7 +73,7 @@ final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassO
 								RegexLeaf.spaceOneOrMore() //
 						)), //
 				new RegexLeaf("ENT1", "(?:" + optionalKeywords(umlDiagramType) + "[%s]+)?"
-						+ "(\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*|[%g][^%g]+[%g])[%s]*(\\<\\<.*\\>\\>)?"), //
+						+ "(\\.?[%pLN_]+(?:\\.[%pLN_]+)*|[%g][^%g]+[%g])[%s]*(\\<\\<.*\\>\\>)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexLeaf("FIRST_LABEL", "[%g]([^%g]+)[%g]")), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -83,7 +83,7 @@ final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassO
 				new RegexOptional(new RegexLeaf("SECOND_LABEL", "[%g]([^%g]+)[%g]")), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("ENT2", "(?:" + optionalKeywords(umlDiagramType) + "[%s]+)?"
-						+ "(\\.?[\\p{L}0-9_]+(?:\\.[\\p{L}0-9_]+)*|[%g][^%g]+[%g])[%s]*(\\<\\<.*\\>\\>)?"), //
+						+ "(\\.?[%pLN_]+(?:\\.[%pLN_]+)*|[%g][^%g]+[%g])[%s]*(\\<\\<.*\\>\\>)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional( //
 						new RegexConcat( //

@@ -37,10 +37,12 @@ package net.sourceforge.plantuml.eggs;
 
 import net.sourceforge.plantuml.PlainStringsDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.UmlSource;
 
 public class PSystemLost extends PlainStringsDiagram {
 
-	public PSystemLost() {
+	public PSystemLost(UmlSource source) {
+		super(source);
 		strings.add("Thank you for choosing Oceanic Airlines.");
 	}
 

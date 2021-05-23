@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.PlainDiagram;
 import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.creole.Parser;
 import net.sourceforge.plantuml.creole.Sheet;
@@ -58,7 +59,8 @@ public class PSystemCreole extends PlainDiagram {
 
 	private final List<String> lines = new ArrayList<>();
 
-	public PSystemCreole() {
+	public PSystemCreole(UmlSource source) {
+		super(source);
 	}
 
 	public DiagramDescription getDescription() {

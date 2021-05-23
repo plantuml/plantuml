@@ -74,7 +74,7 @@ public class CommandNamespace2 extends SingleLineCommand2<ClassDiagram> {
 				new RegexLeaf("as"), //
 				RegexLeaf.spaceOneOrMore(), //
 
-				new RegexLeaf("NAME", "([\\p{L}0-9_][-\\p{L}0-9_.:\\\\]*)"), //
+				new RegexLeaf("NAME", "([%pLN_][-%pLN_.:\\\\]*)"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("STEREOTYPE", "(\\<\\<.*\\>\\>)?"), //
 				RegexLeaf.spaceZeroOrMore(), //

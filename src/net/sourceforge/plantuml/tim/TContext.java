@@ -102,6 +102,8 @@ import net.sourceforge.plantuml.tim.stdlib.LogicalNot;
 import net.sourceforge.plantuml.tim.stdlib.Lower;
 import net.sourceforge.plantuml.tim.stdlib.Newline;
 import net.sourceforge.plantuml.tim.stdlib.RetrieveProcedure;
+import net.sourceforge.plantuml.tim.stdlib.ReverseHsluvColor;
+import net.sourceforge.plantuml.tim.stdlib.ReverseColor;
 import net.sourceforge.plantuml.tim.stdlib.SetVariableValue;
 import net.sourceforge.plantuml.tim.stdlib.StringFunction;
 import net.sourceforge.plantuml.tim.stdlib.Strlen;
@@ -160,6 +162,8 @@ public class TContext {
 		functionsSet.addFunction(new Darken());
 		functionsSet.addFunction(new IsDark());
 		functionsSet.addFunction(new IsLight());
+		functionsSet.addFunction(new ReverseHsluvColor());
+		functionsSet.addFunction(new ReverseColor());
 		// %standard_exists_function
 		// %str_replace
 		// !exit

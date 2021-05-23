@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.core.UmlSource;
 public class PSystemErrorEmpty extends PSystemError {
 
 	public PSystemErrorEmpty(UmlSource source, List<StringLocated> trace, ErrorUml singleError) {
-		this.setSource(source);
+		super(source);
 		this.trace = trace;
 		this.singleError = singleError;
 

@@ -45,8 +45,7 @@ import net.sourceforge.plantuml.core.UmlSource;
 public class PSystemErrorPreprocessor extends PSystemError {
 
 	public PSystemErrorPreprocessor(List<StringLocated> input, List<StringLocated> trace) {
-		final DiagramType type = DiagramType.getTypeFromArobaseStart(input.get(0).getString());
-		this.setSource(new UmlSource(input, type == DiagramType.UML));
+		super(new UmlSource(input, DiagramType.getTypeFromArobaseStart(input.get(0).getString()) == DiagramType.UML));
 		this.trace = trace;
 		this.singleError = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, getLastLine().getPreprocessorError(), 0,
 				getLastLine().getLocation());

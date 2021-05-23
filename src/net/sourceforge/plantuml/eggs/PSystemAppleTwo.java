@@ -39,12 +39,14 @@ import java.io.IOException;
 
 import net.sourceforge.plantuml.PlainStringsDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.graphic.GraphicPosition;
 import net.sourceforge.plantuml.version.PSystemVersion;
 
 public class PSystemAppleTwo extends PlainStringsDiagram {
 
-	public PSystemAppleTwo() throws IOException {
+	public PSystemAppleTwo(UmlSource source) throws IOException {
+		super(source);
 		strings.add("                             <b><size:18>Apple //e for ever !                             ");
 		strings.add(" ");
 

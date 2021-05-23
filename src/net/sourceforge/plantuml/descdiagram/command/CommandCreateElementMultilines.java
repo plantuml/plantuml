@@ -79,10 +79,10 @@ public class CommandCreateElementMultilines extends CommandMultilines2<AbstractE
 	@Override
 	public String getPatternEnd() {
 		if (type == 0) {
-			return "(?i)^(.*)[%g]$";
+			return "^(.*)[%g]$";
 		}
 		if (type == 1) {
-			return "(?i)^([^\\[\\]]*)\\]$";
+			return "^([^\\[\\]]*)\\]$";
 		}
 		throw new IllegalArgumentException();
 	}
@@ -91,7 +91,7 @@ public class CommandCreateElementMultilines extends CommandMultilines2<AbstractE
 		if (type == 0) {
 			return RegexConcat.build(CommandCreateElementMultilines.class.getName() + type, RegexLeaf.start(), //
 					new RegexLeaf("TYPE", "(" + CommandCreateElementFull.ALL_TYPES + ")[%s]+"), //
-					new RegexLeaf("CODE", "([\\p{L}0-9_.]+)"), //
+					new RegexLeaf("CODE", "([%pLN_.]+)"), //
 					RegexLeaf.spaceZeroOrMore(), //
 					new RegexLeaf("STEREO", "(\\<\\<.+\\>\\>)?"), //
 					RegexLeaf.spaceZeroOrMore(), //
@@ -108,7 +108,7 @@ public class CommandCreateElementMultilines extends CommandMultilines2<AbstractE
 		if (type == 1) {
 			return RegexConcat.build(CommandCreateElementMultilines.class.getName() + type, RegexLeaf.start(), //
 					new RegexLeaf("TYPE", "(" + CommandCreateElementFull.ALL_TYPES + ")[%s]+"), //
-					new RegexLeaf("CODE", "([\\p{L}0-9_.]+)"), //
+					new RegexLeaf("CODE", "([%pLN_.]+)"), //
 					RegexLeaf.spaceZeroOrMore(), //
 					new RegexLeaf("STEREO", "(\\<\\<.+\\>\\>)?"), //
 					RegexLeaf.spaceZeroOrMore(), //

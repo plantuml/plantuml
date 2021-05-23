@@ -65,7 +65,7 @@ public final class CommandFactoryNote implements SingleMultiFactoryCommand<Abstr
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("as"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("CODE", "([\\p{L}0-9_.]+)"), //
+				new RegexLeaf("CODE", "([%pLN_.]+)"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("TAGS", Stereotag.pattern() + "?"), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -84,7 +84,7 @@ public final class CommandFactoryNote implements SingleMultiFactoryCommand<Abstr
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("as"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("CODE", "([\\p{L}0-9_.]+)"), //
+				new RegexLeaf("CODE", "([%pLN_.]+)"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("TAGS", Stereotag.pattern() + "?"), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -113,7 +113,7 @@ public final class CommandFactoryNote implements SingleMultiFactoryCommand<Abstr
 
 			@Override
 			public String getPatternEnd() {
-				return "(?i)^[%s]*end[%s]?note$";
+				return "^[%s]*end[%s]?note$";
 			}
 
 			protected CommandExecutionResult executeNow(final AbstractEntityDiagram system, BlocLines lines)

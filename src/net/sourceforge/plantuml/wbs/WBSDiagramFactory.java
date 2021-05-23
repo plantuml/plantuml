@@ -38,9 +38,11 @@ package net.sourceforge.plantuml.wbs;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.core.DiagramType;
+import net.sourceforge.plantuml.core.UmlSource;
 
 public class WBSDiagramFactory extends PSystemCommandFactory {
 
@@ -59,8 +61,8 @@ public class WBSDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	public WBSDiagram createEmptyDiagram() {
-		return new WBSDiagram();
+	public WBSDiagram createEmptyDiagram(UmlSource source, ISkinSimple skinParam) {
+		return new WBSDiagram(source);
 	}
 
 }

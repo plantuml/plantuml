@@ -80,9 +80,9 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 				new RegexOptional(//
 						new RegexOr("FIRST", //
 								new RegexLeaf("STAR", "(\\(\\*(top)?\\))"), //
-								new RegexLeaf("CODE", "([\\p{L}0-9][\\p{L}0-9_.]*)"), //
-								new RegexLeaf("BAR", "(?:==+)[%s]*([\\p{L}0-9_.]+)[%s]*(?:==+)"), //
-								new RegexLeaf("QUOTED", "[%g]([^%g]+)[%g](?:[%s]+as[%s]+([\\p{L}0-9_.]+))?"))), //
+								new RegexLeaf("CODE", "([%pLN][%pLN_.]*)"), //
+								new RegexLeaf("BAR", "(?:==+)[%s]*([%pLN_.]+)[%s]*(?:==+)"), //
+								new RegexLeaf("QUOTED", "[%g]([^%g]+)[%g](?:[%s]+as[%s]+([%pLN_.]+))?"))), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("STEREOTYPE", "(\\<\\<.*\\>\\>)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -103,9 +103,9 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 				new RegexOr("FIRST2", //
 						new RegexLeaf("STAR2", "(\\(\\*(top|\\d+)?\\))"), //
 						new RegexLeaf("OPENBRACKET2", "(\\{)"), //
-						new RegexLeaf("CODE2", "([\\p{L}0-9][\\p{L}0-9_.]*)"), //
-						new RegexLeaf("BAR2", "(?:==+)[%s]*([\\p{L}0-9_.]+)[%s]*(?:==+)"), //
-						new RegexLeaf("QUOTED2", "[%g]([^%g]+)[%g](?:[%s]+as[%s]+([\\p{L}0-9][\\p{L}0-9_.]*))?"), //
+						new RegexLeaf("CODE2", "([%pLN][%pLN_.]*)"), //
+						new RegexLeaf("BAR2", "(?:==+)[%s]*([%pLN_.]+)[%s]*(?:==+)"), //
+						new RegexLeaf("QUOTED2", "[%g]([^%g]+)[%g](?:[%s]+as[%s]+([%pLN][%pLN_.]*))?"), //
 						new RegexLeaf("QUOTED_INVISIBLE2", "(\\w.*?)")), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("STEREOTYPE2", "(\\<\\<.*\\>\\>)?"), //

@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.Rainbow;
@@ -73,8 +74,8 @@ public class ActivityDiagram3 extends UmlDiagram {
 
 	private final Swimlanes swinlanes = new Swimlanes(getSkinParam(), getPragma());
 
-	public ActivityDiagram3(ISkinSimple skinParam) {
-		super(UmlDiagramType.ACTIVITY, skinParam);
+	public ActivityDiagram3(UmlSource source, ISkinSimple skinParam) {
+		super(source, UmlDiagramType.ACTIVITY, skinParam);
 	}
 
 	private void manageSwimlaneStrategy() {

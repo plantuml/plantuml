@@ -3,9 +3,9 @@
 
 	Original Author: Andreas Gadermaier <up.gadermaier@gmail.com>
  */
-package ext.plantuml.com.at.gadermaier.argon2.algorithm;
+package net.sourceforge.plantuml.argon2.algorithm;
 
-import static ext.plantuml.com.at.gadermaier.argon2.Constants.ARGON2_SYNC_POINTS;
+import static net.sourceforge.plantuml.argon2.Constants.ARGON2_SYNC_POINTS;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,8 +14,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-import ext.plantuml.com.at.gadermaier.argon2.model.Instance;
-import ext.plantuml.com.at.gadermaier.argon2.model.Position;
+import net.sourceforge.plantuml.argon2.model.Instance;
+import net.sourceforge.plantuml.argon2.model.Position;
 
 public class FillMemory {
 

@@ -99,7 +99,7 @@ public final class CommandFactoryNoteOnLink implements SingleMultiFactoryCommand
 
 			@Override
 			public String getPatternEnd() {
-				return "(?i)^end[%s]?note$";
+				return "^end[%s]?note$";
 			}
 
 			protected CommandExecutionResult executeNow(final CucaDiagram system, BlocLines lines)

@@ -47,12 +47,12 @@ import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 public class CommandMultilinesFooter extends CommandMultilines<TitledDiagram> {
 
 	public CommandMultilinesFooter() {
-		super("(?i)^(?:(left|right|center)?[%s]*)footer$");
+		super("^(?:(left|right|center)?[%s]*)footer$");
 	}
 
 	@Override
 	public String getPatternEnd() {
-		return "(?i)^end[%s]?footer$";
+		return "^end[%s]?footer$";
 	}
 
 	public CommandExecutionResult execute(final TitledDiagram diagram, BlocLines lines) throws NoSuchColorException {

@@ -191,8 +191,8 @@ public class FtileSwitchWithManyLinks extends FtileSwitchWithDiamonds {
 			final double x2 = p2.getX();
 			final double y2 = p2.getY();
 
-			final Snake snake = Snake.create(null, arrowColor, Arrows.asToDown())
-					.withLabel(getLabelPositive(branch), VerticalAlignment.BOTTOM);
+			final Snake snake = Snake.create(null, arrowColor, Arrows.asToDown()).withLabel(getLabelPositive(branch),
+					VerticalAlignment.BOTTOM);
 			if (x2 < p1d.getX() - margin || x2 > p1b.getX() + margin) {
 				snake.addPoint(x2, p1d.getY());
 				snake.addPoint(x2, y2);
@@ -274,15 +274,18 @@ public class FtileSwitchWithManyLinks extends FtileSwitchWithDiamonds {
 		return max + 10;
 	}
 
-	public Ftile addLinks() {
+	public Ftile addLinks(StringBounder stringBounder) {
 		final List<Connection> conns = new ArrayList<>();
 		conns.add(new ConnectionHorizontalThenVertical(tiles.get(0), branches.get(0)));
 		conns.add(new ConnectionHorizontalThenVertical(tiles.get(tiles.size() - 1), branches.get(tiles.size() - 1)));
 		conns.add(new ConnectionVerticalThenHorizontal(tiles.get(0)));
 		conns.add(new ConnectionVerticalThenHorizontal(tiles.get(tiles.size() - 1)));
 		for (int i = 1; i < tiles.size() - 1; i++) {
-			conns.add(new ConnectionVerticalTop(tiles.get(i), branches.get(i)));
-			conns.add(new ConnectionVerticalBottom(tiles.get(i)));
+			final Ftile tile = tiles.get(i);
+			conns.add(new ConnectionVerticalTop(tile, branches.get(i)));
+			if (tile.calculateDimension(stringBounder).hasPointOut()) {
+				conns.add(new ConnectionVerticalBottom(tile));
+			}
 		}
 
 		return FtileUtils.addConnection(this, conns);

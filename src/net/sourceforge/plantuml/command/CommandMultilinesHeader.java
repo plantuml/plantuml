@@ -47,12 +47,12 @@ import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 public class CommandMultilinesHeader extends CommandMultilines<TitledDiagram> {
 
 	public CommandMultilinesHeader() {
-		super("(?i)^(?:(left|right|center)?[%s]*)header$");
+		super("^(?:(left|right|center)?[%s]*)header$");
 	}
 
 	@Override
 	public String getPatternEnd() {
-		return "(?i)^end[%s]?header$";
+		return "^end[%s]?header$";
 	}
 
 	public CommandExecutionResult execute(final TitledDiagram diagram, BlocLines lines) throws NoSuchColorException {

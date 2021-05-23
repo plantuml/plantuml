@@ -44,14 +44,13 @@ import net.sourceforge.plantuml.math.ScientificEquationSafe;
 
 public class CommandCreoleMath implements Command {
 
-	private final Pattern2 pattern;
+	private static final Pattern2 pattern = MyPattern.cmpile("^(" + Splitter.mathPattern + ")");
 
-	private CommandCreoleMath(String p) {
-		this.pattern = MyPattern.cmpile(p);
+	private CommandCreoleMath() {
 	}
 
 	public static Command create() {
-		return new CommandCreoleMath("^(?i)(" + Splitter.mathPattern + ")");
+		return new CommandCreoleMath();
 	}
 
 	public int matchingSize(String line) {

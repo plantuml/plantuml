@@ -88,7 +88,9 @@ public class CommandRepeatWhile3Multilines extends CommandMultilines3<ActivityDi
 		// System.err.println("linesLast=" + lineLast);
 
 		//
-		// final HtmlColor color = diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(line0.get("COLOR", 0));
+		// final HtmlColor color =
+		// diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(line0.get("COLOR",
+		// 0));
 
 		final String test = line0.get("TEST1", 0);
 		Display testDisplay = Display.getWithNewlines(test);
@@ -105,8 +107,8 @@ public class CommandRepeatWhile3Multilines extends CommandMultilines3<ActivityDi
 		final Rainbow linkColor = Rainbow.none(); // diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR",
 		// 0));
 		final Display linkLabel = Display.NULL; // Display.getWithNewlines("arg.get(\"LABEL\", 0)");
-		final List<Display> splitted = testDisplay.splitMultiline(MyPattern.cmpile("\\)[%s]*(is|equals?)[%s]*\\(",
-				Pattern.CASE_INSENSITIVE));
+		final List<Display> splitted = testDisplay
+				.splitMultiline(MyPattern.cmpile("\\)[%s]*(is|equals?)[%s]*\\("));
 		if (splitted.size() == 2) {
 			testDisplay = splitted.get(0);
 			yes = splitted.get(1);

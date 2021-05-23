@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -61,8 +62,8 @@ public class ActivityDiagram extends CucaDiagram {
 	private IEntity lastEntityBrancheConsulted;
 	private ConditionalContext currentContext;
 
-	public ActivityDiagram(ISkinSimple skinParam) {
-		super(UmlDiagramType.ACTIVITY, skinParam);
+	public ActivityDiagram(UmlSource source, ISkinSimple skinParam) {
+		super(source, UmlDiagramType.ACTIVITY, skinParam);
 		setNamespaceSeparator(null);
 	}
 

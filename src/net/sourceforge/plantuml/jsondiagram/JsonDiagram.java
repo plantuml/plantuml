@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -65,8 +66,8 @@ public class JsonDiagram extends TitledDiagram {
 	private final JsonValue root;
 	private final List<String> highlighted;
 
-	public JsonDiagram(UmlDiagramType type, JsonValue json, List<String> highlighted) {
-		super(type);
+	public JsonDiagram(UmlSource source, UmlDiagramType type, JsonValue json, List<String> highlighted) {
+		super(source, type);
 		if (json != null && (json.isString() || json.isBoolean() || json.isNumber())) {
 			this.root = new JsonArray();
 			((JsonArray) this.root).add(json);

@@ -55,6 +55,7 @@ import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.dot.CucaDiagramTxtMaker;
 import net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
@@ -121,8 +122,8 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		return ident;
 	}
 
-	public CucaDiagram(UmlDiagramType type, ISkinSimple orig) {
-		super(type, orig);
+	public CucaDiagram(UmlSource source, UmlDiagramType type, ISkinSimple orig) {
+		super(source, type, orig);
 		this.stacks2.add(Ident.empty());
 	}
 

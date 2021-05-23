@@ -46,19 +46,32 @@ abstract class HColorAbstract implements HColor {
 		};
 	}
 
+	@Override
 	public HColor lighten(int ratio) {
 		return this;
 	}
 
+	@Override
 	public HColor darken(int ratio) {
 		return this;
 	}
-	
+
+	@Override
+	public HColor reverseHsluv() {
+		return this;
+	}
+
+	@Override
+	public HColor reverse() {
+		return this;
+	}
+
 	@Override
 	public boolean isDark() {
 		return true;
 	}
 
+	@Override
 	public String asString() {
 		return "?" + getClass().getSimpleName();
 	}

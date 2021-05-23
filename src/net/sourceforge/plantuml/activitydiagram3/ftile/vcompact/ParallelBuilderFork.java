@@ -208,7 +208,9 @@ public class ParallelBuilderFork extends AbstractParallelFtilesBuilder {
 				def = Rainbow.build(skinParam());
 			}
 			final Rainbow rainbow = tmp.getOutLinkRendering().getRainbow(def);
-			conns.add(new ConnectionOut(tmp, out, x, rainbow, getJustBeforeBar2(middle, getStringBounder())));
+			if (tmp.calculateDimension(getStringBounder()).hasPointOut()) {
+				conns.add(new ConnectionOut(tmp, out, x, rainbow, getJustBeforeBar2(middle, getStringBounder())));
+			}
 			x += dim.getWidth();
 		}
 		result = FtileUtils.addConnection(result, conns);

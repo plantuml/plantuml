@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.PlainDiagram;
 import net.sourceforge.plantuml.SpriteContainerEmpty;
 import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -56,7 +57,8 @@ public class PSystemDefinition extends PlainDiagram implements UDrawable {
 	private final List<String> lines = new ArrayList<>();
 	private final String startLine;
 
-	public PSystemDefinition(String startLine) {
+	public PSystemDefinition(UmlSource source, String startLine) {
+		super(source);
 		this.startLine = startLine;
 	}
 

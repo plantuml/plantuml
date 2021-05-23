@@ -53,7 +53,7 @@ public class CommandResume extends SingleLineCommand2<BpmDiagram> {
 		return RegexConcat.build(CommandResume.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("resume"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("ID", "([\\p{L}0-9_.@]+)"), //
+				new RegexLeaf("ID", "([%pLN_.@]+)"), //
 				RegexLeaf.end());
 	}
 

@@ -38,14 +38,15 @@ package net.sourceforge.plantuml.sprite;
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
+import net.sourceforge.plantuml.core.UmlSource;
 
 public class PSystemListInternalSpritesFactory extends PSystemSingleLineFactory {
 
 	@Override
-	protected AbstractPSystem executeLine(String line) {
+	protected AbstractPSystem executeLine(UmlSource source, String line) {
 		final String lineLower = StringUtils.goLowerCase(line);
 		if (lineLower.startsWith("listsprite")) {
-			return new PSystemListInternalSprites();
+			return new PSystemListInternalSprites(source);
 		}
 		return null;
 	}

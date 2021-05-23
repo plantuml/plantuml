@@ -54,6 +54,7 @@ import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -84,8 +85,8 @@ public class NwDiagram extends UmlDiagram {
 		return new DiagramDescription("(Nwdiag)");
 	}
 
-	public NwDiagram() {
-		super(UmlDiagramType.NWDIAG);
+	public NwDiagram(UmlSource source) {
+		super(source, UmlDiagramType.NWDIAG);
 	}
 
 	public void init() {
@@ -101,7 +102,7 @@ public class NwDiagram extends UmlDiagram {
 
 	public CommandExecutionResult openGroup(String name) {
 		if (initDone == false) {
-			return error();
+			return errorNoInit();
 		}
 		currentGroup = new NwGroup(name, currentNetwork());
 		groups.add(currentGroup);
@@ -110,7 +111,7 @@ public class NwDiagram extends UmlDiagram {
 
 	public CommandExecutionResult openNetwork(String name) {
 		if (initDone == false) {
-			return error();
+			return errorNoInit();
 		}
 		createNetwork(name);
 		return CommandExecutionResult.ok();
@@ -124,7 +125,7 @@ public class NwDiagram extends UmlDiagram {
 
 	public CommandExecutionResult link(String name1, String name2) {
 		if (initDone == false) {
-			return error();
+			return errorNoInit();
 		}
 		if (currentNetwork() == null) {
 			createNetwork(name1);
@@ -162,7 +163,7 @@ public class NwDiagram extends UmlDiagram {
 
 	public CommandExecutionResult endSomething() {
 		if (initDone == false) {
-			return error();
+			return errorNoInit();
 		}
 		this.currentGroup = null;
 		return CommandExecutionResult.ok();
@@ -170,7 +171,7 @@ public class NwDiagram extends UmlDiagram {
 
 	public CommandExecutionResult addElement(String name, String definition) {
 		if (initDone == false) {
-			return error();
+			return errorNoInit();
 		}
 		if (currentGroup != null) {
 			currentGroup.addElement(name);
@@ -189,8 +190,8 @@ public class NwDiagram extends UmlDiagram {
 		return CommandExecutionResult.ok();
 	}
 
-	private CommandExecutionResult error() {
-		return CommandExecutionResult.error("");
+	private CommandExecutionResult errorNoInit() {
+		return CommandExecutionResult.error("Maybe you forget 'nwdiag {' in your diagram ?");
 	}
 
 	private Map<String, String> toSet(String definition) {
@@ -346,7 +347,7 @@ public class NwDiagram extends UmlDiagram {
 
 	public CommandExecutionResult setProperty(String property, String value) {
 		if (initDone == false) {
-			return error();
+			return errorNoInit();
 		}
 		if ("address".equalsIgnoreCase(property) && currentNetwork() != null) {
 			currentNetwork().setOwnAdress(value);
