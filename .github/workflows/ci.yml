@@ -1,5 +1,12 @@
 name: tests
-on: push
+
+on:
+  pull_request:
+    types: [ opened, synchronize, reopened ]
+  push:
+    branches:
+      - master
+
 jobs:
   run_tests:
     runs-on: ubuntu-latest
@@ -12,12 +19,19 @@ jobs:
         with:
           java-version: 8
 
-      - name: Cache Maven packages
+      - name: Cache local Maven repository
         uses: actions/cache@v2
         with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
 
+      # Downloading all the dependencies is very log spammy so we do this in its own step.
+      # Also the cache is reused by the "release" workflow but the workflow here does not use all
+      # dependencies so without the priming step the cache will be missing some things.
+      - name: Prime Maven cache
+        run: mvn --batch-mode dependency:go-offline
+        
       - name: Run tests with Maven
         run: mvn -B test --file pom.xml
