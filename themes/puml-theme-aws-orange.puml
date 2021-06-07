@@ -50,7 +50,9 @@ skinparam useBetaStyle false
 '' define colors based on PUML_MODE
 ''
 !if ($PUML_MODE == "light")
-    !$SECONDARY      = "#cccccc"
+    !$SECONDARY      = "#eeeeee"
+    '' hardcode $SECONDARY_LIGHT since it is so close to white
+    !$SECONDARY_LIGHT = "ffffff"
     !$SUCCESS        = "#1D8102"
     !$INFO           = "#0073bb"
     !$DANGER         = "#d13212"
@@ -64,6 +66,7 @@ skinparam useBetaStyle false
     !assume transparent light
 !else
     !$SECONDARY      = "#2a2e33"
+    !$SECONDARY_LIGHT = %lighten($SECONDARY, $PUML_GRADIENT)
     !$SUCCESS        = "#6aaf35"
     !$INFO           = "#44b9d6"
     !$DANGER         = "#ff5d64"
@@ -83,7 +86,6 @@ skinparam useBetaStyle false
 !$PRIMARY_DARK    = %darken($PRIMARY, $PUML_GRADIENT)
 !$PRIMARY_LIGHT   = %lighten($PRIMARY, $PUML_GRADIENT)
 !$SECONDARY_DARK  = %darken($SECONDARY, $PUML_GRADIENT)
-!$SECONDARY_LIGHT = %lighten($SECONDARY, $PUML_GRADIENT)
 !$SUCCESS_DARK    = %darken($SUCCESS, $PUML_GRADIENT)
 !$SUCCESS_LIGHT   = %lighten($SUCCESS, $PUML_GRADIENT)
 !$INFO_DARK       = %darken($INFO, $PUML_GRADIENT)
