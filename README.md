@@ -1,6 +1,6 @@
 PlantUML
 ========
-[![Build Status](https://travis-ci.org/plantuml/plantuml.png?branch=master)](https://travis-ci.org/plantuml/plantuml)
+[![Build Status](https://travis-ci.org/plantuml/plantuml.svg?branch=master)](https://travis-ci.org/plantuml/plantuml)
 
 Generate UML diagram from textual description
 
