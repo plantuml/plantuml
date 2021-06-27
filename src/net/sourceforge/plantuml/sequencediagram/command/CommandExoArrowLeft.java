@@ -54,7 +54,7 @@ public class CommandExoArrowLeft extends CommandExoArrowAny {
 		return RegexConcat.build(CommandExoArrowLeft.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("PARALLEL", "(&[%s]*)?"), //
 				new RegexLeaf("ANCHOR", CommandArrow.ANCHOR), //
-				new RegexLeaf("SHORT", "([?\\[\\]][ox]?)?"), //
+				new RegexLeaf(SHORT, "([?\\[\\]][ox]?)?"), //
 				new RegexOr( //
 						new RegexConcat( //
 								new RegexLeaf("ARROW_BOTHDRESSING", "(<<?|//?|\\\\\\\\?)?"), //
@@ -87,7 +87,7 @@ public class CommandExoArrowLeft extends CommandExoArrowAny {
 
 	@Override
 	MessageExoType getMessageExoType(RegexResult arg2) {
-		final String start = arg2.get("SHORT", 0);
+		final String start = arg2.get(SHORT, 0);
 		final String dressing1 = arg2.get("ARROW_DRESSING1", 0);
 		final String dressing2 = arg2.get("ARROW_DRESSING2", 0);
 		if (start != null && start.contains("]")) {

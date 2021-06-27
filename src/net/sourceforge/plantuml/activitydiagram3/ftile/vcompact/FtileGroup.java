@@ -230,7 +230,7 @@ public class FtileGroup extends AbstractFtile {
 				.withStroke(stroke).withCorner(roundCorner, 0);
 
 		final HorizontalAlignment align = inner.skinParam().getHorizontalAlignment(AlignmentParam.packageTitleAlignment,
-				null, false);
+				null, false, null);
 		type.asBig(name, align, TextBlockUtils.empty(0, 0), dimTotal.getWidth(), dimTotal.getHeight(), symbolContext,
 				skinParam().getStereotypeAlignment()).drawU(ug);
 

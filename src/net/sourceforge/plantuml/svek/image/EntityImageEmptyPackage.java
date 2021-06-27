@@ -178,7 +178,7 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 				stereoBlock, 0, 0, widthTotal, heightTotal, stroke);
 
 		final HorizontalAlignment horizontalAlignment = getSkinParam()
-				.getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null, false);
+				.getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null, false, null);
 		final HorizontalAlignment stereotypeAlignment = getSkinParam().getStereotypeAlignment();
 
 		decoration.drawU(ug, back, borderColor, shadowing, roundCorner, horizontalAlignment, stereotypeAlignment);

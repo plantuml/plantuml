@@ -70,17 +70,17 @@ public class RectangleTask {
 		ug.apply(UTranslate.dy(height)).draw(hline);
 	}
 
-	private void drawRect(UGraphic ug, int completion, HColor documentBackground, double width, double height) {
-		if (completion == 100 || completion == 0) {
-			if (completion == 0)
+	private void drawRect(double widthCompletion, UGraphic ug, HColor documentBackground, double width, double height) {
+		if (widthCompletion == -1 || widthCompletion == 0) {
+			if (widthCompletion == 0)
 				ug = ug.apply(documentBackground.bg());
 			final URectangle rect = new URectangle(width, height);
 			ug.draw(rect);
 		} else {
-			final URectangle rect1 = new URectangle(width * completion / 100, height);
+			final URectangle rect1 = new URectangle(widthCompletion, height);
 			ug.draw(rect1);
-			final URectangle rect2 = new URectangle(width * (100 - completion) / 100, height);
-			ug.apply(documentBackground.bg()).apply(UTranslate.dx(width * completion / 100)).draw(rect2);
+			final URectangle rect2 = new URectangle(width - widthCompletion, height);
+			ug.apply(documentBackground.bg()).apply(UTranslate.dx(widthCompletion)).draw(rect2);
 		}
 	}
 
@@ -129,7 +129,7 @@ public class RectangleTask {
 
 		for (int i = 1; i < segments.size() - 1; i++) {
 			final Segment segment = segments.get(i);
-			drawPartly(ug, segment, height, documentBackground, i);
+			drawPartly(segment.getLength() * completion / 100, ug, segment, height, documentBackground, i);
 		}
 
 		final Segment last = segments.get(segments.size() - 1);
@@ -142,9 +142,24 @@ public class RectangleTask {
 			boolean oddEnd) {
 		final ULine vline = ULine.vline(height);
 
+		final double sum = getFullSegmentsLength();
+		final double lim = completion == 100 ? sum : sum * completion / 100;
+		double current = 0;
+
 		for (int i = 0; i < segments.size(); i++) {
 			final Segment segment = segments.get(i);
-			drawPartly(ug, segment, height, documentBackground, i);
+			final double next = current + segment.getLength();
+			final double widthCompletion;
+			if (lim >= next)
+				widthCompletion = -1;
+			else if (current >= lim)
+				widthCompletion = 0;
+			else {
+				assert current < lim && lim < next;
+				widthCompletion = lim - current;
+			}
+
+			drawPartly(widthCompletion, ug, segment, height, documentBackground, i);
 
 			if (!oddStart && i == 0) {
 				ug.apply(UTranslate.dx(segment.getPos1())).draw(vline);
@@ -152,8 +167,16 @@ public class RectangleTask {
 			if (!oddEnd && i == segments.size() - 1) {
 				ug.apply(UTranslate.dx(segment.getPos2())).draw(vline);
 			}
+			current = next;
 		}
 		drawIntermediateDotted(ug, height);
+	}
+
+	private double getFullSegmentsLength() {
+		double result = 0;
+		for (Segment seg : segments)
+			result += seg.getLength();
+		return result;
 	}
 
 	private void drawIntermediateDotted(UGraphic ug, double height) {
@@ -167,14 +190,15 @@ public class RectangleTask {
 		}
 	}
 
-	private void drawPartly(UGraphic ug, final Segment segment, double height, HColor documentBackground, int i) {
+	private void drawPartly(double widthCompletion, UGraphic ug, final Segment segment, double height,
+			HColor documentBackground, int i) {
 		double width = segment.getLength();
 		if (i != segments.size() - 1) {
 			width++;
 		}
 		if (width > 0) {
-			drawRect(ug.apply(new HColorNone()).apply(UTranslate.dx(segment.getPos1())), completion, documentBackground,
-					width, height);
+			drawRect(widthCompletion, ug.apply(new HColorNone()).apply(UTranslate.dx(segment.getPos1())),
+					documentBackground, width, height);
 		}
 
 		double pos1 = segment.getPos1();

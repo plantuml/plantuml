@@ -32,21 +32,18 @@
  * Original Author:  Arnaud Roques
  *
  */
-package net.sourceforge.plantuml.nwdiag;
+package net.sourceforge.plantuml.nwdiag.core;
 
-import java.awt.geom.Dimension2D;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
-import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.ugraphic.MinMax;
+import net.sourceforge.plantuml.nwdiag.legacy.NServerLegacy;
+import net.sourceforge.plantuml.nwdiag.next.NBox;
 import net.sourceforge.plantuml.ugraphic.UFont;
-import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
@@ -55,39 +52,40 @@ public class NwGroup {
 
 	public static final HColorSet colors = HColorSet.instance();
 
+	private final Set<String> names = new HashSet<>();
+
 	private final String name;
-	private final Network network;
-	private final Set<String> elements = new HashSet<>();
 	private HColor color;
 	private String description;
+	private NBox nbox;
+
+	public final NBox getNbox(Map<String, NServerLegacy> servers) {
+		if (nbox == null) {
+			nbox = new NBox();
+			for (Entry<String, NServerLegacy> ent : servers.entrySet()) {
+				if (names.contains(ent.getKey())) {
+					nbox.add(ent.getValue().getBar());
+				}
+			}
+		}
+		return nbox;
+	}
+
+	public void addName(String name) {
+		this.names.add(name);
+	}
 
 	@Override
 	public String toString() {
-		return name + " " + network + " " + elements;
+		return name;
 	}
 
-	public NwGroup(String name, Network network) {
+	public NwGroup(String name) {
 		this.name = name;
-		this.network = network;
-	}
-
-	public int size() {
-		return elements.size();
 	}
 
 	public final String getName() {
 		return name;
-	}
-
-	public void addElement(String name) {
-		this.elements.add(name);
-	}
-
-	public boolean matches(LinkedElement tested) {
-		if (network != null && network != tested.getNetwork()) {
-			return false;
-		}
-		return elements.contains(tested.getElement().getName());
 	}
 
 	public final HColor getColor() {
@@ -98,38 +96,21 @@ public class NwGroup {
 		this.color = color;
 	}
 
-	public void setDescription(String value) {
+	public final void setDescription(String value) {
 		this.description = value;
 	}
 
-	public void drawGroup(UGraphic ug, MinMax size, ISkinParam skinParam) {
-		TextBlock block = null;
-		Dimension2D blockDim = null;
-		if (description != null) {
-			block = Display.getWithNewlines(description).create(getGroupDescriptionFontConfiguration(),
-					HorizontalAlignment.LEFT, skinParam);
-			blockDim = block.calculateDimension(ug.getStringBounder());
-			final double dy = size.getMinY() - blockDim.getHeight();
-			size = size.addPoint(size.getMinX(), dy);
-		}
-		HColor color = getColor();
-		if (color == null) {
-			color = colors.getColorOrWhite(skinParam.getThemeStyle(), "#AAA");
-		}
-		size.draw(ug, color);
-
-		if (block != null) {
-			block.drawU(ug.apply(new UTranslate(size.getMinX() + 5, size.getMinY())));
-		}
-	}
-
-	private FontConfiguration getGroupDescriptionFontConfiguration() {
+	public final FontConfiguration getGroupDescriptionFontConfiguration() {
 		final UFont font = UFont.serif(11);
 		return new FontConfiguration(font, HColorUtils.BLACK, HColorUtils.BLACK, false);
 	}
 
-	public final Network getNetwork() {
-		return network;
+	protected final String getDescription() {
+		return description;
+	}
+
+	public final Set<String> names() {
+		return Collections.unmodifiableSet(names);
 	}
 
 }

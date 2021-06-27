@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.project.LabelStrategy;
 import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.core.TaskAttribute;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
+import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 public interface TaskDraw extends UDrawable {
@@ -52,11 +53,9 @@ public interface TaskDraw extends UDrawable {
 
 	public void setColorsAndCompletion(CenterBorderColor colors, int completion, Url url, Display note);
 
-	public double getY(StringBounder stringBounder);
+	public Real getY(StringBounder stringBounder);
 
 	public double getY(StringBounder stringBounder, Direction direction);
-
-	public void pushMe(double deltaY);
 
 	public void drawTitle(UGraphic ug, LabelStrategy labelStrategy, double colTitles, double colBars);
 

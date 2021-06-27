@@ -493,6 +493,7 @@ public class Run {
 					option.getConfig(), option.getCharset(), option.getFileFormatOption());
 		}
 		sourceFileReader.setCheckMetadata(option.isCheckMetadata());
+		((SourceFileReaderAbstract) sourceFileReader).setNoerror(option.isNoerror());
 
 		if (option.isComputeurl()) {
 			error.goOk();

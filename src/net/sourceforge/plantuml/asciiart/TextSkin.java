@@ -35,15 +35,18 @@
  */
 package net.sourceforge.plantuml.asciiart;
 
+import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.skin.ArrowComponent;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.skin.ArrowDirection;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.rose.ComponentRoseGroupingSpace;
+import net.sourceforge.plantuml.skin.rose.ComponentRoseNewpage;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.Style;
 
@@ -56,7 +59,8 @@ public class TextSkin extends Rose {
 	}
 
 	@Override
-	public ArrowComponent createComponentArrow(Style[] styles, ArrowConfiguration config, ISkinParam param, Display stringsToDisplay) {
+	public ArrowComponent createComponentArrow(Style[] styles, ArrowConfiguration config, ISkinParam param,
+			Display stringsToDisplay) {
 		if (config.getArrowDirection() == ArrowDirection.LEFT_TO_RIGHT_NORMAL
 				|| config.getArrowDirection() == ArrowDirection.RIGHT_TO_LEFT_REVERSE
 				|| config.getArrowDirection() == ArrowDirection.BOTH_DIRECTION) {
@@ -70,8 +74,23 @@ public class TextSkin extends Rose {
 	}
 
 	@Override
-	public Component createComponent(Style style[], ComponentType type, ArrowConfiguration config,
-			ISkinParam param, Display stringsToDisplay) {
+	public Component createComponentNote(Style[] styles, ComponentType type, ISkinParam param, Display stringsToDisplay,
+			NotePosition notePosition) {
+		if (type == ComponentType.NOTE || type == ComponentType.NOTE_BOX) {
+			return new ComponentTextNote(type, stringsToDisplay, fileFormat);
+		}
+		throw new UnsupportedOperationException(type.toString());
+	}
+
+	@Override
+	public Component createComponentNote(Style[] styles, ComponentType type, ISkinParam param,
+			Display stringsToDisplay) {
+		return createComponentNote(styles, type, param, stringsToDisplay, null);
+	}
+
+	@Override
+	public Component createComponent(Style style[], ComponentType type, ArrowConfiguration config, ISkinParam param,
+			Display stringsToDisplay) {
 		if (type == ComponentType.ACTOR_HEAD || type == ComponentType.ACTOR_TAIL) {
 			return new ComponentTextActor(type, stringsToDisplay, fileFormat,
 					fileFormat == FileFormat.UTXT ? AsciiShape.STICKMAN_UNICODE : AsciiShape.STICKMAN);
@@ -85,10 +104,9 @@ public class TextSkin extends Rose {
 		if (type.name().endsWith("_HEAD") || type.name().endsWith("_TAIL")) {
 			return new ComponentTextParticipant(type, stringsToDisplay, fileFormat);
 		}
-		if (type.isArrow()
-				&& (config.getArrowDirection() == ArrowDirection.LEFT_TO_RIGHT_NORMAL
-						|| config.getArrowDirection() == ArrowDirection.RIGHT_TO_LEFT_REVERSE || config
-						.getArrowDirection() == ArrowDirection.BOTH_DIRECTION)) {
+		if (type.isArrow() && (config.getArrowDirection() == ArrowDirection.LEFT_TO_RIGHT_NORMAL
+				|| config.getArrowDirection() == ArrowDirection.RIGHT_TO_LEFT_REVERSE
+				|| config.getArrowDirection() == ArrowDirection.BOTH_DIRECTION)) {
 			return new ComponentTextArrow(type, config, stringsToDisplay, fileFormat, param.maxAsciiMessageLength());
 		}
 		if (type.isArrow() && config.isSelfArrow()) {
@@ -115,9 +133,6 @@ public class TextSkin extends Rose {
 		if (type == ComponentType.ALIVE_BOX_OPEN_OPEN) {
 			return new ComponentTextActiveLine(fileFormat);
 		}
-		if (type == ComponentType.NOTE || type == ComponentType.NOTE_BOX) {
-			return new ComponentTextNote(type, stringsToDisplay, fileFormat);
-		}
 		if (type == ComponentType.DIVIDER) {
 			return new ComponentTextDivider(type, stringsToDisplay, fileFormat);
 		}
@@ -130,9 +145,6 @@ public class TextSkin extends Rose {
 		if (type == ComponentType.GROUPING_ELSE) {
 			return new ComponentTextGroupingElse(type, stringsToDisplay, fileFormat);
 		}
-		if (type == ComponentType.NEWPAGE) {
-			return new ComponentTextNewpage(fileFormat);
-		}
 		if (type == ComponentType.DELAY_TEXT) {
 			return new ComponentTextDelay(type, stringsToDisplay, fileFormat);
 		}
@@ -141,5 +153,11 @@ public class TextSkin extends Rose {
 		}
 		throw new UnsupportedOperationException(type.toString());
 	}
+	
+	@Override
+	public Component createComponentNewPage(ISkinParam param) {
+		return new ComponentTextNewpage(fileFormat);
+	}
+
 
 }

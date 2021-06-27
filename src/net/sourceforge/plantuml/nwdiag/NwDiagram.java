@@ -43,6 +43,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -63,6 +64,11 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.UDrawable;
+import net.sourceforge.plantuml.nwdiag.legacy.GridTextBlockDecorated;
+import net.sourceforge.plantuml.nwdiag.legacy.NServerLegacy;
+import net.sourceforge.plantuml.nwdiag.legacy.NetworkLegacy;
+import net.sourceforge.plantuml.nwdiag.legacy.NwGroupLegacy;
+import net.sourceforge.plantuml.nwdiag.next.NPlayField;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.MinMax;
@@ -76,10 +82,12 @@ import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 public class NwDiagram extends UmlDiagram {
 
 	private boolean initDone;
-	private final Map<String, Square> squares = new LinkedHashMap<String, Square>();
-	private final List<Network> networks = new ArrayList<>();
-	private final List<NwGroup> groups = new ArrayList<>();
-	private NwGroup currentGroup = null;
+	private final Map<String, NServerLegacy> servers = new LinkedHashMap<String, NServerLegacy>();
+	private final List<NetworkLegacy> networks = new ArrayList<>();
+	private final List<NwGroupLegacy> groups = new ArrayList<>();
+	private NwGroupLegacy currentGroup = null;
+
+	private final NPlayField playField = new NPlayField();
 
 	public DiagramDescription getDescription() {
 		return new DiagramDescription("(Nwdiag)");
@@ -93,7 +101,7 @@ public class NwDiagram extends UmlDiagram {
 		initDone = true;
 	}
 
-	private Network currentNetwork() {
+	private NetworkLegacy currentNetwork() {
 		if (networks.size() == 0) {
 			return null;
 		}
@@ -104,7 +112,7 @@ public class NwDiagram extends UmlDiagram {
 		if (initDone == false) {
 			return errorNoInit();
 		}
-		currentGroup = new NwGroup(name, currentNetwork());
+		currentGroup = new NwGroupLegacy(name, currentNetwork());
 		groups.add(currentGroup);
 		return CommandExecutionResult.ok();
 	}
@@ -117,8 +125,8 @@ public class NwDiagram extends UmlDiagram {
 		return CommandExecutionResult.ok();
 	}
 
-	private Network createNetwork(String name) {
-		final Network network = new Network(name, networks.size());
+	private NetworkLegacy createNetwork(String name) {
+		final NetworkLegacy network = new NetworkLegacy(playField.createNewStage(), name, networks.size());
 		networks.add(network);
 		return network;
 	}
@@ -127,46 +135,37 @@ public class NwDiagram extends UmlDiagram {
 		if (initDone == false) {
 			return errorNoInit();
 		}
+		final NServerLegacy element;
 		if (currentNetwork() == null) {
 			createNetwork(name1);
-			addSquare(null, name2, toSet(null));
-			return CommandExecutionResult.ok();
+			element = new NServerLegacy(name2, currentNetwork(), this.getSkinParam());
 		} else {
-			final Square already = squares.get(name1);
-			final Network network1 = createNetwork("");
+			final NServerLegacy already = servers.get(name1);
+			final NetworkLegacy network1 = createNetwork("");
 			network1.goInvisible();
 			if (already != null) {
-				currentNetwork().addSquare(already, toSet(null));
+				currentNetwork().addServer(already, toSet(null));
+				already.connect(currentNetwork(), toSet(null));
 			}
-			final Square added = addSquare(null, name2, toSet(null));
-			added.sameColThan(already);
-			return CommandExecutionResult.ok();
+			element = new NServerLegacy(name2, currentNetwork(), this.getSkinParam());
+			element.sameColThan(already);
 		}
+		servers.put(name2, element);
+		addInternal(element, toSet(null));
+		return CommandExecutionResult.ok();
 	}
 
-	private Square addSquare(Square element, String name, Map<String, String> props) {
-		if (element == null) {
-			element = new Square(name, currentNetwork(), this.getSkinParam());
-			squares.put(name, element);
-		}
-		currentNetwork().addSquare(element, props);
+	private void addInternal(NServerLegacy server, Map<String, String> props) {
+		currentNetwork().addServer(Objects.requireNonNull(server), props);
+		server.connect(currentNetwork(), props);
 		final String description = props.get("description");
 		if (description != null) {
-			element.setDescription(description);
+			server.setDescription(description);
 		}
 		final String shape = props.get("shape");
 		if (shape != null) {
-			element.setShape(shape);
+			server.setShape(shape);
 		}
-		return element;
-	}
-
-	public CommandExecutionResult endSomething() {
-		if (initDone == false) {
-			return errorNoInit();
-		}
-		this.currentGroup = null;
-		return CommandExecutionResult.ok();
 	}
 
 	public CommandExecutionResult addElement(String name, String definition) {
@@ -174,19 +173,35 @@ public class NwDiagram extends UmlDiagram {
 			return errorNoInit();
 		}
 		if (currentGroup != null) {
-			currentGroup.addElement(name);
+			currentGroup.addName(name);
 		}
+		NServerLegacy server = null;
 		if (currentNetwork() == null) {
-			if (currentGroup == null) {
-				final Network network1 = createNetwork("");
-				network1.goInvisible();
-				final Square first = addSquare(null, name, toSet(definition));
-				first.doNotHaveItsOwnColumn();
+			if (currentGroup != null) {
+				return CommandExecutionResult.ok();
 			}
+			assert currentGroup == null;
+			final NetworkLegacy network1 = createNetwork("");
+			network1.goInvisible();
+			server = new NServerLegacy(name, currentNetwork(), this.getSkinParam());
+			servers.put(name, server);
+			server.doNotHaveItsOwnColumn();
 		} else {
-			final Square element = squares.get(name);
-			addSquare(element, name, toSet(definition));
+			server = servers.get(name);
+			if (server == null) {
+				server = new NServerLegacy(name, currentNetwork(), this.getSkinParam());
+				servers.put(name, server);
+			}
 		}
+		addInternal(server, toSet(definition));
+		return CommandExecutionResult.ok();
+	}
+
+	public CommandExecutionResult endSomething() {
+		if (initDone == false) {
+			return errorNoInit();
+		}
+		this.currentGroup = null;
 		return CommandExecutionResult.ok();
 	}
 
@@ -274,7 +289,7 @@ public class NwDiagram extends UmlDiagram {
 		double deltaX = 0;
 		double deltaY = 0;
 		for (int i = 0; i < networks.size(); i++) {
-			final Network current = networks.get(i);
+			final NetworkLegacy current = networks.get(i);
 			final String address = current.getOwnAdress();
 			final TextBlock desc = toTextBlock(current.getName(), address);
 			final Dimension2D dim = desc.calculateDimension(stringBounder);
@@ -285,7 +300,7 @@ public class NwDiagram extends UmlDiagram {
 		}
 		double y = 0;
 		for (int i = 0; i < networks.size(); i++) {
-			final Network current = networks.get(i);
+			final NetworkLegacy current = networks.get(i);
 			final String address = current.getOwnAdress();
 			final TextBlock desc = toTextBlock(current.getName(), address);
 			final Dimension2D dim = desc.calculateDimension(stringBounder);
@@ -304,9 +319,9 @@ public class NwDiagram extends UmlDiagram {
 
 	}
 
-	private Map<Network, String> getLinks(Square element) {
-		final Map<Network, String> result = new LinkedHashMap<Network, String>();
-		for (Network network : networks) {
+	private Map<NetworkLegacy, String> getLinks(NServerLegacy element) {
+		final Map<NetworkLegacy, String> result = new LinkedHashMap<NetworkLegacy, String>();
+		for (NetworkLegacy network : networks) {
 			final String s = network.getAdress(element);
 			if (s != null) {
 				result.put(network, s);
@@ -316,17 +331,17 @@ public class NwDiagram extends UmlDiagram {
 	}
 
 	private GridTextBlockDecorated buildGrid() {
-		final GridTextBlockDecorated grid = new GridTextBlockDecorated(networks.size(), squares.size(), groups,
+		final GridTextBlockDecorated grid = new GridTextBlockDecorated(networks.size(), servers.size(), groups,
 				networks, getSkinParam());
 
 		for (int i = 0; i < networks.size(); i++) {
-			final Network current = networks.get(i);
+			final NetworkLegacy current = networks.get(i);
 			int j = 0;
-			for (Map.Entry<String, Square> ent : squares.entrySet()) {
-				final Square square = ent.getValue();
+			for (Map.Entry<String, NServerLegacy> ent : servers.entrySet()) {
+				final NServerLegacy square = ent.getValue();
 				if (square.getMainNetwork() == current) {
-					final Map<Network, String> conns = getLinks(square);
-					final Square sameCol = square.getSameCol();
+					final Map<NetworkLegacy, String> conns = getLinks(square);
+					final NServerLegacy sameCol = square.getSameCol();
 					if (sameCol != null) {
 						square.setNumCol(sameCol.getNumCol());
 					} else {
@@ -357,7 +372,7 @@ public class NwDiagram extends UmlDiagram {
 		}
 		if ("color".equalsIgnoreCase(property)) {
 			final HColor color = value == null ? null
-					: NwGroup.colors.getColorOrWhite(getSkinParam().getThemeStyle(), value);
+					: NwGroupLegacy.colors.getColorOrWhite(getSkinParam().getThemeStyle(), value);
 			if (currentGroup != null) {
 				currentGroup.setColor(color);
 			} else if (currentNetwork() != null) {

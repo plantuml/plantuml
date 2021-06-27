@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.project.draw;
 
+import java.util.Locale;
 import java.util.Map;
 
 import net.sourceforge.plantuml.ThemeStyle;
@@ -52,11 +53,13 @@ public abstract class TimeHeaderCalendar extends TimeHeader {
 	protected final LoadPlanable defaultPlan;
 	protected final Map<Day, HColor> colorDays;
 	protected final Map<DayOfWeek, HColor> colorDaysOfWeek;
+	protected final Locale locale;
 
-	public TimeHeaderCalendar(Day calendar, Day min, Day max, LoadPlanable defaultPlan, Map<Day, HColor> colorDays,
-			Map<DayOfWeek, HColor> colorDaysOfWeek, TimeScale timeScale, Style style, HColorSet colorSet,
-			ThemeStyle themeStyle) {
-		super(min, max, timeScale, style, colorSet, themeStyle);
+	public TimeHeaderCalendar(Locale locale, Style timelineStyle, Style closedStyle, Day calendar, Day min, Day max,
+			LoadPlanable defaultPlan, Map<Day, HColor> colorDays, Map<DayOfWeek, HColor> colorDaysOfWeek,
+			TimeScale timeScale, HColorSet colorSet, ThemeStyle themeStyle) {
+		super(timelineStyle, closedStyle, min, max, timeScale, colorSet, themeStyle);
+		this.locale = locale;
 		this.defaultPlan = defaultPlan;
 		this.colorDays = colorDays;
 		this.colorDaysOfWeek = colorDaysOfWeek;

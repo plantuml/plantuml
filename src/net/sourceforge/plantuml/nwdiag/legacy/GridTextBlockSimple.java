@@ -32,7 +32,7 @@
  * Original Author:  Arnaud Roques
  *
  */
-package net.sourceforge.plantuml.nwdiag;
+package net.sourceforge.plantuml.nwdiag.legacy;
 
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Rectangle2D;
@@ -124,7 +124,7 @@ public class GridTextBlockSimple implements TextBlock {
 		data.set(i, j, value);
 	}
 
-	public Footprint getFootprint(NwGroup group) {
+	public Footprint getFootprint(NwGroupLegacy group) {
 		return data.getFootprint(group);
 	}
 

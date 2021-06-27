@@ -60,6 +60,7 @@ import net.sourceforge.plantuml.project.core.TaskAttribute;
 import net.sourceforge.plantuml.project.core.TaskImpl;
 import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
+import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.sequencediagram.graphic.Segment;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.PName;
@@ -89,7 +90,7 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 
 	// private final double margin = 2;
 
-	public TaskDrawRegular(TimeScale timeScale, double y, String prettyDisplay, Day start, Day end, boolean oddStart,
+	public TaskDrawRegular(TimeScale timeScale, Real y, String prettyDisplay, Day start, Day end, boolean oddStart,
 			boolean oddEnd, ISkinParam skinParam, Task task, ToTaskDraw toTaskDraw,
 			Collection<GanttConstraint> constraints, StyleBuilder styleBuilder, HColorSet colorSet) {
 		super(timeScale, y, prettyDisplay, start, skinParam, task, toTaskDraw, styleBuilder, colorSet);
@@ -227,7 +228,7 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 		final double h = getFullHeightTask(stringBounder);
 		final double startPos = timeScale.getStartingPosition(start);
 		final double endPos = timeScale.getEndingPosition(end);
-		return new FingerPrint(startPos, getY(stringBounder), endPos - startPos, h);
+		return new FingerPrint(startPos, getY(stringBounder).getCurrentValue(), endPos - startPos, h);
 	}
 
 	public FingerPrint getFingerPrintNote(StringBounder stringBounder) {
@@ -237,8 +238,8 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 		final Dimension2D dim = getOpaleNote().calculateDimension(stringBounder);
 		final double startPos = timeScale.getStartingPosition(start);
 		// final double endPos = timeScale.getEndingPosition(end);
-		return new FingerPrint(startPos, getY(stringBounder) + getYNotePosition(stringBounder), dim.getWidth(),
-				dim.getHeight());
+		return new FingerPrint(startPos, getY(stringBounder).getCurrentValue() + getYNotePosition(stringBounder),
+				dim.getWidth(), dim.getHeight());
 	}
 
 	private UGraphic applyColors(UGraphic ug) {

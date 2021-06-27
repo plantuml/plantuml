@@ -32,55 +32,29 @@
  * Original Author:  Arnaud Roques
  *
  */
-package net.sourceforge.plantuml.nwdiag;
+package net.sourceforge.plantuml.nwdiag.core;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
+import net.sourceforge.plantuml.nwdiag.next.NStage;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class Network {
 
 	private final String name;
-	private final Map<Square, String> localSquare = new LinkedHashMap<Square, String>();
 	private HColor color;
 	private boolean visible = true;
 	private String ownAdress;
+	private double y;
 	private boolean fullWidth;
-	private final int stage;
+	private final NStage nstage;
 
 	@Override
 	public String toString() {
-		return name + "(" + stage + ")";
+		return name;
 	}
 
-	public Network(String name, int stage) {
+	public Network(NStage nstage, String name) {
 		this.name = name;
-		this.stage = stage;
-	}
-
-	public String getAdress(Square element) {
-		return localSquare.get(element);
-	}
-
-	public void addSquare(Square square, Map<String, String> props) {
-		String address = props.get("address");
-		if (address == null) {
-			address = "";
-		}
-		if (address.length() == 0 && localSquare.containsKey(square)) {
-			return;
-		}
-		localSquare.put(square, address);
-	}
-
-	public boolean constainsLocally(String name) {
-		for (Square square : localSquare.keySet()) {
-			if (square.getName().equals(name)) {
-				return true;
-			}
-		}
-		return false;
+		this.nstage = nstage;
 	}
 
 	public final String getOwnAdress() {
@@ -103,12 +77,20 @@ public class Network {
 		this.color = color;
 	}
 
-	public void goInvisible() {
+	public final void goInvisible() {
 		this.visible = false;
 	}
 
 	public final boolean isVisible() {
 		return visible;
+	}
+
+	public final double getY() {
+		return y;
+	}
+
+	public final void setY(double y) {
+		this.y = y;
 	}
 
 	public void setFullWidth(boolean fullWidth) {
@@ -119,34 +101,8 @@ public class Network {
 		return fullWidth;
 	}
 
-	public final int getStage() {
-		return stage;
-	}
-
-	private double xmin;
-	private double xmax;
-	private double y;
-
-	public void setMinMax(double xmin, double xmax) {
-		this.xmin = xmin;
-		this.xmax = xmax;
-
-	}
-
-	public final double getXmin() {
-		return xmin;
-	}
-
-	public final double getXmax() {
-		return xmax;
-	}
-
-	public final double getY() {
-		return y;
-	}
-
-	public final void setY(double y) {
-		this.y = y;
+	public final NStage getNstage() {
+		return nstage;
 	}
 
 }

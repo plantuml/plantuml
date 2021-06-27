@@ -85,8 +85,8 @@ class Step1Message extends Step1Abstract {
 		final List<Note> noteOnMessages = message.getNoteOnMessages();
 		for (Note noteOnMessage : noteOnMessages) {
 			final ISkinParam skinParam = noteOnMessage.getSkinParamBackcolored(drawingSet.getSkinParam());
-			addNote(drawingSet.getSkin().createComponent(noteOnMessage.getUsedStyles(),
-					noteOnMessage.getNoteStyle().getNoteComponentType(), null, skinParam, noteOnMessage.getStrings()));
+			addNote(drawingSet.getSkin().createComponentNote(noteOnMessage.getUsedStyles(),
+					noteOnMessage.getNoteStyle().getNoteComponentType(), skinParam, noteOnMessage.getStrings()));
 		}
 
 	}

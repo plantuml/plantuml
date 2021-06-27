@@ -383,7 +383,7 @@ public class Cluster implements Moveable {
 				final ClusterDecoration decoration = new ClusterDecoration(packageStyle, group.getUSymbol(), ztitle,
 						zstereo, minX, minY, maxX, maxY, stroke);
 				decoration.drawU(ug, backColor, borderColor, shadowing, roundCorner,
-						skinParam2.getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null, false),
+						skinParam2.getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null, false, null),
 						skinParam2.getStereotypeAlignment());
 				return;
 			}
@@ -781,7 +781,7 @@ public class Cluster implements Moveable {
 			sblabel.append(">");
 			label = sblabel.toString();
 			final HorizontalAlignment align = skinParam.getHorizontalAlignment(AlignmentParam.packageTitleAlignment,
-					null, false);
+					null, false, null);
 			sb.append("labeljust=\"" + align.getGraphVizValue() + "\";");
 		} else {
 			label = "\"\"";

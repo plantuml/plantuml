@@ -32,43 +32,58 @@
  * Original Author:  Arnaud Roques
  *
  */
-package net.sourceforge.plantuml.nwdiag;
+package net.sourceforge.plantuml.nwdiag.next;
 
-public class Footprint {
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
-	private final int min;
-	private final int max;
+public class NBox implements Staged {
 
-	public Footprint(int min, int max) {
-		if (max < min) {
-			throw new IllegalArgumentException();
+	private final List<NBar> bars = new ArrayList<>();
+	private final NTetris<NBar> tetris = new NTetris<>();
+
+	public void add(NBar bar) {
+		this.bars.add(bar);
+		this.tetris.add(bar);
+	}
+
+//	public void addAll(NBox other) {
+//		for (NBar bar : other.bars) {
+//			add(bar);
+//		}
+//	}
+
+	@Override
+	public NStage getStart() {
+		NStage result = bars.get(0).getStart();
+		for (int i = 1; i < bars.size(); i++) {
+			result = NStage.getMin(result, bars.get(i).getStart());
 		}
-		assert max >= min;
-		this.min = min;
-		this.max = max;
+		return result;
 	}
 
 	@Override
-	public String toString() {
-		return "" + min + " -> " + max;
-	}
-
-	public Footprint intersection(Footprint other) {
-		if (this.max < other.min) {
-			return null;
+	public NStage getEnd() {
+		NStage result = bars.get(0).getEnd();
+		for (int i = 1; i < bars.size(); i++) {
+			result = NStage.getMax(result, bars.get(i).getEnd());
 		}
-		if (this.min > other.max) {
-			return null;
-		}
-		return new Footprint(Math.max(this.min, other.min), Math.min(this.max, other.max));
+		return result;
 	}
 
-	public final int getMin() {
-		return min;
+	@Override
+	public int getNWidth() {
+		return tetris.getNWidth();
 	}
 
-	public final int getMax() {
-		return max;
+	public Map<NBar, Integer> getPositions() {
+		return tetris.getPositions();
+	}
+
+	@Override
+	public boolean contains(NStage stage) {
+		return stage.compareTo(getStart()) >= 0 && stage.compareTo(getEnd()) <= 0;
 	}
 
 }

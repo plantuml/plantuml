@@ -81,8 +81,8 @@ public class NoteTile extends AbstractTile implements Tile {
 	}
 
 	private Component getComponent(StringBounder stringBounder) {
-		final Component comp = skin.createComponent(note.getUsedStyles(), getNoteComponentType(note.getNoteStyle()),
-				null, note.getSkinParamBackcolored(skinParam), note.getStrings());
+		final Component comp = skin.createComponentNote(note.getUsedStyles(), getNoteComponentType(note.getNoteStyle()),
+				note.getSkinParamBackcolored(skinParam), note.getStrings(), note.getPosition());
 		return comp;
 	}
 

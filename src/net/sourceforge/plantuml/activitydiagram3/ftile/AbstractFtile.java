@@ -103,7 +103,7 @@ public abstract class AbstractFtile extends AbstractTextBlock implements Ftile {
 	}
 
 	public HorizontalAlignment arrowHorizontalAlignment() {
-		return skinParam.getHorizontalAlignment(AlignmentParam.arrowMessageAlignment, null, false);
+		return skinParam.getHorizontalAlignment(AlignmentParam.arrowMessageAlignment, null, false, null);
 	}
 
 	private FtileGeometry cachedGeometry;

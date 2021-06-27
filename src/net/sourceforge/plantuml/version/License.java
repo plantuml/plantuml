@@ -196,10 +196,8 @@ public enum License {
 		text.add("or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public");
 		text.add("License for more details.");
 		text.add(" ");
-		text.add("You should have received a copy of the GNU General Public");
-		text.add("License along with this library; if not, write to the Free Software");
-		text.add("Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,");
-		text.add("USA.");
+		text.add("You should have received a copy of the GNU General Public License");
+		text.add("along with this library.  If not, see <https://www.gnu.org/licenses/>.");
 		text.add(" ");
 		addSupplementary(licenseInfo, text);
 		text.add("the GPL license.");
@@ -224,10 +222,8 @@ public enum License {
 		text.add("or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public");
 		text.add("License for more details.");
 		text.add(" ");
-		text.add("You should have received a copy of the GNU General Public");
-		text.add("License along with this library; if not, write to the Free Software");
-		text.add("Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,");
-		text.add("USA.");
+		text.add("You should have received a copy of the GNU General Public License");
+		text.add("along with this library.  If not, see <https://www.gnu.org/licenses/>.");
 		text.add(" ");
 		addSupplementary(licenseInfo, text);
 		text.add("the GPL license.");
@@ -252,10 +248,8 @@ public enum License {
 		text.add("or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public");
 		text.add("License for more details.");
 		text.add(" ");
-		text.add("You should have received a copy of the GNU Lesser General Public");
-		text.add("License along with this library; if not, write to the Free Software");
-		text.add("Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,");
-		text.add("USA.");
+		text.add("You should have received a copy of the GNU Lesser General Public License");
+		text.add("along with this library.  If not, see <https://www.gnu.org/licenses/>.");
 		text.add(" ");
 		addSupplementary(licenseInfo, text);
 		text.add("the LGPL license.");
@@ -369,10 +363,8 @@ public enum License {
 			h.add(" * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public");
 			h.add(" * License for more details.");
 			h.add(" *");
-			h.add(" * You should have received a copy of the GNU Lesser General Public");
-			h.add(" * License along with this library; if not, write to the Free Software");
-			h.add(" * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,");
-			h.add(" * USA.");
+			h.add(" * You should have received a copy of the GNU General Public License");
+			h.add(" * along with this library.  If not, see <https://www.gnu.org/licenses/>.");
 			h.add(" *");
 		} else if (this == License.GPLV2) {
 			h.add(" * PlantUML is free software; you can redistribute it and/or modify it");
@@ -385,10 +377,8 @@ public enum License {
 			h.add(" * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public");
 			h.add(" * License for more details.");
 			h.add(" *");
-			h.add(" * You should have received a copy of the GNU General Public");
-			h.add(" * License along with this library; if not, write to the Free Software");
-			h.add(" * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,");
-			h.add(" * USA.");
+			h.add(" * You should have received a copy of the GNU General Public License");
+			h.add(" * along with this library.  If not, see <https://www.gnu.org/licenses/>.");
 			h.add(" *");
 		} else if (this == License.APACHE) {
 			h.add(" * Licensed under the Apache License, Version 2.0 (the \"License\");");

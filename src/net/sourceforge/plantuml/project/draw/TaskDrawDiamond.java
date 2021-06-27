@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.core.TaskAttribute;
 import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
+import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
@@ -62,7 +63,7 @@ import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 
 public class TaskDrawDiamond extends AbstractTaskDraw {
 
-	public TaskDrawDiamond(TimeScale timeScale, double y, String prettyDisplay, Day start, ISkinParam skinParam,
+	public TaskDrawDiamond(TimeScale timeScale, Real y, String prettyDisplay, Day start, ISkinParam skinParam,
 			Task task, ToTaskDraw toTaskDraw, StyleBuilder styleBuilder, HColorSet colorSet) {
 		super(timeScale, y, prettyDisplay, start, skinParam, task, toTaskDraw, styleBuilder, colorSet);
 	}
@@ -72,6 +73,7 @@ public class TaskDrawDiamond extends AbstractTaskDraw {
 		return StyleSignature.of(SName.root, SName.element, SName.ganttDiagram, SName.milestone);
 	}
 
+	@Override
 	public double getHeightMax(StringBounder stringBounder) {
 		return getFullHeightTask(stringBounder);
 	}
@@ -127,6 +129,7 @@ public class TaskDrawDiamond extends AbstractTaskDraw {
 				new SpriteContainerEmpty());
 	}
 
+	@Override
 	public void drawU(UGraphic ug) {
 
 		final Style style = getStyle();
@@ -151,14 +154,17 @@ public class TaskDrawDiamond extends AbstractTaskDraw {
 		ug.draw(getDiamond(ug.getStringBounder()));
 	}
 
+	@Override
 	public FingerPrint getFingerPrintNote(StringBounder stringBounder) {
 		return null;
 	}
 
+	@Override
 	public FingerPrint getFingerPrint(StringBounder stringBounder) {
 		final double h = getFullHeightTask(stringBounder);
 		final double startPos = timeScale.getStartingPosition(start);
-		return new FingerPrint(startPos, getY(stringBounder), startPos + h, getY(stringBounder) + h);
+		return new FingerPrint(startPos, getY(stringBounder).getCurrentValue(), startPos + h,
+				getY(stringBounder).getCurrentValue() + h);
 	}
 
 	private UShape getDiamond(StringBounder stringBounder) {
@@ -171,6 +177,7 @@ public class TaskDrawDiamond extends AbstractTaskDraw {
 		return result;
 	}
 
+	@Override
 	public double getX1(TaskAttribute taskAttribute) {
 		final double x1 = timeScale.getStartingPosition(start);
 		final double x2 = timeScale.getEndingPosition(start);
@@ -179,6 +186,7 @@ public class TaskDrawDiamond extends AbstractTaskDraw {
 		return x1 + delta;
 	}
 
+	@Override
 	public double getX2(TaskAttribute taskAttribute) {
 		final double x1 = timeScale.getStartingPosition(start);
 		final double x2 = timeScale.getEndingPosition(start);

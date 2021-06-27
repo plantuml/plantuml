@@ -289,6 +289,7 @@ ganttDiagram {
 	}
 	timeline {
 	    BackgroundColor transparent
+	    LineColor #C0C0C0
 	}
 	closed {
         BackGroundColor #E0E8E8

@@ -86,6 +86,7 @@ import net.sourceforge.plantuml.tim.stdlib.CallUserFunction;
 import net.sourceforge.plantuml.tim.stdlib.Darken;
 import net.sourceforge.plantuml.tim.stdlib.DateFunction;
 import net.sourceforge.plantuml.tim.stdlib.Dirpath;
+import net.sourceforge.plantuml.tim.stdlib.Eval;
 import net.sourceforge.plantuml.tim.stdlib.Feature;
 import net.sourceforge.plantuml.tim.stdlib.FileExists;
 import net.sourceforge.plantuml.tim.stdlib.Filename;
@@ -102,8 +103,8 @@ import net.sourceforge.plantuml.tim.stdlib.LogicalNot;
 import net.sourceforge.plantuml.tim.stdlib.Lower;
 import net.sourceforge.plantuml.tim.stdlib.Newline;
 import net.sourceforge.plantuml.tim.stdlib.RetrieveProcedure;
-import net.sourceforge.plantuml.tim.stdlib.ReverseHsluvColor;
 import net.sourceforge.plantuml.tim.stdlib.ReverseColor;
+import net.sourceforge.plantuml.tim.stdlib.ReverseHsluvColor;
 import net.sourceforge.plantuml.tim.stdlib.SetVariableValue;
 import net.sourceforge.plantuml.tim.stdlib.StringFunction;
 import net.sourceforge.plantuml.tim.stdlib.Strlen;
@@ -164,6 +165,7 @@ public class TContext {
 		functionsSet.addFunction(new IsLight());
 		functionsSet.addFunction(new ReverseHsluvColor());
 		functionsSet.addFunction(new ReverseColor());
+		functionsSet.addFunction(new Eval());
 		// %standard_exists_function
 		// %str_replace
 		// !exit

@@ -166,15 +166,19 @@ public class BodierLikeClassOrObject implements Bodier {
 
 	public boolean hasUrl() {
 		for (CharSequence cs : getFieldsToDisplay()) {
-			final Member m = (Member) cs;
-			if (m.hasUrl()) {
-				return true;
+			if (cs instanceof Member) {
+				final Member m = (Member) cs;
+				if (m.hasUrl()) {
+					return true;
+				}
 			}
 		}
 		for (CharSequence cs : getMethodsToDisplay()) {
-			final Member m = (Member) cs;
-			if (m.hasUrl()) {
-				return true;
+			if (cs instanceof Member) {
+				final Member m = (Member) cs;
+				if (m.hasUrl()) {
+					return true;
+				}
 			}
 		}
 		return false;

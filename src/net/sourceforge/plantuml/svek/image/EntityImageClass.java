@@ -233,7 +233,9 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 
 	public Ports getPorts(StringBounder stringBounder) {
 		final Dimension2D dimHeader = header.calculateDimension(stringBounder);
-		return ((WithPorts) body).getPorts(stringBounder).translateY(dimHeader.getHeight());
+		if (body instanceof WithPorts)
+			return ((WithPorts) body).getPorts(stringBounder).translateY(dimHeader.getHeight());
+		return new Ports();
 	}
 
 	private UStroke getStroke() {

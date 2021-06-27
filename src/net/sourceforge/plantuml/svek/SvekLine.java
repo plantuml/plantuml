@@ -325,7 +325,7 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 
 	private HorizontalAlignment getMessageTextAlignment(UmlDiagramType umlDiagramType, ISkinParam skinParam) {
 		if (umlDiagramType == UmlDiagramType.STATE) {
-			return skinParam.getHorizontalAlignment(AlignmentParam.stateMessageAlignment, null, false);
+			return skinParam.getHorizontalAlignment(AlignmentParam.stateMessageAlignment, null, false, null);
 		}
 		return skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER);
 	}

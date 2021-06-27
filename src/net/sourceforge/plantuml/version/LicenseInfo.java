@@ -194,6 +194,8 @@ public class LicenseInfo {
 		final String classpath = System.getProperty("java.class.path");
 		String[] classpathEntries = classpath.split(SFile.pathSeparator);
 		for (String s : classpathEntries) {
+			if (s == null)
+				continue;
 			SFile dir = new SFile(s);
 			if (dir.isFile()) {
 				dir = dir.getParentFile();

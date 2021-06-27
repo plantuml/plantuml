@@ -50,13 +50,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.preproc.FileWithSuffix;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SecurityUtils;
 
-public abstract class SourceFileReaderAbstract {
+public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 
 	protected File file;
 	protected File outputDirectory;
@@ -65,6 +66,7 @@ public abstract class SourceFileReaderAbstract {
 	protected BlockUmlBuilder builder;
 	protected FileFormatOption fileFormatOption;
 	private boolean checkMetadata;
+	private boolean noerror;
 
 	public void setCheckMetadata(boolean checkMetadata) {
 		this.checkMetadata = checkMetadata;
@@ -120,8 +122,8 @@ public abstract class SourceFileReaderAbstract {
 		return Collections.singletonList(image);
 	}
 
-	protected void exportWarnOrErrIfWord(final SFile f, final Diagram system) throws FileNotFoundException {
-		if (OptionFlags.getInstance().isWord()) {
+	protected void exportWarnOrErrIfWord(SFile f, Diagram system) throws FileNotFoundException {
+		if (OptionFlags.getInstance().isWord() && f != null) {
 			final String warnOrError = system.getWarningOrError();
 			if (warnOrError != null) {
 				final String name = f.getName().substring(0, f.getName().length() - 4) + ".err";
@@ -149,6 +151,9 @@ public abstract class SourceFileReaderAbstract {
 				system = blockUml.getDiagram();
 			} catch (Throwable t) {
 				t.printStackTrace();
+				if (OptionFlags.getInstance().isSilentlyCompletelyIgnoreErrors()) {
+					continue;
+				}
 				return getCrashedImage(blockUml, t, suggested.getFile(0));
 			}
 
@@ -157,8 +162,14 @@ public abstract class SourceFileReaderAbstract {
 			}
 
 			OptionFlags.getInstance().logData(SFile.fromFile(file), system);
-			final List<FileImageData> exportDiagrams = PSystemUtils.exportDiagrams(system, suggested, fileFormatOption,
-					checkMetadata);
+			final List<FileImageData> exportDiagrams;
+			if (noerror) {
+				exportDiagrams = new ArrayList<FileImageData>();
+				exportDiagrams.add(
+						new FileImageData(null, new ImageDataSimple(new Dimension2DDouble(0, 0), FileImageData.ERROR)));
+			} else
+				exportDiagrams = PSystemUtils.exportDiagrams(system, suggested, fileFormatOption, checkMetadata);
+
 			if (exportDiagrams.size() > 1) {
 				cpt += exportDiagrams.size() - 1;
 			}
@@ -179,5 +190,10 @@ public abstract class SourceFileReaderAbstract {
 	}
 
 	abstract protected SuggestedFile getSuggestedFile(BlockUml blockUml) throws FileNotFoundException;
+
+	protected final void setNoerror(boolean noerror) {
+		this.noerror = noerror;
+
+	}
 
 }

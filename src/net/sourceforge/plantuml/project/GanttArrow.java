@@ -129,7 +129,7 @@ public class GanttArrow implements UDrawable {
 			} else {
 				x1 = getX(source.getAttribute(), getSource(), Direction.RIGHT);
 				y1 = getSource().getY(stringBounder, Direction.RIGHT);
-				final double y1b = getDestination().getY(stringBounder);
+				final double y1b = getDestination().getY(stringBounder).getCurrentValue();
 				drawLine(ug, x1, y1, x1 + 6, y1, x1 + 6, y1b, x2 - 8, y1b, x2 - 8, y2, x2, y2);
 			}
 		} else if (this.atStart == Direction.RIGHT && this.atEnd == Direction.LEFT) {

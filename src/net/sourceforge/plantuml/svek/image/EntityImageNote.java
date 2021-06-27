@@ -40,6 +40,7 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.util.Objects;
 
+import net.sourceforge.plantuml.AlignmentParam;
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.CornerParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
@@ -129,7 +130,9 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 			textBlock = new TextBlockEmpty();
 		} else {
 			final FontConfiguration fc = new FontConfiguration(getSkinParam(), FontParam.NOTE, null);
-			textBlock = BodyFactory.create3(strings, FontParam.NOTE, getSkinParam(), HorizontalAlignment.LEFT, fc,
+			final HorizontalAlignment align = skinParam.getHorizontalAlignment(AlignmentParam.noteTextAlignment, null,
+					false, null);
+			textBlock = BodyFactory.create3(strings, FontParam.NOTE, getSkinParam(), align, fc,
 					getSkinParam().wrapWidth());
 		}
 	}
@@ -297,7 +300,7 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 		return null;
 
 	}
-	
+
 	private static double getOrthoDistance(Line2D.Double seg, Point2D pt) {
 		if (isHorizontal(seg)) {
 			return Math.abs(seg.getP1().getY() - pt.getY());
@@ -307,7 +310,7 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 		}
 		throw new IllegalArgumentException();
 	}
-	
+
 	private static boolean isHorizontal(Line2D.Double seg) {
 		return seg.getP1().getY() == seg.getP2().getY();
 	}
@@ -315,8 +318,6 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 	private static boolean isVertical(Line2D.Double seg) {
 		return seg.getP1().getX() == seg.getP2().getX();
 	}
-
-
 
 	public ShapeType getShapeType() {
 		return ShapeType.RECTANGLE;

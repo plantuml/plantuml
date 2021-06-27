@@ -69,6 +69,7 @@ public abstract class AbstractTextualComponent extends AbstractComponent {
 
 	private final UFont font;
 	private final HColor fontColor;
+	private final HorizontalAlignment alignment;
 
 	public AbstractTextualComponent(Style style, LineBreakStrategy maxMessageSize, CharSequence label,
 			FontConfiguration font, HorizontalAlignment horizontalAlignment, int marginX1, int marginX2, int marginY,
@@ -118,6 +119,7 @@ public abstract class AbstractTextualComponent extends AbstractComponent {
 			textBlock = this.display.create0(fc, horizontalAlignment, spriteContainer, maxMessageSize, CreoleMode.FULL,
 					fontForStereotype, htmlColorForStereotype);
 		}
+		this.alignment = horizontalAlignment;
 	}
 
 	protected HColorSet getIHtmlColorSet() {
@@ -166,6 +168,10 @@ public abstract class AbstractTextualComponent extends AbstractComponent {
 
 	protected final ISkinSimple getISkinSimple() {
 		return spriteContainer;
+	}
+
+	public final HorizontalAlignment getHorizontalAlignment() {
+		return alignment;
 	}
 
 }
