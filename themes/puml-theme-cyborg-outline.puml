@@ -185,7 +185,9 @@ skinparam sequence {
 	''
 	BoxBackgroundColor $BGCOLOR
 	BoxBorderColor $DARK
-	BoxFontColor $DARk
+	BoxFontColor $DARK
+	''
+	DelayFontColor $DARK
 	''
 	LifeLineBorderColor $SECONDARY
 	LifeLineBorderThickness 2
@@ -207,6 +209,8 @@ skinparam sequence {
 	ReferenceFontColor $DARK
 	ReferenceHeaderFontColor $INFO_TEXT
 	ReferenceHeaderBackgroundColor $BGCOLOR
+	''
+	StereotypeFontColor $PRIMARY_TEXT
 }
 !endsub
 
