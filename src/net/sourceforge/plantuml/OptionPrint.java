@@ -108,7 +108,7 @@ public class OptionPrint {
 				+ "file\tTo include file as if '!include file' were used");
 		System.out.println(
 				"    -I" + separator + "path" + separator + "to" + separator + "*.puml\tTo include files with pattern");
-		System.out.println("    -theme xxx\\t\\tTo use a specific theme");
+		System.out.println("    -theme xxx\t\tTo use a specific theme");
 		System.out.println("    -charset xxx\tTo use a specific charset (default is " + charset + ")");
 		System.out.println("    -e[x]clude pattern\tTo exclude files that match the provided pattern");
 		System.out.println("    -metadata\t\tTo retrieve PlantUML sources from PNG images");
@@ -133,6 +133,7 @@ public class OptionPrint {
 		System.out.println("    -checkonly\t\tTo check the syntax of files without generating images");
 		System.out.println("    -failfast\t\tTo stop processing as soon as a syntax error in diagram occurs");
 		System.out.println("    -failfast2\t\tTo do a first syntax check before processing files, to fail even faster");
+		System.out.println("    -noerror\t\tTo skip images when error in diagrams");
 		System.out.println("    -duration\t\tTo print the duration of complete diagrams processing");
 		System.out.println("    -nbthread N\t\tTo use (N) threads for processing");
 		System.out.println("    -nbthread auto\tTo use " + Option.defaultNbThreads() + " threads for processing");

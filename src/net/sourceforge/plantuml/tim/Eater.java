@@ -77,8 +77,7 @@ public abstract class Eater {
 		return result;
 	}
 
-	final protected TValue eatExpression(TContext context, TMemory memory)
-			throws EaterException, EaterExceptionLocated {
+	final public TValue eatExpression(TContext context, TMemory memory) throws EaterException, EaterExceptionLocated {
 		if (peekChar() == '{') {
 			String data = eatAllToEnd();
 			// System.err.println("data=" + data);

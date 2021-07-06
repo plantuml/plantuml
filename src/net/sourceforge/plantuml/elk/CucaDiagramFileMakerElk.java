@@ -289,7 +289,7 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 
 			final HColor borderColor = HColorUtils.BLACK;
 			decoration.drawU(ug.apply(new UTranslate(corner)), backColor, borderColor, shadowing, roundCorner,
-					skinParam.getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null, false),
+					skinParam.getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null, false, null),
 					skinParam.getStereotypeAlignment());
 
 //			// Print a simple rectangle right now

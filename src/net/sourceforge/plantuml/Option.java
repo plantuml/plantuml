@@ -72,6 +72,7 @@ public class Option {
 	private OptionPreprocOutputMode preprocessorOutput = null;
 	private boolean failfast = false;
 	private boolean failfast2 = false;
+	private boolean noerror = false;
 
 	private boolean duration = false;
 	private boolean debugsvek = false;
@@ -228,6 +229,8 @@ public class Option {
 				this.failfast = true;
 			} else if (s.equalsIgnoreCase("-failfast2")) {
 				this.failfast2 = true;
+			} else if (s.equalsIgnoreCase("-noerror")) {
+				this.noerror = true;
 			} else if (s.equalsIgnoreCase("-checkonly")) {
 				this.checkOnly = true;
 			} else if (s.equalsIgnoreCase("-theme")) {
@@ -617,6 +620,14 @@ public class Option {
 
 	public final void setFailfast2(boolean failfast2) {
 		this.failfast2 = failfast2;
+	}
+
+	public final void setNoerror(boolean noerror) {
+		this.noerror = noerror;
+	}
+
+	public final boolean isNoerror() {
+		return noerror;
 	}
 
 	public final File getOutputFile() {

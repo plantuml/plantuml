@@ -318,6 +318,7 @@ skinparam sequence {
 	ReferenceHeaderBackgroundColor $SECONDARY
 	''
 	StereotypeFontColor $PRIMARY_TEXT
+	StereotypeFontSize 12
 }
 !endsub
 
@@ -423,6 +424,7 @@ skinparam cloud {
 skinparam database {
 	$primary_scheme()
 	FontColor $FGCOLOR
+	StereotypeFontColor $FGCOLOR
 }
 !endsub
 

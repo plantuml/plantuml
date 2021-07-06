@@ -119,21 +119,27 @@ public class WBSDiagram extends UmlDiagram {
 
 	public CommandExecutionResult addIdea(HColor backColor, int level, String label, Direction direction,
 			IdeaShape shape) {
+		final Matcher2 m = patternStereotype.matcher(label);
+		String stereotype = null;
+		if (m.matches()) {
+			label = m.group(1);
+			stereotype = m.group(2);
+		}
+		final Display display = Display.getWithNewlines(label);
+		return addIdea(backColor, level, display, stereotype, direction, shape);
+	}
+
+	public CommandExecutionResult addIdea(HColor backColor, int level, Display display, String stereotype,
+			Direction direction, IdeaShape shape) {
 		try {
-			final Matcher2 m = patternStereotype.matcher(label);
-			String stereotype = null;
-			if (m.matches()) {
-				label = m.group(1);
-				stereotype = m.group(2);
-			}
 			if (level == 0) {
 				if (root != null) {
 					return CommandExecutionResult.error("Error 44");
 				}
-				initRoot(backColor, label, stereotype, shape);
+				initRoot(backColor, display, stereotype, shape);
 				return CommandExecutionResult.ok();
 			}
-			return add(backColor, level, label, stereotype, direction, shape);
+			return add(backColor, level, display, stereotype, direction, shape);
 		} catch (NoStyleAvailableException e) {
 			// e.printStackTrace();
 			return CommandExecutionResult.error("General failure: no style available.");
@@ -144,9 +150,8 @@ public class WBSDiagram extends UmlDiagram {
 	private WElement last;
 	private String first;
 
-	private void initRoot(HColor backColor, String label, String stereotype, IdeaShape shape) {
-		root = new WElement(backColor, Display.getWithNewlines(label), stereotype,
-				getSkinParam().getCurrentStyleBuilder(), shape);
+	private void initRoot(HColor backColor, Display display, String stereotype, IdeaShape shape) {
+		root = new WElement(backColor, display, stereotype, getSkinParam().getCurrentStyleBuilder(), shape);
 		last = root;
 	}
 
@@ -180,20 +185,19 @@ public class WBSDiagram extends UmlDiagram {
 		throw new UnsupportedOperationException("type=<" + type + ">[" + first + "]");
 	}
 
-	private CommandExecutionResult add(HColor backColor, int level, String label, String stereotype,
+	private CommandExecutionResult add(HColor backColor, int level, Display display, String stereotype,
 			Direction direction, IdeaShape shape) {
 		try {
 			if (level == last.getLevel() + 1) {
-				final WElement newIdea = last.createElement(backColor, level, Display.getWithNewlines(label),
-						stereotype, direction, shape, getSkinParam().getCurrentStyleBuilder());
+				final WElement newIdea = last.createElement(backColor, level, display, stereotype, direction, shape,
+						getSkinParam().getCurrentStyleBuilder());
 				last = newIdea;
 				return CommandExecutionResult.ok();
 			}
 			if (level <= last.getLevel()) {
 				final int diff = last.getLevel() - level + 1;
-				final WElement newIdea = getParentOfLast(diff).createElement(backColor, level,
-						Display.getWithNewlines(label), stereotype, direction, shape,
-						getSkinParam().getCurrentStyleBuilder());
+				final WElement newIdea = getParentOfLast(diff).createElement(backColor, level, display, stereotype,
+						direction, shape, getSkinParam().getCurrentStyleBuilder());
 				last = newIdea;
 				return CommandExecutionResult.ok();
 			}

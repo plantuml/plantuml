@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
 import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
+import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
@@ -62,7 +63,7 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 	protected Url url;
 	protected Display note;
 	protected final TimeScale timeScale;
-	private double y;
+	private Real y;
 	protected final String prettyDisplay;
 	protected final Day start;
 	private final StyleBuilder styleBuilder;
@@ -82,7 +83,7 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 		this.note = note;
 	}
 
-	public AbstractTaskDraw(TimeScale timeScale, double y, String prettyDisplay, Day start, ISkinParam skinParam,
+	public AbstractTaskDraw(TimeScale timeScale, Real y, String prettyDisplay, Day start, ISkinParam skinParam,
 			Task task, ToTaskDraw toTaskDraw, StyleBuilder styleBuilder, HColorSet colorSet) {
 		this.y = y;
 		this.colorSet = colorSet;
@@ -133,29 +134,25 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 		return toTaskDraw.getTaskDraw(task.getRow());
 	}
 
-	final public double getY(StringBounder stringBounder) {
+	@Override
+	final public Real getY(StringBounder stringBounder) {
 		if (task.getRow() == null) {
 			return y;
 		}
 		return getTrueRow().getY(stringBounder);
 	}
 
-	public void pushMe(double deltaY) {
-		if (task.getRow() == null) {
-			this.y += deltaY;
-		}
-	}
-
 	public final Task getTask() {
 		return task;
 	}
 
+	@Override
 	public final double getY(StringBounder stringBounder, Direction direction) {
 		final Style style = getStyle();
 		final ClockwiseTopRightBottomLeft margin = style.getMargin();
 		final ClockwiseTopRightBottomLeft padding = style.getPadding();
 
-		final double y1 = margin.getTop() + getY(stringBounder);
+		final double y1 = margin.getTop() + getY(stringBounder).getCurrentValue();
 		final double y2 = y1 + getShapeHeight(stringBounder);
 
 		if (direction == Direction.UP) {

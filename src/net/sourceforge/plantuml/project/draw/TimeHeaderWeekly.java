@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.project.draw;
 
+import java.util.Locale;
 import java.util.Map;
 
 import net.sourceforge.plantuml.ThemeStyle;
@@ -47,7 +48,6 @@ import net.sourceforge.plantuml.project.time.WeekNumberStrategy;
 import net.sourceforge.plantuml.project.timescale.TimeScaleCompressed;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
@@ -65,11 +65,11 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 		return 16;
 	}
 
-	public TimeHeaderWeekly(double scale, Day calendar, Day min, Day max, LoadPlanable defaultPlan,
-			Map<Day, HColor> colorDays, Map<DayOfWeek, HColor> colorDaysOfWeek, WeekNumberStrategy weekNumberStrategy,
-			Style style, HColorSet colorSet, ThemeStyle themeStyle) {
-		super(calendar, min, max, defaultPlan, colorDays, colorDaysOfWeek, new TimeScaleCompressed(calendar, scale),
-				style, colorSet, themeStyle);
+	public TimeHeaderWeekly(Locale locale, Style timelineStyle, Style closedStyle, double scale, Day calendar, Day min, Day max,
+			LoadPlanable defaultPlan, Map<Day, HColor> colorDays, Map<DayOfWeek, HColor> colorDaysOfWeek,
+			WeekNumberStrategy weekNumberStrategy, HColorSet colorSet, ThemeStyle themeStyle) {
+		super(locale, timelineStyle, closedStyle, calendar, min, max, defaultPlan, colorDays, colorDaysOfWeek,
+				new TimeScaleCompressed(calendar, scale), colorSet, themeStyle);
 		this.weekNumberStrategy = weekNumberStrategy;
 	}
 
@@ -130,7 +130,7 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 			if (wink.getDayOfWeek() == weekNumberStrategy.getFirstDayOfWeek()) {
 				final String num = "" + wink.getWeekOfYear(weekNumberStrategy);
 				// final String num = "" + wink.getDayOfMonth();
-				final TextBlock textBlock = getTextBlock(num, 10, false, HColorUtils.BLACK);
+				final TextBlock textBlock = getTextBlock(num, 10, false, openFontColor());
 				printLeft(ug.apply(UTranslate.dy(Y_POS_ROW16())), textBlock,
 						getTimeScale().getStartingPosition(wink) + 5);
 			}
@@ -138,14 +138,9 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 	}
 
 	private void printMonth(UGraphic ug, MonthYear monthYear, double start, double end) {
-		final TextBlock small = getTextBlock(monthYear.shortName(), 12, true, HColorUtils.BLACK);
-		final TextBlock big = getTextBlock(monthYear.shortNameYYYY(), 12, true, HColorUtils.BLACK);
+		final TextBlock small = getTextBlock(monthYear.shortName(locale), 12, true, openFontColor());
+		final TextBlock big = getTextBlock(monthYear.shortNameYYYY(locale), 12, true, openFontColor());
 		printCentered(ug, false, start, end, small, big);
-	}
-
-	private void drawVbar(UGraphic ug, double x, double y1, double y2) {
-		final ULine vbar = ULine.vline(y2 - y1);
-		ug.apply(HColorUtils.LIGHT_GRAY).apply(new UTranslate(x, y1)).draw(vbar);
 	}
 
 	private void printLeft(UGraphic ug, TextBlock text, double start) {

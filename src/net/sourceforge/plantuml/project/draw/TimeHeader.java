@@ -68,28 +68,40 @@ public abstract class TimeHeader {
 	}
 
 	private final TimeScale timeScale;
-	private final Style style;
+	private final Style closedStyle;
+	private final Style timelineStyle;
+
 	private final HColorSet colorSet;
 	private final ThemeStyle themeStyle;
 
 	protected final Day min;
 	protected final Day max;
 
-	public TimeHeader(Day min, Day max, TimeScale timeScale, Style style, HColorSet colorSet, ThemeStyle themeStyle) {
+	public TimeHeader(Style timelineStyle, Style closedStyle, Day min, Day max, TimeScale timeScale, HColorSet colorSet,
+			ThemeStyle themeStyle) {
 		this.timeScale = timeScale;
 		this.min = min;
 		this.max = max;
-		this.style = Objects.requireNonNull(style);
+		this.closedStyle = Objects.requireNonNull(closedStyle);
+		this.timelineStyle = Objects.requireNonNull(timelineStyle);
 		this.colorSet = colorSet;
 		this.themeStyle = themeStyle;
 	}
 
 	protected final HColor closedBackgroundColor() {
-		return style.value(PName.BackGroundColor).asColor(themeStyle, colorSet);
+		return closedStyle.value(PName.BackGroundColor).asColor(themeStyle, colorSet);
 	}
 
 	protected final HColor closedFontColor() {
-		return style.value(PName.FontColor).asColor(themeStyle, colorSet);
+		return closedStyle.value(PName.FontColor).asColor(themeStyle, colorSet);
+	}
+
+	protected final HColor openFontColor() {
+		return timelineStyle.value(PName.FontColor).asColor(themeStyle, colorSet);
+	}
+
+	protected final HColor getBarColor() {
+		return timelineStyle.value(PName.LineColor).asColor(themeStyle, colorSet);
 	}
 
 	public abstract double getTimeHeaderHeight();
@@ -106,7 +118,12 @@ public abstract class TimeHeader {
 		final double xmin = getTimeScale().getStartingPosition(min);
 		final double xmax = getTimeScale().getEndingPosition(max);
 		final ULine hline = ULine.hline(xmax - xmin);
-		ug.apply(HColorUtils.LIGHT_GRAY).apply(UTranslate.dy(y)).draw(hline);
+		ug.apply(getBarColor()).apply(UTranslate.dy(y)).draw(hline);
+	}
+
+	protected final void drawVbar(UGraphic ug, double x, double y1, double y2) {
+		final ULine vbar = ULine.vline(y2 - y1);
+		ug.apply(getBarColor()).apply(new UTranslate(x, y1)).draw(vbar);
 	}
 
 	final protected FontConfiguration getFontConfiguration(int size, boolean bold, HColor color) {

@@ -32,60 +32,43 @@
  * Original Author:  Arnaud Roques
  *
  */
-package net.sourceforge.plantuml.nwdiag;
+package net.sourceforge.plantuml.nwdiag.next;
 
-public class NwArray {
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
-	private final LinkedElement data[][];
+public class NTetris<S extends Staged> {
 
-	public NwArray(int lines, int cols) {
-		this.data = new LinkedElement[lines][cols];
-	}
+	private final Map<S, Integer> all = new LinkedHashMap<>();
+	private final BooleanGrid grid = new BooleanGrid();
 
-	public int getNbLines() {
-		return data.length;
-	}
-
-	public int getNbCols() {
-		return data[0].length;
-	}
-
-	public LinkedElement get(int i, int j) {
-		return data[i][j];
-	}
-
-	public LinkedElement[] getLine(int i) {
-		return data[i];
-	}
-
-	public void set(int i, int j, LinkedElement value) {
-		data[i][j] = value;
-	}
-
-	public void swapCols(int col1, int col2) {
-		if (col1 == col2) {
-			throw new IllegalArgumentException();
-		}
-		for (int i = 0; i < getNbLines(); i++) {
-			final LinkedElement tmp = data[i][col1];
-			data[i][col1] = data[i][col2];
-			data[i][col2] = tmp;
-		}
-
-	}
-
-	public Footprint getFootprint(NwGroup group) {
-		int min = Integer.MAX_VALUE;
-		int max = Integer.MIN_VALUE;
-		for (int i = 0; i < getNbLines(); i++) {
-			for (int j = 0; j < getNbCols(); j++) {
-				if (data[i][j] != null && group.matches(data[i][j])) {
-					min = Math.min(min, j);
-					max = Math.max(max, j);
-				}
+	public void add(S element) {
+		int x = 0;
+		while (true) {
+			if (grid.isSpaceAvailable(element, x)) {
+				all.put(element, x);
+				grid.useSpace(element, x);
+				return;
+			}
+			x++;
+			if (x > 100) {
+				throw new IllegalStateException();
 			}
 		}
-		return new Footprint(min, max);
+	}
+
+	public final Map<S, Integer> getPositions() {
+		return Collections.unmodifiableMap(all);
+	}
+
+	public int getNWidth() {
+		int max = 0;
+		for (Entry<S, Integer> ent : all.entrySet()) {
+			max = Math.max(max, ent.getValue() + ent.getKey().getNWidth());
+		}
+		return max;
 	}
 
 }

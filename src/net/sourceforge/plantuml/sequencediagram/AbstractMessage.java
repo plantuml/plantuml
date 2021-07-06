@@ -193,11 +193,11 @@ public abstract class AbstractMessage implements EventWithDeactivate, WithStyle 
 				&& note.getPosition() != NotePosition.BOTTOM && note.getPosition() != NotePosition.TOP) {
 			throw new IllegalArgumentException();
 		}
-		note = note.withPosition(overideNotePosition(note.getPosition()));
+		note = note.withPosition(overrideNotePosition(note.getPosition()));
 		this.noteOnMessages.add(note);
 	}
 
-	protected NotePosition overideNotePosition(NotePosition notePosition) {
+	protected NotePosition overrideNotePosition(NotePosition notePosition) {
 		return notePosition;
 	}
 

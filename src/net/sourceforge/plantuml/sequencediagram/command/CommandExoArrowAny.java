@@ -60,6 +60,8 @@ import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 abstract class CommandExoArrowAny extends SingleLineCommand2<SequenceDiagram> {
 
+	protected static final String SHORT = "SHORT";
+
 	public CommandExoArrowAny(IRegex pattern) {
 		super(pattern);
 	}
@@ -204,7 +206,7 @@ abstract class CommandExoArrowAny extends SingleLineCommand2<SequenceDiagram> {
 	abstract MessageExoType getMessageExoType(RegexResult arg2);
 
 	private boolean isShortArrow(RegexResult arg2) {
-		final String s = arg2.get("SHORT", 0);
+		final String s = arg2.get(SHORT, 0);
 		if (s != null && s.contains("?")) {
 			return true;
 		}
@@ -212,7 +214,7 @@ abstract class CommandExoArrowAny extends SingleLineCommand2<SequenceDiagram> {
 	}
 
 	private boolean containsSymbolExterior(RegexResult arg2, String symbol) {
-		final String s = arg2.get("SHORT", 0);
+		final String s = arg2.get(SHORT, 0);
 		if (s != null && s.contains(symbol)) {
 			return true;
 		}

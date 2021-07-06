@@ -40,6 +40,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FontParam;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.activitydiagram3.Branch;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
@@ -58,6 +59,7 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
+import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class FtileFactoryDelegatorSwitch extends FtileFactoryDelegator {
@@ -100,7 +102,13 @@ public class FtileFactoryDelegatorSwitch extends FtileFactoryDelegator {
 		for (Branch branch : branches) {
 			ftiles.add(new FtileMinWidthCentered(branch.getFtile(), 30));
 		}
-		final Rainbow arrowColor = Rainbow.build(skinParam());
+		final Rainbow arrowColor;
+		if (UseStyle.useBetaStyle()) {
+			final Style style = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam().getCurrentStyleBuilder());
+			arrowColor = Rainbow.build(style, skinParam().getIHtmlColorSet(), skinParam().getThemeStyle());
+		} else {
+			arrowColor = Rainbow.build(skinParam());
+		}
 		if (ftiles.size() == 1) {
 			final FtileSwitchWithOneLink result = new FtileSwitchWithOneLink(ftiles, branches, swimlane, diamond1,
 					diamond2, getStringBounder(), arrowColor);

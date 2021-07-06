@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.project.draw;
 
+import java.util.Locale;
 import java.util.Map;
 
 import net.sourceforge.plantuml.ThemeStyle;
@@ -46,7 +47,6 @@ import net.sourceforge.plantuml.project.time.MonthYear;
 import net.sourceforge.plantuml.project.timescale.TimeScaleCompressed;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
@@ -62,11 +62,11 @@ public class TimeHeaderQuarterly extends TimeHeaderCalendar {
 		return 16 + 13 - 1;
 	}
 
-	public TimeHeaderQuarterly(double scale, Day calendar, Day min, Day max, LoadPlanable defaultPlan,
-			Map<Day, HColor> colorDays, Map<DayOfWeek, HColor> colorDaysOfWeek, Style style, HColorSet colorSet,
-			ThemeStyle themeStyle) {
-		super(calendar, min, max, defaultPlan, colorDays, colorDaysOfWeek, new TimeScaleCompressed(calendar, scale),
-				style, colorSet, themeStyle);
+	public TimeHeaderQuarterly(Locale locale, Style timelineStyle, Style closedStyle, double scale, Day calendar, Day min, Day max,
+			LoadPlanable defaultPlan, Map<Day, HColor> colorDays, Map<DayOfWeek, HColor> colorDaysOfWeek,
+			HColorSet colorSet, ThemeStyle themeStyle) {
+		super(locale, timelineStyle, closedStyle, calendar, min, max, defaultPlan, colorDays, colorDaysOfWeek,
+				new TimeScaleCompressed(calendar, scale), colorSet, themeStyle);
 	}
 
 	@Override
@@ -136,18 +136,13 @@ public class TimeHeaderQuarterly extends TimeHeaderCalendar {
 	}
 
 	private void printYear(UGraphic ug, MonthYear monthYear, double start, double end) {
-		final TextBlock small = getTextBlock("" + monthYear.year(), 12, true, HColorUtils.BLACK);
+		final TextBlock small = getTextBlock("" + monthYear.year(), 12, true, openFontColor());
 		printCentered(ug, false, start, end, small);
 	}
 
 	private void printQuarter(UGraphic ug, String quarter, double start, double end) {
-		final TextBlock small = getTextBlock(quarter, 10, false, HColorUtils.BLACK);
+		final TextBlock small = getTextBlock(quarter, 10, false, openFontColor());
 		printCentered(ug, false, start, end, small);
-	}
-
-	private void drawVbar(UGraphic ug, double x, double y1, double y2) {
-		final ULine vbar = ULine.vline(y2 - y1);
-		ug.apply(HColorUtils.LIGHT_GRAY).apply(new UTranslate(x, y1)).draw(vbar);
 	}
 
 	private void printLeft(UGraphic ug, TextBlock text, double start) {

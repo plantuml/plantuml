@@ -69,15 +69,16 @@ public class TimeHeaderSimple extends TimeHeader {
 		return 0;
 	}
 
-	public TimeHeaderSimple(double scale, Day min, Day max, Style style, HColorSet colorSet, ThemeStyle themeStyle) {
-		super(min, max, new TimeScaleWink(scale), style, colorSet, themeStyle);
+	public TimeHeaderSimple(Style timelineStyle, Style closedStyle, double scale, Day min, Day max, HColorSet colorSet,
+			ThemeStyle themeStyle) {
+		super(timelineStyle, closedStyle, min, max, new TimeScaleWink(scale), colorSet, themeStyle);
 	}
 
 	private void drawSmallVlinesDay(UGraphic ug, TimeScale timeScale, double totalHeightWithoutFooter) {
 		final ULine vbar = ULine.vline(totalHeightWithoutFooter);
 		for (Day i = min; i.compareTo(max.increment()) <= 0; i = i.increment()) {
 			final double x1 = timeScale.getStartingPosition(i);
-			ug.apply(HColorUtils.LIGHT_GRAY).apply(UTranslate.dx(x1)).draw(vbar);
+			ug.apply(getBarColor()).apply(UTranslate.dx(x1)).draw(vbar);
 		}
 	}
 
@@ -85,7 +86,7 @@ public class TimeHeaderSimple extends TimeHeader {
 		for (Day i = min; i.compareTo(max.increment()) <= 0; i = i.increment()) {
 			final String number = "" + (i.getAbsoluteDayNum() + 1);
 			final TextBlock num = Display.getWithNewlines(number).create(
-					getFontConfiguration(10, false, HColorUtils.BLACK), HorizontalAlignment.LEFT,
+					getFontConfiguration(10, false, openFontColor()), HorizontalAlignment.LEFT,
 					new SpriteContainerEmpty());
 			final double x1 = timeScale.getStartingPosition(i);
 			final double x2 = timeScale.getEndingPosition(i);
@@ -103,8 +104,8 @@ public class TimeHeaderSimple extends TimeHeader {
 		final double xmax = getTimeScale().getEndingPosition(max);
 		drawSmallVlinesDay(ug, getTimeScale(), totalHeightWithoutFooter);
 		drawSimpleDayCounter(ug, getTimeScale());
-		ug.apply(HColorUtils.LIGHT_GRAY).draw(ULine.hline(xmax - xmin));
-		ug.apply(HColorUtils.LIGHT_GRAY).apply(UTranslate.dy(getFullHeaderHeight() - 3)).draw(ULine.hline(xmax - xmin));
+		ug.apply(getBarColor()).draw(ULine.hline(xmax - xmin));
+		ug.apply(getBarColor()).apply(UTranslate.dy(getFullHeaderHeight() - 3)).draw(ULine.hline(xmax - xmin));
 
 	}
 
@@ -115,7 +116,7 @@ public class TimeHeaderSimple extends TimeHeader {
 		drawSmallVlinesDay(ug, getTimeScale(), getTimeFooterHeight());
 		ug = ug.apply(UTranslate.dy(3));
 		drawSimpleDayCounter(ug, getTimeScale());
-		ug.apply(HColorUtils.LIGHT_GRAY).draw(ULine.hline(xmax - xmin));
+		ug.apply(getBarColor()).draw(ULine.hline(xmax - xmin));
 	}
 
 }

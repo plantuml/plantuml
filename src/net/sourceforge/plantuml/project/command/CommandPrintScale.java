@@ -78,7 +78,7 @@ public class CommandPrintScale extends SingleLineCommand2<GanttDiagram> {
 		final String scaleString = arg.get("SCALE", 0);
 		final PrintScale scale = PrintScale.fromString(scaleString);
 		diagram.setPrintScale(scale);
-		
+
 		final String zoom = arg.get("ZOOM", 0);
 		if (zoom != null) {
 			diagram.setFactorScale(Double.parseDouble(zoom));

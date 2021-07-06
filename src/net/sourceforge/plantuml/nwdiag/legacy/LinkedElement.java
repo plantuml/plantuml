@@ -32,7 +32,7 @@
  * Original Author:  Arnaud Roques
  *
  */
-package net.sourceforge.plantuml.nwdiag;
+package net.sourceforge.plantuml.nwdiag.legacy;
 
 import java.awt.geom.Dimension2D;
 import java.util.Collections;
@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.nwdiag.VerticalLine;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -54,12 +55,12 @@ import net.sourceforge.plantuml.utils.MathUtils;
 public class LinkedElement {
 
 	private final TextBlock box;
-	private final Network network;
-	private final Square square;
-	private final Map<Network, TextBlock> conns;
-	private final List<Network> networks;
+	private final NetworkLegacy network;
+	private final NServerLegacy square;
+	private final Map<NetworkLegacy, TextBlock> conns;
+	private final List<NetworkLegacy> networks;
 
-	public LinkedElement(Square square, TextBlock box, Map<Network, TextBlock> conns, List<Network> networks) {
+	public LinkedElement(NServerLegacy square, TextBlock box, Map<NetworkLegacy, TextBlock> conns, List<NetworkLegacy> networks) {
 		this.networks = networks;
 		this.box = box;
 		this.network = square.getMainNetwork();
@@ -67,7 +68,7 @@ public class LinkedElement {
 		this.conns = conns;
 	}
 
-	public boolean isLinkedTo(Network some) {
+	public boolean isLinkedTo(NetworkLegacy some) {
 		return conns.containsKey(some);
 	}
 
@@ -110,7 +111,7 @@ public class LinkedElement {
 
 		final TreeSet<Double> skip = new TreeSet<>();
 
-		for (Network n : networks) {
+		for (NetworkLegacy n : networks) {
 			if (xstart + xMiddle > n.getXmin() && xstart + xMiddle < n.getXmax())
 				skip.add(n.getY());
 		}
@@ -129,7 +130,7 @@ public class LinkedElement {
 		final double seven = 7.0;
 		double x = xMiddle - (conns.size() - 2) * seven / 2;
 		boolean first = true;
-		for (Entry<Network, TextBlock> ent : conns.entrySet()) {
+		for (Entry<NetworkLegacy, TextBlock> ent : conns.entrySet()) {
 			if (ent.getKey() == network) {
 				continue;
 			}
@@ -183,11 +184,11 @@ public class LinkedElement {
 		return new Dimension2DDouble(width, height);
 	}
 
-	public final Network getNetwork() {
+	public final NetworkLegacy getNetwork() {
 		return network;
 	}
 
-	public final Square getElement() {
+	public final NServerLegacy getElement() {
 		return square;
 	}
 

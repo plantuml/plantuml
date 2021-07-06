@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.math;
 
+import static net.sourceforge.plantuml.ugraphic.ImageBuilder.plainImageBuilder;
+import static net.sourceforge.plantuml.ugraphic.ImageBuilder.plainPngBuilder;
+
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -56,9 +59,6 @@ import net.sourceforge.plantuml.ugraphic.AffineTransformType;
 import net.sourceforge.plantuml.ugraphic.MutableImage;
 import net.sourceforge.plantuml.ugraphic.PixelImage;
 import net.sourceforge.plantuml.ugraphic.UImageSvg;
-
-import static net.sourceforge.plantuml.ugraphic.ImageBuilder.plainImageBuilder;
-import static net.sourceforge.plantuml.ugraphic.ImageBuilder.plainPngBuilder;
 
 public class ScientificEquationSafe {
 

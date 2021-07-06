@@ -47,6 +47,9 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.sequencediagram.NotePosition;
+import net.sourceforge.plantuml.sequencediagram.NoteType;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class InstructionSwitch extends WithNote implements Instruction, InstructionCollection {
@@ -105,7 +108,7 @@ public class InstructionSwitch extends WithNote implements Instruction, Instruct
 	}
 
 	final public boolean kill() {
-		throw new UnsupportedOperationException();
+		return current.kill();
 	}
 
 	public LinkRendering getInLinkRendering() {
@@ -151,6 +154,16 @@ public class InstructionSwitch extends WithNote implements Instruction, Instruct
 		// TODO Auto-generated method stub
 
 	}
+	
+	@Override
+	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote) {
+		if (current.isEmpty()) {
+			return super.addNote(note, position, type, colors, swimlaneNote);
+		} else {
+			return current.addNote(note, position, type, colors, swimlaneNote);
+		}
+	}
+
 
 	// public void afterEndwhile(LinkRendering linkRenderer) {
 	// this.afterEndwhile = linkRenderer;

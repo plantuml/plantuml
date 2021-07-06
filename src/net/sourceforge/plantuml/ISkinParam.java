@@ -78,7 +78,7 @@ public interface ISkinParam extends ISkinSimple {
 	public UFont getFont(Stereotype stereotype, boolean inPackageTitle, FontParam... fontParam);
 
 	public HorizontalAlignment getHorizontalAlignment(AlignmentParam param, ArrowDirection arrowDirection,
-			boolean isReverseDefine);
+			boolean isReverseDefine, HorizontalAlignment overrideDefault);
 
 	public HorizontalAlignment getDefaultTextAlignment(HorizontalAlignment defaultValue);
 

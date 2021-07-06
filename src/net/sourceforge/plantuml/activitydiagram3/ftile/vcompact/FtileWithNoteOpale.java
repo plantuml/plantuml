@@ -163,7 +163,7 @@ public class FtileWithNoteOpale extends AbstractFtile implements Stencil, Stylea
 		}
 
 		final HorizontalAlignment align = skinParam.getHorizontalAlignment(AlignmentParam.noteTextAlignment, null,
-				false);
+				false, null);
 		final Sheet sheet = Parser.build(fc, align, skinParam, CreoleMode.FULL).createSheet(note.getDisplay());
 		final TextBlock text = new SheetBlock2(new SheetBlock1(sheet, wrapWidth, skinParam.getPadding()), this,
 				new UStroke(1));

@@ -37,57 +37,22 @@ package net.sourceforge.plantuml.math;
 
 import java.awt.Color;
 import java.awt.geom.Dimension2D;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
 
-import javax.script.Invocable;
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
-import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.ugraphic.MutableImage;
 import net.sourceforge.plantuml.ugraphic.UImageSvg;
 
 public class AsciiMath implements ScientificEquation {
 
-	private static final String ASCIIMATH_PARSER_JS_LOCATION = "/net/sourceforge/plantuml/math/";
-
-	private static String JAVASCRIPT_CODE;
-
 	private final LatexBuilder builder;
 	private final String tex;
 
-	static {
-		try {
-			final BufferedReader br = new BufferedReader(new InputStreamReader(
-					AsciiMath.class.getResourceAsStream(ASCIIMATH_PARSER_JS_LOCATION + "ASCIIMathTeXImg.js"), "UTF-8"));
-			final StringBuilder sb = new StringBuilder();
-			String s = null;
-			while ((s = br.readLine()) != null) {
-				sb.append(s);
-				sb.append(BackSlash.NEWLINE);
-			}
-			br.close();
-			JAVASCRIPT_CODE = sb.toString();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-	}
-
 	public AsciiMath(String form) throws ScriptException, NoSuchMethodException {
-		final ScriptEngine engine = new ScriptEngineManager().getEngineByName("JavaScript");
-		engine.eval(JAVASCRIPT_CODE);
-		final Invocable inv = (Invocable) engine;
-		this.tex = patchColor((String) inv.invokeFunction("plantuml", form));
+		this.tex = new ASCIIMathTeXImg().getTeX(form);
 		this.builder = new LatexBuilder(tex);
-	}
-
-	private String patchColor(String latex) {
-		return latex.replace("\\color{", "\\textcolor{");
 	}
 
 	public Dimension2D getDimension() {

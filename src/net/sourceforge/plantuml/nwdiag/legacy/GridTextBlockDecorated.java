@@ -32,7 +32,7 @@
  * Original Author:  Arnaud Roques
  *
  */
-package net.sourceforge.plantuml.nwdiag;
+package net.sourceforge.plantuml.nwdiag.legacy;
 
 import java.util.List;
 
@@ -47,10 +47,10 @@ public class GridTextBlockDecorated extends GridTextBlockSimple {
 
 	public static final int NETWORK_THIN = 5;
 
-	private final List<NwGroup> groups;
-	private final List<Network> networks;
+	private final List<NwGroupLegacy> groups;
+	private final List<NetworkLegacy> networks;
 
-	public GridTextBlockDecorated(int lines, int cols, List<NwGroup> groups, List<Network> networks,
+	public GridTextBlockDecorated(int lines, int cols, List<NwGroupLegacy> groups, List<NetworkLegacy> networks,
 			ISkinParam skinparam) {
 		super(lines, cols, skinparam);
 		this.groups = groups;
@@ -59,7 +59,7 @@ public class GridTextBlockDecorated extends GridTextBlockSimple {
 
 	@Override
 	protected void drawGrid(UGraphic ug) {
-		for (NwGroup group : groups) {
+		for (NwGroupLegacy group : groups) {
 			drawGroups(ug, group, skinparam);
 		}
 		drawNetworkTube(ug);
@@ -82,7 +82,7 @@ public class GridTextBlockDecorated extends GridTextBlockSimple {
 
 	}
 
-	private void drawGroups(UGraphic ug, NwGroup group, ISkinParam skinParam) {
+	private void drawGroups(UGraphic ug, NwGroupLegacy group, ISkinParam skinParam) {
 		final StringBounder stringBounder = ug.getStringBounder();
 
 		MinMax size = null;
@@ -108,7 +108,7 @@ public class GridTextBlockDecorated extends GridTextBlockSimple {
 
 	}
 
-	private boolean isThereALink(int j, Network network) {
+	private boolean isThereALink(int j, NetworkLegacy network) {
 		for (int i = 0; i < data.getNbLines(); i++) {
 			final LinkedElement element = data.get(i, j);
 			if (element != null && element.isLinkedTo(network)) {
@@ -123,7 +123,7 @@ public class GridTextBlockDecorated extends GridTextBlockSimple {
 		final StringBounder stringBounder = ug.getStringBounder();
 		double y = 0;
 		for (int i = 0; i < data.getNbLines(); i++) {
-			final Network network = getNetwork(i);
+			final NetworkLegacy network = getNetwork(i);
 			computeMixMax(data.getLine(i), stringBounder, network);
 
 			final URectangle rect = new URectangle(network.getXmax() - network.getXmin(), NETWORK_THIN);
@@ -142,7 +142,7 @@ public class GridTextBlockDecorated extends GridTextBlockSimple {
 		}
 	}
 
-	private void computeMixMax(LinkedElement line[], StringBounder stringBounder, Network network) {
+	private void computeMixMax(LinkedElement line[], StringBounder stringBounder, NetworkLegacy network) {
 		double x = 0;
 		double xmin = network.isFullWidth() ? 0 : -1;
 		double xmax = 0;
@@ -160,15 +160,15 @@ public class GridTextBlockDecorated extends GridTextBlockSimple {
 
 	}
 
-	private Network getNetwork(int i) {
+	private NetworkLegacy getNetwork(int i) {
 		return networks.get(i);
 	}
 
 	public void checkGroups() {
 		for (int i = 0; i < groups.size(); i++) {
 			for (int j = i + 1; j < groups.size(); j++) {
-				final NwGroup group1 = groups.get(i);
-				final NwGroup group2 = groups.get(j);
+				final NwGroupLegacy group1 = groups.get(i);
+				final NwGroupLegacy group2 = groups.get(j);
 				if (group1.size() == 0 || group2.size() == 0) {
 					continue;
 				}

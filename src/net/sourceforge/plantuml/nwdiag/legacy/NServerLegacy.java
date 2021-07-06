@@ -32,7 +32,7 @@
  * Original Author:  Arnaud Roques
  *
  */
-package net.sourceforge.plantuml.nwdiag;
+package net.sourceforge.plantuml.nwdiag.legacy;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -40,39 +40,24 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import net.sourceforge.plantuml.ColorParam;
-import net.sourceforge.plantuml.ComponentStyle;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
-import net.sourceforge.plantuml.graphic.USymbol;
-import net.sourceforge.plantuml.skin.ActorStyle;
-import net.sourceforge.plantuml.svek.PackageStyle;
-import net.sourceforge.plantuml.ugraphic.UFont;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.nwdiag.core.NServer;
 
-public class Square {
+public class NServerLegacy extends NServer {
 
-	private USymbol shape = USymbol.RECTANGLE;
-	private final String name;
-	private String description;
-	private final Network mainNetwork;
+	private final NetworkLegacy mainNetwork;
 	private final ISkinSimple spriteContainer;
 	private boolean hasItsOwnColumn = true;
-	private Square sameCol;
+	private NServerLegacy sameCol;
 
-	@Override
-	public String toString() {
-		return name;
-	}
-
-	public Square(String name, Network network, ISkinSimple spriteContainer) {
-		this.description = name;
+	public NServerLegacy(String name, NetworkLegacy network, ISkinSimple spriteContainer) {
+		super(name);
 		this.mainNetwork = network;
-		this.name = name;
 		this.spriteContainer = spriteContainer;
 	}
 
@@ -87,46 +72,21 @@ public class Square {
 		return Display.getWithNewlines(s).create(getFontConfiguration(), HorizontalAlignment.LEFT, spriteContainer);
 	}
 
-	private FontConfiguration getFontConfiguration() {
-		final UFont font = UFont.serif(11);
-		return new FontConfiguration(font, HColorUtils.BLACK, HColorUtils.BLACK, false);
-	}
-
-	public LinkedElement asTextBlock(Map<Network, String> conns, List<Network> networks) {
-		final Map<Network, TextBlock> conns2 = new LinkedHashMap<Network, TextBlock>();
-		for (Entry<Network, String> ent : conns.entrySet()) {
+	public LinkedElement asTextBlock(Map<NetworkLegacy, String> conns, List<NetworkLegacy> networks) {
+		final Map<NetworkLegacy, TextBlock> conns2 = new LinkedHashMap<NetworkLegacy, TextBlock>();
+		for (Entry<NetworkLegacy, String> ent : conns.entrySet()) {
 			conns2.put(ent.getKey(), toTextBlock(ent.getValue()));
 		}
 		final SymbolContext symbolContext = new SymbolContext(ColorParam.activityBackground.getDefaultValue(),
 				ColorParam.activityBorder.getDefaultValue()).withShadow(3);
-		final TextBlock desc = toTextBlock(description);
-		final TextBlock box = shape.asSmall(TextBlockUtils.empty(0, 0), desc, TextBlockUtils.empty(0, 0), symbolContext,
-				HorizontalAlignment.CENTER);
+		final TextBlock desc = toTextBlock(getDescription());
+		final TextBlock box = getShape().asSmall(TextBlockUtils.empty(0, 0), desc, TextBlockUtils.empty(0, 0),
+				symbolContext, HorizontalAlignment.CENTER);
 		return new LinkedElement(this, box, conns2, networks);
 	}
 
-	public String getDescription() {
-		return description;
-	}
-
-	public final Network getMainNetwork() {
+	public final NetworkLegacy getMainNetwork() {
 		return mainNetwork;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public final void setShape(String shapeName) {
-		final USymbol shapeFromString = USymbol.fromString(shapeName, ActorStyle.STICKMAN, ComponentStyle.RECTANGLE,
-				PackageStyle.RECTANGLE);
-		if (shapeFromString != null) {
-			this.shape = shapeFromString;
-		}
 	}
 
 	public void doNotHaveItsOwnColumn() {
@@ -137,11 +97,11 @@ public class Square {
 		return hasItsOwnColumn;
 	}
 
-	public void sameColThan(Square sameCol) {
+	public void sameColThan(NServerLegacy sameCol) {
 		this.sameCol = sameCol;
 	}
 
-	public final Square getSameCol() {
+	public final NServerLegacy getSameCol() {
 		return sameCol;
 	}
 

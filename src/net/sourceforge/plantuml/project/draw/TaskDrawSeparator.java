@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.project.core.TaskAttribute;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
 import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
+import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
@@ -67,14 +68,14 @@ import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 public class TaskDrawSeparator implements TaskDraw {
 
 	private final TimeScale timeScale;
-	private double y;
+	private Real y;
 	private final Day min;
 	private final Day max;
 	private final String name;
 	private final StyleBuilder styleBuilder;
 	private final HColorSet colorSet;
 
-	public TaskDrawSeparator(String name, TimeScale timeScale, double y, Day min, Day max, StyleBuilder styleBuilder,
+	public TaskDrawSeparator(String name, TimeScale timeScale, Real y, Day min, Day max, StyleBuilder styleBuilder,
 			HColorSet colorSet) {
 		this.styleBuilder = styleBuilder;
 		this.colorSet = colorSet;
@@ -126,6 +127,7 @@ public class TaskDrawSeparator implements TaskDraw {
 		return getStyle().getFontConfiguration(styleBuilder.getSkinParam().getThemeStyle(), colorSet);
 	}
 
+	@Override
 	public void drawU(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final double widthTitle = getTitle().calculateDimension(stringBounder).getWidth();
@@ -168,12 +170,20 @@ public class TaskDrawSeparator implements TaskDraw {
 		}
 	}
 
+	@Override
 	public FingerPrint getFingerPrint(StringBounder stringBounder) {
 		final double h = getFullHeightTask(stringBounder);
 		final double end = timeScale.getEndingPosition(max);
-		return new FingerPrint(0, y, end, y + h);
+		return new FingerPrint(0, getY(stringBounder).getCurrentValue(), end,
+				getY(stringBounder).getCurrentValue() + h);
 	}
 
+	@Override
+	public FingerPrint getFingerPrintNote(StringBounder stringBounder) {
+		return null;
+	}
+
+	@Override
 	public double getFullHeightTask(StringBounder stringBounder) {
 		final ClockwiseTopRightBottomLeft padding = getStyle().getPadding();
 		final ClockwiseTopRightBottomLeft margin = getStyle().getMargin();
@@ -185,41 +195,41 @@ public class TaskDrawSeparator implements TaskDraw {
 		return getTitle().calculateDimension(stringBounder).getHeight();
 	}
 
-	public double getY(StringBounder stringBounder) {
+	@Override
+	public Real getY(StringBounder stringBounder) {
 		return y;
 	}
 
-	public void pushMe(double deltaY) {
-		this.y += deltaY;
-	}
-
+	@Override
 	public TaskDraw getTrueRow() {
 		return null;
 	}
 
+	@Override
 	public void setColorsAndCompletion(CenterBorderColor colors, int completion, Url url, Display note) {
 	}
 
+	@Override
 	public Task getTask() {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public double getY(StringBounder stringBounder, Direction direction) {
 		throw new UnsupportedOperationException();
 	}
 
-	public FingerPrint getFingerPrintNote(StringBounder stringBounder) {
-		return null;
-	}
-
+	@Override
 	public double getHeightMax(StringBounder stringBounder) {
 		return getFullHeightTask(stringBounder);
 	}
 
+	@Override
 	public double getX1(TaskAttribute taskAttribute) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public double getX2(TaskAttribute taskAttribute) {
 		throw new UnsupportedOperationException();
 	}

@@ -357,7 +357,8 @@ public class SkinParam implements ISkinParam {
 	}
 
 	public char getCircledCharacter(Stereotype stereotype) {
-		final String value2 = getValue("spotchar" + Objects.requireNonNull(stereotype).getLabel(Guillemet.DOUBLE_COMPARATOR));
+		final String value2 = getValue(
+				"spotchar" + Objects.requireNonNull(stereotype).getLabel(Guillemet.DOUBLE_COMPARATOR));
 		if (value2 != null && value2.length() > 0) {
 			return value2.charAt(0);
 		}
@@ -613,7 +614,7 @@ public class SkinParam implements ISkinParam {
 	}
 
 	public HorizontalAlignment getHorizontalAlignment(AlignmentParam param, ArrowDirection arrowDirection,
-			boolean isReverseDefine) {
+			boolean isReverseDefine, HorizontalAlignment overrideDefault) {
 		final String value;
 		switch (param) {
 		case sequenceMessageAlignment:
@@ -662,7 +663,7 @@ public class SkinParam implements ISkinParam {
 		}
 		final HorizontalAlignment result = HorizontalAlignment.fromString(value);
 		if (result == null && param == AlignmentParam.noteTextAlignment) {
-			return getDefaultTextAlignment(HorizontalAlignment.LEFT);
+			return getDefaultTextAlignment(overrideDefault == null ? HorizontalAlignment.LEFT : overrideDefault);
 		} else if (result == null && param == AlignmentParam.stateMessageAlignment) {
 			return getDefaultTextAlignment(HorizontalAlignment.CENTER);
 		} else if (result == null) {
