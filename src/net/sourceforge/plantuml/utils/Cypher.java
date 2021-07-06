@@ -131,7 +131,7 @@ public class Cypher {
 	public void addException(String word) {
 		word = word.toLowerCase();
 		if (words.contains(word)) {
-			System.err.println("Warning:" + word);
+			System.err.println("CypherWarning:" + word);
 			words.remove(word);
 		}
 		except.add(word);
