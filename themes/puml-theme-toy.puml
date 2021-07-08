@@ -69,3 +69,10 @@ skinparam collections {
     BorderColor 454645
     FontColor 454645
 }
+
+skinparam queue {
+    BackgroundColor FF6F61
+    BorderColor 454645
+    FontColor FFF
+    BorderThickness 1.5
+}
