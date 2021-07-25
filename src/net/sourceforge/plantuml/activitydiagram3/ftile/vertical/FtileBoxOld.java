@@ -81,10 +81,9 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorNone;
 
-public class FtileBox extends AbstractFtile {
+public class FtileBoxOld extends AbstractFtile {
 
 	private final ClockwiseTopRightBottomLeft padding;
-	private final ClockwiseTopRightBottomLeft margin;
 
 	private final TextBlock tb;
 	private double roundCorner = 25;
@@ -140,7 +139,7 @@ public class FtileBox extends AbstractFtile {
 
 	}
 
-	public static FtileBox create(ISkinParam skinParam, Display label, Swimlane swimlane, BoxStyle boxStyle,
+	public static FtileBoxOld create(ISkinParam skinParam, Display label, Swimlane swimlane, BoxStyle boxStyle,
 			Stereotype stereotype) {
 		Style style = null;
 		Style styleArrow = null;
@@ -149,36 +148,36 @@ public class FtileBox extends AbstractFtile {
 					.getMergedStyle(skinParam.getCurrentStyleBuilder());
 			styleArrow = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam.getCurrentStyleBuilder());
 		}
-		return new FtileBox(skinParam, label, swimlane, boxStyle, style, styleArrow);
+		return new FtileBoxOld(skinParam, label, swimlane, boxStyle, style, styleArrow);
 	}
 
-//	public static TextBlock createWbs(StyleBuilder styleBuilder, ISkinParam skinParam, Display label,
-//			StyleSignature styleDefinition) {
-//		Style style = null;
-//		Style styleArrow = null;
-//		if (UseStyle.useBetaStyle()) {
-//			style = styleDefinition.getMergedStyle(styleBuilder);
-//			styleArrow = style;
-//		}
-//		return new FtileBox(skinParam, label, null, BoxStyle.PLAIN, style, styleArrow);
-//	}
-//
-//	public static TextBlock createWbs(Style style, ISkinParam skinParam, Display label) {
-//		Style styleArrow = null;
-//		if (UseStyle.useBetaStyle()) {
-//			styleArrow = style;
-//		}
-//		return new FtileBox(skinParam, label, null, BoxStyle.PLAIN, style, styleArrow);
-//	}
-//
-//	public static TextBlock createMindMap(StyleBuilder styleBuilder, ISkinParam skinParam, Display label,
-//			StyleSignature styleDefinition) {
-//		final Style style = styleDefinition.getMergedStyle(styleBuilder);
-//		final Style styleArrow = style;
-//		return new FtileBox(skinParam, label, null, BoxStyle.PLAIN, style, styleArrow);
-//	}
+	public static TextBlock createWbs(StyleBuilder styleBuilder, ISkinParam skinParam, Display label,
+			StyleSignature styleDefinition) {
+		Style style = null;
+		Style styleArrow = null;
+		if (UseStyle.useBetaStyle()) {
+			style = styleDefinition.getMergedStyle(styleBuilder);
+			styleArrow = style;
+		}
+		return new FtileBoxOld(skinParam, label, null, BoxStyle.PLAIN, style, styleArrow);
+	}
 
-	private FtileBox(ISkinParam skinParam, Display label, Swimlane swimlane, BoxStyle boxStyle, Style style,
+	public static TextBlock createWbs(Style style, ISkinParam skinParam, Display label) {
+		Style styleArrow = null;
+		if (UseStyle.useBetaStyle()) {
+			styleArrow = style;
+		}
+		return new FtileBoxOld(skinParam, label, null, BoxStyle.PLAIN, style, styleArrow);
+	}
+
+	public static TextBlock createMindMap(StyleBuilder styleBuilder, ISkinParam skinParam, Display label,
+			StyleSignature styleDefinition) {
+		final Style style = styleDefinition.getMergedStyle(styleBuilder);
+		final Style styleArrow = style;
+		return new FtileBoxOld(skinParam, label, null, BoxStyle.PLAIN, style, styleArrow);
+	}
+
+	private FtileBoxOld(ISkinParam skinParam, Display label, Swimlane swimlane, BoxStyle boxStyle, Style style,
 			Style styleArrow) {
 		super(skinParam);
 		this.style = style;
@@ -199,14 +198,12 @@ public class FtileBox extends AbstractFtile {
 			fc = style.getFontConfiguration(skinParam.getThemeStyle(), getIHtmlColorSet());
 			this.horizontalAlignment = style.getHorizontalAlignment();
 			this.padding = style.getPadding();
-			this.margin = style.getMargin();
 			this.roundCorner = style.value(PName.RoundCorner).asDouble();
 			this.shadowing = style.value(PName.Shadowing).asDouble();
 			wrapWidth = style.wrapWidth();
 			this.minimumWidth = style.value(PName.MinimumWidth).asDouble();
 		} else {
 			this.padding = ClockwiseTopRightBottomLeft.same(10);
-			this.margin = ClockwiseTopRightBottomLeft.same(0);
 			this.inRendering = new LinkRendering(Rainbow.build(skinParam));
 			this.borderColor = SkinParamUtils.getColor(skinParam(), null, ColorParam.activityBorder);
 			this.backColor = SkinParamUtils.getColor(skinParam(), null, ColorParam.activityBackground);

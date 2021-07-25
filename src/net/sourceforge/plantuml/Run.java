@@ -46,8 +46,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.net.URL;
+import java.time.Month;
+import java.time.format.TextStyle;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -82,6 +85,10 @@ public class Run {
 		final long start = System.currentTimeMillis();
 		if (argsArray.length > 0 && argsArray[0].equalsIgnoreCase("-headless")) {
 			System.setProperty("java.awt.headless", "true");
+		}
+		if (argsArray.length > 0 && argsArray[0].equalsIgnoreCase("--de")) {
+			debugGantt();
+			return;
 		}
 		saveCommandLine(argsArray);
 		final Option option = new Option(argsArray);
@@ -575,6 +582,18 @@ public class Run {
 			}
 		}
 		error.goOk();
+	}
+
+	public static void debugGantt() {
+		final Locale locale = Locale.GERMAN;
+		for (java.time.Month month : java.time.Month.values()) {
+			System.err.println("Testing locale " + locale + " " + month);
+			for (TextStyle style : TextStyle.values()) {
+				final String s = month.getDisplayName(style, locale);
+				System.err.println(style + " --> '" + s + "'");
+
+			}
+		}
 	}
 
 }

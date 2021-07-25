@@ -43,7 +43,7 @@ import java.util.List;
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SkinParamColors;
-import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileBox;
+import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileBoxOld;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -237,7 +237,7 @@ public class FingerImpl implements Finger, UDrawable {
 		}
 		if (shape == IdeaShape.BOX) {
 			final ISkinParam foo = new SkinParamColors(skinParam, Colors.empty().add(ColorType.BACK, backColor));
-			final FtileBox box = FtileBox.createMindMap(styleBuilder, foo, label, getDefaultStyleDefinitionNode());
+			final TextBlock box = FtileBoxOld.createMindMap(styleBuilder, foo, label, getDefaultStyleDefinitionNode());
 			return TextBlockUtils.withMargin(box, 0, 0, marginTop, marginBottom);
 		}
 

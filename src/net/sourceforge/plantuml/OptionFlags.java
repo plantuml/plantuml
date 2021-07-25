@@ -122,6 +122,7 @@ public class OptionFlags {
 	private boolean enableStats = defaultForStats();
 	private boolean stdLib;
 	private boolean silentlyCompletelyIgnoreErrors;
+	private boolean replaceWhiteBackgroundByTransparent;
 	private boolean extractStdLib;
 	private boolean clipboardLoop;
 	private boolean clipboard;
@@ -366,5 +367,13 @@ public class OptionFlags {
 
 	public final void setSilentlyCompletelyIgnoreErrors(boolean silentlyCompletelyIgnoreErrors) {
 		this.silentlyCompletelyIgnoreErrors = silentlyCompletelyIgnoreErrors;
+	}
+
+	public final boolean isReplaceWhiteBackgroundByTransparent() {
+		return replaceWhiteBackgroundByTransparent;
+	}
+
+	public final void setReplaceWhiteBackgroundByTransparent(boolean replaceWhiteBackgroundByTransparent) {
+		this.replaceWhiteBackgroundByTransparent = replaceWhiteBackgroundByTransparent;
 	}
 }

@@ -151,7 +151,7 @@ public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 				system = blockUml.getDiagram();
 			} catch (Throwable t) {
 				t.printStackTrace();
-				if (OptionFlags.getInstance().isSilentlyCompletelyIgnoreErrors()) {
+				if (OptionFlags.getInstance().isSilentlyCompletelyIgnoreErrors() || noerror) {
 					continue;
 				}
 				return getCrashedImage(blockUml, t, suggested.getFile(0));
@@ -163,7 +163,7 @@ public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 
 			OptionFlags.getInstance().logData(SFile.fromFile(file), system);
 			final List<FileImageData> exportDiagrams;
-			if (noerror) {
+			if (noerror && system instanceof PSystemError) {
 				exportDiagrams = new ArrayList<FileImageData>();
 				exportDiagrams.add(
 						new FileImageData(null, new ImageDataSimple(new Dimension2DDouble(0, 0), FileImageData.ERROR)));

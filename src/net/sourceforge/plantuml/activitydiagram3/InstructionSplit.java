@@ -43,6 +43,7 @@ import java.util.Set;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
@@ -77,8 +78,8 @@ public class InstructionSplit implements Instruction {
 		return splits.get(splits.size() - 1);
 	}
 
-	public void add(Instruction ins) {
-		getLast().add(ins);
+	public CommandExecutionResult add(Instruction ins) {
+		return getLast().add(ins);
 	}
 
 	public Ftile createFtile(FtileFactory factory) {

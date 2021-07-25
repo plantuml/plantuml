@@ -55,7 +55,7 @@ public interface Task extends Moment {
 
 	public void setEnd(Day end);
 
-	public void setColors(CenterBorderColor colors);
+	public void setColors(CenterBorderColor... colors);
 
 	public void addResource(Resource resource, int percentage);
 

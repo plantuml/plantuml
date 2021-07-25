@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.WeldingPoint;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.color.Colors;
@@ -105,8 +106,9 @@ public class Branch {
 		return ftile.getWeldingPoints();
 	}
 
-	public void add(Instruction ins) {
+	public CommandExecutionResult add(Instruction ins) {
 		list.add(ins);
+		return CommandExecutionResult.ok();
 	}
 
 	public boolean kill() {

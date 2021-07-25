@@ -83,6 +83,10 @@ public class Verbs {
 		return new RegexLeaf("is[%s]+colou?red");
 	}
 
+	public static IRegex isColoredForCompletion() {
+		return new RegexLeaf("is[%s]+colou?red[%s]+for[%s]+completion");
+	}
+
 	public static IRegex isOff() {
 		return new RegexConcat(new RegexLeaf("is"), //
 				RegexLeaf.spaceOneOrMore(), //

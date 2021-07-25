@@ -60,6 +60,7 @@ public class Option {
 	private final List<String> excludes = new ArrayList<>();
 	private final List<String> config = new ArrayList<>();
 	private final Map<String, String> defines = new LinkedHashMap<String, String>();
+
 	private String charset;
 	private boolean computeurl = false;
 	private boolean decodeurl = false;
@@ -305,6 +306,8 @@ public class Option {
 				manageDefine(s.substring(2));
 			} else if (s.startsWith("-S")) {
 				manageSkinParam(s.substring(2));
+			} else if (s.startsWith("-P")) {
+				managePragma(s.substring(2));
 			} else if (s.equalsIgnoreCase("-testdot")) {
 				OptionPrint.printTestDot();
 			} else if (s.equalsIgnoreCase("-about") || s.equalsIgnoreCase("-author")
@@ -318,8 +321,6 @@ public class Option {
 				OptionFlags.getInstance().setGui(true);
 			} else if (s.equalsIgnoreCase("-encodesprite")) {
 				OptionFlags.getInstance().setEncodesprite(true);
-				// } else if (s.equalsIgnoreCase("-nosuggestengine")) {
-				// OptionFlags.getInstance().setUseSuggestEngine(false);
 			} else if (s.equalsIgnoreCase("-printfonts")) {
 				OptionFlags.getInstance().setPrintFonts(true);
 			} else if (s.equalsIgnoreCase("-dumphtmlstats")) {
@@ -467,19 +468,28 @@ public class Option {
 		}
 	}
 
+	private void managePragma(String s) {
+		final Pattern2 p = MyPattern.cmpile("^(\\w+)(?:=(.*))?$");
+		final Matcher2 m = p.matcher(s);
+		if (m.find()) {
+			final String var = m.group(1);
+			final String value = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(m.group(2));
+			if (var != null && value != null) {
+				config.add("!pragma " + var + " " + value);
+			}
+		}
+	}
+
 	private void manageSkinParam(String s) {
 		final Pattern2 p = MyPattern.cmpile("^(\\w+)(?:=(.*))?$");
 		final Matcher2 m = p.matcher(s);
 		if (m.find()) {
-			skinParam(m.group(1), m.group(2));
+			final String var = m.group(1);
+			final String value = m.group(2);
+			if (var != null && value != null) {
+				config.add("skinparamlocked " + var + " " + value);
+			}
 		}
-	}
-
-	private void skinParam(String var, String value) {
-		if (var != null && value != null) {
-			config.add("skinparamlocked " + var + " " + value);
-		}
-
 	}
 
 	public final File getOutputDir() {

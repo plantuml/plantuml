@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileWithNotes;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.color.Colors;
@@ -80,8 +81,8 @@ public class InstructionGroup implements Instruction, InstructionCollection {
 		this.roundCorner = roundCorner;
 	}
 
-	public void add(Instruction ins) {
-		list.add(ins);
+	public CommandExecutionResult add(Instruction ins) {
+		return list.add(ins);
 	}
 
 	public Ftile createFtile(FtileFactory factory) {

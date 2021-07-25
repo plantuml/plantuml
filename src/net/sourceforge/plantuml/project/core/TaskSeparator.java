@@ -68,7 +68,7 @@ public class TaskSeparator extends AbstractTask implements Task {
 		throw new UnsupportedOperationException();
 	}
 
-	public void setColors(CenterBorderColor colors) {
+	public void setColors(CenterBorderColor... colors) {
 		throw new UnsupportedOperationException();
 	}
 

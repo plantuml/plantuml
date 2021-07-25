@@ -40,6 +40,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.Map;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.EmbeddedDiagram;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.Url;
@@ -185,9 +186,12 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlock,
 			return new TextBlockTracer(m, bloc);
 		}
 
-		TextBlock bloc = Display.getWithNewlines(cs.toString()).create8(config, align, skinParam,
-				CreoleMode.SIMPLE_LINE, skinParam.wrapWidth());
-		return bloc;
+		if (cs instanceof EmbeddedDiagram) {
+			return ((EmbeddedDiagram) cs).asDraw(skinParam);
+		}
+
+		return Display.getWithNewlines(cs.toString()).create8(config, align, skinParam, CreoleMode.SIMPLE_LINE,
+				skinParam.wrapWidth());
 
 	}
 

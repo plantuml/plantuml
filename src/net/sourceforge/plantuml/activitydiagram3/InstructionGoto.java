@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGoto;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
 
 public class InstructionGoto extends MonoSwimable implements Instruction {
 
@@ -53,7 +54,7 @@ public class InstructionGoto extends MonoSwimable implements Instruction {
 		return new FtileGoto(factory.skinParam(), getSwimlaneIn(), name);
 	}
 
-	public void add(Instruction other) {
+	public CommandExecutionResult add(Instruction other) {
 		throw new UnsupportedOperationException();
 	}
 

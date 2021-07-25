@@ -64,6 +64,7 @@ import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.FileUtils;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
+import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.Scale;
 import net.sourceforge.plantuml.SvgCharSizeHack;
 import net.sourceforge.plantuml.TitledDiagram;
@@ -95,6 +96,7 @@ import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorBackground;
 import net.sourceforge.plantuml.ugraphic.color.HColorGradient;
+import net.sourceforge.plantuml.ugraphic.color.HColorNone;
 import net.sourceforge.plantuml.ugraphic.color.HColorSimple;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 import net.sourceforge.plantuml.ugraphic.debug.UGraphicDebug;
@@ -111,7 +113,7 @@ public class ImageBuilder {
 
 	private Animation animation;
 	private boolean annotations;
-	private HColor backcolor = HColorUtils.WHITE;
+	private HColor backcolor = getDefaultHBackColor();
 	private ColorMapper colorMapper = new ColorMapperIdentity();
 	private Dimension2D dimension;
 	private final FileFormatOption fileFormatOption;
@@ -453,11 +455,17 @@ public class ImageBuilder {
 
 	private UGraphic2 createUGraphicPNG(double scaleFactor, final Dimension2D dim, Animation affineTransforms,
 			double dx, double dy, String watermark) {
-		Color backColor = Color.WHITE; // TODO simplify backcolor some more in a future PR
+		Color backColor = getDefaultBackColor();
+
 		if (this.backcolor instanceof HColorSimple) {
 			backColor = colorMapper.toColor(this.backcolor);
-		} else if (this.backcolor instanceof HColorBackground) {
+		} else if (this.backcolor instanceof HColorBackground || this.backcolor instanceof HColorNone) {
 			backColor = null;
+		}
+
+		if (OptionFlags.getInstance().isReplaceWhiteBackgroundByTransparent() && backColor != null
+				&& backColor.equals(Color.WHITE)) {
+			backColor = new Color(0, 0, 0, 0);
 		}
 
 		final EmptyImageBuilder builder = new EmptyImageBuilder(watermark, (int) (dim.getWidth() * scaleFactor),
@@ -474,6 +482,14 @@ public class ImageBuilder {
 		}
 
 		return ug;
+	}
+
+	static private Color getDefaultBackColor() {
+		return Color.WHITE;
+	}
+
+	static private HColor getDefaultHBackColor() {
+		return HColorUtils.WHITE;
 	}
 
 	private String getHoverPathColorRGB() {

@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 public class Upper extends SimpleReturnFunction {
 
 	public TFunctionSignature getSignature() {
-		return new TFunctionSignature("%upper", 3);
+		return new TFunctionSignature("%upper", 1);
 	}
 
 	public boolean canCover(int nbArg, Set<String> namedArgument) {

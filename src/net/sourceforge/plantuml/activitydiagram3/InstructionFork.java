@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileWithNoteOpale;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
@@ -85,8 +86,8 @@ public class InstructionFork extends WithNote implements Instruction {
 		return forks.get(forks.size() - 1);
 	}
 
-	public void add(Instruction ins) {
-		getLastList().add(ins);
+	public CommandExecutionResult add(Instruction ins) {
+		return getLastList().add(ins);
 	}
 
 	public Ftile createFtile(FtileFactory factory) {

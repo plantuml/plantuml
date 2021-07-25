@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.project.LabelStrategy;
 import net.sourceforge.plantuml.project.ToTaskDraw;
 import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.core.TaskAttribute;
+import net.sourceforge.plantuml.project.lang.CenterBorderColor;
 import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.real.Real;
@@ -144,8 +145,9 @@ public class TaskDrawDiamond extends AbstractTaskDraw {
 	}
 
 	private UGraphic applyColors(UGraphic ug) {
-		if (colors != null && colors.isOk()) {
-			return colors.apply(ug);
+		final CenterBorderColor col = this.getColors();
+		if (col != null && col.isOk()) {
+			return col.apply(ug);
 		}
 		return ug.apply(getLineColor()).apply(getBackgroundColor().bg());
 	}

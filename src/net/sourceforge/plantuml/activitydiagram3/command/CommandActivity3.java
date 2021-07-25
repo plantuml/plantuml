@@ -123,8 +123,7 @@ public class CommandActivity3 extends SingleLineCommand2<ActivityDiagram3> {
 		}
 		final BoxStyle style = BoxStyle.fromChar(arg.get("STYLE", 0).charAt(0));
 		final Display display = Display.getWithNewlines2(arg.get("LABEL", 0));
-		diagram.addActivity(display, style, url, colors, stereotype);
-		return CommandExecutionResult.ok();
+		return diagram.addActivity(display, style, url, colors, stereotype);
 	}
 
 }

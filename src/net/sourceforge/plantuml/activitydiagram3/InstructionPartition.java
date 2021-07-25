@@ -40,6 +40,7 @@ import java.util.Set;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
@@ -74,8 +75,8 @@ public class InstructionPartition implements Instruction {
 		return list.createFtile(factory);
 	}
 
-	public void add(Instruction other) {
-		list.add(other);
+	public CommandExecutionResult add(Instruction other) {
+		return list.add(other);
 	}
 
 	public boolean kill() {

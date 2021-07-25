@@ -75,13 +75,14 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.ugraphic.UEmpty;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorNone;
 
-public class FtileBox extends AbstractFtile {
+public class FtileBox2 extends AbstractFtile {
 
 	private final ClockwiseTopRightBottomLeft padding;
 	private final ClockwiseTopRightBottomLeft margin;
@@ -140,7 +141,7 @@ public class FtileBox extends AbstractFtile {
 
 	}
 
-	public static FtileBox create(ISkinParam skinParam, Display label, Swimlane swimlane, BoxStyle boxStyle,
+	public static FtileBox2 create(ISkinParam skinParam, Display label, Swimlane swimlane, BoxStyle boxStyle,
 			Stereotype stereotype) {
 		Style style = null;
 		Style styleArrow = null;
@@ -149,36 +150,10 @@ public class FtileBox extends AbstractFtile {
 					.getMergedStyle(skinParam.getCurrentStyleBuilder());
 			styleArrow = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam.getCurrentStyleBuilder());
 		}
-		return new FtileBox(skinParam, label, swimlane, boxStyle, style, styleArrow);
+		return new FtileBox2(skinParam, label, swimlane, boxStyle, style, styleArrow);
 	}
 
-//	public static TextBlock createWbs(StyleBuilder styleBuilder, ISkinParam skinParam, Display label,
-//			StyleSignature styleDefinition) {
-//		Style style = null;
-//		Style styleArrow = null;
-//		if (UseStyle.useBetaStyle()) {
-//			style = styleDefinition.getMergedStyle(styleBuilder);
-//			styleArrow = style;
-//		}
-//		return new FtileBox(skinParam, label, null, BoxStyle.PLAIN, style, styleArrow);
-//	}
-//
-//	public static TextBlock createWbs(Style style, ISkinParam skinParam, Display label) {
-//		Style styleArrow = null;
-//		if (UseStyle.useBetaStyle()) {
-//			styleArrow = style;
-//		}
-//		return new FtileBox(skinParam, label, null, BoxStyle.PLAIN, style, styleArrow);
-//	}
-//
-//	public static TextBlock createMindMap(StyleBuilder styleBuilder, ISkinParam skinParam, Display label,
-//			StyleSignature styleDefinition) {
-//		final Style style = styleDefinition.getMergedStyle(styleBuilder);
-//		final Style styleArrow = style;
-//		return new FtileBox(skinParam, label, null, BoxStyle.PLAIN, style, styleArrow);
-//	}
-
-	private FtileBox(ISkinParam skinParam, Display label, Swimlane swimlane, BoxStyle boxStyle, Style style,
+	private FtileBox2(ISkinParam skinParam, Display label, Swimlane swimlane, BoxStyle boxStyle, Style style,
 			Style styleArrow) {
 		super(skinParam);
 		this.style = style;
@@ -233,10 +208,13 @@ public class FtileBox extends AbstractFtile {
 	}
 
 	public void drawU(UGraphic ug) {
-		final Dimension2D dimTotal = calculateDimension(ug.getStringBounder());
-		final double widthTotal = dimTotal.getWidth();
-		final double heightTotal = dimTotal.getHeight();
+		final Dimension2D dimRaw = getDimRaw(ug.getStringBounder());
+		final double widthTotal = dimRaw.getWidth();
+		final double heightTotal = dimRaw.getHeight();
 		final UDrawable shape = boxStyle.getUDrawable(widthTotal, heightTotal, shadowing, roundCorner);
+
+		final Dimension2D dimTotal = calculateDimension(ug.getStringBounder());
+		ug.draw(new UEmpty(dimTotal));
 
 		final UStroke thickness;
 		if (UseStyle.useBetaStyle()) {
@@ -257,6 +235,7 @@ public class FtileBox extends AbstractFtile {
 		}
 
 		ug = ug.apply(thickness);
+		ug = ug.apply(new UTranslate(margin.getLeft(), margin.getTop()));
 		shape.drawU(ug);
 
 		if (horizontalAlignment == HorizontalAlignment.LEFT) {
@@ -264,21 +243,27 @@ public class FtileBox extends AbstractFtile {
 		} else if (horizontalAlignment == HorizontalAlignment.RIGHT) {
 			final Dimension2D dimTb = tb.calculateDimension(ug.getStringBounder());
 			tb.drawU(ug.apply(
-					new UTranslate(dimTotal.getWidth() - dimTb.getWidth() - padding.getRight(), padding.getBottom())));
+					new UTranslate(dimRaw.getWidth() - dimTb.getWidth() - padding.getRight(), padding.getBottom())));
 		} else if (horizontalAlignment == HorizontalAlignment.CENTER) {
 			final Dimension2D dimTb = tb.calculateDimension(ug.getStringBounder());
-			tb.drawU(ug.apply(new UTranslate((dimTotal.getWidth() - dimTb.getWidth()) / 2, padding.getBottom())));
+			tb.drawU(ug.apply(new UTranslate((dimRaw.getWidth() - dimTb.getWidth()) / 2, padding.getBottom())));
 		}
 	}
 
 	@Override
 	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
+		Dimension2D dimRaw = getDimRaw(stringBounder);
+		return new FtileGeometry(dimRaw.getWidth() + margin.getLeft() + margin.getRight(),
+				dimRaw.getHeight() + margin.getTop() + margin.getBottom(), margin.getLeft() + dimRaw.getWidth() / 2,
+				margin.getTop(), margin.getTop() + dimRaw.getHeight());
+	}
+
+	private Dimension2D getDimRaw(StringBounder stringBounder) {
 		Dimension2D dimRaw = tb.calculateDimension(stringBounder);
-		dimRaw = Dimension2DDouble.delta(dimRaw, padding.getLeft() + padding.getRight(),
+		dimRaw = Dimension2DDouble.delta(dimRaw, padding.getLeft() + padding.getRight() + boxStyle.getShield(),
 				padding.getBottom() + padding.getTop());
 		dimRaw = Dimension2DDouble.atLeast(dimRaw, minimumWidth, 0);
-		return new FtileGeometry(dimRaw.getWidth() + boxStyle.getShield(), dimRaw.getHeight(), dimRaw.getWidth() / 2, 0,
-				dimRaw.getHeight());
+		return dimRaw;
 	}
 
 	public Collection<Ftile> getMyChildren() {

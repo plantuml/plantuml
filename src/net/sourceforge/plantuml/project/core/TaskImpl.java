@@ -71,7 +71,7 @@ public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 	private Display note;
 
 	private Url url;
-	private CenterBorderColor colors;
+	private CenterBorderColor[] colors;
 
 	public void setUrl(Url url) {
 		this.url = url;
@@ -211,7 +211,7 @@ public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 		solver.setData(TaskAttribute.END, end);
 	}
 
-	public void setColors(CenterBorderColor colors) {
+	public void setColors(CenterBorderColor... colors) {
 		this.colors = colors;
 	}
 
@@ -236,7 +236,13 @@ public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 	}
 
 	public final CenterBorderColor getColors() {
-		return colors;
+		if (colors == null) {
+			return null;
+		}
+		if (colors.length == 1) {
+			return colors[0];
+		}
+		return colors[0].linearTo(colors[1], completion);
 	}
 
 	public final int getCompletion() {

@@ -40,7 +40,7 @@ import java.awt.geom.Point2D;
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.UseStyle;
-import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileBox;
+import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileBoxOld;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
@@ -72,8 +72,7 @@ abstract class WBSTextBlock extends AbstractTextBlock {
 		final ULine line = new ULine(p1, p2);
 		if (UseStyle.useBetaStyle()) {
 			getStyleUsed().applyStrokeAndLineColor(ug.apply(new UTranslate(p1)), skinParam.getIHtmlColorSet(),
-					skinParam.getThemeStyle())
-					.draw(line);
+					skinParam.getThemeStyle()).draw(line);
 		} else {
 			final HColor color = ColorParam.activityBorder.getDefaultValue();
 			ug.apply(new UTranslate(p1)).apply(color).draw(line);
@@ -96,8 +95,7 @@ abstract class WBSTextBlock extends AbstractTextBlock {
 		final Display label = idea.getLabel();
 		final Style style = idea.getStyle();
 		if (idea.getShape() == IdeaShape.BOX) {
-			final FtileBox box = FtileBox.createWbs(style, idea.withBackColor(skinParam), label);
-			return box;
+			return FtileBoxOld.createWbs(style, idea.withBackColor(skinParam), label);
 		}
 		final TextBlock text = label.create0(
 				style.getFontConfiguration(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet()),

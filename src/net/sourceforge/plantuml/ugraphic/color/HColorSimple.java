@@ -65,7 +65,7 @@ public class HColorSimple extends HColorAbstract implements HColor {
 		if (color.getAlpha() == 255) {
 			return DotStringFactory.sharp000000(color.getRGB());
 		}
-		return super.asString();
+		return "#" + Integer.toHexString(color.getRGB());
 	}
 
 	@Override
@@ -140,6 +140,31 @@ public class HColorSimple extends HColorAbstract implements HColor {
 
 	public final boolean isMonochrome() {
 		return monochrome;
+	}
+
+	public static HColorSimple linear(HColorSimple color1, HColorSimple color2, int completion) {
+		final HSLColor col1 = new HSLColor(color1.color);
+		final HSLColor col2 = new HSLColor(color2.color);
+
+		final float[] hsl1 = col1.getHSL();
+		final float[] hsl2 = col2.getHSL();
+
+		final float[] hsl = linear(completion, hsl1, hsl2);
+
+		final HSLColor col = new HSLColor(hsl);
+
+		return new HColorSimple(col.getRGB(), color1.monochrome);
+	}
+
+	private static float[] linear(int completion, float[] hsl1, float[] hsl2) {
+		final float h = linear(completion, hsl1[0], hsl2[0]);
+		final float s = linear(completion, hsl1[1], hsl2[1]);
+		final float l = linear(completion, hsl1[2], hsl2[2]);
+		return new float[] { h, s, l };
+	}
+
+	private static float linear(int completion, float x, float y) {
+		return x + (y - x) * completion / 100;
 	}
 
 }

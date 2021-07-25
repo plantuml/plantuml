@@ -30,46 +30,27 @@
  *
  *
  * Original Author:  Arnaud Roques
- *
+ * 
  *
  */
-package net.sourceforge.plantuml.activitydiagram3;
+package net.sourceforge.plantuml.project.lang;
 
-import java.util.Objects;
-
-import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
-import net.sourceforge.plantuml.activitydiagram3.ftile.FtileBreak;
-import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
-import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.project.GanttDiagram;
+import net.sourceforge.plantuml.project.core.Task;
 
-public class InstructionBreak extends MonoSwimable implements Instruction {
+public class SentenceIsColoredForCompletion extends SentenceSimple {
 
-	private final LinkRendering inlinkRendering;
-
-	public InstructionBreak(Swimlane swimlane, LinkRendering inlinkRendering) {
-		super(swimlane);
-		this.inlinkRendering = Objects.requireNonNull(inlinkRendering);
+	public SentenceIsColoredForCompletion() {
+		super(new SubjectTask(), Verbs.isColoredForCompletion(), new ComplementInColorsFromTo());
 	}
 
-	public Ftile createFtile(FtileFactory factory) {
-		return new FtileBreak(factory.skinParam(), getSwimlaneIn());
-	}
-
-	public CommandExecutionResult add(Instruction other) {
-		throw new UnsupportedOperationException();
-	}
-
-	final public boolean kill() {
-		return false;
-	}
-
-	public LinkRendering getInLinkRendering() {
-		return inlinkRendering;
-	}
-
-	public boolean containsBreak() {
-		return true;
+	@Override
+	public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+		final Task task = (Task) subject;
+		final CenterBorderColor[] colors = (CenterBorderColor[]) complement;
+		task.setColors(colors);
+		return CommandExecutionResult.ok();
 	}
 
 }

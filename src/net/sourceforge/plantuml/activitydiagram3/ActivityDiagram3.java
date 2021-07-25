@@ -108,16 +108,22 @@ public class ActivityDiagram3 extends UmlDiagram {
 		return swinlanes.nextLinkRenderer();
 	}
 
-	public void addActivity(Display activity, BoxStyle style, Url url, Colors colors, Stereotype stereotype) {
+	public CommandExecutionResult addActivity(Display activity, BoxStyle style, Url url, Colors colors,
+			Stereotype stereotype) {
 		manageSwimlaneStrategy();
 		final InstructionSimple ins = new InstructionSimple(activity, nextLinkRenderer(),
 				swinlanes.getCurrentSwimlane(), style, url, colors, stereotype);
-		current().add(ins);
+		final CommandExecutionResult added = current().add(ins);
+		if (added.isOk() == false) {
+			return added;
+		}
 		setNextLinkRendererInternal(LinkRendering.none());
 		manageHasUrl(activity);
 		if (url != null) {
 			hasUrl = true;
 		}
+		return CommandExecutionResult.ok();
+
 	}
 
 	public void addSpot(String spot, HColor color) {
@@ -205,9 +211,7 @@ public class ActivityDiagram3 extends UmlDiagram {
 		result = CompressionXorYBuilder.build(CompressionMode.ON_Y, result, stringBounder);
 
 		result = new TextBlockRecentred(result);
-		return createImageBuilder(fileFormatOption)
-				.drawable(result)
-				.write(os);
+		return createImageBuilder(fileFormatOption).drawable(result).write(os);
 	}
 
 	public void fork() {

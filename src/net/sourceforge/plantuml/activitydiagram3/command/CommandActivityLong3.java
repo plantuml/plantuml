@@ -84,7 +84,6 @@ public class CommandActivityLong3 extends CommandMultilines2<ActivityDiagram3> {
 		// 0));
 		final BoxStyle style = BoxStyle.fromChar(lines.getLastChar());
 		lines = lines.removeStartingAndEnding(line0.get("DATA", 0), 1);
-		diagram.addActivity(lines.toDisplay(), style, null, colors, null);
-		return CommandExecutionResult.ok();
+		return diagram.addActivity(lines.toDisplay(), style, null, colors, null);
 	}
 }

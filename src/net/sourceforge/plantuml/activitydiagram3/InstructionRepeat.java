@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileKilled;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
@@ -111,8 +112,8 @@ public class InstructionRepeat implements Instruction {
 		return this.backward != Display.NULL;
 	}
 
-	public void add(Instruction ins) {
-		repeatList.add(ins);
+	public CommandExecutionResult add(Instruction ins) {
+		return repeatList.add(ins);
 	}
 
 	public Ftile createFtile(FtileFactory factory) {

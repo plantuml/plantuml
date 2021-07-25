@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileKilled;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileWithNoteOpale;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.color.Colors;
@@ -93,8 +94,8 @@ public class InstructionWhile extends WithNote implements Instruction, Instructi
 		this.skinParam = skinParam;
 	}
 
-	public void add(Instruction ins) {
-		repeatList.add(ins);
+	public CommandExecutionResult add(Instruction ins) {
+		return repeatList.add(ins);
 	}
 
 	public Ftile createFtile(FtileFactory factory) {

@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileEmpty;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.WeldingPoint;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
@@ -88,8 +89,9 @@ public class InstructionList extends WithNote implements Instruction, Instructio
 		this.defaultSwimlane = defaultSwimlane;
 	}
 
-	public void add(Instruction ins) {
+	public CommandExecutionResult add(Instruction ins) {
 		all.add(ins);
+		return CommandExecutionResult.ok();
 	}
 
 	public Ftile createFtile(FtileFactory factory) {

@@ -85,6 +85,7 @@ import net.sourceforge.plantuml.tim.stdlib.AlwaysTrue;
 import net.sourceforge.plantuml.tim.stdlib.CallUserFunction;
 import net.sourceforge.plantuml.tim.stdlib.Darken;
 import net.sourceforge.plantuml.tim.stdlib.DateFunction;
+import net.sourceforge.plantuml.tim.stdlib.Dec2hex;
 import net.sourceforge.plantuml.tim.stdlib.Dirpath;
 import net.sourceforge.plantuml.tim.stdlib.Eval;
 import net.sourceforge.plantuml.tim.stdlib.Feature;
@@ -94,6 +95,8 @@ import net.sourceforge.plantuml.tim.stdlib.FunctionExists;
 import net.sourceforge.plantuml.tim.stdlib.GetVariableValue;
 import net.sourceforge.plantuml.tim.stdlib.GetVersion;
 import net.sourceforge.plantuml.tim.stdlib.Getenv;
+import net.sourceforge.plantuml.tim.stdlib.Hex2dec;
+import net.sourceforge.plantuml.tim.stdlib.HslColor;
 import net.sourceforge.plantuml.tim.stdlib.IntVal;
 import net.sourceforge.plantuml.tim.stdlib.InvokeProcedure;
 import net.sourceforge.plantuml.tim.stdlib.IsDark;
@@ -166,6 +169,9 @@ public class TContext {
 		functionsSet.addFunction(new ReverseHsluvColor());
 		functionsSet.addFunction(new ReverseColor());
 		functionsSet.addFunction(new Eval());
+		functionsSet.addFunction(new Hex2dec());
+		functionsSet.addFunction(new Dec2hex());
+		functionsSet.addFunction(new HslColor());
 		// %standard_exists_function
 		// %str_replace
 		// !exit

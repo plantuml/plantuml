@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
@@ -84,27 +85,18 @@ public class InstructionSwitch extends WithNote implements Instruction, Instruct
 		this.swimlane = swimlane;
 	}
 
-	public void add(Instruction ins) {
-		current.add(ins);
+	public CommandExecutionResult add(Instruction ins) {
+		if (current == null) {
+			return CommandExecutionResult.error("No 'case' in this switch");
+		}
+		return current.add(ins);
 	}
 
 	public Ftile createFtile(FtileFactory factory) {
 		for (Branch branch : branches) {
 			branch.updateFtile(factory);
 		}
-		Ftile result = factory.createSwitch(swimlane, branches, afterEndwhile, topInlinkRendering, labelTest);
-		// if (getPositionedNotes().size() > 0) {
-		// result = FtileWithNoteOpale.create(result, getPositionedNotes(), skinParam,
-		// false);
-		// }
-		// final List<WeldingPoint> weldingPoints = new ArrayList<>();
-		// for (Branch branch : branches) {
-		// weldingPoints.addAll(branch.getWeldingPoints());
-		// }
-		// if (weldingPoints.size() > 0) {
-		// result = new FtileDecorateWelding(result, weldingPoints);
-		// }
-		return result;
+		return factory.createSwitch(swimlane, branches, afterEndwhile, topInlinkRendering, labelTest);
 	}
 
 	final public boolean kill() {
@@ -154,7 +146,7 @@ public class InstructionSwitch extends WithNote implements Instruction, Instruct
 		// TODO Auto-generated method stub
 
 	}
-	
+
 	@Override
 	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote) {
 		if (current.isEmpty()) {
@@ -163,10 +155,5 @@ public class InstructionSwitch extends WithNote implements Instruction, Instruct
 			return current.addNote(note, position, type, colors, swimlaneNote);
 		}
 	}
-
-
-	// public void afterEndwhile(LinkRendering linkRenderer) {
-	// this.afterEndwhile = linkRenderer;
-	// }
 
 }

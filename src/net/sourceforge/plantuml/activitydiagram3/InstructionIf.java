@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.WeldingPoint;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileWithNoteOpale;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
@@ -96,8 +97,8 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 		this.current = this.thens.get(0);
 	}
 
-	public void add(Instruction ins) {
-		current.add(ins);
+	public CommandExecutionResult add(Instruction ins) {
+		return current.add(ins);
 	}
 
 	public Ftile createFtile(FtileFactory factory) {

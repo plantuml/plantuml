@@ -58,7 +58,8 @@ import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 
 public abstract class AbstractTaskDraw implements TaskDraw {
 
-	protected CenterBorderColor colors;
+	private CenterBorderColor colors;
+
 	protected int completion = 100;
 	protected Url url;
 	protected Display note;
@@ -171,6 +172,10 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 
 	protected final HColorSet getColorSet() {
 		return colorSet;
+	}
+
+	protected CenterBorderColor getColors() {
+		return colors;
 	}
 
 }
