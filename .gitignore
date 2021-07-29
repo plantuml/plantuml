@@ -17,3 +17,6 @@ target/
 .settings/
 .classpath
 .project
+
+# for jenv users
+.java-version
