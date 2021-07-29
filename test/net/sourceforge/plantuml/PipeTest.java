@@ -3,6 +3,7 @@ package net.sourceforge.plantuml;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -154,43 +155,109 @@ class PipeTest {
     }
 
     @Test
-    void should_readOneDiagram_return_null_for_empty_input() throws IOException {
+    void should_readFirstDiagram_return_null_for_empty_input() throws IOException {
         pipe = new Pipe(option, null, new ByteArrayInputStream(new byte[0]), UTF_8.name());
 
-        String actual = pipe.readOneDiagram();
+        String actual = pipe.readFirstDiagram();
 
         assertThat(actual).isNull();
     }
 
     @Test
-    void should_readOneDiagram_remove_carriage_returns() throws IOException {
-        pipe = new Pipe(option, null, new ByteArrayInputStream("@startuml\na\rb\r\nc\rd\re\n@enduml".getBytes(UTF_8)), UTF_8.name());
+    void should_readFirstDiagram_decode_a_special_unicode_character_when_provided_charset_is_utf8() throws IOException {
+        pipe = new Pipe(option, null, new ByteArrayInputStream("\u2620\n".getBytes(UTF_8)), UTF_8.name());
 
-        String actual = pipe.readOneDiagram();
+        String actual = pipe.readFirstDiagram();
 
-        assertThat(actual).isEqualTo("@startuml\nab\ncde\n@enduml");
+        assertThat(actual).isEqualTo("@startuml\n\u2620\n@enduml\n");
     }
 
-    static List<InputExpected> startAndEndMarks() {
-        LinkedList<InputExpected> linkedList = new LinkedList<>();
-        linkedList.add(InputExpected.of("\na\rb\r\nc\rd\re\n@enduml", "@startuml\nab\ncde\n@enduml\n@enduml"));
-        linkedList.add(InputExpected.of("\na\rb\r\nc\rd\re\n@endwhatever", "@startuml\nab\ncde\n@endwhatever\n@enduml"));
-        linkedList.add(InputExpected.of("\na\rb\r\nc\rd\re\n@enduml\n", "@startuml\nab\ncde\n@enduml\n@enduml"));
-        linkedList.add(InputExpected.of("@startuml\na\rb\r\nc\rd\re\n@enduml", "@startuml\nab\ncde\n@enduml"));
-        linkedList.add(InputExpected.of("@startuml\na\rb\r\nc\rd\re\n@enduml\n", "@startuml\nab\ncde\n@enduml"));
-        linkedList.add(InputExpected.of("@startuml\na\rb\r\nc\rd\re\n@enduml\n\n", "@startuml\nab\ncde\n@enduml"));
-        linkedList.add(InputExpected.of("@startuml\na\rb\r\nc\rd\re\n@enduml\r\n\r\n", "@startuml\nab\ncde\n@enduml"));
-        linkedList.add(InputExpected.of("this-is-garbage\n@startuml\na\rb\r\nc\rd\re\n@enduml\nthis-is-garbage\n", "@startuml\nab\ncde\n@enduml"));
-        linkedList.add(InputExpected.of("@startwhatever\na\rb\r\nc\rd\re\n@endwhatever", "@startwhatever\nab\ncde\n@endwhatever"));
-        return linkedList;
+    // The testing is relevant only if the testing VM is configured in non-UTF-8 defaultCharset()
+    @Test
+    void should_readFirstDiagram_uses_current_charset_if_not_provided() throws IOException {
+        String input = "\u00C1"; // A acute accented. (HTML &Aacute;). Multibyte in UTF-8.
+        if(Charset.defaultCharset().newEncoder().canEncode(input)) {
+            pipe = new Pipe(option, null, new ByteArrayInputStream(input.getBytes(Charset.defaultCharset())), null);
+
+            String actual = pipe.readFirstDiagram();
+
+            assertThat(actual).isEqualTo("@startuml\n\u00C1\n@enduml\n");
+
+        } else {
+            // default charset can't encode &Aacute;. Ignore the test.
+            assertTrue(true);
+        }
     }
 
     @ParameterizedTest
-    @MethodSource("startAndEndMarks")
-    void should_readOneDiagram_handle_correctly_start_and_end_marks(InputExpected inputExpected) throws IOException {
+    @ValueSource(strings = {
+            "ab\nc",    // *nix, macOsX
+            "ab\rc",    // pre-macOsX macs
+            "ab\r\nc",  // Windows
+            // the case \n\r is handled as 2 new lines, thus not added
+
+            "ab\nc\n",
+            "ab\nc\r",
+            "ab\nc\r\n"
+    })
+    void should_readFirstDiagram_decode_correctly_different_line_endings(String input) throws IOException {
+        pipe = new Pipe(option, null, new ByteArrayInputStream(input.getBytes(UTF_8)), UTF_8.name());
+
+        String first = pipe.readFirstDiagram();
+        String second = pipe.readFirstDiagram();
+
+        assertThat(first).isEqualTo("@startuml\nab\nc\n@enduml\n");
+        assertThat(second).isEqualTo(null);                         // no spurious diagram afterwards
+    }
+
+    static List<InputExpected> firstStartAndEndMarks() {
+        List<InputExpected> l = new LinkedList<>();
+        l.add(InputExpected.of("\nab\r\ncde", "@startuml\nab\ncde\n@enduml\n"));
+        l.add(InputExpected.of("\nab\r\ncde\n", "@startuml\nab\ncde\n@enduml\n"));
+        l.add(InputExpected.of("\nab\r\ncde\n@enduml", "@startuml\nab\ncde\n@enduml\n@enduml\n"));
+        l.add(InputExpected.of("\nab\r\ncde\n@endwhatever", "@startuml\nab\ncde\n@endwhatever\n@enduml\n"));
+        l.add(InputExpected.of("\nab\r\ncde\n@enduml\n", "@startuml\nab\ncde\n@enduml\n@enduml\n"));
+        l.add(InputExpected.of("@startuml\nab\r\ncde\n@enduml", "@startuml\nab\ncde\n@enduml\n"));
+        l.add(InputExpected.of("@startuml\nab\r\ncde\n@enduml\n", "@startuml\nab\ncde\n@enduml\n"));
+        l.add(InputExpected.of("@startuml\nab\r\ncde\n@enduml\n\n", "@startuml\nab\ncde\n@enduml\n"));
+        l.add(InputExpected.of("@startuml\nab\r\ncde\n@enduml\r\n\r\n", "@startuml\nab\ncde\n@enduml\n"));
+        l.add(InputExpected.of("this-is-garbage\n@startuml\nab\rcde\n@enduml\nthis-is-garbage\n", "@startuml\nab\ncde\n@enduml\n"));
+        l.add(InputExpected.of("@startwhatever\nab\rcde\n@endwhatever", "@startwhatever\nab\ncde\n@endwhatever\n"));
+        return l;
+    }
+
+    @ParameterizedTest
+    @MethodSource("firstStartAndEndMarks")
+    void should_readFirstDiagram_handle_correctly_start_and_end_marks(InputExpected inputExpected) throws IOException {
         pipe = new Pipe(option, null, new ByteArrayInputStream(inputExpected.getInput().getBytes(UTF_8)), UTF_8.name());
 
-        String actual = pipe.readOneDiagram();
+        String actual = pipe.readFirstDiagram();
+
+        assertThat(actual).isEqualTo(inputExpected.getExpected());
+    }
+
+    static List<InputExpected> subsequentStartAndEndMarks() {
+        List<InputExpected> l = new LinkedList<>();
+        l.add(InputExpected.of("\nab\r\ncde", null));
+        l.add(InputExpected.of("\nab\r\ncde\n", null));
+        l.add(InputExpected.of("\nab\r\ncde\n@enduml", null));
+        l.add(InputExpected.of("\nab\r\ncde\n@endwhatever", null));
+        l.add(InputExpected.of("\nab\r\ncde\n@enduml\n", null));
+        l.add(InputExpected.of("@startuml\nab\r\ncde\n@enduml", "@startuml\nab\ncde\n@enduml\n"));
+        l.add(InputExpected.of("@startuml\nab\r\ncde\n@enduml\n", "@startuml\nab\ncde\n@enduml\n"));
+        l.add(InputExpected.of("@startuml\nab\r\ncde\n@enduml\n\n", "@startuml\nab\ncde\n@enduml\n"));
+        l.add(InputExpected.of("@startuml\nab\r\ncde\n@enduml\r\n\r\n", "@startuml\nab\ncde\n@enduml\n"));
+        l.add(InputExpected.of("this-is-garbage\n@startuml\nab\rcde\n@enduml\nthis-is-garbage\n", "@startuml\nab\ncde\n@enduml\n"));
+        l.add(InputExpected.of("@startwhatever\nab\rcde\n@endwhatever", "@startwhatever\nab\ncde\n@endwhatever\n"));
+        return l;
+    }
+
+    @ParameterizedTest
+    @MethodSource("subsequentStartAndEndMarks")
+    void should_readSubsequentDiagram_handle_correctly_start_and_end_marks(InputExpected inputExpected) throws IOException {
+        pipe = new Pipe(option, null, new ByteArrayInputStream(inputExpected.getInput().getBytes(UTF_8)), UTF_8.name());
+
+        String actual = pipe.readSubsequentDiagram();
 
         assertThat(actual).isEqualTo(inputExpected.getExpected());
     }
@@ -219,81 +286,8 @@ class PipeTest {
         assertThat(option.getFileFormatOption().getFileFormat()).isEqualTo(FileFormat.PNG);
     }
 
-    @Test
-    void should_readOneLine_returns_null_if_no_input() throws IOException {
-        pipe = new Pipe(option, null, new ByteArrayInputStream(new byte[0]), UTF_8.toString());
-
-        String result = pipe.readOneLine();
-
-        assertThat(result).isNull();
-    }
-
-    @ParameterizedTest
-    @ValueSource(strings = {"\rab\nc\n", "\ra\rb\r\nc\n", "ab\n\rc"})
-    void should_readOneLine_ignore_carriage_return_and_stop_at_line_feed(String input) throws IOException {
-        pipe = new Pipe(option, null, new ByteArrayInputStream(input.getBytes(UTF_8)), UTF_8.name());
-
-        String actual = pipe.readOneLine();
-
-        assertThat(actual).isEqualTo("ab");
-    }
-
-    @Test
-    void should_readOneLine_return_empty_string_if_line_feed_is_the_first_character() throws IOException {
-        pipe = new Pipe(option, null, new ByteArrayInputStream("\n".getBytes(UTF_8)), UTF_8.name());
-
-        String actual = pipe.readOneLine();
-
-        assertThat(actual).isEqualTo("");
-    }
-
-    @Test
-    void should_readOneLine_use_the_default_charset_if_not_provided() throws IOException {
-        pipe = new Pipe(option, null, new ByteArrayInputStream("ab\n".getBytes(Charset.defaultCharset())), null);
-
-        String actual = pipe.readOneLine();
-
-        assertThat(actual).isEqualTo("ab");
-    }
-
-    @Test
-    void should_readOneLine_use_provided_charset() throws IOException {
-        pipe = new Pipe(option, null, new ByteArrayInputStream("\u2620\n".getBytes(UTF_8)), UTF_8.name());
-
-        String actual = pipe.readOneLine();
-
-        assertThat(actual).isEqualTo("\u2620");
-    }
-
-    static class InputExpected {
-        private final String input;
-        private final String expected;
-
-
-        public InputExpected(String input, String expected) {
-            this.input = input;
-            this.expected = expected;
-        }
-
-        public static InputExpected of(String input, String expected) {
-            return new InputExpected(input, expected);
-        }
-
-        public String getInput() {
-            return input;
-        }
-
-        public String getExpected() {
-            return expected;
-        }
-
-        @Override
-        public String toString() {
-            return "i:'" + input + "', e='" + expected + "'";
-        }
-    }
-
     static class TestCase {
+
         private final String options;
         private final String input;
         private final String expectedOut;
@@ -344,6 +338,34 @@ class PipeTest {
             return "o:'" + options + "', i:'" + input + "', e-out='" + expectedOut + "', e-err='" + expectedHasErrors + "', e-nodata='" + expectedIsNoData + "'";
         }
 
+    }
+
+    static class InputExpected {
+        private final String input;
+        private final String expected;
+
+
+        public InputExpected(String input, String expected) {
+            this.input = input;
+            this.expected = expected;
+        }
+
+        public static InputExpected of(String input, String expected) {
+            return new InputExpected(input, expected);
+        }
+
+        public String getInput() {
+            return input;
+        }
+
+        public String getExpected() {
+            return expected;
+        }
+
+        @Override
+        public String toString() {
+            return "i:'" + input + "', e='" + expected + "'";
+        }
     }
 
     enum Verification {
