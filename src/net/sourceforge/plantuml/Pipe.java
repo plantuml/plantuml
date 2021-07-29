@@ -150,7 +150,7 @@ public class Pipe {
 		return s == null || s.startsWith("@end");
 	}
 
-	private String readOneDiagram() throws IOException {
+	String readOneDiagram() throws IOException {
 		final StringBuilder sb = new StringBuilder();
 		while (true) {
 			final String s = readOneLine();
@@ -176,7 +176,7 @@ public class Pipe {
 		return source;
 	}
 
-	private void manageFormat(String s) {
+	void manageFormat(String s) {
 		if (s.contains("png")) {
 			option.setFileFormatOption(new FileFormatOption(FileFormat.PNG));
 		} else if (s.contains("svg")) {
@@ -184,7 +184,7 @@ public class Pipe {
 		}
 	}
 
-	private String readOneLine() throws IOException {
+	String readOneLine() throws IOException {
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		while (true) {
 			final int read = is.read();
