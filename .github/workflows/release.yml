@@ -10,7 +10,7 @@ on:
 
 env:
   RELEASE_TAG: ${{ github.event.release.tag_name }}
-  
+
 jobs:
   build_and_upload_jar:
     runs-on: ubuntu-latest
@@ -26,11 +26,12 @@ jobs:
         run: |
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git config user.name  'github-actions[bot]'
-          
+
       - name: Setup Java
         uses: actions/setup-java@v2.1.0
         with:
           java-version: 8
+          distribution: 'adopt'
 
       # If this run stores a new cache then the next run will not be able to use it because this is a tag checkout :-(
       # But a cache already created on the default branch (by the CI workflow) will be loaded here.
@@ -42,7 +43,7 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-
-        
+
       # The POM version is usually a -SNAPSHOT at this point so we set it to RELEASE_TAG.
       - name: Set POM version
         run: mvn --batch-mode versions:set "-DnewVersion=${RELEASE_TAG}"
@@ -59,7 +60,7 @@ jobs:
         run: |
           # upload_url with trailing "{..." removed
           upload_url="$(echo '${{ github.event.release.upload_url }}' | sed 's/{.*//' )"
-          
+
           http_code=$(curl \
             --url "${upload_url}?name=plantuml-${RELEASE_TAG}.jar" \
             --header 'Accept: application/vnd.github.v3+json' \
@@ -69,8 +70,8 @@ jobs:
             --silent \
             --output target/response.json \
             --write-out '%{http_code}')
-          
+
           echo "Server response ${http_code}:"
           cat target/response.json
-          
+
           [ ${http_code} -eq 201 ] || exit 1
