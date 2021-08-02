@@ -35,38 +35,6 @@
  */
 package net.sourceforge.plantuml.swing;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Image;
-import java.awt.RenderingHints;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.prefs.Preferences;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
-import javax.swing.ListModel;
-import javax.swing.SwingUtilities;
-import javax.swing.WindowConstants;
-
 import net.sourceforge.plantuml.GeneratedImage;
 import net.sourceforge.plantuml.ImageSelection;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
@@ -75,15 +43,25 @@ import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.version.PSystemVersion;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.prefs.Preferences;
+
 import static net.sourceforge.plantuml.ugraphic.ImageBuilder.plainPngBuilder;
 
-class ImageWindow2 extends JFrame {
+class ImageWindow extends JFrame {
 
-	private final static Preferences prefs = Preferences.userNodeForPackage(ImageWindow2.class);
+	private final static Preferences prefs = Preferences.userNodeForPackage(ImageWindow.class);
 	private final static String KEY_ZOOM_FIT = "zoomfit";
 	private final static String KEY_WIDTH_FIT = "widthfit";
 
-	private SimpleLine2 simpleLine2;
+	private SimpleLine simpleLine;
 	private final JScrollPane scrollPane;
 	private final JButton next = new JButton("Next");
 	private final JButton copy = new JButton("Copy");
@@ -92,7 +70,7 @@ class ImageWindow2 extends JFrame {
 	private final JCheckBox widthFitButt = new JCheckBox("Width fit");
 	private final JButton zoomMore = new JButton("+");
 	private final JButton zoomLess = new JButton("-");
-	private final MainWindow2 main;
+	private final MainWindow main;
 
 	private final ListModel listModel;
 	private int index;
@@ -106,10 +84,10 @@ class ImageWindow2 extends JFrame {
 
 	private int startX, startY;
 
-	public ImageWindow2(SimpleLine2 simpleLine, final MainWindow2 main, ListModel listModel, int index) {
+	public ImageWindow(SimpleLine simpleLine, final MainWindow main, ListModel listModel, int index) {
 		super(simpleLine.toString());
 		setIconImage(PSystemVersion.getPlantumlSmallIcon2());
-		this.simpleLine2 = simpleLine;
+		this.simpleLine = simpleLine;
 		this.listModel = listModel;
 		this.index = index;
 		this.main = main;
@@ -180,7 +158,7 @@ class ImageWindow2 extends JFrame {
 			@Override
 			public void windowClosing(WindowEvent e) {
 				super.windowClosing(e);
-				main.closing(ImageWindow2.this);
+				main.closing(ImageWindow.this);
 			}
 		});
 
@@ -205,7 +183,16 @@ class ImageWindow2 extends JFrame {
 		this.setFocusable(true);
 		this.addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent evt) {
-				if (evt.isControlDown() && evt.getKeyCode() == KeyEvent.VK_RIGHT) {
+				if (evt.isControlDown() && (evt.getKeyCode() == KeyEvent.VK_PLUS || evt.getKeyCode() == KeyEvent.VK_ADD)) {
+					zoomFactor++;
+					refreshImage(false);
+				} else if (evt.isControlDown() && (evt.getKeyCode() == KeyEvent.VK_MINUS || evt.getKeyCode() == KeyEvent.VK_SUBTRACT)) {
+					zoomFactor--;
+					refreshImage(false);
+				} else if (evt.isControlDown() && (evt.getKeyCode() == KeyEvent.VK_0 || evt.getKeyCode() == KeyEvent.VK_NUMPAD0)) {
+					zoomFactor = 0;
+					refreshImage(false);
+				} else if (evt.isControlDown() && evt.getKeyCode() == KeyEvent.VK_RIGHT) {
 					next();
 				} else if (evt.isControlDown() && evt.getKeyCode() == KeyEvent.VK_LEFT) {
 					previous();
@@ -229,7 +216,6 @@ class ImageWindow2 extends JFrame {
 				}
 			}
 		});
-
 	}
 
 	private void next() {
@@ -285,22 +271,22 @@ class ImageWindow2 extends JFrame {
 		if (index > listModel.getSize() - 1) {
 			index = listModel.getSize() - 1;
 		}
-		simpleLine2 = (SimpleLine2) listModel.getElementAt(index);
-		setTitle(simpleLine2.toString());
+		simpleLine = (SimpleLine) listModel.getElementAt(index);
+		setTitle(simpleLine.toString());
 		refreshImage(false);
 	}
 
 	private void refreshSimpleLine() {
-		for (SimpleLine2 line : main.getCurrentDirectoryListing2()) {
-			if (line.getFile().equals(simpleLine2.getFile())) {
-				simpleLine2 = line;
-				setTitle(simpleLine2.toString());
+		for (SimpleLine line : main.getCurrentDirectoryListing2()) {
+			if (line.getFile().equals(simpleLine.getFile())) {
+				simpleLine = line;
+				setTitle(simpleLine.toString());
 			}
 		}
 	}
 
 	private ScrollablePicture buildScrollablePicture() {
-		final GeneratedImage generatedImage = simpleLine2.getGeneratedImage();
+		final GeneratedImage generatedImage = simpleLine.getGeneratedImage();
 		if (generatedImage == null) {
 			return null;
 		}
@@ -333,7 +319,7 @@ class ImageWindow2 extends JFrame {
 				e.printStackTrace();
 			}
 		}
-		final ImageIcon imageIcon = new ImageIcon(image, simpleLine2.toString());
+		final ImageIcon imageIcon = new ImageIcon(image, simpleLine.toString());
 		final ScrollablePicture scrollablePicture = new ScrollablePicture(imageIcon, 1);
 
 		scrollablePicture.addMouseListener(new MouseAdapter() {
@@ -376,7 +362,7 @@ class ImageWindow2 extends JFrame {
 	}
 
 	private void copy() {
-		final GeneratedImage generatedImage = simpleLine2.getGeneratedImage();
+		final GeneratedImage generatedImage = simpleLine.getGeneratedImage();
 		if (generatedImage == null) {
 			return;
 		}
@@ -386,8 +372,8 @@ class ImageWindow2 extends JFrame {
 		Toolkit.getDefaultToolkit().getSystemClipboard().setContents(imgSel, null);
 	}
 
-	public SimpleLine2 getSimpleLine() {
-		return simpleLine2;
+	public SimpleLine getSimpleLine() {
+		return simpleLine;
 	}
 
 	private int v1;
@@ -416,7 +402,7 @@ class ImageWindow2 extends JFrame {
 	}
 
 	private boolean isError() {
-		return simpleLine2.getGeneratedImage() != null && simpleLine2.getGeneratedImage().lineErrorRaw() != -1;
+		return simpleLine.getGeneratedImage() != null && simpleLine.getGeneratedImage().lineErrorRaw() != -1;
 
 	}
 

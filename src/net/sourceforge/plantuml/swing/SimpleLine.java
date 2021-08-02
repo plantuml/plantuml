@@ -41,21 +41,21 @@ import java.util.concurrent.Future;
 
 import net.sourceforge.plantuml.GeneratedImage;
 
-class SimpleLine2 implements Comparable<SimpleLine2> {
+class SimpleLine implements Comparable<SimpleLine> {
 
 	private final File file;
 	private final GeneratedImage generatedImage;
 	private final Future<List<GeneratedImage>> future;
 
-	public static SimpleLine2 fromFuture(File file, Future<List<GeneratedImage>> future) {
-		return new SimpleLine2(file, null, future);
+	public static SimpleLine fromFuture(File file, Future<List<GeneratedImage>> future) {
+		return new SimpleLine(file, null, future);
 	}
 
-	public static SimpleLine2 fromGeneratedImage(File file, GeneratedImage generatedImage) {
-		return new SimpleLine2(file, generatedImage, null);
+	public static SimpleLine fromGeneratedImage(File file, GeneratedImage generatedImage) {
+		return new SimpleLine(file, generatedImage, null);
 	}
 
-	private SimpleLine2(File file, GeneratedImage generatedImage, Future<List<GeneratedImage>> future) {
+	private SimpleLine(File file, GeneratedImage generatedImage, Future<List<GeneratedImage>> future) {
 		this.generatedImage = generatedImage;
 		this.file = file;
 		this.future = future;
@@ -84,7 +84,7 @@ class SimpleLine2 implements Comparable<SimpleLine2> {
 		return future;
 	}
 
-	public int compareTo(SimpleLine2 other) {
+	public int compareTo(SimpleLine other) {
 		return toString().compareTo(other.toString());
 	}
 

@@ -35,59 +35,30 @@
  */
 package net.sourceforge.plantuml.swing;
 
-import java.awt.BorderLayout;
-import java.awt.Frame;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.Vector;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
-import java.util.prefs.Preferences;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
-import javax.swing.ListModel;
-import javax.swing.SwingUtilities;
-import javax.swing.Timer;
-import javax.swing.border.CompoundBorder;
-
 import net.sourceforge.plantuml.DirWatcher2;
 import net.sourceforge.plantuml.GeneratedImage;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.Option;
 import net.sourceforge.plantuml.version.PSystemVersion;
 
-public class MainWindow2 extends JFrame {
+import javax.swing.Timer;
+import javax.swing.*;
+import javax.swing.border.CompoundBorder;
+import java.awt.*;
+import java.awt.event.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+import java.util.*;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+import java.util.prefs.Preferences;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-	final private static Preferences prefs = Preferences.userNodeForPackage(MainWindow2.class);
+public class MainWindow extends JFrame {
+
+	final private static Preferences prefs = Preferences.userNodeForPackage(MainWindow.class);
 	final private static String KEY_DIR = "cur";
 	final private static String KEY_PATTERN = "pat";
 
@@ -97,8 +68,8 @@ public class MainWindow2 extends JFrame {
 	private final JTextField extensions = new JTextField();
 	private final int period = 300;
 
-	final private List<SimpleLine2> currentDirectoryListing2 = new ArrayList<>();
-	final private Set<ImageWindow2> openWindows2 = new HashSet<>();
+	final private List<SimpleLine> currentDirectoryListing2 = new ArrayList<>();
+	final private Set<ImageWindow> openWindows2 = new HashSet<>();
 	final private Option option;
 
 	private DirWatcher2 dirWatcher;
@@ -155,7 +126,7 @@ public class MainWindow2 extends JFrame {
 		return Option.getPattern();
 	}
 
-	public MainWindow2(Option option, File arg) {
+	public MainWindow(Option option, File arg) {
 		super(getDirectory(arg).getAbsolutePath());
 		System.setProperty("PLANTUML_SECURITY_PROFILE", "UNSECURE");
 		final File dir = getDirectory(arg);
@@ -190,7 +161,7 @@ public class MainWindow2 extends JFrame {
 				try {
 					if (e.getClickCount() == 2) {
 						final int index = jList1.locationToIndex(e.getPoint());
-						doubleClick((SimpleLine2) jList1.getModel().getElementAt(index), jList1.getModel(), index);
+						doubleClick((SimpleLine) jList1.getModel().getElementAt(index), jList1.getModel(), index);
 					}
 				} catch (Exception ex) {
 
@@ -209,7 +180,7 @@ public class MainWindow2 extends JFrame {
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					final int index = jList1.getSelectedIndex();
-					doubleClick((SimpleLine2) jList1.getModel().getElementAt(index), jList1.getModel(), index);
+					doubleClick((SimpleLine) jList1.getModel().getElementAt(index), jList1.getModel(), index);
 				}
 			}
 
@@ -315,8 +286,8 @@ public class MainWindow2 extends JFrame {
 		jList1.setVisible(true);
 	}
 
-	private void doubleClick(SimpleLine2 simpleLine, ListModel listModel, int index) {
-		for (ImageWindow2 win : openWindows2) {
+	private void doubleClick(SimpleLine simpleLine, ListModel listModel, int index) {
+		for (ImageWindow win : openWindows2) {
 			if (win.getSimpleLine().equals(simpleLine)) {
 				win.setVisible(true);
 				win.setExtendedState(Frame.NORMAL);
@@ -324,7 +295,7 @@ public class MainWindow2 extends JFrame {
 			}
 		}
 		if (simpleLine.getGeneratedImage() != null) {
-			openWindows2.add(new ImageWindow2(simpleLine, this, listModel, index));
+			openWindows2.add(new ImageWindow(simpleLine, this, listModel, index));
 		}
 	}
 
@@ -356,19 +327,19 @@ public class MainWindow2 extends JFrame {
 			final File file = ent.getKey();
 			removeAllThatUseThisFile(file);
 			final Future<List<GeneratedImage>> future = ent.getValue();
-			final SimpleLine2 simpleLine = SimpleLine2.fromFuture(file, future);
+			final SimpleLine simpleLine = SimpleLine.fromFuture(file, future);
 			currentDirectoryListing2.add(simpleLine);
 			changed = true;
 		}
 
-		for (SimpleLine2 line : new ArrayList<>(currentDirectoryListing2)) {
+		for (SimpleLine line : new ArrayList<>(currentDirectoryListing2)) {
 			if (line.pendingAndFinished()) {
 				currentDirectoryListing2.remove(line);
 				changed = true;
 				final Future<List<GeneratedImage>> future = line.getFuture();
 				for (GeneratedImage im : future.get()) {
 					mayRefreshImageWindow(im.getPngFile());
-					final SimpleLine2 simpleLine = SimpleLine2.fromGeneratedImage(line.getFile(), im);
+					final SimpleLine simpleLine = SimpleLine.fromGeneratedImage(line.getFile(), im);
 					currentDirectoryListing2.add(simpleLine);
 				}
 			}
@@ -378,8 +349,8 @@ public class MainWindow2 extends JFrame {
 	}
 
 	private void removeAllThatUseThisFile(File file) {
-		for (final Iterator<SimpleLine2> it = currentDirectoryListing2.iterator(); it.hasNext();) {
-			final SimpleLine2 line = it.next();
+		for (final Iterator<SimpleLine> it = currentDirectoryListing2.iterator(); it.hasNext();) {
+			final SimpleLine line = it.next();
 			if (line.getFile().equals(file)) {
 				it.remove();
 			}
@@ -387,7 +358,7 @@ public class MainWindow2 extends JFrame {
 	}
 
 	private void mayRefreshImageWindow(File pngFile) {
-		for (ImageWindow2 win : openWindows2) {
+		for (ImageWindow win : openWindows2) {
 			if (win.getSimpleLine().getGeneratedImage() == null) {
 				continue;
 			}
@@ -398,14 +369,14 @@ public class MainWindow2 extends JFrame {
 
 	}
 
-	public void closing(ImageWindow2 imageWindow) {
+	public void closing(ImageWindow imageWindow) {
 		final boolean ok = openWindows2.remove(imageWindow);
 		if (ok == false) {
 			throw new IllegalStateException();
 		}
 	}
 
-	public List<SimpleLine2> getCurrentDirectoryListing2() {
+	public List<SimpleLine> getCurrentDirectoryListing2() {
 		return Collections.unmodifiableList(currentDirectoryListing2);
 	}
 
