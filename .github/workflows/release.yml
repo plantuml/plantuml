@@ -31,7 +31,7 @@ jobs:
         uses: actions/setup-java@v2.1.0
         with:
           java-version: 8
-          distribution: 'adopt'
+          distribution: 'temurin'
 
       # If this run stores a new cache then the next run will not be able to use it because this is a tag checkout :-(
       # But a cache already created on the default branch (by the CI workflow) will be loaded here.

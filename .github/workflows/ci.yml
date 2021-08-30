@@ -18,7 +18,7 @@ jobs:
         uses: actions/setup-java@v2.1.0
         with:
           java-version: 8
-          distribution: 'adopt'
+          distribution: 'temurin'
 
       - name: Cache local Maven repository
         uses: actions/cache@v2
