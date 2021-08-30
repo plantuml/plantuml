@@ -32,26 +32,27 @@
  * Original Author:  Arnaud Roques
  *
  */
-package net.sourceforge.plantuml.nwdiag.legacy;
+package net.sourceforge.plantuml.nwdiag.next;
 
 import java.util.List;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.nwdiag.core.Network;
+import net.sourceforge.plantuml.nwdiag.core.NwGroup;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class GridTextBlockDecorated extends GridTextBlockSimple {
+public class GridTextBlockDecoratedNext extends GridTextBlockSimpleNext {
 
 	public static final int NETWORK_THIN = 5;
 
-	private final List<NwGroupLegacy> groups;
-	private final List<NetworkLegacy> networks;
+	private final List<NwGroup> groups;
+	private final List<Network> networks;
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public GridTextBlockDecorated(int lines, int cols, List groups, List networks,
+	public GridTextBlockDecoratedNext(int lines, int cols, List<NwGroup> groups, List<Network> networks,
 			ISkinParam skinparam) {
 		super(lines, cols, skinparam);
 		this.groups = groups;
@@ -60,7 +61,7 @@ public class GridTextBlockDecorated extends GridTextBlockSimple {
 
 	@Override
 	protected void drawGrid(UGraphic ug) {
-		for (NwGroupLegacy group : groups) {
+		for (NwGroup group : groups) {
 			drawGroups(ug, group, skinparam);
 		}
 		drawNetworkTube(ug);
@@ -83,7 +84,7 @@ public class GridTextBlockDecorated extends GridTextBlockSimple {
 
 	}
 
-	private void drawGroups(UGraphic ug, NwGroupLegacy group, ISkinParam skinParam) {
+	private void drawGroups(UGraphic ug, NwGroup group, ISkinParam skinParam) {
 		final StringBounder stringBounder = ug.getStringBounder();
 
 		MinMax size = null;
@@ -93,7 +94,7 @@ public class GridTextBlockDecorated extends GridTextBlockSimple {
 			double x = 0;
 			for (int j = 0; j < data.getNbCols(); j++) {
 				final double colWidth = colWidth(stringBounder, j);
-				final LinkedElement element = data.get(i, j);
+				final LinkedElementNext element = data.get(i, j);
 				if (element != null && group.matches(element)) {
 					final MinMax minMax = element.getMinMax(stringBounder, colWidth, lineHeight)
 							.translate(new UTranslate(x, y));
@@ -109,9 +110,9 @@ public class GridTextBlockDecorated extends GridTextBlockSimple {
 
 	}
 
-	private boolean isThereALink(int j, NetworkLegacy network) {
+	private boolean isThereALink(int j, Network network) {
 		for (int i = 0; i < data.getNbLines(); i++) {
-			final LinkedElement element = data.get(i, j);
+			final LinkedElementNext element = data.get(i, j);
 			if (element != null && element.isLinkedTo(network)) {
 				return true;
 			}
@@ -124,7 +125,7 @@ public class GridTextBlockDecorated extends GridTextBlockSimple {
 		final StringBounder stringBounder = ug.getStringBounder();
 		double y = 0;
 		for (int i = 0; i < data.getNbLines(); i++) {
-			final NetworkLegacy network = getNetwork(i);
+			final Network network = getNetwork(i);
 			computeMixMax(data.getLine(i), stringBounder, network);
 
 			final URectangle rect = new URectangle(network.getXmax() - network.getXmin(), NETWORK_THIN);
@@ -143,7 +144,7 @@ public class GridTextBlockDecorated extends GridTextBlockSimple {
 		}
 	}
 
-	private void computeMixMax(LinkedElement line[], StringBounder stringBounder, NetworkLegacy network) {
+	private void computeMixMax(LinkedElementNext line[], StringBounder stringBounder, Network network) {
 		double x = 0;
 		double xmin = network.isFullWidth() ? 0 : -1;
 		double xmax = 0;
@@ -161,30 +162,8 @@ public class GridTextBlockDecorated extends GridTextBlockSimple {
 
 	}
 
-	private NetworkLegacy getNetwork(int i) {
+	private Network getNetwork(int i) {
 		return networks.get(i);
 	}
 
-	public void checkGroups() {
-		for (int i = 0; i < groups.size(); i++) {
-			for (int j = i + 1; j < groups.size(); j++) {
-				final NwGroupLegacy group1 = groups.get(i);
-				final NwGroupLegacy group2 = groups.get(j);
-				if (group1.size() == 0 || group2.size() == 0) {
-					continue;
-				}
-				if (group1.getNetwork() != group2.getNetwork()) {
-					continue;
-				}
-				final Footprint footprint1 = getFootprint(group1);
-				final Footprint footprint2 = getFootprint(group2);
-				final Footprint inter = footprint1.intersection(footprint2);
-				if (inter != null) {
-					data.swapCols(inter.getMin(), inter.getMax());
-					return;
-				}
-			}
-		}
-
-	}
 }

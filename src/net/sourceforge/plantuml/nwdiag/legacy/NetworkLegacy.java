@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.nwdiag.legacy;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import net.sourceforge.plantuml.nwdiag.core.NServer;
 import net.sourceforge.plantuml.nwdiag.core.Network;
 import net.sourceforge.plantuml.nwdiag.next.NStage;
 
@@ -51,11 +52,11 @@ public class NetworkLegacy extends Network {
 	}
 
 	public NetworkLegacy(NStage nstage, String name, int stage) {
-		super(nstage, name);
+		super(null, nstage, name);
 		this.stage = stage;
 	}
 
-	public String getAdress(NServerLegacy server) {
+	public String getAdress(NServer server) {
 		return localServers.get(server);
 	}
 
@@ -83,20 +84,5 @@ public class NetworkLegacy extends Network {
 		return stage;
 	}
 
-	private double xmin;
-	private double xmax;
-
-	public void setMinMax(double xmin, double xmax) {
-		this.xmin = xmin;
-		this.xmax = xmax;
-	}
-
-	public final double getXmin() {
-		return xmin;
-	}
-
-	public final double getXmax() {
-		return xmax;
-	}
 
 }

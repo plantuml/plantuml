@@ -152,9 +152,15 @@ public class HColorUtils {
 		return false;
 	}
 
-	public static HColor linear(HColor color1, HColor color2, int completion) {
+	public static HColor unlinear(HColor color1, HColor color2, int completion) {
+		if (completion == 0) {
+			return color1;
+		}
+		if (completion == 100) {
+			return color2;
+		}
 		if (color1 instanceof HColorSimple && color2 instanceof HColorSimple) {
-			return HColorSimple.linear((HColorSimple) color1, (HColorSimple) color2, completion);
+			return HColorSimple.unlinear((HColorSimple) color1, (HColorSimple) color2, completion);
 		}
 		return color1;
 	}

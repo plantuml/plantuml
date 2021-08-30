@@ -32,38 +32,60 @@
  * Original Author:  Arnaud Roques
  *
  */
-package net.sourceforge.plantuml.nwdiag.legacy;
+package net.sourceforge.plantuml.nwdiag.next;
 
-import net.sourceforge.plantuml.nwdiag.core.Network;
-import net.sourceforge.plantuml.nwdiag.core.NwGroup;
+public class NwArrayNext {
 
-public class NwGroupLegacy extends NwGroup {
+	private final LinkedElementNext data[][];
 
-	private final NetworkLegacy network;
-
-	@Override
-	public String toString() {
-		return getName() + " " + network + " " + names();
+	public NwArrayNext(int lines, int cols) {
+		this.data = new LinkedElementNext[lines][cols];
 	}
 
-	public NwGroupLegacy(String name, Network network) {
-		super(name);
-		this.network = (NetworkLegacy) network;
+	public int getNbLines() {
+		return data.length;
 	}
 
-	public int size() {
-		return names().size();
+	public int getNbCols() {
+		return data[0].length;
 	}
 
-	public boolean matches(LinkedElement tested) {
-		if (network != null && network != tested.getNetwork()) {
-			return false;
-		}
-		return names().contains(tested.getElement().getName());
+	public LinkedElementNext get(int i, int j) {
+		return data[i][j];
 	}
 
-	public final NetworkLegacy getNetwork() {
-		return network;
+	public LinkedElementNext[] getLine(int i) {
+		return data[i];
 	}
+
+	public void set(int i, int j, LinkedElementNext value) {
+		data[i][j] = value;
+	}
+
+//	public void swapCols(int col1, int col2) {
+//		if (col1 == col2) {
+//			throw new IllegalArgumentException();
+//		}
+//		for (int i = 0; i < getNbLines(); i++) {
+//			final LinkedElement tmp = data[i][col1];
+//			data[i][col1] = data[i][col2];
+//			data[i][col2] = tmp;
+//		}
+//
+//	}
+//
+//	public Footprint getFootprint(NwGroupLegacy group) {
+//		int min = Integer.MAX_VALUE;
+//		int max = Integer.MIN_VALUE;
+//		for (int i = 0; i < getNbLines(); i++) {
+//			for (int j = 0; j < getNbCols(); j++) {
+//				if (data[i][j] != null && group.matches(data[i][j])) {
+//					min = Math.min(min, j);
+//					max = Math.max(max, j);
+//				}
+//			}
+//		}
+//		return new Footprint(min, max);
+//	}
 
 }

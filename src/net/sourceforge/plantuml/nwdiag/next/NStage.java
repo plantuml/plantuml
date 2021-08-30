@@ -34,8 +34,6 @@
  */
 package net.sourceforge.plantuml.nwdiag.next;
 
-import java.util.Objects;
-
 public class NStage implements Comparable<NStage> {
 
 	private final int number;

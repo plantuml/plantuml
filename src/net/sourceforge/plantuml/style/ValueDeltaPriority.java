@@ -35,89 +35,60 @@
  */
 package net.sourceforge.plantuml.style;
 
-public enum SName {
-	activity, //
-	activityBar, //
-	activityDiagram, //
-	actor, //
-	agent, //
-	archimate, //
-	arrow, //
-	artifact, //
-	boundary, //
-	box, //
-	boxless, //
-	caption, //
-	card, //
-	circle, //
-	classDiagram, //
-	class_, //
-	clickable, //
-	cloud, //
-	closed, //
-	collection, //
-	collections, //
-	component, //
-	componentDiagram, //
-	constraintArrow, //
-	control, //
-	database, //
-	delay, //
-	destroy, //
-	diamond, //
-	document, //
-	element, //
-	entity, //
-	file, //
-	folder, //
-	footer, //
-	frame, //
-	ganttDiagram, //
-	group, //
-	groupHeader, //
-	hexagon, //
-	highlight, //
-	header, //
-	interface_, //
-	jsonDiagram, //
-	gitDiagram, //
-	label, //
-	leafNode, //
-	legend, //
-	lifeLine, //
-	milestone, //
-	mindmapDiagram, //
-	node, //
-	note, //
-	objectDiagram, //
-	package_, //
-	participant, //
-	partition, //
-	person, //
-	queue, //
-	rectangle, //
-	reference, //
-	referenceHeader, //
-	root, //
-	rootNode, //
-	saltDiagram, //
-	separator, //
-	sequenceDiagram, //
-	stack, //
-	stateDiagram, //
-	stereotype, //
-	storage, //
-	swimlane, //
-	task, //
-	timeline, //
-	timingDiagram, //
-	title, //
-	unstartedTask, //
-	usecase, //
-	wbsDiagram, //
-	yamlDiagram; //
+import net.sourceforge.plantuml.ThemeStyle;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 
-	public static String depth(int level) {
-		return "depth(" + level + ")";
+public class ValueDeltaPriority implements Value {
+
+	private final Value orig;
+	private final int deltaPriority;
+
+	public ValueDeltaPriority(Value orig, int deltaPriority) {
+		this.orig = orig;
+		this.deltaPriority = deltaPriority;
 	}
+
+	@Override
+	public String asString() {
+		return orig.asString();
+	}
+
+	@Override
+	public HColor asColor(ThemeStyle themeStyle, HColorSet colorSet) {
+		return orig.asColor(themeStyle, colorSet);
+	}
+
+	@Override
+	public int asInt() {
+		return orig.asInt();
+	}		// TODO Auto-generated method stub
+
+
+	@Override
+	public double asDouble() {
+		return orig.asDouble();
+	}
+
+	@Override
+	public boolean asBoolean() {
+		return orig.asBoolean();
+	}
+
+	@Override
+	public int asFontStyle() {
+		return orig.asFontStyle();
+	}
+
+	@Override
+	public HorizontalAlignment asHorizontalAlignment() {
+		return orig.asHorizontalAlignment();
+	}
+
+	@Override
+	public int getPriority() {
+		return orig.getPriority() + deltaPriority;
+	}
+
 }

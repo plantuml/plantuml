@@ -133,7 +133,7 @@ public class Defines implements Truth {
 		return result;
 	}
 
-	public static Defines createWithMap(Map<String, String> init) {
+	private static Defines createWithMap(Map<String, String> init) {
 		final Defines result = createEmpty();
 		for (Map.Entry<String, String> ent : init.entrySet()) {
 			result.environment.put(ent.getKey(), ent.getValue());

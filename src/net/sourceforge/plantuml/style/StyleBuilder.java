@@ -71,11 +71,10 @@ public class StyleBuilder implements AutomaticCounter {
 		return skinParam;
 	}
 
-	// public Collection<StyleSignature> getAllStyleSignatures() {
-	// return Collections.unmodifiableCollection(styles.keySet());
-	// }
-
 	public Style createStyle(String name) {
+		if (name.contains("*")) {
+			throw new IllegalArgumentException();
+		}
 		name = name.toLowerCase();
 		final StyleSignature signature = new StyleSignature(name);
 		final Style result = styles.get(signature);
@@ -101,7 +100,10 @@ public class StyleBuilder implements AutomaticCounter {
 		return result;
 	}
 
-	public void put(StyleSignature styleName, Style newStyle) {
+	public void loadInternal(StyleSignature styleName, Style newStyle) {
+		if (styleName.isStarred()) {
+			throw new IllegalArgumentException();
+		}
 		this.styles.put(styleName, newStyle);
 	}
 
@@ -124,6 +126,31 @@ public class StyleBuilder implements AutomaticCounter {
 				result = ent.getValue();
 			} else {
 				result = result.mergeWith(ent.getValue());
+			}
+
+		}
+		return result;
+	}
+
+	public Style getMergedStyleSpecial(StyleSignature signature, int deltaPriority) {
+		boolean added = this.printedForLog.add(signature);
+		if (added) {
+			Log.info("Using style " + signature);
+		}
+		Style result = null;
+		for (Entry<StyleSignature, Style> ent : styles.entrySet()) {
+			final StyleSignature key = ent.getKey();
+			if (key.matchAll(signature) == false) {
+				continue;
+			}
+			Style tmp = ent.getValue();
+			if (key.isStarred()) {
+				tmp = tmp.deltaPriority(deltaPriority);
+			}
+			if (result == null) {
+				result = tmp;
+			} else {
+				result = result.mergeWith(tmp);
 			}
 
 		}

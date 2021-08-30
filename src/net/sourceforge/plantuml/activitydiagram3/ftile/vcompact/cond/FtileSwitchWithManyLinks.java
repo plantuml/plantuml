@@ -39,6 +39,7 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.activitydiagram3.Branch;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractConnection;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Arrows;
@@ -135,15 +136,19 @@ public class FtileSwitchWithManyLinks extends FtileSwitchWithDiamonds {
 			final Point2D ptD = getTranslateDiamond2(stringBounder).getTranslated(dimDiamond2.getPointD());
 			final Point2D p2;
 			final UPolygon arrow;
+			final Direction direction;
 			if (x1 < ptD.getX()) {
 				p2 = ptD;
 				arrow = Arrows.asToRight();
+				direction = Direction.RIGHT;
 			} else if (x1 > ptB.getX()) {
 				p2 = ptB;
 				arrow = Arrows.asToLeft();
+				direction = Direction.LEFT;
 			} else {
 				p2 = ptA;
 				arrow = Arrows.asToDown();
+				direction = Direction.DOWN;
 			}
 
 			final double x2 = p2.getX();
@@ -151,9 +156,14 @@ public class FtileSwitchWithManyLinks extends FtileSwitchWithDiamonds {
 
 			final Snake snake = Snake.create(arrowColor, arrow);
 			snake.addPoint(x1, y1);
-			snake.addPoint(x1, y2);
+			if (direction == Direction.LEFT && x2 > x1 - 10) {
+				snake.addPoint(x1, y2 - 8);
+				snake.addPoint(x1 + 12, y2 - 8);
+				snake.addPoint(x1 + 12, y2);
+			} else {
+				snake.addPoint(x1, y2);
+			}
 			snake.addPoint(x2, y2);
-
 			ug.draw(snake);
 		}
 

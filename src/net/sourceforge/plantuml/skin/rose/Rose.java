@@ -293,7 +293,7 @@ public class Rose {
 			return new ComponentRoseGroupingElse(styles == null ? null : styles[0],
 					getHtmlColor(param, stereotype, ColorParam.sequenceGroupBorder),
 					getUFont2(param, FontParam.SEQUENCE_GROUP), stringsToDisplay.get(0), param,
-					param.getBackgroundColor(true));
+					param.getBackgroundColor(true), roundCorner);
 		}
 		if (type == ComponentType.GROUPING_SPACE) {
 			return new ComponentRoseGroupingSpace(7);

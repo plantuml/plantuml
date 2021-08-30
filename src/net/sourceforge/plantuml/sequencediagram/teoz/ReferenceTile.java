@@ -95,8 +95,8 @@ public class ReferenceTile extends AbstractTile implements Tile {
 		strings = strings.add("ref");
 		strings = strings.addAll(reference.getStrings());
 
-		final Component comp = tileArguments.getSkin().createComponent(null, ComponentType.REFERENCE, null,
-				tileArguments.getSkinParam(), strings);
+		final Component comp = tileArguments.getSkin().createComponent(reference.getUsedStyles(),
+				ComponentType.REFERENCE, null, tileArguments.getSkinParam(), strings);
 		return comp;
 	}
 

@@ -276,10 +276,14 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlock,
 			group = new ULayoutGroup(
 					new PlacementStrategyVisibility(stringBounder, skinParam.getCircledCharacterRadius() + 3));
 			for (CharSequence cs : members) {
-				final Member att = (Member) cs;
-				final TextBlock bloc = createTextBlock(att);
-				final VisibilityModifier modifier = att.getVisibilityModifier();
-				group.add(getUBlock(modifier, att.getUrl()));
+				final TextBlock bloc = createTextBlock(cs);
+				if (cs instanceof EmbeddedDiagram) {
+					group.add(getUBlock(null, null));
+				} else {
+					final Member att = (Member) cs;
+					final VisibilityModifier modifier = att.getVisibilityModifier();
+					group.add(getUBlock(modifier, att.getUrl()));
+				}
 				group.add(bloc);
 			}
 		} else {

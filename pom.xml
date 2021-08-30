@@ -35,7 +35,7 @@
 
     <groupId>net.sourceforge.plantuml</groupId>
     <artifactId>plantuml</artifactId>
-    <version>1.2021.9-SNAPSHOT</version>
+    <version>1.2021.11-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>PlantUML</name>
@@ -62,7 +62,7 @@
 			<dependency>
 				<groupId>org.junit</groupId>
 				<artifactId>junit-bom</artifactId>
-				<version>5.7.2</version>
+				<version>5.7.1</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
@@ -74,13 +74,13 @@
         <dependency>
             <groupId>org.apache.ant</groupId>
             <artifactId>ant</artifactId>
-            <version>1.10.11</version>
+            <version>1.10.9</version>
             <scope>provided</scope>
         </dependency>
 		<dependency>
 			<groupId>org.assertj</groupId>
 			<artifactId>assertj-core</artifactId>
-			<version>3.20.2</version>
+			<version>3.19.0</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -163,7 +163,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-dependency-plugin</artifactId>
-                <version>3.2.0</version>
+                <version>3.1.2</version>
             </plugin>
             <plugin>
                 <artifactId>maven-source-plugin</artifactId>
@@ -179,7 +179,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.3.0</version>
+                <version>3.2.0</version>
                 <executions>
                     <execution>
                         <id>attach-javadocs</id>

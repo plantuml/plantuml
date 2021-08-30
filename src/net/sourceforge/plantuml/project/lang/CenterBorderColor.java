@@ -80,16 +80,9 @@ public class CenterBorderColor {
 		return style;
 	}
 
-	public CenterBorderColor linearTo(CenterBorderColor other, int completion) {
-		if (completion == 0) {
-			return this;
-		}
-		if (completion == 100) {
-			return other;
-		}
-
-		final HColor newCenter = HColorUtils.linear(this.center, other.center, completion);
-		final HColor newBorder = HColorUtils.linear(this.border, other.border, completion);
+	public CenterBorderColor unlinearTo(CenterBorderColor other, int completion) {
+		final HColor newCenter = HColorUtils.unlinear(this.center, other.center, completion);
+		final HColor newBorder = HColorUtils.unlinear(this.border, other.border, completion);
 
 		return new CenterBorderColor(newCenter, newBorder, style);
 	}

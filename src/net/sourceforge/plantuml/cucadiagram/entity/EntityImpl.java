@@ -155,7 +155,8 @@ final public class EntityImpl implements ILeaf, IGroup {
 
 	EntityImpl(Ident ident, Code code, EntityFactory entityFactory, Bodier bodier, IGroup parentContainer,
 			LeafType leafType, String namespaceSeparator, int rawLayout) {
-		this(Objects.requireNonNull(ident), entityFactory, code, bodier, parentContainer, namespaceSeparator, rawLayout);
+		this(Objects.requireNonNull(ident), entityFactory, code, bodier, parentContainer, namespaceSeparator,
+				rawLayout);
 		// System.err.println("ID for leaf=" + code + " " + ident);
 		// ident.checkSameAs(code, namespaceSeparator);
 		this.leafType = leafType;
@@ -163,7 +164,8 @@ final public class EntityImpl implements ILeaf, IGroup {
 
 	EntityImpl(Ident ident, Code code, EntityFactory entityFactory, Bodier bodier, IGroup parentContainer,
 			GroupType groupType, Code namespace, String namespaceSeparator, int rawLayout) {
-		this(Objects.requireNonNull(ident), entityFactory, code, bodier, parentContainer, namespaceSeparator, rawLayout);
+		this(Objects.requireNonNull(ident), entityFactory, code, bodier, parentContainer, namespaceSeparator,
+				rawLayout);
 		// System.err.println("ID for group=" + code + " " + ident);
 		ident.checkSameAs(code, namespaceSeparator, entityFactory.namespaceSeparator);
 		this.groupType = groupType;
@@ -630,7 +632,7 @@ final public class EntityImpl implements ILeaf, IGroup {
 			if (entityFactory.isRemoved(this)) {
 				return true;
 			}
-			if (getLeafsDirect().size() == 0) {
+			if (getLeafsDirect().size() == 0 && getChildren().size() == 0) {
 				return false;
 			}
 			for (ILeaf leaf : getLeafsDirect()) {

@@ -81,6 +81,7 @@ public class DotStringFactory implements Moveable {
 	private final UmlDiagramType umlDiagramType;
 	private final ISkinParam skinParam;
 	private final DotMode dotMode;
+	private DotSplines dotSplines;
 
 	private final StringBounder stringBounder;
 
@@ -190,12 +191,13 @@ public class DotStringFactory implements Moveable {
 		// SvekUtils.println(sb);
 		// }
 
-		final DotSplines dotSplines = skinParam.getDotSplines();
+		dotSplines = skinParam.getDotSplines();
 		if (dotSplines == DotSplines.POLYLINE) {
 			sb.append("splines=polyline;");
 			SvekUtils.println(sb);
 		} else if (dotSplines == DotSplines.ORTHO) {
 			sb.append("splines=ortho;");
+			sb.append("forcelabels=true;");
 			SvekUtils.println(sb);
 		}
 
@@ -208,14 +210,14 @@ public class DotStringFactory implements Moveable {
 
 		root.printCluster1(sb, bibliotekon.allLines(), stringBounder);
 		for (SvekLine line : bibliotekon.lines0()) {
-			line.appendLine(getGraphvizVersion(), sb, dotMode);
+			line.appendLine(getGraphvizVersion(), sb, dotMode, dotSplines);
 		}
 		root.fillRankMin(rankMin);
 		root.printCluster2(sb, bibliotekon.allLines(), stringBounder, dotMode, getGraphvizVersion(), umlDiagramType);
 		printMinRanking(sb);
 
 		for (SvekLine line : bibliotekon.lines1()) {
-			line.appendLine(getGraphvizVersion(), sb, dotMode);
+			line.appendLine(getGraphvizVersion(), sb, dotMode, dotSplines);
 		}
 		SvekUtils.println(sb);
 		sb.append("}");

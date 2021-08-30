@@ -109,7 +109,12 @@ public abstract class RegexComposed implements IRegex {
 	}
 
 	public boolean match(StringLocated s) {
-		return getPattern2().matcher(s.getString()).find();
+		final String tmp = s.getString();
+		final Matcher2 matcher = getPattern2().matcher(tmp);
+		if (matcher == null) {
+			return false;
+		}
+		return matcher.find();
 	}
 
 	final public String getPattern() {

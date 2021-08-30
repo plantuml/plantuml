@@ -35,26 +35,55 @@
  */
 package net.sourceforge.plantuml.swing;
 
-import net.sourceforge.plantuml.DirWatcher2;
-import net.sourceforge.plantuml.GeneratedImage;
-import net.sourceforge.plantuml.Log;
-import net.sourceforge.plantuml.Option;
-import net.sourceforge.plantuml.version.PSystemVersion;
-
-import javax.swing.Timer;
-import javax.swing.*;
-import javax.swing.border.CompoundBorder;
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.BorderLayout;
+import java.awt.Frame;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
-import java.util.*;
+import java.util.Map;
+import java.util.Set;
+import java.util.Vector;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.prefs.Preferences;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.ListModel;
+import javax.swing.SwingUtilities;
+import javax.swing.Timer;
+import javax.swing.border.CompoundBorder;
+
+import net.sourceforge.plantuml.DirWatcher2;
+import net.sourceforge.plantuml.GeneratedImage;
+import net.sourceforge.plantuml.Log;
+import net.sourceforge.plantuml.Option;
+import net.sourceforge.plantuml.version.PSystemVersion;
 
 public class MainWindow extends JFrame {
 

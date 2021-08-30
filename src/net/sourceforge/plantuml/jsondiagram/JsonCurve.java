@@ -41,6 +41,7 @@ import h.ST_splines;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPath;
+import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
@@ -112,7 +113,7 @@ public class JsonCurve {
 	public void drawSpot(UGraphic ug) {
 		final double size = 3;
 		ug = ug.apply(new UTranslate(getVeryFirst()).compose(new UTranslate(-size, -size)));
-		ug.draw(new UEllipse(2 * size, 2 * size));
+		ug.apply(new UStroke()).draw(new UEllipse(2 * size, 2 * size));
 	}
 
 	private Point2D getVeryFirst() {

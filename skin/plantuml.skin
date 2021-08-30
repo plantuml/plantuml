@@ -348,3 +348,12 @@ jsonDiagram {
 }
 
 
+timingDiagram {
+	arrow {
+	    LineThickness 1.5
+	}
+	constraintArrow {
+	    LineThickness 1.5
+	}
+}
+

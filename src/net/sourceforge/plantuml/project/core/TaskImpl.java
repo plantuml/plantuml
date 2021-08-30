@@ -90,10 +90,7 @@ public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 	}
 
 	public int getLoadAt(Day instant) {
-		if (pausedDay.contains(instant)) {
-			return 0;
-		}
-		if (pausedDayOfWeek(instant)) {
+		if (isPaused(instant)) {
 			return 0;
 		}
 
@@ -102,6 +99,16 @@ public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 			result = PlanUtils.multiply(defaultPlan, getRessourcePlan());
 		}
 		return result.getLoadAt(instant);
+	}
+
+	private boolean isPaused(Day instant) {
+		if (pausedDay.contains(instant)) {
+			return true;
+		}
+		if (pausedDayOfWeek(instant)) {
+			return true;
+		}
+		return false;
 	}
 
 	private boolean pausedDayOfWeek(Day instant) {
@@ -116,6 +123,9 @@ public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 	public int loadForResource(Resource res, Day instant) {
 		if (resources.keySet().contains(res) && instant.compareTo(getStart()) >= 0
 				&& instant.compareTo(getEnd()) <= 0) {
+			if (isPaused(instant)) {
+				return 0;
+			}
 			if (res.isClosedAt(instant)) {
 				return 0;
 			}
@@ -242,7 +252,7 @@ public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 		if (colors.length == 1) {
 			return colors[0];
 		}
-		return colors[0].linearTo(colors[1], completion);
+		return colors[0].unlinearTo(colors[1], completion);
 	}
 
 	public final int getCompletion() {

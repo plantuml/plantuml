@@ -68,6 +68,18 @@ public class Style {
 		this.signature = signature;
 	}
 
+	public Style deltaPriority(int delta) {
+		if (signature.isStarred() == false) {
+			throw new UnsupportedOperationException();
+		}
+		final EnumMap<PName, Value> copy = new EnumMap<PName, Value>(PName.class);
+		for (Entry<PName, Value> ent : this.map.entrySet()) {
+			copy.put(ent.getKey(), new ValueDeltaPriority(ent.getValue(), delta));
+		}
+		return new Style(this.signature, copy);
+
+	}
+
 	public void printMe() {
 		if (map.size() == 0) {
 			return;
@@ -110,11 +122,20 @@ public class Style {
 			}
 		}
 		return new Style(this.signature.mergeWith(other.getSignature()), both);
-		// if (this.name.equals(other.name)) {
-		// return new Style(this.kind.add(other.kind), this.name, both);
-		// }
-		// return new Style(this.kind.add(other.kind), this.name + "," + other.name,
-		// both);
+	}
+
+	private Style mergeIfUnknownWith(Style other) {
+		if (other == null) {
+			return this;
+		}
+		final EnumMap<PName, Value> both = new EnumMap<PName, Value>(this.map);
+		for (Entry<PName, Value> ent : other.map.entrySet()) {
+			final Value previous = this.map.get(ent.getKey());
+			if (previous == null) {
+				both.put(ent.getKey(), ent.getValue());
+			}
+		}
+		return new Style(this.signature.mergeWith(other.getSignature()), both);
 	}
 
 	public Style eventuallyOverride(PName param, HColor color) {

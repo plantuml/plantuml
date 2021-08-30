@@ -43,6 +43,7 @@ import java.util.StringTokenizer;
 import net.sourceforge.plantuml.ThemeStyle;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 
@@ -156,6 +157,10 @@ public abstract class WithLinkType {
 
 	public LinkType getType() {
 		return type;
+	}
+
+	public UStroke getUStroke() {
+		throw new UnsupportedOperationException();
 	}
 
 }

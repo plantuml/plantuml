@@ -41,6 +41,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 
+import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SkinParamBackcolored;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -123,10 +124,13 @@ public class LiveBoxesDrawer {
 	private void drawInternal(UGraphic ug, double ya, double yb, ComponentType type) {
 		final double width = getWidth(ug.getStringBounder());
 		final Area area = new Area(width, yb - ya);
-		ISkinParam skinParam2 = new SkinParamBackcolored(skinParam,
+		SkinParamBackcolored skinParam2 = new SkinParamBackcolored(skinParam,
 				symbolContext == null ? null : symbolContext.getBackColor());
 		Style style = type.getDefaultStyleDefinition().getMergedStyle(skinParam.getCurrentStyleBuilder());
-		if (style != null) {
+		if (style == null) {
+			if (symbolContext != null)
+				skinParam2.forceColor(ColorParam.sequenceLifeLineBorder, symbolContext.getForeColor());
+		} else {
 			style = style.eventuallyOverride(symbolContext);
 		}
 		final Component comp = skin.createComponent(new Style[] { style }, type, null, skinParam2, null);

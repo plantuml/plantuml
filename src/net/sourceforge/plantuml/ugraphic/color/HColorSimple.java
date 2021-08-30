@@ -142,13 +142,15 @@ public class HColorSimple extends HColorAbstract implements HColor {
 		return monochrome;
 	}
 
-	public static HColorSimple linear(HColorSimple color1, HColorSimple color2, int completion) {
+	public static HColorSimple unlinear(HColorSimple color1, HColorSimple color2, int completionInt) {
 		final HSLColor col1 = new HSLColor(color1.color);
 		final HSLColor col2 = new HSLColor(color2.color);
 
 		final float[] hsl1 = col1.getHSL();
 		final float[] hsl2 = col2.getHSL();
 
+		float completion = (float) (completionInt / 100.0);
+		completion = completion * completion * completion;
 		final float[] hsl = linear(completion, hsl1, hsl2);
 
 		final HSLColor col = new HSLColor(hsl);
@@ -156,15 +158,15 @@ public class HColorSimple extends HColorAbstract implements HColor {
 		return new HColorSimple(col.getRGB(), color1.monochrome);
 	}
 
-	private static float[] linear(int completion, float[] hsl1, float[] hsl2) {
-		final float h = linear(completion, hsl1[0], hsl2[0]);
-		final float s = linear(completion, hsl1[1], hsl2[1]);
-		final float l = linear(completion, hsl1[2], hsl2[2]);
+	private static float[] linear(float factor, float[] hsl1, float[] hsl2) {
+		final float h = linear(factor, hsl1[0], hsl2[0]);
+		final float s = linear(factor, hsl1[1], hsl2[1]);
+		final float l = linear(factor, hsl1[2], hsl2[2]);
 		return new float[] { h, s, l };
 	}
 
-	private static float linear(int completion, float x, float y) {
-		return x + (y - x) * completion / 100;
+	private static float linear(float factor, float x, float y) {
+		return (x + (y - x) * factor);
 	}
 
 }

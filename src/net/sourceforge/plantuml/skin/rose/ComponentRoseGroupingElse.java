@@ -51,7 +51,9 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
+import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.URectangle;
+import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
@@ -62,12 +64,15 @@ public class ComponentRoseGroupingElse extends AbstractTextualComponent {
 
 	private final HColor groupBorder;
 	private final HColor backgroundColor;
+	private final double roundCorner;
 
 	public ComponentRoseGroupingElse(Style style, HColor groupBorder, FontConfiguration smallFont, CharSequence comment,
-			ISkinSimple spriteContainer, HColor backgroundColor) {
+			ISkinSimple spriteContainer, HColor backgroundColor, double roundCorner) {
 		super(style, LineBreakStrategy.NONE, comment == null ? null : "[" + comment + "]", smallFont,
 				HorizontalAlignment.LEFT, 5, 5, 1, spriteContainer, null, null);
+
 		if (UseStyle.useBetaStyle()) {
+			this.roundCorner = style.value(PName.RoundCorner).asInt();
 			if (spriteContainer instanceof SkinParamBackcolored) {
 				style = style.eventuallyOverride(PName.BackGroundColor,
 						((SkinParamBackcolored) spriteContainer).getBackgroundColor(false));
@@ -77,6 +82,7 @@ public class ComponentRoseGroupingElse extends AbstractTextualComponent {
 			this.backgroundColor = style.value(PName.BackGroundColor).asColor(spriteContainer.getThemeStyle(),
 					getIHtmlColorSet());
 		} else {
+			this.roundCorner = roundCorner;
 			this.groupBorder = groupBorder;
 			this.backgroundColor = backgroundColor;
 		}
@@ -88,8 +94,27 @@ public class ComponentRoseGroupingElse extends AbstractTextualComponent {
 			return;
 		}
 		final Dimension2D dimensionToUse = area.getDimensionToUse();
-		final URectangle rect = new URectangle(dimensionToUse.getWidth(), dimensionToUse.getHeight());
-		ug.apply(new HColorNone()).apply(backgroundColor.bg()).draw(rect);
+		ug = ug.apply(new HColorNone()).apply(backgroundColor.bg());
+		final double width = dimensionToUse.getWidth();
+		final double height = dimensionToUse.getHeight();
+		final UShape rect;
+		if (roundCorner == 0) {
+			rect = new URectangle(width, height);
+		} else {
+			final UPath path = new UPath();
+			path.moveTo(0, 0);
+			path.lineTo(width, 0);
+
+			path.lineTo(width, height - roundCorner / 2);
+			path.arcTo(roundCorner / 2, roundCorner / 2, 0, 0, 1, width - roundCorner / 2, height);
+
+			path.lineTo(roundCorner / 2, height);
+			path.arcTo(roundCorner / 2, roundCorner / 2, 0, 0, 1, 0, height - roundCorner / 2);
+
+			path.lineTo(0, 0);
+			rect = path;
+		}
+		ug.draw(rect);
 	}
 
 	@Override

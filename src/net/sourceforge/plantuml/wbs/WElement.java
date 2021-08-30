@@ -94,12 +94,16 @@ final class WElement {
 		return new SkinParamColors(skinParam, Colors.empty().add(ColorType.BACK, backColor));
 	}
 
+	private static final int STEP_BY_PARENT = 1000_1000;
+
 	public Style getStyle() {
-		Style result = getDefaultStyleDefinitionNode(level).getMergedStyle(styleBuilder);
+		int deltaPriority = STEP_BY_PARENT * 1000;
+		Style result = styleBuilder.getMergedStyleSpecial(getDefaultStyleDefinitionNode(level), deltaPriority);
 		for (WElement up = parent; up != null; up = up.parent) {
 			final StyleSignature ss = up.getDefaultStyleDefinitionNode(level).addStar();
-			final Style p = ss.getMergedStyle(styleBuilder);
-			result = result.mergeWith(p);
+			deltaPriority -= STEP_BY_PARENT;
+			final Style styleParent = styleBuilder.getMergedStyleSpecial(ss, deltaPriority);
+			result = result.mergeWith(styleParent);
 		}
 		return result;
 	}

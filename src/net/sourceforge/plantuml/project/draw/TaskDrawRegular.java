@@ -295,7 +295,7 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 				.getMergedStyle(getStyleBuilder()).value(PName.BackGroundColor)
 				.asColor(skinParam.getThemeStyle(), getColorSet());
 
-		final RectangleTask rectangleTask = new RectangleTask(startPos, endPos, round, completion, off);
+		final RectangleTask rectangleTask = new RectangleTask(startPos, endPos, round, getCompletion(), off);
 
 		rectangleTask.draw(ug, getShapeHeight(stringBounder), back2, oddStart, oddEnd);
 
@@ -333,10 +333,10 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 			ug.apply(UTranslate.dx(startPos)).draw(PathUtils.UtoLeft(fullLength, getShapeHeight(stringBounder), round));
 		} else {
 			final URectangle full = new URectangle(fullLength, getShapeHeight(stringBounder)).rounded(round);
-			if (completion == 100) {
+			if (getCompletion() == 100) {
 				ug.apply(UTranslate.dx(startPos)).draw(full);
 			} else {
-				final double partialLength = fullLength * completion / 100.;
+				final double partialLength = fullLength * getCompletion() / 100.;
 				ug.apply(UTranslate.dx(startPos)).apply(HColorUtils.WHITE).apply(HColorUtils.WHITE.bg()).draw(full);
 				if (partialLength > 2) {
 					final URectangle partial = new URectangle(partialLength, getShapeHeight(stringBounder))

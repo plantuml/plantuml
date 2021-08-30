@@ -120,7 +120,7 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("MESSAGE", "(?::[%s]*(.*))?"), //
-				RegexLeaf.end());
+				RegexLeaf.end()).protectSize(2000);
 	}
 
 	private List<Participant> getMulticasts(SequenceDiagram system, RegexResult arg2) {

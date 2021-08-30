@@ -34,16 +34,25 @@
  */
 package net.sourceforge.plantuml.nwdiag.core;
 
+import java.awt.geom.Dimension2D;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.nwdiag.legacy.NServerLegacy;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
+import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.nwdiag.next.LinkedElementNext;
 import net.sourceforge.plantuml.nwdiag.next.NBox;
+import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UFont;
+import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
@@ -59,10 +68,17 @@ public class NwGroup {
 	private String description;
 	private NBox nbox;
 
-	public final NBox getNbox(Map<String, NServerLegacy> servers) {
+	public NBox getNboxInternal() {
 		if (nbox == null) {
 			nbox = new NBox();
-			for (Entry<String, NServerLegacy> ent : servers.entrySet()) {
+		}
+		return nbox;
+	}
+
+	public final NBox getNbox(Map<String, ? extends NServer> servers) {
+		if (nbox == null) {
+			nbox = new NBox();
+			for (Entry<String, ? extends NServer> ent : servers.entrySet()) {
 				if (names.contains(ent.getKey())) {
 					nbox.add(ent.getValue().getBar());
 				}
@@ -77,10 +93,10 @@ public class NwGroup {
 
 	@Override
 	public String toString() {
-		return name;
+		return "NwGroup:" + name + " " + names + " " + nbox;
 	}
 
-	public NwGroup(String name) {
+	public NwGroup(String name, Object... unused) {
 		this.name = name;
 	}
 
@@ -111,6 +127,50 @@ public class NwGroup {
 
 	public final Set<String> names() {
 		return Collections.unmodifiableSet(names);
+	}
+
+	public boolean matches(LinkedElementNext tested) {
+		// To be merged with containsNext
+		return names().contains(tested.getElement().getName());
+	}
+
+	public boolean containsNext(NServer server) {
+		return names.contains(server.getName());
+	}
+
+	public double getTopHeaderHeight(StringBounder stringBounder, ISkinParam skinParam) {
+		final TextBlock block = buildHeaderName(skinParam);
+		if (block == null) {
+			return 0;
+		}
+		final Dimension2D blockDim = block.calculateDimension(stringBounder);
+		return blockDim.getHeight();
+	}
+
+	public void drawGroup(UGraphic ug, MinMax size, ISkinParam skinParam) {
+		final TextBlock block = buildHeaderName(skinParam);
+		if (block != null) {
+			final Dimension2D blockDim = block.calculateDimension(ug.getStringBounder());
+			final double dy = size.getMinY() - blockDim.getHeight();
+			size = size.addPoint(size.getMinX(), dy);
+		}
+		HColor color = getColor();
+		if (color == null) {
+			color = colors.getColorOrWhite(skinParam.getThemeStyle(), "#AAA");
+		}
+		size.draw(ug, color);
+
+		if (block != null) {
+			block.drawU(ug.apply(new UTranslate(size.getMinX() + 5, size.getMinY())));
+		}
+	}
+
+	private TextBlock buildHeaderName(ISkinParam skinParam) {
+		if (getDescription() == null) {
+			return null;
+		}
+		return Display.getWithNewlines(getDescription()).create(getGroupDescriptionFontConfiguration(),
+				HorizontalAlignment.LEFT, skinParam);
 	}
 
 }

@@ -40,6 +40,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 import net.sourceforge.plantuml.core.Diagram;
@@ -119,7 +120,7 @@ public class EmbeddedDiagram implements CharSequence {
 		private final ISkinSimple skinParam;
 
 		public List<Atom> splitInTwo(StringBounder stringBounder, double width) {
-			throw new UnsupportedOperationException(getClass().toString());
+			return Arrays.asList((Atom) this);
 		}
 
 		private Draw(ISkinSimple skinParam) {

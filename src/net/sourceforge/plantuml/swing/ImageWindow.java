@@ -35,17 +35,22 @@
  */
 package net.sourceforge.plantuml.swing;
 
-import net.sourceforge.plantuml.GeneratedImage;
-import net.sourceforge.plantuml.ImageSelection;
-import net.sourceforge.plantuml.graphic.GraphicStrings;
-import net.sourceforge.plantuml.security.ImageIO;
-import net.sourceforge.plantuml.security.SFile;
-import net.sourceforge.plantuml.svek.TextBlockBackcolored;
-import net.sourceforge.plantuml.version.PSystemVersion;
+import static net.sourceforge.plantuml.ugraphic.ImageBuilder.plainPngBuilder;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Image;
+import java.awt.RenderingHints;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -53,7 +58,24 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.prefs.Preferences;
 
-import static net.sourceforge.plantuml.ugraphic.ImageBuilder.plainPngBuilder;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
+import javax.swing.ListModel;
+import javax.swing.SwingUtilities;
+import javax.swing.WindowConstants;
+
+import net.sourceforge.plantuml.GeneratedImage;
+import net.sourceforge.plantuml.ImageSelection;
+import net.sourceforge.plantuml.graphic.GraphicStrings;
+import net.sourceforge.plantuml.security.ImageIO;
+import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.svek.TextBlockBackcolored;
+import net.sourceforge.plantuml.version.PSystemVersion;
 
 class ImageWindow extends JFrame {
 

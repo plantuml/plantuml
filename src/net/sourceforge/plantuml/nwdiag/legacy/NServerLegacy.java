@@ -41,45 +41,33 @@ import java.util.Map.Entry;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.ISkinSimple;
-import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.nwdiag.core.NServer;
+import net.sourceforge.plantuml.nwdiag.core.Network;
 
 public class NServerLegacy extends NServer {
 
 	private final NetworkLegacy mainNetwork;
 	private final ISkinSimple spriteContainer;
-	private boolean hasItsOwnColumn = true;
 	private NServerLegacy sameCol;
 
-	public NServerLegacy(String name, NetworkLegacy network, ISkinSimple spriteContainer) {
+	public NServerLegacy(String name, Network network, ISkinSimple spriteContainer) {
 		super(name);
-		this.mainNetwork = network;
+		this.mainNetwork = (NetworkLegacy) network;
 		this.spriteContainer = spriteContainer;
 	}
 
-	private TextBlock toTextBlock(String s) {
-		if (s == null) {
-			return null;
-		}
-		if (s.length() == 0) {
-			return TextBlockUtils.empty(0, 0);
-		}
-		s = s.replace(", ", "\\n");
-		return Display.getWithNewlines(s).create(getFontConfiguration(), HorizontalAlignment.LEFT, spriteContainer);
-	}
-
-	public LinkedElement asTextBlock(Map<NetworkLegacy, String> conns, List<NetworkLegacy> networks) {
+	public LinkedElement asTextBlock(Map<NetworkLegacy, String> conns, List networks) {
 		final Map<NetworkLegacy, TextBlock> conns2 = new LinkedHashMap<NetworkLegacy, TextBlock>();
 		for (Entry<NetworkLegacy, String> ent : conns.entrySet()) {
-			conns2.put(ent.getKey(), toTextBlock(ent.getValue()));
+			conns2.put(ent.getKey(), toTextBlock(ent.getValue(), spriteContainer));
 		}
 		final SymbolContext symbolContext = new SymbolContext(ColorParam.activityBackground.getDefaultValue(),
 				ColorParam.activityBorder.getDefaultValue()).withShadow(3);
-		final TextBlock desc = toTextBlock(getDescription());
+		final TextBlock desc = toTextBlock(getDescription(), spriteContainer);
 		final TextBlock box = getShape().asSmall(TextBlockUtils.empty(0, 0), desc, TextBlockUtils.empty(0, 0),
 				symbolContext, HorizontalAlignment.CENTER);
 		return new LinkedElement(this, box, conns2, networks);
@@ -89,16 +77,8 @@ public class NServerLegacy extends NServer {
 		return mainNetwork;
 	}
 
-	public void doNotHaveItsOwnColumn() {
-		this.hasItsOwnColumn = false;
-	}
-
-	public final boolean hasItsOwnColumn() {
-		return hasItsOwnColumn;
-	}
-
-	public void sameColThan(NServerLegacy sameCol) {
-		this.sameCol = sameCol;
+	public void sameColThan(NServer sameCol) {
+		this.sameCol = (NServerLegacy) sameCol;
 	}
 
 	public final NServerLegacy getSameCol() {

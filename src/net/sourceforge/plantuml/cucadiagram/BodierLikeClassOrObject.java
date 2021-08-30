@@ -142,7 +142,7 @@ public class BodierLikeClassOrObject implements Bodier {
 		if (fieldsToDisplay == null) {
 			fieldsToDisplay = new ArrayList<>();
 			for (CharSequence s : rawBody) {
-				if (isMethod(s) == true) {
+				if (type != LeafType.OBJECT && isMethod(s) == true) {
 					continue;
 				}
 				if (s.length() == 0 && fieldsToDisplay.size() == 0) {

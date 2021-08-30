@@ -98,7 +98,7 @@ public class GanttConstraint extends WithLinkType {
 	}
 
 	public UDrawable getUDrawable(TimeScale timeScale, ToTaskDraw toTaskDraw) {
-		Style style = styleBuilder.getMergedStyle(getStyleSignature()).eventuallyOverride(PName.LineColor,
+		Style style = getStyleSignature().getMergedStyle(styleBuilder).eventuallyOverride(PName.LineColor,
 				getSpecificColor());
 		style = style.eventuallyOverride(getType().getStroke3(style.getStroke()));
 		return new GanttArrow(colorSet, style, timeScale, source, dest, toTaskDraw, styleBuilder);

@@ -45,12 +45,19 @@ import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.timingdiagram.graphic.TimeArrow;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
+import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class TimeConstraint {
@@ -59,12 +66,14 @@ public class TimeConstraint {
 	private final TimeTick tick2;
 	private final Display label;
 	private final ISkinParam skinParam;
+	private final StyleBuilder styleBuilder;
 
 	public TimeConstraint(TimeTick tick1, TimeTick tick2, String label, ISkinParam skinParam) {
 		this.tick1 = Objects.requireNonNull(tick1);
 		this.tick2 = Objects.requireNonNull(tick2);
 		this.label = Display.getWithNewlines(label);
 		this.skinParam = skinParam;
+		this.styleBuilder = skinParam.getCurrentStyleBuilder();
 	}
 
 	public final TimeTick getTick1() {
@@ -89,11 +98,12 @@ public class TimeConstraint {
 	}
 
 	public void drawU(UGraphic ug, TimingRuler ruler) {
-		ug = ug.apply(HColorUtils.RED).apply(HColorUtils.RED.bg());
+		final HColor arrowColor = getArrowColor();
+		ug = ug.apply(arrowColor).apply(arrowColor.bg());
 		final double x1 = ruler.getPosInPixel(tick1);
 		final double x2 = ruler.getPosInPixel(tick2);
 		ug = ug.apply(UTranslate.dx(x1));
-		ug.draw(ULine.hline(x2 - x1));
+		ug.apply(getUStroke()).draw(ULine.hline(x2 - x1));
 
 		ug.draw(getPolygon(-Math.PI / 2, new Point2D.Double(0, 0)));
 		ug.draw(getPolygon(Math.PI / 2, new Point2D.Double(x2 - x1, 0)));
@@ -102,6 +112,28 @@ public class TimeConstraint {
 		final Dimension2D dimText = text.calculateDimension(ug.getStringBounder());
 		final double x = (x2 - x1 - dimText.getWidth()) / 2;
 		text.drawU(ug.apply(new UTranslate(x, -getConstraintHeight(ug.getStringBounder()))));
+	}
+
+	private HColor getArrowColor() {
+		if (styleBuilder == null) {
+			return HColorUtils.MY_RED;
+		}
+		return getStyle().value(PName.LineColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
+	}
+
+	private Style getStyle() {
+		return getStyleSignature().getMergedStyle(styleBuilder);
+	}
+
+	private UStroke getUStroke() {
+		if (styleBuilder == null) {
+			return new UStroke(1.5);
+		}
+		return getStyle().getStroke();
+	}
+
+	private StyleSignature getStyleSignature() {
+		return StyleSignature.of(SName.root, SName.element, SName.timingDiagram, SName.constraintArrow);
 	}
 
 	public double getConstraintHeight(StringBounder stringBounder) {

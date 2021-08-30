@@ -43,6 +43,11 @@ public class NTetris<S extends Staged> {
 
 	private final Map<S, Integer> all = new LinkedHashMap<>();
 	private final BooleanGrid grid = new BooleanGrid();
+	
+	@Override
+	public String toString() {
+		return all.toString();
+	}
 
 	public void add(S element) {
 		int x = 0;

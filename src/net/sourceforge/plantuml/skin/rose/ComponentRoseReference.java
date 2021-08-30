@@ -48,9 +48,10 @@ import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.UPolygon;
+import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -65,6 +66,7 @@ public class ComponentRoseReference extends AbstractTextualComponent {
 	private final HorizontalAlignment position;
 	private final SymbolContext symbolContextHeader;
 	private final SymbolContext symbolContextBody;
+	private int roundCorner;
 
 	public ComponentRoseReference(Style style, Style styleHeader, FontConfiguration font, SymbolContext symbolContext,
 			FontConfiguration fcHeader, Display stringsToDisplay, HorizontalAlignment position,
@@ -75,6 +77,7 @@ public class ComponentRoseReference extends AbstractTextualComponent {
 			this.symbolContextHeader = styleHeader.getSymbolContext(spriteContainer.getThemeStyle(),
 					getIHtmlColorSet());
 			this.symbolContextBody = style.getSymbolContext(spriteContainer.getThemeStyle(), getIHtmlColorSet());
+			this.roundCorner = style.value(PName.RoundCorner).asInt();
 			fcHeader = styleHeader.getFontConfiguration(spriteContainer.getThemeStyle(), getIHtmlColorSet());
 			this.position = style.getHorizontalAlignment();
 		} else {
@@ -94,25 +97,40 @@ public class ComponentRoseReference extends AbstractTextualComponent {
 		final int textHeaderWidth = (int) (getHeaderWidth(stringBounder));
 		final int textHeaderHeight = (int) (getHeaderHeight(stringBounder));
 
-		final URectangle rect = new URectangle(
-				dimensionToUse.getWidth() - xMargin * 2 - symbolContextHeader.getDeltaShadow(),
+		URectangle rect = new URectangle(dimensionToUse.getWidth() - xMargin * 2 - symbolContextBody.getDeltaShadow(),
 				dimensionToUse.getHeight() - heightFooter);
-		rect.setDeltaShadow(symbolContextHeader.getDeltaShadow());
+		if (this.roundCorner != 0) {
+			rect = rect.rounded(this.roundCorner);
+		}
+		rect.setDeltaShadow(symbolContextBody.getDeltaShadow());
 		ug = symbolContextBody.apply(ug);
 		ug.apply(UTranslate.dx(xMargin)).draw(rect);
 
-		final UPolygon polygon = new UPolygon();
-		polygon.addPoint(0, 0);
-		polygon.addPoint(textHeaderWidth, 0);
+		final UPath corner = new UPath();
+		if (this.roundCorner == 0) {
+			corner.moveTo(0, 0);
+			corner.lineTo(textHeaderWidth, 0);
 
-		polygon.addPoint(textHeaderWidth, textHeaderHeight - cornersize);
-		polygon.addPoint(textHeaderWidth - cornersize, textHeaderHeight);
+			corner.lineTo(textHeaderWidth, textHeaderHeight - cornersize);
+			corner.lineTo(textHeaderWidth - cornersize, textHeaderHeight);
 
-		polygon.addPoint(0, textHeaderHeight);
-		polygon.addPoint(0, 0);
+			corner.lineTo(0, textHeaderHeight);
+			corner.lineTo(0, 0);
+		} else {
+			corner.moveTo(this.roundCorner / 2, 0);
+			corner.lineTo(textHeaderWidth, 0);
+
+			corner.lineTo(textHeaderWidth, textHeaderHeight - cornersize);
+			corner.lineTo(textHeaderWidth - cornersize, textHeaderHeight);
+
+			corner.lineTo(0, textHeaderHeight);
+			corner.lineTo(0, this.roundCorner / 2);
+
+			corner.arcTo(this.roundCorner / 2, this.roundCorner / 2, 0, 0, 1, this.roundCorner / 2, 0);
+		}
 
 		ug = symbolContextHeader.apply(ug);
-		ug.apply(UTranslate.dx(xMargin)).draw(polygon);
+		ug.apply(UTranslate.dx(xMargin)).draw(corner);
 
 		ug = ug.apply(new UStroke());
 
@@ -148,7 +166,7 @@ public class ComponentRoseReference extends AbstractTextualComponent {
 	@Override
 	public double getPreferredWidth(StringBounder stringBounder) {
 		return Math.max(getTextWidth(stringBounder), getHeaderWidth(stringBounder)) + xMargin * 2
-				+ symbolContextHeader.getDeltaShadow();
+				+ symbolContextBody.getDeltaShadow();
 	}
 
 }

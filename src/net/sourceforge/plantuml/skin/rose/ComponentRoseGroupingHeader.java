@@ -199,6 +199,9 @@ public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 
 			polygon.lineTo(0, height);
 			polygon.lineTo(0, roundCorner / 2);
+
+			polygon.arcTo(roundCorner / 2, roundCorner / 2, 0, 0, 1, roundCorner / 2, 0);
+
 		}
 		return polygon;
 	}
