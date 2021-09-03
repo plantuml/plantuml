@@ -12,6 +12,8 @@ import java.nio.charset.Charset;
 import java.util.LinkedList;
 import java.util.List;
 
+import net.sourceforge.plantuml.error.PSystemError;
+
 import org.assertj.core.api.AutoCloseableSoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,6 +31,8 @@ class PipeTest {
 
 	@BeforeEach
 	void setup() {
+		PSystemError.disableTimeBasedErrorDecorations();
+
 		errorStatus = ErrorStatus.init();
 
 		baos = new ByteArrayOutputStream();

@@ -97,6 +97,13 @@ import net.sourceforge.plantuml.version.PSystemVersion;
 import net.sourceforge.plantuml.version.Version;
 
 public abstract class PSystemError extends PlainDiagram {
+	
+	// Dodgy kludge for testing - we will need a different approach if we want to test addMessageDedication() etc. 
+	private static boolean disableTimeBasedErrorDecorations = false;
+
+	public static void disableTimeBasedErrorDecorations() {
+		PSystemError.disableTimeBasedErrorDecorations = true;
+	}
 
 	protected List<StringLocated> trace;
 	protected ErrorUml singleError;
@@ -249,7 +256,10 @@ public abstract class PSystemError extends PlainDiagram {
 		}
 		final int min = (int) (System.currentTimeMillis() / 60000L) % 60;
 		// udrawable = addMessageAdopt(udrawable);
-		if (min == 1 || min == 8 || min == 13 || min == 55) {
+		if (disableTimeBasedErrorDecorations) {
+			// do nothing
+		}
+		else if (min == 1 || min == 8 || min == 13 || min == 55) {
 			udrawable = addMessagePatreon(udrawable);
 		} else if (min == 15) {
 			udrawable = addMessageLiberapay(udrawable);
