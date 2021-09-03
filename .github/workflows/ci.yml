@@ -1,38 +1,100 @@
-name: tests
+name: CI
 
 on:
+  create:
   pull_request:
     types: [ opened, synchronize, reopened ]
   push:
     branches:
       - master
+  workflow_dispatch:
 
 jobs:
-  run_tests:
+  CI:
     runs-on: ubuntu-latest
     steps:
+      - name: Configure job
+        id: config
+        env:
+          ACTOR: ${{ github.actor }}
+          EVENT_ACTION: ${{ github.event.action }}
+          REF_TYPE: ${{ github.event.ref_type }}
+          REF: ${{ github.event.ref }}
+        run: |
+          cat <<-EOF
+            ::group::Debug Info
+            GITHUB_EVENT_NAME       : '${GITHUB_EVENT_NAME}'
+            EVENT_ACTION            : '${EVENT_ACTION}'
+            REF_TYPE                : '${REF_TYPE}'
+            REF                     : '${REF}'
+            ACTOR                   : '${ACTOR}'
+            GITHUB_REPOSITORY_OWNER : '${GITHUB_REPOSITORY_OWNER}'
+            ::endgroup::
+          EOF
+
+          # Do a release when a git tag starting with 'v' has been created by a suitable user.
+          # (We match against github.repository_owner as a kludge so that forked repos can release themselves when testing the workflow)
+
+          if [[ "${GITHUB_EVENT_NAME}" == "create" && \
+                "${REF_TYPE}" == "tag" && \
+                "${REF}" == v* && \
+                ( "${ACTOR}" == "arnaudroques" || "${ACTOR}" == "${GITHUB_REPOSITORY_OWNER}" ) \
+             ]]; then
+            echo "📣 This run will release '${REF}'"
+            echo "::set-output name=do_release::true"
+            echo "::set-output name=pom_version::${REF#v}"  # pom_version is the tag without the 'v' prefix
+          else
+            echo "This run will NOT make a release"
+          fi
+
       - name: Checkout the repository
         uses: actions/checkout@v2
 
-      - name: Set up JDK 8
-        uses: actions/setup-java@v2.2.0
+      - name: Set up java
+        uses: actions/setup-java@v2.3.0
         with:
           java-version: 8
-          distribution: 'temurin'
+          distribution: temurin
+          cache: maven
 
-      - name: Cache local Maven repository
-        uses: actions/cache@v2
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
-
-      # Downloading all the dependencies is very log spammy so we do this in its own step.
-      # Also the cache is reused by the "release" workflow but the workflow here does not use all
-      # dependencies so without the priming step the cache will be missing some things.
-      - name: Prime Maven cache
+      # Downloading all the dependencies is very log spammy, so we do this in its own step.
+      - name: Prime maven cache
         run: mvn --batch-mode dependency:go-offline
 
-      - name: Run tests with Maven
-        run: mvn -B test --file pom.xml
+      # POM version is usually a -SNAPSHOT at this point, if this is a release then we use the version derived from the tag
+      - name: Set POM version
+        if: steps.config.outputs.do_release == 'true'
+        env:
+          POM_VERSION: ${{ steps.config.outputs.pom_version }}
+        run: |
+          mvn --batch-mode versions:set "-DnewVersion=${POM_VERSION}"
+
+      # Compile / Test / Package are separate steps so the reason for any failure is more obvious in GitHub UI
+      - name: Compile
+        run: mvn --batch-mode compile
+
+      - name: Test
+        run: mvn --batch-mode test
+
+      - name: Package
+        run: mvn --batch-mode -Dmaven.test.skip=true package
+
+      - name: Upload jar artifacts
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v2
+        with:
+          # Using github.run_number here to reduce confusion when downloading & comparing artifacts from several builds  
+          name: ${{ github.run_number }}-jars
+          path: target/*.jar
+
+      - name: Create release in GitHub
+        if: steps.config.outputs.do_release == 'true'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          POM_VERSION: ${{ steps.config.outputs.pom_version }}
+          TAG: ${{ github.event.ref }}
+        run: |
+          gh release create "${TAG}" \
+            "target/plantuml-${POM_VERSION}.jar" \
+            "target/plantuml-${POM_VERSION}-javadoc.jar" \
+            "target/plantuml-${POM_VERSION}-sources.jar"
