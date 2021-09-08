@@ -388,10 +388,14 @@ class ImageWindow extends JFrame {
 		if (generatedImage == null) {
 			return;
 		}
-		final File png = generatedImage.getPngFile();
-		final Image image = Toolkit.getDefaultToolkit().createImage(png.getAbsolutePath());
-		final ImageSelection imgSel = new ImageSelection(image);
-		Toolkit.getDefaultToolkit().getSystemClipboard().setContents(imgSel, null);
+		try {
+			final File png = generatedImage.getPngFile();
+			final Image image = ImageIO.read(png);
+			final ImageSelection imgSel = new ImageSelection(image);
+			Toolkit.getDefaultToolkit().getSystemClipboard().setContents(imgSel, null);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public SimpleLine getSimpleLine() {
