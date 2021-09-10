@@ -85,12 +85,10 @@ public class GroupPrinter {
 	}
 
 	public static void print(SFile f, IGroup rootGroup) {
-		try {
-			final PrintWriter pw = f.createPrintWriter();
+		try (PrintWriter pw = f.createPrintWriter()) {
 			pw.println("<html>");
 			new GroupPrinter(pw).printGroup(rootGroup);
 			pw.println("</html>");
-			pw.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

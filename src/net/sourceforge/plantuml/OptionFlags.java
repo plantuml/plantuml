@@ -210,9 +210,7 @@ public class OptionFlags {
 				return;
 			}
 			// final PSystemError systemError = (PSystemError) system;
-			PrintStream ps = null;
-			try {
-				ps = SecurityUtils.createPrintStream(logData.createFileOutputStream(true));
+			try (PrintStream ps = SecurityUtils.createPrintStream(logData.createFileOutputStream(true))) {
 				ps.println("Start of " + file.getName());
 				ps.println(warnOrError);
 				ps.println("End of " + file.getName());
@@ -220,10 +218,6 @@ public class OptionFlags {
 			} catch (FileNotFoundException e) {
 				Log.error("Cannot open " + logData);
 				e.printStackTrace();
-			} finally {
-				if (ps != null) {
-					ps.close();
-				}
 			}
 		}
 	}
@@ -231,17 +225,11 @@ public class OptionFlags {
 	public final void setLogData(SFile logData) {
 		this.logData = logData;
 		logData.delete();
-		PrintStream ps = null;
-		try {
-			ps = SecurityUtils.createPrintStream(logData.createFileOutputStream());
+		try (PrintStream ps = SecurityUtils.createPrintStream(logData.createFileOutputStream())) {
 			ps.println();
 		} catch (FileNotFoundException e) {
 			Log.error("Cannot open " + logData);
 			e.printStackTrace();
-		} finally {
-			if (ps != null) {
-				ps.close();
-			}
 		}
 	}
 

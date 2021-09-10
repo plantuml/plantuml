@@ -108,17 +108,10 @@ public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 
 	private List<GeneratedImage> getCrashedImage(BlockUml blockUml, Throwable t, SFile outputFile) throws IOException {
 		final GeneratedImage image = new GeneratedImageImpl(outputFile, "Crash Error", blockUml, FileImageData.CRASH);
-		OutputStream os = null;
-		try {
-			os = outputFile.createBufferedOutputStream();
+		try (OutputStream os = outputFile.createBufferedOutputStream()) {
 			UmlDiagram.exportDiagramError(os, t, fileFormatOption, 42, null, blockUml.getFlashData(),
 					UmlDiagram.getFailureText2(t, blockUml.getFlashData()));
-		} finally {
-			if (os != null) {
-				os.close();
-			}
 		}
-
 		return Collections.singletonList(image);
 	}
 
@@ -128,9 +121,9 @@ public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 			if (warnOrError != null) {
 				final String name = f.getName().substring(0, f.getName().length() - 4) + ".err";
 				final SFile errorFile = f.getParentFile().file(name);
-				final PrintStream ps = SecurityUtils.createPrintStream(errorFile.createFileOutputStream());
-				ps.print(warnOrError);
-				ps.close();
+				try (PrintStream ps = SecurityUtils.createPrintStream(errorFile.createFileOutputStream())) {
+					ps.print(warnOrError);
+				}
 			}
 		}
 	}

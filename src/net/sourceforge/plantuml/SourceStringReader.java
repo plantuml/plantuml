@@ -110,14 +110,9 @@ public class SourceStringReader {
 	}
 
 	public DiagramDescription outputImage(SFile f) throws IOException {
-		final OutputStream os = f.createBufferedOutputStream();
-		DiagramDescription result = null;
-		try {
-			result = outputImage(os, 0);
-		} finally {
-			os.close();
+		try (OutputStream os = f.createBufferedOutputStream()) {
+			return outputImage(os, 0);
 		}
-		return result;
 	}
 
 	@Deprecated

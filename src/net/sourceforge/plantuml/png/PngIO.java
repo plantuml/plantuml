@@ -56,14 +56,8 @@ public class PngIO {
 	}
 
 	public static void write(RenderedImage image, SFile file, String metadata, int dpi) throws IOException {
-		OutputStream os = null;
-		try {
-			os = file.createBufferedOutputStream();
+		try (OutputStream os = file.createBufferedOutputStream()) {
 			write(image, os, metadata, dpi);
-		} finally {
-			if (os != null) {
-				os.close();
-			}
 		}
 		Log.debug("File is " + file);
 		Log.debug("File size " + file.length());
