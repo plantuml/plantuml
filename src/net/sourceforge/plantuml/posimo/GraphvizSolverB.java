@@ -222,11 +222,11 @@ public class GraphvizSolverB {
 
 	private void exportPng(final String dotString, SFile f) throws IOException {
 		final Graphviz graphviz = GraphvizUtils.create(null, dotString, "png");
-		final OutputStream os = f.createBufferedOutputStream();
-		final ProcessState state = graphviz.createFile3(os);
-		os.close();
-		if (state.differs(ProcessState.TERMINATED_OK())) {
-			throw new IllegalStateException("Timeout3 " + state);
+		try (OutputStream os = f.createBufferedOutputStream()) {
+			final ProcessState state = graphviz.createFile3(os);
+			if (state.differs(ProcessState.TERMINATED_OK())) {
+				throw new IllegalStateException("Timeout3 " + state);
+			}
 		}
 	}
 

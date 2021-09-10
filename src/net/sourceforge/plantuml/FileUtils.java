@@ -139,9 +139,9 @@ public class FileUtils {
 	}
 
 	static public void copyToFile(byte[] src, SFile dest) throws IOException {
-		final OutputStream fos = dest.createBufferedOutputStream();
-		fos.write(src);
-		fos.close();
+		try (OutputStream fos = dest.createBufferedOutputStream()) {
+			fos.write(src);
+		}
 	}
 
 	static public String readSvg(SFile svgFile) throws IOException {

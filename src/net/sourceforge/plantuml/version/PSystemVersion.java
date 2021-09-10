@@ -47,7 +47,6 @@ import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.OptionPrint;
 import net.sourceforge.plantuml.PlainStringsDiagram;
 import net.sourceforge.plantuml.Run;
-import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
@@ -127,11 +126,8 @@ public class PSystemVersion extends PlainStringsDiagram {
 	}
 
 	private static BufferedImage getImageWebp(final String name) {
-		try {
-			final InputStream is = PSystemVersion.class.getResourceAsStream(name);
-			final BufferedImage image = PSystemDedication.getBufferedImage(is);
-			is.close();
-			return image;
+		try (InputStream is = PSystemVersion.class.getResourceAsStream(name)) {
+			return PSystemDedication.getBufferedImage(is);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

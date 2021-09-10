@@ -143,11 +143,8 @@ public class SignatureUtils {
 	}
 
 	public static String getSignatureSha512(SFile f) throws IOException {
-		final InputStream is = f.openFile();
-		try {
+		try (InputStream is = f.openFile()) {
 			return getSignatureSha512(is);
-		} finally {
-			is.close();
 		}
 	}
 
@@ -183,9 +180,8 @@ public class SignatureUtils {
 	}
 
 	public static synchronized String getSignature(SFile f) throws IOException {
-		try {
+		try (final InputStream is = f.openFile()) {
 			final MessageDigest msgDigest = MessageDigest.getInstance("MD5");
-			final InputStream is = f.openFile();
 			if (is == null) {
 				throw new FileNotFoundException();
 			}
@@ -193,7 +189,6 @@ public class SignatureUtils {
 			while ((read = is.read()) != -1) {
 				msgDigest.update((byte) read);
 			}
-			is.close();
 			final byte[] digest = msgDigest.digest();
 			return toString(digest);
 		} catch (NoSuchAlgorithmException e) {

@@ -64,19 +64,15 @@ public final class BlockUmlBuilder implements DefinitionsContainer {
 
 	public BlockUmlBuilder(List<String> config, String charset, Defines defines, Reader readerInit, SFile newCurrentDir,
 			String desc) throws IOException {
-		ReadLineNumbered includer = null;
+		
 		this.defines = defines;
 		this.charset = charset;
-		try {
-			this.reader = new UncommentReadLine(ReadLineReader.create(readerInit, desc));
-			this.importedFiles = ImportedFiles.createImportedFiles(new AParentFolderRegular(newCurrentDir));
-			includer = new Preprocessor(config, reader);
+		this.reader = new UncommentReadLine(ReadLineReader.create(readerInit, desc));
+		this.importedFiles = ImportedFiles.createImportedFiles(new AParentFolderRegular(newCurrentDir));
+		
+		try (ReadLineNumbered includer = new Preprocessor(config, reader)) {
 			init(includer);
 		} finally {
-			if (includer != null) {
-				includer.close();
-				// usedFiles = includer.getFilesUsedTOBEREMOVED();
-			}
 			readerInit.close();
 		}
 	}

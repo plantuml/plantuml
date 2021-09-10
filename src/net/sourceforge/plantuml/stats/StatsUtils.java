@@ -166,27 +166,15 @@ public class StatsUtils {
 	}
 
 	static void htmlOutput(Stats stats) throws FileNotFoundException {
-		PrintWriter pw = null;
-		try {
-			pw = SecurityUtils.createPrintWriter("plantuml-stats.html");
+		try (PrintWriter pw = SecurityUtils.createPrintWriter("plantuml-stats.html")) {
 			pw.print(new HtmlConverter(stats).toHtml());
-		} finally {
-			if (pw != null) {
-				pw.close();
-			}
 		}
 	}
 
 	static void xmlOutput(Stats stats)
-			throws FileNotFoundException, TransformerException, ParserConfigurationException, IOException {
-		OutputStream os = null;
-		try {
-			os = SecurityUtils.createFileOutputStream("plantuml-stats.xml");
+			throws TransformerException, ParserConfigurationException, IOException {
+		try (OutputStream os = SecurityUtils.createFileOutputStream("plantuml-stats.xml")) {
 			new XmlConverter(stats).createXml(os);
-		} finally {
-			if (os != null) {
-				os.close();
-			}
 		}
 	}
 

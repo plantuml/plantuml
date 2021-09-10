@@ -112,24 +112,24 @@ public class CheckZipTask extends Task {
 	private void loadZipFile(SFile file) throws IOException {
 
 		this.entries.clear();
-		final PrintWriter pw = SecurityUtils.createPrintWriter("tmp.txt");
 		final InputStream tmp = file.openFile();
 		if (tmp == null) {
 			throw new FileNotFoundException();
 		}
-		final ZipInputStream zis = new ZipInputStream(tmp);
-		ZipEntry ze = zis.getNextEntry();
-
-		while (ze != null) {
-			final String fileName = ze.getName();
-			this.entries.add(fileName);
-			if (fileName.endsWith("/") == false) {
-				pw.println("<file name=\"" + fileName + "\" />");
+		try (
+			final PrintWriter pw = SecurityUtils.createPrintWriter("tmp.txt");
+			final ZipInputStream zis = new ZipInputStream(tmp);
+		) {
+			ZipEntry ze = zis.getNextEntry();
+			while (ze != null) {
+				final String fileName = ze.getName();
+				this.entries.add(fileName);
+				if (fileName.endsWith("/") == false) {
+					pw.println("<file name=\"" + fileName + "\" />");
+				}
+				ze = zis.getNextEntry();
 			}
-			ze = zis.getNextEntry();
 		}
-		pw.close();
-		zis.close();
 	}
 
 	private synchronized void myLog(String s) {

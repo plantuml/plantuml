@@ -282,9 +282,10 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 	private ImageData exportDiagramInternalPdf(OutputStream os, int index) throws IOException {
 		final File svg = FileUtils.createTempFileLegacy("pdf", ".svf");
 		final File pdfFile = FileUtils.createTempFileLegacy("pdf", ".pdf");
-		final OutputStream fos = new BufferedOutputStream(new FileOutputStream(svg));
-		final ImageData result = exportDiagram(fos, index, new FileFormatOption(FileFormat.SVG));
-		fos.close();
+		final ImageData result;
+		try (OutputStream fos = new BufferedOutputStream(new FileOutputStream(svg))) {
+			result = exportDiagram(fos, index, new FileFormatOption(FileFormat.SVG));
+		}
 		PdfConverter.convert(svg, pdfFile);
 		FileUtils.copyToStream(pdfFile, os);
 		return result;
@@ -297,18 +298,11 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 			throws FileNotFoundException {
 		final String name = changeName(suggestedFile.getFile(index).getAbsolutePath());
 		final SFile cmapFile = new SFile(name);
-		PrintWriter pw = null;
-		try {
+		try (PrintWriter pw = cmapFile.createPrintWriter()) {
 			if (PSystemUtils.canFileBeWritten(cmapFile) == false) {
 				return;
 			}
-			pw = cmapFile.createPrintWriter();
 			pw.print(cmapdata.getCMapData(cmapFile.getName().substring(0, cmapFile.getName().length() - 6)));
-			pw.close();
-		} finally {
-			if (pw != null) {
-				pw.close();
-			}
 		}
 	}
 

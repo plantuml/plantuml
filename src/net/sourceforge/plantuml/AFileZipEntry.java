@@ -60,8 +60,7 @@ public class AFileZipEntry implements AFile {
 	public InputStream openFile() {
 		final InputStream tmp = zipFile.openFile();
 		if (tmp != null)
-			try {
-				final ZipInputStream zis = new ZipInputStream(tmp);
+			try (final ZipInputStream zis = new ZipInputStream(tmp)) {
 				ZipEntry ze = zis.getNextEntry();
 
 				while (ze != null) {
@@ -73,7 +72,6 @@ public class AFileZipEntry implements AFile {
 					ze = zis.getNextEntry();
 				}
 				zis.closeEntry();
-				zis.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

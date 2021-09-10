@@ -85,28 +85,25 @@ public final class WindowsDotArchive {
 
 	private static void extract(File dir) throws IOException {
 		final InputStream raw = WindowsDotArchive.class.getResourceAsStream("graphviz.dat");
-		final BrotliInputStream is = new BrotliInputStream(raw);
-
-		while (true) {
-			final String name = readString(is);
-			if (name.length() == 0)
-				break;
-			final int size = readNumber(is);
-			final OutputStream fos = new BufferedOutputStream(new FileOutputStream(new File(dir, name)));
-			for (int i = 0; i < size; i++) {
-				fos.write(is.read());
+		try (final BrotliInputStream is = new BrotliInputStream(raw)) {
+			while (true) {
+				final String name = readString(is);
+				if (name.length() == 0)
+					break;
+				final int size = readNumber(is);
+				try (final OutputStream fos = new BufferedOutputStream(new FileOutputStream(new File(dir, name)))) {
+					for (int i = 0; i < size; i++) {
+						fos.write(is.read());
+					}
+				}
 			}
-			fos.close();
 		}
-		is.close();
 	}
 
 	public synchronized boolean isThereArchive() {
 		if (isThereArchive == null)
-			try {
-				final InputStream raw = WindowsDotArchive.class.getResourceAsStream("graphviz.dat");
+			try (InputStream raw = WindowsDotArchive.class.getResourceAsStream("graphviz.dat")) {
 				isThereArchive = raw != null;
-				raw.close();
 			} catch (Exception e) {
 				isThereArchive = false;
 			}

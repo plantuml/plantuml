@@ -297,17 +297,10 @@ public class Run {
 			return;
 		}
 
-		InputStream stream = null;
 		final BufferedImage im;
-		try {
-			stream = source.openStream();
+		try (InputStream stream = source.openStream()) {
 			im = ImageIO.read(stream);
-		} finally {
-			if (stream != null) {
-				stream.close();
-			}
 		}
-
 		final String name = getSpriteName(fileName);
 		final String s = compressed ? SpriteUtils.encodeCompressed(im, name, level)
 				: SpriteUtils.encode(im, name, level);
@@ -545,24 +538,24 @@ public class Run {
 					.withPreprocFormat();
 			final SFile file = suggested.getFile(0);
 			Log.info("Export preprocessing source to " + file.getPrintablePath());
-			final PrintWriter pw = charset == null ? file.createPrintWriter() : file.createPrintWriter(charset);
-			int level = 0;
-			for (CharSequence cs : blockUml.getDefinition(true)) {
-				String s = cs.toString();
-				if (cypher != null) {
-					if (s.contains("skinparam") && s.contains("{")) {
-						level++;
+			try (final PrintWriter pw = charset == null ? file.createPrintWriter() : file.createPrintWriter(charset)) {
+				int level = 0;
+				for (CharSequence cs : blockUml.getDefinition(true)) {
+					String s = cs.toString();
+					if (cypher != null) {
+						if (s.contains("skinparam") && s.contains("{")) {
+							level++;
+						}
+						if (level == 0 && s.contains("skinparam") == false) {
+							s = cypher.cypher(s);
+						}
+						if (level > 0 && s.contains("}")) {
+							level--;
+						}
 					}
-					if (level == 0 && s.contains("skinparam") == false) {
-						s = cypher.cypher(s);
-					}
-					if (level > 0 && s.contains("}")) {
-						level--;
-					}
+					pw.println(s);
 				}
-				pw.println(s);
 			}
-			pw.close();
 		}
 	}
 

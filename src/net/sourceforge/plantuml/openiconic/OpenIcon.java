@@ -85,30 +85,28 @@ public class OpenIcon {
 
 	private OpenIcon(InputStream is, String id) throws IOException {
 		this.id = id;
-		BufferedReader br = new BufferedReader(new InputStreamReader(is));
-		String s = null;
-		while ((s = br.readLine()) != null) {
-			rawData.add(s);
-			if (s.contains("<path")) {
-				final int x1 = s.indexOf('"');
-				final int x2 = s.indexOf('"', x1 + 1);
-				svgPath = new SvgPath(s.substring(x1 + 1, x2));
+		try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
+			String s = null;
+			while ((s = br.readLine()) != null) {
+				rawData.add(s);
+				if (s.contains("<path")) {
+					final int x1 = s.indexOf('"');
+					final int x2 = s.indexOf('"', x1 + 1);
+					svgPath = new SvgPath(s.substring(x1 + 1, x2));
+				}
 			}
 		}
-		br.close();
-		is.close();
 		if (rawData.size() != 3 && rawData.size() != 4) {
 			throw new IllegalStateException();
 		}
 	}
 
 	void saveCopy(SFile fnew) throws IOException {
-		final PrintWriter pw = fnew.createPrintWriter();
-		pw.println(rawData.get(0));
-		pw.println(svgPath.toSvg());
-		pw.println(rawData.get(rawData.size() - 1));
-		pw.close();
-
+		try(PrintWriter pw = fnew.createPrintWriter()) {
+			pw.println(rawData.get(0));
+			pw.println(svgPath.toSvg());
+			pw.println(rawData.get(rawData.size() - 1));
+		}
 	}
 
 	private Dimension2D getDimension(double factor) {
