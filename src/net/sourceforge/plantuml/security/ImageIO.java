@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.security;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -75,6 +76,10 @@ public class ImageIO {
 
 	public static BufferedImage read(InputStream is) throws IOException {
 		return javax.imageio.ImageIO.read(is);
+	}
+	
+	public static BufferedImage read(byte[] bytes) throws IOException {
+		return javax.imageio.ImageIO.read(new ByteArrayInputStream(bytes));
 	}
 
 	public static ImageInputStream createImageInputStream(java.io.File file) throws IOException {

@@ -52,7 +52,6 @@ import java.awt.event.MouseMotionAdapter;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
@@ -336,7 +335,7 @@ class ImageWindow extends JFrame {
 			final TextBlockBackcolored error = GraphicStrings.createForError(Arrays.asList(msg), false);
 			try {
 				final byte[] bytes = plainPngBuilder(error).writeByteArray();
-				image = ImageIO.read(new ByteArrayInputStream(bytes));
+				image = ImageIO.read(bytes);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
