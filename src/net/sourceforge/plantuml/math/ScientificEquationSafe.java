@@ -40,7 +40,6 @@ import static net.sourceforge.plantuml.ugraphic.ImageBuilder.plainPngBuilder;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -119,7 +118,7 @@ public class ScientificEquationSafe {
 			}
 		try {
 			final byte[] bytes = plainPngBuilder(getRollback()).writeByteArray();
-			return new PixelImage(ImageIO.read(new ByteArrayInputStream(bytes)), AffineTransformType.TYPE_BILINEAR);
+			return new PixelImage(ImageIO.read(bytes), AffineTransformType.TYPE_BILINEAR);
 		} catch (IOException e1) {
 			return null;
 		}

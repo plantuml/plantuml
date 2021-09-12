@@ -43,7 +43,6 @@ import java.awt.Shape;
 import java.awt.font.TextLayout;
 import java.awt.geom.PathIterator;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -184,7 +183,7 @@ public class FontChecker {
 			}
 		};
 		final byte[] bytes = plainPngBuilder(drawable).writeByteArray();
-		return ImageIO.read(new ByteArrayInputStream(bytes));
+		return ImageIO.read(bytes);
 	}
 
 	// public BufferedImage getBufferedImageOld(char c) throws IOException {

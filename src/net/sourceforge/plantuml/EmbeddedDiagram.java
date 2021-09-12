@@ -37,7 +37,6 @@ package net.sourceforge.plantuml;
 
 import java.awt.geom.Dimension2D;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
@@ -187,10 +186,7 @@ public class EmbeddedDiagram implements CharSequence {
 			final ByteArrayOutputStream os = new ByteArrayOutputStream();
 			system.exportDiagram(os, 0, new FileFormatOption(FileFormat.PNG));
 			os.close();
-			final ByteArrayInputStream is = new ByteArrayInputStream(os.toByteArray());
-			final BufferedImage im = ImageIO.read(is);
-			is.close();
-			return im;
+			return ImageIO.read(os.toByteArray());
 		}
 
 		public HorizontalAlignment getHorizontalAlignment() {

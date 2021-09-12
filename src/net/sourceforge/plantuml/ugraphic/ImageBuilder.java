@@ -43,7 +43,6 @@ import java.awt.Image;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Dimension2D;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -401,11 +400,7 @@ public class ImageBuilder {
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		writeImageInternal(new FileFormatOption(FileFormat.PNG), baos, Animation.singleton(affineTransform));
 		baos.close();
-
-		final ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
-		final Image im = ImageIO.read(bais);
-		bais.close();
-		return im;
+		return ImageIO.read(baos.toByteArray());
 	}
 
 	private UGraphic2 createUGraphic(FileFormatOption option, final Dimension2D dim, Animation animationArg, double dx,

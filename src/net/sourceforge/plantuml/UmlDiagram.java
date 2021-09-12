@@ -42,7 +42,6 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Dimension2D;
 import java.awt.image.BufferedImage;
 import java.io.BufferedOutputStream;
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -270,7 +269,7 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 			// exportDiagramTOxxBEREMOVED(baos, null, 0, new
 			// FileFormatOption(FileFormat.PNG, at));
 			baos.close();
-			final BufferedImage im = ImageIO.read(new ByteArrayInputStream(baos.toByteArray()));
+			final BufferedImage im = ImageIO.read(baos.toByteArray());
 			m.addImage(im);
 		}
 		m.finishAVI();
