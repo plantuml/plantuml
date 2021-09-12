@@ -53,6 +53,7 @@ import java.util.Set;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.error.PSystemError;
+import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.preproc.FileWithSuffix;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SecurityUtils;
@@ -67,6 +68,19 @@ public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 	protected FileFormatOption fileFormatOption;
 	private boolean checkMetadata;
 	private boolean noerror;
+
+	public SourceFileReaderAbstract(File file, FileFormatOption fileFormatOption, Defines defines, List<String> config, String charset)
+			throws IOException {
+		
+		if (!file.exists()) {
+			throw new IllegalArgumentException();
+		}
+
+		this.file = file;
+		this.fileFormatOption = fileFormatOption;
+		this.builder = new BlockUmlBuilder(config, charset, defines, getReader(charset),
+				SFile.fromFile(file.getAbsoluteFile().getParentFile()), FileWithSuffix.getFileName(file));
+	}
 
 	public void setCheckMetadata(boolean checkMetadata) {
 		this.checkMetadata = checkMetadata;
