@@ -35,8 +35,12 @@
  */
 package net.sourceforge.plantuml;
 
+import static java.util.Objects.requireNonNull;
+import static net.sourceforge.plantuml.utils.CharsetUtils.charsetOrDefault;
+
 import java.io.IOException;
 import java.io.Reader;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -60,13 +64,23 @@ public final class BlockUmlBuilder implements DefinitionsContainer {
 	private final UncommentReadLine reader;
 	private final Defines defines;
 	private final ImportedFiles importedFiles;
-	private final String charset;
+	private final Charset charset;
 
+	/**
+	 * @deprecated being kept for backwards compatibility, perhaps other projects are using this? 
+	 */
+	@Deprecated
 	public BlockUmlBuilder(List<String> config, String charset, Defines defines, Reader readerInit, SFile newCurrentDir,
 			String desc) throws IOException {
 		
+		this(config, charsetOrDefault(charset), defines, readerInit, newCurrentDir, desc);
+	}
+	
+	public BlockUmlBuilder(List<String> config, Charset charset, Defines defines, Reader readerInit, SFile newCurrentDir,
+			String desc) throws IOException {
+		
 		this.defines = defines;
-		this.charset = charset;
+		this.charset = requireNonNull(charset);
 		this.reader = new UncommentReadLine(ReadLineReader.create(readerInit, desc));
 		this.importedFiles = ImportedFiles.createImportedFiles(new AParentFolderRegular(newCurrentDir));
 		
@@ -77,6 +91,10 @@ public final class BlockUmlBuilder implements DefinitionsContainer {
 		}
 	}
 
+	/**
+	 * @deprecated being kept for backwards compatibility, perhaps other projects are using this? 
+	 */
+	@Deprecated
 	public BlockUmlBuilder(List<String> config, String charset, Defines defines, Reader reader) throws IOException {
 		this(config, charset, defines, reader, null, null);
 	}
@@ -116,7 +134,7 @@ public final class BlockUmlBuilder implements DefinitionsContainer {
 				if (paused) {
 					current.add(s);
 				}
-				final BlockUml uml = new BlockUml(current, defines.cloneMe(), null, this);
+				final BlockUml uml = new BlockUml(current, defines.cloneMe(), null, this, charset);
 				usedFiles.addAll(uml.getIncluded());
 				blocks.add(uml);
 				current = null;
@@ -146,8 +164,12 @@ public final class BlockUmlBuilder implements DefinitionsContainer {
 		return importedFiles;
 	}
 
+	/**
+	 * @deprecated being kept for backwards compatibility, perhaps other projects are using this? 
+	 */
+	@Deprecated
 	public final String getCharset() {
-		return charset;
+		return charset.name();
 	}
 
 }

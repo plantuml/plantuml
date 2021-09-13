@@ -40,6 +40,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -115,7 +116,7 @@ public class PreprocessorUtils {
 		}
 	}
 
-	public static ReadLine getReaderIncludeUrl(final SURL url, StringLocated s, String suf, String charset)
+	public static ReadLine getReaderIncludeUrl(final SURL url, StringLocated s, String suf, Charset charset)
 			throws EaterException {
 		try {
 			if (StartDiagramExtractReader.containsStartDiagram(url, s, charset)) {
@@ -129,17 +130,12 @@ public class PreprocessorUtils {
 
 	}
 
-	public static ReadLine getReaderInclude(SURL url, LineLocation lineLocation, String charset)
+	public static ReadLine getReaderInclude(SURL url, LineLocation lineLocation, Charset charset)
 			throws EaterException, UnsupportedEncodingException {
 		final InputStream is = url.openStream();
 		if (is == null) {
 			throw EaterException.located("Cannot open URL");
 		}
-		if (charset == null) {
-			Log.info("Using default charset");
-			return ReadLineReader.create(new InputStreamReader(is), url.toString(), lineLocation);
-		}
-		Log.info("Using charset " + charset);
 		return ReadLineReader.create(new InputStreamReader(is, charset), url.toString(), lineLocation);
 	}
 

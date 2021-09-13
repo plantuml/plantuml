@@ -34,8 +34,11 @@
  */
 package net.sourceforge.plantuml.tim;
 
+import static java.util.Objects.requireNonNull;
+
 import java.io.IOException;
 import java.io.Reader;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -124,7 +127,7 @@ public class TContext {
 	public final FunctionsSet functionsSet = new FunctionsSet();
 
 	private ImportedFiles importedFiles;
-	private final String charset;
+	private final Charset charset;
 
 	private final Map<String, Sub> subs = new HashMap<String, Sub>();
 	private final DefinitionsContainer definitionsContainer;
@@ -183,11 +186,11 @@ public class TContext {
 		// %trim
 	}
 
-	public TContext(ImportedFiles importedFiles, Defines defines, String charset,
+	public TContext(ImportedFiles importedFiles, Defines defines, Charset charset,
 			DefinitionsContainer definitionsContainer) {
 		this.definitionsContainer = definitionsContainer;
 		this.importedFiles = importedFiles;
-		this.charset = charset;
+		this.charset = requireNonNull(charset);
 		this.addStandardFunctions(defines);
 	}
 

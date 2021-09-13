@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml;
 
 import static net.sourceforge.plantuml.ugraphic.ImageBuilder.plainImageBuilder;
+import static net.sourceforge.plantuml.utils.CharsetUtils.charsetOrDefault;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -85,7 +86,7 @@ public class SourceStringReader {
 		// // WARNING GLOBAL LOCK HERE
 		// synchronized (SourceStringReader.class) {
 		try {
-			final BlockUmlBuilder builder = new BlockUmlBuilder(config, charset, defines, new StringReader(source),
+			final BlockUmlBuilder builder = new BlockUmlBuilder(config, charsetOrDefault(charset), defines, new StringReader(source),
 					newCurrentDir, "string");
 			this.blocks = builder.getBlockUmls();
 		} catch (IOException e) {
