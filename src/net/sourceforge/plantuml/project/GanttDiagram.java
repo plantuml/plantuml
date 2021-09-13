@@ -322,9 +322,9 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 					openClose.getCalendar(), min, max, openClose, colorDays(), colorDaysOfWeek, nameDays, printStart,
 					printEnd, getIHtmlColorSet(), getSkinParam().getThemeStyle());
 		} else if (printScale == PrintScale.WEEKLY) {
-			return new TimeHeaderWeekly(locale, getTimelineStyle(), getClosedStyle(), getFactorScale(),
-					openClose.getCalendar(), min, max, openClose, colorDays(), colorDaysOfWeek, weekNumberStrategy,
-					getIHtmlColorSet(), getSkinParam().getThemeStyle());
+			return new TimeHeaderWeekly(weekNumberStrategy, withCalendarDate, locale, getTimelineStyle(),
+					getClosedStyle(), getFactorScale(), openClose.getCalendar(), min, max, openClose, colorDays(),
+					colorDaysOfWeek, getIHtmlColorSet(), getSkinParam().getThemeStyle());
 		} else if (printScale == PrintScale.MONTHLY) {
 			return new TimeHeaderMonthly(locale, getTimelineStyle(), getClosedStyle(), getFactorScale(),
 					openClose.getCalendar(), min, max, openClose, colorDays(), colorDaysOfWeek, getIHtmlColorSet(),
@@ -800,6 +800,13 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 
 	public void setLabelStrategy(LabelStrategy strategy) {
 		this.labelStrategy = strategy;
+	}
+
+	private boolean withCalendarDate;
+
+	public void setWithCalendarDate(boolean withCalendarDate) {
+		this.withCalendarDate = withCalendarDate;
+
 	}
 
 }

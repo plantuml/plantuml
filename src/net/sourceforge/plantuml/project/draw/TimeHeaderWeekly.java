@@ -51,11 +51,11 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class TimeHeaderWeekly extends TimeHeaderCalendar {
 
 	private final WeekNumberStrategy weekNumberStrategy;
+	private final boolean withCalendarDate;
 
 	public double getTimeHeaderHeight() {
 		return 16 + 13;
@@ -65,12 +65,14 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 		return 16;
 	}
 
-	public TimeHeaderWeekly(Locale locale, Style timelineStyle, Style closedStyle, double scale, Day calendar, Day min, Day max,
-			LoadPlanable defaultPlan, Map<Day, HColor> colorDays, Map<DayOfWeek, HColor> colorDaysOfWeek,
-			WeekNumberStrategy weekNumberStrategy, HColorSet colorSet, ThemeStyle themeStyle) {
+	public TimeHeaderWeekly(WeekNumberStrategy weekNumberStrategy, boolean withCalendarDate, Locale locale, Style timelineStyle,
+			Style closedStyle, double scale, Day calendar, Day min, Day max, LoadPlanable defaultPlan,
+			Map<Day, HColor> colorDays, Map<DayOfWeek, HColor> colorDaysOfWeek, HColorSet colorSet,
+			ThemeStyle themeStyle) {
 		super(locale, timelineStyle, closedStyle, calendar, min, max, defaultPlan, colorDays, colorDaysOfWeek,
 				new TimeScaleCompressed(calendar, scale), colorSet, themeStyle);
 		this.weekNumberStrategy = weekNumberStrategy;
+		this.withCalendarDate = withCalendarDate;
 	}
 
 	@Override
@@ -128,8 +130,11 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 	private void printDaysOfMonth(final UGraphic ug) {
 		for (Day wink = min; wink.compareTo(max) < 0; wink = wink.increment()) {
 			if (wink.getDayOfWeek() == weekNumberStrategy.getFirstDayOfWeek()) {
-				final String num = "" + wink.getWeekOfYear(weekNumberStrategy);
-				// final String num = "" + wink.getDayOfMonth();
+				final String num;
+				if (withCalendarDate)
+					num = "" + wink.getDayOfMonth();
+				else
+					num = "" + wink.getWeekOfYear(weekNumberStrategy);
 				final TextBlock textBlock = getTextBlock(num, 10, false, openFontColor());
 				printLeft(ug.apply(UTranslate.dy(Y_POS_ROW16())), textBlock,
 						getTimeScale().getStartingPosition(wink) + 5);

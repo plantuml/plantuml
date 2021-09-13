@@ -67,6 +67,13 @@ public class CommandPrintScale extends SingleLineCommand2<GanttDiagram> {
 						new RegexLeaf("weekly")), //
 				new RegexOptional(new RegexConcat( //
 						RegexLeaf.spaceOneOrMore(), //
+						new RegexLeaf("DATE", "(with)"), //
+						RegexLeaf.spaceOneOrMore(), //
+						new RegexLeaf("calendar"), //
+						RegexLeaf.spaceOneOrMore(), //
+						new RegexLeaf("date"))), //
+				new RegexOptional(new RegexConcat( //
+						RegexLeaf.spaceOneOrMore(), //
 						new RegexLeaf("zoom"), //
 						RegexLeaf.spaceOneOrMore(), //
 						new RegexLeaf("ZOOM", "([.\\d]+)"))), //
@@ -82,6 +89,10 @@ public class CommandPrintScale extends SingleLineCommand2<GanttDiagram> {
 		final String zoom = arg.get("ZOOM", 0);
 		if (zoom != null) {
 			diagram.setFactorScale(Double.parseDouble(zoom));
+		}
+		final String withCalendarDate = arg.get("DATE", 0);
+		if (withCalendarDate != null) {
+			diagram.setWithCalendarDate(true);
 		}
 		return CommandExecutionResult.ok();
 	}
