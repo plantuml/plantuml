@@ -78,7 +78,7 @@ public enum License {
 		text.add(" ");
 		text.add("The generated images can then be used without any reference to the MIT License.");
 		text.add("It is not even necessary to stipulate that they have been generated with PlantUML,");
-		text.add("also this will be appreciate by PlantUML team.");
+		text.add("although this will be appreciated by the PlantUML team.");
 		text.add(" ");
 		text.add("There is an exception : if the textual description in PlantUML language is also covered");
 		text.add("by a license (like the MIT), then the generated images are logically covered");
@@ -110,7 +110,7 @@ public enum License {
 		text.add(" ");
 		text.add("The generated images can then be used without any reference to the Eclipse Public License.");
 		text.add("It is not even necessary to stipulate that they have been generated with PlantUML,");
-		text.add("also this will be appreciate by PlantUML team.");
+		text.add("although this will be appreciated by the PlantUML team.");
 		text.add(" ");
 		text.add("There is an exception : if the textual description in PlantUML language is also covered");
 		text.add("by a license (like the EPL), then the generated images are logically covered");
@@ -150,7 +150,7 @@ public enum License {
 		text.add(" ");
 		text.add("The generated images can then be used without any reference to the Eclipse Public License.");
 		text.add("It is not even necessary to stipulate that they have been generated with PlantUML,");
-		text.add("also this will be appreciate by PlantUML team.");
+		text.add("although this will be appreciated by the PlantUML team.");
 		text.add(" ");
 		text.add("There is an exception : if the textual description in PlantUML language is also covered");
 		text.add("by a license (like the BSD), then the generated images are logically covered");
@@ -178,7 +178,7 @@ public enum License {
 		text.add(" ");
 		text.add("The generated images can then be used without any reference to the Apache license.");
 		text.add("It is not even necessary to stipulate that they have been generated with PlantUML,");
-		text.add("also this will be appreciate by PlantUML team.");
+		text.add("although this will be appreciated by the PlantUML team.");
 		text.add(" ");
 		text.add("There is an exception : if the textual description in PlantUML language is also covered");
 		text.add("by a license (like the Apache), then the generated images are logically covered");
@@ -204,7 +204,7 @@ public enum License {
 		text.add(" ");
 		text.add("The generated images can then be used without any reference to the GPL license.");
 		text.add("It is not even necessary to stipulate that they have been generated with PlantUML,");
-		text.add("also this will be appreciate by PlantUML team.");
+		text.add("although this will be appreciated by the PlantUML team.");
 		text.add(" ");
 		text.add("There is an exception : if the textual description in PlantUML language is also covered");
 		text.add("by a license (like the GPL), then the generated images are logically covered");
@@ -230,7 +230,7 @@ public enum License {
 		text.add(" ");
 		text.add("The generated images can then be used without any reference to the GPL license.");
 		text.add("It is not even necessary to stipulate that they have been generated with PlantUML,");
-		text.add("also this will be appreciate by PlantUML team.");
+		text.add("although this will be appreciated by the PlantUML team.");
 		text.add(" ");
 		text.add("There is an exception : if the textual description in PlantUML language is also covered");
 		text.add("by a license (like the GPL), then the generated images are logically covered");
@@ -256,7 +256,7 @@ public enum License {
 		text.add(" ");
 		text.add("The generated images can then be used without any reference to the LGPL license.");
 		text.add("It is not even necessary to stipulate that they have been generated with PlantUML,");
-		text.add("although this will be appreciate by PlantUML team.");
+		text.add("although this will be appreciated by the PlantUML team.");
 		text.add(" ");
 		text.add("There is an exception : if the textual description in PlantUML language is also covered");
 		text.add("by a license (like the LGPL), then the generated images are logically covered");

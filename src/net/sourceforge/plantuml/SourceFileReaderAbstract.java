@@ -64,8 +64,8 @@ public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 	protected File outputDirectory;
 	protected File outputFile;
 
-	protected BlockUmlBuilder builder;
-	protected FileFormatOption fileFormatOption;
+	protected final BlockUmlBuilder builder;
+	protected /*final*/ FileFormatOption fileFormatOption;
 	private boolean checkMetadata;
 	private boolean noerror;
 
