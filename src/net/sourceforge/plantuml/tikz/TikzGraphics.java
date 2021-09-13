@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.tikz;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import java.awt.Color;
 import java.awt.geom.PathIterator;
 import java.io.IOException;
@@ -271,8 +273,8 @@ public class TikzGraphics {
 	}
 
 	private void out(OutputStream os, String s) throws IOException {
-		os.write(s.getBytes("UTF-8"));
-		os.write("\n".getBytes("UTF-8"));
+		os.write(s.getBytes(UTF_8));
+		os.write("\n".getBytes(UTF_8));
 	}
 
 	public void text(double x, double y, String text, boolean underline, boolean italic, boolean bold) {

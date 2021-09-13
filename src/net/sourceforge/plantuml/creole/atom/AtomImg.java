@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.creole.atom;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import java.awt.Color;
 import java.awt.geom.Dimension2D;
 import java.awt.image.BufferedImage;
@@ -184,7 +186,7 @@ public class AtomImg extends AbstractAtom implements Atom {
 		if (read == null) {
 			return AtomTextUtils.createLegacy("(Cannot decode SVG: " + text + ")", fc);
 		}
-		return new AtomImgSvg(new TileImageSvg(new String(read, "UTF-8")));
+		return new AtomImgSvg(new TileImageSvg(new String(read, UTF_8)));
 	}
 
 	// End

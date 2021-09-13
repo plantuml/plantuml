@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.math;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import java.awt.Color;
 import java.awt.geom.Dimension2D;
 import java.io.BufferedReader;
@@ -63,7 +65,7 @@ public class AsciiMathJs implements ScientificEquation {
 	static {
 		try {
 			final BufferedReader br = new BufferedReader(new InputStreamReader(
-					AsciiMathJs.class.getResourceAsStream(ASCIIMATH_PARSER_JS_LOCATION + "ASCIIMathTeXImg.js"), "UTF-8"));
+					AsciiMathJs.class.getResourceAsStream(ASCIIMATH_PARSER_JS_LOCATION + "ASCIIMathTeXImg.js"), UTF_8));
 			final StringBuilder sb = new StringBuilder();
 			String s = null;
 			while ((s = br.readLine()) != null) {

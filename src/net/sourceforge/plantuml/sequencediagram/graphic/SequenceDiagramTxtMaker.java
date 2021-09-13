@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import java.awt.geom.Dimension2D;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -126,7 +128,7 @@ public class SequenceDiagramTxtMaker implements FileMaker {
 
 	public ImageData createOne(OutputStream os, int index, boolean isWithMetadata) throws IOException {
 		if (fileFormat == FileFormat.UTXT) {
-			final PrintStream ps = SecurityUtils.createPrintStream(os, true, "UTF-8");
+			final PrintStream ps = SecurityUtils.createPrintStream(os, true, UTF_8);
 			ug.getCharArea().print(ps);
 		} else {
 			final PrintStream ps = SecurityUtils.createPrintStream(os);

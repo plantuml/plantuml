@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -127,12 +129,12 @@ public class SignatureUtils {
 	public static synchronized byte[] getMD5raw(String s)
 			throws NoSuchAlgorithmException, UnsupportedEncodingException {
 		final MessageDigest msgDigest = MessageDigest.getInstance("MD5");
-		msgDigest.update(s.getBytes("UTF-8"));
+		msgDigest.update(s.getBytes(UTF_8));
 		return msgDigest.digest();
 	}
 
 	public static byte[] getSHA512raw(String s) throws NoSuchAlgorithmException, UnsupportedEncodingException {
-		return getSHA512raw(s.getBytes("UTF-8"));
+		return getSHA512raw(s.getBytes(UTF_8));
 	}
 
 	public static synchronized byte[] getSHA512raw(byte data[])

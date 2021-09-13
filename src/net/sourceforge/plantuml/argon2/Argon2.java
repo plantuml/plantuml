@@ -5,6 +5,7 @@
  */
 package net.sourceforge.plantuml.argon2;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static net.sourceforge.plantuml.argon2.Constants.Defaults.LANES_DEF;
 import static net.sourceforge.plantuml.argon2.Constants.Defaults.LOG_M_COST_DEF;
 import static net.sourceforge.plantuml.argon2.Constants.Defaults.OUTLEN_DEF;
@@ -42,7 +43,6 @@ public class Argon2 {
 	private Argon2Type type;
 
 	private boolean clearMemory = true;
-	private Charset charset = Charset.forName("UTF-8");
 
 	private boolean encodedOnly = false;
 	private boolean rawOnly = false;
@@ -125,11 +125,11 @@ public class Argon2 {
 	}
 
 	public Argon2 setPassword(char[] password) {
-		return setPassword(toByteArray(password, charset));
+		return setPassword(toByteArray(password, UTF_8));
 	}
 
 	public Argon2 setSalt(String salt) {
-		return setSalt(salt.getBytes(charset));
+		return setSalt(salt.getBytes(UTF_8));
 	}
 
 	public byte[] getOutput() {
@@ -254,7 +254,7 @@ public class Argon2 {
 	}
 
 	public Charset getCharset() {
-		return charset;
+		return UTF_8;
 	}
 
 	public void setEncodedOnly(boolean encodedOnly) {

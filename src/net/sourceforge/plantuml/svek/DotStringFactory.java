@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.svek;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import java.awt.geom.Point2D;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -323,7 +325,7 @@ public class DotStringFactory implements Moveable {
 			}
 		}
 		final byte[] result = baos.toByteArray();
-		final String s = new String(result, "UTF-8");
+		final String s = new String(result, UTF_8);
 
 		if (basefile != null) {
 			final SFile f = basefile.getTraceFile("svek.svg");

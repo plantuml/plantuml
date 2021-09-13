@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.xmi;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import java.io.OutputStream;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -234,7 +236,7 @@ public class XmiDescriptionDiagram implements IXmiClassDiagram {
 		final Transformer transformer = fabrique.newTransformer();
 		transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 		// transformer.setOutputProperty(OutputKeys.ENCODING, "ISO-8859-1");
-		transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+		transformer.setOutputProperty(OutputKeys.ENCODING, UTF_8.name());
 		// tf.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
 		transformer.transform(source, resultat);
 	}

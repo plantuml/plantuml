@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -77,7 +79,7 @@ public class Pipe {
 		for(String source = readFirstDiagram(); source != null; source = readSubsequentDiagram()) {
 			final Defines defines = option.getDefaultDefines();
 			final SFile newCurrentDir = option.getFileDir() == null ? null : new SFile(option.getFileDir());
-			final SourceStringReader sourceStringReader = new SourceStringReader(defines, source, "UTF-8",
+			final SourceStringReader sourceStringReader = new SourceStringReader(defines, source, UTF_8,
 					option.getConfig(), newCurrentDir);
 
 			if (option.isComputeurl()) {

@@ -1,5 +1,6 @@
 package nonreg;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -7,8 +8,6 @@ import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -33,8 +32,6 @@ public class BasicTest {
 
 	private static final String TRIPLE_QUOTE = "\"\"\"";
 
-	private static final Charset UTF8 = Charset.forName("UTF-8");
-
 	private static final boolean FORCE_RESULT_GENERATION = false;
 	private static final boolean ENABLE_RESULT_GENERATION_IF_NONE_PRESENT = false;
 
@@ -49,7 +46,7 @@ public class BasicTest {
 		final String actualResult = runPlantUML(expectedDescription);
 		if (FORCE_RESULT_GENERATION
 				|| (ENABLE_RESULT_GENERATION_IF_NONE_PRESENT && Files.exists(getResultFile()) == false)) {
-			generatedResultJavaFile(actualResult, actualResult.getBytes(UTF8));
+			generatedResultJavaFile(actualResult, actualResult.getBytes(UTF_8));
 		}
 		final String imageExpectedResult = readTripleQuotedString(getResultFile());
 		assertEquals(imageExpectedResult, actualResult);
@@ -57,7 +54,7 @@ public class BasicTest {
 
 	private void generatedResultJavaFile(String actualResult, byte[] bytes) throws IOException {
 
-		try (BufferedWriter writer = Files.newBufferedWriter(getResultFile(), StandardCharsets.UTF_8)) {
+		try (BufferedWriter writer = Files.newBufferedWriter(getResultFile(), UTF_8)) {
 			writer.write("package " + getPackageName() + ";\n");
 			writer.write("\n");
 			writer.write("public class " + getClass().getSimpleName() + "Result {\n");
@@ -89,18 +86,18 @@ public class BasicTest {
 
 	protected String runPlantUML(String expectedDescription) throws IOException, UnsupportedEncodingException {
 		final String diagramText = readTripleQuotedString(getDiagramFile());
-		final SourceStringReader ssr = new SourceStringReader(diagramText, "UTF-8");
+		final SourceStringReader ssr = new SourceStringReader(diagramText, UTF_8);
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		final DiagramDescription diagramDescription = ssr.outputImage(baos, 0, new FileFormatOption(FileFormat.DEBUG));
 		assertEquals(expectedDescription, diagramDescription.getDescription(), "Bad description");
 
-		return new String(baos.toByteArray(), UTF8);
+		return new String(baos.toByteArray(), UTF_8);
 	}
 
 	protected String readTripleQuotedString(Path path) throws IOException {
 		assertTrue(Files.exists(path), "Cannot find " + path);
 		assertTrue(Files.isReadable(path), "Cannot read " + path);
-		final List<String> allLines = Files.readAllLines(path, UTF8);
+		final List<String> allLines = Files.readAllLines(path, UTF_8);
 		final int first = allLines.indexOf(TRIPLE_QUOTE);
 		final int last = allLines.lastIndexOf(TRIPLE_QUOTE);
 		assertTrue(first != -1);

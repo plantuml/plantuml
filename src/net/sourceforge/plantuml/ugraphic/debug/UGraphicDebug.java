@@ -34,6 +34,8 @@
  */
 package net.sourceforge.plantuml.ugraphic.debug;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import java.awt.Color;
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
@@ -295,8 +297,8 @@ public class UGraphicDebug extends AbstractCommonUGraphic implements ClipContain
 	}
 
 	private void print(OutputStream os, String out) throws UnsupportedEncodingException, IOException {
-		os.write(out.getBytes("UTF-8"));
-		os.write("\n".getBytes("UTF-8"));
+		os.write(out.getBytes(UTF_8));
+		os.write("\n".getBytes(UTF_8));
 	}
 
 }

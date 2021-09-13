@@ -35,12 +35,14 @@
  */
 package net.sourceforge.plantuml;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static net.sourceforge.plantuml.ugraphic.ImageBuilder.plainImageBuilder;
 import static net.sourceforge.plantuml.utils.CharsetUtils.charsetOrDefault;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.StringReader;
+import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -62,31 +64,39 @@ public class SourceStringReader {
 	}
 
 	public SourceStringReader(String source, String charset) {
-		this(Defines.createEmpty(), source, "UTF-8", Collections.<String>emptyList());
+		this(Defines.createEmpty(), source, UTF_8.name(), Collections.<String>emptyList());
+	}
+
+	public SourceStringReader(String source, Charset charset) {
+		this(Defines.createEmpty(), source, charset.name(), Collections.<String>emptyList());
 	}
 
 	public SourceStringReader(Defines defines, String source, List<String> config) {
-		this(defines, source, "UTF-8", config);
+		this(defines, source, UTF_8.name(), config);
 	}
 
 	public SourceStringReader(Defines defines, String source) {
-		this(defines, source, "UTF-8", Collections.<String>emptyList());
+		this(defines, source, UTF_8.name(), Collections.<String>emptyList());
 	}
 
 	public SourceStringReader(String source, SFile newCurrentDir) {
-		this(Defines.createEmpty(), source, "UTF-8", Collections.<String>emptyList(), newCurrentDir);
+		this(Defines.createEmpty(), source, UTF_8, Collections.<String>emptyList(), newCurrentDir);
 	}
 
 	public SourceStringReader(Defines defines, String source, String charset, List<String> config) {
 		this(defines, source, charset, config, FileSystem.getInstance().getCurrentDir());
 	}
 
-	public SourceStringReader(Defines defines, String source, String charset, List<String> config,
+	public SourceStringReader(Defines defines, String source, String charset, List<String> config, SFile newCurrentDir) {
+		this(defines, source, charsetOrDefault(charset), config, newCurrentDir);
+	}
+	
+	public SourceStringReader(Defines defines, String source, Charset charset, List<String> config,
 			SFile newCurrentDir) {
 		// // WARNING GLOBAL LOCK HERE
 		// synchronized (SourceStringReader.class) {
 		try {
-			final BlockUmlBuilder builder = new BlockUmlBuilder(config, charsetOrDefault(charset), defines, new StringReader(source),
+			final BlockUmlBuilder builder = new BlockUmlBuilder(config, charset, defines, new StringReader(source),
 					newCurrentDir, "string");
 			this.blocks = builder.getBlockUmls();
 		} catch (IOException e) {

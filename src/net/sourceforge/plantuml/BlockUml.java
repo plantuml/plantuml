@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static net.sourceforge.plantuml.utils.CharsetUtils.charsetOrDefault;
 
 import java.io.IOException;
@@ -186,7 +187,7 @@ public class BlockUml {
 			final AsciiEncoder coder = new AsciiEncoder();
 			final MessageDigest msgDigest = MessageDigest.getInstance("MD5");
 			for (StringLocated s : data) {
-				msgDigest.update(s.getString().getBytes("UTF-8"));
+				msgDigest.update(s.getString().getBytes(UTF_8));
 			}
 			final byte[] digest = msgDigest.digest();
 			return coder.encode(digest);

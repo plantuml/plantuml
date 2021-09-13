@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.dedication;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import java.io.UnsupportedEncodingException;
 
 public final class TinyHashableString {
@@ -52,7 +54,7 @@ public final class TinyHashableString {
 
 	public final synchronized int tinyHash() throws UnsupportedEncodingException {
 		if (cachedTinyHash == -1) {
-			cachedTinyHash = Noise.shortHash(sentence.getBytes("UTF-8"), Dedication.N.toByteArray());
+			cachedTinyHash = Noise.shortHash(sentence.getBytes(UTF_8), Dedication.N.toByteArray());
 		}
 		return cachedTinyHash;
 
