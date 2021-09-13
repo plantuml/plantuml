@@ -37,7 +37,7 @@ the GPL license.
 
 The generated images can then be used without any reference to the GPL license.
 It is not even necessary to stipulate that they have been generated with PlantUML,
-also this will be appreciate by PlantUML team.
+although this will be appreciated by the PlantUML team.
 
 There is an exception : if the textual description in PlantUML language is also covered
 by a license (like the GPL), then the generated images are logically covered
