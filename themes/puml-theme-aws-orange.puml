@@ -293,6 +293,8 @@ skinparam sequence {
 	BoxBorderColor $DARK
 	BoxFontColor $DARK
 	''
+	DelayFontColor $DARK
+	''
 	LifeLineBorderColor $LIGHT
 	LifeLineBorderThickness 2
 	LifeLineBackgroundColor $LIGHT_DARK
