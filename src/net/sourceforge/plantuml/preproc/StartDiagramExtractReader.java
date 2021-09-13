@@ -39,6 +39,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.nio.charset.Charset;
 
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.StringLocated;
@@ -50,11 +51,11 @@ public class StartDiagramExtractReader implements ReadLine {
 	private final ReadLine raw;
 	private boolean finished = false;
 
-	public static StartDiagramExtractReader build(FileWithSuffix f2, StringLocated s, String charset) {
+	public static StartDiagramExtractReader build(FileWithSuffix f2, StringLocated s, Charset charset) {
 		return new StartDiagramExtractReader(getReadLine(f2, s, charset), f2.getSuffix());
 	}
 
-	public static StartDiagramExtractReader build(SURL url, StringLocated s, String uid, String charset) {
+	public static StartDiagramExtractReader build(SURL url, StringLocated s, String uid, Charset charset) {
 		return new StartDiagramExtractReader(getReadLine(url, s, charset), uid);
 	}
 
@@ -101,7 +102,7 @@ public class StartDiagramExtractReader implements ReadLine {
 		return false;
 	}
 
-	private static ReadLine getReadLine(FileWithSuffix f2, StringLocated s, String charset) {
+	private static ReadLine getReadLine(FileWithSuffix f2, StringLocated s, Charset charset) {
 		try {
 			final Reader tmp1 = f2.getReader(charset);
 			if (tmp1 == null) {
@@ -117,29 +118,20 @@ public class StartDiagramExtractReader implements ReadLine {
 		return new UncommentReadLine(ReadLineReader.create(new InputStreamReader(is), description));
 	}
 
-	private static ReadLine getReadLine(SURL url, StringLocated s, String charset) {
-		try {
-			final InputStream tmp = url.openStream();
-			if (tmp == null) {
-				return new ReadLineSimple(s, "Cannot connect");
-			}
-			if (charset == null) {
-				Log.info("Using default charset");
-				return new UncommentReadLine(ReadLineReader.create(new InputStreamReader(tmp), url.toString()));
-			}
-			Log.info("Using charset " + charset);
-			return new UncommentReadLine(ReadLineReader.create(new InputStreamReader(tmp, charset), url.toString()));
-		} catch (IOException e) {
-			return new ReadLineSimple(s, e.toString());
+	private static ReadLine getReadLine(SURL url, StringLocated s, Charset charset) {
+		final InputStream tmp = url.openStream();
+		if (tmp == null) {
+			return new ReadLineSimple(s, "Cannot connect");
 		}
+		return new UncommentReadLine(ReadLineReader.create(new InputStreamReader(tmp, charset), url.toString()));
 	}
 
-	static public boolean containsStartDiagram(FileWithSuffix f2, StringLocated s, String charset) throws IOException {
+	static public boolean containsStartDiagram(FileWithSuffix f2, StringLocated s, Charset charset) throws IOException {
 		final ReadLine r = getReadLine(f2, s, charset);
 		return containsStartDiagram(r);
 	}
 
-	static public boolean containsStartDiagram(SURL url, StringLocated s, String charset) throws IOException {
+	static public boolean containsStartDiagram(SURL url, StringLocated s, Charset charset) throws IOException {
 		final ReadLine r = getReadLine(url, s, charset);
 		return containsStartDiagram(r);
 	}

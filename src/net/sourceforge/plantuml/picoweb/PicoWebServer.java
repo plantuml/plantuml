@@ -187,7 +187,7 @@ public class PicoWebServer implements Runnable {
 				: "@startuml\n" + renderRequest.getSource() + "\n@enduml";
 
 		final SFile newCurrentDir = option.getFileDir() == null ? null : new SFile(option.getFileDir());
-		final SourceStringReader ssr = new SourceStringReader(option.getDefaultDefines(), source, "UTF-8",
+		final SourceStringReader ssr = new SourceStringReader(option.getDefaultDefines(), source, UTF_8,
 				option.getConfig(), newCurrentDir);
 		final ByteArrayOutputStream os = new ByteArrayOutputStream();
 		final Diagram system;
@@ -263,7 +263,7 @@ public class PicoWebServer implements Runnable {
 
 	private void write(OutputStream os, String s) throws IOException {
 		s = s + "\r\n";
-		os.write(s.getBytes("UTF-8"));
+		os.write(s.getBytes(UTF_8));
 	}
 
 }

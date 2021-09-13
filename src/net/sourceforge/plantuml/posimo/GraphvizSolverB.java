@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.posimo;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 import java.io.ByteArrayOutputStream;
@@ -105,7 +107,7 @@ public class GraphvizSolverB {
 			throw new IllegalStateException("Timeout2 " + state);
 		}
 		final byte[] result = baos.toByteArray();
-		final String s = new String(result, "UTF-8");
+		final String s = new String(result, UTF_8);
 		// Log.println("result=" + s);
 
 		// if (OptionFlags.getInstance().isKeepTmpFiles()) {

@@ -35,7 +35,11 @@
  */
 package net.sourceforge.plantuml;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static net.sourceforge.plantuml.utils.CharsetUtils.charsetOrDefault;
+
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -72,7 +76,7 @@ public class BlockUml {
 	}
 
 	BlockUml(String... strings) {
-		this(convert(strings), Defines.createEmpty(), null, null);
+		this(convert(strings), Defines.createEmpty(), null, null, null);
 	}
 
 	public String getEncodedUrl() throws IOException {
@@ -108,7 +112,15 @@ public class BlockUml {
 
 	private boolean preprocessorError;
 
+	/**
+	 * @deprecated being kept for backwards compatibility, perhaps other projects are using this? 
+	 */
+	@Deprecated
 	public BlockUml(List<StringLocated> strings, Defines defines, ISkinSimple skinParam, PreprocessorModeSet mode) {
+		this(strings, defines, skinParam, mode, charsetOrDefault(mode.getCharset()));
+	}
+	
+	public BlockUml(List<StringLocated> strings, Defines defines, ISkinSimple skinParam, PreprocessorModeSet mode, Charset charset) {
 		this.rawSource = new ArrayList<>(strings);
 		this.localDefines = defines;
 		this.skinParam = skinParam;
@@ -119,7 +131,7 @@ public class BlockUml {
 		if (mode == null) {
 			this.data = new ArrayList<>(strings);
 		} else {
-			final TimLoader timLoader = new TimLoader(mode.getImportedFiles(), defines, mode.getCharset(),
+			final TimLoader timLoader = new TimLoader(mode.getImportedFiles(), defines, charset,
 					(DefinitionsContainer) mode);
 			this.included.addAll(timLoader.load(strings));
 			this.data = timLoader.getResultList();
@@ -175,7 +187,7 @@ public class BlockUml {
 			final AsciiEncoder coder = new AsciiEncoder();
 			final MessageDigest msgDigest = MessageDigest.getInstance("MD5");
 			for (StringLocated s : data) {
-				msgDigest.update(s.getString().getBytes("UTF-8"));
+				msgDigest.update(s.getString().getBytes(UTF_8));
 			}
 			final byte[] digest = msgDigest.digest();
 			return coder.encode(digest);

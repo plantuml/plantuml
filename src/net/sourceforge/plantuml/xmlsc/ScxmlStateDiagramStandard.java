@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.xmlsc;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import java.io.OutputStream;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -133,7 +135,7 @@ public class ScxmlStateDiagramStandard {
 		final TransformerFactory fabrique = TransformerFactory.newInstance();
 		final Transformer transformer = fabrique.newTransformer();
 		transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-		transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+		transformer.setOutputProperty(OutputKeys.ENCODING, UTF_8.name());
 		transformer.transform(source, resultat);
 	}
 

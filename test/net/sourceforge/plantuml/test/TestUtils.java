@@ -19,7 +19,7 @@ public class TestUtils {
 		final Option option = new Option(options);
 		option.setFileFormatOption(new FileFormatOption(FileFormat.UTXT));
 
-		final SourceStringReader ssr = new SourceStringReader(option.getDefaultDefines(), source, "UTF-8", option.getConfig());
+		final SourceStringReader ssr = new SourceStringReader(option.getDefaultDefines(), source, UTF_8.name(), option.getConfig());
 
 		final ByteArrayOutputStream os = new ByteArrayOutputStream();
 

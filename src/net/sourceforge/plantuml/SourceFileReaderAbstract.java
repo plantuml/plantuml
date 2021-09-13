@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml;
 
+import static net.sourceforge.plantuml.utils.CharsetUtils.charsetOrDefault;
+
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -45,6 +47,7 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -69,12 +72,14 @@ public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 	private boolean checkMetadata;
 	private boolean noerror;
 
-	public SourceFileReaderAbstract(File file, FileFormatOption fileFormatOption, Defines defines, List<String> config, String charset)
+	public SourceFileReaderAbstract(File file, FileFormatOption fileFormatOption, Defines defines, List<String> config, String charsetName)
 			throws IOException {
 		
 		if (!file.exists()) {
 			throw new IllegalArgumentException();
 		}
+
+		final Charset charset = charsetOrDefault(charsetName);
 
 		this.file = file;
 		this.fileFormatOption = fileFormatOption;
@@ -99,12 +104,7 @@ public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 		return builder.getBlockUmls();
 	}
 
-	protected Reader getReader(String charset) throws FileNotFoundException, UnsupportedEncodingException {
-		if (charset == null) {
-			Log.info("Using default charset");
-			return new InputStreamReader(new BufferedInputStream(new FileInputStream(file)));
-		}
-		Log.info("Using charset " + charset);
+	protected Reader getReader(Charset charset) throws FileNotFoundException, UnsupportedEncodingException {
 		return new InputStreamReader(new BufferedInputStream(new FileInputStream(file)), charset);
 	}
 

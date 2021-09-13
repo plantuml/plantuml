@@ -45,6 +45,7 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -122,6 +123,11 @@ public class SecurityUtils {
 	public static PrintStream createPrintStream(OutputStream os, boolean autoFlush, String charset)
 			throws UnsupportedEncodingException {
 		return new PrintStream(os, autoFlush, charset);
+	}
+
+	public static PrintStream createPrintStream(OutputStream os, boolean autoFlush, Charset charset)
+			throws UnsupportedEncodingException {
+		return new PrintStream(os, autoFlush, charset.name());
 	}
 
 	public synchronized static BufferedImage readRasterImage(final ImageIcon imageIcon) {

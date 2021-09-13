@@ -34,6 +34,8 @@
  */
 package net.sourceforge.plantuml.tim;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
@@ -85,7 +87,7 @@ public class EaterTheme extends Eater {
 				throw EaterException.located("Cannot open URL");
 			}
 			try {
-				return PreprocessorUtils.getReaderInclude(url, getLineLocation(), "UTF-8");
+				return PreprocessorUtils.getReaderInclude(url, getLineLocation(), UTF_8);
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 				throw EaterException.located("Cannot decode charset");
@@ -94,7 +96,7 @@ public class EaterTheme extends Eater {
 
 		try {
 			final FileWithSuffix file = context.getFileWithSuffix(from, realName);
-			return ReadLineReader.create(file.getReader("UTF-8"), "theme " + realName);
+			return ReadLineReader.create(file.getReader(UTF_8), "theme " + realName);
 		} catch (IOException e) {
 			e.printStackTrace();
 			throw EaterException.located("Cannot load " + realName);

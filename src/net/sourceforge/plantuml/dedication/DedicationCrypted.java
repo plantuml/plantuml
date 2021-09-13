@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.dedication;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.math.BigInteger;
@@ -76,10 +78,10 @@ public class DedicationCrypted implements Dedication {
 				this.next = System.currentTimeMillis() + 5000L;
 			}
 
-			final byte[] hash1 = Noise.computeArgon2bytes(line.getBytes("UTF-8"),
-					(pq.toString(35) + line).getBytes("UTF-8"));
-			final byte[] hash2 = Noise.computeArgon2bytes(line.getBytes("UTF-8"),
-					(pq.toString(36) + line).getBytes("UTF-8"));
+			final byte[] hash1 = Noise.computeArgon2bytes(line.getBytes(UTF_8),
+					(pq.toString(35) + line).getBytes(UTF_8));
+			final byte[] hash2 = Noise.computeArgon2bytes(line.getBytes(UTF_8),
+					(pq.toString(36) + line).getBytes(UTF_8));
 
 			final BlumBlumShub rndBBS = new BlumBlumShub(pq, hash1);
 			final MTRandom rndMT = new MTRandom(hash2);
@@ -87,7 +89,7 @@ public class DedicationCrypted implements Dedication {
 			byte[] current = crypted.clone();
 			Noise.shuffle(current, rndMT);
 			Noise.xor(current, rndBBS);
-			Noise.xor(current, line.getBytes("UTF-8"));
+			Noise.xor(current, line.getBytes(UTF_8));
 
 			Noise.shuffle(current, rndMT);
 
@@ -99,7 +101,7 @@ public class DedicationCrypted implements Dedication {
 			Noise.shuffle(current, rndMT);
 			Noise.xor(current, rndBBS);
 
-			final String argon = Noise.computeArgon2String(current, (pq.toString(34) + line).getBytes("UTF-8"));
+			final String argon = Noise.computeArgon2String(current, (pq.toString(34) + line).getBytes(UTF_8));
 
 			if (this.argon2.equals(argon) == false) {
 				return null;

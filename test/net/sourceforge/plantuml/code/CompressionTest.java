@@ -1,5 +1,6 @@
 package net.sourceforge.plantuml.code;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -13,8 +14,8 @@ class CompressionTest {
 	@Test
 	public void no_100_000_limit() throws Exception {
 		final Compression compression = new CompressionZlib();
-		compression.decompress(compression.compress(repeat("x", 100_000).getBytes("UTF-8")));
-		compression.decompress(compression.compress(repeat("x", 100_001).getBytes("UTF-8")));
+		compression.decompress(compression.compress(repeat("x", 100_000).getBytes(UTF_8)));
+		compression.decompress(compression.compress(repeat("x", 100_001).getBytes(UTF_8)));
 
 		final Transcoder transcoder = TranscoderUtil.getDefaultTranscoder();
 		transcoder.decode(transcoder.encode(repeat("x", 100_000)));

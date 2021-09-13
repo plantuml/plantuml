@@ -34,6 +34,8 @@
  */
 package net.sourceforge.plantuml.version;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -147,7 +149,7 @@ public class PLSSignature {
 		if (read != size) {
 			throw new IOException();
 		}
-		return new String(result, "UTF-8");
+		return new String(result, UTF_8);
 	}
 
 	private static long readLong(ByteArrayInputStream bais) throws IOException {
@@ -207,7 +209,7 @@ public class PLSSignature {
 	}
 
 	public static byte[] getSalt(final String signature) throws UnsupportedEncodingException {
-		final Random rnd = new Random(getSeed(signature.getBytes("UTF-8")));
+		final Random rnd = new Random(getSeed(signature.getBytes(UTF_8)));
 		final byte salt[] = new byte[512];
 		rnd.nextBytes(salt);
 		return salt;

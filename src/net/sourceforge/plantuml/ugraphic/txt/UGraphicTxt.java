@@ -34,6 +34,8 @@
  */
 package net.sourceforge.plantuml.ugraphic.txt;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import java.awt.geom.Dimension2D;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -115,7 +117,7 @@ public class UGraphicTxt extends AbstractCommonUGraphic implements ClipContainer
 	}
 
 	public void writeImageTOBEMOVED(OutputStream os, String metadata, int dpi) throws IOException {
-		final PrintStream ps = SecurityUtils.createPrintStream(os, true, "UTF-8");
+		final PrintStream ps = SecurityUtils.createPrintStream(os, true, UTF_8);
 		getCharArea().print(ps);
 	}
 
