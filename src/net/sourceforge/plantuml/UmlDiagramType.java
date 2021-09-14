@@ -84,6 +84,9 @@ public enum UmlDiagramType {
 		if (this == TIMING) {
 			return SName.timingDiagram;
 		}
+		if (this == NWDIAG) {
+			return SName.nwdiagDiagram;
+		}
 		return SName.activityDiagram;
 	}
 }

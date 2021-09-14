@@ -53,35 +53,46 @@ import net.sourceforge.plantuml.ugraphic.color.HColor;
 public class SubjectDaysAsDates implements Subject {
 
 	public IRegex toRegex() {
-		return new RegexOr(regexTo(), regexAnd(), regexThen());
-
+		return new RegexOr(toRegexB(), toRegexE(), andRegex(), thenRegex());
 	}
 
-	private IRegex regexTo() {
+	private IRegex toRegexB() {
 		return new RegexConcat( //
-				new RegexLeaf("YEAR1", "([\\d]{4})"), //
+				new RegexLeaf("BYEAR1", "([\\d]{4})"), //
 				new RegexLeaf("\\D"), //
-				new RegexLeaf("MONTH1", "([\\d]{1,2})"), //
+				new RegexLeaf("BMONTH1", "([\\d]{1,2})"), //
 				new RegexLeaf("\\D"), //
-				new RegexLeaf("DAY1", "([\\d]{1,2})"), //
+				new RegexLeaf("BDAY1", "([\\d]{1,2})"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("to"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("YEAR2", "([\\d]{4})"), //
+				new RegexLeaf("BYEAR2", "([\\d]{4})"), //
 				new RegexLeaf("\\D"), //
-				new RegexLeaf("MONTH2", "([\\d]{1,2})"), //
+				new RegexLeaf("BMONTH2", "([\\d]{1,2})"), //
 				new RegexLeaf("\\D"), //
-				new RegexLeaf("DAY2", "([\\d]{1,2})") //
+				new RegexLeaf("BDAY2", "([\\d]{1,2})") //
 		);
 	}
 
-	private IRegex regexAnd() {
+	private IRegex toRegexE() {
 		return new RegexConcat( //
-				new RegexLeaf("YEAR3", "([\\d]{4})"), //
+				new RegexLeaf("[dD]\\+"), //
+				new RegexLeaf("ECOUNT1", "([\\d]+)"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("to"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("[dD]\\+"), //
+				new RegexLeaf("ECOUNT2", "([\\d]+)") //
+		);
+	}
+
+	private IRegex andRegex() {
+		return new RegexConcat( //
+				new RegexLeaf("BYEAR3", "([\\d]{4})"), //
 				new RegexLeaf("\\D"), //
-				new RegexLeaf("MONTH3", "([\\d]{1,2})"), //
+				new RegexLeaf("BMONTH3", "([\\d]{1,2})"), //
 				new RegexLeaf("\\D"), //
-				new RegexLeaf("DAY3", "([\\d]{1,2})"), //
+				new RegexLeaf("BDAY3", "([\\d]{1,2})"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("and"), //
 				RegexLeaf.spaceOneOrMore(), //
@@ -92,7 +103,7 @@ public class SubjectDaysAsDates implements Subject {
 		);
 	}
 
-	private IRegex regexThen() {
+	private IRegex thenRegex() {
 		return new RegexConcat( //
 				new RegexLeaf("then"), //
 				RegexLeaf.spaceOneOrMore(), //
@@ -106,7 +117,7 @@ public class SubjectDaysAsDates implements Subject {
 	public Failable<DaysAsDates> getMe(GanttDiagram project, RegexResult arg) {
 		final String countAnd = arg.get("COUNT_AND", 0);
 		if (countAnd != null) {
-			final Day date3 = getDate(arg, "3");
+			final Day date3 = getDate(project, arg, "3");
 			final int nb = Integer.parseInt(countAnd);
 			return Failable.ok(new DaysAsDates(project, date3, nb));
 		}
@@ -116,16 +127,23 @@ public class SubjectDaysAsDates implements Subject {
 			final int nb = Integer.parseInt(countThen);
 			return Failable.ok(new DaysAsDates(project, date3, nb));
 		}
-		final Day date1 = getDate(arg, "1");
-		final Day date2 = getDate(arg, "2");
+		final Day date1 = getDate(project, arg, "1");
+		final Day date2 = getDate(project, arg, "2");
 		return Failable.ok(new DaysAsDates(date1, date2));
 	}
 
-	private Day getDate(RegexResult arg, String suffix) {
-		final int day = Integer.parseInt(arg.get("DAY" + suffix, 0));
-		final int month = Integer.parseInt(arg.get("MONTH" + suffix, 0));
-		final int year = Integer.parseInt(arg.get("YEAR" + suffix, 0));
-		return Day.create(year, month, day);
+	private Day getDate(GanttDiagram project, RegexResult arg, String suffix) {
+		if (arg.get("BDAY" + suffix, 0) != null) {
+			final int day = Integer.parseInt(arg.get("BDAY" + suffix, 0));
+			final int month = Integer.parseInt(arg.get("BMONTH" + suffix, 0));
+			final int year = Integer.parseInt(arg.get("BYEAR" + suffix, 0));
+			return Day.create(year, month, day);
+		}
+		if (arg.get("ECOUNT" + suffix, 0) != null) {
+			final int day = Integer.parseInt(arg.get("ECOUNT" + suffix, 0));
+			return project.getStartingDate().addDays(day);
+		}
+		throw new IllegalStateException();
 	}
 
 	public Collection<? extends SentenceSimple> getSentences() {

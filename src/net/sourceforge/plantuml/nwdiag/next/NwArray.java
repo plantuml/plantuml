@@ -34,12 +34,12 @@
  */
 package net.sourceforge.plantuml.nwdiag.next;
 
-public class NwArrayNext {
+public class NwArray {
 
-	private final LinkedElementNext data[][];
+	private final LinkedElement data[][];
 
-	public NwArrayNext(int lines, int cols) {
-		this.data = new LinkedElementNext[lines][cols];
+	public NwArray(int lines, int cols) {
+		this.data = new LinkedElement[lines][cols];
 	}
 
 	public int getNbLines() {
@@ -50,15 +50,15 @@ public class NwArrayNext {
 		return data[0].length;
 	}
 
-	public LinkedElementNext get(int i, int j) {
+	public LinkedElement get(int i, int j) {
 		return data[i][j];
 	}
 
-	public LinkedElementNext[] getLine(int i) {
+	public LinkedElement[] getLine(int i) {
 		return data[i];
 	}
 
-	public void set(int i, int j, LinkedElementNext value) {
+	public void set(int i, int j, LinkedElement value) {
 		data[i][j] = value;
 	}
 

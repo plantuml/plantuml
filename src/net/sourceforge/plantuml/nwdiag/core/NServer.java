@@ -41,6 +41,7 @@ import java.util.Map.Entry;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.ComponentStyle;
+import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -49,9 +50,15 @@ import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.USymbol;
-import net.sourceforge.plantuml.nwdiag.next.LinkedElementNext;
+import net.sourceforge.plantuml.mindmap.IdeaShape;
+import net.sourceforge.plantuml.nwdiag.next.LinkedElement;
 import net.sourceforge.plantuml.nwdiag.next.NBar;
 import net.sourceforge.plantuml.skin.ActorStyle;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.svek.PackageStyle;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
@@ -65,15 +72,14 @@ public class NServer {
 	private String description;
 	private final NBar bar = new NBar();
 
-	// To be renamed in "printFirstLink"
-	private boolean hasItsOwnColumn = true;
+	private boolean printFirstLink = true;
 
-	public void doNotHaveItsOwnColumn() {
-		this.hasItsOwnColumn = false;
+	public void doNotPrintFirstLink() {
+		this.printFirstLink = false;
 	}
 
-	public final boolean hasItsOwnColumn() {
-		return hasItsOwnColumn;
+	public final boolean printFirstLink() {
+		return printFirstLink;
 	}
 
 	public Network getMainNetworkNext() {
@@ -95,18 +101,30 @@ public class NServer {
 		return Display.getWithNewlines(s).create(getFontConfiguration(), HorizontalAlignment.LEFT, spriteContainer);
 	}
 
-	public LinkedElementNext asTextBlockNext(double topMargin, Map<Network, String> conns, List<Network> networks,
-			ISkinSimple spriteContainer) {
+	private StyleSignature getStyleDefinition() {
+		return StyleSignature.of(SName.root, SName.element, SName.nwdiagDiagram, SName.node);
+	}
+
+	public LinkedElement asTextBlock(double topMargin, Map<Network, String> conns, List<Network> networks,
+			ISkinParam skinParam) {
+		double deltaShadow = 3;
+		final StyleBuilder styleBuilder = skinParam.getCurrentStyleBuilder();
+		if (styleBuilder != null) {
+			final Style style = getStyleDefinition().getMergedStyle(styleBuilder);
+			deltaShadow = style.value(PName.Shadowing).asDouble();
+		}
+
 		final Map<Network, TextBlock> conns2 = new LinkedHashMap<Network, TextBlock>();
 		for (Entry<Network, String> ent : conns.entrySet()) {
-			conns2.put(ent.getKey(), toTextBlock(ent.getValue(), spriteContainer));
+			conns2.put(ent.getKey(), toTextBlock(ent.getValue(), skinParam));
 		}
+		
 		final SymbolContext symbolContext = new SymbolContext(ColorParam.activityBackground.getDefaultValue(),
-				ColorParam.activityBorder.getDefaultValue()).withShadow(3);
-		final TextBlock desc = toTextBlock(getDescription(), spriteContainer);
+				ColorParam.activityBorder.getDefaultValue()).withShadow(deltaShadow);
+		final TextBlock desc = toTextBlock(getDescription(), skinParam);
 		final TextBlock box = getShape().asSmall(TextBlockUtils.empty(0, 0), desc, TextBlockUtils.empty(0, 0),
 				symbolContext, HorizontalAlignment.CENTER);
-		return new LinkedElementNext(topMargin, this, box, conns2, networks);
+		return new LinkedElement(topMargin, this, box, conns2, networks);
 	}
 
 	public void connect(Network network, Map<String, String> props) {
@@ -134,11 +152,6 @@ public class NServer {
 	}
 
 	public NServer(String name) {
-		this.description = name;
-		this.name = name;
-	}
-
-	public NServer(String name, Object... unused) {
 		this.description = name;
 		this.name = name;
 	}

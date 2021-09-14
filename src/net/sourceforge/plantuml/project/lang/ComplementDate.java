@@ -48,7 +48,7 @@ import net.sourceforge.plantuml.project.time.Month;
 public class ComplementDate implements Something {
 
 	public IRegex toRegex(String suffix) {
-		return new RegexOr(toRegexA(suffix), toRegexB(suffix), toRegexC(suffix), toRegexD(suffix));
+		return new RegexOr(toRegexA(suffix), toRegexB(suffix), toRegexC(suffix), toRegexD(suffix), toRegexE(suffix));
 	}
 
 	private IRegex toRegexA(String suffix) {
@@ -90,6 +90,13 @@ public class ComplementDate implements Something {
 		);
 	}
 
+	private IRegex toRegexE(String suffix) {
+		return new RegexConcat( //
+				new RegexLeaf("[dD]\\+"), //
+				new RegexLeaf("ECOUNT" + suffix, "([\\d]+)") //
+		);
+	}
+
 	public Failable<Day> getMe(GanttDiagram system, RegexResult arg, String suffix) {
 		if (arg.get("ADAY" + suffix, 0) != null) {
 			return Failable.ok(resultA(arg, suffix));
@@ -103,12 +110,10 @@ public class ComplementDate implements Something {
 		if (arg.get("DCOUNT" + suffix, 0) != null) {
 			return Failable.ok(resultD(system, arg, suffix));
 		}
+		if (arg.get("ECOUNT" + suffix, 0) != null) {
+			return Failable.ok(resultE(system, arg, suffix));
+		}
 		throw new IllegalStateException();
-	}
-
-	private Day resultD(GanttDiagram system, RegexResult arg, String suffix) {
-		final int day = Integer.parseInt(arg.get("DCOUNT" + suffix, 0));
-		return system.getStartingDate().addDays(day);
 	}
 
 	private Day resultA(RegexResult arg, String suffix) {
@@ -131,4 +136,15 @@ public class ComplementDate implements Something {
 		final int year = Integer.parseInt(arg.get("CYEAR" + suffix, 0));
 		return Day.create(year, month, day);
 	}
+
+	private Day resultD(GanttDiagram system, RegexResult arg, String suffix) {
+		final int day = Integer.parseInt(arg.get("DCOUNT" + suffix, 0));
+		return system.getStartingDate().addDays(day);
+	}
+
+	private Day resultE(GanttDiagram system, RegexResult arg, String suffix) {
+		final int day = Integer.parseInt(arg.get("ECOUNT" + suffix, 0));
+		return system.getStartingDate().addDays(day);
+	}
+
 }

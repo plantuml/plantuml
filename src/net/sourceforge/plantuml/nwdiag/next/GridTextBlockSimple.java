@@ -46,14 +46,14 @@ import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class GridTextBlockSimpleNext implements TextBlock {
+public class GridTextBlockSimple implements TextBlock {
 
-	protected final NwArrayNext data;
-	protected final ISkinParam skinparam;
+	protected final NwArray data;
+	private final ISkinParam skinParam;
 
-	public GridTextBlockSimpleNext(int lines, int cols, ISkinParam skinparam) {
-		this.skinparam = skinparam;
-		this.data = new NwArrayNext(lines, cols);
+	public GridTextBlockSimple(int lines, int cols, ISkinParam skinParam) {
+		this.skinParam = skinParam;
+		this.data = new NwArray(lines, cols);
 	}
 
 	protected void drawGrid(UGraphic ug) {
@@ -120,8 +120,14 @@ public class GridTextBlockSimpleNext implements TextBlock {
 		throw new UnsupportedOperationException(getClass().toString());
 	}
 
-	public void add(int i, int j, LinkedElementNext value) {
+	public void add(int i, int j, LinkedElement value) {
 		data.set(i, j, value);
 	}
+	
+	protected final ISkinParam getSkinParam() {
+		return skinParam;
+	}
+
+
 
 }

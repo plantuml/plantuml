@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
@@ -51,10 +52,26 @@ import net.sourceforge.plantuml.ugraphic.color.HColor;
 public class SubjectDayAsDate implements Subject {
 
 	public Failable<Day> getMe(GanttDiagram project, RegexResult arg) {
-		final int day = Integer.parseInt(arg.get("DAY", 0));
-		final int month = Integer.parseInt(arg.get("MONTH", 0));
-		final int year = Integer.parseInt(arg.get("YEAR", 0));
-		return Failable.ok(Day.create(year, month, day));
+		if (arg.get("BDAY", 0) != null) {
+			return Failable.ok(resultB(arg));
+		}
+		if (arg.get("ECOUNT", 0) != null) {
+			return Failable.ok(resultE(project, arg));
+		}
+		throw new IllegalStateException();
+
+	}
+
+	private Day resultB(RegexResult arg) {
+		final int day = Integer.parseInt(arg.get("BDAY", 0));
+		final int month = Integer.parseInt(arg.get("BMONTH", 0));
+		final int year = Integer.parseInt(arg.get("BYEAR", 0));
+		return Day.create(year, month, day);
+	}
+
+	private Day resultE(GanttDiagram system, RegexResult arg) {
+		final int day = Integer.parseInt(arg.get("ECOUNT", 0));
+		return system.getStartingDate().addDays(day);
 	}
 
 	public Collection<? extends SentenceSimple> getSentences() {
@@ -102,12 +119,23 @@ public class SubjectDayAsDate implements Subject {
 	}
 
 	public IRegex toRegex() {
+		return new RegexOr(toRegexB(), toRegexE());
+	}
+
+	private IRegex toRegexB() {
 		return new RegexConcat( //
-				new RegexLeaf("YEAR", "([\\d]{4})"), //
+				new RegexLeaf("BYEAR", "([\\d]{4})"), //
 				new RegexLeaf("\\D"), //
-				new RegexLeaf("MONTH", "([\\d]{1,2})"), //
+				new RegexLeaf("BMONTH", "([\\d]{1,2})"), //
 				new RegexLeaf("\\D"), //
-				new RegexLeaf("DAY", "([\\d]{1,2})"));
+				new RegexLeaf("BDAY", "([\\d]{1,2})"));
+	}
+
+	private IRegex toRegexE() {
+		return new RegexConcat( //
+				new RegexLeaf("[dD]\\+"), //
+				new RegexLeaf("ECOUNT", "([\\d]+)") //
+		);
 	}
 
 }

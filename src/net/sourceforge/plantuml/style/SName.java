@@ -89,6 +89,7 @@ public enum SName {
 	mindmapDiagram, //
 	node, //
 	note, //
+	nwdiagDiagram, //
 	objectDiagram, //
 	package_, //
 	participant, //

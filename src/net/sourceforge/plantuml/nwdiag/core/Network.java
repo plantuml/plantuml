@@ -72,7 +72,7 @@ public class Network {
 		return up;
 	}
 
-	public Network(NStage up, NStage nstage, String name, Object... unused) {
+	public Network(NStage up, NStage nstage, String name) {
 		this.up = up;
 		this.name = name;
 		this.nstage = nstage;

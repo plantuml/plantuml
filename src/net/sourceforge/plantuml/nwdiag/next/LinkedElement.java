@@ -32,7 +32,7 @@
  * Original Author:  Arnaud Roques
  *
  */
-package net.sourceforge.plantuml.nwdiag.legacy;
+package net.sourceforge.plantuml.nwdiag.next;
 
 import java.awt.geom.Dimension2D;
 import java.util.Collections;
@@ -46,6 +46,8 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.nwdiag.VerticalLine;
+import net.sourceforge.plantuml.nwdiag.core.NServer;
+import net.sourceforge.plantuml.nwdiag.core.Network;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -54,26 +56,38 @@ import net.sourceforge.plantuml.utils.MathUtils;
 
 public class LinkedElement {
 
-	private final TextBlock box;
-	private final NetworkLegacy network;
-	private final NServerLegacy square;
-	private final Map<NetworkLegacy, TextBlock> conns;
-	private final List<NetworkLegacy> networks;
+	public static final int MAGIC = 15;
 
-	public LinkedElement(NServerLegacy square, TextBlock box, Map<NetworkLegacy, TextBlock> conns, List<NetworkLegacy> networks) {
+	private final TextBlock box;
+	private final Network network;
+	private final NServer server;
+	private final Map<Network, TextBlock> conns;
+	private final List<Network> networks;
+	private final double topMargin;
+
+	public LinkedElement(double topMargin, NServer server, TextBlock box, Map<Network, TextBlock> conns,
+			List<Network> networks) {
+		this.topMargin = topMargin;
 		this.networks = networks;
 		this.box = box;
-		this.network = square.getMainNetwork();
-		this.square = square;
+		this.network = server.getMainNetworkNext();
+		this.server = server;
 		this.conns = conns;
 	}
 
-	public boolean isLinkedTo(NetworkLegacy some) {
+	public boolean isLinkedTo(Network some) {
 		return conns.containsKey(some);
 	}
 
 	private final double marginAd = 10;
-	private final double marginBox = 15;
+
+	private int marginBoxW() {
+		return 15;
+	}
+
+	private double marginBoxH() {
+		return topMargin;
+	}
 
 	public MinMax getMinMax(StringBounder stringBounder, double width, double height) {
 		final double xMiddle = width / 2;
@@ -103,46 +117,49 @@ public class LinkedElement {
 		final Dimension2D dimBox = box.calculateDimension(stringBounder);
 
 		final double alpha = yMiddle - dimBox.getHeight() / 2;
+		final double posLink1 = (yMiddle - dimBox.getHeight() / 2 - topMargin + MAGIC) / 2;
 
 		final HColor color = ColorParam.activityBorder.getDefaultValue();
 		ug = ug.apply(color);
 
 		final double xMiddle = width / 2;
+		final double xLinkPos = width / 2;
 
 		final TreeSet<Double> skip = new TreeSet<>();
 
-		for (NetworkLegacy n : networks) {
+		for (Network n : networks) {
 			if (xstart + xMiddle > n.getXmin() && xstart + xMiddle < n.getXmax())
 				skip.add(n.getY());
 		}
 
-		if (square.hasItsOwnColumn()) {
-			if (square.getMainNetwork().isVisible()) {
+		if (server.printFirstLink()) {
+			if (network.isVisible()) {
 				new VerticalLine(ynet1 + GridTextBlockDecorated.NETWORK_THIN, ynet1 + alpha, skip)
-						.drawU(ug.apply(UTranslate.dx(xMiddle)));
+						.drawU(ug.apply(UTranslate.dx(xLinkPos + network.magicDelta())));
 			} else {
 				new VerticalLine(ynet1, ynet1 + alpha, Collections.<Double>emptySet())
-						.drawU(ug.apply(UTranslate.dx(xMiddle)));
+						.drawU(ug.apply(UTranslate.dx(xLinkPos + network.magicDelta())));
 			}
 		}
-		drawCenter(ug, link1(), xMiddle, ynet1 + alpha / 2);
+		drawCenter(ug, link1(), xMiddle + network.magicDelta(), ynet1 + posLink1);
 
-		final double seven = 7.0;
-		double x = xMiddle - (conns.size() - 2) * seven / 2;
+		final double seven = 9.0;
+		double x = xLinkPos - (conns.size() - 2) * seven / 2;
 		boolean first = true;
-		for (Entry<NetworkLegacy, TextBlock> ent : conns.entrySet()) {
+		for (Entry<Network, TextBlock> ent : conns.entrySet()) {
 			if (ent.getKey() == network) {
 				continue;
 			}
 			final double ynet2 = ent.getKey().getY();
-			new VerticalLine(ynet1 + yMiddle + dimBox.getHeight() / 2, ynet2, skip).drawU(ug.apply(UTranslate.dx(x)));
+			new VerticalLine(ynet1 + yMiddle + dimBox.getHeight() / 2, ynet2, skip)
+					.drawU(ug.apply(UTranslate.dx(x - ent.getKey().magicDelta())));
 			final double xtext;
 			if (first && conns.size() > 2) {
 				xtext = x - ent.getValue().calculateDimension(stringBounder).getWidth() / 2;
 			} else {
 				xtext = x;
 			}
-			drawCenter(ug, ent.getValue(), xtext, ynet2 - alpha / 2);
+			drawCenter(ug, ent.getValue(), xtext - ent.getKey().magicDelta(), ynet2 - alpha / 2);
 			x += seven;
 			first = false;
 
@@ -172,24 +189,24 @@ public class LinkedElement {
 	}
 
 	public Dimension2D naturalDimension(StringBounder stringBounder) {
-		final Dimension2D dim1 = link1() == null ? new Dimension2DDouble(0, 0)
+		final Dimension2D dimLink1 = link1() == null ? new Dimension2DDouble(0, 0)
 				: link1().calculateDimension(stringBounder);
 		final Dimension2D dimBox = box.calculateDimension(stringBounder);
-		final Dimension2D dim2 = link2() == null ? new Dimension2DDouble(0, 0)
+		final Dimension2D dimLink2 = link2() == null ? new Dimension2DDouble(0, 0)
 				: link2().calculateDimension(stringBounder);
-		final double width = MathUtils.max(dim1.getWidth() + 2 * marginAd, dimBox.getWidth() + 2 * marginBox,
-				dim2.getWidth() + 2 * marginAd);
-		final double height = dim1.getHeight() + 2 * marginAd + dimBox.getHeight() + 2 * marginBox + dim2.getHeight()
-				+ 2 * marginAd;
+		final double width = MathUtils.max(dimLink1.getWidth() + 2 * marginAd, dimBox.getWidth() + 2 * marginBoxW(),
+				dimLink2.getWidth() + 2 * marginAd);
+		final double height = dimLink1.getHeight() + 2 * marginAd + 2 * marginBoxH() + dimBox.getHeight()
+				+ dimLink2.getHeight() + 2 * marginAd;
 		return new Dimension2DDouble(width, height);
 	}
 
-	public final NetworkLegacy getNetwork() {
+	public final Network getNetwork() {
 		return network;
 	}
 
-	public final NServerLegacy getElement() {
-		return square;
+	public final NServer getServer() {
+		return server;
 	}
 
 }

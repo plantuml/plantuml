@@ -66,8 +66,8 @@ import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.nwdiag.core.NServer;
 import net.sourceforge.plantuml.nwdiag.core.Network;
 import net.sourceforge.plantuml.nwdiag.core.NwGroup;
-import net.sourceforge.plantuml.nwdiag.next.GridTextBlockDecoratedNext;
-import net.sourceforge.plantuml.nwdiag.next.LinkedElementNext;
+import net.sourceforge.plantuml.nwdiag.next.GridTextBlockDecorated;
+import net.sourceforge.plantuml.nwdiag.next.LinkedElement;
 import net.sourceforge.plantuml.nwdiag.next.NBar;
 import net.sourceforge.plantuml.nwdiag.next.NPlayField;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
@@ -127,7 +127,7 @@ public class NwDiagram extends UmlDiagram {
 	}
 
 	private Network createNetwork(String name) {
-		final Network network = new Network(playField.getLast(), playField.createNewStage(), name, networks.size());
+		final Network network = new Network(playField.getLast(), playField.createNewStage(), name);
 		networks.add(network);
 		return network;
 	}
@@ -139,7 +139,7 @@ public class NwDiagram extends UmlDiagram {
 		final NServer element;
 		if (currentNetwork() == null) {
 			createNetwork(name1);
-			element = new NServer(name2, currentNetwork(), this.getSkinParam());
+			element = new NServer(name2);
 		} else {
 			final NServer already = servers.get(name1);
 			final Network network1 = createNetwork("");
@@ -147,7 +147,7 @@ public class NwDiagram extends UmlDiagram {
 			if (already != null) {
 				connect(already, toSet(null));
 			}
-			element = new NServer(name2, currentNetwork(), this.getSkinParam());
+			element = new NServer(name2);
 		}
 		servers.put(name2, element);
 		addInternal(element, toSet(null));
@@ -186,13 +186,13 @@ public class NwDiagram extends UmlDiagram {
 			assert currentGroup == null;
 			final Network network1 = createNetwork("");
 			network1.goInvisible();
-			server = new NServer(name, currentNetwork(), this.getSkinParam());
+			server = new NServer(name);
 			servers.put(name, server);
-			server.doNotHaveItsOwnColumn();
+			server.doNotPrintFirstLink();
 		} else {
 			server = servers.get(name);
 			if (server == null) {
-				server = new NServer(name, currentNetwork(), this.getSkinParam());
+				server = new NServer(name);
 				servers.put(name, server);
 			}
 		}
@@ -291,7 +291,7 @@ public class NwDiagram extends UmlDiagram {
 		double deltaX = 0;
 		double deltaY = 0;
 
-		final GridTextBlockDecoratedNext grid = buildGrid(stringBounder);
+		final GridTextBlockDecorated grid = buildGrid(stringBounder);
 
 		for (int i = 0; i < networks.size(); i++) {
 			final Network current = networks.get(i);
@@ -299,7 +299,7 @@ public class NwDiagram extends UmlDiagram {
 			final TextBlock desc = toTextBlock(current.getDisplayName(), address);
 			final Dimension2D dim = desc.calculateDimension(stringBounder);
 			if (i == 0) {
-				deltaY = (dim.getHeight() - GridTextBlockDecoratedNext.NETWORK_THIN) / 2;
+				deltaY = (dim.getHeight() - GridTextBlockDecorated.NETWORK_THIN) / 2;
 			}
 			deltaX = Math.max(deltaX, dim.getWidth());
 		}
@@ -335,11 +335,11 @@ public class NwDiagram extends UmlDiagram {
 		return result;
 	}
 
-	private GridTextBlockDecoratedNext buildGrid(StringBounder stringBounder) {
+	private GridTextBlockDecorated buildGrid(StringBounder stringBounder) {
 
 		playField.fixGroups(groups, servers.values());
 
-		final GridTextBlockDecoratedNext grid = new GridTextBlockDecoratedNext(networks.size(), servers.size(), groups,
+		final GridTextBlockDecorated grid = new GridTextBlockDecorated(networks.size(), servers.size(), groups,
 				networks, getSkinParam());
 
 		final Map<NBar, Integer> layout = playField.doLayout();
@@ -350,11 +350,11 @@ public class NwDiagram extends UmlDiagram {
 				if (server.getMainNetworkNext() == current) {
 					final Map<Network, String> conns = getLinks(server);
 					final int col = layout.get(server.getBar());
-					double topMargin = LinkedElementNext.MAGIC;
+					double topMargin = LinkedElement.MAGIC;
 					NwGroup group = getGroupOf(server);
 					if (group != null)
 						topMargin += group.getTopHeaderHeight(stringBounder, getSkinParam());
-					grid.add(i, col, server.asTextBlockNext(topMargin, conns, networks, getSkinParam()));
+					grid.add(i, col, server.asTextBlock(topMargin, conns, networks, getSkinParam()));
 				}
 			}
 		}
@@ -364,7 +364,7 @@ public class NwDiagram extends UmlDiagram {
 
 	private NwGroup getGroupOf(NServer server) {
 		for (NwGroup group : groups) {
-			if (group.containsNext(server)) {
+			if (group.contains(server)) {
 				return group;
 			}
 		}

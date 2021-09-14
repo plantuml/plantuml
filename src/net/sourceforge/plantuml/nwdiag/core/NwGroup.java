@@ -47,7 +47,6 @@ import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.nwdiag.next.LinkedElementNext;
 import net.sourceforge.plantuml.nwdiag.next.NBox;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UFont;
@@ -129,12 +128,7 @@ public class NwGroup {
 		return Collections.unmodifiableSet(names);
 	}
 
-	public boolean matches(LinkedElementNext tested) {
-		// To be merged with containsNext
-		return names().contains(tested.getElement().getName());
-	}
-
-	public boolean containsNext(NServer server) {
+	public boolean contains(NServer server) {
 		return names.contains(server.getName());
 	}
 

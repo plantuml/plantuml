@@ -104,7 +104,7 @@ public class NPlayField {
 	public void fixGroups(List<NwGroup> groups, Collection<NServer> servers) {
 		for (NwGroup group : groups) {
 			for (NServer server : servers) {
-				if (group.containsNext(server)) {
+				if (group.contains(server)) {
 					fixServerInGroup(server, group);
 				}
 			}
