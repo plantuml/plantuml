@@ -87,6 +87,7 @@ public enum SName {
 	lifeLine, //
 	milestone, //
 	mindmapDiagram, //
+	network, //
 	node, //
 	note, //
 	nwdiagDiagram, //
@@ -104,6 +105,7 @@ public enum SName {
 	saltDiagram, //
 	separator, //
 	sequenceDiagram, //
+	server, //
 	stack, //
 	stateDiagram, //
 	stereotype, //

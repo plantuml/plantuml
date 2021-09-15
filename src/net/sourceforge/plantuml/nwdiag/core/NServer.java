@@ -42,7 +42,6 @@ import java.util.Map.Entry;
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.ComponentStyle;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -50,7 +49,6 @@ import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.USymbol;
-import net.sourceforge.plantuml.mindmap.IdeaShape;
 import net.sourceforge.plantuml.nwdiag.next.LinkedElement;
 import net.sourceforge.plantuml.nwdiag.next.NBar;
 import net.sourceforge.plantuml.skin.ActorStyle;
@@ -90,7 +88,7 @@ public class NServer {
 		return connections.get(network);
 	}
 
-	protected final TextBlock toTextBlock(String s, ISkinSimple spriteContainer) {
+	private TextBlock toTextBlock(String s, ISkinParam skinParam) {
 		if (s == null) {
 			return null;
 		}
@@ -98,29 +96,31 @@ public class NServer {
 			return TextBlockUtils.empty(0, 0);
 		}
 		s = s.replace(", ", "\\n");
-		return Display.getWithNewlines(s).create(getFontConfiguration(), HorizontalAlignment.LEFT, spriteContainer);
+		return Display.getWithNewlines(s).create(getFontConfiguration(skinParam), HorizontalAlignment.LEFT, skinParam);
 	}
 
 	private StyleSignature getStyleDefinition() {
-		return StyleSignature.of(SName.root, SName.element, SName.nwdiagDiagram, SName.node);
+		return StyleSignature.of(SName.root, SName.element, SName.nwdiagDiagram, SName.server);
+	}
+
+	private FontConfiguration getFontConfiguration(ISkinParam skinParam) {
+		final StyleBuilder styleBuilder = skinParam.getCurrentStyleBuilder();
+		final Style style = getStyleDefinition().getMergedStyle(styleBuilder);
+		return style.getFontConfiguration(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
 	}
 
 	public LinkedElement asTextBlock(double topMargin, Map<Network, String> conns, List<Network> networks,
 			ISkinParam skinParam) {
-		double deltaShadow = 3;
 		final StyleBuilder styleBuilder = skinParam.getCurrentStyleBuilder();
-		if (styleBuilder != null) {
-			final Style style = getStyleDefinition().getMergedStyle(styleBuilder);
-			deltaShadow = style.value(PName.Shadowing).asDouble();
-		}
+		final Style style = getStyleDefinition().getMergedStyle(styleBuilder);
+		final SymbolContext symbolContext = style.getSymbolContext(skinParam.getThemeStyle(),
+				skinParam.getIHtmlColorSet());
 
 		final Map<Network, TextBlock> conns2 = new LinkedHashMap<Network, TextBlock>();
 		for (Entry<Network, String> ent : conns.entrySet()) {
 			conns2.put(ent.getKey(), toTextBlock(ent.getValue(), skinParam));
 		}
-		
-		final SymbolContext symbolContext = new SymbolContext(ColorParam.activityBackground.getDefaultValue(),
-				ColorParam.activityBorder.getDefaultValue()).withShadow(deltaShadow);
+
 		final TextBlock desc = toTextBlock(getDescription(), skinParam);
 		final TextBlock box = getShape().asSmall(TextBlockUtils.empty(0, 0), desc, TextBlockUtils.empty(0, 0),
 				symbolContext, HorizontalAlignment.CENTER);
@@ -154,11 +154,6 @@ public class NServer {
 	public NServer(String name) {
 		this.description = name;
 		this.name = name;
-	}
-
-	protected final FontConfiguration getFontConfiguration() {
-		final UFont font = UFont.serif(11);
-		return new FontConfiguration(font, HColorUtils.BLACK, HColorUtils.BLACK, false);
 	}
 
 	public final String getDescription() {

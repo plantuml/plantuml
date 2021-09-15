@@ -48,17 +48,19 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.nwdiag.next.NBox;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class NwGroup {
-
-	public static final HColorSet colors = HColorSet.instance();
 
 	private final Set<String> names = new HashSet<>();
 
@@ -115,11 +117,6 @@ public class NwGroup {
 		this.description = value;
 	}
 
-	public final FontConfiguration getGroupDescriptionFontConfiguration() {
-		final UFont font = UFont.serif(11);
-		return new FontConfiguration(font, HColorUtils.BLACK, HColorUtils.BLACK, false);
-	}
-
 	protected final String getDescription() {
 		return description;
 	}
@@ -141,7 +138,13 @@ public class NwGroup {
 		return blockDim.getHeight();
 	}
 
+	private StyleSignature getStyleDefinition() {
+		return StyleSignature.of(SName.root, SName.element, SName.nwdiagDiagram, SName.group);
+	}
+
 	public void drawGroup(UGraphic ug, MinMax size, ISkinParam skinParam) {
+		final StyleBuilder styleBuilder = skinParam.getCurrentStyleBuilder();
+		final Style style = getStyleDefinition().getMergedStyle(styleBuilder);
 		final TextBlock block = buildHeaderName(skinParam);
 		if (block != null) {
 			final Dimension2D blockDim = block.calculateDimension(ug.getStringBounder());
@@ -150,7 +153,8 @@ public class NwGroup {
 		}
 		HColor color = getColor();
 		if (color == null) {
-			color = colors.getColorOrWhite(skinParam.getThemeStyle(), "#AAA");
+			color = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
+
 		}
 		size.draw(ug, color);
 
@@ -163,7 +167,10 @@ public class NwGroup {
 		if (getDescription() == null) {
 			return null;
 		}
-		return Display.getWithNewlines(getDescription()).create(getGroupDescriptionFontConfiguration(),
+		final StyleBuilder styleBuilder = skinParam.getCurrentStyleBuilder();
+		final Style style = getStyleDefinition().getMergedStyle(styleBuilder);
+		return Display.getWithNewlines(getDescription()).create(
+				style.getFontConfiguration(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet()),
 				HorizontalAlignment.LEFT, skinParam);
 	}
 

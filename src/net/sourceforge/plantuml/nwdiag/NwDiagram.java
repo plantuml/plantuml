@@ -71,8 +71,13 @@ import net.sourceforge.plantuml.nwdiag.next.LinkedElement;
 import net.sourceforge.plantuml.nwdiag.next.NBar;
 import net.sourceforge.plantuml.nwdiag.next.NPlayField;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.MinMax;
+import net.sourceforge.plantuml.ugraphic.UBackground;
 import net.sourceforge.plantuml.ugraphic.UEmpty;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -260,17 +265,20 @@ public class NwDiagram extends UmlDiagram {
 		};
 	}
 
+	private StyleSignature getStyleDefinitionNetwork() {
+		return StyleSignature.of(SName.root, SName.element, SName.nwdiagDiagram, SName.network);
+	}
+
 	private TextBlock toTextBlock(String name, String s) {
 		if (s != null) {
 			name += "\\n" + s;
 		}
-		return Display.getWithNewlines(name).create(getFontConfiguration(), HorizontalAlignment.RIGHT,
+		final StyleBuilder styleBuilder = getSkinParam().getCurrentStyleBuilder();
+		final Style style = getStyleDefinitionNetwork().getMergedStyle(styleBuilder);
+		final FontConfiguration fontConfiguration = style.getFontConfiguration(getSkinParam().getThemeStyle(),
+				getSkinParam().getIHtmlColorSet());
+		return Display.getWithNewlines(name).create(fontConfiguration, HorizontalAlignment.RIGHT,
 				new SpriteContainerEmpty());
-	}
-
-	private FontConfiguration getFontConfiguration() {
-		final UFont font = UFont.serif(11);
-		return new FontConfiguration(font, HColorUtils.BLACK, HColorUtils.BLACK, false);
 	}
 
 	private Dimension2D getTotalDimension(StringBounder stringBounder) {
@@ -315,8 +323,7 @@ public class NwDiagram extends UmlDiagram {
 		}
 		deltaX += 5;
 
-		grid.drawU(ug.apply(ColorParam.activityBorder.getDefaultValue())
-				.apply(ColorParam.activityBackground.getDefaultValue().bg()).apply(new UTranslate(deltaX, deltaY)));
+		grid.drawU(ug.apply(new UTranslate(deltaX, deltaY)));
 		final Dimension2D dimGrid = grid.calculateDimension(stringBounder);
 
 		ug.apply(new UTranslate(dimGrid.getWidth() + deltaX + margin, dimGrid.getHeight() + deltaY + margin))
@@ -383,7 +390,7 @@ public class NwDiagram extends UmlDiagram {
 		}
 		if ("color".equalsIgnoreCase(property)) {
 			final HColor color = value == null ? null
-					: NwGroup.colors.getColorOrWhite(getSkinParam().getThemeStyle(), value);
+					: getSkinParam().getIHtmlColorSet().getColorOrWhite(getSkinParam().getThemeStyle(), value);
 			if (currentGroup != null) {
 				currentGroup.setColor(color);
 			} else if (currentNetwork() != null) {

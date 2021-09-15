@@ -357,3 +357,16 @@ timingDiagram {
 	}
 }
 
+nwdiagDiagram {
+	network {
+		FontSize 12
+		Shadowing 1.0
+	}
+	server {
+		FontSize 12
+	}
+	group {
+		FontSize 12
+		BackGroundColor #ddd
+	}
+}

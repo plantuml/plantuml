@@ -316,7 +316,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 	private TimeHeader getTimeHeader() {
 		if (openClose.getCalendar() == null) {
 			return new TimeHeaderSimple(getTimelineStyle(), getClosedStyle(), getFactorScale(), min, max,
-					getIHtmlColorSet(), getSkinParam().getThemeStyle());
+					getIHtmlColorSet(), getSkinParam().getThemeStyle(), colorDays());
 		} else if (printScale == PrintScale.DAILY) {
 			return new TimeHeaderDaily(locale, getTimelineStyle(), getClosedStyle(), getFactorScale(),
 					openClose.getCalendar(), min, max, openClose, colorDays(), colorDaysOfWeek, nameDays, printStart,

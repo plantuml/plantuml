@@ -149,6 +149,9 @@ public class HColorSimple extends HColorAbstract implements HColor {
 		final float[] hsl1 = col1.getHSL();
 		final float[] hsl2 = col2.getHSL();
 
+		if (completionInt > 100)
+			completionInt = 100;
+
 		float completion = (float) (completionInt / 100.0);
 		completion = completion * completion * completion;
 		final float[] hsl = linear(completion, hsl1, hsl2);

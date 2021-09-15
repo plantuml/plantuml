@@ -125,11 +125,11 @@ public class GridTextBlockDecorated extends GridTextBlockSimple {
 		return false;
 	}
 
-	private StyleSignature getStyleDefinition() {
-		return StyleSignature.of(SName.root, SName.element, SName.nwdiagDiagram, SName.node);
+	private StyleSignature getStyleDefinitionNetwork() {
+		return StyleSignature.of(SName.root, SName.element, SName.nwdiagDiagram, SName.network);
 	}
 
-	private void drawNetworkTube(final UGraphic ug) {
+	private void drawNetworkTube(UGraphic ug) {
 
 		final StringBounder stringBounder = ug.getStringBounder();
 		double y = 0;
@@ -138,15 +138,17 @@ public class GridTextBlockDecorated extends GridTextBlockSimple {
 			computeMixMax(data.getLine(i), stringBounder, network);
 
 			final URectangle rect = new URectangle(network.getXmax() - network.getXmin(), NETWORK_THIN);
-			double deltaShadow = 1.0;
+
+			UGraphic ug2 = ug.apply(new UTranslate(network.getXmin(), y));
 			final StyleBuilder styleBuilder = getSkinParam().getCurrentStyleBuilder();
-			if (styleBuilder != null) {
-				final Style style = getStyleDefinition().getMergedStyle(styleBuilder);
-				deltaShadow = style.value(PName.Shadowing).asDouble();
-			}
+			final Style style = getStyleDefinitionNetwork().getMergedStyle(styleBuilder);
+			final double deltaShadow = style.value(PName.Shadowing).asDouble();
+			ug2 = ug2.apply(style.value(PName.LineColor).asColor(getSkinParam().getThemeStyle(),
+					getSkinParam().getIHtmlColorSet()));
+			ug2 = ug2.apply(style.value(PName.BackGroundColor)
+					.asColor(getSkinParam().getThemeStyle(), getSkinParam().getIHtmlColorSet()).bg());
 
 			rect.setDeltaShadow(deltaShadow);
-			UGraphic ug2 = ug.apply(new UTranslate(network.getXmin(), y));
 			if (network != null && network.getColor() != null) {
 				ug2 = ug2.apply(network.getColor().bg());
 			}
