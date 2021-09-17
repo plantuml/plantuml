@@ -40,4 +40,4 @@ Furthermore:
  * [Sprite icons](http://plantuml.com/sprite)
  * [AsciiMath mathematical expressions](http://plantuml.com/ascii-math)
 
-To know more about PlantUML, please visit http://plantuml.com/
+To know more about PlantUML, please visit https://plantuml.com/
