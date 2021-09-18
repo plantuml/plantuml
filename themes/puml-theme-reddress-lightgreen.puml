@@ -1,0 +1,202 @@
+''
+'' A light green style from "Red Dress"
+''
+'' Original Author: https://github.com/Drakemor
+'' https://github.com/Drakemor/RedDress-PlantUML
+''
+
+!if (%not(%variable_exists("$FONTNAME")))
+!$FONTNAME = "Verdana"
+!endif
+
+!if (%not(%variable_exists("$FONTSIZE")))
+!$FONTSIZE = 11
+!endif
+
+!$ACCENT = "55BB33"
+!$ACCENTDARK = "338822"
+skinparam stereotypeCBackgroundColor $ACCENTDARK
+!$PRIMARYFONTCOLOR = "000"
+!$SECONDARY = "333"
+!$ARROWCOLOR = "000"
+!$ARROWFONTCOLOR = "333"
+!$BORDERCOLOR = "aaa"
+!$BOXBG = "ccc"
+!$LIGHTBORDERCOLOR = "cccccc"
+!$LIGHTBG = "e0e0e0"
+skinparam backgroundColor fff
+
+!procedure font_style()
+  fontColor $PRIMARYFONTCOLOR
+  fontName $FONTNAME
+  fontSize $FONTSIZE
+  stereotypeFontColor $SECONDARY
+  stereotypeFontSize $FONTSIZE
+!endprocedure
+
+!procedure basic_style()
+  backgroundColor $BOXBG
+  borderColor $BORDERCOLOR
+!endprocedure
+
+!procedure light_style()
+  backgroundColor $LIGHTBG
+  borderColor $LIGHTBORDERCOLOR
+!endprocedure
+
+!procedure accent_style()
+  backgroundColor $ACCENT
+  borderColor $ACCENTDARK
+!endprocedure
+
+!procedure arrow_style()
+  arrowColor $ARROWCOLOR
+  arrowFontName $FONTNAME
+  arrowFontColor $ARROWFONTCOLOR
+  arrowFontSize $FONTSIZE
+!endprocedure
+
+' Class diagrams
+
+skinparam circledCharacter {
+  radius 8
+  fontSize $FONTSIZE
+  fontName $FONTNAME
+}
+
+skinparam class {
+  basic_style()
+  font_style()
+  arrow_style()
+
+  attributeFontColor $SECONDARY
+  attributeFontSize $FONTSIZE
+  attributeIconSize $FONTSIZE
+}
+
+' Sequence diagrams
+
+skinparam actor {
+  accent_style()
+  font_style()
+}
+
+skinparam participant {
+  basic_style()
+  font_style()
+}
+
+skinparam collections {
+  basic_style()
+  font_style()
+}
+
+skinparam SequenceBox{
+  light_style()
+  font_style()
+}
+
+' Component diagrams
+
+skinparam interface {
+  accent_style()
+  font_style()
+}
+
+skinparam component {
+  basic_style()
+  font_style()
+}
+
+skinparam node {
+  basic_style()
+  font_style()
+}
+
+skinparam database {
+  basic_style()
+  font_style()
+}
+
+skinparam queue {
+  basic_style()
+  font_style()
+}
+
+' Use Case diagrams
+
+skinparam usecase {
+  basic_style()
+  font_style()
+  arrow_style()
+}
+
+skinparam activity {
+  basic_style()
+  font_style()
+  arrow_style()
+}
+
+skinparam sequence {
+  font_style()
+  arrow_style()
+
+  lifeLineBorderColor $ACCENT
+  lifeLineBackgroundColor $LIGHTBG
+}
+
+skinparam boundary {
+  accent_style()
+  font_style()
+}
+
+skinparam control {
+  accent_style()
+  font_style()
+}
+
+skinparam entity {
+  accent_style()
+  font_style()
+}
+
+' State diagrams
+
+skinparam state {
+  basic_style()
+  font_style()
+  arrow_style()
+  startColor $ACCENT
+  endColor $ACCENTDARK
+}
+
+' Object diagrams
+
+skinparam object {
+  basic_style()
+  font_style()
+  arrow_style()
+}
+
+' Common
+
+skinparam note {
+  accent_style()
+  font_style()
+}
+
+skinparam cloud {
+  basic_style()
+  font_style()
+  arrow_style()
+}
+
+skinparam rectangle {
+  basic_style()
+  font_style()
+}
+
+skinparam storage {
+  basic_style()
+  font_style()
+}
