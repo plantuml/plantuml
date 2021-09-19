@@ -34,10 +34,11 @@
  */
 package net.sourceforge.plantuml.ugraphic.eps;
 
+import static net.sourceforge.plantuml.graphic.TextBlockUtils.createTextLayout;
+
 import java.awt.font.TextLayout;
 
 import net.sourceforge.plantuml.eps.EpsGraphics;
-import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.UnusedSpace;
 import net.sourceforge.plantuml.ugraphic.UCenteredCharacter;
 import net.sourceforge.plantuml.ugraphic.UDriver;
@@ -57,7 +58,7 @@ public class DriverCenteredCharacterEps implements UDriver<EpsGraphics> {
 		final double xpos = x - unusedSpace.getCenterX() - 0.5;
 		final double ypos = y - unusedSpace.getCenterY() - 0.5;
 
-		final TextLayout t = new TextLayout("" + c, font.getUnderlayingFont(), TextBlockUtils.getFontRenderContext());
+		final TextLayout t = createTextLayout(font, "" + c);
 		eps.setStrokeColor(mapper.toColor(param.getColor()));
 		DriverTextEps.drawPathIterator(eps, xpos, ypos, t.getOutline(null));
 

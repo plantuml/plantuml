@@ -34,9 +34,10 @@
  */
 package net.sourceforge.plantuml.ugraphic.tikz;
 
+import static net.sourceforge.plantuml.graphic.TextBlockUtils.createTextLayout;
+
 import java.awt.font.TextLayout;
 
-import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.UnusedSpace;
 import net.sourceforge.plantuml.tikz.TikzGraphics;
 import net.sourceforge.plantuml.ugraphic.UCenteredCharacter;
@@ -57,7 +58,7 @@ public class DriverCenteredCharacterTikz implements UDriver<TikzGraphics> {
 		final double xpos = x - unusedSpace.getCenterX() - 0.5;
 		final double ypos = y - unusedSpace.getCenterY() - 0.5;
 
-		final TextLayout t = new TextLayout("" + c, font.getUnderlayingFont(), TextBlockUtils.getFontRenderContext());
+		final TextLayout t = createTextLayout(font, "" + c);
 		tikz.setStrokeColor(mapper.toColor(param.getColor()));
 		tikz.drawPathIterator(xpos, ypos, t.getOutline(null).getPathIterator(null));
 

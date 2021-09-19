@@ -34,9 +34,10 @@
  */
 package net.sourceforge.plantuml.ugraphic.eps;
 
+import static net.sourceforge.plantuml.graphic.TextBlockUtils.createTextLayout;
+
 import java.awt.Color;
 import java.awt.Shape;
-import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.PathIterator;
 import java.util.ArrayList;
@@ -49,12 +50,10 @@ import net.sourceforge.plantuml.eps.EpsStrategy;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.FontStyle;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.ugraphic.ClipContainer;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UClip;
 import net.sourceforge.plantuml.ugraphic.UDriver;
-import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UText;
@@ -66,13 +65,11 @@ public class DriverTextEps implements UDriver<EpsGraphics> {
 
 	private final StringBounder stringBounder;
 	private final ClipContainer clipContainer;
-	private final FontRenderContext fontRenderContext;
 	private final EpsStrategy strategy;
 
 	public DriverTextEps(ClipContainer clipContainer, EpsStrategy strategy) {
 		this.stringBounder = FileFormat.PNG.getDefaultStringBounder();
 		this.clipContainer = clipContainer;
-		this.fontRenderContext = TextBlockUtils.getFontRenderContext();
 		this.strategy = strategy;
 	}
 
@@ -95,10 +92,7 @@ public class DriverTextEps implements UDriver<EpsGraphics> {
 			return;
 		}
 
-		final UFont font = fontConfiguration.getFont();
-
-		final TextLayout textLayout = new TextLayout(shape.getText(), font.getUnderlayingFont(), fontRenderContext);
-		// System.err.println("text=" + shape.getText());
+		final TextLayout textLayout = createTextLayout(shape);
 
 		MinMax dim = null;
 

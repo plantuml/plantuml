@@ -45,7 +45,6 @@ import net.sourceforge.plantuml.SvgCharSizeHack;
 import net.sourceforge.plantuml.TikzFontDistortion;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.posimo.DotPath;
 import net.sourceforge.plantuml.svg.LengthAdjust;
 import net.sourceforge.plantuml.svg.SvgGraphics;
@@ -131,7 +130,7 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 	private void register() {
 		registerDriver(URectangle.class, new DriverRectangleSvg(this));
 		if (textAsPath2) {
-			registerDriver(UText.class, new DriverTextAsPathSvg(TextBlockUtils.getFontRenderContext(), this));
+			registerDriver(UText.class, new DriverTextAsPathSvg(this));
 		} else {
 			registerDriver(UText.class, new DriverTextSvg(getStringBounder(), this));
 		}
