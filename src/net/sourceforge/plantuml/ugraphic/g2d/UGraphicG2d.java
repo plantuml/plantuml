@@ -54,7 +54,6 @@ import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.anim.AffineTransformation;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.png.PngIO;
 import net.sourceforge.plantuml.posimo.DotPath;
 import net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
@@ -143,7 +142,7 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> implements EnsureV
 	private void register(double dpiFactor) {
 		registerDriver(URectangle.class, new DriverRectangleG2d(dpiFactor, this));
 		if (this.hasAffineTransform || dpiFactor != 1.0) {
-			registerDriver(UText.class, new DriverTextAsPathG2d(this, TextBlockUtils.getFontRenderContext()));
+			registerDriver(UText.class, new DriverTextAsPathG2d(this));
 		} else {
 			registerDriver(UText.class, new DriverTextG2d(this));
 		}

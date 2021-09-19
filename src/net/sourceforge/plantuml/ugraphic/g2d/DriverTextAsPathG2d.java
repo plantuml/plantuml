@@ -35,12 +35,13 @@
  */
 package net.sourceforge.plantuml.ugraphic.g2d;
 
+import static net.sourceforge.plantuml.graphic.TextBlockUtils.createTextLayout;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsEnvironment;
-import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Rectangle2D;
@@ -63,11 +64,9 @@ import net.sourceforge.plantuml.ugraphic.color.HColor;
 public class DriverTextAsPathG2d implements UDriver<Graphics2D> {
 
 	private final EnsureVisible visible;
-	private final FontRenderContext fontRenderContext;
 
-	public DriverTextAsPathG2d(EnsureVisible visible, FontRenderContext fontRenderContext) {
+	public DriverTextAsPathG2d(EnsureVisible visible) {
 		this.visible = visible;
-		this.fontRenderContext = fontRenderContext;
 	}
 
 	private static void printFont() {
@@ -99,7 +98,7 @@ public class DriverTextAsPathG2d implements UDriver<Graphics2D> {
 
 		g2d.setFont(font.getUnderlayingFont());
 		g2d.setColor(mapper.toColor(fontConfiguration.getColor()));
-		final TextLayout t = new TextLayout(shape.getText(), font.getUnderlayingFont(), fontRenderContext);
+		final TextLayout t = createTextLayout(font, shape.getText());
 		g2d.translate(x, y);
 		g2d.fill(t.getOutline(null));
 		g2d.translate(-x, -y);

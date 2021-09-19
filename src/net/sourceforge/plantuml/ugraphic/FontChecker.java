@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.ugraphic;
 
+import static net.sourceforge.plantuml.graphic.TextBlockUtils.createTextLayout;
 import static net.sourceforge.plantuml.ugraphic.ImageBuilder.plainPngBuilder;
 
 import java.awt.Font;
@@ -54,7 +55,6 @@ import javax.xml.transform.TransformerException;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.security.ImageIO;
 import net.sourceforge.plantuml.security.SFile;
@@ -102,7 +102,7 @@ public class FontChecker {
 	}
 
 	public String getCharDesc(char c) {
-		final TextLayout t = new TextLayout("" + c, font.getUnderlayingFont(), TextBlockUtils.getFontRenderContext());
+		final TextLayout t = createTextLayout(font, "" + c);
 		final Shape sh = t.getOutline(null);
 		final double current[] = new double[6];
 		final PathIterator it = sh.getPathIterator(null);
@@ -120,7 +120,7 @@ public class FontChecker {
 	}
 
 	public String getCharDescVerbose(char c) {
-		final TextLayout t = new TextLayout("" + c, font.getUnderlayingFont(), TextBlockUtils.getFontRenderContext());
+		final TextLayout t = createTextLayout(font, "" + c);
 		final Shape sh = t.getOutline(null);
 		final double current[] = new double[6];
 		final PathIterator it = sh.getPathIterator(null);
