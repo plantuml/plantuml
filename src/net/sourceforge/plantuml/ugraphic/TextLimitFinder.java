@@ -35,75 +35,50 @@
  */
 package net.sourceforge.plantuml.ugraphic;
 
+import static net.sourceforge.plantuml.utils.ObjectUtils.instanceOfAny;
+
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
-public class TextLimitFinder extends UGraphicNo implements UGraphic {
+public class TextLimitFinder extends UGraphicNo {
 
-	public boolean matchesProperty(String propertyName) {
-		return false;
-	}
-
-	public double dpiFactor() {
-		return 1;
-	}
-
+	@Override
 	public UGraphic apply(UChange change) {
-		if (change instanceof UTranslate) {
-			return new TextLimitFinder(stringBounder, minmax, translate.compose((UTranslate) change));
-		} else if (change instanceof UStroke) {
-			return new TextLimitFinder(this);
-		} else if (change instanceof UBackground) {
-			return new TextLimitFinder(this);
-		} else if (change instanceof HColor) {
-			return new TextLimitFinder(this);
-		}
-		throw new UnsupportedOperationException();
+		return new TextLimitFinder(this, change);
 	}
 
-	private final StringBounder stringBounder;
-	private final UTranslate translate;
 	private final MinMaxMutable minmax;
 
 	public TextLimitFinder(StringBounder stringBounder, boolean initToZero) {
-		this(stringBounder, MinMaxMutable.getEmpty(initToZero), new UTranslate());
+		super(stringBounder);
+		this.minmax = MinMaxMutable.getEmpty(initToZero);
 	}
 
-	private TextLimitFinder(StringBounder stringBounder, MinMaxMutable minmax, UTranslate translate) {
-		this.stringBounder = stringBounder;
-		this.minmax = minmax;
-		this.translate = translate;
-	}
-
-	private TextLimitFinder(TextLimitFinder other) {
-		this(other.stringBounder, other.minmax, other.translate);
-	}
-
-	public StringBounder getStringBounder() {
-		return stringBounder;
-	}
-
-	public UParam getParam() {
-		return new UParamNull();
+	private TextLimitFinder(TextLimitFinder other, UChange change) {
+		super(other, change);
+		if (!instanceOfAny(change,
+				UBackground.class,
+				HColor.class,
+				UStroke.class,
+				UTranslate.class
+		)) {
+			throw new UnsupportedOperationException(change.getClass().toString());
+		}
+		this.minmax = other.minmax;
 	}
 
 	public void draw(UShape shape) {
 		if (shape instanceof UText) {
-			final double x = translate.getDx();
-			final double y = translate.getDy();
+			final double x = getTranslate().getDx();
+			final double y = getTranslate().getDy();
 			drawText(x, y, (UText) shape);
 		}
 	}
 
-	public ColorMapper getColorMapper() {
-		throw new UnsupportedOperationException();
-	}
-
 	private void drawText(double x, double y, UText text) {
-		final Dimension2D dim = stringBounder.calculateDimension(text.getFontConfiguration().getFont(), text.getText());
+		final Dimension2D dim = getStringBounder().calculateDimension(text.getFontConfiguration().getFont(), text.getText());
 		y -= dim.getHeight() - 1.5;
 		minmax.addPoint(x, y);
 		minmax.addPoint(x, y + dim.getHeight());
@@ -125,9 +100,6 @@ public class TextLimitFinder extends UGraphicNo implements UGraphic {
 
 	public double getMinY() {
 		return minmax.getMinY();
-	}
-
-	public void flushUg() {
 	}
 
 }

@@ -35,38 +35,26 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile;
 
+import static net.sourceforge.plantuml.utils.ObjectUtils.instanceOfAny;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UBackground;
 import net.sourceforge.plantuml.ugraphic.UChange;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UGraphicNo;
-import net.sourceforge.plantuml.ugraphic.UParam;
-import net.sourceforge.plantuml.ugraphic.UParamNull;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
-public class ZadBuilder extends UGraphicNo implements UGraphic {
+public class ZadBuilder extends UGraphicNo {
 
+	@Override
 	public UGraphic apply(UChange change) {
-		if (change instanceof UTranslate) {
-			return new ZadBuilder(stringBounder, translate.compose((UTranslate) change), this.context);
-		} else if (change instanceof UStroke) {
-			return new ZadBuilder(this);
-		} else if (change instanceof UBackground) {
-			return new ZadBuilder(this);
-		} else if (change instanceof HColor) {
-			return new ZadBuilder(this);
-		}
-		throw new UnsupportedOperationException();
+		return new ZadBuilder(this, change);
 	}
 
-	private final StringBounder stringBounder;
-	private final UTranslate translate;
 	private final Context context;
 
 	static class Context {
@@ -74,25 +62,21 @@ public class ZadBuilder extends UGraphicNo implements UGraphic {
 	}
 
 	public ZadBuilder(StringBounder stringBounder) {
-		this(stringBounder, new UTranslate(), new Context());
+		super(stringBounder);
+		this.context = new Context();
 	}
 
-	private ZadBuilder(StringBounder stringBounder, UTranslate translate, Context context) {
-		this.stringBounder = stringBounder;
-		this.translate = translate;
-		this.context = context;
-	}
-
-	private ZadBuilder(ZadBuilder other) {
-		this(other.stringBounder, other.translate, other.context);
-	}
-
-	public StringBounder getStringBounder() {
-		return stringBounder;
-	}
-
-	public UParam getParam() {
-		return new UParamNull();
+	private ZadBuilder(ZadBuilder other, UChange change) {
+		super(other, change);
+		if (!instanceOfAny(change,
+				UBackground.class,
+				HColor.class,
+				UStroke.class,
+				UTranslate.class
+		)) {
+			throw new UnsupportedOperationException(change.getClass().toString());
+		}
+		this.context = other.context;
 	}
 
 	public void draw(UShape shape) {
@@ -102,24 +86,9 @@ public class ZadBuilder extends UGraphicNo implements UGraphic {
 	}
 
 	private void drawRectangle(URectangle shape) {
-		final MinMax area = shape.getMinMax().translate(translate);
+		final MinMax area = shape.getMinMax().translate(getTranslate());
 		// System.err.println("ZadBuilder " + shape + " " + area);
 		context.zad.add(area);
-	}
-
-	public ColorMapper getColorMapper() {
-		throw new UnsupportedOperationException();
-	}
-
-	public void flushUg() {
-	}
-
-	public boolean matchesProperty(String propertyName) {
-		return false;
-	}
-
-	public double dpiFactor() {
-		return 1;
 	}
 
 	public Zad getZad() {
