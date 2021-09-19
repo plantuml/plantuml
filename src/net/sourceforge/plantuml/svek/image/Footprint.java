@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
+import static net.sourceforge.plantuml.utils.ObjectUtils.instanceOfAny;
+
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
@@ -50,8 +52,6 @@ import net.sourceforge.plantuml.ugraphic.UGraphicNo;
 import net.sourceforge.plantuml.ugraphic.UHorizontalLine;
 import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.ULine;
-import net.sourceforge.plantuml.ugraphic.UParam;
-import net.sourceforge.plantuml.ugraphic.UParamNull;
 import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UShape;
@@ -71,48 +71,35 @@ public class Footprint {
 
 	}
 
-	class MyUGraphic extends UGraphicNo implements UGraphic {
+	class MyUGraphic extends UGraphicNo {
 
-		private final UTranslate translate;
 		private final List<Point2D.Double> all;
 
-		public double dpiFactor() {
-			return 1;
-		}
-
-		private MyUGraphic(List<Point2D.Double> all, UTranslate translate) {
-			this.all = all;
-			this.translate = translate;
-		}
-
-		public boolean matchesProperty(String propertyName) {
-			return false;
-		}
-
 		public MyUGraphic() {
-			this(new ArrayList<Point2D.Double>(), new UTranslate());
+			super(stringBounder);
+			this.all = new ArrayList<>();
+		}
+
+		private MyUGraphic(MyUGraphic other, UChange change) {
+			super(other, change);
+			if (!instanceOfAny(change,
+					UBackground.class,
+					HColor.class,
+					UStroke.class,
+					UTranslate.class
+			)) {
+				throw new UnsupportedOperationException(change.getClass().toString());
+			}
+			this.all = other.all;
 		}
 
 		public UGraphic apply(UChange change) {
-			if (change instanceof UTranslate) {
-				return new MyUGraphic(all, translate.compose((UTranslate) change));
-			} else if (change instanceof UStroke || change instanceof HColor || change instanceof UBackground) {
-				return new MyUGraphic(all, translate);
-			}
-			throw new UnsupportedOperationException();
-		}
-
-		public StringBounder getStringBounder() {
-			return stringBounder;
-		}
-
-		public UParam getParam() {
-			return new UParamNull();
+			return new MyUGraphic(this, change);
 		}
 
 		public void draw(UShape shape) {
-			final double x = translate.getDx();
-			final double y = translate.getDy();
+			final double x = getTranslate().getDx();
+			final double y = getTranslate().getDy();
 			if (shape instanceof UText) {
 				drawText(x, y, (UText) shape);
 			} else if (shape instanceof UHorizontalLine) {
@@ -142,7 +129,7 @@ public class Footprint {
 		}
 
 		private void drawText(double x, double y, UText text) {
-			final Dimension2D dim = stringBounder.calculateDimension(text.getFontConfiguration().getFont(),
+			final Dimension2D dim = getStringBounder().calculateDimension(text.getFontConfiguration().getFont(),
 					text.getText());
 			y -= dim.getHeight() - 1.5;
 			addPoint(x, y);
@@ -172,10 +159,6 @@ public class Footprint {
 			addPoint(x, y);
 			addPoint(x + rect.getWidth(), y + rect.getHeight());
 		}
-
-		public void flushUg() {
-		}
-
 	}
 
 	public ContainingEllipse getEllipse(UDrawable drawable, double alpha) {

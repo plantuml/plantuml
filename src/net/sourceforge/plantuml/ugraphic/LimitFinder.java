@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.ugraphic;
 
+import static net.sourceforge.plantuml.utils.ObjectUtils.instanceOfAny;
+
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.activitydiagram3.ftile.CenteredText;
@@ -46,66 +48,38 @@ import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
-public class LimitFinder extends UGraphicNo implements UGraphic {
+public class LimitFinder extends UGraphicNo {
 
-	public boolean matchesProperty(String propertyName) {
-		return false;
-	}
-
-	public double dpiFactor() {
-		return 1;
-	}
-
+	@Override
 	public UGraphic apply(UChange change) {
-		if (change instanceof UTranslate) {
-			return new LimitFinder(stringBounder, minmax, translate.compose((UTranslate) change), clip);
-		} else if (change instanceof UStroke) {
-			return new LimitFinder(this);
-		} else if (change instanceof UBackground) {
-			return new LimitFinder(this);
-		} else if (change instanceof HColor) {
-			return new LimitFinder(this);
-		} else if (change instanceof UHidden) {
-			return new LimitFinder(this);
-		} else if (change instanceof UAntiAliasing) {
-			return new LimitFinder(this);
-		} else if (change instanceof UScale) {
-			return new LimitFinder(this);
-		} else if (change instanceof UClip) {
-			final LimitFinder copy = new LimitFinder(this);
-			copy.clip = (UClip) change;
-			copy.clip = copy.clip.translate(translate);
-			return copy;
-		}
-		throw new UnsupportedOperationException(change.getClass().toString());
+		return new LimitFinder(this, change);
 	}
 
-	private final StringBounder stringBounder;
-	private final UTranslate translate;
 	private final MinMaxMutable minmax;
-	private UClip clip;
+	private final UClip clip;
 
 	public LimitFinder(StringBounder stringBounder, boolean initToZero) {
-		this(stringBounder, MinMaxMutable.getEmpty(initToZero), new UTranslate(), null);
+		super(stringBounder);
+		this.minmax = MinMaxMutable.getEmpty(initToZero);
+		this.clip = null;
 	}
 
-	private LimitFinder(StringBounder stringBounder, MinMaxMutable minmax, UTranslate translate, UClip clip) {
-		this.stringBounder = stringBounder;
-		this.minmax = minmax;
-		this.translate = translate;
-		this.clip = clip;
-	}
-
-	private LimitFinder(LimitFinder other) {
-		this(other.stringBounder, other.minmax, other.translate, other.clip);
-	}
-
-	public StringBounder getStringBounder() {
-		return stringBounder;
-	}
-
-	public UParam getParam() {
-		return new UParamNull();
+	private LimitFinder(LimitFinder other, UChange change) {
+		super(other, change);
+		if (!instanceOfAny(change,
+				UAntiAliasing.class,
+				UBackground.class,
+				UClip.class,
+				HColor.class,
+				UHidden.class,
+				UScale.class,
+				UStroke.class,
+				UTranslate.class
+		)) {
+			throw new UnsupportedOperationException(change.getClass().toString());
+		}
+		this.clip = change instanceof UClip ? ((UClip) change).translate(getTranslate()) : other.clip;
+		this.minmax = other.minmax;
 	}
 
 	private void addPoint(double x, double y) {
@@ -115,8 +89,8 @@ public class LimitFinder extends UGraphicNo implements UGraphic {
 	}
 
 	public void draw(UShape shape) {
-		final double x = translate.getDx();
-		final double y = translate.getDy();
+		final double x = getTranslate().getDx();
+		final double y = getTranslate().getDy();
 		if (shape instanceof UText) {
 			drawText(x, y, (UText) shape);
 		} else if (shape instanceof ULine) {
@@ -208,7 +182,7 @@ public class LimitFinder extends UGraphicNo implements UGraphic {
 	}
 
 	private void drawText(double x, double y, UText text) {
-		final Dimension2D dim = stringBounder.calculateDimension(text.getFontConfiguration().getFont(), text.getText());
+		final Dimension2D dim = getStringBounder().calculateDimension(text.getFontConfiguration().getFont(), text.getText());
 		y -= dim.getHeight() - 1.5;
 		addPoint(x, y);
 		addPoint(x, y + dim.getHeight());
@@ -241,9 +215,6 @@ public class LimitFinder extends UGraphicNo implements UGraphic {
 			return MinMax.getEmpty(true);
 		}
 		return MinMax.fromMutable(minmax);
-	}
-
-	public void flushUg() {
 	}
 
 }

@@ -36,25 +36,80 @@
 package net.sourceforge.plantuml.ugraphic;
 
 import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
-public abstract class UGraphicNo {
+public abstract class UGraphicNo implements UGraphic {
 
+	private final StringBounder stringBounder;
+	private final UTranslate translate;
+
+	public UGraphicNo(StringBounder stringBounder) {
+		this.stringBounder = stringBounder;
+		this.translate = new UTranslate();
+	}
+
+	public UGraphicNo(UGraphicNo other, UChange change) {
+		this.stringBounder = other.stringBounder;
+		this.translate = change instanceof UTranslate ? other.translate.compose((UTranslate) change) : other.translate;
+	}
+
+	//
+	// Implement UGraphic
+	//
+	
+	@Override
 	final public void startUrl(Url url) {
 	}
 
+	@Override
 	public void startGroup(UGroupType type, String ident) {
 	}
 
+	@Override
 	final public void closeUrl() {
 	}
 
+	@Override
 	final public void closeGroup() {
 	}
 
+	@Override
+	public ColorMapper getColorMapper() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public HColor getDefaultBackground() {
 		return HColorUtils.BLACK;
 	}
+	
+	@Override
+	public UParam getParam() {
+		return new UParamNull();
+	}
 
+	@Override
+	public StringBounder getStringBounder() {
+		return stringBounder;
+	}
+
+	@Override
+	public void flushUg() {
+	}
+
+	@Override
+	public boolean matchesProperty(String propertyName) {
+		return false;
+	}
+	
+	//
+	// Internal things
+	//
+
+	protected UTranslate getTranslate() {
+		return translate;
+	}
 }
