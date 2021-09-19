@@ -15,88 +15,85 @@ root {
 
 document {
   BackGroundColor White
+  header {
+    HorizontalAlignment right
+    FontSize 10
+    FontColor #888888
+    BackGroundColor none
+    LineColor none
+  }
+  title {
+    HorizontalAlignment center
+    FontSize 14
+    FontStyle bold
+    Padding 5
+    Margin 5
+    LineColor none
+    BackGroundColor none
+  }
+  footer {
+    HorizontalAlignment center
+    FontSize 10
+    FontColor #888888
+    BackGroundColor none
+    LineColor none
+  }
+  legend {
+    LineColor black
+    BackGroundColor #DDDDDD
+    FontSize 14
+    RoundCorner 15
+    Padding 6
+    Margin 8
+  }
+  caption {
+    HorizontalAlignment center
+    FontSize 14
+    Padding 0
+    Margin 1
+    LineColor none
+    BackGroundColor none
+  }
 }
 
 stereotype {
   FontStyle italic
 }
 
-title {
-  HorizontalAlignment center
-  FontSize 14
-  FontStyle bold
-  Padding 5
-  Margin 5
-  LineColor none
-  BackGroundColor none
-}
-
-header {
-  HorizontalAlignment right
-  FontSize 10
-  FontColor #888888
-  BackGroundColor none
-  LineColor none
-}
-
-footer {
-  HorizontalAlignment center
-  FontSize 10
-  FontColor #888888
-  BackGroundColor none
-  LineColor none
-}
-
-legend {
-  LineColor black
-  BackGroundColor #DDDDDD
-  FontSize 14
-  RoundCorner 15
-  Padding 6
-  Margin 8
-}
-
-caption {
-  HorizontalAlignment center
-  FontSize 14
-  Padding 0
-  Margin 1
-  LineColor none
-  BackGroundColor none
-}
 
 
 element {
   Shadowing 4.0
 }
 
+group {
+    BackGroundColor white
+}
+
 sequenceDiagram {
+  group {
+    LineColor black
+    LineThickness 2.0
+    FontSize 11
+    FontStyle bold
+  }
+
+  groupHeader {
+    BackGroundColor #EEEEEE
+    LineColor black
+    FontSize 13
+    FontStyle bold
+  }
+
+  lifeLine {
+    BackGroundColor white
+  }
+
 }
 
 classDiagram {
 }
 
-
-group {
-  BackGroundColor white
-  LineColor black
-  LineThickness 2.0
-  FontSize 11
-  
-  FontStyle bold
-}
-
-groupHeader {
-  BackGroundColor #EEEEEE
-  LineColor black
-
-  FontSize 13
-  FontStyle bold
-}
-
-lifeLine {
-  BackGroundColor white
-}
 
 destroy {
 }
@@ -368,5 +365,8 @@ nwdiagDiagram {
 	group {
 		FontSize 12
 		BackGroundColor #ddd
+	}
+	arrow {
+		FontSize 11
 	}
 }
