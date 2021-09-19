@@ -36,6 +36,7 @@ package net.sourceforge.plantuml.nwdiag.next;
 
 import java.util.List;
 
+import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.nwdiag.core.Network;
@@ -49,6 +50,7 @@ import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class GridTextBlockDecorated extends GridTextBlockSimple {
 
@@ -70,10 +72,17 @@ public class GridTextBlockDecorated extends GridTextBlockSimple {
 			drawGroups(ug, group, getSkinParam());
 		}
 		drawNetworkTube(ug);
-		drawLinks(ug);
+		drawLinks(ug, getSkinParam().getCurrentStyleBuilder());
 	}
 
-	private void drawLinks(UGraphic ug) {
+	private void drawLinks(UGraphic ug, StyleBuilder styleBuilder) {
+
+		final Style style = getStyleDefinitionNetwork(SName.arrow).getMergedStyle(styleBuilder);
+		final HColor lineColor = style.value(PName.LineColor).asColor(getSkinParam().getThemeStyle(),
+				getSkinParam().getIHtmlColorSet());
+
+		ug = ug.apply(lineColor);
+
 		final StringBounder stringBounder = ug.getStringBounder();
 		for (int i = 0; i < data.getNbLines(); i++) {
 			final double lineHeight = lineHeight(stringBounder, i);
@@ -125,8 +134,8 @@ public class GridTextBlockDecorated extends GridTextBlockSimple {
 		return false;
 	}
 
-	private StyleSignature getStyleDefinitionNetwork() {
-		return StyleSignature.of(SName.root, SName.element, SName.nwdiagDiagram, SName.network);
+	private StyleSignature getStyleDefinitionNetwork(SName sname) {
+		return StyleSignature.of(SName.root, SName.element, SName.nwdiagDiagram, sname);
 	}
 
 	private void drawNetworkTube(UGraphic ug) {
@@ -141,7 +150,7 @@ public class GridTextBlockDecorated extends GridTextBlockSimple {
 
 			UGraphic ug2 = ug.apply(new UTranslate(network.getXmin(), y));
 			final StyleBuilder styleBuilder = getSkinParam().getCurrentStyleBuilder();
-			final Style style = getStyleDefinitionNetwork().getMergedStyle(styleBuilder);
+			final Style style = getStyleDefinitionNetwork(SName.network).getMergedStyle(styleBuilder);
 			final double deltaShadow = style.value(PName.Shadowing).asDouble();
 			ug2 = ug2.apply(style.value(PName.LineColor).asColor(getSkinParam().getThemeStyle(),
 					getSkinParam().getIHtmlColorSet()));

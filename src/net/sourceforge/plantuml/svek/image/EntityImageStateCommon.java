@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineConfigurable;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
@@ -50,6 +51,10 @@ import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -70,10 +75,28 @@ public abstract class EntityImageStateCommon extends AbstractEntityImage {
 		this.lineConfig = entity;
 		final Stereotype stereotype = entity.getStereotype();
 
-		this.desc = entity.getDisplay().create8(new FontConfiguration(getSkinParam(), FontParam.STATE, stereotype),
-				HorizontalAlignment.CENTER, skinParam, CreoleMode.FULL, skinParam.wrapWidth());
+		final FontConfiguration fontConfiguration;
+
+		if (UseStyle.useBetaStyle())
+			fontConfiguration = getStyleHeader().getFontConfiguration(getSkinParam().getThemeStyle(),
+					getSkinParam().getIHtmlColorSet());
+		else
+			fontConfiguration = new FontConfiguration(getSkinParam(), FontParam.STATE, stereotype);
+
+		this.desc = entity.getDisplay().create8(fontConfiguration, HorizontalAlignment.CENTER, skinParam,
+				CreoleMode.FULL, skinParam.wrapWidth());
 		this.url = entity.getUrl99();
 
+	}
+
+	final protected Style getStyleHeader() {
+		return StyleSignature.of(SName.root, SName.element, SName.stateDiagram, SName.state, SName.header)
+				.with(getEntity().getStereotype()).getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+	}
+
+	final protected Style getStyleMember() {
+		return StyleSignature.of(SName.root, SName.element, SName.stateDiagram, SName.state)
+				.with(getEntity().getStereotype()).getMergedStyle(getSkinParam().getCurrentStyleBuilder());
 	}
 
 	final protected UStroke getStroke() {
@@ -100,12 +123,21 @@ public abstract class EntityImageStateCommon extends AbstractEntityImage {
 
 		HColor classBorder = lineConfig.getColors(getSkinParam()).getColor(ColorType.LINE);
 		if (classBorder == null) {
-			classBorder = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.stateBorder);
+			if (UseStyle.useBetaStyle())
+				classBorder = getStyleMember().value(PName.LineColor).asColor(getSkinParam().getThemeStyle(),
+						getSkinParam().getIHtmlColorSet());
+			else
+				classBorder = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.stateBorder);
 		}
 		ug = ug.apply(getStroke()).apply(classBorder);
 		HColor backcolor = getEntity().getColors(getSkinParam()).getColor(ColorType.BACK);
 		if (backcolor == null) {
-			backcolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.stateBackground);
+			if (UseStyle.useBetaStyle())
+				backcolor = getStyleMember().value(PName.BackGroundColor).asColor(getSkinParam().getThemeStyle(),
+						getSkinParam().getIHtmlColorSet());
+			else
+				backcolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.stateBackground);
+
 		}
 		ug = ug.apply(backcolor.bg());
 

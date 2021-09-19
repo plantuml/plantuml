@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.SkinParamBackcolored;
 import net.sourceforge.plantuml.SkinParamUtils;
+import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.creole.Stencil;
@@ -96,7 +97,7 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 
 	private final TextBlock textBlock;
 
-	public EntityImageNote(ILeaf entity, ISkinParam skinParam) {
+	public EntityImageNote(ILeaf entity, ISkinParam skinParam, UmlDiagramType umlDiagramType) {
 		super(entity, getSkin(getISkinParam(skinParam, entity), entity));
 		this.skinParam = getISkinParam(skinParam, entity);
 
@@ -106,7 +107,8 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 		final Rose rose = new Rose();
 
 		if (UseStyle.useBetaStyle()) {
-			final Style style = getDefaultStyleDefinition().getMergedStyle(skinParam.getCurrentStyleBuilder());
+			final Style style = getDefaultStyleDefinition(umlDiagramType.getStyleName())
+					.getMergedStyle(skinParam.getCurrentStyleBuilder());
 			if (entity.getColors(getSkinParam()).getColor(ColorType.BACK) == null) {
 				this.noteBackgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
 						skinParam.getIHtmlColorSet());
@@ -201,8 +203,8 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 		return new Dimension2DDouble(width, height);
 	}
 
-	public StyleSignature getDefaultStyleDefinition() {
-		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.note);
+	private StyleSignature getDefaultStyleDefinition(SName sname) {
+		return StyleSignature.of(SName.root, SName.element, sname, SName.note);
 	}
 
 	final public void drawU(UGraphic ug) {

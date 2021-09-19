@@ -164,7 +164,7 @@ public final class GeneralImageBuilder {
 			return entityImageClass;
 		}
 		if (leaf.getLeafType() == LeafType.NOTE) {
-			return new EntityImageNote(leaf, skinParam);
+			return new EntityImageNote(leaf, skinParam, umlDiagramType);
 		}
 		if (leaf.getLeafType() == LeafType.ACTIVITY) {
 			return new EntityImageActivity(leaf, skinParam, bibliotekon);
@@ -271,7 +271,7 @@ public final class GeneralImageBuilder {
 		}
 
 		if (leaf.getLeafType() == LeafType.TIPS) {
-			return new EntityImageTips(leaf, skinParam, bibliotekon);
+			return new EntityImageTips(leaf, skinParam, bibliotekon, umlDiagramType);
 		}
 		// TODO Clean
 		if (leaf.getLeafType() == LeafType.DOMAIN && leaf.getStereotype() != null

@@ -75,9 +75,9 @@ public enum SName {
 	ganttDiagram, //
 	group, //
 	groupHeader, //
+	header, //
 	hexagon, //
 	highlight, //
-	header, //
 	interface_, //
 	jsonDiagram, //
 	gitDiagram, //
@@ -92,6 +92,7 @@ public enum SName {
 	note, //
 	nwdiagDiagram, //
 	objectDiagram, //
+	object, //
 	package_, //
 	participant, //
 	partition, //
@@ -108,6 +109,7 @@ public enum SName {
 	server, //
 	stack, //
 	stateDiagram, //
+	state, //
 	stereotype, //
 	storage, //
 	swimlane, //

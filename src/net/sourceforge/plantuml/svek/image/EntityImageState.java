@@ -40,6 +40,7 @@ import java.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
@@ -48,6 +49,9 @@ import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UGroupType;
@@ -76,11 +80,19 @@ public class EntityImageState extends EntityImageStateCommon {
 
 		this.withSymbol = stereotype != null && stereotype.isWithOOSymbol();
 		final Display list = Display.create(entity.getBodier().getRawBody());
-		this.fields = list.create8(new FontConfiguration(getSkinParam(), FontParam.STATE_ATTRIBUTE, stereotype),
-				HorizontalAlignment.LEFT, skinParam, CreoleMode.FULL, skinParam.wrapWidth());
+		final FontConfiguration fontConfiguration;
+
+		if (UseStyle.useBetaStyle())
+			fontConfiguration = getStyleMember().getFontConfiguration(getSkinParam().getThemeStyle(),
+					getSkinParam().getIHtmlColorSet());
+		else
+			fontConfiguration = new FontConfiguration(getSkinParam(), FontParam.STATE_ATTRIBUTE, stereotype);
+
+		this.fields = list.create8(fontConfiguration, HorizontalAlignment.LEFT, skinParam, CreoleMode.FULL,
+				skinParam.wrapWidth());
 
 	}
-
+	
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
 		final Dimension2D dim = Dimension2DDouble.mergeTB(desc.calculateDimension(stringBounder),
 				fields.calculateDimension(stringBounder));

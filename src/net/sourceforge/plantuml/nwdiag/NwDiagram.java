@@ -265,16 +265,16 @@ public class NwDiagram extends UmlDiagram {
 		};
 	}
 
-	private StyleSignature getStyleDefinitionNetwork() {
-		return StyleSignature.of(SName.root, SName.element, SName.nwdiagDiagram, SName.network);
+	private StyleSignature getStyleDefinitionNetwork(SName sname) {
+		return StyleSignature.of(SName.root, SName.element, SName.nwdiagDiagram, sname);
 	}
 
-	private TextBlock toTextBlock(String name, String s) {
+	private TextBlock toTextBlockForNetworkName(String name, String s) {
 		if (s != null) {
 			name += "\\n" + s;
 		}
 		final StyleBuilder styleBuilder = getSkinParam().getCurrentStyleBuilder();
-		final Style style = getStyleDefinitionNetwork().getMergedStyle(styleBuilder);
+		final Style style = getStyleDefinitionNetwork(SName.network).getMergedStyle(styleBuilder);
 		final FontConfiguration fontConfiguration = style.getFontConfiguration(getSkinParam().getThemeStyle(),
 				getSkinParam().getIHtmlColorSet());
 		return Display.getWithNewlines(name).create(fontConfiguration, HorizontalAlignment.RIGHT,
@@ -304,7 +304,7 @@ public class NwDiagram extends UmlDiagram {
 		for (int i = 0; i < networks.size(); i++) {
 			final Network current = networks.get(i);
 			final String address = current.getOwnAdress();
-			final TextBlock desc = toTextBlock(current.getDisplayName(), address);
+			final TextBlock desc = toTextBlockForNetworkName(current.getDisplayName(), address);
 			final Dimension2D dim = desc.calculateDimension(stringBounder);
 			if (i == 0) {
 				deltaY = (dim.getHeight() - GridTextBlockDecorated.NETWORK_THIN) / 2;
@@ -315,7 +315,7 @@ public class NwDiagram extends UmlDiagram {
 		for (int i = 0; i < networks.size(); i++) {
 			final Network current = networks.get(i);
 			final String address = current.getOwnAdress();
-			final TextBlock desc = toTextBlock(current.getDisplayName(), address);
+			final TextBlock desc = toTextBlockForNetworkName(current.getDisplayName(), address);
 			final Dimension2D dim = desc.calculateDimension(stringBounder);
 			desc.drawU(ug.apply(new UTranslate(deltaX - dim.getWidth(), y)));
 

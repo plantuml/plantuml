@@ -61,6 +61,7 @@ import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.HeaderLayout;
 import net.sourceforge.plantuml.svek.ShapeType;
@@ -84,7 +85,8 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 		FontConfiguration fontConfigurationName;
 
 		if (UseStyle.useBetaStyle()) {
-			final Style style = FontParam.CLASS.getStyleDefinition(SName.classDiagram).with(stereotype)
+			final Style style = StyleSignature
+					.of(SName.root, SName.element, SName.classDiagram, SName.class_, SName.header).with(stereotype)
 					.getMergedStyle(skinParam.getCurrentStyleBuilder());
 			fontConfigurationName = new FontConfiguration(skinParam, style);
 		} else {

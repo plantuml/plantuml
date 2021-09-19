@@ -119,9 +119,6 @@ public class LinkedElement {
 		final double alpha = yMiddle - dimBox.getHeight() / 2;
 		final double posLink1 = (yMiddle - dimBox.getHeight() / 2 - topMargin + MAGIC) / 2;
 
-		final HColor color = ColorParam.activityBorder.getDefaultValue();
-		ug = ug.apply(color);
-
 		final double xMiddle = width / 2;
 		final double xLinkPos = width / 2;
 

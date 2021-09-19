@@ -88,7 +88,7 @@ public class NServer {
 		return connections.get(network);
 	}
 
-	private TextBlock toTextBlock(String s, ISkinParam skinParam) {
+	private TextBlock toTextBlock(String s, ISkinParam skinParam, SName sname) {
 		if (s == null) {
 			return null;
 		}
@@ -96,32 +96,32 @@ public class NServer {
 			return TextBlockUtils.empty(0, 0);
 		}
 		s = s.replace(", ", "\\n");
-		return Display.getWithNewlines(s).create(getFontConfiguration(skinParam), HorizontalAlignment.LEFT, skinParam);
+		return Display.getWithNewlines(s).create(getFontConfiguration(skinParam, sname), HorizontalAlignment.LEFT,
+				skinParam);
 	}
 
-	private StyleSignature getStyleDefinition() {
-		return StyleSignature.of(SName.root, SName.element, SName.nwdiagDiagram, SName.server);
+	private StyleSignature getStyleDefinition(SName sname) {
+		return StyleSignature.of(SName.root, SName.element, SName.nwdiagDiagram, sname);
 	}
 
-	private FontConfiguration getFontConfiguration(ISkinParam skinParam) {
+	private FontConfiguration getFontConfiguration(ISkinParam skinParam, SName sname) {
 		final StyleBuilder styleBuilder = skinParam.getCurrentStyleBuilder();
-		final Style style = getStyleDefinition().getMergedStyle(styleBuilder);
+		final Style style = getStyleDefinition(sname).getMergedStyle(styleBuilder);
 		return style.getFontConfiguration(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
 	}
 
 	public LinkedElement asTextBlock(double topMargin, Map<Network, String> conns, List<Network> networks,
 			ISkinParam skinParam) {
 		final StyleBuilder styleBuilder = skinParam.getCurrentStyleBuilder();
-		final Style style = getStyleDefinition().getMergedStyle(styleBuilder);
-		final SymbolContext symbolContext = style.getSymbolContext(skinParam.getThemeStyle(),
-				skinParam.getIHtmlColorSet());
+		final SymbolContext symbolContext = getStyleDefinition(SName.server).getMergedStyle(styleBuilder)
+				.getSymbolContext(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
 
 		final Map<Network, TextBlock> conns2 = new LinkedHashMap<Network, TextBlock>();
 		for (Entry<Network, String> ent : conns.entrySet()) {
-			conns2.put(ent.getKey(), toTextBlock(ent.getValue(), skinParam));
+			conns2.put(ent.getKey(), toTextBlock(ent.getValue(), skinParam, SName.arrow));
 		}
 
-		final TextBlock desc = toTextBlock(getDescription(), skinParam);
+		final TextBlock desc = toTextBlock(getDescription(), skinParam, SName.server);
 		final TextBlock box = getShape().asSmall(TextBlockUtils.empty(0, 0), desc, TextBlockUtils.empty(0, 0),
 				symbolContext, HorizontalAlignment.CENTER);
 		return new LinkedElement(topMargin, this, box, conns2, networks);

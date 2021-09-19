@@ -46,6 +46,8 @@ import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineBreakStrategy;
+import net.sourceforge.plantuml.UmlDiagramType;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.cucadiagram.BodyFactory;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -58,6 +60,10 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.ShapeType;
@@ -78,17 +84,41 @@ public class EntityImageTips extends AbstractEntityImage {
 
 	private final double ySpacing = 10;
 
-	public EntityImageTips(ILeaf entity, ISkinParam skinParam, Bibliotekon bibliotekon) {
+	public EntityImageTips(ILeaf entity, ISkinParam skinParam, Bibliotekon bibliotekon, UmlDiagramType type) {
 		super(entity, EntityImageNote.getSkin(skinParam, entity));
 		this.skinParam = skinParam;
 		this.bibliotekon = bibliotekon;
 
-		if (entity.getColors(skinParam).getColor(ColorType.BACK) == null) {
-			noteBackgroundColor = rose.getHtmlColor(skinParam, ColorParam.noteBackground);
+		if (UseStyle.useBetaStyle()) {
+			final Style style = getDefaultStyleDefinition(type.getStyleName())
+					.getMergedStyle(skinParam.getCurrentStyleBuilder());
+
+			if (entity.getColors(skinParam).getColor(ColorType.BACK) == null) {
+				this.noteBackgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
+						skinParam.getIHtmlColorSet());
+
+			} else {
+				this.noteBackgroundColor = entity.getColors(skinParam).getColor(ColorType.BACK);
+			}
+
+			this.borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(),
+					skinParam.getIHtmlColorSet());
+
 		} else {
-			noteBackgroundColor = entity.getColors(skinParam).getColor(ColorType.BACK);
+
+			if (entity.getColors(skinParam).getColor(ColorType.BACK) == null) {
+				this.noteBackgroundColor = rose.getHtmlColor(skinParam, ColorParam.noteBackground);
+			} else {
+				this.noteBackgroundColor = entity.getColors(skinParam).getColor(ColorType.BACK);
+			}
+
+			this.borderColor = rose.getHtmlColor(skinParam, ColorParam.noteBorder);
+
 		}
-		this.borderColor = rose.getHtmlColor(skinParam, ColorParam.noteBorder);
+	}
+
+	private StyleSignature getDefaultStyleDefinition(SName sname) {
+		return StyleSignature.of(SName.root, SName.element, sname, SName.note);
 	}
 
 	private Position getPosition() {

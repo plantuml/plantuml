@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.LineConfigurable;
 import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.creole.Stencil;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.EntityPortion;
@@ -61,6 +62,10 @@ import net.sourceforge.plantuml.graphic.TextBlockEmpty;
 import net.sourceforge.plantuml.graphic.TextBlockLineBefore;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.ugraphic.PlacementStrategyY1Y2;
@@ -89,8 +94,15 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil {
 		this.lineConfig = entity;
 		final Stereotype stereotype = entity.getStereotype();
 		this.roundCorner = skinParam.getRoundCorner(CornerParam.DEFAULT, null);
-		final FontConfiguration fc = new FontConfiguration(getSkinParam(), FontParam.OBJECT, stereotype);
-		final TextBlock tmp = getUnderlinedName(entity).create(fc, HorizontalAlignment.CENTER, skinParam);
+
+		final FontConfiguration fcHeader;
+		if (UseStyle.useBetaStyle())
+			fcHeader = getStyleHeader().getFontConfiguration(getSkinParam().getThemeStyle(),
+					getSkinParam().getIHtmlColorSet());
+		else
+			fcHeader = new FontConfiguration(getSkinParam(), FontParam.OBJECT, stereotype);
+
+		final TextBlock tmp = getUnderlinedName(entity).create(fcHeader, HorizontalAlignment.CENTER, skinParam);
 		this.name = TextBlockUtils.withMargin(tmp, 2, 2);
 		if (stereotype == null || stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) == null
 				|| portionShower.showPortion(EntityPortion.STEREOTYPE, entity) == false) {
@@ -107,10 +119,20 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil {
 			this.fields = new TextBlockLineBefore(new TextBlockEmpty(10, 16));
 		} else {
 			this.fields = entity.getBodier().getBody(FontParam.OBJECT_ATTRIBUTE, skinParam, false, showFields,
-					entity.getStereotype(), null);
+					entity.getStereotype(), getStyle());
 		}
 		this.url = entity.getUrl99();
 
+	}
+
+	private Style getStyle() {
+		return StyleSignature.of(SName.root, SName.element, SName.objectDiagram, SName.object)
+				.with(getEntity().getStereotype()).getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+	}
+
+	private Style getStyleHeader() {
+		return StyleSignature.of(SName.root, SName.element, SName.objectDiagram, SName.object, SName.header)
+				.with(getEntity().getStereotype()).getMergedStyle(getSkinParam().getCurrentStyleBuilder());
 	}
 
 	private Display getUnderlinedName(ILeaf entity) {
@@ -146,10 +168,16 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil {
 			rect.setDeltaShadow(4);
 		}
 
-		ug = ug.apply(SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.objectBorder));
+		final HColor borderColor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.objectBorder);
+		ug = ug.apply(borderColor);
 		HColor backcolor = getEntity().getColors(getSkinParam()).getColor(ColorType.BACK);
 		if (backcolor == null) {
-			backcolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.objectBackground);
+			if (UseStyle.useBetaStyle())
+				backcolor = getStyle().value(PName.BackGroundColor).asColor(getSkinParam().getThemeStyle(),
+						getSkinParam().getIHtmlColorSet());
+			else
+				backcolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.objectBackground);
+
 		}
 		ug = ug.apply(backcolor.bg());
 		if (url != null) {
