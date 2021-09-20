@@ -38,7 +38,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import net.sourceforge.plantuml.FileFormat;
-import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
 import net.sourceforge.plantuml.ugraphic.AbstractUGraphic;
 import net.sourceforge.plantuml.ugraphic.ClipContainer;
@@ -51,16 +50,13 @@ import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class UGraphicHtml5 extends AbstractUGraphic<Html5Drawer> implements ClipContainer {
 
-	private final StringBounder stringBounder;
-
 	@Override
 	protected AbstractCommonUGraphic copyUGraphic() {
 		return this;
 	}
 
 	public UGraphicHtml5(HColor defaultBackground, ColorMapper colorMapper) {
-		super(defaultBackground, colorMapper, new Html5Drawer());
-		stringBounder = FileFormat.PNG.getDefaultStringBounder();
+		super(defaultBackground, colorMapper, FileFormat.PNG.getDefaultStringBounder(), new Html5Drawer());
 		registerDriver(URectangle.class, new DriverRectangleHtml5(this));
 		// registerDriver(UText.class, new DriverTextEps(imDummy, this, strategy));
 		registerDriver(UText.class, new DriverNopHtml5());
@@ -71,10 +67,6 @@ public class UGraphicHtml5 extends AbstractUGraphic<Html5Drawer> implements Clip
 		// registerDriver(UImage.class, new DriverImageEps());
 		// registerDriver(UPath.class, new DriverPathEps());
 		// registerDriver(DotPath.class, new DriverDotPathEps());
-	}
-
-	public StringBounder getStringBounder() {
-		return stringBounder;
 	}
 
 	// public void close() {

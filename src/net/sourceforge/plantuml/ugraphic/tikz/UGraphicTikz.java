@@ -41,7 +41,6 @@ import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.TikzFontDistortion;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.creole.legacy.AtomText;
-import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.posimo.DotPath;
 import net.sourceforge.plantuml.tikz.TikzGraphics;
 import net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
@@ -61,14 +60,12 @@ import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class UGraphicTikz extends AbstractUGraphic<TikzGraphics> implements ClipContainer {
 
-	private final StringBounder stringBounder;
 	private final TikzFontDistortion tikzFontDistortion;
 
 	private UGraphicTikz(HColor defaultBackground, ColorMapper colorMapper, TikzGraphics tikz,
 			TikzFontDistortion tikzFontDistortion) {
-		super(defaultBackground, colorMapper, tikz);
+		super(defaultBackground, colorMapper, FileFormat.LATEX.getDefaultStringBounder(tikzFontDistortion), tikz);
 		this.tikzFontDistortion = tikzFontDistortion;
-		this.stringBounder = FileFormat.LATEX.getDefaultStringBounder(tikzFontDistortion);
 		register();
 
 	}
@@ -87,7 +84,6 @@ public class UGraphicTikz extends AbstractUGraphic<TikzGraphics> implements Clip
 	private UGraphicTikz(UGraphicTikz other) {
 		super(other);
 		this.tikzFontDistortion = other.tikzFontDistortion;
-		this.stringBounder = other.stringBounder;
 		register();
 	}
 
@@ -104,10 +100,6 @@ public class UGraphicTikz extends AbstractUGraphic<TikzGraphics> implements Clip
 		registerDriver(DotPath.class, new DriverDotPathTikz());
 		// registerDriver(UCenteredCharacter.class, new DriverCenteredCharacterTikz());
 		registerDriver(UCenteredCharacter.class, new DriverCenteredCharacterTikz2());
-	}
-
-	public StringBounder getStringBounder() {
-		return stringBounder;
 	}
 
 	public void startUrl(Url url) {

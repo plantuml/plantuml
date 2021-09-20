@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.ugraphic;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapperTransparentWrapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
@@ -52,6 +53,7 @@ public abstract class AbstractCommonUGraphic implements UGraphic {
 	private HColor color = null;
 	private boolean enlargeClip = false;
 
+	private final StringBounder stringBounder;
 	private UTranslate translate = new UTranslate();
 
 	private final ColorMapper colorMapper;
@@ -107,15 +109,17 @@ public abstract class AbstractCommonUGraphic implements UGraphic {
 		this.enlargeClip = true;
 	}
 
-	public AbstractCommonUGraphic(HColor defaultBackground, ColorMapper colorMapper) {
+	public AbstractCommonUGraphic(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder) {
 		this.colorMapper = colorMapper;
 		this.defaultBackground = defaultBackground;
+		this.stringBounder = stringBounder;
 	}
 
 	protected AbstractCommonUGraphic(AbstractCommonUGraphic other) {
 		this.defaultBackground = other.defaultBackground;
 		this.enlargeClip = other.enlargeClip;
 		this.colorMapper = other.colorMapper;
+		this.stringBounder = other.stringBounder;
 		this.translate = other.translate;
 		this.clip = other.clip;
 
@@ -156,6 +160,11 @@ public abstract class AbstractCommonUGraphic implements UGraphic {
 				return scale;
 			}
 		};
+	}
+
+	@Override
+	public StringBounder getStringBounder() {
+		return stringBounder;
 	}
 
 	final protected double getTranslateX() {

@@ -39,7 +39,6 @@ import java.io.OutputStream;
 
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.creole.legacy.AtomText;
-import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.posimo.DotPath;
 import net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
 import net.sourceforge.plantuml.ugraphic.AbstractUGraphic;
@@ -58,15 +57,12 @@ import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class UGraphicVdx extends AbstractUGraphic<VisioGraphics> implements ClipContainer {
 
-	private final StringBounder stringBounder;
-
 	public double dpiFactor() {
 		return 1;
 	}
 
 	private UGraphicVdx(HColor defaultBackground, ColorMapper colorMapper, VisioGraphics visio) {
-		super(defaultBackground, colorMapper, visio);
-		this.stringBounder = FileFormat.PNG.getDefaultStringBounder();
+		super(defaultBackground, colorMapper, FileFormat.PNG.getDefaultStringBounder(), visio);
 		register();
 
 	}
@@ -83,13 +79,12 @@ public class UGraphicVdx extends AbstractUGraphic<VisioGraphics> implements Clip
 
 	private UGraphicVdx(UGraphicVdx other) {
 		super(other);
-		this.stringBounder = other.stringBounder;
 		register();
 	}
 
 	private void register() {
 		registerDriver(URectangle.class, new DriverRectangleVdx());
-		registerDriver(UText.class, new DriverTextVdx(stringBounder));
+		registerDriver(UText.class, new DriverTextVdx(getStringBounder()));
 		registerDriver(AtomText.class, new DriverNoneVdx());
 		registerDriver(ULine.class, new DriverLineVdx());
 		registerDriver(UPolygon.class, new DriverPolygonVdx());
@@ -99,10 +94,6 @@ public class UGraphicVdx extends AbstractUGraphic<VisioGraphics> implements Clip
 		registerDriver(UPath.class, new DriverUPathVdx());
 		registerDriver(DotPath.class, new DriverDotPathVdx());
 		registerDriver(UCenteredCharacter.class, new DriverNoneVdx());
-	}
-
-	public StringBounder getStringBounder() {
-		return stringBounder;
 	}
 
 	@Override
