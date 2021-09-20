@@ -54,7 +54,6 @@ import net.sourceforge.plantuml.ugraphic.ClipContainer;
 import net.sourceforge.plantuml.ugraphic.UCenteredCharacter;
 import net.sourceforge.plantuml.ugraphic.UComment;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
-import net.sourceforge.plantuml.ugraphic.UGraphic2;
 import net.sourceforge.plantuml.ugraphic.UGroupType;
 import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.UImageSvg;
@@ -68,7 +67,7 @@ import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorGradient;
 
-public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipContainer, UGraphic2 {
+public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipContainer {
 
 	private final StringBounder stringBounder;
 	private final boolean textAsPath2;
@@ -153,7 +152,8 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 		return stringBounder;
 	}
 
-	public void createXml(OutputStream os, String metadata) throws IOException {
+	@Override
+	public void writeToStream(OutputStream os, String metadata, int dpi) throws IOException {
 		try {
 			if (metadata != null) {
 				getGraphicObject().addComment(metadata);
@@ -182,10 +182,6 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 	@Override
 	public void closeUrl() {
 		getGraphicObject().closeLink();
-	}
-
-	public void writeImageTOBEMOVED(OutputStream os, String metadata, int dpi) throws IOException {
-		createXml(os, metadata);
 	}
 
 	@Override

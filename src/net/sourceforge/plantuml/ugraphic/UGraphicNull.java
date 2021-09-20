@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
-public class UGraphicNull extends AbstractUGraphic<String> implements EnsureVisible, UGraphic2 {
+public class UGraphicNull extends AbstractUGraphic<String> implements EnsureVisible {
 
 	@Override
 	protected AbstractCommonUGraphic copyUGraphic() {
@@ -63,7 +63,8 @@ public class UGraphicNull extends AbstractUGraphic<String> implements EnsureVisi
 		return FileFormat.PNG.getDefaultStringBounder();
 	}
 
-	public void writeImageTOBEMOVED(OutputStream os, String metadata, int dpi) throws IOException {
+	@Override
+	public void writeToStream(OutputStream os, String metadata, int dpi) throws IOException {
 	}
 
 	public void ensureVisible(double x, double y) {

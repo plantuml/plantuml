@@ -51,14 +51,13 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
 import net.sourceforge.plantuml.ugraphic.ClipContainer;
-import net.sourceforge.plantuml.ugraphic.UGraphic2;
 import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UText;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
-public class UGraphicTxt extends AbstractCommonUGraphic implements ClipContainer, UGraphic2 {
+public class UGraphicTxt extends AbstractCommonUGraphic implements ClipContainer {
 
 	private final UmlCharArea charArea;
 
@@ -116,7 +115,8 @@ public class UGraphicTxt extends AbstractCommonUGraphic implements ClipContainer
 		return new Dimension2DDouble(0, 0);
 	}
 
-	public void writeImageTOBEMOVED(OutputStream os, String metadata, int dpi) throws IOException {
+	@Override
+	public void writeToStream(OutputStream os, String metadata, int dpi) throws IOException {
 		final PrintStream ps = SecurityUtils.createPrintStream(os, true, UTF_8);
 		getCharArea().print(ps);
 	}

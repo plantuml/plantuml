@@ -46,7 +46,6 @@ import net.sourceforge.plantuml.ugraphic.AbstractUGraphic;
 import net.sourceforge.plantuml.ugraphic.ClipContainer;
 import net.sourceforge.plantuml.ugraphic.UCenteredCharacter;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
-import net.sourceforge.plantuml.ugraphic.UGraphic2;
 import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.UImageSvg;
 import net.sourceforge.plantuml.ugraphic.ULine;
@@ -57,7 +56,7 @@ import net.sourceforge.plantuml.ugraphic.UText;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
-public class UGraphicVdx extends AbstractUGraphic<VisioGraphics> implements ClipContainer, UGraphic2 {
+public class UGraphicVdx extends AbstractUGraphic<VisioGraphics> implements ClipContainer {
 
 	private final StringBounder stringBounder;
 
@@ -106,11 +105,8 @@ public class UGraphicVdx extends AbstractUGraphic<VisioGraphics> implements Clip
 		return stringBounder;
 	}
 
-	public void writeImageTOBEMOVED(OutputStream os, String metadata, int dpi) throws IOException {
-		createVsd(os);
-	}
-
-	public void createVsd(OutputStream os) throws IOException {
+	@Override
+	public void writeToStream(OutputStream os, String metadata, int dpi) throws IOException {
 		getGraphicObject().createVsd(os);
 	}
 
