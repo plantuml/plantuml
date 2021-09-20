@@ -34,18 +34,18 @@
  */
 package net.sourceforge.plantuml.braille;
 
+import static net.sourceforge.plantuml.ugraphic.ImageBuilder.plainPngBuilder;
+
 import java.io.IOException;
 import java.io.OutputStream;
 
 import net.sourceforge.plantuml.FileFormat;
-import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.posimo.DotPath;
 import net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
 import net.sourceforge.plantuml.ugraphic.AbstractUGraphic;
 import net.sourceforge.plantuml.ugraphic.ClipContainer;
 import net.sourceforge.plantuml.ugraphic.UCenteredCharacter;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
-import net.sourceforge.plantuml.ugraphic.UGraphic2;
 import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPath;
@@ -55,10 +55,8 @@ import net.sourceforge.plantuml.ugraphic.UText;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
-import static net.sourceforge.plantuml.ugraphic.ImageBuilder.plainPngBuilder;
-
 // https://www.branah.com/braille-translator
-public class UGraphicBraille extends AbstractUGraphic<BrailleGrid> implements ClipContainer, UGraphic2 {
+public class UGraphicBraille extends AbstractUGraphic<BrailleGrid> implements ClipContainer {
 
 	public static final int QUANTA = 4;
 	private final BrailleGrid grid;
@@ -99,7 +97,7 @@ public class UGraphicBraille extends AbstractUGraphic<BrailleGrid> implements Cl
 	// }
 
 	private UGraphicBraille(HColor defaultBackground, ColorMapper colorMapper, BrailleGrid grid) {
-		super(defaultBackground, colorMapper, grid);
+		super(defaultBackground, colorMapper, FileFormat.BRAILLE_PNG.getDefaultStringBounder(), grid);
 		this.grid = grid;
 		register();
 	}
@@ -117,11 +115,8 @@ public class UGraphicBraille extends AbstractUGraphic<BrailleGrid> implements Cl
 		registerDriver(UCenteredCharacter.class, new DriverCenteredCharacterBraille());
 	}
 
-	public StringBounder getStringBounder() {
-		return FileFormat.BRAILLE_PNG.getDefaultStringBounder();
-	}
-
-	public void writeImageTOBEMOVED(OutputStream os, String metadata, int dpi) throws IOException {
+	@Override
+	public void writeToStream(OutputStream os, String metadata, int dpi) throws IOException {
 		plainPngBuilder(new BrailleDrawer(getGraphicObject()))
 				.metadata(metadata)
 				.write(os);

@@ -38,11 +38,9 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import net.sourceforge.plantuml.FileFormat;
-import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
 import net.sourceforge.plantuml.ugraphic.AbstractUGraphic;
 import net.sourceforge.plantuml.ugraphic.ClipContainer;
-import net.sourceforge.plantuml.ugraphic.UGraphic2;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.URectangle;
@@ -50,9 +48,7 @@ import net.sourceforge.plantuml.ugraphic.UText;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
-public class UGraphicHtml5 extends AbstractUGraphic<Html5Drawer> implements ClipContainer, UGraphic2 {
-
-	private final StringBounder stringBounder;
+public class UGraphicHtml5 extends AbstractUGraphic<Html5Drawer> implements ClipContainer {
 
 	@Override
 	protected AbstractCommonUGraphic copyUGraphic() {
@@ -60,8 +56,7 @@ public class UGraphicHtml5 extends AbstractUGraphic<Html5Drawer> implements Clip
 	}
 
 	public UGraphicHtml5(HColor defaultBackground, ColorMapper colorMapper) {
-		super(defaultBackground, colorMapper, new Html5Drawer());
-		stringBounder = FileFormat.PNG.getDefaultStringBounder();
+		super(defaultBackground, colorMapper, FileFormat.PNG.getDefaultStringBounder(), new Html5Drawer());
 		registerDriver(URectangle.class, new DriverRectangleHtml5(this));
 		// registerDriver(UText.class, new DriverTextEps(imDummy, this, strategy));
 		registerDriver(UText.class, new DriverNopHtml5());
@@ -74,10 +69,6 @@ public class UGraphicHtml5 extends AbstractUGraphic<Html5Drawer> implements Clip
 		// registerDriver(DotPath.class, new DriverDotPathEps());
 	}
 
-	public StringBounder getStringBounder() {
-		return stringBounder;
-	}
-
 	// public void close() {
 	// getEpsGraphics().close();
 	// }
@@ -86,7 +77,8 @@ public class UGraphicHtml5 extends AbstractUGraphic<Html5Drawer> implements Clip
 		return getGraphicObject().generateHtmlCode();
 	}
 
-	public void writeImageTOBEMOVED(OutputStream os, String metadata, int dpi) throws IOException {
+	@Override
+	public void writeToStream(OutputStream os, String metadata, int dpi) throws IOException {
 		os.write(generateHtmlCode().getBytes());
 	}
 

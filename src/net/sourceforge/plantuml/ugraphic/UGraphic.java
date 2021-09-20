@@ -40,6 +40,9 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
+import java.io.IOException;
+import java.io.OutputStream;
+
 public interface UGraphic {
 
 	public StringBounder getStringBounder();
@@ -66,4 +69,5 @@ public interface UGraphic {
 
 	public HColor getDefaultBackground();
 
+	public void writeToStream(OutputStream os, String metadata, int dpi) throws IOException;
 }

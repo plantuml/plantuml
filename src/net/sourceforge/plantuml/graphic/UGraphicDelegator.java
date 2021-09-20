@@ -43,6 +43,9 @@ import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
+import java.io.IOException;
+import java.io.OutputStream;
+
 public abstract class UGraphicDelegator implements UGraphic {
 
 	final private UGraphic ug;
@@ -105,4 +108,8 @@ public abstract class UGraphicDelegator implements UGraphic {
 		return ug.getDefaultBackground();
 	}
 
+	@Override
+	public void writeToStream(OutputStream os, String metadata, int dpi) throws IOException {
+		ug.writeToStream(os, metadata, dpi);
+	}
 }

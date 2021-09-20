@@ -44,7 +44,6 @@ import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.SvgCharSizeHack;
 import net.sourceforge.plantuml.TikzFontDistortion;
 import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.posimo.DotPath;
 import net.sourceforge.plantuml.svg.LengthAdjust;
 import net.sourceforge.plantuml.svg.SvgGraphics;
@@ -54,7 +53,6 @@ import net.sourceforge.plantuml.ugraphic.ClipContainer;
 import net.sourceforge.plantuml.ugraphic.UCenteredCharacter;
 import net.sourceforge.plantuml.ugraphic.UComment;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
-import net.sourceforge.plantuml.ugraphic.UGraphic2;
 import net.sourceforge.plantuml.ugraphic.UGroupType;
 import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.UImageSvg;
@@ -68,9 +66,8 @@ import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorGradient;
 
-public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipContainer, UGraphic2 {
+public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipContainer {
 
-	private final StringBounder stringBounder;
 	private final boolean textAsPath2;
 	private final String target;
 
@@ -85,7 +82,6 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 
 	private UGraphicSvg(UGraphicSvg other) {
 		super(other);
-		this.stringBounder = other.stringBounder;
 		this.textAsPath2 = other.textAsPath2;
 		this.target = other.target;
 		register();
@@ -120,8 +116,7 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 
 	private UGraphicSvg(HColor defaultBackground, Dimension2D minDim, ColorMapper colorMapper, SvgGraphics svg,
 			boolean textAsPath, String linkTarget, SvgCharSizeHack charSizeHack) {
-		super(defaultBackground, colorMapper, svg);
-		this.stringBounder = FileFormat.SVG.getDefaultStringBounder(TikzFontDistortion.getDefault(), charSizeHack);
+		super(defaultBackground, colorMapper, FileFormat.SVG.getDefaultStringBounder(TikzFontDistortion.getDefault(), charSizeHack), svg);
 		this.textAsPath2 = textAsPath;
 		this.target = linkTarget;
 		register();
@@ -149,11 +144,8 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 		return this.getGraphicObject();
 	}
 
-	public StringBounder getStringBounder() {
-		return stringBounder;
-	}
-
-	public void createXml(OutputStream os, String metadata) throws IOException {
+	@Override
+	public void writeToStream(OutputStream os, String metadata, int dpi) throws IOException {
 		try {
 			if (metadata != null) {
 				getGraphicObject().addComment(metadata);
@@ -182,10 +174,6 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 	@Override
 	public void closeUrl() {
 		getGraphicObject().closeLink();
-	}
-
-	public void writeImageTOBEMOVED(OutputStream os, String metadata, int dpi) throws IOException {
-		createXml(os, metadata);
 	}
 
 	@Override

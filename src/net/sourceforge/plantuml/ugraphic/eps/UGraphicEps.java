@@ -41,7 +41,6 @@ import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.eps.EpsGraphics;
 import net.sourceforge.plantuml.eps.EpsStrategy;
-import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.posimo.DotPath;
 import net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
@@ -49,7 +48,6 @@ import net.sourceforge.plantuml.ugraphic.AbstractUGraphic;
 import net.sourceforge.plantuml.ugraphic.ClipContainer;
 import net.sourceforge.plantuml.ugraphic.UCenteredCharacter;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
-import net.sourceforge.plantuml.ugraphic.UGraphic2;
 import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPath;
@@ -59,9 +57,7 @@ import net.sourceforge.plantuml.ugraphic.UText;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
-public class UGraphicEps extends AbstractUGraphic<EpsGraphics> implements ClipContainer, UGraphic2 {
-
-	private final StringBounder stringBounder;
+public class UGraphicEps extends AbstractUGraphic<EpsGraphics> implements ClipContainer {
 
 	private final EpsStrategy strategyTOBEREMOVED;
 
@@ -72,7 +68,6 @@ public class UGraphicEps extends AbstractUGraphic<EpsGraphics> implements ClipCo
 
 	protected UGraphicEps(UGraphicEps other) {
 		super(other);
-		this.stringBounder = other.stringBounder;
 		this.strategyTOBEREMOVED = other.strategyTOBEREMOVED;
 		register(strategyTOBEREMOVED);
 	}
@@ -82,9 +77,8 @@ public class UGraphicEps extends AbstractUGraphic<EpsGraphics> implements ClipCo
 	}
 
 	private UGraphicEps(HColor defaultBackground, ColorMapper colorMapper, EpsStrategy strategy, EpsGraphics eps) {
-		super(defaultBackground, colorMapper, eps);
+		super(defaultBackground, colorMapper, FileFormat.PNG.getDefaultStringBounder(), eps);
 		this.strategyTOBEREMOVED = strategy;
-		this.stringBounder = FileFormat.PNG.getDefaultStringBounder();
 		register(strategy);
 	}
 
@@ -112,10 +106,6 @@ public class UGraphicEps extends AbstractUGraphic<EpsGraphics> implements ClipCo
 		return this.getGraphicObject();
 	}
 
-	public StringBounder getStringBounder() {
-		return stringBounder;
-	}
-
 	public void drawEps(String eps, double x, double y) {
 		this.getGraphicObject().drawEps(eps, x, y);
 	}
@@ -135,7 +125,8 @@ public class UGraphicEps extends AbstractUGraphic<EpsGraphics> implements ClipCo
 		getGraphicObject().closeLink();
 	}
 
-	public void writeImageTOBEMOVED(OutputStream os, String metadata, int dpi) throws IOException {
+	@Override
+	public void writeToStream(OutputStream os, String metadata, int dpi) throws IOException {
 		os.write(getEPSCode().getBytes());
 	}
 
