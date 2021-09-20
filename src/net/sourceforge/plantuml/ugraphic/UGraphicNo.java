@@ -41,6 +41,9 @@ import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
+import java.io.IOException;
+import java.io.OutputStream;
+
 public abstract class UGraphicNo implements UGraphic {
 
 	private final StringBounder stringBounder;
@@ -104,7 +107,12 @@ public abstract class UGraphicNo implements UGraphic {
 	public boolean matchesProperty(String propertyName) {
 		return false;
 	}
-	
+
+	@Override
+	public void writeToStream(OutputStream os, String metadata, int dpi) throws IOException {
+		throw new UnsupportedOperationException();
+	}
+
 	//
 	// Internal things
 	//

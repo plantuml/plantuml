@@ -93,7 +93,7 @@ public class GraphicsSudoku {
 				new ColorMapperIdentity(), false, 1.0, null, null, 0, "none", SvgCharSizeHack.NO_HACK,
 				LengthAdjust.defaultValue());
 		drawInternal(ug);
-		ug.createXml(os, null);
+		ug.writeToStream(os, null, -1); // dpi param is not used
 		return ImageDataSimple.ok();
 	}
 
@@ -101,7 +101,7 @@ public class GraphicsSudoku {
 		final UGraphicTikz ug = new UGraphicTikz(HColorUtils.WHITE, new ColorMapperIdentity(), 1,
 				fileFormat == FileFormat.LATEX, TikzFontDistortion.getDefault());
 		drawInternal(ug);
-		ug.createTikz(os);
+		ug.writeToStream(os, null, -1); // dpi param is not used
 		return ImageDataSimple.ok();
 	}
 

@@ -55,7 +55,6 @@ import net.sourceforge.plantuml.ugraphic.UCenteredCharacter;
 import net.sourceforge.plantuml.ugraphic.UComment;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UEmpty;
-import net.sourceforge.plantuml.ugraphic.UGraphic2;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
@@ -70,7 +69,7 @@ import net.sourceforge.plantuml.ugraphic.color.HColorMiddle;
 import net.sourceforge.plantuml.ugraphic.color.HColorSimple;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
-public class UGraphicDebug extends AbstractCommonUGraphic implements ClipContainer, UGraphic2 {
+public class UGraphicDebug extends AbstractCommonUGraphic implements ClipContainer {
 
 	private final List<String> output;
 	private final double scaleFactor;
@@ -280,7 +279,8 @@ public class UGraphicDebug extends AbstractCommonUGraphic implements ClipContain
 		return color.getClass().getSimpleName() + " " + new Date();
 	}
 
-	public void writeImageTOBEMOVED(OutputStream os, String metadata, int dpi) throws IOException {
+	@Override
+	public void writeToStream(OutputStream os, String metadata, int dpi) throws IOException {
 		print(os, "DPI: " + dpi);
 		print(os, "dimension: " + pointd(dim.getWidth(), dim.getHeight()));
 		print(os, "scaleFactor: " + String.format(Locale.US, "%.4f", scaleFactor));
