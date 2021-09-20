@@ -280,27 +280,36 @@ public class FtileSwitchWithManyLinks extends FtileSwitchWithDiamonds {
 
 	public Ftile addLinks(StringBounder stringBounder) {
 		final List<Connection> conns = new ArrayList<>();
+		addIngoingArrows(conns);
+		addOutgoingArrows(stringBounder, conns);
+		return FtileUtils.addConnection(this, conns);
+	}
+
+	private void addIngoingArrows(final List<Connection> conns) {
 		conns.add(new ConnectionHorizontalThenVertical(tiles.get(0), branches.get(0)));
 		conns.add(new ConnectionHorizontalThenVertical(tiles.get(tiles.size() - 1), branches.get(tiles.size() - 1)));
-
-		final int first = getFirst(stringBounder);
-		final int last = getLast(stringBounder);
-		if (first < tiles.size())
-			conns.add(new ConnectionVerticalThenHorizontal(tiles.get(first)));
-		if (last > 0)
-			conns.add(new ConnectionVerticalThenHorizontal(tiles.get(last)));
-		for (int i = first + 1; i < last; i++) {
+		for (int i = 1; i < tiles.size() - 1; i++) {
 			final Ftile tile = tiles.get(i);
 			conns.add(new ConnectionVerticalTop(tile, branches.get(i)));
+		}
+	}
+
+	private void addOutgoingArrows(StringBounder stringBounder, final List<Connection> conns) {
+		final int firstOutgoingArrow = getFirstOutgoingArrow(stringBounder);
+		final int lastOutgoingArrow = getLastOutgoingArrow(stringBounder);
+		if (firstOutgoingArrow < tiles.size())
+			conns.add(new ConnectionVerticalThenHorizontal(tiles.get(firstOutgoingArrow)));
+		if (lastOutgoingArrow > 0)
+			conns.add(new ConnectionVerticalThenHorizontal(tiles.get(lastOutgoingArrow)));
+		for (int i = firstOutgoingArrow + 1; i < lastOutgoingArrow; i++) {
+			final Ftile tile = tiles.get(i);
 			if (tile.calculateDimension(stringBounder).hasPointOut()) {
 				conns.add(new ConnectionVerticalBottom(tile));
 			}
 		}
-
-		return FtileUtils.addConnection(this, conns);
 	}
 
-	private int getFirst(StringBounder stringBounder) {
+	private int getFirstOutgoingArrow(StringBounder stringBounder) {
 		for (int i = 0; i < tiles.size() - 1; i++) {
 			final Ftile tile = tiles.get(i);
 			if (tile.calculateDimension(stringBounder).hasPointOut()) {
@@ -310,7 +319,7 @@ public class FtileSwitchWithManyLinks extends FtileSwitchWithDiamonds {
 		return tiles.size();
 	}
 
-	private int getLast(StringBounder stringBounder) {
+	private int getLastOutgoingArrow(StringBounder stringBounder) {
 		for (int i = tiles.size() - 1; i >= 0; i--) {
 			final Ftile tile = tiles.get(i);
 			if (tile.calculateDimension(stringBounder).hasPointOut()) {
