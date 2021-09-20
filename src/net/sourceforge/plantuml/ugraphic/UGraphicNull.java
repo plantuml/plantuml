@@ -40,7 +40,6 @@ import java.io.OutputStream;
 
 import net.sourceforge.plantuml.EnsureVisible;
 import net.sourceforge.plantuml.FileFormat;
-import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
@@ -56,11 +55,7 @@ public class UGraphicNull extends AbstractUGraphic<String> implements EnsureVisi
 	}
 
 	public UGraphicNull() {
-		super(HColorUtils.BLACK, new ColorMapperIdentity(), "foo");
-	}
-
-	public StringBounder getStringBounder() {
-		return FileFormat.PNG.getDefaultStringBounder();
+		super(HColorUtils.BLACK, new ColorMapperIdentity(), FileFormat.PNG.getDefaultStringBounder(), "foo");
 	}
 
 	@Override

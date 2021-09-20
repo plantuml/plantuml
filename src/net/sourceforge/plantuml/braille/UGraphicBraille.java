@@ -40,7 +40,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import net.sourceforge.plantuml.FileFormat;
-import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.posimo.DotPath;
 import net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
 import net.sourceforge.plantuml.ugraphic.AbstractUGraphic;
@@ -98,7 +97,7 @@ public class UGraphicBraille extends AbstractUGraphic<BrailleGrid> implements Cl
 	// }
 
 	private UGraphicBraille(HColor defaultBackground, ColorMapper colorMapper, BrailleGrid grid) {
-		super(defaultBackground, colorMapper, grid);
+		super(defaultBackground, colorMapper, FileFormat.BRAILLE_PNG.getDefaultStringBounder(), grid);
 		this.grid = grid;
 		register();
 	}
@@ -114,10 +113,6 @@ public class UGraphicBraille extends AbstractUGraphic<BrailleGrid> implements Cl
 		registerDriver(UPath.class, new DriverNoneBraille());
 		registerDriver(DotPath.class, new DriverDotPathBraille());
 		registerDriver(UCenteredCharacter.class, new DriverCenteredCharacterBraille());
-	}
-
-	public StringBounder getStringBounder() {
-		return FileFormat.BRAILLE_PNG.getDefaultStringBounder();
 	}
 
 	@Override

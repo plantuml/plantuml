@@ -47,7 +47,6 @@ import net.sourceforge.plantuml.asciiart.TranslatedCharArea;
 import net.sourceforge.plantuml.asciiart.UmlCharArea;
 import net.sourceforge.plantuml.asciiart.UmlCharAreaImpl;
 import net.sourceforge.plantuml.graphic.FontStyle;
-import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
 import net.sourceforge.plantuml.ugraphic.ClipContainer;
@@ -72,12 +71,8 @@ public class UGraphicTxt extends AbstractCommonUGraphic implements ClipContainer
 	}
 
 	public UGraphicTxt() {
-		super(HColorUtils.BLACK, new ColorMapperIdentity());
+		super(HColorUtils.BLACK, new ColorMapperIdentity(), new TextStringBounder());
 		this.charArea = new UmlCharAreaImpl();
-	}
-
-	public StringBounder getStringBounder() {
-		return new TextStringBounder();
 	}
 
 	public void draw(UShape shape) {

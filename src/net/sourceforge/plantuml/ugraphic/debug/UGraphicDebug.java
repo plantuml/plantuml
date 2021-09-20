@@ -47,7 +47,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.posimo.DotPath;
 import net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
 import net.sourceforge.plantuml.ugraphic.ClipContainer;
@@ -99,7 +98,7 @@ public class UGraphicDebug extends AbstractCommonUGraphic implements ClipContain
 
 	public UGraphicDebug(double scaleFactor, Dimension2D dim, String svgLinkTarget, String hoverPathColorRGB, long seed,
 			String preserveAspectRatio) {
-		super(HColorUtils.WHITE, new ColorMapperIdentity());
+		super(HColorUtils.WHITE, new ColorMapperIdentity(), new StringBounderDebug());
 		this.output = new ArrayList<>();
 		this.scaleFactor = scaleFactor;
 		this.dim = dim;
@@ -107,10 +106,6 @@ public class UGraphicDebug extends AbstractCommonUGraphic implements ClipContain
 		this.hoverPathColorRGB = hoverPathColorRGB;
 		this.seed = seed;
 		this.preserveAspectRatio = preserveAspectRatio;
-	}
-
-	public StringBounder getStringBounder() {
-		return new StringBounderDebug();
 	}
 
 	public void draw(UShape shape) {
