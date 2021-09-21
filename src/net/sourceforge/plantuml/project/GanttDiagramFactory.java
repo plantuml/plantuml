@@ -53,7 +53,6 @@ import net.sourceforge.plantuml.project.command.CommandGanttArrow2;
 import net.sourceforge.plantuml.project.command.CommandLabelOnColumn;
 import net.sourceforge.plantuml.project.command.CommandLanguage;
 import net.sourceforge.plantuml.project.command.CommandNoteBottom;
-import net.sourceforge.plantuml.project.command.CommandPage;
 import net.sourceforge.plantuml.project.command.CommandPrintBetween;
 import net.sourceforge.plantuml.project.command.CommandPrintScale;
 import net.sourceforge.plantuml.project.command.CommandSeparator;
@@ -107,7 +106,6 @@ public class GanttDiagramFactory extends PSystemCommandFactory {
 		cmds.add(new CommandLanguage());
 		cmds.add(new CommandPrintScale());
 		cmds.add(new CommandPrintBetween());
-		cmds.add(new CommandPage());
 		cmds.add(new CommandNoteBottom());
 		cmds.add(new CommandFootbox());
 		cmds.add(new CommandLabelOnColumn());

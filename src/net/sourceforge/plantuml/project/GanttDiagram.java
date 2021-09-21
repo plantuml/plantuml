@@ -162,30 +162,6 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		super(source, UmlDiagramType.GANTT);
 	}
 
-	private int horizontalPages = 1;
-	private int verticalPages = 1;
-
-	final public int getHorizontalPages() {
-		return horizontalPages;
-	}
-
-	final public void setHorizontalPages(int horizontalPages) {
-		this.horizontalPages = horizontalPages;
-	}
-
-	final public int getVerticalPages() {
-		return verticalPages;
-	}
-
-	final public void setVerticalPages(int verticalPages) {
-		this.verticalPages = verticalPages;
-	}
-
-	@Override
-	public int getNbImages() {
-		return this.horizontalPages * this.verticalPages;
-	}
-
 	public final int getDpi(FileFormatOption fileFormatOption) {
 		return 96;
 	}

@@ -104,9 +104,6 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		return entityFactory.getAllSuperGroups();
 	}
 
-	private int horizontalPages = 1;
-	private int verticalPages = 1;
-
 	private final List<HideOrShow2> hides2 = new ArrayList<>();
 	private final List<HideOrShow2> removed = new ArrayList<>();
 	protected final EntityFactory entityFactory = new EntityFactory(hides2, removed, this);
@@ -544,27 +541,6 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 
 	final public List<Link> getLinks() {
 		return entityFactory.getLinks();
-	}
-
-	final public int getHorizontalPages() {
-		return horizontalPages;
-	}
-
-	final public void setHorizontalPages(int horizontalPages) {
-		this.horizontalPages = horizontalPages;
-	}
-
-	final public int getVerticalPages() {
-		return verticalPages;
-	}
-
-	final public void setVerticalPages(int verticalPages) {
-		this.verticalPages = verticalPages;
-	}
-
-	@Override
-	public int getNbImages() {
-		return this.horizontalPages * this.verticalPages;
 	}
 
 	abstract protected List<String> getDotStrings();
