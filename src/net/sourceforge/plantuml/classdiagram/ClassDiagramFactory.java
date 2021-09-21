@@ -63,7 +63,6 @@ import net.sourceforge.plantuml.command.CommandNamespace2;
 import net.sourceforge.plantuml.command.CommandNamespaceEmpty;
 import net.sourceforge.plantuml.command.CommandPackage;
 import net.sourceforge.plantuml.command.CommandPackageEmpty;
-import net.sourceforge.plantuml.command.CommandPage;
 import net.sourceforge.plantuml.command.CommandRankDir;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.command.note.CommandConstraintOnLinks;
@@ -96,7 +95,6 @@ public class ClassDiagramFactory extends PSystemCommandFactory {
 		cmds.add(new CommandRankDir());
 		cmds.add(new CommandNewpage(this));
 
-		cmds.add(new CommandPage());
 		cmds.add(new CommandAddMethod());
 
 		addCommonHides(cmds);

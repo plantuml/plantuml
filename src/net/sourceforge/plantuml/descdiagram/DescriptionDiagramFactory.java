@@ -80,7 +80,6 @@ public class DescriptionDiagramFactory extends PSystemCommandFactory {
 		cmds.add(new CommandNewpage(this));
 		addCommonCommands1(cmds);
 
-		cmds.add(new CommandPage());
 		cmds.add(new CommandLinkElement());
 		cmds.add(new CommandHideShow2());
 		cmds.add(new CommandRemoveRestore());

@@ -71,6 +71,10 @@ public interface Diagram {
 	 */
 	int getNbImages();
 
+	int getSplitPagesHorizontal();
+
+	int getSplitPagesVertical();
+
 	DiagramDescription getDescription();
 
 	String getMetadata();

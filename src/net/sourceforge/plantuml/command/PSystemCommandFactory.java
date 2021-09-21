@@ -231,6 +231,7 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 		cmds.add(new CommandSkinParamMultilines());
 		cmds.add(new CommandSkin());
 		cmds.add(new CommandMinwidth());
+		cmds.add(new CommandPage());
 		cmds.add(new CommandRotate());
 		cmds.add(new CommandScale());
 		cmds.add(new CommandScaleWidthAndHeight());
