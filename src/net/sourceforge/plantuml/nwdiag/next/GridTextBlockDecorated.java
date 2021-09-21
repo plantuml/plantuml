@@ -36,7 +36,6 @@ package net.sourceforge.plantuml.nwdiag.next;
 
 import java.util.List;
 
-import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.nwdiag.core.Network;

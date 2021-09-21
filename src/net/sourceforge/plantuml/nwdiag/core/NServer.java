@@ -39,7 +39,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.ComponentStyle;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -52,14 +51,11 @@ import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.nwdiag.next.LinkedElement;
 import net.sourceforge.plantuml.nwdiag.next.NBar;
 import net.sourceforge.plantuml.skin.ActorStyle;
-import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.svek.PackageStyle;
-import net.sourceforge.plantuml.ugraphic.UFont;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class NServer {
 
@@ -68,7 +64,7 @@ public class NServer {
 	private USymbol shape = USymbol.RECTANGLE;
 	private final String name;
 	private String description;
-	private final NBar bar = new NBar();
+	private final NBar bar;
 
 	private boolean printFirstLink = true;
 
@@ -136,14 +132,10 @@ public class NServer {
 			return;
 		}
 		connections.put(network, address);
-		if (bar.getStart() == null) {
+		if (bar.getStart() == null)
 			bar.addStage(network.getNstage());
-		} else {
-			// Test to be removed
-			if (network.getUp() != null)
-				if (this.getMainNetworkNext() != network)
-					bar.addStage(network.getUp());
-		}
+		else if (this.getMainNetworkNext() != network)
+			bar.addStage(network.getUp());
 	}
 
 	@Override
@@ -152,8 +144,13 @@ public class NServer {
 	}
 
 	public NServer(String name) {
+		this(name, new NBar());
+	}
+
+	public NServer(String name, NBar bar) {
 		this.description = name;
 		this.name = name;
+		this.bar = bar;
 	}
 
 	public final String getDescription() {

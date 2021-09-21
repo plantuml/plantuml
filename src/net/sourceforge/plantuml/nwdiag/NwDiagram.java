@@ -46,7 +46,6 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.SpriteContainerEmpty;
 import net.sourceforge.plantuml.UmlDiagram;
@@ -77,13 +76,10 @@ import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.MinMax;
-import net.sourceforge.plantuml.ugraphic.UBackground;
 import net.sourceforge.plantuml.ugraphic.UEmpty;
-import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class NwDiagram extends UmlDiagram {
 
@@ -152,7 +148,7 @@ public class NwDiagram extends UmlDiagram {
 			if (already != null) {
 				connect(already, toSet(null));
 			}
-			element = new NServer(name2);
+			element = new NServer(name2, already.getBar());
 		}
 		servers.put(name2, element);
 		addInternal(element, toSet(null));
