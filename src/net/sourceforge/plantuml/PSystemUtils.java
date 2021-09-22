@@ -44,7 +44,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
@@ -91,30 +90,7 @@ public class PSystemUtils {
 			return createFilesHtml((CucaDiagram) system, suggestedFile);
 		}
 
-		final FileImageData fileImageData;
-		
-		if (system instanceof CucaDiagram) {
-			fileImageData = exportDiagramsCuca((CucaDiagram) system, suggestedFile, fileFormatOption);
-		}
-		else if (system instanceof GanttDiagram) {
-			fileImageData = exportDiagramsGantt2((GanttDiagram) system, suggestedFile, fileFormatOption);
-		}
-		else if (system instanceof ActivityDiagram3) {
-			fileImageData = exportDiagramsActivityDiagram3((ActivityDiagram3) system, suggestedFile, fileFormatOption);
-		}
-		else {
-			fileImageData = exportDiagramsDefault(system, suggestedFile, fileFormatOption);
-		}
-		
-		if (fileImageData == null) {
-			return emptyList();
-		}
-		
-		if (system instanceof TitledDiagram && fileFormatOption.getFileFormat() == FileFormat.PNG) {
-			return splitPng((TitledDiagram) system, suggestedFile, fileImageData, fileFormatOption);
-		}
-		
-		return singletonList(fileImageData);
+		return exportDiagramsDefault(system, suggestedFile, fileFormatOption);
 	}
 
 	private static List<FileImageData> exportDiagramsNewpaged(NewpagedDiagram system, SuggestedFile suggestedFile,
@@ -158,53 +134,6 @@ public class PSystemUtils {
 		return true;
 	}
 
-	static private FileImageData exportDiagramsDefault(Diagram system, SuggestedFile suggestedFile,
-			FileFormatOption fileFormat) throws IOException {
-		if (suggestedFile.getFile(0).exists() && suggestedFile.getFile(0).isDirectory()) {
-			throw new IllegalArgumentException("File is a directory " + suggestedFile);
-		}
-		OutputStream os = null;
-		ImageData imageData = null;
-		try {
-			if (PSystemUtils.canFileBeWritten(suggestedFile.getFile(0)) == false) {
-				return null;
-			}
-			os = suggestedFile.getFile(0).createBufferedOutputStream();
-			// system.exportDiagram(os, null, 0, fileFormat);
-			imageData = system.exportDiagram(os, 0, fileFormat);
-		} finally {
-			if (os != null) {
-				os.close();
-			}
-		}
-		return new FileImageData(suggestedFile.getFile(0), imageData);
-	}
-
-	static private FileImageData exportDiagramsActivityDiagram3(ActivityDiagram3 system,
-			SuggestedFile suggestedFile, FileFormatOption fileFormat) throws IOException {
-		if (suggestedFile.getFile(0).exists() && suggestedFile.getFile(0).isDirectory()) {
-			throw new IllegalArgumentException("File is a directory " + suggestedFile);
-		}
-		OutputStream os = null;
-		ImageData cmap = null;
-		ImageData imageData = null;
-		try {
-			if (PSystemUtils.canFileBeWritten(suggestedFile.getFile(0)) == false) {
-				return null;
-			}
-			os = suggestedFile.getFile(0).createBufferedOutputStream();
-			imageData = cmap = system.exportDiagram(os, 0, fileFormat);
-		} finally {
-			if (os != null) {
-				os.close();
-			}
-		}
-		if (cmap != null && cmap.containsCMapData()) {
-			system.exportCmap(suggestedFile, 0, cmap);
-		}
-		return new FileImageData(suggestedFile.getFile(0), imageData);
-	}
-
 	private static List<FileImageData> exportDiagramsSequence(SequenceDiagram system, SuggestedFile suggestedFile,
 			FileFormatOption fileFormat) throws IOException {
 		final List<FileImageData> result = new ArrayList<>();
@@ -231,56 +160,6 @@ public class PSystemUtils {
 		return result;
 	}
 
-	static private FileImageData exportDiagramsCuca(CucaDiagram system, SuggestedFile suggestedFile,
-			FileFormatOption fileFormat) throws IOException {
-		if (suggestedFile.getFile(0).exists() && suggestedFile.getFile(0).isDirectory()) {
-			throw new IllegalArgumentException("File is a directory " + suggestedFile);
-		}
-
-		ImageData cmap = null;
-		OutputStream os = null;
-		try {
-			if (PSystemUtils.canFileBeWritten(suggestedFile.getFile(0)) == false) {
-				return null;
-			}
-			// System.err.println("FOO11=" + suggestedFile);
-			// os = SecurityUtils.BufferedOutputStream(suggestedFile));
-			os = new NamedOutputStream(suggestedFile.getFile(0));
-			cmap = system.exportDiagram(os, 0, fileFormat);
-		} finally {
-			if (os != null) {
-				os.close();
-			}
-		}
-		if (cmap != null && cmap.containsCMapData()) {
-			system.exportCmap(suggestedFile, 0, cmap);
-		}
-
-		return new FileImageData(suggestedFile.getFile(0), cmap);
-	}
-
-	static private FileImageData exportDiagramsGantt2(GanttDiagram system, SuggestedFile suggestedFile,
-			FileFormatOption fileFormat) throws IOException {
-		if (suggestedFile.getFile(0).exists() && suggestedFile.getFile(0).isDirectory()) {
-			throw new IllegalArgumentException("File is a directory " + suggestedFile);
-		}
-
-		ImageData cmap = null;
-		OutputStream os = null;
-		try {
-			if (PSystemUtils.canFileBeWritten(suggestedFile.getFile(0)) == false) {
-				return null;
-			}
-			os = new NamedOutputStream(suggestedFile.getFile(0));
-			cmap = system.exportDiagram(os, 0, fileFormat);
-		} finally {
-			if (os != null) {
-				os.close();
-			}
-		}
-		return new FileImageData(suggestedFile.getFile(0), cmap);
-	}
-
 	private static List<FileImageData> createFilesHtml(CucaDiagram system, SuggestedFile suggestedFile)
 			throws IOException {
 		final String name = suggestedFile.getName();
@@ -290,7 +169,7 @@ public class PSystemUtils {
 		return maker.create();
 	}
 
-	private static List<FileImageData> splitPng(TitledDiagram diagram, SuggestedFile pngFile, FileImageData fileImageData, FileFormatOption fileFormatOption)
+	private static List<FileImageData> splitPng(TitledDiagram diagram, SuggestedFile pngFile, ImageData imageData, FileFormatOption fileFormatOption)
 			throws IOException {
 
 		final List<SFile> files = new PngSplitter(
@@ -306,9 +185,42 @@ public class PSystemUtils {
 
 		final List<FileImageData> result = new ArrayList<>();
 		for (SFile f : files) {
-			result.add(new FileImageData(f, fileImageData.getImageData()));
+			result.add(new FileImageData(f, imageData));
 		}
 		return result;
 	}
 
+	private static List<FileImageData> exportDiagramsDefault(Diagram system, SuggestedFile suggestedFile,
+			FileFormatOption fileFormatOption) throws IOException {
+
+		final SFile outputFile = suggestedFile.getFile(0);
+
+		if (outputFile.isDirectory()) {
+			throw new IllegalArgumentException("File is a directory " + suggestedFile);
+		}
+
+		if (!canFileBeWritten(outputFile)) {
+			return emptyList();
+		}
+
+		final ImageData imageData;
+
+		try (OutputStream os = outputFile.createBufferedOutputStream()) {
+			imageData = system.exportDiagram(os, 0, fileFormatOption);
+		}
+
+		if (imageData == null) {
+			return emptyList();
+		}
+
+		if (imageData.containsCMapData() && system instanceof UmlDiagram) {
+			((UmlDiagram) system).exportCmap(suggestedFile, 0, imageData);
+		}
+
+		if (system instanceof TitledDiagram && fileFormatOption.getFileFormat() == FileFormat.PNG) {
+			return splitPng((TitledDiagram) system, suggestedFile, imageData, fileFormatOption);
+		}
+
+		return singletonList(new FileImageData(outputFile, imageData));
+	}
 }
