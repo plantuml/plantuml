@@ -133,7 +133,9 @@
         <sourceDirectory>${project.basedir}/src</sourceDirectory>
         <testSourceDirectory>${project.basedir}/test</testSourceDirectory>
 		<testResources>
-			<testResource>${project.basedir}/testResources</testResource>
+			<testResource>
+				<directory>${project.basedir}/testResources</directory>
+			</testResource>
 		</testResources>
         <resources>
             <resource>
