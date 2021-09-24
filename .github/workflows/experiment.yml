@@ -11,7 +11,7 @@ jobs:
       fail-fast: false
       matrix:
         # java_version: [8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
-        java_version: [7, 8, 11, 17]
+        java_version: [8, 11, 17]
         # os: [macos-11, macos-10.15, ubuntu-18.04, ubuntu-20.04, windows-2016, windows-2019, windows-2022]
         os: [macos-10.15, ubuntu-20.04, windows-2022]
     defaults:
@@ -34,27 +34,19 @@ jobs:
 
       - name: Compile
         run: mvn --batch-mode compile compiler:testCompile
-          
-      - name: Check Rendering Engine
+
+      - name: Raster Test
         run: |
           [[ "${{ matrix.java_version }}" != "8" ]] && export MAVEN_OPTS="--add-exports java.desktop/sun.java2d.pipe=ALL-UNNAMED"
 
           mvn --batch-mode exec:java \
              -Dexec.mainClass=org.junit.platform.console.ConsoleLauncher \
              -Dexec.classpathScope=test \
-             -Dexec.args="--disable-ansi-colors --select-class net.sourceforge.plantuml.ugraphic.RenderingEngineTest"
-
-      - name: Test Rendering
-        if: ${{ always() }}
-        run: |
-          mvn --batch-mode exec:java \
-             -Dexec.mainClass=org.junit.platform.console.ConsoleLauncher \
-             -Dexec.classpathScope=test \
-             -Dexec.args="--disable-ansi-colors --select-class net.sourceforge.plantuml.ugraphic.FontSpriteExperiments"
+             -Dexec.args="--disable-ansi-colors --select-class net.sourceforge.plantuml.ugraphic.RasterTest"
 
       - name: Upload test outputs
         if: ${{ always() }}
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ github.run_number }}-${{ matrix.os }}-java${{ matrix.java_version }}-images-created
-          path: target/images-created/*
+          name: ${{ github.run_number }}-${{ matrix.os }}-java${{ matrix.java_version }}-raster-test-output
+          path: target/raster-test-output.bmp
