@@ -15,6 +15,11 @@ jobs:
         os: [macos-11, ubuntu-20.04]
         java_version: [8, 17]
     steps:
+      - name: Configure maven
+        id: maven
+        if: ${{ matrix.java }} != 8
+        run: echo "::set-output name=opts::--add-exports java.desktop/sun.java2d.pipe=ALL-UNNAMED"
+
       - name: Checkout the repository
         uses: actions/checkout@v2
 
@@ -31,7 +36,7 @@ jobs:
 
       - name: Test
         env:
-          MAVEN_OPTS: --add-exports java.desktop/sun.java2d.pipe=ALL-UNNAMED
+          MAVEN_OPTS: ${{ steps.maven.outputs.opts }}
         run: |
           mvn --batch-mode compile compiler:testCompile exec:java \
              -Dexec.mainClass=org.junit.platform.console.ConsoleLauncher \
