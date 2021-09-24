@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  CI:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v2
+
+      - name: Set up java
+        uses: actions/setup-java@v2.3.0
+        with:
+          java-version: 11
+          distribution: temurin
+          cache: maven
+
+      # Downloading all the dependencies is very log spammy, so we do this in its own step.
+      - name: Prime maven cache
+        run: mvn --batch-mode dependency:go-offline
+
+      - name: Test
+        run: |
+          mvn --batch-mode compile compiler:testCompile exec:java \
+             -Dexec.mainClass=org.junit.platform.console.ConsoleLauncher \
+             -Dexec.classpathScope=test \
+             -Dexec.args="--disable-ansi-colors --select-class net.sourceforge.plantuml.FontSpriteExperiments"
+
+      - name: Upload test outputs
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ github.run_number }}-images-created
+          path: target/images-created/*

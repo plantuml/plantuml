@@ -89,6 +89,12 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
+			<groupId>org.junit.platform</groupId>
+			<artifactId>junit-platform-console-standalone</artifactId>
+			<version>1.8.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
 			<groupId>org.scilab.forge</groupId>
 			<artifactId>jlatexmath</artifactId>
 			<version>1.0.7</version>
