@@ -33,10 +33,9 @@ jobs:
         run: mvn --batch-mode compile compiler:testCompile
           
       - name: Check Rendering Engine
-        if: ${{ matrix.java }} != 8
-        env:
-          MAVEN_OPTS: --add-exports java.desktop/sun.java2d.pipe=ALL-UNNAMED
         run: |
+          [[ "${{ matrix.java }}" = "8" ]] && export MAVEN_OPTS="--add-exports java.desktop/sun.java2d.pipe=ALL-UNNAMED"
+
           mvn --batch-mode exec:java \
              -Dexec.mainClass=org.junit.platform.console.ConsoleLauncher \
              -Dexec.classpathScope=test \
