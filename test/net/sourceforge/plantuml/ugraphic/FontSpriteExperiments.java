@@ -77,7 +77,7 @@ public class FontSpriteExperiments {
 
 	@Target(ElementType.METHOD)
 	@Retention(RetentionPolicy.RUNTIME)
-	@ParameterizedTest(name = ParameterizedTest.ARGUMENTS_PLACEHOLDER)
+	@ParameterizedTest(name = ParameterizedTest.DISPLAY_NAME_PLACEHOLDER + "_" + ParameterizedTest.ARGUMENTS_PLACEHOLDER)
 	@ValueSource(strings = {"1px_antialias", "1px", "3px", "3px_antialias"})
 	@interface MyTest {
 	}
@@ -90,20 +90,19 @@ public class FontSpriteExperiments {
 
 	@BeforeEach
 	void beforeEach(TestInfo testInfo) throws Exception {
-		final String displayName = testInfo.getDisplayName();
+		final String testName = testInfo.getDisplayName().replaceAll("\\(.*\\)", "");
 
-		if (displayName.contains("1px")) {
+		if (testName.contains("1px")) {
 			g2d.setStroke(new BasicStroke(1));
-		} else if (displayName.contains("3px")) {
+		} else if (testName.contains("3px")) {
 			g2d.setStroke(new BasicStroke(3));
 		}
 
-		if (displayName.contains("antialias")) {
+		if (testName.contains("antialias")) {
 			g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		}
 
-		final String filename = testInfo.getTestMethod().get().getName() + "_" + displayName + ".bmp";
-		file = createDirectories(Paths.get("target/images-created")).resolve(filename).toFile();
+		file = createDirectories(Paths.get("target/images-created")).resolve(testName + ".bmp").toFile();
 
 		g2d.setBackground(WHITE);
 		g2d.clearRect(0, 0, image.getWidth(), image.getHeight());
