@@ -30,6 +30,8 @@ jobs:
         run: mvn --batch-mode dependency:go-offline
 
       - name: Test
+        env:
+          MAVEN_OPTS: --add-exports java.desktop/sun.java2d.pipe=ALL-UNNAMED
         run: |
           mvn --batch-mode compile compiler:testCompile exec:java \
              -Dexec.mainClass=org.junit.platform.console.ConsoleLauncher \
