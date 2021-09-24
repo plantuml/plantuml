@@ -35,12 +35,11 @@ jobs:
 
       - name: Raster Test
         run: |
-          [[ "${{ matrix.java_version }}" != "8" ]] && export MAVEN_OPTS="--add-exports java.desktop/sun.java2d.pipe=ALL-UNNAMED"
-
           mvn --batch-mode exec:java \
              -Dexec.mainClass=org.junit.platform.console.ConsoleLauncher \
              -Dexec.classpathScope=test \
-             -Dexec.args="--disable-ansi-colors --select-class net.sourceforge.plantuml.ugraphic.RasterTest"
+             -Dexec.args="--disable-ansi-colors --select-class net.sourceforge.plantuml.ugraphic.RasterTest" \
+             -Dsun.java2d.renderer.log=true 
 
       - name: Upload test outputs
         if: ${{ always() }}
