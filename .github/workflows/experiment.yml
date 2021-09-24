@@ -5,8 +5,14 @@ on:
   workflow_dispatch:
 
 jobs:
-  CI:
-    runs-on: ubuntu-latest
+  font-sprite:
+    strategy:
+      matrix:
+#        os: [macos-11, macos-10.15, ubuntu-18.04, ubuntu-20.04, windows-2016, windows-2019, windows-2022]
+#        java_version: [8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
+        os: [macos-11, ubuntu-20.04]
+        java_version: [8, 17]
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v2
@@ -14,7 +20,7 @@ jobs:
       - name: Set up java
         uses: actions/setup-java@v2.3.0
         with:
-          java-version: 11
+          java-version: ${{ matrix.java_version }}
           distribution: temurin
           cache: maven
 
