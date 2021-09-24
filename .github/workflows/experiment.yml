@@ -1,4 +1,4 @@
-name: CI
+name: font-sprite
 
 on:
   push:
@@ -27,7 +27,7 @@ jobs:
           mvn --batch-mode compile compiler:testCompile exec:java \
              -Dexec.mainClass=org.junit.platform.console.ConsoleLauncher \
              -Dexec.classpathScope=test \
-             -Dexec.args="--disable-ansi-colors --select-class net.sourceforge.plantuml.FontSpriteExperiments"
+             -Dexec.args="--disable-ansi-colors --select-class net.sourceforge.plantuml.ugraphic.FontSpriteExperiments"
 
       - name: Upload test outputs
         if: ${{ always() }}
