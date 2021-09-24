@@ -34,7 +34,7 @@ jobs:
           
       - name: Check Rendering Engine
         run: |
-          [[ "${{ matrix.java }}" = "8" ]] && export MAVEN_OPTS="--add-exports java.desktop/sun.java2d.pipe=ALL-UNNAMED"
+          [[ "${{ matrix.java_version }}" = "8" ]] && export MAVEN_OPTS="--add-exports java.desktop/sun.java2d.pipe=ALL-UNNAMED"
 
           mvn --batch-mode exec:java \
              -Dexec.mainClass=org.junit.platform.console.ConsoleLauncher \
