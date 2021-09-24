@@ -6,13 +6,14 @@ on:
 
 jobs:
   font-sprite:
+    runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
 #        os: [macos-11, macos-10.15, ubuntu-18.04, ubuntu-20.04, windows-2016, windows-2019, windows-2022]
 #        java_version: [8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
         os: [macos-11, ubuntu-20.04]
         java_version: [8, 17]
-    runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v2
@@ -39,5 +40,5 @@ jobs:
         if: ${{ always() }}
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ github.run_number }}-images-created
+          name: ${{ github.run_number }}-${{ matrix.os }}-java${{ matrix.java_version }}-images-created
           path: target/images-created/*
