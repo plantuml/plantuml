@@ -15,11 +15,6 @@ jobs:
         os: [macos-11, ubuntu-20.04]
         java_version: [8, 17]
     steps:
-      - name: Configure maven
-        id: maven
-        if: ${{ matrix.java }} != 8
-        run: echo "::set-output name=opts::--add-exports java.desktop/sun.java2d.pipe=ALL-UNNAMED"
-
       - name: Checkout the repository
         uses: actions/checkout@v2
 
@@ -34,14 +29,26 @@ jobs:
       - name: Prime maven cache
         run: mvn --batch-mode dependency:go-offline
 
-      - name: Test
+      - name: Compile
+        run: mvn --batch-mode compile compiler:testCompile
+          
+      - name: Check Rendering Engine
+        if: ${{ matrix.java }} != 8
         env:
-          MAVEN_OPTS: ${{ steps.maven.outputs.opts }}
+          MAVEN_OPTS: --add-exports java.desktop/sun.java2d.pipe=ALL-UNNAMED
         run: |
-          mvn --batch-mode compile compiler:testCompile exec:java \
+          mvn --batch-mode exec:java \
              -Dexec.mainClass=org.junit.platform.console.ConsoleLauncher \
              -Dexec.classpathScope=test \
-             -Dexec.args="--disable-ansi-colors --select-class net.sourceforge.plantuml.ugraphic.FontSpriteExperiments --select-class net.sourceforge.plantuml.ugraphic.RenderingEngineTest"
+             -Dexec.args="--disable-ansi-colors --select-class net.sourceforge.plantuml.ugraphic.RenderingEngineTest"
+
+      - name: Test Rendering
+        if: ${{ always() }}
+        run: |
+          mvn --batch-mode exec:java \
+             -Dexec.mainClass=org.junit.platform.console.ConsoleLauncher \
+             -Dexec.classpathScope=test \
+             -Dexec.args="--disable-ansi-colors --select-class net.sourceforge.plantuml.ugraphic.FontSpriteExperiments"
 
       - name: Upload test outputs
         if: ${{ always() }}
