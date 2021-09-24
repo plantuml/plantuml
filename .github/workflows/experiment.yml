@@ -33,7 +33,7 @@ jobs:
         run: mvn --batch-mode dependency:go-offline
 
       - name: Compile
-        run: mvn --batch-mode compile compiler:testCompile
+        run: mvn --batch-mode compile resources:testResources compiler:testCompile
 
       - name: Raster Test
         run: |
