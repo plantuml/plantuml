@@ -477,7 +477,7 @@ public class Run {
 		}
 		final ISourceFileReader sourceFileReader;
 		if (option.getOutputFile() == null) {
-			File outputDir = option.getOutputDir();
+			File outputDir = option.getOutputDir().getAbsoluteFile();
 			if (outputDir != null && outputDir.getPath().endsWith("$")) {
 				final String path = outputDir.getPath();
 				outputDir = new File(path.substring(0, path.length() - 1)).getAbsoluteFile();
@@ -490,6 +490,7 @@ public class Run {
 		} else {
 			sourceFileReader = new SourceFileReaderHardFile(option.getDefaultDefines(f), f, option.getOutputFile(),
 					option.getConfig(), option.getCharset(), option.getFileFormatOption());
+			System.out.println(option.getOutputFile().getAbsolutePath());
 		}
 		sourceFileReader.setCheckMetadata(option.isCheckMetadata());
 		((SourceFileReaderAbstract) sourceFileReader).setNoerror(option.isNoerror());
