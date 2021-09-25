@@ -44,7 +44,7 @@ class FontSpriteSheetMakerTest {
 
 		final FontSpriteSheet sheet = createFontSpriteSheet(font);
 
-		final String string = "\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\""; //sheet.getChars().toString();
+		final String string = sheet.getChars().toString();
 
 		final int width = string.length() * sheet.getCharWidth() + 20;
 
