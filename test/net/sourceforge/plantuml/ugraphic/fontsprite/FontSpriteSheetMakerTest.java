@@ -21,7 +21,7 @@ import java.nio.file.Paths;
 import javax.imageio.ImageIO;
 
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
+import org.junit.jupiter.params.provider.CsvSource;
 
 class FontSpriteSheetMakerTest {
 
@@ -31,16 +31,20 @@ class FontSpriteSheetMakerTest {
 
 	// I have seen one font fail because the real maxAscent is one bigger than FontMetrics.getMaxAscent() returns - so the top pixel row was missing in the sprite sheet)
 	@ParameterizedTest
-	@ValueSource(strings = {
-			"JetBrainsMonoNL-Bold",
-			"JetBrainsMonoNL-BoldItalic",
-			"JetBrainsMonoNL-Italic",
-			"JetBrainsMonoNL-Regular"
+	@CsvSource(value = {
+			"Bold       , 8",
+			"BoldItalic , 8",
+			"Italic     , 8",
+			"Regular    , 8",
+			"Bold       , 20",
+			"BoldItalic , 20",
+			"Italic     , 20",
+			"Regular    , 20"
 	})
-	void test_font_sheet_matches_raw_font(String fontname) throws Exception {
-		final File fontFile = Paths.get("JetBrainsMono-2.242").resolve(fontname + ".ttf").toFile();
+	void test_font_sheet_matches_raw_font(String style, int size) throws Exception {
+		final File fontFile = Paths.get("JetBrainsMono-2.242").resolve("JetBrainsMonoNL-" + style + ".ttf").toFile();
 
-		final Font font = createFont(TRUETYPE_FONT, fontFile);
+		final Font font = createFont(TRUETYPE_FONT, fontFile).deriveFont((float) size);
 
 		final FontSpriteSheet sheet = createFontSpriteSheet(font);
 
@@ -59,9 +63,10 @@ class FontSpriteSheetMakerTest {
 					.isEqualTo(fontImage);
 		} catch (AssertionError e) {
 			final Path dir = testOutputDir("font-sheet-matches-raw-font");
-			ImageIO.write(fontImage, "png", dir.resolve(fontname + "-from-font.png").toFile());
-			ImageIO.write(sheetImage, "png", dir.resolve(fontname + "-from-sheet.png").toFile());
-			sheet.writePNG(dir.resolve(fontname + "-sheet.png").toFile());
+			final String prefix = style + "-" + size;
+			ImageIO.write(fontImage, "png", dir.resolve(prefix + "-from-font.png").toFile());
+			ImageIO.write(sheetImage, "png", dir.resolve(prefix + "-from-sheet.png").toFile());
+			sheet.writePNG(dir.resolve(prefix + "-sheet.png").toFile());
 			throw e;
 		}
 	}
