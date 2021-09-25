@@ -38,7 +38,11 @@ jobs:
           mvn --batch-mode exec:java \
              -Dexec.mainClass=org.junit.platform.console.ConsoleLauncher \
              -Dexec.classpathScope=test \
-             -Dexec.args="--disable-ansi-colors --select-class net.sourceforge.plantuml.ugraphic.RasterTest" \
+             -Dexec.args=" \
+                 --disable-ansi-colors \
+                 --select-class net.sourceforge.plantuml.ugraphic.RasterTest \
+                 --select-class net.sourceforge.plantuml.ugraphic.fontsprite.FontSpriteSheetMakerTest \
+             " \
              -Dsun.java2d.renderer.log=true 
 
       - name: Upload test outputs
