@@ -2,6 +2,8 @@ package net.sourceforge.plantuml.ugraphic.fontsprite;
 
 import static java.awt.Color.BLACK;
 import static java.awt.Color.WHITE;
+import static java.awt.Font.TRUETYPE_FONT;
+import static java.awt.Font.createFont;
 import static java.awt.RenderingHints.KEY_TEXT_ANTIALIASING;
 import static java.awt.RenderingHints.VALUE_TEXT_ANTIALIAS_ON;
 import static java.awt.image.BufferedImage.TYPE_INT_RGB;
@@ -12,7 +14,9 @@ import static org.assertj.swing.assertions.Assertions.assertThat;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import javax.imageio.ImageIO;
 
@@ -28,21 +32,15 @@ class FontSpriteSheetMakerTest {
 	// I have seen one font fail because the real maxAscent is one bigger than FontMetrics.getMaxAscent() returns - so the top pixel row was missing in the sprite sheet)
 	@ParameterizedTest
 	@ValueSource(strings = {
-			"Dialog-8",
-			"Dialog-20",
-			"Dialog-italic-8",
-			"Dialog-italic-20",
-			"Monospaced-8",
-			"Monospaced-20",
-			"Monospaced-italic-8",
-			"Monospaced-italic-20",
-			"SansSerif-8",
-			"SansSerif-20",
-			"SansSerif-italic-8",
-			"SansSerif-italic-20"
+			"JetBrainsMonoNL-Bold",
+			"JetBrainsMonoNL-BoldItalic",
+			"JetBrainsMonoNL-Italic",
+			"JetBrainsMonoNL-Regular"
 	})
 	void test_font_sheet_matches_raw_font(String fontname) throws Exception {
-		final Font font = Font.decode(fontname);
+		final File fontFile = Paths.get("JetBrainsMono-2.242").resolve(fontname + ".ttf").toFile();
+
+		final Font font = createFont(TRUETYPE_FONT, fontFile);
 
 		final FontSpriteSheet sheet = createFontSpriteSheet(font);
 
