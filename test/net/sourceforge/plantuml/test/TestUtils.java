@@ -1,11 +1,13 @@
 package net.sourceforge.plantuml.test;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.nio.file.Files.createDirectories;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
@@ -31,6 +33,10 @@ public class TestUtils {
 	public static String renderUmlAsUnicode(String source, String... options) throws Exception {
 
 		return renderAsUnicode("@startuml\n" + source + "\n@enduml\n", options);
+	}
+
+	public static Path testOutputDir(String name) throws IOException {
+		return createDirectories(Paths.get("target/test-outputs").resolve(name));
 	}
 
 	public static void writeUtf8File(Path path, String string) throws IOException {

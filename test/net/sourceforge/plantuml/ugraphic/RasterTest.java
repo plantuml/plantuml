@@ -9,6 +9,7 @@ import static java.awt.geom.AffineTransform.getTranslateInstance;
 import static java.awt.image.BufferedImage.TYPE_INT_RGB;
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableList;
+import static net.sourceforge.plantuml.test.TestUtils.testOutputDir;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.awt.BasicStroke;
@@ -17,7 +18,6 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -31,53 +31,55 @@ public class RasterTest {
 	//
 
 	@Test
-	void test_raster_primitives() throws Exception {
-		final BufferedImage image = new BufferedImage(1600, 1200, TYPE_INT_RGB);
+	void test_raster_engine() throws Exception {
+		System.out.println("java.runtime.name    = " + System.getProperty("java.runtime.name"));
+		System.out.println("java.runtime.version = " + System.getProperty("java.runtime.version"));
+		System.out.println("java.vendor          = " + System.getProperty("java.vendor"));
+		System.out.println("java.vendor.version  = " + System.getProperty("java.vendor.version"));
 
-		final Graphics2D g2d = image.createGraphics();
-		g2d.setBackground(WHITE);
-		g2d.setColor(BLACK);
-		g2d.clearRect(0, 0, image.getWidth(), image.getHeight());
+		final BufferedImage image = new BufferedImage(1550, 850, TYPE_INT_RGB);
 
-		g2d.translate(10, 10);
+		final Graphics2D g = image.createGraphics();
+		g.setBackground(WHITE);
+		g.setColor(BLACK);
+		g.clearRect(0, 0, image.getWidth(), image.getHeight());
+
+		g.translate(10, 10);
 
 		for (Object antialias : ANTIALIAS_OPTIONS) {
-			g2d.setRenderingHint(KEY_ANTIALIASING, antialias);
+			g.setRenderingHint(KEY_ANTIALIASING, antialias);
 
 			for (float width : new float[]{0.5f, 1, 1.5f, 2, 3}) {
-				g2d.setStroke(new BasicStroke(width));
+				g.setStroke(new BasicStroke(width));
 
-				g2d.drawOval(0, 0, 90, 90);
-				g2d.translate(100, 0);
+				g.drawOval(0, 0, 90, 90);
+				g.translate(100, 0);
 
-				g2d.drawOval(0, 0, 90, 60);
-				g2d.translate(100, 0);
+				g.drawOval(0, 0, 90, 60);
+				g.translate(100, 0);
 
-				g2d.drawOval(0, 0, 90, 30);
-				g2d.translate(100, 0);
+				g.drawOval(0, 0, 90, 30);
+				g.translate(100, 0);
 			}
 
-			nextRow(g2d, 110);
+			nextRow(g, 110);
 		}
 
-		polyline(g2d, new int[]{0, 20, 20}, new int[]{0, 0, 20});
+		polyline(g, new int[]{0, 20, 20}, new int[]{0, 0, 20});
 
-		polyline(g2d, new int[]{0, 10, 0}, new int[]{0, 10, 20});
+		polyline(g, new int[]{0, 10, 0}, new int[]{0, 10, 20});
 
-		polyline(g2d, new int[]{0, 20, 0}, new int[]{0, 10, 20});
+		polyline(g, new int[]{0, 20, 0}, new int[]{0, 10, 20});
 
-		polyline(g2d, new int[]{0, 40, 0}, new int[]{0, 10, 20});
-
-		// TODO
-		// image
+		polyline(g, new int[]{0, 40, 0}, new int[]{0, 10, 20});
 
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		ImageIO.write(image, "BMP", baos);
+		ImageIO.write(image, "png", baos);
 		byte[] bytes = baos.toByteArray();
 
-		Files.write(Paths.get("target/raster-test-output.bmp"), bytes);
+		Files.write(testOutputDir("raster-engine").resolve("output.png"), bytes);
 
-		final InputStream reference = getClass().getResourceAsStream("/raster-test-reference.bmp");
+		final InputStream reference = getClass().getResourceAsStream("/raster-engine-reference.png");
 
 		assertThat(reference)
 				.hasBinaryContent(bytes);
@@ -91,21 +93,21 @@ public class RasterTest {
 			VALUE_ANTIALIAS_OFF, VALUE_ANTIALIAS_ON
 	));
 
-	private void nextRow(Graphics2D g2d, int down) {
-		g2d.setTransform(getTranslateInstance(10, g2d.getTransform().getTranslateY() + down));
+	private void nextRow(Graphics2D g, int down) {
+		g.setTransform(getTranslateInstance(10, g.getTransform().getTranslateY() + down));
 	}
 
-	private void polyline(Graphics2D g2d, int[] xPoints, int[] yPoints) {
+	private void polyline(Graphics2D g, int[] xPoints, int[] yPoints) {
 		for (int cap_join : new int[]{0, 1, 2}) {
 			for (Object antialias : ANTIALIAS_OPTIONS) {
-				g2d.setRenderingHint(KEY_ANTIALIASING, antialias);
+				g.setRenderingHint(KEY_ANTIALIASING, antialias);
 				for (float width : new float[]{0.5f, 1, 1.5f, 2, 3, 5, 8, 12, 15}) {
-					g2d.setStroke(new BasicStroke(width, cap_join, cap_join));
-					g2d.drawPolyline(xPoints, yPoints, 3);
-					g2d.translate(70, 0);
+					g.setStroke(new BasicStroke(width, cap_join, cap_join));
+					g.drawPolyline(xPoints, yPoints, 3);
+					g.translate(70, 0);
 				}
 			}
-			nextRow(g2d, 50);
+			nextRow(g, 50);
 		}
 	}
 }

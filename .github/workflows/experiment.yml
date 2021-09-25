@@ -45,5 +45,5 @@ jobs:
         if: ${{ always() }}
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ github.run_number }}-${{ matrix.os }}-java${{ matrix.java_version }}-raster-test-output
-          path: target/raster-test-output.bmp
+          name: ${{ github.run_number }}-${{ matrix.os }}-java${{ matrix.java_version }}-test-outputs
+          path: target/test-outputs/
