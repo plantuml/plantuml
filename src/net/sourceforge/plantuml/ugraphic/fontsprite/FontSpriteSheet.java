@@ -53,8 +53,9 @@ public class FontSpriteSheet {
 	}
 
 	public void drawString(Graphics2D g, String s, int x, int y) {
+		final RecoloredImage recoloredImage = new RecoloredImage(this.image, g.getColor());
 		for (char c : s.toCharArray()) {
-			drawChar(g, c, x, y);
+			drawChar(recoloredImage, g, c, x, y);
 			x += charWidth;
 		}
 	}
@@ -64,7 +65,7 @@ public class FontSpriteSheet {
 	}
 
 	@SuppressWarnings("UnnecessaryLocalVariable")
-	private void drawChar(Graphics2D g, char c, int x, int y) {
+	private void drawChar(BufferedImage image, Graphics2D g, char c, int x, int y) {
 		if (c == ' ') {
 			return;
 		}
@@ -85,7 +86,7 @@ public class FontSpriteSheet {
 		final int destBottom = destTop + image.getHeight();
 
 		g.drawImage(
-				new RecoloredImage(image, g.getColor()),
+				image,
 				destLeft, destTop, destRight, destBottom,
 				srcLeft, srcTop, srcRight, srcBottom,
 				null
