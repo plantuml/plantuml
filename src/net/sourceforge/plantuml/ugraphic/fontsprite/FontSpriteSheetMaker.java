@@ -10,6 +10,11 @@ import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+// I did a few experiments comparing a single PNG containing four font styles (plain / bold / italic / bold-italic) 
+// vs four separate PNGs and found the total file size is very similar either way.
+//
+// It is much simpler to use one PNG for each style so that is what we do.
+
 public class FontSpriteSheetMaker {
 
 	public static final char MIN_CHAR = 0x21;
