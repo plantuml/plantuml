@@ -9,20 +9,20 @@ import static java.awt.geom.AffineTransform.getTranslateInstance;
 import static java.awt.image.BufferedImage.TYPE_INT_RGB;
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableList;
+import static java.util.Objects.requireNonNull;
 import static net.sourceforge.plantuml.test.TestUtils.testOutputDir;
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.swing.assertions.Assertions.assertThat;
 
 import java.awt.BasicStroke;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.nio.file.Files;
 import java.util.List;
 
 import javax.imageio.ImageIO;
 
 import org.junit.jupiter.api.Test;
+
+import sun.java2d.pipe.RenderingEngine;
 
 public class RasterTest {
 
@@ -32,10 +32,23 @@ public class RasterTest {
 
 	@Test
 	void test_raster_engine() throws Exception {
-		System.out.println("java.runtime.name    = " + System.getProperty("java.runtime.name"));
-		System.out.println("java.runtime.version = " + System.getProperty("java.runtime.version"));
-		System.out.println("java.vendor          = " + System.getProperty("java.vendor"));
-		System.out.println("java.vendor.version  = " + System.getProperty("java.vendor.version"));
+		System.setProperty("sun.java2d.renderer.log", "true");
+		RenderingEngine.getInstance();
+		System.out.println("java.runtime.name         = " + System.getProperty("java.runtime.name"));
+		System.out.println("java.runtime.version      = " + System.getProperty("java.runtime.version"));
+		System.out.println("java.vendor               = " + System.getProperty("java.vendor"));
+		System.out.println("java.vendor.version       = " + System.getProperty("java.vendor.version"));
+		System.out.println("Rendering Engine          = " + RenderingEngine.getInstance().getClass().getName());
+		
+		try {
+			System.out.println("org.marlin.pisces.Version = " + Class.forName("org.marlin.pisces.Version").getMethod("getVersion").invoke(new Object[]{}));
+		} catch (Exception e) {
+		}
+
+		try {
+			System.out.println("sun.java2d.marlin.Version = " + Class.forName("sun.java2d.marlin.Version").getMethod("getVersion").invoke(new Object[]{}));
+		} catch (Exception e) {
+		}
 
 		final BufferedImage image = new BufferedImage(1550, 850, TYPE_INT_RGB);
 
@@ -73,16 +86,12 @@ public class RasterTest {
 
 		polyline(g, new int[]{0, 40, 0}, new int[]{0, 10, 20});
 
-		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		ImageIO.write(image, "png", baos);
-		byte[] bytes = baos.toByteArray();
+		ImageIO.write(image, "png", testOutputDir("raster-engine").resolve("output.png").toFile());
 
-		Files.write(testOutputDir("raster-engine").resolve("output.png"), bytes);
+		final BufferedImage reference = ImageIO.read(requireNonNull(getClass().getResourceAsStream("/raster-engine-reference.png")));
 
-		final InputStream reference = getClass().getResourceAsStream("/raster-engine-reference.png");
-
-		assertThat(reference)
-				.hasBinaryContent(bytes);
+		assertThat(image)
+				.isEqualTo(reference);
 	}
 
 	//
