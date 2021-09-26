@@ -46,6 +46,6 @@ public class FontSpriteSheetMaker {
 			g.translate(maxCharWidth, 0);
 		}
 
-		return new FontSpriteSheet(image, ascent, fontMetrics.getHeight(), MAX_CHAR, MIN_CHAR, maxCharWidth);
+		return new FontSpriteSheet(image, ascent, fontMetrics.getHeight(), MIN_CHAR, MAX_CHAR, maxCharWidth);
 	}
 }

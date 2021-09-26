@@ -22,6 +22,7 @@ import javax.imageio.ImageIO;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class FontSpriteSheetMakerTest {
 
@@ -29,6 +30,17 @@ class FontSpriteSheetMakerTest {
 	// Test Cases
 	//
 
+	@ParameterizedTest
+	@ValueSource(strings = {"Bold", "BoldItalic", "Italic", "Regular"})
+	void test_create_sheets(String style) throws Exception {
+		final int size = 12;
+		final File fontFile = Paths.get("JetBrainsMono-2.242").resolve("JetBrainsMonoNL-" + style + ".ttf").toFile();
+		final Font font = createFont(TRUETYPE_FONT, fontFile).deriveFont((float) size);
+		final FontSpriteSheet sheet = createFontSpriteSheet(font);
+		System.out.println(sheet.getMetadata());
+		sheet.writePNG(testOutputDir("font-sprite-sheets").resolve("JetBrainsMonoNL-" + size + "-" + style + ".png").toFile());
+	}
+	
 	// I have seen one font fail because the real maxAscent is one bigger than FontMetrics.getMaxAscent() returns - so the top pixel row was missing in the sprite sheet)
 	@ParameterizedTest
 	@CsvSource(value = {

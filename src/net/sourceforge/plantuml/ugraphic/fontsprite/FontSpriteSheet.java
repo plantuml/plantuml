@@ -20,7 +20,7 @@ public class FontSpriteSheet {
 	private final char maxChar;
 	private final char minChar;
 
-	public FontSpriteSheet(BufferedImage image, int ascent, int lineHeight, char maxChar, char minChar, int charWidth) {
+	public FontSpriteSheet(BufferedImage image, int ascent, int lineHeight, char minChar, char maxChar, int charWidth) {
 		this.image = image;
 		this.ascent = ascent;
 		this.lineHeight = lineHeight;
@@ -50,6 +50,14 @@ public class FontSpriteSheet {
 
 	public int getLineHeight() {
 		return lineHeight;
+	}
+
+	public String getMetadata() {
+		return "ascent=" + ascent + '\n' +
+				"lineHeight=" + lineHeight + '\n' +
+				"minChar=" + minChar + '\n' +
+				"maxChar=" + maxChar + '\n' +
+				"charWidth=" + charWidth;
 	}
 
 	public void drawString(Graphics2D g, String s, int x, int y) {
