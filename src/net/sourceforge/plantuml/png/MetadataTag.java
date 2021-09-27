@@ -35,14 +35,14 @@
  */
 package net.sourceforge.plantuml.png;
 
+import static net.sourceforge.plantuml.utils.ImageIOUtils.createImageReader;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Iterator;
 
 import javax.imageio.ImageReader;
 import javax.imageio.metadata.IIOMetadata;
-import javax.imageio.stream.ImageInputStream;
 
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -71,37 +71,28 @@ public class MetadataTag {
 	}
 
 	public String getData() throws IOException {
-		final ImageInputStream iis = ImageIO.createImageInputStream(source);
-		final Iterator<ImageReader> readers = ImageIO.getImageReaders(iis);
+		final ImageReader reader = createImageReader(ImageIO.createImageInputStream(source));
+		return findMetadataValue(reader.getImageMetadata(0), tag);
+	}
 
-		if (readers.hasNext()) {
-			// pick the first available ImageReader
-			final ImageReader reader = readers.next();
-
-			// attach source to the reader
-			reader.setInput(iis, true);
-
-			// read metadata of first image
-			final IIOMetadata metadata = reader.getImageMetadata(0);
-
+	public static String findMetadataValue(IIOMetadata metadata, String tag) {
 			final String[] names = metadata.getMetadataFormatNames();
 			final int length = names.length;
 			for (int i = 0; i < length; i++) {
-				final String result = displayMetadata(metadata.getAsTree(names[i]));
+				final String result = displayMetadata(metadata.getAsTree(names[i]), tag);
 				if (result != null) {
 					return result;
 				}
 			}
-		}
 
 		return null;
 	}
 
-	private String displayMetadata(Node root) {
-		return displayMetadata(root, 0);
+	private static String displayMetadata(Node root, String tag) {
+		return displayMetadata(root, tag, 0);
 	}
 
-	private String displayMetadata(Node node, int level) {
+	private static String displayMetadata(Node node, String tag, int level) {
 		final NamedNodeMap map = node.getAttributes();
 		if (map != null) {
 			final Node keyword = map.getNamedItem("keyword");
@@ -118,7 +109,7 @@ public class MetadataTag {
 		// children, so close current tag
 		while (child != null) {
 			// print children recursively
-			final String result = displayMetadata(child, level + 1);
+			final String result = displayMetadata(child, tag, level + 1);
 			if (result != null) {
 				return result;
 			}

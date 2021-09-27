@@ -4,11 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
-import java.io.File;
-import java.io.IOException;
 import java.util.Hashtable;
-
-import javax.imageio.ImageIO;
 
 public class FontSpriteSheet {
 
@@ -26,7 +22,6 @@ public class FontSpriteSheet {
 		ALL_CHARS = b.toString();
 	}
 
-	private CharSequence chars;
 	private final int ascent;
 	private final int charWidth;
 	private final int lineHeight;
@@ -51,13 +46,12 @@ public class FontSpriteSheet {
 		return charWidth;
 	}
 
-	public int getLineHeight() {
-		return lineHeight;
+	BufferedImage getImage() {
+		return image;
 	}
 
-	public String getMetadata() {
-		return "ascent=" + ascent + '\n' +
-				"lineHeight=" + lineHeight;
+	public int getLineHeight() {
+		return lineHeight;
 	}
 
 	public void drawString(Graphics g, String s, int x, int y) {
@@ -66,10 +60,6 @@ public class FontSpriteSheet {
 			drawChar(recoloredImage, g, c, x, y);
 			x += charWidth;
 		}
-	}
-
-	public void writePNG(File file) throws IOException {
-		ImageIO.write(image, "png", file);
 	}
 
 	@SuppressWarnings("UnnecessaryLocalVariable")

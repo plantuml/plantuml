@@ -1,11 +1,8 @@
 package net.sourceforge.plantuml.ugraphic.fontsprite;
 
-import static java.util.Objects.requireNonNull;
+import static net.sourceforge.plantuml.ugraphic.fontsprite.FontSpriteSheetIO.readFontSpriteSheetFromPNG;
 
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
+import java.io.InputStream;
 
 // TODO sizes
 public class FontSpriteSheetManager {
@@ -17,53 +14,40 @@ public class FontSpriteSheetManager {
 
 	public FontSpriteSheet bold() {
 		if (bold == null) {
-			bold = new FontSpriteSheet(
-					loadImageFromResource("/font-sprite-sheets/JetBrainsMonoNL-12-Bold.png"),
-					13,  // ascent
-					17   // lineHeight
-			);
+			bold = load("JetBrainsMonoNL-12-Bold.png");
 		}
 		return bold;
 	}
 
 	public FontSpriteSheet boldItalic() {
 		if (boldItalic == null) {
-			boldItalic = new FontSpriteSheet(
-					loadImageFromResource("/font-sprite-sheets/JetBrainsMonoNL-12-Bold.png"),
-					13,  // ascent
-					17   // lineHeight
-			);
+			boldItalic = load("JetBrainsMonoNL-12-BoldItalic.png");
 		}
 		return boldItalic;
 	}
 
 	public FontSpriteSheet italic() {
 		if (italic == null) {
-			italic = new FontSpriteSheet(
-					loadImageFromResource("/font-sprite-sheets/JetBrainsMonoNL-12-Bold.png"),
-					13,  // ascent
-					17   // lineHeight
-			);
+			italic = load("JetBrainsMonoNL-12-Italic.png");
 		}
 		return italic;
 	}
 
 	public FontSpriteSheet plain() {
 		if (plain == null) {
-			plain = new FontSpriteSheet(
-					loadImageFromResource("/font-sprite-sheets/JetBrainsMonoNL-12-Regular.png"),
-					13,  // ascent
-					17   // lineHeight
-			);
+			plain = load("JetBrainsMonoNL-12-Regular.png");
 		}
 		return plain;
 	}
 
-	private BufferedImage loadImageFromResource(String name) {
-		try {
-			return ImageIO.read(requireNonNull(FontSpriteSheet.class.getResourceAsStream(name)));
-		} catch (IOException e) {
-			throw new RuntimeException("Error loading Font Sprite Sheet resource : " + e.getMessage(), e);
+	private static FontSpriteSheet load(String name) {
+		try (final InputStream in = FontSpriteSheet.class.getResourceAsStream("/font-sprite-sheets/" + name)) {
+			if (in == null) {
+				throw new IllegalStateException("Resource not found");
+			}
+			return readFontSpriteSheetFromPNG(in);
+		} catch (Exception e) {
+			throw new RuntimeException("Error loading Font Sprite Sheet '" + name + "' : " + e.getMessage(), e);
 		}
 	}
 }

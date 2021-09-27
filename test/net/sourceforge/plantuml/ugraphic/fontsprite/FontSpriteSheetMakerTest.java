@@ -8,6 +8,7 @@ import static java.awt.RenderingHints.KEY_TEXT_ANTIALIASING;
 import static java.awt.RenderingHints.VALUE_TEXT_ANTIALIAS_ON;
 import static java.awt.image.BufferedImage.TYPE_INT_RGB;
 import static net.sourceforge.plantuml.test.TestUtils.testOutputDir;
+import static net.sourceforge.plantuml.ugraphic.fontsprite.FontSpriteSheetIO.writeFontSpriteSheetAsPNG;
 import static net.sourceforge.plantuml.ugraphic.fontsprite.FontSpriteSheetMaker.createFontSpriteSheet;
 import static org.assertj.swing.assertions.Assertions.assertThat;
 
@@ -37,10 +38,10 @@ class FontSpriteSheetMakerTest {
 		final File fontFile = Paths.get("JetBrainsMono-2.242").resolve("JetBrainsMonoNL-" + style + ".ttf").toFile();
 		final Font font = createFont(TRUETYPE_FONT, fontFile).deriveFont((float) size);
 		final FontSpriteSheet sheet = createFontSpriteSheet(font);
-		System.out.println(sheet.getMetadata());
-		sheet.writePNG(testOutputDir("font-sprite-sheets").resolve("JetBrainsMonoNL-" + size + "-" + style + ".png").toFile());
+		final Path target = testOutputDir("font-sprite-sheets").resolve("JetBrainsMonoNL-" + size + "-" + style + ".png");
+		writeFontSpriteSheetAsPNG(sheet, target);
 	}
-	
+
 	// I have seen one font fail because the real maxAscent is one bigger than FontMetrics.getMaxAscent() returns - so the top pixel row was missing in the sprite sheet)
 	@ParameterizedTest
 	@CsvSource(value = {
@@ -78,7 +79,7 @@ class FontSpriteSheetMakerTest {
 			final String prefix = style + "-" + size;
 			ImageIO.write(fontImage, "png", dir.resolve(prefix + "-from-font.png").toFile());
 			ImageIO.write(sheetImage, "png", dir.resolve(prefix + "-from-sheet.png").toFile());
-			sheet.writePNG(dir.resolve(prefix + "-sheet.png").toFile());
+			writeFontSpriteSheetAsPNG(sheet, dir.resolve(prefix + "-sheet.png"));
 			throw e;
 		}
 	}

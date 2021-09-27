@@ -64,28 +64,35 @@ public class PngIOMetadata {
 //		PngIO.forceImageIO = true;
 //		ImageIO.write(image, "png", os);
 
-		writeInternal(image, os, metadata, dpi, debugData);
+		final PngIOMetadata writer = new PngIOMetadata();
+		
+		if (dpi != 96) {
+			writer.addDpi(dpi);
+		}
+
+		if (debugData != null) {
+			writer.addText("debug", debugData);
+		}
+
+		writer.addiText("plantuml", metadata);
+
+		writer.write(image, os);
 	}
 
-	private static void writeInternal(RenderedImage image, OutputStream os, String metadata, int dpi, String debugData)
-			throws IOException {
+	final IIOMetadata meta;
 
+	public PngIOMetadata() throws IOException {
 		final ImageWriter writer = javax.imageio.ImageIO.getImageWritersByFormatName("png").next();
 		final ImageWriteParam writeParam = writer.getDefaultWriteParam();
 		final ImageTypeSpecifier typeSpecifier = ImageTypeSpecifier
 				.createFromBufferedImageType(BufferedImage.TYPE_INT_RGB);
 
-		final IIOMetadata meta = writer.getDefaultImageMetadata(typeSpecifier, writeParam);
+		meta = writer.getDefaultImageMetadata(typeSpecifier, writeParam);
 
-		if (dpi != 96) {
-			addDpi(meta, dpi);
-		}
-
-		if (debugData != null) {
-			addText(meta, "debug", debugData);
-		}
-		addText(meta, "copyleft", copyleft);
-		addiText(meta, "plantuml", metadata);
+		addText("copyleft", copyleft);
+	}
+	
+	public void write(RenderedImage image, OutputStream os) throws IOException {
 
 		Log.debug("PngIOMetadata pngMetadata=" + meta);
 
@@ -119,7 +126,7 @@ public class PngIOMetadata {
 		}
 	}
 
-	private static void addDpi(IIOMetadata meta, double dpi) throws IIOInvalidTreeException {
+	public void addDpi(double dpi) throws IIOInvalidTreeException {
 		final IIOMetadataNode dimension = new IIOMetadataNode("Dimension");
 
 		final IIOMetadataNode horizontalPixelSize = new IIOMetadataNode("HorizontalPixelSize");
@@ -138,7 +145,7 @@ public class PngIOMetadata {
 
 	}
 
-	private static void addiText(IIOMetadata meta, String key, String value) throws IIOInvalidTreeException {
+	public void addiText(String key, String value) throws IIOInvalidTreeException {
 		final IIOMetadataNode text = new IIOMetadataNode("iTXt");
 		final IIOMetadataNode entry = new IIOMetadataNode("iTXtEntry");
 		entry.setAttribute("keyword", key);
@@ -156,7 +163,7 @@ public class PngIOMetadata {
 
 	}
 
-	private static void addText(IIOMetadata meta, String key, String value) throws IIOInvalidTreeException {
+	public void addText(String key, String value) throws IIOInvalidTreeException {
 		final IIOMetadataNode text = new IIOMetadataNode("tEXt");
 		final IIOMetadataNode entry = new IIOMetadataNode("tEXtEntry");
 		entry.setAttribute("keyword", key);
