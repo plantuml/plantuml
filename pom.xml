@@ -72,12 +72,6 @@
 	
     <dependencies>
 		<dependency>
-			<groupId>com.approvaltests</groupId>
-			<artifactId>approvaltests</artifactId>
-			<version>12.1.1</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
             <groupId>org.apache.ant</groupId>
             <artifactId>ant</artifactId>
             <version>1.10.11</version>

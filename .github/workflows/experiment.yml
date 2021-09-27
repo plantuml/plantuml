@@ -85,5 +85,5 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: ${{ github.run_number }}-${{ matrix.os }}-${{ matrix.java_distribution }}-${{ matrix.java_version }}-approval-test-failures
-          path: test/**/*.received.*
+          path: test/**/*.failed.*
           if-no-files-found: ignore

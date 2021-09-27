@@ -4,13 +4,15 @@ import static java.awt.Color.BLACK;
 import static java.awt.Color.WHITE;
 import static java.awt.image.BufferedImage.TYPE_INT_ARGB;
 import static java.awt.image.BufferedImage.TYPE_INT_RGB;
-import static net.sourceforge.plantuml.test.ApprovalTesting.approveImage;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+
+import net.sourceforge.plantuml.test.ApprovalTesting;
 
 class FontSpriteSheetTest {
 
@@ -22,22 +24,23 @@ class FontSpriteSheetTest {
 		final int margin = 5;
 		final int width = plain.getChars().length() * plain.getCharWidth() + 2 * margin;
 		final int height = 4 * plain.getLineHeight() + 2 * margin;
-		
+
 		final BufferedImage image = new BufferedImage(width, height, TYPE_INT_RGB);
 		final Graphics2D g = image.createGraphics();
-		
+
 		g.setBackground(WHITE);
 		g.clearRect(0, 0, image.getWidth(), image.getHeight());
 
 		g.setColor(BLACK);
 		g.translate(0, margin);
+		
 		for (FontSpriteSheet sheet : new FontSpriteSheet[]{plain, manager.bold(), manager.italic(), manager.boldItalic()}) {
 			String testString = String.valueOf(sheet.getChars());
 			sheet.drawString(g, testString, margin, sheet.getAscent());
 			g.translate(0, sheet.getLineHeight());
 		}
 
-		approveImage(image);
+		approvalTesting.approve(image);
 	}
 
 	@Test
@@ -67,6 +70,14 @@ class FontSpriteSheetTest {
 			}
 		}
 
-		approveImage(image);
+		approvalTesting.approve(image);
 	}
+
+	//
+	// Test DSL
+	//
+
+	@RegisterExtension
+	private final ApprovalTesting approvalTesting = new ApprovalTesting();
+
 }
