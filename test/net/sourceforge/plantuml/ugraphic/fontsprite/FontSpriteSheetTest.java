@@ -33,7 +33,7 @@ class FontSpriteSheetTest {
 
 		g.setColor(BLACK);
 		g.translate(0, margin);
-		
+
 		for (FontSpriteSheet sheet : new FontSpriteSheet[]{plain, manager.bold(), manager.italic(), manager.boldItalic()}) {
 			String testString = String.valueOf(sheet.getChars());
 			sheet.drawString(g, testString, margin, sheet.getAscent());
@@ -48,28 +48,37 @@ class FontSpriteSheetTest {
 		final FontSpriteSheetManager manager = new FontSpriteSheetManager();
 		final FontSpriteSheet sheet = manager.plain();
 
-		final String testString = String.valueOf(sheet.getChars());
-		final float[] background_alphas = new float[]{0, 1f / 3, 0.5f, 2f / 3, 1};
-		final float[] foreground_alphas = {0.01f, 1f / 3, 0.5f, 2f / 3, 0.8f};
+		final float[] numbers = new float[]{0, 0.01f, 0.25f, 1f / 3, 0.5f, 2f / 3, 0.75f, 0.99f, 1};
+		final String testString = ".!@#$%^&*0OI1'";
 
-		final int width = sheet.getChars().length() * sheet.getCharWidth();
-		final int stripeHeight = foreground_alphas.length * sheet.getLineHeight();
-		final int height = background_alphas.length * stripeHeight;
+		final int margin = 5;
+		final int stringWidth = testString.length() * sheet.getCharWidth();
+		final int stripeWidth = stringWidth * numbers.length;
+		final int stripeHeight = numbers.length * sheet.getLineHeight();
 
-		final BufferedImage image = new BufferedImage(width, height, TYPE_INT_ARGB);
-		final Graphics2D g = image.createGraphics();
+		final BufferedImage image = new BufferedImage(2 * stripeWidth + 2 * margin, numbers.length * stripeHeight + 2 * margin, TYPE_INT_ARGB);
+		final Graphics2D g_font_color = image.createGraphics();
+		g_font_color.translate(margin, margin);
 
-		for (float bg_alpha : background_alphas) {
-			g.setColor(new Color(1, 1, 1, bg_alpha));
-			g.fillRect(0, 0, width, stripeHeight);
-
-			for (float fg_alpha : foreground_alphas) {
-				g.setColor(new Color(1, 1, 1, fg_alpha));
-				sheet.drawString(g, testString, 0, sheet.getAscent());
-				g.translate(0, sheet.getLineHeight());
+		for (int font_color : new int[]{0, 1}) {
+			final Graphics2D g_bg_color = (Graphics2D) g_font_color.create();
+			for (float bg_color : numbers) {
+				final Graphics2D g_bg_alpha = (Graphics2D) g_bg_color.create();
+				for (float bg_alpha : numbers) {
+					g_bg_alpha.setColor(new Color(bg_color, bg_color, bg_color, bg_alpha));
+					g_bg_alpha.fillRect(0, 0, stringWidth, stripeHeight);
+					final Graphics2D g_fg_alpha = (Graphics2D) g_bg_alpha.create();
+					for (float fg_alpha : numbers) {
+						g_fg_alpha.setColor(new Color(font_color, font_color, font_color, fg_alpha));
+						sheet.drawString(g_fg_alpha, testString, 0, sheet.getAscent());
+						g_fg_alpha.translate(0, sheet.getLineHeight());
+					}
+					g_bg_alpha.translate(stringWidth, 0);
+				}
+				g_bg_color.translate(0, numbers.length * sheet.getLineHeight());
 			}
+			g_font_color.translate(stripeWidth, 0);
 		}
-
 		approvalTesting.approve(image);
 	}
 
