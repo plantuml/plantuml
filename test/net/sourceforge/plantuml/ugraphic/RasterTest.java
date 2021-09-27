@@ -91,6 +91,8 @@ public class RasterTest {
 		polyline(g, new int[]{0, 40, 0}, new int[]{0, 10, 20});
 
 		approvalTesting.approve(image);
+		approvalTesting.approve("x");
+		approvalTesting.approve("y", "1");
 	}
 
 	//

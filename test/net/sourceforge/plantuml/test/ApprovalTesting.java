@@ -2,6 +2,8 @@ package net.sourceforge.plantuml.test;
 
 import static java.nio.file.Files.createDirectories;
 import static java.nio.file.Files.deleteIfExists;
+import static net.sourceforge.plantuml.test.TestUtils.readUtf8File;
+import static net.sourceforge.plantuml.test.TestUtils.writeUtf8File;
 import static org.assertj.swing.assertions.Assertions.assertThat;
 
 import java.awt.image.BufferedImage;
@@ -20,51 +22,41 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 
 public class ApprovalTesting implements Extension, BeforeEachCallback {
 
+	//
+	// Public methods
+	//
+
+	public void approve(BufferedImage value) {
+		approve(value, "");
+	}
+
+	public void approve(BufferedImage value, String suffix) {
+		approveImpl(IMAGE_STRATEGY, value, suffix, ".png");
+	}
+
+	public void approve(String value) {
+		approve(value, "");
+	}
+
+	public void approve(String value, String suffix) {
+		approveImpl(STRING_STRATEGY, value, suffix, ".txt");
+	}
+
+	//
+	// Internals
+	//
+
 	String baseName;
-	Path sourceDir;
-	final Set<String> suffixUsed = new HashSet<>();
+	Path dir;
+	final Set<String> approvedFilesUsed = new HashSet<>();
 
 	@Override
 	public void beforeEach(ExtensionContext context) {
 		final Class<?> klass = context.getRequiredTestClass();
 
-		sourceDir = Paths.get("test", klass.getPackage().getName().split("\\."));
+		dir = Paths.get("test", klass.getPackage().getName().split("\\."));
 
 		baseName = klass.getSimpleName() + "." + createTestName(context);
-	}
-
-	public void approve(BufferedImage image) {
-		approve(image, "");
-	}
-
-	public void approve(BufferedImage image, String suffix) {
-		if (!suffixUsed.add(suffix)) {
-			throw new IllegalStateException("Already used suffix '" + suffix + "'");  // todo better message when suffix empty
-		}
-
-		final Path approvedFile = sourceDir.resolve(baseName + suffix + ".approved.png");
-		final Path failedFile = sourceDir.resolve(baseName + suffix + ".failed.png");
-
-		try {
-			try {
-				assertThat(approvedFile)
-						.isNotEmptyFile();
-
-				final BufferedImage approvedImage = ImageIO.read(approvedFile.toFile());
-
-				assertThat(image)
-						.isEqualTo(approvedImage);
-
-				deleteIfExists(failedFile);
-
-			} catch (AssertionError e) {
-				createDirectories(sourceDir);  // in case the dir no longer exists!
-				ImageIO.write(image, "png", failedFile.toFile());
-				throw e;
-			}
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
 	}
 
 	private String createTestName(ExtensionContext context) {
@@ -72,4 +64,62 @@ public class ApprovalTesting implements Extension, BeforeEachCallback {
 		final int index = displayName.indexOf('(');
 		return index == -1 ? displayName : displayName.substring(0, index);
 	}
+
+	private <T> void approveImpl(Strategy<T> strategy, T value, String suffix, String extensionWithDot) {
+		final String approvedFilename = baseName + suffix + ".approved" + extensionWithDot;
+		final String failedFilename = baseName + suffix + ".failed" + extensionWithDot;
+
+		if (!approvedFilesUsed.add(approvedFilename)) {
+			throw new IllegalStateException("Already used '" + approvedFilename + "'");  // todo better message when suffix empty
+		}
+
+		final Path approvedFile = dir.resolve(approvedFilename);
+		final Path failedFile = dir.resolve(failedFilename);
+
+		try {
+			try {
+				assertThat(approvedFile).isNotEmptyFile();
+				strategy.compare(value, approvedFile, failedFile);
+				deleteIfExists(failedFile);
+			} catch (AssertionError e) {
+				createDirectories(dir);
+				strategy.writeFailedFile(value, failedFile);
+				throw e;
+			}
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	private interface Strategy<T> {
+		void compare(T value, Path approvedFile, Path failedFile) throws IOException, AssertionError;
+
+		void writeFailedFile(T value, Path failedFile) throws IOException;
+	}
+
+	private final Strategy<BufferedImage> IMAGE_STRATEGY = new Strategy<BufferedImage>() {
+		@Override
+		public void compare(BufferedImage value, Path approvedFile, Path failedFile) throws IOException, AssertionError {
+			final BufferedImage approved = ImageIO.read(approvedFile.toFile());
+			assertThat(value).isEqualTo(approved);
+		}
+
+		@Override
+		public void writeFailedFile(BufferedImage value, Path failedFile) throws IOException {
+			ImageIO.write(value, "png", failedFile.toFile());
+		}
+	};
+
+	private final Strategy<String> STRING_STRATEGY = new Strategy<String>() {
+		@Override
+		public void compare(String value, Path approvedFile, Path failedFile) throws IOException, AssertionError {
+			final String approved = readUtf8File(approvedFile);
+			assertThat(value).isEqualTo(approved);
+		}
+
+		@Override
+		public void writeFailedFile(String value, Path failedFile) throws IOException {
+			writeUtf8File(failedFile, value);
+		}
+	};
 }

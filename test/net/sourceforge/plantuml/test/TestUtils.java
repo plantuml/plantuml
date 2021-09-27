@@ -2,6 +2,7 @@ package net.sourceforge.plantuml.test;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.createDirectories;
+import static java.nio.file.Files.readAllBytes;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -38,7 +39,12 @@ public class TestUtils {
 	public static Path testOutputDir(String name) throws IOException {
 		return createDirectories(Paths.get("target/test-outputs").resolve(name));
 	}
+	
+	public static String readUtf8File(Path path) throws IOException {
 
+		return new String(readAllBytes(path), UTF_8);
+	}
+	
 	public static void writeUtf8File(Path path, String string) throws IOException {
 
 		Files.createDirectories(path.getParent());
