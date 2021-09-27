@@ -9,16 +9,12 @@ import static java.awt.geom.AffineTransform.getTranslateInstance;
 import static java.awt.image.BufferedImage.TYPE_INT_RGB;
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableList;
-import static java.util.Objects.requireNonNull;
-import static net.sourceforge.plantuml.test.TestUtils.testOutputDir;
-import static org.assertj.swing.assertions.Assertions.assertThat;
+import static net.sourceforge.plantuml.test.ApprovalTesting.approveImage;
 
 import java.awt.BasicStroke;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.List;
-
-import javax.imageio.ImageIO;
 
 import org.junit.jupiter.api.Test;
 
@@ -31,7 +27,7 @@ public class RasterTest {
 	//
 
 	@Test
-	void test_raster_engine() throws Exception {
+	void test_raster_engine() {
 		System.setProperty("sun.java2d.renderer.log", "true");
 		RenderingEngine.getInstance();
 		System.out.println("java.runtime.name         = " + System.getProperty("java.runtime.name"));
@@ -39,7 +35,7 @@ public class RasterTest {
 		System.out.println("java.vendor               = " + System.getProperty("java.vendor"));
 		System.out.println("java.vendor.version       = " + System.getProperty("java.vendor.version"));
 		System.out.println("Rendering Engine          = " + RenderingEngine.getInstance().getClass().getName());
-		
+
 		try {
 			System.out.println("org.marlin.pisces.Version = " + Class.forName("org.marlin.pisces.Version").getMethod("getVersion").invoke(new Object[]{}));
 		} catch (Exception e) {
@@ -86,12 +82,7 @@ public class RasterTest {
 
 		polyline(g, new int[]{0, 40, 0}, new int[]{0, 10, 20});
 
-		ImageIO.write(image, "png", testOutputDir("raster-engine").resolve("output.png").toFile());
-
-		final BufferedImage reference = ImageIO.read(requireNonNull(getClass().getResourceAsStream("/raster-engine-reference.png")));
-
-		assertThat(image)
-				.isEqualTo(reference);
+		approveImage(image);
 	}
 
 	//

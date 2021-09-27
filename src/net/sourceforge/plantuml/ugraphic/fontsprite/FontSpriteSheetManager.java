@@ -19,11 +19,8 @@ public class FontSpriteSheetManager {
 		if (bold == null) {
 			bold = new FontSpriteSheet(
 					loadImageFromResource("/font-sprite-sheets/JetBrainsMonoNL-12-Bold.png"),
-					13,           // ascent
-					17,           // lineHeight
-					(char) 0x21,  // minChar
-					(char) 0x7e,  // maxChar
-					7             // charWidth
+					13,  // ascent
+					17   // lineHeight
 			);
 		}
 		return bold;
@@ -33,11 +30,8 @@ public class FontSpriteSheetManager {
 		if (boldItalic == null) {
 			boldItalic = new FontSpriteSheet(
 					loadImageFromResource("/font-sprite-sheets/JetBrainsMonoNL-12-Bold.png"),
-					13,           // ascent
-					17,           // lineHeight
-					(char) 0x21,  // minChar
-					(char) 0x7e,  // maxChar
-					7             // charWidth
+					13,  // ascent
+					17   // lineHeight
 			);
 		}
 		return boldItalic;
@@ -47,11 +41,8 @@ public class FontSpriteSheetManager {
 		if (italic == null) {
 			italic = new FontSpriteSheet(
 					loadImageFromResource("/font-sprite-sheets/JetBrainsMonoNL-12-Bold.png"),
-					13,           // ascent
-					17,           // lineHeight
-					(char) 0x21,  // minChar
-					(char) 0x7e,  // maxChar
-					7             // charWidth
+					13,  // ascent
+					17   // lineHeight
 			);
 		}
 		return italic;
@@ -61,11 +52,8 @@ public class FontSpriteSheetManager {
 		if (plain == null) {
 			plain = new FontSpriteSheet(
 					loadImageFromResource("/font-sprite-sheets/JetBrainsMonoNL-12-Regular.png"),
-					13,           // ascent
-					17,           // lineHeight
-					(char) 0x21,  // minChar
-					(char) 0x7e,  // maxChar
-					7             // charWidth
+					13,  // ascent
+					17   // lineHeight
 			);
 		}
 		return plain;

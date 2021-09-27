@@ -79,3 +79,11 @@ jobs:
         with:
           name: ${{ github.run_number }}-${{ matrix.os }}-${{ matrix.java_distribution }}-${{ matrix.java_version }}-test-outputs
           path: target/test-outputs/
+
+      - name: Upload approval test failures
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ github.run_number }}-${{ matrix.os }}-${{ matrix.java_distribution }}-${{ matrix.java_version }}-approval-test-failures
+          path: test/**/*.received.*
+          if-no-files-found: ignore

@@ -1,7 +1,7 @@
 package net.sourceforge.plantuml.ugraphic.fontsprite;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.io.File;
@@ -12,21 +12,31 @@ import javax.imageio.ImageIO;
 
 public class FontSpriteSheet {
 
+	static final int MIN_CHAR = 0x21;
+	static final int MAX_CHAR = 0x7e;
+	static final int NUM_CHARS = MAX_CHAR - MIN_CHAR + 1;
+
+	private static final String ALL_CHARS;
+
+	static {
+		StringBuilder b = new StringBuilder();
+		for (char c = MIN_CHAR; c <= MAX_CHAR; c++) {
+			b.append(c);
+		}
+		ALL_CHARS = b.toString();
+	}
+
 	private CharSequence chars;
 	private final int ascent;
 	private final int charWidth;
 	private final int lineHeight;
 	private final BufferedImage image;
-	private final char maxChar;
-	private final char minChar;
 
-	public FontSpriteSheet(BufferedImage image, int ascent, int lineHeight, char minChar, char maxChar, int charWidth) {
+	public FontSpriteSheet(BufferedImage image, int ascent, int lineHeight) {
 		this.image = image;
 		this.ascent = ascent;
 		this.lineHeight = lineHeight;
-		this.maxChar = maxChar;
-		this.minChar = minChar;
-		this.charWidth = charWidth;
+		this.charWidth = image.getWidth() / NUM_CHARS;
 	}
 
 	public int getAscent() {
@@ -34,14 +44,7 @@ public class FontSpriteSheet {
 	}
 
 	public CharSequence getChars() {
-		if (chars == null) {
-			StringBuilder b = new StringBuilder();
-			for (char c = minChar; c <= maxChar; c++) {
-				b.append(c);
-			}
-			this.chars = b.toString();
-		}
-		return chars;
+		return ALL_CHARS;
 	}
 
 	public int getCharWidth() {
@@ -54,13 +57,10 @@ public class FontSpriteSheet {
 
 	public String getMetadata() {
 		return "ascent=" + ascent + '\n' +
-				"lineHeight=" + lineHeight + '\n' +
-				"minChar=" + minChar + '\n' +
-				"maxChar=" + maxChar + '\n' +
-				"charWidth=" + charWidth;
+				"lineHeight=" + lineHeight;
 	}
 
-	public void drawString(Graphics2D g, String s, int x, int y) {
+	public void drawString(Graphics g, String s, int x, int y) {
 		final RecoloredImage recoloredImage = new RecoloredImage(this.image, g.getColor());
 		for (char c : s.toCharArray()) {
 			drawChar(recoloredImage, g, c, x, y);
@@ -73,17 +73,17 @@ public class FontSpriteSheet {
 	}
 
 	@SuppressWarnings("UnnecessaryLocalVariable")
-	private void drawChar(BufferedImage image, Graphics2D g, char c, int x, int y) {
+	private void drawChar(BufferedImage image, Graphics g, char c, int x, int y) {
 		if (c == ' ') {
 			return;
 		}
 
-		if (c < minChar || c > maxChar) {
+		if (c < MIN_CHAR || c > MAX_CHAR) {
 			// TODO tofu
 			throw new IllegalArgumentException("Char '" + c + "' not supported");
 		}
 
-		final int srcLeft = (c - minChar) * charWidth;
+		final int srcLeft = (c - MIN_CHAR) * charWidth;
 		final int srcRight = srcLeft + charWidth;
 		final int srcTop = 0;
 		final int srcBottom = image.getHeight();
@@ -129,7 +129,7 @@ public class FontSpriteSheet {
 
 				@Override
 				public int getRGB(Object inData) {
-					final int pixel = ((byte[]) inData)[0];
+					final int pixel = ((byte[]) inData)[0] & 0xFF;
 					final int alpha0 = ((pixel * alpha) / 255) & 0xFF;
 					return (alpha0 << 24)
 							| (red << 16)
