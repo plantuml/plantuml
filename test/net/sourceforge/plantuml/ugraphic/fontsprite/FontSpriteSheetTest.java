@@ -12,7 +12,7 @@ import java.awt.image.BufferedImage;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
-import net.sourceforge.plantuml.test.ApprovalTesting;
+import net.sourceforge.plantuml.test.approval.ApprovalTestingExtension;
 
 class FontSpriteSheetTest {
 
@@ -78,6 +78,6 @@ class FontSpriteSheetTest {
 	//
 
 	@RegisterExtension
-	private final ApprovalTesting approvalTesting = new ApprovalTesting();
+	private final ApprovalTestingExtension approvalTesting = new ApprovalTestingExtension();
 
 }

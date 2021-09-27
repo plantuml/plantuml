@@ -547,4 +547,9 @@ public class StringUtils {
 	}
 
 	// http://docs.oracle.com/javase/tutorial/i18n/format/dateFormat.html
+
+	public static String substringBefore(String s, int separator) {
+		final int index = s.indexOf(separator);
+		return index == -1 ? s : s.substring(0, index);
+	}
 }

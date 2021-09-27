@@ -18,7 +18,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
-import net.sourceforge.plantuml.test.ApprovalTesting;
+import net.sourceforge.plantuml.test.approval.ApprovalTestingExtension;
 import sun.java2d.pipe.RenderingEngine;
 
 public class RasterTest {
@@ -91,8 +91,6 @@ public class RasterTest {
 		polyline(g, new int[]{0, 40, 0}, new int[]{0, 10, 20});
 
 		approvalTesting.approve(image);
-		approvalTesting.approve("x");
-		approvalTesting.approve("y", "1");
 	}
 
 	//
@@ -100,7 +98,7 @@ public class RasterTest {
 	//
 
 	@RegisterExtension
-	private final ApprovalTesting approvalTesting = new ApprovalTesting();
+	private final ApprovalTestingExtension approvalTesting = new ApprovalTestingExtension();
 
 	private static final List<Object> ANTIALIAS_OPTIONS = unmodifiableList(asList(
 			VALUE_ANTIALIAS_OFF, VALUE_ANTIALIAS_ON
