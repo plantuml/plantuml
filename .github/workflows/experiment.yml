@@ -10,15 +10,15 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        java_distribution: [ zulu ]
+        java_distribution: [ temurin ]
 #        java_version: [ 8, 11, 17 ]
 #        os: [ macos-latest, ubuntu-latest, windows-latest ]
 
         # All temurin:
-        # java_version: [ 8.0.302+8, 11.0.12+7, 17.0.0+35 ]
+         java_version: [ 8.0.302+8, 11.0.12+7, 17.0.0+35 ]
 
         # All zulu:
-        java_version: [ 8.0.302+8, 9.0.7+0, 10.0.2+13, 11.0.12+7, 12.0.2+3, 13.0.8+5, 14.0.2+12, 15.0.4+5, 16.0.2+7, 17.0.0+35 ]
+#        java_version: [ 8.0.302+8, 9.0.7+0, 10.0.2+13, 11.0.12+7, 12.0.2+3, 13.0.8+5, 14.0.2+12, 15.0.4+5, 16.0.2+7, 17.0.0+35 ]
         
         # All OS:
         os: [ macos-11, macos-10.15, ubuntu-18.04, ubuntu-20.04, windows-2016, windows-2019, windows-2022 ]
