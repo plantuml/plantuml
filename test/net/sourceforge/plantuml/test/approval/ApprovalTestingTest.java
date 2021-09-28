@@ -22,6 +22,13 @@ class ApprovalTestingTest {
 	}
 
 	@Test
+	void test_approveImage_bmp() {
+		final BufferedImage image = new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB);
+		image.createGraphics().drawRect(2, 3, 5, 3);
+		approvalTesting.withExtension(".bmp").approveImage(image);
+	}
+
+	@Test
 	void test_approveString() {
 		approvalTesting.approveString("foo");
 	}

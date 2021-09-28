@@ -17,8 +17,6 @@ import javax.imageio.ImageIO;
 
 class ApprovalTestingImpl<T> {
 
-	private static final String APPROVED_DOES_NOT_EXIST = "The '%s' file does not exist";
-
 	private static final String APPROVED_FILE_ALREADY_USED = "The '%s' file is already part of this test, " +
 			"please use withSuffix() to make this approve() unique";
 
@@ -67,7 +65,7 @@ class ApprovalTestingImpl<T> {
 		try {
 			try {
 				if (!isRegularFile(approvedFile)) {
-					throw new AssertionError(String.format(APPROVED_DOES_NOT_EXIST, approvedFile));
+					throw new AssertionError(String.format("The '%s' file does not exist", approvedFile));
 				}
 				comparison.compare(value, approvedFile);
 				deleteIfExists(failedFile);
@@ -91,8 +89,11 @@ class ApprovalTestingImpl<T> {
 			".png",
 			(value, approvedFile) ->
 					org.assertj.swing.assertions.Assertions.assertThat(value).isEqualTo(ImageIO.read(approvedFile.toFile())),
-			(value, path) ->
-					ImageIO.write(value, "png", path.toFile())
+			(value, path) -> {
+				final String format = substringAfterLast(path.toString(), '.');
+				boolean success = ImageIO.write(value, format, path.toFile());
+				if (!success) throw new AssertionError(String.format("Failed to write image file '%s'", path));
+			}
 	);
 
 	static final ApprovalTestingImpl<String> STRING = new ApprovalTestingImpl<>(
