@@ -90,7 +90,7 @@ class ApprovalTestingImpl<T> {
 	static final ApprovalTestingImpl<BufferedImage> BUFFERED_IMAGE = new ApprovalTestingImpl<>(
 			".png",
 			(value, approvedFile) ->
-					assertThat(value).isEqualTo(ImageIO.read(approvedFile.toFile())),
+					org.assertj.swing.assertions.Assertions.assertThat(value).isEqualTo(ImageIO.read(approvedFile.toFile())),
 			(value, path) ->
 					ImageIO.write(value, "png", path.toFile())
 	);
