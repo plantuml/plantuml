@@ -91,8 +91,8 @@ class ApprovalTestingImpl<T> {
 					org.assertj.swing.assertions.Assertions.assertThat(value).isEqualTo(ImageIO.read(approvedFile.toFile())),
 			(value, path) -> {
 				final String format = substringAfterLast(path.toString(), '.');
-				boolean success = ImageIO.write(value, format, path.toFile());
-				if (!success) throw new AssertionError(String.format("Failed to write image file '%s'", path));
+				boolean failed = !ImageIO.write(value, format, path.toFile());
+				if (failed) throw new AssertionError(String.format("Failed to write image file '%s'", path));
 			}
 	);
 
