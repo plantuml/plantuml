@@ -4,7 +4,6 @@ import static net.sourceforge.plantuml.test.approval.ApprovalTestingImpl.BUFFERE
 import static net.sourceforge.plantuml.test.approval.ApprovalTestingImpl.STRING;
 
 import java.awt.image.BufferedImage;
-import java.nio.file.Path;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -34,9 +33,9 @@ public class ApprovalTestingDsl {
 	//
 
 	private final Set<String> approvedFilesUsed;
-	private String baseName;
-	private Path dir;
+	private String className;
 	private String suffix;
+	private String testName;
 
 	ApprovalTestingDsl() {
 		approvedFilesUsed = new HashSet<>();
@@ -45,29 +44,29 @@ public class ApprovalTestingDsl {
 
 	ApprovalTestingDsl(ApprovalTestingDsl other) {
 		this.approvedFilesUsed = other.approvedFilesUsed;
-		this.baseName = other.baseName;
-		this.dir = other.dir;
+		this.className = other.className;
 		this.suffix = other.suffix;
+		this.testName = other.testName;
 	}
 
-	void configureForTest(String baseName, Path dir) {
-		this.baseName = baseName;
-		this.dir = dir;
+	void configureForTest(String className, String methodName) {
+		this.className = className;
+		this.testName = methodName;
 	}
 
 	Set<String> getApprovedFilesUsed() {
 		return approvedFilesUsed;
 	}
 
-	String getBaseName() {
-		return baseName;
-	}
-
-	Path getDir() {
-		return dir;
+	public String getClassName() {
+		return className;
 	}
 
 	String getSuffix() {
 		return suffix;
+	}
+
+	public String getTestName() {
+		return testName;
 	}
 }

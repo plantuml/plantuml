@@ -3,6 +3,7 @@ package net.sourceforge.plantuml.test.approval;
 import static java.nio.file.Files.createDirectories;
 import static java.nio.file.Files.deleteIfExists;
 import static java.nio.file.Files.isRegularFile;
+import static net.sourceforge.plantuml.StringUtils.substringBefore;
 import static net.sourceforge.plantuml.test.TestUtils.readUtf8File;
 import static net.sourceforge.plantuml.test.TestUtils.writeUtf8File;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -10,6 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import javax.imageio.ImageIO;
 
@@ -23,15 +25,19 @@ abstract class ApprovalTestingImpl<T> {
 			"please use withSuffix() to make this approve() unique";
 
 	void approve(ApprovalTestingDsl dsl, T value) {
-		final String approvedFilename = dsl.getBaseName() + dsl.getSuffix() + ".approved" + extensionWithDot();
-		final String failedFilename = dsl.getBaseName() + dsl.getSuffix() + ".failed" + extensionWithDot();
+		final Path parts = Paths.get("test", dsl.getClassName().split("\\."));
+		final Path dir = parts.getParent();
+		final String className = parts.getFileName().toString();
+		final String baseName = className + "." + simplifyTestName(dsl.getTestName()) + dsl.getSuffix();
+		final String approvedFilename = baseName + ".approved" + extensionWithDot();
+		final String failedFilename = baseName + ".failed" + extensionWithDot();
 
 		if (!dsl.getApprovedFilesUsed().add(approvedFilename)) {
 			throw new AssertionError(String.format(APPROVED_FILE_ALREADY_USED, approvedFilename));
 		}
 
-		final Path approvedFile = dsl.getDir().resolve(approvedFilename);
-		final Path failedFile = dsl.getDir().resolve(failedFilename);
+		final Path approvedFile = dir.resolve(approvedFilename);
+		final Path failedFile = dir.resolve(failedFilename);
 
 		try {
 			try {
@@ -41,13 +47,19 @@ abstract class ApprovalTestingImpl<T> {
 				compare(value, approvedFile, failedFile);
 				deleteIfExists(failedFile);
 			} catch (Throwable e) {
-				createDirectories(dsl.getDir());
+				createDirectories(dir);
 				writeFailedFile(value, failedFile);
 				throw e;
 			}
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	private static String simplifyTestName(String name) {
+		return substringBefore(name, '(')
+				.replaceAll("^[ \\p{Punct}]+", "")
+				.replaceAll("[ \\p{Punct}]+", "_");
 	}
 
 	abstract void compare(T value, Path approvedFile, Path failedFile) throws IOException, AssertionError;
