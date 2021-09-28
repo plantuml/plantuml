@@ -1,7 +1,7 @@
 package net.sourceforge.plantuml.test.approval;
 
-import static net.sourceforge.plantuml.test.approval.ApprovalTestingImpl.BUFFERED_IMAGE;
-import static net.sourceforge.plantuml.test.approval.ApprovalTestingImpl.STRING;
+import static net.sourceforge.plantuml.test.approval.ApprovalTestingStrategy.BUFFERED_IMAGE;
+import static net.sourceforge.plantuml.test.approval.ApprovalTestingStrategy.STRING;
 
 import java.awt.image.BufferedImage;
 import java.util.HashSet;
@@ -11,30 +11,32 @@ import java.util.Set;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
 
-public class ApprovalTestingDsl {
+public class ApprovalTestingDsl implements ApprovalTesting {
 
 	//
-	// Public
+	// Implement ApprovalTesting
 	//
 
 	public ApprovalTestingDsl withExtension(String extensionWithDot) {
-		ApprovalTestingDsl copy = new ApprovalTestingDsl(this);
+		final ApprovalTestingDsl copy = new ApprovalTestingDsl(this);
 		copy.extensionWithDot = extensionWithDot;
 		return copy;
 	}
 
 	public ApprovalTestingDsl withSuffix(String suffix) {
-		ApprovalTestingDsl copy = new ApprovalTestingDsl(this);
+		final ApprovalTestingDsl copy = new ApprovalTestingDsl(this);
 		copy.suffix = suffix;
 		return copy;
 	}
 
-	public void approveImage(BufferedImage value) {
+	public ApprovalTestingDsl approveImage(BufferedImage value) {
 		BUFFERED_IMAGE.approve(this, value);
+		return this;
 	}
 
-	public void approveString(String value) {
+	public ApprovalTestingDsl approveString(String value) {
 		STRING.approve(this, value);
+		return this;
 	}
 
 	//
@@ -42,30 +44,28 @@ public class ApprovalTestingDsl {
 	//
 
 	private final Set<String> approvedFilesUsed;
-	private String className;
-	private String displayName;
+	private final String className;
+	private final String displayName;
 	private String extensionWithDot;
-	private String methodName;
+	private final String methodName;
 	private String suffix;
-
-	ApprovalTestingDsl() {
-		approvedFilesUsed = new HashSet<>();
-		suffix = "";
-	}
 
 	ApprovalTestingDsl(ApprovalTestingDsl other) {
 		this.approvedFilesUsed = other.approvedFilesUsed;
 		this.className = other.className;
 		this.displayName = other.displayName;
 		this.extensionWithDot = other.extensionWithDot;
-		this.suffix = other.suffix;
 		this.methodName = other.methodName;
+		this.suffix = other.suffix;
 	}
 
-	void configureForTest(ExtensionContext context) {
+	ApprovalTestingDsl(ExtensionContext context) {
+		this.approvedFilesUsed = new HashSet<>();
 		this.className = context.getRequiredTestClass().getName();
 		this.displayName = context.getDisplayName();
+		this.extensionWithDot = null;
 		this.methodName = context.getRequiredTestMethod().getName();
+		this.suffix = "";
 	}
 
 	Set<String> getApprovedFilesUsed() {

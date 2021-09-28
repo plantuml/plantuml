@@ -67,7 +67,7 @@ class ApprovalTestingTest {
 			"!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~} x !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~} y !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~}  D  x_y",
 	})
 	void test_simplifyTestName(String input, String output) {
-		assertThat(ApprovalTestingImpl.simplifyTestName(input))
+		assertThat(ApprovalTestingStrategy.simplifyTestName(input))
 				.isEqualTo(output);
 	}
 
