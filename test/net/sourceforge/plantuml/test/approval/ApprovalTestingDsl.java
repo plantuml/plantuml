@@ -5,6 +5,7 @@ import static net.sourceforge.plantuml.test.approval.ApprovalTestingImpl.STRING;
 
 import java.awt.image.BufferedImage;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -15,6 +16,12 @@ public class ApprovalTestingDsl {
 	//
 	// Public
 	//
+
+	public ApprovalTestingDsl withExtension(String extensionWithDot) {
+		ApprovalTestingDsl copy = new ApprovalTestingDsl(this);
+		copy.extensionWithDot = extensionWithDot;
+		return copy;
+	}
 
 	public ApprovalTestingDsl withSuffix(String suffix) {
 		ApprovalTestingDsl copy = new ApprovalTestingDsl(this);
@@ -37,6 +44,7 @@ public class ApprovalTestingDsl {
 	private final Set<String> approvedFilesUsed;
 	private String className;
 	private String displayName;
+	private String extensionWithDot;
 	private String methodName;
 	private String suffix;
 
@@ -49,6 +57,7 @@ public class ApprovalTestingDsl {
 		this.approvedFilesUsed = other.approvedFilesUsed;
 		this.className = other.className;
 		this.displayName = other.displayName;
+		this.extensionWithDot = other.extensionWithDot;
 		this.suffix = other.suffix;
 		this.methodName = other.methodName;
 	}
@@ -69,6 +78,10 @@ public class ApprovalTestingDsl {
 
 	String getDisplayName() {
 		return displayName;
+	}
+
+	Optional<String> getExtensionWithDot() {
+		return Optional.ofNullable(extensionWithDot);
 	}
 
 	String getSuffix() {

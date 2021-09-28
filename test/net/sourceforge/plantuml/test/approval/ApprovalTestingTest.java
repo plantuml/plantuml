@@ -14,16 +14,21 @@ class ApprovalTestingTest {
 
 	@Test
 	void test_simple() {
-		approvalTesting.approveString("simple");
+		approvalTesting.approveString("foo");
 	}
 
 	@ParameterizedTest(name = "{arguments}")
 	@CsvSource({
-			"a, 1",
-			"b, 2",
+			"foo, 1",
+			"bar, 2",
 	})
 	void test_parameterized(String s, int i) {
 		approvalTesting.approveString(s + i);
+	}
+
+	@Test
+	void test_withExtension() {
+		approvalTesting.withExtension(".foo").approveString("foo");
 	}
 
 	@ParameterizedTest

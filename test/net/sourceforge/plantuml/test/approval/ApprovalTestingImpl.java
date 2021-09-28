@@ -31,30 +31,30 @@ class ApprovalTestingImpl<T> {
 	}
 
 	private final Comparison<T> comparison;
+	private final String defaultExtensionWithDot;
 	private final FileWriter<T> fileWriter;
-	private final String extensionWithDot;
 
-	ApprovalTestingImpl(String extensionWithDot, Comparison<T> comparison, FileWriter<T> fileWriter) {
+	ApprovalTestingImpl(String defaultExtensionWithDot, Comparison<T> comparison, FileWriter<T> fileWriter) {
 		this.comparison = comparison;
-		this.extensionWithDot = extensionWithDot;
+		this.defaultExtensionWithDot = defaultExtensionWithDot;
 		this.fileWriter = fileWriter;
 	}
 
 	void approve(ApprovalTestingDsl dsl, T value) {
-		final StringBuilder b = new StringBuilder()
+		final StringBuilder baseName = new StringBuilder()
 				.append(simplifyTestName(substringAfterLast(dsl.getClassName(), '.')))
 				.append('.')
 				.append(simplifyTestName(dsl.getMethodName()));
 
 		if (!dsl.getDisplayName().equals(dsl.getMethodName() + "()")) {
-			b.append('.').append(simplifyTestName(dsl.getDisplayName()));
+			baseName.append('.').append(simplifyTestName(dsl.getDisplayName()));
 		}
 
-		b.append(dsl.getSuffix());
+		baseName.append(dsl.getSuffix());
 
-		final String baseName = b.toString();
-		final String approvedFilename = baseName + ".approved" + extensionWithDot;
-		final String failedFilename = baseName + ".failed" + extensionWithDot;
+		final String extension = dsl.getExtensionWithDot().orElse(defaultExtensionWithDot);
+		final String approvedFilename = baseName + ".approved" + extension;
+		final String failedFilename = baseName + ".failed" + extension;
 
 		if (!dsl.getApprovedFilesUsed().add(approvedFilename)) {
 			throw new AssertionError(String.format(APPROVED_FILE_ALREADY_USED, approvedFilename));
