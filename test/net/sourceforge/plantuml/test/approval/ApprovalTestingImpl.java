@@ -15,14 +15,30 @@ import java.nio.file.Paths;
 
 import javax.imageio.ImageIO;
 
-import org.assertj.swing.assertions.Assertions;
-
-abstract class ApprovalTestingImpl<T> {
+class ApprovalTestingImpl<T> {
 
 	private static final String APPROVED_DOES_NOT_EXIST = "The '%s' file does not exist";
 
 	private static final String APPROVED_FILE_ALREADY_USED = "The '%s' file is already part of this test, " +
 			"please use withSuffix() to make this approve() unique";
+
+	interface Comparison<T> {
+		void compare(T value, Path approvedFile) throws IOException, AssertionError;
+	}
+
+	interface FileWriter<T> {
+		void write(T value, Path path) throws IOException;
+	}
+
+	private final Comparison<T> comparison;
+	private final FileWriter<T> fileWriter;
+	private final String extensionWithDot;
+
+	ApprovalTestingImpl(String extensionWithDot, Comparison<T> comparison, FileWriter<T> fileWriter) {
+		this.comparison = comparison;
+		this.extensionWithDot = extensionWithDot;
+		this.fileWriter = fileWriter;
+	}
 
 	void approve(ApprovalTestingDsl dsl, T value) {
 		final StringBuilder b = new StringBuilder()
@@ -37,8 +53,8 @@ abstract class ApprovalTestingImpl<T> {
 		b.append(dsl.getSuffix());
 
 		final String baseName = b.toString();
-		final String approvedFilename = baseName + ".approved" + extensionWithDot();
-		final String failedFilename = baseName + ".failed" + extensionWithDot();
+		final String approvedFilename = baseName + ".approved" + extensionWithDot;
+		final String failedFilename = baseName + ".failed" + extensionWithDot;
 
 		if (!dsl.getApprovedFilesUsed().add(approvedFilename)) {
 			throw new AssertionError(String.format(APPROVED_FILE_ALREADY_USED, approvedFilename));
@@ -53,11 +69,11 @@ abstract class ApprovalTestingImpl<T> {
 				if (!isRegularFile(approvedFile)) {
 					throw new AssertionError(String.format(APPROVED_DOES_NOT_EXIST, approvedFile));
 				}
-				compare(value, approvedFile, failedFile);
+				comparison.compare(value, approvedFile);
 				deleteIfExists(failedFile);
 			} catch (Throwable e) {
 				createDirectories(dir);
-				writeFailedFile(value, failedFile);
+				fileWriter.write(value, failedFile);
 				throw e;
 			}
 		} catch (IOException e) {
@@ -71,45 +87,19 @@ abstract class ApprovalTestingImpl<T> {
 				.replaceAll("(^_+|_+$)", "");
 	}
 
-	abstract void compare(T value, Path approvedFile, Path failedFile) throws IOException, AssertionError;
+	static final ApprovalTestingImpl<BufferedImage> BUFFERED_IMAGE = new ApprovalTestingImpl<>(
+			".png",
+			(value, approvedFile) ->
+					assertThat(value).isEqualTo(ImageIO.read(approvedFile.toFile())),
+			(value, path) ->
+					ImageIO.write(value, "png", path.toFile())
+	);
 
-	abstract String extensionWithDot();
-
-	abstract void writeFailedFile(T value, Path failedFile) throws IOException;
-
-	static final ApprovalTestingImpl<BufferedImage> BUFFERED_IMAGE = new ApprovalTestingImpl<BufferedImage>() {
-		@Override
-		void compare(BufferedImage value, Path approvedFile, Path failedFile) throws IOException, AssertionError {
-			final BufferedImage approved = ImageIO.read(approvedFile.toFile());
-			Assertions.assertThat(value).isEqualTo(approved);
-		}
-
-		@Override
-		String extensionWithDot() {
-			return ".png";
-		}
-
-		@Override
-		void writeFailedFile(BufferedImage value, Path failedFile) throws IOException {
-			ImageIO.write(value, "png", failedFile.toFile());
-		}
-	};
-
-	static final ApprovalTestingImpl<String> STRING = new ApprovalTestingImpl<String>() {
-		@Override
-		void compare(String value, Path approvedFile, Path failedFile) throws IOException, AssertionError {
-			final String approved = readUtf8File(approvedFile);
-			assertThat(value).isEqualTo(approved);
-		}
-
-		@Override
-		String extensionWithDot() {
-			return ".txt";
-		}
-
-		@Override
-		void writeFailedFile(String value, Path failedFile) throws IOException {
-			writeUtf8File(failedFile, value);
-		}
-	};
+	static final ApprovalTestingImpl<String> STRING = new ApprovalTestingImpl<>(
+			".txt",
+			(value, approvedFile) ->
+					assertThat(value).isEqualTo(readUtf8File(approvedFile)),
+			(value, path) ->
+					writeUtf8File(path, value)
+	);
 }
