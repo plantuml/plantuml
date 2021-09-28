@@ -143,9 +143,12 @@ class ApprovalTestingImpl implements ApprovalTesting {
 	}
 
 	private static final Strategy<BufferedImage> BUFFERED_IMAGE = new Strategy<BufferedImage>() {
+
 		@Override
 		public void compare(BufferedImage value, Path approvedFile) throws IOException, AssertionError {
-			org.assertj.swing.assertions.Assertions.assertThat(value).isEqualTo(ImageIO.read(approvedFile.toFile()));
+			final BufferedImage approved = ImageIO.read(approvedFile.toFile());
+			org.assertj.swing.assertions.Assertions.assertThat(value)
+					.isEqualTo(approved);
 		}
 
 		@Override
@@ -162,9 +165,12 @@ class ApprovalTestingImpl implements ApprovalTesting {
 	};
 
 	private static final Strategy<String> STRING = new Strategy<String>() {
+
 		@Override
 		public void compare(String value, Path approvedFile) throws IOException, AssertionError {
-			assertThat(value).isEqualTo(readUtf8File(approvedFile));
+			final String approved = readUtf8File(approvedFile);
+			assertThat(value)
+					.isEqualTo(approved);
 		}
 
 		@Override
