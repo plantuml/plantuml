@@ -22,11 +22,11 @@ public class ApprovalTestingDsl {
 		return copy;
 	}
 
-	public void approve(BufferedImage value) {
+	public void approveImage(BufferedImage value) {
 		BUFFERED_IMAGE.approve(this, value);
 	}
 
-	public void approve(String value) {
+	public void approveString(String value) {
 		STRING.approve(this, value);
 	}
 
