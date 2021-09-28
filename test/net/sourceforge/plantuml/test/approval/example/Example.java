@@ -1,9 +1,12 @@
-package net.sourceforge.plantuml.test.approval;
+package net.sourceforge.plantuml.test.approval.example;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static net.sourceforge.plantuml.test.TestUtils.exportOneDiagramToByteArray;
 
 import java.awt.image.BufferedImage;
+
+import net.sourceforge.plantuml.test.approval.ApprovalTesting;
+import net.sourceforge.plantuml.test.approval.ApprovalTestingJUnitExtension;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
