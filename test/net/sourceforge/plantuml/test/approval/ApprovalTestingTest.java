@@ -2,6 +2,8 @@ package net.sourceforge.plantuml.test.approval;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.awt.image.BufferedImage;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -11,6 +13,13 @@ class ApprovalTestingTest {
 
 	@RegisterExtension
 	private final ApprovalTestingJUnitExtension approvalTesting = new ApprovalTestingJUnitExtension();
+
+	@Test
+	void test_approveImage() {
+		final BufferedImage image = new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB);
+		image.createGraphics().drawRect(2, 3, 5, 3);
+		approvalTesting.approveImage(image);
+	}
 
 	@Test
 	void test_approveString() {
@@ -30,7 +39,7 @@ class ApprovalTestingTest {
 	void test_withExtension() {
 		approvalTesting.withExtension(".foo").approveString("foo");
 	}
-	
+
 	@Test
 	void test_withSuffix() {
 		approvalTesting.withSuffix("-bar").approveString("foo");
