@@ -15,21 +15,21 @@ class ApprovalTestingTest {
 	private ApprovalTesting approvalTesting;  // injected by ApprovalTestingJUnitExtension
 
 	@Test
-	void test_approveImage() {
-		final BufferedImage image = new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB);
-		image.createGraphics().drawRect(2, 3, 5, 3);
-		approvalTesting.approve(image);
-	}
-
-	@Test
-	void test_approveImage_bmp() {
+	void test_approve_image_bmp() {
 		final BufferedImage image = new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB);
 		image.createGraphics().drawRect(2, 3, 5, 3);
 		approvalTesting.withExtension(".bmp").approve(image);
 	}
 
 	@Test
-	void test_approveString() {
+	void test_approve_image_png() {
+		final BufferedImage image = new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB);
+		image.createGraphics().drawRect(2, 3, 5, 3);
+		approvalTesting.approve(image);
+	}
+
+	@Test
+	void test_approve_string() {
 		approvalTesting.approve("foo");
 	}
 
