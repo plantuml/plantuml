@@ -18,13 +18,13 @@ public class ApprovalTestingJUnitExtension implements BeforeEachCallback {
 
 	@Override
 	public void beforeEach(ExtensionContext context) {
-		final ApprovalTestingImpl approvalTesting = new ApprovalTestingImpl(context, approvedFilesUsed);
 
 		final Predicate<Field> filter = field -> field.getType().isAssignableFrom(ApprovalTesting.class);
 
 		findFields(context.getRequiredTestClass(), filter, TOP_DOWN).forEach(field -> {
 			try {
-				makeAccessible(field).set(context.getRequiredTestInstance(), approvalTesting);
+				makeAccessible(field)
+						.set(context.getRequiredTestInstance(), new ApprovalTestingImpl(context, approvedFilesUsed));
 			} catch (Throwable t) {
 				throw new RuntimeException(t);
 			}

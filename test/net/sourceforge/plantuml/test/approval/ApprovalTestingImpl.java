@@ -134,6 +134,10 @@ class ApprovalTestingImpl implements ApprovalTesting {
 				.replaceAll("(^_+|_+$)", "");
 	}
 
+	//
+	// Strategies
+	//
+	
 	private interface Strategy<T> {
 		void compare(T value, Path approvedFile) throws IOException, AssertionError;
 
