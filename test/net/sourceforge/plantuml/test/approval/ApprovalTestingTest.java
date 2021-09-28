@@ -30,6 +30,11 @@ class ApprovalTestingTest {
 	void test_withExtension() {
 		approvalTesting.withExtension(".foo").approveString("foo");
 	}
+	
+	@Test
+	void test_withSuffix() {
+		approvalTesting.withSuffix("-bar").approveString("foo");
+	}
 
 	@ParameterizedTest
 	@CsvSource(delimiter = 'D', value = {
