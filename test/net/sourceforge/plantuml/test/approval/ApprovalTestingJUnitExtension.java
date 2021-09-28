@@ -8,6 +8,6 @@ public class ApprovalTestingJUnitExtension extends ApprovalTestingDsl implements
 
 	@Override
 	public void beforeEach(ExtensionContext context) {
-		configureForTest(context.getRequiredTestClass().getName(), context.getDisplayName());
+		configureForTest(context);
 	}
 }

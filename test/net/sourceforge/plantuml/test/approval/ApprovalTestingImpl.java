@@ -3,7 +3,7 @@ package net.sourceforge.plantuml.test.approval;
 import static java.nio.file.Files.createDirectories;
 import static java.nio.file.Files.deleteIfExists;
 import static java.nio.file.Files.isRegularFile;
-import static net.sourceforge.plantuml.StringUtils.substringBefore;
+import static net.sourceforge.plantuml.StringUtils.substringAfterLast;
 import static net.sourceforge.plantuml.test.TestUtils.readUtf8File;
 import static net.sourceforge.plantuml.test.TestUtils.writeUtf8File;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -25,10 +25,18 @@ abstract class ApprovalTestingImpl<T> {
 			"please use withSuffix() to make this approve() unique";
 
 	void approve(ApprovalTestingDsl dsl, T value) {
-		final Path parts = Paths.get("test", dsl.getClassName().split("\\."));
-		final Path dir = parts.getParent();
-		final String className = parts.getFileName().toString();
-		final String baseName = className + "." + simplifyTestName(dsl.getTestName()) + dsl.getSuffix();
+		final StringBuilder b = new StringBuilder()
+				.append(simplifyTestName(substringAfterLast(dsl.getClassName(), '.')))
+				.append('.')
+				.append(simplifyTestName(dsl.getMethodName()));
+
+		if (!dsl.getDisplayName().equals(dsl.getMethodName() + "()")) {
+			b.append('.').append(simplifyTestName(dsl.getDisplayName()));
+		}
+
+		b.append(dsl.getSuffix());
+
+		final String baseName = b.toString();
 		final String approvedFilename = baseName + ".approved" + extensionWithDot();
 		final String failedFilename = baseName + ".failed" + extensionWithDot();
 
@@ -36,6 +44,7 @@ abstract class ApprovalTestingImpl<T> {
 			throw new AssertionError(String.format(APPROVED_FILE_ALREADY_USED, approvedFilename));
 		}
 
+		final Path dir = Paths.get("test", dsl.getClassName().split("\\.")).getParent();
 		final Path approvedFile = dir.resolve(approvedFilename);
 		final Path failedFile = dir.resolve(failedFilename);
 
@@ -56,10 +65,10 @@ abstract class ApprovalTestingImpl<T> {
 		}
 	}
 
-	private static String simplifyTestName(String name) {
-		return substringBefore(name, '(')
-				.replaceAll("^[ \\p{Punct}]+", "")
-				.replaceAll("[ \\p{Punct}]+", "_");
+	static String simplifyTestName(String name) {
+		return name
+				.replaceAll("[^A-Za-z0-9]+", "_")
+				.replaceAll("(^_+|_+$)", "");
 	}
 
 	abstract void compare(T value, Path approvedFile, Path failedFile) throws IOException, AssertionError;

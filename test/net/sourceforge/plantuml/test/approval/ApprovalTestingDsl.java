@@ -7,6 +7,8 @@ import java.awt.image.BufferedImage;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.junit.jupiter.api.extension.ExtensionContext;
+
 
 public class ApprovalTestingDsl {
 
@@ -34,8 +36,9 @@ public class ApprovalTestingDsl {
 
 	private final Set<String> approvedFilesUsed;
 	private String className;
+	private String displayName;
+	private String methodName;
 	private String suffix;
-	private String testName;
 
 	ApprovalTestingDsl() {
 		approvedFilesUsed = new HashSet<>();
@@ -45,28 +48,34 @@ public class ApprovalTestingDsl {
 	ApprovalTestingDsl(ApprovalTestingDsl other) {
 		this.approvedFilesUsed = other.approvedFilesUsed;
 		this.className = other.className;
+		this.displayName = other.displayName;
 		this.suffix = other.suffix;
-		this.testName = other.testName;
+		this.methodName = other.methodName;
 	}
 
-	void configureForTest(String className, String methodName) {
-		this.className = className;
-		this.testName = methodName;
+	void configureForTest(ExtensionContext context) {
+		this.className = context.getRequiredTestClass().getName();
+		this.displayName = context.getDisplayName();
+		this.methodName = context.getRequiredTestMethod().getName();
 	}
 
 	Set<String> getApprovedFilesUsed() {
 		return approvedFilesUsed;
 	}
 
-	public String getClassName() {
+	String getClassName() {
 		return className;
+	}
+
+	String getDisplayName() {
+		return displayName;
 	}
 
 	String getSuffix() {
 		return suffix;
 	}
 
-	public String getTestName() {
-		return testName;
+	String getMethodName() {
+		return methodName;
 	}
 }
