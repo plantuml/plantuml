@@ -50,12 +50,12 @@ class ApprovalTestingImpl implements ApprovalTesting {
 	// Implement ApprovalTesting
 	//
 
-	public ApprovalTestingImpl approveImage(BufferedImage value) {
+	public ApprovalTestingImpl approve(BufferedImage value) {
 		approve(BUFFERED_IMAGE, value);
 		return this;
 	}
 
-	public ApprovalTestingImpl approveString(String value) {
+	public ApprovalTestingImpl approve(String value) {
 		approve(STRING, value);
 		return this;
 	}

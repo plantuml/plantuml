@@ -18,19 +18,19 @@ class ApprovalTestingTest {
 	void test_approveImage() {
 		final BufferedImage image = new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB);
 		image.createGraphics().drawRect(2, 3, 5, 3);
-		approvalTesting.approveImage(image);
+		approvalTesting.approve(image);
 	}
 
 	@Test
 	void test_approveImage_bmp() {
 		final BufferedImage image = new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB);
 		image.createGraphics().drawRect(2, 3, 5, 3);
-		approvalTesting.withExtension(".bmp").approveImage(image);
+		approvalTesting.withExtension(".bmp").approve(image);
 	}
 
 	@Test
 	void test_approveString() {
-		approvalTesting.approveString("foo");
+		approvalTesting.approve("foo");
 	}
 
 	@ParameterizedTest(name = "{arguments}")
@@ -39,17 +39,17 @@ class ApprovalTestingTest {
 			"bar, 2",
 	})
 	void test_parameterized(String s, int i) {
-		approvalTesting.approveString(s + i);
+		approvalTesting.approve(s + i);
 	}
 
 	@Test
 	void test_withExtension() {
-		approvalTesting.withExtension(".foo").approveString("foo");
+		approvalTesting.withExtension(".foo").approve("foo");
 	}
 
 	@Test
 	void test_withSuffix() {
-		approvalTesting.withSuffix("-bar").approveString("foo");
+		approvalTesting.withSuffix("-bar").approve("foo");
 	}
 
 	@ParameterizedTest

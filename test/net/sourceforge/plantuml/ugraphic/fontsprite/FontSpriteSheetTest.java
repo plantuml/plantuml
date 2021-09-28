@@ -42,7 +42,7 @@ class FontSpriteSheetTest {
 			g.translate(0, sheet.getLineHeight());
 		}
 
-		approvalTesting.approveImage(image);
+		approvalTesting.approve(image);
 	}
 
 	@Test
@@ -81,7 +81,7 @@ class FontSpriteSheetTest {
 			}
 			g_font_color.translate(stripeWidth, 0);
 		}
-		approvalTesting.approveImage(image);
+		approvalTesting.approve(image);
 	}
 
 	//

@@ -27,14 +27,14 @@ public class Example {
 	void test_export_png() throws Exception {
 		final byte[] bytes = exportOneDiagramToByteArray(SOURCE, FileFormat.PNG, "-nometadata");
 		final BufferedImage image = ImageIO.read(bytes);
-		approvalTesting.approveImage(image);
+		approvalTesting.approve(image);
 	}
 
 	@Test
 	void test_export_ascii() throws Exception {
 		final byte[] bytes = exportOneDiagramToByteArray(SOURCE, FileFormat.ATXT);
 		final String string = new String(bytes, UTF_8);
-		approvalTesting.approveString(string);
+		approvalTesting.approve(string);
 	}
 
 	@ParameterizedTest(name = "{arguments}")
@@ -47,6 +47,6 @@ public class Example {
 		final String string = new String(bytes, UTF_8);
 		approvalTesting
 				.withExtension(fileFormat.getFileSuffix())
-				.approveString(string);
+				.approve(string);
 	}
 }

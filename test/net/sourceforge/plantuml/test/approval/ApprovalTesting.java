@@ -4,9 +4,9 @@ import java.awt.image.BufferedImage;
 
 public interface ApprovalTesting {
 	
-	ApprovalTesting approveImage(BufferedImage value);
+	ApprovalTesting approve(BufferedImage value);
 
-	ApprovalTesting approveString(String value);
+	ApprovalTesting approve(String value);
 
 	ApprovalTesting withExtension(String extensionWithDot);
 
