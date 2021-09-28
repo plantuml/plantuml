@@ -17,10 +17,10 @@ import net.sourceforge.plantuml.SourceStringReader;
 
 public class TestUtils {
 
-	public static String renderAsUnicode(String source, String... options) throws Exception {
+	public static byte[] exportOneDiagramToByteArray(String source, FileFormat fileFormat, String... options) throws Exception {
 
 		final Option option = new Option(options);
-		option.setFileFormatOption(new FileFormatOption(FileFormat.UTXT));
+		option.setFileFormatOption(new FileFormatOption(fileFormat));
 
 		final SourceStringReader ssr = new SourceStringReader(option.getDefaultDefines(), source, UTF_8.name(), option.getConfig());
 
@@ -28,7 +28,13 @@ public class TestUtils {
 
 		ssr.getBlocks().get(0).getDiagram().exportDiagram(os, 0, option.getFileFormatOption());
 
-		return new String(os.toByteArray(), UTF_8);
+		return os.toByteArray();
+	}
+
+	public static String renderAsUnicode(String source, String... options) throws Exception {
+
+		final byte[] bytes = exportOneDiagramToByteArray(source, FileFormat.UTXT, options);
+		return new String(bytes, UTF_8);
 	}
 
 	public static String renderUmlAsUnicode(String source, String... options) throws Exception {

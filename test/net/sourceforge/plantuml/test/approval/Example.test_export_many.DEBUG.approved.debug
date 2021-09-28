@@ -1,0 +1,112 @@
+DPI: 96
+dimension: [ 86.7653 ; 112.0000 ]
+scaleFactor: 1.0000
+seed: 2096867542771932957
+svgLinkTarget: _top
+hoverPathColorRGB: null
+preserveAspectRatio: none
+
+LINE:
+  pt1: [ 20.0000 ; 38.0000 ]
+  pt2: [ 20.0000 ; 72.0000 ]
+  stroke: 5.0-5.0-1.0
+  shadow: 0
+  color: ffa80036
+
+LINE:
+  pt1: [ 61.3830 ; 38.0000 ]
+  pt2: [ 61.3830 ; 72.0000 ]
+  stroke: 5.0-5.0-1.0
+  shadow: 0
+  color: ffa80036
+
+RECTANGLE:
+  pt1: [ 5.0000 ; 5.0000 ]
+  pt2: [ 32.3830 ; 33.0000 ]
+  xCorner: 0
+  yCorner: 0
+  stroke: 0.0-0.0-1.5
+  shadow: 4
+  color: ffa80036
+  backcolor: fffefece
+
+TEXT:
+  text: a
+  position: [ 12.0000 ; 22.8889 ]
+  orientation: 0
+  font: SansSerif/14 []
+  color: ff000000
+  extendedColor: NULL_COLOR
+
+RECTANGLE:
+  pt1: [ 5.0000 ; 71.0000 ]
+  pt2: [ 32.3830 ; 99.0000 ]
+  xCorner: 0
+  yCorner: 0
+  stroke: 0.0-0.0-1.5
+  shadow: 4
+  color: ffa80036
+  backcolor: fffefece
+
+TEXT:
+  text: a
+  position: [ 12.0000 ; 88.8889 ]
+  orientation: 0
+  font: SansSerif/14 []
+  color: ff000000
+  extendedColor: NULL_COLOR
+
+RECTANGLE:
+  pt1: [ 46.3830 ; 5.0000 ]
+  pt2: [ 73.7653 ; 33.0000 ]
+  xCorner: 0
+  yCorner: 0
+  stroke: 0.0-0.0-1.5
+  shadow: 4
+  color: ffa80036
+  backcolor: fffefece
+
+TEXT:
+  text: b
+  position: [ 53.3830 ; 22.8889 ]
+  orientation: 0
+  font: SansSerif/14 []
+  color: ff000000
+  extendedColor: NULL_COLOR
+
+RECTANGLE:
+  pt1: [ 46.3830 ; 71.0000 ]
+  pt2: [ 73.7653 ; 99.0000 ]
+  xCorner: 0
+  yCorner: 0
+  stroke: 0.0-0.0-1.5
+  shadow: 4
+  color: ffa80036
+  backcolor: fffefece
+
+TEXT:
+  text: b
+  position: [ 53.3830 ; 88.8889 ]
+  orientation: 0
+  font: SansSerif/14 []
+  color: ff000000
+  extendedColor: NULL_COLOR
+
+POLYGON:
+  points:
+   - [ 50.0741 ; 50.0000 ]
+   - [ 60.0741 ; 54.0000 ]
+   - [ 50.0741 ; 58.0000 ]
+   - [ 54.0741 ; 54.0000 ]
+  stroke: 0.0-0.0-1.0
+  shadow: 0
+  color: ffa80036
+  backcolor: ffa80036
+
+LINE:
+  pt1: [ 20.6915 ; 54.0000 ]
+  pt2: [ 56.0741 ; 54.0000 ]
+  stroke: 0.0-0.0-1.0
+  shadow: 0
+  color: ffa80036
+

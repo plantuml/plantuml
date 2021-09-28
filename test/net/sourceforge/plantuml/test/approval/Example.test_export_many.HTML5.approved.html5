@@ -1,0 +1,37 @@
+<html>
+<canvas id="demo" width="700" height="350">
+</canvas>
+</html>
+<script>
+window.addEventListener('load', function () {
+var elem = document.getElementById('demo');
+if (!elem || !elem.getContext) { return;}
+var ctx = elem.getContext('2d');
+if (!ctx) { return;}
+//RECT
+ctx.strokeStyle='#A80036';
+ctx.fillStyle='#FEFECE';
+ctx.rect(194,230.4414,-84.5,-59.9766);
+ctx.fill();
+ctx.stroke();
+//RECT
+ctx.strokeStyle='#A80036';
+ctx.fillStyle='#FEFECE';
+ctx.rect(206,319.4648,-96.5,-149);
+ctx.fill();
+ctx.stroke();
+//RECT
+ctx.strokeStyle='#A80036';
+ctx.fillStyle='#FEFECE';
+ctx.rect(254,340,-144.5,-169.5352);
+ctx.fill();
+ctx.stroke();
+//RECT
+ctx.strokeStyle='#A80036';
+ctx.fillStyle='#FEFECE';
+ctx.rect(302,429.0234,-192.5,-258.5586);
+ctx.fill();
+ctx.stroke();
+}, false);
+</script>
+</html>
