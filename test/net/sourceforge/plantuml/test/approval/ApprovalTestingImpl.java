@@ -51,12 +51,12 @@ class ApprovalTestingImpl implements ApprovalTesting {
 	//
 
 	public ApprovalTestingImpl approve(BufferedImage value) {
-		approve(BUFFERED_IMAGE, value);
+		approve(BUFFERED_IMAGE_STRATEGY, value);
 		return this;
 	}
 
 	public ApprovalTestingImpl approve(String value) {
-		approve(STRING, value);
+		approve(STRING_STRATEGY, value);
 		return this;
 	}
 
@@ -146,7 +146,7 @@ class ApprovalTestingImpl implements ApprovalTesting {
 		void writeFile(T value, Path path) throws IOException;
 	}
 
-	private static final Strategy<BufferedImage> BUFFERED_IMAGE = new Strategy<BufferedImage>() {
+	private static final Strategy<BufferedImage> BUFFERED_IMAGE_STRATEGY = new Strategy<BufferedImage>() {
 
 		@Override
 		public void compare(BufferedImage value, Path approvedFile) throws IOException, AssertionError {
@@ -168,7 +168,7 @@ class ApprovalTestingImpl implements ApprovalTesting {
 		}
 	};
 
-	private static final Strategy<String> STRING = new Strategy<String>() {
+	private static final Strategy<String> STRING_STRATEGY = new Strategy<String>() {
 
 		@Override
 		public void compare(String value, Path approvedFile) throws IOException, AssertionError {
