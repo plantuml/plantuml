@@ -2,7 +2,7 @@ package net.sourceforge.plantuml.test.approval;
 
 import static java.nio.file.Files.createDirectories;
 import static java.nio.file.Files.deleteIfExists;
-import static java.nio.file.Files.isRegularFile;
+import static java.nio.file.Files.notExists;
 import static net.sourceforge.plantuml.StringUtils.substringAfterLast;
 import static net.sourceforge.plantuml.test.TestUtils.readUtf8File;
 import static net.sourceforge.plantuml.test.TestUtils.writeUtf8File;
@@ -64,8 +64,9 @@ class ApprovalTestingImpl<T> {
 
 		try {
 			try {
-				if (!isRegularFile(approvedFile)) {
-					throw new AssertionError(String.format("The '%s' file does not exist", approvedFile));
+				if (notExists(approvedFile)) {
+					fileWriter.write(value, approvedFile);
+					return;
 				}
 				comparison.compare(value, approvedFile);
 				deleteIfExists(failedFile);
