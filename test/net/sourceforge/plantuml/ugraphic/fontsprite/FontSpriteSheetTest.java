@@ -88,6 +88,6 @@ class FontSpriteSheetTest {
 	// Test DSL
 	//
 
-	private ApprovalTesting approvalTesting;
+	private ApprovalTesting approvalTesting;  // injected by ApprovalTestingJUnitExtension
 
 }

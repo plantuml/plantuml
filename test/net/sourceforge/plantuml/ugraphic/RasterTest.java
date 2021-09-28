@@ -99,7 +99,7 @@ public class RasterTest {
 	// Test DSL
 	//
 
-	private ApprovalTesting approvalTesting;
+	private ApprovalTesting approvalTesting;  // injected by ApprovalTestingJUnitExtension
 
 	private static final List<Object> ANTIALIAS_OPTIONS = unmodifiableList(asList(
 			VALUE_ANTIALIAS_OFF, VALUE_ANTIALIAS_ON

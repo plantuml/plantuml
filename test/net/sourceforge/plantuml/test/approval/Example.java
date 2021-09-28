@@ -16,7 +16,7 @@ import net.sourceforge.plantuml.security.ImageIO;
 @ExtendWith(ApprovalTestingJUnitExtension.class)
 public class Example {
 
-	private ApprovalTesting approvalTesting;
+	private ApprovalTesting approvalTesting;  // injected by ApprovalTestingJUnitExtension
 
 	private static final String SOURCE = "" +
 			"@startuml\n" +
