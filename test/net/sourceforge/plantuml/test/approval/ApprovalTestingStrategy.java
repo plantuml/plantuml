@@ -38,7 +38,7 @@ class ApprovalTestingStrategy<T> {
 		this.fileWriter = fileWriter;
 	}
 
-	void approve(ApprovalTestingDsl dsl, T value) {
+	void approve(ApprovalTestingImpl dsl, T value) {
 		final StringBuilder baseName = new StringBuilder()
 				.append(simplifyTestName(substringAfterLast(dsl.getClassName(), '.')))
 				.append('.')

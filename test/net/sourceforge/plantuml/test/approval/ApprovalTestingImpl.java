@@ -11,30 +11,30 @@ import java.util.Set;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
 
-public class ApprovalTestingDsl implements ApprovalTesting {
+public class ApprovalTestingImpl implements ApprovalTesting {
 
 	//
 	// Implement ApprovalTesting
 	//
 
-	public ApprovalTestingDsl withExtension(String extensionWithDot) {
-		final ApprovalTestingDsl copy = new ApprovalTestingDsl(this);
+	public ApprovalTestingImpl withExtension(String extensionWithDot) {
+		final ApprovalTestingImpl copy = new ApprovalTestingImpl(this);
 		copy.extensionWithDot = extensionWithDot;
 		return copy;
 	}
 
-	public ApprovalTestingDsl withSuffix(String suffix) {
-		final ApprovalTestingDsl copy = new ApprovalTestingDsl(this);
+	public ApprovalTestingImpl withSuffix(String suffix) {
+		final ApprovalTestingImpl copy = new ApprovalTestingImpl(this);
 		copy.suffix = suffix;
 		return copy;
 	}
 
-	public ApprovalTestingDsl approveImage(BufferedImage value) {
+	public ApprovalTestingImpl approveImage(BufferedImage value) {
 		BUFFERED_IMAGE.approve(this, value);
 		return this;
 	}
 
-	public ApprovalTestingDsl approveString(String value) {
+	public ApprovalTestingImpl approveString(String value) {
 		STRING.approve(this, value);
 		return this;
 	}
@@ -50,7 +50,7 @@ public class ApprovalTestingDsl implements ApprovalTesting {
 	private final String methodName;
 	private String suffix;
 
-	ApprovalTestingDsl(ApprovalTestingDsl other) {
+	ApprovalTestingImpl(ApprovalTestingImpl other) {
 		this.approvedFilesUsed = other.approvedFilesUsed;
 		this.className = other.className;
 		this.displayName = other.displayName;
@@ -59,7 +59,7 @@ public class ApprovalTestingDsl implements ApprovalTesting {
 		this.suffix = other.suffix;
 	}
 
-	ApprovalTestingDsl(ExtensionContext context) {
+	ApprovalTestingImpl(ExtensionContext context) {
 		this.approvedFilesUsed = new HashSet<>();
 		this.className = context.getRequiredTestClass().getName();
 		this.displayName = context.getDisplayName();
