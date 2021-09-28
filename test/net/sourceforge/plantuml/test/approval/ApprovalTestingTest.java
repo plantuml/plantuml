@@ -13,7 +13,7 @@ class ApprovalTestingTest {
 	private final ApprovalTestingJUnitExtension approvalTesting = new ApprovalTestingJUnitExtension();
 
 	@Test
-	void test_simple() {
+	void test_approveString() {
 		approvalTesting.approveString("foo");
 	}
 
