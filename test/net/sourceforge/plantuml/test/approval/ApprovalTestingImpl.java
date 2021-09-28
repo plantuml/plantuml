@@ -2,6 +2,7 @@ package net.sourceforge.plantuml.test.approval;
 
 import static java.nio.file.Files.createDirectories;
 import static java.nio.file.Files.deleteIfExists;
+import static java.nio.file.Files.isRegularFile;
 import static net.sourceforge.plantuml.test.TestUtils.readUtf8File;
 import static net.sourceforge.plantuml.test.TestUtils.writeUtf8File;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -16,12 +17,17 @@ import org.assertj.swing.assertions.Assertions;
 
 abstract class ApprovalTestingImpl<T> {
 
+	private static final String APPROVED_DOES_NOT_EXIST = "The '%s' file does not exist";
+
+	private static final String APPROVED_FILE_ALREADY_USED = "The '%s' file is already part of this test, " +
+			"please use withSuffix() to make this approve() unique";
+
 	void approve(ApprovalTestingDsl dsl, T value) {
 		final String approvedFilename = dsl.getBaseName() + dsl.getSuffix() + ".approved" + extensionWithDot();
 		final String failedFilename = dsl.getBaseName() + dsl.getSuffix() + ".failed" + extensionWithDot();
 
 		if (!dsl.getApprovedFilesUsed().add(approvedFilename)) {
-			throw new IllegalStateException("Already used '" + approvedFilename + "'");  // todo better message
+			throw new AssertionError(String.format(APPROVED_FILE_ALREADY_USED, approvedFilename));
 		}
 
 		final Path approvedFile = dsl.getDir().resolve(approvedFilename);
@@ -29,10 +35,12 @@ abstract class ApprovalTestingImpl<T> {
 
 		try {
 			try {
-				assertThat(approvedFile).isNotEmptyFile();
+				if (!isRegularFile(approvedFile)) {
+					throw new AssertionError(String.format(APPROVED_DOES_NOT_EXIST, approvedFile));
+				}
 				compare(value, approvedFile, failedFile);
 				deleteIfExists(failedFile);
-			} catch (AssertionError e) {
+			} catch (Throwable e) {
 				createDirectories(dsl.getDir());
 				writeFailedFile(value, failedFile);
 				throw e;

@@ -14,8 +14,14 @@ public class ApprovalTestingJUnitExtension extends ApprovalTestingDsl implements
 	public void beforeEach(ExtensionContext context) {
 		final Class<?> klass = context.getRequiredTestClass();
 		configureForTest(
-				klass.getSimpleName() + "." + substringBefore(context.getDisplayName(), '('),
+				klass.getSimpleName() + "." + simplifyTestName(context.getDisplayName()),
 				Paths.get("test", klass.getPackage().getName().split("\\."))
 		);
+	}
+
+	private static String simplifyTestName(String name) {
+		return substringBefore(name, '(')
+				.replaceAll("^[ \\p{Punct}]+", "")
+				.replaceAll("[ \\p{Punct}]+", "_");
 	}
 }
