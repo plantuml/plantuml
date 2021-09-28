@@ -16,11 +16,13 @@ import java.awt.image.BufferedImage;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.extension.ExtendWith;
 
+import net.sourceforge.plantuml.test.approval.ApprovalTesting;
 import net.sourceforge.plantuml.test.approval.ApprovalTestingJUnitExtension;
 import sun.java2d.pipe.RenderingEngine;
 
+@ExtendWith(ApprovalTestingJUnitExtension.class)
 public class RasterTest {
 
 	//
@@ -34,7 +36,7 @@ public class RasterTest {
 			RenderingEngine.getInstance();
 		} catch (Throwable e) {
 		}
-		
+
 		System.out.println("java.runtime.name         = " + System.getProperty("java.runtime.name"));
 		System.out.println("java.runtime.version      = " + System.getProperty("java.runtime.version"));
 		System.out.println("java.vendor               = " + System.getProperty("java.vendor"));
@@ -97,8 +99,7 @@ public class RasterTest {
 	// Test DSL
 	//
 
-	@RegisterExtension
-	private final ApprovalTestingJUnitExtension approvalTesting = new ApprovalTestingJUnitExtension();
+	private ApprovalTesting approvalTesting;
 
 	private static final List<Object> ANTIALIAS_OPTIONS = unmodifiableList(asList(
 			VALUE_ANTIALIAS_OFF, VALUE_ANTIALIAS_ON

@@ -10,10 +10,12 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.extension.ExtendWith;
 
+import net.sourceforge.plantuml.test.approval.ApprovalTesting;
 import net.sourceforge.plantuml.test.approval.ApprovalTestingJUnitExtension;
 
+@ExtendWith(ApprovalTestingJUnitExtension.class)
 class FontSpriteSheetTest {
 
 	@Test
@@ -86,7 +88,6 @@ class FontSpriteSheetTest {
 	// Test DSL
 	//
 
-	@RegisterExtension
-	private final ApprovalTestingJUnitExtension approvalTesting = new ApprovalTestingJUnitExtension();
+	private ApprovalTesting approvalTesting;
 
 }

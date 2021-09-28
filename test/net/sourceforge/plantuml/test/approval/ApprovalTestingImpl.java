@@ -1,21 +1,64 @@
 package net.sourceforge.plantuml.test.approval;
 
-import static net.sourceforge.plantuml.test.approval.ApprovalTestingStrategy.BUFFERED_IMAGE;
-import static net.sourceforge.plantuml.test.approval.ApprovalTestingStrategy.STRING;
+import static java.nio.file.Files.createDirectories;
+import static java.nio.file.Files.deleteIfExists;
+import static java.nio.file.Files.notExists;
+import static net.sourceforge.plantuml.StringUtils.substringAfterLast;
+import static net.sourceforge.plantuml.test.TestUtils.readUtf8File;
+import static net.sourceforge.plantuml.test.TestUtils.writeUtf8File;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.awt.image.BufferedImage;
-import java.util.HashSet;
-import java.util.Optional;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Set;
+
+import javax.imageio.ImageIO;
 
 import org.junit.jupiter.api.extension.ExtensionContext;
 
 
-public class ApprovalTestingImpl implements ApprovalTesting {
+class ApprovalTestingImpl implements ApprovalTesting {
+
+	private final Set<String> approvedFilesUsed;
+	private final String className;
+	private final String displayName;
+	private String extensionWithDot;
+	private final String methodName;
+	private String suffix;
+
+	ApprovalTestingImpl(ExtensionContext context, Set<String> approvedFilesUsed) {
+		this.approvedFilesUsed = approvedFilesUsed;
+		this.className = context.getRequiredTestClass().getName();
+		this.displayName = context.getDisplayName();
+		this.extensionWithDot = null;
+		this.methodName = context.getRequiredTestMethod().getName();
+		this.suffix = "";
+	}
+
+	private ApprovalTestingImpl(ApprovalTestingImpl other) {
+		this.approvedFilesUsed = other.approvedFilesUsed;
+		this.className = other.className;
+		this.displayName = other.displayName;
+		this.extensionWithDot = other.extensionWithDot;
+		this.methodName = other.methodName;
+		this.suffix = other.suffix;
+	}
 
 	//
 	// Implement ApprovalTesting
 	//
+
+	public ApprovalTestingImpl approveImage(BufferedImage value) {
+		approve(BUFFERED_IMAGE, value);
+		return this;
+	}
+
+	public ApprovalTestingImpl approveString(String value) {
+		approve(STRING, value);
+		return this;
+	}
 
 	public ApprovalTestingImpl withExtension(String extensionWithDot) {
 		final ApprovalTestingImpl copy = new ApprovalTestingImpl(this);
@@ -29,66 +72,109 @@ public class ApprovalTestingImpl implements ApprovalTesting {
 		return copy;
 	}
 
-	public ApprovalTestingImpl approveImage(BufferedImage value) {
-		BUFFERED_IMAGE.approve(this, value);
-		return this;
-	}
-
-	public ApprovalTestingImpl approveString(String value) {
-		STRING.approve(this, value);
-		return this;
-	}
-
 	//
 	// Internals
 	//
 
-	private final Set<String> approvedFilesUsed;
-	private final String className;
-	private final String displayName;
-	private String extensionWithDot;
-	private final String methodName;
-	private String suffix;
+	private <T> void approve(Strategy<T> strategy, T value) {
+		final String baseName = createBaseName();
+		final String extension = extensionWithDot == null ? strategy.defaultExtensionWithDot() : extensionWithDot;
+		final String approvedFilename = baseName + ".approved" + extension;
+		final String failedFilename = baseName + ".failed" + extension;
 
-	ApprovalTestingImpl(ApprovalTestingImpl other) {
-		this.approvedFilesUsed = other.approvedFilesUsed;
-		this.className = other.className;
-		this.displayName = other.displayName;
-		this.extensionWithDot = other.extensionWithDot;
-		this.methodName = other.methodName;
-		this.suffix = other.suffix;
+		if (!approvedFilesUsed.add(approvedFilename)) {
+			throw new AssertionError(String.format(
+					"The file '%s' is already used by this test class, please use withSuffix() to make a unique approval",
+					approvedFilename
+			));
+		}
+
+		final Path dir = Paths.get("test", className.split("\\.")).getParent();
+		final Path approvedFile = dir.resolve(approvedFilename);
+		final Path failedFile = dir.resolve(failedFilename);
+
+		try {
+			if (notExists(approvedFile)) {
+				createDirectories(approvedFile.getParent());
+				strategy.writeFile(value, approvedFile);
+				return;
+			}
+
+			try {
+				strategy.compare(value, approvedFile);
+				deleteIfExists(failedFile);
+			} catch (Throwable t) {
+				createDirectories(failedFile.getParent());
+				strategy.writeFile(value, failedFile);
+				throw t;
+			}
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
-	ApprovalTestingImpl(ExtensionContext context) {
-		this.approvedFilesUsed = new HashSet<>();
-		this.className = context.getRequiredTestClass().getName();
-		this.displayName = context.getDisplayName();
-		this.extensionWithDot = null;
-		this.methodName = context.getRequiredTestMethod().getName();
-		this.suffix = "";
+	private String createBaseName() {
+		final StringBuilder b = new StringBuilder()
+				.append(simplifyTestName(substringAfterLast(className, '.')))
+				.append('.')
+				.append(simplifyTestName(methodName));
+
+		if (!displayName.equals(methodName + "()")) {
+			b.append('.').append(simplifyTestName(displayName));
+		}
+
+		b.append(suffix);
+		return b.toString();
 	}
 
-	Set<String> getApprovedFilesUsed() {
-		return approvedFilesUsed;
+	// Visible for testing
+	static String simplifyTestName(String name) {
+		return name
+				.replaceAll("[^A-Za-z0-9]+", "_")
+				.replaceAll("(^_+|_+$)", "");
 	}
 
-	String getClassName() {
-		return className;
+	private interface Strategy<T> {
+		void compare(T value, Path approvedFile) throws IOException, AssertionError;
+
+		String defaultExtensionWithDot();
+
+		void writeFile(T value, Path path) throws IOException;
 	}
 
-	String getDisplayName() {
-		return displayName;
-	}
+	private static final Strategy<BufferedImage> BUFFERED_IMAGE = new Strategy<BufferedImage>() {
+		@Override
+		public void compare(BufferedImage value, Path approvedFile) throws IOException, AssertionError {
+			org.assertj.swing.assertions.Assertions.assertThat(value).isEqualTo(ImageIO.read(approvedFile.toFile()));
+		}
 
-	Optional<String> getExtensionWithDot() {
-		return Optional.ofNullable(extensionWithDot);
-	}
+		@Override
+		public String defaultExtensionWithDot() {
+			return ".png";
+		}
 
-	String getSuffix() {
-		return suffix;
-	}
+		@Override
+		public void writeFile(BufferedImage value, Path path) throws IOException {
+			final String format = substringAfterLast(path.toString(), '.');
+			boolean failed = !ImageIO.write(value, format, path.toFile());
+			if (failed) throw new RuntimeException(String.format("Failed to write image file '%s'", path));
+		}
+	};
 
-	String getMethodName() {
-		return methodName;
-	}
+	private static final Strategy<String> STRING = new Strategy<String>() {
+		@Override
+		public void compare(String value, Path approvedFile) throws IOException, AssertionError {
+			assertThat(value).isEqualTo(readUtf8File(approvedFile));
+		}
+
+		@Override
+		public String defaultExtensionWithDot() {
+			return ".txt";
+		}
+
+		@Override
+		public void writeFile(String value, Path path) throws IOException {
+			writeUtf8File(path, value);
+		}
+	};
 }

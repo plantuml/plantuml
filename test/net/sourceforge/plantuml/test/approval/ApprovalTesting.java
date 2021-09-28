@@ -2,7 +2,7 @@ package net.sourceforge.plantuml.test.approval;
 
 import java.awt.image.BufferedImage;
 
-interface ApprovalTesting {
+public interface ApprovalTesting {
 	
 	ApprovalTesting approveImage(BufferedImage value);
 
