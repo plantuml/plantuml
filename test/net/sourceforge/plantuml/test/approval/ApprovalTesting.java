@@ -8,6 +8,10 @@ public interface ApprovalTesting {
 	ApprovalTesting approve(BufferedImage value);
 
 	ApprovalTesting approve(String value);
+
+	Path createOutputPath(String suffix);
+	
+	String getBaseName();
 	
 	Path getDir();
 

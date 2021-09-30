@@ -50,26 +50,51 @@ class ApprovalTestingImpl implements ApprovalTesting {
 	// Implement ApprovalTesting
 	//
 
+	@Override
 	public ApprovalTestingImpl approve(BufferedImage value) {
 		approve(BUFFERED_IMAGE_STRATEGY, value);
 		return this;
 	}
 
+	@Override
 	public ApprovalTestingImpl approve(String value) {
 		approve(STRING_STRATEGY, value);
 		return this;
 	}
 
+	@Override
+	public Path createOutputPath(String suffix) {
+		return getDir().resolve(getBaseName() + suffix);
+	}
+
+	@Override
+	public String getBaseName() {
+		final StringBuilder b = new StringBuilder()
+				.append(simplifyTestName(substringAfterLast(className, '.')))
+				.append('.')
+				.append(simplifyTestName(methodName));
+
+		if (!displayName.equals(methodName + "()")) {
+			b.append('.').append(simplifyTestName(displayName));
+		}
+
+		b.append(suffix);
+		return b.toString();
+	}
+
+	@Override
 	public Path getDir() {
 		return Paths.get("test", className.split("\\.")).getParent();
 	}
 
+	@Override
 	public ApprovalTestingImpl withExtension(String extensionWithDot) {
 		final ApprovalTestingImpl copy = new ApprovalTestingImpl(this);
 		copy.extensionWithDot = extensionWithDot;
 		return copy;
 	}
 
+	@Override
 	public ApprovalTestingImpl withSuffix(String suffix) {
 		final ApprovalTestingImpl copy = new ApprovalTestingImpl(this);
 		copy.suffix = suffix;
@@ -81,7 +106,7 @@ class ApprovalTestingImpl implements ApprovalTesting {
 	//
 
 	private <T> void approve(Strategy<T> strategy, T value) {
-		final String baseName = createBaseName();
+		final String baseName = getBaseName();
 		final String extension = extensionWithDot == null ? strategy.defaultExtensionWithDot() : extensionWithDot;
 		final String approvedFilename = baseName + ".approved" + extension;
 		final String failedFilename = baseName + ".failed" + extension;
@@ -115,20 +140,6 @@ class ApprovalTestingImpl implements ApprovalTesting {
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
-	}
-
-	private String createBaseName() {
-		final StringBuilder b = new StringBuilder()
-				.append(simplifyTestName(substringAfterLast(className, '.')))
-				.append('.')
-				.append(simplifyTestName(methodName));
-
-		if (!displayName.equals(methodName + "()")) {
-			b.append('.').append(simplifyTestName(displayName));
-		}
-
-		b.append(suffix);
-		return b.toString();
 	}
 
 	// Visible for testing
