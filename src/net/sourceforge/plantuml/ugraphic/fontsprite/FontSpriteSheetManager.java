@@ -1,53 +1,60 @@
 package net.sourceforge.plantuml.ugraphic.fontsprite;
 
-import static net.sourceforge.plantuml.ugraphic.fontsprite.FontSpriteSheetIO.readFontSpriteSheetFromPNG;
+import static java.awt.Font.PLAIN;
+import static net.sourceforge.plantuml.utils.CollectionUtils.immutableList;
 
+import java.awt.Font;
 import java.io.InputStream;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
-// TODO sizes
 public class FontSpriteSheetManager {
 
-	private FontSpriteSheet bold;
-	private FontSpriteSheet boldItalic;
-	private FontSpriteSheet italic;
-	private FontSpriteSheet plain;
+	private static final FontSpriteSheetManager INSTANCE = new FontSpriteSheetManager();
 
-	public FontSpriteSheet bold() {
-		if (bold == null) {
-			bold = load("JetBrainsMonoNL-12-Bold.png");
-		}
-		return bold;
+	public static FontSpriteSheetManager instance() {
+		return INSTANCE;
 	}
 
-	public FontSpriteSheet boldItalic() {
-		if (boldItalic == null) {
-			boldItalic = load("JetBrainsMonoNL-12-BoldItalic.png");
-		}
-		return boldItalic;
+	static final List<Integer> FONT_SIZES = immutableList(9, 20);
+
+	private final Map<String, FontSpriteSheet> cache = new ConcurrentHashMap<>();
+
+	private FontSpriteSheetManager() {
 	}
 
-	public FontSpriteSheet italic() {
-		if (italic == null) {
-			italic = load("JetBrainsMonoNL-12-Italic.png");
+	public FontSpriteSheet getNearestSheet(int style, int size) {
+		if (size < 16) {
+			size = 9;
+		} else {
+			size = 20;
 		}
-		return italic;
+
+		final String cacheKey = style + "-" + size;
+
+		FontSpriteSheet sheet = cache.get(cacheKey);
+		if (sheet == null) { // TODO concurrency?
+			sheet = load(style, size);
+			cache.put(cacheKey, sheet);
+		}
+		return sheet;
 	}
 
-	public FontSpriteSheet plain() {
-		if (plain == null) {
-			plain = load("JetBrainsMonoNL-12-Regular.png");
-		}
-		return plain;
-	}
+	private static FontSpriteSheet load(int style, int size) {
+		final StringBuilder name = new StringBuilder("/font-sprite-sheets/JetBrains-Mono-NL-");
+		if (style == PLAIN) name.append("Regular-");
+		if ((style & Font.BOLD) > 0) name.append("Bold-");
+		if ((style & Font.ITALIC) > 0) name.append("Italic-");
+		name.append(size).append(".png");
 
-	private static FontSpriteSheet load(String name) {
-		try (final InputStream in = FontSpriteSheet.class.getResourceAsStream("/font-sprite-sheets/" + name)) {
+		try (final InputStream in = FontSpriteSheet.class.getResourceAsStream(name.toString())) {
 			if (in == null) {
-				throw new IllegalStateException("Resource not found");
+				throw new RuntimeException(String.format("Resource '%s' not found", name));
 			}
-			return readFontSpriteSheetFromPNG(in);
+			return new FontSpriteSheet(in);
 		} catch (Exception e) {
-			throw new RuntimeException("Error loading Font Sprite Sheet '" + name + "' : " + e.getMessage(), e);
+			throw new RuntimeException(String.format("Error loading Font Sprite Sheet '%s' : %s", name, e.getMessage()), e);
 		}
 	}
 }
