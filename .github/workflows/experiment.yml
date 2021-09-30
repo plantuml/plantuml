@@ -69,7 +69,7 @@ jobs:
              -Dexec.args=" \
                  --disable-ansi-colors \
                  --select-class net.sourceforge.plantuml.ugraphic.fontsprite.FontSpriteSheetTest \
-                 --select-class net.sourceforge.plantuml.ugraphic.fontsprite.FontSpriteSheetMakerTest \
+                 --select-class net.sourceforge.plantuml.ugraphic.RasterTest
              " \
              -Dsun.java2d.renderer.log=true 
 
