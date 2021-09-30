@@ -5,9 +5,6 @@ import static net.sourceforge.plantuml.test.TestUtils.exportOneDiagramToByteArra
 
 import java.awt.image.BufferedImage;
 
-import net.sourceforge.plantuml.test.approval.ApprovalTesting;
-import net.sourceforge.plantuml.test.approval.ApprovalTestingJUnitExtension;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -15,6 +12,8 @@ import org.junit.jupiter.params.provider.EnumSource;
 
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.security.ImageIO;
+import net.sourceforge.plantuml.test.approval.ApprovalTesting;
+import net.sourceforge.plantuml.test.approval.ApprovalTestingJUnitExtension;
 
 @ExtendWith(ApprovalTestingJUnitExtension.class)
 public class Example {

@@ -60,6 +60,10 @@ class ApprovalTestingImpl implements ApprovalTesting {
 		return this;
 	}
 
+	public Path getDir() {
+		return Paths.get("test", className.split("\\.")).getParent();
+	}
+
 	public ApprovalTestingImpl withExtension(String extensionWithDot) {
 		final ApprovalTestingImpl copy = new ApprovalTestingImpl(this);
 		copy.extensionWithDot = extensionWithDot;
@@ -89,7 +93,7 @@ class ApprovalTestingImpl implements ApprovalTesting {
 			));
 		}
 
-		final Path dir = Paths.get("test", className.split("\\.")).getParent();
+		final Path dir = getDir();
 		final Path approvedFile = dir.resolve(approvedFilename);
 		final Path failedFile = dir.resolve(failedFilename);
 
@@ -137,7 +141,7 @@ class ApprovalTestingImpl implements ApprovalTesting {
 	//
 	// Strategies
 	//
-	
+
 	private interface Strategy<T> {
 		void compare(T value, Path approvedFile) throws IOException, AssertionError;
 
