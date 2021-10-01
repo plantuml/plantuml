@@ -18,7 +18,8 @@ import net.sourceforge.plantuml.approvaltesting.ApprovalTestingJUnitExtension;
 @ExtendWith(ApprovalTestingJUnitExtension.class)
 public class Example {
 
-	private ApprovalTesting approvalTesting;  // injected by ApprovalTestingJUnitExtension
+	@SuppressWarnings("unused")  // injected by ApprovalTestingJUnitExtension
+	private ApprovalTesting approvalTesting;
 
 	private static final String SOURCE = "" +
 			"@startuml\n" +

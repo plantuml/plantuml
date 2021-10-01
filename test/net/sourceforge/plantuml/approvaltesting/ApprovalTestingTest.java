@@ -13,7 +13,8 @@ import org.junit.jupiter.params.provider.CsvSource;
 @ExtendWith(ApprovalTestingJUnitExtension.class)
 class ApprovalTestingTest {
 
-	private ApprovalTesting approvalTesting;  // injected by ApprovalTestingJUnitExtension
+	@SuppressWarnings("unused")  // injected by ApprovalTestingJUnitExtension
+	private ApprovalTesting approvalTesting;
 
 	@Test
 	void test_approve_image_bmp() {
