@@ -552,9 +552,4 @@ public class StringUtils {
 		final int index = s.lastIndexOf(separator);
 		return index == -1 ? s : s.substring(index + 1);
 	}
-
-	public static String substringBefore(String s, int separator) {
-		final int index = s.indexOf(separator);
-		return index == -1 ? s : s.substring(0, index);
-	}
 }
