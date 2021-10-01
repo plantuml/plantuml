@@ -20,3 +20,6 @@ target/
 
 # for jenv users
 .java-version
+
+# Approval test failures
+test/**/*.failed.*
