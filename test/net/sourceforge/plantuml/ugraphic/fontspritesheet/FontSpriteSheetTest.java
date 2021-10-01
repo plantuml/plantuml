@@ -1,4 +1,4 @@
-package net.sourceforge.plantuml.ugraphic.fontsprite;
+package net.sourceforge.plantuml.ugraphic.fontspritesheet;
 
 import static java.awt.Color.BLACK;
 import static java.awt.Color.WHITE;
@@ -10,11 +10,11 @@ import static java.awt.RenderingHints.VALUE_TEXT_ANTIALIAS_GASP;
 import static java.awt.image.BufferedImage.TYPE_INT_ARGB;
 import static java.awt.image.BufferedImage.TYPE_INT_RGB;
 import static java.lang.Math.max;
-import static net.sourceforge.plantuml.ugraphic.fontsprite.FontSpriteSheetMaker.ALL_CHARS;
-import static net.sourceforge.plantuml.ugraphic.fontsprite.FontSpriteSheetMaker.JETBRAINS_FONT_FAMILY;
-import static net.sourceforge.plantuml.ugraphic.fontsprite.FontSpriteSheetMaker.createFontSpriteSheet;
-import static net.sourceforge.plantuml.ugraphic.fontsprite.FontSpriteSheetMaker.registerJetBrainsFonts;
-import static net.sourceforge.plantuml.ugraphic.fontsprite.FontSpriteSheetManager.FONT_SIZES;
+import static net.sourceforge.plantuml.ugraphic.fontspritesheet.FontSpriteSheetMaker.ALL_CHARS;
+import static net.sourceforge.plantuml.ugraphic.fontspritesheet.FontSpriteSheetMaker.JETBRAINS_FONT_FAMILY;
+import static net.sourceforge.plantuml.ugraphic.fontspritesheet.FontSpriteSheetMaker.createFontSpriteSheet;
+import static net.sourceforge.plantuml.ugraphic.fontspritesheet.FontSpriteSheetMaker.registerJetBrainsFonts;
+import static net.sourceforge.plantuml.ugraphic.fontspritesheet.FontSpriteSheetManager.FONT_SIZES;
 import static org.assertj.swing.assertions.Assertions.assertThat;
 
 import java.awt.Color;

@@ -1,4 +1,4 @@
-package net.sourceforge.plantuml.ugraphic.fontsprite;
+package net.sourceforge.plantuml.ugraphic.fontspritesheet;
 
 import static java.lang.Integer.parseInt;
 import static java.nio.file.Files.newInputStream;

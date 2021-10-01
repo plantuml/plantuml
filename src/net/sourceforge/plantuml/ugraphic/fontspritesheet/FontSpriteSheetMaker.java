@@ -1,4 +1,4 @@
-package net.sourceforge.plantuml.ugraphic.fontsprite;
+package net.sourceforge.plantuml.ugraphic.fontspritesheet;
 
 import static java.awt.Color.WHITE;
 import static java.awt.Font.BOLD;
