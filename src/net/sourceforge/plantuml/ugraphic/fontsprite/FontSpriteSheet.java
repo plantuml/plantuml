@@ -10,12 +10,14 @@ import java.awt.Color;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.awt.image.ColorModel;
+import java.awt.image.DataBuffer;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.ref.SoftReference;
 import java.nio.file.Path;
-import java.util.Hashtable;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
@@ -34,19 +36,20 @@ public class FontSpriteSheet {
 	private static final int MIN_CHAR = 0x21;
 	private static final int MAX_CHAR = 0x7e;
 
+	private final Map<Integer, SoftReference<BufferedImage>> colorisedImageCache = new ConcurrentHashMap<>();
 	private final int advance;
+	private final BufferedImage alphaImage;
 	private final int ascent;
-	private final BufferedImage image;
 	private final int lineHeight;
 	private final String name;
 	private final int pointSize;
 	private final int spriteWidth;
 	private final int xOffset;
 
-	FontSpriteSheet(BufferedImage image, FontMetrics fontMetrics, int advance, int ascent, int spriteWidth, int xOffset) {
+	FontSpriteSheet(BufferedImage alphaImage, FontMetrics fontMetrics, int advance, int ascent, int spriteWidth, int xOffset) {
 		this.advance = advance;
+		this.alphaImage = alphaImage;
 		this.ascent = ascent;
-		this.image = image;
 		this.lineHeight = fontMetrics.getHeight();
 		this.name = fontMetrics.getFont().getFontName();
 		this.pointSize = fontMetrics.getFont().getSize();
@@ -58,8 +61,8 @@ public class FontSpriteSheet {
 		try (ImageInputStream iis = ImageIO.createImageInputStream(in)) {
 			final IIOImage iioImage = createImageReader(iis).readAll(0, null);
 			advance = getMetadataInt(iioImage, TAG_ADVANCE);
+			alphaImage = (BufferedImage) iioImage.getRenderedImage();
 			ascent = getMetadataInt(iioImage, TAG_ASCENT);
-			image = (BufferedImage) iioImage.getRenderedImage();
 			lineHeight = getMetadataInt(iioImage, TAG_LINE_HEIGHT);
 			name = getMetadataString(iioImage, TAG_NAME);
 			pointSize = getMetadataInt(iioImage, TAG_POINT_SIZE);
@@ -96,113 +99,76 @@ public class FontSpriteSheet {
 		return spriteWidth;
 	}
 
+	//
+	// Drawing
+	//
+
 	public void drawString(Graphics g, String s, int x, int y) {
+		final BufferedImage colorisedImage = getOrCreateColorisedImage(g.getColor());
+
 		for (char c : s.toCharArray()) {
-			drawChar(g, c, x, y);
+			if (c != ' ') {
+				drawChar(g, colorisedImage, c, x, y);
+			}
 			x += advance;
 		}
 	}
 
 	@SuppressWarnings("UnnecessaryLocalVariable")
-	private void drawChar(Graphics g, char c, int x, int y) {
-		if (c == ' ') {
-			return;
-		}
+	private void drawChar(Graphics g, BufferedImage colorisedImage, char c, int x, int y) {
+		final int height = colorisedImage.getHeight();
 
-		final int srcLeft = leftPosInSheet(c);
+		final int srcLeft = spriteIndex(c) * spriteWidth;
 		final int srcRight = srcLeft + spriteWidth;
 		final int srcTop = 0;
-		final int srcBottom = image.getHeight();
+		final int srcBottom = height;
 
 		final int destLeft = x - xOffset;
 		final int destRight = destLeft + spriteWidth;
 		final int destTop = y - ascent;
-		final int destBottom = destTop + image.getHeight();
+		final int destBottom = destTop + height;
 
 		g.drawImage(
-				new RecoloredImage(image, g.getColor()),
+				colorisedImage,
 				destLeft, destTop, destRight, destBottom,
 				srcLeft, srcTop, srcRight, srcBottom,
 				null
 		);
 	}
 
-	private int leftPosInSheet(char c) {
+	private int spriteIndex(char c) {
 		if (c < MIN_CHAR || c > MAX_CHAR) {
 			return 0;  // tofu
 		} else {
-			return (c - MIN_CHAR + 1) * spriteWidth;
+			return c - MIN_CHAR + 1;
 		}
 	}
 
-	/**
-	 * Used for colouring the chars.  No idea if this is the most efficient way.
-	 */
-	private static class RecoloredImage extends BufferedImage {
-		private final int red;
-		private final int green;
-		private final int blue;
-		private final int alpha;
-
-		public RecoloredImage(BufferedImage image, Color color) {
-			super(image.getColorModel(), image.getRaster(), image.isAlphaPremultiplied(), cloneProperties(image));
-			this.red = color.getRed();
-			this.green = color.getGreen();
-			this.blue = color.getBlue();
-			this.alpha = color.getAlpha();
+	private BufferedImage getOrCreateColorisedImage(Color color) {
+		final int cacheKey = color.getRGB();
+		final SoftReference<BufferedImage> ref = colorisedImageCache.get(cacheKey);
+		BufferedImage image = ref != null ? ref.get() : null;
+		if (image == null) {
+			image = createColorisedImage(color);
+			colorisedImageCache.put(cacheKey, new SoftReference<>(image));
 		}
-
-		@Override
-		public int getType() {
-			return TYPE_CUSTOM;
-		}
-
-		@Override
-		public ColorModel getColorModel() {
-			return new ColorModel(8) {
-
-				@Override
-				public int getRGB(Object inData) {
-					final int pixel = ((byte[]) inData)[0] & 0xFF;
-					final int alpha0 = ((pixel * alpha) / 255) & 0xFF;
-					return (alpha0 << 24)
-							| (red << 16)
-							| (green << 8)
-							| (blue << 0);
-				}
-
-				@Override
-				public int getRed(int pixel) {
-					throw new UnsupportedOperationException();
-				}
-
-				@Override
-				public int getGreen(int pixel) {
-					throw new UnsupportedOperationException();
-				}
-
-				@Override
-				public int getBlue(int pixel) {
-					throw new UnsupportedOperationException();
-				}
-
-				@Override
-				public int getAlpha(int pixel) {
-					throw new UnsupportedOperationException();
-				}
-			};
-		}
+		return image;
 	}
 
-	private static Hashtable<String, Object> cloneProperties(BufferedImage image) {
-		final Hashtable<String, Object> properties = new Hashtable<>();
-		final String[] names = image.getPropertyNames();
-		if (names != null) {
-			for (String name : names) {
-				properties.put(name, image.getProperty(name));
-			}
+	private BufferedImage createColorisedImage(Color color) {
+		final BufferedImage image = new BufferedImage(alphaImage.getWidth(), alphaImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
+		final DataBuffer data = image.getRaster().getDataBuffer();
+		final DataBuffer alphaData = alphaImage.getRaster().getDataBuffer();
+		final int colorAlpha = color.getAlpha();
+		final int colorRgb = color.getRGB() & 0x00FFFFFF;
+		final int dataSize = data.getSize();
+
+		for (int i = 0; i < dataSize; i++) {
+			final int pixelAlpha = ((alphaData.getElem(i) * colorAlpha) / 255) & 0xFF;
+			data.setElem(i, (pixelAlpha << 24) | colorRgb);
 		}
-		return properties;
+
+		return image;
 	}
 
 	//
@@ -220,7 +186,7 @@ public class FontSpriteSheet {
 	private static final String TAG_POINT_SIZE = "PlantUml-FontSprite-PointSize";
 
 	private static final String TAG_LINE_HEIGHT = "PlantUml-FontSprite-LineHeight";
-	
+
 	private static final String TAG_X_OFFSET = "PlantUml-FontSprite-XOffset";
 
 	public void writeAsPNG(Path path) throws IOException {
@@ -238,7 +204,7 @@ public class FontSpriteSheet {
 		writer.addText(TAG_POINT_SIZE, String.valueOf(pointSize));
 		writer.addText(TAG_SPRITE_WIDTH, String.valueOf(spriteWidth));
 		writer.addText(TAG_X_OFFSET, String.valueOf(xOffset));
-		writer.write(image, out);
+		writer.write(alphaImage, out);
 	}
 
 	private static int getMetadataInt(IIOImage image, String tag) {
