@@ -117,6 +117,13 @@ public class FontSpriteSheet {
 
 	@SuppressWarnings("UnnecessaryLocalVariable")
 	private void drawChar(Graphics g, BufferedImage colorisedImage, char c, int x, int y) {
+		// We draw strings by blitting each char from an image that has all pixels set to the requested color
+		// and has alpha values copied from alphaImage.
+		// 
+		// As an alternative I tried making a ColorModel class that returns colorized pixels
+		// with their alpha value read direct from alphaImage but drawing that way was 2 - 3 times slower
+		// than the blitting approach.
+
 		final int height = colorisedImage.getHeight();
 
 		final int srcLeft = spriteIndex(c) * spriteWidth;
