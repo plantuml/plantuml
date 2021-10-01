@@ -1,4 +1,4 @@
-package net.sourceforge.plantuml.test.approval.example;
+package net.sourceforge.plantuml.test.approvaltest.example;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static net.sourceforge.plantuml.test.TestUtils.exportOneDiagramToByteArray;
@@ -12,8 +12,8 @@ import org.junit.jupiter.params.provider.EnumSource;
 
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.security.ImageIO;
-import net.sourceforge.plantuml.test.approval.ApprovalTesting;
-import net.sourceforge.plantuml.test.approval.ApprovalTestingJUnitExtension;
+import net.sourceforge.plantuml.test.approvaltest.ApprovalTesting;
+import net.sourceforge.plantuml.test.approvaltest.ApprovalTestingJUnitExtension;
 
 @ExtendWith(ApprovalTestingJUnitExtension.class)
 public class Example {

@@ -1,4 +1,4 @@
-package net.sourceforge.plantuml.test.approval;
+package net.sourceforge.plantuml.test.approvaltest;
 
 import java.awt.image.BufferedImage;
 import java.nio.file.Path;

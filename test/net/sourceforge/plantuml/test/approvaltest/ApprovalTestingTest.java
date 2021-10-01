@@ -1,4 +1,4 @@
-package net.sourceforge.plantuml.test.approval;
+package net.sourceforge.plantuml.test.approvaltest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

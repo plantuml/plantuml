@@ -18,8 +18,8 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import net.sourceforge.plantuml.test.approval.ApprovalTesting;
-import net.sourceforge.plantuml.test.approval.ApprovalTestingJUnitExtension;
+import net.sourceforge.plantuml.test.approvaltest.ApprovalTesting;
+import net.sourceforge.plantuml.test.approvaltest.ApprovalTestingJUnitExtension;
 import sun.java2d.pipe.RenderingEngine;
 
 @ExtendWith(ApprovalTestingJUnitExtension.class)

@@ -33,8 +33,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import net.sourceforge.plantuml.test.approval.ApprovalTesting;
-import net.sourceforge.plantuml.test.approval.ApprovalTestingJUnitExtension;
+import net.sourceforge.plantuml.test.approvaltest.ApprovalTesting;
+import net.sourceforge.plantuml.test.approvaltest.ApprovalTestingJUnitExtension;
 
 @ExtendWith(ApprovalTestingJUnitExtension.class)
 class FontSpriteSheetTest {
