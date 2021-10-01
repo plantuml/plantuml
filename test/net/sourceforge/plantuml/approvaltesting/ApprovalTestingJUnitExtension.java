@@ -16,6 +16,9 @@ public class ApprovalTestingJUnitExtension implements BeforeEachCallback {
 
 	private final Set<String> approvedFilesUsed = new HashSet<>();
 
+	/**
+	 * Injects {@link ApprovalTesting} fields;
+	 */
 	@Override
 	public void beforeEach(ExtensionContext context) {
 

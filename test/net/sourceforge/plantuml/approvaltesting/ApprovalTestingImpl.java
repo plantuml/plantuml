@@ -63,7 +63,7 @@ class ApprovalTestingImpl implements ApprovalTesting {
 	}
 
 	@Override
-	public Path createOutputPath(String suffix) {
+	public Path createPathForOutput(String suffix) {
 		return getDir().resolve(getBaseName() + suffix);
 	}
 
