@@ -42,10 +42,6 @@ public class TestUtils {
 		return renderAsUnicode("@startuml\n" + source + "\n@enduml\n", options);
 	}
 
-	public static Path testOutputDir(String name) throws IOException {
-		return createDirectories(Paths.get("target/test-outputs").resolve(name));
-	}
-	
 	public static String readUtf8File(Path path) throws IOException {
 
 		return new String(readAllBytes(path), UTF_8);
