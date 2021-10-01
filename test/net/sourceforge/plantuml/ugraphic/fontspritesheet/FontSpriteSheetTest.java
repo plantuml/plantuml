@@ -10,12 +10,12 @@ import static java.awt.RenderingHints.VALUE_TEXT_ANTIALIAS_GASP;
 import static java.awt.image.BufferedImage.TYPE_INT_ARGB;
 import static java.awt.image.BufferedImage.TYPE_INT_RGB;
 import static java.lang.Math.max;
+import static net.sourceforge.plantuml.test.Assertions.assertImagesEqualWithinTolerance;
 import static net.sourceforge.plantuml.ugraphic.fontspritesheet.FontSpriteSheetMaker.ALL_CHARS;
 import static net.sourceforge.plantuml.ugraphic.fontspritesheet.FontSpriteSheetMaker.JETBRAINS_FONT_FAMILY;
 import static net.sourceforge.plantuml.ugraphic.fontspritesheet.FontSpriteSheetMaker.createFontSpriteSheet;
 import static net.sourceforge.plantuml.ugraphic.fontspritesheet.FontSpriteSheetMaker.registerJetBrainsFonts;
 import static net.sourceforge.plantuml.ugraphic.fontspritesheet.FontSpriteSheetManager.FONT_SIZES;
-import static org.assertj.swing.assertions.Assertions.assertThat;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -24,6 +24,7 @@ import java.awt.image.BufferedImage;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 import javax.imageio.ImageIO;
 
@@ -32,6 +33,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import net.sourceforge.plantuml.approvaltesting.ApprovalTesting;
 import net.sourceforge.plantuml.approvaltesting.ApprovalTestingJUnitExtension;
@@ -143,12 +145,34 @@ class FontSpriteSheetTest {
 			"20, Bold      ",
 			"20, BoldItalic",
 	})
-	void test_font_sheet_draws_same_as_raw_font(int size, String style) throws Exception {
-
-		final String testString = ALL_CHARS;
-
+	void test_font_sheet_draws_same_as_raw_font_using_different_fonts(int size, String style) throws Exception {
 		//noinspection MagicConstant
-		final Font font = new Font(JETBRAINS_FONT_FAMILY, styleFromName(style), size);
+		check_font_sheet_draws_same_as_raw_font(
+				new Font(JETBRAINS_FONT_FAMILY, styleFromName(style), size),
+				BLACK
+		);
+	}
+
+	@ParameterizedTest(name = "{arguments}")
+	@MethodSource("int_range_0_255")
+	void test_font_sheet_draws_same_as_raw_font_using_different_alphas(int alpha) throws Exception {
+		check_font_sheet_draws_same_as_raw_font(
+				new Font(JETBRAINS_FONT_FAMILY, PLAIN, 20),
+				new Color(1, 1, 1, alpha)
+		);
+	}
+
+	@SuppressWarnings("unused")  // used as a MethodSource 
+	static Stream<Integer> int_range_0_255() {
+		final Integer[] alphas = new Integer[256];
+		for (int i = 0; i < alphas.length; i++) {
+			alphas[i] = i;
+		}
+		return Stream.of(alphas);
+	}
+
+	private void check_font_sheet_draws_same_as_raw_font(Font font, Color color) throws Exception {
+		final String testString = ALL_CHARS;
 
 		final FontSpriteSheet sheet = createFontSpriteSheet(font);
 		final int margin = 2;
@@ -160,7 +184,7 @@ class FontSpriteSheetTest {
 		final BufferedImage image_from_sprite = new BufferedImage(width, height, TYPE_INT_RGB);
 		final Graphics2D g1 = image_from_sprite.createGraphics();
 		g1.setBackground(WHITE);
-		g1.setColor(BLACK);
+		g1.setColor(color);
 		g1.clearRect(0, 0, width, height);
 		g1.translate(margin, margin + sheet.getAscent());
 		sheet.drawString(g1, testString, 0, 0);
@@ -171,7 +195,7 @@ class FontSpriteSheetTest {
 		final Graphics2D g2 = image_from_font.createGraphics();
 		g2.setRenderingHint(KEY_TEXT_ANTIALIASING, VALUE_TEXT_ANTIALIAS_GASP);
 		g2.setBackground(WHITE);
-		g2.setColor(BLACK);
+		g2.setColor(color);
 		g2.setFont(font);
 		g2.clearRect(0, 0, width, height);
 		g2.translate(margin, margin + g2.getFontMetrics().getAscent());
@@ -184,8 +208,10 @@ class FontSpriteSheetTest {
 		// Compare
 
 		try {
-			assertThat(image_from_sprite)
-					.isEqualTo(image_from_font);
+			// tolerance value is explained by the comment in FontSpriteSheet.calculateAlpha()
+			final int tolerance = color.getAlpha() >= 128 && color.getAlpha() <= 252 ? 1 : 0;
+
+			assertImagesEqualWithinTolerance(image_from_font, image_from_sprite, tolerance);
 		} catch (AssertionError e) {
 			final String baseName = approvalTesting.getBaseName();
 			final Path dir = approvalTesting.getDir();
@@ -200,7 +226,8 @@ class FontSpriteSheetTest {
 	// Test DSL
 	//
 
-	private ApprovalTesting approvalTesting;  // injected by ApprovalTestingJUnitExtension
+	@SuppressWarnings("unused")  // injected by ApprovalTestingJUnitExtension
+	private ApprovalTesting approvalTesting;
 
 	private int styleFromName(String styleName) {
 		if ("Regular".equals(styleName)) return PLAIN;

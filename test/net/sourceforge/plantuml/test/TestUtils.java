@@ -1,14 +1,12 @@
 package net.sourceforge.plantuml.test;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static java.nio.file.Files.createDirectories;
 import static java.nio.file.Files.readAllBytes;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
@@ -46,7 +44,7 @@ public class TestUtils {
 
 		return new String(readAllBytes(path), UTF_8);
 	}
-	
+
 	public static void writeUtf8File(Path path, String string) throws IOException {
 
 		Files.createDirectories(path.getParent());

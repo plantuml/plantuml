@@ -4,6 +4,7 @@ import static java.nio.file.Files.createDirectories;
 import static java.nio.file.Files.deleteIfExists;
 import static java.nio.file.Files.notExists;
 import static net.sourceforge.plantuml.StringUtils.substringAfterLast;
+import static net.sourceforge.plantuml.test.Assertions.assertImagesEqual;
 import static net.sourceforge.plantuml.test.TestUtils.readUtf8File;
 import static net.sourceforge.plantuml.test.TestUtils.writeUtf8File;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -165,9 +166,8 @@ class ApprovalTestingImpl implements ApprovalTesting {
 
 		@Override
 		public void compare(BufferedImage value, Path approvedFile) throws IOException, AssertionError {
-			final BufferedImage approved = ImageIO.read(approvedFile.toFile());
-			org.assertj.swing.assertions.Assertions.assertThat(value)
-					.isEqualTo(approved);
+			final BufferedImage expected = ImageIO.read(approvedFile.toFile());
+			assertImagesEqual(expected, value);
 		}
 
 		@Override

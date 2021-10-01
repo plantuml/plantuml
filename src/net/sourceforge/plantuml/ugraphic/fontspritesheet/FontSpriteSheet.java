@@ -1,6 +1,7 @@
 package net.sourceforge.plantuml.ugraphic.fontspritesheet;
 
 import static java.lang.Integer.parseInt;
+import static java.lang.Math.round;
 import static java.nio.file.Files.newInputStream;
 import static java.nio.file.Files.newOutputStream;
 import static net.sourceforge.plantuml.png.MetadataTag.findMetadataValue;
@@ -159,16 +160,25 @@ public class FontSpriteSheet {
 		final BufferedImage image = new BufferedImage(alphaImage.getWidth(), alphaImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
 		final DataBuffer data = image.getRaster().getDataBuffer();
 		final DataBuffer alphaData = alphaImage.getRaster().getDataBuffer();
-		final int colorAlpha = color.getAlpha();
+		final float colorAlpha = color.getAlpha() / 255f;
 		final int colorRgb = color.getRGB() & 0x00FFFFFF;
 		final int dataSize = data.getSize();
 
 		for (int i = 0; i < dataSize; i++) {
-			final int pixelAlpha = ((alphaData.getElem(i) * colorAlpha) / 255) & 0xFF;
-			data.setElem(i, (pixelAlpha << 24) | colorRgb);
+			data.setElem(i, colorRgb | calculateAlpha(colorAlpha, alphaData.getElem(i)));
 		}
 
 		return image;
+	}
+
+	private int calculateAlpha(float colorAlpha, int spriteAlpha) {
+		// This calculation gets very close to matching what happens in Graphics2D.drawString()
+		// but some values are off by one when colorAlpha is between 128 and 252.
+		//
+		// I think it is because Graphics2D.drawString() uses floating point for alpha calculations
+		// but alphaImage stores 8-bit integers so this calculation has less accuracy.
+
+		return (round(colorAlpha * spriteAlpha) & 0xFF) << 24;
 	}
 
 	//
