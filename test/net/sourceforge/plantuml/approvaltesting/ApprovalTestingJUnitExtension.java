@@ -1,4 +1,4 @@
-package net.sourceforge.plantuml.test.approvaltesting;
+package net.sourceforge.plantuml.approvaltesting;
 
 import static org.junit.platform.commons.util.ReflectionUtils.HierarchyTraversalMode.TOP_DOWN;
 import static org.junit.platform.commons.util.ReflectionUtils.findFields;

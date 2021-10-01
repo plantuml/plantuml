@@ -1,4 +1,4 @@
-package net.sourceforge.plantuml.test.approvaltesting;
+package net.sourceforge.plantuml.approvaltesting;
 
 import static java.nio.file.Files.createDirectories;
 import static java.nio.file.Files.deleteIfExists;
