@@ -182,8 +182,8 @@ public class FontSpriteSheet {
 		// This calculation gets very close to matching what happens in Graphics2D.drawString()
 		// but some values are off by one when colorAlpha is between 128 and 254.
 		//
-		// I think it is because Graphics2D.drawString() uses floating point for alpha calculations
-		// but alphaImage stores 8-bit integers so this calculation has less accuracy.
+		// I think it's because Graphics2D.drawString() uses floating point for alpha calculations
+		// but alphaImage stores 8-bit integers so there is less accuracy here.
 
 		return (round(colorAlpha * spriteAlpha) & 0xFF) << 24;
 	}
