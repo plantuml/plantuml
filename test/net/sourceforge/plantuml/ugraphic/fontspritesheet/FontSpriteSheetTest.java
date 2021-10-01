@@ -9,6 +9,7 @@ import static java.awt.RenderingHints.KEY_TEXT_ANTIALIASING;
 import static java.awt.RenderingHints.VALUE_TEXT_ANTIALIAS_GASP;
 import static java.awt.image.BufferedImage.TYPE_INT_ARGB;
 import static java.awt.image.BufferedImage.TYPE_INT_RGB;
+import static java.lang.Integer.parseInt;
 import static java.lang.Math.max;
 import static net.sourceforge.plantuml.test.Assertions.assertImagesEqualWithinTolerance;
 import static net.sourceforge.plantuml.ugraphic.fontspritesheet.FontSpriteSheetMaker.ALL_CHARS;
@@ -24,6 +25,7 @@ import java.awt.image.BufferedImage;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import javax.imageio.ImageIO;
@@ -34,6 +36,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import net.sourceforge.plantuml.approvaltesting.ApprovalTesting;
 import net.sourceforge.plantuml.approvaltesting.ApprovalTestingJUnitExtension;
@@ -164,11 +167,29 @@ class FontSpriteSheetTest {
 
 	@SuppressWarnings("unused")  // used as a MethodSource 
 	static Stream<Integer> int_range_0_255() {
-		final Integer[] alphas = new Integer[256];
-		for (int i = 0; i < alphas.length; i++) {
-			alphas[i] = i;
-		}
-		return Stream.of(alphas);
+		return IntStream.range(0, 256).boxed();
+	}
+
+	@ParameterizedTest(name = "{arguments}")
+	@ValueSource(strings = {
+			"00FF0000",
+			"0000FF00",
+			"000000FF",
+			"00999999",
+			"00990000",
+			"00009900",
+			"00000099",
+			"00888888",
+			"00333333",
+			"00330000",
+			"00003300",
+			"00000033",
+	})
+	void test_font_sheet_draws_same_as_raw_font_using_different_colors(String color) throws Exception {
+		check_font_sheet_draws_same_as_raw_font(
+				new Font(JETBRAINS_FONT_FAMILY, PLAIN, 20),
+				new Color(parseInt(color, 16))
+		);
 	}
 
 	private void check_font_sheet_draws_same_as_raw_font(Font font, Color color) throws Exception {
