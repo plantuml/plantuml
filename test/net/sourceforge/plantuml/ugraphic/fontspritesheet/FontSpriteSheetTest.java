@@ -148,7 +148,7 @@ class FontSpriteSheetTest {
 			"20, Bold      ",
 			"20, BoldItalic",
 	})
-	void test_font_sheet_draws_same_as_raw_font_using_different_fonts(int size, String style) throws Exception {
+	void test_font_sheet_draws_same_as_raw_font_using_different_sizes_and_styles(int size, String style) throws Exception {
 		//noinspection MagicConstant
 		check_font_sheet_draws_same_as_raw_font(
 				new Font(JETBRAINS_FONT_FAMILY, styleFromName(style), size),
@@ -163,11 +163,6 @@ class FontSpriteSheetTest {
 				new Font(JETBRAINS_FONT_FAMILY, PLAIN, 20),
 				new Color(1, 1, 1, alpha)
 		);
-	}
-
-	@SuppressWarnings("unused")  // used as a MethodSource 
-	static Stream<Integer> int_range_0_255() {
-		return IntStream.range(0, 256).boxed();
 	}
 
 	@ParameterizedTest(name = "{arguments}")
@@ -192,6 +187,10 @@ class FontSpriteSheetTest {
 		);
 	}
 
+	//
+	// Test DSL
+	//
+	
 	private void check_font_sheet_draws_same_as_raw_font(Font font, Color color) throws Exception {
 		final String testString = ALL_CHARS;
 
@@ -243,12 +242,13 @@ class FontSpriteSheetTest {
 		}
 	}
 
-	//
-	// Test DSL
-	//
-
 	@SuppressWarnings("unused")  // injected by ApprovalTestingJUnitExtension
 	private ApprovalTesting approvalTesting;
+
+	@SuppressWarnings("unused")  // used as a MethodSource 
+	static Stream<Integer> int_range_0_255() {
+		return IntStream.range(0, 256).boxed();
+	}
 
 	private int styleFromName(String styleName) {
 		if ("Regular".equals(styleName)) return PLAIN;

@@ -19,6 +19,7 @@ import java.awt.Graphics2D;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import java.awt.font.FontRenderContext;
+import java.awt.font.GlyphVector;
 import java.awt.font.TextLayout;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -91,10 +92,10 @@ public class FontSpriteSheetMaker {
 
 		final Rectangle bounds = new Rectangle();
 
-		for (char c1 : ALL_CHARS.toCharArray()) {
-			final TextLayout layout = new TextLayout(String.valueOf(c1), font, frc);
-			advance = max(advance, (int) ceil(layout.getAdvance()));
-			bounds.add(layout.getPixelBounds(null, 0, ascent));
+		for (char c : ALL_CHARS.toCharArray()) {
+			final GlyphVector glyphVector = font.createGlyphVector(frc, new char[]{c});
+			advance = max(advance, (int) ceil(glyphVector.getGlyphMetrics(0).getAdvance()));
+			bounds.add(glyphVector.getGlyphPixelBounds(0, frc, 0, ascent));
 		}
 
 		final int xOffset = (int) -ceil(bounds.getX());
