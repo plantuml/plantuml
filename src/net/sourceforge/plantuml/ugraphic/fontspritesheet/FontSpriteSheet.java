@@ -28,12 +28,6 @@ import net.sourceforge.plantuml.png.PngIOMetadata;
 
 public class FontSpriteSheet {
 
-	public static FontSpriteSheet readFromPNG(Path path) throws IOException {
-		try (InputStream is = newInputStream(path)) {
-			return new FontSpriteSheet(is);
-		}
-	}
-
 	private static final int MIN_CHAR = 0x21;
 	private static final int MAX_CHAR = 0x7e;
 
@@ -58,7 +52,7 @@ public class FontSpriteSheet {
 		this.xOffset = xOffset;
 	}
 
-	public FontSpriteSheet(InputStream in) throws IOException {
+	FontSpriteSheet(InputStream in) throws IOException {
 		try (ImageInputStream iis = ImageIO.createImageInputStream(in)) {
 			final IIOImage iioImage = createImageReader(iis).readAll(0, null);
 			advance = getMetadataInt(iioImage, TAG_ADVANCE);
@@ -92,7 +86,7 @@ public class FontSpriteSheet {
 		return pointSize;
 	}
 
-	public String getPreferredFilename() {
+	String getPreferredFilename() {
 		return getName().replace(' ', '-') + "-" + getPointSize() + ".png";
 	}
 
@@ -193,26 +187,20 @@ public class FontSpriteSheet {
 	//
 
 	private static final String TAG_ADVANCE = "PlantUml-FontSprite-Advance";
-
 	private static final String TAG_ASCENT = "PlantUml-FontSprite-Ascent";
-
-	private static final String TAG_NAME = "PlantUml-FontSprite-Name";
-
-	private static final String TAG_SPRITE_WIDTH = "PlantUml-FontSprite-SpriteWidth";
-
-	private static final String TAG_POINT_SIZE = "PlantUml-FontSprite-PointSize";
-
 	private static final String TAG_LINE_HEIGHT = "PlantUml-FontSprite-LineHeight";
-
+	private static final String TAG_NAME = "PlantUml-FontSprite-Name";
+	private static final String TAG_POINT_SIZE = "PlantUml-FontSprite-PointSize";
+	private static final String TAG_SPRITE_WIDTH = "PlantUml-FontSprite-SpriteWidth";
 	private static final String TAG_X_OFFSET = "PlantUml-FontSprite-XOffset";
 
-	public void writeAsPNG(Path path) throws IOException {
+	void writeAsPNG(Path path) throws IOException {
 		try (OutputStream os = newOutputStream(path)) {
 			writeAsPNG(os);
 		}
 	}
 
-	public void writeAsPNG(OutputStream out) throws IOException {
+	private void writeAsPNG(OutputStream out) throws IOException {
 		final PngIOMetadata writer = new PngIOMetadata();
 		writer.addText(TAG_ADVANCE, String.valueOf(advance));
 		writer.addText(TAG_ASCENT, String.valueOf(ascent));
