@@ -173,7 +173,7 @@ public class FontSpriteSheet {
 
 	private int calculateAlpha(float colorAlpha, int spriteAlpha) {
 		// This calculation gets very close to matching what happens in Graphics2D.drawString()
-		// but some values are off by one when colorAlpha is between 128 and 252.
+		// but some values are off by one when colorAlpha is between 128 and 254.
 		//
 		// I think it is because Graphics2D.drawString() uses floating point for alpha calculations
 		// but alphaImage stores 8-bit integers so this calculation has less accuracy.

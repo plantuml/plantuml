@@ -209,7 +209,7 @@ class FontSpriteSheetTest {
 
 		try {
 			// tolerance value is explained by the comment in FontSpriteSheet.calculateAlpha()
-			final int tolerance = color.getAlpha() >= 128 && color.getAlpha() <= 252 ? 1 : 0;
+			final int tolerance = color.getAlpha() >= 128 && color.getAlpha() <= 254 ? 1 : 0;
 
 			assertImagesEqualWithinTolerance(image_from_font, image_from_sprite, tolerance);
 		} catch (AssertionError e) {
