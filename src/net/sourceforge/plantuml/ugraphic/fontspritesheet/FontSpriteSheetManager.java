@@ -24,18 +24,14 @@ public class FontSpriteSheetManager {
 	private FontSpriteSheetManager() {
 	}
 
-	public FontSpriteSheet getNearestSheet(int style, int size) {
-		if (size < 16) {
-			size = 9;
-		} else {
-			size = 20;
-		}
+	public FontSpriteSheet findNearestSheet(Font font) {
+		final int size = font.getSize() < 16 ? 9 : 20;
 
-		final String cacheKey = style + "-" + size;
+		final String cacheKey = font.getStyle() + "-" + size;
 
 		FontSpriteSheet sheet = cache.get(cacheKey);
 		if (sheet == null) { // TODO concurrency?
-			sheet = load(style, size);
+			sheet = load(font.getStyle(), size);
 			cache.put(cacheKey, sheet);
 		}
 		return sheet;

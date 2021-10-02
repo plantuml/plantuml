@@ -56,10 +56,10 @@ class FontSpriteSheetTest {
 
 		final List<FontSpriteSheet> sheets = new ArrayList<>();
 		for (int size : FONT_SIZES) {
-			sheets.add(manager.getNearestSheet(PLAIN, size));
-			sheets.add(manager.getNearestSheet(ITALIC, size));
-			sheets.add(manager.getNearestSheet(BOLD, size));
-			sheets.add(manager.getNearestSheet(BOLD | ITALIC, size));
+			sheets.add(manager.findNearestSheet(new Font(null, PLAIN, size)));
+			sheets.add(manager.findNearestSheet(new Font(null, ITALIC, size)));
+			sheets.add(manager.findNearestSheet(new Font(null, BOLD, size)));
+			sheets.add(manager.findNearestSheet(new Font(null, BOLD | ITALIC, size)));
 		}
 
 		int height = 0;
@@ -93,7 +93,7 @@ class FontSpriteSheetTest {
 	@Test
 	void test_stored_font_sprites_on_alpha() {
 		final FontSpriteSheetManager manager = FontSpriteSheetManager.instance();
-		final FontSpriteSheet sheet = manager.getNearestSheet(ITALIC, 9);
+		final FontSpriteSheet sheet = manager.findNearestSheet(new Font(null, ITALIC, 9));
 
 		final float[] numbers = new float[]{0, 0.01f, 0.25f, 1f / 3, 0.5f, 2f / 3, 0.75f, 0.99f, 1};
 		final String testString = ".!@#$%^&*0OI1☺'";
@@ -190,7 +190,7 @@ class FontSpriteSheetTest {
 	//
 	// Test DSL
 	//
-	
+
 	private void check_font_sheet_draws_same_as_raw_font(Font font, Color color) throws Exception {
 		final String testString = ALL_CHARS;
 
