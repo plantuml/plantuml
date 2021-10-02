@@ -60,12 +60,9 @@ import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class UGraphicTikz extends AbstractUGraphic<TikzGraphics> implements ClipContainer {
 
-	private final TikzFontDistortion tikzFontDistortion;
-
 	private UGraphicTikz(HColor defaultBackground, ColorMapper colorMapper, TikzGraphics tikz,
 			TikzFontDistortion tikzFontDistortion) {
 		super(defaultBackground, colorMapper, FileFormat.LATEX.getDefaultStringBounder(tikzFontDistortion), tikz);
-		this.tikzFontDistortion = tikzFontDistortion;
 		register();
 
 	}
@@ -83,7 +80,6 @@ public class UGraphicTikz extends AbstractUGraphic<TikzGraphics> implements Clip
 
 	private UGraphicTikz(UGraphicTikz other) {
 		super(other);
-		this.tikzFontDistortion = other.tikzFontDistortion;
 		register();
 	}
 
