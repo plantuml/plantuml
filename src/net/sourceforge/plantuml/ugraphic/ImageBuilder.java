@@ -418,9 +418,9 @@ public class ImageBuilder {
 		case VDX:
 			return new UGraphicVdx(backcolor, colorMapper);
 		case LATEX:
-			return new UGraphicTikz(backcolor, colorMapper, scaleFactor, true, option.getTikzFontDistortion());
+			return new UGraphicTikz(backcolor, colorMapper, FileFormat.LATEX.getDefaultStringBounder(option.getTikzFontDistortion()), scaleFactor, true, option.getTikzFontDistortion());
 		case LATEX_NO_PREAMBLE:
-			return new UGraphicTikz(backcolor, colorMapper, scaleFactor, false, option.getTikzFontDistortion());
+			return new UGraphicTikz(backcolor, colorMapper, FileFormat.LATEX.getDefaultStringBounder(option.getTikzFontDistortion()), scaleFactor, false, option.getTikzFontDistortion());
 		case BRAILLE_PNG:
 			return new UGraphicBraille(backcolor, colorMapper);
 		case UTXT:
