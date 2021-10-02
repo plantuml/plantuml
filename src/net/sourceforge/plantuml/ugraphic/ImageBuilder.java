@@ -438,11 +438,10 @@ public class ImageBuilder {
 		final String hoverPathColorRGB = getHoverPathColorRGB();
 		final LengthAdjust lengthAdjust = skinParam == null ? LengthAdjust.defaultValue() : skinParam.getlengthAdjust();
 		final String preserveAspectRatio = getPreserveAspectRatio();
-		final SvgCharSizeHack svgCharSizeHack = getSvgCharSizeHack();
 		final boolean svgDimensionStyle = skinParam == null || skinParam.svgDimensionStyle();
 		final String svgLinkTarget = getSvgLinkTarget();
 		final UGraphicSvg ug = new UGraphicSvg(backcolor, svgDimensionStyle, dim, colorMapper, false, scaleFactor,
-				svgLinkTarget, hoverPathColorRGB, seed, preserveAspectRatio, svgCharSizeHack, lengthAdjust);
+				svgLinkTarget, hoverPathColorRGB, seed, preserveAspectRatio, FileFormat.SVG.getDefaultStringBounder(getSvgCharSizeHack()), lengthAdjust);
 		return ug;
 
 	}
