@@ -98,7 +98,7 @@ public class GraphicsSudoku {
 	}
 
 	public ImageData writeImageLatex(OutputStream os, FileFormat fileFormat) throws IOException {
-		final UGraphicTikz ug = new UGraphicTikz(HColorUtils.WHITE, new ColorMapperIdentity(), 1,
+		final UGraphicTikz ug = new UGraphicTikz(HColorUtils.WHITE, new ColorMapperIdentity(), FileFormat.LATEX.getDefaultStringBounder(), 1,
 				fileFormat == FileFormat.LATEX, TikzFontDistortion.getDefault());
 		drawInternal(ug);
 		ug.writeToStream(os, null, -1); // dpi param is not used
