@@ -42,7 +42,6 @@ import javax.xml.transform.TransformerException;
 
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.SvgCharSizeHack;
-import net.sourceforge.plantuml.TikzFontDistortion;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.posimo.DotPath;
 import net.sourceforge.plantuml.svg.LengthAdjust;
@@ -116,7 +115,7 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 
 	private UGraphicSvg(HColor defaultBackground, Dimension2D minDim, ColorMapper colorMapper, SvgGraphics svg,
 			boolean textAsPath, String linkTarget, SvgCharSizeHack charSizeHack) {
-		super(defaultBackground, colorMapper, FileFormat.SVG.getDefaultStringBounder(TikzFontDistortion.getDefault(), charSizeHack), svg);
+		super(defaultBackground, colorMapper, FileFormat.SVG.getDefaultStringBounder(charSizeHack), svg);
 		this.textAsPath2 = textAsPath;
 		this.target = linkTarget;
 		register();

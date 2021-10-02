@@ -132,6 +132,10 @@ public enum FileFormat {
 		return getDefaultStringBounder(TikzFontDistortion.getDefault(), SvgCharSizeHack.NO_HACK);
 	}
 
+	public StringBounder getDefaultStringBounder(SvgCharSizeHack charSizeHack) {
+		return getDefaultStringBounder(TikzFontDistortion.getDefault(), charSizeHack);
+	}
+
 	public StringBounder getDefaultStringBounder(TikzFontDistortion tikzFontDistortion) {
 		return getDefaultStringBounder(tikzFontDistortion, SvgCharSizeHack.NO_HACK);
 	}
