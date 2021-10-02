@@ -48,7 +48,6 @@ import net.sourceforge.plantuml.EmptyImageBuilder;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.SpriteContainerEmpty;
 import net.sourceforge.plantuml.SvgCharSizeHack;
-import net.sourceforge.plantuml.TikzFontDistortion;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -99,7 +98,7 @@ public class GraphicsSudoku {
 
 	public ImageData writeImageLatex(OutputStream os, FileFormat fileFormat) throws IOException {
 		final UGraphicTikz ug = new UGraphicTikz(HColorUtils.WHITE, new ColorMapperIdentity(), FileFormat.LATEX.getDefaultStringBounder(), 1,
-				fileFormat == FileFormat.LATEX, TikzFontDistortion.getDefault());
+				fileFormat == FileFormat.LATEX);
 		drawInternal(ug);
 		ug.writeToStream(os, null, -1); // dpi param is not used
 		return ImageDataSimple.ok();
