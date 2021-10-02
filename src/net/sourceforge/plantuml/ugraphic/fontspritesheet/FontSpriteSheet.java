@@ -85,24 +85,6 @@ public class FontSpriteSheet {
 		return ascent;
 	}
 
-	float getDescent() {
-		return descent;
-	}
-
-	Dimension2D calculateDimension(String text) {
-		return new Dimension2DDouble(calculateWidth(text), leading + ascent + descent);
-	}
-
-	private double calculateWidth(String text) {
-		if (text.isEmpty()) {
-			return 0;
-		} else if (text.length() == 1) {
-			return spriteWidth;
-		} else {
-			return (text.length() - 1) * advance + spriteWidth;
-		}
-	}
-
 	public String getName() {
 		return name;
 	}
@@ -210,6 +192,18 @@ public class FontSpriteSheet {
 		// but alphaImage stores 8-bit integers so there is less accuracy here.
 
 		return (round(colorAlpha * spriteAlpha) & 0xFF) << 24;
+	}
+
+	//
+	// StringBounder
+	//
+
+	public Dimension2D calculateDimension(String text) {
+		return new Dimension2DDouble(text.length() * advance, leading + ascent + descent);
+	}
+
+	public double getDescent() {
+		return descent;
 	}
 
 	//

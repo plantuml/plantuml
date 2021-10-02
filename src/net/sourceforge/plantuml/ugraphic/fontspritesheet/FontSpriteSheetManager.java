@@ -7,6 +7,7 @@ import static java.util.Collections.unmodifiableList;
 import static net.sourceforge.plantuml.utils.CollectionUtils.immutableList;
 
 import java.awt.Font;
+import java.awt.geom.Dimension2D;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.ugraphic.UFont;
 
 public class FontSpriteSheetManager {
 
@@ -30,10 +32,6 @@ public class FontSpriteSheetManager {
 	private FontSpriteSheetManager() {
 	}
 
-	public StringBounder createStringBounder() {
-		return new FontSpriteSheetStringBounder(this);
-	}
-
 	public FontSpriteSheet findNearestSheet(Font font) {
 		final int size = font.getSize() < 16 ? 9 : 20;
 
@@ -45,6 +43,22 @@ public class FontSpriteSheetManager {
 			cache.put(cacheKey, sheet);
 		}
 		return sheet;
+	}
+
+	public StringBounder createStringBounder() {
+		return new StringBounder() {
+			@Override
+			public Dimension2D calculateDimension(UFont font, String text) {
+				return findNearestSheet(font.getUnderlayingFont())
+						.calculateDimension(text);
+			}
+
+			@Override
+			public double getDescent(UFont font, String text) {
+				return findNearestSheet(font.getUnderlayingFont())
+						.getDescent();
+			}
+		};
 	}
 
 	private static FontSpriteSheet load(int style, int size) {

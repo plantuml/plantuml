@@ -2,7 +2,6 @@ package net.sourceforge.plantuml.ugraphic.fontspritesheet;
 
 import static java.awt.Color.BLACK;
 import static java.awt.Color.WHITE;
-import static java.awt.Font.BOLD;
 import static java.awt.Font.ITALIC;
 import static java.awt.Font.PLAIN;
 import static java.awt.RenderingHints.KEY_TEXT_ANTIALIASING;
@@ -17,6 +16,7 @@ import static net.sourceforge.plantuml.ugraphic.fontspritesheet.FontSpriteSheetM
 import static net.sourceforge.plantuml.ugraphic.fontspritesheet.FontSpriteSheetMaker.createFontSpriteSheet;
 import static net.sourceforge.plantuml.ugraphic.fontspritesheet.FontSpriteSheetMaker.registerJetBrainsFonts;
 import static net.sourceforge.plantuml.utils.MathUtils.roundUp;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -34,12 +34,16 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.params.provider.ValueSource;
+import org.junitpioneer.jupiter.CartesianEnumSource;
+import org.junitpioneer.jupiter.CartesianProductTest;
+import org.junitpioneer.jupiter.CartesianValueSource;
 
+import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.approvaltesting.ApprovalTesting;
 import net.sourceforge.plantuml.approvaltesting.ApprovalTestingJUnitExtension;
+import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.ugraphic.UFont;
 
 @ExtendWith(ApprovalTestingJUnitExtension.class)
 class FontSpriteSheetTest {
@@ -129,67 +133,80 @@ class FontSpriteSheetTest {
 		approvalTesting.approve(image);
 	}
 
-	@ParameterizedTest(name = "{arguments}")
-	@CsvSource(value = {
-			" 3, Regular   ",
-			" 3, Italic    ",
-			" 3, Bold      ",
-			" 3, BoldItalic",
-			" 4, Regular   ",
-			" 4, Italic    ",
-			" 4, Bold      ",
-			" 4, BoldItalic",
-			" 9, Regular   ",
-			" 9, Italic    ",
-			" 9, Bold      ",
-			" 9, BoldItalic",
-			"20, Regular   ",
-			"20, Italic    ",
-			"20, Bold      ",
-			"20, BoldItalic",
-	})
-	void test_font_sheet_draws_same_as_raw_font_using_different_sizes_and_styles(int size, String style) throws Exception {
-		//noinspection MagicConstant
-		check_font_sheet_draws_same_as_raw_font(
-				new Font(JETBRAINS_FONT_FAMILY, styleFromName(style), size),
-				BLACK
-		);
+	@CartesianProductTest(name = "{arguments}")
+	@CartesianValueSource(ints = {3, 4, 9, 20})
+	@CartesianEnumSource(FontStyle.class)
+	void test_font_sheet_draws_same_as_raw_font_using_different_sizes_and_styles(int size, FontStyle style) throws Exception {
+		check_font_sheet_draws_same_as_raw_font(style.toFont(size), BLACK);
 	}
 
 	@ParameterizedTest(name = "{arguments}")
 	@MethodSource("int_range_0_255")
 	void test_font_sheet_draws_same_as_raw_font_using_different_alphas(int alpha) throws Exception {
-		check_font_sheet_draws_same_as_raw_font(
-				new Font(JETBRAINS_FONT_FAMILY, PLAIN, 20),
-				new Color(1, 1, 1, alpha)
-		);
+		check_font_sheet_draws_same_as_raw_font(PLAIN_FONT_20, new Color(1, 1, 1, alpha));
 	}
 
-	@ParameterizedTest(name = "{arguments}")
-	@ValueSource(strings = {
-			"00FF0000",
-			"0000FF00",
-			"000000FF",
-			"00999999",
-			"00990000",
-			"00009900",
-			"00000099",
-			"00888888",
-			"00333333",
-			"00330000",
-			"00003300",
-			"00000033",
-	})
-	void test_font_sheet_draws_same_as_raw_font_using_different_colors(String color) throws Exception {
-		check_font_sheet_draws_same_as_raw_font(
-				new Font(JETBRAINS_FONT_FAMILY, PLAIN, 20),
-				new Color(parseInt(color, 16))
-		);
+	@CartesianProductTest(name = "{arguments}", value = {"00", "33", "88", "AA", "FF"})
+	void test_font_sheet_draws_same_as_raw_font_using_different_colors(String r, String g, String b) throws Exception {
+		check_font_sheet_draws_same_as_raw_font(PLAIN_FONT_20, new Color(parseInt(r + g + b, 16)));
+	}
+
+	@Test
+	void test_getDescent() {
+		final FontSpriteSheet sheet = createFontSpriteSheet(PLAIN_FONT_20);
+		final UFont uFont = UFont.fromFont(PLAIN_FONT_20);
+
+		assertThat(sheet.getDescent())
+				.isEqualTo(NORMAL_BOUNDER.getDescent(uFont, "foo"));
+	}
+
+	@CartesianProductTest(name = "{arguments}")
+	@CartesianValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20})
+	@CartesianValueSource(strings = {"", " ", "x", "foo", ALL_CHARS})
+	@CartesianEnumSource(FontStyle.class)
+	void test_calculateDimension(int size, String string, FontStyle style) {
+		final Font font = style.toFont(size);
+		final FontSpriteSheet sheet = createFontSpriteSheet(font);
+		final UFont uFont = UFont.fromFont(font);
+		final Dimension2D actual = sheet.calculateDimension(string);
+		final Dimension2D expected = NORMAL_BOUNDER.calculateDimension(uFont, string);
+
+		assertThat(actual.getHeight())
+				.isEqualTo(expected.getHeight());
+		assertThat(actual.getWidth())
+				.isEqualTo(expected.getWidth());
 	}
 
 	//
 	// Test DSL
 	//
+
+	private static final StringBounder NORMAL_BOUNDER = FileFormat.PNG.getDefaultStringBounder();
+
+	private static final Font PLAIN_FONT_20 = new Font(JETBRAINS_FONT_FAMILY, PLAIN, 20);
+
+	// Kludge to give us meaningful test names
+	@SuppressWarnings("unused")
+	private enum FontStyle {
+		PLAIN(Font.PLAIN),
+		ITALIC(Font.ITALIC),
+		BOLD(Font.BOLD),
+		BOLD_ITALIC(Font.BOLD | Font.ITALIC);
+
+		Font toFont(int size) {
+			return new Font(JETBRAINS_FONT_FAMILY, style, size);
+		}
+
+		private final int style;
+
+		FontStyle(int style) {
+			this.style = style;
+		}
+
+	}
+
+	@SuppressWarnings("unused")  // injected by ApprovalTestingJUnitExtension
+	private ApprovalTesting approvalTesting;
 
 	private void check_font_sheet_draws_same_as_raw_font(Font font, Color color) throws Exception {
 		final String testString = ALL_CHARS;
@@ -243,19 +260,8 @@ class FontSpriteSheetTest {
 		}
 	}
 
-	@SuppressWarnings("unused")  // injected by ApprovalTestingJUnitExtension
-	private ApprovalTesting approvalTesting;
-
 	@SuppressWarnings("unused")  // used as a MethodSource 
 	static Stream<Integer> int_range_0_255() {
 		return IntStream.range(0, 256).boxed();
-	}
-
-	private int styleFromName(String styleName) {
-		if ("Regular".equals(styleName)) return PLAIN;
-		if ("Bold".equals(styleName)) return BOLD;
-		if ("Italic".equals(styleName)) return ITALIC;
-		if ("BoldItalic".equals(styleName)) return BOLD | ITALIC;
-		throw new IllegalArgumentException();
 	}
 }

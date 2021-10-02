@@ -112,6 +112,10 @@ public class UFont {
 		this.family = family;
 	}
 
+	public static UFont fromFont(Font font) {
+		return new UFont(font, font.getFamily());
+	}
+	
 	public final Font getUnderlayingFont() {
 		return font;
 	}
