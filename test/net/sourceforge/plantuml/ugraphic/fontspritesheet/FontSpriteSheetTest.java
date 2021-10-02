@@ -25,8 +25,6 @@ import java.awt.geom.Dimension2D;
 import java.awt.image.BufferedImage;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 import javax.imageio.ImageIO;
 
@@ -34,10 +32,10 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
 import org.junitpioneer.jupiter.CartesianEnumSource;
 import org.junitpioneer.jupiter.CartesianProductTest;
 import org.junitpioneer.jupiter.CartesianValueSource;
+import org.junitpioneer.jupiter.params.IntRangeSource;
 
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.approvaltesting.ApprovalTesting;
@@ -141,7 +139,7 @@ class FontSpriteSheetTest {
 	}
 
 	@ParameterizedTest(name = "{arguments}")
-	@MethodSource("int_range_0_255")
+	@IntRangeSource(from = 0, to = 255)
 	void test_font_sheet_draws_same_as_raw_font_using_different_alphas(int alpha) throws Exception {
 		check_font_sheet_draws_same_as_raw_font(PLAIN_FONT_20, new Color(1, 1, 1, alpha));
 	}
@@ -258,10 +256,5 @@ class FontSpriteSheetTest {
 			sheet.writeAsPNG(dir.resolve(baseName + "_sprite_sheet.failed.png"));
 			throw e;
 		}
-	}
-
-	@SuppressWarnings("unused")  // used as a MethodSource 
-	static Stream<Integer> int_range_0_255() {
-		return IntStream.range(0, 256).boxed();
 	}
 }
