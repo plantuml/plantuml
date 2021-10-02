@@ -461,11 +461,12 @@ public class ImageBuilder {
 			backColor = new Color(0, 0, 0, 0);
 		}
 
+		final StringBounder stringBounder = FileFormat.PNG.getDefaultStringBounder();
 		final EmptyImageBuilder builder = new EmptyImageBuilder(watermark, (int) (dim.getWidth() * scaleFactor),
-				(int) (dim.getHeight() * scaleFactor), backColor);
+				(int) (dim.getHeight() * scaleFactor), backColor, stringBounder);
 		final Graphics2D graphics2D = builder.getGraphics2D();
 
-		final UGraphicG2d ug = new UGraphicG2d(backcolor, colorMapper, graphics2D, scaleFactor,
+		final UGraphicG2d ug = new UGraphicG2d(backcolor, colorMapper, stringBounder, graphics2D, scaleFactor,
 				affineTransforms == null ? null : affineTransforms.getFirst(), dx, dy);
 		ug.setBufferedImage(builder.getBufferedImage());
 		final BufferedImage im = ug.getBufferedImage();

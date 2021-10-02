@@ -42,8 +42,10 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import net.sourceforge.plantuml.EmptyImageBuilder;
+import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.png.PngIO;
 import net.sourceforge.plantuml.ugraphic.UChange;
 import net.sourceforge.plantuml.ugraphic.UMotif;
@@ -68,11 +70,12 @@ public class GraphicsPath {
 	}
 
 	private BufferedImage createImage() {
-		final EmptyImageBuilder builder = new EmptyImageBuilder(null, 50, 50, Color.WHITE);
+		final StringBounder stringBounder = FileFormat.PNG.getDefaultStringBounder();
+		final EmptyImageBuilder builder = new EmptyImageBuilder(null, 50, 50, Color.WHITE, stringBounder);
 		final BufferedImage im = builder.getBufferedImage();
 		final Graphics2D g2d = builder.getGraphics2D();
 
-		final UGraphicG2d ug = new UGraphicG2d(HColorUtils.WHITE, colorMapper, g2d, 1.0);
+		final UGraphicG2d ug = new UGraphicG2d(HColorUtils.WHITE, colorMapper, stringBounder, g2d, 1.0);
 		ug.setBufferedImage(im);
 		final UMotif motif = new UMotif(path);
 		motif.drawHorizontal(ug.apply((UChange) HColorUtils.BLACK), 20, 20, 1);
