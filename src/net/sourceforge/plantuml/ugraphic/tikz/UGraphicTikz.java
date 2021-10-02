@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.ugraphic.tikz;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import net.sourceforge.plantuml.TikzFontDistortion;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.creole.legacy.AtomText;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -60,16 +59,14 @@ import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class UGraphicTikz extends AbstractUGraphic<TikzGraphics> implements ClipContainer {
 
-	private UGraphicTikz(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder, TikzGraphics tikz,
-			TikzFontDistortion tikzFontDistortion) {
+	private UGraphicTikz(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder, TikzGraphics tikz) {
 		super(defaultBackground, colorMapper, stringBounder, tikz);
 		register();
 
 	}
 
-	public UGraphicTikz(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder, double scale, boolean withPreamble,
-			TikzFontDistortion tikzFontDistortion) {
-		this(defaultBackground, colorMapper, stringBounder, new TikzGraphics(scale, withPreamble), tikzFontDistortion);
+	public UGraphicTikz(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder, double scale, boolean withPreamble) {
+		this(defaultBackground, colorMapper, stringBounder, new TikzGraphics(scale, withPreamble));
 
 	}
 
