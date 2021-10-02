@@ -15,7 +15,7 @@ class FontSpriteSheetStringBounder extends StringBounderRaw {
 
 	@Override
 	protected Dimension2D calculateDimensionInternal(UFont font, String text) {
-		throw new UnsupportedOperationException();
+		return manager.findNearestSheet(font.getUnderlayingFont()).calculateDimension(text);
 	}
 
 	@Override

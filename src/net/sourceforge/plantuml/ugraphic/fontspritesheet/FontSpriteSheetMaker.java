@@ -9,9 +9,9 @@ import static java.awt.Font.createFont;
 import static java.awt.RenderingHints.KEY_TEXT_ANTIALIASING;
 import static java.awt.RenderingHints.VALUE_TEXT_ANTIALIAS_GASP;
 import static java.awt.image.BufferedImage.TYPE_BYTE_GRAY;
-import static java.lang.Math.ceil;
 import static java.lang.Math.max;
 import static net.sourceforge.plantuml.utils.CollectionUtils.immutableList;
+import static net.sourceforge.plantuml.utils.MathUtils.roundUp;
 
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -85,21 +85,20 @@ public class FontSpriteSheetMaker {
 
 		final FontRenderContext frc = g0.getFontRenderContext();
 		final LineMetrics lineMetrics = font.getLineMetrics(ALL_CHARS, frc);
-		final int ascent = (int) ceil(lineMetrics.getAscent());
-		final float descent = lineMetrics.getDescent();
+		final int ascent = roundUp(lineMetrics.getAscent());
 
 		int advance = 0;
 		final Rectangle bounds = new Rectangle();
 
 		for (char c : ALL_CHARS.toCharArray()) {
 			final GlyphVector glyphVector = font.createGlyphVector(frc, new char[]{c});
-			advance = max(advance, (int) ceil(glyphVector.getGlyphMetrics(0).getAdvance()));
+			advance = max(advance, roundUp(glyphVector.getGlyphMetrics(0).getAdvance()));
 			bounds.add(glyphVector.getGlyphPixelBounds(0, frc, 0, ascent));
 		}
 
-		final int xOffset = (int) -ceil(bounds.getX());
-		final int sheetHeight = (int) ceil(bounds.getHeight() - bounds.getY());
-		final int spriteWidth = (int) ceil(bounds.getWidth() - bounds.getX());
+		final int xOffset = -roundUp(bounds.getX());
+		final int sheetHeight = roundUp(bounds.getHeight() - bounds.getY());
+		final int spriteWidth = roundUp(bounds.getWidth() - bounds.getX());
 		final int sheetWidth = xOffset + spriteWidth * ALL_CHARS.length();
 
 		// Draw sprites
@@ -117,6 +116,6 @@ public class FontSpriteSheetMaker {
 			g.translate(spriteWidth, 0);
 		}
 
-		return new FontSpriteSheet(image, fontMetrics, advance, ascent, descent, spriteWidth, xOffset);
+		return new FontSpriteSheet(image, fontMetrics, lineMetrics, advance, spriteWidth, xOffset);
 	}
 }

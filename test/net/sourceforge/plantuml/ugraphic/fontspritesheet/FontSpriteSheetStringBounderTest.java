@@ -34,6 +34,16 @@ class FontSpriteSheetStringBounderTest {
 		assertThat(spriteSheetBounder.getDescent(uFont, string))
 				.isEqualTo(normalBounder.getDescent(uFont, string));
 	}
+	
+	@ParameterizedTest(name = "{arguments}")
+	@MethodSource("allSpriteSheets")
+	void test_calculateDimension(FontSpriteSheet sheet) {
+		final UFont uFont = createUFont(sheet);
+		final String string = "foo";
+ // TODO fixme
+		assertThat(spriteSheetBounder.calculateDimension(uFont, string))
+				.isEqualTo(normalBounder.calculateDimension(uFont, string));
+	}
 
 	//
 	// Test DSL

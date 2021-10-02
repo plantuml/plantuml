@@ -16,10 +16,12 @@ import static net.sourceforge.plantuml.ugraphic.fontspritesheet.FontSpriteSheetM
 import static net.sourceforge.plantuml.ugraphic.fontspritesheet.FontSpriteSheetMaker.JETBRAINS_FONT_FAMILY;
 import static net.sourceforge.plantuml.ugraphic.fontspritesheet.FontSpriteSheetMaker.createFontSpriteSheet;
 import static net.sourceforge.plantuml.ugraphic.fontspritesheet.FontSpriteSheetMaker.registerJetBrainsFonts;
+import static net.sourceforge.plantuml.utils.MathUtils.roundUp;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.geom.Dimension2D;
 import java.awt.image.BufferedImage;
 import java.nio.file.Path;
 import java.util.List;
@@ -50,25 +52,26 @@ class FontSpriteSheetTest {
 	//
 	// Test Cases
 	//
-	
+
 	@Test
 	void test_stored_font_sprites_on_white() {
 
 		final FontSpriteSheetManager manager = FontSpriteSheetManager.instance();
 		final List<FontSpriteSheet> sheets = manager.allSheets();
 
-		int height = 0;
-		int width = 0;
+		double height = 0;
+		double width = 0;
 		for (FontSpriteSheet sheet : sheets) {
-			height += sheet.getLineHeight();
-			width = max(width, sheet.getSpriteWidth() * ALL_CHARS.length());
+			final Dimension2D dimension = sheet.calculateDimension(ALL_CHARS);
+			height += dimension.getHeight();
+			width = max(width, dimension.getWidth());
 		}
 
 		final int margin = 2;
 		height += 2 * margin;
 		width += 2 * margin;
 
-		final BufferedImage image = new BufferedImage(width, height, TYPE_INT_RGB);
+		final BufferedImage image = new BufferedImage(roundUp(width), roundUp(height), TYPE_INT_RGB);
 		final Graphics2D g = image.createGraphics();
 
 		g.setBackground(WHITE);
@@ -78,8 +81,9 @@ class FontSpriteSheetTest {
 		g.translate(margin, margin);
 
 		for (FontSpriteSheet sheet : sheets) {
-			sheet.drawString(g, ALL_CHARS, 0, sheet.getAscent());
-			g.translate(0, sheet.getLineHeight());
+			final Dimension2D dimension = sheet.calculateDimension(ALL_CHARS);
+			sheet.drawString(g, ALL_CHARS, 0, (float) (dimension.getHeight() - sheet.getDescent()));
+			g.translate(0, dimension.getHeight());
 		}
 
 		approvalTesting.approve(image);
@@ -93,9 +97,11 @@ class FontSpriteSheetTest {
 		final String testString = ".!@#$%^&*0OI1☺'";
 
 		final int margin = 5;
-		final int stringWidth = testString.length() * sheet.getSpriteWidth();
+		final Dimension2D dimension = sheet.calculateDimension(testString);
+		final int stringWidth = roundUp(dimension.getWidth());
 		final int stripeWidth = stringWidth * numbers.length;
-		final int stripeHeight = numbers.length * sheet.getLineHeight();
+		final double lineHeight = dimension.getHeight();
+		final int stripeHeight = roundUp(numbers.length * lineHeight);
 
 		final BufferedImage image = new BufferedImage(2 * stripeWidth + 2 * margin, numbers.length * stripeHeight + 2 * margin, TYPE_INT_ARGB);
 		final Graphics2D g_font_color = image.createGraphics();
@@ -112,11 +118,11 @@ class FontSpriteSheetTest {
 					for (float fg_alpha : numbers) {
 						g_fg_alpha.setColor(new Color(font_color, font_color, font_color, fg_alpha));
 						sheet.drawString(g_fg_alpha, testString, 0, sheet.getAscent());
-						g_fg_alpha.translate(0, sheet.getLineHeight());
+						g_fg_alpha.translate(0, lineHeight);
 					}
 					g_bg_alpha.translate(stringWidth, 0);
 				}
-				g_bg_color.translate(0, numbers.length * sheet.getLineHeight());
+				g_bg_color.translate(0, stripeHeight);
 			}
 			g_font_color.translate(stripeWidth, 0);
 		}
@@ -190,8 +196,9 @@ class FontSpriteSheetTest {
 
 		final FontSpriteSheet sheet = createFontSpriteSheet(font);
 		final int margin = 2;
-		final int width = testString.length() * sheet.getSpriteWidth() + 2 * margin;
-		final int height = sheet.getLineHeight() + 2 * margin;
+		final Dimension2D dimension = sheet.calculateDimension(testString);
+		final int width = roundUp(dimension.getWidth() + 2 * margin);
+		final int height = roundUp(dimension.getHeight() + 2 * margin);
 
 		// Draw using sprites
 

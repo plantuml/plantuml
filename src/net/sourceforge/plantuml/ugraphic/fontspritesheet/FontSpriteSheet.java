@@ -6,10 +6,13 @@ import static java.lang.Math.round;
 import static java.nio.file.Files.newOutputStream;
 import static net.sourceforge.plantuml.png.MetadataTag.findMetadataValue;
 import static net.sourceforge.plantuml.utils.ImageIOUtils.createImageReader;
+import static net.sourceforge.plantuml.utils.MathUtils.roundUp;
 
 import java.awt.Color;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.font.LineMetrics;
+import java.awt.geom.Dimension2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBuffer;
 import java.io.IOException;
@@ -24,6 +27,7 @@ import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
 import javax.imageio.stream.ImageInputStream;
 
+import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.png.PngIOMetadata;
 
 public class FontSpriteSheet {
@@ -34,21 +38,21 @@ public class FontSpriteSheet {
 	private final Map<Integer, SoftReference<BufferedImage>> colorisedImageCache = new ConcurrentHashMap<>();
 	private final int advance;
 	private final BufferedImage alphaImage;
-	private final int ascent;
+	private final float ascent;
 	private final float descent;
-	private final int lineHeight;
+	private final float leading;
 	private final String name;
 	private final int pointSize;
 	private final int spriteWidth;
 	private final int style;
 	private final int xOffset;
 
-	FontSpriteSheet(BufferedImage alphaImage, FontMetrics fontMetrics, int advance, int ascent, float descent, int spriteWidth, int xOffset) {
+	FontSpriteSheet(BufferedImage alphaImage, FontMetrics fontMetrics, LineMetrics lineMetrics, int advance, int spriteWidth, int xOffset) {
 		this.advance = advance;
 		this.alphaImage = alphaImage;
-		this.ascent = ascent;
-		this.descent = descent;
-		this.lineHeight = fontMetrics.getHeight();
+		this.ascent = lineMetrics.getAscent();
+		this.descent = lineMetrics.getDescent();
+		this.leading = lineMetrics.getLeading();
 		this.name = fontMetrics.getFont().getFontName();
 		this.pointSize = fontMetrics.getFont().getSize();
 		this.spriteWidth = spriteWidth;
@@ -61,9 +65,9 @@ public class FontSpriteSheet {
 			final IIOImage iioImage = createImageReader(iis).readAll(0, null);
 			advance = getMetadataInt(iioImage, TAG_ADVANCE);
 			alphaImage = (BufferedImage) iioImage.getRenderedImage();
-			ascent = getMetadataInt(iioImage, TAG_ASCENT);
+			ascent = getMetadataFloat(iioImage, TAG_ASCENT);
 			descent = getMetadataFloat(iioImage, TAG_DESCENT);
-			lineHeight = getMetadataInt(iioImage, TAG_LINE_HEIGHT);
+			leading = getMetadataFloat(iioImage, TAG_LEADING);
 			name = getMetadataString(iioImage, TAG_NAME);
 			pointSize = getMetadataInt(iioImage, TAG_POINT_SIZE);
 			spriteWidth = getMetadataInt(iioImage, TAG_SPRITE_WIDTH);
@@ -72,20 +76,31 @@ public class FontSpriteSheet {
 		}
 	}
 
-	public int getAdvance() {
+	// Visible for testing
+	int getAdvance() {
 		return advance;
 	}
 
-	public int getAscent() {
+	public float getAscent() {
 		return ascent;
 	}
 
-	public float getDescent() {
+	float getDescent() {
 		return descent;
 	}
 
-	public int getLineHeight() {
-		return lineHeight;
+	Dimension2D calculateDimension(String text) {
+		return new Dimension2DDouble(calculateWidth(text), leading + ascent + descent);
+	}
+
+	private double calculateWidth(String text) {
+		if (text.isEmpty()) {
+			return 0;
+		} else if (text.length() == 1) {
+			return spriteWidth;
+		} else {
+			return (text.length() - 1) * advance + spriteWidth;
+		}
 	}
 
 	public String getName() {
@@ -98,10 +113,6 @@ public class FontSpriteSheet {
 
 	String getPreferredFilename() {
 		return getName().replace(' ', '-') + "-" + getPointSize() + ".png";
-	}
-
-	public int getSpriteWidth() {
-		return spriteWidth;
 	}
 
 	public int getStyle() {
@@ -117,7 +128,7 @@ public class FontSpriteSheet {
 	// Drawing
 	//
 
-	public void drawString(Graphics g, String s, int x, int y) {
+	public void drawString(Graphics g, String s, float x, float y) {
 		final BufferedImage colorisedImage = getOrCreateColorisedImage(g.getColor());
 
 		for (char c : s.toCharArray()) {
@@ -129,7 +140,7 @@ public class FontSpriteSheet {
 	}
 
 	@SuppressWarnings("UnnecessaryLocalVariable")
-	private void drawChar(Graphics g, BufferedImage colorisedImage, char c, int x, int y) {
+	private void drawChar(Graphics g, BufferedImage colorisedImage, char c, float x, float y) {
 		// We draw strings by blitting each char from an image that has all pixels set to the requested color
 		// and has alpha values copied from alphaImage.
 		// 
@@ -144,9 +155,9 @@ public class FontSpriteSheet {
 		final int srcTop = 0;
 		final int srcBottom = height;
 
-		final int destLeft = x - xOffset;
+		final int destLeft = roundUp(x - xOffset);
 		final int destRight = destLeft + spriteWidth;
-		final int destTop = y - ascent;
+		final int destTop = roundUp(y - ascent);
 		final int destBottom = destTop + height;
 
 		g.drawImage(
@@ -208,7 +219,7 @@ public class FontSpriteSheet {
 	private static final String TAG_ADVANCE = "PlantUml-FontSprite-Advance";
 	private static final String TAG_ASCENT = "PlantUml-FontSprite-Ascent";
 	private static final String TAG_DESCENT = "PlantUml-FontSprite-Descent";
-	private static final String TAG_LINE_HEIGHT = "PlantUml-FontSprite-LineHeight";
+	private static final String TAG_LEADING = "PlantUml-FontSprite-Leading";
 	private static final String TAG_NAME = "PlantUml-FontSprite-Name";
 	private static final String TAG_POINT_SIZE = "PlantUml-FontSprite-PointSize";
 	private static final String TAG_SPRITE_WIDTH = "PlantUml-FontSprite-SpriteWidth";
@@ -226,7 +237,7 @@ public class FontSpriteSheet {
 		writer.addText(TAG_ADVANCE, String.valueOf(advance));
 		writer.addText(TAG_ASCENT, String.valueOf(ascent));
 		writer.addText(TAG_DESCENT, String.valueOf(descent));
-		writer.addText(TAG_LINE_HEIGHT, String.valueOf(lineHeight));
+		writer.addText(TAG_LEADING, String.valueOf(leading));
 		writer.addText(TAG_NAME, String.valueOf(name));
 		writer.addText(TAG_POINT_SIZE, String.valueOf(pointSize));
 		writer.addText(TAG_SPRITE_WIDTH, String.valueOf(spriteWidth));
