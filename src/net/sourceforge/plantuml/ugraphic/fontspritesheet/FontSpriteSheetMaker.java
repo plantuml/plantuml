@@ -86,7 +86,7 @@ public class FontSpriteSheetMaker {
 		final FontRenderContext frc = g0.getFontRenderContext();
 		final LineMetrics lineMetrics = font.getLineMetrics(ALL_CHARS, frc);
 		final int ascent = (int) ceil(lineMetrics.getAscent());
-		final int descent = (int) ceil(lineMetrics.getDescent());
+		final float descent = lineMetrics.getDescent();
 
 		int advance = 0;
 		final Rectangle bounds = new Rectangle();

@@ -1,13 +1,19 @@
 package net.sourceforge.plantuml.ugraphic.fontspritesheet;
 
+import static java.awt.Font.BOLD;
+import static java.awt.Font.ITALIC;
 import static java.awt.Font.PLAIN;
+import static java.util.Collections.unmodifiableList;
 import static net.sourceforge.plantuml.utils.CollectionUtils.immutableList;
 
 import java.awt.Font;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import net.sourceforge.plantuml.graphic.StringBounder;
 
 public class FontSpriteSheetManager {
 
@@ -22,6 +28,10 @@ public class FontSpriteSheetManager {
 	private final Map<String, FontSpriteSheet> cache = new ConcurrentHashMap<>();
 
 	private FontSpriteSheetManager() {
+	}
+
+	public StringBounder createStringBounder() {
+		return new FontSpriteSheetStringBounder(this);
 	}
 
 	public FontSpriteSheet findNearestSheet(Font font) {
@@ -52,5 +62,16 @@ public class FontSpriteSheetManager {
 		} catch (Exception e) {
 			throw new RuntimeException(String.format("Error loading Font Sprite Sheet '%s' : %s", name, e.getMessage()), e);
 		}
+	}
+
+	List<FontSpriteSheet> allSheets() {
+		final List<FontSpriteSheet> sheets = new ArrayList<>();
+		for (int size : FONT_SIZES) {
+			sheets.add(findNearestSheet(new Font(null, PLAIN, size)));
+			sheets.add(findNearestSheet(new Font(null, ITALIC, size)));
+			sheets.add(findNearestSheet(new Font(null, BOLD, size)));
+			sheets.add(findNearestSheet(new Font(null, BOLD | ITALIC, size)));
+		}
+		return unmodifiableList(sheets);
 	}
 }

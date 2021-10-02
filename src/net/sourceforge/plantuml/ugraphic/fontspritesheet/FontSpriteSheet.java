@@ -1,8 +1,8 @@
 package net.sourceforge.plantuml.ugraphic.fontspritesheet;
 
+import static java.lang.Float.parseFloat;
 import static java.lang.Integer.parseInt;
 import static java.lang.Math.round;
-import static java.nio.file.Files.newInputStream;
 import static java.nio.file.Files.newOutputStream;
 import static net.sourceforge.plantuml.png.MetadataTag.findMetadataValue;
 import static net.sourceforge.plantuml.utils.ImageIOUtils.createImageReader;
@@ -35,14 +35,15 @@ public class FontSpriteSheet {
 	private final int advance;
 	private final BufferedImage alphaImage;
 	private final int ascent;
-	private final int descent;
+	private final float descent;
 	private final int lineHeight;
 	private final String name;
 	private final int pointSize;
 	private final int spriteWidth;
+	private final int style;
 	private final int xOffset;
 
-	FontSpriteSheet(BufferedImage alphaImage, FontMetrics fontMetrics, int advance, int ascent, int descent, int spriteWidth, int xOffset) {
+	FontSpriteSheet(BufferedImage alphaImage, FontMetrics fontMetrics, int advance, int ascent, float descent, int spriteWidth, int xOffset) {
 		this.advance = advance;
 		this.alphaImage = alphaImage;
 		this.ascent = ascent;
@@ -51,6 +52,7 @@ public class FontSpriteSheet {
 		this.name = fontMetrics.getFont().getFontName();
 		this.pointSize = fontMetrics.getFont().getSize();
 		this.spriteWidth = spriteWidth;
+		this.style = fontMetrics.getFont().getStyle();
 		this.xOffset = xOffset;
 	}
 
@@ -60,11 +62,12 @@ public class FontSpriteSheet {
 			advance = getMetadataInt(iioImage, TAG_ADVANCE);
 			alphaImage = (BufferedImage) iioImage.getRenderedImage();
 			ascent = getMetadataInt(iioImage, TAG_ASCENT);
-			descent = getMetadataInt(iioImage, TAG_DESCENT);
+			descent = getMetadataFloat(iioImage, TAG_DESCENT);
 			lineHeight = getMetadataInt(iioImage, TAG_LINE_HEIGHT);
 			name = getMetadataString(iioImage, TAG_NAME);
 			pointSize = getMetadataInt(iioImage, TAG_POINT_SIZE);
 			spriteWidth = getMetadataInt(iioImage, TAG_SPRITE_WIDTH);
+			style = getMetadataInt(iioImage, TAG_STYLE);
 			xOffset = getMetadataInt(iioImage, TAG_X_OFFSET);
 		}
 	}
@@ -75,6 +78,10 @@ public class FontSpriteSheet {
 
 	public int getAscent() {
 		return ascent;
+	}
+
+	public float getDescent() {
+		return descent;
 	}
 
 	public int getLineHeight() {
@@ -95,6 +102,15 @@ public class FontSpriteSheet {
 
 	public int getSpriteWidth() {
 		return spriteWidth;
+	}
+
+	public int getStyle() {
+		return style;
+	}
+
+	@Override
+	public String toString() {
+		return getName() + " " + getPointSize();
 	}
 
 	//
@@ -196,6 +212,7 @@ public class FontSpriteSheet {
 	private static final String TAG_NAME = "PlantUml-FontSprite-Name";
 	private static final String TAG_POINT_SIZE = "PlantUml-FontSprite-PointSize";
 	private static final String TAG_SPRITE_WIDTH = "PlantUml-FontSprite-SpriteWidth";
+	private static final String TAG_STYLE = "PlantUml-FontSprite-Style";
 	private static final String TAG_X_OFFSET = "PlantUml-FontSprite-XOffset";
 
 	void writeAsPNG(Path path) throws IOException {
@@ -213,8 +230,13 @@ public class FontSpriteSheet {
 		writer.addText(TAG_NAME, String.valueOf(name));
 		writer.addText(TAG_POINT_SIZE, String.valueOf(pointSize));
 		writer.addText(TAG_SPRITE_WIDTH, String.valueOf(spriteWidth));
+		writer.addText(TAG_STYLE, String.valueOf(style));
 		writer.addText(TAG_X_OFFSET, String.valueOf(xOffset));
 		writer.write(alphaImage, out);
+	}
+
+	private static float getMetadataFloat(IIOImage image, String tag) {
+		return parseFloat(getMetadataString(image, tag));
 	}
 
 	private static int getMetadataInt(IIOImage image, String tag) {

@@ -16,14 +16,12 @@ import static net.sourceforge.plantuml.ugraphic.fontspritesheet.FontSpriteSheetM
 import static net.sourceforge.plantuml.ugraphic.fontspritesheet.FontSpriteSheetMaker.JETBRAINS_FONT_FAMILY;
 import static net.sourceforge.plantuml.ugraphic.fontspritesheet.FontSpriteSheetMaker.createFontSpriteSheet;
 import static net.sourceforge.plantuml.ugraphic.fontspritesheet.FontSpriteSheetMaker.registerJetBrainsFonts;
-import static net.sourceforge.plantuml.ugraphic.fontspritesheet.FontSpriteSheetManager.FONT_SIZES;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -49,18 +47,15 @@ class FontSpriteSheetTest {
 		registerJetBrainsFonts();
 	}
 
+	//
+	// Test Cases
+	//
+	
 	@Test
 	void test_stored_font_sprites_on_white() {
 
 		final FontSpriteSheetManager manager = FontSpriteSheetManager.instance();
-
-		final List<FontSpriteSheet> sheets = new ArrayList<>();
-		for (int size : FONT_SIZES) {
-			sheets.add(manager.findNearestSheet(new Font(null, PLAIN, size)));
-			sheets.add(manager.findNearestSheet(new Font(null, ITALIC, size)));
-			sheets.add(manager.findNearestSheet(new Font(null, BOLD, size)));
-			sheets.add(manager.findNearestSheet(new Font(null, BOLD | ITALIC, size)));
-		}
+		final List<FontSpriteSheet> sheets = manager.allSheets();
 
 		int height = 0;
 		int width = 0;
@@ -92,8 +87,7 @@ class FontSpriteSheetTest {
 
 	@Test
 	void test_stored_font_sprites_on_alpha() {
-		final FontSpriteSheetManager manager = FontSpriteSheetManager.instance();
-		final FontSpriteSheet sheet = manager.findNearestSheet(new Font(null, ITALIC, 9));
+		final FontSpriteSheet sheet = FontSpriteSheetManager.instance().findNearestSheet(new Font(null, ITALIC, 9));
 
 		final float[] numbers = new float[]{0, 0.01f, 0.25f, 1f / 3, 0.5f, 2f / 3, 0.75f, 0.99f, 1};
 		final String testString = ".!@#$%^&*0OI1☺'";
