@@ -43,13 +43,11 @@ import java.awt.geom.PathIterator;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.eps.EpsGraphics;
 import net.sourceforge.plantuml.eps.EpsGraphicsMacroAndText;
 import net.sourceforge.plantuml.eps.EpsStrategy;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.FontStyle;
-import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.ClipContainer;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UClip;
@@ -63,12 +61,10 @@ import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class DriverTextEps implements UDriver<EpsGraphics> {
 
-	private final StringBounder stringBounder;
 	private final ClipContainer clipContainer;
 	private final EpsStrategy strategy;
 
 	public DriverTextEps(ClipContainer clipContainer, EpsStrategy strategy) {
-		this.stringBounder = FileFormat.PNG.getDefaultStringBounder();
 		this.clipContainer = clipContainer;
 		this.strategy = strategy;
 	}
