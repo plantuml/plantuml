@@ -35,16 +35,18 @@ public class FontSpriteSheet {
 	private final int advance;
 	private final BufferedImage alphaImage;
 	private final int ascent;
+	private final int descent;
 	private final int lineHeight;
 	private final String name;
 	private final int pointSize;
 	private final int spriteWidth;
 	private final int xOffset;
 
-	FontSpriteSheet(BufferedImage alphaImage, FontMetrics fontMetrics, int advance, int ascent, int spriteWidth, int xOffset) {
+	FontSpriteSheet(BufferedImage alphaImage, FontMetrics fontMetrics, int advance, int ascent, int descent, int spriteWidth, int xOffset) {
 		this.advance = advance;
 		this.alphaImage = alphaImage;
 		this.ascent = ascent;
+		this.descent = descent;
 		this.lineHeight = fontMetrics.getHeight();
 		this.name = fontMetrics.getFont().getFontName();
 		this.pointSize = fontMetrics.getFont().getSize();
@@ -58,6 +60,7 @@ public class FontSpriteSheet {
 			advance = getMetadataInt(iioImage, TAG_ADVANCE);
 			alphaImage = (BufferedImage) iioImage.getRenderedImage();
 			ascent = getMetadataInt(iioImage, TAG_ASCENT);
+			descent = getMetadataInt(iioImage, TAG_DESCENT);
 			lineHeight = getMetadataInt(iioImage, TAG_LINE_HEIGHT);
 			name = getMetadataString(iioImage, TAG_NAME);
 			pointSize = getMetadataInt(iioImage, TAG_POINT_SIZE);
@@ -188,6 +191,7 @@ public class FontSpriteSheet {
 
 	private static final String TAG_ADVANCE = "PlantUml-FontSprite-Advance";
 	private static final String TAG_ASCENT = "PlantUml-FontSprite-Ascent";
+	private static final String TAG_DESCENT = "PlantUml-FontSprite-Descent";
 	private static final String TAG_LINE_HEIGHT = "PlantUml-FontSprite-LineHeight";
 	private static final String TAG_NAME = "PlantUml-FontSprite-Name";
 	private static final String TAG_POINT_SIZE = "PlantUml-FontSprite-PointSize";
@@ -204,6 +208,7 @@ public class FontSpriteSheet {
 		final PngIOMetadata writer = new PngIOMetadata();
 		writer.addText(TAG_ADVANCE, String.valueOf(advance));
 		writer.addText(TAG_ASCENT, String.valueOf(ascent));
+		writer.addText(TAG_DESCENT, String.valueOf(descent));
 		writer.addText(TAG_LINE_HEIGHT, String.valueOf(lineHeight));
 		writer.addText(TAG_NAME, String.valueOf(name));
 		writer.addText(TAG_POINT_SIZE, String.valueOf(pointSize));

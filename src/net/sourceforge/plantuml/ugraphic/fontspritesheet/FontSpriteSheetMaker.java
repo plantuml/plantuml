@@ -20,7 +20,7 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import java.awt.font.FontRenderContext;
 import java.awt.font.GlyphVector;
-import java.awt.font.TextLayout;
+import java.awt.font.LineMetrics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.nio.file.Path;
@@ -54,7 +54,7 @@ public class FontSpriteSheetMaker {
 			for (int style : immutableList(PLAIN, ITALIC, BOLD, BOLD | ITALIC)) {
 				final Font font = new Font(JETBRAINS_FONT_FAMILY, style, size);
 				final FontSpriteSheet sheet = createFontSpriteSheet(font);
-				final Path path = Paths.get(".").resolve(sheet.getPreferredFilename());
+				final Path path = Paths.get("testResources").resolve("font-sprite-sheets").resolve(sheet.getPreferredFilename());
 				sheet.writeAsPNG(path);
 			}
 		}
@@ -81,15 +81,14 @@ public class FontSpriteSheetMaker {
 		// Compute sizes
 
 		final Graphics2D g0 = new BufferedImage(1, 1, TYPE_BYTE_GRAY).createGraphics();
-
 		g0.setRenderingHint(KEY_TEXT_ANTIALIASING, VALUE_TEXT_ANTIALIAS_GASP);
 
 		final FontRenderContext frc = g0.getFontRenderContext();
-
-		final int ascent = (int) ceil(new TextLayout(ALL_CHARS, font, frc).getAscent());
+		final LineMetrics lineMetrics = font.getLineMetrics(ALL_CHARS, frc);
+		final int ascent = (int) ceil(lineMetrics.getAscent());
+		final int descent = (int) ceil(lineMetrics.getDescent());
 
 		int advance = 0;
-
 		final Rectangle bounds = new Rectangle();
 
 		for (char c : ALL_CHARS.toCharArray()) {
@@ -118,6 +117,6 @@ public class FontSpriteSheetMaker {
 			g.translate(spriteWidth, 0);
 		}
 
-		return new FontSpriteSheet(image, fontMetrics, advance, ascent, spriteWidth, xOffset);
+		return new FontSpriteSheet(image, fontMetrics, advance, ascent, descent, spriteWidth, xOffset);
 	}
 }
