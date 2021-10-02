@@ -2,7 +2,9 @@ package net.sourceforge.plantuml.test;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.readAllBytes;
+import static net.sourceforge.plantuml.FileFormat.PNG;
 
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -12,6 +14,7 @@ import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.Option;
 import net.sourceforge.plantuml.SourceStringReader;
+import net.sourceforge.plantuml.security.ImageIO;
 
 public class TestUtils {
 
@@ -27,6 +30,12 @@ public class TestUtils {
 		ssr.getBlocks().get(0).getDiagram().exportDiagram(os, 0, option.getFileFormatOption());
 
 		return os.toByteArray();
+	}
+
+	public static BufferedImage renderAsImage(String... source) throws Exception {
+		
+		final byte[] bytes = exportOneDiagramToByteArray(String.join("\n", source), PNG);
+		return ImageIO.read(bytes);
 	}
 
 	public static String renderAsUnicode(String source, String... options) throws Exception {

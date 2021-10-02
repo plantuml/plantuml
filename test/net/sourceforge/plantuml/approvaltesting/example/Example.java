@@ -2,6 +2,7 @@ package net.sourceforge.plantuml.approvaltesting.example;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static net.sourceforge.plantuml.test.TestUtils.exportOneDiagramToByteArray;
+import static net.sourceforge.plantuml.test.TestUtils.renderAsImage;
 
 import java.awt.image.BufferedImage;
 
@@ -11,7 +12,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 
 import net.sourceforge.plantuml.FileFormat;
-import net.sourceforge.plantuml.security.ImageIO;
 import net.sourceforge.plantuml.approvaltesting.ApprovalTesting;
 import net.sourceforge.plantuml.approvaltesting.ApprovalTestingJUnitExtension;
 
@@ -28,8 +28,7 @@ public class Example {
 
 	@Test
 	void test_export_png() throws Exception {
-		final byte[] bytes = exportOneDiagramToByteArray(SOURCE, FileFormat.PNG, "-nometadata");
-		final BufferedImage image = ImageIO.read(bytes);
+		final BufferedImage image = renderAsImage(SOURCE);
 		approvalTesting.approve(image);
 	}
 
