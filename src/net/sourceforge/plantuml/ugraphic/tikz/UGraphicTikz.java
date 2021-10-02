@@ -59,15 +59,9 @@ import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class UGraphicTikz extends AbstractUGraphic<TikzGraphics> implements ClipContainer {
 
-	private UGraphicTikz(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder, TikzGraphics tikz) {
-		super(defaultBackground, colorMapper, stringBounder, tikz);
-		register();
-
-	}
-
 	public UGraphicTikz(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder, double scale, boolean withPreamble) {
-		this(defaultBackground, colorMapper, stringBounder, new TikzGraphics(scale, withPreamble));
-
+		super(defaultBackground, colorMapper, stringBounder, new TikzGraphics(scale, withPreamble));
+		register();
 	}
 
 	@Override
