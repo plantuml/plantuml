@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.eps.EpsStrategy;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
+import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.png.PngIO;
 import net.sourceforge.plantuml.svg.LengthAdjust;
@@ -104,12 +105,13 @@ public class GraphicsSudoku {
 	}
 
 	public ImageData writeImagePng(OutputStream os) throws IOException {
+		final StringBounder stringBounder = FileFormat.PNG.getDefaultStringBounder();
 		final EmptyImageBuilder builder = new EmptyImageBuilder(null, sudoWidth, sudoHeight + textTotalHeight,
-				Color.WHITE);
+				Color.WHITE, stringBounder);
 		final BufferedImage im = builder.getBufferedImage();
 		final Graphics2D g3d = builder.getGraphics2D();
 
-		final UGraphic ug = new UGraphicG2d(HColorUtils.WHITE, new ColorMapperIdentity(), g3d, 1.0);
+		final UGraphic ug = new UGraphicG2d(HColorUtils.WHITE, new ColorMapperIdentity(), stringBounder, g3d, 1.0);
 
 		drawInternal(ug);
 		g3d.dispose();
