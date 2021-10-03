@@ -1,11 +1,16 @@
 package net.sourceforge.plantuml.approvaltesting;
 
+import static java.util.stream.Collectors.toList;
+import static net.sourceforge.plantuml.test.PathUtils.glob;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 import java.awt.image.BufferedImage;
+import java.util.List;
 
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -58,6 +63,23 @@ class ApprovalTestingTest {
 	@Test
 	void test_withExtension() {
 		approvalTesting.withExtension(".foo").approve("foo");
+	}
+
+	@RepeatedTest(value = 3, name = "{currentRepetition}")
+	void test_withMaxFailures(TestInfo testInfo) throws Exception {
+		final int maxFailures = 2;
+		final String prefix = testInfo.getDisplayName().equals("3") ? "** APPROVAL FAILURE FILE(S) WERE SUPPRESSED ** " : "";
+
+		assertThatExceptionOfType(AssertionError.class)
+				.isThrownBy(() -> approvalTesting.withMaxFailures(maxFailures).approve("bar"))
+				.withMessageStartingWith(prefix + "\nexpected:");
+
+		final List<String> failureFiles = glob(approvalTesting.getDir(), "**/ApprovalTestingTest.test_withMaxFailures.*.failed.txt")
+				.map(path -> path.getFileName().toString())
+				.collect(toList());
+
+		assertThat(failureFiles)
+				.hasSizeBetween(1, maxFailures);
 	}
 
 	@Test

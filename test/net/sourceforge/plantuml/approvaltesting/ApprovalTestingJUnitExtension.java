@@ -5,8 +5,6 @@ import static org.junit.platform.commons.util.ReflectionUtils.findFields;
 import static org.junit.platform.commons.util.ReflectionUtils.makeAccessible;
 
 import java.lang.reflect.Field;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.function.Predicate;
 
 import org.junit.jupiter.api.extension.BeforeEachCallback;
@@ -14,7 +12,7 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 
 public class ApprovalTestingJUnitExtension implements BeforeEachCallback {
 
-	private final Set<String> approvedFilesUsed = new HashSet<>();
+	private final ApprovalTestingImpl approvalTestingImpl = new ApprovalTestingImpl();
 
 	/**
 	 * Injects {@link ApprovalTesting} fields;
@@ -27,7 +25,7 @@ public class ApprovalTestingJUnitExtension implements BeforeEachCallback {
 		findFields(context.getRequiredTestClass(), filter, TOP_DOWN).forEach(field -> {
 			try {
 				makeAccessible(field)
-						.set(context.getRequiredTestInstance(), new ApprovalTestingImpl(context, approvedFilesUsed));
+						.set(context.getRequiredTestInstance(), approvalTestingImpl.forExtensionContext(context));
 			} catch (Throwable t) {
 				throw new RuntimeException(t);
 			}

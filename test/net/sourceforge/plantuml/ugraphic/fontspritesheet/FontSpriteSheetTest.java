@@ -249,12 +249,14 @@ class FontSpriteSheetTest {
 
 			assertImagesEqualWithinTolerance(image_from_font, image_from_sprite, tolerance);
 		} catch (AssertionError e) {
-			final String baseName = approvalTesting.getBaseName();
-			final Path dir = approvalTesting.getDir();
-			ImageIO.write(image_from_font, "png", dir.resolve(baseName + "_from_font.failed.png").toFile());
-			ImageIO.write(image_from_sprite, "png", dir.resolve(baseName + "_from_sprite.failed.png").toFile());
-			sheet.writeAsPNG(dir.resolve(baseName + "_sprite_sheet.failed.png"));
-			throw e;
+			approvalTesting
+					.withMaxFailures(3)
+					.fail(a -> {
+						ImageIO.write(image_from_font, "png", a.getPathForFailed("_from_font", ".png").toFile());
+						ImageIO.write(image_from_sprite, "png", a.getPathForFailed("_from_sprite", ".png").toFile());
+						sheet.writeAsPNG(a.getPathForFailed("_sprite_sheet", ".png"));
+					})
+					.rethrow(e);
 		}
 	}
 }
