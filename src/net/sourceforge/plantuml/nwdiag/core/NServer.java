@@ -106,7 +106,7 @@ public class NServer {
 		return style.getFontConfiguration(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
 	}
 
-	public LinkedElement asTextBlock(double topMargin, Map<Network, String> conns, List<Network> networks,
+	public LinkedElement getLinkedElement(double topMargin, Map<Network, String> conns, List<Network> networks,
 			ISkinParam skinParam) {
 		final StyleBuilder styleBuilder = skinParam.getCurrentStyleBuilder();
 		final SymbolContext symbolContext = getStyleDefinition(SName.server).getMergedStyle(styleBuilder)
@@ -123,11 +123,13 @@ public class NServer {
 		return new LinkedElement(topMargin, this, box, conns2, networks);
 	}
 
-	public void connect(Network network, Map<String, String> props) {
-		String address = props.get("address");
-		if (address == null) {
+	public void connectTo(Network network) {
+		connectTo(network, "");
+	}
+
+	public void connectTo(Network network, String address) {
+		if (address == null)
 			address = "";
-		}
 		if (address.length() == 0 && connections.containsKey(network)) {
 			return;
 		}
@@ -136,6 +138,17 @@ public class NServer {
 			bar.addStage(network.getNstage());
 		else if (this.getMainNetworkNext() != network)
 			bar.addStage(network.getUp());
+	}
+
+	public void updateProperties(Map<String, String> props) {
+		final String description = props.get("description");
+		if (description != null) {
+			this.setDescription(description);
+		}
+		final String shape = props.get("shape");
+		if (shape != null) {
+			this.setShape(shape);
+		}
 	}
 
 	@Override

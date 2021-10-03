@@ -30,35 +30,16 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
  *
  */
-package net.sourceforge.plantuml.nwdiag;
+package net.sourceforge.plantuml.nwdiag.core;
 
-import net.sourceforge.plantuml.LineLocation;
-import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.SingleLineCommand2;
-import net.sourceforge.plantuml.command.regex.IRegex;
-import net.sourceforge.plantuml.command.regex.RegexConcat;
-import net.sourceforge.plantuml.command.regex.RegexLeaf;
-import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
-public class CommandEndSomething extends SingleLineCommand2<NwDiagram> {
+public interface NStackable {
 
-	public CommandEndSomething() {
-		super(getRegexConcat());
-	}
+	public void setDescription(String description);
 
-	static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandEndSomething.class.getName(), RegexLeaf.start(), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("\\}"), //
-				RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());
-	}
-
-	@Override
-	protected CommandExecutionResult executeArg(NwDiagram diagram, LineLocation location, RegexResult arg) {
-		return diagram.closeSomething();
-	}
+	public void setColor(HColor color);
 
 }

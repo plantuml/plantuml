@@ -131,9 +131,9 @@ public class InstructionRepeat implements Instruction {
 		if (Display.isNull(backward)) {
 			return null;
 		}
-		Ftile result = factory.activity(backward, swimlane, boxStyle, Colors.empty(), null);
+		Ftile result = factory.activity(backward, swimlaneOut, boxStyle, Colors.empty(), null);
 		if (backwardNotes.size() > 0) {
-			result = factory.addNote(result, swimlane, backwardNotes);
+			result = factory.addNote(result, swimlaneOut, backwardNotes);
 		}
 		return result;
 	}

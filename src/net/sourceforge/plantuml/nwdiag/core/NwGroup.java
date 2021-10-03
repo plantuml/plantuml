@@ -57,7 +57,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
-public class NwGroup {
+public class NwGroup implements NStackable {
 
 	private final Set<String> names = new HashSet<>();
 
@@ -94,7 +94,7 @@ public class NwGroup {
 		return "NwGroup:" + name + " " + names + " " + nbox;
 	}
 
-	public NwGroup(String name, Object... unused) {
+	public NwGroup(String name) {
 		this.name = name;
 	}
 
@@ -106,10 +106,12 @@ public class NwGroup {
 		return color;
 	}
 
+	@Override
 	public final void setColor(HColor color) {
 		this.color = color;
 	}
 
+	@Override
 	public final void setDescription(String value) {
 		this.description = value;
 	}

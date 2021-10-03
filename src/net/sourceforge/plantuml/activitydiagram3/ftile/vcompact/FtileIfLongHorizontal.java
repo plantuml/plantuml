@@ -402,6 +402,7 @@ class FtileIfLongHorizontal extends AbstractFtile {
 			return getTranslate1(getFtile2(), stringBounder).getTranslated(p);
 		}
 
+		@Override
 		public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
 			final Point2D p1 = getP1(ug.getStringBounder());
 			final Point2D p2 = getP2(ug.getStringBounder());

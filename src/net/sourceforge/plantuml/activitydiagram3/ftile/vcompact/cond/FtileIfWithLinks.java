@@ -135,6 +135,7 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 			throw new IllegalStateException();
 		}
 
+		@Override
 		public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
 			final StringBounder stringBounder = ug.getStringBounder();
 			Point2D p1 = getP1(stringBounder);
@@ -223,6 +224,7 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 			throw new IllegalStateException();
 		}
 
+		@Override
 		public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
 			final StringBounder stringBounder = ug.getStringBounder();
 			final FtileGeometry geo = getFtile1().calculateDimension(stringBounder);
@@ -313,6 +315,7 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 			ug.draw(snake);
 		}
 
+		@Override
 		public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
 			final StringBounder stringBounder = ug.getStringBounder();
 			final FtileGeometry dimTotal = calculateDimensionInternal(stringBounder);
@@ -416,7 +419,7 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 			super(null, null);
 			this.arrowColor = arrowColor;
 		}
-		
+
 		public void drawU(UGraphic ug) {
 			final StringBounder stringBounder = ug.getStringBounder();
 			final Dimension2D totalDim = calculateDimensionInternal(stringBounder);
@@ -446,7 +449,7 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 			s.addPoint(maxX, totalDim.getHeight());
 			ug.draw(s);
 		}
-		
+
 		private double[] getMinmax(StringBounder stringBounder, double width, List<Ftile> allTiles, Swimlane intoSw,
 				List<Swimlane> allSwimlanes) {
 			final int current = allSwimlanes.indexOf(intoSw);
@@ -499,7 +502,7 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 			}
 			return new double[] { minX, maxX };
 		}
-		
+
 		private int getFirstSwimlane(StringBounder stringBounder, List<Ftile> allTiles, List<Swimlane> allSwimlanes) {
 			for (int i = 0; i < allSwimlanes.size(); i++) {
 				if (atLeastOne(stringBounder, allSwimlanes.get(i), allTiles)) {
@@ -528,7 +531,6 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 		private boolean ftileDoesOutcomeInThatSwimlane(Ftile ftile, Swimlane swimlane) {
 			return ftile.getSwimlaneOut() == swimlane && ftile.getSwimlanes().contains(swimlane);
 		}
-
 
 	}
 
