@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junitpioneer.jupiter.CartesianProductTest;
 
 @ExtendWith(ApprovalTestingJUnitExtension.class)
 class ApprovalTestingTest {
@@ -33,6 +34,11 @@ class ApprovalTestingTest {
 	@Test
 	void test_approve_string() {
 		approvalTesting.approve("foo");
+	}
+
+	@CartesianProductTest(name = "{arguments}", value = {"foo", "bar"})
+	void test_cartesian_product(String a, String b) {
+		approvalTesting.approve(a + b);
 	}
 
 	@ParameterizedTest(name = "{arguments}")
