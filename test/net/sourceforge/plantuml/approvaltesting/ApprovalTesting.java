@@ -19,9 +19,9 @@ public interface ApprovalTesting {
 
 	Path getDir();
 
-	Path getPathForApproved(String suffix, String extensionWithDot);
+	Path getPathForApproved(String extraSuffix, String extensionWithDot);
 
-	Path getPathForFailed(String suffix, String extensionWithDot);
+	Path getPathForFailed(String extraSuffix, String extensionWithDot);
 
 	ApprovalTesting withExtension(String extensionWithDot);
 
