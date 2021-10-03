@@ -54,7 +54,7 @@ jobs:
       - name: Compile
         run: mvn --batch-mode compile resources:testResources compiler:testCompile
 
-      - name: Raster Test
+      - name: Test
         run: |
           if [[ "${{ matrix.java_version }}" != 8* ]]; then
             export MAVEN_OPTS=" \
@@ -80,6 +80,6 @@ jobs:
           name: ${{ github.run_number }}-${{ matrix.os }}-${{ matrix.java_distribution }}-${{ matrix.java_version }}-approval-test-failures
           path: |
             test/**/*.failed.*
-            !TODO/**/ApprovalTestingTest.test_withMaxFailures.1.failed.txt
-            !TODO/**/ApprovalTestingTest.test_withMaxFailures.2.failed.txt
+            !test/**/ApprovalTestingTest.test_withMaxFailures.1.failed.txt
+            !test/**/ApprovalTestingTest.test_withMaxFailures.2.failed.txt
           if-no-files-found: ignore

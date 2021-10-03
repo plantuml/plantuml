@@ -19,8 +19,9 @@ import org.junitpioneer.jupiter.CartesianProductTest;
 @ExtendWith(ApprovalTestingJUnitExtension.class)
 class ApprovalTestingTest {
 
-	@SuppressWarnings("unused")  // injected by ApprovalTestingJUnitExtension
-	private ApprovalTesting approvalTesting;
+	//
+	// Test Cases
+	//
 
 	@Test
 	void test_approve_image_bmp() {
@@ -72,7 +73,7 @@ class ApprovalTestingTest {
 
 		assertThatExceptionOfType(AssertionError.class)
 				.isThrownBy(() -> approvalTesting.withMaxFailures(maxFailures).approve("bar"))
-				.withMessageStartingWith(prefix + "\nexpected:");
+				.withMessageStartingWith(prefix + EOL + "expected:");
 
 		final List<String> failureFiles = glob(approvalTesting.getDir(), "**/ApprovalTestingTest.test_withMaxFailures.*.failed.txt")
 				.map(path -> path.getFileName().toString())
@@ -105,5 +106,14 @@ class ApprovalTestingTest {
 		assertThat(ApprovalTestingImpl.simplifyTestName(input))
 				.isEqualTo(output);
 	}
+
+	//
+	// Test DSL
+	//
+
+	private static final String EOL = System.getProperty("line.separator");
+
+	@SuppressWarnings("unused")  // injected by ApprovalTestingJUnitExtension
+	private ApprovalTesting approvalTesting;
 
 }
