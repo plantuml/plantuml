@@ -4,12 +4,16 @@ import static java.awt.Color.BLACK;
 import static java.awt.Color.WHITE;
 import static java.awt.Font.ITALIC;
 import static java.awt.Font.PLAIN;
+import static java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment;
 import static java.awt.RenderingHints.KEY_TEXT_ANTIALIASING;
 import static java.awt.RenderingHints.VALUE_TEXT_ANTIALIAS_GASP;
+import static java.awt.image.BufferedImage.TYPE_BYTE_GRAY;
 import static java.awt.image.BufferedImage.TYPE_INT_ARGB;
 import static java.awt.image.BufferedImage.TYPE_INT_RGB;
 import static java.lang.Integer.parseInt;
 import static java.lang.Math.max;
+import static java.util.Arrays.stream;
+import static net.sourceforge.plantuml.test.Assertions.assertImagesEqual;
 import static net.sourceforge.plantuml.test.Assertions.assertImagesEqualWithinTolerance;
 import static net.sourceforge.plantuml.ugraphic.fontspritesheet.FontSpriteSheetMaker.ALL_CHARS;
 import static net.sourceforge.plantuml.ugraphic.fontspritesheet.FontSpriteSheetMaker.JETBRAINS_FONT_FAMILY;
@@ -21,9 +25,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.font.FontRenderContext;
 import java.awt.geom.Dimension2D;
 import java.awt.image.BufferedImage;
-import java.nio.file.Path;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -132,7 +138,7 @@ class FontSpriteSheetTest {
 	}
 
 	@CartesianProductTest(name = "{arguments}")
-	@CartesianValueSource(ints = {3, 4, 9, 20})
+	@CartesianValueSource(ints = {20, 9, 4, 3})
 	@CartesianEnumSource(FontStyle.class)
 	void test_font_sheet_draws_same_as_raw_font_using_different_sizes_and_styles(int size, FontStyle style) throws Exception {
 		check_font_sheet_draws_same_as_raw_font(style.toFont(size), BLACK);
@@ -173,6 +179,59 @@ class FontSpriteSheetTest {
 				.isEqualTo(expected.getHeight());
 		assertThat(actual.getWidth())
 				.isEqualTo(expected.getWidth());
+	}
+
+	@Test
+	void test_png_read_write() throws Exception {
+		final int style = ITALIC;
+		final int pointSize = 20;
+
+		final FontRenderContext frc = new BufferedImage(1, 1, TYPE_BYTE_GRAY).createGraphics().getFontRenderContext();
+
+		final Font font = stream(getLocalGraphicsEnvironment().getAllFonts())
+				.filter(f -> f.getLineMetrics("x", frc).getLeading() > 0)
+				.findFirst()
+				.orElseThrow(() -> new IllegalStateException("This test needs a font with non-zero leading"))
+				.deriveFont(style, pointSize);
+
+		final FontSpriteSheet original = createFontSpriteSheet(font);
+		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		original.writeAsPNG(baos);
+
+		final ByteArrayInputStream inputStream = new ByteArrayInputStream(baos.toByteArray());
+		final FontSpriteSheet loaded = new FontSpriteSheet(inputStream);
+
+		// isNotZero() & isNotEmpty() ensure we do not overlook a failure because the expected value is the default field value
+
+		assertThat(loaded.getAdvance())
+				.isNotZero()
+				.isEqualTo(original.getAdvance());
+		assertThat(loaded.getAscent())
+				.isNotZero()
+				.isEqualTo(original.getAscent());
+		assertThat(loaded.getDescent())
+				.isNotZero()
+				.isEqualTo(original.getDescent());
+		assertThat(loaded.getLeading())
+				.isNotZero()
+				.isEqualTo(original.getLeading());
+		assertThat(loaded.getName())
+				.isNotEmpty()
+				.isEqualTo(font.getFontName());
+		assertThat(loaded.getPointSize())
+				.isNotZero()
+				.isEqualTo(pointSize);
+		assertThat(loaded.getSpriteWidth())
+				.isNotZero()
+				.isEqualTo(original.getSpriteWidth());
+		assertThat(loaded.getStyle())
+				.isNotZero()
+				.isEqualTo(style);
+		assertThat(loaded.getXOffset())
+				.isNotZero()
+				.isEqualTo(original.getXOffset());
+
+		assertImagesEqual(original.getAlphaImage(), loaded.getAlphaImage());
 	}
 
 	//
@@ -250,7 +309,7 @@ class FontSpriteSheetTest {
 			assertImagesEqualWithinTolerance(image_from_font, image_from_sprite, tolerance);
 		} catch (AssertionError e) {
 			approvalTesting
-					.withMaxFailures(3)
+					.withMaxFailures(5)
 					.fail(a -> {
 						ImageIO.write(image_from_font, "png", a.getPathForFailed("_from_font", ".png").toFile());
 						ImageIO.write(image_from_sprite, "png", a.getPathForFailed("_from_sprite", ".png").toFile());

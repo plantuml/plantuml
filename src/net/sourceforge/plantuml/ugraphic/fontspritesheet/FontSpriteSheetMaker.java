@@ -20,7 +20,7 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import java.awt.font.FontRenderContext;
 import java.awt.font.GlyphVector;
-import java.awt.font.LineMetrics;
+import java.awt.font.TextLayout;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.nio.file.Path;
@@ -34,8 +34,10 @@ import java.util.List;
 
 public class FontSpriteSheetMaker {
 
+	private static final char TOFU = (char) -1;  // not sure if this is a good idea but so far it is working fine !
+	
 	// Visible for testing
-	static final String ALL_CHARS = "☺!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
+	static final String ALL_CHARS = TOFU + "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
 
 	// Visible for testing
 	static final String JETBRAINS_FONT_FAMILY = "JetBrains Mono NL";
@@ -73,9 +75,8 @@ public class FontSpriteSheetMaker {
 
 	// Visible for testing
 	static FontSpriteSheet createFontSpriteSheet(Font font) {
-		if (font.canDisplay(ALL_CHARS.charAt(0))) {
-			throw new RuntimeException(
-					"Oops. This font has a glyph for the first char in ALL_CHARS. Use a different char so we get the tofu symbol");
+		if (font.canDisplay(TOFU)) {
+			throw new RuntimeException("Oops this font has a glyph for TOFU : " + font.getFontName());
 		}
 
 		// Compute sizes
@@ -84,8 +85,8 @@ public class FontSpriteSheetMaker {
 		g0.setRenderingHint(KEY_TEXT_ANTIALIASING, VALUE_TEXT_ANTIALIAS_GASP);
 
 		final FontRenderContext frc = g0.getFontRenderContext();
-		final LineMetrics lineMetrics = font.getLineMetrics(ALL_CHARS, frc);
-		final int ascent = roundUp(lineMetrics.getAscent());
+		final TextLayout textLayout = new TextLayout(ALL_CHARS, font, frc);
+		final int ascent = roundUp(textLayout.getAscent());
 
 		int advance = 0;
 		final Rectangle bounds = new Rectangle();
@@ -116,6 +117,6 @@ public class FontSpriteSheetMaker {
 			g.translate(spriteWidth, 0);
 		}
 
-		return new FontSpriteSheet(image, fontMetrics, lineMetrics, advance, spriteWidth, xOffset);
+		return new FontSpriteSheet(image, fontMetrics, textLayout, advance, spriteWidth, xOffset);
 	}
 }

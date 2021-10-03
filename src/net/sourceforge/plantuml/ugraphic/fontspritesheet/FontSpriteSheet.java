@@ -11,7 +11,7 @@ import static net.sourceforge.plantuml.utils.MathUtils.roundUp;
 import java.awt.Color;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
-import java.awt.font.LineMetrics;
+import java.awt.font.TextLayout;
 import java.awt.geom.Dimension2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBuffer;
@@ -35,7 +35,7 @@ public class FontSpriteSheet {
 	private static final int MIN_CHAR = 0x21;
 	private static final int MAX_CHAR = 0x7e;
 
-	private final Map<Integer, SoftReference<BufferedImage>> colorisedImageCache = new ConcurrentHashMap<>();
+	private final Map<Integer, SoftReference<BufferedImage>> colorizedImageCache = new ConcurrentHashMap<>();
 	private final int advance;
 	private final BufferedImage alphaImage;
 	private final float ascent;
@@ -47,12 +47,12 @@ public class FontSpriteSheet {
 	private final int style;
 	private final int xOffset;
 
-	FontSpriteSheet(BufferedImage alphaImage, FontMetrics fontMetrics, LineMetrics lineMetrics, int advance, int spriteWidth, int xOffset) {
+	FontSpriteSheet(BufferedImage alphaImage, FontMetrics fontMetrics, TextLayout textLayout, int advance, int spriteWidth, int xOffset) {
 		this.advance = advance;
 		this.alphaImage = alphaImage;
-		this.ascent = lineMetrics.getAscent();
-		this.descent = lineMetrics.getDescent();
-		this.leading = lineMetrics.getLeading();
+		this.ascent = textLayout.getAscent();
+		this.descent = textLayout.getDescent();
+		this.leading = textLayout.getLeading();
 		this.name = fontMetrics.getFont().getFontName();
 		this.pointSize = fontMetrics.getFont().getSize();
 		this.spriteWidth = spriteWidth;
@@ -76,13 +76,20 @@ public class FontSpriteSheet {
 		}
 	}
 
-	// Visible for testing
 	int getAdvance() {
 		return advance;
 	}
 
+	BufferedImage getAlphaImage() {
+		return alphaImage;
+	}
+
 	public float getAscent() {
 		return ascent;
+	}
+
+	float getLeading() {
+		return leading;
 	}
 
 	public String getName() {
@@ -97,8 +104,16 @@ public class FontSpriteSheet {
 		return getName().replace(' ', '-') + "-" + getPointSize() + ".png";
 	}
 
+	int getSpriteWidth() {
+		return spriteWidth;
+	}
+
 	public int getStyle() {
 		return style;
+	}
+
+	int getXOffset() {
+		return xOffset;
 	}
 
 	@Override
@@ -111,18 +126,18 @@ public class FontSpriteSheet {
 	//
 
 	public void drawString(Graphics g, String s, float x, float y) {
-		final BufferedImage colorisedImage = getOrCreateColorisedImage(g.getColor());
+		final BufferedImage colorizedImage = getOrCreateColorizedImage(g.getColor());
 
 		for (char c : s.toCharArray()) {
 			if (c != ' ') {
-				drawChar(g, colorisedImage, c, x, y);
+				drawChar(g, colorizedImage, c, x, y);
 			}
 			x += advance;
 		}
 	}
 
 	@SuppressWarnings("UnnecessaryLocalVariable")
-	private void drawChar(Graphics g, BufferedImage colorisedImage, char c, float x, float y) {
+	private void drawChar(Graphics g, BufferedImage colorizedImage, char c, float x, float y) {
 		// We draw strings by blitting each char from an image that has all pixels set to the requested color
 		// and has alpha values copied from alphaImage.
 		// 
@@ -130,7 +145,7 @@ public class FontSpriteSheet {
 		// with their alpha value read direct from alphaImage but drawing that way was 2 - 3 times slower
 		// than the blitting approach.
 
-		final int height = colorisedImage.getHeight();
+		final int height = colorizedImage.getHeight();
 
 		final int srcLeft = spriteIndex(c) * spriteWidth;
 		final int srcRight = srcLeft + spriteWidth;
@@ -143,7 +158,7 @@ public class FontSpriteSheet {
 		final int destBottom = destTop + height;
 
 		g.drawImage(
-				colorisedImage,
+				colorizedImage,
 				destLeft, destTop, destRight, destBottom,
 				srcLeft, srcTop, srcRight, srcBottom,
 				null
@@ -158,18 +173,18 @@ public class FontSpriteSheet {
 		}
 	}
 
-	private BufferedImage getOrCreateColorisedImage(Color color) {
+	private BufferedImage getOrCreateColorizedImage(Color color) {
 		final int cacheKey = color.getRGB();
-		final SoftReference<BufferedImage> ref = colorisedImageCache.get(cacheKey);
+		final SoftReference<BufferedImage> ref = colorizedImageCache.get(cacheKey);
 		BufferedImage image = ref != null ? ref.get() : null;
 		if (image == null) {
-			image = createColorisedImage(color);
-			colorisedImageCache.put(cacheKey, new SoftReference<>(image));
+			image = createColorizedImage(color);
+			colorizedImageCache.put(cacheKey, new SoftReference<>(image));
 		}
 		return image;
 	}
 
-	private BufferedImage createColorisedImage(Color color) {
+	private BufferedImage createColorizedImage(Color color) {
 		final BufferedImage image = new BufferedImage(alphaImage.getWidth(), alphaImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
 		final DataBuffer data = image.getRaster().getDataBuffer();
 		final DataBuffer alphaData = alphaImage.getRaster().getDataBuffer();
@@ -226,7 +241,7 @@ public class FontSpriteSheet {
 		}
 	}
 
-	private void writeAsPNG(OutputStream out) throws IOException {
+	void writeAsPNG(OutputStream out) throws IOException {
 		final PngIOMetadata writer = new PngIOMetadata();
 		writer.addText(TAG_ADVANCE, String.valueOf(advance));
 		writer.addText(TAG_ASCENT, String.valueOf(ascent));
