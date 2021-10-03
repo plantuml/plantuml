@@ -121,7 +121,8 @@ class FtileRepeat extends AbstractFtile {
 			FontConfiguration fcDiamond, FontConfiguration fcArrow, Ftile backward, boolean noOut,
 			LinkRendering incoming1, LinkRendering incoming2) {
 
-		final FontConfiguration fontConfiguration1 = conditionStyle == ConditionStyle.INSIDE_HEXAGON ? fcDiamond : fcArrow;
+		final FontConfiguration fontConfiguration1 = conditionStyle == ConditionStyle.INSIDE_HEXAGON ? fcDiamond
+				: fcArrow;
 
 		final TextBlock tbTest = (Display.isNull(test) || test.isWhite()) ? TextBlockUtils.empty(0, 0)
 				: test.create(fontConfiguration1, repeat.skinParam().getDefaultTextAlignment(HorizontalAlignment.LEFT),
@@ -168,22 +169,17 @@ class FtileRepeat extends AbstractFtile {
 				: incoming1.getDisplay().create7(fcArrow, HorizontalAlignment.LEFT, spriteContainer,
 						CreoleMode.SIMPLE_LINE);
 
-		if (repeat.getSwimlaneIn() == null || repeat.getSwimlaneIn() == swimlaneOut) {
-			if (backward == null) {
-				conns.add(result.new ConnectionBackSimple(incoming1.getRainbow(arrowColor), incomingText));
-			} else {
-				final Rainbow rainbow1 = incoming1.getRainbow(arrowColor);
-				conns.add(result.new ConnectionBackBackward1(rainbow1, incomingText));
-				final TextBlock backArrowLabel = incoming2 == null || incoming2.getDisplay() == null ? null
-						: incoming2.getDisplay().create(fcArrow, HorizontalAlignment.LEFT, spriteContainer);
-				final Rainbow rainbow2 = incoming2.getRainbow(arrowColor);
-				conns.add(result.new ConnectionBackBackward2(rainbow2, backArrowLabel));
-			}
+		if (backward != null) {
+			final Rainbow rainbow1 = incoming1.getRainbow(arrowColor);
+			conns.add(result.new ConnectionBackBackward1(rainbow1, incomingText));
+			final TextBlock backArrowLabel = incoming2 == null || incoming2.getDisplay() == null ? null
+					: incoming2.getDisplay().create(fcArrow, HorizontalAlignment.LEFT, spriteContainer);
+			final Rainbow rainbow2 = incoming2.getRainbow(arrowColor);
+			conns.add(result.new ConnectionBackBackward2(rainbow2, backArrowLabel));
+		} else if (repeat.getSwimlaneIn() == null || repeat.getSwimlaneIn() == swimlaneOut) {
+			conns.add(result.new ConnectionBackSimple(incoming1.getRainbow(arrowColor), incomingText));
 		} else {
 			conns.add(result.new ConnectionBackComplex1(incoming1.getRainbow(arrowColor)));
-			// conns.add(result.new
-			// ConnectionBackComplexHorizontalOnly(incoming1.getRainbow(arrowColor),
-			// incomingText));
 		}
 
 		final Display out1 = repeat.getOutLinkRendering().getDisplay();
@@ -260,6 +256,7 @@ class FtileRepeat extends AbstractFtile {
 			ug.draw(snake);
 		}
 
+		@Override
 		public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
 			final StringBounder stringBounder = ug.getStringBounder();
 			if (getFtile1().calculateDimension(stringBounder).hasPointOut() == false) {
@@ -304,6 +301,7 @@ class FtileRepeat extends AbstractFtile {
 			// throw new UnsupportedOperationException();
 		}
 
+		@Override
 		public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
 			final StringBounder stringBounder = ug.getStringBounder();
 			final Dimension2D dimRepeat = repeat.calculateDimension(stringBounder);
@@ -345,39 +343,6 @@ class FtileRepeat extends AbstractFtile {
 
 	}
 
-//	class ConnectionBackComplexHorizontalOnly extends AbstractConnection {
-//		private final Rainbow arrowColor;
-//		private final TextBlock tbback;
-//
-//		public ConnectionBackComplexHorizontalOnly(Rainbow arrowColor, TextBlock tbback) {
-//			super(diamond2, diamond2);
-//			this.arrowColor = arrowColor;
-//			this.tbback = tbback;
-//		}
-//
-//		private Point2D getP1(final StringBounder stringBounder) {
-//			return getTranslateDiamond2(stringBounder).getTranslated(new Point2D.Double(0, 0));
-//		}
-//
-//		public void drawU(UGraphic ug) {
-//			final StringBounder stringBounder = ug.getStringBounder();
-//
-//			final Snake snake = Snake.create(arrowColor, null).withLabel(tbback, arrowHorizontalAlignment());
-//			final Dimension2D dimRepeat = repeat.calculateDimension(stringBounder);
-//			final Point2D p1 = getP1(stringBounder);
-//			final Dimension2D dimDiamond2 = diamond2.calculateDimension(stringBounder);
-//			final double x1 = p1.getX() + dimDiamond2.getWidth();
-//			final double y1 = p1.getY() + dimDiamond2.getHeight() / 2;
-//
-//			snake.addPoint(x1, y1);
-//			final double xmax = p1.getX() + dimDiamond2.getWidth() / 2 + dimRepeat.getWidth() / 2
-//					+ Diamond.diamondHalfSize;
-//			snake.addPoint(xmax, y1);
-//			ug.draw(snake);
-//		}
-//
-//	}
-
 	class ConnectionBackBackward1 extends AbstractConnection {
 		private final Rainbow arrowColor;
 		private final TextBlock tbback;
@@ -400,7 +365,6 @@ class FtileRepeat extends AbstractFtile {
 		public void drawU(UGraphic ug) {
 			final StringBounder stringBounder = ug.getStringBounder();
 
-			final Snake snake = Snake.create(arrowColor, Arrows.asToUp()).withLabel(tbback, arrowHorizontalAlignment());
 			final Point2D p1 = getP1(stringBounder);
 			final Point2D p2 = getP2(stringBounder);
 			final Dimension2D dimDiamond2 = diamond2.calculateDimension(stringBounder);
@@ -408,6 +372,8 @@ class FtileRepeat extends AbstractFtile {
 			final double y1 = p1.getY() + dimDiamond2.getHeight() / 2;
 			final double x2 = p2.getX();
 			final double y2 = p2.getY();
+
+			final Snake snake = Snake.create(arrowColor, Arrows.asToUp()).withLabel(tbback, arrowHorizontalAlignment());
 
 			snake.addPoint(x1, y1);
 			snake.addPoint(x2, y1);
@@ -418,7 +384,7 @@ class FtileRepeat extends AbstractFtile {
 
 	}
 
-	class ConnectionBackBackward2 extends AbstractConnection {
+	class ConnectionBackBackward2 extends AbstractConnection implements ConnectionTranslatable {
 		private final Rainbow arrowColor;
 		private final TextBlock label;
 
@@ -437,11 +403,41 @@ class FtileRepeat extends AbstractFtile {
 			return getTranslateDiamond1(stringBounder).getTranslated(new Point2D.Double(0, 0));
 		}
 
+		@Override
+		public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
+			final StringBounder stringBounder = ug.getStringBounder();
+
+			Point2D p1 = getP1(stringBounder);
+			Point2D p2 = getP2(stringBounder);
+			p1 = translate1.getTranslated(p1);
+			p2 = translate2.getTranslated(p2);
+
+			final Dimension2D dimDiamond1 = diamond1.calculateDimension(stringBounder);
+
+			final double x1 = p1.getX();
+			final double y1 = p1.getY();
+			double x2 = p2.getX();
+			if (x2 < x1)
+				x2 += dimDiamond1.getWidth();
+			final double y2 = p2.getY() + dimDiamond1.getHeight() / 2;
+
+			Snake snake = Snake.create(arrowColor, x2 < x1 ? Arrows.asToLeft() : Arrows.asToRight());
+			if (label != null) {
+				snake = snake.withLabel(label, arrowHorizontalAlignment());
+			}
+
+			snake.addPoint(x1, y1);
+			snake.addPoint(x1, y2);
+			snake.addPoint(x2, y2);
+
+			ug.draw(snake);
+
+		}
+
 		public void drawU(UGraphic ug) {
 			final StringBounder stringBounder = ug.getStringBounder();
 
 			Snake snake = Snake.create(arrowColor, Arrows.asToLeft());
-			// .emphasizeDirection(Direction.UP);
 			if (label != null) {
 				snake = snake.withLabel(label, arrowHorizontalAlignment());
 			}
@@ -504,6 +500,7 @@ class FtileRepeat extends AbstractFtile {
 			ug.draw(snake);
 		}
 
+		@Override
 		public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
 			final StringBounder stringBounder = ug.getStringBounder();
 			final Snake snake = Snake.create(arrowColor, Arrows.asToLeft()).emphasizeDirection(Direction.UP)
