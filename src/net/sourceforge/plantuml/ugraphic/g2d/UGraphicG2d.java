@@ -50,9 +50,9 @@ import java.util.Objects;
 import java.util.Set;
 
 import net.sourceforge.plantuml.EnsureVisible;
-import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.anim.AffineTransformation;
+import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.png.PngIO;
 import net.sourceforge.plantuml.posimo.DotPath;
 import net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
@@ -116,13 +116,13 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> implements EnsureV
 		register(dpiFactor);
 	}
 
-	public UGraphicG2d(HColor defaultBackground, ColorMapper colorMapper, Graphics2D g2d, double dpiFactor) {
-		this(defaultBackground, colorMapper, g2d, dpiFactor, null, 0, 0);
+	public UGraphicG2d(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder, Graphics2D g2d, double dpiFactor) {
+		this(defaultBackground, colorMapper, stringBounder, g2d, dpiFactor, null, 0, 0);
 	}
 
-	public UGraphicG2d(HColor defaultBackground, ColorMapper colorMapper, Graphics2D g2d, double dpiFactor,
+	public UGraphicG2d(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder, Graphics2D g2d, double dpiFactor,
 			AffineTransformation affineTransform, double dx, double dy) {
-		super(defaultBackground, colorMapper, FileFormat.PNG.getDefaultStringBounder(), g2d);
+		super(defaultBackground, colorMapper, stringBounder, g2d);
 		this.hasAffineTransform = affineTransform != null;
 		this.dpiFactor = dpiFactor;
 		if (dpiFactor != 1.0) {
@@ -140,9 +140,9 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> implements EnsureV
 	private void register(double dpiFactor) {
 		registerDriver(URectangle.class, new DriverRectangleG2d(dpiFactor, this));
 		if (this.hasAffineTransform || dpiFactor != 1.0) {
-			registerDriver(UText.class, new DriverTextAsPathG2d(this));
+			registerDriver(UText.class, new DriverTextAsPathG2d(this, getStringBounder()));
 		} else {
-			registerDriver(UText.class, new DriverTextG2d(this));
+			registerDriver(UText.class, new DriverTextG2d(this, getStringBounder()));
 		}
 		registerDriver(ULine.class, new DriverLineG2d(dpiFactor));
 		registerDriver(UPixel.class, new DriverPixelG2d());

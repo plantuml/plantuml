@@ -121,6 +121,7 @@ public class ImageBuilder {
 	private String metadata;
 	private long seed = 42;
 	private ISkinParam skinParam;
+	private StringBounder stringBounder;
 	private int status = 0;
 	private TitledDiagram titledDiagram;
 	private boolean randomPixel;
@@ -140,6 +141,7 @@ public class ImageBuilder {
 
 	private ImageBuilder(FileFormatOption fileFormatOption) {
 		this.fileFormatOption = fileFormatOption;
+		this.stringBounder = fileFormatOption.getDefaultStringBounder(SvgCharSizeHack.NO_HACK);
 	}
 
 	public ImageBuilder annotations(boolean annotations) {
@@ -198,10 +200,6 @@ public class ImageBuilder {
 		return this;
 	}
 
-	private SvgCharSizeHack getSvgCharSizeHack() {
-		return skinParam == null ? SvgCharSizeHack.NO_HACK : skinParam;
-	}
-
 	private String getSvgLinkTarget() {
 		if (fileFormatOption.getSvgLinkTarget() != null) {
 			return fileFormatOption.getSvgLinkTarget();
@@ -219,6 +217,7 @@ public class ImageBuilder {
 
 	public ImageBuilder styled(TitledDiagram diagram) {
 		skinParam = diagram.getSkinParam();
+		stringBounder = fileFormatOption.getDefaultStringBounder(skinParam);
 		animation = diagram.getAnimation();
 		annotations = true;
 		backcolor = diagram.calculateBackColor();
@@ -235,8 +234,6 @@ public class ImageBuilder {
 		if (annotations && titledDiagram != null) {
 			if (!(udrawable instanceof TextBlock))
 				throw new IllegalStateException("udrawable is not a TextBlock");
-			final ISkinParam skinParam = titledDiagram.getSkinParam();
-			final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(skinParam);
 			final AnnotatedWorker annotatedWorker = new AnnotatedWorker(titledDiagram, skinParam, stringBounder);
 			udrawable = annotatedWorker.addAdd((TextBlock) udrawable);
 		}
@@ -325,8 +322,7 @@ public class ImageBuilder {
 
 	private Dimension2D getFinalDimension() {
 		if (dimension == null) {
-			final LimitFinder limitFinder = new LimitFinder(
-					fileFormatOption.getDefaultStringBounder(getSvgCharSizeHack()), true);
+			final LimitFinder limitFinder = new LimitFinder(stringBounder, true);
 			udrawable.drawU(limitFinder);
 			dimension = new Dimension2DDouble(limitFinder.getMaxX() + 1 + margin.getLeft() + margin.getRight(),
 					limitFinder.getMaxY() + 1 + margin.getTop() + margin.getBottom());
@@ -418,9 +414,9 @@ public class ImageBuilder {
 		case VDX:
 			return new UGraphicVdx(backcolor, colorMapper);
 		case LATEX:
-			return new UGraphicTikz(backcolor, colorMapper, scaleFactor, true, option.getTikzFontDistortion());
+			return new UGraphicTikz(backcolor, colorMapper, stringBounder, scaleFactor, true);
 		case LATEX_NO_PREAMBLE:
-			return new UGraphicTikz(backcolor, colorMapper, scaleFactor, false, option.getTikzFontDistortion());
+			return new UGraphicTikz(backcolor, colorMapper, stringBounder, scaleFactor, false);
 		case BRAILLE_PNG:
 			return new UGraphicBraille(backcolor, colorMapper);
 		case UTXT:
@@ -438,11 +434,10 @@ public class ImageBuilder {
 		final String hoverPathColorRGB = getHoverPathColorRGB();
 		final LengthAdjust lengthAdjust = skinParam == null ? LengthAdjust.defaultValue() : skinParam.getlengthAdjust();
 		final String preserveAspectRatio = getPreserveAspectRatio();
-		final SvgCharSizeHack svgCharSizeHack = getSvgCharSizeHack();
 		final boolean svgDimensionStyle = skinParam == null || skinParam.svgDimensionStyle();
 		final String svgLinkTarget = getSvgLinkTarget();
 		final UGraphicSvg ug = new UGraphicSvg(backcolor, svgDimensionStyle, dim, colorMapper, false, scaleFactor,
-				svgLinkTarget, hoverPathColorRGB, seed, preserveAspectRatio, svgCharSizeHack, lengthAdjust);
+				svgLinkTarget, hoverPathColorRGB, seed, preserveAspectRatio, stringBounder, lengthAdjust);
 		return ug;
 
 	}
@@ -463,10 +458,10 @@ public class ImageBuilder {
 		}
 
 		final EmptyImageBuilder builder = new EmptyImageBuilder(watermark, (int) (dim.getWidth() * scaleFactor),
-				(int) (dim.getHeight() * scaleFactor), backColor);
+				(int) (dim.getHeight() * scaleFactor), backColor, stringBounder);
 		final Graphics2D graphics2D = builder.getGraphics2D();
 
-		final UGraphicG2d ug = new UGraphicG2d(backcolor, colorMapper, graphics2D, scaleFactor,
+		final UGraphicG2d ug = new UGraphicG2d(backcolor, colorMapper, stringBounder, graphics2D, scaleFactor,
 				affineTransforms == null ? null : affineTransforms.getFirst(), dx, dy);
 		ug.setBufferedImage(builder.getBufferedImage());
 		final BufferedImage im = ug.getBufferedImage();

@@ -48,7 +48,6 @@ import java.awt.geom.Rectangle2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.EnsureVisible;
-import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.FontStyle;
@@ -64,9 +63,11 @@ import net.sourceforge.plantuml.ugraphic.color.HColor;
 public class DriverTextAsPathG2d implements UDriver<Graphics2D> {
 
 	private final EnsureVisible visible;
+	private final StringBounder stringBounder;
 
-	public DriverTextAsPathG2d(EnsureVisible visible) {
+	public DriverTextAsPathG2d(EnsureVisible visible, StringBounder stringBounder) {
 		this.visible = visible;
+		this.stringBounder = stringBounder;
 	}
 
 	private static void printFont() {
@@ -83,7 +84,7 @@ public class DriverTextAsPathG2d implements UDriver<Graphics2D> {
 		final FontConfiguration fontConfiguration = shape.getFontConfiguration();
 
 		final UFont font = fontConfiguration.getFont().scaled(param.getScale());
-		final Dimension2D dimBack = calculateDimension(FileFormat.PNG.getDefaultStringBounder(), font, shape.getText());
+		final Dimension2D dimBack = calculateDimension(font, shape.getText());
 		if (fontConfiguration.containsStyle(FontStyle.BACKCOLOR)) {
 			final Color extended = mapper.toColor(fontConfiguration.getExtendedColor());
 			if (extended != null) {
@@ -108,14 +109,14 @@ public class DriverTextAsPathG2d implements UDriver<Graphics2D> {
 			if (extended != null) {
 				g2d.setColor(mapper.toColor(extended));
 			}
-			final Dimension2D dim = calculateDimension(FileFormat.PNG.getDefaultStringBounder(), font, shape.getText());
+			final Dimension2D dim = calculateDimension(font, shape.getText());
 			final int ypos = (int) (y + 2.5);
 			g2d.setStroke(new BasicStroke((float) 1));
 			g2d.drawLine((int) x, ypos, (int) (x + dim.getWidth()), ypos);
 			g2d.setStroke(new BasicStroke());
 		}
 		if (fontConfiguration.containsStyle(FontStyle.WAVE)) {
-			final Dimension2D dim = calculateDimension(FileFormat.PNG.getDefaultStringBounder(), font, shape.getText());
+			final Dimension2D dim = calculateDimension(font, shape.getText());
 			final int ypos = (int) (y + 2.5) - 1;
 			final HColor extended = fontConfiguration.getExtendedColor();
 			if (extended != null) {
@@ -127,7 +128,7 @@ public class DriverTextAsPathG2d implements UDriver<Graphics2D> {
 			}
 		}
 		if (fontConfiguration.containsStyle(FontStyle.STRIKE)) {
-			final Dimension2D dim = calculateDimension(FileFormat.PNG.getDefaultStringBounder(), font, shape.getText());
+			final Dimension2D dim = calculateDimension(font, shape.getText());
 			final FontMetrics fm = g2d.getFontMetrics(font.getUnderlayingFont());
 			final int ypos = (int) (y - fm.getDescent() - 0.5);
 			final HColor extended = fontConfiguration.getExtendedColor();
@@ -140,7 +141,7 @@ public class DriverTextAsPathG2d implements UDriver<Graphics2D> {
 		}
 	}
 
-	static public Dimension2D calculateDimension(StringBounder stringBounder, UFont font, String text) {
+	public Dimension2D calculateDimension(UFont font, String text) {
 		final Dimension2D rect = stringBounder.calculateDimension(font, text);
 		double h = rect.getHeight();
 		if (h < 10) {

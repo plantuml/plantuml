@@ -37,10 +37,9 @@ package net.sourceforge.plantuml.ugraphic.tikz;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import net.sourceforge.plantuml.FileFormat;
-import net.sourceforge.plantuml.TikzFontDistortion;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.creole.legacy.AtomText;
+import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.posimo.DotPath;
 import net.sourceforge.plantuml.tikz.TikzGraphics;
 import net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
@@ -60,20 +59,9 @@ import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class UGraphicTikz extends AbstractUGraphic<TikzGraphics> implements ClipContainer {
 
-	private final TikzFontDistortion tikzFontDistortion;
-
-	private UGraphicTikz(HColor defaultBackground, ColorMapper colorMapper, TikzGraphics tikz,
-			TikzFontDistortion tikzFontDistortion) {
-		super(defaultBackground, colorMapper, FileFormat.LATEX.getDefaultStringBounder(tikzFontDistortion), tikz);
-		this.tikzFontDistortion = tikzFontDistortion;
+	public UGraphicTikz(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder, double scale, boolean withPreamble) {
+		super(defaultBackground, colorMapper, stringBounder, new TikzGraphics(scale, withPreamble));
 		register();
-
-	}
-
-	public UGraphicTikz(HColor defaultBackground, ColorMapper colorMapper, double scale, boolean withPreamble,
-			TikzFontDistortion tikzFontDistortion) {
-		this(defaultBackground, colorMapper, new TikzGraphics(scale, withPreamble), tikzFontDistortion);
-
 	}
 
 	@Override
@@ -83,7 +71,6 @@ public class UGraphicTikz extends AbstractUGraphic<TikzGraphics> implements Clip
 
 	private UGraphicTikz(UGraphicTikz other) {
 		super(other);
-		this.tikzFontDistortion = other.tikzFontDistortion;
 		register();
 	}
 

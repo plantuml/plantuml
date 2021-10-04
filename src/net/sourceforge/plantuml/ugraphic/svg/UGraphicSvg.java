@@ -40,10 +40,8 @@ import java.io.OutputStream;
 
 import javax.xml.transform.TransformerException;
 
-import net.sourceforge.plantuml.FileFormat;
-import net.sourceforge.plantuml.SvgCharSizeHack;
-import net.sourceforge.plantuml.TikzFontDistortion;
 import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.posimo.DotPath;
 import net.sourceforge.plantuml.svg.LengthAdjust;
 import net.sourceforge.plantuml.svg.SvgGraphics;
@@ -89,10 +87,10 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 
 	public UGraphicSvg(HColor defaultBackground, boolean svgDimensionStyle, Dimension2D minDim, ColorMapper colorMapper,
 			boolean textAsPath, double scale, String linkTarget, String hover, long seed, String preserveAspectRatio,
-			SvgCharSizeHack charSizeHack, LengthAdjust lengthAdjust) {
+			StringBounder stringBounder, LengthAdjust lengthAdjust) {
 		this(defaultBackground, minDim, colorMapper, new SvgGraphics(colorMapper.toSvg(defaultBackground),
 				svgDimensionStyle, minDim, scale, hover, seed, preserveAspectRatio, lengthAdjust), textAsPath,
-				linkTarget, charSizeHack);
+				linkTarget, stringBounder);
 		if (defaultBackground instanceof HColorGradient) {
 			final SvgGraphics svg = getGraphicObject();
 			svg.paintBackcolorGradient(colorMapper, (HColorGradient) defaultBackground);
@@ -115,8 +113,8 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 	}
 
 	private UGraphicSvg(HColor defaultBackground, Dimension2D minDim, ColorMapper colorMapper, SvgGraphics svg,
-			boolean textAsPath, String linkTarget, SvgCharSizeHack charSizeHack) {
-		super(defaultBackground, colorMapper, FileFormat.SVG.getDefaultStringBounder(TikzFontDistortion.getDefault(), charSizeHack), svg);
+			boolean textAsPath, String linkTarget, StringBounder stringBounder) {
+		super(defaultBackground, colorMapper, stringBounder, svg);
 		this.textAsPath2 = textAsPath;
 		this.target = linkTarget;
 		register();
