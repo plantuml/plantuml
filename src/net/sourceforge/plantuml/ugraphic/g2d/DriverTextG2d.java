@@ -83,20 +83,18 @@ public class DriverTextG2d implements UDriver<Graphics2D> {
 
 		final List<StyledString> strings = StyledString.build(text);
 
-		final UFont font = fontConfiguration.getFont().scaled(param.getScale());
-
 		for (StyledString styledString : strings) {
 			final FontConfiguration fc = styledString.getStyle() == FontStyle.BOLD ? fontConfiguration.bold()
 					: fontConfiguration;
 			final Dimension2D dim = calculateDimension(fc.getFont(), styledString.getText());
-			printSingleText(g2d, fc, styledString.getText(), x, y, mapper, param);
+			printSingleText(g2d, fc, styledString.getText(), x, y, mapper);
 			x += dim.getWidth();
 		}
 	}
 
 	private void printSingleText(Graphics2D g2d, final FontConfiguration fontConfiguration, final String text, double x,
-			double y, ColorMapper mapper, UParam param) {
-		final UFont font = fontConfiguration.getFont().scaled(param.getScale());
+			double y, ColorMapper mapper) {
+		final UFont font = fontConfiguration.getFont();
 		final HColor extended = fontConfiguration.getExtendedColor();
 
 		final int orientation = 0;

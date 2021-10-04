@@ -93,13 +93,7 @@ public abstract class AbstractUGraphic<O> extends AbstractCommonUGraphic {
 			return;
 		}
 		beforeDraw();
-		if (shape instanceof Scalable) {
-			final double scale = getParam().getScale();
-			shape = ((Scalable) shape).getScaled(scale);
-			driver.draw(shape, getTranslateX(), getTranslateY(), getColorMapper(), getParam(), graphic);
-		} else {
-			driver.draw(shape, getTranslateX(), getTranslateY(), getColorMapper(), getParam(), graphic);
-		}
+		driver.draw(shape, getTranslateX(), getTranslateY(), getColorMapper(), getParam(), graphic);
 		afterDraw();
 	}
 
