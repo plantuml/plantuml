@@ -76,6 +76,10 @@ public class TimeConstraint {
 		this.styleBuilder = skinParam.getCurrentStyleBuilder();
 	}
 
+	public final boolean containsStrict(TimeTick other) {
+		return tick1.compareTo(other) < 0 && tick2.compareTo(other) > 0;
+	}
+
 	public final TimeTick getTick1() {
 		return tick1;
 	}

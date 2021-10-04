@@ -347,16 +347,14 @@ public class Histogram implements PDrawing {
 
 	private void drawConstraints(UGraphic ug) {
 		for (TimeConstraint constraint : constraints) {
-			final String state1 = last(getStatesAt(constraint.getTick1()));
-			final String state2 = getStatesAt(constraint.getTick2()).get(0);
-			final double y1 = yOfState(state1);
-			final double y2 = yOfState(state2);
-			constraint.drawU(ug.apply(UTranslate.dy(y1)), ruler);
+			double y = yOfState(constraint.getTick1());
+			for (ChangeState change : changes) {
+				if (constraint.containsStrict(change.getWhen())) {
+					y = Math.min(y, yOfState(change.getWhen()));
+				}
+			}
+			constraint.drawU(ug.apply(UTranslate.dy(y)), ruler);
 		}
-	}
-
-	private static String last(List<String> list) {
-		return list.get(list.size() - 1);
 	}
 
 	private Point2D.Double getInitialPoint() {
@@ -378,6 +376,14 @@ public class Histogram implements PDrawing {
 	private double yOfState(String state) {
 		final int nb = allStates.size() - 1 - allStates.indexOf(state);
 		return stepHeight() * nb;
+	}
+
+	private double yOfState(TimeTick when) {
+		return yOfState(last(getStatesAt(when)));
+	}
+
+	private static String last(List<String> list) {
+		return list.get(list.size() - 1);
 	}
 
 	private double stepHeight() {
