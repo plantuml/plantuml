@@ -83,7 +83,7 @@ public class DriverTextAsPathG2d implements UDriver<Graphics2D> {
 		final UText shape = (UText) ushape;
 		final FontConfiguration fontConfiguration = shape.getFontConfiguration();
 
-		final UFont font = fontConfiguration.getFont().scaled(param.getScale());
+		final UFont font = fontConfiguration.getFont();
 		final Dimension2D dimBack = calculateDimension(font, shape.getText());
 		if (fontConfiguration.containsStyle(FontStyle.BACKCOLOR)) {
 			final Color extended = mapper.toColor(fontConfiguration.getExtendedColor());

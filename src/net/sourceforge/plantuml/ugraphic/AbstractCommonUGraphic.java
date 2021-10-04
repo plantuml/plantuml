@@ -58,7 +58,6 @@ public abstract class AbstractCommonUGraphic implements UGraphic {
 
 	private final ColorMapper colorMapper;
 	private UClip clip;
-	private double scale = 1;
 
 	private final HColor defaultBackground;
 
@@ -75,7 +74,7 @@ public abstract class AbstractCommonUGraphic implements UGraphic {
 		Objects.requireNonNull(change);
 		final AbstractCommonUGraphic copy = copyUGraphic();
 		if (change instanceof UTranslate) {
-			copy.translate = ((UTranslate) change).scaled(scale).compose(copy.translate);
+			copy.translate = ((UTranslate) change).compose(copy.translate);
 		} else if (change instanceof UClip) {
 			copy.clip = (UClip) change;
 			copy.clip = copy.clip.translate(getTranslateX(), getTranslateY());
@@ -91,9 +90,6 @@ public abstract class AbstractCommonUGraphic implements UGraphic {
 			copy.color = null;
 		} else if (change instanceof HColor) {
 			copy.color = (HColor) change;
-		} else if (change instanceof UScale) {
-			final double factor = ((UScale) change).getScale();
-			copy.scale = scale * factor;
 		}
 		return copy;
 	}
@@ -128,7 +124,6 @@ public abstract class AbstractCommonUGraphic implements UGraphic {
 		this.hidden = other.hidden;
 		this.color = other.color;
 		this.backColor = other.backColor;
-		this.scale = other.scale;
 	}
 
 	protected abstract AbstractCommonUGraphic copyUGraphic();
@@ -154,10 +149,6 @@ public abstract class AbstractCommonUGraphic implements UGraphic {
 
 			public UPattern getPattern() {
 				return pattern;
-			}
-
-			public double getScale() {
-				return scale;
 			}
 		};
 	}
