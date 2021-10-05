@@ -35,7 +35,7 @@ import java.util.List;
 public class FontSpriteSheetMaker {
 
 	private static final char TOFU = (char) -1;  // not sure if this is a good idea but so far it is working fine !
-	
+
 	// Visible for testing
 	static final String ALL_CHARS = TOFU + "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
 
@@ -86,7 +86,7 @@ public class FontSpriteSheetMaker {
 
 		final FontRenderContext frc = g0.getFontRenderContext();
 		final TextLayout textLayout = new TextLayout(ALL_CHARS, font, frc);
-		final int ascent = roundUp(textLayout.getAscent());
+		final float ascent = textLayout.getAscent();
 
 		int advance = 0;
 		final Rectangle bounds = new Rectangle();
@@ -110,11 +110,11 @@ public class FontSpriteSheetMaker {
 		final FontMetrics fontMetrics = g.getFontMetrics(font);
 		g.setColor(WHITE);
 		g.setFont(font);
-		g.translate(xOffset, ascent);
 
+		int x = xOffset;
 		for (char c : ALL_CHARS.toCharArray()) {
-			g.drawString(String.valueOf(c), 0, 0);
-			g.translate(spriteWidth, 0);
+			g.drawString(String.valueOf(c), x, ascent);
+			x += spriteWidth;
 		}
 
 		return new FontSpriteSheet(image, fontMetrics, textLayout, advance, spriteWidth, xOffset);
