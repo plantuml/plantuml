@@ -41,6 +41,8 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.FontParam;
+import net.sourceforge.plantuml.LineBreakStrategy;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.activitydiagram3.Branch;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
@@ -50,6 +52,10 @@ import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
@@ -64,7 +70,7 @@ public class FtileSwitchWithDiamonds extends FtileSwitchNude {
 	protected final Ftile diamond1;
 	protected final Ftile diamond2;
 	protected final List<Branch> branches;
-	private Mode mode;
+	protected final Mode mode;
 	private final double w13;
 	private final double w9;
 
@@ -95,18 +101,18 @@ public class FtileSwitchWithDiamonds extends FtileSwitchNude {
 	}
 
 	@Override
-	public Collection<Ftile> getMyChildren() {
+	final public Collection<Ftile> getMyChildren() {
 		final Collection<Ftile> result = new ArrayList<>(super.getMyChildren());
 		result.add(diamond1);
 		result.add(diamond2);
 		return Collections.unmodifiableCollection(result);
 	}
 
-	public double getYdelta1a(StringBounder stringBounder) {
+	protected double getYdelta1a(StringBounder stringBounder) {
 		return 20;
 	}
 
-	public double getYdelta1b(StringBounder stringBounder) {
+	final protected double getYdelta1b(StringBounder stringBounder) {
 		return 10;
 	}
 
@@ -134,7 +140,7 @@ public class FtileSwitchWithDiamonds extends FtileSwitchNude {
 	}
 
 	@Override
-	public void drawU(UGraphic ug) {
+	final public void drawU(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
 
 		ug.apply(getTranslateDiamond1(stringBounder)).draw(diamond1);
@@ -151,7 +157,7 @@ public class FtileSwitchWithDiamonds extends FtileSwitchNude {
 		}
 	}
 
-	protected UTranslate getTranslateOf(Ftile tile, StringBounder stringBounder) {
+	final protected UTranslate getTranslateOf(Ftile tile, StringBounder stringBounder) {
 		final UTranslate main = getTranslateMain(stringBounder);
 		if (mode == Mode.BIG_DIAMOND) {
 			double dx = 0;
@@ -173,13 +179,13 @@ public class FtileSwitchWithDiamonds extends FtileSwitchNude {
 		return getTranslateNude(tile, stringBounder).compose(main);
 	}
 
-	protected UTranslate getTranslateMain(StringBounder stringBounder) {
+	final protected UTranslate getTranslateMain(StringBounder stringBounder) {
 		final FtileGeometry dimDiamond1 = diamond1.calculateDimension(stringBounder);
 		final double dy1 = dimDiamond1.getHeight() + getYdelta1a(stringBounder);
 		return UTranslate.dy(dy1);
 	}
 
-	protected UTranslate getTranslateDiamond1(StringBounder stringBounder) {
+	final protected UTranslate getTranslateDiamond1(StringBounder stringBounder) {
 		final double y1 = 0;
 		final FtileGeometry dimTotal = calculateDimensionInternal(stringBounder);
 		final FtileGeometry dimDiamond1 = diamond1.calculateDimension(stringBounder);
@@ -187,7 +193,7 @@ public class FtileSwitchWithDiamonds extends FtileSwitchNude {
 		return new UTranslate(x1, y1);
 	}
 
-	protected UTranslate getTranslateDiamond2(StringBounder stringBounder) {
+	final protected UTranslate getTranslateDiamond2(StringBounder stringBounder) {
 		final FtileGeometry dimTotal = calculateDimensionInternal(stringBounder);
 		final FtileGeometry dimDiamond2 = diamond2.calculateDimension(stringBounder);
 		final double y2 = dimTotal.getHeight() - dimDiamond2.getHeight();
@@ -195,10 +201,23 @@ public class FtileSwitchWithDiamonds extends FtileSwitchNude {
 		return new UTranslate(x2, y2);
 	}
 
-	protected TextBlock getLabelPositive(Branch branch) {
-		final FontConfiguration fcArrow = new FontConfiguration(skinParam(), FontParam.ARROW, null);
-		return branch.getLabelPositive().create7(fcArrow, HorizontalAlignment.LEFT, skinParam(),
-				CreoleMode.SIMPLE_LINE);
+	final public StyleSignature getDefaultStyleDefinitionArrow() {
+		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.arrow);
+	}
+
+	final protected TextBlock getLabelPositive(Branch branch) {
+		LineBreakStrategy lineBreak = LineBreakStrategy.NONE;
+		final FontConfiguration fcArrow;
+		if (UseStyle.useBetaStyle()) {
+			final Style style = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam().getCurrentStyleBuilder());
+			lineBreak = style.wrapWidth();
+			fcArrow = style.getFontConfiguration(skinParam().getThemeStyle(), getIHtmlColorSet());
+		} else {
+			fcArrow = new FontConfiguration(skinParam(), FontParam.ARROW, null);
+		}
+
+		return branch.getLabelPositive().create0(fcArrow, HorizontalAlignment.LEFT, skinParam(), lineBreak,
+				CreoleMode.SIMPLE_LINE, null, null);
 	}
 
 }
