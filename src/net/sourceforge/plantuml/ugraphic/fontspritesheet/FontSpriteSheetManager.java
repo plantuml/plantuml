@@ -19,6 +19,8 @@ import net.sourceforge.plantuml.ugraphic.UFont;
 
 public class FontSpriteSheetManager {
 
+	public static boolean USE = false;  // TODO temporary kludge
+	
 	private static final FontSpriteSheetManager INSTANCE = new FontSpriteSheetManager();
 
 	public static FontSpriteSheetManager instance() {

@@ -100,6 +100,7 @@ import net.sourceforge.plantuml.ugraphic.color.HColorSimple;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 import net.sourceforge.plantuml.ugraphic.debug.UGraphicDebug;
 import net.sourceforge.plantuml.ugraphic.eps.UGraphicEps;
+import net.sourceforge.plantuml.ugraphic.fontspritesheet.FontSpriteSheetManager;
 import net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d;
 import net.sourceforge.plantuml.ugraphic.hand.UGraphicHandwritten;
 import net.sourceforge.plantuml.ugraphic.html5.UGraphicHtml5;
@@ -141,7 +142,7 @@ public class ImageBuilder {
 
 	private ImageBuilder(FileFormatOption fileFormatOption) {
 		this.fileFormatOption = fileFormatOption;
-		this.stringBounder = fileFormatOption.getDefaultStringBounder(SvgCharSizeHack.NO_HACK);
+		updateStringBounder();
 	}
 
 	public ImageBuilder annotations(boolean annotations) {
@@ -217,7 +218,6 @@ public class ImageBuilder {
 
 	public ImageBuilder styled(TitledDiagram diagram) {
 		skinParam = diagram.getSkinParam();
-		stringBounder = fileFormatOption.getDefaultStringBounder(skinParam);
 		animation = diagram.getAnimation();
 		annotations = true;
 		backcolor = diagram.calculateBackColor();
@@ -227,7 +227,14 @@ public class ImageBuilder {
 		seed = diagram.seed();
 		titledDiagram = diagram;
 		warningOrError = diagram.getWarningOrError();
+		updateStringBounder();
 		return this;
+	}
+
+	private void updateStringBounder() {
+		stringBounder = FontSpriteSheetManager.USE
+				? FontSpriteSheetManager.instance().createStringBounder()
+				: fileFormatOption.getDefaultStringBounder(skinParam != null ? skinParam : SvgCharSizeHack.NO_HACK);
 	}
 
 	public ImageData write(OutputStream os) throws IOException {
