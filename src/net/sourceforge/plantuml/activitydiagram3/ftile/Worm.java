@@ -309,12 +309,19 @@ public class Worm implements Iterable<Point2D.Double> {
 		this.points.add(i, pt);
 	}
 
-	private Point2D getFirst() {
+	public Point2D getFirst() {
 		return points.get(0);
 	}
 
 	public Point2D getLast() {
 		return points.get(points.size() - 1);
+	}
+
+	public double getMinX() {
+		double result = points.get(0).getX();
+		for (Point2D.Double pt : points)
+			result = Math.min(result, pt.getX());
+		return result;
 	}
 
 	public Worm merge(Worm other, MergeStrategy merge) {

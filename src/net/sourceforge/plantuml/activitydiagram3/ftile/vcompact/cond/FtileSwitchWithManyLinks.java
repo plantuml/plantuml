@@ -196,7 +196,7 @@ public class FtileSwitchWithManyLinks extends FtileSwitchWithDiamonds {
 			final double y2 = p2.getY();
 
 			final Snake snake = Snake.create(null, arrowColor, Arrows.asToDown()).withLabel(getLabelPositive(branch),
-					VerticalAlignment.BOTTOM);
+					VerticalAlignment.CENTER);
 			if (x2 < p1d.getX() - margin || x2 > p1b.getX() + margin) {
 				snake.addPoint(x2, p1d.getY());
 				snake.addPoint(x2, y2);
@@ -270,10 +270,15 @@ public class FtileSwitchWithManyLinks extends FtileSwitchWithDiamonds {
 
 	}
 
-	public double getYdelta1a(StringBounder stringBounder) {
+	@Override
+	protected double getYdelta1a(StringBounder stringBounder) {
 		double max = 10;
 		for (Branch branch : branches) {
 			max = Math.max(max, getLabelPositive(branch).calculateDimension(stringBounder).getHeight());
+		}
+		if (mode == Mode.BIG_DIAMOND) {
+			final double diamondHeight = diamond1.calculateDimension(stringBounder).getHeight();
+			max += diamondHeight / 2;
 		}
 		return max + 10;
 	}
