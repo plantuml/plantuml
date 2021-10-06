@@ -40,14 +40,12 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import java.io.OutputStream;
 
 import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
@@ -63,6 +61,7 @@ import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.statediagram.StateDiagram;
 import net.sourceforge.plantuml.utils.UniqueSequence;
 import net.sourceforge.plantuml.version.Version;
+import net.sourceforge.plantuml.xml.XmlFactories;
 
 public class XmiStateDiagram implements IXmiClassDiagram {
 
@@ -72,9 +71,8 @@ public class XmiStateDiagram implements IXmiClassDiagram {
 
 	public XmiStateDiagram(StateDiagram diagram) throws ParserConfigurationException {
 		this.diagram = diagram;
-		final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
-		final DocumentBuilder builder = factory.newDocumentBuilder();
+		final DocumentBuilder builder = XmlFactories.newDocumentBuilder();
 		this.document = builder.newDocument();
 		document.setXmlVersion("1.0");
 		document.setXmlStandalone(true);
@@ -246,8 +244,7 @@ public class XmiStateDiagram implements IXmiClassDiagram {
 
 		final Result resultat = new StreamResult(os);
 
-		final TransformerFactory fabrique = TransformerFactory.newInstance();
-		final Transformer transformer = fabrique.newTransformer();
+		final Transformer transformer = XmlFactories.newTransformer();
 		transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 		// transformer.setOutputProperty(OutputKeys.ENCODING, "ISO-8859-1");
 		transformer.setOutputProperty(OutputKeys.ENCODING, UTF_8.name());
