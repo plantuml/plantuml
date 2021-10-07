@@ -279,12 +279,11 @@ class FontSpriteSheetTest {
 		FontSpriteSheetManager.USE = true;
 		final BufferedImage fromSprite = renderAsImage(source);
 
-		final Comparator<ColorHSB> comparator =  new Comparator<ColorHSB>() {
+		final Comparator<ColorHSB> comparator = new Comparator<ColorHSB>() {
 			@Override
 			public int compare(ColorHSB expected, ColorHSB actual) {
 				return (
-						abs(expected.getAlpha() - actual.getAlpha()) > 0x30
-								|| abs(expected.getHue() - actual.getHue()) > 0
+						abs(expected.getHue() - actual.getHue()) > 0
 								|| abs(expected.getSaturation() - actual.getSaturation()) > 0
 								|| abs(expected.getBrightness() - actual.getBrightness()) > 0.05
 				) ? 1 : 0;
@@ -295,7 +294,7 @@ class FontSpriteSheetTest {
 				return "custom";
 			}
 		};
-		
+
 		try {
 			assertImagesEqual(fromFont, fromSprite, comparator, 15);
 		} catch (AssertionError e) {
