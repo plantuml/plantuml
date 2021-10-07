@@ -283,7 +283,7 @@ class FontSpriteSheetTest {
 			@Override
 			public int compare(ColorHSB expected, ColorHSB actual) {
 				return (
-						abs(expected.getAlpha() - actual.getAlpha()) > 0x20
+						abs(expected.getAlpha() - actual.getAlpha()) > 0x30
 								|| abs(expected.getHue() - actual.getHue()) > 0
 								|| abs(expected.getSaturation() - actual.getSaturation()) > 0
 								|| abs(expected.getBrightness() - actual.getBrightness()) > 0.05

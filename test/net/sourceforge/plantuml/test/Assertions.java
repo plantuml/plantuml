@@ -40,15 +40,10 @@ public class Assertions {
 				final ColorHSB expectedColor = new ColorHSB(expected.getRGB(x, y));
 				final ColorHSB actualColor = new ColorHSB(actual.getRGB(x, y));
 				if (comparator.compare(expectedColor, actualColor) != 0) {
-					System.out.println("differentCount=" + differentCount);
-					System.out.println("expected " + expectedColor);
-					System.out.println("actual   " + actualColor);
-					System.out.println();
 					if (expectedColor.getHue() == actualColor.getHue() && differentCount < maxDifferentPixels) {
 						differentCount++;
 						continue;
 					}
-					
 					assertionFailed(
 							expectedColor.toString(),
 							String.format("%s at:<[%d, %d]> using %s", actualColor, x, y, comparator)
