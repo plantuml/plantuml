@@ -37,7 +37,7 @@ class SkinParamTest {
 	public void testDefaultValues(UmlDiagramType umlDiagramType) {
 
 		final SkinParam skinParam = SkinParam.create(umlDiagramType);
-		final Stereotype fooStereotype = new Stereotype("foo");
+		final Stereotype fooStereotype = Stereotype.build("<<foo>>");
 
 		assertThat(skinParam.actorStyle()).isEqualTo(ActorStyle.STICKMAN);
 
