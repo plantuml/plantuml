@@ -71,6 +71,7 @@ import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.anim.AffineTransformation;
 import net.sourceforge.plantuml.anim.Animation;
+import net.sourceforge.plantuml.api.ImageDataBufferedImage;
 import net.sourceforge.plantuml.api.ImageDataComplex;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.braille.UGraphicBraille;
@@ -285,6 +286,10 @@ public class ImageBuilder {
 		ug = handwritten(ug.apply(new UTranslate(margin.getLeft(), margin.getTop())));
 		udrawable.drawU(ug);
 		ug.flushUg();
+		if (fileFormatOption.getFileFormat() == FileFormat.BUFFERED_IMAGE) {
+			return new ImageDataBufferedImage(((UGraphicG2d) ug).getBufferedImage());
+		}
+		
 		ug.writeToStream(os, metadata, 96);
 		os.flush();
 
@@ -408,6 +413,7 @@ public class ImageBuilder {
 	private UGraphic createUGraphic(FileFormatOption option, final Dimension2D dim, Animation animationArg, double dx,
 			double dy, double scaleFactor) {
 		switch (option.getFileFormat()) {
+		case BUFFERED_IMAGE:
 		case PNG:
 			return createUGraphicPNG(scaleFactor, dim, animationArg, dx, dy, option.getWatermark());
 		case SVG:

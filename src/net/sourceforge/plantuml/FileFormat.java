@@ -82,7 +82,8 @@ public enum FileFormat {
 	BASE64("text/plain; charset=x-user-defined"),
 	BRAILLE_PNG("image/png"),
 	PREPROC("text/plain"),
-	DEBUG("text/plain");
+	DEBUG("text/plain"),
+	BUFFERED_IMAGE("internal-use-only");
 
 	private final String mimeType;
 
