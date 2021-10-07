@@ -92,7 +92,7 @@ public class CommandBoxStart extends SingleLineCommand2<SequenceDiagram> {
 		Stereotype stereotype = null;
 		if (stereo != null) {
 			final ISkinParam skinParam = diagram.getSkinParam();
-			stereotype = new Stereotype(stereo);
+			stereotype = Stereotype.build(stereo);
 		}
 
 		// final HtmlColor color =

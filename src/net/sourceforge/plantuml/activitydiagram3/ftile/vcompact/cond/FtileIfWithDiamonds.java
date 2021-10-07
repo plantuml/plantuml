@@ -65,16 +65,13 @@ public class FtileIfWithDiamonds extends FtileIfNude {
 	}
 
 	public int getYdelta1a(StringBounder stringBounder) {
-		// if (getSwimlanes().size() > 1 && hasTwoBranches(stringBounder)) {
 		if (getSwimlanes().size() > 1) {
 			return 20;
 		}
 		return 10;
-		// return hasTwoBranches(stringBounder) ? 6 : 6;
 	}
 
 	public int getYdelta1b(StringBounder stringBounder) {
-		// if (getSwimlanes().size() > 1 && hasTwoBranches(stringBounder)) {
 		if (getSwimlanes().size() > 1) {
 			return 10;
 		}
@@ -98,9 +95,6 @@ public class FtileIfWithDiamonds extends FtileIfNude {
 
 		return all.addDim(0, getYdelta1a(stringBounder) + getYdelta1b(stringBounder));
 
-		// final double height = dimNude.getHeight() + dim1.getHeight() + dim2.getHeight() + getYdelta1a(stringBounder)
-		// + getYdelta1b(stringBounder);
-		// return new Dimension2DDouble(width, height);
 	}
 
 	@Override
@@ -115,22 +109,21 @@ public class FtileIfWithDiamonds extends FtileIfNude {
 	@Override
 	protected UTranslate getTranslate1(StringBounder stringBounder) {
 		final FtileGeometry dimDiamond1 = diamond1.calculateDimension(stringBounder);
-		return super.getTranslate1(stringBounder).compose(
-				UTranslate.dy(dimDiamond1.getHeight() + getYdelta1a(stringBounder)));
+		return super.getTranslate1(stringBounder)
+				.compose(UTranslate.dy(dimDiamond1.getHeight() + getYdelta1a(stringBounder)));
 	}
 
 	@Override
 	protected UTranslate getTranslate2(StringBounder stringBounder) {
 		final FtileGeometry dimDiamond1 = diamond1.calculateDimension(stringBounder);
-		return super.getTranslate2(stringBounder).compose(
-				UTranslate.dy(dimDiamond1.getHeight() + getYdelta1a(stringBounder)));
+		return super.getTranslate2(stringBounder)
+				.compose(UTranslate.dy(dimDiamond1.getHeight() + getYdelta1a(stringBounder)));
 	}
 
 	protected UTranslate getTranslateDiamond1(StringBounder stringBounder) {
 		final double y1 = 0;
 		final FtileGeometry dimTotal = calculateDimensionInternal(stringBounder);
 		final FtileGeometry dimDiamond1 = diamond1.calculateDimension(stringBounder);
-		// final double x1 = getLeft(stringBounder) - dimDiamond1.getWidth() / 2;
 		final double x1 = dimTotal.getLeft() - dimDiamond1.getLeft();
 		return new UTranslate(x1, y1);
 	}

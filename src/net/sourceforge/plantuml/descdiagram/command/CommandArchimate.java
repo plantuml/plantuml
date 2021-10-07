@@ -143,7 +143,7 @@ public class CommandArchimate extends SingleLineCommand2<DescriptionDiagram> {
 		entity.setUSymbol(USymbol.ARCHIMATE);
 		if (icon != null) {
 			entity.setStereotype(
-					new Stereotype("<<$archimate/" + icon + ">>", diagram.getSkinParam().getCircledCharacterRadius(),
+					Stereotype.build("<<$archimate/" + icon + ">>", diagram.getSkinParam().getCircledCharacterRadius(),
 							diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),
 							diagram.getSkinParam().getIHtmlColorSet()));
 		}

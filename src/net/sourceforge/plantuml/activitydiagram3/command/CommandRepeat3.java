@@ -94,7 +94,7 @@ public class CommandRepeat3 extends SingleLineCommand2<ActivityDiagram3> {
 				diagram.getSkinParam().getIHtmlColorSet());
 		final String stereo = arg.get("STEREO", 0);
 		if (stereo != null) {
-			final Stereotype stereotype = new Stereotype(stereo);
+			final Stereotype stereotype = Stereotype.build(stereo);
 			colors = colors.applyStereotype(stereotype, diagram.getSkinParam(), ColorParam.activityBackground);
 		}
 

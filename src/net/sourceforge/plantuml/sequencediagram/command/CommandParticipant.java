@@ -120,7 +120,7 @@ public abstract class CommandParticipant extends SingleLineCommand2<SequenceDiag
 			final ISkinParam skinParam = diagram.getSkinParam();
 			final boolean stereotypePositionTop = skinParam.stereotypePositionTop();
 			final UFont font = skinParam.getFont(null, false, FontParam.CIRCLED_CHARACTER);
-			participant.setStereotype(new Stereotype(stereotype, skinParam.getCircledCharacterRadius(), font,
+			participant.setStereotype(Stereotype.build(stereotype, skinParam.getCircledCharacterRadius(), font,
 					diagram.getSkinParam().getIHtmlColorSet()), stereotypePositionTop);
 		}
 		final String s = arg.get("COLOR", 0);

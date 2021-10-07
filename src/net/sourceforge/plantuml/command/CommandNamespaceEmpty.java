@@ -92,7 +92,7 @@ public class CommandNamespaceEmpty extends SingleLineCommand2<ClassDiagram> {
 		final IEntity p = diagram.getCurrentGroup();
 		final String stereotype = arg.get("STEREOTYPE", 0);
 		if (stereotype != null) {
-			p.setStereotype(new Stereotype(stereotype));
+			p.setStereotype(Stereotype.build(stereotype));
 		}
 
 		final String urlString = arg.get("URL", 0);

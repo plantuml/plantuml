@@ -121,7 +121,7 @@ public class CommandCreateDomain extends SingleLineCommand2<DescriptionDiagram> 
 					type.equalsIgnoreCase("domain") ? LeafType.DOMAIN : LeafType.REQUIREMENT, null);
 		}
 		if (stereotype != null) {
-			entity.setStereotype(new Stereotype(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),
+			entity.setStereotype(Stereotype.build(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),
 					diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),
 					diagram.getSkinParam().getIHtmlColorSet()));
 		}

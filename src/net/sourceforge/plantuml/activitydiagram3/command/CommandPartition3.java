@@ -129,7 +129,7 @@ public class CommandPartition3 extends SingleLineCommand2<ActivityDiagram3> {
 
 		final USymbol symbol = getUSymbol(arg.get("TYPE", 0));
 		final String stereo = arg.get("STEREO", 0);
-		final Stereotype stereotype = stereo == null ? null : new Stereotype(stereo);
+		final Stereotype stereotype = stereo == null ? null : Stereotype.build(stereo);
 
 		final HColor backColorInSkinparam = diagram.getSkinParam().getHtmlColor(getColorParamBack(symbol), stereotype,
 				false);

@@ -273,7 +273,7 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 				diagram.getSkinParam().getIHtmlColorSet()));
 		link.applyStyle(diagram.getSkinParam().getThemeStyle(), arg.getLazzy("ARROW_STYLE", 0));
 		if (arg.get("STEREOTYPE", 0) != null) {
-			final Stereotype stereotype = new Stereotype(arg.get("STEREOTYPE", 0));
+			final Stereotype stereotype = Stereotype.build(arg.get("STEREOTYPE", 0));
 			if (UseStyle.useBetaStyle()) {
 				link.setStereotype(stereotype);
 			} else {

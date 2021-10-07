@@ -111,17 +111,6 @@ public class PlayerClock extends Player {
 		throw new UnsupportedOperationException();
 	}
 
-	private double getPulseCoef() {
-		if (pulse == 0) {
-			return 0.5;
-		}
-		return 1.0 * pulse / period;
-	}
-
-	private double getOffsetCoef() {
-		return 1.0 * offset / period;
-	}
-
 	public final int getPeriod() {
 		return period;
 	}
@@ -143,41 +132,53 @@ public class PlayerClock extends Player {
 
 	public UDrawable getPart2() {
 		return new UDrawable() {
+
+			private void drawHline(UGraphic ug, double value1, double value2) {
+				final double x1 = getX(value1);
+				final double x2 = Math.min(ruler.getWidth(), getX(value2));
+
+				final ULine hline = ULine.hline(x2 - x1);
+				ug.apply(UTranslate.dx(x1)).draw(hline);
+			}
+
+			private void drawVline(UGraphic ug, final ULine vline, double value) {
+				ug.apply(new UTranslate(getX(value), ymargin)).draw(vline);
+			}
+
+			private double getX(double value) {
+				return ruler.getPosInPixel(new TimeTick(new BigDecimal(value), TimingFormat.DECIMAL));
+			}
+
 			public void drawU(UGraphic ug) {
 				ug = getContext().apply(ug);
 				ug = ug.apply(UTranslate.dy(getTitleHeight(ug.getStringBounder())));
 				final ULine vline = ULine.vline(getLineHeight(ug.getStringBounder()));
-				int i = 0;
-				double lastx = -Double.MAX_VALUE;
-				while (i < 1000) {
-					final double x = ruler
-							.getPosInPixel(new TimeTick(new BigDecimal(i * period), TimingFormat.DECIMAL));
-					if (x > ruler.getWidth()) {
-						return;
-					}
-					i++;
-					if (x > lastx) {
-						final double dx = x - lastx;
-
-						final ULine hline1 = ULine.hline(dx * getOffsetCoef());
-						final ULine hline2 = ULine.hline(dx * getPulseCoef());
-						final ULine hline3 = ULine.hline(dx * (1 - getPulseCoef() - getOffsetCoef()));
-
-						final double x2 = lastx + dx * getOffsetCoef();
-						final double x3 = lastx + dx * (getOffsetCoef() + getPulseCoef());
-						
-						if (offset > 0)
-							ug.apply(new UTranslate(lastx, ymargin + vline.getDY())).draw(hline1);
-						ug.apply(new UTranslate(x2, ymargin)).draw(hline2);
-						ug.apply(new UTranslate(x3, ymargin + vline.getDY())).draw(hline3);
-
-						ug.apply(new UTranslate(x2, ymargin)).draw(vline);
-						ug.apply(new UTranslate(x3, ymargin)).draw(vline);
-
-					}
-					lastx = x;
+				double value = 0;
+				if (offset != 0) {
+					drawHline(ug.apply(UTranslate.dy(ymargin + vline.getDY())), value, offset);
+					value += offset;
 				}
+				if (getX(value) > ruler.getWidth())
+					return;
+				drawVline(ug, vline, value);
+
+				final double vpulse = pulse == 0 ? period / 2.0 : pulse;
+				final double remain = period - vpulse;
+				for (int i = 0; i < 1000; i++) {
+					drawHline(ug.apply(UTranslate.dy(ymargin)), value, value + vpulse);
+					value += vpulse;
+					if (getX(value) > ruler.getWidth())
+						return;
+					drawVline(ug, vline, value);
+					drawHline(ug.apply(UTranslate.dy(ymargin + vline.getDY())), value, value + remain);
+					value += remain;
+					if (getX(value) > ruler.getWidth())
+						return;
+					drawVline(ug, vline, value);
+				}
+
 			}
+
 		};
 	}
 
