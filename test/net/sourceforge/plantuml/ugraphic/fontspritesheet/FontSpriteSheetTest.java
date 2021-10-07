@@ -11,6 +11,7 @@ import static java.awt.image.BufferedImage.TYPE_BYTE_GRAY;
 import static java.awt.image.BufferedImage.TYPE_INT_ARGB;
 import static java.awt.image.BufferedImage.TYPE_INT_RGB;
 import static java.lang.Integer.parseInt;
+import static java.lang.Math.abs;
 import static java.lang.Math.max;
 import static java.util.Arrays.stream;
 import static net.sourceforge.plantuml.test.Assertions.assertImagesEqual;
@@ -278,8 +279,25 @@ class FontSpriteSheetTest {
 		FontSpriteSheetManager.USE = true;
 		final BufferedImage fromSprite = renderAsImage(source);
 
+		final Comparator<ColorHSB> comparator =  new Comparator<ColorHSB>() {
+			@Override
+			public int compare(ColorHSB expected, ColorHSB actual) {
+				return (
+						abs(expected.getAlpha() - actual.getAlpha()) > 0x20
+								|| abs(expected.getHue() - actual.getHue()) > 0
+								|| abs(expected.getSaturation() - actual.getSaturation()) > 0
+								|| abs(expected.getBrightness() - actual.getBrightness()) > 0.05
+				) ? 1 : 0;
+			}
+
+			@Override
+			public String toString() {
+				return "custom";
+			}
+		};
+		
 		try {
-			assertImagesEqual(fromFont, fromSprite, comparePixelWithSBTolerance(0, 0.10f), 15);
+			assertImagesEqual(fromFont, fromSprite, comparator, 15);
 		} catch (AssertionError e) {
 			approvalTesting
 					.withMaxFailures(1)

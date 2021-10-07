@@ -11,8 +11,10 @@ jobs:
       fail-fast: false
       matrix:
         java_distribution: [ zulu ]
-        java_version: [ 8, 11, 17 ]
-        os: [ macos-latest, ubuntu-latest, windows-latest ]
+        java_version: [ 8 ]
+        os: [ macos-latest ]
+#        java_version: [ 8, 11, 17 ]
+#        os: [ macos-latest, ubuntu-latest, windows-latest ]
 
         # All temurin:
 #        java_version: [ 8.0.302+8, 11.0.12+7, 17.0.0+35 ]
