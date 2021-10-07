@@ -2,7 +2,7 @@ package net.sourceforge.plantuml.test;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.readAllBytes;
-import static net.sourceforge.plantuml.FileFormat.PNG;
+import static net.sourceforge.plantuml.FileFormat.BUFFERED_IMAGE;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -14,7 +14,7 @@ import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.Option;
 import net.sourceforge.plantuml.SourceStringReader;
-import net.sourceforge.plantuml.security.ImageIO;
+import net.sourceforge.plantuml.api.ImageDataBufferedImage;
 
 public class TestUtils {
 
@@ -33,9 +33,17 @@ public class TestUtils {
 	}
 
 	public static BufferedImage renderAsImage(String... source) throws Exception {
-		
-		final byte[] bytes = exportOneDiagramToByteArray(String.join("\n", source), PNG);
-		return ImageIO.read(bytes);
+
+		final Option option = new Option(new String[]{});
+		option.setFileFormatOption(new FileFormatOption(BUFFERED_IMAGE));
+
+		final SourceStringReader ssr = new SourceStringReader(option.getDefaultDefines(), String.join("\n", source), UTF_8.name(), option.getConfig());
+
+		final ByteArrayOutputStream os = new ByteArrayOutputStream();
+
+		ImageDataBufferedImage imageData = (ImageDataBufferedImage) ssr.getBlocks().get(0).getDiagram().exportDiagram(os, 0, option.getFileFormatOption());
+
+		return imageData.getImage();
 	}
 
 	public static String renderAsUnicode(String source, String... options) throws Exception {

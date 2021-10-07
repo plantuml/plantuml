@@ -6,11 +6,12 @@ import static java.lang.Math.round;
 import static java.nio.file.Files.newOutputStream;
 import static net.sourceforge.plantuml.png.MetadataTag.findMetadataValue;
 import static net.sourceforge.plantuml.utils.ImageIOUtils.createImageReader;
-import static net.sourceforge.plantuml.utils.MathUtils.roundUp;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
+import java.awt.Composite;
 import java.awt.FontMetrics;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.font.TextLayout;
 import java.awt.geom.Dimension2D;
 import java.awt.image.BufferedImage;
@@ -32,8 +33,8 @@ import net.sourceforge.plantuml.png.PngIOMetadata;
 
 public class FontSpriteSheet {
 
-	private static final int MIN_CHAR = 0x21;
-	private static final int MAX_CHAR = 0x7e;
+	private static final char MIN_CHAR = 0x21;
+	private static final char MAX_CHAR = 0x7e;
 
 	private final Map<Integer, SoftReference<BufferedImage>> colorizedImageCache = new ConcurrentHashMap<>();
 	private final int advance;
@@ -125,44 +126,43 @@ public class FontSpriteSheet {
 	// Drawing
 	//
 
-	public void drawString(Graphics g, String s, float x, float y) {
-		final BufferedImage colorizedImage = getOrCreateColorizedImage(g.getColor());
-
-		for (char c : s.toCharArray()) {
-			if (c != ' ') {
-				drawChar(g, colorizedImage, c, x, y);
-			}
-			x += advance;
-		}
-	}
-
 	@SuppressWarnings("UnnecessaryLocalVariable")
-	private void drawChar(Graphics g, BufferedImage colorizedImage, char c, float x, float y) {
+	public void drawString(Graphics2D g, String s, float x, float y) {
 		// We draw strings by blitting each char from an image that has all pixels set to the requested color
 		// and has alpha values copied from alphaImage.
 		// 
 		// As an alternative I tried making a ColorModel class that returns colorized pixels
 		// with their alpha value read direct from alphaImage but drawing that way was 2 - 3 times slower
 		// than the blitting approach.
+		
+		final Composite oldComposite = g.getComposite();
+		g.setComposite(AlphaComposite.SrcOver);
 
+		final BufferedImage colorizedImage = getOrCreateColorizedImage(g.getColor());
 		final int height = colorizedImage.getHeight();
-
-		final int srcLeft = spriteIndex(c) * spriteWidth;
-		final int srcRight = srcLeft + spriteWidth;
 		final int srcTop = 0;
 		final int srcBottom = height;
-
-		final int destLeft = roundUp(x - xOffset);
-		final int destRight = destLeft + spriteWidth;
-		final int destTop = roundUp(y - ascent);
+		final int destTop = round(y - ascent);
 		final int destBottom = destTop + height;
 
-		g.drawImage(
-				colorizedImage,
-				destLeft, destTop, destRight, destBottom,
-				srcLeft, srcTop, srcRight, srcBottom,
-				null
-		);
+		for (char c : s.toCharArray()) {
+			if (c != ' ') {
+				final int srcLeft = spriteIndex(c) * spriteWidth;
+				final int srcRight = srcLeft + spriteWidth;
+				final int destLeft = round(x - xOffset);
+				final int destRight = destLeft + spriteWidth;
+
+				g.drawImage(
+						colorizedImage,
+						destLeft, destTop, destRight, destBottom,
+						srcLeft, srcTop, srcRight, srcBottom,
+						null
+				);
+			}
+			x += advance;
+		}
+		
+		g.setComposite(oldComposite);
 	}
 
 	private int spriteIndex(char c) {

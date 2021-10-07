@@ -14,7 +14,9 @@ import static java.lang.Integer.parseInt;
 import static java.lang.Math.max;
 import static java.util.Arrays.stream;
 import static net.sourceforge.plantuml.test.Assertions.assertImagesEqual;
-import static net.sourceforge.plantuml.test.Assertions.assertImagesEqualWithinTolerance;
+import static net.sourceforge.plantuml.test.ColorComparators.COMPARE_PIXEL_EXACT;
+import static net.sourceforge.plantuml.test.ColorComparators.comparePixelWithSBTolerance;
+import static net.sourceforge.plantuml.test.TestUtils.renderAsImage;
 import static net.sourceforge.plantuml.ugraphic.fontspritesheet.FontSpriteSheetMaker.ALL_CHARS;
 import static net.sourceforge.plantuml.ugraphic.fontspritesheet.FontSpriteSheetMaker.JETBRAINS_FONT_FAMILY;
 import static net.sourceforge.plantuml.ugraphic.fontspritesheet.FontSpriteSheetMaker.createFontSpriteSheet;
@@ -26,10 +28,12 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.font.FontRenderContext;
+import java.awt.font.TextLayout;
 import java.awt.geom.Dimension2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -47,6 +51,7 @@ import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.approvaltesting.ApprovalTesting;
 import net.sourceforge.plantuml.approvaltesting.ApprovalTestingJUnitExtension;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.color.ColorHSB;
 import net.sourceforge.plantuml.ugraphic.UFont;
 
 @ExtendWith(ApprovalTestingJUnitExtension.class)
@@ -140,19 +145,27 @@ class FontSpriteSheetTest {
 	@CartesianProductTest(name = "{arguments}")
 	@CartesianValueSource(ints = {20, 9, 4, 3})
 	@CartesianEnumSource(FontStyle.class)
-	void test_font_sheet_draws_same_as_raw_font_using_different_sizes_and_styles(int size, FontStyle style) throws Exception {
-		check_font_sheet_draws_same_as_raw_font(style.toFont(size), BLACK);
+	void test_font_sheet_draws_same_as_raw_font_using_different_sizes_and_styles(int size, FontStyle style) {
+		final CheckOptions options = new CheckOptions();
+		options.size = size;
+		options.style = style;
+		check_font_sheet_draws_same_as_raw_font(options);
 	}
 
 	@ParameterizedTest(name = "{arguments}")
 	@IntRangeSource(from = 0, to = 255)
-	void test_font_sheet_draws_same_as_raw_font_using_different_alphas(int alpha) throws Exception {
-		check_font_sheet_draws_same_as_raw_font(PLAIN_FONT_20, new Color(1, 1, 1, alpha));
+	void test_font_sheet_draws_same_as_raw_font_using_different_alphas(int alpha) {
+		final CheckOptions options = new CheckOptions();
+		options.color = new Color(1, 1, 1, alpha);
+		options.comparator = comparePixelWithSBTolerance(0, 0.005f);
+		check_font_sheet_draws_same_as_raw_font(options);
 	}
 
 	@CartesianProductTest(name = "{arguments}", value = {"00", "33", "88", "AA", "FF"})
-	void test_font_sheet_draws_same_as_raw_font_using_different_colors(String r, String g, String b) throws Exception {
-		check_font_sheet_draws_same_as_raw_font(PLAIN_FONT_20, new Color(parseInt(r + g + b, 16)));
+	void test_font_sheet_draws_same_as_raw_font_using_different_colors(String r, String g, String b) {
+		final CheckOptions options = new CheckOptions();
+		options.color = new Color(parseInt(r + g + b, 16));
+		check_font_sheet_draws_same_as_raw_font(options);
 	}
 
 	@Test
@@ -234,13 +247,58 @@ class FontSpriteSheetTest {
 		assertImagesEqual(original.getAlphaImage(), loaded.getAlphaImage());
 	}
 
+	@CartesianProductTest(name = "{arguments}")
+	@CartesianValueSource(strings = {
+			"<b>bold",
+			"<i>italic",
+			"<s>strike",
+			"<u>underlined",
+			"<w>wave",
+			"plain",
+	})
+	@CartesianValueSource(strings = {"red", "green", "blue", "yellow", "cyan", "magenta", "black"})
+	@CartesianValueSource(ints = {9, 20})
+	@IntRangeSource(from = 0, to = 255)
+	void test_plantuml_draws_same_with_font_and_sprite(String text, String fgColor, int size, int backAlpha) throws Exception {
+		final String[] source = {
+				"@startuml",
+				"!$BGCOLOR=transparent",
+				"!$FONT_NAME='JetBrains Mono NL'",
+				"!theme plain",
+				"skinparam ActivityBackgroundColor none",
+				"skinparam ActivityBorderColor none",
+				"skinparam ActivityFontSize " + size,
+				String.format(":<color:%s><back:#000000%02X>%s %s;", fgColor, backAlpha, text, ALL_CHARS),
+				"@enduml",
+		};
+
+		FontSpriteSheetManager.USE = false;
+		final BufferedImage fromFont = renderAsImage(source);
+
+		FontSpriteSheetManager.USE = true;
+		final BufferedImage fromSprite = renderAsImage(source);
+
+		try {
+			assertImagesEqual(fromFont, fromSprite, comparePixelWithSBTolerance(0, 0.10f), 15);
+		} catch (AssertionError e) {
+			approvalTesting
+					.withMaxFailures(1)
+					.fail(a -> {
+						ImageIO.write(fromFont, "png", a.getPathForFailed("_from_font", ".png").toFile());
+						ImageIO.write(fromSprite, "png", a.getPathForFailed("_from_sprite", ".png").toFile());
+					})
+					.rethrow(e);
+		}
+	}
+
 	//
 	// Test DSL
 	//
 
 	private static final StringBounder NORMAL_BOUNDER = FileFormat.PNG.getDefaultStringBounder();
 
-	private static final Font PLAIN_FONT_20 = new Font(JETBRAINS_FONT_FAMILY, PLAIN, 20);
+	public static final Font PLAIN_FONT_9 = new Font(JETBRAINS_FONT_FAMILY, PLAIN, 9);
+	public static final Font PLAIN_FONT_20 = new Font(JETBRAINS_FONT_FAMILY, PLAIN, 20);
 
 	// Kludge to give us meaningful test names
 	@SuppressWarnings("unused")
@@ -259,18 +317,24 @@ class FontSpriteSheetTest {
 		FontStyle(int style) {
 			this.style = style;
 		}
-
 	}
 
 	@SuppressWarnings("unused")  // injected by ApprovalTestingJUnitExtension
 	private ApprovalTesting approvalTesting;
 
-	private void check_font_sheet_draws_same_as_raw_font(Font font, Color color) throws Exception {
-		final String testString = ALL_CHARS;
+	private static class CheckOptions {
+		Color color = BLACK;
+		Comparator<ColorHSB> comparator = COMPARE_PIXEL_EXACT;
+		int size = 20;
+		String string = ALL_CHARS;
+		FontStyle style = FontStyle.PLAIN;
+	}
 
+	private void check_font_sheet_draws_same_as_raw_font(CheckOptions options) {
+		final Font font = options.style.toFont(options.size);
 		final FontSpriteSheet sheet = createFontSpriteSheet(font);
-		final int margin = 2;
-		final Dimension2D dimension = sheet.calculateDimension(testString);
+		final int margin = 5;
+		final Dimension2D dimension = sheet.calculateDimension(options.string);
 		final int width = roundUp(dimension.getWidth() + 2 * margin);
 		final int height = roundUp(dimension.getHeight() + 2 * margin);
 
@@ -279,10 +343,11 @@ class FontSpriteSheetTest {
 		final BufferedImage image_from_sprite = new BufferedImage(width, height, TYPE_INT_RGB);
 		final Graphics2D g1 = image_from_sprite.createGraphics();
 		g1.setBackground(WHITE);
-		g1.setColor(color);
+		g1.setColor(options.color);
 		g1.clearRect(0, 0, width, height);
-		g1.translate(margin, margin + sheet.getAscent());
-		sheet.drawString(g1, testString, 0, 0);
+		float x = margin;
+		final float spriteY = margin + sheet.getAscent();
+		sheet.drawString(g1, options.string, x, spriteY);
 
 		// Draw using font
 
@@ -290,26 +355,25 @@ class FontSpriteSheetTest {
 		final Graphics2D g2 = image_from_font.createGraphics();
 		g2.setRenderingHint(KEY_TEXT_ANTIALIASING, VALUE_TEXT_ANTIALIAS_GASP);
 		g2.setBackground(WHITE);
-		g2.setColor(color);
+		g2.setColor(options.color);
 		g2.setFont(font);
 		g2.clearRect(0, 0, width, height);
-		g2.translate(margin, margin + g2.getFontMetrics().getAscent());
 
-		for (char c : testString.toCharArray()) {
-			g2.drawString(String.valueOf(c), 0, 0);
-			g2.translate(sheet.getAdvance(), 0);
+		final float fontAscent = new TextLayout(options.string, font, g2.getFontRenderContext()).getAscent();
+		final float fontY = margin + fontAscent;
+
+		for (char c : options.string.toCharArray()) {
+			g2.drawString(String.valueOf(c), x, fontY);
+			x += sheet.getAdvance();
 		}
 
 		// Compare
 
 		try {
-			// tolerance value is explained by the comment in FontSpriteSheet.calculateAlpha()
-			final int tolerance = color.getAlpha() >= 128 && color.getAlpha() <= 254 ? 1 : 0;
-
-			assertImagesEqualWithinTolerance(image_from_font, image_from_sprite, tolerance);
+			assertImagesEqual(image_from_font, image_from_sprite, options.comparator, 0);
 		} catch (AssertionError e) {
 			approvalTesting
-					.withMaxFailures(5)
+					.withMaxFailures(2)
 					.fail(a -> {
 						ImageIO.write(image_from_font, "png", a.getPathForFailed("_from_font", ".png").toFile());
 						ImageIO.write(image_from_sprite, "png", a.getPathForFailed("_from_sprite", ".png").toFile());
