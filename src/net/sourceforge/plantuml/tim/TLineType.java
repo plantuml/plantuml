@@ -34,6 +34,20 @@
  */
 package net.sourceforge.plantuml.tim;
 
+import static java.util.Collections.unmodifiableList;
+import static java.util.Collections.unmodifiableMap;
+import static java.util.Collections.unmodifiableSet;
+import static java.util.Objects.requireNonNull;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public enum TLineType {
 
 	PLAIN, AFFECTATION_DEFINE, AFFECTATION, ASSERT, IF, IFDEF, UNDEF, IFNDEF, ELSE, ELSEIF, ENDIF, WHILE, ENDWHILE,
@@ -53,103 +67,128 @@ public enum TLineType {
 //		return this == ENDIF || elseLike();
 //	}
 
+	private static final List<ComplexDirectiveData> COMPLEX_DIRECTIVES;
+
+	private static final Map<String, TLineType> SIMPLE_DIRECTIVE_MAP;
+
+	private static final Pattern SIMPLE_DIRECTIVE_PATTERN;
+
+	// Messy but provides backwards compatibility (visible for testing)
+	static final Set<String> REQUIRES_TRAILING_SPACE;
+
+	private static class ComplexDirectiveData {
+		final Pattern pattern;
+		final TLineType lineType;
+
+		public ComplexDirectiveData(Pattern pattern, TLineType lineType) {
+			this.pattern = pattern;
+			this.lineType = lineType;
+		}
+	}
+
+	// Init COMPLEX_DIRECTIVES
+	static {
+		final Object[] data = new Object[]{
+				"\\s*!\\s*(local|global)?\\s*\\$?[\\p{L}_][\\p{L}_0-9]*\\s*\\??=.*", AFFECTATION,
+
+				"\\s*!define\\s+[\\p{L}_][\\p{L}_0-9]*\\(.*", LEGACY_DEFINE,
+
+				"\\s*!define\\s+[\\p{L}_][\\p{L}_0-9]*\\b.*", AFFECTATION_DEFINE,
+
+				"\\s*('.*|/'.*'/\\s*)", COMMENT_SIMPLE,
+
+				"\\s*/'([^']|'(?!/))*", COMMENT_LONG_START,
+
+				"\\s*!(unquoted\\s|final\\s)*(procedure)\\s+\\$?[\\p{L}_][\\p{L}_0-9]*.*", DECLARE_PROCEDURE,
+
+				"\\s*!(unquoted\\s|final\\s)*(function)\\s+\\$?[\\p{L}_][\\p{L}_0-9]*.*", DECLARE_RETURN_FUNCTION,
+
+				"\\s*!(end\\s*function|end\\s*definelong|end\\s*procedure)\\b.*", END_FUNCTION,
+
+				"\\s*!definelong\\s+[\\p{L}_][\\p{L}_0-9]*\\b.*", LEGACY_DEFINELONG
+		};
+
+		final List<ComplexDirectiveData> list = new ArrayList<>();
+
+		for (int i = 0; i < data.length; i += 2) {
+			final String pattern = (String) data[i];
+			final TLineType lineType = (TLineType) data[i + 1];
+			list.add(new ComplexDirectiveData(Pattern.compile(pattern), lineType));
+		}
+
+		COMPLEX_DIRECTIVES = unmodifiableList(list);
+	}
+
+	// Init SIMPLE_DIRECTIVE_MAP,  SIMPLE_DIRECTIVE_PATTERN, REQUIRES_TRAILING_SPACE
+	static {
+		final Object[] data = new Object[]{
+				"!assert ", ASSERT,
+				"!dump_memory", DUMP_MEMORY,
+				"!else", ELSE,
+				"!elseif", ELSEIF,
+				"!endfor", ENDFOREACH,
+				"!endif", ENDIF,
+				"!endsub", ENDSUB,
+				"!endwhile", ENDWHILE,
+				"!foreach ", FOREACH,
+				"!if ", IF,
+				"!ifdef ", IFDEF,
+				"!ifndef ", IFNDEF,
+				"!import", IMPORT,
+				"!include", INCLUDE,
+				"!include_many", INCLUDE,
+				"!include_once", INCLUDE,
+				"!includedef", INCLUDE_DEF,
+				"!includesub", INCLUDESUB,
+				"!includeurl", INCLUDE,
+				"!log", LOG,
+				"!return", RETURN,
+				"!startsub ", STARTSUB,
+				"!theme", THEME,
+				"!undef ", UNDEF,
+				"!while ", WHILE,
+		};
+
+		final Map<String, TLineType> map = new HashMap<>();
+		final StringBuilder pattern = new StringBuilder("\\s*(");
+		final Set<String> requiresTrailingSpace = new HashSet<>();
+
+		for (int i = 0; i < data.length; i += 2) {
+			final String directive = (String) data[i];
+			final TLineType lineType = (TLineType) data[i + 1];
+
+			if (i != 0) {
+				pattern.append('|');
+			}
+
+			pattern.append(directive);
+			map.put(directive, lineType);
+
+			if (directive.endsWith(" ")) {
+				requiresTrailingSpace.add(directive.trim());
+			} else {
+				pattern.append("\\b");
+			}
+		}
+
+		pattern.append(").*");
+		REQUIRES_TRAILING_SPACE = unmodifiableSet(requiresTrailingSpace);
+		SIMPLE_DIRECTIVE_MAP = unmodifiableMap(map);
+		SIMPLE_DIRECTIVE_PATTERN = Pattern.compile(pattern.toString());
+	}
+
 	public static TLineType getFromLineInternal(String s) {
-		if (s.matches("^\\s*!define\\s+[\\p{L}_][\\p{L}_0-9]*\\(.*")) {
-			return LEGACY_DEFINE;
+		final Matcher matcher = SIMPLE_DIRECTIVE_PATTERN.matcher(s);
+		if (matcher.matches()) {
+			return requireNonNull(SIMPLE_DIRECTIVE_MAP.get(matcher.group(1)));
 		}
-		if (s.matches("^\\s*!definelong\\s+[\\p{L}_][\\p{L}_0-9]*\\b.*")) {
-			return LEGACY_DEFINELONG;
+
+		for (ComplexDirectiveData data : COMPLEX_DIRECTIVES) {
+			if (data.pattern.matcher(s).matches()) {
+				return data.lineType;
+			}
 		}
-		if (s.matches("^\\s*!define\\s+[\\p{L}_][\\p{L}_0-9]*\\b.*")) {
-			return AFFECTATION_DEFINE;
-		}
-		if (s.matches("^\\s*!\\s*(local|global)?\\s*\\$?[\\p{L}_][\\p{L}_0-9]*\\s*\\??=.*")) {
-			return AFFECTATION;
-		}
-		if (s.matches("^\\s*'.*")) {
-			return COMMENT_SIMPLE;
-		}
-		if (s.matches("^\\s*/'.*'/\\s*$")) {
-			return COMMENT_SIMPLE;
-		}
-		if (s.matches("^\\s*/'.*") && s.contains("'/") == false) {
-			return COMMENT_LONG_START;
-		}
-		if (s.matches("^\\s*!ifdef\\s+.*")) {
-			return IFDEF;
-		}
-		if (s.matches("^\\s*!undef\\s+.*")) {
-			return UNDEF;
-		}
-		if (s.matches("^\\s*!ifndef\\s+.*")) {
-			return IFNDEF;
-		}
-		if (s.matches("^\\s*!assert\\s+.*")) {
-			return ASSERT;
-		}
-		if (s.matches("^\\s*!if\\s+.*")) {
-			return IF;
-		}
-		if (s.matches("^\\s*!(unquoted\\s|final\\s)*(function)\\s+\\$?[\\p{L}_][\\p{L}_0-9]*.*")) {
-			return DECLARE_RETURN_FUNCTION;
-		}
-		if (s.matches("^\\s*!(unquoted\\s|final\\s)*(procedure)\\s+\\$?[\\p{L}_][\\p{L}_0-9]*.*")) {
-			return DECLARE_PROCEDURE;
-		}
-		if (s.matches("^\\s*!else\\b.*")) {
-			return ELSE;
-		}
-		if (s.matches("^\\s*!elseif\\b.*")) {
-			return ELSEIF;
-		}
-		if (s.matches("^\\s*!endif\\b.*")) {
-			return ENDIF;
-		}
-		if (s.matches("^\\s*!while\\s+.*")) {
-			return WHILE;
-		}
-		if (s.matches("^\\s*!endwhile\\b.*")) {
-			return ENDWHILE;
-		}
-		if (s.matches("^\\s*!foreach\\s+.*")) {
-			return FOREACH;
-		}
-		if (s.matches("^\\s*!endfor\\b.*")) {
-			return ENDFOREACH;
-		}
-		if (s.matches("^\\s*!(end\\s*function|end\\s*definelong|end\\s*procedure)\\b.*")) {
-			return END_FUNCTION;
-		}
-		if (s.matches("^\\s*!return\\b.*")) {
-			return RETURN;
-		}
-		if (s.matches("^\\s*!theme\\b.*")) {
-			return THEME;
-		}
-		if (s.matches("^\\s*!(include|includeurl|include_many|include_once)\\b.*")) {
-			return INCLUDE;
-		}
-		if (s.matches("^\\s*!(includedef)\\b.*")) {
-			return INCLUDE_DEF;
-		}
-		if (s.matches("^\\s*!(import)\\b.*")) {
-			return IMPORT;
-		}
-		if (s.matches("^\\s*!startsub\\s+.*")) {
-			return STARTSUB;
-		}
-		if (s.matches("^\\s*!endsub\\b.*")) {
-			return ENDSUB;
-		}
-		if (s.matches("^\\s*!includesub\\b.*")) {
-			return INCLUDESUB;
-		}
-		if (s.matches("^\\s*!(log)\\b.*")) {
-			return LOG;
-		}
-		if (s.matches("^\\s*!(dump_memory)\\b.*")) {
-			return DUMP_MEMORY;
-		}
+
 		return PLAIN;
 	}
 
