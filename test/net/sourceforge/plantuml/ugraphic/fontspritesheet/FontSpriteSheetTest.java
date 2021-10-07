@@ -150,6 +150,22 @@ class FontSpriteSheetTest {
 		final CheckOptions options = new CheckOptions();
 		options.size = size;
 		options.style = style;
+		options.comparator = new Comparator<ColorHSB>() {
+			@Override
+			public int compare(ColorHSB expected, ColorHSB actual) {
+				return (
+						abs(expected.getHue() - actual.getHue()) > 0
+								|| abs(expected.getSaturation() - actual.getSaturation()) > 0
+								|| abs(expected.getBrightness() - actual.getBrightness()) > 0.10
+				) ? 1 : 0;
+			}
+
+			@Override
+			public String toString() {
+				return "custom";
+			}
+		};
+		
 		check_font_sheet_draws_same_as_raw_font(options);
 	}
 
