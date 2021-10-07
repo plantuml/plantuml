@@ -144,7 +144,7 @@ class FontSpriteSheetTest {
 	}
 
 	@CartesianProductTest(name = "{arguments}")
-	@CartesianValueSource(ints = {20, 9, 4, 3})
+	@CartesianValueSource(ints = {20, 9, 5, 4})
 	@CartesianEnumSource(FontStyle.class)
 	void test_font_sheet_draws_same_as_raw_font_using_different_sizes_and_styles(int size, FontStyle style) {
 		final CheckOptions options = new CheckOptions();
@@ -257,9 +257,10 @@ class FontSpriteSheetTest {
 			"<w>wave",
 			"plain",
 	})
-	@CartesianValueSource(strings = {"red", "green", "blue", "yellow", "cyan", "magenta", "black"})
+//	@CartesianValueSource(strings = {"red", "green", "blue", "yellow", "cyan", "magenta", "black"})
+	@CartesianValueSource(strings = {"red", "black"})
 	@CartesianValueSource(ints = {9, 20})
-	@IntRangeSource(from = 0, to = 255)
+	@IntRangeSource(from = 0, to = 255, step = 14)
 	void test_plantuml_draws_same_with_font_and_sprite(String text, String fgColor, int size, int backAlpha) throws Exception {
 		final String[] source = {
 				"@startuml",
