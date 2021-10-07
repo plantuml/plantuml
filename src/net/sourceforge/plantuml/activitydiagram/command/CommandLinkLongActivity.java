@@ -126,7 +126,7 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 		}
 
 		if (line0.get("STEREOTYPE", 0) != null) {
-			entity1.setStereotype(new Stereotype(line0.get("STEREOTYPE", 0)));
+			entity1.setStereotype(Stereotype.build(line0.get("STEREOTYPE", 0)));
 		}
 		final String stringColor = line0.get("BACKCOLOR", 0);
 		if (stringColor != null) {
@@ -196,7 +196,7 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 		}
 
 		if (lineLast.get(2) != null) {
-			entity2.setStereotype(new Stereotype(lineLast.get(2)));
+			entity2.setStereotype(Stereotype.build(lineLast.get(2)));
 		}
 		if (lineLast.get(4) != null) {
 			String s = lineLast.get(4);

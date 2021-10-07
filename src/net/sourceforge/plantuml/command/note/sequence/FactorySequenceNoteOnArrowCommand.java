@@ -153,7 +153,7 @@ public final class FactorySequenceNoteOnArrowCommand implements SingleMultiFacto
 			final Note note = new Note(display, position, style, diagram.getSkinParam().getCurrentStyleBuilder());
 			final String stereotypeString = line0.get("STEREO", 0);
 			if (stereotypeString != null) {
-				final Stereotype stereotype = new Stereotype(stereotypeString);
+				final Stereotype stereotype = Stereotype.build(stereotypeString);
 				colors = colors.applyStereotypeForNote(stereotype, diagram.getSkinParam(), FontParam.NOTE,
 						ColorParam.noteBackground, ColorParam.noteBorder);
 				note.setStereotype(stereotype);

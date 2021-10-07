@@ -158,7 +158,7 @@ public final class FactorySequenceNoteCommand implements SingleMultiFactoryComma
 					diagram.getSkinParam().getIHtmlColorSet());
 			final String stereotypeString = arg.get("STEREO", 0);
 			if (stereotypeString != null) {
-				final Stereotype stereotype = new Stereotype(stereotypeString);
+				final Stereotype stereotype = Stereotype.build(stereotypeString);
 				colors = colors.applyStereotypeForNote(stereotype, diagram.getSkinParam(), FontParam.NOTE,
 						ColorParam.noteBackground, ColorParam.noteBorder);
 				note.setStereotype(stereotype);

@@ -215,8 +215,15 @@ class FtileRepeat extends AbstractFtile {
 			final StringBounder stringBounder = ug.getStringBounder();
 
 			final Snake snake = Snake.create(arrowColor, Arrows.asToDown()).withLabel(tbin, arrowHorizontalAlignment());
-			snake.addPoint(getP1(stringBounder));
-			snake.addPoint(getP2(stringBounder));
+			final Point2D p1 = getP1(stringBounder);
+			final Point2D p2 = getP2(stringBounder);
+			snake.addPoint(p1);
+			if (p1.getX() != p2.getX()) {
+				final double my = (p1.getY() + p2.getY()) / 2;
+				snake.addPoint(new Point2D.Double(p1.getX(), my));
+				snake.addPoint(new Point2D.Double(p2.getX(), my));
+			}
+			snake.addPoint(p2);
 
 			ug.draw(snake);
 		}

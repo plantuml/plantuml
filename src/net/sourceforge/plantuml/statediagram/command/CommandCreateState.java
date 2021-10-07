@@ -123,7 +123,7 @@ public class CommandCreateState extends SingleLineCommand2<StateDiagram> {
 		ent.setDisplay(Display.getWithNewlines(display));
 
 		if (stereotype != null) {
-			ent.setStereotype(new Stereotype(stereotype));
+			ent.setStereotype(Stereotype.build(stereotype));
 		}
 		final String urlString = arg.get("URL", 0);
 		if (urlString != null) {

@@ -114,7 +114,7 @@ public class CommandLinkState extends SingleLineCommand2<StateDiagram> {
 		}
 
 		if (arg.get("ENT1", 1) != null) {
-			cl1.setStereotype(new Stereotype(arg.get("ENT1", 1)));
+			cl1.setStereotype(Stereotype.build(arg.get("ENT1", 1)));
 		}
 		if (arg.get("ENT1", 2) != null) {
 			final String s = arg.get("ENT1", 2);
@@ -122,7 +122,7 @@ public class CommandLinkState extends SingleLineCommand2<StateDiagram> {
 					diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(), s));
 		}
 		if (arg.get("ENT2", 1) != null) {
-			cl2.setStereotype(new Stereotype(arg.get("ENT2", 1)));
+			cl2.setStereotype(Stereotype.build(arg.get("ENT2", 1)));
 		}
 		if (arg.get("ENT2", 2) != null) {
 			final String s = arg.get("ENT2", 2);

@@ -78,6 +78,8 @@ public class ConditionalBuilder {
 	private final Swimlane swimlane;
 	private final HColor borderColor;
 	private final HColor backColor;
+	private final LineBreakStrategy diamondLineBreak;
+	private final LineBreakStrategy labelLineBreak;
 	private final Rainbow arrowColor;
 	private final FtileFactory ftileFactory;
 	private final ConditionStyle conditionStyle;
@@ -110,6 +112,8 @@ public class ConditionalBuilder {
 					.getMergedStyle(skinParam.getCurrentStyleBuilder());
 			final Style styleDiamond = getDefaultStyleDefinitionDiamond()
 					.getMergedStyle(skinParam.getCurrentStyleBuilder());
+			this.diamondLineBreak = styleDiamond.wrapWidth();
+			this.labelLineBreak = styleArrow.wrapWidth();
 			this.borderColor = styleDiamond.value(PName.LineColor).asColor(skinParam.getThemeStyle(),
 					skinParam.getIHtmlColorSet());
 			this.backColor = styleDiamond.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
@@ -120,6 +124,8 @@ public class ConditionalBuilder {
 			this.fontTest = styleDiamond.getFontConfiguration(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
 			this.fontArrow = styleArrow.getFontConfiguration(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
 		} else {
+			this.diamondLineBreak = LineBreakStrategy.NONE;
+			this.labelLineBreak = LineBreakStrategy.NONE;
 			this.borderColor = borderColor;
 			this.backColor = backColor;
 			this.arrowColor = arrowColor;
@@ -242,7 +248,7 @@ public class ConditionalBuilder {
 
 		final Sheet sheet = Parser.build(fontTest, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT),
 				skinParam, CreoleMode.FULL).createSheet(labelTest);
-		final SheetBlock1 sheetBlock1 = new SheetBlock1(sheet, LineBreakStrategy.NONE, skinParam.getPadding());
+		final SheetBlock1 sheetBlock1 = new SheetBlock1(sheet, diamondLineBreak, skinParam.getPadding());
 		final TextBlock tbTest = new SheetBlock2(sheetBlock1, Diamond.asStencil(sheetBlock1), tile1.getThickness());
 
 		final Ftile diamond1;
@@ -277,8 +283,8 @@ public class ConditionalBuilder {
 	}
 
 	private TextBlock getLabelPositive(Branch branch) {
-		return branch.getLabelPositive().create7(fontArrow, HorizontalAlignment.LEFT, ftileFactory.skinParam(),
-				CreoleMode.SIMPLE_LINE);
+		return branch.getLabelPositive().create0(fontArrow, HorizontalAlignment.LEFT, ftileFactory.skinParam(),
+				labelLineBreak, CreoleMode.SIMPLE_LINE, null, null);
 	}
 
 	private Ftile getDiamond2(Branch branch1, Branch branch2, boolean useNorth) {
