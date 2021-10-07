@@ -87,12 +87,15 @@ import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
+import net.sourceforge.plantuml.utils.SoftReferenceCache;
 
 public class SkinParam implements ISkinParam {
 
 	// TODO not clear whether SkinParam or ImageBuilder is responsible for defaults
 	public static final String DEFAULT_PRESERVE_ASPECT_RATIO = "none";
 
+	private static SoftReferenceCache<String, StyleBuilder> STYLE_BUILDER_CACHE = new SoftReferenceCache<>();
+	
 	// private String skin = "debug.skin";
 
 	private String skin = "plantuml.skin";
@@ -138,7 +141,7 @@ public class SkinParam implements ISkinParam {
 	public StyleBuilder getCurrentStyleBuilder() {
 		if (styleBuilder == null && UseStyle.useBetaStyle()) {
 			try {
-				this.styleBuilder = getCurrentStyleBuilderInternal();
+				this.styleBuilder = createStyleBuilder();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -160,14 +163,21 @@ public class SkinParam implements ISkinParam {
 		this.skin = newSkin;
 	}
 
-	public StyleBuilder getCurrentStyleBuilderInternal() throws IOException {
-		final StyleLoader tmp = new StyleLoader(this);
-		StyleBuilder result = tmp.loadSkin(this.getDefaultSkin());
-		if (result == null) {
-			result = tmp.loadSkin("plantuml.skin");
+	public StyleBuilder createStyleBuilder() throws IOException {
+		// TODO /skin/strictuml.skin is loaded below - be nice to cache it also
+		// TODO StyleLoader can be reused?
+		final String skinName = this.getDefaultSkin();
+		StyleBuilder builder = STYLE_BUILDER_CACHE.get(skinName);
+		if (builder == null) {
+			builder = new StyleLoader(this).loadSkin(skinName);
+			STYLE_BUILDER_CACHE.put(skinName, builder);
 		}
+		return builder.cloneForReuse(this);
 
-		return result;
+		// todo never happens, an exception prevents it 
+//		if (result == null) { 
+//			result = tmp.loadSkin("plantuml.skin");
+//		}
 	}
 
 	public static int zeroMargin(int defaultValue) {

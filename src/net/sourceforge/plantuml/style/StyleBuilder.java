@@ -63,6 +63,14 @@ public class StyleBuilder implements AutomaticCounter {
 		this.printedForLog = new LinkedHashSet<>();
 	}
 
+	// TODO might need more thought
+	public StyleBuilder cloneForReuse(SkinParam skinParam) {
+		final StyleBuilder result = new StyleBuilder(skinParam);
+		result.counter = counter;
+		result.styles.putAll(styles);
+		return result;
+	}
+
 	public StyleBuilder(SkinParam skinParam) {
 		this(skinParam, new LinkedHashSet<StyleSignature>());
 	}
