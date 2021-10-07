@@ -103,6 +103,7 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock, Styleable
 
 	private LinkRendering nextLinkRenderer = LinkRendering.none();
 	private Style style;
+	private TextBlock full;
 
 	private List<Swimlane> swimlanes() {
 		return Collections.unmodifiableList(swimlanesRaw);
@@ -206,14 +207,13 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock, Styleable
 	public final void computeSize(StringBounder stringBounder) {
 		final SlotFinder ug = new SlotFinder(CompressionMode.ON_Y, stringBounder);
 		if (swimlanes().size() > 1) {
-			TextBlock full = root.createFtile(getFtileFactory(stringBounder));
-			computeSizeInternal(ug, full);
+			computeSizeInternal(ug, getFull(stringBounder));
 		}
 
 	}
 
 	public final void drawU(UGraphic ug) {
-		TextBlock full = root.createFtile(getFtileFactory(ug.getStringBounder()));
+		TextBlock full = getFull(ug.getStringBounder());
 
 		ug = new UGraphicForSnake(ug);
 		if (swimlanes().size() > 1) {
@@ -226,6 +226,14 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock, Styleable
 		}
 	}
 
+	// TODO not convinced this is a safe optimization - need to enforce same string bounder?
+	private TextBlock getFull(StringBounder stringBounder) {
+		if (full == null) {
+			full = root.createFtile(getFtileFactory(stringBounder));
+		}
+		return full;
+	}
+	
 	private TextBlock getTitle(Swimlane swimlane) {
 		final HorizontalAlignment horizontalAlignment = HorizontalAlignment.LEFT;
 		FontConfiguration fontConfiguration = new FontConfiguration(skinParam, FontParam.SWIMLANE_TITLE, null);
