@@ -274,7 +274,7 @@ class FontSpriteSheetTest {
 			"plain",
 	})
 //	@CartesianValueSource(strings = {"red", "green", "blue", "yellow", "cyan", "magenta", "black"})
-	@CartesianValueSource(strings = {"red", "black"})
+	@CartesianValueSource(strings = {"black"})
 	@CartesianValueSource(ints = {9, 20})
 	@IntRangeSource(from = 0, to = 255, step = 14)
 	void test_plantuml_draws_same_with_font_and_sprite(String text, String fgColor, int size, int backAlpha) throws Exception {
