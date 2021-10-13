@@ -119,6 +119,9 @@ skinparam Note {
   FontColor $FGCOLOR
   FontName $FONT_NAME
 }
+skinparam Object {
+  BorderColor $FGCOLOR
+}
 skinparam Package {
   BorderColor $FGCOLOR
   FontColor $FGCOLOR
