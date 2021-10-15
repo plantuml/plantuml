@@ -37,19 +37,14 @@ package net.sourceforge.plantuml.ugraphic.visio;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.URectangle;
-import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 
-public class DriverRectangleVdx implements UDriver<VisioGraphics> {
+public class DriverRectangleVdx implements UDriver<URectangle, VisioGraphics> {
 
-	public void draw(UShape shape, double x, double y, ColorMapper mapper, UParam param, VisioGraphics visio) {
-		final URectangle rect = (URectangle) shape;
-
+	public void draw(URectangle rect, double x, double y, ColorMapper mapper, UParam param, VisioGraphics visio) {
 		final double width = rect.getWidth();
 		final double height = rect.getHeight();
-
 		visio.rectangle(x, y, width, height);
-
 	}
 
 }

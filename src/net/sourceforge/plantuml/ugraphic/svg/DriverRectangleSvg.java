@@ -42,12 +42,11 @@ import net.sourceforge.plantuml.ugraphic.UClip;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.URectangle;
-import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorGradient;
 
-public class DriverRectangleSvg implements UDriver<SvgGraphics> {
+public class DriverRectangleSvg implements UDriver<URectangle, SvgGraphics> {
 
 	private final ClipContainer clipContainer;
 
@@ -55,9 +54,7 @@ public class DriverRectangleSvg implements UDriver<SvgGraphics> {
 		this.clipContainer = clipContainer;
 	}
 
-	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, SvgGraphics svg) {
-		final URectangle rect = (URectangle) ushape;
-
+	public void draw(URectangle rect, double x, double y, ColorMapper mapper, UParam param, SvgGraphics svg) {
 		final double rx = rect.getRx();
 		final double ry = rect.getRy();
 		double width = rect.getWidth();

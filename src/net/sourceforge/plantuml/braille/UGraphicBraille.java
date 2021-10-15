@@ -103,14 +103,14 @@ public class UGraphicBraille extends AbstractUGraphic<BrailleGrid> implements Cl
 	}
 
 	private void register() {
-		registerDriver(URectangle.class, new DriverNoneBraille());
+		ignoreShape(URectangle.class);
 		registerDriver(URectangle.class, new DriverRectangleBraille(this));
 		registerDriver(UText.class, new DriverTextBraille());
 		registerDriver(ULine.class, new DriverLineBraille(this));
 		registerDriver(UPolygon.class, new DriverPolygonBraille(this));
-		registerDriver(UEllipse.class, new DriverNoneBraille());
-		registerDriver(UImage.class, new DriverNoneBraille());
-		registerDriver(UPath.class, new DriverNoneBraille());
+		ignoreShape(UEllipse.class);
+		ignoreShape(UImage.class);
+		ignoreShape(UPath.class);
 		registerDriver(DotPath.class, new DriverDotPathBraille());
 		registerDriver(UCenteredCharacter.class, new DriverCenteredCharacterBraille());
 	}

@@ -40,13 +40,12 @@ import net.sourceforge.plantuml.ugraphic.UClip;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.UPath;
-import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorGradient;
 import net.sourceforge.plantuml.ugraphic.g2d.DriverShadowedG2d;
 
-public class DriverPathSvg extends DriverShadowedG2d implements UDriver<SvgGraphics> {
+public class DriverPathSvg extends DriverShadowedG2d implements UDriver<UPath, SvgGraphics> {
 
 	private final ClipContainer clipContainer;
 
@@ -54,9 +53,7 @@ public class DriverPathSvg extends DriverShadowedG2d implements UDriver<SvgGraph
 		this.clipContainer = clipContainer;
 	}
 
-	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, SvgGraphics svg) {
-		final UPath shape = (UPath) ushape;
-
+	public void draw(UPath shape, double x, double y, ColorMapper mapper, UParam param, SvgGraphics svg) {
 		final UClip clip = clipContainer.getClip();
 		if (clip != null && clip.isInside(x, y, shape) == false) {
 			return;

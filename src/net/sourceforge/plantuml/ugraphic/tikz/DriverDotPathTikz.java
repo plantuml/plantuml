@@ -38,13 +38,11 @@ import net.sourceforge.plantuml.posimo.DotPath;
 import net.sourceforge.plantuml.tikz.TikzGraphics;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UParam;
-import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 
-public class DriverDotPathTikz implements UDriver<TikzGraphics> {
+public class DriverDotPathTikz implements UDriver<DotPath, TikzGraphics> {
 
-	public void draw(UShape shape, double x, double y, ColorMapper mapper, UParam param, TikzGraphics tikz) {
-		final DotPath path = (DotPath) shape;
+	public void draw(DotPath path, double x, double y, ColorMapper mapper, UParam param, TikzGraphics tikz) {
 		tikz.setFillColor(null);
 		tikz.setStrokeColor(mapper.toColor(param.getColor()));
 		tikz.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDashTikz());

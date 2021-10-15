@@ -76,14 +76,14 @@ public class UGraphicTikz extends AbstractUGraphic<TikzGraphics> implements Clip
 
 	private void register() {
 		registerDriver(URectangle.class, new DriverRectangleTikz());
-		registerDriver(UText.class, new DriverUTextTikz());
+		registerDriver(UText.class, new DriverTextTikz());
 		registerDriver(AtomText.class, new DriverAtomTextTikz());
 		registerDriver(ULine.class, new DriverLineTikz());
 		registerDriver(UPolygon.class, new DriverPolygonTikz());
 		registerDriver(UEllipse.class, new DriverEllipseTikz());
 		registerDriver(UImage.class, new DriverImageTikz());
-		registerDriver(UImageSvg.class, new DriverNoneTikz());
-		registerDriver(UPath.class, new DriverUPathTikz());
+		ignoreShape(UImageSvg.class);
+		registerDriver(UPath.class, new DriverPathTikz());
 		registerDriver(DotPath.class, new DriverDotPathTikz());
 		// registerDriver(UCenteredCharacter.class, new DriverCenteredCharacterTikz());
 		registerDriver(UCenteredCharacter.class, new DriverCenteredCharacterTikz2());

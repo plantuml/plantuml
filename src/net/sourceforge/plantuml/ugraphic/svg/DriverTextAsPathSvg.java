@@ -43,11 +43,10 @@ import net.sourceforge.plantuml.ugraphic.ClipContainer;
 import net.sourceforge.plantuml.ugraphic.UClip;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UParam;
-import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UText;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 
-public class DriverTextAsPathSvg implements UDriver<SvgGraphics> {
+public class DriverTextAsPathSvg implements UDriver<UText, SvgGraphics> {
 
 	private final ClipContainer clipContainer;
 
@@ -55,14 +54,13 @@ public class DriverTextAsPathSvg implements UDriver<SvgGraphics> {
 		this.clipContainer = clipContainer;
 	}
 
-	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, SvgGraphics svg) {
-
+	public void draw(UText ushape, double x, double y, ColorMapper mapper, UParam param, SvgGraphics svg) {
 		final UClip clip = clipContainer.getClip();
 		if (clip != null && clip.isInside(x, y) == false) {
 			return;
 		}
 
-		final TextLayout t = createTextLayout((UText) ushape);
+		final TextLayout t = createTextLayout(ushape);
 		svg.drawPathIterator(x, y, t.getOutline(null).getPathIterator(null));
 	}
 

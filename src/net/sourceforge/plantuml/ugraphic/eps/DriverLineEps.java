@@ -42,10 +42,9 @@ import net.sourceforge.plantuml.ugraphic.UClip;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UParam;
-import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 
-public class DriverLineEps implements UDriver<EpsGraphics> {
+public class DriverLineEps implements UDriver<ULine, EpsGraphics> {
 
 	private final ClipContainer clipContainer;
 
@@ -53,9 +52,7 @@ public class DriverLineEps implements UDriver<EpsGraphics> {
 		this.clipContainer = clipContainer;
 	}
 
-	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, EpsGraphics eps) {
-		final ULine shape = (ULine) ushape;
-
+	public void draw(ULine shape, double x, double y, ColorMapper mapper, UParam param, EpsGraphics eps) {
 		double x2 = x + shape.getDX();
 		double y2 = y + shape.getDY();
 

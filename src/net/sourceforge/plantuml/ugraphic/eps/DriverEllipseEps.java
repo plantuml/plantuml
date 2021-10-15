@@ -40,10 +40,9 @@ import net.sourceforge.plantuml.ugraphic.UClip;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UParam;
-import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 
-public class DriverEllipseEps implements UDriver<EpsGraphics> {
+public class DriverEllipseEps implements UDriver<UEllipse, EpsGraphics> {
 
 	private final ClipContainer clipContainer;
 
@@ -51,8 +50,7 @@ public class DriverEllipseEps implements UDriver<EpsGraphics> {
 		this.clipContainer = clipContainer;
 	}
 
-	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, EpsGraphics eps) {
-		final UEllipse shape = (UEllipse) ushape;
+	public void draw(UEllipse shape, double x, double y, ColorMapper mapper, UParam param, EpsGraphics eps) {
 		final double width = shape.getWidth();
 		final double height = shape.getHeight();
 

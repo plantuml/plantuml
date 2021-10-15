@@ -37,13 +37,11 @@ package net.sourceforge.plantuml.ugraphic.visio;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
-import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 
-public class DriverPolygonVdx implements UDriver<VisioGraphics> {
+public class DriverPolygonVdx implements UDriver<UPolygon, VisioGraphics> {
 
-	public void draw(UShape shape, double x, double y, ColorMapper mapper, UParam param, VisioGraphics visio) {
-		final UPolygon poly = (UPolygon) shape;
+	public void draw(UPolygon poly, double x, double y, ColorMapper mapper, UParam param, VisioGraphics visio) {
 		visio.polygon(poly.translate(x, y));
 	}
 
