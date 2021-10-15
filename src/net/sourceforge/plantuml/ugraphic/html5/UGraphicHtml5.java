@@ -59,10 +59,10 @@ public class UGraphicHtml5 extends AbstractUGraphic<Html5Drawer> implements Clip
 		super(defaultBackground, colorMapper, FileFormat.PNG.getDefaultStringBounder(), new Html5Drawer());
 		registerDriver(URectangle.class, new DriverRectangleHtml5(this));
 		// registerDriver(UText.class, new DriverTextEps(imDummy, this, strategy));
-		registerDriver(UText.class, new DriverNopHtml5());
+		ignoreShape(UText.class);
 		registerDriver(ULine.class, new DriverLineHtml5(this));
 		// registerDriver(UPolygon.class, new DriverPolygonEps(this));
-		registerDriver(UPolygon.class, new DriverNopHtml5());
+		ignoreShape(UPolygon.class);
 		// registerDriver(UEllipse.class, new DriverEllipseEps());
 		// registerDriver(UImage.class, new DriverImageEps());
 		// registerDriver(UPath.class, new DriverPathEps());

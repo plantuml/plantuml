@@ -44,14 +44,13 @@ import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.USegment;
 import net.sourceforge.plantuml.ugraphic.USegmentType;
-import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.arc.ExtendedGeneralPath;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorGradient;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
-public class DriverPathG2d extends DriverShadowedG2d implements UDriver<Graphics2D> {
+public class DriverPathG2d extends DriverShadowedG2d implements UDriver<UPath, Graphics2D> {
 
 	private final double dpiFactor;
 
@@ -59,8 +58,7 @@ public class DriverPathG2d extends DriverShadowedG2d implements UDriver<Graphics
 		this.dpiFactor = dpiFactor;
 	}
 
-	public void draw(UShape ushape, final double x, final double y, ColorMapper mapper, UParam param, Graphics2D g2d) {
-		final UPath shape = (UPath) ushape;
+	public void draw(UPath shape, final double x, final double y, ColorMapper mapper, UParam param, Graphics2D g2d) {
 		DriverLineG2d.manageStroke(param, g2d);
 
 		final HColor back = param.getBackcolor();

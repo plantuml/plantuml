@@ -37,13 +37,11 @@ package net.sourceforge.plantuml.ugraphic.visio;
 import net.sourceforge.plantuml.posimo.DotPath;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UParam;
-import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 
-public class DriverDotPathVdx implements UDriver<VisioGraphics> {
+public class DriverDotPathVdx implements UDriver<DotPath, VisioGraphics> {
 
-	public void draw(UShape shape, double x, double y, ColorMapper mapper, UParam param, VisioGraphics visio) {
-		final DotPath path = (DotPath) shape;
+	public void draw(DotPath path, double x, double y, ColorMapper mapper, UParam param, VisioGraphics visio) {
 		visio.upath(x, y, path.toUPath());
 	}
 

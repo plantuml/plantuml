@@ -43,12 +43,11 @@ import java.awt.geom.Line2D;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UParam;
-import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
-public class DriverLineG2d extends DriverShadowedG2d implements UDriver<Graphics2D> {
+public class DriverLineG2d extends DriverShadowedG2d implements UDriver<ULine, Graphics2D> {
 
 	private final double dpiFactor;
 
@@ -56,9 +55,7 @@ public class DriverLineG2d extends DriverShadowedG2d implements UDriver<Graphics
 		this.dpiFactor = dpiFactor;
 	}
 
-	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, Graphics2D g2d) {
-		final ULine shape = (ULine) ushape;
-
+	public void draw(ULine shape, double x, double y, ColorMapper mapper, UParam param, Graphics2D g2d) {
 		final Shape line = new Line2D.Double(x, y, x + shape.getDX(), y + shape.getDY());
 		manageStroke(param, g2d);
 		// Shadow

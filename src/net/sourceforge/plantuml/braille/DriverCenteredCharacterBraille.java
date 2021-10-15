@@ -38,14 +38,11 @@ package net.sourceforge.plantuml.braille;
 import net.sourceforge.plantuml.ugraphic.UCenteredCharacter;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UParam;
-import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 
-public class DriverCenteredCharacterBraille implements UDriver<BrailleGrid> {
+public class DriverCenteredCharacterBraille implements UDriver<UCenteredCharacter, BrailleGrid> {
 
-	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, BrailleGrid grid) {
-		final UCenteredCharacter characterCircled = (UCenteredCharacter) ushape;
-
+	public void draw(UCenteredCharacter characterCircled, double x, double y, ColorMapper mapper, UParam param, BrailleGrid grid) {
 		final double xpos = x;
 		final double ypos = y;
 

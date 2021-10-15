@@ -49,7 +49,7 @@ public interface UGraphic {
 
 	public UParam getParam();
 
-	public void draw(UShape shape);
+	public <SHAPE extends UShape> void draw(SHAPE shape);
 
 	public UGraphic apply(UChange change);
 

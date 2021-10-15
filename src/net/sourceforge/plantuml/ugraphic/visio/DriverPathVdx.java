@@ -32,15 +32,17 @@
  * Original Author:  Arnaud Roques
  *
  */
-package net.sourceforge.plantuml.ugraphic.html5;
+package net.sourceforge.plantuml.ugraphic.visio;
 
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UParam;
-import net.sourceforge.plantuml.ugraphic.UShape;
+import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 
-public class DriverNopHtml5 implements UDriver<Html5Drawer> {
+public class DriverPathVdx implements UDriver<UPath, VisioGraphics> {
 
-	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, Html5Drawer html) {
+	public void draw(UPath path, double x, double y, ColorMapper mapper, UParam param, VisioGraphics visio) {
+		visio.upath(x, y, path);
 	}
+
 }

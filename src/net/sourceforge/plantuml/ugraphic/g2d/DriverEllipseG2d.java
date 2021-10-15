@@ -46,12 +46,11 @@ import net.sourceforge.plantuml.EnsureVisible;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UParam;
-import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorGradient;
 
-public class DriverEllipseG2d extends DriverShadowedG2d implements UDriver<Graphics2D> {
+public class DriverEllipseG2d extends DriverShadowedG2d implements UDriver<UEllipse, Graphics2D> {
 
 	private final double dpiFactor;
 	private final EnsureVisible visible;
@@ -61,8 +60,7 @@ public class DriverEllipseG2d extends DriverShadowedG2d implements UDriver<Graph
 		this.visible = visible;
 	}
 
-	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, Graphics2D g2d) {
-		final UEllipse ellipse = (UEllipse) ushape;
+	public void draw(UEllipse ellipse, double x, double y, ColorMapper mapper, UParam param, Graphics2D g2d) {
 		g2d.setStroke(new BasicStroke((float) param.getStroke().getThickness()));
 		visible.ensureVisible(x, y);
 		visible.ensureVisible(x + ellipse.getWidth(), y + ellipse.getHeight());

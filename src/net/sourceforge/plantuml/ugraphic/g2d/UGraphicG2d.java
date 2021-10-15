@@ -148,7 +148,7 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> implements EnsureV
 		registerDriver(UPixel.class, new DriverPixelG2d());
 		registerDriver(UPolygon.class, new DriverPolygonG2d(dpiFactor, this));
 		registerDriver(UEllipse.class, new DriverEllipseG2d(dpiFactor, this));
-		registerDriver(UImageSvg.class, new DriverImageG2d(dpiFactor, this));
+		ignoreShape(UImageSvg.class);
 		registerDriver(UImage.class, new DriverImageG2d(dpiFactor, this));
 		registerDriver(DotPath.class, new DriverDotPathG2d(this));
 		registerDriver(UPath.class, new DriverPathG2d(dpiFactor));

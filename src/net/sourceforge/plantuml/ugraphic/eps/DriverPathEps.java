@@ -38,14 +38,11 @@ import net.sourceforge.plantuml.eps.EpsGraphics;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.UPath;
-import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 
-public class DriverPathEps implements UDriver<EpsGraphics> {
+public class DriverPathEps implements UDriver<UPath, EpsGraphics> {
 
-	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, EpsGraphics eps) {
-		final UPath shape = (UPath) ushape;
-
+	public void draw(UPath shape, double x, double y, ColorMapper mapper, UParam param, EpsGraphics eps) {
 		eps.setStrokeColor(mapper.toColor(param.getColor()));
 		eps.setFillColor(mapper.toColor(param.getBackcolor()));
 		eps.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDashVisible(), param

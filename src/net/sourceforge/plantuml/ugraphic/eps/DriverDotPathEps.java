@@ -39,13 +39,11 @@ import net.sourceforge.plantuml.eps.EpsGraphics;
 import net.sourceforge.plantuml.posimo.DotPath;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UParam;
-import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 
-public class DriverDotPathEps implements UDriver<EpsGraphics> {
+public class DriverDotPathEps implements UDriver<DotPath, EpsGraphics> {
 
-	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, EpsGraphics eps) {
-		final DotPath shape = (DotPath) ushape;
+	public void draw(DotPath shape, double x, double y, ColorMapper mapper, UParam param, EpsGraphics eps) {
 		//DriverLineG2d.manageStroke(param, g2d);
 
 		if (param.getColor() != null) {

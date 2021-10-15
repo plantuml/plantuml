@@ -41,12 +41,10 @@ import java.awt.geom.AffineTransform;
 import net.sourceforge.plantuml.EnsureVisible;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UImage;
-import net.sourceforge.plantuml.ugraphic.UImageSvg;
 import net.sourceforge.plantuml.ugraphic.UParam;
-import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 
-public class DriverImageG2d implements UDriver<Graphics2D> {
+public class DriverImageG2d implements UDriver<UImage, Graphics2D> {
 
 	private final EnsureVisible visible;
 
@@ -57,11 +55,7 @@ public class DriverImageG2d implements UDriver<Graphics2D> {
 		this.dpiFactor = dpiFactor;
 	}
 
-	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, Graphics2D g2d) {
-		if (ushape instanceof UImageSvg) {
-			return;
-		}
-		final UImage shape = ((UImage) ushape);
+	public void draw(UImage shape, double x, double y, ColorMapper mapper, UParam param, Graphics2D g2d) {
 		visible.ensureVisible(x, y);
 		visible.ensureVisible(x + shape.getWidth(), y + shape.getHeight());
 		if (dpiFactor == 1) {

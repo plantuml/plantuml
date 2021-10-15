@@ -39,12 +39,12 @@ import java.awt.Graphics2D;
 
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UParam;
-import net.sourceforge.plantuml.ugraphic.UShape;
+import net.sourceforge.plantuml.ugraphic.UPixel;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 
-public class DriverPixelG2d implements UDriver<Graphics2D> {
+public class DriverPixelG2d implements UDriver<UPixel, Graphics2D> {
 
-	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, Graphics2D g2d) {
+	public void draw(UPixel pixel, double x, double y, ColorMapper mapper, UParam param, Graphics2D g2d) {
 		g2d.setColor(mapper.toColor(param.getColor()));
 		g2d.fillRect((int) x, (int) y, 1, 1);
 	}

@@ -42,13 +42,11 @@ import net.sourceforge.plantuml.ugraphic.UCenteredCharacter;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UParam;
-import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 
-public class DriverCenteredCharacterG2d implements UDriver<Graphics2D> {
+public class DriverCenteredCharacterG2d implements UDriver<UCenteredCharacter, Graphics2D> {
 
-	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, Graphics2D g2d) {
-		final UCenteredCharacter characterCircled = (UCenteredCharacter) ushape;
+	public void draw(UCenteredCharacter characterCircled, double x, double y, ColorMapper mapper, UParam param, Graphics2D g2d) {
 		final char c = characterCircled.getChar();
 		final UFont font = characterCircled.getFont();
 		final UnusedSpace unusedSpace = UnusedSpace.getUnusedSpace(font, c);

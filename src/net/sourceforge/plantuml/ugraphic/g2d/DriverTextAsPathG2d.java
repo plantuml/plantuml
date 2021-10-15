@@ -55,12 +55,11 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UParam;
-import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UText;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
-public class DriverTextAsPathG2d implements UDriver<Graphics2D> {
+public class DriverTextAsPathG2d implements UDriver<UText, Graphics2D> {
 
 	private final EnsureVisible visible;
 	private final StringBounder stringBounder;
@@ -79,8 +78,7 @@ public class DriverTextAsPathG2d implements UDriver<Graphics2D> {
 		}
 	}
 
-	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, Graphics2D g2d) {
-		final UText shape = (UText) ushape;
+	public void draw(UText shape, double x, double y, ColorMapper mapper, UParam param, Graphics2D g2d) {
 		final FontConfiguration fontConfiguration = shape.getFontConfiguration();
 
 		final UFont font = fontConfiguration.getFont();
