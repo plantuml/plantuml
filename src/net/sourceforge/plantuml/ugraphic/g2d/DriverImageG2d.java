@@ -38,26 +38,16 @@ package net.sourceforge.plantuml.ugraphic.g2d;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 
-import net.sourceforge.plantuml.EnsureVisible;
 import net.sourceforge.plantuml.ugraphic.UDriver;
+import net.sourceforge.plantuml.ugraphic.UDriverContext;
 import net.sourceforge.plantuml.ugraphic.UImage;
-import net.sourceforge.plantuml.ugraphic.UParam;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 
 public class DriverImageG2d implements UDriver<UImage, Graphics2D> {
 
-	private final EnsureVisible visible;
-
-	private final double dpiFactor;
-
-	public DriverImageG2d(double dpiFactor, EnsureVisible visible) {
-		this.visible = visible;
-		this.dpiFactor = dpiFactor;
-	}
-
-	public void draw(UImage shape, double x, double y, ColorMapper mapper, UParam param, Graphics2D g2d) {
-		visible.ensureVisible(x, y);
-		visible.ensureVisible(x + shape.getWidth(), y + shape.getHeight());
+	public void draw(UImage shape, double x, double y, UDriverContext context, Graphics2D g2d) {
+		context.ensureVisible(x, y);
+		context.ensureVisible(x + shape.getWidth(), y + shape.getHeight());
+		final double dpiFactor = context.getDpiFactor();
 		if (dpiFactor == 1) {
 			g2d.drawImage(shape.getImage(1), (int) (x), (int) (y), null);
 		} else {

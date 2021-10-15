@@ -35,9 +35,8 @@
  */
 package net.sourceforge.plantuml.ugraphic;
 
-import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
-
 public interface UDriver<SHAPE extends UShape, O> {
-	public void draw(SHAPE shape, double x, double y, ColorMapper mapper, UParam param, O object);
+
+	public void draw(SHAPE shape, double x, double y, UDriverContext context, O object);
 
 }

@@ -48,14 +48,12 @@ import java.awt.geom.Dimension2D;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
 
-import net.sourceforge.plantuml.EnsureVisible;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.FontStyle;
-import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.text.StyledString;
 import net.sourceforge.plantuml.ugraphic.UDriver;
+import net.sourceforge.plantuml.ugraphic.UDriverContext;
 import net.sourceforge.plantuml.ugraphic.UFont;
-import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.UText;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
@@ -64,15 +62,7 @@ import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class DriverTextG2d implements UDriver<UText, Graphics2D> {
 
-	private final EnsureVisible visible;
-	private final StringBounder stringBounder;
-
-	public DriverTextG2d(EnsureVisible visible, StringBounder stringBounder) {
-		this.visible = visible;
-		this.stringBounder = stringBounder;
-	}
-
-	public void draw(UText shape, double x, double y, ColorMapper mapper, UParam param, Graphics2D g2d) {
+	public void draw(UText shape, double x, double y, UDriverContext context, Graphics2D g2d) {
 		final FontConfiguration fontConfiguration = shape.getFontConfiguration();
 
 		if (HColorUtils.isTransparent(fontConfiguration.getColor())) {
@@ -85,16 +75,17 @@ public class DriverTextG2d implements UDriver<UText, Graphics2D> {
 		for (StyledString styledString : strings) {
 			final FontConfiguration fc = styledString.getStyle() == FontStyle.BOLD ? fontConfiguration.bold()
 					: fontConfiguration;
-			x += printSingleText(g2d, fc, styledString.getText(), x, y, mapper);
+			x += printSingleText(g2d, fc, styledString.getText(), x, y, context);
 		}
 	}
 
 	private double printSingleText(Graphics2D g2d, final FontConfiguration fontConfiguration, final String text, double x,
-			double y, ColorMapper mapper) {
+			double y, UDriverContext context) {
+		final ColorMapper mapper = context.getColorMapper();
 		final UFont font = fontConfiguration.getFont();
 		final HColor extended = fontConfiguration.getExtendedColor();
 		
-		final Dimension2D dim = stringBounder.calculateDimension(font, text);
+		final Dimension2D dim = context.getStringBounder().calculateDimension(font, text);
 		final double height = max(10, dim.getHeight());
 		final double width = dim.getWidth();
 
@@ -127,8 +118,8 @@ public class DriverTextG2d implements UDriver<UText, Graphics2D> {
 					}
 				}
 			}
-			visible.ensureVisible(x, y - height + 1.5);
-			visible.ensureVisible(x + width, y + 1.5);
+			context.ensureVisible(x, y - height + 1.5);
+			context.ensureVisible(x + width, y + 1.5);
 
 			g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 			g2d.setFont(font.getUnderlayingFont());

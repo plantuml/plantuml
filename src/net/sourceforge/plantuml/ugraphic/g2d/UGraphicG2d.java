@@ -142,14 +142,14 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> implements EnsureV
 		if (this.hasAffineTransform || dpiFactor != 1.0) {
 			registerDriver(UText.class, new DriverTextAsPathG2d(this, getStringBounder()));
 		} else {
-			registerDriver(UText.class, new DriverTextG2d(this, getStringBounder()));
+			registerDriver(UText.class, new DriverTextG2d());
 		}
 		registerDriver(ULine.class, new DriverLineG2d(dpiFactor));
 		registerDriver(UPixel.class, new DriverPixelG2d());
 		registerDriver(UPolygon.class, new DriverPolygonG2d(dpiFactor, this));
 		registerDriver(UEllipse.class, new DriverEllipseG2d(dpiFactor, this));
 		ignoreShape(UImageSvg.class);
-		registerDriver(UImage.class, new DriverImageG2d(dpiFactor, this));
+		registerDriver(UImage.class, new DriverImageG2d());
 		registerDriver(DotPath.class, new DriverDotPathG2d(this));
 		registerDriver(UPath.class, new DriverPathG2d(dpiFactor));
 		registerDriver(UCenteredCharacter.class, new DriverCenteredCharacterG2d());
