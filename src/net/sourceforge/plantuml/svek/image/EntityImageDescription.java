@@ -146,7 +146,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 					symbol.getSkinParameter().getStyleName());
 			style = tmp.with(stereotype).getMergedStyle(getSkinParam().getCurrentStyleBuilder());
 			style = style.eventuallyOverride(colors);
-			final Style styleStereo = tmp.withStereotype(stereotype)
+			final Style styleStereo = tmp.forStereotypeItself(stereotype)
 					.getMergedStyle(getSkinParam().getCurrentStyleBuilder());
 			forecolor = style.value(PName.LineColor).asColor(getSkinParam().getThemeStyle(),
 					getSkinParam().getIHtmlColorSet());

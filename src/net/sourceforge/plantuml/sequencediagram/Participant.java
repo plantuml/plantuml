@@ -83,7 +83,7 @@ public class Participant implements SpecificBackcolorable, WithStyle {
 		final StyleSignature signature = getDefaultStyleDefinition().with(stereotype);
 		Style tmp = signature.getMergedStyle(styleBuilder);
 		tmp = tmp.eventuallyOverride(getColors(null));
-		Style stereo = getDefaultStyleDefinition().withStereotype(stereotype).getMergedStyle(styleBuilder);
+		Style stereo = getDefaultStyleDefinition().forStereotypeItself(stereotype).getMergedStyle(styleBuilder);
 		if (tmp != null) {
 			stereo = tmp.mergeWith(stereo);
 		}

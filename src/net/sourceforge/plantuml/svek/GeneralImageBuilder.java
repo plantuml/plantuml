@@ -643,7 +643,7 @@ public final class GeneralImageBuilder {
 		final TextBlock stereoAndTitle = TextBlockUtils.mergeTB(stereo, title, HorizontalAlignment.CENTER);
 		final Dimension2D dimLabel = stereoAndTitle.calculateDimension(stringBounder);
 		if (dimLabel.getWidth() > 0) {
-			final Dimension2D dimAttribute = stateHeader((IEntity) g, getStyle(FontParam.STATE_ATTRIBUTE),
+			final Dimension2D dimAttribute = stateHeader((IEntity) g, getStyleState(FontParam.STATE_ATTRIBUTE),
 					dotData.getSkinParam()).calculateDimension(stringBounder);
 			final double attributeHeight = dimAttribute.getHeight();
 			final double attributeWidth = dimAttribute.getWidth();
@@ -690,7 +690,7 @@ public final class GeneralImageBuilder {
 
 	}
 
-	private Style getStyle(FontParam fontParam) {
+	private Style getStyleState(FontParam fontParam) {
 		return fontParam.getStyleDefinition(SName.stateDiagram)
 				.getMergedStyle(dotData.getSkinParam().getCurrentStyleBuilder());
 	}
@@ -700,10 +700,19 @@ public final class GeneralImageBuilder {
 		if (label == null) {
 			return TextBlockUtils.empty(0, 0);
 		}
-
 		final ISkinParam skinParam = dotData.getSkinParam();
-		final FontConfiguration fontConfiguration = g.getFontConfigurationForTitle(skinParam);
-		return label.create(fontConfiguration, HorizontalAlignment.CENTER, skinParam);
+		final FontConfiguration fontConfiguration;
+		if (UseStyle.useBetaStyle()) {
+			final SName sname = dotData.getUmlDiagramType().getStyleName();
+			final Style style = StyleSignature.of(SName.root, SName.element, sname, SName.title) //
+					.with(g.getStereotype()) //
+					.with(g.getStereostyles()) //
+					.getMergedStyle(skinParam.getCurrentStyleBuilder());
+			fontConfiguration = style.getFontConfiguration(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
+		} else
+			fontConfiguration = g.getFontConfigurationForTitle(skinParam);
+		final HorizontalAlignment alignment = HorizontalAlignment.CENTER;
+		return label.create(fontConfiguration, alignment, dotData.getSkinParam());
 	}
 
 	private TextBlock addLegend(TextBlock original, DisplayPositionned legend) {
