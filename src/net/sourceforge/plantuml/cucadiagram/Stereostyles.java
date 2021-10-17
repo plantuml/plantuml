@@ -30,57 +30,45 @@
  *
  *
  * Original Author:  Arnaud Roques
+ * 
  *
  */
-package net.sourceforge.plantuml.nwdiag.next;
+package net.sourceforge.plantuml.cucadiagram;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
-public class NBox implements Staged {
+import net.sourceforge.plantuml.command.regex.Matcher2;
+import net.sourceforge.plantuml.command.regex.MyPattern;
+import net.sourceforge.plantuml.command.regex.Pattern2;
 
-	private final List<NBar> bars = new ArrayList<>();
-	private final NTetris<NBar> tetris = new NTetris<>();
+public class Stereostyles {
 
-	public void add(NBar bar) {
-		if (this.bars.contains(bar)) {
-			return;
-		}
-		this.bars.add(bar);
-		this.tetris.add(bar);
+	public static final Stereostyles NONE = new Stereostyles();
+
+	private final Set<String> names = new LinkedHashSet<String>();
+
+	private Stereostyles() {
 	}
 
-	@Override
-	public NStage getStart() {
-		NStage result = bars.get(0).getStart();
-		for (int i = 1; i < bars.size(); i++) {
-			result = NStage.getMin(result, bars.get(i).getStart());
-		}
-		return result;
+	public boolean isEmpty() {
+		return names.isEmpty();
 	}
 
-	@Override
-	public NStage getEnd() {
-		NStage result = bars.get(0).getEnd();
-		for (int i = 1; i < bars.size(); i++) {
-			result = NStage.getMax(result, bars.get(i).getEnd());
+	public static Stereostyles build(String label) {
+		final Stereostyles result = new Stereostyles();
+		final Pattern2 p = MyPattern.cmpile("\\<{3}(.*?)\\>{3}");
+		final Matcher2 m = p.matcher(label);
+		while (m.find()) {
+			result.names.add(m.group(1));
 		}
 		return result;
 	}
 
-	@Override
-	public int getNWidth() {
-		return tetris.getNWidth();
-	}
-
-	public Map<NBar, Integer> getPositions() {
-		return tetris.getPositions();
-	}
-
-	@Override
-	public boolean contains(NStage stage) {
-		return stage.compareTo(getStart()) >= 0 && stage.compareTo(getEnd()) <= 0;
+	public Collection<String> getStyleNames() {
+		return Collections.unmodifiableCollection(names);
 	}
 
 }

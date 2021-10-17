@@ -36,33 +36,34 @@
  */
 package net.sourceforge.plantuml.statediagram.command;
 
+import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.descdiagram.command.CommandLinkElement;
 
-public class CommandLinkState extends CommandLinkStateCommon {
+public class CommandLinkStateReverse extends CommandLinkStateCommon {
 
-	public CommandLinkState() {
+	public CommandLinkStateReverse() {
 		super(getRegex());
 	}
 
 	static RegexConcat getRegex() {
-		return RegexConcat.build(CommandLinkState.class.getName(), RegexLeaf.start(), //
-				getStatePattern("ENT1"), //
+		return RegexConcat.build(CommandLinkStateReverse.class.getName(), RegexLeaf.start(), //
+				getStatePattern("ENT2"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexConcat(
 						//
-						new RegexLeaf("ARROW_CROSS_START", "(x)?"), //
-						new RegexLeaf("ARROW_BODY1", "(-+)"), //
-						new RegexLeaf("ARROW_STYLE1", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
-						new RegexLeaf("ARROW_DIRECTION", "(left|right|up|down|le?|ri?|up?|do?)?"), //
-						new RegexLeaf("ARROW_STYLE2", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
+						new RegexLeaf("ARROW_CIRCLE_END", "(o[%s]+)?"), //
+						new RegexLeaf("\\<"), //
 						new RegexLeaf("ARROW_BODY2", "(-*)"), //
-						new RegexLeaf("\\>"), //
-						new RegexLeaf("ARROW_CIRCLE_END", "(o[%s]+)?")), //
+						new RegexLeaf("ARROW_STYLE2", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
+						new RegexLeaf("ARROW_DIRECTION", "(left|right|up|down|le?|ri?|up?|do?)?"), //
+						new RegexLeaf("ARROW_STYLE1", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
+						new RegexLeaf("ARROW_BODY1", "(-+)"), //
+						new RegexLeaf("ARROW_CROSS_START", "(x)?")), //
 				RegexLeaf.spaceZeroOrMore(), //
-				getStatePattern("ENT2"), //
+				getStatePattern("ENT1"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional( //
 						new RegexConcat( //
@@ -70,6 +71,11 @@ public class CommandLinkState extends CommandLinkStateCommon {
 								RegexLeaf.spaceZeroOrMore(), //
 								new RegexLeaf("LABEL", "(.+)") //
 						)), RegexLeaf.end());
+	}
+
+	@Override
+	protected Direction getDefaultDirection() {
+		return Direction.LEFT;
 	}
 
 }

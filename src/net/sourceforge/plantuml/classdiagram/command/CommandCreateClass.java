@@ -133,7 +133,7 @@ public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 		final String genericOption = arg.getLazzy("DISPLAY", 1);
 		final String generic = genericOption != null ? genericOption : arg.get("GENERIC", 0);
 
-		final String stereotype = arg.get("STEREO", 0);
+		final String stereo = arg.get("STEREO", 0);
 		final ILeaf entity;
 		final Ident idNewLong = diagram.buildLeafIdent(idShort);
 		if (diagram.V1972()) {
@@ -156,10 +156,11 @@ public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 				entity = diagram.createLeaf(idNewLong, code, Display.getWithNewlines(display), type, null);
 			}
 		}
-		if (stereotype != null) {
-			entity.setStereotype(Stereotype.build(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),
+		if (stereo != null) {
+			entity.setStereotype(Stereotype.build(stereo, diagram.getSkinParam().getCircledCharacterRadius(),
 					diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),
 					diagram.getSkinParam().getIHtmlColorSet()));
+			entity.setStereostyle(stereo);
 		}
 		if (generic != null) {
 			entity.setGeneric(generic);

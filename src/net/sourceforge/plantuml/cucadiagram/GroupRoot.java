@@ -66,6 +66,7 @@ public class GroupRoot implements IGroup {
 		this.entityFactory = entityFactory;
 	}
 
+	@Override
 	public Collection<ILeaf> getLeafsDirect() {
 		final List<ILeaf> result = new ArrayList<>();
 		for (ILeaf ent : entityFactory.leafs()) {
@@ -82,71 +83,79 @@ public class GroupRoot implements IGroup {
 		return "ROOT";
 	}
 
+	@Override
 	public boolean isGroup() {
 		return true;
 	}
 
+	@Override
 	public Display getDisplay() {
 		throw new UnsupportedOperationException();
 
 	}
 
+	@Override
 	public void setDisplay(Display display) {
 		throw new UnsupportedOperationException();
 
 	}
 
+	@Override
 	public LeafType getLeafType() {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public String getUid() {
 		throw new UnsupportedOperationException();
 
 	}
 
+	@Override
 	public Url getUrl99() {
 		return null;
 
 	}
 
+	@Override
 	public Stereotype getStereotype() {
 		throw new UnsupportedOperationException();
 
 	}
 
+	@Override
 	public void setStereotype(Stereotype stereotype) {
 		throw new UnsupportedOperationException();
-
 	}
 
-	public TextBlock getBody(PortionShower portionShower, FontParam fontParam, ISkinParam skinParam) {
-		throw new UnsupportedOperationException();
-
-	}
-
+	@Override
 	public Code getCode() {
 		return CodeImpl.of("__ROOT__");
 	}
 
+	@Override
 	public String getCodeGetName() {
 		return getCode().getName();
 	}
 
+	@Override
 	public void addUrl(Url url) {
 		throw new UnsupportedOperationException();
 
 	}
 
+	@Override
 	public IGroup getParentContainer() {
 		return null;
 	}
 
+	@Override
 	public boolean containsLeafRecurse(ILeaf entity) {
 		throw new UnsupportedOperationException();
 
 	}
 
+	@Override
 	public Collection<IGroup> getChildren() {
 		final List<IGroup> result = new ArrayList<>();
 		if (entityFactory.namespaceSeparator.V1972()) {
@@ -166,93 +175,105 @@ public class GroupRoot implements IGroup {
 		return Collections.unmodifiableCollection(result);
 	}
 
+	@Override
 	public void moveEntitiesTo(IGroup dest) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public int size() {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public GroupType getGroupType() {
 		return null;
 	}
 
+	@Override
 	public Code getNamespace() {
 		throw new UnsupportedOperationException();
 
 	}
 
+	@Override
 	public PackageStyle getPackageStyle() {
 		throw new UnsupportedOperationException();
 
 	}
 
+	@Override
 	public void overrideImage(IEntityImage img, LeafType state) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public boolean isHidden() {
 		return false;
 	}
 
+	@Override
 	public USymbol getUSymbol() {
 		return null;
 		// throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void setUSymbol(USymbol symbol) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public SingleStrategy getSingleStrategy() {
 		return SingleStrategy.SQUARE;
 	}
 
+	@Override
 	public boolean isRemoved() {
 		return false;
 	}
 
+	@Override
 	public boolean hasUrl() {
 		return false;
 	}
 
-	public int getHectorLayer() {
-		throw new UnsupportedOperationException();
-	}
-
-	public void setHectorLayer(int layer) {
-		throw new UnsupportedOperationException();
-	}
-
+	@Override
 	public int getRawLayout() {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public char getConcurrentSeparator() {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void setConcurrentSeparator(char separator) {
 		// throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void putTip(String member, Display display) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public Map<String, Display> getTips() {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public Bodier getBodier() {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public Colors getColors(ISkinParam skinParam) {
 		return Colors.empty();
 	}
 
+	@Override
 	public void setColors(Colors colors) {
 		throw new UnsupportedOperationException();
 	}
@@ -277,31 +298,48 @@ public class GroupRoot implements IGroup {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void setLegend(DisplayPositionned legend) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public DisplayPositionned getLegend() {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public Ident getIdent() {
 		return Ident.empty();
 	}
 
+	@Override
 	public boolean isAloneAndUnlinked() {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void setThisIsTogether() {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public String getCodeLine() {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void setCodeLine(LineLocation codeLine) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void setStereostyle(String stereo) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public Stereostyles getStereostyles() {
 		throw new UnsupportedOperationException();
 	}
 }
