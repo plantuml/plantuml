@@ -302,7 +302,8 @@ public class SequenceDiagram extends UmlDiagram {
 		}
 		final boolean ok = lastEventWithDeactivate.addLifeEvent(lifeEvent);
 		if (lastEventWithDeactivate instanceof AbstractMessage) {
-			lifeEvent.setMessage((AbstractMessage) lastEventWithDeactivate);
+			final AbstractMessage lastMessage = (AbstractMessage) lastEventWithDeactivate;
+			lifeEvent.setMessage(lastMessage);
 		}
 		if (ok) {
 			return null;

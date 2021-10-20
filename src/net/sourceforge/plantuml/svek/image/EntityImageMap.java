@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.LineConfigurable;
 import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.creole.Stencil;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.EntityPortion;
@@ -61,6 +62,10 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.Ports;
 import net.sourceforge.plantuml.svek.ShapeType;
@@ -91,10 +96,17 @@ public class EntityImageMap extends AbstractEntityImage implements Stencil, With
 		this.lineConfig = entity;
 		final Stereotype stereotype = entity.getStereotype();
 		this.roundCorner = skinParam.getRoundCorner(CornerParam.DEFAULT, null);
-		this.name = TextBlockUtils.withMargin(
-				entity.getDisplay().create(new FontConfiguration(getSkinParam(), FontParam.OBJECT, stereotype),
-						HorizontalAlignment.CENTER, skinParam),
-				2, 2);
+
+		final FontConfiguration fcHeader;
+		if (UseStyle.useBetaStyle())
+			fcHeader = getStyleHeader().getFontConfiguration(getSkinParam().getThemeStyle(),
+					getSkinParam().getIHtmlColorSet());
+		else
+			fcHeader = new FontConfiguration(getSkinParam(), FontParam.OBJECT, stereotype);
+
+		this.name = TextBlockUtils
+				.withMargin(entity.getDisplay().create(fcHeader, HorizontalAlignment.CENTER, skinParam), 2, 2);
+
 		if (stereotype == null || stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) == null
 				|| portionShower.showPortion(EntityPortion.STEREOTYPE, entity) == false) {
 			this.stereo = null;
@@ -104,8 +116,15 @@ public class EntityImageMap extends AbstractEntityImage implements Stencil, With
 					HorizontalAlignment.CENTER, skinParam);
 		}
 
-		this.entries = entity.getBodier().getBody(FontParam.OBJECT_ATTRIBUTE, skinParam, false, false,
-				entity.getStereotype(), null);
+		if (UseStyle.useBetaStyle()) {
+			final FontConfiguration fontConfiguration = getStyleHeader()
+					.getFontConfiguration(getSkinParam().getThemeStyle(), getSkinParam().getIHtmlColorSet());
+			this.entries = entity.getBodier().getBody(FontParam.OBJECT_ATTRIBUTE, skinParam, false, false,
+					entity.getStereotype(), getStyle(), fontConfiguration);
+		} else
+			this.entries = entity.getBodier().getBody(FontParam.OBJECT_ATTRIBUTE, skinParam, false, false,
+					entity.getStereotype(), null, null);
+
 		this.url = entity.getUrl99();
 
 	}
@@ -129,6 +148,16 @@ public class EntityImageMap extends AbstractEntityImage implements Stencil, With
 		return new Dimension2DDouble(width, height);
 	}
 
+	private Style getStyle() {
+		return StyleSignature.of(SName.root, SName.element, SName.objectDiagram, SName.map)
+				.with(getEntity().getStereotype()).getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+	}
+
+	private Style getStyleHeader() {
+		return StyleSignature.of(SName.root, SName.element, SName.objectDiagram, SName.map, SName.header)
+				.with(getEntity().getStereotype()).getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+	}
+
 	final public void drawU(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final Dimension2D dimTotal = calculateDimension(stringBounder);
@@ -141,11 +170,18 @@ public class EntityImageMap extends AbstractEntityImage implements Stencil, With
 			rect.setDeltaShadow(4);
 		}
 
-		ug = ug.apply(SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.objectBorder));
+		final HColor borderColor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.objectBorder);
+		ug = ug.apply(borderColor);
 		HColor backcolor = getEntity().getColors(getSkinParam()).getColor(ColorType.BACK);
 		if (backcolor == null) {
-			backcolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.objectBackground);
+			if (UseStyle.useBetaStyle())
+				backcolor = getStyle().value(PName.BackGroundColor).asColor(getSkinParam().getThemeStyle(),
+						getSkinParam().getIHtmlColorSet());
+			else
+				backcolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.objectBackground);
+
 		}
+
 		ug = ug.apply(backcolor.bg());
 		if (url != null) {
 			ug.startUrl(url);

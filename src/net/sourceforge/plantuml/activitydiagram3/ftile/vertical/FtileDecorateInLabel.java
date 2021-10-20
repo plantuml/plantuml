@@ -30,36 +30,42 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
-package net.sourceforge.plantuml.cucadiagram;
+package net.sourceforge.plantuml.activitydiagram3.ftile.vertical;
 
-import java.util.List;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
+import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-import net.sourceforge.plantuml.FontParam;
-import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
+public class FtileDecorateInLabel extends FtileDecorate {
 
-public interface Bodier {
+	final private double xl;
+	final private double yl;
 
-	public void setLeaf(ILeaf leaf);
+	public FtileDecorateInLabel(final Ftile ftile, double xl, double yl) {
+		super(ftile);
+		this.xl = xl;
+		this.yl = yl;
+	}
 
-	public Display getFieldsToDisplay();
+	@Override
+	public FtileGeometry calculateDimension(StringBounder stringBounder) {
+		FtileGeometry result = super.calculateDimension(stringBounder);
+		result = result.addTop(yl);
+		final double missing = xl - result.getRight();
+		if (missing > 0)
+			result = result.incRight(missing);
 
-	public Display getMethodsToDisplay();
+		return result;
+	}
 
-	public void addFieldOrMethod(String s) throws NoSuchColorException;
+	@Override
+	public void drawU(UGraphic ug) {
+		super.drawU(ug.apply(UTranslate.dy(yl)));
+	}
 
-	public TextBlock getBody(FontParam fontParam, ISkinParam skinParam, boolean showMethods, boolean showFields,
-			Stereotype stereotype, Style style, FontConfiguration fontConfiguration);
-
-	public List<CharSequence> getRawBody();
-
-	public void muteClassToObject();
-
-	public boolean hasUrl();
 }

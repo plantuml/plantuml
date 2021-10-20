@@ -108,7 +108,7 @@ class FtileSwitch extends AbstractFtile {
 
 		List<Double> inlabelSizes = new ArrayList<>();
 		for (Branch branch : thens) {
-			final TextBlock tb1 = branch.getLabelPositive().create(fcArrow, HorizontalAlignment.LEFT,
+			final TextBlock tb1 = branch.getDisplayPositive().create(fcArrow, HorizontalAlignment.LEFT,
 					ftileFactory.skinParam());
 			final TextBlock tbTest = branch.getLabelTest().create(fcTest,
 					ftileFactory.skinParam().getDefaultTextAlignment(HorizontalAlignment.LEFT),

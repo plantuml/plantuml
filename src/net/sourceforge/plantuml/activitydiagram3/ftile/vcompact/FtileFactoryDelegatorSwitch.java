@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 
+import java.awt.geom.Dimension2D;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,6 +54,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond.FtileSwitch
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond.FtileSwitchWithDiamonds;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond.FtileSwitchWithManyLinks;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond.FtileSwitchWithOneLink;
+import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDecorateInLabel;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamondInside;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -102,9 +104,13 @@ public class FtileFactoryDelegatorSwitch extends FtileFactoryDelegator {
 		final List<Ftile> ftiles = new ArrayList<>();
 		final Ftile diamond1 = getDiamond1(swimlane, branches.get(0), labelTest);
 		final Ftile diamond2 = getDiamond2(swimlane, branches.get(0));
+
 		for (Branch branch : branches) {
-			ftiles.add(new FtileMinWidthCentered(branch.getFtile(), 30));
+			final Dimension2D dimLabel = branch.getTextBlockPositive().calculateDimension(getStringBounder());
+//			ftiles.add(new FtileMinWidthCentered(branch.getFtile(), 30));
+			ftiles.add(new FtileDecorateInLabel(branch.getFtile(), dimLabel.getWidth(), dimLabel.getHeight()));
 		}
+
 		final Rainbow arrowColor;
 		if (UseStyle.useBetaStyle()) {
 			final Style style = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam().getCurrentStyleBuilder());

@@ -38,15 +38,21 @@ package net.sourceforge.plantuml.activitydiagram3;
 import java.util.Collection;
 import java.util.Objects;
 
+import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.WeldingPoint;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.graphic.FontConfiguration;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.Rainbow;
+import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
@@ -131,14 +137,6 @@ public class Branch {
 		return list.getSwimlanes();
 	}
 
-	public final Display getLabelPositive() {
-		final LinkRendering in = ftile.getInLinkRendering();
-		if (in != null && Display.isNull(in.getDisplay()) == false) {
-			return in.getDisplay();
-		}
-		return labelPositive.getDisplay();
-	}
-
 	public final Display getLabelTest() {
 		return labelTest;
 	}
@@ -214,5 +212,31 @@ public class Branch {
 	public final LinkRendering getSpecial() {
 		return special;
 	}
+	
+	public final Display getDisplayPositive() {
+		final LinkRendering in = ftile.getInLinkRendering();
+		if (in != null && Display.isNull(in.getDisplay()) == false) {
+			return in.getDisplay();
+		}
+		return labelPositive.getDisplay();
+	}
+
+	
+	public final TextBlock getTextBlockPositive() {
+		LineBreakStrategy lineBreak = LineBreakStrategy.NONE;
+		final FontConfiguration fcArrow;
+		if (UseStyle.useBetaStyle()) {
+			final Style style = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam().getCurrentStyleBuilder());
+			lineBreak = style.wrapWidth();
+			fcArrow = style.getFontConfiguration(skinParam().getThemeStyle(), skinParam().getIHtmlColorSet());
+		} else {
+			fcArrow = new FontConfiguration(skinParam(), FontParam.ARROW, null);
+		}
+
+		return getDisplayPositive().create0(fcArrow, HorizontalAlignment.LEFT, skinParam(), lineBreak,
+				CreoleMode.SIMPLE_LINE, null, null);
+	}
+
+
 
 }

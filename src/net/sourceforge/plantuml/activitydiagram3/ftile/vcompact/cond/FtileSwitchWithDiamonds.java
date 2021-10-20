@@ -201,23 +201,4 @@ public class FtileSwitchWithDiamonds extends FtileSwitchNude {
 		return new UTranslate(x2, y2);
 	}
 
-	final public StyleSignature getDefaultStyleDefinitionArrow() {
-		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.arrow);
-	}
-
-	final protected TextBlock getLabelPositive(Branch branch) {
-		LineBreakStrategy lineBreak = LineBreakStrategy.NONE;
-		final FontConfiguration fcArrow;
-		if (UseStyle.useBetaStyle()) {
-			final Style style = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam().getCurrentStyleBuilder());
-			lineBreak = style.wrapWidth();
-			fcArrow = style.getFontConfiguration(skinParam().getThemeStyle(), getIHtmlColorSet());
-		} else {
-			fcArrow = new FontConfiguration(skinParam(), FontParam.ARROW, null);
-		}
-
-		return branch.getLabelPositive().create0(fcArrow, HorizontalAlignment.LEFT, skinParam(), lineBreak,
-				CreoleMode.SIMPLE_LINE, null, null);
-	}
-
 }

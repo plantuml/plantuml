@@ -85,6 +85,7 @@ public enum SName {
 	leafNode, //
 	legend, //
 	lifeLine, //
+	map, //
 	milestone, //
 	mindmapDiagram, //
 	network, //

@@ -283,7 +283,7 @@ public class ConditionalBuilder {
 	}
 
 	private TextBlock getLabelPositive(Branch branch) {
-		return branch.getLabelPositive().create0(fontArrow, HorizontalAlignment.LEFT, ftileFactory.skinParam(),
+		return branch.getDisplayPositive().create0(fontArrow, HorizontalAlignment.LEFT, ftileFactory.skinParam(),
 				labelLineBreak, CreoleMode.SIMPLE_LINE, null, null);
 	}
 

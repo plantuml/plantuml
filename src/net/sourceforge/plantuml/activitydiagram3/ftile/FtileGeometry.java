@@ -114,6 +114,16 @@ public class FtileGeometry extends Dimension2D {
 		return new FtileGeometry(width, height + northHeight, left, inY, outY);
 	}
 
+	public FtileGeometry addTop(double northHeight) {
+		if (hasPointOut())
+			return new FtileGeometry(width, height + northHeight, left, inY + northHeight, outY + northHeight);
+		return new FtileGeometry(width, height + northHeight, left, inY + northHeight, Double.MIN_NORMAL);
+	}
+
+	public FtileGeometry incRight(double missing) {
+		return new FtileGeometry(width + missing, height, left, inY, outY);
+	}
+
 //	public FtileGeometry incInnerHeight(double northHeight) {
 //		return new FtileGeometry(width, height + northHeight, left, inY, outY + northHeight);
 //	}

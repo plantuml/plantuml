@@ -42,6 +42,7 @@ import java.util.Objects;
 
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.style.Style;
@@ -52,6 +53,7 @@ public class BodierSimple implements Bodier {
 	private final List<CharSequence> rawBody = new ArrayList<>();
 	private ILeaf leaf;
 
+	@Override
 	public void muteClassToObject() {
 		throw new UnsupportedOperationException();
 	}
@@ -59,33 +61,40 @@ public class BodierSimple implements Bodier {
 	BodierSimple() {
 	}
 
+	@Override
 	public void setLeaf(ILeaf leaf) {
 		this.leaf = Objects.requireNonNull(leaf);
 	}
 
+	@Override
 	public void addFieldOrMethod(String s) throws NoSuchColorException {
 		final Display display = Display.getWithNewlines2(s);
 		rawBody.addAll(display.asList());
 	}
 
+	@Override
 	public Display getMethodsToDisplay() {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public Display getFieldsToDisplay() {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public boolean hasUrl() {
 		return false;
 	}
 
+	@Override
 	public List<CharSequence> getRawBody() {
 		return Collections.unmodifiableList(rawBody);
 	}
 
+	@Override
 	public TextBlock getBody(FontParam fontParam, ISkinParam skinParam, boolean showMethods, boolean showFields,
-			Stereotype stereotype, Style style) {
+			Stereotype stereotype, Style style, FontConfiguration fontConfiguration) {
 		return BodyFactory.create1(skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT), rawBody, fontParam,
 				skinParam, stereotype, leaf, style);
 	}

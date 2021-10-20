@@ -46,6 +46,7 @@ import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.style.Style;
 
@@ -55,6 +56,7 @@ public class BodierMap implements Bodier {
 	private final Map<String, String> map = new LinkedHashMap<String, String>();
 	private ILeaf leaf;
 
+	@Override
 	public void muteClassToObject() {
 		throw new UnsupportedOperationException();
 	}
@@ -62,6 +64,7 @@ public class BodierMap implements Bodier {
 	public BodierMap() {
 	}
 
+	@Override
 	public void setLeaf(ILeaf leaf) {
 		this.leaf = Objects.requireNonNull(leaf);
 
@@ -76,6 +79,7 @@ public class BodierMap implements Bodier {
 		return null;
 	}
 
+	@Override
 	public void addFieldOrMethod(String s) {
 		if (s.contains("=>")) {
 			final int x = s.indexOf("=>");
@@ -87,23 +91,28 @@ public class BodierMap implements Bodier {
 		}
 	}
 
+	@Override
 	public Display getMethodsToDisplay() {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public Display getFieldsToDisplay() {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public boolean hasUrl() {
 		return false;
 	}
 
+	@Override
 	public TextBlock getBody(FontParam fontParam, ISkinParam skinParam, final boolean showMethods,
-			final boolean showFields, Stereotype stereotype, Style style) {
-		return new TextBlockMap(fontParam, skinParam, map);
+			final boolean showFields, Stereotype stereotype, Style style, FontConfiguration fontConfiguration) {
+		return new TextBlockMap(fontConfiguration, fontParam, skinParam, map);
 	}
 
+	@Override
 	public List<CharSequence> getRawBody() {
 		return Collections.unmodifiableList(rawBody);
 	}
