@@ -57,7 +57,7 @@ public class UFont {
 
 	public String toStringDebug() {
 		final StringBuilder sb = new StringBuilder();
-		sb.append(font.getFontName());
+		sb.append(getPortableFontName());
 		sb.append("/");
 		sb.append(font.getSize());
 		return sb.toString();
@@ -166,6 +166,20 @@ public class UFont {
 			return family;
 		}
 		return family;
+	}
+
+	// Kludge for testing because font names on some machines (only macOS?) do not end with <DOT><STYLE>
+	// See https://github.com/plantuml/plantuml/issues/720
+	private String getPortableFontName() {
+		final String name = font.getFontName();
+		if (font.isBold() && font.isItalic())
+			return name.endsWith(".bolditalic") ? name : name + ".bolditalic";
+		else if (font.isBold())
+			return name.endsWith(".bold") ? name : name + ".bold";
+		else if (font.isItalic())
+			return name.endsWith(".italic") ? name : name + ".italic";
+		else
+			return name.endsWith(".plain") ? name : name + ".plain";
 	}
 
 	@Override
