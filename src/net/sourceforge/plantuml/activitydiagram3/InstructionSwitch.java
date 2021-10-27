@@ -131,6 +131,8 @@ public class InstructionSwitch extends WithNote implements Instruction, Instruct
 	}
 
 	public boolean switchCase(Display labelCase, LinkRendering nextLinkRenderer) {
+		if (this.current != null)
+			this.current.setSpecial(nextLinkRenderer);
 		this.current = new Branch(skinParam.getCurrentStyleBuilder(), swimlane,
 				LinkRendering.none().withDisplay(labelCase), labelCase, null,
 				LinkRendering.none().withDisplay(labelCase));

@@ -54,7 +54,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Arrows;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Connection;
 import net.sourceforge.plantuml.activitydiagram3.ftile.ConnectionTranslatable;
-import net.sourceforge.plantuml.activitydiagram3.ftile.Diamond;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Hexagon;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileEmpty;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
@@ -143,7 +143,7 @@ class FtileRepeat extends AbstractFtile {
 			if (noOut && Display.isNull(test)) {
 				diamond2 = new FtileEmpty(repeat.skinParam());
 			} else {
-				diamond2 = new FtileDiamondInside(repeat.skinParam(), diamondColor, borderColor, swimlaneOut, tbTest)
+				diamond2 = new FtileDiamondInside(tbTest, repeat.skinParam(), diamondColor, borderColor, swimlaneOut)
 						.withEast(yesTb).withSouth(outTb);
 			}
 			result = new FtileRepeat(repeat, diamond1, diamond2, TextBlockUtils.empty(0, 0), backward);
@@ -152,8 +152,8 @@ class FtileRepeat extends AbstractFtile {
 					.withEast(tbTest);
 			result = new FtileRepeat(repeat, diamond1, diamond2, tbTest, backward);
 		} else if (conditionStyle == ConditionStyle.INSIDE_DIAMOND) {
-			final Ftile diamond2 = new FtileDiamondSquare(repeat.skinParam(), diamondColor, borderColor, swimlane,
-					tbTest);
+			final Ftile diamond2 = new FtileDiamondSquare(tbTest, repeat.skinParam(), diamondColor, borderColor,
+					swimlane);
 			result = new FtileRepeat(repeat, diamond1, diamond2, TextBlockUtils.empty(0, 0), backward);
 		} else {
 			throw new IllegalStateException();
@@ -165,9 +165,12 @@ class FtileRepeat extends AbstractFtile {
 				: in1.create7(fcArrow, HorizontalAlignment.LEFT, spriteContainer, CreoleMode.SIMPLE_LINE);
 		conns.add(result.new ConnectionIn(repeat.getInLinkRendering().getRainbow(arrowColor), tbin1));
 
-		final TextBlock incomingText = incoming1 == null || incoming1.getDisplay() == null ? null
-				: incoming1.getDisplay().create7(fcArrow, HorizontalAlignment.LEFT, spriteContainer,
-						CreoleMode.SIMPLE_LINE);
+		final TextBlock incomingText;
+		if (incoming1 == null || incoming1.getDisplay() == null)
+			incomingText = null;
+		else
+			incomingText = incoming1.getDisplay().create7(fcArrow, HorizontalAlignment.LEFT, spriteContainer,
+					CreoleMode.SIMPLE_LINE);
 
 		if (backward != null) {
 			final Rainbow rainbow1 = incoming1.getRainbow(arrowColor);
@@ -326,7 +329,7 @@ class FtileRepeat extends AbstractFtile {
 			final double x1_a = p1.getX() + dimDiamond2.getWidth();
 
 			final double x1_b = p1.getX() + dimDiamond2.getWidth() / 2 + dimRepeat.getWidth() / 2
-					+ Diamond.diamondHalfSize;
+					+ Hexagon.hexagonHalfSize;
 
 			UPolygon arrow = Arrows.asToLeft();
 			if (x1_b < x2) {
@@ -499,7 +502,7 @@ class FtileRepeat extends AbstractFtile {
 			final double y2 = p2.getY() + dimDiamond1.getHeight() / 2;
 
 			snake.addPoint(x1, y1);
-			final double xmax = dimTotal.getWidth() - Diamond.diamondHalfSize;
+			final double xmax = dimTotal.getWidth() - Hexagon.hexagonHalfSize;
 			snake.addPoint(xmax, y1);
 			snake.addPoint(xmax, y2);
 			snake.addPoint(x2, y2);
@@ -527,7 +530,7 @@ class FtileRepeat extends AbstractFtile {
 
 			snake.addPoint(x1, y1);
 			final double xmax = p1.getX() + dimDiamond2.getWidth() / 2 + dimRepeat.getWidth() / 2
-					+ Diamond.diamondHalfSize;
+					+ Hexagon.hexagonHalfSize;
 			snake.addPoint(xmax, y1);
 			snake.addPoint(xmax, y2);
 			snake.addPoint(x2, y2);
@@ -562,13 +565,13 @@ class FtileRepeat extends AbstractFtile {
 		final double w = tbTest.calculateDimension(stringBounder).getWidth();
 
 		double width = getLeft(stringBounder) + getRight(stringBounder);
-		width = Math.max(width, w + 2 * Diamond.diamondHalfSize);
+		width = Math.max(width, w + 2 * Hexagon.hexagonHalfSize);
 		if (backward != null) {
 			width += backward.calculateDimension(stringBounder).getWidth();
 		}
 		final double height = dimDiamond1.getHeight() + dimRepeat.getHeight() + dimDiamond2.getHeight()
-				+ 8 * Diamond.diamondHalfSize;
-		return new Dimension2DDouble(width + 2 * Diamond.diamondHalfSize, height);
+				+ 8 * Hexagon.hexagonHalfSize;
+		return new Dimension2DDouble(width + 2 * Hexagon.hexagonHalfSize, height);
 
 	}
 

@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.security;
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -58,10 +59,6 @@ public class SImageIO {
 		javax.imageio.ImageIO.write(image, format, os);
 	}
 
-	public static void write(RenderedImage image, String format, java.io.File file) throws IOException {
-		javax.imageio.ImageIO.write(image, format, file);
-	}
-
 	public static void write(RenderedImage image, String format, SFile file) throws IOException {
 		javax.imageio.ImageIO.write(image, format, file.conv());
 	}
@@ -77,23 +74,19 @@ public class SImageIO {
 	public static BufferedImage read(InputStream is) throws IOException {
 		return javax.imageio.ImageIO.read(is);
 	}
-	
+
 	public static BufferedImage read(byte[] bytes) throws IOException {
 		return javax.imageio.ImageIO.read(new ByteArrayInputStream(bytes));
-	}
-
-	public static ImageInputStream createImageInputStream(java.io.File file) throws IOException {
-		return javax.imageio.ImageIO.createImageInputStream(file);
 	}
 
 	public static ImageInputStream createImageInputStream(SFile file) throws IOException {
 		return javax.imageio.ImageIO.createImageInputStream(file.conv());
 	}
 
-	public static ImageInputStream createImageInputStream(Object obj) throws IOException {
-		if (obj instanceof SFile) {
-			obj = ((SFile) obj).conv();
-		}
+	public static ImageInputStream createImageInputStream(File obj) throws IOException {
+//		if (obj instanceof SFile) {
+//			obj = ((SFile) obj).conv();
+//		}
 		return javax.imageio.ImageIO.createImageInputStream(obj);
 	}
 

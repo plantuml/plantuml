@@ -55,6 +55,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond.FtileSwitch
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond.FtileSwitchWithManyLinks;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond.FtileSwitchWithOneLink;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDecorateInLabel;
+import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDecorateOutLabel;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamondInside;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -106,9 +107,9 @@ public class FtileFactoryDelegatorSwitch extends FtileFactoryDelegator {
 		final Ftile diamond2 = getDiamond2(swimlane, branches.get(0));
 
 		for (Branch branch : branches) {
-			final Dimension2D dimLabel = branch.getTextBlockPositive().calculateDimension(getStringBounder());
-//			ftiles.add(new FtileMinWidthCentered(branch.getFtile(), 30));
-			ftiles.add(new FtileDecorateInLabel(branch.getFtile(), dimLabel.getWidth(), dimLabel.getHeight()));
+			final Dimension2D dimLabelIn = branch.getTextBlockPositive().calculateDimension(getStringBounder());
+			final Dimension2D dimLabelOut = branch.getTextBlockSpecial().calculateDimension(getStringBounder());
+			ftiles.add(new FtileDecorateOutLabel(new FtileDecorateInLabel(branch.getFtile(), dimLabelIn), dimLabelOut));
 		}
 
 		final Rainbow arrowColor;
@@ -158,7 +159,7 @@ public class FtileFactoryDelegatorSwitch extends FtileFactoryDelegator {
 			tbTest = test.create0(fcDiamond, branch0.skinParam().getDefaultTextAlignment(HorizontalAlignment.LEFT),
 					branch0.skinParam(), lineBreak, CreoleMode.FULL, null, null);
 
-		return new FtileDiamondInside(branch0.skinParam(), backColor, borderColor, swimlane, tbTest);
+		return new FtileDiamondInside(tbTest, branch0.skinParam(), backColor, borderColor, swimlane);
 	}
 
 	private Ftile getDiamond2(Swimlane swimlane, Branch branch0) {
@@ -167,8 +168,8 @@ public class FtileFactoryDelegatorSwitch extends FtileFactoryDelegator {
 				? getRose().getHtmlColor(skinParam(), ColorParam.activityDiamondBackground)
 				: branch0.getColor();
 
-		return new FtileDiamondInside(branch0.skinParam(), backColor, borderColor, swimlane,
-				TextBlockUtils.empty(0, 0));
+		return new FtileDiamondInside(TextBlockUtils.empty(0, 0), branch0.skinParam(), backColor, borderColor,
+				swimlane);
 	}
 
 //	private HColor fontColor(FontParam param) {

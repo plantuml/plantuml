@@ -163,8 +163,8 @@ class FtileIfLongHorizontal extends AbstractFtile {
 					ftileFactory.skinParam());
 			final HColor diamondColor = branch.getColor() == null ? backColor : branch.getColor();
 
-			FtileDiamondInside2 diamond = new FtileDiamondInside2(branch.skinParam(), diamondColor, borderColor,
-					swimlane, tbTest);
+			FtileDiamondInside2 diamond = new FtileDiamondInside2(tbTest, branch.skinParam(), diamondColor,
+					borderColor, swimlane);
 			TextBlock tbInlabel = null;
 			if (Display.isNull(branch.getInlabel())) {
 				inlabelSizes.add(0.0);

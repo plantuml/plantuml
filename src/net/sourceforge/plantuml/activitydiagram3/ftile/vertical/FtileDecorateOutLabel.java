@@ -41,18 +41,17 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class FtileDecorateInLabel extends FtileDecorate {
+public class FtileDecorateOutLabel extends FtileDecorate {
 
 	final private double xl;
 	final private double yl;
 
-	public FtileDecorateInLabel(Ftile ftile, Dimension2D dim) {
+	public FtileDecorateOutLabel(Ftile ftile, Dimension2D dim) {
 		this(ftile, dim.getWidth(), dim.getHeight());
 	}
 
-	private FtileDecorateInLabel(final Ftile ftile, double xl, double yl) {
+	private FtileDecorateOutLabel(Ftile ftile, double xl, double yl) {
 		super(ftile);
 		this.xl = xl;
 		this.yl = yl;
@@ -61,7 +60,7 @@ public class FtileDecorateInLabel extends FtileDecorate {
 	@Override
 	public FtileGeometry calculateDimension(StringBounder stringBounder) {
 		FtileGeometry result = super.calculateDimension(stringBounder);
-		result = result.addTop(yl);
+		result = result.addBottom(yl);
 		final double missing = xl - result.getRight();
 		if (missing > 0)
 			result = result.incRight(missing);
@@ -71,7 +70,7 @@ public class FtileDecorateInLabel extends FtileDecorate {
 
 	@Override
 	public void drawU(UGraphic ug) {
-		super.drawU(ug.apply(UTranslate.dy(yl)));
+		super.drawU(ug);
 	}
 
 }

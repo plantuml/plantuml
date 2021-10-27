@@ -36,136 +36,81 @@
 package net.sourceforge.plantuml.activitydiagram3.ftile.vertical;
 
 import java.awt.geom.Dimension2D;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Set;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.UseStyle;
-import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
-import net.sourceforge.plantuml.activitydiagram3.ftile.Diamond;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Hexagon;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
-import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
-import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
-public class FtileDiamond extends AbstractFtile {
-
-	private final HColor backColor;
-	private final HColor borderColor;
-	private final Swimlane swimlane;
-	private final TextBlock north;
-	private final TextBlock south;
-	private final TextBlock west1;
-	private final TextBlock east1;
-	private final double shadowing;
+public class FtileDiamond extends FtileDiamondWIP {
 
 	public FtileDiamond(ISkinParam skinParam, HColor backColor, HColor borderColor, Swimlane swimlane) {
 		this(skinParam, backColor, borderColor, swimlane, TextBlockUtils.empty(0, 0), TextBlockUtils.empty(0, 0),
 				TextBlockUtils.empty(0, 0), TextBlockUtils.empty(0, 0));
 	}
 
-	public StyleSignature getDefaultStyleDefinitionDiamond() {
-		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.diamond);
-	}
-
-	@Override
-	public Collection<Ftile> getMyChildren() {
-		return Collections.emptyList();
-	}
-
 	public FtileDiamond withNorth(TextBlock north) {
-		return new FtileDiamond(skinParam(), backColor, borderColor, swimlane, north, south, east1, west1);
+		return new FtileDiamond(skinParam(), backColor, borderColor, swimlane, north, south, east, west);
 	}
 
 	public FtileDiamond withWest(TextBlock west1) {
 		if (west1 == null) {
 			return this;
 		}
-		return new FtileDiamond(skinParam(), backColor, borderColor, swimlane, north, south, east1, west1);
+		return new FtileDiamond(skinParam(), backColor, borderColor, swimlane, north, south, east, west1);
 	}
 
 	public FtileDiamond withEast(TextBlock east1) {
 		if (east1 == null) {
 			return this;
 		}
-		return new FtileDiamond(skinParam(), backColor, borderColor, swimlane, north, south, east1, west1);
+		return new FtileDiamond(skinParam(), backColor, borderColor, swimlane, north, south, east1, west);
 	}
 
 	public FtileDiamond withSouth(TextBlock south) {
-		return new FtileDiamond(skinParam(), backColor, borderColor, swimlane, north, south, east1, west1);
+		return new FtileDiamond(skinParam(), backColor, borderColor, swimlane, north, south, east, west);
 	}
 
-	private FtileDiamond(ISkinParam skinParam, HColor backColor, HColor borderColor, Swimlane swimlane,
-			TextBlock north, TextBlock south, TextBlock east1, TextBlock west1) {
-		super(skinParam);
-		if (UseStyle.useBetaStyle()) {
-			Style style = getDefaultStyleDefinitionDiamond().getMergedStyle(skinParam.getCurrentStyleBuilder());
-			shadowing = style.value(PName.Shadowing).asDouble();
-		} else {
-			shadowing = skinParam().shadowing(null) ? 3 : 0;
-		}
-
-		this.backColor = backColor;
-		this.swimlane = swimlane;
-		this.borderColor = borderColor;
-		this.north = north;
-		this.west1 = west1;
-		this.east1 = east1;
-		this.south = south;
-	}
-
-	public Set<Swimlane> getSwimlanes() {
-		if (swimlane == null) {
-			return Collections.emptySet();
-		}
-		return Collections.singleton(swimlane);
-	}
-
-	public Swimlane getSwimlaneIn() {
-		return swimlane;
-	}
-
-	public Swimlane getSwimlaneOut() {
-		return swimlane;
+	private FtileDiamond(ISkinParam skinParam, HColor backColor, HColor borderColor, Swimlane swimlane, TextBlock north,
+			TextBlock south, TextBlock east, TextBlock west) {
+		super(null, skinParam, backColor, borderColor, swimlane, north, south, east, west);
 	}
 
 	public void drawU(UGraphic ug) {
 
 		final double suppY1 = north.calculateDimension(ug.getStringBounder()).getHeight();
 		ug = ug.apply(UTranslate.dy(suppY1));
-		ug.apply(borderColor).apply(getThickness()).apply(backColor.bg())
-				.draw(Diamond.asPolygon(shadowing));
+		ug.apply(borderColor).apply(getThickness()).apply(backColor.bg()).draw(Hexagon.asPolygon(shadowing));
 		// final Dimension2D dimNorth = north.calculateDimension(ug.getStringBounder());
-		north.drawU(ug.apply(new UTranslate(Diamond.diamondHalfSize * 1.5, -suppY1)));
+		north.drawU(ug.apply(new UTranslate(Hexagon.hexagonHalfSize * 1.5, -suppY1)));
 
 		// final Dimension2D dimSouth = south.calculateDimension(ug.getStringBounder());
-		south.drawU(ug.apply(new UTranslate(Diamond.diamondHalfSize * 1.5, 2 * Diamond.diamondHalfSize)));
-		// south.drawU(ug.apply(new UTranslate(-(dimSouth.getWidth() - 2 * Diamond.diamondHalfSize) / 2,
+		south.drawU(ug.apply(new UTranslate(Hexagon.hexagonHalfSize * 1.5, 2 * Hexagon.hexagonHalfSize)));
+		// south.drawU(ug.apply(new UTranslate(-(dimSouth.getWidth() - 2 *
+		// Diamond.diamondHalfSize) / 2,
 		// 2 * Diamond.diamondHalfSize)));
 
-		final Dimension2D dimWeat1 = west1.calculateDimension(ug.getStringBounder());
-		west1.drawU(ug.apply(new UTranslate(-dimWeat1.getWidth(), -dimWeat1.getHeight() + Diamond.diamondHalfSize)));
+		final Dimension2D dimWeat1 = west.calculateDimension(ug.getStringBounder());
+		west.drawU(ug.apply(new UTranslate(-dimWeat1.getWidth(), -dimWeat1.getHeight() + Hexagon.hexagonHalfSize)));
 
-		final Dimension2D dimEast1 = east1.calculateDimension(ug.getStringBounder());
-		east1.drawU(ug.apply(new UTranslate(Diamond.diamondHalfSize * 2, -dimEast1.getHeight()
-						+ Diamond.diamondHalfSize)));
+		final Dimension2D dimEast1 = east.calculateDimension(ug.getStringBounder());
+		east.drawU(
+				ug.apply(new UTranslate(Hexagon.hexagonHalfSize * 2, -dimEast1.getHeight() + Hexagon.hexagonHalfSize)));
 	}
 
 	@Override
 	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
 		final double suppY1 = north.calculateDimension(stringBounder).getHeight();
-		final Dimension2D dim = new Dimension2DDouble(Diamond.diamondHalfSize * 2, Diamond.diamondHalfSize * 2 + suppY1);
+		final Dimension2D dim = new Dimension2DDouble(Hexagon.hexagonHalfSize * 2,
+				Hexagon.hexagonHalfSize * 2 + suppY1);
 		return new FtileGeometry(dim, dim.getWidth() / 2, suppY1, dim.getHeight());
 	}
 
@@ -174,7 +119,7 @@ public class FtileDiamond extends AbstractFtile {
 	}
 
 	public double getEastLabelWidth(StringBounder stringBounder) {
-		final Dimension2D dimEast = east1.calculateDimension(stringBounder);
+		final Dimension2D dimEast = east.calculateDimension(stringBounder);
 		return dimEast.getWidth();
 	}
 

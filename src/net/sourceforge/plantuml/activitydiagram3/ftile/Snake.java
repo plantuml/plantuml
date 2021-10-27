@@ -134,7 +134,7 @@ public class Snake implements UShape {
 	}
 
 	public Snake withLabel(TextBlock textBlock, VerticalAlignment verticalAlignment) {
-		if (textBlock != null) {
+		if (textBlock != null && textBlock != TextBlockUtils.EMPTY_TEXT_BLOCK) {
 			this.texts.add(new Text(textBlock, verticalAlignment, null));
 		}
 		if (verticalAlignment != VerticalAlignment.CENTER) {
@@ -314,9 +314,10 @@ public class Snake implements UShape {
 			if (this.startDecoration != null || other.startDecoration != null) {
 				throw new UnsupportedOperationException("Not yet coded: to be done");
 			}
+			final ArrayList<Text> mergeTexts = new ArrayList<Text>(this.texts);
+			mergeTexts.addAll(other.texts);
 			final Snake result = new Snake(null, color, oneOf, this.worm.merge(other.worm, strategy), strategy,
-					emphasizeDirection == null ? other.emphasizeDirection : emphasizeDirection, new ArrayList<Text>());
-			// result.textBlock = oneOf(this.textBlock, other.textBlock, stringBounder);
+					emphasizeDirection == null ? other.emphasizeDirection : emphasizeDirection, mergeTexts);
 			return result;
 		}
 		if (same(this.getFirst(), other.getLast())) {

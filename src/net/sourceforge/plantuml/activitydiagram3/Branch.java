@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
@@ -212,7 +213,7 @@ public class Branch {
 	public final LinkRendering getSpecial() {
 		return special;
 	}
-	
+
 	public final Display getDisplayPositive() {
 		final LinkRendering in = ftile.getInLinkRendering();
 		if (in != null && Display.isNull(in.getDisplay()) == false) {
@@ -221,8 +222,17 @@ public class Branch {
 		return labelPositive.getDisplay();
 	}
 
-	
-	public final TextBlock getTextBlockPositive() {
+	public Display getSpecialDisplay() {
+		if (special != null && Display.isNull(special.getDisplay()) == false) {
+			return special.getDisplay();
+		}
+		return null;
+	}
+
+	private TextBlock getTextBlock(Display display) {
+		if (display == null)
+			return TextBlockUtils.EMPTY_TEXT_BLOCK;
+
 		LineBreakStrategy lineBreak = LineBreakStrategy.NONE;
 		final FontConfiguration fcArrow;
 		if (UseStyle.useBetaStyle()) {
@@ -233,10 +243,16 @@ public class Branch {
 			fcArrow = new FontConfiguration(skinParam(), FontParam.ARROW, null);
 		}
 
-		return getDisplayPositive().create0(fcArrow, HorizontalAlignment.LEFT, skinParam(), lineBreak,
-				CreoleMode.SIMPLE_LINE, null, null);
+		return display.create0(fcArrow, HorizontalAlignment.LEFT, skinParam(), lineBreak, CreoleMode.SIMPLE_LINE, null,
+				null);
 	}
 
+	public final TextBlock getTextBlockPositive() {
+		return getTextBlock(getDisplayPositive());
+	}
 
+	public final TextBlock getTextBlockSpecial() {
+		return getTextBlock(getSpecialDisplay());
+	}
 
 }

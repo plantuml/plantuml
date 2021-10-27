@@ -351,8 +351,8 @@ public class ActivityDiagram3 extends UmlDiagram {
 
 	public void startRepeat(HColor color, Display label, BoxStyle boxStyleIn, Colors colors) {
 		manageSwimlaneStrategy();
-		final InstructionRepeat instructionRepeat = new InstructionRepeat(swinlanes.getCurrentSwimlane(), current(),
-				nextLinkRenderer(), color, label, boxStyleIn, colors);
+		final InstructionRepeat instructionRepeat = new InstructionRepeat(swinlanes, current(), nextLinkRenderer(),
+				color, label, boxStyleIn, colors);
 		current().add(instructionRepeat);
 		setCurrent(instructionRepeat);
 		setNextLinkRendererInternal(LinkRendering.none());

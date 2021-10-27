@@ -42,18 +42,18 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 
-public class Diamond {
+public class Hexagon {
 
-	final static public double diamondHalfSize = 12;
+	final static public double hexagonHalfSize = 12;
 
 	public static UPolygon asPolygon(double shadowing) {
 		final UPolygon diams = new UPolygon();
 
-		diams.addPoint(diamondHalfSize, 0);
-		diams.addPoint(diamondHalfSize * 2, diamondHalfSize);
-		diams.addPoint(diamondHalfSize, diamondHalfSize * 2);
-		diams.addPoint(0, diamondHalfSize);
-		diams.addPoint(diamondHalfSize, 0);
+		diams.addPoint(hexagonHalfSize, 0);
+		diams.addPoint(hexagonHalfSize * 2, hexagonHalfSize);
+		diams.addPoint(hexagonHalfSize, hexagonHalfSize * 2);
+		diams.addPoint(0, hexagonHalfSize);
+		diams.addPoint(hexagonHalfSize, 0);
 
 		// if (shadowing) {
 		// diams.setDeltaShadow(3);
@@ -66,13 +66,13 @@ public class Diamond {
 	public static UPolygon asPolygon(double shadowing, double width, double height) {
 		final UPolygon diams = new UPolygon();
 
-		diams.addPoint(diamondHalfSize, 0);
-		diams.addPoint(width - diamondHalfSize, 0);
+		diams.addPoint(hexagonHalfSize, 0);
+		diams.addPoint(width - hexagonHalfSize, 0);
 		diams.addPoint(width, height / 2);
-		diams.addPoint(width - diamondHalfSize, height);
-		diams.addPoint(diamondHalfSize, height);
+		diams.addPoint(width - hexagonHalfSize, height);
+		diams.addPoint(hexagonHalfSize, height);
 		diams.addPoint(0, height / 2);
-		diams.addPoint(diamondHalfSize, 0);
+		diams.addPoint(hexagonHalfSize, 0);
 
 		// if (shadowing) {
 		// diams.setDeltaShadow(3);
@@ -88,9 +88,9 @@ public class Diamond {
 			private final double getDeltaX(double height, double y) {
 				final double p = y / height * 2;
 				if (p <= 1) {
-					return diamondHalfSize * p;
+					return hexagonHalfSize * p;
 				}
-				return diamondHalfSize * (2 - p);
+				return hexagonHalfSize * (2 - p);
 			}
 
 			public double getStartingX(StringBounder stringBounder, double y) {

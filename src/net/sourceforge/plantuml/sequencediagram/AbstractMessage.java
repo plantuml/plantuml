@@ -72,6 +72,7 @@ public abstract class AbstractMessage implements EventWithDeactivate, WithStyle 
 	private Url url;
 	private final String messageNumber;
 	private boolean parallel = false;
+	private AbstractMessage parallelBrother;
 	private final StyleBuilder styleBuilder;
 
 	private List<Note> noteOnMessages = new ArrayList<>();
@@ -91,6 +92,10 @@ public abstract class AbstractMessage implements EventWithDeactivate, WithStyle 
 
 	public void goParallel() {
 		this.parallel = true;
+	}
+
+	public void setParallelBrother(AbstractMessage brother) {
+		this.parallelBrother = brother;
 	}
 
 	public boolean isParallel() {
@@ -262,4 +267,5 @@ public abstract class AbstractMessage implements EventWithDeactivate, WithStyle 
 	public abstract Participant getParticipant1();
 
 	public abstract Participant getParticipant2();
+
 }

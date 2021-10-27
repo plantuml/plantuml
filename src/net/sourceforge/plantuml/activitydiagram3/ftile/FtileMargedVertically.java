@@ -68,9 +68,7 @@ public class FtileMargedVertically extends FtileDecorate {
 	}
 
 	private FtileGeometry calculateDimensionSlow(StringBounder stringBounder) {
-		final FtileGeometry orig = getFtileDelegated().calculateDimension(stringBounder);
-		return new FtileGeometry(orig.getWidth(), orig.getHeight() + margin1 + margin2, orig.getLeft(), orig.getInY()
-				+ margin1, orig.hasPointOut() ? orig.getOutY() + margin1 : orig.getOutY());
+		return super.calculateDimension(stringBounder).incVertically(margin1, margin2);
 	}
 
 }

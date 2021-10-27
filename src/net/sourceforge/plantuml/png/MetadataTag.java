@@ -35,9 +35,9 @@
  */
 package net.sourceforge.plantuml.png;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Iterator;
 
 import javax.imageio.ImageReader;
@@ -52,7 +52,7 @@ import net.sourceforge.plantuml.security.SFile;
 
 public class MetadataTag {
 
-	private final Object source;
+	private final File source;
 	private final String tag;
 
 	public MetadataTag(SFile file, String tag) throws FileNotFoundException {
@@ -62,11 +62,6 @@ public class MetadataTag {
 
 	public MetadataTag(java.io.File file, String tag) {
 		this.source = file;
-		this.tag = tag;
-	}
-
-	public MetadataTag(InputStream is, String tag) {
-		this.source = is;
 		this.tag = tag;
 	}
 
