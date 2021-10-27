@@ -40,7 +40,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import net.sourceforge.plantuml.Log;
-import net.sourceforge.plantuml.security.ImageIO;
+import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.security.SFile;
 
 public class PngIO {
@@ -63,7 +63,7 @@ public class PngIO {
 		Log.debug("File size " + file.length());
 		if (file.length() == 0) {
 			Log.error("File size is zero: " + file);
-			ImageIO.write(image, "png", file);
+			SImageIO.write(image, "png", file);
 		}
 	}
 
@@ -74,7 +74,7 @@ public class PngIO {
 	public static void write(RenderedImage image, OutputStream os, String metadata, int dpi, String debugData)
 			throws IOException {
 		if (metadata == null) {
-			ImageIO.write(image, "png", os);
+			SImageIO.write(image, "png", os);
 		} else {
 			PngIOMetadata.writeWithMetadata(image, os, metadata, dpi, debugData);
 		}

@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import ext.plantuml.com.ctreber.acearth.renderer.RenderTarget;
-import net.sourceforge.plantuml.security.ImageIO;
+import net.sourceforge.plantuml.security.SImageIO;
 
 /**
  * <p>
@@ -58,7 +58,7 @@ public class PixelCanvas implements RenderTarget {
 	}
 
 	public void saveToImage(OutputStream os) throws IOException {
-		ImageIO.write(fEarthImage2, "png", os);
+		SImageIO.write(fEarthImage2, "png", os);
 	}
 
 }

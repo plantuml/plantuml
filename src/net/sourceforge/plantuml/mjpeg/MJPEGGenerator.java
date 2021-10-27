@@ -21,7 +21,7 @@ import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import net.sourceforge.plantuml.security.ImageIO;
+import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.security.SFile;
 
 /**
@@ -455,7 +455,7 @@ public class MJPEGGenerator {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		Graphics2D g = bi.createGraphics();
 		g.drawImage(image, 0, 0, width, height, null);
-		ImageIO.write(bi, "jpg", baos);
+		SImageIO.write(bi, "jpg", baos);
 		baos.close();
 		bi = null;
 		g = null;

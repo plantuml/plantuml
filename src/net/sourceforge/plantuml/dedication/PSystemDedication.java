@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.PlainDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.graphic.UDrawable;
-import net.sourceforge.plantuml.security.ImageIO;
+import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.ugraphic.AffineTransformType;
 import net.sourceforge.plantuml.ugraphic.PixelImage;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -77,7 +77,7 @@ public class PSystemDedication extends PlainDiagram {
 			final Object vp8Decoder = clVP8Decoder.newInstance();
 			// final VP8Decoder vp8Decoder = new VP8Decoder();
 			final Method decodeFrame = clVP8Decoder.getMethod("decodeFrame", ImageInputStream.class);
-			final ImageInputStream iis = ImageIO.createImageInputStream(is);
+			final ImageInputStream iis = SImageIO.createImageInputStream(is);
 			decodeFrame.invoke(vp8Decoder, iis);
 			// vp8Decoder.decodeFrame(iis);
 			iis.close();

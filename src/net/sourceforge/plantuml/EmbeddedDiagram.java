@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.Line;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.preproc.Defines;
-import net.sourceforge.plantuml.security.ImageIO;
+import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.ugraphic.AffineTransformType;
 import net.sourceforge.plantuml.ugraphic.PixelImage;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -186,7 +186,7 @@ public class EmbeddedDiagram implements CharSequence {
 			final ByteArrayOutputStream os = new ByteArrayOutputStream();
 			system.exportDiagram(os, 0, new FileFormatOption(FileFormat.PNG));
 			os.close();
-			return ImageIO.read(os.toByteArray());
+			return SImageIO.read(os.toByteArray());
 		}
 
 		public HorizontalAlignment getHorizontalAlignment() {

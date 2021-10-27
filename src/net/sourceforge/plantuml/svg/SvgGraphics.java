@@ -69,7 +69,7 @@ import net.sourceforge.plantuml.FileUtils;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.SignatureUtils;
 import net.sourceforge.plantuml.code.Base64Coder;
-import net.sourceforge.plantuml.security.ImageIO;
+import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.tikz.TikzGraphics;
 import net.sourceforge.plantuml.ugraphic.UGroupType;
@@ -848,7 +848,7 @@ public class SvgGraphics {
 
 	private String toBase64(BufferedImage image) throws IOException {
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		ImageIO.write(image, "png", baos);
+		SImageIO.write(image, "png", baos);
 		final byte data[] = baos.toByteArray();
 		return new String(Base64Coder.encode(data));
 	}

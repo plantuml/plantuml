@@ -51,7 +51,7 @@ import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
-import net.sourceforge.plantuml.security.ImageIO;
+import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.svek.GraphvizCrash;
 
 public class PSystemDitaa extends AbstractPSystem {
@@ -141,7 +141,7 @@ public class PSystemDitaa extends AbstractPSystem {
 					renderingOptions.getClass());
 			final BufferedImage image = (BufferedImage) renderToImage.invoke(bitmapRenderer, diagram, renderingOptions);
 
-			ImageIO.write(image, "png", os);
+			SImageIO.write(image, "png", os);
 			final int width = image.getWidth();
 			final int height = image.getHeight();
 			return new ImageDataSimple(width, height);

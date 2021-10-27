@@ -45,7 +45,7 @@ import java.util.List;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.SplitParam;
 import net.sourceforge.plantuml.SuggestedFile;
-import net.sourceforge.plantuml.security.ImageIO;
+import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.security.SFile;
 
 public class PngSplitter {
@@ -71,7 +71,7 @@ public class PngSplitter {
 		}
 
 		// Thread.yield();
-		final BufferedImage im = ImageIO.read(full);
+		final BufferedImage im = SImageIO.read(full);
 		// Thread.yield();
 		final PngSegment horizontalSegment = new PngSegment(im.getWidth(), horizontalPages);
 		final PngSegment verticalSegment = new PngSegment(im.getHeight(), verticalPages);

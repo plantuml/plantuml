@@ -45,7 +45,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.security.ImageIO;
+import net.sourceforge.plantuml.security.SImageIO;
 
 public class ClipboardLoop {
 
@@ -88,7 +88,7 @@ public class ClipboardLoop {
 		} else {
 			Log.info("Image ok " + desc.getDescription());
 			baos.close();
-			final BufferedImage image = ImageIO.read(baos.toByteArray());
+			final BufferedImage image = SImageIO.read(baos.toByteArray());
 			setClipboardImage(image);
 			Log.info("Image copied in clipboard");
 		}
