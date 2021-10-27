@@ -41,7 +41,7 @@ import net.sourceforge.plantuml.PlainStringsDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.graphic.GraphicPosition;
-import net.sourceforge.plantuml.security.ImageIO;
+import net.sourceforge.plantuml.security.SImageIO;
 
 public class PSystemRIP extends PlainStringsDiagram {
 
@@ -58,7 +58,7 @@ public class PSystemRIP extends PlainStringsDiagram {
 		strings.add("         <b>Requiescat In Pace");
 		strings.add(" ");
 
-		image = ImageIO.read(imm);
+		image = SImageIO.read(imm);
 		imagePosition = GraphicPosition.BOTTOM;
 	}
 

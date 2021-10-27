@@ -49,7 +49,7 @@ import java.util.prefs.Preferences;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.SignatureUtils;
-import net.sourceforge.plantuml.security.ImageIO;
+import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.security.SFile;
 
 public class LicenseInfo {
@@ -154,7 +154,7 @@ public class LicenseInfo {
 				return null;
 			}
 			try {
-				final BufferedImage result = ImageIO.read(dis);
+				final BufferedImage result = SImageIO.read(dis);
 				return result;
 			} finally {
 				dis.close();

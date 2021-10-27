@@ -66,7 +66,7 @@ import net.sourceforge.plantuml.graphic.GraphicStrings;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.mjpeg.MJPEGGenerator;
 import net.sourceforge.plantuml.pdf.PdfConverter;
-import net.sourceforge.plantuml.security.ImageIO;
+import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.style.NoStyleAvailableException;
@@ -269,7 +269,7 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 			// exportDiagramTOxxBEREMOVED(baos, null, 0, new
 			// FileFormatOption(FileFormat.PNG, at));
 			baos.close();
-			final BufferedImage im = ImageIO.read(baos.toByteArray());
+			final BufferedImage im = SImageIO.read(baos.toByteArray());
 			m.addImage(im);
 		}
 		m.finishAVI();

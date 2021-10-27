@@ -48,7 +48,7 @@ import javax.imageio.ImageWriter;
 import javax.imageio.stream.ImageInputStream;
 import javax.imageio.stream.ImageOutputStream;
 
-public class ImageIO {
+public class SImageIO {
 
 	public static ImageOutputStream createImageOutputStream(OutputStream os) throws IOException {
 		return javax.imageio.ImageIO.createImageOutputStream(os);

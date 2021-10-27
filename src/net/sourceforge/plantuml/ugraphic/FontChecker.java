@@ -56,7 +56,7 @@ import javax.xml.transform.TransformerException;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.UDrawable;
-import net.sourceforge.plantuml.security.ImageIO;
+import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.svg.LengthAdjust;
 import net.sourceforge.plantuml.svg.SvgGraphics;
@@ -183,7 +183,7 @@ public class FontChecker {
 			}
 		};
 		final byte[] bytes = plainPngBuilder(drawable).writeByteArray();
-		return ImageIO.read(bytes);
+		return SImageIO.read(bytes);
 	}
 
 	// public BufferedImage getBufferedImageOld(char c) throws IOException {
