@@ -53,7 +53,7 @@ import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
-public class InstructionRepeat implements Instruction {
+public class InstructionRepeat extends AbstractInstruction implements Instruction {
 
 	private final InstructionList repeatList;
 	private final Instruction parent;

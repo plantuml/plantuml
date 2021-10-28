@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
-public class InstructionGroup implements Instruction, InstructionCollection {
+public class InstructionGroup extends AbstractInstruction implements Instruction, InstructionCollection {
 
 	private final InstructionList list;
 	private final Instruction parent;
@@ -68,8 +68,8 @@ public class InstructionGroup implements Instruction, InstructionCollection {
 		return list.containsBreak();
 	}
 
-	public InstructionGroup(Instruction parent, Display test, HColor backColor, HColor titleColor,
-			Swimlane swimlane, HColor borderColor, LinkRendering linkRendering, USymbol type, double roundCorner) {
+	public InstructionGroup(Instruction parent, Display test, HColor backColor, HColor titleColor, Swimlane swimlane,
+			HColor borderColor, LinkRendering linkRendering, USymbol type, double roundCorner) {
 		this.list = new InstructionList(swimlane);
 		this.type = type;
 		this.linkRendering = linkRendering;

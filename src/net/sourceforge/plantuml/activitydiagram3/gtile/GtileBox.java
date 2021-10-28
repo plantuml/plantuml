@@ -33,12 +33,9 @@
  *
  *
  */
-package net.sourceforge.plantuml.activitydiagram3.ftile.vertical;
+package net.sourceforge.plantuml.activitydiagram3.gtile;
 
 import java.awt.geom.Dimension2D;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Set;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
@@ -49,9 +46,7 @@ import net.sourceforge.plantuml.SkinParamColors;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
-import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
-import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.creole.CreoleMode;
@@ -80,7 +75,7 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorNone;
 
-public class FtileBox extends AbstractFtile {
+public class GtileBox extends AbstractGtile {
 
 	private final ClockwiseTopRightBottomLeft padding;
 	private final ClockwiseTopRightBottomLeft margin;
@@ -111,21 +106,6 @@ public class FtileBox extends AbstractFtile {
 		return inRendering;
 	}
 
-	public Set<Swimlane> getSwimlanes() {
-		if (swimlane == null) {
-			return Collections.emptySet();
-		}
-		return Collections.singleton(swimlane);
-	}
-
-	public Swimlane getSwimlaneIn() {
-		return swimlane;
-	}
-
-	public Swimlane getSwimlaneOut() {
-		return swimlane;
-	}
-
 	class MyStencil implements Stencil {
 
 		public double getStartingX(StringBounder stringBounder, double y) {
@@ -139,8 +119,8 @@ public class FtileBox extends AbstractFtile {
 
 	}
 
-	public static FtileBox create(ISkinParam skinParam, Display label, Swimlane swimlane, BoxStyle boxStyle,
-			Stereotype stereotype) {
+	public static GtileBox create(StringBounder stringBounder, ISkinParam skinParam, Display label, Swimlane swimlane,
+			BoxStyle boxStyle, Stereotype stereotype) {
 		Style style = null;
 		Style styleArrow = null;
 		if (UseStyle.useBetaStyle()) {
@@ -148,12 +128,12 @@ public class FtileBox extends AbstractFtile {
 					.getMergedStyle(skinParam.getCurrentStyleBuilder());
 			styleArrow = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam.getCurrentStyleBuilder());
 		}
-		return new FtileBox(skinParam, label, swimlane, boxStyle, style, styleArrow);
+		return new GtileBox(stringBounder, skinParam, label, swimlane, boxStyle, style, styleArrow);
 	}
 
-	private FtileBox(ISkinParam skinParam, Display label, Swimlane swimlane, BoxStyle boxStyle, Style style,
-			Style styleArrow) {
-		super(skinParam);
+	private GtileBox(StringBounder stringBounder, ISkinParam skinParam, Display label, Swimlane swimlane,
+			BoxStyle boxStyle, Style style, Style styleArrow) {
+		super(stringBounder, skinParam);
 		this.style = style;
 		this.boxStyle = boxStyle;
 		this.swimlane = swimlane;
@@ -245,17 +225,13 @@ public class FtileBox extends AbstractFtile {
 	}
 
 	@Override
-	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
+	public final Dimension2D calculateDimension(StringBounder stringBounder) {
 		Dimension2D dimRaw = tb.calculateDimension(stringBounder);
 		dimRaw = Dimension2DDouble.delta(dimRaw, padding.getLeft() + padding.getRight(),
 				padding.getBottom() + padding.getTop());
 		dimRaw = Dimension2DDouble.atLeast(dimRaw, minimumWidth, 0);
 		return new FtileGeometry(dimRaw.getWidth() + boxStyle.getShield(), dimRaw.getHeight(), dimRaw.getWidth() / 2, 0,
 				dimRaw.getHeight());
-	}
-
-	public Collection<Ftile> getMyChildren() {
-		return Collections.emptyList();
 	}
 
 }

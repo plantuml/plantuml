@@ -33,32 +33,33 @@
  *
  *
  */
-package net.sourceforge.plantuml.activitydiagram3;
+package net.sourceforge.plantuml.activitydiagram3.gtile;
 
-import java.util.Collections;
-import java.util.Set;
+import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-import net.sourceforge.plantuml.activitydiagram3.ftile.Swimable;
-import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+public interface Gtile extends Swimable2, TextBlock {
 
-abstract class MonoSwimable extends WithNote implements Swimable {
+	public static final boolean USE_GTILE = false;
 
-	private final Swimlane swimlane;
+	public ISkinParam skinParam();
 
-	public MonoSwimable(Swimlane swimlane) {
-		this.swimlane = swimlane;
-	}
+	public StringBounder getStringBounder();
 
-	final public Set<Swimlane> getSwimlanes() {
-		return swimlane == null ? Collections.<Swimlane>emptySet() : Collections.<Swimlane>singleton(swimlane);
-	}
+	// public UTranslate getTranslateFor(Gtile child);
 
-	final public Swimlane getSwimlaneIn() {
-		return swimlane;
-	}
+	// public Collection<Gtile> getMyChildren();
 
-	final public Swimlane getSwimlaneOut() {
-		return swimlane;
-	}
+	public UTranslate getCoord(String name);
+
+	public GPoint getGPoint(String name);
+
+//	public Collection<Connection> getInnerConnections();
+//
+//	public List<WeldingPoint> getWeldingPoints();
+//	
+//	public HorizontalAlignment arrowHorizontalAlignment();
 
 }

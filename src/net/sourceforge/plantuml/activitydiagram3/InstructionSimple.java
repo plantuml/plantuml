@@ -37,15 +37,19 @@ package net.sourceforge.plantuml.activitydiagram3;
 
 import java.util.Objects;
 
+import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileKilled;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.activitydiagram3.gtile.Gtile;
+import net.sourceforge.plantuml.activitydiagram3.gtile.GtileBox;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
+import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.color.Colors;
 
 public class InstructionSimple extends MonoSwimable implements Instruction {
@@ -58,6 +62,7 @@ public class InstructionSimple extends MonoSwimable implements Instruction {
 	private final Url url;
 	private final Stereotype stereotype;
 
+	@Override
 	public boolean containsBreak() {
 		return false;
 	}
@@ -73,6 +78,12 @@ public class InstructionSimple extends MonoSwimable implements Instruction {
 		this.colors = Objects.requireNonNull(colors);
 	}
 
+	@Override
+	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
+		return GtileBox.create(stringBounder, colors.mute(skinParam), label, getSwimlaneIn(), style, stereotype);
+	}
+
+	@Override
 	public Ftile createFtile(FtileFactory factory) {
 		Ftile result = factory.activity(label, getSwimlaneIn(), style, colors, stereotype);
 		if (url != null) {
@@ -85,15 +96,18 @@ public class InstructionSimple extends MonoSwimable implements Instruction {
 		return result;
 	}
 
+	@Override
 	public CommandExecutionResult add(Instruction other) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	final public boolean kill() {
 		this.killed = true;
 		return true;
 	}
 
+	@Override
 	public LinkRendering getInLinkRendering() {
 		return inlinkRendering;
 	}

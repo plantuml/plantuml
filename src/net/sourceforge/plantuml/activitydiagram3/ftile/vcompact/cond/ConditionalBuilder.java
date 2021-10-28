@@ -290,7 +290,7 @@ public class ConditionalBuilder {
 	private Ftile getShape2(Branch branch1, Branch branch2, boolean useNorth) {
 		final Ftile shape2;
 		if (conditionEndStyle == ConditionEndStyle.HLINE) {
-			return new FtileEmpty(tile1.skinParam(), 0, Hexagon.hexagonHalfSize, swimlane, swimlane);
+			return new FtileEmpty(tile1.skinParam(), 0, Hexagon.hexagonHalfSize, swimlane);
 		}
 		// else use default ConditionEndStyle.DIAMOND
 		if (hasTwoBranches()) {
@@ -307,7 +307,7 @@ public class ConditionalBuilder {
 			tmp = tmp.withEast(tbout2);
 			shape2 = tmp;
 		} else {
-			shape2 = new FtileEmpty(tile1.skinParam(), 0, Hexagon.hexagonHalfSize / 2, swimlane, swimlane);
+			shape2 = new FtileEmpty(tile1.skinParam(), 0, Hexagon.hexagonHalfSize / 2, swimlane);
 		}
 		return shape2;
 	}

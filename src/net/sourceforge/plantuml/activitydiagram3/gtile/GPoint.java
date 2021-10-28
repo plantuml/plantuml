@@ -33,42 +33,44 @@
  *
  *
  */
-package net.sourceforge.plantuml.activitydiagram3;
+package net.sourceforge.plantuml.activitydiagram3.gtile;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
+import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
-import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
-import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
-import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.color.Colors;
-import net.sourceforge.plantuml.sequencediagram.NotePosition;
-import net.sourceforge.plantuml.sequencediagram.NoteType;
+public class GPoint {
 
-abstract class WithNote extends AbstractInstruction {
+	public static final String NORTH = "NORTH";
+	public static final String SOUTH = "SOUTH";
 
-	private final Collection<PositionedNote> notes = new ArrayList<>();
+	private final Gtile gtile;
+	private final String name;
+	private final LinkRendering linkRendering;
 
-	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote) {
-		this.notes.add(new PositionedNote(note, position, type, colors, swimlaneNote));
-		return true;
+	public GPoint(Gtile gtile, String name, LinkRendering linkRendering) {
+		this.gtile = gtile;
+		this.name = name;
+		this.linkRendering = linkRendering;
 	}
 
-	final protected Ftile eventuallyAddNote(FtileFactory factory, Ftile ftile, Swimlane swimlane) {
-		if (notes.size() == 0) {
-			return ftile;
-		}
-		return factory.addNote(ftile, swimlane, notes);
+	public GPoint(Gtile gtile, String name) {
+		this(gtile, name, LinkRendering.none());
 	}
 
-	public Collection<PositionedNote> getPositionedNotes() {
-		return Collections.unmodifiableCollection(notes);
+	public Gtile getGtile() {
+		return gtile;
 	}
 
-	public boolean hasNotes() {
-		return notes.size() > 0;
+	public String getName() {
+		return name;
+	}
+
+	public UTranslate getCoord() {
+		return gtile.getCoord(name);
+	}
+
+	public LinkRendering getLinkRendering() {
+		return linkRendering;
 	}
 
 }

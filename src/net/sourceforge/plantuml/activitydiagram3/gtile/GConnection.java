@@ -33,32 +33,12 @@
  *
  *
  */
-package net.sourceforge.plantuml.activitydiagram3;
+package net.sourceforge.plantuml.activitydiagram3.gtile;
 
-import java.util.Collections;
-import java.util.Set;
+import java.util.List;
 
-import net.sourceforge.plantuml.activitydiagram3.ftile.Swimable;
-import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+public interface GConnection extends Gtile {
 
-abstract class MonoSwimable extends WithNote implements Swimable {
-
-	private final Swimlane swimlane;
-
-	public MonoSwimable(Swimlane swimlane) {
-		this.swimlane = swimlane;
-	}
-
-	final public Set<Swimlane> getSwimlanes() {
-		return swimlane == null ? Collections.<Swimlane>emptySet() : Collections.<Swimlane>singleton(swimlane);
-	}
-
-	final public Swimlane getSwimlaneIn() {
-		return swimlane;
-	}
-
-	final public Swimlane getSwimlaneOut() {
-		return swimlane;
-	}
+	public List<GPoint> getHooks();
 
 }

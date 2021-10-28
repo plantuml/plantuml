@@ -35,40 +35,14 @@
  */
 package net.sourceforge.plantuml.activitydiagram3;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
+import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.activitydiagram3.gtile.Gtile;
+import net.sourceforge.plantuml.graphic.StringBounder;
 
-import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
-import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
-import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
-import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.color.Colors;
-import net.sourceforge.plantuml.sequencediagram.NotePosition;
-import net.sourceforge.plantuml.sequencediagram.NoteType;
+abstract class AbstractInstruction {
 
-abstract class WithNote extends AbstractInstruction {
-
-	private final Collection<PositionedNote> notes = new ArrayList<>();
-
-	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote) {
-		this.notes.add(new PositionedNote(note, position, type, colors, swimlaneNote));
-		return true;
-	}
-
-	final protected Ftile eventuallyAddNote(FtileFactory factory, Ftile ftile, Swimlane swimlane) {
-		if (notes.size() == 0) {
-			return ftile;
-		}
-		return factory.addNote(ftile, swimlane, notes);
-	}
-
-	public Collection<PositionedNote> getPositionedNotes() {
-		return Collections.unmodifiableCollection(notes);
-	}
-
-	public boolean hasNotes() {
-		return notes.size() > 0;
+	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
+		throw new UnsupportedOperationException("" + getClass());
 	}
 
 }

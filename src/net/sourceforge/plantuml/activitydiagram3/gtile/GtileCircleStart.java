@@ -30,38 +30,55 @@
  *
  *
  * Original Author:  Arnaud Roques
- *
+ * 
  *
  */
-package net.sourceforge.plantuml.activitydiagram3;
+package net.sourceforge.plantuml.activitydiagram3.gtile;
 
+import java.awt.geom.Dimension2D;
+
+import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
-import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
-import net.sourceforge.plantuml.activitydiagram3.ftile.Swimable;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
-import net.sourceforge.plantuml.activitydiagram3.gtile.Gtile;
-import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.color.Colors;
-import net.sourceforge.plantuml.sequencediagram.NotePosition;
-import net.sourceforge.plantuml.sequencediagram.NoteType;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.ugraphic.UEllipse;
+import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorNone;
 
-public interface Instruction extends Swimable {
+public class GtileCircleStart extends AbstractGtile {
 
-	public Ftile createFtile(FtileFactory factory);
+	private static final int SIZE = 20;
 
-	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder);
+	private final HColor backColor;
+	private double shadowing;
 
-	public CommandExecutionResult add(Instruction other);
+	public GtileCircleStart(StringBounder stringBounder, ISkinParam skinParam, HColor backColor, Swimlane swimlane,
+			Style style) {
+		super(stringBounder, skinParam, swimlane);
+		this.backColor = backColor;
+		if (UseStyle.useBetaStyle()) {
+			this.shadowing = style.value(PName.Shadowing).asDouble();
+		} else {
+			if (skinParam().shadowing(null)) {
+				this.shadowing = 3;
+			}
+		}
 
-	public boolean kill();
+	}
 
-	public LinkRendering getInLinkRendering();
+	public void drawU(UGraphic ug) {
+		final UEllipse circle = new UEllipse(SIZE, SIZE);
+		circle.setDeltaShadow(shadowing);
+		ug.apply(new HColorNone()).apply(backColor.bg()).draw(circle);
+	}
 
-	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote);
-
-	public boolean containsBreak();
+	@Override
+	public Dimension2D calculateDimension(StringBounder stringBounder) {
+		return new Dimension2DDouble(SIZE, SIZE);
+	}
 
 }
