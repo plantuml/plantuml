@@ -53,12 +53,11 @@ public class TextBlockInterceptorUDrawable extends AbstractTextBlock implements 
 	}
 
 	public void drawU(UGraphic ug) {
-		textBlock.drawU(new UGraphicInterceptorUDrawable2(ug, new HashMap<String, UTranslate>()));
+		new UGraphicInterceptorUDrawable2(ug, new HashMap<String, UTranslate>()).draw(textBlock);
 		ug.flushUg();
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		// return TextBlockUtils.getMinMax(this, stringBounder).getDimension();
 		throw new UnsupportedOperationException();
 	}
 

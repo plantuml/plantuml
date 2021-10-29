@@ -45,13 +45,13 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class GConnectionVerticalDown extends GAbstractConnection implements GConnectionTranslatable {
+public class GConnectionHorizontalThenVerticalDown extends GAbstractConnection implements GConnectionTranslatable {
 
 	private final TextBlock textBlock;
 	private final UTranslate pos1;
 	private final UTranslate pos2;
 
-	public GConnectionVerticalDown(UTranslate pos1, GPoint gpoint1, UTranslate pos2, GPoint gpoint2,
+	public GConnectionHorizontalThenVerticalDown(UTranslate pos1, GPoint gpoint1, UTranslate pos2, GPoint gpoint2,
 			TextBlock textBlock) {
 		super(gpoint1, gpoint2);
 		this.textBlock = textBlock;
@@ -108,6 +108,7 @@ public class GConnectionVerticalDown extends GAbstractConnection implements GCon
 		final Point2D p1 = pos1.getTranslated(gpoint1.getPoint2D());
 		final Point2D p2 = pos2.getTranslated(gpoint2.getPoint2D());
 		snake.addPoint(p1);
+		snake.addPoint(new Point2D.Double(p2.getX(), p1.getY()));
 		snake.addPoint(p2);
 		return snake;
 	}

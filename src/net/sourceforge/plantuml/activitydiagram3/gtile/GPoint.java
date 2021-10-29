@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.gtile;
 
+import java.awt.geom.Point2D;
+
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
@@ -42,6 +44,8 @@ public class GPoint {
 
 	public static final String NORTH = "NORTH";
 	public static final String SOUTH = "SOUTH";
+	public static final String WEST = "WEST";
+	public static final String EAST = "EAST";
 
 	private final Gtile gtile;
 	private final String name;
@@ -67,6 +71,10 @@ public class GPoint {
 
 	public UTranslate getCoord() {
 		return gtile.getCoord(name);
+	}
+
+	public Point2D getPoint2D() {
+		return getCoord().getPosition();
 	}
 
 	public LinkRendering getLinkRendering() {

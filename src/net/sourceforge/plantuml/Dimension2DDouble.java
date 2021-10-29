@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml;
 
 import java.awt.geom.Dimension2D;
+import java.awt.geom.Point2D;
 
 import net.sourceforge.plantuml.utils.MathUtils;
 
@@ -50,6 +51,10 @@ public class Dimension2DDouble extends Dimension2D {
 		}
 		this.width = width;
 		this.height = height;
+	}
+
+	public Dimension2DDouble(Point2D point) {
+		this(point.getX(), point.getY());
 	}
 
 	@Override

@@ -48,8 +48,8 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileEmpty;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.WeldingPoint;
-import net.sourceforge.plantuml.activitydiagram3.gtile.GConnectionVerticalDown;
 import net.sourceforge.plantuml.activitydiagram3.gtile.Gtile;
+import net.sourceforge.plantuml.activitydiagram3.gtile.GtileAssembly;
 import net.sourceforge.plantuml.activitydiagram3.gtile.GtileEmpty;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -113,7 +113,7 @@ public class InstructionList extends WithNote implements Instruction, Instructio
 			if (result == null) {
 				result = cur;
 			} else {
-				result = new GConnectionVerticalDown(result, cur, ins.getInLinkRendering());
+				result = new GtileAssembly(result, cur, ins.getInLinkRendering());
 			}
 		}
 		return result;

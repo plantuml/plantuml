@@ -291,11 +291,13 @@ public final class AtomText extends AbstractAtom implements Atom {
 
 	private boolean isSeparator(char ch) {
 		return Character.isWhitespace(ch) //
-				|| ch == '\uFF0C' // U+FF0C FULLWIDTH COMMA (,)
 				|| ch == '\uFF01' // U+FF01 FULLWIDTH EXCLAMATION MARK (!)
-				|| ch == '\uFF1F' // U+FF1F FULLWIDTH QUESTION MARK (?)
-				|| ch == '\uFF1B' // U+FF1B FULLWIDTH SEMICOLON (;)
+				|| ch == '\uFF08' // U+FF08 FULLWIDTH LEFT PARENTHESIS
+				|| ch == '\uFF09' // U+FF09 FULLWIDTH RIGHT PARENTHESIS
+				|| ch == '\uFF0C' // U+FF0C FULLWIDTH COMMA
 				|| ch == '\uFF1A' // U+FF1A FULLWIDTH COLON (:)
+				|| ch == '\uFF1B' // U+FF1B FULLWIDTH SEMICOLON (;)
+				|| ch == '\uFF1F' // U+FF1F FULLWIDTH QUESTION MARK (?)
 				|| ch == '\u3002'; // U+3002 IDEOGRAPHIC FULL STOP (.)
 	}
 

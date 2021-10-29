@@ -37,10 +37,11 @@ package net.sourceforge.plantuml.activitydiagram3.gtile;
 
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
@@ -50,89 +51,64 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.utils.MathUtils;
 
-public class GtileAssemblySimple extends AbstractGtile {
+public class GtileIfSimple extends AbstractGtile {
 
-	protected final Gtile tile1;
-	protected final Gtile tile2;
-
-	private final Dimension2D dim1;
-	private final Dimension2D dim2;
-
-	private final UTranslate pos1;
-	private final UTranslate pos2;
+	protected final List<Gtile> gtiles;
+	private final List<Dimension2D> dims = new ArrayList<>();
+	protected final List<UTranslate> positions = new ArrayList<>();
 
 	@Override
 	public String toString() {
-		return "GtileAssemblySimple " + tile1 + " && " + tile2;
+		return "GtileIfSimple " + gtiles;
 	}
 
-	public GtileAssemblySimple(Gtile tile1, Gtile tile2) {
-		super(tile1.getStringBounder(), tile1.skinParam());
-		this.tile1 = tile1;
-		this.tile2 = tile2;
+	public GtileIfSimple(List<Gtile> gtiles) {
+		super(gtiles.get(0).getStringBounder(), gtiles.get(0).skinParam());
+		this.gtiles = gtiles;
 
-		this.dim1 = tile1.calculateDimension(stringBounder);
-		this.dim2 = tile2.calculateDimension(stringBounder);
-
-		final UTranslate vector1 = tile1.getCoord(GPoint.SOUTH);
-		final UTranslate vector2 = tile2.getCoord(GPoint.NORTH);
-
-//		final UTranslate diff = vector1.compose(vector2.reverse());
-//		this.pos1 = diff.getDx() > 0 ? UTranslate.none() : UTranslate.dx(-diff.getDx());
-//		this.pos2 = diff.compose(this.pos1);
-
-		final double maxDx = Math.max(vector1.getDx(), vector2.getDx());
-		this.pos1 = UTranslate.dx(maxDx - vector1.getDx());
-		this.pos2 = new UTranslate(maxDx - vector2.getDx(), dim1.getHeight());
+		double dx = 0;
+		for (Gtile tile : gtiles) {
+			final Dimension2D dim = tile.calculateDimension(getStringBounder());
+			final UTranslate pos = UTranslate.dx(dx);
+			dx += dim.getWidth() + getMargin();
+			dims.add(dim);
+			positions.add(pos);
+		}
 	}
 
-	protected UTranslate supplementaryMove() {
-		return new UTranslate();
-	}
-
-//	@Override
-//	public List<GPoint> getHooks() {
-//		return Arrays.asList(tile1.getGPoint(GPoint.SOUTH), tile2.getGPoint(GPoint.NORTH));
-//	}
-
-	@Override
-	public UTranslate getCoord(String name) {
-		if (name.equals(GPoint.NORTH))
-			return getPos1().compose(tile1.getCoord(name));
-		if (name.equals(GPoint.SOUTH))
-			return getPos2().compose(tile2.getCoord(name));
-		throw new UnsupportedOperationException();
-	}
-
-	protected UTranslate getPos1() {
-		return pos1;
-	}
-
-	protected UTranslate getPos2() {
-		return pos2.compose(supplementaryMove());
+	private double getMargin() {
+		return 20;
 	}
 
 	public void drawU(UGraphic ug) {
-		ug.apply(getPos1()).draw(tile1);
-		ug.apply(getPos2()).draw(tile2);
+		for (int i = 0; i < gtiles.size(); i++) {
+			final Gtile tile = gtiles.get(i);
+			final UTranslate pos = positions.get(i);
+			ug.apply(pos).draw(tile);
+		}
 	}
 
 	@Override
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		final Point2D corner1 = getPos1().getTranslated(dim1);
-		final Point2D corner2 = getPos2().getTranslated(dim2);
-		return new Dimension2DDouble(MathUtils.max(corner1, corner2));
+		Point2D result = new Point2D.Double();
+		for (int i = 0; i < dims.size(); i++) {
+			final Dimension2D dim = dims.get(i);
+			final UTranslate pos = positions.get(i);
+			final Point2D corner = pos.getTranslated(dim);
+			result = MathUtils.max(result, corner);
+		}
+		return new Dimension2DDouble(result);
 	}
 
 	public Set<Swimlane> getSwimlanes() {
 		final Set<Swimlane> result = new HashSet<>();
-		result.addAll(tile1.getSwimlanes());
-		result.addAll(tile2.getSwimlanes());
+		for (Gtile tile : gtiles)
+			result.addAll(tile.getSwimlanes());
 		return Collections.unmodifiableSet(result);
 	}
 
 	public Collection<Gtile> getMyChildren() {
-		return Arrays.asList(tile1, tile2);
+		return Collections.unmodifiableCollection(gtiles);
 	}
 
 }
