@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.eps.EpsGraphics;
 import net.sourceforge.plantuml.eps.EpsStrategy;
+import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.posimo.DotPath;
 import net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
@@ -69,22 +70,18 @@ public class UGraphicEps extends AbstractUGraphic<EpsGraphics> implements ClipCo
 	protected UGraphicEps(UGraphicEps other) {
 		super(other);
 		this.strategyTOBEREMOVED = other.strategyTOBEREMOVED;
-		register(strategyTOBEREMOVED);
+		register();
 	}
 
-	public UGraphicEps(HColor defaultBackground, ColorMapper colorMapper, EpsStrategy strategy) {
-		this(defaultBackground, colorMapper, strategy, strategy.creatEpsGraphics());
-	}
-
-	private UGraphicEps(HColor defaultBackground, ColorMapper colorMapper, EpsStrategy strategy, EpsGraphics eps) {
-		super(defaultBackground, colorMapper, FileFormat.PNG.getDefaultStringBounder(), eps);
+	public UGraphicEps(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder, EpsStrategy strategy) {
+		super(defaultBackground, colorMapper, stringBounder, strategy.creatEpsGraphics());
 		this.strategyTOBEREMOVED = strategy;
-		register(strategy);
+		register();
 	}
 
-	private void register(EpsStrategy strategy) {
+	private void register() {
 		registerDriver(URectangle.class, new DriverRectangleEps(this));
-		registerDriver(UText.class, new DriverTextEps(this, strategy));
+		registerDriver(UText.class, new DriverTextEps(this, strategyTOBEREMOVED));
 		registerDriver(ULine.class, new DriverLineEps(this));
 		registerDriver(UPolygon.class, new DriverPolygonEps(this));
 		registerDriver(UEllipse.class, new DriverEllipseEps(this));
@@ -112,7 +109,7 @@ public class UGraphicEps extends AbstractUGraphic<EpsGraphics> implements ClipCo
 
 	static public String getEpsString(HColor defaultBackground, ColorMapper colorMapper, EpsStrategy epsStrategy,
 			UDrawable udrawable) throws IOException {
-		final UGraphicEps ug = new UGraphicEps(defaultBackground, colorMapper, epsStrategy);
+		final UGraphicEps ug = new UGraphicEps(defaultBackground, colorMapper, FileFormat.EPS_TEXT.getDefaultStringBounder(), epsStrategy);
 		udrawable.drawU(ug);
 		return ug.getEPSCode();
 	}

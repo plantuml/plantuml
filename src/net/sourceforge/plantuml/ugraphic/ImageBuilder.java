@@ -406,19 +406,19 @@ public class ImageBuilder {
 		case SVG:
 			return createUGraphicSVG(scaleFactor, dim);
 		case EPS:
-			return new UGraphicEps(backcolor, colorMapper, EpsStrategy.getDefault2());
+			return new UGraphicEps(backcolor, colorMapper, stringBounder, EpsStrategy.getDefault2());
 		case EPS_TEXT:
-			return new UGraphicEps(backcolor, colorMapper, EpsStrategy.WITH_MACRO_AND_TEXT);
+			return new UGraphicEps(backcolor, colorMapper, stringBounder, EpsStrategy.WITH_MACRO_AND_TEXT);
 		case HTML5:
-			return new UGraphicHtml5(backcolor, colorMapper);
+			return new UGraphicHtml5(backcolor, colorMapper, stringBounder);
 		case VDX:
-			return new UGraphicVdx(backcolor, colorMapper);
+			return new UGraphicVdx(backcolor, colorMapper, stringBounder);
 		case LATEX:
 			return new UGraphicTikz(backcolor, colorMapper, stringBounder, scaleFactor, true);
 		case LATEX_NO_PREAMBLE:
 			return new UGraphicTikz(backcolor, colorMapper, stringBounder, scaleFactor, false);
 		case BRAILLE_PNG:
-			return new UGraphicBraille(backcolor, colorMapper);
+			return new UGraphicBraille(backcolor, colorMapper, stringBounder);
 		case UTXT:
 		case ATXT:
 			return new UGraphicTxt();

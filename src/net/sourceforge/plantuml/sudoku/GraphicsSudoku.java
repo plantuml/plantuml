@@ -81,7 +81,7 @@ public class GraphicsSudoku {
 
 	public ImageData writeImageEps(OutputStream os) throws IOException {
 		final UGraphicEps ug = new UGraphicEps(HColorUtils.WHITE, new ColorMapperIdentity(),
-				EpsStrategy.WITH_MACRO_AND_TEXT);
+				FileFormat.EPS_TEXT.getDefaultStringBounder(), EpsStrategy.WITH_MACRO_AND_TEXT);
 		drawInternal(ug);
 		os.write(ug.getEPSCode().getBytes());
 		return ImageDataSimple.ok();
