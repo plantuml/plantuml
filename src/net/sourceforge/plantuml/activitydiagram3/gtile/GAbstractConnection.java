@@ -35,33 +35,27 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.gtile;
 
-import java.util.Collection;
+import java.util.Arrays;
+import java.util.List;
 
-import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.ugraphic.UTranslate;
+public abstract class GAbstractConnection implements GConnection {
 
-public interface Gtile extends Swimable2, TextBlock {
+	protected final GPoint gpoint1;
+	protected final GPoint gpoint2;
 
-	public static final boolean USE_GTILE = false;
+	public GAbstractConnection(GPoint gpoint1, GPoint gpoint2) {
+		this.gpoint1 = gpoint1;
+		this.gpoint2 = gpoint2;
+	}
 
-	public ISkinParam skinParam();
+	@Override
+	public String toString() {
+		return "[" + gpoint1 + "]->[" + gpoint2 + "]";
+	}
 
-	public StringBounder getStringBounder();
-
-	// public UTranslate getTranslateFor(Gtile child);
-
-	// public Collection<Gtile> getMyChildren();
-
-	public UTranslate getCoord(String name);
-
-	public GPoint getGPoint(String name);
-
-	public Collection<GConnection> getInnerConnections();
-
-//	public List<WeldingPoint> getWeldingPoints();
-//	
-//	public HorizontalAlignment arrowHorizontalAlignment();
+	@Override
+	final public List<GPoint> getHooks() {
+		return Arrays.asList(gpoint1, gpoint2);
+	}
 
 }

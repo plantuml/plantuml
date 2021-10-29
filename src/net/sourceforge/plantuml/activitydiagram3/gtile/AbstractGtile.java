@@ -36,15 +36,16 @@
 package net.sourceforge.plantuml.activitydiagram3.gtile;
 
 import java.awt.geom.Dimension2D;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
-import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
@@ -97,15 +98,18 @@ public abstract class AbstractGtile extends AbstractTextBlock implements Gtile {
 			return new UTranslate(dim.getWidth() / 2, 0);
 		if (name.equals(GPoint.SOUTH))
 			return new UTranslate(dim.getWidth() / 2, dim.getHeight());
+		if (name.equals(GPoint.WEST))
+			return new UTranslate(0, dim.getHeight() / 2);
+		if (name.equals(GPoint.EAST))
+			return new UTranslate(dim.getWidth(), dim.getHeight() / 2);
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public GPoint getGPoint(String name) {
-		if (name.equals(GPoint.NORTH))
-			return new GPoint(this, GPoint.NORTH);
-		if (name.equals(GPoint.SOUTH))
-			return new GPoint(this, GPoint.SOUTH);
+		if (name.equals(GPoint.NORTH) || name.equals(GPoint.SOUTH) || name.equals(GPoint.WEST)
+				|| name.equals(GPoint.EAST))
+			return new GPoint(this, name);
 		throw new UnsupportedOperationException();
 	}
 
@@ -128,11 +132,11 @@ public abstract class AbstractGtile extends AbstractTextBlock implements Gtile {
 //	public LinkRendering getOutLinkRendering() {
 //		return LinkRendering.none();
 //	}
-//
-//	public Collection<Connection> getInnerConnections() {
-//		return Collections.emptyList();
-//	}
-//
+
+	public Collection<GConnection> getInnerConnections() {
+		return Collections.emptyList();
+	}
+
 //	public UTranslate getTranslateFor(Ftile child, StringBounder stringBounder) {
 //		throw new UnsupportedOperationException("" + getClass());
 //	}
@@ -144,17 +148,12 @@ public abstract class AbstractGtile extends AbstractTextBlock implements Gtile {
 		}
 		return thickness;
 	}
-	
-	
-	final public Ftile getFtile1() {
-		throw new UnsupportedOperationException("WIP1");
+
+	private final Rose rose = new Rose();
+
+	protected final Rose getRose() {
+		return rose;
 	}
-
-	final public Ftile getFtile2() {
-		throw new UnsupportedOperationException("WIP2");
-	}
-
-
 
 //	public List<WeldingPoint> getWeldingPoints() {
 //		return Collections.emptyList();

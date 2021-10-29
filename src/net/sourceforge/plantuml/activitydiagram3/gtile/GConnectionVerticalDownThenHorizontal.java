@@ -43,15 +43,16 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class GConnectionVerticalDown extends GAbstractConnection implements GConnectionTranslatable {
+public class GConnectionVerticalDownThenHorizontal extends GAbstractConnection implements GConnectionTranslatable {
 
 	private final TextBlock textBlock;
 	private final UTranslate pos1;
 	private final UTranslate pos2;
 
-	public GConnectionVerticalDown(UTranslate pos1, GPoint gpoint1, UTranslate pos2, GPoint gpoint2,
+	public GConnectionVerticalDownThenHorizontal(UTranslate pos1, GPoint gpoint1, UTranslate pos2, GPoint gpoint2,
 			TextBlock textBlock) {
 		super(gpoint1, gpoint2);
 		this.textBlock = textBlock;
@@ -103,11 +104,13 @@ public class GConnectionVerticalDown extends GAbstractConnection implements GCon
 	}
 
 	private Snake getSimpleSnake() {
-		final Snake snake = Snake.create(getInLinkRenderingColor(), Arrows.asToDown()).withLabel(textBlock,
-				HorizontalAlignment.LEFT);
 		final Point2D p1 = pos1.getTranslated(gpoint1.getPoint2D());
 		final Point2D p2 = pos2.getTranslated(gpoint2.getPoint2D());
+		final UPolygon arrow = p1.getX() < p2.getX() ? Arrows.asToRight() : Arrows.asToLeft();
+		final Snake snake = Snake.create(getInLinkRenderingColor(), arrow).withLabel(textBlock,
+				HorizontalAlignment.LEFT);
 		snake.addPoint(p1);
+		snake.addPoint(new Point2D.Double(p1.getX(), p2.getY()));
 		snake.addPoint(p2);
 		return snake;
 	}

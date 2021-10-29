@@ -37,7 +37,10 @@ package net.sourceforge.plantuml.activitydiagram3.gtile;
 
 import java.util.List;
 
-public interface GConnection extends Gtile {
+import net.sourceforge.plantuml.graphic.UDrawable;
+import net.sourceforge.plantuml.ugraphic.UShape;
+
+public interface GConnection extends UDrawable, UShape {
 
 	public List<GPoint> getHooks();
 

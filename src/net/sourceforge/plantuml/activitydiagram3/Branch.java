@@ -46,12 +46,14 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.WeldingPoint;
+import net.sourceforge.plantuml.activitydiagram3.gtile.Gtile;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.Rainbow;
+import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.color.Colors;
@@ -78,6 +80,7 @@ public class Branch {
 	private final HColor color;
 
 	private Ftile ftile;
+	private Gtile gtile;
 
 	public StyleSignature getDefaultStyleDefinitionArrow() {
 		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.arrow);
@@ -134,6 +137,10 @@ public class Branch {
 		this.ftile = factory.decorateOut(list.createFtile(factory), inlinkRendering);
 	}
 
+	public void updateGtile(ISkinParam skinParam, StringBounder stringBounder) {
+		this.gtile = list.createGtile(skinParam, stringBounder);
+	}
+
 	public Collection<? extends Swimlane> getSwimlanes() {
 		return list.getSwimlanes();
 	}
@@ -184,6 +191,10 @@ public class Branch {
 
 	public final Ftile getFtile() {
 		return ftile;
+	}
+
+	public Gtile getGtile() {
+		return gtile;
 	}
 
 	public ISkinParam skinParam() {
