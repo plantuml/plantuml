@@ -1,11 +1,14 @@
 package net.sourceforge.plantuml.test;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 
 import net.sourceforge.plantuml.BlockUml;
@@ -28,12 +31,19 @@ public class PlantUmlTestUtils {
 		return new ExportDiagram(diagram);
 	}
 
+	@SuppressWarnings("unused")
 	public static class ExportDiagram {
 		private final Diagram diagram;
 		private boolean metadata;
 
 		public ExportDiagram(Diagram diagram) {
 			this.diagram = diagram;
+		}
+
+		public ExportDiagram assertDiagramType(Class<? extends Diagram> klass) {
+			assertNoError();
+			assertThat(diagram).isInstanceOf(klass);
+			return this;
 		}
 
 		public ExportDiagram assertNoError() {
@@ -51,7 +61,11 @@ public class PlantUmlTestUtils {
 		}
 
 		public BufferedImage asImage() throws IOException {
-			return SImageIO.read(asByteArray(FileFormat.PNG));
+			return asImage(FileFormat.PNG);
+		}
+
+		public BufferedImage asImage(FileFormat fileFormat) throws IOException {
+			return SImageIO.read(asByteArray(fileFormat));
 		}
 
 		public String asString() throws IOException {
@@ -66,6 +80,12 @@ public class PlantUmlTestUtils {
 			final FileFormatOption fileFormatOption = new FileFormatOption(fileFormat, metadata);
 			diagram.exportDiagram(os, 0, fileFormatOption);
 			return this;
+		}
+
+		public ExportDiagram toFile(Path path, FileFormat fileFormat) throws IOException {
+			try (OutputStream os = Files.newOutputStream(path)) {
+				return stream(os, fileFormat);
+			}
 		}
 
 		public ExportDiagram withMetadata(boolean metadata) {
