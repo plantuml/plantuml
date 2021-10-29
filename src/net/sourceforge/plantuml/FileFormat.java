@@ -197,6 +197,11 @@ public enum FileFormat {
 				final double width = 3 * nb * quanta + 1;
 				return new Dimension2DDouble(width, height);
 			}
+
+			@Override
+			public double getDescent(UFont font, String text) {
+				return UGraphicBraille.QUANTA;
+			}
 		};
 	}
 
