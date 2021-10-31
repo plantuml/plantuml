@@ -9,11 +9,18 @@ on:
       - master
   workflow_dispatch:
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
-  CI:
+  workflow_config:
     runs-on: ubuntu-latest
+    outputs:
+      do_release: ${{ steps.config.outputs.do_release }}
+      pom_version: ${{ steps.config.outputs.pom_version }}
     steps:
-      - name: Configure job
+      - name: Configure workflow
         id: config
         env:
           ACTOR: ${{ github.actor }}
@@ -47,13 +54,28 @@ jobs:
             echo "This run will NOT make a release"
           fi
 
+  # We run the tests on many OS / Java combinations but also the Compile & Package steps because some users build
+  # their own jars from source, so it is good for CI to check that "mvn package" is working on all combinations.
+  build:
+    needs: workflow_config
+    strategy:
+      fail-fast: false
+      matrix:
+        java_version: [ 8, 11, 17 ]
+        os: [ macos-10.15,  macos-11, ubuntu-18.04, ubuntu-20.04, windows-2016, windows-2019, windows-2022 ]
+        include:
+          - release_from_this_build: true
+            os: ubuntu-20.04
+            java_version: 8
+    runs-on: ${{ matrix.os }}
+    steps:
       - name: Checkout the repository
         uses: actions/checkout@v2
 
       - name: Set up java
         uses: actions/setup-java@v2.3.1
         with:
-          java-version: 8
+          java-version: ${{ matrix.java_version }}
           distribution: temurin
           cache: maven
 
@@ -63,9 +85,9 @@ jobs:
 
       # POM version is usually a -SNAPSHOT at this point, if this is a release then we use the version derived from the tag
       - name: Set POM version
-        if: steps.config.outputs.do_release == 'true'
+        if: needs.workflow_config.outputs.do_release == 'true'
         env:
-          POM_VERSION: ${{ steps.config.outputs.pom_version }}
+          POM_VERSION: ${{ needs.workflow_config.outputs.pom_version }}
         run: |
           mvn --batch-mode versions:set "-DnewVersion=${POM_VERSION}"
 
@@ -80,21 +102,33 @@ jobs:
         run: mvn --batch-mode -Dmaven.test.skip=true package
 
       - name: Upload jar artifacts
-        if: ${{ always() }}
+        if: ${{ matrix.release_from_this_build }}
         uses: actions/upload-artifact@v2
         with:
           # Using github.run_number here to reduce confusion when downloading & comparing artifacts from several builds  
           name: ${{ github.run_number }}-jars
           path: target/*.jar
 
+  release:
+    needs: [ workflow_config, build ]
+    if: needs.workflow_config.outputs.do_release == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v2
+
+      - name: Download jar artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: ${{ github.run_number }}-jars
+
       - name: Create release in GitHub
-        if: steps.config.outputs.do_release == 'true'
         env:
           GITHUB_TOKEN: ${{ github.token }}
-          POM_VERSION: ${{ steps.config.outputs.pom_version }}
+          POM_VERSION: ${{ needs.workflow_config.outputs.pom_version }}
           TAG: ${{ github.event.ref }}
         run: |
           gh release create "${TAG}" \
-            "target/plantuml-${POM_VERSION}.jar" \
-            "target/plantuml-${POM_VERSION}-javadoc.jar" \
-            "target/plantuml-${POM_VERSION}-sources.jar"
+            "plantuml-${POM_VERSION}.jar" \
+            "plantuml-${POM_VERSION}-javadoc.jar" \
+            "plantuml-${POM_VERSION}-sources.jar"
