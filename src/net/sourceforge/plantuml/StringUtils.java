@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -119,16 +119,22 @@ public class StringUtils {
 		return result;
 	}
 
-	public static boolean isNotEmpty(String input) {
-		return input != null && trin(input).length() > 0;
+	public static boolean isNotEmpty(CharSequence s) {
+		return !isEmpty(s);
 	}
 
 	public static boolean isNotEmpty(List<? extends CharSequence> input) {
 		return input != null && input.size() > 0;
 	}
 
-	public static boolean isEmpty(String input) {
-		return input == null || trin(input).length() == 0;
+	public static boolean isEmpty(CharSequence s) {
+		if (s == null) return true;
+		final int length = s.length();
+		if (length == 0) return true;
+		for (int i = 0; i < length; i++) {
+			if (!isSpaceOrTabOrNull(s.charAt(i))) return false;
+		}
+		return true;
 	}
 
 	public static String manageHtml(String s) {
