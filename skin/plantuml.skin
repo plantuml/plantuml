@@ -64,6 +64,9 @@ stereotype {
 
 element {
   Shadowing 4.0
+  title {
+    FontStyle bold
+  }
 }
 
 group {
@@ -92,6 +95,18 @@ sequenceDiagram {
 }
 
 classDiagram {
+}
+
+
+stateDiagram {
+  state {
+    RoundCorner 25
+  }
+  element {
+	title {
+	  FontStyle plain
+	}
+  }
 }
 
 
