@@ -331,8 +331,10 @@ public class EntityImageDescription extends AbstractEntityImage {
 		}
 		final SvekNode node = bibliotekon.getNode(getEntity());
 		final Shadowable hexagon = node.getPolygon();
-		hexagon.setDeltaShadow(ctx.getDeltaShadow());
-		ug.draw(hexagon);
+		if (hexagon != null) {
+			hexagon.setDeltaShadow(ctx.getDeltaShadow());
+			ug.draw(hexagon);
+		}
 	}
 
 	public ShapeType getShapeType() {
