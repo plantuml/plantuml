@@ -94,21 +94,21 @@ public abstract class AbstractGtile extends AbstractTextBlock implements Gtile {
 	@Override
 	public UTranslate getCoord(String name) {
 		final Dimension2D dim = calculateDimension(stringBounder);
-		if (name.equals(GPoint.NORTH))
+		if (name.equals(GPoint.NORTH_HOOK))
 			return new UTranslate(dim.getWidth() / 2, 0);
-		if (name.equals(GPoint.SOUTH))
+		if (name.equals(GPoint.SOUTH_HOOK))
 			return new UTranslate(dim.getWidth() / 2, dim.getHeight());
-		if (name.equals(GPoint.WEST))
+		if (name.equals(GPoint.WEST_HOOK))
 			return new UTranslate(0, dim.getHeight() / 2);
-		if (name.equals(GPoint.EAST))
+		if (name.equals(GPoint.EAST_HOOK))
 			return new UTranslate(dim.getWidth(), dim.getHeight() / 2);
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public GPoint getGPoint(String name) {
-		if (name.equals(GPoint.NORTH) || name.equals(GPoint.SOUTH) || name.equals(GPoint.WEST)
-				|| name.equals(GPoint.EAST))
+		if (name.equals(GPoint.NORTH_HOOK) || name.equals(GPoint.SOUTH_HOOK) || name.equals(GPoint.WEST_HOOK)
+				|| name.equals(GPoint.EAST_HOOK))
 			return new GPoint(this, name);
 		throw new UnsupportedOperationException();
 	}

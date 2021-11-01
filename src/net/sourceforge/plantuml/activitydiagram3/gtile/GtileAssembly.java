@@ -89,8 +89,8 @@ public class GtileAssembly extends GtileAssemblySimple {
 
 	@Override
 	public Collection<GConnection> getInnerConnections() {
-		final GConnection arrow = new GConnectionVerticalDown(getPos1(), tile1.getGPoint(GPoint.SOUTH), getPos2(),
-				tile2.getGPoint(GPoint.NORTH), textBlock);
+		final GConnection arrow = new GConnectionVerticalDown(getPos1(), tile1.getGPoint(GPoint.SOUTH_HOOK), getPos2(),
+				tile2.getGPoint(GPoint.NORTH_HOOK), textBlock);
 		return Collections.singletonList(arrow);
 	}
 

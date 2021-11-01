@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.activitydiagram3;
 
+import java.util.Collection;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.ISkinParam;
@@ -46,6 +47,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileKilled;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.gtile.Gtile;
 import net.sourceforge.plantuml.activitydiagram3.gtile.GtileBox;
+import net.sourceforge.plantuml.activitydiagram3.gtile.GtileWithNoteOpale;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
@@ -80,7 +82,16 @@ public class InstructionSimple extends MonoSwimable implements Instruction {
 
 	@Override
 	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
-		return GtileBox.create(stringBounder, colors.mute(skinParam), label, getSwimlaneIn(), style, stereotype);
+		GtileBox result = GtileBox.create(stringBounder, colors.mute(skinParam), label, getSwimlaneIn(), style,
+				stereotype);
+		if (hasNotes()) {
+			final Collection<PositionedNote> notes = getPositionedNotes();
+			if (notes.size() != 1)
+				throw new UnsupportedOperationException("wip");
+			return new GtileWithNoteOpale(result, notes.iterator().next(), skinParam, false);
+
+		}
+		return result;
 	}
 
 	@Override

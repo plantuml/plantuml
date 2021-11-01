@@ -74,8 +74,8 @@ public class GtileAssemblySimple extends AbstractGtile {
 		this.dim1 = tile1.calculateDimension(stringBounder);
 		this.dim2 = tile2.calculateDimension(stringBounder);
 
-		final UTranslate vector1 = tile1.getCoord(GPoint.SOUTH);
-		final UTranslate vector2 = tile2.getCoord(GPoint.NORTH);
+		final UTranslate vector1 = tile1.getCoord(GPoint.SOUTH_HOOK);
+		final UTranslate vector2 = tile2.getCoord(GPoint.NORTH_HOOK);
 
 //		final UTranslate diff = vector1.compose(vector2.reverse());
 //		this.pos1 = diff.getDx() > 0 ? UTranslate.none() : UTranslate.dx(-diff.getDx());
@@ -97,9 +97,9 @@ public class GtileAssemblySimple extends AbstractGtile {
 
 	@Override
 	public UTranslate getCoord(String name) {
-		if (name.equals(GPoint.NORTH))
+		if (name.equals(GPoint.NORTH_HOOK))
 			return getPos1().compose(tile1.getCoord(name));
-		if (name.equals(GPoint.SOUTH))
+		if (name.equals(GPoint.SOUTH_HOOK))
 			return getPos2().compose(tile2.getCoord(name));
 		throw new UnsupportedOperationException();
 	}

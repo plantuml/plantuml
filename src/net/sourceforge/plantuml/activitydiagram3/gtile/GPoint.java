@@ -42,10 +42,15 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class GPoint {
 
-	public static final String NORTH = "NORTH";
-	public static final String SOUTH = "SOUTH";
-	public static final String WEST = "WEST";
-	public static final String EAST = "EAST";
+	public static final String NORTH_HOOK = "NORTH_HOOK";
+	public static final String SOUTH_HOOK = "SOUTH_HOOK";
+	public static final String WEST_HOOK = "WEST_HOOK";
+	public static final String EAST_HOOK = "EAST_HOOK";
+
+	public static final String NORTH_BORDER = "NORTH_BORDER";
+	public static final String SOUTH_BORDER = "SOUTH_BORDER";
+	public static final String WEST_BORDER = "WEST_BORDER";
+	public static final String EAST_BORDER = "EAST_BORDER";
 
 	private final Gtile gtile;
 	private final String name;

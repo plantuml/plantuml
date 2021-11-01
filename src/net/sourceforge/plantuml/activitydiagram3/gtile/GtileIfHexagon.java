@@ -147,9 +147,20 @@ public class GtileIfHexagon extends GtileIfSimple {
 			it.set(tmp.compose(UTranslate.dy(height1)));
 		}
 
-		this.positionShape1 = this.getCoord(GPoint.NORTH).compose(shape1.getCoord(GPoint.NORTH).reverse());
-		this.positionShape2 = this.getCoord(GPoint.SOUTH).compose(shape2.getCoord(GPoint.SOUTH).reverse());
+		if (branches.size() == 1) {
+			final UTranslate tmp = positions.get(0);
+			positions.set(0, tmp.compose(UTranslate.dx(missingSpace())));
+		}
 
+		this.positionShape1 = this.getCoord(GPoint.NORTH_HOOK).compose(shape1.getCoord(GPoint.NORTH_HOOK).reverse());
+		this.positionShape2 = this.getCoord(GPoint.SOUTH_HOOK).compose(shape2.getCoord(GPoint.SOUTH_HOOK).reverse());
+
+	}
+
+	private double missingSpace() {
+		if (branches.size() != 1)
+			throw new IllegalStateException();
+		return 25;
 	}
 
 	private double getSuppHeightMargin() {
@@ -161,8 +172,16 @@ public class GtileIfHexagon extends GtileIfSimple {
 	@Override
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
 		final double height2 = shape2.calculateDimension(stringBounder).getHeight() + getSuppHeightMargin();
-		final Dimension2D result = super.calculateDimension(stringBounder);
-		return Dimension2DDouble.delta(result, 0, height2);
+		final Dimension2D nude = super.calculateDimension(stringBounder);
+		if (branches.size() > 1)
+			return Dimension2DDouble.delta(nude, 0, height2);
+		return Dimension2DDouble.delta(nude, missingSpace(), height2);
+	}
+
+	@Override
+	public UTranslate getCoord(String name) {
+		final UTranslate result = super.getCoord(name);
+		return result;
 	}
 
 	private HColor fontColor(FontParam param) {
@@ -192,25 +211,32 @@ public class GtileIfHexagon extends GtileIfSimple {
 	@Override
 	public Collection<GConnection> getInnerConnections() {
 		if (branches.size() == 1) {
-			final GConnection arrow1 = new GConnectionVerticalDown(positionShape1, shape1.getGPoint(GPoint.SOUTH),
-					positions.get(0), gtiles.get(0).getGPoint(GPoint.NORTH), TextBlockUtils.EMPTY_TEXT_BLOCK);
+			final GConnection arrow1 = new GConnectionVerticalDown(positionShape1, shape1.getGPoint(GPoint.SOUTH_HOOK),
+					positions.get(0), gtiles.get(0).getGPoint(GPoint.NORTH_HOOK), TextBlockUtils.EMPTY_TEXT_BLOCK);
 			final GConnection arrow2 = new GConnectionVerticalDown(positions.get(0),
-					gtiles.get(0).getGPoint(GPoint.SOUTH), positionShape2, shape2.getGPoint(GPoint.NORTH),
+					gtiles.get(0).getGPoint(GPoint.SOUTH_HOOK), positionShape2, shape2.getGPoint(GPoint.NORTH_HOOK),
 					TextBlockUtils.EMPTY_TEXT_BLOCK);
-			return Arrays.asList(arrow1, arrow2);
+
+			final Dimension2D totalDim = calculateDimension(stringBounder);
+
+			final GConnection arrow3 = new GConnectionLeftThenDownThenRight(positionShape1,
+					shape1.getGPoint(GPoint.EAST_HOOK), positionShape2, shape2.getGPoint(GPoint.EAST_HOOK), totalDim.getWidth(),
+					TextBlockUtils.EMPTY_TEXT_BLOCK);
+			return Arrays.asList(arrow1, arrow2, arrow3);
+			// return Arrays.asList(arrow3);
 		} else if (branches.size() == 2) {
 			final GConnection arrow1 = new GConnectionHorizontalThenVerticalDown(positionShape1,
-					shape1.getGPoint(GPoint.WEST), positions.get(0), gtiles.get(0).getGPoint(GPoint.NORTH),
+					shape1.getGPoint(GPoint.WEST_HOOK), positions.get(0), gtiles.get(0).getGPoint(GPoint.NORTH_HOOK),
 					TextBlockUtils.EMPTY_TEXT_BLOCK);
 			final GConnection arrow2 = new GConnectionHorizontalThenVerticalDown(positionShape1,
-					shape1.getGPoint(GPoint.EAST), positions.get(1), gtiles.get(1).getGPoint(GPoint.NORTH),
+					shape1.getGPoint(GPoint.EAST_HOOK), positions.get(1), gtiles.get(1).getGPoint(GPoint.NORTH_HOOK),
 					TextBlockUtils.EMPTY_TEXT_BLOCK);
 
 			final GConnection arrow3 = new GConnectionVerticalDownThenHorizontal(positions.get(0),
-					gtiles.get(0).getGPoint(GPoint.SOUTH), positionShape2, shape2.getGPoint(GPoint.WEST),
+					gtiles.get(0).getGPoint(GPoint.SOUTH_HOOK), positionShape2, shape2.getGPoint(GPoint.WEST_HOOK),
 					TextBlockUtils.EMPTY_TEXT_BLOCK);
 			final GConnection arrow4 = new GConnectionVerticalDownThenHorizontal(positions.get(1),
-					gtiles.get(1).getGPoint(GPoint.SOUTH), positionShape2, shape2.getGPoint(GPoint.EAST),
+					gtiles.get(1).getGPoint(GPoint.SOUTH_HOOK), positionShape2, shape2.getGPoint(GPoint.EAST_HOOK),
 					TextBlockUtils.EMPTY_TEXT_BLOCK);
 
 			return Arrays.asList(arrow1, arrow2, arrow3, arrow4);
