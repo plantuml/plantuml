@@ -57,6 +57,13 @@
         <version>7</version>
     </parent>
 
+	<properties>
+		<maven.compiler.source>1.7</maven.compiler.source>
+		<maven.compiler.target>1.7</maven.compiler.target>
+		<maven.compiler.testSource>1.8</maven.compiler.testSource>
+		<maven.compiler.testTarget>1.8</maven.compiler.testTarget>
+	</properties>
+
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -156,8 +163,6 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
                     <debug>true</debug>
                 </configuration>
             </plugin>
@@ -234,4 +239,24 @@
 			</plugin>
         </plugins>
     </build>
+
+	<profiles>
+		<profile>
+			<!--
+			Kludge to make 1.8 tests with 1.7 source work nicer in IntelliJ
+			See https://youtrack.jetbrains.com/issue/IDEA-85478
+			-->
+			<id>intellij</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+				<property>
+					<name>idea.maven.embedder.version</name>
+				</property>
+			</activation>
+			<properties>
+				<maven.compiler.source>1.8</maven.compiler.source>
+				<maven.compiler.target>1.8</maven.compiler.target>
+			</properties>
+		</profile>
+	</profiles>
 </project>
