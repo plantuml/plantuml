@@ -1,0 +1,203 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Launch Run",
+            "request": "launch",
+            "mainClass": "net.sourceforge.plantuml.Run",
+            "projectName": "plantuml",
+            "args":[
+                "sample.pu"
+            ]
+        },
+        {
+            "type": "java",
+            "name": "Launch Run for Code",
+            "request": "launch",
+            "mainClass": "net.sourceforge.plantuml.Run",
+            "projectName": "plantuml",
+            "args": [
+                "-code",
+                "sample.pu"
+            ]
+        },
+        {
+            "type": "java",
+            "name": "Launch Splash",
+            "request": "launch",
+            "mainClass": "net.sourceforge.plantuml.Splash",
+            "projectName": "plantuml"
+        },
+        {
+            "type": "java",
+            "name": "Launch CommandActivity3",
+            "request": "launch",
+            "mainClass": "net.sourceforge.plantuml.activitydiagram3.command.CommandActivity3",
+            "projectName": "plantuml"
+        },
+        {
+            "type": "java",
+            "name": "Launch Blake2b$Engine",
+            "request": "launch",
+            "mainClass": "net.sourceforge.plantuml.argon2.blake2.Blake2b$Engine",
+            "projectName": "plantuml"
+        },
+        {
+            "type": "java",
+            "name": "Launch Tokens",
+            "request": "launch",
+            "mainClass": "net.sourceforge.plantuml.code.Tokens",
+            "projectName": "plantuml"
+        },
+        {
+            "type": "java",
+            "name": "Launch FtpServer",
+            "request": "launch",
+            "mainClass": "net.sourceforge.plantuml.ftp.FtpServer",
+            "projectName": "plantuml"
+        },
+        {
+            "type": "java",
+            "name": "Launch MagicTable",
+            "request": "launch",
+            "mainClass": "net.sourceforge.plantuml.oregon.MagicTable",
+            "projectName": "plantuml"
+        },
+        {
+            "type": "java",
+            "name": "Launch PicoWebServer",
+            "request": "launch",
+            "mainClass": "net.sourceforge.plantuml.picoweb.PicoWebServer",
+            "projectName": "plantuml"
+        },
+        {
+            "type": "java",
+            "name": "Launch PicoWebServerTest",
+            "request": "launch",
+            "mainClass": "net.sourceforge.plantuml.picoweb.PicoWebServerTest",
+            "projectName": "plantuml"
+        },
+        {
+            "type": "java",
+            "name": "Launch Metadata",
+            "request": "launch",
+            "mainClass": "net.sourceforge.plantuml.png.Metadata",
+            "projectName": "plantuml"
+        },
+        {
+            "type": "java",
+            "name": "Launch EvalMath",
+            "request": "launch",
+            "mainClass": "net.sourceforge.plantuml.preproc.EvalMath",
+            "projectName": "plantuml"
+        },
+        {
+            "type": "java",
+            "name": "Launch TextConverter",
+            "request": "launch",
+            "mainClass": "net.sourceforge.plantuml.stats.TextConverter",
+            "projectName": "plantuml"
+        },
+        {
+            "type": "java",
+            "name": "Launch SudokuDLX",
+            "request": "launch",
+            "mainClass": "net.sourceforge.plantuml.sudoku.SudokuDLX",
+            "projectName": "plantuml"
+        },
+        {
+            "type": "java",
+            "name": "Launch AboutWindow",
+            "request": "launch",
+            "mainClass": "net.sourceforge.plantuml.swing.AboutWindow",
+            "projectName": "plantuml"
+        },
+        {
+            "type": "java",
+            "name": "Launch LicenseWindow",
+            "request": "launch",
+            "mainClass": "net.sourceforge.plantuml.swing.LicenseWindow",
+            "projectName": "plantuml"
+        },
+        {
+            "type": "java",
+            "name": "Launch SpriteWindow",
+            "request": "launch",
+            "mainClass": "net.sourceforge.plantuml.swing.SpriteWindow",
+            "projectName": "plantuml"
+        },
+        {
+            "type": "java",
+            "name": "Launch TelnetServer",
+            "request": "launch",
+            "mainClass": "net.sourceforge.plantuml.telnet.TelnetServer",
+            "projectName": "plantuml"
+        },
+        {
+            "type": "java",
+            "name": "Launch FontChecker",
+            "request": "launch",
+            "mainClass": "net.sourceforge.plantuml.ugraphic.FontChecker",
+            "projectName": "plantuml"
+        },
+        {
+            "type": "java",
+            "name": "Launch LicenseInfo",
+            "request": "launch",
+            "mainClass": "net.sourceforge.plantuml.version.LicenseInfo",
+            "projectName": "plantuml"
+        },
+        {
+            "type": "java",
+            "name": "Launch DocBookConverter",
+            "request": "launch",
+            "mainClass": "org.stathissideris.ascii2image.core.DocBookConverter",
+            "projectName": "plantuml"
+        },
+        {
+            "type": "java",
+            "name": "Launch CompositeDiagramShape",
+            "request": "launch",
+            "mainClass": "org.stathissideris.ascii2image.graphics.CompositeDiagramShape",
+            "projectName": "plantuml"
+        },
+        {
+            "type": "java",
+            "name": "Launch DiagramShape",
+            "request": "launch",
+            "mainClass": "org.stathissideris.ascii2image.graphics.DiagramShape",
+            "projectName": "plantuml"
+        },
+        {
+            "type": "java",
+            "name": "Launch FontMeasurer",
+            "request": "launch",
+            "mainClass": "org.stathissideris.ascii2image.graphics.FontMeasurer",
+            "projectName": "plantuml"
+        },
+        {
+            "type": "java",
+            "name": "Launch GridPattern",
+            "request": "launch",
+            "mainClass": "org.stathissideris.ascii2image.text.GridPattern",
+            "projectName": "plantuml"
+        },
+        {
+            "type": "java",
+            "name": "Launch StringUtils",
+            "request": "launch",
+            "mainClass": "org.stathissideris.ascii2image.text.StringUtils",
+            "projectName": "plantuml"
+        }
+    ]
+}

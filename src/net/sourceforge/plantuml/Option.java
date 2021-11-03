@@ -341,6 +341,9 @@ public class Option {
 				OptionFlags.getInstance().setClipboard(true);
 			} else if (s.equalsIgnoreCase("-clipboardloop")) {
 				OptionFlags.getInstance().setClipboardLoop(true);
+			} else if (s.equalsIgnoreCase("-code")) {
+				OptionFlags.getInstance().setGenerateCodeMode(true);
+
 			} else if (s.equalsIgnoreCase("-htmlstats")) {
 				StatsUtils.setHtmlStats(true);
 			} else if (s.equalsIgnoreCase("-xmlstats")) {

@@ -126,6 +126,7 @@ public class OptionFlags {
 	private boolean extractStdLib;
 	private boolean clipboardLoop;
 	private boolean clipboard;
+	private boolean generateCodeMode;
 	private String fileSeparator = "_";
 	private long timeoutMs = 15 * 60 * 1000L; // 15 minutes
 	private SFile logData;
@@ -343,6 +344,14 @@ public class OptionFlags {
 
 	public final boolean isStdLib() {
 		return stdLib;
+	}
+
+	public final void setGenerateCodeMode(boolean generateCodeMode) {
+		this.generateCodeMode = generateCodeMode;
+	}
+
+	public final boolean isGenerateCodeMode() {
+		return generateCodeMode;
 	}
 
 	public final void setStdLib(boolean stdLib) {

@@ -1,0 +1,19 @@
+@startuml
+
+Run -> SourceFileReader: getGeneratedImages()
+SourceFileReader -> PSystemUtils: exportDiagrams(\nDiagram system, SuggestedFile suggestedFile,\n FileFormatOption fileFormatOption, boolean checkMetadata)
+
+group クラスの場合
+
+PSystemUtils -> PSystemUtils: exportDiagramsDefault(\n Diagram system, SuggestedFile suggestedFile,\n FileFormatOption fileFormatOption)
+
+PSystemUtils -> ClassDiagram: exportDiagram(OutputStream os, int num, FileFormatOption fileFormat)
+ClassDiagram -> ClassDiagram: exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption)
+ClassDiagram -> ClassDiagram: exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
+ClassDiagram -> CucaDiagram: exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
+CucaDiagram -> ImageBuilder: write(OutputStream os)
+ImageBuilder -> ImageBuilder: writeInternal(FileFormatOption fileFormatOption,\n OutputStream os, Animation animationArg)
+
+end
+
+@enduml

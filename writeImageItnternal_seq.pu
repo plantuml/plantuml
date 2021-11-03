@@ -1,0 +1,19 @@
+@startuml
+
+-> ImageBuilder: writeImageInternal()
+
+ImageBuilder -> ImageBuilder: createUGraphic(FileFormatOption option, final Dimension2D dim,\n Animation animationArg, double dx, double dy, double scaleFactor)
+
+group PNGの場合
+
+ImageBuilder -> ImageBuilder: createUGraphicPNG(double scaleFactor, final Dimension2D dim,\n Animation affineTransforms, double dx, double dy, String watermark)
+
+ImageBuilder -> SvekResult: drawU(UGraphic ug)
+note right: 各Entityの書き出しを行う\n ただEntityを取り出すだけ
+
+SvekResult -> SvekNode: getImage()
+note right: ただ画像を返却するだけ
+
+end
+
+@enduml

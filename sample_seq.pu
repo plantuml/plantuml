@@ -1,0 +1,15 @@
+@startuml
+
+Run -> Option: construct(string[] args)
+Run -> Run: manageAllFiles(Option option, ErrorStatus error)
+Run -> Run: processArgs(Option option, ErrorStatus error)
+Run -> Option: getResult()
+note right: 一つ一つのファイルを処理
+Run -> Run: manageFileInternal(File f, Option option, ErrorStatus error)
+Run -> SourceFileReader: create()
+Run -> SourceFileReader: getGeneratedImages()
+note right: ここでファイルを解釈し、画像ファイルを作成
+SourceFileReader -> BlockUml: getDiagram()
+SourceFileReader <- BlockUml: Diagram
+
+@enduml

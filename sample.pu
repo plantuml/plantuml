@@ -1,0 +1,14 @@
+@startuml
+
+class Person{
+
+}
+
+class Option{
+    int hoge
+    void Fuga()
+}
+
+Person -> Option
+
+@enduml

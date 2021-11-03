@@ -94,6 +94,18 @@
 			<version>1.0.7</version>
 			<scope>test</scope>
 		</dependency>
+    
+      <dependency>
+        <groupId>net.sourceforge.plantuml</groupId>
+        <artifactId>plantuml</artifactId>
+        <version>6703</version>
+      </dependency>
+    
+      <dependency>
+        <groupId>net.sourceforge.plantuml</groupId>
+        <artifactId>plantuml</artifactId>
+        <version>6703</version>
+      </dependency>
     </dependencies>
 
     <licenses>
