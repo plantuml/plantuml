@@ -73,7 +73,6 @@ import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -151,32 +150,6 @@ public class FtileBox extends AbstractFtile {
 		}
 		return new FtileBox(skinParam, label, swimlane, boxStyle, style, styleArrow);
 	}
-
-//	public static TextBlock createWbs(StyleBuilder styleBuilder, ISkinParam skinParam, Display label,
-//			StyleSignature styleDefinition) {
-//		Style style = null;
-//		Style styleArrow = null;
-//		if (UseStyle.useBetaStyle()) {
-//			style = styleDefinition.getMergedStyle(styleBuilder);
-//			styleArrow = style;
-//		}
-//		return new FtileBox(skinParam, label, null, BoxStyle.PLAIN, style, styleArrow);
-//	}
-//
-//	public static TextBlock createWbs(Style style, ISkinParam skinParam, Display label) {
-//		Style styleArrow = null;
-//		if (UseStyle.useBetaStyle()) {
-//			styleArrow = style;
-//		}
-//		return new FtileBox(skinParam, label, null, BoxStyle.PLAIN, style, styleArrow);
-//	}
-//
-//	public static TextBlock createMindMap(StyleBuilder styleBuilder, ISkinParam skinParam, Display label,
-//			StyleSignature styleDefinition) {
-//		final Style style = styleDefinition.getMergedStyle(styleBuilder);
-//		final Style styleArrow = style;
-//		return new FtileBox(skinParam, label, null, BoxStyle.PLAIN, style, styleArrow);
-//	}
 
 	private FtileBox(ISkinParam skinParam, Display label, Swimlane swimlane, BoxStyle boxStyle, Style style,
 			Style styleArrow) {

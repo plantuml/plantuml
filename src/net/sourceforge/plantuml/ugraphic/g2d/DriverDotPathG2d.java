@@ -41,10 +41,9 @@ import net.sourceforge.plantuml.EnsureVisible;
 import net.sourceforge.plantuml.posimo.DotPath;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UParam;
-import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 
-public class DriverDotPathG2d implements UDriver<Graphics2D> {
+public class DriverDotPathG2d implements UDriver<DotPath, Graphics2D> {
 
 	private final EnsureVisible visible;
 
@@ -52,8 +51,7 @@ public class DriverDotPathG2d implements UDriver<Graphics2D> {
 		this.visible = visible;
 	}
 
-	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, Graphics2D g2d) {
-		final DotPath shape = (DotPath) ushape;
+	public void draw(DotPath shape, double x, double y, ColorMapper mapper, UParam param, Graphics2D g2d) {
 		DriverLineG2d.manageStroke(param, g2d);
 
 		if (param.getColor() != null) {

@@ -151,6 +151,9 @@ public class SequenceDiagram extends UmlDiagram {
 	}
 
 	public String addMessage(AbstractMessage m) {
+		if (m.isParallel()) {
+			m.setParallelBrother(getLastAbstractMessage());
+		}
 		lastEventWithDeactivate = m;
 		lastDelay = null;
 		events.add(m);
@@ -161,6 +164,14 @@ public class SequenceDiagram extends UmlDiagram {
 			m.addLifeEvent(pendingCreate);
 			pendingCreate = null;
 		}
+		return null;
+	}
+
+	private AbstractMessage getLastAbstractMessage() {
+		for (int i = events.size() - 1; i > 0; i--)
+			if (events.get(i) instanceof AbstractMessage)
+				return (AbstractMessage) events.get(i);
+
 		return null;
 	}
 
@@ -302,7 +313,8 @@ public class SequenceDiagram extends UmlDiagram {
 		}
 		final boolean ok = lastEventWithDeactivate.addLifeEvent(lifeEvent);
 		if (lastEventWithDeactivate instanceof AbstractMessage) {
-			lifeEvent.setMessage((AbstractMessage) lastEventWithDeactivate);
+			final AbstractMessage lastMessage = (AbstractMessage) lastEventWithDeactivate;
+			lifeEvent.setMessage(lastMessage);
 		}
 		if (ok) {
 			return null;

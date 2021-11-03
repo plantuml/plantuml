@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.ugraphic.html5;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
 import net.sourceforge.plantuml.ugraphic.AbstractUGraphic;
 import net.sourceforge.plantuml.ugraphic.ClipContainer;
@@ -55,14 +55,14 @@ public class UGraphicHtml5 extends AbstractUGraphic<Html5Drawer> implements Clip
 		return this;
 	}
 
-	public UGraphicHtml5(HColor defaultBackground, ColorMapper colorMapper) {
-		super(defaultBackground, colorMapper, FileFormat.PNG.getDefaultStringBounder(), new Html5Drawer());
+	public UGraphicHtml5(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder) {
+		super(defaultBackground, colorMapper, stringBounder, new Html5Drawer());
 		registerDriver(URectangle.class, new DriverRectangleHtml5(this));
 		// registerDriver(UText.class, new DriverTextEps(imDummy, this, strategy));
-		registerDriver(UText.class, new DriverNopHtml5());
+		ignoreShape(UText.class);
 		registerDriver(ULine.class, new DriverLineHtml5(this));
 		// registerDriver(UPolygon.class, new DriverPolygonEps(this));
-		registerDriver(UPolygon.class, new DriverNopHtml5());
+		ignoreShape(UPolygon.class);
 		// registerDriver(UEllipse.class, new DriverEllipseEps());
 		// registerDriver(UImage.class, new DriverImageEps());
 		// registerDriver(UPath.class, new DriverPathEps());

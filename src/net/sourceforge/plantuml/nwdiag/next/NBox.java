@@ -45,7 +45,7 @@ public class NBox implements Staged {
 
 	public void add(NBar bar) {
 		if (this.bars.contains(bar)) {
-			throw new IllegalStateException();
+			return;
 		}
 		this.bars.add(bar);
 		this.tetris.add(bar);

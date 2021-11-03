@@ -31,36 +31,18 @@
  *
  * Original Author:  Arnaud Roques
  *
+ *
  */
-package net.sourceforge.plantuml.ugraphic.tikz;
+package net.sourceforge.plantuml.activitydiagram3.gtile;
 
-import java.awt.Color;
+import java.util.Set;
 
-import net.sourceforge.plantuml.tikz.TikzGraphics;
-import net.sourceforge.plantuml.ugraphic.UDriver;
-import net.sourceforge.plantuml.ugraphic.UParam;
-import net.sourceforge.plantuml.ugraphic.UPath;
-import net.sourceforge.plantuml.ugraphic.UShape;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorGradient;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 
-public class DriverUPathTikz implements UDriver<TikzGraphics> {
+public interface Swimable2 {
 
-	public void draw(UShape shape, double x, double y, ColorMapper mapper, UParam param, TikzGraphics tikz) {
-		final UPath path = (UPath) shape;
-		final HColor back = param.getBackcolor();
-		if (back instanceof HColorGradient) {
-			final HColorGradient gr = (HColorGradient) back;
-			final Color color1 = mapper.toColor(gr.getColor1());
-			final Color color2 = mapper.toColor(gr.getColor2());
-			tikz.setGradientColor(color1, color2, gr.getPolicy());
-		} else {
-			tikz.setFillColor(mapper.toColor(back));
-		}
-		tikz.setStrokeColor(mapper.toColor(param.getColor()));
-		tikz.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDashTikz());
-		tikz.upath(x, y, path);
-	}
+	public Set<Swimlane> getSwimlanes();
+
+	public Swimlane getSwimlane(String point);
 
 }

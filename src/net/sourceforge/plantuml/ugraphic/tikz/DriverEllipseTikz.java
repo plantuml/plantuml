@@ -38,13 +38,11 @@ import net.sourceforge.plantuml.tikz.TikzGraphics;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UParam;
-import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 
-public class DriverEllipseTikz implements UDriver<TikzGraphics> {
+public class DriverEllipseTikz implements UDriver<UEllipse, TikzGraphics> {
 
-	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, TikzGraphics tikz) {
-		final UEllipse shape = (UEllipse) ushape;
+	public void draw(UEllipse shape, double x, double y, ColorMapper mapper, UParam param, TikzGraphics tikz) {
 		final double width = shape.getWidth();
 		final double height = shape.getHeight();
 

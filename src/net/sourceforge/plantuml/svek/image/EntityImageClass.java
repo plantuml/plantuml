@@ -93,15 +93,18 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 		super(entity, entity.getColors(skinParam).mute(skinParam));
 		this.leafType = entity.getLeafType();
 		this.lineConfig = entity;
-		this.roundCorner = getSkinParam().getRoundCorner(CornerParam.DEFAULT, null);
+		if (UseStyle.useBetaStyle())
+			this.roundCorner = getStyle().value(PName.RoundCorner).asDouble();
+		else
+			this.roundCorner = getSkinParam().getRoundCorner(CornerParam.DEFAULT, null);
 		this.shield = version != null && version.useShield() && entity.hasNearDecoration() ? Margins.uniform(16)
 				: Margins.NONE;
 		final boolean showMethods = portionShower.showPortion(EntityPortion.METHOD, entity);
 		final boolean showFields = portionShower.showPortion(EntityPortion.FIELD, entity);
 		this.body = entity.getBodier().getBody(FontParam.CLASS_ATTRIBUTE, getSkinParam(), showMethods, showFields,
-				entity.getStereotype(), getStyle());
+				entity.getStereotype(), getStyle(), null);
 
-		header = new EntityImageClassHeader(entity, getSkinParam(), portionShower);
+		this.header = new EntityImageClassHeader(entity, getSkinParam(), portionShower);
 		this.url = entity.getUrl99();
 	}
 
@@ -143,8 +146,10 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 	}
 
 	private Style getStyle() {
-		return StyleSignature.of(SName.root, SName.element, SName.classDiagram, SName.class_)
-				.with(getEntity().getStereotype()).getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+		return StyleSignature.of(SName.root, SName.element, SName.classDiagram, SName.class_) //
+				.with(getEntity().getStereotype()) //
+				.with(getEntity().getStereostyles()) //
+				.getMergedStyle(getSkinParam().getCurrentStyleBuilder());
 	}
 
 	private void drawInternal(UGraphic ug) {

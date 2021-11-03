@@ -53,12 +53,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
@@ -71,7 +69,7 @@ import net.sourceforge.plantuml.FileUtils;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.SignatureUtils;
 import net.sourceforge.plantuml.code.Base64Coder;
-import net.sourceforge.plantuml.security.ImageIO;
+import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.tikz.TikzGraphics;
 import net.sourceforge.plantuml.ugraphic.UGroupType;
@@ -81,6 +79,7 @@ import net.sourceforge.plantuml.ugraphic.USegment;
 import net.sourceforge.plantuml.ugraphic.USegmentType;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColorGradient;
+import net.sourceforge.plantuml.xml.XmlFactories;
 
 public class SvgGraphics {
 
@@ -240,9 +239,7 @@ public class SvgGraphics {
 	}
 
 	private Document getDocument() throws ParserConfigurationException {
-		final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-
-		final DocumentBuilder builder = factory.newDocumentBuilder();
+		final DocumentBuilder builder = XmlFactories.newDocumentBuilder();
 		final Document document = builder.newDocument();
 		document.setXmlStandalone(true);
 		return document;
@@ -569,19 +566,7 @@ public class SvgGraphics {
 	}
 
 	private Transformer getTransformer() throws TransformerException {
-		// Get a TransformerFactory object.
-		TransformerFactory xformFactory = null;
-//		try {
-//			final Class<?> factoryClass = Class
-//					.forName("com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl");
-//			xformFactory = (TransformerFactory) factoryClass.newInstance();
-//		} catch (Exception e) {
-		xformFactory = TransformerFactory.newInstance();
-//		}
-		Log.info("TransformerFactory=" + xformFactory.getClass());
-
-		// Get an XSL Transformer object.
-		final Transformer transformer = xformFactory.newTransformer();
+		final Transformer transformer = XmlFactories.newTransformer();
 		Log.info("Transformer=" + transformer.getClass());
 
 		// // Sets the standalone property in the first line of
@@ -863,7 +848,7 @@ public class SvgGraphics {
 
 	private String toBase64(BufferedImage image) throws IOException {
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		ImageIO.write(image, "png", baos);
+		SImageIO.write(image, "png", baos);
 		final byte data[] = baos.toByteArray();
 		return new String(Base64Coder.encode(data));
 	}

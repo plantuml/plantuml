@@ -114,9 +114,30 @@ public class FtileGeometry extends Dimension2D {
 		return new FtileGeometry(width, height + northHeight, left, inY, outY);
 	}
 
-//	public FtileGeometry incInnerHeight(double northHeight) {
-//		return new FtileGeometry(width, height + northHeight, left, inY, outY + northHeight);
-//	}
+	public FtileGeometry addTop(double northHeight) {
+		if (hasPointOut())
+			return new FtileGeometry(width, height + northHeight, left, inY + northHeight, outY + northHeight);
+		return new FtileGeometry(width, height + northHeight, left, inY + northHeight, Double.MIN_NORMAL);
+	}
+
+	public FtileGeometry addBottom(double southHeight) {
+		if (hasPointOut())
+			return new FtileGeometry(width, height + southHeight, left, inY, outY);
+		return new FtileGeometry(width, height + southHeight, left, inY, Double.MIN_NORMAL);
+	}
+
+	public FtileGeometry incRight(double missing) {
+		return new FtileGeometry(width + missing, height, left, inY, outY);
+	}
+
+	public FtileGeometry incLeft(double missing) {
+		return new FtileGeometry(width + missing, height, left + missing, inY, outY);
+	}
+
+	public FtileGeometry incVertically(double missing1, double missing2) {
+		return new FtileGeometry(width, height + missing1 + missing2, left, inY + missing1,
+				hasPointOut() ? outY + missing1 : outY);
+	}
 
 	public FtileGeometry(Dimension2D dim, double left, double inY, double outY) {
 		this(dim.getWidth(), dim.getHeight(), left, inY, outY);

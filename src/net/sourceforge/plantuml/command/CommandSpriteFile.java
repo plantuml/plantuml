@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.security.ImageIO;
+import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.sprite.Sprite;
 import net.sourceforge.plantuml.sprite.SpriteImage;
@@ -83,7 +83,7 @@ public class CommandSpriteFile extends SingleLineCommand2<TitledDiagram> {
 				if (is == null) {
 					return CommandExecutionResult.error("No such internal sprite: " + inner);
 				}
-				sprite = new SpriteImage(ImageIO.read(is));
+				sprite = new SpriteImage(SImageIO.read(is));
 			} else if (src.contains("~")) {
 				final int idx = src.lastIndexOf("~");
 				final SFile f = FileSystem.getInstance().getFile(src.substring(0, idx));
@@ -139,7 +139,7 @@ public class CommandSpriteFile extends SingleLineCommand2<TitledDiagram> {
 					if (isSvg(name)) {
 						return new SpriteSvg(FileUtils.readSvg(zis));
 					} else {
-						return new SpriteImage(ImageIO.read(zis));
+						return new SpriteImage(SImageIO.read(zis));
 					}
 				}
 				ze = zis.getNextEntry();

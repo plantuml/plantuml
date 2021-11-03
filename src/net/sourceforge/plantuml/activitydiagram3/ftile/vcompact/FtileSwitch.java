@@ -108,15 +108,15 @@ class FtileSwitch extends AbstractFtile {
 
 		List<Double> inlabelSizes = new ArrayList<>();
 		for (Branch branch : thens) {
-			final TextBlock tb1 = branch.getLabelPositive().create(fcArrow, HorizontalAlignment.LEFT,
+			final TextBlock tb1 = branch.getDisplayPositive().create(fcArrow, HorizontalAlignment.LEFT,
 					ftileFactory.skinParam());
 			final TextBlock tbTest = branch.getLabelTest().create(fcTest,
 					ftileFactory.skinParam().getDefaultTextAlignment(HorizontalAlignment.LEFT),
 					ftileFactory.skinParam());
 			final HColor diamondColor = branch.getColor() == null ? backColor : branch.getColor();
 
-			FtileDiamondInside2 diamond = new FtileDiamondInside2(branch.skinParam(), diamondColor, borderColor,
-					swimlane, tbTest);
+			FtileDiamondInside2 diamond = new FtileDiamondInside2(tbTest, branch.skinParam(), diamondColor,
+					borderColor, swimlane);
 			TextBlock tbInlabel = null;
 			if (Display.isNull(branch.getInlabel())) {
 				inlabelSizes.add(0.0);

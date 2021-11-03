@@ -36,31 +36,12 @@
  */
 package net.sourceforge.plantuml.statediagram.command;
 
-import net.sourceforge.plantuml.Direction;
-import net.sourceforge.plantuml.LineLocation;
-import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.UmlDiagramType;
-import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOptional;
-import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.cucadiagram.Code;
-import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.cucadiagram.IEntity;
-import net.sourceforge.plantuml.cucadiagram.Ident;
-import net.sourceforge.plantuml.cucadiagram.LeafType;
-import net.sourceforge.plantuml.cucadiagram.Link;
-import net.sourceforge.plantuml.cucadiagram.LinkDecor;
-import net.sourceforge.plantuml.cucadiagram.LinkType;
-import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.descdiagram.command.CommandLinkElement;
-import net.sourceforge.plantuml.graphic.color.ColorType;
-import net.sourceforge.plantuml.statediagram.StateDiagram;
-import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
-public class CommandLinkState extends SingleLineCommand2<StateDiagram> {
+public class CommandLinkState extends CommandLinkStateCommon {
 
 	public CommandLinkState() {
 		super(getRegex());
@@ -89,130 +70,6 @@ public class CommandLinkState extends SingleLineCommand2<StateDiagram> {
 								RegexLeaf.spaceZeroOrMore(), //
 								new RegexLeaf("LABEL", "(.+)") //
 						)), RegexLeaf.end());
-	}
-
-	private static RegexLeaf getStatePattern(String name) {
-		return new RegexLeaf(name,
-				"([%pLN_.:]+|[%pLN_.:]+\\[H\\*?\\]|\\[\\*\\]|\\[H\\*?\\]|(?:==+)(?:[%pLN_.:]+)(?:==+))[%s]*(\\<\\<.*\\>\\>)?[%s]*(#\\w+)?");
-	}
-
-	@Override
-	protected CommandExecutionResult executeArg(StateDiagram diagram, LineLocation location, RegexResult arg)
-			throws NoSuchColorException {
-		final String ent1 = arg.get("ENT1", 0);
-		final String ent2 = arg.get("ENT2", 0);
-
-		final IEntity cl1 = getEntityStart(diagram, ent1);
-		if (cl1 == null) {
-			return CommandExecutionResult
-					.error("The state " + ent1 + " has been created in a concurrent state : it cannot be used here.");
-		}
-		final IEntity cl2 = getEntityEnd(diagram, ent2);
-		if (cl2 == null) {
-			return CommandExecutionResult
-					.error("The state " + ent2 + " has been created in a concurrent state : it cannot be used here.");
-		}
-
-		if (arg.get("ENT1", 1) != null) {
-			cl1.setStereotype(new Stereotype(arg.get("ENT1", 1)));
-		}
-		if (arg.get("ENT1", 2) != null) {
-			final String s = arg.get("ENT1", 2);
-			cl1.setSpecificColorTOBEREMOVED(ColorType.BACK,
-					diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(), s));
-		}
-		if (arg.get("ENT2", 1) != null) {
-			cl2.setStereotype(new Stereotype(arg.get("ENT2", 1)));
-		}
-		if (arg.get("ENT2", 2) != null) {
-			final String s = arg.get("ENT2", 2);
-			cl2.setSpecificColorTOBEREMOVED(ColorType.BACK,
-					diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(), s));
-		}
-
-		String queue = arg.get("ARROW_BODY1", 0) + arg.get("ARROW_BODY2", 0);
-		final Direction dir = getDirection(arg);
-
-		if (dir == Direction.LEFT || dir == Direction.RIGHT) {
-			queue = "-";
-		}
-
-		final int lenght = queue.length();
-
-		final boolean crossStart = arg.get("ARROW_CROSS_START", 0) != null;
-		final boolean circleEnd = arg.get("ARROW_CIRCLE_END", 0) != null;
-		final LinkType linkType = new LinkType(circleEnd ? LinkDecor.ARROW_AND_CIRCLE : LinkDecor.ARROW,
-				crossStart ? LinkDecor.CIRCLE_CROSS : LinkDecor.NONE);
-
-		final Display label = Display.getWithNewlines(arg.get("LABEL", 0));
-		Link link = new Link(cl1, cl2, linkType, label, lenght, diagram.getSkinParam().getCurrentStyleBuilder());
-		if (dir == Direction.LEFT || dir == Direction.UP) {
-			link = link.getInv();
-		}
-		link.applyStyle(diagram.getSkinParam().getThemeStyle(), arg.getLazzy("ARROW_STYLE", 0));
-		link.setUmlDiagramType(UmlDiagramType.STATE);
-		diagram.addLink(link);
-
-		return CommandExecutionResult.ok();
-	}
-
-	private Direction getDirection(RegexResult arg) {
-		final String arrowDirection = arg.get("ARROW_DIRECTION", 0);
-		if (arrowDirection != null) {
-			return StringUtils.getQueueDirection(arrowDirection);
-		}
-		return null;
-	}
-
-	private IEntity getEntityStart(StateDiagram diagram, final String codeString) {
-		if (codeString.startsWith("[*]")) {
-			return diagram.getStart();
-		}
-		return getFoo1(diagram, codeString);
-	}
-
-	private IEntity getEntityEnd(StateDiagram diagram, final String codeString) {
-		if (codeString.startsWith("[*]")) {
-			return diagram.getEnd();
-		}
-		return getFoo1(diagram, codeString);
-	}
-
-	private IEntity getFoo1(StateDiagram diagram, final String codeString) {
-		if (codeString.equalsIgnoreCase("[H]")) {
-			return diagram.getHistorical();
-		}
-		if (codeString.endsWith("[H]")) {
-			return diagram.getHistorical(codeString.substring(0, codeString.length() - 3));
-		}
-		if (codeString.equalsIgnoreCase("[H*]")) {
-			return diagram.getDeepHistory();
-		}
-		if (codeString.endsWith("[H*]")) {
-			return diagram.getDeepHistory(codeString.substring(0, codeString.length() - 4));
-		}
-		if (codeString.startsWith("=") && codeString.endsWith("=")) {
-			final String codeString1 = removeEquals(codeString);
-			final Ident ident1 = diagram.buildLeafIdent(codeString1);
-			final Code code1 = diagram.V1972() ? ident1 : diagram.buildCode(codeString1);
-			return diagram.getOrCreateLeaf(ident1, code1, LeafType.SYNCHRO_BAR, null);
-		}
-		final Ident ident = diagram.buildLeafIdent(codeString);
-		final Code code = diagram.V1972() ? ident : diagram.buildCode(codeString);
-		if (diagram.checkConcurrentStateOk(ident, code) == false) {
-			return null;
-		}
-		return diagram.getOrCreateLeaf(ident, code, null, null);
-	}
-
-	private String removeEquals(String code) {
-		while (code.startsWith("=")) {
-			code = code.substring(1);
-		}
-		while (code.endsWith("=")) {
-			code = code.substring(0, code.length() - 1);
-		}
-		return code;
 	}
 
 }

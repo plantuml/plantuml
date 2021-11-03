@@ -136,7 +136,7 @@ public class CommandCreateMap extends CommandMultilines2<AbstractClassOrObjectDi
 		}
 		final IEntity entity = diagram.createLeaf(ident, code, Display.getWithNewlines(display), LeafType.MAP, null);
 		if (stereotype != null) {
-			entity.setStereotype(new Stereotype(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),
+			entity.setStereotype(Stereotype.build(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),
 					diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),
 					diagram.getSkinParam().getIHtmlColorSet()));
 		}

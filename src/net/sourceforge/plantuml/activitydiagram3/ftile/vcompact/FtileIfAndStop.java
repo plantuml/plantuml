@@ -51,7 +51,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractConnection;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Arrows;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Connection;
-import net.sourceforge.plantuml.activitydiagram3.ftile.Diamond;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Hexagon;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
@@ -134,12 +134,12 @@ class FtileIfAndStop extends AbstractFtile {
 		final Sheet sheet = Parser.build(fcTest, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT), skinParam, CreoleMode.FULL)
 				.createSheet(labelTest);
 		final SheetBlock1 sheetBlock1 = new SheetBlock1(sheet, LineBreakStrategy.NONE, skinParam.getPadding());
-		final TextBlock tbTest = new SheetBlock2(sheetBlock1, Diamond.asStencil(sheetBlock1),
+		final TextBlock tbTest = new SheetBlock2(sheetBlock1, Hexagon.asStencil(sheetBlock1),
 				tileNonStop.getThickness());
 
 		final Ftile diamond1;
 		if (conditionStyle == ConditionStyle.INSIDE_HEXAGON) {
-			diamond1 = new FtileDiamondInside(tileNonStop.skinParam(), backColor, borderColor, swimlane, tbTest);
+			diamond1 = new FtileDiamondInside(tbTest, tileNonStop.skinParam(), backColor, borderColor, swimlane);
 			// .withWest(tb1).withEast(tb2);
 		} else if (conditionStyle == ConditionStyle.EMPTY_DIAMOND) {
 			diamond1 = new FtileDiamond(tileNonStop.skinParam(), backColor, borderColor, swimlane).withNorth(tbTest);

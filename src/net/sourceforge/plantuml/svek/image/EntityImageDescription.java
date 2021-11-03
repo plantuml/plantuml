@@ -146,7 +146,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 					symbol.getSkinParameter().getStyleName());
 			style = tmp.with(stereotype).getMergedStyle(getSkinParam().getCurrentStyleBuilder());
 			style = style.eventuallyOverride(colors);
-			final Style styleStereo = tmp.withStereotype(stereotype)
+			final Style styleStereo = tmp.forStereotypeItself(stereotype)
 					.getMergedStyle(getSkinParam().getCurrentStyleBuilder());
 			forecolor = style.value(PName.LineColor).asColor(getSkinParam().getThemeStyle(),
 					getSkinParam().getIHtmlColorSet());
@@ -331,8 +331,10 @@ public class EntityImageDescription extends AbstractEntityImage {
 		}
 		final SvekNode node = bibliotekon.getNode(getEntity());
 		final Shadowable hexagon = node.getPolygon();
-		hexagon.setDeltaShadow(ctx.getDeltaShadow());
-		ug.draw(hexagon);
+		if (hexagon != null) {
+			hexagon.setDeltaShadow(ctx.getDeltaShadow());
+			ug.draw(hexagon);
+		}
 	}
 
 	public ShapeType getShapeType() {

@@ -37,19 +37,10 @@ package net.sourceforge.plantuml.ugraphic;
 
 import java.awt.geom.Point2D;
 
-public class ULine extends AbstractShadowable implements Scalable, UShapeSized {
+public class ULine extends AbstractShadowable implements UShapeSized {
 
 	private final double dx;
 	private final double dy;
-
-	public UShape getScaled(double scale) {
-		if (scale == 1) {
-			return this;
-		}
-		final AbstractShadowable result = new ULine(dx * scale, dy * scale);
-		result.setDeltaShadow(this.getDeltaShadow());
-		return result;
-	}
 
 	public ULine(Point2D p1, Point2D p2) {
 		this(p2.getX() - p1.getX(), p2.getY() - p1.getY());

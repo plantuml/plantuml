@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Arrows;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Connection;
 import net.sourceforge.plantuml.activitydiagram3.ftile.ConnectionTranslatable;
-import net.sourceforge.plantuml.activitydiagram3.ftile.Diamond;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Hexagon;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileEmpty;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
@@ -205,6 +205,7 @@ public class FtileIfDown extends AbstractFtile {
 			ug.draw(snake);
 		}
 
+		@Override
 		public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
 			final StringBounder stringBounder = ug.getStringBounder();
 			final Point2D p1 = getP1(stringBounder);
@@ -266,6 +267,7 @@ public class FtileIfDown extends AbstractFtile {
 			ug.draw(snake);
 		}
 
+		@Override
 		public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
 
 			if (getFtile1().calculateDimension(ug.getStringBounder()).hasPointOut() == false) {
@@ -326,16 +328,15 @@ public class FtileIfDown extends AbstractFtile {
 			final double y2 = p2.getY();
 
 			final FtileGeometry thenGeom = thenBlock.calculateDimension(stringBounder);
-			final double xmax = Math.max(x1 + Diamond.diamondHalfSize,
+			final double xmax = Math.max(x1 + Hexagon.hexagonHalfSize,
 					getTranslateForThen(stringBounder).getDx() + thenGeom.getWidth());
 
-			final Snake snake = Snake.create(endInlinkColor, Arrows.asToLeft())
-					.emphasizeDirection(Direction.DOWN);
+			final Snake snake = Snake.create(endInlinkColor, Arrows.asToLeft()).emphasizeDirection(Direction.DOWN);
 			snake.addPoint(x1, y1);
 			snake.addPoint(xmax, y1);
 			snake.addPoint(xmax, y2);
 			snake.addPoint(x2, y2);
-			ug.apply(new UTranslate(x2, y2 - Diamond.diamondHalfSize)).draw(new UEmpty(5, Diamond.diamondHalfSize));
+			ug.apply(new UTranslate(x2, y2 - Hexagon.hexagonHalfSize)).draw(new UEmpty(5, Hexagon.hexagonHalfSize));
 			ug.draw(snake);
 
 		}
@@ -366,7 +367,7 @@ public class FtileIfDown extends AbstractFtile {
 			final double y2 = p2.getY();
 
 			final FtileGeometry thenGeom = thenBlock.calculateDimension(stringBounder);
-			final double xmax = Math.max(x1 + Diamond.diamondHalfSize,
+			final double xmax = Math.max(x1 + Hexagon.hexagonHalfSize,
 					getTranslateForThen(stringBounder).getDx() + thenGeom.getWidth());
 
 			/*
@@ -381,7 +382,7 @@ public class FtileIfDown extends AbstractFtile {
 			snake.addPoint(x1, y1);
 			snake.addPoint(xmax, y1);
 			snake.addPoint(xmax, y2);
-			ug.apply(new UTranslate(xmax, y2 - Diamond.diamondHalfSize)).draw(new UEmpty(5, Diamond.diamondHalfSize));
+			ug.apply(new UTranslate(xmax, y2 - Hexagon.hexagonHalfSize)).draw(new UEmpty(5, Hexagon.hexagonHalfSize));
 			ug.draw(snake);
 			/*
 			 * final Snake snake2 = Snake.create(arrowHorizontalAlignment(),
@@ -457,7 +458,7 @@ public class FtileIfDown extends AbstractFtile {
 			final double y3 = p3.getY();
 
 			final FtileGeometry thenGeom = thenBlock.calculateDimension(stringBounder);
-			final double xmax = Math.max(x1 + Diamond.diamondHalfSize,
+			final double xmax = Math.max(x1 + Hexagon.hexagonHalfSize,
 					getTranslateForThen(stringBounder).getDx() + thenGeom.getWidth());
 
 			final Snake snake = Snake.create(endInlinkColor).withMerge(MergeStrategy.NONE);
@@ -489,9 +490,9 @@ public class FtileIfDown extends AbstractFtile {
 		final FtileGeometry geoThen = thenBlock.calculateDimension(stringBounder);
 		final FtileGeometry geoDiamond2 = diamond2.calculateDimension(stringBounder);
 		final FtileGeometry geo = geoDiamond1.appendBottom(geoThen).appendBottom(geoDiamond2);
-		final double height = geo.getHeight() + 3 * Diamond.diamondHalfSize
-				+ Math.max(Diamond.diamondHalfSize * 1, getSouthLabelHeight(stringBounder));
-		double width = geo.getWidth() + Diamond.diamondHalfSize;
+		final double height = geo.getHeight() + 3 * Hexagon.hexagonHalfSize
+				+ Math.max(Hexagon.hexagonHalfSize * 1, getSouthLabelHeight(stringBounder));
+		double width = geo.getWidth() + Hexagon.hexagonHalfSize;
 		if (optionalStop != null) {
 			width += optionalStop.calculateDimension(stringBounder).getWidth() + getAdditionalWidth(stringBounder);
 		}

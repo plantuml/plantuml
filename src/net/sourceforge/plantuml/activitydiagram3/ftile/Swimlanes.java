@@ -61,6 +61,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDele
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorWhile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.UGraphicInterceptorOneSwimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.VCompactFactory;
+import net.sourceforge.plantuml.activitydiagram3.gtile.Gtile;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -213,6 +214,11 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock, Styleable
 	}
 
 	public final void drawU(UGraphic ug) {
+		if (Gtile.USE_GTILE) {
+			drawGtile(ug);
+			return;
+		}
+
 		TextBlock full = root.createFtile(getFtileFactory(ug.getStringBounder()));
 
 		ug = new UGraphicForSnake(ug);
@@ -224,6 +230,16 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock, Styleable
 			full.drawU(ug);
 			ug.flushUg();
 		}
+	}
+
+	private void drawGtile(UGraphic ug) {
+		TextBlock full = root.createGtile(skinParam, ug.getStringBounder());
+
+		ug = new UGraphicForSnake(ug);
+		full = new TextBlockInterceptorUDrawable(full);
+		full.drawU(ug);
+		ug.flushUg();
+
 	}
 
 	private TextBlock getTitle(Swimlane swimlane) {

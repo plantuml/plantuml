@@ -76,12 +76,12 @@ public class CommandActivate extends SingleLineCommand2<SequenceDiagram> {
 		final LifeEventType type = LifeEventType.valueOf(StringUtils.goUpperCase(arg.get("TYPE", 0)));
 		final Participant p = diagram
 				.getOrCreateParticipant(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("WHO", 0)));
-		String s = arg.get("BACK", 0);
-		final HColor backColor = s == null ? null
-				: diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(), s);
-		String s1 = arg.get("LINE", 0);
-		final HColor lineColor = s1 == null ? null
-				: diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(), s1);
+		final String back = arg.get("BACK", 0);
+		final HColor backColor = back == null ? null
+				: diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(), back);
+		final String line = arg.get("LINE", 0);
+		final HColor lineColor = line == null ? null
+				: diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(), line);
 		final String error = diagram.activate(p, type, backColor, lineColor);
 		if (error == null) {
 			return CommandExecutionResult.ok();

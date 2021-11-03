@@ -31,16 +31,37 @@
  *
  * Original Author:  Arnaud Roques
  *
+ *
  */
-package net.sourceforge.plantuml.ugraphic.html5;
+package net.sourceforge.plantuml.activitydiagram3.gtile;
 
-import net.sourceforge.plantuml.ugraphic.UDriver;
-import net.sourceforge.plantuml.ugraphic.UParam;
-import net.sourceforge.plantuml.ugraphic.UShape;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+import java.util.Collection;
 
-public class DriverNopHtml5 implements UDriver<Html5Drawer> {
+import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, Html5Drawer html) {
-	}
+public interface Gtile extends Swimable2, TextBlock {
+
+	public static final boolean USE_GTILE = false;
+
+	public ISkinParam skinParam();
+
+	public StringBounder getStringBounder();
+
+	// public UTranslate getTranslateFor(Gtile child);
+
+	// public Collection<Gtile> getMyChildren();
+
+	public UTranslate getCoord(String name);
+
+	public GPoint getGPoint(String name);
+
+	public Collection<GConnection> getInnerConnections();
+
+//	public List<WeldingPoint> getWeldingPoints();
+//	
+//	public HorizontalAlignment arrowHorizontalAlignment();
+
 }

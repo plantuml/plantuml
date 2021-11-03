@@ -147,8 +147,7 @@ public class USymbolFolder extends USymbol {
 				final Dimension2D dim = calculateDimension(ug.getStringBounder());
 				ug = UGraphicStencil.create(ug, dim);
 				ug = symbolContext.apply(ug);
-				final Dimension2D dimName = showTitle ? name.calculateDimension(ug.getStringBounder())
-						: new Dimension2DDouble(40, 15);
+				final Dimension2D dimName = getDimName(ug.getStringBounder());
 				drawFolder(ug, dim.getWidth(), dim.getHeight(), dimName, symbolContext.isShadowing(),
 						symbolContext.getRoundCorner());
 				final Margin margin = getMargin();
@@ -159,8 +158,12 @@ public class USymbolFolder extends USymbol {
 				tb.drawU(ug.apply(new UTranslate(margin.getX1(), margin.getY1() + dimName.getHeight())));
 			}
 
+			private Dimension2D getDimName(StringBounder stringBounder) {
+				return showTitle ? name.calculateDimension(stringBounder) : new Dimension2DDouble(40, 15);
+			}
+
 			public Dimension2D calculateDimension(StringBounder stringBounder) {
-				final Dimension2D dimName = name.calculateDimension(stringBounder);
+				final Dimension2D dimName = getDimName(stringBounder);
 				final Dimension2D dimLabel = label.calculateDimension(stringBounder);
 				final Dimension2D dimStereo = stereotype.calculateDimension(stringBounder);
 				return getMargin().addDimension(Dimension2DDouble.mergeTB(dimName, dimStereo, dimLabel));

@@ -38,6 +38,8 @@ package net.sourceforge.plantuml.activitydiagram3.ftile;
 import java.awt.geom.Point2D;
 import java.util.Map;
 
+import net.sourceforge.plantuml.activitydiagram3.gtile.GConnection;
+import net.sourceforge.plantuml.activitydiagram3.gtile.Gtile;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.graphic.UGraphicDelegator;
 import net.sourceforge.plantuml.svek.UGraphicForSnake;
@@ -60,7 +62,15 @@ public class UGraphicInterceptorUDrawable2 extends UGraphicDelegator {
 	}
 
 	public void draw(UShape shape) {
-		if (shape instanceof Ftile) {
+		if (shape instanceof Gtile) {
+			final Gtile gtile = (Gtile) shape;
+			// System.err.println("gtile=" + gtile);
+			gtile.drawU(this);
+			// FtileWithConnection
+			for (GConnection c : gtile.getInnerConnections()) {
+				this.draw(c);
+			}
+		} else if (shape instanceof Ftile) {
 			final Ftile ftile = (Ftile) shape;
 			// System.err.println("ftile=" + ftile);
 			ftile.drawU(this);

@@ -58,7 +58,7 @@ public class CommandEndSomething extends SingleLineCommand2<NwDiagram> {
 
 	@Override
 	protected CommandExecutionResult executeArg(NwDiagram diagram, LineLocation location, RegexResult arg) {
-		return diagram.endSomething();
+		return diagram.closeSomething();
 	}
 
 }

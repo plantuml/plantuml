@@ -83,7 +83,7 @@ public class EntityImageState extends EntityImageStateCommon {
 		final FontConfiguration fontConfiguration;
 
 		if (UseStyle.useBetaStyle())
-			fontConfiguration = getStyleMember().getFontConfiguration(getSkinParam().getThemeStyle(),
+			fontConfiguration = getStyleState().getFontConfiguration(getSkinParam().getThemeStyle(),
 					getSkinParam().getIHtmlColorSet());
 		else
 			fontConfiguration = new FontConfiguration(getSkinParam(), FontParam.STATE_ATTRIBUTE, stereotype);

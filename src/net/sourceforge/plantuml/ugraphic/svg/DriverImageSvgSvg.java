@@ -38,13 +38,11 @@ import net.sourceforge.plantuml.svg.SvgGraphics;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UImageSvg;
 import net.sourceforge.plantuml.ugraphic.UParam;
-import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 
-public class DriverImageSvgSvg implements UDriver<SvgGraphics> {
+public class DriverImageSvgSvg implements UDriver<UImageSvg, SvgGraphics> {
 
-	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, SvgGraphics svg) {
-		final UImageSvg image = (UImageSvg) ushape;
+	public void draw(UImageSvg image, double x, double y, ColorMapper mapper, UParam param, SvgGraphics svg) {
 		svg.svgImage(image, x, y);
 	}
 }

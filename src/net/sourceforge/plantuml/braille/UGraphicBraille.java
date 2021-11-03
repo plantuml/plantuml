@@ -39,7 +39,7 @@ import static net.sourceforge.plantuml.ugraphic.ImageBuilder.plainPngBuilder;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.posimo.DotPath;
 import net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
 import net.sourceforge.plantuml.ugraphic.AbstractUGraphic;
@@ -59,20 +59,19 @@ import net.sourceforge.plantuml.ugraphic.color.HColor;
 public class UGraphicBraille extends AbstractUGraphic<BrailleGrid> implements ClipContainer {
 
 	public static final int QUANTA = 4;
-	private final BrailleGrid grid;
 
 	@Override
 	protected AbstractCommonUGraphic copyUGraphic() {
 		return new UGraphicBraille(this);
 	}
 
-	public UGraphicBraille(HColor defaultBackground, ColorMapper colorMapper) {
-		this(defaultBackground, colorMapper, new BrailleGrid(QUANTA));
+	public UGraphicBraille(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder) {
+		super(defaultBackground, colorMapper, stringBounder, new BrailleGrid(QUANTA));
+		register();
 	}
 
 	private UGraphicBraille(UGraphicBraille other) {
 		super(other);
-		this.grid = other.grid;
 		register();
 	}
 
@@ -96,21 +95,15 @@ public class UGraphicBraille extends AbstractUGraphic<BrailleGrid> implements Cl
 	// svg.paintBackcolorGradient(mapper, gr);
 	// }
 
-	private UGraphicBraille(HColor defaultBackground, ColorMapper colorMapper, BrailleGrid grid) {
-		super(defaultBackground, colorMapper, FileFormat.BRAILLE_PNG.getDefaultStringBounder(), grid);
-		this.grid = grid;
-		register();
-	}
-
 	private void register() {
-		registerDriver(URectangle.class, new DriverNoneBraille());
+		ignoreShape(URectangle.class);
 		registerDriver(URectangle.class, new DriverRectangleBraille(this));
 		registerDriver(UText.class, new DriverTextBraille());
 		registerDriver(ULine.class, new DriverLineBraille(this));
 		registerDriver(UPolygon.class, new DriverPolygonBraille(this));
-		registerDriver(UEllipse.class, new DriverNoneBraille());
-		registerDriver(UImage.class, new DriverNoneBraille());
-		registerDriver(UPath.class, new DriverNoneBraille());
+		ignoreShape(UEllipse.class);
+		ignoreShape(UImage.class);
+		ignoreShape(UPath.class);
 		registerDriver(DotPath.class, new DriverDotPathBraille());
 		registerDriver(UCenteredCharacter.class, new DriverCenteredCharacterBraille());
 	}

@@ -223,7 +223,12 @@ public final class EntityFactory {
 
 	public ILeaf createLeaf(Ident ident, Code code, Display display, LeafType entityType, IGroup parentContainer,
 			Set<VisibilityModifier> hides, String namespaceSeparator) {
-		final Bodier bodier = Objects.requireNonNull(entityType) == LeafType.MAP ? new BodierMap() : BodyFactory.createLeaf(entityType, hides);
+		final Bodier bodier;
+		if (Objects.requireNonNull(entityType) == LeafType.MAP)
+			bodier = new BodierMap();
+		else
+			bodier = BodyFactory.createLeaf(entityType, hides);
+
 		final EntityImpl result = new EntityImpl(ident, code, this, bodier, parentContainer, entityType,
 				namespaceSeparator, rawLayout);
 		bodier.setLeaf(result);

@@ -31,18 +31,31 @@
  *
  * Original Author:  Arnaud Roques
  *
+ *
  */
-package net.sourceforge.plantuml.ugraphic.tikz;
+package net.sourceforge.plantuml.activitydiagram3.gtile;
 
-import net.sourceforge.plantuml.tikz.TikzGraphics;
-import net.sourceforge.plantuml.ugraphic.UDriver;
-import net.sourceforge.plantuml.ugraphic.UParam;
-import net.sourceforge.plantuml.ugraphic.UShape;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+import java.util.Arrays;
+import java.util.List;
 
-public class DriverNoneTikz implements UDriver<TikzGraphics> {
+public abstract class GAbstractConnection implements GConnection {
 
-	public void draw(UShape shape, double x, double y, ColorMapper mapper, UParam param, TikzGraphics object) {
+	protected final GPoint gpoint1;
+	protected final GPoint gpoint2;
+
+	public GAbstractConnection(GPoint gpoint1, GPoint gpoint2) {
+		this.gpoint1 = gpoint1;
+		this.gpoint2 = gpoint2;
+	}
+
+	@Override
+	public String toString() {
+		return "[" + gpoint1 + "]->[" + gpoint2 + "]";
+	}
+
+	@Override
+	final public List<GPoint> getHooks() {
+		return Arrays.asList(gpoint1, gpoint2);
 	}
 
 }

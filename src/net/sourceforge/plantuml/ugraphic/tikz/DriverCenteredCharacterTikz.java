@@ -44,13 +44,11 @@ import net.sourceforge.plantuml.ugraphic.UCenteredCharacter;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UParam;
-import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 
-public class DriverCenteredCharacterTikz implements UDriver<TikzGraphics> {
+public class DriverCenteredCharacterTikz implements UDriver<UCenteredCharacter, TikzGraphics> {
 
-	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, TikzGraphics tikz) {
-		final UCenteredCharacter centeredCharacter = (UCenteredCharacter) ushape;
+	public void draw(UCenteredCharacter centeredCharacter, double x, double y, ColorMapper mapper, UParam param, TikzGraphics tikz) {
 		final char c = centeredCharacter.getChar();
 		final UFont font = centeredCharacter.getFont();
 		final UnusedSpace unusedSpace = UnusedSpace.getUnusedSpace(font, c);
@@ -61,7 +59,6 @@ public class DriverCenteredCharacterTikz implements UDriver<TikzGraphics> {
 		final TextLayout t = createTextLayout(font, "" + c);
 		tikz.setStrokeColor(mapper.toColor(param.getColor()));
 		tikz.drawPathIterator(xpos, ypos, t.getOutline(null).getPathIterator(null));
-
 	}
 
 }

@@ -119,7 +119,7 @@ public class CommandArchimateMultilines extends CommandMultilines2<AbstractEntit
 		entity.setUSymbol(USymbol.RECTANGLE);
 		if (icon != null) {
 			entity.setStereotype(
-					new Stereotype("<<$archimate/" + icon + ">>", diagram.getSkinParam().getCircledCharacterRadius(),
+					Stereotype.build("<<$archimate/" + icon + ">>", diagram.getSkinParam().getCircledCharacterRadius(),
 							diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),
 							diagram.getSkinParam().getIHtmlColorSet()));
 		}

@@ -37,19 +37,14 @@ package net.sourceforge.plantuml.ugraphic.visio;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UParam;
-import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 
-public class DriverLineVdx implements UDriver<VisioGraphics> {
+public class DriverLineVdx implements UDriver<ULine, VisioGraphics> {
 
-	public void draw(UShape shape, double x, double y, ColorMapper mapper, UParam param, VisioGraphics visio) {
-		final ULine line = (ULine) shape;
-
+	public void draw(ULine line, double x, double y, ColorMapper mapper, UParam param, VisioGraphics visio) {
 		final double dx = line.getDX();
 		final double dy = line.getDY();
-
 		visio.line(x, y, x + dx, y + dy);
-
 	}
 
 }

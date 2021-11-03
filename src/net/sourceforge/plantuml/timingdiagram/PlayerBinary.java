@@ -78,9 +78,6 @@ public class PlayerBinary extends Player {
 		return getHeightForConstraints(stringBounder) + suggestedHeight;
 	}
 
-	public void drawFrameTitle(UGraphic ug) {
-	}
-
 	private SymbolContext getContext() {
 		return new SymbolContext(HColorUtils.COL_D7E0F2, HColorUtils.COL_038048).withStroke(new UStroke(1.5));
 	}

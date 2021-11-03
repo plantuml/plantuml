@@ -43,10 +43,9 @@ import net.sourceforge.plantuml.ugraphic.UClip;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.UParam;
-import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 
-public class DriverImagePng implements UDriver<SvgGraphics> {
+public class DriverImagePng implements UDriver<UImage, SvgGraphics> {
 
 	private final ClipContainer clipContainer;
 
@@ -54,9 +53,7 @@ public class DriverImagePng implements UDriver<SvgGraphics> {
 		this.clipContainer = clipContainer;
 	}
 
-	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, SvgGraphics svg) {
-
-		final UImage image = (UImage) ushape;
+	public void draw(UImage image, double x, double y, ColorMapper mapper, UParam param, SvgGraphics svg) {
 		final UClip clip = clipContainer.getClip();
 		if (clip != null) {
 			if (clip.isInside(x, y) == false) {

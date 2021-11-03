@@ -33,12 +33,13 @@
  *
  *
  */
-package net.sourceforge.plantuml.activitydiagram3.ftile;
+package net.sourceforge.plantuml.activitydiagram3.gtile;
 
-import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public interface FtileOverpassing extends Ftile {
+public interface GConnectionTranslatable extends GConnection {
 
-	public FtileGeometry getOverpassDimension(StringBounder stringBounder);
+	public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2);
 
 }

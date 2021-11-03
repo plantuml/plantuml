@@ -37,8 +37,8 @@ package net.sourceforge.plantuml.ugraphic.visio;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.creole.legacy.AtomText;
+import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.posimo.DotPath;
 import net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
 import net.sourceforge.plantuml.ugraphic.AbstractUGraphic;
@@ -61,15 +61,9 @@ public class UGraphicVdx extends AbstractUGraphic<VisioGraphics> implements Clip
 		return 1;
 	}
 
-	private UGraphicVdx(HColor defaultBackground, ColorMapper colorMapper, VisioGraphics visio) {
-		super(defaultBackground, colorMapper, FileFormat.PNG.getDefaultStringBounder(), visio);
+	public UGraphicVdx(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder) {
+		super(defaultBackground, colorMapper, stringBounder, new VisioGraphics());
 		register();
-
-	}
-
-	public UGraphicVdx(HColor defaultBackground, ColorMapper colorMapper) {
-		this(defaultBackground, colorMapper, new VisioGraphics());
-
 	}
 
 	@Override
@@ -85,15 +79,15 @@ public class UGraphicVdx extends AbstractUGraphic<VisioGraphics> implements Clip
 	private void register() {
 		registerDriver(URectangle.class, new DriverRectangleVdx());
 		registerDriver(UText.class, new DriverTextVdx(getStringBounder()));
-		registerDriver(AtomText.class, new DriverNoneVdx());
+		ignoreShape(AtomText.class);
 		registerDriver(ULine.class, new DriverLineVdx());
 		registerDriver(UPolygon.class, new DriverPolygonVdx());
-		registerDriver(UEllipse.class, new DriverNoneVdx());
-		registerDriver(UImage.class, new DriverNoneVdx());
-		registerDriver(UImageSvg.class, new DriverNoneVdx());
-		registerDriver(UPath.class, new DriverUPathVdx());
+		ignoreShape(UEllipse.class);
+		ignoreShape(UImage.class);
+		ignoreShape(UImageSvg.class);
+		registerDriver(UPath.class, new DriverPathVdx());
 		registerDriver(DotPath.class, new DriverDotPathVdx());
-		registerDriver(UCenteredCharacter.class, new DriverNoneVdx());
+		ignoreShape(UCenteredCharacter.class);
 	}
 
 	@Override

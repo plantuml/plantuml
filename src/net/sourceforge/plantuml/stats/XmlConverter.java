@@ -42,12 +42,10 @@ import java.util.Date;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
@@ -59,6 +57,7 @@ import net.sourceforge.plantuml.stats.api.Stats;
 import net.sourceforge.plantuml.stats.api.StatsColumn;
 import net.sourceforge.plantuml.stats.api.StatsLine;
 import net.sourceforge.plantuml.stats.api.StatsTable;
+import net.sourceforge.plantuml.xml.XmlFactories;
 
 public class XmlConverter {
 
@@ -71,8 +70,7 @@ public class XmlConverter {
 	}
 
 	private Document getDocument() throws ParserConfigurationException {
-		final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		final DocumentBuilder builder = factory.newDocumentBuilder();
+		final DocumentBuilder builder = XmlFactories.newDocumentBuilder();
 		final Document document = builder.newDocument();
 		document.setXmlStandalone(true);
 
@@ -124,8 +122,7 @@ public class XmlConverter {
 	}
 
 	private Transformer getTransformer() throws TransformerException {
-		final TransformerFactory xformFactory = TransformerFactory.newInstance();
-		final Transformer transformer = xformFactory.newTransformer();
+		final Transformer transformer = XmlFactories.newTransformer();
 		transformer.setOutputProperty(OutputKeys.STANDALONE, "yes");
 		return transformer;
 	}

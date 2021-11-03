@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.security.ImageIO;
+import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.ugraphic.AffineTransformType;
 import net.sourceforge.plantuml.ugraphic.PixelImage;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -87,7 +87,7 @@ public class SpriteImage implements Sprite {
 			return null;
 		}
 		try {
-			return new SpriteImage(ImageIO.read(is));
+			return new SpriteImage(SImageIO.read(is));
 		} catch (IOException e) {
 			e.printStackTrace();
 			return null;

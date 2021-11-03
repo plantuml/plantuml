@@ -45,7 +45,7 @@ import javax.imageio.stream.ImageInputStream;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
-import net.sourceforge.plantuml.security.ImageIO;
+import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.security.SFile;
 
 public class Metadata {
@@ -59,8 +59,8 @@ public class Metadata {
 	}
 
 	public void readAndDisplayMetadata(SFile file) throws IOException {
-		final ImageInputStream iis = ImageIO.createImageInputStream(file);
-		final Iterator<ImageReader> readers = ImageIO.getImageReaders(iis);
+		final ImageInputStream iis = SImageIO.createImageInputStream(file);
+		final Iterator<ImageReader> readers = SImageIO.getImageReaders(iis);
 
 		if (readers.hasNext()) {
 			// pick the first available ImageReader

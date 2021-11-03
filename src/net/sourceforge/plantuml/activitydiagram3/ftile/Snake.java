@@ -134,10 +134,10 @@ public class Snake implements UShape {
 	}
 
 	public Snake withLabel(TextBlock textBlock, VerticalAlignment verticalAlignment) {
-		if (textBlock != null) {
+		if (textBlock != null && textBlock != TextBlockUtils.EMPTY_TEXT_BLOCK) {
 			this.texts.add(new Text(textBlock, verticalAlignment, null));
 		}
-		if (verticalAlignment != VerticalAlignment.BOTTOM) {
+		if (verticalAlignment != VerticalAlignment.CENTER) {
 			throw new UnsupportedOperationException();
 		}
 		return this;
@@ -254,6 +254,10 @@ public class Snake implements UShape {
 		double y = (pt1.getY() + pt2.getY()) / 2 - dim.getHeight() / 2;
 		if (text.verticalAlignment == VerticalAlignment.BOTTOM) {
 			x = worm.getLast().getX();
+			throw new AssertionError();
+		} else if (text.verticalAlignment == VerticalAlignment.CENTER) {
+			x = worm.getMinX();
+			y = (worm.getFirst().getY() + worm.getLast().getY() - 10) / 2 - dim.getHeight() / 2;
 		} else if (text.horizontalAlignment == HorizontalAlignment.CENTER && zigzag) {
 			final Point2D pt3 = worm.get(2);
 			x = (pt2.getX() + pt3.getX()) / 2 - dim.getWidth() / 2;
@@ -310,9 +314,10 @@ public class Snake implements UShape {
 			if (this.startDecoration != null || other.startDecoration != null) {
 				throw new UnsupportedOperationException("Not yet coded: to be done");
 			}
+			final ArrayList<Text> mergeTexts = new ArrayList<Text>(this.texts);
+			mergeTexts.addAll(other.texts);
 			final Snake result = new Snake(null, color, oneOf, this.worm.merge(other.worm, strategy), strategy,
-					emphasizeDirection == null ? other.emphasizeDirection : emphasizeDirection, new ArrayList<Text>());
-			// result.textBlock = oneOf(this.textBlock, other.textBlock, stringBounder);
+					emphasizeDirection == null ? other.emphasizeDirection : emphasizeDirection, mergeTexts);
 			return result;
 		}
 		if (same(this.getFirst(), other.getLast())) {

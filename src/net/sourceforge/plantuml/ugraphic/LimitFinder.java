@@ -72,7 +72,6 @@ public class LimitFinder extends UGraphicNo {
 				UClip.class,
 				HColor.class,
 				UHidden.class,
-				UScale.class,
 				UStroke.class,
 				UTranslate.class
 		)) {

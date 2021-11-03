@@ -31,17 +31,33 @@
  *
  * Original Author:  Arnaud Roques
  *
+ *
  */
-package net.sourceforge.plantuml.ugraphic.visio;
+package net.sourceforge.plantuml.activitydiagram3.ftile;
 
-import net.sourceforge.plantuml.ugraphic.UDriver;
-import net.sourceforge.plantuml.ugraphic.UParam;
-import net.sourceforge.plantuml.ugraphic.UShape;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDecorate;
+import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class DriverNoneVdx implements UDriver<VisioGraphics> {
+public class FtileMargedWest extends FtileDecorate {
 
-	public void draw(UShape shape, double x, double y, ColorMapper mapper, UParam param, VisioGraphics object) {
+	private final double margin;
+
+	public FtileMargedWest(Ftile tile, double margin) {
+		super(tile);
+		this.margin = margin;
+	}
+
+	public void drawU(UGraphic ug) {
+		super.drawU(ug.apply(UTranslate.dx(margin)));
+	}
+
+	@Override
+	public FtileGeometry calculateDimension(StringBounder stringBounder) {
+		FtileGeometry result = super.calculateDimension(stringBounder);
+		result = result.incLeft(margin);
+		return result;
 	}
 
 }

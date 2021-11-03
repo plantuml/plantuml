@@ -66,6 +66,7 @@ import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
+import net.sourceforge.plantuml.cucadiagram.Stereostyles;
 import net.sourceforge.plantuml.cucadiagram.Stereotag;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.cucadiagram.dot.Neighborhood;
@@ -98,6 +99,7 @@ final public class EntityImpl implements ILeaf, IGroup {
 
 	private LeafType leafType;
 	private Stereotype stereotype;
+	private Stereostyles stereostyles = Stereostyles.NONE;
 	private String generic;
 	private IGroup parentContainer;
 
@@ -662,19 +664,6 @@ final public class EntityImpl implements ILeaf, IGroup {
 		return true;
 	}
 
-	private int layer;
-
-	public int getHectorLayer() {
-		return layer;
-	}
-
-	public void setHectorLayer(int layer) {
-		this.layer = layer;
-		if (layer > 1000) {
-			throw new IllegalArgumentException();
-		}
-	}
-
 	private FontParam getTitleFontParam() {
 		if (symbol != null) {
 			return symbol.getFontParam();
@@ -802,6 +791,16 @@ final public class EntityImpl implements ILeaf, IGroup {
 
 	public void setCodeLine(LineLocation codeLine) {
 		this.codeLine = codeLine;
+	}
+
+	@Override
+	public void setStereostyle(String stereo) {
+		this.stereostyles = Stereostyles.build(stereo);
+	}
+
+	@Override
+	public Stereostyles getStereostyles() {
+		return stereostyles;
 	}
 
 }

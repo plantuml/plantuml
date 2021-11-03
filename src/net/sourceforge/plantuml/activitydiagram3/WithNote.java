@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
 
-public class WithNote {
+abstract class WithNote extends AbstractInstruction {
 
 	private final Collection<PositionedNote> notes = new ArrayList<>();
 

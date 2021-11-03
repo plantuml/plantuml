@@ -30,12 +30,16 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
  *
  */
-package net.sourceforge.plantuml.ugraphic;
+package net.sourceforge.plantuml.nwdiag.core;
 
-public interface Scalable {
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
-	public UShape getScaled(double scale);
+public interface NStackable {
+
+	public void setDescription(String description);
+
+	public void setColor(HColor color);
+
 }

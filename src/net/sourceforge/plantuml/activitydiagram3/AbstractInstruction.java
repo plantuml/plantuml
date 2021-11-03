@@ -30,34 +30,19 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
-package net.sourceforge.plantuml.ugraphic;
+package net.sourceforge.plantuml.activitydiagram3;
 
+import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.activitydiagram3.gtile.Gtile;
+import net.sourceforge.plantuml.graphic.StringBounder;
 
-public class UScale implements UChange {
+abstract class AbstractInstruction {
 
-	private final double scale;
-
-	@Override
-	public String toString() {
-		return "scale scale=" + scale;
+	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
+		throw new UnsupportedOperationException("" + getClass());
 	}
-
-	public UScale(double scale) {
-		this.scale = scale;
-	}
-
-	public double getScale() {
-		return scale;
-	}
-
-//	public Point2D getTranslated(Point2D p) {
-//		if (p == null) {
-//			return null;
-//		}
-//		return new Point2D.Double(p.getX() + dx, p.getY() + dy);
-//	}
 
 }

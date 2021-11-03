@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileKilled;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.color.Colors;
@@ -52,12 +53,13 @@ import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
-public class InstructionRepeat implements Instruction {
+public class InstructionRepeat extends AbstractInstruction implements Instruction {
 
 	private final InstructionList repeatList;
 	private final Instruction parent;
 	private final LinkRendering nextLinkRenderer;
 	private final Swimlane swimlane;
+	private final Swimlanes swimlanes;
 	private Swimlane swimlaneOut;
 	private BoxStyle boxStyle;
 	private boolean killed = false;
@@ -81,13 +83,14 @@ public class InstructionRepeat implements Instruction {
 		return repeatList.containsBreak();
 	}
 
-	public InstructionRepeat(Swimlane swimlane, Instruction parent, LinkRendering nextLinkRenderer, HColor color,
+	public InstructionRepeat(Swimlanes swimlanes, Instruction parent, LinkRendering nextLinkRenderer, HColor color,
 			Display startLabel, BoxStyle boxStyleIn, Colors colors) {
-		this.repeatList = new InstructionList(swimlane);
+		this.swimlanes = swimlanes;
+		this.swimlane = swimlanes.getCurrentSwimlane();
+		this.repeatList = new InstructionList(this.swimlane);
 		this.boxStyleIn = boxStyleIn;
 		this.startLabel = startLabel;
 		this.parent = parent;
-		this.swimlane = swimlane;
 		this.nextLinkRenderer = Objects.requireNonNull(nextLinkRenderer);
 		this.colors = colors;
 	}
@@ -119,6 +122,8 @@ public class InstructionRepeat implements Instruction {
 	public Ftile createFtile(FtileFactory factory) {
 		final Ftile back = getBackward(factory);
 		final Ftile decorateOut = factory.decorateOut(repeatList.createFtile(factory), endRepeatLinkRendering);
+		if (this.testCalled == false && incoming1.isNone())
+			incoming1 = swimlanes.nextLinkRenderer();
 		final Ftile result = factory.repeat(boxStyleIn, swimlane, swimlaneOut, startLabel, decorateOut, test, yes, out,
 				colors, back, isLastOfTheParent(), incoming1, incoming2);
 		if (killed) {
@@ -131,9 +136,9 @@ public class InstructionRepeat implements Instruction {
 		if (Display.isNull(backward)) {
 			return null;
 		}
-		Ftile result = factory.activity(backward, swimlane, boxStyle, Colors.empty(), null);
+		Ftile result = factory.activity(backward, swimlaneOut, boxStyle, Colors.empty(), null);
 		if (backwardNotes.size() > 0) {
-			result = factory.addNote(result, swimlane, backwardNotes);
+			result = factory.addNote(result, swimlaneOut, backwardNotes);
 		}
 		return result;
 	}

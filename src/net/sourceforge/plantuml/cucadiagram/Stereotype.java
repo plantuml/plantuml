@@ -45,191 +45,100 @@ import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.SpriteContainer;
-import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.command.regex.Matcher2;
-import net.sourceforge.plantuml.command.regex.MyPattern;
-import net.sourceforge.plantuml.command.regex.Pattern2;
-import net.sourceforge.plantuml.command.regex.RegexComposed;
-import net.sourceforge.plantuml.command.regex.RegexConcat;
-import net.sourceforge.plantuml.command.regex.RegexLeaf;
-import net.sourceforge.plantuml.command.regex.RegexOptional;
-import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.creole.Parser;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.sprite.Sprite;
-import net.sourceforge.plantuml.sprite.SpriteUtils;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.svek.PackageStyle;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public class Stereotype implements CharSequence {
-	private final static RegexComposed circleChar = new RegexConcat( //
-			new RegexLeaf("\\<\\<"), //
-			RegexLeaf.spaceZeroOrMore(), //
-			new RegexLeaf("\\(?"), //
-			new RegexLeaf("CHAR", "(\\S)"), //
-			RegexLeaf.spaceZeroOrMore(), //
-			new RegexLeaf(","), //
-			RegexLeaf.spaceZeroOrMore(), //
-			new RegexLeaf("COLOR", "(#[0-9a-fA-F]{6}|\\w+)"), //
-			RegexLeaf.spaceZeroOrMore(), //
-			new RegexOptional(new RegexLeaf("LABEL", "[),](.*?)")), //
-			new RegexLeaf("\\>\\>") //
-	);
-
-	private final static RegexComposed circleSprite = new RegexConcat( //
-			new RegexLeaf("\\<\\<"), //
-			RegexLeaf.spaceZeroOrMore(), //
-			new RegexLeaf("\\(?\\$"), //
-			new RegexLeaf("NAME", "(" + SpriteUtils.SPRITE_NAME + ")"), //
-			new RegexLeaf("SCALE", "((?:\\{scale=|\\*)([0-9.]+)\\}?)?"), //
-			RegexLeaf.spaceZeroOrMore(), //
-			new RegexOptional( //
-					new RegexConcat( //
-							new RegexLeaf(","), //
-							RegexLeaf.spaceZeroOrMore(), //
-							new RegexLeaf("COLOR", "(#[0-9a-fA-F]{6}|\\w+)") //
-					)), //
-			RegexLeaf.spaceZeroOrMore(), //
-			new RegexOptional(new RegexLeaf("LABEL", "[),](.*?)")), //
-			new RegexLeaf("\\>\\>") //
-	);
 
 	private final double radius;
 	private final UFont circledFont;
 	private final boolean automaticPackageStyle;
+	private final StereotypeDecoration decoration;
 
-	private String label;
-	private HColor htmlColor;
-	private char character;
-	private String spriteName;
-	private double spriteScale;
-
-	public Stereotype(String label, double radius, UFont circledFont, HColorSet htmlColorSet) throws NoSuchColorException {
-		this(label, radius, circledFont, true, htmlColorSet);
-	}
-
-	public Stereotype(String label, boolean automaticPackageStyle) {
-		this.automaticPackageStyle = automaticPackageStyle;
-		this.label = label;
-		this.htmlColor = null;
-		this.character = '\0';
-		this.radius = 0;
-		this.circledFont = null;
-		if (label.startsWith("<<$") && label.endsWith(">>")) {
-			final RegexResult mCircleSprite = circleSprite.matcher(label);
-			this.spriteName = mCircleSprite.get("NAME", 0);
-			this.spriteScale = Parser.getScale(mCircleSprite.get("SCALE", 0), 1);
-		} else {
-			this.spriteName = null;
-		}
-	}
-
-	public Stereotype(String label, double radius, UFont circledFont, boolean automaticPackageStyle,
-			HColorSet htmlColorSet) throws NoSuchColorException {
-		Objects.requireNonNull(label);
-		if (label.startsWith("<<") == false || label.endsWith(">>") == false) {
-			throw new IllegalArgumentException(label);
-		}
+	private Stereotype(boolean automaticPackageStyle, String label, StereotypeDecoration decoration, double radius,
+			UFont circledFont) {
 		this.automaticPackageStyle = automaticPackageStyle;
 		this.radius = radius;
 		this.circledFont = circledFont;
+		this.decoration = decoration;
 
-		final StringBuilder tmpLabel = new StringBuilder();
+	}
 
-		final List<String> list = cutLabels(label, Guillemet.DOUBLE_COMPARATOR);
-		for (String local : list) {
-			final RegexResult mCircleChar = circleChar.matcher(local);
-			final RegexResult mCircleSprite = circleSprite.matcher(local);
-			if (mCircleSprite != null) {
-				if (StringUtils.isNotEmpty(mCircleSprite.get("LABEL", 0))) {
-					local = "<<" + mCircleSprite.get("LABEL", 0) + ">>";
-				} else {
-					local = null;
-				}
-				final String colName = mCircleSprite.get("COLOR", 0);
-				final HColor col = colName == null ? null : htmlColorSet.getColorLEGACY(colName);
-				this.htmlColor = col == null ? HColorUtils.BLACK : col;
-				this.spriteName = mCircleSprite.get("NAME", 0);
-				this.character = '\0';
-				this.spriteScale = Parser.getScale(mCircleSprite.get("SCALE", 0), 1);
-			} else if (mCircleChar != null) {
-				if (StringUtils.isNotEmpty(mCircleChar.get("LABEL", 0))) {
-					local = "<<" + mCircleChar.get("LABEL", 0) + ">>";
-				} else {
-					local = null;
-				}
-				final String colName = mCircleChar.get("COLOR", 0);
-				this.htmlColor = colName == null ? null : htmlColorSet.getColorLEGACY(colName);
-				this.character = mCircleChar.get("CHAR", 0).charAt(0);
-				this.spriteName = null;
-			}
-			if (local != null) {
-				tmpLabel.append(local);
-			}
-		}
-		if (tmpLabel.length() > 0) {
-			this.label = tmpLabel.toString();
+	private static void checkLabel(String label) {
+		if (label.startsWith("<<") == false || label.endsWith(">>") == false) {
+			throw new IllegalArgumentException(label);
 		}
 	}
 
-	public Stereotype(String label) {
-		this(label, true);
+	public static Stereotype build(String label) {
+		return build(label, true);
+	}
+
+	public static Stereotype build(String label, boolean automaticPackageStyle) {
+		checkLabel(label);
+		final StereotypeDecoration decoration = StereotypeDecoration.buildSimple(label);
+		return new Stereotype(automaticPackageStyle, label, decoration, 0, null);
+	}
+
+	public static Stereotype build(String label, double radius, UFont circledFont, HColorSet htmlColorSet)
+			throws NoSuchColorException {
+		checkLabel(label);
+		final StereotypeDecoration decoration = StereotypeDecoration.buildComplex(label, htmlColorSet);
+		return new Stereotype(true, label, decoration, radius, circledFont);
 	}
 
 	public HColor getHtmlColor() {
-		return htmlColor;
+		return decoration.htmlColor;
 	}
 
 	public char getCharacter() {
-		return character;
+		return decoration.character;
 	}
 
 	public final TextBlock getSprite(SpriteContainer container) {
-		if (spriteName == null || container == null) {
+		if (decoration.spriteName == null || container == null) {
 			return null;
 		}
-		final Sprite tmp = container.getSprite(spriteName);
+		final Sprite tmp = container.getSprite(decoration.spriteName);
 		if (tmp == null) {
 			return null;
 		}
-		return tmp.asTextBlock(getHtmlColor(), spriteScale);
+		return tmp.asTextBlock(getHtmlColor(), decoration.spriteScale);
 	}
 
 	public boolean isWithOOSymbol() {
-		return "<<O-O>>".equalsIgnoreCase(label);
+		return "<<O-O>>".equalsIgnoreCase(decoration.label);
 	}
 
 	public List<String> getMultipleLabels() {
 		final List<String> result = new ArrayList<>();
-		if (label != null) {
-			final Pattern p = Pattern.compile("\\<\\<\\s?((?:\\<&\\w+\\>|[^<>])+?)\\s?\\>\\>");
-			final Matcher m = p.matcher(label);
-			while (m.find()) {
-				result.add(m.group(1));
-			}
+
+		final Pattern p = Pattern.compile("\\<\\<\\s?((?:\\<&\\w+\\>|[^<>])+?)\\s?\\>\\>");
+		final Matcher m = p.matcher(decoration.label);
+		while (m.find()) {
+			result.add(m.group(1));
 		}
+
 		return Collections.unmodifiableList(result);
 	}
 
 	public boolean isSpotted() {
-		return character != 0;
+		return decoration.character != 0;
 	}
 
 	@Override
 	public String toString() {
-		if (label == null) {
-			return "" + character;
+		if (decoration.character == 0) {
+			return decoration.label;
 		}
-		if (character == 0) {
-			return label;
-		}
-		return character + " " + label;
+		return decoration.character + " " + decoration.label;
 	}
 
 	public char charAt(int arg0) {
@@ -253,14 +162,13 @@ public class Stereotype implements CharSequence {
 	}
 
 	public String getLabel(Guillemet guillemet) {
-		assert label == null || label.length() > 0;
 		if (isWithOOSymbol()) {
 			return null;
 		}
-		if (spriteName != null && spriteName.startsWith("archimate/")) {
-			return guillemet.manageGuillemet("<<" + spriteName.substring("archimate/".length()) + ">>");
+		if (decoration.spriteName != null && decoration.spriteName.startsWith("archimate/")) {
+			return guillemet.manageGuillemet("<<" + decoration.spriteName.substring("archimate/".length()) + ">>");
 		}
-		return guillemet.manageGuillemet(label);
+		return guillemet.manageGuillemet(decoration.label);
 	}
 
 	public List<String> getLabels(Guillemet guillemet) {
@@ -268,7 +176,7 @@ public class Stereotype implements CharSequence {
 		if (labelLocal == null) {
 			return Collections.emptyList();
 		}
-		return cutLabels(labelLocal, guillemet);
+		return StereotypeDecoration.cutLabels(labelLocal, guillemet);
 	}
 
 	public List<Style> getStyles(StyleBuilder builder) {
@@ -289,22 +197,12 @@ public class Stereotype implements CharSequence {
 		return Collections.unmodifiableList(labels);
 	}
 
-	private static List<String> cutLabels(final String label, Guillemet guillemet) {
-		final List<String> result = new ArrayList<>();
-		final Pattern2 p = MyPattern.cmpile("\\<\\<.*?\\>\\>");
-		final Matcher2 m = p.matcher(label);
-		while (m.find()) {
-			result.add(guillemet.manageGuillemetStrict(m.group()));
-		}
-		return Collections.unmodifiableList(result);
-	}
-
 	public PackageStyle getPackageStyle() {
 		if (automaticPackageStyle == false) {
 			return null;
 		}
 		for (PackageStyle p : EnumSet.allOf(PackageStyle.class)) {
-			if (("<<" + p + ">>").equalsIgnoreCase(label)) {
+			if (("<<" + p + ">>").equalsIgnoreCase(decoration.label)) {
 				return p;
 			}
 		}
@@ -312,27 +210,28 @@ public class Stereotype implements CharSequence {
 	}
 
 	public boolean isBiddableOrUncertain() {
-		return label.equalsIgnoreCase("<<B>>") || label.equalsIgnoreCase("<<Biddable>>")
-				|| label.equalsIgnoreCase("<<Uncertain>>");
+		return decoration.label.equalsIgnoreCase("<<B>>") || decoration.label.equalsIgnoreCase("<<Biddable>>")
+				|| decoration.label.equalsIgnoreCase("<<Uncertain>>");
 	}
 
 	public boolean isCausal() {
-		return label.equalsIgnoreCase("<<C>>") || label.equalsIgnoreCase("<<Causal>>");
+		return decoration.label.equalsIgnoreCase("<<C>>") || decoration.label.equalsIgnoreCase("<<Causal>>");
 	}
 
 	public boolean isLexicalOrGiven() {
-		return label.equalsIgnoreCase("<<L>>") || label.equalsIgnoreCase("<<Lexical>>")
-				|| label.equalsIgnoreCase("<<X>>") || label.equalsIgnoreCase("<<Given>>");
+		return decoration.label.equalsIgnoreCase("<<L>>") || decoration.label.equalsIgnoreCase("<<Lexical>>")
+				|| decoration.label.equalsIgnoreCase("<<X>>") || decoration.label.equalsIgnoreCase("<<Given>>");
 	}
 
 	public boolean isDesignedOrSolved() {
-		return label.equalsIgnoreCase("<<D>>") || label.equalsIgnoreCase("<<Designed>>")
-				|| label.equalsIgnoreCase("<<Nested>>") || label.equalsIgnoreCase("<<Solved>>");
+		return decoration.label.equalsIgnoreCase("<<D>>") || decoration.label.equalsIgnoreCase("<<Designed>>")
+				|| decoration.label.equalsIgnoreCase("<<Nested>>") || decoration.label.equalsIgnoreCase("<<Solved>>");
 	}
 
 	public boolean isMachineOrSpecification() {
-		return label.equalsIgnoreCase("M") || label.equalsIgnoreCase("<<Machine>>") || label.equalsIgnoreCase("<<S>>")
-				|| label.equalsIgnoreCase("<<Spec>>") || label.equalsIgnoreCase("<<Specification>>");
+		return decoration.label.equalsIgnoreCase("M") || decoration.label.equalsIgnoreCase("<<Machine>>")
+				|| decoration.label.equalsIgnoreCase("<<S>>") || decoration.label.equalsIgnoreCase("<<Spec>>")
+				|| decoration.label.equalsIgnoreCase("<<Specification>>");
 	}
 
 }

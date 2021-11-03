@@ -36,18 +36,15 @@ package net.sourceforge.plantuml.braille;
 
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UParam;
-import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UText;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 
-public class DriverTextBraille implements UDriver<BrailleGrid> {
+public class DriverTextBraille implements UDriver<UText, BrailleGrid> {
 
 	public DriverTextBraille() {
 	}
 
-	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, BrailleGrid grid) {
-		final UText text = (UText) ushape;
-
+	public void draw(UText text, double x, double y, ColorMapper mapper, UParam param, BrailleGrid grid) {
 		y -= grid.getQuanta() * 3;
 		x += grid.getQuanta();
 

@@ -156,15 +156,15 @@ class FtileIfLongHorizontal extends AbstractFtile {
 		List<Ftile> diamonds = new ArrayList<>();
 		List<Double> inlabelSizes = new ArrayList<>();
 		for (Branch branch : thens) {
-			final TextBlock tb1 = branch.getLabelPositive().create(fcArrow, HorizontalAlignment.LEFT,
+			final TextBlock tb1 = branch.getDisplayPositive().create(fcArrow, HorizontalAlignment.LEFT,
 					ftileFactory.skinParam());
 			final TextBlock tbTest = branch.getLabelTest().create(fcTest,
 					ftileFactory.skinParam().getDefaultTextAlignment(HorizontalAlignment.LEFT),
 					ftileFactory.skinParam());
 			final HColor diamondColor = branch.getColor() == null ? backColor : branch.getColor();
 
-			FtileDiamondInside2 diamond = new FtileDiamondInside2(branch.skinParam(), diamondColor, borderColor,
-					swimlane, tbTest);
+			FtileDiamondInside2 diamond = new FtileDiamondInside2(tbTest, branch.skinParam(), diamondColor,
+					borderColor, swimlane);
 			TextBlock tbInlabel = null;
 			if (Display.isNull(branch.getInlabel())) {
 				inlabelSizes.add(0.0);
@@ -177,7 +177,7 @@ class FtileIfLongHorizontal extends AbstractFtile {
 			diamonds.add(diamond);
 		}
 
-		final TextBlock tb2 = branch2.getLabelPositive().create(fcArrow, HorizontalAlignment.LEFT,
+		final TextBlock tb2 = branch2.getDisplayPositive().create(fcArrow, HorizontalAlignment.LEFT,
 				ftileFactory.skinParam());
 		final int last = diamonds.size() - 1;
 		diamonds.set(last, ((FtileDiamondInside2) diamonds.get(last)).withEast(tb2));
@@ -402,6 +402,7 @@ class FtileIfLongHorizontal extends AbstractFtile {
 			return getTranslate1(getFtile2(), stringBounder).getTranslated(p);
 		}
 
+		@Override
 		public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
 			final Point2D p1 = getP1(ug.getStringBounder());
 			final Point2D p2 = getP2(ug.getStringBounder());

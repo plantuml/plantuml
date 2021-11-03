@@ -38,18 +38,15 @@ import net.sourceforge.plantuml.tikz.TikzGraphics;
 import net.sourceforge.plantuml.ugraphic.UCenteredCharacter;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UParam;
-import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 
-public class DriverCenteredCharacterTikz2 implements UDriver<TikzGraphics> {
+public class DriverCenteredCharacterTikz2 implements UDriver<UCenteredCharacter, TikzGraphics> {
 
-	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, TikzGraphics tikz) {
-		final UCenteredCharacter centeredCharacter = (UCenteredCharacter) ushape;
+	public void draw(UCenteredCharacter centeredCharacter, double x, double y, ColorMapper mapper, UParam param, TikzGraphics tikz) {
 		final char c = centeredCharacter.getChar();
 
 		tikz.setStrokeColor(mapper.toColor(param.getColor()));
 		tikz.drawSingleCharacter(x, y, c);
-
 	}
 
 }

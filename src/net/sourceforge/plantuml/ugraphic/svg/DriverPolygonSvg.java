@@ -40,12 +40,11 @@ import net.sourceforge.plantuml.ugraphic.UClip;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
-import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorGradient;
 
-public class DriverPolygonSvg implements UDriver<SvgGraphics> {
+public class DriverPolygonSvg implements UDriver<UPolygon, SvgGraphics> {
 
 	private final ClipContainer clipContainer;
 
@@ -53,9 +52,7 @@ public class DriverPolygonSvg implements UDriver<SvgGraphics> {
 		this.clipContainer = clipContainer;
 	}
 
-	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, SvgGraphics svg) {
-		final UPolygon shape = (UPolygon) ushape;
-
+	public void draw(UPolygon shape, double x, double y, ColorMapper mapper, UParam param, SvgGraphics svg) {
 		final double points[] = shape.getPointArray(x, y);
 		assert points.length % 2 == 0;
 		final UClip clip = clipContainer.getClip();

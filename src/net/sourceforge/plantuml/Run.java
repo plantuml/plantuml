@@ -63,7 +63,7 @@ import net.sourceforge.plantuml.ftp.FtpServer;
 import net.sourceforge.plantuml.picoweb.PicoWebServer;
 import net.sourceforge.plantuml.png.MetadataTag;
 import net.sourceforge.plantuml.preproc.Stdlib;
-import net.sourceforge.plantuml.security.ImageIO;
+import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.sprite.SpriteGrayLevel;
@@ -299,7 +299,7 @@ public class Run {
 
 		final BufferedImage im;
 		try (InputStream stream = source.openStream()) {
-			im = ImageIO.read(stream);
+			im = SImageIO.read(stream);
 		}
 		final String name = getSpriteName(fileName);
 		final String s = compressed ? SpriteUtils.encodeCompressed(im, name, level)

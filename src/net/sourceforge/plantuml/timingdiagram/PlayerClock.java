@@ -34,11 +34,13 @@
  */
 package net.sourceforge.plantuml.timingdiagram;
 
+import java.awt.geom.Dimension2D;
 import java.math.BigDecimal;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -46,6 +48,7 @@ import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.timingdiagram.graphic.IntricatedPoint;
+import net.sourceforge.plantuml.timingdiagram.graphic.PlayerFrame;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -56,20 +59,32 @@ public class PlayerClock extends Player {
 
 	private final int period;
 	private final int pulse;
+	private final int offset;
 	private final double ymargin = 8;
+	private final boolean displayTitle;
 
-	public PlayerClock(ISkinParam skinParam, TimingRuler ruler, int period, int pulse, boolean compact) {
-		super("", skinParam, ruler, compact);
+	public PlayerClock(String title, ISkinParam skinParam, TimingRuler ruler, int period, int pulse, int offset,
+			boolean compact) {
+		super(title, skinParam, ruler, compact);
+		this.displayTitle = title.length() > 0;
 		this.period = period;
 		this.pulse = pulse;
+		this.offset = offset;
 		this.suggestedHeight = 30;
 	}
 
-	public double getFullHeight(StringBounder striWngBounder) {
-		return suggestedHeight;
+	public double getFullHeight(StringBounder stringBounder) {
+		return suggestedHeight + getTitleHeight(stringBounder);
 	}
 
-	public void drawFrameTitle(UGraphic ug) {
+	private double getLineHeight(StringBounder stringBounder) {
+		return suggestedHeight - 2 * ymargin;
+	}
+
+	private double getTitleHeight(StringBounder stringBounder) {
+		if (displayTitle)
+			return getTitle().calculateDimension(stringBounder).getHeight();
+		return 0;
 	}
 
 	private SymbolContext getContext() {
@@ -96,48 +111,74 @@ public class PlayerClock extends Player {
 		throw new UnsupportedOperationException();
 	}
 
-	private double getPulseCoef() {
-		if (pulse == 0) {
-			return 0.5;
-		}
-		return 1.0 * pulse / period;
-	}
-
 	public final int getPeriod() {
 		return period;
 	}
 
 	public TextBlock getPart1(double fullAvailableWidth, double specialVSpace) {
+		if (displayTitle)
+			return new AbstractTextBlock() {
+
+				public void drawU(UGraphic ug) {
+					new PlayerFrame(getTitle()).drawFrameTitle(ug);
+				}
+
+				public Dimension2D calculateDimension(StringBounder stringBounder) {
+					return getTitle().calculateDimension(stringBounder);
+				}
+			};
 		return TextBlockUtils.empty(0, 0);
 	}
 
 	public UDrawable getPart2() {
 		return new UDrawable() {
+
+			private void drawHline(UGraphic ug, double value1, double value2) {
+				final double x1 = getX(value1);
+				final double x2 = Math.min(ruler.getWidth(), getX(value2));
+
+				final ULine hline = ULine.hline(x2 - x1);
+				ug.apply(UTranslate.dx(x1)).draw(hline);
+			}
+
+			private void drawVline(UGraphic ug, final ULine vline, double value) {
+				ug.apply(new UTranslate(getX(value), ymargin)).draw(vline);
+			}
+
+			private double getX(double value) {
+				return ruler.getPosInPixel(new TimeTick(new BigDecimal(value), TimingFormat.DECIMAL));
+			}
+
 			public void drawU(UGraphic ug) {
 				ug = getContext().apply(ug);
-				final ULine vline = ULine.vline(getFullHeight(ug.getStringBounder()) - 2 * ymargin);
-				int i = 0;
-				double lastx = -Double.MAX_VALUE;
-				while (i < 1000) {
-					final double x = ruler
-							.getPosInPixel(new TimeTick(new BigDecimal(i * period), TimingFormat.DECIMAL));
-					if (x > ruler.getWidth()) {
-						return;
-					}
-					i++;
-					if (x > lastx) {
-						final double dx = x - lastx;
-						final ULine hline1 = ULine.hline(dx * getPulseCoef());
-						final ULine hline2 = ULine.hline(dx * (1 - getPulseCoef()));
-						ug.apply(new UTranslate(lastx, ymargin)).draw(vline);
-						ug.apply(new UTranslate(lastx, ymargin)).draw(hline1);
-						final double x2 = lastx + dx * getPulseCoef();
-						ug.apply(new UTranslate(x2, ymargin)).draw(vline);
-						ug.apply(new UTranslate(x2, ymargin + vline.getDY())).draw(hline2);
-					}
-					lastx = x;
+				ug = ug.apply(UTranslate.dy(getTitleHeight(ug.getStringBounder())));
+				final ULine vline = ULine.vline(getLineHeight(ug.getStringBounder()));
+				double value = 0;
+				if (offset != 0) {
+					drawHline(ug.apply(UTranslate.dy(ymargin + vline.getDY())), value, offset);
+					value += offset;
 				}
+				if (getX(value) > ruler.getWidth())
+					return;
+				drawVline(ug, vline, value);
+
+				final double vpulse = pulse == 0 ? period / 2.0 : pulse;
+				final double remain = period - vpulse;
+				for (int i = 0; i < 1000; i++) {
+					drawHline(ug.apply(UTranslate.dy(ymargin)), value, value + vpulse);
+					value += vpulse;
+					if (getX(value) > ruler.getWidth())
+						return;
+					drawVline(ug, vline, value);
+					drawHline(ug.apply(UTranslate.dy(ymargin + vline.getDY())), value, value + remain);
+					value += remain;
+					if (getX(value) > ruler.getWidth())
+						return;
+					drawVline(ug, vline, value);
+				}
+
 			}
+
 		};
 	}
 

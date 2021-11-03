@@ -49,8 +49,7 @@ import net.sourceforge.plantuml.ugraphic.color.NoSuchColorRuntimeException;
 
 public class CommandCreoleColorChange implements Command {
 
-	private static final Pattern2 pattern = MyPattern
-			.cmpile("^(" + Splitter.fontColorPattern2 + "(.*?)\\</color\\>)");
+	private static final Pattern2 pattern = MyPattern.cmpile("^(" + Splitter.fontColorPattern2 + "(.*?)\\</color\\>)");
 
 	private static final Pattern2 patternEol = MyPattern.cmpile("^(" + Splitter.fontColorPattern2 + "(.*)$)");
 
@@ -90,12 +89,13 @@ public class CommandCreoleColorChange implements Command {
 			final HColor color = HColorSet.instance().getColor(themeStyle, s);
 			final FontConfiguration fc2 = fc1.changeColor(color);
 			stripe.setActualFontConfiguration(fc2);
-			stripe.analyzeAndAdd(m.group(3));
-			stripe.setActualFontConfiguration(fc1);
-			return line.substring(m.group(1).length());
 		} catch (NoSuchColorException e) {
-			throw new NoSuchColorRuntimeException();
+			// Too late for parsing error
+			// So we just ignore
 		}
+		stripe.analyzeAndAdd(m.group(3));
+		stripe.setActualFontConfiguration(fc1);
+		return line.substring(m.group(1).length());
 	}
 
 }

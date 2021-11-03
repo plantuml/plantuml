@@ -64,13 +64,16 @@ public class TextBlockMap extends AbstractTextBlock implements WithPorts {
 
 	private final FontParam fontParam;
 	private final ISkinParam skinParam;
+	private final FontConfiguration fontConfiguration;
 	private final Map<TextBlock, TextBlock> blocksMap = new LinkedHashMap<TextBlock, TextBlock>();
 	private final List<String> keys = new ArrayList<>();
 	private double totalWidth;
 
-	public TextBlockMap(FontParam fontParam, ISkinParam skinParam, Map<String, String> map) {
+	public TextBlockMap(FontConfiguration fontConfiguration, FontParam fontParam, ISkinParam skinParam,
+			Map<String, String> map) {
 		this.fontParam = fontParam;
 		this.skinParam = skinParam;
+		this.fontConfiguration = fontConfiguration;
 		for (Map.Entry<String, String> ent : map.entrySet()) {
 			final String key = ent.getKey();
 			this.keys.add(key);
@@ -198,7 +201,9 @@ public class TextBlockMap extends AbstractTextBlock implements WithPorts {
 	}
 
 	private FontConfiguration getFontConfiguration() {
-		return new FontConfiguration(skinParam, fontParam, null);
+		if (fontConfiguration == null)
+			return new FontConfiguration(skinParam, fontParam, null);
+		return fontConfiguration;
 	}
 
 	public void setTotalWidth(double totalWidth) {

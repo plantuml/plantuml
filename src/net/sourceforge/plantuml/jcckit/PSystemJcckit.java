@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
-import net.sourceforge.plantuml.security.ImageIO;
+import net.sourceforge.plantuml.security.SImageIO;
 
 public class PSystemJcckit extends AbstractPSystem {
 
@@ -77,7 +77,7 @@ public class PSystemJcckit extends AbstractPSystem {
 		plotCanvas.paint();
 
 		// Writes the off-screen image into a PNG file
-		ImageIO.write(image, "png", os);
+		SImageIO.write(image, "png", os);
 
 		return new ImageDataSimple(width, height);
 	}

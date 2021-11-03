@@ -86,7 +86,9 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 
 		if (UseStyle.useBetaStyle()) {
 			final Style style = StyleSignature
-					.of(SName.root, SName.element, SName.classDiagram, SName.class_, SName.header).with(stereotype)
+					.of(SName.root, SName.element, SName.classDiagram, SName.class_, SName.header) //
+					.with(stereotype) //
+					.with(entity.getStereostyles()) //
 					.getMergedStyle(skinParam.getCurrentStyleBuilder());
 			fontConfigurationName = new FontConfiguration(skinParam, style);
 		} else {

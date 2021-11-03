@@ -166,7 +166,7 @@ public class CommandPackageWithUSymbol extends SingleLineCommand2<AbstractEntity
 				diagram.getSkinParam().componentStyle(), diagram.getSkinParam().packageStyle()));
 		final String stereotype = arg.getLazzy("STEREOTYPE", 0);
 		if (stereotype != null) {
-			p.setStereotype(new Stereotype(stereotype, false));
+			p.setStereotype(Stereotype.build(stereotype, false));
 		}
 		final String urlString = arg.get("URL", 0);
 		if (urlString != null) {

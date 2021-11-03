@@ -123,7 +123,7 @@ public class CommandCreatePackageState extends SingleLineCommand2<StateDiagram> 
 		final IEntity p = diagram.getCurrentGroup();
 		final String stereotype = arg.get("STEREOTYPE", 0);
 		if (stereotype != null) {
-			p.setStereotype(new Stereotype(stereotype));
+			p.setStereotype(Stereotype.build(stereotype));
 		}
 		final String urlString = arg.get("URL", 0);
 		if (urlString != null) {

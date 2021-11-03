@@ -78,7 +78,7 @@ public abstract class EntityImageStateCommon extends AbstractEntityImage {
 		final FontConfiguration fontConfiguration;
 
 		if (UseStyle.useBetaStyle())
-			fontConfiguration = getStyleHeader().getFontConfiguration(getSkinParam().getThemeStyle(),
+			fontConfiguration = getStyleStateHeader().getFontConfiguration(getSkinParam().getThemeStyle(),
 					getSkinParam().getIHtmlColorSet());
 		else
 			fontConfiguration = new FontConfiguration(getSkinParam(), FontParam.STATE, stereotype);
@@ -89,12 +89,12 @@ public abstract class EntityImageStateCommon extends AbstractEntityImage {
 
 	}
 
-	final protected Style getStyleHeader() {
+	private Style getStyleStateHeader() {
 		return StyleSignature.of(SName.root, SName.element, SName.stateDiagram, SName.state, SName.header)
 				.with(getEntity().getStereotype()).getMergedStyle(getSkinParam().getCurrentStyleBuilder());
 	}
 
-	final protected Style getStyleMember() {
+	final protected Style getStyleState() {
 		return StyleSignature.of(SName.root, SName.element, SName.stateDiagram, SName.state)
 				.with(getEntity().getStereotype()).getMergedStyle(getSkinParam().getCurrentStyleBuilder());
 	}
@@ -112,10 +112,19 @@ public abstract class EntityImageStateCommon extends AbstractEntityImage {
 	}
 
 	final protected URectangle getShape(final Dimension2D dimTotal) {
-		final URectangle rect = new URectangle(dimTotal).rounded(CORNER);
-		if (getSkinParam().shadowing(getEntity().getStereotype())) {
-			rect.setDeltaShadow(4);
+		double deltaShadow = 0;
+		final double corner;
+		if (UseStyle.useBetaStyle()) {
+			corner = getStyleState().value(PName.RoundCorner).asDouble();
+			deltaShadow = getStyleState().value(PName.Shadowing).asDouble();
+		} else {
+			corner = CORNER;
+			if (getSkinParam().shadowing(getEntity().getStereotype()))
+				deltaShadow = 4;
 		}
+
+		final URectangle rect = new URectangle(dimTotal).rounded(corner);
+		rect.setDeltaShadow(deltaShadow);
 		return rect;
 	}
 
@@ -124,7 +133,7 @@ public abstract class EntityImageStateCommon extends AbstractEntityImage {
 		HColor classBorder = lineConfig.getColors(getSkinParam()).getColor(ColorType.LINE);
 		if (classBorder == null) {
 			if (UseStyle.useBetaStyle())
-				classBorder = getStyleMember().value(PName.LineColor).asColor(getSkinParam().getThemeStyle(),
+				classBorder = getStyleState().value(PName.LineColor).asColor(getSkinParam().getThemeStyle(),
 						getSkinParam().getIHtmlColorSet());
 			else
 				classBorder = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.stateBorder);
@@ -133,7 +142,7 @@ public abstract class EntityImageStateCommon extends AbstractEntityImage {
 		HColor backcolor = getEntity().getColors(getSkinParam()).getColor(ColorType.BACK);
 		if (backcolor == null) {
 			if (UseStyle.useBetaStyle())
-				backcolor = getStyleMember().value(PName.BackGroundColor).asColor(getSkinParam().getThemeStyle(),
+				backcolor = getStyleState().value(PName.BackGroundColor).asColor(getSkinParam().getThemeStyle(),
 						getSkinParam().getIHtmlColorSet());
 			else
 				backcolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.stateBackground);

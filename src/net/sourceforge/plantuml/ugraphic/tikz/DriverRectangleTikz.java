@@ -40,17 +40,14 @@ import net.sourceforge.plantuml.tikz.TikzGraphics;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.URectangle;
-import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorGradient;
 import net.sourceforge.plantuml.utils.MathUtils;
 
-public class DriverRectangleTikz implements UDriver<TikzGraphics> {
+public class DriverRectangleTikz implements UDriver<URectangle, TikzGraphics> {
 
-	public void draw(UShape shape, double x, double y, ColorMapper mapper, UParam param, TikzGraphics tikz) {
-		final URectangle rect = (URectangle) shape;
-
+	public void draw(URectangle rect, double x, double y, ColorMapper mapper, UParam param, TikzGraphics tikz) {
 		final double width = rect.getWidth();
 		final double height = rect.getHeight();
 		final double r = MathUtils.min(rect.getRx(), rect.getRy(), width / 2, height / 2);

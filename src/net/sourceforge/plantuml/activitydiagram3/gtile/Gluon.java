@@ -31,18 +31,10 @@
  *
  * Original Author:  Arnaud Roques
  *
+ *
  */
-package net.sourceforge.plantuml.ugraphic.svg;
+package net.sourceforge.plantuml.activitydiagram3.gtile;
 
-import net.sourceforge.plantuml.svg.SvgGraphics;
-import net.sourceforge.plantuml.ugraphic.UDriver;
-import net.sourceforge.plantuml.ugraphic.UParam;
-import net.sourceforge.plantuml.ugraphic.UShape;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
-
-public class DriverNoneSvg implements UDriver<SvgGraphics> {
-
-	public void draw(UShape shape, double x, double y, ColorMapper mapper, UParam param, SvgGraphics object) {
-	}
+public interface Gluon {
 
 }

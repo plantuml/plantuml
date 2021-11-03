@@ -228,16 +228,16 @@ public final class AtomText extends AbstractAtom implements Atom {
 		final List<String> result = new ArrayList<>();
 		for (int i = 0; i < text.length(); i++) {
 			final char ch = text.charAt(i);
-			if (isOfWord(ch)) {
+			if (isSeparator(ch)) {
+				result.add("" + text.charAt(i));
+			} else {
 				final StringBuilder tmp = new StringBuilder();
 				tmp.append(ch);
-				while (i + 1 < text.length() && isOfWord(text.charAt(i + 1))) {
+				while (i + 1 < text.length() && isSeparator(text.charAt(i + 1)) == false) {
 					i++;
 					tmp.append(text.charAt(i));
 				}
 				result.add(tmp.toString());
-			} else {
-				result.add("" + text.charAt(i));
 			}
 		}
 		return result;
@@ -289,8 +289,16 @@ public final class AtomText extends AbstractAtom implements Atom {
 		return Collections.singletonList((Atom) this);
 	}
 
-	private boolean isOfWord(char ch) {
-		return Character.isWhitespace(ch) == false;
+	private boolean isSeparator(char ch) {
+		return Character.isWhitespace(ch) //
+				|| ch == '\uFF01' // U+FF01 FULLWIDTH EXCLAMATION MARK (!)
+				|| ch == '\uFF08' // U+FF08 FULLWIDTH LEFT PARENTHESIS
+				|| ch == '\uFF09' // U+FF09 FULLWIDTH RIGHT PARENTHESIS
+				|| ch == '\uFF0C' // U+FF0C FULLWIDTH COMMA
+				|| ch == '\uFF1A' // U+FF1A FULLWIDTH COLON (:)
+				|| ch == '\uFF1B' // U+FF1B FULLWIDTH SEMICOLON (;)
+				|| ch == '\uFF1F' // U+FF1F FULLWIDTH QUESTION MARK (?)
+				|| ch == '\u3002'; // U+3002 IDEOGRAPHIC FULL STOP (.)
 	}
 
 	public final String getText() {

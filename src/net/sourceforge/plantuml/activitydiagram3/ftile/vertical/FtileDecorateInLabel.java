@@ -31,22 +31,47 @@
  *
  * Original Author:  Arnaud Roques
  *
+ *
  */
-package net.sourceforge.plantuml.ugraphic.visio;
+package net.sourceforge.plantuml.activitydiagram3.ftile.vertical;
 
-import net.sourceforge.plantuml.ugraphic.UDriver;
-import net.sourceforge.plantuml.ugraphic.UParam;
-import net.sourceforge.plantuml.ugraphic.UPath;
-import net.sourceforge.plantuml.ugraphic.UShape;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+import java.awt.geom.Dimension2D;
 
-public class DriverUPathVdx implements UDriver<VisioGraphics> {
+import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
+import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-	public void draw(UShape shape, double x, double y, ColorMapper mapper, UParam param, VisioGraphics visio) {
-		final UPath path = (UPath) shape;
+public class FtileDecorateInLabel extends FtileDecorate {
 
-		visio.upath(x, y, path);
+	final private double xl;
+	final private double yl;
 
+	public FtileDecorateInLabel(Ftile ftile, Dimension2D dim) {
+		this(ftile, dim.getWidth(), dim.getHeight());
+	}
+
+	private FtileDecorateInLabel(final Ftile ftile, double xl, double yl) {
+		super(ftile);
+		this.xl = xl;
+		this.yl = yl;
+	}
+
+	@Override
+	public FtileGeometry calculateDimension(StringBounder stringBounder) {
+		FtileGeometry result = super.calculateDimension(stringBounder);
+		result = result.addTop(yl);
+		final double missing = xl - result.getRight();
+		if (missing > 0)
+			result = result.incRight(missing);
+
+		return result;
+	}
+
+	@Override
+	public void drawU(UGraphic ug) {
+		super.drawU(ug.apply(UTranslate.dy(yl)));
 	}
 
 }

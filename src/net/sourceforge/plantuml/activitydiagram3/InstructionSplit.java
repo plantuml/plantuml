@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
 
-public class InstructionSplit implements Instruction {
+public class InstructionSplit extends AbstractInstruction implements Instruction {
 
 	private final List<InstructionList> splits = new ArrayList<>();
 	private final Instruction parent;

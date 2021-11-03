@@ -48,7 +48,7 @@ import javax.imageio.ImageWriter;
 import javax.imageio.stream.ImageInputStream;
 import javax.imageio.stream.ImageOutputStream;
 
-public class ImageIO {
+public class SImageIO {
 
 	public static ImageOutputStream createImageOutputStream(OutputStream os) throws IOException {
 		return javax.imageio.ImageIO.createImageOutputStream(os);
@@ -56,10 +56,6 @@ public class ImageIO {
 
 	public static void write(RenderedImage image, String format, OutputStream os) throws IOException {
 		javax.imageio.ImageIO.write(image, format, os);
-	}
-
-	public static void write(RenderedImage image, String format, java.io.File file) throws IOException {
-		javax.imageio.ImageIO.write(image, format, file);
 	}
 
 	public static void write(RenderedImage image, String format, SFile file) throws IOException {
@@ -77,13 +73,9 @@ public class ImageIO {
 	public static BufferedImage read(InputStream is) throws IOException {
 		return javax.imageio.ImageIO.read(is);
 	}
-	
+
 	public static BufferedImage read(byte[] bytes) throws IOException {
 		return javax.imageio.ImageIO.read(new ByteArrayInputStream(bytes));
-	}
-
-	public static ImageInputStream createImageInputStream(java.io.File file) throws IOException {
-		return javax.imageio.ImageIO.createImageInputStream(file);
 	}
 
 	public static ImageInputStream createImageInputStream(SFile file) throws IOException {

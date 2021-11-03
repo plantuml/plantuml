@@ -123,12 +123,12 @@ public final class GroupPngMakerState {
 		return result;
 	}
 
-	private Style getStyleHeader() {
+	private Style getStyleStateHeader() {
 		return StyleSignature.of(SName.root, SName.element, SName.stateDiagram, SName.state, SName.header)
 				.with(group.getStereotype()).getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
 	}
 
-	private Style getStyle() {
+	private Style getStyleState() {
 		return StyleSignature.of(SName.root, SName.element, SName.stateDiagram, SName.state).with(group.getStereotype())
 				.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
 	}
@@ -138,11 +138,20 @@ public final class GroupPngMakerState {
 		final ISkinParam skinParam = diagram.getSkinParam();
 
 		final FontConfiguration fontConfiguration;
-		if (UseStyle.useBetaStyle())
-			fontConfiguration = getStyleHeader().getFontConfiguration(skinParam.getThemeStyle(),
+		final double rounded;
+		double shadowing = 0;
+
+		if (UseStyle.useBetaStyle()) {
+			rounded = getStyleState().value(PName.RoundCorner).asDouble();
+			shadowing = getStyleState().value(PName.Shadowing).asDouble();
+			fontConfiguration = getStyleStateHeader().getFontConfiguration(skinParam.getThemeStyle(),
 					skinParam.getIHtmlColorSet());
-		else
+		} else {
+			rounded = IEntityImage.CORNER;
 			fontConfiguration = new FontConfiguration(skinParam, FontParam.STATE, group.getStereotype());
+			if (skinParam.shadowing(group.getStereotype()))
+				shadowing = 3.0;
+		}
 
 		final TextBlock title = display.create(fontConfiguration, HorizontalAlignment.CENTER, diagram.getSkinParam());
 
@@ -171,7 +180,7 @@ public final class GroupPngMakerState {
 		HColor borderColor = group.getColors(skinParam).getColor(ColorType.LINE);
 		if (borderColor == null) {
 			if (UseStyle.useBetaStyle())
-				borderColor = getStyle().value(PName.LineColor).asColor(skinParam.getThemeStyle(),
+				borderColor = getStyleState().value(PName.LineColor).asColor(skinParam.getThemeStyle(),
 						skinParam.getIHtmlColorSet());
 			else
 				borderColor = getColor(ColorParam.stateBorder, group.getStereotype());
@@ -181,8 +190,10 @@ public final class GroupPngMakerState {
 		final HColor backColor;
 		if (tmp == null)
 			if (UseStyle.useBetaStyle())
-				backColor = getStyle().value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
-						skinParam.getIHtmlColorSet());
+				backColor =
+
+						getStyleState().value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
+								skinParam.getIHtmlColorSet());
 			else
 				backColor = getColor(ColorParam.stateBackground, stereo);
 		else
@@ -200,8 +211,8 @@ public final class GroupPngMakerState {
 		if (stroke == null) {
 			stroke = new UStroke(1.5);
 		}
-		return new InnerStateAutonom(image, title, attribute, borderColor, backColor,
-				skinParam.shadowing(group.getStereotype()), group.getUrl99(), withSymbol, stroke);
+		return new InnerStateAutonom(image, title, attribute, borderColor, backColor, group.getUrl99(), withSymbol,
+				stroke, rounded, shadowing);
 
 	}
 

@@ -41,10 +41,9 @@ import net.sourceforge.plantuml.ugraphic.UClip;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UParam;
-import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 
-public class DriverLineHtml5 implements UDriver<Html5Drawer> {
+public class DriverLineHtml5 implements UDriver<ULine, Html5Drawer> {
 
 	private final ClipContainer clipContainer;
 
@@ -52,9 +51,7 @@ public class DriverLineHtml5 implements UDriver<Html5Drawer> {
 		this.clipContainer = clipContainer;
 	}
 
-	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, Html5Drawer html) {
-		final ULine shape = (ULine) ushape;
-
+	public void draw(ULine shape, double x, double y, ColorMapper mapper, UParam param, Html5Drawer html) {
 		double x2 = x + shape.getDX();
 		double y2 = y + shape.getDY();
 

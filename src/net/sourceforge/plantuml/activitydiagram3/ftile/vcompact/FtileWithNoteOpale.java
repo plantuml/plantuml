@@ -84,7 +84,6 @@ public class FtileWithNoteOpale extends AbstractFtile implements Stencil, Stylea
 	private final Ftile tile;
 	private final Opale opale;
 
-	// private final HtmlColor arrowColor;
 	private final NotePosition notePosition;
 	private final double suppSpace = 20;
 	private final Swimlane swimlaneNote;
@@ -184,6 +183,13 @@ public class FtileWithNoteOpale extends AbstractFtile implements Stencil, Stylea
 		}
 
 		return new UTranslate(marge, yForFtile);
+	}
+
+	@Override
+	public UTranslate getTranslateFor(Ftile child, StringBounder stringBounder) {
+		if (child == tile)
+			return new UTranslate();
+		return super.getTranslateFor(child, stringBounder);
 
 	}
 

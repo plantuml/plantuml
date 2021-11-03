@@ -47,8 +47,8 @@ import javax.imageio.stream.ImageInputStream;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
-import net.sourceforge.plantuml.security.ImageIO;
 import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.security.SImageIO;
 
 public class MetadataTag {
 
@@ -71,8 +71,8 @@ public class MetadataTag {
 	}
 
 	public String getData() throws IOException {
-		final ImageInputStream iis = ImageIO.createImageInputStream(source);
-		final Iterator<ImageReader> readers = ImageIO.getImageReaders(iis);
+		final ImageInputStream iis = SImageIO.createImageInputStream(source);
+		final Iterator<ImageReader> readers = SImageIO.getImageReaders(iis);
 
 		if (readers.hasNext()) {
 			// pick the first available ImageReader

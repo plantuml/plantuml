@@ -41,10 +41,9 @@ import net.sourceforge.plantuml.ugraphic.UClip;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.URectangle;
-import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 
-public class DriverRectangleBraille implements UDriver<BrailleGrid> {
+public class DriverRectangleBraille implements UDriver<URectangle, BrailleGrid> {
 
 	private final ClipContainer clipContainer;
 
@@ -52,9 +51,7 @@ public class DriverRectangleBraille implements UDriver<BrailleGrid> {
 		this.clipContainer = clipContainer;
 	}
 
-	public void draw(UShape ushape, double x, double y, ColorMapper mapper, UParam param, BrailleGrid grid) {
-		final URectangle rect = (URectangle) ushape;
-
+	public void draw(URectangle rect, double x, double y, ColorMapper mapper, UParam param, BrailleGrid grid) {
 		// final double rx = rect.getRx();
 		// final double ry = rect.getRy();
 		double width = rect.getWidth();

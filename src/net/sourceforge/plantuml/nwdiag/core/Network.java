@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.nwdiag.core;
 import net.sourceforge.plantuml.nwdiag.next.NStage;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
-public class Network {
+public class Network implements NStackable {
 
 	private final String name;
 	private String description;
@@ -93,6 +93,7 @@ public class Network {
 		return this.description;
 	}
 
+	@Override
 	public void setDescription(String description) {
 		this.description = description;
 	}
@@ -101,6 +102,7 @@ public class Network {
 		return color;
 	}
 
+	@Override
 	public final void setColor(HColor color) {
 		this.color = color;
 	}

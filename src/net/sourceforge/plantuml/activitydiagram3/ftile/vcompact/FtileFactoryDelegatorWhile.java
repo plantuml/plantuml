@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.activitydiagram3.Instruction;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Arrows;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Connection;
-import net.sourceforge.plantuml.activitydiagram3.ftile.Diamond;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Hexagon;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileBreak;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
@@ -124,7 +124,7 @@ public class FtileFactoryDelegatorWhile extends FtileFactoryDelegator {
 
 						final Snake snake = Snake.create(arrowColor, Arrows.asToLeft());
 						snake.addPoint(tr1.getDx(), tr1.getDy());
-						snake.addPoint(Diamond.diamondHalfSize, tr1.getDy());
+						snake.addPoint(Hexagon.hexagonHalfSize, tr1.getDy());
 						ug.draw(snake);
 					}
 

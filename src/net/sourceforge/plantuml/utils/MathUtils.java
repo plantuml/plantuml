@@ -35,6 +35,11 @@
  */
 package net.sourceforge.plantuml.utils;
 
+import java.awt.geom.Dimension2D;
+import java.awt.geom.Point2D;
+
+import net.sourceforge.plantuml.Dimension2DDouble;
+
 public class MathUtils {
 
 	public static double max(double a, double b) {
@@ -82,6 +87,15 @@ public class MathUtils {
 			return max;
 		}
 		return v;
+	}
+
+	public static Dimension2D max(Dimension2D dim1, Dimension2D dim2) {
+		return new Dimension2DDouble(Math.max(dim1.getWidth(), dim2.getWidth()),
+				Math.max(dim1.getHeight(), dim2.getHeight()));
+	}
+
+	public static Point2D max(Point2D pt1, Point2D pt2) {
+		return new Point2D.Double(Math.max(pt1.getX(), pt2.getX()), Math.max(pt1.getY(), pt2.getY()));
 	}
 
 }
