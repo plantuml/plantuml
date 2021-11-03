@@ -1507,16 +1507,16 @@ public class TextGrid {
 	public boolean initialiseWithLines(ArrayList<StringBuffer> lines, ProcessingOptions options) throws UnsupportedEncodingException {
 
 		//remove blank rows at the bottom
-		boolean done = false;
-		int i;
-		for(i = lines.size() - 1; !done; i--){
-			StringBuffer row = lines.get(i);
-			if(!StringUtils.isBlank(row.toString())) done = true;
+
+		rows = new ArrayList<>();
+
+		for (StringBuffer row:lines) {
+			if(!StringUtils.isBlank(row.toString()))
+				rows.add(row);
 		}
-		rows = new ArrayList<StringBuffer>(lines.subList(0, i + 2));
 
 		if(options != null) fixTabs(options.getTabSize());
-		else fixTabs(options.DEFAULT_TAB_SIZE);
+		else fixTabs(ProcessingOptions.DEFAULT_TAB_SIZE);
 
 
 		// make all lines of equal length
