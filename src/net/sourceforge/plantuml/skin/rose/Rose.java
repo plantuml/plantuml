@@ -286,7 +286,7 @@ public class Rose {
 				smallFont = smallFont.changeColor(smallColor);
 			}
 			return new ComponentRoseGroupingHeader(styles == null ? null : styles[0], styles == null ? null : styles[1],
-					param.getBackgroundColor(true), getSymbolContext(stereotype, param, ColorParam.sequenceGroupBorder),
+					param.getBackgroundColor(false), getSymbolContext(stereotype, param, ColorParam.sequenceGroupBorder),
 					bigFont, smallFont, stringsToDisplay, param, roundCorner);
 		}
 		if (type == ComponentType.GROUPING_ELSE) {
