@@ -101,7 +101,6 @@ import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorNone;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class SvekLine implements Moveable, Hideable, GuideLine {
 
@@ -234,7 +233,7 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		this.defaultThickness = skinParam.getThickness(LineParam.arrow, null);
 		this.arrowLollipopColor = skinParam.getHtmlColor(ColorParam.arrowLollipop, null, false);
 		if (arrowLollipopColor == null) {
-			this.arrowLollipopColor = HColorUtils.WHITE;
+			this.arrowLollipopColor = backgroundColor;
 		}
 		this.pragma = pragma;
 		this.bibliotekon = bibliotekon;
