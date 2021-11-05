@@ -1,0 +1,81 @@
+''
+'' The mars theme from future-architect/puml-themes
+'' 
+'' Original Author: [future-architect](https://github.com/future-architect)
+'' Source: [future-architect/puml-themes](https://github.com/future-architect/puml-themes/tree/master/themes)
+'' License: [Apache License, Version 2.0](https://github.com/future-architect/puml-themes/blob/master/LICENSE) 
+''
+skinparam BackgroundColor F9F9F9
+skinparam shadowing false
+skinparam RoundCorner 7
+skinparam ArrowColor 191919
+skinparam FontColor 191919
+skinparam SequenceLifeLineBorderColor 393939
+skinparam SequenceGroupHeaderFontColor 191919
+skinparam SequenceGroupFontColor 393939
+skinparam SequenceGroupBorderColor 393939
+skinparam SequenceGroupBorderThickness 1
+
+skinparam sequenceDivider {
+    BorderColor 191919
+    BorderThickness 1
+    FontColor 191919
+}
+
+skinparam participant {
+    BackgroundColor E55756
+    BorderColor 191919
+    FontColor F9F9F9
+    BorderThickness 1.5
+}
+
+skinparam database {
+    BackgroundColor A4DBD8
+    BorderColor 191919
+    FontColor 191919
+}
+
+skinparam entity {
+    BackgroundColor EFBABC
+    BorderColor 191919
+    FontColor 191919
+}
+
+skinparam note {
+    BackgroundColor e5e5e5
+    BorderColor 191919
+    FontColor 191919
+    BorderThickness 1.5
+}
+
+skinparam actor {
+    BackgroundColor 191919
+    BorderColor 191919
+    FontColor 191919
+}
+
+skinparam boundary {
+    BackgroundColor EFBABC
+    BorderColor 191919
+    FontColor 191919
+}
+
+skinparam control {
+    BackgroundColor EFBABC
+    BorderColor 191919
+    FontColor 191919
+}
+
+skinparam collections {
+    BackgroundColor E55756
+    BorderColor 191919
+    FontColor 191919
+    BorderThickness 1.5
+}
+
+skinparam queue {
+    BackgroundColor E55756
+    BorderColor 191919
+    FontColor FFF
+    BorderThickness 1.5
+}
