@@ -24,8 +24,9 @@ skinparam sequenceDivider {
 
 skinparam participant {
     BackgroundColor FF6347
-    BorderColor FF6F61
+    BorderColor 454645
     FontColor FFFFFF
+    BorderThickness 1.5
 }
 
 skinparam database {
@@ -42,8 +43,9 @@ skinparam entity {
 
 skinparam note {
     BackgroundColor 7FFFD4
-    BorderColor 7FFFD4
+    BorderColor 454645
     FontColor 454645
+    BorderThickness 1.5
 }
 
 skinparam actor {
@@ -65,14 +67,14 @@ skinparam control {
 }
 
 skinparam collections {
-    BackgroundColor FF6347
-    BorderColor FFFFFF
+    BackgroundColor FF5F42
+    BorderColor 454645
     FontColor 454645
 }
 
 skinparam queue {
     BackgroundColor FF6347
-    BorderColor FFF
+    BorderColor 454645
     FontColor FFF
     BorderThickness 1.5
 }
