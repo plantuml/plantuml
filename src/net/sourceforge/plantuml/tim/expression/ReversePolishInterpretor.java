@@ -95,7 +95,7 @@ public class ReversePolishInterpretor {
 				if (trace)
 					System.err.println("function=" + function);
 				if (function == null) {
-					throw EaterException.unlocated("Unknow built-in function " + token2.getSurface());
+					throw EaterException.unlocated("Unknown built-in function " + token2.getSurface());
 				}
 				if (function.canCover(nb, Collections.<String>emptySet()) == false) {
 					throw EaterException
