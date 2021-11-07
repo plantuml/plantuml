@@ -66,10 +66,6 @@ public class UGraphicInterceptorUDrawable2 extends UGraphicDelegator {
 			final Gtile gtile = (Gtile) shape;
 			// System.err.println("gtile=" + gtile);
 			gtile.drawU(this);
-			// FtileWithConnection
-			for (GConnection c : gtile.getInnerConnections()) {
-				this.draw(c);
-			}
 		} else if (shape instanceof Ftile) {
 			final Ftile ftile = (Ftile) shape;
 			// System.err.println("ftile=" + ftile);

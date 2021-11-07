@@ -52,7 +52,7 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class GtileAssembly extends GtileAssemblySimple {
+public class GtileAssembly extends GtileTopDown {
 
 	private final TextBlock textBlock;
 

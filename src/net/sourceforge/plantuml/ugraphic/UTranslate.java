@@ -39,6 +39,8 @@ import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
+import net.sourceforge.plantuml.Dimension2DDouble;
+
 public class UTranslate implements UChange {
 
 	private final double dx;
@@ -93,8 +95,8 @@ public class UTranslate implements UChange {
 		return new Point2D.Double(p.getX() + dx, p.getY() + dy);
 	}
 
-	public Point2D getTranslated(Dimension2D dim) {
-		return new Point2D.Double(dim.getWidth() + dx, dim.getHeight() + dy);
+	public Dimension2D getTranslated(Dimension2D dim) {
+		return new Dimension2DDouble(dim.getWidth() + dx, dim.getHeight() + dy);
 	}
 
 	public UTranslate scaled(double scale) {

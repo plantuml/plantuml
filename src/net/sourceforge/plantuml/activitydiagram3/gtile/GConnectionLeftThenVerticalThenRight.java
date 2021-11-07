@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class GConnectionLeftThenDownThenRight extends GAbstractConnection implements GConnectionTranslatable {
+public class GConnectionLeftThenVerticalThenRight extends GAbstractConnection {
 
 	private final TextBlock textBlock;
 	private final UTranslate pos1;
@@ -54,7 +54,7 @@ public class GConnectionLeftThenDownThenRight extends GAbstractConnection implem
 
 	private final double xright;
 
-	public GConnectionLeftThenDownThenRight(UTranslate pos1, GPoint gpoint1, UTranslate pos2, GPoint gpoint2,
+	public GConnectionLeftThenVerticalThenRight(UTranslate pos1, GPoint gpoint1, UTranslate pos2, GPoint gpoint2,
 			double xright, TextBlock textBlock) {
 		super(gpoint1, gpoint2);
 		this.textBlock = textBlock;
@@ -72,7 +72,18 @@ public class GConnectionLeftThenDownThenRight extends GAbstractConnection implem
 
 	@Override
 	public void drawU(UGraphic ug) {
-		ug.draw(getSimpleSnake());
+		final Point2D p1 = pos1.getTranslated(gpoint1.getPoint2D());
+		final Point2D p2 = pos2.getTranslated(gpoint2.getPoint2D());
+		final Direction direction = p1.getY() < p2.getY() ? Direction.DOWN : Direction.UP;
+		final Snake snake = Snake.create(getInLinkRenderingColor(), Arrows.asToLeft()).emphasizeDirection(direction)
+				.withLabel(textBlock, HorizontalAlignment.LEFT);
+		// final double maxX = Math.max(p1.getX(), p2.getX());
+		final double maxX = xright;
+		snake.addPoint(p1);
+		snake.addPoint(new Point2D.Double(maxX, p1.getY()));
+		snake.addPoint(new Point2D.Double(maxX, p2.getY()));
+		snake.addPoint(p2);
+		ug.draw(snake);
 	}
 
 //	public double getMaxX(StringBounder stringBounder) {
@@ -104,20 +115,6 @@ public class GConnectionLeftThenDownThenRight extends GAbstractConnection implem
 //			}
 //		}
 		return color;
-	}
-
-	private Snake getSimpleSnake() {
-		final Snake snake = Snake.create(getInLinkRenderingColor(), Arrows.asToLeft())
-				.emphasizeDirection(Direction.DOWN).withLabel(textBlock, HorizontalAlignment.LEFT);
-		final Point2D p1 = pos1.getTranslated(gpoint1.getPoint2D());
-		final Point2D p2 = pos2.getTranslated(gpoint2.getPoint2D());
-		// final double maxX = Math.max(p1.getX(), p2.getX());
-		final double maxX = xright;
-		snake.addPoint(p1);
-		snake.addPoint(new Point2D.Double(maxX, p1.getY()));
-		snake.addPoint(new Point2D.Double(maxX, p2.getY()));
-		snake.addPoint(p2);
-		return snake;
 	}
 
 //	@Override

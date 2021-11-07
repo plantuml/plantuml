@@ -52,6 +52,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.WeldingPoint;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileWithNoteOpale;
 import net.sourceforge.plantuml.activitydiagram3.gtile.Gtile;
 import net.sourceforge.plantuml.activitydiagram3.gtile.GtileIfHexagon;
+import net.sourceforge.plantuml.activitydiagram3.gtile.GtileIfAlone;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -123,6 +124,8 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 			branches.add(elseBranch);
 		}
 
+		if (branches.size() == 1)
+			return new GtileIfAlone(swimlane, gtiles.get(0), branches.get(0));
 		return new GtileIfHexagon(swimlane, gtiles, branches);
 	}
 

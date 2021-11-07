@@ -36,73 +36,64 @@
 package net.sourceforge.plantuml.activitydiagram3.gtile;
 
 import java.awt.geom.Dimension2D;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Set;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class GtileEmpty extends AbstractGtile {
+public class GtileWithMargin extends AbstractGtileRoot implements Gtile {
 
-	private final double width;
-	private final double height;
+	protected final AbstractGtileRoot orig;
+	protected final double north;
+	protected final double south;
+	private final double east;
 
-	public GtileEmpty(StringBounder stringBounder, ISkinParam skinParam, double width, double height) {
-		this(stringBounder, skinParam, width, height, null);
-	}
-
-	public GtileEmpty(StringBounder stringBounder, ISkinParam skinParam) {
-		this(stringBounder, skinParam, 0, 0, null);
-	}
-
-	public GtileEmpty(StringBounder stringBounder, ISkinParam skinParam, Swimlane swimlane) {
-		this(stringBounder, skinParam, 0, 0, swimlane);
-	}
-
-	public GtileEmpty(StringBounder stringBounder, ISkinParam skinParam, double width, double height, Swimlane swimlane) {
-		super(stringBounder, skinParam, swimlane);
-		this.width = width;
-		this.height = height;
+	public GtileWithMargin(AbstractGtileRoot orig, double north, double south, double east) {
+		super(orig.stringBounder, orig.skinParam());
+		this.orig = orig;
+		this.north = north;
+		this.south = south;
+		this.east = east;
 	}
 
 	@Override
-	public String toString() {
-		return "FtileEmpty";
+	public Set<Swimlane> getSwimlanes() {
+		return orig.getSwimlanes();
 	}
 
 	@Override
-	protected void drawUInternal(UGraphic ug) {
+	public Swimlane getSwimlane(String point) {
+		return orig.getSwimlane(point);
 	}
 
 	@Override
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		return new Dimension2DDouble(width, height);
+		final Dimension2D result = orig.calculateDimension(stringBounder);
+		return Dimension2DDouble.delta(result, east, north + south);
 	}
 
-//	@Override
-//	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
-//		return calculateDimensionEmpty();
-//	}
-//
-//	final protected FtileGeometry calculateDimensionEmpty() {
-//		return new FtileGeometry(width, height, width / 2, 0, height);
-//	}
-//
-//	public Swimlane getSwimlaneIn() {
-//		return swimlane;
-//	}
-//
-//	public Swimlane getSwimlaneOut() {
-//		return swimlane;
-//	}
-//
-//	public Set<Swimlane> getSwimlanes() {
-//		final Set<Swimlane> result = new HashSet<>();
-//		if (swimlane != null) {
-//			result.add(swimlane);
-//		}
-//		return Collections.unmodifiableSet(result);
-//	}
+	private UTranslate getTranslate() {
+		return new UTranslate(east, north);
+	}
+
+	@Override
+	protected void drawUInternal(UGraphic ug) {
+		orig.drawU(ug.apply(getTranslate()));
+	}
+
+	@Override
+	protected UTranslate getCoordImpl(String name) {
+		return orig.getCoordImpl(name).compose(getTranslate());
+	}
+
+	@Override
+	public Collection<GConnection> getInnerConnections() {
+		return Collections.emptyList();
+	}
 
 }

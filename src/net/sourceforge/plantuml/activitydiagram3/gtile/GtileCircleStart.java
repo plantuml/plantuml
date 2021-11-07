@@ -70,7 +70,8 @@ public class GtileCircleStart extends AbstractGtile {
 
 	}
 
-	public void drawU(UGraphic ug) {
+	@Override
+	protected void drawUInternal(UGraphic ug) {
 		final UEllipse circle = new UEllipse(SIZE, SIZE);
 		circle.setDeltaShadow(shadowing);
 		ug.apply(new HColorNone()).apply(backColor.bg()).draw(circle);

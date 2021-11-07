@@ -35,11 +35,23 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.gtile;
 
-import net.sourceforge.plantuml.ugraphic.UGraphic;
+import java.util.Collection;
+import java.util.Collections;
+
+import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public interface GConnectionTranslatable extends GConnection {
+public class GtileWithOutgoingArrow extends GtileWithMargin implements Gtile {
 
-	public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2);
+	public GtileWithOutgoingArrow(AbstractGtileRoot orig, double south) {
+		super(orig, 0, south, 0);
+	}
+
+	@Override
+	public Collection<GConnection> getInnerConnections() {
+		final GConnection arrow = new GConnectionVerticalDown(UTranslate.dy(0), orig.getGPoint(GPoint.SOUTH_HOOK),
+				UTranslate.dy(south), orig.getGPoint(GPoint.SOUTH_HOOK), TextBlockUtils.EMPTY_TEXT_BLOCK);
+		return Collections.singletonList(arrow);
+	}
 
 }

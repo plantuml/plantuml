@@ -87,7 +87,7 @@ public class GtileBox extends AbstractGtile {
 	private double minimumWidth = 0;
 
 	private final LinkRendering inRendering;
-	private final Swimlane swimlane;
+
 	private final BoxStyle boxStyle;
 
 	private final HColor borderColor;
@@ -133,10 +133,10 @@ public class GtileBox extends AbstractGtile {
 
 	private GtileBox(StringBounder stringBounder, ISkinParam skinParam, Display label, Swimlane swimlane,
 			BoxStyle boxStyle, Style style, Style styleArrow) {
-		super(stringBounder, skinParam);
+		super(stringBounder, skinParam, swimlane);
 		this.style = style;
 		this.boxStyle = boxStyle;
-		this.swimlane = swimlane;
+
 		final FontConfiguration fc;
 		final LineBreakStrategy wrapWidth;
 		if (UseStyle.useBetaStyle()) {
@@ -185,7 +185,8 @@ public class GtileBox extends AbstractGtile {
 		return print;
 	}
 
-	public void drawU(UGraphic ug) {
+	@Override
+	protected void drawUInternal(UGraphic ug) {
 		final Dimension2D dimTotal = calculateDimension(ug.getStringBounder());
 		final double widthTotal = dimTotal.getWidth();
 		final double heightTotal = dimTotal.getHeight();

@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class GConnectionVerticalDown extends GAbstractConnection implements GConnectionTranslatable {
+public class GConnectionVerticalDown extends GAbstractConnection {
 
 	private final TextBlock textBlock;
 	private final UTranslate pos1;
@@ -62,18 +62,31 @@ public class GConnectionVerticalDown extends GAbstractConnection implements GCon
 
 	@Override
 	public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
-		throw new UnsupportedOperationException();
+		final Snake snake = Snake.create(getInLinkRenderingColor(), Arrows.asToDown()).withLabel(textBlock,
+				HorizontalAlignment.LEFT);
+		final Point2D p1 = pos1.getTranslated(gpoint1.getPoint2D());
+		final Point2D p2 = pos2.getTranslated(gpoint2.getPoint2D());
+		final Point2D mp1a = translate1.getTranslated(p1);
+		final Point2D mp2b = translate2.getTranslated(p2);
+		final double middle = (mp1a.getY() + mp2b.getY()) / 2.0;
+		snake.addPoint(mp1a);
+		snake.addPoint(mp1a.getX(), middle);
+		snake.addPoint(mp2b.getX(), middle);
+		snake.addPoint(mp2b);
+		ug.draw(snake);
 
 	}
 
 	@Override
 	public void drawU(UGraphic ug) {
-		ug.draw(getSimpleSnake());
+		final Snake snake = Snake.create(getInLinkRenderingColor(), Arrows.asToDown()).withLabel(textBlock,
+				HorizontalAlignment.LEFT);
+		final Point2D p1 = pos1.getTranslated(gpoint1.getPoint2D());
+		final Point2D p2 = pos2.getTranslated(gpoint2.getPoint2D());
+		snake.addPoint(p1);
+		snake.addPoint(p2);
+		ug.draw(snake);
 	}
-
-//	public double getMaxX(StringBounder stringBounder) {
-//		return getSimpleSnake().getMaxX(stringBounder);
-//	}
 
 	private Rainbow getInLinkRenderingColor() {
 		Rainbow color;
@@ -100,16 +113,6 @@ public class GConnectionVerticalDown extends GAbstractConnection implements GCon
 //			}
 //		}
 		return color;
-	}
-
-	private Snake getSimpleSnake() {
-		final Snake snake = Snake.create(getInLinkRenderingColor(), Arrows.asToDown()).withLabel(textBlock,
-				HorizontalAlignment.LEFT);
-		final Point2D p1 = pos1.getTranslated(gpoint1.getPoint2D());
-		final Point2D p2 = pos2.getTranslated(gpoint2.getPoint2D());
-		snake.addPoint(p1);
-		snake.addPoint(p2);
-		return snake;
 	}
 
 //	@Override

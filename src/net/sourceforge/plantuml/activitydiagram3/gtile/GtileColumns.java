@@ -36,9 +36,7 @@
 package net.sourceforge.plantuml.activitydiagram3.gtile;
 
 import java.awt.geom.Dimension2D;
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -51,7 +49,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.utils.MathUtils;
 
-public class GtileIfSimple extends AbstractGtile {
+public class GtileColumns extends AbstractGtile {
 
 	protected final List<Gtile> gtiles;
 	private final List<Dimension2D> dims = new ArrayList<>();
@@ -62,8 +60,12 @@ public class GtileIfSimple extends AbstractGtile {
 		return "GtileIfSimple " + gtiles;
 	}
 
-	public GtileIfSimple(List<Gtile> gtiles) {
-		super(gtiles.get(0).getStringBounder(), gtiles.get(0).skinParam());
+	public Gtile first() {
+		return gtiles.get(0);
+	}
+
+	public GtileColumns(List<Gtile> gtiles, Swimlane singleSwimlane) {
+		super(gtiles.get(0).getStringBounder(), gtiles.get(0).skinParam(), singleSwimlane);
 		this.gtiles = gtiles;
 
 		double dx = 0;
@@ -80,7 +82,8 @@ public class GtileIfSimple extends AbstractGtile {
 		return 20;
 	}
 
-	public void drawU(UGraphic ug) {
+	@Override
+	protected void drawUInternal(UGraphic ug) {
 		for (int i = 0; i < gtiles.size(); i++) {
 			final Gtile tile = gtiles.get(i);
 			final UTranslate pos = positions.get(i);
@@ -90,14 +93,14 @@ public class GtileIfSimple extends AbstractGtile {
 
 	@Override
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		Point2D result = new Point2D.Double();
+		Dimension2D result = new Dimension2DDouble(0, 0);
 		for (int i = 0; i < dims.size(); i++) {
 			final Dimension2D dim = dims.get(i);
 			final UTranslate pos = positions.get(i);
-			final Point2D corner = pos.getTranslated(dim);
+			final Dimension2D corner = pos.getTranslated(dim);
 			result = MathUtils.max(result, corner);
 		}
-		return new Dimension2DDouble(result);
+		return result;
 	}
 
 	public Set<Swimlane> getSwimlanes() {
@@ -107,8 +110,8 @@ public class GtileIfSimple extends AbstractGtile {
 		return Collections.unmodifiableSet(result);
 	}
 
-	public Collection<Gtile> getMyChildren() {
-		return Collections.unmodifiableCollection(gtiles);
-	}
+//	public Collection<Gtile> getMyChildren() {
+//		return Collections.unmodifiableCollection(gtiles);
+//	}
 
 }
