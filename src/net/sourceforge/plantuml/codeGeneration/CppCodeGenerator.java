@@ -6,6 +6,7 @@ import java.util.List;
 import net.sourceforge.plantuml.BlockUml;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.entity.EntityImpl;
 import net.sourceforge.plantuml.preproc.Defines;
@@ -47,10 +48,14 @@ public class CppCodeGenerator extends CodeGeneratorAbstract {
             if (l instanceof EntityImpl) {
                 res += "class " + l.getCodeGetName() + "\n";
                 res += "{\n";
+                // メンバ要素を取り出す
+                Display fields = l.getBodier().getFieldsToDisplay();
+                // メソッドを取り出す
+                Display methods = l.getBodier().getMethodsToDisplay();
                 for (CharSequence s : l.getBodier().getRawBody()) {
-                    res += s + "\n";
+                    res += s + ";\n";
                 }
-                res += "}\n";
+                res += "};\n";
             }
         }
         return res;
