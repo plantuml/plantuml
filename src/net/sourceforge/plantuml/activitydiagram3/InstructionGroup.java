@@ -38,12 +38,15 @@ package net.sourceforge.plantuml.activitydiagram3;
 import java.util.Collections;
 import java.util.Set;
 
+import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileWithNotes;
+import net.sourceforge.plantuml.activitydiagram3.gtile.Gtile;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
@@ -64,6 +67,7 @@ public class InstructionGroup extends AbstractInstruction implements Instruction
 	private final double roundCorner;
 	private PositionedNote note = null;
 
+	@Override
 	public boolean containsBreak() {
 		return list.containsBreak();
 	}
@@ -81,10 +85,18 @@ public class InstructionGroup extends AbstractInstruction implements Instruction
 		this.roundCorner = roundCorner;
 	}
 
+	@Override
 	public CommandExecutionResult add(Instruction ins) {
 		return list.add(ins);
 	}
 
+	@Override
+	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
+		Gtile tmp = list.createGtile(skinParam, stringBounder);
+		return tmp;
+	}
+
+	@Override
 	public Ftile createFtile(FtileFactory factory) {
 		Ftile tmp = list.createFtile(factory);
 		if (note != null) {
@@ -97,14 +109,17 @@ public class InstructionGroup extends AbstractInstruction implements Instruction
 		return parent;
 	}
 
+	@Override
 	final public boolean kill() {
 		return list.kill();
 	}
 
+	@Override
 	public LinkRendering getInLinkRendering() {
 		return linkRendering;
 	}
 
+	@Override
 	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote) {
 		if (list.isEmpty()) {
 			this.note = new PositionedNote(note, position, type, colors, swimlaneNote);
@@ -113,18 +128,22 @@ public class InstructionGroup extends AbstractInstruction implements Instruction
 		return list.addNote(note, position, type, colors, swimlaneNote);
 	}
 
+	@Override
 	public Set<Swimlane> getSwimlanes() {
 		return list.getSwimlanes();
 	}
 
+	@Override
 	public Swimlane getSwimlaneIn() {
 		return list.getSwimlaneIn();
 	}
 
+	@Override
 	public Swimlane getSwimlaneOut() {
 		return list.getSwimlaneOut();
 	}
 
+	@Override
 	public Instruction getLast() {
 		return list.getLast();
 	}

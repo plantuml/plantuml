@@ -40,14 +40,19 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileKilled;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes;
+import net.sourceforge.plantuml.activitydiagram3.gtile.Gtile;
+import net.sourceforge.plantuml.activitydiagram3.gtile.GtileIfAlone;
+import net.sourceforge.plantuml.activitydiagram3.gtile.GtileRepeat;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
@@ -115,8 +120,16 @@ public class InstructionRepeat extends AbstractInstruction implements Instructio
 		return this.backward != Display.NULL;
 	}
 
+	@Override
 	public CommandExecutionResult add(Instruction ins) {
 		return repeatList.add(ins);
+	}
+	
+	@Override
+	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
+
+		final Gtile tile = repeatList.createGtile(skinParam, stringBounder);
+		return new GtileRepeat(swimlane, tile, null, test);
 	}
 
 	public Ftile createFtile(FtileFactory factory) {
@@ -167,10 +180,12 @@ public class InstructionRepeat extends AbstractInstruction implements Instructio
 		return repeatList.kill();
 	}
 
+	@Override
 	public LinkRendering getInLinkRendering() {
 		return nextLinkRenderer;
 	}
 
+	@Override
 	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote) {
 		if (Display.isNull(backward)) {
 			return repeatList.addNote(note, position, type, colors, swimlaneNote);
@@ -180,14 +195,17 @@ public class InstructionRepeat extends AbstractInstruction implements Instructio
 
 	}
 
+	@Override
 	public Set<Swimlane> getSwimlanes() {
 		return repeatList.getSwimlanes();
 	}
 
+	@Override
 	public Swimlane getSwimlaneIn() {
 		return parent.getSwimlaneOut();
 	}
 
+	@Override
 	public Swimlane getSwimlaneOut() {
 		return parent.getSwimlaneOut();
 	}

@@ -43,42 +43,22 @@ import java.util.Set;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
-import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 
-public abstract class AbstractGtile extends AbstractTextBlock implements Gtile {
+public abstract class AbstractGtile extends AbstractGtileRoot implements Gtile {
 
-	protected final StringBounder stringBounder;
-	private final ISkinParam skinParam;
-	private final Swimlane singleSwimlane;
+	protected final Swimlane singleSwimlane;
 
 	public AbstractGtile(StringBounder stringBounder, ISkinParam skinParam, Swimlane singleSwimlane) {
-		this.stringBounder = stringBounder;
-		this.skinParam = skinParam;
+		super(stringBounder, skinParam);
 		this.singleSwimlane = singleSwimlane;
-	}
-
-	public StringBounder getStringBounder() {
-		return stringBounder;
 	}
 
 	public AbstractGtile(StringBounder stringBounder, ISkinParam skinParam) {
 		this(stringBounder, skinParam, null);
-	}
-
-	final public ISkinParam skinParam() {
-		if (skinParam == null) {
-			throw new IllegalStateException();
-		}
-		return skinParam;
-	}
-
-	final public HColorSet getIHtmlColorSet() {
-		return skinParam.getIHtmlColorSet();
 	}
 
 //	@Override
@@ -92,7 +72,7 @@ public abstract class AbstractGtile extends AbstractTextBlock implements Gtile {
 //	}
 
 	@Override
-	public UTranslate getCoord(String name) {
+	protected UTranslate getCoordImpl(String name) {
 		final Dimension2D dim = calculateDimension(stringBounder);
 		if (name.equals(GPoint.NORTH_HOOK))
 			return new UTranslate(dim.getWidth() / 2, 0);
@@ -102,14 +82,6 @@ public abstract class AbstractGtile extends AbstractTextBlock implements Gtile {
 			return new UTranslate(0, dim.getHeight() / 2);
 		if (name.equals(GPoint.EAST_HOOK))
 			return new UTranslate(dim.getWidth(), dim.getHeight() / 2);
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public GPoint getGPoint(String name) {
-		if (name.equals(GPoint.NORTH_HOOK) || name.equals(GPoint.SOUTH_HOOK) || name.equals(GPoint.WEST_HOOK)
-				|| name.equals(GPoint.EAST_HOOK))
-			return new GPoint(this, name);
 		throw new UnsupportedOperationException();
 	}
 
@@ -142,14 +114,14 @@ public abstract class AbstractGtile extends AbstractTextBlock implements Gtile {
 //	}
 
 	public final UStroke getThickness() {
-		UStroke thickness = skinParam.getThickness(LineParam.activityBorder, null);
+		UStroke thickness = skinParam().getThickness(LineParam.activityBorder, null);
 		if (thickness == null) {
 			thickness = new UStroke(1.5);
 		}
 		return thickness;
 	}
 
-	private final Rose rose = new Rose();
+	private static final Rose rose = new Rose();
 
 	protected final Rose getRose() {
 		return rose;

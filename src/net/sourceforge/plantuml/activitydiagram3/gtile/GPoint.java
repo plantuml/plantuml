@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.activitydiagram3.gtile;
 import java.awt.geom.Point2D;
 
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class GPoint {
@@ -66,6 +67,11 @@ public class GPoint {
 		this(gtile, name, LinkRendering.none());
 	}
 
+	@Override
+	public String toString() {
+		return gtile + "@" + name;
+	}
+
 	public Gtile getGtile() {
 		return gtile;
 	}
@@ -84,6 +90,19 @@ public class GPoint {
 
 	public LinkRendering getLinkRendering() {
 		return linkRendering;
+	}
+
+	public boolean match(Swimlane swimlane) {
+		final Swimlane tmp = gtile.getSwimlane(name);
+		return tmp == swimlane;
+	}
+
+	public Swimlane getSwimlane() {
+		final Swimlane result = gtile.getSwimlane(name);
+		if (result == null) {
+			throw new IllegalStateException(name + " " + gtile.getClass().toString() + " " + gtile);
+		}
+		return result;
 	}
 
 }

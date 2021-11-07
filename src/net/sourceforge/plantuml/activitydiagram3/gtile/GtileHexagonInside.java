@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Hexagon;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
@@ -52,7 +53,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
-public class GtileDiamondInside extends AbstractGtile {
+public class GtileHexagonInside extends AbstractGtile {
 
 	protected final HColor backColor;
 	protected final HColor borderColor;
@@ -67,7 +68,23 @@ public class GtileDiamondInside extends AbstractGtile {
 	}
 
 	// FtileDiamondInside
-	public GtileDiamondInside(StringBounder stringBounder, TextBlock label, ISkinParam skinParam, HColor backColor,
+
+	public GtileHexagonInsideLabelled withEastLabel(TextBlock eastLabel) {
+		return new GtileHexagonInsideLabelled(this, TextBlockUtils.EMPTY_TEXT_BLOCK, eastLabel,
+				TextBlockUtils.EMPTY_TEXT_BLOCK);
+	}
+
+	public GtileHexagonInsideLabelled withWestLabel(TextBlock westLabel) {
+		return new GtileHexagonInsideLabelled(this, TextBlockUtils.EMPTY_TEXT_BLOCK, TextBlockUtils.EMPTY_TEXT_BLOCK,
+				westLabel);
+	}
+
+	public AbstractGtileRoot withSouthLabel(TextBlock southLabel) {
+		return new GtileHexagonInsideLabelled(this, southLabel, TextBlockUtils.EMPTY_TEXT_BLOCK,
+				TextBlockUtils.EMPTY_TEXT_BLOCK);
+	}
+
+	public GtileHexagonInside(StringBounder stringBounder, TextBlock label, ISkinParam skinParam, HColor backColor,
 			HColor borderColor, Swimlane swimlane) {
 		super(stringBounder, skinParam, swimlane);
 		if (UseStyle.useBetaStyle()) {
@@ -100,16 +117,15 @@ public class GtileDiamondInside extends AbstractGtile {
 	}
 
 	@Override
-	public void drawU(UGraphic ug) {
+	protected void drawUInternal(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final Dimension2D dimTotal = calculateDimension(stringBounder);
 		ug = ug.apply(borderColor).apply(getThickness()).apply(backColor.bg());
 		ug.draw(Hexagon.asPolygon(shadowing, dimTotal.getWidth(), dimTotal.getHeight()));
-		
+
 		final double lx = (dimTotal.getWidth() - dimLabel.getWidth()) / 2;
 		final double ly = (dimTotal.getHeight() - dimLabel.getHeight()) / 2;
 		label.drawU(ug.apply(new UTranslate(lx, ly)));
-
 	}
 
 }

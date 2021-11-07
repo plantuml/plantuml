@@ -138,13 +138,19 @@ public class GtileWithNoteOpale extends AbstractGtile implements Stencil, Stylea
 
 		final Dimension2D dimTotal = calculateDimension(stringBounder);
 
-		this.positionNote = new UTranslate(0, (dimTotal.getHeight() - dimNote.getHeight()) / 2);
-		this.positionTile = new UTranslate(dimNote.getWidth() + suppSpace,
-				(dimTotal.getHeight() - dimTile.getHeight()) / 2);
+		if (note.getNotePosition() == NotePosition.LEFT) {
+			this.positionNote = new UTranslate(0, (dimTotal.getHeight() - dimNote.getHeight()) / 2);
+			this.positionTile = new UTranslate(dimNote.getWidth() + suppSpace,
+					(dimTotal.getHeight() - dimTile.getHeight()) / 2);
+		} else {
+			this.positionNote = new UTranslate(dimTile.getWidth() + suppSpace,
+					(dimTotal.getHeight() - dimNote.getHeight()) / 2);
+			this.positionTile = new UTranslate(0, (dimTotal.getHeight() - dimTile.getHeight()) / 2);
+		}
 	}
 
 	@Override
-	public UTranslate getCoord(String name) {
+	protected UTranslate getCoordImpl(String name) {
 		return tile.getCoord(name).compose(positionTile);
 	}
 
@@ -155,7 +161,7 @@ public class GtileWithNoteOpale extends AbstractGtile implements Stencil, Stylea
 	}
 
 	@Override
-	public void drawU(UGraphic ug) {
+	protected void drawUInternal(UGraphic ug) {
 		ug.apply(positionNote).draw(opale);
 		ug.apply(positionTile).draw(tile);
 	}

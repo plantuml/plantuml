@@ -50,18 +50,15 @@ public interface Gtile extends Swimable2, TextBlock {
 
 	public StringBounder getStringBounder();
 
-	// public UTranslate getTranslateFor(Gtile child);
-
-	// public Collection<Gtile> getMyChildren();
-
 	public UTranslate getCoord(String name);
 
 	public GPoint getGPoint(String name);
 
 	public Collection<GConnection> getInnerConnections();
 
-//	public List<WeldingPoint> getWeldingPoints();
-//	
-//	public HorizontalAlignment arrowHorizontalAlignment();
+	// public UTranslate getTranslateFor(Gtile child);
+	// public Collection<Gtile> getMyChildren();
+	// public List<WeldingPoint> getWeldingPoints();
+	// public HorizontalAlignment arrowHorizontalAlignment();
 
 }

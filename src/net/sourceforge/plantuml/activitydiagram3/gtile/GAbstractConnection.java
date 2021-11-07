@@ -38,6 +38,10 @@ package net.sourceforge.plantuml.activitydiagram3.gtile;
 import java.util.Arrays;
 import java.util.List;
 
+import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
+
 public abstract class GAbstractConnection implements GConnection {
 
 	protected final GPoint gpoint1;
@@ -56,6 +60,25 @@ public abstract class GAbstractConnection implements GConnection {
 	@Override
 	final public List<GPoint> getHooks() {
 		return Arrays.asList(gpoint1, gpoint2);
+	}
+
+	@Override
+	final public void drawTranslatable(UGraphic ug) {
+		final Swimlane swimlane1 = gpoint1.getSwimlane();
+		final Swimlane swimlane2 = gpoint2.getSwimlane();
+
+		if (swimlane1 == swimlane2)
+			return;
+
+		final UTranslate translate1 = swimlane1.getTranslate();
+		final UTranslate translate2 = swimlane2.getTranslate();
+
+		drawTranslate(ug, translate1, translate2);
+
+	}
+
+	public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
+		throw new UnsupportedOperationException();
 	}
 
 }

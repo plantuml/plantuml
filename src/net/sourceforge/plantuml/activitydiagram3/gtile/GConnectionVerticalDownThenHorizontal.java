@@ -37,7 +37,10 @@ package net.sourceforge.plantuml.activitydiagram3.gtile;
 
 import java.awt.geom.Point2D;
 
+import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Arrows;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Hexagon;
+import net.sourceforge.plantuml.activitydiagram3.ftile.MergeStrategy;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.Rainbow;
@@ -46,7 +49,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class GConnectionVerticalDownThenHorizontal extends GAbstractConnection implements GConnectionTranslatable {
+public class GConnectionVerticalDownThenHorizontal extends GAbstractConnection {
 
 	private final TextBlock textBlock;
 	private final UTranslate pos1;
@@ -63,13 +66,64 @@ public class GConnectionVerticalDownThenHorizontal extends GAbstractConnection i
 
 	@Override
 	public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
-		throw new UnsupportedOperationException();
+		Point2D p1 = pos1.getTranslated(gpoint1.getPoint2D());
+		Point2D p2 = pos2.getTranslated(gpoint2.getPoint2D());
+
+		final Direction originalDirection = Direction.leftOrRight(p1, p2);
+
+//		p1 = translate1.getTranslated(p1);
+//		p2 = translate2.getTranslated(p2);
+
+		final double x1 = p1.getX();
+		final double x2 = p2.getX();
+		final Point2D mp1a = translate1.getTranslated(p1);
+		final Point2D mp2b = translate2.getTranslated(p2);
+		final Direction newDirection = Direction.leftOrRight(mp1a, mp2b);
+		final UPolygon arrow = x2 > x1 ? Arrows.asToRight() : Arrows.asToLeft();
+		if (originalDirection == newDirection) {
+			final double delta = (x2 > x1 ? -1 : 1) * 1.5 * Hexagon.hexagonHalfSize;
+			final Point2D mp2bc = new Point2D.Double(mp2b.getX() + delta, mp2b.getY());
+			final Snake snake = Snake.create(getInLinkRenderingColor()).withMerge(MergeStrategy.LIMITED);
+			final double middle = (mp1a.getY() + mp2b.getY()) / 2.0;
+			snake.addPoint(mp1a);
+			snake.addPoint(mp1a.getX(), middle);
+			snake.addPoint(mp2bc.getX(), middle);
+			snake.addPoint(mp2bc);
+			ug.draw(snake);
+			final Snake small = Snake.create(getInLinkRenderingColor(), arrow).withMerge(MergeStrategy.LIMITED);
+			small.addPoint(mp2bc);
+			small.addPoint(mp2bc.getX(), mp2b.getY());
+			small.addPoint(mp2b);
+			ug.draw(small);
+		} else {
+			final double delta = (x2 > x1 ? -1 : 1) * 1.5 * Hexagon.hexagonHalfSize;
+			final Point2D mp2bb = new Point2D.Double(mp2b.getX() + delta, mp2b.getY() - 1.5 * Hexagon.hexagonHalfSize);
+			final Snake snake = Snake.create(getInLinkRenderingColor()).withMerge(MergeStrategy.LIMITED);
+			snake.addPoint(mp1a);
+			snake.addPoint(mp1a.getX(), mp2bb.getY());
+			snake.addPoint(mp2bb);
+			ug.draw(snake);
+			final Snake small = Snake.create(getInLinkRenderingColor(), arrow).withMerge(MergeStrategy.LIMITED);
+			small.addPoint(mp2bb);
+			small.addPoint(mp2bb.getX(), mp2b.getY());
+			small.addPoint(mp2b);
+			ug.draw(small);
+
+		}
 
 	}
 
 	@Override
 	public void drawU(UGraphic ug) {
-		ug.draw(getSimpleSnake());
+		final Point2D p1 = pos1.getTranslated(gpoint1.getPoint2D());
+		final Point2D p2 = pos2.getTranslated(gpoint2.getPoint2D());
+		final UPolygon arrow = p1.getX() < p2.getX() ? Arrows.asToRight() : Arrows.asToLeft();
+		final Snake snake = Snake.create(getInLinkRenderingColor(), arrow).withLabel(textBlock,
+				HorizontalAlignment.LEFT);
+		snake.addPoint(p1);
+		snake.addPoint(new Point2D.Double(p1.getX(), p2.getY()));
+		snake.addPoint(p2);
+		ug.draw(snake);
 	}
 
 //	public double getMaxX(StringBounder stringBounder) {
@@ -101,18 +155,6 @@ public class GConnectionVerticalDownThenHorizontal extends GAbstractConnection i
 //			}
 //		}
 		return color;
-	}
-
-	private Snake getSimpleSnake() {
-		final Point2D p1 = pos1.getTranslated(gpoint1.getPoint2D());
-		final Point2D p2 = pos2.getTranslated(gpoint2.getPoint2D());
-		final UPolygon arrow = p1.getX() < p2.getX() ? Arrows.asToRight() : Arrows.asToLeft();
-		final Snake snake = Snake.create(getInLinkRenderingColor(), arrow).withLabel(textBlock,
-				HorizontalAlignment.LEFT);
-		snake.addPoint(p1);
-		snake.addPoint(new Point2D.Double(p1.getX(), p2.getY()));
-		snake.addPoint(p2);
-		return snake;
 	}
 
 //	@Override

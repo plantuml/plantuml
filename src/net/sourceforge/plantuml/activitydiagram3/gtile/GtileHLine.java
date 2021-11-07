@@ -42,67 +42,32 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.ULine;
+import net.sourceforge.plantuml.ugraphic.UStroke;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
-public class GtileEmpty extends AbstractGtile {
+public class GtileHLine extends AbstractGtile {
 
+	private final double start;
 	private final double width;
-	private final double height;
+	private final HColor lineColor;
 
-	public GtileEmpty(StringBounder stringBounder, ISkinParam skinParam, double width, double height) {
-		this(stringBounder, skinParam, width, height, null);
-	}
-
-	public GtileEmpty(StringBounder stringBounder, ISkinParam skinParam) {
-		this(stringBounder, skinParam, 0, 0, null);
-	}
-
-	public GtileEmpty(StringBounder stringBounder, ISkinParam skinParam, Swimlane swimlane) {
-		this(stringBounder, skinParam, 0, 0, swimlane);
-	}
-
-	public GtileEmpty(StringBounder stringBounder, ISkinParam skinParam, double width, double height, Swimlane swimlane) {
+	public GtileHLine(StringBounder stringBounder, ISkinParam skinParam, Swimlane swimlane, HColor lineColor) {
 		super(stringBounder, skinParam, swimlane);
-		this.width = width;
-		this.height = height;
-	}
-
-	@Override
-	public String toString() {
-		return "FtileEmpty";
+		this.start = 0;
+		this.width = 10;
+		this.lineColor = lineColor;
 	}
 
 	@Override
 	protected void drawUInternal(UGraphic ug) {
+		ug.apply(lineColor).apply(new UStroke(1.5)).apply(UTranslate.dx(start)).draw(ULine.hline(width));
 	}
 
 	@Override
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		return new Dimension2DDouble(width, height);
+		return new Dimension2DDouble(width, 1.5);
 	}
-
-//	@Override
-//	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
-//		return calculateDimensionEmpty();
-//	}
-//
-//	final protected FtileGeometry calculateDimensionEmpty() {
-//		return new FtileGeometry(width, height, width / 2, 0, height);
-//	}
-//
-//	public Swimlane getSwimlaneIn() {
-//		return swimlane;
-//	}
-//
-//	public Swimlane getSwimlaneOut() {
-//		return swimlane;
-//	}
-//
-//	public Set<Swimlane> getSwimlanes() {
-//		final Set<Swimlane> result = new HashSet<>();
-//		if (swimlane != null) {
-//			result.add(swimlane);
-//		}
-//		return Collections.unmodifiableSet(result);
-//	}
 
 }

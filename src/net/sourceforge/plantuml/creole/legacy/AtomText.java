@@ -226,6 +226,29 @@ public final class AtomText extends AbstractAtom implements Atom {
 
 	private final Collection<String> splitted() {
 		final List<String> result = new ArrayList<>();
+		final StringBuilder pending = new StringBuilder();
+		for (int i = 0; i < text.length(); i++) {
+			final char ch = text.charAt(i);
+			if (isSeparator(ch)) {
+				if (pending.length() > 0)
+					result.add(pending.toString());
+				result.add("" + ch);
+				pending.setLength(0);
+			} else if (isChineseSentenceBoundary(ch)) {
+				pending.append(ch);
+				result.add(pending.toString());
+				pending.setLength(0);
+			} else {
+				pending.append(ch);
+			}
+		}
+		if (pending.length() > 0)
+			result.add(pending.toString());
+		return result;
+	}
+
+	private final Collection<String> splittedOld() {
+		final List<String> result = new ArrayList<>();
 		for (int i = 0; i < text.length(); i++) {
 			final char ch = text.charAt(i);
 			if (isSeparator(ch)) {
@@ -290,10 +313,13 @@ public final class AtomText extends AbstractAtom implements Atom {
 	}
 
 	private boolean isSeparator(char ch) {
-		return Character.isWhitespace(ch) //
-				|| ch == '\uFF01' // U+FF01 FULLWIDTH EXCLAMATION MARK (!)
-				|| ch == '\uFF08' // U+FF08 FULLWIDTH LEFT PARENTHESIS
-				|| ch == '\uFF09' // U+FF09 FULLWIDTH RIGHT PARENTHESIS
+		return Character.isWhitespace(ch);
+	}
+
+	private boolean isChineseSentenceBoundary(char ch) {
+		return ch == '\uFF01' // U+FF01 FULLWIDTH EXCLAMATION MARK (!)
+//				|| ch == '\uFF08' // U+FF08 FULLWIDTH LEFT PARENTHESIS
+//				|| ch == '\uFF09' // U+FF09 FULLWIDTH RIGHT PARENTHESIS
 				|| ch == '\uFF0C' // U+FF0C FULLWIDTH COMMA
 				|| ch == '\uFF1A' // U+FF1A FULLWIDTH COLON (:)
 				|| ch == '\uFF1B' // U+FF1B FULLWIDTH SEMICOLON (;)

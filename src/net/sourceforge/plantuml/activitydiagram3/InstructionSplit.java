@@ -40,14 +40,22 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.activitydiagram3.gtile.Gtile;
+import net.sourceforge.plantuml.activitydiagram3.gtile.GtileColumns;
+import net.sourceforge.plantuml.activitydiagram3.gtile.GtileSplit;
+import net.sourceforge.plantuml.activitydiagram3.gtile.Gtiles;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.graphic.Rainbow;
+import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class InstructionSplit extends AbstractInstruction implements Instruction {
 
@@ -65,6 +73,7 @@ public class InstructionSplit extends AbstractInstruction implements Instruction
 		this.inlinkRendering = Objects.requireNonNull(inlinkRendering);
 	}
 
+	@Override
 	public boolean containsBreak() {
 		for (InstructionList split : splits) {
 			if (split.containsBreak()) {
@@ -78,10 +87,33 @@ public class InstructionSplit extends AbstractInstruction implements Instruction
 		return splits.get(splits.size() - 1);
 	}
 
+	@Override
 	public CommandExecutionResult add(Instruction ins) {
 		return getLast().add(ins);
 	}
 
+	@Override
+	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
+		final List<Gtile> all = new ArrayList<>();
+		for (InstructionList list : splits) {
+			Gtile tmp = list.createGtile(skinParam, stringBounder);
+			tmp = Gtiles.withIncomingArrow(tmp, 20);
+			tmp = Gtiles.withOutgoingArrow(tmp, 20);
+			all.add(tmp);
+		}
+
+//		final GtileColumns tmp = new GtileColumns(all, swimlaneIn);
+//		return new GtileSplit(tmp, getInLinkRenderingColor(skinParam).getColor());
+		return new GtileSplit(all, swimlaneIn, getInLinkRenderingColor(skinParam).getColor());
+	}
+
+	private Rainbow getInLinkRenderingColor(ISkinParam skinParam) {
+		Rainbow color;
+		color = Rainbow.build(skinParam);
+		return color;
+	}
+
+	@Override
 	public Ftile createFtile(FtileFactory factory) {
 		final List<Ftile> all = new ArrayList<>();
 		for (InstructionList list : splits) {
@@ -110,26 +142,32 @@ public class InstructionSplit extends AbstractInstruction implements Instruction
 
 	}
 
+	@Override
 	final public boolean kill() {
 		return getLast().kill();
 	}
 
+	@Override
 	public LinkRendering getInLinkRendering() {
 		return inlinkRendering;
 	}
 
+	@Override
 	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote) {
 		return getLast().addNote(note, position, type, colors, swimlaneNote);
 	}
 
+	@Override
 	public Set<Swimlane> getSwimlanes() {
 		return InstructionList.getSwimlanes2(splits);
 	}
 
+	@Override
 	public Swimlane getSwimlaneIn() {
 		return parent.getSwimlaneOut();
 	}
 
+	@Override
 	public Swimlane getSwimlaneOut() {
 		return swimlaneOut;
 		// return getLast().getSwimlaneOut();

@@ -94,8 +94,17 @@ public class MathUtils {
 				Math.max(dim1.getHeight(), dim2.getHeight()));
 	}
 
+	public static Dimension2D max(Dimension2D dim1, Dimension2D dim2, Dimension2D dim3) {
+		return new Dimension2DDouble(MathUtils.max(dim1.getWidth(), dim2.getWidth(), dim3.getWidth()),
+				MathUtils.max(dim1.getHeight(), dim2.getHeight(), dim3.getHeight()));
+	}
+
 	public static Point2D max(Point2D pt1, Point2D pt2) {
 		return new Point2D.Double(Math.max(pt1.getX(), pt2.getX()), Math.max(pt1.getY(), pt2.getY()));
+	}
+
+	public static Point2D max(Point2D pt1, Point2D pt2, Point2D pt3) {
+		return new Point2D.Double(max(pt1.getX(), pt2.getX(), pt3.getX()), max(pt1.getY(), pt2.getY(), pt3.getY()));
 	}
 
 }

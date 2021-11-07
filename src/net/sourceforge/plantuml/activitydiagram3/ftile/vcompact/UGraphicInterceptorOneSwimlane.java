@@ -42,6 +42,9 @@ import java.util.Set;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Connection;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.activitydiagram3.gtile.GConnection;
+import net.sourceforge.plantuml.activitydiagram3.gtile.GPoint;
+import net.sourceforge.plantuml.activitydiagram3.gtile.Gtile;
 import net.sourceforge.plantuml.graphic.UGraphicDelegator;
 import net.sourceforge.plantuml.ugraphic.UChange;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -70,6 +73,22 @@ public class UGraphicInterceptorOneSwimlane extends UGraphicDelegator {
 				tile.drawU(this);
 				// drawGoto();
 			}
+		} else if (shape instanceof Gtile) {
+			final Gtile tile = (Gtile) shape;
+			final Set<Swimlane> swinlanes = tile.getSwimlanes();
+			final boolean contained = swinlanes.contains(swimlane);
+			if (contained)
+				tile.drawU(this);
+
+		} else if (shape instanceof GConnection) {
+			final GConnection connection = (GConnection) shape;
+			final List<GPoint> hooks = connection.getHooks();
+			final GPoint point0 = hooks.get(0);
+			final GPoint point1 = hooks.get(1);
+
+			if (point0.match(swimlane) && point1.match(swimlane))
+				connection.drawU(this);
+			
 		} else if (shape instanceof Connection) {
 			final Connection connection = (Connection) shape;
 			final Ftile tile1 = connection.getFtile1();
