@@ -135,7 +135,7 @@ public final class EntityFactory {
 				final ColorParam param = symbol == null ? ColorParam.packageBackground : symbol.getColorParamBack();
 				final HColor c1 = skinParam.getHtmlColor(param, g.getStereotype(), false);
 				folder.setSpecificColorTOBEREMOVED(ColorType.BACK,
-						c1 == null ? skinParam.getBackgroundColor(false) : c1);
+						c1 == null ? skinParam.getBackgroundColor() : c1);
 			} else {
 				folder.setSpecificColorTOBEREMOVED(ColorType.BACK, g.getColors(skinParam).getColor(ColorType.BACK));
 			}

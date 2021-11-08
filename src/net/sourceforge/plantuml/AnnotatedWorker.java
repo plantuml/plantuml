@@ -138,7 +138,7 @@ public class AnnotatedWorker {
 	}
 
 	private HColor getBackgroundColor() {
-		return getSkinParam().getBackgroundColor(false);
+		return getSkinParam().getBackgroundColor();
 	}
 
 	private TextBlock addLegend(TextBlock original) {

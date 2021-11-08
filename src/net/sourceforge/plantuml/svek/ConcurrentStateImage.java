@@ -109,7 +109,7 @@ public final class ConcurrentStateImage extends AbstractTextBlock implements IEn
 			HColor backColor) {
 		this.separator = Separator.fromChar(concurrentSeparator);
 		this.skinParam = skinParam;
-		this.backColor = skinParam.getBackgroundColor(false);
+		this.backColor = skinParam.getBackgroundColor();
 		this.inners.addAll(images);
 	}
 

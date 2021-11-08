@@ -147,7 +147,7 @@ public final class SvekResult extends AbstractTextBlock implements IEntityImage 
 			return style.value(PName.BackGroundColor).asColor(dotData.getSkinParam().getThemeStyle(),
 					dotData.getSkinParam().getIHtmlColorSet());
 		}
-		return dotData.getSkinParam().getBackgroundColor(false);
+		return dotData.getSkinParam().getBackgroundColor();
 	}
 
 	private MinMax minMax;

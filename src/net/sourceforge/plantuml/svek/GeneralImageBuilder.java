@@ -396,12 +396,12 @@ public final class GeneralImageBuilder {
 			return style.value(PName.BackGroundColor).asColor(dotData.getSkinParam().getThemeStyle(),
 					dotData.getSkinParam().getIHtmlColorSet());
 		}
-		return dotData.getSkinParam().getBackgroundColor(false);
+		return dotData.getSkinParam().getBackgroundColor();
 	}
 
 	public IEntityImage buildImage(BaseFile basefile, String dotStrings[]) {
 		if (dotData.isDegeneratedWithFewEntities(0)) {
-			return new EntityImageSimpleEmpty(dotData.getSkinParam().getBackgroundColor(false));
+			return new EntityImageSimpleEmpty(dotData.getSkinParam().getBackgroundColor());
 		}
 		if (dotData.isDegeneratedWithFewEntities(1) && dotData.getUmlDiagramType() != UmlDiagramType.STATE) {
 			final ILeaf single = dotData.getLeafs().iterator().next();

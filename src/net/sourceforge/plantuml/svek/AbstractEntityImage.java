@@ -67,7 +67,7 @@ public abstract class AbstractEntityImage extends AbstractTextBlock implements I
 	}
 
 	public final HColor getBackcolor() {
-		return skinParam.getBackgroundColor(false);
+		return skinParam.getBackgroundColor();
 	}
 
 	protected final Stereotype getStereo() {
