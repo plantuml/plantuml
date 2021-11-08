@@ -60,18 +60,6 @@ public class GtileSplit extends GtileColumns {
 
 	}
 
-	private static Gtile getShape1(Swimlane swimlane, HColor color, StringBounder stringBounder, ISkinParam skinParam,
-			Gtile first) {
-		final double start = first.getCoord(GPoint.NORTH_HOOK).getDx();
-		final GtileHLine tmp = new GtileHLine(stringBounder, skinParam, swimlane, color);
-		return tmp;
-	}
-
-	private static Gtile getShape2(Swimlane swimlane, HColor color, StringBounder stringBounder, ISkinParam skinParam) {
-		final GtileHLine tmp = new GtileHLine(stringBounder, skinParam, swimlane, color);
-		return tmp;
-	}
-
 	final public StyleSignature getDefaultStyleDefinitionActivity() {
 		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.activity);
 	}
@@ -87,10 +75,19 @@ public class GtileSplit extends GtileColumns {
 	@Override
 	protected void drawUInternal(UGraphic ug) {
 		super.drawUInternal(ug);
-		gtiles.get(0).getCoord(GPoint.NORTH_HOOK);
-		ug.apply(lineColor).apply(new UStroke(1.5))
-				.apply(UTranslate.dx(gtiles.get(0).getCoord(GPoint.NORTH_HOOK).getDx())).apply(positions.get(0))
-				.draw(ULine.hline(10));
+
+		final double x0 = gtiles.get(0).getCoord(GPoint.NORTH_HOOK).compose(positions.get(0)).getDx();
+		assert gtiles.size() == positions.size();
+		final int last = gtiles.size() - 1;
+		final double xLast = gtiles.get(last).getCoord(GPoint.NORTH_HOOK).compose(positions.get(last)).getDx();
+		final ULine hline = ULine.hline(xLast - x0);
+
+		ug = ug.apply(lineColor).apply(new UStroke(1.5));
+		ug.apply(UTranslate.dx(x0)).draw(hline);
+
+		final double y = getCoord(GPoint.SOUTH_BORDER).getDy();
+		ug.apply(new UTranslate(x0, y)).draw(hline);
+
 	}
 
 	@Override

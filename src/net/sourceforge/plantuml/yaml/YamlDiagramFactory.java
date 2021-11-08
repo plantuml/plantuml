@@ -62,7 +62,7 @@ public class YamlDiagramFactory extends PSystemAbstractFactory {
 		StyleExtractor styleExtractor = null;
 		try {
 			final List<String> list = new ArrayList<>();
-			styleExtractor = new StyleExtractor(source.iterator2());
+			styleExtractor = new StyleExtractor(source.iteratorRaw(), source.iterator2());
 			final Iterator<String> it = styleExtractor.getIterator();
 			it.next();
 			while (true) {
