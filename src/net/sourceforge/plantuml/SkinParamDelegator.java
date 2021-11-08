@@ -75,8 +75,8 @@ public class SkinParamDelegator implements ISkinParam {
 	}
 
 	@Override
-	public HColor getBackgroundColor(boolean replaceTransparentByWhite) {
-		return skinParam.getBackgroundColor(replaceTransparentByWhite);
+	public HColor getBackgroundColor() {
+		return skinParam.getBackgroundColor();
 	}
 
 	@Override

@@ -119,10 +119,10 @@ public class VCompactFactory implements FtileFactory {
 			borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
 			// backgroundColor =
 			// style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
-			backgroundColor = skinParam.getBackgroundColor(false);
+			backgroundColor = skinParam.getBackgroundColor();
 		} else {
 			borderColor = rose.getHtmlColor(skinParam, ColorParam.activityEnd);
-			backgroundColor = skinParam.getBackgroundColor(false);
+			backgroundColor = skinParam.getBackgroundColor();
 		}
 		return new FtileCircleStop(skinParam(), backgroundColor, borderColor, swimlane, style);
 	}
@@ -143,10 +143,10 @@ public class VCompactFactory implements FtileFactory {
 			borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
 			// backgroundColor =
 			// style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
-			backgroundColor = skinParam.getBackgroundColor(false);
+			backgroundColor = skinParam.getBackgroundColor();
 		} else {
 			borderColor = rose.getHtmlColor(skinParam, ColorParam.activityEnd);
-			backgroundColor = skinParam.getBackgroundColor(false);
+			backgroundColor = skinParam.getBackgroundColor();
 		}
 		return new FtileCircleEnd(skinParam(), backgroundColor, borderColor, swimlane, style);
 	}

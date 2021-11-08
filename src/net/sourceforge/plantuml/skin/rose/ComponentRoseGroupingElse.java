@@ -75,7 +75,7 @@ public class ComponentRoseGroupingElse extends AbstractTextualComponent {
 			this.roundCorner = style.value(PName.RoundCorner).asInt();
 			if (spriteContainer instanceof SkinParamBackcolored) {
 				style = style.eventuallyOverride(PName.BackGroundColor,
-						((SkinParamBackcolored) spriteContainer).getBackgroundColor(false));
+						((SkinParamBackcolored) spriteContainer).getBackgroundColor());
 			}
 			this.groupBorder = style.value(PName.LineColor).asColor(spriteContainer.getThemeStyle(),
 					getIHtmlColorSet());

@@ -164,7 +164,7 @@ public class SmetanaPath implements UDrawable {
 
 	private void printExtremityAtStart(UGraphic ug) {
 		final ExtremityFactory extremityFactory2 = link.getType().getDecor2()
-				.getExtremityFactoryComplete(diagram.getSkinParam().getBackgroundColor(false));
+				.getExtremityFactoryComplete(diagram.getSkinParam().getBackgroundColor());
 		if (extremityFactory2 == null) {
 			return;
 		}
@@ -188,7 +188,7 @@ public class SmetanaPath implements UDrawable {
 
 	private void printExtremityAtEnd(UGraphic ug) {
 		final ExtremityFactory extremityFactory1 = link.getType().getDecor1()
-				.getExtremityFactoryComplete(diagram.getSkinParam().getBackgroundColor(false));
+				.getExtremityFactoryComplete(diagram.getSkinParam().getBackgroundColor());
 		if (extremityFactory1 == null) {
 			return;
 		}

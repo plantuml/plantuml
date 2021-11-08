@@ -267,7 +267,7 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 			return backgroundColor;
 
 		}
-		return this.getSkinParam().getBackgroundColor(false);
+		return this.getSkinParam().getBackgroundColor();
 	}
 
 }

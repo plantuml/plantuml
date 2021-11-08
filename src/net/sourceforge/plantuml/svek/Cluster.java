@@ -946,7 +946,7 @@ public class Cluster implements Moveable {
 						skinParam.getIHtmlColorSet());
 			}
 			if (backColor == null || backColor.equals(HColorUtils.transparent())) {
-				backColor = new HColorBackground(skinParam.getBackgroundColor(false));
+				backColor = new HColorBackground(skinParam.getBackgroundColor());
 			}
 			return backColor;
 		}
@@ -958,7 +958,7 @@ public class Cluster implements Moveable {
 		}
 		if (backColor == null
 				|| backColor.equals(HColorUtils.transparent()) /* || stateBack instanceof HtmlColorTransparent */) {
-			final HColor tmp = skinParam.getBackgroundColor(false);
+			final HColor tmp = skinParam.getBackgroundColor();
 			backColor = new HColorBackground(tmp);
 		}
 		return backColor;

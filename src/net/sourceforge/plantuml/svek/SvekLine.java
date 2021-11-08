@@ -229,7 +229,7 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 			skinParam = link.getColors().mute(skinParam);
 			font = font.mute(link.getColors());
 		}
-		this.backgroundColor = skinParam.getBackgroundColor(false);
+		this.backgroundColor = skinParam.getBackgroundColor();
 		this.defaultThickness = skinParam.getThickness(LineParam.arrow, null);
 		this.arrowLollipopColor = skinParam.getHtmlColor(ColorParam.arrowLollipop, null, false);
 		if (arrowLollipopColor == null) {
