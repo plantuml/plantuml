@@ -102,8 +102,6 @@ public class InstructionSplit extends AbstractInstruction implements Instruction
 			all.add(tmp);
 		}
 
-//		final GtileColumns tmp = new GtileColumns(all, swimlaneIn);
-//		return new GtileSplit(tmp, getInLinkRenderingColor(skinParam).getColor());
 		return new GtileSplit(all, swimlaneIn, getInLinkRenderingColor(skinParam).getColor());
 	}
 

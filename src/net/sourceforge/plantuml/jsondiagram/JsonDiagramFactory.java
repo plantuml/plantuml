@@ -63,7 +63,7 @@ public class JsonDiagramFactory extends PSystemAbstractFactory {
 		JsonValue json;
 		try {
 			final StringBuilder sb = new StringBuilder();
-			styleExtractor = new StyleExtractor(source.iterator2());
+			styleExtractor = new StyleExtractor(source.iteratorRaw(), source.iterator2());
 			final Iterator<String> it = styleExtractor.getIterator();
 			it.next();
 			while (true) {
