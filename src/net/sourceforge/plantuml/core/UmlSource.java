@@ -149,9 +149,9 @@ final public class UmlSource {
 		return new IteratorCounter2Impl(source);
 	}
 
-	public Iterator<StringLocated> iteratorRaw() {
-		return Collections.unmodifiableCollection(rawSource).iterator();
-	}
+//	public Iterator<StringLocated> iteratorRaw() {
+//		return Collections.unmodifiableCollection(rawSource).iterator();
+//	}
 
 	/**
 	 * Return the source as a single String with <code>\n</code> as line separator.

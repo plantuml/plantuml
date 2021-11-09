@@ -46,8 +46,13 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileWithNoteOpale;
+import net.sourceforge.plantuml.activitydiagram3.gtile.Gtile;
+import net.sourceforge.plantuml.activitydiagram3.gtile.GtileSplit;
+import net.sourceforge.plantuml.activitydiagram3.gtile.Gtiles;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.graphic.Rainbow;
+import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
@@ -64,6 +69,7 @@ public class InstructionFork extends WithNote implements Instruction {
 	private String label;
 	boolean finished = false;
 
+	@Override
 	public boolean containsBreak() {
 		for (InstructionList fork : forks) {
 			if (fork.containsBreak()) {
@@ -86,10 +92,32 @@ public class InstructionFork extends WithNote implements Instruction {
 		return forks.get(forks.size() - 1);
 	}
 
+	@Override
 	public CommandExecutionResult add(Instruction ins) {
 		return getLastList().add(ins);
 	}
 
+	@Override
+	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
+		final List<Gtile> all = new ArrayList<>();
+		for (InstructionList list : forks) {
+			Gtile tmp = list.createGtile(skinParam, stringBounder);
+			tmp = Gtiles.withIncomingArrow(tmp, 20);
+			tmp = Gtiles.withOutgoingArrow(tmp, 20);
+			all.add(tmp);
+		}
+
+		return new GtileSplit(all, swimlaneIn, getInLinkRenderingColor(skinParam).getColor());
+	}
+	
+	private Rainbow getInLinkRenderingColor(ISkinParam skinParam) {
+		Rainbow color;
+		color = Rainbow.build(skinParam);
+		return color;
+	}
+
+
+	@Override
 	public Ftile createFtile(FtileFactory factory) {
 		final List<Ftile> all = new ArrayList<>();
 		for (InstructionList list : forks) {
@@ -111,10 +139,12 @@ public class InstructionFork extends WithNote implements Instruction {
 		this.forks.add(new InstructionList());
 	}
 
+	@Override
 	final public boolean kill() {
 		return getLastList().kill();
 	}
 
+	@Override
 	public LinkRendering getInLinkRendering() {
 		return inlinkRendering;
 	}
@@ -130,6 +160,7 @@ public class InstructionFork extends WithNote implements Instruction {
 		return getLastList().addNote(note, position, type, colors, swimlaneNote);
 	}
 
+	@Override
 	public Set<Swimlane> getSwimlanes() {
 		final Set<Swimlane> result = new HashSet<>(InstructionList.getSwimlanes2(forks));
 		result.add(swimlaneIn);
@@ -137,10 +168,12 @@ public class InstructionFork extends WithNote implements Instruction {
 		return result;
 	}
 
+	@Override
 	public Swimlane getSwimlaneIn() {
 		return swimlaneIn;
 	}
 
+	@Override
 	public Swimlane getSwimlaneOut() {
 		return swimlaneOut;
 	}

@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.command;
 
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.cucadiagram.DisplayPositionned;
+import net.sourceforge.plantuml.cucadiagram.DisplayPositioned;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
@@ -58,7 +58,7 @@ public class CommandMultilinesTitle extends CommandMultilines<TitledDiagram> {
 		lines = lines.removeEmptyColumns();
 		final Display strings = lines.toDisplay();
 		if (strings.size() > 0) {
-			diagram.setTitle(DisplayPositionned.single(strings.replaceBackslashT(), HorizontalAlignment.CENTER, VerticalAlignment.TOP));
+			diagram.setTitle(DisplayPositioned.single(strings.replaceBackslashT(), HorizontalAlignment.CENTER, VerticalAlignment.TOP));
 			return CommandExecutionResult.ok();
 		}
 		return CommandExecutionResult.error("No title defined");

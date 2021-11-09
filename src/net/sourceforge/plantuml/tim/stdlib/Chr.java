@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,38 +30,39 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
  *
  */
-package net.sourceforge.plantuml.command;
+package net.sourceforge.plantuml.tim.stdlib;
 
-import net.sourceforge.plantuml.TitledDiagram;
-import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.cucadiagram.DisplayPositioned;
-import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.VerticalAlignment;
-import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-public class CommandMultilinesCaption extends CommandMultilines<TitledDiagram> {
+import net.sourceforge.plantuml.LineLocation;
+import net.sourceforge.plantuml.tim.EaterException;
+import net.sourceforge.plantuml.tim.EaterExceptionLocated;
+import net.sourceforge.plantuml.tim.TContext;
+import net.sourceforge.plantuml.tim.TFunctionSignature;
+import net.sourceforge.plantuml.tim.TMemory;
+import net.sourceforge.plantuml.tim.expression.TValue;
 
-	public CommandMultilinesCaption() {
-		super("^caption$");
+public class Chr extends SimpleReturnFunction {
+
+	public TFunctionSignature getSignature() {
+		return new TFunctionSignature("%chr", 1);
 	}
 
-	@Override
-	public String getPatternEnd() {
-		return "^end[%s]?caption$";
+	public boolean canCover(int nbArg, Set<String> namedArgument) {
+		return nbArg == 1;
 	}
 
-	public CommandExecutionResult execute(final TitledDiagram diagram, BlocLines lines) throws NoSuchColorException {
-		lines = lines.subExtract(1, 1);
-		lines = lines.removeEmptyColumns();
-		final Display strings = lines.toDisplay();
-		if (strings.size() > 0) {
-			diagram.setCaption(DisplayPositioned.single(strings.replaceBackslashT(), HorizontalAlignment.CENTER, VerticalAlignment.BOTTOM));
-			return CommandExecutionResult.ok();
+	public TValue executeReturnFunction(TContext context, TMemory memory, LineLocation location, List<TValue> values,
+			Map<String, TValue> named) throws EaterException, EaterExceptionLocated {
+		try {
+			final char value = (char) values.get(0).toInt();
+			return TValue.fromString("" + value);
+		} catch (Throwable t) {
+			return TValue.fromString("\0");
 		}
-		return CommandExecutionResult.error("No caption defined");
 	}
-
 }

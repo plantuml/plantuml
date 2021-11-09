@@ -299,12 +299,12 @@ public class GroupRoot implements IGroup {
 	}
 
 	@Override
-	public void setLegend(DisplayPositionned legend) {
+	public void setLegend(DisplayPositioned legend) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public DisplayPositionned getLegend() {
+	public DisplayPositioned getLegend() {
 		throw new UnsupportedOperationException();
 	}
 

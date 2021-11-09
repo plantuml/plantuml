@@ -46,8 +46,11 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.activitydiagram3.gtile.Gtile;
+import net.sourceforge.plantuml.activitydiagram3.gtile.GtileIfHexagon;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
@@ -55,7 +58,7 @@ import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class InstructionSwitch extends WithNote implements Instruction, InstructionCollection {
 
-	private final List<Branch> branches = new ArrayList<>();
+	private final List<Branch> switches = new ArrayList<>();
 	private final ISkinParam skinParam;
 
 	private final Instruction parent;
@@ -67,8 +70,9 @@ public class InstructionSwitch extends WithNote implements Instruction, Instruct
 
 	private final Swimlane swimlane;
 
+	@Override
 	public boolean containsBreak() {
-		for (Branch branch : branches) {
+		for (Branch branch : switches) {
 			if (branch.containsBreak()) {
 				return true;
 			}
@@ -85,6 +89,7 @@ public class InstructionSwitch extends WithNote implements Instruction, Instruct
 		this.swimlane = swimlane;
 	}
 
+	@Override
 	public CommandExecutionResult add(Instruction ins) {
 		if (current == null) {
 			return CommandExecutionResult.error("No 'case' in this switch");
@@ -92,42 +97,63 @@ public class InstructionSwitch extends WithNote implements Instruction, Instruct
 		return current.add(ins);
 	}
 
-	public Ftile createFtile(FtileFactory factory) {
-		for (Branch branch : branches) {
-			branch.updateFtile(factory);
+	@Override
+	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
+		for (Branch branch : switches)
+			branch.updateGtile(skinParam, stringBounder);
+
+		final List<Gtile> gtiles = new ArrayList<>();
+		final List<Branch> branches = new ArrayList<>();
+		for (Branch branch : switches) {
+			gtiles.add(branch.getGtile());
+			branches.add(branch);
 		}
-		return factory.createSwitch(swimlane, branches, afterEndwhile, topInlinkRendering, labelTest);
+
+		return new GtileIfHexagon(swimlane, gtiles, switches);
+	}
+	
+	public Ftile createFtile(FtileFactory factory) {
+		for (Branch branch : switches)
+			branch.updateFtile(factory);
+		
+		return factory.createSwitch(swimlane, switches, afterEndwhile, topInlinkRendering, labelTest);
 	}
 
+	@Override
 	final public boolean kill() {
 		return current.kill();
 	}
 
+	@Override
 	public LinkRendering getInLinkRendering() {
 		return topInlinkRendering;
 	}
 
+	@Override
 	public Set<Swimlane> getSwimlanes() {
 		final Set<Swimlane> result = new HashSet<>();
 		if (swimlane != null) {
 			result.add(swimlane);
 		}
-		for (Branch branch : branches) {
+		for (Branch branch : switches) {
 			result.addAll(branch.getSwimlanes());
 		}
 		return Collections.unmodifiableSet(result);
 	}
 
+	@Override
 	public Swimlane getSwimlaneIn() {
 		return swimlane;
 	}
 
+	@Override
 	public Swimlane getSwimlaneOut() {
 		return swimlane;
 	}
 
+	@Override
 	public Instruction getLast() {
-		return branches.get(branches.size() - 1).getLast();
+		return switches.get(switches.size() - 1).getLast();
 	}
 
 	public boolean switchCase(Display labelCase, LinkRendering nextLinkRenderer) {
@@ -136,7 +162,7 @@ public class InstructionSwitch extends WithNote implements Instruction, Instruct
 		this.current = new Branch(skinParam.getCurrentStyleBuilder(), swimlane,
 				LinkRendering.none().withDisplay(labelCase), labelCase, null,
 				LinkRendering.none().withDisplay(labelCase));
-		this.branches.add(this.current);
+		this.switches.add(this.current);
 		return true;
 	}
 

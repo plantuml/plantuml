@@ -48,7 +48,7 @@ import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.activitydiagram3.ftile.EntityImageLegend;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.cucadiagram.DisplayPositionned;
+import net.sourceforge.plantuml.cucadiagram.DisplayPositioned;
 import net.sourceforge.plantuml.cucadiagram.EntityPortion;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.PortionShower;
@@ -137,7 +137,7 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 
 		this.desc = entity.getDisplay().create(titleFontConfiguration, titleHorizontalAlignment, skinParam);
 
-		final DisplayPositionned legend = ((EntityImpl) entity).getLegend();
+		final DisplayPositioned legend = ((EntityImpl) entity).getLegend();
 		if (legend != null) {
 			final TextBlock legendBlock = EntityImageLegend.create(legend.getDisplay(), skinParam);
 			stereoBlock = legendBlock;

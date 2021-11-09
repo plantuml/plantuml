@@ -45,6 +45,10 @@ import net.sourceforge.plantuml.command.PSystemAbstractFactory;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.cucadiagram.DisplayPositioned;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
+import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.jsondiagram.JsonDiagram;
 import net.sourceforge.plantuml.jsondiagram.StyleExtractor;
@@ -62,7 +66,7 @@ public class YamlDiagramFactory extends PSystemAbstractFactory {
 		StyleExtractor styleExtractor = null;
 		try {
 			final List<String> list = new ArrayList<>();
-			styleExtractor = new StyleExtractor(source.iteratorRaw(), source.iterator2());
+			styleExtractor = new StyleExtractor(source.iterator2());
 			final Iterator<String> it = styleExtractor.getIterator();
 			it.next();
 			while (true) {
@@ -83,6 +87,10 @@ public class YamlDiagramFactory extends PSystemAbstractFactory {
 		final JsonDiagram result = new JsonDiagram(source, UmlDiagramType.YAML, yaml, highlighted);
 		if (styleExtractor != null) {
 			styleExtractor.applyStyles(result.getSkinParam());
+			final String title = styleExtractor.getTitle();
+			if (title != null)
+				result.setTitle(DisplayPositioned.single(Display.getWithNewlines(title), HorizontalAlignment.CENTER,
+						VerticalAlignment.CENTER));
 		}
 		return result;
 	}

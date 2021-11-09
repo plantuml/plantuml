@@ -48,7 +48,6 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileKilled;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes;
 import net.sourceforge.plantuml.activitydiagram3.gtile.Gtile;
-import net.sourceforge.plantuml.activitydiagram3.gtile.GtileIfAlone;
 import net.sourceforge.plantuml.activitydiagram3.gtile.GtileRepeat;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.cucadiagram.Display;

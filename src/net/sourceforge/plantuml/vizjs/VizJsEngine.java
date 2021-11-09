@@ -58,7 +58,6 @@ public class VizJsEngine {
 		final Method mCreate = classVizJS.getMethod("create");
 		mExecute = classVizJS.getMethod("execute", String.class);
 		this.viz = mCreate.invoke(null);
-		System.err.println("Creating one engine");
 	}
 
 	public String execute(String dot) throws IllegalAccessException, IllegalArgumentException,

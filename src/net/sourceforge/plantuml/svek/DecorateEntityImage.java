@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.svek;
 
 import java.awt.geom.Dimension2D;
+import java.util.Objects;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
@@ -82,7 +83,7 @@ public class DecorateEntityImage extends AbstractTextBlock implements TextBlockB
 
 	private DecorateEntityImage(TextBlock original, TextBlock text1, HorizontalAlignment horizontal1, TextBlock text2,
 			HorizontalAlignment horizontal2) {
-		this.original = original;
+		this.original = Objects.requireNonNull(original);
 		this.horizontal1 = horizontal1;
 		this.text1 = text1;
 		this.horizontal2 = horizontal2;
@@ -142,8 +143,9 @@ public class DecorateEntityImage extends AbstractTextBlock implements TextBlockB
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
 		final Dimension2D dimOriginal = original.calculateDimension(stringBounder);
-		final Dimension2D dimText = Dimension2DDouble.mergeTB(getTextDim(text1, stringBounder),
-				getTextDim(text2, stringBounder));
+		final Dimension2D dim1 = getTextDim(text1, stringBounder);
+		final Dimension2D dim2 = getTextDim(text2, stringBounder);
+		final Dimension2D dimText = Dimension2DDouble.mergeTB(dim1, dim2);
 		return Dimension2DDouble.mergeTB(dimOriginal, dimText);
 	}
 

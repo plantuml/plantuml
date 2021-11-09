@@ -50,33 +50,32 @@ public class StyleExtractor {
 
 	private final List<String> list = new ArrayList<>();
 	private final List<StringLocated> style = new ArrayList<>();
+	private String title = null;
 
-	public StyleExtractor(Iterator<StringLocated> dataRaw, Iterator<StringLocated> data) {
-		while (dataRaw.hasNext()) {
-			StringLocated lineRaw = dataRaw.next();
-			if (startStyle(lineRaw)) {
-				while (dataRaw.hasNext()) {
-					style.add(lineRaw);
-					if (endStyle(lineRaw))
-						break;
-					lineRaw = dataRaw.next();
-				}
-			} else if (lineRaw.getString().trim().startsWith("!theme ")) {
+	public StyleExtractor(Iterator<StringLocated> data) {
+		while (data.hasNext()) {
+			StringLocated line = data.next();
+			if (startStyle(line)) {
 				while (data.hasNext()) {
-					StringLocated line = data.next();
-					if (startStyle(line))
-						while (data.hasNext()) {
-							style.add(line);
-							if (endStyle(line))
-								break;
-							line = data.next();
-						}
+					style.add(line);
+					if (endStyle(line))
+						break;
+					line = data.next();
+				}
+			} else if (line.getString().trim().startsWith("title ")) {
+				this.title = line.getString().trim().substring("title ".length()).trim();
+			} else if (line.getString().trim().startsWith("skinparam ")) {
+				if (line.getString().trim().contains("{")) {
+					while (data.hasNext()) {
+						if (line.getString().trim().equals("}"))
+							break;
+						line = data.next();
+					}
 				}
 			} else {
-				list.add(lineRaw.getString());
+				list.add(line.getString());
 			}
 		}
-
 	}
 
 	private boolean startStyle(StringLocated line) {
@@ -99,6 +98,10 @@ public class StyleExtractor {
 
 	public Iterator<String> getIterator() {
 		return list.iterator();
+	}
+
+	public String getTitle() {
+		return title;
 	}
 
 }

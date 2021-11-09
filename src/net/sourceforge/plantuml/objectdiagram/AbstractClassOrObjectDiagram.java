@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.cucadiagram.DisplayPositionned;
+import net.sourceforge.plantuml.cucadiagram.DisplayPositioned;
 import net.sourceforge.plantuml.cucadiagram.GroupRoot;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.IGroup;
@@ -360,7 +360,7 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 	}
 
 	@Override
-	public void setLegend(DisplayPositionned legend) {
+	public void setLegend(DisplayPositioned legend) {
 
 		final IGroup currentGroup = this.getCurrentGroup();
 
