@@ -42,8 +42,8 @@ public class SimpleCurveFactory implements CurveFactory {
    * <table border=1 cellpadding=5>
    * <tr><th>Key &amp; Default Value</th><th>Type</th><th>Mandatory</th>
    *     <th>Description</th></tr>
-   * <tr><td><tt>definitions = </tt><i>one empty <tt>ConfigParameters<tt> 
-   *         instance</i></td>
+   * <tr><td><tt>definitions = </tt><i>one empty</i> <tt>ConfigParameters</tt> 
+   *         <i>instance</i></td>
    *     <td><tt>String[]</tt></td><td>no</td>
    *     <td>Keys of subtrees defining {@link ConfigParameters}
    *         used by the {@link SimpleCurve#SimpleCurve constructor} of 

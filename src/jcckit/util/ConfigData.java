@@ -21,7 +21,7 @@ package jcckit.util;
 /**
  *  Interface for hierarchically managed key-value pairs. The key is
  *  always a string which contains any kind of printable character except
- *  '/', '=', ':', and whitespace characters like ' ' and '\t'. 
+ *  '/', '=', ':', and whitespace characters like ' ' and '\\t'. 
  *  The value is either a string or a <tt>ConfigData</tt> object.
  *  <p>
  *  This interface will be used by {@link ConfigParameters} in accordance

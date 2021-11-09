@@ -36,8 +36,7 @@ import ext.plantuml.com.ctreber.aclib.sort.CTSort;
 import ext.plantuml.com.ctreber.aclib.sort.QuickSort;
 
 /**
- * <h1>AC.earth - XEarth for Java
- * <h1>
+ * <h1>AC.earth - XEarth for Java</h1>
  * 
  * <p>
  * The original XEarth was written by Kirk Johnson in July 1993 - thank you for

@@ -93,7 +93,7 @@ public class GraphicsPlotCanvas extends PlotCanvas {
 	 * <td>Foreground color of the wrapped AWT component.</td>
 	 * </tr>
 	 * <tr>
-	 * <td><tt>doubleBuffering = true</td>
+	 * <td><tt>doubleBuffering = true</tt></td>
 	 *     <td><tt>boolean</tt></td><td>no</td>
 	 *     <td>If <tt>true</tt> the plot will be painted by using 
 	 *         double-buffering and pre-rendered view of the coordinate system.

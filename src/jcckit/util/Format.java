@@ -59,7 +59,7 @@ public class Format implements TicLabelFormat {
    *  Creates an instance for the specified format string.
    *  The format string is an alternation of some static texts and
    *  format elements.
-   *  A format element has to start with '%' and it must end with
+   *  A format element has to start with `%` and it must end with
    *  one of the following format descriptors:
    *  <table border=0 cellpadding=5>
    *    <tr><td><tt>d</tt></td>
@@ -77,7 +77,7 @@ public class Format implements TicLabelFormat {
    *            format of logarithmic format depending on the size of
    *            the mantissa.</td></tr>
    *  </table>
-   *  The characters between '%' and the decriptor are optional.
+   *  The characters between `%` and the decriptor are optional.
    *  They can be grouped into
    *  <ul><li>modifier<br>
    *          it is
@@ -90,7 +90,7 @@ public class Format implements TicLabelFormat {
    *          of the result
    *      <li>precision
    *  </ul>
-   *  A plain '%' is coded as '%%'.
+   *  A plain `%` is coded as `%%`.
    *  @param formatString The format string.
    *  @exception IllegalArgumentException if invalid format string.
    */

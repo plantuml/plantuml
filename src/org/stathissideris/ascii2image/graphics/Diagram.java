@@ -103,8 +103,8 @@ public class Diagram {
 	 * <p>Finally, the text processing occurs: [pending]</p>
 	 * 
 	 * @param grid
-	 * @param cellWidth
-	 * @param cellHeight
+	 * @param options
+	 * @param processingOptions
 	 */
 	public Diagram(TextGrid grid, ConversionOptions options, ProcessingOptions processingOptions) {
 		

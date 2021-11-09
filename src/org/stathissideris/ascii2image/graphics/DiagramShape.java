@@ -532,6 +532,7 @@ public class DiagramShape extends DiagramComponent {
 	 *
 	 * @param pointInCell
 	 * @param otherPoint
+	 * @param diagram
 	 * @return
 	 */
 	public ShapePoint getCellEdgePointBetween(ShapePoint pointInCell, ShapePoint otherPoint, Diagram diagram){

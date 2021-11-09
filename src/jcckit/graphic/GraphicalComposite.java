@@ -66,6 +66,7 @@ public class GraphicalComposite implements GraphicalElement {
   /**
    * Replaces the specified element at the specified index of
    * the list of elements.
+   * @param index Index of the element to be replaced.
    * @param element New element. <tt>null</tt> is not allowed.
    * @throws NullPointerException if <tt>element == null</tt>
    */

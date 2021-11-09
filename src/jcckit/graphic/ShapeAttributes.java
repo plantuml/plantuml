@@ -47,7 +47,7 @@ public class ShapeAttributes implements LineAttributes, FillAttributes {
    *     <th>Description</th></tr>
    * <tr><td><tt>fillColor = <i>no filling</i></tt></td><td><tt>Color</tt></td>
    *     <td>no</td><td>The fill color of the shape.</td></tr>
-   * <tr><td><tt>lineColor = <i>no line<i></tt></td><td><tt>Color</tt></td>
+   * <tr><td><tt>lineColor = <i>no line</i></tt></td><td><tt>Color</tt></td>
    *     <td>no</td><td>The color of a line, a polygon, or the border of a shape.</td></tr>
    * <tr><td><tt>lineThickness = 0</tt></td><td><tt>double</tt></td>
    *     <td>no</td>

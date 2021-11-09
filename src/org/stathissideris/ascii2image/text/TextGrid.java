@@ -1292,7 +1292,7 @@ public class TextGrid {
 		}
 	}
 
-	/**
+	/*
 	 * 
 	 * Fills the continuous area with if c1 characters with c2,
 	 * flooding from cell x, y
