@@ -85,7 +85,55 @@ skinparam useBetaStyle false
 	BorderColor $PRIMARY_DARK
 	BackgroundColor $BGCOLOR
 !endprocedure
-
+<style>
+  root {
+    BackgroundColor $BGCOLOR
+    FontColor $PRIMARY_TEXT
+    HyperLinkColor $ORANGE
+    LineColor $PRIMARY_DARK
+    LineThickness 1
+    Margin 10
+    Padding 6
+    Shadowing 0.0
+  }
+  node {
+   Padding 15
+   roundcorner 20
+   BackgroundColor $BGCOLOR
+  }
+  caption {
+    LineThickness 0
+  }
+  footer {
+    LineThickness 0
+  }
+  groupHeader {
+    BackgroundColor $SECONDARY
+    FontColor $INFO
+    FontStyle bold
+  }
+  header {
+    LineThickness 0
+  }
+  referenceHeader {
+    BackgroundColor $BGCOLOR
+    FontColor $DARK
+    FontStyle bold
+  }
+  separator {
+    BackgroundColor $FGCOLOR
+    FontColor $BGCOLOR
+    FontStyle bold
+  }
+  title {
+	FontSize 20
+	BorderRoundCorner            8
+	BorderThickness 	         1
+	BackgroundColor  $BGCOLOR
+	FontColor $PRIMARY
+	BorderColor $SECONDARY
+  }
+</style>
 ''
 '' Global Default Values
 ''
