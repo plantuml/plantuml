@@ -38,26 +38,26 @@ package net.sourceforge.plantuml.cucadiagram;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
 
-public class DisplayPositionned {
+public class DisplayPositioned {
 
 	private final Display display;
 	private final HorizontalAlignment horizontalAlignment;
 	private final VerticalAlignment verticalAlignment;
 
-	private DisplayPositionned(Display display, HorizontalAlignment horizontalAlignment,
+	private DisplayPositioned(Display display, HorizontalAlignment horizontalAlignment,
 			VerticalAlignment verticalAlignment) {
 		this.display = display;
 		this.horizontalAlignment = horizontalAlignment;
 		this.verticalAlignment = verticalAlignment;
 	}
 
-	public static DisplayPositionned single(Display display, HorizontalAlignment horizontalAlignment,
+	public static DisplayPositioned single(Display display, HorizontalAlignment horizontalAlignment,
 			VerticalAlignment verticalAlignment) {
-		return new DisplayPositionned(display, horizontalAlignment, verticalAlignment);
+		return new DisplayPositioned(display, horizontalAlignment, verticalAlignment);
 	}
 
-	public static DisplayPositionned none(HorizontalAlignment horizontalAlignment, VerticalAlignment verticalAlignment) {
-		return new DisplayPositionned(Display.NULL, horizontalAlignment, verticalAlignment);
+	public static DisplayPositioned none(HorizontalAlignment horizontalAlignment, VerticalAlignment verticalAlignment) {
+		return new DisplayPositioned(Display.NULL, horizontalAlignment, verticalAlignment);
 	}
 
 	public final Display getDisplay() {

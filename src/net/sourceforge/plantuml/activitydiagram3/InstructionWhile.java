@@ -45,9 +45,11 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileKilled;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileWithNoteOpale;
+import net.sourceforge.plantuml.activitydiagram3.gtile.Gtile;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.Rainbow;
+import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
@@ -94,10 +96,17 @@ public class InstructionWhile extends WithNote implements Instruction, Instructi
 		this.skinParam = skinParam;
 	}
 
+	@Override
 	public CommandExecutionResult add(Instruction ins) {
 		return repeatList.add(ins);
 	}
 
+	@Override
+	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
+		return repeatList.createGtile(skinParam, stringBounder);
+	}
+
+	@Override
 	public Ftile createFtile(FtileFactory factory) {
 		final Ftile back = Display.isNull(backward) ? null
 				: factory.activity(backward, swimlane, boxStyle, Colors.empty(), null);
@@ -116,6 +125,7 @@ public class InstructionWhile extends WithNote implements Instruction, Instructi
 		return parent;
 	}
 
+	@Override
 	final public boolean kill() {
 		if (testCalled) {
 			this.killed = true;
@@ -124,6 +134,7 @@ public class InstructionWhile extends WithNote implements Instruction, Instructi
 		return repeatList.kill();
 	}
 
+	@Override
 	public LinkRendering getInLinkRendering() {
 		return nextLinkRenderer;
 	}
@@ -145,18 +156,22 @@ public class InstructionWhile extends WithNote implements Instruction, Instructi
 		}
 	}
 
+	@Override
 	public Set<Swimlane> getSwimlanes() {
 		return repeatList.getSwimlanes();
 	}
 
+	@Override
 	public Swimlane getSwimlaneIn() {
 		return parent.getSwimlaneIn();
 	}
 
+	@Override
 	public Swimlane getSwimlaneOut() {
 		return parent.getSwimlaneOut();
 	}
 
+	@Override
 	public Instruction getLast() {
 		return repeatList.getLast();
 	}
@@ -165,6 +180,7 @@ public class InstructionWhile extends WithNote implements Instruction, Instructi
 		this.specialOut = special;
 	}
 
+	@Override
 	public boolean containsBreak() {
 		return repeatList.containsBreak();
 	}

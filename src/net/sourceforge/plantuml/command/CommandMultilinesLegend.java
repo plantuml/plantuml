@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.cucadiagram.DisplayPositionned;
+import net.sourceforge.plantuml.cucadiagram.DisplayPositioned;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
@@ -88,7 +88,7 @@ public class CommandMultilinesLegend extends CommandMultilines2<TitledDiagram> {
 			if (alignment == null) {
 				alignment = HorizontalAlignment.CENTER;
 			}
-			diagram.setLegend(DisplayPositionned.single(strings.replaceBackslashT(), alignment, valignment));
+			diagram.setLegend(DisplayPositioned.single(strings.replaceBackslashT(), alignment, valignment));
 			return CommandExecutionResult.ok();
 		}
 		return CommandExecutionResult.error("No legend defined");

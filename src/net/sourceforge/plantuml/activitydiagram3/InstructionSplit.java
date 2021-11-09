@@ -45,7 +45,6 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.gtile.Gtile;
-import net.sourceforge.plantuml.activitydiagram3.gtile.GtileColumns;
 import net.sourceforge.plantuml.activitydiagram3.gtile.GtileSplit;
 import net.sourceforge.plantuml.activitydiagram3.gtile.Gtiles;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -55,7 +54,6 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class InstructionSplit extends AbstractInstruction implements Instruction {
 

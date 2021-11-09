@@ -67,7 +67,7 @@ import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.activitydiagram3.ftile.EntityImageLegend;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.cucadiagram.DisplayPositionned;
+import net.sourceforge.plantuml.cucadiagram.DisplayPositioned;
 import net.sourceforge.plantuml.cucadiagram.EntityPortion;
 import net.sourceforge.plantuml.cucadiagram.EntityPosition;
 import net.sourceforge.plantuml.cucadiagram.GroupRoot;
@@ -715,7 +715,7 @@ public final class GeneralImageBuilder {
 		return label.create(fontConfiguration, alignment, dotData.getSkinParam());
 	}
 
-	private TextBlock addLegend(TextBlock original, DisplayPositionned legend) {
+	private TextBlock addLegend(TextBlock original, DisplayPositioned legend) {
 		if (legend == null || legend.isNull()) {
 			return original;
 		}
@@ -725,7 +725,7 @@ public final class GeneralImageBuilder {
 	}
 
 	private TextBlock getStereoBlock(IGroup g) {
-		final DisplayPositionned legend = g.getLegend();
+		final DisplayPositioned legend = g.getLegend();
 		return addLegend(getStereoBlockWithoutLegend(g), legend);
 	}
 

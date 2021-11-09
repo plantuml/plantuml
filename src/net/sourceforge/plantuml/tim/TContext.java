@@ -86,6 +86,7 @@ import net.sourceforge.plantuml.tim.iterator.CodeIteratorWhile;
 import net.sourceforge.plantuml.tim.stdlib.AlwaysFalse;
 import net.sourceforge.plantuml.tim.stdlib.AlwaysTrue;
 import net.sourceforge.plantuml.tim.stdlib.CallUserFunction;
+import net.sourceforge.plantuml.tim.stdlib.Chr;
 import net.sourceforge.plantuml.tim.stdlib.Darken;
 import net.sourceforge.plantuml.tim.stdlib.DateFunction;
 import net.sourceforge.plantuml.tim.stdlib.Dec2hex;
@@ -112,6 +113,7 @@ import net.sourceforge.plantuml.tim.stdlib.RetrieveProcedure;
 import net.sourceforge.plantuml.tim.stdlib.ReverseColor;
 import net.sourceforge.plantuml.tim.stdlib.ReverseHsluvColor;
 import net.sourceforge.plantuml.tim.stdlib.SetVariableValue;
+import net.sourceforge.plantuml.tim.stdlib.Size;
 import net.sourceforge.plantuml.tim.stdlib.StringFunction;
 import net.sourceforge.plantuml.tim.stdlib.Strlen;
 import net.sourceforge.plantuml.tim.stdlib.Strpos;
@@ -175,6 +177,8 @@ public class TContext {
 		functionsSet.addFunction(new Hex2dec());
 		functionsSet.addFunction(new Dec2hex());
 		functionsSet.addFunction(new HslColor());
+		functionsSet.addFunction(new Chr());
+		functionsSet.addFunction(new Size());
 		// %standard_exists_function
 		// %str_replace
 		// !exit

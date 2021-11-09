@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.cucadiagram.DisplayPositionned;
+import net.sourceforge.plantuml.cucadiagram.DisplayPositioned;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.stats.StatsUtilsIncrement;
@@ -128,11 +128,11 @@ public abstract class AbstractPSystem implements Diagram {
 		this.splitPagesVertical = splitPagesVertical;
 	}
 
-	public DisplayPositionned getTitle() {
+	public DisplayPositioned getTitle() {
 		if (source == null) {
-			return DisplayPositionned.single(Display.empty(), HorizontalAlignment.CENTER, VerticalAlignment.TOP);
+			return DisplayPositioned.single(Display.empty(), HorizontalAlignment.CENTER, VerticalAlignment.TOP);
 		}
-		return DisplayPositionned.single(source.getTitle(), HorizontalAlignment.CENTER, VerticalAlignment.TOP);
+		return DisplayPositioned.single(source.getTitle(), HorizontalAlignment.CENTER, VerticalAlignment.TOP);
 	}
 
 	public String getWarningOrError() {

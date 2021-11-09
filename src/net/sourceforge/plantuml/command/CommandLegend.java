@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.cucadiagram.DisplayPositionned;
+import net.sourceforge.plantuml.cucadiagram.DisplayPositioned;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
 
@@ -67,7 +67,7 @@ public class CommandLegend extends SingleLineCommand2<TitledDiagram> {
 	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg) {
 		final Display s = Display.getWithNewlines(arg.getLazzy("LEGEND", 0));
-		diagram.setLegend(DisplayPositionned.single(s, HorizontalAlignment.CENTER, VerticalAlignment.BOTTOM));
+		diagram.setLegend(DisplayPositioned.single(s, HorizontalAlignment.CENTER, VerticalAlignment.BOTTOM));
 		return CommandExecutionResult.ok();
 	}
 }
