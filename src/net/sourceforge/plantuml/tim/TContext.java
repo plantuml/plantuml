@@ -106,6 +106,7 @@ import net.sourceforge.plantuml.tim.stdlib.InvokeProcedure;
 import net.sourceforge.plantuml.tim.stdlib.IsDark;
 import net.sourceforge.plantuml.tim.stdlib.IsLight;
 import net.sourceforge.plantuml.tim.stdlib.Lighten;
+import net.sourceforge.plantuml.tim.stdlib.LoadJson;
 import net.sourceforge.plantuml.tim.stdlib.LogicalNot;
 import net.sourceforge.plantuml.tim.stdlib.Lower;
 import net.sourceforge.plantuml.tim.stdlib.Newline;
@@ -177,6 +178,7 @@ public class TContext {
 		functionsSet.addFunction(new Hex2dec());
 		functionsSet.addFunction(new Dec2hex());
 		functionsSet.addFunction(new HslColor());
+		functionsSet.addFunction(new LoadJson());
 		functionsSet.addFunction(new Chr());
 		functionsSet.addFunction(new Size());
 		// %standard_exists_function
