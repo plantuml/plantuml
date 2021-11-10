@@ -106,6 +106,8 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 
 		final Rose rose = new Rose();
 
+		final FontConfiguration fontConfiguration;
+		final HorizontalAlignment horizontalAlignment;
 		if (UseStyle.useBetaStyle()) {
 			final Style style = getDefaultStyleDefinition(umlDiagramType.getStyleName())
 					.getMergedStyle(skinParam.getCurrentStyleBuilder());
@@ -118,6 +120,9 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 			this.borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(),
 					skinParam.getIHtmlColorSet());
 			this.shadowing = style.value(PName.Shadowing).asDouble();
+
+			fontConfiguration = style.getFontConfiguration(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
+			horizontalAlignment = style.getHorizontalAlignment();
 		} else {
 			this.shadowing = skinParam.shadowing(getEntity().getStereotype()) ? 4 : 0;
 			if (entity.getColors(getSkinParam()).getColor(ColorType.BACK) == null) {
@@ -126,16 +131,16 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 				this.noteBackgroundColor = entity.getColors(getSkinParam()).getColor(ColorType.BACK);
 			}
 			this.borderColor = SkinParamUtils.getColor(getSkinParam(), null, ColorParam.noteBorder);
+
+			fontConfiguration = new FontConfiguration(getSkinParam(), FontParam.NOTE, null);
+			horizontalAlignment = skinParam.getHorizontalAlignment(AlignmentParam.noteTextAlignment, null, false, null);
 		}
 
 		if (strings.size() == 1 && strings.get(0).length() == 0) {
 			textBlock = new TextBlockEmpty();
 		} else {
-			final FontConfiguration fc = new FontConfiguration(getSkinParam(), FontParam.NOTE, null);
-			final HorizontalAlignment align = skinParam.getHorizontalAlignment(AlignmentParam.noteTextAlignment, null,
-					false, null);
-			textBlock = BodyFactory.create3(strings, FontParam.NOTE, getSkinParam(), align, fc,
-					getSkinParam().wrapWidth());
+			textBlock = BodyFactory.create3(strings, FontParam.NOTE, getSkinParam(), horizontalAlignment,
+					fontConfiguration, getSkinParam().wrapWidth());
 		}
 	}
 

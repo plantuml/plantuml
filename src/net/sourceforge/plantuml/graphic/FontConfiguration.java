@@ -103,9 +103,9 @@ public class FontConfiguration {
 		return useUnderlineForHyperlink;
 	}
 
-	public final HColor getHyperlinkColor() {
-		return hyperlinkColor;
-	}
+//	public final HColor getHyperlinkColor() {
+//		return hyperlinkColor;
+//	}
 
 	// ---
 
@@ -170,8 +170,11 @@ public class FontConfiguration {
 				fontPosition, svgAttributes, true, hyperlinkColor, useUnderlineForHyperlink, tabSize);
 	}
 
-	public FontConfiguration changeColor(HColor htmlColor) {
-		return new FontConfiguration(styles, motherFont, motherColor, currentFont, htmlColor, extendedColor,
+	public FontConfiguration changeColor(HColor newHtmlColor) {
+		if (hyperlink)
+			return new FontConfiguration(styles, motherFont, motherColor, currentFont, currentColor, extendedColor,
+					fontPosition, svgAttributes, hyperlink, newHtmlColor, useUnderlineForHyperlink, tabSize);
+		return new FontConfiguration(styles, motherFont, motherColor, currentFont, newHtmlColor, extendedColor,
 				fontPosition, svgAttributes, hyperlink, hyperlinkColor, useUnderlineForHyperlink, tabSize);
 	}
 
