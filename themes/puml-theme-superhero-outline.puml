@@ -133,6 +133,27 @@ skinparam useBetaStyle false
 	FontColor $PRIMARY
 	BorderColor $SECONDARY
   }
+  network {
+    $primary_scheme()    
+    LineColor $PRIMARY
+    LineThickness 1.0
+    FontColor $PRIMARY_LIGHT
+  }
+  server {
+    $primary_scheme()
+  }
+  arrow {
+    FontColor $PRIMARY_LIGHT
+    LineColor $PRIMARY_LIGHT
+  }
+  group {
+    BackGroundColor $LIGHT
+    LineColor $LIGHT_DARK
+    LineThickness 2.0
+    Margin 5
+    Padding 5
+  }
+
 </style>
 ''
 '' Global Default Values
