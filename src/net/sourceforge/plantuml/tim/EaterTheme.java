@@ -36,11 +36,14 @@ package net.sourceforge.plantuml.tim;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
+import net.sourceforge.plantuml.AFile;
 import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.preproc.FileWithSuffix;
+import net.sourceforge.plantuml.preproc.ImportedFiles;
 import net.sourceforge.plantuml.preproc.ReadLine;
 import net.sourceforge.plantuml.preproc.ReadLineReader;
 import net.sourceforge.plantuml.preproc2.PreprocessorUtils;
@@ -53,9 +56,11 @@ public class EaterTheme extends Eater {
 	private String name;
 	private String from;
 	private TContext context;
+	private final ImportedFiles importedFiles;
 
-	public EaterTheme(StringLocated s) {
+	public EaterTheme(StringLocated s, ImportedFiles importedFiles) {
 		super(s);
+		this.importedFiles = importedFiles;
 	}
 
 	@Override
@@ -79,13 +84,26 @@ public class EaterTheme extends Eater {
 	public final ReadLine getTheme() throws EaterException {
 		if (from == null) {
 			final ReadLine reader = ThemeUtils.getReaderTheme(realName);
-			return reader;
-		}
-		if (from.startsWith("http://") || from.startsWith("https://")) {
-			final SURL url = SURL.create(ThemeUtils.getFullPath(from, realName));
-			if (url == null) {
-				throw EaterException.located("Cannot open URL");
+			if (reader != null)
+				return reader;
+
+			try {
+				final AFile localFile = importedFiles.getAFile(ThemeUtils.getFilename(realName));
+				if (localFile != null && localFile.isOk()) {
+					final BufferedReader br = localFile.getUnderlyingFile().openBufferedReader();
+					if (br != null)
+						return ReadLineReader.create(br, "theme " + realName);
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
+			throw EaterException.located("Cannot load " + realName);
+
+		} else if (from.startsWith("http://") || from.startsWith("https://")) {
+			final SURL url = SURL.create(ThemeUtils.getFullPath(from, realName));
+			if (url == null)
+				throw EaterException.located("Cannot open URL");
+
 			try {
 				return PreprocessorUtils.getReaderInclude(url, getLineLocation(), UTF_8);
 			} catch (UnsupportedEncodingException e) {

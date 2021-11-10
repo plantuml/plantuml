@@ -86,6 +86,11 @@ public class ThemeUtils {
 		if (from.endsWith("/") == false) {
 			sb.append("/");
 		}
-		return sb + THEME_FILE_PREFIX + filename + THEME_FILE_SUFFIX;
+		return sb + getFilename(filename);
 	}
+
+	public static String getFilename(String filename) {
+		return THEME_FILE_PREFIX + filename + THEME_FILE_SUFFIX;
+	}
+
 }

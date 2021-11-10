@@ -34,6 +34,13 @@
  */
 package net.sourceforge.plantuml.tim.stdlib;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import net.sourceforge.plantuml.FileSystem;
 import net.sourceforge.plantuml.FileUtils;
 import net.sourceforge.plantuml.LineLocation;
@@ -42,25 +49,23 @@ import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.json.ParseException;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SURL;
-import net.sourceforge.plantuml.tim.*;
+import net.sourceforge.plantuml.tim.EaterException;
+import net.sourceforge.plantuml.tim.EaterExceptionLocated;
+import net.sourceforge.plantuml.tim.TContext;
+import net.sourceforge.plantuml.tim.TFunctionSignature;
+import net.sourceforge.plantuml.tim.TMemory;
 import net.sourceforge.plantuml.tim.expression.TValue;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * Loads JSON data from file or URL source.
  * <p>
- * Supports three parameters for datasource, default JSON value and charset. The datasource will be checked against
- * the security rules.
+ * Supports three parameters for datasource, default JSON value and charset. The
+ * datasource will be checked against the security rules.
  * <p>
  * Examples:</br>
+ * 
  * <pre>
- *     @ startuml
+ *     &#64; startuml
  *     ' loads a local file
  *     !$JSON_LOCAL_RELATIVE=%loadJSON("file.json")
  *
@@ -81,8 +86,9 @@ import java.util.Set;
  *     !$STATUS_NO_CONNECTION={"status": "No connection"}
  *     !$JSON_REMOTE_DEF=%loadJSON("https://localhost:7778/management/health", $STATUS_NO_CONNECTION)
  *     status -> $JSON_REMOTE_DEF.status
- *     @ enduml
+ *     &#64; enduml
  * </pre>
+ * 
  * @author Aljoscha Rittner
  */
 public class LoadJson extends SimpleReturnFunction {
@@ -92,7 +98,7 @@ public class LoadJson extends SimpleReturnFunction {
 	private static final String VALUE_DEFAULT_DEFAULT = "{}";
 
 	public TFunctionSignature getSignature() {
-		return new TFunctionSignature("%loadJSON", 3 );
+		return new TFunctionSignature("%loadJSON", 3);
 	}
 
 	public boolean canCover(int nbArg, Set<String> namedArgument) {
@@ -101,52 +107,54 @@ public class LoadJson extends SimpleReturnFunction {
 
 	public TValue executeReturnFunction(TContext context, TMemory memory, LineLocation location, List<TValue> values,
 			Map<String, TValue> named) throws EaterException, EaterExceptionLocated {
-		String path = values.get(0).toString();
+		final String path = values.get(0).toString();
 		try {
-			String data = loadStringData ( path, getCharset (values) );
-			if ( data == null ) {
+			String data = loadStringData(path, getCharset(values));
+			if (data == null)
 				data = getDefaultJson(values);
-			}
+
 			JsonValue jsonValue = Json.parse(data);
 			return TValue.fromJson(jsonValue);
 		} catch (ParseException pe) {
-			pe.printStackTrace ();
-			throw EaterException.unlocated ( "JSON parse issue in source "
-				+ path + " on location " +  pe.getLocation () );
+			pe.printStackTrace();
+			throw EaterException.unlocated("JSON parse issue in source " + path + " on location " + pe.getLocation());
 		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace ();
-			throw EaterException.unlocated ( "JSON encoding issue in source "
-				+ path + ": " + e.getMessage () );
+			e.printStackTrace();
+			throw EaterException.unlocated("JSON encoding issue in source " + path + ": " + e.getMessage());
 		}
 	}
 
 	/**
 	 * Returns the JSON default, if the data source contains no data.
+	 * 
 	 * @param values value parameters
 	 * @return the defined default JSON or {@code "{}"}
 	 */
 	private String getDefaultJson(List<TValue> values) {
-		if (values.size() > 1 ) {
-			return values.get(1).toString ();
-		}
+		if (values.size() > 1)
+			return values.get(1).toString();
+
 		return VALUE_DEFAULT_DEFAULT;
 	}
 
 	/**
 	 * Returns the charset name (if set)
+	 * 
 	 * @param values value parameters
 	 * @return defined charset or {@code "UTF-8"}
 	 */
 	private String getCharset(List<TValue> values) {
-		if ( values.size() == 3) {
-			return values.get (2).toString ();
-		}
+		if (values.size() == 3)
+			return values.get(2).toString();
+
 		return VALUE_CHARSET_DEFAULT;
 	}
 
 	/**
-	 * Loads String data from a data source {@code path} (file or URL) and expects the data encoded in {@code charset}.
-	 * @param path path to data source (http(s)-URL or file).
+	 * Loads String data from a data source {@code path} (file or URL) and expects
+	 * the data encoded in {@code charset}.
+	 * 
+	 * @param path    path to data source (http(s)-URL or file).
 	 * @param charset character set to encode the string data
 	 * @return the decoded String from the data source
 	 * @throws EaterException if something went wrong on reading data
@@ -156,31 +164,27 @@ public class LoadJson extends SimpleReturnFunction {
 		byte[] byteData = null;
 		if (path.startsWith("http://") || path.startsWith("https://")) {
 			final SURL url = SURL.create(path);
-			if (url == null) {
+			if (url == null)
 				throw EaterException.located("load JSON: Invalid URL " + path);
-			}
 			byteData = url.getBytes();
-			if (byteData != null && byteData.length == 0) {
-				// no length, no data (we want the default)
-				byteData = null;
-			}
 		} else {
 			try {
-				SFile file = FileSystem.getInstance().getFile(path);
+				final SFile file = FileSystem.getInstance().getFile(path);
 				if (file != null && file.exists() && file.canRead() && !file.isDirectory()) {
-					ByteArrayOutputStream out = new ByteArrayOutputStream(1024 * 8);
+					final ByteArrayOutputStream out = new ByteArrayOutputStream(1024 * 8);
 					FileUtils.copyToStream(file, out);
 					byteData = out.toByteArray();
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
-				throw EaterException.located("load JSON: Cannot read file "
-						+ path + ". " + e.getMessage());
+				throw EaterException.located("load JSON: Cannot read file " + path + ". " + e.getMessage());
 			}
 		}
-		if (byteData != null) {
-			return new String(byteData, charset);
-		}
-		return null;
+
+		if (byteData == null || byteData.length == 0)
+			return null; // no length, no data (we want the default)
+
+		return new String(byteData, charset);
+
 	}
 }

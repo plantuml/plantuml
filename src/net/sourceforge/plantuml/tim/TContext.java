@@ -585,7 +585,7 @@ public class TContext {
 	}
 
 	private void executeTheme(TMemory memory, StringLocated s) throws EaterException, EaterExceptionLocated {
-		final EaterTheme eater = new EaterTheme(s.getTrimmed());
+		final EaterTheme eater = new EaterTheme(s.getTrimmed(), importedFiles);
 		eater.analyze(this, memory);
 		final ReadLine reader = eater.getTheme();
 		if (reader == null) {
