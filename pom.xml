@@ -164,6 +164,10 @@
                 <version>3.8.1</version>
                 <configuration>
                     <debug>true</debug>
+                	<fork>true</fork>
+                	<useIncrementalCompilation>true</useIncrementalCompilation>
+
+
                 </configuration>
             </plugin>
             <plugin>
