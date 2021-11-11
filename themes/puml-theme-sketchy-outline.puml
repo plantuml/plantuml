@@ -135,25 +135,60 @@ skinparam shadowing false
 	FontColor $PRIMARY
 	BorderColor $SECONDARY
   }
-  network {
-    $primary_scheme()    
-    LineColor $PRIMARY
-    LineThickness 1.0
-    FontColor $PRIMARY_DARK
+  nwdiagDiagram {
+	network {
+		$primary_scheme()    
+		LineColor $PRIMARY
+		LineThickness 1.0
+		FontColor $PRIMARY_DARK
+	}
+	server {
+		$primary_scheme()
+	}
+	arrow {
+		FontColor $PRIMARY_DARK
+		LineColor $PRIMARY_DARK
+	}
+	group {
+		BackGroundColor $LIGHT
+		LineColor $LIGHT_DARK
+		LineThickness 2.0
+		Margin 5
+		Padding 5
+	}
   }
-  server {
-    $primary_scheme()
-  }
-  arrow {
-    FontColor $PRIMARY_DARK
-    LineColor $PRIMARY_DARK
-  }
-  group {
-    BackGroundColor $LIGHT
-    LineColor $LIGHT_DARK
-    LineThickness 2.0
-    Margin 5
-    Padding 5
+  ganttDiagram {
+	task {
+		$primary_scheme()
+		LineColor $PRIMARY
+		Margin 10
+		Padding 6
+	}
+	note {
+		FontColor $INFO_TEXT
+		LineColor $INFO_DARK
+		BackGroundColor $BGCOLOR
+	}
+	separator {
+		LineColor $SECONDARY_DARK
+		BackGroundColor $BGCOLOR
+		FontColor $SECONDARY_TEXT
+	}
+	milestone {
+		FontColor $INFO
+		FontSize 24
+		FontStyle italic
+		BackGroundColor $SECONDARY
+		LineColor $SECONDARY_DARK
+	}
+	timeline {
+		BackgroundColor $SECONDARY
+		FontColor $SECONDARY_TEXT
+	}
+	closed {
+		BackgroundColor $WARNING_DARK
+		FontColor $WARNING_TEXT
+	}
   }
 </style>
 ''

@@ -231,6 +231,7 @@ skinparam useBetaStyle false
 	FontColor $PRIMARY
 	BorderColor $SECONDARY
   }
+nwdiagDiagram {
   network {
     $primary_scheme()    
     LineColor $PRIMARY
@@ -251,6 +252,40 @@ skinparam useBetaStyle false
     Margin 5
     Padding 5
   }
+}
+ganttDiagram {
+  task {
+    $primary_scheme()
+	LineColor $PRIMARY
+    Margin 10
+    Padding 6
+  }
+  note {
+	FontColor $INFO_TEXT
+	LineColor $INFO_DARK
+    BackGroundColor $INFO_BG
+  }
+  separator {
+	LineColor $SECONDARY
+    BackGroundColor $secondary_scheme()
+    FontColor $SECONDARY_TEXT
+  }
+  milestone {
+	FontColor $INFO
+	FontSize 24
+	FontStyle italic
+	BackGroundColor $DIAMOND_BG
+	LineColor $SECONDARY_DARK
+  }
+  timeline {
+    BackgroundColor $SECONDARY
+    FontColor $SECONDARY_TEXT
+  }
+  closed {
+	BackgroundColor $WARNING_DARK
+	FontColor $WARNING_TEXT
+  }
+}
 </style>
 ''
 '' Global Default Values
