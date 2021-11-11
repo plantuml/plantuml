@@ -150,6 +150,39 @@ skinparam useBetaStyle false
     Margin 5
     Padding 5
   }
+  ganttDiagram {
+	task {
+		$primary_scheme()
+		LineColor $PRIMARY
+		Margin 10
+		Padding 6
+	}
+	note {
+		FontColor $INFO_TEXT
+		LineColor $INFO_DARK
+		BackGroundColor $INFO
+	}
+	separator {
+		LineColor $SECONDARY
+		BackGroundColor $SECONDARY-$SECONDARY_DARK
+		FontColor $SECONDARY_TEXT
+	}
+	milestone {
+		FontColor $INFO
+		FontSize 24
+		FontStyle italic
+		BackGroundColor $SECONDARY
+		LineColor $SECONDARY_DARK
+	}
+	timeline {
+		BackgroundColor $SECONDARY
+		FontColor $SECONDARY_TEXT
+	}
+	closed {
+		BackgroundColor $WARNING_DARK
+		FontColor $WARNING_TEXT
+	}
+  }
 </style>
 ''
 '' Global Default Values
