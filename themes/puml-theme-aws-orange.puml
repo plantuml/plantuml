@@ -231,6 +231,7 @@ skinparam useBetaStyle false
 	FontColor $PRIMARY
 	BorderColor $SECONDARY
   }
+nwdiagDiagram {
   network {
     $primary_scheme()    
     LineColor $PRIMARY
@@ -251,6 +252,7 @@ skinparam useBetaStyle false
     Margin 5
     Padding 5
   }
+}
 ganttDiagram {
   task {
     $primary_scheme()
