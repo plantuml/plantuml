@@ -42,9 +42,7 @@ jobs:
           # Do a release when a git tag starting with 'v' has been created by a suitable user.
           # (We match against github.repository_owner as a kludge so that forked repos can release themselves when testing the workflow)
 
-          if [[ "${GITHUB_EVENT_NAME}" == "create" && \
-                "${REF_TYPE}" == "tag" && \
-                "${REF}" == v* && \
+          if [[ "${GITHUB_EVENT_NAME}" == "create" && "${REF_TYPE}" == "tag" && "${REF}" == v* && \
                 ( "${ACTOR}" == "arnaudroques" || "${ACTOR}" == "${GITHUB_REPOSITORY_OWNER}" ) \
              ]]; then
             echo "📣 This run will release '${REF}'"
@@ -88,8 +86,7 @@ jobs:
         if: needs.workflow_config.outputs.do_release == 'true'
         env:
           POM_VERSION: ${{ needs.workflow_config.outputs.pom_version }}
-        run: |
-          mvn --batch-mode versions:set "-DnewVersion=${POM_VERSION}"
+        run: mvn --batch-mode versions:set "-DnewVersion=${POM_VERSION}"
 
       # Compile / Test / Package are separate steps so the reason for any failure is more obvious in GitHub UI
       - name: Compile
@@ -99,11 +96,11 @@ jobs:
         run: mvn --batch-mode test
 
       - name: Package
-        if: ${{ matrix.release_from_this_build }}
+        if: matrix.release_from_this_build
         run: mvn --batch-mode -Dmaven.test.skip=true package
 
       - name: Upload jar artifacts
-        if: ${{ matrix.release_from_this_build }}
+        if: matrix.release_from_this_build
         uses: actions/upload-artifact@v2
         with:
           # Using github.run_number here to reduce confusion when downloading & comparing artifacts from several builds  
