@@ -1,9 +1,9 @@
 PlantUML
 ========
-[![Build Status](https://travis-ci.org/plantuml/plantuml.svg?branch=master)](https://travis-ci.org/plantuml/plantuml)
-
 [![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/plantuml/plantuml)](https://github.com/plantuml/plantuml/releases)
 [![GitHub last commit](https://img.shields.io/github/last-commit/plantuml/plantuml)](https://github.com/plantuml/plantuml/commits/)
+
+[![CI](https://github.com/plantuml/plantuml/actions/workflows/ci.yml/badge.svg)](https://github.com/plantuml/plantuml/actions/workflows/ci.yml)
 
 Generate UML diagram from textual description
 
