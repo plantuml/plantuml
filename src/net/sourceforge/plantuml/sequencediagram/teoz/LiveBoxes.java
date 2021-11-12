@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.sequencediagram.AbstractMessage;
 import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.LifeEvent;
 import net.sourceforge.plantuml.sequencediagram.Message;
+import net.sourceforge.plantuml.sequencediagram.MessageExo;
 import net.sourceforge.plantuml.sequencediagram.Note;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.skin.Context2D;
@@ -162,7 +163,7 @@ public class LiveBoxes {
 			if (event != current) {
 				continue;
 			}
-			if (current instanceof Message) {
+			if (current instanceof Message || current instanceof MessageExo) {
 				final Event next = nextButSkippingNotes(it);
 				if (next instanceof LifeEvent) {
 					final LifeEvent le = (LifeEvent) next;
