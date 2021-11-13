@@ -18,6 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       do_release: ${{ steps.config.outputs.do_release }}
+      do_snapshot_release: ${{ steps.config.outputs.do_snapshot_release }}
       pom_version: ${{ steps.config.outputs.pom_version }}
     steps:
       - name: Configure workflow
@@ -45,9 +46,14 @@ jobs:
           if [[ "${GITHUB_EVENT_NAME}" == "create" && "${REF_TYPE}" == "tag" && "${REF}" == v* && \
                 ( "${ACTOR}" == "arnaudroques" || "${ACTOR}" == "${GITHUB_REPOSITORY_OWNER}" ) \
              ]]; then
-            echo "📣 This run will release '${REF}'"
+            echo "::notice title=::This run will release '${REF}'"
             echo "::set-output name=do_release::true"
             echo "::set-output name=pom_version::${REF#v}"  # pom_version is the tag without the 'v' prefix
+
+          elif [[ "${GITHUB_EVENT_NAME}" =~ push|workflow_dispatch && "${REF}" == "refs/heads/master" ]]; then
+            echo "::notice title=::This run will release a snapshot"
+            echo "::set-output name=do_snapshot_release::true"
+
           else
             echo "This run will NOT make a release"
           fi
@@ -97,7 +103,7 @@ jobs:
 
       - name: Package
         if: matrix.release_from_this_build
-        run: mvn --batch-mode -Dmaven.test.skip=true package
+        run: mvn --batch-mode -DfinalName=plantuml -Dmaven.test.skip=true package
 
       - name: Upload jar artifacts
         if: matrix.release_from_this_build
@@ -119,7 +125,7 @@ jobs:
 
   release:
     needs: [ workflow_config, build ]
-    if: needs.workflow_config.outputs.do_release == 'true'
+    if: needs.workflow_config.outputs.do_release == 'true' || needs.workflow_config.outputs.do_snapshot_release == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
@@ -130,13 +136,16 @@ jobs:
         with:
           name: ${{ github.run_number }}-jars
 
+      - name: Create snapshot release
+        if: needs.workflow_config.outputs.do_snapshot_release == 'true'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: .github/scripts/release_snapshot.sh
+
       - name: Create release in GitHub
+        if: needs.workflow_config.outputs.do_release == 'true'
         env:
           GITHUB_TOKEN: ${{ github.token }}
           POM_VERSION: ${{ needs.workflow_config.outputs.pom_version }}
           TAG: ${{ github.event.ref }}
-        run: |
-          gh release create "${TAG}" \
-            "plantuml-${POM_VERSION}.jar" \
-            "plantuml-${POM_VERSION}-javadoc.jar" \
-            "plantuml-${POM_VERSION}-sources.jar"
+        run: .github/scripts/release.sh
