@@ -18,7 +18,7 @@ cat <<-EOF >notes.txt
   ⚠️  **It is not ready for general use** ⚠️
 EOF
 
-gh release create --prerelease --target "${GITHUB_SHA}" --notes-file notes.txt "${TAG}" \
+gh release create --prerelease --target "${GITHUB_SHA}" --title "${TAG}" --notes-file notes.txt "${TAG}" \
   plantuml-SNAPSHOT.jar \
   plantuml-SNAPSHOT-javadoc.jar \
   plantuml-SNAPSHOT-sources.jar
