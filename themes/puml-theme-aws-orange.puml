@@ -272,7 +272,7 @@ ganttDiagram {
   }
   milestone {
 	FontColor $INFO
-	FontSize 24
+	FontSize 16
 	FontStyle italic
 	BackGroundColor $DIAMOND_BG
 	LineColor $SECONDARY_DARK
