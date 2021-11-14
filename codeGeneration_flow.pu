@@ -1,0 +1,23 @@
+@startuml
+
+Run -> CodeGeneratorAbstract: generateCode()
+CodeGeneratorAbstract -> CppCodeGenerator: generateCode()
+note right: ポリモーフィズム
+CppCodeGenerator -> CppCodeGenerator: generateFromClassDiagram(ClassDiagram diagram)
+note right: UML構成に応じて呼び出す関数を切り替え
+CppCodeGenerator -> ClassCppGenerator: generate(EntityImpl impl)
+ClassCppGenerator -> ClassCppGenerator: generateHeader()
+ClassCppGenerator -> ClassCppGenerator: generateFields()
+ClassCppGenerator -> ClassCppGenerator: generateMethods()
+ClassCppGenerator -> ClassCppGenerator: generateObject()
+ClassCppGenerator -> ClassCppGenerator: generateFooter()
+ClassCppGenerator -> ClassCppGenerator: saveFile()
+CppCodeGenerator -> ClassHeaderGenerator: generate(EntityImpl impl)
+ClassHeaderGenerator -> ClassHeaderGenerator: generateHeader()
+ClassHeaderGenerator -> ClassHeaderGenerator: generateFields()
+ClassHeaderGenerator -> ClassHeaderGenerator: generateMethods()
+ClassHeaderGenerator -> ClassHeaderGenerator: generateObject()
+ClassHeaderGenerator -> ClassHeaderGenerator: generateFooter()
+ClassHeaderGenerator -> ClassHeaderGenerator: saveFile()
+
+@enduml

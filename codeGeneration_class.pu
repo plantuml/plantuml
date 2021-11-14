@@ -1,0 +1,44 @@
+@startuml
+
+    class Run{
+
+    }
+
+    class CodeGeneratorAbstract{
+
+    }
+    note right: 言語に応じてポリモーフィズムを実現
+
+    class CppCodeGenerator{
+
+    }
+    note right: ソースのフォーマットに応じてGeneratorを変更
+
+    class CppClassDefinitionGenerator{
+
+    }
+
+    class CppClassDefinitionTemplateProvider{
+
+    }
+    note bottom: .cppファイルのテンプレートを提供
+
+    class CppClassDeclarationGenerator{
+
+    }
+
+    class CppClassDeclarationTemplateProvider{
+
+    }
+    note bottom: .hファイルのテンプレートを提供
+
+    Run *--> CodeGeneratorAbstract
+    CodeGeneratorAbstract <|-- CppCodeGenerator
+
+    CppCodeGenerator *..> CppClassDefinitionGenerator
+    CppCodeGenerator *..> CppClassDeclarationGenerator
+
+    CppClassDefinitionGenerator *..> CppClassDefinitionTemplateProvider
+    CppClassDeclarationGenerator *..> CppClassDeclarationTemplateProvider
+
+@enduml

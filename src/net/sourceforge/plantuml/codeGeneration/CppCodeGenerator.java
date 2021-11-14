@@ -46,15 +46,7 @@ public class CppCodeGenerator extends CodeGeneratorAbstract {
             if (l instanceof EntityImpl) {
                 EntityImpl now = (EntityImpl) l;
                 CppClassDefinitionGenerator generator = new CppClassDefinitionGenerator();
-                generator.generate(now, ".");
-
-                /*
-                 * CppTemplateProvider provider = new CppTemplateProvider(); EntityImpl now =
-                 * (EntityImpl) l;
-                 * 
-                 * String res = provider.getCpp((EntityImpl) l); System.out.println(res);
-                 */
-
+                generator.generate(now, "./out");
             }
         }
     }
