@@ -45,8 +45,11 @@ public class CppCodeGenerator extends CodeGeneratorAbstract {
         for (ILeaf l : diagram.getEntityFactory().leafs()) {
             if (l instanceof EntityImpl) {
                 EntityImpl now = (EntityImpl) l;
-                CppClassDefinitionGenerator generator = new CppClassDefinitionGenerator();
-                generator.generate(now, "./out");
+                CppClassDefinitionGenerator definitionGenerator = new CppClassDefinitionGenerator();
+                definitionGenerator.generate(now, "./out");
+
+                CppClassDeclarationGenerator declarationGenerator = new CppClassDeclarationGenerator();
+                declarationGenerator.generate(now, "./out");
             }
         }
     }

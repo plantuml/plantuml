@@ -7,7 +7,7 @@ import java.io.IOException;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.entity.EntityImpl;
 
-public class CppClassDefinitionGenerator {
+public class CppClassDeclarationGenerator {
     public void generate(EntityImpl impl, String dirPath) {
         String headerStr = generateHeader(impl.getCodeGetName());
         String classStr = generateClass(impl);
@@ -17,7 +17,7 @@ public class CppClassDefinitionGenerator {
         if (filePath.charAt(filePath.length() - 1) != '/') {
             filePath += '/';
         }
-        filePath += impl.getCodeGetName().replace(".", "/") + ".cpp";
+        filePath += impl.getCodeGetName().replace(".", "/") + ".h";
 
         saveFile(res, filePath);
     }
@@ -26,8 +26,7 @@ public class CppClassDefinitionGenerator {
         String[] splittedName = rawClassName.split("\\.");
         String className = splittedName[splittedName.length - 1];
 
-        String res = "/*\t" + className + ".cpp\n *\tby sono 2021.\n */";
-        res += "\n\n#include \"" + rawClassName.replace(".", "/") + ".h\"";
+        String res = "/*\t" + className + ".h\n *\tby sono 2021.\n */";
         return res;
     }
 
@@ -39,10 +38,12 @@ public class CppClassDefinitionGenerator {
         for (int i = 0; i + 1 < splittedName.length; i++) {
             res += "namespace " + splittedName[i] + "\n{\n";
         }
-
+        res += "class " + className + "\n{\n\n";
         res += generateFields(impl.getBodier().getFieldsToDisplay(), className, "\t");
         res += "\n\n";
         res += generateMethods(impl.getBodier().getMethodsToDisplay(), className, "\t");
+
+        res += "\n\n};\n";
 
         for (int i = 0; i + 1 < splittedName.length; i++) {
             res += "}\n";
@@ -73,7 +74,7 @@ public class CppClassDefinitionGenerator {
             // 【暫定】テンプレート、引数などで空白が生じるような場合は未対応
             // 空白で戻り値と関数名+引数を識別
             String[] fieldStrs = methods.get(i).toString().split(" ", 2);
-            res += "//------------------------\n" + fieldStrs[0] + " " + className + "::" + fieldStrs[1] + "\n{\n\n}";
+            res += "//------------------------\n" + fieldStrs[0] + " " + className + "::" + fieldStrs[1] + ";";
             if (i + 1 < methods.size()) {
                 res += "\n\n";
             }
@@ -97,4 +98,5 @@ public class CppClassDefinitionGenerator {
             System.out.println(e);
         }
     }
+
 }
