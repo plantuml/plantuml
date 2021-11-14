@@ -1,8 +1,9 @@
 PlantUML
 ========
-[![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/plantuml/plantuml)](https://github.com/plantuml/plantuml/releases)
-[![GitHub last commit](https://img.shields.io/github/last-commit/plantuml/plantuml)](https://github.com/plantuml/plantuml/commits/)
 
+[![Release (latest by date)](https://img.shields.io/github/v/release/plantuml/plantuml)](https://github.com/plantuml/plantuml/releases/latest)
+[![Pre-release (latest by date)](https://img.shields.io/github/v/release/plantuml/plantuml?include_prereleases)](https://github.com/plantuml/plantuml/releases/tag/snapshot)
+[![GitHub last commit](https://img.shields.io/github/last-commit/plantuml/plantuml)](https://github.com/plantuml/plantuml/commits/)
 [![CI](https://github.com/plantuml/plantuml/actions/workflows/ci.yml/badge.svg)](https://github.com/plantuml/plantuml/actions/workflows/ci.yml)
 
 Generate UML diagram from textual description
