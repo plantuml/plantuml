@@ -2,7 +2,11 @@ PlantUML
 ========
 
 [![Release (latest by date)](https://img.shields.io/github/v/release/plantuml/plantuml)](https://github.com/plantuml/plantuml/releases/latest)
+[![Release Date](https://img.shields.io/github/release-date/plantuml/plantuml)](https://github.com/plantuml/plantuml/releases/latest)
+[![GitHub commits since latest release (by date)](https://img.shields.io/github/commits-since/plantuml/plantuml/latest)](https://github.com/plantuml/plantuml/commits/)
+
 [![Pre-release (latest by date)](https://img.shields.io/github/v/release/plantuml/plantuml?include_prereleases)](https://github.com/plantuml/plantuml/releases/tag/snapshot)
+[![Pre-release Date](https://img.shields.io/github/release-date-pre/plantuml/plantuml)](https://github.com/plantuml/plantuml/releases/tag/snapshot) 
 [![GitHub last commit](https://img.shields.io/github/last-commit/plantuml/plantuml)](https://github.com/plantuml/plantuml/commits/)
 [![CI](https://github.com/plantuml/plantuml/actions/workflows/ci.yml/badge.svg)](https://github.com/plantuml/plantuml/actions/workflows/ci.yml)
 
