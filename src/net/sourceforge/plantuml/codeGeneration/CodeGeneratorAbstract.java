@@ -39,5 +39,5 @@ public abstract class CodeGeneratorAbstract {
         return new InputStreamReader(new BufferedInputStream(new FileInputStream(file)), charset);
     }
 
-    public abstract String generateCodeText();
+    public abstract void generateCode();
 }

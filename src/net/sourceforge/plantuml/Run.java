@@ -608,12 +608,11 @@ public class Run {
 				File outputDir = option.getOutputDir();
 				final CodeGeneratorAbstract generator = new CppCodeGenerator(f, option.getDefaultDefines(f),
 						option.getConfig(), option.getCharset());
-				res += generator.generateCodeText();
+				generator.generateCode();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
-		System.out.println(res);
 	}
 
 }

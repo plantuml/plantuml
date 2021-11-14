@@ -20,18 +20,17 @@ public class CppCodeGenerator extends CodeGeneratorAbstract {
     }
 
     @Override
-    public String generateCodeText() {
+    public void generateCode() {
         for (final BlockUml b : builder.getBlockUmls()) {
             Diagram d = b.getDiagram();
             if (d instanceof SequenceDiagram) {
                 SequenceDiagram diagram = SequenceDiagram.class.cast(b.getDiagram());
-                return generateFromSequenceDiagram(diagram);
+                generateFromSequenceDiagram(diagram);
             } else if (d instanceof ClassDiagram) {
                 ClassDiagram diagram = ClassDiagram.class.cast(b.getDiagram());
-                return generateFromClassDiagram(diagram);
+                generateFromClassDiagram(diagram);
             }
         }
-        return "hoge";
     }
 
     public String generateFromSequenceDiagram(SequenceDiagram diagram) {
@@ -42,22 +41,21 @@ public class CppCodeGenerator extends CodeGeneratorAbstract {
 
     }
 
-    public String generateFromClassDiagram(ClassDiagram diagram) {
-        String res = "";
+    public void generateFromClassDiagram(ClassDiagram diagram) {
         for (ILeaf l : diagram.getEntityFactory().leafs()) {
             if (l instanceof EntityImpl) {
-                res += "class " + l.getCodeGetName() + "\n";
-                res += "{\n";
-                // メンバ要素を取り出す
-                Display fields = l.getBodier().getFieldsToDisplay();
-                // メソッドを取り出す
-                Display methods = l.getBodier().getMethodsToDisplay();
-                for (CharSequence s : l.getBodier().getRawBody()) {
-                    res += s + ";\n";
-                }
-                res += "};\n";
+                EntityImpl now = (EntityImpl) l;
+                CppClassDefinitionGenerator generator = new CppClassDefinitionGenerator();
+                generator.generate(now, ".");
+
+                /*
+                 * CppTemplateProvider provider = new CppTemplateProvider(); EntityImpl now =
+                 * (EntityImpl) l;
+                 * 
+                 * String res = provider.getCpp((EntityImpl) l); System.out.println(res);
+                 */
+
             }
         }
-        return res;
     }
 }
