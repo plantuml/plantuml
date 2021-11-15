@@ -17,6 +17,7 @@ cat <<-EOF >notes.txt
   This is a pre-release of the latest development work.
   ⚠️  **It is not ready for general use** ⚠️
 EOF
+echo "⏱ _Snapshot of $(date -Iseconds)_" >>notes.txt
 
 gh release create --prerelease --target "${GITHUB_SHA}" --title "${TAG}" --notes-file notes.txt "${TAG}" \
   plantuml-SNAPSHOT.jar \
