@@ -4,7 +4,7 @@ PlantUML
 [![GitHub Org's stars](https://img.shields.io/github/stars/plantuml)](https://github.com/plantuml/plantuml/stargazers/)
 [![GitHub watchers](https://img.shields.io/github/watchers/plantuml/plantuml)](https://github.com/plantuml/plantuml/watchers/)
 [![GitHub contributors](https://img.shields.io/github/contributors-anon/plantuml/plantuml)](https://github.com/plantuml/plantuml/graphs/contributors)
-[![GitHub forks](https://img.shields.io/github/forks/plantuml/plantuml)]((https://github.com/plantuml/plantuml//network/))
+[![GitHub forks](https://img.shields.io/github/forks/plantuml/plantuml)](https://github.com/plantuml/plantuml/network/)
 [![GitHub all releases](https://img.shields.io/github/downloads/plantuml/plantuml/total)](https://github.com/plantuml/plantuml/releases)
 
 [![Release (latest by date)](https://img.shields.io/github/v/release/plantuml/plantuml)](https://github.com/plantuml/plantuml/releases/latest)
