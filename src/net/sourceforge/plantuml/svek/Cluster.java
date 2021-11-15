@@ -320,7 +320,7 @@ public class Cluster implements Moveable {
 		final double rounded;
 		final double shadowing;
 		if (UseStyle.useBetaStyle()) {
-			style = getDefaultStyleDefinition(umlDiagramType.getStyleName())
+			style = getDefaultStyleDefinition(umlDiagramType.getStyleName()).with(group.getStereotype())
 					.getMergedStyle(skinParam.getCurrentStyleBuilder());
 			shadowing = style.value(PName.Shadowing).asDouble();
 			borderColor = style.value(PName.LineColor).asColor(skinParam2.getThemeStyle(),
