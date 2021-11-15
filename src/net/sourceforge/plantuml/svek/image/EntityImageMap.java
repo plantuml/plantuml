@@ -172,7 +172,7 @@ public class EntityImageMap extends AbstractEntityImage implements Stencil, With
 
 		final HColor borderColor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.objectBorder);
 		ug = ug.apply(borderColor);
-		HColor backcolor = getEntity().getColors(getSkinParam()).getColor(ColorType.BACK);
+		HColor backcolor = getEntity().getColors().getColor(ColorType.BACK);
 		if (backcolor == null) {
 			if (UseStyle.useBetaStyle())
 				backcolor = getStyle().value(PName.BackGroundColor).asColor(getSkinParam().getThemeStyle(),
@@ -211,7 +211,7 @@ public class EntityImageMap extends AbstractEntityImage implements Stencil, With
 	}
 
 	private UStroke getStroke() {
-		UStroke stroke = lineConfig.getColors(getSkinParam()).getSpecificLineStroke();
+		UStroke stroke = lineConfig.getColors().getSpecificLineStroke();
 		if (stroke == null) {
 			stroke = getSkinParam().getThickness(LineParam.objectBorder, getStereo());
 		}

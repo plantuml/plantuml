@@ -100,7 +100,7 @@ public abstract class EntityImageStateCommon extends AbstractEntityImage {
 	}
 
 	final protected UStroke getStroke() {
-		UStroke stroke = lineConfig.getColors(getSkinParam()).getSpecificLineStroke();
+		UStroke stroke = lineConfig.getColors().getSpecificLineStroke();
 		if (stroke == null) {
 			stroke = new UStroke(1.5);
 		}
@@ -130,7 +130,7 @@ public abstract class EntityImageStateCommon extends AbstractEntityImage {
 
 	final protected UGraphic applyColor(UGraphic ug) {
 
-		HColor classBorder = lineConfig.getColors(getSkinParam()).getColor(ColorType.LINE);
+		HColor classBorder = lineConfig.getColors().getColor(ColorType.LINE);
 		if (classBorder == null) {
 			if (UseStyle.useBetaStyle())
 				classBorder = getStyleState().value(PName.LineColor).asColor(getSkinParam().getThemeStyle(),
@@ -139,7 +139,7 @@ public abstract class EntityImageStateCommon extends AbstractEntityImage {
 				classBorder = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.stateBorder);
 		}
 		ug = ug.apply(getStroke()).apply(classBorder);
-		HColor backcolor = getEntity().getColors(getSkinParam()).getColor(ColorType.BACK);
+		HColor backcolor = getEntity().getColors().getColor(ColorType.BACK);
 		if (backcolor == null) {
 			if (UseStyle.useBetaStyle())
 				backcolor = getStyleState().value(PName.BackGroundColor).asColor(getSkinParam().getThemeStyle(),

@@ -41,7 +41,7 @@ import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public interface LineConfigurable {
 
-	public Colors getColors(ISkinParam skinParam);
+	public Colors getColors();
 	
 	public void setSpecificColorTOBEREMOVED(ColorType type, HColor color);
 

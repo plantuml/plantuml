@@ -155,7 +155,7 @@ public class Cluster implements Moveable {
 		}
 		this.color = colorSequence.getValue();
 		this.colorTitle = colorSequence.getValue();
-		this.skinParam = group.getColors(skinParam).mute(skinParam);
+		this.skinParam = group.getColors().mute(skinParam);
 	}
 
 	@Override
@@ -360,11 +360,11 @@ public class Cluster implements Moveable {
 			}
 			final boolean isState = umlDiagramType == UmlDiagramType.STATE;
 			if (isState) {
-				if (group.getColors(skinParam).getSpecificLineStroke() != null) {
-					strokeForState = group.getColors(skinParam).getSpecificLineStroke();
+				if (group.getColors().getSpecificLineStroke() != null) {
+					strokeForState = group.getColors().getSpecificLineStroke();
 				}
-				if (group.getColors(skinParam).getColor(ColorType.LINE) != null) {
-					borderColor = group.getColors(skinParam).getColor(ColorType.LINE);
+				if (group.getColors().getColor(ColorType.LINE) != null) {
+					borderColor = group.getColors().getColor(ColorType.LINE);
 				}
 				drawUState(ug, borderColor, skinParam2, strokeForState, umlDiagramType, rounded, shadowing);
 				return;
@@ -382,9 +382,9 @@ public class Cluster implements Moveable {
 
 			final UStroke stroke;
 			if (UseStyle.useBetaStyle()) {
-				stroke = style.getStroke();
+				stroke = getStrokeInternal(group, skinParam2, style);
 			} else {
-				stroke = getStrokeInternal(group, skinParam2);
+				stroke = getStrokeInternal(group, skinParam2, null);
 			}
 			HColor backColor = getBackColor(umlDiagramType, style);
 			backColor = getBackColor(backColor, skinParam2, group.getStereotype(), umlDiagramType.getStyleName());
@@ -412,10 +412,13 @@ public class Cluster implements Moveable {
 
 	}
 
-	static public UStroke getStrokeInternal(IGroup group, ISkinParam skinParam) {
-		final Colors colors = group.getColors(skinParam);
+	static public UStroke getStrokeInternal(IGroup group, ISkinParam skinParam, Style style) {
+		final Colors colors = group.getColors();
 		if (colors.getSpecificLineStroke() != null) {
 			return colors.getSpecificLineStroke();
+		}
+		if (style != null) {
+			return style.getStroke();
 		}
 		if (group.getUSymbol() != null && group.getUSymbol() != USymbol.PACKAGE) {
 			return group.getUSymbol().getSkinParameter().getStroke(skinParam, group.getStereotype());
@@ -908,7 +911,7 @@ public class Cluster implements Moveable {
 		if (EntityUtils.groupRoot(group)) {
 			return null;
 		}
-		final HColor result = group.getColors(skinParam).getColor(ColorType.BACK);
+		final HColor result = group.getColors().getColor(ColorType.BACK);
 		if (result != null) {
 			return result;
 		}

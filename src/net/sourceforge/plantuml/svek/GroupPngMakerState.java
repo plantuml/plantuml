@@ -177,7 +177,7 @@ public final class GroupPngMakerState {
 			throw new UnsupportedOperationException(group.getGroupType().toString());
 		}
 
-		HColor borderColor = group.getColors(skinParam).getColor(ColorType.LINE);
+		HColor borderColor = group.getColors().getColor(ColorType.LINE);
 		if (borderColor == null) {
 			if (UseStyle.useBetaStyle())
 				borderColor = getStyleState().value(PName.LineColor).asColor(skinParam.getThemeStyle(),
@@ -186,7 +186,7 @@ public final class GroupPngMakerState {
 				borderColor = getColor(ColorParam.stateBorder, group.getStereotype());
 		}
 		final Stereotype stereo = group.getStereotype();
-		final HColor tmp = group.getColors(skinParam).getColor(ColorType.BACK);
+		final HColor tmp = group.getColors().getColor(ColorType.BACK);
 		final HColor backColor;
 		if (tmp == null)
 			if (UseStyle.useBetaStyle())
@@ -207,7 +207,7 @@ public final class GroupPngMakerState {
 		final boolean containsOnlyConcurrentStates = containsOnlyConcurrentStates(dotData);
 		final IEntityImage image = containsOnlyConcurrentStates ? buildImageForConcurrentState(dotData)
 				: svek2.buildImage(null, new String[0]);
-		UStroke stroke = group.getColors(skinParam).getSpecificLineStroke();
+		UStroke stroke = group.getColors().getSpecificLineStroke();
 		if (stroke == null) {
 			stroke = new UStroke(1.5);
 		}

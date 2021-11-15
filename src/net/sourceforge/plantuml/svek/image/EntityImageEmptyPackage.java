@@ -101,7 +101,7 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 		super(entity, skinParam);
 		this.styleName = styleName;
 
-		final Colors colors = entity.getColors(getSkinParam());
+		final Colors colors = entity.getColors();
 		final HColor specificBackColor = colors.getColor(ColorType.BACK);
 		this.stereotype = entity.getStereotype();
 		final FontConfiguration titleFontConfiguration;

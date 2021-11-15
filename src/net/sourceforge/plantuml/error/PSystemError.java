@@ -350,7 +350,7 @@ public abstract class PSystemError extends PlainDiagram {
 		final BufferedImage qrcode = smaller(
 				utils.exportFlashcode("http://plantuml.com/dedication", Color.BLACK, backColor.getColor999()));
 		final Display disp = Display.create("<b>Add your own dedication into PlantUML", " ", "For just $5 per month!",
-				"Details on <i>[[http://plantuml.com/dedication]]");
+				"Details on <i>[[https://plantuml.com/dedication]]");
 
 		final UFont font = UFont.sansSerif(14);
 		final FontConfiguration fc = new FontConfiguration(font, HColorUtils.BLACK, HColorUtils.BLACK, false);

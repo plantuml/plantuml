@@ -269,7 +269,7 @@ public class GroupRoot implements IGroup {
 	}
 
 	@Override
-	public Colors getColors(ISkinParam skinParam) {
+	public Colors getColors() {
 		return Colors.empty();
 	}
 

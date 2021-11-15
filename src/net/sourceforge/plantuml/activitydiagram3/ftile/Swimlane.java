@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile;
 
-import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SpecificBackcolorable;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.color.ColorType;
@@ -87,7 +86,7 @@ public class Swimlane implements SpecificBackcolorable {
 		this.actualWidth = actualWidth;
 	}
 
-	public Colors getColors(ISkinParam skinParam) {
+	public Colors getColors() {
 		return colors;
 	}
 

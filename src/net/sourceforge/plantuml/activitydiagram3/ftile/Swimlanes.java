@@ -306,7 +306,7 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock, Styleable
 			final LaneDivider divider1 = dividers.get(i);
 
 			final double xpos = swimlane.getTranslate().getDx() + swimlane.getMinMax().getMinX();
-			final HColor back = swimlane.getColors(skinParam).getColor(ColorType.BACK);
+			final HColor back = swimlane.getColors().getColor(ColorType.BACK);
 			if (back != null) {
 				final LaneDivider divider2 = dividers.get(i + 1);
 				final UGraphic background = ug.apply(back.bg()).apply(back)

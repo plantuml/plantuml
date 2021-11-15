@@ -137,9 +137,9 @@ public final class GroupPngMakerActivity {
 		if (group.getGroupType() == GroupType.INNER_ACTIVITY) {
 			final Stereotype stereo = group.getStereotype();
 			final HColor borderColor = getColor(ColorParam.activityBorder, stereo);
-			final HColor backColor = group.getColors(skinParam).getColor(ColorType.BACK) == null
+			final HColor backColor = group.getColors().getColor(ColorType.BACK) == null
 					? getColor(ColorParam.background, stereo)
-					: group.getColors(skinParam).getColor(ColorType.BACK);
+					: group.getColors().getColor(ColorType.BACK);
 			final double shadowing;
 			if (UseStyle.useBetaStyle()) {
 				final Style style = getDefaultStyleDefinitionGroup().getMergedStyle(skinParam.getCurrentStyleBuilder());

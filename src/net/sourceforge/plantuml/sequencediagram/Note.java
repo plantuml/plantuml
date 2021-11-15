@@ -142,7 +142,7 @@ final public class Note extends AbstractEvent implements Event, SpecificBackcolo
 		return position;
 	}
 
-	final public Colors getColors(ISkinParam skinParam) {
+	final public Colors getColors() {
 		return colors;
 	}
 

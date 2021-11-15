@@ -264,7 +264,7 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 				final Style style = Cluster.getDefaultStyleDefinition(umlDiagramType.getStyleName())
 						.getMergedStyle(skinParam.getCurrentStyleBuilder());
 				shadowing = style.value(PName.Shadowing).asDouble();
-				stroke = style.getStroke();
+				stroke = Cluster.getStrokeInternal(group, skinParam, style);
 			} else {
 				if (group.getUSymbol() == null) {
 					shadowing = skinParam.shadowing2(group.getStereotype(), USymbol.PACKAGE.getSkinParameter()) ? 3 : 0;
@@ -272,7 +272,7 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 					shadowing = skinParam.shadowing2(group.getStereotype(), group.getUSymbol().getSkinParameter()) ? 3
 							: 0;
 				}
-				stroke = Cluster.getStrokeInternal(group, skinParam);
+				stroke = Cluster.getStrokeInternal(group, skinParam, null);
 			}
 			HColor backColor = getBackColor(umlDiagramType);
 			backColor = Cluster.getBackColor(backColor, skinParam, group.getStereotype(),

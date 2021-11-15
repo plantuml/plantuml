@@ -117,12 +117,12 @@ public class EntityImageRequirement extends AbstractEntityImage {
 		}
 
 		ug = ug.apply(getStroke());
-		HColor linecolor = getEntity().getColors(getSkinParam()).getColor(ColorType.LINE);
+		HColor linecolor = getEntity().getColors().getColor(ColorType.LINE);
 		if (linecolor == null) {
 			linecolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.requirementBorder);
 		}
 		ug = ug.apply(linecolor);
-		HColor backcolor = getEntity().getColors(getSkinParam()).getColor(ColorType.BACK);
+		HColor backcolor = getEntity().getColors().getColor(ColorType.BACK);
 		if (backcolor == null) {
 			backcolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.requirementBackground);
 		}

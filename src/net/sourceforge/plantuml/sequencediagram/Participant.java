@@ -82,7 +82,7 @@ public class Participant implements SpecificBackcolorable, WithStyle {
 		}
 		final StyleSignature signature = getDefaultStyleDefinition().with(stereotype);
 		Style tmp = signature.getMergedStyle(styleBuilder);
-		tmp = tmp.eventuallyOverride(getColors(null));
+		tmp = tmp.eventuallyOverride(getColors());
 		Style stereo = getDefaultStyleDefinition().forStereotypeItself(stereotype).getMergedStyle(styleBuilder);
 		if (tmp != null) {
 			stereo = tmp.mergeWith(stereo);
@@ -163,7 +163,7 @@ public class Participant implements SpecificBackcolorable, WithStyle {
 		return liveBackcolors;
 	}
 
-	public Colors getColors(ISkinParam skinParam) {
+	public Colors getColors() {
 		return colors;
 	}
 
@@ -199,7 +199,7 @@ public class Participant implements SpecificBackcolorable, WithStyle {
 
 	public SkinParamBackcolored getSkinParamBackcolored(ISkinParam skinParam) {
 		final ColorParam param = getColorParam();
-		HColor specificBackColor = getColors(skinParam).getColor(ColorType.BACK);
+		HColor specificBackColor = getColors().getColor(ColorType.BACK);
 		final boolean clickable = getUrl() != null;
 		final HColor stereoBackColor = skinParam.getHtmlColor(getBackgroundColorParam(), getStereotype(), clickable);
 		if (stereoBackColor != null && specificBackColor == null) {

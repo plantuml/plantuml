@@ -107,7 +107,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 
 	public EntityImageDescription(ILeaf entity, ISkinParam skinParam2, PortionShower portionShower,
 			Collection<Link> links, SName styleName, Bibliotekon bibliotekon) {
-		super(entity, entity.getColors(skinParam2).mute(skinParam2));
+		super(entity, entity.getColors().mute(skinParam2));
 		this.useRankSame = getSkinParam().useRankSame();
 		this.bibliotekon = bibliotekon;
 		this.fixCircleLabelOverlapping = getSkinParam().fixCircleLabelOverlapping();
@@ -129,7 +129,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 
 		this.url = entity.getUrl99();
 
-		final Colors colors = entity.getColors(getSkinParam());
+		final Colors colors = entity.getColors();
 		HColor backcolor = colors.getColor(ColorType.BACK);
 		final HColor forecolor;
 		final double roundCorner;

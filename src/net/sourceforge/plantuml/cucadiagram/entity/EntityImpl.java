@@ -714,7 +714,7 @@ final public class EntityImpl implements ILeaf, IGroup {
 
 	private Colors colors = Colors.empty();
 
-	public Colors getColors(ISkinParam skinParam) {
+	public Colors getColors() {
 		return colors;
 	}
 

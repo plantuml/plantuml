@@ -74,7 +74,7 @@ public class EntityImageState2 extends AbstractEntityImage {
 
 		final USymbol symbol = USymbol.FRAME;
 
-		HColor backcolor = getEntity().getColors(getSkinParam()).getColor(ColorType.BACK);
+		HColor backcolor = getEntity().getColors().getColor(ColorType.BACK);
 		if (backcolor == null) {
 			backcolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), symbol.getColorParamBack());
 		}

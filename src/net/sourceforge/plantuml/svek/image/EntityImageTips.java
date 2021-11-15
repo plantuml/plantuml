@@ -93,12 +93,12 @@ public class EntityImageTips extends AbstractEntityImage {
 			final Style style = getDefaultStyleDefinition(type.getStyleName())
 					.getMergedStyle(skinParam.getCurrentStyleBuilder());
 
-			if (entity.getColors(skinParam).getColor(ColorType.BACK) == null) {
+			if (entity.getColors().getColor(ColorType.BACK) == null) {
 				this.noteBackgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
 						skinParam.getIHtmlColorSet());
 
 			} else {
-				this.noteBackgroundColor = entity.getColors(skinParam).getColor(ColorType.BACK);
+				this.noteBackgroundColor = entity.getColors().getColor(ColorType.BACK);
 			}
 
 			this.borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(),
@@ -106,10 +106,10 @@ public class EntityImageTips extends AbstractEntityImage {
 
 		} else {
 
-			if (entity.getColors(skinParam).getColor(ColorType.BACK) == null) {
+			if (entity.getColors().getColor(ColorType.BACK) == null) {
 				this.noteBackgroundColor = rose.getHtmlColor(skinParam, ColorParam.noteBackground);
 			} else {
-				this.noteBackgroundColor = entity.getColors(skinParam).getColor(ColorType.BACK);
+				this.noteBackgroundColor = entity.getColors().getColor(ColorType.BACK);
 			}
 
 			this.borderColor = rose.getHtmlColor(skinParam, ColorParam.noteBorder);

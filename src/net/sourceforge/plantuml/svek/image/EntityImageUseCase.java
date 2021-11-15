@@ -86,7 +86,7 @@ public class EntityImageUseCase extends AbstractEntityImage {
 	final private Url url;
 
 	public EntityImageUseCase(ILeaf entity, ISkinParam skinParam2, PortionShower portionShower) {
-		super(entity, entity.getColors(skinParam2).mute(skinParam2));
+		super(entity, entity.getColors().mute(skinParam2));
 		final Stereotype stereotype = entity.getStereotype();
 
 		final HorizontalAlignment align;
@@ -126,7 +126,7 @@ public class EntityImageUseCase extends AbstractEntityImage {
 		if (stroke == null) {
 			stroke = new UStroke(1.5);
 		}
-		final Colors colors = getEntity().getColors(getSkinParam());
+		final Colors colors = getEntity().getColors();
 		stroke = colors.muteStroke(stroke);
 		return stroke;
 	}
@@ -196,11 +196,11 @@ public class EntityImageUseCase extends AbstractEntityImage {
 	}
 
 	private HColor getBackColor() {
-		HColor backcolor = getEntity().getColors(getSkinParam()).getColor(ColorType.BACK);
+		HColor backcolor = getEntity().getColors().getColor(ColorType.BACK);
 		if (backcolor == null) {
 			if (UseStyle.useBetaStyle()) {
 				Style style = getStyle();
-				final Colors colors = getEntity().getColors(getSkinParam());
+				final Colors colors = getEntity().getColors();
 				style = style.eventuallyOverride(colors);
 				backcolor = style.value(PName.BackGroundColor).asColor(getSkinParam().getThemeStyle(),
 						getSkinParam().getIHtmlColorSet());
@@ -220,7 +220,7 @@ public class EntityImageUseCase extends AbstractEntityImage {
 	}
 
 	private HColor getLineColor() {
-		HColor linecolor = getEntity().getColors(getSkinParam()).getColor(ColorType.LINE);
+		HColor linecolor = getEntity().getColors().getColor(ColorType.LINE);
 		if (linecolor == null) {
 			if (UseStyle.useBetaStyle()) {
 				final Style style = getStyle();
