@@ -16,6 +16,7 @@ mv plantuml-sources.jar plantuml-SNAPSHOT-sources.jar
 cat <<-EOF >notes.txt
   This is a pre-release of the latest development work.
   ⚠️  **It is not ready for general use** ⚠️
+  ⏱  _Snapshot of $(date -Iseconds)_
 EOF
 
 gh release create --prerelease --target "${GITHUB_SHA}" --title "${TAG}" --notes-file notes.txt "${TAG}" \
