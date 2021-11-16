@@ -174,7 +174,7 @@ skinparam useBetaStyle false
 	}
 	milestone {
 		FontColor $INFO
-		FontSize 24
+		FontSize 16
 		FontStyle italic
 		BackGroundColor $SECONDARY
 		LineColor $SECONDARY_DARK
