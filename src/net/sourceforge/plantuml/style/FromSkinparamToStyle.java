@@ -64,30 +64,38 @@ public class FromSkinparamToStyle {
 		addConvert("participantBorderColor", PName.LineColor, SName.participant);
 		addConvert("participantBorderThickness", PName.LineThickness, SName.participant);
 		addConFont("participant", SName.participant);
+		
 		addConvert("boundaryBackgroundColor", PName.BackGroundColor, SName.boundary);
 		addConvert("boundaryBorderColor", PName.LineColor, SName.boundary);
 		addConvert("boundaryBorderThickness", PName.LineThickness, SName.boundary);
 		addConFont("boundary", SName.boundary);
+		
 		addConvert("controlBackgroundColor", PName.BackGroundColor, SName.control);
 		addConvert("controlBorderColor", PName.LineColor, SName.control);
 		addConvert("controlBorderThickness", PName.LineThickness, SName.control);
 		addConFont("control", SName.control);
+		
 		addConvert("collectionsBackgroundColor", PName.BackGroundColor, SName.collections);
 		addConvert("collectionsBorderColor", PName.LineColor, SName.collections);
 		addConvert("collectionsBorderThickness", PName.LineThickness, SName.collections);
 		addConFont("collections", SName.collections);
+		
 		addConvert("actorBackgroundColor", PName.BackGroundColor, SName.actor);
 		addConvert("actorBorderColor", PName.LineColor, SName.actor);
 		addConvert("actorBorderThickness", PName.LineThickness, SName.actor);
 		addConFont("actor", SName.actor);
+		
 		addConvert("databaseBackgroundColor", PName.BackGroundColor, SName.database);
 		addConvert("databaseBorderColor", PName.LineColor, SName.database);
 		addConvert("databaseBorderThickness", PName.LineThickness, SName.database);
 		addConFont("database", SName.database);
+		
 		addConvert("entityBackgroundColor", PName.BackGroundColor, SName.entity);
 		addConvert("entityBorderColor", PName.LineColor, SName.entity);
 		addConvert("entityBorderThickness", PName.LineThickness, SName.entity);
 		addConFont("entity", SName.entity);
+		
+		addConFont("header", SName.header);
 		addConFont("footer", SName.footer);
 
 		addConvert("sequenceStereotypeFontSize", PName.FontSize, SName.stereotype);
@@ -119,12 +127,16 @@ public class FromSkinparamToStyle {
 		addConFont("note", SName.note);
 		addConvert("noteBorderThickness", PName.LineThickness, SName.note);
 		addConvert("noteBackgroundColor", PName.BackGroundColor, SName.note);
+		
 		addConvert("packageBackgroundColor", PName.BackGroundColor, SName.group);
 		addConvert("packageBorderColor", PName.LineColor, SName.group);
+		
 		addConvert("PartitionBorderColor", PName.LineColor, SName.partition);
 		addConvert("PartitionBackgroundColor", PName.BackGroundColor, SName.partition);
 		addConFont("Partition", SName.partition);
+		
 		addConvert("hyperlinkColor", PName.HyperLinkColor, SName.root);
+		
 		addConvert("activityStartColor", PName.LineColor, SName.circle);
 		addConvert("activityBarColor", PName.LineColor, SName.activityBar);
 		addConvert("activityBorderColor", PName.LineColor, SName.activity);
@@ -134,7 +146,6 @@ public class FromSkinparamToStyle {
 		addConvert("activityDiamondBackgroundColor", PName.BackGroundColor, SName.diamond);
 		addConvert("activityDiamondBorderColor", PName.LineColor, SName.diamond);
 		addConFont("activityDiamond", SName.diamond);
-		addConvert("arrowColor", PName.LineColor, SName.arrow);
 		
 		addConFont("arrow", SName.arrow);
 		addConvert("arrowThickness", PName.LineThickness, SName.arrow);
@@ -143,25 +154,47 @@ public class FromSkinparamToStyle {
 
 		addConvert("defaulttextalignment", PName.HorizontalAlignment, SName.root);
 		addConvert("defaultFontName", PName.FontName, SName.root);
+		
 		addConFont("SwimlaneTitle", SName.swimlane);
 		addConvert("SwimlaneTitleBackgroundColor", PName.BackGroundColor, SName.swimlane);
 		addConvert("SwimlaneBorderColor", PName.LineColor, SName.swimlane);
 		addConvert("SwimlaneBorderThickness", PName.LineThickness, SName.swimlane);
+		
 		addConvert("roundCorner", PName.RoundCorner, SName.root);
+		
 		addConvert("titleBorderThickness", PName.LineThickness, SName.title);
 		addConvert("titleBorderColor", PName.LineColor, SName.title);
 		addConvert("titleBackgroundColor", PName.BackGroundColor, SName.title);
 		addConvert("titleBorderRoundCorner", PName.RoundCorner, SName.title);
 		addConFont("title", SName.title);
+		
 		addConvert("legendBorderThickness", PName.LineThickness, SName.legend);
 		addConvert("legendBorderColor", PName.LineColor, SName.legend);
 		addConvert("legendBackgroundColor", PName.BackGroundColor, SName.legend);
 		addConvert("legendBorderRoundCorner", PName.RoundCorner, SName.legend);
 		addConFont("legend", SName.legend);
+		
 		addConvert("noteTextAlignment", PName.HorizontalAlignment, SName.note);
 		
 		addConvert("BackgroundColor", PName.BackGroundColor, SName.document);
+		
+		addConvert("classBackgroundColor", PName.BackGroundColor, SName.class_);
+		addConvert("classBorderColor", PName.LineColor, SName.class_);
+		addConFont("class", SName.class_);
+		addConFont("classAttribute", SName.class_);
+		addConvert("classBorderThickness", PName.LineThickness, SName.class_);
 
+		addConvert("objectBackgroundColor", PName.BackGroundColor, SName.object);
+		addConvert("objectBorderColor", PName.LineColor, SName.object);
+		addConFont("object", SName.object);
+		addConFont("objectAttribute", SName.object);
+		addConvert("objectBorderThickness", PName.LineThickness, SName.object);
+
+		addConvert("stateBackgroundColor", PName.BackGroundColor, SName.state);
+		addConvert("stateBorderColor", PName.LineColor, SName.state);
+		addConFont("state", SName.state);
+		addConFont("stateAttribute", SName.state);
+		addConvert("stateBorderThickness", PName.LineThickness, SName.state);
 
 	}
 
