@@ -206,12 +206,7 @@
                 <version>3.2.0</version>
                 <configuration>
                     <archive>
-                        <manifest>
-                            <mainClass>net.sourceforge.plantuml.Run</mainClass>
-                        </manifest>
-                        <manifestEntries>
-                            <Automatic-Module-Name>net.sourceforge.plantuml</Automatic-Module-Name>
-                        </manifestEntries>
+                       <manifestFile>manifest.txt</manifestFile>
                     </archive>
                 </configuration>
             </plugin>
