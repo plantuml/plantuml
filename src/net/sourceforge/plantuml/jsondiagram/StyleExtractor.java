@@ -62,6 +62,8 @@ public class StyleExtractor {
 						break;
 					line = data.next();
 				}
+			} else if (line.getString().trim().startsWith("!assume ")) {
+				// Ignore
 			} else if (line.getString().trim().startsWith("!pragma ")) {
 				// Ignore
 			} else if (line.getString().trim().startsWith("title ")) {

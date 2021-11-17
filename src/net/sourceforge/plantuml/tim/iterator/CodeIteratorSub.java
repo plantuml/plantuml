@@ -67,6 +67,9 @@ public class CodeIteratorSub extends AbstractCodeIterator {
 	}
 
 	public StringLocated peek() throws EaterException, EaterExceptionLocated {
+		if (readingInProgress != null) {
+			return readingInProgress.peek();
+		}
 		StringLocated result = source.peek();
 		if (result == null) {
 			return null;
