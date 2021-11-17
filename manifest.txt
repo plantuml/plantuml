@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Class-Path: elk-full.jar avalon-framework-4.2.0.jar batik-all-1.7.jar commons-io-1.3.1.jar commons-logging-1.0.4.jar fop.jar xml-apis-ext-1.3.04.jar xmlgraphics-commons-1.4.jar jlatexmath-minimal-1.0.3.jar jlm_cyrillic.jar jlm_greek.jar vizjs.jar j2v8_win32_x86_64-3.1.6.jar j2v8_linux_x86_64-3.1.6.jar j2v8_macosx_x86_64-3.1.6.jar ditaa0_9.jar
+Main-Class: net.sourceforge.plantuml.Run
+Automatic-Module-Name: net.sourceforge.plantuml
