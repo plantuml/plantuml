@@ -108,12 +108,12 @@ public class ImportedFiles {
 	public List<SFile> getPath() {
 		final List<SFile> result = new ArrayList<>(imported);
 		result.addAll(includePath());
-		result.addAll(SecurityUtils.getPath("java.class.path"));
+		result.addAll(SecurityUtils.getPath(SecurityUtils.PATHS_CLASSES));
 		return result;
 	}
 
 	private List<SFile> includePath() {
-		return SecurityUtils.getPath("plantuml.include.path");
+		return SecurityUtils.getPath(SecurityUtils.PATHS_INCLUDES);
 	}
 
 	private boolean isAbsolute(String nameOrPath) {

@@ -169,7 +169,7 @@ public class PSystemVersion extends PlainStringsDiagram {
 				strings.add("Word Mode");
 				strings.add("Command Line: " + Run.getCommandLine());
 				strings.add("Current Dir: " + new SFile(".").getAbsolutePath());
-				strings.add("plantuml.include.path: " + PreprocessorUtils.getenv("plantuml.include.path"));
+				strings.add("plantuml.include.path: " + PreprocessorUtils.getenv(SecurityUtils.PATHS_INCLUDES));
 			}
 		}
 		strings.add(" ");

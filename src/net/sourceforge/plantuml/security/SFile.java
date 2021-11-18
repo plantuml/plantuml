@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.security;
 
+import javax.swing.ImageIcon;
 import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -55,8 +56,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-
-import javax.swing.ImageIcon;
 
 /**
  * Secure replacement for java.io.File.
@@ -246,11 +245,15 @@ public class SFile implements Comparable<SFile> {
 			// In SANDBOX, we cannot read any files
 			return false;
 		}
+		// In any case SFile should not access the security folders (the files must be handled internally)
+		if (isDenied()) {
+			return false;
+		}
 		// Files in "plantuml.include.path" and "plantuml.allowlist.path" are ok.
-		if (isInAllowList(SecurityUtils.getPath("plantuml.include.path"))) {
+		if (isInAllowList(SecurityUtils.getPath(SecurityUtils.PATHS_INCLUDES))) {
 			return true;
 		}
-		if (isInAllowList(SecurityUtils.getPath("plantuml.allowlist.path"))) {
+		if (isInAllowList(SecurityUtils.getPath(SecurityUtils.PATHS_ALLOWED))) {
 			return true;
 		}
 		if (SecurityUtils.getSecurityProfile() == SecurityProfile.INTERNET) {
@@ -282,6 +285,19 @@ public class SFile implements Comparable<SFile> {
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * Checks, if the SFile is inside the folder (-structure) of the security area.
+	 *
+	 * @return true, if the file is not allowed to read/write
+	 */
+	private boolean isDenied() {
+		SFile securityPath = SecurityUtils.getSecurityPath();
+		if (securityPath == null) {
+			return false;
+		}
+		return getCleanPathSecure().startsWith(securityPath.getCleanPathSecure());
 	}
 
 	private String getCleanPathSecure() {
