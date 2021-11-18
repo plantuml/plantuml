@@ -63,6 +63,7 @@
 		<maven.compiler.target>1.7</maven.compiler.target>
 		<maven.compiler.testSource>1.8</maven.compiler.testSource>
 		<maven.compiler.testTarget>1.8</maven.compiler.testTarget>
+		<main.class>net.sourceforge.plantuml.Run</main.class>
 	</properties>
 
 	<dependencyManagement>
@@ -202,15 +203,22 @@
                 </executions>
             </plugin>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.2.0</version>
                 <configuration>
                     <archive>
-                       <manifestFile>manifest.txt</manifestFile>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <useUniqueVersions>false</useUniqueVersions>
+                            <mainClass>${main.class}</mainClass>
+                            <addBuildEnvironmentEntries>true</addBuildEnvironmentEntries>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                        </manifest>
                     </archive>
                 </configuration>
             </plugin>
-			<plugin>
+            <plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>3.0.0-M5</version>
 				<configuration>
@@ -255,5 +263,51 @@
 				<maven.compiler.target>1.8</maven.compiler.target>
 			</properties>
 		</profile>
+        <profile>
+            <id>pdf</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-assembly-plugin</artifactId>
+                        <version>3.1.1</version>
+                        <configuration>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                            </descriptorRefs>
+                            <archive>
+                                <manifest>
+                                    <mainClass>${main.class}</mainClass>
+                                </manifest>
+                            </archive>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>make-assembly</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>single</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+            <dependencies>
+                <dependency>
+                    <groupId>org.apache.xmlgraphics</groupId>
+                    <artifactId>fop</artifactId>
+                    <version>2.6</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.apache.xmlgraphics</groupId>
+                    <artifactId>batik-all</artifactId>
+                    <version>1.14</version>
+                </dependency>
+            </dependencies>
+        </profile>
 	</profiles>
 </project>
