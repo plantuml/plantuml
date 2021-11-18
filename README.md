@@ -3,21 +3,21 @@ PlantUML
 
 [![GitHub Org's stars](https://img.shields.io/github/stars/plantuml)](https://github.com/plantuml/plantuml/stargazers/)
 [![GitHub watchers](https://img.shields.io/github/watchers/plantuml/plantuml)](https://github.com/plantuml/plantuml/watchers/)
-[![GitHub contributors](https://img.shields.io/github/contributors-anon/plantuml/plantuml)](https://github.com/plantuml/plantuml/graphs/contributors)
+[![GitHub contributors](https://img.shields.io/github/contributors-anon/plantuml/plantuml?color=blue)](https://github.com/plantuml/plantuml/graphs/contributors)
 [![GitHub forks](https://img.shields.io/github/forks/plantuml/plantuml)](https://github.com/plantuml/plantuml/network/)
-[![GitHub all releases](https://img.shields.io/github/downloads/plantuml/plantuml/total)](https://github.com/plantuml/plantuml/releases)
+[![GitHub all releases](https://img.shields.io/sourceforge/dt/plantuml?color=blue)](https://github.com/plantuml/plantuml/releases)
 
 [![online](https://img.shields.io/endpoint?url=https://www.plantuml.com/plantuml/badge)](https://www.plantuml.com/plantuml/uml/SyfFKj2rKt3CoKnELR1Io4ZDoSa70000)
 [![rate](https://img.shields.io/endpoint?url=https://www.plantuml.com/plantuml/rate)](https://www.plantuml.com/plantuml/uml/SyfFKj2rKt3CoKnELR1Io4ZDoSa70000)
 
 [![Release (latest by date)](https://img.shields.io/github/v/release/plantuml/plantuml)](https://github.com/plantuml/plantuml/releases/latest)
-[![Release Date](https://img.shields.io/github/release-date/plantuml/plantuml)](https://github.com/plantuml/plantuml/releases/latest)
+[![Release Date](https://img.shields.io/github/release-date/plantuml/plantuml?color=blue)](https://github.com/plantuml/plantuml/releases/latest)
 [![GitHub commits since latest release (by date)](https://img.shields.io/github/commits-since/plantuml/plantuml/latest)](https://github.com/plantuml/plantuml/commits/)
 
-[![Pre-release (latest by date)](https://img.shields.io/github/v/release/plantuml/plantuml?include_prereleases)](https://github.com/plantuml/plantuml/releases/tag/snapshot)
-[![Pre-release Date](https://img.shields.io/github/release-date-pre/plantuml/plantuml)](https://github.com/plantuml/plantuml/releases/tag/snapshot) 
-[![GitHub last commit](https://img.shields.io/github/last-commit/plantuml/plantuml)](https://github.com/plantuml/plantuml/commits/)
-[![CI](https://github.com/plantuml/plantuml/actions/workflows/ci.yml/badge.svg)](https://github.com/plantuml/plantuml/actions/workflows/ci.yml)
+[![Pre-release (latest by date)](https://img.shields.io/github/v/release/plantuml/plantuml?color=chocolate&include_prereleases)](https://github.com/plantuml/plantuml/releases/tag/snapshot)
+[![Pre-release Date](https://img.shields.io/github/release-date-pre/plantuml/plantuml?color=chocolate)](https://github.com/plantuml/plantuml/releases/tag/snapshot)
+[![GitHub last commit](https://img.shields.io/github/last-commit/plantuml/plantuml?color=chocolate)](https://github.com/plantuml/plantuml/commits/)
+[![CI](https://github.com/plantuml/plantuml/actions/workflows/ci.yml/badge.svg?color=chocolate)](https://github.com/plantuml/plantuml/actions/workflows/ci.yml)
 
 Generate UML diagram from textual description
 
