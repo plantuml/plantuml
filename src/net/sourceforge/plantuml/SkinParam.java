@@ -148,9 +148,8 @@ public class SkinParam implements ISkinParam {
 	}
 
 	public void muteStyle(Style modifiedStyle) {
-		if (UseStyle.useBetaStyle()) {
+		if (UseStyle.useBetaStyle())
 			styleBuilder = getCurrentStyleBuilder().muteStyle(modifiedStyle);
-		}
 	}
 
 	public String getDefaultSkin() {
@@ -167,7 +166,6 @@ public class SkinParam implements ISkinParam {
 		if (result == null) {
 			result = tmp.loadSkin("plantuml.skin");
 		}
-
 		return result;
 	}
 
@@ -225,7 +223,7 @@ public class SkinParam implements ISkinParam {
 		}
 	}
 
-	private void applyPendingStyleMigration() {
+	public void applyPendingStyleMigration() {
 		for (Entry<String, String> ent : paramsPendingForStyleMigration.entrySet()) {
 			final FromSkinparamToStyle convertor = new FromSkinparamToStyle(ent.getKey(), ent.getValue(),
 					getCurrentStyleBuilder());

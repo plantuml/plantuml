@@ -527,14 +527,12 @@ skinparam stack {
 }
 !endsub
 
-!if %variable_exists("NEWSTYLE")
 <style>
-wbsDiagram {
-    LineColor $PRIMARY
-    BorderThickness 3
-    BackgroundColor $LIGHT-black
-    FontColor $PRIMARY
-    :depth(0) {
+mindmapDiagram, wbsDiagram {
+    element {
+	    $primary_scheme()
+	}
+	:depth(0) {
         fontSize 16
         fontStyle bold
         fontColor $SECONDARY
@@ -557,33 +555,4 @@ wbsDiagram {
 }
 </style>
 
-<style>
-mindmapDiagram {
-    LineColor $PRIMARY
-    BorderThickness 3
-    BackgroundColor $LIGHT-black
-    FontColor $PRIMARY
-    :depth(0) {
-        fontSize 16
-        fontStyle bold
-        fontColor $SECONDARY
-    }
-    :depth(1) {
-        fontSize 14
-        padding 5
-        fontStyle bold
-    }
-    :depth(2) {
-        fontSize 12
-        padding 4
-    }
-    :depth(3) {
-        fontSize 11
-        padding 3
-        fontColor $INFO
-    }
-
-}
-</style>
-!endif
 
