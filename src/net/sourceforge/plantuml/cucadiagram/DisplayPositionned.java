@@ -44,11 +44,15 @@ package net.sourceforge.plantuml.cucadiagram;
  * 
  */
 @Deprecated
-public interface DisplayPositionned {
+public class DisplayPositionned {
 
-	public Display getDisplay();
+	public Display getDisplay() {
+		return null;
+	}
 	
-	public boolean isNull();
+	public boolean isNull() {
+		return false;
+	}
 
 
 }

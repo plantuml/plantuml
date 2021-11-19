@@ -118,6 +118,11 @@ public class StyleLoader {
 		boolean inComment = false;
 		for (StringLocated s : lines) {
 			String trimmed = s.getTrimmed().getString();
+			if (trimmed.startsWith("/*") || trimmed.endsWith("*/"))
+				continue;
+			if (trimmed.startsWith("/'") || trimmed.endsWith("'/"))
+				continue;
+
 			if (trimmed.startsWith("/*") || trimmed.startsWith("/'")) {
 				inComment = true;
 				continue;
@@ -126,9 +131,9 @@ public class StyleLoader {
 				inComment = false;
 				continue;
 			}
-			if (inComment) {
+			if (inComment)
 				continue;
-			}
+
 			final int x = trimmed.lastIndexOf("//");
 			if (x != -1) {
 				trimmed = trimmed.substring(0, x).trim();

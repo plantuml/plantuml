@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.cucadiagram;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
 
-public class DisplayPositioned implements DisplayPositionned {
+public class DisplayPositioned extends DisplayPositionned {
 
 	private final Display display;
 	private final HorizontalAlignment horizontalAlignment;
