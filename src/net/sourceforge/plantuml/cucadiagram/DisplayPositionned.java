@@ -37,14 +37,18 @@ package net.sourceforge.plantuml.cucadiagram;
 
 /**
  * 
- * There is a type in this class name.
+ * There is a typo in this class name.
  * 
- * You should use directly DisplayPositioned and not this interface which is here for legacy code
+ * You should use directly DisplayPositioned and not this interface which is here for legacy code.
+ * This file will be removed, so use DisplayPositioned instead.
  * 
  */
 @Deprecated
 public interface DisplayPositionned {
 
 	public Display getDisplay();
+	
+	public boolean isNull();
+
 
 }

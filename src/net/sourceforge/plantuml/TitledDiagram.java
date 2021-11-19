@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.DisplayPositioned;
+import net.sourceforge.plantuml.cucadiagram.DisplayPositionned;
 import net.sourceforge.plantuml.cucadiagram.DisplaySection;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
@@ -172,7 +173,7 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 	}
 
 	@Override
-	final public DisplayPositioned getTitle() {
+	final public DisplayPositionned getTitle() {
 		return title;
 	}
 

@@ -101,7 +101,7 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 	abstract StyleSignature getStyleSignature();
 
 	private StyleSignature getStyleSignatureUnstarted() {
-		return StyleSignature.of(SName.root, SName.element, SName.ganttDiagram, SName.unstartedTask);
+		return StyleSignature.of(SName.root, SName.element, SName.ganttDiagram, SName.task, SName.unstarted);
 	}
 
 	final protected HColor getLineColor() {

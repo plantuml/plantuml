@@ -118,7 +118,7 @@ public enum SName {
 	timeline, //
 	timingDiagram, //
 	title, //
-	unstartedTask, //
+	unstarted, //
 	usecase, //
 	wbsDiagram, //
 	yamlDiagram; //

@@ -179,7 +179,7 @@ public class AnnotatedWorker {
 	}
 
 	private TextBlock addTitle(TextBlock original) {
-		final DisplayPositioned title = annotated.getTitle();
+		final DisplayPositioned title = (DisplayPositioned) annotated.getTitle();
 		if (title.isNull()) {
 			return original;
 		}

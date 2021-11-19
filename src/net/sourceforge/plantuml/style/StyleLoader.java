@@ -41,7 +41,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.EnumMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -105,8 +104,8 @@ public class StyleLoader {
 		}
 	}
 
-	private static final String NAME_USER = "[\\w()]+?";
-	private final static Pattern2 userName = MyPattern.cmpile("^[.:]?(" + NAME_USER + ")([%s]+\\*)?[%s]*\\{$");
+	private final static String KEYNAMES = "[\\w(), ]+?";
+	private final static Pattern2 keyName = MyPattern.cmpile("^[.:]?(" + KEYNAMES + ")([%s]+\\*)?[%s]*\\{$");
 	private final static Pattern2 propertyAndValue = MyPattern.cmpile("^([\\w]+):?[%s]+(.*?);?$");
 	private final static Pattern2 closeBracket = MyPattern.cmpile("^\\}$");
 
@@ -114,7 +113,7 @@ public class StyleLoader {
 		lines = lines.eventuallyMoveAllEmptyBracket();
 		final List<Style> result = new ArrayList<>();
 
-		final List<String> context = new ArrayList<>();
+		Context context = new Context();
 		final List<Map<PName, Value>> maps = new ArrayList<Map<PName, Value>>();
 		boolean inComment = false;
 		for (StringLocated s : lines) {
@@ -134,14 +133,14 @@ public class StyleLoader {
 			if (x != -1) {
 				trimmed = trimmed.substring(0, x).trim();
 			}
-			final Matcher2 mUserName = userName.matcher(trimmed);
-			if (mUserName.find()) {
-				String n = mUserName.group(1);
-				final boolean isRecurse = mUserName.group(2) != null;
+			final Matcher2 mKeyNames = keyName.matcher(trimmed);
+			if (mKeyNames.find()) {
+				String names = mKeyNames.group(1).replace(" ", "");
+				final boolean isRecurse = mKeyNames.group(2) != null;
 				if (isRecurse) {
-					n += "*";
+					names += "*";
 				}
-				context.add(n);
+				context = context.push(names);
 				maps.add(new EnumMap<PName, Value>(PName.class));
 				continue;
 			}
@@ -157,10 +156,12 @@ public class StyleLoader {
 			final Matcher2 mCloseBracket = closeBracket.matcher(trimmed);
 			if (mCloseBracket.find()) {
 				if (context.size() > 0) {
-					final StyleSignature signature = contextToSignature(context);
-					final Style style = new Style(signature, maps.get(maps.size() - 1));
-					result.add(style);
-					context.remove(context.size() - 1);
+					final Collection<StyleSignature> signatures = context.toSignatures();
+					for (StyleSignature signature : signatures) {
+						final Style style = new Style(signature, maps.get(maps.size() - 1));
+						result.add(style);
+					}
+					context = context.pop();
 					maps.remove(maps.size() - 1);
 				}
 			}
@@ -168,23 +169,6 @@ public class StyleLoader {
 
 		return Collections.unmodifiableList(result);
 
-	}
-
-	private static StyleSignature contextToSignature(List<String> context) {
-		StyleSignature result = StyleSignature.empty();
-		boolean star = false;
-		for (Iterator<String> it = context.iterator(); it.hasNext();) {
-			String s = it.next();
-			if (s.endsWith("*")) {
-				star = true;
-				s = s.substring(0, s.length() - 1);
-			}
-			result = result.add(s);
-		}
-		if (star) {
-			result = result.addStar();
-		}
-		return result;
 	}
 
 }
