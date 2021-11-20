@@ -89,6 +89,12 @@ public class EmbeddedDiagram implements CharSequence {
 		if (s.equals("{{wire")) {
 			return "wire";
 		}
+		if (s.equals("{{creole")) {
+			return "creole";
+		}
+		if (s.equals("{{board")) {
+			return "board";
+		}
 		return null;
 	}
 
