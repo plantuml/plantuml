@@ -40,7 +40,6 @@ import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.UmlDiagram;
@@ -52,18 +51,14 @@ import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.style.NoStyleAvailableException;
-import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class MindMapDiagram extends UmlDiagram {
 
-	private Branch left = new Branch();
-	private Branch right = new Branch();
+	private final MindMap mindmap;
 
 	private Direction defaultDirection = Direction.RIGHT;
 
@@ -77,6 +72,7 @@ public class MindMapDiagram extends UmlDiagram {
 
 	public MindMapDiagram(UmlSource source) {
 		super(source, UmlDiagramType.MINDMAP);
+		this.mindmap = new MindMap(getSkinParam());
 	}
 
 	@Override
@@ -90,7 +86,7 @@ public class MindMapDiagram extends UmlDiagram {
 		return new TextBlockBackcolored() {
 
 			public void drawU(UGraphic ug) {
-				drawMe(ug);
+				mindmap.drawU(ug);
 			}
 
 			public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
@@ -98,19 +94,7 @@ public class MindMapDiagram extends UmlDiagram {
 			}
 
 			public Dimension2D calculateDimension(StringBounder stringBounder) {
-				computeFinger();
-				final double y1 = right.finger == null ? 0 : right.finger.getFullThickness(stringBounder) / 2;
-				final double y2 = left.finger == null ? 0 : left.finger.getFullThickness(stringBounder) / 2;
-				final double y = Math.max(y1, y2);
-
-				final double x = left.finger == null ? 0 : left.finger.getFullElongation(stringBounder);
-
-				final double width = right.finger == null ? x : x + right.finger.getFullElongation(stringBounder);
-				final double height = y
-						+ Math.max(left.finger == null ? 0 : left.finger.getFullThickness(stringBounder) / 2,
-								right.finger == null ? 0 : right.finger.getFullThickness(stringBounder) / 2);
-				return new Dimension2DDouble(width, height);
-
+				return mindmap.calculateDimension(stringBounder);
 			}
 
 			public MinMax getMinMax(StringBounder stringBounder) {
@@ -123,41 +107,6 @@ public class MindMapDiagram extends UmlDiagram {
 		};
 	}
 
-	private void drawMe(UGraphic ug) {
-		if (left.root == null && right.root == null) {
-			return;
-		}
-		computeFinger();
-
-		final StringBounder stringBounder = ug.getStringBounder();
-		final double y1 = right.finger == null ? 0 : right.finger.getFullThickness(stringBounder) / 2;
-		final double y2 = left.finger == null ? 0 : left.finger.getFullThickness(stringBounder) / 2;
-		final double y = Math.max(y1, y2);
-
-		final double x = left.finger == null ? 0
-				: left.finger.getFullElongation(stringBounder) + ((FingerImpl) left.finger).getX12();
-		if (right.finger != null) {
-			right.finger.drawU(ug.apply(new UTranslate(x, y)));
-		}
-		if (left.finger != null) {
-			left.finger.drawU(ug.apply(new UTranslate(x, y)));
-		}
-	}
-
-	private void computeFinger() {
-		if (left.finger == null && right.finger == null) {
-			if (left.root.hasChildren()) {
-				left.finger = FingerImpl.build(left.root, getSkinParam(), Direction.LEFT);
-			}
-			if (left.finger == null || right.root.hasChildren()) {
-				right.finger = FingerImpl.build(right.root, getSkinParam(), Direction.RIGHT);
-			}
-			if (left.finger != null && right.finger != null) {
-				left.finger.doNotDrawFirstPhalanx();
-			}
-		}
-	}
-
 	public CommandExecutionResult addIdea(HColor backColor, int level, Display label, IdeaShape shape) {
 		return addIdea(backColor, level, label, shape, defaultDirection);
 	}
@@ -168,78 +117,12 @@ public class MindMapDiagram extends UmlDiagram {
 		if (stereotype != null) {
 			label = label.removeEndingStereotype();
 		}
-		return addIdeaInternal(stereotype, backColor, level, label, shape, direction);
+		return mindmap.addIdeaInternal(stereotype, backColor, level, label, shape, direction);
 	}
 
 	public CommandExecutionResult addIdea(String stereotype, HColor backColor, int level, Display label,
 			IdeaShape shape) {
-		return addIdeaInternal(stereotype, backColor, level, label, shape, defaultDirection);
-	}
-
-	private CommandExecutionResult addIdeaInternal(String stereotype, HColor backColor, int level, Display label,
-			IdeaShape shape, Direction direction) {
-		try {
-			if (left.root == null && right.root == null) {
-				level = 0;
-			}
-			if (level == 0) {
-				if (this.right.root != null) {
-					return CommandExecutionResult.error(
-							"I don't know how to draw multi-root diagram. You should suggest an image so that the PlantUML team implements it :-)");
-				}
-				right.initRoot(getSkinParam().getCurrentStyleBuilder(), backColor, label, shape, stereotype);
-				left.initRoot(getSkinParam().getCurrentStyleBuilder(), backColor, label, shape, stereotype);
-				return CommandExecutionResult.ok();
-			}
-			if (direction == Direction.LEFT) {
-				return left.add(getSkinParam().getCurrentStyleBuilder(), backColor, level, label, shape, stereotype);
-			}
-			return right.add(getSkinParam().getCurrentStyleBuilder(), backColor, level, label, shape, stereotype);
-		} catch (NoStyleAvailableException e) {
-			// e.printStackTrace();
-			return CommandExecutionResult.error("General failure: no style available.");
-		}
-	}
-
-	static class Branch {
-		private Idea root;
-		private Idea last;
-		private Finger finger;
-
-		private void initRoot(StyleBuilder styleBuilder, HColor backColor, Display label, IdeaShape shape,
-				String stereotype) {
-			root = new Idea(styleBuilder, backColor, label, shape, stereotype);
-			last = root;
-		}
-
-		private Idea getParentOfLast(int nb) {
-			Idea result = last;
-			for (int i = 0; i < nb; i++) {
-				result = result.getParent();
-			}
-			return result;
-		}
-
-		private CommandExecutionResult add(StyleBuilder styleBuilder, HColor backColor, int level, Display label,
-				IdeaShape shape, String stereotype) {
-			if (last == null) {
-				return CommandExecutionResult.error("Check your indentation ?");
-			}
-			if (level == last.getLevel() + 1) {
-				final Idea newIdea = last.createIdea(styleBuilder, backColor, level, label, shape, stereotype);
-				last = newIdea;
-				return CommandExecutionResult.ok();
-			}
-			if (level <= last.getLevel()) {
-				final int diff = last.getLevel() - level + 1;
-				final Idea newIdea = getParentOfLast(diff).createIdea(styleBuilder, backColor, level, label, shape,
-						stereotype);
-				last = newIdea;
-				return CommandExecutionResult.ok();
-			}
-			return CommandExecutionResult.error("error42L");
-		}
-
+		return mindmap.addIdeaInternal(stereotype, backColor, level, label, shape, defaultDirection);
 	}
 
 	private String first;

@@ -203,5 +203,10 @@ public abstract class AbstractPSystem implements Diagram {
 	public ClockwiseTopRightBottomLeft getDefaultMargins() {
 		return ClockwiseTopRightBottomLeft.same(0);
 	}
+	
+	@Override
+	public Display getTitleDisplay() {
+		return null;
+	}
 
 }

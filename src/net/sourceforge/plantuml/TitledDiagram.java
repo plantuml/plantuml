@@ -39,6 +39,7 @@ import java.io.IOException;
 
 import net.sourceforge.plantuml.anim.Animation;
 import net.sourceforge.plantuml.anim.AnimationDecoder;
+import net.sourceforge.plantuml.api.ApiStable;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.UmlSource;
@@ -166,15 +167,22 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 //	}
 
 	final public void setTitle(DisplayPositioned title) {
-		if (title.isNull() || title.getDisplay().isWhite()) {
+		if (title.isNull() || title.getDisplay().isWhite())
 			return;
-		}
 		this.title = title;
 	}
 
 	@Override
 	final public DisplayPositionned getTitle() {
 		return title;
+	}
+
+	@Override
+	@ApiStable
+	final public Display getTitleDisplay() {
+		if (title == null)
+			return null;
+		return title.getDisplay();
 	}
 
 	final public void setMainFrame(Display mainFrame) {

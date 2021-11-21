@@ -240,7 +240,7 @@ public final class GeneralImageBuilder {
 			return new EntityImageMap(leaf, skinParam, portionShower);
 		}
 		if (leaf.getLeafType() == LeafType.SYNCHRO_BAR || leaf.getLeafType() == LeafType.STATE_FORK_JOIN) {
-			return new EntityImageSynchroBar(leaf, skinParam);
+			return new EntityImageSynchroBar(leaf, skinParam, umlDiagramType.getStyleName());
 		}
 		if (leaf.getLeafType() == LeafType.ARC_CIRCLE) {
 			return new EntityImageArcCircle(leaf, skinParam);

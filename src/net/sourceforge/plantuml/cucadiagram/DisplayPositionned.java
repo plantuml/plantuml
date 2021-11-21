@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.cucadiagram;
 
+import net.sourceforge.plantuml.api.ApiWarning;
+
 /**
  * 
  * There is a typo in this class name.
@@ -44,6 +46,7 @@ package net.sourceforge.plantuml.cucadiagram;
  * 
  */
 @Deprecated
+@ApiWarning(willBeRemoved = "use DisplayPositioned instead")
 public class DisplayPositionned {
 
 	public Display getDisplay() {

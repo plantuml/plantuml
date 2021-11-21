@@ -130,15 +130,15 @@ public abstract class EntityImageStateCommon extends AbstractEntityImage {
 
 	final protected UGraphic applyColor(UGraphic ug) {
 
-		HColor classBorder = lineConfig.getColors().getColor(ColorType.LINE);
-		if (classBorder == null) {
+		HColor border = lineConfig.getColors().getColor(ColorType.LINE);
+		if (border == null) {
 			if (UseStyle.useBetaStyle())
-				classBorder = getStyleState().value(PName.LineColor).asColor(getSkinParam().getThemeStyle(),
+				border = getStyleState().value(PName.LineColor).asColor(getSkinParam().getThemeStyle(),
 						getSkinParam().getIHtmlColorSet());
 			else
-				classBorder = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.stateBorder);
+				border = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.stateBorder);
 		}
-		ug = ug.apply(getStroke()).apply(classBorder);
+		ug = ug.apply(getStroke()).apply(border);
 		HColor backcolor = getEntity().getColors().getColor(ColorType.BACK);
 		if (backcolor == null) {
 			if (UseStyle.useBetaStyle())

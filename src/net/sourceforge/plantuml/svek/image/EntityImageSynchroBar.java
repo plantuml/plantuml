@@ -59,12 +59,17 @@ import net.sourceforge.plantuml.ugraphic.color.HColorNone;
 
 public class EntityImageSynchroBar extends AbstractEntityImage {
 
-	public EntityImageSynchroBar(ILeaf entity, ISkinParam skinParam) {
+	// private final SName styleName;
+
+	public EntityImageSynchroBar(ILeaf entity, ISkinParam skinParam, SName styleName) {
 		super(entity, skinParam);
+		// this.styleName = styleName;
 	}
 
 	public StyleSignature getDefaultStyleDefinitionBar() {
-		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.activityBar);
+		// return StyleSignature.of(SName.root, SName.element, styleName,
+		// SName.activityBar);
+		return StyleSignature.of(SName.root, SName.element, SName.activityBar);
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
@@ -83,8 +88,9 @@ public class EntityImageSynchroBar extends AbstractEntityImage {
 		}
 		HColor color = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.activityBar);
 		if (UseStyle.useBetaStyle()) {
-			final Style style = getDefaultStyleDefinitionBar().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
-			color = style.value(PName.LineColor).asColor(getSkinParam().getThemeStyle(),
+			final Style style = getDefaultStyleDefinitionBar().with(getEntity().getStereotype())
+					.getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+			color = style.value(PName.BackGroundColor).asColor(getSkinParam().getThemeStyle(),
 					getSkinParam().getIHtmlColorSet());
 			shadowing = style.value(PName.Shadowing).asDouble();
 		}
