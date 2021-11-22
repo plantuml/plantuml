@@ -40,9 +40,14 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.Proxy;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -54,29 +59,71 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import javax.net.ssl.HttpsURLConnection;
 import javax.swing.ImageIcon;
 
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.security.authentication.SecurityAccessInterceptor;
+import net.sourceforge.plantuml.security.authentication.SecurityAuthentication;
+import net.sourceforge.plantuml.security.authentication.SecurityCredentials;
 
 /**
  * Secure replacement for java.net.URL.
  * <p>
  * This class should be used instead of java.net.URL.
  * <p>
- * This class does some control access.
- *
+ * This class does some control access and manages access-tokens via URL. If a URL contains a access-token, similar to
+ * a user prefix, SURL loads the authorization config for this user-token and passes the credentials to the host.
+ * <p>
+ * Example:<br/>
+ * <pre>
+ *     SURL url = SURL.create ("https://jenkins-access@jenkins.mycompany.com/api/json")
+ * </pre>
+ * The {@code jenkins-access} will checked against the Security context access token configuration. If a configuration
+ * exists for this token name, the token will be removed from the URL and the credentials will be added to the headers.
+ * If the token is not found, the URL remains as it is and no separate authentication will be performed.
+ * <p>
+ * TODO: Some methods should be moved to a HttpClient implementation, because SURL is not the valid class to manage it.
+ * <br/>
+ * TODO: BAD_HOSTS implementation should be reviewed and moved to HttpClient implementation with a circuit-breaker.
+ * <br/>
+ * TODO: Token expiration with refresh should be implemented in future.
+ * <br/>
  */
 public class SURL {
 
+	/**
+	 * Indicates, that we have no authentication to access the URL.
+	 */
+	public static final String WITHOUT_AUTHENTICATION = SecurityUtils.NO_CREDENTIALS;
+
+	/**
+	 * Regex to remove the UserInfo part from a URL.
+	 */
+	private static final Pattern PATTERN_USERINFO = Pattern.compile("(^https?://)(.*@)(.*)");
+
+	private static final ExecutorService EXE = Executors.newCachedThreadPool();
+
+	private static final Map<String, Long> BAD_HOSTS = new ConcurrentHashMap<String, Long>();
+
+	/**
+	 * Internal URL, maybe cleaned from user-token.
+	 */
 	private final URL internal;
 
-	private SURL(String src) throws MalformedURLException {
-		this(new URL(src));
-	}
+	/**
+	 * Assigned credentials to this URL.
+	 */
+	private final String securityIdentifier;
 
-	private SURL(URL url) {
+	private SURL(URL url, String securityIdentifier) {
+		assert url != null;
+		assert securityIdentifier != null;
 		this.internal = url;
+		this.securityIdentifier = securityIdentifier;
 	}
 
 	public static SURL create(String url) {
@@ -85,7 +132,7 @@ public class SURL {
 		}
 		if (url.startsWith("http://") || url.startsWith("https://"))
 			try {
-				return new SURL(url);
+				return create(new URL(url));
 			} catch (MalformedURLException e) {
 				e.printStackTrace();
 			}
@@ -96,7 +143,47 @@ public class SURL {
 		if (url == null) {
 			return null;
 		}
-		return new SURL(url);
+
+		URL internalUrl;
+
+		String credentialId = url.getUserInfo();
+
+		if (credentialId == null || credentialId.indexOf(':') > 0) {
+			// No user info at all, or a user with password (This is a legacy BasicAuth access, and we bypass it):
+			internalUrl = url;
+			credentialId = WITHOUT_AUTHENTICATION;
+		} else {
+			// Given userInfo, but without a password. We try to find SecurityCredentials
+			if (SecurityUtils.existsSecurityCredentials(credentialId) ) {
+				internalUrl = removeUserInfo (url);
+			} else {
+				internalUrl = url;
+				credentialId = WITHOUT_AUTHENTICATION;
+			}
+		}
+
+		return new SURL(internalUrl, credentialId);
+	}
+
+	/**
+	 * Creates a URL without UserInfo part and without SecurityCredentials.
+	 *
+	 * @param url plain URL
+	 * @return SURL without any user credential information.
+	 */
+	public static SURL createWithoutUser(URL url) {
+		return new SURL(removeUserInfo(url), WITHOUT_AUTHENTICATION);
+	}
+
+	/**
+	 * Clears the bad hosts cache.
+	 * <p>
+	 * In some test cases (and maybe also needed for other functionality) the bad hosts cache must be cleared.<br/>
+	 * E.g., in a test we check the failure on missing credentials and then a test with existing credentials. With a
+	 * bad host cache the second test will fail, or we have unpredicted results.
+	 */
+	public static void resetBadHosts() {
+		BAD_HOSTS.clear();
 	}
 
 	@Override
@@ -105,7 +192,7 @@ public class SURL {
 	}
 
 	/**
-	 * Check SecurityProfile to see if this URL can be open.
+	 * Check SecurityProfile to see if this URL can be opened.
 	 */
 	private boolean isUrlOk() {
 		if (SecurityUtils.getSecurityProfile() == SecurityProfile.SANDBOX) {
@@ -128,18 +215,13 @@ public class SURL {
 			}
 			final int port = internal.getPort();
 			// Using INTERNET profile, port 80 and 443 are ok
-			if (port == 80 || port == 443 || port == -1) {
-				return true;
-			}
+			return port == 80 || port == 443 || port == -1;
 		}
 		return false;
 	}
 
 	private boolean pureIP(String full) {
-		if (full.matches("^https?://\\d+\\.\\d+\\.\\d+\\.\\d+.*")) {
-			return true;
-		}
-		return false;
+		return full.matches("^https?://\\d+\\.\\d+\\.\\d+\\.\\d+.*");
 	}
 
 	private boolean isInAllowList() {
@@ -153,6 +235,8 @@ public class SURL {
 	}
 
 	private String cleanPath(String path) {
+		// Remove user information, because we don't like to store user/password or userTokens in allow-list
+		path = removeUserInfoFromUrlPath (path);
 		path = path.trim().toLowerCase(Locale.US);
 		// We simplify/normalize the url, removing default ports
 		path = path.replace(":80/", "");
@@ -161,72 +245,268 @@ public class SURL {
 	}
 
 	private List<String> getAllowList() {
-		final String env = SecurityUtils.getenv("plantuml.allowlist.url");
+		final String env = SecurityUtils.getenv(SecurityUtils.PATHS_ALLOWED);
 		if (env == null) {
 			return Collections.emptyList();
 		}
 		return Arrays.asList(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(env).split(";"));
 	}
 
-	private final static ExecutorService exe = Executors.newCachedThreadPool();
-	private final static Map<String, Long> badHosts = new ConcurrentHashMap<String, Long>();
-
-	// Added by Alain Corbiere
+	/**
+	 * Reads from an endpoint (with configured credentials and proxy) the response as blob.
+	 * <p>
+	 * This method allows access to an endpoint, with a configured SecurityCredentials object. The credentials will
+	 * load on the fly and authentication fetched from an authentication-manager. Caching of tokens is not supported.
+	 * <p>
+	 * authors: Alain Corbiere, Aljoscha Rittner
+	 *
+	 * @return data loaded data from endpoint
+	 */
 	public byte[] getBytes() {
-		if (isUrlOk() == false) {
+		if (!isUrlOk()) {
 			return null;
 		}
-		final String host = internal.getHost();
-		final Long bad = badHosts.get(host);
-		if (bad != null) {
-			final long duration = System.currentTimeMillis() - bad;
-			if (duration < 1000L * 60) {
-				// System.err.println("BAD HOST!" + host);
-				return null;
-			}
-			// System.err.println("cleaning " + host);
-			badHosts.remove(host);
-		}
-		final Future<byte[]> result = exe.submit(new Callable<byte[]>() {
-			public byte[] call() throws IOException {
-				InputStream input = null;
-				try {
-					final URLConnection connection = internal.openConnection();
-					if (connection == null) {
-						return null;
-					}
-					input = connection.getInputStream();
-					final ByteArrayOutputStream image = new ByteArrayOutputStream();
-					final byte[] buffer = new byte[1024];
-					int read;
-					while ((read = input.read(buffer)) > 0) {
-						image.write(buffer, 0, read);
-					}
-					image.close();
-					return image.toByteArray();
-				} finally {
-					if (input != null) {
-						input.close();
-					}
-				}
-			}
-		});
-
+		SecurityCredentials credentials = SecurityUtils.loadSecurityCredentials(securityIdentifier);
+		SecurityAuthentication authentication = SecurityUtils.getAuthenticationManager(credentials).create(credentials);
 		try {
-			byte data[] = result.get(SecurityUtils.getSecurityProfile().getTimeout(), TimeUnit.MILLISECONDS);
-			if (data != null) {
-				return data;
+			String host = internal.getHost();
+			Long bad = BAD_HOSTS.get(host);
+			if (bad != null) {
+				if ((System.currentTimeMillis() - bad) < 1000L * 60) {
+					return null;
+				}
+				BAD_HOSTS.remove(host);
 			}
-		} catch (Exception e) {
-			System.err.println("issue " + host + " " + e);
+
+			try {
+				Future<byte[]> result = EXE.submit(
+						requestWithGetAndResponse(internal, credentials.getProxy(), authentication, null));
+				byte[] data = result.get(SecurityUtils.getSecurityProfile().getTimeout(), TimeUnit.MILLISECONDS);
+				if (data != null) {
+					return data;
+				}
+			} catch (Exception e) {
+				System.err.println("issue " + host + " " + e);
+			}
+
+			BAD_HOSTS.put(host, System.currentTimeMillis());
+			return null;
+		} finally {
+			// clean up. We don't cache tokens, no expire handling. All time a re-request.
+			credentials.eraseCredentials();
+			authentication.eraseCredentials();
 		}
-		badHosts.put(host, System.currentTimeMillis());
+	}
+
+	/**
+	 * Reads from an endpoint with a given authentication and proxy the response as blob.
+	 * <p>
+	 * This method allows a parametrized access to an endpoint, without a configured SecurityCredentials object. This is
+	 * useful to access internally identity providers (IDP), or authorization servers (to request access tokens).
+	 * <p>
+	 * This method don't use the "bad-host" functionality, because the access to infrastructure services should not be
+	 * obfuscated by some internal management.
+	 * <p>
+	 * <strong>Please don't use this method directly from DSL scripts.</strong>
+	 *
+	 * @param authentication authentication object data. Caller is responsible to erase credentials
+	 * @param proxy proxy configuration
+	 * @param headers additional headers, if needed
+	 * @return loaded data from endpoint
+	 */
+	public byte[] getBytes (Proxy proxy, SecurityAuthentication authentication, Map<String, Object> headers) {
+		if (!isUrlOk()) {
+			return null;
+		}
+		final Future<byte[]> result = EXE.submit(requestWithGetAndResponse(internal, proxy, authentication, headers));
+		byte[] data = null;
+		try {
+			data = result.get(SecurityUtils.getSecurityProfile().getTimeout(), TimeUnit.MILLISECONDS);
+		} catch (Exception e) {
+			System.err.println("SURL response issue to " + internal.getHost() + " " + e);
+		}
+		return data;
+	}
+
+
+	/**
+	 * Post to an endpoint with a given authentication and proxy the response as blob.
+	 * <p>
+	 * This method allows a parametrized access to an endpoint, without a configured SecurityCredentials object. This is
+	 * useful to access internally identity providers (IDP), or authorization servers (to request access tokens).
+	 * <p>
+	 * This method don't use the "bad-host" functionality, because the access to infrastructure services should not be
+	 * obfuscated by some internal management.
+	 * <p>
+	 * <strong>Please don't use this method directly from DSL scripts.</strong>
+	 *
+	 * @param authentication authentication object data. Caller is responsible to erase credentials
+	 * @param proxy proxy configuration
+	 * @param data content to post
+	 * @param headers headers, if needed
+	 * @return loaded data from endpoint
+	 */
+	public byte[] getBytesOnPost(Proxy proxy, SecurityAuthentication authentication, String data,
+								 Map<String, Object> headers) {
+		if (!isUrlOk()) {
+			return null;
+		}
+		final Future<byte[]> result = EXE.submit(
+				requestWithPostAndResponse(internal, proxy, authentication, data, headers));
+		byte[] response = null;
+		try {
+			response = result.get(SecurityUtils.getSecurityProfile().getTimeout(), TimeUnit.MILLISECONDS);
+		} catch (Exception e) {
+			System.err.println("SURL response issue to " + internal.getHost() + " " + e);
+		}
+		return response;
+	}
+
+	/**
+	 * Creates a GET request and response handler
+	 * @param url URL to request
+	 * @param proxy proxy to apply
+	 * @param authentication the authentication to use
+	 * @param headers additional headers, if needed
+	 * @return the callable handler.
+	 */
+	private static Callable<byte[]> requestWithGetAndResponse(
+			final URL url, final Proxy proxy, final SecurityAuthentication authentication,
+			final Map<String, Object> headers) {
+		return new Callable<byte[]>() {
+			public byte[] call() throws IOException {
+				// Add proxy, if passed throw parameters
+				final URLConnection connection = proxy == null
+						? url.openConnection()
+						: url.openConnection(proxy);
+				if (connection == null) {
+					return null;
+				}
+
+				HttpURLConnection http = (HttpURLConnection) connection;
+
+				applyEndpointAccessAuthentication(http, authentication);
+				applyAdditionalHeaders (http, headers);
+
+				return retrieveResponseAsBytes(http);
+			}
+		};
+	}
+
+	/**
+	 * Creates a POST request and response handler with a simple String content. The content will be identified as form
+	 * or JSON data. The charset encoding can be set by header parameters or will be set to UTF-8. The method to some
+	 * fancy logic to simplify it for the user.
+	 * @param url URL to request via POST method
+	 * @param proxy proxy to apply
+	 * @param authentication the authentication to use
+	 * @param headers additional headers, if needed
+	 * @return the callable handler.
+	 */
+	private static Callable<byte[]> requestWithPostAndResponse(
+			final URL url, final Proxy proxy, final SecurityAuthentication authentication,
+			final String data, final Map<String, Object> headers) {
+		return new Callable<byte[]>() {
+			public byte[] call() throws IOException {
+				// Add proxy, if passed throw parameters
+				final URLConnection connection = proxy == null
+						? url.openConnection()
+						: url.openConnection(proxy);
+				if (connection == null) {
+					return null;
+				}
+
+				boolean withContent = StringUtils.isNotEmpty(data);
+
+				HttpURLConnection http = (HttpURLConnection) connection;
+				http.setRequestMethod("POST");
+				if (withContent) {
+					http.setDoOutput(true);
+				}
+
+				applyEndpointAccessAuthentication(http, authentication);
+				applyAdditionalHeaders (http, headers);
+
+				Charset charSet = extractCharset(http.getRequestProperty("Content-Type"));
+
+				if ( withContent ) {
+					sendRequestAsBytes(http, data.getBytes(charSet != null ? charSet : StandardCharsets.UTF_8));
+				}
+				return retrieveResponseAsBytes(http);
+			}
+		};
+	}
+
+	private static Charset extractCharset(String contentType) {
+		if ( StringUtils.isEmpty(contentType) ) {
+			return null;
+		}
+		Matcher matcher = Pattern.compile("(?i)\\bcharset=\\s*\"?([^\\s;\"]*)").matcher(contentType);
+		if (matcher.find()) {
+			try {
+				return Charset.forName(matcher.group(1));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 		return null;
+	}
+
+	/**
+	 * Loads a response from an endpoint as a byte[] array.
+	 *
+	 * @param connection the URL connection
+	 * @return the loaded byte arrays
+	 * @throws IOException an exception, if the connection cannot establish or the download was broken
+	 */
+	private static byte[] retrieveResponseAsBytes(HttpURLConnection connection) throws IOException {
+		int responseCode = connection.getResponseCode();
+		if ( responseCode < HttpURLConnection.HTTP_BAD_REQUEST) {
+			try (InputStream input = connection.getInputStream()) {
+				return retrieveData(input);
+			}
+		} else {
+			try (InputStream error = connection.getErrorStream()) {
+				byte[] bytes = retrieveData(error);
+				throw new IOException("HTTP error "
+						+ responseCode + " with " + new String(bytes, StandardCharsets.UTF_8));
+			}
+		}
+	}
+
+	/**
+	 * Reads data in a byte[] array.
+	 * @param input input stream
+	 * @return byte data
+	 * @throws IOException if something went wrong
+	 */
+	private static byte[] retrieveData (InputStream input) throws IOException {
+		final ByteArrayOutputStream out = new ByteArrayOutputStream();
+		final byte[] buffer = new byte[1024];
+		int read;
+		while ((read = input.read(buffer)) > 0) {
+			out.write(buffer, 0, read);
+		}
+		out.close();
+		return out.toByteArray();
+	}
+
+	/**
+	 * Sends a request content payload to an endpoint.
+	 * @param connection HTTP connection
+	 * @param data data as byte array
+	 * @throws IOException if something went wrong
+	 */
+	private static void sendRequestAsBytes (HttpURLConnection connection, byte[] data) throws IOException {
+		connection.setFixedLengthStreamingMode(data.length);
+		try (OutputStream os = connection.getOutputStream()) {
+			os.write(data);
+		}
 	}
 
 	public InputStream openStream() {
 		if (isUrlOk()) {
-			final byte data[] = getBytes();
+			final byte[] data = getBytes();
 			if (data != null) {
 				return new ByteArrayInputStream(data);
 			}
@@ -245,4 +525,86 @@ public class SURL {
 		return null;
 	}
 
+	/**
+	 * Informs, if SecurityCredentials are configured for this connection.
+	 *
+	 * @return true, if credentials will be used for a connection
+	 */
+	public boolean isAuthorizationConfigured() {
+		return !WITHOUT_AUTHENTICATION.equals(securityIdentifier);
+	}
+
+	/**
+	 * Applies the given authentication data to the http connection.
+	 *
+	 * @param http           HTTP URL connection (must be an encrypted https-TLS/SSL connection, or http must be
+	 *                       activated with a property)
+	 * @param authentication the data to request the access
+	 * @see SecurityUtils#getAccessInterceptor(SecurityAuthentication)
+	 * @see SecurityUtils#isNonSSLAuthenticationAllowed()
+	 */
+	private static void applyEndpointAccessAuthentication (URLConnection http, SecurityAuthentication authentication) {
+		if (authentication.isPublic()) {
+			// Shortcut: No need to apply authentication.
+			return;
+		}
+		if (http instanceof HttpsURLConnection || SecurityUtils.isNonSSLAuthenticationAllowed()) {
+			SecurityAccessInterceptor accessInterceptor = SecurityUtils.getAccessInterceptor(authentication);
+			accessInterceptor.apply(authentication, http);
+		} else {
+			// We cannot allow applying secret tokens on plain connections. Everyone can read the data.
+			throw new IllegalStateException(
+					"The transport of authentication data over an unencrypted http connection is not allowed");
+		}
+	}
+
+	/**
+	 * Set the headers for a URL connection
+	 * @param headers map Keys with values (can be String or list of String)
+	 */
+	private static void applyAdditionalHeaders(URLConnection http, Map<String, Object> headers) {
+		if ( headers == null || headers.isEmpty() ) {
+			return;
+		}
+		for (Map.Entry<String, Object> header : headers.entrySet()) {
+			Object value = header.getValue();
+			if ( value instanceof String ) {
+				http.setRequestProperty(header.getKey(), (String) value);
+			} else if (value instanceof List) {
+				for ( Object item: (List<?>) value) {
+					if ( item != null ) {
+						http.addRequestProperty(header.getKey(), item.toString());
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * Removes the userInfo part from the URL, because we want to use the SecurityCredentials instead.
+	 * @param url URL with UserInfo part
+	 * @return url without UserInfo part
+	 */
+	private static URL removeUserInfo(URL url) {
+		try {
+			return new URL(removeUserInfoFromUrlPath (url.toExternalForm()));
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+			return url;
+		}
+	}
+
+	/**
+	 * Removes the userInfo part from the URL, because we want to use the SecurityCredentials instead.
+	 * @param url URL with UserInfo part
+	 * @return url without UserInfo part
+	 */
+	private static String removeUserInfoFromUrlPath(String url) {
+		// Simple solution:
+		Matcher matcher = PATTERN_USERINFO.matcher(url);
+		if (matcher.find()) {
+			return matcher.replaceFirst("$1$3");
+		}
+		return url;
+	}
 }

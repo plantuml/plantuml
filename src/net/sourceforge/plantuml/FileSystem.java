@@ -84,7 +84,7 @@ public class FileSystem {
 
 			}
 		}
-		for (SFile d : SecurityUtils.getPath("plantuml.include.path")) {
+		for (SFile d : SecurityUtils.getPath(SecurityUtils.PATHS_INCLUDES)) {
 			assert d.isDirectory();
 			final SFile file = d.file(nameOrPath);
 			if (file.exists()) {
@@ -92,7 +92,7 @@ public class FileSystem {
 
 			}
 		}
-		for (SFile d : SecurityUtils.getPath("java.class.path")) {
+		for (SFile d : SecurityUtils.getPath(SecurityUtils.PATHS_CLASSES)) {
 			assert d.isDirectory();
 			final SFile file = d.file(nameOrPath);
 			if (file.exists()) {

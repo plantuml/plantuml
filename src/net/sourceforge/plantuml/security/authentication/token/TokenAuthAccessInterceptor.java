@@ -1,0 +1,72 @@
+/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2021, Arnaud Roques
+ *
+ * Project Info:  http://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.security.authentication.token;
+
+import net.sourceforge.plantuml.security.authentication.SecurityAccessInterceptor;
+import net.sourceforge.plantuml.security.authentication.SecurityAuthentication;
+
+import java.net.URLConnection;
+import java.util.Map;
+
+/**
+ * Applies from {@link SecurityAuthentication} data plain token authentication access headers. This is a raw header
+ * injection with static data.
+ *
+ * @author Aljoscha Rittner
+ */
+public class TokenAuthAccessInterceptor implements SecurityAccessInterceptor {
+
+	/**
+	 * Applies from {@link SecurityAuthentication} data plain token authentication access headers.
+	 * <p>
+	 * Expects headers.* key value pairs to pass it directly to the connection.
+	 *
+	 * @param authentication the determined authentication data to authorize for the endpoint access
+	 * @param connection     the connection to the endpoint
+	 */
+	@Override
+	public void apply(SecurityAuthentication authentication, URLConnection connection) {
+
+		for (Map.Entry<String, Object> header : authentication.getTokens().entrySet() ) {
+			if (!header.getKey().startsWith("headers.") || header.getValue() == null) {
+				continue;
+			}
+			String key = header.getKey().substring(8);
+			String value = header.getValue().toString();
+			connection.setRequestProperty(key, value);
+		}
+	}
+}
