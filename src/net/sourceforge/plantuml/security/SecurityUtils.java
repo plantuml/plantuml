@@ -358,7 +358,6 @@ public class SecurityUtils {
 				File userCredentials = new File(securityFilePath, userToken + ".credential");
 				JsonValue jsonValue = loadJson(userCredentials);
 				return SecurityCredentials.fromJson(jsonValue);
-
 			}
 		}
 		return SecurityCredentials.NONE;

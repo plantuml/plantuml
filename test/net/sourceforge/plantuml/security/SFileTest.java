@@ -47,12 +47,10 @@ class SFileTest {
 		// A file is needed:
 		File secretFile = File.createTempFile("user", ".credentials", secureFolder);
 
-		assertThat(secretFile).describedAs("File should be visible with standard java.io.File")
-				.exists();
+		assertThat(secretFile).describedAs("File should be visible with standard java.io.File").exists();
 
 		SFile file = new SFile(secretFile.getAbsolutePath());
 
-		assertThat(file.exists()).describedAs("File should be invisible for SFile")
-				.isFalse();
+		assertThat(file.exists()).describedAs("File should be invisible for SFile").isFalse();
 	}
 }

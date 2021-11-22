@@ -52,6 +52,8 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.nio.charset.Charset;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -246,7 +248,11 @@ public class SFile implements Comparable<SFile> {
 			return false;
 		}
 		// In any case SFile should not access the security folders (the files must be handled internally)
-		if (isDenied()) {
+		try {
+			if (isDenied()) {
+				return false;
+			}
+		} catch (IOException e) {
 			return false;
 		}
 		// Files in "plantuml.include.path" and "plantuml.allowlist.path" are ok.
@@ -291,13 +297,29 @@ public class SFile implements Comparable<SFile> {
 	 * Checks, if the SFile is inside the folder (-structure) of the security area.
 	 *
 	 * @return true, if the file is not allowed to read/write
+	 * @throws IOException If an I/O error occurs, which is possible because the check the pathname may require
+	 *                     filesystem queries
 	 */
-	private boolean isDenied() {
+	private boolean isDenied() throws IOException {
 		SFile securityPath = SecurityUtils.getSecurityPath();
 		if (securityPath == null) {
 			return false;
 		}
-		return getCleanPathSecure().startsWith(securityPath.getCleanPathSecure());
+		return getSanitizedPath().startsWith(securityPath.getSanitizedPath());
+	}
+
+	/**
+	 * Returns a sanitized, canonical and normalized Path to a file.
+	 *
+	 * @return the Path
+	 * @throws IOException If an I/O error occurs, which is possible because the construction of the canonical pathname
+	 *                     may require filesystem queries
+	 * @see #getCleanPathSecure()
+	 * @see File#getCanonicalPath()
+	 * @see Path#normalize()
+	 */
+	private Path getSanitizedPath() throws IOException {
+		return Paths.get(new File(getCleanPathSecure()).getCanonicalPath()).normalize();
 	}
 
 	private String getCleanPathSecure() {
