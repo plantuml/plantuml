@@ -75,23 +75,28 @@ import net.sourceforge.plantuml.security.authentication.SecurityCredentials;
  * <p>
  * This class should be used instead of java.net.URL.
  * <p>
- * This class does some control access and manages access-tokens via URL. If a URL contains a access-token, similar to
- * a user prefix, SURL loads the authorization config for this user-token and passes the credentials to the host.
+ * This class does some control access and manages access-tokens via URL. If a
+ * URL contains a access-token, similar to a user prefix, SURL loads the
+ * authorization config for this user-token and passes the credentials to the
+ * host.
  * <p>
  * Example:<br/>
+ * 
  * <pre>
  *     SURL url = SURL.create ("https://jenkins-access@jenkins.mycompany.com/api/json")
  * </pre>
- * The {@code jenkins-access} will checked against the Security context access token configuration. If a configuration
- * exists for this token name, the token will be removed from the URL and the credentials will be added to the headers.
- * If the token is not found, the URL remains as it is and no separate authentication will be performed.
+ * 
+ * The {@code jenkins-access} will checked against the Security context access
+ * token configuration. If a configuration exists for this token name, the token
+ * will be removed from the URL and the credentials will be added to the
+ * headers. If the token is not found, the URL remains as it is and no separate
+ * authentication will be performed.
  * <p>
- * TODO: Some methods should be moved to a HttpClient implementation, because SURL is not the valid class to manage it.
- * <br/>
- * TODO: BAD_HOSTS implementation should be reviewed and moved to HttpClient implementation with a circuit-breaker.
- * <br/>
- * TODO: Token expiration with refresh should be implemented in future.
- * <br/>
+ * TODO: Some methods should be moved to a HttpClient implementation, because
+ * SURL is not the valid class to manage it. <br/>
+ * TODO: BAD_HOSTS implementation should be reviewed and moved to HttpClient
+ * implementation with a circuit-breaker. <br/>
+ * TODO: Token expiration with refresh should be implemented in future. <br/>
  */
 public class SURL {
 
@@ -140,22 +145,21 @@ public class SURL {
 	}
 
 	public static SURL create(URL url) {
-		if (url == null) {
+		if (url == null)
 			return null;
-		}
-
-		URL internalUrl;
 
 		String credentialId = url.getUserInfo();
 
+		final URL internalUrl;
 		if (credentialId == null || credentialId.indexOf(':') > 0) {
-			// No user info at all, or a user with password (This is a legacy BasicAuth access, and we bypass it):
+			// No user info at all, or a user with password (This is a legacy BasicAuth
+			// access, and we bypass it):
 			internalUrl = url;
 			credentialId = WITHOUT_AUTHENTICATION;
 		} else {
 			// Given userInfo, but without a password. We try to find SecurityCredentials
-			if (SecurityUtils.existsSecurityCredentials(credentialId) ) {
-				internalUrl = removeUserInfo (url);
+			if (SecurityUtils.existsSecurityCredentials(credentialId)) {
+				internalUrl = removeUserInfo(url);
 			} else {
 				internalUrl = url;
 				credentialId = WITHOUT_AUTHENTICATION;
@@ -178,9 +182,11 @@ public class SURL {
 	/**
 	 * Clears the bad hosts cache.
 	 * <p>
-	 * In some test cases (and maybe also needed for other functionality) the bad hosts cache must be cleared.<br/>
-	 * E.g., in a test we check the failure on missing credentials and then a test with existing credentials. With a
-	 * bad host cache the second test will fail, or we have unpredicted results.
+	 * In some test cases (and maybe also needed for other functionality) the bad
+	 * hosts cache must be cleared.<br/>
+	 * E.g., in a test we check the failure on missing credentials and then a test
+	 * with existing credentials. With a bad host cache the second test will fail,
+	 * or we have unpredicted results.
 	 */
 	public static void resetBadHosts() {
 		BAD_HOSTS.clear();
@@ -195,24 +201,24 @@ public class SURL {
 	 * Check SecurityProfile to see if this URL can be opened.
 	 */
 	private boolean isUrlOk() {
-		if (SecurityUtils.getSecurityProfile() == SecurityProfile.SANDBOX) {
+		if (SecurityUtils.getSecurityProfile() == SecurityProfile.SANDBOX)
 			// In SANDBOX, we cannot read any URL
 			return false;
-		}
-		if (SecurityUtils.getSecurityProfile() == SecurityProfile.LEGACY) {
+
+		if (SecurityUtils.getSecurityProfile() == SecurityProfile.LEGACY)
 			return true;
-		}
-		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE) {
+
+		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE)
 			// We are UNSECURE anyway
 			return true;
-		}
-		if (isInAllowList()) {
+
+		if (isInAllowList())
 			return true;
-		}
+
 		if (SecurityUtils.getSecurityProfile() == SecurityProfile.INTERNET) {
-			if (pureIP(cleanPath(internal.toString()))) {
+			if (pureIP(cleanPath(internal.toString())))
 				return false;
-			}
+
 			final int port = internal.getPort();
 			// Using INTERNET profile, port 80 and 443 are ok
 			return port == 80 || port == 443 || port == -1;
@@ -235,8 +241,9 @@ public class SURL {
 	}
 
 	private String cleanPath(String path) {
-		// Remove user information, because we don't like to store user/password or userTokens in allow-list
-		path = removeUserInfoFromUrlPath (path);
+		// Remove user information, because we don't like to store user/password or
+		// userTokens in allow-list
+		path = removeUserInfoFromUrlPath(path);
 		path = path.trim().toLowerCase(Locale.US);
 		// We simplify/normalize the url, removing default ports
 		path = path.replace(":80/", "");
@@ -253,10 +260,13 @@ public class SURL {
 	}
 
 	/**
-	 * Reads from an endpoint (with configured credentials and proxy) the response as blob.
+	 * Reads from an endpoint (with configured credentials and proxy) the response
+	 * as blob.
 	 * <p>
-	 * This method allows access to an endpoint, with a configured SecurityCredentials object. The credentials will
-	 * load on the fly and authentication fetched from an authentication-manager. Caching of tokens is not supported.
+	 * This method allows access to an endpoint, with a configured
+	 * SecurityCredentials object. The credentials will load on the fly and
+	 * authentication fetched from an authentication-manager. Caching of tokens is
+	 * not supported.
 	 * <p>
 	 * authors: Alain Corbiere, Aljoscha Rittner
 	 *
@@ -279,8 +289,8 @@ public class SURL {
 			}
 
 			try {
-				Future<byte[]> result = EXE.submit(
-						requestWithGetAndResponse(internal, credentials.getProxy(), authentication, null));
+				Future<byte[]> result = EXE
+						.submit(requestWithGetAndResponse(internal, credentials.getProxy(), authentication, null));
 				byte[] data = result.get(SecurityUtils.getSecurityProfile().getTimeout(), TimeUnit.MILLISECONDS);
 				if (data != null) {
 					return data;
@@ -299,22 +309,25 @@ public class SURL {
 	}
 
 	/**
-	 * Reads from an endpoint with a given authentication and proxy the response as blob.
+	 * Reads from an endpoint with a given authentication and proxy the response as
+	 * blob.
 	 * <p>
-	 * This method allows a parametrized access to an endpoint, without a configured SecurityCredentials object. This is
-	 * useful to access internally identity providers (IDP), or authorization servers (to request access tokens).
+	 * This method allows a parametrized access to an endpoint, without a configured
+	 * SecurityCredentials object. This is useful to access internally identity
+	 * providers (IDP), or authorization servers (to request access tokens).
 	 * <p>
-	 * This method don't use the "bad-host" functionality, because the access to infrastructure services should not be
-	 * obfuscated by some internal management.
+	 * This method don't use the "bad-host" functionality, because the access to
+	 * infrastructure services should not be obfuscated by some internal management.
 	 * <p>
 	 * <strong>Please don't use this method directly from DSL scripts.</strong>
 	 *
-	 * @param authentication authentication object data. Caller is responsible to erase credentials
-	 * @param proxy proxy configuration
-	 * @param headers additional headers, if needed
+	 * @param authentication authentication object data. Caller is responsible to
+	 *                       erase credentials
+	 * @param proxy          proxy configuration
+	 * @param headers        additional headers, if needed
 	 * @return loaded data from endpoint
 	 */
-	public byte[] getBytes (Proxy proxy, SecurityAuthentication authentication, Map<String, Object> headers) {
+	public byte[] getBytes(Proxy proxy, SecurityAuthentication authentication, Map<String, Object> headers) {
 		if (!isUrlOk()) {
 			return null;
 		}
@@ -328,31 +341,33 @@ public class SURL {
 		return data;
 	}
 
-
 	/**
-	 * Post to an endpoint with a given authentication and proxy the response as blob.
+	 * Post to an endpoint with a given authentication and proxy the response as
+	 * blob.
 	 * <p>
-	 * This method allows a parametrized access to an endpoint, without a configured SecurityCredentials object. This is
-	 * useful to access internally identity providers (IDP), or authorization servers (to request access tokens).
+	 * This method allows a parametrized access to an endpoint, without a configured
+	 * SecurityCredentials object. This is useful to access internally identity
+	 * providers (IDP), or authorization servers (to request access tokens).
 	 * <p>
-	 * This method don't use the "bad-host" functionality, because the access to infrastructure services should not be
-	 * obfuscated by some internal management.
+	 * This method don't use the "bad-host" functionality, because the access to
+	 * infrastructure services should not be obfuscated by some internal management.
 	 * <p>
 	 * <strong>Please don't use this method directly from DSL scripts.</strong>
 	 *
-	 * @param authentication authentication object data. Caller is responsible to erase credentials
-	 * @param proxy proxy configuration
-	 * @param data content to post
-	 * @param headers headers, if needed
+	 * @param authentication authentication object data. Caller is responsible to
+	 *                       erase credentials
+	 * @param proxy          proxy configuration
+	 * @param data           content to post
+	 * @param headers        headers, if needed
 	 * @return loaded data from endpoint
 	 */
 	public byte[] getBytesOnPost(Proxy proxy, SecurityAuthentication authentication, String data,
-								 Map<String, Object> headers) {
+			Map<String, Object> headers) {
 		if (!isUrlOk()) {
 			return null;
 		}
-		final Future<byte[]> result = EXE.submit(
-				requestWithPostAndResponse(internal, proxy, authentication, data, headers));
+		final Future<byte[]> result = EXE
+				.submit(requestWithPostAndResponse(internal, proxy, authentication, data, headers));
 		byte[] response = null;
 		try {
 			response = result.get(SecurityUtils.getSecurityProfile().getTimeout(), TimeUnit.MILLISECONDS);
@@ -364,21 +379,19 @@ public class SURL {
 
 	/**
 	 * Creates a GET request and response handler
-	 * @param url URL to request
-	 * @param proxy proxy to apply
+	 * 
+	 * @param url            URL to request
+	 * @param proxy          proxy to apply
 	 * @param authentication the authentication to use
-	 * @param headers additional headers, if needed
+	 * @param headers        additional headers, if needed
 	 * @return the callable handler.
 	 */
-	private static Callable<byte[]> requestWithGetAndResponse(
-			final URL url, final Proxy proxy, final SecurityAuthentication authentication,
-			final Map<String, Object> headers) {
+	private static Callable<byte[]> requestWithGetAndResponse(final URL url, final Proxy proxy,
+			final SecurityAuthentication authentication, final Map<String, Object> headers) {
 		return new Callable<byte[]>() {
 			public byte[] call() throws IOException {
 				// Add proxy, if passed throw parameters
-				final URLConnection connection = proxy == null
-						? url.openConnection()
-						: url.openConnection(proxy);
+				final URLConnection connection = proxy == null ? url.openConnection() : url.openConnection(proxy);
 				if (connection == null) {
 					return null;
 				}
@@ -386,7 +399,7 @@ public class SURL {
 				HttpURLConnection http = (HttpURLConnection) connection;
 
 				applyEndpointAccessAuthentication(http, authentication);
-				applyAdditionalHeaders (http, headers);
+				applyAdditionalHeaders(http, headers);
 
 				return retrieveResponseAsBytes(http);
 			}
@@ -394,24 +407,23 @@ public class SURL {
 	}
 
 	/**
-	 * Creates a POST request and response handler with a simple String content. The content will be identified as form
-	 * or JSON data. The charset encoding can be set by header parameters or will be set to UTF-8. The method to some
-	 * fancy logic to simplify it for the user.
-	 * @param url URL to request via POST method
-	 * @param proxy proxy to apply
+	 * Creates a POST request and response handler with a simple String content. The
+	 * content will be identified as form or JSON data. The charset encoding can be
+	 * set by header parameters or will be set to UTF-8. The method to some fancy
+	 * logic to simplify it for the user.
+	 * 
+	 * @param url            URL to request via POST method
+	 * @param proxy          proxy to apply
 	 * @param authentication the authentication to use
-	 * @param headers additional headers, if needed
+	 * @param headers        additional headers, if needed
 	 * @return the callable handler.
 	 */
-	private static Callable<byte[]> requestWithPostAndResponse(
-			final URL url, final Proxy proxy, final SecurityAuthentication authentication,
-			final String data, final Map<String, Object> headers) {
+	private static Callable<byte[]> requestWithPostAndResponse(final URL url, final Proxy proxy,
+			final SecurityAuthentication authentication, final String data, final Map<String, Object> headers) {
 		return new Callable<byte[]>() {
 			public byte[] call() throws IOException {
 				// Add proxy, if passed throw parameters
-				final URLConnection connection = proxy == null
-						? url.openConnection()
-						: url.openConnection(proxy);
+				final URLConnection connection = proxy == null ? url.openConnection() : url.openConnection(proxy);
 				if (connection == null) {
 					return null;
 				}
@@ -425,11 +437,11 @@ public class SURL {
 				}
 
 				applyEndpointAccessAuthentication(http, authentication);
-				applyAdditionalHeaders (http, headers);
+				applyAdditionalHeaders(http, headers);
 
 				Charset charSet = extractCharset(http.getRequestProperty("Content-Type"));
 
-				if ( withContent ) {
+				if (withContent) {
 					sendRequestAsBytes(http, data.getBytes(charSet != null ? charSet : StandardCharsets.UTF_8));
 				}
 				return retrieveResponseAsBytes(http);
@@ -438,7 +450,7 @@ public class SURL {
 	}
 
 	private static Charset extractCharset(String contentType) {
-		if ( StringUtils.isEmpty(contentType) ) {
+		if (StringUtils.isEmpty(contentType)) {
 			return null;
 		}
 		Matcher matcher = Pattern.compile("(?i)\\bcharset=\\s*\"?([^\\s;\"]*)").matcher(contentType);
@@ -457,30 +469,32 @@ public class SURL {
 	 *
 	 * @param connection the URL connection
 	 * @return the loaded byte arrays
-	 * @throws IOException an exception, if the connection cannot establish or the download was broken
+	 * @throws IOException an exception, if the connection cannot establish or the
+	 *                     download was broken
 	 */
 	private static byte[] retrieveResponseAsBytes(HttpURLConnection connection) throws IOException {
 		int responseCode = connection.getResponseCode();
-		if ( responseCode < HttpURLConnection.HTTP_BAD_REQUEST) {
+		if (responseCode < HttpURLConnection.HTTP_BAD_REQUEST) {
 			try (InputStream input = connection.getInputStream()) {
 				return retrieveData(input);
 			}
 		} else {
 			try (InputStream error = connection.getErrorStream()) {
 				byte[] bytes = retrieveData(error);
-				throw new IOException("HTTP error "
-						+ responseCode + " with " + new String(bytes, StandardCharsets.UTF_8));
+				throw new IOException(
+						"HTTP error " + responseCode + " with " + new String(bytes, StandardCharsets.UTF_8));
 			}
 		}
 	}
 
 	/**
 	 * Reads data in a byte[] array.
+	 * 
 	 * @param input input stream
 	 * @return byte data
 	 * @throws IOException if something went wrong
 	 */
-	private static byte[] retrieveData (InputStream input) throws IOException {
+	private static byte[] retrieveData(InputStream input) throws IOException {
 		final ByteArrayOutputStream out = new ByteArrayOutputStream();
 		final byte[] buffer = new byte[1024];
 		int read;
@@ -493,11 +507,12 @@ public class SURL {
 
 	/**
 	 * Sends a request content payload to an endpoint.
+	 * 
 	 * @param connection HTTP connection
-	 * @param data data as byte array
+	 * @param data       data as byte array
 	 * @throws IOException if something went wrong
 	 */
-	private static void sendRequestAsBytes (HttpURLConnection connection, byte[] data) throws IOException {
+	private static void sendRequestAsBytes(HttpURLConnection connection, byte[] data) throws IOException {
 		connection.setFixedLengthStreamingMode(data.length);
 		try (OutputStream os = connection.getOutputStream()) {
 			os.write(data);
@@ -537,13 +552,13 @@ public class SURL {
 	/**
 	 * Applies the given authentication data to the http connection.
 	 *
-	 * @param http           HTTP URL connection (must be an encrypted https-TLS/SSL connection, or http must be
-	 *                       activated with a property)
+	 * @param http           HTTP URL connection (must be an encrypted https-TLS/SSL
+	 *                       connection, or http must be activated with a property)
 	 * @param authentication the data to request the access
 	 * @see SecurityUtils#getAccessInterceptor(SecurityAuthentication)
 	 * @see SecurityUtils#isNonSSLAuthenticationAllowed()
 	 */
-	private static void applyEndpointAccessAuthentication (URLConnection http, SecurityAuthentication authentication) {
+	private static void applyEndpointAccessAuthentication(URLConnection http, SecurityAuthentication authentication) {
 		if (authentication.isPublic()) {
 			// Shortcut: No need to apply authentication.
 			return;
@@ -552,7 +567,8 @@ public class SURL {
 			SecurityAccessInterceptor accessInterceptor = SecurityUtils.getAccessInterceptor(authentication);
 			accessInterceptor.apply(authentication, http);
 		} else {
-			// We cannot allow applying secret tokens on plain connections. Everyone can read the data.
+			// We cannot allow applying secret tokens on plain connections. Everyone can
+			// read the data.
 			throw new IllegalStateException(
 					"The transport of authentication data over an unencrypted http connection is not allowed");
 		}
@@ -560,19 +576,20 @@ public class SURL {
 
 	/**
 	 * Set the headers for a URL connection
+	 * 
 	 * @param headers map Keys with values (can be String or list of String)
 	 */
 	private static void applyAdditionalHeaders(URLConnection http, Map<String, Object> headers) {
-		if ( headers == null || headers.isEmpty() ) {
+		if (headers == null || headers.isEmpty()) {
 			return;
 		}
 		for (Map.Entry<String, Object> header : headers.entrySet()) {
 			Object value = header.getValue();
-			if ( value instanceof String ) {
+			if (value instanceof String) {
 				http.setRequestProperty(header.getKey(), (String) value);
 			} else if (value instanceof List) {
-				for ( Object item: (List<?>) value) {
-					if ( item != null ) {
+				for (Object item : (List<?>) value) {
+					if (item != null) {
 						http.addRequestProperty(header.getKey(), item.toString());
 					}
 				}
@@ -581,13 +598,15 @@ public class SURL {
 	}
 
 	/**
-	 * Removes the userInfo part from the URL, because we want to use the SecurityCredentials instead.
+	 * Removes the userInfo part from the URL, because we want to use the
+	 * SecurityCredentials instead.
+	 * 
 	 * @param url URL with UserInfo part
 	 * @return url without UserInfo part
 	 */
 	private static URL removeUserInfo(URL url) {
 		try {
-			return new URL(removeUserInfoFromUrlPath (url.toExternalForm()));
+			return new URL(removeUserInfoFromUrlPath(url.toExternalForm()));
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 			return url;
@@ -595,7 +614,9 @@ public class SURL {
 	}
 
 	/**
-	 * Removes the userInfo part from the URL, because we want to use the SecurityCredentials instead.
+	 * Removes the userInfo part from the URL, because we want to use the
+	 * SecurityCredentials instead.
+	 * 
 	 * @param url URL with UserInfo part
 	 * @return url without UserInfo part
 	 */
