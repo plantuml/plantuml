@@ -265,7 +265,7 @@ activityDiagram {
 }
 
 activityBar {
-	LineColor black
+	BackgroundColor black
 }
 
 circle {

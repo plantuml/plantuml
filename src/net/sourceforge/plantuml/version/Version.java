@@ -80,7 +80,7 @@ public class Version {
 	}
 
 	public static int beta() {
-		final int beta = 6;
+		final int beta = 7;
 		return beta;
 	}
 
