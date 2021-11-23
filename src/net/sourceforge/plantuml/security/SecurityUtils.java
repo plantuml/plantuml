@@ -351,7 +351,7 @@ public class SecurityUtils {
 	 */
 	public static SecurityCredentials loadSecurityCredentials(String userToken) {
 		if (userToken != null && checkFileSystemSaveCharactersStrict(userToken) && !NO_CREDENTIALS.equals(userToken)) {
-			SFile securityPath = getSecurityPath();
+			final SFile securityPath = getSecurityPath();
 			if (securityPath != null) {
 				// SFile does not allow access to the security path (to hide the credentials in DSL scripts)
 				File securityFilePath = securityPath.conv();

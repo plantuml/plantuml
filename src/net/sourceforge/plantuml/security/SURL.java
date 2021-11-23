@@ -53,6 +53,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
@@ -125,16 +126,23 @@ public class SURL {
 	private final String securityIdentifier;
 
 	private SURL(URL url, String securityIdentifier) {
-		assert url != null;
-		assert securityIdentifier != null;
-		this.internal = url;
-		this.securityIdentifier = securityIdentifier;
+		this.internal = Objects.requireNonNull(url);
+		this.securityIdentifier = Objects.requireNonNull(securityIdentifier);
 	}
 
+	/**
+	 * Create a secure URL from a String.
+	 * <p>
+	 * The url must be http or https.
+	 * Return null in case of error or if <code>url</code> is null
+	 * 
+	 * @param url  plain url starting by http:// or https//
+	 * @return the secure URL or null
+	 */
 	public static SURL create(String url) {
-		if (url == null) {
+		if (url == null)
 			return null;
-		}
+
 		if (url.startsWith("http://") || url.startsWith("https://"))
 			try {
 				return create(new URL(url));
@@ -144,29 +152,30 @@ public class SURL {
 		return null;
 	}
 
-	public static SURL create(URL url) {
+	/**
+	 * Create a secure URL from a <code>java.net.URL</code> object.
+	 * <p>
+	 * It takes into account credentials.
+	 * 
+	 * @param url
+	 * @return the secure URL 
+	 * @throws MalformedURLException if <code>url</code> is null
+	 */
+	public static SURL create(URL url) throws MalformedURLException {
 		if (url == null)
-			return null;
+			throw new MalformedURLException("URL cannot be null");
 
-		String credentialId = url.getUserInfo();
+		final String credentialId = url.getUserInfo();
 
-		final URL internalUrl;
-		if (credentialId == null || credentialId.indexOf(':') > 0) {
+		if (credentialId == null || credentialId.indexOf(':') > 0)
 			// No user info at all, or a user with password (This is a legacy BasicAuth
 			// access, and we bypass it):
-			internalUrl = url;
-			credentialId = WITHOUT_AUTHENTICATION;
-		} else {
+			return new SURL(url, WITHOUT_AUTHENTICATION);
+		else if (SecurityUtils.existsSecurityCredentials(credentialId))
 			// Given userInfo, but without a password. We try to find SecurityCredentials
-			if (SecurityUtils.existsSecurityCredentials(credentialId)) {
-				internalUrl = removeUserInfo(url);
-			} else {
-				internalUrl = url;
-				credentialId = WITHOUT_AUTHENTICATION;
-			}
-		}
-
-		return new SURL(internalUrl, credentialId);
+			return new SURL(removeUserInfo(url), credentialId);
+		else
+			return new SURL(url, WITHOUT_AUTHENTICATION);
 	}
 
 	/**
@@ -174,8 +183,9 @@ public class SURL {
 	 *
 	 * @param url plain URL
 	 * @return SURL without any user credential information.
+	 * @throws MalformedURLException
 	 */
-	public static SURL createWithoutUser(URL url) {
+	static SURL createWithoutUser(URL url) throws MalformedURLException {
 		return new SURL(removeUserInfo(url), WITHOUT_AUTHENTICATION);
 	}
 
@@ -188,7 +198,7 @@ public class SURL {
 	 * with existing credentials. With a bad host cache the second test will fail,
 	 * or we have unpredicted results.
 	 */
-	public static void resetBadHosts() {
+	static void resetBadHosts() {
 		BAD_HOSTS.clear();
 	}
 
@@ -232,11 +242,10 @@ public class SURL {
 
 	private boolean isInAllowList() {
 		final String full = cleanPath(internal.toString());
-		for (String allow : getAllowList()) {
-			if (full.startsWith(cleanPath(allow))) {
+		for (String allow : getAllowList())
+			if (full.startsWith(cleanPath(allow)))
 				return true;
-			}
-		}
+		
 		return false;
 	}
 
@@ -253,9 +262,9 @@ public class SURL {
 
 	private List<String> getAllowList() {
 		final String env = SecurityUtils.getenv(SecurityUtils.PATHS_ALLOWED);
-		if (env == null) {
+		if (env == null)
 			return Collections.emptyList();
-		}
+
 		return Arrays.asList(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(env).split(";"));
 	}
 
@@ -273,28 +282,28 @@ public class SURL {
 	 * @return data loaded data from endpoint
 	 */
 	public byte[] getBytes() {
-		if (!isUrlOk()) {
+		if (isUrlOk() == false)
 			return null;
-		}
-		SecurityCredentials credentials = SecurityUtils.loadSecurityCredentials(securityIdentifier);
-		SecurityAuthentication authentication = SecurityUtils.getAuthenticationManager(credentials).create(credentials);
+
+		final SecurityCredentials credentials = SecurityUtils.loadSecurityCredentials(securityIdentifier);
+		final SecurityAuthentication authentication = SecurityUtils.getAuthenticationManager(credentials)
+				.create(credentials);
 		try {
-			String host = internal.getHost();
-			Long bad = BAD_HOSTS.get(host);
+			final String host = internal.getHost();
+			final Long bad = BAD_HOSTS.get(host);
 			if (bad != null) {
-				if ((System.currentTimeMillis() - bad) < 1000L * 60) {
+				if ((System.currentTimeMillis() - bad) < 1000L * 60)
 					return null;
-				}
 				BAD_HOSTS.remove(host);
 			}
 
 			try {
-				Future<byte[]> result = EXE
+				final Future<byte[]> result = EXE
 						.submit(requestWithGetAndResponse(internal, credentials.getProxy(), authentication, null));
-				byte[] data = result.get(SecurityUtils.getSecurityProfile().getTimeout(), TimeUnit.MILLISECONDS);
-				if (data != null) {
+				final byte[] data = result.get(SecurityUtils.getSecurityProfile().getTimeout(), TimeUnit.MILLISECONDS);
+				if (data != null)
 					return data;
-				}
+
 			} catch (Exception e) {
 				System.err.println("issue " + host + " " + e);
 			}
@@ -327,18 +336,18 @@ public class SURL {
 	 * @param headers        additional headers, if needed
 	 * @return loaded data from endpoint
 	 */
-	public byte[] getBytes(Proxy proxy, SecurityAuthentication authentication, Map<String, Object> headers) {
-		if (!isUrlOk()) {
+	private byte[] getBytes(Proxy proxy, SecurityAuthentication authentication, Map<String, Object> headers) {
+		if (isUrlOk() == false)
 			return null;
-		}
+
 		final Future<byte[]> result = EXE.submit(requestWithGetAndResponse(internal, proxy, authentication, headers));
-		byte[] data = null;
+
 		try {
-			data = result.get(SecurityUtils.getSecurityProfile().getTimeout(), TimeUnit.MILLISECONDS);
+			return result.get(SecurityUtils.getSecurityProfile().getTimeout(), TimeUnit.MILLISECONDS);
 		} catch (Exception e) {
 			System.err.println("SURL response issue to " + internal.getHost() + " " + e);
+			return null;
 		}
-		return data;
 	}
 
 	/**
@@ -363,18 +372,18 @@ public class SURL {
 	 */
 	public byte[] getBytesOnPost(Proxy proxy, SecurityAuthentication authentication, String data,
 			Map<String, Object> headers) {
-		if (!isUrlOk()) {
+		if (isUrlOk() == false)
 			return null;
-		}
+
 		final Future<byte[]> result = EXE
 				.submit(requestWithPostAndResponse(internal, proxy, authentication, data, headers));
-		byte[] response = null;
+
 		try {
-			response = result.get(SecurityUtils.getSecurityProfile().getTimeout(), TimeUnit.MILLISECONDS);
+			return result.get(SecurityUtils.getSecurityProfile().getTimeout(), TimeUnit.MILLISECONDS);
 		} catch (Exception e) {
 			System.err.println("SURL response issue to " + internal.getHost() + " " + e);
+			return null;
 		}
-		return response;
 	}
 
 	/**
@@ -392,11 +401,10 @@ public class SURL {
 			public byte[] call() throws IOException {
 				// Add proxy, if passed throw parameters
 				final URLConnection connection = proxy == null ? url.openConnection() : url.openConnection(proxy);
-				if (connection == null) {
+				if (connection == null)
 					return null;
-				}
 
-				HttpURLConnection http = (HttpURLConnection) connection;
+				final HttpURLConnection http = (HttpURLConnection) connection;
 
 				applyEndpointAccessAuthentication(http, authentication);
 				applyAdditionalHeaders(http, headers);
@@ -424,43 +432,41 @@ public class SURL {
 			public byte[] call() throws IOException {
 				// Add proxy, if passed throw parameters
 				final URLConnection connection = proxy == null ? url.openConnection() : url.openConnection(proxy);
-				if (connection == null) {
+				if (connection == null)
 					return null;
-				}
 
-				boolean withContent = StringUtils.isNotEmpty(data);
+				final boolean withContent = StringUtils.isNotEmpty(data);
 
-				HttpURLConnection http = (HttpURLConnection) connection;
+				final HttpURLConnection http = (HttpURLConnection) connection;
 				http.setRequestMethod("POST");
-				if (withContent) {
+				if (withContent)
 					http.setDoOutput(true);
-				}
 
 				applyEndpointAccessAuthentication(http, authentication);
 				applyAdditionalHeaders(http, headers);
 
-				Charset charSet = extractCharset(http.getRequestProperty("Content-Type"));
+				final Charset charSet = extractCharset(http.getRequestProperty("Content-Type"));
 
-				if (withContent) {
+				if (withContent)
 					sendRequestAsBytes(http, data.getBytes(charSet != null ? charSet : StandardCharsets.UTF_8));
-				}
+
 				return retrieveResponseAsBytes(http);
 			}
 		};
 	}
 
 	private static Charset extractCharset(String contentType) {
-		if (StringUtils.isEmpty(contentType)) {
+		if (StringUtils.isEmpty(contentType))
 			return null;
-		}
-		Matcher matcher = Pattern.compile("(?i)\\bcharset=\\s*\"?([^\\s;\"]*)").matcher(contentType);
-		if (matcher.find()) {
+
+		final Matcher matcher = Pattern.compile("(?i)\\bcharset=\\s*\"?([^\\s;\"]*)").matcher(contentType);
+		if (matcher.find())
 			try {
 				return Charset.forName(matcher.group(1));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}
+
 		return null;
 	}
 
@@ -473,14 +479,14 @@ public class SURL {
 	 *                     download was broken
 	 */
 	private static byte[] retrieveResponseAsBytes(HttpURLConnection connection) throws IOException {
-		int responseCode = connection.getResponseCode();
+		final int responseCode = connection.getResponseCode();
 		if (responseCode < HttpURLConnection.HTTP_BAD_REQUEST) {
 			try (InputStream input = connection.getInputStream()) {
 				return retrieveData(input);
 			}
 		} else {
 			try (InputStream error = connection.getErrorStream()) {
-				byte[] bytes = retrieveData(error);
+				final byte[] bytes = retrieveData(error);
 				throw new IOException(
 						"HTTP error " + responseCode + " with " + new String(bytes, StandardCharsets.UTF_8));
 			}
@@ -522,9 +528,9 @@ public class SURL {
 	public InputStream openStream() {
 		if (isUrlOk()) {
 			final byte[] data = getBytes();
-			if (data != null) {
+			if (data != null)
 				return new ByteArrayInputStream(data);
-			}
+
 		}
 		return null;
 	}
@@ -546,7 +552,7 @@ public class SURL {
 	 * @return true, if credentials will be used for a connection
 	 */
 	public boolean isAuthorizationConfigured() {
-		return !WITHOUT_AUTHENTICATION.equals(securityIdentifier);
+		return WITHOUT_AUTHENTICATION.equals(securityIdentifier) == false;
 	}
 
 	/**
@@ -559,10 +565,10 @@ public class SURL {
 	 * @see SecurityUtils#isNonSSLAuthenticationAllowed()
 	 */
 	private static void applyEndpointAccessAuthentication(URLConnection http, SecurityAuthentication authentication) {
-		if (authentication.isPublic()) {
+		if (authentication.isPublic())
 			// Shortcut: No need to apply authentication.
 			return;
-		}
+
 		if (http instanceof HttpsURLConnection || SecurityUtils.isNonSSLAuthenticationAllowed()) {
 			SecurityAccessInterceptor accessInterceptor = SecurityUtils.getAccessInterceptor(authentication);
 			accessInterceptor.apply(authentication, http);
@@ -580,20 +586,18 @@ public class SURL {
 	 * @param headers map Keys with values (can be String or list of String)
 	 */
 	private static void applyAdditionalHeaders(URLConnection http, Map<String, Object> headers) {
-		if (headers == null || headers.isEmpty()) {
+		if (headers == null || headers.isEmpty())
 			return;
-		}
+
 		for (Map.Entry<String, Object> header : headers.entrySet()) {
-			Object value = header.getValue();
-			if (value instanceof String) {
+			final Object value = header.getValue();
+			if (value instanceof String)
 				http.setRequestProperty(header.getKey(), (String) value);
-			} else if (value instanceof List) {
-				for (Object item : (List<?>) value) {
-					if (item != null) {
+			else if (value instanceof List)
+				for (Object item : (List<?>) value)
+					if (item != null)
 						http.addRequestProperty(header.getKey(), item.toString());
-					}
-				}
-			}
+
 		}
 	}
 
@@ -603,14 +607,10 @@ public class SURL {
 	 * 
 	 * @param url URL with UserInfo part
 	 * @return url without UserInfo part
+	 * @throws MalformedURLException
 	 */
-	private static URL removeUserInfo(URL url) {
-		try {
-			return new URL(removeUserInfoFromUrlPath(url.toExternalForm()));
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-			return url;
-		}
+	private static URL removeUserInfo(URL url) throws MalformedURLException {
+		return new URL(removeUserInfoFromUrlPath(url.toExternalForm()));
 	}
 
 	/**
@@ -622,10 +622,10 @@ public class SURL {
 	 */
 	private static String removeUserInfoFromUrlPath(String url) {
 		// Simple solution:
-		Matcher matcher = PATTERN_USERINFO.matcher(url);
-		if (matcher.find()) {
+		final Matcher matcher = PATTERN_USERINFO.matcher(url);
+		if (matcher.find())
 			return matcher.replaceFirst("$1$3");
-		}
+
 		return url;
 	}
 }
