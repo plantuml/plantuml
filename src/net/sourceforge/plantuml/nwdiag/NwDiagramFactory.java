@@ -40,6 +40,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.command.Command;
+import net.sourceforge.plantuml.command.CommandFootboxIgnored;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
@@ -68,6 +69,7 @@ public class NwDiagramFactory extends PSystemCommandFactory {
 		cmds.add(new CommandLink());
 		cmds.add(new CommandProperty());
 		cmds.add(new CommandEndSomething());
+		cmds.add(new CommandFootboxIgnored());
 		return cmds;
 	}
 

@@ -67,7 +67,9 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
+import net.sourceforge.plantuml.svek.Ports;
 import net.sourceforge.plantuml.svek.ShapeType;
+import net.sourceforge.plantuml.svek.WithPorts;
 import net.sourceforge.plantuml.ugraphic.PlacementStrategyY1Y2;
 import net.sourceforge.plantuml.ugraphic.Shadowable;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -79,7 +81,7 @@ import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
-public class EntityImageObject extends AbstractEntityImage implements Stencil {
+public class EntityImageObject extends AbstractEntityImage implements Stencil, WithPorts {
 
 	final private TextBlock name;
 	final private TextBlock stereo;
@@ -241,6 +243,9 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil {
 	}
 
 	public ShapeType getShapeType() {
+		if (((ILeaf) getEntity()).getPortShortNames().size() > 0) {
+			return ShapeType.RECTANGLE_HTML_FOR_PORTS;
+		}
 		return ShapeType.RECTANGLE;
 	}
 
@@ -250,6 +255,14 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil {
 
 	public double getEndingX(StringBounder stringBounder, double y) {
 		return calculateDimension(stringBounder).getWidth();
+	}
+
+	@Override
+	public Ports getPorts(StringBounder stringBounder) {
+		final Dimension2D dimHeader = getNameAndSteretypeDimension(stringBounder);
+		if (fields instanceof WithPorts)
+			return ((WithPorts) fields).getPorts(stringBounder).translateY(dimHeader.getHeight());
+		return new Ports();
 	}
 
 }
