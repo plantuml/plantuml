@@ -66,6 +66,8 @@ public class StyleExtractor {
 				// Ignore
 			} else if (line.getString().trim().startsWith("!pragma ")) {
 				// Ignore
+			} else if (line.getString().trim().startsWith("hide ")) {
+				// Ignore
 			} else if (line.getString().trim().startsWith("title ")) {
 				this.title = line.getString().trim().substring("title ".length()).trim();
 			} else if (line.getString().trim().startsWith("skinparam ")) {
