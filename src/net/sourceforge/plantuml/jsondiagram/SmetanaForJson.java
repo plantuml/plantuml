@@ -109,16 +109,22 @@ public class SmetanaForJson {
 		this.ug = ug;
 	}
 
-	private UGraphic getUgFor(SName name) {
-		return getStyle(name).applyStrokeAndLineColor(ug, skinParam.getIHtmlColorSet(), skinParam.getThemeStyle());
-	}
-
 	private SName getDiagramType() {
 		return skinParam.getUmlDiagramType() == UmlDiagramType.YAML ? SName.yamlDiagram : SName.jsonDiagram;
 	}
 
-	private Style getStyle(SName name) {
-		return StyleSignature.of(SName.root, SName.element, getDiagramType(), name)
+	private Style getStyleArrow() {
+		return StyleSignature.of(SName.root, SName.element, getDiagramType(), SName.arrow)
+				.getMergedStyle(skinParam.getCurrentStyleBuilder());
+	}
+
+	private Style getStyleNode() {
+		return StyleSignature.of(SName.root, SName.element, getDiagramType(), SName.node)
+				.getMergedStyle(skinParam.getCurrentStyleBuilder());
+	}
+
+	private Style getStyleNodeHeader() {
+		return StyleSignature.of(SName.root, SName.element, getDiagramType(), SName.header, SName.node)
 				.getMergedStyle(skinParam.getCurrentStyleBuilder());
 	}
 
@@ -127,9 +133,14 @@ public class SmetanaForJson {
 				.getMergedStyle(skinParam.getCurrentStyleBuilder());
 	}
 
+	private Style getStyleNodeHeaderHighlight() {
+		return StyleSignature.of(SName.root, SName.element, getDiagramType(), SName.header, SName.node, SName.highlight)
+				.getMergedStyle(skinParam.getCurrentStyleBuilder());
+	}
+
 	private ST_Agnode_s manageOneNode(JsonValue current, List<String> highlighted) {
-		final TextBlockJson block = new TextBlockJson(skinParam, current, highlighted, getStyle(SName.node),
-				getStyleNodeHighlight());
+		final TextBlockJson block = new TextBlockJson(skinParam, current, highlighted, getStyleNode(),
+				getStyleNodeHighlight(), getStyleNodeHeader(), getStyleNodeHeaderHighlight());
 		final ST_Agnode_s node1 = createNode(block.calculateDimension(stringBounder), block.size(), current.isArray(),
 				(int) block.getWidthColA(stringBounder), (int) block.getWidthColB(stringBounder));
 		nodes.add(new InternalNode(block, node1));
@@ -171,16 +182,20 @@ public class SmetanaForJson {
 		xMirror = new Mirror(max);
 
 		for (InternalNode node : nodes) {
-			node.block.drawU(getUgFor(SName.node).apply(getPosition(node.node)));
+			node.block.drawU(
+					getStyleNode().applyStrokeAndLineColor(ug, skinParam.getIHtmlColorSet(), skinParam.getThemeStyle())
+							.apply(getPosition(node.node)));
 		}
-		final HColor color = getStyle(SName.arrow).value(PName.LineColor).asColor(skinParam.getThemeStyle(),
+		final HColor color = getStyleArrow().value(PName.LineColor).asColor(skinParam.getThemeStyle(),
 				skinParam.getIHtmlColorSet());
 
 		for (ST_Agedge_s edge : edges) {
 			final JsonCurve curve = getCurve(edge, 13);
-			// curve.drawCurve(color, getUgFor(SName.arrow).apply(new UStroke(3, 3, 1)));
-			curve.drawCurve(color, getUgFor(SName.arrow));
-			curve.drawSpot(getUgFor(SName.arrow).apply(color.bg()));
+			curve.drawCurve(color, getStyleArrow().applyStrokeAndLineColor(ug, skinParam.getIHtmlColorSet(),
+					skinParam.getThemeStyle()));
+			curve.drawSpot(
+					getStyleArrow().applyStrokeAndLineColor(ug, skinParam.getIHtmlColorSet(), skinParam.getThemeStyle())
+							.apply(color.bg()));
 		}
 	}
 

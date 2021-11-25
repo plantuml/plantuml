@@ -136,6 +136,7 @@
           <include>net/sourceforge/plantuml/dedication/*.png</include>
           <include>net/sourceforge/plantuml/math/*.js</include>
           <include>net/sourceforge/plantuml/windowsdot/*.dat</include>
+          <include>net/sourceforge/plantuml/utils/*.txt</include>
         </includes>
       </resource>
       <resource>

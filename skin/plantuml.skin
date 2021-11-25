@@ -323,7 +323,10 @@ usecase {
   HorizontalAlignment center
 }
 
-yamlDiagram {
+yamlDiagram,jsonDiagram {
+  BackGroundColor white
+  FontColor black
+  LineColor black
   arrow {
     LineThickness 1
     LineStyle 3;3
@@ -333,25 +336,9 @@ yamlDiagram {
   	RoundCorner 10
   	separator {
       LineThickness 1
-      LineColor #A80036
   	}
-    highlight {
-	  BackGroundColor #ccff02
-    }
-  }
-}
-
-jsonDiagram {
-  arrow {
-    LineThickness 1
-    LineStyle 3;3
-  }
-  node {
-    LineThickness 1.5
-  	RoundCorner 10
-  	separator {
-      LineThickness 1
-      LineColor #A80036
+  	header {
+  	  FontStyle bold
   	}
     highlight {
 	  BackGroundColor #ccff02
