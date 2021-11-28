@@ -59,6 +59,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -111,7 +112,13 @@ public class SURL {
 	 */
 	private static final Pattern PATTERN_USERINFO = Pattern.compile("(^https?://)(.*@)(.*)");
 
-	private static final ExecutorService EXE = Executors.newCachedThreadPool();
+	private static final ExecutorService EXE = Executors.newCachedThreadPool(new ThreadFactory() {
+		public Thread newThread(Runnable r) {
+			final Thread t = Executors.defaultThreadFactory().newThread(r);
+			t.setDaemon(true);
+			return t;
+		}
+	});
 
 	private static final Map<String, Long> BAD_HOSTS = new ConcurrentHashMap<String, Long>();
 
