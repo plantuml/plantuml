@@ -234,7 +234,7 @@ public final class BitArray {
   }
   
   public String toString() {
-    StringBuffer result = new StringBuffer(size);
+    StringBuilder result = new StringBuilder(size);
     for (int i = 0; i < size; i++) {
       if ((i & 0x07) == 0) {
         result.append(' ');

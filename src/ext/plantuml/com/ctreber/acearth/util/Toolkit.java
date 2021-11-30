@@ -96,7 +96,7 @@ public class Toolkit
   {
     boolean lDoCap = false;
     final StringTokenizer lST = new StringTokenizer(pText, ".- ", true);
-    final StringBuffer lSB = new StringBuffer(50);
+    final StringBuilder lSB = new StringBuilder(50);
     while(lST.hasMoreTokens())
     {
       String lWord = lST.nextToken();

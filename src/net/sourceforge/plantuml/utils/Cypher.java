@@ -80,7 +80,7 @@ public class Cypher {
 	public synchronized String cypher(String s) {
 
 		final Matcher m = p.matcher(s);
-		final StringBuffer sb = new StringBuffer();
+		final StringBuilder sb = new StringBuilder();
 		while (m.find()) {
 			final String word = m.group(0);
 			m.appendReplacement(sb, changeWord(word));

@@ -140,7 +140,7 @@ public final class QRCode {
 
   // Return debug String.
   public String toString() {
-    StringBuffer result = new StringBuffer(200);
+    StringBuilder result = new StringBuilder(200);
     result.append("<<\n");
     result.append(" mode: ");
     result.append(mode);

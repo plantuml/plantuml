@@ -224,7 +224,7 @@ final class GF256Poly {
   }
 
   public String toString() {
-    StringBuffer result = new StringBuffer(8 * getDegree());
+    StringBuilder result = new StringBuilder(8 * getDegree());
     for (int degree = getDegree(); degree >= 0; degree--) {
       int coefficient = getCoefficient(degree);
       if (coefficient != 0) {

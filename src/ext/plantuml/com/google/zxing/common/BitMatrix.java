@@ -213,7 +213,7 @@ public final class BitMatrix {
   }
 
   public String toString() {
-    StringBuffer result = new StringBuffer(height * (width + 1));
+    StringBuilder result = new StringBuilder(height * (width + 1));
     for (int y = 0; y < height; y++) {
       for (int x = 0; x < width; x++) {
         result.append(get(x, y) ? "X " : "  ");
