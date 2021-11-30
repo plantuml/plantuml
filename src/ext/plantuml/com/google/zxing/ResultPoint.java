@@ -53,7 +53,7 @@ public class ResultPoint {
   }
 
   public String toString() {
-    StringBuffer result = new StringBuffer(25);
+    StringBuilder result = new StringBuilder(25);
     result.append('(');
     result.append(x);
     result.append(',');

@@ -92,7 +92,7 @@ public class ComponentTextArrow extends AbstractComponentText implements ArrowCo
 		if (fileFormat == FileFormat.UTXT) {
 			final Pattern pattern = Pattern.compile("\\<b\\>([0-9]+)\\</b\\>");
 			final Matcher matcher = pattern.matcher(s);
-			final StringBuffer result = new StringBuffer();
+			final StringBuffer result = new StringBuffer(); // Can't be switched to StringBuilder in order to support Java 8
 			while (matcher.find()) {
 				final String num = matcher.group(1);
 				final String replace = StringUtils.toInternalBoldNumber(num);

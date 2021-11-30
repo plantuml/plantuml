@@ -97,7 +97,7 @@ public class CellSet implements Iterable<TextGrid.Cell> {
 	}
 
 	public String getCellsAsString(){
-		StringBuffer str = new StringBuffer();
+		StringBuilder str = new StringBuilder();
 		Iterator<TextGrid.Cell> it = iterator();
 		while(it.hasNext()){
 			str.append(it.next().toString());

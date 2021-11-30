@@ -940,7 +940,7 @@ public class SvgGraphics {
 	private String formatTitle(String title) {
 		final Pattern p = Pattern.compile("\\<U\\+([0-9A-Fa-f]+)\\>");
 		final Matcher m = p.matcher(title);
-		final StringBuffer sb = new StringBuffer();
+		final StringBuffer sb = new StringBuffer(); // Can't be switched to StringBuilder in order to support Java 8
 		while (m.find()) {
 			final String num = m.group(1);
 			final char c = (char) Integer.parseInt(num, 16);

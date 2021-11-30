@@ -62,7 +62,7 @@ public class PreprocessorUtils {
 		final Pattern p = Pattern.compile("%(\\w+)%");
 
 		final Matcher m = p.matcher(s);
-		final StringBuffer sb = new StringBuffer();
+		final StringBuffer sb = new StringBuffer(); // Can't be switched to StringBuilder in order to support Java 8
 		while (m.find()) {
 			final String var = m.group(1);
 			final String value = getenv(var);
