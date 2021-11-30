@@ -44,6 +44,11 @@ import net.sourceforge.plantuml.graphic.Splitter;
 
 public class CommandCreoleQrcode implements Command {
 
+	@Override
+	public String startingChars() {
+		return "<";
+	}
+
 	private static final Pattern2 pattern = MyPattern.cmpile("^(" + Splitter.qrcodePattern + ")");
 
 	private CommandCreoleQrcode() {

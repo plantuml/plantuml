@@ -66,6 +66,7 @@ import net.sourceforge.plantuml.sequencediagram.command.CommandFootbox;
 import net.sourceforge.plantuml.sequencediagram.command.CommandFootboxOld;
 import net.sourceforge.plantuml.sequencediagram.command.CommandGrouping;
 import net.sourceforge.plantuml.sequencediagram.command.CommandHSpace;
+import net.sourceforge.plantuml.sequencediagram.command.CommandHideUnlinked;
 import net.sourceforge.plantuml.sequencediagram.command.CommandIgnoreNewpage;
 import net.sourceforge.plantuml.sequencediagram.command.CommandLinkAnchor;
 import net.sourceforge.plantuml.sequencediagram.command.CommandNewpage;
@@ -91,6 +92,7 @@ public class SequenceDiagramFactory extends PSystemCommandFactory {
 		final List<Command> cmds = new ArrayList<>();
 
 		addCommonCommands1(cmds);
+		cmds.add(new CommandHideUnlinked());
 
 		cmds.add(new CommandActivate());
 		cmds.add(new CommandDeactivateShort());

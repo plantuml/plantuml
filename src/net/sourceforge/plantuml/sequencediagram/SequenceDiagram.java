@@ -73,6 +73,16 @@ import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class SequenceDiagram extends UmlDiagram {
+	
+	private boolean hideUnlinkedData;
+
+	public final boolean isHideUnlinkedData() {
+		return hideUnlinkedData;
+	}
+
+	public final void setHideUnlinkedData(boolean hideUnlinkedData) {
+		this.hideUnlinkedData = hideUnlinkedData;
+	}
 
 	private final List<Participant> participantsList = new ArrayList<>();
 

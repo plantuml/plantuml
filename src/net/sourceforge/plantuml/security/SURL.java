@@ -140,10 +140,10 @@ public class SURL {
 	/**
 	 * Create a secure URL from a String.
 	 * <p>
-	 * The url must be http or https.
-	 * Return null in case of error or if <code>url</code> is null
+	 * The url must be http or https. Return null in case of error or if
+	 * <code>url</code> is null
 	 * 
-	 * @param url  plain url starting by http:// or https//
+	 * @param url plain url starting by http:// or https//
 	 * @return the secure URL or null
 	 */
 	public static SURL create(String url) {
@@ -165,7 +165,7 @@ public class SURL {
 	 * It takes into account credentials.
 	 * 
 	 * @param url
-	 * @return the secure URL 
+	 * @return the secure URL
 	 * @throws MalformedURLException if <code>url</code> is null
 	 */
 	public static SURL create(URL url) throws MalformedURLException {
@@ -252,7 +252,7 @@ public class SURL {
 		for (String allow : getAllowList())
 			if (full.startsWith(cleanPath(allow)))
 				return true;
-		
+
 		return false;
 	}
 

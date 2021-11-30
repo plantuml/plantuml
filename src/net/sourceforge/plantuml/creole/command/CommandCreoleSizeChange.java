@@ -44,6 +44,11 @@ import net.sourceforge.plantuml.graphic.Splitter;
 
 public class CommandCreoleSizeChange implements Command {
 
+	@Override
+	public String startingChars() {
+		return "<";
+	}
+
 	private final Pattern2 mypattern;
 
 	private static final Pattern2 pattern = MyPattern

@@ -37,7 +37,9 @@ package net.sourceforge.plantuml.creole.legacy;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.BackSlash;
@@ -70,7 +72,6 @@ import net.sourceforge.plantuml.creole.command.CommandCreoleSizeChange;
 import net.sourceforge.plantuml.creole.command.CommandCreoleSpace;
 import net.sourceforge.plantuml.creole.command.CommandCreoleSprite;
 import net.sourceforge.plantuml.creole.command.CommandCreoleStyle;
-import net.sourceforge.plantuml.creole.command.CommandCreoleStyle2;
 import net.sourceforge.plantuml.creole.command.CommandCreoleSvgAttributeChange;
 import net.sourceforge.plantuml.creole.command.CommandCreoleUrl;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -90,7 +91,10 @@ public class StripeSimple implements Stripe {
 	final private Atom header;
 
 	final private List<Atom> atoms = new ArrayList<>();
-	final private List<Command> commands = new ArrayList<>();
+
+	// final private List<Command> commands = new ArrayList<>();
+	final private Map<Character, List<Command>> commands = new HashMap<>();
+
 	private HorizontalAlignment align = HorizontalAlignment.LEFT;
 
 	public void setCellAlignment(HorizontalAlignment align) {
@@ -115,70 +119,74 @@ public class StripeSimple implements Stripe {
 		return header;
 	}
 
-	public final static boolean TSPAN = false;
-
 	public StripeSimple(FontConfiguration fontConfiguration, StripeStyle style, CreoleContext context,
 			ISkinSimple skinParam, CreoleMode modeSimpleLine) {
 		this.fontConfiguration = fontConfiguration;
 		this.style = style;
 		this.skinParam = skinParam;
 
-		// class Splitter
-		if (TSPAN) {
-			this.commands.add(CommandCreoleStyle2.createCreole(FontStyle.BOLD));
-			this.commands.add(CommandCreoleStyle2.createLegacy(FontStyle.BOLD));
-			this.commands.add(CommandCreoleStyle2.createLegacyEol(FontStyle.BOLD));
-		} else {
-			this.commands.add(CommandCreoleStyle.createCreole(FontStyle.BOLD));
-			this.commands.add(CommandCreoleStyle.createLegacy(FontStyle.BOLD));
-			this.commands.add(CommandCreoleStyle.createLegacyEol(FontStyle.BOLD));
-		}
+		addCommand(CommandCreoleStyle.createCreole(FontStyle.BOLD));
+		addCommand(CommandCreoleStyle.createLegacy(FontStyle.BOLD));
+		addCommand(CommandCreoleStyle.createLegacyEol(FontStyle.BOLD));
 
-		this.commands.add(CommandCreoleStyle.createCreole(FontStyle.ITALIC));
-		this.commands.add(CommandCreoleStyle.createLegacy(FontStyle.ITALIC));
-		this.commands.add(CommandCreoleStyle.createLegacyEol(FontStyle.ITALIC));
-		this.commands.add(CommandCreoleStyle.createLegacy(FontStyle.PLAIN));
-		this.commands.add(CommandCreoleStyle.createLegacyEol(FontStyle.PLAIN));
+		addCommand(CommandCreoleStyle.createCreole(FontStyle.ITALIC));
+		addCommand(CommandCreoleStyle.createLegacy(FontStyle.ITALIC));
+		addCommand(CommandCreoleStyle.createLegacyEol(FontStyle.ITALIC));
+		addCommand(CommandCreoleStyle.createLegacy(FontStyle.PLAIN));
+		addCommand(CommandCreoleStyle.createLegacyEol(FontStyle.PLAIN));
 		if (modeSimpleLine == CreoleMode.FULL) {
-			this.commands.add(CommandCreoleStyle.createCreole(FontStyle.UNDERLINE));
+			addCommand(CommandCreoleStyle.createCreole(FontStyle.UNDERLINE));
 		}
-		this.commands.add(CommandCreoleStyle.createLegacy(FontStyle.UNDERLINE));
-		this.commands.add(CommandCreoleStyle.createLegacyEol(FontStyle.UNDERLINE));
-		this.commands.add(CommandCreoleStyle.createCreole(FontStyle.STRIKE));
-		this.commands.add(CommandCreoleStyle.createLegacy(FontStyle.STRIKE));
-		this.commands.add(CommandCreoleStyle.createLegacyEol(FontStyle.STRIKE));
-		this.commands.add(CommandCreoleStyle.createCreole(FontStyle.WAVE));
-		this.commands.add(CommandCreoleStyle.createLegacy(FontStyle.WAVE));
-		this.commands.add(CommandCreoleStyle.createLegacyEol(FontStyle.WAVE));
-		this.commands.add(CommandCreoleStyle.createLegacy(FontStyle.BACKCOLOR));
-		this.commands.add(CommandCreoleStyle.createLegacyEol(FontStyle.BACKCOLOR));
-		this.commands.add(CommandCreoleSizeChange.create());
-		this.commands.add(CommandCreoleSizeChange.createEol());
-		this.commands.add(CommandCreoleColorChange.create(skinParam.getThemeStyle()));
-		this.commands.add(CommandCreoleColorChange.createEol(skinParam.getThemeStyle()));
-		this.commands.add(CommandCreoleColorAndSizeChange.create(skinParam.getThemeStyle()));
-		this.commands.add(CommandCreoleColorAndSizeChange.createEol(skinParam.getThemeStyle()));
-		this.commands.add(CommandCreoleExposantChange.create(FontPosition.EXPOSANT));
-		this.commands.add(CommandCreoleExposantChange.create(FontPosition.INDICE));
-		this.commands.add(CommandCreoleImg.create());
-		this.commands.add(CommandCreoleQrcode.create());
-		this.commands.add(CommandCreoleOpenIcon.create(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet()));
-		this.commands.add(CommandCreoleMath.create());
-		this.commands.add(CommandCreoleLatex.create());
-		this.commands.add(CommandCreoleSprite.create(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet()));
-		this.commands.add(CommandCreoleSpace.create());
-		this.commands.add(CommandCreoleFontFamilyChange.create());
-		this.commands.add(CommandCreoleFontFamilyChange.createEol());
-		this.commands.add(CommandCreoleMonospaced.create(skinParam.getMonospacedFamily()));
-		this.commands.add(CommandCreoleUrl.create(skinParam));
+		addCommand(CommandCreoleStyle.createLegacy(FontStyle.UNDERLINE));
+		addCommand(CommandCreoleStyle.createLegacyEol(FontStyle.UNDERLINE));
+		addCommand(CommandCreoleStyle.createCreole(FontStyle.STRIKE));
+		addCommand(CommandCreoleStyle.createLegacy(FontStyle.STRIKE));
+		addCommand(CommandCreoleStyle.createLegacyEol(FontStyle.STRIKE));
+		addCommand(CommandCreoleStyle.createCreole(FontStyle.WAVE));
+		addCommand(CommandCreoleStyle.createLegacy(FontStyle.WAVE));
+		addCommand(CommandCreoleStyle.createLegacyEol(FontStyle.WAVE));
+		addCommand(CommandCreoleStyle.createLegacy(FontStyle.BACKCOLOR));
+		addCommand(CommandCreoleStyle.createLegacyEol(FontStyle.BACKCOLOR));
+		addCommand(CommandCreoleSizeChange.create());
+		addCommand(CommandCreoleSizeChange.createEol());
+		addCommand(CommandCreoleColorChange.create());
+		addCommand(CommandCreoleColorChange.createEol());
+		addCommand(CommandCreoleColorAndSizeChange.create());
+		addCommand(CommandCreoleColorAndSizeChange.createEol());
+		addCommand(CommandCreoleExposantChange.create(FontPosition.EXPOSANT));
+		addCommand(CommandCreoleExposantChange.create(FontPosition.INDICE));
+		addCommand(CommandCreoleImg.create());
+		addCommand(CommandCreoleQrcode.create());
+		addCommand(CommandCreoleOpenIcon.create());
+		addCommand(CommandCreoleMath.create());
+		addCommand(CommandCreoleLatex.create());
+		addCommand(CommandCreoleSprite.create());
+		addCommand(CommandCreoleSpace.create());
+		addCommand(CommandCreoleFontFamilyChange.create());
+		addCommand(CommandCreoleFontFamilyChange.createEol());
+		addCommand(CommandCreoleMonospaced.create());
+		addCommand(CommandCreoleUrl.create());
 		if (SecurityUtils.allowSvgText()) {
-			this.commands.add(CommandCreoleSvgAttributeChange.create());
+			addCommand(CommandCreoleSvgAttributeChange.create());
 		}
 
 		this.header = style.getHeader(fontConfiguration, context);
 
 		if (this.header != null) {
 			this.atoms.add(this.header);
+		}
+	}
+
+	private void addCommand(Command cmd) {
+		final String starters = cmd.startingChars();
+		for (int i = 0; i < starters.length(); i++) {
+			final char ch = starters.charAt(i);
+			List<Command> localList = commands.get(ch);
+			if (localList == null) {
+				localList = new ArrayList<Command>();
+				commands.put(ch, localList);
+			}
+			localList.add(cmd);
 		}
 	}
 
@@ -285,13 +293,19 @@ public class StripeSimple implements Stripe {
 	}
 
 	private Command searchCommand(String line) {
-		for (Command cmd : commands) {
-			final int i = cmd.matchingSize(line);
-			if (i != 0) {
-				return cmd;
+		final List<Command> localList = commands.get(line.charAt(0));
+		if (localList != null)
+			for (Command cmd : localList) {
+				final int i = cmd.matchingSize(line);
+				if (i != 0) {
+					return cmd;
+				}
 			}
-		}
 		return null;
+	}
+
+	public ISkinSimple getSkinParam() {
+		return skinParam;
 	}
 
 }

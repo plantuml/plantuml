@@ -108,11 +108,6 @@ public class MindMap implements UDrawable {
 
 	CommandExecutionResult addIdeaInternal(String stereotype, HColor backColor, int level, Display label,
 			IdeaShape shape, Direction direction) {
-
-		if (level == 0 && this.right.hasRoot())
-			return CommandExecutionResult.error(
-					"I don't know how to draw multi-root diagram. You should suggest an image so that the PlantUML team implements it :-)");
-
 		try {
 			if (this.left.hasRoot() == false && this.right.hasRoot() == false)
 				level = 0;
@@ -130,6 +125,10 @@ public class MindMap implements UDrawable {
 			// e.printStackTrace();
 			return CommandExecutionResult.error("General failure: no style available.");
 		}
+	}
+
+	boolean isFull(int level) {
+		return level == 0 && this.right.hasRoot();
 	}
 
 }

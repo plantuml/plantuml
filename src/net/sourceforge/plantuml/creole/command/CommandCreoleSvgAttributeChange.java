@@ -45,6 +45,11 @@ import net.sourceforge.plantuml.graphic.SvgAttributes;
 
 public class CommandCreoleSvgAttributeChange implements Command {
 
+	@Override
+	public String startingChars() {
+		return "<";
+	}
+
 	public static final String fontPattern = Splitter.svgAttributePattern;
 
 	private static final Pattern2 pattern = MyPattern.cmpile("^(" + fontPattern + "(.*?)\\</text\\>)");

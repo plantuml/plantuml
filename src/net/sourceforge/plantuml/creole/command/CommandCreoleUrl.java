@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.creole.command;
 
-import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
@@ -46,16 +45,18 @@ import net.sourceforge.plantuml.creole.legacy.StripeSimple;
 
 public class CommandCreoleUrl implements Command {
 
-	private static final Pattern2 pattern = MyPattern.cmpile("^(" + UrlBuilder.getRegexp() + ")");
-	private final ISkinSimple skinParam;
-
-	public static Command create(ISkinSimple skinParam) {
-		return new CommandCreoleUrl(skinParam);
+	@Override
+	public String startingChars() {
+		return "[";
 	}
 
-	private CommandCreoleUrl(ISkinSimple skinParam) {
-		this.skinParam = skinParam;
+	private static final Pattern2 pattern = MyPattern.cmpile("^(" + UrlBuilder.getRegexp() + ")");
 
+	public static Command create() {
+		return new CommandCreoleUrl();
+	}
+
+	private CommandCreoleUrl() {
 	}
 
 	public int matchingSize(String line) {
@@ -71,7 +72,7 @@ public class CommandCreoleUrl implements Command {
 		if (m.find() == false) {
 			throw new IllegalStateException();
 		}
-		final UrlBuilder urlBuilder = new UrlBuilder(skinParam.getValue("topurl"), ModeUrl.STRICT);
+		final UrlBuilder urlBuilder = new UrlBuilder(stripe.getSkinParam().getValue("topurl"), ModeUrl.STRICT);
 		final Url url = urlBuilder.getUrl(m.group(1));
 		stripe.addUrl(url);
 		return line.substring(m.group(1).length());

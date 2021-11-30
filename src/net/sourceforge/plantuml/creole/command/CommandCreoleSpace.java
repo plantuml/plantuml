@@ -41,6 +41,11 @@ import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.creole.legacy.StripeSimple;
 
 public class CommandCreoleSpace implements Command {
+	
+	@Override
+	public String startingChars() {
+		return "<";
+	}
 
 	private static final Pattern2 pattern = MyPattern.cmpile("^(\\<space:(\\d+)/?\\>)");
 

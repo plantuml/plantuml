@@ -44,6 +44,11 @@ import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class CommandCreoleStyle extends CommandCreoleCache implements Command {
 
+	@Override
+	public String startingChars() {
+		return "</*_~-";
+	}
+
 	private final FontStyle style;
 	private final boolean tryExtendedColor;
 

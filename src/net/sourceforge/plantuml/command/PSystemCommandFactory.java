@@ -253,7 +253,6 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 
 	final protected void addCommonHides(List<Command> cmds) {
 		cmds.add(new CommandHideEmptyDescription());
-		cmds.add(new CommandHideUnlinked());
 		cmds.add(new CommandHideShowByVisibility());
 		cmds.add(new CommandHideShowByGender());
 	}

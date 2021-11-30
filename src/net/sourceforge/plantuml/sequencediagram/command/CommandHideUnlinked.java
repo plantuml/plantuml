@@ -33,16 +33,18 @@
  * 
  *
  */
-package net.sourceforge.plantuml.command;
+package net.sourceforge.plantuml.sequencediagram.command;
 
 import net.sourceforge.plantuml.LineLocation;
-import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 
-public class CommandHideUnlinked extends SingleLineCommand2<UmlDiagram> {
+public class CommandHideUnlinked extends SingleLineCommand2<SequenceDiagram> {
 
 	public CommandHideUnlinked() {
 		super(getRegexConcat());
@@ -52,12 +54,12 @@ public class CommandHideUnlinked extends SingleLineCommand2<UmlDiagram> {
 		return RegexConcat.build(CommandHideUnlinked.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("HIDE", "(hide|show)"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("unlinked"), //
+				new RegexLeaf("@?unlinked"), //
 				RegexLeaf.end()); //
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(UmlDiagram diagram, LineLocation location, RegexResult arg) {
+	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg) {
 		diagram.setHideUnlinkedData(arg.get("HIDE", 0).equalsIgnoreCase("hide"));
 		return CommandExecutionResult.ok();
 	}

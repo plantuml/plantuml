@@ -228,7 +228,7 @@ public class PicoWebServer implements Runnable {
 			}
 		}
 		if (system.getTitleDisplay() != null && system.getTitleDisplay().size() == 1) {
-			final String encode = URLEncoder.encode(system.getTitleDisplay().toString(), "UTF-8");
+			final String encode = URLEncoder.encode(system.getTitleDisplay().asList().get(0).toString(), "UTF-8");
 			if (encode.length() < 256)
 				write(out, "X-PlantUML-Diagram-Title: " + encode);
 		}

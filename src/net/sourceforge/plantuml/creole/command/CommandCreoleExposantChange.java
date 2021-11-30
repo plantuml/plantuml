@@ -43,6 +43,11 @@ import net.sourceforge.plantuml.graphic.FontPosition;
 public class CommandCreoleExposantChange extends CommandCreoleCache implements Command {
 
 	private final FontPosition position;
+	
+	@Override
+	public String startingChars() {
+		return "<";
+	}
 
 	private CommandCreoleExposantChange(String p, FontPosition position) {
 		super(p);

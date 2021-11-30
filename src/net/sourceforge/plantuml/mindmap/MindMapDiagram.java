@@ -39,7 +39,10 @@ import java.awt.geom.Dimension2D;
 import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
+import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.UmlDiagram;
@@ -54,11 +57,12 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class MindMapDiagram extends UmlDiagram {
 
-	private final MindMap mindmap;
+	private final List<MindMap> mindmaps = new ArrayList<>();
 
 	private Direction defaultDirection = Direction.RIGHT;
 
@@ -72,7 +76,7 @@ public class MindMapDiagram extends UmlDiagram {
 
 	public MindMapDiagram(UmlSource source) {
 		super(source, UmlDiagramType.MINDMAP);
-		this.mindmap = new MindMap(getSkinParam());
+		this.mindmaps.add(new MindMap(getSkinParam()));
 	}
 
 	@Override
@@ -86,7 +90,11 @@ public class MindMapDiagram extends UmlDiagram {
 		return new TextBlockBackcolored() {
 
 			public void drawU(UGraphic ug) {
-				mindmap.drawU(ug);
+				for (MindMap mindmap : mindmaps) {
+					mindmap.drawU(ug);
+					final Dimension2D dim = mindmap.calculateDimension(ug.getStringBounder());
+					ug = ug.apply(UTranslate.dy(dim.getHeight()));
+				}
 			}
 
 			public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
@@ -94,7 +102,14 @@ public class MindMapDiagram extends UmlDiagram {
 			}
 
 			public Dimension2D calculateDimension(StringBounder stringBounder) {
-				return mindmap.calculateDimension(stringBounder);
+				double width = 0;
+				double height = 0;
+				for (MindMap mindmap : mindmaps) {
+					final Dimension2D dim = mindmap.calculateDimension(stringBounder);
+					height += dim.getHeight();
+					width = Math.max(width, dim.getWidth());
+				}
+				return new Dimension2DDouble(width, height);
 			}
 
 			public MinMax getMinMax(StringBounder stringBounder) {
@@ -111,18 +126,28 @@ public class MindMapDiagram extends UmlDiagram {
 		return addIdea(backColor, level, label, shape, defaultDirection);
 	}
 
+	private MindMap last() {
+		return mindmaps.get(mindmaps.size() - 1);
+	}
+
 	public CommandExecutionResult addIdea(HColor backColor, int level, Display label, IdeaShape shape,
 			Direction direction) {
 		String stereotype = label.getEndingStereotype();
 		if (stereotype != null) {
 			label = label.removeEndingStereotype();
 		}
-		return mindmap.addIdeaInternal(stereotype, backColor, level, label, shape, direction);
+		if (last().isFull(level))
+			this.mindmaps.add(new MindMap(getSkinParam()));
+
+		return last().addIdeaInternal(stereotype, backColor, level, label, shape, direction);
 	}
 
 	public CommandExecutionResult addIdea(String stereotype, HColor backColor, int level, Display label,
 			IdeaShape shape) {
-		return mindmap.addIdeaInternal(stereotype, backColor, level, label, shape, defaultDirection);
+		if (last().isFull(level))
+			this.mindmaps.add(new MindMap(getSkinParam()));
+
+		return last().addIdeaInternal(stereotype, backColor, level, label, shape, defaultDirection);
 	}
 
 	private String first;
