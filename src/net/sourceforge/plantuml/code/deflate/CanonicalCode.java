@@ -83,7 +83,7 @@ final class CanonicalCode {
 	 *   <li>[1, 1, 1] (result: A=0, B=1, C=overflow)</li>
 	 *   <li>[1, 1, 2, 2, 3, 3, 3, 3] (result: A=0, B=1, C=overflow, ...)</li>
 	 * </ul>
-	 * @param canonicalCodeLengths array of symbol code lengths (not {@code null})
+	 * @param codeLengths array of symbol code lengths (not {@code null})
 	 * @throws NullPointerException if the array is {@code null}
 	 * @throws IllegalArgumentException if any element is negative, any value exceeds MAX_CODE_LENGTH,
 	 * or the collection of code lengths would yield an under-full or over-full Huffman code tree

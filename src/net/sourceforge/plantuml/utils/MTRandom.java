@@ -302,7 +302,7 @@ public class MTRandom extends Random {
 	 * integer value.  That is to say that:
 	 * <pre>
 	 * mt.setSeed(12345);
-	 * int foo = mt.nextInt(16) + (mt.nextInt(16) << 16);</pre>
+	 * int foo = mt.nextInt(16) + (mt.nextInt(16) &lt;&lt; 16);</pre>
 	 * will not give the same result as
 	 * <pre>
 	 * mt.setSeed(12345);

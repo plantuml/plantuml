@@ -190,7 +190,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-javadoc-plugin</artifactId>
-        <version>3.2.0</version>
+        <version>3.3.1</version>
         <executions>
           <execution>
             <id>attach-javadocs</id>
@@ -198,9 +198,9 @@
               <goal>jar</goal>
             </goals>
             <configuration>
-              <javadoc.opts>-Xdoclint:none</javadoc.opts>
-              <additionalparam>-Xdoclint:none</additionalparam>
               <doclint>none</doclint>
+              <quiet>true</quiet>
+              <sourceFileIncludes>net/sourceforge/plantuml/**/*.java</sourceFileIncludes>
             </configuration>
           </execution>
         </executions>

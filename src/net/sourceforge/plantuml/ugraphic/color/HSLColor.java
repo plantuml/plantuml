@@ -279,7 +279,7 @@ public class HSLColor {
 	 *
 	 * @param hsl an array containing the 3 HSL values
 	 *
-	 * @returns the RGB Color object
+	 * @return the RGB Color object
 	 */
 	public static Color toRGB(float[] hsl) {
 		return toRGB(hsl, 1.0f);
@@ -293,7 +293,7 @@ public class HSLColor {
 	 * @param hsl   an array containing the 3 HSL values
 	 * @param alpha the alpha value between 0 - 1
 	 *
-	 * @returns the RGB Color object
+	 * @return the RGB Color object
 	 */
 	public static Color toRGB(float[] hsl, float alpha) {
 		return toRGB(hsl[0], hsl[1], hsl[2], alpha);
@@ -306,7 +306,7 @@ public class HSLColor {
 	 * @param s Saturation is specified as a percentage in the range 1 - 100.
 	 * @param l Lumanance is specified as a percentage in the range 1 - 100.
 	 *
-	 * @returns the RGB Color object
+	 * @return the RGB Color object
 	 */
 	public static Color toRGB(float h, float s, float l) {
 		return toRGB(h, s, l, 1.0f);
@@ -320,7 +320,7 @@ public class HSLColor {
 	 * @param l     Lumanance is specified as a percentage in the range 1 - 100.
 	 * @param alpha the alpha value between 0 - 1
 	 *
-	 * @returns the RGB Color object
+	 * @return the RGB Color object
 	 */
 	public static Color toRGB(float h, float s, float l, float alpha) {
 		if (s < 0.0f || s > 100.0f) {

@@ -51,13 +51,11 @@ public interface ImageData {
 
 	/**
 	 * Width in pixel of the image.
-	 * @return
 	 */
 	public int getWidth();
 
 	/**
 	 * Height in pixel of the image.
-	 * @return
 	 */
 	public int getHeight();
 
@@ -79,7 +77,6 @@ public interface ImageData {
 	 * </code>
 	 * 
 	 * @param nameId the id to be used in the cmap data string.
-	 * @return
 	 */
 	public String getCMapData(String nameId);
 	
