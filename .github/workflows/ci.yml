@@ -66,7 +66,7 @@ jobs:
       fail-fast: false
       matrix:
         java_version: [ 8, 11, 17 ]
-        os: [ macos-10.15,  macos-11, ubuntu-18.04, ubuntu-20.04, windows-2016, windows-2019, windows-2022 ]
+        os: [ macos-10.15,  macos-11, ubuntu-18.04, ubuntu-20.04, windows-2019, windows-2022 ]
         include:
           - release_from_this_build: true
             os: ubuntu-20.04
