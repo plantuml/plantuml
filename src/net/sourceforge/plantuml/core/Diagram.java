@@ -86,15 +86,11 @@ public interface Diagram {
 
 	/**
 	 * The original source of the diagram
-	 * 
-	 * @return
 	 */
 	UmlSource getSource();
 
 	/**
 	 * Check if the Diagram have some links.
-	 * 
-	 * @return
 	 */
 	public boolean hasUrl();
 

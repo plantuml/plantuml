@@ -53,6 +53,7 @@ public class LivingParticipantBox implements InGroupable {
 	/**
 	 * @deprecated a virer
 	 */
+	@Deprecated
 	public ParticipantBox getParticipantBox() {
 		return participantBox;
 	}
@@ -60,6 +61,7 @@ public class LivingParticipantBox implements InGroupable {
 	/**
 	 * @deprecated a virer
 	 */
+	@Deprecated
 	public LifeLine getLifeLine() {
 		return lifeLine;
 	}
