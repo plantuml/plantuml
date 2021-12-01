@@ -9,6 +9,7 @@ PlantUML
 
 [![online](https://img.shields.io/endpoint?url=https://www.plantuml.com/plantuml/badge)](https://www.plantuml.com/plantuml/uml/SyfFKj2rKt3CoKnELR1Io4ZDoSa70000)
 [![rate](https://img.shields.io/endpoint?url=https://www.plantuml.com/plantuml/rate)](https://www.plantuml.com/plantuml/uml/SyfFKj2rKt3CoKnELR1Io4ZDoSa70000)
+[![peak](https://img.shields.io/endpoint?url=https://www.plantuml.com/plantuml/rate?peak)](https://www.plantuml.com/plantuml/uml/SyfFKj2rKt3CoKnELR1Io4ZDoSa70000)
 
 [![Release (latest by date)](https://img.shields.io/github/v/release/plantuml/plantuml)](https://github.com/plantuml/plantuml/releases/latest)
 [![Release Date](https://img.shields.io/github/release-date/plantuml/plantuml?color=blue)](https://github.com/plantuml/plantuml/releases/latest)
