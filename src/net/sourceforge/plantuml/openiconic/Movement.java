@@ -85,8 +85,6 @@ public class Movement {
 			throw new UnsupportedOperationException();
 		}
 		if (mirrorControlPoint == null) {
-			// return this;
-			// throw new IllegalArgumentException();
 			return new Movement(new SvgCommandLetter("C"), this.getSvgPosition(0), this.getSvgPosition(0),
 					lastPosition());
 		}
@@ -117,47 +115,42 @@ public class Movement {
 			return null;
 		}
 		return getSvgPosition(arguments.size() - 2);
-		// final SvgCommandNumber lastX = arguments.get(arguments.size() - 2);
-		// final SvgCommandNumber lastY = arguments.get(arguments.size() - 1);
-		// return new SvgPosition(lastX, lastY);
 	}
-
-	// public SvgPosition firstPosition() {
-	// return getSvgPosition(0);
-	// // final SvgCommandNumber firstX = arguments.get(0);
-	// // final SvgCommandNumber firstY = arguments.get(1);
-	// // return new SvgPosition(firstX, firstY);
-	// }
 
 	public Movement toAbsoluteUpperCase(SvgPosition delta) {
 		Objects.requireNonNull(delta);
-		if (letter.isUpperCase()) {
+		if (letter.is('H')) {
+			final SvgCommandNumber tmp = arguments.get(0);
+			return new Movement(new SvgCommandLetter("L"), new SvgPosition(tmp, delta.getY()));
+		}
+		if (letter.is('V'))
+			throw new UnsupportedOperationException();
+
+		if (letter.isUpperCase())
 			return this;
-		}
-		if (letter.is('m')) {
+
+		if (letter.is('m'))
 			return new Movement(new SvgCommandLetter("M"), delta.add(getSvgPosition(0)));
-		}
-		if (letter.is('l')) {
+
+		if (letter.is('l'))
 			return new Movement(new SvgCommandLetter("L"), delta.add(getSvgPosition(0)));
-		}
-		if (letter.is('z')) {
+
+		if (letter.is('z'))
 			return new Movement(new SvgCommandLetter("Z"));
-		}
-		if (letter.is('c')) {
+
+		if (letter.is('c'))
 			return new Movement(new SvgCommandLetter("C"), delta.add(getSvgPosition(0)), delta.add(getSvgPosition(2)),
 					delta.add(getSvgPosition(4)));
-		}
-		if (letter.is('s')) {
+
+		if (letter.is('s'))
 			return new Movement(new SvgCommandLetter("S"), delta.add(getSvgPosition(0)), delta.add(getSvgPosition(2)));
-		}
+
 		if (letter.is('a')) {
 			final SvgPosition last = delta.add(lastPosition());
 			// System.err.println("LAST=" + last);
 			return new Movement(new SvgCommandLetter("A"), arguments.get(0), arguments.get(1), arguments.get(2),
 					arguments.get(3), arguments.get(4), last.getX(), last.getY());
 		}
-		// A still to be done
-		// System.err.println("Movement::goUpperCase " + letter);
 		throw new UnsupportedOperationException("Movement::goUpperCase " + letter);
 	}
 

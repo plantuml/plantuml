@@ -33,29 +33,46 @@
  * 
  *
  */
-package net.sourceforge.plantuml.font;
+package net.sourceforge.plantuml.creole.command;
 
-import java.awt.GraphicsEnvironment;
+import net.sourceforge.plantuml.command.regex.Matcher2;
+import net.sourceforge.plantuml.command.regex.MyPattern;
+import net.sourceforge.plantuml.command.regex.Pattern2;
+import net.sourceforge.plantuml.creole.legacy.StripeSimple;
+import net.sourceforge.plantuml.graphic.Splitter;
 
-import net.sourceforge.plantuml.PlainStringsDiagram;
-import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.UmlSource;
+public class CommandCreoleEmojiTwo implements Command {
 
-public class PSystemListFonts extends PlainStringsDiagram {
-
-	public PSystemListFonts(UmlSource source, String text) {
-		super(source);
-		strings.add("   <b><size:16>Fonts available:");
-		strings.add(" ");
-		final String name[] = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
-		for (String n : name) {
-			strings.add(n + " : <font:" + n + ">" + text);
-		}
-
+	@Override
+	public String startingChars() {
+		return "<";
 	}
 
-	public DiagramDescription getDescription() {
-		return new DiagramDescription("(List fonts)");
+	private static final Pattern2 pattern = MyPattern.cmpile("^(" + Splitter.emojiTwoPattern + ")");
+
+	private CommandCreoleEmojiTwo() {
+	}
+
+	public static Command create() {
+		return new CommandCreoleEmojiTwo();
+	}
+
+	public int matchingSize(String line) {
+		final Matcher2 m = pattern.matcher(line);
+		if (m.find() == false)
+			return 0;
+
+		return m.group(1).length();
+	}
+
+	public String executeAndGetRemaining(String line, StripeSimple stripe) {
+		final Matcher2 m = pattern.matcher(line);
+		if (m.find() == false)
+			throw new IllegalStateException();
+
+		final String emoji = m.group(2);
+		stripe.addEmojiTwo(emoji);
+		return line.substring(m.group(1).length());
 	}
 
 }
