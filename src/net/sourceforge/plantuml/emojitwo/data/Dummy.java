@@ -33,29 +33,8 @@
  * 
  *
  */
-package net.sourceforge.plantuml.font;
+package net.sourceforge.plantuml.emojitwo.data;
 
-import java.awt.GraphicsEnvironment;
-
-import net.sourceforge.plantuml.PlainStringsDiagram;
-import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.UmlSource;
-
-public class PSystemListFonts extends PlainStringsDiagram {
-
-	public PSystemListFonts(UmlSource source, String text) {
-		super(source);
-		strings.add("   <b><size:16>Fonts available:");
-		strings.add(" ");
-		final String name[] = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
-		for (String n : name) {
-			strings.add(n + " : <font:" + n + ">" + text);
-		}
-
-	}
-
-	public DiagramDescription getDescription() {
-		return new DiagramDescription("(List fonts)");
-	}
+public class Dummy {
 
 }

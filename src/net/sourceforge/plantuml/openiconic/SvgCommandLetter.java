@@ -60,9 +60,10 @@ public class SvgCommandLetter implements SvgCommand {
 	public int argumentNumber() {
 		switch (StringUtils.goLowerCase(letter)) {
 		case 'm':
-		case 'M':
 		case 'l':
 			return 2;
+		case 'h':
+			return 1;
 		case 'z':
 			return 0;
 		case 'c':

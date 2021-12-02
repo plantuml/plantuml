@@ -33,29 +33,38 @@
  * 
  *
  */
-package net.sourceforge.plantuml.font;
+package net.sourceforge.plantuml.creole.atom;
 
-import java.awt.GraphicsEnvironment;
+import java.awt.geom.Dimension2D;
 
-import net.sourceforge.plantuml.PlainStringsDiagram;
-import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.emojitwo.EmojiTwo;
+import net.sourceforge.plantuml.graphic.FontConfiguration;
+import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.ugraphic.UGraphic;
 
-public class PSystemListFonts extends PlainStringsDiagram {
+public class AtomEmojiTwo extends AbstractAtom implements Atom {
 
-	public PSystemListFonts(UmlSource source, String text) {
-		super(source);
-		strings.add("   <b><size:16>Fonts available:");
-		strings.add(" ");
-		final String name[] = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
-		for (String n : name) {
-			strings.add(n + " : <font:" + n + ">" + text);
-		}
+	private static final double MAGIC = 4.0;
+	private final EmojiTwo emojiTwo;
+	private final double factor;
 
+	public AtomEmojiTwo(EmojiTwo emojiTwo, double scale, FontConfiguration fontConfiguration) {
+		this.emojiTwo = emojiTwo;
+		this.factor = scale * fontConfiguration.getSize2D() / 12.0 / MAGIC;
 	}
 
-	public DiagramDescription getDescription() {
-		return new DiagramDescription("(List fonts)");
+	public Dimension2D calculateDimension(StringBounder stringBounder) {
+		final double size = 64 * factor;
+		return new Dimension2DDouble(size, size);
+	}
+
+	public double getStartingAltitude(StringBounder stringBounder) {
+		return -3 * factor;
+	}
+
+	public void drawU(UGraphic ug) {
+		emojiTwo.drawU(ug, this.factor);
 	}
 
 }

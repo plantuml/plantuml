@@ -52,6 +52,7 @@ import net.sourceforge.plantuml.creole.Stripe;
 import net.sourceforge.plantuml.creole.StripeStyle;
 import net.sourceforge.plantuml.creole.StripeStyleType;
 import net.sourceforge.plantuml.creole.atom.Atom;
+import net.sourceforge.plantuml.creole.atom.AtomEmojiTwo;
 import net.sourceforge.plantuml.creole.atom.AtomImg;
 import net.sourceforge.plantuml.creole.atom.AtomMath;
 import net.sourceforge.plantuml.creole.atom.AtomOpenIcon;
@@ -60,6 +61,7 @@ import net.sourceforge.plantuml.creole.atom.AtomSprite;
 import net.sourceforge.plantuml.creole.command.Command;
 import net.sourceforge.plantuml.creole.command.CommandCreoleColorAndSizeChange;
 import net.sourceforge.plantuml.creole.command.CommandCreoleColorChange;
+import net.sourceforge.plantuml.creole.command.CommandCreoleEmojiTwo;
 import net.sourceforge.plantuml.creole.command.CommandCreoleExposantChange;
 import net.sourceforge.plantuml.creole.command.CommandCreoleFontFamilyChange;
 import net.sourceforge.plantuml.creole.command.CommandCreoleImg;
@@ -74,6 +76,7 @@ import net.sourceforge.plantuml.creole.command.CommandCreoleSprite;
 import net.sourceforge.plantuml.creole.command.CommandCreoleStyle;
 import net.sourceforge.plantuml.creole.command.CommandCreoleSvgAttributeChange;
 import net.sourceforge.plantuml.creole.command.CommandCreoleUrl;
+import net.sourceforge.plantuml.emojitwo.EmojiTwo;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.FontPosition;
 import net.sourceforge.plantuml.graphic.FontStyle;
@@ -158,6 +161,7 @@ public class StripeSimple implements Stripe {
 		addCommand(CommandCreoleImg.create());
 		addCommand(CommandCreoleQrcode.create());
 		addCommand(CommandCreoleOpenIcon.create());
+		addCommand(CommandCreoleEmojiTwo.create());
 		addCommand(CommandCreoleMath.create());
 		addCommand(CommandCreoleLatex.create());
 		addCommand(CommandCreoleSprite.create());
@@ -251,16 +255,21 @@ public class StripeSimple implements Stripe {
 
 	public void addSprite(String src, double scale, HColor color) {
 		final Sprite sprite = skinParam.getSprite(src);
-		if (sprite != null) {
+		if (sprite != null)
 			atoms.add(new AtomSprite(color, scale, fontConfiguration, sprite, null));
-		}
 	}
 
 	public void addOpenIcon(String src, double scale, HColor color) {
 		final OpenIcon openIcon = OpenIcon.retrieve(src);
-		if (openIcon != null) {
+		if (openIcon != null)
 			atoms.add(new AtomOpenIcon(color, scale, openIcon, fontConfiguration, null));
-		}
+	}
+
+	public void addEmojiTwo(String emoji) {
+		final EmojiTwo emojiTwo = EmojiTwo.retrieve(emoji);
+		if (emojiTwo != null)
+			atoms.add(new AtomEmojiTwo(emojiTwo, 1, fontConfiguration));
+
 	}
 
 	public void addMath(ScientificEquationSafe math) {

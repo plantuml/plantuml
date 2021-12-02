@@ -89,10 +89,11 @@ public class AtomTextUtils {
 		return createAtomText(url.getLabel(), url, fontConfiguration, skinSimple);
 	}
 
+	private static final Pattern p = Pattern.compile(Splitter.openiconPattern + "|" + Splitter.spritePattern2 + "|"
+			+ Splitter.imgPatternNoSrcColon + "|" + Splitter.emojiTwoPattern);
+
 	private static Atom createAtomText(final String text, Url url, FontConfiguration fontConfiguration,
 			ISkinSimple skinSimple) {
-		final Pattern p = Pattern.compile(
-				Splitter.openiconPattern + "|" + Splitter.spritePattern2 + "|" + Splitter.imgPatternNoSrcColon);
 		final Matcher m = p.matcher(text);
 		final List<Atom> result = new ArrayList<>();
 		while (m.find()) {
@@ -104,6 +105,10 @@ public class AtomTextUtils {
 			final String valOpenicon = m.group(1);
 			final String valSprite = m.group(3);
 			final String valImg = m.group(5);
+			final String valEmojiTwo = m.group(6);
+			if (valEmojiTwo != null)
+				throw new UnsupportedOperationException();
+
 			if (valOpenicon != null) {
 				final OpenIcon openIcon = OpenIcon.retrieve(valOpenicon);
 				if (openIcon != null) {

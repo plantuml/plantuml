@@ -127,14 +127,10 @@ public class SvgPath {
 
 	private List<SvgCommand> manageHV(List<SvgCommand> commands) {
 		final List<SvgCommand> result = new ArrayList<>();
-		SvgCommandNumber lastX = null;
-		SvgCommandNumber lastY = null;
 		final Iterator<SvgCommand> it = commands.iterator();
 		while (it.hasNext()) {
 			final SvgCommand cmd = it.next();
 			if (cmd instanceof SvgCommandNumber) {
-				lastX = lastY;
-				lastY = (SvgCommandNumber) cmd;
 				result.add(cmd);
 				continue;
 			}
@@ -185,8 +181,8 @@ public class SvgPath {
 				final SvgPosition ctl1 = move.getSvgPosition(0);
 				final SvgPosition ctl2 = move.getSvgPosition(2);
 				result.cubicTo(ctl1.getXDouble() * factor, ctl1.getYDouble() * factor, ctl2.getXDouble() * factor,
-						ctl2.getYDouble() * factor, lastPosition.getXDouble() * factor, lastPosition.getYDouble()
-								* factor);
+						ctl2.getYDouble() * factor, lastPosition.getXDouble() * factor,
+						lastPosition.getYDouble() * factor);
 			} else if (letter == 'L') {
 				result.lineTo(lastPosition.getXDouble() * factor, lastPosition.getYDouble() * factor);
 			} else if (letter == 'A') {

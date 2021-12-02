@@ -530,6 +530,7 @@ public enum License {
 		text.add("CafeUndZopfli ported by Eugene Klyuchnikov https://github.com/eustas/CafeUndZopfli");
 		text.add("Brotli (c) by the Brotli Authors https://github.com/google/brotli");
 		text.add("Themes (c) by Brett Schwarz https://github.com/bschwarz/puml-themes");
+		text.add("EmojiTwo SVG provided by https://github.com/EmojiTwo/emojitwo");
 		text.add(" ");
 	}
 }
