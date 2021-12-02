@@ -36,6 +36,11 @@
 				<include name="*.svg" />
 			</fileset>
 		</copy>
+		<copy todir="build/net/sourceforge/plantuml/emojitwo/data">
+			<fileset dir="src/net/sourceforge/plantuml/emojitwo/data">
+				<include name="*.svg" />
+			</fileset>
+		</copy>
 		<copy todir="build/net/sourceforge/plantuml/fun">
 			<fileset dir="src/net/sourceforge/plantuml/fun">
 				<include name="*.png" />
