@@ -204,7 +204,7 @@ final public class UmlSource {
 	 * Check if a source diagram description is empty. Does not take comment line
 	 * into account.
 	 * 
-	 * @return <code>true<code> if the diagram does not contain information.
+	 * @return <code>true</code> if the diagram does not contain information.
 	 */
 	public boolean isEmpty() {
 		for (StringLocated s : source) {

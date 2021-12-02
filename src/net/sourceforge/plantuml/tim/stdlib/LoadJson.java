@@ -62,7 +62,7 @@ import net.sourceforge.plantuml.tim.expression.TValue;
  * Supports three parameters for datasource, default JSON value and charset. The
  * datasource will be checked against the security rules.
  * <p>
- * Examples:</br>
+ * Examples:<br/>
  * 
  * <pre>
  *     &#64; startuml
