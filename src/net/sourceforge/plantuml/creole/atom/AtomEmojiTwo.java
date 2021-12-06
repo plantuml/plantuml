@@ -39,19 +39,21 @@ import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.emojitwo.EmojiTwo;
-import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class AtomEmojiTwo extends AbstractAtom implements Atom {
 
-	private static final double MAGIC = 4.0;
+	private static final double MAGIC = 40.0;
 	private final EmojiTwo emojiTwo;
 	private final double factor;
+	private final HColor color;
 
-	public AtomEmojiTwo(EmojiTwo emojiTwo, double scale, FontConfiguration fontConfiguration) {
+	public AtomEmojiTwo(EmojiTwo emojiTwo, double scale, double size2D, HColor color) {
 		this.emojiTwo = emojiTwo;
-		this.factor = scale * fontConfiguration.getSize2D() / 12.0 / MAGIC;
+		this.factor = scale * size2D / MAGIC;
+		this.color = color;
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
@@ -64,7 +66,7 @@ public class AtomEmojiTwo extends AbstractAtom implements Atom {
 	}
 
 	public void drawU(UGraphic ug) {
-		emojiTwo.drawU(ug, this.factor);
+		emojiTwo.drawU(ug, this.factor, this.color);
 	}
 
 }

@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.openiconic;
 
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
+
 public class SvgPosition {
 
 	final private SvgCommandNumber x;
@@ -86,5 +89,9 @@ public class SvgPosition {
 		final double x = 2 * centerX - tobeMirrored.getXDouble();
 		final double y = 2 * centerY - tobeMirrored.getYDouble();
 		return new SvgPosition(x, y);
+	}
+
+	public Point2D affine(AffineTransform at) {
+		return at.transform(new Point2D.Double(getXDouble(), getYDouble()), null);
 	}
 }

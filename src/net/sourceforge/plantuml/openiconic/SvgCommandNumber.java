@@ -42,15 +42,15 @@ public class SvgCommandNumber implements SvgCommand {
 	final private String number;
 
 	public SvgCommandNumber(String number) {
-		if (number.matches("[-.0-9]+") == false) {
+		if (number.matches("[-.0-9e]+") == false) {
 			throw new IllegalArgumentException();
 		}
 		this.number = number;
 	}
-	
+
 	@Override
 	public String toString() {
-		return super.toString() + " " + number;
+		return " " + number;
 	}
 
 	public SvgCommandNumber(double number) {

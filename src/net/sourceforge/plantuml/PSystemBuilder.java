@@ -65,6 +65,7 @@ import net.sourceforge.plantuml.eggs.PSystemEggFactory;
 import net.sourceforge.plantuml.eggs.PSystemPathFactory;
 import net.sourceforge.plantuml.eggs.PSystemRIPFactory;
 import net.sourceforge.plantuml.eggs.PSystemWelcomeFactory;
+import net.sourceforge.plantuml.emojitwo.PSystemListEmojiFactory;
 import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.error.PSystemErrorUtils;
 import net.sourceforge.plantuml.flowdiagram.FlowDiagramFactory;
@@ -169,6 +170,7 @@ public class PSystemBuilder {
 		factories.add(new PSystemDonorsFactory());
 		factories.add(new PSystemSkinparameterListFactory());
 		factories.add(new PSystemListFontsFactory());
+		factories.add(new PSystemListEmojiFactory());
 		factories.add(new PSystemOpenIconicFactory());
 		factories.add(new PSystemListOpenIconicFactory());
 		factories.add(new PSystemListInternalSpritesFactory());

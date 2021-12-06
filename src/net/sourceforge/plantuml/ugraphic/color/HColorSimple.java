@@ -51,20 +51,20 @@ public class HColorSimple extends HColorAbstract implements HColor {
 
 	@Override
 	public String toString() {
-		if (isTransparent()) {
+		if (isTransparent())
 			return "transparent";
-		}
+
 		return color.toString() + " alpha=" + color.getAlpha() + " monochrome=" + monochrome;
 	}
 
 	@Override
 	public String asString() {
-		if (isTransparent()) {
+		if (isTransparent())
 			return "transparent";
-		}
-		if (color.getAlpha() == 255) {
+
+		if (color.getAlpha() == 255)
 			return DotStringFactory.sharp000000(color.getRGB());
-		}
+
 		return "#" + Integer.toHexString(color.getRGB());
 	}
 
@@ -103,9 +103,9 @@ public class HColorSimple extends HColorAbstract implements HColor {
 
 	@Override
 	public boolean equals(Object other) {
-		if (other instanceof HColorSimple == false) {
+		if (other instanceof HColorSimple == false)
 			return false;
-		}
+
 		return this.color.equals(((HColorSimple) other).color);
 	}
 
@@ -119,10 +119,16 @@ public class HColorSimple extends HColorAbstract implements HColor {
 	}
 
 	public HColorSimple asMonochrome() {
-		if (monochrome) {
-			throw new IllegalStateException();
-		}
-		return new HColorSimple(new ColorChangerMonochrome().getChangedColor(color), true);
+		return new HColorSimple(new ColorChangerMonochrome().getChangedColor(color), monochrome);
+	}
+
+	public HColor asMonochrome(HColorSimple colorForMonochrome) {
+		final Color tmp = new ColorChangerMonochrome().getChangedColor(color);
+		final int grey = tmp.getGreen();
+		assert grey == tmp.getBlue();
+		assert grey == tmp.getRed();
+		Color result = ColorUtils.greyToColor(colorForMonochrome.color, grey);
+		return new HColorSimple(result, monochrome);
 	}
 
 	public HColorSimple opposite() {

@@ -70,8 +70,9 @@ public class CommandCreoleEmojiTwo implements Command {
 		if (m.find() == false)
 			throw new IllegalStateException();
 
-		final String emoji = m.group(2);
-		stripe.addEmojiTwo(emoji);
+		final boolean monochrome = m.group(2).equals(":") == false;
+		final String emoji = m.group(4);
+		stripe.addEmojiTwo(emoji, monochrome, m.group(3));
 		return line.substring(m.group(1).length());
 	}
 

@@ -105,7 +105,7 @@ public class AtomTextUtils {
 			final String valOpenicon = m.group(1);
 			final String valSprite = m.group(3);
 			final String valImg = m.group(5);
-			final String valEmojiTwo = m.group(6);
+			final String valEmojiTwo = m.group(7);
 			if (valEmojiTwo != null)
 				throw new UnsupportedOperationException();
 

@@ -56,6 +56,11 @@ public class Movement {
 		this.arguments = Arrays.asList(args);
 	}
 
+	@Override
+	public String toString() {
+		return letter.getLetter() + " " + arguments;
+	}
+
 	private Movement(SvgCommandLetter letter, SvgCommandNumber... args) {
 		this.letter = letter;
 		this.arguments = Arrays.asList(args);
@@ -123,8 +128,18 @@ public class Movement {
 			final SvgCommandNumber tmp = arguments.get(0);
 			return new Movement(new SvgCommandLetter("L"), new SvgPosition(tmp, delta.getY()));
 		}
-		if (letter.is('V'))
-			throw new UnsupportedOperationException();
+		if (letter.is('V')) {
+			final SvgCommandNumber tmp = arguments.get(0);
+			return new Movement(new SvgCommandLetter("L"), new SvgPosition(delta.getX(), tmp));
+		}
+		if (letter.is('h')) {
+			final SvgCommandNumber tmp = arguments.get(0);
+			return new Movement(new SvgCommandLetter("L"), new SvgPosition(delta.getX().add(tmp), delta.getY()));
+		}
+		if (letter.is('v')) {
+			final SvgCommandNumber tmp = arguments.get(0);
+			return new Movement(new SvgCommandLetter("L"), new SvgPosition(delta.getX(), delta.getY().add(tmp)));
+		}
 
 		if (letter.isUpperCase())
 			return this;

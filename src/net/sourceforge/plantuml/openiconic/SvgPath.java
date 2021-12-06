@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.openiconic;
 
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -53,37 +55,43 @@ public class SvgPath {
 	private List<SvgCommand> commands = new ArrayList<>();
 
 	public SvgPath(String path) {
+		// System.err.println("before=" + path);
 		path = StringDecipher.decipher(path);
-		// List<SvgCommand> commands = new ArrayList<>();
+		// System.err.println("after=" + path);
+
 		for (final StringTokenizer st = new StringTokenizer(path); st.hasMoreTokens();) {
 			final String token = st.nextToken();
-			// System.err.println("token=" + token);
+
 			if (token.matches("[a-zA-Z]")) {
 				commands.add(new SvgCommandLetter(token));
 			} else {
 				commands.add(new SvgCommandNumber(token));
 			}
 		}
-		commands = manageHV(commands);
 		commands = insertMissingLetter(commands);
 		checkArguments(commands);
 		SvgPosition last = new SvgPosition();
+		SvgPosition lastMove = new SvgPosition();
 		SvgPosition mirrorControlPoint = null;
 		final Iterator<SvgCommand> iterator = commands.iterator();
 		while (iterator.hasNext()) {
 			Movement movement = new Movement(iterator);
-			// System.err.println("before=" + movement.toSvg());
 			movement = movement.toAbsoluteUpperCase(last);
-			// System.err.println("after=" + movement.toSvg());
-			if (movement.is('S')) {
-				// System.err.println(" before " + movement.toSvg());
+
+			if (movement.getLetter() == 'Z')
+				last = lastMove;
+
+			if (movement.is('S'))
 				movement = movement.mutoToC(mirrorControlPoint);
-				// System.err.println(" after " + movement.toSvg());
-			}
+
 			movements.add(movement);
-			if (movement.lastPosition() != null) {
+
+			if (movement.getLetter() == 'M')
+				lastMove = movement.lastPosition();
+
+			if (movement.lastPosition() != null)
 				last = movement.lastPosition();
-			}
+
 			mirrorControlPoint = movement.getMirrorControlPoint();
 		}
 	}
@@ -103,7 +111,7 @@ public class SvgPath {
 				nb = lastLetter.argumentNumber() - 1;
 			} else {
 				result.add(cmd);
-				lastLetter = (SvgCommandLetter) cmd;
+				lastLetter = ((SvgCommandLetter) cmd).implicit();
 				nb = lastLetter.argumentNumber();
 			}
 			for (int i = 0; i < nb; i++) {
@@ -125,31 +133,6 @@ public class SvgPath {
 		}
 	}
 
-	private List<SvgCommand> manageHV(List<SvgCommand> commands) {
-		final List<SvgCommand> result = new ArrayList<>();
-		final Iterator<SvgCommand> it = commands.iterator();
-		while (it.hasNext()) {
-			final SvgCommand cmd = it.next();
-			if (cmd instanceof SvgCommandNumber) {
-				result.add(cmd);
-				continue;
-			}
-			final String letter = cmd.toSvg();
-			if (letter.equals("h")) {
-				result.add(new SvgCommandLetter("l"));
-				result.add(it.next());
-				result.add(new SvgCommandNumber("0"));
-			} else if (letter.equals("v")) {
-				result.add(new SvgCommandLetter("l"));
-				result.add(new SvgCommandNumber("0"));
-				result.add(it.next());
-			} else {
-				result.add(cmd);
-			}
-		}
-		return result;
-	}
-
 	public String toSvg() {
 		final StringBuilder result = new StringBuilder("<path d=\"");
 		for (Movement move : movements) {
@@ -160,53 +143,78 @@ public class SvgPath {
 		return result.toString();
 	}
 
-	private String toSvgNew() {
-		final StringBuilder result = new StringBuilder("<path d=\"");
-		for (SvgCommand cmd : commands) {
-			result.append(cmd.toSvg());
-			result.append(' ');
-		}
-		result.append("\"/>");
-		return result.toString();
-	}
-
-	private UPath toUPath(double factor) {
+	private UPath toUPath(double factorx, double factory) {
 		final UPath result = new UPath();
 		for (Movement move : movements) {
 			final char letter = move.getLetter();
 			final SvgPosition lastPosition = move.lastPosition();
 			if (letter == 'M') {
-				result.moveTo(lastPosition.getXDouble() * factor, lastPosition.getYDouble() * factor);
+				result.moveTo(lastPosition.getXDouble() * factorx, lastPosition.getYDouble() * factory);
 			} else if (letter == 'C') {
 				final SvgPosition ctl1 = move.getSvgPosition(0);
 				final SvgPosition ctl2 = move.getSvgPosition(2);
-				result.cubicTo(ctl1.getXDouble() * factor, ctl1.getYDouble() * factor, ctl2.getXDouble() * factor,
-						ctl2.getYDouble() * factor, lastPosition.getXDouble() * factor,
-						lastPosition.getYDouble() * factor);
+				result.cubicTo(ctl1.getXDouble() * factorx, ctl1.getYDouble() * factory, ctl2.getXDouble() * factorx,
+						ctl2.getYDouble() * factory, lastPosition.getXDouble() * factorx,
+						lastPosition.getYDouble() * factory);
 			} else if (letter == 'L') {
-				result.lineTo(lastPosition.getXDouble() * factor, lastPosition.getYDouble() * factor);
+				result.lineTo(lastPosition.getXDouble() * factorx, lastPosition.getYDouble() * factory);
 			} else if (letter == 'A') {
-
 				final double rx = move.getArgument(0);
 				final double ry = move.getArgument(1);
 				final double x_axis_rotation = move.getArgument(2);
 				final double large_arc_flag = move.getArgument(3);
 				final double sweep_flag = move.getArgument(4);
-				result.arcTo(rx * factor, ry * factor, x_axis_rotation, large_arc_flag, sweep_flag,
-						lastPosition.getXDouble() * factor, lastPosition.getYDouble() * factor);
+				result.arcTo(rx * factorx, ry * factory, x_axis_rotation, large_arc_flag, sweep_flag,
+						lastPosition.getXDouble() * factorx, lastPosition.getYDouble() * factory);
 			} else if (letter == 'Z') {
 				result.closePath();
 			} else {
 				throw new UnsupportedOperationException("letter " + letter);
 			}
+		}
+		result.setOpenIconic(true);
+		return result;
+	}
 
+	private UPath toUPath(AffineTransform at) {
+		final UPath result = new UPath();
+		for (Movement move : movements) {
+			final char letter = move.getLetter();
+			final SvgPosition lastPosition = move.lastPosition();
+			if (letter == 'M') {
+				result.moveTo(lastPosition.affine(at));
+			} else if (letter == 'C') {
+				final SvgPosition ctl1 = move.getSvgPosition(0);
+				final SvgPosition ctl2 = move.getSvgPosition(2);
+				result.cubicTo(ctl1.affine(at), ctl2.affine(at), lastPosition.affine(at));
+			} else if (letter == 'L') {
+				result.lineTo(lastPosition.affine(at));
+			} else if (letter == 'A') {
+				final double rx = move.getArgument(0);
+				final double ry = move.getArgument(1);
+				final double x_axis_rotation = move.getArgument(2);
+				final double large_arc_flag = move.getArgument(3);
+				final double sweep_flag = move.getArgument(4);
+				final Point2D tmp = lastPosition.affine(at);
+				result.arcTo(rx * at.getScaleX(), ry * at.getScaleY(), x_axis_rotation, large_arc_flag, sweep_flag,
+						tmp.getX(), tmp.getY());
+			} else if (letter == 'Z') {
+				result.closePath();
+			} else {
+				throw new UnsupportedOperationException("letter " + letter);
+			}
 		}
 		result.setOpenIconic(true);
 		return result;
 	}
 
 	public void drawMe(UGraphic ug, double factor) {
-		final UPath path = toUPath(factor);
+		final UPath path = toUPath(factor, factor);
+		ug.draw(path);
+	}
+
+	public void drawMe(UGraphic ug, AffineTransform at) {
+		final UPath path = toUPath(at);
 		ug.draw(path);
 	}
 }

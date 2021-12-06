@@ -87,6 +87,7 @@ import net.sourceforge.plantuml.openiconic.OpenIcon;
 import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.sprite.Sprite;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 import net.sourceforge.plantuml.utils.CharHidder;
 
 public class StripeSimple implements Stripe {
@@ -265,10 +266,21 @@ public class StripeSimple implements Stripe {
 			atoms.add(new AtomOpenIcon(color, scale, openIcon, fontConfiguration, null));
 	}
 
-	public void addEmojiTwo(String emoji) {
+	public void addEmojiTwo(String emoji, boolean monochrome, String forcedColor) {
 		final EmojiTwo emojiTwo = EmojiTwo.retrieve(emoji);
-		if (emojiTwo != null)
-			atoms.add(new AtomEmojiTwo(emojiTwo, 1, fontConfiguration));
+		if (emojiTwo != null) {
+			HColor col = null;
+			if (monochrome) {
+				col = fontConfiguration.getColor();
+				if (forcedColor != null)
+					try {
+						col = skinParam.getIHtmlColorSet().getColor(skinParam.getThemeStyle(), forcedColor);
+					} catch (NoSuchColorException e) {
+					}
+			}
+
+			atoms.add(new AtomEmojiTwo(emojiTwo, 1, fontConfiguration.getSize2D(), col));
+		}
 
 	}
 
