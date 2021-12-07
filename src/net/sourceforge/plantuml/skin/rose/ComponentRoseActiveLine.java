@@ -59,9 +59,9 @@ public class ComponentRoseActiveLine extends AbstractComponent {
 	public ComponentRoseActiveLine(ThemeStyle themeStyle, Style style, SymbolContext symbolContext, boolean closeUp,
 			boolean closeDown, HColorSet set) {
 		super(style);
-		if (UseStyle.useBetaStyle()) {
+		if (UseStyle.useBetaStyle())
 			symbolContext = style.getSymbolContext(themeStyle, set);
-		}
+
 		this.symbolContext = symbolContext;
 		this.closeUp = closeUp;
 		this.closeDown = closeDown;

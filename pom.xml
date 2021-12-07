@@ -145,8 +145,8 @@
           <include>net/sourceforge/plantuml/version/*.png</include>
           <include>net/sourceforge/plantuml/openiconic/data/*.txt</include>
           <include>net/sourceforge/plantuml/openiconic/data/*.svg</include>
-          <include>net/sourceforge/plantuml/emojitwo/data/*.svg</include>
-          <include>net/sourceforge/plantuml/emojitwo/data/*.txt</include>
+          <include>net/sourceforge/plantuml/emoji/data/*.svg</include>
+          <include>net/sourceforge/plantuml/emoji/data/*.txt</include>
           <include>net/sourceforge/plantuml/fun/*.png</include>
           <include>sprites/archimate/*.png</include>
           <include>net/sourceforge/plantuml/dedication/*.png</include>

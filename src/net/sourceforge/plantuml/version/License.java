@@ -489,23 +489,23 @@ public enum License {
 	}
 
 	private void end3(final List<String> text, final LicenseInfo licenseInfo) {
-		if (this == License.GPL) {
+		if (this == License.GPL)
 			addGpl(licenseInfo, text);
-		} else if (this == License.GPLV2) {
+		else if (this == License.GPLV2)
 			addGplV2(licenseInfo, text);
-		} else if (this == License.MIT) {
+		else if (this == License.MIT)
 			addMit(licenseInfo, text);
-		} else if (this == License.EPL) {
+		else if (this == License.EPL)
 			addEpl(licenseInfo, text);
-		} else if (this == License.BSD) {
+		else if (this == License.BSD)
 			addBsd(licenseInfo, text);
-		} else if (this == License.APACHE) {
+		else if (this == License.APACHE)
 			addApache(licenseInfo, text);
-		} else if (this == License.LGPL) {
+		else if (this == License.LGPL)
 			addLgpl(licenseInfo, text);
-		} else {
+		else
 			throw new IllegalStateException();
-		}
+
 		if (OptionFlags.getInstance().isEnableStats()) {
 			text.add(" ");
 			text.add("This version of PlantUML records general local statistics about usage.");
@@ -517,7 +517,7 @@ public enum License {
 			text.add(" if needed in the local temporary directory.");
 		} else {
 			text.add("This is the IGY distribution (Install GraphViz by Yourself).");
-			text.add("You have to install GraphViz and to setup the GRAPHVIZ_DOT environment variable");			
+			text.add("You have to install GraphViz and to setup the GRAPHVIZ_DOT environment variable");
 		}
 		text.add("(see https://plantuml.com/graphviz-dot )");
 		text.add(" ");
@@ -530,7 +530,7 @@ public enum License {
 		text.add("CafeUndZopfli ported by Eugene Klyuchnikov https://github.com/eustas/CafeUndZopfli");
 		text.add("Brotli (c) by the Brotli Authors https://github.com/google/brotli");
 		text.add("Themes (c) by Brett Schwarz https://github.com/bschwarz/puml-themes");
-		text.add("EmojiTwo SVG provided by https://github.com/EmojiTwo/emojitwo");
+		text.add("Twemoji (c) by Twitter at https://twemoji.twitter.com/");
 		text.add(" ");
 	}
 }

@@ -90,6 +90,7 @@ sequenceDiagram {
 
   lifeLine {
     BackGroundColor white
+    LineStyle 5
   }
 
 }

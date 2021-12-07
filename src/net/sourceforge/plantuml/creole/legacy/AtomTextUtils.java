@@ -90,7 +90,7 @@ public class AtomTextUtils {
 	}
 
 	private static final Pattern p = Pattern.compile(Splitter.openiconPattern + "|" + Splitter.spritePattern2 + "|"
-			+ Splitter.imgPatternNoSrcColon + "|" + Splitter.emojiTwoPattern);
+			+ Splitter.imgPatternNoSrcColon + "|" + Splitter.emojiPattern);
 
 	private static Atom createAtomText(final String text, Url url, FontConfiguration fontConfiguration,
 			ISkinSimple skinSimple) {
@@ -105,8 +105,8 @@ public class AtomTextUtils {
 			final String valOpenicon = m.group(1);
 			final String valSprite = m.group(3);
 			final String valImg = m.group(5);
-			final String valEmojiTwo = m.group(7);
-			if (valEmojiTwo != null)
+			final String valEmoji = m.group(7);
+			if (valEmoji != null)
 				throw new UnsupportedOperationException();
 
 			if (valOpenicon != null) {

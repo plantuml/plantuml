@@ -258,19 +258,18 @@ public class HColorSet {
 		}
 
 		boolean isValid() {
-			for (String color : colors) {
-				if (isColorValid(color) == false) {
+			for (String color : colors)
+				if (isColorValid(color) == false)
 					return false;
-				}
-			}
+
 			return true;
 		}
 
 		HColorAutomatic buildInternal(ThemeStyle themeStyle, HColor background) {
-			if (colors.length == 2) {
+			if (colors.length == 2)
 				return new HColorAutomatic(themeStyle, build(colors[0], background), build(colors[1], background),
 						null);
-			}
+
 			return new HColorAutomatic(themeStyle, build(colors[0], background), build(colors[1], background),
 					build(colors[2], background));
 		}
@@ -290,16 +289,16 @@ public class HColorSet {
 	}
 
 	private Automatic automaticFromString(String s) {
-		if (s.startsWith("#")) {
+		if (s.startsWith("#"))
 			s = s.substring(1);
-		}
-		if (s.startsWith("?") == false) {
+
+		if (s.startsWith("?") == false)
 			return null;
-		}
+
 		final int idx = s.indexOf(':');
-		if (idx != -1) {
+		if (idx != -1)
 			return new Automatic(s.substring(1).split(":"));
-		}
+
 		return null;
 	}
 
@@ -312,9 +311,9 @@ public class HColorSet {
 	}
 
 	public HColor getColorOrWhite(ThemeStyle themeStyle, String s, HColor background) {
-		if (isColorValid(Objects.requireNonNull(s)) == false) {
+		if (isColorValid(Objects.requireNonNull(s)) == false)
 			return HColorUtils.WHITE;
-		}
+
 		try {
 			return getColor(themeStyle, s, background);
 		} catch (NoSuchColorException e) {
@@ -332,50 +331,39 @@ public class HColorSet {
 	}
 
 	public HColor getColor(ThemeStyle themeStyle, String s, HColor background) throws NoSuchColorException {
-		if (isColorValid(Objects.requireNonNull(s)) == false) {
+		if (isColorValid(Objects.requireNonNull(s)) == false)
 			throw new NoSuchColorException();
-		}
+
 		final Automatic automatic = automaticFromString(s);
-		if (automatic != null) {
+		if (automatic != null)
 			return automatic.buildInternal(themeStyle, background);
-		}
+
 		final Gradient gradient = gradientFromString(s);
-		if (gradient != null) {
+		if (gradient != null)
 			return gradient.buildInternal(background);
-		}
+
 		if (background == null && (s.equalsIgnoreCase("#transparent") || s.equalsIgnoreCase("transparent")))
 			s = "#00000000";
+
 		return build(s, background);
 	}
 
 	private boolean isColorValid(String s) {
 		s = removeFirstDieseAndgoLowerCase(s);
 		final Automatic automatic = automaticFromString(s);
-		if (automatic != null) {
+		if (automatic != null)
 			return automatic.isValid();
-		}
+
 		final Gradient gradient = gradientFromString(s);
-		if (gradient != null) {
+		if (gradient != null)
 			return gradient.isValid();
-		}
-		if (s.matches("[0-9A-Fa-f]{3}")) {
+
+		if (s.matches("[0-9A-Fa-f]|[0-9A-Fa-f]{3}|[0-9A-Fa-f]{6}|[0-9A-Fa-f]{8}|automatic|transparent"))
 			return true;
-		}
-		if (s.matches("[0-9A-Fa-f]{6}")) {
+
+		if (htmlNames.containsKey(s))
 			return true;
-		}
-		if (s.matches("[0-9A-Fa-f]{8}")) {
-			return true;
-		}
-		if (s.equalsIgnoreCase("automatic")) {
-			return true;
-		}
-		if (s.equalsIgnoreCase("transparent")) {
-			return true;
-		}
-		if (htmlNames.containsKey(s)) {
-			return true;
-		}
+
 		return false;
 
 	}
@@ -387,6 +375,9 @@ public class HColorSet {
 			return new HColorBackground(background);
 		} else if (s.equalsIgnoreCase("automatic")) {
 			return new HColorAutomaticLegacy();
+		} else if (s.matches("[0-9A-Fa-f]")) {
+			s = "" + s.charAt(0) + s.charAt(0) + s.charAt(0) + s.charAt(0) + s.charAt(0) + s.charAt(0);
+			color = new Color(Integer.parseInt(s, 16));
 		} else if (s.matches("[0-9A-Fa-f]{3}")) {
 			s = "" + s.charAt(0) + s.charAt(0) + s.charAt(1) + s.charAt(1) + s.charAt(2) + s.charAt(2);
 			color = new Color(Integer.parseInt(s, 16));
@@ -403,9 +394,9 @@ public class HColorSet {
 
 	private Color fromRGBa(String s) {
 		// https://forum.plantuml.net/11606/full-opacity-alpha-compositing-support-for-svg-and-png
-		if (s.length() != 8) {
+		if (s.length() != 8)
 			throw new IllegalArgumentException();
-		}
+
 		final int red = Integer.parseInt(s.substring(0, 2), 16);
 		final int green = Integer.parseInt(s.substring(2, 4), 16);
 		final int blue = Integer.parseInt(s.substring(4, 6), 16);
@@ -415,9 +406,9 @@ public class HColorSet {
 
 	private String removeFirstDieseAndgoLowerCase(String s) {
 		s = StringUtils.goLowerCase(s);
-		if (s.startsWith("#")) {
+		if (s.startsWith("#"))
 			s = s.substring(1);
-		}
+
 		return s;
 	}
 
