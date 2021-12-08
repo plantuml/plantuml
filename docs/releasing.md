@@ -10,6 +10,14 @@ Tags [cannot][3] be part of a pull request, so you need to push directly to the 
 
 The release will only happen if the username making the push is matched in the CI `Configure job` step.
 
+# Artifact Signing
+
+The CI workflow will sign artifacts if the `ARTIFACT_SIGNING_KEY` [GitHub secret][4] is present.  This should be a
+private GPG key as described [here][5].  The passphrase is stored in the `ARTIFACT_SIGNING_PASSPHRASE` secret.
+
+Currently, the signature files are only published as part of the [snapshot][6] releases.
+In future, they will be part of the versioned releases as well.
+
 # Releases Elsewhere 
 
 PlantUML is released to other places, currently that happens outside of GitHub and is not documented here.
@@ -17,3 +25,6 @@ PlantUML is released to other places, currently that happens outside of GitHub a
 [1]: https://github.com/plantuml/plantuml/releases
 [2]: https://github.com/plantuml/plantuml/actions/workflows/ci.yml
 [3]: https://stackoverflow.com/questions/12278660/adding-tags-to-a-pull-request
+[4]: https://docs.github.com/en/actions/security-guides/encrypted-secrets
+[5]: https://central.sonatype.org/publish/requirements/gpg/#generating-a-key-pair
+[6]: https://github.com/plantuml/plantuml/releases/tag/snapshot

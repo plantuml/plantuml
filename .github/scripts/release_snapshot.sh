@@ -3,6 +3,7 @@ set -ex
 
 TAG="snapshot"
 DATE_TIME_UTC=$(date -u +"%F at %T (UTC)")
+RELEASE_DIR="target/github_release"
 
 gh release delete "${TAG}" -y || true
 
@@ -10,10 +11,22 @@ git tag --force "${TAG}"
 
 git push --force origin "${TAG}"
 
-mv plantuml.jar         plantuml-SNAPSHOT.jar
-mv plantuml-javadoc.jar plantuml-SNAPSHOT-javadoc.jar
-mv plantuml-sources.jar plantuml-SNAPSHOT-sources.jar
-echo -n "${DATE_TIME_UTC}" > plantuml-SNAPSHOT-timestamp.lock
+mkdir "${RELEASE_DIR}"
+
+ln -s "../plantuml.pom"             "${RELEASE_DIR}/plantuml-SNAPSHOT.pom"
+ln -s "../plantuml.jar"             "${RELEASE_DIR}/plantuml-SNAPSHOT.jar"
+ln -s "../plantuml-javadoc.jar"     "${RELEASE_DIR}/plantuml-SNAPSHOT-javadoc.jar"
+ln -s "../plantuml-sources.jar"     "${RELEASE_DIR}/plantuml-SNAPSHOT-sources.jar"
+
+if [[ -e "target/plantuml.pom.asc" ]]; then
+  # signatures are optional so that forked repos can release snapshots without needing a gpg signing key
+  ln -s "../plantuml.pom.asc"         "${RELEASE_DIR}/plantuml-SNAPSHOT.pom.asc"
+  ln -s "../plantuml.jar.asc"         "${RELEASE_DIR}/plantuml-SNAPSHOT.jar.asc"
+  ln -s "../plantuml-javadoc.jar.asc" "${RELEASE_DIR}/plantuml-SNAPSHOT-javadoc.jar.asc"
+  ln -s "../plantuml-sources.jar.asc" "${RELEASE_DIR}/plantuml-SNAPSHOT-sources.jar.asc"
+fi
+
+echo -n "${DATE_TIME_UTC}" > "${RELEASE_DIR}/plantuml-SNAPSHOT.timestamp"
 
 cat <<-EOF >notes.txt
   This is a pre-release of [the latest development work](https://github.com/plantuml/plantuml/commits/).
@@ -21,10 +34,11 @@ cat <<-EOF >notes.txt
   ⏱  _Snapshot taken the ${DATE_TIME_UTC}_
 EOF
 
-gh release create --prerelease --target "${GITHUB_SHA}" --title "${TAG}" --notes-file notes.txt "${TAG}" \
-  plantuml-SNAPSHOT.jar \
-  plantuml-SNAPSHOT-javadoc.jar \
-  plantuml-SNAPSHOT-sources.jar \
-  plantuml-SNAPSHOT-timestamp.lock
+gh release create \
+  --prerelease \
+  --target "${GITHUB_SHA}" \
+  --title "${TAG}" \
+  --notes-file notes.txt \
+  "${TAG}" ${RELEASE_DIR}/*
 
 echo "::notice title=release snapshot::Snapshot released at ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/tag/${TAG} and taken the ${DATE_TIME_UTC}"

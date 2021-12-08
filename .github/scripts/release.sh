@@ -1,13 +1,18 @@
 #!/usr/bin/env bash
 set -ex
 
-mv plantuml.jar         "plantuml-${POM_VERSION}.jar"
-mv plantuml-javadoc.jar "plantuml-${POM_VERSION}-javadoc.jar"
-mv plantuml-sources.jar "plantuml-${POM_VERSION}-sources.jar"
+RELEASE_DIR="target/github_release"
 
-gh release create --target "${GITHUB_SHA}" "${TAG}" \
-  "plantuml-${POM_VERSION}.jar" \
-  "plantuml-${POM_VERSION}-javadoc.jar" \
-  "plantuml-${POM_VERSION}-sources.jar"
+mkdir "${RELEASE_DIR}"
+
+ln -s "../plantuml.jar"             "${RELEASE_DIR}/plantuml-${POM_VERSION}.jar"
+ln -s "../plantuml-javadoc.jar"     "${RELEASE_DIR}/plantuml-${POM_VERSION}-javadoc.jar"
+ln -s "../plantuml-sources.jar"     "${RELEASE_DIR}/plantuml-${POM_VERSION}-sources.jar"
+# we do not release the .pom or .asc signature files here, they will be added in a later PR
+
+gh release create \
+  --target "${GITHUB_SHA}" \
+  --title "${TAG}" \
+  "${TAG}" ${RELEASE_DIR}/*
 
 echo "::notice title=::Released at ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/tag/${TAG} 🎉"
