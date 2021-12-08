@@ -56,18 +56,20 @@ public class FlashCodeUtilsZxing implements FlashCodeUtils {
 		if (USE_FLASH == false) {
 			return null;
 		}
-		try {
-			final QRCodeWriter writer = new QRCodeWriter();
-			final Hashtable hints = new Hashtable();
-			hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
-			hints.put(EncodeHintType.CHARACTER_SET, "UTF8");
-			final int multiple = 1;
-			final BitMatrix bit = writer.encode(s, BarcodeFormat.QR_CODE, multiple, hints);
-			return MatrixToImageWriter.toBufferedImage(bit, fore.getRGB() | 0xFF000000, back.getRGB() | 0xFF000000);
-		} catch (WriterException e) {
-			Log.debug("Cannot create qrcode " + e);
-			// e.printStackTrace();
-			return null;
+		synchronized (FlashCodeUtilsZxing.class) {
+			try {
+				final QRCodeWriter writer = new QRCodeWriter();
+				final Hashtable hints = new Hashtable();
+				hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
+				hints.put(EncodeHintType.CHARACTER_SET, "UTF8");
+				final int multiple = 1;
+				final BitMatrix bit = writer.encode(s, BarcodeFormat.QR_CODE, multiple, hints);
+				return MatrixToImageWriter.toBufferedImage(bit, fore.getRGB() | 0xFF000000, back.getRGB() | 0xFF000000);
+			} catch (WriterException e) {
+				Log.debug("Cannot create qrcode " + e);
+				// e.printStackTrace();
+				return null;
+			}
 		}
 	}
 
