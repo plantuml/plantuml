@@ -32,15 +32,11 @@
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
   <groupId>net.sourceforge.plantuml</groupId>
   <artifactId>plantuml</artifactId>
-  <version>1.2021.15-SNAPSHOT</version>
-
+  <version>1.2021.16-SNAPSHOT</version>
   <packaging>jar</packaging>
-
   <name>PlantUML</name>
-
   <description>
       PlantUML is a component that allows to quickly write :
         * sequence diagram,
@@ -50,16 +46,13 @@
         * component diagram,
         * state diagram
         * object diagram
-  </description>
-
+    </description>
   <url>https://plantuml.com</url>
-
   <parent>
     <groupId>org.sonatype.oss</groupId>
     <artifactId>oss-parent</artifactId>
     <version>7</version>
   </parent>
-
   <properties>
     <finalName>${project.artifactId}-${project.version}</finalName>
     <maven.compiler.source>1.7</maven.compiler.source>
@@ -68,7 +61,6 @@
     <maven.compiler.testTarget>1.8</maven.compiler.testTarget>
     <main.class>net.sourceforge.plantuml.Run</main.class>
   </properties>
-
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -80,7 +72,6 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-
   <dependencies>
     <dependency>
       <groupId>org.apache.ant</groupId>
@@ -106,7 +97,6 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-
   <licenses>
     <license>
       <name>The GNU General Public License</name>
@@ -114,18 +104,15 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
-
   <scm>
     <connection>scm:svn:svn://svn.code.sf.net/p/plantuml/code/trunk</connection>
     <developerConnection>scm:svn:https://svn.code.sf.net/p/plantuml/code/trunk</developerConnection>
     <url>svn://svn.code.sf.net/p/plantuml/code/trunk</url>
   </scm>
-
   <issueManagement>
     <system>Sourceforge</system>
     <url>http://sourceforge.net/tracker/?group_id=259736</url>
   </issueManagement>
-
   <developers>
     <developer>
       <id>arnaud.roques</id>
@@ -133,7 +120,6 @@
       <email>plantuml@gmail.com</email>
     </developer>
   </developers>
-
   <build>
     <finalName>${finalName}</finalName>
     <sourceDirectory>${project.basedir}/src</sourceDirectory>
@@ -145,8 +131,8 @@
           <include>net/sourceforge/plantuml/version/*.png</include>
           <include>net/sourceforge/plantuml/openiconic/data/*.txt</include>
           <include>net/sourceforge/plantuml/openiconic/data/*.svg</include>
-          <include>net/sourceforge/plantuml/emoji/data/*.svg</include>
           <include>net/sourceforge/plantuml/emoji/data/*.txt</include>
+          <include>net/sourceforge/plantuml/emoji/data/*.svg</include>
           <include>net/sourceforge/plantuml/fun/*.png</include>
           <include>sprites/archimate/*.png</include>
           <include>net/sourceforge/plantuml/dedication/*.png</include>
@@ -192,7 +178,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-javadoc-plugin</artifactId>
-        <version>3.3.1</version>
+        <version>3.2.0</version>
         <executions>
           <execution>
             <id>attach-javadocs</id>
@@ -200,9 +186,9 @@
               <goal>jar</goal>
             </goals>
             <configuration>
+              <javadoc.opts>-Xdoclint:none</javadoc.opts>
+              <additionalparam>-Xdoclint:none</additionalparam>
               <doclint>none</doclint>
-              <quiet>true</quiet>
-              <sourceFileIncludes>net/sourceforge/plantuml/**/*.java</sourceFileIncludes>
             </configuration>
           </execution>
         </executions>
@@ -242,13 +228,12 @@
       </plugin>
     </plugins>
   </build>
-
   <profiles>
     <profile>
       <!--
-      Kludge to make 1.8 tests with 1.7 source work nicer in IntelliJ
-      See https://youtrack.jetbrains.com/issue/IDEA-85478
-      -->
+			Kludge to make 1.8 tests with 1.7 source work nicer in IntelliJ
+			See https://youtrack.jetbrains.com/issue/IDEA-85478
+			-->
       <id>intellij</id>
       <activation>
         <activeByDefault>false</activeByDefault>
@@ -261,7 +246,6 @@
         <maven.compiler.target>1.8</maven.compiler.target>
       </properties>
     </profile>
-
     <profile>
       <id>pdf</id>
       <activation>

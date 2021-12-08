@@ -32,8 +32,8 @@ public class Emoji {
 	private final static Map<String, Emoji> ALL = new HashMap<>();
 
 	static {
-		final InputStream tmp = getRessourceAllTxt();
-		try (BufferedReader br = new BufferedReader(new InputStreamReader(tmp))) {
+		final InputStream is = Dummy.class.getResourceAsStream("emoji.txt");
+		try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
 			String s = null;
 			while ((s = br.readLine()) != null) {
 				new Emoji(s);
@@ -45,10 +45,6 @@ public class Emoji {
 
 	public static Map<String, Emoji> getAll() {
 		return Collections.unmodifiableMap(new TreeMap<>(ALL));
-	}
-
-	static private InputStream getRessourceAllTxt() {
-		return Dummy.class.getResourceAsStream("emoji.txt");
 	}
 
 	private final List<String> data = new ArrayList<>();
