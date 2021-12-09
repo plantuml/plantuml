@@ -78,6 +78,8 @@ jobs:
             os: ubuntu-20.04
             java_version: 8
     runs-on: ${{ matrix.os }}
+    env:
+      SIGN_ARTIFACTS: ${{ secrets.ARTIFACT_SIGNING_KEY != '' }}
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v2
@@ -107,17 +109,45 @@ jobs:
       - name: Test
         run: mvn --batch-mode test
 
-      - name: Package
-        if: matrix.release_from_this_build
-        run: mvn --batch-mode -DfinalName=plantuml -Dmaven.test.skip=true package
+      # The repeated "matrix.release_from_this_build" checks are messy, but I have not found a simple way to avoid them
+      # See https://github.com/actions/runner/issues/662
 
-      - name: Upload jar artifacts
+      - name: Setup gpg
+        if: matrix.release_from_this_build && env.ARTIFACT_SIGNING_KEY
+        id: gpg
+        env:
+          ARTIFACT_SIGNING_KEY: ${{ secrets.ARTIFACT_SIGNING_KEY }}
+        run: |
+          echo "Importing key ..."
+          echo "${ARTIFACT_SIGNING_KEY}" | gpg --batch --import --import-options import-show
+
+          echo "Getting key id ..."
+          key_id="$(echo "${ARTIFACT_SIGNING_KEY}" | gpg --batch --show-keys --with-colons | awk -F: '$1 == "sec" { print $5 }')"
+          echo "::set-output name=key_id::${key_id}"
+
+      - name: Create artifacts
+        if: matrix.release_from_this_build
+        env:
+          GPG_KEYNAME: ${{ steps.gpg.outputs.key_id }}
+          GPG_PASSPHRASE: ${{ secrets.ARTIFACT_SIGNING_PASSPHRASE }}
+        run: |
+          mvn --batch-mode \
+            "-DfinalName=plantuml" \
+            "-Dgpg.keyname=${GPG_KEYNAME}" \
+            "-Dgpg.passphrase=${GPG_PASSPHRASE}" \
+            "-Dmaven.test.skip=true" \
+            verify
+
+      - name: Upload artifacts
         if: matrix.release_from_this_build
         uses: actions/upload-artifact@v2
         with:
           # Using github.run_number here to reduce confusion when downloading & comparing artifacts from several builds  
-          name: ${{ github.run_number }}-jars
-          path: target/*.jar
+          name: ${{ github.run_number }}-artifacts
+          path: |
+            target/*.asc
+            target/*.jar
+            target/*.pom
 
   release:
     needs: [ workflow_config, build ]
@@ -127,10 +157,11 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v2
 
-      - name: Download jar artifacts
+      - name: Download artifacts
         uses: actions/download-artifact@v2
         with:
-          name: ${{ github.run_number }}-jars
+          name: ${{ github.run_number }}-artifacts
+          path: target
 
       - name: Create snapshot release
         if: needs.workflow_config.outputs.do_snapshot_release == 'true'

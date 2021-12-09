@@ -49,6 +49,7 @@
     </description>
   <url>https://plantuml.com</url>
   <parent>
+    <!-- TODO remove oss-parent https://central.sonatype.org/publish/publish-maven/#deprecated-oss-parent -->
     <groupId>org.sonatype.oss</groupId>
     <artifactId>oss-parent</artifactId>
     <version>7</version>
@@ -291,6 +292,33 @@
           <version>1.14</version>
         </dependency>
       </dependencies>
+    </profile>
+
+    <profile>
+      <id>sign-artifacts</id>
+      <activation>
+        <property>
+          <name>env.SIGN_ARTIFACTS</name>
+          <value>true</value>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>3.0.1</version>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
     </profile>
   </profiles>
 </project>
