@@ -131,6 +131,8 @@ jobs:
           GPG_KEYNAME: ${{ steps.gpg.outputs.key_id }}
           GPG_PASSPHRASE: ${{ secrets.ARTIFACT_SIGNING_PASSPHRASE }}
         run: |
+          [[ "${SIGN_ARTIFACTS}" == "true" ]] || cp pom.xml target/plantuml.pom
+
           mvn --batch-mode \
             "-DfinalName=plantuml" \
             "-Dgpg.keyname=${GPG_KEYNAME}" \
