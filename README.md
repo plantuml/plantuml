@@ -22,6 +22,8 @@ PlantUML
 
 Generate UML diagram from textual description
 
+[PlantUML is **not** affected by the log4j vulnerability.](https://github.com/plantuml/plantuml/issues/826)
+
 PlantUML is a component that allows to quickly write:
 
  * [Sequence diagram](http://plantuml.com/sequence-diagram),
