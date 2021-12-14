@@ -38,6 +38,8 @@ package net.sourceforge.plantuml.flashcode;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.Hashtable;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import ext.plantuml.com.google.zxing.BarcodeFormat;
 import ext.plantuml.com.google.zxing.EncodeHintType;
@@ -50,13 +52,10 @@ import net.sourceforge.plantuml.Log;
 
 public class FlashCodeUtilsZxing implements FlashCodeUtils {
 
-	private static final boolean USE_FLASH = true;
+	private static final Lock lock = new ReentrantLock();
 
 	public BufferedImage exportFlashcode(String s, Color fore, Color back) {
-		if (USE_FLASH == false) {
-			return null;
-		}
-		synchronized (FlashCodeUtilsZxing.class) {
+		if (lock.tryLock())
 			try {
 				final QRCodeWriter writer = new QRCodeWriter();
 				final Hashtable hints = new Hashtable();
@@ -67,10 +66,11 @@ public class FlashCodeUtilsZxing implements FlashCodeUtils {
 				return MatrixToImageWriter.toBufferedImage(bit, fore.getRGB() | 0xFF000000, back.getRGB() | 0xFF000000);
 			} catch (WriterException e) {
 				Log.debug("Cannot create qrcode " + e);
-				// e.printStackTrace();
-				return null;
+			} finally {
+				lock.unlock();
 			}
-		}
+
+		return null;
 	}
 
 }

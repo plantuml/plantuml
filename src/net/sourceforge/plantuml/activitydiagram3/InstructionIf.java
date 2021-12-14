@@ -126,7 +126,7 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 
 		if (branches.size() == 1)
 			return new GtileIfAlone(swimlane, gtiles.get(0), branches.get(0));
-		return new GtileIfHexagon(swimlane, gtiles, branches);
+		return GtileIfHexagon.build(swimlane, gtiles, branches);
 	}
 
 	@Override

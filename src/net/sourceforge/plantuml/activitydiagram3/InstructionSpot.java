@@ -37,11 +37,17 @@ package net.sourceforge.plantuml.activitydiagram3;
 
 import java.util.Objects;
 
+import net.sourceforge.plantuml.FontParam;
+import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileKilled;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.activitydiagram3.gtile.Gtile;
+import net.sourceforge.plantuml.activitydiagram3.gtile.GtileCircleSpot;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class InstructionSpot extends MonoSwimable implements Instruction {
@@ -51,6 +57,7 @@ public class InstructionSpot extends MonoSwimable implements Instruction {
 	private final String spot;
 	private final HColor color;
 
+	@Override
 	public boolean containsBreak() {
 		return false;
 	}
@@ -62,24 +69,35 @@ public class InstructionSpot extends MonoSwimable implements Instruction {
 		this.color = color;
 	}
 
+	@Override
 	public Ftile createFtile(FtileFactory factory) {
 		Ftile result = factory.spot(getSwimlaneIn(), spot, color);
 		result = eventuallyAddNote(factory, result, result.getSwimlaneIn());
-		if (killed) {
+		if (killed)
 			return new FtileKilled(result);
-		}
+
 		return result;
 	}
 
+	@Override
+	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
+		final UFont font = skinParam.getFont(null, false, FontParam.ACTIVITY);
+		return new GtileCircleSpot(stringBounder, skinParam, color, getSwimlaneIn(), spot, font);
+
+	}
+
+	@Override
 	public CommandExecutionResult add(Instruction other) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	final public boolean kill() {
 		this.killed = true;
 		return true;
 	}
 
+	@Override
 	public LinkRendering getInLinkRendering() {
 		return inlinkRendering;
 	}

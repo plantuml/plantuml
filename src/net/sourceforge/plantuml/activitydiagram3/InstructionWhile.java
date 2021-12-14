@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileKilled;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileWithNoteOpale;
 import net.sourceforge.plantuml.activitydiagram3.gtile.Gtile;
+import net.sourceforge.plantuml.activitydiagram3.gtile.GtileWhile;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.Rainbow;
@@ -103,7 +104,10 @@ public class InstructionWhile extends WithNote implements Instruction, Instructi
 
 	@Override
 	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
-		return repeatList.createGtile(skinParam, stringBounder);
+		final Gtile back = null;
+		Gtile tmp = repeatList.createGtile(skinParam, stringBounder);
+		tmp = GtileWhile.createWhile(swimlane, tmp, test, yes, specialOut, back);
+		return tmp;
 	}
 
 	@Override

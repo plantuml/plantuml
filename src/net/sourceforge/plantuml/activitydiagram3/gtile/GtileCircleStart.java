@@ -43,7 +43,9 @@ import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
@@ -56,17 +58,18 @@ public class GtileCircleStart extends AbstractGtile {
 	private final HColor backColor;
 	private double shadowing;
 
-	public GtileCircleStart(StringBounder stringBounder, ISkinParam skinParam, HColor backColor, Swimlane swimlane,
-			Style style) {
+	private StyleSignature getDefaultStyleDefinitionCircle() {
+		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.circle);
+	}
+
+	public GtileCircleStart(StringBounder stringBounder, ISkinParam skinParam, HColor backColor, Swimlane swimlane) {
 		super(stringBounder, skinParam, swimlane);
 		this.backColor = backColor;
 		if (UseStyle.useBetaStyle()) {
+			final Style style = getDefaultStyleDefinitionCircle().getMergedStyle(skinParam().getCurrentStyleBuilder());
 			this.shadowing = style.value(PName.Shadowing).asDouble();
-		} else {
-			if (skinParam().shadowing(null)) {
-				this.shadowing = 3;
-			}
-		}
+		} else if (skinParam().shadowing(null))
+			this.shadowing = 3;
 
 	}
 

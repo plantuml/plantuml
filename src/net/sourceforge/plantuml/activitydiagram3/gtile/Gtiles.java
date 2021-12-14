@@ -128,14 +128,21 @@ public class Gtiles {
 
 	static public Gtile withNorthMargin(Gtile orig, double north) {
 		return new GtileWithMargin((AbstractGtileRoot) orig, north, 0, 0);
-
 	}
 
+//	static public Gtile withEastMargin(Gtile orig, double east) {
+//		return new GtileWithMargin((AbstractGtileRoot) orig, 0, 0, east);
+//	}
+
 	public static Gtile withIncomingArrow(Gtile orig, double margin) {
+		if (orig instanceof GtileEmpty)
+			return orig;
 		return new GtileWithIncomingArrow((AbstractGtileRoot) orig, margin);
 	}
 
 	public static Gtile withOutgoingArrow(Gtile orig, double margin) {
+		if (orig instanceof GtileEmpty)
+			return orig;
 		return new GtileWithOutgoingArrow((AbstractGtileRoot) orig, margin);
 	}
 

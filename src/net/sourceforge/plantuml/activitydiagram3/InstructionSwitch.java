@@ -109,13 +109,13 @@ public class InstructionSwitch extends WithNote implements Instruction, Instruct
 			branches.add(branch);
 		}
 
-		return new GtileIfHexagon(swimlane, gtiles, switches);
+		return GtileIfHexagon.build(swimlane, gtiles, switches);
 	}
-	
+
 	public Ftile createFtile(FtileFactory factory) {
 		for (Branch branch : switches)
 			branch.updateFtile(factory);
-		
+
 		return factory.createSwitch(swimlane, switches, afterEndwhile, topInlinkRendering, labelTest);
 	}
 

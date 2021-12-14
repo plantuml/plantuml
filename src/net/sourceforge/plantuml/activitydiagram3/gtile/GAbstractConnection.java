@@ -38,7 +38,13 @@ package net.sourceforge.plantuml.activitydiagram3.gtile;
 import java.util.Arrays;
 import java.util.List;
 
+import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.graphic.Rainbow;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
@@ -80,5 +86,45 @@ public abstract class GAbstractConnection implements GConnection {
 	public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
 		throw new UnsupportedOperationException();
 	}
+	
+	private final StyleSignature getDefaultStyleDefinitionArrow() {
+		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.arrow);
+	}
+	
+	// DUPLICATE 4561
+	final protected Rainbow getInLinkRenderingColor() {
+		Rainbow color;
+		final ISkinParam skinParam = gpoint1.getGtile().skinParam();
+		if (UseStyle.useBetaStyle()) {
+			final Style style = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam.getCurrentStyleBuilder());
+			color = Rainbow.build(style, skinParam.getIHtmlColorSet(), skinParam.getThemeStyle());
+		} else
+			color = Rainbow.build(skinParam);
+//		final LinkRendering linkRendering = tile.getInLinkRendering();
+//		if (linkRendering == null) {
+//			if (UseStyle.useBetaStyle()) {
+//				final Style style = getDefaultStyleDefinitionArrow()
+//						.getMergedStyle(skinParam().getCurrentStyleBuilder());
+//				return Rainbow.build(style, skinParam().getIHtmlColorSet(), skinParam().getThemeStyle());
+//			} else {
+//				color = Rainbow.build(skinParam());
+//			}
+//		} else {
+//			color = linkRendering.getRainbow();
+//		}
+//		if (color.size() == 0) {
+//			if (UseStyle.useBetaStyle()) {
+//				final Style style = getDefaultStyleDefinitionArrow()
+//						.getMergedStyle(skinParam().getCurrentStyleBuilder());
+//				return Rainbow.build(style, skinParam().getIHtmlColorSet(), skinParam().getThemeStyle());
+//			} else {
+//				color = Rainbow.build(skinParam());
+//			}
+//		}
+		return color;
+	}
+
+
+
 
 }

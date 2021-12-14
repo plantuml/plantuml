@@ -61,7 +61,7 @@ public class PSystemListEmoji extends PlainDiagram {
 			public void drawU(UGraphic ug) {
 				final TextBlockBackcolored header = GraphicStrings
 						.createBlackOnWhite(Arrays.asList("<b><size:16>Emoji available on Unicode Block " + text,
-								"(Blocks available: 26, 1F3, 1F4, 1F5, 1F6, 1F9)"));
+								"(Blocks available: 26, 27, 1F3, 1F4, 1F5, 1F6, 1F9)"));
 				header.drawU(ug);
 				final StringBounder stringBounder = ug.getStringBounder();
 				ug = ug.apply(UTranslate.dy(header.calculateDimension(stringBounder).getHeight()));

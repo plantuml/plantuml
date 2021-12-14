@@ -16,8 +16,6 @@
 
 package ext.plantuml.com.google.zxing.common;
 
-import ext.plantuml.com.google.zxing.WriterException;
-
 /**
  * <p>A simple, fast array of bits, represented compactly by an array of ints internally.</p>
  *

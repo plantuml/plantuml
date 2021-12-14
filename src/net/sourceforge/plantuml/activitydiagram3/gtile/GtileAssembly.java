@@ -35,9 +35,11 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.gtile;
 
+import java.awt.geom.Dimension2D;
 import java.util.Collection;
 import java.util.Collections;
 
+import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
@@ -45,6 +47,7 @@ import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
+import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.style.SName;
@@ -70,6 +73,14 @@ public class GtileAssembly extends GtileTopDown {
 
 	final public StyleSignature getDefaultStyleDefinitionArrow() {
 		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.arrow);
+	}
+
+	@Override
+	public Dimension2D calculateDimension(StringBounder stringBounder) {
+		final Dimension2D raw = super.calculateDimension(stringBounder);
+		final double textBlockWidth = textBlock.calculateDimension(stringBounder).getWidth();
+		final double pos1 = tile1.getCoord(GPoint.SOUTH_HOOK).compose(getPos1()).getDx();
+		return Dimension2DDouble.atLeast(raw, pos1 + textBlockWidth, 0);
 	}
 
 	protected final TextBlock getTextBlock(Display display) {

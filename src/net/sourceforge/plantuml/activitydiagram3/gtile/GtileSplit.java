@@ -39,7 +39,6 @@ import java.awt.geom.Dimension2D;
 import java.util.List;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.style.SName;
@@ -55,7 +54,7 @@ public class GtileSplit extends GtileColumns {
 	private final HColor lineColor;
 
 	public GtileSplit(List<Gtile> gtiles, Swimlane singleSwimlane, HColor lineColor) {
-		super(gtiles, singleSwimlane);
+		super(gtiles, singleSwimlane, 20);
 		this.lineColor = lineColor;
 
 	}
@@ -76,10 +75,10 @@ public class GtileSplit extends GtileColumns {
 	protected void drawUInternal(UGraphic ug) {
 		super.drawUInternal(ug);
 
-		final double x0 = gtiles.get(0).getCoord(GPoint.NORTH_HOOK).compose(positions.get(0)).getDx();
-		assert gtiles.size() == positions.size();
+		final double x0 = gtiles.get(0).getCoord(GPoint.NORTH_HOOK).compose(getPosition(0)).getDx();
+
 		final int last = gtiles.size() - 1;
-		final double xLast = gtiles.get(last).getCoord(GPoint.NORTH_HOOK).compose(positions.get(last)).getDx();
+		final double xLast = gtiles.get(last).getCoord(GPoint.NORTH_HOOK).compose(getPosition(last)).getDx();
 		final ULine hline = ULine.hline(xLast - x0);
 
 		ug = ug.apply(lineColor).apply(new UStroke(1.5));

@@ -226,10 +226,11 @@ public class Snake implements UShape {
 	}
 
 	private void drawInternalLabel(UGraphic ug) {
-		for (Text text : texts) {
-			final Point2D position = getTextBlockPosition(ug.getStringBounder(), text);
-			text.textBlock.drawU(ug.apply(new UTranslate(position)));
-		}
+		for (Text text : texts)
+			if (text.hasText(ug.getStringBounder())) {
+				final Point2D position = getTextBlockPosition(ug.getStringBounder(), text);
+				text.textBlock.drawU(ug.apply(new UTranslate(position)));
+			}
 	}
 
 	public double getMaxX(StringBounder stringBounder) {

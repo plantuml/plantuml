@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.ugraphic.UEmpty;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 public class GtileEmpty extends AbstractGtile {
@@ -60,7 +61,8 @@ public class GtileEmpty extends AbstractGtile {
 		this(stringBounder, skinParam, 0, 0, swimlane);
 	}
 
-	public GtileEmpty(StringBounder stringBounder, ISkinParam skinParam, double width, double height, Swimlane swimlane) {
+	public GtileEmpty(StringBounder stringBounder, ISkinParam skinParam, double width, double height,
+			Swimlane swimlane) {
 		super(stringBounder, skinParam, swimlane);
 		this.width = width;
 		this.height = height;
@@ -68,11 +70,14 @@ public class GtileEmpty extends AbstractGtile {
 
 	@Override
 	public String toString() {
-		return "FtileEmpty";
+		return "GtileEmpty";
 	}
 
 	@Override
 	protected void drawUInternal(UGraphic ug) {
+		if (width > 0 && height > 0)
+			ug.draw(new UEmpty(width, height));
+
 	}
 
 	@Override

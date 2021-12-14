@@ -65,14 +65,10 @@ public class FtileCircleStart extends AbstractFtile {
 		super(skinParam);
 		this.backColor = backColor;
 		this.swimlane = swimlane;
-		if (UseStyle.useBetaStyle()) {
+		if (UseStyle.useBetaStyle())
 			this.shadowing = style.value(PName.Shadowing).asDouble();
-		} else {
-			if (skinParam().shadowing(null)) {
-				this.shadowing = 3;
-			}
-		}
-
+		else if (skinParam().shadowing(null))
+			this.shadowing = 3;
 	}
 
 	@Override

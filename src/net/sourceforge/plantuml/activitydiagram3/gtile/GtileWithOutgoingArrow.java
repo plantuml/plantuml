@@ -45,6 +45,9 @@ public class GtileWithOutgoingArrow extends GtileWithMargin implements Gtile {
 
 	public GtileWithOutgoingArrow(AbstractGtileRoot orig, double south) {
 		super(orig, 0, south, 0);
+		if (orig instanceof GtileEmpty) {
+			System.err.println("Warning 1");
+		}
 	}
 
 	@Override

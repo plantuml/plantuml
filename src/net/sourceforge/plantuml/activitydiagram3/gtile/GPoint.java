@@ -58,6 +58,10 @@ public class GPoint {
 	private final LinkRendering linkRendering;
 
 	public GPoint(Gtile gtile, String name, LinkRendering linkRendering) {
+		if (gtile instanceof GtileEmpty) {
+			System.err.println("Warning 1");
+		}
+
 		this.gtile = gtile;
 		this.name = name;
 		this.linkRendering = linkRendering;

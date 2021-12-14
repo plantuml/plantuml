@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.activitydiagram3.gtile;
 
 import java.awt.geom.Dimension2D;
+import java.util.Set;
 
 import net.sourceforge.plantuml.AlignmentParam;
 import net.sourceforge.plantuml.ColorParam;
@@ -88,18 +89,28 @@ public class GtileWithNoteOpale extends AbstractGtile implements Stencil, Stylea
 	public StyleSignature getDefaultStyleDefinition() {
 		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.note);
 	}
+	
+	@Override
+	public Swimlane getSwimlane(String point) {
+		return tile.getSwimlane(point);
+	}
+	
+	@Override
+	public Set<Swimlane> getSwimlanes() {
+		return tile.getSwimlanes();
+	}
 
 	public GtileWithNoteOpale(Gtile tile, PositionedNote note, ISkinParam skinParam, boolean withLink) {
 		super(tile.getStringBounder(), tile.skinParam());
 		this.swimlaneNote = note.getSwimlaneNote();
-		if (note.getColors() != null) {
+		if (note.getColors() != null)
 			skinParam = note.getColors().mute(skinParam);
-		}
+		
 		this.tile = tile;
 		this.notePosition = note.getNotePosition();
-		if (note.getType() == NoteType.FLOATING_NOTE) {
+		if (note.getType() == NoteType.FLOATING_NOTE)
 			withLink = false;
-		}
+		
 
 		final Rose rose = new Rose();
 
@@ -162,8 +173,8 @@ public class GtileWithNoteOpale extends AbstractGtile implements Stencil, Stylea
 
 	@Override
 	protected void drawUInternal(UGraphic ug) {
-		ug.apply(positionNote).draw(opale);
-		ug.apply(positionTile).draw(tile);
+		opale.drawU(ug.apply(positionNote));
+		tile.drawU(ug.apply(positionTile));
 	}
 
 	@Override

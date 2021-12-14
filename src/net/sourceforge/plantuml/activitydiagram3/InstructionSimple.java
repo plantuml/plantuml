@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.gtile.Gtile;
 import net.sourceforge.plantuml.activitydiagram3.gtile.GtileBox;
 import net.sourceforge.plantuml.activitydiagram3.gtile.GtileWithNoteOpale;
+import net.sourceforge.plantuml.activitydiagram3.gtile.GtileWithNotes;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
@@ -86,8 +87,11 @@ public class InstructionSimple extends MonoSwimable implements Instruction {
 				stereotype);
 		if (hasNotes()) {
 			final Collection<PositionedNote> notes = getPositionedNotes();
-			if (notes.size() != 1)
+			if (notes.size() == 0)
 				throw new UnsupportedOperationException("wip");
+			if (notes.size() > 0)
+				return new GtileWithNotes(result, notes, skinParam);
+
 			return new GtileWithNoteOpale(result, notes.iterator().next(), skinParam, false);
 
 		}

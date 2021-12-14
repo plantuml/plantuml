@@ -90,32 +90,32 @@ public class GConnectionLeftThenVerticalThenRight extends GAbstractConnection {
 //		return getSimpleSnake().getMaxX(stringBounder);
 //	}
 
-	private Rainbow getInLinkRenderingColor() {
-		Rainbow color;
-		color = Rainbow.build(gpoint1.getGtile().skinParam());
-//		final LinkRendering linkRendering = tile.getInLinkRendering();
-//		if (linkRendering == null) {
-//			if (UseStyle.useBetaStyle()) {
-//				final Style style = getDefaultStyleDefinitionArrow()
-//						.getMergedStyle(skinParam().getCurrentStyleBuilder());
-//				return Rainbow.build(style, skinParam().getIHtmlColorSet(), skinParam().getThemeStyle());
-//			} else {
-//				color = Rainbow.build(skinParam());
-//			}
-//		} else {
-//			color = linkRendering.getRainbow();
-//		}
-//		if (color.size() == 0) {
-//			if (UseStyle.useBetaStyle()) {
-//				final Style style = getDefaultStyleDefinitionArrow()
-//						.getMergedStyle(skinParam().getCurrentStyleBuilder());
-//				return Rainbow.build(style, skinParam().getIHtmlColorSet(), skinParam().getThemeStyle());
-//			} else {
-//				color = Rainbow.build(skinParam());
-//			}
-//		}
-		return color;
-	}
+//	private Rainbow getInLinkRenderingColor() {
+//		Rainbow color;
+//		color = Rainbow.build(gpoint1.getGtile().skinParam());
+////		final LinkRendering linkRendering = tile.getInLinkRendering();
+////		if (linkRendering == null) {
+////			if (UseStyle.useBetaStyle()) {
+////				final Style style = getDefaultStyleDefinitionArrow()
+////						.getMergedStyle(skinParam().getCurrentStyleBuilder());
+////				return Rainbow.build(style, skinParam().getIHtmlColorSet(), skinParam().getThemeStyle());
+////			} else {
+////				color = Rainbow.build(skinParam());
+////			}
+////		} else {
+////			color = linkRendering.getRainbow();
+////		}
+////		if (color.size() == 0) {
+////			if (UseStyle.useBetaStyle()) {
+////				final Style style = getDefaultStyleDefinitionArrow()
+////						.getMergedStyle(skinParam().getCurrentStyleBuilder());
+////				return Rainbow.build(style, skinParam().getIHtmlColorSet(), skinParam().getThemeStyle());
+////			} else {
+////				color = Rainbow.build(skinParam());
+////			}
+////		}
+//		return color;
+//	}
 
 //	@Override
 //	public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {

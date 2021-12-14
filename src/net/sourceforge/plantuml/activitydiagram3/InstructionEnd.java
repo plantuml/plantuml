@@ -58,7 +58,7 @@ public class InstructionEnd extends MonoSwimable implements Instruction {
 
 	@Override
 	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
-		return new GtileCircleStart(stringBounder, skinParam, HColorUtils.BLACK, getSwimlaneIn(), null);
+		return new GtileCircleStart(stringBounder, skinParam, HColorUtils.BLACK, getSwimlaneIn());
 	}
 
 	@Override

@@ -67,30 +67,30 @@ final class WElement {
 
 	private StyleSignature getDefaultStyleDefinitionNode(int level) {
 		final String depth = SName.depth(level);
-		if (level == 0) {
+		if (level == 0)
 			return StyleSignature.of(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.rootNode)
 					.add(stereotype).add(depth);
-		}
-		if (shape == IdeaShape.NONE && isLeaf()) {
+
+		if (shape == IdeaShape.NONE && isLeaf())
 			return StyleSignature
 					.of(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.leafNode, SName.boxless)
 					.add(stereotype).add(depth);
-		}
-		if (isLeaf()) {
+
+		if (isLeaf())
 			return StyleSignature.of(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.leafNode)
 					.add(stereotype).add(depth);
-		}
-		if (shape == IdeaShape.NONE) {
+
+		if (shape == IdeaShape.NONE)
 			return StyleSignature.of(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.boxless)
 					.add(stereotype).add(depth);
-		}
+
 		return StyleSignature.of(SName.root, SName.element, SName.wbsDiagram, SName.node).add(stereotype).add(depth);
 	}
 
 	public ISkinParam withBackColor(ISkinParam skinParam) {
-		if (backColor == null) {
+		if (backColor == null)
 			return skinParam;
-		}
+
 		return new SkinParamColors(skinParam, Colors.empty().add(ColorType.BACK, backColor));
 	}
 
@@ -130,11 +130,13 @@ final class WElement {
 	public WElement createElement(HColor backColor, int newLevel, Display newLabel, String stereotype,
 			Direction direction, IdeaShape shape, StyleBuilder styleBuilder) {
 		final WElement result = new WElement(backColor, newLevel, newLabel, stereotype, this, shape, styleBuilder);
-		if (direction == Direction.LEFT) {
+		if (direction == Direction.LEFT && newLevel == 1)
+			this.childrenRight.add(0, result);
+		if (direction == Direction.LEFT)
 			this.childrenLeft.add(result);
-		} else {
+		else
 			this.childrenRight.add(result);
-		}
+
 		return result;
 	}
 
@@ -152,9 +154,8 @@ final class WElement {
 	}
 
 	public Collection<WElement> getChildren(Direction direction) {
-		if (direction == Direction.LEFT) {
+		if (direction == Direction.LEFT)
 			return Collections.unmodifiableList(childrenLeft);
-		}
 		return Collections.unmodifiableList(childrenRight);
 	}
 

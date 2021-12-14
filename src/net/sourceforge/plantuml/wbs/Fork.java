@@ -54,13 +54,13 @@ class Fork extends WBSTextBlock {
 
 	public Fork(ISkinParam skinParam, WElement idea) {
 		super(idea.withBackColor(skinParam), idea.getStyleBuilder(), idea.getLevel());
-		if (idea.getLevel() != 0) {
+		if (idea.getLevel() != 0)
 			throw new IllegalArgumentException();
-		}
+
 		this.main = buildMain(idea);
-		for (WElement child : idea.getChildren(Direction.RIGHT)) {
+		for (WElement child : idea.getChildren(Direction.RIGHT))
 			this.right.add(ITFComposed.build2(skinParam, child));
-		}
+
 	}
 
 	final private double delta1x = 20;
@@ -68,27 +68,42 @@ class Fork extends WBSTextBlock {
 
 	public void drawU(final UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
-		final Dimension2D fullDim = calculateDimension(stringBounder);
 		final Dimension2D mainDim = main.calculateDimension(stringBounder);
-		final double dx = (fullDim.getWidth() - mainDim.getWidth()) / 2;
-		main.drawU(ug.apply(UTranslate.dx(dx)));
-		drawLine(ug, dx + mainDim.getWidth() / 2, mainDim.getHeight(), dx + mainDim.getWidth() / 2,
-				mainDim.getHeight() + deltay / 2);
-		double x = 0;
-		final double y = mainDim.getHeight() + deltay;
+
+		final double y0 = mainDim.getHeight();
+		final double y1 = y0 + deltay / 2;
+		final double y2 = y0 + deltay;
+		final double mainWidth = mainDim.getWidth();
+
 		if (right.size() == 0) {
+			main.drawU(ug);
+			drawLine(ug, mainWidth / 2, y0, mainWidth / 2, y1);
 			return;
 		}
+
+		double x = 0;
 		final double firstX = right.get(0).getT1(stringBounder).getX();
 		double lastX = firstX;
+
 		for (ITF child : right) {
 			lastX = x + child.getT1(stringBounder).getX();
-			drawLine(ug, lastX, mainDim.getHeight() + deltay / 2, lastX, y);
-			child.drawU(ug.apply(new UTranslate(x, y)));
+			drawLine(ug, lastX, y1, lastX, y2);
+			child.drawU(ug.apply(new UTranslate(x, y2)));
 			x += child.calculateDimension(stringBounder).getWidth() + delta1x;
 		}
-		lastX = Math.max(lastX, dx + mainDim.getWidth() / 2);
-		drawLine(ug, firstX, mainDim.getHeight() + deltay / 2, lastX, mainDim.getHeight() + deltay / 2);
+
+		final double posMain;
+		if (lastX > firstX) {
+			drawLine(ug, firstX, y1, lastX, y1);
+			posMain = firstX + (lastX - firstX - mainWidth) / 2;
+		} else {
+			assert lastX == firstX;
+			final Dimension2D fullDim = calculateDimension(stringBounder);
+			posMain = (fullDim.getWidth() - mainWidth) / 2;
+			drawLine(ug, firstX, y1, posMain + mainWidth / 2, y1);
+		}
+		main.drawU(ug.apply(UTranslate.dx(posMain)));
+		drawLine(ug, posMain + mainWidth / 2, y0, posMain + mainWidth / 2, y1);
 
 	}
 

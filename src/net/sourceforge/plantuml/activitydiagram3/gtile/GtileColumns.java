@@ -40,6 +40,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Set;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
@@ -52,8 +53,28 @@ import net.sourceforge.plantuml.utils.MathUtils;
 public class GtileColumns extends AbstractGtile {
 
 	protected final List<Gtile> gtiles;
-	private final List<Dimension2D> dims = new ArrayList<>();
-	protected final List<UTranslate> positions = new ArrayList<>();
+
+	private double margin;
+	private double dy;
+
+	protected final UTranslate getPosition(int pos) {
+		double dx = 0;
+		for (int i = 0; i < pos; i++) {
+			final Dimension2D dim = gtiles.get(i).calculateDimension(getStringBounder());
+			dx += dim.getWidth() + margin;
+		}
+		return new UTranslate(dx, dy);
+	}
+
+	protected final void setMargin(double margin) {
+		if (margin < 0)
+			throw new IllegalArgumentException("margin=" + margin);
+		this.margin = margin;
+	}
+
+	protected final void pushDown(double height) {
+		this.dy += height;
+	}
 
 	@Override
 	public String toString() {
@@ -64,29 +85,17 @@ public class GtileColumns extends AbstractGtile {
 		return gtiles.get(0);
 	}
 
-	public GtileColumns(List<Gtile> gtiles, Swimlane singleSwimlane) {
+	public GtileColumns(List<Gtile> gtiles, Swimlane singleSwimlane, double margin) {
 		super(gtiles.get(0).getStringBounder(), gtiles.get(0).skinParam(), singleSwimlane);
 		this.gtiles = gtiles;
-
-		double dx = 0;
-		for (Gtile tile : gtiles) {
-			final Dimension2D dim = tile.calculateDimension(getStringBounder());
-			final UTranslate pos = UTranslate.dx(dx);
-			dx += dim.getWidth() + getMargin();
-			dims.add(dim);
-			positions.add(pos);
-		}
-	}
-
-	private double getMargin() {
-		return 20;
+		this.margin = margin;
 	}
 
 	@Override
 	protected void drawUInternal(UGraphic ug) {
 		for (int i = 0; i < gtiles.size(); i++) {
 			final Gtile tile = gtiles.get(i);
-			final UTranslate pos = positions.get(i);
+			final UTranslate pos = getPosition(i);
 			ug.apply(pos).draw(tile);
 		}
 	}
@@ -94,9 +103,9 @@ public class GtileColumns extends AbstractGtile {
 	@Override
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
 		Dimension2D result = new Dimension2DDouble(0, 0);
-		for (int i = 0; i < dims.size(); i++) {
-			final Dimension2D dim = dims.get(i);
-			final UTranslate pos = positions.get(i);
+		for (int i = 0; i < gtiles.size(); i++) {
+			final Dimension2D dim = gtiles.get(i).calculateDimension(stringBounder);
+			final UTranslate pos = getPosition(i);
 			final Dimension2D corner = pos.getTranslated(dim);
 			result = MathUtils.max(result, corner);
 		}
