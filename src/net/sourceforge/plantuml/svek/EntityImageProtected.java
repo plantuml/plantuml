@@ -53,11 +53,10 @@ public class EntityImageProtected extends AbstractTextBlock implements IEntityIm
 	private final double border;
 	private final Bibliotekon bibliotekon;
 	private final Neighborhood neighborhood;
-	
+
 	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
 		throw new UnsupportedOperationException();
 	}
-
 
 	public EntityImageProtected(IEntityImage orig, double border, Neighborhood neighborhood, Bibliotekon bibliotekon) {
 		this.orig = orig;
@@ -94,10 +93,9 @@ public class EntityImageProtected extends AbstractTextBlock implements IEntityIm
 	public Margins getShield(StringBounder stringBounder) {
 		return orig.getShield(stringBounder);
 	}
-	
+
 	public double getOverscanX(StringBounder stringBounder) {
 		return orig.getOverscanX(stringBounder);
 	}
-
 
 }

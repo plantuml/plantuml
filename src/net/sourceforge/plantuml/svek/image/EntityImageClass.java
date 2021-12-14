@@ -232,6 +232,7 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 		}
 	}
 
+	@Override
 	public Ports getPorts(StringBounder stringBounder) {
 		final Dimension2D dimHeader = header.calculateDimension(stringBounder);
 		if (body instanceof WithPorts)

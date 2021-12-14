@@ -30,42 +30,23 @@
  *
  *
  * Original Author:  Arnaud Roques
- *
  * 
+ *
  */
-package net.sourceforge.plantuml.svek;
+package net.sourceforge.plantuml.cucadiagram;
 
-public class PortGeometry {
+class Elected {
 
-	private final double position;
-	private final double height;
+	private final String shortName;
 	private final int score;
 
-	public PortGeometry(double position, double height, int score) {
-		this.position = position;
-		this.height = height;
+	public Elected(String shortName, int score) {
+		this.shortName = shortName;
 		this.score = score;
 	}
 
-	public PortGeometry translateY(double deltaY) {
-		return new PortGeometry(position + deltaY, height, score);
-	}
-
-	@Override
-	public String toString() {
-		return "pos=" + position + " height=" + height;
-	}
-
-	public double getHeight() {
-		return height;
-	}
-
-	public double getPosition() {
-		return position;
-	}
-
-	public double getLastY() {
-		return position + height;
+	public final String getShortName() {
+		return shortName;
 	}
 
 	public final int getScore() {

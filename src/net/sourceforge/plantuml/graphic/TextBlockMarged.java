@@ -96,6 +96,7 @@ class TextBlockMarged extends AbstractTextBlock implements TextBlock, WithPorts 
 		return translate.apply(parent);
 	}
 
+	@Override
 	public Ports getPorts(StringBounder stringBounder) {
 		return ((WithPorts) textBlock).getPorts(stringBounder).translateY(top);
 	}

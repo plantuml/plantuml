@@ -129,6 +129,7 @@ public class EntityImageMap extends AbstractEntityImage implements Stencil, With
 
 	}
 
+	@Override
 	public Ports getPorts(StringBounder stringBounder) {
 		final Dimension2D dimTitle = getTitleDimension(stringBounder);
 		return ((WithPorts) entries).getPorts(stringBounder).translateY(dimTitle.getHeight());

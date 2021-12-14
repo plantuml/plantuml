@@ -84,6 +84,7 @@ public class TextBlockMap extends AbstractTextBlock implements WithPorts {
 		}
 	}
 
+	@Override
 	public Ports getPorts(StringBounder stringBounder) {
 		final Ports ports = new Ports();
 		int i = 0;
@@ -92,7 +93,7 @@ public class TextBlockMap extends AbstractTextBlock implements WithPorts {
 			final TextBlock key = ent.getKey();
 			final TextBlock value = ent.getValue();
 			final double height = getHeightOfRow(stringBounder, key, value);
-			ports.add(keys.get(i), y, height);
+			ports.add(keys.get(i), 100, y, height);
 			y += height;
 			i++;
 		}

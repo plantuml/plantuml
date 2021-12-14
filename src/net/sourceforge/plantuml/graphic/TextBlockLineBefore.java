@@ -96,6 +96,7 @@ public class TextBlockLineBefore extends AbstractTextBlock implements TextBlock,
 		return textBlock.getInnerPosition(member, stringBounder, strategy);
 	}
 
+	@Override
 	public Ports getPorts(StringBounder stringBounder) {
 		return ((WithPorts) textBlock).getPorts(stringBounder);
 	}

@@ -730,8 +730,7 @@ final public class EntityImpl implements ILeaf, IGroup {
 
 	public Collection<String> getPortShortNames() {
 		checkNotGroup();
-		// return Collections.unmodifiableCollection(portShortNames);
-		return portShortNames;
+		return Collections.unmodifiableCollection(portShortNames);
 	}
 
 	public void addPortShortName(String portShortName) {
