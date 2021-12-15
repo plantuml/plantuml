@@ -38,16 +38,10 @@ package net.sourceforge.plantuml.activitydiagram3.gtile;
 import java.awt.geom.Point2D;
 
 import net.sourceforge.plantuml.Direction;
-import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Arrows;
-import net.sourceforge.plantuml.activitydiagram3.ftile.Hexagon;
-import net.sourceforge.plantuml.activitydiagram3.ftile.MergeStrategy;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -57,26 +51,60 @@ public class GConnectionVerticalDownThenBack extends GAbstractConnection {
 	private final TextBlock textBlock;
 	private final UTranslate pos1;
 	private final UTranslate pos2;
+	private final double xpos;
 
 	public GConnectionVerticalDownThenBack(UTranslate pos1, GPoint gpoint1, UTranslate pos2, GPoint gpoint2,
-			TextBlock textBlock) {
+			TextBlock textBlock, double xpos) {
 		super(gpoint1, gpoint2);
 		this.textBlock = textBlock;
 		this.pos1 = pos1;
 		this.pos2 = pos2;
+		this.xpos = xpos;
 		// See FtileFactoryDelegatorAssembly
 	}
 
 	@Override
+	public void drawU(UGraphic ug) {
+		final Point2D p1 = pos1.getTranslated(gpoint1.getPoint2D());
+		final Point2D p2 = pos2.getTranslated(gpoint2.getPoint2D());
+		final UPolygon arrow = Arrows.asToLeft();
+		final Snake snake = Snake.create(getInLinkRenderingColor(), arrow)
+				.withLabel(textBlock, HorizontalAlignment.LEFT).emphasizeDirection(Direction.UP);
+
+		snake.addPoint(p1);
+		final Point2D p1bis = UTranslate.dy(10).getTranslated(p1);
+		snake.addPoint(p1bis);
+		final double border = xpos;
+
+		snake.addPoint(new Point2D.Double(border, p1bis.getY()));
+		snake.addPoint(new Point2D.Double(border, p2.getY()));
+		snake.addPoint(p2);
+		ug.draw(snake);
+	}
+
+	@Override
 	public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
-		throw new UnsupportedOperationException("wip");
-//		Point2D p1 = pos1.getTranslated(gpoint1.getPoint2D());
-//		Point2D p2 = pos2.getTranslated(gpoint2.getPoint2D());
-//
+		// throw new UnsupportedOperationException("wip");
+		Point2D p1 = pos1.getTranslated(gpoint1.getPoint2D());
+		Point2D p2 = pos2.getTranslated(gpoint2.getPoint2D());
+
 //		final Direction originalDirection = Direction.leftOrRight(p1, p2);
 //
-////		p1 = translate1.getTranslated(p1);
-////		p2 = translate2.getTranslated(p2);
+		p1 = translate1.getTranslated(p1);
+		p2 = translate2.getTranslated(p2);
+
+		final UPolygon arrow = Arrows.asToLeft();
+		final Snake snake = Snake.create(getInLinkRenderingColor(), arrow)
+				.withLabel(textBlock, HorizontalAlignment.LEFT).emphasizeDirection(Direction.UP);
+
+		snake.addPoint(p1);
+		final Point2D p1bis = UTranslate.dy(10).getTranslated(p1);
+		snake.addPoint(p1bis);
+		snake.addPoint(new Point2D.Double(p2.getX() + 20, p1bis.getY()));
+		snake.addPoint(new Point2D.Double(p2.getX() + 20, p2.getY()));
+		snake.addPoint(p2);
+		ug.draw(snake);
+
 //
 //		final double x1 = p1.getX();
 //		final double x2 = p2.getX();
@@ -115,23 +143,6 @@ public class GConnectionVerticalDownThenBack extends GAbstractConnection {
 //
 //		}
 
-	}
-
-	@Override
-	public void drawU(UGraphic ug) {
-		final Point2D p1 = pos1.getTranslated(gpoint1.getPoint2D());
-		final Point2D p2 = pos2.getTranslated(gpoint2.getPoint2D());
-		final UPolygon arrow = Arrows.asToLeft();
-		final Snake snake = Snake.create(getInLinkRenderingColor(), arrow).withLabel(textBlock,
-				HorizontalAlignment.LEFT).emphasizeDirection(Direction.UP);
-
-		snake.addPoint(p1);
-		final Point2D p1bis = UTranslate.dy(10).getTranslated(p1);
-		snake.addPoint(p1bis);
-		snake.addPoint(new Point2D.Double(p2.getX() + 20, p1bis.getY()));
-		snake.addPoint(new Point2D.Double(p2.getX() + 20, p2.getY()));
-		snake.addPoint(p2);
-		ug.draw(snake);
 	}
 
 //	public double getMaxX(StringBounder stringBounder) {

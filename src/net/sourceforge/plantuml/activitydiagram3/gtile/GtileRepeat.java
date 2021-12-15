@@ -36,8 +36,11 @@
 package net.sourceforge.plantuml.activitydiagram3.gtile;
 
 import java.awt.geom.Dimension2D;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
@@ -47,15 +50,19 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class GtileRepeat extends GtileTopDown3 {
 
 	private static final double SUPP_WIDTH = 15;
 
-	public GtileRepeat(Swimlane swimlane, Gtile gtile, HColor color, Display test) {
+	private final Gtile backward;
+
+	public GtileRepeat(Swimlane swimlane, Gtile gtile, HColor color, Display test, Gtile backward) {
 		super(getShape1(swimlane, color, gtile.getStringBounder(), gtile.skinParam()), gtile,
 				getShape2(swimlane, color, gtile.getStringBounder(), gtile.skinParam(), test));
+		this.backward = backward;
 
 	}
 
@@ -94,19 +101,36 @@ public class GtileRepeat extends GtileTopDown3 {
 	}
 
 	@Override
+	protected void drawUInternal(UGraphic ug) {
+		super.drawUInternal(ug);
+		if (backward != null) {
+			backward.drawU(ug);
+		}
+	}
+
+	@Override
 	public Collection<GConnection> getInnerConnections() {
 
+		final List<GConnection> result = new ArrayList<GConnection>();
 		final GConnection arrow1 = new GConnectionVerticalDown(getPos1(), tile1.getGPoint(GPoint.SOUTH_HOOK), getPos2(),
 				tile2.getGPoint(GPoint.NORTH_HOOK), TextBlockUtils.EMPTY_TEXT_BLOCK);
 		final GConnection arrow2 = new GConnectionVerticalDown(getPos2(), tile2.getGPoint(GPoint.SOUTH_HOOK), getPos3(),
 				tile3.getGPoint(GPoint.NORTH_HOOK), TextBlockUtils.EMPTY_TEXT_BLOCK);
 
+		result.add(arrow1);
+		result.add(arrow2);
+
 		final double xright = calculateDimension(stringBounder).getWidth();
 
-		final GConnection arrow3 = new GConnectionLeftThenVerticalThenRight(getPos3(), tile3.getGPoint(GPoint.EAST_HOOK),
-				getPos1(), tile1.getGPoint(GPoint.EAST_HOOK), xright, TextBlockUtils.EMPTY_TEXT_BLOCK);
+		if (backward == null) {
+			final GConnection arrow3 = new GConnectionSideThenVerticalThenSide(getPos3(),
+					tile3.getGPoint(GPoint.EAST_HOOK), getPos1(), tile1.getGPoint(GPoint.EAST_HOOK), xright,
+					TextBlockUtils.EMPTY_TEXT_BLOCK);
+			result.add(arrow3);
+		}
 
-		return Arrays.asList(arrow1, arrow2, arrow3);
+		// final List<GConnection> result = Arrays.asList(arrow1, arrow2, arrow3);
+		return Collections.unmodifiableList(result);
 	}
 
 }

@@ -101,7 +101,7 @@ public class GtileIfAlone extends GtileTopDown3 {
 
 		final double xright = calculateDimension(stringBounder).getWidth();
 
-		final GConnection arrow3 = new GConnectionLeftThenVerticalThenRight(getPos1(), tile1.getGPoint(GPoint.EAST_HOOK),
+		final GConnection arrow3 = new GConnectionSideThenVerticalThenSide(getPos1(), tile1.getGPoint(GPoint.EAST_HOOK),
 				getPos3(), tile3.getGPoint(GPoint.EAST_HOOK), xright, TextBlockUtils.EMPTY_TEXT_BLOCK);
 
 		return Arrays.asList(arrow1, arrow2, arrow3);

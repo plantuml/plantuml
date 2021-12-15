@@ -206,9 +206,8 @@ public class SvekNode implements Positionable, IShapePseudo, Hideable {
 		sb.append("<TABLE BGCOLOR=\"" + DotStringFactory.sharp000000(color)
 				+ "\" BORDER=\"0\" CELLBORDER=\"0\" CELLSPACING=\"0\" CELLPADDING=\"0\">");
 		double position = 0;
-		for (Map.Entry<String, PortGeometry> ent : ports.getAllWithEncodedPortId().entrySet()) {
-			final String portId = ent.getKey();
-			final PortGeometry geom = ent.getValue();
+		for (PortGeometry geom : ports.getAllPortGeometry()) {
+			final String portId = geom.getId();
 			final double missing = geom.getPosition() - position;
 			appendTr(sb, null, missing);
 			appendTr(sb, portId, geom.getHeight());

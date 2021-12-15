@@ -40,16 +40,20 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
 
+import net.sourceforge.plantuml.AlignmentParam;
+import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.UseStyle;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FloatingNote;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.USymbol;
@@ -63,6 +67,7 @@ import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.utils.MathUtils;
 
 public class GtileGroup extends AbstractGtileRoot {
 
@@ -79,6 +84,15 @@ public class GtileGroup extends AbstractGtileRoot {
 
 	final public StyleSignature getDefaultStyleDefinitionPartition() {
 		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.partition);
+	}
+
+	private double suppWidth(StringBounder stringBounder) {
+		final Dimension2D orig = inner.calculateDimension(stringBounder);
+		final Dimension2D dimTitle = name.calculateDimension(stringBounder);
+		final Dimension2D dimHeaderNote = headerNote.calculateDimension(stringBounder);
+		final double suppWidth = MathUtils.max(orig.getWidth(), dimTitle.getWidth() + 20, dimHeaderNote.getWidth() + 20)
+				- orig.getWidth();
+		return suppWidth;
 	}
 
 	public GtileGroup(Gtile inner, Display title, Display displayNote, HColor arrowColor, HColor backColor,
@@ -136,20 +150,38 @@ public class GtileGroup extends AbstractGtileRoot {
 
 	@Override
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		// TODO Auto-generated method stub
-		return null;
+		final Dimension2D orig = inner.calculateDimension(stringBounder);
+		return Dimension2DDouble.delta(orig, 18, suppHeight(stringBounder));
+	}
+
+	private double suppHeight(StringBounder stringBounder) {
+		final Dimension2D dimTitle = name.calculateDimension(stringBounder);
+		return dimTitle.getHeight() + 30;
+	}
+
+	private UTranslate getTranslate() {
+		return new UTranslate(9, suppHeight(getStringBounder()) - 10);
 	}
 
 	@Override
 	protected UTranslate getCoordImpl(String name) {
-		// TODO Auto-generated method stub
-		return null;
+		return inner.getCoord(name).compose(getTranslate());
 	}
 
 	@Override
 	protected void drawUInternal(UGraphic ug) {
-		// TODO Auto-generated method stub
 
+		final Dimension2D dimTotal = calculateDimension(stringBounder);
+
+		final SymbolContext symbolContext = new SymbolContext(backColor, borderColor).withShadow(shadowing)
+				.withStroke(stroke).withCorner(roundCorner, 0);
+
+		final HorizontalAlignment align = inner.skinParam().getHorizontalAlignment(AlignmentParam.packageTitleAlignment,
+				null, false, null);
+		type.asBig(name, align, TextBlockUtils.empty(0, 0), dimTotal.getWidth(), dimTotal.getHeight(), symbolContext,
+				skinParam().getStereotypeAlignment()).drawU(ug);
+
+		inner.drawU(ug.apply(getTranslate()));
 	}
 
 //	@Override

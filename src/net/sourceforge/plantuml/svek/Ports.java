@@ -35,7 +35,11 @@
  */
 package net.sourceforge.plantuml.svek;
 
-import java.util.LinkedHashMap;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
@@ -44,7 +48,7 @@ import net.sourceforge.plantuml.SignatureUtils;
 
 public class Ports {
 
-	private final Map<String, PortGeometry> ids = new LinkedHashMap<String, PortGeometry>();
+	private final Map<String, PortGeometry> ids = new HashMap<String, PortGeometry>();
 
 	public static String encodePortNameToId(String portName) {
 		return "p" + SignatureUtils.getMD5Hex(portName);
@@ -57,9 +61,9 @@ public class Ports {
 
 	public Ports translateY(double deltaY) {
 		final Ports result = new Ports();
-		for (Map.Entry<String, PortGeometry> ent : ids.entrySet()) {
+		for (Map.Entry<String, PortGeometry> ent : ids.entrySet())
 			result.ids.put(ent.getKey(), ent.getValue().translateY(deltaY));
-		}
+
 		return result;
 	}
 
@@ -67,7 +71,7 @@ public class Ports {
 		final String id = encodePortNameToId(Objects.requireNonNull(portName));
 		final PortGeometry already = ids.get(id);
 		if (already == null || already.getScore() < score)
-			ids.put(id, new PortGeometry(position, height, score));
+			ids.put(id, new PortGeometry(id, position, height, score));
 	}
 
 	public void addThis(Ports other) {
@@ -79,8 +83,10 @@ public class Ports {
 		}
 	}
 
-	public Map<String, PortGeometry> getAllWithEncodedPortId() {
-		return ids;
+	public Collection<PortGeometry> getAllPortGeometry() {
+		final List<PortGeometry> result = new ArrayList<PortGeometry>(ids.values());
+		Collections.sort(result);
+		return Collections.unmodifiableCollection(result);
 	}
 
 }

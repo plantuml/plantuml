@@ -41,32 +41,32 @@ import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Arrows;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class GConnectionLeftThenVerticalThenRight extends GAbstractConnection {
+public class GConnectionSideThenVerticalThenSide extends GAbstractConnection {
 
 	private final TextBlock textBlock;
 	private final UTranslate pos1;
 	private final UTranslate pos2;
 
-	private final double xright;
+	private final double xpos;
 
-	public GConnectionLeftThenVerticalThenRight(UTranslate pos1, GPoint gpoint1, UTranslate pos2, GPoint gpoint2,
-			double xright, TextBlock textBlock) {
+	public GConnectionSideThenVerticalThenSide(UTranslate pos1, GPoint gpoint1, UTranslate pos2, GPoint gpoint2,
+			double xpos, TextBlock textBlock) {
 		super(gpoint1, gpoint2);
 		this.textBlock = textBlock;
 		this.pos1 = pos1;
 		this.pos2 = pos2;
-		this.xright = xright;
+		this.xpos = xpos;
 		// See FtileFactoryDelegatorAssembly
 	}
 
 	@Override
 	public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
-		throw new UnsupportedOperationException();
+		throw new UnsupportedOperationException("wip3");
 
 	}
 
@@ -75,10 +75,11 @@ public class GConnectionLeftThenVerticalThenRight extends GAbstractConnection {
 		final Point2D p1 = pos1.getTranslated(gpoint1.getPoint2D());
 		final Point2D p2 = pos2.getTranslated(gpoint2.getPoint2D());
 		final Direction direction = p1.getY() < p2.getY() ? Direction.DOWN : Direction.UP;
-		final Snake snake = Snake.create(getInLinkRenderingColor(), Arrows.asToLeft()).emphasizeDirection(direction)
+		final UPolygon tmp = p1.getX() < p2.getX() ? Arrows.asToRight() : Arrows.asToLeft();
+		final Snake snake = Snake.create(getInLinkRenderingColor(), tmp).emphasizeDirection(direction)
 				.withLabel(textBlock, HorizontalAlignment.LEFT);
 		// final double maxX = Math.max(p1.getX(), p2.getX());
-		final double maxX = xright;
+		final double maxX = xpos;
 		snake.addPoint(p1);
 		snake.addPoint(new Point2D.Double(maxX, p1.getY()));
 		snake.addPoint(new Point2D.Double(maxX, p2.getY()));

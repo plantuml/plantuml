@@ -233,7 +233,7 @@ public class SURL {
 			return true;
 
 		if (SecurityUtils.getSecurityProfile() == SecurityProfile.INTERNET) {
-			if (pureIP(cleanPath(internal.toString())))
+			if (forbiddenURL(cleanPath(internal.toString())))
 				return false;
 
 			final int port = internal.getPort();
@@ -243,8 +243,12 @@ public class SURL {
 		return false;
 	}
 
-	private boolean pureIP(String full) {
-		return full.matches("^https?://\\d+\\.\\d+\\.\\d+\\.\\d+.*");
+	private boolean forbiddenURL(String full) {
+		if (full.matches("^https?://\\d+\\.\\d+\\.\\d+\\.\\d+.*"))
+			return true;
+		if (full.matches("^https?://[^.]+/.*"))
+			return true;
+		return false;
 	}
 
 	private boolean isInAllowList() {

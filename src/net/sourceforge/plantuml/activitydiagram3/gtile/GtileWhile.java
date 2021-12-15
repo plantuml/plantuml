@@ -76,10 +76,18 @@ public class GtileWhile extends GtileTopDown3 {
 	public Collection<GConnection> getInnerConnections() {
 		final GConnection arrow1 = new GConnectionVerticalDown(getPos1(), tile1.getGPoint(GPoint.SOUTH_HOOK), getPos2(),
 				tile2.getGPoint(GPoint.NORTH_HOOK), TextBlockUtils.EMPTY_TEXT_BLOCK);
-		final GConnection arrow2 = new GConnectionVerticalDownThenBack(getPos2(), tile2.getGPoint(GPoint.SOUTH_HOOK),
-				getPos1(), tile1.getGPoint(GPoint.EAST_HOOK), TextBlockUtils.EMPTY_TEXT_BLOCK);
 
-		return Arrays.asList(arrow1, arrow2);
+		final double xright = calculateDimension(stringBounder).getWidth();
+
+		final GConnection arrow2 = new GConnectionVerticalDownThenBack(getPos2(), tile2.getGPoint(GPoint.SOUTH_HOOK),
+				getPos1(), tile1.getGPoint(GPoint.EAST_HOOK), TextBlockUtils.EMPTY_TEXT_BLOCK, xright);
+
+		final double xleft = 0;
+
+		final GConnection arrow3 = new GConnectionSideThenVerticalThenSide(getPos1(), tile1.getGPoint(GPoint.WEST_HOOK),
+				getPos3(), tile3.getGPoint(GPoint.SOUTH_HOOK), xleft, TextBlockUtils.EMPTY_TEXT_BLOCK);
+
+		return Arrays.asList(arrow1, arrow2, arrow3);
 	}
 
 //	private final Ftile whileBlock;

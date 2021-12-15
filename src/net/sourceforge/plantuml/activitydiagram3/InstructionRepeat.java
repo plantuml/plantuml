@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileKilled;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes;
 import net.sourceforge.plantuml.activitydiagram3.gtile.Gtile;
+import net.sourceforge.plantuml.activitydiagram3.gtile.GtileBox;
 import net.sourceforge.plantuml.activitydiagram3.gtile.GtileRepeat;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -100,9 +101,9 @@ public class InstructionRepeat extends AbstractInstruction implements Instructio
 	}
 
 	private boolean isLastOfTheParent() {
-		if (parent instanceof InstructionList) {
+		if (parent instanceof InstructionList)
 			return ((InstructionList) parent).getLast() == this;
-		}
+
 		return false;
 	}
 
@@ -123,35 +124,48 @@ public class InstructionRepeat extends AbstractInstruction implements Instructio
 	public CommandExecutionResult add(Instruction ins) {
 		return repeatList.add(ins);
 	}
-	
+
 	@Override
 	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
 
 		final Gtile tile = repeatList.createGtile(skinParam, stringBounder);
-		return new GtileRepeat(swimlane, tile, null, test);
+		final Gtile backward = getGtileBackward(skinParam, stringBounder);
+
+		return new GtileRepeat(swimlane, tile, null, test, backward);
+	}
+
+	private Gtile getGtileBackward(ISkinParam skinParam, StringBounder stringBounder) {
+		if (Display.isNull(backward))
+			return null;
+
+		GtileBox result = GtileBox.create(stringBounder, skinParam, backward, getSwimlaneIn(), boxStyle, null);
+//		if (backwardNotes.size() > 0) {
+//			result = factory.addNote(result, swimlaneOut, backwardNotes);
+//		}
+		return result;
 	}
 
 	public Ftile createFtile(FtileFactory factory) {
-		final Ftile back = getBackward(factory);
+		final Ftile back = getFtileBackward(factory);
 		final Ftile decorateOut = factory.decorateOut(repeatList.createFtile(factory), endRepeatLinkRendering);
 		if (this.testCalled == false && incoming1.isNone())
 			incoming1 = swimlanes.nextLinkRenderer();
 		final Ftile result = factory.repeat(boxStyleIn, swimlane, swimlaneOut, startLabel, decorateOut, test, yes, out,
 				colors, back, isLastOfTheParent(), incoming1, incoming2);
-		if (killed) {
+		if (killed)
 			return new FtileKilled(result);
-		}
+
 		return result;
 	}
 
-	private Ftile getBackward(FtileFactory factory) {
-		if (Display.isNull(backward)) {
+	private Ftile getFtileBackward(FtileFactory factory) {
+		if (Display.isNull(backward))
 			return null;
-		}
+
 		Ftile result = factory.activity(backward, swimlaneOut, boxStyle, Colors.empty(), null);
-		if (backwardNotes.size() > 0) {
+		if (backwardNotes.size() > 0)
 			result = factory.addNote(result, swimlaneOut, backwardNotes);
-		}
+
 		return result;
 	}
 
@@ -186,9 +200,9 @@ public class InstructionRepeat extends AbstractInstruction implements Instructio
 
 	@Override
 	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote) {
-		if (Display.isNull(backward)) {
+		if (Display.isNull(backward))
 			return repeatList.addNote(note, position, type, colors, swimlaneNote);
-		}
+
 		this.backwardNotes.add(new PositionedNote(note, position, type, colors, swimlaneNote));
 		return true;
 
