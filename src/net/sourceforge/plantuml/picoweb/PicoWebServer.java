@@ -117,6 +117,14 @@ public class PicoWebServer implements Runnable {
 					return;
 				if (request.getPath().startsWith("/plantuml/svg/") && handleGET(request, out, FileFormat.SVG))
 					return;
+				if (request.getPath().startsWith("/txt/") && handleGET(request, out, FileFormat.ATXT))
+					return;
+				if (request.getPath().startsWith("/plantuml/txt/") && handleGET(request, out, FileFormat.ATXT))
+					return;
+				if (request.getPath().startsWith("/utxt/") && handleGET(request, out, FileFormat.UTXT))
+					return;
+				if (request.getPath().startsWith("/plantuml/utxt/") && handleGET(request, out, FileFormat.UTXT))
+					return;
 			} else if (request.getMethod().equals("POST") && request.getPath().equals("/render")) {
 				handleRenderRequest(request, out);
 				return;

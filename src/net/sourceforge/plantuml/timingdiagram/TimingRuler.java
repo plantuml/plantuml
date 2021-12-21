@@ -89,6 +89,8 @@ public class TimingRuler {
 	}
 
 	public void scaleInPixels(long tick, long pixel) {
+		if (pixel <= 0 || tick <= 0)
+			throw new IllegalArgumentException();
 		this.tickIntervalInPixels = pixel;
 		this.tickUnitary = tick;
 	}
