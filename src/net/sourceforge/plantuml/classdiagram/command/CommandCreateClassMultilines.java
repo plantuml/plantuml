@@ -72,8 +72,8 @@ import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagram> {
 
-	private static final String CODE = CommandLinkClass.getSeparator() + "?[%pLN_]+" + "(?:"
-			+ CommandLinkClass.getSeparator() + "[%pLN_]+)*";
+	private static final String CODE = CommandLinkClass.getSeparator() + "?[%pLN_$]+" + "(?:"
+			+ CommandLinkClass.getSeparator() + "[%pLN_$]+)*";
 	public static final String CODES = CODE + "(?:\\s*,\\s*" + CODE + ")*";
 
 	enum Mode {
