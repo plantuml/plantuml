@@ -238,10 +238,13 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 					drawConstraints(ug, timeHeader.getTimeScale());
 					drawTasksRect(ug);
 					drawTasksTitle(ugOrig, getTitlesColumnWidth(ug.getStringBounder()), getBarsColumnWidth(timeHeader));
-					drawResources(ug);
-					if (showFootbox) {
+
+					if (hideRessourceFoobox == false)
+						drawResources(ug);
+
+					if (showFootbox)
 						timeHeader.drawTimeFooter(ug.apply(UTranslate.dy(totalHeightWithoutFooter)));
-					}
+
 				} catch (Throwable t) {
 					t.printStackTrace();
 					final UDrawable crash = new GraphvizCrash(getSource().getPlainString(), false, t);
@@ -428,13 +431,13 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		double yy = lastY(stringBounder);
 		if (yy == 0) {
 			yy = headerHeight;
-		} else {
+		} else if (this.hideRessourceFoobox == false)
 			for (Resource res : resources.values()) {
 				final ResourceDraw draw = new ResourceDraw(this, res, timeScale, yy, min, max);
 				res.setTaskDraw(draw);
 				yy += draw.getHeight();
 			}
-		}
+
 		this.totalHeightWithoutFooter = yy;
 	}
 
@@ -783,13 +786,18 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 
 	public void setWithCalendarDate(boolean withCalendarDate) {
 		this.withCalendarDate = withCalendarDate;
-
 	}
 
 	private boolean hideRessourceName;
+	private boolean hideRessourceFoobox;
 
 	public CommandExecutionResult hideRessourceName() {
 		this.hideRessourceName = true;
+		return CommandExecutionResult.ok();
+	}
+
+	public CommandExecutionResult hideRessourceFootbox() {
+		this.hideRessourceFoobox = true;
 		return CommandExecutionResult.ok();
 	}
 
