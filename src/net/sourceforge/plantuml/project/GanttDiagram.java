@@ -405,14 +405,15 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 						task.getStyleBuilder(), getSkinParam().getIHtmlColorSet());
 			} else {
 				final TaskImpl tmp = (TaskImpl) task;
+				final String disp = hideRessourceName ? tmp.getCode().getSimpleDisplay() : tmp.getPrettyDisplay();
 				if (tmp.isDiamond()) {
-					draw = new TaskDrawDiamond(timeScale, y, tmp.getPrettyDisplay(), getStart(tmp), getSkinParam(),
-							task, this, task.getStyleBuilder(), getSkinParam().getIHtmlColorSet());
+					draw = new TaskDrawDiamond(timeScale, y, disp, getStart(tmp), getSkinParam(), task, this,
+							task.getStyleBuilder(), getSkinParam().getIHtmlColorSet());
 				} else {
 					final boolean oddStart = printStart != null && min.compareTo(getStart(tmp)) == 0;
 					final boolean oddEnd = printStart != null && max.compareTo(getEnd(tmp)) == 0;
-					draw = new TaskDrawRegular(timeScale, y, tmp.getPrettyDisplay(), getStart(tmp), getEnd(tmp),
-							oddStart, oddEnd, getSkinParam(), task, this, getConstraints(task), task.getStyleBuilder(),
+					draw = new TaskDrawRegular(timeScale, y, disp, getStart(tmp), getEnd(tmp), oddStart, oddEnd,
+							getSkinParam(), task, this, getConstraints(task), task.getStyleBuilder(),
 							getSkinParam().getIHtmlColorSet());
 				}
 				draw.setColorsAndCompletion(tmp.getColors(), tmp.getCompletion(), tmp.getUrl(), tmp.getNote());
@@ -783,6 +784,13 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 	public void setWithCalendarDate(boolean withCalendarDate) {
 		this.withCalendarDate = withCalendarDate;
 
+	}
+
+	private boolean hideRessourceName;
+
+	public CommandExecutionResult hideRessourceName() {
+		this.hideRessourceName = true;
+		return CommandExecutionResult.ok();
 	}
 
 }
