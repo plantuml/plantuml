@@ -36,12 +36,14 @@
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.real.RealUtils;
-import net.sourceforge.plantuml.sequencediagram.DollLeaf;
+import net.sourceforge.plantuml.sequencediagram.Doll;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.ParticipantEnglober;
 import net.sourceforge.plantuml.skin.Context2D;
@@ -49,10 +51,12 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 public class Dolls {
 
-	private final List<DollLeaf> dolls = new ArrayList<>();
+	private final List<Doll> dolls = new ArrayList<>();
+
+	private final Map<ParticipantEnglober, Doll> groups = new HashMap<>();
 
 	public Dolls(TileArguments tileArguments) {
-		DollLeaf pending = null;
+		Doll pending = null;
 		for (Participant p : tileArguments.getLivingSpaces().participants()) {
 			final ParticipantEnglober englober = tileArguments.getLivingSpaces().get(p).getEnglober();
 			if (englober == null) {
@@ -61,11 +65,25 @@ public class Dolls {
 			}
 			assert englober != null;
 			if (pending != null && englober == pending.getParticipantEnglober()) {
-				pending.add(p);
+				pending.addParticipant(p);
 				continue;
 			}
-			pending = DollLeaf.createTeoz(englober, p, tileArguments,
+
+			if (groups.containsKey(englober)) {
+				groups.get(englober).addParticipant(p);
+				continue;
+			}
+
+			final ParticipantEnglober parent = englober.getParent();
+			pending = Doll.createTeoz(englober, p, tileArguments,
 					tileArguments.getSkinParam().getCurrentStyleBuilder());
+			if (parent != null && groups.containsKey(parent) == false)
+				groups.put(parent, Doll.createGroup(parent, tileArguments,
+						tileArguments.getSkinParam().getCurrentStyleBuilder(), true));
+
+			if (parent != null)
+				getParent(pending).addDoll(pending);
+
 			dolls.add(pending);
 		}
 	}
@@ -76,8 +94,12 @@ public class Dolls {
 
 	public double getOffsetForEnglobers(StringBounder stringBounder) {
 		double result = 0;
-		for (DollLeaf doll : dolls) {
-			final double height = doll.getPreferredHeight();
+		for (Doll doll : dolls) {
+			double height = doll.getTitlePreferredHeight();
+			final Doll group = getParent(doll);
+			if (group != null)
+				height += group.getTitlePreferredHeight();
+
 			if (height > result)
 				result = height;
 
@@ -86,8 +108,8 @@ public class Dolls {
 	}
 
 	public void addConstraints(StringBounder stringBounder) {
-		DollLeaf last = null;
-		for (DollLeaf doll : dolls) {
+		Doll last = null;
+		for (Doll doll : dolls) {
 			doll.addInternalConstraints();
 			if (last != null)
 				last.addConstraintAfter(doll);
@@ -96,9 +118,32 @@ public class Dolls {
 		}
 	}
 
+	private Doll getParent(Doll doll) {
+		final ParticipantEnglober parent = doll.getParticipantEnglober().getParent();
+		if (parent == null)
+			return null;
+		return groups.get(parent);
+	}
+
 	public void drawEnglobers(UGraphic ug, double height, Context2D context) {
-		for (DollLeaf doll : dolls)
-			doll.drawMe(ug, height, context);
+		for (Doll group : groups.values()) {
+			group.drawGroup(ug, height, context);
+
+		}
+//		DollGroup pending = null;
+//		for (DollLeaf doll : dolls) {
+//			final DollGroup group = doll.getGroup();
+//			if (group==null) {
+//				
+//			}
+//			// if (pending==null || pending.equals(group))
+//			if (group != null) {
+//				// group.drawMe(ug, height, context, doll.getX1().getCurrentValue(), doll.getX2().getCurrentValue());
+//			}
+//		}
+
+		for (Doll doll : dolls)
+			doll.drawMe(ug, height, context, getParent(doll));
 
 	}
 
@@ -107,7 +152,7 @@ public class Dolls {
 			throw new IllegalStateException();
 
 		final List<Real> result = new ArrayList<>();
-		for (DollLeaf doll : dolls)
+		for (Doll doll : dolls)
 			result.add(doll.getMinX(stringBounder));
 
 		return RealUtils.min(result);
@@ -118,7 +163,7 @@ public class Dolls {
 			throw new IllegalStateException();
 
 		final List<Real> result = new ArrayList<>();
-		for (DollLeaf doll : dolls)
+		for (Doll doll : dolls)
 			result.add(doll.getMaxX(stringBounder));
 
 		return RealUtils.max(result);

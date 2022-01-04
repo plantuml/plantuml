@@ -52,7 +52,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.sequencediagram.AbstractMessage;
 import net.sourceforge.plantuml.sequencediagram.Delay;
 import net.sourceforge.plantuml.sequencediagram.Divider;
-import net.sourceforge.plantuml.sequencediagram.DollLeaf;
+import net.sourceforge.plantuml.sequencediagram.Doll;
 import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.GroupingLeaf;
 import net.sourceforge.plantuml.sequencediagram.GroupingStart;
@@ -214,7 +214,7 @@ class DrawableSetInitializer {
 		if (padding == 0)
 			return;
 
-		for (DollLeaf pe : drawableSet.getExistingParticipantEnglober(stringBounder)) {
+		for (Doll pe : drawableSet.getExistingParticipantEnglober(stringBounder)) {
 			final ParticipantBox first = drawableSet.getLivingParticipantBox(pe.getFirst2TOBEPRIVATE())
 					.getParticipantBox();
 			final ParticipantBox last = drawableSet.getLivingParticipantBox(pe.getLast2TOBEPRIVATE())
@@ -225,7 +225,7 @@ class DrawableSetInitializer {
 	}
 
 	private void takeParticipantEngloberTitleWidth(StringBounder stringBounder) {
-		for (DollLeaf doll : drawableSet.getExistingParticipantEnglober(stringBounder)) {
+		for (Doll doll : drawableSet.getExistingParticipantEnglober(stringBounder)) {
 			final double preferredWidth = drawableSet.getEngloberPreferedWidth(stringBounder, doll);
 			final ParticipantBox first = drawableSet.getLivingParticipantBox(doll.getFirst2TOBEPRIVATE())
 					.getParticipantBox();

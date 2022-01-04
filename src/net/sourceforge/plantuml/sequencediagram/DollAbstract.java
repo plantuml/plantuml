@@ -35,11 +35,13 @@
  */
 package net.sourceforge.plantuml.sequencediagram;
 
+import java.util.Objects;
+
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.SkinParamBackcolored;
 import net.sourceforge.plantuml.sequencediagram.teoz.TileArguments;
+import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
-import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
@@ -52,11 +54,13 @@ public abstract class DollAbstract implements WithStyle {
 	final protected ParticipantEnglober englober;
 	final protected StyleBuilder styleBuilder;
 	final protected boolean isTeoz;
+	final protected TileArguments tileArguments;
 
-	DollAbstract(ParticipantEnglober englober, StyleBuilder styleBuilder, boolean isTeoz) {
-		this.englober = englober;
+	DollAbstract(ParticipantEnglober englober, TileArguments tileArguments, StyleBuilder styleBuilder, boolean isTeoz) {
+		this.englober = Objects.requireNonNull(englober);
 		this.styleBuilder = styleBuilder;
 		this.isTeoz = isTeoz;
+		this.tileArguments = Objects.requireNonNull(tileArguments);
 	}
 
 	final public StyleSignature getDefaultStyleDefinition() {
@@ -66,20 +70,29 @@ public abstract class DollAbstract implements WithStyle {
 	final public Style[] getUsedStyles() {
 		Style tmp = getDefaultStyleDefinition().with(englober.getStereotype()).getMergedStyle(styleBuilder);
 		final HColor backColor = englober.getBoxColor();
-		if (tmp != null) {
+		if (tmp != null)
 			tmp = tmp.eventuallyOverride(PName.BackGroundColor, backColor);
-		}
-		return new Style[] { tmp };
-	}
 
-	private static TileArguments convertFunctionToBeRemoved(ISkinParam skinParam, Rose skin,
-			StringBounder stringBounder) {
-		final TileArguments result = new TileArguments(stringBounder, null, skin, skinParam, null);
-		return result;
+		return new Style[] { tmp };
 	}
 
 	final public ParticipantEnglober getParticipantEnglober() {
 		return englober;
 	}
+
+	final protected Component getComponent() {
+		final ParticipantEnglober englober = getParticipantEnglober();
+		final ISkinParam s = englober.getBoxColor() == null ? tileArguments.getSkinParam()
+				: new SkinParamBackcolored(tileArguments.getSkinParam(), englober.getBoxColor());
+		return tileArguments.getSkin().createComponent(getUsedStyles(), ComponentType.ENGLOBER, null, s,
+				englober.getTitle());
+	}
+	
+	public double getTitlePreferredHeight() {
+		final Component comp = tileArguments.getSkin().createComponent(getUsedStyles(), ComponentType.ENGLOBER, null,
+				tileArguments.getSkinParam(), getParticipantEnglober().getTitle());
+		return comp.getPreferredHeight(tileArguments.getStringBounder());
+	}
+
 
 }

@@ -55,7 +55,7 @@ import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.sequencediagram.DollLeaf;
+import net.sourceforge.plantuml.sequencediagram.Doll;
 import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.Newpage;
 import net.sourceforge.plantuml.sequencediagram.Participant;
@@ -142,7 +142,7 @@ public class DrawableSet {
 	public double getHeadAndEngloberHeight(Participant p, StringBounder stringBounder) {
 		final LivingParticipantBox box = participants.get(p);
 		final double height = box.getParticipantBox().getHeadHeight(stringBounder);
-		final DollLeaf doll = getParticipantEnglober(p, stringBounder);
+		final Doll doll = getParticipantEnglober(p, stringBounder);
 		if (doll == null)
 			return height;
 
@@ -152,9 +152,9 @@ public class DrawableSet {
 		return height + heightEnglober;
 	}
 
-	public List<DollLeaf> getExistingParticipantEnglober(StringBounder stringBounder) {
-		final List<DollLeaf> result = new ArrayList<>();
-		DollLeaf pending = null;
+	public List<Doll> getExistingParticipantEnglober(StringBounder stringBounder) {
+		final List<Doll> result = new ArrayList<>();
+		Doll pending = null;
 		for (Map.Entry<Participant, ParticipantEnglober> ent : participantEnglobers2.entrySet()) {
 			final ParticipantEnglober englober = ent.getValue();
 			if (englober == null) {
@@ -163,10 +163,10 @@ public class DrawableSet {
 			}
 			assert englober != null;
 			if (pending != null && englober == pending.getParticipantEnglober()) {
-				pending.add(ent.getKey());
+				pending.addParticipant(ent.getKey());
 				continue;
 			}
-			pending = DollLeaf.createPuma(englober, ent.getKey(), getSkinParam(), skin, stringBounder,
+			pending = Doll.createPuma(englober, ent.getKey(), getSkinParam(), skin, stringBounder,
 					skinParam.getCurrentStyleBuilder());
 			result.add(pending);
 		}
@@ -175,7 +175,7 @@ public class DrawableSet {
 
 	public double getOffsetForEnglobers(StringBounder stringBounder) {
 		double result = 0;
-		for (DollLeaf englober : getExistingParticipantEnglober(stringBounder)) {
+		for (Doll englober : getExistingParticipantEnglober(stringBounder)) {
 			final Component comp = skin.createComponent(null, ComponentType.ENGLOBER, null, skinParam,
 					englober.getParticipantEnglober().getTitle());
 			final double height = comp.getPreferredHeight(stringBounder);
@@ -363,7 +363,7 @@ public class DrawableSet {
 	}
 
 	private void drawDolls(UGraphic ug, double height, Context2D context) {
-		for (DollLeaf doll : getExistingParticipantEnglober(ug.getStringBounder())) {
+		for (Doll doll : getExistingParticipantEnglober(ug.getStringBounder())) {
 			double x1 = getX1(doll);
 			final double x2 = getX2(ug.getStringBounder(), doll);
 
@@ -384,11 +384,11 @@ public class DrawableSet {
 		}
 	}
 
-	public double getEngloberPreferedWidth(StringBounder stringBounder, DollLeaf doll) {
+	public double getEngloberPreferedWidth(StringBounder stringBounder, Doll doll) {
 		return getEngloberComponent(doll).getPreferredWidth(stringBounder);
 	}
 
-	private Component getEngloberComponent(DollLeaf doll) {
+	private Component getEngloberComponent(Doll doll) {
 		final ParticipantEnglober participantEnglober = doll.getParticipantEnglober();
 		final ISkinParam s = participantEnglober.getBoxColor() == null ? skinParam
 				: new SkinParamBackcolored(skinParam, participantEnglober.getBoxColor());
@@ -396,13 +396,13 @@ public class DrawableSet {
 				participantEnglober.getTitle());
 	}
 
-	public double getX1(DollLeaf doll) {
+	public double getX1(Doll doll) {
 		final Participant first = doll.getFirst2TOBEPRIVATE();
 		final ParticipantBox firstBox = participants.get(first).getParticipantBox();
 		return firstBox.getStartingX() + 1;
 	}
 
-	public double getX2(StringBounder stringBounder, DollLeaf doll) {
+	public double getX2(StringBounder stringBounder, Doll doll) {
 		final Participant last = doll.getLast2TOBEPRIVATE();
 		final ParticipantBox lastBox = participants.get(last).getParticipantBox();
 		return lastBox.getMaxX(stringBounder) - 1;
@@ -415,8 +415,8 @@ public class DrawableSet {
 		line.drawU(ug, getSkin(), skinParam);
 	}
 
-	private DollLeaf getParticipantEnglober(Participant p, StringBounder stringBounder) {
-		for (DollLeaf pe : getExistingParticipantEnglober(stringBounder))
+	private Doll getParticipantEnglober(Participant p, StringBounder stringBounder) {
+		for (Doll pe : getExistingParticipantEnglober(stringBounder))
 			if (pe.contains(p))
 				return pe;
 

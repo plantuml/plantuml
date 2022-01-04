@@ -45,6 +45,11 @@ public class ParticipantEnglober {
 	final private Display title;
 	final private HColor boxColor;
 	final private Stereotype stereotype;
+	
+	@Override
+	public String toString() {
+		return title.toString();
+	}
 
 	public static ParticipantEnglober build(Display title, HColor boxColor, Stereotype stereotype) {
 		return new ParticipantEnglober(null, title, boxColor, stereotype);
