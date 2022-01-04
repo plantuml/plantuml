@@ -65,6 +65,7 @@ import net.sourceforge.plantuml.creole.Parser;
 import net.sourceforge.plantuml.creole.Sheet;
 import net.sourceforge.plantuml.creole.SheetBlock1;
 import net.sourceforge.plantuml.creole.SheetBlock2;
+import net.sourceforge.plantuml.creole.atom.AtomWithMargin;
 import net.sourceforge.plantuml.creole.legacy.CreoleParser;
 import net.sourceforge.plantuml.graphic.CircledCharacter;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -504,6 +505,13 @@ public class Display implements Iterable<CharSequence> {
 	public TextBlock create0(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
 			ISkinSimple spriteContainer, LineBreakStrategy maxMessageSize, CreoleMode creoleMode,
 			UFont fontForStereotype, HColor htmlColorForStereotype) {
+		return create0(fontConfiguration, horizontalAlignment, spriteContainer, maxMessageSize, creoleMode,
+				fontForStereotype, htmlColorForStereotype, 0, 0);
+	}
+
+	public TextBlock create0(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
+			ISkinSimple spriteContainer, LineBreakStrategy maxMessageSize, CreoleMode creoleMode,
+			UFont fontForStereotype, HColor htmlColorForStereotype, double marginX1, double marginX2) {
 		Objects.requireNonNull(maxMessageSize);
 		if (getNaturalHorizontalAlignment() != null)
 			horizontalAlignment = getNaturalHorizontalAlignment();
@@ -513,24 +521,24 @@ public class Display implements Iterable<CharSequence> {
 		if (size() > 0) {
 			if (get(0) instanceof Stereotype)
 				return createStereotype(fontConfiguration, horizontalAlignment, spriteContainer, 0, fontForStereotype,
-						htmlColorForStereotype, maxMessageSize, creoleMode);
+						htmlColorForStereotype, maxMessageSize, creoleMode, marginX1, marginX2);
 
 			if (get(size() - 1) instanceof Stereotype)
 				return createStereotype(fontConfiguration, horizontalAlignment, spriteContainer, size() - 1,
-						fontForStereotype, htmlColorForStereotype, maxMessageSize, creoleMode);
+						fontForStereotype, htmlColorForStereotype, maxMessageSize, creoleMode, marginX1, marginX2);
 
 			if (get(0) instanceof MessageNumber)
 				return createMessageNumber(fontConfiguration, horizontalAlignment, spriteContainer, maxMessageSize,
-						stereotypeConfiguration);
+						stereotypeConfiguration, marginX1, marginX2);
 		}
 
 		return getCreole(fontConfiguration, horizontalAlignment, spriteContainer, maxMessageSize, creoleMode,
-				stereotypeConfiguration);
+				stereotypeConfiguration, marginX1, marginX2);
 	}
 
 	private TextBlock createStereotype(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
 			SpriteContainer spriteContainer, int position, UFont fontForStereotype, HColor htmlColorForStereotype,
-			LineBreakStrategy maxMessageSize, CreoleMode creoleMode) {
+			LineBreakStrategy maxMessageSize, CreoleMode creoleMode, double marginX1, double marginX2) {
 		final Stereotype stereotype = (Stereotype) get(position);
 		TextBlock circledCharacter = null;
 		if (stereotype.isSpotted())
@@ -542,7 +550,7 @@ public class Display implements Iterable<CharSequence> {
 		final FontConfiguration stereotypeConfiguration = fontConfiguration.forceFont(fontForStereotype,
 				htmlColorForStereotype);
 		final TextBlock result = getCreole(fontConfiguration, horizontalAlignment, (ISkinSimple) spriteContainer,
-				maxMessageSize, creoleMode, stereotypeConfiguration);
+				maxMessageSize, creoleMode, stereotypeConfiguration, marginX1, marginX2);
 		if (circledCharacter != null)
 			return new TextBlockSprited(circledCharacter, result);
 
@@ -551,22 +559,23 @@ public class Display implements Iterable<CharSequence> {
 
 	private TextBlock getCreole(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
 			ISkinSimple spriteContainer, LineBreakStrategy maxMessageSize, CreoleMode creoleMode,
-			FontConfiguration stereotypeConfiguration) {
+			FontConfiguration stereotypeConfiguration, double marginX1, double marginX2) {
 		final Sheet sheet = Parser
 				.build(fontConfiguration, horizontalAlignment, spriteContainer, creoleMode, stereotypeConfiguration)
 				.createSheet(this);
 		final double padding = spriteContainer == null ? 0 : spriteContainer.getPadding();
-		final SheetBlock1 sheetBlock1 = new SheetBlock1(sheet, maxMessageSize, padding);
+		final SheetBlock1 sheetBlock1 = new SheetBlock1(sheet, maxMessageSize, padding, marginX1, marginX2);
 		return new SheetBlock2(sheetBlock1, sheetBlock1, new UStroke(1.5));
 	}
 
 	private TextBlock createMessageNumber(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
-			ISkinSimple spriteContainer, LineBreakStrategy maxMessageSize, FontConfiguration stereotypeConfiguration) {
+			ISkinSimple spriteContainer, LineBreakStrategy maxMessageSize, FontConfiguration stereotypeConfiguration,
+			double marginX1, double marginX2) {
 		TextBlock tb1 = subList(0, 1).getCreole(fontConfiguration, horizontalAlignment, spriteContainer, maxMessageSize,
-				CreoleMode.FULL, stereotypeConfiguration);
+				CreoleMode.FULL, stereotypeConfiguration, marginX1, marginX2);
 		tb1 = TextBlockUtils.withMargin(tb1, 0, 4, 0, 0);
 		final TextBlock tb2 = subList(1, size()).getCreole(fontConfiguration, horizontalAlignment, spriteContainer,
-				maxMessageSize, CreoleMode.FULL, stereotypeConfiguration);
+				maxMessageSize, CreoleMode.FULL, stereotypeConfiguration, marginX1, marginX2);
 		return TextBlockUtils.mergeLR(tb1, tb2, VerticalAlignment.CENTER);
 
 	}

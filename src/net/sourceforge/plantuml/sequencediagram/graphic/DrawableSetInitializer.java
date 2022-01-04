@@ -52,7 +52,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.sequencediagram.AbstractMessage;
 import net.sourceforge.plantuml.sequencediagram.Delay;
 import net.sourceforge.plantuml.sequencediagram.Divider;
-import net.sourceforge.plantuml.sequencediagram.Englober;
+import net.sourceforge.plantuml.sequencediagram.DollLeaf;
 import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.GroupingLeaf;
 import net.sourceforge.plantuml.sequencediagram.GroupingStart;
@@ -99,17 +99,16 @@ class DrawableSetInitializer {
 
 	private boolean useContinueLineBecauseOfDelay() {
 		final String strategy = drawableSet.getSkinParam().getValue("lifelineStrategy");
-		if ("nosolid".equalsIgnoreCase(strategy)) {
+		if ("nosolid".equalsIgnoreCase(strategy))
 			return false;
-		}
-		if ("solid".equalsIgnoreCase(strategy)) {
+
+		if ("solid".equalsIgnoreCase(strategy))
 			return true;
-		}
-		for (Event ev : drawableSet.getAllEvents()) {
-			if (ev instanceof Delay) {
+
+		for (Event ev : drawableSet.getAllEvents())
+			if (ev instanceof Delay)
 				return true;
-			}
-		}
+
 		return false;
 	}
 
@@ -133,16 +132,14 @@ class DrawableSetInitializer {
 	// }
 
 	public DrawableSet createDrawableSet(StringBounder stringBounder) {
-		if (freeY2 != null) {
+		if (freeY2 != null)
 			throw new IllegalStateException();
-		}
 
 		this.defaultLineType = useContinueLineBecauseOfDelay() ? ComponentType.CONTINUE_LINE
 				: ComponentType.PARTICIPANT_LINE;
 
-		for (Participant p : drawableSet.getAllParticipants()) {
+		for (Participant p : drawableSet.getAllParticipants())
 			prepareParticipant(stringBounder, p);
-		}
 
 		this.freeY2 = new FrontierStackImpl(drawableSet.getHeadHeight(stringBounder),
 				drawableSet.getAllParticipants().size());
@@ -153,16 +150,15 @@ class DrawableSetInitializer {
 
 		for (Participant p : drawableSet.getAllParticipants()) {
 			final LivingParticipantBox living = drawableSet.getLivingParticipantBox(p);
-			for (int i = 0; i < p.getInitialLife(); i++) {
+			for (int i = 0; i < p.getInitialLife(); i++)
 				living.getLifeLine().addSegmentVariation(LifeSegmentVariation.LARGER,
 						freeY2.getFreeY(getFullParticipantRange()), p.getLiveSpecificBackColors());
-			}
+
 		}
 
 		final List<ParticipantBox> col = new ArrayList<>();
-		for (LivingParticipantBox livingParticipantBox : drawableSet.getAllLivingParticipantBox()) {
+		for (LivingParticipantBox livingParticipantBox : drawableSet.getAllLivingParticipantBox())
 			col.add(livingParticipantBox.getParticipantBox());
-		}
 
 		constraintSet = new ConstraintSet(col, freeX);
 
@@ -170,36 +166,36 @@ class DrawableSetInitializer {
 			final ParticipantRange range = getParticipantRange(ev);
 			final double diffY = freeY2.getFreeY(range) - lastFreeY2.getFreeY(range);
 			// final double diffY = freeY2.diff(lastFreeY2);
-			if (autonewpage > 0 && diffY > 0 && diffY + getTotalHeight(0, stringBounder) > autonewpage) {
+			if (autonewpage > 0 && diffY > 0 && diffY + getTotalHeight(0, stringBounder) > autonewpage)
 				prepareNewpageSpecial(stringBounder, new Newpage(null), ev, range);
-			}
-			if (ev instanceof MessageExo) {
+
+			if (ev instanceof MessageExo)
 				prepareMessageExo(stringBounder, (MessageExo) ev, range);
-			} else if (ev instanceof Message) {
+			else if (ev instanceof Message)
 				prepareMessage(stringBounder, (Message) ev, range);
-			} else if (ev instanceof Note) {
+			else if (ev instanceof Note)
 				prepareNote(stringBounder, (Note) ev, range);
-			} else if (ev instanceof Notes) {
+			else if (ev instanceof Notes)
 				prepareNotes(stringBounder, (Notes) ev, range);
-			} else if (ev instanceof LifeEvent) {
+			else if (ev instanceof LifeEvent)
 				prepareLiveEvent(stringBounder, (LifeEvent) ev, range);
-			} else if (ev instanceof GroupingLeaf) {
+			else if (ev instanceof GroupingLeaf)
 				prepareGroupingLeaf(stringBounder, (GroupingLeaf) ev, range);
-			} else if (ev instanceof GroupingStart) {
+			else if (ev instanceof GroupingStart)
 				prepareGroupingStart(stringBounder, (GroupingStart) ev, range);
-			} else if (ev instanceof Newpage) {
+			else if (ev instanceof Newpage)
 				prepareNewpage(stringBounder, (Newpage) ev, range);
-			} else if (ev instanceof Divider) {
+			else if (ev instanceof Divider)
 				prepareDivider(stringBounder, (Divider) ev, range);
-			} else if (ev instanceof HSpace) {
+			else if (ev instanceof HSpace)
 				prepareHSpace(stringBounder, (HSpace) ev, range);
-			} else if (ev instanceof Delay) {
+			else if (ev instanceof Delay)
 				prepareDelay(stringBounder, (Delay) ev, col, range);
-			} else if (ev instanceof Reference) {
+			else if (ev instanceof Reference)
 				prepareReference(stringBounder, (Reference) ev, range);
-			} else {
+			else
 				throw new IllegalStateException();
-			}
+
 		}
 
 		takeParticipantEngloberPadding(stringBounder);
@@ -215,10 +211,10 @@ class DrawableSetInitializer {
 
 	private void takeParticipantEngloberPadding(StringBounder stringBounder) {
 		final double padding = drawableSet.getSkinParam().getPadding(PaddingParam.BOX);
-		if (padding == 0) {
+		if (padding == 0)
 			return;
-		}
-		for (Englober pe : drawableSet.getExistingParticipantEnglober(stringBounder)) {
+
+		for (DollLeaf pe : drawableSet.getExistingParticipantEnglober(stringBounder)) {
 			final ParticipantBox first = drawableSet.getLivingParticipantBox(pe.getFirst2TOBEPRIVATE())
 					.getParticipantBox();
 			final ParticipantBox last = drawableSet.getLivingParticipantBox(pe.getLast2TOBEPRIVATE())
@@ -229,14 +225,14 @@ class DrawableSetInitializer {
 	}
 
 	private void takeParticipantEngloberTitleWidth(StringBounder stringBounder) {
-		for (Englober englober : drawableSet.getExistingParticipantEnglober(stringBounder)) {
-			final double preferredWidth = drawableSet.getEngloberPreferedWidth(stringBounder, englober);
-			final ParticipantBox first = drawableSet.getLivingParticipantBox(englober.getFirst2TOBEPRIVATE())
+		for (DollLeaf doll : drawableSet.getExistingParticipantEnglober(stringBounder)) {
+			final double preferredWidth = drawableSet.getEngloberPreferedWidth(stringBounder, doll);
+			final ParticipantBox first = drawableSet.getLivingParticipantBox(doll.getFirst2TOBEPRIVATE())
 					.getParticipantBox();
-			final ParticipantBox last = drawableSet.getLivingParticipantBox(englober.getLast2TOBEPRIVATE())
+			final ParticipantBox last = drawableSet.getLivingParticipantBox(doll.getLast2TOBEPRIVATE())
 					.getParticipantBox();
-			final double x1 = drawableSet.getX1(englober);
-			final double x2 = drawableSet.getX2(stringBounder, englober);
+			final double x1 = drawableSet.getX1(doll);
+			final double x2 = drawableSet.getX2(stringBounder, doll);
 			final double missing = preferredWidth - (x2 - x1);
 			if (missing > 0) {
 				constraintSet.pushToLeftParticipantBox(missing / 2, first, true);
@@ -273,9 +269,9 @@ class DrawableSetInitializer {
 			}
 			final double startX = ev.getStartingX(stringBounder);
 			final double delta1 = -startX;
-			if (delta1 > missingSpace1) {
+			if (delta1 > missingSpace1)
 				missingSpace1 = delta1;
-			}
+
 			if (ev instanceof Arrow) {
 				final Arrow a = (Arrow) ev;
 				a.setMaxX(freeX);
@@ -283,26 +279,25 @@ class DrawableSetInitializer {
 			double width = ev.getPreferredWidth(stringBounder);
 			if (ev instanceof Arrow) {
 				final Arrow a = (Arrow) ev;
-				if (width < a.getActualWidth(stringBounder)) {
+				if (width < a.getActualWidth(stringBounder))
 					width = a.getActualWidth(stringBounder);
-				}
+
 			}
 			if (ev instanceof GroupingGraphicalElementHeader) {
 				final GroupingGraphicalElementHeader gh = (GroupingGraphicalElementHeader) ev;
-				if (width < gh.getActualWidth(stringBounder)) {
+				if (width < gh.getActualWidth(stringBounder))
 					width = gh.getActualWidth(stringBounder);
-				}
+
 			}
 			final double endX = startX + width;
 			final double delta2 = endX - freeX;
-			if (delta2 > missingSpace2) {
+			if (delta2 > missingSpace2)
 				missingSpace2 = delta2;
-			}
 		}
 
-		if (missingSpace1 > 0) {
+		if (missingSpace1 > 0)
 			constraintSet.pushToLeft(missingSpace1);
-		}
+
 		freeX = constraintSet.getMaxX() + missingSpace2;
 	}
 
@@ -345,9 +340,9 @@ class DrawableSetInitializer {
 		final ParticipantBox last = participants.get(participants.size() - 1);
 		final GraphicalDelayText graphicalDivider = new GraphicalDelayText(freeY2.getFreeY(range), compText, first,
 				last);
-		for (ParticipantBox p : participants) {
+		for (ParticipantBox p : participants)
 			p.addDelay(graphicalDivider);
-		}
+
 		freeY2 = freeY2.add(graphicalDivider.getPreferredHeight(stringBounder), range);
 		drawableSet.addEvent(delay, graphicalDivider);
 	}
@@ -355,9 +350,9 @@ class DrawableSetInitializer {
 	final private InGroupablesStack inGroupableStack = new InGroupablesStack();
 
 	private void prepareGroupingStart(StringBounder stringBounder, GroupingStart start, ParticipantRange range) {
-		if (start.getType() != GroupingType.START) {
+		if (start.getType() != GroupingType.START)
 			throw new IllegalStateException();
-		}
+
 		final ISkinParam skinParam = new SkinParamBackcolored(drawableSet.getSkinParam(), start.getBackColorElement(),
 				start.getBackColorGeneral());
 
@@ -379,9 +374,8 @@ class DrawableSetInitializer {
 		inGroupableList.setMinWidth(element.getPreferredWidth(stringBounder));
 		freeY2 = freeY2.add(element.getPreferredHeight(stringBounder), range);
 		drawableSet.addEvent(start, element);
-		if (start.isParallel()) {
+		if (start.isParallel())
 			freeY2 = ((FrontierStack) freeY2).openBar();
-		}
 
 	}
 
@@ -390,17 +384,17 @@ class DrawableSetInitializer {
 		final ISkinParam skinParam = new SkinParamBackcolored(drawableSet.getSkinParam(), null,
 				m.getBackColorGeneral());
 		if (m.getType() == GroupingType.ELSE) {
-			if (m.isParallel()) {
+			if (m.isParallel())
 				freeY2 = ((FrontierStack) freeY2).restore();
-			}
+
 			final Component compElse = drawableSet.getSkin().createComponent(m.getUsedStyles(),
 					ComponentType.GROUPING_ELSE, null, skinParam, Display.create(m.getComment()));
 			final Lazy lazy = new Lazy() {
 				public double getNow() {
 					final GraphicalElement after = drawableSet.getEvent(m.getJustAfter());
-					if (after == null) {
+					if (after == null)
 						return 0;
-					}
+
 					return after.getStartingY();
 				}
 			};
@@ -418,9 +412,9 @@ class DrawableSetInitializer {
 						noteOnMessage.getNoteStyle().getNoteComponentType(), sk, noteOnMessage.getStrings());
 				notes.add(note);
 			}
-			if (m.isParallel()) {
+			if (m.isParallel())
 				freeY2 = ((FrontierStack) freeY2).closeBar();
-			}
+
 			final GroupingGraphicalElementHeader groupingHeaderStart = (GroupingGraphicalElementHeader) drawableSet
 					.getEvent(m.getGroupingStart());
 			if (groupingHeaderStart != null) {
@@ -434,9 +428,9 @@ class DrawableSetInitializer {
 			final double preferredHeight = comp.getPreferredHeight(stringBounder);
 			freeY2 = freeY2.add(preferredHeight, range);
 			inGroupableStack.pop();
-		} else {
+		} else
 			throw new IllegalStateException();
-		}
+
 		drawableSet.addEvent(m, element);
 
 	}
@@ -452,9 +446,9 @@ class DrawableSetInitializer {
 	private NoteBox createNoteBox(StringBounder stringBounder, Note n, ParticipantRange range) {
 		LivingParticipantBox p1 = drawableSet.getLivingParticipantBox(n.getParticipant());
 		LivingParticipantBox p2;
-		if (n.getParticipant2() == null) {
+		if (n.getParticipant2() == null)
 			p2 = null;
-		} else {
+		else {
 			p2 = drawableSet.getLivingParticipantBox(n.getParticipant2());
 			if (p1.getParticipantBox().getCenterX(stringBounder) > p2.getParticipantBox().getCenterX(stringBounder)) {
 				final LivingParticipantBox tmp = p1;
@@ -464,14 +458,14 @@ class DrawableSetInitializer {
 		}
 		final ISkinParam skinParam = n.getSkinParamBackcolored(drawableSet.getSkinParam());
 		final ComponentType type = n.getNoteStyle().getNoteComponentType();
-		if (p1 == null && p2 == null) {
+		if (p1 == null && p2 == null)
 			for (LivingParticipantBox p : drawableSet.getAllLivingParticipantBox()) {
-				if (p1 == null) {
+				if (p1 == null)
 					p1 = p;
-				}
+
 				p2 = p;
 			}
-		}
+
 		final Component component = drawableSet.getSkin().createComponentNote(n.getUsedStyles(), type, skinParam,
 				n.getStrings(), n.getPosition());
 		final NoteBox noteBox = new NoteBox(freeY2.getFreeY(range), component, p1, p2, n.getPosition(), n.getUrl());
@@ -501,26 +495,26 @@ class DrawableSetInitializer {
 			double pos = 0;
 			if (message != null) {
 				int delta1 = 0;
-				if (message.isCreate()) {
+				if (message.isCreate())
 					delta1 += 10;
-				} else if (OptionFlags.STRICT_SELFMESSAGE_POSITION && message.isSelfMessage()) {
+				else if (OptionFlags.STRICT_SELFMESSAGE_POSITION && message.isSelfMessage())
 					delta1 += 8;
-				}
+
 				pos = message.getPosYstartLevel() + delta1;
 			}
 			final LifeLine line1 = drawableSet.getLivingParticipantBox(lifeEvent.getParticipant()).getLifeLine();
 			line1.addSegmentVariation(LifeSegmentVariation.LARGER, pos, lifeEvent.getSpecificColors());
 		} else if (lifeEvent.getType() == LifeEventType.DESTROY || lifeEvent.getType() == LifeEventType.DEACTIVATE) {
 			double delta = 0;
-			if (OptionFlags.STRICT_SELFMESSAGE_POSITION && message != null && message.isSelfMessage()) {
+			if (OptionFlags.STRICT_SELFMESSAGE_POSITION && message != null && message.isSelfMessage())
 				delta += 7;
-			}
+
 			final Participant p = lifeEvent.getParticipant();
 			final LifeLine line = drawableSet.getLivingParticipantBox(p).getLifeLine();
 			double pos2 = y;
-			if (message != null) {
+			if (message != null)
 				pos2 = message.getPosYendLevel() - delta;
-			}
+
 			line.addSegmentVariation(LifeSegmentVariation.SMALLER, pos2, lifeEvent.getSpecificColors());
 		}
 
@@ -534,14 +528,13 @@ class DrawableSetInitializer {
 			if (message == null) {
 				pos2 = y;
 				freeY2 = freeY2.add(comp.getPreferredHeight(stringBounder), range);
-			} else {
+			} else
 				pos2 = message.getPosYendLevel() - delta;
-			}
+
 			final LifeDestroy destroy = new LifeDestroy(pos2, livingParticipantBox.getParticipantBox(), comp);
 			drawableSet.addEvent(lifeEvent, destroy);
-		} else {
+		} else
 			drawableSet.addEvent(lifeEvent, new GraphicalElementLiveEvent(y));
-		}
 
 	}
 
@@ -577,18 +570,17 @@ class DrawableSetInitializer {
 				- pbox1.getPreferredWidth(stringBounder) / 2 - pbox2.getPreferredWidth(stringBounder) / 2;
 
 		final Constraint constraint;
-		if (p1 == p2) {
+		if (p1 == p2)
 			constraint = constraintSet.getConstraintAfter(pbox1);
-		} else {
+		else
 			constraint = constraintSet.getConstraint(pbox1, pbox2);
-		}
+
 		constraint.ensureValue(width);
 
 		inGroupableStack.addElement(graphicalReference);
 		inGroupableStack.addElement(p1);
-		if (p1 != p2) {
+		if (p1 != p2)
 			inGroupableStack.addElement(p2);
-		}
 
 		freeY2 = freeY2.add(graphicalReference.getPreferredHeight(stringBounder), range);
 		drawableSet.addEvent(reference, graphicalReference);

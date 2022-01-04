@@ -41,18 +41,18 @@ import java.util.List;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.real.RealUtils;
-import net.sourceforge.plantuml.sequencediagram.Englober;
+import net.sourceforge.plantuml.sequencediagram.DollLeaf;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.ParticipantEnglober;
 import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
-public class Englobers {
+public class Dolls {
 
-	private final List<Englober> englobers = new ArrayList<>();
+	private final List<DollLeaf> dolls = new ArrayList<>();
 
-	public Englobers(TileArguments tileArguments) {
-		Englober pending = null;
+	public Dolls(TileArguments tileArguments) {
+		DollLeaf pending = null;
 		for (Participant p : tileArguments.getLivingSpaces().participants()) {
 			final ParticipantEnglober englober = tileArguments.getLivingSpaces().get(p).getEnglober();
 			if (englober == null) {
@@ -64,64 +64,64 @@ public class Englobers {
 				pending.add(p);
 				continue;
 			}
-			pending = Englober.createTeoz(englober, p, tileArguments,
+			pending = DollLeaf.createTeoz(englober, p, tileArguments,
 					tileArguments.getSkinParam().getCurrentStyleBuilder());
-			englobers.add(pending);
+			dolls.add(pending);
 		}
 	}
 
 	public int size() {
-		return englobers.size();
+		return dolls.size();
 	}
 
 	public double getOffsetForEnglobers(StringBounder stringBounder) {
 		double result = 0;
-		for (Englober englober : englobers) {
-			final double height = englober.getPreferredHeight();
-			if (height > result) {
+		for (DollLeaf doll : dolls) {
+			final double height = doll.getPreferredHeight();
+			if (height > result)
 				result = height;
-			}
+
 		}
 		return result;
 	}
 
 	public void addConstraints(StringBounder stringBounder) {
-		Englober last = null;
-		for (Englober current : englobers) {
-			current.addInternalConstraints();
-			if (last != null) {
-				last.addConstraintAfter(current);
-			}
-			last = current;
+		DollLeaf last = null;
+		for (DollLeaf doll : dolls) {
+			doll.addInternalConstraints();
+			if (last != null)
+				last.addConstraintAfter(doll);
+
+			last = doll;
 		}
 	}
 
 	public void drawEnglobers(UGraphic ug, double height, Context2D context) {
-		for (Englober englober : englobers) {
-			englober.drawEnglober(ug, height, context);
-		}
+		for (DollLeaf doll : dolls)
+			doll.drawMe(ug, height, context);
+
 	}
 
 	public Real getMinX(StringBounder stringBounder) {
-		if (size() == 0) {
+		if (size() == 0)
 			throw new IllegalStateException();
-		}
-		final List<Real> all = new ArrayList<>();
-		for (Englober englober : englobers) {
-			all.add(englober.getMinX(stringBounder));
-		}
-		return RealUtils.min(all);
+
+		final List<Real> result = new ArrayList<>();
+		for (DollLeaf doll : dolls)
+			result.add(doll.getMinX(stringBounder));
+
+		return RealUtils.min(result);
 	}
 
 	public Real getMaxX(StringBounder stringBounder) {
-		if (size() == 0) {
+		if (size() == 0)
 			throw new IllegalStateException();
-		}
-		final List<Real> all = new ArrayList<>();
-		for (Englober englober : englobers) {
-			all.add(englober.getMaxX(stringBounder));
-		}
-		return RealUtils.max(all);
+
+		final List<Real> result = new ArrayList<>();
+		for (DollLeaf doll : dolls)
+			result.add(doll.getMaxX(stringBounder));
+
+		return RealUtils.max(result);
 	}
 
 }

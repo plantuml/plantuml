@@ -99,7 +99,7 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 		this.legend = getLegend();
 		this.caption = annotatedWorker.getCaption();
 
-		this.heightEnglober1 = englobers.getOffsetForEnglobers(stringBounder);
+		this.heightEnglober1 = dolls.getOffsetForEnglobers(stringBounder);
 		this.heightEnglober2 = heightEnglober1 == 0 ? 0 : 10;
 
 		final double totalWidth = MathUtils.max(body.calculateDimension(stringBounder).getWidth(),
@@ -115,7 +115,7 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 		this.dimTotal = new Dimension2DDouble(totalWidth, totalHeight);
 	}
 
-	private Englobers englobers;
+	private Dolls dolls;
 	private final StringBounder stringBounder;
 
 	private final TextBlock footer;
@@ -193,11 +193,11 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 		final TileArguments tileArguments = new TileArguments(stringBounder, livingSpaces, skin, diagram.getSkinParam(),
 				origin);
 
-		this.englobers = new Englobers(tileArguments);
-		final PlayingSpace mainTile = new PlayingSpace(diagram, englobers, tileArguments);
+		this.dolls = new Dolls(tileArguments);
+		final PlayingSpace mainTile = new PlayingSpace(diagram, dolls, tileArguments);
 		this.livingSpaces.addConstraints(stringBounder);
 		mainTile.addConstraints();
-		this.englobers.addConstraints(stringBounder);
+		this.dolls.addConstraints(stringBounder);
 		origin.compileNow();
 		tileArguments.setBordered(mainTile);
 		return mainTile;
@@ -262,7 +262,7 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 		final UTranslate min1translate = UTranslate.dx(-min1.getCurrentValue());
 		ug = ug.apply(min1translate);
 
-		englobers.drawEnglobers(goDownAndCenterForEnglobers(ug),
+		dolls.drawEnglobers(goDownAndCenterForEnglobers(ug),
 				body.calculateDimension(stringBounder).getHeight() + heightEnglober1 + heightEnglober2 / 2,
 				new SimpleContext2D(true));
 

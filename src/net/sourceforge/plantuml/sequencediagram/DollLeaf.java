@@ -53,60 +53,38 @@ import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.skin.rose.Rose;
-import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignature;
-import net.sourceforge.plantuml.style.WithStyle;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
 
-public class Englober implements WithStyle {
+public class DollLeaf extends DollAbstract {
 
-	final private ParticipantEnglober participantEnglober;
 	final private List<Participant> participants = new ArrayList<>();
 	final private TileArguments tileArguments;
-	final private StyleBuilder styleBuilder;
 	final private Real core1;
 	final private Real core2;
-	final private boolean isTeoz;
 	private double marginX = 0;
 
-	public StyleSignature getDefaultStyleDefinition() {
-		return ComponentType.ENGLOBER.getDefaultStyleDefinition();
-	}
-
-	public Style[] getUsedStyles() {
-		Style tmp = getDefaultStyleDefinition().with(participantEnglober.getStereotype()).getMergedStyle(styleBuilder);
-		final HColor backColor = participantEnglober.getBoxColor();
-		if (tmp != null) {
-			tmp = tmp.eventuallyOverride(PName.BackGroundColor, backColor);
-		}
-		return new Style[] { tmp };
-	}
-
-	public static Englober createPuma(ParticipantEnglober englober, Participant first, ISkinParam skinParam, Rose skin,
+	public static DollLeaf createPuma(ParticipantEnglober englober, Participant first, ISkinParam skinParam, Rose skin,
 			StringBounder stringBounder, StyleBuilder styleBuilder) {
-		return new Englober(englober, first, convertFunctionToBeRemoved(skinParam, skin, stringBounder), false,
-				styleBuilder);
+		return new DollLeaf(englober, styleBuilder, false, first,
+				convertFunctionToBeRemoved(skinParam, skin, stringBounder));
 	}
 
-	public static Englober createTeoz(ParticipantEnglober participantEnglober, Participant first,
-			TileArguments tileArguments, StyleBuilder styleBuilder) {
-		return new Englober(participantEnglober, first, tileArguments, true, styleBuilder);
+	public static DollLeaf createTeoz(ParticipantEnglober englober, Participant first, TileArguments tileArguments,
+			StyleBuilder styleBuilder) {
+		return new DollLeaf(englober, styleBuilder, true, first, tileArguments);
 	}
 
-	private static TileArguments convertFunctionToBeRemoved(ISkinParam skinParam, Rose skin, StringBounder stringBounder) {
+	private static TileArguments convertFunctionToBeRemoved(ISkinParam skinParam, Rose skin,
+			StringBounder stringBounder) {
 		final TileArguments result = new TileArguments(stringBounder, null, skin, skinParam, null);
 		return result;
 	}
 
-	private Englober(ParticipantEnglober participantEnglober, Participant first, TileArguments tileArguments,
-			boolean isTeoz, StyleBuilder styleBuilder) {
-		this.styleBuilder = styleBuilder;
-		this.isTeoz = isTeoz;
-		this.participantEnglober = participantEnglober;
+	private DollLeaf(ParticipantEnglober englober, StyleBuilder styleBuilder, boolean isTeoz, Participant first,
+			TileArguments tileArguments) {
+		super(englober, styleBuilder, isTeoz);
 		this.participants.add(first);
 		this.tileArguments = Objects.requireNonNull(tileArguments);
 		final double preferredWidth = getPreferredWidth();
@@ -166,14 +144,10 @@ public class Englober implements WithStyle {
 
 	private Component getComponent() {
 		final ParticipantEnglober englober = getParticipantEnglober();
-		final ISkinParam s = englober.getBoxColor() == null ? tileArguments.getSkinParam() : new SkinParamBackcolored(
-				tileArguments.getSkinParam(), englober.getBoxColor());
+		final ISkinParam s = englober.getBoxColor() == null ? tileArguments.getSkinParam()
+				: new SkinParamBackcolored(tileArguments.getSkinParam(), englober.getBoxColor());
 		return tileArguments.getSkin().createComponent(getUsedStyles(), ComponentType.ENGLOBER, null, s,
 				englober.getTitle());
-	}
-
-	public final ParticipantEnglober getParticipantEnglober() {
-		return participantEnglober;
 	}
 
 	public boolean contains(Participant p) {
@@ -189,7 +163,7 @@ public class Englober implements WithStyle {
 
 	@Override
 	public String toString() {
-		return "ParticipantEngloberContexted:" + participantEnglober.getTitle().toString() + " " + participants;
+		return "ParticipantEngloberContexted:" + englober.getTitle().toString() + " " + participants;
 	}
 
 	private double getPreferredWidth() {
@@ -209,7 +183,7 @@ public class Englober implements WithStyle {
 		return comp.getPreferredHeight(tileArguments.getStringBounder());
 	}
 
-	public void drawEnglober(UGraphic ug, double height, Context2D context) {
+	public void drawMe(UGraphic ug, double height, Context2D context) {
 		final double x1 = getX1().getCurrentValue() - 4;
 		final double x2 = getX2().getCurrentValue() + 4;
 
@@ -246,7 +220,7 @@ public class Englober implements WithStyle {
 		return tileArguments.getSkinParam().getPadding(PaddingParam.BOX);
 	}
 
-	public void addConstraintAfter(Englober current) {
+	public void addConstraintAfter(DollLeaf current) {
 		current.getX1().ensureBiggerThan(getX2().addFixed(10 + 2 * padding()));
 	}
 

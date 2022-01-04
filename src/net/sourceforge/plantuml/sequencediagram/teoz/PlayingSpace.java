@@ -60,7 +60,7 @@ public class PlayingSpace implements Bordered {
 	private final List<LinkAnchor> linkAnchors;
 	private final ISkinParam skinParam;
 
-	public PlayingSpace(SequenceDiagram diagram, Englobers englobers, TileArguments tileArguments) {
+	public PlayingSpace(SequenceDiagram diagram, Dolls dolls, TileArguments tileArguments) {
 
 		this.livingSpaces = tileArguments.getLivingSpaces();
 		this.linkAnchors = diagram.getLinkAnchors();
@@ -72,9 +72,9 @@ public class PlayingSpace implements Bordered {
 		min2.add(tileArguments.getOrigin());
 		max2.add(tileArguments.getOrigin());
 
-		if (englobers.size() > 0) {
-			min2.add(englobers.getMinX(tileArguments.getStringBounder()));
-			max2.add(englobers.getMaxX(tileArguments.getStringBounder()));
+		if (dolls.size() > 0) {
+			min2.add(dolls.getMinX(tileArguments.getStringBounder()));
+			max2.add(dolls.getMaxX(tileArguments.getStringBounder()));
 		}
 
 		tiles.addAll(TileBuilder.buildSeveral(diagram.events().iterator(), tileArguments, null));

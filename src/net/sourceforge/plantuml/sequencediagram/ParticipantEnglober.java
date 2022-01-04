@@ -41,11 +41,21 @@ import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class ParticipantEnglober {
 
+	final private ParticipantEnglober parent;
 	final private Display title;
 	final private HColor boxColor;
 	final private Stereotype stereotype;
 
-	public ParticipantEnglober(Display title, HColor boxColor, Stereotype stereotype) {
+	public static ParticipantEnglober build(Display title, HColor boxColor, Stereotype stereotype) {
+		return new ParticipantEnglober(null, title, boxColor, stereotype);
+	}
+
+	public ParticipantEnglober newChild(Display title, HColor boxColor, Stereotype stereotype) {
+		return new ParticipantEnglober(this, title, boxColor, stereotype);
+	}
+
+	private ParticipantEnglober(ParticipantEnglober parent, Display title, HColor boxColor, Stereotype stereotype) {
+		this.parent = parent;
 		this.title = title;
 		this.boxColor = boxColor;
 		this.stereotype = stereotype;
@@ -61,6 +71,10 @@ public class ParticipantEnglober {
 
 	public final Stereotype getStereotype() {
 		return stereotype;
+	}
+
+	public final ParticipantEnglober getParent() {
+		return parent;
 	}
 
 }

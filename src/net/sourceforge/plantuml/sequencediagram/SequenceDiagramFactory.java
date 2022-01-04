@@ -74,6 +74,7 @@ import net.sourceforge.plantuml.sequencediagram.command.CommandParticipantA;
 import net.sourceforge.plantuml.sequencediagram.command.CommandParticipantA2;
 import net.sourceforge.plantuml.sequencediagram.command.CommandParticipantA3;
 import net.sourceforge.plantuml.sequencediagram.command.CommandParticipantA4;
+import net.sourceforge.plantuml.sequencediagram.command.CommandParticipantMultilines;
 import net.sourceforge.plantuml.sequencediagram.command.CommandReferenceMultilinesOverSeveral;
 import net.sourceforge.plantuml.sequencediagram.command.CommandReferenceOverSeveral;
 import net.sourceforge.plantuml.sequencediagram.command.CommandReturn;
@@ -101,6 +102,7 @@ public class SequenceDiagramFactory extends PSystemCommandFactory {
 		cmds.add(new CommandParticipantA2());
 		cmds.add(new CommandParticipantA3());
 		cmds.add(new CommandParticipantA4());
+		cmds.add(new CommandParticipantMultilines());
 		cmds.add(new CommandArrow());
 		// addCommand(new CommandArrowCrossX());
 		cmds.add(new CommandExoArrowLeft());

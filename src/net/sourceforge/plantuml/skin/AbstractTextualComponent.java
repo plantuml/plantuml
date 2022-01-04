@@ -117,7 +117,7 @@ public abstract class AbstractTextualComponent extends AbstractComponent {
 					maxMessageSize);
 		} else {
 			textBlock = this.display.create0(fc, horizontalAlignment, spriteContainer, maxMessageSize, CreoleMode.FULL,
-					fontForStereotype, htmlColorForStereotype);
+					fontForStereotype, htmlColorForStereotype, marginX1, marginX2);
 		}
 		this.alignment = horizontalAlignment;
 	}
