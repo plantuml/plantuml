@@ -1,6 +1,7 @@
 PlantUML
 ========
 
+[![GitHub Sponsors](https://img.shields.io/github/sponsors/plantuml?logo=github)](https://github.com/sponsors/plantuml/)
 [![GitHub Org's stars](https://img.shields.io/github/stars/plantuml)](https://github.com/plantuml/plantuml/stargazers/)
 [![GitHub watchers](https://img.shields.io/github/watchers/plantuml/plantuml)](https://github.com/plantuml/plantuml/watchers/)
 [![GitHub contributors](https://img.shields.io/github/contributors-anon/plantuml/plantuml?color=blue)](https://github.com/plantuml/plantuml/graphs/contributors)
