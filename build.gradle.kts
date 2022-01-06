@@ -22,7 +22,7 @@ java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 java {
     withSourcesJar()
-//    withJavadocJar()
+    withJavadocJar()
 }
 
 sourceSets {
@@ -74,4 +74,12 @@ publishing {
 
 tasks.withType<JavaCompile> {
     options.encoding = "UTF-8"
+}
+
+tasks.withType<Javadoc> {
+    options {
+        this as StandardJavadocDocletOptions
+        addStringOption("Xdoclint:none", "-quiet")
+        addStringOption("Xmaxwarns", "1")
+    }
 }
