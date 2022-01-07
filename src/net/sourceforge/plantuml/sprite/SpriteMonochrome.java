@@ -60,7 +60,7 @@ public class SpriteMonochrome implements Sprite {
 	private final int width;
 	private final int height;
 	private final int grayLevel;
-	private final int grey[][];
+	private final int gray[][];
 
 	public boolean isSameKind(SpriteMonochrome other) {
 		if (this.width != other.width) {
@@ -81,7 +81,7 @@ public class SpriteMonochrome implements Sprite {
 		}
 		for (int i = 0; i < width; i++) {
 			for (int j = 0; j < height; j++) {
-				if (this.grey[j][i] != other.grey[j][i]) {
+				if (this.gray[j][i] != other.gray[j][i]) {
 					return false;
 				}
 			}
@@ -102,7 +102,7 @@ public class SpriteMonochrome implements Sprite {
 		final SpriteMonochrome result = new SpriteMonochrome(width, height, grayLevel);
 		for (int i = 0; i < width; i++) {
 			for (int j = 0; j < height; j++) {
-				result.grey[j][i] = this.grey[j][i] ^ other.grey[j][i];
+				result.gray[j][i] = this.gray[j][i] ^ other.gray[j][i];
 			}
 		}
 		return result;
@@ -115,21 +115,21 @@ public class SpriteMonochrome implements Sprite {
 		this.width = width;
 		this.height = height;
 		this.grayLevel = grayLevel;
-		this.grey = new int[height][width];
+		this.gray = new int[height][width];
 	}
 
 	public SpriteMonochrome xSymetric() {
 		final SpriteMonochrome result = new SpriteMonochrome(width, height, grayLevel);
 		for (int i = 0; i < width; i++) {
 			for (int j = 0; j < height; j++) {
-				result.setGrey(i, j, this.getGrey(i, j));
+				result.setGray(i, j, this.getGray(i, j));
 			}
 		}
 		for (int j = 0; j < height; j++) {
 			for (int i = 0; i < width / 2; i++) {
 				final int i2 = width - 1 - i;
-				final int level = result.getGrey(i, j) ^ result.getGrey(i2, j);
-				result.setGrey(i2, j, level);
+				final int level = result.getGray(i, j) ^ result.getGray(i2, j);
+				result.setGray(i2, j, level);
 			}
 		}
 		return result;
@@ -139,20 +139,20 @@ public class SpriteMonochrome implements Sprite {
 		final SpriteMonochrome result = new SpriteMonochrome(width, height, grayLevel);
 		for (int i = 0; i < width; i++) {
 			for (int j = 0; j < height; j++) {
-				result.setGrey(i, j, this.getGrey(i, j));
+				result.setGray(i, j, this.getGray(i, j));
 			}
 		}
 		for (int i = 0; i < width; i++) {
 			for (int j = 0; j < height / 2; j++) {
 				final int j2 = height - 1 - j;
-				final int level = result.getGrey(i, j) ^ result.getGrey(i, j2);
-				result.setGrey(i, j2, level);
+				final int level = result.getGray(i, j) ^ result.getGray(i, j2);
+				result.setGray(i, j2, level);
 			}
 		}
 		return result;
 	}
 
-	public void setGrey(int x, int y, int level) {
+	public void setGray(int x, int y, int level) {
 		if (x < 0 || x >= width) {
 			return;
 		}
@@ -162,17 +162,17 @@ public class SpriteMonochrome implements Sprite {
 		if (level < 0 || level >= grayLevel) {
 			throw new IllegalArgumentException("level=" + level + " grayLevel=" + grayLevel);
 		}
-		grey[y][x] = level;
+		gray[y][x] = level;
 	}
 
-	public int getGrey(int x, int y) {
+	public int getGray(int x, int y) {
 		if (x >= width) {
 			throw new IllegalArgumentException("x=" + x + " width=" + width);
 		}
 		if (y >= height) {
 			throw new IllegalArgumentException("y=" + y + " height=" + height);
 		}
-		return grey[y][x];
+		return gray[y][x];
 	}
 
 	public int getHeight() {
@@ -198,7 +198,7 @@ public class SpriteMonochrome implements Sprite {
 		final HColorGradient gradient = new HColorGradient(backcolor, color, '\0');
 		for (int col = 0; col < width; col++) {
 			for (int line = 0; line < height; line++) {
-				final double coef = 1.0 * grey[line][col] / (grayLevel - 1);
+				final double coef = 1.0 * gray[line][col] / (grayLevel - 1);
 				final Color c = gradient.getColor(colorMapper, coef);
 				im.setRGB(col, line, c.getRGB());
 			}
@@ -213,7 +213,7 @@ public class SpriteMonochrome implements Sprite {
 				final HColor backColorLocal = new HColorSimple(backcolor.getColor(colorMapper, 1.0 * line / height),
 						false);
 				final HColorGradient gradient = new HColorGradient(backColorLocal, color, '\0');
-				final double coef = 1.0 * grey[line][col] / (grayLevel - 1);
+				final double coef = 1.0 * gray[line][col] / (grayLevel - 1);
 				final Color c = gradient.getColor(colorMapper, coef);
 				im.setRGB(col, line, c.getRGB());
 			}
@@ -238,8 +238,8 @@ public class SpriteMonochrome implements Sprite {
 	public void exportSprite1(OutputStream fos) throws IOException {
 		for (int y = 0; y < this.getHeight(); y += 2) {
 			for (int x = 0; x < this.getWidth(); x += 1) {
-				int b1 = this.getGrey(x, y);
-				int b2 = y + 1 < this.getHeight() ? this.getGrey(x, y + 1) : b1;
+				int b1 = this.getGray(x, y);
+				int b2 = y + 1 < this.getHeight() ? this.getGray(x, y + 1) : b1;
 				fos.write(b1 * 16 + b2);
 			}
 		}

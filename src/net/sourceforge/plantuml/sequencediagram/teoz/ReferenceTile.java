@@ -75,7 +75,7 @@ public class ReferenceTile extends AbstractTile implements Tile {
 			final LivingSpace livingSpace = tileArguments.getLivingSpace(p);
 			final Real pos = livingSpace.getPosC(stringBounder);
 			if (first == null || pos.getCurrentValue() < first.getCurrentValue()) {
-				this.first = livingSpace.getPosB();
+				this.first = livingSpace.getPosB(stringBounder);
 			}
 			if (last == null || pos.getCurrentValue() > last.getCurrentValue()) {
 				this.last = livingSpace.getPosD(stringBounder);

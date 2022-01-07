@@ -37,46 +37,44 @@ package net.sourceforge.plantuml.sequencediagram;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.PaddingParam;
+import net.sourceforge.plantuml.SkinParamBackcolored;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.real.Real;
-import net.sourceforge.plantuml.real.RealUtils;
 import net.sourceforge.plantuml.sequencediagram.teoz.LivingSpace;
 import net.sourceforge.plantuml.sequencediagram.teoz.TileArguments;
 import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.skin.Component;
+import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.WithStyle;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
-public class Doll extends DollAbstract {
+public class Doll implements WithStyle {
 
 	final private List<Participant> participants = new ArrayList<>();
-	private final List<Doll> leafs = new ArrayList<>();
-
-	final private Real core1;
-	final private Real core2;
-	private double marginX = 0;
-
-	public static Doll createGroup(ParticipantEnglober englober, TileArguments tileArguments, StyleBuilder styleBuilder,
-			boolean isTeoz) {
-		return new Doll(englober, tileArguments, styleBuilder, isTeoz);
-	}
+	final private ParticipantEnglober englober;
+	final private StyleBuilder styleBuilder;
+	final private TileArguments tileArguments;
 
 	public static Doll createPuma(ParticipantEnglober englober, Participant first, ISkinParam skinParam, Rose skin,
 			StringBounder stringBounder, StyleBuilder styleBuilder) {
-		return new Doll(englober, convertFunctionToBeRemoved(skinParam, skin, stringBounder), styleBuilder, false,
-				first);
+		return new Doll(englober, convertFunctionToBeRemoved(skinParam, skin, stringBounder), styleBuilder, first);
 	}
 
-	public static Doll createTeoz(ParticipantEnglober englober, Participant first, TileArguments tileArguments,
-			StyleBuilder styleBuilder) {
-		final Doll result = new Doll(englober, tileArguments, styleBuilder, true, first);
-		return result;
+	public static Doll createTeoz(ParticipantEnglober englober, TileArguments tileArguments) {
+		return new Doll(englober, tileArguments, tileArguments.getSkinParam().getCurrentStyleBuilder(), null);
 	}
 
 	private static TileArguments convertFunctionToBeRemoved(ISkinParam skinParam, Rose skin,
@@ -84,24 +82,47 @@ public class Doll extends DollAbstract {
 		return new TileArguments(stringBounder, null, skin, skinParam, null);
 	}
 
-	private Doll(ParticipantEnglober englober, TileArguments tileArguments, StyleBuilder styleBuilder, boolean isTeoz,
+	private Doll(ParticipantEnglober englober, TileArguments tileArguments, StyleBuilder styleBuilder,
 			Participant first) {
-		super(englober, tileArguments, styleBuilder, isTeoz);
-		this.participants.add(first);
-		final double preferredWidth = getPreferredWidth();
-		if (tileArguments.getLivingSpaces() == null) {
-			this.core1 = null;
-			this.core2 = null;
-		} else {
-			this.core1 = getMiddle().addFixed(-preferredWidth / 2);
-			this.core2 = getMiddle().addFixed(preferredWidth / 2);
+		this.englober = Objects.requireNonNull(englober);
+		this.styleBuilder = styleBuilder;
+		this.tileArguments = Objects.requireNonNull(tileArguments);
+
+		if (first != null) {
+			this.participants.add(first);
 		}
+
 	}
 
-	private Doll(ParticipantEnglober englober, TileArguments tileArguments, StyleBuilder styleBuilder, boolean isTeoz) {
-		super(englober, tileArguments, styleBuilder, isTeoz);
-		this.core1 = null;
-		this.core2 = null;
+	final public StyleSignature getDefaultStyleDefinition() {
+		return ComponentType.ENGLOBER.getDefaultStyleDefinition();
+	}
+
+	final public Style[] getUsedStyles() {
+		Style tmp = getDefaultStyleDefinition().with(englober.getStereotype()).getMergedStyle(styleBuilder);
+		final HColor backColor = englober.getBoxColor();
+		if (tmp != null)
+			tmp = tmp.eventuallyOverride(PName.BackGroundColor, backColor);
+
+		return new Style[] { tmp };
+	}
+
+	final public ParticipantEnglober getParticipantEnglober() {
+		return englober;
+	}
+
+	private Component getComponent() {
+		final ParticipantEnglober englober = getParticipantEnglober();
+		final ISkinParam s = englober.getBoxColor() == null ? tileArguments.getSkinParam()
+				: new SkinParamBackcolored(tileArguments.getSkinParam(), englober.getBoxColor());
+		return tileArguments.getSkin().createComponent(getUsedStyles(), ComponentType.ENGLOBER, null, s,
+				englober.getTitle());
+	}
+
+	public double getTitlePreferredHeight() {
+		final Component comp = tileArguments.getSkin().createComponent(getUsedStyles(), ComponentType.ENGLOBER, null,
+				tileArguments.getSkinParam(), getParticipantEnglober().getTitle());
+		return comp.getPreferredHeight(tileArguments.getStringBounder());
 	}
 
 	public final Participant getFirst2TOBEPRIVATE() {
@@ -112,33 +133,28 @@ public class Doll extends DollAbstract {
 		return participants.get(participants.size() - 1);
 	}
 
-	private Real getMiddle() {
-		return RealUtils.middle(getPosB(), getPosD());
+	private Real getPosA(StringBounder stringBounder) {
+		return getFirstLivingSpace().getPosA(stringBounder);
 	}
 
-	private Real getPosB() {
-		return getFirstLivingSpace().getPosB();
+	private Real getPosB(StringBounder stringBounder) {
+		return getFirstLivingSpace().getPosB(stringBounder);
 	}
 
-	private Real getPosD() {
-		return getLastLivingSpace().getPosD(tileArguments.getStringBounder());
+	private Real getPosD(StringBounder stringBounder) {
+		return getLastLivingSpace().getPosD(stringBounder);
 	}
 
-	private Real getPosAA() {
+	private Real getPosE(StringBounder stringBounder) {
+		return getLastLivingSpace().getPosE(stringBounder);
+	}
+
+	private Real getPosAA(StringBounder stringBounder) {
 		final LivingSpace previous = tileArguments.getLivingSpaces().previous(getFirstLivingSpace());
 		if (previous == null) {
 			return tileArguments.getOrigin();
 		}
-		return previous.getPosD(tileArguments.getStringBounder());
-	}
-
-	private Real getPosZZ() {
-		final LivingSpace next = tileArguments.getLivingSpaces().next(getLastLivingSpace());
-		if (next == null) {
-			// return tileArguments.getMaxAbsolute();
-			return null;
-		}
-		return next.getPosB();
+		return previous.getPosD(stringBounder);
 	}
 
 	private LivingSpace getFirstLivingSpace() {
@@ -154,58 +170,22 @@ public class Doll extends DollAbstract {
 	}
 
 	public void addParticipant(Participant p) {
-		if (participants.contains(p))
-			throw new IllegalArgumentException();
-
-		participants.add(p);
-	}
-
-	public void addDoll(Doll doll) {
-		this.leafs.add(doll);
+		participants.add(Objects.requireNonNull(p));
 	}
 
 	@Override
 	public String toString() {
-		return "DollLeaf:" + englober.getTitle().toString() + " " + participants;
-	}
-
-	private double getPreferredWidth() {
-		if (isTeoz) {
-			return 10;
-		}
-		return getTitleWidth();
+		return "Doll:" + englober.getTitle().toString() + " " + participants;
 	}
 
 	private double getTitleWidth() {
 		return getComponent().getPreferredWidth(tileArguments.getStringBounder());
 	}
 
-	public void drawGroup(UGraphic ug, double height, Context2D context) {
-		if (leafs.size() == 0)
-			throw new IllegalArgumentException();
-		final double x1 = getGroupX1();
-		final double x2 = getGroupX2();
-		final Dimension2DDouble dim = new Dimension2DDouble(x2 - x1, height);
-		getComponent().drawU(ug.apply(new UTranslate(x1, 1)), new Area(dim), context);
-	}
-
-	private double getGroupX1() {
-		double result = leafs.get(0).getX1().getCurrentValue() - 6;
-		if (participants.size() > 0)
-			result = Math.min(result, getX1().getCurrentValue() - 6);
-		return result;
-	}
-
-	private double getGroupX2() {
-		double result = leafs.get(leafs.size() - 1).getX2().getCurrentValue() + 6;
-		if (participants.size() > 0)
-			result = Math.max(result, getX2().getCurrentValue() + 6);
-		return result;
-	}
-
 	public void drawMe(UGraphic ug, double height, Context2D context, Doll group) {
-		final double x1 = getX1().getCurrentValue() - 4;
-		final double x2 = getX2().getCurrentValue() + 4;
+		final StringBounder stringBounder = ug.getStringBounder();
+		final double x1 = getPosA(stringBounder).getCurrentValue() - 4;
+		final double x2 = getPosE(stringBounder).getCurrentValue() + 4;
 
 		if (group != null) {
 			final double titlePreferredHeight = group.getTitlePreferredHeight();
@@ -217,49 +197,38 @@ public class Doll extends DollAbstract {
 		getComponent().drawU(ug.apply(new UTranslate(x1, 1)), new Area(dim), context);
 	}
 
-	private Real getX1() {
-		if (core1 == null)
-			return getPosB().addFixed(-marginX);
-		return RealUtils.min(getPosB(), core1).addFixed(-marginX);
-	}
-
-	private Real getX2() {
-		if (core2 == null)
-			return getPosD().addFixed(marginX);
-		return RealUtils.max(getPosD(), core2).addFixed(marginX);
-	}
-
-	public void addInternalConstraints() {
-		assert isTeoz;
+	public void addInternalConstraints(StringBounder stringBounder) {
 		final double titleWidth = getTitleWidth();
-		final double x1 = getX1().getCurrentValue();
-		final double x2 = getX2().getCurrentValue();
+		final double x1 = getPosB(stringBounder).getCurrentValue();
+		final double x2 = getPosD(stringBounder).getCurrentValue();
 		final double actualWidth = x2 - x1;
-		if (titleWidth > actualWidth + 20)
-			this.marginX = (titleWidth - actualWidth - 20) / 2;
+		final double marginX = (titleWidth + 10 - actualWidth) / 2;
+		if (marginX > 0) {
+			getFirstLivingSpace().ensureMarginBefore(marginX);
+			getLastLivingSpace().ensureMarginAfter(marginX);
+		}
+		getPosA(stringBounder).ensureBiggerThan(getPosAA(stringBounder).addFixed(10 + padding()));
 
-		getX1().ensureBiggerThan(getPosAA().addFixed(10 + padding()));
-		final Real posZZ = getPosZZ();
-		final Real limit = getX2().addFixed(10 + padding());
-		if (posZZ != null)
-			posZZ.ensureBiggerThan(limit);
+	}
 
+	public void addConstraintAfter(StringBounder stringBounder) {
+		final LivingSpace next = tileArguments.getLivingSpaces().next(getLastLivingSpace());
+		if (next == null)
+			return;
+
+		next.getPosA(stringBounder).ensureBiggerThan(getPosE(stringBounder).addFixed(20 + 2 * padding()));
 	}
 
 	private double padding() {
 		return tileArguments.getSkinParam().getPadding(PaddingParam.BOX);
 	}
 
-	public void addConstraintAfter(Doll current) {
-		current.getX1().ensureBiggerThan(getX2().addFixed(10 + 2 * padding()));
-	}
-
 	public Real getMinX(StringBounder stringBounder) {
-		return getX1();
+		return getPosA(stringBounder);
 	}
 
 	public Real getMaxX(StringBounder stringBounder) {
-		return getX2().addFixed(10);
+		return getPosE(stringBounder).addFixed(10);
 	}
 
 }

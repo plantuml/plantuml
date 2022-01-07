@@ -97,7 +97,7 @@ public class ColorUtils {
 		return new Color(red2, green2, blue2);
 	}
 
-	public static Color greyToColor(Color color, int grey) {
+	public static Color grayToColor(double coef, Color color) {
 		final int red = color.getRed();
 		final int green = color.getGreen();
 		final int blue = color.getBlue();
@@ -108,7 +108,7 @@ public class ColorUtils {
 		final double s = hsluv[1];
 		double l = hsluv[2];
 
-		l = l + (100 - l) * (grey / 255.0);
+		l = l + (100 - l) * coef;
 
 		final double rgb[] = HUSLColorConverter.hsluvToRgb(new double[] { h, s, l });
 

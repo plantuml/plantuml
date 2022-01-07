@@ -112,7 +112,7 @@ public class NoteTile extends AbstractTile implements Tile {
 		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
 		final double width = dim.getWidth();
 		if (note.getPosition() == NotePosition.OVER_SEVERAL) {
-			final double x1 = livingSpace1.getPosB().getCurrentValue();
+			final double x1 = livingSpace1.getPosB(stringBounder).getCurrentValue();
 			final double x2 = livingSpace2.getPosD(stringBounder).getCurrentValue();
 			final double w = x2 - x1;
 			if (width < w) {
@@ -157,7 +157,7 @@ public class NoteTile extends AbstractTile implements Tile {
 	public Real getMinX() {
 		final Real result = getX(getStringBounder());
 		if (note.getPosition() == NotePosition.OVER_SEVERAL) {
-			final Real x1 = livingSpace1.getPosB();
+			final Real x1 = livingSpace1.getPosB(getStringBounder());
 			return RealUtils.min(result, x1);
 		}
 		return result;

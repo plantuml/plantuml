@@ -256,9 +256,9 @@ public class SequenceDiagram extends UmlDiagram {
 		if (fileFormat == FileFormat.ATXT || fileFormat == FileFormat.UTXT)
 			return new SequenceDiagramTxtMaker(this, fileFormat);
 
-        if (fileFormat.name().startsWith("XMI"))
+		if (fileFormat.name().startsWith("XMI"))
 			return new SequenceDiagramXmiMaker(this, fileFormat);
-        
+
 		if (modeTeoz())
 			return new SequenceDiagramFileMakerTeoz(this, skin2, fileFormatOption, index);
 

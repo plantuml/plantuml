@@ -153,7 +153,7 @@ public class MinMax {
 		return new Dimension2DDouble(maxX - minX, maxY - minY);
 	}
 
-	public void drawGrey(UGraphic ug) {
+	public void drawGray(UGraphic ug) {
 		draw(ug, HColorUtils.GRAY);
 	}
 

@@ -221,7 +221,7 @@ public class LivingSpace {
 		return posD;
 	}
 
-	public Real getPosB() {
+	public Real getPosB(StringBounder stringBounder) {
 		return posB;
 	}
 
@@ -245,6 +245,29 @@ public class LivingSpace {
 
 	public ParticipantEnglober getEnglober() {
 		return englober;
+	}
+
+	private double marginBefore;
+	private double marginAfter;
+
+	public void ensureMarginBefore(double margin) {
+		if (margin < 0)
+			throw new IllegalArgumentException();
+		this.marginBefore = Math.max(marginBefore, margin);
+	}
+
+	public void ensureMarginAfter(double margin) {
+		if (margin < 0)
+			throw new IllegalArgumentException();
+		this.marginAfter = Math.max(marginAfter, margin);
+	}
+
+	public Real getPosA(StringBounder stringBounder) {
+		return getPosB(stringBounder).addFixed(-marginBefore);
+	}
+
+	public Real getPosE(StringBounder stringBounder) {
+		return getPosD(stringBounder).addFixed(marginAfter);
 	}
 
 }

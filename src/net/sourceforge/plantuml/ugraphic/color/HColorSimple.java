@@ -122,12 +122,14 @@ public class HColorSimple extends HColorAbstract implements HColor {
 		return new HColorSimple(new ColorChangerMonochrome().getChangedColor(color), monochrome);
 	}
 
-	public HColor asMonochrome(HColorSimple colorForMonochrome) {
+	public HColor asMonochrome(HColorSimple colorForMonochrome, double minGray, double maxGray) {
 		final Color tmp = new ColorChangerMonochrome().getChangedColor(color);
-		final int grey = tmp.getGreen();
-		assert grey == tmp.getBlue();
-		assert grey == tmp.getRed();
-		Color result = ColorUtils.greyToColor(colorForMonochrome.color, grey);
+		final int gray = tmp.getGreen();
+		assert gray == tmp.getBlue();
+		assert gray == tmp.getRed();
+
+		final double coef = (gray - minGray) / 256.0;
+		final Color result = ColorUtils.grayToColor(coef, colorForMonochrome.color);
 		return new HColorSimple(result, monochrome);
 	}
 

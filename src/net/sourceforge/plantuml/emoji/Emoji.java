@@ -1,5 +1,6 @@
 package net.sourceforge.plantuml.emoji;
 
+import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,6 +20,7 @@ import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.ColorChangerMonochrome;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorNone;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
@@ -48,6 +50,8 @@ public class Emoji {
 	}
 
 	private final List<String> data = new ArrayList<>();
+	private int minGray = 999;
+	private int maxGray = -1;
 	private final String unicode;
 	private final String shortcut;
 
@@ -116,6 +120,12 @@ public class Emoji {
 			e.printStackTrace();
 		}
 		UGraphicWithScale ugs = new UGraphicWithScale(ug, scale);
+
+		synchronized (this) {
+			if (colorForMonochrome != null && maxGray == -1)
+				computeMinMaxGray();
+		}
+
 		final List<UGraphicWithScale> stack = new ArrayList<>();
 		for (String s : data) {
 			if (s.contains("<path ")) {
@@ -137,6 +147,39 @@ public class Emoji {
 				System.err.println("**?=" + s);
 			}
 		}
+	}
+
+	private void computeMinMaxGray() {
+		for (String s : data) {
+			if (s.contains("<path ")) {
+				final int gray = getGray(justExtractColor(s));
+				minGray = Math.min(minGray, gray);
+				maxGray = Math.max(maxGray, gray);
+			} else if (s.contains("</g>")) {
+				// Nothing
+			} else if (s.contains("<g>")) {
+				// Nothing
+			} else if (s.contains("<g ")) {
+				final int gray = getGray(justExtractColor(s));
+				minGray = Math.min(minGray, gray);
+				maxGray = Math.max(maxGray, gray);
+			} else if (s.contains("<circle ")) {
+				final int gray = getGray(justExtractColor(s));
+				minGray = Math.min(minGray, gray);
+				maxGray = Math.max(maxGray, gray);
+			} else if (s.contains("<ellipse ")) {
+				final int gray = getGray(justExtractColor(s));
+				minGray = Math.min(minGray, gray);
+				maxGray = Math.max(maxGray, gray);
+			} else {
+				// Nothing
+			}
+		}
+	}
+
+	private int getGray(HColor col) {
+		final Color tmp = new ColorChangerMonochrome().getChangedColor(col);
+		return tmp.getGreen();
 	}
 
 	private UGraphicWithScale applyFill(UGraphicWithScale ugs, String s, HColor colorForMonochrome) {
@@ -165,12 +208,31 @@ public class Emoji {
 		return ugs;
 	}
 
+	private HColor justExtractColor(String s) {
+		final String fillString = extractData("fill", s);
+		if (fillString == null)
+			return null;
+
+		if (fillString.equals("none")) {
+			final String strokeString = extractData("stroke", s);
+			if (strokeString == null)
+				return null;
+
+			final HColor stroke = getTrueColor(strokeString, null);
+			return stroke;
+
+		} else {
+			final HColor fill = getTrueColor(fillString, null);
+			return fill;
+		}
+
+	}
+
 	private HColor getTrueColor(String code, HColor colorForMonochrome) {
 		final HColorSimple result = (HColorSimple) HColorSet.instance().getColorOrWhite(code);
 		if (colorForMonochrome == null)
 			return result;
-
-		return result.asMonochrome((HColorSimple) colorForMonochrome);
+		return result.asMonochrome((HColorSimple) colorForMonochrome, this.minGray, this.maxGray);
 	}
 
 	private void drawCircle(UGraphicWithScale ugs, String s, HColor colorForMonochrome) {

@@ -62,8 +62,8 @@ public class LivingSpaces {
 		LivingSpace previous = null;
 		for (LivingSpace current : all.values()) {
 			if (previous != null) {
-				final Real point1 = previous.getPosD(stringBounder);
-				final Real point2 = current.getPosB();
+				final Real point1 = previous.getPosE(stringBounder);
+				final Real point2 = current.getPosA(stringBounder);
 				point2.ensureBiggerThan(point1.addFixed(10));
 			}
 			previous = current;
@@ -108,7 +108,7 @@ public class LivingSpaces {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final double headHeight = getHeadHeight(stringBounder);
 		for (LivingSpace livingSpace : values()) {
-			final double x = livingSpace.getPosB().getCurrentValue();
+			final double x = livingSpace.getPosB(stringBounder).getCurrentValue();
 			double y = 0;
 			if (verticalAlignment == VerticalAlignment.BOTTOM) {
 				final Dimension2D dimHead = livingSpace.getHeadPreferredDimension(stringBounder);

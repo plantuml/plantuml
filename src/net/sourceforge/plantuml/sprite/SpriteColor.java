@@ -56,17 +56,17 @@ public class SpriteColor implements Sprite {
 
 	private final int width;
 	private final int height;
-	private final int grey[][];
+	private final int gray[][];
 	private final int color[][];
 
 	public SpriteColor(int width, int height) {
 		this.width = width;
 		this.height = height;
-		this.grey = new int[height][width];
+		this.gray = new int[height][width];
 		this.color = new int[height][width];
 	}
 
-	public void setGrey(int x, int y, int level) {
+	public void setGray(int x, int y, int level) {
 		if (x < 0 || x >= width) {
 			return;
 		}
@@ -76,7 +76,7 @@ public class SpriteColor implements Sprite {
 		if (level < 0 || level >= 16) {
 			throw new IllegalArgumentException();
 		}
-		grey[y][x] = level;
+		gray[y][x] = level;
 		color[y][x] = -1;
 	}
 
@@ -87,7 +87,7 @@ public class SpriteColor implements Sprite {
 		if (y < 0 || y >= height) {
 			return;
 		}
-		grey[y][x] = -1;
+		gray[y][x] = -1;
 		color[y][x] = col;
 	}
 
@@ -113,7 +113,7 @@ public class SpriteColor implements Sprite {
 			for (int line = 0; line < height; line++) {
 				final int localColor = color[line][col];
 				if (localColor == -1) {
-					final double coef = 1.0 * grey[line][col] / (16 - 1);
+					final double coef = 1.0 * gray[line][col] / (16 - 1);
 					final Color c = gradient.getColor(colorMapper, coef);
 					im.setRGB(col, line, c.getRGB());
 				} else {

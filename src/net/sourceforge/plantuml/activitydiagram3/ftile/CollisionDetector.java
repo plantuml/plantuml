@@ -91,7 +91,7 @@ public class CollisionDetector extends UGraphicNo {
 		public void drawDebug(UGraphic ug) {
 			for (MinMax minmax : rectangles) {
 				if (collision(minmax)) {
-					minmax.drawGrey(ug);
+					minmax.drawGray(ug);
 				}
 			}
 			final HColor color = HColorUtils.BLACK;
