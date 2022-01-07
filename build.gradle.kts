@@ -45,6 +45,17 @@ sourceSets {
       include("**/*.txt")
     }
   }
+  test {
+    java {
+      srcDirs("test/net")
+      srcDirs("test/nonreg")
+    }
+    resources {
+      srcDirs(".")
+      include("skin/**/*.skin")
+      include("themes/**/*.puml")
+    }
+  }
 }
 
 tasks.withType<Jar> {
@@ -82,4 +93,9 @@ tasks.withType<Javadoc> {
     addStringOption("Xdoclint:none", "-quiet")
     addStringOption("Xmaxwarns", "1")
   }
+}
+
+tasks.test {
+  useJUnitPlatform()
+  testLogging.showStandardStreams = true
 }
