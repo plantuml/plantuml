@@ -151,26 +151,13 @@ public class Emoji {
 
 	private void computeMinMaxGray() {
 		for (String s : data) {
-			if (s.contains("<path ")) {
-				final int gray = getGray(justExtractColor(s));
-				minGray = Math.min(minGray, gray);
-				maxGray = Math.max(maxGray, gray);
-			} else if (s.contains("</g>")) {
-				// Nothing
-			} else if (s.contains("<g>")) {
-				// Nothing
-			} else if (s.contains("<g ")) {
-				final int gray = getGray(justExtractColor(s));
-				minGray = Math.min(minGray, gray);
-				maxGray = Math.max(maxGray, gray);
-			} else if (s.contains("<circle ")) {
-				final int gray = getGray(justExtractColor(s));
-				minGray = Math.min(minGray, gray);
-				maxGray = Math.max(maxGray, gray);
-			} else if (s.contains("<ellipse ")) {
-				final int gray = getGray(justExtractColor(s));
-				minGray = Math.min(minGray, gray);
-				maxGray = Math.max(maxGray, gray);
+			if (s.contains("<path ") || s.contains("<g ") || s.contains("<circle ") || s.contains("<ellipse ")) {
+				final HColor color = justExtractColor(s);
+				if (color != null) {
+					final int gray = getGray(color);
+					minGray = Math.min(minGray, gray);
+					maxGray = Math.max(maxGray, gray);
+				}
 			} else {
 				// Nothing
 			}
