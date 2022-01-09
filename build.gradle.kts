@@ -62,7 +62,8 @@ tasks.withType<Jar> {
   manifest {
     attributes["Main-Class"] = "net.sourceforge.plantuml.Run"
     attributes["Implementation-Version"] = archiveVersion
-    attributes["Multi-Release"] = "true"
+    attributes["Build-Jdk-Spec"] = System.getProperty("java.specification.version")
+    from("manifest.txt")
   }
 
   dependsOn(configurations.runtimeClasspath)
