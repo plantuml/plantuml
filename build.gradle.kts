@@ -10,8 +10,8 @@ repositories {
 
 dependencies {
   compileOnly("org.apache.ant:ant:1.10.12")
-  testImplementation("org.assertj:assertj-core:3.21.0")
-  testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
+  testImplementation("org.assertj:assertj-core:3.22.0")
+  testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
   testImplementation("org.scilab.forge:jlatexmath:1.0.7")
 }
 
@@ -43,6 +43,17 @@ sourceSets {
       include("**/*.png")
       include("**/*.svg")
       include("**/*.txt")
+    }
+  }
+  test {
+    java {
+      srcDirs("test/net")
+      srcDirs("test/nonreg")
+    }
+    resources {
+      srcDirs(".")
+      include("skin/**/*.skin")
+      include("themes/**/*.puml")
     }
   }
 }
@@ -82,4 +93,9 @@ tasks.withType<Javadoc> {
     addStringOption("Xdoclint:none", "-quiet")
     addStringOption("Xmaxwarns", "1")
   }
+}
+
+tasks.test {
+  useJUnitPlatform()
+  testLogging.showStandardStreams = true
 }
