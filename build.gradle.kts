@@ -10,8 +10,8 @@ repositories {
 
 dependencies {
   compileOnly("org.apache.ant:ant:1.10.12")
-  testImplementation("org.assertj:assertj-core:3.21.0")
-  testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
+  testImplementation("org.assertj:assertj-core:3.22.0")
+  testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
   testImplementation("org.scilab.forge:jlatexmath:1.0.7")
 }
 
