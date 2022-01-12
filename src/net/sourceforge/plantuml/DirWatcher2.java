@@ -71,14 +71,14 @@ public class DirWatcher2 {
 
 	public Map<File, Future<List<GeneratedImage>>> buildCreatedFiles() throws IOException, InterruptedException {
 		final Map<File, Future<List<GeneratedImage>>> result = new TreeMap<File, Future<List<GeneratedImage>>>();
-		if (dir.listFiles() != null) {
+		if (dir.listFiles() != null)
 			for (final File f : dir.listFiles()) {
-				if (f.isFile() == false) {
+				if (f.isFile() == false)
 					continue;
-				}
-				if (fileToProcess(f.getName()) == false) {
+
+				if (fileToProcess(f.getName()) == false)
 					continue;
-				}
+
 				final FileWatcher watcher = modifieds.get(f);
 
 				if (watcher == null || watcher.hasChanged()) {
@@ -106,7 +106,6 @@ public class DirWatcher2 {
 					result.put(f, value);
 				}
 			}
-		}
 		return Collections.unmodifiableMap(result);
 	}
 

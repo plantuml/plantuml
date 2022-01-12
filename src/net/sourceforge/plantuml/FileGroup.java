@@ -57,13 +57,13 @@ public class FileGroup {
 		this.pattern = pattern;
 		this.excluded = excluded;
 		this.option = option;
-		if (pattern.indexOf("*") == -1 && pattern.indexOf("?") == -1) {
+		if (pattern.indexOf("*") == -1 && pattern.indexOf("?") == -1)
 			initNoStar();
-		} else if (pattern.indexOf("**") != -1) {
+		else if (pattern.indexOf("**") != -1)
 			recurse();
-		} else {
+		else
 			initWithSimpleStar();
-		}
+
 		Collections.sort(result);
 
 	}
@@ -71,54 +71,53 @@ public class FileGroup {
 	private void recurse() {
 		final Matcher2 m = predirPath.matcher(pattern);
 		final boolean ok = m.find();
-		if (ok == false) {
+		if (ok == false)
 			throw new IllegalArgumentException();
-		}
+
 		final File parent;
-		if (m.group(1) == null) {
+		if (m.group(1) == null)
 			parent = new File(".");
-		} else {
+		else
 			parent = new File(m.group(1));
-		}
+
 		initWithDoubleStar(parent);
 	}
 
 	private void initNoStar() {
 		final File f = new File(pattern);
-		if (f.isDirectory()) {
+		if (f.isDirectory())
 			addSimpleDirectory(f);
-		} else if (f.isFile()) {
+		else if (f.isFile())
 			addResultFile(f);
-		}
+
 	}
 
 	private void addResultFile(final File f) {
 		final String path = getNormalizedPath(f);
-		for (String x : excluded) {
-			if (path.matches(toRegexp(x))) {
+		for (String x : excluded)
+			if (path.matches(toRegexp(x)))
 				return;
-			}
-		}
+
 		result.add(f);
 	}
 
 	private void addSimpleDirectory(File dir) {
-		if (OptionFlags.getInstance().isWord()) {
+		if (OptionFlags.getInstance().isWord())
 			addSimpleDirectory(dir, "(?i)^.*_extr\\d+\\.txt$");
-		} else {
+		else
 			addSimpleDirectory(dir, option.getPattern());
-		}
+
 	}
 
 	private void addSimpleDirectory(File dir, String pattern) {
-		if (dir.isDirectory() == false) {
+		if (dir.isDirectory() == false)
 			throw new IllegalArgumentException("dir=" + dir);
-		}
-		for (File f : dir.listFiles()) {
-			if (f.getName().matches(pattern)) {
-				addResultFile(f);
-			}
-		}
+
+		if (dir.listFiles() != null)
+			for (File f : dir.listFiles())
+				if (f.getName().matches(pattern))
+					addResultFile(f);
+
 	}
 
 	private static String getNormalizedPath(File f) {
@@ -146,17 +145,16 @@ public class FileGroup {
 	}
 
 	private void initWithDoubleStar(File currentDir) {
-		for (File f : currentDir.listFiles()) {
-			if (f.isDirectory()) {
-				initWithDoubleStar(f);
-			} else if (f.isFile()) {
-				final String path = getNormalizedPath(f);
-				if (path.matches(toRegexp(pattern))) {
-					addResultFile(f);
+		if (currentDir.listFiles() != null)
+			for (File f : currentDir.listFiles()) {
+				if (f.isDirectory()) {
+					initWithDoubleStar(f);
+				} else if (f.isFile()) {
+					final String path = getNormalizedPath(f);
+					if (path.matches(toRegexp(pattern)))
+						addResultFile(f);
 				}
-
 			}
-		}
 
 	}
 

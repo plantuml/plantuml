@@ -65,54 +65,58 @@ public class DirWatcher {
 	public List<GeneratedImage> buildCreatedFiles() throws IOException, InterruptedException {
 		boolean error = false;
 		final List<GeneratedImage> result = new ArrayList<>();
-		for (File f : dir.listFiles()) {
-			if (error) {
-				continue;
-			}
-			if (f.isFile() == false) {
-				continue;
-			}
-			if (fileToProcess(f.getName()) == false) {
-				continue;
-			}
-			final FileWatcher watcher = modifieds.get(f);
+		if (dir.listFiles() != null)
+			for (File f : dir.listFiles()) {
+				if (error)
+					continue;
 
-			if (watcher == null || watcher.hasChanged()) {
-				final SourceFileReader sourceFileReader = new SourceFileReader(Defines.createWithFileName(f), f,
-						option.getOutputDir(), option.getConfig(), option.getCharset(), option.getFileFormatOption());
-				final Set<File> files = FileWithSuffix.convert(sourceFileReader.getIncludedFiles());
-				files.add(f);
-				for (GeneratedImage g : sourceFileReader.getGeneratedImages()) {
-					result.add(g);
-					if (option.isFailfastOrFailfast2() && g.lineErrorRaw() != -1) {
-						error = true;
+				if (f.isFile() == false)
+					continue;
+
+				if (fileToProcess(f.getName()) == false)
+					continue;
+
+				final FileWatcher watcher = modifieds.get(f);
+
+				if (watcher == null || watcher.hasChanged()) {
+					final SourceFileReader sourceFileReader = new SourceFileReader(Defines.createWithFileName(f), f,
+							option.getOutputDir(), option.getConfig(), option.getCharset(),
+							option.getFileFormatOption());
+					final Set<File> files = FileWithSuffix.convert(sourceFileReader.getIncludedFiles());
+					files.add(f);
+					for (GeneratedImage g : sourceFileReader.getGeneratedImages()) {
+						result.add(g);
+						if (option.isFailfastOrFailfast2() && g.lineErrorRaw() != -1) {
+							error = true;
+						}
 					}
+					modifieds.put(f, new FileWatcher(files));
 				}
-				modifieds.put(f, new FileWatcher(files));
 			}
-		}
 		Collections.sort(result);
 		return Collections.unmodifiableList(result);
 	}
 
 	public File getErrorFile() throws IOException, InterruptedException {
-		for (File f : dir.listFiles()) {
-			if (f.isFile() == false) {
-				continue;
-			}
-			if (fileToProcess(f.getName()) == false) {
-				continue;
-			}
-			final FileWatcher watcher = modifieds.get(f);
+		if (dir.listFiles() != null)
+			for (File f : dir.listFiles()) {
+				if (f.isFile() == false)
+					continue;
 
-			if (watcher == null || watcher.hasChanged()) {
-				final SourceFileReader sourceFileReader = new SourceFileReader(Defines.createWithFileName(f), f,
-						option.getOutputDir(), option.getConfig(), option.getCharset(), option.getFileFormatOption());
-				if (sourceFileReader.hasError()) {
-					return f;
+				if (fileToProcess(f.getName()) == false)
+					continue;
+
+				final FileWatcher watcher = modifieds.get(f);
+
+				if (watcher == null || watcher.hasChanged()) {
+					final SourceFileReader sourceFileReader = new SourceFileReader(Defines.createWithFileName(f), f,
+							option.getOutputDir(), option.getConfig(), option.getCharset(),
+							option.getFileFormatOption());
+					if (sourceFileReader.hasError())
+						return f;
+
 				}
 			}
-		}
 		return null;
 	}
 
