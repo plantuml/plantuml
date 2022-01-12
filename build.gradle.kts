@@ -16,7 +16,6 @@ dependencies {
 }
 
 group = "net.sourceforge.plantuml"
-version = "1.2021.16-SNAPSHOT"
 description = "PlantUML"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
