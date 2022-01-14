@@ -69,6 +69,7 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.Value;
 import net.sourceforge.plantuml.svek.image.Opale;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
@@ -291,13 +292,13 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 			off.add(new Segment(x1, x2));
 		}
 
-		final HColor back2 = StyleSignature.of(SName.root, SName.document, SName.ganttDiagram)
+		final HColor backUndone = StyleSignature.of(SName.root, SName.element, SName.ganttDiagram, SName.undone)
 				.getMergedStyle(getStyleBuilder()).value(PName.BackGroundColor)
 				.asColor(skinParam.getThemeStyle(), getColorSet());
 
 		final RectangleTask rectangleTask = new RectangleTask(startPos, endPos, round, getCompletion(), off);
 
-		rectangleTask.draw(ug, getShapeHeight(stringBounder), back2, oddStart, oddEnd);
+		rectangleTask.draw(ug, getShapeHeight(stringBounder), backUndone, oddStart, oddEnd);
 
 		if (url != null) {
 			ug.closeUrl();

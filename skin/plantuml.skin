@@ -313,6 +313,9 @@ ganttDiagram {
         Margin 2 2 2 2
         Padding 0
 	}
+	undone {
+        BackGroundColor white
+	}
 	milestone {
         Margin 2
         Padding 3

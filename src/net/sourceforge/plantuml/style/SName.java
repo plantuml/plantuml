@@ -118,6 +118,7 @@ public enum SName {
 	timeline, //
 	timingDiagram, //
 	title, //
+	undone, //
 	unstarted, //
 	usecase, //
 	wbsDiagram, //
