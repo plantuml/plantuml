@@ -270,6 +270,8 @@ public class ImageBuilder {
 		final Scale scale = titledDiagram == null ? null : titledDiagram.getScale();
 		final double scaleFactor = (scale == null ? 1 : scale.getScale(dim.getWidth(), dim.getHeight())) * getDpi()
 				/ 96.0;
+		if (scaleFactor <= 0)
+			throw new IllegalStateException("Bad scaleFactor");
 		UGraphic ug = createUGraphic(fileFormatOption, dim, animationArg, dx, dy, scaleFactor);
 		maybeDrawBorder(ug, dim);
 		if (randomPixel) {
@@ -442,8 +444,8 @@ public class ImageBuilder {
 
 	}
 
-	private UGraphic createUGraphicPNG(double scaleFactor, final Dimension2D dim, Animation affineTransforms,
-			double dx, double dy, String watermark) {
+	private UGraphic createUGraphicPNG(double scaleFactor, final Dimension2D dim, Animation affineTransforms, double dx,
+			double dy, String watermark) {
 		Color backColor = getDefaultBackColor();
 
 		if (this.backcolor instanceof HColorSimple) {

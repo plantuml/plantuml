@@ -150,6 +150,14 @@ public class HColorSimple extends HColorAbstract implements HColor {
 		return monochrome;
 	}
 
+	public boolean isGray() {
+		if (monochrome)
+			return true;
+		if (color.getRed() == color.getGreen() && color.getGreen() == color.getBlue())
+			return true;
+		return false;
+	}
+
 	public static HColorSimple unlinear(HColorSimple color1, HColorSimple color2, int completionInt) {
 		final HSLColor col1 = new HSLColor(color1.color);
 		final HSLColor col2 = new HSLColor(color2.color);

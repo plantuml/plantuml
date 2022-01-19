@@ -156,9 +156,9 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 	}
 
 	public Direction getArrowDirection() {
-		if (getLinkArrow() == LinkArrow.BACKWARD) {
+		if (getLinkArrow() == LinkArrow.BACKWARD)
 			return getArrowDirectionInternal().getInv();
-		}
+
 		return getArrowDirectionInternal();
 	}
 
@@ -170,19 +170,19 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		final Point2D start = dotPath.getStartPoint();
 		final Point2D end = dotPath.getEndPoint();
 		final double ang = Math.atan2(end.getX() - start.getX(), end.getY() - start.getY());
-		if (ang > -Math.PI / 4 && ang < Math.PI / 4) {
+		if (ang > -Math.PI / 4 && ang < Math.PI / 4)
 			return Direction.DOWN;
-		}
-		if (ang > Math.PI * 3 / 4 || ang < -Math.PI * 3 / 4) {
+
+		if (ang > Math.PI * 3 / 4 || ang < -Math.PI * 3 / 4)
 			return Direction.UP;
-		}
+
 		return end.getX() > start.getX() ? Direction.RIGHT : Direction.LEFT;
 	}
 
 	public double getArrowDirection2() {
-		if (getLinkArrow() == LinkArrow.BACKWARD) {
+		if (getLinkArrow() == LinkArrow.BACKWARD)
 			return Math.PI + getArrowDirectionInternal2();
-		}
+
 		return getArrowDirectionInternal2();
 	}
 
@@ -198,11 +198,10 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 	}
 
 	private Cluster getCluster2(Bibliotekon bibliotekon, IEntity entityMutable) {
-		for (Cluster cl : bibliotekon.allCluster()) {
-			if (cl.getGroups().contains(entityMutable)) {
+		for (Cluster cl : bibliotekon.allCluster())
+			if (cl.getGroups().contains(entityMutable))
 				return cl;
-			}
-		}
+
 		throw new IllegalArgumentException();
 	}
 
@@ -217,13 +216,12 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		this.endUid = link.getEntityPort2(bibliotekon);
 
 		Cluster ltail = null;
-		if (startUid.startsWith(Cluster.CENTER_ID)) {
+		if (startUid.startsWith(Cluster.CENTER_ID))
 			ltail = getCluster2(bibliotekon, link.getEntity1());
-		}
+
 		Cluster lhead = null;
-		if (endUid.startsWith(Cluster.CENTER_ID)) {
+		if (endUid.startsWith(Cluster.CENTER_ID))
 			lhead = getCluster2(bibliotekon, link.getEntity2());
-		}
 
 		if (link.getColors() != null) {
 			skinParam = link.getColors().mute(skinParam);
@@ -232,9 +230,9 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		this.backgroundColor = skinParam.getBackgroundColor();
 		this.defaultThickness = skinParam.getThickness(LineParam.arrow, null);
 		this.arrowLollipopColor = skinParam.getHtmlColor(ColorParam.arrowLollipop, null, false);
-		if (arrowLollipopColor == null) {
+		if (arrowLollipopColor == null)
 			this.arrowLollipopColor = backgroundColor;
-		}
+
 		this.pragma = pragma;
 		this.bibliotekon = bibliotekon;
 		this.stringBounder = stringBounder;
@@ -249,22 +247,22 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		TextBlock labelOnly;
 		if (Display.isNull(link.getLabel())) {
 			labelOnly = TextBlockUtils.EMPTY_TEXT_BLOCK;
-			if (getLinkArrow() != LinkArrow.NONE_OR_SEVERAL) {
+			if (getLinkArrow() != LinkArrow.NONE_OR_SEVERAL)
 				labelOnly = StringWithArrow.addMagicArrow(labelOnly, this, font);
-			}
+
 		} else {
 			final HorizontalAlignment alignment = getMessageTextAlignment(link.getUmlDiagramType(), skinParam);
 			final boolean hasSeveralGuideLines = link.getLabel().hasSeveralGuideLines();
 			final TextBlock block;
-			if (hasSeveralGuideLines) {
+			if (hasSeveralGuideLines)
 				block = StringWithArrow.addSeveralMagicArrows(link.getLabel(), this, font, alignment, skinParam);
-			} else {
+			else
 				block = link.getLabel().create9(font, alignment, skinParam, skinParam.maxMessageSize());
-			}
+
 			labelOnly = addVisibilityModifier(block, link, skinParam);
-			if (getLinkArrow() != LinkArrow.NONE_OR_SEVERAL && hasSeveralGuideLines == false) {
+			if (getLinkArrow() != LinkArrow.NONE_OR_SEVERAL && hasSeveralGuideLines == false)
 				labelOnly = StringWithArrow.addMagicArrow(labelOnly, this, font);
-			}
+
 		}
 
 		final TextBlock noteOnly;
@@ -273,40 +271,36 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		} else {
 			noteOnly = new EntityImageNoteLink(link.getNote(), link.getNoteColors(), skinParam, link.getStyleBuilder());
 			if (link.getNoteLinkStrategy() == NoteLinkStrategy.HALF_NOT_PRINTED
-					|| link.getNoteLinkStrategy() == NoteLinkStrategy.HALF_PRINTED_FULL) {
+					|| link.getNoteLinkStrategy() == NoteLinkStrategy.HALF_PRINTED_FULL)
 				divideLabelWidthByTwo = true;
-			}
+
 		}
 
-		if (link.getNotePosition() == Position.LEFT) {
+		if (link.getNotePosition() == Position.LEFT)
 			labelText = TextBlockUtils.mergeLR(noteOnly, labelOnly, VerticalAlignment.CENTER);
-		} else if (link.getNotePosition() == Position.RIGHT) {
+		else if (link.getNotePosition() == Position.RIGHT)
 			labelText = TextBlockUtils.mergeLR(labelOnly, noteOnly, VerticalAlignment.CENTER);
-		} else if (link.getNotePosition() == Position.TOP) {
+		else if (link.getNotePosition() == Position.TOP)
 			labelText = TextBlockUtils.mergeTB(noteOnly, labelOnly, HorizontalAlignment.CENTER);
-		} else {
+		else
 			labelText = TextBlockUtils.mergeTB(labelOnly, noteOnly, HorizontalAlignment.CENTER);
-		}
 
-		if (link.getQualifier1() == null) {
+		if (link.getQualifier1() == null)
 			startTailText = null;
-		} else {
+		else
 			startTailText = Display.getWithNewlines(link.getQualifier1()).create(font, HorizontalAlignment.CENTER,
 					skinParam);
-		}
 
-		if (link.getQualifier2() == null) {
+		if (link.getQualifier2() == null)
 			endHeadText = null;
-		} else {
+		else
 			endHeadText = Display.getWithNewlines(link.getQualifier2()).create(font, HorizontalAlignment.CENTER,
 					skinParam);
-		}
 
-		if (link.getType().getMiddleDecor() == LinkMiddleDecor.NONE) {
+		if (link.getType().getMiddleDecor() == LinkMiddleDecor.NONE)
 			this.labelShield = 0;
-		} else {
+		else
 			this.labelShield = 7;
-		}
 
 	}
 
@@ -324,9 +318,9 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 	}
 
 	private HorizontalAlignment getMessageTextAlignment(UmlDiagramType umlDiagramType, ISkinParam skinParam) {
-		if (umlDiagramType == UmlDiagramType.STATE) {
+		if (umlDiagramType == UmlDiagramType.STATE)
 			return skinParam.getHorizontalAlignment(AlignmentParam.stateMessageAlignment, null, false, null);
-		}
+
 		return skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER);
 	}
 
@@ -352,15 +346,15 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		sb.append("[");
 		final LinkType linkType = link.getTypePatchCluster();
 		String decoration = linkType.getSpecificDecorationSvek();
-		if (decoration.length() > 0 && decoration.endsWith(",") == false) {
+		if (decoration.length() > 0 && decoration.endsWith(",") == false)
 			decoration += ",";
-		}
+
 		sb.append(decoration);
 
 		int length = link.getLength();
-		if (graphvizVersion.ignoreHorizontalLinks() && length == 1) {
+		if (graphvizVersion.ignoreHorizontalLinks() && length == 1)
 			length = 2;
-		}
+
 		if (useRankSame) {
 			if (pragma.horizontalLineBetweenDifferentPackageAllowed() || link.isInvis() || length != 1) {
 				// if (graphvizVersion.isJs() == false) {
@@ -406,22 +400,20 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 			sb.append("style=invis");
 		}
 
-		if (link.isConstraint() == false || link.hasTwoEntryPointsSameContainer()) {
+		if (link.isConstraint() == false || link.hasTwoEntryPointsSameContainer())
 			sb.append(",constraint=false");
-		}
 
-		if (link.getSametail() != null) {
+		if (link.getSametail() != null)
 			sb.append(",sametail=" + link.getSametail());
-		}
 
 		sb.append("];");
 		SvekUtils.println(sb);
 	}
 
 	private Dimension2D eventuallyDivideByTwo(Dimension2D dim) {
-		if (divideLabelWidthByTwo) {
+		if (divideLabelWidthByTwo)
 			return new Dimension2DDouble(dim.getWidth() / 2, dim.getHeight());
-		}
+
 		return dim;
 	}
 
@@ -474,24 +466,24 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 				// System.err.println("angle=" + angle * 180 / Math.PI);
 				return extremityFactory.createUDrawable(center, angle, null);
 			}
-			if (decor == LinkDecor.EXTENDS) {
+			if (decor == LinkDecor.EXTENDS)
 				return new ExtremityFactoryExtends(backgroundColor).createUDrawable(center, angle, null);
-			}
+
 			return null;
 		}
 
 		if (extremityFactory != null) {
 			final List<Point2D.Double> points = pointListIterator.next();
-			if (points.size() == 0) {
+			if (points.size() == 0)
 				return extremityFactory.createUDrawable(center, angle, null);
-			}
+
 			final Point2D p0 = points.get(0);
 			final Point2D p1 = points.get(1);
 			final Point2D p2 = points.get(2);
 			Side side = null;
-			if (nodeContact != null) {
+			if (nodeContact != null)
 				side = nodeContact.getClusterPosition().getClosestSide(p1);
-			}
+
 			return extremityFactory.createUDrawable(p0, p1, p2, side);
 		} else if (decor == LinkDecor.NONE) {
 			final UPolygon sh = new UPolygon(pointListIterator.cloneMe().next());
@@ -514,9 +506,8 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 	}
 
 	public void solveLine(SvgResult fullSvg) {
-		if (this.link.isInvis()) {
+		if (this.link.isInvis())
 			return;
-		}
 
 		int idx = fullSvg.getIndexFromColor(this.lineColor);
 		if (idx == -1) {
@@ -524,15 +515,15 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 			// throw new IllegalStateException();
 		}
 		idx = fullSvg.indexOf("d=\"", idx);
-		if (idx == -1) {
+		if (idx == -1)
 			throw new IllegalStateException();
-		}
+
 		final int end = fullSvg.indexOf("\"", idx + 3);
 		final SvgResult path = fullSvg.substring(idx + 3, end);
 
-		if (DotPath.isPathConsistent(path.getSvg()) == false) {
+		if (DotPath.isPathConsistent(path.getSvg()) == false)
 			return;
-		}
+
 		dotPath = new DotPath(path);
 
 		if (projectionCluster != null) {
@@ -557,12 +548,11 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		this.extremity2 = getExtremity(linkType.getDecor1(), pointListIterator, dotPath.getEndPoint(),
 				dotPath.getEndAngle(), lhead, bibliotekon.getNode(link.getEntity2()));
 
-		if (link.getEntity1().getLeafType() == LeafType.LOLLIPOP_HALF) {
+		if (link.getEntity1().getLeafType() == LeafType.LOLLIPOP_HALF)
 			bibliotekon.getNode(link.getEntity1()).addImpact(dotPath.getStartAngle() + Math.PI);
-		}
-		if (link.getEntity2().getLeafType() == LeafType.LOLLIPOP_HALF) {
+
+		if (link.getEntity2().getLeafType() == LeafType.LOLLIPOP_HALF)
 			bibliotekon.getNode(link.getEntity2()).addImpact(dotPath.getEndAngle());
-		}
 
 		if (extremity1 instanceof Extremity && extremity2 instanceof Extremity) {
 			final Point2D p1 = ((Extremity) extremity1).somePoint();
@@ -610,9 +600,9 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 			}
 		}
 
-		if (isOpalisable() == false) {
+		if (isOpalisable() == false)
 			setOpale(false);
-		}
+
 	}
 
 	private boolean isOpalisable() {
@@ -621,26 +611,25 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 
 	private Point2D.Double getXY(SvgResult svgResult, int color) {
 		final int idx = svgResult.getIndexFromColor(color);
-		if (idx == -1) {
+		if (idx == -1)
 			return null;
-		}
+
 		return SvekUtils.getMinXY(svgResult.substring(idx).extractList(SvgResult.POINTS_EQUALS));
 
 	}
 
 	public void drawU(UGraphic ug, UStroke suggestedStroke, HColor color, Set<String> ids) {
-		if (opale) {
+		if (opale)
 			return;
-		}
+
 		ug.draw(link.commentForSvg());
 		ug.startGroup(UGroupType.CLASS,
 				"link " + link.getEntity1().getCode() + " " + link.getEntity2().getCode() + " selected");
 		double x = 0;
 		double y = 0;
 		final Url url = link.getUrl();
-		if (url != null) {
+		if (url != null)
 			ug.startUrl(url);
-		}
 
 		if (link.isAutoLinkOfAGroup()) {
 			final Cluster cl = bibliotekon.getCluster((IGroup) link.getEntity1());
@@ -653,28 +642,24 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		x += dx;
 		y += dy;
 
-		if (link.isInvis()) {
+		if (link.isInvis())
 			return;
-		}
 
 		if (this.link.getColors() != null) {
 			final HColor newColor = this.link.getColors().getColor(ColorType.ARROW, ColorType.LINE);
-			if (newColor != null) {
+			if (newColor != null)
 				color = newColor;
-			}
-
-		} else if (this.link.getSpecificColor() != null) {
+		} else if (this.link.getSpecificColor() != null)
 			color = this.link.getSpecificColor();
-		}
 
 		ug = ug.apply(new HColorNone().bg()).apply(color);
 		final LinkType linkType = link.getType();
 		UStroke stroke = suggestedStroke == null || linkType.getStyle().isNormal() == false
 				? linkType.getStroke3(defaultThickness)
 				: suggestedStroke;
-		if (link.getColors() != null && link.getColors().getSpecificLineStroke() != null) {
+		if (link.getColors() != null && link.getColors().getSpecificLineStroke() != null)
 			stroke = link.getColors().getSpecificLineStroke();
-		}
+
 		ug = ug.apply(stroke);
 		// double moveEndY = 0;
 
@@ -697,13 +682,12 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		if (extremity1 instanceof Extremity && extremity2 instanceof Extremity) {
 			// http://forum.plantuml.net/9421/arrow-inversion-with-skinparam-linetype-ortho-missing-arrow
 			final Point2D p1 = ((Extremity) extremity1).isTooSmallSoGiveThePointCloserToThisOne(todraw.getStartPoint());
-			if (p1 != null) {
+			if (p1 != null)
 				todraw.forceStartPoint(p1.getX(), p1.getY());
-			}
+
 			final Point2D p2 = ((Extremity) extremity2).isTooSmallSoGiveThePointCloserToThisOne(todraw.getEndPoint());
-			if (p2 != null) {
+			if (p2 != null)
 				todraw.forceEndPoint(p2.getX(), p2.getY());
-			}
 
 		}
 
@@ -716,19 +700,17 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		ug = ug.apply(new UStroke()).apply(color);
 
 		if (hasNoteLabelText() && this.labelXY != null
-				&& link.getNoteLinkStrategy() != NoteLinkStrategy.HALF_NOT_PRINTED) {
+				&& link.getNoteLinkStrategy() != NoteLinkStrategy.HALF_NOT_PRINTED)
 			this.labelText.drawU(ug.apply(new UTranslate(x + this.labelXY.getPosition().getX() + labelShield,
 					y + this.labelXY.getPosition().getY() + labelShield)));
-		}
-		if (this.startTailText != null && this.startTailLabelXY != null
-				&& this.startTailLabelXY.getPosition() != null) {
+
+		if (this.startTailText != null && this.startTailLabelXY != null && this.startTailLabelXY.getPosition() != null)
 			this.startTailText.drawU(ug.apply(new UTranslate(x + this.startTailLabelXY.getPosition().getX(),
 					y + this.startTailLabelXY.getPosition().getY())));
-		}
-		if (this.endHeadText != null && this.endHeadLabelXY != null && this.endHeadLabelXY.getPosition() != null) {
+
+		if (this.endHeadText != null && this.endHeadLabelXY != null && this.endHeadLabelXY.getPosition() != null)
 			this.endHeadText.drawU(ug.apply(new UTranslate(x + this.endHeadLabelXY.getPosition().getX(),
 					y + this.endHeadLabelXY.getPosition().getY())));
-		}
 
 		if (linkType.getMiddleDecor() != LinkMiddleDecor.NONE) {
 			final PointAndAngle middle = dotPath.getMiddle();
@@ -739,9 +721,8 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 			mi.drawU(ug.apply(new UTranslate(x + middle.getX(), y + middle.getY())));
 		}
 
-		if (url != null) {
+		if (url != null)
 			ug.closeUrl();
-		}
 
 		if (link.getLinkConstraint() != null) {
 			final double xConstraint = x + this.labelXY.getPosition().getX();
@@ -789,9 +770,9 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		while (true) {
 			final String candidate = comment + "-" + i;
 			changed = ids.add(candidate);
-			if (changed) {
+			if (changed)
 				return candidate;
-			}
+
 			i++;
 		}
 	}
@@ -803,21 +784,21 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 
 		if (this.extremity2 != null) {
 			UGraphic ug2 = ug.apply(color).apply(stroke.onlyThickness());
-			if (linkType.getDecor1().isFill()) {
+			if (linkType.getDecor1().isFill())
 				ug2 = ug2.apply(color.bg());
-			} else {
+			else
 				ug2 = ug2.apply(new HColorNone().bg());
-			}
+
 			// System.err.println("Line::draw EXTREMITY1");
 			this.extremity2.drawU(ug2);
 		}
 		if (this.extremity1 != null) {
 			UGraphic ug2 = ug.apply(color).apply(stroke.onlyThickness());
-			if (linkType.getDecor2().isFill()) {
+			if (linkType.getDecor2().isFill())
 				ug2 = ug2.apply(color.bg());
-			} else {
+			else
 				ug2 = ug2.apply(new HColorNone().bg());
-			}
+
 			// System.err.println("Line::draw EXTREMITY2");
 			this.extremity1.drawU(ug2);
 		}
@@ -840,24 +821,24 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 	}
 
 	public double getHorizontalDzeta(StringBounder stringBounder) {
-		if (startUid.equalsId(endUid)) {
+		if (startUid.equalsId(endUid))
 			return getDecorDzeta();
-		}
+
 		final ArithmeticStrategy strategy;
-		if (isHorizontal()) {
+		if (isHorizontal())
 			strategy = new ArithmeticStrategySum();
-		} else {
+		else
 			return 0;
-		}
-		if (hasNoteLabelText()) {
+
+		if (hasNoteLabelText())
 			strategy.eat(labelText.calculateDimension(stringBounder).getWidth());
-		}
-		if (startTailText != null) {
+
+		if (startTailText != null)
 			strategy.eat(startTailText.calculateDimension(stringBounder).getWidth());
-		}
-		if (endHeadText != null) {
+
+		if (endHeadText != null)
 			strategy.eat(endHeadText.calculateDimension(stringBounder).getWidth());
-		}
+
 		return strategy.getResult() + getDecorDzeta();
 	}
 
@@ -866,36 +847,34 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 	}
 
 	public double getVerticalDzeta(StringBounder stringBounder) {
-		if (startUid.equalsId(endUid)) {
+		if (startUid.equalsId(endUid))
 			return getDecorDzeta();
-		}
-		if (isHorizontal()) {
+
+		if (isHorizontal())
 			return 0;
-		}
+
 		final ArithmeticStrategy strategy = new ArithmeticStrategySum();
-		if (hasNoteLabelText()) {
+		if (hasNoteLabelText())
 			strategy.eat(labelText.calculateDimension(stringBounder).getHeight());
-		}
-		if (startTailText != null) {
+
+		if (startTailText != null)
 			strategy.eat(startTailText.calculateDimension(stringBounder).getHeight());
-		}
-		if (endHeadText != null) {
+
+		if (endHeadText != null)
 			strategy.eat(endHeadText.calculateDimension(stringBounder).getHeight());
-		}
+
 		return strategy.getResult() + getDecorDzeta();
 	}
 
 	public void manageCollision(Collection<SvekNode> allNodes) {
-
 		for (SvekNode sh : allNodes) {
 			final Positionable cl = PositionableUtils.addMargin(sh, 8, 8);
-			if (startTailText != null && startTailLabelXY != null
-					&& PositionableUtils.intersect(cl, startTailLabelXY)) {
+			if (startTailText != null && startTailLabelXY != null && PositionableUtils.intersect(cl, startTailLabelXY))
 				startTailLabelXY = PositionableUtils.moveAwayFrom(cl, startTailLabelXY);
-			}
-			if (endHeadText != null && endHeadLabelXY != null && PositionableUtils.intersect(cl, endHeadLabelXY)) {
+
+			if (endHeadText != null && endHeadLabelXY != null && PositionableUtils.intersect(cl, endHeadLabelXY))
 				endHeadLabelXY = PositionableUtils.moveAwayFrom(cl, endHeadLabelXY);
-			}
+
 		}
 
 		// final Positionable start = getStartTailPositionnable();
@@ -993,12 +972,12 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 	}
 
 	public Point2D getMyPoint(IEntity entity) {
-		if (link.getEntity1() == entity) {
+		if (link.getEntity1() == entity)
 			return moveDelta(dotPath.getStartPoint());
-		}
-		if (link.getEntity2() == entity) {
+
+		if (link.getEntity2() == entity)
 			return moveDelta(dotPath.getEndPoint());
-		}
+
 		throw new IllegalArgumentException();
 	}
 
@@ -1011,25 +990,27 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 	}
 
 	public Point2D getStartContactPoint() {
-		final Point2D start = dotPath.getStartPoint();
-		if (start == null) {
+		if (dotPath == null)
 			return null;
-		}
+		final Point2D start = dotPath.getStartPoint();
+		if (start == null)
+			return null;
+
 		return new Point2D.Double(dx + start.getX(), dy + start.getY());
 	}
 
 	public Point2D getEndContactPoint() {
 		final Point2D end = dotPath.getEndPoint();
-		if (end == null) {
+		if (end == null)
 			return null;
-		}
+
 		return new Point2D.Double(dx + end.getX(), dy + end.getY());
 	}
 
 	public IEntity getOther(IEntity entity) {
-		if (link.contains(entity)) {
+		if (link.contains(entity))
 			return link.getOther(entity);
-		}
+
 		return null;
 	}
 

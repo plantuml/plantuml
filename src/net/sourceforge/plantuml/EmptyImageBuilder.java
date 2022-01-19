@@ -60,11 +60,15 @@ public class EmptyImageBuilder {
 	private final Color background;
 	private final StringBounder stringBounder;
 
-	public EmptyImageBuilder(String watermark, double width, double height, Color background, StringBounder stringBounder) {
+	public EmptyImageBuilder(String watermark, double width, double height, Color background,
+			StringBounder stringBounder) {
 		this(watermark, (int) width, (int) height, background, stringBounder);
 	}
 
 	public EmptyImageBuilder(String watermark, int width, int height, Color background, StringBounder stringBounder) {
+		if (width <= 0 || height <= 0)
+			throw new IllegalArgumentException("width and height must be positive");
+
 		if (width > GraphvizUtils.getenvImageLimit()) {
 			Log.info("Width too large " + width + ". You should set PLANTUML_LIMIT_SIZE");
 			width = GraphvizUtils.getenvImageLimit();
@@ -152,7 +156,8 @@ public class EmptyImageBuilder {
 		return result;
 	}
 
-	public EmptyImageBuilder(String watermark, int width, int height, Color background, StringBounder stringBounder, double dpiFactor) {
+	public EmptyImageBuilder(String watermark, int width, int height, Color background, StringBounder stringBounder,
+			double dpiFactor) {
 		this(watermark, width * dpiFactor, height * dpiFactor, background, stringBounder);
 		if (dpiFactor != 1.0) {
 			g2d.setTransform(AffineTransform.getScaleInstance(dpiFactor, dpiFactor));

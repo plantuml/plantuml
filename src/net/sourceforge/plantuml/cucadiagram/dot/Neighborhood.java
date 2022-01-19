@@ -93,12 +93,12 @@ public class Neighborhood {
 			final SvekLine line = bibliotekon.getLine(link);
 			final Point2D contact = link.getEntity1() == leaf ? line.getStartContactPoint() : line.getEndContactPoint();
 			if (contact == null) {
-				assert false;
+				// assert false;
 				continue;
 			}
 			final Point2D inter = intersection(rect, center, contact);
 			if (inter == null) {
-				assert false;
+				// assert false;
 				continue;
 			}
 			drawLine(ug, inter, contact);

@@ -610,7 +610,11 @@ public class SkinParam implements ISkinParam {
 	}
 
 	public int getDpi() {
-		return getAsInt("dpi", 96);
+		final int defaultValue = 96;
+		final int dpi = getAsInt("dpi", defaultValue);
+		if (dpi <= 0)
+			return defaultValue;
+		return dpi;
 	}
 
 	public DotSplines getDotSplines() {

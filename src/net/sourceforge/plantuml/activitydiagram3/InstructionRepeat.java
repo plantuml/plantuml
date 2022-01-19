@@ -66,6 +66,7 @@ public class InstructionRepeat extends AbstractInstruction implements Instructio
 	private final Swimlane swimlane;
 	private final Swimlanes swimlanes;
 	private Swimlane swimlaneOut;
+	private Swimlane swimlaneBackward;
 	private BoxStyle boxStyle;
 	private boolean killed = false;
 	private final BoxStyle boxStyleIn;
@@ -107,10 +108,10 @@ public class InstructionRepeat extends AbstractInstruction implements Instructio
 		return false;
 	}
 
-	public void setBackward(Display label, Swimlane swimlaneOut, BoxStyle boxStyle, LinkRendering incoming1,
+	public void setBackward(Display label, Swimlane swimlaneBackward, BoxStyle boxStyle, LinkRendering incoming1,
 			LinkRendering incoming2) {
 		this.backward = label;
-		this.swimlaneOut = swimlaneOut;
+		this.swimlaneBackward = swimlaneBackward;
 		this.boxStyle = boxStyle;
 		this.incoming1 = incoming1;
 		this.incoming2 = incoming2;
@@ -162,9 +163,9 @@ public class InstructionRepeat extends AbstractInstruction implements Instructio
 		if (Display.isNull(backward))
 			return null;
 
-		Ftile result = factory.activity(backward, swimlaneOut, boxStyle, Colors.empty(), null);
+		Ftile result = factory.activity(backward, swimlaneBackward, boxStyle, Colors.empty(), null);
 		if (backwardNotes.size() > 0)
-			result = factory.addNote(result, swimlaneOut, backwardNotes);
+			result = factory.addNote(result, swimlaneBackward, backwardNotes);
 
 		return result;
 	}

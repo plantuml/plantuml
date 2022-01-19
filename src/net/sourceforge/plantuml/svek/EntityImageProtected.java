@@ -55,7 +55,9 @@ public class EntityImageProtected extends AbstractTextBlock implements IEntityIm
 	private final Neighborhood neighborhood;
 
 	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
-		throw new UnsupportedOperationException();
+		final Rectangle2D result = orig.getInnerPosition(member, stringBounder, strategy);
+		return new Rectangle2D.Double(result.getMinX() + border, result.getMinY() + border, result.getWidth(),
+				result.getHeight());
 	}
 
 	public EntityImageProtected(IEntityImage orig, double border, Neighborhood neighborhood, Bibliotekon bibliotekon) {

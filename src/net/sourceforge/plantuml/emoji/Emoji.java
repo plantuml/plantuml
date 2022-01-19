@@ -219,7 +219,10 @@ public class Emoji {
 		final HColorSimple result = (HColorSimple) HColorSet.instance().getColorOrWhite(code);
 		if (colorForMonochrome == null)
 			return result;
-		return result.asMonochrome((HColorSimple) colorForMonochrome, this.minGray, this.maxGray);
+		final HColorSimple color = (HColorSimple) colorForMonochrome;
+		if (color.isGray())
+			return result.asMonochrome();
+		return result.asMonochrome(color, this.minGray, this.maxGray);
 	}
 
 	private void drawCircle(UGraphicWithScale ugs, String s, HColor colorForMonochrome) {
