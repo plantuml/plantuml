@@ -1,6 +1,7 @@
 plugins {
   java
   `maven-publish`
+  signing
 }
 
 repositories {
@@ -98,4 +99,9 @@ tasks.withType<Javadoc> {
 tasks.test {
   useJUnitPlatform()
   testLogging.showStandardStreams = true
+}
+
+signing {
+  useGpgCmd()
+  sign(publishing.publications["maven"])
 }
