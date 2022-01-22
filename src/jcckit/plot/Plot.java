@@ -34,7 +34,7 @@ import jcckit.util.ConfigParameters;
 import jcckit.util.Factory;
 
 /**
- * A plot is determined by a {@link CoordinateSystem}, {@link Curve Curves}, 
+ * A plot is determined by a {@link CoordinateSystem}, {@link Curve Curves},
  * an optional annotation layer and an optional {@link Legend}. When rendered
  * these components are draw in this order.
  * <p>
@@ -45,8 +45,8 @@ import jcckit.util.Factory;
  * This is done with the method {@link #connect connect()} which registrates
  * this <tt>Plot</tt> instance as
  * a {@link DataListener} at the connected <tt>DataPlot</tt>.
- * After an received {@link DataEvent DataEvents} has been handled 
- * the registrated <tt>PlotListeners</tt> will receive a 
+ * After an received {@link DataEvent DataEvents} has been handled
+ * the registrated <tt>PlotListeners</tt> will receive a
  * {@link PlotEvent} of the type {@link PlotEventType#DATA_PLOT_CHANGED}.
  *
  * @author Franz-Josef Elmer
@@ -113,10 +113,10 @@ public class Plot implements DataListener {
   }
 
   /**
-   * Sets the coordinate system. All curves will be regenerated and a 
+   * Sets the coordinate system. All curves will be regenerated and a
    * {@link PlotEvent} of type {@link PlotEventType#COODINATE_SYSTEM_CHANGED}
    * will be fired.
-   *  
+   *
    * @param coordinateSystem New coordinate system.
    */
   public void setCoordinateSystem(CoordinateSystem coordinateSystem)
@@ -150,8 +150,8 @@ public class Plot implements DataListener {
     _plotListeners.removeElement(listener);
   }
 
-  /** 
-   * Sends all registrated {@link PlotListener PlotListeners} 
+  /**
+   * Sends all registrated {@link PlotListener PlotListeners}
    * the specified event.
    */
   protected void notifyListeners(PlotEvent event) {
@@ -163,7 +163,7 @@ public class Plot implements DataListener {
   /**
    * Connect the specified {@link DataPlot} with this instance.
    * <p>
-   * If this <tt>Plot</tt> instance is already connected with a 
+   * If this <tt>Plot</tt> instance is already connected with a
    * <tt>DataPlot</tt> the connection will be released and a
    * {@link PlotEvent} of the type {@link PlotEventType#DATA_PLOT_DISCONNECTED}
    * will be sent to all registrated {@link PlotListener PlotListeners}.
@@ -192,7 +192,7 @@ public class Plot implements DataListener {
                                     _dataPlot));
     }
   }
-  
+
   /**
    * Transforms a point from device-independent coordinates into
    * data coordinates.
@@ -239,7 +239,7 @@ public class Plot implements DataListener {
       return curves;
     }
   }
-  
+
   /**
    * Returns the annotation layer.
    * @return <tt>null</tt> if no annotation layer.
@@ -248,11 +248,11 @@ public class Plot implements DataListener {
   {
     return _annotation;
   }
-  
+
   /**
    * Sets the annotation layer.
    * @param annotation Any kind of graphics which will be drawn on the
-   *        top of the curves but may be covered by the legend. 
+   *        top of the curves but may be covered by the legend.
    *        Can be <tt>null</tt>.
    */
   public void setAnnotation(GraphicalElement annotation)
@@ -260,7 +260,7 @@ public class Plot implements DataListener {
     _annotation = annotation;
   }
 
-  /** Returns <tt>true</tt> if the legend is visible. */  
+  /** Returns <tt>true</tt> if the legend is visible. */
   public boolean isLegendVisible() {
     return _legendVisibility;
   }
@@ -271,7 +271,7 @@ public class Plot implements DataListener {
   }
 
   /**
-   * Handles the received {@link DataEvent} and notifies 
+   * Handles the received {@link DataEvent} and notifies
    * {@link PlotListener PlotListeners} by an event of the type
    * {@link PlotEventType#DATA_CURVE_CHANGED} or
    * {@link PlotEventType#DATA_PLOT_CHANGED}. The following table shows what
@@ -291,23 +291,23 @@ public class Plot implements DataListener {
    * </table>
    */
   public void dataChanged(DataEvent event) {
-    Integer index = new Integer(0);
+    int index = 0;
     PlotEventType type = PlotEventType.DATA_PLOT_CHANGED;
     synchronized (_curves) {
       int numberOfCurves = _curves.size();
-      if (event.getContainer() instanceof DataCurve 
+      if (event.getContainer() instanceof DataCurve
           && numberOfCurves == _dataPlot.getNumberOfElements()) {
         DataCurve curve = (DataCurve) event.getContainer();
-        index = new Integer(curve.getContainer().getIndexOf(curve));
+        index = curve.getContainer().getIndexOf(curve);
         type = PlotEventType.DATA_CURVE_CHANGED;
-        fillCurve(index.intValue(), curve);
-        if (index.intValue() < numberOfCurves - 1) {
-          Vector curveHints 
-              = (Vector) _nextCurveHints.elementAt(index.intValue());
+        fillCurve(index, curve);
+        if (index < numberOfCurves - 1) {
+          Vector curveHints
+              = (Vector) _nextCurveHints.elementAt(index);
           for (int i = 0, n = curveHints.size(); i < n; i++) {
             if (curveHints.elementAt(i) != null) {
               type = PlotEventType.DATA_PLOT_CHANGED;
-              for (int j = index.intValue()+1; j < numberOfCurves; j++) {
+              for (int j = index +1; j < numberOfCurves; j++) {
                 fillCurve(j, (DataCurve) _dataPlot.getElement(j));
               }
               break;
@@ -319,7 +319,7 @@ public class Plot implements DataListener {
       }
     }
     notifyListeners(new PlotEvent(Plot.this, type, index));
-  } 
+  }
 
   /**
    * Generates all curves based on the specified data.
@@ -349,13 +349,13 @@ public class Plot implements DataListener {
     Curve curve = (Curve) _curves.elementAt(curveIndex);
     curve.removeAllPoints();
     for (int i = 0, n = dataCurve.getNumberOfElements(); i < n; i++) {
-      setHintForNextCurve(curveHints, i, 
+      setHintForNextCurve(curveHints, i,
           curve.addPoint(_transformation.transformToGraph(
                                           (DataPoint) dataCurve.getElement(i)),
                          getHintForNextCurve(curveIndex - 1, i)));
     }
   }
-  
+
   private Hint getHintForNextCurve(int curveIndex, int pointIndex) {
     Hint result = _initialHintForNextCurve;
     if (curveIndex >= 0) {
@@ -366,8 +366,8 @@ public class Plot implements DataListener {
     }
     return result;
   }
-  
-  private void setHintForNextCurve(Vector curveHints, int pointIndex, 
+
+  private void setHintForNextCurve(Vector curveHints, int pointIndex,
                                    Hint hint) {
     while (curveHints.size() <= pointIndex) {
       curveHints.addElement(_initialHintForNextCurve);

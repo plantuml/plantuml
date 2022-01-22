@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.graphic;
@@ -50,7 +50,7 @@ class SizeChange implements FontChange {
 		if (matcherSize.find() == false) {
 			throw new IllegalArgumentException();
 		}
-		size = new Integer(matcherSize.group(1));
+		size = Integer.valueOf(matcherSize.group(1));
 	}
 
 	Integer getSize() {

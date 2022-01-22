@@ -119,7 +119,7 @@ class ScanBuf
     // Record the x value for every line (y).
     for(int lLineNo = lYFrom; lLineNo <= lYTo; lLineNo++)
     {
-      fScanbuf[lLineNo].add(new Double(lX));
+      fScanbuf[lLineNo].add(Double.valueOf(lX));
       lX += lDx;
     }
     fScanBufsAdded = true;
@@ -152,10 +152,10 @@ class ScanBuf
       {
         // Round lLineFrom (but .5 is handled oddly)
         // 1.5001 - 2.5 -> 1.0001 - 2.0 -> 2
-        int lXLo = (int)Math.ceil(lScanLine[n].doubleValue() - 0.5);
+        int lXLo = (int)Math.ceil(lScanLine[n] - 0.5);
         // Round lLineTo, substract 1
         // 1.5 - 2.4999 -> 1.0 - 1.9999 -> 1
-        int lXHi = (int)Math.floor(lScanLine[n + 1].doubleValue() - 0.5);
+        int lXHi = (int)Math.floor(lScanLine[n + 1] - 0.5);
 
         // Limit low and high x to image dimensions
         if(lXLo < 0)

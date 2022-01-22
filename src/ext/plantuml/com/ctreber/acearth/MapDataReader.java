@@ -23,14 +23,14 @@ import ext.plantuml.com.ctreber.acearth.util.Polygon;
  * obtained by adding [dx,dy,dz] onto the previous [x,y,z] values. - the curves
  * are [must be!] non-self-intersecting and traced in a counter-clockwise
  * direction
- * 
+ *
  * the curves are sampled at a (roughly) a 20 mile resolution.
- * 
+ *
  * <p>
  * &copy; 2002 Christian Treber, ct@ctreber.com
- * 
+ *
  * @author Christian Treber, ct@ctreber.com
- * 
+ *
  */
 public class MapDataReader {
 	/** Point value scale (devide value by this number). */
@@ -43,17 +43,17 @@ public class MapDataReader {
 	/**
 	 * <p>
 	 * Read map data.
-	 * 
+	 *
 	 * @return Array of map polygons.
 	 * @throws IOException
 	 */
 	public static Polygon[] readMapData() throws IOException {
 		final List lines = new MapData().getLines();
-		
+
 		fData = new ArrayList();
 		for (Iterator it = lines.iterator(); it.hasNext(); ) {
 			String lLine = (String) it.next();
-			if (lLine.indexOf("/*") != -1) {
+			if (lLine.contains("/*")) {
 				// Filter out comments.
 				continue;
 			}
@@ -61,7 +61,7 @@ public class MapDataReader {
 			StringTokenizer lST = new StringTokenizer(lLine, ", ");
 			while (lST.hasMoreTokens()) {
 				String lToken = lST.nextToken();
-				final Integer lValue = new Integer(lToken);
+				final Integer lValue = Integer.valueOf(lToken);
 				fData.add(lValue);
 			}
 		}
@@ -96,7 +96,7 @@ public class MapDataReader {
 	/**
 	 * <p>
 	 * Get value of raw data at specified point.
-	 * 
+	 *
 	 * @param pIndex
 	 *            Index of value.
 	 * @return Value of raw data at specified point.
