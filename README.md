@@ -8,9 +8,9 @@ PlantUML
 [![GitHub forks](https://img.shields.io/github/forks/plantuml/plantuml)](https://github.com/plantuml/plantuml/network/)
 [![GitHub all releases](https://img.shields.io/sourceforge/dt/plantuml?color=blue)](https://github.com/plantuml/plantuml/releases)
 
-[![online](https://img.shields.io/endpoint?url=https://plantuml.io/plantuml/badge)](https://plantuml.io)
-[![rate](https://img.shields.io/endpoint?url=https://plantuml.io/plantuml/rate)](https://plantuml.io)
-[![peak](https://img.shields.io/endpoint?url=https://plantuml.io/plantuml/rate?peak)](https://plantuml.io)
+[![online](https://img.shields.io/endpoint?url=https://www.plantuml.com/plantuml/badge)](https://plantuml.io)
+[![rate](https://img.shields.io/endpoint?url=https://www.plantuml.com/plantuml/rate)](https://plantuml.io)
+[![peak](https://img.shields.io/endpoint?url=https://www.plantuml.com/plantuml/rate?peak)](https://plantuml.io)
 
 [![Release (latest by date)](https://img.shields.io/github/v/release/plantuml/plantuml)](https://github.com/plantuml/plantuml/releases/latest)
 [![Release Date](https://img.shields.io/github/release-date/plantuml/plantuml?color=blue)](https://github.com/plantuml/plantuml/releases/latest)
