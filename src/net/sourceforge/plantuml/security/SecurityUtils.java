@@ -173,6 +173,9 @@ public class SecurityUtils {
 		if ("true".equalsIgnoreCase(env)) {
 			return true;
 		}
+		if ("false".equalsIgnoreCase(env)) {
+			return false;
+		}
 		return OptionFlags.ALLOW_INCLUDE;
 	}
 
