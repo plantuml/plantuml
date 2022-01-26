@@ -359,7 +359,8 @@ public class Cluster implements Moveable {
 				return;
 			}
 			final boolean isState = umlDiagramType == UmlDiagramType.STATE;
-			if (isState) {
+
+			if (isState && group.getUSymbol() == null) {
 				if (group.getColors().getSpecificLineStroke() != null) {
 					strokeForState = group.getColors().getSpecificLineStroke();
 				}

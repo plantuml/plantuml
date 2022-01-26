@@ -55,6 +55,7 @@ import net.sourceforge.plantuml.cucadiagram.IGroup;
 import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.NamespaceStrategy;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
+import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
@@ -62,15 +63,15 @@ import net.sourceforge.plantuml.statediagram.StateDiagram;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
-public class CommandCreatePackageState extends SingleLineCommand2<StateDiagram> {
+public class CommandCreatePackage2 extends SingleLineCommand2<StateDiagram> {
 
-	public CommandCreatePackageState() {
+	public CommandCreatePackage2() {
 		super(getRegexConcat());
 	}
 
 	private static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandCreatePackageState.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("state"), //
+		return RegexConcat.build(CommandCreatePackage2.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("frame"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexOr(//
 						new RegexConcat(//
@@ -118,12 +119,13 @@ public class CommandCreatePackageState extends SingleLineCommand2<StateDiagram> 
 		if (display == null)
 			display = code.getName();
 
-		diagram.gotoGroup(idNewLong, code, Display.getWithNewlines(display), GroupType.STATE, currentPackage,
+		diagram.gotoGroup(idNewLong, code, Display.getWithNewlines(display), GroupType.PACKAGE, currentPackage,
 				NamespaceStrategy.SINGLE);
 		final IEntity p = diagram.getCurrentGroup();
 		final String stereotype = arg.get("STEREOTYPE", 0);
 		if (stereotype != null)
 			p.setStereotype(Stereotype.build(stereotype));
+		p.setUSymbol(USymbol.FRAME);
 
 		final String urlString = arg.get("URL", 0);
 		if (urlString != null) {

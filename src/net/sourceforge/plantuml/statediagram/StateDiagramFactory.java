@@ -55,6 +55,7 @@ import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.statediagram.command.CommandAddField;
 import net.sourceforge.plantuml.statediagram.command.CommandConcurrentState;
+import net.sourceforge.plantuml.statediagram.command.CommandCreatePackage2;
 import net.sourceforge.plantuml.statediagram.command.CommandCreatePackageState;
 import net.sourceforge.plantuml.statediagram.command.CommandCreateState;
 import net.sourceforge.plantuml.statediagram.command.CommandEndState;
@@ -78,6 +79,7 @@ public class StateDiagramFactory extends PSystemCommandFactory {
 		cmds.add(new CommandLinkState());
 		cmds.add(new CommandLinkStateReverse());
 		cmds.add(new CommandCreatePackageState());
+		cmds.add(new CommandCreatePackage2());
 		cmds.add(new CommandEndState());
 		cmds.add(new CommandAddField());
 		cmds.add(new CommandConcurrentState());
