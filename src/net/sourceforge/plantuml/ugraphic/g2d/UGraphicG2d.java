@@ -55,6 +55,7 @@ import net.sourceforge.plantuml.anim.AffineTransformation;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.png.PngIO;
 import net.sourceforge.plantuml.posimo.DotPath;
+import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
 import net.sourceforge.plantuml.ugraphic.AbstractUGraphic;
 import net.sourceforge.plantuml.ugraphic.UAntiAliasing;
@@ -82,7 +83,7 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> implements EnsureV
 
 	private UAntiAliasing antiAliasing = UAntiAliasing.ANTI_ALIASING_ON;
 
-	private/* final */List<Url> urls = new ArrayList<>();
+	private List<Url> urls = new ArrayList<>();
 	private Set<Url> allUrls = new HashSet<>();
 
 	private final boolean hasAffineTransform;
@@ -116,22 +117,22 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> implements EnsureV
 		register(dpiFactor);
 	}
 
-	public UGraphicG2d(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder, Graphics2D g2d, double dpiFactor) {
+	public UGraphicG2d(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder, Graphics2D g2d,
+			double dpiFactor) {
 		this(defaultBackground, colorMapper, stringBounder, g2d, dpiFactor, null, 0, 0);
 	}
 
-	public UGraphicG2d(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder, Graphics2D g2d, double dpiFactor,
-			AffineTransformation affineTransform, double dx, double dy) {
+	public UGraphicG2d(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder, Graphics2D g2d,
+			double dpiFactor, AffineTransformation affineTransform, double dx, double dy) {
 		super(defaultBackground, colorMapper, stringBounder, g2d);
 		this.hasAffineTransform = affineTransform != null;
 		this.dpiFactor = dpiFactor;
-		if (dpiFactor != 1.0) {
+		if (dpiFactor != 1.0)
 			g2d.scale(dpiFactor, dpiFactor);
-		}
+
 		if (this.hasAffineTransform) {
-			if (dx != 0 || dy != 0) {
+			if (dx != 0 || dy != 0)
 				getGraphicObject().transform(AffineTransform.getTranslateInstance(dx, dy));
-			}
 			getGraphicObject().transform(affineTransform.getAffineTransform());
 		}
 		register(dpiFactor);
@@ -176,21 +177,28 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> implements EnsureV
 		return dpiFactor;
 	}
 
+	@Override
 	public void startUrl(Url url) {
-		urls.add(Objects.requireNonNull(url));
-		allUrls.add(url);
+		Objects.requireNonNull(url);
+		// javascript: security issue
+		if (SecurityUtils.ignoreThisLink(url.getUrl())) {
+			urls.add(null);
+		} else {
+			urls.add(url);
+			allUrls.add(url);
+		}
 	}
 
+	@Override
 	public void closeUrl() {
 		urls.remove(urls.size() - 1);
 	}
 
 	public void ensureVisible(double x, double y) {
-		for (Url u : urls) {
-			if (getClip() == null || getClip().isInside(x, y)) {
+		for (Url u : urls)
+			if (u != null && (getClip() == null || getClip().isInside(x, y)))
 				u.ensureVisible(x, y);
-			}
-		}
+
 	}
 
 	public BufferedImage getBufferedImage() {
