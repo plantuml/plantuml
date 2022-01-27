@@ -12,6 +12,6 @@ trim_trailing_whitespace = true
 max_line_length = off
 trim_trailing_whitespace = false
 
-[pom.xml, *.yml]
+[{pom.xml, *.yml}]
 indent_style = space
 
