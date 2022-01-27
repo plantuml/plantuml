@@ -113,6 +113,7 @@ public class Segment {
 				return Collections.unmodifiableCollection(result2);
 			}
 			if (this.contains(pause)) {
+				assert pendingStart < pause.pos1;
 				result2.add(new Segment(pendingStart, pause.pos1));
 				pendingStart = pause.pos2;
 			}
