@@ -114,10 +114,12 @@ public class UGraphicEps extends AbstractUGraphic<EpsGraphics> implements ClipCo
 		return ug.getEPSCode();
 	}
 
+	@Override
 	public void startUrl(Url url) {
 		getGraphicObject().openLink(url.getUrl());
 	}
 
+	@Override
 	public void closeUrl() {
 		getGraphicObject().closeLink();
 	}

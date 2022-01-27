@@ -912,9 +912,9 @@ public class SvgGraphics {
 		Objects.requireNonNull(url);
 
 		// javascript: security issue
-		if (SecurityUtils.getJavascriptUnsecure() == false && url.toLowerCase().startsWith("javascript")) {
+		if (SecurityUtils.ignoreThisLink(url))
 			return;
-		}
+		
 
 		if (pendingAction.size() > 0) {
 			closeLink();

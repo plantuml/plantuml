@@ -89,10 +89,12 @@ public class UGraphicTikz extends AbstractUGraphic<TikzGraphics> implements Clip
 		registerDriver(UCenteredCharacter.class, new DriverCenteredCharacterTikz2());
 	}
 
+	@Override
 	public void startUrl(Url url) {
 		getGraphicObject().openLink(url.getUrl(), url.getTooltip());
 	}
 
+	@Override
 	public void closeUrl() {
 		getGraphicObject().closeLink();
 	}

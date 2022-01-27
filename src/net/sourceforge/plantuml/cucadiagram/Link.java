@@ -104,23 +104,20 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 	private Url url;
 
 	public String idCommentForSvg() {
-		if (type.looksLikeRevertedForSvg()) {
-			final String comment = getEntity1().getCodeGetName() + "-backto-" + getEntity2().getCodeGetName();
-			return comment;
-		}
-		if (type.looksLikeNoDecorAtAllSvg()) {
-			final String comment = getEntity1().getCodeGetName() + "-" + getEntity2().getCodeGetName();
-			return comment;
-		}
-		final String comment = getEntity1().getCodeGetName() + "-to-" + getEntity2().getCodeGetName();
-		return comment;
+		if (type.looksLikeRevertedForSvg())
+			return getEntity1().getCodeGetName() + "-backto-" + getEntity2().getCodeGetName();
+
+		if (type.looksLikeNoDecorAtAllSvg())
+			return getEntity1().getCodeGetName() + "-" + getEntity2().getCodeGetName();
+
+		return getEntity1().getCodeGetName() + "-to-" + getEntity2().getCodeGetName();
 	}
 
 	public UComment commentForSvg() {
-		if (type.looksLikeRevertedForSvg()) {
+		if (type.looksLikeRevertedForSvg())
 			return new UComment(
 					"reverse link " + getEntity1().getCodeGetName() + " to " + getEntity2().getCodeGetName());
-		}
+
 		return new UComment("link " + getEntity1().getCodeGetName() + " to " + getEntity2().getCodeGetName());
 	}
 
@@ -158,33 +155,15 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 		this.labeldistance = labeldistance;
 		this.labelangle = labelangle;
 		this.setSpecificColor(specificColor);
-		if (qualifier1 != null) {
+		if (qualifier1 != null)
 			((ILeaf) cl1).setNearDecoration(true);
-		}
-		if (qualifier2 != null) {
+
+		if (qualifier2 != null)
 			((ILeaf) cl2).setNearDecoration(true);
-		}
-		// if (type.getDecor2() == LinkDecor.EXTENDS) {
-		// setSametail(cl1.getUid());
-		// }
+
 	}
 
-	// private static boolean doWeHaveToRemoveUrlAtStart(Display label) {
-	// if (label.size() == 0) {
-	// return false;
-	// }
-	// final String s = label.get(0).toString();
-	// if (s.matches("^\\[\\[\\S+\\]\\].+$")) {
-	// return true;
-	// }
-	// return false;
-	// }
-
 	public Link getInv() {
-		// if (getLength() == 1) {
-		// final int x = cl1.getXposition();
-		// cl2.setXposition(x-1);
-		// }
 		final Link result = new Link(cl2, cl1, getType().getInversed(), label, length, qualifier2, qualifier1,
 				labeldistance, labelangle, getSpecificColor(), styleBuilder);
 		result.inverted = !this.inverted;
@@ -193,6 +172,7 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 		result.url = this.url;
 		result.linkConstraint = this.linkConstraint;
 		result.stereotype = stereotype;
+		result.visibilityModifier = visibilityModifier;
 		return result;
 	}
 
@@ -216,9 +196,9 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 	}
 
 	public final boolean isInvis() {
-		if (type.isInvisible()) {
+		if (type.isInvisible())
 			return true;
-		}
+
 		return invis;
 	}
 
@@ -227,12 +207,12 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 	}
 
 	public boolean isBetween(IEntity cl1, IEntity cl2) {
-		if (cl1.equals(this.cl1) && cl2.equals(this.cl2)) {
+		if (cl1.equals(this.cl1) && cl2.equals(this.cl2))
 			return true;
-		}
-		if (cl1.equals(this.cl2) && cl2.equals(this.cl1)) {
+
+		if (cl1.equals(this.cl2) && cl2.equals(this.cl1))
 			return true;
-		}
+
 		return false;
 	}
 
@@ -259,40 +239,40 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 
 	@Override
 	public LinkType getType() {
-		if (opale) {
+		if (opale)
 			return new LinkType(LinkDecor.NONE, LinkDecor.NONE);
-		}
-		if (getSametail() != null) {
+
+		if (getSametail() != null)
 			return new LinkType(LinkDecor.NONE, LinkDecor.NONE);
-		}
+
 		LinkType result = type;
 		if (OptionFlags.USE_INTERFACE_EYE1) {
-			if (isLollipopInterfaceEye(cl1)) {
+			if (isLollipopInterfaceEye(cl1))
 				type = type.withLollipopInterfaceEye1();
-			}
-			if (isLollipopInterfaceEye(cl2)) {
+
+			if (isLollipopInterfaceEye(cl2))
 				type = type.withLollipopInterfaceEye2();
-			}
+
 		}
 		return result;
 	}
 
 	private boolean isReallyGroup(IEntity ent) {
-		if (ent.isGroup() == false) {
+		if (ent.isGroup() == false)
 			return false;
-		}
+
 		final IGroup group = (IGroup) ent;
 		return group.getChildren().size() + group.getLeafsDirect().size() > 0;
 	}
 
 	public LinkType getTypePatchCluster() {
 		LinkType result = getType();
-		if (isReallyGroup(getEntity1())) {
+		if (isReallyGroup(getEntity1()))
 			result = result.withoutDecors2();
-		}
-		if (isReallyGroup(getEntity2())) {
+
+		if (isReallyGroup(getEntity2()))
 			result = result.withoutDecors1();
-		}
+
 		return result;
 	}
 
@@ -302,12 +282,12 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 		}
 		LinkType result = type;
 		if (OptionFlags.USE_INTERFACE_EYE1) {
-			if (isLollipopInterfaceEye(cl1)) {
+			if (isLollipopInterfaceEye(cl1))
 				type = type.withLollipopInterfaceEye1();
-			}
-			if (isLollipopInterfaceEye(cl2)) {
+
+			if (isLollipopInterfaceEye(cl2))
 				type = type.withLollipopInterfaceEye2();
-			}
+
 		}
 		return result;
 	}
@@ -375,39 +355,39 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 	}
 
 	public boolean isAutoLinkOfAGroup() {
-		if (getEntity1().isGroup() == false) {
+		if (getEntity1().isGroup() == false)
 			return false;
-		}
-		if (getEntity2().isGroup() == false) {
+
+		if (getEntity2().isGroup() == false)
 			return false;
-		}
-		if (getEntity1() == getEntity2()) {
+
+		if (getEntity1() == getEntity2())
 			return true;
-		}
+
 		return false;
 	}
 
 	public boolean containsType(LeafType type) {
-		if (getEntity1().getLeafType() == type || getEntity2().getLeafType() == type) {
+		if (getEntity1().getLeafType() == type || getEntity2().getLeafType() == type)
 			return true;
-		}
+
 		return false;
 	}
 
 	public boolean contains(IEntity entity) {
-		if (getEntity1() == entity || getEntity2() == entity) {
+		if (getEntity1() == entity || getEntity2() == entity)
 			return true;
-		}
+
 		return false;
 	}
 
 	public IEntity getOther(IEntity entity) {
-		if (getEntity1() == entity) {
+		if (getEntity1() == entity)
 			return getEntity2();
-		}
-		if (getEntity2() == entity) {
+
+		if (getEntity2() == entity)
 			return getEntity1();
-		}
+
 		throw new IllegalArgumentException();
 	}
 
@@ -455,9 +435,9 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 	}
 
 	public final LinkArrow getLinkArrow() {
-		if (inverted) {
+		if (inverted)
 			return linkArrow.reverse();
-		}
+
 		return linkArrow;
 	}
 
@@ -495,28 +475,28 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 	}
 
 	public boolean sameConnections(Link other) {
-		if (this.cl1 == other.cl1 && this.cl2 == other.cl2) {
+		if (this.cl1 == other.cl1 && this.cl2 == other.cl2)
 			return true;
-		}
-		if (this.cl1 == other.cl2 && this.cl2 == other.cl1) {
+
+		if (this.cl1 == other.cl2 && this.cl2 == other.cl1)
 			return true;
-		}
+
 		return false;
 	}
 
 	public boolean doesTouch(Link other) {
-		if (this.cl1 == other.cl1) {
+		if (this.cl1 == other.cl1)
 			return true;
-		}
-		if (this.cl1 == other.cl2) {
+
+		if (this.cl1 == other.cl2)
 			return true;
-		}
-		if (this.cl2 == other.cl1) {
+
+		if (this.cl2 == other.cl1)
 			return true;
-		}
-		if (this.cl2 == other.cl2) {
+
+		if (this.cl2 == other.cl2)
 			return true;
-		}
+
 		return false;
 	}
 
@@ -529,9 +509,9 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 	}
 
 	public boolean hasUrl() {
-		if (Display.isNull(label) == false && label.hasUrl()) {
+		if (Display.isNull(label) == false && label.hasUrl())
 			return true;
-		}
+
 		return getUrl() != null;
 	}
 
@@ -546,12 +526,12 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 	public void setPortMembers(String port1, String port2) {
 		this.port1 = port1;
 		this.port2 = port2;
-		if (port1 != null) {
+		if (port1 != null)
 			((ILeaf) cl1).addPortShortName(port1);
-		}
-		if (port2 != null) {
+
+		if (port2 != null)
 			((ILeaf) cl2).addPortShortName(port2);
-		}
+
 	}
 
 	public final VisibilityModifier getVisibilityModifier() {
@@ -581,9 +561,9 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 	private LineLocation codeLine;
 
 	public String getCodeLine() {
-		if (codeLine == null) {
+		if (codeLine == null)
 			return null;
-		}
+
 		return "" + codeLine.getPosition();
 	}
 

@@ -97,29 +97,29 @@ public class SecurityUtils {
 	public static final String PATHS_ALLOWED = "plantuml.allowlist.path";
 
 	/**
-	 * Paths to folders with security specific content (not allowed to read via SFile).
+	 * Paths to folders with security specific content (not allowed to read via
+	 * SFile).
 	 */
 	public static final String PATHS_SECURITY = "plantuml.security.credentials.path";
 
 	public static final String SECURITY_ALLOW_NONSSL_AUTH = "plantuml.security.allowNonSSLAuth";
 
 	/**
-	 * Standard BasicAuth authentication interceptor, to generate a SecurityAuthentication from credentials.
+	 * Standard BasicAuth authentication interceptor, to generate a
+	 * SecurityAuthentication from credentials.
 	 */
-	private static final SecurityAuthorizeManager PUBLIC_AUTH_MANAGER
-			= new SecurityDefaultNoopAuthorizeManager();
+	private static final SecurityAuthorizeManager PUBLIC_AUTH_MANAGER = new SecurityDefaultNoopAuthorizeManager();
 
 	/**
 	 * Standard interceptor for public endpoint access.
 	 */
-	private static final SecurityAccessInterceptor PUBLIC_ACCESS_INTERCEPTOR
-			= new SecurityDefaultNoopAccessInterceptor();
+	private static final SecurityAccessInterceptor PUBLIC_ACCESS_INTERCEPTOR = new SecurityDefaultNoopAccessInterceptor();
 
 	/**
-	 * Standard TokenAuth authorize manager, to generate a SecurityAuthentication from credentials.
+	 * Standard TokenAuth authorize manager, to generate a SecurityAuthentication
+	 * from credentials.
 	 */
-	private static final SecurityAuthorizeManager TOKEN_AUTH_MANAGER
-			= new TokenAuthAuthorizeManager();
+	private static final SecurityAuthorizeManager TOKEN_AUTH_MANAGER = new TokenAuthAuthorizeManager();
 
 	/**
 	 * Standard token access interceptor.
@@ -127,10 +127,10 @@ public class SecurityUtils {
 	private static final SecurityAccessInterceptor TOKEN_ACCESS_INTERCEPTOR = new TokenAuthAccessInterceptor();
 
 	/**
-	 * Standard BasicAuth authorize manager, to generate a SecurityAuthentication from credentials.
+	 * Standard BasicAuth authorize manager, to generate a SecurityAuthentication
+	 * from credentials.
 	 */
-	private static final SecurityAuthorizeManager BASICAUTH_AUTH_MANAGER
-			= new BasicAuthAuthorizeManager();
+	private static final SecurityAuthorizeManager BASICAUTH_AUTH_MANAGER = new BasicAuthAuthorizeManager();
 
 	/**
 	 * Standard BasicAuth access interceptor.
@@ -140,14 +140,12 @@ public class SecurityUtils {
 	/**
 	 * OAuth2 client credentials authorization manager.
 	 */
-	private static final SecurityAuthorizeManager OAUTH2_CLIENT_AUTH_MANAGER
-			= new OAuth2ClientAccessAuthorizeManager();
+	private static final SecurityAuthorizeManager OAUTH2_CLIENT_AUTH_MANAGER = new OAuth2ClientAccessAuthorizeManager();
 
 	/**
 	 * OAuth2 resource owner authorization manager.
 	 */
-	private static final SecurityAuthorizeManager OAUTH2_RESOURCEOWNER_AUTH_MANAGER
-			= new OAuth2ResourceOwnerAccessAuthorizeManager();
+	private static final SecurityAuthorizeManager OAUTH2_RESOURCEOWNER_AUTH_MANAGER = new OAuth2ResourceOwnerAccessAuthorizeManager();
 
 	/**
 	 * Standard 'bearer' OAuth2 access interceptor.
@@ -168,15 +166,19 @@ public class SecurityUtils {
 		return current;
 	}
 
-	public static boolean getJavascriptUnsecure() {
-		final String env = getenv("PLANTUML_JAVASCRIPT_UNSECURE");
-		if ("true".equalsIgnoreCase(env)) {
+	public static boolean ignoreThisLink(String url) {
+		if (allowJavascriptInLink() == false && isJavascriptLink(url))
 			return true;
-		}
-		if ("false".equalsIgnoreCase(env)) {
-			return false;
-		}
-		return OptionFlags.ALLOW_INCLUDE;
+		return false;
+	}
+
+	private static boolean isJavascriptLink(String url) {
+		return url.toLowerCase().replaceAll("[^a-z]", "").startsWith("javascript");
+	}
+
+	private static boolean allowJavascriptInLink() {
+		final String env = getenv("PLANTUML_ALLOW_JAVASCRIPT_IN_LINK");
+		return "true".equalsIgnoreCase(env);
 	}
 
 	public static String getenv(String name) {
@@ -188,8 +190,8 @@ public class SecurityUtils {
 	}
 
 	/**
-	 * Checks the environment variable and returns true if the variable is used in security context. In this case, the
-	 * value should not be displayed in scripts.
+	 * Checks the environment variable and returns true if the variable is used in
+	 * security context. In this case, the value should not be displayed in scripts.
 	 *
 	 * @param name Environment variable to check
 	 * @return true, if this is a secret variable
@@ -201,7 +203,8 @@ public class SecurityUtils {
 	/**
 	 * Configuration for Non-SSL authentication methods.
 	 *
-	 * @return true, if plantUML should allow authentication in plain connections (without encryption).
+	 * @return true, if plantUML should allow authentication in plain connections
+	 *         (without encryption).
 	 * @see #SECURITY_ALLOW_NONSSL_AUTH
 	 */
 	public static boolean isNonSSLAuthenticationAllowed() {
@@ -336,7 +339,8 @@ public class SecurityUtils {
 	public static boolean existsSecurityCredentials(String userToken) {
 		SFile securityPath = getSecurityPath();
 		if (securityPath != null) {
-			// SFile does not allow access to the security path (to hide the credentials in DSL scripts)
+			// SFile does not allow access to the security path (to hide the credentials in
+			// DSL scripts)
 			File securityFilePath = securityPath.conv();
 			File userCredentials = new File(securityFilePath, userToken + ".credential");
 			return userCredentials.exists() && userCredentials.canRead() && !userCredentials.isDirectory()
@@ -356,7 +360,8 @@ public class SecurityUtils {
 		if (userToken != null && checkFileSystemSaveCharactersStrict(userToken) && !NO_CREDENTIALS.equals(userToken)) {
 			final SFile securityPath = getSecurityPath();
 			if (securityPath != null) {
-				// SFile does not allow access to the security path (to hide the credentials in DSL scripts)
+				// SFile does not allow access to the security path (to hide the credentials in
+				// DSL scripts)
 				File securityFilePath = securityPath.conv();
 				File userCredentials = new File(securityFilePath, userToken + ".credential");
 				JsonValue jsonValue = loadJson(userCredentials);
@@ -367,8 +372,8 @@ public class SecurityUtils {
 	}
 
 	/**
-	 * Checks, if the token of a pathname (filename, ext, directory-name) uses only a very strict set of characters and
-	 * not longer than 64 characters.
+	 * Checks, if the token of a pathname (filename, ext, directory-name) uses only
+	 * a very strict set of characters and not longer than 64 characters.
 	 * <p>
 	 * Only characters from a to Z, Numbers and - are allowed.
 	 *
@@ -377,15 +382,16 @@ public class SecurityUtils {
 	 * @see #SECURE_CHARS
 	 */
 	private static boolean checkFileSystemSaveCharactersStrict(String pathNameToken) {
-		return StringUtils.isNotEmpty(pathNameToken)
-				&& SECURE_CHARS.matcher(pathNameToken).matches() && pathNameToken.length() <= 64;
+		return StringUtils.isNotEmpty(pathNameToken) && SECURE_CHARS.matcher(pathNameToken).matches()
+				&& pathNameToken.length() <= 64;
 	}
 
 	/**
 	 * Loads the path to the configured security folder, if existing.
 	 * <p>
-	 * Please note: A SFile referenced to a security folder cannot access the files. The content of the files in the
-	 * security path should never have passed to DSL scripts.
+	 * Please note: A SFile referenced to a security folder cannot access the files.
+	 * The content of the files in the security path should never have passed to DSL
+	 * scripts.
 	 *
 	 * @return SFile folder or null
 	 */
@@ -401,9 +407,9 @@ public class SecurityUtils {
 		return null;
 	}
 
-
 	/**
-	 * Loads a file as JSON object. If no file exists or the file is not parsable, the method returns an empty JSON.
+	 * Loads a file as JSON object. If no file exists or the file is not parsable,
+	 * the method returns an empty JSON.
 	 *
 	 * @param jsonFile file path to the JSON file
 	 * @return a Json vale (maybe empty)

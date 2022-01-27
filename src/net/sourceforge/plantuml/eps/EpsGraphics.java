@@ -43,6 +43,7 @@ import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.Log;
+import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.ugraphic.ShadowManager;
 import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.USegment;
@@ -790,6 +791,10 @@ public class EpsGraphics {
 	}
 
 	public void openLink(String url) {
+		// javascript: security issue
+		if (SecurityUtils.ignoreThisLink(url))
+			return;
+
 		this.urlArea = new UrlArea(url);
 	}
 

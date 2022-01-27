@@ -78,11 +78,13 @@ public abstract class UGraphicDelegator implements UGraphic {
 	public ColorMapper getColorMapper() {
 		return ug.getColorMapper();
 	}
-
+	
+	@Override
 	public void startUrl(Url url) {
 		ug.startUrl(url);
 	}
 
+	@Override
 	public void closeUrl() {
 		ug.closeUrl();
 	}
