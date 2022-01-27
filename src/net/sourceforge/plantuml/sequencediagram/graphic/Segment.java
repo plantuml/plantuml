@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
@@ -62,7 +62,7 @@ public class Segment {
 
 	@Override
 	public int hashCode() {
-		return new Double(pos1).hashCode() + new Double(pos2).hashCode();
+		return Double.valueOf(pos1).hashCode() + Double.valueOf(pos2).hashCode();
 	}
 
 	final public boolean contains(double y) {
@@ -113,8 +113,7 @@ public class Segment {
 				return Collections.unmodifiableCollection(result2);
 			}
 			if (this.contains(pause)) {
-				if (pendingStart < pause.pos1)
-					result2.add(new Segment(pendingStart, pause.pos1));
+				result2.add(new Segment(pendingStart, pause.pos1));
 				pendingStart = pause.pos2;
 			}
 		}

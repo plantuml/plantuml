@@ -51,15 +51,15 @@ import jcckit.util.TicLabelFormat;
  * <p>
  * Examples:
  * <pre><tt>
- * 1=monday;2=tuesday;3=wednesday;4=thursday;5=friday;6=saturday;7=sunday 
- * 0.5:1.5=I; 1.5:2.5 = II; 2.5:3.5 = III; the rest 
+ * 1=monday;2=tuesday;3=wednesday;4=thursday;5=friday;6=saturday;7=sunday
+ * 0.5:1.5=I; 1.5:2.5 = II; 2.5:3.5 = III; the rest
  * </tt></pre>
- * 
+ *
  * @author Franz-Josef Elmer
  */
 public class TicLabelMap implements TicLabelFormat {
   public static final String MAP_KEY = "map";
-  
+
   private static class MapItem {
     private double _min = Double.MIN_VALUE;
     private double _max = Double.MAX_VALUE;
@@ -73,7 +73,7 @@ public class TicLabelMap implements TicLabelFormat {
         item = item.substring(0, index).trim();
         index = item.indexOf(':');
         if (index < 0) {
-          _min = new Double(item).doubleValue();
+          _min = Double.parseDouble(item);
           _max = _min == 0 ? Double.MIN_VALUE : _min * 1.000001d;
           _min = _min * 0.999999d;
           if (_min > _max) {
@@ -82,18 +82,18 @@ public class TicLabelMap implements TicLabelFormat {
             _max = z;
           }
         } else {
-          _min = new Double(item.substring(0, index)).doubleValue();
-          _max = new Double(item.substring(index + 1)).doubleValue();
+          _min = Double.parseDouble(item.substring(0, index));
+          _max = Double.parseDouble(item.substring(index + 1));
         }
       }
     }
     public boolean isInside(double value) {
-      return value >= _min && value < _max; 
+      return value >= _min && value < _max;
     }
   }
-  
+
   private final MapItem[] _map;
-  
+
   /**
    * Creates an instance from the specified configuration parameters.
    * <table border=1 cellpadding=5>
@@ -113,12 +113,12 @@ public class TicLabelMap implements TicLabelFormat {
       try {
         _map[i] = new MapItem(item.trim());
       } catch (NumberFormatException e) {
-        throw new NumberFormatException("Item '" + item + "' of " 
+        throw new NumberFormatException("Item '" + item + "' of "
             + config.getFullKey(MAP_KEY) + " has an invalid number.");
       }
     }
   }
-  
+
   /**
    * Maps the specified tic value onto a text label in accordance
    * with the map description.

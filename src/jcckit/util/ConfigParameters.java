@@ -79,7 +79,7 @@ public class ConfigParameters {
   }
 
   /**
-   * Returns the string value associated with the specified key or 
+   * Returns the string value associated with the specified key or
    * <tt>defaultValue</tt> if undefined.
    * @param key The (relative) key. <tt>null</tt> is not allowed.
    * @param defaultValue The default value. Can be <tt>null</tt>.
@@ -104,7 +104,7 @@ public class ConfigParameters {
   public boolean getBoolean(String key) {
     return parseBoolean(get(key), key);
   }
-  
+
   /**
    * Returns the boolean associated with the specified key.
    * @param key The (relative) key. <tt>null</tt> is not allowed.
@@ -116,7 +116,7 @@ public class ConfigParameters {
     String value = _configData.get(key);
     return value == null ? defaultValue : parseBoolean(value, key);
   }
-  
+
   private boolean parseBoolean(String value, String key) {
     if (value.equals("true")) {
       return true;
@@ -126,19 +126,19 @@ public class ConfigParameters {
       throw createNumberFormatException("boolean", value, key);
     }
   }
-  
-  private NumberFormatException createNumberFormatException(String text, 
-                                                            String value, 
+
+  private NumberFormatException createNumberFormatException(String text,
+                                                            String value,
                                                             String key) {
-    return new NumberFormatException("Not a " + text + ": " + getFullKey(key) 
+    return new NumberFormatException("Not a " + text + ": " + getFullKey(key)
                                      + " = " + value);
   }
 
   /**
    * Returns the integer associated with the specified key.
-   * The value can be either 
-   * <ul><li>a decimal number (starting with a non-zero digit), 
-   *     <li>a hexadecimal number (starting with <tt>0x</tt>), or 
+   * The value can be either
+   * <ul><li>a decimal number (starting with a non-zero digit),
+   *     <li>a hexadecimal number (starting with <tt>0x</tt>), or
    *     <li>an octal number (starting with zero).
    * </ul>
    * @param key The (relative) key. <tt>null</tt> is not allowed.
@@ -153,11 +153,11 @@ public class ConfigParameters {
   }
 
   /**
-   * Returns the integer associated with the specified key or 
+   * Returns the integer associated with the specified key or
    * <tt>defaultValue</tt> if no key-value pair exists for the specified key.
-   * The value can be either 
-   * <ul><li>a decimal number (starting with a non-zero digit), 
-   *     <li>a hexadecimal number (starting with <tt>0x</tt>), or 
+   * The value can be either
+   * <ul><li>a decimal number (starting with a non-zero digit),
+   *     <li>a hexadecimal number (starting with <tt>0x</tt>), or
    *     <li>an octal number (starting with zero).
    * </ul>
    * @param key The (relative) key. <tt>null</tt> is not allowed.
@@ -193,12 +193,12 @@ public class ConfigParameters {
   }
 
   /**
-   * Returns the double associated with the specified key or 
+   * Returns the double associated with the specified key or
    * <tt>defaultValue</tt> if no key-value pair exists for the specified key.
    * @param key The (relative) key. <tt>null</tt> is not allowed.
    * @param defaultValue The default value. Can be <tt>null</tt>.
    * @return the double value.
-   * @throws NumberFormatException if the value exists but is not a valid 
+   * @throws NumberFormatException if the value exists but is not a valid
    *         number.
    *         The exception message contains the full key and the invalid value.
    */
@@ -209,7 +209,7 @@ public class ConfigParameters {
 
   private double parseDouble(String value, String key) {
     try {
-      return new Double(value).doubleValue();
+      return Double.parseDouble(value);
     } catch (NumberFormatException e) {
       throw createNumberFormatException("number", value, key);
     }
@@ -251,7 +251,7 @@ public class ConfigParameters {
       StringTokenizer tokenizer = new StringTokenizer(value);
       double[] result = new double[tokenizer.countTokens()];
       for (int i = 0; i < result.length; i++) {
-        result[i] = new Double(tokenizer.nextToken()).doubleValue();
+        result[i] = Double.parseDouble(tokenizer.nextToken());
       }
       return result;
     } catch (NumberFormatException e) {
@@ -261,9 +261,9 @@ public class ConfigParameters {
 
   /**
    * Returns the color associated with the specified key.
-   * The color is coded as 
-   * <ul><li>a decimal number (starting with a non-zero digit), 
-   *     <li>a hexadecimal number (starting with <tt>0x</tt>), or 
+   * The color is coded as
+   * <ul><li>a decimal number (starting with a non-zero digit),
+   *     <li>a hexadecimal number (starting with <tt>0x</tt>), or
    *     <li>an octal number (starting with zero).
    * </ul>
    * @param key The (relative) key. <tt>null</tt> is not allowed.
@@ -278,9 +278,9 @@ public class ConfigParameters {
   /**
    * Returns the color associated with the specified key or the specified
    * default value if no key-value pair exists for the specified key.
-   * The color is coded as 
-   * <ul><li>a decimal number (starting with a non-zero digit), 
-   *     <li>a hexadecimal number (starting with <tt>0x</tt>), or 
+   * The color is coded as
+   * <ul><li>a decimal number (starting with a non-zero digit),
+   *     <li>a hexadecimal number (starting with <tt>0x</tt>), or
    *     <li>an octal number (starting with zero).
    * </ul>
    * @param key The (relative) key. <tt>null</tt> is not allowed.
@@ -313,7 +313,7 @@ private Color decodeInternal(String value) {
 	}
 	return Color.decode(value);
 }
-  
+
   /**
    * Returns the child node associated with the specified key.
    * This method returns in any case a non-<tt>null</tt> result.

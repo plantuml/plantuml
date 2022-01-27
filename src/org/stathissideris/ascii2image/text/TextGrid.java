@@ -1,6 +1,6 @@
 /*
  * DiTAA - Diagrams Through Ascii Art
- * 
+ *
  * Copyright (C) 2004 Efstathios Sideris
  *
  * This program is free software; you can redistribute it and/or
@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- *   
+ *
  */
 package org.stathissideris.ascii2image.text;
 
@@ -35,7 +35,7 @@ import org.stathissideris.ascii2image.core.ProcessingOptions;
 
 
 /**
- * 
+ *
  * @author Efstathios Sideris
  */
 public class TextGrid {
@@ -52,7 +52,7 @@ public class TextGrid {
 	private static char[] cornerChars = {'\\', '/', '+'};
 	private static char[] pointMarkers = {'*'};
 	private static char[] dashedLines = {':', '~', '='};
-	
+
 	private static char[] entryPoints1 = {'\\'};
 	private static char[] entryPoints2 = {'|', ':', '+', '\\', '/'};
 	private static char[] entryPoints3 = {'/'};
@@ -72,7 +72,7 @@ public class TextGrid {
 		humanColorCodes.put("RED", "E32");
 		humanColorCodes.put("YEL", "FF3");
 		humanColorCodes.put("BLK", "000");
-		
+
 	}
 
 	private static HashSet<String> markupTags =
@@ -91,13 +91,13 @@ public class TextGrid {
 	public void addToMarkupTags(Collection<String> tags){
 		markupTags.addAll(tags);
 	}
-	
+
 
 
 	public TextGrid(){
 		rows = new ArrayList<StringBuffer>();
 	}
-	
+
 	public TextGrid(int width, int height){
 		String space = StringUtils.repeatString(" ", width);
 		rows = new ArrayList<StringBuffer>();
@@ -114,7 +114,7 @@ public class TextGrid {
 		rows = new ArrayList<StringBuffer>();
 		for(StringBuffer row : otherGrid.getRows()) {
 			rows.add(new StringBuffer(row));
-		}		
+		}
 	}
 
 	public void clear(){
@@ -122,7 +122,7 @@ public class TextGrid {
 		int height = getHeight();
 		rows.clear();
 		for(int i = 0; i < height; i++)
-			rows.add(new StringBuffer(blank)); 
+			rows.add(new StringBuffer(blank));
 	}
 
 //	duplicated code due to lots of hits to this function
@@ -142,7 +142,7 @@ public class TextGrid {
 			|| cell.y < 0) return 0;
 		return rows.get(cell.y).charAt(cell.x);
 	}
-	
+
 	public StringBuffer getRow(int y){
 		return rows.get(y);
 	}
@@ -171,7 +171,7 @@ public class TextGrid {
 			|| y > getHeight() - 1
 			|| x < 0
 			|| y < 0) return null;
-		return rows.get(y).substring(x, x + length);		
+		return rows.get(y).substring(x, x + length);
 	}
 
 	public char getNorthOf(int x, int y){ return get(x, y - 1); }
@@ -202,7 +202,7 @@ public class TextGrid {
 		StringBuffer row = rows.get(y);
 		row.setCharAt(x, c);
 	}
-	
+
 	public void setRow(int y, String row){
 		if(y > getHeight() || row.length() != getWidth())
 			throw new IllegalArgumentException("setRow out of bounds or string wrong size");
@@ -214,7 +214,7 @@ public class TextGrid {
 			throw new IllegalArgumentException("setRow out of bounds or string wrong size");
 		rows.set(y, row);
 	}
-	
+
 	public int getWidth(){
 		if(rows.size() == 0) return 0; //empty buffer
 		return rows.get(0).length();
@@ -232,10 +232,10 @@ public class TextGrid {
 			+StringUtils.repeatString("0123456789", (int) Math.floor(getWidth()/10)+1));
 		while(it.hasNext()){
 			String row = it.next().toString();
-			String index = new Integer(i).toString();
+			String index = Integer.valueOf(i).toString();
 			if(i < 10) index = " "+index;
 			System.out.println(index+" ("+row+")");
-			i++; 
+			i++;
 		}
 	}
 
@@ -248,12 +248,12 @@ public class TextGrid {
 			+StringUtils.repeatString("0123456789", (int) Math.floor(getWidth()/10)+1)+"\n");
 		while(it.hasNext()){
 			String row = it.next().toString();
-			String index = new Integer(i).toString();
+			String index = Integer.valueOf(i).toString();
 			if(i < 10) index = " "+index;
 			row = row.replaceAll("\n", "\\\\n");
 			row = row.replaceAll("\r", "\\\\r");
 			buffer.append(index+" ("+row+")\n");
-			i++; 
+			i++;
 		}
 		return buffer.toString();
 	}
@@ -264,9 +264,9 @@ public class TextGrid {
 
 	/**
 	 * Adds grid to this. Space characters in this grid
-	 * are replaced with the corresponding contents of 
+	 * are replaced with the corresponding contents of
 	 * grid, otherwise the contents are unchanged.
-	 * 
+	 *
 	 * @param grid
 	 * @return false if the grids are of different size
 	 */
@@ -297,7 +297,7 @@ public class TextGrid {
 				char c = get(xi, yi);
 				if(Character.isLetterOrDigit(c)) {
 					boolean isOnHorizontalLine = isOnHorizontalLine(xi, yi);
-					boolean isOnVerticalLine = isOnVerticalLine(xi, yi); 
+					boolean isOnVerticalLine = isOnVerticalLine(xi, yi);
 					if(isOnHorizontalLine && isOnVerticalLine){
 						set(xi, yi, '+');
 						if(DEBUG) System.out.println("replaced type on line '"+c+"' with +");
@@ -310,7 +310,7 @@ public class TextGrid {
 					}
 				}
 			}
-		}		
+		}
 	}
 
 	public void replacePointMarkersOnLine(){
@@ -322,7 +322,7 @@ public class TextGrid {
 				Cell cell = new Cell(xi, yi);
 				if(StringUtils.isOneOf(c, pointMarkers)
 						&& isStarOnLine(cell)){
-					
+
 					boolean isOnHorizontalLine = false;
 					if(StringUtils.isOneOf(get(cell.getEast()), horizontalLines))
 						isOnHorizontalLine = true;
@@ -334,7 +334,7 @@ public class TextGrid {
 						isOnVerticalLine = true;
 					if(StringUtils.isOneOf(get(cell.getSouth()), verticalLines))
 						isOnVerticalLine = true;
- 
+
 					if(isOnHorizontalLine && isOnVerticalLine){
 						set(xi, yi, '+');
 						if(DEBUG) System.out.println("replaced marker on line '"+c+"' with +");
@@ -347,7 +347,7 @@ public class TextGrid {
 					}
 				}
 			}
-		}		
+		}
 	}
 
 	public CellSet getPointMarkersOnLine(){
@@ -383,13 +383,13 @@ public class TextGrid {
 					row = rows.get(y).toString();
 				}
 			}
-		}		
+		}
 	}
 
 
 	/**
 	 * Replace all occurences of c1 with c2
-	 * 
+	 *
 	 * @param c1
 	 * @param c2
 	 */
@@ -401,7 +401,7 @@ public class TextGrid {
 				char c = get(xi, yi);
 				if(c == c1) set(xi, yi, c2);
 			}
-		}		
+		}
 	}
 
 	public boolean hasBlankCells(){
@@ -465,7 +465,7 @@ public class TextGrid {
 	 * in the grid. Used on buffers that contain only
 	 * type, in order to find the positions and the
 	 * contents of the strings.
-	 * 
+	 *
 	 * @return
 	 */
 	public ArrayList<CellStringPair> findStrings(){
@@ -497,7 +497,7 @@ public class TextGrid {
 	/**
 	 * This is done in a bit of a messy way, should be impossible
 	 * to go out of sync with corresponding GridPatternGroup.
-	 * 
+	 *
 	 * @param cell
 	 * @param entryPointId
 	 * @return
@@ -507,7 +507,7 @@ public class TextGrid {
 		char c = get(cell);
 		if(entryPointId == 1) {
 			return StringUtils.isOneOf(c, entryPoints1);
-		
+
 		} else if(entryPointId == 2) {
 			return StringUtils.isOneOf(c, entryPoints2);
 
@@ -535,7 +535,7 @@ public class TextGrid {
 	/**
 	 * true if cell is blank and the east and west cells are not
 	 * (used to find gaps between words)
-	 * 
+	 *
 	 * @param cell
 	 * @return
 	 */
@@ -567,7 +567,7 @@ public class TextGrid {
 				Cell cell = new Cell(xi, yi);
 				if(isArrowhead(cell)) set(cell, ' ');
 			}
-		}		
+		}
 	}
 
 	public void removeColorCodes(){
@@ -592,10 +592,10 @@ public class TextGrid {
 				if(isBoundary(cell)) toBeRemoved.add(cell);
 			}
 		}
-		
+
 		//remove in two stages, because decision of
 		//isBoundary depends on contants of surrounding
-		//cells 
+		//cells
 		Iterator it = toBeRemoved.iterator();
 		while(it.hasNext()){
 			Cell cell = (Cell) it.next();
@@ -632,9 +632,9 @@ public class TextGrid {
 					char cR = s.charAt(1);
 					char cG = s.charAt(2);
 					char cB = s.charAt(3);
-					int r = Integer.valueOf(String.valueOf(cR), 16).intValue() * 17;
-					int g = Integer.valueOf(String.valueOf(cG), 16).intValue() * 17;
-					int b = Integer.valueOf(String.valueOf(cB), 16).intValue() * 17;
+					int r = Integer.valueOf(String.valueOf(cR), 16) * 17;
+					int g = Integer.valueOf(String.valueOf(cG), 16) * 17;
+					int b = Integer.valueOf(String.valueOf(cB), 16) * 17;
 					result.add(new CellColorPair(cell, new Color(r, g, b)));
 				}
 			}
@@ -668,7 +668,7 @@ public class TextGrid {
 		}
 		return result;
 	}
-		
+
 	public void removeMarkupTags(){
 		Iterator it = findMarkupTags().iterator();
 		while (it.hasNext()) {
@@ -679,7 +679,7 @@ public class TextGrid {
 			writeStringTo(pair.cell, StringUtils.repeatString(" ", length));
 		}
 	}
-		
+
 
 
 	public boolean matchesAny(GridPatternGroup criteria){
@@ -722,9 +722,9 @@ public class TextGrid {
 		if('+' == c || '\\' == c || '/' == c){
 			// System.out.print("");
 			if(
-			       isIntersection(cell) 
+			       isIntersection(cell)
 				|| isCorner(cell)
-				|| isStub(cell) 
+				|| isStub(cell)
 				|| isCrossOnLine(cell)){
 				return true;
 			} else return false;
@@ -763,10 +763,10 @@ public class TextGrid {
 	public boolean isLinesEnd(int x, int y){
 		return isLinesEnd(new Cell(x, y));
 	}
-	
+
 	/**
 	 * Stubs are also considered end of lines
-	 * 
+	 *
 	 * @param cell
 	 * @return
 	 */
@@ -811,16 +811,16 @@ public class TextGrid {
 	}
 
 	/**
-	 * 
+	 *
 	 * A stub looks like that:
-	 * 
+	 *
 	 * <pre>
-	 * 
+	 *
 	 * +- or -+ or + or + or /- or -/ or / (you get the point)
 	 *             |    |                |
-	 * 
+	 *
 	 * </pre>
-	 * 
+	 *
 	 * @param cell
 	 * @return
 	 */
@@ -864,7 +864,7 @@ public class TextGrid {
 				|| isWestArrowhead(cell)
 				|| isEastArrowhead(cell));
 	}
-	
+
 	public boolean isNorthArrowhead(Cell cell){
 		return get(cell) == '^';
 	}
@@ -881,8 +881,8 @@ public class TextGrid {
 		return (get(cell) == 'v' || get(cell) == 'V')
 				&& isVerticalLine(cell.getNorth());
 	}
-	
-	
+
+
 //	unicode for bullets
 //
 //	2022 bullet
@@ -897,7 +897,7 @@ public class TextGrid {
 	public boolean isBullet(int x, int y){
 		return isBullet(new Cell(x, y));
 	}
-	
+
 	public boolean isBullet(Cell cell){
 		char c = get(cell);
 		if((c == 'o' || c == '*')
@@ -907,7 +907,7 @@ public class TextGrid {
 			return true;
 		return false;
 	}
-	
+
 	public void replaceBullets(){
 		int width = getWidth();
 		int height = getHeight();
@@ -921,11 +921,11 @@ public class TextGrid {
 			}
 		}
 	}
-	
+
 	/**
 	 * true if the cell is not blank
 	 * but the previous (west) is
-	 * 
+	 *
 	 * @param cell
 	 * @return
 	 */
@@ -936,7 +936,7 @@ public class TextGrid {
 	/**
 	 * true if the cell is not blank
 	 * but the next (east) is
-	 * 
+	 *
 	 * @param cell
 	 * @return
 	 */
@@ -1007,7 +1007,7 @@ public class TextGrid {
 	/**
 	 * Returns the neighbours of a line-cell that are boundaries
 	 *  (0 to 2 cells are returned)
-	 * 
+	 *
 	 * @param cell
 	 * @return null if the cell is not a line
 	 */
@@ -1021,7 +1021,7 @@ public class TextGrid {
 			CellSet result = new CellSet();
 			if(isBoundary(cell.getNorth())) result.add(cell.getNorth());
 			if(isBoundary(cell.getSouth())) result.add(cell.getSouth());
-			return result;			
+			return result;
 		}
 		return null;
 	}
@@ -1103,11 +1103,11 @@ public class TextGrid {
 		if(result.contains(blocked)) result.remove(blocked);
 		return result;
 	}
-	
+
 	public CellSet followCell(Cell cell){
 		return followCell(cell, null);
 	}
-	
+
 	public CellSet followCell(Cell cell, Cell blocked){
 		if(isIntersection(cell)) return followIntersection(cell, blocked);
 		if(isCorner(cell)) return followCorner(cell, blocked);
@@ -1135,7 +1135,7 @@ public class TextGrid {
 		return "unrecognisable type";
 	}
 
-	
+
 	public CellSet followCrossOnLine(Cell cell, Cell blocked){
 		CellSet result = new CellSet();
 		if(isHorizontalCrossOnLine(cell)){
@@ -1187,7 +1187,7 @@ public class TextGrid {
 		TextGrid subGrid = getTestingSubGrid(cell);
 		return subGrid.matchesAny(criteria);
 	}
-	
+
 	public boolean isCorner1(Cell cell){
 		return matchesAny(cell, GridPatternGroup.corner1Criteria);
 	}
@@ -1253,7 +1253,7 @@ public class TextGrid {
 			grid.set(cell, this.get(cell));
 		}
 	}
-	
+
 	public boolean equals(TextGrid grid){
 		if(grid.getHeight() != this.getHeight()
 			|| grid.getWidth() != this.getWidth()
@@ -1268,7 +1268,7 @@ public class TextGrid {
 		}
 		return true;
 	}
-	
+
 //	@Override
 //	public int hashCode() {
 //		int h = 0;
@@ -1277,10 +1277,10 @@ public class TextGrid {
 //		}
 //		return h;
 //	}
-	
+
 	/**
 	 * Fills all the cells in <code>cells</code> with <code>c</code>
-	 * 
+	 *
 	 * @param cells
 	 * @param c
 	 */
@@ -1293,10 +1293,10 @@ public class TextGrid {
 	}
 
 	/*
-	 * 
+	 *
 	 * Fills the continuous area with if c1 characters with c2,
 	 * flooding from cell x, y
-	 * 
+	 *
 	 * @param x
 	 * @param y
 	 * @param c1 the character to replace
@@ -1322,17 +1322,17 @@ public class TextGrid {
 	private CellSet seedFill(Cell seed, char newChar){
 		CellSet cellsFilled = new CellSet();
 		char oldChar = get(seed);
-		
+
 		if(oldChar == newChar) return cellsFilled;
 		if(isOutOfBounds(seed)) return cellsFilled;
 
 		Stack<Cell> stack = new Stack<Cell>();
 
 		stack.push(seed);
-		
+
 		while(!stack.isEmpty()){
 			Cell cell = (Cell) stack.pop();
-			
+
 			//set(cell, newChar);
 			cellsFilled.add(cell);
 
@@ -1340,30 +1340,30 @@ public class TextGrid {
 			Cell sCell = cell.getSouth();
 			Cell eCell = cell.getEast();
 			Cell wCell = cell.getWest();
-			
+
 			if(get(nCell) == oldChar && !cellsFilled.contains(nCell)) stack.push(nCell);
 			if(get(sCell) == oldChar && !cellsFilled.contains(sCell)) stack.push(sCell);
 			if(get(eCell) == oldChar && !cellsFilled.contains(eCell)) stack.push(eCell);
 			if(get(wCell) == oldChar && !cellsFilled.contains(wCell)) stack.push(wCell);
 		}
-		
+
 		return cellsFilled;
 	}
 
 	private CellSet seedFillOld(Cell seed, char newChar){
 		CellSet cellsFilled = new CellSet();
 		char oldChar = get(seed);
-		
+
 		if(oldChar == newChar) return cellsFilled;
 		if(isOutOfBounds(seed)) return cellsFilled;
 
 		Stack<Cell> stack = new Stack<Cell>();
 
 		stack.push(seed);
-		
+
 		while(!stack.isEmpty()){
 			Cell cell = (Cell) stack.pop();
-			
+
 			set(cell, newChar);
 			cellsFilled.add(cell);
 
@@ -1371,22 +1371,22 @@ public class TextGrid {
 			Cell sCell = cell.getSouth();
 			Cell eCell = cell.getEast();
 			Cell wCell = cell.getWest();
-			
+
 			if(get(nCell) == oldChar) stack.push(nCell);
 			if(get(sCell) == oldChar) stack.push(sCell);
 			if(get(eCell) == oldChar) stack.push(eCell);
 			if(get(wCell) == oldChar) stack.push(wCell);
 		}
-		
+
 		return cellsFilled;
 	}
 
 
 	/**
-	 * 
+	 *
 	 * Locates and returns the '*' boundaries that we would
-	 * encounter if we did a flood-fill at <code>seed</code>. 
-	 * 
+	 * encounter if we did a flood-fill at <code>seed</code>.
+	 *
 	 * @param seed
 	 * @return
 	 */
@@ -1401,48 +1401,48 @@ public class TextGrid {
 		Stack<Cell> stack = new Stack<Cell>();
 
 		stack.push(seed);
-		
+
 		while(!stack.isEmpty()){
 			Cell cell = (Cell) stack.pop();
-			
+
 			set(cell, newChar);
 
 			Cell nCell = cell.getNorth();
 			Cell sCell = cell.getSouth();
 			Cell eCell = cell.getEast();
 			Cell wCell = cell.getWest();
-			
+
 			if(get(nCell) == oldChar) stack.push(nCell);
 			else if(get(nCell) == '*') boundaries.add(nCell);
-			
+
 			if(get(sCell) == oldChar) stack.push(sCell);
 			else if(get(sCell) == '*') boundaries.add(sCell);
-			
+
 			if(get(eCell) == oldChar) stack.push(eCell);
 			else if(get(eCell) == '*') boundaries.add(eCell);
-			
+
 			if(get(wCell) == oldChar) stack.push(wCell);
 			else if(get(wCell) == '*') boundaries.add(wCell);
 		}
-		
+
 		return boundaries;
 	}
-	
-	
+
+
 	//TODO: incomplete method seedFillLine()
 	private CellSet seedFillLine(Cell cell, char newChar){
 		CellSet cellsFilled = new CellSet();
-		
+
 		Stack stack = new Stack();
-		
+
 		char oldChar = get(cell);
-		
+
 		if(oldChar == newChar) return cellsFilled;
 		if(isOutOfBounds(cell)) return cellsFilled;
-		
+
 		stack.push(new LineSegment(cell.x, cell.x, cell.y, 1));
 		stack.push(new LineSegment(cell.x, cell.x, cell.y + 1, -1));
-		
+
 		int left;
 		while(!stack.isEmpty()){
 			LineSegment segment = (LineSegment) stack.pop();
@@ -1455,9 +1455,9 @@ public class TextGrid {
 				set(x, segment.y, newChar);
 				cellsFilled.add(new Cell(x, segment.y));
 			}
-			
+
 			left = cell.getEast().x;
-			boolean skip = (x > segment.x1)? true : false; 
+			boolean skip = (x > segment.x1)? true : false;
 
 			if(left < segment.x1){ //leak on left?
 				//TODO: i think the first param should be x
@@ -1473,13 +1473,13 @@ public class TextGrid {
 			       	    set(x, segment.y, newChar);
 			       	    cellsFilled.add(new Cell(x, segment.y));
 			       	}
-					
+
 			       	stack.push(new LineSegment(left, x - 1, segment.y, segment.dy));
 				   	if(x > segment.x2 + 1) //leak on right?
 			        stack.push(new LineSegment(segment.x2 + 1, x - 1, segment.y, -segment.dy));
 			    }
 				skip = false; //skip only once
-				
+
 				for(++x; x <= segment.x2 && get(x, segment.y) != oldChar; ++x){;}
 				left = x;
 			} while( x < segment.x2);
@@ -1487,7 +1487,7 @@ public class TextGrid {
 
 		return cellsFilled;
 	}
-	
+
 	public boolean cellContainsDashedLineChar(Cell cell){
 		char c = get(cell);
 		return StringUtils.isOneOf(c, dashedLines);
@@ -1522,15 +1522,15 @@ public class TextGrid {
 		// make all lines of equal length
 		// add blank outline around the buffer to prevent fill glitch
 		// convert tabs to spaces (or remove them if setting is 0)
-		
+
 		int blankBorderSize = 2;
-		
+
 		int maxLength = 0;
 		int index = 0;
-		
+
 		String encoding = null;
 		//if(options != null) encoding = options.getCharacterEncoding();
-		
+
 		Iterator<StringBuffer> it = rows.iterator();
 		while(it.hasNext()){
 			String row = it.next().toString();
@@ -1546,24 +1546,24 @@ public class TextGrid {
 		it = rows.iterator();
 		ArrayList<StringBuffer> newRows = new ArrayList<StringBuffer>();
 		//TODO: make the following depend on blankBorderSize
-		
+
 		StringBuffer topBottomRow =
 			new StringBuffer(StringUtils.repeatString(" ", maxLength + blankBorderSize * 2));
-		
+
 		newRows.add(topBottomRow);
 		newRows.add(topBottomRow);
 		while(it.hasNext()){
 			StringBuffer row = it.next();
-			
+
 			if(row.length() < maxLength) {
 				String borderString = StringUtils.repeatString(" ", blankBorderSize);
 				StringBuffer newRow = new StringBuffer();
-				
+
 				newRow.append(borderString);
 				newRow.append(row);
 				newRow.append(StringUtils.repeatString(" ", maxLength - row.length()));
 				newRow.append(borderString);
-				
+
 				newRows.add(newRow);
 			} else { //TODO: why is the following line like that?
 				newRows.add(new StringBuffer("  ").append(row).append("  "));
@@ -1573,13 +1573,13 @@ public class TextGrid {
 		newRows.add(topBottomRow);
 		newRows.add(topBottomRow);
 		rows = newRows;
-		
+
 		replaceBullets();
 		replaceHumanColorCodes();
-		
+
 		return true;
 	}
-	
+
 	private void fixTabs(int tabSize){
 
 		int rowIndex = 0;
@@ -1588,7 +1588,7 @@ public class TextGrid {
 		while(it.hasNext()){
 			String row = it.next().toString();
 			StringBuffer newRow = new StringBuffer();
-			
+
 			char[] chars = row.toCharArray();
 			for(int i = 0; i < chars.length; i++){
 				if(chars[i] == '\t'){
@@ -1607,14 +1607,14 @@ public class TextGrid {
 			rowIndex++;
 		}
 	}
-	
+
 	/**
 	 * @return
 	 */
 	protected ArrayList<StringBuffer> getRows() {
 		return rows;
 	}
-	
+
 	public class CellColorPair{
 		public CellColorPair(Cell cell, Color color){
 			this.cell = cell;
@@ -1642,20 +1642,20 @@ public class TextGrid {
 		public String tag;
 	}
 
-	
+
 	public class Cell{
 
 		public int x, y;
-		
+
 		public Cell(Cell cell){
 			this(cell.x, cell.y);
 		}
-		
+
 		public Cell(int x, int y){
 			this.x = x;
 			this.y = y;
 		}
-		
+
 		public Cell getNorth(){ return new Cell(x, y - 1); }
 		public Cell getSouth(){ return new Cell(x, y + 1); }
 		public Cell getEast(){ return new Cell(x + 1, y); }
@@ -1721,32 +1721,32 @@ public class TextGrid {
 			if(x == cell.x && y == cell.y) return true;
 			else return false;
 		}
-		
+
 		public int hashCode() {
 			return (x << 16) | y;
 		}
-		
+
 		public boolean isNextTo(int x2, int y2){
 			if(Math.abs(x2 - x) == 1 && Math.abs(y2 - y) == 1) return false;
 			if(Math.abs(x2 - x) == 1 && y2 == y) return true;
 			if(Math.abs(y2 - y) == 1 && x2 == x) return true;
 			return false;
 		}
-		
+
 		public boolean isNextTo(Cell cell){
 			if(cell == null) throw new IllegalArgumentException("cell cannot be null");
 			return this.isNextTo(cell.x, cell.y);
 		}
-		
+
 		public String toString(){
 			return "("+x+", "+y+")";
 		}
-		
+
 		public void scale(int s){
 			x = x * s;
 			y = y * s;
 		}
-		
+
 	}
 
 	private class LineSegment{
