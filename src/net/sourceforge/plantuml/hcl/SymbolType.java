@@ -33,45 +33,21 @@
  * 
  *
  */
-package net.sourceforge.plantuml.nwdiag;
+package net.sourceforge.plantuml.hcl;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import net.sourceforge.plantuml.ISkinSimple;
-import net.sourceforge.plantuml.command.Command;
-import net.sourceforge.plantuml.command.CommandFootboxIgnored;
-import net.sourceforge.plantuml.command.PSystemCommandFactory;
-import net.sourceforge.plantuml.command.CommonCommands;
-import net.sourceforge.plantuml.core.DiagramType;
-import net.sourceforge.plantuml.core.UmlSource;
-
-public class NwDiagramFactory extends PSystemCommandFactory {
-
-	public NwDiagramFactory(DiagramType type) {
-		super(type);
-	}
-
-	@Override
-	public NwDiagram createEmptyDiagram(UmlSource source, ISkinSimple skinParam) {
-		return new NwDiagram(source);
-	}
-
-	@Override
-	protected List<Command> createCommands() {
-
-		final List<Command> cmds = new ArrayList<>();
-		CommonCommands.addCommonCommands1(cmds);
-		cmds.add(new CommandNwDiagInit());
-		cmds.add(new CommandComment());
-		cmds.add(new CommandElement());
-		cmds.add(new CommandGroup());
-		cmds.add(new CommandNetwork());
-		cmds.add(new CommandLink());
-		cmds.add(new CommandProperty());
-		cmds.add(new CommandEndSomething());
-		cmds.add(new CommandFootboxIgnored());
-		return cmds;
-	}
+public enum SymbolType {
+	STRING_SIMPLE, //
+	STRING_QUOTED, //
+	FUNCTION_NAME, //
+	SQUARE_BRACKET_OPEN, //
+	SQUARE_BRACKET_CLOSE, //
+	CURLY_BRACKET_OPEN, //
+	CURLY_BRACKET_CLOSE, //
+	PARENTHESIS_OPEN, //
+	PARENTHESIS_CLOSE, //
+	TWO_POINTS, //
+	EQUALS, //
+	COMMA, //
+	SPACE; //
 
 }

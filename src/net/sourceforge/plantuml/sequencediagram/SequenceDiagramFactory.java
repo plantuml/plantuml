@@ -41,6 +41,7 @@ import java.util.List;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
+import net.sourceforge.plantuml.command.CommonCommands;
 import net.sourceforge.plantuml.command.note.sequence.FactorySequenceNoteAcrossCommand;
 import net.sourceforge.plantuml.command.note.sequence.FactorySequenceNoteCommand;
 import net.sourceforge.plantuml.command.note.sequence.FactorySequenceNoteOnArrowCommand;
@@ -92,7 +93,7 @@ public class SequenceDiagramFactory extends PSystemCommandFactory {
 
 		final List<Command> cmds = new ArrayList<>();
 
-		addCommonCommands1(cmds);
+		CommonCommands.addCommonCommands1(cmds);
 		cmds.add(new CommandHideUnlinked());
 
 		cmds.add(new CommandActivate());

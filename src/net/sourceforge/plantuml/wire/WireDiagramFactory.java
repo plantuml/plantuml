@@ -41,6 +41,7 @@ import java.util.List;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
+import net.sourceforge.plantuml.command.CommonCommands;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 
@@ -54,7 +55,7 @@ public class WireDiagramFactory extends PSystemCommandFactory {
 	protected List<Command> createCommands() {
 
 		final List<Command> cmds = new ArrayList<>();
-		addCommonCommands1(cmds);
+		CommonCommands.addCommonCommands1(cmds);
 		cmds.add(new CommandComponent());
 		cmds.add(new CommandSpot());
 		cmds.add(new CommandGoto());

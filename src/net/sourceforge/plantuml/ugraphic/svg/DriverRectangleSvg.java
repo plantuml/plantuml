@@ -66,11 +66,17 @@ public class DriverRectangleSvg implements UDriver<URectangle, SvgGraphics> {
 			final String id = svg.createSvgGradient(mapper.toRGB(gr.getColor1()), mapper.toRGB(gr.getColor2()),
 					gr.getPolicy());
 			svg.setFillColor("url(#" + id + ")");
-			applyColor(svg, mapper, param);
+			applyStrokeColor(svg, mapper, param);
 		} else {
 			final String backcolor = mapper.toSvg(back);
-			svg.setFillColor(backcolor);
-			applyColor(svg, mapper, param);
+			final HColor dark = back == null ? null : back.darkSchemeTheme();
+			if (dark == back) {
+				svg.setFillColor(backcolor);
+			} else {
+				final String darkcolor = mapper.toSvg(dark);
+				svg.setFillColor(backcolor, darkcolor);
+			}
+			applyStrokeColor(svg, mapper, param);
 		}
 
 		svg.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDasharraySvg());
@@ -90,7 +96,7 @@ public class DriverRectangleSvg implements UDriver<URectangle, SvgGraphics> {
 				rect.getCodeLine());
 	}
 
-	public static void applyColor(SvgGraphics svg, ColorMapper mapper, UParam param) {
+	public static void applyStrokeColor(SvgGraphics svg, ColorMapper mapper, UParam param) {
 		final HColor color = param.getColor();
 		if (color instanceof HColorGradient) {
 			final HColorGradient gr = (HColorGradient) color;

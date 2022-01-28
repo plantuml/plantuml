@@ -79,7 +79,7 @@ public class DriverEllipseSvg implements UDriver<UEllipse, SvgGraphics> {
 			final String backcolor = mapper.toSvg(back);
 			svg.setFillColor(backcolor);
 		}
-		DriverRectangleSvg.applyColor(svg, mapper, param);
+		DriverRectangleSvg.applyStrokeColor(svg, mapper, param);
 		// svg.setStrokeColor(StringUtils.getAsSvg(mapper, param.getColor()));
 		svg.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDasharraySvg());
 

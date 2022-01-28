@@ -71,6 +71,7 @@ import net.sourceforge.plantuml.error.PSystemErrorUtils;
 import net.sourceforge.plantuml.flowdiagram.FlowDiagramFactory;
 import net.sourceforge.plantuml.font.PSystemListFontsFactory;
 import net.sourceforge.plantuml.gitlog.GitDiagramFactory;
+import net.sourceforge.plantuml.hcl.HclDiagramFactory;
 import net.sourceforge.plantuml.help.HelpFactory;
 import net.sourceforge.plantuml.jcckit.PSystemJcckitFactory;
 import net.sourceforge.plantuml.jsondiagram.JsonDiagramFactory;
@@ -223,6 +224,7 @@ public class PSystemBuilder {
 		factories.add(new GitDiagramFactory());
 		factories.add(new BoardDiagramFactory());
 		factories.add(new YamlDiagramFactory());
+		factories.add(new HclDiagramFactory());
 	}
 
 	private boolean isOk(Diagram ps) {

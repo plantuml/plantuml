@@ -71,9 +71,9 @@ public class StyleLoader {
 		InputStream internalIs = null;
 		SFile localFile = new SFile(filename);
 		Log.info("Trying to load style " + filename);
-		if (localFile.exists() == false) {
+		if (localFile.exists() == false)
 			localFile = FileSystem.getInstance().getFile(filename);
-		}
+
 		if (localFile.exists()) {
 			Log.info("File found : " + localFile.getPrintablePath());
 			internalIs = localFile.openFile();
@@ -99,9 +99,9 @@ public class StyleLoader {
 	}
 
 	private void loadSkinInternal(final BlocLines lines) {
-		for (Style newStyle : getDeclaredStyles(lines, styleBuilder)) {
+		for (Style newStyle : getDeclaredStyles(lines, styleBuilder))
 			this.styleBuilder.loadInternal(newStyle.getSignature(), newStyle);
-		}
+
 	}
 
 	private final static String KEYNAMES = "[\\w(), ]+?";
@@ -112,6 +112,7 @@ public class StyleLoader {
 	public static Collection<Style> getDeclaredStyles(BlocLines lines, AutomaticCounter counter) {
 		lines = lines.eventuallyMoveAllEmptyBracket();
 		final List<Style> result = new ArrayList<>();
+		StyleScheme scheme = StyleScheme.REGULAR;
 
 		Context context = new Context();
 		final List<Map<PName, Value>> maps = new ArrayList<Map<PName, Value>>();
@@ -134,28 +135,33 @@ public class StyleLoader {
 			if (inComment)
 				continue;
 
-			final int x = trimmed.lastIndexOf("//");
-			if (x != -1) {
-				trimmed = trimmed.substring(0, x).trim();
+			if (trimmed.matches("@media.*dark.*\\{")) {
+				scheme = StyleScheme.DARK;
+				continue;
 			}
+
+			final int x = trimmed.lastIndexOf("//");
+			if (x != -1)
+				trimmed = trimmed.substring(0, x).trim();
+
 			final Matcher2 mKeyNames = keyName.matcher(trimmed);
 			if (mKeyNames.find()) {
 				String names = mKeyNames.group(1).replace(" ", "");
 				final boolean isRecurse = mKeyNames.group(2) != null;
-				if (isRecurse) {
+				if (isRecurse)
 					names += "*";
-				}
+
 				context = context.push(names);
 				maps.add(new EnumMap<PName, Value>(PName.class));
 				continue;
 			}
 			final Matcher2 mPropertyAndValue = propertyAndValue.matcher(trimmed);
 			if (mPropertyAndValue.find()) {
-				final PName key = PName.getFromName(mPropertyAndValue.group(1));
+				final PName key = PName.getFromName(mPropertyAndValue.group(1), scheme);
 				final String value = mPropertyAndValue.group(2);
-				if (key != null && maps.size() > 0) {
+				if (key != null && maps.size() > 0)
 					maps.get(maps.size() - 1).put(key, new ValueImpl(value, counter));
-				}
+
 				continue;
 			}
 			final Matcher2 mCloseBracket = closeBracket.matcher(trimmed);
@@ -168,6 +174,8 @@ public class StyleLoader {
 					}
 					context = context.pop();
 					maps.remove(maps.size() - 1);
+				} else {
+					scheme = StyleScheme.REGULAR;
 				}
 			}
 		}

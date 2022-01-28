@@ -43,6 +43,7 @@ public class HColorSimple extends HColorAbstract implements HColor {
 
 	private final Color color;
 	private final boolean monochrome;
+	private HColor dark;
 
 	@Override
 	public int hashCode() {
@@ -112,6 +113,13 @@ public class HColorSimple extends HColorAbstract implements HColor {
 	public HColorSimple(Color c, boolean monochrome) {
 		this.color = c;
 		this.monochrome = monochrome;
+		this.dark = this;
+	}
+
+	private HColorSimple(Color c, boolean monochrome, HColor dark) {
+		this.color = c;
+		this.monochrome = monochrome;
+		this.dark = dark;
 	}
 
 	public Color getColor999() {
@@ -186,6 +194,15 @@ public class HColorSimple extends HColorAbstract implements HColor {
 
 	private static float linear(float factor, float x, float y) {
 		return (x + (y - x) * factor);
+	}
+
+	public HColor withDark(HColor dark) {
+		return new HColorSimple(color, monochrome, dark);
+	}
+
+	@Override
+	public HColor darkSchemeTheme() {
+		return dark;
 	}
 
 }

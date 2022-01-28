@@ -54,4 +54,6 @@ public interface HColor extends UChange {
 
 	public HColor reverse();
 
+	public HColor darkSchemeTheme();
+
 }

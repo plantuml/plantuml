@@ -41,6 +41,7 @@ import java.util.List;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
+import net.sourceforge.plantuml.command.CommonCommands;
 import net.sourceforge.plantuml.core.UmlSource;
 
 public class ListSpriteDiagramFactory extends PSystemCommandFactory {
@@ -49,8 +50,8 @@ public class ListSpriteDiagramFactory extends PSystemCommandFactory {
 	protected List<Command> createCommands() {
 
 		final List<Command> cmds = new ArrayList<>();
-		addCommonCommands1(cmds);
-		addCommonCommands2(cmds);
+		CommonCommands.addCommonCommands1(cmds);
+		CommonCommands.addCommonCommands2(cmds);
 		cmds.add(new CommandListSprite());
 		return cmds;
 	}

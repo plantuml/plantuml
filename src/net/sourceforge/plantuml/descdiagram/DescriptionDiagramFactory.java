@@ -46,9 +46,9 @@ import net.sourceforge.plantuml.classdiagram.command.CommandUrl;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandEndPackage;
 import net.sourceforge.plantuml.command.CommandFootboxIgnored;
-import net.sourceforge.plantuml.command.CommandPage;
 import net.sourceforge.plantuml.command.CommandRankDir;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
+import net.sourceforge.plantuml.command.CommonCommands;
 import net.sourceforge.plantuml.command.note.CommandFactoryNote;
 import net.sourceforge.plantuml.command.note.CommandFactoryNoteOnEntity;
 import net.sourceforge.plantuml.command.note.CommandFactoryNoteOnLink;
@@ -78,7 +78,7 @@ public class DescriptionDiagramFactory extends PSystemCommandFactory {
 		cmds.add(new CommandNamespaceSeparator());
 		cmds.add(new CommandRankDir());
 		cmds.add(new CommandNewpage(this));
-		addCommonCommands1(cmds);
+		CommonCommands.addCommonCommands1(cmds);
 
 		cmds.add(new CommandLinkElement());
 		cmds.add(new CommandHideShow2());
@@ -92,7 +92,7 @@ public class DescriptionDiagramFactory extends PSystemCommandFactory {
 		final CommandFactoryNoteOnLink factoryNoteOnLinkCommand = new CommandFactoryNoteOnLink();
 		cmds.add(factoryNoteOnLinkCommand.createSingleLine());
 		cmds.add(factoryNoteOnLinkCommand.createMultiLine(false));
-		
+
 		final CommandFactoryNoteOnEntity factoryNoteOnEntityCommand = new CommandFactoryNoteOnEntity("desc",
 				new RegexOr("ENTITY", //
 						new RegexLeaf("[%pLN_.]+"), //
@@ -114,7 +114,6 @@ public class DescriptionDiagramFactory extends PSystemCommandFactory {
 		cmds.add(factoryNoteOnEntityCommand.createMultiLine(true));
 		cmds.add(factoryNoteOnEntityCommand.createMultiLine(false));
 		cmds.add(factoryNoteCommand.createMultiLine(false));
-
 
 		// cmds.add(new CommandHideShowSpecificClass());
 

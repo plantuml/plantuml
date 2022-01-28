@@ -31,54 +31,67 @@
  *
  * Original Author:  Arnaud Roques
  *
+ *
  */
-package net.sourceforge.plantuml.ugraphic.color;
+package net.sourceforge.plantuml.style;
 
-import net.sourceforge.plantuml.ugraphic.UBackground;
+import net.sourceforge.plantuml.ThemeStyle;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorSet;
+import net.sourceforge.plantuml.ugraphic.color.HColorSimple;
 
-abstract class HColorAbstract implements HColor {
+public class ValueForDark implements Value {
 
-	public UBackground bg() {
-		return new UBackground() {
-			public HColor getBackColor() {
-				return HColorAbstract.this;
-			}
-		};
-	}
+	private final Value regular;
+	private final Value dark;
 
-	@Override
-	public HColor lighten(int ratio) {
-		return this;
-	}
-
-	@Override
-	public HColor darken(int ratio) {
-		return this;
-	}
-
-	@Override
-	public HColor reverseHsluv() {
-		return this;
-	}
-
-	@Override
-	public HColor reverse() {
-		return this;
-	}
-
-	@Override
-	public boolean isDark() {
-		return true;
+	public ValueForDark(Value regular, Value dark) {
+		this.regular = regular;
+		this.dark = dark;
 	}
 
 	@Override
 	public String asString() {
-		return "?" + getClass().getSimpleName();
+		throw new UnsupportedOperationException();
 	}
-	
+
 	@Override
-	public HColor darkSchemeTheme() {
-		return this;
+	public HColor asColor(ThemeStyle themeStyle, HColorSet set) {
+		final HColor result = regular.asColor(themeStyle, set);
+		if (result instanceof HColorSimple)
+			return ((HColorSimple) result).withDark(dark.asColor(themeStyle, set));
+		return result;
+	}
+
+	@Override
+	public int asInt() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public double asDouble() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public boolean asBoolean() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public int asFontStyle() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public HorizontalAlignment asHorizontalAlignment() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public int getPriority() {
+		throw new UnsupportedOperationException();
 	}
 
 }

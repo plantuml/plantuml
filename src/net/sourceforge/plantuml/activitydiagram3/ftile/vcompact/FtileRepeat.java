@@ -328,25 +328,27 @@ class FtileRepeat extends AbstractFtile {
 			final double y2 = p2.getY() + dimDiamond1.getHeight() / 2;
 
 			final double x1_a = p1.getX() + dimDiamond2.getWidth();
-
 			final double x1_b = p1.getX() + dimDiamond2.getWidth() / 2 + dimRepeat.getWidth() / 2
 					+ Hexagon.hexagonHalfSize;
 
-			UPolygon arrow = Arrows.asToLeft();
-			if (x1_b < x2) {
-				arrow = Arrows.asToRight();
-				x2 = p2.getX();
-			}
-			final Snake snake = Snake.create(arrowColor, arrow).emphasizeDirection(Direction.UP);
-
-			snake.addPoint(x1_a, y1);
-			if (x1_a < x1_b) {
-				snake.addPoint(x1_b, y1);
-				snake.addPoint(x1_b, y2);
+			final Snake snake;
+			if (x2 < x1_a) {
+				snake = Snake.create(arrowColor, Arrows.asToLeft()).emphasizeDirection(Direction.UP);
+				snake.addPoint(x1_a, y1);
+				if (x1_a < x1_b) {
+					snake.addPoint(x1_b, y1);
+					snake.addPoint(x1_b, y2);
+				} else {
+					snake.addPoint(x1_a + 10, y1);
+					snake.addPoint(x1_a + 10, y2);
+				}
 			} else {
-				snake.addPoint(x1_a + 10, y1);
-				snake.addPoint(x1_a + 10, y2);
-
+				x2 = p2.getX();
+				snake = Snake.create(arrowColor, Arrows.asToRight()).emphasizeDirection(Direction.UP);
+				snake.addPoint(x1_a, y1);
+				final double middle = x1_a / 4 + x2 * 3 / 4;
+				snake.addPoint(middle, y1);
+				snake.addPoint(middle, y2);
 			}
 			snake.addPoint(x2, y2);
 			ug.draw(snake);

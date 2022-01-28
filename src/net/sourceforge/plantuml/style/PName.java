@@ -39,14 +39,18 @@ public enum PName {
 	Shadowing, //
 	FontName, //
 	FontColor, //
+	DARK_FontColor, //
 	FontSize, //
 	FontStyle, //
 	BackGroundColor, //
+	DARK_BackGroundColor, //
 	RoundCorner, //
 	LineThickness, //
 	DiagonalCorner, //
 	HyperLinkColor, //
+	DARK_HyperLinkColor, //
 	LineColor, //
+	DARK_LineColor, //
 	LineStyle, //
 	Padding, //
 	Margin, //
@@ -58,13 +62,30 @@ public enum PName {
 	ShowStereotype, //
 	ImagePosition;
 
-	public static PName getFromName(String name) {
+	public static PName getFromName(String name, StyleScheme scheme) {
 		for (PName prop : values()) {
 			if (prop.name().equalsIgnoreCase(name)) {
+				if (scheme == StyleScheme.DARK)
+					return dark(prop);
 				return prop;
 			}
 		}
 		return null;
+	}
+
+	private static PName dark(PName name) {
+		switch (name) {
+		case FontColor:
+			return DARK_FontColor;
+		case BackGroundColor:
+			return DARK_BackGroundColor;
+		case HyperLinkColor:
+			return DARK_HyperLinkColor;
+		case LineColor:
+			return DARK_LineColor;
+		default:
+			return name;
+		}
 	}
 
 }

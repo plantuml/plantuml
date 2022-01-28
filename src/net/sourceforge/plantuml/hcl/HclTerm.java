@@ -33,45 +33,47 @@
  * 
  *
  */
-package net.sourceforge.plantuml.nwdiag;
+package net.sourceforge.plantuml.hcl;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Objects;
 
-import net.sourceforge.plantuml.ISkinSimple;
-import net.sourceforge.plantuml.command.Command;
-import net.sourceforge.plantuml.command.CommandFootboxIgnored;
-import net.sourceforge.plantuml.command.PSystemCommandFactory;
-import net.sourceforge.plantuml.command.CommonCommands;
-import net.sourceforge.plantuml.core.DiagramType;
-import net.sourceforge.plantuml.core.UmlSource;
+public class HclTerm {
 
-public class NwDiagramFactory extends PSystemCommandFactory {
+	private final SymbolType type;
+	private final String data;
 
-	public NwDiagramFactory(DiagramType type) {
-		super(type);
+	public HclTerm(SymbolType type) {
+		this.type = type;
+		this.data = null;
+	}
+
+	public HclTerm(SymbolType type, String data) {
+		this.type = type;
+		this.data = Objects.requireNonNull(data);
 	}
 
 	@Override
-	public NwDiagram createEmptyDiagram(UmlSource source, ISkinSimple skinParam) {
-		return new NwDiagram(source);
+	public String toString() {
+		if (data == null)
+			return type.toString();
+
+		return type + "(" + data + ")";
 	}
 
-	@Override
-	protected List<Command> createCommands() {
+	public SymbolType getType() {
+		return type;
+	}
 
-		final List<Command> cmds = new ArrayList<>();
-		CommonCommands.addCommonCommands1(cmds);
-		cmds.add(new CommandNwDiagInit());
-		cmds.add(new CommandComment());
-		cmds.add(new CommandElement());
-		cmds.add(new CommandGroup());
-		cmds.add(new CommandNetwork());
-		cmds.add(new CommandLink());
-		cmds.add(new CommandProperty());
-		cmds.add(new CommandEndSomething());
-		cmds.add(new CommandFootboxIgnored());
-		return cmds;
+	public String getData() {
+		return data;
+	}
+
+	public boolean is(SymbolType type) {
+		return this.type == type;
+	}
+
+	public boolean is(SymbolType type1, SymbolType type2) {
+		return this.type == type1 || this.type == type2;
 	}
 
 }

@@ -53,9 +53,9 @@ public class StyleBuilder implements AutomaticCounter {
 	private int counter;
 
 	public void printMe() {
-		for (Entry<StyleSignature, Style> ent : styles.entrySet()) {
+		for (Entry<StyleSignature, Style> ent : styles.entrySet())
 			ent.getValue().printMe();
-		}
+
 	}
 
 	private StyleBuilder(SkinParam skinParam, Set<StyleSignature> printedForLog) {
@@ -72,15 +72,15 @@ public class StyleBuilder implements AutomaticCounter {
 	}
 
 	public Style createStyle(String name) {
-		if (name.contains("*")) {
+		if (name.contains("*"))
 			throw new IllegalArgumentException();
-		}
+
 		name = name.toLowerCase();
 		final StyleSignature signature = new StyleSignature(name);
 		final Style result = styles.get(signature);
-		if (result == null) {
+		if (result == null)
 			return new Style(signature, new EnumMap<PName, Value>(PName.class));
-		}
+
 		return result;
 	}
 
@@ -101,9 +101,9 @@ public class StyleBuilder implements AutomaticCounter {
 	}
 
 	public void loadInternal(StyleSignature styleName, Style newStyle) {
-		if (styleName.isStarred()) {
+		if (styleName.isStarred())
 			throw new IllegalArgumentException();
-		}
+
 		this.styles.put(styleName, newStyle);
 	}
 
@@ -113,20 +113,19 @@ public class StyleBuilder implements AutomaticCounter {
 
 	public Style getMergedStyle(StyleSignature signature) {
 		boolean added = this.printedForLog.add(signature);
-		if (added) {
+		if (added)
 			Log.info("Using style " + signature);
-		}
+
 		Style result = null;
 		for (Entry<StyleSignature, Style> ent : styles.entrySet()) {
 			final StyleSignature key = ent.getKey();
-			if (key.matchAll(signature) == false) {
+			if (key.matchAll(signature) == false)
 				continue;
-			}
-			if (result == null) {
+
+			if (result == null)
 				result = ent.getValue();
-			} else {
+			else
 				result = result.mergeWith(ent.getValue());
-			}
 
 		}
 		return result;
@@ -134,24 +133,23 @@ public class StyleBuilder implements AutomaticCounter {
 
 	public Style getMergedStyleSpecial(StyleSignature signature, int deltaPriority) {
 		boolean added = this.printedForLog.add(signature);
-		if (added) {
+		if (added)
 			Log.info("Using style " + signature);
-		}
+
 		Style result = null;
 		for (Entry<StyleSignature, Style> ent : styles.entrySet()) {
 			final StyleSignature key = ent.getKey();
-			if (key.matchAll(signature) == false) {
+			if (key.matchAll(signature) == false)
 				continue;
-			}
+
 			Style tmp = ent.getValue();
-			if (key.isStarred()) {
+			if (key.isStarred())
 				tmp = tmp.deltaPriority(deltaPriority);
-			}
-			if (result == null) {
+
+			if (result == null)
 				result = tmp;
-			} else {
+			else
 				result = result.mergeWith(tmp);
-			}
 
 		}
 		return result;

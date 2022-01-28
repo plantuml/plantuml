@@ -65,6 +65,7 @@ import net.sourceforge.plantuml.command.CommandPackage;
 import net.sourceforge.plantuml.command.CommandPackageEmpty;
 import net.sourceforge.plantuml.command.CommandRankDir;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
+import net.sourceforge.plantuml.command.CommonCommands;
 import net.sourceforge.plantuml.command.note.CommandConstraintOnLinks;
 import net.sourceforge.plantuml.command.note.CommandFactoryNote;
 import net.sourceforge.plantuml.command.note.CommandFactoryNoteOnEntity;
@@ -97,7 +98,7 @@ public class ClassDiagramFactory extends PSystemCommandFactory {
 
 		cmds.add(new CommandAddMethod());
 
-		addCommonHides(cmds);
+		CommonCommands.addCommonHides(cmds);
 		cmds.add(new CommandHideShow2());
 
 		cmds.add(new CommandRemoveRestore());
@@ -154,8 +155,8 @@ public class ClassDiagramFactory extends PSystemCommandFactory {
 
 		cmds.add(new CommandCreateElementMultilines(0));
 		cmds.add(new CommandCreateElementMultilines(1));
-		addTitleCommands(cmds);
-		addCommonCommands2(cmds);
+		CommonCommands.addTitleCommands(cmds);
+		CommonCommands.addCommonCommands2(cmds);
 
 		return cmds;
 	}

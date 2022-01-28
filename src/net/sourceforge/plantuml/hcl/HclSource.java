@@ -33,43 +33,27 @@
  * 
  *
  */
-package net.sourceforge.plantuml.compositediagram;
+package net.sourceforge.plantuml.hcl;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.plantuml.ISkinSimple;
-import net.sourceforge.plantuml.command.Command;
-import net.sourceforge.plantuml.command.PSystemCommandFactory;
-import net.sourceforge.plantuml.command.CommonCommands;
-import net.sourceforge.plantuml.compositediagram.command.CommandCreateBlock;
-import net.sourceforge.plantuml.compositediagram.command.CommandCreatePackageBlock;
-import net.sourceforge.plantuml.compositediagram.command.CommandEndPackageBlock;
-import net.sourceforge.plantuml.compositediagram.command.CommandLinkBlock;
-import net.sourceforge.plantuml.core.UmlSource;
+public class HclSource implements Iterable<Character> {
 
-public class CompositeDiagramFactory extends PSystemCommandFactory {
+	final private List<Character> all = new ArrayList<>();
 
-	private final ISkinSimple skinParam;
-
-	public CompositeDiagramFactory(ISkinSimple skinParam) {
-		this.skinParam = skinParam;
+	public void add(String line) {
+		if (line.trim().startsWith("#"))
+			return;
+		for (char c : line.toCharArray())
+			all.add(c);
 	}
 
 	@Override
-	protected List<Command> createCommands() {
-		final List<Command> cmds = new ArrayList<>();
-		cmds.add(new CommandCreateBlock());
-		cmds.add(new CommandLinkBlock());
-		cmds.add(new CommandCreatePackageBlock());
-		cmds.add(new CommandEndPackageBlock());
-		CommonCommands.addCommonCommands1(cmds);
-
-		return cmds;
+	public Iterator<Character> iterator() {
+		return Collections.unmodifiableList(all).iterator();
 	}
 
-	@Override
-	public CompositeDiagram createEmptyDiagram(UmlSource source, ISkinSimple skinParam) {
-		return new CompositeDiagram(source, skinParam);
-	}
 }

@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
-public class EntityImageProtected extends AbstractTextBlock implements IEntityImage, Untranslated {
+public class EntityImageProtected extends AbstractTextBlock implements IEntityImage, Untranslated, WithPorts {
 
 	private final IEntityImage orig;
 	private final double border;
@@ -98,6 +98,11 @@ public class EntityImageProtected extends AbstractTextBlock implements IEntityIm
 
 	public double getOverscanX(StringBounder stringBounder) {
 		return orig.getOverscanX(stringBounder);
+	}
+
+	@Override
+	public Ports getPorts(StringBounder stringBounder) {
+		return ((WithPorts) orig).getPorts(stringBounder);
 	}
 
 }

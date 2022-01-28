@@ -123,6 +123,9 @@ public class SkinParam implements ISkinParam {
 		if (type == UmlDiagramType.YAML) {
 			UseStyle.setBetaStyle(true);
 		}
+		if (type == UmlDiagramType.HCL) {
+			UseStyle.setBetaStyle(true);
+		}
 		if (type == UmlDiagramType.NWDIAG) {
 			UseStyle.setBetaStyle(true);
 		}

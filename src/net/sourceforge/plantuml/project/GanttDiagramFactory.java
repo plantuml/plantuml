@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandNope;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
+import net.sourceforge.plantuml.command.CommonCommands;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.project.command.CommandColorTask;
@@ -88,8 +89,8 @@ public class GanttDiagramFactory extends PSystemCommandFactory {
 	@Override
 	protected List<Command> createCommands() {
 		final List<Command> cmds = new ArrayList<>();
-		addTitleCommands(cmds);
-		addCommonCommands2(cmds);
+		CommonCommands.addTitleCommands(cmds);
+		CommonCommands.addCommonCommands2(cmds);
 
 		cmds.add(new CommandStyleMultilinesCSS());
 		cmds.add(new CommandStyleImport());

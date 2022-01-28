@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandFootboxIgnored;
 import net.sourceforge.plantuml.command.CommandRankDir;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
+import net.sourceforge.plantuml.command.CommonCommands;
 import net.sourceforge.plantuml.command.note.CommandFactoryNote;
 import net.sourceforge.plantuml.command.note.CommandFactoryNoteOnEntity;
 import net.sourceforge.plantuml.command.note.CommandFactoryNoteOnLink;
@@ -101,7 +102,7 @@ public class StateDiagramFactory extends PSystemCommandFactory {
 		cmds.add(factoryNoteCommand.createSingleLine());
 		cmds.add(factoryNoteCommand.createMultiLine(false));
 
-		addCommonCommands1(cmds);
+		CommonCommands.addCommonCommands1(cmds);
 		cmds.add(new CommandHideShow2());
 		cmds.add(new CommandNamespaceSeparator());
 

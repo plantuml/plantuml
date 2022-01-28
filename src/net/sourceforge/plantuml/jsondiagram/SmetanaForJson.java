@@ -110,7 +110,9 @@ public class SmetanaForJson {
 	}
 
 	private SName getDiagramType() {
-		return skinParam.getUmlDiagramType() == UmlDiagramType.YAML ? SName.yamlDiagram : SName.jsonDiagram;
+		if (skinParam.getUmlDiagramType() == UmlDiagramType.JSON)
+			return SName.jsonDiagram;
+		return SName.yamlDiagram;
 	}
 
 	private Style getStyleArrow() {
