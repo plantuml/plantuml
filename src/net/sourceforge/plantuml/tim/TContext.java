@@ -96,6 +96,8 @@ import net.sourceforge.plantuml.tim.stdlib.Feature;
 import net.sourceforge.plantuml.tim.stdlib.FileExists;
 import net.sourceforge.plantuml.tim.stdlib.Filename;
 import net.sourceforge.plantuml.tim.stdlib.FunctionExists;
+import net.sourceforge.plantuml.tim.stdlib.GetJsonKey;
+import net.sourceforge.plantuml.tim.stdlib.GetJsonType;
 import net.sourceforge.plantuml.tim.stdlib.GetVariableValue;
 import net.sourceforge.plantuml.tim.stdlib.GetVersion;
 import net.sourceforge.plantuml.tim.stdlib.Getenv;
@@ -181,6 +183,8 @@ public class TContext {
 		functionsSet.addFunction(new LoadJson());
 		functionsSet.addFunction(new Chr());
 		functionsSet.addFunction(new Size());
+		functionsSet.addFunction(new GetJsonKey());
+		functionsSet.addFunction(new GetJsonType());
 		// %standard_exists_function
 		// %str_replace
 		// !exit
