@@ -171,6 +171,9 @@ public class CommandCreateState extends SingleLineCommand2<StateDiagram> {
 		if ("<<join>>".equalsIgnoreCase(stereotype)) {
 			return LeafType.STATE_FORK_JOIN;
 		}
+		if ("<<start>>".equalsIgnoreCase(stereotype)) {
+			return LeafType.CIRCLE_START;
+		}
 		if ("<<end>>".equalsIgnoreCase(stereotype)) {
 			return LeafType.CIRCLE_END;
 		}
