@@ -71,6 +71,8 @@ public class FromSkinparamToStyle {
 
 		addConFont("header", SName.header);
 		addConFont("footer", SName.footer);
+		
+		addConvert("defaultFontSize", PName.FontSize, SName.element);
 
 		addConvert("sequenceStereotypeFontSize", PName.FontSize, SName.stereotype);
 		addConvert("sequenceStereotypeFontStyle", PName.FontStyle, SName.stereotype);
@@ -114,6 +116,8 @@ public class FromSkinparamToStyle {
 		addConvert("hyperlinkColor", PName.HyperLinkColor, SName.root);
 
 		addConvert("activityStartColor", PName.LineColor, SName.circle);
+		addConvert("activityEndColor", PName.LineColor, SName.circle, SName.end);
+		addConvert("activityStopColor", PName.LineColor, SName.circle, SName.stop);
 		addConvert("activityBarColor", PName.LineColor, SName.activityBar);
 		addConvert("activityBorderColor", PName.LineColor, SName.activity);
 		addConvert("activityBorderThickness", PName.LineThickness, SName.activity);

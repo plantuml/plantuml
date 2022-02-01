@@ -39,6 +39,7 @@ import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.creole.Stencil;
+import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.ugraphic.AbstractUGraphicHorizontalLine;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UHorizontalLine;
@@ -52,14 +53,19 @@ class USymbolQueue extends USymbol {
 	public SkinParameter getSkinParameter() {
 		return SkinParameter.QUEUE;
 	}
+	
+	@Override
+	public SName getSName() {
+		return SName.queue;
+	}
+
 
 	private final double dx = 5;
 
-	private void drawQueue(UGraphic ug, double width, double height, boolean shadowing) {
+	private void drawQueue(UGraphic ug, double width, double height, double shadowing) {
 		final UPath shape = new UPath();
-		if (shadowing) {
-			shape.setDeltaShadow(3.0);
-		}
+		shape.setDeltaShadow(shadowing);
+
 		shape.moveTo(dx, 0);
 		shape.lineTo(width - dx, 0);
 		shape.cubicTo(width, 0, width, height / 2, width, height / 2);
@@ -135,7 +141,7 @@ class USymbolQueue extends USymbol {
 			public void drawU(UGraphic ug) {
 				final Dimension2D dim = calculateDimension(ug.getStringBounder());
 				ug = symbolContext.apply(ug);
-				drawQueue(ug, dim.getWidth(), dim.getHeight(), symbolContext.isShadowing());
+				drawQueue(ug, dim.getWidth(), dim.getHeight(), symbolContext.getDeltaShadow());
 				final Margin margin = getMargin();
 				final TextBlock tb = TextBlockUtils.mergeTB(stereotype, label, HorizontalAlignment.CENTER);
 				final UGraphic ug2 = new MyUGraphicQueue(ug, dim.getWidth() - 2 * dx, dim.getWidth() - dx,
@@ -153,13 +159,14 @@ class USymbolQueue extends USymbol {
 
 	@Override
 	public TextBlock asBig(final TextBlock title, HorizontalAlignment labelAlignment, final TextBlock stereotype,
-			final double width, final double height, final SymbolContext symbolContext, final HorizontalAlignment stereoAlignment) {
+			final double width, final double height, final SymbolContext symbolContext,
+			final HorizontalAlignment stereoAlignment) {
 		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
 				final Dimension2D dim = calculateDimension(ug.getStringBounder());
 				ug = symbolContext.apply(ug);
-				drawQueue(ug, dim.getWidth(), dim.getHeight(), symbolContext.isShadowing());
+				drawQueue(ug, dim.getWidth(), dim.getHeight(), symbolContext.getDeltaShadow());
 				final Dimension2D dimStereo = stereotype.calculateDimension(ug.getStringBounder());
 				final double posStereo = (width - dimStereo.getWidth()) / 2;
 				stereotype.drawU(ug.apply(new UTranslate(posStereo, 2)));

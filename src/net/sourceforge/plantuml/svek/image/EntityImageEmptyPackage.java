@@ -59,6 +59,7 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
+import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.style.PName;
@@ -130,7 +131,7 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 			this.shadowing = getSkinParam().shadowing(getEntity().getStereotype()) ? 3 : 0;
 			this.stroke = GeneralImageBuilder.getForcedStroke(getEntity().getStereotype(), getSkinParam());
 			this.roundCorner = 0;
-			this.back = Cluster.getBackColor(specificBackColor, skinParam, stereotype, styleName);
+			this.back = Cluster.getBackColor(specificBackColor, skinParam, stereotype, styleName, USymbol.PACKAGE);
 			titleFontConfiguration = new FontConfiguration(getSkinParam(), FontParam.PACKAGE, stereotype);
 			titleHorizontalAlignment = HorizontalAlignment.CENTER;
 		}

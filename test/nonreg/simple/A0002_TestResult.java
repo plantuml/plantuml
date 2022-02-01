@@ -40,7 +40,7 @@ PATH:
    - type: SEG_LINETO
      pt1: [ 0.0000 ; 0.0000 ]
   stroke: 0.0-0.0-1.0
-  shadow: 4
+  shadow: 3
   color: ffa80036
   backcolor: fffbfb77
 
@@ -100,7 +100,7 @@ PATH:
    - type: SEG_LINETO
      pt1: [ 0.0000 ; 0.0000 ]
   stroke: 0.0-0.0-1.0
-  shadow: 4
+  shadow: 3
   color: ffa80036
   backcolor: fffbfb77
 
@@ -388,7 +388,7 @@ RECTANGLE:
   xCorner: 25
   yCorner: 25
   stroke: 0.0-0.0-1.5
-  shadow: 4
+  shadow: 3
   color: ffa80036
   backcolor: fffefece
 
@@ -449,7 +449,7 @@ PATH:
      sweepFlag: false
      dest: [ 0.0000 ; 0.0000 ]
   stroke: 0.0-0.0-1.0
-  shadow: 4
+  shadow: 3
   color: ffa80036
   backcolor: fffbfb77
 
@@ -745,7 +745,7 @@ RECTANGLE:
   xCorner: 25
   yCorner: 25
   stroke: 0.0-0.0-1.5
-  shadow: 4
+  shadow: 3
   color: ffa80036
   backcolor: fffefece
 

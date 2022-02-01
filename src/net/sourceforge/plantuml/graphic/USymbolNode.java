@@ -39,6 +39,7 @@ import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.UseStyle;
+import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.ugraphic.AbstractUGraphicHorizontalLine;
 import net.sourceforge.plantuml.ugraphic.UEmpty;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -56,6 +57,12 @@ class USymbolNode extends USymbol {
 	public SkinParameter getSkinParameter() {
 		return SkinParameter.NODE;
 	}
+	
+	@Override
+	public SName getSName() {
+		return SName.node;
+	}
+
 
 //	public USymbolNode(HorizontalAlignment stereotypeAlignement) {
 //		this.stereotypeAlignement = stereotypeAlignement;
@@ -66,7 +73,7 @@ class USymbolNode extends USymbol {
 //		return new USymbolNode(alignment);
 //	}
 
-	private void drawNode(UGraphic ug, double width, double height, boolean shadowing) {
+	private void drawNode(UGraphic ug, double width, double height, double shadowing) {
 		final UPolygon shape = new UPolygon();
 		shape.addPoint(0, 10);
 		shape.addPoint(10, 0);
@@ -75,14 +82,13 @@ class USymbolNode extends USymbol {
 		shape.addPoint(width - 10, height);
 		shape.addPoint(0, height);
 		shape.addPoint(0, 10);
-		if (shadowing) {
-			shape.setDeltaShadow(2);
-		}
+
+		shape.setDeltaShadow(shadowing);
+
 		ug.draw(shape);
 
 		ug.apply(new UTranslate(width - 10, 10)).draw(new ULine(10, -10));
-		
-		
+
 		ug.apply(UTranslate.dy(10)).draw(ULine.hline(width - 10));
 		ug.apply(new UTranslate(width - 10, 10)).draw(ULine.vline(height - 10));
 		if (UseStyle.useBetaStyle()) {
@@ -135,7 +141,7 @@ class USymbolNode extends USymbol {
 			public void drawU(UGraphic ug) {
 				final Dimension2D dim = calculateDimension(ug.getStringBounder());
 				ug = symbolContext.apply(ug);
-				drawNode(ug, dim.getWidth(), dim.getHeight(), symbolContext.isShadowing());
+				drawNode(ug, dim.getWidth(), dim.getHeight(), symbolContext.getDeltaShadow());
 				final Margin margin = getMargin();
 				final TextBlock tb = TextBlockUtils.mergeTB(stereotype, label, stereoAlignment);
 				final UGraphic ug2 = new MyUGraphicNode(ug, dim.getWidth());
@@ -152,13 +158,14 @@ class USymbolNode extends USymbol {
 
 	@Override
 	public TextBlock asBig(final TextBlock title, HorizontalAlignment labelAlignment, final TextBlock stereotype,
-			final double width, final double height, final SymbolContext symbolContext, final HorizontalAlignment stereoAlignment) {
+			final double width, final double height, final SymbolContext symbolContext,
+			final HorizontalAlignment stereoAlignment) {
 		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
 				final Dimension2D dim = calculateDimension(ug.getStringBounder());
 				ug = symbolContext.apply(ug);
-				drawNode(ug, dim.getWidth(), dim.getHeight(), symbolContext.isShadowing());
+				drawNode(ug, dim.getWidth(), dim.getHeight(), symbolContext.getDeltaShadow());
 				ug = ug.apply(new UTranslate(-4, 11));
 
 				final Dimension2D dimStereo = stereotype.calculateDimension(ug.getStringBounder());

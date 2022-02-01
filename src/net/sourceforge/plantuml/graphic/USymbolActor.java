@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.graphic;
 
 import net.sourceforge.plantuml.skin.ActorStyle;
+import net.sourceforge.plantuml.style.SName;
 
 class USymbolActor extends USymbolSimpleAbstract {
 
@@ -49,6 +50,11 @@ class USymbolActor extends USymbolSimpleAbstract {
 	@Override
 	public SkinParameter getSkinParameter() {
 		return SkinParameter.ACTOR;
+	}
+	
+	@Override
+	public SName getSName() {
+		return SName.actor;
 	}
 
 	@Override

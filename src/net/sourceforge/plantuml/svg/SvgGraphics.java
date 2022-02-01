@@ -112,6 +112,7 @@ public class SvgGraphics {
 	private String fillDark = "black";
 	private Collection<String> classesForDarkness = new LinkedHashSet<>();
 	private String stroke = "black";
+	private String strokeDark = "black";
 	private String strokeWidth;
 	private String strokeDasharray = null;
 	private final String backcolor;
@@ -201,8 +202,15 @@ public class SvgGraphics {
 				throw new IllegalStateException();
 			final String color1 = m.group(2);
 			final String color2 = m.group(3);
-			text1.append("*." + s + " {fill:#" + color1 + ";}");
-			text2.append("*." + s + " {fill:#" + color2 + ";}");
+			final String type = m.group(1);
+			if ("f".equals(type)) {
+				text1.append("*." + s + " {fill:#" + color1 + ";}");
+				text2.append("*." + s + " {fill:#" + color2 + ";}");
+			} else if ("s".equals(type)) {
+				text1.append("*." + s + " {stroke:#" + color1 + ";}");
+				text2.append("*." + s + " {stroke:#" + color2 + ";}");
+			} else
+				throw new IllegalStateException();
 		}
 		text2.append("}");
 		final CDATASection cdata = document.createCDATASection(text1.toString() + text2.toString());
@@ -298,6 +306,7 @@ public class SvgGraphics {
 			elt.setAttribute("ry", format(yRadius));
 			fillMe(elt);
 			elt.setAttribute("style", getStyle());
+			manageDarkStroke(elt);
 			addFilterShadowId(elt, deltaShadow);
 			getG().appendChild(elt);
 		}
@@ -376,6 +385,12 @@ public class SvgGraphics {
 
 	public final void setStrokeColor(String stroke) {
 		this.stroke = stroke == null ? "none" : stroke;
+		this.strokeDark = stroke;
+	}
+
+	public final void setStrokeColor(String stroke, String strokeDark) {
+		this.stroke = stroke == null ? "none" : stroke;
+		this.strokeDark = strokeDark == null ? "none" : strokeDark;
 	}
 
 	public final void setStrokeWidth(double strokeWidth, String strokeDasharray) {
@@ -426,7 +441,18 @@ public class SvgGraphics {
 		elt.setAttribute("height", format(height));
 		fillMe(elt);
 		elt.setAttribute("style", getStyleSpecial());
+		manageDarkStroke(elt);
 		return elt;
+	}
+
+	private void manageDarkStroke(final Element elt) {
+		if (strokeDark != null && stroke.equals(strokeDark) == false) {
+			final String attribute = elt.getAttribute("class");
+			if (attribute == null || attribute.length() == 0)
+				elt.setAttribute("class", getStrokeClassForDark());
+			else
+				elt.setAttribute("class", attribute + " " + getStrokeClassForDark());
+		}
 	}
 
 	public void svgLine(double x1, double y1, double x2, double y2, double deltaShadow) {
@@ -438,6 +464,7 @@ public class SvgGraphics {
 			elt.setAttribute("x2", format(x2));
 			elt.setAttribute("y2", format(y2));
 			elt.setAttribute("style", getStyle());
+			manageDarkStroke(elt);
 			addFilterShadowId(elt, deltaShadow);
 			getG().appendChild(elt);
 		}
@@ -447,7 +474,8 @@ public class SvgGraphics {
 
 	private String getStyle() {
 		final StringBuilder style = new StringBuilder();
-		style.append("stroke:" + stroke + ";");
+		if (stroke.equals(strokeDark))
+			style.append("stroke:" + stroke + ";");
 		style.append("stroke-width:" + strokeWidth + ";");
 		if (fill.equals("#00000000"))
 			style.append("fill:none;");
@@ -461,7 +489,8 @@ public class SvgGraphics {
 	// https://forum.plantuml.net/12469/package-background-transparent-package-default-background?show=12479#c12479
 	private String getStyleSpecial() {
 		final StringBuilder style = new StringBuilder();
-		style.append("stroke:" + stroke + ";");
+		if (stroke.equals(strokeDark))
+			style.append("stroke:" + stroke + ";");
 		style.append("stroke-width:" + strokeWidth + ";");
 		if (fill.equals("#00000000"))
 			style.append("fill:none;");
@@ -487,6 +516,7 @@ public class SvgGraphics {
 			elt.setAttribute("points", sb.toString());
 			fillMe(elt);
 			elt.setAttribute("style", getStyleSpecial());
+			manageDarkStroke(elt);
 			addFilterShadowId(elt, deltaShadow);
 			getG().appendChild(elt);
 		}
@@ -529,14 +559,14 @@ public class SvgGraphics {
 
 			if (fontFamily != null) {
 				// http://plantuml.sourceforge.net/qa/?qa=5432/svg-monospace-output-has-wrong-font-family
-				if ("monospaced".equalsIgnoreCase(fontFamily)) {
+				if ("monospaced".equalsIgnoreCase(fontFamily))
 					fontFamily = "monospace";
-				}
+
 				elt.setAttribute("font-family", fontFamily);
 
-				if (fontFamily.equalsIgnoreCase("monospace") || fontFamily.equalsIgnoreCase("courier")) {
+				if (fontFamily.equalsIgnoreCase("monospace") || fontFamily.equalsIgnoreCase("courier"))
 					text = text.replace(' ', (char) 160);
-				}
+
 			}
 			if (textBackColor != null) {
 				final String backFilterId = getFilterBackColor(textBackColor);
@@ -706,6 +736,7 @@ public class SvgGraphics {
 			final Element elt = (Element) document.createElement("path");
 			elt.setAttribute("d", sb.toString());
 			elt.setAttribute("style", getStyle());
+			manageDarkStroke(elt);
 			fillMe(elt);
 			final String id = path.getComment();
 			if (id != null)
@@ -723,6 +754,13 @@ public class SvgGraphics {
 	private String getFillClassForDark() {
 		final String result = "f_" + fill.toLowerCase().replaceAll("\\#", "") + "_"
 				+ fillDark.toLowerCase().replaceAll("\\#", "");
+		this.classesForDarkness.add(result);
+		return result;
+	}
+
+	private String getStrokeClassForDark() {
+		final String result = "s_" + stroke.toLowerCase().replaceAll("\\#", "") + "_"
+				+ strokeDark.toLowerCase().replaceAll("\\#", "");
 		this.classesForDarkness.add(result);
 		return result;
 	}

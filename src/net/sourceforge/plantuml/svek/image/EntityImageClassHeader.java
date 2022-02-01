@@ -59,6 +59,7 @@ import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
@@ -94,13 +95,14 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 		} else {
 			fontConfigurationName = new FontConfiguration(getSkinParam(), FontParam.CLASS, stereotype);
 		}
-		if (italic) {
+
+		if (italic)
 			fontConfigurationName = fontConfigurationName.italic();
-		}
+
 		Display display = entity.getDisplay();
-		if (displayGenericWithOldFashion && entity.getGeneric() != null) {
+		if (displayGenericWithOldFashion && entity.getGeneric() != null)
 			display = display.addGeneric(entity.getGeneric());
-		}
+
 		TextBlock name = display.createWithNiceCreoleMode(fontConfigurationName, HorizontalAlignment.CENTER, skinParam);
 		final VisibilityModifier modifier = entity.getVisibilityModifier();
 		if (modifier == null) {
@@ -117,13 +119,12 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 
 		final TextBlock stereo;
 		if (stereotype == null || stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) == null
-				|| portionShower.showPortion(EntityPortion.STEREOTYPE, entity) == false) {
+				|| portionShower.showPortion(EntityPortion.STEREOTYPE, entity) == false)
 			stereo = null;
-		} else {
+		else
 			stereo = TextBlockUtils.withMargin(Display.create(stereotype.getLabels(skinParam.guillemet())).create(
 					new FontConfiguration(getSkinParam(), FontParam.CLASS_STEREOTYPE, stereotype),
 					HorizontalAlignment.CENTER, skinParam), 1, 0);
-		}
 
 		TextBlock genericBlock;
 		if (generic == null) {
@@ -142,41 +143,76 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 		}
 
 		final TextBlock circledCharacter;
-		if (portionShower.showPortion(EntityPortion.CIRCLED_CHARACTER, (ILeaf) getEntity())) {
+		if (portionShower.showPortion(EntityPortion.CIRCLED_CHARACTER, (ILeaf) getEntity()))
 			circledCharacter = TextBlockUtils.withMargin(getCircledCharacter(entity, skinParam), 4, 0, 5, 5);
-		} else {
+		else
 			circledCharacter = null;
-		}
+
 		this.headerLayout = new HeaderLayout(circledCharacter, stereo, name, genericBlock);
 	}
 
 	private TextBlock getCircledCharacter(ILeaf entity, ISkinParam skinParam) {
 		final Stereotype stereotype = entity.getStereotype();
-		if (stereotype != null && stereotype.getSprite(skinParam) != null) {
+		if (stereotype != null && stereotype.getSprite(skinParam) != null)
 			return stereotype.getSprite(skinParam);
-		}
+
 		final UFont font = SkinParamUtils.getFont(getSkinParam(), FontParam.CIRCLED_CHARACTER, null);
-		final HColor classBorder = SkinParamUtils.getColor(getSkinParam(), stereotype, ColorParam.classBorder);
-		final HColor fontColor = SkinParamUtils.getFontColor(getSkinParam(), FontParam.CIRCLED_CHARACTER, null);
-		if (stereotype != null && stereotype.getCharacter() != 0) {
+
+		final LeafType leafType = entity.getLeafType();
+
+		final HColor spotBackColor;
+		HColor spotBorder;
+
+		final HColor classBorder;
+		final HColor fontColor;
+		if (UseStyle.useBetaStyle()) {
+			final Style style = spotStyleSignature(leafType).getMergedStyle(skinParam.getCurrentStyleBuilder());
+			spotBorder = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
+			spotBackColor = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
+					skinParam.getIHtmlColorSet());
+			classBorder = SkinParamUtils.getColor(getSkinParam(), stereotype, ColorParam.classBorder);
+			fontColor = style.value(PName.FontColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
+		} else {
+			spotBackColor = SkinParamUtils.getColor(getSkinParam(), stereotype, spotBackground(leafType));
+			spotBorder = SkinParamUtils.getColor(getSkinParam(), stereotype, spotBorder(leafType));
+			classBorder = SkinParamUtils.getColor(getSkinParam(), stereotype, ColorParam.classBorder);
+			fontColor = SkinParamUtils.getFontColor(getSkinParam(), FontParam.CIRCLED_CHARACTER, null);
+		}
+
+		if (stereotype != null && stereotype.getCharacter() != 0)
 			return new CircledCharacter(stereotype.getCharacter(), getSkinParam().getCircledCharacterRadius(), font,
 					stereotype.getHtmlColor(), classBorder, fontColor);
-		}
-		final LeafType leafType = entity.getLeafType();
-		final HColor spotBackColor = SkinParamUtils.getColor(getSkinParam(), stereotype, spotBackground(leafType));
-		HColor spotBorder = SkinParamUtils.getColor(getSkinParam(), stereotype, spotBorder(leafType));
-		if (spotBorder == null) {
+
+		if (spotBorder == null)
 			spotBorder = classBorder;
-		}
+
 		char circledChar = 0;
-		if (stereotype != null) {
+		if (stereotype != null)
 			circledChar = getSkinParam().getCircledCharacter(stereotype);
-		}
-		if (circledChar == 0) {
+
+		if (circledChar == 0)
 			circledChar = getCircledChar(leafType);
-		}
+
 		return new CircledCharacter(circledChar, getSkinParam().getCircledCharacterRadius(), font, spotBackColor,
 				spotBorder, fontColor);
+	}
+
+	private StyleSignature spotStyleSignature(LeafType leafType) {
+		switch (leafType) {
+		case ANNOTATION:
+			return StyleSignature.of(SName.root, SName.element, SName.spot, SName.spotAnnotation);
+		case ABSTRACT_CLASS:
+			return StyleSignature.of(SName.root, SName.element, SName.spot, SName.spotAbstractClass);
+		case CLASS:
+			return StyleSignature.of(SName.root, SName.element, SName.spot, SName.spotClass);
+		case INTERFACE:
+			return StyleSignature.of(SName.root, SName.element, SName.spot, SName.spotInterface);
+		case ENUM:
+			return StyleSignature.of(SName.root, SName.element, SName.spot, SName.spotEnum);
+		case ENTITY:
+			return StyleSignature.of(SName.root, SName.element, SName.spot, SName.spotEntity);
+		}
+		throw new IllegalStateException();
 	}
 
 	private ColorParam spotBackground(LeafType leafType) {

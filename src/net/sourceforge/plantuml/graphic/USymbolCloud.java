@@ -42,6 +42,7 @@ import java.util.List;
 import java.util.Random;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UGraphicStencil;
 import net.sourceforge.plantuml.ugraphic.UPath;
@@ -60,12 +61,17 @@ class USymbolCloud extends USymbol {
 	public SkinParameter getSkinParameter() {
 		return SkinParameter.CLOUD;
 	}
+	
+	@Override
+	public SName getSName() {
+		return SName.cloud;
+	}
 
-	private void drawCloud(UGraphic ug, double width, double height, boolean shadowing) {
+
+	private void drawCloud(UGraphic ug, double width, double height, double shadowing) {
 		final UPath shape = getSpecificFrontierForCloud(width, height);
-		if (shadowing) {
-			 shape.setDeltaShadow(3.0);
-		}
+		shape.setDeltaShadow(shadowing);
+
 		ug.apply(UTranslate.dy(0)).draw(shape);
 	}
 
@@ -226,7 +232,7 @@ class USymbolCloud extends USymbol {
 				final Dimension2D dim = calculateDimension(ug.getStringBounder());
 				ug = UGraphicStencil.create(ug, dim);
 				ug = symbolContext.apply(ug);
-				drawCloud(ug, dim.getWidth(), dim.getHeight(), symbolContext.isShadowing());
+				drawCloud(ug, dim.getWidth(), dim.getHeight(), symbolContext.getDeltaShadow());
 				final Margin margin = getMargin();
 				final TextBlock tb = TextBlockUtils.mergeTB(stereotype, label, HorizontalAlignment.CENTER);
 				tb.drawU(ug.apply(new UTranslate(margin.getX1(), margin.getY1())));
@@ -249,7 +255,7 @@ class USymbolCloud extends USymbol {
 			public void drawU(UGraphic ug) {
 				final Dimension2D dim = calculateDimension(ug.getStringBounder());
 				ug = symbolContext.apply(ug);
-				drawCloud(ug, dim.getWidth(), dim.getHeight(), symbolContext.isShadowing());
+				drawCloud(ug, dim.getWidth(), dim.getHeight(), symbolContext.getDeltaShadow());
 				final Dimension2D dimStereo = stereotype.calculateDimension(ug.getStringBounder());
 				final double posStereo = (width - dimStereo.getWidth()) / 2;
 				stereotype.drawU(ug.apply(new UTranslate(posStereo, 13)));

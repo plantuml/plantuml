@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.graphic;
 
+import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.svek.EntityDomain;
 
 class USymbolEntityDomain extends USymbolSimpleAbstract {
@@ -43,6 +44,12 @@ class USymbolEntityDomain extends USymbolSimpleAbstract {
 	public SkinParameter getSkinParameter() {
 		return SkinParameter.ENTITY;
 	}
+	
+	@Override
+	public SName getSName() {
+		return SName.entity;
+	}
+
 
 	@Override
 	protected TextBlock getDrawing(final SymbolContext symbolContext) {

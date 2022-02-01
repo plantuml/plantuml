@@ -8,8 +8,8 @@ root {
   RoundCorner 0
   DiagonalCorner 0
   LineThickness 1.0
-  LineColor #A80036
-  BackGroundColor #FEFECE
+  LineColor #181818
+  BackGroundColor #f8f8f8
   Shadowing 0.0
 }
 
@@ -63,60 +63,12 @@ stereotype {
 
 
 element {
-  Shadowing 4.0
+  Shadowing 0.0
   title {
     FontStyle bold
   }
 }
 
-artifact {
-  Shadowing 4.0
-}
-node {
-  Shadowing 2.0
-}
-person {
-  Shadowing 2.0
-}
-queue {
-  Shadowing 2.0
-}
-rectangle {
-  Shadowing 3.0
-}
-stack {
-  Shadowing 3.0
-}
-storage {
-  Shadowing 3.0
-}
-boundary {
-  Shadowing 4.0
-}
-card {
-  Shadowing 3.0
-}
-cloud {
-  Shadowing 3.0
-}
-collections {
-  Shadowing 3.0
-}
-component {
-  Shadowing 4.0
-}
-database {
-  Shadowing 3.0
-}
-file {
-  Shadowing 3.0
-}
-frame {
-  Shadowing 3.0
-}
-folder {
-  Shadowing 3.0
-}
 group {
   package {
     LineThickness 1.5
@@ -302,17 +254,13 @@ swimlane {
   FontSize 18
 }
 
-diamond {
-  Shadowing 3.0
-}
-
 arrow {
   FontSize 13
 }
 
 note {
   FontSize 13
-  BackGroundColor #FBFB77
+  BackGroundColor #ebebeb
 }
 
 partition {
@@ -346,10 +294,6 @@ wbsDiagram {
 }
 
 activityDiagram {
-  Shadowing 3.0
-}
-
-activityDiagram {
 	activity {
 	    LineThickness 1.5
 	    Padding 10
@@ -369,13 +313,11 @@ activityDiagram {
 }
 
 activityBar {
-  Shadowing 3.0
   BackgroundColor black
 }
 
 circle {
 	LineColor black
-	Shadowing 3.0
 }
 
 
@@ -395,7 +337,6 @@ ganttDiagram {
 	}
 	note {
 	  FontSize 9
-      Shadowing 0.0
 	}
 	separator {
 	  FontSize 11
@@ -467,7 +408,6 @@ timingDiagram {
 nwdiagDiagram {
 	network {
 		FontSize 12
-		Shadowing 1.0
 	}
 	server {
 		FontSize 12
@@ -480,3 +420,33 @@ nwdiagDiagram {
 		FontSize 11
 	}
 }
+
+
+@media (prefers-color-scheme:dark) {
+element {
+  LineColor #e7e7e7
+  BackGroundColor #070707
+  FontColor white
+}
+spot {
+  spotAnnotation {
+    BackgroundColor #4A0000
+  }
+  spotAbstractClass {
+    BackgroundColor #2A5D60
+  }
+  spotClass {
+    BackgroundColor #2E5233
+  }
+  spotInterface {
+    BackgroundColor #352866
+  }
+  spotEnum {
+    BackgroundColor #852D19
+  }
+  spotEntity {
+    BackgroundColor #2E5233
+  }
+}
+}
+

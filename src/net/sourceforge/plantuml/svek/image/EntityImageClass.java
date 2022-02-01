@@ -161,8 +161,12 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 		final double heightTotal = dimTotal.getHeight();
 		final Shadowable rect = new URectangle(widthTotal, heightTotal).rounded(roundCorner)
 				.withCommentAndCodeLine(getEntity().getCodeGetName(), getEntity().getCodeLine());
-		if (getSkinParam().shadowing(getEntity().getStereotype())) {
-			rect.setDeltaShadow(4);
+		if (UseStyle.useBetaStyle()) {
+			rect.setDeltaShadow(getStyle().value(PName.Shadowing).asDouble());
+		} else {
+			if (getSkinParam().shadowing(getEntity().getStereotype())) {
+				rect.setDeltaShadow(4);
+			}
 		}
 
 		HColor classBorder = lineConfig.getColors().getColor(ColorType.LINE);
@@ -197,8 +201,7 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 
 		if (headerBackcolor == null) {
 			if (UseStyle.useBetaStyle())
-				headerBackcolor = getStyle().value(PName.BackGroundColor).asColor(getSkinParam().getThemeStyle(),
-						getSkinParam().getIHtmlColorSet());
+				headerBackcolor = backcolor;
 			else
 				headerBackcolor = getSkinParam().getHtmlColor(ColorParam.classHeaderBackground, getStereo(), false);
 		}

@@ -39,7 +39,7 @@ import java.awt.geom.Point2D;
 
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorNone;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 class ExtremityDiamond extends Extremity {
@@ -47,16 +47,14 @@ class ExtremityDiamond extends Extremity {
 	private UPolygon polygon = new UPolygon();
 	private final boolean fill;
 	private final Point2D contact;
-	private final HColor backgroundColor;
 
 	@Override
 	public Point2D somePoint() {
 		return contact;
 	}
 
-	public ExtremityDiamond(Point2D p1, double angle, boolean fill, HColor backgroundColor) {
+	public ExtremityDiamond(Point2D p1, double angle, boolean fill) {
 		this.fill = fill;
-		this.backgroundColor = backgroundColor;
 		this.contact = new Point2D.Double(p1.getX(), p1.getY());
 		angle = manageround(angle);
 		polygon.addPoint(0, 0);
@@ -71,22 +69,21 @@ class ExtremityDiamond extends Extremity {
 	}
 
 	public void drawU(UGraphic ug) {
-		if (fill) {
+		if (fill)
 			ug = ug.apply(HColorUtils.changeBack(ug));
-		} else {
-			ug = ug.apply(backgroundColor.bg());
-		}
+		else
+			ug = ug.apply(new HColorNone().bg());
+
 		ug.draw(polygon);
 	}
 
 	@Override
 	public Point2D isTooSmallSoGiveThePointCloserToThisOne(Point2D pt) {
 		Point2D result = null;
-		for (Point2D p : polygon.getPoints()) {
-			if (result == null || p.distance(pt) < result.distance(pt)) {
+		for (Point2D p : polygon.getPoints())
+			if (result == null || p.distance(pt) < result.distance(pt))
 				result = p;
-			}
-		}
+
 		return result;
 	}
 

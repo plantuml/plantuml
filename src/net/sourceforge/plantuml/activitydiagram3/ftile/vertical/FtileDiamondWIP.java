@@ -81,8 +81,8 @@ abstract class FtileDiamondWIP extends AbstractFtile implements Styleable {
 		super(skinParam);
 		if (UseStyle.useBetaStyle()) {
 			Style style = getDefaultStyleDefinition().getMergedStyle(skinParam.getCurrentStyleBuilder());
-			this.borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), getIHtmlColorSet());
-			this.backColor = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(), getIHtmlColorSet());
+			this.borderColor = borderColor; //style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), getIHtmlColorSet());
+			this.backColor = backColor; //style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(), getIHtmlColorSet());
 			this.shadowing = style.value(PName.Shadowing).asDouble();
 		} else {
 			this.backColor = backColor;

@@ -44,36 +44,35 @@ import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorAutomatic;
 
 public class CircledCharacter extends AbstractTextBlock implements TextBlock {
 
 	private final String c;
 	private final UFont font;
-	private final HColor innerCircle;
-	private final HColor circle;
+	private final HColor spotBackColor;
+	private final HColor spotBorder;
 	private final HColor fontColor;
 	private final double radius;
 
-	public CircledCharacter(char c, double radius, UFont font, HColor innerCircle, HColor circle,
+	public CircledCharacter(char c, double radius, UFont font, HColor spotBackColor, HColor spotBorder,
 			HColor fontColor) {
 		this.c = "" + c;
 		this.radius = radius;
 		this.font = font;
-		this.innerCircle = innerCircle;
-		this.circle = circle;
-		this.fontColor = fontColor;
+		this.spotBackColor = spotBackColor;
+		this.spotBorder = spotBorder;
+		if (fontColor instanceof HColorAutomatic)
+			this.fontColor = ((HColorAutomatic) fontColor).getAppropriateColor(spotBackColor);
+		else
+			this.fontColor = fontColor;
 	}
 
-	// public void draw(ColorMapper colorMapper, Graphics2D g2d, int x, int y, double dpiFactor) {
-	// drawU(new UGraphicG2d(colorMapper, g2d, null, 1.0), x, y);
-	// }
-
 	public void drawU(UGraphic ug) {
-		if (circle != null) {
-			ug = ug.apply(circle);
-		}
-		// final HtmlColor back = ug.getParam().getBackcolor();
-		ug = ug.apply(innerCircle.bg());
+		if (spotBorder != null)
+			ug = ug.apply(spotBorder);
+
+		ug = ug.apply(spotBackColor.bg());
 		ug.draw(new UEllipse(radius * 2, radius * 2));
 		ug = ug.apply(fontColor);
 		ug = ug.apply(new UTranslate(radius, radius));

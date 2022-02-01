@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.graphic;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 class USymbolTogether extends USymbol {
@@ -46,6 +47,12 @@ class USymbolTogether extends USymbol {
 	public SkinParameter getSkinParameter() {
 		return SkinParameter.STORAGE;
 	}
+	
+	@Override
+	public SName getSName() {
+		return SName.storage;
+	}
+
 
 	@Override
 	public TextBlock asSmall(TextBlock name, final TextBlock label, final TextBlock stereotype,

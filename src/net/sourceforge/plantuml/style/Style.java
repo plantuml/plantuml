@@ -106,7 +106,18 @@ public class Style {
 			final Value resultDark = map.get(PName.DARK_BackGroundColor);
 			if (resultDark != null)
 				return new ValueForDark(result, resultDark);
-
+		} else if (name == PName.LineColor) {
+			final Value resultDark = map.get(PName.DARK_LineColor);
+			if (resultDark != null)
+				return new ValueForDark(result, resultDark);
+		} else if (name == PName.FontColor) {
+			final Value resultDark = map.get(PName.DARK_FontColor);
+			if (resultDark != null)
+				return new ValueForDark(result, resultDark);
+		} else if (name == PName.HyperLinkColor) {
+			final Value resultDark = map.get(PName.DARK_HyperLinkColor);
+			if (resultDark != null)
+				return new ValueForDark(result, resultDark);
 		}
 
 		return result;
@@ -129,20 +140,6 @@ public class Style {
 		}
 		return new Style(this.signature.mergeWith(other.getSignature()), both);
 	}
-
-//	private Style mergeIfUnknownWith(Style other) {
-//		if (other == null) {
-//			return this;
-//		}
-//		final EnumMap<PName, Value> both = new EnumMap<PName, Value>(this.map);
-//		for (Entry<PName, Value> ent : other.map.entrySet()) {
-//			final Value previous = this.map.get(ent.getKey());
-//			if (previous == null)
-//				both.put(ent.getKey(), ent.getValue());
-//
-//		}
-//		return new Style(this.signature.mergeWith(other.getSignature()), both, this.scheme);
-//	}
 
 	public Style eventuallyOverride(PName param, HColor color) {
 		if (color == null)

@@ -139,9 +139,9 @@ public enum LinkDecor {
 		case NOT_NAVIGABLE:
 			return new ExtremityFactoryNotNavigable();
 		case AGREGATION:
-			return new ExtremityFactoryDiamond(false, backgroundColor);
+			return new ExtremityFactoryDiamond(false);
 		case COMPOSITION:
-			return new ExtremityFactoryDiamond(true, backgroundColor);
+			return new ExtremityFactoryDiamond(true);
 		case CIRCLE:
 			return new ExtremityFactoryCircle(false, backgroundColor);
 		case CIRCLE_FILL:

@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.graphic;
 import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UGraphicStencil;
 import net.sourceforge.plantuml.ugraphic.URectangle;
@@ -50,14 +51,18 @@ class USymbolComponent1 extends USymbol {
 	public SkinParameter getSkinParameter() {
 		return SkinParameter.COMPONENT1;
 	}
+	
+	@Override
+	public SName getSName() {
+		return SName.component;
+	}
 
-	private void drawComponent1(UGraphic ug, double widthTotal, double heightTotal, boolean shadowing,
+
+	private void drawComponent1(UGraphic ug, double widthTotal, double heightTotal, double shadowing,
 			double roundCorner) {
 
 		final URectangle form = new URectangle(widthTotal, heightTotal).rounded(roundCorner);
-		if (shadowing) {
-			form.setDeltaShadow(4);
-		}
+		form.setDeltaShadow(shadowing);
 
 		ug.draw(form);
 		final UShape small = new URectangle(10, 5);
@@ -82,7 +87,7 @@ class USymbolComponent1 extends USymbol {
 				final Dimension2D dimTotal = calculateDimension(stringBounder);
 				ug = UGraphicStencil.create(ug, dimTotal);
 				ug = symbolContext.apply(ug);
-				drawComponent1(ug, dimTotal.getWidth(), dimTotal.getHeight(), symbolContext.isShadowing(),
+				drawComponent1(ug, dimTotal.getWidth(), dimTotal.getHeight(), symbolContext.getDeltaShadow(),
 						symbolContext.getRoundCorner());
 				final Margin margin = getMargin();
 				final TextBlock tb = TextBlockUtils.mergeTB(stereotype, label, HorizontalAlignment.CENTER);

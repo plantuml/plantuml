@@ -47,8 +47,8 @@ public class DriverDotPathSvg implements UDriver<DotPath, SvgGraphics> {
 		// DriverLineG2d.manageStroke(param, g2d);
 
 		if (param.getColor() != null) {
-			final String color = mapper.toSvg(param.getColor());
-			svg.setStrokeColor(color);
+			DriverRectangleSvg.applyStrokeColor(svg, mapper, param);
+
 			svg.setFillColor(null);
 			svg.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDasharraySvg());
 

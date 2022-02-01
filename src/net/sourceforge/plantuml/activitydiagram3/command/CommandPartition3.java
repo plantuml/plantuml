@@ -118,6 +118,12 @@ public class CommandPartition3 extends SingleLineCommand2<ActivityDiagram3> {
 		return ColorParser.simpleColor(ColorType.BACK, id);
 	}
 
+	private StyleSignature getDefaultStyleDefinitionPartition(USymbol symbol) {
+		if (symbol == USymbol.RECTANGLE)
+			return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.rectangle);
+		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.partition);
+	}
+
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg)
 			throws NoSuchColorException {
@@ -131,45 +137,44 @@ public class CommandPartition3 extends SingleLineCommand2<ActivityDiagram3> {
 		final String stereo = arg.get("STEREO", 0);
 		final Stereotype stereotype = stereo == null ? null : Stereotype.build(stereo);
 
-		final HColor backColorInSkinparam = diagram.getSkinParam().getHtmlColor(getColorParamBack(symbol), stereotype,
-				false);
 		HColor backColor;
-		if (backColorInSkinparam == null) {
-			backColor = colors.getColor(ColorType.BACK);
-		} else {
-			backColor = backColorInSkinparam;
-		}
-		HColor titleColor = colors.getColor(ColorType.HEADER);
-
 		// Warning : titleColor unused in FTileGroupW
-		HColor borderColor = diagram.getSkinParam().getHtmlColor(getColorParamBorder(symbol), stereotype, false);
-		if (borderColor == null) {
-			borderColor = HColorUtils.BLACK;
-		}
-		double roundCorner = symbol.getSkinParameter().getRoundCorner(diagram.getSkinParam(), stereotype);
+		HColor titleColor;
+		HColor borderColor;
+		double roundCorner;
 
 		if (UseStyle.useBetaStyle()) {
-			final Style stylePartition = getDefaultStyleDefinitionPartition()
+			final Style stylePartition = getDefaultStyleDefinitionPartition(symbol).with(stereotype)
 					.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
 			borderColor = stylePartition.value(PName.LineColor).asColor(diagram.getSkinParam().getThemeStyle(),
 					diagram.getSkinParam().getIHtmlColorSet());
 			backColor = colors.getColor(ColorType.BACK);
-			if (backColor == null) {
+			if (backColor == null)
 				backColor = stylePartition.value(PName.BackGroundColor).asColor(diagram.getSkinParam().getThemeStyle(),
 						diagram.getSkinParam().getIHtmlColorSet());
-			}
+
 			titleColor = HColorUtils.BLUE;// stylePartition.value(PName.FontColor).asColor(diagram.getSkinParam().getIHtmlColorSet());
 			roundCorner = stylePartition.value(PName.RoundCorner).asDouble();
+		} else {
+			final HColor backColorInSkinparam = diagram.getSkinParam().getHtmlColor(getColorParamBack(symbol),
+					stereotype, false);
+			if (backColorInSkinparam == null)
+				backColor = colors.getColor(ColorType.BACK);
+			else
+				backColor = backColorInSkinparam;
+
+			titleColor = colors.getColor(ColorType.HEADER);
+
+			borderColor = diagram.getSkinParam().getHtmlColor(getColorParamBorder(symbol), stereotype, false);
+			if (borderColor == null)
+				borderColor = HColorUtils.BLACK;
+			roundCorner = symbol.getSkinParameter().getRoundCorner(diagram.getSkinParam(), stereotype);
 		}
 
 		diagram.startGroup(Display.getWithNewlines(partitionTitle), backColor, titleColor, borderColor, symbol,
 				roundCorner);
 
 		return CommandExecutionResult.ok();
-	}
-
-	final public StyleSignature getDefaultStyleDefinitionPartition() {
-		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.partition);
 	}
 
 }

@@ -46,6 +46,8 @@ import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.UDrawable;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
@@ -105,9 +107,9 @@ public enum VisibilityModifier {
 			}
 
 			public void drawU(UGraphic ug) {
-				if (withInvisibleRectanble) {
+				if (withInvisibleRectanble)
 					ug.apply(new HColorNone()).draw(new URectangle(size * 2, size));
-				}
+
 				drawInternal(ug, size, foregroundColor, backgoundColor, 0, 0);
 			}
 		};
@@ -115,11 +117,11 @@ public enum VisibilityModifier {
 
 	private void drawInternal(UGraphic ug, int size, final HColor foregroundColor, final HColor backgoundColor,
 			double x, double y) {
-		if (backgoundColor == null) {
+		if (backgoundColor == null)
 			ug = ug.apply(new HColorNone().bg());
-		} else {
+		else
 			ug = ug.apply(backgoundColor.bg());
-		}
+
 		ug = ug.apply(foregroundColor);
 		size = ensureEven(size);
 		switch (this) {
@@ -173,9 +175,8 @@ public enum VisibilityModifier {
 	}
 
 	static private int ensureEven(int n) {
-		if (n % 2 == 1) {
+		if (n % 2 == 1)
 			n--;
-		}
 		return n;
 	}
 
@@ -199,97 +200,96 @@ public enum VisibilityModifier {
 	}
 
 	public static boolean isVisibilityCharacter(CharSequence s) {
-		if (s.length() <= 2) {
+		if (s.length() <= 2)
 			return false;
-		}
+
 		final char c = s.charAt(0);
-		if (s.charAt(1) == c) {
+		if (s.charAt(1) == c)
 			return false;
-		}
-		if (c == '-') {
+
+		if (c == '-')
 			return true;
-		}
-		if (c == '#') {
+
+		if (c == '#')
 			return true;
-		}
-		if (c == '+') {
+
+		if (c == '+')
 			return true;
-		}
-		if (c == '~') {
+
+		if (c == '~')
 			return true;
-		}
-		if (c == '*') {
+
+		if (c == '*')
 			return true;
-		}
+
 		return false;
 	}
 
 	public static VisibilityModifier getByUnicode(char c) {
-		for (VisibilityModifier modifier : VisibilityModifier.values()) {
-			if (modifier.unicode == c) {
+		for (VisibilityModifier modifier : VisibilityModifier.values())
+			if (modifier.unicode == c)
 				return modifier;
-			}
-		}
+
 		return null;
 	}
 
 	public static String replaceVisibilityModifierByUnicodeChar(String s, boolean isField) {
 		final VisibilityModifier modifier = getVisibilityModifier(s, isField);
-		if (modifier == null) {
+		if (modifier == null)
 			return s;
-		}
+
 		return "" + modifier.unicode + s.substring(1);
 	}
 
 	public static VisibilityModifier getVisibilityModifier(CharSequence s, boolean isField) {
-		if (s.length() <= 2) {
+		if (s.length() <= 2)
 			return null;
-		}
+
 		final char c = s.charAt(0);
-		if (s.charAt(1) == c) {
+		if (s.charAt(1) == c)
 			return null;
-		}
-		if (isField) {
+
+		if (isField)
 			return getVisibilityModifierForField(c);
-		}
+
 		return getVisibilityModifierForMethod(c);
 	}
 
 	private static VisibilityModifier getVisibilityModifierForField(char c) {
-		if (c == '-') {
+		if (c == '-')
 			return VisibilityModifier.PRIVATE_FIELD;
-		}
-		if (c == '#') {
+
+		if (c == '#')
 			return VisibilityModifier.PROTECTED_FIELD;
-		}
-		if (c == '+') {
+
+		if (c == '+')
 			return VisibilityModifier.PUBLIC_FIELD;
-		}
-		if (c == '~') {
+
+		if (c == '~')
 			return VisibilityModifier.PACKAGE_PRIVATE_FIELD;
-		}
-		if (c == '*') {
+
+		if (c == '*')
 			return VisibilityModifier.IE_MANDATORY;
-		}
+
 		return null;
 	}
 
 	private static VisibilityModifier getVisibilityModifierForMethod(char c) {
-		if (c == '-') {
+		if (c == '-')
 			return VisibilityModifier.PRIVATE_METHOD;
-		}
-		if (c == '#') {
+
+		if (c == '#')
 			return VisibilityModifier.PROTECTED_METHOD;
-		}
-		if (c == '+') {
+
+		if (c == '+')
 			return VisibilityModifier.PUBLIC_METHOD;
-		}
-		if (c == '~') {
+
+		if (c == '~')
 			return VisibilityModifier.PACKAGE_PRIVATE_METHOD;
-		}
-		if (c == '*') {
+
+		if (c == '*')
 			return VisibilityModifier.IE_MANDATORY;
-		}
+
 		return null;
 	}
 
@@ -302,18 +302,44 @@ public enum VisibilityModifier {
 	}
 
 	public String getXmiVisibility() {
-		if (this == PUBLIC_FIELD || this == PUBLIC_METHOD) {
+		if (this == PUBLIC_FIELD || this == PUBLIC_METHOD)
 			return "public";
-		}
-		if (this == PRIVATE_FIELD || this == PRIVATE_METHOD) {
+
+		if (this == PRIVATE_FIELD || this == PRIVATE_METHOD)
 			return "private";
-		}
-		if (this == PROTECTED_FIELD || this == PROTECTED_METHOD) {
+
+		if (this == PROTECTED_FIELD || this == PROTECTED_METHOD)
 			return "protected";
-		}
-		if (this == PACKAGE_PRIVATE_FIELD || this == VisibilityModifier.PACKAGE_PRIVATE_METHOD) {
+
+		if (this == PACKAGE_PRIVATE_FIELD || this == VisibilityModifier.PACKAGE_PRIVATE_METHOD)
 			return "package";
-		}
+
+		throw new IllegalStateException();
+	}
+
+	public boolean isField() {
+		if (this == PUBLIC_FIELD || this == PRIVATE_FIELD || this == PROTECTED_FIELD || this == PACKAGE_PRIVATE_FIELD)
+			return true;
+
+		return false;
+	}
+
+	public StyleSignature getStyleSignature() {
+		if (this == IE_MANDATORY)
+			return StyleSignature.of(SName.root, SName.element, SName.visibilityIcon, SName.IEMandatory);
+
+		if (this == PUBLIC_FIELD || this == PUBLIC_METHOD)
+			return StyleSignature.of(SName.root, SName.element, SName.visibilityIcon, SName.public_);
+
+		if (this == PRIVATE_FIELD || this == PRIVATE_METHOD)
+			return StyleSignature.of(SName.root, SName.element, SName.visibilityIcon, SName.private_);
+
+		if (this == PROTECTED_FIELD || this == PROTECTED_METHOD)
+			return StyleSignature.of(SName.root, SName.element, SName.visibilityIcon, SName.protected_);
+
+		if (this == PACKAGE_PRIVATE_FIELD || this == VisibilityModifier.PACKAGE_PRIVATE_METHOD)
+			return StyleSignature.of(SName.root, SName.element, SName.visibilityIcon, SName.package_);
+
 		throw new IllegalStateException();
 	}
 

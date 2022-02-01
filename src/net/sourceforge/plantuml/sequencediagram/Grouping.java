@@ -65,9 +65,8 @@ public abstract class Grouping implements Event, WithStyle {
 
 	public Style[] getUsedStyles() {
 		return new Style[] {
-				style,
-				styleHeader == null ? styleHeader : styleHeader.eventuallyOverride(PName.BackGroundColor,
-						backColorElement) };
+				style == null ? null : style.eventuallyOverride(PName.BackGroundColor, getBackColorGeneral()),
+				styleHeader == null ? null : styleHeader.eventuallyOverride(PName.BackGroundColor, backColorElement) };
 	}
 
 	public Grouping(String title, String comment, GroupingType type, HColor backColorElement,

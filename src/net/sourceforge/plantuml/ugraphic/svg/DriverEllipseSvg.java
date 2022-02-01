@@ -41,9 +41,6 @@ import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorBackground;
-import net.sourceforge.plantuml.ugraphic.color.HColorGradient;
 
 public class DriverEllipseSvg implements UDriver<UEllipse, SvgGraphics> {
 
@@ -67,20 +64,9 @@ public class DriverEllipseSvg implements UDriver<UEllipse, SvgGraphics> {
 			}
 		}
 
-		final HColor back = param.getBackcolor();
-		if (back instanceof HColorGradient) {
-			final HColorGradient gr = (HColorGradient) back;
-			final String id = svg.createSvgGradient(mapper.toRGB(gr.getColor1()), mapper.toRGB(gr.getColor2()),
-					gr.getPolicy());
-			svg.setFillColor("url(#" + id + ")");
-		} else if (back == null || back instanceof HColorBackground) {
-			svg.setFillColor("#00000000");
-		} else {
-			final String backcolor = mapper.toSvg(back);
-			svg.setFillColor(backcolor);
-		}
 		DriverRectangleSvg.applyStrokeColor(svg, mapper, param);
-		// svg.setStrokeColor(StringUtils.getAsSvg(mapper, param.getColor()));
+		DriverRectangleSvg.applyFillColor(svg, mapper, param);
+
 		svg.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDasharraySvg());
 
 		double start = shape.getStart();

@@ -41,8 +41,6 @@ import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorGradient;
 
 public class DriverPolygonSvg implements UDriver<UPolygon, SvgGraphics> {
 
@@ -56,27 +54,14 @@ public class DriverPolygonSvg implements UDriver<UPolygon, SvgGraphics> {
 		final double points[] = shape.getPointArray(x, y);
 		assert points.length % 2 == 0;
 		final UClip clip = clipContainer.getClip();
-		if (clip != null) {
-			for (int j = 0; j < points.length; j += 2) {
-				if (clip.isInside(points[j], points[j + 1]) == false) {
+		if (clip != null)
+			for (int j = 0; j < points.length; j += 2)
+				if (clip.isInside(points[j], points[j + 1]) == false)
 					return;
-				}
-			}
-		}
 
-		final String color = mapper.toSvg(param.getColor());
-		final HColor back = param.getBackcolor();
-		if (back instanceof HColorGradient) {
-			final HColorGradient gr = (HColorGradient) back;
-			final String id = svg.createSvgGradient(mapper.toRGB(gr.getColor1()),
-					mapper.toRGB(gr.getColor2()), gr.getPolicy());
-			svg.setFillColor("url(#" + id + ")");
-		} else {
-			final String backcolorString = mapper.toSvg(back);
-			svg.setFillColor(backcolorString);
-		}
+		DriverRectangleSvg.applyFillColor(svg, mapper, param);
+		DriverRectangleSvg.applyStrokeColor(svg, mapper, param);
 
-		svg.setStrokeColor(color);
 		svg.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDasharraySvg());
 
 		svg.svgPolygon(shape.getDeltaShadow(), points);

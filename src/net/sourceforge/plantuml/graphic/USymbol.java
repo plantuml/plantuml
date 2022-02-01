@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.skin.ActorStyle;
+import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.svek.PackageStyle;
 
 public abstract class USymbol {
@@ -96,6 +97,7 @@ public abstract class USymbol {
 	public final static USymbol TOGETHER = record("TOGETHER", SkinParameter.QUEUE, new USymbolTogether());
 
 	abstract public SkinParameter getSkinParameter();
+	abstract public SName getSName();
 
 	// public USymbol withStereoAlignment(HorizontalAlignment alignment) {
 	// return this;

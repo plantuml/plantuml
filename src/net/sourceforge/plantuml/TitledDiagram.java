@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 import net.sourceforge.plantuml.anim.Animation;
 import net.sourceforge.plantuml.anim.AnimationDecoder;
@@ -55,6 +56,7 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleLoader;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
@@ -118,7 +120,13 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 	}
 
 	public CommandExecutionResult loadSkin(String newSkin) throws IOException {
-		getSkinParam().setDefaultSkin(newSkin + ".skin");
+		final String filename = newSkin + ".skin";
+		final InputStream is = StyleLoader.getInputStreamForStyle(filename);
+		if (is == null)
+			return CommandExecutionResult.error("Cannot find style " + newSkin);
+		is.close();
+
+		getSkinParam().setDefaultSkin(filename);
 		return CommandExecutionResult.ok();
 		// final String res = "/skin/" + filename + ".skin";
 		// final InputStream internalIs = UmlDiagram.class.getResourceAsStream(res);

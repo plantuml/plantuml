@@ -124,7 +124,13 @@ public class DriverTextSvg implements UDriver<UText, SvgGraphics> {
 			}
 		}
 
-		svg.setFillColor(mapper.toSvg(fontConfiguration.getColor()));
+		final HColor textColor = fontConfiguration.getColor();
+		final HColor dark = textColor == null ? null : textColor.darkSchemeTheme();
+		if (dark == textColor)
+			svg.setFillColor(mapper.toSvg(textColor));
+		else
+			svg.setFillColor(mapper.toSvg(textColor), mapper.toSvg(dark));
+
 		svg.text(text, x, y, font.getFamily(UFontContext.SVG), font.getSize(), fontWeight, fontStyle, textDecoration,
 				width, fontConfiguration.getAttributes(), backColor);
 	}

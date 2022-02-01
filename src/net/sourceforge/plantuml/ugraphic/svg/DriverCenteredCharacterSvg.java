@@ -45,10 +45,12 @@ import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class DriverCenteredCharacterSvg implements UDriver<UCenteredCharacter, SvgGraphics> {
 
-	public void draw(UCenteredCharacter characterCircled, double x, double y, ColorMapper mapper, UParam param, SvgGraphics svg) {
+	public void draw(UCenteredCharacter characterCircled, double x, double y, ColorMapper mapper, UParam param,
+			SvgGraphics svg) {
 		final char c = characterCircled.getChar();
 		final UFont font = characterCircled.getFont();
 		final UnusedSpace unusedSpace = UnusedSpace.getUnusedSpace(font, c);
@@ -57,7 +59,13 @@ public class DriverCenteredCharacterSvg implements UDriver<UCenteredCharacter, S
 		final double ypos = y - unusedSpace.getCenterY() - 0.5;
 
 		final TextLayout t = createTextLayout(font, "" + c);
-		svg.setFillColor(mapper.toRGB(param.getColor()));
+		final HColor textColor = param.getColor();
+		final HColor dark = textColor == null ? null : textColor.darkSchemeTheme();
+		if (dark == textColor)
+			svg.setFillColor(mapper.toSvg(textColor));
+		else
+			svg.setFillColor(mapper.toSvg(textColor), mapper.toSvg(dark));
+
 		svg.drawPathIterator(xpos, ypos, t.getOutline(null).getPathIterator(null));
 	}
 }

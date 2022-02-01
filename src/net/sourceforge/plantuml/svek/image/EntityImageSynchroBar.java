@@ -66,9 +66,7 @@ public class EntityImageSynchroBar extends AbstractEntityImage {
 		// this.styleName = styleName;
 	}
 
-	public StyleSignature getDefaultStyleDefinitionBar() {
-		// return StyleSignature.of(SName.root, SName.element, styleName,
-		// SName.activityBar);
+	private StyleSignature getDefaultStyleDefinitionBar() {
 		return StyleSignature.of(SName.root, SName.element, SName.activityBar);
 	}
 

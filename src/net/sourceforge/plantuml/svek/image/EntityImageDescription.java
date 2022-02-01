@@ -115,16 +115,16 @@ public class EntityImageDescription extends AbstractEntityImage {
 		this.links = links;
 		final Stereotype stereotype = entity.getStereotype();
 		USymbol symbol = getUSymbol(entity);
-		if (symbol == USymbol.FOLDER) {
+		if (symbol == USymbol.FOLDER)
 			this.shapeType = ShapeType.FOLDER;
-		} else if (symbol == USymbol.HEXAGON) {
+		else if (symbol == USymbol.HEXAGON)
 			this.shapeType = ShapeType.HEXAGON;
-		} else if (symbol == USymbol.INTERFACE) {
+		else if (symbol == USymbol.INTERFACE)
 			this.shapeType = getSkinParam().fixCircleLabelOverlapping() ? ShapeType.RECTANGLE_WITH_CIRCLE_INSIDE
 					: ShapeType.RECTANGLE;
-		} else {
+		else
 			this.shapeType = ShapeType.RECTANGLE;
-		}
+
 		this.hideText = symbol == USymbol.INTERFACE;
 
 		this.url = entity.getUrl99();
@@ -150,10 +150,10 @@ public class EntityImageDescription extends AbstractEntityImage {
 					.getMergedStyle(getSkinParam().getCurrentStyleBuilder());
 			forecolor = style.value(PName.LineColor).asColor(getSkinParam().getThemeStyle(),
 					getSkinParam().getIHtmlColorSet());
-			if (backcolor == null) {
+			if (backcolor == null)
 				backcolor = style.value(PName.BackGroundColor).asColor(getSkinParam().getThemeStyle(),
 						getSkinParam().getIHtmlColorSet());
-			}
+
 			roundCorner = style.value(PName.RoundCorner).asDouble();
 			diagonalCorner = style.value(PName.DiagonalCorner).asDouble();
 			deltaShadow = style.value(PName.Shadowing).asDouble();
@@ -164,9 +164,9 @@ public class EntityImageDescription extends AbstractEntityImage {
 			defaultAlign = style.getHorizontalAlignment();
 		} else {
 			forecolor = SkinParamUtils.getColor(getSkinParam(), stereotype, symbol.getColorParamBorder());
-			if (backcolor == null) {
+			if (backcolor == null)
 				backcolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), symbol.getColorParamBack());
-			}
+
 			roundCorner = symbol.getSkinParameter().getRoundCorner(getSkinParam(), stereotype);
 			diagonalCorner = symbol.getSkinParameter().getDiagonalCorner(getSkinParam(), stereotype);
 			deltaShadow = getSkinParam().shadowing2(getEntity().getStereotype(), symbol.getSkinParameter()) ? 3 : 0;
@@ -193,24 +193,22 @@ public class EntityImageDescription extends AbstractEntityImage {
 
 		stereo = TextBlockUtils.empty(0, 0);
 
-		if (stereotype != null && stereotype.getSprite(getSkinParam()) != null) {
-			// symbol = symbol.withStereoAlignment(HorizontalAlignment.RIGHT);
+		if (stereotype != null && stereotype.getSprite(getSkinParam()) != null)
 			stereo = stereotype.getSprite(getSkinParam());
-		} else if (stereotype != null && stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) != null
-				&& portionShower.showPortion(EntityPortion.STEREOTYPE, entity)) {
+		else if (stereotype != null && stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) != null
+				&& portionShower.showPortion(EntityPortion.STEREOTYPE, entity))
 			stereo = Display.getWithNewlines(stereotype.getLabel(getSkinParam().guillemet())).create(fcStereo,
 					HorizontalAlignment.CENTER, getSkinParam());
-		}
 
 		name = BodyFactory.create2(getSkinParam().getDefaultTextAlignment(HorizontalAlignment.CENTER), codeDisplay,
 				symbol.getFontParam(), getSkinParam(), stereotype, entity, style);
 
-		if (hideText) {
+		if (hideText)
 			asSmall = symbol.asSmall(TextBlockUtils.empty(0, 0), TextBlockUtils.empty(0, 0), TextBlockUtils.empty(0, 0),
 					ctx, getSkinParam().getStereotypeAlignment());
-		} else {
+		else
 			asSmall = symbol.asSmall(name, desc, stereo, ctx, getSkinParam().getStereotypeAlignment());
-		}
+
 	}
 
 	private USymbol getUSymbol(ILeaf entity) {
@@ -220,9 +218,9 @@ public class EntityImageDescription extends AbstractEntityImage {
 	}
 
 	public Dimension2D getNameDimension(StringBounder stringBounder) {
-		if (hideText) {
+		if (hideText)
 			return new Dimension2DDouble(0, 0);
-		}
+
 		return name.calculateDimension(stringBounder);
 	}
 
@@ -232,39 +230,35 @@ public class EntityImageDescription extends AbstractEntityImage {
 
 	@Override
 	public Margins getShield(StringBounder stringBounder) {
-		if (hideText == false) {
+		if (hideText == false)
 			return Margins.NONE;
-		}
-		// if (useRankSame && hasSomeHorizontalLink((ILeaf) getEntity(), links)) {
-		// return Margins.NONE;
-		// }
-		if (isThereADoubleLink((ILeaf) getEntity(), links)) {
+
+		if (isThereADoubleLink((ILeaf) getEntity(), links))
 			return Margins.NONE;
-		}
-		if (fixCircleLabelOverlapping == false && hasSomeHorizontalLinkVisible((ILeaf) getEntity(), links)) {
+
+		if (fixCircleLabelOverlapping == false && hasSomeHorizontalLinkVisible((ILeaf) getEntity(), links))
 			return Margins.NONE;
-		}
-		if (hasSomeHorizontalLinkDoubleDecorated((ILeaf) getEntity(), links)) {
+
+		if (hasSomeHorizontalLinkDoubleDecorated((ILeaf) getEntity(), links))
 			return Margins.NONE;
-		}
+
 		final Dimension2D dimStereo = stereo.calculateDimension(stringBounder);
 		final Dimension2D dimDesc = desc.calculateDimension(stringBounder);
 		final Dimension2D dimSmall = asSmall.calculateDimension(stringBounder);
 		final double x = Math.max(dimStereo.getWidth(), dimDesc.getWidth());
 		double suppX = x - dimSmall.getWidth();
-		if (suppX < 1) {
+		if (suppX < 1)
 			suppX = 1;
-		}
+
 		final double y = MathUtils.max(1, dimDesc.getHeight(), dimStereo.getHeight());
 		return new Margins(suppX / 2, suppX / 2, y, y);
 	}
 
 	private boolean hasSomeHorizontalLinkVisible(ILeaf leaf, Collection<Link> links) {
-		for (Link link : links) {
-			if (link.getLength() == 1 && link.contains(leaf) && link.isInvis() == false) {
+		for (Link link : links)
+			if (link.getLength() == 1 && link.contains(leaf) && link.isInvis() == false)
 				return true;
-			}
-		}
+
 		return false;
 	}
 
@@ -274,20 +268,19 @@ public class EntityImageDescription extends AbstractEntityImage {
 			if (link.contains(leaf)) {
 				final IEntity other = link.getOther(leaf);
 				final boolean changed = others.add(other);
-				if (changed == false) {
+				if (changed == false)
 					return true;
-				}
+
 			}
 		}
 		return false;
 	}
 
 	private boolean hasSomeHorizontalLinkDoubleDecorated(ILeaf leaf, Collection<Link> links) {
-		for (Link link : links) {
-			if (link.getLength() == 1 && link.contains(leaf) && link.getType().isDoubleDecorated()) {
+		for (Link link : links)
+			if (link.getLength() == 1 && link.contains(leaf) && link.getType().isDoubleDecorated())
 				return true;
-			}
-		}
+
 		return false;
 	}
 
@@ -295,12 +288,12 @@ public class EntityImageDescription extends AbstractEntityImage {
 		ug.draw(new UComment("entity " + getEntity().getCodeGetName()));
 		ug.startGroup(UGroupType.CLASS, "elem " + getEntity().getCode() + " selected");
 
-		if (url != null) {
+		if (url != null)
 			ug.startUrl(url);
-		}
-		if (shapeType == ShapeType.HEXAGON) {
+
+		if (shapeType == ShapeType.HEXAGON)
 			drawHexagon(ctx.apply(ug));
-		}
+
 		asSmall.drawU(ug);
 
 		if (hideText) {
@@ -318,17 +311,16 @@ public class EntityImageDescription extends AbstractEntityImage {
 			stereo.drawU(ug.apply(new UTranslate(posx2, -space - dimStereo.getHeight())));
 		}
 
-		if (url != null) {
+		if (url != null)
 			ug.closeUrl();
-		}
 
 		ug.closeGroup();
 	}
 
 	private void drawHexagon(UGraphic ug) {
-		if (bibliotekon == null) {
+		if (bibliotekon == null)
 			throw new IllegalStateException();
-		}
+
 		final SvekNode node = bibliotekon.getNode(getEntity());
 		final Shadowable hexagon = node.getPolygon();
 		if (hexagon != null) {

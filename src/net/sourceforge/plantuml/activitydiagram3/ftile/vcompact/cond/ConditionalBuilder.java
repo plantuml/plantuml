@@ -108,19 +108,25 @@ public class ConditionalBuilder {
 			Branch branch1, Branch branch2, ISkinParam skinParam, StringBounder stringBounder,
 			FontConfiguration fontArrow, FontConfiguration fontTest, Url url) {
 		if (UseStyle.useBetaStyle()) {
+			if (backColor == null)
+				throw new IllegalArgumentException();
+			if (borderColor == null)
+				throw new IllegalArgumentException();
+			if (arrowColor == null)
+				throw new IllegalArgumentException();
 			final Style styleArrow = getDefaultStyleDefinitionArrow()
 					.getMergedStyle(skinParam.getCurrentStyleBuilder());
 			final Style styleDiamond = getDefaultStyleDefinitionDiamond()
 					.getMergedStyle(skinParam.getCurrentStyleBuilder());
 			this.diamondLineBreak = styleDiamond.wrapWidth();
 			this.labelLineBreak = styleArrow.wrapWidth();
-			this.borderColor = styleDiamond.value(PName.LineColor).asColor(skinParam.getThemeStyle(),
-					skinParam.getIHtmlColorSet());
-			this.backColor = styleDiamond.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
-					skinParam.getIHtmlColorSet());
-			this.arrowColor = Rainbow.fromColor(
+			this.borderColor = borderColor; /*styleDiamond.value(PName.LineColor).asColor(skinParam.getThemeStyle(),
+					skinParam.getIHtmlColorSet());*/
+			this.backColor = backColor;/*styleDiamond.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
+					skinParam.getIHtmlColorSet())*/;
+			this.arrowColor = arrowColor;/* Rainbow.fromColor(
 					styleArrow.value(PName.LineColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet()),
-					null);
+					null);*/
 			this.fontTest = styleDiamond.getFontConfiguration(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
 			this.fontArrow = styleArrow.getFontConfiguration(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
 		} else {

@@ -122,11 +122,11 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 
 	private void register() {
 		registerDriver(URectangle.class, new DriverRectangleSvg(this));
-		if (textAsPath2) {
+		if (textAsPath2)
 			registerDriver(UText.class, new DriverTextAsPathSvg(this));
-		} else {
+		else
 			registerDriver(UText.class, new DriverTextSvg(getStringBounder(), this));
-		}
+
 		registerDriver(ULine.class, new DriverLineSvg(this));
 		registerDriver(UPixel.class, new DriverPixelSvg());
 		registerDriver(UPolygon.class, new DriverPolygonSvg(this));
@@ -145,9 +145,9 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 	@Override
 	public void writeToStream(OutputStream os, String metadata, int dpi) throws IOException {
 		try {
-			if (metadata != null) {
+			if (metadata != null)
 				getGraphicObject().addComment(metadata);
-			}
+
 			getGraphicObject().createXml(os);
 		} catch (TransformerException e) {
 			throw new IOException(e.toString());
@@ -181,9 +181,9 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 
 	@Override
 	public boolean matchesProperty(String propertyName) {
-		if (propertyName.equalsIgnoreCase("SVG")) {
+		if (propertyName.equalsIgnoreCase("SVG"))
 			return true;
-		}
+
 		return super.matchesProperty(propertyName);
 	}
 

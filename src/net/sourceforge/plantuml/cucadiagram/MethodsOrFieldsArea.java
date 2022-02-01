@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.EmbeddedDiagram;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -55,9 +56,13 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockLineBefore;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.TextBlockWithUrl;
+import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.svek.Ports;
 import net.sourceforge.plantuml.svek.WithPorts;
 import net.sourceforge.plantuml.ugraphic.PlacementStrategy;
@@ -68,6 +73,7 @@ import net.sourceforge.plantuml.ugraphic.PlacementStrategyY1Y2Right;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULayoutGroup;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 import net.sourceforge.plantuml.utils.CharHidder;
 
 public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlock, WithPorts {
@@ -261,11 +267,23 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlock,
 				}
 			};
 		}
-		final HColor back = modifier.getBackground() == null ? null
-				: rose.getHtmlColor(skinParam, modifier.getBackground());
-		final HColor fore = rose.getHtmlColor(skinParam, modifier.getForeground());
+		final HColor backColor;
+		final HColor borderColor;
+		if (UseStyle.useBetaStyle()) {
+			final Style style = modifier.getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
+			borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
+			final boolean isField = modifier.isField();
+			backColor = isField ? null
+					: style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
+							skinParam.getIHtmlColorSet());
+		} else {
+			borderColor = rose.getHtmlColor(skinParam, modifier.getForeground());
+			backColor = modifier.getBackground() == null ? null
+					: rose.getHtmlColor(skinParam, modifier.getBackground());
+		}
 
-		final TextBlock uBlock = modifier.getUBlock(skinParam.classAttributeIconSize(), fore, back, url != null);
+		final TextBlock uBlock = modifier.getUBlock(skinParam.classAttributeIconSize(), borderColor, backColor,
+				url != null);
 		return TextBlockWithUrl.withUrl(uBlock, url);
 	}
 
