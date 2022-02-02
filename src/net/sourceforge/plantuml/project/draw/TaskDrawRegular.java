@@ -292,7 +292,7 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 			off.add(new Segment(x1, x2));
 		}
 
-		final HColor backUndone = StyleSignature.of(SName.root, SName.element, SName.ganttDiagram, SName.undone)
+		final HColor backUndone = StyleSignature.of(SName.root, SName.element, SName.ganttDiagram, SName.task, SName.undone)
 				.getMergedStyle(getStyleBuilder()).value(PName.BackGroundColor)
 				.asColor(skinParam.getThemeStyle(), getColorSet());
 
