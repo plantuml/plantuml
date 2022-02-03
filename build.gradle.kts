@@ -28,14 +28,7 @@ java {
 sourceSets {
   main {
     java {
-      srcDirs("src/ext")
-      srcDirs("src/gen")
-      srcDirs("src/h")
-      srcDirs("src/jcckit")
-      srcDirs("src/net")
-      srcDirs("src/org")
-      srcDirs("src/smetana")
-      srcDirs("src/sprites")
+      srcDirs("src")
     }
     resources {
       srcDirs("src")
@@ -47,8 +40,7 @@ sourceSets {
   }
   test {
     java {
-      srcDirs("test/net")
-      srcDirs("test/nonreg")
+      srcDirs("test")
     }
     resources {
       srcDirs(".")
@@ -71,8 +63,9 @@ tasks.withType<Jar> {
     configurations.runtimeClasspath.get().filter { it.name.endsWith("jar") }.map { zipTree(it) }
   })
 
+	// source sets for java and resources are on "src", only put once into the jar
+	duplicatesStrategy = org.gradle.api.file.DuplicatesStrategy.EXCLUDE
   from("skin") { into("skin") }
-  from("sprites/archimate") { into("sprites/archimate") }
   from("stdlib") { into("stdlib") }
   from("svg") { into("svg") }
   from("themes") { into("themes") }
