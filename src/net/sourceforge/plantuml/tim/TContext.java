@@ -117,6 +117,7 @@ import net.sourceforge.plantuml.tim.stdlib.ReverseColor;
 import net.sourceforge.plantuml.tim.stdlib.ReverseHsluvColor;
 import net.sourceforge.plantuml.tim.stdlib.SetVariableValue;
 import net.sourceforge.plantuml.tim.stdlib.Size;
+import net.sourceforge.plantuml.tim.stdlib.SplitStr;
 import net.sourceforge.plantuml.tim.stdlib.StringFunction;
 import net.sourceforge.plantuml.tim.stdlib.Strlen;
 import net.sourceforge.plantuml.tim.stdlib.Strpos;
@@ -185,6 +186,7 @@ public class TContext {
 		functionsSet.addFunction(new Size());
 		functionsSet.addFunction(new GetJsonKey());
 		functionsSet.addFunction(new GetJsonType());
+		functionsSet.addFunction(new SplitStr());
 		// %standard_exists_function
 		// %str_replace
 		// !exit

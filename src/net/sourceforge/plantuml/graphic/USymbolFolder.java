@@ -59,11 +59,13 @@ public class USymbolFolder extends USymbol {
 	private final static int marginTitleY2 = 3;
 
 	private final SkinParameter skinParameter;
+	private final SName sname;
 	private final boolean showTitle;
 
-	public USymbolFolder(SkinParameter skinParameter, boolean showTitle) {
+	public USymbolFolder(SName sname, SkinParameter skinParameter, boolean showTitle) {
 		this.skinParameter = skinParameter;
 		this.showTitle = showTitle;
+		this.sname = sname;
 	}
 
 	@Override
@@ -78,7 +80,7 @@ public class USymbolFolder extends USymbol {
 	
 	@Override
 	public SName getSName() {
-		return SName.folder;
+		return sname;
 	}
 
 

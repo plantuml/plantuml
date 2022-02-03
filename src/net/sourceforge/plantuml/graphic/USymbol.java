@@ -61,16 +61,15 @@ public abstract class USymbol {
 	public final static USymbol NODE = record("NODE", SkinParameter.NODE, new USymbolNode());
 	public final static USymbol ARTIFACT = record("ARTIFACT", SkinParameter.ARTIFACT, new USymbolArtifact());
 	public final static USymbol PACKAGE = record("PACKAGE", SkinParameter.PACKAGE,
-			new USymbolFolder(SkinParameter.PACKAGE, true));
+			new USymbolFolder(SName.package_, SkinParameter.PACKAGE, true));
 	public final static USymbol FOLDER = record("FOLDER", SkinParameter.FOLDER,
-			new USymbolFolder(SkinParameter.FOLDER, false));
+			new USymbolFolder(SName.folder, SkinParameter.FOLDER, false));
 	public final static USymbol FILE = record("FILE", SkinParameter.FILE, new USymbolFile());
 	public final static USymbol RECTANGLE = record("RECTANGLE", SkinParameter.RECTANGLE,
 			new USymbolRectangle(SkinParameter.RECTANGLE));
 	public final static USymbol HEXAGON = record("HEXAGON", SkinParameter.HEXAGON, new USymbolHexagon());
 	public final static USymbol PERSON = record("PERSON", SkinParameter.PERSON, new USymbolPerson());
-	public final static USymbol LABEL = record("LABEL", SkinParameter.LABEL,
-			new USymbolLabel(SkinParameter.LABEL));
+	public final static USymbol LABEL = record("LABEL", SkinParameter.LABEL, new USymbolLabel(SkinParameter.LABEL));
 	public final static USymbol ARCHIMATE = record("ARCHIMATE", SkinParameter.ARCHIMATE,
 			new USymbolRectangle(SkinParameter.ARCHIMATE));
 	public final static USymbol COLLECTIONS = record("COLLECTIONS", SkinParameter.COLLECTIONS,
@@ -97,6 +96,7 @@ public abstract class USymbol {
 	public final static USymbol TOGETHER = record("TOGETHER", SkinParameter.QUEUE, new USymbolTogether());
 
 	abstract public SkinParameter getSkinParameter();
+
 	abstract public SName getSName();
 
 	// public USymbol withStereoAlignment(HorizontalAlignment alignment) {
