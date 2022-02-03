@@ -3,29 +3,29 @@
  * ========================================================================
  *
  * Project Info:  http://plantuml.com
- *
+ * 
  * If you like this project or if you find it useful, you can support us at:
- *
+ * 
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- *
+ * 
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
  * (C) Copyright 2009-2020, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program.
- *
+ * 
  * THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC
  * LICENSE ("AGREEMENT"). [Eclipse Public License - v 1.0]
- *
+ * 
  * ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES
  * RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
- *
+ * 
  * You may obtain a copy of the License at
- *
+ * 
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -60,7 +60,7 @@ public class CString extends UnsupportedC implements __ptr__ {
 	}
 
 	public CString(String string) {
-		this(new ArrayList<>(), 0);
+		this(new ArrayList<Character>(), 0);
 		for (int i = 0; i < string.length(); i++) {
 			data2.add(string.charAt(i));
 		}
@@ -70,7 +70,7 @@ public class CString extends UnsupportedC implements __ptr__ {
 	public CString duplicate() {
 		// return this;
 
-		return new CString(new ArrayList<>(this.data2), currentStart);
+		return new CString(new ArrayList<Character>(this.data2), currentStart);
 
 		// final CString result = new CString(this.data.size());
 		// for (int i = 0; i < result.data.size(); i++) {
@@ -82,14 +82,14 @@ public class CString extends UnsupportedC implements __ptr__ {
 	public CString strdup() {
 		return duplicate();
 	}
-
+	
 	public static CString gmalloc(int nbytes) {
 		return new CString(nbytes);
 		}
 
 
 	public CString(int size) {
-		this(new ArrayList<>(), 0);
+		this(new ArrayList<Character>(), 0);
 		for (int i = 0; i < size; i++) {
 			data2.add('\0');
 		}
@@ -131,7 +131,7 @@ public class CString extends UnsupportedC implements __ptr__ {
 	public CString plus_(int pointerMove) {
 		return new CString(data2, currentStart + pointerMove);
 	}
-
+	
 	public int comparePointer(__ptr__ other) {
 		final CString this2 = (CString) other;
 		if (this.data2 != this2.data2) {
@@ -225,7 +225,7 @@ public class CString extends UnsupportedC implements __ptr__ {
 
 	public CString strchr(char c) {
 		for (int i = currentStart; i < data2.size(); i++) {
-			if (data2.get(i) == c) {
+			if (data2.get(i).charValue() == c) {
 				return new CString(data2, i);
 			}
 		}
