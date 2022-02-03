@@ -1,6 +1,3 @@
 # Editor configuration, see http://editorconfig.org
 root = true
-
-[*]
-# no reformat with intellij
-ij_formatter_enabled = false
+# no reformat
