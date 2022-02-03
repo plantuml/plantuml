@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -32,7 +32,7 @@
  * Original Author:  Arnaud Roques
  * Contribution:  Miguel Esteves
  *
- * 
+ *
  */
 package net.sourceforge.plantuml.posimo;
 
@@ -92,16 +92,16 @@ public class DotPath implements UShape, Moveable {
 		// }
 	}
 
-	private final List<CubicCurve2D.Double> beziers = new ArrayList<CubicCurve2D.Double>();
+	private final List<CubicCurve2D.Double> beziers = new ArrayList<>();
 	private String comment;
 	private String codeLine;
 
 	public DotPath() {
-		this(new ArrayList<CubicCurve2D.Double>());
+		this(new ArrayList<>());
 	}
 
 	public DotPath(DotPath other) {
-		this(new ArrayList<CubicCurve2D.Double>());
+		this(new ArrayList<>());
 		for (CubicCurve2D.Double c : other.beziers) {
 			this.beziers.add(new CubicCurve2D.Double(c.x1, c.y1, c.ctrlx1, c.ctrly1, c.ctrlx2, c.ctrly2, c.x2, c.y2));
 		}
@@ -112,7 +112,7 @@ public class DotPath implements UShape, Moveable {
 	}
 
 	public DotPath addCurve(Point2D pt1, Point2D pt2, Point2D pt3, Point2D pt4) {
-		final List<CubicCurve2D.Double> beziersNew = new ArrayList<CubicCurve2D.Double>(beziers);
+		final List<CubicCurve2D.Double> beziersNew = new ArrayList<>(beziers);
 		beziersNew.add(new CubicCurve2D.Double(pt1.getX(), pt1.getY(), pt2.getX(), pt2.getY(), pt3.getX(), pt3.getY(),
 				pt4.getX(), pt4.getY()));
 		return new DotPath(beziersNew);
@@ -337,31 +337,31 @@ public class DotPath implements UShape, Moveable {
 	}
 
 	public DotPath addBefore(CubicCurve2D.Double before) {
-		final List<CubicCurve2D.Double> copy = new ArrayList<CubicCurve2D.Double>(beziers);
+		final List<CubicCurve2D.Double> copy = new ArrayList<>(beziers);
 		copy.add(0, before);
 		return new DotPath(copy);
 	}
 
 	private DotPath addBefore(DotPath other) {
-		final List<CubicCurve2D.Double> copy = new ArrayList<CubicCurve2D.Double>(beziers);
+		final List<CubicCurve2D.Double> copy = new ArrayList<>(beziers);
 		copy.addAll(0, other.beziers);
 		return new DotPath(copy);
 	}
 
 	public DotPath addAfter(CubicCurve2D.Double after) {
-		final List<CubicCurve2D.Double> copy = new ArrayList<CubicCurve2D.Double>(beziers);
+		final List<CubicCurve2D.Double> copy = new ArrayList<>(beziers);
 		copy.add(after);
 		return new DotPath(copy);
 	}
 
 	public DotPath addAfter(DotPath other) {
-		final List<CubicCurve2D.Double> copy = new ArrayList<CubicCurve2D.Double>(beziers);
+		final List<CubicCurve2D.Double> copy = new ArrayList<>(beziers);
 		copy.addAll(other.beziers);
 		return new DotPath(copy);
 	}
 
 	public Map<Point2D, Double> somePoints() {
-		final Map<Point2D, Double> result = new HashMap<Point2D, Double>();
+		final Map<Point2D, Double> result = new HashMap<>();
 		for (CubicCurve2D.Double bez : beziers) {
 			final CubicCurve2D.Double left = new CubicCurve2D.Double();
 			final CubicCurve2D.Double right = new CubicCurve2D.Double();
@@ -443,7 +443,7 @@ public class DotPath implements UShape, Moveable {
 	}
 
 	private Point2D getFrontierIntersection(Shape shape, Rectangle2D... notIn) {
-		final List<CubicCurve2D.Double> all = new ArrayList<CubicCurve2D.Double>(beziers);
+		final List<CubicCurve2D.Double> all = new ArrayList<>(beziers);
 		for (int i = 0; i < 8; i++) {
 			for (CubicCurve2D.Double immutable : all) {
 				if (contains(immutable, notIn)) {
@@ -467,7 +467,7 @@ public class DotPath implements UShape, Moveable {
 	}
 
 	private void cutAllCubic(List<CubicCurve2D.Double> all) {
-		final List<CubicCurve2D.Double> tmp = new ArrayList<CubicCurve2D.Double>(all);
+		final List<CubicCurve2D.Double> tmp = new ArrayList<>(all);
 		all.clear();
 		for (CubicCurve2D.Double bez : tmp) {
 			final CubicCurve2D.Double left = new CubicCurve2D.Double();
@@ -497,7 +497,7 @@ public class DotPath implements UShape, Moveable {
 	}
 
 	private DotPath manageRect(Rectangle2D start, Rectangle2D end) {
-		final List<CubicCurve2D.Double> list = new ArrayList<CubicCurve2D.Double>(this.beziers);
+		final List<CubicCurve2D.Double> list = new ArrayList<>(this.beziers);
 		while (true) {
 			if (BezierUtils.isCutting(list.get(0), start) == false) {
 				throw new IllegalStateException();
@@ -557,9 +557,9 @@ public class DotPath implements UShape, Moveable {
 	}
 
 	public DotPath reverse() {
-		final List<CubicCurve2D.Double> reverse = new ArrayList<CubicCurve2D.Double>(beziers);
+		final List<CubicCurve2D.Double> reverse = new ArrayList<>(beziers);
 		Collections.reverse(reverse);
-		final List<CubicCurve2D.Double> copy = new ArrayList<CubicCurve2D.Double>();
+		final List<CubicCurve2D.Double> copy = new ArrayList<>();
 		for (CubicCurve2D.Double cub : reverse) {
 			copy.add(reverse(cub));
 		}
