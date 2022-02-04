@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  */
 package smetana.core.debug;
 
@@ -51,7 +51,7 @@ import gen.annotation.Reviewed;
 
 public class Purify {
 
-	private final Map<String, Method> methods = new LinkedHashMap<String, Method>();
+	private final Map<String, Method> methods = new LinkedHashMap<>();
 	private final File out2 = new File("../out-smetana", "smetana.txt");
 	private PrintWriter pw2;
 	private int currentLevel;
@@ -161,7 +161,7 @@ public class Purify {
 	}
 
 	public void printMe() {
-		final List<Entry<String, Method>> reverse = new ArrayList<Entry<String, Method>>(methods.entrySet());
+		final List<Entry<String, Method>> reverse = new ArrayList<>(methods.entrySet());
 		Collections.reverse(reverse);
 		for (Entry<String, Method> ent : reverse) {
 			final String signature = ent.getKey();
@@ -170,8 +170,8 @@ public class Purify {
 			final String version = getVersion(m);
 			final String path = getPath(m);
 			final String hasND_Rank = hasND_Rank(m) ? "*" : " ";
-			System.err.println(String.format("%-8s %-26s %-12s %s %-30s %s", version, signature, reviewedWhen,
-					hasND_Rank, m.getName(), path));
+			System.err.printf("%-8s %-26s %-12s %s %-30s %s%n", version, signature, reviewedWhen,
+					hasND_Rank, m.getName(), path);
 		}
 	}
 
