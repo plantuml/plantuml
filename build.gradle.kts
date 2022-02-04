@@ -18,8 +18,6 @@ dependencies {
 
 group = "net.sourceforge.plantuml"
 description = "PlantUML"
-java.sourceCompatibility = JavaVersion.VERSION_1_8
-java.targetCompatibility = JavaVersion.VERSION_1_8
 
 java {
   withSourcesJar()
@@ -49,6 +47,10 @@ sourceSets {
       include("themes/**/*.puml")
     }
   }
+}
+
+tasks.compileJava {
+	options.release.set(8)
 }
 
 tasks.withType<Jar> {
