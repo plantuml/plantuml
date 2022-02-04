@@ -18,7 +18,8 @@ dependencies {
 
 group = "net.sourceforge.plantuml"
 description = "PlantUML"
-java.sourceCompatibility = JavaVersion.VERSION_1_7
+java.sourceCompatibility = JavaVersion.VERSION_1_8
+java.targetCompatibility = JavaVersion.VERSION_1_8
 
 java {
   withSourcesJar()

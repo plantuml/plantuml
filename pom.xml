@@ -56,10 +56,8 @@
   </parent>
   <properties>
     <finalName>${project.artifactId}-${project.version}</finalName>
-    <maven.compiler.source>1.7</maven.compiler.source>
-    <maven.compiler.target>1.7</maven.compiler.target>
-    <maven.compiler.testSource>1.8</maven.compiler.testSource>
-    <maven.compiler.testTarget>1.8</maven.compiler.testTarget>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
     <main.class>net.sourceforge.plantuml.Run</main.class>
   </properties>
   <dependencyManagement>
@@ -235,23 +233,6 @@
     </plugins>
   </build>
   <profiles>
-    <profile>
-      <!--
-			Kludge to make 1.8 tests with 1.7 source work nicer in IntelliJ
-			See https://youtrack.jetbrains.com/issue/IDEA-85478
-			-->
-      <id>intellij</id>
-      <activation>
-        <activeByDefault>false</activeByDefault>
-        <property>
-          <name>idea.maven.embedder.version</name>
-        </property>
-      </activation>
-      <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-      </properties>
-    </profile>
     <profile>
       <id>pdf</id>
       <activation>
