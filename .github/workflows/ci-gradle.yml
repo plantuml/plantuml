@@ -71,12 +71,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        java_version: [ 8, 11, 17 ]
+        java_version: [ 11, 17 ]
         os: [ macos-10.15,  macos-11, ubuntu-18.04, ubuntu-20.04, windows-2019, windows-2022 ]
         include:
           - release_from_this_build: true
             os: ubuntu-20.04
-            java_version: 8
+            java_version: 11
     runs-on: ${{ matrix.os }}
     env:
       SIGN_ARTIFACTS: ${{ secrets.ARTIFACT_SIGNING_KEY != '' }}
