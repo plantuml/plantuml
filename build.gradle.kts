@@ -1,3 +1,5 @@
+val javacRelease: String by project
+
 plugins {
   java
   `maven-publish`
@@ -50,7 +52,7 @@ sourceSets {
 }
 
 tasks.compileJava {
-	options.release.set(8)
+	options.release.set(Integer.parseInt(javacRelease))
 }
 
 tasks.withType<Jar> {
@@ -87,7 +89,7 @@ tasks.withType<JavaCompile> {
 tasks.withType<Javadoc> {
   options {
     this as StandardJavadocDocletOptions
-    addStringOption("Xdoclint:none", "-quiet")
+    addBooleanOption("Xdoclint:none", true)
     addStringOption("Xmaxwarns", "1")
   }
 }
