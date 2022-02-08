@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.acearth;
@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.core.UmlSource;
 
 public class PSystemXearthFactory extends PSystemBasicFactory<PSystemXearth> {
 
-	private final Map<String, String> config = new LinkedHashMap<String, String>();
+	private final Map<String, String> config = new LinkedHashMap<>();
 	private final List<Marker> markers = new ArrayList<>();
 	private int width;
 	private int height;
