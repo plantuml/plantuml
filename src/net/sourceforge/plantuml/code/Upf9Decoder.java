@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -64,7 +64,7 @@ public class Upf9Decoder {
 			final int read1 = is.read();
 			return (char) ((read0 << 8) + read1);
 		}
-		if (read0 >= 0x80 && read0 <= 0xFF) {
+		if (read0 >= 0x80) {
 			final int read1 = is.read();
 			return (char) (((read0 - 0x60) << 8) + read1);
 		}
