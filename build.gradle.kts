@@ -87,7 +87,7 @@ tasks.withType<JavaCompile> {
 tasks.withType<Javadoc> {
   options {
     this as StandardJavadocDocletOptions
-    addStringOption("Xdoclint:none", "-quiet")
+    addBooleanOption("Xdoclint:none", true)
     addStringOption("Xmaxwarns", "1")
   }
 }
