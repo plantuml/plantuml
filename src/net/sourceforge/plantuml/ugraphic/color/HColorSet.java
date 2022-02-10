@@ -45,7 +45,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.ThemeStyle;
+import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 
@@ -265,12 +265,11 @@ public class HColorSet {
 			return true;
 		}
 
-		HColorAutomatic buildInternal(ThemeStyle themeStyle, HColor background) {
+		HColorAutomatic buildInternal(HColor background) {
 			if (colors.length == 2)
-				return new HColorAutomatic(themeStyle, build(colors[0], background), build(colors[1], background),
-						null);
+				return new HColorAutomatic(build(colors[0], background), build(colors[1], background), null);
 
-			return new HColorAutomatic(themeStyle, build(colors[0], background), build(colors[1], background),
+			return new HColorAutomatic(build(colors[0], background), build(colors[1], background),
 					build(colors[2], background));
 		}
 
@@ -303,40 +302,40 @@ public class HColorSet {
 	}
 
 	public HColor getColorOrWhite(String s) {
-		return getColorOrWhite(ThemeStyle.LIGHT, s, null);
+		return getColorOrWhite(null, s, null);
 	}
 
-	public HColor getColorOrWhite(ThemeStyle themeStyle, String s) {
-		return getColorOrWhite(themeStyle, s, null);
+	public HColor getColorOrWhite(ThemeStyle UNUSED, String s) {
+		return getColorOrWhite(null, s, null);
 	}
 
-	public HColor getColorOrWhite(ThemeStyle themeStyle, String s, HColor background) {
+	public HColor getColorOrWhite(ThemeStyle UNUSED, String s, HColor background) {
 		if (isColorValid(Objects.requireNonNull(s)) == false)
 			return HColorUtils.WHITE;
 
 		try {
-			return getColor(themeStyle, s, background);
+			return getColor(null, s, background);
 		} catch (NoSuchColorException e) {
 			assert false;
 			return HColorUtils.WHITE;
 		}
 	}
 
-	public HColor getColor(ThemeStyle themeStyle, String s) throws NoSuchColorException {
-		return getColor(themeStyle, s, null);
+	public HColor getColor(ThemeStyle UNUSED, String s) throws NoSuchColorException {
+		return getColor(null, s, null);
 	}
 
 	public HColor getColorLEGACY(String s) throws NoSuchColorException {
-		return getColor(ThemeStyle.LIGHT, s, null);
+		return getColor(null, s, null);
 	}
 
-	public HColor getColor(ThemeStyle themeStyle, String s, HColor background) throws NoSuchColorException {
+	public HColor getColor(ThemeStyle UNUSED, String s, HColor background) throws NoSuchColorException {
 		if (isColorValid(Objects.requireNonNull(s)) == false)
 			throw new NoSuchColorException();
 
 		final Automatic automatic = automaticFromString(s);
 		if (automatic != null)
-			return automatic.buildInternal(themeStyle, background);
+			return automatic.buildInternal(background);
 
 		final Gradient gradient = gradientFromString(s);
 		if (gradient != null)

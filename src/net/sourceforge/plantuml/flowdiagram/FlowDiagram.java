@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
+import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
@@ -89,8 +90,8 @@ public class FlowDiagram extends UmlDiagram implements TextBlock {
 		return new DiagramDescription("Flow Diagram");
 	}
 
-	public FlowDiagram(UmlSource source) {
-		super(source, UmlDiagramType.FLOW);
+	public FlowDiagram(ThemeStyle style, UmlSource source) {
+		super(style, source, UmlDiagramType.FLOW);
 	}
 
 	public void lineSimple(TileGeometry orientation, String idDest, String label) {
@@ -126,8 +127,7 @@ public class FlowDiagram extends UmlDiagram implements TextBlock {
 	public ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) throws IOException {
 		return imageBuilder(fileFormatOption)
 				.dimension(calculateDimension(fileFormatOption.getDefaultStringBounder(getSkinParam())))
-				.margin(getDefaultMargins())
-				.metadata(fileFormatOption.isWithMetadata() ? getMetadata() : null)
+				.margin(getDefaultMargins()).metadata(fileFormatOption.isWithMetadata() ? getMetadata() : null)
 				.seed(seed());
 	}
 
@@ -135,9 +135,7 @@ public class FlowDiagram extends UmlDiagram implements TextBlock {
 	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
 
-		return createImageBuilder(fileFormatOption)
-				.drawable(this)
-				.write(os);
+		return createImageBuilder(fileFormatOption).drawable(this).write(os);
 	}
 
 	public void drawU(UGraphic ug) {
@@ -156,8 +154,8 @@ public class FlowDiagram extends UmlDiagram implements TextBlock {
 			final Dimension2D dimBox = box.calculateDimension(stringBounder);
 			final double deltaX = SINGLE_SIZE_X * 2 - dimBox.getWidth();
 			final double deltaY = SINGLE_SIZE_Y * 2 - dimBox.getHeight();
-			box.drawU(ug.apply(new UTranslate((x + xmin * SINGLE_SIZE_X + deltaX / 2),
-					(y + ymin * SINGLE_SIZE_Y + deltaY / 2))));
+			box.drawU(ug.apply(
+					new UTranslate((x + xmin * SINGLE_SIZE_X + deltaX / 2), (y + ymin * SINGLE_SIZE_Y + deltaY / 2))));
 		}
 		ug = ug.apply(HColorUtils.MY_RED);
 		ug = ug.apply(HColorUtils.MY_RED.bg());

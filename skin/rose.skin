@@ -8,19 +8,19 @@ root {
   RoundCorner 0
   DiagonalCorner 0
   LineThickness 1.0
-  LineColor #181818
-  BackGroundColor #f8f8f8
+  LineColor #A80036
+  BackGroundColor #FEFECE
   Shadowing 0.0
 }
 
 document {
-  BackGroundColor White
+  BackGroundColor white
   header {
     HorizontalAlignment right
     FontSize 10
-    FontColor #888888
-    BackGroundColor none
-    LineColor none
+    FontColor #8
+    BackGroundColor transparent
+    LineColor transparent
   }
   title {
     HorizontalAlignment center
@@ -28,19 +28,19 @@ document {
     FontStyle bold
     Padding 5
     Margin 5
-    LineColor none
-    BackGroundColor none
+    LineColor transparent
+    BackGroundColor transparent
   }
   footer {
     HorizontalAlignment center
     FontSize 10
-    FontColor #888888
-    BackGroundColor none
-    LineColor none
+    FontColor #8
+    BackGroundColor transparent
+    LineColor transparent
   }
   legend {
     LineColor black
-    BackGroundColor #DDDDDD
+    BackGroundColor #d
     FontSize 14
     RoundCorner 15
     Padding 6
@@ -51,8 +51,12 @@ document {
     FontSize 14
     Padding 0
     Margin 1
-    LineColor none
-    BackGroundColor none
+    LineColor transparent
+    BackGroundColor transparent
+  }
+  frame {
+    LineColor black
+    LineThickness 1.5
   }
 }
 
@@ -63,12 +67,60 @@ stereotype {
 
 
 element {
-  Shadowing 0.0
+  Shadowing 4.0
   title {
     FontStyle bold
   }
 }
 
+artifact {
+  Shadowing 4.0
+}
+node {
+  Shadowing 2.0
+}
+person {
+  Shadowing 2.0
+}
+queue {
+  Shadowing 2.0
+}
+rectangle {
+  Shadowing 3.0
+}
+stack {
+  Shadowing 3.0
+}
+storage {
+  Shadowing 3.0
+}
+boundary {
+  Shadowing 4.0
+}
+card {
+  Shadowing 3.0
+}
+cloud {
+  Shadowing 3.0
+}
+collections {
+  Shadowing 3.0
+}
+component {
+  Shadowing 4.0
+}
+database {
+  Shadowing 3.0
+}
+file {
+  Shadowing 3.0
+}
+frame {
+  Shadowing 3.0
+}
+folder {
+  Shadowing 3.0
+}
 group {
   package {
     LineThickness 1.5
@@ -93,7 +145,7 @@ sequenceDiagram {
   }
 
   groupHeader {
-    BackGroundColor #EEEEEE
+    BackGroundColor #e
     LineColor black
     FontSize 13
     FontStyle bold
@@ -104,6 +156,42 @@ sequenceDiagram {
     LineStyle 5
   }
 
+
+	destroy {
+	}
+	
+	reference {
+	  FontSize 12
+	  LineColor black
+	  BackGroundColor white
+	  LineThickness 2.0
+	  HorizontalAlignment center
+	}
+	
+	referenceHeader {
+	  LineColor black
+	  BackGroundColor #e
+	  FontColor black
+	  FontSize 13
+	  FontStyle bold
+	  LineThickness 2.0
+	}
+	
+	box {
+	  BackGroundColor #d
+	
+	  FontSize 13
+	  FontStyle bold
+	}
+	
+	separator {
+	  LineColor black
+	  LineThickness 2.0
+	  BackGroundColor #e
+	  
+	  FontSize 13
+	  FontStyle bold
+	}
 }
 
 classDiagram {
@@ -166,42 +254,6 @@ stateDiagram {
 }
 
 
-destroy {
-}
-
-reference {
-  FontSize 12
-  LineColor black
-  BackGroundColor while
-  LineThickness 2.0
-  HorizontalAlignment center
-}
-
-referenceHeader {
-  LineColor black
-  BackGroundColor #EEEEEE
-  FontColor black
-  FontSize 13
-  FontStyle bold
-  LineThickness 2.0
-}
-
-box {
-  BackGroundColor #DDDDDD
-
-  FontSize 13
-  FontStyle bold
-}
-
-separator {
-  LineColor black
-  LineThickness 2.0
-  BackGroundColor #EEEEEE
-  
-  FontSize 13
-  FontStyle bold
-}
-
 delay {
   FontSize 11
   FontStyle plain
@@ -254,13 +306,17 @@ swimlane {
   FontSize 18
 }
 
+diamond {
+  Shadowing 3.0
+}
+
 arrow {
   FontSize 13
 }
 
 note {
   FontSize 13
-  BackGroundColor #ebebeb
+  BackGroundColor #FBFB77
 }
 
 partition {
@@ -294,6 +350,10 @@ wbsDiagram {
 }
 
 activityDiagram {
+  Shadowing 3.0
+}
+
+activityDiagram {
 	activity {
 	    LineThickness 1.5
 	    Padding 10
@@ -310,14 +370,24 @@ activityDiagram {
 	arrow {
 	    FontSize 11
 	}
-}
-
-activityBar {
-  BackgroundColor black
-}
-
-circle {
-	LineColor black
+	circle {
+	    start {
+		    LineColor black
+		    BackgroundColor black
+	    }
+	    stop {
+		    LineColor black
+		    BackgroundColor white
+	    }
+	    end {
+		    LineColor black
+		    BackgroundColor white
+	    }
+	}
+	activityBar {
+	  Shadowing 3.0
+	  BackgroundColor black
+	}
 }
 
 
@@ -337,6 +407,7 @@ ganttDiagram {
 	}
 	note {
 	  FontSize 9
+      Shadowing 0.0
 	}
 	separator {
 	  FontSize 11
@@ -397,17 +468,51 @@ yamlDiagram,jsonDiagram {
 
 
 timingDiagram {
+	LineColor #3
+	FontColor #3
+	FontStyle bold
+    LineThickness 1.5
+    timeline {
+	  FontStyle plain
+	  FontSize 11
+    }
 	arrow {
+	    LineColor darkblue
 	    LineThickness 1.5
 	}
 	constraintArrow {
+	    FontSize 12
+		FontStyle plain
+	    FontColor darkred
+	    LineColor darkred
 	    LineThickness 1.5
+	}
+	clock {
+	  LineColor darkgreen
+	}
+	concise {
+	  FontSize 12
+	  LineColor darkgreen
+	  BackgroundColor #c
+	}
+	robust {
+	  FontStyle plain
+	  FontSize 12
+	  LineColor darkgreen
+      LineThickness 2
+	  BackgroundColor #c
+	}
+	highlight {
+	  BackgroundColor #e
+	  LineThickness 2
+	  LineStyle 4;4
 	}
 }
 
 nwdiagDiagram {
 	network {
 		FontSize 12
+		Shadowing 1.0
 	}
 	server {
 		FontSize 12
@@ -420,33 +525,3 @@ nwdiagDiagram {
 		FontSize 11
 	}
 }
-
-
-@media (prefers-color-scheme:dark) {
-element {
-  LineColor #e7e7e7
-  BackGroundColor #070707
-  FontColor white
-}
-spot {
-  spotAnnotation {
-    BackgroundColor #4A0000
-  }
-  spotAbstractClass {
-    BackgroundColor #2A5D60
-  }
-  spotClass {
-    BackgroundColor #2E5233
-  }
-  spotInterface {
-    BackgroundColor #352866
-  }
-  spotEnum {
-    BackgroundColor #852D19
-  }
-  spotEntity {
-    BackgroundColor #2E5233
-  }
-}
-}
-

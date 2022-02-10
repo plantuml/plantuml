@@ -63,7 +63,7 @@ public class EntityImageCircleEnd extends AbstractEntityImage {
 	private final ColorParam param;
 
 	public StyleSignature getDefaultStyleDefinitionCircle() {
-		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.circle);
+		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.circle, SName.end);
 	}
 
 	public EntityImageCircleEnd(ILeaf entity, ISkinParam skinParam, ColorParam param) {

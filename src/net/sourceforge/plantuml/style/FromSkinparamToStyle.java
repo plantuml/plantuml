@@ -61,7 +61,7 @@ public class FromSkinparamToStyle {
 		addConvert("participantClickableBackgroundColor", PName.BackGroundColor, SName.participant, SName.clickable);
 		addConvert("participantClickableBorderColor", PName.LineColor, SName.participant, SName.clickable);
 		addMagic(SName.participant);
-		
+
 		addMagic(SName.boundary);
 		addMagic(SName.control);
 		addMagic(SName.collections);
@@ -71,7 +71,7 @@ public class FromSkinparamToStyle {
 
 		addConFont("header", SName.header);
 		addConFont("footer", SName.footer);
-		
+
 		addConvert("defaultFontSize", PName.FontSize, SName.element);
 
 		addConvert("sequenceStereotypeFontSize", PName.FontSize, SName.stereotype);
@@ -108,14 +108,13 @@ public class FromSkinparamToStyle {
 		addConvert("packageBorderColor", PName.LineColor, SName.group);
 		addMagic(SName.package_);
 
-
 		addConvert("PartitionBorderColor", PName.LineColor, SName.partition);
 		addConvert("PartitionBackgroundColor", PName.BackGroundColor, SName.partition);
 		addConFont("Partition", SName.partition);
 
 		addConvert("hyperlinkColor", PName.HyperLinkColor, SName.root);
 
-		addConvert("activityStartColor", PName.LineColor, SName.circle);
+		addConvert("activityStartColor", PName.BackGroundColor, SName.circle, SName.start);
 		addConvert("activityEndColor", PName.LineColor, SName.circle, SName.end);
 		addConvert("activityStopColor", PName.LineColor, SName.circle, SName.stop);
 		addConvert("activityBarColor", PName.LineColor, SName.activityBar);
@@ -134,6 +133,7 @@ public class FromSkinparamToStyle {
 
 		addConvert("defaulttextalignment", PName.HorizontalAlignment, SName.root);
 		addConvert("defaultFontName", PName.FontName, SName.root);
+		addConvert("defaultFontColor", PName.FontColor, SName.root);
 
 		addConFont("SwimlaneTitle", SName.swimlane);
 		addConvert("SwimlaneTitleBackgroundColor", PName.BackGroundColor, SName.swimlane);
@@ -222,7 +222,7 @@ public class FromSkinparamToStyle {
 
 		if (datas != null) {
 			for (Data data : datas) {
-				addStyle(data.propertyName, new ValueImpl(value, counter), data.styleNames);
+				addStyle(data.propertyName, ValueImpl.regular(value, counter), data.styleNames);
 			}
 		} else if (key.equalsIgnoreCase("shadowing")) {
 			addStyle(PName.Shadowing, getShadowingValue(value, counter), SName.root);
@@ -233,21 +233,22 @@ public class FromSkinparamToStyle {
 
 	private ValueImpl getShadowingValue(final String value, final AutomaticCounter counter) {
 		if (value.equalsIgnoreCase("false") || value.equalsIgnoreCase("no")) {
-			return new ValueImpl("0", counter);
+			return ValueImpl.regular("0", counter);
 		}
 		if (value.equalsIgnoreCase("true") || value.equalsIgnoreCase("yes")) {
-			return new ValueImpl("3", counter);
+			return ValueImpl.regular("3", counter);
 		}
-		return new ValueImpl(value, counter);
+		return ValueImpl.regular(value, counter);
 	}
 
 	private void addStyle(PName propertyName, Value value, SName... styleNames) {
 		final Map<PName, Value> map = new EnumMap<PName, Value>(PName.class);
 		map.put(propertyName, value);
 		StyleSignature sig = StyleSignature.of(styleNames);
-		if (stereo != null) {
-			sig = sig.add(stereo);
-		}
+		if (stereo != null)
+			for (String s : stereo.split("\\&"))
+				sig = sig.add(s);
+
 		styles.add(new Style(sig, map));
 	}
 

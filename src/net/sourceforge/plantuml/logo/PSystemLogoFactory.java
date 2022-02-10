@@ -35,19 +35,19 @@
  */
 package net.sourceforge.plantuml.logo;
 
+import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.command.PSystemBasicFactory;
 import net.sourceforge.plantuml.core.UmlSource;
-
 
 public class PSystemLogoFactory extends PSystemBasicFactory<PSystemLogo> {
 
 	@Override
-	public PSystemLogo initDiagram(UmlSource source, String startLine) {
+	public PSystemLogo initDiagram(ThemeStyle style, UmlSource source, String startLine) {
 		return null;
 	}
 
 	@Override
-	public PSystemLogo executeLine(UmlSource source, PSystemLogo system, String line) {
+	public PSystemLogo executeLine(ThemeStyle style, UmlSource source, PSystemLogo system, String line) {
 		if (system == null && line.equalsIgnoreCase("logo")) {
 			return new PSystemLogo(source);
 		}

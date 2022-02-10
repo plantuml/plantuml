@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.SpriteContainer;
-import net.sourceforge.plantuml.ThemeStyle;
+import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.creole.Parser;
 import net.sourceforge.plantuml.salt.element.Element;
 import net.sourceforge.plantuml.salt.element.WrappedElement;
@@ -129,7 +129,7 @@ public class Dictionary implements SpriteContainer, ISkinSimple {
 	}
 
 	public ThemeStyle getThemeStyle() {
-		return ThemeStyle.LIGHT;
+		return ThemeStyle.LIGHT_REGULAR;
 	}
 
 }

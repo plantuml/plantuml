@@ -56,6 +56,7 @@ import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.WithSprite;
+import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
@@ -158,8 +159,8 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		this.weekNumberStrategy = new WeekNumberStrategy(firstDayOfWeek, minimalDaysInFirstWeek);
 	}
 
-	public GanttDiagram(UmlSource source) {
-		super(source, UmlDiagramType.GANTT);
+	public GanttDiagram(ThemeStyle style, UmlSource source) {
+		super(style, source, UmlDiagramType.GANTT);
 	}
 
 	public final int getDpi(FileFormatOption fileFormatOption) {

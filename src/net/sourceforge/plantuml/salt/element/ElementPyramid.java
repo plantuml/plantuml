@@ -95,11 +95,13 @@ public class ElementPyramid extends AbstractElement {
 
 	public Dimension2D getPreferredDimension(StringBounder stringBounder, double x, double y) {
 		init(stringBounder);
-		return new Dimension2DDouble(colsStart[colsStart.length - 1], rowsStart[rowsStart.length - 1]
-				+ title.calculateDimension(stringBounder).getHeight());
+		return new Dimension2DDouble(colsStart[colsStart.length - 1],
+				rowsStart[rowsStart.length - 1] + title.calculateDimension(stringBounder).getHeight());
 	}
 
 	public void drawU(UGraphic ug, int zIndex, Dimension2D dimToUse) {
+		ug = ug.apply(getBlack());
+
 		init(ug.getStringBounder());
 		final double titleHeight = title.calculateDimension(ug.getStringBounder()).getHeight();
 		final Grid grid = new Grid(rowsStart, colsStart, tableStrategy, title);
@@ -114,21 +116,21 @@ public class ElementPyramid extends AbstractElement {
 			grid.addCell(cell);
 			elt.drawU(ug.apply(new UTranslate(xcell + 1, ycell + 1)), zIndex, new Dimension2DDouble(width, height));
 		}
-		if (zIndex == 0) {
-			grid.drawU(ug, 0, 0);
-		}
+		if (zIndex == 0)
+			grid.drawU(ug, 0, 0, getWhite());
+
 	}
 
 	private void init(StringBounder stringBounder) {
-		if (rowsStart != null) {
+		if (rowsStart != null)
 			return;
-		}
+
 		final double titleHeight = title.calculateDimension(stringBounder).getHeight();
 		rowsStart = new double[rows + 1];
 		rowsStart[0] = titleHeight / 2;
-		for (int i = 1; i < rows + 1; i++) {
+		for (int i = 1; i < rows + 1; i++)
 			rowsStart[i] = titleHeight / 2;
-		}
+
 		colsStart = new double[cols + 1];
 		final List<Cell> all = new ArrayList<>(positions1.values());
 		Collections.sort(all, new LeftFirst());
@@ -149,21 +151,19 @@ public class ElementPyramid extends AbstractElement {
 	private void ensureColWidth(int first, int last, double width) {
 		final double actual = colsStart[last] - colsStart[first];
 		final double missing = width - actual;
-		if (missing > 0) {
-			for (int i = last; i < colsStart.length; i++) {
+		if (missing > 0)
+			for (int i = last; i < colsStart.length; i++)
 				colsStart[i] += missing;
-			}
-		}
+
 	}
 
 	private void ensureRowHeight(int first, int last, double height) {
 		final double actual = rowsStart[last] - rowsStart[first];
 		final double missing = height - actual;
-		if (missing > 0) {
-			for (int i = last; i < rowsStart.length; i++) {
+		if (missing > 0)
+			for (int i = last; i < rowsStart.length; i++)
 				rowsStart[i] += missing;
-			}
-		}
+
 	}
 
 	public final int getNbRows() {

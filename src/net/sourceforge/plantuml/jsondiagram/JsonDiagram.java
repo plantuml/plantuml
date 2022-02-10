@@ -43,6 +43,7 @@ import java.util.List;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
+import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
@@ -66,8 +67,9 @@ public class JsonDiagram extends TitledDiagram {
 	private final JsonValue root;
 	private final List<String> highlighted;
 
-	public JsonDiagram(UmlSource source, UmlDiagramType type, JsonValue json, List<String> highlighted) {
-		super(source, type);
+	public JsonDiagram(ThemeStyle style, UmlSource source, UmlDiagramType type, JsonValue json,
+			List<String> highlighted) {
+		super(style, source, type);
 		if (json != null && (json.isString() || json.isBoolean() || json.isNumber())) {
 			this.root = new JsonArray();
 			((JsonArray) this.root).add(json);

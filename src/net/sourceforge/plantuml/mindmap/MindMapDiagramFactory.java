@@ -39,6 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.command.CommonCommands;
@@ -67,8 +68,8 @@ public class MindMapDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	public MindMapDiagram createEmptyDiagram(UmlSource source, ISkinSimple skinParam) {
-		return new MindMapDiagram(source);
+	public MindMapDiagram createEmptyDiagram(ThemeStyle style, UmlSource source, ISkinSimple skinParam) {
+		return new MindMapDiagram(style, source);
 	}
 
 }

@@ -194,6 +194,6 @@ public interface ISkinParam extends ISkinSimple {
 
 	public LengthAdjust getlengthAdjust();
 
-	public void assumeTransparent(ThemeStyle style);
+	// public void assumeTransparent(ThemeStyle style);
 
 }

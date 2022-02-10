@@ -52,6 +52,8 @@ import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.timingdiagram.graphic.IntricatedPoint;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
@@ -74,23 +76,23 @@ public class PlayerAnalog extends Player {
 	}
 
 	private double getMin() {
-		if (start != null) {
+		if (start != null)
 			return start;
-		}
+
 		return 0;
 	}
 
 	private double getMax() {
-		if (end != null) {
+		if (end != null)
 			return end;
-		}
+
 		double max = 0;
-		for (Double val : values.values()) {
+		for (Double val : values.values())
 			max = Math.max(max, val);
-		}
-		if (max == 0) {
+
+		if (max == 0)
 			return 10;
-		}
+
 		return max;
 	}
 
@@ -98,7 +100,8 @@ public class PlayerAnalog extends Player {
 		return suggestedHeight;
 	}
 
-	private SymbolContext getContext() {
+	@Override
+	protected SymbolContext getContextLegacy() {
 		return new SymbolContext(HColorUtils.COL_D7E0F2, HColorUtils.COL_038048).withStroke(new UStroke(1.5));
 	}
 
@@ -110,16 +113,16 @@ public class PlayerAnalog extends Player {
 
 	private double getValueAt(TimeTick tick) {
 		final Double result = values.get(tick);
-		if (result != null) {
+		if (result != null)
 			return result;
-		}
+
 		Entry<TimeTick, Double> last = null;
 		for (Entry<TimeTick, Double> ent : values.entrySet()) {
 			if (ent.getKey().compareTo(tick) > 0) {
 				final double v2 = ent.getValue();
-				if (last == null) {
+				if (last == null)
 					return v2;
-				}
+
 				final double t2 = ent.getKey().getTime().doubleValue();
 				final double v1 = last.getValue();
 				final double t1 = last.getKey().getTime().doubleValue();
@@ -141,14 +144,14 @@ public class PlayerAnalog extends Player {
 
 	public void setState(TimeTick now, String comment, Colors color, String... valueString) {
 		final double value = getState(valueString[0]);
-		if (now == null) {
+		if (now == null)
 			this.initialState = value;
-		} else {
+		else
 			this.values.put(now, value);
-		}
-		if (this.initialState == null) {
+
+		if (this.initialState == null)
 			this.initialState = value;
-		}
+
 	}
 
 	private double getState(String value) {
@@ -185,17 +188,16 @@ public class PlayerAnalog extends Player {
 	}
 
 	private double getMaxWidthForTicks(StringBounder stringBounder) {
-		if (ticksEvery == null) {
+		if (ticksEvery == null)
 			return Math.max(getWidthLabel(stringBounder, getMin()), getWidthLabel(stringBounder, getMax()));
-		}
+
 		double result = 0;
 		final int first = (int) Math.ceil(getMin());
 		final int last = (int) Math.floor(getMax());
-		for (int i = first; i <= last; i++) {
-			if (i % ticksEvery == 0) {
+		for (int i = first; i <= last; i++)
+			if (i % ticksEvery == 0)
 				result = Math.max(result, getWidthLabel(stringBounder, i));
-			}
-		}
+
 		return result;
 	}
 
@@ -212,11 +214,10 @@ public class PlayerAnalog extends Player {
 		} else {
 			final int first = (int) Math.ceil(getMin());
 			final int last = (int) Math.floor(getMax());
-			for (int i = first; i <= last; i++) {
-				if (i % ticksEvery == 0) {
+			for (int i = first; i <= last; i++)
+				if (i % ticksEvery == 0)
 					drawScaleLabel(ug.apply(UTranslate.dy(specialVSpace)), i, fullAvailableWidth);
-				}
-			}
+
 		}
 
 	}
@@ -240,24 +241,22 @@ public class PlayerAnalog extends Player {
 	}
 
 	private void drawTickHlines(UGraphic ug) {
-		ug = TimingRuler.applyForVLines(ug);
+		ug = TimingRuler.applyForVLines(ug, getStyle(), skinParam);
 		final int first = (int) Math.ceil(getMin());
 		final int last = (int) Math.floor(getMax());
 		final ULine hline = ULine.hline(ruler.getWidth());
-		for (int i = first; i <= last; i++) {
-			if (i % ticksEvery == 0) {
+		for (int i = first; i <= last; i++)
+			if (i % ticksEvery == 0)
 				ug.apply(UTranslate.dy(getYpos(i))).draw(hline);
-			}
-		}
 
 	}
 
 	public UDrawable getPart2() {
 		return new UDrawable() {
 			public void drawU(UGraphic ug) {
-				if (ticksEvery != null) {
+				if (ticksEvery != null)
 					drawTickHlines(ug);
-				}
+
 				ug = getContext().apply(ug);
 				double lastx = 0;
 				double lastValue = initialState == null ? 0 : initialState;
@@ -281,6 +280,11 @@ public class PlayerAnalog extends Player {
 
 	public void setTicks(int ticksEvery) {
 		this.ticksEvery = ticksEvery;
+	}
+
+	@Override
+	protected StyleSignature getStyleSignature() {
+		return StyleSignature.of(SName.root, SName.element, SName.timingDiagram);
 	}
 
 }

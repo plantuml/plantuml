@@ -84,11 +84,12 @@ import net.sourceforge.plantuml.activitydiagram3.command.CommandSwimlane2;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandSwitch;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandWhile3;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandWhileEnd3;
+import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandDecoratorMultine;
 import net.sourceforge.plantuml.command.CommandFootboxIgnored;
-import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.command.CommonCommands;
+import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.core.UmlSource;
 
 public class ActivityDiagramFactory3 extends PSystemCommandFactory {
@@ -161,8 +162,8 @@ public class ActivityDiagramFactory3 extends PSystemCommandFactory {
 	}
 
 	@Override
-	public ActivityDiagram3 createEmptyDiagram(UmlSource source, ISkinSimple skinParam) {
-		return new ActivityDiagram3(source, skinParam);
+	public ActivityDiagram3 createEmptyDiagram(ThemeStyle style, UmlSource source, ISkinSimple skinParam) {
+		return new ActivityDiagram3(style, source, skinParam);
 	}
 
 }

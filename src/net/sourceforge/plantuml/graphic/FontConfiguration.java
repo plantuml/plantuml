@@ -81,7 +81,7 @@ public class FontConfiguration {
 	}
 
 	public static FontConfiguration blackBlueTrue(UFont font) {
-		return new FontConfiguration(font, HColorUtils.BLACK, HColorUtils.BLUE, true, 8);
+		return new FontConfiguration(font, HColorUtils.BLACK.withDark(HColorUtils.WHITE), HColorUtils.BLUE, true, 8);
 	}
 
 	public FontConfiguration(ISkinParam skinParam, FontParam fontParam, Stereotype stereo) {

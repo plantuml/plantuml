@@ -35,25 +35,25 @@
  */
 package net.sourceforge.plantuml.oregon;
 
+import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.command.PSystemBasicFactory;
 import net.sourceforge.plantuml.core.UmlSource;
 
 public class PSystemOregonFactory extends PSystemBasicFactory<PSystemOregon> {
 
 	@Override
-	public PSystemOregon initDiagram(UmlSource source, String startLine) {
+	public PSystemOregon initDiagram(ThemeStyle style, UmlSource source, String startLine) {
 		return null;
 	}
 
-
 	@Override
-	public PSystemOregon executeLine(UmlSource source, PSystemOregon system, String line) {
-		if (system == null && line.equalsIgnoreCase("run oregon trail")) {
+	public PSystemOregon executeLine(ThemeStyle style, UmlSource source, PSystemOregon system, String line) {
+		if (system == null && line.equalsIgnoreCase("run oregon trail"))
 			return new PSystemOregon(source);
-		}
-		if (system == null) {
+
+		if (system == null)
 			return null;
-		}
+
 		system.add(line);
 		return system;
 	}

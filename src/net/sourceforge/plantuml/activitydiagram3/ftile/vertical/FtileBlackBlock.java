@@ -66,7 +66,7 @@ public class FtileBlackBlock extends AbstractFtile {
 	private double width;
 	private double height;
 	private TextBlock label = TextBlockUtils.empty(0, 0);
-	private final HColor colorBar;
+	private HColor colorBar;
 	private final Swimlane swimlane;
 
 	public FtileBlackBlock(ISkinParam skinParam, HColor colorBar, Swimlane swimlane) {
@@ -93,16 +93,17 @@ public class FtileBlackBlock extends AbstractFtile {
 		return new FtileGeometry(width + supp, height, width / 2, 0, height);
 	}
 
-	private StyleSignature getDefaultStyleDefinitionBar() {
-		return StyleSignature.of(SName.root, SName.element, SName.activityBar);
+	private StyleSignature getSignature() {
+		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.activityBar);
 	}
 
 	public void drawU(UGraphic ug) {
 		final URectangle rect = new URectangle(width, height).rounded(5).ignoreForCompressionOnX();
 		if (UseStyle.useBetaStyle()) {
-			final Style style = getDefaultStyleDefinitionBar().getMergedStyle(skinParam().getCurrentStyleBuilder());
+			final Style style = getSignature().getMergedStyle(skinParam().getCurrentStyleBuilder());
 			final double shadowing = style.value(PName.Shadowing).asDouble();
 			rect.setDeltaShadow(shadowing);
+			colorBar = style.value(PName.BackGroundColor).asColor(skinParam().getThemeStyle(), getIHtmlColorSet());
 		} else {
 			if (skinParam().shadowing(null))
 				rect.setDeltaShadow(3);

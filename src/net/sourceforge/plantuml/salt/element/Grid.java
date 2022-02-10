@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class Grid {
 
@@ -82,7 +82,7 @@ public class Grid {
 
 	}
 
-	public void drawU(UGraphic ug, double x, double y) {
+	public void drawU(UGraphic ug, double x, double y, HColor white) {
 		// Hlines
 		for (Segment seg : horizontals) {
 			final int row1 = seg.getRow();
@@ -102,8 +102,7 @@ public class Grid {
 
 		if (dim.getWidth() > 0 && dim.getHeight() > 0) {
 			final UGraphic ug2 = ug.apply(new UTranslate(x + 6, y - dim.getHeight() * 0));
-			ug2.apply(HColorUtils.WHITE.bg()).apply(HColorUtils.WHITE)
-					.draw(new URectangle(dim));
+			ug2.apply(white.bg()).apply(white).draw(new URectangle(dim));
 			title.drawU(ug2);
 		}
 

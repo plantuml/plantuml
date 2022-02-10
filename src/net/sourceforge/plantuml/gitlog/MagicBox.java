@@ -44,36 +44,39 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class MagicBox {
 
 	private final ISkinParam skinParam;
 	private final GNode node;
+	private final HColor fontColor;
 
 	public MagicBox(ISkinParam skinParam, GNode node) {
 		this.skinParam = skinParam;
 		this.node = node;
-
+		final Style style = StyleSignature.of(SName.root, SName.element, SName.gitDiagram)
+				.getMergedStyle(skinParam.getCurrentStyleBuilder());
+		this.fontColor = style.value(PName.FontColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
 	}
 
 	private TextBlock getSmallBlock() {
-		final FontConfiguration mono = new FontConfiguration(UFont.monospaced(15).bold(), HColorUtils.BLACK,
-				HColorUtils.BLACK, false);
-
-		final TextBlock big = node.getDisplay().create(mono, HorizontalAlignment.CENTER, skinParam);
-		return big;
+		final FontConfiguration fc = new FontConfiguration(UFont.monospaced(15).bold(), fontColor, fontColor, false);
+		return node.getDisplay().create(fc, HorizontalAlignment.CENTER, skinParam);
 	}
 
 	private TextBlock getCommentBlock() {
 		if (node.getComment() != null && node.isTop()) {
-			final FontConfiguration tag = new FontConfiguration(UFont.sansSerif(13), HColorUtils.BLACK,
-					HColorUtils.BLACK, false);
+			final FontConfiguration tag = new FontConfiguration(UFont.sansSerif(13), fontColor, fontColor, false);
 			return Display.create(node.getComment()).create(tag, HorizontalAlignment.CENTER, skinParam);
 		}
 		return TextBlockUtils.empty(0, 0);

@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.SpriteContainerEmpty;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
+import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
@@ -96,8 +97,8 @@ public class NwDiagram extends UmlDiagram {
 		return new DiagramDescription("(Nwdiag)");
 	}
 
-	public NwDiagram(UmlSource source) {
-		super(source, UmlDiagramType.NWDIAG);
+	public NwDiagram(ThemeStyle style, UmlSource source) {
+		super(style, source, UmlDiagramType.NWDIAG);
 	}
 
 	public void init() {

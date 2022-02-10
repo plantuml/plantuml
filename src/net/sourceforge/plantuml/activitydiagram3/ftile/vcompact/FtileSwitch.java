@@ -82,9 +82,9 @@ class FtileSwitch extends AbstractFtile {
 
 	public Set<Swimlane> getSwimlanes() {
 		final Set<Swimlane> result = new HashSet<>();
-		if (getSwimlaneIn() != null) {
+		if (getSwimlaneIn() != null)
 			result.add(getSwimlaneIn());
-		}
+
 		return Collections.unmodifiableSet(result);
 	}
 
@@ -102,9 +102,8 @@ class FtileSwitch extends AbstractFtile {
 		Objects.requireNonNull(afterEndwhile);
 		final List<Ftile> tiles = new ArrayList<>();
 
-		for (Branch branch : thens) {
+		for (Branch branch : thens)
 			tiles.add(new FtileMinWidthCentered(branch.getFtile(), 30));
-		}
 
 		List<Double> inlabelSizes = new ArrayList<>();
 		for (Branch branch : thens) {
@@ -115,8 +114,8 @@ class FtileSwitch extends AbstractFtile {
 					ftileFactory.skinParam());
 			final HColor diamondColor = branch.getColor() == null ? backColor : branch.getColor();
 
-			FtileDiamondInside2 diamond = new FtileDiamondInside2(tbTest, branch.skinParam(), diamondColor,
-					borderColor, swimlane);
+			FtileDiamondInside2 diamond = new FtileDiamondInside2(tbTest, branch.skinParam(), diamondColor, borderColor,
+					swimlane);
 			TextBlock tbInlabel = null;
 			if (Display.isNull(branch.getInlabel())) {
 				inlabelSizes.add(0.0);
@@ -140,9 +139,9 @@ class FtileSwitch extends AbstractFtile {
 
 	@Override
 	public UTranslate getTranslateFor(Ftile child, StringBounder stringBounder) {
-		if (tiles.contains(child)) {
+		if (tiles.contains(child))
 			return getTranslate1(child, stringBounder);
-		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -150,9 +149,9 @@ class FtileSwitch extends AbstractFtile {
 		double x1 = 0;
 		for (Ftile candidate : tiles) {
 			final FtileGeometry dim1 = candidate.calculateDimension(stringBounder);
-			if (candidate == tile) {
+			if (candidate == tile)
 				return new UTranslate(x1, 25);
-			}
+
 			x1 += dim1.getWidth() + xSeparation;
 		}
 		throw new IllegalArgumentException();
@@ -160,16 +159,16 @@ class FtileSwitch extends AbstractFtile {
 
 	public void drawU(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
-		for (Ftile tile : tiles) {
+		for (Ftile tile : tiles)
 			ug.apply(getTranslate1(tile, stringBounder)).draw(tile);
-		}
+
 	}
 
 	private FtileGeometry calculateDimensionInternal(StringBounder stringBounder) {
 		Dimension2D result = new Dimension2DDouble(0, 0);
-		for (Ftile couple : tiles) {
+		for (Ftile couple : tiles)
 			result = Dimension2DDouble.mergeLR(result, couple.calculateDimension(stringBounder));
-		}
+
 		result = Dimension2DDouble.delta(result, xSeparation * (tiles.size() - 1), 100);
 
 		return new FtileGeometry(result, result.getWidth() / 2, 0);
@@ -180,11 +179,10 @@ class FtileSwitch extends AbstractFtile {
 		final Dimension2D dimTotal = calculateDimensionInternal(stringBounder);
 
 		final List<Ftile> all = new ArrayList<>(tiles);
-		for (Ftile tmp : all) {
-			if (tmp.calculateDimension(stringBounder).hasPointOut()) {
+		for (Ftile tmp : all)
+			if (tmp.calculateDimension(stringBounder).hasPointOut())
 				return new FtileGeometry(dimTotal, dimTotal.getWidth() / 2, 0, dimTotal.getHeight());
-			}
-		}
+
 		return new FtileGeometry(dimTotal, dimTotal.getWidth() / 2, 0);
 
 	}

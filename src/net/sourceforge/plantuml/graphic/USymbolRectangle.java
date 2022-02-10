@@ -122,13 +122,13 @@ class USymbolRectangle extends USymbol {
 				stereotype.drawU(ug.apply(new UTranslate(posStereoX, posStereoY)));
 				final Dimension2D dimTitle = title.calculateDimension(ug.getStringBounder());
 				final double posTitle;
-				if (labelAlignment == HorizontalAlignment.LEFT) {
+				if (labelAlignment == HorizontalAlignment.LEFT)
 					posTitle = 3;
-				} else if (labelAlignment == HorizontalAlignment.RIGHT) {
+				else if (labelAlignment == HorizontalAlignment.RIGHT)
 					posTitle = width - dimTitle.getWidth() - 3;
-				} else {
+				else
 					posTitle = (width - dimTitle.getWidth()) / 2;
-				}
+
 				title.drawU(ug.apply(new UTranslate(posTitle, 2 + dimStereo.getHeight())));
 			}
 

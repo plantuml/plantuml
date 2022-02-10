@@ -5,7 +5,7 @@ public class A0005_TestResult {
 /*
 """
 DPI: 96
-dimension: [ 128.0935 ; 282.0000 ]
+dimension: [ 128.0935 ; 275.0000 ]
 scaleFactor: 1.0000
 seed: 293863236578191100
 svgLinkTarget: _top
@@ -23,7 +23,7 @@ RECTANGLE:
   yCorner: 0
   stroke: 0.0-0.0-1.0
   shadow: 0
-  color: NULL_COLOR
+  color: 0
   backcolor: ffff0000
 
 TEXT:
@@ -45,7 +45,7 @@ RECTANGLE:
   yCorner: 0
   stroke: 0.0-0.0-1.0
   shadow: 0
-  color: NULL_COLOR
+  color: 0
   backcolor: ffffff00
 
 TEXT:
@@ -58,173 +58,173 @@ TEXT:
 
 COMMENT: class Bob
 RECTANGLE:
-  pt1: [ 25.6999 ; 143.0000 ]
-  pt2: [ 102.4463 ; 205.0000 ]
+  pt1: [ 29.1999 ; 136.0000 ]
+  pt2: [ 105.9463 ; 198.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-1.5
-  shadow: 4
-  color: ffa80036
-  backcolor: fffefece
+  shadow: 0
+  color: ff181818
+  backcolor: fff8f8f8
 
 EMPTY:
-  pt1: [ 29.7685 ; 143.0000 ]
-  pt2: [ 55.7685 ; 175.0000 ]
+  pt1: [ 33.2685 ; 136.0000 ]
+  pt2: [ 59.2685 ; 168.0000 ]
 
 ELLIPSE:
-  pt1: [ 33.7685 ; 148.0000 ]
-  pt2: [ 55.7685 ; 170.0000 ]
+  pt1: [ 37.2685 ; 141.0000 ]
+  pt2: [ 59.2685 ; 163.0000 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.0
   shadow: 0
-  color: ffa80036
+  color: ff181818
   backcolor: ffadd1b2
 
 CENTERED_CHAR:
   char: C
-  position: [ 44.7685 ; 159.0000 ]
+  position: [ 48.2685 ; 152.0000 ]
   font: Monospaced.bold/17
   color: ff000000
 
 EMPTY:
-  pt1: [ 56.6726 ; 152.0000 ]
-  pt2: [ 98.3776 ; 166.0000 ]
+  pt1: [ 60.1726 ; 145.0000 ]
+  pt2: [ 101.8776 ; 159.0000 ]
 
 TEXT:
   text: Bob
-  position: [ 59.6726 ; 162.8889 ]
+  position: [ 63.1726 ; 155.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 26.6999 ; 175.0000 ]
-  pt2: [ 101.4463 ; 175.0000 ]
+  pt1: [ 30.1999 ; 168.0000 ]
+  pt2: [ 104.9463 ; 168.0000 ]
   stroke: 0.0-0.0-1.5
   shadow: 0
-  color: ffa80036
+  color: ff181818
 
 EMPTY:
-  pt1: [ 25.6999 ; 175.0000 ]
-  pt2: [ 102.4463 ; 197.0000 ]
+  pt1: [ 29.1999 ; 168.0000 ]
+  pt2: [ 105.9463 ; 190.0000 ]
 
 TEXT:
   text: hello
-  position: [ 31.6999 ; 189.8889 ]
+  position: [ 35.1999 ; 182.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 26.6999 ; 197.0000 ]
-  pt2: [ 101.4463 ; 197.0000 ]
+  pt1: [ 30.1999 ; 190.0000 ]
+  pt2: [ 104.9463 ; 190.0000 ]
   stroke: 0.0-0.0-1.5
   shadow: 0
-  color: ffa80036
+  color: ff181818
 
 EMPTY:
-  pt1: [ 25.6999 ; 197.0000 ]
-  pt2: [ 37.6999 ; 205.0000 ]
+  pt1: [ 29.1999 ; 190.0000 ]
+  pt2: [ 41.1999 ; 198.0000 ]
 
 COMMENT: class Sally
 RECTANGLE:
-  pt1: [ 18.1999 ; 59.0000 ]
-  pt2: [ 109.8937 ; 107.0000 ]
+  pt1: [ 21.6999 ; 52.0000 ]
+  pt2: [ 113.3937 ; 100.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-1.5
-  shadow: 4
-  color: ffa80036
-  backcolor: fffefece
+  shadow: 0
+  color: ff181818
+  backcolor: fff8f8f8
 
 EMPTY:
-  pt1: [ 18.1999 ; 59.0000 ]
-  pt2: [ 44.1999 ; 91.0000 ]
+  pt1: [ 21.6999 ; 52.0000 ]
+  pt2: [ 47.6999 ; 84.0000 ]
 
 ELLIPSE:
-  pt1: [ 22.1999 ; 64.0000 ]
-  pt2: [ 44.1999 ; 86.0000 ]
+  pt1: [ 25.6999 ; 57.0000 ]
+  pt2: [ 47.6999 ; 79.0000 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.0
   shadow: 0
-  color: ffa80036
+  color: ff181818
   backcolor: ffadd1b2
 
 CENTERED_CHAR:
   char: C
-  position: [ 33.1999 ; 75.0000 ]
+  position: [ 36.6999 ; 68.0000 ]
   font: Monospaced.bold/17
   color: ff000000
 
 EMPTY:
-  pt1: [ 44.1999 ; 68.0000 ]
-  pt2: [ 109.8937 ; 82.0000 ]
+  pt1: [ 47.6999 ; 61.0000 ]
+  pt2: [ 113.3937 ; 75.0000 ]
 
 TEXT:
   text: Sally
-  position: [ 47.1999 ; 78.8889 ]
+  position: [ 50.6999 ; 71.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 19.1999 ; 91.0000 ]
-  pt2: [ 108.8937 ; 91.0000 ]
+  pt1: [ 22.6999 ; 84.0000 ]
+  pt2: [ 112.3937 ; 84.0000 ]
   stroke: 0.0-0.0-1.5
   shadow: 0
-  color: ffa80036
+  color: ff181818
 
 EMPTY:
-  pt1: [ 18.1999 ; 91.0000 ]
-  pt2: [ 30.1999 ; 99.0000 ]
+  pt1: [ 21.6999 ; 84.0000 ]
+  pt2: [ 33.6999 ; 92.0000 ]
 
 LINE:
-  pt1: [ 19.1999 ; 99.0000 ]
-  pt2: [ 108.8937 ; 99.0000 ]
+  pt1: [ 22.6999 ; 92.0000 ]
+  pt2: [ 112.3937 ; 92.0000 ]
   stroke: 0.0-0.0-1.5
   shadow: 0
-  color: ffa80036
+  color: ff181818
 
 EMPTY:
-  pt1: [ 18.1999 ; 99.0000 ]
-  pt2: [ 30.1999 ; 107.0000 ]
+  pt1: [ 21.6999 ; 92.0000 ]
+  pt2: [ 33.6999 ; 100.0000 ]
 
 PATH:
    - type: SEG_MOVETO
-     pt1: [ 46.0000 ; 55.3837 ]
+     pt1: [ 46.0000 ; 48.3837 ]
    - type: SEG_CUBICTO
-     pt1: [ 46.0000 ; 66.1992 ]
-     pt2: [ 46.0000 ; 79.1811 ]
-     pt3: [ 46.0000 ; 90.7328 ]
+     pt1: [ 46.0000 ; 59.1992 ]
+     pt2: [ 46.0000 ; 72.1811 ]
+     pt3: [ 46.0000 ; 83.7328 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
-  color: ffa80036
+  color: ff181818
   backcolor: NULL_COLOR
 
 POLYGON:
   points:
-   - [ 64.1999 ; 142.7328 ]
-   - [ 68.1999 ; 133.7328 ]
-   - [ 64.1999 ; 137.7328 ]
-   - [ 60.1999 ; 133.7328 ]
-   - [ 64.1999 ; 142.7328 ]
+   - [ 67.6999 ; 135.7328 ]
+   - [ 71.6999 ; 126.7328 ]
+   - [ 67.6999 ; 130.7328 ]
+   - [ 63.6999 ; 126.7328 ]
+   - [ 67.6999 ; 135.7328 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
-  color: ffa80036
-  backcolor: ffa80036
+  color: ff181818
+  backcolor: ff181818
 
 EMPTY:
-  pt1: [ 0.0000 ; 200.0000 ]
-  pt2: [ 122.0935 ; 243.0000 ]
+  pt1: [ 0.0000 ; 193.0000 ]
+  pt2: [ 122.0935 ; 236.0000 ]
 
 RECTANGLE:
-  pt1: [ 8.0000 ; 208.0000 ]
-  pt2: [ 113.0935 ; 234.0000 ]
+  pt1: [ 8.0000 ; 201.0000 ]
+  pt2: [ 113.0935 ; 227.0000 ]
   xCorner: 15
   yCorner: 15
   stroke: 0.0-0.0-1.0
@@ -234,51 +234,51 @@ RECTANGLE:
 
 TEXT:
   text: legend
-  position: [ 14.0000 ; 224.8889 ]
+  position: [ 14.0000 ; 217.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 EMPTY:
-  pt1: [ 2.6679 ; 243.0000 ]
-  pt2: [ 119.4256 ; 260.0000 ]
+  pt1: [ 2.6679 ; 236.0000 ]
+  pt2: [ 119.4256 ; 253.0000 ]
 
 RECTANGLE:
-  pt1: [ 3.6679 ; 244.0000 ]
-  pt2: [ 117.4256 ; 258.0000 ]
+  pt1: [ 3.6679 ; 237.0000 ]
+  pt2: [ 117.4256 ; 251.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-1.0
   shadow: 0
-  color: NULL_COLOR
+  color: 0
   backcolor: ff800080
 
 TEXT:
   text: caption
-  position: [ 3.6679 ; 254.8889 ]
+  position: [ 3.6679 ; 247.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 EMPTY:
-  pt1: [ 16.9796 ; 260.0000 ]
-  pt2: [ 105.1139 ; 276.0000 ]
+  pt1: [ 16.9796 ; 253.0000 ]
+  pt2: [ 105.1139 ; 269.0000 ]
 
 RECTANGLE:
-  pt1: [ 16.9796 ; 260.0000 ]
-  pt2: [ 104.1139 ; 275.0000 ]
+  pt1: [ 16.9796 ; 253.0000 ]
+  pt2: [ 104.1139 ; 268.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-1.0
   shadow: 0
-  color: NULL_COLOR
+  color: 0
   backcolor: ff0000ff
 
 TEXT:
   text: footer
-  position: [ 16.9796 ; 271.6667 ]
+  position: [ 16.9796 ; 264.6667 ]
   orientation: 0
   font: SansSerif.plain/15 []
   color: ffff0000

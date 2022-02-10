@@ -42,6 +42,7 @@ import java.util.Objects;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.UmlDiagramType;
+import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.creole.CreoleMode;
@@ -61,8 +62,8 @@ import net.sourceforge.plantuml.svek.image.EntityImageClass;
 
 public class ClassDiagram extends AbstractClassOrObjectDiagram {
 
-	public ClassDiagram(UmlSource source, ISkinSimple skinParam) {
-		super(source, UmlDiagramType.CLASS, skinParam);
+	public ClassDiagram(ThemeStyle style, UmlSource source, ISkinSimple skinParam) {
+		super(style, source, UmlDiagramType.CLASS, skinParam);
 	}
 
 	private Code getShortName1972(Code code) {
@@ -195,10 +196,9 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 			final RowLayout rawLayout = getRawLayout(i);
 			fullLayout.addRowLayout(rawLayout);
 		}
-		return createImageBuilder(fileFormatOption)
-				.annotations(false) // Backwards compatibility - this only applies when "layout_new_line" is used
-				.drawable(fullLayout)
-				.write(os);
+		return createImageBuilder(fileFormatOption).annotations(false) // Backwards compatibility - this only applies
+																		// when "layout_new_line" is used
+				.drawable(fullLayout).write(os);
 	}
 
 	private RowLayout getRawLayout(int raw) {

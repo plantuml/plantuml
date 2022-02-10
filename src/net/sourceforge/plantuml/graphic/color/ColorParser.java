@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.graphic.color;
 
-import net.sourceforge.plantuml.ThemeStyle;
+import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;

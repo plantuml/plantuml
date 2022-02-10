@@ -58,6 +58,9 @@ public enum SName {
 	collection, //
 	collections, //
 	component, //
+	robust, //
+	concise, //
+	clock, //
 	componentDiagram, //
 	constraintArrow, //
 	control, //
@@ -69,6 +72,7 @@ public enum SName {
 	element, //
 	entity, //
 	end, //
+	start, //
 	stop, //
 	file, //
 	folder, //

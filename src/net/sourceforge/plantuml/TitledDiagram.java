@@ -41,6 +41,7 @@ import java.io.InputStream;
 import net.sourceforge.plantuml.anim.Animation;
 import net.sourceforge.plantuml.anim.AnimationDecoder;
 import net.sourceforge.plantuml.api.ApiStable;
+import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.UmlSource;
@@ -86,18 +87,18 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 		return pragma;
 	}
 
-	public TitledDiagram(UmlSource source, UmlDiagramType type) {
+	public TitledDiagram(ThemeStyle style, UmlSource source, UmlDiagramType type) {
 		super(source);
 		this.type = type;
-		this.skinParam = SkinParam.create(type);
+		this.skinParam = SkinParam.create(type, style);
 	}
 
 	public final StyleBuilder getCurrentStyleBuilder() {
 		return skinParam.getCurrentStyleBuilder();
 	}
 
-	public TitledDiagram(UmlSource source, UmlDiagramType type, ISkinSimple orig) {
-		this(source, type);
+	public TitledDiagram(ThemeStyle style, UmlSource source, UmlDiagramType type, ISkinSimple orig) {
+		this(style, source, type);
 		if (orig != null) {
 			this.skinParam.copyAllFrom(orig);
 		}

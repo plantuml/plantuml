@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes;
+import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
@@ -74,23 +75,22 @@ public class ActivityDiagram3 extends UmlDiagram {
 
 	private final Swimlanes swinlanes = new Swimlanes(getSkinParam(), getPragma());
 
-	public ActivityDiagram3(UmlSource source, ISkinSimple skinParam) {
-		super(source, UmlDiagramType.ACTIVITY, skinParam);
+	public ActivityDiagram3(ThemeStyle style, UmlSource source, ISkinSimple skinParam) {
+		super(style, source, UmlDiagramType.ACTIVITY, skinParam);
 	}
 
 	private void manageSwimlaneStrategy() {
-		if (swimlaneStrategy == null) {
+		if (swimlaneStrategy == null)
 			swimlaneStrategy = SwimlaneStrategy.SWIMLANE_FORBIDDEN;
-		}
+
 	}
 
 	public CommandExecutionResult swimlane(String name, HColor color, Display label) {
-		if (swimlaneStrategy == null) {
+		if (swimlaneStrategy == null)
 			swimlaneStrategy = SwimlaneStrategy.SWIMLANE_ALLOWED;
-		}
-		if (swimlaneStrategy == SwimlaneStrategy.SWIMLANE_FORBIDDEN) {
+
+		if (swimlaneStrategy == SwimlaneStrategy.SWIMLANE_FORBIDDEN)
 			return CommandExecutionResult.error("This swimlane must be defined at the start of the diagram.");
-		}
 
 		swinlanes.swimlane(name, color, label);
 		return CommandExecutionResult.ok();
@@ -114,14 +114,14 @@ public class ActivityDiagram3 extends UmlDiagram {
 		final InstructionSimple ins = new InstructionSimple(activity, nextLinkRenderer(),
 				swinlanes.getCurrentSwimlane(), style, url, colors, stereotype);
 		final CommandExecutionResult added = current().add(ins);
-		if (added.isOk() == false) {
+		if (added.isOk() == false)
 			return added;
-		}
+
 		setNextLinkRendererInternal(LinkRendering.none());
 		manageHasUrl(activity);
-		if (url != null) {
+		if (url != null)
 			hasUrl = true;
-		}
+
 		return CommandExecutionResult.ok();
 
 	}
@@ -157,34 +157,34 @@ public class ActivityDiagram3 extends UmlDiagram {
 	public void stop() {
 		manageSwimlaneStrategy();
 		final InstructionStop ins = new InstructionStop(swinlanes.getCurrentSwimlane(), nextLinkRenderer());
-		if (manageSpecialStopEndAfterEndWhile(ins)) {
+		if (manageSpecialStopEndAfterEndWhile(ins))
 			return;
-		}
+
 		current().add(ins);
 	}
 
 	public void end() {
 		manageSwimlaneStrategy();
 		final InstructionEnd ins = new InstructionEnd(swinlanes.getCurrentSwimlane(), nextLinkRenderer());
-		if (manageSpecialStopEndAfterEndWhile(ins)) {
+		if (manageSpecialStopEndAfterEndWhile(ins))
 			return;
-		}
+
 		current().add(ins);
 	}
 
 	private boolean manageSpecialStopEndAfterEndWhile(Instruction special) {
-		if (current() instanceof InstructionList == false) {
+		if (current() instanceof InstructionList == false)
 			return false;
-		}
+
 		final InstructionList current = (InstructionList) current();
 		final Instruction last = current.getLast();
-		if (last instanceof InstructionWhile == false) {
+		if (last instanceof InstructionWhile == false)
 			return false;
-		}
+
 		final InstructionWhile instructionWhile = (InstructionWhile) last;
-		if (instructionWhile.containsBreak()) {
+		if (instructionWhile.containsBreak())
 			return false;
-		}
+
 		instructionWhile.setSpecial(special);
 		return true;
 	}
@@ -285,9 +285,9 @@ public class ActivityDiagram3 extends UmlDiagram {
 	public CommandExecutionResult switchCase(Display labelCase) {
 		if (current() instanceof InstructionSwitch) {
 			final boolean ok = ((InstructionSwitch) current()).switchCase(labelCase, nextLinkRenderer());
-			if (ok == false) {
+			if (ok == false)
 				return CommandExecutionResult.error("You cannot put an elseIf here");
-			}
+
 			setNextLinkRendererInternal(LinkRendering.none());
 			return CommandExecutionResult.ok();
 
@@ -317,9 +317,9 @@ public class ActivityDiagram3 extends UmlDiagram {
 	public CommandExecutionResult elseIf(LinkRendering inlabel, Display test, LinkRendering whenThen, HColor color) {
 		if (current() instanceof InstructionIf) {
 			final boolean ok = ((InstructionIf) current()).elseIf(inlabel, test, whenThen, nextLinkRenderer(), color);
-			if (ok == false) {
+			if (ok == false)
 				return CommandExecutionResult.error("You cannot put an elseIf here");
-			}
+
 			setNextLinkRendererInternal(LinkRendering.none());
 			return CommandExecutionResult.ok();
 		}
@@ -329,9 +329,9 @@ public class ActivityDiagram3 extends UmlDiagram {
 	public CommandExecutionResult else2(LinkRendering whenElse) {
 		if (current() instanceof InstructionIf) {
 			final boolean result = ((InstructionIf) current()).swithToElse2(whenElse, nextLinkRenderer());
-			if (result == false) {
+			if (result == false)
 				return CommandExecutionResult.error("Cannot find if");
-			}
+
 			setNextLinkRendererInternal(LinkRendering.none());
 			return CommandExecutionResult.ok();
 		}
@@ -411,9 +411,9 @@ public class ActivityDiagram3 extends UmlDiagram {
 	}
 
 	final public CommandExecutionResult kill() {
-		if (current().kill() == false) {
+		if (current().kill() == false)
 			return CommandExecutionResult.error("kill cannot be used here");
-		}
+
 		return CommandExecutionResult.ok();
 	}
 
@@ -444,11 +444,11 @@ public class ActivityDiagram3 extends UmlDiagram {
 		// System.err.println("setNextLink=" + linkRenderer);
 		if (current() instanceof InstructionCollection) {
 			final Instruction last = ((InstructionCollection) current()).getLast();
-			if (last instanceof InstructionWhile) {
+			if (last instanceof InstructionWhile)
 				((InstructionWhile) last).outColor(linkRenderer.getRainbow());
-			} else if (last instanceof InstructionIf) {
+			else if (last instanceof InstructionIf)
 				((InstructionIf) last).outColor(linkRenderer);
-			}
+
 		}
 		this.setNextLinkRendererInternal(linkRenderer);
 	}
@@ -468,18 +468,18 @@ public class ActivityDiagram3 extends UmlDiagram {
 	}
 
 	public void setColorNextArrow(Rainbow color) {
-		if (color == null) {
+		if (color == null)
 			return;
-		}
+
 		final LinkRendering link = new LinkRendering(color);
 		setNextLink(link);
 	}
 
 	public CommandExecutionResult addNote(Display note, NotePosition position, NoteType type, Colors colors) {
 		final boolean ok = current().addNote(note, position, type, colors, swinlanes.getCurrentSwimlane());
-		if (ok == false) {
+		if (ok == false)
 			return CommandExecutionResult.error("Cannot add note here");
-		}
+
 		manageHasUrl(note);
 		return CommandExecutionResult.ok();
 	}
@@ -487,9 +487,9 @@ public class ActivityDiagram3 extends UmlDiagram {
 	private boolean hasUrl = false;
 
 	private void manageHasUrl(Display display) {
-		if (display.hasUrl()) {
+		if (display.hasUrl())
 			hasUrl = true;
-		}
+
 	}
 
 	@Override

@@ -40,7 +40,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import net.sourceforge.plantuml.ThemeStyle;
+import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.ugraphic.UStroke;

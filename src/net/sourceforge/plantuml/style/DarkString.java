@@ -35,60 +35,60 @@
  */
 package net.sourceforge.plantuml.style;
 
-import net.sourceforge.plantuml.ThemeStyle;
-import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorSet;
+public class DarkString {
 
-public class ValueDeltaPriority implements Value {
+	private final String value1;
+	private final String value2;
+	private final int priority;
 
-	private final Value orig;
-	private final int deltaPriority;
+	public DarkString(String value1, String value2, int priority) {
+		this.value1 = value1;
+		this.value2 = value2;
+		this.priority = priority;
+	}
 
-	public ValueDeltaPriority(Value orig, int deltaPriority) {
-		this.orig = orig;
-		this.deltaPriority = deltaPriority;
+	public DarkString mergeWith(DarkString other) {
+		if (other == null)
+			return this;
+
+		if ((this.value2 == null && other.value2 == null) || this.value1 == null && other.value1 == null) {
+			if (this.priority > other.priority)
+				return this;
+			return other;
+		}
+		if (this.value2 == null && other.value1 == null)
+			return new DarkString(this.value1, other.value2, this.priority);
+		if (other.value2 == null && this.value1 == null)
+			return new DarkString(other.value1, this.value2, other.priority);
+		
+		if (this.priority > other.priority)
+			return this;
+		return other;
+		
+//		System.err.println("this =" + this);
+//		System.err.println("other=" + other);
+//		throw new UnsupportedOperationException();
+	}
+
+	public DarkString addPriority(int delta) {
+		return new DarkString(value1, value2, delta + priority);
 	}
 
 	@Override
-	public String asString() {
-		return orig.asString();
+	public String toString() {
+		return value1 + "/" + value2 + " (" + priority + ")";
 	}
 
-	@Override
-	public HColor asColor(ThemeStyle themeStyle, HColorSet colorSet) {
-		return orig.asColor(themeStyle, colorSet);
+	public final String getValue1() {
+		return value1;
 	}
 
-	@Override
-	public int asInt() {
-		return orig.asInt();
-	}		// TODO Auto-generated method stub
-
-
-	@Override
-	public double asDouble() {
-		return orig.asDouble();
+	public final String getValue2() {
+		return value2;
 	}
 
-	@Override
-	public boolean asBoolean() {
-		return orig.asBoolean();
-	}
-
-	@Override
-	public int asFontStyle() {
-		return orig.asFontStyle();
-	}
-
-	@Override
-	public HorizontalAlignment asHorizontalAlignment() {
-		return orig.asHorizontalAlignment();
-	}
-
-	@Override
-	public int getPriority() {
-		return orig.getPriority() + deltaPriority;
+	public final int getPriority() {
+		return priority;
 	}
 
 }

@@ -35,9 +35,13 @@
  */
 package net.sourceforge.plantuml.timingdiagram;
 
+import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
@@ -79,22 +83,29 @@ public class ChangeState implements Comparable<ChangeState> {
 		return comment;
 	}
 
-	public final HColor getBackColor() {
+	public final HColor getBackColor(ISkinParam skinParam, Style style) {
 		if (colors == null || colors.getColor(ColorType.BACK) == null) {
-			return HColorUtils.COL_D7E0F2;
+			if (UseStyle.useBetaStyle() == false)
+				return HColorUtils.COL_D7E0F2;
+
+			return style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
 		}
 		return colors.getColor(ColorType.BACK);
 	}
 
-	private final HColor getLineColor() {
+	private final HColor getLineColor(ISkinParam skinParam, Style style) {
 		if (colors == null || colors.getColor(ColorType.LINE) == null) {
-			return HColorUtils.COL_038048;
+			if (UseStyle.useBetaStyle() == false)
+				return HColorUtils.COL_038048;
+
+			return style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
 		}
 		return colors.getColor(ColorType.LINE);
 	}
 
-	public SymbolContext getContext() {
-		return new SymbolContext(getBackColor(), getLineColor()).withStroke(new UStroke(1.5));
+	public SymbolContext getContext(ISkinParam skinParam, Style style) {
+		return new SymbolContext(getBackColor(skinParam, style), getLineColor(skinParam, style))
+				.withStroke(new UStroke(1.5));
 	}
 
 	public final boolean isBlank() {

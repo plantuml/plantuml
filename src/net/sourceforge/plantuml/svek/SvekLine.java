@@ -673,7 +673,7 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 			if (endCluster != null) {
 				final double deltaFolderH = endCluster.checkFolderPosition(dotPath.getEndPoint(),
 						ug.getStringBounder());
-				todraw = new DotPath(dotPath);
+				todraw = dotPath.copy();
 				todraw.moveEndPoint(0, deltaFolderH);
 				// moveEndY = deltaFolderH;
 			}
@@ -923,7 +923,7 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 	}
 
 	public final DotPath getDotPath() {
-		final DotPath result = new DotPath(dotPath);
+		final DotPath result = dotPath.copy();
 		result.moveSvek(dx, dy);
 		return result;
 	}

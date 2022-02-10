@@ -61,7 +61,7 @@ public class EntityImageCircleStart extends AbstractEntityImage {
 	private final ColorParam colorParam; // = ColorParam.activityStart;
 
 	public StyleSignature getDefaultStyleDefinitionCircle() {
-		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.circle);
+		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.circle, SName.start);
 	}
 
 	public EntityImageCircleStart(ILeaf entity, ISkinParam skinParam, ColorParam colorParam) {

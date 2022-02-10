@@ -59,8 +59,8 @@ public class FtileCircleEnd extends AbstractFtile {
 
 	private static final int SIZE = 20;
 
-	private final HColor borderColor;
-	private final HColor backColor;
+	private HColor borderColor;
+	private HColor backColor;
 	private final Swimlane swimlane;
 	private double shadowing;
 
@@ -76,17 +76,18 @@ public class FtileCircleEnd extends AbstractFtile {
 		this.swimlane = swimlane;
 		if (UseStyle.useBetaStyle()) {
 			this.shadowing = style.value(PName.Shadowing).asDouble();
-		} else {
-			if (skinParam().shadowing(null)) {
-				this.shadowing = 3;
-			}
+			this.backColor = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(), getIHtmlColorSet());
+			this.borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), getIHtmlColorSet());
+		} else if (skinParam().shadowing(null)) {
+			this.shadowing = 3;
 		}
+
 	}
 
 	public Set<Swimlane> getSwimlanes() {
-		if (swimlane == null) {
+		if (swimlane == null)
 			return Collections.emptySet();
-		}
+
 		return Collections.singleton(swimlane);
 	}
 

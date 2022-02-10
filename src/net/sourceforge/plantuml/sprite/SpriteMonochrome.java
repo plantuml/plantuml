@@ -63,55 +63,52 @@ public class SpriteMonochrome implements Sprite {
 	private final int gray[][];
 
 	public boolean isSameKind(SpriteMonochrome other) {
-		if (this.width != other.width) {
+		if (this.width != other.width)
 			return false;
-		}
-		if (this.height != other.height) {
+
+		if (this.height != other.height)
 			return false;
-		}
-		if (this.grayLevel != other.grayLevel) {
+
+		if (this.grayLevel != other.grayLevel)
 			return false;
-		}
+
 		return true;
 	}
 
 	public boolean isSame(SpriteMonochrome other) {
-		if (isSameKind(other) == false) {
+		if (isSameKind(other) == false)
 			return false;
-		}
-		for (int i = 0; i < width; i++) {
-			for (int j = 0; j < height; j++) {
-				if (this.gray[j][i] != other.gray[j][i]) {
+
+		for (int i = 0; i < width; i++)
+			for (int j = 0; j < height; j++)
+				if (this.gray[j][i] != other.gray[j][i])
 					return false;
-				}
-			}
-		}
+
 		return true;
 	}
 
 	public SpriteMonochrome xor(SpriteMonochrome other) {
-		if (this.width != other.width) {
+		if (this.width != other.width)
 			throw new IllegalStateException();
-		}
-		if (this.height != other.height) {
+
+		if (this.height != other.height)
 			throw new IllegalStateException();
-		}
-		if (this.grayLevel != other.grayLevel) {
+
+		if (this.grayLevel != other.grayLevel)
 			throw new IllegalStateException();
-		}
+
 		final SpriteMonochrome result = new SpriteMonochrome(width, height, grayLevel);
-		for (int i = 0; i < width; i++) {
-			for (int j = 0; j < height; j++) {
+		for (int i = 0; i < width; i++)
+			for (int j = 0; j < height; j++)
 				result.gray[j][i] = this.gray[j][i] ^ other.gray[j][i];
-			}
-		}
+
 		return result;
 	}
 
 	public SpriteMonochrome(int width, int height, int grayLevel) {
-		if (grayLevel != 2 && grayLevel != 4 && grayLevel != 8 && grayLevel != 16) {
+		if (grayLevel != 2 && grayLevel != 4 && grayLevel != 8 && grayLevel != 16)
 			throw new IllegalArgumentException();
-		}
+
 		this.width = width;
 		this.height = height;
 		this.grayLevel = grayLevel;
@@ -120,58 +117,56 @@ public class SpriteMonochrome implements Sprite {
 
 	public SpriteMonochrome xSymetric() {
 		final SpriteMonochrome result = new SpriteMonochrome(width, height, grayLevel);
-		for (int i = 0; i < width; i++) {
-			for (int j = 0; j < height; j++) {
+		for (int i = 0; i < width; i++)
+			for (int j = 0; j < height; j++)
 				result.setGray(i, j, this.getGray(i, j));
-			}
-		}
-		for (int j = 0; j < height; j++) {
+
+		for (int j = 0; j < height; j++)
 			for (int i = 0; i < width / 2; i++) {
 				final int i2 = width - 1 - i;
 				final int level = result.getGray(i, j) ^ result.getGray(i2, j);
 				result.setGray(i2, j, level);
 			}
-		}
+
 		return result;
 	}
 
 	public SpriteMonochrome ySymetric() {
 		final SpriteMonochrome result = new SpriteMonochrome(width, height, grayLevel);
-		for (int i = 0; i < width; i++) {
-			for (int j = 0; j < height; j++) {
+		for (int i = 0; i < width; i++)
+			for (int j = 0; j < height; j++)
 				result.setGray(i, j, this.getGray(i, j));
-			}
-		}
-		for (int i = 0; i < width; i++) {
+
+		for (int i = 0; i < width; i++)
 			for (int j = 0; j < height / 2; j++) {
 				final int j2 = height - 1 - j;
 				final int level = result.getGray(i, j) ^ result.getGray(i, j2);
 				result.setGray(i, j2, level);
 			}
-		}
+
 		return result;
 	}
 
 	public void setGray(int x, int y, int level) {
-		if (x < 0 || x >= width) {
+		if (x < 0 || x >= width)
 			return;
-		}
-		if (y < 0 || y >= height) {
+
+		if (y < 0 || y >= height)
 			return;
-		}
-		if (level < 0 || level >= grayLevel) {
+
+		if (level < 0 || level >= grayLevel)
 			throw new IllegalArgumentException("level=" + level + " grayLevel=" + grayLevel);
-		}
+
 		gray[y][x] = level;
 	}
 
 	public int getGray(int x, int y) {
-		if (x >= width) {
+		if (x >= width)
 			throw new IllegalArgumentException("x=" + x + " width=" + width);
-		}
-		if (y >= height) {
+
+		if (y >= height)
 			throw new IllegalArgumentException("y=" + y + " height=" + height);
-		}
+
 		return gray[y][x];
 	}
 
@@ -185,15 +180,12 @@ public class SpriteMonochrome implements Sprite {
 
 	public UImage toUImage(ColorMapper colorMapper, HColor backcolor, HColor color) {
 
-		if (backcolor == null) {
-			backcolor = HColorUtils.WHITE;
-		}
-		if (color == null) {
-			color = HColorUtils.BLACK;
-		}
-		// if (backcolor instanceof HtmlColorGradient) {
-		// return special(colorMapper, (HtmlColorGradient) backcolor, color);
-		// }
+		if (backcolor == null || HColorUtils.isTransparent(backcolor))
+			backcolor = HColorUtils.WHITE.withDark(HColorUtils.BLACK);
+
+		if (color == null || HColorUtils.isTransparent(color))
+			color = HColorUtils.BLACK.withDark(HColorUtils.WHITE);
+
 		final BufferedImage im = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		final HColorGradient gradient = new HColorGradient(backcolor, color, '\0');
 		for (int col = 0; col < width; col++) {

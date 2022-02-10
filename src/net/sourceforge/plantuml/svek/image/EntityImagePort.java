@@ -44,10 +44,15 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SkinParamUtils;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.cucadiagram.EntityPosition;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.Cluster;
 import net.sourceforge.plantuml.svek.ShapeType;
@@ -60,8 +65,16 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class EntityImagePort extends AbstractEntityImageBorder {
-	public EntityImagePort(ILeaf leaf, ISkinParam skinParam, Cluster parent, final Bibliotekon bibliotekon) {
+
+	private final SName sname;
+
+	public EntityImagePort(ILeaf leaf, ISkinParam skinParam, Cluster parent, Bibliotekon bibliotekon, SName sname) {
 		super(leaf, skinParam, parent, bibliotekon, FontParam.BOUNDARY);
+		this.sname = sname;
+	}
+
+	private StyleSignature getSignature() {
+		return StyleSignature.of(SName.root, SName.element, sname, SName.boundary);
 	}
 
 	private boolean upPosition() {
@@ -90,22 +103,37 @@ public class EntityImagePort extends AbstractEntityImageBorder {
 		final Dimension2D dimDesc = desc.calculateDimension(ug.getStringBounder());
 		final double x = 0 - (dimDesc.getWidth() - 2 * EntityPosition.RADIUS) / 2;
 
-		if (upPosition()) {
+		if (upPosition())
 			y -= 2 * EntityPosition.RADIUS + dimDesc.getHeight();
-		} else {
+		else
 			y += 2 * EntityPosition.RADIUS;
-		}
+
 		desc.drawU(ug.apply(new UTranslate(x, y)));
 
-		ug = ug.apply(new UStroke(1.5))
-				.apply(SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.stateBorder).bg());
 		HColor backcolor = getEntity().getColors().getColor(ColorType.BACK);
-		if (backcolor == null) {
-			backcolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.stateBackground);
+		final HColor borderColor;
+
+		if (UseStyle.useBetaStyle()) {
+			final Style style = getSignature().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+			borderColor = style.value(PName.LineColor).asColor(getSkinParam().getThemeStyle(),
+					getSkinParam().getIHtmlColorSet());
+			if (backcolor == null)
+				backcolor = style.value(PName.BackGroundColor).asColor(getSkinParam().getThemeStyle(),
+						getSkinParam().getIHtmlColorSet());
+		} else {
+			borderColor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.stateBorder);
+			if (backcolor == null)
+				backcolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.stateBackground);
 		}
+
 		ug = ug.apply(backcolor);
+		ug = ug.apply(getUStroke()).apply(borderColor.bg());
 
 		drawSymbol(ug);
+	}
+
+	private UStroke getUStroke() {
+		return new UStroke(1.5);
 	}
 
 	public ShapeType getShapeType() {

@@ -96,9 +96,7 @@ public class FtileGroup extends AbstractFtile {
 		super(inner.skinParam());
 		this.roundCorner = roundCorner;
 		this.type = type;
-		this.backColor = backColor == null ? HColorUtils.WHITE : backColor;
 		this.inner = FtileUtils.addHorizontalMargin(inner, 10);
-		this.borderColor = borderColor == null ? HColorUtils.BLACK : borderColor;
 
 		final FontConfiguration fc;
 		final Style style;
@@ -106,7 +104,15 @@ public class FtileGroup extends AbstractFtile {
 			style = getDefaultStyleDefinitionPartition().getMergedStyle(skinParam.getCurrentStyleBuilder());
 			fc = style.getFontConfiguration(skinParam.getThemeStyle(), getIHtmlColorSet());
 			this.shadowing = style.value(PName.Shadowing).asDouble();
+			this.backColor = backColor == null
+					? style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(), getIHtmlColorSet())
+					: backColor;
+			this.borderColor = borderColor == null
+					? style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), getIHtmlColorSet())
+					: borderColor;
 		} else {
+			this.backColor = backColor == null ? HColorUtils.WHITE : backColor;
+			this.borderColor = borderColor == null ? HColorUtils.BLACK : borderColor;
 			style = null;
 			final UFont font = skinParam.getFont(null, false, FontParam.PARTITION);
 			final HColor fontColor = skinParam.getFontHtmlColor(null, FontParam.PARTITION);
@@ -114,16 +120,15 @@ public class FtileGroup extends AbstractFtile {
 					skinParam.useUnderlineForHyperlink(), skinParam.getTabSize());
 			this.shadowing = skinParam().shadowing(null) ? 3 : 0;
 		}
-		if (title == null) {
+		if (title == null)
 			this.name = TextBlockUtils.empty(0, 0);
-		} else {
+		else
 			this.name = title.create(fc, HorizontalAlignment.LEFT, skinParam);
-		}
-		if (Display.isNull(displayNote)) {
+
+		if (Display.isNull(displayNote))
 			this.headerNote = TextBlockUtils.empty(0, 0);
-		} else {
+		else
 			this.headerNote = new FloatingNote(displayNote, skinParam, style);
-		}
 
 		final UStroke thickness = skinParam.getThickness(LineParam.partitionBorder, null);
 		this.stroke = thickness == null ? new UStroke(2) : thickness;
@@ -183,9 +188,9 @@ public class FtileGroup extends AbstractFtile {
 	private FtileGeometry cachedInnerDimension;
 
 	private FtileGeometry getInnerDimension(StringBounder stringBounder) {
-		if (cachedInnerDimension == null) {
+		if (cachedInnerDimension == null)
 			cachedInnerDimension = getInnerDimensionSlow(stringBounder);
-		}
+
 		return cachedInnerDimension;
 
 	}
@@ -208,10 +213,10 @@ public class FtileGroup extends AbstractFtile {
 		final double height = orig.getHeight() + diffHeightTitle(stringBounder) + diffYY2
 				+ headerNoteHeight(stringBounder);
 		final double titleAndHeaderNoteHeight = diffHeightTitle(stringBounder) + headerNoteHeight(stringBounder);
-		if (orig.hasPointOut()) {
+		if (orig.hasPointOut())
 			return new FtileGeometry(width, height, orig.getLeft() + suppWidth / 2,
 					orig.getInY() + titleAndHeaderNoteHeight, orig.getOutY() + titleAndHeaderNoteHeight);
-		}
+
 		return new FtileGeometry(width, height, orig.getLeft() + suppWidth / 2,
 				orig.getInY() + titleAndHeaderNoteHeight);
 	}
@@ -224,8 +229,6 @@ public class FtileGroup extends AbstractFtile {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final Dimension2D dimTotal = calculateDimension(stringBounder);
 
-		// final double roundCorner =
-		// type.getSkinParameter().getRoundCorner(skinParam(), null);
 		final SymbolContext symbolContext = new SymbolContext(backColor, borderColor).withShadow(shadowing)
 				.withStroke(stroke).withCorner(roundCorner, 0);
 

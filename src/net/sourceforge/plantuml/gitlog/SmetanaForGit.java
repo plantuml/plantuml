@@ -59,12 +59,13 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.jsondiagram.Mirror;
+import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 import smetana.core.CString;
 import smetana.core.Macro;
 import smetana.core.Z;
@@ -92,6 +93,10 @@ public class SmetanaForGit {
 				.getMergedStyle(skinParam.getCurrentStyleBuilder());
 	}
 
+	private HColor arrowColor() {
+		return getStyle().value(PName.LineColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
+	}
+
 	public void drawMe(Collection<GNode> gnodes) {
 		initGraph(gnodes);
 
@@ -101,12 +106,11 @@ public class SmetanaForGit {
 
 			final MagicBox magicBox = new MagicBox(skinParam, ent.getKey());
 			magicBox.drawBorder(ug.apply(pos), getSize(node));
-
 		}
 
 		for (ST_Agedge_s edge : edges) {
 			final ST_Agedgeinfo_t data = (ST_Agedgeinfo_t) Macro.AGDATA(edge);
-			new GitCurve(data, yMirror).drawCurve(HColorUtils.BLACK, ug);
+			new GitCurve(data, yMirror).drawCurve(arrowColor(), ug);
 		}
 	}
 
@@ -127,9 +131,9 @@ public class SmetanaForGit {
 	}
 
 	private void initGraph(Collection<GNode> gnodes) {
-		if (g != null) {
+		if (g != null)
 			return;
-		}
+
 		Z.open();
 		try {
 			g = agopen(new CString("g"), Z.z().Agdirected, null);
@@ -142,9 +146,9 @@ public class SmetanaForGit {
 			for (GNode gnode : nodes.keySet()) {
 				for (GNode parent : gnode.getDowns()) {
 					final ST_Agedge_s edge = createEdge(gnode, parent);
-					if (edge != null) {
+					if (edge != null)
 						edges.add(edge);
-					}
+
 				}
 			}
 

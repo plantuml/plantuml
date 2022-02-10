@@ -37,10 +37,10 @@ package net.sourceforge.plantuml.ditaa;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.command.PSystemBasicFactory;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
-import net.sourceforge.plantuml.definition.PSystemDefinition;
 
 public class PSystemDitaaFactory extends PSystemBasicFactory<PSystemDitaa> {
 
@@ -56,15 +56,15 @@ public class PSystemDitaaFactory extends PSystemBasicFactory<PSystemDitaa> {
 	}
 
 	@Override
-	public PSystemDitaa initDiagram(UmlSource source, String startLine) {
+	public PSystemDitaa initDiagram(ThemeStyle style, UmlSource source, String startLine) {
 		boolean performSeparationOfCommonEdges = true;
-		if (startLine != null && (startLine.contains("-E") || startLine.contains("--no-separation"))) {
+		if (startLine != null && (startLine.contains("-E") || startLine.contains("--no-separation")))
 			performSeparationOfCommonEdges = false;
-		}
+
 		boolean dropShadows = true;
-		if (startLine != null && (startLine.contains("-S") || startLine.contains("--no-shadows"))) {
+		if (startLine != null && (startLine.contains("-S") || startLine.contains("--no-shadows")))
 			dropShadows = false;
-		}
+
 		final float scale = extractScale(startLine);
 		if (getDiagramType() == DiagramType.UML) {
 			return null;
@@ -76,29 +76,29 @@ public class PSystemDitaaFactory extends PSystemBasicFactory<PSystemDitaa> {
 	}
 
 	@Override
-	public PSystemDitaa executeLine(UmlSource source, PSystemDitaa system, String line) {
+	public PSystemDitaa executeLine(ThemeStyle style, UmlSource source, PSystemDitaa system, String line) {
 		if (system == null && (line.equals("ditaa") || line.startsWith("ditaa("))) {
 			boolean performSeparationOfCommonEdges = true;
-			if (line.contains("-E") || line.contains("--no-separation")) {
+			if (line.contains("-E") || line.contains("--no-separation"))
 				performSeparationOfCommonEdges = false;
-			}
+
 			boolean dropShadows = true;
-			if (line.contains("-S") || line.contains("--no-shadows")) {
+			if (line.contains("-S") || line.contains("--no-shadows"))
 				dropShadows = false;
-			}
+
 			final float scale = extractScale(line);
 			return new PSystemDitaa(source, "", performSeparationOfCommonEdges, dropShadows, scale);
 		}
-		if (system == null) {
+		if (system == null)
 			return null;
-		}
+
 		return system.add(line);
 	}
 
 	private float extractScale(String line) {
-		if (line == null) {
+		if (line == null)
 			return 1;
-		}
+
 		final Pattern p = Pattern.compile("scale=([\\d.]+)");
 		final Matcher m = p.matcher(line);
 		if (m.find()) {

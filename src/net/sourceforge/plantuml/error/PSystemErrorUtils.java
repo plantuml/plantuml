@@ -54,41 +54,39 @@ public class PSystemErrorUtils {
 	}
 
 	public static PSystemError merge(Collection<PSystemError> ps) {
-		if (ps.size() == 0) {
+		if (ps.size() == 0)
 			throw new IllegalStateException();
-		}
+
 		UmlSource source = null;
 		final List<ErrorUml> errors = new ArrayList<>();
 		// final List<String> debugs = new ArrayList<>();
 		final List<PSystemErrorV2> errorsV2 = new ArrayList<>();
 		for (PSystemError system : ps) {
-			if (system == null) {
+			if (system == null)
 				continue;
-			}
-			if (system.getSource() != null && source == null) {
+
+			if (system.getSource() != null && source == null)
 				source = system.getSource();
-			}
+
 			errors.addAll(system.getErrorsUml());
-			if (system instanceof PSystemErrorV2) {
+			if (system instanceof PSystemErrorV2)
 				errorsV2.add((PSystemErrorV2) system);
-			}
 		}
-		if (source == null) {
+		if (source == null)
 			throw new IllegalStateException();
-		}
-		if (errorsV2.size() > 0) {
+
+		if (errorsV2.size() > 0)
 			return mergeV2(errorsV2);
-		}
+
 		throw new IllegalStateException();
 	}
 
 	private static PSystemErrorV2 mergeV2(List<PSystemErrorV2> errorsV2) {
 		PSystemErrorV2 result = null;
-		for (PSystemErrorV2 err : errorsV2) {
-			if (result == null || result.score() < err.score()) {
+		for (PSystemErrorV2 err : errorsV2)
+			if (result == null || result.score() < err.score())
 				result = err;
-			}
-		}
+
 		return result;
 	}
 

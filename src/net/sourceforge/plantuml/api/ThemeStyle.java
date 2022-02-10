@@ -33,10 +33,10 @@
  *
  *
  */
-package net.sourceforge.plantuml;
+package net.sourceforge.plantuml.api;
 
 public enum ThemeStyle {
 
-	DARK, LIGHT
+	LIGHT_REGULAR, DARK
 
 }

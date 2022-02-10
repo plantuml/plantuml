@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.activitydiagram.command.CommandIf;
 import net.sourceforge.plantuml.activitydiagram.command.CommandLinkActivity;
 import net.sourceforge.plantuml.activitydiagram.command.CommandLinkLongActivity;
 import net.sourceforge.plantuml.activitydiagram.command.CommandPartition;
+import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.classdiagram.command.CommandHideShow2;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandFootboxIgnored;
@@ -59,8 +60,8 @@ import net.sourceforge.plantuml.core.UmlSource;
 public class ActivityDiagramFactory extends PSystemCommandFactory {
 
 	@Override
-	public ActivityDiagram createEmptyDiagram(UmlSource source, ISkinSimple skinParam) {
-		return new ActivityDiagram(source, skinParam);
+	public ActivityDiagram createEmptyDiagram(ThemeStyle style, UmlSource source, ISkinSimple skinParam) {
+		return new ActivityDiagram(style, source, skinParam);
 	}
 
 	@Override

@@ -5,7 +5,7 @@ public class A0002_TestResult {
 /*
 """
 DPI: 96
-dimension: [ 763.0498 ; 895.5000 ]
+dimension: [ 763.0498 ; 890.5000 ]
 scaleFactor: 1.0000
 seed: -9181376250803721714
 svgLinkTarget: _top
@@ -18,9 +18,9 @@ ELLIPSE:
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.0
-  shadow: 3
-  color: NULL_COLOR
-  backcolor: ff000000
+  shadow: 0
+  color: ff222222
+  backcolor: ff222222
 
 EMPTY:
   pt1: [ 20.0000 ; 220.0000 ]
@@ -40,9 +40,9 @@ PATH:
    - type: SEG_LINETO
      pt1: [ 0.0000 ; 0.0000 ]
   stroke: 0.0-0.0-1.0
-  shadow: 3
-  color: ffa80036
-  backcolor: fffbfb77
+  shadow: 0
+  color: ff181818
+  backcolor: ffebebeb
 
 PATH:
    - type: SEG_MOVETO
@@ -55,8 +55,8 @@ PATH:
      pt1: [ 93.4243 ; 0.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
-  color: ffa80036
-  backcolor: fffbfb77
+  color: ff181818
+  backcolor: ffebebeb
 
 TEXT:
   text: This 
@@ -100,9 +100,9 @@ PATH:
    - type: SEG_LINETO
      pt1: [ 0.0000 ; 0.0000 ]
   stroke: 0.0-0.0-1.0
-  shadow: 3
-  color: ffa80036
-  backcolor: fffbfb77
+  shadow: 0
+  color: ff181818
+  backcolor: ffebebeb
 
 PATH:
    - type: SEG_MOVETO
@@ -115,8 +115,8 @@ PATH:
      pt1: [ 193.3768 ; 0.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
-  color: ffa80036
-  backcolor: fffbfb77
+  color: ff181818
+  backcolor: ffebebeb
 
 TEXT:
   text: A Long
@@ -307,14 +307,14 @@ LINE:
   pt2: [ 431.7562 ; 358.5000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
-  color: ffa80036
+  color: ff181818
 
 LINE:
   pt1: [ 228.3794 ; 360.5000 ]
   pt2: [ 431.7562 ; 360.5000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
-  color: ffa80036
+  color: ff181818
 
 ELLIPSE:
   pt1: [ 237.3794 ; 366.5000 ]
@@ -388,9 +388,9 @@ RECTANGLE:
   xCorner: 25
   yCorner: 25
   stroke: 0.0-0.0-1.5
-  shadow: 3
-  color: ffa80036
-  backcolor: fffefece
+  shadow: 0
+  color: ff181818
+  backcolor: fff8f8f8
 
 TEXT:
   text: foo1
@@ -449,9 +449,9 @@ PATH:
      sweepFlag: false
      dest: [ 0.0000 ; 0.0000 ]
   stroke: 0.0-0.0-1.0
-  shadow: 3
-  color: ffa80036
-  backcolor: fffbfb77
+  shadow: 0
+  color: ff181818
+  backcolor: ffebebeb
 
 PATH:
    - type: SEG_MOVETO
@@ -464,8 +464,8 @@ PATH:
      pt1: [ 175.8127 ; 0.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
-  color: ffa80036
-  backcolor: fffbfb77
+  color: ff181818
+  backcolor: ffebebeb
 
 TEXT:
   text:  KO for 
@@ -672,14 +672,14 @@ LINE:
   pt2: [ 733.5219 ; 762.5000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
-  color: ffa80036
+  color: ff181818
 
 LINE:
   pt1: [ 547.7092 ; 764.5000 ]
   pt2: [ 733.5219 ; 764.5000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
-  color: ffa80036
+  color: ff181818
 
 ELLIPSE:
   pt1: [ 556.7092 ; 770.5000 ]
@@ -745,9 +745,9 @@ RECTANGLE:
   xCorner: 25
   yCorner: 25
   stroke: 0.0-0.0-1.5
-  shadow: 3
-  color: ffa80036
-  backcolor: fffefece
+  shadow: 0
+  color: ff181818
+  backcolor: fff8f8f8
 
 TEXT:
   text: foo2
@@ -763,9 +763,9 @@ ELLIPSE:
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.0
-  shadow: 3
-  color: ff000000
-  backcolor: ffffffff
+  shadow: 0
+  color: ff222222
+  backcolor: 0
 
 ELLIPSE:
   pt1: [ 484.2327 ; 862.5000 ]
@@ -774,8 +774,8 @@ ELLIPSE:
   extend: 0.0
   stroke: 0.0-0.0-1.0
   shadow: 0
-  color: middle(ff000000 & ff000000 )
-  backcolor: ff000000
+  color: middle(ff222222 & ff222222 )
+  backcolor: ff222222
 
 EMPTY:
   pt1: [ 441.7562 ; 12.5000 ]
@@ -804,7 +804,7 @@ LINE:
   pt2: [ 180.9019 ; 238.5000 ]
   stroke: 0.0-0.0-1.5
   shadow: 0
-  color: ffa80036
+  color: ff181818
 
 POLYGON:
   points:
@@ -814,15 +814,15 @@ POLYGON:
    - [ 180.9019 ; 232.5000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
-  color: ffa80036
-  backcolor: ffa80036
+  color: ff181818
+  backcolor: ff181818
 
 LINE:
   pt1: [ 490.2327 ; 661.5000 ]
   pt2: [ 490.2327 ; 857.5000 ]
   stroke: 0.0-0.0-1.5
   shadow: 0
-  color: ffa80036
+  color: ff181818
 
 POLYGON:
   points:
@@ -832,29 +832,29 @@ POLYGON:
    - [ 490.2327 ; 851.5000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
-  color: ffa80036
-  backcolor: ffa80036
+  color: ff181818
+  backcolor: ff181818
 
 LINE:
   pt1: [ 180.9019 ; 270.5000 ]
   pt2: [ 180.9019 ; 448.5000 ]
   stroke: 0.0-0.0-1.5
   shadow: 0
-  color: ffa80036
+  color: ff181818
 
 LINE:
   pt1: [ 180.9019 ; 448.5000 ]
   pt2: [ 490.2327 ; 448.5000 ]
   stroke: 0.0-0.0-1.5
   shadow: 0
-  color: ffa80036
+  color: ff181818
 
 LINE:
   pt1: [ 490.2327 ; 448.5000 ]
   pt2: [ 490.2327 ; 629.5000 ]
   stroke: 0.0-0.0-1.5
   shadow: 0
-  color: ffa80036
+  color: ff181818
 
 POLYGON:
   points:
@@ -864,8 +864,8 @@ POLYGON:
    - [ 490.2327 ; 623.5000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
-  color: ffa80036
-  backcolor: ffa80036
+  color: ff181818
+  backcolor: ff181818
 
 TEXT:
   text: Actor 1

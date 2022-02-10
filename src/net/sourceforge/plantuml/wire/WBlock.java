@@ -78,9 +78,9 @@ public class WBlock {
 	private final List<WPrint> prints = new ArrayList<>();
 
 	public UTranslate getAbsolutePosition(String supx, String supy) {
-		if (parent == null) {
+		if (parent == null)
 			return position;
-		}
+
 		final UTranslate p = parent.getAbsolutePosition("0", "0");
 
 		final double x = position.getDx() + p.getDx() + parseWidth(supx);
@@ -133,23 +133,22 @@ public class WBlock {
 	}
 
 	private WBlock getChildByName(String name) {
-		for (WBlock child : children) {
-			if (name.equals(child.getName())) {
+		for (WBlock child : children)
+			if (name.equals(child.getName()))
 				return child;
-			}
-		}
+
 		return null;
 	}
 
 	public WBlock getBlock(String name) {
 		final int x = name.indexOf('.');
-		if (x == -1) {
+		if (x == -1)
 			return getChildByName(name);
-		}
+
 		final WBlock first = getChildByName(name.substring(0, x));
-		if (first == null) {
+		if (first == null)
 			return null;
-		}
+
 		return first.getBlock(name.substring(x + 1));
 	}
 
@@ -227,24 +226,28 @@ public class WBlock {
 	}
 
 	private WBlock getLastChild() {
-		if (children.size() == 0) {
+		if (children.size() == 0)
 			return null;
-		}
+
 		return children.get(children.size() - 1);
 	}
 
 	public void drawMe(UGraphic ug) {
 		drawBox(ug);
 		final UFont font = UFont.sansSerif(12);
-		final FontConfiguration fc = new FontConfiguration(font, HColorUtils.BLACK, HColorUtils.BLACK, false);
+		final FontConfiguration fc = new FontConfiguration(font, getBlack(), getBlack(), false);
 		final Display display = Display.create(name.replace('_', ' '));
 		final TextBlock text = display.create(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 		text.drawU(ug.apply(UTranslate.dx(5)));
 
 	}
 
+	private HColor getBlack() {
+		return HColorUtils.BLACK.withDark(HColorUtils.WHITE);
+	}
+
 	private void drawBox(UGraphic ug) {
-		ug = ug.apply(HColorUtils.BLACK);
+		ug = ug.apply(getBlack());
 		if (name.length() > 0) {
 			final URectangle rect = new URectangle(getMaxDimension());
 			UGraphic ugRect = ug;

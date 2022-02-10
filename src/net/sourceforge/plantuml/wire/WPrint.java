@@ -59,7 +59,11 @@ public class WPrint {
 		this.position = position;
 		this.skinParam = skinParam;
 		this.label = label;
-		this.color = color == null ? HColorUtils.BLACK : color;
+		this.color = color == null ? getBlack() : color;
+	}
+
+	private HColor getBlack() {
+		return HColorUtils.BLACK.withDark(HColorUtils.WHITE);
 	}
 
 	private TextBlock getTextBlock() {

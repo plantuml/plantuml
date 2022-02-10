@@ -57,18 +57,23 @@ public class FtileCircleStart extends AbstractFtile {
 
 	private static final int SIZE = 20;
 
-	private final HColor backColor;
+	private HColor backColor;
+	private HColor borderColor;
 	private final Swimlane swimlane;
 	private double shadowing;
 
 	public FtileCircleStart(ISkinParam skinParam, HColor backColor, Swimlane swimlane, Style style) {
 		super(skinParam);
-		this.backColor = backColor;
 		this.swimlane = swimlane;
-		if (UseStyle.useBetaStyle())
+		this.backColor = backColor;
+		this.borderColor = new HColorNone();
+		if (UseStyle.useBetaStyle()) {
 			this.shadowing = style.value(PName.Shadowing).asDouble();
-		else if (skinParam().shadowing(null))
+			this.backColor = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(), getIHtmlColorSet());
+			this.borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), getIHtmlColorSet());
+		} else if (skinParam().shadowing(null)) {
 			this.shadowing = 3;
+		}
 	}
 
 	@Override
@@ -77,9 +82,9 @@ public class FtileCircleStart extends AbstractFtile {
 	}
 
 	public Set<Swimlane> getSwimlanes() {
-		if (swimlane == null) {
+		if (swimlane == null)
 			return Collections.emptySet();
-		}
+
 		return Collections.singleton(swimlane);
 	}
 
@@ -94,7 +99,7 @@ public class FtileCircleStart extends AbstractFtile {
 	public void drawU(UGraphic ug) {
 		final UEllipse circle = new UEllipse(SIZE, SIZE);
 		circle.setDeltaShadow(shadowing);
-		ug.apply(new HColorNone()).apply(backColor.bg()).draw(circle);
+		ug.apply(borderColor).apply(backColor.bg()).draw(circle);
 	}
 
 	@Override

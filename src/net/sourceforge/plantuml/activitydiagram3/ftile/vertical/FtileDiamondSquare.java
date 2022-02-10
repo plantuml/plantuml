@@ -88,7 +88,8 @@ public class FtileDiamondSquare extends FtileDiamondWIP {
 		final Dimension2D dimLabel = label.calculateDimension(stringBounder);
 		final Dimension2D dimTotal = calculateDimensionInternal(stringBounder);
 		ug = ug.apply(borderColor).apply(getThickness()).apply(backColor.bg());
-		ug.draw(Hexagon.asPolygonSquare(skinParam().shadowing(null), dimTotal.getWidth(), dimTotal.getHeight()));
+
+		ug.draw(Hexagon.asPolygonSquare(shadowing, dimTotal.getWidth(), dimTotal.getHeight()));
 
 		// Fix why north and south are the same
 		north.drawU(ug.apply(new UTranslate(4 + dimTotal.getWidth() / 2, dimTotal.getHeight())));
@@ -114,9 +115,9 @@ public class FtileDiamondSquare extends FtileDiamondWIP {
 
 	private Dimension2D calculateDimensionInternal(StringBounder stringBounder) {
 		final Dimension2D dimLabel = label.calculateDimension(stringBounder);
-		if (dimLabel.getWidth() == 0 || dimLabel.getHeight() == 0) {
+		if (dimLabel.getWidth() == 0 || dimLabel.getHeight() == 0)
 			return new Dimension2DDouble(Hexagon.hexagonHalfSize * 2, Hexagon.hexagonHalfSize * 2);
-		}
+
 		Dimension2D result = dimLabel;
 		result = Dimension2DDouble.delta(result, Hexagon.hexagonHalfSize * 2, Hexagon.hexagonHalfSize * 2);
 		return result;

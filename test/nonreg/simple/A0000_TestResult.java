@@ -5,7 +5,7 @@ public class A0000_TestResult {
 /*
 """
 DPI: 96
-dimension: [ 193.5185 ; 125.0000 ]
+dimension: [ 185.5185 ; 113.0000 ]
 scaleFactor: 1.0000
 seed: 5605069588648637213
 svgLinkTarget: _top
@@ -13,18 +13,18 @@ hoverPathColorRGB: null
 preserveAspectRatio: none
 
 LINE:
-  pt1: [ 50.0000 ; 38.0000 ]
-  pt2: [ 50.0000 ; 85.0000 ]
+  pt1: [ 48.0000 ; 34.0000 ]
+  pt2: [ 48.0000 ; 81.0000 ]
   stroke: 5.0-5.0-1.0
   shadow: 0
-  color: ffa80036
+  color: ff181818
 
 LINE:
-  pt1: [ 156.8135 ; 38.0000 ]
-  pt2: [ 156.8135 ; 85.0000 ]
+  pt1: [ 154.8135 ; 34.0000 ]
+  pt2: [ 154.8135 ; 81.0000 ]
   stroke: 5.0-5.0-1.0
   shadow: 0
-  color: ffa80036
+  color: ff181818
 
 RECTANGLE:
   pt1: [ 5.0000 ; 5.0000 ]
@@ -32,9 +32,9 @@ RECTANGLE:
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-1.5
-  shadow: 4
-  color: ffa80036
-  backcolor: fffefece
+  shadow: 0
+  color: ff181818
+  backcolor: fff8f8f8
 
 TEXT:
   text: Alice
@@ -45,18 +45,18 @@ TEXT:
   extendedColor: NULL_COLOR
 
 RECTANGLE:
-  pt1: [ 5.0000 ; 84.0000 ]
-  pt2: [ 92.9573 ; 112.0000 ]
+  pt1: [ 5.0000 ; 80.0000 ]
+  pt2: [ 92.9573 ; 108.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-1.5
-  shadow: 4
-  color: ffa80036
-  backcolor: fffefece
+  shadow: 0
+  color: ff181818
+  backcolor: fff8f8f8
 
 TEXT:
   text: Alice
-  position: [ 12.0000 ; 101.8889 ]
+  position: [ 12.0000 ; 97.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
@@ -68,9 +68,9 @@ RECTANGLE:
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-1.5
-  shadow: 4
-  color: ffa80036
-  backcolor: fffefece
+  shadow: 0
+  color: ff181818
+  backcolor: fff8f8f8
 
 TEXT:
   text: Bob
@@ -81,18 +81,18 @@ TEXT:
   extendedColor: NULL_COLOR
 
 RECTANGLE:
-  pt1: [ 130.8135 ; 84.0000 ]
-  pt2: [ 180.5185 ; 112.0000 ]
+  pt1: [ 130.8135 ; 80.0000 ]
+  pt2: [ 180.5185 ; 108.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-1.5
-  shadow: 4
-  color: ffa80036
-  backcolor: fffefece
+  shadow: 0
+  color: ff181818
+  backcolor: fff8f8f8
 
 TEXT:
   text: Bob
-  position: [ 137.8135 ; 101.8889 ]
+  position: [ 137.8135 ; 97.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
@@ -100,25 +100,25 @@ TEXT:
 
 POLYGON:
   points:
-   - [ 145.6660 ; 63.0000 ]
-   - [ 155.6660 ; 67.0000 ]
-   - [ 145.6660 ; 71.0000 ]
-   - [ 149.6660 ; 67.0000 ]
+   - [ 143.6660 ; 59.0000 ]
+   - [ 153.6660 ; 63.0000 ]
+   - [ 143.6660 ; 67.0000 ]
+   - [ 147.6660 ; 63.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
-  color: ffa80036
-  backcolor: ffa80036
+  color: ff181818
+  backcolor: ff181818
 
 LINE:
-  pt1: [ 50.9786 ; 67.0000 ]
-  pt2: [ 151.6660 ; 67.0000 ]
+  pt1: [ 48.9786 ; 63.0000 ]
+  pt2: [ 149.6660 ; 63.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
-  color: ffa80036
+  color: ff181818
 
 TEXT:
   text: Hello
-  position: [ 57.9786 ; 62.1111 ]
+  position: [ 55.9786 ; 58.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000

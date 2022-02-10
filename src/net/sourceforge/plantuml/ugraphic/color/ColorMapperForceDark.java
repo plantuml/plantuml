@@ -33,31 +33,32 @@
  * 
  *
  */
-package net.sourceforge.plantuml.math;
+package net.sourceforge.plantuml.ugraphic.color;
 
-import net.sourceforge.plantuml.api.ThemeStyle;
-import net.sourceforge.plantuml.command.PSystemBasicFactory;
-import net.sourceforge.plantuml.core.DiagramType;
-import net.sourceforge.plantuml.core.UmlSource;
+import java.awt.Color;
 
-public class PSystemLatexFactory extends PSystemBasicFactory<PSystemLatex> {
+public class ColorMapperForceDark extends AbstractColorMapper implements ColorMapper {
 
-	public PSystemLatexFactory(DiagramType type) {
-		super(type);
+	public Color toColor(HColor color) {
+		if (color == null) {
+			return null;
+		}
+		if (color instanceof HColorBackground) {
+			throw new UnsupportedOperationException();
+		}
+		if (color instanceof HColorGradient) {
+			return toColor(((HColorGradient) color).getColor1());
+		}
+		if (color instanceof HColorMiddle) {
+			return ((HColorMiddle) color).getMappedColor(this);
+		}
+		if (color instanceof HColorAutomatic) {
+			throw new IllegalStateException();
+		}
+		if (color instanceof HColorAutomaticLegacy) {
+			throw new IllegalStateException();
+		}
+		final HColor tmp = ((HColorSimple) color).darkSchemeTheme();
+		return ((HColorSimple) tmp).getColor999();
 	}
-
-	@Override
-	public PSystemLatex initDiagram(ThemeStyle style, UmlSource source, String startLine) {
-		if (getDiagramType() == DiagramType.LATEX)
-			return new PSystemLatex(source);
-
-		return null;
-	}
-
-	@Override
-	public PSystemLatex executeLine(ThemeStyle style, UmlSource source, PSystemLatex system, String line) {
-		system.doCommandLine(line);
-		return system;
-	}
-
 }

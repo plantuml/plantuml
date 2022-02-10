@@ -43,7 +43,6 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 
 public class ElementLine extends AbstractElement {
 
@@ -61,7 +60,7 @@ public class ElementLine extends AbstractElement {
 		if (zIndex != 0) {
 			return;
 		}
-		ug = ug.apply(HColorSet.instance().getColorOrWhite(getThemeStyle(), "#AAAAAA"));
+		ug = ug.apply(getColorAA());
 		double y2 = dimToUse.getHeight() / 2;
 		if (separator == '=') {
 			y2 = y2 - 1;

@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
+import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
@@ -65,14 +66,13 @@ public class Help extends UmlDiagram {
 		return new DiagramDescription("(Help)");
 	}
 
-	public Help(UmlSource source) {
-		super(source, UmlDiagramType.HELP);
+	public Help(ThemeStyle style, UmlSource source) {
+		super(style, source, UmlDiagramType.HELP);
 	}
 
 	@Override
 	public ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) throws IOException {
-		return super.createImageBuilder(fileFormatOption)
-				.annotations(false);
+		return super.createImageBuilder(fileFormatOption).annotations(false);
 	}
 
 	@Override
@@ -84,9 +84,7 @@ public class Help extends UmlDiagram {
 		final Sheet sheet = Parser.build(fontConfiguration, HorizontalAlignment.LEFT, getSkinParam(), CreoleMode.FULL)
 				.createSheet(display);
 		final SheetBlock1 sheetBlock = new SheetBlock1(sheet, LineBreakStrategy.NONE, 0);
-		return createImageBuilder(fileFormat)
-				.drawable(sheetBlock)
-				.write(os);
+		return createImageBuilder(fileFormat).drawable(sheetBlock).write(os);
 	}
 
 	public void add(CharSequence line) {

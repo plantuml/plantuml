@@ -172,12 +172,13 @@ public final class GeneralImageBuilder {
 		if ((leaf.getLeafType() == LeafType.PORT) || (leaf.getLeafType() == LeafType.PORTIN)
 				|| (leaf.getLeafType() == LeafType.PORTOUT)) {
 			final Cluster parent = bibliotekon.getCluster(leaf.getParentContainer());
-			return new EntityImagePort(leaf, skinParam, parent, bibliotekon);
+			return new EntityImagePort(leaf, skinParam, parent, bibliotekon, umlDiagramType.getStyleName());
 		}
 		if (leaf.getLeafType() == LeafType.STATE) {
 			if (leaf.getEntityPosition() != EntityPosition.NORMAL) {
 				final Cluster stateParent = bibliotekon.getCluster(leaf.getParentContainer());
-				return new EntityImageStateBorder(leaf, skinParam, stateParent, bibliotekon);
+				return new EntityImageStateBorder(leaf, skinParam, stateParent, bibliotekon,
+						umlDiagramType.getStyleName());
 			}
 			if (isHideEmptyDescriptionForState && leaf.getBodier().getRawBody().size() == 0) {
 				return new EntityImageStateEmptyDescription(leaf, skinParam);
@@ -207,7 +208,7 @@ public final class GeneralImageBuilder {
 			return new EntityImageBranch(leaf, skinParam);
 		}
 		if (leaf.getLeafType() == LeafType.LOLLIPOP_FULL || leaf.getLeafType() == LeafType.LOLLIPOP_HALF) {
-			return new EntityImageLollipopInterface(leaf, skinParam);
+			return new EntityImageLollipopInterface(leaf, skinParam, umlDiagramType.getStyleName());
 		}
 		if (leaf.getLeafType() == LeafType.CIRCLE) {
 			return new EntityImageDescription(leaf, skinParam, portionShower, links, umlDiagramType.getStyleName(),

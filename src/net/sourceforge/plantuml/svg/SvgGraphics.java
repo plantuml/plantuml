@@ -669,7 +669,7 @@ public class SvgGraphics {
 		final int maxXscaled = (int) (maxX * scale);
 		final int maxYscaled = (int) (maxY * scale);
 		String style = "width:" + maxXscaled + "px;height:" + maxYscaled + "px;";
-		if (backcolor != null)
+		if (this.classesForDarkness.size() == 0 && backcolor != null)
 			style += "background:" + backcolor + ";";
 
 		if (svgDimensionStyle) {
@@ -736,8 +736,8 @@ public class SvgGraphics {
 			final Element elt = (Element) document.createElement("path");
 			elt.setAttribute("d", sb.toString());
 			elt.setAttribute("style", getStyle());
-			manageDarkStroke(elt);
 			fillMe(elt);
+			manageDarkStroke(elt);
 			final String id = path.getComment();
 			if (id != null)
 				elt.setAttribute("id", id);
@@ -770,6 +770,9 @@ public class SvgGraphics {
 			return;
 
 		if (fill.equals(fillDark) == false) {
+			if (elt.getAttribute("class") != null && elt.getAttribute("class").length() != 0)
+				throw new IllegalStateException();
+
 			elt.setAttribute("class", getFillClassForDark());
 			return;
 		}

@@ -166,7 +166,9 @@ public class StyleLoader {
 				final PName key = PName.getFromName(mPropertyAndValue.group(1), scheme);
 				final String value = mPropertyAndValue.group(2);
 				if (key != null && maps.size() > 0)
-					maps.get(maps.size() - 1).put(key, new ValueImpl(value, counter));
+					maps.get(maps.size() - 1).put(key, //
+							scheme == StyleScheme.REGULAR ? //
+									ValueImpl.regular(value, counter) : ValueImpl.dark(value, counter));
 
 				continue;
 			}

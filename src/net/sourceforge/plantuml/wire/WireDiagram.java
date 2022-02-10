@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
+import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
@@ -70,17 +71,15 @@ public class WireDiagram extends UmlDiagram {
 		return new DiagramDescription("Wire Diagram");
 	}
 
-	public WireDiagram(UmlSource source) {
-		super(source, UmlDiagramType.WIRE);
+	public WireDiagram(ThemeStyle style, UmlSource source) {
+		super(style, source, UmlDiagramType.WIRE);
 	}
 
 	@Override
 	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
 
-		return createImageBuilder(fileFormatOption)
-				.drawable(getTextBlock())
-				.write(os);
+		return createImageBuilder(fileFormatOption).drawable(getTextBlock()).write(os);
 	}
 
 	private TextBlockBackcolored getTextBlock() {
@@ -112,15 +111,14 @@ public class WireDiagram extends UmlDiagram {
 
 	private void drawMe(UGraphic ug) {
 		root.drawMe(ug);
-		for (Spot spot : spots) {
+		for (Spot spot : spots)
 			spot.drawMe(ug);
-		}
-		for (WLinkHorizontal link : hlinks) {
+
+		for (WLinkHorizontal link : hlinks)
 			link.drawMe(ug);
-		}
-		for (WLinkVertical link : vlinks) {
+
+		for (WLinkVertical link : vlinks)
 			link.drawMe(ug);
-		}
 
 	}
 
@@ -136,9 +134,9 @@ public class WireDiagram extends UmlDiagram {
 
 	public CommandExecutionResult spot(String name, HColor color, String x, String y) {
 		final WBlock block = this.root.getBlock(name);
-		if (block == null) {
+		if (block == null)
 			return CommandExecutionResult.error("No such element " + name);
-		}
+
 		final Spot spot = new Spot(block, color, x, y);
 		this.spots.add(spot);
 		return CommandExecutionResult.ok();
@@ -169,13 +167,12 @@ public class WireDiagram extends UmlDiagram {
 	public CommandExecutionResult vlink(String name1, String x1, String y1, String name2, WLinkType type,
 			WArrowDirection direction, HColor color, Display label) {
 		final WBlock block1 = this.root.getBlock(name1);
-		if (block1 == null) {
+		if (block1 == null)
 			return CommandExecutionResult.error("No such element " + name1);
-		}
+
 		final WBlock block2 = this.root.getBlock(name2);
-		if (block2 == null) {
+		if (block2 == null)
 			return CommandExecutionResult.error("No such element " + name2);
-		}
 
 		final UTranslate start = block1.getNextOutVertical(x1, y1, type);
 		final double destination = block2.getAbsolutePosition("0", "0").getDy();
@@ -188,13 +185,12 @@ public class WireDiagram extends UmlDiagram {
 	public CommandExecutionResult hlink(String name1, String x1, String y1, String name2, WLinkType type,
 			WArrowDirection direction, HColor color, Display label) {
 		final WBlock block1 = this.root.getBlock(name1);
-		if (block1 == null) {
+		if (block1 == null)
 			return CommandExecutionResult.error("No such element " + name1);
-		}
+
 		final WBlock block2 = this.root.getBlock(name2);
-		if (block2 == null) {
+		if (block2 == null)
 			return CommandExecutionResult.error("No such element " + name2);
-		}
 
 		final UTranslate start = block1.getNextOutHorizontal(x1, y1, type);
 		final double destination = block2.getAbsolutePosition("0", "0").getDx();

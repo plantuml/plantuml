@@ -70,6 +70,7 @@ public class ElementMenuEntry extends AbstractElement {
 	}
 
 	public void drawU(UGraphic ug, int zIndex, Dimension2D dimToUse) {
+		ug = ug.apply(getBlack());
 		if (background != null) {
 			final Dimension2D dim = getPreferredDimension(ug.getStringBounder(), 0, 0);
 			ug.apply(background.bg()).draw(new URectangle(dim.getWidth(), dim.getHeight()));

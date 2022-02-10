@@ -45,7 +45,6 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 
 public class ElementButton extends AbstractElementText implements Element {
 
@@ -64,14 +63,14 @@ public class ElementButton extends AbstractElementText implements Element {
 	}
 
 	public void drawU(UGraphic ug, int zIndex, Dimension2D dimToUse) {
-		if (zIndex != 0) {
+		if (zIndex != 0)
 			return;
-		}
+
 		final Dimension2D dim = getPreferredDimension(ug.getStringBounder(), 0, 0);
 		ug = ug.apply(new UStroke(stroke));
-		ug = ug.apply(HColorSet.instance().getColorOrWhite(getThemeStyle(), "#EEEEEE").bg());
-		ug.apply(new UTranslate(stroke, stroke)).draw(
-				new URectangle(dim.getWidth() - 2 * stroke, dim.getHeight() - 2 * stroke).rounded(10));
+		ug = ug.apply(getColorEE().bg()).apply(getBlack());
+		ug.apply(new UTranslate(stroke, stroke))
+				.draw(new URectangle(dim.getWidth() - 2 * stroke, dim.getHeight() - 2 * stroke).rounded(10));
 		final Dimension2D dimPureText = getPureTextDimension(ug.getStringBounder());
 		drawText(ug, (dim.getWidth() - dimPureText.getWidth()) / 2, stroke + marginY);
 	}

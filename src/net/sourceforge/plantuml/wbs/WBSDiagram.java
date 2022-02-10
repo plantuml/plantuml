@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
+import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
@@ -68,8 +69,8 @@ public class WBSDiagram extends UmlDiagram {
 		return new DiagramDescription("Work Breakdown Structure");
 	}
 
-	public WBSDiagram(UmlSource source) {
-		super(source, UmlDiagramType.WBS);
+	public WBSDiagram(ThemeStyle style, UmlSource source) {
+		super(style, source, UmlDiagramType.WBS);
 	}
 
 	@Override

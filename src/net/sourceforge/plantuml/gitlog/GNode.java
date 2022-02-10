@@ -85,33 +85,33 @@ public class GNode {
 	}
 
 	public boolean canEatTheNextOne() {
-		if (up.size() != 1) {
+		if (up.size() != 1)
 			return false;
-		}
-		if (down.size() != 1) {
+
+		if (down.size() != 1)
 			return false;
-		}
+
 		final GNode next = down.get(0);
-		if (next.up.size() != 1) {
+		if (next.up.size() != 1)
 			return false;
-		}
-		if (next.down.size() != 1) {
+
+		if (next.down.size() != 1)
 			return false;
-		}
+
 		return true;
 	}
 
 	public GNode eatTheNextOne() {
-		if (canEatTheNextOne() == false) {
+		if (canEatTheNextOne() == false)
 			throw new IllegalStateException();
-		}
+
 		final GNode removed = down.get(0);
 		final GNode newNext = removed.down.get(0);
 		this.texts.addAll(removed.texts);
 		this.down.set(0, newNext);
-		if (newNext.up.remove(removed) == false) {
+		if (newNext.up.remove(removed) == false)
 			throw new IllegalStateException();
-		}
+
 		newNext.up.add(this);
 		return removed;
 	}

@@ -5,7 +5,7 @@ public class A0001_TestResult {
 /*
 """
 DPI: 96
-dimension: [ 304.7331 ; 297.0000 ]
+dimension: [ 296.7331 ; 285.0000 ]
 scaleFactor: 1.0000
 seed: -1212656935193060805
 svgLinkTarget: _top
@@ -13,28 +13,28 @@ hoverPathColorRGB: null
 preserveAspectRatio: none
 
 RECTANGLE:
-  pt1: [ 26.8525 ; 75.0000 ]
-  pt2: [ 36.8525 ; 113.0000 ]
+  pt1: [ 24.8525 ; 71.0000 ]
+  pt2: [ 34.8525 ; 109.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-1.0
-  shadow: 1
-  color: ffa80036
+  shadow: 0
+  color: ff181818
   backcolor: ffffffff
 
 LINE:
-  pt1: [ 31.0000 ; 38.0000 ]
-  pt2: [ 31.0000 ; 257.0000 ]
+  pt1: [ 29.0000 ; 34.0000 ]
+  pt2: [ 29.0000 ; 253.0000 ]
   stroke: 5.0-5.0-1.0
   shadow: 0
-  color: ffa80036
+  color: ff181818
 
 LINE:
-  pt1: [ 248.7758 ; 38.0000 ]
-  pt2: [ 248.7758 ; 257.0000 ]
+  pt1: [ 246.7758 ; 34.0000 ]
+  pt2: [ 246.7758 ; 253.0000 ]
   stroke: 5.0-5.0-1.0
   shadow: 0
-  color: ffa80036
+  color: ff181818
 
 RECTANGLE:
   pt1: [ 5.0000 ; 5.0000 ]
@@ -42,9 +42,9 @@ RECTANGLE:
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-1.5
-  shadow: 4
-  color: ffa80036
-  backcolor: fffefece
+  shadow: 0
+  color: ff181818
+  backcolor: fff8f8f8
 
 TEXT:
   text: Bob
@@ -55,18 +55,18 @@ TEXT:
   extendedColor: NULL_COLOR
 
 RECTANGLE:
-  pt1: [ 5.0000 ; 256.0000 ]
-  pt2: [ 54.7050 ; 284.0000 ]
+  pt1: [ 5.0000 ; 252.0000 ]
+  pt2: [ 54.7050 ; 280.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-1.5
-  shadow: 4
-  color: ffa80036
-  backcolor: fffefece
+  shadow: 0
+  color: ff181818
+  backcolor: fff8f8f8
 
 TEXT:
   text: Bob
-  position: [ 12.0000 ; 273.8889 ]
+  position: [ 12.0000 ; 269.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
@@ -78,9 +78,9 @@ RECTANGLE:
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-1.5
-  shadow: 4
-  color: ffa80036
-  backcolor: fffefece
+  shadow: 0
+  color: ff181818
+  backcolor: fff8f8f8
 
 TEXT:
   text: Alice
@@ -91,162 +91,162 @@ TEXT:
   extendedColor: NULL_COLOR
 
 RECTANGLE:
-  pt1: [ 203.7758 ; 256.0000 ]
-  pt2: [ 291.7331 ; 284.0000 ]
+  pt1: [ 203.7758 ; 252.0000 ]
+  pt2: [ 291.7331 ; 280.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-1.5
-  shadow: 4
-  color: ffa80036
-  backcolor: fffefece
+  shadow: 0
+  color: ff181818
+  backcolor: fff8f8f8
 
 TEXT:
   text: Alice
-  position: [ 210.7758 ; 273.8889 ]
+  position: [ 210.7758 ; 269.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 RECTANGLE:
-  pt1: [ 26.8525 ; 75.0000 ]
-  pt2: [ 36.8525 ; 113.0000 ]
+  pt1: [ 24.8525 ; 71.0000 ]
+  pt2: [ 34.8525 ; 109.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-1.0
-  shadow: 1
-  color: ffa80036
+  shadow: 0
+  color: ff181818
   backcolor: ffffffff
 
 LINE:
-  pt1: [ 31.8525 ; 62.0000 ]
-  pt2: [ 78.8525 ; 62.0000 ]
+  pt1: [ 29.8525 ; 58.0000 ]
+  pt2: [ 76.8525 ; 58.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
-  color: ffa80036
+  color: ff181818
 
 LINE:
-  pt1: [ 78.8525 ; 62.0000 ]
-  pt2: [ 78.8525 ; 75.0000 ]
+  pt1: [ 76.8525 ; 58.0000 ]
+  pt2: [ 76.8525 ; 71.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
-  color: ffa80036
+  color: ff181818
 
 LINE:
-  pt1: [ 37.8525 ; 75.0000 ]
-  pt2: [ 78.8525 ; 75.0000 ]
+  pt1: [ 35.8525 ; 71.0000 ]
+  pt2: [ 76.8525 ; 71.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
-  color: ffa80036
+  color: ff181818
 
 POLYGON:
   points:
-   - [ 47.8525 ; 71.0000 ]
-   - [ 37.8525 ; 75.0000 ]
-   - [ 47.8525 ; 79.0000 ]
-   - [ 43.8525 ; 75.0000 ]
+   - [ 45.8525 ; 67.0000 ]
+   - [ 35.8525 ; 71.0000 ]
+   - [ 45.8525 ; 75.0000 ]
+   - [ 41.8525 ; 71.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
-  color: ffa80036
-  backcolor: ffa80036
+  color: ff181818
+  backcolor: ff181818
 
 TEXT:
   text: hello1
-  position: [ 43.8525 ; 57.1111 ]
+  position: [ 41.8525 ; 53.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 36.8525 ; 107.0000 ]
-  pt2: [ 78.8525 ; 107.0000 ]
+  pt1: [ 34.8525 ; 103.0000 ]
+  pt2: [ 76.8525 ; 103.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
-  color: ffa80036
+  color: ff181818
 
 LINE:
-  pt1: [ 78.8525 ; 107.0000 ]
-  pt2: [ 78.8525 ; 120.0000 ]
+  pt1: [ 76.8525 ; 103.0000 ]
+  pt2: [ 76.8525 ; 116.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
-  color: ffa80036
+  color: ff181818
 
 LINE:
-  pt1: [ 37.8525 ; 120.0000 ]
-  pt2: [ 78.8525 ; 120.0000 ]
+  pt1: [ 35.8525 ; 116.0000 ]
+  pt2: [ 76.8525 ; 116.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
-  color: ffa80036
+  color: ff181818
 
 POLYGON:
   points:
-   - [ 47.8525 ; 116.0000 ]
-   - [ 37.8525 ; 120.0000 ]
-   - [ 47.8525 ; 124.0000 ]
-   - [ 43.8525 ; 120.0000 ]
+   - [ 45.8525 ; 112.0000 ]
+   - [ 35.8525 ; 116.0000 ]
+   - [ 45.8525 ; 120.0000 ]
+   - [ 41.8525 ; 116.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
-  color: ffa80036
-  backcolor: ffa80036
+  color: ff181818
+  backcolor: ff181818
 
 TEXT:
   text: hello2
-  position: [ 43.8525 ; 102.1111 ]
+  position: [ 41.8525 ; 98.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 22.8525 ; 111.0000 ]
-  pt2: [ 40.8525 ; 129.0000 ]
+  pt1: [ 20.8525 ; 107.0000 ]
+  pt2: [ 38.8525 ; 125.0000 ]
   stroke: 0.0-0.0-2.0
   shadow: 0
   color: ffa80036
 
 LINE:
-  pt1: [ 22.8525 ; 129.0000 ]
-  pt2: [ 40.8525 ; 111.0000 ]
+  pt1: [ 20.8525 ; 125.0000 ]
+  pt2: [ 38.8525 ; 107.0000 ]
   stroke: 0.0-0.0-2.0
   shadow: 0
   color: ffa80036
 
 LINE:
-  pt1: [ 31.8525 ; 173.0000 ]
-  pt2: [ 73.8525 ; 173.0000 ]
+  pt1: [ 29.8525 ; 169.0000 ]
+  pt2: [ 71.8525 ; 169.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
-  color: ffa80036
+  color: ff181818
 
 LINE:
-  pt1: [ 73.8525 ; 173.0000 ]
-  pt2: [ 73.8525 ; 186.0000 ]
+  pt1: [ 71.8525 ; 169.0000 ]
+  pt2: [ 71.8525 ; 182.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
-  color: ffa80036
+  color: ff181818
 
 LINE:
-  pt1: [ 32.8525 ; 186.0000 ]
-  pt2: [ 73.8525 ; 186.0000 ]
+  pt1: [ 30.8525 ; 182.0000 ]
+  pt2: [ 71.8525 ; 182.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
-  color: ffa80036
+  color: ff181818
 
 POLYGON:
   points:
-   - [ 42.8525 ; 182.0000 ]
-   - [ 32.8525 ; 186.0000 ]
-   - [ 42.8525 ; 190.0000 ]
-   - [ 38.8525 ; 186.0000 ]
+   - [ 40.8525 ; 178.0000 ]
+   - [ 30.8525 ; 182.0000 ]
+   - [ 40.8525 ; 186.0000 ]
+   - [ 36.8525 ; 182.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
-  color: ffa80036
-  backcolor: ffa80036
+  color: ff181818
+  backcolor: ff181818
 
 TEXT:
   text: this is an
-  position: [ 38.8525 ; 142.1111 ]
+  position: [ 36.8525 ; 138.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -254,7 +254,7 @@ TEXT:
 
 TEXT:
   text: example of long
-  position: [ 38.8525 ; 155.1111 ]
+  position: [ 36.8525 ; 151.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -262,7 +262,7 @@ TEXT:
 
 TEXT:
   text: message
-  position: [ 38.8525 ; 168.1111 ]
+  position: [ 36.8525 ; 164.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -270,25 +270,25 @@ TEXT:
 
 POLYGON:
   points:
-   - [ 237.7544 ; 235.0000 ]
-   - [ 247.7544 ; 239.0000 ]
-   - [ 237.7544 ; 243.0000 ]
-   - [ 241.7544 ; 239.0000 ]
+   - [ 235.7544 ; 231.0000 ]
+   - [ 245.7544 ; 235.0000 ]
+   - [ 235.7544 ; 239.0000 ]
+   - [ 239.7544 ; 235.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
-  color: ffa80036
-  backcolor: ffa80036
+  color: ff181818
+  backcolor: ff181818
 
 LINE:
-  pt1: [ 31.8525 ; 239.0000 ]
-  pt2: [ 243.7544 ; 239.0000 ]
+  pt1: [ 29.8525 ; 235.0000 ]
+  pt2: [ 241.7544 ; 235.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
-  color: ffa80036
+  color: ff181818
 
 TEXT:
   text: And this
-  position: [ 38.8525 ; 208.1111 ]
+  position: [ 36.8525 ; 204.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -296,7 +296,7 @@ TEXT:
 
 TEXT:
   text: is an other on
-  position: [ 38.8525 ; 221.1111 ]
+  position: [ 36.8525 ; 217.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -304,7 +304,7 @@ TEXT:
 
 TEXT:
   text: very long too
-  position: [ 38.8525 ; 234.1111 ]
+  position: [ 36.8525 ; 230.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000

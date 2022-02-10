@@ -38,6 +38,7 @@ import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineBreakStrategy;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.creole.Parser;
@@ -48,6 +49,8 @@ import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.svek.image.Opale;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -60,8 +63,11 @@ public class TimingNote {
 	private final Display note;
 	private final Position position;
 	private final ISkinParam skinParam;
+	private final Style style;
 
-	public TimingNote(TimeTick when, Player player, Display note, Position position, ISkinParam skinParam) {
+	public TimingNote(TimeTick when, Player player, Display note, Position position, ISkinParam skinParam,
+			Style style) {
+		this.style = style;
 		this.note = note;
 		this.player = player;
 		this.when = when;
@@ -70,25 +76,36 @@ public class TimingNote {
 	}
 
 	public void drawU(UGraphic ug) {
-		if (position == Position.BOTTOM) {
+		if (position == Position.BOTTOM)
 			ug = ug.apply(UTranslate.dy(getMarginY() / 2));
-		}
+
 		createOpale().drawU(ug);
 
 	}
 
 	private Opale createOpale() {
-		final FontConfiguration fc = new FontConfiguration(skinParam, FontParam.NOTE, null);
-		final Rose rose = new Rose();
 
-		final HColor noteBackgroundColor = rose.getHtmlColor(skinParam, ColorParam.noteBackground);
-		final HColor borderColor = rose.getHtmlColor(skinParam, ColorParam.noteBorder);
-
-		final Sheet sheet = Parser.build(fc, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT), skinParam, CreoleMode.FULL)
+		final double shadowing;
+		final FontConfiguration fc;
+		final HColor noteBackgroundColor;
+		final HColor borderColor;
+		if (UseStyle.useBetaStyle()) {
+			fc = new FontConfiguration(skinParam, style);
+			shadowing = style.value(PName.Shadowing).asDouble();
+			borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
+			noteBackgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
+					skinParam.getIHtmlColorSet());
+		} else {
+			shadowing = skinParam.shadowing(null) ? 4 : 0;
+			fc = new FontConfiguration(skinParam, FontParam.NOTE, null);
+			final Rose rose = new Rose();
+			noteBackgroundColor = rose.getHtmlColor(skinParam, ColorParam.noteBackground);
+			borderColor = rose.getHtmlColor(skinParam, ColorParam.noteBorder);
+		}
+		final Sheet sheet = Parser
+				.build(fc, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT), skinParam, CreoleMode.FULL)
 				.createSheet(note);
 		final SheetBlock1 sheet1 = new SheetBlock1(sheet, LineBreakStrategy.NONE, skinParam.getPadding());
-		final double shadowing;
-		shadowing = skinParam.shadowing(null) ? 4 : 0;
 		final Opale opale = new Opale(shadowing, borderColor, noteBackgroundColor, sheet1, false);
 		return opale;
 	}

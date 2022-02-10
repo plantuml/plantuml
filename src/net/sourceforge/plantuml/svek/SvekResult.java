@@ -76,11 +76,17 @@ public final class SvekResult extends AbstractTextBlock implements IEntityImage 
 
 	public void drawU(UGraphic ug) {
 
-		for (Cluster cluster : dotStringFactory.getBibliotekon().allCluster()) {
+		for (Cluster cluster : dotStringFactory.getBibliotekon().allCluster())
 			cluster.drawU(ug, new UStroke(1.5), dotData.getUmlDiagramType(), dotData.getSkinParam());
-		}
 
 		HColor color = rose.getHtmlColor(dotData.getSkinParam(), null, getArrowColorParam());
+		if (UseStyle.useBetaStyle()) {
+			final Style style = getDefaultStyleDefinition(null)
+					.getMergedStyle(dotData.getSkinParam().getCurrentStyleBuilder());
+			color = style.value(PName.LineColor).asColor(dotData.getSkinParam().getThemeStyle(),
+					dotData.getSkinParam().getIHtmlColorSet());
+		}
+
 		color = HColorUtils.noGradient(color);
 		UStroke stroke = null;
 
@@ -90,10 +96,9 @@ public final class SvekResult extends AbstractTextBlock implements IEntityImage 
 			final UGraphic ug2 = node.isHidden() ? ug.apply(UHidden.HIDDEN) : ug;
 			final IEntityImage image = node.getImage();
 			image.drawU(ug2.apply(new UTranslate(minX, minY)));
-			if (image instanceof Untranslated) {
+			if (image instanceof Untranslated)
 				((Untranslated) image).drawUntranslated(ug.apply(color), minX, minY);
-			}
-			// shape.getImage().drawNeighborhood(ug2, minX, minY);
+
 		}
 
 		final Set<String> ids = new HashSet<>();
@@ -116,26 +121,26 @@ public final class SvekResult extends AbstractTextBlock implements IEntityImage 
 	}
 
 	private ColorParam getArrowColorParam() {
-		if (dotData.getUmlDiagramType() == UmlDiagramType.CLASS) {
+		if (dotData.getUmlDiagramType() == UmlDiagramType.CLASS)
 			return ColorParam.arrow;
-		} else if (dotData.getUmlDiagramType() == UmlDiagramType.OBJECT) {
+		else if (dotData.getUmlDiagramType() == UmlDiagramType.OBJECT)
 			return ColorParam.arrow;
-		} else if (dotData.getUmlDiagramType() == UmlDiagramType.DESCRIPTION) {
+		else if (dotData.getUmlDiagramType() == UmlDiagramType.DESCRIPTION)
 			return ColorParam.arrow;
-		} else if (dotData.getUmlDiagramType() == UmlDiagramType.ACTIVITY) {
+		else if (dotData.getUmlDiagramType() == UmlDiagramType.ACTIVITY)
 			return ColorParam.arrow;
-		} else if (dotData.getUmlDiagramType() == UmlDiagramType.STATE) {
+		else if (dotData.getUmlDiagramType() == UmlDiagramType.STATE)
 			return ColorParam.arrow;
-		}
+
 		throw new IllegalStateException();
 	}
 
 	private StyleSignature getDefaultStyleDefinition(Stereotype stereotype) {
 		StyleSignature result = StyleSignature.of(SName.root, SName.element, dotData.getUmlDiagramType().getStyleName(),
 				SName.arrow);
-		if (stereotype != null) {
+		if (stereotype != null)
 			result = result.with(stereotype);
-		}
+
 		return result;
 	}
 

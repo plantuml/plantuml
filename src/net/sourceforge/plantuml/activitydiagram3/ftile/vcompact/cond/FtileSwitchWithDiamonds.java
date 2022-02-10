@@ -85,18 +85,18 @@ public class FtileSwitchWithDiamonds extends FtileSwitchNude {
 				- tiles.get(0).calculateDimension(stringBounder).getRight()
 				- tiles.get(tiles.size() - 1).calculateDimension(stringBounder).getLeft();
 		w9 = getW9(stringBounder);
-		if (w13 > w9) {
+		if (w13 > w9)
 			mode = Mode.BIG_DIAMOND;
-		} else {
+		else
 			mode = Mode.SMALL_DIAMOND;
-		}
+
 	}
 
 	private double getW9(StringBounder stringBounder) {
 		double result = 0;
-		for (int i = 1; i < tiles.size() - 1; i++) {
+		for (int i = 1; i < tiles.size() - 1; i++)
 			result += tiles.get(i).calculateDimension(stringBounder).getWidth();
-		}
+
 		return result;
 	}
 
@@ -144,17 +144,15 @@ public class FtileSwitchWithDiamonds extends FtileSwitchNude {
 		final StringBounder stringBounder = ug.getStringBounder();
 
 		ug.apply(getTranslateDiamond1(stringBounder)).draw(diamond1);
-		if (mode == Mode.BIG_DIAMOND) {
-			for (Ftile tile : tiles) {
+		if (mode == Mode.BIG_DIAMOND)
+			for (Ftile tile : tiles)
 				tile.drawU(ug.apply(getTranslateOf(tile, stringBounder)));
-			}
-		} else {
+		else
 			super.drawU(ug.apply(getTranslateMain(stringBounder)));
-		}
 
-		if (calculateDimension(stringBounder).hasPointOut()) {
+		if (calculateDimension(stringBounder).hasPointOut())
 			ug.apply(getTranslateDiamond2(stringBounder)).draw(diamond2);
-		}
+
 	}
 
 	final protected UTranslate getTranslateOf(Ftile tile, StringBounder stringBounder) {
@@ -163,11 +161,10 @@ public class FtileSwitchWithDiamonds extends FtileSwitchNude {
 			double dx = 0;
 			final double suppx = (w13 - w9) / (tiles.size() - 1);
 			for (int i = 0; i < tiles.size() - 1; i++) {
-				if (tile == tiles.get(i)) {
+				if (tile == tiles.get(i))
 					return main.compose(UTranslate.dx(dx));
-				}
-				dx += tiles.get(i).calculateDimension(stringBounder).getWidth() + suppx;
 
+				dx += tiles.get(i).calculateDimension(stringBounder).getWidth() + suppx;
 			}
 			if (tile == tiles.get(tiles.size() - 1)) {
 				final double dx9 = tiles.get(0).calculateDimension(stringBounder).getWidth() + w13 + SUPP15 + SUPP15;

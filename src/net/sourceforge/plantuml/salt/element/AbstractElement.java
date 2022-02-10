@@ -35,12 +35,51 @@
  */
 package net.sourceforge.plantuml.salt.element;
 
-import net.sourceforge.plantuml.ThemeStyle;
+import net.sourceforge.plantuml.graphic.FontConfiguration;
+import net.sourceforge.plantuml.ugraphic.UFont;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorSet;
+import net.sourceforge.plantuml.ugraphic.color.HColorSimple;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public abstract class AbstractElement implements Element {
 
-	final protected ThemeStyle getThemeStyle() {
-		return ThemeStyle.LIGHT;
+	final protected HColor getBlack() {
+		return HColorUtils.BLACK.withDark(HColorUtils.WHITE);
+	}
+
+	final protected HColor getColor88() {
+		return buildColor("#8", "#8");
+	}
+
+	final protected HColor getColorAA() {
+		return buildColor("#A", "#6");
+	}
+
+	final protected HColor getColorBB() {
+		return buildColor("#B", "#5");
+	}
+
+	final protected HColor getColorDD() {
+		return buildColor("#D", "#3");
+	}
+
+	final protected HColor getColorEE() {
+		return buildColor("#E", "#2");
+	}
+
+	final protected HColor getWhite() {
+		return HColorUtils.WHITE.withDark(HColorUtils.BLACK);
+	}
+
+	private HColor buildColor(String color1, String color2) {
+		final HColorSimple tmp1 = (HColorSimple) HColorSet.instance().getColorOrWhite(null, color1);
+		final HColor tmp2 = HColorSet.instance().getColorOrWhite(null, color2);
+		return tmp1.withDark(tmp2);
+	}
+
+	final protected FontConfiguration blackBlueTrue(UFont font) {
+		return FontConfiguration.blackBlueTrue(font);
 	}
 
 }

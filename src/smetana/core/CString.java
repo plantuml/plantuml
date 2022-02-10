@@ -60,7 +60,7 @@ public class CString extends UnsupportedC implements __ptr__ {
 	}
 
 	public CString(String string) {
-		this(new ArrayList<>(), 0);
+		this(null, 0);
 		for (int i = 0; i < string.length(); i++) {
 			data2.add(string.charAt(i));
 		}
@@ -85,18 +85,20 @@ public class CString extends UnsupportedC implements __ptr__ {
 
 	public static CString gmalloc(int nbytes) {
 		return new CString(nbytes);
-		}
-
+	}
 
 	public CString(int size) {
-		this(new ArrayList<>(), 0);
+		this(null, 0);
 		for (int i = 0; i < size; i++) {
 			data2.add('\0');
 		}
 	}
 
 	private CString(List<Character> data2, int currentStart) {
-		this.data2 = data2;
+		if (data2 == null)
+			this.data2 = new ArrayList<>();
+		else
+			this.data2 = data2;
 		this.currentStart = currentStart;
 		this.uid = UID;
 		UID += 2;
@@ -139,8 +141,6 @@ public class CString extends UnsupportedC implements __ptr__ {
 		}
 		return this.currentStart - this2.currentStart;
 	}
-
-
 
 	@Override
 	public String toString() {

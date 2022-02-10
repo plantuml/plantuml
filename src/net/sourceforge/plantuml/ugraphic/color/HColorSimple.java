@@ -55,7 +55,17 @@ public class HColorSimple extends HColorAbstract implements HColor {
 		if (isTransparent())
 			return "transparent";
 
-		return color.toString() + " alpha=" + color.getAlpha() + " monochrome=" + monochrome;
+		final boolean withDark = this != dark;
+
+		final StringBuilder sb = new StringBuilder();
+		if (withDark)
+			sb.append("WITHDARK ");
+		sb.append(color.toString());
+		sb.append(" \u03B1=");
+		sb.append(color.getAlpha());
+		if (monochrome)
+			sb.append("MONOCHROME");
+		return sb.toString();
 	}
 
 	@Override

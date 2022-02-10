@@ -43,7 +43,6 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import ext.plantuml.com.google.zxing.BarcodeFormat;
 import ext.plantuml.com.google.zxing.EncodeHintType;
-import ext.plantuml.com.google.zxing.WriterException;
 import ext.plantuml.com.google.zxing.client.j2se.MatrixToImageWriter;
 import ext.plantuml.com.google.zxing.common.BitMatrix;
 import ext.plantuml.com.google.zxing.qrcode.QRCodeWriter;
@@ -64,7 +63,7 @@ public class FlashCodeUtilsZxing implements FlashCodeUtils {
 				final int multiple = 1;
 				final BitMatrix bit = writer.encode(s, BarcodeFormat.QR_CODE, multiple, hints);
 				return MatrixToImageWriter.toBufferedImage(bit, fore.getRGB() | 0xFF000000, back.getRGB() | 0xFF000000);
-			} catch (WriterException e) {
+			} catch (Exception e) {
 				Log.debug("Cannot create qrcode " + e);
 			} finally {
 				lock.unlock();

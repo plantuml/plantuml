@@ -58,11 +58,10 @@ public class InGroupableList implements InGroupable {
 
 	public List<InGroupableList> getInnerList() {
 		final List<InGroupableList> result = new ArrayList<>();
-		for (InGroupable i : inGroupables) {
-			if (i instanceof InGroupableList) {
+		for (InGroupable i : inGroupables)
+			if (i instanceof InGroupableList)
 				result.add((InGroupableList) i);
-			}
-		}
+
 		return result;
 	}
 
@@ -101,23 +100,22 @@ public class InGroupableList implements InGroupable {
 	private InGroupable getMinSlow(StringBounder stringBounder) {
 		InGroupable result = null;
 		for (InGroupable in : inGroupables) {
-			if (in instanceof GroupingGraphicalElementElse) {
+			if (in instanceof GroupingGraphicalElementElse)
 				continue;
-			}
-			if (result == null || in.getMinX(stringBounder) < result.getMinX(stringBounder)) {
+
+			if (result == null || in.getMinX(stringBounder) < result.getMinX(stringBounder))
 				result = in;
-			}
+
 		}
 		return result;
 	}
 
 	private InGroupable getMaxSlow(StringBounder stringBounder) {
 		InGroupable result = null;
-		for (InGroupable in : inGroupables) {
-			if (result == null || in.getMaxX(stringBounder) > result.getMaxX(stringBounder)) {
+		for (InGroupable in : inGroupables)
+			if (result == null || in.getMaxX(stringBounder) > result.getMaxX(stringBounder))
 				result = in;
-			}
-		}
+
 		return result;
 	}
 
@@ -125,19 +123,20 @@ public class InGroupableList implements InGroupable {
 	private InGroupable cacheMax = null;
 
 	private InGroupable getMin(StringBounder stringBounder) {
-		if (cacheMin == null) {
+		if (cacheMin == null)
 			cacheMin = getMinSlow(stringBounder);
-		}
+
 		// Since // MODIF42 // the assert does not work...
-		// System.err.println("cacheMin1="+cacheMin+" cacheMin2="+getMinSlow(stringBounder));
-		assert cacheMin == getMinSlow(stringBounder);
+		// System.err.println("cacheMin1="+cacheMin+"
+		// cacheMin2="+getMinSlow(stringBounder));
+		// assert cacheMin == getMinSlow(stringBounder);
 		return cacheMin;
 	}
 
 	private InGroupable getMax(StringBounder stringBounder) {
-		if (cacheMax == null) {
+		if (cacheMax == null)
 			cacheMax = getMaxSlow(stringBounder);
-		}
+
 		assert cacheMax == getMaxSlow(stringBounder);
 		return cacheMax;
 	}
@@ -148,45 +147,42 @@ public class InGroupableList implements InGroupable {
 
 	public ParticipantBox getFirstParticipantBox() {
 		ParticipantBox first = null;
-		for (InGroupable in : inGroupables) {
+		for (InGroupable in : inGroupables)
 			if (in instanceof LivingParticipantBox) {
 				final ParticipantBox participantBox = ((LivingParticipantBox) in).getParticipantBox();
-				if (first == null || participantBox.getStartingX() < first.getStartingX()) {
+				if (first == null || participantBox.getStartingX() < first.getStartingX())
 					first = participantBox;
-				}
+
 			}
-		}
+
 		return first;
 	}
 
 	public ParticipantBox getLastParticipantBox() {
 		ParticipantBox last = null;
-		for (InGroupable in : inGroupables) {
+		for (InGroupable in : inGroupables)
 			if (in instanceof LivingParticipantBox) {
 				final ParticipantBox participantBox = ((LivingParticipantBox) in).getParticipantBox();
-				if (last == null || participantBox.getStartingX() > last.getStartingX()) {
+				if (last == null || participantBox.getStartingX() > last.getStartingX())
 					last = participantBox;
-				}
 			}
-		}
 		return last;
 	}
 
 	public double getMinX(StringBounder stringBounder) {
 		final InGroupable min = getMin(stringBounder);
-		if (min == null) {
+		if (min == null)
 			return MARGIN10 + MARGIN5 + (veryfirst == null ? 0 : veryfirst.getStartingX());
-			// return MARGIN10 + MARGIN5;
-		}
+
 		double m = min.getMinX(stringBounder);
-		if (min instanceof MessageExoArrow
-				&& (((MessageExoArrow) min).getType() == MessageExoType.FROM_LEFT || ((MessageExoArrow) min).getType() == MessageExoType.TO_LEFT)) {
+		if (min instanceof MessageExoArrow && (((MessageExoArrow) min).getType() == MessageExoType.FROM_LEFT
+				|| ((MessageExoArrow) min).getType() == MessageExoType.TO_LEFT))
 			m += 3;
-		} else if (min instanceof InGroupableList) {
+		else if (min instanceof InGroupableList)
 			m -= MARGIN10;
-		} else {
+		else
 			m -= MARGIN5;
-		}
+
 		return m;
 	}
 
@@ -194,26 +190,26 @@ public class InGroupableList implements InGroupable {
 		final double min = getMinX(stringBounder);
 		final double max = getMaxXInternal(stringBounder);
 		assert max - min >= 0;
-		if (max - min < minWidth) {
+		if (max - min < minWidth)
 			return min + minWidth + hack2;
-		}
+
 		return max + hack2;
 	}
 
 	private final double getMaxXInternal(StringBounder stringBounder) {
 		final InGroupable max = getMax(stringBounder);
-		if (max == null) {
+		if (max == null)
 			return MARGIN10 + MARGIN5 + minWidth;
-		}
+
 		double m = max.getMaxX(stringBounder);
-		if (max instanceof MessageExoArrow
-				&& (((MessageExoArrow) max).getType() == MessageExoType.FROM_RIGHT || ((MessageExoArrow) max).getType() == MessageExoType.TO_RIGHT)) {
+		if (max instanceof MessageExoArrow && (((MessageExoArrow) max).getType() == MessageExoType.FROM_RIGHT
+				|| ((MessageExoArrow) max).getType() == MessageExoType.TO_RIGHT))
 			m -= 3;
-		} else if (max instanceof InGroupableList) {
+		else if (max instanceof InGroupableList)
 			m += MARGIN10;
-		} else {
+		else
 			m += MARGIN5;
-		}
+
 		return m;
 	}
 

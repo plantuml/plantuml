@@ -97,9 +97,8 @@ public class CommandWLink extends SingleLineCommand2<WireDiagram> {
 
 		final String stringColor = arg.get("COLOR", 0);
 		HColor color = null;
-		if (stringColor != null) {
+		if (stringColor != null)
 			color = HColorSet.instance().getColor(diagram.getSkinParam().getThemeStyle(), stringColor);
-		}
 
 		final Display label;
 		if (arg.get("MESSAGE", 0) == null) {
@@ -109,9 +108,9 @@ public class CommandWLink extends SingleLineCommand2<WireDiagram> {
 			label = Display.getWithNewlines(message);
 		}
 
-		if (orientation == WOrientation.VERTICAL) {
+		if (orientation == WOrientation.VERTICAL)
 			return diagram.vlink(name1, x1, y1, name2, type, direction, color, label);
-		}
+
 		return diagram.hlink(name1, x1, y1, name2, type, direction, color, label);
 	}
 

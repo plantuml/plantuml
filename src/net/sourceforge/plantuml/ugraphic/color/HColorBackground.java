@@ -44,6 +44,11 @@ public class HColorBackground extends HColorAbstract implements HColor {
 		this.back = Objects.requireNonNull(back);
 	}
 
+	@Override
+	public String toString() {
+		return "BACK " + back;
+	}
+
 	public HColor getNull() {
 		return null;
 	}

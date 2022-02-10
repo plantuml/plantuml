@@ -66,14 +66,14 @@ public class EntityImageSynchroBar extends AbstractEntityImage {
 		// this.styleName = styleName;
 	}
 
-	private StyleSignature getDefaultStyleDefinitionBar() {
-		return StyleSignature.of(SName.root, SName.element, SName.activityBar);
+	private StyleSignature getStyleSignature() {
+		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.activityBar);
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		if (getSkinParam().getRankdir() == Rankdir.LEFT_TO_RIGHT) {
+		if (getSkinParam().getRankdir() == Rankdir.LEFT_TO_RIGHT)
 			return new Dimension2DDouble(8, 80);
-		}
+
 		return new Dimension2DDouble(80, 8);
 	}
 
@@ -81,16 +81,18 @@ public class EntityImageSynchroBar extends AbstractEntityImage {
 		final Dimension2D dim = calculateDimension(ug.getStringBounder());
 		final Shadowable rect = new URectangle(dim.getWidth(), dim.getHeight());
 		double shadowing = 0;
-		if (getSkinParam().shadowing(getEntity().getStereotype())) {
-			shadowing = 4;
-		}
+
 		HColor color = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.activityBar);
 		if (UseStyle.useBetaStyle()) {
-			final Style style = getDefaultStyleDefinitionBar().with(getEntity().getStereotype())
+			final Style style = getStyleSignature().with(getEntity().getStereotype())
 					.getMergedStyle(getSkinParam().getCurrentStyleBuilder());
 			color = style.value(PName.BackGroundColor).asColor(getSkinParam().getThemeStyle(),
 					getSkinParam().getIHtmlColorSet());
 			shadowing = style.value(PName.Shadowing).asDouble();
+		} else {
+			if (getSkinParam().shadowing(getEntity().getStereotype()))
+				shadowing = 4;
+
 		}
 		rect.setDeltaShadow(shadowing);
 		ug.apply(new HColorNone()).apply(color.bg()).draw(rect);

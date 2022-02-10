@@ -42,8 +42,8 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 public class HColorUtils {
 
-	public static final HColor BLACK;
-	public static final HColor WHITE;
+	public static final HColorSimple BLACK;
+	public static final HColorSimple WHITE;
 	public static final HColor RED_LIGHT;
 	public static final HColor RED_DARK;
 	public static final HColor RED;
@@ -81,8 +81,8 @@ public class HColorUtils {
 
 		final HColorSet set = HColorSet.instance();
 
-		BLACK = set.getColorOrWhite("black");
-		WHITE = set.getColorOrWhite("white");
+		BLACK = (HColorSimple) set.getColorOrWhite("black");
+		WHITE = (HColorSimple) set.getColorOrWhite("white");
 		RED_LIGHT = set.getColorOrWhite("#FEF6F3");
 		RED_DARK = set.getColorOrWhite("#CD0A0A");
 		RED = set.getColorOrWhite("#FF0000");

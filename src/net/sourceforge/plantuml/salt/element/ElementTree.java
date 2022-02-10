@@ -47,7 +47,6 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 
 public class ElementTree extends AbstractElement {
 
@@ -115,9 +114,10 @@ public class ElementTree extends AbstractElement {
 	}
 
 	public void drawU(UGraphic ug, int zIndex, Dimension2D dimToUse) {
-		if (zIndex != 0) {
+		if (zIndex != 0)
 			return;
-		}
+
+		ug = ug.apply(getBlack());
 
 		final StringBounder stringBounder = ug.getStringBounder();
 		final double w1 = getWidth1(stringBounder);
@@ -144,7 +144,7 @@ public class ElementTree extends AbstractElement {
 			yvar += h;
 			rows.add(yvar);
 		}
-		ug = ug.apply(HColorSet.instance().getColorOrWhite(getThemeStyle(), "#888888"));
+		ug = ug.apply(getColor88());
 		skeleton.draw(ug, 0, 0);
 		if (strategy != TableStrategy.DRAW_NONE) {
 			final Grid2 grid = new Grid2(rows, cols, strategy);

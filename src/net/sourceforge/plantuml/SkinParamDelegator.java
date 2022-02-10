@@ -38,6 +38,7 @@ package net.sourceforge.plantuml;
 import java.util.Collection;
 import java.util.Map;
 
+import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.cucadiagram.Rankdir;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.cucadiagram.dot.DotSplines;
@@ -455,10 +456,10 @@ public class SkinParamDelegator implements ISkinParam {
 		return skinParam.getlengthAdjust();
 	}
 
-	@Override
-	public void assumeTransparent(ThemeStyle style) {
-		skinParam.assumeTransparent(style);
-	}
+//	@Override
+//	public void assumeTransparent(ThemeStyle style) {
+//		skinParam.assumeTransparent(style);
+//	}
 
 	@Override
 	public ThemeStyle getThemeStyle() {

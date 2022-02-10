@@ -483,10 +483,14 @@ public class Cluster implements Moveable {
 				.getMergedStyle(skinParam.getCurrentStyleBuilder());
 
 		HColor stateBack = getBackColor(umlDiagramType, styleGroup);
-		if (stateBack == null)
+		if (UseStyle.useBetaStyle() == false && stateBack == null)
 			stateBack = getColorLegacy(skinParam2, ColorParam.stateBackground, group.getStereotype());
 
-		final HColor background = getColorLegacy(skinParam2, ColorParam.background, null);
+		final HColor background;
+		if (UseStyle.useBetaStyle() == false)
+			background = getColorLegacy(skinParam2, ColorParam.background, null);
+		else
+			background = stateBack;
 
 		// final Style style = getStyle(FontParam.STATE_ATTRIBUTE, skinParam2);
 
@@ -936,7 +940,7 @@ public class Cluster implements Moveable {
 						skinParam.getIHtmlColorSet());
 
 			if (backColor == null || backColor.equals(HColorUtils.transparent()))
-				backColor = new HColorBackground(skinParam.getBackgroundColor());
+				backColor = HColorUtils.transparent();
 
 			return backColor;
 		}

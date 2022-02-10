@@ -47,7 +47,6 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 
 public class ElementMenuPopup extends AbstractElement {
 
@@ -76,20 +75,21 @@ public class ElementMenuPopup extends AbstractElement {
 	}
 
 	public void drawU(UGraphic ug, int zIndex, Dimension2D dimToUse) {
-		if (zIndex != 1) {
+		if (zIndex != 1)
 			return;
-		}
-		ug.apply(HColorSet.instance().getColorOrWhite(getThemeStyle(), "#DDDDDD").bg()).draw(
-				new URectangle(dimToUse.getWidth(), dimToUse.getHeight()));
+
+		ug = ug.apply(getBlack());
+
+		ug.apply(getColorDD().bg()).draw(new URectangle(dimToUse.getWidth(), dimToUse.getHeight()));
 
 		double y1 = 0;
 		for (ElementMenuEntry entry : entries) {
 			final double h = entry.getPreferredDimension(ug.getStringBounder(), 0, y1).getHeight();
-			if (entry.getText().equals("-")) {
+			if (entry.getText().equals("-"))
 				ug.apply(UTranslate.dy(y1 + h / 2)).draw(ULine.hline(dimToUse.getWidth()));
-			} else {
+			else
 				entry.drawU(ug.apply(UTranslate.dy(y1)), zIndex, dimToUse);
-			}
+
 			y1 += h;
 		}
 	}

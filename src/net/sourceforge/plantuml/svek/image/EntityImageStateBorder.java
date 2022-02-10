@@ -42,9 +42,14 @@ import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SkinParamUtils;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.cucadiagram.EntityPosition;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.Cluster;
 import net.sourceforge.plantuml.svek.SvekNode;
@@ -55,15 +60,22 @@ import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class EntityImageStateBorder extends AbstractEntityImageBorder {
 
-	public EntityImageStateBorder(ILeaf leaf, ISkinParam skinParam, Cluster stateParent,
-			final Bibliotekon bibliotekon) {
+	private final SName sname;
+
+	public EntityImageStateBorder(ILeaf leaf, ISkinParam skinParam, Cluster stateParent, final Bibliotekon bibliotekon,
+			SName sname) {
 		super(leaf, skinParam, stateParent, bibliotekon, FontParam.STATE);
+		this.sname = sname;
+	}
+
+	private StyleSignature getSignature() {
+		return StyleSignature.of(SName.root, SName.element, sname);
 	}
 
 	private boolean upPosition() {
-		if (parent == null) {
+		if (parent == null)
 			return false;
-		}
+
 		final Point2D clusterCenter = parent.getClusterPosition().getPointCenter();
 		final SvekNode node = bibliotekon.getNode(getEntity());
 		return node.getMinY() < clusterCenter.getY();
@@ -73,22 +85,37 @@ public class EntityImageStateBorder extends AbstractEntityImageBorder {
 		double y = 0;
 		final Dimension2D dimDesc = desc.calculateDimension(ug.getStringBounder());
 		final double x = 0 - (dimDesc.getWidth() - 2 * EntityPosition.RADIUS) / 2;
-		if (upPosition()) {
+		if (upPosition())
 			y -= 2 * EntityPosition.RADIUS + dimDesc.getHeight();
-		} else {
+		else
 			y += 2 * EntityPosition.RADIUS;
-		}
+
 		desc.drawU(ug.apply(new UTranslate(x, y)));
 
-		ug = ug.apply(new UStroke(1.5))
-				.apply(SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.stateBorder));
 		HColor backcolor = getEntity().getColors().getColor(ColorType.BACK);
-		if (backcolor == null) {
-			backcolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.stateBackground);
+		final HColor borderColor;
+
+		if (UseStyle.useBetaStyle()) {
+			final Style style = getSignature().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+			borderColor = style.value(PName.LineColor).asColor(getSkinParam().getThemeStyle(),
+					getSkinParam().getIHtmlColorSet());
+			if (backcolor == null)
+				backcolor = style.value(PName.BackGroundColor).asColor(getSkinParam().getThemeStyle(),
+						getSkinParam().getIHtmlColorSet());
+		} else {
+			borderColor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.stateBorder);
+			if (backcolor == null)
+				backcolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.stateBackground);
 		}
+
+		ug = ug.apply(getUStroke()).apply(borderColor);
 		ug = ug.apply(backcolor.bg());
 
 		entityPosition.drawSymbol(ug, rankdir);
+	}
+
+	private UStroke getUStroke() {
+		return new UStroke(1.5);
 	}
 
 }

@@ -69,10 +69,8 @@ public class Reference extends AbstractEvent implements Event {
 	}
 
 	public Style[] getUsedStyles() {
-		return new Style[] {
-				style,
-				styleHeader == null ? styleHeader : styleHeader.eventuallyOverride(PName.BackGroundColor,
-						backColorElement) };
+		return new Style[] { style, styleHeader == null ? styleHeader
+				: styleHeader.eventuallyOverride(PName.BackGroundColor, backColorElement) };
 	}
 
 	public Reference(List<Participant> participants, Url url, Display strings, HColor backColorGeneral,
@@ -111,9 +109,8 @@ public class Reference extends AbstractEvent implements Event {
 		final StringBuilder sb = new StringBuilder();
 		for (final Iterator<Participant> it = participants.iterator(); it.hasNext();) {
 			sb.append(it.next().getCode());
-			if (it.hasNext()) {
+			if (it.hasNext())
 				sb.append("-");
-			}
 
 		}
 		return sb.toString();

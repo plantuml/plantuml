@@ -39,15 +39,15 @@ public enum WArrowDirection {
 	NORMAL, REVERSE, BOTH, NONE;
 
 	public static WArrowDirection from(String type) {
-		if (type.contains("<") && type.contains(">")) {
+		if (type.contains("<") && type.contains(">"))
 			return BOTH;
-		}
-		if (type.contains(">")) {
+
+		if (type.contains(">"))
 			return NORMAL;
-		}
-		if (type.contains("<")) {
+
+		if (type.contains("<"))
 			return REVERSE;
-		}
+
 		return NONE;
 	}
 

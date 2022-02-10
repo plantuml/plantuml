@@ -71,9 +71,9 @@ public class ElementTabBar extends AbstractElement {
 	}
 
 	public Dimension2D getPreferredDimension(StringBounder stringBounder, double x, double y) {
-		if (vertical) {
+		if (vertical)
 			return getPreferredDimensionVertical(stringBounder, x, y);
-		}
+
 		return getPreferredDimensionHorizontal(stringBounder, x, y);
 
 	}
@@ -90,14 +90,15 @@ public class ElementTabBar extends AbstractElement {
 	}
 
 	public void drawU(UGraphic ug, int zIndex, Dimension2D dimToUse) {
-		if (zIndex != 0) {
+		if (zIndex != 0)
 			return;
-		}
-		if (vertical) {
+		ug = ug.apply(getBlack());
+
+		if (vertical)
 			drawUVertical(ug, 0, 0, zIndex, dimToUse);
-		} else {
+		else
 			drawUHorizontal(ug, 0, 0, zIndex, dimToUse);
-		}
+
 	}
 
 	private void drawUHorizontal(UGraphic ug, final double x, final double y, int zIndex, Dimension2D dimToUse) {

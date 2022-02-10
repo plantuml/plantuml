@@ -39,6 +39,16 @@ import java.awt.geom.Point2D;
 import java.util.Collection;
 import java.util.List;
 
+import net.sourceforge.plantuml.ColorParam;
+import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.LineParam;
+import net.sourceforge.plantuml.UmlDiagramType;
+import net.sourceforge.plantuml.UseStyle;
+import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
+import net.sourceforge.plantuml.cucadiagram.Link;
+import net.sourceforge.plantuml.cucadiagram.LinkDecor;
+import net.sourceforge.plantuml.cucadiagram.LinkType;
+
 /*
  * You can choose between real "org.eclipse.elk..." classes or proxied "net.sourceforge.plantuml.elk.proxy..."
  * 
@@ -61,19 +71,14 @@ import net.sourceforge.plantuml.elk.proxy.graph.ElkBendPoint;
 import net.sourceforge.plantuml.elk.proxy.graph.ElkEdge;
 import net.sourceforge.plantuml.elk.proxy.graph.ElkEdgeSection;
 import net.sourceforge.plantuml.elk.proxy.graph.ElkLabel;
-
-import net.sourceforge.plantuml.ColorParam;
-import net.sourceforge.plantuml.LineParam;
-import net.sourceforge.plantuml.UmlDiagramType;
-import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
-import net.sourceforge.plantuml.cucadiagram.Link;
-import net.sourceforge.plantuml.cucadiagram.LinkDecor;
-import net.sourceforge.plantuml.cucadiagram.LinkType;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactory;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryExtends;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -109,43 +114,51 @@ public class ElkPath implements UDrawable {
 	}
 
 	private ColorParam getArrowColorParam() {
-		if (diagram.getUmlDiagramType() == UmlDiagramType.CLASS) {
+		if (diagram.getUmlDiagramType() == UmlDiagramType.CLASS)
 			return ColorParam.arrow;
-		} else if (diagram.getUmlDiagramType() == UmlDiagramType.OBJECT) {
+		else if (diagram.getUmlDiagramType() == UmlDiagramType.OBJECT)
 			return ColorParam.arrow;
-		} else if (diagram.getUmlDiagramType() == UmlDiagramType.DESCRIPTION) {
+		else if (diagram.getUmlDiagramType() == UmlDiagramType.DESCRIPTION)
 			return ColorParam.arrow;
-		} else if (diagram.getUmlDiagramType() == UmlDiagramType.ACTIVITY) {
+		else if (diagram.getUmlDiagramType() == UmlDiagramType.ACTIVITY)
 			return ColorParam.arrow;
-		} else if (diagram.getUmlDiagramType() == UmlDiagramType.STATE) {
+		else if (diagram.getUmlDiagramType() == UmlDiagramType.STATE)
 			return ColorParam.arrow;
-		}
+
 		throw new IllegalStateException();
+	}
+
+	private Style getStyle() {
+		final StyleSignature signature = StyleSignature.of(SName.root, SName.element, styleName, SName.arrow);
+		return signature.getMergedStyle(diagram.getCurrentStyleBuilder());
 	}
 
 	public void drawU(UGraphic ug) {
 
-		if (link.isHidden()) {
+		if (link.isHidden())
 			return;
-		}
 
-		HColor color = rose.getHtmlColor(diagram.getSkinParam(), null, getArrowColorParam());
+		HColor color;
+		final ISkinParam skinParam = diagram.getSkinParam();
+
+		if (UseStyle.useBetaStyle())
+			color = getStyle().value(PName.LineColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
+		else
+			color = rose.getHtmlColor(skinParam, null, getArrowColorParam());
 
 		if (this.link.getColors() != null) {
 			final HColor newColor = this.link.getColors().getColor(ColorType.ARROW, ColorType.LINE);
-			if (newColor != null) {
+			if (newColor != null)
 				color = newColor;
-			}
-
 		} else if (this.link.getSpecificColor() != null) {
 			color = this.link.getSpecificColor();
 		}
 
 		final LinkType linkType = link.getType();
-		UStroke stroke = linkType.getStroke3(diagram.getSkinParam().getThickness(LineParam.arrow, null));
-		if (link.getColors() != null && link.getColors().getSpecificLineStroke() != null) {
+		UStroke stroke = linkType.getStroke3(skinParam.getThickness(LineParam.arrow, null));
+		if (link.getColors() != null && link.getColors().getSpecificLineStroke() != null)
 			stroke = link.getColors().getSpecificLineStroke();
-		}
+
 		ug = ug.apply(stroke).apply(color);
 
 		final List<ElkEdgeSection> sections = edge.getSections();
@@ -195,15 +208,15 @@ public class ElkPath implements UDrawable {
 			final TextBlock labelLink;
 			// Nasty trick: we store the type of label (center/head/tail) in the text
 			final String type = label.getText();
-			if ("X".equals(type)) {
+			if ("X".equals(type))
 				labelLink = centerLabel;
-			} else if ("1".equals(type)) {
+			else if ("1".equals(type))
 				labelLink = tailLabel;
-			} else if ("2".equals(type)) {
+			else if ("2".equals(type))
 				labelLink = headLabel;
-			} else {
+			else
 				continue;
-			}
+
 			labelLink.drawU(ug.apply(new UTranslate(x, y)));
 		}
 	}

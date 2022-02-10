@@ -70,12 +70,12 @@ public class FtileSwitchNude extends FtileDimensionMemoize {
 
 	public Set<Swimlane> getSwimlanes() {
 		final Set<Swimlane> result = new HashSet<>();
-		if (getSwimlaneIn() != null) {
+		if (getSwimlaneIn() != null)
 			result.add(getSwimlaneIn());
-		}
-		for (Ftile tile : tiles) {
+
+		for (Ftile tile : tiles)
 			result.addAll(tile.getSwimlanes());
-		}
+
 		return Collections.unmodifiableSet(result);
 	}
 
@@ -89,9 +89,9 @@ public class FtileSwitchNude extends FtileDimensionMemoize {
 
 	@Override
 	public UTranslate getTranslateFor(Ftile child, StringBounder stringBounder) {
-		if (tiles.contains(child)) {
+		if (tiles.contains(child))
 			return getTranslateNude(child, stringBounder);
-		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -99,9 +99,9 @@ public class FtileSwitchNude extends FtileDimensionMemoize {
 		double x1 = 0;
 		for (Ftile candidate : tiles) {
 			final FtileGeometry dim1 = candidate.calculateDimension(stringBounder);
-			if (candidate == tile) {
+			if (candidate == tile)
 				return UTranslate.dx(x1);
-			}
+
 			x1 += dim1.getWidth() + xSeparation;
 		}
 		throw new IllegalArgumentException();
@@ -109,27 +109,27 @@ public class FtileSwitchNude extends FtileDimensionMemoize {
 
 	public void drawU(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
-		for (Ftile tile : tiles) {
+		for (Ftile tile : tiles)
 			ug.apply(getTranslateNude(tile, stringBounder)).draw(tile);
-		}
+
 	}
 
 	@Override
 	final protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
 		final FtileGeometry dimTotal = calculateDimensionInternal(stringBounder);
 		for (Ftile tile : tiles)
-			if (tile.calculateDimension(stringBounder).hasPointOut()) {
+			if (tile.calculateDimension(stringBounder).hasPointOut())
 				return dimTotal;
-			}
+
 		return dimTotal.withoutPointOut();
 	}
 
 	@Override
 	protected FtileGeometry calculateDimensionInternalSlow(StringBounder stringBounder) {
 		Dimension2D result = new Dimension2DDouble(0, 0);
-		for (Ftile couple : tiles) {
+		for (Ftile couple : tiles)
 			result = Dimension2DDouble.mergeLR(result, couple.calculateDimension(stringBounder));
-		}
+
 		result = Dimension2DDouble.delta(result, xSeparation * (tiles.size() - 1), 100);
 
 		return new FtileGeometry(result, result.getWidth() / 2, 0);

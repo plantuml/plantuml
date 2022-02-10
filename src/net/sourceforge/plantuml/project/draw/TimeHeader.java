@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.project.draw;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.SpriteContainerEmpty;
-import net.sourceforge.plantuml.ThemeStyle;
+import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;

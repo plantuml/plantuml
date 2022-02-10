@@ -42,7 +42,7 @@ import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.LineBreakStrategy;
-import net.sourceforge.plantuml.ThemeStyle;
+import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -74,7 +74,7 @@ public class Style {
 
 		final EnumMap<PName, Value> copy = new EnumMap<PName, Value>(PName.class);
 		for (Entry<PName, Value> ent : this.map.entrySet())
-			copy.put(ent.getKey(), new ValueDeltaPriority(ent.getValue(), delta));
+			copy.put(ent.getKey(), ((ValueImpl) ent.getValue()).addPriority(delta));
 
 		return new Style(this.signature, copy);
 
@@ -102,24 +102,6 @@ public class Style {
 		if (result == null)
 			return ValueNull.NULL;
 
-		if (name == PName.BackGroundColor) {
-			final Value resultDark = map.get(PName.DARK_BackGroundColor);
-			if (resultDark != null)
-				return new ValueForDark(result, resultDark);
-		} else if (name == PName.LineColor) {
-			final Value resultDark = map.get(PName.DARK_LineColor);
-			if (resultDark != null)
-				return new ValueForDark(result, resultDark);
-		} else if (name == PName.FontColor) {
-			final Value resultDark = map.get(PName.DARK_FontColor);
-			if (resultDark != null)
-				return new ValueForDark(result, resultDark);
-		} else if (name == PName.HyperLinkColor) {
-			final Value resultDark = map.get(PName.DARK_HyperLinkColor);
-			if (resultDark != null)
-				return new ValueForDark(result, resultDark);
-		}
-
 		return result;
 	}
 
@@ -134,9 +116,8 @@ public class Style {
 		final EnumMap<PName, Value> both = new EnumMap<PName, Value>(this.map);
 		for (Entry<PName, Value> ent : other.map.entrySet()) {
 			final Value previous = this.map.get(ent.getKey());
-			if (previous == null || ent.getValue().getPriority() > previous.getPriority())
-				both.put(ent.getKey(), ent.getValue());
-
+			final PName key = ent.getKey();
+			both.put(key, ((ValueImpl) ent.getValue()).mergeWith(previous));
 		}
 		return new Style(this.signature.mergeWith(other.getSignature()), both);
 	}
@@ -157,7 +138,7 @@ public class Style {
 
 	public Style eventuallyOverride(PName param, String value) {
 		final EnumMap<PName, Value> result = new EnumMap<PName, Value>(this.map);
-		result.put(param, new ValueImpl(value, Integer.MAX_VALUE));
+		result.put(param, ValueImpl.regular(value, Integer.MAX_VALUE));
 		return new Style(this.signature, result);
 	}
 

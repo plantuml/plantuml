@@ -123,9 +123,9 @@ public class EntityImageUseCase extends AbstractEntityImage {
 			return style.getStroke();
 		}
 		UStroke stroke = getSkinParam().getThickness(LineParam.usecaseBorder, getStereo());
-		if (stroke == null) {
+		if (stroke == null)
 			stroke = new UStroke(1.5);
-		}
+
 		final Colors colors = getEntity().getColors();
 		stroke = colors.muteStroke(stroke);
 		return stroke;
@@ -137,14 +137,20 @@ public class EntityImageUseCase extends AbstractEntityImage {
 
 	final public void drawU(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
-		final TextBlockInEllipse ellipse = new TextBlockInEllipse(desc, stringBounder);
-		if (getSkinParam().shadowing2(getEntity().getStereotype(), SkinParameter.USECASE)) {
-			ellipse.setDeltaShadow(3);
-		}
 
-		if (url != null) {
+		double shadow = 0;
+
+		if (UseStyle.useBetaStyle()) {
+			final Style style = getStyle();
+			shadow = style.value(PName.Shadowing).asDouble();
+		} else if (getSkinParam().shadowing2(getEntity().getStereotype(), SkinParameter.USECASE))
+			shadow = 3;
+
+		final TextBlockInEllipse ellipse = new TextBlockInEllipse(desc, stringBounder);
+		ellipse.setDeltaShadow(shadow);
+
+		if (url != null)
 			ug.startUrl(url);
-		}
 
 		ug = ug.apply(getStroke());
 		final HColor linecolor = getLineColor();
@@ -157,13 +163,12 @@ public class EntityImageUseCase extends AbstractEntityImage {
 		ellipse.drawU(ug2);
 		ug2.closeGroup();
 
-		if (getEntity().getLeafType() == LeafType.USECASE_BUSINESS) {
+		if (getEntity().getLeafType() == LeafType.USECASE_BUSINESS)
 			specialBusiness(ug, ellipse.getUEllipse());
-		}
 
-		if (url != null) {
+		if (url != null)
 			ug.closeUrl();
-		}
+
 	}
 
 	private void specialBusiness(UGraphic ug, UEllipse frontier) {
@@ -256,13 +261,13 @@ public class EntityImageUseCase extends AbstractEntityImage {
 		}
 
 		private double getNormalized(double y) {
-			if (y < yTheoricalPosition) {
+			if (y < yTheoricalPosition)
 				throw new IllegalArgumentException();
-			}
+
 			y = y - yTheoricalPosition;
-			if (y > ellipse.getHeight()) {
+			if (y > ellipse.getHeight())
 				throw new IllegalArgumentException();
-			}
+
 			return y;
 		}
 

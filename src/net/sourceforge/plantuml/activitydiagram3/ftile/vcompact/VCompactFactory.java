@@ -94,10 +94,6 @@ public class VCompactFactory implements FtileFactory {
 		this.stringBounder = stringBounder;
 	}
 
-	private StyleSignature getSignatureCircle() {
-		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.circle);
-	}
-
 	private StyleSignature getSignatureCircleEnd() {
 		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.circle, SName.end);
 	}
@@ -106,11 +102,15 @@ public class VCompactFactory implements FtileFactory {
 		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.circle, SName.stop);
 	}
 
+	private StyleSignature getSignatureCircleStart() {
+		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.circle, SName.start);
+	}
+
 	public Ftile start(Swimlane swimlane) {
 		final HColor color;
 		Style style = null;
 		if (UseStyle.useBetaStyle()) {
-			style = getSignatureCircle().getMergedStyle(skinParam.getCurrentStyleBuilder());
+			style = getSignatureCircleStart().getMergedStyle(skinParam.getCurrentStyleBuilder());
 			color = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
 		} else {
 			color = rose.getHtmlColor(skinParam, ColorParam.activityStart);

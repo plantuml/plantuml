@@ -81,6 +81,7 @@ public class EntityImageTips extends AbstractEntityImage {
 	private final HColor borderColor;
 
 	private final Bibliotekon bibliotekon;
+	private final Style style;
 
 	private final double ySpacing = 10;
 
@@ -90,27 +91,24 @@ public class EntityImageTips extends AbstractEntityImage {
 		this.bibliotekon = bibliotekon;
 
 		if (UseStyle.useBetaStyle()) {
-			final Style style = getDefaultStyleDefinition(type.getStyleName())
-					.getMergedStyle(skinParam.getCurrentStyleBuilder());
+			style = getDefaultStyleDefinition(type.getStyleName()).getMergedStyle(skinParam.getCurrentStyleBuilder());
 
-			if (entity.getColors().getColor(ColorType.BACK) == null) {
+			if (entity.getColors().getColor(ColorType.BACK) == null)
 				this.noteBackgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
 						skinParam.getIHtmlColorSet());
-
-			} else {
+			else
 				this.noteBackgroundColor = entity.getColors().getColor(ColorType.BACK);
-			}
 
 			this.borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(),
 					skinParam.getIHtmlColorSet());
 
 		} else {
+			style = null;
 
-			if (entity.getColors().getColor(ColorType.BACK) == null) {
+			if (entity.getColors().getColor(ColorType.BACK) == null)
 				this.noteBackgroundColor = rose.getHtmlColor(skinParam, ColorParam.noteBackground);
-			} else {
+			else
 				this.noteBackgroundColor = entity.getColors().getColor(ColorType.BACK);
-			}
 
 			this.borderColor = rose.getHtmlColor(skinParam, ColorParam.noteBorder);
 
@@ -122,9 +120,9 @@ public class EntityImageTips extends AbstractEntityImage {
 	}
 
 	private Position getPosition() {
-		if (getEntity().getCodeGetName().endsWith(Position.RIGHT.name())) {
+		if (getEntity().getCodeGetName().endsWith(Position.RIGHT.name()))
 			return Position.RIGHT;
-		}
+
 		return Position.LEFT;
 	}
 
@@ -166,21 +164,21 @@ public class EntityImageTips extends AbstractEntityImage {
 			final Display display = ent.getValue();
 			final Rectangle2D memberPosition = nodeOther.getImage().getInnerPosition(ent.getKey(), stringBounder,
 					InnerStrategy.STRICT);
-			if (memberPosition == null) {
+			if (memberPosition == null)
 				return;
-			}
+
 			final Opale opale = getOpale(display);
 			final Dimension2D dim = opale.calculateDimension(stringBounder);
 			final Point2D pp1 = new Point2D.Double(0, dim.getHeight() / 2);
 			double x = positionOther.getX() - positionMe.getX();
-			if (direction == Direction.RIGHT && x < 0) {
+			if (direction == Direction.RIGHT && x < 0)
 				direction = direction.getInv();
-			}
-			if (direction == Direction.LEFT) {
+
+			if (direction == Direction.LEFT)
 				x += memberPosition.getMaxX();
-			} else {
+			else
 				x += 4;
-			}
+
 			final double y = positionOther.getY() - positionMe.getY() - height + memberPosition.getCenterY();
 			final Point2D pp2 = new Point2D.Double(x, y);
 			opale.setOpale(direction, pp1, pp2);
@@ -193,12 +191,19 @@ public class EntityImageTips extends AbstractEntityImage {
 	}
 
 	private Opale getOpale(final Display display) {
-		final FontConfiguration fc = new FontConfiguration(skinParam, FontParam.NOTE, null);
+		final FontConfiguration fc;
+		final double shadowing;
+		if (UseStyle.useBetaStyle()) {
+			shadowing = style.value(PName.Shadowing).asDouble();
+			fc = style.getFontConfiguration(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
+		} else {
+			shadowing = skinParam.shadowing(getEntity().getStereotype()) ? 4 : 0;
+			fc = new FontConfiguration(skinParam, FontParam.NOTE, null);
+		}
+
 		final TextBlock textBlock = BodyFactory.create3(display, FontParam.NOTE, skinParam, HorizontalAlignment.LEFT,
 				fc, LineBreakStrategy.NONE);
-		final double shadowing = skinParam.shadowing(getEntity().getStereotype()) ? 4 : 0;
-		final Opale opale = new Opale(shadowing, borderColor, noteBackgroundColor, textBlock, true);
-		return opale;
+		return new Opale(shadowing, borderColor, noteBackgroundColor, textBlock, true);
 	}
 
 }

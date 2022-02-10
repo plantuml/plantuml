@@ -20,7 +20,7 @@ RECTANGLE:
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: NULL_COLOR
-  backcolor: ffe0e8e8
+  backcolor: ffe0e0e0
 
 RECTANGLE:
   pt1: [ 36.0000 ; 29.0000 ]
@@ -30,7 +30,7 @@ RECTANGLE:
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: NULL_COLOR
-  backcolor: ffe0e8e8
+  backcolor: ffe0e0e0
 
 RECTANGLE:
   pt1: [ 44.0000 ; 29.0000 ]
@@ -50,7 +50,7 @@ RECTANGLE:
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: NULL_COLOR
-  backcolor: ffe0e8e8
+  backcolor: ffe0e0e0
 
 RECTANGLE:
   pt1: [ 120.0000 ; 29.0000 ]
@@ -60,7 +60,7 @@ RECTANGLE:
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: NULL_COLOR
-  backcolor: ffe0e8e8
+  backcolor: ffe0e0e0
 
 RECTANGLE:
   pt1: [ 148.0000 ; 29.0000 ]
@@ -70,7 +70,7 @@ RECTANGLE:
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: NULL_COLOR
-  backcolor: ffe0e8e8
+  backcolor: ffe0e0e0
 
 TEXT:
   text: 43
@@ -232,14 +232,14 @@ LINE:
   pt2: [ 131.0000 ; 51.5000 ]
   stroke: 0.0-0.0-1.5
   shadow: 0
-  color: ffa80036
+  color: ff181818
 
 LINE:
   pt1: [ 131.0000 ; 51.5000 ]
   pt2: [ 139.0000 ; 51.5000 ]
   stroke: 0.0-0.0-1.5
   shadow: 0
-  color: ffa80036
+  color: ff181818
 
 POLYGON:
   points:
@@ -249,8 +249,8 @@ POLYGON:
    - [ 139.0000 ; 51.5000 ]
   stroke: 0.0-0.0-1.5
   shadow: 0
-  color: ffa80036
-  backcolor: ffa80036
+  color: ff181818
+  backcolor: ff181818
 
 RECTANGLE:
   pt1: [ 2.0000 ; 31.0000 ]
@@ -488,28 +488,28 @@ RECTANGLE:
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: NULL_COLOR
-  backcolor: fffefece
+  backcolor: fff8f8f8
 
 LINE:
   pt1: [ 142.0000 ; 46.0000 ]
   pt2: [ 147.0000 ; 46.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
-  color: ffa80036
+  color: ff181818
 
 LINE:
   pt1: [ 142.0000 ; 57.0000 ]
   pt2: [ 147.0000 ; 57.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
-  color: ffa80036
+  color: ff181818
 
 LINE:
   pt1: [ 142.0000 ; 46.0000 ]
   pt2: [ 142.0000 ; 57.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
-  color: ffa80036
+  color: ff181818
 
 RECTANGLE:
   pt1: [ 156.0000 ; 46.0000 ]
@@ -519,42 +519,42 @@ RECTANGLE:
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: NULL_COLOR
-  backcolor: fffefece
+  backcolor: fff8f8f8
 
 LINE:
   pt1: [ 157.0000 ; 46.0000 ]
   pt2: [ 166.0000 ; 46.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
-  color: ffa80036
+  color: ff181818
 
 LINE:
   pt1: [ 157.0000 ; 57.0000 ]
   pt2: [ 166.0000 ; 57.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
-  color: ffa80036
+  color: ff181818
 
 LINE:
   pt1: [ 166.0000 ; 46.0000 ]
   pt2: [ 166.0000 ; 57.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
-  color: ffa80036
+  color: ff181818
 
 LINE:
   pt1: [ 151.0000 ; 46.0000 ]
   pt2: [ 153.0000 ; 46.0000 ]
   stroke: 2.0-3.0-1.0
   shadow: 0
-  color: ffa80036
+  color: ff181818
 
 LINE:
   pt1: [ 151.0000 ; 57.0000 ]
   pt2: [ 153.0000 ; 57.0000 ]
   stroke: 2.0-3.0-1.0
   shadow: 0
-  color: ffa80036
+  color: ff181818
 
 TEXT:
   text: Prototype design
