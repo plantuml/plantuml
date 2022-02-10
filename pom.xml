@@ -242,14 +242,13 @@
       </properties>
     </profile>
     <profile>
-      <!-- the source contains java11+ syntax, let mvn shout. allow "mvn test" with java8 as rendering sometimes
-      can give different results with java8. -->
       <id>javac-source-flag</id>
       <activation>
         <activeByDefault>true</activeByDefault>
       </activation>
       <properties>
-        <maven.compiler.source>17</maven.compiler.source>
+        <!-- maven-compiler-plugin source default with 3.9.0 is still 1.7, so set it for java8. -->
+        <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
       </properties>
     </profile>

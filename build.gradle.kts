@@ -1,4 +1,10 @@
-val javacRelease: String by project
+//    permits to start the build setting the javac release parameter, no parameter means build for java8:
+// gradle clean build -x javaDoc -PjavacRelease=8
+// gradle clean build -x javaDoc -PjavacRelease=17
+//    also supported is to build first, with java17, then switch the java version, and run the test with java8:
+// gradle clean build -x javaDoc -x test
+// gradle test
+val javacRelease = (project.findProperty("javacRelease") ?: "8") as String
 
 plugins {
   java
@@ -52,7 +58,11 @@ sourceSets {
 }
 
 tasks.compileJava {
-	options.release.set(Integer.parseInt(javacRelease))
+	if (JavaVersion.current().isJava8) {
+		java.targetCompatibility = JavaVersion.VERSION_1_8
+	} else {
+		options.release.set(Integer.parseInt(javacRelease))
+	}
 }
 
 tasks.withType<Jar> {
