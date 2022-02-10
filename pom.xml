@@ -56,7 +56,6 @@
   </parent>
   <properties>
     <finalName>${project.artifactId}-${project.version}</finalName>
-    <maven.compiler.release>8</maven.compiler.release>
     <main.class>net.sourceforge.plantuml.Run</main.class>
   </properties>
   <dependencyManagement>
@@ -232,6 +231,28 @@
     </plugins>
   </build>
   <profiles>
+    <profile>
+      <!-- set the release flag only for jdk which do support it, plantuml should keep running with java8. -->
+      <id>javac-release-flag</id>
+      <activation>
+        <jdk>[9,)</jdk>
+      </activation>
+      <properties>
+        <maven.compiler.release>8</maven.compiler.release>
+      </properties>
+    </profile>
+    <profile>
+      <!-- the source contains java11+ syntax, let mvn shout. allow "mvn test" with java8 as rendering sometimes
+      can give different results with java8. -->
+      <id>javac-source-flag</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+      </properties>
+    </profile>
     <profile>
       <id>pdf</id>
       <activation>
