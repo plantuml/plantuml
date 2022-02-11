@@ -1,18 +1,18 @@
 name: CI gradle
 
 on:
-#  create:
-#  pull_request:
-#    types: [ opened, synchronize, reopened ]
-#    paths-ignore:
-#      - '*.md'
-#      - 'docs/**'
-#  push:
-#    branches:
-#      - master
-#    paths-ignore:
-#      - '*.md'
-#      - 'docs/**'
+  create:
+  pull_request:
+    types: [ opened, synchronize, reopened ]
+    paths-ignore:
+      - '*.md'
+      - 'docs/**'
+  push:
+    branches:
+      - master
+    paths-ignore:
+      - '*.md'
+      - 'docs/**'
   workflow_dispatch:
 
 defaults:
