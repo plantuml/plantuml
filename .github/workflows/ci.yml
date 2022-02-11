@@ -71,12 +71,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        javac_release: [ 8, 11, 17 ]
+        java_version: [ 8, 11, 17 ]
         os: [ macos-10.15,  macos-11, ubuntu-18.04, ubuntu-20.04, windows-2019, windows-2022 ]
         include:
           - release_from_this_build: true
             os: ubuntu-20.04
-            javac_release: 8
+            java_version: 8
     runs-on: ${{ matrix.os }}
     env:
       SIGN_ARTIFACTS: ${{ secrets.ARTIFACT_SIGNING_KEY != '' }}
@@ -85,9 +85,9 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Set up java
-        uses: actions/setup-java@v2.3.1
+        uses: actions/setup-java@v2.5.0
         with:
-          java-version: 17
+          java-version: ${{ matrix.java_version }}
           distribution: temurin
           cache: maven
 
@@ -104,10 +104,10 @@ jobs:
 
       # Compile / Test / Package are separate steps so the reason for any failure is more obvious in GitHub UI
       - name: Compile
-        run: mvn --batch-mode compile -Dmaven.compiler.release=${{ matrix.javac_release }}
+        run: mvn --batch-mode compile
 
       - name: Test
-        run: mvn --batch-mode test -Dmaven.compiler.release=${{ matrix.javac_release }}
+        run: mvn --batch-mode test
 
       # The repeated "matrix.release_from_this_build" checks are messy, but I have not found a simple way to avoid them
       # See https://github.com/actions/runner/issues/662
