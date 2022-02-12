@@ -18,10 +18,11 @@ repositories {
 }
 
 dependencies {
-	compileOnly("org.apache.ant:ant:1.10.12")
-	testImplementation("org.assertj:assertj-core:3.22.0")
-	testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
-	testImplementation("org.scilab.forge:jlatexmath:1.0.7")
+  	compileOnly("org.apache.ant:ant:1.10.12")
+  	testImplementation("org.assertj:assertj-core:3.22.0")
+  	testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
+  	testImplementation("org.scilab.forge:jlatexmath:1.0.7")
+	testImplementation("org.mockito:mockito-core:3.+")
 }
 
 group = "net.sourceforge.plantuml"
