@@ -18,6 +18,9 @@ description = "PlantUML"
 java {
 	withSourcesJar()
 	withJavadocJar()
+	registerFeature("pdf") {
+		usingSourceSet(sourceSets["main"])
+	}
 }
 
 dependencies {
@@ -25,6 +28,8 @@ dependencies {
 	testImplementation("org.assertj:assertj-core:3.22.0")
 	testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
 	testImplementation("org.scilab.forge:jlatexmath:1.0.7")
+	"pdfRuntimeOnly"("org.apache.xmlgraphics:fop:2.6")
+	"pdfRuntimeOnly"("org.apache.xmlgraphics:batik-all:1.14")
 }
 
 repositories {
