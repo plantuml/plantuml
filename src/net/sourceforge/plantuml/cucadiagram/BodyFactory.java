@@ -74,8 +74,9 @@ public class BodyFactory {
 	}
 
 	public static TextBlock create3(Display rawBody, FontParam fontParam, ISkinSimple skinParam,
-			HorizontalAlignment align, FontConfiguration titleConfig, LineBreakStrategy lineBreakStrategy) {
-		return new BodyEnhanced2(rawBody, fontParam, skinParam, align, titleConfig, lineBreakStrategy);
+			HorizontalAlignment align, FontConfiguration titleConfig, LineBreakStrategy lineBreakStrategy,
+			Style style) {
+		return new BodyEnhanced2(rawBody, fontParam, skinParam, align, titleConfig, lineBreakStrategy, style);
 	}
 
 }

@@ -86,15 +86,15 @@ public class GtileWithNoteOpale extends AbstractGtile implements Stencil, Stylea
 	private final Dimension2D dimNote;
 	private final Dimension2D dimTile;
 
-	public StyleSignature getDefaultStyleDefinition() {
+	public StyleSignature getStyleSignature() {
 		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.note);
 	}
-	
+
 	@Override
 	public Swimlane getSwimlane(String point) {
 		return tile.getSwimlane(point);
 	}
-	
+
 	@Override
 	public Set<Swimlane> getSwimlanes() {
 		return tile.getSwimlanes();
@@ -105,12 +105,11 @@ public class GtileWithNoteOpale extends AbstractGtile implements Stencil, Stylea
 		this.swimlaneNote = note.getSwimlaneNote();
 		if (note.getColors() != null)
 			skinParam = note.getColors().mute(skinParam);
-		
+
 		this.tile = tile;
 		this.notePosition = note.getNotePosition();
 		if (note.getType() == NoteType.FLOATING_NOTE)
 			withLink = false;
-		
 
 		final Rose rose = new Rose();
 
@@ -120,8 +119,9 @@ public class GtileWithNoteOpale extends AbstractGtile implements Stencil, Stylea
 
 		final double shadowing;
 		final LineBreakStrategy wrapWidth;
+		UStroke stroke = new UStroke();
 		if (UseStyle.useBetaStyle()) {
-			final Style style = getDefaultStyleDefinition().getMergedStyle(skinParam.getCurrentStyleBuilder())
+			final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder())
 					.eventuallyOverride(note.getColors());
 			noteBackgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
 					getIHtmlColorSet());
@@ -129,6 +129,7 @@ public class GtileWithNoteOpale extends AbstractGtile implements Stencil, Stylea
 			fc = style.getFontConfiguration(skinParam.getThemeStyle(), getIHtmlColorSet());
 			shadowing = style.value(PName.Shadowing).asDouble();
 			wrapWidth = style.wrapWidth();
+			stroke = style.getStroke();
 		} else {
 			noteBackgroundColor = rose.getHtmlColor(skinParam, ColorParam.noteBackground);
 			borderColor = rose.getHtmlColor(skinParam, ColorParam.noteBorder);
@@ -142,7 +143,7 @@ public class GtileWithNoteOpale extends AbstractGtile implements Stencil, Stylea
 		final Sheet sheet = Parser.build(fc, align, skinParam, CreoleMode.FULL).createSheet(note.getDisplay());
 		final TextBlock text = new SheetBlock2(new SheetBlock1(sheet, wrapWidth, skinParam.getPadding()), this,
 				new UStroke(1));
-		this.opale = new Opale(shadowing, borderColor, noteBackgroundColor, text, withLink);
+		this.opale = new Opale(shadowing, borderColor, noteBackgroundColor, text, withLink, stroke);
 
 		this.dimNote = opale.calculateDimension(stringBounder);
 		this.dimTile = tile.calculateDimension(stringBounder);

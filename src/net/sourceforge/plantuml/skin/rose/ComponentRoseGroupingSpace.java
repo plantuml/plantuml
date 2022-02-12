@@ -52,7 +52,7 @@ public class ComponentRoseGroupingSpace implements Component {
 		throw new UnsupportedOperationException();
 	}
 
-	public StyleSignature getDefaultStyleDefinition() {
+	public StyleSignature getStyleSignature() {
 		throw new UnsupportedOperationException();
 	}
 

@@ -304,7 +304,7 @@ public class Cluster implements Moveable {
 				.with(stereotype);
 	}
 
-	public void drawU(UGraphic ug, UStroke strokeForState, UmlDiagramType umlDiagramType, ISkinParam skinParam2) {
+	public void drawU(UGraphic ug, UmlDiagramType umlDiagramType, ISkinParam skinParam2) {
 		if (group.isHidden())
 			return;
 
@@ -362,6 +362,8 @@ public class Cluster implements Moveable {
 			final boolean isState = umlDiagramType == UmlDiagramType.STATE;
 
 			if (isState && group.getUSymbol() == null) {
+				UStroke strokeForState = getDefaultStyleDefinition(SName.stateDiagram, null)
+						.getMergedStyle(skinParam.getCurrentStyleBuilder()).getStroke();
 				if (group.getColors().getSpecificLineStroke() != null)
 					strokeForState = group.getColors().getSpecificLineStroke();
 

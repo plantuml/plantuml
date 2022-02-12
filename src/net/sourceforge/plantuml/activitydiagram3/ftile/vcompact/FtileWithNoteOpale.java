@@ -88,7 +88,7 @@ public class FtileWithNoteOpale extends AbstractFtile implements Stencil, Stylea
 	private final double suppSpace = 20;
 	private final Swimlane swimlaneNote;
 
-	public StyleSignature getDefaultStyleDefinition() {
+	public StyleSignature getStyleSignature() {
 		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.note);
 	}
 
@@ -141,11 +141,12 @@ public class FtileWithNoteOpale extends AbstractFtile implements Stencil, Stylea
 		final HColor noteBackgroundColor;
 		final HColor borderColor;
 		final FontConfiguration fc;
+		UStroke stroke = new UStroke();
 
 		final double shadowing;
 		final LineBreakStrategy wrapWidth;
 		if (UseStyle.useBetaStyle()) {
-			final Style style = getDefaultStyleDefinition().getMergedStyle(skinParam.getCurrentStyleBuilder())
+			final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder())
 					.eventuallyOverride(note.getColors());
 			noteBackgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
 					getIHtmlColorSet());
@@ -153,6 +154,7 @@ public class FtileWithNoteOpale extends AbstractFtile implements Stencil, Stylea
 			fc = style.getFontConfiguration(skinParam.getThemeStyle(), getIHtmlColorSet());
 			shadowing = style.value(PName.Shadowing).asDouble();
 			wrapWidth = style.wrapWidth();
+			stroke = style.getStroke();
 		} else {
 			noteBackgroundColor = rose.getHtmlColor(skinParam, ColorParam.noteBackground);
 			borderColor = rose.getHtmlColor(skinParam, ColorParam.noteBorder);
@@ -164,9 +166,8 @@ public class FtileWithNoteOpale extends AbstractFtile implements Stencil, Stylea
 		final HorizontalAlignment align = skinParam.getHorizontalAlignment(AlignmentParam.noteTextAlignment, null,
 				false, null);
 		final Sheet sheet = Parser.build(fc, align, skinParam, CreoleMode.FULL).createSheet(note.getDisplay());
-		final TextBlock text = new SheetBlock2(new SheetBlock1(sheet, wrapWidth, skinParam.getPadding()), this,
-				new UStroke(1));
-		opale = new Opale(shadowing, borderColor, noteBackgroundColor, text, withLink);
+		final TextBlock text = new SheetBlock2(new SheetBlock1(sheet, wrapWidth, skinParam.getPadding()), this, stroke);
+		opale = new Opale(shadowing, borderColor, noteBackgroundColor, text, withLink, stroke);
 
 	}
 

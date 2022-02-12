@@ -83,7 +83,7 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 	private final Stereotype stereotype;
 	private final TextBlock stereoBlock;
 	private final Url url;
-	private final SName styleName;
+	private final SName sname;
 	private final double shadowing;
 	private final HColor borderColor;
 	private final UStroke stroke;
@@ -91,16 +91,16 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 	private final HColor back;
 
 	private Style getStyle() {
-		return getDefaultStyleDefinition().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+		return getStyleSignature().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
 	}
 
-	private StyleSignature getDefaultStyleDefinition() {
-		return StyleSignature.of(SName.root, SName.element, styleName, SName.package_).with(stereotype);
+	private StyleSignature getStyleSignature() {
+		return StyleSignature.of(SName.root, SName.element, sname, SName.package_).with(stereotype);
 	}
 
-	public EntityImageEmptyPackage(ILeaf entity, ISkinParam skinParam, PortionShower portionShower, SName styleName) {
+	public EntityImageEmptyPackage(ILeaf entity, ISkinParam skinParam, PortionShower portionShower, SName sname) {
 		super(entity, skinParam);
-		this.styleName = styleName;
+		this.sname = sname;
 
 		final Colors colors = entity.getColors();
 		final HColor specificBackColor = colors.getColor(ColorType.BACK);
@@ -131,7 +131,7 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 			this.shadowing = getSkinParam().shadowing(getEntity().getStereotype()) ? 3 : 0;
 			this.stroke = GeneralImageBuilder.getForcedStroke(getEntity().getStereotype(), getSkinParam());
 			this.roundCorner = 0;
-			this.back = Cluster.getBackColor(specificBackColor, skinParam, stereotype, styleName, USymbol.PACKAGE);
+			this.back = Cluster.getBackColor(specificBackColor, skinParam, stereotype, sname, USymbol.PACKAGE);
 			titleFontConfiguration = new FontConfiguration(getSkinParam(), FontParam.PACKAGE, stereotype);
 			titleHorizontalAlignment = HorizontalAlignment.CENTER;
 		}

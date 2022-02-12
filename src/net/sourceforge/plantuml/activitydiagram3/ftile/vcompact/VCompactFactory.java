@@ -102,6 +102,10 @@ public class VCompactFactory implements FtileFactory {
 		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.circle, SName.stop);
 	}
 
+	private StyleSignature getSignatureCircleSpot() {
+		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.circle, SName.spot);
+	}
+
 	private StyleSignature getSignatureCircleStart() {
 		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.circle, SName.start);
 	}
@@ -135,7 +139,11 @@ public class VCompactFactory implements FtileFactory {
 
 	public Ftile spot(Swimlane swimlane, String spot, HColor color) {
 		final UFont font = skinParam.getFont(null, false, FontParam.ACTIVITY);
-		return new FtileCircleSpot(skinParam(), swimlane, spot, font, color);
+		Style style = null;
+		if (UseStyle.useBetaStyle()) {
+			style = getSignatureCircleSpot().getMergedStyle(skinParam.getCurrentStyleBuilder());
+		}
+		return new FtileCircleSpot(skinParam(), swimlane, spot, font, color, style);
 	}
 
 	public Ftile end(Swimlane swimlane) {

@@ -63,6 +63,7 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class ParallelBuilderFork extends AbstractParallelFtilesBuilder {
 
@@ -108,15 +109,15 @@ public class ParallelBuilderFork extends AbstractParallelFtilesBuilder {
 
 	private double getXSuppForDisplay(Ftile ftile, Display label) {
 		final TextBlock text = getTextBlock(label);
-		if (text == null) {
+		if (text == null)
 			return 0;
-		}
+
 		final double textWidth = text.calculateDimension(getStringBounder()).getWidth();
 		final FtileGeometry ftileDim = ftile.calculateDimension(getStringBounder());
 		final double pos2 = ftileDim.getLeft() + textWidth;
-		if (pos2 > ftileDim.getWidth()) {
+		if (pos2 > ftileDim.getWidth())
 			return pos2 - ftileDim.getWidth();
-		}
+
 		return 0;
 	}
 
@@ -130,18 +131,17 @@ public class ParallelBuilderFork extends AbstractParallelFtilesBuilder {
 		Ftile result = middle;
 		final List<Connection> conns = new ArrayList<>();
 		final Swimlane swimlaneBlack = in;
-		final Ftile black = new FtileBlackBlock(skinParam(),
-				getRose().getHtmlColor(skinParam(), ColorParam.activityBar), swimlaneBlack);
+		final Style style = getStyleSignature().getMergedStyle(skinParam().getCurrentStyleBuilder());
+		final Ftile black = new FtileBlackBlock(skinParam(), barColor(), swimlaneBlack);
 		double x = 0;
 		for (Ftile tmp : list99) {
 			final Dimension2D dim = tmp.calculateDimension(getStringBounder());
 			final Rainbow def;
-			if (UseStyle.useBetaStyle()) {
-				Style style = getDefaultStyleDefinition().getMergedStyle(skinParam().getCurrentStyleBuilder());
+			if (UseStyle.useBetaStyle())
 				def = Rainbow.build(style, skinParam().getIHtmlColorSet(), skinParam().getThemeStyle());
-			} else {
+			else
 				def = Rainbow.build(skinParam());
-			}
+
 			final Rainbow rainbow = tmp.getInLinkRendering().getRainbow(def);
 			conns.add(new ConnectionIn(black, tmp, x, rainbow));
 			x += dim.getWidth();
@@ -158,9 +158,9 @@ public class ParallelBuilderFork extends AbstractParallelFtilesBuilder {
 		double result = 0;
 		for (Ftile child : all) {
 			final TextBlock text = getTextBlock(child.getInLinkRendering().getDisplay());
-			if (text == null) {
+			if (text == null)
 				continue;
-			}
+
 			final Dimension2D dim = text.calculateDimension(stringBounder);
 			result = Math.max(result, dim.getHeight());
 
@@ -172,9 +172,9 @@ public class ParallelBuilderFork extends AbstractParallelFtilesBuilder {
 		double result = 0;
 		for (Ftile child : all) {
 			final TextBlock text = getTextBlock(child.getOutLinkRendering().getDisplay());
-			if (text == null) {
+			if (text == null)
 				continue;
-			}
+
 			final Dimension2D dim = text.calculateDimension(stringBounder);
 			result = Math.max(result, dim.getHeight());
 		}
@@ -188,33 +188,36 @@ public class ParallelBuilderFork extends AbstractParallelFtilesBuilder {
 	@Override
 	protected Ftile doStep2(Ftile middle, Ftile result) {
 		final Swimlane swimlaneBlack = out;
-		final Ftile out = new FtileBlackBlock(skinParam(), getRose().getHtmlColor(skinParam(), ColorParam.activityBar),
-				swimlaneBlack);
+		final Ftile out = new FtileBlackBlock(skinParam(), barColor(), swimlaneBlack);
 		((FtileBlackBlock) out).setBlackBlockDimension(result.calculateDimension(getStringBounder()).getWidth(),
 				barHeight);
-		if (label != null) {
+		if (label != null)
 			((FtileBlackBlock) out).setLabel(getTextBlock(Display.getWithNewlines(label)));
-		}
+
 		result = new FtileAssemblySimple(result, out);
 		final List<Connection> conns = new ArrayList<>();
+		final Style style = getStyleSignatureArrow().getMergedStyle(skinParam().getCurrentStyleBuilder());
 		double x = 0;
 		for (Ftile tmp : list99) {
 			final Dimension2D dim = tmp.calculateDimension(getStringBounder());
 			final Rainbow def;
-			if (UseStyle.useBetaStyle()) {
-				Style style = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam().getCurrentStyleBuilder());
+			if (UseStyle.useBetaStyle())
 				def = Rainbow.build(style, skinParam().getIHtmlColorSet(), skinParam().getThemeStyle());
-			} else {
+			else
 				def = Rainbow.build(skinParam());
-			}
+
 			final Rainbow rainbow = tmp.getOutLinkRendering().getRainbow(def);
-			if (tmp.calculateDimension(getStringBounder()).hasPointOut()) {
+			if (tmp.calculateDimension(getStringBounder()).hasPointOut())
 				conns.add(new ConnectionOut(tmp, out, x, rainbow, getJustBeforeBar2(middle, getStringBounder())));
-			}
+
 			x += dim.getWidth();
 		}
 		result = FtileUtils.addConnection(result, conns);
 		return result;
+	}
+
+	private HColor barColor() {
+		return getRose().getHtmlColor(skinParam(), ColorParam.activityBar);
 	}
 
 	class ConnectionIn extends AbstractConnection implements ConnectionTranslatable {
@@ -233,10 +236,10 @@ public class ParallelBuilderFork extends AbstractParallelFtilesBuilder {
 		public void drawU(UGraphic ug) {
 			ug = ug.apply(UTranslate.dx(x));
 			final FtileGeometry geo2 = getFtile2().calculateDimension(getStringBounder());
-			Snake snake = Snake.create(arrowColor, Arrows.asToDown());
-			if (Display.isNull(label) == false) {
+			Snake snake = Snake.create(skinParam(), arrowColor, Arrows.asToDown());
+			if (Display.isNull(label) == false)
 				snake = snake.withLabel(getTextBlock(label), arrowHorizontalAlignment());
-			}
+
 			final Point2D p1 = new Point2D.Double(geo2.getLeft(), 0);
 			final Point2D p2 = new Point2D.Double(geo2.getLeft(), geo2.getInY());
 			snake.addPoint(p1);
@@ -251,10 +254,10 @@ public class ParallelBuilderFork extends AbstractParallelFtilesBuilder {
 			final Point2D p1 = new Point2D.Double(geo2.getLeft(), 0);
 			final Point2D p2 = new Point2D.Double(geo2.getLeft(), geo2.getInY());
 
-			Snake snake = Snake.create(arrowColor, Arrows.asToDown()).ignoreForCompression();
-			if (Display.isNull(label) == false) {
+			Snake snake = Snake.create(skinParam(), arrowColor, Arrows.asToDown()).ignoreForCompression();
+			if (Display.isNull(label) == false)
 				snake = snake.withLabel(getTextBlock(label), arrowHorizontalAlignment());
-			}
+
 			final Point2D mp1a = translate1.getTranslated(p1);
 			final Point2D mp2b = translate2.getTranslated(p2);
 			final double middle = mp1a.getY() + 4;
@@ -284,13 +287,13 @@ public class ParallelBuilderFork extends AbstractParallelFtilesBuilder {
 		public void drawU(UGraphic ug) {
 			ug = ug.apply(UTranslate.dx(x));
 			final FtileGeometry geo1 = getFtile1().calculateDimension(getStringBounder());
-			if (geo1.hasPointOut() == false) {
+			if (geo1.hasPointOut() == false)
 				return;
-			}
-			Snake snake = Snake.create(arrowColor, Arrows.asToDown());
-			if (Display.isNull(label) == false) {
+
+			Snake snake = Snake.create(skinParam(), arrowColor, Arrows.asToDown());
+			if (Display.isNull(label) == false)
 				snake = snake.withLabel(getTextBlock(label), arrowHorizontalAlignment());
-			}
+
 			final Point2D p1 = new Point2D.Double(geo1.getLeft(), barHeight + geo1.getOutY());
 			final Point2D p2 = new Point2D.Double(geo1.getLeft(), justBeforeBar2);
 			snake.addPoint(p1);
@@ -302,16 +305,16 @@ public class ParallelBuilderFork extends AbstractParallelFtilesBuilder {
 		public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
 			ug = ug.apply(UTranslate.dx(x));
 			final FtileGeometry geo = getFtile1().calculateDimension(getStringBounder());
-			if (geo.hasPointOut() == false) {
+			if (geo.hasPointOut() == false)
 				return;
-			}
+
 			final Point2D p1 = new Point2D.Double(geo.getLeft(), barHeight + geo.getOutY());
 			final Point2D p2 = new Point2D.Double(geo.getLeft(), justBeforeBar2);
 
-			Snake snake = Snake.create(arrowColor, Arrows.asToDown()).ignoreForCompression();
-			if (Display.isNull(label) == false) {
+			Snake snake = Snake.create(skinParam(), arrowColor, Arrows.asToDown()).ignoreForCompression();
+			if (Display.isNull(label) == false)
 				snake = snake.withLabel(getTextBlock(label), arrowHorizontalAlignment());
-			}
+
 			final Point2D mp1a = translate1.getTranslated(p1);
 			final Point2D mp2b = translate2.getTranslated(p2);
 			final double middle = mp2b.getY() - 14;

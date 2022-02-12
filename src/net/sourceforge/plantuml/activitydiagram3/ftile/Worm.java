@@ -45,8 +45,12 @@ import java.util.List;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.Direction;
+import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.cucadiagram.LinkStyle;
 import net.sourceforge.plantuml.graphic.HtmlColorAndStyle;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
@@ -59,6 +63,11 @@ import net.sourceforge.plantuml.ugraphic.comp.CompressionMode;
 public class Worm implements Iterable<Point2D.Double> {
 
 	private final List<Point2D.Double> points = new ArrayList<Point2D.Double>();
+	private final Style style;
+
+	public Worm(Style style) {
+		this.style = style;
+	}
 
 	public boolean isPureHorizontal() {
 		return points.size() == 2 && points.get(0).getY() == points.get(1).getY();
@@ -67,32 +76,37 @@ public class Worm implements Iterable<Point2D.Double> {
 	private boolean ignoreForCompression;
 
 	public Worm cloneEmpty() {
-		final Worm result = new Worm();
+		final Worm result = new Worm(style);
 		result.ignoreForCompression = this.ignoreForCompression;
 		return result;
 	}
 
 	public final void setIgnoreForCompression() {
-		if (points.size() > 0) {
+		if (points.size() > 0)
 			throw new IllegalStateException();
-		}
+
 		this.ignoreForCompression = true;
 	}
 
 	public void drawInternalOneColor(UPolygon startDecoration, UGraphic ug, HtmlColorAndStyle colorAndStyle,
-			double stroke, Direction emphasizeDirection, UPolygon endDecoration) {
+			double strokeValue, Direction emphasizeDirection, UPolygon endDecoration) {
 		final HColor arrowColor = Objects.requireNonNull(colorAndStyle.getArrowColor());
-		final LinkStyle style = colorAndStyle.getStyle();
-		if (style.isInvisible()) {
+		final LinkStyle linkStyle = colorAndStyle.getStyle();
+		if (linkStyle.isInvisible())
 			return;
-		}
+
 		ug = ug.apply(arrowColor);
 		ug = ug.apply(arrowColor.bg());
-		if (style.isNormal()) {
-			ug = ug.apply(new UStroke(stroke));
+		if (linkStyle.isNormal()) {
+			UStroke stroke = new UStroke(strokeValue);
+			if (UseStyle.useBetaStyle()) {
+				stroke = style.getStroke();
+			}
+			ug = ug.apply(stroke);
 		} else {
-			ug = ug.apply(style.goThickness(stroke).getStroke3());
+			ug = ug.apply(linkStyle.goThickness(strokeValue).getStroke3());
 		}
+
 		boolean drawn = false;
 		for (int i = 0; i < points.size() - 1; i++) {
 			final java.awt.geom.Point2D.Double p1 = points.get(i);
@@ -107,9 +121,9 @@ public class Worm implements Iterable<Point2D.Double> {
 		}
 
 		final HColor arrowHeadColor = colorAndStyle.getArrowHeadColor();
-		if (arrowHeadColor == null) {
+		if (arrowHeadColor == null)
 			throw new IllegalStateException();
-		}
+
 //		if (arrowHeadColor == null || arrowHeadColor.equals(HColorUtils.transparent())) {
 //			return;
 //		}
@@ -119,17 +133,17 @@ public class Worm implements Iterable<Point2D.Double> {
 		if (startDecoration != null) {
 			ug = ug.apply(new UStroke(1.5));
 			final Point2D start = points.get(0);
-			if (ignoreForCompression) {
+			if (ignoreForCompression)
 				startDecoration.setCompressionMode(CompressionMode.ON_X);
-			}
+
 			ug.apply(new UTranslate(start)).apply(new UStroke()).draw(startDecoration);
 		}
 		if (endDecoration != null) {
 			ug = ug.apply(new UStroke(1.5));
 			final Point2D end = points.get(points.size() - 1);
-			if (ignoreForCompression) {
+			if (ignoreForCompression)
 				endDecoration.setCompressionMode(CompressionMode.ON_X);
-			}
+
 			ug.apply(new UTranslate(end)).apply(new UStroke()).draw(endDecoration);
 		}
 	}
@@ -140,73 +154,73 @@ public class Worm implements Iterable<Point2D.Double> {
 
 	private void drawLine(UGraphic ug, double x1, double y1, double x2, double y2, Direction direction) {
 		ug = ug.apply(new UTranslate(x1, y1));
-		if (direction != null) {
+		if (direction != null)
 			ug.apply(new UTranslate((x2 - x1) / 2, (y2 - y1) / 2)).draw(Arrows.asTo(direction));
-		}
+
 		ug.draw(new ULine(x2 - x1, y2 - y1));
 	}
 
 	public Worm move(double dx, double dy) {
-		final Worm result = new Worm();
-		for (Point2D pt : points) {
+		final Worm result = new Worm(style);
+		for (Point2D pt : points)
 			result.addPoint(pt.getX() + dx, pt.getY() + dy);
-		}
+
 		return result;
 	}
 
 	public Worm moveFirstPoint(UTranslate move) {
 		final double dx = move.getDx();
 		final double dy = move.getDy();
-		if (dx != 0 && dy != 0) {
+		if (dx != 0 && dy != 0)
 			throw new IllegalArgumentException("move=" + move);
-		}
-		final Worm result = new Worm();
+
+		final Worm result = new Worm(style);
 		double x0 = this.points.get(0).getX();
 		double y0 = this.points.get(0).getY();
 		double x1 = this.points.get(1).getX();
 		double y1 = this.points.get(1).getY();
 
-		if (dx != 0 && x0 == x1) {
+		if (dx != 0 && x0 == x1)
 			x1 += dx;
-		}
-		if (dy != 0 && y0 == y1) {
+
+		if (dy != 0 && y0 == y1)
 			y1 += dy;
-		}
+
 		x0 += dx;
 		y0 += dy;
 
 		result.addPoint(x0, y0);
 		result.addPoint(x1, y1);
-		for (int i = 2; i < this.points.size(); i++) {
+		for (int i = 2; i < this.points.size(); i++)
 			result.addPoint(this.points.get(i));
-		}
+
 		return result;
 	}
 
 	public Worm moveLastPoint(UTranslate move) {
 		final double dx = move.getDx();
 		final double dy = move.getDy();
-		if (dx != 0 && dy != 0) {
+		if (dx != 0 && dy != 0)
 			throw new IllegalArgumentException("move=" + move);
-		}
-		final Worm result = new Worm();
+
+		final Worm result = new Worm(style);
 		double x8 = this.points.get(this.points.size() - 2).getX();
 		double y8 = this.points.get(this.points.size() - 2).getY();
 		double x9 = this.points.get(this.points.size() - 1).getX();
 		double y9 = this.points.get(this.points.size() - 1).getY();
 
-		if (dx != 0 && x8 == x9) {
+		if (dx != 0 && x8 == x9)
 			x8 += dx;
-		}
-		if (dy != 0 && y8 == y9) {
+
+		if (dy != 0 && y8 == y9)
 			y8 += dy;
-		}
+
 		x9 += dx;
 		y9 += dy;
 
-		for (int i = 0; i < this.points.size() - 2; i++) {
+		for (int i = 0; i < this.points.size() - 2; i++)
 			result.addPoint(this.points.get(i));
-		}
+
 		result.addPoint(x8, y8);
 		result.addPoint(x9, y9);
 		return result;
@@ -215,24 +229,24 @@ public class Worm implements Iterable<Point2D.Double> {
 	@Override
 	public String toString() {
 		final StringBuilder result = new StringBuilder();
-		for (int i = 0; i < points.size() - 1; i++) {
+		for (int i = 0; i < points.size() - 1; i++)
 			result.append(getDirectionAtPoint(i) + " ");
-		}
+
 		return result + points.toString();
 	}
 
 	public void addPoint(double x, double y) {
-		if (Double.isNaN(x)) {
+		if (Double.isNaN(x))
 			throw new IllegalArgumentException();
-		}
-		if (Double.isNaN(y)) {
+
+		if (Double.isNaN(y))
 			throw new IllegalArgumentException();
-		}
+
 		if (points.size() > 0) {
 			final Point2D last = getLast();
-			if (last.getX() == x && last.getY() == y) {
+			if (last.getX() == x && last.getY() == y)
 				return;
-			}
+
 		}
 		this.points.add(new Point2D.Double(x, y));
 	}
@@ -246,9 +260,9 @@ public class Worm implements Iterable<Point2D.Double> {
 	}
 
 	SnakeDirection getDirection() {
-		if (points.size() < 2) {
+		if (points.size() < 2)
 			throw new IllegalStateException();
-		}
+
 		return SnakeDirection.getDirection(points.get(0), points.get(1));
 	}
 
@@ -282,9 +296,9 @@ public class Worm implements Iterable<Point2D.Double> {
 		for (int i = 0; i < points.size() - 1; i++) {
 			final Point2D.Double pt1 = get(i);
 			final Point2D.Double pt2 = get(i + 1);
-			if (pt1.getY() == pt2.getY() && area.doesHorizontalCross(pt1, pt2)) {
+			if (pt1.getY() == pt2.getY() && area.doesHorizontalCross(pt1, pt2))
 				return true;
-			}
+
 		}
 		return false;
 	}
@@ -325,10 +339,10 @@ public class Worm implements Iterable<Point2D.Double> {
 	}
 
 	public Worm merge(Worm other, MergeStrategy merge) {
-		if (Snake.same(this.getLast(), other.getFirst()) == false) {
+		if (Snake.same(this.getLast(), other.getFirst()) == false)
 			throw new IllegalArgumentException();
-		}
-		final Worm result = new Worm();
+
+		final Worm result = new Worm(style);
 		result.points.addAll(this.points);
 		result.points.addAll(other.points);
 		result.mergeMe(merge);
@@ -348,9 +362,9 @@ public class Worm implements Iterable<Point2D.Double> {
 			change = change || removePattern5();
 			change = change || removePattern6();
 			change = change || removePattern7();
-			if (merge == MergeStrategy.FULL) {
+			if (merge == MergeStrategy.FULL)
 				change = change || removePattern8();
-			}
+
 		} while (change);
 	}
 
@@ -508,6 +522,10 @@ public class Worm implements Iterable<Point2D.Double> {
 			}
 		}
 		return false;
+	}
+
+	public Style getStyle() {
+		return style;
 	}
 
 }

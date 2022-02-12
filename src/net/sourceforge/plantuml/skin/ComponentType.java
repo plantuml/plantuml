@@ -70,7 +70,7 @@ public enum ComponentType implements Styleable {
 		return this == ARROW;
 	}
 
-	public StyleSignature getDefaultStyleDefinition() {
+	public StyleSignature getStyleSignature() {
 		if (this == PARTICIPANT_HEAD || this == PARTICIPANT_TAIL) {
 			return StyleSignature.of(SName.root, SName.element,
 					SName.sequenceDiagram, SName.participant);

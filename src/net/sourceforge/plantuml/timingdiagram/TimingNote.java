@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.svek.image.Opale;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
@@ -89,12 +90,14 @@ public class TimingNote {
 		final FontConfiguration fc;
 		final HColor noteBackgroundColor;
 		final HColor borderColor;
+		UStroke stroke = new UStroke();
 		if (UseStyle.useBetaStyle()) {
 			fc = new FontConfiguration(skinParam, style);
 			shadowing = style.value(PName.Shadowing).asDouble();
 			borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
 			noteBackgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
 					skinParam.getIHtmlColorSet());
+			stroke = style.getStroke();
 		} else {
 			shadowing = skinParam.shadowing(null) ? 4 : 0;
 			fc = new FontConfiguration(skinParam, FontParam.NOTE, null);
@@ -106,7 +109,7 @@ public class TimingNote {
 				.build(fc, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT), skinParam, CreoleMode.FULL)
 				.createSheet(note);
 		final SheetBlock1 sheet1 = new SheetBlock1(sheet, LineBreakStrategy.NONE, skinParam.getPadding());
-		final Opale opale = new Opale(shadowing, borderColor, noteBackgroundColor, sheet1, false);
+		final Opale opale = new Opale(shadowing, borderColor, noteBackgroundColor, sheet1, false, stroke);
 		return opale;
 	}
 

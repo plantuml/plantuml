@@ -136,7 +136,7 @@ public class FtileFactoryDelegatorRepeat extends FtileFactoryDelegator {
 					final UTranslate tr2 = genealogy.getTranslate(diamondBreak, ug.getStringBounder());
 					final Dimension2D dimDiamond = diamondBreak.calculateDimension(ug.getStringBounder());
 
-					final Snake snake = Snake.create(arrowColor, Arrows.asToRight());
+					final Snake snake = Snake.create(skinParam(), arrowColor, Arrows.asToRight());
 					snake.addPoint(tr1.getDx(), tr1.getDy());
 					snake.addPoint(0, tr1.getDy());
 					snake.addPoint(0, tr2.getDy() + dimDiamond.getHeight() / 2);

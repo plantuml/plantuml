@@ -223,7 +223,7 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), getColorSet());
 		final double shadowing = style.value(PName.Shadowing).asDouble();
 
-		return new Opale(shadowing, borderColor, noteBackgroundColor, sheet1, false);
+		return new Opale(shadowing, borderColor, noteBackgroundColor, sheet1, false, style.getStroke());
 	}
 
 	public FingerPrint getFingerPrint(StringBounder stringBounder) {

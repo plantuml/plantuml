@@ -99,9 +99,9 @@ public class ComponentRoseReference extends AbstractTextualComponent {
 
 		URectangle rect = new URectangle(dimensionToUse.getWidth() - xMargin * 2 - symbolContextBody.getDeltaShadow(),
 				dimensionToUse.getHeight() - heightFooter);
-		if (this.roundCorner != 0) {
+		if (this.roundCorner != 0)
 			rect = rect.rounded(this.roundCorner);
-		}
+
 		rect.setDeltaShadow(symbolContextBody.getDeltaShadow());
 		ug = symbolContextBody.apply(ug);
 		ug.apply(UTranslate.dx(xMargin)).draw(rect);

@@ -55,7 +55,10 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.svek.image.Opale;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -65,33 +68,40 @@ public class FloatingNote extends AbstractTextBlock implements Stencil, TextBloc
 
 	private final Opale opale;
 
-	public FloatingNote(Display note, ISkinParam skinParam, Style style) {
+	public FloatingNote(Display note, ISkinParam skinParam) {
 
 		final Rose rose = new Rose();
 
-		final HColor noteBackgroundColor = rose.getHtmlColor(skinParam, ColorParam.noteBackground);
-		final HColor borderColor = rose.getHtmlColor(skinParam, ColorParam.noteBorder);
-
-		final FontConfiguration fc = new FontConfiguration(skinParam, FontParam.NOTE, null);
-
+		UStroke stroke = new UStroke();
+		final HColor noteBackgroundColor;
+		final HColor borderColor;
+		final FontConfiguration fc;
 		final LineBreakStrategy wrapWidth;
-
+		final double shadowing;
 		if (UseStyle.useBetaStyle()) {
+			final Style style = StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.note)
+					.getMergedStyle(skinParam.getCurrentStyleBuilder());
 			wrapWidth = style.wrapWidth();
+			fc = new FontConfiguration(skinParam, style);
+			noteBackgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
+					skinParam.getIHtmlColorSet());
+			borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
+			stroke = style.getStroke();
+			shadowing = style.value(PName.Shadowing).asDouble();
 		} else {
+			shadowing = skinParam.shadowing(null) ? 4 : 0;
+			noteBackgroundColor = rose.getHtmlColor(skinParam, ColorParam.noteBackground);
+			borderColor = rose.getHtmlColor(skinParam, ColorParam.noteBorder);
+			fc = new FontConfiguration(skinParam, FontParam.NOTE, null);
 			wrapWidth = skinParam.wrapWidth();
-
 		}
+
 		final Sheet sheet = Parser
 				.build(fc, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT), skinParam, CreoleMode.FULL)
 				.createSheet(note);
 		final SheetBlock2 sheetBlock2 = new SheetBlock2(new SheetBlock1(sheet, wrapWidth, skinParam.getPadding()), this,
-				new UStroke(1));
-		final double shadowing;
-		shadowing = skinParam.shadowing(null) ? 4 : 0;
-		this.opale = new Opale(shadowing, borderColor, noteBackgroundColor, sheetBlock2, false);
-
-		// this.text = sheetBlock2;
+				stroke);
+		this.opale = new Opale(shadowing, borderColor, noteBackgroundColor, sheetBlock2, false, stroke);
 
 	}
 

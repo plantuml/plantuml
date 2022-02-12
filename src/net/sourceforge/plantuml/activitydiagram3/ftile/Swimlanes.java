@@ -120,7 +120,7 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock, Styleable
 		return Collections.unmodifiableList(swimlanesSpecial);
 	}
 
-	public StyleSignature getDefaultStyleDefinition() {
+	public StyleSignature getStyleSignature() {
 		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.swimlane);
 	}
 
@@ -131,7 +131,7 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock, Styleable
 
 	protected Style getStyle() {
 		if (style == null) {
-			this.style = getDefaultStyleDefinition().getMergedStyle(skinParam.getCurrentStyleBuilder());
+			this.style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
 		}
 		return style;
 	}

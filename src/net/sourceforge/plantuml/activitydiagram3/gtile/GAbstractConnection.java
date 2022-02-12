@@ -91,6 +91,10 @@ public abstract class GAbstractConnection implements GConnection {
 		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.arrow);
 	}
 	
+	protected ISkinParam skinParam() {
+		throw new UnsupportedOperationException("wip");
+	}
+	
 	// DUPLICATE 4561
 	final protected Rainbow getInLinkRenderingColor() {
 		Rainbow color;

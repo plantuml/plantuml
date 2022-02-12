@@ -39,6 +39,7 @@ import java.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -46,6 +47,8 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockLineBefore;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 public abstract class BodyEnhancedAbstract extends AbstractTextBlock implements TextBlock {
@@ -53,10 +56,12 @@ public abstract class BodyEnhancedAbstract extends AbstractTextBlock implements 
 	protected final HorizontalAlignment align;
 	protected final FontConfiguration titleConfig;
 	protected TextBlock area;
+	private final Style style;
 
-	BodyEnhancedAbstract(HorizontalAlignment align, FontConfiguration titleConfig) {
+	BodyEnhancedAbstract(HorizontalAlignment align, FontConfiguration titleConfig, Style style) {
 		this.align = align;
 		this.titleConfig = titleConfig;
+		this.style = style;
 	}
 
 	public static boolean isBlockSeparator(CharSequence cs) {
@@ -85,9 +90,9 @@ public abstract class BodyEnhancedAbstract extends AbstractTextBlock implements 
 	}
 
 	final protected TextBlock getTitle(String s, ISkinSimple spriteContainer) {
-		if (s.length() <= 4) {
+		if (s.length() <= 4)
 			return null;
-		}
+
 		s = StringUtils.trin(s.substring(2, s.length() - 2));
 		return Display.getWithNewlines(s).create(titleConfig, HorizontalAlignment.LEFT, spriteContainer);
 	}
@@ -98,16 +103,22 @@ public abstract class BodyEnhancedAbstract extends AbstractTextBlock implements 
 
 	final protected TextBlock decorate(StringBounder stringBounder, TextBlock b, char separator, TextBlock title) {
 		final double marginX = getMarginX();
-		if (separator == 0) {
+		if (separator == 0)
 			return TextBlockUtils.withMargin(b, marginX, 0);
-		}
-		if (title == null) {
-			return new TextBlockLineBefore(TextBlockUtils.withMargin(b, marginX, 4), separator);
-		}
+
+		if (title == null)
+			return new TextBlockLineBefore(getDefaultThickness(), TextBlockUtils.withMargin(b, marginX, 4), separator);
+
 		final Dimension2D dimTitle = title.calculateDimension(stringBounder);
-		final TextBlock raw = new TextBlockLineBefore(
+		final TextBlock raw = new TextBlockLineBefore(getDefaultThickness(),
 				TextBlockUtils.withMargin(b, marginX, 6, dimTitle.getHeight() / 2, 4), separator, title);
 		return TextBlockUtils.withMargin(raw, 0, 0, dimTitle.getHeight() / 2, 0);
+	}
+
+	final protected double getDefaultThickness() {
+		if (UseStyle.useBetaStyle())
+			return style.value(PName.LineThickness).asDouble();
+		return 1.5;
 	}
 
 }

@@ -70,11 +70,11 @@ public class LiveBoxesDrawer {
 
 	public LiveBoxesDrawer(Context2D context, Rose skin, ISkinParam skinParam, Map<Double, Double> delays) {
 		this.cross = skin.createComponent(
-				new Style[] { ComponentType.DESTROY.getDefaultStyleDefinition()
+				new Style[] { ComponentType.DESTROY.getStyleSignature()
 						.getMergedStyle(skinParam.getCurrentStyleBuilder()) },
 				ComponentType.DESTROY, null, skinParam, null);
 		this.compForWidth = skin.createComponent(
-				new Style[] { ComponentType.ALIVE_BOX_CLOSE_CLOSE.getDefaultStyleDefinition()
+				new Style[] { ComponentType.ALIVE_BOX_CLOSE_CLOSE.getStyleSignature()
 						.getMergedStyle(skinParam.getCurrentStyleBuilder()) },
 				ComponentType.ALIVE_BOX_CLOSE_CLOSE, null, skinParam, null);
 		this.context = context;
@@ -126,7 +126,7 @@ public class LiveBoxesDrawer {
 		final Area area = new Area(width, yb - ya);
 		SkinParamBackcolored skinParam2 = new SkinParamBackcolored(skinParam,
 				symbolContext == null ? null : symbolContext.getBackColor());
-		Style style = type.getDefaultStyleDefinition().getMergedStyle(skinParam.getCurrentStyleBuilder());
+		Style style = type.getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
 		if (style == null) {
 			if (symbolContext != null)
 				skinParam2.forceColor(ColorParam.sequenceLifeLineBorder, symbolContext.getForeColor());

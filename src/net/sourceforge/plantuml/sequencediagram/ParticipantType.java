@@ -60,7 +60,7 @@ public enum ParticipantType implements Styleable {
 		return background;
 	}
 
-	public StyleSignature getDefaultStyleDefinition() {
+	public StyleSignature getStyleSignature() {
 		if (this == PARTICIPANT) {
 			return StyleSignature.of(SName.root, SName.element,
 					SName.sequenceDiagram, SName.participant);

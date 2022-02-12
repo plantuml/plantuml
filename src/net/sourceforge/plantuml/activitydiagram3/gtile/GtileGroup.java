@@ -126,7 +126,7 @@ public class GtileGroup extends AbstractGtileRoot {
 		if (Display.isNull(displayNote)) {
 			this.headerNote = TextBlockUtils.empty(0, 0);
 		} else {
-			this.headerNote = new FloatingNote(displayNote, skinParam, style);
+			this.headerNote = new FloatingNote(displayNote, skinParam);
 		}
 
 		final UStroke thickness = skinParam.getThickness(LineParam.partitionBorder, null);

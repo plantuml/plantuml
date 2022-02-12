@@ -107,6 +107,7 @@ import net.sourceforge.plantuml.tim.stdlib.IntVal;
 import net.sourceforge.plantuml.tim.stdlib.InvokeProcedure;
 import net.sourceforge.plantuml.tim.stdlib.IsDark;
 import net.sourceforge.plantuml.tim.stdlib.IsLight;
+import net.sourceforge.plantuml.tim.stdlib.JsonKeyExists;
 import net.sourceforge.plantuml.tim.stdlib.Lighten;
 import net.sourceforge.plantuml.tim.stdlib.LoadJson;
 import net.sourceforge.plantuml.tim.stdlib.LogicalNot;
@@ -187,6 +188,7 @@ public class TContext {
 		functionsSet.addFunction(new GetJsonKey());
 		functionsSet.addFunction(new GetJsonType());
 		functionsSet.addFunction(new SplitStr());
+		functionsSet.addFunction(new JsonKeyExists());
 		// %standard_exists_function
 		// %str_replace
 		// !exit

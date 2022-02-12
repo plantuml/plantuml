@@ -72,7 +72,7 @@ final public class Note extends AbstractEvent implements Event, SpecificBackcolo
 
 	private Style style;
 
-	public StyleSignature getDefaultStyleDefinition() {
+	public StyleSignature getStyleSignature() {
 		return noteStyle.getDefaultStyleDefinition();
 	}
 
@@ -103,14 +103,14 @@ final public class Note extends AbstractEvent implements Event, SpecificBackcolo
 		this.position = position;
 		this.strings = strings;
 		if (UseStyle.useBetaStyle()) {
-			this.style = getDefaultStyleDefinition().getMergedStyle(styleBuilder);
+			this.style = getStyleSignature().getMergedStyle(styleBuilder);
 		}
 	}
 
 	public void setStereotype(Stereotype stereotype) {
 		if (UseStyle.useBetaStyle()) {
 			final List<Style> others = stereotype.getStyles(styleBuilder);
-			this.style = getDefaultStyleDefinition().mergeWith(others).getMergedStyle(styleBuilder);
+			this.style = getStyleSignature().mergeWith(others).getMergedStyle(styleBuilder);
 		}
 	}
 

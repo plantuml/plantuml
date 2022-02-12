@@ -205,7 +205,7 @@ public class TimingDiagram extends UmlDiagram implements Clocks {
 	}
 
 	private UStroke getBorderStroke() {
-		return new UStroke(1.7);
+		return getStyleSignature().getMergedStyle(getCurrentStyleBuilder()).getStroke();
 	}
 
 	private UTranslate getLastTranslate(final StringBounder stringBounder) {

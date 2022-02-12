@@ -30,19 +30,40 @@
  *
  *
  * Original Author:  Arnaud Roques
- * Contribution   :  Serge Wenger
+ *
  *
  */
-package net.sourceforge.plantuml.svek.image;
+package net.sourceforge.plantuml.style;
 
-import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.cucadiagram.ILeaf;
-import net.sourceforge.plantuml.style.SName;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-public class EntityImageDeepHistory extends EntityImagePseudoState {
+public class CssVariables {
 
-	public EntityImageDeepHistory(ILeaf entity, ISkinParam skinParam, SName sname) {
-		super(entity, skinParam, "H*", sname);
+	private final Map<String, String> variables = new HashMap<>();
 
+	private final Pattern learnPattern = Pattern.compile("^--([_\\w][-_\\w]+)[ :]+(.*?);?");
+	private final Pattern retrieve = Pattern.compile("var\\(-*([_\\w][-_\\w]+)\\)");
+
+	public void learn(String s) {
+		final Matcher m = learnPattern.matcher(s);
+		if (m.matches())
+			variables.put(m.group(1), m.group(2));
 	}
+
+	public String value(String v) {
+		if (v.startsWith("var(")) {
+			final Matcher m = retrieve.matcher(v);
+			if (m.matches()) {
+				final String varname = m.group(1);
+				final String result = variables.get(varname);
+				if (result != null)
+					return result;
+			}
+		}
+		return v;
+	}
+
 }

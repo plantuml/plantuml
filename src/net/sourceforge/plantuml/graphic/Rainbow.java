@@ -78,6 +78,7 @@ public class Rainbow {
 		return Rainbow.build(new HtmlColorAndStyle(arrowColor, arrowHeadColor));
 	}
 
+	@Deprecated
 	public static Rainbow build(ISkinParam skinParam) {
 		if (UseStyle.useBetaStyle()) {
 			throw new IllegalStateException();

@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -146,6 +147,7 @@ public class FtileAssemblySimple extends AbstractTextBlock implements Ftile {
 		return Collections.emptyList();
 	}
 
+	@Override
 	public Set<Swimlane> getSwimlanes() {
 		final Set<Swimlane> result = new HashSet<>();
 		result.addAll(tile1.getSwimlanes());
@@ -153,14 +155,17 @@ public class FtileAssemblySimple extends AbstractTextBlock implements Ftile {
 		return Collections.unmodifiableSet(result);
 	}
 
+	@Override
 	public ISkinParam skinParam() {
 		return tile1.skinParam();
 	}
 
-	public UStroke getThickness() {
-		return tile1.getThickness();
+	@Override
+	public UStroke getThickness(Style style) {
+		return tile1.getThickness(style);
 	}
 
+	@Override
 	public List<WeldingPoint> getWeldingPoints() {
 		final List<WeldingPoint> result = new ArrayList<>(tile1.getWeldingPoints());
 		result.addAll(tile2.getWeldingPoints());
@@ -171,6 +176,7 @@ public class FtileAssemblySimple extends AbstractTextBlock implements Ftile {
 		return Arrays.asList(tile1, tile2);
 	}
 
+	@Override
 	public HorizontalAlignment arrowHorizontalAlignment() {
 		return tile1.arrowHorizontalAlignment();
 	}

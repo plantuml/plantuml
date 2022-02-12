@@ -110,7 +110,7 @@ public class MutingLine {
 		if (y2 < y1) {
 			throw new IllegalArgumentException();
 		}
-		final Style style = defaultLineType.getDefaultStyleDefinition().getMergedStyle(styleBuilder);
+		final Style style = defaultLineType.getStyleSignature().getMergedStyle(styleBuilder);
 		final Component comp = skin.createComponent(new Style[] { style }, defaultLineType, null, skinParam,
 				participant.getDisplay(skinParam.forceSequenceParticipantUnderlined()));
 		final Dimension2D dim = comp.getPreferredDimension(ug.getStringBounder());

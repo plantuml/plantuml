@@ -72,18 +72,18 @@ public class Participant implements SpecificBackcolorable, WithStyle {
 
 	// private Style style;
 
-	public StyleSignature getDefaultStyleDefinition() {
-		return type.getDefaultStyleDefinition().addClickable(getUrl());
+	public StyleSignature getStyleSignature() {
+		return type.getStyleSignature().addClickable(getUrl());
 	}
 
 	public Style[] getUsedStyles() {
 		if (UseStyle.useBetaStyle() == false) {
 			return null;
 		}
-		final StyleSignature signature = getDefaultStyleDefinition().with(stereotype);
+		final StyleSignature signature = getStyleSignature().with(stereotype);
 		Style tmp = signature.getMergedStyle(styleBuilder);
 		tmp = tmp.eventuallyOverride(getColors());
-		Style stereo = getDefaultStyleDefinition().forStereotypeItself(stereotype).getMergedStyle(styleBuilder);
+		Style stereo = getStyleSignature().forStereotypeItself(stereotype).getMergedStyle(styleBuilder);
 		if (tmp != null) {
 			stereo = tmp.mergeWith(stereo);
 		}

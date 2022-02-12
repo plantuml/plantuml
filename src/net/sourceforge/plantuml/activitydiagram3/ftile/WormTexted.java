@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.graphic.HtmlColorAndStyle;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
+import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -53,8 +54,8 @@ public class WormTexted implements Iterable<Point2D.Double> {
 	private final Worm worm;
 	private TextBlock textBlock;
 
-	public WormTexted() {
-		this(new Worm());
+	private WormTexted(Style style) {
+		this(new Worm(style));
 	}
 
 	private WormTexted(Worm worm) {

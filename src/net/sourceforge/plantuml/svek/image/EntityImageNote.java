@@ -94,6 +94,7 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 	private final int marginY = 5;
 	private final boolean withShadow;
 	private final ISkinParam skinParam;
+	private final Style style;
 
 	private final TextBlock textBlock;
 
@@ -109,7 +110,7 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 		final FontConfiguration fontConfiguration;
 		final HorizontalAlignment horizontalAlignment;
 		if (UseStyle.useBetaStyle()) {
-			final Style style = getDefaultStyleDefinition(umlDiagramType.getStyleName())
+			this.style = getDefaultStyleDefinition(umlDiagramType.getStyleName())
 					.getMergedStyle(skinParam.getCurrentStyleBuilder());
 			if (entity.getColors().getColor(ColorType.BACK) == null)
 				this.noteBackgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
@@ -124,7 +125,7 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 			fontConfiguration = style.getFontConfiguration(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
 			horizontalAlignment = style.getHorizontalAlignment();
 		} else {
-
+			this.style = null;
 			this.shadowing = skinParam.shadowing(getEntity().getStereotype()) ? 4 : 0;
 			if (entity.getColors().getColor(ColorType.BACK) == null)
 				this.noteBackgroundColor = rose.getHtmlColor(getSkinParam(), ColorParam.noteBackground);
@@ -141,7 +142,7 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 			textBlock = new TextBlockEmpty();
 		else
 			textBlock = BodyFactory.create3(strings, FontParam.NOTE, getSkinParam(), horizontalAlignment,
-					fontConfiguration, getSkinParam().wrapWidth());
+					fontConfiguration, getSkinParam().wrapWidth(), style);
 
 	}
 
@@ -244,7 +245,7 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 			final Point2D newRefpp2 = move(pp2, node.getMinX(), node.getMinY());
 			final Point2D projection = move(other.projection(newRefpp2, stringBounder), -node.getMinX(),
 					-node.getMinY());
-			final Opale opale = new Opale(shadowing, borderColor, noteBackgroundColor, textBlock, true);
+			final Opale opale = new Opale(shadowing, borderColor, noteBackgroundColor, textBlock, true, getStroke());
 			opale.setRoundCorner(getRoundCorner());
 			opale.setOpale(strategy, pp1, projection);
 			final UGraphic stroked = applyStroke(ug2);
@@ -285,11 +286,21 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 	}
 
 	private UGraphic applyStroke(UGraphic ug) {
+		if (UseStyle.useBetaStyle())
+			return ug.apply(style.getStroke());
+
 		final UStroke stroke = skinParam.getThickness(LineParam.noteBorder, null);
 		if (stroke == null)
 			return ug;
 
 		return ug.apply(stroke);
+	}
+
+	private UStroke getStroke() {
+		if (UseStyle.useBetaStyle())
+			return style.getStroke();
+
+		return skinParam.getThickness(LineParam.noteBorder, null);
 	}
 
 	private Direction getOpaleStrategy(double width, double height, Point2D pt) {

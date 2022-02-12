@@ -87,7 +87,7 @@ public class FtileGroup extends AbstractFtile {
 	private final USymbol type;
 	private final double roundCorner;
 
-	final public StyleSignature getDefaultStyleDefinitionPartition() {
+	final public StyleSignature getStyleSignature() {
 		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.partition);
 	}
 
@@ -100,8 +100,9 @@ public class FtileGroup extends AbstractFtile {
 
 		final FontConfiguration fc;
 		final Style style;
+		final UStroke thickness;
 		if (UseStyle.useBetaStyle()) {
-			style = getDefaultStyleDefinitionPartition().getMergedStyle(skinParam.getCurrentStyleBuilder());
+			style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
 			fc = style.getFontConfiguration(skinParam.getThemeStyle(), getIHtmlColorSet());
 			this.shadowing = style.value(PName.Shadowing).asDouble();
 			this.backColor = backColor == null
@@ -110,6 +111,7 @@ public class FtileGroup extends AbstractFtile {
 			this.borderColor = borderColor == null
 					? style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), getIHtmlColorSet())
 					: borderColor;
+			thickness = style.getStroke();
 		} else {
 			this.backColor = backColor == null ? HColorUtils.WHITE : backColor;
 			this.borderColor = borderColor == null ? HColorUtils.BLACK : borderColor;
@@ -119,6 +121,7 @@ public class FtileGroup extends AbstractFtile {
 			fc = new FontConfiguration(font, fontColor, skinParam.getHyperlinkColor(),
 					skinParam.useUnderlineForHyperlink(), skinParam.getTabSize());
 			this.shadowing = skinParam().shadowing(null) ? 3 : 0;
+			thickness = skinParam.getThickness(LineParam.partitionBorder, null);
 		}
 		if (title == null)
 			this.name = TextBlockUtils.empty(0, 0);
@@ -128,9 +131,8 @@ public class FtileGroup extends AbstractFtile {
 		if (Display.isNull(displayNote))
 			this.headerNote = TextBlockUtils.empty(0, 0);
 		else
-			this.headerNote = new FloatingNote(displayNote, skinParam, style);
+			this.headerNote = new FloatingNote(displayNote, skinParam);
 
-		final UStroke thickness = skinParam.getThickness(LineParam.partitionBorder, null);
 		this.stroke = thickness == null ? new UStroke(2) : thickness;
 	}
 

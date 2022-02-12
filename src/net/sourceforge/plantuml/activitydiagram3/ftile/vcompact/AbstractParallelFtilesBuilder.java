@@ -67,11 +67,11 @@ public abstract class AbstractParallelFtilesBuilder {
 	private final StringBounder stringBounder;
 	protected final List<Ftile> list99 = new ArrayList<>();
 
-	public StyleSignature getDefaultStyleDefinition() {
+	public StyleSignature getStyleSignature() {
 		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.activity);
 	}
 
-	final public StyleSignature getDefaultStyleDefinitionArrow() {
+	final public StyleSignature getStyleSignatureArrow() {
 		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.arrow);
 	}
 
@@ -136,7 +136,7 @@ public abstract class AbstractParallelFtilesBuilder {
 		}
 		final FontConfiguration fontConfiguration;
 		if (UseStyle.useBetaStyle()) {
-			final Style style = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam().getCurrentStyleBuilder());
+			final Style style = getStyleSignatureArrow().getMergedStyle(skinParam().getCurrentStyleBuilder());
 			fontConfiguration = style.getFontConfiguration(skinParam().getThemeStyle(), skinParam().getIHtmlColorSet());
 		} else {
 			fontConfiguration = new FontConfiguration(skinParam(), FontParam.ARROW, null);

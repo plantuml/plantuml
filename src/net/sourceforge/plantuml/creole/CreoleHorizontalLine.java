@@ -59,6 +59,8 @@ public class CreoleHorizontalLine extends AbstractAtom implements Atom {
 	private final char style;
 	private final ISkinSimple skinParam;
 
+	private final static double defaultThickness = 1;
+
 	public static CreoleHorizontalLine create(FontConfiguration fontConfiguration, String line, char style,
 			ISkinSimple skinParam) {
 		return new CreoleHorizontalLine(fontConfiguration, line, style, skinParam);
@@ -73,10 +75,10 @@ public class CreoleHorizontalLine extends AbstractAtom implements Atom {
 
 	private UHorizontalLine getHorizontalLine() {
 		if (line.length() == 0) {
-			return UHorizontalLine.infinite(0, 0, style);
+			return UHorizontalLine.infinite(defaultThickness, 0, 0, style);
 		}
 		final TextBlock tb = getTitle();
-		return UHorizontalLine.infinite(0, 0, tb, style);
+		return UHorizontalLine.infinite(defaultThickness, 0, 0, tb, style);
 	}
 
 	private TextBlock getTitle() {

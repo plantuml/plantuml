@@ -112,7 +112,7 @@ public class LinkAnchor {
 
 		final Display display = Display.getWithNewlines(message);
 		final TextBlock title = display.create(fontConfiguration, HorizontalAlignment.CENTER, skinParam);
-		final Snake snake = Snake.create(Arrows.asToUp(), rainbow, Arrows.asToDown()).withLabel(title,
+		final Snake snake = Snake.create(skinParam, Arrows.asToUp(), rainbow, Arrows.asToDown()).withLabel(title,
 				HorizontalAlignment.CENTER);
 
 		snake.addPoint(x, ymin + 2);

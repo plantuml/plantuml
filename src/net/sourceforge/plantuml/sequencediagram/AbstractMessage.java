@@ -54,14 +54,14 @@ import net.sourceforge.plantuml.style.WithStyle;
 public abstract class AbstractMessage implements EventWithDeactivate, WithStyle {
 
 	public Style[] getUsedStyles() {
-		Style style = getDefaultStyleDefinition().getMergedStyle(styleBuilder);
+		Style style = getStyleSignature().getMergedStyle(styleBuilder);
 		if (style != null && arrowConfiguration.getColor() != null) {
 			style = style.eventuallyOverride(PName.LineColor, arrowConfiguration.getColor());
 		}
 		return new Style[] { style };
 	}
 
-	public StyleSignature getDefaultStyleDefinition() {
+	public StyleSignature getStyleSignature() {
 		return StyleSignature.of(SName.root, SName.element, SName.sequenceDiagram, SName.arrow);
 	}
 

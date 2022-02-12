@@ -1,4 +1,8 @@
 root {
+  --common-background: #f1f1f1;
+  --note-background: #FEFFDD;
+  --grey-blue: #e2e2f0;
+  
   FontName SansSerif
   HyperLinkColor blue
   FontColor black
@@ -9,8 +13,8 @@ root {
   DiagonalCorner 0
   LineThickness 1.0
   LineColor #181818
-  BackGroundColor #f8f8f8
-  Shadowing 0.0
+  BackGroundColor: var(--common-background);
+  Shadowing: 0.0;
 }
 
 document {
@@ -73,7 +77,13 @@ element {
   }
 }
 
+element {
+  LineThickness 0.5
+}
+
 group {
+  BackGroundColor transparent
+  LineThickness 1.0
   package {
     LineThickness 1.5
     LineColor black
@@ -84,38 +94,32 @@ group {
   }
 }
 
-group {
-    BackGroundColor transparent
-}
-
 sequenceDiagram {
-  group {
-    LineColor black
-    LineThickness 2.0
-    FontSize 11
-    FontStyle bold
-  }
-
-  groupHeader {
-    BackGroundColor #e
-    LineColor black
-    FontSize 13
-    FontStyle bold
-  }
-
-  lifeLine {
-    BackGroundColor white
-    LineStyle 5
-  }
-
-	destroy {
+	group {
+	  LineColor black
+	  LineThickness 1.5
+	  FontSize 11
+	  FontStyle bold
 	}
 	
+	groupHeader {
+	  LineThickness 1.5
+	  BackGroundColor #e
+	  LineColor black
+	  FontSize 13
+	  FontStyle bold
+	}
+	
+	lifeLine {
+	  BackGroundColor white
+	  LineStyle 5
+	}
+
 	reference {
 	  FontSize 12
 	  LineColor black
 	  BackGroundColor transparent
-	  LineThickness 2.0
+	  LineThickness 1.5
 	  HorizontalAlignment center
 	}
 	
@@ -143,9 +147,20 @@ sequenceDiagram {
 	  FontSize 13
 	  FontStyle bold
 	}
+	participant {
+	  RoundCorner 5  
+	}
+	
+	participant,actor,boundary,control,entity,queue,database,collections {
+	  BackgroundColor: var(--grey-blue);
+	  HorizontalAlignment center
+	}
 }
 
-classDiagram {
+classDiagram,componentDiagram,objectDiagram {
+  element {
+    RoundCorner 5
+  }
 }
 
 visibilityIcon {
@@ -202,6 +217,9 @@ stateDiagram {
 	  FontStyle plain
 	}
   }
+  group {
+    LineThickness 0.5
+  }
 }
 
 
@@ -211,59 +229,24 @@ delay {
   HorizontalAlignment center
 }
 
-participant {
-  LineThickness 1.5
-  HorizontalAlignment center
-}
 
-actor {
-  LineThickness 2.0
-  HorizontalAlignment center
-}
-
-boundary {
-  LineThickness 2.0
-  HorizontalAlignment center
-}
-
-control {
-  LineThickness 2.0
-  HorizontalAlignment center
-}
-
-entity {
-  LineThickness 2.0
-  HorizontalAlignment center
-}
-
-queue {
-  LineThickness 2.0
-  HorizontalAlignment center
-}
-
-database {
-  HorizontalAlignment center
-}
-
-collections {
-  LineThickness 1.5
-  HorizontalAlignment center
-}
 
 swimlane {
   BackGroundColor none
   LineColor black
-  LineThickness 2
+  LineThickness 1.5
   FontSize 18
 }
 
 arrow {
   FontSize 13
+  LineThickness 1.0
 }
 
 note {
   FontSize 13
-  BackGroundColor #ebebeb
+  BackGroundColor: var(--note-background);
+  LineThickness 0.5
 }
 
 partition {
@@ -298,7 +281,6 @@ wbsDiagram {
 
 activityDiagram {
 	activity {
-	    LineThickness 1.5
 	    Padding 10
 	    FontSize 12
 	    RoundCorner 25
@@ -306,12 +288,14 @@ activityDiagram {
 	partition {
 	    LineColor black
 	    BackgroundColor none
+	    LineThickness 1.5
 	}
 	diamond {
 	    FontSize 11
 	}
 	arrow {
 	    FontSize 11
+	    LineThickness 1
 	}
 	circle {
 	    start {
@@ -362,10 +346,11 @@ ganttDiagram {
 	    LineColor #C0C0C0
 	}
 	closed {
-        BackGroundColor #E0E0E0
+        BackGroundColor #F1E5E5
         FontColor #989898
     }
 	task {
+        BackGroundColor: var(--grey-blue);
 		RoundCorner 0
         Margin 2 2 2 2
         Padding 0
@@ -385,7 +370,6 @@ usecase {
 }
 
 yamlDiagram,jsonDiagram {
-  BackGroundColor white
   FontColor black
   LineColor black
   arrow {
@@ -412,10 +396,13 @@ timingDiagram {
 	LineColor #3
 	FontColor #3
 	FontStyle bold
-    LineThickness 1.5
+    LineThickness 0.5
     timeline {
 	  FontStyle plain
 	  FontSize 11
+    }
+    note {
+      LineThickness 0.5
     }
 	arrow {
 	    LineColor darkblue
@@ -430,18 +417,20 @@ timingDiagram {
 	}
 	clock {
 	  LineColor darkgreen
+      LineThickness 1.5
 	}
 	concise {
 	  FontSize 12
 	  LineColor darkgreen
-	  BackgroundColor #c
+	  BackgroundColor: var(--grey-blue);
+      LineThickness 2
 	}
 	robust {
 	  FontStyle plain
 	  FontSize 12
 	  LineColor darkgreen
       LineThickness 2
-	  BackgroundColor #c
+	  BackgroundColor: var(--grey-blue);
 	}
 	highlight {
 	  BackgroundColor #e
@@ -452,6 +441,7 @@ timingDiagram {
 
 nwdiagDiagram {
 	network {
+	    BackgroundColor: var(--grey-blue);
 		FontSize 12
 	}
 	server {
@@ -459,7 +449,7 @@ nwdiagDiagram {
 	}
 	group {
 		FontSize 12
-		BackGroundColor #d
+		BackGroundColor #e7e7e7
 	}
 	arrow {
 		FontSize 11
@@ -638,7 +628,6 @@ ganttDiagram {
 
 
 yamlDiagram,jsonDiagram {
-  BackGroundColor black
   FontColor white
   LineColor white
   node {

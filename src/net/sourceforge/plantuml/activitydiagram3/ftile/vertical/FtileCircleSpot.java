@@ -43,12 +43,15 @@ import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SkinParamUtils;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.UCenteredCharacter;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UFont;
@@ -64,13 +67,19 @@ public class FtileCircleSpot extends AbstractFtile {
 	private final String spot;
 	private final FontConfiguration fc;
 	private final HColor backColor;
+	private final Style style;
 
-	public FtileCircleSpot(ISkinParam skinParam, Swimlane swimlane, String spot, UFont font, HColor backColor) {
+	public FtileCircleSpot(ISkinParam skinParam, Swimlane swimlane, String spot, UFont font, HColor backColor,
+			Style style) {
 		super(skinParam);
+		this.style = style;
 		this.spot = spot;
 		this.swimlane = swimlane;
 		this.backColor = backColor;
-		this.fc = new FontConfiguration(skinParam, FontParam.ACTIVITY, null);
+		if (UseStyle.useBetaStyle())
+			this.fc = new FontConfiguration(skinParam, FontParam.ACTIVITY, null);
+		else
+			this.fc = new FontConfiguration(skinParam, style);
 	}
 
 	@Override
@@ -94,17 +103,30 @@ public class FtileCircleSpot extends AbstractFtile {
 	}
 
 	public void drawU(UGraphic ug) {
-
-		final HColor borderColor = SkinParamUtils.getColor(skinParam(), null, ColorParam.activityBorder);
-		final HColor backColor = this.backColor == null ? SkinParamUtils.getColor(skinParam(), null,
-				ColorParam.activityBackground) : this.backColor;
-
 		final UEllipse circle = new UEllipse(SIZE, SIZE);
-		if (skinParam().shadowing(null)) {
-			circle.setDeltaShadow(3);
+
+		final HColor borderColor;
+		final HColor backColor;
+		double shadow = 0;
+
+		if (UseStyle.useBetaStyle()) {
+			backColor = this.backColor == null
+					? style.value(PName.BackGroundColor).asColor(skinParam().getThemeStyle(), getIHtmlColorSet())
+					: this.backColor;
+			borderColor = style.value(PName.LineColor).asColor(skinParam().getThemeStyle(), getIHtmlColorSet());
+			shadow = style.value(PName.Shadowing).asDouble();
+		} else {
+			borderColor = SkinParamUtils.getColor(skinParam(), null, ColorParam.activityBorder);
+			backColor = this.backColor == null
+					? SkinParamUtils.getColor(skinParam(), null, ColorParam.activityBackground)
+					: this.backColor;
+
+			if (skinParam().shadowing(null))
+				shadow = 3;
 		}
-		ug.apply(borderColor).apply(backColor.bg()).apply(getThickness())
-				.draw(circle);
+
+		circle.setDeltaShadow(shadow);
+		ug.apply(borderColor).apply(backColor.bg()).apply(getThickness(style)).draw(circle);
 
 		ug.apply(fc.getColor()).apply(new UTranslate(SIZE / 2, SIZE / 2))
 				.draw(new UCenteredCharacter(spot.charAt(0), fc.getFont()));

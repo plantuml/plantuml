@@ -83,7 +83,7 @@ public class FtileWithNotes extends AbstractFtile {
 
 	private final double suppSpace = 20;
 
-	public StyleSignature getDefaultStyleDefinition() {
+	public StyleSignature getStyleSignature() {
 		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.note);
 	}
 
@@ -107,17 +107,18 @@ public class FtileWithNotes extends AbstractFtile {
 
 		for (PositionedNote note : notes) {
 			ISkinParam skinParam2 = skinParam;
-			if (note.getColors() != null) {
+			if (note.getColors() != null)
 				skinParam2 = note.getColors().mute(skinParam2);
-			}
+
 			final HColor noteBackgroundColor;
 			final HColor borderColor;
 			final FontConfiguration fc;
 			final double shadowing;
+			UStroke stroke = new UStroke();
 
 			final LineBreakStrategy wrapWidth;
 			if (UseStyle.useBetaStyle()) {
-				final Style style = getDefaultStyleDefinition().getMergedStyle(skinParam.getCurrentStyleBuilder())
+				final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder())
 						.eventuallyOverride(note.getColors());
 				noteBackgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
 						getIHtmlColorSet());
@@ -125,6 +126,7 @@ public class FtileWithNotes extends AbstractFtile {
 				fc = style.getFontConfiguration(skinParam.getThemeStyle(), getIHtmlColorSet());
 				shadowing = style.value(PName.Shadowing).asDouble();
 				wrapWidth = style.wrapWidth();
+				stroke = style.getStroke();
 			} else {
 				noteBackgroundColor = rose.getHtmlColor(skinParam2, ColorParam.noteBackground);
 				borderColor = rose.getHtmlColor(skinParam2, ColorParam.noteBorder);
@@ -148,7 +150,7 @@ public class FtileWithNotes extends AbstractFtile {
 				}
 			}, new UStroke());
 
-			final Opale opale = new Opale(shadowing, borderColor, noteBackgroundColor, sheet2, false);
+			final Opale opale = new Opale(shadowing, borderColor, noteBackgroundColor, sheet2, false, stroke);
 			final TextBlock opaleMarged = TextBlockUtils.withMargin(opale, 10, 10);
 			if (note.getNotePosition() == NotePosition.LEFT) {
 				if (left == null) {

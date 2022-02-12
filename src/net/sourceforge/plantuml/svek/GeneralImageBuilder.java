@@ -185,7 +185,7 @@ public final class GeneralImageBuilder {
 			}
 			if (leaf.getStereotype() != null
 					&& "<<sdlreceive>>".equals(leaf.getStereotype().getLabel(Guillemet.DOUBLE_COMPARATOR))) {
-				return new EntityImageState2(leaf, skinParam);
+				return new EntityImageState2(leaf, skinParam, umlDiagramType.getStyleName());
 			}
 			return new EntityImageState(leaf, skinParam);
 
@@ -262,13 +262,13 @@ public final class GeneralImageBuilder {
 			return new EntityImageEmptyPackage(leaf, skinParam, portionShower, umlDiagramType.getStyleName());
 		}
 		if (leaf.getLeafType() == LeafType.ASSOCIATION) {
-			return new EntityImageAssociation(leaf, skinParam);
+			return new EntityImageAssociation(leaf, skinParam, umlDiagramType.getStyleName());
 		}
 		if (leaf.getLeafType() == LeafType.PSEUDO_STATE) {
-			return new EntityImagePseudoState(leaf, skinParam);
+			return new EntityImagePseudoState(leaf, skinParam, umlDiagramType.getStyleName());
 		}
 		if (leaf.getLeafType() == LeafType.DEEP_HISTORY) {
-			return new EntityImageDeepHistory(leaf, skinParam);
+			return new EntityImageDeepHistory(leaf, skinParam, umlDiagramType.getStyleName());
 		}
 
 		if (leaf.getLeafType() == LeafType.TIPS) {

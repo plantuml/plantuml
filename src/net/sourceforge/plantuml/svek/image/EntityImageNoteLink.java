@@ -63,7 +63,7 @@ public class EntityImageNoteLink extends AbstractTextBlock implements IEntityIma
 	public EntityImageNoteLink(Display note, Colors colors, ISkinParam skinParam, StyleBuilder styleBuilder) {
 		final Rose skin = new Rose();
 		comp = skin.createComponentNote(
-				new Style[] { ComponentType.NOTE.getDefaultStyleDefinition().getMergedStyle(styleBuilder) },
+				new Style[] { ComponentType.NOTE.getStyleSignature().getMergedStyle(styleBuilder) },
 				ComponentType.NOTE, colors.mute(skinParam), note);
 	}
 

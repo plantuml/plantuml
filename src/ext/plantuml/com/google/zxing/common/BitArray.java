@@ -231,8 +231,8 @@ public final class BitArray {
 
   private static int[] makeArray(int size) {
     final int tmp = (size + 31) >> 5;
-        if (tmp>1000)
-        	throw new IllegalArgumentException("Memory error");
+    if (tmp > 1000)
+    	throw new IllegalArgumentException("Not even an issue :-) We just cancel flashcode generation.");
 	return new int[tmp];
   }
   

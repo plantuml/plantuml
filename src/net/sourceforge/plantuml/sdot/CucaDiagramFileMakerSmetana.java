@@ -133,7 +133,8 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 
 		public void drawU(UGraphic ug) {
 			if (minMax != null) {
-				// Matches the adjustment in SvekResult.calculateDimension() except no need to adjust for minY because
+				// Matches the adjustment in SvekResult.calculateDimension() except no need to
+				// adjust for minY because
 				// mirroring takes care of that
 				ug = ug.apply(new UTranslate(6 - minMax.getMinX(), 6));
 			}
@@ -158,8 +159,8 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 					continue;
 				}
 				final ST_Agedge_s edge = ent.getValue();
-				new SmetanaPath(link, edge, ymirror, diagram, getLabel(link), getQualifier(link, 1), getQualifier(link, 2))
-						.drawU(ug);
+				new SmetanaPath(link, edge, ymirror, diagram, getLabel(link), getQualifier(link, 1),
+						getQualifier(link, 2)).drawU(ug);
 			}
 		}
 
@@ -221,7 +222,7 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 			// ug.apply(new UTranslate(llx, lly)).apply(new
 			// UChangeColor(HtmlColorUtils.BLUE))
 			// .draw(new URectangle(urx - llx, ury - lly));
-			cluster.drawU(ug, new UStroke(1.5), diagram.getUmlDiagramType(), diagram.getSkinParam());
+			cluster.drawU(ug, diagram.getUmlDiagramType(), diagram.getSkinParam());
 		} catch (Exception e) {
 			System.err.println("CANNOT DRAW GROUP");
 		}
@@ -324,7 +325,8 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 			throw new IllegalStateException();
 		}
 		final IEntityImage image = printEntityInternal(ent);
-		final SvekNode node = getBibliotekon().createNode(ent, image, dotStringFactory.getColorSequence(), stringBounder);
+		final SvekNode node = getBibliotekon().createNode(ent, image, dotStringFactory.getColorSequence(),
+				stringBounder);
 		dotStringFactory.addNode(node);
 	}
 
@@ -449,9 +451,7 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 
 			// imageBuilder.setUDrawable(new Drawing(new YMirror(dim.getHeight())));
 			final TextBlock drawable = new Drawing(new YMirror(minMax.getMaxY()), minMax);
-			return diagram.createImageBuilder(fileFormatOption)
-					.drawable(drawable)
-					.write(os);
+			return diagram.createImageBuilder(fileFormatOption).drawable(drawable).write(os);
 		} catch (Throwable e) {
 			SmetanaDebug.printMe();
 			UmlDiagram.exportDiagramError(os, e, fileFormatOption, diagram.seed(), diagram.getMetadata(),
@@ -620,7 +620,8 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 			return;
 		}
 		final IEntityImage image = printEntityInternal(ent);
-		final SvekNode shape = getBibliotekon().createNode(ent, image, dotStringFactory.getColorSequence(), stringBounder);
+		final SvekNode shape = getBibliotekon().createNode(ent, image, dotStringFactory.getColorSequence(),
+				stringBounder);
 		// dotStringFactory.addShape(shape);
 	}
 

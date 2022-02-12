@@ -188,7 +188,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 		} else {
 			final HorizontalAlignment align = getSkinParam().getDefaultTextAlignment(defaultAlign);
 			desc = BodyFactory.create3(entity.getDisplay(), symbol.getFontParam(), getSkinParam(), align, fcTitle,
-					getSkinParam().wrapWidth());
+					getSkinParam().wrapWidth(), style);
 		}
 
 		stereo = TextBlockUtils.empty(0, 0);

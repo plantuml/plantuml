@@ -326,7 +326,8 @@ public class Rose {
 					getUFont2(param, FontParam.SEQUENCE_DELAY), stringsToDisplay, param);
 		}
 		if (type == ComponentType.DESTROY) {
-			return new ComponentRoseDestroy(null, getHtmlColor(param, stereotype, ColorParam.sequenceLifeLineBorder));
+			return new ComponentRoseDestroy(styles == null ? null : styles[0],
+					getHtmlColor(param, stereotype, ColorParam.sequenceLifeLineBorder), param);
 		}
 		if (type == ComponentType.NEWPAGE) {
 			throw new UnsupportedOperationException();

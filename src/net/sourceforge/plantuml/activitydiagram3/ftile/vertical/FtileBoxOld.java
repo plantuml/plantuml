@@ -239,7 +239,7 @@ public class FtileBoxOld extends AbstractFtile {
 		if (UseStyle.useBetaStyle()) {
 			thickness = style.getStroke();
 		} else {
-			thickness = getThickness();
+			thickness = getThickness(style);
 		}
 
 		if (borderColor == null) {

@@ -225,4 +225,18 @@ public class StyleSignature {
 		return withDot;
 	}
 
+	// Frequent use
+
+	public static StyleSignature activity() {
+		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.activity);
+	}
+
+	public static StyleSignature activityDiamond() {
+		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond);
+	}
+
+	public static StyleSignature activityArrow() {
+		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.arrow);
+	}
+
 }

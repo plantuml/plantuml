@@ -86,7 +86,7 @@ public class FtileSwitchWithManyLinks extends FtileSwitchWithDiamonds {
 			final double x2 = p2.getX();
 			final double y2 = p2.getY();
 
-			final Snake snake = Snake.create(null, arrowColor, Arrows.asToDown())
+			final Snake snake = Snake.create(skinParam(), arrowColor, Arrows.asToDown())
 					.withLabel(branch.getTextBlockPositive(), arrowHorizontalAlignment());
 			snake.addPoint(x1, y1);
 			snake.addPoint(x2, y1);
@@ -158,7 +158,8 @@ public class FtileSwitchWithManyLinks extends FtileSwitchWithDiamonds {
 			final double x2 = p2.getX();
 			final double y2 = p2.getY();
 
-			final Snake snake = Snake.create(arrowColor, arrow).withLabel(outLabel, VerticalAlignment.CENTER);
+			final Snake snake = Snake.create(skinParam(), arrowColor, arrow).withLabel(outLabel,
+					VerticalAlignment.CENTER);
 			snake.addPoint(x1, y1);
 			if (direction == Direction.LEFT && x2 > x1 - 10) {
 				snake.addPoint(x1, y2 - 8);
@@ -199,7 +200,7 @@ public class FtileSwitchWithManyLinks extends FtileSwitchWithDiamonds {
 			final double x2 = p2.getX();
 			final double y2 = p2.getY();
 
-			final Snake snake = Snake.create(null, arrowColor, Arrows.asToDown())
+			final Snake snake = Snake.create(skinParam(), arrowColor, Arrows.asToDown())
 					.withLabel(branch.getTextBlockPositive(), VerticalAlignment.CENTER);
 			if (x2 < p1d.getX() - margin || x2 > p1b.getX() + margin) {
 				snake.addPoint(x2, p1d.getY());
@@ -255,7 +256,7 @@ public class FtileSwitchWithManyLinks extends FtileSwitchWithDiamonds {
 
 			final double ym = (y1 + y2) / 2;
 
-			final Snake snake = Snake.create(null, arrowColor, Arrows.asToDown()).withLabel(outLabel,
+			final Snake snake = Snake.create(skinParam(), arrowColor, Arrows.asToDown()).withLabel(outLabel,
 					VerticalAlignment.CENTER);
 
 			if (x1 < p1d.getX() - margin || x1 > p1b.getX() + margin) {

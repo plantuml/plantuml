@@ -69,6 +69,7 @@ import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.svek.SvekNode;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
@@ -193,17 +194,19 @@ public class EntityImageTips extends AbstractEntityImage {
 	private Opale getOpale(final Display display) {
 		final FontConfiguration fc;
 		final double shadowing;
+		UStroke stroke = new UStroke();
 		if (UseStyle.useBetaStyle()) {
 			shadowing = style.value(PName.Shadowing).asDouble();
 			fc = style.getFontConfiguration(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
+			stroke = style.getStroke();
 		} else {
 			shadowing = skinParam.shadowing(getEntity().getStereotype()) ? 4 : 0;
 			fc = new FontConfiguration(skinParam, FontParam.NOTE, null);
 		}
 
 		final TextBlock textBlock = BodyFactory.create3(display, FontParam.NOTE, skinParam, HorizontalAlignment.LEFT,
-				fc, LineBreakStrategy.NONE);
-		return new Opale(shadowing, borderColor, noteBackgroundColor, textBlock, true);
+				fc, LineBreakStrategy.NONE, style);
+		return new Opale(shadowing, borderColor, noteBackgroundColor, textBlock, true, stroke);
 	}
 
 }

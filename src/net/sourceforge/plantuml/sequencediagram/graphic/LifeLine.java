@@ -220,7 +220,7 @@ public class LifeLine {
 					type = type == ComponentType.ALIVE_BOX_CLOSE_OPEN ? ComponentType.ALIVE_BOX_CLOSE_CLOSE
 							: ComponentType.ALIVE_BOX_OPEN_CLOSE;
 				}
-				Style style = type.getDefaultStyleDefinition().getMergedStyle(skinParam2.getCurrentStyleBuilder());
+				Style style = type.getStyleSignature().getMergedStyle(skinParam2.getCurrentStyleBuilder());
 				if (style != null) {
 					style = style.eventuallyOverride(PName.BackGroundColor, specificBackColor);
 					style = style.eventuallyOverride(PName.LineColor, specificLineColor);

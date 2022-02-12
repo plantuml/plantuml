@@ -87,7 +87,7 @@ public class FtileDiamondSquare extends FtileDiamondWIP {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final Dimension2D dimLabel = label.calculateDimension(stringBounder);
 		final Dimension2D dimTotal = calculateDimensionInternal(stringBounder);
-		ug = ug.apply(borderColor).apply(getThickness()).apply(backColor.bg());
+		ug = ug.apply(borderColor).apply(getThickness(getStyle())).apply(backColor.bg());
 
 		ug.draw(Hexagon.asPolygonSquare(shadowing, dimTotal.getWidth(), dimTotal.getHeight()));
 

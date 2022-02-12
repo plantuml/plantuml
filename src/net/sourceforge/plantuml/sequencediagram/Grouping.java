@@ -55,7 +55,7 @@ public abstract class Grouping implements Event, WithStyle {
 	final private Style style;
 	final private Style styleHeader;
 
-	public StyleSignature getDefaultStyleDefinition() {
+	public StyleSignature getStyleSignature() {
 		return StyleSignature.of(SName.root, SName.element, SName.sequenceDiagram, SName.group);
 	}
 
@@ -76,7 +76,7 @@ public abstract class Grouping implements Event, WithStyle {
 		this.comment = comment;
 		this.type = type;
 		this.backColorElement = backColorElement;
-		this.style = getDefaultStyleDefinition().getMergedStyle(styleBuilder);
+		this.style = getStyleSignature().getMergedStyle(styleBuilder);
 		this.styleHeader = getHeaderStyleDefinition().getMergedStyle(styleBuilder);
 	}
 

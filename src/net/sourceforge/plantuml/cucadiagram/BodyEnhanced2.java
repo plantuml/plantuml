@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.TextBlockVertical2;
+import net.sourceforge.plantuml.style.Style;
 
 public class BodyEnhanced2 extends BodyEnhancedAbstract {
 
@@ -57,8 +58,8 @@ public class BodyEnhanced2 extends BodyEnhancedAbstract {
 	private final LineBreakStrategy lineBreakStrategy;
 
 	BodyEnhanced2(Display rawBody, FontParam fontParam, ISkinSimple skinParam, HorizontalAlignment align,
-			FontConfiguration titleConfig, LineBreakStrategy lineBreakStrategy) {
-		super(align, titleConfig);
+			FontConfiguration titleConfig, LineBreakStrategy lineBreakStrategy, Style style) {
+		super(align, titleConfig, style);
 		this.rawBody = rawBody;
 		this.lineBreakStrategy = lineBreakStrategy;
 		this.skinParam = skinParam;

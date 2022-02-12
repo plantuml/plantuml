@@ -118,6 +118,7 @@ public class StyleLoader {
 	public static Collection<Style> getDeclaredStyles(BlocLines lines, AutomaticCounter counter) {
 		lines = lines.eventuallyMoveAllEmptyBracket();
 		final List<Style> result = new ArrayList<>();
+		final CssVariables variables = new CssVariables();
 		StyleScheme scheme = StyleScheme.REGULAR;
 
 		Context context = new Context();
@@ -125,6 +126,7 @@ public class StyleLoader {
 		boolean inComment = false;
 		for (StringLocated s : lines) {
 			String trimmed = s.getTrimmed().getString();
+
 			if (trimmed.startsWith("/*") || trimmed.endsWith("*/"))
 				continue;
 			if (trimmed.startsWith("/'") || trimmed.endsWith("'/"))
@@ -146,6 +148,11 @@ public class StyleLoader {
 				continue;
 			}
 
+			if (trimmed.startsWith("--")) {
+				variables.learn(trimmed);
+				continue;
+			}
+
 			final int x = trimmed.lastIndexOf("//");
 			if (x != -1)
 				trimmed = trimmed.substring(0, x).trim();
@@ -164,7 +171,7 @@ public class StyleLoader {
 			final Matcher2 mPropertyAndValue = propertyAndValue.matcher(trimmed);
 			if (mPropertyAndValue.find()) {
 				final PName key = PName.getFromName(mPropertyAndValue.group(1), scheme);
-				final String value = mPropertyAndValue.group(2);
+				final String value = variables.value(mPropertyAndValue.group(2));
 				if (key != null && maps.size() > 0)
 					maps.get(maps.size() - 1).put(key, //
 							scheme == StyleScheme.REGULAR ? //

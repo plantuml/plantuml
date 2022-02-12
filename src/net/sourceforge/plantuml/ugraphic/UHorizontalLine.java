@@ -48,8 +48,11 @@ public class UHorizontalLine implements UShape {
 	private final TextBlock title;
 	private final boolean blankTitle;
 	private final char style;
+	private final double defaultThickness;
 
-	private UHorizontalLine(double skipAtStart, double skipAtEnd, TextBlock title, boolean blankTitle, char style) {
+	private UHorizontalLine(double defaultThickness, double skipAtStart, double skipAtEnd, TextBlock title,
+			boolean blankTitle, char style) {
+		this.defaultThickness = defaultThickness;
 		this.skipAtEnd = skipAtEnd;
 		this.skipAtStart = skipAtStart;
 		this.title = title;
@@ -57,12 +60,13 @@ public class UHorizontalLine implements UShape {
 		this.style = style;
 	}
 
-	public static UHorizontalLine infinite(double skipAtStart, double skipAtEnd, char style) {
-		return new UHorizontalLine(skipAtStart, skipAtEnd, null, false, style);
+	public static UHorizontalLine infinite(double defaultThickness, double skipAtStart, double skipAtEnd, char style) {
+		return new UHorizontalLine(defaultThickness, skipAtStart, skipAtEnd, null, false, style);
 	}
 
-	public static UHorizontalLine infinite(double skipAtStart, double skipAtEnd, TextBlock title, char style) {
-		return new UHorizontalLine(skipAtStart, skipAtEnd, title, false, style);
+	public static UHorizontalLine infinite(double defaultThickness, double skipAtStart, double skipAtEnd,
+			TextBlock title, char style) {
+		return new UHorizontalLine(defaultThickness, skipAtStart, skipAtEnd, title, false, style);
 	}
 
 	public boolean isDouble() {
@@ -133,9 +137,9 @@ public class UHorizontalLine implements UShape {
 
 	private void drawHLine(Stencil stencil, double y, final UGraphic ug) {
 		drawSimpleHline(ug, stencil, y);
-		if (style == '=') {
+		if (style == '=')
 			drawSimpleHline(ug, stencil, y + 2);
-		}
+
 	}
 
 	private static void drawSimpleHline(UGraphic ug, Stencil stencil, double y) {
@@ -143,15 +147,6 @@ public class UHorizontalLine implements UShape {
 		final double endingX = stencil.getEndingX(ug.getStringBounder(), y);
 		ug.apply(new UTranslate(startingX, y)).draw(ULine.hline(endingX - startingX));
 	}
-
-//	public void drawTitleInternalForFootprint(UGraphic ug, double x, double y) {
-//		if (title == null || blankTitle) {
-//			return;
-//		}
-//		final Dimension2D dimTitle = title.calculateDimension(ug.getStringBounder());
-//		final double y1 = y - dimTitle.getHeight() / 2 - 0.5;
-//		title.drawU(ug.apply(new UTranslate(skipAtStart, y1)));
-//	}
 
 	public void drawTitleInternal(UGraphic ug, double startingX, double endingX, double y, boolean clearArea) {
 		if (title == null || blankTitle) {
@@ -174,18 +169,17 @@ public class UHorizontalLine implements UShape {
 	}
 
 	public UStroke getStroke() {
-		if (style == '\0') {
+		if (style == '\0')
 			throw new IllegalStateException();
-			// return null;
-		} else if (style == '=') {
+		else if (style == '=')
 			return new UStroke();
-		} else if (style == '.') {
+		else if (style == '.')
 			return new UStroke(1, 2, 1);
-		} else if (style == '-') {
+		else if (style == '-')
 			return new UStroke();
-		} else {
-			return new UStroke(1.5);
-		}
+		else
+			return new UStroke(defaultThickness);
+
 	}
 
 }

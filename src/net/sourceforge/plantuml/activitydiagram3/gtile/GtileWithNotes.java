@@ -118,6 +118,7 @@ public class GtileWithNotes extends AbstractGtile {
 			final HColor borderColor;
 			final FontConfiguration fc;
 			final double shadowing;
+			UStroke stroke = new UStroke();
 
 			final LineBreakStrategy wrapWidth;
 			if (UseStyle.useBetaStyle()) {
@@ -129,6 +130,7 @@ public class GtileWithNotes extends AbstractGtile {
 				fc = style.getFontConfiguration(skinParam.getThemeStyle(), getIHtmlColorSet());
 				shadowing = style.value(PName.Shadowing).asDouble();
 				wrapWidth = style.wrapWidth();
+				stroke = style.getStroke();
 			} else {
 				noteBackgroundColor = rose.getHtmlColor(skinParam2, ColorParam.noteBackground);
 				borderColor = rose.getHtmlColor(skinParam2, ColorParam.noteBorder);
@@ -150,9 +152,9 @@ public class GtileWithNotes extends AbstractGtile {
 				public double getEndingX(StringBounder stringBounder, double y) {
 					return sheet1.getEndingX(stringBounder, y) + 15;
 				}
-			}, new UStroke());
+			}, stroke);
 
-			final Opale opale = new Opale(shadowing, borderColor, noteBackgroundColor, sheet2, false);
+			final Opale opale = new Opale(shadowing, borderColor, noteBackgroundColor, sheet2, false, stroke);
 			final TextBlock opaleMarged = TextBlockUtils.withMargin(opale, 10, 10);
 			if (note.getNotePosition() == NotePosition.LEFT) {
 				if (left == null) {

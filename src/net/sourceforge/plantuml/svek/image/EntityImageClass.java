@@ -112,9 +112,9 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 		final Dimension2D dimHeader = header.calculateDimension(stringBounder);
 		final Dimension2D dimBody = body == null ? new Dimension2DDouble(0, 0) : body.calculateDimension(stringBounder);
 		double width = Math.max(dimBody.getWidth(), dimHeader.getWidth());
-		if (width < getSkinParam().minClassWidth()) {
+		if (width < getSkinParam().minClassWidth())
 			width = getSkinParam().minClassWidth();
-		}
+
 		final double height = dimBody.getHeight() + dimHeader.getHeight();
 		return new Dimension2DDouble(width, height);
 	}
@@ -122,9 +122,9 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 	@Override
 	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
 		final Rectangle2D result = body.getInnerPosition(member, stringBounder, strategy);
-		if (result == null) {
+		if (result == null)
 			return result;
-		}
+
 		final Dimension2D dimHeader = header.calculateDimension(stringBounder);
 		final UTranslate translate = UTranslate.dy(dimHeader.getHeight());
 		return translate.apply(result);
@@ -132,17 +132,16 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 
 	final public void drawU(UGraphic ug) {
 		ug.draw(new UComment("class " + getEntity().getCodeGetName()));
-		if (url != null) {
+		if (url != null)
 			ug.startUrl(url);
-		}
 
 		ug.startGroup(UGroupType.CLASS, "elem " + getEntity().getCode() + " selected");
 		drawInternal(ug);
 		ug.closeGroup();
 
-		if (url != null) {
+		if (url != null)
 			ug.closeUrl();
-		}
+
 	}
 
 	private Style getStyle() {
@@ -161,50 +160,53 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 		final double heightTotal = dimTotal.getHeight();
 		final Shadowable rect = new URectangle(widthTotal, heightTotal).rounded(roundCorner)
 				.withCommentAndCodeLine(getEntity().getCodeGetName(), getEntity().getCodeLine());
-		if (UseStyle.useBetaStyle()) {
-			rect.setDeltaShadow(getStyle().value(PName.Shadowing).asDouble());
-		} else {
-			if (getSkinParam().shadowing(getEntity().getStereotype())) {
-				rect.setDeltaShadow(4);
-			}
-		}
+
+		double shadow = 0;
 
 		HColor classBorder = lineConfig.getColors().getColor(ColorType.LINE);
 		HColor headerBackcolor = getEntity().getColors().getColor(ColorType.HEADER);
+		HColor backcolor = getEntity().getColors().getColor(ColorType.BACK);
 
-		if (classBorder == null) {
-			if (UseStyle.useBetaStyle())
+		if (UseStyle.useBetaStyle()) {
+			shadow = getStyle().value(PName.Shadowing).asDouble();
+
+			if (classBorder == null)
 				classBorder = getStyle().value(PName.LineColor).asColor(getSkinParam().getThemeStyle(),
 						getSkinParam().getIHtmlColorSet());
-			else
-				classBorder = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.classBorder);
-		}
-		HColor backcolor = getEntity().getColors().getColor(ColorType.BACK);
-		if (backcolor == null) {
-			if (UseStyle.useBetaStyle())
+
+			if (backcolor == null)
 				backcolor = getStyle().value(PName.BackGroundColor).asColor(getSkinParam().getThemeStyle(),
 						getSkinParam().getIHtmlColorSet());
-			else {
-				if (leafType == LeafType.ENUM) {
+
+			if (headerBackcolor == null)
+				headerBackcolor = backcolor;
+
+		} else {
+			if (getSkinParam().shadowing(getEntity().getStereotype()))
+				shadow = 4;
+
+			if (classBorder == null)
+				classBorder = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.classBorder);
+
+			if (backcolor == null)
+				if (leafType == LeafType.ENUM)
 					backcolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.enumBackground,
 							ColorParam.classBackground);
-				} else {
+				else
 					backcolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.classBackground);
-				}
-			}
+
+			if (headerBackcolor == null)
+				headerBackcolor = getSkinParam().getHtmlColor(ColorParam.classHeaderBackground, getStereo(), false);
+
 		}
+
+		rect.setDeltaShadow(shadow);
 
 		ug = ug.apply(classBorder);
 		ug = ug.apply(backcolor.bg());
 
 		final UStroke stroke = getStroke();
 
-		if (headerBackcolor == null) {
-			if (UseStyle.useBetaStyle())
-				headerBackcolor = backcolor;
-			else
-				headerBackcolor = getSkinParam().getHtmlColor(ColorParam.classHeaderBackground, getStereo(), false);
-		}
 		UGraphic ugHeader = ug;
 		if (roundCorner == 0 && headerBackcolor != null && backcolor.equals(headerBackcolor) == false) {
 			ug.apply(stroke).draw(rect);
@@ -244,13 +246,17 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 	}
 
 	private UStroke getStroke() {
+
+		if (UseStyle.useBetaStyle())
+			return getStyle().getStroke();
+
 		UStroke stroke = lineConfig.getColors().getSpecificLineStroke();
-		if (stroke == null) {
+		if (stroke == null)
 			stroke = getSkinParam().getThickness(LineParam.classBorder, getStereo());
-		}
-		if (stroke == null) {
+
+		if (stroke == null)
 			stroke = new UStroke(1.5);
-		}
+
 		return stroke;
 	}
 

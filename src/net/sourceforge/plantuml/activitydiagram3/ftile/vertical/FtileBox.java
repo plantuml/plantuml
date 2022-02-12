@@ -99,11 +99,11 @@ public class FtileBox extends AbstractFtile {
 	private final HColor backColor;
 	private final Style style;
 
-	static public StyleSignature getDefaultStyleDefinitionActivity() {
+	static public StyleSignature getStyleSignature() {
 		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.activity);
 	}
 
-	static public StyleSignature getDefaultStyleDefinitionArrow() {
+	static public StyleSignature getStyleSignatureArrow() {
 		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.arrow);
 	}
 
@@ -144,9 +144,9 @@ public class FtileBox extends AbstractFtile {
 		Style style = null;
 		Style styleArrow = null;
 		if (UseStyle.useBetaStyle()) {
-			style = getDefaultStyleDefinitionActivity().with(stereotype)
+			style = getStyleSignature().with(stereotype)
 					.getMergedStyle(skinParam.getCurrentStyleBuilder());
-			styleArrow = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam.getCurrentStyleBuilder());
+			styleArrow = getStyleSignatureArrow().getMergedStyle(skinParam.getCurrentStyleBuilder());
 		}
 		return new FtileBox(skinParam, label, swimlane, boxStyle, style, styleArrow);
 	}
@@ -215,7 +215,7 @@ public class FtileBox extends AbstractFtile {
 		if (UseStyle.useBetaStyle()) {
 			thickness = style.getStroke();
 		} else {
-			thickness = getThickness();
+			thickness = getThickness(style);
 		}
 
 		if (borderColor == null) {
