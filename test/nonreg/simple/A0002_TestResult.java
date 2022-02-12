@@ -39,10 +39,10 @@ PATH:
      pt1: [ 93.4243 ; 0.0000 ]
    - type: SEG_LINETO
      pt1: [ 0.0000 ; 0.0000 ]
-  stroke: 0.0-0.0-1.0
+  stroke: 0.0-0.0-0.5
   shadow: 0
   color: ff181818
-  backcolor: ffebebeb
+  backcolor: fffeffdd
 
 PATH:
    - type: SEG_MOVETO
@@ -53,10 +53,10 @@ PATH:
      pt1: [ 103.4243 ; 10.0000 ]
    - type: SEG_LINETO
      pt1: [ 93.4243 ; 0.0000 ]
-  stroke: 0.0-0.0-1.0
+  stroke: 0.0-0.0-0.5
   shadow: 0
   color: ff181818
-  backcolor: ffebebeb
+  backcolor: fffeffdd
 
 TEXT:
   text: This 
@@ -99,10 +99,10 @@ PATH:
      pt1: [ 193.3768 ; 0.0000 ]
    - type: SEG_LINETO
      pt1: [ 0.0000 ; 0.0000 ]
-  stroke: 0.0-0.0-1.0
+  stroke: 0.0-0.0-0.5
   shadow: 0
   color: ff181818
-  backcolor: ffebebeb
+  backcolor: fffeffdd
 
 PATH:
    - type: SEG_MOVETO
@@ -113,10 +113,10 @@ PATH:
      pt1: [ 203.3768 ; 10.0000 ]
    - type: SEG_LINETO
      pt1: [ 193.3768 ; 0.0000 ]
-  stroke: 0.0-0.0-1.0
+  stroke: 0.0-0.0-0.5
   shadow: 0
   color: ff181818
-  backcolor: ffebebeb
+  backcolor: fffeffdd
 
 TEXT:
   text: A Long
@@ -387,10 +387,10 @@ RECTANGLE:
   pt2: [ 218.3794 ; 270.5000 ]
   xCorner: 25
   yCorner: 25
-  stroke: 0.0-0.0-1.5
+  stroke: 0.0-0.0-0.5
   shadow: 0
   color: ff181818
-  backcolor: fff8f8f8
+  backcolor: fff1f1f1
 
 TEXT:
   text: foo1
@@ -407,7 +407,7 @@ EMPTY:
 LINE:
   pt1: [ 15.0000 ; 12.5000 ]
   pt2: [ 15.0000 ; 879.5000 ]
-  stroke: 0.0-0.0-2.0
+  stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff000000
 
@@ -448,10 +448,10 @@ PATH:
      largeArcFlag: false
      sweepFlag: false
      dest: [ 0.0000 ; 0.0000 ]
-  stroke: 0.0-0.0-1.0
+  stroke: 0.0-0.0-0.5
   shadow: 0
   color: ff181818
-  backcolor: ffebebeb
+  backcolor: fffeffdd
 
 PATH:
    - type: SEG_MOVETO
@@ -462,10 +462,10 @@ PATH:
      pt1: [ 185.8127 ; 10.0000 ]
    - type: SEG_LINETO
      pt1: [ 175.8127 ; 0.0000 ]
-  stroke: 0.0-0.0-1.0
+  stroke: 0.0-0.0-0.5
   shadow: 0
   color: ff181818
-  backcolor: ffebebeb
+  backcolor: fffeffdd
 
 TEXT:
   text:  KO for 
@@ -744,10 +744,10 @@ RECTANGLE:
   pt2: [ 527.7092 ; 661.5000 ]
   xCorner: 25
   yCorner: 25
-  stroke: 0.0-0.0-1.5
+  stroke: 0.0-0.0-0.5
   shadow: 0
   color: ff181818
-  backcolor: fff8f8f8
+  backcolor: fff1f1f1
 
 TEXT:
   text: foo2
@@ -784,7 +784,7 @@ EMPTY:
 LINE:
   pt1: [ 446.7562 ; 12.5000 ]
   pt2: [ 446.7562 ; 879.5000 ]
-  stroke: 0.0-0.0-2.0
+  stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff000000
 
@@ -795,14 +795,14 @@ EMPTY:
 LINE:
   pt1: [ 738.5219 ; 12.5000 ]
   pt2: [ 738.5219 ; 879.5000 ]
-  stroke: 0.0-0.0-2.0
+  stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff000000
 
 LINE:
   pt1: [ 180.9019 ; 55.5000 ]
   pt2: [ 180.9019 ; 238.5000 ]
-  stroke: 0.0-0.0-1.5
+  stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
@@ -820,7 +820,7 @@ POLYGON:
 LINE:
   pt1: [ 490.2327 ; 661.5000 ]
   pt2: [ 490.2327 ; 857.5000 ]
-  stroke: 0.0-0.0-1.5
+  stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
@@ -838,21 +838,21 @@ POLYGON:
 LINE:
   pt1: [ 180.9019 ; 270.5000 ]
   pt2: [ 180.9019 ; 448.5000 ]
-  stroke: 0.0-0.0-1.5
+  stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
   pt1: [ 180.9019 ; 448.5000 ]
   pt2: [ 490.2327 ; 448.5000 ]
-  stroke: 0.0-0.0-1.5
+  stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
   pt1: [ 490.2327 ; 448.5000 ]
   pt2: [ 490.2327 ; 629.5000 ]
-  stroke: 0.0-0.0-1.5
+  stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 

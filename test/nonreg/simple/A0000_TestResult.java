@@ -15,26 +15,26 @@ preserveAspectRatio: none
 LINE:
   pt1: [ 48.0000 ; 34.0000 ]
   pt2: [ 48.0000 ; 81.0000 ]
-  stroke: 5.0-5.0-1.0
+  stroke: 5.0-5.0-0.5
   shadow: 0
   color: ff181818
 
 LINE:
   pt1: [ 154.8135 ; 34.0000 ]
   pt2: [ 154.8135 ; 81.0000 ]
-  stroke: 5.0-5.0-1.0
+  stroke: 5.0-5.0-0.5
   shadow: 0
   color: ff181818
 
 RECTANGLE:
   pt1: [ 5.0000 ; 5.0000 ]
   pt2: [ 92.9573 ; 33.0000 ]
-  xCorner: 0
-  yCorner: 0
-  stroke: 0.0-0.0-1.5
+  xCorner: 5
+  yCorner: 5
+  stroke: 0.0-0.0-0.5
   shadow: 0
   color: ff181818
-  backcolor: fff8f8f8
+  backcolor: ffe2e2f0
 
 TEXT:
   text: Alice
@@ -47,12 +47,12 @@ TEXT:
 RECTANGLE:
   pt1: [ 5.0000 ; 80.0000 ]
   pt2: [ 92.9573 ; 108.0000 ]
-  xCorner: 0
-  yCorner: 0
-  stroke: 0.0-0.0-1.5
+  xCorner: 5
+  yCorner: 5
+  stroke: 0.0-0.0-0.5
   shadow: 0
   color: ff181818
-  backcolor: fff8f8f8
+  backcolor: ffe2e2f0
 
 TEXT:
   text: Alice
@@ -65,12 +65,12 @@ TEXT:
 RECTANGLE:
   pt1: [ 130.8135 ; 5.0000 ]
   pt2: [ 180.5185 ; 33.0000 ]
-  xCorner: 0
-  yCorner: 0
-  stroke: 0.0-0.0-1.5
+  xCorner: 5
+  yCorner: 5
+  stroke: 0.0-0.0-0.5
   shadow: 0
   color: ff181818
-  backcolor: fff8f8f8
+  backcolor: ffe2e2f0
 
 TEXT:
   text: Bob
@@ -83,12 +83,12 @@ TEXT:
 RECTANGLE:
   pt1: [ 130.8135 ; 80.0000 ]
   pt2: [ 180.5185 ; 108.0000 ]
-  xCorner: 0
-  yCorner: 0
-  stroke: 0.0-0.0-1.5
+  xCorner: 5
+  yCorner: 5
+  stroke: 0.0-0.0-0.5
   shadow: 0
   color: ff181818
-  backcolor: fff8f8f8
+  backcolor: ffe2e2f0
 
 TEXT:
   text: Bob

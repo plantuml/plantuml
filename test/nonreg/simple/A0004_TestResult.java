@@ -27,10 +27,10 @@ RECTANGLE:
   pt2: [ 258.0017 ; 94.0000 ]
   xCorner: 25
   yCorner: 25
-  stroke: 0.0-0.0-1.5
+  stroke: 0.0-0.0-0.5
   shadow: 0
   color: ff181818
-  backcolor: fff8f8f8
+  backcolor: fff1f1f1
 
 TEXT:
   text: VerifyReservation
@@ -47,20 +47,20 @@ POLYGON:
    - [ 149.0000 ; 155.0000 ]
    - [ 137.0000 ; 143.0000 ]
    - [ 149.0000 ; 131.0000 ]
-  stroke: 0.0-0.0-1.5
+  stroke: 0.0-0.0-0.5
   shadow: 0
   color: ff181818
-  backcolor: fff8f8f8
+  backcolor: fff1f1f1
 
 RECTANGLE:
   pt1: [ 7.0000 ; 173.0000 ]
   pt2: [ 173.2574 ; 205.0000 ]
   xCorner: 25
   yCorner: 25
-  stroke: 0.0-0.0-1.5
+  stroke: 0.0-0.0-0.5
   shadow: 0
   color: ff181818
-  backcolor: fff8f8f8
+  backcolor: fff1f1f1
 
 TEXT:
   text: sendToAirport
@@ -95,10 +95,10 @@ RECTANGLE:
   pt2: [ 354.3239 ; 255.0000 ]
   xCorner: 25
   yCorner: 25
-  stroke: 0.0-0.0-1.5
+  stroke: 0.0-0.0-0.5
   shadow: 0
   color: ff181818
-  backcolor: fff8f8f8
+  backcolor: fff1f1f1
 
 TEXT:
   text: getPreference
@@ -125,10 +125,10 @@ POLYGON:
    - [ 275.0000 ; 377.0000 ]
    - [ 263.0000 ; 365.0000 ]
    - [ 275.0000 ; 353.0000 ]
-  stroke: 0.0-0.0-1.5
+  stroke: 0.0-0.0-0.5
   shadow: 0
   color: ff181818
-  backcolor: fff8f8f8
+  backcolor: fff1f1f1
 
 RECTANGLE:
   pt1: [ 264.0000 ; 514.0000 ]
@@ -145,10 +145,10 @@ RECTANGLE:
   pt2: [ 423.7702 ; 477.0000 ]
   xCorner: 25
   yCorner: 25
-  stroke: 0.0-0.0-1.5
+  stroke: 0.0-0.0-0.5
   shadow: 0
   color: ff181818
-  backcolor: fff8f8f8
+  backcolor: fff1f1f1
 
 TEXT:
   text: ReceiveBaggage
@@ -163,10 +163,10 @@ RECTANGLE:
   pt2: [ 546.6156 ; 427.0000 ]
   xCorner: 25
   yCorner: 25
-  stroke: 0.0-0.0-1.5
+  stroke: 0.0-0.0-0.5
   shadow: 0
   color: ff181818
-  backcolor: fff8f8f8
+  backcolor: fff1f1f1
 
 TEXT:
   text: PrintBoadingboard
@@ -181,10 +181,10 @@ RECTANGLE:
   pt2: [ 440.6392 ; 607.0000 ]
   xCorner: 25
   yCorner: 25
-  stroke: 0.0-0.0-1.5
+  stroke: 0.0-0.0-0.5
   shadow: 0
   color: ff181818
-  backcolor: fff8f8f8
+  backcolor: fff1f1f1
 
 TEXT:
   text: GiveTravelDocumentation

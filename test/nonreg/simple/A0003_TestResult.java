@@ -20,7 +20,7 @@ RECTANGLE:
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: NULL_COLOR
-  backcolor: ffe0e0e0
+  backcolor: fff1e5e5
 
 RECTANGLE:
   pt1: [ 36.0000 ; 29.0000 ]
@@ -30,7 +30,7 @@ RECTANGLE:
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: NULL_COLOR
-  backcolor: ffe0e0e0
+  backcolor: fff1e5e5
 
 RECTANGLE:
   pt1: [ 44.0000 ; 29.0000 ]
@@ -50,7 +50,7 @@ RECTANGLE:
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: NULL_COLOR
-  backcolor: ffe0e0e0
+  backcolor: fff1e5e5
 
 RECTANGLE:
   pt1: [ 120.0000 ; 29.0000 ]
@@ -60,7 +60,7 @@ RECTANGLE:
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: NULL_COLOR
-  backcolor: ffe0e0e0
+  backcolor: fff1e5e5
 
 RECTANGLE:
   pt1: [ 148.0000 ; 29.0000 ]
@@ -70,7 +70,7 @@ RECTANGLE:
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: NULL_COLOR
-  backcolor: ffe0e0e0
+  backcolor: fff1e5e5
 
 TEXT:
   text: 43
@@ -488,7 +488,7 @@ RECTANGLE:
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: NULL_COLOR
-  backcolor: fff8f8f8
+  backcolor: ffe2e2f0
 
 LINE:
   pt1: [ 142.0000 ; 46.0000 ]
@@ -519,7 +519,7 @@ RECTANGLE:
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: NULL_COLOR
-  backcolor: fff8f8f8
+  backcolor: ffe2e2f0
 
 LINE:
   pt1: [ 157.0000 ; 46.0000 ]

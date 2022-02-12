@@ -59,26 +59,26 @@ TEXT:
 LINE:
   pt1: [ 41.0000 ; 80.0000 ]
   pt2: [ 41.0000 ; 114.0000 ]
-  stroke: 5.0-5.0-1.0
+  stroke: 5.0-5.0-0.5
   shadow: 0
   color: ff181818
 
 LINE:
   pt1: [ 112.6938 ; 80.0000 ]
   pt2: [ 112.6938 ; 114.0000 ]
-  stroke: 5.0-5.0-1.0
+  stroke: 5.0-5.0-0.5
   shadow: 0
   color: ff181818
 
 RECTANGLE:
   pt1: [ 5.0000 ; 51.0000 ]
   pt2: [ 78.6938 ; 79.0000 ]
-  xCorner: 0
-  yCorner: 0
-  stroke: 0.0-0.0-1.5
+  xCorner: 5
+  yCorner: 5
+  stroke: 0.0-0.0-0.5
   shadow: 0
   color: ff181818
-  backcolor: fff8f8f8
+  backcolor: ffe2e2f0
 
 TEXT:
   text: Sally
@@ -91,12 +91,12 @@ TEXT:
 RECTANGLE:
   pt1: [ 5.0000 ; 113.0000 ]
   pt2: [ 78.6938 ; 141.0000 ]
-  xCorner: 0
-  yCorner: 0
-  stroke: 0.0-0.0-1.5
+  xCorner: 5
+  yCorner: 5
+  stroke: 0.0-0.0-0.5
   shadow: 0
   color: ff181818
-  backcolor: fff8f8f8
+  backcolor: ffe2e2f0
 
 TEXT:
   text: Sally
@@ -109,12 +109,12 @@ TEXT:
 RECTANGLE:
   pt1: [ 88.6938 ; 51.0000 ]
   pt2: [ 138.3989 ; 79.0000 ]
-  xCorner: 0
-  yCorner: 0
-  stroke: 0.0-0.0-1.5
+  xCorner: 5
+  yCorner: 5
+  stroke: 0.0-0.0-0.5
   shadow: 0
   color: ff181818
-  backcolor: fff8f8f8
+  backcolor: ffe2e2f0
 
 TEXT:
   text: Bob
@@ -127,12 +127,12 @@ TEXT:
 RECTANGLE:
   pt1: [ 88.6938 ; 113.0000 ]
   pt2: [ 138.3989 ; 141.0000 ]
-  xCorner: 0
-  yCorner: 0
-  stroke: 0.0-0.0-1.5
+  xCorner: 5
+  yCorner: 5
+  stroke: 0.0-0.0-0.5
   shadow: 0
   color: ff181818
-  backcolor: fff8f8f8
+  backcolor: ffe2e2f0
 
 TEXT:
   text: Bob

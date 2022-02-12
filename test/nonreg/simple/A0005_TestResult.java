@@ -60,12 +60,12 @@ COMMENT: class Bob
 RECTANGLE:
   pt1: [ 29.1999 ; 136.0000 ]
   pt2: [ 105.9463 ; 198.0000 ]
-  xCorner: 0
-  yCorner: 0
-  stroke: 0.0-0.0-1.5
+  xCorner: 5
+  yCorner: 5
+  stroke: 0.0-0.0-0.5
   shadow: 0
   color: ff181818
-  backcolor: fff8f8f8
+  backcolor: fff1f1f1
 
 EMPTY:
   pt1: [ 33.2685 ; 136.0000 ]
@@ -102,7 +102,7 @@ TEXT:
 LINE:
   pt1: [ 30.1999 ; 168.0000 ]
   pt2: [ 104.9463 ; 168.0000 ]
-  stroke: 0.0-0.0-1.5
+  stroke: 0.0-0.0-0.5
   shadow: 0
   color: ff181818
 
@@ -121,7 +121,7 @@ TEXT:
 LINE:
   pt1: [ 30.1999 ; 190.0000 ]
   pt2: [ 104.9463 ; 190.0000 ]
-  stroke: 0.0-0.0-1.5
+  stroke: 0.0-0.0-0.5
   shadow: 0
   color: ff181818
 
@@ -133,12 +133,12 @@ COMMENT: class Sally
 RECTANGLE:
   pt1: [ 21.6999 ; 52.0000 ]
   pt2: [ 113.3937 ; 100.0000 ]
-  xCorner: 0
-  yCorner: 0
-  stroke: 0.0-0.0-1.5
+  xCorner: 5
+  yCorner: 5
+  stroke: 0.0-0.0-0.5
   shadow: 0
   color: ff181818
-  backcolor: fff8f8f8
+  backcolor: fff1f1f1
 
 EMPTY:
   pt1: [ 21.6999 ; 52.0000 ]
@@ -175,7 +175,7 @@ TEXT:
 LINE:
   pt1: [ 22.6999 ; 84.0000 ]
   pt2: [ 112.3937 ; 84.0000 ]
-  stroke: 0.0-0.0-1.5
+  stroke: 0.0-0.0-0.5
   shadow: 0
   color: ff181818
 
@@ -186,7 +186,7 @@ EMPTY:
 LINE:
   pt1: [ 22.6999 ; 92.0000 ]
   pt2: [ 112.3937 ; 92.0000 ]
-  stroke: 0.0-0.0-1.5
+  stroke: 0.0-0.0-0.5
   shadow: 0
   color: ff181818
 
