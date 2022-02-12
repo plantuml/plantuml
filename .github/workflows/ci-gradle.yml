@@ -66,17 +66,13 @@ jobs:
 
   # We run the tests on many OS / Java combinations but also the Compile step because some users build
   # their own jars from source, so it is good for CI to check that is working on all combinations.
-  build:
+  test:
     needs: workflow_config
     strategy:
       fail-fast: false
       matrix:
         java_version: [ 8, 11, 17 ]
         os: [ macos-10.15,  macos-11, ubuntu-18.04, ubuntu-20.04, windows-2019, windows-2022 ]
-        include:
-          - release_from_this_build: true
-            os: ubuntu-20.04
-            java_version: 8
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout the repository
@@ -96,15 +92,32 @@ jobs:
       - name: Test
         run: gradle -q test --no-daemon
 
-      # The repeated "matrix.release_from_this_build" checks are messy, but I have not found a simple way to avoid them
-      # See https://github.com/actions/runner/issues/662
+  upload:
+    needs: [ workflow_config, test ]
+    if: needs.workflow_config.outputs.do_release == 'true' || needs.workflow_config.outputs.do_snapshot_release == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v2
 
-      - name: Create artifacts
-        if: matrix.release_from_this_build
-        run: gradle -q build -x test
+      - name: Set up java
+        uses: actions/setup-java@v2.5.0
+        with:
+          java-version: 17
+          distribution: temurin
+          cache: gradle
+
+      - name: Set version from tag
+        if: env.POM_VERSION
+        env:
+          POM_VERSION: ${{ needs.workflow_config.outputs.pom_version }}
+        run: sed -i "s/version = .*/version = $POM_VERSION/" gradle.properties
+
+      - name: Build artifacts
+        run: gradle -q clean build generateMetadataFileForMavenPublication generatePomFileForMavenPublication -x test
 
       - name: Setup gpg
-        if: matrix.release_from_this_build && env.ARTIFACT_SIGNING_KEY
+        if: env.ARTIFACT_SIGNING_KEY
         id: gpg
         env:
           ARTIFACT_SIGNING_KEY: ${{ secrets.ARTIFACT_SIGNING_KEY }}
@@ -117,17 +130,16 @@ jobs:
           echo "::set-output name=key_id::${key_id}"
 
       - name: Sign artifacts
-        if: matrix.release_from_this_build && env.GPG_KEYNAME
+        if: env.GPG_KEYNAME
         env:
           GPG_KEYNAME: ${{ steps.gpg.outputs.key_id }}
           GPG_PASSPHRASE: ${{ secrets.ARTIFACT_SIGNING_PASSPHRASE }}
         run: |
-          gradle sign "-Pversion=${POM_VERSION}"\
+          gradle sign \
             "-Psigning.gnupg.keyName=${GPG_KEYNAME}" \
             "-Psigning.gnupg.passphrase=${GPG_PASSPHRASE}"
 
       - name: Upload artifacts
-        if: matrix.release_from_this_build
         uses: actions/upload-artifact@v2
         with:
           # Using github.run_number here to reduce confusion when downloading & comparing artifacts from several builds
@@ -135,20 +147,6 @@ jobs:
           path: |
             build/libs/*
             build/publications/maven/*
-
-  release:
-    needs: [ workflow_config, build ]
-    if: needs.workflow_config.outputs.do_release == 'true' || needs.workflow_config.outputs.do_snapshot_release == 'true'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout the repository
-        uses: actions/checkout@v2
-
-      - name: Download artifacts
-        uses: actions/download-artifact@v2
-        with:
-          name: ${{ github.run_number }}-artifacts
-          path: build
 
       - name: Create snapshot release
         if: needs.workflow_config.outputs.do_snapshot_release == 'true'
@@ -160,6 +158,5 @@ jobs:
         if: needs.workflow_config.outputs.do_release == 'true'
         env:
           GITHUB_TOKEN: ${{ github.token }}
-          POM_VERSION: ${{ needs.workflow_config.outputs.pom_version }}
           TAG: ${{ github.event.ref }}
         run: .github/scripts/release-gradle.sh
