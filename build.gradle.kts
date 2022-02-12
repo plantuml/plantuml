@@ -12,9 +12,12 @@ plugins {
 	signing
 }
 
-repositories {
-	mavenLocal()
-	mavenCentral()
+group = "net.sourceforge.plantuml"
+description = "PlantUML"
+
+java {
+	withSourcesJar()
+	withJavadocJar()
 }
 
 dependencies {
@@ -24,12 +27,9 @@ dependencies {
 	testImplementation("org.scilab.forge:jlatexmath:1.0.7")
 }
 
-group = "net.sourceforge.plantuml"
-description = "PlantUML"
-
-java {
-	withSourcesJar()
-	withJavadocJar()
+repositories {
+	mavenLocal()
+	mavenCentral()
 }
 
 sourceSets {
@@ -72,18 +72,12 @@ tasks.withType<Jar>().configureEach {
 		attributes["Build-Jdk-Spec"] = System.getProperty("java.specification.version")
 		from("manifest.txt")
 	}
-
-	dependsOn(configurations.runtimeClasspath)
-	from({
-		configurations.runtimeClasspath.get().filter { it.name.endsWith("jar") }.map { zipTree(it) }
-	})
-
-	// source sets for java and resources are on "src", only put once into the jar
-	duplicatesStrategy = org.gradle.api.file.DuplicatesStrategy.EXCLUDE
 	from("skin") { into("skin") }
 	from("stdlib") { into("stdlib") }
 	from("svg") { into("svg") }
 	from("themes") { into("themes") }
+	// source sets for java and resources are on "src", only put once into the jar
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
 publishing {
