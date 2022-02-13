@@ -101,6 +101,8 @@ tasks.withType<Javadoc> {
 		this as StandardJavadocDocletOptions
 		addBooleanOption("Xdoclint:none", true)
 		addStringOption("Xmaxwarns", "1")
+		encoding = "UTF-8"
+		isUse = true
 	}
 }
 
