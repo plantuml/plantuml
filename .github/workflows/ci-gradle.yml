@@ -114,7 +114,11 @@ jobs:
         run: sed -i "s/version = .*/version = $POM_VERSION/" gradle.properties
 
       - name: Build artifacts
-        run: gradle -q clean build generateMetadataFileForMavenPublication generatePomFileForMavenPublication -x test
+        run: |
+          gradle -q clean build \
+            pdfJar \
+            generateMetadataFileForMavenPublication generatePomFileForMavenPublication \
+            -x test
 
       - name: Setup gpg
         if: env.ARTIFACT_SIGNING_KEY
