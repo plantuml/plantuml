@@ -19,6 +19,7 @@ ln -s "../publications/maven/pom-default.xml"                "${RELEASE_DIR}/pla
 ln -s "../libs/plantuml-${POM_VERSION}.jar"                  "${RELEASE_DIR}/plantuml-SNAPSHOT.jar"
 ln -s "../libs/plantuml-${POM_VERSION}-javadoc.jar"          "${RELEASE_DIR}/plantuml-SNAPSHOT-javadoc.jar"
 ln -s "../libs/plantuml-${POM_VERSION}-sources.jar"          "${RELEASE_DIR}/plantuml-SNAPSHOT-sources.jar"
+ln -s "../libs/plantuml-pdf-${POM_VERSION}.jar"              "${RELEASE_DIR}/plantuml-pdf-SNAPSHOT.jar"
 
 if [[ -e "build/publications/maven/module.json.asc" ]]; then
   # signatures are optional so that forked repos can release snapshots without needing a gpg signing key
