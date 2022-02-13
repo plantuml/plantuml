@@ -94,7 +94,6 @@ jobs:
 
   upload:
     needs: [ workflow_config, test ]
-    if: needs.workflow_config.outputs.do_release == 'true' || needs.workflow_config.outputs.do_snapshot_release == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
