@@ -110,6 +110,8 @@ tasks.test {
 }
 
 signing {
-	useGpgCmd()
-	sign(publishing.publications["maven"])
+	if (hasProperty("signing.gnupg.passphrase")) {
+		useGpgCmd()
+		sign(publishing.publications["maven"])
+	}
 }
