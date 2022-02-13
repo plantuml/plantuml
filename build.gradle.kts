@@ -65,7 +65,7 @@ tasks.compileJava {
 	}
 }
 
-tasks.withType<Jar> {
+tasks.withType<Jar>().configureEach {
 	manifest {
 		attributes["Main-Class"] = "net.sourceforge.plantuml.Run"
 		attributes["Implementation-Version"] = archiveVersion
@@ -92,11 +92,11 @@ publishing {
 	}
 }
 
-tasks.withType<JavaCompile> {
+tasks.withType<JavaCompile>().configureEach {
 	options.encoding = "UTF-8"
 }
 
-tasks.withType<Javadoc> {
+tasks.withType<Javadoc>().configureEach {
 	options {
 		this as StandardJavadocDocletOptions
 		addBooleanOption("Xdoclint:none", true)
