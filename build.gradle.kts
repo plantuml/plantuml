@@ -116,3 +116,14 @@ signing {
 		sign(publishing.publications["maven"])
 	}
 }
+
+tasks.create("pdfJar", Jar::class) {
+	group = "build" // OR for example, "build"
+	description = "Assembles a jar containing dependencies to create PDFs."
+	manifest.attributes["Main-Class"] = "net.sourceforge.plantuml.Run"
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+	val dependencies = configurations.runtimeClasspath.get().map(::zipTree)
+	from(dependencies)
+	with(tasks.jar.get())
+	archiveAppendix.set("pdf")
+}
