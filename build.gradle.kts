@@ -12,9 +12,15 @@ plugins {
 	signing
 }
 
-repositories {
-	mavenLocal()
-	mavenCentral()
+group = "net.sourceforge.plantuml"
+description = "PlantUML"
+
+java {
+	withSourcesJar()
+	withJavadocJar()
+	registerFeature("pdf") {
+		usingSourceSet(sourceSets["main"])
+	}
 }
 
 dependencies {
@@ -22,14 +28,13 @@ dependencies {
 	testImplementation("org.assertj:assertj-core:3.22.0")
 	testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
 	testImplementation("org.scilab.forge:jlatexmath:1.0.7")
+	"pdfRuntimeOnly"("org.apache.xmlgraphics:fop:2.6")
+	"pdfRuntimeOnly"("org.apache.xmlgraphics:batik-all:1.14")
 }
 
-group = "net.sourceforge.plantuml"
-description = "PlantUML"
-
-java {
-	withSourcesJar()
-	withJavadocJar()
+repositories {
+	mavenLocal()
+	mavenCentral()
 }
 
 sourceSets {
@@ -65,25 +70,19 @@ tasks.compileJava {
 	}
 }
 
-tasks.withType<Jar> {
+tasks.withType<Jar>().configureEach {
 	manifest {
 		attributes["Main-Class"] = "net.sourceforge.plantuml.Run"
 		attributes["Implementation-Version"] = archiveVersion
 		attributes["Build-Jdk-Spec"] = System.getProperty("java.specification.version")
 		from("manifest.txt")
 	}
-
-	dependsOn(configurations.runtimeClasspath)
-	from({
-		configurations.runtimeClasspath.get().filter { it.name.endsWith("jar") }.map { zipTree(it) }
-	})
-
-	// source sets for java and resources are on "src", only put once into the jar
-	duplicatesStrategy = org.gradle.api.file.DuplicatesStrategy.EXCLUDE
 	from("skin") { into("skin") }
 	from("stdlib") { into("stdlib") }
 	from("svg") { into("svg") }
 	from("themes") { into("themes") }
+	// source sets for java and resources are on "src", only put once into the jar
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
 publishing {
@@ -92,15 +91,17 @@ publishing {
 	}
 }
 
-tasks.withType<JavaCompile> {
+tasks.withType<JavaCompile>().configureEach {
 	options.encoding = "UTF-8"
 }
 
-tasks.withType<Javadoc> {
+tasks.withType<Javadoc>().configureEach {
 	options {
 		this as StandardJavadocDocletOptions
 		addBooleanOption("Xdoclint:none", true)
 		addStringOption("Xmaxwarns", "1")
+		encoding = "UTF-8"
+		isUse = true
 	}
 }
 
@@ -110,6 +111,8 @@ tasks.test {
 }
 
 signing {
-	useGpgCmd()
-	sign(publishing.publications["maven"])
+	if (hasProperty("signing.gnupg.passphrase")) {
+		useGpgCmd()
+		sign(publishing.publications["maven"])
+	}
 }
