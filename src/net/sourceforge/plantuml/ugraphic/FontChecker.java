@@ -58,6 +58,7 @@ import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.svg.DarkStrategy;
 import net.sourceforge.plantuml.svg.LengthAdjust;
 import net.sourceforge.plantuml.svg.SvgGraphics;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
@@ -158,7 +159,7 @@ public class FontChecker {
 
 	private String getSvgImage(char c) throws IOException, TransformerException {
 		final SvgGraphics svg = new SvgGraphics(null, true, new Dimension2DDouble(0, 0), 1.0, null, 42, "none",
-				LengthAdjust.defaultValue());
+				LengthAdjust.defaultValue(), DarkStrategy.IGNORE_DARK_COLOR);
 		svg.setStrokeColor("black");
 		svg.svgImage(getBufferedImage(c), 0, 0);
 		final ByteArrayOutputStream os = new ByteArrayOutputStream();

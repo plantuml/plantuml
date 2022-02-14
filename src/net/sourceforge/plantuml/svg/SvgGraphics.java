@@ -141,7 +141,7 @@ public class SvgGraphics {
 	}
 
 	public SvgGraphics(String backcolor, boolean svgDimensionStyle, Dimension2D minDim, double scale, String hover,
-			long seed, String preserveAspectRatio, LengthAdjust lengthAdjust) {
+			long seed, String preserveAspectRatio, LengthAdjust lengthAdjust, DarkStrategy darkStrategy) {
 		try {
 			this.lengthAdjust = lengthAdjust;
 			this.svgDimensionStyle = svgDimensionStyle;

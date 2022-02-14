@@ -112,9 +112,9 @@ public class FtileBoxOld extends AbstractFtile {
 	}
 
 	public Set<Swimlane> getSwimlanes() {
-		if (swimlane == null) {
+		if (swimlane == null)
 			return Collections.emptySet();
-		}
+
 		return Collections.singleton(swimlane);
 	}
 
@@ -164,9 +164,9 @@ public class FtileBoxOld extends AbstractFtile {
 
 	public static TextBlock createWbs(Style style, ISkinParam skinParam, Display label) {
 		Style styleArrow = null;
-		if (UseStyle.useBetaStyle()) {
+		if (UseStyle.useBetaStyle())
 			styleArrow = style;
-		}
+
 		return new FtileBoxOld(skinParam, label, null, BoxStyle.PLAIN, style, styleArrow);
 	}
 
@@ -189,9 +189,9 @@ public class FtileBoxOld extends AbstractFtile {
 			this.inRendering = new LinkRendering(
 					Rainbow.build(styleArrow, getIHtmlColorSet(), skinParam.getThemeStyle()));
 			Colors specBack = null;
-			if (skinParam instanceof SkinParamColors) {
+			if (skinParam instanceof SkinParamColors)
 				specBack = ((SkinParamColors) skinParam).getColors();
-			}
+
 			style = style.eventuallyOverride(specBack);
 			this.borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), getIHtmlColorSet());
 			this.backColor = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(), getIHtmlColorSet());
@@ -230,42 +230,44 @@ public class FtileBoxOld extends AbstractFtile {
 	}
 
 	public void drawU(UGraphic ug) {
-		final Dimension2D dimTotal = calculateDimension(ug.getStringBounder());
+		final StringBounder stringBounder = ug.getStringBounder();
+		final Dimension2D dimTotal = calculateDimension(stringBounder);
 		final double widthTotal = dimTotal.getWidth();
 		final double heightTotal = dimTotal.getHeight();
 		final UDrawable shape = boxStyle.getUDrawable(widthTotal, heightTotal, shadowing, roundCorner);
 
 		final UStroke thickness;
-		if (UseStyle.useBetaStyle()) {
+		if (UseStyle.useBetaStyle())
 			thickness = style.getStroke();
-		} else {
+		else
 			thickness = getThickness(style);
-		}
 
-		if (borderColor == null) {
+		if (borderColor == null)
 			ug = ug.apply(new HColorNone());
-		} else {
+		else
 			ug = ug.apply(borderColor);
-		}
-		if (backColor == null) {
+
+		if (backColor == null)
 			ug = ug.apply(new HColorNone().bg());
-		} else {
+		else
 			ug = ug.apply(backColor.bg());
-		}
 
 		ug = ug.apply(thickness);
 		shape.drawU(ug);
 
-		if (horizontalAlignment == HorizontalAlignment.LEFT) {
+		if (horizontalAlignment == HorizontalAlignment.LEFT)
 			tb.drawU(ug.apply(new UTranslate(padding.getLeft(), padding.getTop())));
-		} else if (horizontalAlignment == HorizontalAlignment.RIGHT) {
-			final Dimension2D dimTb = tb.calculateDimension(ug.getStringBounder());
-			tb.drawU(ug.apply(
-					new UTranslate(dimTotal.getWidth() - dimTb.getWidth() - padding.getRight(), padding.getBottom())));
-		} else if (horizontalAlignment == HorizontalAlignment.CENTER) {
-			final Dimension2D dimTb = tb.calculateDimension(ug.getStringBounder());
-			tb.drawU(ug.apply(new UTranslate((dimTotal.getWidth() - dimTb.getWidth()) / 2, padding.getBottom())));
-		}
+		else if (horizontalAlignment == HorizontalAlignment.RIGHT)
+			tb.drawU(ug.apply(new UTranslate(dimTotal.getWidth() - tbWidth(stringBounder) - padding.getRight(),
+					padding.getBottom())));
+		else if (horizontalAlignment == HorizontalAlignment.CENTER)
+			tb.drawU(ug.apply(new UTranslate(padding.getRight() + (dimTotal.getWidth() - tbWidth(stringBounder)) / 2,
+					padding.getBottom())));
+
+	}
+
+	private double tbWidth(final StringBounder stringBounder) {
+		return Math.max(minimumWidth, tb.calculateDimension(stringBounder).getWidth());
 	}
 
 	@Override

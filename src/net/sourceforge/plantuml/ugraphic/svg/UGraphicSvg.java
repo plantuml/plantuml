@@ -43,6 +43,7 @@ import javax.xml.transform.TransformerException;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.posimo.DotPath;
+import net.sourceforge.plantuml.svg.DarkStrategy;
 import net.sourceforge.plantuml.svg.LengthAdjust;
 import net.sourceforge.plantuml.svg.SvgGraphics;
 import net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
@@ -88,9 +89,10 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 	public UGraphicSvg(HColor defaultBackground, boolean svgDimensionStyle, Dimension2D minDim, ColorMapper colorMapper,
 			boolean textAsPath, double scale, String linkTarget, String hover, long seed, String preserveAspectRatio,
 			StringBounder stringBounder, LengthAdjust lengthAdjust) {
-		this(defaultBackground, minDim, colorMapper, new SvgGraphics(colorMapper.toSvg(defaultBackground),
-				svgDimensionStyle, minDim, scale, hover, seed, preserveAspectRatio, lengthAdjust), textAsPath,
-				linkTarget, stringBounder);
+		this(defaultBackground, minDim, colorMapper,
+				new SvgGraphics(colorMapper.toSvg(defaultBackground), svgDimensionStyle, minDim, scale, hover, seed,
+						preserveAspectRatio, lengthAdjust, DarkStrategy.IGNORE_DARK_COLOR),
+				textAsPath, linkTarget, stringBounder);
 		if (defaultBackground instanceof HColorGradient) {
 			final SvgGraphics svg = getGraphicObject();
 			svg.paintBackcolorGradient(colorMapper, (HColorGradient) defaultBackground);
