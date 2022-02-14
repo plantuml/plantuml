@@ -138,7 +138,7 @@ jobs:
           GPG_KEYNAME: ${{ steps.gpg.outputs.key_id }}
           GPG_PASSPHRASE: ${{ secrets.ARTIFACT_SIGNING_PASSPHRASE }}
         run: |
-          gradle sign \
+          gradle -q signMavenPublication signPdfJar \
             "-Psigning.gnupg.keyName=${GPG_KEYNAME}" \
             "-Psigning.gnupg.passphrase=${GPG_PASSPHRASE}"
 

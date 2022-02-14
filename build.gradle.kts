@@ -110,14 +110,7 @@ tasks.test {
 	testLogging.showStandardStreams = true
 }
 
-signing {
-	if (hasProperty("signing.gnupg.passphrase")) {
-		useGpgCmd()
-		sign(publishing.publications["maven"])
-	}
-}
-
-tasks.create("pdfJar", Jar::class) {
+val pdfJar by tasks.registering(Jar::class) {
 	group = "build" // OR for example, "build"
 	description = "Assembles a jar containing dependencies to create PDFs."
 	manifest.attributes["Main-Class"] = "net.sourceforge.plantuml.Run"
@@ -126,4 +119,12 @@ tasks.create("pdfJar", Jar::class) {
 	from(dependencies)
 	with(tasks.jar.get())
 	archiveAppendix.set("pdf")
+}
+
+signing {
+	if (hasProperty("signing.gnupg.passphrase")) {
+		useGpgCmd()
+		sign(publishing.publications["maven"])
+		sign(closureOf<SignOperation> { sign(pdfJar.get()) })
+	}
 }
