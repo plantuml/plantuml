@@ -680,7 +680,7 @@ public class SvgGraphics {
 		root.setAttribute("viewBox", "0 0 " + maxXscaled + " " + maxYscaled);
 		root.setAttribute("zoomAndPan", "magnify");
 		root.setAttribute("preserveAspectRatio", preserveAspectRatio);
-		root.setAttribute("contentScriptType", "application/ecmascript");
+		// root.setAttribute("contentScriptType", "application/ecmascript");
 		root.setAttribute("contentStyleType", "text/css");
 
 		if (pendingBackground != null) {
