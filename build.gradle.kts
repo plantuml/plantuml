@@ -28,7 +28,7 @@ dependencies {
 	testImplementation("org.assertj:assertj-core:3.22.0")
 	testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
 	testImplementation("org.scilab.forge:jlatexmath:1.0.7")
-	"pdfRuntimeOnly"("org.apache.xmlgraphics:fop:2.6")
+	"pdfRuntimeOnly"("org.apache.xmlgraphics:fop:2.7")
 	"pdfRuntimeOnly"("org.apache.xmlgraphics:batik-all:1.14")
 }
 
@@ -110,14 +110,7 @@ tasks.test {
 	testLogging.showStandardStreams = true
 }
 
-signing {
-	if (hasProperty("signing.gnupg.passphrase")) {
-		useGpgCmd()
-		sign(publishing.publications["maven"])
-	}
-}
-
-tasks.create("pdfJar", Jar::class) {
+val pdfJar by tasks.registering(Jar::class) {
 	group = "build" // OR for example, "build"
 	description = "Assembles a jar containing dependencies to create PDFs."
 	manifest.attributes["Main-Class"] = "net.sourceforge.plantuml.Run"
@@ -126,4 +119,18 @@ tasks.create("pdfJar", Jar::class) {
 	from(dependencies)
 	with(tasks.jar.get())
 	archiveAppendix.set("pdf")
+}
+
+signing {
+	if (hasProperty("signing.gnupg.keyName") && hasProperty("signing.gnupg.passphrase")) {
+		useGpgCmd()
+	} else if (hasProperty("signingKey") && hasProperty("signingPassword")) {
+		val signingKey: String? by project
+		val signingPassword: String? by project
+		useInMemoryPgpKeys(signingKey, signingPassword)
+	}
+	if (hasProperty("signing.gnupg.passphrase") || hasProperty("signingPassword")) {
+		sign(publishing.publications["maven"])
+		sign(closureOf<SignOperation> { sign(pdfJar.get()) })
+	}
 }

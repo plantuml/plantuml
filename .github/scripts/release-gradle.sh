@@ -16,6 +16,7 @@ if [[ -e "build/publications/maven/module.json.asc" ]]; then
   ln -s "../libs/plantuml-${POM_VERSION}.jar.asc"            "${RELEASE_DIR}/plantuml-${POM_VERSION}.jar.asc"
   ln -s "../libs/plantuml-${POM_VERSION}-javadoc.jar.asc"    "${RELEASE_DIR}/plantuml-${POM_VERSION}-javadoc.jar.asc"
   ln -s "../libs/plantuml-${POM_VERSION}-sources.jar.asc"    "${RELEASE_DIR}/plantuml-${POM_VERSION}-sources.jar.asc"
+  ln -s "../libs/plantuml-pdf-${POM_VERSION}.jar.asc"        "${RELEASE_DIR}/plantuml-pdf-${POM_VERSION}.jar.asc"
 fi
 
 gh release create \
