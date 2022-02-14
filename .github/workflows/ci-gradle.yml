@@ -119,28 +119,13 @@ jobs:
             generateMetadataFileForMavenPublication generatePomFileForMavenPublication \
             -x test
 
-      - name: Setup gpg
-        if: env.ARTIFACT_SIGNING_KEY
-        id: gpg
-        env:
-          ARTIFACT_SIGNING_KEY: ${{ secrets.ARTIFACT_SIGNING_KEY }}
-        run: |
-          echo "Importing key ..."
-          echo "${ARTIFACT_SIGNING_KEY}" | gpg --batch --import --import-options import-show
-
-          echo "Getting key id ..."
-          key_id="$(echo "${ARTIFACT_SIGNING_KEY}" | gpg --batch --show-keys --with-colons | awk -F: '$1 == "sec" { print $5 }')"
-          echo "::set-output name=key_id::${key_id}"
-
       - name: Sign artifacts
-        if: env.GPG_KEYNAME
+        if: env.ORG_GRADLE_PROJECT_signingKey
         env:
-          GPG_KEYNAME: ${{ steps.gpg.outputs.key_id }}
-          GPG_PASSPHRASE: ${{ secrets.ARTIFACT_SIGNING_PASSPHRASE }}
+          ORG_GRADLE_PROJECT_signingKey: ${{ secrets.ARTIFACT_SIGNING_KEY }}
+          ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.ARTIFACT_SIGNING_PASSPHRASE }}
         run: |
-          gradle -q signMavenPublication signPdfJar \
-            "-Psigning.gnupg.keyName=${GPG_KEYNAME}" \
-            "-Psigning.gnupg.passphrase=${GPG_PASSPHRASE}"
+          gradle -q signMavenPublication signPdfJar
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
