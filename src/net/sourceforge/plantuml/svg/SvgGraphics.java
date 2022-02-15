@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.svg;
@@ -992,9 +992,11 @@ public class SvgGraphics {
 		// javascript: security issue
 		if (SecurityUtils.ignoreThisLink(url))
 			return;
+		Log.info("openLink=" + title);
 
-		if (pendingAction.size() > 0)
-			closeLink();
+
+//		if (pendingAction.size() > 0)
+//			closeLink();
 
 		pendingAction.add(0, (Element) document.createElement("a"));
 		pendingAction.get(0).setAttribute("target", target);
@@ -1039,13 +1041,18 @@ public class SvgGraphics {
 		}
 	}
 
-	public void startGroup(UGroupType type, String ident) {
-		if (type == UGroupType.ID) {
+	public void startGroup(Map<UGroupType, String> typeIdents) {
+		Log.debug("startGroup=" + typeIdents) ;
+		if (!typeIdents.isEmpty())
 			pendingAction.add(0, (Element) document.createElement("g"));
-			pendingAction.get(0).setAttribute("id", ident);
-		} else if (INTERACTIVE && type == UGroupType.CLASS) {
-			pendingAction.add(0, (Element) document.createElement("g"));
-			pendingAction.get(0).setAttribute("class", ident);
+		for (Map.Entry<UGroupType, String> typeIdent : typeIdents.entrySet()) {
+			if (typeIdent.getKey() == UGroupType.ID) {
+				pendingAction.get(0).setAttribute("id", typeIdent.getValue());
+			}
+
+			if (INTERACTIVE && typeIdent.getKey() == UGroupType.CLASS) {
+				pendingAction.get(0).setAttribute("class", typeIdent.getValue());
+			}
 		}
 	}
 

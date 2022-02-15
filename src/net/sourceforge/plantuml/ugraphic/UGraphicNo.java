@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.ugraphic;
@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Map;
 
 public abstract class UGraphicNo implements UGraphic {
 
@@ -62,13 +63,13 @@ public abstract class UGraphicNo implements UGraphic {
 	//
 	// Implement UGraphic
 	//
-	
+
 	@Override
 	final public void startUrl(Url url) {
 	}
 
 	@Override
-	public void startGroup(UGroupType type, String ident) {
+	public void startGroup(Map<UGroupType, String> typeIdents) {
 	}
 
 	@Override
@@ -88,7 +89,7 @@ public abstract class UGraphicNo implements UGraphic {
 	public HColor getDefaultBackground() {
 		return HColorUtils.BLACK;
 	}
-	
+
 	@Override
 	public UParam getParam() {
 		return new UParamNull();

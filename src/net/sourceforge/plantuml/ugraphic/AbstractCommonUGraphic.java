@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,11 +30,12 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.ugraphic;
 
+import java.util.Map;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.Url;
@@ -181,7 +182,7 @@ public abstract class AbstractCommonUGraphic implements UGraphic {
 	public void closeUrl() {
 	}
 
-	public void startGroup(UGroupType type, String ident) {
+	public void startGroup(Map<UGroupType, String> typeIdents) {
 	}
 
 	public void closeGroup() {

@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -31,17 +31,13 @@
  *
  * Original Author:  Arnaud Roques
  *
- * 
+ *
  */
 package net.sourceforge.plantuml.svek;
 
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 import net.sourceforge.plantuml.AlignmentParam;
 import net.sourceforge.plantuml.ColorParam;
@@ -623,8 +619,10 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 			return;
 
 		ug.draw(link.commentForSvg());
-		ug.startGroup(UGroupType.CLASS,
-				"link " + link.getEntity1().getCode() + " " + link.getEntity2().getCode() + " selected");
+		Map<UGroupType, String> typeIDent = new HashMap<>();
+		typeIDent.put(UGroupType.CLASS, "link " + link.getEntity1().getCode() + " " + link.getEntity2().getCode() + " selected");
+		typeIDent.put(UGroupType.ID, "link_"  + link.getEntity1().getCode() + "_" + link.getEntity2().getCode());
+		ug.startGroup(typeIDent);
 		double x = 0;
 		double y = 0;
 		final Url url = link.getUrl();
