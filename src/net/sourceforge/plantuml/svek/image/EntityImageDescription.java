@@ -283,7 +283,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 
 	final public void drawU(UGraphic ug) {
 		ug.draw(new UComment("entity " + getEntity().getCodeGetName()));
-		Map<UGroupType, String> typeIDent = new HashMap<>();
+		Map<UGroupType, String> typeIDent = new EnumMap<>(UGroupType.class);;
 		typeIDent.put(UGroupType.CLASS, "elem " + getEntity().getCode() + " selected");
 		typeIDent.put(UGroupType.ID, "elem_" + getEntity().getCode());
 		ug.startGroup(typeIDent);

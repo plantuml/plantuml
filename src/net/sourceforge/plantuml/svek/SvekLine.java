@@ -619,7 +619,7 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 			return;
 
 		ug.draw(link.commentForSvg());
-		Map<UGroupType, String> typeIDent = new HashMap<>();
+		Map<UGroupType, String> typeIDent = new EnumMap<>(UGroupType.class);;
 		typeIDent.put(UGroupType.CLASS, "link " + link.getEntity1().getCode() + " " + link.getEntity2().getCode() + " selected");
 		typeIDent.put(UGroupType.ID, "link_"  + link.getEntity1().getCode() + "_" + link.getEntity2().getCode());
 		ug.startGroup(typeIDent);

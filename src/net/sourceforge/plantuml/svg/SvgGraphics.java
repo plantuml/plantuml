@@ -992,7 +992,6 @@ public class SvgGraphics {
 		// javascript: security issue
 		if (SecurityUtils.ignoreThisLink(url))
 			return;
-		Log.info("openLink=" + title);
 
 
 //		if (pendingAction.size() > 0)
@@ -1042,7 +1041,6 @@ public class SvgGraphics {
 	}
 
 	public void startGroup(Map<UGroupType, String> typeIdents) {
-		Log.debug("startGroup=" + typeIdents) ;
 		if (!typeIdents.isEmpty())
 			pendingAction.add(0, (Element) document.createElement("g"));
 		for (Map.Entry<UGroupType, String> typeIdent : typeIdents.entrySet()) {
