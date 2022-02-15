@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -31,16 +31,13 @@
  *
  * Original Author:  Arnaud Roques
  * Modified by : Arno Peterson
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.svek.image;
 
 import java.awt.geom.Dimension2D;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.Guillemet;
@@ -286,7 +283,10 @@ public class EntityImageDescription extends AbstractEntityImage {
 
 	final public void drawU(UGraphic ug) {
 		ug.draw(new UComment("entity " + getEntity().getCodeGetName()));
-		ug.startGroup(UGroupType.CLASS, "elem " + getEntity().getCode() + " selected");
+		Map<UGroupType, String> typeIDent = new HashMap<>();
+		typeIDent.put(UGroupType.CLASS, "elem " + getEntity().getCode() + " selected");
+		typeIDent.put(UGroupType.ID, "elem_" + getEntity().getCode());
+		ug.startGroup(typeIDent);
 
 		if (url != null)
 			ug.startUrl(url);

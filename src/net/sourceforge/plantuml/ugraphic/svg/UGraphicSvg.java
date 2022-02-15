@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.ugraphic.svg;
 import java.awt.geom.Dimension2D;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Map;
 
 import javax.xml.transform.TransformerException;
 
@@ -157,8 +158,8 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 	}
 
 	@Override
-	public void startGroup(UGroupType type, String ident) {
-		getGraphicObject().startGroup(type, ident);
+	public void startGroup(Map<UGroupType, String> typeIdents) {
+		getGraphicObject().startGroup(typeIdents);
 	}
 
 	@Override

@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -32,7 +32,7 @@
  * Original Author:  Arnaud Roques
  * Contribution :  Hisashi Miyashita
  *
- * 
+ *
  */
 package net.sourceforge.plantuml.svek;
 
@@ -80,6 +80,7 @@ import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.svek.image.EntityImageState;
 import net.sourceforge.plantuml.ugraphic.UComment;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UGroupType;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -347,6 +348,9 @@ public class Cluster implements Moveable {
 
 		}
 
+
+		ug.startGroup(Collections.singletonMap(UGroupType.ID, "cluster_" + fullName));
+
 		final Url url = group.getUrl99();
 		if (url != null)
 			ug.startUrl(url);
@@ -411,8 +415,8 @@ public class Cluster implements Moveable {
 		} finally {
 			if (url != null)
 				ug.closeUrl();
+			ug.closeGroup();
 		}
-
 	}
 
 	static public UStroke getStrokeInternal(IGroup group, ISkinParam skinParam, Style style) {
