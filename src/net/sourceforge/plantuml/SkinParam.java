@@ -206,7 +206,8 @@ public class SkinParam implements ISkinParam {
 
 			if (UseStyle.useBetaStyle()) {
 				applyPendingStyleMigration();
-				final FromSkinparamToStyle convertor = new FromSkinparamToStyle(key2, value, getCurrentStyleBuilder());
+				final FromSkinparamToStyle convertor = new FromSkinparamToStyle(key2);
+				convertor.convertNow(value, getCurrentStyleBuilder());
 				for (Style style : convertor.getStyles())
 					muteStyle(style);
 			} else {
@@ -231,8 +232,8 @@ public class SkinParam implements ISkinParam {
 
 	public void applyPendingStyleMigration() {
 		for (Entry<String, String> ent : paramsPendingForStyleMigration.entrySet()) {
-			final FromSkinparamToStyle convertor = new FromSkinparamToStyle(ent.getKey(), ent.getValue(),
-					getCurrentStyleBuilder());
+			final FromSkinparamToStyle convertor = new FromSkinparamToStyle(ent.getKey());
+			convertor.convertNow(ent.getValue(), getCurrentStyleBuilder());
 			for (Style style : convertor.getStyles())
 				muteStyle(style);
 		}
@@ -726,7 +727,7 @@ public class SkinParam implements ISkinParam {
 	public ColorMapper getColorMapper() {
 		if (themeStyle == ThemeStyle.DARK)
 			return new ColorMapperForceDark();
-		
+
 		final String monochrome = getValue("monochrome");
 		if ("true".equals(monochrome))
 			return new ColorMapperMonochrome(false);

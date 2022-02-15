@@ -46,12 +46,26 @@ import java.util.StringTokenizer;
 public class FromSkinparamToStyle {
 
 	static class Data {
-		final private PName propertyName;
 		final private SName[] styleNames;
+		final private PName propertyName;
 
-		Data(PName propertyName, SName[] styleNames) {
+		Data(SName[] styleNames, PName propertyName) {
 			this.propertyName = propertyName;
 			this.styleNames = styleNames;
+		}
+
+		@Override
+		public String toString() {
+			final StringBuilder sb = new StringBuilder();
+			sb.append("[");
+			for (SName s : styleNames) {
+				sb.append(s.toString());
+				sb.append(".");
+			}
+			sb.setLength(sb.length() - 1);
+			sb.append("]");
+			sb.append(propertyName.toString());
+			return sb.toString();
 		}
 	}
 
@@ -117,7 +131,7 @@ public class FromSkinparamToStyle {
 		addConvert("activityStartColor", PName.BackGroundColor, SName.circle, SName.start);
 		addConvert("activityEndColor", PName.LineColor, SName.circle, SName.end);
 		addConvert("activityStopColor", PName.LineColor, SName.circle, SName.stop);
-		addConvert("activityBarColor", PName.LineColor, SName.activityBar);
+		addConvert("activityBarColor", PName.BackGroundColor, SName.activityBar);
 		addConvert("activityBorderColor", PName.LineColor, SName.activity);
 		addConvert("activityBorderThickness", PName.LineThickness, SName.activity);
 		addConvert("activityBackgroundColor", PName.BackGroundColor, SName.activity);
@@ -206,38 +220,70 @@ public class FromSkinparamToStyle {
 	}
 
 	private final List<Style> styles = new ArrayList<>();
-	private String stereo = null;
+	private final String stereo;
+	private final String key;
 
-	public FromSkinparamToStyle(String key, String value, final AutomaticCounter counter) {
-		if (value.equals("right:right")) {
-			value = "right";
-		}
+	public FromSkinparamToStyle(String key) {
+
 		if (key.contains("<<")) {
 			final StringTokenizer st = new StringTokenizer(key, "<>");
-			key = st.nextToken();
-			stereo = st.nextToken();
+			this.key = st.nextToken();
+			this.stereo = st.nextToken();
+		} else {
+			this.key = key;
+			this.stereo = null;
 		}
+
+	}
+
+	public void convertNow(String value, final AutomaticCounter counter) {
+		if (value.equals("right:right"))
+			value = "right";
 
 		final List<Data> datas = knowlegde.get(key.toLowerCase());
 
-		if (datas != null) {
-			for (Data data : datas) {
-				addStyle(data.propertyName, ValueImpl.regular(value, counter), data.styleNames);
-			}
-		} else if (key.equalsIgnoreCase("shadowing")) {
-			addStyle(PName.Shadowing, getShadowingValue(value, counter), SName.root);
-		} else if (key.equalsIgnoreCase("noteshadowing")) {
-			addStyle(PName.Shadowing, getShadowingValue(value, counter), SName.root, SName.note);
+		if (datas == null) {
+			if (key.equalsIgnoreCase("shadowing"))
+				addStyle(PName.Shadowing, getShadowingValue(value, counter), SName.root);
+			else if (key.equalsIgnoreCase("noteshadowing"))
+				addStyle(PName.Shadowing, getShadowingValue(value, counter), SName.root, SName.note);
+			return;
 		}
+
+		final boolean complex = value.contains(";");
+		if (complex) {
+			// System.err.println("key=" + key + " value=" + value);
+			final StringTokenizer st = new StringTokenizer(value, ";");
+			value = st.nextToken();
+			while (st.hasMoreTokens()) {
+				final String read = st.nextToken();
+				// System.err.println("read:" + read);
+				if (read.startsWith("text:")) {
+					final String value2 = read.split(":")[1];
+					for (Data data : datas)
+						addStyle(PName.FontColor, ValueImpl.regular(value2, counter), data.styleNames);
+				} else if (read.startsWith("line.dotted")) {
+					for (Data data : datas)
+						addStyle(PName.LineStyle, ValueImpl.regular("1;3", counter), data.styleNames);
+				} else if (read.startsWith("line.dashed")) {
+					for (Data data : datas)
+						addStyle(PName.LineStyle, ValueImpl.regular("7;7", counter), data.styleNames);
+				}
+			}
+		}
+
+		for (Data data : datas)
+			addStyle(data.propertyName, ValueImpl.regular(value, counter), data.styleNames);
+
 	}
 
 	private ValueImpl getShadowingValue(final String value, final AutomaticCounter counter) {
-		if (value.equalsIgnoreCase("false") || value.equalsIgnoreCase("no")) {
+		if (value.equalsIgnoreCase("false") || value.equalsIgnoreCase("no"))
 			return ValueImpl.regular("0", counter);
-		}
-		if (value.equalsIgnoreCase("true") || value.equalsIgnoreCase("yes")) {
+
+		if (value.equalsIgnoreCase("true") || value.equalsIgnoreCase("yes"))
 			return ValueImpl.regular("3", counter);
-		}
+
 		return ValueImpl.regular(value, counter);
 	}
 
@@ -263,7 +309,7 @@ public class FromSkinparamToStyle {
 			datas = new ArrayList<>();
 			knowlegde.put(skinparam, datas);
 		}
-		datas.add(new Data(propertyName, styleNames));
+		datas.add(new Data(styleNames, propertyName));
 	}
 
 	private static void addConFont(String skinparam, SName... styleNames) {

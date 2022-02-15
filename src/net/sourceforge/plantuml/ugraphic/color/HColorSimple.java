@@ -207,8 +207,7 @@ public class HColorSimple extends HColorAbstract implements HColor {
 	}
 
 	public HColor withDark(HColor dark) {
-		return this;
-		// return new HColorSimple(color, monochrome, dark);
+		return new HColorSimple(color, monochrome, dark);
 	}
 
 	@Override
