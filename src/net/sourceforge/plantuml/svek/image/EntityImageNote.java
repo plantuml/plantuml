@@ -38,10 +38,7 @@ package net.sourceforge.plantuml.svek.image;
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 import net.sourceforge.plantuml.AlignmentParam;
 import net.sourceforge.plantuml.ColorParam;
@@ -220,7 +217,7 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 	final public void drawU(UGraphic ug) {
 		final Url url = getEntity().getUrl99();
 
-		Map<UGroupType, String> typeIDent = new HashMap<>();
+		Map<UGroupType, String> typeIDent = new EnumMap<>(UGroupType.class);;
 		typeIDent.put(UGroupType.CLASS, "elem " + getEntity().getCode() + " selected");
 		typeIDent.put(UGroupType.ID, "elem_" + getEntity().getCode());
 		ug.startGroup(typeIDent);
