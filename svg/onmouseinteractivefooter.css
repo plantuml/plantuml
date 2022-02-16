@@ -1,0 +1,6 @@
+[data-mouse-over-selected="false"] {
+	opacity: 0.2;
+}
+[data-mouse-over-selected="true"] {
+	opacity: 1.0;
+}

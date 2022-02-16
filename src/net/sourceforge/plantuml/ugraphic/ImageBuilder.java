@@ -255,7 +255,7 @@ public class ImageBuilder {
 				/ 96.0;
 		if (scaleFactor <= 0)
 			throw new IllegalStateException("Bad scaleFactor");
-		UGraphic ug = createUGraphic(fileFormatOption, dim, animationArg, dx, dy, scaleFactor, titledDiagram.getPragma());
+		UGraphic ug = createUGraphic(fileFormatOption, dim, animationArg, dx, dy, scaleFactor, titledDiagram !=null ? titledDiagram.getPragma() : new Pragma());
 		maybeDrawBorder(ug, dim);
 		if (randomPixel) {
 			drawRandomPoint(ug);

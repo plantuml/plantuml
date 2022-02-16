@@ -988,11 +988,37 @@ public class SvgGraphics {
 		return SignatureUtils.getMD5Hex(comment);
 	}
 
+
 	public void addComment(String comment) {
 		final String signature = getMD5Hex(comment);
 		comment = "MD5=[" + signature + "]\n" + comment;
 		final Comment commentElement = document.createComment(comment);
 		getG().appendChild(commentElement);
+	}
+
+	public void addScriptTag(String url) {
+		final Element script = document.createElement("script");
+		script.setAttribute("type", "text/javascript");
+		script.setAttribute("xlink:href", url);
+		root.appendChild(script);
+	}
+
+	public void addScript(String scriptTextPath) {
+		final Element script = document.createElement("script");
+		final String scriptText = getData(scriptTextPath);
+		final CDATASection cDATAScript = document.createCDATASection(scriptText);
+		script.appendChild(cDATAScript);
+		root.appendChild(script);
+	}
+
+	public void addStyle(String cssStylePath) {
+		final Element style = simpleElement("style");
+		final String text = getData(cssStylePath);
+
+		final CDATASection cdata = document.createCDATASection(text);
+		style.setAttribute("type", "text/css");
+		style.appendChild(cdata);
+		root.appendChild(style);
 	}
 
 	public void openLink(String url, String title, String target) {

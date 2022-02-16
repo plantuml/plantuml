@@ -71,6 +71,7 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 
 	private final boolean textAsPath2;
 	private final String target;
+	private final Pragma pragma;
 
 	public double dpiFactor() {
 		return 1;
@@ -85,6 +86,7 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 		super(other);
 		this.textAsPath2 = other.textAsPath2;
 		this.target = other.target;
+		this.pragma = other.pragma;
 		register();
 	}
 
@@ -94,7 +96,7 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 		this(defaultBackground, minDim, colorMapper,
 				new SvgGraphics(colorMapper.toSvg(defaultBackground), svgDimensionStyle, minDim, scale, hover, seed,
 						preserveAspectRatio, lengthAdjust, DarkStrategy.IGNORE_DARK_COLOR, pragma),
-				textAsPath, linkTarget, stringBounder);
+				textAsPath, linkTarget, stringBounder, pragma);
 		if (defaultBackground instanceof HColorGradient) {
 			final SvgGraphics svg = getGraphicObject();
 			svg.paintBackcolorGradient(colorMapper, (HColorGradient) defaultBackground);
@@ -117,10 +119,11 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 	}
 
 	private UGraphicSvg(HColor defaultBackground, Dimension2D minDim, ColorMapper colorMapper, SvgGraphics svg,
-			boolean textAsPath, String linkTarget, StringBounder stringBounder) {
+			boolean textAsPath, String linkTarget, StringBounder stringBounder, Pragma pragma) {
 		super(defaultBackground, colorMapper, stringBounder, svg);
 		this.textAsPath2 = textAsPath;
 		this.target = linkTarget;
+		this.pragma = pragma;
 		register();
 	}
 
@@ -151,6 +154,14 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 		try {
 			if (metadata != null)
 				getGraphicObject().addComment(metadata);
+
+			if (pragma.isDefine("svginteractive") && Boolean.valueOf(pragma.getValue("svginteractive"))) {
+				// For performance reasons and also because we want the entire graph DOM to be create so we can register
+				// the event handlers on them we will append to the end of the document
+				getGraphicObject().addStyle("onmouseinteractivefooter.css");
+				getGraphicObject().addScriptTag("https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.0/dist/svg.min.js");
+				getGraphicObject().addScript("onmouseinteractivefooter.js");
+			}
 
 			getGraphicObject().createXml(os);
 		} catch (TransformerException e) {
