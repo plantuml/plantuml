@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Matthew Leather
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.ugraphic;
@@ -66,6 +66,7 @@ import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.Scale;
 import net.sourceforge.plantuml.SvgCharSizeHack;
+import net.sourceforge.plantuml.Pragma;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UseStyle;
@@ -272,7 +273,7 @@ public class ImageBuilder {
 				/ 96.0;
 		if (scaleFactor <= 0)
 			throw new IllegalStateException("Bad scaleFactor");
-		UGraphic ug = createUGraphic(fileFormatOption, dim, animationArg, dx, dy, scaleFactor);
+		UGraphic ug = createUGraphic(fileFormatOption, dim, animationArg, dx, dy, scaleFactor, titledDiagram !=null ? titledDiagram.getPragma() : new Pragma());
 		maybeDrawBorder(ug, dim);
 		if (randomPixel) {
 			drawRandomPoint(ug);
@@ -401,12 +402,18 @@ public class ImageBuilder {
 	}
 
 	private UGraphic createUGraphic(FileFormatOption option, final Dimension2D dim, Animation animationArg, double dx,
-			double dy, double scaleFactor) {
+																	double dy, double scaleFactor, Pragma pragma) {
 		switch (option.getFileFormat()) {
 		case PNG:
 			return createUGraphicPNG(scaleFactor, dim, animationArg, dx, dy, option.getWatermark());
 		case SVG:
-			return createUGraphicSVG(scaleFactor, dim);
+			final boolean interactive;
+			if (!pragma.isDefine("svginteractive"))
+				interactive = false;
+			else {
+				interactive = Boolean.valueOf(pragma.getValue("svginteractive"));
+			}
+			return createUGraphicSVG(scaleFactor, dim, interactive);
 		case EPS:
 			return new UGraphicEps(backcolor, colorMapper, stringBounder, EpsStrategy.getDefault2());
 		case EPS_TEXT:
@@ -432,14 +439,14 @@ public class ImageBuilder {
 		}
 	}
 
-	private UGraphic createUGraphicSVG(double scaleFactor, Dimension2D dim) {
+	private UGraphic createUGraphicSVG(double scaleFactor, Dimension2D dim, boolean interactive) {
 		final String hoverPathColorRGB = getHoverPathColorRGB();
 		final LengthAdjust lengthAdjust = skinParam == null ? LengthAdjust.defaultValue() : skinParam.getlengthAdjust();
 		final String preserveAspectRatio = getPreserveAspectRatio();
 		final boolean svgDimensionStyle = skinParam == null || skinParam.svgDimensionStyle();
 		final String svgLinkTarget = getSvgLinkTarget();
 		final UGraphicSvg ug = new UGraphicSvg(backcolor, svgDimensionStyle, dim, colorMapper, false, scaleFactor,
-				svgLinkTarget, hoverPathColorRGB, seed, preserveAspectRatio, stringBounder, lengthAdjust);
+				svgLinkTarget, hoverPathColorRGB, seed, preserveAspectRatio, stringBounder, lengthAdjust, interactive);
 		return ug;
 
 	}

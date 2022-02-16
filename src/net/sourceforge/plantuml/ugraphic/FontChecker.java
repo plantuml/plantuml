@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.ugraphic;
@@ -159,7 +159,7 @@ public class FontChecker {
 
 	private String getSvgImage(char c) throws IOException, TransformerException {
 		final SvgGraphics svg = new SvgGraphics(null, true, new Dimension2DDouble(0, 0), 1.0, null, 42, "none",
-				LengthAdjust.defaultValue(), DarkStrategy.IGNORE_DARK_COLOR);
+				LengthAdjust.defaultValue(), DarkStrategy.IGNORE_DARK_COLOR, false);
 		svg.setStrokeColor("black");
 		svg.svgImage(getBufferedImage(c), 0, 0);
 		final ByteArrayOutputStream os = new ByteArrayOutputStream();
