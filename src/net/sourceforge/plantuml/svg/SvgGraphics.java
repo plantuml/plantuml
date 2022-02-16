@@ -993,7 +993,6 @@ public class SvgGraphics {
 		if (SecurityUtils.ignoreThisLink(url))
 			return;
 
-
 //		if (pendingAction.size() > 0)
 //			closeLink();
 
@@ -1041,16 +1040,16 @@ public class SvgGraphics {
 	}
 
 	public void startGroup(Map<UGroupType, String> typeIdents) {
-		if (!typeIdents.isEmpty())
-			pendingAction.add(0, (Element) document.createElement("g"));
-		for (Map.Entry<UGroupType, String> typeIdent : typeIdents.entrySet()) {
-			if (typeIdent.getKey() == UGroupType.ID) {
-				pendingAction.get(0).setAttribute("id", typeIdent.getValue());
-			}
+		if (typeIdents.isEmpty())
+			throw new IllegalArgumentException();
+		
+		pendingAction.add(0, (Element) document.createElement("g"));
 
-			if (INTERACTIVE && typeIdent.getKey() == UGroupType.CLASS) {
+		for (Map.Entry<UGroupType, String> typeIdent : typeIdents.entrySet()) {
+			if (typeIdent.getKey() == UGroupType.ID)
+				pendingAction.get(0).setAttribute("id", typeIdent.getValue());
+			if (INTERACTIVE && typeIdent.getKey() == UGroupType.CLASS)
 				pendingAction.get(0).setAttribute("class", typeIdent.getValue());
-			}
 		}
 	}
 

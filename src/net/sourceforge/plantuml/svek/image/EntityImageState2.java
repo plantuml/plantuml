@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.svek.image;
 
 import java.awt.geom.Dimension2D;
 
-import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.Url;

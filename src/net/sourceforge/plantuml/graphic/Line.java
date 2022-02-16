@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.graphic;
 
-
 public interface Line extends TextBlock {
 
 	HorizontalAlignment getHorizontalAlignment();

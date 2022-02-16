@@ -102,10 +102,10 @@ public class TextBlockVertical2 extends AbstractTextBlock implements TextBlock, 
 			final Dimension2D dimb = block.calculateDimension(ug.getStringBounder());
 			if (block instanceof TextBlockBackcolored) {
 				final HColor back = ((TextBlockBackcolored) block).getBackcolor();
-				if (back != null) 
+				if (back != null)
 					ug.apply(UTranslate.dy(y)).apply(back).apply(back.bg())
 							.draw(new URectangle(dimtotal.getWidth(), dimb.getHeight()));
-				
+
 			}
 			if (horizontalAlignment == HorizontalAlignment.LEFT) {
 				block.drawU(ug.apply(UTranslate.dy(y)));

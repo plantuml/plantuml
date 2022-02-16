@@ -51,7 +51,7 @@ class USymbolActor extends USymbolSimpleAbstract {
 	public SkinParameter getSkinParameter() {
 		return SkinParameter.ACTOR;
 	}
-	
+
 	@Override
 	public SName getSName() {
 		return SName.actor;
@@ -60,7 +60,8 @@ class USymbolActor extends USymbolSimpleAbstract {
 	@Override
 	protected TextBlock getDrawing(SymbolContext symbolContext) {
 		// final double deltaShadow = symbolContext.isShadowing() ? 4.0 : 0.0;
-		// final SymbolContext tmp = symbolContext.withDeltaShadow(deltaShadow).withStroke(new UStroke(2));
+		// final SymbolContext tmp =
+		// symbolContext.withDeltaShadow(deltaShadow).withStroke(new UStroke(2));
 		return actorStyle.getTextBlock(symbolContext);
 	}
 

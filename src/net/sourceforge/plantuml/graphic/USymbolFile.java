@@ -55,12 +55,11 @@ class USymbolFile extends USymbol {
 	public SkinParameter getSkinParameter() {
 		return SkinParameter.FILE;
 	}
-	
+
 	@Override
 	public SName getSName() {
 		return SName.file;
 	}
-
 
 	private void drawFile(UGraphic ug, double width, double height, double shadowing, double roundCorner) {
 		final int cornersize = 10;

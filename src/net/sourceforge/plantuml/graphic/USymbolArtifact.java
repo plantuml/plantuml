@@ -52,12 +52,11 @@ class USymbolArtifact extends USymbol {
 	public SkinParameter getSkinParameter() {
 		return SkinParameter.ARTIFACT;
 	}
-	
+
 	@Override
 	public SName getSName() {
 		return SName.artifact;
 	}
-
 
 	private void drawArtifact(UGraphic ug, double widthTotal, double heightTotal, double shadowing,
 			double roundCorner) {

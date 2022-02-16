@@ -44,13 +44,12 @@ public class USymbolInterface extends USymbolSimpleAbstract {
 	public SkinParameter getSkinParameter() {
 		return SkinParameter.INTERFACE;
 	}
-	
+
 	@Override
 	public SName getSName() {
 		return SName.interface_;
 	}
 
-	
 	@Override
 	protected TextBlock getDrawing(SymbolContext symbolContext) {
 		return new CircleInterface2(symbolContext.getBackColor(), symbolContext.getForeColor(),

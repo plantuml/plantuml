@@ -44,12 +44,11 @@ class USymbolBoundary extends USymbolSimpleAbstract {
 	public SkinParameter getSkinParameter() {
 		return SkinParameter.BOUNDARY;
 	}
-	
+
 	@Override
 	public SName getSName() {
 		return SName.boundary;
 	}
-
 
 	@Override
 	protected TextBlock getDrawing(SymbolContext symbolContext) {

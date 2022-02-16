@@ -53,12 +53,11 @@ class USymbolStack extends USymbol {
 	public SkinParameter getSkinParameter() {
 		return SkinParameter.STACK;
 	}
-	
+
 	@Override
 	public SName getSName() {
 		return SName.stack;
 	}
-
 
 	private void drawQueue(UGraphic ug, double width, double height, double shadowing, double roundCorner) {
 		final double border = 15;

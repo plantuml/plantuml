@@ -37,7 +37,13 @@ package net.sourceforge.plantuml.svek;
 
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.EnumMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 
 import net.sourceforge.plantuml.AlignmentParam;
 import net.sourceforge.plantuml.ColorParam;
@@ -619,9 +625,10 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 			return;
 
 		ug.draw(link.commentForSvg());
-		Map<UGroupType, String> typeIDent = new EnumMap<>(UGroupType.class);;
-		typeIDent.put(UGroupType.CLASS, "link " + link.getEntity1().getCode() + " " + link.getEntity2().getCode() + " selected");
-		typeIDent.put(UGroupType.ID, "link_"  + link.getEntity1().getCode() + "_" + link.getEntity2().getCode());
+		final Map<UGroupType, String> typeIDent = new EnumMap<>(UGroupType.class);
+		typeIDent.put(UGroupType.CLASS,
+				"link " + link.getEntity1().getCode() + " " + link.getEntity2().getCode() + " selected");
+		typeIDent.put(UGroupType.ID, "link_" + link.getEntity1().getCode() + "_" + link.getEntity2().getCode());
 		ug.startGroup(typeIDent);
 		double x = 0;
 		double y = 0;

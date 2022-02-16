@@ -36,9 +36,7 @@
 package net.sourceforge.plantuml.svek.image;
 
 import java.awt.geom.Dimension2D;
-import java.util.Collections;
 import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.Map;
 
 import net.sourceforge.plantuml.ColorParam;
@@ -135,7 +133,7 @@ public class EntityImageLollipopInterface extends AbstractEntityImage {
 		if (url != null)
 			ug.startUrl(url);
 
-		Map<UGroupType, String> typeIDent = new EnumMap<>(UGroupType.class);;
+		final Map<UGroupType, String> typeIDent = new EnumMap<>(UGroupType.class);
 		typeIDent.put(UGroupType.CLASS, "elem " + getEntity().getCode() + " selected");
 		typeIDent.put(UGroupType.ID, "elem_" + getEntity().getCode());
 		ug.startGroup(typeIDent);

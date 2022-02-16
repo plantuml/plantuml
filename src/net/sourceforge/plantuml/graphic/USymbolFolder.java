@@ -77,12 +77,11 @@ public class USymbolFolder extends USymbol {
 	public SkinParameter getSkinParameter() {
 		return skinParameter;
 	}
-	
+
 	@Override
 	public SName getSName() {
 		return sname;
 	}
-
 
 	private void drawFolder(UGraphic ug, double width, double height, Dimension2D dimTitle, double shadowing,
 			double roundCorner) {

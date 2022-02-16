@@ -37,7 +37,12 @@
 package net.sourceforge.plantuml.svek.image;
 
 import java.awt.geom.Dimension2D;
-import java.util.*;
+import java.util.Collection;
+import java.util.EnumMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.Guillemet;
@@ -283,7 +288,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 
 	final public void drawU(UGraphic ug) {
 		ug.draw(new UComment("entity " + getEntity().getCodeGetName()));
-		Map<UGroupType, String> typeIDent = new EnumMap<>(UGroupType.class);;
+		final Map<UGroupType, String> typeIDent = new EnumMap<>(UGroupType.class);
 		typeIDent.put(UGroupType.CLASS, "elem " + getEntity().getCode() + " selected");
 		typeIDent.put(UGroupType.ID, "elem_" + getEntity().getCode());
 		ug.startGroup(typeIDent);

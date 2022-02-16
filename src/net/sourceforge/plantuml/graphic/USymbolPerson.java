@@ -51,12 +51,11 @@ class USymbolPerson extends USymbol {
 	public SkinParameter getSkinParameter() {
 		return SkinParameter.PERSON;
 	}
-	
+
 	@Override
 	public SName getSName() {
 		return SName.person;
 	}
-
 
 	private void drawHeadAndBody(UGraphic ug, double shadowing, Dimension2D dimBody, double headSize) {
 		final UEllipse head = new UEllipse(headSize, headSize);

@@ -80,8 +80,8 @@ public class EntityImageLollipopInterfaceEye2 extends AbstractEntityImage {
 		super(entity, skinParam);
 		final Stereotype stereotype = entity.getStereotype();
 
-		final USymbol symbol = Objects.requireNonNull(entity.getUSymbol() == null ? skinParam.componentStyle().toUSymbol()
-				: entity.getUSymbol());
+		final USymbol symbol = Objects.requireNonNull(
+				entity.getUSymbol() == null ? skinParam.componentStyle().toUSymbol() : entity.getUSymbol());
 
 		this.desc = BodyFactory.create2(skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER),
 				entity.getDisplay(), symbol.getFontParam(), skinParam, stereotype, entity,

@@ -64,7 +64,7 @@ public class TextBlockGeneric extends AbstractTextBlock implements TextBlock {
 		ug = ug.apply(border);
 		final Dimension2D dim = calculateDimension(ug.getStringBounder());
 		ug.apply(new UStroke(2, 2, 1)).draw(new URectangle(dim.getWidth(), dim.getHeight()));
-		
+
 		textBlock.drawU(ug);
 	}
 

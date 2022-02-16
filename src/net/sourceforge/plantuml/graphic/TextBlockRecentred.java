@@ -64,7 +64,8 @@ public class TextBlockRecentred extends AbstractTextBlock implements TextBlockBa
 		// if (cachedMinMax == null) {
 		// cachedMinMax = getMinMaxSlow(stringBounder);
 		// }
-		// // assert cachedMinMax.toString().equals(getMinMaxSlow(stringBounder).toString());
+		// // assert
+		// cachedMinMax.toString().equals(getMinMaxSlow(stringBounder).toString());
 		// return cachedMinMax;
 	}
 

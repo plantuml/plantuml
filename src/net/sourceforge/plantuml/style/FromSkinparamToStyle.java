@@ -253,6 +253,8 @@ public class FromSkinparamToStyle {
 		final boolean complex = value.contains(";");
 		if (complex) {
 			// System.err.println("key=" + key + " value=" + value);
+			if (value.startsWith(";"))
+				value = " " + value;
 			final StringTokenizer st = new StringTokenizer(value, ";");
 			value = st.nextToken();
 			while (st.hasMoreTokens()) {
@@ -272,8 +274,9 @@ public class FromSkinparamToStyle {
 			}
 		}
 
-		for (Data data : datas)
-			addStyle(data.propertyName, ValueImpl.regular(value, counter), data.styleNames);
+		if (" ".equals(value) == false)
+			for (Data data : datas)
+				addStyle(data.propertyName, ValueImpl.regular(value, counter), data.styleNames);
 
 	}
 

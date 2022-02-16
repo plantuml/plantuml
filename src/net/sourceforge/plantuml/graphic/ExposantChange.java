@@ -36,7 +36,7 @@
 package net.sourceforge.plantuml.graphic;
 
 class ExposantChange implements FontChange {
-	
+
 	private final FontPosition fontPosition;
 
 	ExposantChange(FontPosition fontPosition) {

@@ -53,12 +53,11 @@ class USymbolQueue extends USymbol {
 	public SkinParameter getSkinParameter() {
 		return SkinParameter.QUEUE;
 	}
-	
+
 	@Override
 	public SName getSName() {
 		return SName.queue;
 	}
-
 
 	private final double dx = 5;
 

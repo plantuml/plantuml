@@ -50,12 +50,11 @@ class USymbolLabel extends USymbol {
 	public USymbolLabel(SkinParameter skinParameter) {
 		this.skinParameter = skinParameter;
 	}
-	
+
 	@Override
 	public SName getSName() {
 		return SName.label;
 	}
-
 
 	@Override
 	public SkinParameter getSkinParameter() {

@@ -103,7 +103,7 @@ public class EntityImageBranch extends AbstractEntityImage {
 
 		}
 		diams.setDeltaShadow(shadowing);
-		Map<UGroupType, String> typeIDent = new EnumMap<>(UGroupType.class);
+		final Map<UGroupType, String> typeIDent = new EnumMap<>(UGroupType.class);
 		typeIDent.put(UGroupType.CLASS, "elem " + getEntity().getCode() + " selected");
 		typeIDent.put(UGroupType.ID, "elem_" + getEntity().getCode());
 		ug.startGroup(typeIDent);

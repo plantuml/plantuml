@@ -82,12 +82,7 @@ public class Footprint {
 
 		private MyUGraphic(MyUGraphic other, UChange change) {
 			super(other, change);
-			if (!instanceOfAny(change,
-					UBackground.class,
-					HColor.class,
-					UStroke.class,
-					UTranslate.class
-			)) {
+			if (!instanceOfAny(change, UBackground.class, HColor.class, UStroke.class, UTranslate.class)) {
 				throw new UnsupportedOperationException(change.getClass().toString());
 			}
 			this.all = other.all;

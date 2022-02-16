@@ -69,7 +69,7 @@ public class TextBlockWithUrl implements TextBlock {
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
 		return block.calculateDimension(stringBounder);
 	}
-	
+
 	public MinMax getMinMax(StringBounder stringBounder) {
 		return block.getMinMax(stringBounder);
 	}

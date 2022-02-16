@@ -57,12 +57,11 @@ class USymbolNode extends USymbol {
 	public SkinParameter getSkinParameter() {
 		return SkinParameter.NODE;
 	}
-	
+
 	@Override
 	public SName getSName() {
 		return SName.node;
 	}
-
 
 //	public USymbolNode(HorizontalAlignment stereotypeAlignement) {
 //		this.stereotypeAlignement = stereotypeAlignement;

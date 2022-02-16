@@ -47,12 +47,11 @@ class USymbolTogether extends USymbol {
 	public SkinParameter getSkinParameter() {
 		return SkinParameter.STORAGE;
 	}
-	
+
 	@Override
 	public SName getSName() {
 		return SName.storage;
 	}
-
 
 	@Override
 	public TextBlock asSmall(TextBlock name, final TextBlock label, final TextBlock stereotype,
@@ -62,7 +61,8 @@ class USymbolTogether extends USymbol {
 
 	@Override
 	public TextBlock asBig(final TextBlock title, HorizontalAlignment labelAlignment, final TextBlock stereotype,
-			final double width, final double height, final SymbolContext symbolContext, final HorizontalAlignment stereoAlignment) {
+			final double width, final double height, final SymbolContext symbolContext,
+			final HorizontalAlignment stereoAlignment) {
 		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {

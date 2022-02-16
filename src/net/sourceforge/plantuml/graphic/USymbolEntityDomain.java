@@ -44,12 +44,11 @@ class USymbolEntityDomain extends USymbolSimpleAbstract {
 	public SkinParameter getSkinParameter() {
 		return SkinParameter.ENTITY;
 	}
-	
+
 	@Override
 	public SName getSName() {
 		return SName.entity;
 	}
-
 
 	@Override
 	protected TextBlock getDrawing(final SymbolContext symbolContext) {

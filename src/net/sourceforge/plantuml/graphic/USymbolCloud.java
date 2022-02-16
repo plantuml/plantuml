@@ -61,12 +61,11 @@ class USymbolCloud extends USymbol {
 	public SkinParameter getSkinParameter() {
 		return SkinParameter.CLOUD;
 	}
-	
+
 	@Override
 	public SName getSName() {
 		return SName.cloud;
 	}
-
 
 	private void drawCloud(UGraphic ug, double width, double height, double shadowing) {
 		final UPath shape = getSpecificFrontierForCloud(width, height);

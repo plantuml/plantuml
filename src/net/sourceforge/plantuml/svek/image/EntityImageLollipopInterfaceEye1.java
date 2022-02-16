@@ -84,8 +84,7 @@ public class EntityImageLollipopInterfaceEye1 extends AbstractEntityImage {
 
 	final public void drawU(UGraphic ug) {
 		ug = ug.apply(SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.classBorder));
-		ug = ug.apply(SkinParamUtils.getColor(getSkinParam(), getStereo(),
-		ColorParam.classBackground).bg());
+		ug = ug.apply(SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.classBackground).bg());
 		if (url != null) {
 			ug.startUrl(url);
 		}

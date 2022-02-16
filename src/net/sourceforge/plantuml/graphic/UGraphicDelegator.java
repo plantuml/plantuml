@@ -35,6 +35,10 @@
  */
 package net.sourceforge.plantuml.graphic;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.Map;
+
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UGroupType;
@@ -42,10 +46,6 @@ import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.Map;
 
 public abstract class UGraphicDelegator implements UGraphic {
 

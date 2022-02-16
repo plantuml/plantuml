@@ -64,17 +64,16 @@ public class Circle {
 		return new Circle(p2, p1, p3);
 	}
 
-
 	private Circle(Point2D p1, Point2D p2, Point2D p3) {
 		final double num1 = p3.getX() * p3.getX() * (p1.getY() - p2.getY())
 				+ (p1.getX() * p1.getX() + (p1.getY() - p2.getY()) * (p1.getY() - p3.getY())) * (p2.getY() - p3.getY())
 				+ p2.getX() * p2.getX() * (-p1.getY() + p3.getY());
-		final double den1 = 2 * (p3.getX() * (p1.getY() - p2.getY()) + p1.getX() * (p2.getY() - p3.getY()) + p2.getX()
-				* (-p1.getY() + p3.getY()));
+		final double den1 = 2 * (p3.getX() * (p1.getY() - p2.getY()) + p1.getX() * (p2.getY() - p3.getY())
+				+ p2.getX() * (-p1.getY() + p3.getY()));
 		final double x = num1 / den1;
 		final double den2 = p3.getY() - p2.getY();
-		final double y = (p2.getY() + p3.getY()) / 2 - (p3.getX() - p2.getX()) / den2
-				* (x - (p2.getX() + p3.getX()) / 2);
+		final double y = (p2.getY() + p3.getY()) / 2
+				- (p3.getX() - p2.getX()) / den2 * (x - (p2.getX() + p3.getX()) / 2);
 		center = new Point2D.Double(x, y);
 		radius = center.distance(p1);
 	}

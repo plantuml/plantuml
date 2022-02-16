@@ -63,12 +63,11 @@ class USymbolCollections extends USymbol {
 	public SkinParameter getSkinParameter() {
 		return skinParameter;
 	}
-	
+
 	@Override
 	public SName getSName() {
 		return SName.collections;
 	}
-
 
 	private void drawCollections(UGraphic ug, double width, double height, double shadowing, double roundCorner) {
 		final URectangle small = new URectangle(width - getDeltaCollection(), height - getDeltaCollection())

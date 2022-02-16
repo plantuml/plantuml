@@ -56,8 +56,8 @@ public class TextBlockSprited extends AbstractTextBlock {
 		final double heightCircledCharacter = sprite.calculateDimension(stringBounder).getHeight();
 
 		final Dimension2D dim = parent.calculateDimension(stringBounder);
-		return new Dimension2DDouble(dim.getWidth() + widthCircledCharacter, Math.max(heightCircledCharacter,
-				dim.getHeight()));
+		return new Dimension2DDouble(dim.getWidth() + widthCircledCharacter,
+				Math.max(heightCircledCharacter, dim.getHeight()));
 	}
 
 	private double getCircledCharacterWithAndMargin(StringBounder stringBounder) {

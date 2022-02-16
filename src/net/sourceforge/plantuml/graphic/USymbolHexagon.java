@@ -49,12 +49,11 @@ public class USymbolHexagon extends USymbol {
 	public SkinParameter getSkinParameter() {
 		return SkinParameter.HEXAGON;
 	}
-	
+
 	@Override
 	public SName getSName() {
 		return SName.hexagon;
 	}
-
 
 	private final double marginY = 5;
 

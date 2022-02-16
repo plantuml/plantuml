@@ -54,12 +54,11 @@ class USymbolDatabase extends USymbol {
 	public SkinParameter getSkinParameter() {
 		return SkinParameter.DATABASE;
 	}
-	
+
 	@Override
 	public SName getSName() {
 		return SName.database;
 	}
-
 
 	private void drawDatabase(UGraphic ug, double width, double height, double shadowing) {
 		final UPath shape = new UPath();

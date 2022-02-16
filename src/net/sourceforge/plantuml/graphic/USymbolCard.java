@@ -52,12 +52,11 @@ class USymbolCard extends USymbol {
 	public USymbolCard(SkinParameter skinParameter) {
 		this.skinParameter = skinParameter;
 	}
-	
+
 	@Override
 	public SName getSName() {
 		return SName.card;
 	}
-
 
 	@Override
 	public SkinParameter getSkinParameter() {

@@ -52,8 +52,10 @@ public class EntityImageGroup extends AbstractEntityImage {
 
 	public EntityImageGroup(ILeaf entity, ISkinParam skinParam) {
 		super(entity, skinParam);
-		// this.desc = Display.create(StringUtils.getWithNewlines(entity.getDisplay()), new FontConfiguration(
-		// getFont(FontParam.ACTIVITY), HtmlColorUtils.BLACK), HorizontalAlignment.CENTER);
+		// this.desc = Display.create(StringUtils.getWithNewlines(entity.getDisplay()),
+		// new FontConfiguration(
+		// getFont(FontParam.ACTIVITY), HtmlColorUtils.BLACK),
+		// HorizontalAlignment.CENTER);
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
