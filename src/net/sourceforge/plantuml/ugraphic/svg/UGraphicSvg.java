@@ -41,7 +41,6 @@ import java.util.Map;
 
 import javax.xml.transform.TransformerException;
 
-import net.sourceforge.plantuml.Pragma;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.posimo.DotPath;
@@ -71,7 +70,7 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 
 	private final boolean textAsPath2;
 	private final String target;
-	private final Pragma pragma;
+	private final boolean interactive;
 
 	public double dpiFactor() {
 		return 1;
@@ -86,17 +85,17 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 		super(other);
 		this.textAsPath2 = other.textAsPath2;
 		this.target = other.target;
-		this.pragma = other.pragma;
+		this.interactive = other.interactive;
 		register();
 	}
 
 	public UGraphicSvg(HColor defaultBackground, boolean svgDimensionStyle, Dimension2D minDim, ColorMapper colorMapper,
 			boolean textAsPath, double scale, String linkTarget, String hover, long seed, String preserveAspectRatio,
-			StringBounder stringBounder, LengthAdjust lengthAdjust, Pragma pragma) {
+			StringBounder stringBounder, LengthAdjust lengthAdjust, boolean interactive) {
 		this(defaultBackground, minDim, colorMapper,
 				new SvgGraphics(colorMapper.toSvg(defaultBackground), svgDimensionStyle, minDim, scale, hover, seed,
-						preserveAspectRatio, lengthAdjust, DarkStrategy.IGNORE_DARK_COLOR, pragma),
-				textAsPath, linkTarget, stringBounder, pragma);
+						preserveAspectRatio, lengthAdjust, DarkStrategy.IGNORE_DARK_COLOR, interactive),
+				textAsPath, linkTarget, stringBounder, interactive);
 		if (defaultBackground instanceof HColorGradient) {
 			final SvgGraphics svg = getGraphicObject();
 			svg.paintBackcolorGradient(colorMapper, (HColorGradient) defaultBackground);
@@ -119,11 +118,11 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 	}
 
 	private UGraphicSvg(HColor defaultBackground, Dimension2D minDim, ColorMapper colorMapper, SvgGraphics svg,
-			boolean textAsPath, String linkTarget, StringBounder stringBounder, Pragma pragma) {
+			boolean textAsPath, String linkTarget, StringBounder stringBounder, boolean interactive) {
 		super(defaultBackground, colorMapper, stringBounder, svg);
 		this.textAsPath2 = textAsPath;
 		this.target = linkTarget;
-		this.pragma = pragma;
+		this.interactive = interactive;
 		register();
 	}
 
@@ -155,7 +154,7 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 			if (metadata != null)
 				getGraphicObject().addComment(metadata);
 
-			if (pragma.isDefine("svginteractive") && Boolean.valueOf(pragma.getValue("svginteractive"))) {
+			if (interactive) {
 				// For performance reasons and also because we want the entire graph DOM to be create so we can register
 				// the event handlers on them we will append to the end of the document
 				getGraphicObject().addStyle("onmouseinteractivefooter.css");

@@ -62,7 +62,6 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import net.sourceforge.plantuml.Pragma;
 import org.w3c.dom.CDATASection;
 import org.w3c.dom.Comment;
 import org.w3c.dom.Document;
@@ -130,7 +129,6 @@ public class SvgGraphics {
 	private final boolean svgDimensionStyle;
 	private final LengthAdjust lengthAdjust;
 
-	private final Pragma pragma;
 	private final boolean INTERACTIVE;
 
 	final protected void ensureVisible(double x, double y) {
@@ -143,7 +141,7 @@ public class SvgGraphics {
 	}
 
 	public SvgGraphics(String backcolor, boolean svgDimensionStyle, Dimension2D minDim, double scale, String hover,
-			long seed, String preserveAspectRatio, LengthAdjust lengthAdjust, DarkStrategy darkStrategy, Pragma pragma) {
+			long seed, String preserveAspectRatio, LengthAdjust lengthAdjust, DarkStrategy darkStrategy, boolean interactive) {
 		try {
 			this.lengthAdjust = lengthAdjust;
 			this.svgDimensionStyle = svgDimensionStyle;
@@ -151,7 +149,7 @@ public class SvgGraphics {
 			this.document = getDocument();
 			this.backcolor = backcolor;
 			this.preserveAspectRatio = preserveAspectRatio;
-			this.pragma = pragma;
+			this.INTERACTIVE = interactive;
 			ensureVisible(minDim.getWidth(), minDim.getHeight());
 
 			this.root = getRootNode();
@@ -166,12 +164,6 @@ public class SvgGraphics {
 			this.gradientId = "g" + getSeed(seed);
 			if (hover != null)
 				defs.appendChild(getPathHover(hover));
-
-			if (!pragma.isDefine("svginteractive"))
-				INTERACTIVE = false;
-			else {
-				INTERACTIVE = Boolean.valueOf(pragma.getValue("svginteractive"));
-			}
 
 			if (INTERACTIVE) {
 				final Element styles = getStylesForInteractiveMode();

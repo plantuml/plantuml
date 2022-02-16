@@ -51,7 +51,25 @@ import java.util.Set;
 
 import javax.swing.ImageIcon;
 
-import net.sourceforge.plantuml.*;
+import net.sourceforge.plantuml.AnimatedGifEncoder;
+import net.sourceforge.plantuml.AnnotatedWorker;
+import net.sourceforge.plantuml.CMapData;
+import net.sourceforge.plantuml.ColorParam;
+import net.sourceforge.plantuml.CornerParam;
+import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.EmptyImageBuilder;
+import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.FileUtils;
+import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.LineParam;
+import net.sourceforge.plantuml.OptionFlags;
+import net.sourceforge.plantuml.Scale;
+import net.sourceforge.plantuml.SvgCharSizeHack;
+import net.sourceforge.plantuml.Pragma;
+import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.anim.AffineTransformation;
 import net.sourceforge.plantuml.anim.Animation;
 import net.sourceforge.plantuml.api.ImageDataComplex;
@@ -389,7 +407,13 @@ public class ImageBuilder {
 		case PNG:
 			return createUGraphicPNG(scaleFactor, dim, animationArg, dx, dy, option.getWatermark());
 		case SVG:
-			return createUGraphicSVG(scaleFactor, dim, pragma);
+			final boolean interactive;
+			if (!pragma.isDefine("svginteractive"))
+				interactive = false;
+			else {
+				interactive = Boolean.valueOf(pragma.getValue("svginteractive"));
+			}
+			return createUGraphicSVG(scaleFactor, dim, interactive);
 		case EPS:
 			return new UGraphicEps(backcolor, colorMapper, stringBounder, EpsStrategy.getDefault2());
 		case EPS_TEXT:
@@ -415,14 +439,14 @@ public class ImageBuilder {
 		}
 	}
 
-	private UGraphic createUGraphicSVG(double scaleFactor, Dimension2D dim, Pragma pragma) {
+	private UGraphic createUGraphicSVG(double scaleFactor, Dimension2D dim, boolean interactive) {
 		final String hoverPathColorRGB = getHoverPathColorRGB();
 		final LengthAdjust lengthAdjust = skinParam == null ? LengthAdjust.defaultValue() : skinParam.getlengthAdjust();
 		final String preserveAspectRatio = getPreserveAspectRatio();
 		final boolean svgDimensionStyle = skinParam == null || skinParam.svgDimensionStyle();
 		final String svgLinkTarget = getSvgLinkTarget();
 		final UGraphicSvg ug = new UGraphicSvg(backcolor, svgDimensionStyle, dim, colorMapper, false, scaleFactor,
-				svgLinkTarget, hoverPathColorRGB, seed, preserveAspectRatio, stringBounder, lengthAdjust, pragma);
+				svgLinkTarget, hoverPathColorRGB, seed, preserveAspectRatio, stringBounder, lengthAdjust, interactive);
 		return ug;
 
 	}
