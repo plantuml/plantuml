@@ -41,6 +41,7 @@ import java.util.Map;
 
 import javax.xml.transform.TransformerException;
 
+import net.sourceforge.plantuml.Pragma;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.posimo.DotPath;
@@ -89,10 +90,10 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 
 	public UGraphicSvg(HColor defaultBackground, boolean svgDimensionStyle, Dimension2D minDim, ColorMapper colorMapper,
 			boolean textAsPath, double scale, String linkTarget, String hover, long seed, String preserveAspectRatio,
-			StringBounder stringBounder, LengthAdjust lengthAdjust) {
+			StringBounder stringBounder, LengthAdjust lengthAdjust, Pragma pragma) {
 		this(defaultBackground, minDim, colorMapper,
 				new SvgGraphics(colorMapper.toSvg(defaultBackground), svgDimensionStyle, minDim, scale, hover, seed,
-						preserveAspectRatio, lengthAdjust, DarkStrategy.IGNORE_DARK_COLOR),
+						preserveAspectRatio, lengthAdjust, DarkStrategy.IGNORE_DARK_COLOR, pragma),
 				textAsPath, linkTarget, stringBounder);
 		if (defaultBackground instanceof HColorGradient) {
 			final SvgGraphics svg = getGraphicObject();
