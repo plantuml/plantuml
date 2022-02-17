@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.creole;
 
-import java.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
 import java.util.Objects;

@@ -62,6 +62,7 @@ import net.sourceforge.plantuml.cucadiagram.Stereotag;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.descdiagram.DescriptionDiagram;
 import net.sourceforge.plantuml.graphic.USymbol;
+import net.sourceforge.plantuml.graphic.USymbols;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
@@ -221,7 +222,7 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 			usymbol = null;
 		} else {
 			type = LeafType.DESCRIPTION;
-			usymbol = USymbol.fromString(symbol, diagram.getSkinParam());
+			usymbol = USymbols.fromString(symbol, diagram.getSkinParam());
 			if (usymbol == null) {
 				throw new IllegalStateException();
 			}

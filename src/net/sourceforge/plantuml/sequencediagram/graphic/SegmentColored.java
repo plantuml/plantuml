@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
 
-import java.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.util.AbstractCollection;
 import java.util.Collection;
 import java.util.Iterator;

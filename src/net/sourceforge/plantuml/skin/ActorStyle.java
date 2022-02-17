@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.skin;
 import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.USymbol;
+import net.sourceforge.plantuml.graphic.USymbols;
 
 public enum ActorStyle {
 
@@ -45,11 +46,11 @@ public enum ActorStyle {
 
 	public USymbol toUSymbol() {
 		if (this == STICKMAN) {
-			return USymbol.ACTOR_STICKMAN;
+			return USymbols.ACTOR_STICKMAN;
 		} else if (this == AWESOME) {
-			return USymbol.ACTOR_AWESOME;
+			return USymbols.ACTOR_AWESOME;
 		} else if (this == HOLLOW) {
-			return USymbol.ACTOR_HOLLOW;
+			return USymbols.ACTOR_HOLLOW;
 		}
 		throw new IllegalStateException();
 	}

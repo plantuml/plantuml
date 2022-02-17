@@ -41,7 +41,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -273,7 +273,8 @@ public class ImageBuilder {
 				/ 96.0;
 		if (scaleFactor <= 0)
 			throw new IllegalStateException("Bad scaleFactor");
-		UGraphic ug = createUGraphic(fileFormatOption, dim, animationArg, dx, dy, scaleFactor, titledDiagram !=null ? titledDiagram.getPragma() : new Pragma());
+		UGraphic ug = createUGraphic(fileFormatOption, dim, animationArg, dx, dy, scaleFactor,
+				titledDiagram == null ? new Pragma() : titledDiagram.getPragma());
 		maybeDrawBorder(ug, dim);
 		if (randomPixel) {
 			drawRandomPoint(ug);
@@ -402,17 +403,12 @@ public class ImageBuilder {
 	}
 
 	private UGraphic createUGraphic(FileFormatOption option, final Dimension2D dim, Animation animationArg, double dx,
-																	double dy, double scaleFactor, Pragma pragma) {
+			double dy, double scaleFactor, Pragma pragma) {
 		switch (option.getFileFormat()) {
 		case PNG:
 			return createUGraphicPNG(scaleFactor, dim, animationArg, dx, dy, option.getWatermark());
 		case SVG:
-			final boolean interactive;
-			if (!pragma.isDefine("svginteractive"))
-				interactive = false;
-			else {
-				interactive = Boolean.valueOf(pragma.getValue("svginteractive"));
-			}
+			final boolean interactive = "true".equalsIgnoreCase(pragma.getValue("svginteractive"));
 			return createUGraphicSVG(scaleFactor, dim, interactive);
 		case EPS:
 			return new UGraphicEps(backcolor, colorMapper, stringBounder, EpsStrategy.getDefault2());

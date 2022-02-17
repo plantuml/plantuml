@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.elk;
 
-import java.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -111,7 +111,7 @@ import net.sourceforge.plantuml.graphic.QuoteUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
-import net.sourceforge.plantuml.graphic.USymbol;
+import net.sourceforge.plantuml.graphic.USymbols;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
@@ -267,7 +267,7 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 				stroke = Cluster.getStrokeInternal(group, skinParam, style);
 			} else {
 				if (group.getUSymbol() == null) {
-					shadowing = skinParam.shadowing2(group.getStereotype(), USymbol.PACKAGE.getSkinParameter()) ? 3 : 0;
+					shadowing = skinParam.shadowing2(group.getStereotype(), USymbols.PACKAGE.getSkinParameter()) ? 3 : 0;
 				} else {
 					shadowing = skinParam.shadowing2(group.getStereotype(), group.getUSymbol().getSkinParameter()) ? 3
 							: 0;

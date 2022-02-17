@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
-import java.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.Dimension2DDouble;

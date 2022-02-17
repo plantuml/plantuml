@@ -41,7 +41,7 @@ import static gen.lib.cgraph.node__c.agnode;
 import static gen.lib.gvc.gvc__c.gvContext;
 import static gen.lib.gvc.gvlayout__c.gvLayoutJobs;
 
-import java.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;

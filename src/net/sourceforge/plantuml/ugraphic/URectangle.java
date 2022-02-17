@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.ugraphic;
 
-import java.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.ugraphic.comp.CompressionMode;
 

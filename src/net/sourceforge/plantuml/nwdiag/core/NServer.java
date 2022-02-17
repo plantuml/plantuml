@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.USymbol;
+import net.sourceforge.plantuml.graphic.USymbols;
 import net.sourceforge.plantuml.nwdiag.next.LinkedElement;
 import net.sourceforge.plantuml.nwdiag.next.NBar;
 import net.sourceforge.plantuml.skin.ActorStyle;
@@ -61,7 +62,7 @@ public class NServer {
 
 	private final Map<Network, String> connections = new LinkedHashMap<Network, String>();
 
-	private USymbol shape = USymbol.RECTANGLE;
+	private USymbol shape = USymbols.RECTANGLE;
 	private final String name;
 	private String description;
 	private final NBar bar;
@@ -179,7 +180,7 @@ public class NServer {
 	}
 
 	public final void setShape(String shapeName) {
-		final USymbol shapeFromString = USymbol.fromString(shapeName, ActorStyle.STICKMAN, ComponentStyle.RECTANGLE,
+		final USymbol shapeFromString = USymbols.fromString(shapeName, ActorStyle.STICKMAN, ComponentStyle.RECTANGLE,
 				PackageStyle.RECTANGLE);
 		if (shapeFromString != null) {
 			this.shape = shapeFromString;

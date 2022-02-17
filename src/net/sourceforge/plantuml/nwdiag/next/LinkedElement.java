@@ -34,7 +34,7 @@
  */
 package net.sourceforge.plantuml.nwdiag.next;
 
-import java.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;

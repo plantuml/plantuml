@@ -36,7 +36,7 @@
  */
 package net.sourceforge.plantuml.svek;
 
-import java.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -56,6 +56,7 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SkinParamUtils;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UseStyle;
@@ -69,6 +70,7 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.USymbol;
+import net.sourceforge.plantuml.graphic.USymbols;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.posimo.Moveable;
@@ -318,7 +320,7 @@ public class Cluster implements Moveable {
 		final double rounded;
 		final double shadowing;
 		if (UseStyle.useBetaStyle()) {
-			final USymbol uSymbol = group.getUSymbol() == null ? USymbol.PACKAGE : group.getUSymbol();
+			final USymbol uSymbol = group.getUSymbol() == null ? USymbols.PACKAGE : group.getUSymbol();
 			final StyleSignature tmp = getDefaultStyleDefinition(umlDiagramType.getStyleName(), uSymbol);
 			style = tmp.with(group.getStereotype()).getMergedStyle(skinParam.getCurrentStyleBuilder());
 			shadowing = style.value(PName.Shadowing).asDouble();
@@ -334,7 +336,7 @@ public class Cluster implements Moveable {
 
 		} else {
 			if (group.getUSymbol() == null)
-				shadowing = skinParam2.shadowing2(group.getStereotype(), USymbol.PACKAGE.getSkinParameter()) ? 3 : 0;
+				shadowing = skinParam2.shadowing2(group.getStereotype(), USymbols.PACKAGE.getSkinParameter()) ? 3 : 0;
 			else
 				shadowing = skinParam2.shadowing2(group.getStereotype(), group.getUSymbol().getSkinParameter()) ? 3 : 0;
 
@@ -427,7 +429,7 @@ public class Cluster implements Moveable {
 		if (style != null)
 			return style.getStroke();
 
-		if (group.getUSymbol() != null && group.getUSymbol() != USymbol.PACKAGE)
+		if (group.getUSymbol() != null && group.getUSymbol() != USymbols.PACKAGE)
 			return group.getUSymbol().getSkinParameter().getStroke(skinParam, group.getStereotype());
 
 		return GeneralImageBuilder.getForcedStroke(group.getStereotype(), skinParam);
@@ -714,7 +716,7 @@ public class Cluster implements Moveable {
 	}
 
 	private boolean protection1(UmlDiagramType type) {
-		if (group.getUSymbol() == USymbol.NODE)
+		if (group.getUSymbol() == USymbols.NODE)
 			return true;
 
 		if (skinParam.useSwimlanes(type))
@@ -785,7 +787,7 @@ public class Cluster implements Moveable {
 
 		sb.append("subgraph " + getClusterId() + " {");
 		sb.append("style=solid;");
-		sb.append("color=\"" + DotStringFactory.sharp000000(color) + "\";");
+		sb.append("color=\"" + StringUtils.sharp000000(color) + "\";");
 
 		final String label;
 		if (isLabel()) {
@@ -916,7 +918,7 @@ public class Cluster implements Moveable {
 		if (UseStyle.useBetaStyle())
 			return style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
 
-		final USymbol sym = group.getUSymbol() == null ? USymbol.PACKAGE : group.getUSymbol();
+		final USymbol sym = group.getUSymbol() == null ? USymbols.PACKAGE : group.getUSymbol();
 		final ColorParam backparam = umlDiagramType == UmlDiagramType.ACTIVITY ? ColorParam.partitionBackground
 				: sym.getColorParamBack();
 		final HColor c1 = skinParam.getHtmlColor(backparam, stereo, false);

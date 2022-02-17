@@ -37,36 +37,36 @@ package net.sourceforge.plantuml.ugraphic.color;
 
 import java.awt.Color;
 
-import net.sourceforge.plantuml.svek.DotStringFactory;
+import net.sourceforge.plantuml.StringUtils;
 
 public abstract class AbstractColorMapper implements ColorMapper {
 
 	final public String toRGB(HColor hcolor) {
-		if (hcolor == null) {
+		if (hcolor == null)
 			return null;
-		}
+
 		final Color color = toColor(hcolor);
-		return DotStringFactory.sharp000000(color.getRGB());
+		return StringUtils.sharp000000(color.getRGB());
 	}
 
 	final public String toSvg(HColor hcolor) {
-		if (hcolor == null) {
+		if (hcolor == null)
 			return "none";
-		}
+
 		if (hcolor instanceof HColorBackground) {
 			hcolor = ((HColorBackground) hcolor).getBack();
 //			Thread.dumpStack();
 //			System.exit(0);
 //			return toHtml(result);
 		}
-		if (HColorUtils.isTransparent(hcolor)) {
+		if (HColorUtils.isTransparent(hcolor))
 			return "#00000000";
-		}
+
 		final Color color = toColor(hcolor);
 		final int alpha = color.getAlpha();
-		if (alpha == 255) {
+		if (alpha == 255)
 			return toRGB(hcolor);
-		}
+
 		String s = "0" + Integer.toHexString(alpha).toUpperCase();
 		s = s.substring(s.length() - 2);
 		return toRGB(hcolor) + s;

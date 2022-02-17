@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
-import java.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SkinParamUtils;
@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.USymbol;
+import net.sourceforge.plantuml.graphic.USymbols;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
@@ -72,7 +73,7 @@ public class EntityImageState2 extends AbstractEntityImage {
 		this.sname = sname;
 		final Stereotype stereotype = entity.getStereotype();
 
-		final USymbol symbol = USymbol.FRAME;
+		final USymbol symbol = USymbols.FRAME;
 		final SymbolContext ctx;
 
 		if (UseStyle.useBetaStyle()) {

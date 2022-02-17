@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.USymbol;
+import net.sourceforge.plantuml.graphic.USymbols;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
@@ -89,26 +90,26 @@ public class CommandPartition3 extends SingleLineCommand2<ActivityDiagram3> {
 
 	private USymbol getUSymbol(String type) {
 		if ("card".equalsIgnoreCase(type)) {
-			return USymbol.CARD;
+			return USymbols.CARD;
 		}
 		if ("package".equalsIgnoreCase(type)) {
-			return USymbol.PACKAGE;
+			return USymbols.PACKAGE;
 		}
 		if ("rectangle".equalsIgnoreCase(type)) {
-			return USymbol.RECTANGLE;
+			return USymbols.RECTANGLE;
 		}
-		return USymbol.FRAME;
+		return USymbols.FRAME;
 	}
 
 	private ColorParam getColorParamBorder(final USymbol symbol) {
-		if (symbol == USymbol.FRAME) {
+		if (symbol == USymbols.FRAME) {
 			return ColorParam.partitionBorder;
 		}
 		return symbol.getColorParamBorder();
 	}
 
 	private ColorParam getColorParamBack(final USymbol symbol) {
-		if (symbol == USymbol.FRAME) {
+		if (symbol == USymbols.FRAME) {
 			return ColorParam.partitionBackground;
 		}
 		return symbol.getColorParamBack();
@@ -119,7 +120,7 @@ public class CommandPartition3 extends SingleLineCommand2<ActivityDiagram3> {
 	}
 
 	private StyleSignature getDefaultStyleDefinitionPartition(USymbol symbol) {
-		if (symbol == USymbol.RECTANGLE)
+		if (symbol == USymbols.RECTANGLE)
 			return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.rectangle);
 		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.partition);
 	}

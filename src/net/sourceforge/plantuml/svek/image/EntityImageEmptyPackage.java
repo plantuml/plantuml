@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
-import java.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.AlignmentParam;
 import net.sourceforge.plantuml.ColorParam;
@@ -59,7 +59,7 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
-import net.sourceforge.plantuml.graphic.USymbol;
+import net.sourceforge.plantuml.graphic.USymbols;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.style.PName;
@@ -131,7 +131,7 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 			this.shadowing = getSkinParam().shadowing(getEntity().getStereotype()) ? 3 : 0;
 			this.stroke = GeneralImageBuilder.getForcedStroke(getEntity().getStereotype(), getSkinParam());
 			this.roundCorner = 0;
-			this.back = Cluster.getBackColor(specificBackColor, skinParam, stereotype, sname, USymbol.PACKAGE);
+			this.back = Cluster.getBackColor(specificBackColor, skinParam, stereotype, sname, USymbols.PACKAGE);
 			titleFontConfiguration = new FontConfiguration(getSkinParam(), FontParam.PACKAGE, stereotype);
 			titleHorizontalAlignment = HorizontalAlignment.CENTER;
 		}

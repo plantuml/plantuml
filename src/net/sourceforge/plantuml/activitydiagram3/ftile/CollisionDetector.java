@@ -72,37 +72,29 @@ public class CollisionDetector extends UGraphicNo {
 
 	private CollisionDetector(CollisionDetector other, UChange change) {
 		super(other, change);
-		if (!instanceOfAny(change,
-				UBackground.class,
-				HColor.class,
-				UStroke.class,
-				UTranslate.class
-		)) {
+		if (!instanceOfAny(change, UBackground.class, HColor.class, UStroke.class, UTranslate.class)) {
 			throw new UnsupportedOperationException(change.getClass().toString());
 		}
 		this.context = other.context;
 	}
-	
+
 	static class Context {
 		private final List<MinMax> rectangles = new ArrayList<>();
 		private final List<Snake> snakes = new ArrayList<>();
 		private boolean manageSnakes;
 
 		public void drawDebug(UGraphic ug) {
-			for (MinMax minmax : rectangles) {
-				if (collision(minmax)) {
+			for (MinMax minmax : rectangles)
+				if (collision(minmax))
 					minmax.drawGray(ug);
-				}
-			}
+
 			final HColor color = HColorUtils.BLACK;
 			ug = ug.apply(color).apply(new UStroke(5));
-			for (Snake snake : snakes) {
-				for (Line2D line : snake.getHorizontalLines()) {
-					if (collision(line)) {
+			for (Snake snake : snakes)
+				for (Line2D line : snake.getHorizontalLines())
+					if (collision(line))
 						drawLine(ug, line);
-					}
-				}
-			}
+
 		}
 
 		private void drawLine(UGraphic ug, Line2D line) {
@@ -111,11 +103,10 @@ public class CollisionDetector extends UGraphicNo {
 		}
 
 		private boolean collision(Line2D hline) {
-			for (MinMax r : rectangles) {
-				if (collisionCheck(r, hline)) {
+			for (MinMax r : rectangles)
+				if (collisionCheck(r, hline))
 					return true;
-				}
-			}
+
 			return false;
 		}
 
@@ -133,42 +124,41 @@ public class CollisionDetector extends UGraphicNo {
 	}
 
 	private static boolean collisionCheck(MinMax rect, Line2D hline) {
-		if (hline.getY1() != hline.getY2()) {
+		if (hline.getY1() != hline.getY2())
 			throw new IllegalArgumentException();
-		}
-		if (hline.getY1() < rect.getMinY()) {
+
+		if (hline.getY1() < rect.getMinY())
 			return false;
-		}
-		if (hline.getY1() > rect.getMaxY()) {
+
+		if (hline.getY1() > rect.getMaxY())
 			return false;
-		}
+
 		final double x1 = Math.min(hline.getX1(), hline.getX2());
 		final double x2 = Math.max(hline.getX1(), hline.getX2());
-		if (x2 < rect.getMinX()) {
+		if (x2 < rect.getMinX())
 			return false;
-		}
-		if (x1 > rect.getMaxX()) {
+
+		if (x1 > rect.getMaxX())
 			return false;
-		}
+
 		return true;
 	}
 
 	public void draw(UShape shape) {
-		if (shape instanceof UPolygon) {
+		if (shape instanceof UPolygon)
 			drawPolygone((UPolygon) shape);
-		} else if (shape instanceof URectangle) {
+		else if (shape instanceof URectangle)
 			drawRectangle((URectangle) shape);
-		} else if (shape instanceof Snake) {
+		else if (shape instanceof Snake)
 			drawSnake((Snake) shape);
-		} /*
+		/*
 		 * else { System.err.println("shape=" + shape.getClass() + " " + shape); }
 		 */
 	}
 
 	private void drawSnake(Snake shape) {
-		if (context.manageSnakes) {
+		if (context.manageSnakes)
 			context.snakes.add(shape.translate(getTranslate()));
-		}
 
 	}
 

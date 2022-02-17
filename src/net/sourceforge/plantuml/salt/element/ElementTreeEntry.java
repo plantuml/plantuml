@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.salt.element;
 
-import java.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;

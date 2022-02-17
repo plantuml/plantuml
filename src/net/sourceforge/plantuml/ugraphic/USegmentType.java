@@ -38,16 +38,17 @@ package net.sourceforge.plantuml.ugraphic;
 import java.awt.geom.PathIterator;
 import java.util.EnumSet;
 
-import net.sourceforge.plantuml.ugraphic.arc.ExtendedPathIterator;
-
 public enum USegmentType {
+	
 
 	SEG_MOVETO(PathIterator.SEG_MOVETO), //
 	SEG_LINETO(PathIterator.SEG_LINETO), //
 	SEG_QUADTO(PathIterator.SEG_QUADTO), //
 	SEG_CUBICTO(PathIterator.SEG_CUBICTO), //
 	SEG_CLOSE(PathIterator.SEG_CLOSE), //
-	SEG_ARCTO(ExtendedPathIterator.SEG_ARCTO);//
+	SEG_ARCTO(4321);//
+	
+	final public static int SEG_ARCTO_VALUE = 4321;
 
 	private final int code;
 

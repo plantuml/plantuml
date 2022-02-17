@@ -59,6 +59,7 @@ import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.USymbol;
+import net.sourceforge.plantuml.graphic.USymbols;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
@@ -150,7 +151,7 @@ public class CommandCreateElementParenthesis extends SingleLineCommand2<ClassDia
 		final USymbol usymbol;
 
 		type = LeafType.DESCRIPTION;
-		usymbol = USymbol.fromString(symbol, diagram.getSkinParam());
+		usymbol = USymbols.fromString(symbol, diagram.getSkinParam());
 
 		final String idShort = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(codeRaw);
 		final Ident ident = diagram.buildLeafIdent(idShort);

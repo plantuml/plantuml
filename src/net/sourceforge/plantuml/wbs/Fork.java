@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.wbs;
 
-import java.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.util.ArrayList;
 import java.util.List;
 

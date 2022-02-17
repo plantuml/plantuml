@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.svek;
 
-import java.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -54,6 +54,7 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.Pragma;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.command.Position;
@@ -368,7 +369,7 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 			sb.append("minlen=" + (length - 1));
 			sb.append(",");
 		}
-		sb.append("color=\"" + DotStringFactory.sharp000000(lineColor) + "\"");
+		sb.append("color=\"" + StringUtils.sharp000000(lineColor) + "\"");
 		if (hasNoteLabelText() || link.getLinkConstraint() != null) {
 			sb.append(",");
 			if (graphvizVersion.useXLabelInsteadOfLabel() || dotMode == DotMode.NO_LEFT_RIGHT_AND_XLABEL
@@ -438,7 +439,7 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 
 	public static void appendTable(StringBuilder sb, int w, int h, int col) {
 		sb.append("<TABLE ");
-		sb.append("BGCOLOR=\"" + DotStringFactory.sharp000000(col) + "\" ");
+		sb.append("BGCOLOR=\"" + StringUtils.sharp000000(col) + "\" ");
 		sb.append("FIXEDSIZE=\"TRUE\" WIDTH=\"" + w + "\" HEIGHT=\"" + h + "\">");
 		sb.append("<TR");
 		sb.append(">");

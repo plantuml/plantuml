@@ -36,7 +36,7 @@
 package net.sourceforge.plantuml.svek;
 
 import java.awt.Color;
-import java.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;

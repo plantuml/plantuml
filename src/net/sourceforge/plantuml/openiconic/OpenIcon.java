@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.openiconic;
 
-import java.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;

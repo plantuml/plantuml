@@ -53,7 +53,7 @@ import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.descdiagram.DescriptionDiagram;
-import net.sourceforge.plantuml.graphic.USymbol;
+import net.sourceforge.plantuml.graphic.USymbols;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
@@ -129,7 +129,7 @@ public class CommandArchimate extends SingleLineCommand2<DescriptionDiagram> {
 		final Code code = diagram.V1972() ? ident : diagram.buildCode(idShort);
 		final String icon = arg.getLazzy("STEREOTYPE", 0);
 
-		final IEntity entity = diagram.getOrCreateLeaf(ident, code, LeafType.DESCRIPTION, USymbol.ARCHIMATE);
+		final IEntity entity = diagram.getOrCreateLeaf(ident, code, LeafType.DESCRIPTION, USymbols.ARCHIMATE);
 
 		final String displayRaw = arg.getLazzy("DISPLAY", 0);
 
@@ -140,7 +140,7 @@ public class CommandArchimate extends SingleLineCommand2<DescriptionDiagram> {
 		display = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(display);
 
 		entity.setDisplay(Display.getWithNewlines(display));
-		entity.setUSymbol(USymbol.ARCHIMATE);
+		entity.setUSymbol(USymbols.ARCHIMATE);
 		if (icon != null) {
 			entity.setStereotype(
 					Stereotype.build("<<$archimate/" + icon + ">>", diagram.getSkinParam().getCircledCharacterRadius(),

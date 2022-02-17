@@ -33,9 +33,11 @@
  * 
  *
  */
-package net.sourceforge.plantuml.ugraphic.arc;
+package net.sourceforge.plantuml.ugraphic.g2d;
 
 import java.awt.geom.PathIterator;
+
+import net.sourceforge.plantuml.ugraphic.USegmentType;
 
 
 /*
@@ -105,7 +107,7 @@ public interface ExtendedPathIterator {
 	 * largeArcFlag is zero if the smaller of the two arcs are to be used. sweepFlag is zero if the 'left' branch is
 	 * taken one otherwise. x and y are the destination for the ellipse.
 	 */
-	int SEG_ARCTO = 4321;
+	int SEG_ARCTO = USegmentType.SEG_ARCTO_VALUE;
 
 	/**
 	 * The winding rule constant for specifying an even-odd rule for determining the interior of a path. The even-odd
@@ -115,10 +117,11 @@ public interface ExtendedPathIterator {
 	int WIND_EVEN_ODD = PathIterator.WIND_EVEN_ODD;
 
 	/**
-	 * The winding rule constant for specifying a non-zero rule for determining the interior of a path. The non-zero
-	 * rule specifies that a point lies inside the path if a ray drawn in any direction from that point to infinity is
-	 * crossed by path segments a different number of times in the counter-clockwise direction than the clockwise
-	 * direction.
+	 * The winding rule constant for specifying a non-zero rule for determining the
+	 * interior of a path. The non-zero rule specifies that a point lies inside the
+	 * path if a ray drawn in any direction from that point to infinity is crossed
+	 * by path segments a different number of times in the counter-clockwise
+	 * direction than the clockwise direction.
 	 */
 	int WIND_NON_ZERO = PathIterator.WIND_NON_ZERO;
 

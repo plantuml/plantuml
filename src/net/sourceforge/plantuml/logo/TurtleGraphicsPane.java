@@ -36,7 +36,7 @@
 package net.sourceforge.plantuml.logo;
 
 import java.awt.Font;
-import java.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;

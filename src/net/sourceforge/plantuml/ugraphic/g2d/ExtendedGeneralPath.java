@@ -33,7 +33,7 @@
  * 
  *
  */
-package net.sourceforge.plantuml.ugraphic.arc;
+package net.sourceforge.plantuml.ugraphic.g2d;
 
 /*
 

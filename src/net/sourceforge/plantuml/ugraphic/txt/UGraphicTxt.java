@@ -36,7 +36,7 @@ package net.sourceforge.plantuml.ugraphic.txt;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
-import java.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;

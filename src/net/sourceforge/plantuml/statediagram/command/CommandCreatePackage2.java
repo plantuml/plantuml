@@ -55,7 +55,7 @@ import net.sourceforge.plantuml.cucadiagram.IGroup;
 import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.NamespaceStrategy;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
-import net.sourceforge.plantuml.graphic.USymbol;
+import net.sourceforge.plantuml.graphic.USymbols;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
@@ -125,7 +125,7 @@ public class CommandCreatePackage2 extends SingleLineCommand2<StateDiagram> {
 		final String stereotype = arg.get("STEREOTYPE", 0);
 		if (stereotype != null)
 			p.setStereotype(Stereotype.build(stereotype));
-		p.setUSymbol(USymbol.FRAME);
+		p.setUSymbol(USymbols.FRAME);
 
 		final String urlString = arg.get("URL", 0);
 		if (urlString != null) {

@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.gtile;
 
-import java.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;

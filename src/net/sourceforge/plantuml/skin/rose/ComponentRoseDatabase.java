@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.skin.rose;
 
-import java.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.LineBreakStrategy;
@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
-import net.sourceforge.plantuml.graphic.USymbol;
+import net.sourceforge.plantuml.graphic.USymbols;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.style.Style;
@@ -74,7 +74,7 @@ public class ComponentRoseDatabase extends AbstractTextualComponent {
 
 		final SymbolContext symbolContext = new SymbolContext(biColor.getBackColor(), biColor.getForeColor())
 				.withStroke(new UStroke(1.5)).withShadow(biColor.getDeltaShadow());
-		this.stickman = USymbol.DATABASE.asSmall(null, TextBlockUtils.empty(16, 17), TextBlockUtils.empty(0, 0),
+		this.stickman = USymbols.DATABASE.asSmall(null, TextBlockUtils.empty(16, 17), TextBlockUtils.empty(0, 0),
 				symbolContext, HorizontalAlignment.CENTER);
 	}
 

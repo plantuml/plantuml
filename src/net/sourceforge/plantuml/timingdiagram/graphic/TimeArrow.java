@@ -34,7 +34,7 @@
  */
 package net.sourceforge.plantuml.timingdiagram.graphic;
 
-import java.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 
 import net.sourceforge.plantuml.ISkinSimple;

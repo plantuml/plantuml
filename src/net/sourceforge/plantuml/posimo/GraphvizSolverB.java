@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.posimo;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
-import java.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

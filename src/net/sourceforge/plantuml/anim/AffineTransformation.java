@@ -36,7 +36,7 @@
 package net.sourceforge.plantuml.anim;
 
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 import java.util.Objects;
 import java.util.StringTokenizer;

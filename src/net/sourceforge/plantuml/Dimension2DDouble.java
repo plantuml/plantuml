@@ -35,7 +35,8 @@
  */
 package net.sourceforge.plantuml;
 
-import java.awt.geom.Dimension2D;
+import java.awt.Dimension;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 
 import net.sourceforge.plantuml.utils.MathUtils;
@@ -133,6 +134,10 @@ public class Dimension2DDouble extends Dimension2D {
 			w = minWidth;
 		}
 		return new Dimension2DDouble(w, h);
+	}
+
+	public static Dimension2D fromDimension(Dimension dimension) {
+		return new Dimension2D(dimension.getWidth(), dimension.getHeight());
 	}
 
 }

@@ -36,11 +36,12 @@
  */
 package net.sourceforge.plantuml.svek;
 
-import java.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.util.EnumSet;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.graphic.USymbol;
+import net.sourceforge.plantuml.graphic.USymbols;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPath;
@@ -66,27 +67,27 @@ public enum PackageStyle {
 	}
 
 	public USymbol toUSymbol() {
-		if (this == NODE) {
-			return USymbol.NODE;
-		}
-		if (this == CARD) {
-			return USymbol.CARD;
-		}
-		if (this == DATABASE) {
-			return USymbol.DATABASE;
-		}
-		if (this == CLOUD) {
-			return USymbol.CLOUD;
-		}
-		if (this == FRAME) {
-			return USymbol.FRAME;
-		}
-		if (this == RECTANGLE) {
-			return USymbol.RECTANGLE;
-		}
-		if (this == FOLDER) {
-			return USymbol.PACKAGE;
-		}
+		if (this == NODE)
+			return USymbols.NODE;
+
+		if (this == CARD)
+			return USymbols.CARD;
+
+		if (this == DATABASE)
+			return USymbols.DATABASE;
+
+		if (this == CLOUD)
+			return USymbols.CLOUD;
+
+		if (this == FRAME)
+			return USymbols.FRAME;
+
+		if (this == RECTANGLE)
+			return USymbols.RECTANGLE;
+
+		if (this == FOLDER)
+			return USymbols.PACKAGE;
+
 		return null;
 	}
 
@@ -117,7 +118,8 @@ public enum PackageStyle {
 		} else if (this == ARTIFACT) {
 			drawArtifact(ug, width, height, shadowing);
 		} else {
-			// drawNode(ug, xTheoricalPosition, yTheoricalPosition, width, height, shadowing);
+			// drawNode(ug, xTheoricalPosition, yTheoricalPosition, width, height,
+			// shadowing);
 			throw new UnsupportedOperationException();
 		}
 	}

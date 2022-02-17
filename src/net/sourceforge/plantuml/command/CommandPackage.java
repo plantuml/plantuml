@@ -57,6 +57,7 @@ import net.sourceforge.plantuml.cucadiagram.NamespaceStrategy;
 import net.sourceforge.plantuml.cucadiagram.Stereotag;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.USymbol;
+import net.sourceforge.plantuml.graphic.USymbols;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
@@ -138,7 +139,7 @@ public class CommandPackage extends SingleLineCommand2<AbstractEntityDiagram> {
 //			p.setThisIsTogether();
 //		} else 
 		if (stereotype != null) {
-			final USymbol usymbol = USymbol.fromString(stereotype, diagram.getSkinParam().actorStyle(),
+			final USymbol usymbol = USymbols.fromString(stereotype, diagram.getSkinParam().actorStyle(),
 					diagram.getSkinParam().componentStyle(), diagram.getSkinParam().packageStyle());
 			if (usymbol == null) {
 				p.setStereotype(Stereotype.build(stereotype));

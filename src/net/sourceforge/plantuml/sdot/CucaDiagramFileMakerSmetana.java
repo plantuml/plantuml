@@ -43,7 +43,7 @@ import static gen.lib.cgraph.subg__c.agsubg;
 import static gen.lib.gvc.gvc__c.gvContext;
 import static gen.lib.gvc.gvlayout__c.gvLayoutJobs;
 
-import java.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 import java.io.IOException;
 import java.io.OutputStream;

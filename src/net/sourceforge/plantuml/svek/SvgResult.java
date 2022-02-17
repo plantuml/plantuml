@@ -62,33 +62,34 @@ public class SvgResult {
 
 	public List<Point2D.Double> extractList(final String searched) {
 		final int p2 = this.indexOf(searched, 0);
-		if (p2 == -1) {
+		if (p2 == -1)
 			return Collections.emptyList();
-		}
+
 		final int p3 = this.indexOf("\"", p2 + searched.length());
-		if (p3 == -1) {
+		if (p3 == -1)
 			return Collections.emptyList();
-		}
+
 		return this.substring(p2 + searched.length(), p3).getPoints(" MC");
 	}
 
 	public int getIndexFromColor(int color) {
-		String s = "stroke=\"" + StringUtils.goLowerCase(DotStringFactory.sharp000000(color)) + "\"";
+		String s = "stroke=\"" + StringUtils.goLowerCase(StringUtils.sharp000000(color)) + "\"";
 		int idx = svg.indexOf(s);
-		if (idx != -1) {
+		if (idx != -1)
 			return idx;
-		}
-		s = ";stroke:" + StringUtils.goLowerCase(DotStringFactory.sharp000000(color)) + ";";
+
+		s = ";stroke:" + StringUtils.goLowerCase(StringUtils.sharp000000(color)) + ";";
 		idx = svg.indexOf(s);
-		if (idx != -1) {
+		if (idx != -1)
 			return idx;
-		}
-		s = "fill=\"" + StringUtils.goLowerCase(DotStringFactory.sharp000000(color)) + "\"";
+
+		s = "fill=\"" + StringUtils.goLowerCase(StringUtils.sharp000000(color)) + "\"";
 		idx = svg.indexOf(s);
-		if (idx != -1) {
+		if (idx != -1)
 			return idx;
-		}
-		// Log.info("Cannot find color=" + color + " " + StringUtils.goLowerCase(StringUtils.getAsHtml(color)));
+
+		// Log.info("Cannot find color=" + color + " " +
+		// StringUtils.goLowerCase(StringUtils.getAsHtml(color)));
 		return -1;
 
 	}
@@ -97,9 +98,9 @@ public class SvgResult {
 		try {
 			final StringTokenizer st = new StringTokenizer(svg, separator);
 			final List<Point2D.Double> result = new ArrayList<Point2D.Double>();
-			while (st.hasMoreTokens()) {
+			while (st.hasMoreTokens())
 				result.add(getFirstPoint(st.nextToken()));
-			}
+
 			return result;
 		} catch (NumberFormatException e) {
 			return Collections.emptyList();

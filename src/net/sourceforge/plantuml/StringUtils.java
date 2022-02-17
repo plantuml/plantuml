@@ -81,41 +81,40 @@ public class StringUtils {
 		final StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < s.length(); i++) {
 			final char c = s.charAt(i);
-			if (c >= '0' && c <= '9') {
+			if (c >= '0' && c <= '9')
 				sb.append(Character.toChars('\uE100' + c - '0'));
-			} else {
+			else
 				sb.append(c);
-			}
 
 		}
 		return sb.toString();
 	}
 
 	public static void appendInternalToRealBoldNumber(StringBuilder sb, char c) {
-		if (c >= '\uE100' && c <= ('\uE100' + 9)) {
+		if (c >= '\uE100' && c <= ('\uE100' + 9))
 			sb.append(Character.toChars(0x1d7ce + c - '\uE100'));
-		} else {
+		else
 			sb.append(c);
-		}
+
 	}
 
 	public static void appendInternalToPlainNumber(StringBuilder sb, char c) {
-		if (c >= '\uE100' && c <= ('\uE100' + 9)) {
+		if (c >= '\uE100' && c <= ('\uE100' + 9))
 			sb.append(Character.toChars('0' + c - '\uE100'));
-		} else {
+		else
 			sb.append(c);
-		}
+
 	}
 
 	final static public List<String> getSplit(Pattern2 pattern, String line) {
 		final Matcher2 m = pattern.matcher(line);
-		if (m.find() == false) {
+		if (m.find() == false)
 			return null;
-		}
+
 		final List<String> result = new ArrayList<>();
-		for (int i = 1; i <= m.groupCount(); i++) {
+		for (int i = 1; i <= m.groupCount(); i++)
 			result.add(m.group(i));
-		}
+
 		return result;
 	}
 
@@ -128,11 +127,14 @@ public class StringUtils {
 	}
 
 	public static boolean isEmpty(CharSequence s) {
-		if (s == null) return true;
+		if (s == null)
+			return true;
 		final int length = s.length();
-		if (length == 0) return true;
+		if (length == 0)
+			return true;
 		for (int i = 0; i < length; i++) {
-			if (!isSpaceOrTabOrNull(s.charAt(i))) return false;
+			if (!isSpaceOrTabOrNull(s.charAt(i)))
+				return false;
 		}
 		return true;
 	}
@@ -145,27 +147,27 @@ public class StringUtils {
 
 	public static String unicode(String s) {
 		final StringBuilder result = new StringBuilder();
-		for (char c : s.toCharArray()) {
+		for (char c : s.toCharArray())
 			if (c > 127 || c == '&' || c == '|') {
 				final int i = c;
 				result.append("&#" + i + ";");
 			} else {
 				result.append(c);
 			}
-		}
+
 		return result.toString();
 	}
 
 	public static String unicodeForHtml(String s) {
 		final StringBuilder result = new StringBuilder();
-		for (char c : s.toCharArray()) {
+		for (char c : s.toCharArray())
 			if (c > 127 || c == '&' || c == '|' || c == '<' || c == '>') {
 				final int i = c;
 				result.append("&#" + i + ";");
 			} else {
 				result.append(c);
 			}
-		}
+
 		return result.toString();
 	}
 
@@ -173,9 +175,9 @@ public class StringUtils {
 		final StringBuilder result = new StringBuilder();
 		for (int i = 0; i < display.size(); i++) {
 			result.append(unicodeForHtml(display.get(i).toString()));
-			if (i < display.size() - 1) {
+			if (i < display.size() - 1)
 				result.append("<br>");
-			}
+
 		}
 		return result.toString();
 	}
@@ -209,12 +211,12 @@ public class StringUtils {
 		final Direction dir = getArrowDirection(s);
 		s = s.replace('=', '-');
 		s = s.replaceAll("\\w*", "");
-		if (dir == Direction.LEFT || dir == Direction.RIGHT) {
+		if (dir == Direction.LEFT || dir == Direction.RIGHT)
 			s = s.replaceAll("-+", "-");
-		}
-		if (s.length() == 2 && (dir == Direction.UP || dir == Direction.DOWN)) {
+
+		if (s.length() == 2 && (dir == Direction.UP || dir == Direction.DOWN))
 			s = s.replaceFirst("-", "--");
-		}
+
 		return s;
 	}
 
@@ -222,60 +224,60 @@ public class StringUtils {
 		final Direction dir = getQueueDirection(s);
 		s = s.replace('=', '-');
 		s = s.replaceAll("\\w*", "");
-		if (dir == Direction.LEFT || dir == Direction.RIGHT) {
+		if (dir == Direction.LEFT || dir == Direction.RIGHT)
 			s = s.replaceAll("-+", "-");
-		}
-		if (s.length() == 1 && (dir == Direction.UP || dir == Direction.DOWN)) {
+
+		if (s.length() == 1 && (dir == Direction.UP || dir == Direction.DOWN))
 			s = s.replaceFirst("-", "--");
-		}
+
 		return s;
 	}
 
 	public static Direction getArrowDirection(String s) {
-		if (s.endsWith(">")) {
+		if (s.endsWith(">"))
 			return getQueueDirection(s.substring(0, s.length() - 1));
-		}
+
 		if (s.startsWith("<")) {
-			if (s.length() == 2) {
+			if (s.length() == 2)
 				return Direction.LEFT;
-			}
+
 			return Direction.UP;
 		}
 		throw new IllegalArgumentException(s);
 	}
 
 	public static Direction getQueueDirection(String s) {
-		if (s.indexOf('<') != -1 || s.indexOf('>') != -1) {
+		if (s.indexOf('<') != -1 || s.indexOf('>') != -1)
 			throw new IllegalArgumentException(s);
-		}
+
 		s = s.toLowerCase();
-		if (s.contains("left")) {
+		if (s.contains("left"))
 			return Direction.LEFT;
-		}
-		if (s.contains("right")) {
+
+		if (s.contains("right"))
 			return Direction.RIGHT;
-		}
-		if (s.contains("up")) {
+
+		if (s.contains("up"))
 			return Direction.UP;
-		}
+
 		if (s.contains("down")) {
 			return Direction.DOWN;
 		}
-		if (s.contains("l")) {
+		if (s.contains("l"))
 			return Direction.LEFT;
-		}
-		if (s.contains("r")) {
+
+		if (s.contains("r"))
 			return Direction.RIGHT;
-		}
-		if (s.contains("u")) {
+
+		if (s.contains("u"))
 			return Direction.UP;
-		}
-		if (s.contains("d")) {
+
+		if (s.contains("d"))
 			return Direction.DOWN;
-		}
-		if (s.length() == 1) {
+
+		if (s.length() == 1)
 			return Direction.RIGHT;
-		}
+
 		return Direction.DOWN;
 	}
 
@@ -284,29 +286,29 @@ public class StringUtils {
 	// }
 
 	public static String eventuallyRemoveStartingAndEndingDoubleQuote(String s, String format) {
-		if (s == null) {
+		if (s == null)
 			return null;
-		}
+
 		if (format.contains("\"") && s.length() > 1 && isDoubleQuote(s.charAt(0))
-				&& isDoubleQuote(s.charAt(s.length() - 1))) {
+				&& isDoubleQuote(s.charAt(s.length() - 1)))
 			return s.substring(1, s.length() - 1);
-		}
-		if (format.contains("(") && s.startsWith("(") && s.endsWith(")")) {
+
+		if (format.contains("(") && s.startsWith("(") && s.endsWith(")"))
 			return s.substring(1, s.length() - 1);
-		}
-		if (format.contains("[") && s.startsWith("[") && s.endsWith("]")) {
+
+		if (format.contains("[") && s.startsWith("[") && s.endsWith("]"))
 			return s.substring(1, s.length() - 1);
-		}
-		if (format.contains(":") && s.startsWith(":") && s.endsWith(":")) {
+
+		if (format.contains(":") && s.startsWith(":") && s.endsWith(":"))
 			return s.substring(1, s.length() - 1);
-		}
+
 		return s;
 	}
 
 	public static String eventuallyRemoveStartingAndEndingDoubleQuote(String s) {
-		if (s == null) {
+		if (s == null)
 			return s;
-		}
+
 		return eventuallyRemoveStartingAndEndingDoubleQuote(s, "\"([:");
 	}
 
@@ -342,24 +344,23 @@ public class StringUtils {
 
 	private static int getWidth(Display stringsToDisplay) {
 		int result = 1;
-		for (CharSequence s : stringsToDisplay) {
-			if (s != null && result < s.length()) {
+		for (CharSequence s : stringsToDisplay)
+			if (s != null && result < s.length())
 				result = s.length();
-			}
-		}
+
 		return result;
 	}
 
 	public static int getWcWidth(Display stringsToDisplay) {
 		int result = 1;
 		for (CharSequence s : stringsToDisplay) {
-			if (s == null) {
+			if (s == null)
 				continue;
-			}
+
 			final int length = Wcwidth.length(s);
-			if (result < length) {
+			if (result < length)
 				result = length;
-			}
+
 		}
 		return result;
 	}
@@ -373,9 +374,9 @@ public class StringUtils {
 	}
 
 	public static boolean isDiagramCacheable(String uml) {
-		if (uml.length() < 35) {
+		if (uml.length() < 35)
 			return false;
-		}
+
 //		uml = uml.toLowerCase();
 //		if (uml.startsWith("@startuml\nversion\n")) {
 //			return false;
@@ -410,17 +411,17 @@ public class StringUtils {
 	public static int getPragmaRevision(String uml) {
 		uml = uml.toLowerCase();
 		final String header = "@startuml\n!pragma revision ";
-		if (uml.startsWith(header) == false) {
+		if (uml.startsWith(header) == false)
 			return -1;
-		}
+
 		int x1 = header.length();
 		int x2 = x1;
-		while (x2 < uml.length() && Character.isDigit(uml.charAt(x2))) {
+		while (x2 < uml.length() && Character.isDigit(uml.charAt(x2)))
 			x2++;
-		}
-		if (x1 == x2) {
+
+		if (x1 == x2)
 			return -1;
-		}
+
 		return Integer.parseInt(uml.substring(x1, x2));
 	}
 
@@ -429,9 +430,9 @@ public class StringUtils {
 		final List<String> result = new ArrayList<>();
 		final Pattern2 p = MyPattern.cmpile("([%pLN_.]+|[%g][^%g]+[%g])");
 		final Matcher2 m = p.matcher(s);
-		while (m.find()) {
+		while (m.find())
 			result.add(eventuallyRemoveStartingAndEndingDoubleQuote(m.group(0)));
-		}
+
 		return Collections.unmodifiableList(result);
 	}
 
@@ -453,13 +454,13 @@ public class StringUtils {
 		final StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < s.length(); i++) {
 			char c = s.charAt(i);
-			if ((c >= 'a' && c <= 'm') || (c >= 'A' && c <= 'M')) {
+			if ((c >= 'a' && c <= 'm') || (c >= 'A' && c <= 'M'))
 				c += 13;
-			} else if ((c >= 'n' && c <= 'z') || (c >= 'N' && c <= 'Z')) {
+			else if ((c >= 'n' && c <= 'z') || (c >= 'N' && c <= 'Z'))
 				c -= 13;
-			} else if (c > 126) {
+			else if (c > 126)
 				throw new IllegalArgumentException(s);
-			}
+
 			sb.append(c);
 		}
 		return sb.toString();
@@ -502,35 +503,35 @@ public class StringUtils {
 	}
 
 	public static String trin(String arg) {
-		if (arg.length() == 0) {
+		if (arg.length() == 0)
 			return arg;
-		}
+
 		return trinEndingInternal(arg, getPositionStartNonSpace(arg));
 	}
 
 	private static int getPositionStartNonSpace(String arg) {
 		int i = 0;
-		while (i < arg.length() && isSpaceOrTabOrNull(arg.charAt(i))) {
+		while (i < arg.length() && isSpaceOrTabOrNull(arg.charAt(i)))
 			i++;
-		}
+
 		return i;
 	}
 
 	private static String trinEnding(String arg) {
-		if (arg.length() == 0) {
+		if (arg.length() == 0)
 			return arg;
-		}
+
 		return trinEndingInternal(arg, 0);
 	}
 
 	private static String trinEndingInternal(String arg, int from) {
 		int j = arg.length() - 1;
-		while (j >= from && isSpaceOrTabOrNull(arg.charAt(j))) {
+		while (j >= from && isSpaceOrTabOrNull(arg.charAt(j)))
 			j--;
-		}
-		if (from == 0 && j == arg.length() - 1) {
+
+		if (from == 0 && j == arg.length() - 1)
 			return arg;
-		}
+
 		return arg.substring(from, j + 1);
 	}
 
@@ -546,10 +547,17 @@ public class StringUtils {
 		long h = 1125899906842597L; // prime
 		final int len = string.length();
 
-		for (int i = 0; i < len; i++) {
+		for (int i = 0; i < len; i++)
 			h = 31 * h + string.charAt(i);
-		}
+
 		return h;
+	}
+
+	public static String sharp000000(int color) {
+		final int v = 0xFFFFFF & color;
+		String s = "000000" + Integer.toHexString(v).toUpperCase();
+		s = s.substring(s.length() - 6);
+		return "#" + s;
 	}
 
 	// http://docs.oracle.com/javase/tutorial/i18n/format/dateFormat.html

@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml;
 
 import net.sourceforge.plantuml.graphic.USymbol;
+import net.sourceforge.plantuml.graphic.USymbols;
 
 public enum ComponentStyle {
 
@@ -44,11 +45,11 @@ public enum ComponentStyle {
 	public USymbol toUSymbol() {
 		switch (this) {
 		case UML1:
-			return USymbol.COMPONENT1;
+			return USymbols.COMPONENT1;
 		case UML2:
-			return USymbol.COMPONENT2;
+			return USymbols.COMPONENT2;
 		case RECTANGLE:
-			return USymbol.RECTANGLE;
+			return USymbols.RECTANGLE;
 		}
 		throw new AssertionError();
 	}

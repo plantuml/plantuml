@@ -36,7 +36,7 @@
 package net.sourceforge.plantuml.math;
 
 import java.awt.Color;
-import java.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 

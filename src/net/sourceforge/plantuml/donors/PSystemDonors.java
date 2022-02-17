@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.donors;
 
-import java.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;

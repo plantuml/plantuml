@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.project.draw;
 
-import java.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SpriteContainerEmpty;

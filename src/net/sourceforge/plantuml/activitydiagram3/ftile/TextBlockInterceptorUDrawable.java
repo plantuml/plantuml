@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile;
 
-import java.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.util.HashMap;
 
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;

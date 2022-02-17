@@ -34,7 +34,7 @@
  */
 package net.sourceforge.plantuml.timingdiagram;
 
-import java.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.math.BigDecimal;
 
 import net.sourceforge.plantuml.FontParam;

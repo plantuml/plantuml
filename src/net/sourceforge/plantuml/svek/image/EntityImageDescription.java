@@ -36,7 +36,7 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
-import java.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.util.Collection;
 import java.util.EnumMap;
 import java.util.HashSet;
@@ -66,6 +66,7 @@ import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.USymbol;
+import net.sourceforge.plantuml.graphic.USymbols;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.style.PName;
@@ -117,17 +118,17 @@ public class EntityImageDescription extends AbstractEntityImage {
 		this.links = links;
 		final Stereotype stereotype = entity.getStereotype();
 		USymbol symbol = getUSymbol(entity);
-		if (symbol == USymbol.FOLDER)
+		if (symbol == USymbols.FOLDER)
 			this.shapeType = ShapeType.FOLDER;
-		else if (symbol == USymbol.HEXAGON)
+		else if (symbol == USymbols.HEXAGON)
 			this.shapeType = ShapeType.HEXAGON;
-		else if (symbol == USymbol.INTERFACE)
+		else if (symbol == USymbols.INTERFACE)
 			this.shapeType = getSkinParam().fixCircleLabelOverlapping() ? ShapeType.RECTANGLE_WITH_CIRCLE_INSIDE
 					: ShapeType.RECTANGLE;
 		else
 			this.shapeType = ShapeType.RECTANGLE;
 
-		this.hideText = symbol == USymbol.INTERFACE;
+		this.hideText = symbol == USymbols.INTERFACE;
 
 		this.url = entity.getUrl99();
 

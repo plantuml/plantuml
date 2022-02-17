@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond;
 
-import java.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;

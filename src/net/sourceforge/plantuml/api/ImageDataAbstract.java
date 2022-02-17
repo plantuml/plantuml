@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.api;
 
-import java.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.core.ImageData;
 

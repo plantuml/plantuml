@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.ugraphic.color;
 
 import java.awt.Color;
 
-import net.sourceforge.plantuml.svek.DotStringFactory;
+import net.sourceforge.plantuml.StringUtils;
 
 public class HColorSimple extends HColorAbstract implements HColor {
 
@@ -74,7 +74,7 @@ public class HColorSimple extends HColorAbstract implements HColor {
 			return "transparent";
 
 		if (color.getAlpha() == 255)
-			return DotStringFactory.sharp000000(color.getRGB());
+			return StringUtils.sharp000000(color.getRGB());
 
 		return "#" + Integer.toHexString(color.getRGB());
 	}

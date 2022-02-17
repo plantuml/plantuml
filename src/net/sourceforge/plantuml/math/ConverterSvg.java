@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.math;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.io.CharArrayWriter;
 import java.io.IOException;
 import java.io.Writer;
@@ -49,6 +49,8 @@ import javax.swing.Icon;
 
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
+
+import net.sourceforge.plantuml.Dimension2DDouble;
 
 public class ConverterSvg {
 
@@ -65,10 +67,10 @@ public class ConverterSvg {
 			final Class<?> clDefaultTeXFont = Class.forName("org.scilab.forge.jlatexmath.DefaultTeXFont");
 			final Class<?> clAlphabetRegistration = Class.forName("org.scilab.forge.jlatexmath.AlphabetRegistration");
 			final Method registerAlphabet = clDefaultTeXFont.getMethod("registerAlphabet", clAlphabetRegistration);
-			registerAlphabet.invoke(null, Class.forName("org.scilab.forge.jlatexmath.cyrillic.CyrillicRegistration")
-					.newInstance());
-			registerAlphabet.invoke(null, Class.forName("org.scilab.forge.jlatexmath.greek.GreekRegistration")
-					.newInstance());
+			registerAlphabet.invoke(null,
+					Class.forName("org.scilab.forge.jlatexmath.cyrillic.CyrillicRegistration").newInstance());
+			registerAlphabet.invoke(null,
+					Class.forName("org.scilab.forge.jlatexmath.greek.GreekRegistration").newInstance());
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -78,13 +80,13 @@ public class ConverterSvg {
 
 	private Dimension dimension;
 
-	public String getSvg(double scale, boolean fontAsShapes, Color backgroundColor) throws ClassNotFoundException,
-			IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException,
-			SecurityException, InstantiationException, IOException {
+	public String getSvg(double scale, boolean fontAsShapes, Color backgroundColor)
+			throws ClassNotFoundException, IllegalAccessException, IllegalArgumentException, InvocationTargetException,
+			NoSuchMethodException, SecurityException, InstantiationException, IOException {
 		// DOMImplementation domImpl = GenericDOMImplementation.getDOMImplementation();
 		final Class<?> clGenericDOMImplementation = Class.forName("org.apache.batik.dom.GenericDOMImplementation");
-		final DOMImplementation domImpl = (DOMImplementation) clGenericDOMImplementation.getMethod(
-				"getDOMImplementation").invoke(null);
+		final DOMImplementation domImpl = (DOMImplementation) clGenericDOMImplementation
+				.getMethod("getDOMImplementation").invoke(null);
 		final String svgNS = "http://www.w3.org/2000/svg";
 		final Document document = domImpl.createDocument(svgNS, "svg", null);
 
@@ -120,7 +122,7 @@ public class ConverterSvg {
 	}
 
 	public Dimension2D getDimension() {
-		return dimension;
+		return Dimension2DDouble.fromDimension(dimension);
 	}
 
 }

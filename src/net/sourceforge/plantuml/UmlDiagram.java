@@ -39,7 +39,7 @@ import static net.sourceforge.plantuml.ugraphic.ImageBuilder.plainImageBuilder;
 
 import java.awt.Color;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.awt.image.BufferedImage;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;

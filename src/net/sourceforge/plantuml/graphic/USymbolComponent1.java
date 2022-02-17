@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.graphic;
 
-import java.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.style.SName;
@@ -104,7 +104,7 @@ class USymbolComponent1 extends USymbol {
 	@Override
 	public TextBlock asBig(TextBlock title, HorizontalAlignment labelAlignment, TextBlock stereotype, double width,
 			double height, SymbolContext symbolContext, HorizontalAlignment stereoAlignment) {
-		return USymbol.COMPONENT2.asBig(title, labelAlignment, stereotype, width, height, symbolContext,
+		return USymbols.COMPONENT2.asBig(title, labelAlignment, stereotype, width, height, symbolContext,
 				stereoAlignment);
 	}
 

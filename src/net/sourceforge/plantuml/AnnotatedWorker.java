@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml;
 
-import java.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.awt.geom.Rectangle2D;
 
 import net.sourceforge.plantuml.activitydiagram3.ftile.EntityImageLegend;
@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
-import net.sourceforge.plantuml.graphic.USymbol;
+import net.sourceforge.plantuml.graphic.USymbols;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
@@ -125,7 +125,7 @@ public class AnnotatedWorker {
 
 		final double width = x1 + Math.max(originalMinMax.getWidth(), dimTitle.getWidth()) + x2;
 		final double height = dimTitle.getHeight() + y1 + originalMinMax.getHeight() + y2;
-		final TextBlock frame = USymbol.FRAME.asBig(title, HorizontalAlignment.LEFT, TextBlockUtils.empty(0, 0), width,
+		final TextBlock frame = USymbols.FRAME.asBig(title, HorizontalAlignment.LEFT, TextBlockUtils.empty(0, 0), width,
 				height, symbolContext, skinParam.getStereotypeAlignment());
 
 		return new TextBlockBackcolored() {

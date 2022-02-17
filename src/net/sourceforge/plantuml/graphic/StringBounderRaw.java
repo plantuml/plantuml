@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.graphic;
 
 import java.awt.font.FontRenderContext;
 import java.awt.font.LineMetrics;
-import java.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FileFormat;

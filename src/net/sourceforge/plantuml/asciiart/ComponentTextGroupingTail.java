@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.asciiart;
 
-import java.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.util.List;
 
 import net.sourceforge.plantuml.FileFormat;

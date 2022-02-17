@@ -54,7 +54,7 @@ import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
-import net.sourceforge.plantuml.graphic.USymbol;
+import net.sourceforge.plantuml.graphic.USymbols;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
@@ -110,13 +110,13 @@ public class CommandArchimateMultilines extends CommandMultilines2<AbstractEntit
 		final Code code = diagram.V1972() ? ident : diagram.buildCode(idShort);
 		final String icon = line0.getLazzy("STEREOTYPE", 0);
 
-		final IEntity entity = diagram.getOrCreateLeaf(ident, code, LeafType.DESCRIPTION, USymbol.RECTANGLE);
+		final IEntity entity = diagram.getOrCreateLeaf(ident, code, LeafType.DESCRIPTION, USymbols.RECTANGLE);
 
 		lines = lines.subExtract(1, 1);
 		Display display = lines.toDisplay();
 
 		entity.setDisplay(display);
-		entity.setUSymbol(USymbol.RECTANGLE);
+		entity.setUSymbol(USymbols.RECTANGLE);
 		if (icon != null) {
 			entity.setStereotype(
 					Stereotype.build("<<$archimate/" + icon + ">>", diagram.getSkinParam().getCircledCharacterRadius(),

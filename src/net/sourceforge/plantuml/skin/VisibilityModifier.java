@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.skin;
 
-import java.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.awt.geom.Rectangle2D;
 
 import net.sourceforge.plantuml.ColorParam;

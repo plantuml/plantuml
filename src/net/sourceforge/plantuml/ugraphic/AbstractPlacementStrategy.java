@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.ugraphic;
 
-import java.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;

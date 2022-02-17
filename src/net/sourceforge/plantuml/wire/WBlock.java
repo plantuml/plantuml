@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.wire;
 
-import java.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;

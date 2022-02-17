@@ -36,7 +36,7 @@
 package net.sourceforge.plantuml.png;
 
 import java.awt.Font;
-import java.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.SpriteContainerEmpty;
