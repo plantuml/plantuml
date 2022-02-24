@@ -96,7 +96,10 @@ public class ComponentRoseParticipant extends AbstractTextualComponent {
 	protected void drawInternalU(UGraphic ug, Area area) {
 		final StringBounder stringBounder = ug.getStringBounder();
 		ug = ug.apply(UTranslate.dx(padding));
-		ug = ug.apply(back.bg()).apply(foregroundColor);
+		if (foregroundColor != null)
+			ug = ug.apply(foregroundColor);
+		if (back != null)
+			ug = ug.apply(back.bg());
 		ug = ug.apply(stroke);
 		final Shadowable rect = new URectangle(getTextWidth(stringBounder), getTextHeight(stringBounder))
 				.rounded(roundCorner).diagonalCorner(diagonalCorner);

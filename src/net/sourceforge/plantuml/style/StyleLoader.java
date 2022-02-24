@@ -110,7 +110,7 @@ public class StyleLoader {
 
 	}
 
-	private final static String KEYNAMES = "[.\\w(), ]+?";
+	private final static String KEYNAMES = "[-.\\w(), ]+?";
 	private final static Pattern2 keyName = MyPattern.cmpile("^[:]?(" + KEYNAMES + ")([%s]+\\*)?[%s]*\\{$");
 	private final static Pattern2 propertyAndValue = MyPattern.cmpile("^([\\w]+):?[%s]+(.*?);?$");
 	private final static Pattern2 closeBracket = MyPattern.cmpile("^\\}$");

@@ -216,6 +216,8 @@ public class FromSkinparamToStyle {
 		addConvert(cleanName + "BackgroundColor", PName.BackGroundColor, sname);
 		addConvert(cleanName + "BorderColor", PName.LineColor, sname);
 		addConvert(cleanName + "BorderThickness", PName.LineThickness, sname);
+		addConvert(cleanName + "RoundCorner", PName.RoundCorner, sname);
+		addConvert(cleanName + "DiagonalCorner", PName.DiagonalCorner, sname);
 		addConFont(cleanName, sname);
 	}
 

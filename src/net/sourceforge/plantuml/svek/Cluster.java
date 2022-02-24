@@ -318,6 +318,7 @@ public class Cluster implements Moveable {
 		HColor borderColor;
 		Style style = null;
 		final double rounded;
+		final double diagonalCorner;
 		final double shadowing;
 		if (UseStyle.useBetaStyle()) {
 			final USymbol uSymbol = group.getUSymbol() == null ? USymbols.PACKAGE : group.getUSymbol();
@@ -329,10 +330,8 @@ public class Cluster implements Moveable {
 			else
 				borderColor = style.value(PName.LineColor).asColor(skinParam2.getThemeStyle(),
 						skinParam2.getIHtmlColorSet());
-			if (umlDiagramType == UmlDiagramType.STATE)
-				rounded = style.value(PName.RoundCorner).asDouble();
-			else
-				rounded = IEntityImage.CORNER;
+			rounded = style.value(PName.RoundCorner).asDouble();
+			diagonalCorner = style.value(PName.DiagonalCorner).asDouble();
 
 		} else {
 			if (group.getUSymbol() == null)
@@ -347,9 +346,9 @@ public class Cluster implements Moveable {
 				borderColor = getColor(ColorParam.packageBorder, skinParam, group.getStereotype());
 			else
 				borderColor = getColor(ColorParam.packageBorder, skinParam, group.getStereotype());
+			diagonalCorner = 0;
 
 		}
-
 
 		ug.startGroup(Collections.singletonMap(UGroupType.ID, "cluster_" + fullName));
 
@@ -399,14 +398,18 @@ public class Cluster implements Moveable {
 			backColor = getBackColor(backColor, skinParam2, group.getStereotype(), umlDiagramType.getStyleName(),
 					group.getUSymbol());
 			if (ztitle != null || zstereo != null) {
-				final double roundCorner = group.getUSymbol() == null ? 0
-						: group.getUSymbol().getSkinParameter().getRoundCorner(skinParam, group.getStereotype());
+				final double roundCorner;
+				if (UseStyle.useBetaStyle())
+					roundCorner = rounded;
+				else
+					roundCorner = group.getUSymbol() == null ? 0
+							: group.getUSymbol().getSkinParameter().getRoundCorner(skinParam, group.getStereotype());
 
 				final ClusterDecoration decoration = new ClusterDecoration(packageStyle, group.getUSymbol(), ztitle,
 						zstereo, minX, minY, maxX, maxY, stroke);
 				decoration.drawU(ug, backColor, borderColor, shadowing, roundCorner,
 						skinParam2.getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null, false, null),
-						skinParam2.getStereotypeAlignment());
+						skinParam2.getStereotypeAlignment(), diagonalCorner);
 				return;
 			}
 			final URectangle rect = new URectangle(maxX - minX, maxY - minY);

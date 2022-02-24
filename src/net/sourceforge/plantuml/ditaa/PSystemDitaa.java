@@ -62,18 +62,23 @@ public class PSystemDitaa extends AbstractPSystem {
 	private final String data;
 	private final float scale;
 	private final boolean performSeparationOfCommonEdges;
+	private final boolean allCornersAreRound;
 
-	public PSystemDitaa(UmlSource source, String data, boolean performSeparationOfCommonEdges, boolean dropShadows, float scale) {
+	public PSystemDitaa(UmlSource source, String data, boolean performSeparationOfCommonEdges, boolean dropShadows,
+			boolean allCornersAreRound, float scale) {
 		super(source);
 		this.data = data;
 		this.dropShadows = dropShadows;
 		this.performSeparationOfCommonEdges = performSeparationOfCommonEdges;
+		this.allCornersAreRound = allCornersAreRound;
 		try {
 			this.processingOptions = Class.forName("org.stathissideris.ascii2image.core.ProcessingOptions")
 					.newInstance();
 			// this.processingOptions.setPerformSeparationOfCommonEdges(performSeparationOfCommonEdges);
 			this.processingOptions.getClass().getMethod("setPerformSeparationOfCommonEdges", boolean.class)
 					.invoke(this.processingOptions, performSeparationOfCommonEdges);
+			this.processingOptions.getClass().getMethod("setAllCornersAreRound", boolean.class)
+					.invoke(this.processingOptions, allCornersAreRound);
 		} catch (Exception e) {
 			e.printStackTrace();
 			this.processingOptions = null;
@@ -82,7 +87,8 @@ public class PSystemDitaa extends AbstractPSystem {
 	}
 
 	PSystemDitaa add(String line) {
-		return new PSystemDitaa(getSource(), data + line + BackSlash.NEWLINE, performSeparationOfCommonEdges, dropShadows, scale);
+		return new PSystemDitaa(getSource(), data + line + BackSlash.NEWLINE, performSeparationOfCommonEdges,
+				dropShadows, allCornersAreRound, scale);
 	}
 
 	public DiagramDescription getDescription() {

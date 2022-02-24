@@ -55,8 +55,9 @@ class Idea {
 	private final StyleBuilder styleBuilder;
 	private final String stereotype;
 
-	public Idea(StyleBuilder styleBuilder, HColor backColor, Display label, IdeaShape shape, String stereotype) {
-		this(styleBuilder, backColor, 0, null, label, shape, stereotype);
+	public static Idea createIdeaSimple(StyleBuilder styleBuilder, HColor backColor, Display label, IdeaShape shape,
+			String stereotype) {
+		return new Idea(styleBuilder, backColor, 0, null, label, shape, stereotype);
 	}
 
 	public Idea createIdea(StyleBuilder styleBuilder, HColor backColor, int newLevel, Display newDisplay,

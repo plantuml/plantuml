@@ -65,14 +65,18 @@ public class PSystemDitaaFactory extends PSystemBasicFactory<PSystemDitaa> {
 		if (startLine != null && (startLine.contains("-S") || startLine.contains("--no-shadows")))
 			dropShadows = false;
 
+		boolean allCornersAreRound = false;
+		if (startLine != null && (startLine.contains("-r") || startLine.contains("--round-corners")))
+			allCornersAreRound = true;
+
 		final float scale = extractScale(startLine);
-		if (getDiagramType() == DiagramType.UML) {
+		if (getDiagramType() == DiagramType.UML)
 			return null;
-		} else if (getDiagramType() == DiagramType.DITAA) {
-			return new PSystemDitaa(source, "", performSeparationOfCommonEdges, dropShadows, scale);
-		} else {
+		else if (getDiagramType() == DiagramType.DITAA)
+			return new PSystemDitaa(source, "", performSeparationOfCommonEdges, dropShadows, allCornersAreRound, scale);
+		else
 			throw new IllegalStateException(getDiagramType().name());
-		}
+
 	}
 
 	@Override
@@ -86,8 +90,12 @@ public class PSystemDitaaFactory extends PSystemBasicFactory<PSystemDitaa> {
 			if (line.contains("-S") || line.contains("--no-shadows"))
 				dropShadows = false;
 
+			boolean allCornersAreRound = false;
+			if (line.contains("-r") || line.contains("--round-corners"))
+				allCornersAreRound = true;
+
 			final float scale = extractScale(line);
-			return new PSystemDitaa(source, "", performSeparationOfCommonEdges, dropShadows, scale);
+			return new PSystemDitaa(source, "", performSeparationOfCommonEdges, dropShadows, allCornersAreRound, scale);
 		}
 		if (system == null)
 			return null;

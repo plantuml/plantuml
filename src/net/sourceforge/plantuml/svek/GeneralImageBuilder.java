@@ -101,6 +101,7 @@ import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.USymbolHexagon;
 import net.sourceforge.plantuml.graphic.USymbolInterface;
+import net.sourceforge.plantuml.graphic.USymbols;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
@@ -705,10 +706,18 @@ public final class GeneralImageBuilder {
 		final FontConfiguration fontConfiguration;
 		if (UseStyle.useBetaStyle()) {
 			final SName sname = dotData.getUmlDiagramType().getStyleName();
-			final Style style = StyleSignature.of(SName.root, SName.element, sname, SName.title) //
+			final StyleSignature signature;
+			final USymbol uSymbol = g.getUSymbol();
+			if (uSymbol == USymbols.RECTANGLE)
+				signature = StyleSignature.of(SName.root, SName.element, sname, uSymbol.getSName(), SName.title);
+			else
+				signature = StyleSignature.of(SName.root, SName.element, sname, SName.title);
+
+			final Style style = signature //
 					.with(g.getStereotype()) //
 					.with(g.getStereostyles()) //
 					.getMergedStyle(skinParam.getCurrentStyleBuilder());
+
 			fontConfiguration = style.getFontConfiguration(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
 		} else
 			fontConfiguration = g.getFontConfigurationForTitle(skinParam);

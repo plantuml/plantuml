@@ -105,12 +105,12 @@ public class SymetricalTeePositioned {
 	}
 
 	public SymetricalTeePositioned getMax(SymetricalTeePositioned other) {
-		if (this.tee != other.tee) {
+		if (this.tee != other.tee) 
 			throw new IllegalArgumentException();
-		}
-		if (other.y > this.y) {
+		
+		if (other.y > this.y) 
 			return other;
-		}
+		
 		return this;
 	}
 

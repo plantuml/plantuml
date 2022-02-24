@@ -134,9 +134,9 @@ public class MindMapDiagram extends UmlDiagram {
 	public CommandExecutionResult addIdea(HColor backColor, int level, Display label, IdeaShape shape,
 			Direction direction) {
 		String stereotype = label.getEndingStereotype();
-		if (stereotype != null) {
+		if (stereotype != null)
 			label = label.removeEndingStereotype();
-		}
+
 		if (last().isFull(level))
 			this.mindmaps.add(new MindMap(getSkinParam()));
 
@@ -154,25 +154,25 @@ public class MindMapDiagram extends UmlDiagram {
 	private String first;
 
 	public int getSmartLevel(String type) {
-		if (first == null) {
+		if (first == null)
 			first = type;
-		}
-		if (type.endsWith("**")) {
+
+		if (type.endsWith("**"))
 			type = type.replace('\t', ' ').trim();
-		}
+
 		type = type.replace('\t', ' ');
-		if (type.contains(" ") == false) {
+		if (type.contains(" ") == false)
 			return type.length() - 1;
-		}
-		if (type.endsWith(first)) {
+
+		if (type.endsWith(first))
 			return type.length() - first.length();
-		}
-		if (type.trim().length() == 1) {
+
+		if (type.trim().length() == 1)
 			return type.length() - 1;
-		}
-		if (type.startsWith(first)) {
+
+		if (type.startsWith(first))
 			return type.length() - first.length();
-		}
+
 		throw new UnsupportedOperationException("type=<" + type + ">[" + first + "]");
 	}
 

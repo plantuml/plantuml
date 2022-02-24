@@ -114,10 +114,9 @@ public class FingerImpl implements Finger, UDrawable {
 	public static FingerImpl build(Idea idea, ISkinParam skinParam, Direction direction) {
 		final FingerImpl result = new FingerImpl(idea.getStyleBuilder(), idea.getBackColor(), idea.getLabel(),
 				skinParam, idea.getShape(), direction, idea.getLevel(), idea.getStereotype());
-		for (Idea child : idea.getChildren()) {
+		for (Idea child : idea.getChildren())
 			result.addInNail(build(child, skinParam, direction));
-		}
-		// System.err.println("End of build for " + idea);
+
 		return result;
 	}
 
@@ -156,7 +155,7 @@ public class FingerImpl implements Finger, UDrawable {
 
 		for (int i = 0; i < nail.size(); i++) {
 			final FingerImpl child = nail.get(i);
-			final SymetricalTeePositioned stp = tetris(stringBounder).getElements().get(i);
+			final SymetricalTeePositioned stp = getTetris(stringBounder).getElements().get(i);
 			final double x = direction == Direction.RIGHT ? dimPhalanx.getWidth() + getX12()
 					: -dimPhalanx.getWidth() - getX12();
 			final Point2D p2 = new Point2D.Double(x, stp.getY());
@@ -189,12 +188,12 @@ public class FingerImpl implements Finger, UDrawable {
 		ug.draw(path);
 	}
 
-	private Tetris tetris(StringBounder stringBounder) {
+	private Tetris getTetris(StringBounder stringBounder) {
 		if (tetris == null) {
 			tetris = new Tetris(label.toString());
-			for (FingerImpl child : nail) {
+			for (FingerImpl child : nail)
 				tetris.add(child.asSymetricalTee(stringBounder));
-			}
+
 			tetris.balance();
 		}
 		return tetris;
@@ -203,9 +202,9 @@ public class FingerImpl implements Finger, UDrawable {
 	private SymetricalTee asSymetricalTee(StringBounder stringBounder) {
 		final double thickness1 = getPhalanxThickness(stringBounder);
 		final double elongation1 = getPhalanxElongation(stringBounder);
-		if (nail.size() == 0) {
+		if (nail.size() == 0)
 			return new SymetricalTee(thickness1, elongation1, 0, 0);
-		}
+
 		final double thickness2 = getNailThickness(stringBounder);
 		final double elongation2 = getNailElongation(stringBounder);
 		return new SymetricalTee(thickness1, elongation1 + getX1(), thickness2, getX2() + elongation2);
@@ -232,9 +231,9 @@ public class FingerImpl implements Finger, UDrawable {
 	}
 
 	private TextBlock getPhalanx() {
-		if (drawPhalanx == false) {
+		if (drawPhalanx == false)
 			return TextBlockUtils.empty(0, 0);
-		}
+
 		if (shape == IdeaShape.BOX) {
 			final ISkinParam foo = new SkinParamColors(skinParam, Colors.empty().add(ColorType.BACK, backColor));
 			final TextBlock box = FtileBoxOld.createMindMap(styleBuilder, foo, label, getDefaultStyleDefinitionNode());
@@ -246,18 +245,18 @@ public class FingerImpl implements Finger, UDrawable {
 		final TextBlock text = label.create0(
 				styleNode.getFontConfiguration(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet()),
 				styleNode.getHorizontalAlignment(), skinParam, styleNode.wrapWidth(), CreoleMode.FULL, null, null);
-		if (direction == Direction.RIGHT) {
+		if (direction == Direction.RIGHT)
 			return TextBlockUtils.withMargin(text, 3, 0, 1, 1);
-		}
+
 		return TextBlockUtils.withMargin(text, 0, 3, 1, 1);
 	}
 
 	public double getNailThickness(StringBounder stringBounder) {
-		return tetris(stringBounder).getHeight();
+		return getTetris(stringBounder).getHeight();
 	}
 
 	public double getNailElongation(StringBounder stringBounder) {
-		return tetris(stringBounder).getWidth();
+		return getTetris(stringBounder).getWidth();
 	}
 
 	public double getFullThickness(StringBounder stringBounder) {

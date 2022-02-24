@@ -58,35 +58,35 @@ public class Tetris {
 	}
 
 	public void balance() {
-		if (elements.size() == 0) {
+		if (elements.size() == 0) 
 			return;
-		}
-		if (minY != Double.MAX_VALUE) {
+		
+		if (minY != Double.MAX_VALUE) 
 			throw new IllegalStateException();
-		}
+		
 		for (SymetricalTeePositioned element : elements) {
 			minY = Math.min(minY, element.getMinY());
 			maxY = Math.max(maxY, element.getMaxY());
 		}
 		final double mean = (minY + maxY) / 2;
-		for (SymetricalTeePositioned stp : elements) {
+		for (SymetricalTeePositioned stp : elements) 
 			stp.move(-mean);
-		}
+		
 		// System.err.println("Balanced=" + this + " " + elements);
 	}
 
 	public double getHeight() {
-		if (elements.size() == 0) {
+		if (elements.size() == 0) 
 			return 0;
-		}
+		
 		return maxY - minY;
 	}
 
 	public double getWidth() {
 		double result = 0;
-		for (SymetricalTeePositioned tee : elements) {
+		for (SymetricalTeePositioned tee : elements) 
 			result = Math.max(result, tee.getMaxX());
-		}
+		
 		return result;
 	}
 
@@ -126,9 +126,9 @@ public class Tetris {
 		assert b1.getY1() == b1.getY2();
 
 		final Line2D b2 = result.getSegmentB2();
-		if (b2.getX1() != b2.getX2()) {
+		if (b2.getX1() != b2.getX2()) 
 			frontier.addSegment(b2.getX1(), b2.getX2(), b2.getY1());
-		}
+		
 		assert b2.getY1() == b2.getY2();
 	}
 

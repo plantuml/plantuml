@@ -72,12 +72,15 @@ public class SymbolContext {
 	}
 
 	public UGraphic applyColors(UGraphic ug) {
-		ug = ug.apply(foreColor);
-		if (backColor == null) {
+		if (foreColor == null)
+			ug = ug.apply(new HColorNone());
+		else
+			ug = ug.apply(foreColor);
+		if (backColor == null)
 			ug = ug.apply(new HColorNone().bg());
-		} else {
+		else
 			ug = ug.apply(backColor.bg());
-		}
+
 		return ug;
 	}
 

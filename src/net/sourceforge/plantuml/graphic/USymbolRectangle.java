@@ -108,7 +108,7 @@ class USymbolRectangle extends USymbol {
 				final Dimension2D dim = calculateDimension(ug.getStringBounder());
 				ug = symbolContext.apply(ug);
 				drawRect(ug, dim.getWidth(), dim.getHeight(), symbolContext.getDeltaShadow(),
-						symbolContext.getRoundCorner(), 0);
+						symbolContext.getRoundCorner(), symbolContext.getDiagonalCorner());
 				final Dimension2D dimStereo = stereotype.calculateDimension(ug.getStringBounder());
 				final double posStereoX;
 				final double posStereoY;

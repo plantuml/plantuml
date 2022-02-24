@@ -88,6 +88,7 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 	private final HColor borderColor;
 	private final UStroke stroke;
 	private final double roundCorner;
+	private final double diagonalCorner;
 	private final HColor back;
 
 	private Style getStyle() {
@@ -117,6 +118,7 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 			this.shadowing = style.value(PName.Shadowing).asDouble();
 			this.stroke = style.getStroke(colors);
 			this.roundCorner = style.value(PName.RoundCorner).asDouble();
+			this.diagonalCorner = style.value(PName.DiagonalCorner).asDouble();
 			if (specificBackColor == null) {
 				this.back = style.value(PName.BackGroundColor).asColor(getSkinParam().getThemeStyle(),
 						getSkinParam().getIHtmlColorSet());
@@ -127,6 +129,7 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 					getSkinParam().getIHtmlColorSet());
 			titleHorizontalAlignment = style.getHorizontalAlignment();
 		} else {
+			this.diagonalCorner = 0;
 			this.borderColor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.packageBorder);
 			this.shadowing = getSkinParam().shadowing(getEntity().getStereotype()) ? 3 : 0;
 			this.stroke = GeneralImageBuilder.getForcedStroke(getEntity().getStereotype(), getSkinParam());
@@ -182,7 +185,8 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 				.getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null, false, null);
 		final HorizontalAlignment stereotypeAlignment = getSkinParam().getStereotypeAlignment();
 
-		decoration.drawU(ug, back, borderColor, shadowing, roundCorner, horizontalAlignment, stereotypeAlignment);
+		decoration.drawU(ug, back, borderColor, shadowing, roundCorner, horizontalAlignment, stereotypeAlignment,
+				diagonalCorner);
 
 		if (url != null) {
 			ug.closeUrl();
