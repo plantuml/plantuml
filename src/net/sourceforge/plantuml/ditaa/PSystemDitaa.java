@@ -34,6 +34,7 @@
  */
 package net.sourceforge.plantuml.ditaa;
 
+import java.awt.Font;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -61,11 +62,12 @@ public class PSystemDitaa extends AbstractPSystem {
 	private final boolean dropShadows;
 	private final String data;
 	private final float scale;
+	private final Font font;
 	private final boolean performSeparationOfCommonEdges;
 	private final boolean allCornersAreRound;
 
 	public PSystemDitaa(UmlSource source, String data, boolean performSeparationOfCommonEdges, boolean dropShadows,
-			boolean allCornersAreRound, float scale) {
+			boolean allCornersAreRound, float scale, Font font) {
 		super(source);
 		this.data = data;
 		this.dropShadows = dropShadows;
@@ -84,11 +86,12 @@ public class PSystemDitaa extends AbstractPSystem {
 			this.processingOptions = null;
 		}
 		this.scale = scale;
+		this.font = font;
 	}
 
 	PSystemDitaa add(String line) {
 		return new PSystemDitaa(getSource(), data + line + BackSlash.NEWLINE, performSeparationOfCommonEdges,
-				dropShadows, allCornersAreRound, scale);
+				dropShadows, allCornersAreRound, scale, font);
 	}
 
 	public DiagramDescription getDescription() {
@@ -112,6 +115,10 @@ public class PSystemDitaa extends AbstractPSystem {
 			// final RenderingOptions renderingOptions = options.renderingOptions;
 			final Field f_renderingOptions = options.getClass().getField("renderingOptions");
 			final Object renderingOptions = f_renderingOptions.get(options);
+
+			// renderingOptions.setFont(font);
+			final Method setFont = renderingOptions.getClass().getMethod("setFont", Font.class);
+			setFont.invoke(renderingOptions, font);
 
 			// renderingOptions.setScale(scale);
 			final Method setScale = renderingOptions.getClass().getMethod("setScale", float.class);

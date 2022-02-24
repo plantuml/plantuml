@@ -20,6 +20,7 @@
  */
 package org.stathissideris.ascii2image.core;
 
+import java.awt.*;
 import java.util.HashMap;
 
 import org.stathissideris.ascii2image.graphics.CustomShapeDefinition;
@@ -40,6 +41,8 @@ public class RenderingOptions {
 	private int cellHeight = 14;
 	
 	private float scale = 1;
+
+	private Font font = new Font("Dialog", Font.BOLD, 12);
 
 	/**
 	 * @return
@@ -111,6 +114,16 @@ public class RenderingOptions {
 	 */
 	public void setAntialias(boolean b) {
 		antialias = b;
+	}
+
+	public Font getFont()
+	{
+		return font;
+	}
+
+	public void setFont(Font font)
+	{
+		this.font = font;
 	}
 
 }
