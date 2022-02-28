@@ -42,6 +42,8 @@ public class RenderingOptions {
 	
 	private float scale = 1;
 
+	private Color backgroundColor = Color.white;
+
 	private Font font = new Font("Dialog", Font.BOLD, 12);
 
 	/**
@@ -114,6 +116,18 @@ public class RenderingOptions {
 	 */
 	public void setAntialias(boolean b) {
 		antialias = b;
+	}
+
+	public Color getBackgroundColor() {
+		return backgroundColor;
+	}
+
+	public void setBackgroundColor(Color backgroundColor) {
+		this.backgroundColor = backgroundColor;
+	}
+	
+	public boolean needsTransparency() {
+		return backgroundColor.getAlpha() < 255;
 	}
 
 	public Font getFont()

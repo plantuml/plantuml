@@ -34,6 +34,7 @@
  */
 package net.sourceforge.plantuml.ditaa;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -62,12 +63,13 @@ public class PSystemDitaa extends AbstractPSystem {
 	private final boolean dropShadows;
 	private final String data;
 	private final float scale;
+	private final boolean transparentBackground;
 	private final Font font;
 	private final boolean performSeparationOfCommonEdges;
 	private final boolean allCornersAreRound;
 
 	public PSystemDitaa(UmlSource source, String data, boolean performSeparationOfCommonEdges, boolean dropShadows,
-			boolean allCornersAreRound, float scale, Font font) {
+			boolean allCornersAreRound, boolean transparentBackground, float scale, Font font) {
 		super(source);
 		this.data = data;
 		this.dropShadows = dropShadows;
@@ -85,13 +87,14 @@ public class PSystemDitaa extends AbstractPSystem {
 			e.printStackTrace();
 			this.processingOptions = null;
 		}
+		this.transparentBackground = transparentBackground;
 		this.scale = scale;
 		this.font = font;
 	}
 
 	PSystemDitaa add(String line) {
 		return new PSystemDitaa(getSource(), data + line + BackSlash.NEWLINE, performSeparationOfCommonEdges,
-				dropShadows, allCornersAreRound, scale, font);
+				dropShadows, allCornersAreRound, transparentBackground, scale, font);
 	}
 
 	public DiagramDescription getDescription() {
@@ -115,6 +118,10 @@ public class PSystemDitaa extends AbstractPSystem {
 			// final RenderingOptions renderingOptions = options.renderingOptions;
 			final Field f_renderingOptions = options.getClass().getField("renderingOptions");
 			final Object renderingOptions = f_renderingOptions.get(options);
+
+			// renderingOptions.setBackgroundColor(font);
+			final Method setBackgroundColor = renderingOptions.getClass().getMethod("setBackgroundColor", Color.class);
+			setBackgroundColor.invoke(renderingOptions, transparentBackground ? new Color(0, 0, 0, 0) : Color.WHITE);
 
 			// renderingOptions.setFont(font);
 			final Method setFont = renderingOptions.getClass().getMethod("setFont", Font.class);
