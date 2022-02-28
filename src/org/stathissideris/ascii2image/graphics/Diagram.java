@@ -111,6 +111,8 @@ public class Diagram {
 		this.cellWidth = options.renderingOptions.getCellWidth();
 		this.cellHeight = options.renderingOptions.getCellHeight();
 
+		FontMeasurer fontMeasurer = new FontMeasurer(options.renderingOptions.getFont());
+
 		width = grid.getWidth() * cellWidth;
 		height = grid.getHeight() * cellHeight;
 
@@ -526,7 +528,7 @@ public class Diagram {
 		ArrayList textGroups = nonBlank.breakIntoDistinctBoundaries();
 		if(DEBUG) System.out.println(textGroups.size()+" text groups found");
 
-		Font font = FontMeasurer.instance().getFontFor(cellHeight);
+		Font font = fontMeasurer.getFontFor(cellHeight);
 
 		Iterator textGroupIt = textGroups.iterator();
 		while(textGroupIt.hasNext()){
@@ -550,10 +552,10 @@ public class Diagram {
 				int maxX = getCellMaxX(lastCell);
 
 				DiagramText textObject;
-				if(FontMeasurer.instance().getWidthFor(string, font) > maxX - minX){ //does not fit horizontally
-					Font lessWideFont = FontMeasurer.instance().getFontFor(maxX - minX, string);
-					textObject = new DiagramText(minX, y, string, lessWideFont);
-				} else textObject = new DiagramText(minX, y, string, font);
+				if(fontMeasurer.getWidthFor(string, font) > maxX - minX){ //does not fit horizontally
+					Font lessWideFont = fontMeasurer.getFontFor(maxX - minX, string);
+					textObject = new DiagramText(minX, y, string, lessWideFont, fontMeasurer);
+				} else textObject = new DiagramText(minX, y, string, font, fontMeasurer);
 
 				textObject.centerVerticallyBetween(getCellMinY(cell), getCellMaxY(cell));
 

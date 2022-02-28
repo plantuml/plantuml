@@ -26,32 +26,25 @@ import java.awt.Graphics2D;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.util.Locale;
 
 /**
  * 
  * @author Efstathios Sideris
  */
 public class FontMeasurer {
-	
-	private static final String fontFamilyName = "Dialog";
-	//private static final String fontFamilyName = "Helvetica";
-	
-	private static final boolean DEBUG = false;
-	
-	private static final FontMeasurer instance = new FontMeasurer();
-	FontRenderContext fakeRenderContext;
-	Graphics2D fakeGraphics;
-	
-	{   
+
+	private final Font baseFont;
+	private FontRenderContext fakeRenderContext;
+	private Graphics2D fakeGraphics;
+
+	public FontMeasurer(Font font){
+		baseFont = font;
+
 		BufferedImage image = new BufferedImage(1,1, BufferedImage.TYPE_INT_RGB);
 		fakeGraphics = image.createGraphics();
 		
-		if (DEBUG) System.out.println("Locale: "+Locale.getDefault());
-		
 		fakeRenderContext = fakeGraphics.getFontRenderContext();
-	}		 
-	
+	}
 
 	public int getWidthFor(String str, int pixelHeight){
 		Font font = getFontFor(pixelHeight);
@@ -74,125 +67,86 @@ public class FontMeasurer {
 		Rectangle2D rectangle = font.getStringBounds(str, fakeRenderContext);
 		return (int) rectangle.getHeight();
 	}
-	
+
 	public Rectangle2D getBoundsFor(String str, Font font){
 		return font.getStringBounds(str, fakeRenderContext);
-	}
-	
-	public Font getFontFor(int pixelHeight){
-		BufferedImage image = new BufferedImage(1,1, BufferedImage.TYPE_INT_RGB);
-		Graphics2D g2 = image.createGraphics();
-		return getFontFor(pixelHeight, fakeRenderContext);
 	}
 
 	public int getAscent(Font font){
 		fakeGraphics.setFont(font);
 		FontMetrics metrics = fakeGraphics.getFontMetrics();
-		if(DEBUG) System.out.println("Ascent: "+metrics.getAscent());
 		return metrics.getAscent();
 	}
 
 	public int getZHeight(Font font){
-		int height = (int) font.createGlyphVector(fakeRenderContext, "Z").getOutline().getBounds().getHeight();
-		if(DEBUG) System.out.println("Z height: "+height);
-		return height;
+		return (int) font.createGlyphVector(fakeRenderContext, "Z").getOutline().getBounds().getHeight();
 	}
 
-	public Font getFontFor(int maxWidth, String string){
-		float size = 12;
-		Font currentFont = new Font(fontFamilyName, Font.BOLD, (int) size);
-		//ascent is the distance between the baseline and the tallest character
-		int width = getWidthFor(string, currentFont);
+	public Font getFontFor(final int maxWidth, final String string){
+		FontPredicate predicate = new FontPredicate() {
+			@Override
+			public boolean test(Font font)
+			{
+				int width = getWidthFor(string, font);
+				return width > maxWidth;
+			}
+		};
+
+		return deriveFont(predicate, 1.0f);
+	}
+
+	public Font getFontFor(final int pixelHeight){
+		FontPredicate predicate = new FontPredicate() {
+			@Override
+			public boolean test(Font font)
+			{
+				//ascent is the distance between the baseline and the tallest character
+				int ascent = getAscent(font);
+				return ascent > pixelHeight;
+			}
+		};
+
+		return deriveFont(predicate, 0.5f);
+	}
+
+	private Font deriveFont(FontPredicate predicate, float sizeDelta)
+	{
+		Font currentFont = baseFont;
+		float size = baseFont.getSize2D();
 
 		int direction; //direction of size change (towards smaller or bigger)
-		if(width > maxWidth){
-			currentFont = currentFont.deriveFont(size - 1);
+		if(predicate.test(currentFont)){
+			currentFont = currentFont.deriveFont(size - 1f);
 			size--;
-			direction = -1; 
+			direction = -1;
 		} else {
-			currentFont = currentFont.deriveFont(size + 1);
+			currentFont = currentFont.deriveFont(size + 1f);
 			size++;
 			direction = 1;
 		}
+
 		while(size > 0){
 			currentFont = currentFont.deriveFont(size);
 			//rectangle = currentFont.getStringBounds(testString, frc);
-			width = getWidthFor(string, currentFont);
-			if(direction == 1){
-				if(width > maxWidth){
-					size = size - 1;
+			if (direction == 1) {
+				if (predicate.test(currentFont)) {
+					size = size - sizeDelta;
 					return currentFont.deriveFont(size);
+				} else {
+					size = size + sizeDelta;
 				}
-				else size = size + 1;
 			} else {
-				if(width < maxWidth)
+				if (!predicate.test(currentFont)) {
 					return currentFont;
-				else size = size - 1;
+				} else {
+					size = size - sizeDelta;
+				}
 			}
 		}
 		return null;
 	}
 
-
-
-	public Font getFontFor(int pixelHeight, FontRenderContext frc){
-		float size = 12;
-		Font currentFont = new Font(fontFamilyName, Font.BOLD, (int) size);
-//		Font currentFont = new Font("Times", Font.BOLD, (int) size);
-		if (DEBUG) System.out.println(currentFont.getFontName());
-		//ascent is the distance between the baseline and the tallest character
-		int ascent = getAscent(currentFont);
-
-		int direction; //direction of size change (towards smaller or bigger)
-		if(ascent > pixelHeight){
-			currentFont = currentFont.deriveFont(size - 1);
-			size--;
-			direction = -1; 
-		} else {
-			currentFont = currentFont.deriveFont(size + 1);
-			size++;
-			direction = 1;
-		}
-		while(size > 0){
-			currentFont = currentFont.deriveFont(size);
-			//rectangle = currentFont.getStringBounds(testString, frc);
-			ascent = getAscent(currentFont);
-			if(direction == 1){
-				if(ascent > pixelHeight){
-					size = size - 0.5f;
-					return currentFont.deriveFont(size);
-				}
-				else size = size + 0.5f;
-			} else {
-				if(ascent < pixelHeight)
-					return currentFont;
-				else size = size - 0.5f;
-			}
-		}
-		return null;
-	}
-	
-	public static FontMeasurer instance(){
-		return instance;
-	}
-	
-	public FontMeasurer(){
-	}
-	
-	public static void main(String[] args) {
-		//FontMeasurer.instance().getFontFor(7);
-		float size = 12;
-		Font currentFont = new Font("Sans", Font.BOLD, (int) size);
-		System.out.println(currentFont.getSize());
-		currentFont = currentFont.deriveFont(--size);
-		System.out.println(currentFont.getSize());
-		currentFont = currentFont.deriveFont(--size);
-		System.out.println(currentFont.getSize());
-		currentFont = currentFont.deriveFont(--size);
-		System.out.println(currentFont.getSize());
-		currentFont = currentFont.deriveFont(--size);
-		System.out.println(currentFont.getSize());
-		currentFont = currentFont.deriveFont(--size);
-		System.out.println(currentFont.getSize());
+	private interface FontPredicate {
+		boolean test(Font font);
 	}
 }

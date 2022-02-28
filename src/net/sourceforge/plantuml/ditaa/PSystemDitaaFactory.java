@@ -34,6 +34,7 @@
  */
 package net.sourceforge.plantuml.ditaa;
 
+import java.awt.Font;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -69,11 +70,16 @@ public class PSystemDitaaFactory extends PSystemBasicFactory<PSystemDitaa> {
 		if (startLine != null && (startLine.contains("-r") || startLine.contains("--round-corners")))
 			allCornersAreRound = true;
 
+		boolean transparentBackground = false;
+		if (startLine != null && (startLine.contains("-T") || startLine.contains("--transparent")))
+			transparentBackground = true;
+
 		final float scale = extractScale(startLine);
+		final Font font = extractFont(startLine);
 		if (getDiagramType() == DiagramType.UML)
 			return null;
 		else if (getDiagramType() == DiagramType.DITAA)
-			return new PSystemDitaa(source, "", performSeparationOfCommonEdges, dropShadows, allCornersAreRound, scale);
+			return new PSystemDitaa(source, "", performSeparationOfCommonEdges, dropShadows, allCornersAreRound, transparentBackground, scale, font);
 		else
 			throw new IllegalStateException(getDiagramType().name());
 
@@ -94,8 +100,13 @@ public class PSystemDitaaFactory extends PSystemBasicFactory<PSystemDitaa> {
 			if (line.contains("-r") || line.contains("--round-corners"))
 				allCornersAreRound = true;
 
+			boolean transparentBackground = false;
+			if (line.contains("-T") || line.contains("--transparent"))
+				transparentBackground = true;
+
 			final float scale = extractScale(line);
-			return new PSystemDitaa(source, "", performSeparationOfCommonEdges, dropShadows, allCornersAreRound, scale);
+			final Font font = extractFont(line);
+			return new PSystemDitaa(source, "", performSeparationOfCommonEdges, dropShadows, allCornersAreRound, transparentBackground, scale, font);
 		}
 		if (system == null)
 			return null;
@@ -114,5 +125,47 @@ public class PSystemDitaaFactory extends PSystemBasicFactory<PSystemDitaa> {
 			return Float.parseFloat(number);
 		}
 		return 1;
+	}
+
+	private Font extractFont(String line) {
+		if (line == null)
+			return new Font("Dialog", Font.BOLD, 12);
+
+		final Pattern pName = Pattern.compile("font-family=([a-zA-Z0-0 ]+)");
+		final Matcher mName = pName.matcher(line);
+		String fontName = "Dialog";
+		if (mName.find())
+		{
+			fontName = mName.group(1);
+		}
+
+		final Pattern pVariant = Pattern.compile("font-variant=(BOLD|ITALIC|PLAIN)");
+		final Matcher mVariant = pVariant.matcher(line);
+		int fontVariant = Font.BOLD;
+		if (mVariant.find())
+		{
+			switch (mVariant.group(1))
+			{
+				case "BOLD":
+					fontVariant = Font.BOLD;
+					break;
+				case "ITALIC":
+					fontVariant = Font.ITALIC;
+					break;
+				case "PLAIN":
+					fontVariant = Font.PLAIN;
+					break;
+			}
+		}
+
+		final Pattern pSize = Pattern.compile("font-size=([\\d]+)");
+		final Matcher mSize = pSize.matcher(line);
+		int fontSize = 12;
+		if (mSize.find())
+		{
+			fontSize = Integer.parseInt(mSize.group(1));
+		}
+
+		return new Font(fontName, fontVariant, fontSize);
 	}
 }

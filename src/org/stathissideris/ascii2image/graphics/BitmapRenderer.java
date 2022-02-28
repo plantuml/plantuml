@@ -54,17 +54,23 @@ public class BitmapRenderer {
 	
 	Stroke normalStroke;
 	Stroke dashStroke; 
-	
-	
-	public RenderedImage renderToImage(Diagram diagram,  RenderingOptions options){
-		BufferedImage image = new BufferedImage(
+
+	public RenderedImage renderToImage(Diagram diagram, RenderingOptions options){
+		BufferedImage image;
+		if(options.needsTransparency()) {
+			image = new BufferedImage(
+					diagram.getWidth(),
+					diagram.getHeight(),
+					BufferedImage.TYPE_INT_ARGB);
+		} else {
+			image = new BufferedImage(
 					diagram.getWidth(),
 					diagram.getHeight(),
 					BufferedImage.TYPE_INT_RGB);
-		
+		}
 		return render(diagram, image, options);
 	}
-	
+
 	public RenderedImage render(Diagram diagram, BufferedImage image,  RenderingOptions options){
 		RenderedImage renderedImage = image;
 		Graphics2D g2 = image.createGraphics();
@@ -75,7 +81,7 @@ public class BitmapRenderer {
 		
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, antialiasSetting);
 
-		g2.setColor(Color.white);
+		g2.setColor(options.getBackgroundColor());
 		//TODO: find out why the next line does not work
 		g2.fillRect(0, 0, image.getWidth()+10, image.getHeight()+10);
 		/*for(int y = 0; y < diagram.getHeight(); y ++)

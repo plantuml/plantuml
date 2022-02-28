@@ -39,8 +39,9 @@ public class DiagramText extends DiagramComponent {
 	private boolean isTextOnLine = false;
 	private boolean hasOutline = false;
 	private Color outlineColor = Color.white;
+	private final FontMeasurer fontMeasurer;
 
-	public DiagramText(int x, int y, String text, Font font){
+	public DiagramText(int x, int y, String text, Font font, FontMeasurer fontMeasurer){
 		if(text == null) throw new IllegalArgumentException("DiagramText cannot be initialised with a null string");
 		if(font == null) throw new IllegalArgumentException("DiagramText cannot be initialised with a null font");
 
@@ -48,6 +49,7 @@ public class DiagramText extends DiagramComponent {
 		this.yPos = y;
 		this.text = text;
 		this.font = font;
+		this.fontMeasurer = fontMeasurer;
 	}
 
 	public void centerInBounds(Rectangle2D bounds){
@@ -56,20 +58,20 @@ public class DiagramText extends DiagramComponent {
 	}
 
 	public void centerHorizontallyBetween(int minX, int maxX){
-		int width = FontMeasurer.instance().getWidthFor(text, font);
+		int width = fontMeasurer.getWidthFor(text, font);
 		int center = Math.abs(maxX - minX) / 2;
 		xPos += Math.abs(center - width / 2);
 		
 	}
 
 	public void centerVerticallyBetween(int minY, int maxY){
-		int zHeight = FontMeasurer.instance().getZHeight(font);
+		int zHeight = fontMeasurer.getZHeight(font);
 		int center = Math.abs(maxY - minY) / 2;
 		yPos -= Math.abs(center - zHeight / 2);
 	}
 
 	public void alignRightEdgeTo(int x){
-		int width = FontMeasurer.instance().getWidthFor(text, font);
+		int width = fontMeasurer.getWidthFor(text, font);
 		xPos = x - width;
 	}
 
@@ -145,7 +147,7 @@ public class DiagramText extends DiagramComponent {
 	}
 
 	public Rectangle2D getBounds(){
-		Rectangle2D bounds = FontMeasurer.instance().getBoundsFor(text, font);
+		Rectangle2D bounds = fontMeasurer.getBoundsFor(text, font);
 		bounds.setRect(
 			bounds.getMinX() + xPos,
 			bounds.getMinY() + yPos,
