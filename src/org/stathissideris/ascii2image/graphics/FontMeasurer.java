@@ -34,11 +34,13 @@ import java.awt.image.BufferedImage;
 public class FontMeasurer {
 
 	private final Font baseFont;
+	private boolean forceFontSize;
 	private FontRenderContext fakeRenderContext;
 	private Graphics2D fakeGraphics;
 
-	public FontMeasurer(Font font){
-		baseFont = font;
+	public FontMeasurer(Font font, boolean forceFontSize){
+		this.baseFont = font;
+		this.forceFontSize = forceFontSize;
 
 		BufferedImage image = new BufferedImage(1,1, BufferedImage.TYPE_INT_RGB);
 		fakeGraphics = image.createGraphics();
@@ -83,30 +85,42 @@ public class FontMeasurer {
 	}
 
 	public Font getFontFor(final int maxWidth, final String string){
-		FontPredicate predicate = new FontPredicate() {
-			@Override
-			public boolean test(Font font)
-			{
-				int width = getWidthFor(string, font);
-				return width > maxWidth;
-			}
-		};
-
-		return deriveFont(predicate, 1.0f);
+		if (forceFontSize)
+		{
+			return baseFont;
+		}
+		else
+		{
+			FontPredicate predicate = new FontPredicate() {
+				@Override
+				public boolean test(Font font)
+				{
+					int width = getWidthFor(string, font);
+					return width > maxWidth;
+				}
+			};
+			return deriveFont(predicate, 1.0f);
+		}
 	}
 
 	public Font getFontFor(final int pixelHeight){
-		FontPredicate predicate = new FontPredicate() {
-			@Override
-			public boolean test(Font font)
-			{
-				//ascent is the distance between the baseline and the tallest character
-				int ascent = getAscent(font);
-				return ascent > pixelHeight;
-			}
-		};
-
-		return deriveFont(predicate, 0.5f);
+		if (forceFontSize)
+		{
+			return baseFont;
+		}
+		else
+		{
+			FontPredicate predicate = new FontPredicate() {
+				@Override
+				public boolean test(Font font)
+				{
+					//ascent is the distance between the baseline and the tallest character
+					int ascent = getAscent(font);
+					return ascent > pixelHeight;
+				}
+			};
+			return deriveFont(predicate, 0.5f);
+		}
 	}
 
 	private Font deriveFont(FontPredicate predicate, float sizeDelta)

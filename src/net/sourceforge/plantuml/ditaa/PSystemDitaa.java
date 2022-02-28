@@ -65,11 +65,12 @@ public class PSystemDitaa extends AbstractPSystem {
 	private final float scale;
 	private final boolean transparentBackground;
 	private final Font font;
+	private final boolean forceFontSize;
 	private final boolean performSeparationOfCommonEdges;
 	private final boolean allCornersAreRound;
 
 	public PSystemDitaa(UmlSource source, String data, boolean performSeparationOfCommonEdges, boolean dropShadows,
-			boolean allCornersAreRound, boolean transparentBackground, float scale, Font font) {
+			boolean allCornersAreRound, boolean transparentBackground, float scale, Font font, boolean forceFontSize) {
 		super(source);
 		this.data = data;
 		this.dropShadows = dropShadows;
@@ -90,11 +91,12 @@ public class PSystemDitaa extends AbstractPSystem {
 		this.transparentBackground = transparentBackground;
 		this.scale = scale;
 		this.font = font;
+		this.forceFontSize = forceFontSize;
 	}
 
 	PSystemDitaa add(String line) {
 		return new PSystemDitaa(getSource(), data + line + BackSlash.NEWLINE, performSeparationOfCommonEdges,
-				dropShadows, allCornersAreRound, transparentBackground, scale, font);
+				dropShadows, allCornersAreRound, transparentBackground, scale, font, forceFontSize);
 	}
 
 	public DiagramDescription getDescription() {
@@ -126,6 +128,10 @@ public class PSystemDitaa extends AbstractPSystem {
 			// renderingOptions.setFont(font);
 			final Method setFont = renderingOptions.getClass().getMethod("setFont", Font.class);
 			setFont.invoke(renderingOptions, font);
+
+			// renderingOptions.setForceFontSize(font);
+			final Method setForceFontSize = renderingOptions.getClass().getMethod("setForceFontSize", boolean.class);
+			setForceFontSize.invoke(renderingOptions, forceFontSize);
 
 			// renderingOptions.setScale(scale);
 			final Method setScale = renderingOptions.getClass().getMethod("setScale", float.class);

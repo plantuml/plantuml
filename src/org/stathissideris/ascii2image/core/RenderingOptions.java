@@ -45,6 +45,7 @@ public class RenderingOptions {
 	private Color backgroundColor = Color.white;
 
 	private Font font = new Font("Dialog", Font.BOLD, 12);
+	private boolean forceFontSize = false;
 
 	/**
 	 * @return
@@ -140,4 +141,13 @@ public class RenderingOptions {
 		this.font = font;
 	}
 
+	public boolean getForceFontSize()
+	{
+		return forceFontSize;
+	}
+
+	public void setForceFontSize(boolean forceFontSize)
+	{
+		this.forceFontSize = forceFontSize;
+	}
 }

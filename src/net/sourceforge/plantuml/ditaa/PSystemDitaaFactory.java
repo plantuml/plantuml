@@ -74,12 +74,16 @@ public class PSystemDitaaFactory extends PSystemBasicFactory<PSystemDitaa> {
 		if (startLine != null && (startLine.contains("-T") || startLine.contains("--transparent")))
 			transparentBackground = true;
 
+		boolean forceFontSize = false;
+		if (startLine != null && startLine.contains("--font-size"))
+			forceFontSize = true;
+
 		final float scale = extractScale(startLine);
 		final Font font = extractFont(startLine);
 		if (getDiagramType() == DiagramType.UML)
 			return null;
 		else if (getDiagramType() == DiagramType.DITAA)
-			return new PSystemDitaa(source, "", performSeparationOfCommonEdges, dropShadows, allCornersAreRound, transparentBackground, scale, font);
+			return new PSystemDitaa(source, "", performSeparationOfCommonEdges, dropShadows, allCornersAreRound, transparentBackground, scale, font, forceFontSize);
 		else
 			throw new IllegalStateException(getDiagramType().name());
 
@@ -104,9 +108,13 @@ public class PSystemDitaaFactory extends PSystemBasicFactory<PSystemDitaa> {
 			if (line.contains("-T") || line.contains("--transparent"))
 				transparentBackground = true;
 
+			boolean forceFontSize = false;
+			if (line.contains("--font-size"))
+				forceFontSize = true;
+
 			final float scale = extractScale(line);
 			final Font font = extractFont(line);
-			return new PSystemDitaa(source, "", performSeparationOfCommonEdges, dropShadows, allCornersAreRound, transparentBackground, scale, font);
+			return new PSystemDitaa(source, "", performSeparationOfCommonEdges, dropShadows, allCornersAreRound, transparentBackground, scale, font, forceFontSize);
 		}
 		if (system == null)
 			return null;
