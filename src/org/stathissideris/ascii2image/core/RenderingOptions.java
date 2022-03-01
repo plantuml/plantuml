@@ -20,7 +20,8 @@
  */
 package org.stathissideris.ascii2image.core;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
 import java.util.HashMap;
 
 import org.stathissideris.ascii2image.graphics.CustomShapeDefinition;
