@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.mindmap.IdeaShape;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 final class WElement {
@@ -65,26 +65,26 @@ final class WElement {
 	private final List<WElement> childrenRight = new ArrayList<>();
 	private final IdeaShape shape;
 
-	private StyleSignature getDefaultStyleDefinitionNode(int level) {
+	private StyleSignatureBasic getDefaultStyleDefinitionNode(int level) {
 		final String depth = SName.depth(level);
 		if (level == 0)
-			return StyleSignature.of(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.rootNode)
+			return StyleSignatureBasic.of(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.rootNode)
 					.add(stereotype).add(depth);
 
 		if (shape == IdeaShape.NONE && isLeaf())
-			return StyleSignature
+			return StyleSignatureBasic
 					.of(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.leafNode, SName.boxless)
 					.add(stereotype).add(depth);
 
 		if (isLeaf())
-			return StyleSignature.of(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.leafNode)
+			return StyleSignatureBasic.of(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.leafNode)
 					.add(stereotype).add(depth);
 
 		if (shape == IdeaShape.NONE)
-			return StyleSignature.of(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.boxless)
+			return StyleSignatureBasic.of(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.boxless)
 					.add(stereotype).add(depth);
 
-		return StyleSignature.of(SName.root, SName.element, SName.wbsDiagram, SName.node).add(stereotype).add(depth);
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.wbsDiagram, SName.node).add(stereotype).add(depth);
 	}
 
 	public ISkinParam withBackColor(ISkinParam skinParam) {
@@ -100,7 +100,7 @@ final class WElement {
 		int deltaPriority = STEP_BY_PARENT * 1000;
 		Style result = styleBuilder.getMergedStyleSpecial(getDefaultStyleDefinitionNode(level), deltaPriority);
 		for (WElement up = parent; up != null; up = up.parent) {
-			final StyleSignature ss = up.getDefaultStyleDefinitionNode(level).addStar();
+			final StyleSignatureBasic ss = up.getDefaultStyleDefinitionNode(level).addStar();
 			deltaPriority -= STEP_BY_PARENT;
 			final Style styleParent = styleBuilder.getMergedStyleSpecial(ss, deltaPriority);
 			result = result.mergeWith(styleParent);

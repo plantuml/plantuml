@@ -252,27 +252,20 @@ public class FromSkinparamToStyle {
 			return;
 		}
 
-		final boolean complex = value.contains(";");
+		final boolean complex = isComplexValue(value);
 		if (complex) {
-			// System.err.println("key=" + key + " value=" + value);
-			if (value.startsWith(";"))
-				value = " " + value;
-			final StringTokenizer st = new StringTokenizer(value, ";");
-			value = st.nextToken();
-			while (st.hasMoreTokens()) {
-				final String read = st.nextToken();
-				// System.err.println("read:" + read);
-				if (read.startsWith("text:")) {
-					final String value2 = read.split(":")[1];
-					for (Data data : datas)
-						addStyle(PName.FontColor, ValueImpl.regular(value2, counter), data.styleNames);
-				} else if (read.startsWith("line.dotted")) {
-					for (Data data : datas)
-						addStyle(PName.LineStyle, ValueImpl.regular("1;3", counter), data.styleNames);
-				} else if (read.startsWith("line.dashed")) {
-					for (Data data : datas)
-						addStyle(PName.LineStyle, ValueImpl.regular("7;7", counter), data.styleNames);
+			if (value.contains(";")) {
+				if (value.startsWith(";"))
+					value = " " + value;
+				final StringTokenizer st = new StringTokenizer(value, ";");
+				value = st.nextToken();
+				while (st.hasMoreTokens()) {
+					final String read = st.nextToken();
+					readValue(read, datas, counter);
 				}
+			} else {
+				readValue(value, datas, counter);
+				return;
 			}
 		}
 
@@ -280,6 +273,28 @@ public class FromSkinparamToStyle {
 			for (Data data : datas)
 				addStyle(data.propertyName, ValueImpl.regular(value, counter), data.styleNames);
 
+	}
+
+	private void readValue(final String read, final List<Data> datas, final AutomaticCounter counter) {
+		if (read.startsWith("text:")) {
+			final String value2 = read.split(":")[1];
+			for (Data data : datas)
+				addStyle(PName.FontColor, ValueImpl.regular(value2, counter), data.styleNames);
+		} else if (read.startsWith("line.dotted")) {
+			for (Data data : datas)
+				addStyle(PName.LineStyle, ValueImpl.regular("1;3", counter), data.styleNames);
+		} else if (read.startsWith("line.dashed")) {
+			for (Data data : datas)
+				addStyle(PName.LineStyle, ValueImpl.regular("7;7", counter), data.styleNames);
+		}
+	}
+
+	private boolean isComplexValue(String value) {
+		if (value.contains(";"))
+			return true;
+		if (value.startsWith("text:"))
+			return true;
+		return false;
 	}
 
 	private ValueImpl getShadowingValue(final String value, final AutomaticCounter counter) {
@@ -293,14 +308,17 @@ public class FromSkinparamToStyle {
 	}
 
 	private void addStyle(PName propertyName, Value value, SName... styleNames) {
-		final Map<PName, Value> map = new EnumMap<PName, Value>(PName.class);
+		Map<PName, Value> map = new EnumMap<PName, Value>(PName.class);
 		map.put(propertyName, value);
-		StyleSignature sig = StyleSignature.of(styleNames);
-		if (stereo != null)
+		StyleSignatureBasic sig = StyleSignatureBasic.of(styleNames);
+		if (stereo != null) {
+			map = StyleLoader.addPriorityForStereotype(map);
 			for (String s : stereo.split("\\&"))
 				sig = sig.add(s);
+		}
 
-		styles.add(new Style(sig, map));
+		final Style style = new Style(sig, map);
+		styles.add(style);
 	}
 
 	public List<Style> getStyles() {

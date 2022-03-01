@@ -62,7 +62,7 @@ import net.sourceforge.plantuml.jsondiagram.Mirror;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
@@ -89,7 +89,7 @@ public class SmetanaForGit {
 	}
 
 	private Style getStyle() {
-		return StyleSignature.of(SName.root, SName.element, SName.gitDiagram)
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.gitDiagram)
 				.getMergedStyle(skinParam.getCurrentStyleBuilder());
 	}
 

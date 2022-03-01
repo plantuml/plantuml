@@ -37,7 +37,6 @@
  */
 package net.sourceforge.plantuml.svek;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.io.IOException;
@@ -65,6 +64,7 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.activitydiagram3.ftile.EntityImageLegend;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.DisplayPositioned;
@@ -102,10 +102,11 @@ import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.USymbolHexagon;
 import net.sourceforge.plantuml.graphic.USymbolInterface;
 import net.sourceforge.plantuml.graphic.USymbols;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.image.EntityImageActivity;
 import net.sourceforge.plantuml.svek.image.EntityImageArcCircle;
 import net.sourceforge.plantuml.svek.image.EntityImageAssociation;
@@ -118,6 +119,7 @@ import net.sourceforge.plantuml.svek.image.EntityImageDeepHistory;
 import net.sourceforge.plantuml.svek.image.EntityImageDescription;
 import net.sourceforge.plantuml.svek.image.EntityImageEmptyPackage;
 import net.sourceforge.plantuml.svek.image.EntityImageGroup;
+import net.sourceforge.plantuml.svek.image.EntityImageJson;
 import net.sourceforge.plantuml.svek.image.EntityImageLollipopInterface;
 import net.sourceforge.plantuml.svek.image.EntityImageLollipopInterfaceEye1;
 import net.sourceforge.plantuml.svek.image.EntityImageLollipopInterfaceEye2;
@@ -241,6 +243,9 @@ public final class GeneralImageBuilder {
 		if (leaf.getLeafType() == LeafType.MAP) {
 			return new EntityImageMap(leaf, skinParam, portionShower);
 		}
+		if (leaf.getLeafType() == LeafType.JSON) {
+			return new EntityImageJson(leaf, skinParam, portionShower);
+		}
 		if (leaf.getLeafType() == LeafType.SYNCHRO_BAR || leaf.getLeafType() == LeafType.STATE_FORK_JOIN) {
 			return new EntityImageSynchroBar(leaf, skinParam, umlDiagramType.getStyleName());
 		}
@@ -331,9 +336,9 @@ public final class GeneralImageBuilder {
 	}
 
 	final public StyleSignature getDefaultStyleDefinitionArrow(Stereotype stereotype) {
-		StyleSignature result = StyleSignature.of(SName.root, SName.element, styleName, SName.arrow);
+		StyleSignature result = StyleSignatureBasic.of(SName.root, SName.element, styleName, SName.arrow);
 		if (stereotype != null) {
-			result = result.with(stereotype);
+			result = result.withTOBECHANGED(stereotype);
 		}
 		return result;
 	}
@@ -393,7 +398,7 @@ public final class GeneralImageBuilder {
 	// Duplicate SvekResult / GeneralImageBuilder
 	private HColor getBackcolor() {
 		if (UseStyle.useBetaStyle()) {
-			final Style style = StyleSignature.of(SName.root, SName.document)
+			final Style style = StyleSignatureBasic.of(SName.root, SName.document)
 					.getMergedStyle(dotData.getSkinParam().getCurrentStyleBuilder());
 			return style.value(PName.BackGroundColor).asColor(dotData.getSkinParam().getThemeStyle(),
 					dotData.getSkinParam().getIHtmlColorSet());
@@ -706,15 +711,15 @@ public final class GeneralImageBuilder {
 		final FontConfiguration fontConfiguration;
 		if (UseStyle.useBetaStyle()) {
 			final SName sname = dotData.getUmlDiagramType().getStyleName();
-			final StyleSignature signature;
+			final StyleSignatureBasic signature;
 			final USymbol uSymbol = g.getUSymbol();
 			if (uSymbol == USymbols.RECTANGLE)
-				signature = StyleSignature.of(SName.root, SName.element, sname, uSymbol.getSName(), SName.title);
+				signature = StyleSignatureBasic.of(SName.root, SName.element, sname, uSymbol.getSName(), SName.title);
 			else
-				signature = StyleSignature.of(SName.root, SName.element, sname, SName.title);
+				signature = StyleSignatureBasic.of(SName.root, SName.element, sname, SName.title);
 
 			final Style style = signature //
-					.with(g.getStereotype()) //
+					.withTOBECHANGED(g.getStereotype()) //
 					.with(g.getStereostyles()) //
 					.getMergedStyle(skinParam.getCurrentStyleBuilder());
 

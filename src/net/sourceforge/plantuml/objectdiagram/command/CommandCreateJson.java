@@ -46,31 +46,30 @@ import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.cucadiagram.BodierMap;
+import net.sourceforge.plantuml.cucadiagram.BodierJSon;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
-import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
-import net.sourceforge.plantuml.cucadiagram.Link;
-import net.sourceforge.plantuml.cucadiagram.LinkDecor;
-import net.sourceforge.plantuml.cucadiagram.LinkType;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.json.Json.DefaultHandler;
+import net.sourceforge.plantuml.json.JsonParser;
+import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
-public class CommandCreateMap extends CommandMultilines2<AbstractClassOrObjectDiagram> {
+public class CommandCreateJson extends CommandMultilines2<AbstractClassOrObjectDiagram> {
 
-	public CommandCreateMap() {
+	public CommandCreateJson() {
 		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE);
 	}
 
 	private static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandCreateMap.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("TYPE", "map"), //
+		return RegexConcat.build(CommandCreateJson.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("TYPE", "json"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("NAME", "(?:[%g]([^%g]+)[%g][%s]+as[%s]+)?([%pLN_.]+)"), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -99,28 +98,39 @@ public class CommandCreateMap extends CommandMultilines2<AbstractClassOrObjectDi
 			return CommandExecutionResult.error("No such entity");
 
 		lines = lines.subExtract(1, 1);
+		final StringBuilder sb = new StringBuilder("{");
 		for (StringLocated sl : lines) {
 			final String line = sl.getString();
 			assert line.length() > 0;
-			entity1.getBodier().addFieldOrMethod(line);
-			if (BodierMap.getLinkedEntry(line) != null) {
-				final String linkStr = BodierMap.getLinkedEntry(line);
-				final int x = line.indexOf(linkStr);
-				final String key = line.substring(0, x).trim();
-				final String dest = line.substring(x + linkStr.length()).trim();
-				final Ident ident2 = diagram.buildLeafIdentSpecial(dest);
-				final ILeaf entity2 = diagram.getEntityFactory().getLeafStrict(ident2);
-				if (entity2 == null)
-					return CommandExecutionResult.error("No such entity " + ident2.getName());
-
-				final LinkType linkType = new LinkType(LinkDecor.ARROW, LinkDecor.NONE);
-				final int length = linkStr.length() - 2;
-				final Link link = new Link(entity1, entity2, linkType, Display.NULL, length,
-						diagram.getSkinParam().getCurrentStyleBuilder());
-				link.setPortMembers(key, null);
-				diagram.addLink(link);
-			}
+			System.err.println("l=" + line);
+			sb.append(line);
+//			entity1.getBodier().addFieldOrMethod(line);
+//			if (BodierMap.getLinkedEntry(line) != null) {
+//				final String linkStr = BodierMap.getLinkedEntry(line);
+//				final int x = line.indexOf(linkStr);
+//				final String key = line.substring(0, x).trim();
+//				final String dest = line.substring(x + linkStr.length()).trim();
+//				final Ident ident2 = diagram.buildLeafIdentSpecial(dest);
+//				final ILeaf entity2 = diagram.getEntityFactory().getLeafStrict(ident2);
+//				if (entity2 == null)
+//					return CommandExecutionResult.error("No such entity " + ident2.getName());
+//
+//				final LinkType linkType = new LinkType(LinkDecor.ARROW, LinkDecor.NONE);
+//				final int length = linkStr.length() - 2;
+//				final Link link = new Link(entity1, entity2, linkType, Display.NULL, length,
+//						diagram.getSkinParam().getCurrentStyleBuilder());
+//				link.setPortMembers(key, null);
+//				diagram.addLink(link);
+//			}
 		}
+		sb.append("}");
+
+		final DefaultHandler handler = new DefaultHandler();
+		new JsonParser(handler).parse(sb.toString());
+		final JsonValue json = handler.getValue();
+		System.err.println("foo=" + json);
+		((BodierJSon) entity1.getBodier()).setJson(json);
+
 		return CommandExecutionResult.ok();
 	}
 
@@ -132,14 +142,14 @@ public class CommandCreateMap extends CommandMultilines2<AbstractClassOrObjectDi
 		final String stereotype = line0.get("STEREO", 0);
 		final boolean leafExist = diagram.V1972() ? diagram.leafExistSmart(ident) : diagram.leafExist(code);
 		if (leafExist)
-			return diagram.getOrCreateLeaf(diagram.buildLeafIdent(name), code, LeafType.MAP, null);
+			return diagram.getOrCreateLeaf(diagram.buildLeafIdent(name), code, LeafType.JSON, null);
 
-		final IEntity entity = diagram.createLeaf(ident, code, Display.getWithNewlines(display), LeafType.MAP, null);
-		if (stereotype != null) 
+		final IEntity entity = diagram.createLeaf(ident, code, Display.getWithNewlines(display), LeafType.JSON, null);
+		if (stereotype != null)
 			entity.setStereotype(Stereotype.build(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),
 					diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),
 					diagram.getSkinParam().getIHtmlColorSet()));
-		
+
 		final String s = line0.get("COLOR", 0);
 		entity.setSpecificColorTOBEREMOVED(ColorType.BACK, s == null ? null
 				: diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(), s));

@@ -54,7 +54,7 @@ import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.timingdiagram.graphic.Histogram;
 import net.sourceforge.plantuml.timingdiagram.graphic.IntricatedPoint;
 import net.sourceforge.plantuml.timingdiagram.graphic.PDrawing;
@@ -83,11 +83,11 @@ public final class PlayerRobustConcise extends Player {
 	}
 
 	@Override
-	protected StyleSignature getStyleSignature() {
+	protected StyleSignatureBasic getStyleSignature() {
 		if (type == TimingStyle.CONCISE)
-			return StyleSignature.of(SName.root, SName.element, SName.timingDiagram, SName.concise);
+			return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, SName.concise);
 		if (type == TimingStyle.ROBUST)
-			return StyleSignature.of(SName.root, SName.element, SName.timingDiagram, SName.robust);
+			return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, SName.robust);
 		throw new IllegalStateException();
 	}
 
@@ -102,7 +102,7 @@ public final class PlayerRobustConcise extends Player {
 			return new Ribbon(ruler, skinParam, notes, isCompact(), getTitle(), suggestedHeight, style);
 
 		if (type == TimingStyle.ROBUST) {
-			final Style style0 = StyleSignature.of(SName.root, SName.element, SName.timingDiagram)
+			final Style style0 = StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram)
 					.getMergedStyle(skinParam.getCurrentStyleBuilder());
 			return new Histogram(ruler, skinParam, statesLabel.values(), isCompact(), getTitle(), suggestedHeight,
 					style, style0);
@@ -212,7 +212,7 @@ public final class PlayerRobustConcise extends Player {
 	public final void addNote(TimeTick now, Display note, Position position) {
 		Style style = null;
 		if (UseStyle.useBetaStyle()) {
-			final StyleSignature signature = StyleSignature.of(SName.root, SName.element, SName.timingDiagram,
+			final StyleSignatureBasic signature = StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram,
 					SName.note);
 			style = signature.getMergedStyle(skinParam.getCurrentStyleBuilder());
 		}

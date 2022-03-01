@@ -331,7 +331,7 @@ public final class Json {
     return string;
   }
 
-  static class DefaultHandler extends JsonHandler<JsonArray, JsonObject> {
+  public static class DefaultHandler extends JsonHandler<JsonArray, JsonObject> {
 
     protected JsonValue value;
 
@@ -385,7 +385,7 @@ public final class Json {
       object.add(name, value);
     }
 
-    JsonValue getValue() {
+    public JsonValue getValue() {
       return value;
     }
 

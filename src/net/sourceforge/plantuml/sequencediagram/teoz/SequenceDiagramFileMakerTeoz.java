@@ -67,7 +67,7 @@ import net.sourceforge.plantuml.skin.SimpleContext2D;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
@@ -213,7 +213,7 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 		}
 		final TextBlock compTitle;
 		if (UseStyle.useBetaStyle()) {
-			final Style style = StyleSignature.of(SName.root, SName.document, SName.title)
+			final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.title)
 					.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
 			compTitle = style.createTextBlockBordered(diagram.getTitle().getDisplay(),
 					diagram.getSkinParam().getIHtmlColorSet(), diagram.getSkinParam());
@@ -245,7 +245,7 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 		Style style = null;
 		final ISkinParam skinParam = diagram.getSkinParam();
 		if (UseStyle.useBetaStyle()) {
-			final StyleSignature def = param.getStyleDefinition(null);
+			final StyleSignatureBasic def = param.getStyleDefinition(null);
 			style = def.getMergedStyle(skinParam.getCurrentStyleBuilder());
 		}
 		final PngTitler pngTitler = new PngTitler(titleColor, display, fontSize, fontFamily, hyperlinkColor,
@@ -271,7 +271,7 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 
 		HorizontalAlignment titleAlignment = HorizontalAlignment.CENTER;
 		if (UseStyle.useBetaStyle()) {
-			final StyleSignature def = FontParam.TITLE.getStyleDefinition(null);
+			final StyleSignatureBasic def = FontParam.TITLE.getStyleDefinition(null);
 			titleAlignment = def.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder())
 					.getHorizontalAlignment();
 		}

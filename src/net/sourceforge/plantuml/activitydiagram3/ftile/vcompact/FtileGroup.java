@@ -62,7 +62,7 @@ import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.UGraphicForSnake;
 import net.sourceforge.plantuml.ugraphic.LimitFinder;
 import net.sourceforge.plantuml.ugraphic.MinMax;
@@ -87,8 +87,8 @@ public class FtileGroup extends AbstractFtile {
 	private final USymbol type;
 	private final double roundCorner;
 
-	final public StyleSignature getStyleSignature() {
-		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.partition);
+	final public StyleSignatureBasic getStyleSignature() {
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.partition);
 	}
 
 	public FtileGroup(Ftile inner, Display title, Display displayNote, HColor arrowColor, HColor backColor,

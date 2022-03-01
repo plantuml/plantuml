@@ -53,7 +53,7 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
@@ -98,10 +98,10 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 		this.task = task;
 	}
 
-	abstract StyleSignature getStyleSignature();
+	abstract StyleSignatureBasic getStyleSignature();
 
-	private StyleSignature getStyleSignatureUnstarted() {
-		return StyleSignature.of(SName.root, SName.element, SName.ganttDiagram, SName.task, SName.unstarted);
+	private StyleSignatureBasic getStyleSignatureUnstarted() {
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.task, SName.unstarted);
 	}
 
 	final protected HColor getLineColor() {

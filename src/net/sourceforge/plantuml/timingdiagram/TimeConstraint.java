@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.timingdiagram.graphic.TimeArrow;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -140,8 +140,8 @@ public class TimeConstraint {
 		return getStyle().getStroke();
 	}
 
-	private StyleSignature getStyleSignature() {
-		return StyleSignature.of(SName.root, SName.element, SName.timingDiagram, SName.constraintArrow);
+	private StyleSignatureBasic getStyleSignature() {
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, SName.constraintArrow);
 	}
 
 	public double getConstraintHeight(StringBounder stringBounder) {

@@ -75,7 +75,7 @@ import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.style.Styleable;
 import net.sourceforge.plantuml.svek.UGraphicForSnake;
 import net.sourceforge.plantuml.ugraphic.LimitFinder;
@@ -120,8 +120,8 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock, Styleable
 		return Collections.unmodifiableList(swimlanesSpecial);
 	}
 
-	public StyleSignature getStyleSignature() {
-		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.swimlane);
+	public StyleSignatureBasic getStyleSignature() {
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.swimlane);
 	}
 
 	public Swimlanes(ISkinParam skinParam, Pragma pragma) {

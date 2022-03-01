@@ -48,7 +48,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.ugraphic.Shadowable;
@@ -66,8 +66,8 @@ public class EntityImageSynchroBar extends AbstractEntityImage {
 		// this.styleName = styleName;
 	}
 
-	private StyleSignature getStyleSignature() {
-		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.activityBar);
+	private StyleSignatureBasic getStyleSignature() {
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.activityBar);
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
@@ -84,7 +84,7 @@ public class EntityImageSynchroBar extends AbstractEntityImage {
 
 		HColor color = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.activityBar);
 		if (UseStyle.useBetaStyle()) {
-			final Style style = getStyleSignature().with(getEntity().getStereotype())
+			final Style style = getStyleSignature().withTOBECHANGED(getEntity().getStereotype())
 					.getMergedStyle(getSkinParam().getCurrentStyleBuilder());
 			color = style.value(PName.BackGroundColor).asColor(getSkinParam().getThemeStyle(),
 					getSkinParam().getIHtmlColorSet());

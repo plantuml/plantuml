@@ -61,9 +61,9 @@ import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 public class Style {
 
 	private final Map<PName, Value> map;
-	private final StyleSignature signature;
+	private final StyleSignatureBasic signature;
 
-	public Style(StyleSignature signature, Map<PName, Value> map) {
+	public Style(StyleSignatureBasic signature, Map<PName, Value> map) {
 		this.map = map;
 		this.signature = signature;
 	}
@@ -172,7 +172,7 @@ public class Style {
 		return result;
 	}
 
-	public StyleSignature getSignature() {
+	public StyleSignatureBasic getSignature() {
 		return signature;
 	}
 

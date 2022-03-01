@@ -58,7 +58,7 @@ import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.image.Opale;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -79,7 +79,7 @@ public class FloatingNote extends AbstractTextBlock implements Stencil, TextBloc
 		final LineBreakStrategy wrapWidth;
 		final double shadowing;
 		if (UseStyle.useBetaStyle()) {
-			final Style style = StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.note)
+			final Style style = StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.note)
 					.getMergedStyle(skinParam.getCurrentStyleBuilder());
 			wrapWidth = style.wrapWidth();
 			fc = new FontConfiguration(skinParam, style);

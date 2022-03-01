@@ -56,7 +56,7 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -82,32 +82,32 @@ public class FingerImpl implements Finger, UDrawable {
 	private final List<FingerImpl> nail = new ArrayList<>();
 	private Tetris tetris = null;
 
-	private StyleSignature getDefaultStyleDefinitionNode() {
+	private StyleSignatureBasic getDefaultStyleDefinitionNode() {
 		final String depth = SName.depth(level);
 		if (level == 0) {
-			return StyleSignature.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.rootNode)
+			return StyleSignatureBasic.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.rootNode)
 					.add(stereotype).add(depth);
 		}
 		if (shape == IdeaShape.NONE && nail.size() == 0) {
-			return StyleSignature
+			return StyleSignatureBasic
 					.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.leafNode, SName.boxless)
 					.add(stereotype).add(depth);
 		}
 		if (shape == IdeaShape.NONE) {
-			return StyleSignature.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.boxless)
+			return StyleSignatureBasic.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.boxless)
 					.add(stereotype).add(depth);
 		}
 		if (nail.size() == 0) {
-			return StyleSignature.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.leafNode)
+			return StyleSignatureBasic.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.leafNode)
 					.add(stereotype).add(depth);
 		}
-		return StyleSignature.of(SName.root, SName.element, SName.mindmapDiagram, SName.node).add(stereotype)
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.mindmapDiagram, SName.node).add(stereotype)
 				.add(depth);
 	}
 
-	public StyleSignature getDefaultStyleDefinitionArrow() {
+	public StyleSignatureBasic getDefaultStyleDefinitionArrow() {
 		final String depth = SName.depth(level);
-		return StyleSignature.of(SName.root, SName.element, SName.mindmapDiagram, SName.arrow).add(stereotype)
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.mindmapDiagram, SName.arrow).add(stereotype)
 				.add(depth);
 	}
 

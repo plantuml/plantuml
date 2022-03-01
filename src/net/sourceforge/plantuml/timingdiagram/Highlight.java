@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.URectangle;
@@ -72,8 +72,8 @@ public class Highlight {
 		this.skinParam = skinParam;
 	}
 
-	private StyleSignature getStyleSignature() {
-		return StyleSignature.of(SName.root, SName.element, SName.timingDiagram, SName.highlight);
+	private StyleSignatureBasic getStyleSignature() {
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, SName.highlight);
 	}
 
 	private Style getStyle() {

@@ -73,7 +73,7 @@ import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -126,7 +126,7 @@ class FtileIfAndStop extends AbstractFtile {
 		final UStroke thickness;
 		final FontConfiguration fcTest;
 		if (UseStyle.useBetaStyle()) {
-			final Style style = StyleSignature.activityDiamond().getMergedStyle(skinParam.getCurrentStyleBuilder());
+			final Style style = StyleSignatureBasic.activityDiamond().getMergedStyle(skinParam.getCurrentStyleBuilder());
 			thickness = tileNonStop.getThickness(style);
 			fcTest = new FontConfiguration(skinParam, style);
 		} else {

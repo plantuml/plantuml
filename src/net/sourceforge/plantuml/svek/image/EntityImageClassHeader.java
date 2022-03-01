@@ -62,7 +62,7 @@ import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.HeaderLayout;
 import net.sourceforge.plantuml.svek.ShapeType;
@@ -86,9 +86,9 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 		FontConfiguration fontConfigurationName;
 
 		if (UseStyle.useBetaStyle()) {
-			final Style style = StyleSignature
+			final Style style = StyleSignatureBasic
 					.of(SName.root, SName.element, SName.classDiagram, SName.class_, SName.header) //
-					.with(stereotype) //
+					.withTOBECHANGED(stereotype) //
 					.with(entity.getStereostyles()) //
 					.getMergedStyle(skinParam.getCurrentStyleBuilder());
 			fontConfigurationName = new FontConfiguration(skinParam, style);
@@ -197,20 +197,20 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 				spotBorder, fontColor);
 	}
 
-	private StyleSignature spotStyleSignature(LeafType leafType) {
+	private StyleSignatureBasic spotStyleSignature(LeafType leafType) {
 		switch (leafType) {
 		case ANNOTATION:
-			return StyleSignature.of(SName.root, SName.element, SName.spot, SName.spotAnnotation);
+			return StyleSignatureBasic.of(SName.root, SName.element, SName.spot, SName.spotAnnotation);
 		case ABSTRACT_CLASS:
-			return StyleSignature.of(SName.root, SName.element, SName.spot, SName.spotAbstractClass);
+			return StyleSignatureBasic.of(SName.root, SName.element, SName.spot, SName.spotAbstractClass);
 		case CLASS:
-			return StyleSignature.of(SName.root, SName.element, SName.spot, SName.spotClass);
+			return StyleSignatureBasic.of(SName.root, SName.element, SName.spot, SName.spotClass);
 		case INTERFACE:
-			return StyleSignature.of(SName.root, SName.element, SName.spot, SName.spotInterface);
+			return StyleSignatureBasic.of(SName.root, SName.element, SName.spot, SName.spotInterface);
 		case ENUM:
-			return StyleSignature.of(SName.root, SName.element, SName.spot, SName.spotEnum);
+			return StyleSignatureBasic.of(SName.root, SName.element, SName.spot, SName.spotEnum);
 		case ENTITY:
-			return StyleSignature.of(SName.root, SName.element, SName.spot, SName.spotEntity);
+			return StyleSignatureBasic.of(SName.root, SName.element, SName.spot, SName.spotEntity);
 		}
 		throw new IllegalStateException();
 	}

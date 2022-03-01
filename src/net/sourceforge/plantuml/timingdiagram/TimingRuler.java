@@ -54,7 +54,7 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -193,7 +193,7 @@ public class TimingRuler {
 	}
 
 	private Style getStyle() {
-		return StyleSignature.of(SName.root, SName.element, SName.timingDiagram, SName.timeline)
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, SName.timeline)
 				.getMergedStyle(skinParam.getCurrentStyleBuilder());
 	}
 
@@ -225,7 +225,7 @@ public class TimingRuler {
 		if (UseStyle.useBetaStyle() == false)
 			return HColorUtils.BLACK;
 
-		final Style style = StyleSignature.of(SName.root, SName.element, SName.timingDiagram)
+		final Style style = StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram)
 				.getMergedStyle(skinParam.getCurrentStyleBuilder());
 		return style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
 

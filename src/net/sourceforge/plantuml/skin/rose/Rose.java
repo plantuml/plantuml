@@ -59,7 +59,7 @@ import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
@@ -375,7 +375,7 @@ public class Rose {
 		final HorizontalAlignment textHorizontalAlignment;
 		final ArrowDirection arrowDirection = config.getArrowDirection();
 		if (UseStyle.useBetaStyle()) {
-			final StyleSignature signature = StyleSignature.of(SName.root, SName.element, SName.sequenceDiagram,
+			final StyleSignatureBasic signature = StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram,
 					SName.arrow);
 			final Style textStyle = signature.getMergedStyle(param.getCurrentStyleBuilder());
 			final String value = textStyle.value(PName.HorizontalAlignment).asString();

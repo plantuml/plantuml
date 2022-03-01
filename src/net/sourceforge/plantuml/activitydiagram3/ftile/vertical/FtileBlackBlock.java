@@ -53,7 +53,7 @@ import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -93,8 +93,8 @@ public class FtileBlackBlock extends AbstractFtile {
 		return new FtileGeometry(width + supp, height, width / 2, 0, height);
 	}
 
-	private StyleSignature getSignature() {
-		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.activityBar);
+	private StyleSignatureBasic getSignature() {
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.activityBar);
 	}
 
 	public void drawU(UGraphic ug) {

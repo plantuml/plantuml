@@ -48,7 +48,7 @@ import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
@@ -86,7 +86,7 @@ public class LifeEventTile extends AbstractTile {
 		this.skinParam = skinParam;
 	}
 
-	private StyleSignature getStyleSignature() {
+	private StyleSignatureBasic getStyleSignature() {
 		return ComponentType.DESTROY.getStyleSignature();
 	}
 

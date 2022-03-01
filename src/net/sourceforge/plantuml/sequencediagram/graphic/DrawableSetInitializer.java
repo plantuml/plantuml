@@ -623,7 +623,7 @@ class DrawableSetInitializer {
 				participantDisplay);
 		final Component tail = drawableSet.getSkin().createComponent(p.getUsedStyles(), tailType, null, skinParam,
 				participantDisplay);
-		final Style style = this.defaultLineType.getStyleSignature().with(p.getStereotype())
+		final Style style = this.defaultLineType.getStyleSignature().withTOBECHANGED(p.getStereotype())
 				.getMergedStyle(skinParam.getCurrentStyleBuilder());
 		final Component line = drawableSet.getSkin().createComponent(new Style[] { style }, this.defaultLineType, null,
 				drawableSet.getSkinParam(), participantDisplay);

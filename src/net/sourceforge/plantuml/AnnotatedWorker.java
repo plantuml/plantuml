@@ -53,7 +53,7 @@ import net.sourceforge.plantuml.graphic.USymbols;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.DecorateEntityImage;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.MinMax;
@@ -103,7 +103,7 @@ public class AnnotatedWorker {
 		final UStroke stroke;
 		final HColor borderColor;
 		if (UseStyle.useBetaStyle()) {
-			final Style style = StyleSignature.of(SName.root, SName.document, SName.frame)
+			final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.frame)
 					.getMergedStyle(skinParam.getCurrentStyleBuilder());
 			deltaShadow = style.value(PName.Shadowing).asDouble();
 			fontConfiguration = new FontConfiguration(getSkinParam(), style);
@@ -189,7 +189,7 @@ public class AnnotatedWorker {
 			return TextBlockUtils.empty(0, 0);
 
 		if (UseStyle.useBetaStyle()) {
-			final Style style = StyleSignature.of(SName.root, SName.document, SName.caption)
+			final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.caption)
 					.getMergedStyle(skinParam.getCurrentStyleBuilder());
 			return style.createTextBlockBordered(caption.getDisplay(), skinParam.getIHtmlColorSet(), skinParam);
 		}
@@ -204,7 +204,7 @@ public class AnnotatedWorker {
 
 		final TextBlock block;
 		if (UseStyle.useBetaStyle()) {
-			final Style style = StyleSignature.of(SName.root, SName.document, SName.title)
+			final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.title)
 					.getMergedStyle(skinParam.getCurrentStyleBuilder());
 			block = style.createTextBlockBordered(title.getDisplay(), skinParam.getIHtmlColorSet(), skinParam);
 		} else {
@@ -226,7 +226,7 @@ public class AnnotatedWorker {
 		if (footer.isNull() == false) {
 			Style style = null;
 			if (UseStyle.useBetaStyle()) {
-				style = StyleSignature.of(SName.root, SName.document, SName.footer)
+				style = StyleSignatureBasic.of(SName.root, SName.document, SName.footer)
 						.getMergedStyle(skinParam.getCurrentStyleBuilder());
 			}
 			textFooter = footer.createRibbon(new FontConfiguration(getSkinParam(), FontParam.FOOTER, null),
@@ -236,7 +236,7 @@ public class AnnotatedWorker {
 		if (header.isNull() == false) {
 			Style style = null;
 			if (UseStyle.useBetaStyle()) {
-				style = StyleSignature.of(SName.root, SName.document, SName.header)
+				style = StyleSignatureBasic.of(SName.root, SName.document, SName.header)
 						.getMergedStyle(skinParam.getCurrentStyleBuilder());
 			}
 			textHeader = header.createRibbon(new FontConfiguration(getSkinParam(), FontParam.HEADER, null),

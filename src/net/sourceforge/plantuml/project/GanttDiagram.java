@@ -101,7 +101,7 @@ import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.GraphvizCrash;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.MinMax;
@@ -216,7 +216,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 					if (labelStrategy.titleInFirstColumn())
 						ug = ug.apply(UTranslate.dx(getTitlesColumnWidth(ug.getStringBounder())));
 
-					final Style timelineStyle = StyleSignature
+					final Style timelineStyle = StyleSignatureBasic
 							.of(SName.root, SName.element, SName.ganttDiagram, SName.timeline)
 							.getMergedStyle(getCurrentStyleBuilder());
 
@@ -328,12 +328,12 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 	}
 
 	private Style getClosedStyle() {
-		return StyleSignature.of(SName.root, SName.element, SName.ganttDiagram, SName.closed)
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.closed)
 				.getMergedStyle(getCurrentStyleBuilder());
 	}
 
 	private Style getTimelineStyle() {
-		return StyleSignature.of(SName.root, SName.element, SName.ganttDiagram, SName.timeline)
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.timeline)
 				.getMergedStyle(getCurrentStyleBuilder());
 	}
 
@@ -365,8 +365,8 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 
 	}
 
-	public StyleSignature getDefaultStyleDefinitionArrow() {
-		return StyleSignature.of(SName.root, SName.element, SName.ganttDiagram, SName.arrow);
+	public StyleSignatureBasic getDefaultStyleDefinitionArrow() {
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.arrow);
 	}
 
 	private void drawTasksTitle(UGraphic ug, double colTitles, double colBars) {

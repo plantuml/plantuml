@@ -72,14 +72,15 @@ public class GraphvizVersionFinder {
 
 	public GraphvizVersion getVersion() {
 		final String dotVersion = dotVersion();
-		final Pattern p = Pattern.compile("\\d\\.\\d\\d");
+		final Pattern p = Pattern.compile("([23])\\.(\\d\\d?)");
 		final Matcher m = p.matcher(dotVersion);
 		final boolean find = m.find();
 		if (find == false) {
 			return DEFAULT;
 		}
-		final String vv = m.group(0);
-		final int v = Integer.parseInt(vv.replaceAll("\\.", ""));
+		final int major = Integer.parseInt(m.group(1));
+		final int minor = Integer.parseInt(m.group(2));
+		final int v = 100 * major + minor;
 		return new GraphvizVersion() {
 			public boolean useShield() {
 				return v <= 228;

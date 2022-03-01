@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 public class ComponentRoseGroupingSpace implements Component {
@@ -52,7 +52,7 @@ public class ComponentRoseGroupingSpace implements Component {
 		throw new UnsupportedOperationException();
 	}
 
-	public StyleSignature getStyleSignature() {
+	public StyleSignatureBasic getStyleSignature() {
 		throw new UnsupportedOperationException();
 	}
 

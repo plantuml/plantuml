@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.style.SName;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
@@ -324,21 +324,21 @@ public enum VisibilityModifier {
 		return false;
 	}
 
-	public StyleSignature getStyleSignature() {
+	public StyleSignatureBasic getStyleSignature() {
 		if (this == IE_MANDATORY)
-			return StyleSignature.of(SName.root, SName.element, SName.visibilityIcon, SName.IEMandatory);
+			return StyleSignatureBasic.of(SName.root, SName.element, SName.visibilityIcon, SName.IEMandatory);
 
 		if (this == PUBLIC_FIELD || this == PUBLIC_METHOD)
-			return StyleSignature.of(SName.root, SName.element, SName.visibilityIcon, SName.public_);
+			return StyleSignatureBasic.of(SName.root, SName.element, SName.visibilityIcon, SName.public_);
 
 		if (this == PRIVATE_FIELD || this == PRIVATE_METHOD)
-			return StyleSignature.of(SName.root, SName.element, SName.visibilityIcon, SName.private_);
+			return StyleSignatureBasic.of(SName.root, SName.element, SName.visibilityIcon, SName.private_);
 
 		if (this == PROTECTED_FIELD || this == PROTECTED_METHOD)
-			return StyleSignature.of(SName.root, SName.element, SName.visibilityIcon, SName.protected_);
+			return StyleSignatureBasic.of(SName.root, SName.element, SName.visibilityIcon, SName.protected_);
 
 		if (this == PACKAGE_PRIVATE_FIELD || this == VisibilityModifier.PACKAGE_PRIVATE_METHOD)
-			return StyleSignature.of(SName.root, SName.element, SName.visibilityIcon, SName.package_);
+			return StyleSignatureBasic.of(SName.root, SName.element, SName.visibilityIcon, SName.package_);
 
 		throw new IllegalStateException();
 	}

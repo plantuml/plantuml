@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.util.EnumMap;
 import java.util.Map;
 
@@ -50,6 +49,7 @@ import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UseStyle;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.creole.Stencil;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.EntityPortion;
@@ -57,7 +57,7 @@ import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.PortionShower;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
-import net.sourceforge.plantuml.cucadiagram.TextBlockMap;
+import net.sourceforge.plantuml.cucadiagram.TextBlockCucaJSon;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -83,7 +83,7 @@ import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
-public class EntityImageMap extends AbstractEntityImage implements Stencil, WithPorts {
+public class EntityImageJson extends AbstractEntityImage implements Stencil, WithPorts {
 
 	final private TextBlock name;
 	final private TextBlock stereo;
@@ -93,7 +93,7 @@ public class EntityImageMap extends AbstractEntityImage implements Stencil, With
 
 	final private LineConfigurable lineConfig;
 
-	public EntityImageMap(ILeaf entity, ISkinParam skinParam, PortionShower portionShower) {
+	public EntityImageJson(ILeaf entity, ISkinParam skinParam, PortionShower portionShower) {
 		super(entity, skinParam);
 		this.lineConfig = entity;
 		final Stereotype stereotype = entity.getStereotype();
@@ -195,10 +195,6 @@ public class EntityImageMap extends AbstractEntityImage implements Stencil, With
 		if (url != null)
 			ug.startUrl(url);
 
-		final Map<UGroupType, String> typeIDent = new EnumMap<>(UGroupType.class);
-		typeIDent.put(UGroupType.CLASS, "elem " + getEntity().getCode() + " selected");
-		typeIDent.put(UGroupType.ID, "elem_" + getEntity().getCode());
-		ug.startGroup(typeIDent);
 		ug.apply(stroke).draw(rect);
 
 		final ULayoutGroup header = new ULayoutGroup(new PlacementStrategyY1Y2(ug.getStringBounder()));
@@ -209,7 +205,7 @@ public class EntityImageMap extends AbstractEntityImage implements Stencil, With
 		header.drawU(ug, dimTotal.getWidth(), dimTitle.getHeight());
 
 		final UGraphic ug2 = UGraphicStencil.create(ug, this, stroke);
-		((TextBlockMap) entries).setTotalWidth(dimTotal.getWidth());
+		((TextBlockCucaJSon) entries).setTotalWidth(dimTotal.getWidth());
 		entries.drawU(ug2.apply(UTranslate.dy(dimTitle.getHeight())));
 
 		if (url != null)

@@ -72,7 +72,7 @@ import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.Margins;
@@ -145,9 +145,9 @@ public class EntityImageDescription extends AbstractEntityImage {
 		Style style = null;
 		final HorizontalAlignment defaultAlign;
 		if (UseStyle.useBetaStyle()) {
-			final StyleSignature tmp = StyleSignature.of(SName.root, SName.element, styleName,
+			final StyleSignatureBasic tmp = StyleSignatureBasic.of(SName.root, SName.element, styleName,
 					symbol.getSkinParameter().getStyleName());
-			style = tmp.with(stereotype).getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+			style = tmp.withTOBECHANGED(stereotype).getMergedStyle(getSkinParam().getCurrentStyleBuilder());
 			style = style.eventuallyOverride(colors);
 			final Style styleStereo = tmp.forStereotypeItself(stereotype)
 					.getMergedStyle(getSkinParam().getCurrentStyleBuilder());
