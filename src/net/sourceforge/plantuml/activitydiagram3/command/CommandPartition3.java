@@ -57,7 +57,7 @@ import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
@@ -119,10 +119,10 @@ public class CommandPartition3 extends SingleLineCommand2<ActivityDiagram3> {
 		return ColorParser.simpleColor(ColorType.BACK, id);
 	}
 
-	private StyleSignature getDefaultStyleDefinitionPartition(USymbol symbol) {
+	private StyleSignatureBasic getDefaultStyleDefinitionPartition(USymbol symbol) {
 		if (symbol == USymbols.RECTANGLE)
-			return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.rectangle);
-		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.partition);
+			return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.rectangle);
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.partition);
 	}
 
 	@Override
@@ -145,7 +145,7 @@ public class CommandPartition3 extends SingleLineCommand2<ActivityDiagram3> {
 		double roundCorner;
 
 		if (UseStyle.useBetaStyle()) {
-			final Style stylePartition = getDefaultStyleDefinitionPartition(symbol).with(stereotype)
+			final Style stylePartition = getDefaultStyleDefinitionPartition(symbol).withTOBECHANGED(stereotype)
 					.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
 			borderColor = stylePartition.value(PName.LineColor).asColor(diagram.getSkinParam().getThemeStyle(),
 					diagram.getSkinParam().getIHtmlColorSet());

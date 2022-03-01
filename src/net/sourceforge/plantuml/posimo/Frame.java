@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
@@ -65,7 +65,7 @@ public class Frame implements Component {
 		throw new UnsupportedOperationException();
 	}
 
-	public StyleSignature getStyleSignature() {
+	public StyleSignatureBasic getStyleSignature() {
 		throw new UnsupportedOperationException();
 	}
 

@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
@@ -58,8 +58,8 @@ public class GtileCircleStart extends AbstractGtile {
 	private final HColor backColor;
 	private double shadowing;
 
-	private StyleSignature getDefaultStyleDefinitionCircle() {
-		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.circle);
+	private StyleSignatureBasic getDefaultStyleDefinitionCircle() {
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.circle);
 	}
 
 	public GtileCircleStart(StringBounder stringBounder, ISkinParam skinParam, HColor backColor, Swimlane swimlane) {

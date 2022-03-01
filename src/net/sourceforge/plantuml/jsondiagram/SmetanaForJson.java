@@ -59,7 +59,7 @@ import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
@@ -116,27 +116,27 @@ public class SmetanaForJson {
 	}
 
 	private Style getStyleArrow() {
-		return StyleSignature.of(SName.root, SName.element, getDiagramType(), SName.arrow)
+		return StyleSignatureBasic.of(SName.root, SName.element, getDiagramType(), SName.arrow)
 				.getMergedStyle(skinParam.getCurrentStyleBuilder());
 	}
 
 	private Style getStyleNode() {
-		return StyleSignature.of(SName.root, SName.element, getDiagramType(), SName.node)
+		return StyleSignatureBasic.of(SName.root, SName.element, getDiagramType(), SName.node)
 				.getMergedStyle(skinParam.getCurrentStyleBuilder());
 	}
 
 	private Style getStyleNodeHeader() {
-		return StyleSignature.of(SName.root, SName.element, getDiagramType(), SName.header, SName.node)
+		return StyleSignatureBasic.of(SName.root, SName.element, getDiagramType(), SName.header, SName.node)
 				.getMergedStyle(skinParam.getCurrentStyleBuilder());
 	}
 
 	private Style getStyleNodeHighlight() {
-		return StyleSignature.of(SName.root, SName.element, getDiagramType(), SName.node, SName.highlight)
+		return StyleSignatureBasic.of(SName.root, SName.element, getDiagramType(), SName.node, SName.highlight)
 				.getMergedStyle(skinParam.getCurrentStyleBuilder());
 	}
 
 	private Style getStyleNodeHeaderHighlight() {
-		return StyleSignature.of(SName.root, SName.element, getDiagramType(), SName.header, SName.node, SName.highlight)
+		return StyleSignatureBasic.of(SName.root, SName.element, getDiagramType(), SName.header, SName.node, SName.highlight)
 				.getMergedStyle(skinParam.getCurrentStyleBuilder());
 	}
 

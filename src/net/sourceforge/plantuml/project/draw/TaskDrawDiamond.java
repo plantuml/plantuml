@@ -55,7 +55,7 @@ import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UShape;
@@ -70,8 +70,8 @@ public class TaskDrawDiamond extends AbstractTaskDraw {
 	}
 
 	@Override
-	StyleSignature getStyleSignature() {
-		return StyleSignature.of(SName.root, SName.element, SName.ganttDiagram, SName.milestone);
+	StyleSignatureBasic getStyleSignature() {
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.milestone);
 	}
 
 	@Override

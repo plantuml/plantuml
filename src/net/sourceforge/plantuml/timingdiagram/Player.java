@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
@@ -73,7 +73,7 @@ public abstract class Player implements TimeProjected {
 		return compact;
 	}
 
-	protected abstract StyleSignature getStyleSignature();
+	protected abstract StyleSignatureBasic getStyleSignature();
 
 	protected abstract SymbolContext getContextLegacy();
 //	private StyleSignature getStyleSignature() {
@@ -88,7 +88,7 @@ public abstract class Player implements TimeProjected {
 	final protected FontConfiguration getFontConfiguration() {
 		if (UseStyle.useBetaStyle() == false)
 			return new FontConfiguration(skinParam, FontParam.TIMING, null);
-		return new FontConfiguration(skinParam, StyleSignature.of(SName.root, SName.element, SName.timingDiagram)
+		return new FontConfiguration(skinParam, StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram)
 				.getMergedStyle(skinParam.getCurrentStyleBuilder()));
 	}
 

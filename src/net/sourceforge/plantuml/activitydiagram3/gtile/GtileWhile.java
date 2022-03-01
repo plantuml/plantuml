@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.style.SName;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class GtileWhile extends GtileTopDown3 {
@@ -52,8 +52,8 @@ public class GtileWhile extends GtileTopDown3 {
 		super(tile1, tile2, tile3);
 	}
 
-	private static StyleSignature getDefaultStyleDefinitionDiamond() {
-		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond);
+	private static StyleSignatureBasic getDefaultStyleDefinitionDiamond() {
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond);
 	}
 
 	private static Gtile getShape1(Gtile toto, Swimlane swimlane, Display test, Display yes) {

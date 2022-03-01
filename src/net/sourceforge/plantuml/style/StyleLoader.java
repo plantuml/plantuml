@@ -58,6 +58,7 @@ import net.sourceforge.plantuml.security.SFile;
 
 public class StyleLoader {
 
+	public static final int DELTA_PRIORITY_FOR_STEREOTYPE = 1000;
 	private final SkinParam skinParam;
 
 	public StyleLoader(SkinParam skinParam) {
@@ -182,11 +183,11 @@ public class StyleLoader {
 			final Matcher2 mCloseBracket = closeBracket.matcher(trimmed);
 			if (mCloseBracket.find()) {
 				if (context.size() > 0) {
-					final Collection<StyleSignature> signatures = context.toSignatures();
-					for (StyleSignature signature : signatures) {
+					final Collection<StyleSignatureBasic> signatures = context.toSignatures();
+					for (StyleSignatureBasic signature : signatures) {
 						Map<PName, Value> tmp = maps.get(maps.size() - 1);
 						if (signature.isWithDot())
-							tmp = addPriority(tmp);
+							tmp = addPriorityForStereotype(tmp);
 						if (tmp.size() > 0) {
 							final Style style = new Style(signature, tmp);
 							result.add(style);
@@ -204,10 +205,10 @@ public class StyleLoader {
 
 	}
 
-	private static Map<PName, Value> addPriority(Map<PName, Value> tmp) {
+	public static Map<PName, Value> addPriorityForStereotype(Map<PName, Value> tmp) {
 		final Map<PName, Value> result = new EnumMap<>(PName.class);
 		for (Entry<PName, Value> ent : tmp.entrySet())
-			result.put(ent.getKey(), ((ValueImpl) ent.getValue()).addPriority(1000));
+			result.put(ent.getKey(), ((ValueImpl) ent.getValue()).addPriority(DELTA_PRIORITY_FOR_STEREOTYPE));
 
 		return result;
 	}

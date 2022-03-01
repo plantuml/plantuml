@@ -70,8 +70,8 @@ class Context {
 		return data.size();
 	}
 
-	public Collection<StyleSignature> toSignatures() {
-		List<StyleSignature> results = new ArrayList<>(Collections.singletonList(StyleSignature.empty()));
+	public Collection<StyleSignatureBasic> toSignatures() {
+		List<StyleSignatureBasic> results = new ArrayList<>(Collections.singletonList(StyleSignatureBasic.empty()));
 		boolean star = false;
 		for (Iterator<String> it = data.iterator(); it.hasNext();) {
 			String s = it.next();
@@ -80,16 +80,16 @@ class Context {
 				s = s.substring(0, s.length() - 1);
 			}
 			final String[] names = s.split(",");
-			final List<StyleSignature> tmp = new ArrayList<>();
-			for (StyleSignature ss : results)
+			final List<StyleSignatureBasic> tmp = new ArrayList<>();
+			for (StyleSignatureBasic ss : results)
 				for (String name : names)
 					tmp.add(ss.add(name));
 			results = tmp;
 		}
 
 		if (star)
-			for (ListIterator<StyleSignature> it = results.listIterator(); it.hasNext();) {
-				final StyleSignature tmp = it.next().addStar();
+			for (ListIterator<StyleSignatureBasic> it = results.listIterator(); it.hasNext();) {
+				final StyleSignatureBasic tmp = it.next().addStar();
 				it.set(tmp);
 			}
 

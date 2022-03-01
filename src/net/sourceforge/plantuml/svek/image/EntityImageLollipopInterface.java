@@ -56,7 +56,7 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
@@ -74,8 +74,8 @@ public class EntityImageLollipopInterface extends AbstractEntityImage {
 	private final SName sname;
 	private final Url url;
 
-	public StyleSignature getSignature() {
-		return StyleSignature.of(SName.root, SName.element, sname, SName.circle);
+	public StyleSignatureBasic getSignature() {
+		return StyleSignatureBasic.of(SName.root, SName.element, sname, SName.circle);
 	}
 
 	private UStroke getUStroke() {

@@ -75,7 +75,7 @@ import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UEmpty;
@@ -278,8 +278,8 @@ public class NwDiagram extends UmlDiagram {
 		};
 	}
 
-	private StyleSignature getStyleDefinitionNetwork(SName sname) {
-		return StyleSignature.of(SName.root, SName.element, SName.nwdiagDiagram, sname);
+	private StyleSignatureBasic getStyleDefinitionNetwork(SName sname) {
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.nwdiagDiagram, sname);
 	}
 
 	private TextBlock toTextBlockForNetworkName(String name, String s) {

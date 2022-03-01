@@ -66,7 +66,7 @@ import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
@@ -152,7 +152,7 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 			compTitle = null;
 		} else {
 			if (UseStyle.useBetaStyle()) {
-				final Style style = StyleSignature.of(SName.root, SName.document, SName.title)
+				final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.title)
 						.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
 				compTitle = style.createTextBlockBordered(page.getTitle(), diagram.getSkinParam().getIHtmlColorSet(),
 						diagram.getSkinParam());
@@ -173,7 +173,7 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 			legendBlock = TextBlockUtils.empty(0, 0);
 		} else {
 			if (UseStyle.useBetaStyle()) {
-				final Style style = StyleSignature.of(SName.root, SName.document, SName.legend)
+				final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.legend)
 						.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
 				legendBlock = style.createTextBlockBordered(diagram.getLegend().getDisplay(),
 						diagram.getSkinParam().getIHtmlColorSet(), diagram.getSkinParam());
@@ -251,7 +251,7 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 		final DisplaySection display = diagram.getFooterOrHeaderTeoz(fontParam).withPage(page + 1, pages.size());
 		Style style = null;
 		if (UseStyle.useBetaStyle()) {
-			final StyleSignature def = fontParam.getStyleDefinition(null);
+			final StyleSignatureBasic def = fontParam.getStyleDefinition(null);
 			style = def.getMergedStyle(skinParam.getCurrentStyleBuilder());
 		}
 		return new PngTitler(titleColor, display, fontSize, fontFamily, hyperlinkColor,

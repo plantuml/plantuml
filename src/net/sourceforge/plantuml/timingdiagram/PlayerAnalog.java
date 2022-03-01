@@ -53,7 +53,7 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.style.SName;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.timingdiagram.graphic.IntricatedPoint;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
@@ -283,8 +283,8 @@ public class PlayerAnalog extends Player {
 	}
 
 	@Override
-	protected StyleSignature getStyleSignature() {
-		return StyleSignature.of(SName.root, SName.element, SName.timingDiagram);
+	protected StyleSignatureBasic getStyleSignature() {
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram);
 	}
 
 }

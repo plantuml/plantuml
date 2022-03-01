@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
@@ -60,8 +60,8 @@ public class EntityImageCircleStart extends AbstractEntityImage {
 	private static final int SIZE = 20;
 	private final ColorParam colorParam; // = ColorParam.activityStart;
 
-	public StyleSignature getDefaultStyleDefinitionCircle() {
-		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.circle, SName.start);
+	public StyleSignatureBasic getDefaultStyleDefinitionCircle() {
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.circle, SName.start);
 	}
 
 	public EntityImageCircleStart(ILeaf entity, ISkinParam skinParam, ColorParam colorParam) {

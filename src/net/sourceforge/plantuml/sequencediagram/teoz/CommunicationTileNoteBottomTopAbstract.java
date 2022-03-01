@@ -54,7 +54,7 @@ import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -129,7 +129,7 @@ public abstract class CommunicationTileNoteBottomTopAbstract extends AbstractTil
 		final HColor color;
 
 		if (UseStyle.useBetaStyle()) {
-			final Style style = StyleSignature.of(SName.root, SName.element, SName.sequenceDiagram)
+			final Style style = StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram)
 					.getMergedStyle(skinParam.getCurrentStyleBuilder());
 			color = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
 		} else

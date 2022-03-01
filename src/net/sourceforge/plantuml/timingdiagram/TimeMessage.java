@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
@@ -86,8 +86,8 @@ public class TimeMessage extends WithLinkType {
 		return getStyleSignature().getMergedStyle(styleBuilder);
 	}
 
-	private StyleSignature getStyleSignature() {
-		return StyleSignature.of(SName.root, SName.element, SName.timingDiagram, SName.arrow);
+	private StyleSignatureBasic getStyleSignature() {
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, SName.arrow);
 	}
 
 	public final Player getPlayer1() {

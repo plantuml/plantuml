@@ -73,7 +73,7 @@ import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -99,12 +99,12 @@ public class FtileBox extends AbstractFtile {
 	private final HColor backColor;
 	private final Style style;
 
-	static public StyleSignature getStyleSignature() {
-		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.activity);
+	static public StyleSignatureBasic getStyleSignature() {
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.activity);
 	}
 
-	static public StyleSignature getStyleSignatureArrow() {
-		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.arrow);
+	static public StyleSignatureBasic getStyleSignatureArrow() {
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.arrow);
 	}
 
 	final public LinkRendering getInLinkRendering() {
@@ -144,7 +144,7 @@ public class FtileBox extends AbstractFtile {
 		Style style = null;
 		Style styleArrow = null;
 		if (UseStyle.useBetaStyle()) {
-			style = getStyleSignature().with(stereotype)
+			style = getStyleSignature().withTOBECHANGED(stereotype)
 					.getMergedStyle(skinParam.getCurrentStyleBuilder());
 			styleArrow = getStyleSignatureArrow().getMergedStyle(skinParam.getCurrentStyleBuilder());
 		}

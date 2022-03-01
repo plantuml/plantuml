@@ -52,7 +52,7 @@ import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.Cluster;
 import net.sourceforge.plantuml.svek.ShapeType;
@@ -73,8 +73,8 @@ public class EntityImagePort extends AbstractEntityImageBorder {
 		this.sname = sname;
 	}
 
-	private StyleSignature getSignature() {
-		return StyleSignature.of(SName.root, SName.element, sname, SName.boundary);
+	private StyleSignatureBasic getSignature() {
+		return StyleSignatureBasic.of(SName.root, SName.element, sname, SName.boundary);
 	}
 
 	private boolean upPosition() {

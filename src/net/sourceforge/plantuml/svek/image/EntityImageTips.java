@@ -63,7 +63,7 @@ import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.ShapeType;
@@ -116,8 +116,8 @@ public class EntityImageTips extends AbstractEntityImage {
 		}
 	}
 
-	private StyleSignature getDefaultStyleDefinition(SName sname) {
-		return StyleSignature.of(SName.root, SName.element, sname, SName.note);
+	private StyleSignatureBasic getDefaultStyleDefinition(SName sname) {
+		return StyleSignatureBasic.of(SName.root, SName.element, sname, SName.note);
 	}
 
 	private Position getPosition() {

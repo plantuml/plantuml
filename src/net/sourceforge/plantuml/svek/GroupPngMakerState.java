@@ -66,7 +66,7 @@ import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.image.EntityImageState;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
@@ -123,12 +123,12 @@ public final class GroupPngMakerState {
 	}
 
 	private Style getStyleStateHeader() {
-		return StyleSignature.of(SName.root, SName.element, SName.stateDiagram, SName.state, SName.header)
-				.with(group.getStereotype()).getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.stateDiagram, SName.state, SName.header)
+				.withTOBECHANGED(group.getStereotype()).getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
 	}
 
 	private Style getStyleState() {
-		return StyleSignature.of(SName.root, SName.element, SName.stateDiagram, SName.state).with(group.getStereotype())
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.stateDiagram, SName.state).withTOBECHANGED(group.getStereotype())
 				.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
 	}
 

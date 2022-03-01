@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.cucadiagram.LinkStyle;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
@@ -81,8 +81,8 @@ public class HtmlColorAndStyle {
 		return style;
 	}
 
-	static final public StyleSignature getDefaultStyleDefinitionArrow() {
-		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.arrow);
+	static final public StyleSignatureBasic getDefaultStyleDefinitionArrow() {
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.arrow);
 	}
 
 	public static HtmlColorAndStyle build(ISkinParam skinParam, String definition) throws NoSuchColorException {

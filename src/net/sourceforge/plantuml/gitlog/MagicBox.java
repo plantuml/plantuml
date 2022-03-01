@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
@@ -64,7 +64,7 @@ public class MagicBox {
 	public MagicBox(ISkinParam skinParam, GNode node) {
 		this.skinParam = skinParam;
 		this.node = node;
-		final Style style = StyleSignature.of(SName.root, SName.element, SName.gitDiagram)
+		final Style style = StyleSignatureBasic.of(SName.root, SName.element, SName.gitDiagram)
 				.getMergedStyle(skinParam.getCurrentStyleBuilder());
 		this.fontColor = style.value(PName.FontColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
 	}

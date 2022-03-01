@@ -48,7 +48,7 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 
@@ -93,8 +93,8 @@ public class GanttConstraint extends WithLinkType {
 		return source.toString() + " --> " + dest.toString();
 	}
 
-	final public StyleSignature getStyleSignature() {
-		return StyleSignature.of(SName.root, SName.element, SName.ganttDiagram, SName.arrow);
+	final public StyleSignatureBasic getStyleSignature() {
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.arrow);
 	}
 
 	public UDrawable getUDrawable(TimeScale timeScale, ToTaskDraw toTaskDraw) {

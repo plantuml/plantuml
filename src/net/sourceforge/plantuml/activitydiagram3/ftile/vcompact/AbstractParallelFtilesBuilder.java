@@ -55,7 +55,7 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
 public abstract class AbstractParallelFtilesBuilder {
 
@@ -67,12 +67,12 @@ public abstract class AbstractParallelFtilesBuilder {
 	private final StringBounder stringBounder;
 	protected final List<Ftile> list99 = new ArrayList<>();
 
-	public StyleSignature getStyleSignature() {
-		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.activity);
+	public StyleSignatureBasic getStyleSignature() {
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.activity);
 	}
 
-	final public StyleSignature getStyleSignatureArrow() {
-		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.arrow);
+	final public StyleSignatureBasic getStyleSignatureArrow() {
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.arrow);
 	}
 
 	public AbstractParallelFtilesBuilder(ISkinParam skinParam, StringBounder stringBounder, List<Ftile> all) {

@@ -78,7 +78,7 @@ import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactory;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryExtends;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -129,7 +129,7 @@ public class ElkPath implements UDrawable {
 	}
 
 	private Style getStyle() {
-		final StyleSignature signature = StyleSignature.of(SName.root, SName.element, styleName, SName.arrow);
+		final StyleSignatureBasic signature = StyleSignatureBasic.of(SName.root, SName.element, styleName, SName.arrow);
 		return signature.getMergedStyle(diagram.getCurrentStyleBuilder());
 	}
 

@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class Reference extends AbstractEvent implements Event {
@@ -60,12 +60,12 @@ public class Reference extends AbstractEvent implements Event {
 	final private Style style;
 	final private Style styleHeader;
 
-	public StyleSignature getDefaultStyleDefinition() {
-		return StyleSignature.of(SName.root, SName.element, SName.sequenceDiagram, SName.reference);
+	public StyleSignatureBasic getDefaultStyleDefinition() {
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.reference);
 	}
 
-	private StyleSignature getHeaderStyleDefinition() {
-		return StyleSignature.of(SName.root, SName.element, SName.sequenceDiagram, SName.referenceHeader);
+	private StyleSignatureBasic getHeaderStyleDefinition() {
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.referenceHeader);
 	}
 
 	public Style[] getUsedStyles() {

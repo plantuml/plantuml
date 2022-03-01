@@ -64,7 +64,7 @@ import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.style.Styleable;
 import net.sourceforge.plantuml.svek.image.Opale;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -77,8 +77,8 @@ public class FtileNoteAlone extends AbstractFtile implements Stencil, Styleable 
 	private final boolean withOutPoint;
 	private final Swimlane swimlane;
 
-	public StyleSignature getStyleSignature() {
-		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.note);
+	public StyleSignatureBasic getStyleSignature() {
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.note);
 	}
 
 	@Override

@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -73,8 +73,8 @@ public class EntityImageAssociation extends AbstractEntityImage {
 		return getStyleSignature().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
 	}
 
-	private StyleSignature getStyleSignature() {
-		return StyleSignature.of(SName.root, SName.element, sname, SName.diamond);
+	private StyleSignatureBasic getStyleSignature() {
+		return StyleSignatureBasic.of(SName.root, SName.element, sname, SName.diamond);
 	}
 
 	final public void drawU(UGraphic ug) {

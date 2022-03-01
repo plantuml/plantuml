@@ -36,7 +36,6 @@
  */
 package net.sourceforge.plantuml.svek;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -60,6 +59,7 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UseStyle;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.cucadiagram.EntityPosition;
 import net.sourceforge.plantuml.cucadiagram.EntityUtils;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
@@ -75,10 +75,11 @@ import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.posimo.Moveable;
 import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.image.EntityImageState;
 import net.sourceforge.plantuml.ugraphic.UComment;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -292,19 +293,19 @@ public class Cluster implements Moveable {
 		return SkinParamUtils.getColor(skinParam, stereotype, colorParam);
 	}
 
-	static public StyleSignature getDefaultStyleDefinition(SName diagramStyleName, USymbol symbol) {
+	static public StyleSignatureBasic getDefaultStyleDefinition(SName diagramStyleName, USymbol symbol) {
 		if (diagramStyleName == SName.stateDiagram)
-			return StyleSignature.of(SName.root, SName.element, SName.stateDiagram, SName.state, SName.group);
+			return StyleSignatureBasic.of(SName.root, SName.element, SName.stateDiagram, SName.state, SName.group);
 		if (symbol == null)
-			return StyleSignature.of(SName.root, SName.element, diagramStyleName, SName.group);
-		return StyleSignature.of(SName.root, SName.element, diagramStyleName, SName.group, symbol.getSName());
+			return StyleSignatureBasic.of(SName.root, SName.element, diagramStyleName, SName.group);
+		return StyleSignatureBasic.of(SName.root, SName.element, diagramStyleName, SName.group, symbol.getSName());
 	}
 
 	static public StyleSignature getDefaultStyleDefinitionStateGroup(Stereotype stereotype) {
 		if (stereotype == null)
-			return StyleSignature.of(SName.root, SName.element, SName.stateDiagram, SName.state, SName.group);
-		return StyleSignature.of(SName.root, SName.element, SName.stateDiagram, SName.state, SName.group)
-				.with(stereotype);
+			return StyleSignatureBasic.of(SName.root, SName.element, SName.stateDiagram, SName.state, SName.group);
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.stateDiagram, SName.state, SName.group)
+				.withTOBECHANGED(stereotype);
 	}
 
 	public void drawU(UGraphic ug, UmlDiagramType umlDiagramType, ISkinParam skinParam2) {
@@ -322,8 +323,8 @@ public class Cluster implements Moveable {
 		final double shadowing;
 		if (UseStyle.useBetaStyle()) {
 			final USymbol uSymbol = group.getUSymbol() == null ? USymbols.PACKAGE : group.getUSymbol();
-			final StyleSignature tmp = getDefaultStyleDefinition(umlDiagramType.getStyleName(), uSymbol);
-			style = tmp.with(group.getStereotype()).getMergedStyle(skinParam.getCurrentStyleBuilder());
+			final StyleSignatureBasic tmp = getDefaultStyleDefinition(umlDiagramType.getStyleName(), uSymbol);
+			style = tmp.withTOBECHANGED(group.getStereotype()).getMergedStyle(skinParam.getCurrentStyleBuilder());
 			shadowing = style.value(PName.Shadowing).asDouble();
 			if (group.getColors().getColor(ColorType.LINE) != null)
 				borderColor = group.getColors().getColor(ColorType.LINE);

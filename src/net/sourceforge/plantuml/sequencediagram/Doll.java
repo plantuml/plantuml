@@ -55,7 +55,7 @@ import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.style.WithStyle;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -94,12 +94,12 @@ public class Doll implements WithStyle {
 
 	}
 
-	final public StyleSignature getStyleSignature() {
+	final public StyleSignatureBasic getStyleSignature() {
 		return ComponentType.ENGLOBER.getStyleSignature();
 	}
 
 	final public Style[] getUsedStyles() {
-		Style tmp = getStyleSignature().with(englober.getStereotype()).getMergedStyle(styleBuilder);
+		Style tmp = getStyleSignature().withTOBECHANGED(englober.getStereotype()).getMergedStyle(styleBuilder);
 		final HColor backColor = englober.getBoxColor();
 		if (tmp != null)
 			tmp = tmp.eventuallyOverride(PName.BackGroundColor, backColor);

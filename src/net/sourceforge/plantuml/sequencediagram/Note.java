@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.style.WithStyle;
 
 final public class Note extends AbstractEvent implements Event, SpecificBackcolorable, WithStyle {
@@ -72,7 +72,7 @@ final public class Note extends AbstractEvent implements Event, SpecificBackcolo
 
 	private Style style;
 
-	public StyleSignature getStyleSignature() {
+	public StyleSignatureBasic getStyleSignature() {
 		return noteStyle.getDefaultStyleDefinition();
 	}
 

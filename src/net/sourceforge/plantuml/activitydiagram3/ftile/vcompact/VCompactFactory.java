@@ -71,7 +71,7 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
@@ -94,20 +94,20 @@ public class VCompactFactory implements FtileFactory {
 		this.stringBounder = stringBounder;
 	}
 
-	private StyleSignature getSignatureCircleEnd() {
-		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.circle, SName.end);
+	private StyleSignatureBasic getSignatureCircleEnd() {
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.circle, SName.end);
 	}
 
-	private StyleSignature getSignatureCircleStop() {
-		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.circle, SName.stop);
+	private StyleSignatureBasic getSignatureCircleStop() {
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.circle, SName.stop);
 	}
 
-	private StyleSignature getSignatureCircleSpot() {
-		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.circle, SName.spot);
+	private StyleSignatureBasic getSignatureCircleSpot() {
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.circle, SName.spot);
 	}
 
-	private StyleSignature getSignatureCircleStart() {
-		return StyleSignature.of(SName.root, SName.element, SName.activityDiagram, SName.circle, SName.start);
+	private StyleSignatureBasic getSignatureCircleStart() {
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.circle, SName.start);
 	}
 
 	public Ftile start(Swimlane swimlane) {

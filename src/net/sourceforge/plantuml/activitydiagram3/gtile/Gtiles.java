@@ -56,7 +56,7 @@ import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
@@ -66,7 +66,7 @@ public class Gtiles {
 	private static final Rose rose = new Rose();
 
 	static public GtileHexagonInside hexagonInside(Swimlane swimlane, StringBounder stringBounder, ISkinParam skinParam,
-			StyleSignature styleSignature, HColor color, Display label) {
+			StyleSignatureBasic styleSignature, HColor color, Display label) {
 		final ConditionStyle conditionStyle = skinParam.getConditionStyle();
 
 		final HColor borderColor;
@@ -99,7 +99,7 @@ public class Gtiles {
 	}
 
 	static public AbstractGtileRoot diamondEmpty(Swimlane swimlane, StringBounder stringBounder, ISkinParam skinParam,
-			StyleSignature styleSignature, HColor color) {
+			StyleSignatureBasic styleSignature, HColor color) {
 		final HColor borderColor;
 		final HColor backColor;
 

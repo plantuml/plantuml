@@ -58,7 +58,7 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleLoader;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
@@ -274,7 +274,7 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 
 	public HColor calculateBackColor() {
 		if (UseStyle.useBetaStyle()) {
-			final Style style = StyleSignature.of(SName.root, SName.document, this.getUmlDiagramType().getStyleName())
+			final Style style = StyleSignatureBasic.of(SName.root, SName.document, this.getUmlDiagramType().getStyleName())
 					.getMergedStyle(this.getSkinParam().getCurrentStyleBuilder());
 
 			HColor backgroundColor = style.value(PName.BackGroundColor).asColor(this.getSkinParam().getThemeStyle(),

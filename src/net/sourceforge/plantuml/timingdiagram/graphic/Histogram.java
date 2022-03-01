@@ -58,7 +58,7 @@ import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.timingdiagram.ChangeState;
 import net.sourceforge.plantuml.timingdiagram.TimeConstraint;
 import net.sourceforge.plantuml.timingdiagram.TimeTick;

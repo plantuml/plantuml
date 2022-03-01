@@ -54,7 +54,7 @@ import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -90,13 +90,13 @@ public abstract class EntityImageStateCommon extends AbstractEntityImage {
 	}
 
 	private Style getStyleStateHeader() {
-		return StyleSignature.of(SName.root, SName.element, SName.stateDiagram, SName.state, SName.header)
-				.with(getEntity().getStereotype()).getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.stateDiagram, SName.state, SName.header)
+				.withTOBECHANGED(getEntity().getStereotype()).getMergedStyle(getSkinParam().getCurrentStyleBuilder());
 	}
 
 	final protected Style getStyleState() {
-		return StyleSignature.of(SName.root, SName.element, SName.stateDiagram, SName.state)
-				.with(getEntity().getStereotype()).getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.stateDiagram, SName.state)
+				.withTOBECHANGED(getEntity().getStereotype()).getMergedStyle(getSkinParam().getCurrentStyleBuilder());
 	}
 
 	private UStroke getStrokeWIP() {

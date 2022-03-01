@@ -68,7 +68,7 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.style.Value;
 import net.sourceforge.plantuml.svek.image.Opale;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -174,8 +174,8 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 	}
 
 	@Override
-	StyleSignature getStyleSignature() {
-		return StyleSignature.of(SName.root, SName.element, SName.ganttDiagram, SName.task);
+	StyleSignatureBasic getStyleSignature() {
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.task);
 	}
 
 	public void drawU(UGraphic ug) {
@@ -208,7 +208,7 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 	}
 
 	private Opale getOpaleNote() {
-		final Style style = StyleSignature.of(SName.root, SName.element, SName.ganttDiagram, SName.note)
+		final Style style = StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.note)
 				.getMergedStyle(getStyleBuilder());
 
 		final FontConfiguration fc = style.getFontConfiguration(skinParam.getThemeStyle(), getColorSet());
@@ -292,7 +292,7 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 			off.add(new Segment(x1, x2));
 		}
 
-		final HColor backUndone = StyleSignature.of(SName.root, SName.element, SName.ganttDiagram, SName.undone)
+		final HColor backUndone = StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.undone)
 				.getMergedStyle(getStyleBuilder()).value(PName.BackGroundColor)
 				.asColor(skinParam.getThemeStyle(), getColorSet());
 
