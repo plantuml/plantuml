@@ -100,7 +100,9 @@ public class TextBlockLineBefore extends AbstractTextBlock implements TextBlock,
 
 	@Override
 	public Ports getPorts(StringBounder stringBounder) {
-		return ((WithPorts) textBlock).getPorts(stringBounder);
+		if (textBlock instanceof WithPorts)
+			return ((WithPorts) textBlock).getPorts(stringBounder);
+		return new Ports();
 	}
 
 }
