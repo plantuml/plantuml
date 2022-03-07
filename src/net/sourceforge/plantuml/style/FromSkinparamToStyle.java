@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -218,6 +218,8 @@ public class FromSkinparamToStyle {
 		addConvert(cleanName + "BorderThickness", PName.LineThickness, sname);
 		addConvert(cleanName + "RoundCorner", PName.RoundCorner, sname);
 		addConvert(cleanName + "DiagonalCorner", PName.DiagonalCorner, sname);
+		addConvert(cleanName + "BorderStyle", PName.LineStyle, sname);
+		addConvert(cleanName + "StereotypeFontColor", PName.FontColor, SName.stereotype, sname);
 		addConFont(cleanName, sname);
 	}
 
@@ -239,8 +241,12 @@ public class FromSkinparamToStyle {
 	}
 
 	public void convertNow(String value, final AutomaticCounter counter) {
-		if (value.equals("right:right"))
+		if (value.equalsIgnoreCase("right:right"))
 			value = "right";
+		if (value.equalsIgnoreCase("dotted"))
+			value = "1;3";
+		if (value.equalsIgnoreCase("dashed"))
+			value = "7;7";
 
 		final List<Data> datas = knowlegde.get(key.toLowerCase());
 

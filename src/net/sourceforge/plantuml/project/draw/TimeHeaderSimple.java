@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.project.core.PrintScale;
 import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.project.timescale.TimeScaleWink;
@@ -55,6 +56,7 @@ import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 public class TimeHeaderSimple extends TimeHeader {
 
 	private final Map<Day, HColor> colorDays;
+	private final PrintScale printScale;
 
 	@Override
 	public double getFullHeaderHeight() {
@@ -73,33 +75,42 @@ public class TimeHeaderSimple extends TimeHeader {
 		return 0;
 	}
 
-	public TimeHeaderSimple(Style timelineStyle, Style closedStyle, double scale, Day min, Day max, HColorSet colorSet,
-			ThemeStyle themeStyle, Map<Day, HColor> colorDays) {
-		super(timelineStyle, closedStyle, min, max, new TimeScaleWink(scale), colorSet, themeStyle);
+	public TimeHeaderSimple(PrintScale printScale, Style timelineStyle, Style closedStyle, double scale, Day min,
+			Day max, HColorSet colorSet, ThemeStyle themeStyle, Map<Day, HColor> colorDays) {
+		super(timelineStyle, closedStyle, min, max, new TimeScaleWink(scale, printScale), colorSet, themeStyle);
 		this.colorDays = colorDays;
+		this.printScale = printScale;
 	}
 
 	private void drawSmallVlinesDay(UGraphic ug, TimeScale timeScale, double totalHeightWithoutFooter) {
 		final ULine vbar = ULine.vline(totalHeightWithoutFooter);
-		for (Day i = min; i.compareTo(max.increment()) <= 0; i = i.increment()) {
+		for (Day i = min; i.compareTo(max.increment()) <= 0; i = i.increment(printScale)) {
 			final double x1 = timeScale.getStartingPosition(i);
 			ug.apply(getBarColor()).apply(UTranslate.dx(x1)).draw(vbar);
 		}
 	}
 
 	private void drawSimpleDayCounter(UGraphic ug, TimeScale timeScale) {
-		for (Day i = min; i.compareTo(max.increment()) <= 0; i = i.increment()) {
-			final String number = "" + (i.getAbsoluteDayNum() + 1);
-			final TextBlock num = Display.getWithNewlines(number).create(
+		for (Day i = min; i.compareTo(max.increment()) <= 0; i = i.increment(printScale)) {
+			final int value;
+			if (printScale == PrintScale.WEEKLY)
+				value = i.getAbsoluteDayNum() / 7 + 1;
+			else
+				value = i.getAbsoluteDayNum() + 1;
+			final TextBlock num = Display.getWithNewlines("" + value).create(
 					getFontConfiguration(10, false, openFontColor()), HorizontalAlignment.LEFT,
 					new SpriteContainerEmpty());
 			final double x1 = timeScale.getStartingPosition(i);
-			final double x2 = timeScale.getEndingPosition(i);
+			final double x2;
+			if (printScale == PrintScale.WEEKLY)
+				x2 = timeScale.getEndingPosition(i.addDays(6));
+			else
+				x2 = timeScale.getEndingPosition(i);
 			final double width = num.calculateDimension(ug.getStringBounder()).getWidth();
 			final double delta = (x2 - x1) - width;
-			if (i.compareTo(max.increment()) < 0) {
+			if (i.compareTo(max.increment()) < 0)
 				num.drawU(ug.apply(UTranslate.dx(x1 + delta / 2)));
-			}
+
 		}
 	}
 
@@ -168,11 +179,11 @@ public class TimeHeaderSimple extends TimeHeader {
 					pending.draw(ug, height);
 					pending = null;
 				}
-				if (pending == null) {
+				if (pending == null)
 					pending = new Pending(back, x1, x2);
-				} else {
+				else
 					pending.x2 = x2;
-				}
+
 			}
 		}
 	}

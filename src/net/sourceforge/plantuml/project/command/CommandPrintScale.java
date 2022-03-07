@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -87,13 +87,13 @@ public class CommandPrintScale extends SingleLineCommand2<GanttDiagram> {
 		diagram.setPrintScale(scale);
 
 		final String zoom = arg.get("ZOOM", 0);
-		if (zoom != null) {
+		if (zoom != null)
 			diagram.setFactorScale(Double.parseDouble(zoom));
-		}
+
 		final String withCalendarDate = arg.get("DATE", 0);
-		if (withCalendarDate != null) {
+		if (withCalendarDate != null)
 			diagram.setWithCalendarDate(true);
-		}
+
 		return CommandExecutionResult.ok();
 	}
 

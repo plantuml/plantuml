@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -60,7 +60,7 @@ public class StyleSignatures implements StyleSignature {
 			if (result == null)
 				result = tmp;
 			else
-				result = result.mergeWith(tmp);
+				result = result.mergeWith(tmp, MergeStrategy.KEEP_EXISTING_VALUE_OF_STEREOTYPE);
 		}
 		return result;
 

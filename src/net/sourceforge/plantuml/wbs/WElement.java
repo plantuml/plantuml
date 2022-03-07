@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.mindmap.IdeaShape;
+import net.sourceforge.plantuml.style.MergeStrategy;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
@@ -103,7 +104,7 @@ final class WElement {
 			final StyleSignatureBasic ss = up.getDefaultStyleDefinitionNode(level).addStar();
 			deltaPriority -= STEP_BY_PARENT;
 			final Style styleParent = styleBuilder.getMergedStyleSpecial(ss, deltaPriority);
-			result = result.mergeWith(styleParent);
+			result = result.mergeWith(styleParent, MergeStrategy.OVERWRITE_EXISTING_VALUE);
 		}
 		return result;
 	}

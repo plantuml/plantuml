@@ -7,7 +7,7 @@
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2023, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program.
  * 

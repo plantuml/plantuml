@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -109,13 +109,16 @@ public class Style {
 		return map.containsKey(name);
 	}
 
-	public Style mergeWith(Style other) {
+	public Style mergeWith(Style other, MergeStrategy strategy) {
 		if (other == null)
 			return this;
 
 		final EnumMap<PName, Value> both = new EnumMap<PName, Value>(this.map);
 		for (Entry<PName, Value> ent : other.map.entrySet()) {
 			final Value previous = this.map.get(ent.getKey());
+			if (previous != null && previous.getPriority() > StyleLoader.DELTA_PRIORITY_FOR_STEREOTYPE
+					&& strategy == MergeStrategy.KEEP_EXISTING_VALUE_OF_STEREOTYPE)
+				continue;
 			final PName key = ent.getKey();
 			both.put(key, ((ValueImpl) ent.getValue()).mergeWith(previous));
 		}

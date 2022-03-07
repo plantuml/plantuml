@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.project.timescale;
 
+import net.sourceforge.plantuml.project.core.PrintScale;
 import net.sourceforge.plantuml.project.time.Day;
 
 public final class TimeScaleDaily implements TimeScale {
@@ -43,7 +44,7 @@ public final class TimeScaleDaily implements TimeScale {
 	private final double delta;
 
 	public TimeScaleDaily(double scale, Day calendar, Day zeroDay) {
-		this.basic = new TimeScaleWink(scale);
+		this.basic = new TimeScaleWink(scale, PrintScale.DAILY);
 		if (zeroDay == null) {
 			this.delta = basic.getStartingPosition(calendar);
 		} else {

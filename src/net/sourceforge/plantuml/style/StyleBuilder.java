@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -91,7 +91,7 @@ public class StyleBuilder implements AutomaticCounter {
 		if (orig == null) {
 			copy.put(signature, modifiedStyle);
 		} else {
-			final Style tmp = orig.mergeWith(modifiedStyle);
+			final Style tmp = orig.mergeWith(modifiedStyle, MergeStrategy.OVERWRITE_EXISTING_VALUE);
 			copy.put(signature, tmp);
 		}
 		final StyleBuilder result = new StyleBuilder(skinParam, this.printedForLog);
@@ -108,7 +108,7 @@ public class StyleBuilder implements AutomaticCounter {
 		if (orig == null) {
 			this.stylesMap.put(signature, newStyle);
 		} else {
-			final Style tmp = orig.mergeWith(newStyle);
+			final Style tmp = orig.mergeWith(newStyle, MergeStrategy.OVERWRITE_EXISTING_VALUE);
 			this.stylesMap.put(signature, tmp);
 		}
 	}
@@ -131,7 +131,7 @@ public class StyleBuilder implements AutomaticCounter {
 			if (result == null)
 				result = ent.getValue();
 			else
-				result = result.mergeWith(ent.getValue());
+				result = result.mergeWith(ent.getValue(), MergeStrategy.OVERWRITE_EXISTING_VALUE);
 
 		}
 		return result;
@@ -155,7 +155,7 @@ public class StyleBuilder implements AutomaticCounter {
 			if (result == null)
 				result = tmp;
 			else
-				result = result.mergeWith(tmp);
+				result = result.mergeWith(tmp, MergeStrategy.OVERWRITE_EXISTING_VALUE);
 
 		}
 		return result;
