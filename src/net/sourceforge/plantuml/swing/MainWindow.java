@@ -108,7 +108,7 @@ public class MainWindow extends JFrame {
 	}
 
 	private String getDefaultFileExtensions() {
-		return "txt, tex, java, htm, html, c, h, cpp, apt, pu, puml, hpp, hh";
+		return "txt, tex, java, htm, html, c, h, cpp, apt, pu, puml, hpp, hh, md";
 	}
 
 	private void changeExtensions(String ext) {

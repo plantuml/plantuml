@@ -36,6 +36,8 @@
 package net.sourceforge.plantuml.svek.image;
 
 import net.sourceforge.plantuml.awt.geom.Dimension2D;
+
+import java.awt.geom.Rectangle2D;
 import java.util.EnumMap;
 import java.util.Map;
 
@@ -51,6 +53,7 @@ import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.creole.Stencil;
+import net.sourceforge.plantuml.cucadiagram.Bodier;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.EntityPortion;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
@@ -58,6 +61,7 @@ import net.sourceforge.plantuml.cucadiagram.PortionShower;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
+import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockEmpty;
@@ -203,11 +207,7 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil, W
 		ug.startGroup(typeIDent);
 		ug.apply(stroke).draw(rect);
 
-		final ULayoutGroup header = new ULayoutGroup(new PlacementStrategyY1Y2(ug.getStringBounder()));
-		if (stereo != null)
-			header.add(stereo);
-
-		header.add(name);
+		final ULayoutGroup header = getLayout(stringBounder);
 		header.drawU(ug, dimTotal.getWidth(), dimTitle.getHeight());
 
 		final UGraphic ug2 = UGraphicStencil.create(ug, this, stroke);
@@ -217,6 +217,15 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil, W
 			ug.closeUrl();
 
 		ug.closeGroup();
+	}
+
+	private ULayoutGroup getLayout(final StringBounder stringBounder) {
+		final ULayoutGroup header = new ULayoutGroup(new PlacementStrategyY1Y2(stringBounder));
+		if (stereo != null)
+			header.add(stereo);
+
+		header.add(name);
+		return header;
 	}
 
 	private UStroke getStroke() {
@@ -274,6 +283,13 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil, W
 		if (fields instanceof WithPorts)
 			return ((WithPorts) fields).getPorts(stringBounder).translateY(dimHeader.getHeight());
 		return new Ports();
+	}
+
+	@Override
+	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+		final Dimension2D dimTitle = getTitleDimension(stringBounder);
+		final UTranslate translate = UTranslate.dy(dimTitle.getHeight());
+		return translate.apply(fields.getInnerPosition(member, stringBounder, strategy));
 	}
 
 }
