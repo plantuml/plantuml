@@ -209,6 +209,8 @@ public class TikzGraphics {
 	}
 
 	private String definecolor(String name, Color color) {
+		if (color.getAlpha() == 0)
+			color = Color.WHITE;
 		return "\\definecolor{" + name + "}{RGB}{" + color.getRed() + "," + color.getGreen() + "," + color.getBlue()
 				+ "}";
 	}
