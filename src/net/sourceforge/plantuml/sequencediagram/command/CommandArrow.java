@@ -55,6 +55,7 @@ import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.descdiagram.command.CommandLinkElement;
 import net.sourceforge.plantuml.sequencediagram.LifeEventType;
 import net.sourceforge.plantuml.sequencediagram.Message;
@@ -117,6 +118,8 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("LIFECOLOR", "(?:(#\\w+)?)"), //
 				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("STEREOTYPE", "(\\<\\<.*\\>\\>)?"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("MESSAGE", "(?::[%s]*(.*))?"), //
@@ -129,13 +132,13 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 			final List<Participant> result = new ArrayList<>();
 			for (String s : multicast.split("&")) {
 				s = s.trim();
-				if (s.length() == 0) {
+				if (s.length() == 0)
 					continue;
-				}
+
 				final Participant participant = system.getOrCreateParticipant(s);
-				if (participant != null) {
+				if (participant != null)
 					result.add(participant);
-				}
+
 			}
 			return Collections.unmodifiableList(result);
 		}
@@ -165,11 +168,10 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 	}
 
 	private boolean contains(String string, String... totest) {
-		for (String t : totest) {
-			if (string.contains(t)) {
+		for (String t : totest)
+			if (string.contains(t))
 				return true;
-			}
-		}
+
 		return false;
 	}
 
@@ -228,50 +230,48 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 
 		ArrowConfiguration config = hasDressing1 && hasDressing2 ? ArrowConfiguration.withDirectionBoth()
 				: ArrowConfiguration.withDirectionNormal();
-		if (dotted) {
+		if (dotted)
 			config = config.withBody(ArrowBody.DOTTED);
-		}
-		if (sync) {
+
+		if (sync)
 			config = config.withHead(ArrowHead.ASYNC);
-		}
-		if (dressing2.contains("\\") || dressing1.contains("/")) {
+
+		if (dressing2.contains("\\") || dressing1.contains("/"))
 			config = config.withPart(ArrowPart.TOP_PART);
-		}
-		if (dressing2.contains("/") || dressing1.contains("\\")) {
+
+		if (dressing2.contains("/") || dressing1.contains("\\"))
 			config = config.withPart(ArrowPart.BOTTOM_PART);
-		}
-		if (circleAtEnd) {
+
+		if (circleAtEnd)
 			config = config.withDecoration2(ArrowDecoration.CIRCLE);
-		}
-		if (circleAtStart) {
+
+		if (circleAtStart)
 			config = config.withDecoration1(ArrowDecoration.CIRCLE);
-		}
+
 		if (reverseDefine) {
-			if (dressing1.contains("x")) {
+			if (dressing1.contains("x"))
 				config = config.withHead2(ArrowHead.CROSSX);
-			}
-			if (dressing2.contains("x")) {
+
+			if (dressing2.contains("x"))
 				config = config.withHead1(ArrowHead.CROSSX);
-			}
+
 		} else {
-			if (dressing1.contains("x")) {
+			if (dressing1.contains("x"))
 				config = config.withHead1(ArrowHead.CROSSX);
-			}
-			if (dressing2.contains("x")) {
+
+			if (dressing2.contains("x"))
 				config = config.withHead2(ArrowHead.CROSSX);
-			}
+
 		}
-		if (reverseDefine) {
+		if (reverseDefine)
 			config = config.reverseDefine();
-		}
 
 		config = applyStyle(diagram.getSkinParam().getThemeStyle(), arg.getLazzy("ARROW_STYLE", 0), config);
 
 		final String activationSpec = arg.get("ACTIVATION", 0);
 
-		if (activationSpec != null && activationSpec.charAt(0) == '*') {
+		if (activationSpec != null && activationSpec.charAt(0) == '*')
 			diagram.activate(p2, LifeEventType.CREATE, null);
-		}
 
 		final String messageNumber = diagram.getNextMessageNumber();
 		final Message msg = new Message(diagram.getSkinParam().getCurrentStyleBuilder(), p1, p2,
@@ -284,34 +284,37 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 			msg.setUrl(urlLink);
 		}
 
-		final boolean parallel = arg.get("PARALLEL", 0) != null;
-		if (parallel) {
-			msg.goParallel();
+		if (arg.get("STEREOTYPE", 0) != null) {
+			final Stereotype stereotype = Stereotype.build(arg.get("STEREOTYPE", 0));
+			msg.getStereotype(stereotype);
 		}
+
+		final boolean parallel = arg.get("PARALLEL", 0) != null;
+		if (parallel)
+			msg.goParallel();
+
 		msg.setAnchor(arg.get("ANCHOR", 1));
 		msg.setPart1Anchor(arg.get("PART1ANCHOR", 1));
 		msg.setPart2Anchor(arg.get("PART2ANCHOR", 1));
 
 		final String error = diagram.addMessage(msg);
-		if (error != null) {
+		if (error != null)
 			return CommandExecutionResult.error(error);
-		}
+
 		final String s = arg.get("LIFECOLOR", 0);
 
 		final HColor activationColor = s == null ? null
 				: diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(), s);
 
-		if (activationSpec != null) {
+		if (activationSpec != null)
 			return manageActivations(activationSpec, diagram, p1, p2, activationColor);
-		}
 
-		if (diagram.isAutoactivate() && (config.getHead() == ArrowHead.NORMAL || config.getHead() == ArrowHead.ASYNC)) {
-			if (config.isDotted()) {
+		if (diagram.isAutoactivate() && (config.getHead() == ArrowHead.NORMAL || config.getHead() == ArrowHead.ASYNC))
+			if (config.isDotted())
 				diagram.activate(p1, LifeEventType.DEACTIVATE, null);
-			} else {
+			else
 				diagram.activate(p2, LifeEventType.ACTIVATE, activationColor);
-			}
-		}
+
 		return CommandExecutionResult.ok();
 	}
 
@@ -343,35 +346,31 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 
 	private int getLength(RegexResult arg2) {
 		String sa = arg2.getLazzy("ARROW_BODYA", 0);
-		if (sa == null) {
+		if (sa == null)
 			sa = "";
-		}
+
 		String sb = arg2.getLazzy("ARROW_BODYB", 0);
-		if (sb == null) {
+		if (sb == null)
 			sb = "";
-		}
+
 		return sa.length() + sb.length();
 	}
 
 	public static ArrowConfiguration applyStyle(ThemeStyle themeStyle, String arrowStyle, ArrowConfiguration config)
 			throws NoSuchColorException {
-		if (arrowStyle == null) {
+		if (arrowStyle == null)
 			return config;
-		}
+
 		final StringTokenizer st = new StringTokenizer(arrowStyle, ",");
 		while (st.hasMoreTokens()) {
 			final String s = st.nextToken();
 			if (s.equalsIgnoreCase("dashed")) {
 				config = config.withBody(ArrowBody.DOTTED);
-				// link.goDashed();
 			} else if (s.equalsIgnoreCase("bold")) {
-				// link.goBold();
 			} else if (s.equalsIgnoreCase("dotted")) {
 				config = config.withBody(ArrowBody.DOTTED);
-				// link.goDotted();
 			} else if (s.equalsIgnoreCase("hidden")) {
 				config = config.withBody(ArrowBody.HIDDEN);
-				// link.goHidden();
 			} else {
 				config = config.withColor(HColorSet.instance().getColor(themeStyle, s));
 			}
