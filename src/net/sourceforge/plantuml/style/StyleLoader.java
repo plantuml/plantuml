@@ -108,6 +108,7 @@ public class StyleLoader {
 		}
 		return internalIs;
 	}
+
 	private void loadSkinInternal(final BlocLines lines) {
 		for (Style newStyle : getDeclaredStyles(lines, styleBuilder))
 			this.styleBuilder.loadInternal(newStyle.getSignature(), newStyle);

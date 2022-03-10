@@ -104,12 +104,12 @@ public class TikzGraphics {
 	}
 
 	private String getColorName(Color c) {
-		if (c.equals(Color.WHITE)) {
+		if (c.equals(Color.WHITE))
 			return "white";
-		}
-		if (c.equals(Color.BLACK)) {
+
+		if (c.equals(Color.BLACK))
 			return "black";
-		}
+
 		final String result = colornames.get(c);
 		return Objects.requireNonNull(result);
 	}
@@ -158,29 +158,28 @@ public class TikzGraphics {
 			out(os, "    }");
 			out(os, "}");
 		}
-		for (Map.Entry<Color, String> ent : colornames.entrySet()) {
+		for (Map.Entry<Color, String> ent : colornames.entrySet())
 			out(os, definecolor(ent.getValue(), ent.getKey()));
 
-		}
-		if (scale != 1) {
+		if (scale != 1)
 			out(os, "\\scalebox{" + format(scale) + "}{");
-		}
+
 		out(os, "\\begin{tikzpicture}[yscale=-1");
 		purgeStyles();
-		for (String style : styles.keySet()) {
+		for (String style : styles.keySet())
 			out(os, "," + stylesID.get(style) + "/.style={" + style + "}");
-		}
+
 		out(os, "]");
-		for (String s : cmd) {
+		for (String s : cmd)
 			out(os, useStyle(s));
-		}
+
 		out(os, "\\end{tikzpicture}");
-		if (scale != 1) {
+		if (scale != 1)
 			out(os, "}");
-		}
-		if (withPreamble) {
+
+		if (withPreamble)
 			out(os, "\\end{document}");
-		}
+
 	}
 
 	private String useStyle(String s) {
@@ -202,9 +201,9 @@ public class TikzGraphics {
 	private void purgeStyles() {
 		for (Iterator<Map.Entry<String, Integer>> it = styles.entrySet().iterator(); it.hasNext();) {
 			final Map.Entry<String, Integer> ent = it.next();
-			if (ent.getValue().intValue() == 1) {
+			if (ent.getValue().intValue() == 1)
 				it.remove();
-			}
+
 		}
 	}
 
@@ -224,25 +223,25 @@ public class TikzGraphics {
 			sb.append(";");
 		} else {
 			sb.append("\\node at " + couple(x, y) + "[draw, ");
-			if (color != null) {
+			if (color != null)
 				sb.append("color=" + getColorName(color) + ",");
-			}
-			if (fillcolor != null) {
+
+			if (mustApplyFillColor()) {
 				sb.append("fill=" + getColorName(fillcolor) + ",");
-				if (color == null) {
+				if (color == null)
 					sb.append("color=" + getColorName(fillcolor) + ",");
-				}
+
 			}
 			sb.append("line width=" + thickness + "pt,");
 			sb.append("below right,");
 			sb.append("inner sep=2ex,");
 			sb.append("minimum width=" + format(width) + "pt,");
 			sb.append("minimum height=" + format(height) + "pt,");
-			if (Url.isLatex(pendingUrl)) {
+			if (Url.isLatex(pendingUrl))
 				sb.append("hyperref node=" + extractInternalHref(pendingUrl));
-			} else {
+			else
 				sb.append("href node=" + pendingUrl);
-			}
+
 			sb.append("] ");
 			sb.append(" {};");
 			urlIgnoreText = true;
@@ -251,18 +250,18 @@ public class TikzGraphics {
 	}
 
 	private String getAngleFromGradientPolicy() {
-		if (this.gradientPolicy == '-') {
+		if (this.gradientPolicy == '-')
 			return "0";
-		}
-		if (this.gradientPolicy == '|') {
+
+		if (this.gradientPolicy == '|')
 			return "90";
-		}
-		if (this.gradientPolicy == '/') {
+
+		if (this.gradientPolicy == '/')
 			return "45";
-		}
-		if (this.gradientPolicy == '\\') {
+
+		if (this.gradientPolicy == '\\')
 			return "135";
-		}
+
 		throw new IllegalArgumentException();
 	}
 
@@ -288,25 +287,25 @@ public class TikzGraphics {
 		}
 		sb.append("]{");
 		if (pendingUrl == null || urlIgnoreText) {
-			if (underline) {
+			if (underline)
 				sb.append("\\underline{");
-			}
-			if (italic) {
+
+			if (italic)
 				sb.append("\\textit{");
-			}
-			if (bold) {
+
+			if (bold)
 				sb.append("\\textbf{");
-			}
+
 			sb.append(protectText(text));
-			if (bold) {
+			if (bold)
 				sb.append("}");
-			}
-			if (italic) {
+
+			if (italic)
 				sb.append("}");
-			}
-			if (underline) {
+
+			if (underline)
 				sb.append("}");
-			}
+
 		} else {
 			appendPendingUrl(sb);
 			sb.append("{");
@@ -370,13 +369,13 @@ public class TikzGraphics {
 	public void line(double x1, double y1, double x2, double y2) {
 		final StringBuilder sb = new StringBuilder();
 		sb.append("\\draw[");
-		if (color != null) {
+		if (color != null)
 			sb.append("color=" + getColorName(color) + ",");
-		}
+
 		sb.append("line width=" + thickness + "pt");
-		if (dash != null) {
+		if (dash != null)
 			sb.append(",dash pattern=" + dash);
-		}
+
 		sb.append("] ");
 		sb.append(couple(x1, y1));
 		sb.append(" -- ");
@@ -438,12 +437,20 @@ public class TikzGraphics {
 			sb.append("top color=" + getColorName(fillcolor) + ",");
 			sb.append("bottom color=" + getColorName(fillcolorGradient2) + ",");
 			sb.append("shading=axis,shading angle=" + getAngleFromGradientPolicy() + ",");
-		} else if (fillcolor != null) {
+		} else if (mustApplyFillColor()) {
 			sb.append("fill=" + getColorName(fillcolor) + ",");
-			if (color == null) {
+			if (color == null)
 				sb.append("color=" + getColorName(fillcolor) + ",");
-			}
+
 		}
+	}
+
+	private boolean mustApplyFillColor() {
+		if (fillcolor == null)
+			return false;
+		if (fillcolor.getAlpha() == 0)
+			return false;
+		return true;
 	}
 
 	public void rectangleRound(double x, double y, double width, double height, double r) {
@@ -475,9 +482,9 @@ public class TikzGraphics {
 		final StringBuilder sb = new StringBuilder();
 		appendShadeOrDraw(sb);
 		sb.append("line width=" + thickness + "pt");
-		if (dash != null) {
+		if (dash != null)
 			sb.append(",dash pattern=" + dash);
-		}
+
 		sb.append("] ");
 		for (USegment seg : path) {
 			final USegmentType type = seg.getSegmentType();
@@ -513,12 +520,12 @@ public class TikzGraphics {
 	public void ellipse(double x, double y, double width, double height) {
 		final StringBuilder sb = new StringBuilder();
 		sb.append("\\draw[");
-		if (color != null) {
+		if (color != null)
 			sb.append("color=" + getColorName(color) + ",");
-		}
-		if (fillcolor != null) {
+
+		if (fillcolor != null)
 			sb.append("fill=" + getColorName(fillcolor) + ",");
-		}
+
 		sb.append("line width=" + thickness + "pt] " + couple(x, y) + " ellipse (" + format(width) + "pt and "
 				+ format(height) + "pt);");
 		addCommand(sb);
@@ -527,12 +534,12 @@ public class TikzGraphics {
 	public void arc(double x, double y, int angleStart, int angleEnd, double radius) {
 		final StringBuilder sb = new StringBuilder();
 		sb.append("\\draw[");
-		if (color != null) {
+		if (color != null)
 			sb.append("color=" + getColorName(color) + ",");
-		}
-		if (fillcolor != null) {
+
+		if (fillcolor != null)
 			sb.append("fill=" + getColorName(fillcolor) + ",");
-		}
+
 		sb.append("line width=" + thickness + "pt] " + couple(x, y) + " arc (" + angleStart + ":" + angleEnd + ":"
 				+ format(radius) + "pt);");
 		addCommand(sb);
@@ -609,12 +616,12 @@ public class TikzGraphics {
 	}
 
 	private void addColor(Color c) {
-		if (c == null) {
+		if (c == null)
 			return;
-		}
-		if (colornames.containsKey(c)) {
+
+		if (colornames.containsKey(c))
 			return;
-		}
+
 		final String name = "plantucolor" + String.format("%04d", colornames.size());
 		colornames.put(c, name);
 	}

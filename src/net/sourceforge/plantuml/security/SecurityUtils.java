@@ -35,25 +35,6 @@
  */
 package net.sourceforge.plantuml.security;
 
-import net.sourceforge.plantuml.OptionFlags;
-import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.json.Json;
-import net.sourceforge.plantuml.json.JsonValue;
-import net.sourceforge.plantuml.security.authentication.SecurityAccessInterceptor;
-import net.sourceforge.plantuml.security.authentication.SecurityAuthentication;
-import net.sourceforge.plantuml.security.authentication.SecurityAuthorizeManager;
-import net.sourceforge.plantuml.security.authentication.SecurityCredentials;
-import net.sourceforge.plantuml.security.authentication.SecurityDefaultNoopAccessInterceptor;
-import net.sourceforge.plantuml.security.authentication.SecurityDefaultNoopAuthorizeManager;
-import net.sourceforge.plantuml.security.authentication.basicauth.BasicAuthAccessInterceptor;
-import net.sourceforge.plantuml.security.authentication.basicauth.BasicAuthAuthorizeManager;
-import net.sourceforge.plantuml.security.authentication.oauth.OAuth2AccessInterceptor;
-import net.sourceforge.plantuml.security.authentication.oauth.OAuth2ClientAccessAuthorizeManager;
-import net.sourceforge.plantuml.security.authentication.oauth.OAuth2ResourceOwnerAccessAuthorizeManager;
-import net.sourceforge.plantuml.security.authentication.token.TokenAuthAccessInterceptor;
-import net.sourceforge.plantuml.security.authentication.token.TokenAuthAuthorizeManager;
-
-import javax.swing.ImageIcon;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
@@ -73,6 +54,26 @@ import java.util.Collections;
 import java.util.List;
 import java.util.StringTokenizer;
 import java.util.regex.Pattern;
+
+import javax.swing.ImageIcon;
+
+import net.sourceforge.plantuml.Log;
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.json.Json;
+import net.sourceforge.plantuml.json.JsonValue;
+import net.sourceforge.plantuml.security.authentication.SecurityAccessInterceptor;
+import net.sourceforge.plantuml.security.authentication.SecurityAuthentication;
+import net.sourceforge.plantuml.security.authentication.SecurityAuthorizeManager;
+import net.sourceforge.plantuml.security.authentication.SecurityCredentials;
+import net.sourceforge.plantuml.security.authentication.SecurityDefaultNoopAccessInterceptor;
+import net.sourceforge.plantuml.security.authentication.SecurityDefaultNoopAuthorizeManager;
+import net.sourceforge.plantuml.security.authentication.basicauth.BasicAuthAccessInterceptor;
+import net.sourceforge.plantuml.security.authentication.basicauth.BasicAuthAuthorizeManager;
+import net.sourceforge.plantuml.security.authentication.oauth.OAuth2AccessInterceptor;
+import net.sourceforge.plantuml.security.authentication.oauth.OAuth2ClientAccessAuthorizeManager;
+import net.sourceforge.plantuml.security.authentication.oauth.OAuth2ResourceOwnerAccessAuthorizeManager;
+import net.sourceforge.plantuml.security.authentication.token.TokenAuthAccessInterceptor;
+import net.sourceforge.plantuml.security.authentication.token.TokenAuthAuthorizeManager;
 
 public class SecurityUtils {
 
@@ -160,9 +161,9 @@ public class SecurityUtils {
 	static private SecurityProfile current = null;
 
 	public static synchronized SecurityProfile getSecurityProfile() {
-		if (current == null) {
+		if (current == null)
 			current = SecurityProfile.init();
-		}
+
 		return current;
 	}
 
@@ -183,9 +184,9 @@ public class SecurityUtils {
 
 	public static String getenv(String name) {
 		final String env = System.getProperty(name);
-		if (StringUtils.isNotEmpty(env)) {
+		if (StringUtils.isNotEmpty(env))
 			return env;
-		}
+
 		return System.getenv(name);
 	}
 
@@ -220,13 +221,13 @@ public class SecurityUtils {
 		paths = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(paths);
 		final StringTokenizer st = new StringTokenizer(paths, System.getProperty("path.separator"));
 		while (st.hasMoreTokens()) {
+			final String tmp = st.nextToken();
 			try {
-				final SFile f = new SFile(st.nextToken()).getCanonicalFile();
-				if (f.isDirectory()) {
+				final SFile f = new SFile(tmp).getCanonicalFile();
+				if (f.isDirectory())
 					result.add(f);
-				}
 			} catch (IOException e) {
-				e.printStackTrace();
+				Log.info("Cannot access to " + tmp + ". " + e);
 			}
 		}
 		return Collections.unmodifiableList(result);
@@ -260,9 +261,9 @@ public class SecurityUtils {
 
 	public synchronized static BufferedImage readRasterImage(final ImageIcon imageIcon) {
 		final Image tmpImage = imageIcon.getImage();
-		if (imageIcon.getIconWidth() == -1) {
+		if (imageIcon.getIconWidth() == -1)
 			return null;
-		}
+
 		final BufferedImage image = new BufferedImage(imageIcon.getIconWidth(), imageIcon.getIconHeight(),
 				BufferedImage.TYPE_INT_ARGB);
 		image.getGraphics().drawImage(tmpImage, 0, 0, null);
