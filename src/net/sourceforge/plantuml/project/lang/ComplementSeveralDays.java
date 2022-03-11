@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,41 +30,66 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.project.lang;
 
-import net.sourceforge.plantuml.command.regex.IRegex;
-import net.sourceforge.plantuml.command.regex.RegexConcat;
-import net.sourceforge.plantuml.command.regex.RegexLeaf;
-import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.command.regex.*;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.Load;
 
+import java.time.Period;
+
 public class ComplementSeveralDays implements Something {
 
 	public IRegex toRegex(String suffix) {
-		return new RegexConcat( //
-				new RegexLeaf("COMPLEMENT" + suffix, "(\\d+)[%s]+(day|week)s?" + //
-						"(?:[%s]+and[%s]+(\\d+)[%s]+(day|week)s?)?" //
-				)); //
+		return new RegexConcat(
+			new RegexLeaf(
+				getKey(suffix),
+				"(\\d+)[%s]+(day|week)s?(?:[%s]+and[%s]+(\\d+)[%s]+(day|week)s?)?"
+			)
+		);
 	}
 
-	public Failable<Load> getMe(GanttDiagram system, RegexResult arg, String suffix) {
-		final String nb1 = arg.get("COMPLEMENT" + suffix, 0);
-		final int factor1 = arg.get("COMPLEMENT" + suffix, 1).startsWith("w") ? system.daysInWeek() : 1;
-		final int days1 = Integer.parseInt(nb1) * factor1;
+	public Failable<Load> getMe(GanttDiagram diagram, RegexResult arg, String suffix) {
+		RegexPartialMatch partialRegexpMatch = arg.get(getKey(suffix));
 
-		final String nb2 = arg.get("COMPLEMENT" + suffix, 2);
-		int days2 = 0;
-		if (nb2 != null) {
-			final int factor2 = arg.get("COMPLEMENT" + suffix, 3).startsWith("w") ? system.daysInWeek() : 1;
-			days2 = Integer.parseInt(nb2) * factor2;
+		final Period period = getPeriod(diagram, partialRegexpMatch, 0);
+		final Period period2 = getPeriod(diagram, partialRegexpMatch, 1);
+
+		return Failable.ok(Load.inWinks(period.getDays() + period2.getDays()));
+	}
+
+	private static Period getPeriod(GanttDiagram diagram, RegexPartialMatch regexp, int periodIndex) {
+		if (!hasPeriod(regexp, periodIndex)) {
+			return Period.ZERO;
 		}
 
-		return Failable.ok(Load.inWinks(days1 + days2));
+		final int amount = Integer.parseInt(getAmount(regexp, periodIndex));
+		final int workweekLength = getChronoUnit(regexp, periodIndex).startsWith("w") ? diagram.daysInWeek() : 1;
+		final int days = amount * workweekLength;
+		return Period.ofDays(days);
 	}
 
+	private static boolean hasPeriod(RegexPartialMatch regexp, int periodIndex) {
+		return getAmount(regexp, periodIndex) != null;
+	}
+
+	private static String getAmount(RegexPartialMatch regexp, int periodIndex) {
+		return regexp.get(indexToOffset(periodIndex));
+	}
+
+	private static String getChronoUnit(RegexPartialMatch regexp, int periodIndex) {
+		return regexp.get(indexToOffset(periodIndex) + 1);
+	}
+
+	private static int indexToOffset(int periodIndex) {
+		return periodIndex * 2;
+	}
+
+	private static String getKey(String suffix) {
+		return "COMPLEMENT" + suffix;
+	}
 }
