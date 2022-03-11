@@ -1,4 +1,4 @@
-name: CI gradle
+name: CI
 
 on:
   create:
@@ -140,11 +140,11 @@ jobs:
         if: needs.workflow_config.outputs.do_snapshot_release == 'true'
         env:
           GITHUB_TOKEN: ${{ github.token }}
-        run: .github/scripts/release-gradle-snapshot.sh
+        run: .github/scripts/release-snapshot.sh
 
       - name: Create release in GitHub
         if: needs.workflow_config.outputs.do_release == 'true'
         env:
           GITHUB_TOKEN: ${{ github.token }}
           TAG: ${{ github.event.ref }}
-        run: .github/scripts/release-gradle.sh
+        run: .github/scripts/release.sh
