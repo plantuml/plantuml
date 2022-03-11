@@ -64,6 +64,7 @@ class ComplementSeveralDaysTest {
 			.add(of("lasts 1 months and 4 quarters", 4, List.of("1", "month", "4", "quarter")))
 			.add(of("lasts 1 year and 2 months", 4, List.of("1", "year", "2", "month")))
 			.add(of("lasts 2 years and 3 days", 4, List.of("2", "year", "3", "day")))
+			.add(of("[name with keywords lasts 10 days] lasts 1 days", 4, stream(new String[]{"1", "day", null, null}).toList()))
 			.add(of("[Test prototype] lasts 10 days", 4, stream(new String[]{"10", "day", null, null}).toList()))
 			.build();
 	}

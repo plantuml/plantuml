@@ -54,7 +54,7 @@ public class ComplementSeveralDays implements Something {
 		return new RegexConcat(
 			new RegexLeaf(
 				getKey(suffix),
-				"(\\d+)[%s]+(day|week|month|quarter|year)s?(?:[%s]+and[%s]+(\\d+)[%s]+(day|week|month|quarter|year)s?)?"
+				"(\\d+)[%s]+(day|week|month|quarter|year)s?(?:[%s]+and[%s]+(\\d+)[%s]+(day|week|month|quarter|year)s?)?$"
 			)
 		);
 	}
