@@ -41,6 +41,11 @@ import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.Load;
 
 import java.time.Period;
+import java.time.temporal.ChronoUnit;
+import java.util.Locale;
+
+import static java.time.temporal.ChronoUnit.DAYS;
+import static java.time.temporal.ChronoUnit.valueOf;
 
 public class ComplementSeveralDays implements Something {
 
@@ -48,7 +53,7 @@ public class ComplementSeveralDays implements Something {
 		return new RegexConcat(
 			new RegexLeaf(
 				getKey(suffix),
-				"(\\d+)[%s]+(day|week)s?(?:[%s]+and[%s]+(\\d+)[%s]+(day|week)s?)?"
+				"(\\d+)[%s]+(day|week|month)s?(?:[%s]+and[%s]+(\\d+)[%s]+(day|week|month)s?)?"
 			)
 		);
 	}
@@ -67,10 +72,24 @@ public class ComplementSeveralDays implements Something {
 			return Period.ZERO;
 		}
 
+		ChronoUnit chronoUnit = getChronoUnit(regexp, periodIndex);
+		if (chronoUnit.compareTo(DAYS) < 0) {
+			throw new IllegalArgumentException("Lowest resolution of supported chrono units is " + DAYS + " but was " + chronoUnit);
+		}
+
 		final int amount = Integer.parseInt(getAmount(regexp, periodIndex));
-		final int workweekLength = getChronoUnit(regexp, periodIndex).startsWith("w") ? diagram.daysInWeek() : 1;
-		final int days = amount * workweekLength;
-		return Period.ofDays(days);
+		if (chronoUnit.equals(DAYS)) {
+			return Period.ofDays(amount);
+		}
+
+		// Using ceiling with implicit assumption that the required time (in days) should be rounded, i.e.
+		//  when we have 2.1 days, we'd rather have 2 day slot on the chart
+		return Period.ofDays((int) Math.round(
+			chronoUnit.getDuration()
+				.multipliedBy(amount).toDays()
+				/ (double) 7
+				* diagram.daysInWeek()
+		));
 	}
 
 	private static boolean hasPeriod(RegexPartialMatch regexp, int periodIndex) {
@@ -81,8 +100,11 @@ public class ComplementSeveralDays implements Something {
 		return regexp.get(indexToOffset(periodIndex));
 	}
 
-	private static String getChronoUnit(RegexPartialMatch regexp, int periodIndex) {
-		return regexp.get(indexToOffset(periodIndex) + 1);
+	private static ChronoUnit getChronoUnit(RegexPartialMatch regexp, int periodIndex) {
+		return valueOf(
+			(regexp.get(indexToOffset(periodIndex) + 1) + "S")
+				.toUpperCase(Locale.ROOT)
+		);
 	}
 
 	private static int indexToOffset(int periodIndex) {
