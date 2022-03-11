@@ -1,14 +1,23 @@
 #!/usr/bin/env bash
 set -ex
 
-RELEASE_DIR="target/github_release"
+POM_VERSION=$(gradle properties -q | grep "version:" | awk '{print $2}')
+RELEASE_DIR="build/github_release"
 
 mkdir "${RELEASE_DIR}"
 
-ln -s "../plantuml.jar"             "${RELEASE_DIR}/plantuml-${POM_VERSION}.jar"
-ln -s "../plantuml-javadoc.jar"     "${RELEASE_DIR}/plantuml-${POM_VERSION}-javadoc.jar"
-ln -s "../plantuml-sources.jar"     "${RELEASE_DIR}/plantuml-${POM_VERSION}-sources.jar"
-# we do not release the .pom or .asc signature files here, they will be added in a later PR
+ln -s "../libs/plantuml-${POM_VERSION}.jar"                  "${RELEASE_DIR}/plantuml-${POM_VERSION}.jar"
+ln -s "../libs/plantuml-${POM_VERSION}-javadoc.jar"          "${RELEASE_DIR}/plantuml-${POM_VERSION}-javadoc.jar"
+ln -s "../libs/plantuml-${POM_VERSION}-sources.jar"          "${RELEASE_DIR}/plantuml-${POM_VERSION}-sources.jar"
+ln -s "../libs/plantuml-pdf-${POM_VERSION}.jar"              "${RELEASE_DIR}/plantuml-pdf-${POM_VERSION}.jar"
+
+if [[ -e "build/publications/maven/module.json.asc" ]]; then
+  # signatures are optional so that forked repos can release snapshots without needing a gpg signing key
+  ln -s "../libs/plantuml-${POM_VERSION}.jar.asc"            "${RELEASE_DIR}/plantuml-${POM_VERSION}.jar.asc"
+  ln -s "../libs/plantuml-${POM_VERSION}-javadoc.jar.asc"    "${RELEASE_DIR}/plantuml-${POM_VERSION}-javadoc.jar.asc"
+  ln -s "../libs/plantuml-${POM_VERSION}-sources.jar.asc"    "${RELEASE_DIR}/plantuml-${POM_VERSION}-sources.jar.asc"
+  ln -s "../libs/plantuml-pdf-${POM_VERSION}.jar.asc"        "${RELEASE_DIR}/plantuml-pdf-${POM_VERSION}.jar.asc"
+fi
 
 gh release create \
   --target "${GITHUB_SHA}" \
