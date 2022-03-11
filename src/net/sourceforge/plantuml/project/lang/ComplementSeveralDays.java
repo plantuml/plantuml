@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.project.Load;
 import java.time.Period;
 import java.time.temporal.ChronoUnit;
 import java.util.Locale;
+import java.util.Objects;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 import static java.time.temporal.ChronoUnit.valueOf;
@@ -53,7 +54,7 @@ public class ComplementSeveralDays implements Something {
 		return new RegexConcat(
 			new RegexLeaf(
 				getKey(suffix),
-				"(\\d+)[%s]+(day|week|month)s?(?:[%s]+and[%s]+(\\d+)[%s]+(day|week|month)s?)?"
+				"(\\d+)[%s]+(day|week|month|quarter)s?(?:[%s]+and[%s]+(\\d+)[%s]+(day|week|month|quarter)s?)?"
 			)
 		);
 	}
@@ -72,12 +73,14 @@ public class ComplementSeveralDays implements Something {
 			return Period.ZERO;
 		}
 
-		ChronoUnit chronoUnit = getChronoUnit(regexp, periodIndex);
+		AmountUnit duration = mapDuration(regexp, periodIndex);
+		int amount = duration.getAmount();
+		ChronoUnit chronoUnit = duration.getUnit();
+
 		if (chronoUnit.compareTo(DAYS) < 0) {
 			throw new IllegalArgumentException("Lowest resolution of supported chrono units is " + DAYS + " but was " + chronoUnit);
 		}
 
-		final int amount = Integer.parseInt(getAmount(regexp, periodIndex));
 		if (chronoUnit.equals(DAYS)) {
 			return Period.ofDays(amount);
 		}
@@ -92,6 +95,21 @@ public class ComplementSeveralDays implements Something {
 		));
 	}
 
+	private static AmountUnit mapDuration(RegexPartialMatch regexp, int periodIndex) {
+		final int amount = Integer.parseInt(getAmount(regexp, periodIndex));
+		String untypedChronoUnit = getChronoUnit(regexp, periodIndex);
+
+		if (untypedChronoUnit.toLowerCase(Locale.ROOT).equals("quarter")) {
+			return convertQuartersToMonths(amount);
+		}
+
+		return AmountUnit.of(amount, toTypedChronoUnit(untypedChronoUnit));
+	}
+
+	private static AmountUnit convertQuartersToMonths(int amount) {
+		return AmountUnit.of(amount * 3, ChronoUnit.MONTHS);
+	}
+
 	private static boolean hasPeriod(RegexPartialMatch regexp, int periodIndex) {
 		return getAmount(regexp, periodIndex) != null;
 	}
@@ -100,9 +118,13 @@ public class ComplementSeveralDays implements Something {
 		return regexp.get(indexToOffset(periodIndex));
 	}
 
-	private static ChronoUnit getChronoUnit(RegexPartialMatch regexp, int periodIndex) {
+	private static String getChronoUnit(RegexPartialMatch regexp, int periodIndex) {
+		return regexp.get(indexToOffset(periodIndex) + 1);
+	}
+
+	private static ChronoUnit toTypedChronoUnit(String chronoUnit) {
 		return valueOf(
-			(regexp.get(indexToOffset(periodIndex) + 1) + "S")
+			(chronoUnit + "S")
 				.toUpperCase(Locale.ROOT)
 		);
 	}
@@ -113,5 +135,48 @@ public class ComplementSeveralDays implements Something {
 
 	private static String getKey(String suffix) {
 		return "COMPLEMENT" + suffix;
+	}
+
+	private static class AmountUnit {
+		final int amount;
+		final ChronoUnit unit;
+
+		private AmountUnit(int amount, ChronoUnit unit) {
+			this.amount = amount;
+			this.unit = unit;
+		}
+
+		public static AmountUnit of(int amount, ChronoUnit unit) {
+			return new AmountUnit(amount, unit);
+		}
+
+		public int getAmount() {
+			return amount;
+		}
+
+		public ChronoUnit getUnit() {
+			return unit;
+		}
+
+		@Override
+		public boolean equals(Object o) {
+			if (this == o) return true;
+			if (o == null || getClass() != o.getClass()) return false;
+			AmountUnit that = (AmountUnit) o;
+			return amount == that.amount && unit == that.unit;
+		}
+
+		@Override
+		public int hashCode() {
+			return Objects.hash(amount, unit);
+		}
+
+		@Override
+		public String toString() {
+			return "AmountUnit{" +
+				"amount=" + amount +
+				", unit=" + unit +
+				'}';
+		}
 	}
 }
