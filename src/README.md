@@ -39,16 +39,16 @@ Please refer to [PlantUML site](http://plantuml.com) for that.
 Here, some information about how PlantUML is implemented will be provided to help the
 integration of PlantUML with other programs.
 
-Unfortunatly, here, we have to raise a **warning**:
+Unfortunately, here, we have to raise a **warning**:
 
 While PlantUML language description remains stable over version and follow ascending
 compatibility, the *implementation* of PlantUML changes very often over time.
 
 So if you use classes described in this documentation, it's very likely that you will have
-an issue someday, because thoses class may change without any notice. They could even be deleted.
+an issue someday, because those class may change without any notice. They could even be deleted.
 
 It used to happen more often than you think over years, because we try to constantly improve the
-general design of PlantUML, and this imply a continuous refactoring.
+general design of PlantUML, and this implies a continuous refactoring.
 
 The only exception is the `net.sourceforge.plantuml` package, that we will keep
 as stable as possible over time.
