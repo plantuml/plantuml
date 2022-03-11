@@ -66,4 +66,8 @@ public class Load implements Value {
 		return Objects.hash(winks);
 	}
 
+	@Override
+	public String toString() {
+		return String.format("Load{winks=%d}", winks);
+	}
 }

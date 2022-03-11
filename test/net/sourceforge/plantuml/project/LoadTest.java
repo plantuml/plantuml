@@ -12,4 +12,10 @@ class LoadTest {
 		Assertions.assertThat(Load.inWinks(SAMPLE_VALUE))
 			.isEqualTo(Load.inWinks(SAMPLE_VALUE));
 	}
+
+	@Test
+	void hasToString() {
+		Assertions.assertThat(Load.inWinks(SAMPLE_VALUE).toString())
+			.isEqualTo("Load{winks=" + SAMPLE_VALUE + "}");
+	}
 }
