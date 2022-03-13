@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.project;
@@ -39,12 +39,10 @@ import java.util.Collection;
 import java.util.EnumSet;
 import java.util.HashSet;
 
-import net.sourceforge.plantuml.project.core3.Histogram;
-import net.sourceforge.plantuml.project.core3.TimeLine;
 import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.time.DayOfWeek;
 
-public class OpenClose implements Histogram, LoadPlanable {
+public class OpenClose implements LoadPlanable {
 
 	private final Collection<DayOfWeek> closedDayOfWeek = EnumSet.noneOf(DayOfWeek.class);
 	private final Collection<Day> closedDays = new HashSet<>();
@@ -53,36 +51,6 @@ public class OpenClose implements Histogram, LoadPlanable {
 
 	public int daysInWeek() {
 		return 7 - closedDayOfWeek.size();
-	}
-
-	private boolean isThereSomeChangeAfter(Day day) {
-		if (closedDayOfWeek.size() > 0) {
-			return true;
-		}
-		for (Day tmp : closedDays) {
-			if (tmp.compareTo(day) >= 0)
-				return true;
-		}
-		for (Day tmp : openedDays) {
-			if (tmp.compareTo(day) >= 0)
-				return true;
-		}
-		return false;
-	}
-
-	private boolean isThereSomeChangeBefore(Day day) {
-		if (closedDayOfWeek.size() > 0) {
-			return true;
-		}
-		for (Day tmp : closedDays) {
-			if (tmp.compareTo(day) <= 0)
-				return true;
-		}
-		for (Day tmp : openedDays) {
-			if (tmp.compareTo(day) <= 0)
-				return true;
-		}
-		return false;
 	}
 
 	public boolean isClosed(Day day) {
@@ -111,50 +79,6 @@ public class OpenClose implements Histogram, LoadPlanable {
 
 	public final void setCalendar(Day calendar) {
 		this.calendar = calendar;
-	}
-
-	public long getNext(long moment) {
-		Day day = Day.create(moment);
-		if (isThereSomeChangeAfter(day) == false) {
-			return TimeLine.MAX_TIME;
-		}
-
-		final long current = getLoatAtInternal(day);
-		System.err.println("getNext:day=" + day + " current=" + current);
-		while (true) {
-			day = day.increment();
-			final int tmp = getLoatAtInternal(day);
-			System.err.println("..day=" + day + " " + tmp);
-			if (tmp != current) {
-				return day.getMillis();
-			}
-		}
-	}
-
-	public long getPrevious(long moment) {
-		Day day = Day.create(moment);
-		if (isThereSomeChangeBefore(day) == false) {
-			return -TimeLine.MAX_TIME;
-		}
-
-		final long current = getLoatAtInternal(day);
-		System.err.println("getPrevious=" + day + " current=" + current);
-		while (true) {
-			day = day.decrement();
-			final int tmp = getLoatAtInternal(day);
-			System.err.println("..day=" + day + " " + tmp);
-			if (tmp != current) {
-				return day.getMillis();
-			}
-		}
-	}
-
-	public long getValueAt(long moment) {
-		final Day day = Day.create(moment);
-		if (isClosed(day)) {
-			return 0;
-		}
-		return 100;
 	}
 
 	public int getLoadAt(Day day) {

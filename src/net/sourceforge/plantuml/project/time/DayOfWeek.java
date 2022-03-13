@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.project.time;
@@ -48,7 +48,6 @@ public enum DayOfWeek {
 	MONDAY(Calendar.MONDAY), TUESDAY(Calendar.TUESDAY), WEDNESDAY(Calendar.WEDNESDAY), THURSDAY(Calendar.THURSDAY),
 	FRIDAY(Calendar.FRIDAY), SATURDAY(Calendar.SATURDAY), SUNDAY(Calendar.SUNDAY);
 
-	static final private Calendar gmt = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
 	static final private SimpleDateFormat dateFormatGmt = new SimpleDateFormat("dd MMM yyyy HH:mm:ss.SSS", Locale.US);
 	static {
 		dateFormatGmt.setTimeZone(TimeZone.getTimeZone("GMT"));
@@ -62,15 +61,6 @@ public enum DayOfWeek {
 
 	public int getLegacyJavaValue() {
 		return legacy;
-	}
-
-	public static synchronized DayOfWeek fromTime(long time) {
-		gmt.setTimeInMillis(time);
-		final int result = gmt.get(Calendar.DAY_OF_WEEK);
-		if (result == Calendar.SUNDAY) {
-			return SUNDAY;
-		}
-		return DayOfWeek.values()[result - 2];
 	}
 
 //	private static synchronized String timeToString(Locale locale, long value) {
@@ -97,10 +87,6 @@ public enum DayOfWeek {
 			}
 		}
 		throw new IllegalArgumentException();
-	}
-
-	public DayOfWeek next() {
-		return DayOfWeek.values()[(ordinal() + 1) % 7];
 	}
 
 	public static DayOfWeek fromH(int h) {
