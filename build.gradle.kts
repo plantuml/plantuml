@@ -88,6 +88,42 @@ tasks.withType<Jar>().configureEach {
 publishing {
 	publications.create<MavenPublication>("maven") {
 		from(components["java"])
+		pom {
+			url.set("https://plantuml.com/")
+			licenses {
+				license {
+					name.set("The GNU General Public License")
+					url.set("http://www.gnu.org/licenses/gpl.txt")
+				}
+			}
+			developers {
+				developer {
+					id.set("arnaud.roques")
+					name.set("Arnaud Roques")
+					email.set("plantuml@gmail.com")
+				}
+			}
+			scm {
+				connection.set("scm:git:git://github.com:plantuml/plantuml.git")
+				developerConnection.set("scm:git:ssh://git@github.com:plantuml/plantuml.git")
+				url.set("https://github.com/plantuml/plantuml")
+			}
+		}
+		suppressAllPomMetadataWarnings()
+	}
+	repositories {
+		maven {
+			name = "fstest"
+			url = uri(layout.buildDirectory.dir("repo"))
+		}
+		maven {
+			name = "OSSRH"
+			url = uri("https://oss.sonatype.org/service/local/staging/deploy/maven2/")
+			credentials {
+				username = System.getenv("MAVEN_USERNAME")
+				password = System.getenv("MAVEN_PASSWORD")
+			}
+		}
 	}
 }
 
