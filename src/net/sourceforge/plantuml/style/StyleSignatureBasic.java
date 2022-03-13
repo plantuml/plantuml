@@ -86,7 +86,7 @@ public class StyleSignatureBasic implements StyleSignature {
 		if (s == null)
 			return this;
 
-		if (s.contains("*") || s.contains("&"))
+		if (s.contains("&"))
 			throw new IllegalArgumentException();
 
 		final Set<String> result = new LinkedHashSet<>(names);
