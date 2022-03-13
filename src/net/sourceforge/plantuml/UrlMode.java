@@ -33,30 +33,8 @@
  * 
  *
  */
-package net.sourceforge.plantuml.project.lang;
+package net.sourceforge.plantuml;
 
-import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.UrlBuilder;
-import net.sourceforge.plantuml.UrlMode;
-import net.sourceforge.plantuml.command.regex.IRegex;
-import net.sourceforge.plantuml.command.regex.RegexConcat;
-import net.sourceforge.plantuml.command.regex.RegexLeaf;
-import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.project.Failable;
-import net.sourceforge.plantuml.project.GanttDiagram;
-
-public class ComplementUrl implements Something {
-
-	public IRegex toRegex(String suffix) {
-		return new RegexConcat( //
-				new RegexLeaf("COMPLEMENT" + suffix, "(" + UrlBuilder.getRegexp() + ")")); //
-	}
-
-	public Failable<Url> getMe(GanttDiagram diagram, RegexResult arg, String suffix) {
-		final String urlString = arg.get("COMPLEMENT" + suffix, 0);
-		final UrlBuilder urlBuilder = new UrlBuilder("", UrlMode.STRICT);
-		final Url url = urlBuilder.getUrl(urlString);
-		return Failable.ok(url);
-	}
-
+public enum UrlMode {
+	STRICT, ANYWHERE
 }
