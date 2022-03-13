@@ -109,6 +109,7 @@ publishing {
 				url.set("https://github.com/plantuml/plantuml")
 			}
 		}
+		suppressAllPomMetadataWarnings()
 	}
 	repositories {
 		maven {
