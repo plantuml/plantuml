@@ -69,7 +69,7 @@ public class JsonDiagram extends TitledDiagram {
 
 	public JsonDiagram(ThemeStyle style, UmlSource source, UmlDiagramType type, JsonValue json,
 			List<String> highlighted) {
-		super(style, source, type);
+		super(style, source, type, null);
 		if (json != null && (json.isString() || json.isBoolean() || json.isNumber())) {
 			this.root = new JsonArray();
 			((JsonArray) this.root).add(json);

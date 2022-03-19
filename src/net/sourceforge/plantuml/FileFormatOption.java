@@ -39,6 +39,7 @@ import java.awt.geom.AffineTransform;
 import java.io.Serializable;
 import java.util.Objects;
 
+import net.sourceforge.plantuml.annotation.HaxeIgnored;
 import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.graphic.StringBounder;
 
@@ -66,10 +67,12 @@ public final class FileFormatOption implements Serializable {
 		return scale;
 	}
 
+	@HaxeIgnored
 	public FileFormatOption(FileFormat fileFormat) {
 		this(fileFormat, true, false, null, false, null, TikzFontDistortion.getDefault(), 1.0, null, null, ThemeStyle.LIGHT_REGULAR);
 	}
 
+	@HaxeIgnored
 	public FileFormatOption(FileFormat fileFormat, boolean withMetadata) {
 		this(fileFormat, withMetadata, false, null, false, null, TikzFontDistortion.getDefault(), 1.0, null, null, ThemeStyle.LIGHT_REGULAR);
 	}

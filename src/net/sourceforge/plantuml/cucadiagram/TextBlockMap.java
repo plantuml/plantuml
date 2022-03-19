@@ -203,7 +203,7 @@ public class TextBlockMap extends AbstractTextBlock implements WithPorts {
 
 	private FontConfiguration getFontConfiguration() {
 		if (fontConfiguration == null)
-			return new FontConfiguration(skinParam, fontParam, null);
+			return FontConfiguration.create(skinParam, fontParam, null);
 		return fontConfiguration;
 	}
 

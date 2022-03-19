@@ -184,7 +184,7 @@ public class TextBlockUtils {
 	// }
 
 	public static MinMax getMinMax(UDrawable tb, StringBounder stringBounder, boolean initToZero) {
-		final LimitFinder limitFinder = new LimitFinder(stringBounder, initToZero);
+		final LimitFinder limitFinder = LimitFinder.create(stringBounder, initToZero);
 		tb.drawU(limitFinder);
 		return limitFinder.getMinMax();
 	}

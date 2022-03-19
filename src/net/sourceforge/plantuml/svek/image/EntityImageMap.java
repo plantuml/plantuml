@@ -104,7 +104,7 @@ public class EntityImageMap extends AbstractEntityImage implements Stencil, With
 			fcHeader = getStyleHeader().getFontConfiguration(getSkinParam().getThemeStyle(),
 					getSkinParam().getIHtmlColorSet());
 		else
-			fcHeader = new FontConfiguration(getSkinParam(), FontParam.OBJECT, stereotype);
+			fcHeader = FontConfiguration.create(getSkinParam(), FontParam.OBJECT, stereotype);
 
 		this.name = TextBlockUtils
 				.withMargin(entity.getDisplay().create(fcHeader, HorizontalAlignment.CENTER, skinParam), 2, 2);
@@ -114,7 +114,7 @@ public class EntityImageMap extends AbstractEntityImage implements Stencil, With
 			this.stereo = null;
 		else
 			this.stereo = Display.create(stereotype.getLabels(skinParam.guillemet())).create(
-					new FontConfiguration(getSkinParam(), FontParam.OBJECT_STEREOTYPE, stereotype),
+					FontConfiguration.create(getSkinParam(), FontParam.OBJECT_STEREOTYPE, stereotype),
 					HorizontalAlignment.CENTER, skinParam);
 
 		if (UseStyle.useBetaStyle()) {

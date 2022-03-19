@@ -130,7 +130,7 @@ public class FtileWithNotes extends AbstractFtile {
 			} else {
 				noteBackgroundColor = rose.getHtmlColor(skinParam2, ColorParam.noteBackground);
 				borderColor = rose.getHtmlColor(skinParam2, ColorParam.noteBorder);
-				fc = new FontConfiguration(skinParam, FontParam.NOTE, null);
+				fc = FontConfiguration.create(skinParam, FontParam.NOTE, null);
 				shadowing = skinParam.shadowing(null) ? 4 : 0;
 				wrapWidth = skinParam.wrapWidth();
 			}

@@ -105,7 +105,7 @@ public class ReferenceTile extends AbstractTile implements Tile {
 		init(stringBounder);
 		final Component comp = getComponent(stringBounder);
 		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
-		final Area area = new Area(last.getCurrentValue() - first.getCurrentValue(), dim.getHeight());
+		final Area area = Area.create(last.getCurrentValue() - first.getCurrentValue(), dim.getHeight());
 
 		ug = ug.apply(UTranslate.dx(first.getCurrentValue()));
 		comp.drawU(ug, area, (Context2D) ug);

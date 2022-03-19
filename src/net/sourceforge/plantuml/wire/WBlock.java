@@ -235,7 +235,7 @@ public class WBlock {
 	public void drawMe(UGraphic ug) {
 		drawBox(ug);
 		final UFont font = UFont.sansSerif(12);
-		final FontConfiguration fc = new FontConfiguration(font, getBlack(), getBlack(), false);
+		final FontConfiguration fc = FontConfiguration.create(font, getBlack(), getBlack(), false);
 		final Display display = Display.create(name.replace('_', ' '));
 		final TextBlock text = display.create(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 		text.drawU(ug.apply(UTranslate.dx(5)));

@@ -53,8 +53,8 @@ public class Area {
 		this.dimensionToUse = dimensionToUse;
 	}
 
-	public Area(double with, double height) {
-		this(new Dimension2DDouble(with, height));
+	public static Area create(double with, double height) {
+		return new Area(new Dimension2DDouble(with, height));
 	}
 
 	public Dimension2D getDimensionToUse() {

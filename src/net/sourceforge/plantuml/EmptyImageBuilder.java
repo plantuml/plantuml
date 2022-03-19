@@ -60,9 +60,13 @@ public class EmptyImageBuilder {
 	private final Color background;
 	private final StringBounder stringBounder;
 
-	public EmptyImageBuilder(String watermark, double width, double height, Color background,
-			StringBounder stringBounder) {
-		this(watermark, (int) width, (int) height, background, stringBounder);
+	private static EmptyImageBuilder create(String watermark, int width, int height, Color background,
+			StringBounder stringBounder, double dpiFactor) {
+		EmptyImageBuilder result = new EmptyImageBuilder(watermark, (int) (width * dpiFactor),
+				(int) (height * dpiFactor), background, stringBounder);
+		if (dpiFactor != 1.0)
+			result.g2d.setTransform(AffineTransform.getScaleInstance(dpiFactor, dpiFactor));
+		return result;
 	}
 
 	public EmptyImageBuilder(String watermark, int width, int height, Color background, StringBounder stringBounder) {
@@ -154,14 +158,6 @@ public class EmptyImageBuilder {
 			result.add(pending);
 		}
 		return result;
-	}
-
-	public EmptyImageBuilder(String watermark, int width, int height, Color background, StringBounder stringBounder,
-			double dpiFactor) {
-		this(watermark, width * dpiFactor, height * dpiFactor, background, stringBounder);
-		if (dpiFactor != 1.0) {
-			g2d.setTransform(AffineTransform.getScaleInstance(dpiFactor, dpiFactor));
-		}
 	}
 
 	public BufferedImage getBufferedImage() {

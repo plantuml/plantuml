@@ -135,7 +135,7 @@ public class PlayingSpace implements Bordered {
 	}
 
 	public double getPreferredHeight(StringBounder stringBounder) {
-		final LimitFinder limitFinder = new LimitFinder(stringBounder, true);
+		final LimitFinder limitFinder = LimitFinder.create(stringBounder, true);
 		final UGraphicInterceptorTile interceptor = new UGraphicInterceptorTile(limitFinder, false);
 		final double finalY = drawUInternal(interceptor, false);
 		final double result = Math.max(limitFinder.getMinMax().getDimension().getHeight(), finalY) + 10;

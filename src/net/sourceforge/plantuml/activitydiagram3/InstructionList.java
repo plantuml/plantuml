@@ -73,8 +73,12 @@ public class InstructionList extends WithNote implements Instruction, Instructio
 		return false;
 	}
 
-	public InstructionList() {
-		this(null);
+	public static InstructionList empty() {
+		return new InstructionList(null);
+	}
+
+	public InstructionList(Swimlane defaultSwimlane) {
+		this.defaultSwimlane = defaultSwimlane;
 	}
 
 	public boolean isEmpty() {
@@ -89,10 +93,6 @@ public class InstructionList extends WithNote implements Instruction, Instructio
 			return true;
 		}
 		return getLast() instanceof InstructionStop && ((InstructionStop) getLast()).hasNotes() == false;
-	}
-
-	public InstructionList(Swimlane defaultSwimlane) {
-		this.defaultSwimlane = defaultSwimlane;
 	}
 
 	@Override

@@ -121,7 +121,7 @@ public class Highlight {
 	}
 
 	public TextBlock getCaption(ISkinParam skinParam) {
-		final FontConfiguration fc = new FontConfiguration(skinParam, FontParam.TIMING, null);
+		final FontConfiguration fc = FontConfiguration.create(skinParam, FontParam.TIMING, null);
 		return caption.create(fc, HorizontalAlignment.LEFT, skinParam);
 	}
 

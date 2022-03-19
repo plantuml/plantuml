@@ -33,7 +33,9 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.prefs.Preferences;
 
 import net.sourceforge.plantuml.Log;
+import net.sourceforge.plantuml.annotation.HaxeIgnored;
 
+@HaxeIgnored
 public class NumberAnalyzed2 implements INumberAnalyzed {
 
 	private static final int SLIDING_WINDOW = 512;

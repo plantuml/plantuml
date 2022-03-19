@@ -41,9 +41,11 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.plantuml.annotation.HaxeIgnored;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.security.SFile;
 
+@HaxeIgnored
 public class SourceFileReader extends SourceFileReaderAbstract implements ISourceFileReader {
 
 	public SourceFileReader(File file) throws IOException {

@@ -99,9 +99,9 @@ public class FtileFactoryDelegatorIf extends FtileFactoryDelegator {
 					? getRose().getHtmlColor(skinParam(), ColorParam.activityDiamondBackground)
 					: branch0.getColor();
 			arrowColor = Rainbow.build(skinParam());
-			fcTest = new FontConfiguration(skinParam(), testParam, null)
+			fcTest = FontConfiguration.create(skinParam(), testParam, null)
 					.changeColor(fontColor(FontParam.ACTIVITY_DIAMOND));
-			fcArrow = new FontConfiguration(skinParam(), FontParam.ARROW, null);
+			fcArrow = FontConfiguration.create(skinParam(), FontParam.ARROW, null);
 		}
 
 		if (thens.size() > 1) {

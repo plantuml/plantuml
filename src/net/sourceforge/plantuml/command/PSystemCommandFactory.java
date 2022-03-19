@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.ErrorUmlType;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringLocated;
+import net.sourceforge.plantuml.annotation.HaxeIgnored;
 import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
@@ -60,6 +61,7 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 
 	public abstract AbstractPSystem createEmptyDiagram(ThemeStyle style, UmlSource source, ISkinSimple skinParam);
 
+	@HaxeIgnored
 	protected PSystemCommandFactory() {
 		this(DiagramType.UML);
 	}
@@ -171,7 +173,7 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 	}
 
 	private BlocLines isMultilineCommandOk(IteratorCounter2 it, Command cmd) {
-		BlocLines lines = new BlocLines();
+		BlocLines lines = BlocLines.create();
 		int nb = 0;
 		while (it.hasNext()) {
 			lines = addOneSingleLineManageEmbedded2(it, lines);

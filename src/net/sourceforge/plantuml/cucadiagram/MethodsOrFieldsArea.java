@@ -182,9 +182,9 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlock,
 
 		FontConfiguration config;
 		if (style != null)
-			config = new FontConfiguration(skinParam, style);
+			config = FontConfiguration.create(skinParam, style);
 		else
-			config = new FontConfiguration(skinParam, fontParam, stereotype);
+			config = FontConfiguration.create(skinParam, fontParam, stereotype);
 
 		if (cs instanceof Member) {
 			final Member m = (Member) cs;

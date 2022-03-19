@@ -125,7 +125,7 @@ public class InstructionGroup extends AbstractInstruction implements Instruction
 	@Override
 	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote) {
 		if (list.isEmpty()) {
-			this.note = new PositionedNote(note, position, type, colors, swimlaneNote);
+			this.note = new PositionedNote(note, position, type, swimlaneNote, colors);
 			return true;
 		}
 		return list.addNote(note, position, type, colors, swimlaneNote);

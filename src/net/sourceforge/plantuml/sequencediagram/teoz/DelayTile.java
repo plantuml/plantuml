@@ -95,7 +95,7 @@ public class DelayTile extends AbstractTile implements Tile {
 		init(stringBounder);
 		final Component comp = getComponent(stringBounder);
 		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
-		final Area area = new Area(getPreferredWidth(stringBounder), dim.getHeight());
+		final Area area = Area.create(getPreferredWidth(stringBounder), dim.getHeight());
 		tileArguments.getLivingSpaces().delayOn(getY(), dim.getHeight());
 
 		ug = ug.apply(UTranslate.dx(getMinX().getCurrentValue()));

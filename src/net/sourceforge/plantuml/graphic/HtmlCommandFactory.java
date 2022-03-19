@@ -81,7 +81,7 @@ class HtmlCommandFactory {
 		}
 
 		if (addStyle.matcher(s).matches()) {
-			return new AddStyle(s);
+			return AddStyle.fromString(s);
 		}
 		if (removeStyle.matcher(s).matches()) {
 			return new RemoveStyle(FontStyle.getStyle(s));

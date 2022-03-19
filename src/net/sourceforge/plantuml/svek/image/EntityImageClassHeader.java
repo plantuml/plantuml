@@ -91,9 +91,9 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 					.withTOBECHANGED(stereotype) //
 					.with(entity.getStereostyles()) //
 					.getMergedStyle(skinParam.getCurrentStyleBuilder());
-			fontConfigurationName = new FontConfiguration(skinParam, style);
+			fontConfigurationName = FontConfiguration.create(skinParam, style);
 		} else {
-			fontConfigurationName = new FontConfiguration(getSkinParam(), FontParam.CLASS, stereotype);
+			fontConfigurationName = FontConfiguration.create(getSkinParam(), FontParam.CLASS, stereotype);
 		}
 
 		if (italic)
@@ -123,7 +123,7 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 			stereo = null;
 		else
 			stereo = TextBlockUtils.withMargin(Display.create(stereotype.getLabels(skinParam.guillemet())).create(
-					new FontConfiguration(getSkinParam(), FontParam.CLASS_STEREOTYPE, stereotype),
+					FontConfiguration.create(getSkinParam(), FontParam.CLASS_STEREOTYPE, stereotype),
 					HorizontalAlignment.CENTER, skinParam), 1, 0);
 
 		TextBlock genericBlock;
@@ -131,7 +131,7 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 			genericBlock = null;
 		} else {
 			genericBlock = Display.getWithNewlines(generic).create(
-					new FontConfiguration(getSkinParam(), FontParam.CLASS_STEREOTYPE, stereotype),
+					FontConfiguration.create(getSkinParam(), FontParam.CLASS_STEREOTYPE, stereotype),
 					HorizontalAlignment.CENTER, skinParam);
 			genericBlock = TextBlockUtils.withMargin(genericBlock, 1, 1);
 			final HColor classBackground = SkinParamUtils.getColor(getSkinParam(), stereotype, ColorParam.background);

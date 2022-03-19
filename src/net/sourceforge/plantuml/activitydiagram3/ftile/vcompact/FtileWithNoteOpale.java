@@ -158,7 +158,7 @@ public class FtileWithNoteOpale extends AbstractFtile implements Stencil, Stylea
 		} else {
 			noteBackgroundColor = rose.getHtmlColor(skinParam, ColorParam.noteBackground);
 			borderColor = rose.getHtmlColor(skinParam, ColorParam.noteBorder);
-			fc = new FontConfiguration(skinParam, FontParam.NOTE, null);
+			fc = FontConfiguration.create(skinParam, FontParam.NOTE, null);
 			shadowing = skinParam.shadowing(null) ? 4 : 0;
 			wrapWidth = skinParam.wrapWidth();
 		}

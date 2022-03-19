@@ -75,7 +75,7 @@ public abstract class AbstractEntityImageBorder extends AbstractEntityImage {
 		}
 
 		final Stereotype stereotype = leaf.getStereotype();
-		final FontConfiguration fc = new FontConfiguration(skinParam, fontParam, stereotype);
+		final FontConfiguration fc = FontConfiguration.create(skinParam, fontParam, stereotype);
 		this.desc = leaf.getDisplay().create(fc, HorizontalAlignment.CENTER, skinParam);
 	}
 

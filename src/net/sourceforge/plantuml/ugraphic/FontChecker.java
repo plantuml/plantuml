@@ -194,7 +194,7 @@ public class FontChecker {
 	// ug = (UGraphic2) ug.apply(UChangeColor.nnn(HtmlColorUtils.BLACK));
 	// ug.draw(new URectangle(dim - 1, dim - 1));
 	// ug = (UGraphic2) ug.apply(new UTranslate(dim / 3, 2 * dim / 3));
-	// final UText text = new UText("" + c, new FontConfiguration(font,
+	// final UText text = new UText("" + c, FontConfiguration.create(font,
 	// HtmlColorUtils.BLACK));
 	// ug.draw(text);
 	// final ByteArrayOutputStream os = new ByteArrayOutputStream();

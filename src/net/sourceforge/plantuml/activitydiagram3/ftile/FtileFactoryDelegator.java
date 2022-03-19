@@ -118,7 +118,7 @@ public class FtileFactoryDelegator implements FtileFactory {
 			final Style style = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam().getCurrentStyleBuilder());
 			fontConfiguration = style.getFontConfiguration(skinParam().getThemeStyle(), skinParam().getIHtmlColorSet());
 		} else {
-			fontConfiguration = new FontConfiguration(skinParam(), FontParam.ARROW, null);
+			fontConfiguration = FontConfiguration.create(skinParam(), FontParam.ARROW, null);
 		}
 		return display.create7(fontConfiguration, HorizontalAlignment.LEFT, skinParam(), CreoleMode.SIMPLE_LINE);
 	}

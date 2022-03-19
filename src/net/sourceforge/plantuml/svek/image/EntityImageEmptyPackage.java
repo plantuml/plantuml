@@ -135,7 +135,7 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 			this.stroke = GeneralImageBuilder.getForcedStroke(getEntity().getStereotype(), getSkinParam());
 			this.roundCorner = 0;
 			this.back = Cluster.getBackColor(specificBackColor, skinParam, stereotype, sname, USymbols.PACKAGE);
-			titleFontConfiguration = new FontConfiguration(getSkinParam(), FontParam.PACKAGE, stereotype);
+			titleFontConfiguration = FontConfiguration.create(getSkinParam(), FontParam.PACKAGE, stereotype);
 			titleHorizontalAlignment = HorizontalAlignment.CENTER;
 		}
 
@@ -151,7 +151,7 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 				stereoBlock = TextBlockUtils.empty(0, 0);
 			} else {
 				stereoBlock = TextBlockUtils.withMargin(Display.create(stereotype.getLabels(skinParam.guillemet()))
-						.create(new FontConfiguration(getSkinParam(), FontParam.PACKAGE_STEREOTYPE, stereotype),
+						.create(FontConfiguration.create(getSkinParam(), FontParam.PACKAGE_STEREOTYPE, stereotype),
 								titleHorizontalAlignment, skinParam),
 						1, 0);
 			}

@@ -87,9 +87,9 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 
 	private int minwidth = Integer.MAX_VALUE;
 
-	public UmlDiagram(ThemeStyle style, UmlSource source, UmlDiagramType type) {
-		super(style, source, type);
-	}
+//	public UmlDiagram(ThemeStyle style, UmlSource source, UmlDiagramType type) {
+//		super(style, source, type);
+//	}
 
 	public UmlDiagram(ThemeStyle style, UmlSource source, UmlDiagramType type, ISkinSimple orig) {
 		super(style, source, type, orig);

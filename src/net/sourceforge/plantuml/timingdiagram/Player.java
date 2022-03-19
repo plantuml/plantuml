@@ -87,8 +87,8 @@ public abstract class Player implements TimeProjected {
 
 	final protected FontConfiguration getFontConfiguration() {
 		if (UseStyle.useBetaStyle() == false)
-			return new FontConfiguration(skinParam, FontParam.TIMING, null);
-		return new FontConfiguration(skinParam, StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram)
+			return FontConfiguration.create(skinParam, FontParam.TIMING, null);
+		return FontConfiguration.create(skinParam, StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram)
 				.getMergedStyle(skinParam.getCurrentStyleBuilder()));
 	}
 

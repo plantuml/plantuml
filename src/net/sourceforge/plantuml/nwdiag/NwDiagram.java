@@ -98,7 +98,7 @@ public class NwDiagram extends UmlDiagram {
 	}
 
 	public NwDiagram(ThemeStyle style, UmlSource source) {
-		super(style, source, UmlDiagramType.NWDIAG);
+		super(style, source, UmlDiagramType.NWDIAG, null);
 	}
 
 	public void init() {
@@ -178,7 +178,7 @@ public class NwDiagram extends UmlDiagram {
 		final NServer server2;
 		if (lastNetwork() == null) {
 			createNetwork(name1);
-			server2 = new NServer(name2);
+			server2 = NServer.create(name2);
 		} else {
 			final NServer server1 = servers.get(name1);
 			final Network network1 = createNetwork("");
@@ -209,13 +209,13 @@ public class NwDiagram extends UmlDiagram {
 			assert currentGroup == null;
 			final Network network1 = createNetwork("");
 			network1.goInvisible();
-			server = new NServer(name);
+			server = NServer.create(name);
 			servers.put(name, server);
 			server.doNotPrintFirstLink();
 		} else {
 			server = servers.get(name);
 			if (server == null) {
-				server = new NServer(name);
+				server = NServer.create(name);
 				servers.put(name, server);
 			}
 		}

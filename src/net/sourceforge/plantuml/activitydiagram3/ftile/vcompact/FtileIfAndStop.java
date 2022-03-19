@@ -128,10 +128,10 @@ class FtileIfAndStop extends AbstractFtile {
 		if (UseStyle.useBetaStyle()) {
 			final Style style = StyleSignatureBasic.activityDiamond().getMergedStyle(skinParam.getCurrentStyleBuilder());
 			thickness = tileNonStop.getThickness(style);
-			fcTest = new FontConfiguration(skinParam, style);
+			fcTest = FontConfiguration.create(skinParam, style);
 		} else {
 			thickness = tileNonStop.getThickness(null);
-			fcTest = new FontConfiguration(skinParam, FontParam.ACTIVITY_DIAMOND, null);
+			fcTest = FontConfiguration.create(skinParam, FontParam.ACTIVITY_DIAMOND, null);
 		}
 
 		final Sheet sheet = Parser

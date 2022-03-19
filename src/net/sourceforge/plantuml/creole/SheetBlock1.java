@@ -45,6 +45,7 @@ import java.util.Objects;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.LineBreakStrategy;
+import net.sourceforge.plantuml.annotation.HaxeIgnored;
 import net.sourceforge.plantuml.creole.atom.Atom;
 import net.sourceforge.plantuml.creole.legacy.StripeSimple;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
@@ -73,6 +74,7 @@ public class SheetBlock1 extends AbstractTextBlock implements TextBlock, Atom, S
 	private final double marginX1;
 	private final double marginX2;
 
+	@HaxeIgnored
 	public SheetBlock1(Sheet sheet, LineBreakStrategy maxWidth, double padding) {
 		this(sheet, maxWidth, padding, 0, 0);
 	}

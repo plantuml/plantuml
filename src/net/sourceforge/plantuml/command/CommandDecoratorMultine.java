@@ -42,40 +42,40 @@ public class CommandDecoratorMultine<D extends Diagram> implements Command<D> {
 	private final SingleLineCommand2<D> cmd;
 	private final boolean removeEmptyColumn;
 	private final int nbMaxLines;
-	
-	public CommandDecoratorMultine(SingleLineCommand2<D> cmd, int nbMaxLines) {
-		this(cmd, false, nbMaxLines);
+
+	public static <D extends Diagram> CommandDecoratorMultine<D> create(SingleLineCommand2<D> cmd, int nbMaxLines) {
+		return new CommandDecoratorMultine<D>(cmd, false, nbMaxLines);
 	}
 
-	public CommandDecoratorMultine(SingleLineCommand2<D> cmd, boolean removeEmptyColumn, int nbMaxLines) {
+	private CommandDecoratorMultine(SingleLineCommand2<D> cmd, boolean removeEmptyColumn, int nbMaxLines) {
 		this.cmd = cmd;
 		this.removeEmptyColumn = removeEmptyColumn;
 		this.nbMaxLines = nbMaxLines;
 	}
 
 	public CommandExecutionResult execute(D diagram, BlocLines lines) {
-		if (removeEmptyColumn) {
+		if (removeEmptyColumn)
 			lines = lines.removeEmptyColumns();
-		}
+
 		lines = lines.toSingleLineWithHiddenNewLine();
 		return cmd.execute(diagram, lines);
 	}
 
 	public CommandControl isValid(BlocLines lines) {
-		if (cmd.isCommandForbidden()) {
+		if (cmd.isCommandForbidden())
 			return CommandControl.NOT_OK;
-		}
+
 		lines = lines.toSingleLineWithHiddenNewLine();
-		if (cmd.isForbidden(lines.getFirst().getString())) {
+		if (cmd.isForbidden(lines.getFirst().getString()))
 			return CommandControl.NOT_OK;
-		}
+
 		final CommandControl tmp = cmd.isValid(lines);
-		if (tmp == CommandControl.OK_PARTIAL) {
+		if (tmp == CommandControl.OK_PARTIAL)
 			throw new IllegalStateException();
-		}
-		if (tmp == CommandControl.OK) {
+
+		if (tmp == CommandControl.OK)
 			return tmp;
-		}
+
 		return CommandControl.OK_PARTIAL;
 	}
 

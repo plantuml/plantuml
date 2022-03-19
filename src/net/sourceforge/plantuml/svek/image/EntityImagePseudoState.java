@@ -87,9 +87,9 @@ public class EntityImagePseudoState extends AbstractEntityImage {
 
 		final FontConfiguration fontConfiguration;
 		if (UseStyle.useBetaStyle())
-			fontConfiguration = new FontConfiguration(getSkinParam(), FontParam.STATE, stereotype);
+			fontConfiguration = FontConfiguration.create(getSkinParam(), FontParam.STATE, stereotype);
 		else
-			fontConfiguration = new FontConfiguration(getSkinParam(), getStyle());
+			fontConfiguration = FontConfiguration.create(getSkinParam(), getStyle());
 
 		this.desc = Display.create(historyText).create(fontConfiguration, HorizontalAlignment.CENTER, skinParam);
 	}

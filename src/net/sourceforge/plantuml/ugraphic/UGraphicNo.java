@@ -50,14 +50,14 @@ public abstract class UGraphicNo implements UGraphic {
 	private final StringBounder stringBounder;
 	private final UTranslate translate;
 
-	public UGraphicNo(StringBounder stringBounder) {
-		this.stringBounder = stringBounder;
-		this.translate = new UTranslate();
-	}
+//	private UGraphicNo(UGraphicNo other, UChange change) {
+//		this(other.stringBounder,
+//				change instanceof UTranslate ? other.translate.compose((UTranslate) change) : other.translate);
+//	}
 
-	public UGraphicNo(UGraphicNo other, UChange change) {
-		this.stringBounder = other.stringBounder;
-		this.translate = change instanceof UTranslate ? other.translate.compose((UTranslate) change) : other.translate;
+	public UGraphicNo(StringBounder stringBounder, UTranslate translate) {
+		this.stringBounder = stringBounder;
+		this.translate = translate;
 	}
 
 	//
@@ -118,7 +118,7 @@ public abstract class UGraphicNo implements UGraphic {
 	// Internal things
 	//
 
-	protected UTranslate getTranslate() {
+	protected final UTranslate getTranslate() {
 		return translate;
 	}
 }

@@ -85,7 +85,7 @@ public class InstructionFork extends WithNote implements Instruction {
 		this.skinParam = skinParam;
 		this.swimlaneIn = swimlane;
 		this.swimlaneOut = swimlane;
-		this.forks.add(new InstructionList());
+		this.forks.add(InstructionList.empty());
 	}
 
 	private InstructionList getLastList() {
@@ -109,13 +109,12 @@ public class InstructionFork extends WithNote implements Instruction {
 
 		return new GtileSplit(all, swimlaneIn, getInLinkRenderingColor(skinParam).getColor());
 	}
-	
+
 	private Rainbow getInLinkRenderingColor(ISkinParam skinParam) {
 		Rainbow color;
 		color = Rainbow.build(skinParam);
 		return color;
 	}
-
 
 	@Override
 	public Ftile createFtile(FtileFactory factory) {
@@ -136,7 +135,7 @@ public class InstructionFork extends WithNote implements Instruction {
 
 	public void forkAgain(Swimlane swimlane) {
 		this.swimlaneOut = swimlane;
-		this.forks.add(new InstructionList());
+		this.forks.add(InstructionList.empty());
 	}
 
 	@Override

@@ -70,7 +70,7 @@ public class WBSDiagram extends UmlDiagram {
 	}
 
 	public WBSDiagram(ThemeStyle style, UmlSource source) {
-		super(style, source, UmlDiagramType.WBS);
+		super(style, source, UmlDiagramType.WBS, null);
 	}
 
 	@Override

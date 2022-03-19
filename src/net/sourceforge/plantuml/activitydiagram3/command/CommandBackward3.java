@@ -110,7 +110,7 @@ public class CommandBackward3 extends SingleLineCommand2<ActivityDiagram3> {
 		if (incomingColor == null)
 			in = LinkRendering.none();
 		else
-			in = new LinkRendering(incomingColor);
+			in = LinkRendering.create(incomingColor);
 		final String label = arg.get(name, 0);
 		return in.withDisplay(Display.getWithNewlines(label));
 	}

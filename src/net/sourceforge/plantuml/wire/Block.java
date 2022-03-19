@@ -127,7 +127,7 @@ public class Block extends AbstractTextBlock {
 	public void drawU(UGraphic ug) {
 		ug = ug.apply(getBlack());
 		if (children.size() == 0) {
-			final TextBlock label = display.create(new FontConfiguration(skinParam, FontParam.COMPONENT, null),
+			final TextBlock label = display.create(FontConfiguration.create(skinParam, FontParam.COMPONENT, null),
 					HorizontalAlignment.CENTER, skinParam);
 			label.drawU(ug.apply(new UTranslate(10, 10)));
 		} else {

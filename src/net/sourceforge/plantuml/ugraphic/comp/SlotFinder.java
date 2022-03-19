@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.ugraphic.comp;
 
 import static net.sourceforge.plantuml.utils.ObjectUtils.instanceOfAny;
+
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.TextLimitFinder;
 import net.sourceforge.plantuml.ugraphic.UBackground;
@@ -60,31 +61,25 @@ public class SlotFinder extends UGraphicNo {
 
 	@Override
 	public UGraphic apply(UChange change) {
-		return new SlotFinder(this, change);
+		if (!instanceOfAny(change, UBackground.class, HColor.class, UStroke.class, UTranslate.class))
+			throw new UnsupportedOperationException(change.getClass().toString());
+		final UTranslate tmp = change instanceof UTranslate ? this.getTranslate().compose((UTranslate) change)
+				: this.getTranslate();
+		SlotFinder result = new SlotFinder(this.getStringBounder(), tmp, this.slot, this.mode);
+		return result;
 	}
 
 	private final SlotSet slot;
-
 	private final CompressionMode mode;
 
-	public SlotFinder(CompressionMode mode, StringBounder stringBounder) {
-		super(stringBounder);
-		this.slot = new SlotSet();
-		this.mode = mode;
+	public static SlotFinder create(CompressionMode mode, StringBounder stringBounder) {
+		return new SlotFinder(stringBounder, new UTranslate(), new SlotSet(), mode);
 	}
 
-	private SlotFinder(SlotFinder other, UChange change) {
-		super(other, change);
-		if (!instanceOfAny(change,
-				UBackground.class,
-				HColor.class,
-				UStroke.class,
-				UTranslate.class
-		)) {
-			throw new UnsupportedOperationException(change.getClass().toString());
-		}
-		this.mode = other.mode;
-		this.slot = other.slot;
+	private SlotFinder(StringBounder stringBounder, UTranslate translate, SlotSet slot, CompressionMode mode) {
+		super(stringBounder, translate);
+		this.slot = slot;
+		this.mode = mode;
 	}
 
 	public void draw(UShape sh) {
@@ -115,57 +110,56 @@ public class SlotFinder extends UGraphicNo {
 	}
 
 	private void drawPath(double x, double y, UPath shape) {
-		if (mode == CompressionMode.ON_X) {
+		if (mode == CompressionMode.ON_X)
 			slot.addSlot(x + shape.getMinX(), x + shape.getMaxX());
-		} else {
+		else
 			slot.addSlot(y + shape.getMinY(), y + shape.getMaxY());
-		}
 
 	}
 
 	private void drawEmpty(double x, double y, UEmpty shape) {
-		if (mode == CompressionMode.ON_X) {
+		if (mode == CompressionMode.ON_X)
 			slot.addSlot(x, x + shape.getWidth());
-		} else {
+		else
 			slot.addSlot(y, y + shape.getHeight());
-		}
+
 	}
 
 	private void drawText(double x, double y, UText shape) {
-		final TextLimitFinder finder = new TextLimitFinder(getStringBounder(), false);
+		final TextLimitFinder finder = TextLimitFinder.create(getStringBounder(), false);
 		finder.apply(new UTranslate(x, y)).draw(shape);
-		if (mode == CompressionMode.ON_X) {
+		if (mode == CompressionMode.ON_X)
 			slot.addSlot(finder.getMinX(), finder.getMaxX());
-		} else {
+		else
 			slot.addSlot(finder.getMinY(), finder.getMaxY());
-		}
+
 	}
 
 	private void drawEllipse(double x, double y, UEllipse shape) {
-		if (mode == CompressionMode.ON_X) {
+		if (mode == CompressionMode.ON_X)
 			slot.addSlot(x, x + shape.getWidth());
-		} else {
+		else
 			slot.addSlot(y, y + shape.getHeight());
-		}
+
 	}
 
 	private void drawPolygon(double x, double y, UPolygon shape) {
-		if (mode == shape.getCompressionMode()) {
+		if (mode == shape.getCompressionMode())
 			return;
-		}
-		if (mode == CompressionMode.ON_X) {
+
+		if (mode == CompressionMode.ON_X)
 			slot.addSlot(x + shape.getMinX(), x + shape.getMaxX());
-		} else {
+		else
 			slot.addSlot(y + shape.getMinY(), y + shape.getMaxY());
-		}
+
 	}
 
 	private void drawRectangle(double x, double y, URectangle shape) {
-		if (mode == CompressionMode.ON_X) {
+		if (mode == CompressionMode.ON_X)
 			slot.addSlot(x, x + shape.getWidth());
-		} else {
+		else
 			slot.addSlot(y, y + shape.getHeight());
-		}
+
 	}
 
 	public ColorMapper getColorMapper() {

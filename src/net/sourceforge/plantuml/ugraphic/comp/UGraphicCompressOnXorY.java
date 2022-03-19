@@ -51,12 +51,12 @@ import net.sourceforge.plantuml.ugraphic.color.HColor;
 public class UGraphicCompressOnXorY extends UGraphicDelegator {
 
 	public UGraphic apply(UChange change) {
-		if (change instanceof UTranslate) {
+		if (change instanceof UTranslate)
 			return new UGraphicCompressOnXorY(mode, getUg(), compressionTransform,
 					translate.compose((UTranslate) change));
-		} else if (change instanceof UStroke || change instanceof UBackground || change instanceof HColor) {
+		else if (change instanceof UStroke || change instanceof UBackground || change instanceof HColor)
 			return new UGraphicCompressOnXorY(mode, getUg().apply(change), compressionTransform, translate);
-		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -69,8 +69,9 @@ public class UGraphicCompressOnXorY extends UGraphicDelegator {
 		return "UGraphicCompressOnXorY " + mode;
 	}
 
-	public UGraphicCompressOnXorY(CompressionMode mode, UGraphic ug, PiecewiseAffineTransform compressionTransform) {
-		this(mode, ug, compressionTransform, new UTranslate());
+	public static UGraphicCompressOnXorY create(CompressionMode mode, UGraphic ug,
+			PiecewiseAffineTransform compressionTransform) {
+		return new UGraphicCompressOnXorY(mode, ug, compressionTransform, new UTranslate());
 	}
 
 	private UGraphicCompressOnXorY(CompressionMode mode, UGraphic ug, PiecewiseAffineTransform compressionTransform,
@@ -99,37 +100,37 @@ public class UGraphicCompressOnXorY extends UGraphicDelegator {
 			final TextBlock text = centeredText.getText();
 			final double totalWidth = centeredText.getTotalWidth();
 			final double realSpaceWidth;
-			if (mode == CompressionMode.ON_X) {
+			if (mode == CompressionMode.ON_X)
 				realSpaceWidth = ct(x + totalWidth) - ct(x);
-			} else {
+			else
 				realSpaceWidth = totalWidth;
-			}
+
 			final double textWidth = text.calculateDimension(getStringBounder()).getWidth();
 			final double pos = (realSpaceWidth - textWidth) / 2;
 			text.drawU(getUg().apply(getTranslate(x, y)).apply(UTranslate.dx(pos)));
 			return;
 		}
-		if (shape instanceof ULine) {
+		if (shape instanceof ULine)
 			drawLine(x, y, (ULine) shape);
-		} else {
+		else
 			getUg().apply(getTranslate(x, y)).draw(shape);
-		}
+
 	}
 
 	private UTranslate getTranslate(final double x, final double y) {
-		if (mode == CompressionMode.ON_X) {
+		if (mode == CompressionMode.ON_X)
 			return new UTranslate(ct(x), y);
-		} else {
+		else
 			return new UTranslate(x, ct(y));
-		}
+
 	}
 
 	private void drawLine(double x, double y, ULine shape) {
-		if (mode == CompressionMode.ON_X) {
+		if (mode == CompressionMode.ON_X)
 			drawLine(ct(x), y, ct(x + shape.getDX()), y + shape.getDY());
-		} else {
+		else
 			drawLine(x, ct(y), x + shape.getDX(), ct(y + shape.getDY()));
-		}
+
 	}
 
 	private double ct(double v) {

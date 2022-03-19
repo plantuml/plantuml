@@ -72,7 +72,7 @@ public class WireDiagram extends UmlDiagram {
 	}
 
 	public WireDiagram(ThemeStyle style, UmlSource source) {
-		super(style, source, UmlDiagramType.WIRE);
+		super(style, source, UmlDiagramType.WIRE, null);
 	}
 
 	@Override

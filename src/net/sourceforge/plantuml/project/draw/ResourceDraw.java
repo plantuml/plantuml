@@ -116,7 +116,7 @@ public class ResourceDraw implements UDrawable {
 
 	private FontConfiguration getFontConfiguration(int size, HColor color) {
 		final UFont font = UFont.serif(size);
-		return new FontConfiguration(font, color, color, false);
+		return FontConfiguration.create(font, color, color, false);
 	}
 
 	public double getHeight() {

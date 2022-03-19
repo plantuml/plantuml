@@ -46,8 +46,8 @@ public class SplitParam {
 	private final HColor externalColor;
 	private final int externalMargin;
 
-	public SplitParam() {
-		this(null, null, 0);
+	private static SplitParam empty() {
+		return new SplitParam(null, null, 0);
 	}
 
 	public SplitParam(HColor borderColor, HColor externalColor, int externalMargin) {

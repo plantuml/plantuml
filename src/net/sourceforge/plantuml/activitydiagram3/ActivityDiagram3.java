@@ -364,7 +364,7 @@ public class ActivityDiagram3 extends UmlDiagram {
 		manageSwimlaneStrategy();
 		if (current() instanceof InstructionRepeat) {
 			final InstructionRepeat instructionRepeat = (InstructionRepeat) current();
-			final LinkRendering back = new LinkRendering(linkColor).withDisplay(linkLabel);
+			final LinkRendering back = LinkRendering.create(linkColor).withDisplay(linkLabel);
 			instructionRepeat.setTest(label, yes, out, nextLinkRenderer(), back, swinlanes.getCurrentSwimlane());
 			setCurrent(instructionRepeat.getParent());
 			this.setNextLinkRendererInternal(LinkRendering.none());
@@ -471,7 +471,7 @@ public class ActivityDiagram3 extends UmlDiagram {
 		if (color == null)
 			return;
 
-		final LinkRendering link = new LinkRendering(color);
+		final LinkRendering link = LinkRendering.create(color);
 		setNextLink(link);
 	}
 

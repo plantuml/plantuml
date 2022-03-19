@@ -174,8 +174,8 @@ public class EntityImageDescription extends AbstractEntityImage {
 			diagonalCorner = symbol.getSkinParameter().getDiagonalCorner(getSkinParam(), stereotype);
 			deltaShadow = getSkinParam().shadowing2(getEntity().getStereotype(), symbol.getSkinParameter()) ? 3 : 0;
 			stroke = colors.muteStroke(symbol.getSkinParameter().getStroke(getSkinParam(), stereotype));
-			fcTitle = new FontConfiguration(getSkinParam(), symbol.getFontParam(), stereotype);
-			fcStereo = new FontConfiguration(getSkinParam(), symbol.getFontParamStereotype(), stereotype);
+			fcTitle = FontConfiguration.create(getSkinParam(), symbol.getFontParam(), stereotype);
+			fcStereo = FontConfiguration.create(getSkinParam(), symbol.getFontParamStereotype(), stereotype);
 			defaultAlign = HorizontalAlignment.LEFT;
 		}
 

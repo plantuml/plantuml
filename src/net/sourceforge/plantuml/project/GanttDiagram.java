@@ -160,7 +160,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 	}
 
 	public GanttDiagram(ThemeStyle style, UmlSource source) {
-		super(style, source, UmlDiagramType.GANTT);
+		super(style, source, UmlDiagramType.GANTT, null);
 	}
 
 	public final int getDpi(FileFormatOption fileFormatOption) {

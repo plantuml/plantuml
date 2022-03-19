@@ -88,7 +88,7 @@ public class Rose {
 	}
 
 	private FontConfiguration getUFont2(ISkinParam skinParam, FontParam fontParam) {
-		return new FontConfiguration(skinParam, fontParam, null);
+		return FontConfiguration.create(skinParam, fontParam, null);
 	}
 
 	public Component createComponentNote(Style[] styles, ComponentType type, ISkinParam param,

@@ -81,7 +81,7 @@ public abstract class EntityImageStateCommon extends AbstractEntityImage {
 			fontConfiguration = getStyleStateHeader().getFontConfiguration(getSkinParam().getThemeStyle(),
 					getSkinParam().getIHtmlColorSet());
 		else
-			fontConfiguration = new FontConfiguration(getSkinParam(), FontParam.STATE, stereotype);
+			fontConfiguration = FontConfiguration.create(getSkinParam(), FontParam.STATE, stereotype);
 
 		this.desc = entity.getDisplay().create8(fontConfiguration, HorizontalAlignment.CENTER, skinParam,
 				CreoleMode.FULL, skinParam.wrapWidth());

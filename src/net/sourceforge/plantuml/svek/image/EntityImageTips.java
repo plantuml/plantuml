@@ -201,7 +201,7 @@ public class EntityImageTips extends AbstractEntityImage {
 			stroke = style.getStroke();
 		} else {
 			shadowing = skinParam.shadowing(getEntity().getStereotype()) ? 4 : 0;
-			fc = new FontConfiguration(skinParam, FontParam.NOTE, null);
+			fc = FontConfiguration.create(skinParam, FontParam.NOTE, null);
 		}
 
 		final TextBlock textBlock = BodyFactory.create3(display, FontParam.NOTE, skinParam, HorizontalAlignment.LEFT,

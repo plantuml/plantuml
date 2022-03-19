@@ -38,35 +38,29 @@ package net.sourceforge.plantuml.ugraphic;
 import static net.sourceforge.plantuml.utils.ObjectUtils.instanceOfAny;
 
 import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class TextLimitFinder extends UGraphicNo {
 
-	@Override
-	public UGraphic apply(UChange change) {
-		return new TextLimitFinder(this, change);
-	}
-
 	private final MinMaxMutable minmax;
 
-	public TextLimitFinder(StringBounder stringBounder, boolean initToZero) {
-		super(stringBounder);
-		this.minmax = MinMaxMutable.getEmpty(initToZero);
+	@Override
+	public UGraphic apply(UChange change) {
+		if (!instanceOfAny(change, UBackground.class, HColor.class, UStroke.class, UTranslate.class))
+			throw new UnsupportedOperationException(change.getClass().toString());
+		final UTranslate tmp = change instanceof UTranslate ? this.getTranslate().compose((UTranslate) change)
+				: this.getTranslate();
+		return new TextLimitFinder(this.getStringBounder(), tmp, this.minmax);
 	}
 
-	private TextLimitFinder(TextLimitFinder other, UChange change) {
-		super(other, change);
-		if (!instanceOfAny(change,
-				UBackground.class,
-				HColor.class,
-				UStroke.class,
-				UTranslate.class
-		)) {
-			throw new UnsupportedOperationException(change.getClass().toString());
-		}
-		this.minmax = other.minmax;
+	public static TextLimitFinder create(StringBounder stringBounder, boolean initToZero) {
+		return new TextLimitFinder(stringBounder, new UTranslate(), MinMaxMutable.getEmpty(initToZero));
+	}
+
+	private TextLimitFinder(StringBounder stringBounder, UTranslate translate, MinMaxMutable minmax) {
+		super(stringBounder, translate);
+		this.minmax = minmax;
 	}
 
 	public void draw(UShape shape) {
@@ -78,7 +72,8 @@ public class TextLimitFinder extends UGraphicNo {
 	}
 
 	private void drawText(double x, double y, UText text) {
-		final Dimension2D dim = getStringBounder().calculateDimension(text.getFontConfiguration().getFont(), text.getText());
+		final Dimension2D dim = getStringBounder().calculateDimension(text.getFontConfiguration().getFont(),
+				text.getText());
 		y -= dim.getHeight() - 1.5;
 		minmax.addPoint(x, y);
 		minmax.addPoint(x, y + dim.getHeight());

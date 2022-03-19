@@ -40,11 +40,13 @@ import java.util.Iterator;
 import java.util.Map;
 
 import net.sourceforge.plantuml.StringLocated;
+import net.sourceforge.plantuml.annotation.HaxeIgnored;
 
 public class RegexOr extends RegexComposed implements IRegex {
 
 	private final String name;
 
+	@HaxeIgnored
 	public RegexOr(IRegex... partial) {
 		this(null, partial);
 	}

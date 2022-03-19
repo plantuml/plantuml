@@ -34,7 +34,8 @@ import java.util.concurrent.locks.ReentrantLock;
 import java.util.prefs.Preferences;
 
 import net.sourceforge.plantuml.Log;
-
+import net.sourceforge.plantuml.annotation.HaxeIgnored;
+@HaxeIgnored
 public class NumberAnalyzed implements INumberAnalyzed {
 
 	private static final int SLIDING_WINDOW = 1024;

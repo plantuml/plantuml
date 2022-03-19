@@ -114,7 +114,7 @@ public class GtileGroup extends AbstractGtileRoot {
 			style = null;
 			final UFont font = skinParam.getFont(null, false, FontParam.PARTITION);
 			final HColor fontColor = skinParam.getFontHtmlColor(null, FontParam.PARTITION);
-			fc = new FontConfiguration(font, fontColor, skinParam.getHyperlinkColor(),
+			fc = FontConfiguration.create(font, fontColor, skinParam.getHyperlinkColor(),
 					skinParam.useUnderlineForHyperlink(), skinParam.getTabSize());
 			this.shadowing = skinParam().shadowing(null) ? 3 : 0;
 		}

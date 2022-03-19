@@ -130,7 +130,7 @@ public abstract class TimeHeader {
 		if (bold)
 			font = font.bold();
 
-		return new FontConfiguration(font, color, color, false);
+		return FontConfiguration.create(font, color, color, false);
 	}
 
 	public final TimeScale getTimeScale() {

@@ -71,7 +71,7 @@ public class BoardDiagram extends UmlDiagram {
 	}
 
 	public BoardDiagram(ThemeStyle style, UmlSource source) {
-		super(style, source, UmlDiagramType.BOARD);
+		super(style, source, UmlDiagramType.BOARD, null);
 	}
 
 	@Override

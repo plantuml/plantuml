@@ -136,7 +136,7 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 
 			this.borderColor = SkinParamUtils.getColor(getSkinParam(), null, ColorParam.noteBorder);
 
-			fontConfiguration = new FontConfiguration(getSkinParam(), FontParam.NOTE, null);
+			fontConfiguration = FontConfiguration.create(getSkinParam(), FontParam.NOTE, null);
 			horizontalAlignment = skinParam.getHorizontalAlignment(AlignmentParam.noteTextAlignment, null, false, null);
 		}
 

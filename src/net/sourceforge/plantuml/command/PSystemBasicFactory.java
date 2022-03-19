@@ -40,6 +40,7 @@ import net.sourceforge.plantuml.ErrorUml;
 import net.sourceforge.plantuml.ErrorUmlType;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.StringLocated;
+import net.sourceforge.plantuml.annotation.HaxeIgnored;
 import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
@@ -54,6 +55,7 @@ public abstract class PSystemBasicFactory<P extends AbstractPSystem> extends PSy
 		super(diagramType);
 	}
 
+	@HaxeIgnored
 	public PSystemBasicFactory() {
 		this(DiagramType.UML);
 	}

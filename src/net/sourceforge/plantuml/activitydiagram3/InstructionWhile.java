@@ -58,7 +58,7 @@ import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class InstructionWhile extends WithNote implements Instruction, InstructionCollection {
 
-	private final InstructionList repeatList = new InstructionList();
+	private final InstructionList repeatList = InstructionList.empty();
 	private final Instruction parent;
 	private final LinkRendering nextLinkRenderer;
 	private final HColor color;

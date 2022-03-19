@@ -51,7 +51,7 @@ public class UPolygonHand {
 			poly = new UPolygon();
 			return;
 		}
-		final HandJiggle jiggle = new HandJiggle(pt.get(0), 1.5, rnd);
+		final HandJiggle jiggle = HandJiggle.create(pt.get(0), 1.5, rnd);
 		for (int i = 1; i < pt.size(); i++) {
 			jiggle.lineTo(pt.get(i));
 		}

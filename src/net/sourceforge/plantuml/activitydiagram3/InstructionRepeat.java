@@ -204,7 +204,7 @@ public class InstructionRepeat extends AbstractInstruction implements Instructio
 		if (Display.isNull(backward))
 			return repeatList.addNote(note, position, type, colors, swimlaneNote);
 
-		this.backwardNotes.add(new PositionedNote(note, position, type, colors, swimlaneNote));
+		this.backwardNotes.add(new PositionedNote(note, position, type, swimlaneNote, colors));
 		return true;
 
 	}

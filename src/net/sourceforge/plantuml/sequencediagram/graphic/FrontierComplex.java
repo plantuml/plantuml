@@ -42,33 +42,25 @@ class FrontierComplex implements Frontier {
 
 	private final double freeY[];
 
-	public FrontierComplex(double freeY, int rangeEnd) {
-		this.freeY = new double[rangeEnd + 1];
-		for (int i = 0; i <= rangeEnd; i++) {
-			this.freeY[i] = freeY;
-		}
+	public static FrontierComplex create(double freeY, int rangeEnd) {
+		final FrontierComplex result = new FrontierComplex(new double[rangeEnd + 1]);
+		for (int i = 0; i <= rangeEnd; i++)
+			result.freeY[i] = freeY;
+
+		return result;
 	}
 
 	private FrontierComplex(double freeY[]) {
 		this.freeY = freeY;
 	}
 
-	private FrontierComplex(double freeY[], double delta, ParticipantRange range) {
-		this(freeY.clone());
-		final double newV = getFreeY(range) + delta;
-		for (int i = range.start(); i <= range.end(); i++) {
-			this.freeY[i] = newV;
-		}
-	}
-
 	public double getFreeY(ParticipantRange range) {
 		Objects.requireNonNull(range);
 		double result = freeY[range.start()];
-		for (int i = range.start(); i <= range.end(); i++) {
-			if (freeY[i] > result) {
+		for (int i = range.start(); i <= range.end(); i++)
+			if (freeY[i] > result)
 				result = freeY[i];
-			}
-		}
+
 		return result;
 	}
 
@@ -78,21 +70,26 @@ class FrontierComplex implements Frontier {
 	}
 
 	public FrontierComplex add(double delta, ParticipantRange range) {
-		return new FrontierComplex(freeY, delta, Objects.requireNonNull(range));
+		Objects.requireNonNull(range);
+		final FrontierComplex result = new FrontierComplex(freeY.clone());
+		final double newV = result.getFreeY(range) + delta;
+		for (int i = range.start(); i <= range.end(); i++)
+			result.freeY[i] = newV;
+		return result;
 	}
 
 	FrontierComplex copy() {
 		return new FrontierComplex(freeY.clone());
 	}
-	
+
 	FrontierComplex mergeMax(FrontierComplex other) {
-		if (this.freeY.length != other.freeY.length) {
+		if (this.freeY.length != other.freeY.length)
 			throw new IllegalArgumentException();
-		}
+
 		final FrontierComplex result = new FrontierComplex(new double[freeY.length]);
-		for (int i=0; i<freeY.length; i++) {
+		for (int i = 0; i < freeY.length; i++)
 			result.freeY[i] = Math.max(this.freeY[i], other.freeY[i]);
-		}
+
 		return result;
 	}
 

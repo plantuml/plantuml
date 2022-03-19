@@ -196,7 +196,7 @@ try {
      for (i = 0; i < L.size; i++)
      if (EQ(e, L.list.get_(i)))
  	 	return;
-     UNSUPPORTED("cslejjtgepjdwlcykfas4fmvz"); //     elist_append(e, (*L));
+     elist_append(e, L);
 } finally {
 LEAVING("cttswsffgmw1g710jzvdd3wzn","safe_list_append");
 }

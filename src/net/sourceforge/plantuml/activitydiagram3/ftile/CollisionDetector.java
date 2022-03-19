@@ -41,6 +41,7 @@ import java.awt.geom.Line2D;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.plantuml.annotation.HaxeIgnored;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UBackground;
@@ -56,6 +57,7 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
+@HaxeIgnored
 public class CollisionDetector extends UGraphicNo {
 
 	@Override
@@ -65,16 +67,24 @@ public class CollisionDetector extends UGraphicNo {
 
 	private final Context context;
 
-	public CollisionDetector(StringBounder stringBounder) {
-		super(stringBounder);
-		this.context = new Context();
+	private static CollisionDetector create(StringBounder stringBounder) {
+		return new CollisionDetector(stringBounder, new UTranslate(), new Context());
+	}
+
+	private CollisionDetector(StringBounder stringBounder, UTranslate translate, Context context) {
+		super(stringBounder, translate);
+		this.context = context;
 	}
 
 	private CollisionDetector(CollisionDetector other, UChange change) {
-		super(other, change);
-		if (!instanceOfAny(change, UBackground.class, HColor.class, UStroke.class, UTranslate.class)) {
+		// this(other.stringBounder,
+		// change instanceof UTranslate ? other.translate.compose((UTranslate) change) :
+		// other.translate);
+		super(other.getStringBounder(), change instanceof UTranslate ? other.getTranslate().compose((UTranslate) change)
+				: other.getTranslate());
+		if (!instanceOfAny(change, UBackground.class, HColor.class, UStroke.class, UTranslate.class))
 			throw new UnsupportedOperationException(change.getClass().toString());
-		}
+
 		this.context = other.context;
 	}
 

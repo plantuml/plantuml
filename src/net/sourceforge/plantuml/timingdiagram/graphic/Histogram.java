@@ -195,9 +195,9 @@ public class Histogram implements PDrawing {
 
 	private FontConfiguration getFontConfiguration() {
 		if (UseStyle.useBetaStyle() == false)
-			return new FontConfiguration(skinParam, FontParam.TIMING, null);
+			return FontConfiguration.create(skinParam, FontParam.TIMING, null);
 
-		return new FontConfiguration(skinParam, style);
+		return FontConfiguration.create(skinParam, style);
 	}
 
 	private UStroke getStroke() {

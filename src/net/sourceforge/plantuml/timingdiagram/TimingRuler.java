@@ -187,9 +187,9 @@ public class TimingRuler {
 
 	private FontConfiguration getFontConfiguration() {
 		if (UseStyle.useBetaStyle() == false)
-			return new FontConfiguration(skinParam, FontParam.TIMING, null);
+			return FontConfiguration.create(skinParam, FontParam.TIMING, null);
 
-		return new FontConfiguration(skinParam, getStyle());
+		return FontConfiguration.create(skinParam, getStyle());
 	}
 
 	private Style getStyle() {

@@ -85,7 +85,7 @@ public class Gtiles {
 
 			borderColor = rose.getHtmlColor(skinParam, ColorParam.activityDiamondBorder);
 			backColor = color == null ? rose.getHtmlColor(skinParam, ColorParam.activityDiamondBackground) : color;
-			fcTest = new FontConfiguration(skinParam, testParam, null)
+			fcTest = FontConfiguration.create(skinParam, testParam, null)
 					.changeColor(fontColor(skinParam, FontParam.ACTIVITY_DIAMOND));
 		}
 

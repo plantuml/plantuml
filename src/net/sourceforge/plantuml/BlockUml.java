@@ -77,6 +77,7 @@ public class BlockUml {
 		return Collections.unmodifiableSet(included);
 	}
 
+	@Deprecated
 	BlockUml(ThemeStyle style, String... strings) {
 		this(style, convert(strings), Defines.createEmpty(), null, null, null);
 	}

@@ -101,7 +101,7 @@ public class NoteTile extends AbstractTile implements Tile {
 		final Component comp = getComponent(stringBounder);
 		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
 		final double x = getX(stringBounder).getCurrentValue();
-		final Area area = new Area(getUsedWidth(stringBounder), dim.getHeight());
+		final Area area = Area.create(getUsedWidth(stringBounder), dim.getHeight());
 
 		ug = ug.apply(UTranslate.dx(x));
 		comp.drawU(ug, area, (Context2D) ug);

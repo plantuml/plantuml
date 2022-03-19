@@ -166,7 +166,7 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 			return null;
 		}
 		final ISkinParam skinParam = diagram.getSkinParam();
-		final FontConfiguration labelFont = new FontConfiguration(skinParam, FontParam.ARROW, null);
+		final FontConfiguration labelFont = FontConfiguration.create(skinParam, FontParam.ARROW, null);
 		final TextBlock label = link.getLabel().create(labelFont,
 				skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), skinParam);
 		if (TextBlockUtils.isEmpty(label, stringBounder)) {
@@ -181,7 +181,7 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 			return null;
 		}
 		final ISkinParam skinParam = diagram.getSkinParam();
-		final FontConfiguration labelFont = new FontConfiguration(skinParam, FontParam.ARROW, null);
+		final FontConfiguration labelFont = FontConfiguration.create(skinParam, FontParam.ARROW, null);
 		final TextBlock label = Display.getWithNewlines(tmp).create(labelFont,
 				skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), skinParam);
 		if (TextBlockUtils.isEmpty(label, stringBounder)) {

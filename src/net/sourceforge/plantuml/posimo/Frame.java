@@ -120,7 +120,7 @@ public class Frame implements Component {
 	private TextBlock createTextBloc() {
 		final UFont font = skinParam.getFont(null, false, FontParam.PACKAGE);
 		final HColor textColor = skinParam.getFontHtmlColor(null, FontParam.PACKAGE);
-		// final TextBlock bloc = Display.create(name).create(new FontConfiguration(font, textColor,
+		// final TextBlock bloc = Display.create(name).create(FontConfiguration.create(font, textColor,
 		// skinParam.getHyperlinkColor(), skinParam.useUnderlineForHyperlink()), HorizontalAlignment.LEFT, new
 		// SpriteContainerEmpty());
 		// return bloc;
