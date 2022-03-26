@@ -57,7 +57,7 @@ public class DriverCenteredCharacterTikz implements UDriver<UCenteredCharacter, 
 		final double ypos = y - unusedSpace.getCenterY() - 0.5;
 
 		final TextLayout t = createTextLayout(font, "" + c);
-		tikz.setStrokeColor(mapper.toColor(param.getColor()));
+		tikz.setStrokeColor(param.getColor());
 		tikz.drawPathIterator(xpos, ypos, t.getOutline(null).getPathIterator(null));
 	}
 

@@ -45,7 +45,7 @@ public class DriverLineTikz implements UDriver<ULine, TikzGraphics> {
 	public void draw(ULine line, double x, double y, ColorMapper mapper, UParam param, TikzGraphics tikz) {
 		double x2 = x + line.getDX();
 		double y2 = y + line.getDY();
-		tikz.setStrokeColor(mapper.toColor(param.getColor()));
+		tikz.setStrokeColor(param.getColor());
 		tikz.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDashTikz());
 		tikz.line(x, y, x2, y2);
 	}
