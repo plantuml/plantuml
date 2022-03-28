@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
-import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
+import net.sourceforge.plantuml.UrlMode;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
@@ -217,7 +217,7 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 				labels.getSecondLabel(), diagram.getLabeldistance(), diagram.getLabelangle(),
 				diagram.getSkinParam().getCurrentStyleBuilder());
 		if (arg.get("URL", 0) != null) {
-			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), ModeUrl.STRICT);
+			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), UrlMode.STRICT);
 			final Url url = urlBuilder.getUrl(arg.get("URL", 0));
 			link.setUrl(url);
 		}

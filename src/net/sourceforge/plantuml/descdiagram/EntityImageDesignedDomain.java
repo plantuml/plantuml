@@ -73,13 +73,13 @@ public class EntityImageDesignedDomain extends AbstractEntityImage {
 		super(entity, skinParam);
 		final Stereotype stereotype = entity.getStereotype();
 		this.name = TextBlockUtils.withMargin(
-				entity.getDisplay().create(new FontConfiguration(getSkinParam(), FontParam.DESIGNED_DOMAIN, stereotype),
+				entity.getDisplay().create(FontConfiguration.create(getSkinParam(), FontParam.DESIGNED_DOMAIN, stereotype),
 						HorizontalAlignment.CENTER, skinParam), 2, 2);
 		if (stereotype == null || stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) == null) {
 			this.stereo = null;
 		} else {
 			this.stereo = Display.create(stereotype.getLabels(skinParam.guillemet())).create(
-					new FontConfiguration(getSkinParam(), FontParam.DESIGNED_DOMAIN_STEREOTYPE, stereotype),
+					FontConfiguration.create(getSkinParam(), FontParam.DESIGNED_DOMAIN_STEREOTYPE, stereotype),
 					HorizontalAlignment.CENTER, skinParam);
 		}
 		this.url = entity.getUrl99();

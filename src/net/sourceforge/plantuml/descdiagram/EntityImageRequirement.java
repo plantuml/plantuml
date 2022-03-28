@@ -84,7 +84,7 @@ public class EntityImageRequirement extends AbstractEntityImage {
 			this.desc = tmp;
 		} else {
 			final TextBlock stereo = Display.getWithNewlines(stereotype.getLabel(getSkinParam().guillemet())).create(
-					new FontConfiguration(getSkinParam(), FontParam.REQUIREMENT_STEREOTYPE, stereotype),
+					FontConfiguration.create(getSkinParam(), FontParam.REQUIREMENT_STEREOTYPE, stereotype),
 					HorizontalAlignment.CENTER, skinParam);
 			this.desc = TextBlockUtils.mergeTB(stereo, tmp, HorizontalAlignment.CENTER);
 		}

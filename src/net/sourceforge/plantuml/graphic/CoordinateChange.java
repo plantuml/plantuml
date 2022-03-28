@@ -50,8 +50,8 @@ class CoordinateChange {
 	private final double vect_v_y;
 	private final double len;
 
-	public CoordinateChange(Point2D p1, Point2D p2) {
-		this(p1.getX(), p1.getY(), p2.getX(), p2.getY());
+	public static CoordinateChange create(Point2D p1, Point2D p2) {
+		return new CoordinateChange(p1.getX(), p1.getY(), p2.getX(), p2.getY());
 	}
 
 	public CoordinateChange(double x1, double y1, double x2, double y2) {

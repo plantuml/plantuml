@@ -147,7 +147,7 @@ public final class GroupPngMakerState {
 					skinParam.getIHtmlColorSet());
 		} else {
 			rounded = IEntityImage.CORNER;
-			fontConfiguration = new FontConfiguration(skinParam, FontParam.STATE, group.getStereotype());
+			fontConfiguration = FontConfiguration.create(skinParam, FontParam.STATE, group.getStereotype());
 			if (skinParam.shadowing(group.getStereotype()))
 				shadowing = 3.0;
 		}

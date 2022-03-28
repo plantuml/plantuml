@@ -186,10 +186,10 @@ public class LifeLine {
 			if (level == 0) {
 				final double y1 = events.get(i).y;
 				final double y2 = events.get(j).y;
-				return new SegmentColored(y1, y2, events.get(i).colors, shadowing);
+				return SegmentColored.create(y1, y2, events.get(i).colors, shadowing);
 			}
 		}
-		return new SegmentColored(events.get(i).y, events.get(events.size() - 1).y, events.get(i).colors, shadowing);
+		return SegmentColored.create(events.get(i).y, events.get(events.size() - 1).y, events.get(i).colors, shadowing);
 	}
 
 	private Collection<SegmentColored> getSegmentsCutted(StringBounder stringBounder, int i) {
@@ -225,8 +225,8 @@ public class LifeLine {
 					style = style.eventuallyOverride(PName.BackGroundColor, specificBackColor);
 					style = style.eventuallyOverride(PName.LineColor, specificLineColor);
 				}
-				final Component compAliveBox = skin
-						.createComponent(new Style[] { style }, type, null, skinParam2, null);
+				final Component compAliveBox = skin.createComponent(new Style[] { style }, type, null, skinParam2,
+						null);
 				type = ComponentType.ALIVE_BOX_OPEN_OPEN;
 				final int currentLevel = getLevel(seg.getPos1Initial());
 				seg.drawU(ug, compAliveBox, currentLevel);

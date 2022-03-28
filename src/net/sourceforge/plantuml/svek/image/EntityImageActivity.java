@@ -88,7 +88,7 @@ public class EntityImageActivity extends AbstractEntityImage {
 			horizontalAlignment = style.getHorizontalAlignment();
 			shadowing = style.value(PName.Shadowing).asDouble();
 		} else {
-			fontConfiguration = new FontConfiguration(getSkinParam(), FontParam.ACTIVITY, stereotype);
+			fontConfiguration = FontConfiguration.create(getSkinParam(), FontParam.ACTIVITY, stereotype);
 			horizontalAlignment = HorizontalAlignment.CENTER;
 			if (getSkinParam().shadowing(getEntity().getStereotype())) {
 				shadowing = 4;

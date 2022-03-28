@@ -127,7 +127,7 @@ public class FtileNoteAlone extends AbstractFtile implements Stencil, Styleable 
 			wrapWidth = skinParam.wrapWidth();
 		}
 
-		final FontConfiguration fc = new FontConfiguration(skinParam, FontParam.NOTE, null);
+		final FontConfiguration fc = FontConfiguration.create(skinParam, FontParam.NOTE, null);
 
 		final Sheet sheet = Parser
 				.build(fc, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT), skinParam, CreoleMode.FULL)

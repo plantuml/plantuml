@@ -55,6 +55,9 @@ import net.sourceforge.plantuml.eps.EpsGraphics;
 import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.USegment;
 import net.sourceforge.plantuml.ugraphic.USegmentType;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 import net.sourceforge.plantuml.version.Version;
 
 public class TikzGraphics {
@@ -65,19 +68,21 @@ public class TikzGraphics {
 	private final List<String> cmd = new ArrayList<>();
 	private final boolean withPreamble;
 
-	private Color color = Color.BLACK;
-	private Color fillcolor = Color.BLACK;
-	private Color fillcolorGradient2 = null;
+	private HColor color = HColorUtils.BLACK;
+	private HColor fillcolor = HColorUtils.BLACK;
+	private HColor fillcolorGradient2 = null;
 	private char gradientPolicy;
 	private double thickness = 1.0;
 	private final double scale;
 	private String dash = null;
+	private final ColorMapper mapper;
 
 	private final Map<Color, String> colornames = new LinkedHashMap<Color, String>();
 
-	public TikzGraphics(double scale, boolean withPreamble) {
+	public TikzGraphics(double scale, boolean withPreamble, ColorMapper mapper) {
 		this.withPreamble = withPreamble;
 		this.scale = scale;
+		this.mapper = mapper;
 	}
 
 	private final Map<String, Integer> styles = new LinkedHashMap<String, Integer>();
@@ -103,15 +108,30 @@ public class TikzGraphics {
 		}
 	}
 
-	private String getColorName(Color c) {
-		if (c.equals(Color.WHITE))
+	private String getColorName(HColor hcolor) {
+		final Color color = mapper.toColor(hcolor);
+		if (color.equals(Color.WHITE))
 			return "white";
 
-		if (c.equals(Color.BLACK))
+		if (color.equals(Color.BLACK))
 			return "black";
 
-		final String result = colornames.get(c);
+		final String result = colornames.get(color);
 		return Objects.requireNonNull(result);
+	}
+
+	private void appendFillColor(StringBuilder sb, boolean colorBackup) {
+		if (fillcolor == null)
+			return;
+
+		if (mustApplyFillColor()) {
+			sb.append("fill=" + getColorName(fillcolor) + ",");
+			if (color == null && colorBackup)
+				sb.append("color=" + getColorName(fillcolor) + ",");
+		} else {
+			sb.append("fill opacity=0,");
+		}
+
 	}
 
 	public void createData(OutputStream os) throws IOException {
@@ -227,7 +247,8 @@ public class TikzGraphics {
 				sb.append("color=" + getColorName(color) + ",");
 
 			if (mustApplyFillColor()) {
-				sb.append("fill=" + getColorName(fillcolor) + ",");
+				appendFillColor(sb, true);
+				// sb.append("fill=" + getColorName(fillcolor) + ",");
 				if (color == null)
 					sb.append("color=" + getColorName(fillcolor) + ",");
 
@@ -438,7 +459,8 @@ public class TikzGraphics {
 			sb.append("bottom color=" + getColorName(fillcolorGradient2) + ",");
 			sb.append("shading=axis,shading angle=" + getAngleFromGradientPolicy() + ",");
 		} else if (mustApplyFillColor()) {
-			sb.append("fill=" + getColorName(fillcolor) + ",");
+			appendFillColor(sb, false);
+			// sb.append("fill=" + getColorName(fillcolor) + ",");
 			if (color == null)
 				sb.append("color=" + getColorName(fillcolor) + ",");
 
@@ -448,7 +470,11 @@ public class TikzGraphics {
 	private boolean mustApplyFillColor() {
 		if (fillcolor == null)
 			return false;
-		if (fillcolor.getAlpha() == 0)
+
+		if (HColorUtils.isTransparent(fillcolor))
+			return false;
+
+		if (mapper.toColor(fillcolor).getAlpha() == 0)
 			return false;
 		return true;
 	}
@@ -592,38 +618,42 @@ public class TikzGraphics {
 
 	}
 
-	public void setFillColor(Color c) {
-		// if (c == null) {
-		// c = Color.WHITE;
-		// }
+	public void setFillColor(HColor c) {
 		this.fillcolor = c;
 		this.fillcolorGradient2 = null;
-		addColor(c);
+		if (mustApplyFillColor())
+			addColor(fillcolor);
+
 	}
 
-	public void setGradientColor(Color c1, Color c2, char policy) {
+	public void setGradientColor(HColor c1, HColor c2, char policy) {
 		this.fillcolor = c1;
 		this.fillcolorGradient2 = c2;
 		this.gradientPolicy = policy;
-		addColor(c1);
-		addColor(c2);
+		if (mustApplyFillColor())
+			addColor(fillcolor);
+
+		addColor(fillcolorGradient2);
 	}
 
-	public void setStrokeColor(Color c) {
+	public void setStrokeColor(HColor c) {
 		// Objects.requireNonNull(c);
 		this.color = c;
 		addColor(c);
 	}
 
-	private void addColor(Color c) {
-		if (c == null)
+	private void addColor(HColor hcolor) {
+		if (hcolor == null)
+			return;
+		final Color color = mapper.toColor(hcolor);
+		if (color == null)
 			return;
 
-		if (colornames.containsKey(c))
+		if (colornames.containsKey(color))
 			return;
 
 		final String name = "plantucolor" + String.format("%04d", colornames.size());
-		colornames.put(c, name);
+		colornames.put(color, name);
 	}
 
 	public void setStrokeWidth(double thickness, String dash) {

@@ -96,7 +96,7 @@ public class TimingDiagram extends UmlDiagram implements Clocks {
 	}
 
 	public TimingDiagram(ThemeStyle style, UmlSource source) {
-		super(style, source, UmlDiagramType.TIMING);
+		super(style, source, UmlDiagramType.TIMING, null);
 	}
 
 	@Override

@@ -106,12 +106,12 @@ public class AnnotatedWorker {
 			final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.frame)
 					.getMergedStyle(skinParam.getCurrentStyleBuilder());
 			deltaShadow = style.value(PName.Shadowing).asDouble();
-			fontConfiguration = new FontConfiguration(getSkinParam(), style);
+			fontConfiguration = FontConfiguration.create(getSkinParam(), style);
 			stroke = style.getStroke();
 			borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
 		} else {
 			deltaShadow = getSkinParam().shadowing(null) ? 3 : 0;
-			fontConfiguration = new FontConfiguration(getSkinParam(), FontParam.CAPTION, null);
+			fontConfiguration = FontConfiguration.create(getSkinParam(), FontParam.CAPTION, null);
 			stroke = new UStroke();
 			borderColor = HColorUtils.BLACK;
 		}
@@ -193,7 +193,7 @@ public class AnnotatedWorker {
 					.getMergedStyle(skinParam.getCurrentStyleBuilder());
 			return style.createTextBlockBordered(caption.getDisplay(), skinParam.getIHtmlColorSet(), skinParam);
 		}
-		return caption.getDisplay().create(new FontConfiguration(getSkinParam(), FontParam.CAPTION, null),
+		return caption.getDisplay().create(FontConfiguration.create(getSkinParam(), FontParam.CAPTION, null),
 				HorizontalAlignment.CENTER, getSkinParam());
 	}
 
@@ -209,7 +209,7 @@ public class AnnotatedWorker {
 			block = style.createTextBlockBordered(title.getDisplay(), skinParam.getIHtmlColorSet(), skinParam);
 		} else {
 			final ISkinParam skinParam = getSkinParam();
-			final FontConfiguration fontConfiguration = new FontConfiguration(skinParam, FontParam.TITLE, null);
+			final FontConfiguration fontConfiguration = FontConfiguration.create(skinParam, FontParam.TITLE, null);
 			block = TextBlockUtils.title(fontConfiguration, title.getDisplay(), skinParam);
 		}
 
@@ -229,7 +229,7 @@ public class AnnotatedWorker {
 				style = StyleSignatureBasic.of(SName.root, SName.document, SName.footer)
 						.getMergedStyle(skinParam.getCurrentStyleBuilder());
 			}
-			textFooter = footer.createRibbon(new FontConfiguration(getSkinParam(), FontParam.FOOTER, null),
+			textFooter = footer.createRibbon(FontConfiguration.create(getSkinParam(), FontParam.FOOTER, null),
 					getSkinParam(), style);
 		}
 		TextBlock textHeader = null;
@@ -239,7 +239,7 @@ public class AnnotatedWorker {
 				style = StyleSignatureBasic.of(SName.root, SName.document, SName.header)
 						.getMergedStyle(skinParam.getCurrentStyleBuilder());
 			}
-			textHeader = header.createRibbon(new FontConfiguration(getSkinParam(), FontParam.HEADER, null),
+			textHeader = header.createRibbon(FontConfiguration.create(getSkinParam(), FontParam.HEADER, null),
 					getSkinParam(), style);
 		}
 

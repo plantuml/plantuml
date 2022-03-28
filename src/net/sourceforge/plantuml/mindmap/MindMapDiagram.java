@@ -76,7 +76,7 @@ public class MindMapDiagram extends UmlDiagram {
 	}
 
 	public MindMapDiagram(ThemeStyle style, UmlSource source) {
-		super(style, source, UmlDiagramType.MINDMAP);
+		super(style, source, UmlDiagramType.MINDMAP, null);
 		this.mindmaps.add(new MindMap(getSkinParam()));
 	}
 

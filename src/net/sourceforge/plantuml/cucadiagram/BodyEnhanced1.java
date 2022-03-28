@@ -77,7 +77,7 @@ public class BodyEnhanced1 extends BodyEnhancedAbstract implements TextBlock, Wi
 
 	BodyEnhanced1(HorizontalAlignment align, List<CharSequence> rawBody, FontParam fontParam, ISkinParam skinParam,
 			Stereotype stereotype, ILeaf entity, Style style) {
-		super(align, UseStyle.useBetaStyle() == false ? new FontConfiguration(skinParam, fontParam, stereotype)
+		super(align, UseStyle.useBetaStyle() == false ? FontConfiguration.create(skinParam, fontParam, stereotype)
 				: style.getFontConfiguration(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet()), style);
 		this.style = style;
 		this.rawBody2 = Display.create(rawBody);
@@ -93,7 +93,7 @@ public class BodyEnhanced1 extends BodyEnhancedAbstract implements TextBlock, Wi
 
 	BodyEnhanced1(HorizontalAlignment align, Display display, FontParam fontParam, ISkinParam skinParam,
 			Stereotype stereotype, ILeaf entity, Style style) {
-		super(align, style == null ? new FontConfiguration(skinParam, fontParam, stereotype)
+		super(align, style == null ? FontConfiguration.create(skinParam, fontParam, stereotype)
 				: style.getFontConfiguration(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet()), style);
 
 		this.style = style;

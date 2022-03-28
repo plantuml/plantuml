@@ -100,7 +100,7 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock, Styleable
 	private final List<LaneDivider> dividers = new ArrayList<>();
 	private Swimlane currentSwimlane = null;
 
-	private final Instruction root = new InstructionList();
+	private final Instruction root = InstructionList.empty();
 	private Instruction currentInstruction = root;
 
 	private LinkRendering nextLinkRenderer = LinkRendering.none();
@@ -215,7 +215,7 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock, Styleable
 	}
 
 	public final void computeSize(StringBounder stringBounder) {
-		final SlotFinder ug = new SlotFinder(CompressionMode.ON_Y, stringBounder);
+		final SlotFinder ug = SlotFinder.create(CompressionMode.ON_Y, stringBounder);
 		if (swimlanes().size() > 1) {
 			TextBlock full = root.createFtile(getFtileFactory(stringBounder));
 			computeSizeInternal(ug, full);
@@ -258,7 +258,7 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock, Styleable
 
 	private TextBlock getTitle(Swimlane swimlane) {
 		final HorizontalAlignment horizontalAlignment = HorizontalAlignment.LEFT;
-		FontConfiguration fontConfiguration = new FontConfiguration(skinParam, FontParam.SWIMLANE_TITLE, null);
+		FontConfiguration fontConfiguration = FontConfiguration.create(skinParam, FontParam.SWIMLANE_TITLE, null);
 		if (UseStyle.useBetaStyle()) {
 			fontConfiguration = getStyle().getFontConfiguration(skinParam.getThemeStyle(),
 					skinParam.getIHtmlColorSet());
@@ -359,7 +359,7 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock, Styleable
 	private void computeDrawingWidths(UGraphic ug, TextBlock full) {
 		final StringBounder stringBounder = ug.getStringBounder();
 		for (Swimlane swimlane : swimlanes()) {
-			final LimitFinder limitFinder = new LimitFinder(stringBounder, false);
+			final LimitFinder limitFinder = LimitFinder.create(stringBounder, false);
 			final UGraphicInterceptorOneSwimlane interceptor = new UGraphicInterceptorOneSwimlane(
 					new UGraphicForSnake(limitFinder), swimlane, swimlanes());
 			full.drawU(interceptor);

@@ -59,7 +59,7 @@ public class LabelImage {
 		this.param = param;
 		this.rose = rose;
 //		this.name = link.getLabel().create(
-//				new FontConfiguration(param.getFont(FontParam.CLASS, null, false), HtmlColorUtils.BLACK,
+//				FontConfiguration.create(param.getFont(FontParam.CLASS, null, false), HtmlColorUtils.BLACK,
 //						param.getHyperlinkColor(), param.useUnderlineForHyperlink()), HorizontalAlignment.CENTER,
 //				new SpriteContainerEmpty());
 		throw new UnsupportedOperationException();

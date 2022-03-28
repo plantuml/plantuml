@@ -123,7 +123,7 @@ public class LiveBoxesDrawer {
 
 	private void drawInternal(UGraphic ug, double ya, double yb, ComponentType type) {
 		final double width = getWidth(ug.getStringBounder());
-		final Area area = new Area(width, yb - ya);
+		final Area area = Area.create(width, yb - ya);
 		SkinParamBackcolored skinParam2 = new SkinParamBackcolored(skinParam,
 				symbolContext == null ? null : symbolContext.getBackColor());
 		Style style = type.getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());

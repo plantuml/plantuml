@@ -97,7 +97,7 @@ public class CommunicationTileSelfNoteRight extends AbstractTile {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final Component comp = getComponent(stringBounder);
 		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
-		final Area area = new Area(dim.getWidth(), dim.getHeight());
+		final Area area = Area.create(dim.getWidth(), dim.getHeight());
 		tile.drawU(ug);
 		final Real p = getNotePosition(stringBounder);
 

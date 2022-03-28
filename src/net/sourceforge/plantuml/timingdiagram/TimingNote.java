@@ -92,7 +92,7 @@ public class TimingNote {
 		final HColor borderColor;
 		UStroke stroke = new UStroke();
 		if (UseStyle.useBetaStyle()) {
-			fc = new FontConfiguration(skinParam, style);
+			fc = FontConfiguration.create(skinParam, style);
 			shadowing = style.value(PName.Shadowing).asDouble();
 			borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
 			noteBackgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
@@ -100,7 +100,7 @@ public class TimingNote {
 			stroke = style.getStroke();
 		} else {
 			shadowing = skinParam.shadowing(null) ? 4 : 0;
-			fc = new FontConfiguration(skinParam, FontParam.NOTE, null);
+			fc = FontConfiguration.create(skinParam, FontParam.NOTE, null);
 			final Rose rose = new Rose();
 			noteBackgroundColor = rose.getHtmlColor(skinParam, ColorParam.noteBackground);
 			borderColor = rose.getHtmlColor(skinParam, ColorParam.noteBorder);

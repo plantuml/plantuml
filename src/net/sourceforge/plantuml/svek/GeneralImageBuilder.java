@@ -463,7 +463,7 @@ public final class GeneralImageBuilder {
 			return error(dotStringFactory.getDotExe());
 
 		if (basefile == null && isSvekTrace())
-			basefile = new BaseFile();
+			basefile = new BaseFile(null);
 
 		final String svg;
 		try {
@@ -495,7 +495,7 @@ public final class GeneralImageBuilder {
 					.getMergedStyle(link.getStyleBuilder());
 			labelFont = style.getFontConfiguration(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
 		} else {
-			labelFont = new FontConfiguration(skinParam, FontParam.ARROW, null);
+			labelFont = FontConfiguration.create(skinParam, FontParam.ARROW, null);
 		}
 		return labelFont;
 	}
@@ -677,9 +677,9 @@ public final class GeneralImageBuilder {
 
 		final FontConfiguration fontConfiguration;
 		if (style == null)
-			fontConfiguration = new FontConfiguration(skinParam, FontParam.STATE_ATTRIBUTE, null);
+			fontConfiguration = FontConfiguration.create(skinParam, FontParam.STATE_ATTRIBUTE, null);
 		else
-			fontConfiguration = new FontConfiguration(skinParam, style);
+			fontConfiguration = FontConfiguration.create(skinParam, style);
 
 		Display display = null;
 		for (CharSequence s : details)
@@ -769,7 +769,7 @@ public final class GeneralImageBuilder {
 					dotData.getSkinParam());
 		}
 		final FontParam fontParam = FontParam.PACKAGE_STEREOTYPE;
-		return Display.create(stereos).create(new FontConfiguration(dotData.getSkinParam(), fontParam, stereotype),
+		return Display.create(stereos).create(FontConfiguration.create(dotData.getSkinParam(), fontParam, stereotype),
 				HorizontalAlignment.CENTER, dotData.getSkinParam());
 	}
 

@@ -190,7 +190,7 @@ public class Style {
 		final UFont font = getUFont();
 		final HColor color = value(PName.FontColor).asColor(themeStyle, set);
 		final HColor hyperlinkColor = value(PName.HyperLinkColor).asColor(themeStyle, set);
-		return new FontConfiguration(font, color, hyperlinkColor, true);
+		return FontConfiguration.create(font, color, hyperlinkColor, true);
 	}
 
 	public SymbolContext getSymbolContext(ThemeStyle themeStyle, HColorSet set) {

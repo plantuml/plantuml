@@ -39,6 +39,7 @@ import java.util.Objects;
 
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringLocated;
+import net.sourceforge.plantuml.annotation.HaxeIgnored;
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.core.Diagram;
@@ -50,6 +51,7 @@ public abstract class SingleLineCommand2<S extends Diagram> implements Command<S
 	private final IRegex pattern;
 	private final boolean doTrim;
 
+	@HaxeIgnored
 	public SingleLineCommand2(IRegex pattern) {
 		this(true, pattern);
 	}

@@ -76,15 +76,18 @@ public class Footprint {
 		private final List<Point2D.Double> all;
 
 		public MyUGraphic() {
-			super(stringBounder);
+			super(stringBounder, new UTranslate());
 			this.all = new ArrayList<>();
 		}
 
 		private MyUGraphic(MyUGraphic other, UChange change) {
-			super(other, change);
-			if (!instanceOfAny(change, UBackground.class, HColor.class, UStroke.class, UTranslate.class)) {
+			// super(other, change);
+			super(other.getStringBounder(),
+					change instanceof UTranslate ? other.getTranslate().compose((UTranslate) change)
+							: other.getTranslate());
+			if (!instanceOfAny(change, UBackground.class, HColor.class, UStroke.class, UTranslate.class))
 				throw new UnsupportedOperationException(change.getClass().toString());
-			}
+
 			this.all = other.all;
 		}
 

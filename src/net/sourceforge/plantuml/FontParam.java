@@ -37,6 +37,7 @@ package net.sourceforge.plantuml;
 
 import java.awt.Font;
 
+import net.sourceforge.plantuml.annotation.HaxeIgnored;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
@@ -46,6 +47,7 @@ interface FontParamConstant {
 	String COLOR = "black";
 }
 
+@HaxeIgnored
 public enum FontParam {
 	TIMING(12, Font.PLAIN), //
 	ACTIVITY(12, Font.PLAIN), //
@@ -184,7 +186,7 @@ public enum FontParam {
 	}
 
 	public FontConfiguration getFontConfiguration(ISkinParam skinParam) {
-		return new FontConfiguration(skinParam, this, null);
+		return FontConfiguration.create(skinParam, this, null);
 	}
 
 	public StyleSignatureBasic getStyleDefinition(SName diagramType) {

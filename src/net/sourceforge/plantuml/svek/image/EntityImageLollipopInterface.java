@@ -88,10 +88,10 @@ public class EntityImageLollipopInterface extends AbstractEntityImage {
 		final Stereotype stereotype = entity.getStereotype();
 		final FontConfiguration fc;
 		if (UseStyle.useBetaStyle())
-			fc = new FontConfiguration(getSkinParam(),
+			fc = FontConfiguration.create(getSkinParam(),
 					getSignature().getMergedStyle(skinParam.getCurrentStyleBuilder()));
 		else
-			fc = new FontConfiguration(getSkinParam(), FontParam.CLASS, stereotype);
+			fc = FontConfiguration.create(getSkinParam(), FontParam.CLASS, stereotype);
 
 		this.desc = entity.getDisplay().create(fc, HorizontalAlignment.CENTER, skinParam);
 		this.url = entity.getUrl99();

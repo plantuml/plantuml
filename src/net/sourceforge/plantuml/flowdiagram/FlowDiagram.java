@@ -91,7 +91,7 @@ public class FlowDiagram extends UmlDiagram implements TextBlock {
 	}
 
 	public FlowDiagram(ThemeStyle style, UmlSource source) {
-		super(style, source, UmlDiagramType.FLOW);
+		super(style, source, UmlDiagramType.FLOW, null);
 	}
 
 	public void lineSimple(TileGeometry orientation, String idDest, String label) {

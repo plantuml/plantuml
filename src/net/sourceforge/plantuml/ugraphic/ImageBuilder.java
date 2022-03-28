@@ -326,7 +326,7 @@ public class ImageBuilder {
 
 	private Dimension2D getFinalDimension() {
 		if (dimension == null) {
-			final LimitFinder limitFinder = new LimitFinder(stringBounder, true);
+			final LimitFinder limitFinder = LimitFinder.create(stringBounder, true);
 			udrawable.drawU(limitFinder);
 			dimension = new Dimension2DDouble(limitFinder.getMaxX() + 1 + margin.getLeft() + margin.getRight(),
 					limitFinder.getMaxY() + 1 + margin.getTop() + margin.getBottom());

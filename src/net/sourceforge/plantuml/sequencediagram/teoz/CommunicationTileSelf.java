@@ -129,7 +129,7 @@ public class CommunicationTileSelf extends AbstractTile {
 			x1 += CommunicationTile.LIVE_DELTA_SIZE;
 		}
 
-		final Area area = new Area(dim.getWidth(), dim.getHeight());
+		final Area area = Area.create(dim.getWidth(), dim.getHeight());
 		// if (message.isActivate()) {
 		// area.setDeltaX1(CommunicationTile.LIVE_DELTA_SIZE);
 		// } else if (message.isDeactivate()) {

@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.activitydiagram3.ftile;
 
 import static net.sourceforge.plantuml.utils.ObjectUtils.instanceOfAny;
 
+import net.sourceforge.plantuml.annotation.HaxeIgnored;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UBackground;
@@ -49,6 +50,7 @@ import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
+@HaxeIgnored
 public class ZadBuilder extends UGraphicNo {
 
 	@Override
@@ -63,20 +65,17 @@ public class ZadBuilder extends UGraphicNo {
 	}
 
 	public ZadBuilder(StringBounder stringBounder) {
-		super(stringBounder);
+		super(stringBounder, new UTranslate());
 		this.context = new Context();
 	}
 
 	private ZadBuilder(ZadBuilder other, UChange change) {
-		super(other, change);
-		if (!instanceOfAny(change,
-				UBackground.class,
-				HColor.class,
-				UStroke.class,
-				UTranslate.class
-		)) {
+		// super(other, change);
+		super(other.getStringBounder(), change instanceof UTranslate ? other.getTranslate().compose((UTranslate) change)
+				: other.getTranslate());
+		if (!instanceOfAny(change, UBackground.class, HColor.class, UStroke.class, UTranslate.class))
 			throw new UnsupportedOperationException(change.getClass().toString());
-		}
+
 		this.context = other.context;
 	}
 

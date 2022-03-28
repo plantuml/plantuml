@@ -160,7 +160,7 @@ public class FtileBox extends AbstractFtile {
 		final FontConfiguration fc;
 		final LineBreakStrategy wrapWidth;
 		if (UseStyle.useBetaStyle()) {
-			this.inRendering = new LinkRendering(
+			this.inRendering = LinkRendering.create(
 					Rainbow.build(styleArrow, getIHtmlColorSet(), skinParam.getThemeStyle()));
 			Colors specBack = null;
 			if (skinParam instanceof SkinParamColors) {
@@ -180,10 +180,10 @@ public class FtileBox extends AbstractFtile {
 		} else {
 			this.padding = ClockwiseTopRightBottomLeft.same(10);
 			this.margin = ClockwiseTopRightBottomLeft.same(0);
-			this.inRendering = new LinkRendering(Rainbow.build(skinParam));
+			this.inRendering = LinkRendering.create(Rainbow.build(skinParam));
 			this.borderColor = SkinParamUtils.getColor(skinParam(), null, ColorParam.activityBorder);
 			this.backColor = SkinParamUtils.getColor(skinParam(), null, ColorParam.activityBackground);
-			fc = new FontConfiguration(skinParam, FontParam.ACTIVITY, null);
+			fc = FontConfiguration.create(skinParam, FontParam.ACTIVITY, null);
 			this.horizontalAlignment = HorizontalAlignment.LEFT;
 			this.shadowing = skinParam().shadowing(null) ? 3.0 : 0.0;
 			wrapWidth = skinParam.wrapWidth();

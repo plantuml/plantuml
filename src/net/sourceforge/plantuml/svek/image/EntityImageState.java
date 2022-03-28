@@ -84,7 +84,7 @@ public class EntityImageState extends EntityImageStateCommon {
 			fontConfiguration = getStyleState().getFontConfiguration(getSkinParam().getThemeStyle(),
 					getSkinParam().getIHtmlColorSet());
 		else
-			fontConfiguration = new FontConfiguration(getSkinParam(), FontParam.STATE_ATTRIBUTE, stereotype);
+			fontConfiguration = FontConfiguration.create(getSkinParam(), FontParam.STATE_ATTRIBUTE, stereotype);
 
 		this.fields = list.create8(fontConfiguration, HorizontalAlignment.LEFT, skinParam, CreoleMode.FULL,
 				skinParam.wrapWidth());

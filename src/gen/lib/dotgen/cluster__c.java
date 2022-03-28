@@ -97,6 +97,7 @@ import static smetana.core.Macro.GD_n_nodes;
 import static smetana.core.Macro.GD_nlist;
 import static smetana.core.Macro.GD_rank;
 import static smetana.core.Macro.GD_rankleader;
+import static smetana.core.Macro.N;
 import static smetana.core.Macro.ND_UF_size;
 import static smetana.core.Macro.ND_clust;
 import static smetana.core.Macro.ND_in;
@@ -363,8 +364,8 @@ try {
 		    flat_edge(g, e);
 		    prev = e;
 		} else if (NEQ(e, fe)) {
-		UNSUPPORTED("ckfinb4h4twp1ry02y9peyhz"); // 		    safe_other_edge(e);
-		UNSUPPORTED("dg3e0udctqa7xtfynplc7wdpj"); // 		    if (!ED_to_virt(e)) merge_oneway(e, fe);
+		 		    safe_other_edge(e);
+		 		    if (N(ED_to_virt(e))) merge_oneway(e, fe);
 		}
 		continue;
 	    }

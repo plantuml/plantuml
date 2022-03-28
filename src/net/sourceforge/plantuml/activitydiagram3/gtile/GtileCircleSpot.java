@@ -75,7 +75,7 @@ public class GtileCircleSpot extends AbstractGtile {
 		super(stringBounder, skinParam, swimlane);
 		this.spot = spot;
 		this.backColor = backColor;
-		this.fc = new FontConfiguration(skinParam, FontParam.ACTIVITY, null);
+		this.fc = FontConfiguration.create(skinParam, FontParam.ACTIVITY, null);
 		if (UseStyle.useBetaStyle()) {
 			final Style style = getDefaultStyleDefinitionCircle().getMergedStyle(skinParam().getCurrentStyleBuilder());
 			this.shadowing = style.value(PName.Shadowing).asDouble();

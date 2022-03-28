@@ -99,7 +99,7 @@ public class PSystemSalt extends TitledDiagram implements WithSprite {
 
 	@Deprecated
 	public PSystemSalt(ThemeStyle style, UmlSource source, List<String> data) {
-		super(style, source, UmlDiagramType.SALT);
+		super(style, source, UmlDiagramType.SALT, null);
 		this.data = data;
 	}
 

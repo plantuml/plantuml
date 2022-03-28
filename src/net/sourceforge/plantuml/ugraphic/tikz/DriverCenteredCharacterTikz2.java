@@ -45,7 +45,7 @@ public class DriverCenteredCharacterTikz2 implements UDriver<UCenteredCharacter,
 	public void draw(UCenteredCharacter centeredCharacter, double x, double y, ColorMapper mapper, UParam param, TikzGraphics tikz) {
 		final char c = centeredCharacter.getChar();
 
-		tikz.setStrokeColor(mapper.toColor(param.getColor()));
+		tikz.setStrokeColor(param.getColor());
 		tikz.drawSingleCharacter(x, y, c);
 	}
 

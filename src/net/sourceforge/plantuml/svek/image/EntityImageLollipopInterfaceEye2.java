@@ -101,7 +101,7 @@ public class EntityImageLollipopInterfaceEye2 extends AbstractEntityImage {
 		if (stereotype != null && stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) != null
 				&& portionShower.showPortion(EntityPortion.STEREOTYPE, entity)) {
 			stereo = Display.getWithNewlines(stereotype.getLabel(getSkinParam().guillemet())).create(
-					new FontConfiguration(getSkinParam(), symbol.getFontParamStereotype(), stereotype),
+					FontConfiguration.create(getSkinParam(), symbol.getFontParamStereotype(), stereotype),
 					HorizontalAlignment.CENTER, skinParam);
 		} else {
 			stereo = TextBlockUtils.empty(0, 0);

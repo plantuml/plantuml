@@ -145,7 +145,7 @@ public class FtileFactoryDelegatorSwitch extends FtileFactoryDelegator {
 			backColor = branch0.getColor() == null ? style.value(PName.BackGroundColor)
 					.asColor(skinParam().getThemeStyle(), skinParam().getIHtmlColorSet()) : branch0.getColor();
 		} else {
-			fcDiamond = new FontConfiguration(skinParam(), FontParam.ACTIVITY_DIAMOND, null);
+			fcDiamond = FontConfiguration.create(skinParam(), FontParam.ACTIVITY_DIAMOND, null);
 			borderColor = getRose().getHtmlColor(skinParam(), ColorParam.activityDiamondBorder);
 			backColor = branch0.getColor() == null
 					? getRose().getHtmlColor(skinParam(), ColorParam.activityDiamondBackground)

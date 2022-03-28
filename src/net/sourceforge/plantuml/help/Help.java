@@ -67,7 +67,7 @@ public class Help extends UmlDiagram {
 	}
 
 	public Help(ThemeStyle style, UmlSource source) {
-		super(style, source, UmlDiagramType.HELP);
+		super(style, source, UmlDiagramType.HELP, null);
 	}
 
 	@Override

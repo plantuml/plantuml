@@ -47,8 +47,8 @@ public class AddStyle implements FontChange {
 		this.extendedColor = extendedColor;
 	}
 
-	public AddStyle(String s) {
-		this(FontStyle.getStyle(s), FontStyle.getStyle(s).getExtendedColor(s));
+	public static AddStyle fromString(String s) {
+		return new AddStyle(FontStyle.getStyle(s), FontStyle.getStyle(s).getExtendedColor(s));
 	}
 
 	public FontConfiguration apply(FontConfiguration initial) {

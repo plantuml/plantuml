@@ -102,7 +102,7 @@ public class PngTitler {
 			return style.createTextBlockBordered(display, set, spriteContainer);
 		}
 		final UFont normalFont = new UFont(fontFamily, Font.PLAIN, fontSize);
-		return text.createRibbon(new FontConfiguration(normalFont, textColor, hyperlinkColor, useUnderlineForHyperlink),
+		return text.createRibbon(FontConfiguration.create(normalFont, textColor, hyperlinkColor, useUnderlineForHyperlink),
 				new SpriteContainerEmpty(), null);
 	}
 }

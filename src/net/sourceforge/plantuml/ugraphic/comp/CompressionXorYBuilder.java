@@ -47,7 +47,7 @@ public class CompressionXorYBuilder {
 
 	private static PiecewiseAffineTransform getPiecewiseAffineTransform(CompressionMode mode, TextBlock textBlock,
 			StringBounder stringBounder) {
-		final SlotFinder slotFinder = new SlotFinder(mode, stringBounder);
+		final SlotFinder slotFinder = SlotFinder.create(mode, stringBounder);
 		textBlock.drawU(slotFinder);
 		final SlotSet ysSlotSet = slotFinder.getSlotSet().reverse().smaller(5.0);
 		return new CompressionTransform(ysSlotSet);

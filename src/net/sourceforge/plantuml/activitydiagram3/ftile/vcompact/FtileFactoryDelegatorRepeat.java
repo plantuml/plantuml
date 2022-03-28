@@ -107,8 +107,8 @@ public class FtileFactoryDelegatorRepeat extends FtileFactoryDelegator {
 				diamondColor = getRose().getHtmlColor(skinParam(), ColorParam.activityDiamondBackground);
 			}
 			arrowColor = Rainbow.build(skinParam());
-			fcDiamond = new FontConfiguration(skinParam(), FontParam.ACTIVITY_DIAMOND, null);
-			fcArrow = new FontConfiguration(skinParam(), FontParam.ARROW, null);
+			fcDiamond = FontConfiguration.create(skinParam(), FontParam.ACTIVITY_DIAMOND, null);
+			fcArrow = FontConfiguration.create(skinParam(), FontParam.ARROW, null);
 		}
 
 		final LinkRendering endRepeatLinkRendering = repeat.getOutLinkRendering();

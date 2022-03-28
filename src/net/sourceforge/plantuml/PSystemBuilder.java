@@ -114,7 +114,7 @@ public class PSystemBuilder {
 		Diagram result = null;
 		try {
 			final DiagramType type = DiagramType.getTypeFromArobaseStart(source.get(0).getString());
-			final UmlSource umlSource = new UmlSource(source, type == DiagramType.UML, rawSource);
+			final UmlSource umlSource = UmlSource.createWithRaw(source, type == DiagramType.UML, rawSource);
 
 			for (StringLocated s : source) {
 				if (s.getPreprocessorError() != null) {

@@ -63,7 +63,7 @@ public class EntityImageLegend {
 			return style.createTextBlockBordered(note, skinParam.getIHtmlColorSet(), skinParam);
 		}
 
-		final TextBlock textBlock = note.create(new FontConfiguration(skinParam, FontParam.LEGEND, null),
+		final TextBlock textBlock = note.create(FontConfiguration.create(skinParam, FontParam.LEGEND, null),
 				HorizontalAlignment.LEFT, skinParam);
 		final Rose rose = new Rose();
 		final HColor legendBackgroundColor = rose.getHtmlColor(skinParam, ColorParam.legendBackground);

@@ -42,14 +42,14 @@ public class BaseFile {
 	private final String basename;
 	private final SFile basedir;
 
-	public BaseFile() {
-		this.basedir = null;
-		this.basename = null;
-	}
-
 	public BaseFile(SFile file) {
-		this.basedir = file.getParentFile();
-		this.basename = extractBasename(file.getName());
+		if (file == null) {
+			this.basedir = null;
+			this.basename = null;
+		} else {
+			this.basedir = file.getParentFile();
+			this.basename = extractBasename(file.getName());
+		}
 	}
 
 	private static String extractBasename(String name) {

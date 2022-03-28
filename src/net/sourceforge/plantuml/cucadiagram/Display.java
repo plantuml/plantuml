@@ -56,7 +56,7 @@ import net.sourceforge.plantuml.SpriteContainer;
 import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UrlBuilder;
-import net.sourceforge.plantuml.UrlBuilder.ModeUrl;
+import net.sourceforge.plantuml.UrlMode;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
@@ -434,7 +434,7 @@ public class Display implements Iterable<CharSequence> {
 	}
 
 	public boolean hasUrl() {
-		final UrlBuilder urlBuilder = new UrlBuilder(null, ModeUrl.ANYWHERE);
+		final UrlBuilder urlBuilder = new UrlBuilder(null, UrlMode.ANYWHERE);
 		for (CharSequence s : this)
 			if (urlBuilder.getUrl(s.toString()) != null)
 				return true;

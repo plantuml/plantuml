@@ -102,10 +102,10 @@ public class LinkAnchor {
 			final Style style = signature.getMergedStyle(skinParam.getCurrentStyleBuilder());
 
 			color = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
-			fontConfiguration = new FontConfiguration(skinParam, style);
+			fontConfiguration = FontConfiguration.create(skinParam, style);
 		} else {
 			color = new Rose().getHtmlColor(skinParam, ColorParam.arrow);
-			fontConfiguration = new FontConfiguration(skinParam, FontParam.ARROW, null);
+			fontConfiguration = FontConfiguration.create(skinParam, FontParam.ARROW, null);
 		}
 
 		final Rainbow rainbow = Rainbow.fromColor(color, null);

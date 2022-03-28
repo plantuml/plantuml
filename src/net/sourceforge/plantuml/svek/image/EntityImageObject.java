@@ -108,7 +108,7 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil, W
 			fcHeader = getStyleHeader().getFontConfiguration(getSkinParam().getThemeStyle(),
 					getSkinParam().getIHtmlColorSet());
 		else
-			fcHeader = new FontConfiguration(getSkinParam(), FontParam.OBJECT, stereotype);
+			fcHeader = FontConfiguration.create(getSkinParam(), FontParam.OBJECT, stereotype);
 
 		final TextBlock tmp = getUnderlinedName(entity).create(fcHeader, HorizontalAlignment.CENTER, skinParam);
 		this.name = TextBlockUtils.withMargin(tmp, 2, 2);
@@ -117,7 +117,7 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil, W
 			this.stereo = null;
 		else
 			this.stereo = Display.create(stereotype.getLabels(skinParam.guillemet())).create(
-					new FontConfiguration(getSkinParam(), FontParam.OBJECT_STEREOTYPE, stereotype),
+					FontConfiguration.create(getSkinParam(), FontParam.OBJECT_STEREOTYPE, stereotype),
 					HorizontalAlignment.CENTER, skinParam);
 
 		final boolean showFields = portionShower.showPortion(EntityPortion.FIELD, entity);

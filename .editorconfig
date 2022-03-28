@@ -8,10 +8,16 @@ indent_size = 2
 indent_style = tab
 trim_trailing_whitespace = true
 
+[*.java]
+ij_continuation_indent_size = 8
+ij_java_align_multiline_parameters = false
+ij_java_class_count_to_use_import_on_demand = 999
+ij_java_imports_layout = $*,|,java.**,|,javax.**,|,org.**,|com.**,|*,|
+ij_java_names_count_to_use_import_on_demand = 999
+
 [*.md]
 max_line_length = off
 trim_trailing_whitespace = false
 
 [{pom.xml, *.yml}]
 indent_style = space
-

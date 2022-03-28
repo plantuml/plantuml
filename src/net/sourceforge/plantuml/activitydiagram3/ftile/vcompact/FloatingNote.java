@@ -82,7 +82,7 @@ public class FloatingNote extends AbstractTextBlock implements Stencil, TextBloc
 			final Style style = StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.note)
 					.getMergedStyle(skinParam.getCurrentStyleBuilder());
 			wrapWidth = style.wrapWidth();
-			fc = new FontConfiguration(skinParam, style);
+			fc = FontConfiguration.create(skinParam, style);
 			noteBackgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
 					skinParam.getIHtmlColorSet());
 			borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
@@ -92,7 +92,7 @@ public class FloatingNote extends AbstractTextBlock implements Stencil, TextBloc
 			shadowing = skinParam.shadowing(null) ? 4 : 0;
 			noteBackgroundColor = rose.getHtmlColor(skinParam, ColorParam.noteBackground);
 			borderColor = rose.getHtmlColor(skinParam, ColorParam.noteBorder);
-			fc = new FontConfiguration(skinParam, FontParam.NOTE, null);
+			fc = FontConfiguration.create(skinParam, FontParam.NOTE, null);
 			wrapWidth = skinParam.wrapWidth();
 		}
 

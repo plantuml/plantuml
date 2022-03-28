@@ -47,15 +47,15 @@ public class Dimension2DDouble extends Dimension2D {
 	final private double height;
 
 	public Dimension2DDouble(double width, double height) {
-		if (Double.isNaN(width) || Double.isNaN(height)) {
+		if (Double.isNaN(width) || Double.isNaN(height))
 			throw new IllegalArgumentException();
-		}
+
 		this.width = width;
 		this.height = height;
 	}
 
-	public Dimension2DDouble(Point2D point) {
-		this(point.getX(), point.getY());
+	private static Dimension2DDouble fromPoint(Point2D point) {
+		return new Dimension2DDouble(point.getX(), point.getY());
 	}
 
 	@Override

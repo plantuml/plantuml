@@ -114,7 +114,7 @@ public class MutingLine {
 		final Component comp = skin.createComponent(new Style[] { style }, defaultLineType, null, skinParam,
 				participant.getDisplay(skinParam.forceSequenceParticipantUnderlined()));
 		final Dimension2D dim = comp.getPreferredDimension(ug.getStringBounder());
-		final Area area = new Area(dim.getWidth(), y2 - y1);
+		final Area area = Area.create(dim.getWidth(), y2 - y1);
 		comp.drawU(ug.apply(UTranslate.dy(y1)), area, context);
 	}
 

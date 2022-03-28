@@ -121,7 +121,7 @@ public class CommunicationExoTile extends AbstractTile {
 			x2 -= ComponentRoseArrow.diamCircle / 2 + 2;
 		}
 
-		final Area area = new Area(x2 - x1, dim.getHeight());
+		final Area area = Area.create(x2 - x1, dim.getHeight());
 		ug = ug.apply(UTranslate.dx(x1));
 		comp.drawU(ug, area, (Context2D) ug);
 	}

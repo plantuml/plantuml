@@ -48,7 +48,7 @@ import net.sourceforge.plantuml.sequencediagram.NoteType;
 
 public class InstructionPartition extends AbstractInstruction implements Instruction {
 
-	private final InstructionList list = new InstructionList();
+	private final InstructionList list = InstructionList.empty();
 	private final Instruction parent;
 
 	public InstructionPartition(Instruction parent, String partitionTitle) {

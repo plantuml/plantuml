@@ -27,7 +27,7 @@ class ImageBuilderTest {
 			nullValues = {"NULL"}
 	)
 	public void test_preserveAspectRatio_plainDiagram(String inFileFormatOption, String expected) throws Exception {
-		final PlainDiagram diagram = new PSystemCreole(new UmlSource(new ArrayList<StringLocated>(), false));
+		final PlainDiagram diagram = new PSystemCreole(UmlSource.create(new ArrayList<StringLocated>(), false));
 		FileFormatOption fileFormatOption = new FileFormatOption(DEBUG);
 
 		if (inFileFormatOption != null) fileFormatOption = fileFormatOption.withPreserveAspectRatio(inFileFormatOption);
@@ -49,7 +49,7 @@ class ImageBuilderTest {
 			nullValues = {"NULL"}
 	)
 	public void test_preserveAspectRatio_styledDiagram(String inSkinParam, String inFileFormatOption, String expected) throws Exception {
-		final WBSDiagram diagram = new WBSDiagram(ThemeStyle.LIGHT_REGULAR, new UmlSource(new ArrayList<StringLocated>(), false));
+		final WBSDiagram diagram = new WBSDiagram(ThemeStyle.LIGHT_REGULAR, UmlSource.create(new ArrayList<StringLocated>(), false));
 		FileFormatOption fileFormatOption = new FileFormatOption(DEBUG);
 
 		if (inSkinParam != null) diagram.setParam("preserveAspectRatio", inSkinParam);

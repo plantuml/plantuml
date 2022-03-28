@@ -59,7 +59,7 @@ public class GitDiagram extends UmlDiagram {
 	private final Collection<GNode> gnodes;
 
 	public GitDiagram(ThemeStyle style, UmlSource source, GitTextArea textArea) {
-		super(style, source, UmlDiagramType.GIT);
+		super(style, source, UmlDiagramType.GIT, null);
 		this.gnodes = new GNodeBuilder(textArea.getAllCommits()).getAllNodes();
 		new GNodeBuilder(textArea.getAllCommits());
 	}

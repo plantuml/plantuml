@@ -48,8 +48,8 @@ class RealMiddle extends AbstractReal implements Real {
 		this.delta = delta;
 	}
 
-	RealMiddle(RealMoveable p1, RealMoveable p2) {
-		this(p1, p2, 0);
+	private static RealMiddle create(RealMoveable p1, RealMoveable p2) {
+		return new RealMiddle(p1, p2, 0);
 	}
 
 	@Override

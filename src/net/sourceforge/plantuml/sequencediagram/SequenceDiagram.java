@@ -231,7 +231,7 @@ public class SequenceDiagram extends UmlDiagram {
 	}
 
 	public void hspace() {
-		events.add(new HSpace());
+		events.add(new HSpace(25));
 	}
 
 	public void hspace(int pixel) {

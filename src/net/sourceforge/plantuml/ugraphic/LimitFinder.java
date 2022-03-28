@@ -37,9 +37,8 @@ package net.sourceforge.plantuml.ugraphic;
 
 import static net.sourceforge.plantuml.utils.ObjectUtils.instanceOfAny;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
 import net.sourceforge.plantuml.activitydiagram3.ftile.CenteredText;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.graphic.SpecialText;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -52,39 +51,34 @@ public class LimitFinder extends UGraphicNo {
 
 	@Override
 	public UGraphic apply(UChange change) {
-		return new LimitFinder(this, change);
+		final UTranslate tmp = change instanceof UTranslate ? this.getTranslate().compose((UTranslate) change)
+				: this.getTranslate();
+		final LimitFinder result = new LimitFinder(this.getStringBounder(), tmp, this.minmax);
+		if (!instanceOfAny(change, UAntiAliasing.class, UBackground.class, UClip.class, HColor.class, UHidden.class,
+				UStroke.class, UTranslate.class))
+			throw new UnsupportedOperationException(change.getClass().toString());
+		result.clip = change instanceof UClip ? ((UClip) change).translate(result.getTranslate()) : this.clip;
+		return result;
 	}
 
 	private final MinMaxMutable minmax;
-	private final UClip clip;
+	private UClip clip;
 
-	public LimitFinder(StringBounder stringBounder, boolean initToZero) {
-		super(stringBounder);
-		this.minmax = MinMaxMutable.getEmpty(initToZero);
-		this.clip = null;
+	public static LimitFinder create(StringBounder stringBounder, boolean initToZero) {
+		final LimitFinder result = new LimitFinder(stringBounder, new UTranslate(), MinMaxMutable.getEmpty(initToZero));
+		result.clip = null;
+		return result;
 	}
 
-	private LimitFinder(LimitFinder other, UChange change) {
-		super(other, change);
-		if (!instanceOfAny(change,
-				UAntiAliasing.class,
-				UBackground.class,
-				UClip.class,
-				HColor.class,
-				UHidden.class,
-				UStroke.class,
-				UTranslate.class
-		)) {
-			throw new UnsupportedOperationException(change.getClass().toString());
-		}
-		this.clip = change instanceof UClip ? ((UClip) change).translate(getTranslate()) : other.clip;
-		this.minmax = other.minmax;
+	private LimitFinder(StringBounder stringBounder, UTranslate translate, MinMaxMutable minmax) {
+		super(stringBounder, translate);
+		this.minmax = minmax;
 	}
 
 	private void addPoint(double x, double y) {
-		if (clip == null || clip.isInside(x, y)) {
+		if (clip == null || clip.isInside(x, y))
 			minmax.addPoint(x, y);
-		}
+
 	}
 
 	public void draw(UShape shape) {
@@ -181,7 +175,8 @@ public class LimitFinder extends UGraphicNo {
 	}
 
 	private void drawText(double x, double y, UText text) {
-		final Dimension2D dim = getStringBounder().calculateDimension(text.getFontConfiguration().getFont(), text.getText());
+		final Dimension2D dim = getStringBounder().calculateDimension(text.getFontConfiguration().getFont(),
+				text.getText());
 		y -= dim.getHeight() - 1.5;
 		addPoint(x, y);
 		addPoint(x, y + dim.getHeight());

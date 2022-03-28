@@ -118,7 +118,7 @@ public class FtileGroup extends AbstractFtile {
 			style = null;
 			final UFont font = skinParam.getFont(null, false, FontParam.PARTITION);
 			final HColor fontColor = skinParam.getFontHtmlColor(null, FontParam.PARTITION);
-			fc = new FontConfiguration(font, fontColor, skinParam.getHyperlinkColor(),
+			fc = FontConfiguration.create(font, fontColor, skinParam.getHyperlinkColor(),
 					skinParam.useUnderlineForHyperlink(), skinParam.getTabSize());
 			this.shadowing = skinParam().shadowing(null) ? 3 : 0;
 			thickness = skinParam.getThickness(LineParam.partitionBorder, null);
@@ -169,7 +169,7 @@ public class FtileGroup extends AbstractFtile {
 	}
 
 	private MinMax getInnerMinMax(StringBounder stringBounder) {
-		final LimitFinder limitFinder = new LimitFinder(stringBounder, false);
+		final LimitFinder limitFinder = LimitFinder.create(stringBounder, false);
 		final UGraphicForSnake interceptor = new UGraphicForSnake(limitFinder);
 		final UGraphicInterceptorUDrawable interceptor2 = new UGraphicInterceptorUDrawable(interceptor);
 

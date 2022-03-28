@@ -45,17 +45,17 @@ public class LinkRendering {
 	private final Rainbow rainbow;
 	private final Display display;
 
-	public LinkRendering(Rainbow rainbow) {
-		this(rainbow, Display.NULL);
+	public static LinkRendering create(Rainbow rainbow) {
+		return new LinkRendering(rainbow, Display.NULL);
+	}
+
+	public static LinkRendering none() {
+		return LinkRendering.create(Rainbow.none());
 	}
 
 	private LinkRendering(Rainbow rainbow, Display display) {
 		this.rainbow = Objects.requireNonNull(rainbow);
 		this.display = display;
-	}
-
-	public static LinkRendering none() {
-		return new LinkRendering(Rainbow.none());
 	}
 
 	public LinkRendering withRainbow(Rainbow rainbow) {

@@ -81,9 +81,9 @@ public class Body3 extends AbstractTextBlock implements TextBlock, WithPorts {
 
 		FontConfiguration config;
 		if (style != null) {
-			config = new FontConfiguration(skinParam, style);
+			config = FontConfiguration.create(skinParam, style);
 		} else {
-			config = new FontConfiguration(skinParam, fontParam, stereotype);
+			config = FontConfiguration.create(skinParam, fontParam, stereotype);
 		}
 
 		TextBlock foo = display.create(config, HorizontalAlignment.LEFT, skinParam);

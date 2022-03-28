@@ -70,13 +70,13 @@ public class MagicBox {
 	}
 
 	private TextBlock getSmallBlock() {
-		final FontConfiguration fc = new FontConfiguration(UFont.monospaced(15).bold(), fontColor, fontColor, false);
+		final FontConfiguration fc = FontConfiguration.create(UFont.monospaced(15).bold(), fontColor, fontColor, false);
 		return node.getDisplay().create(fc, HorizontalAlignment.CENTER, skinParam);
 	}
 
 	private TextBlock getCommentBlock() {
 		if (node.getComment() != null && node.isTop()) {
-			final FontConfiguration tag = new FontConfiguration(UFont.sansSerif(13), fontColor, fontColor, false);
+			final FontConfiguration tag = FontConfiguration.create(UFont.sansSerif(13), fontColor, fontColor, false);
 			return Display.create(node.getComment()).create(tag, HorizontalAlignment.CENTER, skinParam);
 		}
 		return TextBlockUtils.empty(0, 0);

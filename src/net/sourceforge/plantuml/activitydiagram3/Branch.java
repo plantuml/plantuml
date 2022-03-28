@@ -255,7 +255,7 @@ public class Branch {
 			lineBreak = style.wrapWidth();
 			fcArrow = style.getFontConfiguration(skinParam().getThemeStyle(), skinParam().getIHtmlColorSet());
 		} else {
-			fcArrow = new FontConfiguration(skinParam(), FontParam.ARROW, null);
+			fcArrow = FontConfiguration.create(skinParam(), FontParam.ARROW, null);
 		}
 
 		return display.create0(fcArrow, HorizontalAlignment.LEFT, skinParam(), lineBreak, CreoleMode.SIMPLE_LINE, null,

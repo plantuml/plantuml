@@ -67,22 +67,21 @@ final public class UmlSource {
 	final private List<StringLocated> rawSource;
 
 	public UmlSource removeInitialSkinparam() {
-		if (hasInitialSkinparam(source) == false) {
+		if (hasInitialSkinparam(source) == false)
 			return this;
-		}
+
 		final List<StringLocated> copy = new ArrayList<>(source);
-		while (hasInitialSkinparam(copy)) {
+		while (hasInitialSkinparam(copy))
 			copy.remove(1);
-		}
+
 		return new UmlSource(copy, rawSource);
 	}
 
 	public boolean containsIgnoreCase(String searched) {
-		for (StringLocated s : source) {
-			if (StringUtils.goLowerCase(s.getString()).contains(searched)) {
+		for (StringLocated s : source)
+			if (StringUtils.goLowerCase(s.getString()).contains(searched))
 				return true;
-			}
-		}
+
 		return false;
 	}
 
@@ -96,24 +95,29 @@ final public class UmlSource {
 		this.rawSource = rawSource;
 	}
 
-	public UmlSource(List<StringLocated> data, boolean checkEndingBackslash) {
-		this(data, checkEndingBackslash, new ArrayList<>());
+	public static UmlSource create(List<StringLocated> source, boolean checkEndingBackslash) {
+		return createWithRaw(source, checkEndingBackslash, new ArrayList<>());
 	}
 
 	/**
 	 * Build the source from a text.
-	 *
-	 * @param data                 the source of the diagram
+	 * 
+	 * @param source               the source of the diagram
 	 * @param checkEndingBackslash <code>true</code> if an ending backslash means
 	 *                             that a line has to be collapsed with the
 	 *                             following one.
 	 */
-	public UmlSource(List<StringLocated> data, boolean checkEndingBackslash, List<StringLocated> rawSource) {
-		this(new ArrayList<>(), rawSource);
+	public static UmlSource createWithRaw(List<StringLocated> source, boolean checkEndingBackslash,
+			List<StringLocated> rawSource) {
+		final UmlSource result = new UmlSource(new ArrayList<StringLocated>(), rawSource);
+		result.loadInternal(source, checkEndingBackslash);
+		return result;
+	}
 
+	private void loadInternal(List<StringLocated> source, boolean checkEndingBackslash) {
 		if (checkEndingBackslash) {
 			final StringBuilder pending = new StringBuilder();
-			for (StringLocated cs : data) {
+			for (StringLocated cs : source) {
 				final String s = cs.getString();
 				if (StringUtils.endsWithBackslash(s)) {
 					pending.append(s, 0, s.length() - 1);
@@ -124,7 +128,7 @@ final public class UmlSource {
 				}
 			}
 		} else {
-			this.source.addAll(data);
+			this.source.addAll(source);
 		}
 	}
 
@@ -181,11 +185,10 @@ final public class UmlSource {
 	}
 
 	public String getLine(LineLocation n) {
-		for (StringLocated s : source) {
-			if (s.getLocation().compareTo(n) == 0) {
+		for (StringLocated s : source)
+			if (s.getLocation().compareTo(n) == 0)
 				return s.getString();
-			}
-		}
+
 		return null;
 	}
 
@@ -208,18 +211,18 @@ final public class UmlSource {
 	 */
 	public boolean isEmpty() {
 		for (StringLocated s : source) {
-			if (StartUtils.isArobaseStartDiagram(s.getString())) {
+			if (StartUtils.isArobaseStartDiagram(s.getString()))
 				continue;
-			}
-			if (StartUtils.isArobaseEndDiagram(s.getString())) {
+
+			if (StartUtils.isArobaseEndDiagram(s.getString()))
 				continue;
-			}
-			if (s.getString().matches("\\s*'.*")) {
+
+			if (s.getString().matches("\\s*'.*"))
 				continue;
-			}
-			if (StringUtils.trin(s.getString()).length() != 0) {
+
+			if (StringUtils.trin(s.getString()).length() != 0)
 				return false;
-			}
+
 		}
 		return true;
 	}
@@ -233,9 +236,8 @@ final public class UmlSource {
 		for (StringLocated s : source) {
 			final Matcher2 m = p.matcher(s.getString());
 			final boolean ok = m.matches();
-			if (ok) {
+			if (ok)
 				return Display.create(m.group(1));
-			}
 		}
 		return Display.empty();
 	}
@@ -247,9 +249,9 @@ final public class UmlSource {
 	public String getId() {
 		final Pattern p = Pattern.compile("id=([\\w]+)\\b");
 		final Matcher m = p.matcher(source.get(0).getString());
-		if (m.find()) {
+		if (m.find())
 			return m.group(1);
-		}
+
 		return null;
 	}
 

@@ -157,8 +157,8 @@ public class NServer {
 		return name;
 	}
 
-	public NServer(String name) {
-		this(name, new NBar());
+	public static NServer create(String name) {
+		return new NServer(name, new NBar());
 	}
 
 	public NServer(String name, NBar bar) {

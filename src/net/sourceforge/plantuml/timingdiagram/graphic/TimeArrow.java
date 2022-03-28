@@ -111,7 +111,7 @@ public class TimeArrow implements UDrawable {
 		final UFont font = UFont.serif(14);
 
 		final HColor color = type.getSpecificColor();
-		return new FontConfiguration(font, color, color, false);
+		return FontConfiguration.create(font, color, color, false);
 	}
 
 	public void drawU(UGraphic ug) {

@@ -157,7 +157,7 @@ public class GroupingTile extends AbstractTile {
 
 		final Component comp = getComponent(stringBounder);
 		final Dimension2D dim1 = getPreferredDimensionIfEmpty(stringBounder);
-		final Area area = new Area(max.getCurrentValue() - min.getCurrentValue(), getTotalHeight(stringBounder));
+		final Area area = Area.create(max.getCurrentValue() - min.getCurrentValue(), getTotalHeight(stringBounder));
 
 		comp.drawU(ug.apply(UTranslate.dx(min.getCurrentValue())), area, (Context2D) ug);
 		drawAllElses(ug);
@@ -192,7 +192,7 @@ public class GroupingTile extends AbstractTile {
 			if (tile instanceof ElseTile) {
 				final ElseTile elseTile = (ElseTile) tile;
 				final Component comp = elseTile.getComponent(stringBounder);
-				final Area area = new Area(max.getCurrentValue() - min.getCurrentValue(), ys.get(i + 1) - ys.get(i));
+				final Area area = Area.create(max.getCurrentValue() - min.getCurrentValue(), ys.get(i + 1) - ys.get(i));
 				comp.drawU(ug.apply(new UTranslate(min.getCurrentValue(), ys.get(i))), area, (Context2D) ug);
 				i++;
 			}
