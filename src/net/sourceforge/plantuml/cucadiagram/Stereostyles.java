@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.cucadiagram;
@@ -48,7 +48,7 @@ public class Stereostyles {
 
 	public static final Stereostyles NONE = new Stereostyles();
 
-	private final Set<String> names = new LinkedHashSet<String>();
+	private final Set<String> names = new LinkedHashSet<>();
 
 	private Stereostyles() {
 	}

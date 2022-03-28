@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile;
@@ -42,7 +42,6 @@ import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class TextBlockInterceptorUDrawable extends AbstractTextBlock implements TextBlock {
 
@@ -53,7 +52,7 @@ public class TextBlockInterceptorUDrawable extends AbstractTextBlock implements 
 	}
 
 	public void drawU(UGraphic ug) {
-		new UGraphicInterceptorUDrawable2(ug, new HashMap<String, UTranslate>()).draw(textBlock);
+		new UGraphicInterceptorUDrawable2(ug, new HashMap<>()).draw(textBlock);
 		ug.flushUg();
 	}
 
