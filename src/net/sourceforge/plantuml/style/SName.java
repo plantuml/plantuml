@@ -44,6 +44,7 @@ public enum SName {
 	archimate, //
 	arrow, //
 	artifact, //
+	binary, //
 	boundary, //
 	box, //
 	boxless, //

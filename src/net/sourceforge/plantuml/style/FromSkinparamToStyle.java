@@ -292,6 +292,9 @@ public class FromSkinparamToStyle {
 		} else if (read.startsWith("line.dashed")) {
 			for (Data data : datas)
 				addStyle(PName.LineStyle, ValueImpl.regular("7;7", counter), data.styleNames);
+		} else if (read.toLowerCase().contains("bold")) {
+			for (Data data : datas)
+				addStyle(PName.LineThickness, ValueImpl.regular("2", counter), data.styleNames);
 		}
 	}
 

@@ -50,7 +50,9 @@ abstract class MonoSwimable extends WithNote implements Swimable {
 	}
 
 	final public Set<Swimlane> getSwimlanes() {
-		return swimlane == null ? Collections.emptySet() : Collections.<Swimlane>singleton(swimlane);
+		if (swimlane == null)
+			return Collections.emptySet();
+		return Collections.<Swimlane>singleton(swimlane);
 	}
 
 	final public Swimlane getSwimlaneIn() {

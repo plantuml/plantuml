@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class TextBlockInterceptorUDrawable extends AbstractTextBlock implements TextBlock {
 
@@ -52,8 +53,12 @@ public class TextBlockInterceptorUDrawable extends AbstractTextBlock implements 
 	}
 
 	public void drawU(UGraphic ug) {
-		new UGraphicInterceptorUDrawable2(ug, new HashMap<>()).draw(textBlock);
+		new UGraphicInterceptorUDrawable2(ug, emptyHashMap()).draw(textBlock);
 		ug.flushUg();
+	}
+
+	private HashMap<String, UTranslate> emptyHashMap() {
+		return new HashMap<>();
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
