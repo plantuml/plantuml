@@ -41,6 +41,8 @@ import java.util.List;
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.UrlBuilder;
+import net.sourceforge.plantuml.UrlMode;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
@@ -72,7 +74,7 @@ public class CommandReferenceOverSeveral extends SingleLineCommand2<SequenceDiag
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(":"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexOptional(new RegexLeaf("URL", "\\[\\[([^|]*)(?:\\|([^|]*))?\\]\\]")), //
+				new RegexOptional(new RegexLeaf("URL", "(\\[\\[.*?\\]\\])")), //
 				new RegexLeaf("TEXT", "(.*)"), RegexLeaf.end());
 	}
 
@@ -87,7 +89,6 @@ public class CommandReferenceOverSeveral extends SingleLineCommand2<SequenceDiag
 
 		final List<String> participants = StringUtils.splitComma(arg.get("PARTS", 0));
 		final String url = arg.get("URL", 0);
-		final String title = arg.get("URL", 1);
 		final String text = StringUtils.trin(arg.get("TEXT", 0));
 
 		final List<Participant> p = new ArrayList<>();
@@ -97,9 +98,10 @@ public class CommandReferenceOverSeveral extends SingleLineCommand2<SequenceDiag
 
 		final Display strings = Display.getWithNewlines(text);
 
+		final UrlBuilder b = new UrlBuilder(null, UrlMode.STRICT);
 		Url u = null;
 		if (url != null) {
-			u = new Url(url, title);
+			u = b.getUrl(url);
 		}
 
 		final HColor backColorGeneral = null;
