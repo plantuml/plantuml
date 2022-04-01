@@ -43,32 +43,44 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
+import net.sourceforge.plantuml.graphic.FontConfiguration;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.timingdiagram.graphic.IntricatedPoint;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class PlayerBinary extends Player {
 
+	private static final String LOW_STRING = "0";
+	private static final String HIGH_STRING = "1";
+
 	private final List<TimeConstraint> constraints = new ArrayList<>();
-	private final SortedMap<TimeTick, Boolean> values = new TreeMap<TimeTick, Boolean>();
-	private Boolean initialState;
+	private final SortedMap<TimeTick, ChangeState> values = new TreeMap<>();
+	private ChangeState initialState;
+	private final Style style;
 
 	public PlayerBinary(String code, ISkinParam skinParam, TimingRuler ruler, boolean compact) {
 		super(code, skinParam, ruler, compact);
+		this.style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
 		this.suggestedHeight = 30;
 	}
 
@@ -82,18 +94,28 @@ public class PlayerBinary extends Player {
 
 	@Override
 	protected StyleSignatureBasic getStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, SName.clock);
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, SName.binary);
 	}
 
 	@Override
 	protected SymbolContext getContextLegacy() {
-		return new SymbolContext(HColorUtils.COL_D7E0F2, HColorUtils.COL_038048).withStroke(new UStroke(1.5));
+
+		if (UseStyle.useBetaStyle() == false)
+			return new SymbolContext(HColorUtils.COL_D7E0F2, HColorUtils.COL_038048).withStroke(new UStroke(2));
+
+		final HColor lineColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(),
+				skinParam.getIHtmlColorSet());
+		final HColor backgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
+				skinParam.getIHtmlColorSet());
+
+		return new SymbolContext(backgroundColor, lineColor).withStroke(getStroke());
+
 	}
 
 	public IntricatedPoint getTimeProjection(StringBounder stringBounder, TimeTick tick) {
 		final double x = ruler.getPosInPixel(tick);
-		return new IntricatedPoint(new Point2D.Double(x, getYpos(stringBounder, false)),
-				new Point2D.Double(x, getYpos(stringBounder, true)));
+		return new IntricatedPoint(new Point2D.Double(x, getYpos(stringBounder, HIGH_STRING)),
+				new Point2D.Double(x, getYpos(stringBounder, HIGH_STRING)));
 	}
 
 	public void addNote(TimeTick now, Display note, Position position) {
@@ -105,16 +127,18 @@ public class PlayerBinary extends Player {
 	}
 
 	public void setState(TimeTick now, String comment, Colors color, String... states) {
-		final boolean state = getState(states[0]);
-		if (now == null) {
-			this.initialState = state;
-		} else {
-			this.values.put(now, state);
-		}
+		final ChangeState cs = new ChangeState(now, comment, color, convert(states[0]));
+		if (now == null)
+			this.initialState = cs;
+		else
+			this.values.put(now, cs);
+
 	}
 
-	private boolean getState(String value) {
-		return "1".equals(value) || "high".equalsIgnoreCase(value);
+	private String[] convert(String value) {
+		if ("1".equals(value) || "high".equalsIgnoreCase(value))
+			return new String[] { HIGH_STRING };
+		return new String[] { LOW_STRING };
 	}
 
 	public void createConstraint(TimeTick tick1, TimeTick tick2, String message) {
@@ -123,8 +147,10 @@ public class PlayerBinary extends Player {
 
 	private final double ymargin = 8;
 
-	private double getYpos(StringBounder stringBounder, boolean state) {
-		return state ? getYhigh(stringBounder) : getYlow(stringBounder);
+	private double getYpos(StringBounder stringBounder, String state) {
+		if (state.equalsIgnoreCase(LOW_STRING))
+			return getYlow(stringBounder);
+		return getYhigh(stringBounder);
 	}
 
 	private double getYlow(StringBounder stringBounder) {
@@ -158,17 +184,25 @@ public class PlayerBinary extends Player {
 			public void drawU(UGraphic ug) {
 				ug = getContext().apply(ug);
 				double lastx = 0;
-				boolean lastValue = initialState == null ? false : initialState;
+				String lastValue = initialState == null ? LOW_STRING : initialState.getState();
 				final StringBounder stringBounder = ug.getStringBounder();
 				final ULine vline = ULine.vline(getYlow(stringBounder) - getYhigh(stringBounder));
-				for (Map.Entry<TimeTick, Boolean> ent : values.entrySet()) {
+				for (Map.Entry<TimeTick, ChangeState> ent : values.entrySet()) {
+					final ChangeState value = ent.getValue();
 					final double x = ruler.getPosInPixel(ent.getKey());
+
 					ug.apply(new UTranslate(lastx, getYpos(stringBounder, lastValue))).draw(ULine.hline(x - lastx));
-					if (lastValue != ent.getValue()) {
+					if (lastValue.equalsIgnoreCase(value.getState()) == false)
 						ug.apply(new UTranslate(x, getYhigh(stringBounder))).draw(vline);
+
+					if (value.getComment() != null) {
+						final TextBlock label = getTextBlock(value.getComment());
+						// final Dimension2D dim = label.calculateDimension(ug.getStringBounder());
+						label.drawU(ug.apply(new UTranslate(x + 2, getYhigh(stringBounder))));
 					}
+
 					lastx = x;
-					lastValue = ent.getValue();
+					lastValue = value.getState();
 				}
 				ug.apply(new UTranslate(lastx, getYpos(stringBounder, lastValue)))
 						.draw(ULine.hline(ruler.getWidth() - lastx));
@@ -177,6 +211,18 @@ public class PlayerBinary extends Player {
 
 			}
 		};
+	}
+
+	final protected FontConfiguration getCommentFontConfiguration() {
+		if (UseStyle.useBetaStyle() == false)
+			return FontConfiguration.create(skinParam, FontParam.TIMING, null);
+		return FontConfiguration.create(skinParam,
+				getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder()));
+	}
+
+	private TextBlock getTextBlock(String value) {
+		final Display display = Display.getWithNewlines(value);
+		return display.create(getCommentFontConfiguration(), HorizontalAlignment.LEFT, skinParam);
 	}
 
 	private void drawConstraints(final UGraphic ug) {

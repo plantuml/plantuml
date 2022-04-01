@@ -432,6 +432,12 @@ timingDiagram {
       LineThickness 2
 	  BackgroundColor: var(--grey-blue);
 	}
+	binary {
+	  FontStyle plain
+	  FontSize 12
+	  LineColor darkgreen
+      LineThickness 2
+	}
 	highlight {
 	  BackgroundColor #e
 	  LineThickness 2

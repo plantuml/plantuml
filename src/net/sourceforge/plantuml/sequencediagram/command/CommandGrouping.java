@@ -93,7 +93,7 @@ public class CommandGrouping extends SingleLineCommand2<SequenceDiagram> {
 			if (StringUtils.isEmpty(comment)) {
 				comment = "group";
 			} else {
-				final Pattern p = Pattern.compile("^(.*?)\\[(.*)\\]$");
+				final Pattern p = Pattern.compile("^(.*\\[\\[.*\\]\\].*?|.*?)\\[(.*)\\]$");
 				final Matcher m = p.matcher(comment);
 				if (m.find()) {
 					type = m.group(1);

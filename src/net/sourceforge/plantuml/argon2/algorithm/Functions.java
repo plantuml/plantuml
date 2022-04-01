@@ -17,7 +17,7 @@ class Functions {
 
 
     /**
-     * H0 = H64(p, τ, m, t, v, y, |P|, P, |S|, S, |L|, K, |X|, X)
+     * H0 = H64(p, \u03c4, m, t, v, y, |P|, P, |S|, S, |L|, K, |X|, X)
      * -> 64 byte (ARGON2_PREHASH_DIGEST_LENGTH)
      */
     static byte[] initialHash(byte[] lanes, byte[] outputLength,
