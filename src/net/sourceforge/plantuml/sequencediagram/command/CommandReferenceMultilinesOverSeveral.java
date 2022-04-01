@@ -71,6 +71,8 @@ public class CommandReferenceMultilinesOverSeveral extends CommandMultilines<Seq
 				new RegexLeaf("over"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("PARTS", "((?:[%pLN_.@]+|[%g][^%g]+[%g])(?:[%s]*,[%s]*(?:[%pLN_.@]+|[%g][^%g]+[%g]))*)"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexOptional(new RegexLeaf("URL", "(\\[\\[.*?\\]\\])")), //
 				RegexLeaf.end());
 	}
 
@@ -103,13 +105,11 @@ public class CommandReferenceMultilinesOverSeveral extends CommandMultilines<Seq
 		lines = lines.removeEmptyColumns();
 		Display strings = lines.toDisplay();
 
+		String url = arg.get("URL", 0);
+		final UrlBuilder b = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), UrlMode.STRICT);
 		Url u = null;
-		if (strings.size() > 0) {
-		final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), UrlMode.STRICT);
-			u = urlBuilder.getUrl(strings.get(0).toString());
-		}
-		if (u != null) {
-			strings = strings.subList(1, strings.size());
+		if (url != null) {
+			u = b.getUrl(url);
 		}
 
 		final HColor backColorGeneral = null;
