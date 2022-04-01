@@ -23,7 +23,5 @@ RUN apt-get update && apt-get install -y \
   && rm -rf /var/lib/apt/lists/*
 
 COPY --from=builder /app/build/libs/plantuml-*-SNAPSHOT.jar /app/plantuml.jar
-COPY entrypoint.sh /app/entrypoint.sh
-RUN chmod +x /app/entrypoint.sh
 
 ENTRYPOINT ["java", "-jar", "/app/plantuml.jar"]
