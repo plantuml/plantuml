@@ -98,7 +98,7 @@ public class CommandReferenceOverSeveral extends SingleLineCommand2<SequenceDiag
 
 		final Display strings = Display.getWithNewlines(text);
 
-		final UrlBuilder b = new UrlBuilder(null, UrlMode.STRICT);
+		final UrlBuilder b = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), UrlMode.STRICT);
 		Url u = null;
 		if (url != null) {
 			u = b.getUrl(url);
