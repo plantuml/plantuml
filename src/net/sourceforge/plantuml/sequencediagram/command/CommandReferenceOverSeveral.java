@@ -72,9 +72,10 @@ public class CommandReferenceOverSeveral extends SingleLineCommand2<SequenceDiag
 				new RegexLeaf("PARTS",
 						"(([%pLN_.@]+|[%g][^%g]+[%g])([%s]*,[%s]*([%pLN_.@]+|[%g][^%g]+[%g]))*)"), //
 				RegexLeaf.spaceZeroOrMore(), //
+				new RegexOptional(new RegexLeaf("URL", "(\\[\\[.*?\\]\\])")), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(":"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexOptional(new RegexLeaf("URL", "(\\[\\[.*?\\]\\])")), //
 				new RegexLeaf("TEXT", "(.*)"), RegexLeaf.end());
 	}
 
@@ -98,7 +99,7 @@ public class CommandReferenceOverSeveral extends SingleLineCommand2<SequenceDiag
 
 		final Display strings = Display.getWithNewlines(text);
 
-		final UrlBuilder b = new UrlBuilder(null, UrlMode.STRICT);
+		final UrlBuilder b = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), UrlMode.STRICT);
 		Url u = null;
 		if (url != null) {
 			u = b.getUrl(url);
