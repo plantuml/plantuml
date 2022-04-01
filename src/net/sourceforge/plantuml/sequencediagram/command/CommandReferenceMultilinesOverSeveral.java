@@ -55,7 +55,7 @@ import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 public class CommandReferenceMultilinesOverSeveral extends CommandMultilines<SequenceDiagram> {
 
 	public CommandReferenceMultilinesOverSeveral() {
-		super("^ref(#\\w+)?[%s]+over[%s]+((?:[%pLN_.@]+|[%g][^%g]+[%g])(?:[%s]*,[%s]*(?:[%pLN_.@]+|[%g][^%g]+[%g]))*)[%s]*(#\\w+)?$");
+		super("^ref(#\\w+)?[%s]+over[%s]+((?:[%pLN_.@]+|[%g][^%g]+[%g])(?:[%s]*,[%s]*(?:[%pLN_.@]+|[%g][^%g]+[%g]))*)$");
 	}
 
 	@Override
