@@ -63,7 +63,7 @@ public class CommandReferenceMultilinesOverSeveral extends CommandMultilines<Seq
 	}
 
 	private static RegexConcat getConcat() {
-		return RegexConcat.build(CommandReferenceMultilinesOverSeveral.class.getName(),
+		return RegexConcat.build(CommandReferenceMultilinesOverSeveral.class.getName(), //
 				RegexLeaf.start(), //
 				new RegexLeaf("ref"), //
 				new RegexLeaf("REF", "(#\\w+)?"), //
@@ -73,9 +73,10 @@ public class CommandReferenceMultilinesOverSeveral extends CommandMultilines<Seq
 				new RegexLeaf("PARTS", "((?:[%pLN_.@]+|[%g][^%g]+[%g])(?:[%s]*,[%s]*(?:[%pLN_.@]+|[%g][^%g]+[%g]))*)"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexLeaf("URL", "(\\[\\[.*?\\]\\])")), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("UNUSED", "(#\\w+)?"), //
 				RegexLeaf.end());
 	}
-
 
 	@Override
 	public String getPatternEnd() {
@@ -83,13 +84,12 @@ public class CommandReferenceMultilinesOverSeveral extends CommandMultilines<Seq
 	}
 
 	public CommandExecutionResult execute(final SequenceDiagram diagram, BlocLines lines) throws NoSuchColorException {
-		String firstLine = lines.getFirst().getTrimmed().getString();
-		RegexResult arg = getConcat().matcher(firstLine);
-		if (arg == null) {
+		final String firstLine = lines.getFirst().getTrimmed().getString();
+		final RegexResult arg = getConcat().matcher(firstLine);
+		if (arg == null)
 			return CommandExecutionResult.error("Cannot parse line " + firstLine);
-		}
 
-		String s1 = arg.get("REF", 0);
+		final String s1 = arg.get("REF", 0);
 		final HColor backColorElement = s1 == null ? null
 				: diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(), s1);
 		// final HtmlColor backColorGeneral =
@@ -97,20 +97,18 @@ public class CommandReferenceMultilinesOverSeveral extends CommandMultilines<Seq
 
 		final List<String> participants = StringUtils.splitComma(arg.get("PARTS", 0));
 		final List<Participant> p = new ArrayList<>();
-		for (String s : participants) {
+		for (String s : participants)
 			p.add(diagram.getOrCreateParticipant(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(s)));
-		}
 
 		lines = lines.subExtract(1, 1);
 		lines = lines.removeEmptyColumns();
-		Display strings = lines.toDisplay();
+		final Display strings = lines.toDisplay();
 
-		String url = arg.get("URL", 0);
+		final String url = arg.get("URL", 0);
 		final UrlBuilder b = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), UrlMode.STRICT);
 		Url u = null;
-		if (url != null) {
+		if (url != null)
 			u = b.getUrl(url);
-		}
 
 		final HColor backColorGeneral = null;
 		final Reference ref = new Reference(p, u, strings, backColorGeneral, backColorElement,

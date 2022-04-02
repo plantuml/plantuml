@@ -63,14 +63,14 @@ public class CommandReferenceOverSeveral extends SingleLineCommand2<SequenceDiag
 	}
 
 	private static RegexConcat getConcat() {
-		return RegexConcat.build(CommandReferenceOverSeveral.class.getName(), RegexLeaf.start(), //
+		return RegexConcat.build(CommandReferenceOverSeveral.class.getName(), //
+				RegexLeaf.start(), //
 				new RegexLeaf("ref"), //
 				new RegexLeaf("REF", "(#\\w+)?"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("over"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("PARTS",
-						"(([%pLN_.@]+|[%g][^%g]+[%g])([%s]*,[%s]*([%pLN_.@]+|[%g][^%g]+[%g]))*)"), //
+				new RegexLeaf("PARTS", "(([%pLN_.@]+|[%g][^%g]+[%g])([%s]*,[%s]*([%pLN_.@]+|[%g][^%g]+[%g]))*)"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexLeaf("URL", "(\\[\\[.*?\\]\\])")), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -82,7 +82,7 @@ public class CommandReferenceOverSeveral extends SingleLineCommand2<SequenceDiag
 	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg)
 			throws NoSuchColorException {
-		String s1 = arg.get("REF", 0);
+		final String s1 = arg.get("REF", 0);
 		final HColor backColorElement = s1 == null ? null
 				: diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(), s1);
 		// final HtmlColor backColorGeneral =
@@ -93,17 +93,15 @@ public class CommandReferenceOverSeveral extends SingleLineCommand2<SequenceDiag
 		final String text = StringUtils.trin(arg.get("TEXT", 0));
 
 		final List<Participant> p = new ArrayList<>();
-		for (String s : participants) {
+		for (String s : participants)
 			p.add(diagram.getOrCreateParticipant(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(s)));
-		}
 
 		final Display strings = Display.getWithNewlines(text);
 
 		final UrlBuilder b = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), UrlMode.STRICT);
 		Url u = null;
-		if (url != null) {
+		if (url != null)
 			u = b.getUrl(url);
-		}
 
 		final HColor backColorGeneral = null;
 		final Reference ref = new Reference(p, u, strings, backColorGeneral, backColorElement,
