@@ -156,6 +156,13 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 				.getMergedStyle(getSkinParam().getCurrentStyleBuilder());
 	}
 
+	private Style getStyleHeader() {
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.classDiagram, SName.class_, SName.header) //
+				.withTOBECHANGED(getEntity().getStereotype()) //
+				.with(getEntity().getStereostyles()) //
+				.getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+	}
+
 	private void drawInternal(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final Dimension2D dimTotal = calculateDimension(stringBounder);
@@ -184,7 +191,8 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 						getSkinParam().getIHtmlColorSet());
 
 			if (headerBackcolor == null)
-				headerBackcolor = backcolor;
+				headerBackcolor = getStyleHeader().value(PName.BackGroundColor).asColor(getSkinParam().getThemeStyle(),
+		                getSkinParam().getIHtmlColorSet());;
 
 		} else {
 			if (getSkinParam().shadowing(getEntity().getStereotype()))

@@ -177,6 +177,7 @@ public class FromSkinparamToStyle {
 		addConFont("class", SName.class_);
 		addConFont("classAttribute", SName.class_);
 		addConvert("classBorderThickness", PName.LineThickness, SName.class_);
+		addConvert("classHeaderBackgroundColor", PName.BackGroundColor, SName.class_, SName.header);
 
 		addConvert("objectBackgroundColor", PName.BackGroundColor, SName.object);
 		addConvert("objectBorderColor", PName.LineColor, SName.object);
