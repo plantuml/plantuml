@@ -118,11 +118,18 @@ public class LatexBuilder implements ScientificEquation {
 			return new LatexImage(icon, this.scale * scale, foregroundColor, backgroundColor);
 		}
 
+		@Override
 		public MutableImage muteColor(Color newColor) {
 			return this;
 		}
 
+		@Override
 		public MutableImage muteTransparentColor(Color newColor) {
+			return this;
+		}
+
+		@Override
+		public MutableImage monochrome() {
 			return this;
 		}
 

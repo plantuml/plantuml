@@ -38,7 +38,6 @@ package net.sourceforge.plantuml;
 import java.util.Map;
 
 import net.sourceforge.plantuml.api.ThemeStyle;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 
 public interface ISkinSimple extends SpriteContainer {
@@ -58,8 +57,6 @@ public interface ISkinSimple extends SpriteContainer {
 	public int getDpi();
 
 	public LineBreakStrategy wrapWidth();
-
-	public ColorMapper getColorMapper();
 
 	public void copyAllFrom(ISkinSimple other);
 

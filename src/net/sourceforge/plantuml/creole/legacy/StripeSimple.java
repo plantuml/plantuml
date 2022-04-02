@@ -255,7 +255,7 @@ public class StripeSimple implements Stripe {
 	public void addSprite(String src, double scale, HColor color) {
 		final Sprite sprite = skinParam.getSprite(src);
 		if (sprite != null)
-			atoms.add(new AtomSprite(color, scale, fontConfiguration, sprite, null));
+			atoms.add(new AtomSprite(color, scale, fontConfiguration, sprite, null, skinParam.getColorMapper()));
 	}
 
 	public void addOpenIcon(String src, double scale, HColor color) {

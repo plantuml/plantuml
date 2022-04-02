@@ -134,19 +134,18 @@ public class CommandArchimate extends SingleLineCommand2<DescriptionDiagram> {
 		final String displayRaw = arg.getLazzy("DISPLAY", 0);
 
 		String display = displayRaw;
-		if (display == null) {
+		if (display == null)
 			display = code.getName();
-		}
+
 		display = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(display);
 
 		entity.setDisplay(Display.getWithNewlines(display));
 		entity.setUSymbol(USymbols.ARCHIMATE);
-		if (icon != null) {
+		if (icon != null)
 			entity.setStereotype(
 					Stereotype.build("<<$archimate/" + icon + ">>", diagram.getSkinParam().getCircledCharacterRadius(),
 							diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),
 							diagram.getSkinParam().getIHtmlColorSet()));
-		}
 
 		final Colors colors = color().getColor(diagram.getSkinParam().getThemeStyle(), arg,
 				diagram.getSkinParam().getIHtmlColorSet());
