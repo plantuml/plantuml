@@ -72,9 +72,9 @@ public class Stereotype implements CharSequence {
 	}
 
 	private static void checkLabel(String label) {
-		if (label.startsWith("<<") == false || label.endsWith(">>") == false) {
+		if (label.startsWith("<<") == false || label.endsWith(">>") == false)
 			throw new IllegalArgumentException(label);
-		}
+
 	}
 
 	public static Stereotype build(String label) {
@@ -103,14 +103,14 @@ public class Stereotype implements CharSequence {
 	}
 
 	public final TextBlock getSprite(SpriteContainer container) {
-		if (decoration.spriteName == null || container == null) {
+		if (decoration.spriteName == null || container == null)
 			return null;
-		}
+
 		final Sprite tmp = container.getSprite(decoration.spriteName);
-		if (tmp == null) {
+		if (tmp == null)
 			return null;
-		}
-		return tmp.asTextBlock(getHtmlColor(), decoration.spriteScale);
+
+		return tmp.asTextBlock(getHtmlColor(), decoration.spriteScale, container.getColorMapper());
 	}
 
 	public boolean isWithOOSymbol() {
@@ -122,9 +122,8 @@ public class Stereotype implements CharSequence {
 
 		final Pattern p = Pattern.compile("\\<\\<\\s?((?:\\<&\\w+\\>|[^<>])+?)\\s?\\>\\>");
 		final Matcher m = p.matcher(decoration.label);
-		while (m.find()) {
+		while (m.find())
 			result.add(m.group(1));
-		}
 
 		return Collections.unmodifiableList(result);
 	}
@@ -135,9 +134,9 @@ public class Stereotype implements CharSequence {
 
 	@Override
 	public String toString() {
-		if (decoration.character == 0) {
+		if (decoration.character == 0)
 			return decoration.label;
-		}
+
 		return decoration.character + " " + decoration.label;
 	}
 
@@ -162,20 +161,20 @@ public class Stereotype implements CharSequence {
 	}
 
 	public String getLabel(Guillemet guillemet) {
-		if (isWithOOSymbol()) {
+		if (isWithOOSymbol())
 			return null;
-		}
-		if (decoration.spriteName != null && decoration.spriteName.startsWith("archimate/")) {
+
+		if (decoration.spriteName != null && decoration.spriteName.startsWith("archimate/"))
 			return guillemet.manageGuillemet("<<" + decoration.spriteName.substring("archimate/".length()) + ">>");
-		}
+
 		return guillemet.manageGuillemet(decoration.label);
 	}
 
 	public List<String> getLabels(Guillemet guillemet) {
 		final String labelLocal = getLabel(Guillemet.DOUBLE_COMPARATOR);
-		if (labelLocal == null) {
+		if (labelLocal == null)
 			return Collections.emptyList();
-		}
+
 		return StereotypeDecoration.cutLabels(labelLocal, guillemet);
 	}
 
@@ -191,21 +190,20 @@ public class Stereotype implements CharSequence {
 
 	public List<String> getStyleNames() {
 		final List<String> labels = getLabels(Guillemet.NONE);
-		if (labels == null) {
+		if (labels == null)
 			return Collections.emptyList();
-		}
+
 		return Collections.unmodifiableList(labels);
 	}
 
 	public PackageStyle getPackageStyle() {
-		if (automaticPackageStyle == false) {
+		if (automaticPackageStyle == false)
 			return null;
-		}
-		for (PackageStyle p : EnumSet.allOf(PackageStyle.class)) {
-			if (("<<" + p + ">>").equalsIgnoreCase(decoration.label)) {
+
+		for (PackageStyle p : EnumSet.allOf(PackageStyle.class))
+			if (("<<" + p + ">>").equalsIgnoreCase(decoration.label))
 				return p;
-			}
-		}
+
 		return null;
 	}
 

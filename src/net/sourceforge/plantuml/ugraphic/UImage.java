@@ -95,4 +95,8 @@ public class UImage implements UShape {
 		return new UImage(image.muteTransparentColor(newColor), rawFileName, formula);
 	}
 
+	public UImage monochrome() {
+		return new UImage(image.monochrome(), rawFileName, formula);
+	}
+
 }

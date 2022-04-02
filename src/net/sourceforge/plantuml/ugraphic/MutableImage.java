@@ -48,4 +48,6 @@ public interface MutableImage {
 
 	public MutableImage muteTransparentColor(Color newColor);
 
+	public MutableImage monochrome();
+
 }
