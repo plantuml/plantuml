@@ -19,24 +19,24 @@ header header
 caption caption
 <style>
     document {
-       BackGroundColor orange
-    }
-    title {
-       BackGroundColor yellow
-    }
-    legend {
-       BackGroundColor green
-    }
-    footer {
-       BackGroundColor blue
-       FontColor red
-       FontSize 15
-    }
-    header {
-       BackGroundColor red
-    }
-    caption {
-       BackGroundColor purple
+		BackGroundColor orange
+	    title {
+	       BackGroundColor yellow
+	    }
+	    legend {
+	       BackGroundColor green
+	    }
+	    footer {
+	       BackGroundColor blue
+	       FontColor red
+	       FontSize 15
+	    }
+	    header {
+	       BackGroundColor red
+	    }
+	    caption {
+	       BackGroundColor purple
+	    }
     }
 </style>
 
