@@ -35,8 +35,6 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
 import java.awt.geom.Rectangle2D;
 import java.util.EnumMap;
 import java.util.Map;
@@ -52,8 +50,8 @@ import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UseStyle;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.creole.Stencil;
-import net.sourceforge.plantuml.cucadiagram.Bodier;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.EntityPortion;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
@@ -174,15 +172,23 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil, W
 
 		final HColor borderColor;
 		final UStroke stroke;
+
 		HColor backcolor = getEntity().getColors().getColor(ColorType.BACK);
+		HColor headerBackcolor = getEntity().getColors().getColor(ColorType.HEADER);
 
 		if (UseStyle.useBetaStyle()) {
 			final Style style = getStyle();
 			borderColor = style.value(PName.LineColor).asColor(getSkinParam().getThemeStyle(),
 					getSkinParam().getIHtmlColorSet());
+
+			if (headerBackcolor == null)
+				headerBackcolor = backcolor == null ? getStyleHeader().value(PName.BackGroundColor)
+						.asColor(getSkinParam().getThemeStyle(), getSkinParam().getIHtmlColorSet()) : backcolor;
+
 			if (backcolor == null)
 				backcolor = style.value(PName.BackGroundColor).asColor(getSkinParam().getThemeStyle(),
 						getSkinParam().getIHtmlColorSet());
+
 			rect.setDeltaShadow(style.value(PName.Shadowing).asDouble());
 			stroke = style.getStroke();
 
@@ -206,6 +212,14 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil, W
 		typeIDent.put(UGroupType.ID, "elem_" + getEntity().getCode());
 		ug.startGroup(typeIDent);
 		ug.apply(stroke).draw(rect);
+
+		UGraphic ugHeader = ug;
+		if (roundCorner == 0 && headerBackcolor != null && backcolor.equals(headerBackcolor) == false) {
+			final Shadowable rect2 = new URectangle(widthTotal, dimTitle.getHeight());
+			rect2.setDeltaShadow(0);
+			ugHeader = ugHeader.apply(headerBackcolor.bg());
+			ugHeader.apply(stroke).draw(rect2);
+		}
 
 		final ULayoutGroup header = getLayout(stringBounder);
 		header.drawU(ug, dimTotal.getWidth(), dimTitle.getHeight());

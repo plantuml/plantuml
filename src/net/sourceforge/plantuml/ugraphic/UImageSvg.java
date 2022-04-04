@@ -43,12 +43,26 @@ import net.sourceforge.plantuml.SignatureUtils;
 
 public class UImageSvg implements UShape {
 
+	private static final String EMPTY_SVG = "<svg width=10 height=10></svg>";
 	private final String svg;
 	private final double scale;
 
 	public UImageSvg(String svg, double scale) {
-		this.svg = Objects.requireNonNull(svg);
+		this.svg = clean(Objects.requireNonNull(svg));
 		this.scale = scale;
+	}
+
+	private String clean(String svg) {
+		svg = svg.toLowerCase().replaceAll("\\s", "");
+		if (svg.contains("<script>"))
+			return EMPTY_SVG;
+		if (svg.contains("</script>"))
+			return EMPTY_SVG;
+		if (svg.contains("<foreignobject"))
+			return EMPTY_SVG;
+		if (svg.contains("</foreignobject>"))
+			return EMPTY_SVG;
+		return svg;
 	}
 
 	public String getMD5Hex() {
