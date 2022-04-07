@@ -70,14 +70,15 @@ public class FontConfiguration {
 		return getFont().toStringDebug() + " " + styles.toString();
 	}
 
-	public static FontConfiguration create(UFont font, HColor color, HColor hyperlinkColor, boolean useUnderlineForHyperlink) {
+	public static FontConfiguration create(UFont font, HColor color, HColor hyperlinkColor,
+			boolean useUnderlineForHyperlink) {
 		return create(font, color, hyperlinkColor, useUnderlineForHyperlink, 8);
 	}
 
-	public static FontConfiguration create(UFont font, HColor color, HColor hyperlinkColor, boolean useUnderlineForHyperlink,
-			int tabSize) {
-		return new FontConfiguration(getStyles(font), font, color, font, color, null, FontPosition.NORMAL, new SvgAttributes(), false,
-				hyperlinkColor, useUnderlineForHyperlink, tabSize);
+	public static FontConfiguration create(UFont font, HColor color, HColor hyperlinkColor,
+			boolean useUnderlineForHyperlink, int tabSize) {
+		return new FontConfiguration(getStyles(font), font, color, font, color, null, FontPosition.NORMAL,
+				new SvgAttributes(), false, hyperlinkColor, useUnderlineForHyperlink, tabSize);
 	}
 
 	public static FontConfiguration blackBlueTrue(UFont font) {
@@ -91,10 +92,12 @@ public class FontConfiguration {
 	}
 
 	public static FontConfiguration create(ISkinParam skinParam, Style style) {
-		// User getStyle().getFontConfiguration(skinParam.getIHtmlColorSet()) instead ?
+		final HColor hyperlinkColor = style.value(PName.HyperLinkColor).asColor(skinParam.getThemeStyle(),
+				skinParam.getIHtmlColorSet());
+		final boolean useUnderlineForHyperlink = skinParam.useUnderlineForHyperlink();
 		return create(style.getUFont(),
 				style.value(PName.FontColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet()),
-				skinParam.getHyperlinkColor(), skinParam.useUnderlineForHyperlink(), skinParam.getTabSize());
+				hyperlinkColor, useUnderlineForHyperlink, skinParam.getTabSize());
 	}
 
 	// ---
