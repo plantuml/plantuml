@@ -52,15 +52,15 @@ public class UImageSvg implements UShape {
 		this.scale = scale;
 	}
 
-	private String clean(String svg) {
-		svg = svg.toLowerCase().replaceAll("\\s", "");
-		if (svg.contains("<script>"))
+	private String clean(final String svg) {
+		final String svg2 = svg.toLowerCase().replaceAll("\\s", "");
+		if (svg2.contains("<script>"))
 			return EMPTY_SVG;
-		if (svg.contains("</script>"))
+		if (svg2.contains("</script>"))
 			return EMPTY_SVG;
-		if (svg.contains("<foreignobject"))
+		if (svg2.contains("<foreignobject"))
 			return EMPTY_SVG;
-		if (svg.contains("</foreignobject>"))
+		if (svg2.contains("</foreignobject>"))
 			return EMPTY_SVG;
 		return svg;
 	}
