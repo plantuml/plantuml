@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -43,10 +43,10 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 
 public interface Placeable {
 
-	public Dimension2D getDimension(StringBounder stringBounder, ISkinParam skinParam);
+	Dimension2D getDimension(StringBounder stringBounder, ISkinParam skinParam);
 
-	public TextBlock toTextBlock(ISkinParam skinParam);
+	TextBlock toTextBlock(ISkinParam skinParam);
 
-	public String getId();
+	String getId();
 
 }

@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -43,46 +43,46 @@ package net.sourceforge.plantuml.core;
  * from the diagram. In that case, the method <code>containsCMapData()</code> returns
  * <code>true</code> and you can retrieve those information using
  * <code>getCMapData()</code> method.
- * 
+ *
  * @author Arnaud Roques
- * 
+ *
  */
 public interface ImageData {
 
 	/**
 	 * Width in pixel of the image.
 	 */
-	public int getWidth();
+	int getWidth();
 
 	/**
 	 * Height in pixel of the image.
 	 */
-	public int getHeight();
+	int getHeight();
 
 	/**
 	 * Indicates if the image has some position information.
 	 * @return <code>true</code> if the image has position information.
 	 */
-	public boolean containsCMapData();
+	boolean containsCMapData();
 
 	/**
 	 * Return position information as a CMap formated string.
 	 * For example, if you call this method with <code>nameId</code>
 	 * set to "foo_map", you will get something like:
-	 * 
+	 *
 	 * <pre>
 	 * &lt;map id="foo_map" name="foo_map"&gt;
 	 * &lt;area shape="rect" id="..." href="..." title="..." alt="" coords="64,68,93,148"/&gt;
 	 * &lt;/map&gt;
 	 * </pre>
-	 * 
+	 *
 	 * @param nameId the id to be used in the cmap data string.
 	 */
-	public String getCMapData(String nameId);
-	
-	public String getWarningOrError();
-	
-	public int getStatus();
+	String getCMapData(String nameId);
+
+	String getWarningOrError();
+
+	int getStatus();
 
 
 }
