@@ -209,6 +209,7 @@ public class FromSkinparamToStyle {
 		addMagic(SName.storage);
 		addMagic(SName.usecase);
 		addMagic(SName.map);
+		addMagic(SName.archimate);
 
 	}
 
@@ -233,7 +234,7 @@ public class FromSkinparamToStyle {
 		if (key.contains("<<")) {
 			final StringTokenizer st = new StringTokenizer(key, "<>");
 			this.key = st.nextToken();
-			this.stereo = st.nextToken();
+			this.stereo = st.hasMoreTokens() ? st.nextToken() : null;
 		} else {
 			this.key = key;
 			this.stereo = null;

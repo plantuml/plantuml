@@ -35,13 +35,9 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
-import net.sourceforge.plantuml.ColorParam;
-import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineBreakStrategy;
-import net.sourceforge.plantuml.UseStyle;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.creole.Parser;
 import net.sourceforge.plantuml.creole.Sheet;
@@ -54,7 +50,6 @@ import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
@@ -70,31 +65,16 @@ public class FloatingNote extends AbstractTextBlock implements Stencil, TextBloc
 
 	public FloatingNote(Display note, ISkinParam skinParam) {
 
-		final Rose rose = new Rose();
-
-		UStroke stroke = new UStroke();
-		final HColor noteBackgroundColor;
-		final HColor borderColor;
-		final FontConfiguration fc;
-		final LineBreakStrategy wrapWidth;
-		final double shadowing;
-		if (UseStyle.useBetaStyle()) {
-			final Style style = StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.note)
-					.getMergedStyle(skinParam.getCurrentStyleBuilder());
-			wrapWidth = style.wrapWidth();
-			fc = FontConfiguration.create(skinParam, style);
-			noteBackgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
-					skinParam.getIHtmlColorSet());
-			borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
-			stroke = style.getStroke();
-			shadowing = style.value(PName.Shadowing).asDouble();
-		} else {
-			shadowing = skinParam.shadowing(null) ? 4 : 0;
-			noteBackgroundColor = rose.getHtmlColor(skinParam, ColorParam.noteBackground);
-			borderColor = rose.getHtmlColor(skinParam, ColorParam.noteBorder);
-			fc = FontConfiguration.create(skinParam, FontParam.NOTE, null);
-			wrapWidth = skinParam.wrapWidth();
-		}
+		final Style style = StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.note)
+				.getMergedStyle(skinParam.getCurrentStyleBuilder());
+		final LineBreakStrategy wrapWidth = style.wrapWidth();
+		final FontConfiguration fc = FontConfiguration.create(skinParam, style);
+		final HColor noteBackgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
+				skinParam.getIHtmlColorSet());
+		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(),
+				skinParam.getIHtmlColorSet());
+		final UStroke stroke = style.getStroke();
+		final double shadowing = style.value(PName.Shadowing).asDouble();
 
 		final Sheet sheet = Parser
 				.build(fc, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT), skinParam, CreoleMode.FULL)

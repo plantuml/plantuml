@@ -35,25 +35,23 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.activitydiagram3.Branch;
-import net.sourceforge.plantuml.activitydiagram3.ftile.Hexagon;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileEmpty;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileMinWidthCentered;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileUtils;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileWithUrl;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Hexagon;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileIfDown;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamond;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamondInside;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamondSquare;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.creole.Parser;
 import net.sourceforge.plantuml.creole.Sheet;
@@ -65,7 +63,6 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
@@ -108,42 +105,24 @@ public class ConditionalBuilder {
 			FtileFactory ftileFactory, ConditionStyle conditionStyle, ConditionEndStyle conditionEndStyle,
 			Branch branch1, Branch branch2, ISkinParam skinParam, StringBounder stringBounder,
 			FontConfiguration fontArrow, FontConfiguration fontTest, Url url) {
-		if (UseStyle.useBetaStyle()) {
-			if (backColor == null)
-				throw new IllegalArgumentException();
-			if (borderColor == null)
-				throw new IllegalArgumentException();
-			if (arrowColor == null)
-				throw new IllegalArgumentException();
-			final Style styleArrow = getStyleSignatureArrow().getMergedStyle(skinParam.getCurrentStyleBuilder());
-			final Style styleDiamond = getStyleSignatureDiamond().getMergedStyle(skinParam.getCurrentStyleBuilder());
-			this.diamondLineBreak = styleDiamond.wrapWidth();
-			this.labelLineBreak = styleArrow.wrapWidth();
-			this.borderColor = borderColor; /*
-											 * styleDiamond.value(PName.LineColor).asColor(skinParam.getThemeStyle(),
-											 * skinParam.getIHtmlColorSet());
-											 */
-			this.backColor = backColor;
-			/*
-			 * styleDiamond.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
-			 * skinParam.getIHtmlColorSet())
-			 */;
-			this.arrowColor = arrowColor;/*
-											 * Rainbow.fromColor(
-											 * styleArrow.value(PName.LineColor).asColor(skinParam.getThemeStyle(),
-											 * skinParam.getIHtmlColorSet()), null);
-											 */
-			this.fontTest = styleDiamond.getFontConfiguration(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
-			this.fontArrow = styleArrow.getFontConfiguration(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
-		} else {
-			this.diamondLineBreak = LineBreakStrategy.NONE;
-			this.labelLineBreak = LineBreakStrategy.NONE;
-			this.borderColor = borderColor;
-			this.backColor = backColor;
-			this.arrowColor = arrowColor;
-			this.fontTest = fontTest;
-			this.fontArrow = fontArrow;
-		}
+
+		if (backColor == null)
+			throw new IllegalArgumentException();
+		if (borderColor == null)
+			throw new IllegalArgumentException();
+		if (arrowColor == null)
+			throw new IllegalArgumentException();
+
+		final Style styleArrow = getStyleSignatureArrow().getMergedStyle(skinParam.getCurrentStyleBuilder());
+		final Style styleDiamond = getStyleSignatureDiamond().getMergedStyle(skinParam.getCurrentStyleBuilder());
+		this.fontTest = styleDiamond.getFontConfiguration(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
+		this.fontArrow = styleArrow.getFontConfiguration(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
+		this.diamondLineBreak = styleDiamond.wrapWidth();
+		this.labelLineBreak = styleArrow.wrapWidth();
+		this.borderColor = borderColor;
+		this.backColor = backColor;
+		this.arrowColor = arrowColor;
+
 		this.ftileFactory = ftileFactory;
 		this.swimlane = swimlane;
 		this.conditionStyle = conditionStyle;
@@ -261,7 +240,7 @@ public class ConditionalBuilder {
 		final Sheet sheet = Parser.build(fontTest, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT),
 				skinParam, CreoleMode.FULL).createSheet(labelTest);
 		final SheetBlock1 sheetBlock1 = new SheetBlock1(sheet, diamondLineBreak, skinParam.getPadding());
-		
+
 		final UStroke thickness = tile1
 				.getThickness(getStyleSignatureDiamond().getMergedStyle(skinParam.getCurrentStyleBuilder()));
 		final TextBlock tbTest = new SheetBlock2(sheetBlock1, Hexagon.asStencil(sheetBlock1), thickness);

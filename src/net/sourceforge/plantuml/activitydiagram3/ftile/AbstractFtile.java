@@ -41,8 +41,6 @@ import java.util.List;
 
 import net.sourceforge.plantuml.AlignmentParam;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.LineParam;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -89,14 +87,7 @@ public abstract class AbstractFtile extends AbstractTextBlock implements Ftile {
 	}
 
 	public final UStroke getThickness(Style style) {
-		if (UseStyle.useBetaStyle())
-			return style.getStroke();
-		
-		UStroke thickness = skinParam.getThickness(LineParam.activityBorder, null);
-		if (thickness == null) {
-			thickness = new UStroke(1.5);
-		}
-		return thickness;
+		return style.getStroke();
 	}
 
 	public List<WeldingPoint> getWeldingPoints() {

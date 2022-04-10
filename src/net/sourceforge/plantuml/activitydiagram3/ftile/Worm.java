@@ -45,12 +45,9 @@ import java.util.List;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.Direction;
-import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.cucadiagram.LinkStyle;
 import net.sourceforge.plantuml.graphic.HtmlColorAndStyle;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
@@ -97,15 +94,10 @@ public class Worm implements Iterable<Point2D.Double> {
 
 		ug = ug.apply(arrowColor);
 		ug = ug.apply(arrowColor.bg());
-		if (linkStyle.isNormal()) {
-			UStroke stroke = new UStroke(strokeValue);
-			if (UseStyle.useBetaStyle()) {
-				stroke = style.getStroke();
-			}
-			ug = ug.apply(stroke);
-		} else {
+		if (linkStyle.isNormal())
+			ug = ug.apply(style.getStroke());
+		else
 			ug = ug.apply(linkStyle.goThickness(strokeValue).getStroke3());
-		}
 
 		boolean drawn = false;
 		for (int i = 0; i < points.size() - 1; i++) {

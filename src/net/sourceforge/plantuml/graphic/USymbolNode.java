@@ -90,9 +90,8 @@ class USymbolNode extends USymbol {
 
 		ug.apply(UTranslate.dy(10)).draw(ULine.hline(width - 10));
 		ug.apply(new UTranslate(width - 10, 10)).draw(ULine.vline(height - 10));
-		if (UseStyle.useBetaStyle()) {
-			ug.apply(new UTranslate(0, height)).draw(new UEmpty(10, 10));
-		}
+
+		ug.apply(new UTranslate(0, height)).draw(new UEmpty(10, 10));
 
 	}
 

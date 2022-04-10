@@ -85,16 +85,12 @@ public class GtileAssembly extends GtileTopDown {
 
 	protected final TextBlock getTextBlock(Display display) {
 		// DUP3945
-		if (Display.isNull(display)) {
+		if (Display.isNull(display))
 			return TextBlockUtils.EMPTY_TEXT_BLOCK;
-		}
-		final FontConfiguration fontConfiguration;
-		if (UseStyle.useBetaStyle()) {
-			final Style style = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam().getCurrentStyleBuilder());
-			fontConfiguration = style.getFontConfiguration(skinParam().getThemeStyle(), skinParam().getIHtmlColorSet());
-		} else {
-			fontConfiguration = FontConfiguration.create(skinParam(), FontParam.ARROW, null);
-		}
+
+		final Style style = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam().getCurrentStyleBuilder());
+		final FontConfiguration fontConfiguration = style.getFontConfiguration(skinParam().getThemeStyle(),
+				skinParam().getIHtmlColorSet());
 		return display.create7(fontConfiguration, HorizontalAlignment.LEFT, skinParam(), CreoleMode.SIMPLE_LINE);
 	}
 

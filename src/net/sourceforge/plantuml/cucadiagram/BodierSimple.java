@@ -67,9 +67,10 @@ public class BodierSimple implements Bodier {
 	}
 
 	@Override
-	public void addFieldOrMethod(String s) throws NoSuchColorException {
+	public boolean addFieldOrMethod(String s) throws NoSuchColorException {
 		final Display display = Display.getWithNewlines2(s);
 		rawBody.addAll(display.asList());
+		return true;
 	}
 
 	@Override

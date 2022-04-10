@@ -37,11 +37,9 @@ package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 
 import java.util.List;
 
-import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.Pragma;
 import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.activitydiagram3.Branch;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
@@ -74,35 +72,19 @@ public class FtileFactoryDelegatorIf extends FtileFactoryDelegator {
 		final ConditionEndStyle conditionEndStyle = skinParam().getConditionEndStyle();
 		final Branch branch0 = thens.get(0);
 
-		final HColor borderColor;
-		final HColor backColor;
-		final Rainbow arrowColor;
-		final FontConfiguration fcTest;
-		final FontParam testParam = conditionStyle == ConditionStyle.INSIDE_HEXAGON ? FontParam.ACTIVITY_DIAMOND
-				: FontParam.ARROW;
-		final FontConfiguration fcArrow;
-		if (UseStyle.useBetaStyle()) {
-			final Style styleArrow = getDefaultStyleDefinitionArrow()
-					.getMergedStyle(skinParam().getCurrentStyleBuilder());
-			final Style styleDiamond = getDefaultStyleDefinitionDiamond()
-					.getMergedStyle(skinParam().getCurrentStyleBuilder());
-			borderColor = styleDiamond.value(PName.LineColor).asColor(skinParam().getThemeStyle(),
-					skinParam().getIHtmlColorSet());
-			backColor = branch0.getColor() == null ? styleDiamond.value(PName.BackGroundColor)
-					.asColor(skinParam().getThemeStyle(), skinParam().getIHtmlColorSet()) : branch0.getColor();
-			arrowColor = Rainbow.build(styleArrow, skinParam().getIHtmlColorSet(), skinParam().getThemeStyle());
-			fcTest = styleDiamond.getFontConfiguration(skinParam().getThemeStyle(), skinParam().getIHtmlColorSet());
-			fcArrow = styleArrow.getFontConfiguration(skinParam().getThemeStyle(), skinParam().getIHtmlColorSet());
-		} else {
-			borderColor = getRose().getHtmlColor(skinParam(), ColorParam.activityDiamondBorder);
-			backColor = branch0.getColor() == null
-					? getRose().getHtmlColor(skinParam(), ColorParam.activityDiamondBackground)
-					: branch0.getColor();
-			arrowColor = Rainbow.build(skinParam());
-			fcTest = FontConfiguration.create(skinParam(), testParam, null)
-					.changeColor(fontColor(FontParam.ACTIVITY_DIAMOND));
-			fcArrow = FontConfiguration.create(skinParam(), FontParam.ARROW, null);
-		}
+		final Style styleArrow = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam().getCurrentStyleBuilder());
+		final Style styleDiamond = getDefaultStyleDefinitionDiamond()
+				.getMergedStyle(skinParam().getCurrentStyleBuilder());
+		final HColor borderColor = styleDiamond.value(PName.LineColor).asColor(skinParam().getThemeStyle(),
+				skinParam().getIHtmlColorSet());
+		final HColor backColor = branch0.getColor() == null ? styleDiamond.value(PName.BackGroundColor)
+				.asColor(skinParam().getThemeStyle(), skinParam().getIHtmlColorSet()) : branch0.getColor();
+		final Rainbow arrowColor = Rainbow.build(styleArrow, skinParam().getIHtmlColorSet(),
+				skinParam().getThemeStyle());
+		final FontConfiguration fcTest = styleDiamond.getFontConfiguration(skinParam().getThemeStyle(),
+				skinParam().getIHtmlColorSet());
+		final FontConfiguration fcArrow = styleArrow.getFontConfiguration(skinParam().getThemeStyle(),
+				skinParam().getIHtmlColorSet());
 
 		if (thens.size() > 1) {
 			if (pragma.useVerticalIf()/* OptionFlags.USE_IF_VERTICAL */)

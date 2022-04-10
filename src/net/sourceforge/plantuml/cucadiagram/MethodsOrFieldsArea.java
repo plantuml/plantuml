@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.cucadiagram;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Collection;
 import java.util.HashSet;
@@ -45,7 +44,7 @@ import net.sourceforge.plantuml.EmbeddedDiagram;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.UseStyle;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -57,7 +56,6 @@ import net.sourceforge.plantuml.graphic.TextBlockLineBefore;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.TextBlockWithUrl;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
-import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.svek.Ports;
@@ -81,7 +79,7 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlock,
 
 	private final FontParam fontParam;
 	private final ISkinParam skinParam;
-	private final Rose rose = new Rose();
+
 	private final Display members;
 	private final HorizontalAlignment align;
 	private final Stereotype stereotype;
@@ -264,20 +262,12 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlock,
 				}
 			};
 		}
-		final HColor backColor;
-		final HColor borderColor;
-		if (UseStyle.useBetaStyle()) {
-			final Style style = modifier.getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
-			borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
-			final boolean isField = modifier.isField();
-			backColor = isField ? null
-					: style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
-							skinParam.getIHtmlColorSet());
-		} else {
-			borderColor = rose.getHtmlColor(skinParam, modifier.getForeground());
-			backColor = modifier.getBackground() == null ? null
-					: rose.getHtmlColor(skinParam, modifier.getBackground());
-		}
+		final Style style = modifier.getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
+		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(),
+				skinParam.getIHtmlColorSet());
+		final boolean isField = modifier.isField();
+		final HColor backColor = isField ? null
+				: style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
 
 		final TextBlock uBlock = modifier.getUBlock(skinParam.classAttributeIconSize(), borderColor, backColor,
 				url != null);

@@ -275,20 +275,15 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 	}
 
 	public HColor calculateBackColor() {
-		if (UseStyle.useBetaStyle()) {
-			final Style style = StyleSignatureBasic
-					.of(SName.root, SName.document, this.getUmlDiagramType().getStyleName())
-					.getMergedStyle(this.getSkinParam().getCurrentStyleBuilder());
+		final Style style = StyleSignatureBasic.of(SName.root, SName.document, this.getUmlDiagramType().getStyleName())
+				.getMergedStyle(this.getSkinParam().getCurrentStyleBuilder());
 
-			HColor backgroundColor = style.value(PName.BackGroundColor).asColor(this.getSkinParam().getThemeStyle(),
-					this.getSkinParam().getIHtmlColorSet());
-			if (backgroundColor == null) {
-				backgroundColor = HColorUtils.transparent();
-			}
-			return backgroundColor;
+		HColor backgroundColor = style.value(PName.BackGroundColor).asColor(this.getSkinParam().getThemeStyle(),
+				this.getSkinParam().getIHtmlColorSet());
+		if (backgroundColor == null)
+			backgroundColor = HColorUtils.transparent();
 
-		}
-		return this.getSkinParam().getBackgroundColor();
+		return backgroundColor;
 	}
 
 }

@@ -63,7 +63,6 @@ public class CommandSkin extends SingleLineCommand2<TitledDiagram> {
 	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg) {
 		try {
-			UseStyle.setBetaStyle(true);
 			return diagram.loadSkin(arg.get("SKIN", 0));
 		} catch (IOException e) {
 			return CommandExecutionResult.error("Skin read error");

@@ -111,32 +111,15 @@ public class GtileWithNoteOpale extends AbstractGtile implements Stencil, Stylea
 		if (note.getType() == NoteType.FLOATING_NOTE)
 			withLink = false;
 
-		final Rose rose = new Rose();
-
-		final HColor noteBackgroundColor;
-		final HColor borderColor;
-		final FontConfiguration fc;
-
-		final double shadowing;
-		final LineBreakStrategy wrapWidth;
-		UStroke stroke = new UStroke();
-		if (UseStyle.useBetaStyle()) {
-			final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder())
-					.eventuallyOverride(note.getColors());
-			noteBackgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
-					getIHtmlColorSet());
-			borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), getIHtmlColorSet());
-			fc = style.getFontConfiguration(skinParam.getThemeStyle(), getIHtmlColorSet());
-			shadowing = style.value(PName.Shadowing).asDouble();
-			wrapWidth = style.wrapWidth();
-			stroke = style.getStroke();
-		} else {
-			noteBackgroundColor = rose.getHtmlColor(skinParam, ColorParam.noteBackground);
-			borderColor = rose.getHtmlColor(skinParam, ColorParam.noteBorder);
-			fc = FontConfiguration.create(skinParam, FontParam.NOTE, null);
-			shadowing = skinParam.shadowing(null) ? 4 : 0;
-			wrapWidth = skinParam.wrapWidth();
-		}
+		final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder())
+				.eventuallyOverride(note.getColors());
+		final HColor noteBackgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
+				getIHtmlColorSet());
+		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), getIHtmlColorSet());
+		final FontConfiguration fc = style.getFontConfiguration(skinParam.getThemeStyle(), getIHtmlColorSet());
+		final double shadowing = style.value(PName.Shadowing).asDouble();
+		final LineBreakStrategy wrapWidth = style.wrapWidth();
+		final UStroke stroke = style.getStroke();
 
 		final HorizontalAlignment align = skinParam.getHorizontalAlignment(AlignmentParam.noteTextAlignment, null,
 				false, null);

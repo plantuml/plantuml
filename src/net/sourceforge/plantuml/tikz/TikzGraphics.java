@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- *
+ * 
  * If you like this project or if you find it useful, you can support us at:
- *
+ * 
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- *
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- *
+ * 
  *
  */
 package net.sourceforge.plantuml.tikz;
@@ -118,6 +118,19 @@ public class TikzGraphics {
 
 		final String result = colornames.get(color);
 		return Objects.requireNonNull(result);
+	}
+
+	private boolean mustApplyFillColor() {
+		if (fillcolor == null)
+			return false;
+
+		if (HColorUtils.isTransparent(fillcolor))
+			return false;
+
+		if (mapper.toColor(fillcolor).getAlpha() == 0)
+			return false;
+		
+		return true;
 	}
 
 	private void appendFillColor(StringBuilder sb, boolean colorBackup) {
@@ -467,18 +480,6 @@ public class TikzGraphics {
 		}
 	}
 
-	private boolean mustApplyFillColor() {
-		if (fillcolor == null)
-			return false;
-
-		if (HColorUtils.isTransparent(fillcolor))
-			return false;
-
-		if (mapper.toColor(fillcolor).getAlpha() == 0)
-			return false;
-		return true;
-	}
-
 	public void rectangleRound(double x, double y, double width, double height, double r) {
 		double[] points = new double[8 * 2];
 		points[0] = x;
@@ -549,7 +550,7 @@ public class TikzGraphics {
 		if (color != null)
 			sb.append("color=" + getColorName(color) + ",");
 
-		if (fillcolor != null && !HColorUtils.isTransparent(fillcolor))
+		if (mustApplyFillColor())
 			sb.append("fill=" + getColorName(fillcolor) + ",");
 
 		sb.append("line width=" + thickness + "pt] " + couple(x, y) + " ellipse (" + format(width) + "pt and "
@@ -563,7 +564,7 @@ public class TikzGraphics {
 		if (color != null)
 			sb.append("color=" + getColorName(color) + ",");
 
-		if (fillcolor != null)
+		if (mustApplyFillColor())
 			sb.append("fill=" + getColorName(fillcolor) + ",");
 
 		sb.append("line width=" + thickness + "pt] " + couple(x, y) + " arc (" + angleStart + ":" + angleEnd + ":"

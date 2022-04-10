@@ -73,13 +73,9 @@ public class FtileCircleStop extends AbstractFtile {
 		this.borderColor = borderColor;
 		this.backColor = backColor;
 		this.swimlane = swimlane;
-		if (UseStyle.useBetaStyle()) {
-			this.shadowing = style.value(PName.Shadowing).asDouble();
-			this.backColor = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(), getIHtmlColorSet());
-			this.borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), getIHtmlColorSet());
-		} else if (skinParam().shadowing(null)) {
-			this.shadowing = 3;
-		}
+		this.shadowing = style.value(PName.Shadowing).asDouble();
+		this.backColor = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(), getIHtmlColorSet());
+		this.borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), getIHtmlColorSet());
 
 	}
 

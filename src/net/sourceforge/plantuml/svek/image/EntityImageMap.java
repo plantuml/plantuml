@@ -35,21 +35,17 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.util.EnumMap;
 import java.util.Map;
 
-import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.CornerParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineConfigurable;
-import net.sourceforge.plantuml.LineParam;
-import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.UseStyle;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.creole.Stencil;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.EntityPortion;
@@ -99,12 +95,8 @@ public class EntityImageMap extends AbstractEntityImage implements Stencil, With
 		final Stereotype stereotype = entity.getStereotype();
 		this.roundCorner = skinParam.getRoundCorner(CornerParam.DEFAULT, null);
 
-		final FontConfiguration fcHeader;
-		if (UseStyle.useBetaStyle())
-			fcHeader = getStyleHeader().getFontConfiguration(getSkinParam().getThemeStyle(),
-					getSkinParam().getIHtmlColorSet());
-		else
-			fcHeader = FontConfiguration.create(getSkinParam(), FontParam.OBJECT, stereotype);
+		final FontConfiguration fcHeader = getStyleHeader().getFontConfiguration(getSkinParam().getThemeStyle(),
+				getSkinParam().getIHtmlColorSet());
 
 		this.name = TextBlockUtils
 				.withMargin(entity.getDisplay().create(fcHeader, HorizontalAlignment.CENTER, skinParam), 2, 2);
@@ -117,14 +109,10 @@ public class EntityImageMap extends AbstractEntityImage implements Stencil, With
 					FontConfiguration.create(getSkinParam(), FontParam.OBJECT_STEREOTYPE, stereotype),
 					HorizontalAlignment.CENTER, skinParam);
 
-		if (UseStyle.useBetaStyle()) {
-			final FontConfiguration fontConfiguration = getStyleHeader()
-					.getFontConfiguration(getSkinParam().getThemeStyle(), getSkinParam().getIHtmlColorSet());
-			this.entries = entity.getBodier().getBody(FontParam.OBJECT_ATTRIBUTE, skinParam, false, false,
-					entity.getStereotype(), getStyle(), fontConfiguration);
-		} else
-			this.entries = entity.getBodier().getBody(FontParam.OBJECT_ATTRIBUTE, skinParam, false, false,
-					entity.getStereotype(), null, null);
+		final FontConfiguration fontConfiguration = getStyleHeader()
+				.getFontConfiguration(getSkinParam().getThemeStyle(), getSkinParam().getIHtmlColorSet());
+		this.entries = entity.getBodier().getBody(FontParam.OBJECT_ATTRIBUTE, skinParam, false, false,
+				entity.getStereotype(), getStyle(), fontConfiguration);
 
 		this.url = entity.getUrl99();
 
@@ -168,27 +156,23 @@ public class EntityImageMap extends AbstractEntityImage implements Stencil, With
 		final double heightTotal = dimTotal.getHeight();
 		final Shadowable rect = new URectangle(widthTotal, heightTotal).rounded(roundCorner);
 
-		final HColor borderColor;
-		final UStroke stroke;
 		HColor backcolor = getEntity().getColors().getColor(ColorType.BACK);
+		HColor headerBackcolor = getEntity().getColors().getColor(ColorType.HEADER);
 
-		if (UseStyle.useBetaStyle()) {
-			final Style style = getStyle();
-			borderColor = style.value(PName.LineColor).asColor(getSkinParam().getThemeStyle(),
+		final Style style = getStyle();
+		final HColor borderColor = style.value(PName.LineColor).asColor(getSkinParam().getThemeStyle(),
+				getSkinParam().getIHtmlColorSet());
+		
+		if (headerBackcolor == null)
+			headerBackcolor = backcolor == null ? getStyleHeader().value(PName.BackGroundColor)
+					.asColor(getSkinParam().getThemeStyle(), getSkinParam().getIHtmlColorSet()) : backcolor;
+
+		if (backcolor == null)
+			backcolor = style.value(PName.BackGroundColor).asColor(getSkinParam().getThemeStyle(),
 					getSkinParam().getIHtmlColorSet());
-			if (backcolor == null)
-				backcolor = style.value(PName.BackGroundColor).asColor(getSkinParam().getThemeStyle(),
-						getSkinParam().getIHtmlColorSet());
-			rect.setDeltaShadow(style.value(PName.Shadowing).asDouble());
-			stroke = style.getStroke();
-		} else {
-			if (getSkinParam().shadowing(getEntity().getStereotype()))
-				rect.setDeltaShadow(4);
-			borderColor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.objectBorder);
-			if (backcolor == null)
-				backcolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.objectBackground);
-			stroke = getStroke();
-		}
+		
+		rect.setDeltaShadow(style.value(PName.Shadowing).asDouble());
+		final UStroke stroke = style.getStroke();
 
 		ug = ug.apply(borderColor).apply(backcolor.bg());
 
@@ -200,6 +184,12 @@ public class EntityImageMap extends AbstractEntityImage implements Stencil, With
 		typeIDent.put(UGroupType.ID, "elem_" + getEntity().getCode());
 		ug.startGroup(typeIDent);
 		ug.apply(stroke).draw(rect);
+		
+		if (roundCorner == 0 && headerBackcolor != null && backcolor.equals(headerBackcolor) == false) {
+			final Shadowable rect2 = new URectangle(widthTotal, dimTitle.getHeight());
+			final UGraphic ugHeader = ug.apply(headerBackcolor.bg());
+			ugHeader.apply(stroke).draw(rect2);
+		}
 
 		final ULayoutGroup header = new ULayoutGroup(new PlacementStrategyY1Y2(ug.getStringBounder()));
 		if (stereo != null)
@@ -216,17 +206,6 @@ public class EntityImageMap extends AbstractEntityImage implements Stencil, With
 			ug.closeUrl();
 
 		ug.closeGroup();
-	}
-
-	private UStroke getStroke() {
-		UStroke stroke = lineConfig.getColors().getSpecificLineStroke();
-		if (stroke == null)
-			stroke = getSkinParam().getThickness(LineParam.objectBorder, getStereo());
-
-		if (stroke == null)
-			stroke = new UStroke(1.5);
-
-		return stroke;
 	}
 
 	private double getMethodOrFieldHeight(final Dimension2D dim) {

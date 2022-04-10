@@ -37,19 +37,8 @@ package net.sourceforge.plantuml;
 
 public class UseStyle {
 
-	private static final ThreadLocal<Boolean> useBeta = new ThreadLocal<>();
-
 	static public boolean useBetaStyle() {
-//		final Boolean result = useBeta.get();
-//		if (result == null) {
-//			return false;
-//		}
-//		return result;
 		return true;
-	}
-
-	static public void setBetaStyle(boolean betastyle) {
-		useBeta.set(betastyle);
 	}
 
 }

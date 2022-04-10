@@ -39,7 +39,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.style.SName;
@@ -86,24 +85,20 @@ public abstract class GAbstractConnection implements GConnection {
 	public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
 		throw new UnsupportedOperationException();
 	}
-	
+
 	private final StyleSignatureBasic getDefaultStyleDefinitionArrow() {
 		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.arrow);
 	}
-	
+
 	protected ISkinParam skinParam() {
 		throw new UnsupportedOperationException("wip");
 	}
-	
+
 	// DUPLICATE 4561
 	final protected Rainbow getInLinkRenderingColor() {
-		Rainbow color;
 		final ISkinParam skinParam = gpoint1.getGtile().skinParam();
-		if (UseStyle.useBetaStyle()) {
-			final Style style = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam.getCurrentStyleBuilder());
-			color = Rainbow.build(style, skinParam.getIHtmlColorSet(), skinParam.getThemeStyle());
-		} else
-			color = Rainbow.build(skinParam);
+		final Style style = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam.getCurrentStyleBuilder());
+		final Rainbow color = Rainbow.build(style, skinParam.getIHtmlColorSet(), skinParam.getThemeStyle());
 //		final LinkRendering linkRendering = tile.getInLinkRendering();
 //		if (linkRendering == null) {
 //			if (UseStyle.useBetaStyle()) {
@@ -127,8 +122,5 @@ public abstract class GAbstractConnection implements GConnection {
 //		}
 		return color;
 	}
-
-
-
 
 }

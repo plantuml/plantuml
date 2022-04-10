@@ -40,7 +40,6 @@ import java.util.Collections;
 import java.util.Set;
 
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
@@ -70,7 +69,7 @@ abstract class FtileDiamondWIP extends AbstractFtile implements Styleable {
 	final public StyleSignatureBasic getStyleSignature() {
 		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond);
 	}
-	
+
 	final public Style getStyle() {
 		return getStyleSignature().getMergedStyle(skinParam().getCurrentStyleBuilder());
 	}
@@ -83,16 +82,10 @@ abstract class FtileDiamondWIP extends AbstractFtile implements Styleable {
 	protected FtileDiamondWIP(TextBlock label, ISkinParam skinParam, HColor backColor, HColor borderColor,
 			Swimlane swimlane, TextBlock north, TextBlock south, TextBlock east, TextBlock west) {
 		super(skinParam);
-		if (UseStyle.useBetaStyle()) {
-			Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
-			this.borderColor = borderColor; //style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), getIHtmlColorSet());
-			this.backColor = backColor; //style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(), getIHtmlColorSet());
-			this.shadowing = style.value(PName.Shadowing).asDouble();
-		} else {
-			this.backColor = backColor;
-			this.borderColor = borderColor;
-			this.shadowing = skinParam().shadowing(null) ? 3 : 0;
-		}
+		Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
+		this.borderColor = borderColor;
+		this.backColor = backColor;
+		this.shadowing = style.value(PName.Shadowing).asDouble();
 
 		this.swimlane = swimlane;
 
@@ -104,9 +97,9 @@ abstract class FtileDiamondWIP extends AbstractFtile implements Styleable {
 	}
 
 	final public Set<Swimlane> getSwimlanes() {
-		if (swimlane == null) {
+		if (swimlane == null)
 			return Collections.emptySet();
-		}
+
 		return Collections.singleton(swimlane);
 	}
 

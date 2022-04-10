@@ -35,45 +35,21 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile;
 
-import net.sourceforge.plantuml.ColorParam;
-import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.LineParam;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.graphic.TextBlockUtils;
-import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
-import net.sourceforge.plantuml.ugraphic.UStroke;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class EntityImageLegend {
 
 	public static TextBlock create(Display note, ISkinParam skinParam) {
 
-		if (UseStyle.useBetaStyle()) {
-			final Style style = StyleSignatureBasic.of(SName.root, SName.root, SName.document,
-					skinParam.getUmlDiagramType().getStyleName(), SName.legend)
-					.getMergedStyle(skinParam.getCurrentStyleBuilder());
-			return style.createTextBlockBordered(note, skinParam.getIHtmlColorSet(), skinParam);
-		}
-
-		final TextBlock textBlock = note.create(FontConfiguration.create(skinParam, FontParam.LEGEND, null),
-				HorizontalAlignment.LEFT, skinParam);
-		final Rose rose = new Rose();
-		final HColor legendBackgroundColor = rose.getHtmlColor(skinParam, ColorParam.legendBackground);
-		final HColor legendColor = rose.getHtmlColor(skinParam, ColorParam.legendBorder);
-		final UStroke stroke = skinParam.getThickness(LineParam.legendBorder, null);
-
-		final int cornersize = 10;
-		final TextBlock result = TextBlockUtils.bordered(textBlock, stroke, legendColor, legendBackgroundColor,
-				cornersize);
-		return TextBlockUtils.withMargin(result, 8, 8);
+		final Style style = StyleSignatureBasic
+				.of(SName.root, SName.root, SName.document, skinParam.getUmlDiagramType().getStyleName(), SName.legend)
+				.getMergedStyle(skinParam.getCurrentStyleBuilder());
+		return style.createTextBlockBordered(note, skinParam.getIHtmlColorSet(), skinParam);
 	}
 
 }

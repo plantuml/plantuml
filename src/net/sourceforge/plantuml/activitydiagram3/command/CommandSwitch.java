@@ -74,9 +74,8 @@ public class CommandSwitch extends SingleLineCommand2<ActivityDiagram3> {
 				: diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(), s);
 
 		String test = arg.get("TEST", 0);
-		if (test.length() == 0) {
+		if (test.length() == 0)
 			test = null;
-		}
 
 		diagram.startSwitch(Display.getWithNewlines(test), color);
 

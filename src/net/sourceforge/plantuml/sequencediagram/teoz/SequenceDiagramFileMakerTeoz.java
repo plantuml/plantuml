@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -46,6 +45,7 @@ import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.activitydiagram3.ftile.EntityImageLegend;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.DisplaySection;
@@ -70,7 +70,6 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.utils.MathUtils;
 
 public class SequenceDiagramFileMakerTeoz implements FileMaker {
@@ -137,9 +136,7 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 		if (this.index != index) {
 			throw new IllegalStateException();
 		}
-		return diagram.createImageBuilder(fileFormatOption)
-				.drawable(new Foo(index))
-				.write(os);
+		return diagram.createImageBuilder(fileFormatOption).drawable(new Foo(index)).write(os);
 	}
 
 	class Foo implements UDrawable {
@@ -234,22 +231,16 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 	}
 
 	public TextBlock getFooterOrHeader(final FontParam param) {
-		if (diagram.getFooterOrHeaderTeoz(param).isNull()) {
+		if (diagram.getFooterOrHeaderTeoz(param).isNull())
 			return new TeozLayer(null, stringBounder, param);
-		}
+
 		final DisplaySection display = diagram.getFooterOrHeaderTeoz(param).withPage(index + 1, getNbPages());
-		final HColor hyperlinkColor = getSkinParam().getHyperlinkColor();
-		final HColor titleColor = getSkinParam().getFontHtmlColor(null, param);
-		final String fontFamily = getSkinParam().getFont(null, false, param).getFamily(null);
-		final int fontSize = getSkinParam().getFont(null, false, param).getSize();
-		Style style = null;
 		final ISkinParam skinParam = diagram.getSkinParam();
-		if (UseStyle.useBetaStyle()) {
-			final StyleSignatureBasic def = param.getStyleDefinition(null);
-			style = def.getMergedStyle(skinParam.getCurrentStyleBuilder());
-		}
-		final PngTitler pngTitler = new PngTitler(titleColor, display, fontSize, fontFamily, hyperlinkColor,
-				getSkinParam().useUnderlineForHyperlink(), style, skinParam.getIHtmlColorSet(), skinParam);
+
+		final StyleSignatureBasic def = param.getStyleDefinition(null);
+		final Style style = def.getMergedStyle(skinParam.getCurrentStyleBuilder());
+
+		final PngTitler pngTitler = new PngTitler(display, style, skinParam.getIHtmlColorSet(), skinParam);
 		return new TeozLayer(pngTitler, stringBounder, param);
 	}
 

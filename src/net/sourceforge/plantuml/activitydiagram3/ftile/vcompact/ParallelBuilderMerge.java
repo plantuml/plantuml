@@ -35,14 +35,12 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractConnection;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Arrows;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Connection;
@@ -54,6 +52,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileUtils;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileBlackBlock;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamond;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -80,13 +79,8 @@ public class ParallelBuilderMerge extends AbstractParallelFtilesBuilder {
 		double x = 0;
 		for (Ftile tmp : list99) {
 			final Dimension2D dim = tmp.calculateDimension(getStringBounder());
-			final Rainbow def;
-			if (UseStyle.useBetaStyle()) {
-				Style style = getStyleSignature().getMergedStyle(skinParam().getCurrentStyleBuilder());
-				def = Rainbow.build(style, skinParam().getIHtmlColorSet(), skinParam().getThemeStyle());
-			} else {
-				def = Rainbow.build(skinParam());
-			}
+			Style style = getStyleSignature().getMergedStyle(skinParam().getCurrentStyleBuilder());
+			final Rainbow def = Rainbow.build(style, skinParam().getIHtmlColorSet(), skinParam().getThemeStyle());
 			final Rainbow rainbow = tmp.getInLinkRendering().getRainbow(def);
 			conns.add(new ConnectionIn(black, tmp, x, rainbow));
 			x += dim.getWidth();
@@ -102,19 +96,12 @@ public class ParallelBuilderMerge extends AbstractParallelFtilesBuilder {
 	@Override
 	protected Ftile doStep2(Ftile inner, Ftile result) {
 		final Style style = getStyleSignature().getMergedStyle(skinParam().getCurrentStyleBuilder());
-		final HColor borderColor;
-		final HColor backColor;
 
-		if (UseStyle.useBetaStyle()) {
-			borderColor = style.value(PName.LineColor).asColor(skinParam().getThemeStyle(),
-					skinParam().getIHtmlColorSet());
-			backColor = style.value(PName.BackGroundColor).asColor(skinParam().getThemeStyle(),
-					skinParam().getIHtmlColorSet());
-		} else {
-			borderColor = getRose().getHtmlColor(skinParam(), ColorParam.activityDiamondBorder);
-			backColor = getRose().getHtmlColor(skinParam(), ColorParam.activityDiamondBackground);
+		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam().getThemeStyle(),
+				skinParam().getIHtmlColorSet());
+		final HColor backColor = style.value(PName.BackGroundColor).asColor(skinParam().getThemeStyle(),
+				skinParam().getIHtmlColorSet());
 
-		}
 		final Ftile out = new FtileDiamond(skinParam(), backColor, borderColor, swimlaneOutForStep2());
 		result = new FtileAssemblySimple(result, out);
 		final List<Connection> conns = new ArrayList<>();
@@ -124,12 +111,7 @@ public class ParallelBuilderMerge extends AbstractParallelFtilesBuilder {
 		for (Ftile tmp : list99) {
 			final Dimension2D dim = tmp.calculateDimension(getStringBounder());
 			final UTranslate translate0 = new UTranslate(x, barHeight);
-			final Rainbow def;
-			if (UseStyle.useBetaStyle())
-				def = Rainbow.build(style, skinParam().getIHtmlColorSet(), skinParam().getThemeStyle());
-			else
-				def = Rainbow.build(skinParam());
-
+			final Rainbow def = Rainbow.build(style, skinParam().getIHtmlColorSet(), skinParam().getThemeStyle());
 			final Rainbow rainbow = tmp.getOutLinkRendering().getRainbow(def);
 			if (tmp.calculateDimension(getStringBounder()).hasPointOut())
 				conns.add(new ConnectionHorizontalThenVertical(tmp, out, rainbow, translate0, diamondTranslate));

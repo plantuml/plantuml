@@ -35,21 +35,18 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.util.Collection;
 import java.util.Set;
 
 import net.sourceforge.plantuml.AlignmentParam;
-import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.LineParam;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileUtils;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -66,12 +63,10 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.UGraphicForSnake;
 import net.sourceforge.plantuml.ugraphic.LimitFinder;
 import net.sourceforge.plantuml.ugraphic.MinMax;
-import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 import net.sourceforge.plantuml.utils.MathUtils;
 
 public class FtileGroup extends AbstractFtile {
@@ -98,31 +93,17 @@ public class FtileGroup extends AbstractFtile {
 		this.type = type;
 		this.inner = FtileUtils.addHorizontalMargin(inner, 10);
 
-		final FontConfiguration fc;
-		final Style style;
-		final UStroke thickness;
-		if (UseStyle.useBetaStyle()) {
-			style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
-			fc = style.getFontConfiguration(skinParam.getThemeStyle(), getIHtmlColorSet());
-			this.shadowing = style.value(PName.Shadowing).asDouble();
-			this.backColor = backColor == null
-					? style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(), getIHtmlColorSet())
-					: backColor;
-			this.borderColor = borderColor == null
-					? style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), getIHtmlColorSet())
-					: borderColor;
-			thickness = style.getStroke();
-		} else {
-			this.backColor = backColor == null ? HColorUtils.WHITE : backColor;
-			this.borderColor = borderColor == null ? HColorUtils.BLACK : borderColor;
-			style = null;
-			final UFont font = skinParam.getFont(null, false, FontParam.PARTITION);
-			final HColor fontColor = skinParam.getFontHtmlColor(null, FontParam.PARTITION);
-			fc = FontConfiguration.create(font, fontColor, skinParam.getHyperlinkColor(),
-					skinParam.useUnderlineForHyperlink(), skinParam.getTabSize());
-			this.shadowing = skinParam().shadowing(null) ? 3 : 0;
-			thickness = skinParam.getThickness(LineParam.partitionBorder, null);
-		}
+		final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
+		final FontConfiguration fc = style.getFontConfiguration(skinParam.getThemeStyle(), getIHtmlColorSet());
+		this.shadowing = style.value(PName.Shadowing).asDouble();
+		this.backColor = backColor == null
+				? style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(), getIHtmlColorSet())
+				: backColor;
+		this.borderColor = borderColor == null
+				? style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), getIHtmlColorSet())
+				: borderColor;
+		final UStroke thickness = style.getStroke();
+
 		if (title == null)
 			this.name = TextBlockUtils.empty(0, 0);
 		else

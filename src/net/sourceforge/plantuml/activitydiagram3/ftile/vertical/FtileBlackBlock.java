@@ -99,15 +99,11 @@ public class FtileBlackBlock extends AbstractFtile {
 
 	public void drawU(UGraphic ug) {
 		final URectangle rect = new URectangle(width, height).rounded(5).ignoreForCompressionOnX();
-		if (UseStyle.useBetaStyle()) {
-			final Style style = getSignature().getMergedStyle(skinParam().getCurrentStyleBuilder());
-			final double shadowing = style.value(PName.Shadowing).asDouble();
-			rect.setDeltaShadow(shadowing);
-			colorBar = style.value(PName.BackGroundColor).asColor(skinParam().getThemeStyle(), getIHtmlColorSet());
-		} else {
-			if (skinParam().shadowing(null))
-				rect.setDeltaShadow(3);
-		}
+
+		final Style style = getSignature().getMergedStyle(skinParam().getCurrentStyleBuilder());
+		final double shadowing = style.value(PName.Shadowing).asDouble();
+		rect.setDeltaShadow(shadowing);
+		colorBar = style.value(PName.BackGroundColor).asColor(skinParam().getThemeStyle(), getIHtmlColorSet());
 
 		ug.apply(colorBar).apply(colorBar.bg()).draw(rect);
 		final Dimension2D dimLabel = label.calculateDimension(ug.getStringBounder());

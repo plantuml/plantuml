@@ -35,11 +35,9 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.gtile;
 
-import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineBreakStrategy;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Hexagon;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.creole.CreoleMode;
@@ -53,41 +51,25 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
-import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
-import net.sourceforge.plantuml.svek.ConditionStyle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class Gtiles {
 
-	private static final Rose rose = new Rose();
-
 	static public GtileHexagonInside hexagonInside(Swimlane swimlane, StringBounder stringBounder, ISkinParam skinParam,
 			StyleSignatureBasic styleSignature, HColor color, Display label) {
-		final ConditionStyle conditionStyle = skinParam.getConditionStyle();
 
-		final HColor borderColor;
-		final HColor backColor;
-		final FontConfiguration fcTest;
-
-		if (UseStyle.useBetaStyle()) {
-			final Style style = styleSignature.getMergedStyle(skinParam.getCurrentStyleBuilder());
-			borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
-			backColor = color == null ? style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
-					skinParam.getIHtmlColorSet()) : color;
-			fcTest = style.getFontConfiguration(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
-		} else {
-			final FontParam testParam = conditionStyle == ConditionStyle.INSIDE_HEXAGON ? FontParam.ACTIVITY_DIAMOND
-					: FontParam.ARROW;
-
-			borderColor = rose.getHtmlColor(skinParam, ColorParam.activityDiamondBorder);
-			backColor = color == null ? rose.getHtmlColor(skinParam, ColorParam.activityDiamondBackground) : color;
-			fcTest = FontConfiguration.create(skinParam, testParam, null)
-					.changeColor(fontColor(skinParam, FontParam.ACTIVITY_DIAMOND));
-		}
+		final Style style = styleSignature.getMergedStyle(skinParam.getCurrentStyleBuilder());
+		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(),
+				skinParam.getIHtmlColorSet());
+		final HColor backColor = color == null
+				? style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet())
+				: color;
+		final FontConfiguration fcTest = style.getFontConfiguration(skinParam.getThemeStyle(),
+				skinParam.getIHtmlColorSet());
 
 		final Sheet sheet = Parser
 				.build(fcTest, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT), skinParam, CreoleMode.FULL)
@@ -100,18 +82,13 @@ public class Gtiles {
 
 	static public AbstractGtileRoot diamondEmpty(Swimlane swimlane, StringBounder stringBounder, ISkinParam skinParam,
 			StyleSignatureBasic styleSignature, HColor color) {
-		final HColor borderColor;
-		final HColor backColor;
 
-		if (UseStyle.useBetaStyle()) {
-			final Style style = styleSignature.getMergedStyle(skinParam.getCurrentStyleBuilder());
-			borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
-			backColor = color == null ? style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
-					skinParam.getIHtmlColorSet()) : color;
-		} else {
-			borderColor = rose.getHtmlColor(skinParam, ColorParam.activityDiamondBorder);
-			backColor = color == null ? rose.getHtmlColor(skinParam, ColorParam.activityDiamondBackground) : color;
-		}
+		final Style style = styleSignature.getMergedStyle(skinParam.getCurrentStyleBuilder());
+		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(),
+				skinParam.getIHtmlColorSet());
+		final HColor backColor = color == null
+				? style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet())
+				: color;
 
 		return new GtileHexagonInside(stringBounder, TextBlockUtils.EMPTY_TEXT_BLOCK, skinParam, backColor, borderColor,
 				swimlane);

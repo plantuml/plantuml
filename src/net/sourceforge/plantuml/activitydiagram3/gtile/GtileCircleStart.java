@@ -35,12 +35,10 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.gtile;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
@@ -65,11 +63,8 @@ public class GtileCircleStart extends AbstractGtile {
 	public GtileCircleStart(StringBounder stringBounder, ISkinParam skinParam, HColor backColor, Swimlane swimlane) {
 		super(stringBounder, skinParam, swimlane);
 		this.backColor = backColor;
-		if (UseStyle.useBetaStyle()) {
-			final Style style = getDefaultStyleDefinitionCircle().getMergedStyle(skinParam().getCurrentStyleBuilder());
-			this.shadowing = style.value(PName.Shadowing).asDouble();
-		} else if (skinParam().shadowing(null))
-			this.shadowing = 3;
+		final Style style = getDefaultStyleDefinitionCircle().getMergedStyle(skinParam().getCurrentStyleBuilder());
+		this.shadowing = style.value(PName.Shadowing).asDouble();
 
 	}
 

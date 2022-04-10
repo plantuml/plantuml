@@ -86,29 +86,26 @@ public class HtmlColorAndStyle {
 	}
 
 	public static HtmlColorAndStyle build(ISkinParam skinParam, String definition) throws NoSuchColorException {
-		HColor arrowColor;
-		HColor arrowHeadColor = null;
-		if (UseStyle.useBetaStyle()) {
-			final Style style = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam.getCurrentStyleBuilder());
-			arrowColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
-		} else {
-			arrowColor = Rainbow.build(skinParam).getColors().get(0).arrowColor;
-			arrowColor = Rainbow.build(skinParam).getColors().get(0).arrowHeadColor;
-		}
-		LinkStyle style = LinkStyle.NORMAL();
+
+		final Style style = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam.getCurrentStyleBuilder());
+		HColor arrowColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(),
+				skinParam.getIHtmlColorSet());
+		final HColor arrowHeadColor = null;
+
+		LinkStyle linkStyle = LinkStyle.NORMAL();
 		final HColorSet set = skinParam.getIHtmlColorSet();
 		for (String s : definition.split(",")) {
 			final LinkStyle tmpStyle = LinkStyle.fromString1(s);
 			if (tmpStyle.isNormal() == false) {
-				style = tmpStyle;
+				linkStyle = tmpStyle;
 				continue;
 			}
 			final HColor tmpColor = s == null ? null : set.getColor(skinParam.getThemeStyle(), s);
-			if (tmpColor != null) {
+			if (tmpColor != null)
 				arrowColor = tmpColor;
-			}
+
 		}
-		return new HtmlColorAndStyle(arrowColor, style, arrowHeadColor);
+		return new HtmlColorAndStyle(arrowColor, linkStyle, arrowHeadColor);
 	}
 
 }

@@ -35,21 +35,18 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.util.Collection;
 import java.util.Set;
 
-import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineBreakStrategy;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.activitydiagram3.PositionedNote;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.creole.Parser;
 import net.sourceforge.plantuml.creole.Sheet;
@@ -103,37 +100,21 @@ public class FtileWithNotes extends AbstractFtile {
 		super(tile.skinParam());
 		this.tile = tile;
 
-		final Rose rose = new Rose();
-
 		for (PositionedNote note : notes) {
 			ISkinParam skinParam2 = skinParam;
 			if (note.getColors() != null)
 				skinParam2 = note.getColors().mute(skinParam2);
 
-			final HColor noteBackgroundColor;
-			final HColor borderColor;
-			final FontConfiguration fc;
-			final double shadowing;
-			UStroke stroke = new UStroke();
-
-			final LineBreakStrategy wrapWidth;
-			if (UseStyle.useBetaStyle()) {
-				final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder())
-						.eventuallyOverride(note.getColors());
-				noteBackgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
-						getIHtmlColorSet());
-				borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), getIHtmlColorSet());
-				fc = style.getFontConfiguration(skinParam.getThemeStyle(), getIHtmlColorSet());
-				shadowing = style.value(PName.Shadowing).asDouble();
-				wrapWidth = style.wrapWidth();
-				stroke = style.getStroke();
-			} else {
-				noteBackgroundColor = rose.getHtmlColor(skinParam2, ColorParam.noteBackground);
-				borderColor = rose.getHtmlColor(skinParam2, ColorParam.noteBorder);
-				fc = FontConfiguration.create(skinParam, FontParam.NOTE, null);
-				shadowing = skinParam.shadowing(null) ? 4 : 0;
-				wrapWidth = skinParam.wrapWidth();
-			}
+			final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder())
+					.eventuallyOverride(note.getColors());
+			final HColor noteBackgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
+					getIHtmlColorSet());
+			final HColor borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(),
+					getIHtmlColorSet());
+			final FontConfiguration fc = style.getFontConfiguration(skinParam.getThemeStyle(), getIHtmlColorSet());
+			final double shadowing = style.value(PName.Shadowing).asDouble();
+			final LineBreakStrategy wrapWidth = style.wrapWidth();
+			final UStroke stroke = style.getStroke();
 
 			final Sheet sheet = Parser
 					.build(fc, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT), skinParam, CreoleMode.FULL)

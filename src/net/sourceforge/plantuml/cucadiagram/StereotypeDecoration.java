@@ -95,6 +95,22 @@ public class StereotypeDecoration {
 	final String spriteName;
 	final double spriteScale;
 
+	@Override
+	public String toString() {
+		return "label='" + label + "' spriteName='" + spriteName + "'";
+	}
+
+	public List<String> getStyleNames() {
+		final List<String> result = new ArrayList<>(cutLabels(label, Guillemet.NONE));
+		if (spriteName == null)
+			return Collections.unmodifiableList(result);
+
+		final int idx = spriteName.lastIndexOf('/');
+		if (idx != -1)
+			result.add(spriteName.substring(idx + 1));
+		return Collections.unmodifiableList(result);
+	}
+
 	private StereotypeDecoration(String label, HColor htmlColor, char character, String spriteName,
 			double spriteScale) {
 		this.label = label;

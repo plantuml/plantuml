@@ -45,7 +45,6 @@ import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SkinParamColors;
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.cucadiagram.LinkStyle;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
@@ -91,9 +90,9 @@ public class Colors {
 			final String s = st.nextToken();
 			final int x = s.indexOf(':');
 			if (x == -1) {
-				if (s.contains(".") == false) {
+				if (s.contains(".") == false)
 					map.put(mainType, set.getColor(themeStyle, s));
-				}
+
 			} else {
 				final String name = s.substring(0, x);
 				final String value = s.substring(x + 1);
@@ -106,13 +105,13 @@ public class Colors {
 				}
 			}
 		}
-		if (data.contains("line.dashed")) {
+		if (data.contains("line.dashed"))
 			lineStyle = LinkStyle.DASHED();
-		} else if (data.contains("line.dotted")) {
+		else if (data.contains("line.dotted"))
 			lineStyle = LinkStyle.DOTTED();
-		} else if (data.contains("line.bold")) {
+		else if (data.contains("line.bold"))
 			lineStyle = LinkStyle.BOLD();
-		}
+
 	}
 
 	public HColor getColor(ColorType key) {
@@ -121,29 +120,23 @@ public class Colors {
 
 	public HColor getColor(ColorType key1, ColorType key2) {
 		final HColor result = getColor(key1);
-		if (result != null) {
+		if (result != null)
 			return result;
-		}
+
 		return getColor(key2);
 	}
 
 	public UStroke getSpecificLineStroke() {
-		if (lineStyle == null) {
+		if (lineStyle == null)
 			return null;
-		}
+
 		return lineStyle.getStroke3();
 	}
 
-	// public Colors addSpecificLineStroke(UStroke specificStroke) {
-	// final Colors result = copy();
-	// result.specificStroke = specificStroke;
-	// return result;
-	// }
-
 	public Colors add(ColorType type, HColor color) {
-		if (color == null) {
+		if (color == null)
 			return this;
-		}
+
 		final Colors result = copy();
 		result.map.put(type, color);
 		return result;
@@ -152,9 +145,9 @@ public class Colors {
 	private Colors add(ColorType colorType, Colors other) {
 		final Colors result = copy();
 		result.map.putAll(other.map);
-		if (other.lineStyle != null) {
+		if (other.lineStyle != null)
 			result.lineStyle = other.lineStyle;
-		}
+
 		return result;
 	}
 
@@ -187,37 +180,20 @@ public class Colors {
 			throws NoSuchColorException {
 		Objects.requireNonNull(stereotype);
 		final ColorType colorType = Objects.requireNonNull(Objects.requireNonNull(param).getColorType());
-		if (getColor(colorType) != null) {
+		if (getColor(colorType) != null)
 			return this;
-		}
+
 		final Colors colors = skinParam.getColors(param, stereotype);
 		return add(colorType, colors);
-	}
-
-	private Colors applyFontParamStereotype(Stereotype stereotype, ISkinParam skinParam, FontParam param) {
-		Objects.requireNonNull(stereotype);
-		if (param == null) {
-			return this;
-		}
-		final ColorType colorType = ColorType.TEXT;
-		if (getColor(colorType) != null) {
-			return this;
-		}
-		if (UseStyle.useBetaStyle()) {
-			return this;
-		}
-		final HColor col = skinParam.getFontHtmlColor(stereotype, param);
-		return add(colorType, col);
 	}
 
 	public Colors applyStereotypeForNote(Stereotype stereotype, ISkinParam skinParam, FontParam fontParam,
 			ColorParam... params) throws NoSuchColorException {
 		Objects.requireNonNull(stereotype);
 		Colors result = this;
-		for (ColorParam param : Objects.requireNonNull(params)) {
+		for (ColorParam param : Objects.requireNonNull(params))
 			result = result.applyStereotype(stereotype, skinParam, param);
-		}
-		result = result.applyFontParamStereotype(stereotype, skinParam, fontParam);
+
 		result.shadowing = skinParam.shadowingForNote(stereotype);
 		return result;
 	}
@@ -227,9 +203,9 @@ public class Colors {
 	}
 
 	public UStroke muteStroke(UStroke stroke) {
-		if (lineStyle == null) {
+		if (lineStyle == null)
 			return stroke;
-		}
+
 		return lineStyle.muteStroke(stroke);
 	}
 

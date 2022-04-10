@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.command;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.TitledDiagram;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
@@ -73,10 +72,10 @@ public class CommandFooter extends SingleLineCommand2<TitledDiagram> {
 	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg) {
 		final String align = arg.get("POSITION", 0);
 		HorizontalAlignment ha = HorizontalAlignment.fromString(align, HorizontalAlignment.CENTER);
-		if (UseStyle.useBetaStyle() && align == null) {
+		if (align == null)
 			ha = FontParam.FOOTER.getStyleDefinition(null).getMergedStyle(diagram.getCurrentStyleBuilder())
 					.getHorizontalAlignment();
-		}
+
 		final Display s = Display.getWithNewlines(arg.getLazzy("LABEL", 0));
 		diagram.getFooter().putDisplay(s, ha);
 

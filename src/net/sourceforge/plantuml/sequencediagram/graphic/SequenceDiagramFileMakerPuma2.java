@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -49,6 +48,7 @@ import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.activitydiagram3.ftile.EntityImageLegend;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.DisplaySection;
@@ -157,10 +157,9 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 				compTitle = style.createTextBlockBordered(page.getTitle(), diagram.getSkinParam().getIHtmlColorSet(),
 						diagram.getSkinParam());
 			} else {
-				compTitle = TextBlockUtils.withMargin(
-						TextBlockUtils.title(FontConfiguration.create(drawableSet.getSkinParam(), FontParam.TITLE, null),
-								page.getTitle(), drawableSet.getSkinParam()),
-						7, 7);
+				compTitle = TextBlockUtils.withMargin(TextBlockUtils.title(
+						FontConfiguration.create(drawableSet.getSkinParam(), FontParam.TITLE, null), page.getTitle(),
+						drawableSet.getSkinParam()), 7, 7);
 			}
 			final Dimension2D dimTitle = compTitle.calculateDimension(stringBounder);
 			area.setTitleArea(dimTitle.getWidth(), dimTitle.getHeight());
@@ -244,18 +243,11 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 
 	private PngTitler getPngTitler(final FontParam fontParam, int page) {
 		final ISkinParam skinParam = diagram.getSkinParam();
-		final HColor hyperlinkColor = skinParam.getHyperlinkColor();
-		final HColor titleColor = skinParam.getFontHtmlColor(null, fontParam);
-		final String fontFamily = skinParam.getFont(null, false, fontParam).getFamily(null);
-		final int fontSize = skinParam.getFont(null, false, fontParam).getSize();
 		final DisplaySection display = diagram.getFooterOrHeaderTeoz(fontParam).withPage(page + 1, pages.size());
-		Style style = null;
-		if (UseStyle.useBetaStyle()) {
-			final StyleSignatureBasic def = fontParam.getStyleDefinition(null);
-			style = def.getMergedStyle(skinParam.getCurrentStyleBuilder());
-		}
-		return new PngTitler(titleColor, display, fontSize, fontFamily, hyperlinkColor,
-				skinParam.useUnderlineForHyperlink(), style, skinParam.getIHtmlColorSet(), skinParam);
+		final StyleSignatureBasic def = fontParam.getStyleDefinition(null);
+		final Style style = def.getMergedStyle(skinParam.getCurrentStyleBuilder());
+
+		return new PngTitler(display, style, skinParam.getIHtmlColorSet(), skinParam);
 	}
 
 	private boolean isLegendTop() {

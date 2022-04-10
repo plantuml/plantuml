@@ -43,7 +43,6 @@ import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.UmlDiagramType;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
@@ -138,13 +137,10 @@ public class ElkPath implements UDrawable {
 		if (link.isHidden())
 			return;
 
-		HColor color;
 		final ISkinParam skinParam = diagram.getSkinParam();
 
-		if (UseStyle.useBetaStyle())
-			color = getStyle().value(PName.LineColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
-		else
-			color = rose.getHtmlColor(skinParam, null, getArrowColorParam());
+		HColor color = getStyle().value(PName.LineColor).asColor(skinParam.getThemeStyle(),
+				skinParam.getIHtmlColorSet());
 
 		if (this.link.getColors() != null) {
 			final HColor newColor = this.link.getColors().getColor(ColorType.ARROW, ColorType.LINE);

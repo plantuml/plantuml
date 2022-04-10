@@ -35,11 +35,9 @@
  */
 package net.sourceforge.plantuml.descdiagram.command;
 
-import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.IRegex;
@@ -120,95 +118,92 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 		LinkDecor d1 = LinkDecor.NONE;
 		LinkDecor d2 = LinkDecor.NONE;
 
-		if (head1.equals("(0")) {
+		if (head1.equals("(0"))
 			d1 = LinkDecor.CIRCLE_CONNECT;
-		} else if (head1.equals("#")) {
+		else if (head1.equals("#"))
 			d1 = LinkDecor.SQUARE;
-		} else if (head1.equals("0")) {
+		else if (head1.equals("0"))
 			d1 = LinkDecor.CIRCLE;
-		} else if (head1.equals("@")) {
+		else if (head1.equals("@"))
 			d1 = LinkDecor.CIRCLE_FILL;
-		} else if (head1.equals("(")) {
+		else if (head1.equals("("))
 			d1 = LinkDecor.PARENTHESIS;
-		} else if (head1.equals(">")) {
+		else if (head1.equals(">"))
 			d1 = LinkDecor.ARROW;
-		} else if (head1.equals("*")) {
+		else if (head1.equals("*"))
 			d1 = LinkDecor.COMPOSITION;
-		} else if (head1.equals("o")) {
+		else if (head1.equals("o"))
 			d1 = LinkDecor.AGREGATION;
-		} else if (head1.equals("+")) {
+		else if (head1.equals("+"))
 			d1 = LinkDecor.PLUS;
-		} else if (head1.equals("\\\\")) {
+		else if (head1.equals("\\\\"))
 			d1 = LinkDecor.HALF_ARROW;
-		} else if (head1.equals(">>")) {
+		else if (head1.equals(">>"))
 			d1 = LinkDecor.ARROW_TRIANGLE;
-		} else if (head1.equals("^")) {
+		else if (head1.equals("^"))
 			d1 = LinkDecor.EXTENDS;
-		} else if (head1.equals(":|>")) {
+		else if (head1.equals(":|>"))
 			d1 = LinkDecor.DEFINEDBY;
-		} else if (head1.equals("||>")) {
+		else if (head1.equals("||>"))
 			d1 = LinkDecor.REDEFINES;
-		} else if (head1.equals("|>")) {
+		else if (head1.equals("|>"))
 			d1 = LinkDecor.EXTENDS;
-		}
 
-		if (head2.equals("0)")) {
+		if (head2.equals("0)"))
 			d2 = LinkDecor.CIRCLE_CONNECT;
-		} else if (head2.equals("#")) {
+		else if (head2.equals("#"))
 			d2 = LinkDecor.SQUARE;
-		} else if (head2.equals("0")) {
+		else if (head2.equals("0"))
 			d2 = LinkDecor.CIRCLE;
-		} else if (head2.equals("@")) {
+		else if (head2.equals("@"))
 			d2 = LinkDecor.CIRCLE_FILL;
-		} else if (head2.equals(")")) {
+		else if (head2.equals(")"))
 			d2 = LinkDecor.PARENTHESIS;
-		} else if (head2.equals("<")) {
+		else if (head2.equals("<"))
 			d2 = LinkDecor.ARROW;
-		} else if (head2.equals("*")) {
+		else if (head2.equals("*"))
 			d2 = LinkDecor.COMPOSITION;
-		} else if (head2.equals("o")) {
+		else if (head2.equals("o"))
 			d2 = LinkDecor.AGREGATION;
-		} else if (head2.equals("+")) {
+		else if (head2.equals("+"))
 			d2 = LinkDecor.PLUS;
-		} else if (head2.equals("<<")) {
+		else if (head2.equals("<<"))
 			d2 = LinkDecor.ARROW_TRIANGLE;
-		} else if (head2.equals("^")) {
+		else if (head2.equals("^"))
 			d2 = LinkDecor.EXTENDS;
-		} else if (head2.equals("<|:")) {
+		else if (head2.equals("<|:"))
 			d2 = LinkDecor.DEFINEDBY;
-		} else if (head2.equals("<||")) {
+		else if (head2.equals("<||"))
 			d2 = LinkDecor.REDEFINES;
-		} else if (head2.equals("<|")) {
+		else if (head2.equals("<|"))
 			d2 = LinkDecor.EXTENDS;
-		}
 
 		LinkType result = new LinkType(d1, d2);
 		final String queue = getQueue(arg);
-		if (queue.contains(".")) {
+		if (queue.contains("."))
 			result = result.goDashed();
-		} else if (queue.contains("~")) {
+		else if (queue.contains("~"))
 			result = result.goDotted();
-		} else if (queue.contains("=")) {
+		else if (queue.contains("="))
 			result = result.goBold();
-		}
 
 		final String middle = arg.get("INSIDE", 0);
-		if ("0".equals(middle)) {
+		if ("0".equals(middle))
 			result = result.withMiddleCircle();
-		} else if ("0)".equals(middle)) {
+		else if ("0)".equals(middle))
 			result = result.withMiddleCircleCircled1();
-		} else if ("(0".equals(middle)) {
+		else if ("(0".equals(middle))
 			result = result.withMiddleCircleCircled2();
-		} else if ("(0)".equals(middle)) {
+		else if ("(0)".equals(middle))
 			result = result.withMiddleCircleCircled();
-		}
+
 		return result;
 	}
 
 	private static String trimAndLowerCase(String s) {
-		if (s == null) {
+		if (s == null)
 			return "";
-		}
+
 		return StringUtils.goLowerCase(StringUtils.trin(s));
 	}
 
@@ -245,11 +240,11 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 		final LinkType linkType = getLinkType(arg);
 		final Direction dir = getDirection(arg);
 		final String queue;
-		if (dir == Direction.LEFT || dir == Direction.RIGHT) {
+		if (dir == Direction.LEFT || dir == Direction.RIGHT)
 			queue = "-";
-		} else {
+		else
 			queue = getQueue(arg);
-		}
+
 		final Labels labels = new Labels(arg);
 
 		final IEntity cl1;
@@ -267,31 +262,27 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 				labels.getFirstLabel(), labels.getSecondLabel(), diagram.getLabeldistance(), diagram.getLabelangle(),
 				diagram.getSkinParam().getCurrentStyleBuilder());
 		link.setLinkArrow(labels.getLinkArrow());
-		if (dir == Direction.LEFT || dir == Direction.UP) {
+		if (dir == Direction.LEFT || dir == Direction.UP)
 			link = link.getInv();
-		}
+
 		link.setColors(color().getColor(diagram.getSkinParam().getThemeStyle(), arg,
 				diagram.getSkinParam().getIHtmlColorSet()));
 		link.applyStyle(diagram.getSkinParam().getThemeStyle(), arg.getLazzy("ARROW_STYLE", 0));
 		if (arg.get("STEREOTYPE", 0) != null) {
 			final Stereotype stereotype = Stereotype.build(arg.get("STEREOTYPE", 0));
-			if (UseStyle.useBetaStyle()) {
-				link.setStereotype(stereotype);
-			} else {
-				link.setColors(link.getColors().applyStereotype(stereotype, diagram.getSkinParam(), ColorParam.arrow));
-			}
+			link.setStereotype(stereotype);
 		}
 		diagram.addLink(link);
 		return CommandExecutionResult.ok();
 	}
 
 	private IEntity getFoo1(DescriptionDiagram diagram, Code code, Ident ident, Ident pure) {
-		if (!diagram.V1972() && diagram.isGroup(code)) {
+		if (!diagram.V1972() && diagram.isGroup(code))
 			return diagram.getGroup(code);
-		}
-		if (diagram.V1972() && diagram.isGroupStrict(ident)) {
+
+		if (diagram.V1972() && diagram.isGroupStrict(ident))
 			return diagram.getGroupStrict(ident);
-		}
+
 		final String codeString = code.getName();
 		if (ident.getLast().startsWith("()")) {
 			ident = ident.removeStartingParenthesis();
@@ -320,9 +311,9 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 		if (diagram.V1972()) {
 			final ILeaf result = pure.size() == 1 ? diagram.getLeafVerySmart(ident) : diagram.getLeafStrict(ident);
 			// final ILeaf result = diagram.getLeafSmart(ident);
-			if (result != null) {
+			if (result != null)
 				return result;
-			}
+
 		}
 		return diagram.getOrCreateLeaf(ident, code, type, symbol);
 	}

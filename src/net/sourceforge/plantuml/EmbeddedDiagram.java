@@ -109,21 +109,17 @@ class EmbeddedDiagramDraw extends AbstractTextBlock implements Line, Atom {
 	}
 
 	private String getImageSvg() throws IOException, InterruptedException {
-		final boolean sav = UseStyle.useBetaStyle();
 		final Diagram system = getSystem();
 		final ByteArrayOutputStream os = new ByteArrayOutputStream();
 		system.exportDiagram(os, 0, new FileFormatOption(FileFormat.SVG));
 		os.close();
-		UseStyle.setBetaStyle(sav);
 		return new String(os.toByteArray());
 	}
 
 	private BufferedImage getImage() throws IOException, InterruptedException {
-		if (image == null) {
-			final boolean sav = UseStyle.useBetaStyle();
+		if (image == null)
 			image = getImageSlow();
-			UseStyle.setBetaStyle(sav);
-		}
+
 		return image;
 	}
 

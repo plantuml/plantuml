@@ -67,7 +67,7 @@ public class Stereotype implements CharSequence {
 		this.automaticPackageStyle = automaticPackageStyle;
 		this.radius = radius;
 		this.circledFont = circledFont;
-		this.decoration = decoration;
+		this.decoration = Objects.requireNonNull(decoration);
 
 	}
 
@@ -189,11 +189,7 @@ public class Stereotype implements CharSequence {
 	}
 
 	public List<String> getStyleNames() {
-		final List<String> labels = getLabels(Guillemet.NONE);
-		if (labels == null)
-			return Collections.emptyList();
-
-		return Collections.unmodifiableList(labels);
+		return decoration.getStyleNames();
 	}
 
 	public PackageStyle getPackageStyle() {

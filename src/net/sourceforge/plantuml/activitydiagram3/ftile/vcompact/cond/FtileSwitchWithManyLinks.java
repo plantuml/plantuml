@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Connection;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileUtils;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Hexagon;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.graphic.Rainbow;
@@ -81,6 +82,7 @@ public class FtileSwitchWithManyLinks extends FtileSwitchWithDiamonds {
 			final StringBounder stringBounder = ug.getStringBounder();
 			final Point2D p1 = getP1(stringBounder);
 			final Point2D p2 = getP2(stringBounder);
+
 			final double x1 = p1.getX();
 			final double y1 = p1.getY();
 			final double x2 = p2.getX();
@@ -89,7 +91,16 @@ public class FtileSwitchWithManyLinks extends FtileSwitchWithDiamonds {
 			final Snake snake = Snake.create(skinParam(), arrowColor, Arrows.asToDown())
 					.withLabel(branch.getTextBlockPositive(), arrowHorizontalAlignment());
 			snake.addPoint(x1, y1);
-			snake.addPoint(x2, y1);
+
+			if (isLast() && p1.getX() > p2.getX()) {
+				final FtileGeometry dimDiamond1 = diamond1.calculateDimension(stringBounder);
+				snake.addPoint(x1 + Hexagon.hexagonHalfSize, y1);
+				snake.addPoint(x1 + Hexagon.hexagonHalfSize, y1 + dimDiamond1.getHeight());
+				snake.addPoint(x2, y1 + dimDiamond1.getHeight());
+			} else {
+				snake.addPoint(x2, y1);
+			}
+
 			snake.addPoint(x2, y2);
 
 			ug.draw(snake);
@@ -100,12 +111,16 @@ public class FtileSwitchWithManyLinks extends FtileSwitchWithDiamonds {
 			final Point2D pt;
 			if (getFtile2() == tiles.get(0))
 				pt = dimDiamond1.getPointD();
-			else if (getFtile2() == tiles.get(tiles.size() - 1))
+			else if (isLast())
 				pt = dimDiamond1.getPointB();
 			else
 				throw new IllegalStateException();
 
 			return getTranslateDiamond1(stringBounder).getTranslated(pt);
+		}
+
+		private boolean isLast() {
+			return getFtile2() == tiles.get(tiles.size() - 1);
 		}
 
 		private Point2D getP2(final StringBounder stringBounder) {

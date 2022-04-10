@@ -102,7 +102,10 @@ public class CommandCreateMap extends CommandMultilines2<AbstractClassOrObjectDi
 		for (StringLocated sl : lines) {
 			final String line = sl.getString();
 			assert line.length() > 0;
-			entity1.getBodier().addFieldOrMethod(line);
+			final boolean ok = entity1.getBodier().addFieldOrMethod(line);
+			if (ok == false)
+				return CommandExecutionResult.error("Map definition should contains key => value");
+
 			if (BodierMap.getLinkedEntry(line) != null) {
 				final String linkStr = BodierMap.getLinkedEntry(line);
 				final int x = line.indexOf(linkStr);
@@ -135,11 +138,11 @@ public class CommandCreateMap extends CommandMultilines2<AbstractClassOrObjectDi
 			return diagram.getOrCreateLeaf(diagram.buildLeafIdent(name), code, LeafType.MAP, null);
 
 		final IEntity entity = diagram.createLeaf(ident, code, Display.getWithNewlines(display), LeafType.MAP, null);
-		if (stereotype != null) 
+		if (stereotype != null)
 			entity.setStereotype(Stereotype.build(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),
 					diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),
 					diagram.getSkinParam().getIHtmlColorSet()));
-		
+
 		final String s = line0.get("COLOR", 0);
 		entity.setSpecificColorTOBEREMOVED(ColorType.BACK, s == null ? null
 				: diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(), s));

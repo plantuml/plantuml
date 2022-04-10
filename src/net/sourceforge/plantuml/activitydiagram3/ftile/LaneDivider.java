@@ -35,16 +35,11 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
-import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.LineParam;
-import net.sourceforge.plantuml.UseStyle;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
@@ -94,15 +89,10 @@ public class LaneDivider extends AbstractTextBlock {
 		final UShape back = new UEmpty(x1 + x2, 1);
 		ug.draw(back);
 
-		HColor color = skinParam.getHtmlColor(ColorParam.swimlaneBorder, null, false);
-		if (color == null) {
-			color = ColorParam.swimlaneBorder.getDefaultValue();
-		}
-		UStroke thickness = Rose.getStroke(skinParam, LineParam.swimlaneBorder, 2);
-		if (UseStyle.useBetaStyle()) {
-			color = getStyle().value(PName.LineColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
-			thickness = getStyle().getStroke();
-		}
+		final HColor color = getStyle().value(PName.LineColor).asColor(skinParam.getThemeStyle(),
+				skinParam.getIHtmlColorSet());
+		final UStroke thickness = getStyle().getStroke();
+
 		ug.apply(UTranslate.dx(x1)).apply(thickness).apply(color).draw(ULine.vline(height));
 
 	}

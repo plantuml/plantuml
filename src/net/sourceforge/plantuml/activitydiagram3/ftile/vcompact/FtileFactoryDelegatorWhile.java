@@ -37,20 +37,17 @@ package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 
 import java.util.List;
 
-import net.sourceforge.plantuml.ColorParam;
-import net.sourceforge.plantuml.FontParam;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.activitydiagram3.Instruction;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Arrows;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Connection;
-import net.sourceforge.plantuml.activitydiagram3.ftile.Hexagon;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileBreak;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactoryDelegator;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileUtils;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Genealogy;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Hexagon;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.WeldingPoint;
@@ -74,34 +71,21 @@ public class FtileFactoryDelegatorWhile extends FtileFactoryDelegator {
 	public Ftile createWhile(LinkRendering outColor, Swimlane swimlane, Ftile whileBlock, Display test, Display yes,
 			HColor color, Instruction specialOut, Ftile backward, LinkRendering incoming1, LinkRendering incoming2) {
 
-		final HColor borderColor;
-		final HColor backColor;
-		final Rainbow arrowColor;
-		final FontConfiguration fontArrow;
-		final FontConfiguration fcTest;
 		final ConditionStyle conditionStyle = skinParam().getConditionStyle();
-		final FontParam testParam = conditionStyle == ConditionStyle.INSIDE_HEXAGON ? FontParam.ACTIVITY_DIAMOND
-				: FontParam.ARROW;
-		if (UseStyle.useBetaStyle()) {
-			final Style styleArrow = getDefaultStyleDefinitionArrow()
-					.getMergedStyle(skinParam().getCurrentStyleBuilder());
-			final Style styleDiamond = getDefaultStyleDefinitionDiamond()
-					.getMergedStyle(skinParam().getCurrentStyleBuilder());
-			borderColor = styleDiamond.value(PName.LineColor).asColor(skinParam().getThemeStyle(),
-					skinParam().getIHtmlColorSet());
-			backColor = styleDiamond.value(PName.BackGroundColor).asColor(skinParam().getThemeStyle(),
-					skinParam().getIHtmlColorSet());
-			arrowColor = Rainbow.build(styleArrow, skinParam().getIHtmlColorSet(), skinParam().getThemeStyle());
-			fontArrow = styleArrow.getFontConfiguration(skinParam().getThemeStyle(), skinParam().getIHtmlColorSet());
-			fcTest = styleDiamond.getFontConfiguration(skinParam().getThemeStyle(), skinParam().getIHtmlColorSet());
-		} else {
-			borderColor = getRose().getHtmlColor(skinParam(), ColorParam.activityDiamondBorder);
-			backColor = color == null ? getRose().getHtmlColor(skinParam(), ColorParam.activityDiamondBackground)
-					: color;
-			arrowColor = Rainbow.build(skinParam());
-			fontArrow = FontConfiguration.create(skinParam(), FontParam.ARROW, null);
-			fcTest = FontConfiguration.create(skinParam(), testParam, null);
-		}
+
+		final Style styleArrow = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam().getCurrentStyleBuilder());
+		final Style styleDiamond = getDefaultStyleDefinitionDiamond()
+				.getMergedStyle(skinParam().getCurrentStyleBuilder());
+		final HColor borderColor = styleDiamond.value(PName.LineColor).asColor(skinParam().getThemeStyle(),
+				skinParam().getIHtmlColorSet());
+		final HColor backColor = styleDiamond.value(PName.BackGroundColor).asColor(skinParam().getThemeStyle(),
+				skinParam().getIHtmlColorSet());
+		final Rainbow arrowColor = Rainbow.build(styleArrow, skinParam().getIHtmlColorSet(),
+				skinParam().getThemeStyle());
+		final FontConfiguration fontArrow = styleArrow.getFontConfiguration(skinParam().getThemeStyle(),
+				skinParam().getIHtmlColorSet());
+		final FontConfiguration fcTest = styleDiamond.getFontConfiguration(skinParam().getThemeStyle(),
+				skinParam().getIHtmlColorSet());
 
 		incoming1 = ensureColor(incoming1, arrowColor);
 		incoming2 = ensureColor(incoming2, arrowColor);

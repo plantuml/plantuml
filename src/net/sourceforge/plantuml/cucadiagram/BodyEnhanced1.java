@@ -48,7 +48,6 @@ import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.creole.Parser;
 import net.sourceforge.plantuml.creole.legacy.CreoleParser;
@@ -77,8 +76,7 @@ public class BodyEnhanced1 extends BodyEnhancedAbstract implements TextBlock, Wi
 
 	BodyEnhanced1(HorizontalAlignment align, List<CharSequence> rawBody, FontParam fontParam, ISkinParam skinParam,
 			Stereotype stereotype, ILeaf entity, Style style) {
-		super(align, UseStyle.useBetaStyle() == false ? FontConfiguration.create(skinParam, fontParam, stereotype)
-				: style.getFontConfiguration(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet()), style);
+		super(align, style.getFontConfiguration(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet()), style);
 		this.style = style;
 		this.rawBody2 = Display.create(rawBody);
 		this.stereotype = stereotype;

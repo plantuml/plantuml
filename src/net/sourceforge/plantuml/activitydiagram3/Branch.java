@@ -38,10 +38,8 @@ package net.sourceforge.plantuml.activitydiagram3;
 import java.util.Collection;
 import java.util.Objects;
 
-import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineBreakStrategy;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
@@ -99,15 +97,10 @@ public class Branch {
 		this.inlabel = Objects.requireNonNull(inlabel);
 		this.labelTest = Objects.requireNonNull(labelTest);
 		this.labelPositive = Objects.requireNonNull(labelPositive);
-		if (UseStyle.useBetaStyle()) {
-			final Style style = getDefaultStyleDefinitionDiamond().getMergedStyle(styleBuilder);
-			this.color = color == null
-					? style.value(PName.BackGroundColor).asColor(styleBuilder.getSkinParam().getThemeStyle(),
-							styleBuilder.getSkinParam().getIHtmlColorSet())
-					: color;
-		} else {
-			this.color = color;
-		}
+
+		final Style style = getDefaultStyleDefinitionDiamond().getMergedStyle(styleBuilder);
+		this.color = color == null ? style.value(PName.BackGroundColor).asColor(
+				styleBuilder.getSkinParam().getThemeStyle(), styleBuilder.getSkinParam().getIHtmlColorSet()) : color;
 
 		this.list = new InstructionList(swimlane);
 	}
@@ -248,15 +241,10 @@ public class Branch {
 		if (display == null)
 			return TextBlockUtils.EMPTY_TEXT_BLOCK;
 
-		LineBreakStrategy lineBreak = LineBreakStrategy.NONE;
-		final FontConfiguration fcArrow;
-		if (UseStyle.useBetaStyle()) {
-			final Style style = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam().getCurrentStyleBuilder());
-			lineBreak = style.wrapWidth();
-			fcArrow = style.getFontConfiguration(skinParam().getThemeStyle(), skinParam().getIHtmlColorSet());
-		} else {
-			fcArrow = FontConfiguration.create(skinParam(), FontParam.ARROW, null);
-		}
+		final Style style = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam().getCurrentStyleBuilder());
+		final LineBreakStrategy lineBreak = style.wrapWidth();
+		final FontConfiguration fcArrow = style.getFontConfiguration(skinParam().getThemeStyle(),
+				skinParam().getIHtmlColorSet());
 
 		return display.create0(fcArrow, HorizontalAlignment.LEFT, skinParam(), lineBreak, CreoleMode.SIMPLE_LINE, null,
 				null);

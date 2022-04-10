@@ -141,32 +141,23 @@ public class FtileBoxOld extends AbstractFtile {
 
 	public static FtileBoxOld create(ISkinParam skinParam, Display label, Swimlane swimlane, BoxStyle boxStyle,
 			Stereotype stereotype) {
-		Style style = null;
-		Style styleArrow = null;
-		if (UseStyle.useBetaStyle()) {
-			style = getDefaultStyleDefinitionActivity().withTOBECHANGED(stereotype)
-					.getMergedStyle(skinParam.getCurrentStyleBuilder());
-			styleArrow = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam.getCurrentStyleBuilder());
-		}
+		final Style style = getDefaultStyleDefinitionActivity().withTOBECHANGED(stereotype)
+				.getMergedStyle(skinParam.getCurrentStyleBuilder());
+		final Style styleArrow = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam.getCurrentStyleBuilder());
+
 		return new FtileBoxOld(skinParam, label, swimlane, boxStyle, style, styleArrow);
 	}
 
 	public static TextBlock createWbs(StyleBuilder styleBuilder, ISkinParam skinParam, Display label,
 			StyleSignatureBasic styleDefinition) {
-		Style style = null;
-		Style styleArrow = null;
-		if (UseStyle.useBetaStyle()) {
-			style = styleDefinition.getMergedStyle(styleBuilder);
-			styleArrow = style;
-		}
+		final Style style = styleDefinition.getMergedStyle(styleBuilder);
+		final Style styleArrow = style;
+
 		return new FtileBoxOld(skinParam, label, null, BoxStyle.PLAIN, style, styleArrow);
 	}
 
 	public static TextBlock createWbs(Style style, ISkinParam skinParam, Display label) {
-		Style styleArrow = null;
-		if (UseStyle.useBetaStyle())
-			styleArrow = style;
-
+		final Style styleArrow = style;
 		return new FtileBoxOld(skinParam, label, null, BoxStyle.PLAIN, style, styleArrow);
 	}
 
@@ -180,39 +171,27 @@ public class FtileBoxOld extends AbstractFtile {
 	private FtileBoxOld(ISkinParam skinParam, Display label, Swimlane swimlane, BoxStyle boxStyle, Style style,
 			Style styleArrow) {
 		super(skinParam);
+		Colors specBack = null;
+		if (skinParam instanceof SkinParamColors)
+			specBack = ((SkinParamColors) skinParam).getColors();
+
+		style = style.eventuallyOverride(specBack);
 		this.style = style;
 		this.boxStyle = boxStyle;
 		this.swimlane = swimlane;
-		final FontConfiguration fc;
-		final LineBreakStrategy wrapWidth;
-		if (UseStyle.useBetaStyle()) {
-			this.inRendering = LinkRendering.create(
-					Rainbow.build(styleArrow, getIHtmlColorSet(), skinParam.getThemeStyle()));
-			Colors specBack = null;
-			if (skinParam instanceof SkinParamColors)
-				specBack = ((SkinParamColors) skinParam).getColors();
 
-			style = style.eventuallyOverride(specBack);
-			this.borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), getIHtmlColorSet());
-			this.backColor = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(), getIHtmlColorSet());
-			fc = style.getFontConfiguration(skinParam.getThemeStyle(), getIHtmlColorSet());
-			this.horizontalAlignment = style.getHorizontalAlignment();
-			this.padding = style.getPadding();
-			this.roundCorner = style.value(PName.RoundCorner).asDouble();
-			this.shadowing = style.value(PName.Shadowing).asDouble();
-			wrapWidth = style.wrapWidth();
-			this.minimumWidth = style.value(PName.MinimumWidth).asDouble();
-		} else {
-			this.padding = ClockwiseTopRightBottomLeft.same(10);
-			this.inRendering = LinkRendering.create(Rainbow.build(skinParam));
-			this.borderColor = SkinParamUtils.getColor(skinParam(), null, ColorParam.activityBorder);
-			this.backColor = SkinParamUtils.getColor(skinParam(), null, ColorParam.activityBackground);
-			fc = FontConfiguration.create(skinParam, FontParam.ACTIVITY, null);
-			this.horizontalAlignment = HorizontalAlignment.LEFT;
-			this.shadowing = skinParam().shadowing(null) ? 3.0 : 0.0;
-			wrapWidth = skinParam.wrapWidth();
+		this.inRendering = LinkRendering
+				.create(Rainbow.build(styleArrow, getIHtmlColorSet(), skinParam.getThemeStyle()));
+		this.borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), getIHtmlColorSet());
+		this.backColor = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(), getIHtmlColorSet());
+		final FontConfiguration fc = style.getFontConfiguration(skinParam.getThemeStyle(), getIHtmlColorSet());
+		this.horizontalAlignment = style.getHorizontalAlignment();
+		this.padding = style.getPadding();
+		this.roundCorner = style.value(PName.RoundCorner).asDouble();
+		this.shadowing = style.value(PName.Shadowing).asDouble();
+		final LineBreakStrategy wrapWidth = style.wrapWidth();
+		this.minimumWidth = style.value(PName.MinimumWidth).asDouble();
 
-		}
 		final Sheet sheet = Parser
 				.build(fc, skinParam.getDefaultTextAlignment(horizontalAlignment), skinParam, CreoleMode.FULL)
 				.createSheet(label);
@@ -236,11 +215,7 @@ public class FtileBoxOld extends AbstractFtile {
 		final double heightTotal = dimTotal.getHeight();
 		final UDrawable shape = boxStyle.getUDrawable(widthTotal, heightTotal, shadowing, roundCorner);
 
-		final UStroke thickness;
-		if (UseStyle.useBetaStyle())
-			thickness = style.getStroke();
-		else
-			thickness = getThickness(style);
+		final UStroke thickness = style.getStroke();
 
 		if (borderColor == null)
 			ug = ug.apply(new HColorNone());

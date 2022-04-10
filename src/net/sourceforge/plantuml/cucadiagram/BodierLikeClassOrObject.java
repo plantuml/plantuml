@@ -87,11 +87,12 @@ public class BodierLikeClassOrObject implements Bodier {
 	}
 
 	@Override
-	public void addFieldOrMethod(String s) {
+	public boolean addFieldOrMethod(String s) {
 		// Empty cache
 		methodsToDisplay = null;
 		fieldsToDisplay = null;
 		rawBody.add(s);
+		return true;
 	}
 
 	private boolean isBodyEnhanced() {

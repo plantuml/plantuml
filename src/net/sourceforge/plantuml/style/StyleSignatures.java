@@ -51,6 +51,11 @@ public class StyleSignatures implements StyleSignature {
 	}
 
 	@Override
+	public String toString() {
+		return all.toString();
+	}
+
+	@Override
 	public Style getMergedStyle(StyleBuilder currentStyleBuilder) {
 		if (all.size() == 0)
 			throw new UnsupportedOperationException();

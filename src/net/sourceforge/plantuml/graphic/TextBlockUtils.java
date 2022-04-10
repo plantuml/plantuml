@@ -84,31 +84,13 @@ public class TextBlockUtils {
 	}
 
 	public static TextBlock title(FontConfiguration font, Display stringsToDisplay, ISkinParam skinParam) {
-		if (UseStyle.useBetaStyle()) {
-			throw new UnsupportedOperationException();
-		}
-		UStroke stroke = skinParam.getThickness(LineParam.titleBorder, null);
-		final Rose rose = new Rose();
-		HColor borderColor = rose.getHtmlColor(skinParam, ColorParam.titleBorder);
-		final HColor backgroundColor = rose.getHtmlColor(skinParam, ColorParam.titleBackground);
-		final TextBlockTitle result = new TextBlockTitle(font, stringsToDisplay, skinParam);
-		if (stroke == null && borderColor == null) {
-			return result;
-		}
-		if (stroke == null) {
-			stroke = new UStroke(1.5);
-		}
-		if (borderColor == null) {
-			borderColor = HColorUtils.BLACK;
-		}
-		final double corner = skinParam.getRoundCorner(CornerParam.titleBorder, null);
-		return withMargin(bordered(result, stroke, borderColor, backgroundColor, corner), 2, 2);
+		throw new UnsupportedOperationException();
 	}
 
 	public static TextBlock withMargin(TextBlock textBlock, double marginX, double marginY) {
-		if (marginX == 0 && marginY == 0) {
+		if (marginX == 0 && marginY == 0)
 			return textBlock;
-		}
+
 		return new TextBlockMarged(textBlock, marginY, marginX, marginY, marginX);
 	}
 

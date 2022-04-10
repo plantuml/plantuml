@@ -80,15 +80,18 @@ public class BodierMap implements Bodier {
 	}
 
 	@Override
-	public void addFieldOrMethod(String s) {
+	public boolean addFieldOrMethod(String s) {
 		if (s.contains("=>")) {
 			final int x = s.indexOf("=>");
 			map.put(s.substring(0, x).trim(), s.substring(x + 2).trim());
+			return true;
 		} else if (getLinkedEntry(s) != null) {
 			final String link = getLinkedEntry(s);
 			final int x = s.indexOf(link);
 			map.put(s.substring(0, x).trim(), "\0");
+			return true;
 		}
+		return false;
 	}
 
 	@Override

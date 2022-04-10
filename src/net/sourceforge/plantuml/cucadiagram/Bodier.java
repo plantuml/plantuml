@@ -52,7 +52,7 @@ public interface Bodier {
 
 	public Display getMethodsToDisplay();
 
-	public void addFieldOrMethod(String s) throws NoSuchColorException;
+	public boolean addFieldOrMethod(String s) throws NoSuchColorException;
 
 	public TextBlock getBody(FontParam fontParam, ISkinParam skinParam, boolean showMethods, boolean showFields,
 			Stereotype stereotype, Style style, FontConfiguration fontConfiguration);

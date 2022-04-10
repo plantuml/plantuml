@@ -92,7 +92,7 @@ public class BodierJSon implements Bodier {
 	}
 
 	@Override
-	public void addFieldOrMethod(String s) throws NoSuchColorException {
+	public boolean addFieldOrMethod(String s) throws NoSuchColorException {
 		throw new UnsupportedOperationException();
 	}
 

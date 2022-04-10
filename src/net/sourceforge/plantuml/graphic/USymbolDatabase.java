@@ -35,10 +35,9 @@
  */
 package net.sourceforge.plantuml.graphic;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.UseStyle;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.ugraphic.AbstractUGraphicHorizontalLine;
 import net.sourceforge.plantuml.ugraphic.UEmpty;
@@ -76,12 +75,7 @@ class USymbolDatabase extends USymbol {
 
 		final UPath closing = getClosingPath(width);
 		ug.apply(new HColorNone().bg()).draw(closing);
-
-		if (UseStyle.useBetaStyle()) {
-			ug.apply(new UTranslate(width, height)).draw(new UEmpty(10, 10));
-			// ug.apply(HColorUtils.BLACK).apply(new UTranslate(width, height)).draw(new
-			// URectangle(10, 10));
-		}
+		ug.apply(new UTranslate(width, height)).draw(new UEmpty(10, 10));
 
 	}
 

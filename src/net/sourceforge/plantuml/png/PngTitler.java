@@ -35,74 +35,44 @@
  */
 package net.sourceforge.plantuml.png;
 
-import java.awt.Font;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
 import net.sourceforge.plantuml.ISkinSimple;
-import net.sourceforge.plantuml.SpriteContainerEmpty;
-import net.sourceforge.plantuml.UseStyle;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.DisplaySection;
-import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.ugraphic.UFont;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 
 public class PngTitler {
 
-	private final HColor textColor;
-	private final HColor hyperlinkColor;
 	private final DisplaySection text;
-	private final int fontSize;
-	private final String fontFamily;
-	private final boolean useUnderlineForHyperlink;
+
 	private final Style style;
 	private final HColorSet set;
 	private final ISkinSimple spriteContainer;
 
-	public PngTitler(HColor textColor, DisplaySection text, int fontSize, String fontFamily, HColor hyperlinkColor,
-			boolean useUnderlineForHyperlink, Style style, HColorSet set, ISkinSimple spriteContainer) {
+	public PngTitler(DisplaySection text, Style style, HColorSet set, ISkinSimple spriteContainer) {
 		this.style = style;
 		this.set = set;
 		this.spriteContainer = spriteContainer;
-
-		if (UseStyle.useBetaStyle()) {
-			textColor = style.value(PName.FontColor).asColor(spriteContainer.getThemeStyle(), set);
-			fontSize = style.value(PName.FontSize).asInt();
-			fontFamily = style.value(PName.FontName).asString();
-			hyperlinkColor = style.value(PName.HyperLinkColor).asColor(spriteContainer.getThemeStyle(), set);
-		}
-		this.textColor = textColor;
 		this.text = text;
-		this.fontSize = fontSize;
-		this.fontFamily = fontFamily;
-		this.hyperlinkColor = hyperlinkColor;
-		this.useUnderlineForHyperlink = useUnderlineForHyperlink;
 
 	}
 
 	public Dimension2D getTextDimension(StringBounder stringBounder) {
 		final TextBlock textBloc = getRibbonBlock();
-		if (textBloc == null) {
+		if (textBloc == null)
 			return null;
-		}
+
 		return textBloc.calculateDimension(stringBounder);
 	}
 
 	public TextBlock getRibbonBlock() {
-		if (UseStyle.useBetaStyle()) {
-			final Display display = text.getDisplay();
-			if (display == null) {
-				return null;
-			}
-			return style.createTextBlockBordered(display, set, spriteContainer);
-		}
-		final UFont normalFont = new UFont(fontFamily, Font.PLAIN, fontSize);
-		return text.createRibbon(FontConfiguration.create(normalFont, textColor, hyperlinkColor, useUnderlineForHyperlink),
-				new SpriteContainerEmpty(), null);
+		final Display display = text.getDisplay();
+		if (display == null)
+			return null;
+
+		return style.createTextBlockBordered(display, set, spriteContainer);
 	}
 }
