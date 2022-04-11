@@ -128,7 +128,7 @@ jobs:
           gradle -q signMavenPublication signPdfJar
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           # Using github.run_number here to reduce confusion when downloading & comparing artifacts from several builds
           name: ${{ github.run_number }}-artifacts
