@@ -76,10 +76,10 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up java
-        uses: actions/setup-java@v3.1.0
+        uses: actions/setup-java@v3.1.1
         with:
           java-version: ${{ matrix.java_version }}
           distribution: temurin
@@ -128,7 +128,7 @@ jobs:
           gradle -q signMavenPublication signPdfJar
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           # Using github.run_number here to reduce confusion when downloading & comparing artifacts from several builds
           name: ${{ github.run_number }}-artifacts
