@@ -82,7 +82,7 @@ element {
 }
 
 group {
-  BackGroundColor transparent
+  BackGroundColor white
   LineThickness 1.0
   package {
     LineThickness 1.5
@@ -287,7 +287,7 @@ activityDiagram {
 	}
 	partition {
 	    LineColor black
-	    BackgroundColor none
+	    BackgroundColor white
 	    LineThickness 1.5
 	}
 	diamond {
@@ -304,11 +304,11 @@ activityDiagram {
 	    }
 	    stop {
 		    LineColor #2
-		    BackgroundColor transparent
+		    BackgroundColor white
 	    }
 	    end {
 		    LineColor #2
-		    BackgroundColor transparent
+		    BackgroundColor white
 	    }
 	}
 	activityBar {
