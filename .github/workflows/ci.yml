@@ -79,7 +79,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Set up java
-        uses: actions/setup-java@v3.1.1
+        uses: actions/setup-java@v3.2.0
         with:
           java-version: ${{ matrix.java_version }}
           distribution: temurin
@@ -100,7 +100,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Set up java
-        uses: actions/setup-java@v3.1.0
+        uses: actions/setup-java@v3.2.0
         with:
           java-version: 17
           distribution: temurin
