@@ -110,7 +110,7 @@ public class SURL {
 	/**
 	 * Regex to remove the UserInfo part from a URL.
 	 */
-	private static final Pattern PATTERN_USERINFO = Pattern.compile("(^https?://)(.*@)(.*)");
+	private static final Pattern PATTERN_USERINFO = Pattern.compile("(^https?://)([-_0-9a-zA-Z]+@)([^@]*)");
 
 	private static final ExecutorService EXE = Executors.newCachedThreadPool(new ThreadFactory() {
 		public Thread newThread(Runnable r) {
@@ -229,7 +229,7 @@ public class SURL {
 			// We are UNSECURE anyway
 			return true;
 
-		if (isInAllowList())
+		if (isInUrlAllowList())
 			return true;
 
 		if (SecurityUtils.getSecurityProfile() == SecurityProfile.INTERNET) {
@@ -244,16 +244,16 @@ public class SURL {
 	}
 
 	private boolean forbiddenURL(String full) {
-		if (full.matches("^https?://\\d+\\.\\d+\\.\\d+\\.\\d+.*"))
+		if (full.matches("^https?://[.0-9]+/.*"))
 			return true;
 		if (full.matches("^https?://[^.]+/.*"))
 			return true;
 		return false;
 	}
 
-	private boolean isInAllowList() {
+	private boolean isInUrlAllowList() {
 		final String full = cleanPath(internal.toString());
-		for (String allow : getAllowList())
+		for (String allow : getUrlAllowList())
 			if (full.startsWith(cleanPath(allow)))
 				return true;
 
@@ -271,8 +271,8 @@ public class SURL {
 		return path;
 	}
 
-	private List<String> getAllowList() {
-		final String env = SecurityUtils.getenv(SecurityUtils.PATHS_ALLOWED);
+	private List<String> getUrlAllowList() {
+		final String env = SecurityUtils.getenv(SecurityUtils.ALLOWLIST_URL);
 		if (env == null)
 			return Collections.emptyList();
 

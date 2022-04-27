@@ -82,7 +82,13 @@ public class SFile implements Comparable<SFile> {
 
 	@Override
 	public String toString() {
-		return "Image42";
+		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE)
+			try {
+				return internal.getCanonicalPath();
+			} catch (IOException e) {
+				return internal.getAbsolutePath();
+			}
+		return super.toString();
 	}
 
 	public SFile(String nameOrPath) {
@@ -174,7 +180,7 @@ public class SFile implements Comparable<SFile> {
 		final File[] tmp = internal.listFiles();
 		if (tmp == null)
 			return Collections.emptyList();
-		
+
 		final List<SFile> result = new ArrayList<>(tmp.length);
 		for (File f : tmp) {
 			result.add(new SFile(f));
@@ -263,7 +269,7 @@ public class SFile implements Comparable<SFile> {
 		if (isInAllowList(SecurityUtils.getPath(SecurityUtils.PATHS_INCLUDES)))
 			return true;
 
-		if (isInAllowList(SecurityUtils.getPath(SecurityUtils.PATHS_ALLOWED)))
+		if (isInAllowList(SecurityUtils.getPath(SecurityUtils.ALLOWLIST_LOCAL_PATHS)))
 			return true;
 
 		if (SecurityUtils.getSecurityProfile() == SecurityProfile.INTERNET)

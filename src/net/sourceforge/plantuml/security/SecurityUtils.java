@@ -95,7 +95,12 @@ public class SecurityUtils {
 	/**
 	 * Whitelist of paths from where scripts can load data.
 	 */
-	public static final String PATHS_ALLOWED = "plantuml.allowlist.path";
+	public static final String ALLOWLIST_LOCAL_PATHS = "plantuml.allowlist.path";
+	
+	/**
+	 * Whitelist of urls
+	 */
+	public static final String ALLOWLIST_URL = "plantuml.allowlist.url";
 
 	/**
 	 * Paths to folders with security specific content (not allowed to read via

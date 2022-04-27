@@ -43,26 +43,12 @@ import net.sourceforge.plantuml.SignatureUtils;
 
 public class UImageSvg implements UShape {
 
-	private static final String EMPTY_SVG = "<svg width=10 height=10></svg>";
 	private final String svg;
 	private final double scale;
 
 	public UImageSvg(String svg, double scale) {
-		this.svg = clean(Objects.requireNonNull(svg));
+		this.svg = Objects.requireNonNull(svg);
 		this.scale = scale;
-	}
-
-	private String clean(final String svg) {
-		final String svg2 = svg.toLowerCase().replaceAll("\\s", "");
-		if (svg2.contains("<script>"))
-			return EMPTY_SVG;
-		if (svg2.contains("</script>"))
-			return EMPTY_SVG;
-		if (svg2.contains("<foreignobject"))
-			return EMPTY_SVG;
-		if (svg2.contains("</foreignobject>"))
-			return EMPTY_SVG;
-		return svg;
 	}
 
 	public String getMD5Hex() {
@@ -71,9 +57,9 @@ public class UImageSvg implements UShape {
 
 	public String getSvg(boolean raw) {
 		String result = svg;
-		if (raw) {
+		if (raw)
 			return result;
-		}
+
 		if (result.startsWith("<?xml")) {
 			final int idx = result.indexOf("<svg");
 			result = result.substring(idx);
@@ -85,31 +71,31 @@ public class UImageSvg implements UShape {
 		final String style = extractSvgStyle();
 		if (style != null) {
 			final String background = extractBackground(style);
-			if (background != null) {
+			if (background != null)
 				result = result.replaceFirst("<g>", "<g><rect fill=\"" + background + "\" style=\"" + style + "\" /> ");
-			}
+
 		}
-		if (result.startsWith("<svg>") == false) {
+		if (result.startsWith("<svg>") == false)
 			throw new IllegalArgumentException();
-		}
+
 		return result;
 	}
 
 	private String extractBackground(String style) {
 		final Pattern p = Pattern.compile("background:([^;]+)");
 		final Matcher m = p.matcher(style);
-		if (m.find()) {
+		if (m.find())
 			return m.group(1);
-		}
+
 		return null;
 	}
 
 	private String extractSvgStyle() {
 		final Pattern p = Pattern.compile("(?i)\\<svg[^>]+style=\"([^\">]+)\"");
 		final Matcher m = p.matcher(svg);
-		if (m.find()) {
+		if (m.find())
 			return m.group(1);
-		}
+
 		return null;
 	}
 

@@ -72,32 +72,29 @@ public class FileSystem {
 	}
 
 	public SFile getFile(String nameOrPath) throws IOException {
-		if (isAbsolute(nameOrPath)) {
+		if (isAbsolute(nameOrPath))
 			return new SFile(nameOrPath).getCanonicalFile();
-		}
+
 		final SFile dir = getCurrentDir();
 		SFile filecurrent = null;
 		if (dir != null) {
 			filecurrent = dir.getAbsoluteFile().file(nameOrPath);
-			if (filecurrent.exists()) {
+			if (filecurrent.exists())
 				return filecurrent.getCanonicalFile();
 
-			}
 		}
 		for (SFile d : SecurityUtils.getPath(SecurityUtils.PATHS_INCLUDES)) {
 			assert d.isDirectory();
 			final SFile file = d.file(nameOrPath);
-			if (file.exists()) {
+			if (file.exists())
 				return file.getCanonicalFile();
-
-			}
 		}
 		for (SFile d : SecurityUtils.getPath(SecurityUtils.PATHS_CLASSES)) {
 			assert d.isDirectory();
 			final SFile file = d.file(nameOrPath);
-			if (file.exists()) {
+			if (file.exists())
 				return file.getCanonicalFile();
-			}
+
 		}
 		if (dir == null) {
 			assert filecurrent == null;

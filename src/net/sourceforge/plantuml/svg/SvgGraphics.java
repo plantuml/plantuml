@@ -42,6 +42,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -642,19 +643,8 @@ public class SvgGraphics {
 	}
 
 	public void createXml(OutputStream os) throws TransformerException, IOException {
-		if (images.size() == 0) {
-			createXmlInternal(os);
-			return;
-		}
-		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		createXmlInternal(baos);
-		String s = new String(baos.toByteArray());
-		for (Map.Entry<String, String> ent : images.entrySet()) {
-			final String k = "<" + ent.getKey() + "/>";
-			s = s.replace(k, ent.getValue());
-		}
-		s = removeXmlHeader(s);
-		os.write(s.getBytes());
+		createXmlInternal(os);
+//		s = removeXmlHeader(s);
 	}
 
 	private String removeXmlHeader(String s) {
@@ -673,7 +663,7 @@ public class SvgGraphics {
 		final int maxXscaled = (int) (maxX * scale);
 		final int maxYscaled = (int) (maxY * scale);
 		String style = "width:" + maxXscaled + "px;height:" + maxYscaled + "px;";
-		if (/*this.classesForDarkness.size() == 0 &&*/ backcolor != null)
+		if (/* this.classesForDarkness.size() == 0 && */ backcolor != null)
 			style += "background:" + backcolor + ";";
 
 		if (svgDimensionStyle) {
@@ -894,17 +884,26 @@ public class SvgGraphics {
 		ensureVisible(x + image.getWidth(), y + image.getHeight());
 	}
 
-	private final Map<String, String> images = new HashMap<String, String>();
-
 	public void svgImage(UImageSvg image, double x, double y) {
+		// https://developer.mozilla.org/fr/docs/Web/SVG/Element/image
 		if (hidden == false) {
+			final Element elt = (Element) document.createElement("image");
+			elt.setAttribute("width", format(image.getWidth()));
+			elt.setAttribute("height", format(image.getHeight()));
+			elt.setAttribute("x", format(x));
+			elt.setAttribute("y", format(y));
+
 			String svg = manageScale(image);
-			final String pos = "<svg x=\"" + format(x) + "\" y=\"" + format(y) + "\">";
-			svg = pos + svg.substring(5);
-			final String key = "imagesvginlined" + image.getMD5Hex() + images.size();
-			final Element elt = (Element) document.createElement(key);
+
+			final String svgHeader = "<svg height=\"" + (int) (image.getHeight() * scale) + "\" width=\""
+					+ (int) (image.getWidth() * scale) + "\" xmlns=\"http://www.w3.org/2000/svg\" >";
+
+			svg = svgHeader + svg.substring(5);
+
+			final String s = toBase64(svg);
+			elt.setAttribute("xlink:href", "data:image/svg+xml;base64," + s);
+
 			getG().appendChild(elt);
-			images.put(key, svg);
 		}
 		ensureVisible(x, y);
 		ensureVisible(x + image.getData("width"), y + image.getData("height"));
@@ -932,6 +931,11 @@ public class SvgGraphics {
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		SImageIO.write(image, "png", baos);
 		final byte data[] = baos.toByteArray();
+		return new String(Base64Coder.encode(data));
+	}
+
+	private String toBase64(String s) {
+		final byte data[] = s.getBytes(Charset.forName("UTF8"));
 		return new String(Base64Coder.encode(data));
 	}
 
