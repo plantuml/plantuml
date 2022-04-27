@@ -110,7 +110,7 @@ public class SURL {
 	/**
 	 * Regex to remove the UserInfo part from a URL.
 	 */
-	private static final Pattern PATTERN_USERINFO = Pattern.compile("(^https?://)([-_0-9a-zA-Z]+@)([^@]*)");
+	private static final Pattern PATTERN_USERINFO = Pattern.compile("(^https?://)([-_:0-9a-zA-Z]+@)([^@]*)");
 
 	private static final ExecutorService EXE = Executors.newCachedThreadPool(new ThreadFactory() {
 		public Thread newThread(Runnable r) {
