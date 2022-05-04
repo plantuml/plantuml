@@ -102,10 +102,10 @@ import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.USymbolHexagon;
 import net.sourceforge.plantuml.graphic.USymbolInterface;
 import net.sourceforge.plantuml.graphic.USymbols;
-import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.image.EntityImageActivity;
 import net.sourceforge.plantuml.svek.image.EntityImageArcCircle;
@@ -703,24 +703,26 @@ public final class GeneralImageBuilder {
 			return TextBlockUtils.empty(0, 0);
 
 		final ISkinParam skinParam = dotData.getSkinParam();
-		final FontConfiguration fontConfiguration;
-		if (UseStyle.useBetaStyle()) {
-			final SName sname = dotData.getUmlDiagramType().getStyleName();
-			final StyleSignatureBasic signature;
-			final USymbol uSymbol = g.getUSymbol();
-			if (uSymbol == USymbols.RECTANGLE)
-				signature = StyleSignatureBasic.of(SName.root, SName.element, sname, uSymbol.getSName(), SName.title);
-			else
-				signature = StyleSignatureBasic.of(SName.root, SName.element, sname, SName.title);
 
-			final Style style = signature //
-					.withTOBECHANGED(g.getStereotype()) //
-					.with(g.getStereostyles()) //
-					.getMergedStyle(skinParam.getCurrentStyleBuilder());
+		final SName sname = dotData.getUmlDiagramType().getStyleName();
+		final StyleSignatureBasic signature;
+		final USymbol uSymbol = g.getUSymbol();
+		if (g.getGroupType() == GroupType.STATE)
+			signature = StyleSignatureBasic.of(SName.root, SName.element, SName.stateDiagram, SName.state,
+					SName.header);
+		else if (uSymbol == USymbols.RECTANGLE)
+			signature = StyleSignatureBasic.of(SName.root, SName.element, sname, uSymbol.getSName(), SName.title);
+		else
+			signature = StyleSignatureBasic.of(SName.root, SName.element, sname, SName.title);
 
-			fontConfiguration = style.getFontConfiguration(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
-		} else
-			fontConfiguration = g.getFontConfigurationForTitle(skinParam);
+		final Style style = signature //
+				.withTOBECHANGED(g.getStereotype()) //
+				.with(g.getStereostyles()) //
+				.getMergedStyle(skinParam.getCurrentStyleBuilder());
+
+		final FontConfiguration fontConfiguration = style.getFontConfiguration(skinParam.getThemeStyle(),
+				skinParam.getIHtmlColorSet());
+
 		final HorizontalAlignment alignment = HorizontalAlignment.CENTER;
 		return label.create(fontConfiguration, alignment, dotData.getSkinParam());
 	}

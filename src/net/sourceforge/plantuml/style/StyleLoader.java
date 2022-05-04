@@ -164,7 +164,7 @@ public class StyleLoader {
 
 			final Matcher2 mKeyNames = keyName.matcher(trimmed);
 			if (mKeyNames.find()) {
-				String names = mKeyNames.group(1).replace(" ", "");
+				String names = mKeyNames.group(1);
 				final boolean isRecurse = mKeyNames.group(2) != null;
 				if (isRecurse)
 					names += "*";

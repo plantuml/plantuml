@@ -217,7 +217,7 @@ public class SkinParam implements ISkinParam {
 
 	List<String> cleanForKeySlow(String key) {
 		key = StringUtils.trin(StringUtils.goLowerCase(key));
-		key = key.replaceAll("_|\\.|\\s", "");
+		key = key.replaceAll("_|\\.", "");
 		// key = replaceSmart(key, "partition", "package");
 		key = replaceSmart(key, "sequenceparticipant", "participant");
 		key = replaceSmart(key, "sequenceactor", "actor");

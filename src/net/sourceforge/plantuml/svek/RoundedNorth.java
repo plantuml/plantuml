@@ -35,68 +35,54 @@
  */
 package net.sourceforge.plantuml.svek;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UStroke;
-import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
-public final class RoundedContainer {
+public final class RoundedNorth implements UDrawable {
 
-	private final Dimension2D dim;
-	private final double titleHeight;
-	private final double attributeHeight;
-	private final HColor borderColor;
+	private final double width;
+	private final double height;
 	private final HColor backColor;
-	private final HColor imgBackcolor;
-	private final UStroke stroke;
 	private final double rounded;
-	private final double shadowing;
 
-	public RoundedContainer(Dimension2D dim, double titleHeight, double attributeHeight, HColor borderColor,
-			HColor backColor, HColor imgBackcolor, UStroke stroke, double rounded, double shadowing) {
-		if (dim.getWidth() == 0)
+	public RoundedNorth(double width, double height, HColor backColor, double rounded) {
+		if (width == 0)
+			throw new IllegalArgumentException();
+		if (height == 0)
 			throw new IllegalArgumentException();
 
+		this.width = width;
+		this.height = height;
 		this.rounded = rounded;
-		this.dim = dim;
-		this.imgBackcolor = imgBackcolor;
-		this.titleHeight = titleHeight;
-		this.borderColor = borderColor;
 		this.backColor = backColor;
-		this.attributeHeight = attributeHeight;
-		this.stroke = stroke;
-		this.shadowing = shadowing;
 	}
 
 	public void drawU(UGraphic ug) {
-		ug = ug.apply(backColor.bg()).apply(borderColor).apply(stroke);
-		final URectangle rect = new URectangle(dim.getWidth(), dim.getHeight()).rounded(rounded);
+		if (HColorUtils.isTransparent(backColor))
+			return;
 
-		if (shadowing > 0) {
-			rect.setDeltaShadow(shadowing);
-			ug.apply(HColorUtils.transparent().bg()).draw(rect);
-			rect.setDeltaShadow(0);
-			
+		final UShape header;
+		if (rounded == 0) {
+			header = new URectangle(width, height);
+		} else {
+			final UPath path = new UPath();
+			path.moveTo(rounded / 2, 0);
+			path.lineTo(width - rounded / 2, 0);
+			path.arcTo(rounded / 2, rounded / 2, 0, 0, 1, width, rounded / 2);
+			path.lineTo(width, height);
+			path.lineTo(0, height);
+			path.lineTo(0, rounded / 2);
+			path.arcTo(rounded / 2, rounded / 2, 0, 0, 1, rounded / 2, 0);
+			path.closePath();
+			header = path;
 		}
-		final double headerHeight = titleHeight + attributeHeight;
-
-		new RoundedNorth(dim.getWidth(), headerHeight, backColor, rounded).drawU(ug);
-		new RoundedSouth(dim.getWidth(), dim.getHeight() - headerHeight, imgBackcolor, rounded)
-				.drawU(ug.apply(UTranslate.dy(headerHeight)));
-
-		ug.apply(HColorUtils.transparent().bg()).draw(rect);
-
-		if (headerHeight > 0)
-			ug.apply(UTranslate.dy(headerHeight)).draw(ULine.hline(dim.getWidth()));
-
-		if (attributeHeight > 0)
-			ug.apply(UTranslate.dy(titleHeight)).draw(ULine.hline(dim.getWidth()));
+		ug.apply(new UStroke()).apply(backColor).apply(backColor.bg()).draw(header);
 
 	}
 }

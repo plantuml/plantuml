@@ -423,7 +423,7 @@ timingDiagram {
 	  FontSize 12
 	  LineColor darkgreen
 	  BackgroundColor: var(--grey-blue);
-      LineThickness 2
+      LineThickness 1.5
 	}
 	robust {
 	  FontStyle plain

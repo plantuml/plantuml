@@ -34,11 +34,10 @@
  */
 package net.sourceforge.plantuml.timingdiagram;
 
-import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -49,10 +48,10 @@ import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public abstract class Player implements TimeProjected {
 
@@ -61,8 +60,10 @@ public abstract class Player implements TimeProjected {
 	private final boolean compact;
 	private final Display title;
 	protected int suggestedHeight;
+	protected final Stereotype stereotype;
 
-	public Player(String title, ISkinParam skinParam, TimingRuler ruler, boolean compact) {
+	public Player(String title, ISkinParam skinParam, TimingRuler ruler, boolean compact, Stereotype stereotype) {
+		this.stereotype = stereotype;
 		this.skinParam = skinParam;
 		this.compact = compact;
 		this.ruler = ruler;
@@ -73,23 +74,15 @@ public abstract class Player implements TimeProjected {
 		return compact;
 	}
 
-	protected abstract StyleSignatureBasic getStyleSignature();
-
-	protected abstract SymbolContext getContextLegacy();
-//	private StyleSignature getStyleSignature() {
-//		return StyleSignature.of(SName.root, SName.element, SName.timingDiagram);
-//	}
+	protected abstract StyleSignature getStyleSignature();
 
 	final protected Style getStyle() {
 		return getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
-
 	}
 
 	final protected FontConfiguration getFontConfiguration() {
-		if (UseStyle.useBetaStyle() == false)
-			return FontConfiguration.create(skinParam, FontParam.TIMING, null);
-		return FontConfiguration.create(skinParam, StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram)
-				.getMergedStyle(skinParam.getCurrentStyleBuilder()));
+		return FontConfiguration.create(skinParam, StyleSignatureBasic
+				.of(SName.root, SName.element, SName.timingDiagram).getMergedStyle(skinParam.getCurrentStyleBuilder()));
 	}
 
 	final protected UStroke getStroke() {
@@ -98,8 +91,6 @@ public abstract class Player implements TimeProjected {
 	}
 
 	final protected SymbolContext getContext() {
-		if (UseStyle.useBetaStyle() == false)
-			return getContextLegacy();
 
 		final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
 		final HColor lineColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(),

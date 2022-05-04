@@ -83,7 +83,7 @@ class Context {
 			final List<StyleSignatureBasic> tmp = new ArrayList<>();
 			for (StyleSignatureBasic ss : results)
 				for (String name : names)
-					tmp.add(ss.add(name));
+					tmp.add(ss.add(name.trim()));
 			results = tmp;
 		}
 

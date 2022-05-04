@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.timingdiagram;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -44,16 +43,18 @@ import java.util.TreeSet;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.UseStyle;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.timingdiagram.graphic.Histogram;
 import net.sourceforge.plantuml.timingdiagram.graphic.IntricatedPoint;
@@ -75,25 +76,20 @@ public final class PlayerRobustConcise extends Player {
 	private PDrawing cached;
 	private Colors initialColors;
 
-	public PlayerRobustConcise(TimingStyle type, String full, ISkinParam skinParam, TimingRuler ruler,
-			boolean compact) {
-		super(full, skinParam, ruler, compact);
+	public PlayerRobustConcise(TimingStyle type, String full, ISkinParam skinParam, TimingRuler ruler, boolean compact,
+			Stereotype stereotype) {
+		super(full, skinParam, ruler, compact, stereotype);
 		this.type = type;
 		this.suggestedHeight = 0;
 	}
 
 	@Override
-	protected StyleSignatureBasic getStyleSignature() {
+	protected StyleSignature getStyleSignature() {
 		if (type == TimingStyle.CONCISE)
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, SName.concise);
+			return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, SName.concise).withTOBECHANGED(stereotype);
 		if (type == TimingStyle.ROBUST)
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, SName.robust);
+			return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, SName.robust).withTOBECHANGED(stereotype);
 		throw new IllegalStateException();
-	}
-
-	@Override
-	protected SymbolContext getContextLegacy() {
-		throw new UnsupportedOperationException();
 	}
 
 	private PDrawing buildPDrawing() {

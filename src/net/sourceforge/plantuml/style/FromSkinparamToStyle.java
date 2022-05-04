@@ -210,6 +210,14 @@ public class FromSkinparamToStyle {
 		addMagic(SName.usecase);
 		addMagic(SName.map);
 		addMagic(SName.archimate);
+		
+		
+//		addConvert("nodeStereotypeFontSize", PName.FontSize, SName.node, SName.stereotype);
+//		addConvert("sequenceStereotypeFontSize", PName.FontSize, SName.stereotype);
+//		addConvert("sequenceStereotypeFontStyle", PName.FontStyle, SName.stereotype);
+//		addConvert("sequenceStereotypeFontColor", PName.FontColor, SName.stereotype);
+//		addConvert("sequenceStereotypeFontName", PName.FontName, SName.stereotype);
+
 
 	}
 
@@ -221,8 +229,14 @@ public class FromSkinparamToStyle {
 		addConvert(cleanName + "RoundCorner", PName.RoundCorner, sname);
 		addConvert(cleanName + "DiagonalCorner", PName.DiagonalCorner, sname);
 		addConvert(cleanName + "BorderStyle", PName.LineStyle, sname);
-		addConvert(cleanName + "StereotypeFontColor", PName.FontColor, SName.stereotype, sname);
 		addConFont(cleanName, sname);
+		addConvert(cleanName + "Shadowing", PName.Shadowing, sname);
+		
+		addConvert(cleanName + "StereotypeFontSize", PName.FontSize, SName.stereotype, sname);
+		addConvert(cleanName + "StereotypeFontStyle", PName.FontStyle, SName.stereotype, sname);
+		addConvert(cleanName + "StereotypeFontColor", PName.FontColor, SName.stereotype, sname);
+		addConvert(cleanName + "StereotypeFontName", PName.FontName, SName.stereotype, sname);
+
 	}
 
 	private final List<Style> styles = new ArrayList<>();
@@ -234,7 +248,7 @@ public class FromSkinparamToStyle {
 		if (key.contains("<<")) {
 			final StringTokenizer st = new StringTokenizer(key, "<>");
 			this.key = st.nextToken();
-			this.stereo = st.hasMoreTokens() ? st.nextToken() : null;
+			this.stereo = st.hasMoreTokens() ? st.nextToken().trim() : null;
 		} else {
 			this.key = key;
 			this.stereo = null;
@@ -243,6 +257,12 @@ public class FromSkinparamToStyle {
 	}
 
 	public void convertNow(String value, final AutomaticCounter counter) {
+		if (key.endsWith("shadowing")) {
+			if (value.equalsIgnoreCase("false"))
+				value = "0";
+			else if (value.equalsIgnoreCase("true"))
+				value = "3";
+		}
 		if (value.equalsIgnoreCase("right:right"))
 			value = "right";
 		if (value.equalsIgnoreCase("dotted"))

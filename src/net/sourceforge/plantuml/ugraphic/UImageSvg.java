@@ -55,6 +55,10 @@ public class UImageSvg implements UShape {
 		return SignatureUtils.getMD5Hex(svg);
 	}
 
+	public boolean containsXlink() {
+		return svg.contains("xmlns:xlink=\"http://www.w3.org/1999/xlink\"");
+	}
+
 	public String getSvg(boolean raw) {
 		String result = svg;
 		if (raw)

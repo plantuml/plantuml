@@ -34,10 +34,10 @@
  */
 package net.sourceforge.plantuml.timingdiagram.graphic;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 
 import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.WithLinkType;
 import net.sourceforge.plantuml.graphic.FontConfiguration;

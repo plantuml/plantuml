@@ -119,17 +119,17 @@ public class HColorUtils {
 	}
 
 	public static HColor noGradient(HColor color) {
-		if (color instanceof HColorGradient) {
+		if (color instanceof HColorGradient)
 			return ((HColorGradient) color).getColor1();
-		}
+
 		return color;
 	}
 
 	public static UChange changeBack(UGraphic ug) {
 		final HColor color = ug.getParam().getColor();
-		if (color == null) {
+		if (color == null)
 			return new HColorNone().bg();
-		}
+
 		return color.bg();
 	}
 
@@ -140,28 +140,28 @@ public class HColorUtils {
 	}
 
 	public static boolean isTransparent(HColor back) {
-		if (back == TRANSPARENT) {
+		if (back == TRANSPARENT)
 			return true;
-		}
-		if (back instanceof HColorBackground && ((HColorBackground) back).getBack() == TRANSPARENT) {
+
+		if (back instanceof HColorBackground && ((HColorBackground) back).getBack() == TRANSPARENT)
 			return true;
-		}
-		if (back instanceof HColorSimple && ((HColorSimple) back).isTransparent()) {
+
+		if (back instanceof HColorSimple && ((HColorSimple) back).isTransparent())
 			return true;
-		}
+
 		return false;
 	}
 
 	public static HColor unlinear(HColor color1, HColor color2, int completion) {
-		if (completion == 0) {
+		if (completion == 0)
 			return color1;
-		}
-		if (completion == 100) {
+
+		if (completion == 100)
 			return color2;
-		}
-		if (color1 instanceof HColorSimple && color2 instanceof HColorSimple) {
+
+		if (color1 instanceof HColorSimple && color2 instanceof HColorSimple)
 			return HColorSimple.unlinear((HColorSimple) color1, (HColorSimple) color2, completion);
-		}
+
 		return color1;
 	}
 

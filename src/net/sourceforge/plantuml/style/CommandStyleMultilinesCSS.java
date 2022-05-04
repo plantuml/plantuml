@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.style;
 
 import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.TitledDiagram;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;

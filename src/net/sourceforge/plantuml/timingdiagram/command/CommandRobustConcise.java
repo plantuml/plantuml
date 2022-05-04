@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.timingdiagram.TimingDiagram;
 import net.sourceforge.plantuml.timingdiagram.TimingStyle;
 
@@ -64,9 +65,14 @@ public class CommandRobustConcise extends SingleLineCommand2<TimingDiagram> {
 						new RegexConcat( //
 								new RegexLeaf("FULL", "[%g]([^%g]+)[%g]"), //
 								RegexLeaf.spaceOneOrMore(), //
+								new RegexLeaf("STEREOTYPE", "(\\<\\<.*\\>\\>)?"), //
+								RegexLeaf.spaceZeroOrMore(), //
 								new RegexLeaf("as"), //
 								RegexLeaf.spaceOneOrMore())), //
 				new RegexLeaf("CODE", "([%pLN_.@]+)"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("STEREOTYPE2", "(\\<\\<.*\\>\\>)?"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				RegexLeaf.end());
 	}
 
@@ -75,11 +81,17 @@ public class CommandRobustConcise extends SingleLineCommand2<TimingDiagram> {
 		final String compact = arg.get("COMPACT", 0);
 		final String code = arg.get("CODE", 0);
 		String full = arg.get("FULL", 0);
-		if (full == null) {
+		if (full == null)
 			full = code;
-		}
+
+		Stereotype stereotype = null;
+		if (arg.get("STEREOTYPE", 0) != null)
+			stereotype = Stereotype.build(arg.get("STEREOTYPE", 0));
+		else if (arg.get("STEREOTYPE2", 0) != null)
+			stereotype = Stereotype.build(arg.get("STEREOTYPE2", 0));
+
 		final TimingStyle type = TimingStyle.valueOf(arg.get("TYPE", 0).toUpperCase());
-		return diagram.createRobustConcise(code, full, type, compact != null);
+		return diagram.createRobustConcise(code, full, type, compact != null, stereotype);
 	}
 
 }

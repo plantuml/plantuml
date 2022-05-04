@@ -37,11 +37,11 @@ package net.sourceforge.plantuml.svek.image;
 
 import static net.sourceforge.plantuml.utils.ObjectUtils.instanceOfAny;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.ugraphic.UBackground;

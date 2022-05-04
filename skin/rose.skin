@@ -136,6 +136,14 @@ group {
     BackGroundColor transparent
 }
 
+componentDiagram {
+  node, rectangle {
+    LineColor black
+    LineThickness 1.5
+  }
+}
+
+
 sequenceDiagram {
   group {
     LineColor black
@@ -494,6 +502,7 @@ timingDiagram {
 	  FontSize 12
 	  LineColor darkgreen
 	  BackgroundColor #c
+      LineThickness 1.5
 	}
 	robust {
 	  FontStyle plain

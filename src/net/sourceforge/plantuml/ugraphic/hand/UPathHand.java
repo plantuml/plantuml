@@ -75,11 +75,15 @@ public class UPathHand {
 				final double y = segment.getCoord()[1];
 				final HandJiggle jiggle = new HandJiggle(last.getX(), last.getY(), defaultVariation, rnd);
 				jiggle.lineTo(x, y);
-				for (USegment seg2 : jiggle.toUPath()) {
-					if (seg2.getSegmentType() == USegmentType.SEG_LINETO) {
+				for (USegment seg2 : jiggle.toUPath())
+					if (seg2.getSegmentType() == USegmentType.SEG_LINETO)
 						result.lineTo(seg2.getCoord()[0], seg2.getCoord()[1]);
-					}
-				}
+
+				last = new Point2D.Double(x, y);
+			} else if (type == USegmentType.SEG_ARCTO) {
+				final double x = segment.getCoord()[5];
+				final double y = segment.getCoord()[6];
+				result.lineTo(x, y);
 				last = new Point2D.Double(x, y);
 			} else {
 				this.path = source;

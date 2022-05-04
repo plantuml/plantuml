@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.svg;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.awt.geom.PathIterator;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -45,9 +44,7 @@ import java.io.OutputStream;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -71,6 +68,7 @@ import org.w3c.dom.Element;
 import net.sourceforge.plantuml.FileUtils;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.SignatureUtils;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.code.Base64Coder;
 import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.security.SecurityUtils;
@@ -895,8 +893,14 @@ public class SvgGraphics {
 
 			String svg = manageScale(image);
 
-			final String svgHeader = "<svg height=\"" + (int) (image.getHeight() * scale) + "\" width=\""
-					+ (int) (image.getWidth() * scale) + "\" xmlns=\"http://www.w3.org/2000/svg\" >";
+			final String svgHeader;
+			if (image.containsXlink())
+				svgHeader = "<svg height=\"" + (int) (image.getHeight() * scale) + "\" width=\""
+						+ (int) (image.getWidth() * scale)
+						+ "\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns=\"http://www.w3.org/2000/svg\" >";
+			else
+				svgHeader = "<svg height=\"" + (int) (image.getHeight() * scale) + "\" width=\""
+						+ (int) (image.getWidth() * scale) + "\" xmlns=\"http://www.w3.org/2000/svg\" >";
 
 			svg = svgHeader + svg.substring(5);
 

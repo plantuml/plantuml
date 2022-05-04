@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.timingdiagram;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -51,11 +50,13 @@ import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.api.ThemeStyle;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -296,8 +297,10 @@ public class TimingDiagram extends UmlDiagram implements Clocks {
 		throw new IllegalArgumentException();
 	}
 
-	public CommandExecutionResult createRobustConcise(String code, String full, TimingStyle type, boolean compact) {
-		final Player player = new PlayerRobustConcise(type, full, getSkinParam(), ruler, compactByDefault || compact);
+	public CommandExecutionResult createRobustConcise(String code, String full, TimingStyle type, boolean compact,
+			Stereotype stereotype) {
+		final Player player = new PlayerRobustConcise(type, full, getSkinParam(), ruler, compactByDefault || compact,
+				stereotype);
 		players.put(code, player);
 		lastPlayer = player;
 		return CommandExecutionResult.ok();
@@ -320,8 +323,8 @@ public class TimingDiagram extends UmlDiagram implements Clocks {
 		return player;
 	}
 
-	public CommandExecutionResult createBinary(String code, String full, boolean compact) {
-		final Player player = new PlayerBinary(full, getSkinParam(), ruler, compactByDefault);
+	public CommandExecutionResult createBinary(String code, String full, boolean compact, Stereotype stereotype) {
+		final Player player = new PlayerBinary(full, getSkinParam(), ruler, compactByDefault, stereotype);
 		players.put(code, player);
 		return CommandExecutionResult.ok();
 	}
