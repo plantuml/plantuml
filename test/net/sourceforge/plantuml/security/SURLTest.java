@@ -71,10 +71,10 @@ class SURLTest {
 	@ValueSource(strings = {
 			"http://localhost:8080/api",
 			"http://alice@localhost:8080/api",
-			"http://alice:secret@localhost:8080/api",
+			"http://alice_secret@localhost:8080/api",
 			"https://localhost:8080/api",
 			"https://alice@localhost:8080/api",
-			"https://alice:secret@localhost:8080/api"})
+			"https://alice_secret@localhost:8080/api"})
 	void removeUserInfo(String url) throws MalformedURLException {
 		SURL surl = SURL.createWithoutUser(new URL(url));
 
