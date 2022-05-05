@@ -90,7 +90,15 @@ jobs:
         run: gradle -q compileJava --no-daemon
 
       - name: Test
-        run: gradle -q test --no-daemon
+        run: gradle test --no-daemon
+
+      - name: Upload test reports
+        uses: actions/upload-artifact@v3
+        if: ${{ always() }}
+        with:
+          # Using github.run_number here to reduce confusion when downloading & comparing from several builds
+          name: ${{ github.run_number }}-${{ matrix.os }}-java-${{ matrix.java_version }}-test-reports
+          path: build/reports/tests/
 
   upload:
     needs: [ workflow_config, test ]
