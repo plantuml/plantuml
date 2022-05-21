@@ -35,14 +35,10 @@
  */
 package net.sourceforge.plantuml.skin.rose;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.LineBreakStrategy;
-import net.sourceforge.plantuml.UseStyle;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
@@ -58,16 +54,10 @@ public class ComponentRoseEnglober extends AbstractTextualComponent {
 	private final SymbolContext symbolContext;
 	private final double roundCorner;
 
-	public ComponentRoseEnglober(Style style, SymbolContext symbolContext, Display strings, FontConfiguration font,
-			ISkinSimple spriteContainer, double roundCorner) {
-		super(style, LineBreakStrategy.NONE, strings, font, HorizontalAlignment.CENTER, 3, 3, 1, spriteContainer, false,
-				null, null);
-		if (UseStyle.useBetaStyle()) {
-			roundCorner = style.value(PName.RoundCorner).asDouble();
-			symbolContext = style.getSymbolContext(spriteContainer.getThemeStyle(), getIHtmlColorSet());
-		}
-		this.roundCorner = roundCorner;
-		this.symbolContext = symbolContext;
+	public ComponentRoseEnglober(Style style, Display strings, ISkinSimple spriteContainer) {
+		super(style, LineBreakStrategy.NONE, 3, 3, 1, spriteContainer, strings, false);
+		this.roundCorner = style.value(PName.RoundCorner).asDouble();
+		this.symbolContext = style.getSymbolContext(spriteContainer.getThemeStyle(), getIHtmlColorSet());
 	}
 
 	@Override

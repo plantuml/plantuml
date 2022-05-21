@@ -35,20 +35,14 @@
  */
 package net.sourceforge.plantuml.graphic;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class USymbolHexagon extends USymbol {
-
-	@Override
-	public SkinParameter getSkinParameter() {
-		return SkinParameter.HEXAGON;
-	}
 
 	@Override
 	public SName getSName() {

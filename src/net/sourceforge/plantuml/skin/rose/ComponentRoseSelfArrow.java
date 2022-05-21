@@ -35,14 +35,12 @@
  */
 package net.sourceforge.plantuml.skin.rose;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.LineBreakStrategy;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
@@ -56,18 +54,15 @@ import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class ComponentRoseSelfArrow extends AbstractComponentRoseArrow {
 
 	private final double arrowWidth = 45;
 	private final boolean niceArrow;
 
-	public ComponentRoseSelfArrow(Style style, HColor foregroundColor, FontConfiguration font, Display stringsToDisplay,
-			ArrowConfiguration arrowConfiguration, ISkinSimple spriteContainer, LineBreakStrategy maxMessageSize,
-			boolean niceArrow) {
-		super(style, foregroundColor, font, stringsToDisplay, arrowConfiguration, spriteContainer,
-				HorizontalAlignment.LEFT, maxMessageSize);
+	public ComponentRoseSelfArrow(Style style, Display stringsToDisplay, ArrowConfiguration arrowConfiguration,
+			ISkinSimple spriteContainer, LineBreakStrategy maxMessageSize, boolean niceArrow) {
+		super(style, stringsToDisplay, arrowConfiguration, spriteContainer, maxMessageSize);
 		this.niceArrow = niceArrow;
 	}
 
@@ -104,13 +99,12 @@ public class ComponentRoseSelfArrow extends AbstractComponentRoseArrow {
 			x2 += ComponentRoseArrow.diamCircle / 2;
 		}
 		final boolean hasStartingCrossX = getArrowConfiguration().getDressing1().getHead() == ArrowHead.CROSSX;
-		if (hasStartingCrossX) {
+		if (hasStartingCrossX)
 			x1 += 2 * ComponentRoseArrow.spaceCrossX;
-		}
+
 		final boolean hasFinalCrossX = getArrowConfiguration().getDressing2().getHead() == ArrowHead.CROSSX;
-		if (hasFinalCrossX) {
+		if (hasFinalCrossX)
 			x2 += 2 * ComponentRoseArrow.spaceCrossX;
-		}
 
 		if (getArrowConfiguration().isReverseDefine()) {
 			ug2.apply(new UTranslate(-xRight, textHeight)).draw(ULine.hline(xRight - x1));
@@ -160,11 +154,11 @@ public class ComponentRoseSelfArrow extends AbstractComponentRoseArrow {
 			}
 		}
 
-		if (getArrowConfiguration().isReverseDefine()) {
+		if (getArrowConfiguration().isReverseDefine())
 			getTextBlock().drawU(ug.apply(UTranslate.dx(-getPureTextWidth(stringBounder))));
-		} else {
+		else
 			getTextBlock().drawU(ug.apply(UTranslate.dx(getMarginX1())));
-		}
+
 	}
 
 	private UPolygon getPolygon() {

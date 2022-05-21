@@ -40,7 +40,6 @@ import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SkinParamUtils;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.EntityPortion;
@@ -82,18 +81,13 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 		final Stereotype stereotype = entity.getStereotype();
 		final boolean displayGenericWithOldFashion = skinParam.displayGenericWithOldFashion();
 		final String generic = displayGenericWithOldFashion ? null : entity.getGeneric();
-		FontConfiguration fontConfigurationName;
 
-		if (UseStyle.useBetaStyle()) {
-			final Style style = StyleSignatureBasic
-					.of(SName.root, SName.element, SName.classDiagram, SName.class_, SName.header) //
-					.withTOBECHANGED(stereotype) //
-					.with(entity.getStereostyles()) //
-					.getMergedStyle(skinParam.getCurrentStyleBuilder());
-			fontConfigurationName = FontConfiguration.create(skinParam, style);
-		} else {
-			fontConfigurationName = FontConfiguration.create(getSkinParam(), FontParam.CLASS, stereotype);
-		}
+		final Style style = StyleSignatureBasic
+				.of(SName.root, SName.element, SName.classDiagram, SName.class_, SName.header) //
+				.withTOBECHANGED(stereotype) //
+				.with(entity.getStereostyles()) //
+				.getMergedStyle(skinParam.getCurrentStyleBuilder());
+		FontConfiguration fontConfigurationName = FontConfiguration.create(skinParam, style);
 
 		if (italic)
 			fontConfigurationName = fontConfigurationName.italic();
@@ -159,24 +153,14 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 
 		final LeafType leafType = entity.getLeafType();
 
-		final HColor spotBackColor;
-		HColor spotBorder;
-
-		final HColor classBorder;
-		final HColor fontColor;
-		if (UseStyle.useBetaStyle()) {
-			final Style style = spotStyleSignature(leafType).getMergedStyle(skinParam.getCurrentStyleBuilder());
-			spotBorder = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
-			spotBackColor = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
-					skinParam.getIHtmlColorSet());
-			classBorder = SkinParamUtils.getColor(getSkinParam(), stereotype, ColorParam.classBorder);
-			fontColor = style.value(PName.FontColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
-		} else {
-			spotBackColor = SkinParamUtils.getColor(getSkinParam(), stereotype, spotBackground(leafType));
-			spotBorder = SkinParamUtils.getColor(getSkinParam(), stereotype, spotBorder(leafType));
-			classBorder = SkinParamUtils.getColor(getSkinParam(), stereotype, ColorParam.classBorder);
-			fontColor = SkinParamUtils.getFontColor(getSkinParam(), FontParam.CIRCLED_CHARACTER, null);
-		}
+		final Style style = spotStyleSignature(leafType).getMergedStyle(skinParam.getCurrentStyleBuilder());
+		HColor spotBorder = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(),
+				skinParam.getIHtmlColorSet());
+		final HColor spotBackColor = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
+				skinParam.getIHtmlColorSet());
+		final HColor classBorder = SkinParamUtils.getColor(getSkinParam(), stereotype, ColorParam.classBorder);
+		final HColor fontColor = style.value(PName.FontColor).asColor(skinParam.getThemeStyle(),
+				skinParam.getIHtmlColorSet());
 
 		if (stereotype != null && stereotype.getCharacter() != 0)
 			return new CircledCharacter(stereotype.getCharacter(), getSkinParam().getCircledCharacterRadius(), font,
@@ -212,44 +196,6 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 			return StyleSignatureBasic.of(SName.root, SName.element, SName.spot, SName.spotEntity);
 		}
 		throw new IllegalStateException();
-	}
-
-	private ColorParam spotBackground(LeafType leafType) {
-		switch (leafType) {
-		case ANNOTATION:
-			return ColorParam.stereotypeNBackground;
-		case ABSTRACT_CLASS:
-			return ColorParam.stereotypeABackground;
-		case CLASS:
-			return ColorParam.stereotypeCBackground;
-		case INTERFACE:
-			return ColorParam.stereotypeIBackground;
-		case ENUM:
-			return ColorParam.stereotypeEBackground;
-		case ENTITY:
-			return ColorParam.stereotypeCBackground;
-		}
-		assert false;
-		return null;
-	}
-
-	private ColorParam spotBorder(LeafType leafType) {
-		switch (leafType) {
-		case ANNOTATION:
-			return ColorParam.stereotypeNBorder;
-		case ABSTRACT_CLASS:
-			return ColorParam.stereotypeABorder;
-		case CLASS:
-			return ColorParam.stereotypeCBorder;
-		case INTERFACE:
-			return ColorParam.stereotypeIBorder;
-		case ENUM:
-			return ColorParam.stereotypeEBorder;
-		case ENTITY:
-			return ColorParam.stereotypeCBorder;
-		}
-		assert false;
-		return null;
 	}
 
 	private char getCircledChar(LeafType leafType) {

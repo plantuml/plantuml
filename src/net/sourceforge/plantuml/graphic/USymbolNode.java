@@ -35,10 +35,8 @@
  */
 package net.sourceforge.plantuml.graphic;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.UseStyle;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.ugraphic.AbstractUGraphicHorizontalLine;
 import net.sourceforge.plantuml.ugraphic.UEmpty;
@@ -50,13 +48,6 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColorNone;
 
 class USymbolNode extends USymbol {
-
-	// private final HorizontalAlignment stereotypeAlignement;
-
-	@Override
-	public SkinParameter getSkinParameter() {
-		return SkinParameter.NODE;
-	}
 
 	@Override
 	public SName getSName() {

@@ -39,7 +39,6 @@ import java.util.List;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -52,14 +51,12 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.timingdiagram.graphic.TimeArrow;
-import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class TimeConstraint {
 
@@ -98,10 +95,6 @@ public class TimeConstraint {
 	}
 
 	private FontConfiguration getFontConfiguration() {
-		if (UseStyle.useBetaStyle() == false) {
-			final UFont font = UFont.serif(14);
-			return FontConfiguration.create(font, HColorUtils.BLACK, HColorUtils.BLUE, false);
-		}
 		return getStyle().getFontConfiguration(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
 	}
 
@@ -123,9 +116,6 @@ public class TimeConstraint {
 	}
 
 	private HColor getArrowColor() {
-		if (UseStyle.useBetaStyle() == false)
-			return HColorUtils.MY_RED;
-
 		return getStyle().value(PName.LineColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
 	}
 
@@ -134,9 +124,6 @@ public class TimeConstraint {
 	}
 
 	private UStroke getUStroke() {
-		if (UseStyle.useBetaStyle() == false)
-			return new UStroke(1.5);
-
 		return getStyle().getStroke();
 	}
 

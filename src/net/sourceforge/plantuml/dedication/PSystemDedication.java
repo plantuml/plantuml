@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.ugraphic.AffineTransformType;
 import net.sourceforge.plantuml.ugraphic.PixelImage;
+import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImage;
 
 public class PSystemDedication extends PlainDiagram {
@@ -63,7 +64,12 @@ public class PSystemDedication extends PlainDiagram {
 
 	@Override
 	protected UDrawable getRootDrawable(FileFormatOption fileFormatOption) {
-		return ug -> ug.draw(new UImage(new PixelImage(img, AffineTransformType.TYPE_BILINEAR)));
+		// return ug -> ug.draw(new UImage(new PixelImage(img, AffineTransformType.TYPE_BILINEAR)));
+		return new UDrawable() {
+			public void drawU(UGraphic ug) {
+				ug.draw(new UImage(new PixelImage(img, AffineTransformType.TYPE_BILINEAR)));
+			}
+		};
 	}
 
 	public static BufferedImage getBufferedImage(InputStream is) {

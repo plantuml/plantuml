@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.USymbol;
+import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
@@ -68,7 +69,8 @@ public interface FtileFactory {
 
 	public Ftile activity(Display label, Swimlane swimlane, BoxStyle style, Colors colors, Stereotype stereotype);
 
-	public Ftile addNote(Ftile ftile, Swimlane swimlane, Collection<PositionedNote> notes);
+	public Ftile addNote(Ftile ftile, Swimlane swimlane, Collection<PositionedNote> notes,
+			VerticalAlignment verticalAlignment);
 
 	public Ftile addUrl(Ftile ftile, Url url);
 

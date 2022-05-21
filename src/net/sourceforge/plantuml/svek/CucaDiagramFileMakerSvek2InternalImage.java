@@ -37,15 +37,12 @@ package net.sourceforge.plantuml.svek;
 
 import java.util.List;
 
-import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
@@ -121,12 +118,8 @@ public final class CucaDiagramFileMakerSvek2InternalImage extends AbstractTextBl
 	}
 
 	public void drawU(UGraphic ug) {
-		final HColor borderColor;
-		if (UseStyle.useBetaStyle())
-			borderColor = getStyle().value(PName.LineColor).asColor(skinParam.getThemeStyle(),
-					skinParam.getIHtmlColorSet());
-		else
-			borderColor = new Rose().getHtmlColor(skinParam, stereotype, ColorParam.stateBorder);
+		final HColor borderColor = getStyle().value(PName.LineColor).asColor(skinParam.getThemeStyle(),
+				skinParam.getIHtmlColorSet());
 		final StringBounder stringBounder = ug.getStringBounder();
 		final Dimension2D dimTotal = calculateDimension(stringBounder);
 

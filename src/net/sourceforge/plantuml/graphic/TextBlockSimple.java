@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.graphic;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -43,6 +42,7 @@ import java.util.StringTokenizer;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.EmbeddedDiagram;
 import net.sourceforge.plantuml.SpriteContainer;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.ugraphic.UGraphic;

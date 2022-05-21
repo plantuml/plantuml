@@ -35,9 +35,8 @@
  */
 package net.sourceforge.plantuml.graphic;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.creole.SheetBlock2;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.ugraphic.Shadowable;

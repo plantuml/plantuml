@@ -35,10 +35,10 @@
  */
 package net.sourceforge.plantuml.graphic;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.ugraphic.Shadowable;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -50,11 +50,6 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 class USymbolFile extends USymbol {
 
 	private final HorizontalAlignment stereotypeAlignement = HorizontalAlignment.CENTER;
-
-	@Override
-	public SkinParameter getSkinParameter() {
-		return SkinParameter.FILE;
-	}
 
 	@Override
 	public SName getSName() {

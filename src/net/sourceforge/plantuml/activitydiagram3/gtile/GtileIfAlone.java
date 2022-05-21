@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.gtile;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -43,6 +42,7 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.activitydiagram3.Branch;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;

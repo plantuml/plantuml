@@ -42,9 +42,7 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
@@ -67,7 +65,6 @@ import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class Histogram implements PDrawing {
 
@@ -152,7 +149,7 @@ public class Histogram implements PDrawing {
 		if (change.isCompletelyHidden())
 			return;
 
-		final String[] states = change.getStates();
+		final List<String> states = change.getStates();
 		for (String state : states)
 			if (allStates.contains(state) == false)
 				allStates.add(state);
@@ -162,12 +159,12 @@ public class Histogram implements PDrawing {
 	private Point2D[] getPoints(int n) {
 		final ChangeState change = changes.get(n);
 		final double x = ruler.getPosInPixel(change.getWhen());
-		final String[] states = change.getStates();
-		if (states.length == 2)
-			return new Point2D[] { new Point2D.Double(x, yOfState(states[0])),
-					new Point2D.Double(x, yOfState(states[1])) };
+		final List<String> states = change.getStates();
+		if (states.size() == 2)
+			return new Point2D[] { new Point2D.Double(x, yOfState(states.get(0))),
+					new Point2D.Double(x, yOfState(states.get(1))) };
 
-		return new Point2D[] { new Point2D.Double(x, yOfState(states[0])) };
+		return new Point2D[] { new Point2D.Double(x, yOfState(states.get(0))) };
 	}
 
 	private double getPointx(int n) {
@@ -176,25 +173,22 @@ public class Histogram implements PDrawing {
 	}
 
 	private double getPointMinY(int n) {
-		final String[] states = changes.get(n).getStates();
-		if (states.length == 2)
-			return Math.min(yOfState(states[0]), yOfState(states[1]));
+		final List<String> states = changes.get(n).getStates();
+		if (states.size() == 2)
+			return Math.min(yOfState(states.get(0)), yOfState(states.get(1)));
 
-		return yOfState(states[0]);
+		return yOfState(states.get(0));
 	}
 
 	private double getPointMaxY(int n) {
-		final String[] states = changes.get(n).getStates();
-		if (states.length == 2)
-			return Math.max(yOfState(states[0]), yOfState(states[1]));
+		final List<String> states = changes.get(n).getStates();
+		if (states.size() == 2)
+			return Math.max(yOfState(states.get(0)), yOfState(states.get(1)));
 
-		return yOfState(states[0]);
+		return yOfState(states.get(0));
 	}
 
 	private FontConfiguration getFontConfiguration() {
-		if (UseStyle.useBetaStyle() == false)
-			return FontConfiguration.create(skinParam, FontParam.TIMING, null);
-
 		return FontConfiguration.create(skinParam, style);
 	}
 
@@ -203,9 +197,6 @@ public class Histogram implements PDrawing {
 	}
 
 	private SymbolContext getContext() {
-		if (UseStyle.useBetaStyle() == false)
-			return new SymbolContext(HColorUtils.COL_D7E0F2, HColorUtils.COL_038048).withStroke(new UStroke(2));
-
 		final HColor lineColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(),
 				skinParam.getIHtmlColorSet());
 		final HColor backgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),

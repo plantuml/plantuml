@@ -37,21 +37,16 @@ package net.sourceforge.plantuml.graphic;
 
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
-import net.sourceforge.plantuml.ColorParam;
-import net.sourceforge.plantuml.CornerParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.LineParam;
-import net.sourceforge.plantuml.UseStyle;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.posimo.Positionable;
 import net.sourceforge.plantuml.posimo.PositionableImpl;
-import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.LimitFinder;
@@ -62,7 +57,6 @@ import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UText;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class TextBlockUtils {
 

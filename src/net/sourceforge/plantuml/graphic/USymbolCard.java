@@ -35,9 +35,8 @@
  */
 package net.sourceforge.plantuml.graphic;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UGraphicStencil;
@@ -47,20 +46,9 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 class USymbolCard extends USymbol {
 
-	private final SkinParameter skinParameter;
-
-	public USymbolCard(SkinParameter skinParameter) {
-		this.skinParameter = skinParameter;
-	}
-
 	@Override
 	public SName getSName() {
 		return SName.card;
-	}
-
-	@Override
-	public SkinParameter getSkinParameter() {
-		return skinParameter;
 	}
 
 	private void drawCard(UGraphic ug, double width, double height, double shadowing, double top, double roundCorner) {

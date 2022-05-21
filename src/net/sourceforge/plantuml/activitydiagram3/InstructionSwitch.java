@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.activitydiagram3.gtile.GtileIfHexagon;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
@@ -72,11 +73,10 @@ public class InstructionSwitch extends WithNote implements Instruction, Instruct
 
 	@Override
 	public boolean containsBreak() {
-		for (Branch branch : switches) {
-			if (branch.containsBreak()) {
+		for (Branch branch : switches)
+			if (branch.containsBreak())
 				return true;
-			}
-		}
+
 		return false;
 	}
 
@@ -91,9 +91,9 @@ public class InstructionSwitch extends WithNote implements Instruction, Instruct
 
 	@Override
 	public CommandExecutionResult add(Instruction ins) {
-		if (current == null) {
+		if (current == null)
 			return CommandExecutionResult.error("No 'case' in this switch");
-		}
+
 		return current.add(ins);
 	}
 
@@ -116,7 +116,9 @@ public class InstructionSwitch extends WithNote implements Instruction, Instruct
 		for (Branch branch : switches)
 			branch.updateFtile(factory);
 
-		return factory.createSwitch(swimlane, switches, afterEndwhile, topInlinkRendering, labelTest);
+		Ftile result = factory.createSwitch(swimlane, switches, afterEndwhile, topInlinkRendering, labelTest);
+		result = eventuallyAddNote(factory, result, getSwimlaneIn(), VerticalAlignment.TOP);
+		return result;
 	}
 
 	@Override
@@ -132,12 +134,12 @@ public class InstructionSwitch extends WithNote implements Instruction, Instruct
 	@Override
 	public Set<Swimlane> getSwimlanes() {
 		final Set<Swimlane> result = new HashSet<>();
-		if (swimlane != null) {
+		if (swimlane != null)
 			result.add(swimlane);
-		}
-		for (Branch branch : switches) {
+
+		for (Branch branch : switches)
 			result.addAll(branch.getSwimlanes());
-		}
+
 		return Collections.unmodifiableSet(result);
 	}
 
@@ -177,11 +179,11 @@ public class InstructionSwitch extends WithNote implements Instruction, Instruct
 
 	@Override
 	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote) {
-		if (current.isEmpty()) {
+		if (current == null || current.isEmpty())
 			return super.addNote(note, position, type, colors, swimlaneNote);
-		} else {
+		else
 			return current.addNote(note, position, type, colors, swimlaneNote);
-		}
+
 	}
 
 }

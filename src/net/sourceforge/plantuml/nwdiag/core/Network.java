@@ -87,9 +87,9 @@ public class Network implements NStackable {
 	}
 
 	public final String getDisplayName() {
-		if (this.description == null) {
+		if (this.description == null) 
 			return name;
-		}
+		
 		return this.description;
 	}
 

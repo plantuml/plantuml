@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.graphic.color.Colors;
 
 public class InstructionSimple extends MonoSwimable implements Instruction {
@@ -104,7 +105,7 @@ public class InstructionSimple extends MonoSwimable implements Instruction {
 		if (url != null) {
 			result = factory.addUrl(result, url);
 		}
-		result = eventuallyAddNote(factory, result, result.getSwimlaneIn());
+		result = eventuallyAddNote(factory, result, result.getSwimlaneIn(), VerticalAlignment.CENTER);
 		if (killed) {
 			return new FtileKilled(result);
 		}

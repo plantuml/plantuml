@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.gtile;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
@@ -44,6 +43,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Arrows;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Hexagon;
 import net.sourceforge.plantuml.activitydiagram3.ftile.MergeStrategy;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.ugraphic.UGraphic;

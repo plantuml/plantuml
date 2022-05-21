@@ -41,11 +41,6 @@ import net.sourceforge.plantuml.svek.CircleInterface2;
 public class USymbolInterface extends USymbolSimpleAbstract {
 
 	@Override
-	public SkinParameter getSkinParameter() {
-		return SkinParameter.INTERFACE;
-	}
-
-	@Override
 	public SName getSName() {
 		return SName.interface_;
 	}

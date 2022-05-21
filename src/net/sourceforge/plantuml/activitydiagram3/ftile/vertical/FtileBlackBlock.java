@@ -35,18 +35,17 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vertical;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
 
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
@@ -66,12 +65,11 @@ public class FtileBlackBlock extends AbstractFtile {
 	private double width;
 	private double height;
 	private TextBlock label = TextBlockUtils.empty(0, 0);
-	private HColor colorBar;
+
 	private final Swimlane swimlane;
 
-	public FtileBlackBlock(ISkinParam skinParam, HColor colorBar, Swimlane swimlane) {
+	public FtileBlackBlock(ISkinParam skinParam, Swimlane swimlane) {
 		super(skinParam);
-		this.colorBar = colorBar;
 		this.swimlane = swimlane;
 	}
 
@@ -103,7 +101,8 @@ public class FtileBlackBlock extends AbstractFtile {
 		final Style style = getSignature().getMergedStyle(skinParam().getCurrentStyleBuilder());
 		final double shadowing = style.value(PName.Shadowing).asDouble();
 		rect.setDeltaShadow(shadowing);
-		colorBar = style.value(PName.BackGroundColor).asColor(skinParam().getThemeStyle(), getIHtmlColorSet());
+		final HColor colorBar = style.value(PName.BackGroundColor).asColor(skinParam().getThemeStyle(),
+				getIHtmlColorSet());
 
 		ug.apply(colorBar).apply(colorBar.bg()).draw(rect);
 		final Dimension2D dimLabel = label.calculateDimension(ug.getStringBounder());

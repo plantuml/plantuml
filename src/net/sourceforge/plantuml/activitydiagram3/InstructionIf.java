@@ -56,6 +56,7 @@ import net.sourceforge.plantuml.activitydiagram3.gtile.GtileIfHexagon;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
@@ -141,7 +142,7 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 		elseBranch.updateFtile(factory);
 		Ftile result = factory.createIf(swimlane, thens, elseBranch, outColor, topInlinkRendering, url);
 		if (getPositionedNotes().size() > 0) {
-			result = FtileWithNoteOpale.create(result, getPositionedNotes(), skinParam, false);
+			result = FtileWithNoteOpale.create(result, getPositionedNotes(), skinParam, false, VerticalAlignment.CENTER);
 		}
 		final List<WeldingPoint> weldingPoints = new ArrayList<>();
 		for (Branch branch : thens) {

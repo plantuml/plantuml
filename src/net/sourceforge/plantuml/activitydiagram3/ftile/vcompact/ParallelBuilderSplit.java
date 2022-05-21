@@ -40,7 +40,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractConnection;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Arrows;

@@ -57,16 +57,16 @@ public class NStage implements Comparable<NStage> {
 	}
 
 	public static NStage getMin(NStage stage1, NStage stage2) {
-		if (stage1.number < stage2.number) {
+		if (stage1.number < stage2.number)
 			return stage1;
-		}
+
 		return stage2;
 	}
 
 	public static NStage getMax(NStage stage1, NStage stage2) {
-		if (stage1.number > stage2.number) {
+		if (stage1.number > stage2.number)
 			return stage1;
-		}
+
 		return stage2;
 	}
 

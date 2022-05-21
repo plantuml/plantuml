@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.nwdiag.next;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -42,6 +41,7 @@ import java.util.Map.Entry;
 import java.util.TreeSet;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.nwdiag.VerticalLine;
@@ -127,33 +127,32 @@ public class LinkedElement {
 				skip.add(n.getY());
 		}
 
-		if (server.printFirstLink()) {
-			if (network.isVisible()) {
+		if (server.printFirstLink())
+			if (network.isVisible())
 				new VerticalLine(ynet1 + GridTextBlockDecorated.NETWORK_THIN, ynet1 + alpha, skip)
 						.drawU(ug.apply(UTranslate.dx(xLinkPos + network.magicDelta())));
-			} else {
+			else
 				new VerticalLine(ynet1, ynet1 + alpha, Collections.<Double>emptySet())
 						.drawU(ug.apply(UTranslate.dx(xLinkPos + network.magicDelta())));
-			}
-		}
+
 		drawCenter(ug, link1(), xMiddle + network.magicDelta(), ynet1 + posLink1);
 
 		final double seven = 9.0;
 		double x = xLinkPos - (conns.size() - 2) * seven / 2;
 		boolean first = true;
 		for (Entry<Network, TextBlock> ent : conns.entrySet()) {
-			if (ent.getKey() == network) {
+			if (ent.getKey() == network)
 				continue;
-			}
+
 			final double ynet2 = ent.getKey().getY();
 			new VerticalLine(ynet1 + yMiddle + dimBox.getHeight() / 2, ynet2, skip)
 					.drawU(ug.apply(UTranslate.dx(x - ent.getKey().magicDelta())));
 			final double xtext;
-			if (first && conns.size() > 2) {
+			if (first && conns.size() > 2)
 				xtext = x - ent.getValue().calculateDimension(stringBounder).getWidth() / 2;
-			} else {
+			else
 				xtext = x;
-			}
+
 			drawCenter(ug, ent.getValue(), xtext - ent.getKey().magicDelta(), ynet2 - alpha / 2);
 			x += seven;
 			first = false;
@@ -168,16 +167,16 @@ public class LinkedElement {
 
 	private TextBlock link2() {
 		final int i = networks.indexOf(network);
-		if (i == networks.size() - 1) {
+		if (i == networks.size() - 1) 
 			return null;
-		}
+		
 		return conns.get(networks.get(i + 1));
 	}
 
 	private void drawCenter(UGraphic ug, TextBlock block, double x, double y) {
-		if (block == null) {
+		if (block == null) 
 			return;
-		}
+		
 		final Dimension2D dim = block.calculateDimension(ug.getStringBounder());
 		block.drawU(ug.apply(new UTranslate(x - dim.getWidth() / 2, y - dim.getHeight() / 2)));
 

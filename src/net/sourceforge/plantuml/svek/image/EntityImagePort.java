@@ -38,12 +38,9 @@ package net.sourceforge.plantuml.svek.image;
 
 import java.awt.geom.Point2D;
 
-import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.SkinParamUtils;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.cucadiagram.EntityPosition;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
@@ -111,20 +108,13 @@ public class EntityImagePort extends AbstractEntityImageBorder {
 		desc.drawU(ug.apply(new UTranslate(x, y)));
 
 		HColor backcolor = getEntity().getColors().getColor(ColorType.BACK);
-		final HColor borderColor;
 
-		if (UseStyle.useBetaStyle()) {
-			final Style style = getSignature().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
-			borderColor = style.value(PName.LineColor).asColor(getSkinParam().getThemeStyle(),
+		final Style style = getSignature().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+		final HColor borderColor = style.value(PName.LineColor).asColor(getSkinParam().getThemeStyle(),
+				getSkinParam().getIHtmlColorSet());
+		if (backcolor == null)
+			backcolor = style.value(PName.BackGroundColor).asColor(getSkinParam().getThemeStyle(),
 					getSkinParam().getIHtmlColorSet());
-			if (backcolor == null)
-				backcolor = style.value(PName.BackGroundColor).asColor(getSkinParam().getThemeStyle(),
-						getSkinParam().getIHtmlColorSet());
-		} else {
-			borderColor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.stateBorder);
-			if (backcolor == null)
-				backcolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.stateBackground);
-		}
 
 		ug = ug.apply(backcolor);
 		ug = ug.apply(getUStroke()).apply(borderColor.bg());

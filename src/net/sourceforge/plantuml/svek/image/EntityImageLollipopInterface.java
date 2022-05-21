@@ -38,17 +38,12 @@ package net.sourceforge.plantuml.svek.image;
 import java.util.EnumMap;
 import java.util.Map;
 
-import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
-import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -56,6 +51,7 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
@@ -74,8 +70,8 @@ public class EntityImageLollipopInterface extends AbstractEntityImage {
 	private final SName sname;
 	private final Url url;
 
-	public StyleSignatureBasic getSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, sname, SName.circle);
+	public StyleSignature getSignature() {
+		return StyleSignatureBasic.of(SName.root, SName.element, sname, SName.circle).withTOBECHANGED(getStereo());
 	}
 
 	private UStroke getUStroke() {
@@ -85,13 +81,9 @@ public class EntityImageLollipopInterface extends AbstractEntityImage {
 	public EntityImageLollipopInterface(ILeaf entity, ISkinParam skinParam, SName sname) {
 		super(entity, skinParam);
 		this.sname = sname;
-		final Stereotype stereotype = entity.getStereotype();
-		final FontConfiguration fc;
-		if (UseStyle.useBetaStyle())
-			fc = FontConfiguration.create(getSkinParam(),
-					getSignature().getMergedStyle(skinParam.getCurrentStyleBuilder()));
-		else
-			fc = FontConfiguration.create(getSkinParam(), FontParam.CLASS, stereotype);
+
+		final FontConfiguration fc = FontConfiguration.create(getSkinParam(),
+				getSignature().getMergedStyle(skinParam.getCurrentStyleBuilder()));
 
 		this.desc = entity.getDisplay().create(fc, HorizontalAlignment.CENTER, skinParam);
 		this.url = entity.getUrl99();
@@ -104,21 +96,12 @@ public class EntityImageLollipopInterface extends AbstractEntityImage {
 
 	final public void drawU(UGraphic ug) {
 
-		final HColor backgroundColor;
-		final HColor borderColor;
-		double shadow = 4;
-
-		if (UseStyle.useBetaStyle()) {
-			final Style style = getSignature().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
-			backgroundColor = style.value(PName.BackGroundColor).asColor(getSkinParam().getThemeStyle(),
-					getSkinParam().getIHtmlColorSet());
-			borderColor = style.value(PName.LineColor).asColor(getSkinParam().getThemeStyle(),
-					getSkinParam().getIHtmlColorSet());
-			shadow = style.value(PName.Shadowing).asDouble();
-		} else {
-			backgroundColor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.classBackground);
-			borderColor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.classBorder);
-		}
+		final Style style = getSignature().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+		final HColor backgroundColor = style.value(PName.BackGroundColor).asColor(getSkinParam().getThemeStyle(),
+				getSkinParam().getIHtmlColorSet());
+		final HColor borderColor = style.value(PName.LineColor).asColor(getSkinParam().getThemeStyle(),
+				getSkinParam().getIHtmlColorSet());
+		final double shadow = style.value(PName.Shadowing).asDouble();
 
 		final UEllipse circle;
 		if (getEntity().getLeafType() == LeafType.LOLLIPOP_HALF) {

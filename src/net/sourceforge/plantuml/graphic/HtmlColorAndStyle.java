@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.graphic;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.cucadiagram.LinkStyle;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;

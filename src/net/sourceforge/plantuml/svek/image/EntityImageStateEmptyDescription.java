@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.svek.image;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -69,11 +68,7 @@ public class EntityImageStateEmptyDescription extends EntityImageStateCommon {
 		final Dimension2D dimTotal = calculateDimension(stringBounder);
 		final Dimension2D dimDesc = desc.calculateDimension(stringBounder);
 
-		final UStroke stroke;
-		if (UseStyle.useBetaStyle())
-			stroke = getStyleState().getStroke();
-		else
-			stroke = new UStroke();
+		final UStroke stroke = getStyleState().getStroke();
 
 		ug = applyColorAndStroke(ug);
 		ug = ug.apply(stroke);

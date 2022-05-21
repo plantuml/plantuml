@@ -35,14 +35,12 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.gtile;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.util.Collection;
 import java.util.Collections;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.FontParam;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;

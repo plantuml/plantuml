@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -47,6 +46,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;

@@ -617,7 +617,7 @@ class DrawableSetInitializer {
 			throw new IllegalArgumentException();
 		}
 
-		final ISkinParam skinParam = p.getSkinParamBackcolored(drawableSet.getSkinParam());
+		final ISkinParam skinParam = drawableSet.getSkinParam();
 		final Display participantDisplay = p.getDisplay(skinParam.forceSequenceParticipantUnderlined());
 		final Component head = drawableSet.getSkin().createComponent(p.getUsedStyles(), headType, null, skinParam,
 				participantDisplay);

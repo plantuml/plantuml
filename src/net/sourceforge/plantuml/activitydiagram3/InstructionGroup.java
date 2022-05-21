@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.USymbol;
+import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
@@ -102,9 +103,9 @@ public class InstructionGroup extends AbstractInstruction implements Instruction
 	@Override
 	public Ftile createFtile(FtileFactory factory) {
 		Ftile tmp = list.createFtile(factory);
-		if (note != null) {
-			tmp = new FtileWithNotes(tmp, Collections.singleton(note), factory.skinParam());
-		}
+		if (note != null)
+			tmp = new FtileWithNotes(tmp, Collections.singleton(note), factory.skinParam(), VerticalAlignment.CENTER);
+
 		return factory.createGroup(tmp, title, backColor, titleColor, null, borderColor, type, roundCorner);
 	}
 

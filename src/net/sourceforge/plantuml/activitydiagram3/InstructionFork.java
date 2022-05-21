@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
@@ -124,7 +125,7 @@ public class InstructionFork extends WithNote implements Instruction {
 		}
 		Ftile result = factory.createParallel(all, style, label, swimlaneIn, swimlaneOut);
 		if (getPositionedNotes().size() > 0) {
-			result = FtileWithNoteOpale.create(result, getPositionedNotes(), skinParam, false);
+			result = FtileWithNoteOpale.create(result, getPositionedNotes(), skinParam, false, VerticalAlignment.CENTER);
 		}
 		return result;
 	}

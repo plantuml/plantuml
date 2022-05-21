@@ -37,10 +37,10 @@ package net.sourceforge.plantuml.graphic;
 
 import java.awt.font.FontRenderContext;
 import java.awt.font.LineMetrics;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.text.RichText;
 import net.sourceforge.plantuml.text.StyledString;
 import net.sourceforge.plantuml.ugraphic.UFont;

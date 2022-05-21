@@ -105,6 +105,8 @@ public class UPolygon extends AbstractShadowable {
 	}
 
 	public void rotate(double theta) {
+		if (theta == 0)
+			return;
 		affine(AffineTransform.getRotateInstance(theta));
 	}
 

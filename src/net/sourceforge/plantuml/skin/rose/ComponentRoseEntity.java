@@ -35,14 +35,10 @@
  */
 package net.sourceforge.plantuml.skin.rose;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.LineBreakStrategy;
-import net.sourceforge.plantuml.UseStyle;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -50,24 +46,20 @@ import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.svek.EntityDomain;
-import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class ComponentRoseEntity extends AbstractTextualComponent {
 
 	private final TextBlock stickman;
 	private final boolean head;
 
-	public ComponentRoseEntity(Style style, Style stereo, SymbolContext biColor, FontConfiguration font,
-			Display stringsToDisplay, boolean head, ISkinSimple spriteContainer, UFont fontForStereotype,
-			HColor htmlColorForStereotype) {
-		super(style, stereo, LineBreakStrategy.NONE, stringsToDisplay, font, HorizontalAlignment.CENTER, 3, 3, 0,
-				spriteContainer, false, fontForStereotype, htmlColorForStereotype);
-		if (UseStyle.useBetaStyle()) {
-			biColor = style.getSymbolContext(spriteContainer.getThemeStyle(), getIHtmlColorSet());
-		}
+	public ComponentRoseEntity(Style style, Style stereo, Display stringsToDisplay, boolean head,
+			ISkinSimple spriteContainer) {
+		super(style, stereo, LineBreakStrategy.NONE, 3, 3, 0, spriteContainer, stringsToDisplay, false);
+
+		final SymbolContext biColor = style.getSymbolContext(spriteContainer.getThemeStyle(), getIHtmlColorSet());
+
 		this.head = head;
 		this.stickman = new EntityDomain(biColor);
 	}

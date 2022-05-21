@@ -41,16 +41,13 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.cucadiagram.BodyFactory;
-import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.EntityPortion;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.PortionShower;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
-import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.SymbolContext;
@@ -67,6 +64,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class EntityImageLollipopInterfaceEye2 extends AbstractEntityImage {
 
@@ -80,29 +78,34 @@ public class EntityImageLollipopInterfaceEye2 extends AbstractEntityImage {
 		super(entity, skinParam);
 		final Stereotype stereotype = entity.getStereotype();
 
-		final USymbol symbol = Objects.requireNonNull(
-				entity.getUSymbol() == null ? skinParam.componentStyle().toUSymbol() : entity.getUSymbol());
+//		final USymbol symbol = Objects.requireNonNull(
+//				entity.getUSymbol() == null ? skinParam.componentStyle().toUSymbol() : entity.getUSymbol());
+
+		// final FontParam fontParam = symbol.getFontParam();
+		final FontParam fontParam = FontParam.COMPONENT;
 
 		this.desc = BodyFactory.create2(skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER),
-				entity.getDisplay(), symbol.getFontParam(), skinParam, stereotype, entity,
-				getStyle(symbol.getFontParam()));
+				entity.getDisplay(), skinParam, stereotype, entity, getStyle(fontParam));
 
 		this.url = entity.getUrl99();
 
 		HColor backcolor = getEntity().getColors().getColor(ColorType.BACK);
-		if (backcolor == null) {
-			backcolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), symbol.getColorParamBack());
-		}
-		// backcolor = HtmlColorUtils.BLUE;
-		final HColor forecolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), symbol.getColorParamBorder());
+//		if (backcolor == null)
+//			backcolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), symbol.getColorParamBack());
+
+		final HColor forecolor = HColorUtils.BLACK;
+		// final HColor forecolor = SkinParamUtils.getColor(getSkinParam(), getStereo(),
+		// symbol.getColorParamBorder());
 		this.ctx = new SymbolContext(backcolor, forecolor).withStroke(new UStroke(1.5))
 				.withShadow(getSkinParam().shadowing(getEntity().getStereotype()) ? 3 : 0);
 
 		if (stereotype != null && stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) != null
 				&& portionShower.showPortion(EntityPortion.STEREOTYPE, entity)) {
-			stereo = Display.getWithNewlines(stereotype.getLabel(getSkinParam().guillemet())).create(
-					FontConfiguration.create(getSkinParam(), symbol.getFontParamStereotype(), stereotype),
-					HorizontalAlignment.CENTER, skinParam);
+//			final FontParam fontParam = symbol.getFontParamStereotype();
+//			stereo = Display.getWithNewlines(stereotype.getLabel(getSkinParam().guillemet())).create(
+//					FontConfiguration.create(getSkinParam(), fontParam, stereotype), HorizontalAlignment.CENTER,
+//					skinParam);
+			stereo = TextBlockUtils.empty(0, 0);
 		} else {
 			stereo = TextBlockUtils.empty(0, 0);
 		}

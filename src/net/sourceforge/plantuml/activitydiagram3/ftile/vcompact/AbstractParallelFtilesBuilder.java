@@ -38,9 +38,7 @@ package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileHeightFixedCentered;

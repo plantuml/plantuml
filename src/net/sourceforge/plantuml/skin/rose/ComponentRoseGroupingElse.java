@@ -35,14 +35,9 @@
  */
 package net.sourceforge.plantuml.skin.rose;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.LineBreakStrategy;
-import net.sourceforge.plantuml.SkinParamBackcolored;
-import net.sourceforge.plantuml.UseStyle;
-import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.HorizontalAlignment;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
@@ -67,27 +62,13 @@ public class ComponentRoseGroupingElse extends AbstractTextualComponent {
 	private final HColor backgroundColor;
 	private final double roundCorner;
 
-	public ComponentRoseGroupingElse(Style style, HColor groupBorder, FontConfiguration smallFont, CharSequence comment,
-			ISkinSimple spriteContainer, HColor backgroundColor, double roundCorner) {
-		super(style, LineBreakStrategy.NONE, comment == null ? null : "[" + comment + "]", smallFont,
-				HorizontalAlignment.LEFT, 5, 5, 1, spriteContainer, null, null);
+	public ComponentRoseGroupingElse(Style style, CharSequence comment, ISkinSimple spriteContainer) {
+		super(style, LineBreakStrategy.NONE, 5, 5, 1, spriteContainer, comment == null ? null : "[" + comment + "]");
 
-		if (UseStyle.useBetaStyle()) {
-			this.roundCorner = style.value(PName.RoundCorner).asInt();
-//			if (spriteContainer instanceof SkinParamBackcolored) {
-//				final HColor backgroundColor2 = ((SkinParamBackcolored) spriteContainer).getBackgroundColor();
-//				System.err.println("toto2=" + backgroundColor2);
-//				style = style.eventuallyOverride(PName.BackGroundColor, backgroundColor2);
-//			}
-			this.groupBorder = style.value(PName.LineColor).asColor(spriteContainer.getThemeStyle(),
-					getIHtmlColorSet());
-			this.backgroundColor = style.value(PName.BackGroundColor).asColor(spriteContainer.getThemeStyle(),
-					getIHtmlColorSet());
-		} else {
-			this.roundCorner = roundCorner;
-			this.groupBorder = groupBorder;
-			this.backgroundColor = backgroundColor;
-		}
+		this.roundCorner = style.value(PName.RoundCorner).asInt();
+		this.groupBorder = style.value(PName.LineColor).asColor(spriteContainer.getThemeStyle(), getIHtmlColorSet());
+		this.backgroundColor = style.value(PName.BackGroundColor).asColor(spriteContainer.getThemeStyle(),
+				getIHtmlColorSet());
 	}
 
 	@Override

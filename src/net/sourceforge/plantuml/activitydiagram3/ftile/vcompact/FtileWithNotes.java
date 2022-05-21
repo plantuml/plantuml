@@ -58,8 +58,8 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
+import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
-import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
@@ -77,6 +77,7 @@ public class FtileWithNotes extends AbstractFtile {
 
 	private TextBlock left;
 	private TextBlock right;
+	private final VerticalAlignment verticalAlignment;
 
 	private final double suppSpace = 20;
 
@@ -96,8 +97,10 @@ public class FtileWithNotes extends AbstractFtile {
 		return tile.getSwimlaneOut();
 	}
 
-	public FtileWithNotes(Ftile tile, Collection<PositionedNote> notes, ISkinParam skinParam) {
+	public FtileWithNotes(Ftile tile, Collection<PositionedNote> notes, ISkinParam skinParam,
+			VerticalAlignment verticalAlignment) {
 		super(tile.skinParam());
+		this.verticalAlignment = verticalAlignment;
 		this.tile = tile;
 
 		for (PositionedNote note : notes) {
@@ -161,7 +164,11 @@ public class FtileWithNotes extends AbstractFtile {
 		final Dimension2D dimTotal = calculateDimensionInternal(stringBounder);
 		final Dimension2D dimTile = tile.calculateDimension(stringBounder);
 		final double xDelta = left.calculateDimension(stringBounder).getWidth();
-		final double yDelta = (dimTotal.getHeight() - dimTile.getHeight()) / 2;
+		final double yDelta;
+		if (verticalAlignment == VerticalAlignment.TOP)
+			yDelta = 0;
+		else
+			yDelta = (dimTotal.getHeight() - dimTile.getHeight()) / 2;
 		return new UTranslate(xDelta, yDelta);
 	}
 
@@ -169,7 +176,11 @@ public class FtileWithNotes extends AbstractFtile {
 		final Dimension2D dimTotal = calculateDimensionInternal(stringBounder);
 		final Dimension2D dimLeft = left.calculateDimension(stringBounder);
 		final double xDelta = 0;
-		final double yDelta = (dimTotal.getHeight() - dimLeft.getHeight()) / 2;
+		final double yDelta;
+		if (verticalAlignment == VerticalAlignment.TOP)
+			yDelta = 0;
+		else
+			yDelta = (dimTotal.getHeight() - dimLeft.getHeight()) / 2;
 		return new UTranslate(xDelta, yDelta);
 	}
 
@@ -177,7 +188,11 @@ public class FtileWithNotes extends AbstractFtile {
 		final Dimension2D dimTotal = calculateDimensionInternal(stringBounder);
 		final Dimension2D dimRight = right.calculateDimension(stringBounder);
 		final double xDelta = dimTotal.getWidth() - dimRight.getWidth();
-		final double yDelta = (dimTotal.getHeight() - dimRight.getHeight()) / 2;
+		final double yDelta;
+		if (verticalAlignment == VerticalAlignment.TOP)
+			yDelta = 0;
+		else
+			yDelta = (dimTotal.getHeight() - dimRight.getHeight()) / 2;
 		return new UTranslate(xDelta, yDelta);
 	}
 

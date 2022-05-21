@@ -35,18 +35,15 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.gtile;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.util.Set;
 
 import net.sourceforge.plantuml.AlignmentParam;
-import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineBreakStrategy;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.activitydiagram3.PositionedNote;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.creole.Parser;
 import net.sourceforge.plantuml.creole.Sheet;
@@ -59,7 +56,6 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
-import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;

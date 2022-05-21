@@ -159,17 +159,17 @@ public class ParticipantBox implements Pushable {
 		ug = ug.apply(UTranslate.dx(startingX));
 		if (delays.size() > 0) {
 			final StringBounder stringBounder = ug.getStringBounder();
-			for (GraphicalDelayText delay : delays) {
+			for (GraphicalDelayText delay : delays) 
 				if (delay.getStartingY() - myDelta >= startingY) {
 					drawLineIfLowerThan(ug, startingY, delay.getStartingY() - myDelta, line, endingY);
 					drawLineIfLowerThan(ug, delay.getStartingY() - myDelta, delay.getEndingY(stringBounder) - myDelta,
 							delayLine, endingY);
 					startingY = delay.getEndingY(stringBounder) - myDelta;
 				}
-			}
-			if (delays.get(delays.size() - 1).getEndingY(stringBounder) - myDelta > startingY) {
+			
+			if (delays.get(delays.size() - 1).getEndingY(stringBounder) - myDelta > startingY) 
 				startingY = delays.get(delays.size() - 1).getEndingY(stringBounder) - myDelta;
-			}
+			
 		}
 		drawLineIfLowerThan(ug, startingY, endingY, line, endingY);
 	}
@@ -177,9 +177,9 @@ public class ParticipantBox implements Pushable {
 	private void drawLineIfLowerThan(UGraphic ug, double startingY, double endingY, Component comp, double limitY) {
 		startingY = Math.min(startingY, limitY);
 		endingY = Math.min(endingY, limitY);
-		if (startingY < limitY || endingY < limitY) {
+		if (startingY < limitY || endingY < limitY) 
 			drawLine(ug, startingY, endingY, comp);
-		}
+		
 
 	}
 

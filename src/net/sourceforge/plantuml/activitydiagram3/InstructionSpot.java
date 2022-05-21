@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.activitydiagram3.gtile.Gtile;
 import net.sourceforge.plantuml.activitydiagram3.gtile.GtileCircleSpot;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
@@ -72,7 +73,7 @@ public class InstructionSpot extends MonoSwimable implements Instruction {
 	@Override
 	public Ftile createFtile(FtileFactory factory) {
 		Ftile result = factory.spot(getSwimlaneIn(), spot, color);
-		result = eventuallyAddNote(factory, result, result.getSwimlaneIn());
+		result = eventuallyAddNote(factory, result, result.getSwimlaneIn(), VerticalAlignment.CENTER);
 		if (killed)
 			return new FtileKilled(result);
 

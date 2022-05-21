@@ -39,14 +39,10 @@ import java.awt.geom.Point2D;
 import java.util.EnumMap;
 import java.util.Map;
 
-import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.LineParam;
-import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.creole.Stencil;
 import net.sourceforge.plantuml.cucadiagram.BodyFactory;
@@ -58,7 +54,6 @@ import net.sourceforge.plantuml.cucadiagram.PortionShower;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.SkinParameter;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
@@ -92,15 +87,11 @@ public class EntityImageUseCase extends AbstractEntityImage {
 		super(entity, entity.getColors().mute(skinParam2));
 		final Stereotype stereotype = entity.getStereotype();
 
-		final HorizontalAlignment align;
-		if (UseStyle.useBetaStyle()) {
-			final Style style = getStyle();
-			align = style.getHorizontalAlignment();
-		} else {
-			align = HorizontalAlignment.CENTER;
-		}
+		final Style style = getStyle();
+		final HorizontalAlignment align = style.getHorizontalAlignment();
+
 		final TextBlock tmp = BodyFactory.create2(getSkinParam().getDefaultTextAlignment(align), entity.getDisplay(),
-				FontParam.USECASE, getSkinParam(), stereotype, entity, getStyle());
+				getSkinParam(), stereotype, entity, getStyle());
 
 		if (stereotype == null || stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) == null
 				|| portionShower.showPortion(EntityPortion.STEREOTYPE, entity) == false) {
@@ -120,20 +111,6 @@ public class EntityImageUseCase extends AbstractEntityImage {
 
 	}
 
-	private UStroke getStroke() {
-		if (UseStyle.useBetaStyle()) {
-			final Style style = getStyle();
-			return style.getStroke();
-		}
-		UStroke stroke = getSkinParam().getThickness(LineParam.usecaseBorder, getStereo());
-		if (stroke == null)
-			stroke = new UStroke(1.5);
-
-		final Colors colors = getEntity().getColors();
-		stroke = colors.muteStroke(stroke);
-		return stroke;
-	}
-
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
 		return new TextBlockInEllipse(desc, stringBounder).calculateDimension(stringBounder);
 	}
@@ -141,13 +118,8 @@ public class EntityImageUseCase extends AbstractEntityImage {
 	final public void drawU(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
 
-		double shadow = 0;
-
-		if (UseStyle.useBetaStyle()) {
-			final Style style = getStyle();
-			shadow = style.value(PName.Shadowing).asDouble();
-		} else if (getSkinParam().shadowing2(getEntity().getStereotype(), SkinParameter.USECASE))
-			shadow = 3;
+		final Style style = getStyle();
+		final double shadow = style.value(PName.Shadowing).asDouble();
 
 		final TextBlockInEllipse ellipse = new TextBlockInEllipse(desc, stringBounder);
 		ellipse.setDeltaShadow(shadow);
@@ -155,7 +127,7 @@ public class EntityImageUseCase extends AbstractEntityImage {
 		if (url != null)
 			ug.startUrl(url);
 
-		ug = ug.apply(getStroke());
+		ug = ug.apply(getStyle().getStroke(getEntity().getColors()));
 		final HColor linecolor = getLineColor();
 		ug = ug.apply(linecolor);
 		final HColor backcolor = getBackColor();
@@ -209,15 +181,11 @@ public class EntityImageUseCase extends AbstractEntityImage {
 	private HColor getBackColor() {
 		HColor backcolor = getEntity().getColors().getColor(ColorType.BACK);
 		if (backcolor == null) {
-			if (UseStyle.useBetaStyle()) {
-				Style style = getStyle();
-				final Colors colors = getEntity().getColors();
-				style = style.eventuallyOverride(colors);
-				backcolor = style.value(PName.BackGroundColor).asColor(getSkinParam().getThemeStyle(),
-						getSkinParam().getIHtmlColorSet());
-			} else {
-				backcolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.usecaseBackground);
-			}
+			final Colors colors = getEntity().getColors();
+			Style style = getStyle();
+			style = style.eventuallyOverride(colors);
+			backcolor = style.value(PName.BackGroundColor).asColor(getSkinParam().getThemeStyle(),
+					getSkinParam().getIHtmlColorSet());
 		}
 		return backcolor;
 	}
@@ -227,19 +195,16 @@ public class EntityImageUseCase extends AbstractEntityImage {
 	}
 
 	private StyleSignature getDefaultStyleDefinition() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.componentDiagram, SName.usecase).withTOBECHANGED(getStereo());
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.componentDiagram, SName.usecase)
+				.withTOBECHANGED(getStereo());
 	}
 
 	private HColor getLineColor() {
 		HColor linecolor = getEntity().getColors().getColor(ColorType.LINE);
 		if (linecolor == null) {
-			if (UseStyle.useBetaStyle()) {
-				final Style style = getStyle();
-				linecolor = style.value(PName.LineColor).asColor(getSkinParam().getThemeStyle(),
-						getSkinParam().getIHtmlColorSet());
-			} else {
-				linecolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.usecaseBorder);
-			}
+			final Style style = getStyle();
+			linecolor = style.value(PName.LineColor).asColor(getSkinParam().getThemeStyle(),
+					getSkinParam().getIHtmlColorSet());
 		}
 		return linecolor;
 	}

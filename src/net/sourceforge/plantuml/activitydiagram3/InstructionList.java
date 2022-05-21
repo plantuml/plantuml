@@ -54,6 +54,7 @@ import net.sourceforge.plantuml.activitydiagram3.gtile.GtileEmpty;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
@@ -125,7 +126,7 @@ public class InstructionList extends WithNote implements Instruction, Instructio
 			return new FtileEmpty(factory.skinParam(), defaultSwimlane);
 		}
 		final List<WeldingPoint> breaks = new ArrayList<>();
-		Ftile result = eventuallyAddNote(factory, null, getSwimlaneIn());
+		Ftile result = eventuallyAddNote(factory, null, getSwimlaneIn(), VerticalAlignment.CENTER);
 		for (Instruction ins : all) {
 			Ftile cur = ins.createFtile(factory);
 			breaks.addAll(cur.getWeldingPoints());

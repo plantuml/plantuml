@@ -35,9 +35,8 @@
  */
 package net.sourceforge.plantuml.graphic;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UGraphicStencil;
@@ -45,24 +44,6 @@ import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 class USymbolCollections extends USymbol {
-
-	private final SkinParameter skinParameter;
-	// private final HorizontalAlignment stereotypeAlignement;
-
-	public USymbolCollections(SkinParameter skinParameter) {
-		this.skinParameter = skinParameter;
-		// this.stereotypeAlignement = stereotypeAlignement;
-	}
-
-//	@Override
-//	public USymbol withStereoAlignment(HorizontalAlignment alignment) {
-//		return new USymbolCollections(skinParameter, alignment);
-//	}
-
-	@Override
-	public SkinParameter getSkinParameter() {
-		return skinParameter;
-	}
 
 	@Override
 	public SName getSName() {

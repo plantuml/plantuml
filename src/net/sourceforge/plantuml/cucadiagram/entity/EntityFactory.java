@@ -47,9 +47,7 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.Bodier;
 import net.sourceforge.plantuml.cucadiagram.BodierJSon;
@@ -69,9 +67,7 @@ import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.SuperGroup;
 import net.sourceforge.plantuml.graphic.USymbol;
-import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public final class EntityFactory {
 

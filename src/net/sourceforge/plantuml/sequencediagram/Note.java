@@ -40,7 +40,6 @@ import java.util.List;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SpecificBackcolorable;
 import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.color.Colors;
@@ -77,9 +76,9 @@ final public class Note extends AbstractEvent implements Event, SpecificBackcolo
 	}
 
 	public Style[] getUsedStyles() {
-		if (style != null) {
+		if (style != null)
 			return new Style[] { style.eventuallyOverride(colors) };
-		}
+
 		return new Style[] { style };
 	}
 
@@ -102,22 +101,18 @@ final public class Note extends AbstractEvent implements Event, SpecificBackcolo
 		this.styleBuilder = styleBuilder;
 		this.position = position;
 		this.strings = strings;
-		if (UseStyle.useBetaStyle()) {
-			this.style = getStyleSignature().getMergedStyle(styleBuilder);
-		}
+		this.style = getStyleSignature().getMergedStyle(styleBuilder);
 	}
 
 	public void setStereotype(Stereotype stereotype) {
-		if (UseStyle.useBetaStyle()) {
-			final List<Style> others = stereotype.getStyles(styleBuilder);
-			this.style = getStyleSignature().mergeWith(others).getMergedStyle(styleBuilder);
-		}
+		final List<Style> others = stereotype.getStyles(styleBuilder);
+		this.style = getStyleSignature().mergeWith(others).getMergedStyle(styleBuilder);
 	}
 
 	public Note withPosition(NotePosition newPosition) {
-		if (position == newPosition) {
+		if (position == newPosition)
 			return this;
-		}
+
 		final Note result = new Note(p, p2, newPosition, strings, styleBuilder);
 		result.noteStyle = this.noteStyle;
 		result.url = this.url;

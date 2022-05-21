@@ -39,9 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -113,8 +111,6 @@ public class Ribbon implements PDrawing {
 	}
 
 	private FontConfiguration getFontConfiguration() {
-		if (UseStyle.useBetaStyle() == false)
-			return FontConfiguration.create(skinParam, FontParam.TIMING, null);
 		return FontConfiguration.create(skinParam, style);
 
 	}

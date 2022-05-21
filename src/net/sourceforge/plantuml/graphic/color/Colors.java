@@ -41,7 +41,6 @@ import java.util.Objects;
 import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.ColorParam;
-import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SkinParamColors;
 import net.sourceforge.plantuml.StringUtils;
@@ -187,8 +186,8 @@ public class Colors {
 		return add(colorType, colors);
 	}
 
-	public Colors applyStereotypeForNote(Stereotype stereotype, ISkinParam skinParam, FontParam fontParam,
-			ColorParam... params) throws NoSuchColorException {
+	public Colors applyStereotypeForNote(Stereotype stereotype, ISkinParam skinParam, ColorParam... params)
+			throws NoSuchColorException {
 		Objects.requireNonNull(stereotype);
 		Colors result = this;
 		for (ColorParam param : Objects.requireNonNull(params))

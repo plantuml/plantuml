@@ -109,6 +109,7 @@ public enum SName {
 	rectangle, //
 	reference, //
 	referenceHeader, //
+	requirement, //
 	root, //
 	rootNode, //
 	saltDiagram, //

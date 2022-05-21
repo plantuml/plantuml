@@ -38,11 +38,8 @@ package net.sourceforge.plantuml.svek.image;
 import java.util.EnumMap;
 import java.util.Map;
 
-import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.SkinParamUtils;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -76,32 +73,20 @@ public class EntityImageBranch extends AbstractEntityImage {
 
 	final public void drawU(UGraphic ug) {
 		final UPolygon diams = new UPolygon();
-		double shadowing = 0;
 		diams.addPoint(SIZE, 0);
 		diams.addPoint(SIZE * 2, SIZE);
 		diams.addPoint(SIZE, SIZE * 2);
 		diams.addPoint(0, SIZE);
 		diams.addPoint(SIZE, 0);
 
-		HColor border = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.activityDiamondBorder,
-				ColorParam.activityBorder);
-		HColor back = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.activityDiamondBackground,
-				ColorParam.activityBackground);
-		UStroke stroke = new UStroke(1.5);
-		if (UseStyle.useBetaStyle()) {
-			final Style style = getDefaultStyleDefinition().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
-			border = style.value(PName.LineColor).asColor(getSkinParam().getThemeStyle(),
-					getSkinParam().getIHtmlColorSet());
-			back = style.value(PName.BackGroundColor).asColor(getSkinParam().getThemeStyle(),
-					getSkinParam().getIHtmlColorSet());
-			stroke = style.getStroke();
-			shadowing = style.value(PName.Shadowing).asDouble();
-		} else {
-			if (getSkinParam().shadowing(getEntity().getStereotype())) {
-				shadowing = 5;
-			}
+		final Style style = getDefaultStyleDefinition().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+		final HColor border = style.value(PName.LineColor).asColor(getSkinParam().getThemeStyle(),
+				getSkinParam().getIHtmlColorSet());
+		final HColor back = style.value(PName.BackGroundColor).asColor(getSkinParam().getThemeStyle(),
+				getSkinParam().getIHtmlColorSet());
+		final UStroke stroke = style.getStroke();
+		final double shadowing = style.value(PName.Shadowing).asDouble();
 
-		}
 		diams.setDeltaShadow(shadowing);
 		final Map<UGroupType, String> typeIDent = new EnumMap<>(UGroupType.class);
 		typeIDent.put(UGroupType.CLASS, "elem " + getEntity().getCode() + " selected");

@@ -41,19 +41,14 @@ import java.util.EnumMap;
 import java.util.Map;
 import java.util.Objects;
 
-import net.sourceforge.plantuml.AlignmentParam;
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.CornerParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.Direction;
-import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.SkinParamBackcolored;
-import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.creole.Stencil;
 import net.sourceforge.plantuml.cucadiagram.BodyFactory;
@@ -107,44 +102,27 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 		this.withShadow = getSkinParam().shadowing(getEntity().getStereotype());
 		final Display strings = entity.getDisplay();
 
-		final Rose rose = new Rose();
-
-		final FontConfiguration fontConfiguration;
-		final HorizontalAlignment horizontalAlignment;
-		if (UseStyle.useBetaStyle()) {
-			this.style = getDefaultStyleDefinition(umlDiagramType.getStyleName())
-					.getMergedStyle(skinParam.getCurrentStyleBuilder());
-			if (entity.getColors().getColor(ColorType.BACK) == null)
-				this.noteBackgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
-						skinParam.getIHtmlColorSet());
-			else
-				this.noteBackgroundColor = entity.getColors().getColor(ColorType.BACK);
-
-			this.borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(),
+		this.style = getDefaultStyleDefinition(umlDiagramType.getStyleName())
+				.getMergedStyle(skinParam.getCurrentStyleBuilder());
+		if (entity.getColors().getColor(ColorType.BACK) == null)
+			this.noteBackgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
 					skinParam.getIHtmlColorSet());
-			this.shadowing = style.value(PName.Shadowing).asDouble();
+		else
+			this.noteBackgroundColor = entity.getColors().getColor(ColorType.BACK);
 
-			fontConfiguration = style.getFontConfiguration(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
-			horizontalAlignment = style.getHorizontalAlignment();
-		} else {
-			this.style = null;
-			this.shadowing = skinParam.shadowing(getEntity().getStereotype()) ? 4 : 0;
-			if (entity.getColors().getColor(ColorType.BACK) == null)
-				this.noteBackgroundColor = rose.getHtmlColor(getSkinParam(), ColorParam.noteBackground);
-			else
-				this.noteBackgroundColor = entity.getColors().getColor(ColorType.BACK);
+		this.borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(),
+				skinParam.getIHtmlColorSet());
+		this.shadowing = style.value(PName.Shadowing).asDouble();
 
-			this.borderColor = SkinParamUtils.getColor(getSkinParam(), null, ColorParam.noteBorder);
-
-			fontConfiguration = FontConfiguration.create(getSkinParam(), FontParam.NOTE, null);
-			horizontalAlignment = skinParam.getHorizontalAlignment(AlignmentParam.noteTextAlignment, null, false, null);
-		}
+		final FontConfiguration fontConfiguration = style.getFontConfiguration(skinParam.getThemeStyle(),
+				skinParam.getIHtmlColorSet());
+		final HorizontalAlignment horizontalAlignment = style.getHorizontalAlignment();
 
 		if (strings.size() == 1 && strings.get(0).length() == 0)
 			textBlock = new TextBlockEmpty();
 		else
-			textBlock = BodyFactory.create3(strings, FontParam.NOTE, getSkinParam(), horizontalAlignment,
-					fontConfiguration, getSkinParam().wrapWidth(), style);
+			textBlock = BodyFactory.create3(strings, getSkinParam(), horizontalAlignment, fontConfiguration,
+					getSkinParam().wrapWidth(), style);
 
 	}
 
@@ -275,12 +253,7 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 		final UPath polygon = Opale.getPolygonNormal(getTextWidth(stringBounder), getTextHeight(stringBounder),
 				getRoundCorner());
 
-		double shadow = 0;
-		if (UseStyle.useBetaStyle())
-			shadow = this.shadowing;
-		else if (withShadow)
-			shadow = 4;
-		polygon.setDeltaShadow(shadow);
+		polygon.setDeltaShadow(this.shadowing);
 
 		ug = ug.apply(noteBackgroundColor.bg()).apply(borderColor);
 		final UGraphic stroked = applyStroke(ug);
@@ -291,21 +264,12 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 	}
 
 	private UGraphic applyStroke(UGraphic ug) {
-		if (UseStyle.useBetaStyle())
-			return ug.apply(style.getStroke());
+		return ug.apply(style.getStroke());
 
-		final UStroke stroke = skinParam.getThickness(LineParam.noteBorder, null);
-		if (stroke == null)
-			return ug;
-
-		return ug.apply(stroke);
 	}
 
 	private UStroke getStroke() {
-		if (UseStyle.useBetaStyle())
-			return style.getStroke();
-
-		return skinParam.getThickness(LineParam.noteBorder, null);
+		return style.getStroke();
 	}
 
 	private Direction getOpaleStrategy(double width, double height, Point2D pt) {

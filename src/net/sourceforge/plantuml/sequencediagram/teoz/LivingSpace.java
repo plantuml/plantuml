@@ -171,7 +171,7 @@ public class LivingSpace {
 			return;
 		}
 		final Component comp = rose.createComponent(p.getUsedStyles(), headType, null,
-				p.getSkinParamBackcolored(skinParam), p.getDisplay(skinParam.forceSequenceParticipantUnderlined()));
+				skinParam, p.getDisplay(skinParam.forceSequenceParticipantUnderlined()));
 		final Dimension2D dim = comp.getPreferredDimension(ug.getStringBounder());
 		if (horizontalAlignment == HorizontalAlignment.RIGHT) {
 			ug = ug.apply(UTranslate.dx(-dim.getWidth()));

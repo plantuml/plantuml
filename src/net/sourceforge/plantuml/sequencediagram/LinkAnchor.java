@@ -35,10 +35,7 @@
  */
 package net.sourceforge.plantuml.sequencediagram;
 
-import net.sourceforge.plantuml.ColorParam;
-import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Arrows;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -47,7 +44,6 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.sequencediagram.teoz.CommonTile;
-import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
@@ -94,19 +90,13 @@ public class LinkAnchor {
 		final double ymin = Math.min(y1, y2);
 		final double ymax = Math.max(y1, y2);
 
-		final HColor color;
-		final FontConfiguration fontConfiguration;
-		if (UseStyle.useBetaStyle()) {
-			final StyleSignatureBasic signature = StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram,
-					SName.arrow);
-			final Style style = signature.getMergedStyle(skinParam.getCurrentStyleBuilder());
+		final StyleSignatureBasic signature = StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram,
+				SName.arrow);
+		final Style style = signature.getMergedStyle(skinParam.getCurrentStyleBuilder());
 
-			color = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
-			fontConfiguration = FontConfiguration.create(skinParam, style);
-		} else {
-			color = new Rose().getHtmlColor(skinParam, ColorParam.arrow);
-			fontConfiguration = FontConfiguration.create(skinParam, FontParam.ARROW, null);
-		}
+		final HColor color = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(),
+				skinParam.getIHtmlColorSet());
+		final FontConfiguration fontConfiguration = FontConfiguration.create(skinParam, style);
 
 		final Rainbow rainbow = Rainbow.fromColor(color, null);
 

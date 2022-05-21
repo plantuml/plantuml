@@ -213,6 +213,7 @@ public enum FileFormat {
 			}
 
 			protected Dimension2D calculateDimensionInternal(UFont font, String text) {
+				text = text.replace("\t", "    ");
 				final Dimension2DDouble w1 = getJavaDimension(font.goTikz(-1), text);
 				final Dimension2DDouble w2 = getJavaDimension(font.goTikz(0), text);
 				final Dimension2DDouble w3 = getJavaDimension(font.goTikz(1), text);

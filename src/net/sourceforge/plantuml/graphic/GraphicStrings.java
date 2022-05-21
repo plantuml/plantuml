@@ -35,12 +35,12 @@
  */
 package net.sourceforge.plantuml.graphic;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.SpriteContainerEmpty;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.svek.IEntityImage;

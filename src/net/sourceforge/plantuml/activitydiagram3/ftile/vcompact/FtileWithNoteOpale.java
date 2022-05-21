@@ -62,6 +62,7 @@ import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
 import net.sourceforge.plantuml.style.PName;
@@ -79,6 +80,7 @@ public class FtileWithNoteOpale extends AbstractFtile implements Stencil, Stylea
 
 	private final Ftile tile;
 	private final Opale opale;
+	private final VerticalAlignment verticalAlignment;
 
 	private final NotePosition notePosition;
 	private final double suppSpace = 20;
@@ -110,18 +112,21 @@ public class FtileWithNoteOpale extends AbstractFtile implements Stencil, Stylea
 		return Collections.singleton(tile);
 	}
 
-	public static Ftile create(Ftile tile, Collection<PositionedNote> notes, ISkinParam skinParam, boolean withLink) {
-		if (notes.size() > 1) {
-			return new FtileWithNotes(tile, notes, skinParam);
-		}
-		if (notes.size() == 0) {
+	public static Ftile create(Ftile tile, Collection<PositionedNote> notes, ISkinParam skinParam, boolean withLink,
+			VerticalAlignment verticalAlignment) {
+		if (notes.size() > 1)
+			return new FtileWithNotes(tile, notes, skinParam, verticalAlignment);
+
+		if (notes.size() == 0)
 			throw new IllegalArgumentException();
-		}
-		return new FtileWithNoteOpale(tile, notes.iterator().next(), skinParam, withLink);
+
+		return new FtileWithNoteOpale(tile, notes.iterator().next(), skinParam, withLink, verticalAlignment);
 	}
 
-	private FtileWithNoteOpale(Ftile tile, PositionedNote note, ISkinParam skinParam, boolean withLink) {
+	private FtileWithNoteOpale(Ftile tile, PositionedNote note, ISkinParam skinParam, boolean withLink,
+			VerticalAlignment verticalAlignment) {
 		super(tile.skinParam());
+		this.verticalAlignment = verticalAlignment;
 		this.swimlaneNote = note.getSwimlaneNote();
 		if (note.getColors() != null)
 			skinParam = note.getColors().mute(skinParam);
@@ -155,11 +160,10 @@ public class FtileWithNoteOpale extends AbstractFtile implements Stencil, Stylea
 		final Dimension2D dimTile = tile.calculateDimension(stringBounder);
 		final double yForFtile = (dimTotal.getHeight() - dimTile.getHeight()) / 2;
 		final double marge;
-		if (notePosition == NotePosition.LEFT) {
+		if (notePosition == NotePosition.LEFT)
 			marge = dimNote.getWidth() + suppSpace;
-		} else {
+		else
 			marge = 0;
-		}
 
 		return new UTranslate(marge, yForFtile);
 	}
@@ -177,22 +181,25 @@ public class FtileWithNoteOpale extends AbstractFtile implements Stencil, Stylea
 		final Dimension2D dimTotal = calculateDimension(stringBounder);
 		final Dimension2D dimNote = opale.calculateDimension(stringBounder);
 
-		final double yForNote = (dimTotal.getHeight() - dimNote.getHeight()) / 2;
+		final double yForNote;
+		if (verticalAlignment == VerticalAlignment.CENTER)
+			yForNote = (dimTotal.getHeight() - dimNote.getHeight()) / 2;
+		else
+			yForNote = 0;
 
-		if (notePosition == NotePosition.LEFT) {
+		if (notePosition == NotePosition.LEFT)
 			return UTranslate.dy(yForNote);
-		}
+
 		final double dx = dimTotal.getWidth() - dimNote.getWidth();
 		return new UTranslate(dx, yForNote);
 	}
 
 	public void drawU(UGraphic ug) {
 		final Swimlane intoSw;
-		if (ug instanceof UGraphicInterceptorOneSwimlane) {
+		if (ug instanceof UGraphicInterceptorOneSwimlane)
 			intoSw = ((UGraphicInterceptorOneSwimlane) ug).getSwimlane();
-		} else {
+		else
 			intoSw = null;
-		}
 
 		final StringBounder stringBounder = ug.getStringBounder();
 		final Dimension2D dimNote = opale.calculateDimension(stringBounder);
@@ -208,9 +215,10 @@ public class FtileWithNoteOpale extends AbstractFtile implements Stencil, Stylea
 			final Point2D pp2 = new Point2D.Double(-suppSpace, dimNote.getHeight() / 2);
 			opale.setOpale(strategy, pp1, pp2);
 		}
-		if (ug instanceof UGraphicInterceptorOneSwimlane == false || swimlaneNote == null || intoSw == swimlaneNote) {
+
+		if (ug instanceof UGraphicInterceptorOneSwimlane == false || swimlaneNote == null || intoSw == swimlaneNote)
 			opale.drawU(ug.apply(getTranslateForOpale(ug)));
-		}
+
 		ug.apply(getTranslate(stringBounder)).draw(tile);
 	}
 
@@ -219,10 +227,10 @@ public class FtileWithNoteOpale extends AbstractFtile implements Stencil, Stylea
 		final Dimension2D dimTotal = calculateDimensionInternal(stringBounder);
 		final FtileGeometry orig = tile.calculateDimension(stringBounder);
 		final UTranslate translate = getTranslate(stringBounder);
-		if (orig.hasPointOut()) {
+		if (orig.hasPointOut())
 			return new FtileGeometry(dimTotal, orig.getLeft() + translate.getDx(), orig.getInY() + translate.getDy(),
 					orig.getOutY() + translate.getDy());
-		}
+
 		return new FtileGeometry(dimTotal, orig.getLeft() + translate.getDx(), orig.getInY() + translate.getDy());
 	}
 

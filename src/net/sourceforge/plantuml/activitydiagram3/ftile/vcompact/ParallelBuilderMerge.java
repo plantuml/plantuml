@@ -73,9 +73,8 @@ public class ParallelBuilderMerge extends AbstractParallelFtilesBuilder {
 	protected Ftile doStep1(Ftile inner) {
 		Ftile result = inner;
 		final List<Connection> conns = new ArrayList<>();
-		final HColor colorBar = getRose().getHtmlColor(skinParam(), ColorParam.activityBar);
 
-		final Ftile black = new FtileBlackBlock(skinParam(), colorBar, list99.get(0).getSwimlaneIn());
+		final Ftile black = new FtileBlackBlock(skinParam(), list99.get(0).getSwimlaneIn());
 		double x = 0;
 		for (Ftile tmp : list99) {
 			final Dimension2D dim = tmp.calculateDimension(getStringBounder());

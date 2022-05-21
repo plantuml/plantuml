@@ -221,7 +221,7 @@ public class BodierLikeClassOrObject implements Bodier {
 		if (type.isLikeClass() && isBodyEnhanced()) {
 			if (showMethods || showFields) {
 				return BodyFactory.create1(skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT),
-						rawBodyWithoutHidden(), fontParam, skinParam, stereotype, leaf, style);
+						rawBodyWithoutHidden(), skinParam, stereotype, leaf, style);
 			}
 			return null;
 		}
@@ -233,15 +233,15 @@ public class BodierLikeClassOrObject implements Bodier {
 				return new TextBlockLineBefore(style.value(PName.LineThickness).asDouble(), TextBlockUtils.empty(0, 0));
 			}
 			return BodyFactory.create1(skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT),
-					rawBodyWithoutHidden(), fontParam, skinParam, stereotype, leaf, style);
+					rawBodyWithoutHidden(), skinParam, stereotype, leaf, style);
 		}
 		assert type.isLikeClass();
 
-		final MethodsOrFieldsArea fields = new MethodsOrFieldsArea(getFieldsToDisplay(), fontParam, skinParam,
-				stereotype, leaf, style);
+		final MethodsOrFieldsArea fields = new MethodsOrFieldsArea(getFieldsToDisplay(), skinParam, leaf,
+				style);
 
-		final MethodsOrFieldsArea methods = new MethodsOrFieldsArea(getMethodsToDisplay(), fontParam, skinParam,
-				stereotype, leaf, style);
+		final MethodsOrFieldsArea methods = new MethodsOrFieldsArea(getMethodsToDisplay(), skinParam, leaf,
+				style);
 		if (showFields && showMethods == false) {
 			return fields.asBlockMemberImpl();
 		} else if (showMethods && showFields == false) {

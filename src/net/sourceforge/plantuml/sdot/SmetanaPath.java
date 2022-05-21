@@ -43,10 +43,7 @@ import h.ST_bezier;
 import h.ST_pointf;
 import h.ST_splines;
 import h.ST_textlabel_t;
-import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.LineParam;
-import net.sourceforge.plantuml.UmlDiagramType;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
@@ -91,73 +88,46 @@ public class SmetanaPath implements UDrawable {
 		this.headLabel = headLabel;
 	}
 
-	private ColorParam getArrowColorParam() {
-		if (diagram.getUmlDiagramType() == UmlDiagramType.CLASS) {
-			return ColorParam.arrow;
-		} else if (diagram.getUmlDiagramType() == UmlDiagramType.OBJECT) {
-			return ColorParam.arrow;
-		} else if (diagram.getUmlDiagramType() == UmlDiagramType.DESCRIPTION) {
-			return ColorParam.arrow;
-		} else if (diagram.getUmlDiagramType() == UmlDiagramType.ACTIVITY) {
-			return ColorParam.arrow;
-		} else if (diagram.getUmlDiagramType() == UmlDiagramType.STATE) {
-			return ColorParam.arrow;
-		}
-		throw new IllegalStateException();
-	}
-
 	public void drawU(UGraphic ug) {
 
-		if (link.isHidden()) {
+		if (link.isHidden())
 			return;
-		}
-		
-		HColor color;
 
-		if (UseStyle.useBetaStyle()) {
-			color = StyleSignatureBasic.of(SName.root, SName.element, diagram.getUmlDiagramType().getStyleName(), SName.arrow)
-					.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder())
-					.value(PName.LineColor)
-					.asColor(diagram.getSkinParam().getThemeStyle(), diagram.getSkinParam().getIHtmlColorSet());
-		} else {
-			color = rose.getHtmlColor(diagram.getSkinParam(), null, getArrowColorParam());
-		}
+		HColor color = StyleSignatureBasic
+				.of(SName.root, SName.element, diagram.getUmlDiagramType().getStyleName(), SName.arrow)
+				.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder()).value(PName.LineColor)
+				.asColor(diagram.getSkinParam().getThemeStyle(), diagram.getSkinParam().getIHtmlColorSet());
 
 		if (this.link.getColors() != null) {
 			final HColor newColor = this.link.getColors().getColor(ColorType.ARROW, ColorType.LINE);
-			if (newColor != null) {
+			if (newColor != null)
 				color = newColor;
-			}
-
-		} else if (this.link.getSpecificColor() != null) {
+		} else if (this.link.getSpecificColor() != null)
 			color = this.link.getSpecificColor();
-		}
 
 		DotPath dotPath = getDotPath(edge);
-		if (ymirror != null && dotPath != null) {
+		if (ymirror != null && dotPath != null)
 			dotPath = ymirror.getMirrored(dotPath);
-		}
 
 		if (dotPath != null) {
 			final LinkType linkType = link.getType();
 			UStroke stroke = linkType.getStroke3(diagram.getSkinParam().getThickness(LineParam.arrow, null));
-			if (link.getColors() != null && link.getColors().getSpecificLineStroke() != null) {
+			if (link.getColors() != null && link.getColors().getSpecificLineStroke() != null)
 				stroke = link.getColors().getSpecificLineStroke();
-			}
 
 			ug.apply(stroke).apply(color).draw(dotPath);
 			printExtremityAtStart(ug.apply(color));
 			printExtremityAtEnd(ug.apply(color));
 		}
-		if (getLabelRectangleTranslate("label") != null) {
+		if (getLabelRectangleTranslate("label") != null)
 			label.drawU(ug.apply(getLabelRectangleTranslate("label")));
-		}
-		if (getLabelRectangleTranslate("head_label") != null) {
+
+		if (getLabelRectangleTranslate("head_label") != null)
 			headLabel.drawU(ug.apply(getLabelRectangleTranslate("head_label")));
-		}
-		if (getLabelRectangleTranslate("tail_label") != null) {
+
+		if (getLabelRectangleTranslate("tail_label") != null)
 			tailLabel.drawU(ug.apply(getLabelRectangleTranslate("tail_label")));
-		}
+
 		// printDebug(ug);
 
 	}
@@ -165,9 +135,9 @@ public class SmetanaPath implements UDrawable {
 	private void printExtremityAtStart(UGraphic ug) {
 		final ExtremityFactory extremityFactory2 = link.getType().getDecor2()
 				.getExtremityFactoryComplete(diagram.getSkinParam().getBackgroundColor());
-		if (extremityFactory2 == null) {
+		if (extremityFactory2 == null)
 			return;
-		}
+
 		final ST_splines splines = getSplines(edge);
 		DotPath s = getDotPath(splines);
 		Point2D p0 = s.getStartPoint();
@@ -178,9 +148,9 @@ public class SmetanaPath implements UDrawable {
 		}
 		try {
 			final UDrawable extremity2 = extremityFactory2.createUDrawable(p0, startAngle, null);
-			if (extremity2 != null) {
+			if (extremity2 != null)
 				extremity2.drawU(ug);
-			}
+
 		} catch (UnsupportedOperationException e) {
 			System.err.println("CANNOT DRAW printExtremityAtStart");
 		}
@@ -189,9 +159,9 @@ public class SmetanaPath implements UDrawable {
 	private void printExtremityAtEnd(UGraphic ug) {
 		final ExtremityFactory extremityFactory1 = link.getType().getDecor1()
 				.getExtremityFactoryComplete(diagram.getSkinParam().getBackgroundColor());
-		if (extremityFactory1 == null) {
+		if (extremityFactory1 == null)
 			return;
-		}
+
 		final ST_splines splines = getSplines(edge);
 		DotPath s = getDotPath(splines);
 		Point2D p0 = s.getEndPoint();
@@ -202,9 +172,9 @@ public class SmetanaPath implements UDrawable {
 		}
 		try {
 			final UDrawable extremity1 = extremityFactory1.createUDrawable(p0, endAngle, null);
-			if (extremity1 != null) {
+			if (extremity1 != null)
 				extremity1.drawU(ug);
-			}
+
 		} catch (UnsupportedOperationException e) {
 			System.err.println("CANNOT DRAW printExtremityAtEnd");
 		}
@@ -216,9 +186,9 @@ public class SmetanaPath implements UDrawable {
 		final ST_bezier beziers = splines.list.get__(0);
 		for (int i = 0; i < beziers.size; i++) {
 			Point2D pt = getPoint(splines, i);
-			if (ymirror != null) {
+			if (ymirror != null)
 				pt = ymirror.getMirrored(pt);
-			}
+
 			ug.apply(new UTranslate(pt).compose(new UTranslate(-1, -1))).draw(new UEllipse(3, 3));
 		}
 		if (getLabelRectangleTranslate("label") != null && getLabelURectangle() != null) {
@@ -231,9 +201,9 @@ public class SmetanaPath implements UDrawable {
 	private URectangle getLabelURectangle() {
 		final ST_Agedgeinfo_t data = (ST_Agedgeinfo_t) Macro.AGDATA(edge).castTo(ST_Agedgeinfo_t.class);
 		ST_textlabel_t label = (ST_textlabel_t) data.label;
-		if (label == null) {
+		if (label == null)
 			return null;
-		}
+
 		final ST_pointf dimen = (ST_pointf) label.dimen;
 		final ST_pointf space = (ST_pointf) label.space;
 		final ST_pointf pos = (ST_pointf) label.pos;
@@ -248,16 +218,16 @@ public class SmetanaPath implements UDrawable {
 		// final String fieldName = "label";
 		final ST_Agedgeinfo_t data = (ST_Agedgeinfo_t) Macro.AGDATA(edge);
 		ST_textlabel_t label = null;
-		if (fieldName.equals("label")) {
+		if (fieldName.equals("label"))
 			label = data.label;
-		} else if (fieldName.equals("head_label")) {
+		else if (fieldName.equals("head_label"))
 			label = data.head_label;
-		} else if (fieldName.equals("tail_label")) {
+		else if (fieldName.equals("tail_label"))
 			label = data.tail_label;
-		}
-		if (label == null) {
+
+		if (label == null)
 			return null;
-		}
+
 		final ST_pointf dimen = (ST_pointf) label.dimen;
 		final ST_pointf space = (ST_pointf) label.space;
 		final ST_pointf pos = (ST_pointf) label.pos;
@@ -266,9 +236,9 @@ public class SmetanaPath implements UDrawable {
 		final double width = dimen.x;
 		final double height = dimen.y;
 
-		if (ymirror == null) {
+		if (ymirror == null)
 			return new UTranslate(x - width / 2, y - height / 2);
-		}
+
 		return ymirror.getMirrored(new UTranslate(x - width / 2, y + height / 2));
 	}
 

@@ -36,15 +36,14 @@ package net.sourceforge.plantuml.timingdiagram;
 
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -88,7 +87,8 @@ public class PlayerBinary extends Player {
 
 	@Override
 	protected StyleSignature getStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, SName.binary).withTOBECHANGED(stereotype);
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, SName.binary)
+				.withTOBECHANGED(stereotype);
 	}
 
 	public IntricatedPoint getTimeProjection(StringBounder stringBounder, TimeTick tick) {
@@ -106,7 +106,7 @@ public class PlayerBinary extends Player {
 	}
 
 	public void setState(TimeTick now, String comment, Colors color, String... states) {
-		final ChangeState cs = new ChangeState(now, comment, color, convert(states[0]));
+		final ChangeState cs = new ChangeState(now, comment, color, convert(states));
 		if (now == null)
 			this.initialState = cs;
 		else
@@ -114,10 +114,16 @@ public class PlayerBinary extends Player {
 
 	}
 
-	private String[] convert(String value) {
+	private String[] convert(String[] states) {
+		if (states.length == 1)
+			return new String[] { convert(states[0]) };
+		return new String[] { convert(states[0]), convert(states[1]) };
+	}
+
+	private String convert(String value) {
 		if ("1".equals(value) || "high".equalsIgnoreCase(value))
-			return new String[] { HIGH_STRING };
-		return new String[] { LOW_STRING };
+			return HIGH_STRING;
+		return LOW_STRING;
 	}
 
 	public void createConstraint(TimeTick tick1, TimeTick tick2, String message) {
@@ -163,15 +169,18 @@ public class PlayerBinary extends Player {
 			public void drawU(UGraphic ug) {
 				ug = getContext().apply(ug);
 				double lastx = 0;
-				String lastValue = initialState == null ? LOW_STRING : initialState.getState();
+				List<String> lastValues = initialState == null ? Collections.singletonList(LOW_STRING)
+						: initialState.getStates();
 				final StringBounder stringBounder = ug.getStringBounder();
 				final ULine vline = ULine.vline(getYlow(stringBounder) - getYhigh(stringBounder));
 				for (Map.Entry<TimeTick, ChangeState> ent : values.entrySet()) {
 					final ChangeState value = ent.getValue();
+
 					final double x = ruler.getPosInPixel(ent.getKey());
 
-					ug.apply(new UTranslate(lastx, getYpos(stringBounder, lastValue))).draw(ULine.hline(x - lastx));
-					if (lastValue.equalsIgnoreCase(value.getState()) == false)
+					ug.apply(new UTranslate(lastx, getYpos(stringBounder, lastValues.get(0))))
+							.draw(ULine.hline(x - lastx));
+					if (lastValues.equals(value.getStates()) == false)
 						ug.apply(new UTranslate(x, getYhigh(stringBounder))).draw(vline);
 
 					if (value.getComment() != null) {
@@ -181,9 +190,9 @@ public class PlayerBinary extends Player {
 					}
 
 					lastx = x;
-					lastValue = value.getState();
+					lastValues = value.getStates();
 				}
-				ug.apply(new UTranslate(lastx, getYpos(stringBounder, lastValue)))
+				ug.apply(new UTranslate(lastx, getYpos(stringBounder, lastValues.get(0))))
 						.draw(ULine.hline(ruler.getWidth() - lastx));
 
 				drawConstraints(ug.apply(UTranslate.dy(getHeightForConstraints(ug.getStringBounder()))));
@@ -193,8 +202,6 @@ public class PlayerBinary extends Player {
 	}
 
 	final protected FontConfiguration getCommentFontConfiguration() {
-		if (UseStyle.useBetaStyle() == false)
-			return FontConfiguration.create(skinParam, FontParam.TIMING, null);
 		return FontConfiguration.create(skinParam,
 				getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder()));
 	}

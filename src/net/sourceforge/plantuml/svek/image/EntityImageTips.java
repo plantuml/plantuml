@@ -39,14 +39,11 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Map;
 
-import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.Direction;
-import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.UmlDiagramType;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.cucadiagram.BodyFactory;
@@ -91,29 +88,16 @@ public class EntityImageTips extends AbstractEntityImage {
 		this.skinParam = skinParam;
 		this.bibliotekon = bibliotekon;
 
-		if (UseStyle.useBetaStyle()) {
-			style = getDefaultStyleDefinition(type.getStyleName()).getMergedStyle(skinParam.getCurrentStyleBuilder());
-
-			if (entity.getColors().getColor(ColorType.BACK) == null)
-				this.noteBackgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
-						skinParam.getIHtmlColorSet());
-			else
-				this.noteBackgroundColor = entity.getColors().getColor(ColorType.BACK);
-
-			this.borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(),
+		style = getDefaultStyleDefinition(type.getStyleName()).getMergedStyle(skinParam.getCurrentStyleBuilder());
+		if (entity.getColors().getColor(ColorType.BACK) == null)
+			this.noteBackgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
 					skinParam.getIHtmlColorSet());
+		else
+			this.noteBackgroundColor = entity.getColors().getColor(ColorType.BACK);
 
-		} else {
-			style = null;
+		this.borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(),
+				skinParam.getIHtmlColorSet());
 
-			if (entity.getColors().getColor(ColorType.BACK) == null)
-				this.noteBackgroundColor = rose.getHtmlColor(skinParam, ColorParam.noteBackground);
-			else
-				this.noteBackgroundColor = entity.getColors().getColor(ColorType.BACK);
-
-			this.borderColor = rose.getHtmlColor(skinParam, ColorParam.noteBorder);
-
-		}
 	}
 
 	private StyleSignatureBasic getDefaultStyleDefinition(SName sname) {
@@ -192,20 +176,14 @@ public class EntityImageTips extends AbstractEntityImage {
 	}
 
 	private Opale getOpale(final Display display) {
-		final FontConfiguration fc;
-		final double shadowing;
-		UStroke stroke = new UStroke();
-		if (UseStyle.useBetaStyle()) {
-			shadowing = style.value(PName.Shadowing).asDouble();
-			fc = style.getFontConfiguration(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
-			stroke = style.getStroke();
-		} else {
-			shadowing = skinParam.shadowing(getEntity().getStereotype()) ? 4 : 0;
-			fc = FontConfiguration.create(skinParam, FontParam.NOTE, null);
-		}
 
-		final TextBlock textBlock = BodyFactory.create3(display, FontParam.NOTE, skinParam, HorizontalAlignment.LEFT,
-				fc, LineBreakStrategy.NONE, style);
+		final double shadowing = style.value(PName.Shadowing).asDouble();
+		final FontConfiguration fc = style.getFontConfiguration(skinParam.getThemeStyle(),
+				skinParam.getIHtmlColorSet());
+		final UStroke stroke = style.getStroke();
+
+		final TextBlock textBlock = BodyFactory.create3(display, skinParam, HorizontalAlignment.LEFT, fc,
+				LineBreakStrategy.NONE, style);
 		return new Opale(shadowing, borderColor, noteBackgroundColor, textBlock, true, stroke);
 	}
 

@@ -35,10 +35,8 @@
  */
 package net.sourceforge.plantuml.skin.rose;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.api.ThemeStyle;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.skin.AbstractComponent;
@@ -56,13 +54,10 @@ public class ComponentRoseActiveLine extends AbstractComponent {
 	private final boolean closeUp;
 	private final boolean closeDown;
 
-	public ComponentRoseActiveLine(ThemeStyle themeStyle, Style style, SymbolContext symbolContext, boolean closeUp,
-			boolean closeDown, HColorSet set) {
+	public ComponentRoseActiveLine(ThemeStyle themeStyle, Style style, boolean closeUp, boolean closeDown,
+			HColorSet set) {
 		super(style);
-		if (UseStyle.useBetaStyle())
-			symbolContext = style.getSymbolContext(themeStyle, set);
-
-		this.symbolContext = symbolContext;
+		this.symbolContext = style.getSymbolContext(themeStyle, set);
 		this.closeUp = closeUp;
 		this.closeDown = closeDown;
 	}

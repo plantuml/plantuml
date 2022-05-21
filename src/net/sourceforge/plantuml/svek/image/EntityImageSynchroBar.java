@@ -35,11 +35,8 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
-import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.SkinParamUtils;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.Rankdir;
@@ -79,20 +76,13 @@ public class EntityImageSynchroBar extends AbstractEntityImage {
 	final public void drawU(UGraphic ug) {
 		final Dimension2D dim = calculateDimension(ug.getStringBounder());
 		final Shadowable rect = new URectangle(dim.getWidth(), dim.getHeight());
-		double shadowing = 0;
 
-		HColor color = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.activityBar);
-		if (UseStyle.useBetaStyle()) {
-			final Style style = getStyleSignature().withTOBECHANGED(getEntity().getStereotype())
-					.getMergedStyle(getSkinParam().getCurrentStyleBuilder());
-			color = style.value(PName.BackGroundColor).asColor(getSkinParam().getThemeStyle(),
-					getSkinParam().getIHtmlColorSet());
-			shadowing = style.value(PName.Shadowing).asDouble();
-		} else {
-			if (getSkinParam().shadowing(getEntity().getStereotype()))
-				shadowing = 4;
+		final Style style = getStyleSignature().withTOBECHANGED(getEntity().getStereotype())
+				.getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+		final HColor color = style.value(PName.BackGroundColor).asColor(getSkinParam().getThemeStyle(),
+				getSkinParam().getIHtmlColorSet());
+		final double shadowing = style.value(PName.Shadowing).asDouble();
 
-		}
 		rect.setDeltaShadow(shadowing);
 		ug.apply(new HColorNone()).apply(color.bg()).draw(rect);
 	}

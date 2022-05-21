@@ -35,35 +35,13 @@
  */
 package net.sourceforge.plantuml.graphic;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
-import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.FontParam;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.style.SName;
 
 public abstract class USymbol {
 
-	abstract public SkinParameter getSkinParameter();
-
 	abstract public SName getSName();
-
-	public FontParam getFontParam() {
-		return getSkinParameter().getFontParam();
-	}
-
-	public FontParam getFontParamStereotype() {
-		return getSkinParameter().getFontParamStereotype();
-
-	}
-
-	public ColorParam getColorParamBack() {
-		return getSkinParameter().getColorParamBack();
-	}
-
-	public ColorParam getColorParamBorder() {
-		return getSkinParameter().getColorParamBorder();
-	}
 
 	public abstract TextBlock asSmall(TextBlock name, TextBlock label, TextBlock stereotype,
 			SymbolContext symbolContext, HorizontalAlignment stereoAlignment);

@@ -42,7 +42,6 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -86,9 +85,11 @@ public final class PlayerRobustConcise extends Player {
 	@Override
 	protected StyleSignature getStyleSignature() {
 		if (type == TimingStyle.CONCISE)
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, SName.concise).withTOBECHANGED(stereotype);
+			return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, SName.concise)
+					.withTOBECHANGED(stereotype);
 		if (type == TimingStyle.ROBUST)
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, SName.robust).withTOBECHANGED(stereotype);
+			return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, SName.robust)
+					.withTOBECHANGED(stereotype);
 		throw new IllegalStateException();
 	}
 
@@ -206,12 +207,10 @@ public final class PlayerRobustConcise extends Player {
 	}
 
 	public final void addNote(TimeTick now, Display note, Position position) {
-		Style style = null;
-		if (UseStyle.useBetaStyle()) {
-			final StyleSignatureBasic signature = StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram,
-					SName.note);
-			style = signature.getMergedStyle(skinParam.getCurrentStyleBuilder());
-		}
+
+		final StyleSignatureBasic signature = StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram,
+				SName.note);
+		final Style style = signature.getMergedStyle(skinParam.getCurrentStyleBuilder());
 
 		this.notes.add(new TimingNote(now, this, note, position, skinParam, style));
 	}

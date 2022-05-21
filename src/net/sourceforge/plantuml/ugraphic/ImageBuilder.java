@@ -41,7 +41,6 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.geom.AffineTransform;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -64,16 +63,16 @@ import net.sourceforge.plantuml.FileUtils;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.OptionFlags;
+import net.sourceforge.plantuml.Pragma;
 import net.sourceforge.plantuml.Scale;
 import net.sourceforge.plantuml.SvgCharSizeHack;
-import net.sourceforge.plantuml.Pragma;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.anim.AffineTransformation;
 import net.sourceforge.plantuml.anim.Animation;
 import net.sourceforge.plantuml.api.ImageDataComplex;
 import net.sourceforge.plantuml.api.ImageDataSimple;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.braille.UGraphicBraille;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.eps.EpsStrategy;
@@ -81,8 +80,8 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.mjpeg.MJPEGGenerator;
-import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.PName;
@@ -499,13 +498,11 @@ public class ImageBuilder {
 	}
 
 	private static ClockwiseTopRightBottomLeft calculateMargin(TitledDiagram diagram) {
-		if (UseStyle.useBetaStyle()) {
-			final Style style = StyleSignatureBasic.of(SName.root, SName.document)
-					.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
-			if (style.hasValue(PName.Margin)) {
-				return style.getMargin();
-			}
-		}
+		final Style style = StyleSignatureBasic.of(SName.root, SName.document)
+				.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
+		if (style.hasValue(PName.Margin))
+			return style.getMargin();
+
 		return diagram.getDefaultMargins();
 	}
 

@@ -62,7 +62,6 @@ import net.sourceforge.plantuml.cucadiagram.Rankdir;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.cucadiagram.dot.DotSplines;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.SkinParameter;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.skin.ActorStyle;
 import net.sourceforge.plantuml.skin.ArrowDirection;
@@ -736,32 +735,6 @@ public class SkinParam implements ISkinParam {
 			return value2.equalsIgnoreCase("true");
 
 		return shadowing(stereotype);
-	}
-
-	public boolean shadowing2(Stereotype stereotype, SkinParameter skinParameter) {
-		final String name = Objects.requireNonNull(skinParameter).getUpperCaseName();
-		if (stereotype != null) {
-			checkStereotype(stereotype);
-			final String value2 = getValue(name + "shadowing" + stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR));
-			if (value2 != null)
-				return value2.equalsIgnoreCase("true");
-
-		}
-
-		final String value = getValue(name + "shadowing");
-		if (value == null)
-			return shadowing(stereotype);
-
-		if ("false".equalsIgnoreCase(value))
-			return false;
-
-		if ("true".equalsIgnoreCase(value))
-			return true;
-
-		if (strictUmlStyle())
-			return false;
-
-		return true;
 	}
 
 	private final Map<String, Sprite> sprites = new HashMap<String, Sprite>();

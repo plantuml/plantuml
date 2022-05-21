@@ -35,11 +35,11 @@
  */
 package net.sourceforge.plantuml.graphic;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.ugraphic.Shadowable;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -58,24 +58,17 @@ public class USymbolFolder extends USymbol {
 	private final static int marginTitleY1 = 3;
 	private final static int marginTitleY2 = 3;
 
-	private final SkinParameter skinParameter;
 	private final SName sname;
 	private final boolean showTitle;
 
-	public USymbolFolder(SName sname, SkinParameter skinParameter, boolean showTitle) {
-		this.skinParameter = skinParameter;
+	public USymbolFolder(SName sname, boolean showTitle) {
 		this.showTitle = showTitle;
 		this.sname = sname;
 	}
 
 	@Override
 	public String toString() {
-		return super.toString() + " " + skinParameter + " " + showTitle;
-	}
-
-	@Override
-	public SkinParameter getSkinParameter() {
-		return skinParameter;
+		return super.toString() + " " + showTitle;
 	}
 
 	@Override

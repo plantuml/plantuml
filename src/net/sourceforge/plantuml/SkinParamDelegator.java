@@ -43,7 +43,6 @@ import net.sourceforge.plantuml.cucadiagram.Rankdir;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.cucadiagram.dot.DotSplines;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.SkinParameter;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.skin.ActorStyle;
 import net.sourceforge.plantuml.skin.ArrowDirection;
@@ -134,11 +133,6 @@ public class SkinParamDelegator implements ISkinParam {
 	@Override
 	public boolean shadowing(Stereotype stereotype) {
 		return skinParam.shadowing(stereotype);
-	}
-
-	@Override
-	public boolean shadowing2(Stereotype stereotype, SkinParameter skinParameter) {
-		return skinParam.shadowing2(stereotype, skinParameter);
 	}
 
 	@Override

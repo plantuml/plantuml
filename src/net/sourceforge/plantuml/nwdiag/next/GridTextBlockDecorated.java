@@ -67,9 +67,9 @@ public class GridTextBlockDecorated extends GridTextBlockSimple {
 
 	@Override
 	protected void drawGrid(UGraphic ug) {
-		for (NwGroup group : groups) {
+		for (NwGroup group : groups)
 			drawGroups(ug, group, getSkinParam());
-		}
+
 		drawNetworkTube(ug);
 		drawLinks(ug, getSkinParam().getCurrentStyleBuilder());
 	}
@@ -88,9 +88,9 @@ public class GridTextBlockDecorated extends GridTextBlockSimple {
 			double x = 0;
 			for (int j = 0; j < data.getNbCols(); j++) {
 				final double colWidth = colWidth(stringBounder, j);
-				if (data.get(i, j) != null) {
+				if (data.get(i, j) != null)
 					data.get(i, j).drawLinks(ug, x, colWidth, lineHeight);
-				}
+
 				x += colWidth;
 			}
 		}
@@ -126,9 +126,9 @@ public class GridTextBlockDecorated extends GridTextBlockSimple {
 	private boolean isThereALink(int j, Network network) {
 		for (int i = 0; i < data.getNbLines(); i++) {
 			final LinkedElement element = data.get(i, j);
-			if (element != null && element.isLinkedTo(network)) {
+			if (element != null && element.isLinkedTo(network))
 				return true;
-			}
+
 		}
 		return false;
 	}
@@ -157,15 +157,15 @@ public class GridTextBlockDecorated extends GridTextBlockSimple {
 					.asColor(getSkinParam().getThemeStyle(), getSkinParam().getIHtmlColorSet()).bg());
 
 			rect.setDeltaShadow(deltaShadow);
-			if (network != null && network.getColor() != null) {
+			if (network != null && network.getColor() != null)
 				ug2 = ug2.apply(network.getColor().bg());
-			}
-			if (network != null) {
+
+			if (network != null)
 				network.setY(y);
-			}
-			if (network.isVisible()) {
+
+			if (network.isVisible())
 				ug2.draw(rect);
-			}
+
 			y += lineHeight(stringBounder, i);
 		}
 	}
@@ -176,13 +176,13 @@ public class GridTextBlockDecorated extends GridTextBlockSimple {
 		double xmax = 0;
 		for (int j = 0; j < line.length; j++) {
 			final boolean hline = isThereALink(j, network);
-			if (hline && xmin < 0) {
+			if (hline && xmin < 0)
 				xmin = x;
-			}
+
 			x += colWidth(stringBounder, j);
-			if (hline || network.isFullWidth()) {
+			if (hline || network.isFullWidth())
 				xmax = x;
-			}
+
 		}
 		network.setMinMax(xmin, xmax);
 

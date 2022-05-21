@@ -37,14 +37,13 @@ package net.sourceforge.plantuml.timingdiagram;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.UseStyle;
-import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -60,8 +59,6 @@ import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorSet;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class TimingRuler {
 
@@ -76,11 +73,8 @@ public class TimingRuler {
 
 	static UGraphic applyForVLines(UGraphic ug, Style style, ISkinParam skinParam) {
 		final UStroke stroke = new UStroke(3, 5, 0.5);
-		final HColor color;
-		if (UseStyle.useBetaStyle())
-			color = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
-		else
-			color = HColorSet.instance().getColorOrWhite(ThemeStyle.LIGHT_REGULAR, "#AAA");
+		final HColor color = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(),
+				skinParam.getIHtmlColorSet());
 
 		return ug.apply(stroke).apply(color);
 	}
@@ -185,9 +179,6 @@ public class TimingRuler {
 	}
 
 	private FontConfiguration getFontConfiguration() {
-		if (UseStyle.useBetaStyle() == false)
-			return FontConfiguration.create(skinParam, FontParam.TIMING, null);
-
 		return FontConfiguration.create(skinParam, getStyle());
 	}
 
@@ -197,12 +188,50 @@ public class TimingRuler {
 	}
 
 	private TextBlock getTimeTextBlock(long time) {
-		final Display display = Display.getWithNewlines(format.formatTime(time));
+		return getTimeTextBlock(format.formatTime(time));
+	}
+
+	private TextBlock getTimeTextBlock(String string) {
+		final Display display = Display.getWithNewlines(string);
 		return display.create(getFontConfiguration(), HorizontalAlignment.LEFT, skinParam);
 	}
 
-	public void drawTimeAxis(UGraphic ug) {
+	public void drawTimeAxis(UGraphic ug, TimeAxisStategy timeAxisStategy, Map<String, TimeTick> codes) {
+		if (timeAxisStategy == TimeAxisStategy.HIDDEN)
+			return;
+
 		ug = ug.apply(new UStroke(2.0)).apply(black());
+
+		if (timeAxisStategy == TimeAxisStategy.AUTOMATIC)
+			drawTimeAxisAutomatic(ug);
+		else
+			drawTimeAxisManual(ug, codes);
+
+	}
+
+	private void drawTimeAxisManual(UGraphic ug, Map<String, TimeTick> codes) {
+		final double tickHeight = 5;
+		final ULine line = ULine.vline(tickHeight);
+		final double firstTickPosition = getPosInPixelInternal(getFirstPositiveOrZeroValue().doubleValue());
+		int nb = 0;
+		while (firstTickPosition + nb * tickIntervalInPixels <= getWidth())
+			nb++;
+
+		ug.apply(UTranslate.dx(firstTickPosition)).draw(ULine.hline((nb - 1) * tickIntervalInPixels));
+
+		for (TimeTick tick : times) {
+			ug.apply(UTranslate.dx(getPosInPixel(tick))).draw(line);
+			final String label = getLabel(tick, codes);
+			if (label.length() == 0)
+				continue;
+			final TextBlock text = getTimeTextBlock(label);
+			final Dimension2D dim = text.calculateDimension(ug.getStringBounder());
+			text.drawU(ug.apply(new UTranslate(getPosInPixel(tick) - dim.getWidth() / 2, tickHeight + 1)));
+
+		}
+	}
+
+	private void drawTimeAxisAutomatic(UGraphic ug) {
 		final double tickHeight = 5;
 		final ULine line = ULine.vline(tickHeight);
 		final double firstTickPosition = getPosInPixelInternal(getFirstPositiveOrZeroValue().doubleValue());
@@ -220,10 +249,16 @@ public class TimingRuler {
 		}
 	}
 
-	private HColor black() {
-		if (UseStyle.useBetaStyle() == false)
-			return HColorUtils.BLACK;
+	private String getLabel(TimeTick tick, Map<String, TimeTick> codes) {
+		for (Entry<String, TimeTick> ent : codes.entrySet())
+			if (tick.equals(ent.getValue()))
+				return ent.getKey();
 
+		return "";
+		// return format.formatTime(tick.getTime());
+	}
+
+	private HColor black() {
 		final Style style = StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram)
 				.getMergedStyle(skinParam.getCurrentStyleBuilder());
 		return style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());

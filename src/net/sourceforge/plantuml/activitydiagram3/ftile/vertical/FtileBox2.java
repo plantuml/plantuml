@@ -43,7 +43,6 @@ import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.SkinParamColors;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;

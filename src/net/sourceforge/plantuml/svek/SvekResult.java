@@ -38,10 +38,7 @@ package net.sourceforge.plantuml.svek;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.UmlDiagramType;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.cucadiagram.dot.DotData;
@@ -58,7 +55,6 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UHidden;
-import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
@@ -80,16 +76,12 @@ public final class SvekResult extends AbstractTextBlock implements IEntityImage 
 		for (Cluster cluster : dotStringFactory.getBibliotekon().allCluster())
 			cluster.drawU(ug, dotData.getUmlDiagramType(), dotData.getSkinParam());
 
-		HColor color = rose.getHtmlColor(dotData.getSkinParam(), null, getArrowColorParam());
-		if (UseStyle.useBetaStyle()) {
-			final Style style = getDefaultStyleDefinition(null)
-					.getMergedStyle(dotData.getSkinParam().getCurrentStyleBuilder());
-			color = style.value(PName.LineColor).asColor(dotData.getSkinParam().getThemeStyle(),
-					dotData.getSkinParam().getIHtmlColorSet());
-		}
+		final Style style2 = getDefaultStyleDefinition(null)
+				.getMergedStyle(dotData.getSkinParam().getCurrentStyleBuilder());
 
+		HColor color = style2.value(PName.LineColor).asColor(dotData.getSkinParam().getThemeStyle(),
+				dotData.getSkinParam().getIHtmlColorSet());
 		color = HColorUtils.noGradient(color);
-		UStroke stroke = null;
 
 		for (SvekNode node : dotStringFactory.getBibliotekon().allNodes()) {
 			final double minX = node.getMinX();
@@ -107,53 +99,30 @@ public final class SvekResult extends AbstractTextBlock implements IEntityImage 
 		for (SvekLine line : dotStringFactory.getBibliotekon().allLines()) {
 			final UGraphic ug2 = line.isHidden() ? ug.apply(UHidden.HIDDEN) : ug;
 
-			if (UseStyle.useBetaStyle()) {
-				final StyleBuilder currentStyleBuilder = line.getCurrentStyleBuilder();
-				final Style style = getDefaultStyleDefinition(line.getStereotype()).getMergedStyle(currentStyleBuilder);
-				color = style.value(PName.LineColor).asColor(dotData.getSkinParam().getThemeStyle(),
-						dotData.getSkinParam().getIHtmlColorSet());
-				stroke = style.getStroke();
-				color = HColorUtils.noGradient(color);
-			}
+			final StyleBuilder currentStyleBuilder = line.getCurrentStyleBuilder();
+			final Style styleLine = getDefaultStyleDefinition(line.getStereotype()).getMergedStyle(currentStyleBuilder);
+			color = styleLine.value(PName.LineColor).asColor(dotData.getSkinParam().getThemeStyle(),
+					dotData.getSkinParam().getIHtmlColorSet());
+			color = HColorUtils.noGradient(color);
 
-			line.drawU(ug2, stroke, color, ids);
+			line.drawU(ug2, styleLine.getStroke(), color, ids);
 		}
 
 	}
 
-	private ColorParam getArrowColorParam() {
-		if (dotData.getUmlDiagramType() == UmlDiagramType.CLASS)
-			return ColorParam.arrow;
-		else if (dotData.getUmlDiagramType() == UmlDiagramType.OBJECT)
-			return ColorParam.arrow;
-		else if (dotData.getUmlDiagramType() == UmlDiagramType.DESCRIPTION)
-			return ColorParam.arrow;
-		else if (dotData.getUmlDiagramType() == UmlDiagramType.ACTIVITY)
-			return ColorParam.arrow;
-		else if (dotData.getUmlDiagramType() == UmlDiagramType.STATE)
-			return ColorParam.arrow;
-
-		throw new IllegalStateException();
-	}
-
 	private StyleSignature getDefaultStyleDefinition(Stereotype stereotype) {
-		StyleSignature result = StyleSignatureBasic.of(SName.root, SName.element, dotData.getUmlDiagramType().getStyleName(),
-				SName.arrow);
-		if (stereotype != null)
-			result = result.withTOBECHANGED(stereotype);
+		StyleSignature result = StyleSignatureBasic.of(SName.root, SName.element,
+				dotData.getUmlDiagramType().getStyleName(), SName.arrow);
 
-		return result;
+		return result.withTOBECHANGED(stereotype);
 	}
 
 	// Duplicate SvekResult / GeneralImageBuilder
 	public HColor getBackcolor() {
-		if (UseStyle.useBetaStyle()) {
-			final Style style = StyleSignatureBasic.of(SName.root, SName.document)
-					.getMergedStyle(dotData.getSkinParam().getCurrentStyleBuilder());
-			return style.value(PName.BackGroundColor).asColor(dotData.getSkinParam().getThemeStyle(),
-					dotData.getSkinParam().getIHtmlColorSet());
-		}
-		return dotData.getSkinParam().getBackgroundColor();
+		final Style style = StyleSignatureBasic.of(SName.root, SName.document)
+				.getMergedStyle(dotData.getSkinParam().getCurrentStyleBuilder());
+		return style.value(PName.BackGroundColor).asColor(dotData.getSkinParam().getThemeStyle(),
+				dotData.getSkinParam().getIHtmlColorSet());
 	}
 
 	private MinMax minMax;

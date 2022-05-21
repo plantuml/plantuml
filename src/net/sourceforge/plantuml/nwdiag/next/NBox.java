@@ -44,9 +44,9 @@ public class NBox implements Staged {
 	private final NTetris<NBar> tetris = new NTetris<>();
 
 	public void add(NBar bar) {
-		if (this.bars.contains(bar)) {
+		if (this.bars.contains(bar))
 			return;
-		}
+
 		this.bars.add(bar);
 		this.tetris.add(bar);
 	}
@@ -54,18 +54,18 @@ public class NBox implements Staged {
 	@Override
 	public NStage getStart() {
 		NStage result = bars.get(0).getStart();
-		for (int i = 1; i < bars.size(); i++) {
+		for (int i = 1; i < bars.size(); i++)
 			result = NStage.getMin(result, bars.get(i).getStart());
-		}
+
 		return result;
 	}
 
 	@Override
 	public NStage getEnd() {
 		NStage result = bars.get(0).getEnd();
-		for (int i = 1; i < bars.size(); i++) {
+		for (int i = 1; i < bars.size(); i++)
 			result = NStage.getMax(result, bars.get(i).getEnd());
-		}
+
 		return result;
 	}
 

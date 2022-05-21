@@ -52,52 +52,42 @@ public abstract class USymbols {
 
 	private static final Map<String, USymbol> all = new HashMap<String, USymbol>();
 
-	private static USymbol record(String code, SkinParameter skinParameter, USymbol symbol) {
+	private static USymbol record(String code, USymbol symbol) {
 		all.put(StringUtils.goUpperCase(code), symbol);
 		return symbol;
 	}
 
-	public final static USymbol STORAGE = record("STORAGE", SkinParameter.STORAGE, new USymbolStorage());
-	public final static USymbol DATABASE = record("DATABASE", SkinParameter.DATABASE, new USymbolDatabase());
-	public final static USymbol CLOUD = record("CLOUD", SkinParameter.CLOUD, new USymbolCloud());
-	public final static USymbol CARD = record("CARD", SkinParameter.CARD, new USymbolCard(SkinParameter.CARD));
-	public final static USymbol FRAME = record("FRAME", SkinParameter.FRAME, new USymbolFrame());
-	public final static USymbol NODE = record("NODE", SkinParameter.NODE, new USymbolNode());
-	public final static USymbol ARTIFACT = record("ARTIFACT", SkinParameter.ARTIFACT, new USymbolArtifact());
-	public final static USymbol PACKAGE = record("PACKAGE", SkinParameter.PACKAGE,
-			new USymbolFolder(SName.package_, SkinParameter.PACKAGE, true));
-	public final static USymbol FOLDER = record("FOLDER", SkinParameter.FOLDER,
-			new USymbolFolder(SName.folder, SkinParameter.FOLDER, false));
-	public final static USymbol FILE = record("FILE", SkinParameter.FILE, new USymbolFile());
-	public final static USymbol RECTANGLE = record("RECTANGLE", SkinParameter.RECTANGLE,
-			new USymbolRectangle(SkinParameter.RECTANGLE));
-	public final static USymbol HEXAGON = record("HEXAGON", SkinParameter.HEXAGON, new USymbolHexagon());
-	public final static USymbol PERSON = record("PERSON", SkinParameter.PERSON, new USymbolPerson());
-	public final static USymbol LABEL = record("LABEL", SkinParameter.LABEL, new USymbolLabel(SkinParameter.LABEL));
-	public final static USymbol ARCHIMATE = record("ARCHIMATE", SkinParameter.ARCHIMATE,
-			new USymbolRectangle(SkinParameter.ARCHIMATE));
-	public final static USymbol COLLECTIONS = record("COLLECTIONS", SkinParameter.COLLECTIONS,
-			new USymbolCollections(SkinParameter.COLLECTIONS));
-	public final static USymbol AGENT = record("AGENT", SkinParameter.AGENT, new USymbolRectangle(SkinParameter.AGENT));
-	public final static USymbol ACTOR_STICKMAN = record("ACTOR_STICKMAN", SkinParameter.ACTOR,
-			new USymbolActor(ActorStyle.STICKMAN));
-	public final static USymbol ACTOR_STICKMAN_BUSINESS = record("ACTOR_STICKMAN_BUSINESS", SkinParameter.ACTOR,
-			new USymbolActor(ActorStyle.STICKMAN_BUSINESS));
-	public final static USymbol ACTOR_AWESOME = record("ACTOR_AWESOME", SkinParameter.ACTOR,
-			new USymbolActor(ActorStyle.AWESOME));
-	public final static USymbol ACTOR_HOLLOW = record("ACTOR_HOLLOW", SkinParameter.ACTOR,
-			new USymbolActor(ActorStyle.HOLLOW));
+	public final static USymbol STORAGE = record("STORAGE", new USymbolStorage());
+	public final static USymbol DATABASE = record("DATABASE", new USymbolDatabase());
+	public final static USymbol CLOUD = record("CLOUD", new USymbolCloud());
+	public final static USymbol CARD = record("CARD", new USymbolCard());
+	public final static USymbol FRAME = record("FRAME", new USymbolFrame());
+	public final static USymbol NODE = record("NODE", new USymbolNode());
+	public final static USymbol ARTIFACT = record("ARTIFACT", new USymbolArtifact());
+	public final static USymbol PACKAGE = record("PACKAGE", new USymbolFolder(SName.package_, true));
+	public final static USymbol FOLDER = record("FOLDER", new USymbolFolder(SName.folder, false));
+	public final static USymbol FILE = record("FILE", new USymbolFile());
+	public final static USymbol RECTANGLE = record("RECTANGLE", new USymbolRectangle(SName.rectangle));
+	public final static USymbol HEXAGON = record("HEXAGON", new USymbolHexagon());
+	public final static USymbol PERSON = record("PERSON", new USymbolPerson());
+	public final static USymbol LABEL = record("LABEL", new USymbolLabel());
+	public final static USymbol ARCHIMATE = record("ARCHIMATE", new USymbolRectangle(SName.archimate));
+	public final static USymbol COLLECTIONS = record("COLLECTIONS", new USymbolCollections());
+	public final static USymbol AGENT = record("AGENT", new USymbolRectangle(SName.agent));
+	public final static USymbol ACTOR_STICKMAN = record("ACTOR_STICKMAN", new USymbolActor(ActorStyle.STICKMAN));
+	public final static USymbol ACTOR_STICKMAN_BUSINESS = record("ACTOR_STICKMAN_BUSINESS", new USymbolActor(ActorStyle.STICKMAN_BUSINESS));
+	public final static USymbol ACTOR_AWESOME = record("ACTOR_AWESOME", new USymbolActor(ActorStyle.AWESOME));
+	public final static USymbol ACTOR_HOLLOW = record("ACTOR_HOLLOW", new USymbolActor(ActorStyle.HOLLOW));
 	public final static USymbol USECASE = null;
-	public final static USymbol COMPONENT1 = record("COMPONENT1", SkinParameter.COMPONENT1, new USymbolComponent1());
-	public final static USymbol COMPONENT2 = record("COMPONENT2", SkinParameter.COMPONENT2, new USymbolComponent2());
-	public final static USymbol BOUNDARY = record("BOUNDARY", SkinParameter.BOUNDARY, new USymbolBoundary());
-	public final static USymbol ENTITY_DOMAIN = record("ENTITY_DOMAIN", SkinParameter.ENTITY,
-			new USymbolEntityDomain());
-	public final static USymbol CONTROL = record("CONTROL", SkinParameter.CONTROL, new USymbolControl());
-	public final static USymbol INTERFACE = record("INTERFACE", SkinParameter.INTERFACE, new USymbolInterface());
-	public final static USymbol QUEUE = record("QUEUE", SkinParameter.QUEUE, new USymbolQueue());
-	public final static USymbol STACK = record("STACK", SkinParameter.STACK, new USymbolStack());
-	public final static USymbol TOGETHER = record("TOGETHER", SkinParameter.QUEUE, new USymbolTogether());
+	public final static USymbol COMPONENT1 = record("COMPONENT1", new USymbolComponent1());
+	public final static USymbol COMPONENT2 = record("COMPONENT2", new USymbolComponent2());
+	public final static USymbol BOUNDARY = record("BOUNDARY", new USymbolBoundary());
+	public final static USymbol ENTITY_DOMAIN = record("ENTITY_DOMAIN", new USymbolEntityDomain());
+	public final static USymbol CONTROL = record("CONTROL", new USymbolControl());
+	public final static USymbol INTERFACE = record("INTERFACE", new USymbolInterface());
+	public final static USymbol QUEUE = record("QUEUE", new USymbolQueue());
+	public final static USymbol STACK = record("STACK", new USymbolStack());
+	public final static USymbol TOGETHER = record("TOGETHER", new USymbolTogether());
 
 	public static USymbol fromString(String s, ActorStyle actorStyle, ComponentStyle componentStyle,
 			PackageStyle packageStyle) {

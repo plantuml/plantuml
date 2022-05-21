@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.cucadiagram;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.LineBreakStrategy;
@@ -57,8 +56,8 @@ public class BodyEnhanced2 extends BodyEnhancedAbstract {
 
 	private final LineBreakStrategy lineBreakStrategy;
 
-	BodyEnhanced2(Display rawBody, FontParam fontParam, ISkinSimple skinParam, HorizontalAlignment align,
-			FontConfiguration titleConfig, LineBreakStrategy lineBreakStrategy, Style style) {
+	BodyEnhanced2(Display rawBody, ISkinSimple skinParam, HorizontalAlignment align, FontConfiguration titleConfig,
+			LineBreakStrategy lineBreakStrategy, Style style) {
 		super(align, titleConfig, style);
 		this.rawBody = rawBody;
 		this.lineBreakStrategy = lineBreakStrategy;

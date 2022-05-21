@@ -86,8 +86,8 @@ public class FtileGroup extends AbstractFtile {
 		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.partition);
 	}
 
-	public FtileGroup(Ftile inner, Display title, Display displayNote, HColor arrowColor, HColor backColor,
-			HColor titleColor, ISkinParam skinParam, HColor borderColor, USymbol type, double roundCorner) {
+	public FtileGroup(Ftile inner, Display title, HColor backColor, HColor titleColor, ISkinParam skinParam,
+			HColor borderColor, USymbol type, double roundCorner) {
 		super(inner.skinParam());
 		this.roundCorner = roundCorner;
 		this.type = type;
@@ -109,10 +109,10 @@ public class FtileGroup extends AbstractFtile {
 		else
 			this.name = title.create(fc, HorizontalAlignment.LEFT, skinParam);
 
-		if (Display.isNull(displayNote))
-			this.headerNote = TextBlockUtils.empty(0, 0);
-		else
-			this.headerNote = new FloatingNote(displayNote, skinParam);
+//		if (Display.isNull(displayNote))
+		this.headerNote = TextBlockUtils.empty(0, 0);
+//		else
+//			this.headerNote = new FloatingNote(displayNote, skinParam);
 
 		this.stroke = thickness == null ? new UStroke(2) : thickness;
 	}

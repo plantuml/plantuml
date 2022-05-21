@@ -35,11 +35,8 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
-import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.SkinParamUtils;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -85,24 +82,13 @@ public class EntityImageAssociation extends AbstractEntityImage {
 		diams.addPoint(0, SIZE);
 		diams.addPoint(SIZE, 0);
 
-		final HColor borderColor;
-		final HColor backgroundColor;
-		double shadow = 0;
-		UStroke stroke = new UStroke(1.5);
-		if (UseStyle.useBetaStyle()) {
-			final Style style = getStyle();
-			borderColor = style.value(PName.LineColor).asColor(getSkinParam().getThemeStyle(),
-					getSkinParam().getIHtmlColorSet());
-			backgroundColor = style.value(PName.BackGroundColor).asColor(getSkinParam().getThemeStyle(),
-					getSkinParam().getIHtmlColorSet());
-			shadow = style.value(PName.Shadowing).asDouble();
-			stroke = style.getStroke();
-		} else {
-			borderColor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.classBorder);
-			backgroundColor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.classBackground);
-			if (getSkinParam().shadowing(getEntity().getStereotype()))
-				shadow = 5;
-		}
+		final Style style = getStyle();
+		final HColor borderColor = style.value(PName.LineColor).asColor(getSkinParam().getThemeStyle(),
+				getSkinParam().getIHtmlColorSet());
+		final HColor backgroundColor = style.value(PName.BackGroundColor).asColor(getSkinParam().getThemeStyle(),
+				getSkinParam().getIHtmlColorSet());
+		final double shadow = style.value(PName.Shadowing).asDouble();
+		final UStroke stroke = style.getStroke();
 
 		diams.setDeltaShadow(shadow);
 		ug.apply(borderColor).apply(backgroundColor.bg()).apply(stroke).draw(diams);

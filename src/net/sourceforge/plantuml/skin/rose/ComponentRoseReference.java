@@ -35,11 +35,9 @@
  */
 package net.sourceforge.plantuml.skin.rose;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.LineBreakStrategy;
-import net.sourceforge.plantuml.UseStyle;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -68,23 +66,17 @@ public class ComponentRoseReference extends AbstractTextualComponent {
 	private final SymbolContext symbolContextBody;
 	private int roundCorner;
 
-	public ComponentRoseReference(Style style, Style styleHeader, FontConfiguration font, SymbolContext symbolContext,
-			FontConfiguration fcHeader, Display stringsToDisplay, HorizontalAlignment position,
-			ISkinSimple spriteContainer, HColor background) {
-		super(style, LineBreakStrategy.NONE, stringsToDisplay.subList(1, stringsToDisplay.size()), font,
-				HorizontalAlignment.LEFT, 4, 4, 4, spriteContainer, false, null, null);
-		if (UseStyle.useBetaStyle()) {
-			this.symbolContextHeader = styleHeader.getSymbolContext(spriteContainer.getThemeStyle(),
-					getIHtmlColorSet());
-			this.symbolContextBody = style.getSymbolContext(spriteContainer.getThemeStyle(), getIHtmlColorSet());
-			this.roundCorner = style.value(PName.RoundCorner).asInt();
-			fcHeader = styleHeader.getFontConfiguration(spriteContainer.getThemeStyle(), getIHtmlColorSet());
-			this.position = style.getHorizontalAlignment();
-		} else {
-			this.symbolContextHeader = symbolContext;
-			this.symbolContextBody = symbolContextHeader.withBackColor(background);
-			this.position = position;
-		}
+	public ComponentRoseReference(Style style, Style styleHeader, Display stringsToDisplay, ISkinSimple spriteContainer,
+			HColor background) {
+		super(style, LineBreakStrategy.NONE, 4, 4, 4, spriteContainer,
+				stringsToDisplay.subList(1, stringsToDisplay.size()), false);
+
+		this.symbolContextHeader = styleHeader.getSymbolContext(spriteContainer.getThemeStyle(), getIHtmlColorSet());
+		this.symbolContextBody = style.getSymbolContext(spriteContainer.getThemeStyle(), getIHtmlColorSet());
+		this.roundCorner = style.value(PName.RoundCorner).asInt();
+		final FontConfiguration fcHeader = styleHeader.getFontConfiguration(spriteContainer.getThemeStyle(),
+				getIHtmlColorSet());
+		this.position = style.getHorizontalAlignment();
 
 		this.textHeader = stringsToDisplay.subList(0, 1).create(fcHeader, HorizontalAlignment.LEFT, spriteContainer);
 

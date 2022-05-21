@@ -86,12 +86,12 @@ public class NServer {
 	}
 
 	private TextBlock toTextBlock(String s, ISkinParam skinParam, SName sname) {
-		if (s == null) {
+		if (s == null) 
 			return null;
-		}
-		if (s.length() == 0) {
+		
+		if (s.length() == 0) 
 			return TextBlockUtils.empty(0, 0);
-		}
+		
 		s = s.replace(", ", "\\n");
 		return Display.getWithNewlines(s).create(getFontConfiguration(skinParam, sname), HorizontalAlignment.LEFT,
 				skinParam);
@@ -114,9 +114,9 @@ public class NServer {
 				.getSymbolContext(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
 
 		final Map<Network, TextBlock> conns2 = new LinkedHashMap<Network, TextBlock>();
-		for (Entry<Network, String> ent : conns.entrySet()) {
+		for (Entry<Network, String> ent : conns.entrySet()) 
 			conns2.put(ent.getKey(), toTextBlock(ent.getValue(), skinParam, SName.arrow));
-		}
+		
 
 		final TextBlock desc = toTextBlock(getDescription(), skinParam, SName.server);
 		final TextBlock box = getShape().asSmall(TextBlockUtils.empty(0, 0), desc, TextBlockUtils.empty(0, 0),
@@ -131,9 +131,9 @@ public class NServer {
 	public void connectTo(Network network, String address) {
 		if (address == null)
 			address = "";
-		if (address.length() == 0 && connections.containsKey(network)) {
+		if (address.length() == 0 && connections.containsKey(network)) 
 			return;
-		}
+		
 		connections.put(network, address);
 		if (bar.getStart() == null)
 			bar.addStage(network.getNstage());
@@ -143,13 +143,13 @@ public class NServer {
 
 	public void updateProperties(Map<String, String> props) {
 		final String description = props.get("description");
-		if (description != null) {
+		if (description != null) 
 			this.setDescription(description);
-		}
+		
 		final String shape = props.get("shape");
-		if (shape != null) {
+		if (shape != null) 
 			this.setShape(shape);
-		}
+		
 	}
 
 	@Override

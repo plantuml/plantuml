@@ -38,10 +38,7 @@ package net.sourceforge.plantuml.skin.rose;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.LineBreakStrategy;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
@@ -60,20 +57,15 @@ public abstract class AbstractComponentRoseArrow extends AbstractTextualComponen
 	private final HColor foregroundColor;
 	private final ArrowConfiguration arrowConfiguration;
 
-	public AbstractComponentRoseArrow(Style style, HColor foregroundColor, FontConfiguration font,
-			Display stringsToDisplay, ArrowConfiguration arrowConfiguration, ISkinSimple spriteContainer,
-			HorizontalAlignment textHorizontalAlignment, LineBreakStrategy maxMessageSize) {
-		super(style, maxMessageSize, stringsToDisplay, font, textHorizontalAlignment, 7, 7, 1, spriteContainer, false,
-				null, null);
-		if (UseStyle.useBetaStyle()) {
-			this.foregroundColor = style.value(PName.LineColor).asColor(spriteContainer.getThemeStyle(),
-					getIHtmlColorSet());
-			final UStroke stroke = style.getStroke();
-			this.arrowConfiguration = arrowConfiguration.withThickness(stroke.getThickness());
-		} else {
-			this.foregroundColor = foregroundColor;
-			this.arrowConfiguration = arrowConfiguration;
-		}
+	public AbstractComponentRoseArrow(Style style, Display stringsToDisplay, ArrowConfiguration arrowConfiguration,
+			ISkinSimple spriteContainer, LineBreakStrategy maxMessageSize) {
+		super(style, maxMessageSize, 7, 7, 1, spriteContainer, stringsToDisplay, false);
+
+		this.foregroundColor = style.value(PName.LineColor).asColor(spriteContainer.getThemeStyle(),
+				getIHtmlColorSet());
+		final UStroke stroke = style.getStroke();
+		this.arrowConfiguration = arrowConfiguration.withThickness(stroke.getThickness());
+
 	}
 
 	@Override

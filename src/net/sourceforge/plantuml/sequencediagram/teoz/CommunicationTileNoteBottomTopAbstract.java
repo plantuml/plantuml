@@ -35,11 +35,8 @@
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
-import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.UseStyle;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.real.Real;
@@ -126,14 +123,11 @@ public abstract class CommunicationTileNoteBottomTopAbstract extends AbstractTil
 	protected final double spacey = 10;
 
 	protected final void drawLine(UGraphic ug, double x1, double y1, double x2, double y2) {
-		final HColor color;
 
-		if (UseStyle.useBetaStyle()) {
-			final Style style = StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram)
-					.getMergedStyle(skinParam.getCurrentStyleBuilder());
-			color = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
-		} else
-			color = new Rose().getHtmlColor(skinParam, ColorParam.arrow);
+		final Style style = StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram)
+				.getMergedStyle(skinParam.getCurrentStyleBuilder());
+		final HColor color = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(),
+				skinParam.getIHtmlColorSet());
 
 		final double dx = x2 - x1;
 		final double dy = y2 - y1;

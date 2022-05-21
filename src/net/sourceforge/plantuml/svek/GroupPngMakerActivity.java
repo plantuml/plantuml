@@ -43,7 +43,6 @@ import java.util.Set;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.EntityUtils;
 import net.sourceforge.plantuml.cucadiagram.GroupHierarchy;
@@ -140,13 +139,10 @@ public final class GroupPngMakerActivity {
 			final HColor backColor = group.getColors().getColor(ColorType.BACK) == null
 					? getColor(ColorParam.background, stereo)
 					: group.getColors().getColor(ColorType.BACK);
-			final double shadowing;
-			if (UseStyle.useBetaStyle()) {
-				final Style style = getDefaultStyleDefinitionGroup().getMergedStyle(skinParam.getCurrentStyleBuilder());
-				shadowing = style.value(PName.Shadowing).asDouble();
-			} else {
-				shadowing = skinParam.shadowing(group.getStereotype()) ? 4 : 0;
-			}
+
+			final Style style = getDefaultStyleDefinitionGroup().getMergedStyle(skinParam.getCurrentStyleBuilder());
+			final double shadowing = style.value(PName.Shadowing).asDouble();
+
 			return new InnerActivity(svek2.buildImage(null, new String[0]), borderColor, backColor, shadowing);
 		}
 

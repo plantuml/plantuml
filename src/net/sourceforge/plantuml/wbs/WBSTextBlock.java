@@ -37,9 +37,7 @@ package net.sourceforge.plantuml.wbs;
 
 import java.awt.geom.Point2D;
 
-import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileBoxOld;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -54,7 +52,6 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 abstract class WBSTextBlock extends AbstractTextBlock {
 
@@ -70,13 +67,8 @@ abstract class WBSTextBlock extends AbstractTextBlock {
 
 	final protected void drawLine(UGraphic ug, Point2D p1, Point2D p2) {
 		final ULine line = new ULine(p1, p2);
-		if (UseStyle.useBetaStyle()) {
-			getStyleUsed().applyStrokeAndLineColor(ug.apply(new UTranslate(p1)), skinParam.getIHtmlColorSet(),
-					skinParam.getThemeStyle()).draw(line);
-		} else {
-			final HColor color = ColorParam.activityBorder.getDefaultValue();
-			ug.apply(new UTranslate(p1)).apply(color).draw(line);
-		}
+		getStyleUsed().applyStrokeAndLineColor(ug.apply(new UTranslate(p1)), skinParam.getIHtmlColorSet(),
+				skinParam.getThemeStyle()).draw(line);
 	}
 
 	private Style getStyleUsed() {

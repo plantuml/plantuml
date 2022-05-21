@@ -38,22 +38,18 @@ package net.sourceforge.plantuml.sequencediagram;
 import java.util.Objects;
 import java.util.Set;
 
-import net.sourceforge.plantuml.ColorParam;
-import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.SkinParamBackcolored;
 import net.sourceforge.plantuml.SpecificBackcolorable;
 import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.EntityPortion;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
-import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.MergeStrategy;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.style.WithStyle;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
@@ -79,16 +75,14 @@ public class Participant implements SpecificBackcolorable, WithStyle {
 	}
 
 	public Style[] getUsedStyles() {
-		if (UseStyle.useBetaStyle() == false) {
-			return null;
-		}
+
 		final StyleSignature signature = getStyleSignature().withTOBECHANGED(stereotype);
 		Style tmp = signature.getMergedStyle(styleBuilder);
 		tmp = tmp.eventuallyOverride(getColors());
 		Style stereo = getStyleSignature().forStereotypeItself(stereotype).getMergedStyle(styleBuilder);
-		if (tmp != null) {
+		if (tmp != null)
 			stereo = tmp.mergeWith(stereo, MergeStrategy.OVERWRITE_EXISTING_VALUE);
-		}
+
 		return new Style[] { tmp, stereo };
 	}
 
@@ -98,17 +92,14 @@ public class Participant implements SpecificBackcolorable, WithStyle {
 		this.styleBuilder = styleBuilder;
 		this.order = order;
 		this.code = Objects.requireNonNull(code);
-		if (code.length() == 0) {
+		if (code.length() == 0)
 			throw new IllegalArgumentException();
-		}
-		if (Display.isNull(display) || display.size() == 0) {
+
+		if (Display.isNull(display) || display.size() == 0)
 			throw new IllegalArgumentException();
-		}
+
 		this.type = Objects.requireNonNull(type);
 		this.display = display;
-		// if (UseStyle.USE_STYLES()) {
-		// this.style = getDefaultStyleDefinition().getMergedStyle(styleBuilder);
-		// }
 	}
 
 	public String getCode() {
@@ -123,11 +114,11 @@ public class Participant implements SpecificBackcolorable, WithStyle {
 	public Display getDisplay(boolean underlined) {
 		Display result = underlined ? display.underlined() : display;
 		if (stereotype != null && hiddenPortions.contains(EntityPortion.STEREOTYPE) == false) {
-			if (stereotypePositionTop) {
+			if (stereotypePositionTop)
 				result = result.addFirst(stereotype);
-			} else {
+			else
 				result = result.add(stereotype);
-			}
+
 		}
 		return result;
 	}
@@ -137,17 +128,11 @@ public class Participant implements SpecificBackcolorable, WithStyle {
 	}
 
 	public final void setStereotype(Stereotype stereotype, boolean stereotypePositionTop) {
-		if (this.stereotype != null) {
+		if (this.stereotype != null)
 			throw new IllegalStateException();
-		}
+
 		this.stereotype = Objects.requireNonNull(stereotype);
 		this.stereotypePositionTop = stereotypePositionTop;
-
-		// if (UseStyle.USE_STYLES()) {
-		// for (Style style : stereotype.getStyles(styleBuilder)) {
-		// this.style = this.style.mergeWith(style);
-		// }
-		// }
 	}
 
 	public final int getInitialLife() {
@@ -170,9 +155,9 @@ public class Participant implements SpecificBackcolorable, WithStyle {
 	}
 
 	public void setSpecificColorTOBEREMOVED(ColorType type, HColor color) {
-		if (color != null) {
+		if (color != null)
 			this.colors = colors.add(type, color);
-		}
+
 	}
 
 	private Colors colors = Colors.empty();
@@ -195,49 +180,8 @@ public class Participant implements SpecificBackcolorable, WithStyle {
 		return stereotype;
 	}
 
-	public ColorParam getBackgroundColorParam() {
-		return type.getBackgroundColorParam();
-	}
-
-	public SkinParamBackcolored getSkinParamBackcolored(ISkinParam skinParam) {
-		final ColorParam param = getColorParam();
-		HColor specificBackColor = getColors().getColor(ColorType.BACK);
-		final boolean clickable = getUrl() != null;
-		final HColor stereoBackColor = skinParam.getHtmlColor(getBackgroundColorParam(), getStereotype(), clickable);
-		if (stereoBackColor != null && specificBackColor == null) {
-			specificBackColor = stereoBackColor;
-		}
-		final SkinParamBackcolored result = new SkinParamBackcolored(skinParam, specificBackColor, clickable);
-		final HColor stereoBorderColor = skinParam.getHtmlColor(param, getStereotype(), clickable);
-		if (stereoBorderColor != null) {
-			result.forceColor(param, stereoBorderColor);
-		}
-		return result;
-	}
-
 	public int getOrder() {
 		return order;
-	}
-
-	private ColorParam getColorParam() {
-		if (getType() == ParticipantType.PARTICIPANT) {
-			return ColorParam.participantBorder;
-		} else if (getType() == ParticipantType.ACTOR) {
-			return ColorParam.actorBorder;
-		} else if (getType() == ParticipantType.BOUNDARY) {
-			return ColorParam.boundaryBorder;
-		} else if (getType() == ParticipantType.CONTROL) {
-			return ColorParam.controlBorder;
-		} else if (getType() == ParticipantType.ENTITY) {
-			return ColorParam.entityBorder;
-		} else if (getType() == ParticipantType.QUEUE) {
-			return ColorParam.queueBorder;
-		} else if (getType() == ParticipantType.DATABASE) {
-			return ColorParam.databaseBorder;
-		} else if (getType() == ParticipantType.COLLECTIONS) {
-			return ColorParam.collectionsBorder;
-		}
-		return ColorParam.participantBorder;
 	}
 
 }

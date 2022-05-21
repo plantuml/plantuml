@@ -34,11 +34,8 @@
  */
 package net.sourceforge.plantuml.timingdiagram;
 
-import net.sourceforge.plantuml.ColorParam;
-import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineBreakStrategy;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.creole.Parser;
@@ -48,7 +45,6 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.svek.image.Opale;
@@ -86,25 +82,14 @@ public class TimingNote {
 
 	private Opale createOpale() {
 
-		final double shadowing;
-		final FontConfiguration fc;
-		final HColor noteBackgroundColor;
-		final HColor borderColor;
-		UStroke stroke = new UStroke();
-		if (UseStyle.useBetaStyle()) {
-			fc = FontConfiguration.create(skinParam, style);
-			shadowing = style.value(PName.Shadowing).asDouble();
-			borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
-			noteBackgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
-					skinParam.getIHtmlColorSet());
-			stroke = style.getStroke();
-		} else {
-			shadowing = skinParam.shadowing(null) ? 4 : 0;
-			fc = FontConfiguration.create(skinParam, FontParam.NOTE, null);
-			final Rose rose = new Rose();
-			noteBackgroundColor = rose.getHtmlColor(skinParam, ColorParam.noteBackground);
-			borderColor = rose.getHtmlColor(skinParam, ColorParam.noteBorder);
-		}
+		final FontConfiguration fc = FontConfiguration.create(skinParam, style);
+		final double shadowing = style.value(PName.Shadowing).asDouble();
+		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(),
+				skinParam.getIHtmlColorSet());
+		final HColor noteBackgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
+				skinParam.getIHtmlColorSet());
+		final UStroke stroke = style.getStroke();
+
 		final Sheet sheet = Parser
 				.build(fc, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT), skinParam, CreoleMode.FULL)
 				.createSheet(note);

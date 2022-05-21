@@ -39,7 +39,6 @@ import java.io.IOException;
 
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.TitledDiagram;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.IRegex;

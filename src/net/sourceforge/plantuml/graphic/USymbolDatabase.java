@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.graphic;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.ugraphic.AbstractUGraphicHorizontalLine;
@@ -48,11 +47,6 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColorNone;
 
 class USymbolDatabase extends USymbol {
-
-	@Override
-	public SkinParameter getSkinParameter() {
-		return SkinParameter.DATABASE;
-	}
 
 	@Override
 	public SName getSName() {

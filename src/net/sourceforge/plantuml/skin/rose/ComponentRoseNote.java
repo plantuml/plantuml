@@ -36,10 +36,8 @@
 package net.sourceforge.plantuml.skin.rose;
 
 import net.sourceforge.plantuml.ISkinSimple;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.creole.Stencil;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.SymbolContext;
@@ -62,21 +60,16 @@ final public class ComponentRoseNote extends AbstractTextualComponent implements
 	private final double roundCorner;
 	private final HorizontalAlignment position;
 
-	public ComponentRoseNote(Style style, SymbolContext symbolContext, FontConfiguration font, Display strings,
-			double paddingX, double paddingY, ISkinSimple spriteContainer, double roundCorner,
-			HorizontalAlignment textAlignment, HorizontalAlignment position) {
-		super(style, spriteContainer.wrapWidth(), strings, font, textAlignment,
-				textAlignment == HorizontalAlignment.CENTER ? 15 : 6, 15, 5, spriteContainer, true, null, null);
+	public ComponentRoseNote(Style style, Display strings, double paddingX, double paddingY,
+			ISkinSimple spriteContainer, HorizontalAlignment textAlignment, HorizontalAlignment position) {
+		super(style, spriteContainer.wrapWidth(), textAlignment == HorizontalAlignment.CENTER ? 15 : 6, 15, 5, spriteContainer,
+				strings, true);
 		this.paddingX = paddingX;
 		this.paddingY = paddingY;
 		this.position = position;
-		if (UseStyle.useBetaStyle()) {
-			this.symbolContext = style.getSymbolContext(spriteContainer.getThemeStyle(), getIHtmlColorSet());
-			this.roundCorner = style.value(PName.RoundCorner).asInt();
-		} else {
-			this.symbolContext = symbolContext;
-			this.roundCorner = roundCorner;
-		}
+		this.symbolContext = style.getSymbolContext(spriteContainer.getThemeStyle(), getIHtmlColorSet());
+		this.roundCorner = style.value(PName.RoundCorner).asInt();
+
 	}
 
 	@Override

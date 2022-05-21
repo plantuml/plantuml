@@ -666,9 +666,6 @@ final public class EntityImpl implements ILeaf, IGroup {
 	}
 
 	private FontParam getTitleFontParam() {
-		if (symbol != null) {
-			return symbol.getFontParam();
-		}
 		return getGroupType() == GroupType.STATE ? FontParam.STATE : FontParam.PACKAGE;
 	}
 

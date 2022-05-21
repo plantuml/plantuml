@@ -52,13 +52,11 @@ import java.util.Set;
 import net.sourceforge.plantuml.AlignmentParam;
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.cucadiagram.EntityPosition;
 import net.sourceforge.plantuml.cucadiagram.EntityUtils;
@@ -88,7 +86,6 @@ import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorBackground;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 import net.sourceforge.plantuml.utils.UniqueSequence;
 
@@ -144,16 +141,12 @@ public class Cluster implements Moveable {
 		this(null, colorSequence, skinParam, root);
 	}
 
-	private ColorParam border;
-
 	private Cluster(Cluster parentCluster, ColorSequence colorSequence, ISkinParam skinParam, IGroup group) {
 		if (group == null)
 			throw new IllegalStateException();
 
 		this.parentCluster = parentCluster;
 		this.group = group;
-		if (group.getUSymbol() != null)
-			border = group.getUSymbol().getColorParamBorder();
 
 		this.color = colorSequence.getValue();
 		this.colorTitle = colorSequence.getValue();
@@ -351,12 +344,6 @@ public class Cluster implements Moveable {
 			if (packageStyle == null)
 				packageStyle = skinParam.packageStyle();
 
-			if (border != null) {
-				final HColor tmp = skinParam.getHtmlColor(border, group.getStereotype(), false);
-				if (tmp != null)
-					borderColor = tmp;
-			}
-
 			final UStroke stroke = getStrokeInternal(group, style);
 
 			HColor backColor = getBackColor(umlDiagramType, style);
@@ -501,10 +488,6 @@ public class Cluster implements Moveable {
 		this.maxX = maxX;
 		this.minY = minY;
 		this.maxY = maxY;
-	}
-
-	private Style getStyle(FontParam fontParam, ISkinParam skinParam) {
-		return fontParam.getStyleDefinition(SName.stateDiagram).getMergedStyle(skinParam.getCurrentStyleBuilder());
 	}
 
 	private boolean isThereALinkFromOrToGroup(Collection<SvekLine> lines) {
@@ -908,29 +891,16 @@ public class Cluster implements Moveable {
 
 	public static HColor getBackColor(HColor backColor, ISkinParam skinParam, Stereotype stereotype, SName styleName,
 			USymbol symbol) {
-		if (UseStyle.useBetaStyle()) {
-			final Style style = getDefaultStyleDefinition(styleName, symbol)
-					.getMergedStyle(skinParam.getCurrentStyleBuilder());
-			if (backColor == null)
-				backColor = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
-						skinParam.getIHtmlColorSet());
 
-			if (backColor == null || backColor.equals(HColorUtils.transparent()))
-				backColor = HColorUtils.transparent();
-
-			return backColor;
-		}
+		final Style style = getDefaultStyleDefinition(styleName, symbol)
+				.getMergedStyle(skinParam.getCurrentStyleBuilder());
 		if (backColor == null)
-			backColor = skinParam.getHtmlColor(ColorParam.packageBackground, stereotype, false);
+			backColor = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
+					skinParam.getIHtmlColorSet());
 
-		if (backColor == null)
-			backColor = skinParam.getHtmlColor(ColorParam.background, stereotype, false);
+		if (backColor == null || backColor.equals(HColorUtils.transparent()))
+			backColor = HColorUtils.transparent();
 
-		if (backColor == null
-				|| backColor.equals(HColorUtils.transparent()) /* || stateBack instanceof HtmlColorTransparent */) {
-			final HColor tmp = skinParam.getBackgroundColor();
-			backColor = new HColorBackground(tmp);
-		}
 		return backColor;
 	}
 

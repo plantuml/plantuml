@@ -38,9 +38,7 @@ package net.sourceforge.plantuml.svek.image;
 import java.util.Collections;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -78,13 +76,8 @@ public class EntityImageState extends EntityImageStateCommon {
 
 		this.withSymbol = stereotype != null && stereotype.isWithOOSymbol();
 		final Display list = Display.create(entity.getBodier().getRawBody());
-		final FontConfiguration fontConfiguration;
-
-		if (UseStyle.useBetaStyle())
-			fontConfiguration = getStyleState().getFontConfiguration(getSkinParam().getThemeStyle(),
-					getSkinParam().getIHtmlColorSet());
-		else
-			fontConfiguration = FontConfiguration.create(getSkinParam(), FontParam.STATE_ATTRIBUTE, stereotype);
+		final FontConfiguration fontConfiguration = getStyleState().getFontConfiguration(getSkinParam().getThemeStyle(),
+				getSkinParam().getIHtmlColorSet());
 
 		this.fields = list.create8(fontConfiguration, HorizontalAlignment.LEFT, skinParam, CreoleMode.FULL,
 				skinParam.wrapWidth());
@@ -111,11 +104,7 @@ public class EntityImageState extends EntityImageStateCommon {
 		final Dimension2D dimTotal = calculateDimension(stringBounder);
 		final Dimension2D dimDesc = desc.calculateDimension(stringBounder);
 
-		final UStroke stroke;
-		if (UseStyle.useBetaStyle())
-			stroke = getStyleState().getStroke();
-		else
-			stroke = new UStroke();
+		final UStroke stroke = getStyleState().getStroke();
 
 		ug = applyColorAndStroke(ug);
 		ug = ug.apply(stroke);

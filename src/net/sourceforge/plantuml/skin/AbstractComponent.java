@@ -64,7 +64,6 @@ public abstract class AbstractComponent implements Component {
 		return style;
 	}
 
-
 	abstract protected void drawInternalU(UGraphic ug, Area area);
 
 	protected void drawBackgroundInternalU(UGraphic ug, Area area) {
@@ -72,11 +71,11 @@ public abstract class AbstractComponent implements Component {
 
 	public final void drawU(UGraphic ug, Area area, Context2D context) {
 		ug = ug.apply(new UTranslate(getPaddingX(), getPaddingY()));
-		if (context.isBackground()) {
+		if (context.isBackground())
 			drawBackgroundInternalU(ug, area);
-		} else {
+		else
 			drawInternalU(ug, area);
-		}
+
 	}
 
 	public double getPaddingX() {

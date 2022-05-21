@@ -63,6 +63,7 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.USymbol;
+import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.PName;
@@ -144,7 +145,8 @@ public class VCompactFactory implements FtileFactory {
 		return FtileBox.create(colors.mute(skinParam), label, swimlane, boxStyle, stereotype);
 	}
 
-	public Ftile addNote(Ftile ftile, Swimlane swimlane, Collection<PositionedNote> notes) {
+	public Ftile addNote(Ftile ftile, Swimlane swimlane, Collection<PositionedNote> notes,
+			VerticalAlignment verticalAlignment) {
 		return ftile;
 	}
 

@@ -35,25 +35,21 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vertical;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
 
-import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.SkinParamColors;
-import net.sourceforge.plantuml.SkinParamUtils;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.creole.Parser;
 import net.sourceforge.plantuml.creole.Sheet;

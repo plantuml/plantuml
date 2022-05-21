@@ -35,10 +35,8 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.command;
 
-import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -89,30 +87,16 @@ public class CommandPartition3 extends SingleLineCommand2<ActivityDiagram3> {
 	}
 
 	private USymbol getUSymbol(String type) {
-		if ("card".equalsIgnoreCase(type)) {
+		if ("card".equalsIgnoreCase(type))
 			return USymbols.CARD;
-		}
-		if ("package".equalsIgnoreCase(type)) {
+
+		if ("package".equalsIgnoreCase(type))
 			return USymbols.PACKAGE;
-		}
-		if ("rectangle".equalsIgnoreCase(type)) {
+
+		if ("rectangle".equalsIgnoreCase(type))
 			return USymbols.RECTANGLE;
-		}
+
 		return USymbols.FRAME;
-	}
-
-	private ColorParam getColorParamBorder(final USymbol symbol) {
-		if (symbol == USymbols.FRAME) {
-			return ColorParam.partitionBorder;
-		}
-		return symbol.getColorParamBorder();
-	}
-
-	private ColorParam getColorParamBack(final USymbol symbol) {
-		if (symbol == USymbols.FRAME) {
-			return ColorParam.partitionBackground;
-		}
-		return symbol.getColorParamBack();
 	}
 
 	private static ColorParser color(String id) {

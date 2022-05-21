@@ -35,9 +35,8 @@
  */
 package net.sourceforge.plantuml.graphic;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.ugraphic.Shadowable;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -47,20 +46,15 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 class USymbolRectangle extends USymbol {
 
-	private final SkinParameter skinParameter;
+	private final SName sname;
 
-	public USymbolRectangle(SkinParameter skinParameter) {
-		this.skinParameter = skinParameter;
+	public USymbolRectangle(SName sname) {
+		this.sname = sname;
 	}
 
 	@Override
 	public SName getSName() {
-		return SName.rectangle;
-	}
-
-	@Override
-	public SkinParameter getSkinParameter() {
-		return skinParameter;
+		return sname;
 	}
 
 	private void drawRect(UGraphic ug, double width, double height, double shadowing, double roundCorner,

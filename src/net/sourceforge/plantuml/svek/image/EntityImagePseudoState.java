@@ -35,12 +35,9 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
-import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.SkinParamUtils;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
@@ -84,11 +81,8 @@ public class EntityImagePseudoState extends AbstractEntityImage {
 		this.sname = sname;
 		final Stereotype stereotype = entity.getStereotype();
 
-		final FontConfiguration fontConfiguration;
-		if (UseStyle.useBetaStyle())
-			fontConfiguration = FontConfiguration.create(getSkinParam(), FontParam.STATE, stereotype);
-		else
-			fontConfiguration = FontConfiguration.create(getSkinParam(), getStyle());
+		final FontConfiguration fontConfiguration = FontConfiguration.create(getSkinParam(), FontParam.STATE,
+				stereotype);
 
 		this.desc = Display.create(historyText).create(fontConfiguration, HorizontalAlignment.CENTER, skinParam);
 	}
@@ -100,24 +94,13 @@ public class EntityImagePseudoState extends AbstractEntityImage {
 	final public void drawU(UGraphic ug) {
 		final UEllipse circle = new UEllipse(SIZE, SIZE);
 
-		double shadow = 0;
-		UStroke stroke = new UStroke(1.5);
-		final HColor backgroundColor;
-		final HColor borderColor;
-		if (UseStyle.useBetaStyle()) {
-			final Style style = getStyle();
-			borderColor = style.value(PName.LineColor).asColor(getSkinParam().getThemeStyle(),
-					getSkinParam().getIHtmlColorSet());
-			backgroundColor = style.value(PName.BackGroundColor).asColor(getSkinParam().getThemeStyle(),
-					getSkinParam().getIHtmlColorSet());
-			shadow = style.value(PName.Shadowing).asDouble();
-			stroke = style.getStroke();
-		} else {
-			backgroundColor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.stateBackground);
-			borderColor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.stateBorder);
-			if (getSkinParam().shadowing(getEntity().getStereotype()))
-				shadow = 4;
-		}
+		final Style style = getStyle();
+		final HColor borderColor = style.value(PName.LineColor).asColor(getSkinParam().getThemeStyle(),
+				getSkinParam().getIHtmlColorSet());
+		final HColor backgroundColor = style.value(PName.BackGroundColor).asColor(getSkinParam().getThemeStyle(),
+				getSkinParam().getIHtmlColorSet());
+		final double shadow = style.value(PName.Shadowing).asDouble();
+		final UStroke stroke = style.getStroke();
 
 		circle.setDeltaShadow(shadow);
 		ug = ug.apply(stroke);

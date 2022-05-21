@@ -35,13 +35,13 @@
  */
 package net.sourceforge.plantuml.graphic;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UGraphicStencil;
@@ -56,11 +56,6 @@ class USymbolCloud extends USymbol {
 
 	private final static boolean NEW = true;
 	private final static boolean DEBUG = false;
-
-	@Override
-	public SkinParameter getSkinParameter() {
-		return SkinParameter.CLOUD;
-	}
 
 	@Override
 	public SName getSName() {

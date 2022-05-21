@@ -31,14 +31,11 @@
  *
  * Original Author:  Arnaud Roques
  *
- *
  */
-package net.sourceforge.plantuml;
+package net.sourceforge.plantuml.timingdiagram;
 
-public class UseStyle {
+public enum TimeAxisStategy {
 
-	static public boolean useBetaStyle() {
-		return true;
-	}
+	AUTOMATIC, HIDDEN, MANUAL;
 
 }

@@ -55,6 +55,7 @@ import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.USymbol;
+import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.SName;
@@ -140,8 +141,9 @@ public class FtileFactoryDelegator implements FtileFactory {
 		return factory.activity(label, swimlane, style, colors, stereotype);
 	}
 
-	public Ftile addNote(Ftile ftile, Swimlane swimlane, Collection<PositionedNote> notes) {
-		return factory.addNote(ftile, swimlane, notes);
+	public Ftile addNote(Ftile ftile, Swimlane swimlane, Collection<PositionedNote> notes,
+			VerticalAlignment verticalAlignment) {
+		return factory.addNote(ftile, swimlane, notes, verticalAlignment);
 	}
 
 	public Ftile addUrl(Ftile ftile, Url url) {

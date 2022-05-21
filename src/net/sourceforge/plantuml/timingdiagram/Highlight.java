@@ -36,7 +36,6 @@ package net.sourceforge.plantuml.timingdiagram;
 
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -54,7 +53,6 @@ import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorNone;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class Highlight {
 
@@ -83,28 +81,22 @@ public class Highlight {
 
 	private HColor getBackColor() {
 		final HColor result = colors.getColor(ColorType.BACK);
-		if (result == null) {
-			if (UseStyle.useBetaStyle() == false)
-				return HColorUtils.COL_A9DCDF;
+		if (result == null) 
 			return getStyle().value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
 					skinParam.getIHtmlColorSet());
-		}
+		
 		return result;
 	}
 
 	private HColor getLineColor() {
 		final HColor result = colors.getColor(ColorType.LINE);
-		if (result == null) {
-			if (UseStyle.useBetaStyle() == false)
-				return HColorUtils.BLACK;
+		if (result == null) 
 			return getStyle().value(PName.LineColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
-		}
+		
 		return result;
 	}
 
 	private UStroke getUStroke() {
-		if (UseStyle.useBetaStyle() == false)
-			return new UStroke(4, 4, 2);
 		return getStyle().getStroke();
 	}
 

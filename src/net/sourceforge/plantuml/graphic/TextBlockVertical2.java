@@ -35,12 +35,12 @@
  */
 package net.sourceforge.plantuml.graphic;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.svek.Ports;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.svek.WithPorts;

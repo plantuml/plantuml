@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.activitydiagram3.command;
 
 import java.util.List;
-import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.StringUtils;

@@ -264,8 +264,9 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 			backColor = Cluster.getBackColor(backColor, skinParam, group.getStereotype(), umlDiagramType.getStyleName(),
 					group.getUSymbol());
 
-			final double roundCorner = group.getUSymbol() == null ? 0
-					: group.getUSymbol().getSkinParameter().getRoundCorner(skinParam, group.getStereotype());
+			final double roundCorner = style.value(PName.RoundCorner).asDouble();
+//			final double roundCorner = group.getUSymbol() == null ? 0
+//					: group.getUSymbol().getSkinParameter().getRoundCorner(skinParam, group.getStereotype());
 
 			final TextBlock ztitle = getTitleBlock(group);
 			final TextBlock zstereo = TextBlockUtils.empty(0, 0);

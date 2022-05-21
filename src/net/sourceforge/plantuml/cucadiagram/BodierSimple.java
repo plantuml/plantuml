@@ -96,8 +96,8 @@ public class BodierSimple implements Bodier {
 	@Override
 	public TextBlock getBody(FontParam fontParam, ISkinParam skinParam, boolean showMethods, boolean showFields,
 			Stereotype stereotype, Style style, FontConfiguration fontConfiguration) {
-		return BodyFactory.create1(skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT), rawBody, fontParam,
-				skinParam, stereotype, leaf, style);
+		return BodyFactory.create1(skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT), rawBody, skinParam,
+				stereotype, leaf, style);
 	}
 
 }

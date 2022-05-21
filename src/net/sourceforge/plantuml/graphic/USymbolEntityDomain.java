@@ -41,11 +41,6 @@ import net.sourceforge.plantuml.svek.EntityDomain;
 class USymbolEntityDomain extends USymbolSimpleAbstract {
 
 	@Override
-	public SkinParameter getSkinParameter() {
-		return SkinParameter.ENTITY;
-	}
-
-	@Override
 	public SName getSName() {
 		return SName.entity;
 	}

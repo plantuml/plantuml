@@ -47,9 +47,9 @@ public class BooleanGrid {
 
 	public void burn(int x, int y) {
 		final boolean added = burned.add(merge(x, y));
-		if (added == false) {
+		if (added == false)
 			throw new IllegalArgumentException("Already present");
-		}
+
 	}
 
 	public boolean isBurned(int x, int y) {
@@ -87,9 +87,9 @@ public class BooleanGrid {
 	// -----------------
 
 	public boolean isSpaceAvailable(Staged element, int x) {
-		if (isBurnRect(x, element.getStart().getNumber(), x + element.getNWidth() - 1, element.getEnd().getNumber())) {
+		if (isBurnRect(x, element.getStart().getNumber(), x + element.getNWidth() - 1, element.getEnd().getNumber()))
 			return false;
-		}
+
 		return true;
 	}
 

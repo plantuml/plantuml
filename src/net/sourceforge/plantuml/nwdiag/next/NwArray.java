@@ -62,30 +62,4 @@ public class NwArray {
 		data[i][j] = value;
 	}
 
-//	public void swapCols(int col1, int col2) {
-//		if (col1 == col2) {
-//			throw new IllegalArgumentException();
-//		}
-//		for (int i = 0; i < getNbLines(); i++) {
-//			final LinkedElement tmp = data[i][col1];
-//			data[i][col1] = data[i][col2];
-//			data[i][col2] = tmp;
-//		}
-//
-//	}
-//
-//	public Footprint getFootprint(NwGroupLegacy group) {
-//		int min = Integer.MAX_VALUE;
-//		int max = Integer.MIN_VALUE;
-//		for (int i = 0; i < getNbLines(); i++) {
-//			for (int j = 0; j < getNbCols(); j++) {
-//				if (data[i][j] != null && group.matches(data[i][j])) {
-//					min = Math.min(min, j);
-//					max = Math.max(max, j);
-//				}
-//			}
-//		}
-//		return new Footprint(min, max);
-//	}
-
 }

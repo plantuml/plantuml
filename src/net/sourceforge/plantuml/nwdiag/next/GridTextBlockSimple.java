@@ -34,11 +34,11 @@
  */
 package net.sourceforge.plantuml.nwdiag.next;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.awt.geom.Rectangle2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -68,9 +68,9 @@ public class GridTextBlockSimple implements TextBlock {
 			double x = 0;
 			for (int j = 0; j < data.getNbCols(); j++) {
 				final double colWidth = colWidth(stringBounder, j);
-				if (data.get(i, j) != null) {
+				if (data.get(i, j) != null)
 					data.get(i, j).drawMe(ug.apply(new UTranslate(x, y)), colWidth, lineHeight);
-				}
+
 				x += colWidth;
 			}
 			y += lineHeight;
@@ -79,36 +79,34 @@ public class GridTextBlockSimple implements TextBlock {
 
 	protected double colWidth(StringBounder stringBounder, final int j) {
 		double width = 0;
-		for (int i = 0; i < data.getNbLines(); i++) {
-			if (data.get(i, j) != null) {
+		for (int i = 0; i < data.getNbLines(); i++)
+			if (data.get(i, j) != null)
 				width = Math.max(width, data.get(i, j).naturalDimension(stringBounder).getWidth());
-			}
-		}
+
 		return width;
 	}
 
 	public double lineHeight(StringBounder stringBounder, final int i) {
 		double height = 50;
-		for (int j = 0; j < data.getNbCols(); j++) {
-			if (data.get(i, j) != null) {
+		for (int j = 0; j < data.getNbCols(); j++)
+			if (data.get(i, j) != null)
 				height = Math.max(height, data.get(i, j).naturalDimension(stringBounder).getHeight());
-			}
-		}
+
 		return height;
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		if (data.getNbLines() == 0) {
+		if (data.getNbLines() == 0)
 			return new Dimension2DDouble(0, 0);
-		}
+
 		double height = 0;
-		for (int i = 0; i < data.getNbLines(); i++) {
+		for (int i = 0; i < data.getNbLines(); i++)
 			height += lineHeight(stringBounder, i);
-		}
+
 		double width = 0;
-		for (int j = 0; j < data.getNbCols(); j++) {
+		for (int j = 0; j < data.getNbCols(); j++)
 			width += colWidth(stringBounder, j);
-		}
+
 		return new Dimension2DDouble(width, height);
 	}
 
@@ -123,11 +121,9 @@ public class GridTextBlockSimple implements TextBlock {
 	public void add(int i, int j, LinkedElement value) {
 		data.set(i, j, value);
 	}
-	
+
 	protected final ISkinParam getSkinParam() {
 		return skinParam;
 	}
-
-
 
 }

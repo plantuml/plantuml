@@ -39,10 +39,8 @@ import java.awt.geom.Point2D;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
-import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
@@ -110,21 +108,6 @@ public class ElkPath implements UDrawable {
 		this.headLabel = headLabel;
 		this.styleName = styleName;
 
-	}
-
-	private ColorParam getArrowColorParam() {
-		if (diagram.getUmlDiagramType() == UmlDiagramType.CLASS)
-			return ColorParam.arrow;
-		else if (diagram.getUmlDiagramType() == UmlDiagramType.OBJECT)
-			return ColorParam.arrow;
-		else if (diagram.getUmlDiagramType() == UmlDiagramType.DESCRIPTION)
-			return ColorParam.arrow;
-		else if (diagram.getUmlDiagramType() == UmlDiagramType.ACTIVITY)
-			return ColorParam.arrow;
-		else if (diagram.getUmlDiagramType() == UmlDiagramType.STATE)
-			return ColorParam.arrow;
-
-		throw new IllegalStateException();
 	}
 
 	private Style getStyle() {

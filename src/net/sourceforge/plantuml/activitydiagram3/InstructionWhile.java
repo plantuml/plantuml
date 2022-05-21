@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
@@ -116,12 +117,12 @@ public class InstructionWhile extends WithNote implements Instruction, Instructi
 				: factory.activity(backward, swimlane, boxStyle, Colors.empty(), null);
 		Ftile tmp = repeatList.createFtile(factory);
 		tmp = factory.createWhile(outColor, swimlane, tmp, test, yes, color, specialOut, back, incoming1, incoming2);
-		if (getPositionedNotes().size() > 0) {
-			tmp = FtileWithNoteOpale.create(tmp, getPositionedNotes(), skinParam, false);
-		}
-		if (killed || specialOut != null) {
+		if (getPositionedNotes().size() > 0)
+			tmp = FtileWithNoteOpale.create(tmp, getPositionedNotes(), skinParam, false, VerticalAlignment.CENTER);
+
+		if (killed || specialOut != null)
 			return new FtileKilled(tmp);
-		}
+
 		return tmp;
 	}
 
@@ -153,11 +154,10 @@ public class InstructionWhile extends WithNote implements Instruction, Instructi
 
 	@Override
 	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote) {
-		if (repeatList.isEmpty()) {
+		if (repeatList.isEmpty())
 			return super.addNote(note, position, type, colors, swimlaneNote);
-		} else {
+		else
 			return repeatList.addNote(note, position, type, colors, swimlaneNote);
-		}
 	}
 
 	@Override

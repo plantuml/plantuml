@@ -67,20 +67,19 @@ public class NwGroup implements NStackable {
 	private NBox nbox;
 
 	public NBox getNboxInternal() {
-		if (nbox == null) {
+		if (nbox == null)
 			nbox = new NBox();
-		}
+
 		return nbox;
 	}
 
 	public final NBox getNbox(Map<String, ? extends NServer> servers) {
 		if (nbox == null) {
 			nbox = new NBox();
-			for (Entry<String, ? extends NServer> ent : servers.entrySet()) {
-				if (names.contains(ent.getKey())) {
+			for (Entry<String, ? extends NServer> ent : servers.entrySet())
+				if (names.contains(ent.getKey()))
 					nbox.add(ent.getValue().getBar());
-				}
-			}
+
 		}
 		return nbox;
 	}
@@ -130,9 +129,9 @@ public class NwGroup implements NStackable {
 
 	public double getTopHeaderHeight(StringBounder stringBounder, ISkinParam skinParam) {
 		final TextBlock block = buildHeaderName(skinParam);
-		if (block == null) {
+		if (block == null)
 			return 0;
-		}
+
 		final Dimension2D blockDim = block.calculateDimension(stringBounder);
 		return blockDim.getHeight();
 	}
@@ -151,21 +150,20 @@ public class NwGroup implements NStackable {
 			size = size.addPoint(size.getMinX(), dy);
 		}
 		HColor color = getColor();
-		if (color == null) {
+		if (color == null)
 			color = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
 
-		}
 		size.draw(ug, color);
 
-		if (block != null) {
+		if (block != null)
 			block.drawU(ug.apply(new UTranslate(size.getMinX() + 5, size.getMinY())));
-		}
+
 	}
 
 	private TextBlock buildHeaderName(ISkinParam skinParam) {
-		if (getDescription() == null) {
+		if (getDescription() == null)
 			return null;
-		}
+
 		final StyleBuilder styleBuilder = skinParam.getCurrentStyleBuilder();
 		final Style style = getStyleDefinition().getMergedStyle(styleBuilder);
 		return Display.getWithNewlines(getDescription()).create(

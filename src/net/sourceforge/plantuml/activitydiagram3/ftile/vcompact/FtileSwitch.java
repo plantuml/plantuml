@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -54,6 +53,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileMinWidthCentered;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamondInside2;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;

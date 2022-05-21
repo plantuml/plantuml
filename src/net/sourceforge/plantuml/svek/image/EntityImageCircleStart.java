@@ -35,11 +35,8 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
-import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.SkinParamUtils;
-import net.sourceforge.plantuml.UseStyle;
 import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -57,15 +54,13 @@ import net.sourceforge.plantuml.ugraphic.color.HColorNone;
 public class EntityImageCircleStart extends AbstractEntityImage {
 
 	private static final int SIZE = 20;
-	private final ColorParam colorParam; // = ColorParam.activityStart;
 
 	public StyleSignatureBasic getDefaultStyleDefinitionCircle() {
 		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.circle, SName.start);
 	}
 
-	public EntityImageCircleStart(ILeaf entity, ISkinParam skinParam, ColorParam colorParam) {
+	public EntityImageCircleStart(ILeaf entity, ISkinParam skinParam) {
 		super(entity, skinParam);
-		this.colorParam = colorParam;
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {
@@ -74,18 +69,12 @@ public class EntityImageCircleStart extends AbstractEntityImage {
 
 	final public void drawU(UGraphic ug) {
 		final UEllipse circle = new UEllipse(SIZE, SIZE);
-		double shadowing = 0;
-		if (getSkinParam().shadowing(getEntity().getStereotype())) {
-			shadowing = 3;
-		}
-		HColor color = SkinParamUtils.getColor(getSkinParam(), getStereo(), colorParam);
-		if (UseStyle.useBetaStyle()) {
-			final Style style = getDefaultStyleDefinitionCircle()
-					.getMergedStyle(getSkinParam().getCurrentStyleBuilder());
-			color = style.value(PName.LineColor).asColor(getSkinParam().getThemeStyle(),
-					getSkinParam().getIHtmlColorSet());
-			shadowing = style.value(PName.Shadowing).asDouble();
-		}
+
+		final Style style = getDefaultStyleDefinitionCircle().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+		final HColor color = style.value(PName.LineColor).asColor(getSkinParam().getThemeStyle(),
+				getSkinParam().getIHtmlColorSet());
+		final double shadowing = style.value(PName.Shadowing).asDouble();
+
 		circle.setDeltaShadow(shadowing);
 		ug.apply(color.bg()).apply(new HColorNone()).draw(circle);
 	}
