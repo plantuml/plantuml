@@ -172,21 +172,27 @@ public class PlayerBinary extends Player {
 				List<String> lastValues = initialState == null ? Collections.singletonList(LOW_STRING)
 						: initialState.getStates();
 				final StringBounder stringBounder = ug.getStringBounder();
-				final ULine vline = ULine.vline(getYlow(stringBounder) - getYhigh(stringBounder));
+				final double yhigh = getYhigh(stringBounder);
+				final double ylow = getYlow(stringBounder);
+				final ULine vline = ULine.vline(ylow - yhigh);
 				for (Map.Entry<TimeTick, ChangeState> ent : values.entrySet()) {
 					final ChangeState value = ent.getValue();
 
 					final double x = ruler.getPosInPixel(ent.getKey());
 
-					ug.apply(new UTranslate(lastx, getYpos(stringBounder, lastValues.get(0))))
-							.draw(ULine.hline(x - lastx));
+					if (lastValues.size() == 1)
+						ug.apply(new UTranslate(lastx, getYpos(stringBounder, lastValues.get(0))))
+								.draw(ULine.hline(x - lastx));
+					else
+						for (double tmpx = lastx; tmpx < x; tmpx += 5)
+							ug.apply(new UTranslate(tmpx, yhigh)).draw(vline);
+
 					if (lastValues.equals(value.getStates()) == false)
-						ug.apply(new UTranslate(x, getYhigh(stringBounder))).draw(vline);
+						ug.apply(new UTranslate(x, yhigh)).draw(vline);
 
 					if (value.getComment() != null) {
 						final TextBlock label = getTextBlock(value.getComment());
-						// final Dimension2D dim = label.calculateDimension(ug.getStringBounder());
-						label.drawU(ug.apply(new UTranslate(x + 2, getYhigh(stringBounder))));
+						label.drawU(ug.apply(new UTranslate(x + 2, yhigh)));
 					}
 
 					lastx = x;
