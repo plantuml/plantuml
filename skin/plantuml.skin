@@ -400,6 +400,7 @@ timingDiagram {
     timeline {
 	  FontStyle plain
 	  FontSize 11
+      LineThickness 2
     }
     note {
       LineThickness 0.5

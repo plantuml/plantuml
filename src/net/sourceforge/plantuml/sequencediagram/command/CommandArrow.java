@@ -96,7 +96,7 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexOr("ARROW_DRESSING1", //
 						new RegexLeaf("[%s][ox]"), //
-						new RegexLeaf("(?:[%s][ox])?<<?_?"), //
+						new RegexLeaf("(?:[%s][ox]|\\(\\d+\\))?<<?_?"), //
 						new RegexLeaf("(?:[%s][ox])?//?"), //
 						new RegexLeaf("(?:[%s][ox])?\\\\\\\\?"))), //
 				new RegexOr(new RegexConcat( //
@@ -210,7 +210,8 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 
 		final String dressing1 = getDressing(arg, "ARROW_DRESSING1");
 		final String dressing2 = getDressing(arg, "ARROW_DRESSING2");
-		final int inclination = getInclination(arg.get("ARROW_DRESSING2", 0));
+		final int inclination1 = getInclination(arg.get("ARROW_DRESSING1", 0));
+		final int inclination2 = getInclination(arg.get("ARROW_DRESSING2", 0));
 
 		final boolean circleAtStart;
 		final boolean circleAtEnd;
@@ -288,7 +289,7 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 
 		config = applyStyle(diagram.getSkinParam().getThemeStyle(), arg.getLazzy("ARROW_STYLE", 0), config);
 
-		config = config.withInclination(inclination);
+		config = config.withInclination(inclination1 + inclination2);
 
 		final String activationSpec = arg.get("ACTIVATION", 0);
 

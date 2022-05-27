@@ -59,6 +59,7 @@ import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public class TimingRuler {
 
@@ -200,7 +201,14 @@ public class TimingRuler {
 		if (timeAxisStategy == TimeAxisStategy.HIDDEN)
 			return;
 
-		ug = ug.apply(new UStroke(2.0)).apply(black());
+		final Style style = StyleSignatureBasic.of(SName.root, SName.timingDiagram, SName.timeline)
+				.getMergedStyle(skinParam.getCurrentStyleBuilder());
+
+		final HColor color = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(),
+				skinParam.getIHtmlColorSet());
+		final UStroke stroke = style.getStroke();
+
+		ug = ug.apply(stroke).apply(color);
 
 		if (timeAxisStategy == TimeAxisStategy.AUTOMATIC)
 			drawTimeAxisAutomatic(ug);
@@ -254,15 +262,7 @@ public class TimingRuler {
 			if (tick.equals(ent.getValue()))
 				return ent.getKey();
 
-		return "";
-		// return format.formatTime(tick.getTime());
-	}
-
-	private HColor black() {
-		final Style style = StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram)
-				.getMergedStyle(skinParam.getCurrentStyleBuilder());
-		return style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
-
+		return format.formatTime(tick.getTime());
 	}
 
 	private BigDecimal getFirstPositiveOrZeroValue() {

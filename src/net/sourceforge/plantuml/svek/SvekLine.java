@@ -665,9 +665,12 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 
 		ug = ug.apply(new HColorNone().bg()).apply(color);
 		final LinkType linkType = link.getType();
-		UStroke stroke = suggestedStroke == null || linkType.getStyle().isNormal() == false
-				? linkType.getStroke3(defaultThickness)
-				: suggestedStroke;
+		UStroke stroke;
+		if (suggestedStroke == null || linkType.getStyle().isNormal() == false)
+			stroke = linkType.getStroke3(defaultThickness);
+		else
+			stroke = linkType.getStroke3(suggestedStroke);
+
 		if (link.getColors() != null && link.getColors().getSpecificLineStroke() != null)
 			stroke = link.getColors().getSpecificLineStroke();
 

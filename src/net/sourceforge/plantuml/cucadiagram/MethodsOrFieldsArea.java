@@ -174,7 +174,7 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlock,
 
 	private TextBlock createTextBlock(CharSequence cs) {
 
-		FontConfiguration config = FontConfiguration.create(skinParam, style);
+		FontConfiguration config = FontConfiguration.create(skinParam, style, leaf.getColors());
 
 		if (cs instanceof Member) {
 			final Member m = (Member) cs;
@@ -195,9 +195,8 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlock,
 			return new TextBlockTracer(m, bloc);
 		}
 
-		if (cs instanceof EmbeddedDiagram) {
+		if (cs instanceof EmbeddedDiagram)
 			return ((EmbeddedDiagram) cs).asDraw(skinParam);
-		}
 
 		return Display.getWithNewlines(cs.toString()).create8(config, align, skinParam, CreoleMode.SIMPLE_LINE,
 				skinParam.wrapWidth());

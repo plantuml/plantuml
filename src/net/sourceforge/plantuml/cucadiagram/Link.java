@@ -133,9 +133,9 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 	public Link(IEntity cl1, IEntity cl2, LinkType type, Display label, int length, String qualifier1,
 			String qualifier2, String labeldistance, String labelangle, HColor specificColor,
 			StyleBuilder styleBuilder) {
-		if (length < 1) {
+		if (length < 1) 
 			throw new IllegalArgumentException();
-		}
+		
 		this.styleBuilder = styleBuilder;
 		this.cl1 = Objects.requireNonNull(cl1);
 		this.cl2 = Objects.requireNonNull(cl2);

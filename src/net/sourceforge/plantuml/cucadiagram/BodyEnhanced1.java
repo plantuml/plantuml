@@ -75,7 +75,9 @@ public class BodyEnhanced1 extends BodyEnhancedAbstract implements TextBlock, Wi
 
 	BodyEnhanced1(HorizontalAlignment align, List<CharSequence> rawBody, ISkinParam skinParam, ILeaf entity,
 			Style style) {
-		super(align, style.getFontConfiguration(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet()), style);
+		super(align,
+				style.getFontConfiguration(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet(), entity.getColors()),
+				style);
 		this.style = style;
 		this.rawBody2 = Display.create(rawBody);
 
@@ -87,9 +89,10 @@ public class BodyEnhanced1 extends BodyEnhancedAbstract implements TextBlock, Wi
 		this.inEllipse = false;
 	}
 
-	BodyEnhanced1(HorizontalAlignment align, Display display, ISkinParam skinParam, ILeaf entity,
-			Style style) {
-		super(align, style.getFontConfiguration(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet()), style);
+	BodyEnhanced1(HorizontalAlignment align, Display display, ISkinParam skinParam, ILeaf entity, Style style) {
+		super(align,
+				style.getFontConfiguration(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet(), entity.getColors()),
+				style);
 
 		this.style = style;
 		this.entity = entity;

@@ -35,24 +35,40 @@
 package net.sourceforge.plantuml.timingdiagram;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
-public enum TimingFormat {
-	DECIMAL, HOUR, DATE;
-
+public final class TimingFormat {
 	private static final TimeZone GMT = TimeZone.getTimeZone("GMT");
 	private static final GregorianCalendar gc = new GregorianCalendar(TimingFormat.GMT);
 
+	public static final TimingFormat DECIMAL = new TimingFormat(null);
+	public static final TimingFormat HOUR = new TimingFormat(null);
+	public static final TimingFormat DATE = new TimingFormat(null);
+
+	private final SimpleDateFormat sdf;
+
+	private TimingFormat(SimpleDateFormat sdf) {
+		this.sdf = sdf;
+	}
+
+	public static TimingFormat create(SimpleDateFormat sdf) {
+		return new TimingFormat(sdf);
+	}
+
 	public String formatTime(BigDecimal time) {
-		if (this == HOUR || this == DATE) {
+		if (this == HOUR || this == DATE || sdf != null)
 			return formatTime(time.longValueExact());
-		}
+
 		return time.toPlainString();
 	}
 
 	public String formatTime(long time) {
+		if (sdf != null)
+			return sdf.format(time * 1000L);
+
 		if (this == HOUR) {
 			final int s = (int) time % 60;
 			final int m = (int) (time / 60) % 60;
@@ -75,14 +91,14 @@ public enum TimingFormat {
 		return "" + time;
 	}
 
-	public static TimeTick createDate(final int yyyy, final int mm, final int dd) {
+	public static TimeTick createDate(int yyyy, int mm, int dd, TimingFormat format) {
 		final long timeInMillis;
 		synchronized (gc) {
 			gc.setTimeInMillis(0);
 			gc.set(yyyy, mm - 1, dd);
 			timeInMillis = gc.getTimeInMillis() / 1000L;
 		}
-		return new TimeTick(new BigDecimal(timeInMillis), TimingFormat.DATE);
+		return new TimeTick(new BigDecimal(timeInMillis), format);
 	}
 
 }

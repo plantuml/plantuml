@@ -72,9 +72,9 @@ public class TimeTickBuilder {
 		if (code != null) {
 			final String delta = arg.get(name + "CODE", 1);
 			TimeTick result = clock.getCodeValue(code);
-			if (delta == null) {
+			if (delta == null)
 				return result;
-			}
+
 			final BigDecimal value = result.getTime().add(new BigDecimal(delta));
 			return new TimeTick(value, TimingFormat.DECIMAL);
 		}
@@ -97,17 +97,17 @@ public class TimeTickBuilder {
 			final int mm = Integer.parseInt(arg.get(name + "DATE", 1));
 			final int dd = Integer.parseInt(arg.get(name + "DATE", 2));
 
-			return TimingFormat.createDate(yy, mm, dd);
+			return TimingFormat.createDate(yy, mm, dd, clock.getTimingFormatDate());
 		}
 		final String number = arg.get(name + "DIGIT", 1);
-		if (number == null) {
+		if (number == null)
 			return clock.getNow();
-		}
+
 		final boolean isRelative = "+".equals(arg.get(name + "DIGIT", 0));
 		BigDecimal value = new BigDecimal(number);
-		if (isRelative && clock.getNow() != null) {
+		if (isRelative && clock.getNow() != null)
 			value = clock.getNow().getTime().add(value);
-		}
+
 		return new TimeTick(value, TimingFormat.DECIMAL);
 	}
 

@@ -92,12 +92,17 @@ public class FontConfiguration {
 	}
 
 	public static FontConfiguration create(ISkinParam skinParam, Style style) {
+		return create(skinParam, style, null);
+	}
+
+	public static FontConfiguration create(ISkinParam skinParam, Style style, Colors colors) {
 		final HColor hyperlinkColor = style.value(PName.HyperLinkColor).asColor(skinParam.getThemeStyle(),
 				skinParam.getIHtmlColorSet());
 		final boolean useUnderlineForHyperlink = skinParam.useUnderlineForHyperlink();
-		return create(style.getUFont(),
-				style.value(PName.FontColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet()),
-				hyperlinkColor, useUnderlineForHyperlink, skinParam.getTabSize());
+		HColor color = colors == null ? null : colors.getColor(ColorType.TEXT);
+		if (color == null)
+			color = style.value(PName.FontColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
+		return create(style.getUFont(), color, hyperlinkColor, useUnderlineForHyperlink, skinParam.getTabSize());
 	}
 
 	// ---

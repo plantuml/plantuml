@@ -38,10 +38,12 @@ import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
@@ -387,6 +389,25 @@ public class TimingDiagram extends UmlDiagram implements Clocks {
 
 	public void goCompactMode() {
 		this.compactByDefault = true;
+	}
+
+	private SimpleDateFormat sdf;
+
+	public CommandExecutionResult useDateFormat(String dateFormat) {
+		try {
+			this.sdf = new SimpleDateFormat(dateFormat, Locale.US);
+		} catch (Exception e) {
+			return CommandExecutionResult.error("Bad date format");
+		}
+
+		return CommandExecutionResult.ok();
+	}
+
+	@Override
+	public TimingFormat getTimingFormatDate() {
+		if (sdf == null)
+			return TimingFormat.DATE;
+		return TimingFormat.create(sdf);
 	}
 
 }

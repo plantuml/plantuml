@@ -166,12 +166,12 @@ public class Colors {
 	}
 
 	public static UGraphic applyStroke(UGraphic ug, Colors colors) {
-		if (colors == null) {
+		if (colors == null) 
 			return ug;
-		}
-		if (colors.lineStyle == null) {
+		
+		if (colors.lineStyle == null) 
 			return ug;
-		}
+		
 		return ug.apply(colors.lineStyle.getStroke3());
 	}
 

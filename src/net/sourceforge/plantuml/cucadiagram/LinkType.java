@@ -54,19 +54,19 @@ public class LinkType {
 	}
 
 	public boolean looksLikeRevertedForSvg() {
-		if (this.decor1 == LinkDecor.NONE && this.decor2 != LinkDecor.NONE) {
+		if (this.decor1 == LinkDecor.NONE && this.decor2 != LinkDecor.NONE)
 			return true;
-		}
+
 		return false;
 	}
 
 	public boolean looksLikeNoDecorAtAllSvg() {
-		if (this.decor1 == LinkDecor.NONE && this.decor2 == LinkDecor.NONE) {
+		if (this.decor1 == LinkDecor.NONE && this.decor2 == LinkDecor.NONE)
 			return true;
-		}
-		if (this.decor1 != LinkDecor.NONE && this.decor2 != LinkDecor.NONE) {
+
+		if (this.decor1 != LinkDecor.NONE && this.decor2 != LinkDecor.NONE)
 			return true;
-		}
+
 		return false;
 	}
 
@@ -184,9 +184,9 @@ public class LinkType {
 
 		final double arrowsize = Math.max(decor1.getArrowSize(), decor2.getArrowSize());
 		if (arrowsize > 0) {
-			if (sb.length() > 0) {
+			if (sb.length() > 0)
 				sb.append(",");
-			}
+
 			sb.append("arrowsize=" + arrowsize);
 		}
 		return sb.toString();
@@ -235,13 +235,16 @@ public class LinkType {
 	}
 
 	public UStroke getStroke3(UStroke defaultThickness) {
-		if (linkStyle.isThicknessOverrided()) {
+		if (linkStyle.isThicknessOverrided())
 			return linkStyle.getStroke3();
-		}
-		if (defaultThickness == null) {
+
+		if (defaultThickness == null)
 			return linkStyle.getStroke3();
-		}
-		return linkStyle.goThickness(defaultThickness.getThickness()).getStroke3();
+
+		if (defaultThickness.getDashVisible() == 0 && defaultThickness.getDashSpace() == 0)
+			return linkStyle.goThickness(defaultThickness.getThickness()).getStroke3();
+
+		return defaultThickness;
 	}
 
 	public LinkMiddleDecor getMiddleDecor() {

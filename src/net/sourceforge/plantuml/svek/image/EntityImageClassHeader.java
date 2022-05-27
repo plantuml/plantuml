@@ -87,7 +87,7 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 				.withTOBECHANGED(stereotype) //
 				.with(entity.getStereostyles()) //
 				.getMergedStyle(skinParam.getCurrentStyleBuilder());
-		FontConfiguration fontConfigurationName = FontConfiguration.create(skinParam, style);
+		FontConfiguration fontConfigurationName = FontConfiguration.create(skinParam, style, entity.getColors());
 
 		if (italic)
 			fontConfigurationName = fontConfigurationName.italic();

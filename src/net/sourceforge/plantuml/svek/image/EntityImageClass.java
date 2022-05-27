@@ -192,7 +192,7 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 		ug = ug.apply(classBorder);
 		ug = ug.apply(backcolor.bg());
 
-		final UStroke stroke = getStyle().getStroke();
+		final UStroke stroke = getStyle().getStroke(lineConfig.getColors());
 
 		UGraphic ugHeader = ug;
 		if (roundCorner == 0 && headerBackcolor != null && backcolor.equals(headerBackcolor) == false) {

@@ -139,9 +139,9 @@ public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 		if (diagram.V1972()) {
 			if (diagram.leafExistSmart(idNewLong)) {
 				entity = diagram.getOrCreateLeaf(idNewLong, idNewLong, type, null);
-				if (entity.muteToType(type, null) == false) {
+				if (entity.muteToType(type, null) == false)
 					return CommandExecutionResult.error("Bad name");
-				}
+
 			} else {
 				entity = diagram.createLeaf(idNewLong, idNewLong, Display.getWithNewlines(display), type, null);
 			}
@@ -149,9 +149,9 @@ public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 			final Code code = diagram.buildCode(idShort);
 			if (diagram.leafExist(code)) {
 				entity = diagram.getOrCreateLeaf(idNewLong, code, type, null);
-				if (entity.muteToType(type, null) == false) {
+				if (entity.muteToType(type, null) == false)
 					return CommandExecutionResult.error("Bad name");
-				}
+
 			} else {
 				entity = diagram.createLeaf(idNewLong, code, Display.getWithNewlines(display), type, null);
 			}
@@ -162,9 +162,8 @@ public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 					diagram.getSkinParam().getIHtmlColorSet()));
 			entity.setStereostyle(stereo);
 		}
-		if (generic != null) {
+		if (generic != null)
 			entity.setGeneric(generic);
-		}
 
 		final String urlString = arg.get("URL", 0);
 		if (urlString != null) {
@@ -180,57 +179,19 @@ public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 
 		final HColor lineColor = s == null ? null
 				: diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(), s);
-		if (lineColor != null) {
+		if (lineColor != null)
 			colors = colors.add(ColorType.LINE, lineColor);
-		}
-		if (arg.get("LINECOLOR", 0) != null) {
+
+		if (arg.get("LINECOLOR", 0) != null)
 			colors = colors.addLegacyStroke(arg.get("LINECOLOR", 0));
-		}
+
 		entity.setColors(colors);
 
-		// entity.setSpecificColorTOBEREMOVED(ColorType.LINE, lineColor);
-		// entity.setSpecificColorTOBEREMOVED(ColorType.HEADER,
-		// colors.getColor(ColorType.HEADER));
-		//
-		// if (colors.getLineStyle() != null) {
-		// entity.setSpecificLineStroke(LinkStyle.getStroke(colors.getLineStyle()));
-		// }
-		//
-		// if (arg.get("LINECOLOR", 0) != null) {
-		// entity.applyStroke(arg.get("LINECOLOR", 0));
-		// }
-
-		// manageExtends(diagram, arg, entity);
 		CommandCreateClassMultilines.manageExtends("EXTENDS", diagram, arg, entity);
 		CommandCreateClassMultilines.manageExtends("IMPLEMENTS", diagram, arg, entity);
 		CommandCreateClassMultilines.addTags(entity, arg.get("TAGS", 0));
 
 		return CommandExecutionResult.ok();
 	}
-	// public static void manageExtends(ClassDiagram system, RegexResult arg, final
-	// IEntity entity) {
-	// if (arg.get("EXTENDS", 1) != null) {
-	// final Mode mode = arg.get("EXTENDS", 1).equalsIgnoreCase("extends") ?
-	// Mode.EXTENDS : Mode.IMPLEMENTS;
-	// final Code other = diagram.buildCode(arg.get("EXTENDS", 2));
-	// LeafType type2 = LeafType.CLASS;
-	// if (mode == Mode.IMPLEMENTS) {
-	// type2 = LeafType.INTERFACE;
-	// }
-	// if (mode == Mode.EXTENDS && entity.getEntityType() == LeafType.INTERFACE) {
-	// type2 = LeafType.INTERFACE;
-	// }
-	// final IEntity cl2 = system.getOrCreateLeaf(other, type2, null);
-	// LinkType typeLink = new LinkType(LinkDecor.NONE, LinkDecor.EXTENDS);
-	// if (type2 == LeafType.INTERFACE && entity.getEntityType() !=
-	// LeafType.INTERFACE) {
-	// typeLink = typeLink.getDashed();
-	// }
-	// final Link link = new Link(cl2, entity, typeLink, null, 2, null, null,
-	// system.getLabeldistance(),
-	// system.getLabelangle());
-	// system.addLink(link);
-	// }
-	// }
 
 }
