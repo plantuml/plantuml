@@ -146,18 +146,18 @@ public class CommandCreateElementFull2 extends SingleLineCommand2<ClassDiagram> 
 
 	@Override
 	final protected boolean isForbidden(CharSequence line) {
-		if (line.toString().matches("^[\\p{L}0-9_.]+$")) {
+		if (line.toString().matches("^[\\p{L}0-9_.]+$"))
 			return true;
-		}
+
 		return false;
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg)
 			throws NoSuchColorException {
-		if (mode == Mode.NORMAL_KEYWORD && diagram.isAllowMixing() == false) {
+		if (mode == Mode.NORMAL_KEYWORD && diagram.isAllowMixing() == false)
 			return CommandExecutionResult.error("Use 'allowmixing' if you want to mix classes and other UML elements.");
-		}
+
 		String codeRaw = arg.getLazzy("CODE", 0);
 		final String displayRaw = arg.getLazzy("DISPLAY", 0);
 		final char codeChar = getCharEncoding(codeRaw);
@@ -188,34 +188,36 @@ public class CommandCreateElementFull2 extends SingleLineCommand2<ClassDiagram> 
 		} else if (symbol.equalsIgnoreCase("usecase")) {
 			type = LeafType.USECASE;
 			usymbol = null;
+		} else if (symbol.equalsIgnoreCase("usecase/")) {
+			type = LeafType.USECASE_BUSINESS;
+			usymbol = null;
 		} else if (symbol.equalsIgnoreCase("state")) {
 			type = LeafType.STATE;
 			usymbol = null;
 		} else {
 			type = LeafType.DESCRIPTION;
 			usymbol = USymbols.fromString(symbol, diagram.getSkinParam());
-			if (usymbol == null) {
+			if (usymbol == null)
 				throw new IllegalStateException();
-			}
 		}
 
 		final String idShort = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(codeRaw);
 		final Ident ident = diagram.buildLeafIdent(idShort);
 		final Code code = diagram.V1972() ? ident : diagram.buildCode(idShort);
 		String display = displayRaw;
-		if (display == null) {
+		if (display == null)
 			display = code.getName();
-		}
+
 		display = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(display);
 		final String stereotype = arg.getLazzy("STEREOTYPE", 0);
 		final IEntity entity = diagram.getOrCreateLeaf(ident, code, type, usymbol);
 		entity.setDisplay(Display.getWithNewlines(display));
 		entity.setUSymbol(usymbol);
-		if (stereotype != null) {
+		if (stereotype != null)
 			entity.setStereotype(Stereotype.build(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),
 					diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),
 					diagram.getSkinParam().getIHtmlColorSet()));
-		}
+
 		CommandCreateClassMultilines.addTags(entity, arg.get("TAGS", 0));
 
 		final String urlString = arg.get("URL", 0);

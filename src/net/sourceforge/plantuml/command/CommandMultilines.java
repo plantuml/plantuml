@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.core.Diagram;
 public abstract class CommandMultilines<S extends Diagram> implements Command<S> {
 
 	private final Pattern2 starting;
-	
+
 	public CommandMultilines(String patternStart) {
 		if (patternStart.startsWith("^") == false || patternStart.endsWith("$") == false) {
 			throw new IllegalArgumentException("Bad pattern " + patternStart);
@@ -58,21 +58,19 @@ public abstract class CommandMultilines<S extends Diagram> implements Command<S>
 	}
 
 	final public CommandControl isValid(BlocLines lines) {
-		if (isCommandForbidden()) {
+		if (isCommandForbidden())
 			return CommandControl.NOT_OK;
-		}
+
 		Matcher2 m1 = starting.matcher(lines.getFirst().getTrimmed().getString());
-		if (m1.matches() == false) {
+		if (m1.matches() == false)
 			return CommandControl.NOT_OK;
-		}
-		if (lines.size() == 1) {
+
+		if (lines.size() == 1)
 			return CommandControl.OK_PARTIAL;
-		}
 
 		m1 = MyPattern.cmpile(getPatternEnd()).matcher(lines.getLast().getTrimmed().getString());
-		if (m1.matches() == false) {
+		if (m1.matches() == false)
 			return CommandControl.OK_PARTIAL;
-		}
 
 		actionIfCommandValid();
 		return CommandControl.OK;

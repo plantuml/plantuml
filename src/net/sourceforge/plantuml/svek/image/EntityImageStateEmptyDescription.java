@@ -70,7 +70,7 @@ public class EntityImageStateEmptyDescription extends EntityImageStateCommon {
 
 		final UStroke stroke = getStyleState().getStroke();
 
-		ug = applyColorAndStroke(ug);
+		ug = applyColor(ug);
 		ug = ug.apply(stroke);
 
 		ug.draw(getShape(dimTotal));

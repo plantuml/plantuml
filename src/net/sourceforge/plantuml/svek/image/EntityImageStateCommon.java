@@ -68,8 +68,8 @@ public abstract class EntityImageStateCommon extends AbstractEntityImage {
 
 		this.lineConfig = entity;
 
-		final FontConfiguration fontConfiguration = getStyleStateHeader()
-				.getFontConfiguration(getSkinParam().getThemeStyle(), getSkinParam().getIHtmlColorSet());
+		final FontConfiguration fontConfiguration = getStyleStateHeader().getFontConfiguration(
+				getSkinParam().getThemeStyle(), getSkinParam().getIHtmlColorSet(), entity.getColors());
 
 		this.desc = entity.getDisplay().create8(fontConfiguration, HorizontalAlignment.CENTER, skinParam,
 				CreoleMode.FULL, skinParam.wrapWidth());
@@ -109,7 +109,7 @@ public abstract class EntityImageStateCommon extends AbstractEntityImage {
 		return rect;
 	}
 
-	final protected UGraphic applyColorAndStroke(UGraphic ug) {
+	final protected UGraphic applyColor(UGraphic ug) {
 
 		HColor border = lineConfig.getColors().getColor(ColorType.LINE);
 		if (border == null)
@@ -117,7 +117,7 @@ public abstract class EntityImageStateCommon extends AbstractEntityImage {
 					getSkinParam().getIHtmlColorSet());
 
 		ug = ug.apply(border);
-		HColor backcolor = getEntity().getColors().getColor(ColorType.BACK);
+		HColor backcolor = lineConfig.getColors().getColor(ColorType.BACK);
 		if (backcolor == null)
 			backcolor = getStyleState().value(PName.BackGroundColor).asColor(getSkinParam().getThemeStyle(),
 					getSkinParam().getIHtmlColorSet());

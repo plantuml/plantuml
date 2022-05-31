@@ -35,21 +35,23 @@
  */
 package net.sourceforge.plantuml.creole;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
 import java.util.Objects;
 
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.creole.atom.Atom;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.svek.Ports;
+import net.sourceforge.plantuml.svek.WithPorts;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UGraphicStencil;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 
-public class SheetBlock2 extends AbstractTextBlock implements TextBlock, Atom {
+final public class SheetBlock2 extends AbstractTextBlock implements TextBlock, Atom, WithPorts {
 
 	public List<Atom> splitInTwo(StringBounder stringBounder, double width) {
 		throw new UnsupportedOperationException(getClass().toString());
@@ -89,9 +91,9 @@ public class SheetBlock2 extends AbstractTextBlock implements TextBlock, Atom {
 	}
 
 	public void drawU(UGraphic ug) {
-		if (stencil != null) {
+		if (stencil != null)
 			ug = UGraphicStencil.create(ug, stencil, defaultStroke);
-		}
+
 		block.drawU(ug);
 	}
 
@@ -102,6 +104,11 @@ public class SheetBlock2 extends AbstractTextBlock implements TextBlock, Atom {
 	@Override
 	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
 		return block.getInnerPosition(member, stringBounder, strategy);
+	}
+
+	@Override
+	public Ports getPorts(StringBounder stringBounder) {
+		return new Ports();
 	}
 
 }

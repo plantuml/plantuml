@@ -44,18 +44,18 @@ import net.sourceforge.plantuml.core.Diagram;
 public abstract class CommandMultilinesBracket<S extends Diagram> implements Command<S> {
 
 	private final Pattern2 starting;
-	
+
 	public CommandMultilinesBracket(String patternStart) {
-		if (patternStart.startsWith("^") == false || patternStart.endsWith("$") == false) {
+		if (patternStart.startsWith("^") == false || patternStart.endsWith("$") == false)
 			throw new IllegalArgumentException("Bad pattern " + patternStart);
-		}
+
 		this.starting = MyPattern.cmpile(patternStart);
 	}
 
 	protected boolean isCommandForbidden() {
 		return false;
 	}
-	
+
 	public String[] getDescription() {
 		return new String[] { "BRACKET: " + starting.pattern() };
 	}
@@ -68,37 +68,35 @@ public abstract class CommandMultilinesBracket<S extends Diagram> implements Com
 	}
 
 	final public CommandControl isValid(BlocLines lines) {
-		if (isCommandForbidden()) {
+		if (isCommandForbidden())
 			return CommandControl.NOT_OK;
-		}
+
 		final Matcher2 m1 = starting.matcher(lines.getFirst().getTrimmed().getString());
-		if (m1.matches() == false) {
+		if (m1.matches() == false)
 			return CommandControl.NOT_OK;
-		}
-		if (lines.size() == 1) {
+
+		if (lines.size() == 1)
 			return CommandControl.OK_PARTIAL;
-		}
 
 		int level = 1;
 		for (StringLocated cs : lines.subExtract(1, 0)) {
 			final String s = cs.getTrimmed().getString();
-			if (isLineConsistent(s, level) == false) {
+			if (isLineConsistent(s, level) == false)
 				return CommandControl.NOT_OK;
-			}
-			if (s.endsWith("{")) {
+
+			if (s.endsWith("{"))
 				level++;
-			}
-			if (s.endsWith("}")) {
+
+			if (s.endsWith("}"))
 				level--;
-			}
-			if (level < 0) {
+
+			if (level < 0)
 				return CommandControl.NOT_OK;
-			}
+
 		}
 
-		if (level != 0) {
+		if (level != 0)
 			return CommandControl.OK_PARTIAL;
-		}
 
 		actionIfCommandValid();
 		return CommandControl.OK;

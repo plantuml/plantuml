@@ -45,11 +45,11 @@ public abstract class CommandMultilines3<S extends Diagram> implements Command<S
 	private final IRegex starting;
 
 	private final MultilinesStrategy strategy;
-	
+
 	public CommandMultilines3(IRegex patternStart, MultilinesStrategy strategy) {
-		if (patternStart.getPattern().startsWith("^") == false || patternStart.getPattern().endsWith("$") == false) {
+		if (patternStart.getPattern().startsWith("^") == false || patternStart.getPattern().endsWith("$") == false)
 			throw new IllegalArgumentException("Bad pattern " + patternStart.getPattern());
-		}
+
 		this.strategy = strategy;
 		this.starting = patternStart;
 	}
@@ -62,26 +62,24 @@ public abstract class CommandMultilines3<S extends Diagram> implements Command<S
 
 	final public CommandControl isValid(BlocLines lines) {
 		lines = lines.cleanList(strategy);
-		if (isCommandForbidden()) {
+		if (isCommandForbidden())
 			return CommandControl.NOT_OK;
-		}
+
 		final StringLocated first = lines.getFirst();
-		if (first == null) {
+		if (first == null)
 			return CommandControl.NOT_OK;
-		}
+
 		final boolean result1 = starting.match(first.getTrimmed());
-		if (result1 == false) {
+		if (result1 == false)
 			return CommandControl.NOT_OK;
-		}
-		if (lines.size() == 1) {
+
+		if (lines.size() == 1)
 			return CommandControl.OK_PARTIAL;
-		}
 
 		final StringLocated potentialLast = lines.getLast().getTrimmed();
 		final boolean m1 = getPatternEnd2().match(potentialLast);
-		if (m1 == false) {
+		if (m1 == false)
 			return CommandControl.OK_PARTIAL;
-		}
 
 		actionIfCommandValid();
 		return CommandControl.OK;

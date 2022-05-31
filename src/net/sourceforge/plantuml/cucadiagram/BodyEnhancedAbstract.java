@@ -64,18 +64,18 @@ public abstract class BodyEnhancedAbstract extends AbstractTextBlock implements 
 
 	public static boolean isBlockSeparator(CharSequence cs) {
 		final String s = cs.toString();
-		if (s.startsWith("--") && s.endsWith("--")) {
+		if (s.startsWith("--") && s.endsWith("--"))
 			return true;
-		}
-		if (s.startsWith("==") && s.endsWith("==")) {
+
+		if (s.startsWith("==") && s.endsWith("=="))
 			return true;
-		}
-		if (s.startsWith("..") && s.endsWith("..") && s.equals("...") == false) {
+
+		if (s.startsWith("..") && s.endsWith("..") && s.equals("...") == false)
 			return true;
-		}
-		if (s.startsWith("__") && s.endsWith("__")) {
+
+		if (s.startsWith("__") && s.endsWith("__"))
 			return true;
-		}
+
 		return false;
 	}
 

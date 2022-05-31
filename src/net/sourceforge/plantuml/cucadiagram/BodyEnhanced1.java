@@ -131,35 +131,40 @@ public class BodyEnhanced1 extends BodyEnhancedAbstract implements TextBlock, Wi
 
 		char separator = lineFirst ? '_' : 0;
 		TextBlock title = null;
-		Display display = Display.empty();
+		Display display = null;
 		for (ListIterator<CharSequence> it = rawBody2.iterator(); it.hasNext();) {
 			final CharSequence cs = it.next();
 			if (cs instanceof EmbeddedDiagram) {
+				if (display == null)
+					display = Display.empty();
 				if (display.size() > 0 || separator != 0) {
 					blocks.add(decorate(stringBounder,
 							new MethodsOrFieldsArea(display, skinParam, align, entity, style), separator, title));
 					separator = 0;
 					title = null;
-					display = Display.empty();
+					display = null;
 				}
-				blocks.add(((EmbeddedDiagram) cs).asDraw(skinParam));
+				blocks.add(TextBlockUtils.withMargin(((EmbeddedDiagram) cs).asDraw(skinParam), 2, 2));
 			} else {
 				final String s = cs.toString();
 				if (isBlockSeparator(s)) {
+					if (display == null)
+						display = Display.empty();
 					blocks.add(decorate(stringBounder,
 							new MethodsOrFieldsArea(display, skinParam, align, entity, style), separator, title));
 					separator = s.charAt(0);
 					title = getTitle(s, skinParam);
-					display = Display.empty();
+					display = null;
 				} else if (isTreeOrTable(s)) {
 					final boolean isTable = CreoleParser.isTableLine(s);
-					if (display.size() > 0)
-						blocks.add(decorate(stringBounder,
-								new MethodsOrFieldsArea(display, skinParam, align, entity, style), separator, title));
+					if (display == null)
+						display = Display.empty();
+					blocks.add(decorate(stringBounder,
+							new MethodsOrFieldsArea(display, skinParam, align, entity, style), separator, title));
 
 					separator = 0;
 					title = null;
-					display = Display.empty();
+					display = null;
 					final List<CharSequence> allTree = buildTreeOrTable(s, it);
 					final FontConfiguration fontConfiguration = style.getFontConfiguration(skinParam.getThemeStyle(),
 							skinParam.getIHtmlColorSet());
@@ -170,6 +175,8 @@ public class BodyEnhanced1 extends BodyEnhancedAbstract implements TextBlock, Wi
 
 					blocks.add(bloc);
 				} else {
+					if (display == null)
+						display = Display.empty();
 					display = display.add(cs);
 					if (cs instanceof Member && ((Member) cs).getUrl() != null)
 						urls.add(((Member) cs).getUrl());
@@ -177,9 +184,12 @@ public class BodyEnhanced1 extends BodyEnhancedAbstract implements TextBlock, Wi
 				}
 			}
 		}
-		if (inEllipse && display.size() == 0) {
+
+		if (display == null)
+			display = Display.empty();
+		if (inEllipse && display.size() == 0)
 			display = display.add("");
-		}
+
 		blocks.add(decorate(stringBounder, new MethodsOrFieldsArea(display, skinParam, align, entity, style), separator,
 				title));
 

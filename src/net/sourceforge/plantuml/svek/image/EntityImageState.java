@@ -104,9 +104,9 @@ public class EntityImageState extends EntityImageStateCommon {
 		final Dimension2D dimTotal = calculateDimension(stringBounder);
 		final Dimension2D dimDesc = desc.calculateDimension(stringBounder);
 
-		final UStroke stroke = getStyleState().getStroke();
+		final UStroke stroke = getStyleState().getStroke(lineConfig.getColors());
 
-		ug = applyColorAndStroke(ug);
+		ug = applyColor(ug);
 		ug = ug.apply(stroke);
 		ug.draw(getShape(dimTotal));
 
