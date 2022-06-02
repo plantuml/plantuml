@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.svek.image;
@@ -194,6 +194,10 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 			return StyleSignatureBasic.of(SName.root, SName.element, SName.spot, SName.spotEnum);
 		case ENTITY:
 			return StyleSignatureBasic.of(SName.root, SName.element, SName.spot, SName.spotEntity);
+		case PROTOCOL:
+			return StyleSignatureBasic.of(SName.root, SName.element, SName.spot, SName.spotProtocol);
+		case STRUCT:
+			return StyleSignatureBasic.of(SName.root, SName.element, SName.spot, SName.spotStruct);
 		}
 		throw new IllegalStateException();
 	}
@@ -212,6 +216,10 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 			return 'E';
 		case ENTITY:
 			return 'E';
+		case PROTOCOL:
+			return 'P';
+		case STRUCT:
+			return 'S';
 		}
 		assert false;
 		return '?';

@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -80,7 +80,7 @@ public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 	private static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandCreateClass.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("TYPE", //
-						"(interface|enum|annotation|abstract[%s]+class|abstract|class|entity|circle|diamond)"), //
+						"(interface|enum|annotation|abstract[%s]+class|abstract|class|entity|circle|diamond|protocol|struct)"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexOr(//
 						new RegexConcat(//
