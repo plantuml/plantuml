@@ -210,7 +210,16 @@ public class FromSkinparamToStyle {
 		addMagic(SName.usecase);
 		addMagic(SName.map);
 		addMagic(SName.archimate);
-		
+
+		addConvert("IconPrivateColor", PName.LineColor, SName.visibilityIcon, SName.private_);
+		addConvert("IconPrivateBackgroundColor", PName.BackGroundColor, SName.visibilityIcon, SName.private_);
+		addConvert("IconPackageColor", PName.LineColor, SName.visibilityIcon, SName.package_);
+		addConvert("IconPackageBackgroundColor", PName.BackGroundColor, SName.visibilityIcon, SName.package_);
+		addConvert("IconProtectedColor", PName.LineColor, SName.visibilityIcon, SName.protected_);
+		addConvert("IconProtectedBackgroundColor", PName.BackGroundColor, SName.visibilityIcon, SName.protected_);
+		addConvert("IconPublicColor", PName.LineColor, SName.visibilityIcon, SName.public_);
+		addConvert("IconPublicBackgroundColor", PName.BackGroundColor, SName.visibilityIcon, SName.public_);
+
 		
 //		addConvert("nodeStereotypeFontSize", PName.FontSize, SName.node, SName.stereotype);
 //		addConvert("sequenceStereotypeFontSize", PName.FontSize, SName.stereotype);

@@ -111,7 +111,7 @@ public class AtomImg extends AbstractAtom implements Atom {
 			try {
 				final byte bytes[] = Base64Coder.decode(data);
 				final String tmp = new String(bytes);
-				return new AtomImgSvg(new TileImageSvg(tmp));
+				return new AtomImgSvg(new TileImageSvg(tmp, scale));
 			} catch (Exception e) {
 				return AtomTextUtils.createLegacy("ERROR " + e.toString(), fc);
 			}
@@ -137,7 +137,7 @@ public class AtomImg extends AbstractAtom implements Atom {
 				if (tmp == null) 
 					return AtomTextUtils.createLegacy("(Cannot decode)", fc);
 				
-				return new AtomImgSvg(new TileImageSvg(tmp));
+				return new AtomImgSvg(new TileImageSvg(tmp, scale));
 			}
 			final BufferedImage read = f.readRasterImageFromFile();
 			if (read == null) {
@@ -186,7 +186,7 @@ public class AtomImg extends AbstractAtom implements Atom {
 		if (read == null) {
 			return AtomTextUtils.createLegacy("(Cannot decode SVG: " + text + ")", fc);
 		}
-		return new AtomImgSvg(new TileImageSvg(new String(read, UTF_8)));
+		return new AtomImgSvg(new TileImageSvg(new String(read, UTF_8), scale));
 	}
 
 	// End

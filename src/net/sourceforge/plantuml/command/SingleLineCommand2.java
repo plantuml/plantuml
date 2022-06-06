@@ -104,9 +104,9 @@ public abstract class SingleLineCommand2<S extends Diagram> implements Command<S
 
 		final boolean result = pattern.match(line2);
 		if (result)
-			actionIfCommandValid();
+			return finalVerification();
 
-		return result ? CommandControl.OK : CommandControl.NOT_OK;
+		return CommandControl.NOT_OK;
 	}
 
 	private CommandControl isValidBracket(BlocLines lines) {
@@ -123,7 +123,8 @@ public abstract class SingleLineCommand2<S extends Diagram> implements Command<S
 		return false;
 	}
 
-	protected void actionIfCommandValid() {
+	protected CommandControl finalVerification() {
+		return CommandControl.OK;
 	}
 
 	public final CommandExecutionResult execute(S system, BlocLines lines) {

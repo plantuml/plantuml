@@ -43,9 +43,11 @@ import net.sourceforge.plantuml.ugraphic.UImageSvg;
 public class TileImageSvg extends AbstractTextBlock implements TextBlock {
 
 	private final UImageSvg svg;
+	private final double scale;
 
-	public TileImageSvg(String svg) {
-		this.svg = new UImageSvg(svg, 1);
+	public TileImageSvg(String svg, double scale) {
+		this.svg = new UImageSvg(svg, scale);
+		this.scale = scale;
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {

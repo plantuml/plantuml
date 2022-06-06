@@ -55,8 +55,6 @@ import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 
 public abstract class AbstractTextualComponent extends AbstractComponent {
 
-	private final Display display;
-
 	private final int marginX1;
 	private final int marginX2;
 	private final int marginY;
@@ -91,20 +89,18 @@ public abstract class AbstractTextualComponent extends AbstractComponent {
 		final UFont fontForStereotype = stereo.getUFont();
 		final HColor htmlColorForStereotype = stereo.value(PName.FontColor).asColor(spriteContainer.getThemeStyle(),
 				getIHtmlColorSet());
-		this.display = display.withoutStereotypeIfNeeded(style);
+		display = display.withoutStereotypeIfNeeded(style);
 
 		this.marginX1 = marginX1;
 		this.marginX2 = marginX2;
 		this.marginY = marginY;
-		// this.display = keepStereotype ? display : display.withoutStereotype();
 
-		if (this.display.size() == 1 && this.display.get(0).length() == 0)
+		if (display.size() == 1 && display.get(0).length() == 0)
 			textBlock = new TextBlockEmpty();
 		else if (enhanced)
-			textBlock = BodyFactory.create3(this.display, spriteContainer, horizontalAlignment, fc, maxMessageSize,
-					style);
+			textBlock = BodyFactory.create3(display, spriteContainer, horizontalAlignment, fc, maxMessageSize, style);
 		else
-			textBlock = this.display.create0(fc, horizontalAlignment, spriteContainer, maxMessageSize, CreoleMode.FULL,
+			textBlock = display.create0(fc, horizontalAlignment, spriteContainer, maxMessageSize, CreoleMode.FULL,
 					fontForStereotype, htmlColorForStereotype, marginX1, marginX2);
 
 		this.alignment = horizontalAlignment;

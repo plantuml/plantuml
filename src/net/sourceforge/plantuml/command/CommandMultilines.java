@@ -72,15 +72,15 @@ public abstract class CommandMultilines<S extends Diagram> implements Command<S>
 		if (m1.matches() == false)
 			return CommandControl.OK_PARTIAL;
 
-		actionIfCommandValid();
-		return CommandControl.OK;
+		return finalVerification();
 	}
 
 	protected boolean isCommandForbidden() {
 		return false;
 	}
 
-	protected void actionIfCommandValid() {
+	protected CommandControl finalVerification() {
+		return CommandControl.OK;
 	}
 
 	protected final Pattern2 getStartingPattern() {

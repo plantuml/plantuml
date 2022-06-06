@@ -60,7 +60,8 @@ public abstract class CommandMultilinesBracket<S extends Diagram> implements Com
 		return new String[] { "BRACKET: " + starting.pattern() };
 	}
 
-	protected void actionIfCommandValid() {
+	protected CommandControl finalVerification() {
+		return CommandControl.OK;
 	}
 
 	protected final Pattern2 getStartingPattern() {
@@ -98,8 +99,7 @@ public abstract class CommandMultilinesBracket<S extends Diagram> implements Com
 		if (level != 0)
 			return CommandControl.OK_PARTIAL;
 
-		actionIfCommandValid();
-		return CommandControl.OK;
+		return finalVerification();
 	}
 
 	protected abstract boolean isLineConsistent(String line, int level);
