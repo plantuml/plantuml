@@ -195,7 +195,7 @@ public class GraphvizUtils {
 		if (s == null)
 			return -1;
 
-		final Pattern p = Pattern.compile("\\s([23])\\.(\\d\\d?)\\D");
+		final Pattern p = Pattern.compile("\\s([23456])\\.(\\d\\d?)\\D");
 		final Matcher m = p.matcher(s);
 		if (m.find() == false)
 			return -1;
