@@ -63,17 +63,17 @@ public class Img implements HtmlCommand {
 
 	static int getVspace(String html) {
 		final Matcher2 m = vspacePattern.matcher(html);
-		if (m.find() == false) {
+		if (m.find() == false)
 			return 0;
-		}
+
 		return Integer.parseInt(m.group(1));
 	}
 
 	static ImgValign getValign(String html) {
 		final Matcher2 m = valignPattern.matcher(html);
-		if (m.find() == false) {
+		if (m.find() == false)
 			return ImgValign.TOP;
-		}
+
 		return ImgValign.valueOf(StringUtils.goUpperCase(m.group(1)));
 	}
 
@@ -99,28 +99,28 @@ public class Img implements HtmlCommand {
 				// Check if valid URL
 				if (src.startsWith("http:") || src.startsWith("https:")) {
 					final SURL tmp = SURL.create(src);
-					if (tmp == null) {
+					if (tmp == null)
 						return new Text("(Cannot decode: " + src + ")");
-					}
+
 					final BufferedImage read = tmp.readRasterImageFromURL();
-					if (read == null) {
+					if (read == null)
 						return new Text("(Cannot decode: " + src + ")");
-					}
+
 					return new Img(new TileImage(read, valign, vspace));
 				}
 				return new Text("(Cannot decode: " + f + ")");
 			}
 			if (f.getName().endsWith(".svg")) {
 				final String tmp = FileUtils.readSvg(f);
-				if (tmp == null) {
+				if (tmp == null)
 					return new Text("(Cannot decode: " + f + ")");
-				}
-				return new Img(new TileImageSvg(tmp));
+
+				return new Img(new TileImageSvg(tmp, 1));
 			}
 			final BufferedImage read = f.readRasterImageFromFile();
-			if (read == null) {
+			if (read == null)
 				return new Text("(Cannot decode: " + f + ")");
-			}
+
 			return new Img(new TileImage(f.readRasterImageFromFile(), valign, vspace));
 		} catch (IOException e) {
 			e.printStackTrace();

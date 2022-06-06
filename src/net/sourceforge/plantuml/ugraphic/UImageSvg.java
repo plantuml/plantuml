@@ -128,12 +128,12 @@ public class UImageSvg implements UShape {
 		throw new IllegalStateException("Cannot find " + name);
 	}
 
-	public int getHeight() {
-		return this.getData("height");
+	public double getHeight() {
+		return this.getData("height") * scale;
 	}
 
-	public int getWidth() {
-		return this.getData("width");
+	public double getWidth() {
+		return this.getData("width") * scale;
 	}
 
 	public double getScale() {

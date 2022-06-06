@@ -73,7 +73,7 @@ public class UPolygon extends AbstractShadowable {
 					(pt1.getY() + pt2.getY()) / 2);
 			final double delta = middle.distance(center);
 			if (delta < 1)
-				return all.get((i - 1) % all.size());
+				return all.get((i + all.size() - 1) % all.size());
 
 		}
 		return null;

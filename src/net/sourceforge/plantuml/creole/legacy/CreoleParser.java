@@ -132,8 +132,9 @@ public class CreoleParser implements SheetBuilder {
 						}
 					};
 				} else if (cs instanceof Stereotype) {
-					for (String st : ((Stereotype) cs).getLabels(skinParam.guillemet()))
-						sheet.add(createStripe(st, context, sheet.getLastStripe(), stereotype));
+					if (display.showStereotype())
+						for (String st : ((Stereotype) cs).getLabels(skinParam.guillemet()))
+							sheet.add(createStripe(st, context, sheet.getLastStripe(), stereotype));
 
 					continue;
 				} else {
