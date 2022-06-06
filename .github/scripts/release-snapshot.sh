@@ -42,8 +42,8 @@ EOF
 gh release create \
   --prerelease \
   --target "${GITHUB_SHA}" \
-  --title "${TAG}" \
+  --title "${TAG} (~v${POM_VERSION%-SNAPSHOT} [${DATE_TIME_UTC}])" \
   --notes-file notes.txt \
   "${TAG}" ${RELEASE_DIR}/*
 
-echo "::notice title=release snapshot::Snapshot released at ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/tag/${TAG} and taken the ${DATE_TIME_UTC}"
+echo "::notice title=release snapshot::Snapshot (~v${POM_VERSION%-SNAPSHOT}) released at ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/tag/${TAG} and taken the ${DATE_TIME_UTC}"
