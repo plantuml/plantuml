@@ -34,6 +34,7 @@ fi
 echo -n "${DATE_TIME_UTC}" > "${RELEASE_DIR}/plantuml-SNAPSHOT.timestamp"
 
 cat <<-EOF >notes.txt
+  ## Version ~v${POM_VERSION%-SNAPSHOT} of the ${DATE_TIME_UTC}
   This is a pre-release of [the latest development work](https://github.com/plantuml/plantuml/commits/).
   ⚠️  **It is not ready for general use** ⚠️
   ⏱  _Snapshot taken the ${DATE_TIME_UTC}_
@@ -42,7 +43,7 @@ EOF
 gh release create \
   --prerelease \
   --target "${GITHUB_SHA}" \
-  --title "${TAG} (~v${POM_VERSION%-SNAPSHOT} [${DATE_TIME_UTC}])" \
+  --title "${TAG} (~v${POM_VERSION%-SNAPSHOT})" \
   --notes-file notes.txt \
   "${TAG}" ${RELEASE_DIR}/*
 
