@@ -27,6 +27,9 @@ jobs:
       do_snapshot_release: ${{ steps.config.outputs.do_snapshot_release }}
       pom_version: ${{ steps.config.outputs.pom_version }}
     steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+
       - name: Configure workflow
         id: config
         env:
@@ -59,8 +62,8 @@ jobs:
           elif [[ "${GITHUB_EVENT_NAME}" =~ push|workflow_dispatch && "${REF}" == "refs/heads/master" ]]; then
             echo "::notice title=::This run will release a snapshot"
             echo "::set-output name=do_snapshot_release::true"
-            v=$(perl -ne 'if (/return (\d{6,7});/) {$v=$1} if (/final int beta = (\d+);/) {$b=$1} END{print(substr($v, 0, 1),".", substr($v, 1, 4),"."); if ($b) {print(int(substr($v+1, 5)), "beta", $b);} else {print(int(substr($v, 5)))}}' src/net/sourceforge/plantuml/version/Version.java)
-            echo "::set-output name=pom_version::$v-SNAPSHOT"  # pom_version is taken from Version.java
+            V=$(perl -ne 'if (/return (\d{6,7});/) {$v=$1} if (/final int beta = (\d+);/) {$b=$1} END{print(substr($v, 0, 1),".", substr($v, 1, 4),"."); if ($b) {print(int(substr($v+1, 5)), "beta", $b);} else {print(int(substr($v, 5)))}}' src/net/sourceforge/plantuml/version/Version.java)
+            echo "::set-output name=pom_version::$V-SNAPSHOT"  # pom_version is taken from Version.java
 
           else
             echo "This run will NOT make a release"
