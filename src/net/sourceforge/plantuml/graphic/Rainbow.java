@@ -42,16 +42,17 @@ import java.util.Objects;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.api.ThemeStyle;
-import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.Value;
+import net.sourceforge.plantuml.style.ValueNull;
+import net.sourceforge.plantuml.ugraphic.color.ColorUtils;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public class Rainbow {
-
-	private final static Rose rose = new Rose();
 
 	private final List<HtmlColorAndStyle> colors = new ArrayList<>();
 	private final int colorArrowSeparationSpace;
@@ -83,7 +84,15 @@ public class Rainbow {
 
 	public static Rainbow build(Style style, HColorSet set, ThemeStyle themeStyle) {
 		final HColor color = style.value(PName.LineColor).asColor(themeStyle, set);
-		return fromColor(color, null);
+		final Value head = style.value(PName.HeadColor);
+		HColor colorHead;
+		if (head instanceof ValueNull)
+			colorHead = color;
+		else
+			colorHead = head.asColor(themeStyle, set);
+		if (colorHead == null)
+			colorHead = HColorUtils.transparent();
+		return fromColor(color, colorHead);
 	}
 
 	public Rainbow withDefault(Rainbow defaultColor) {
