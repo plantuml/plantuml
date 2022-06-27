@@ -38,6 +38,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 
 import net.sourceforge.plantuml.AFile;
@@ -114,7 +115,11 @@ public class EaterTheme extends Eater {
 
 		try {
 			final FileWithSuffix file = context.getFileWithSuffix(from, realName);
-			return ReadLineReader.create(file.getReader(UTF_8), "theme " + realName);
+			final Reader tmp = file.getReader(UTF_8);
+			if (tmp == null)
+				throw EaterException.located("No such theme " + realName);
+
+			return ReadLineReader.create(tmp, "theme " + realName);
 		} catch (IOException e) {
 			e.printStackTrace();
 			throw EaterException.located("Cannot load " + realName);

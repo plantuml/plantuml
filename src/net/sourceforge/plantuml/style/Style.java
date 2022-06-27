@@ -269,8 +269,12 @@ public class Style {
 		final FontConfiguration fc = getFontConfiguration(spriteContainer.getThemeStyle(), set);
 		return display.create(fc, alignment, spriteContainer);
 	}
+	
+	public static final String ID_TITLE = "_title";
+	public static final String ID_CAPTION = "_caption";
+	public static final String ID_LEGEND = "_legend";
 
-	public TextBlock createTextBlockBordered(Display note, HColorSet set, ISkinSimple spriteContainer) {
+	public TextBlock createTextBlockBordered(Display note, HColorSet set, ISkinSimple spriteContainer, String id) {
 		final HorizontalAlignment alignment = this.getHorizontalAlignment();
 		final TextBlock textBlock = this.createTextBlockInternal(note, set, spriteContainer, alignment);
 
@@ -281,7 +285,7 @@ public class Style {
 		final ClockwiseTopRightBottomLeft margin = this.getMargin();
 		final ClockwiseTopRightBottomLeft padding = this.getPadding();
 		final TextBlock result = TextBlockUtils.bordered(textBlock, stroke, lineColor, backgroundColor, cornersize,
-				padding);
+				padding, id);
 		return TextBlockUtils.withMargin(result, margin);
 	}
 

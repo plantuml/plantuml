@@ -58,25 +58,11 @@ public class TextBlockBordered extends AbstractTextBlock implements TextBlock {
 	private final double left;
 	private final UStroke stroke;
 	private final boolean withShadow;
-
+	private final String id;
 	private final TextBlock textBlock;
 
 	TextBlockBordered(TextBlock textBlock, UStroke stroke, HColor borderColor, HColor backgroundColor,
-			double cornersize, double marginX, double marginY) {
-		this.top = marginY;
-		this.right = marginX;
-		this.bottom = marginY;
-		this.left = marginX;
-		this.cornersize = cornersize;
-		this.textBlock = textBlock;
-		this.withShadow = false;
-		this.stroke = stroke;
-		this.borderColor = borderColor;
-		this.backgroundColor = backgroundColor;
-	}
-
-	TextBlockBordered(TextBlock textBlock, UStroke stroke, HColor borderColor, HColor backgroundColor,
-			double cornersize, ClockwiseTopRightBottomLeft margins) {
+			double cornersize, ClockwiseTopRightBottomLeft margins, String id) {
 		this.top = margins.getTop();
 		this.right = margins.getRight();
 		this.bottom = margins.getBottom();
@@ -87,11 +73,7 @@ public class TextBlockBordered extends AbstractTextBlock implements TextBlock {
 		this.stroke = stroke;
 		this.borderColor = borderColor;
 		this.backgroundColor = backgroundColor;
-	}
-
-	TextBlockBordered(TextBlock textBlock, UStroke stroke, HColor borderColor, HColor backgroundColor,
-			double cornersize) {
-		this(textBlock, stroke, borderColor, backgroundColor, cornersize, 6, 5);
+		this.id = id;
 	}
 
 	private double getTextHeight(StringBounder stringBounder) {
@@ -115,16 +97,16 @@ public class TextBlockBordered extends AbstractTextBlock implements TextBlock {
 	}
 
 	private UGraphic applyStroke(UGraphic ug) {
-		if (stroke == null) {
+		if (stroke == null)
 			return ug;
-		}
+
 		return ug.apply(stroke);
 	}
 
 	private boolean noBorder() {
-		if (stroke == null) {
+		if (stroke == null)
 			return false;
-		}
+
 		return stroke.getThickness() == 0;
 	}
 
@@ -132,32 +114,32 @@ public class TextBlockBordered extends AbstractTextBlock implements TextBlock {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final Shadowable polygon = getPolygonNormal(stringBounder);
 		final UGraphic ugOriginal = ug;
-		if (withShadow) {
+		if (withShadow)
 			polygon.setDeltaShadow(4);
-		}
-		if (backgroundColor == null) {
+
+		if (backgroundColor == null)
 			ug = ug.apply(new HColorNone().bg());
-		} else {
+		else
 			ug = ug.apply(backgroundColor.bg());
-		}
+
 		HColor color = noBorder() ? backgroundColor : borderColor;
-		if (color == null) {
+		if (color == null)
 			color = new HColorNone();
-		}
+
 		ug = ug.apply(color);
 		ug = applyStroke(ug);
 		ug.draw(polygon);
 		TextBlock toDraw = textBlock;
-		if (textBlock instanceof SheetBlock2) {
+		if (textBlock instanceof SheetBlock2)
 			toDraw = ((SheetBlock2) textBlock).enlargeMe(left, right);
-		}
+
 		toDraw.drawU(ugOriginal.apply(color).apply(new UTranslate(left, top)));
 	}
 
 	private Shadowable getPolygonNormal(final StringBounder stringBounder) {
 		final double height = getTextHeight(stringBounder);
 		final double width = getTextWidth(stringBounder);
-		return new URectangle(width, height).rounded(cornersize);
+		return new URectangle(width, height).rounded(cornersize).withCommentAndCodeLine(id, null);
 	}
 
 }

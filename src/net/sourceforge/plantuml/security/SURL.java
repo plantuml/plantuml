@@ -244,7 +244,7 @@ public class SURL {
 	}
 
 	private boolean forbiddenURL(String full) {
-		if (full.matches("^https?://[.0-9]+/.*"))
+		if (full.matches("^https?://[-#.0-9:\\[\\]+]+/.*"))
 			return true;
 		if (full.matches("^https?://[^.]+/.*"))
 			return true;

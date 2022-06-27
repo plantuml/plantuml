@@ -42,9 +42,7 @@ import java.awt.geom.Rectangle2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FileFormat;
-import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.awt.geom.Dimension2D;
-import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.posimo.Positionable;
 import net.sourceforge.plantuml.posimo.PositionableImpl;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
@@ -63,22 +61,8 @@ public class TextBlockUtils {
 	public static final TextBlock EMPTY_TEXT_BLOCK = TextBlockUtils.empty(0, 0);
 
 	public static TextBlock bordered(TextBlock textBlock, UStroke stroke, HColor borderColor, HColor backgroundColor,
-			double cornersize) {
-		return new TextBlockBordered(textBlock, stroke, borderColor, backgroundColor, cornersize);
-	}
-
-	public static TextBlock bordered(TextBlock textBlock, UStroke stroke, HColor borderColor, HColor backgroundColor,
-			double cornersize, double marginX, double marginY) {
-		return new TextBlockBordered(textBlock, stroke, borderColor, backgroundColor, cornersize, marginX, marginY);
-	}
-
-	public static TextBlock bordered(TextBlock textBlock, UStroke stroke, HColor borderColor, HColor backgroundColor,
-			double cornersize, ClockwiseTopRightBottomLeft margins) {
-		return new TextBlockBordered(textBlock, stroke, borderColor, backgroundColor, cornersize, margins);
-	}
-
-	public static TextBlock title(FontConfiguration font, Display stringsToDisplay, ISkinParam skinParam) {
-		throw new UnsupportedOperationException();
+			double cornersize, ClockwiseTopRightBottomLeft margins, String id) {
+		return new TextBlockBordered(textBlock, stroke, borderColor, backgroundColor, cornersize, margins, id);
 	}
 
 	public static TextBlock withMargin(TextBlock textBlock, double marginX, double marginY) {

@@ -91,7 +91,7 @@ public abstract class MyPattern {
 		p = p.replace("%pLN", "\\p{L}0-9"); // Unicode Letter, digit
 		p = p.replace("%s", "\\s\u00A0"); // space
 		p = p.replace("%q", "'\u2018\u2019"); // quote
-		p = p.replace("%g", "\"\u201c\u201d\u00ab\u00bb"); // double quote
+		p = p.replace("%g", "\"\u201c\u201d"); // double quote
 		return p;
 	}
 

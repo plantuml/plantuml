@@ -49,7 +49,7 @@ public class EntityImageLegend {
 		final Style style = StyleSignatureBasic
 				.of(SName.root, SName.root, SName.document, skinParam.getUmlDiagramType().getStyleName(), SName.legend)
 				.getMergedStyle(skinParam.getCurrentStyleBuilder());
-		return style.createTextBlockBordered(note, skinParam.getIHtmlColorSet(), skinParam);
+		return style.createTextBlockBordered(note, skinParam.getIHtmlColorSet(), skinParam, Style.ID_LEGEND);
 	}
 
 }

@@ -73,6 +73,6 @@ public class PngTitler {
 		if (display == null)
 			return null;
 
-		return style.createTextBlockBordered(display, set, spriteContainer);
+		return style.createTextBlockBordered(display, set, spriteContainer, Style.ID_TITLE);
 	}
 }

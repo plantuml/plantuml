@@ -156,13 +156,16 @@ public class EntityImageMap extends AbstractEntityImage implements Stencil, With
 		final double heightTotal = dimTotal.getHeight();
 		final Shadowable rect = new URectangle(widthTotal, heightTotal).rounded(roundCorner);
 
+		HColor borderColor = lineConfig.getColors().getColor(ColorType.LINE);
 		HColor backcolor = getEntity().getColors().getColor(ColorType.BACK);
 		HColor headerBackcolor = getEntity().getColors().getColor(ColorType.HEADER);
 
 		final Style style = getStyle();
-		final HColor borderColor = style.value(PName.LineColor).asColor(getSkinParam().getThemeStyle(),
-				getSkinParam().getIHtmlColorSet());
-		
+
+		if (borderColor == null)
+			borderColor = getStyle().value(PName.LineColor).asColor(getSkinParam().getThemeStyle(),
+					getSkinParam().getIHtmlColorSet());
+
 		if (headerBackcolor == null)
 			headerBackcolor = backcolor == null ? getStyleHeader().value(PName.BackGroundColor)
 					.asColor(getSkinParam().getThemeStyle(), getSkinParam().getIHtmlColorSet()) : backcolor;
@@ -170,7 +173,7 @@ public class EntityImageMap extends AbstractEntityImage implements Stencil, With
 		if (backcolor == null)
 			backcolor = style.value(PName.BackGroundColor).asColor(getSkinParam().getThemeStyle(),
 					getSkinParam().getIHtmlColorSet());
-		
+
 		rect.setDeltaShadow(style.value(PName.Shadowing).asDouble());
 		final UStroke stroke = style.getStroke();
 
@@ -184,7 +187,7 @@ public class EntityImageMap extends AbstractEntityImage implements Stencil, With
 		typeIDent.put(UGroupType.ID, "elem_" + getEntity().getCode());
 		ug.startGroup(typeIDent);
 		ug.apply(stroke).draw(rect);
-		
+
 		if (roundCorner == 0 && headerBackcolor != null && backcolor.equals(headerBackcolor) == false) {
 			final Shadowable rect2 = new URectangle(widthTotal, dimTitle.getHeight());
 			final UGraphic ugHeader = ug.apply(headerBackcolor.bg());

@@ -209,7 +209,7 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 		final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.title)
 				.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
 		final TextBlock compTitle = style.createTextBlockBordered(diagram.getTitle().getDisplay(),
-				diagram.getSkinParam().getIHtmlColorSet(), diagram.getSkinParam());
+				diagram.getSkinParam().getIHtmlColorSet(), diagram.getSkinParam(), Style.ID_TITLE);
 		return compTitle;
 
 	}

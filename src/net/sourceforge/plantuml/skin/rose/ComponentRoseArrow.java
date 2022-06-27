@@ -150,11 +150,10 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 
 		if (inclination1 == 0 && inclination2 == 0)
 			getArrowConfiguration().applyStroke(ug).apply(new UTranslate(start, posArrow)).draw(new ULine(len, 0));
-		else if (inclination1 != 0) {
+		else if (inclination1 != 0)
 			drawLine(getArrowConfiguration().applyStroke(ug), start + len, posArrow, 0, posArrow + inclination1);
-		} else if (inclination2 != 0) {
+		else if (inclination2 != 0)
 			drawLine(getArrowConfiguration().applyStroke(ug), start, posArrow, pos2, posArrow + inclination2);
-		}
 
 		final ArrowDirection direction2 = getDirection2();
 		final double textPos;
@@ -203,10 +202,12 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 
 		if (dressing.getHead() == ArrowHead.ASYNC) {
 			if (dressing.getPart() != ArrowPart.BOTTOM_PART)
-				getArrowConfiguration().applyThicknessOnly(ug).draw(new ULine(getArrowDeltaX(), -getArrowDeltaY()));
+				getArrowConfiguration().applyThicknessOnly(ug).draw(
+						new ULine(getArrowDeltaX(), -getArrowDeltaY()).rotate(Math.atan2(-inclination1, lenFull)));
 
 			if (dressing.getPart() != ArrowPart.TOP_PART)
-				getArrowConfiguration().applyThicknessOnly(ug).draw(new ULine(getArrowDeltaX(), getArrowDeltaY()));
+				getArrowConfiguration().applyThicknessOnly(ug)
+						.draw(new ULine(getArrowDeltaX(), getArrowDeltaY()).rotate(Math.atan2(-inclination1, lenFull)));
 
 		} else if (dressing.getHead() == ArrowHead.CROSSX) {
 			ug = ug.apply(new UStroke(2));
@@ -237,10 +238,12 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 
 		if (dressing.getHead() == ArrowHead.ASYNC) {
 			if (dressing.getPart() != ArrowPart.BOTTOM_PART)
-				getArrowConfiguration().applyThicknessOnly(ug).draw(new ULine(-getArrowDeltaX(), -getArrowDeltaY()));
+				getArrowConfiguration().applyThicknessOnly(ug).draw(
+						new ULine(-getArrowDeltaX(), -getArrowDeltaY()).rotate(Math.atan2(inclination2, lenFull)));
 
 			if (dressing.getPart() != ArrowPart.TOP_PART)
-				getArrowConfiguration().applyThicknessOnly(ug).draw(new ULine(-getArrowDeltaX(), getArrowDeltaY()));
+				getArrowConfiguration().applyThicknessOnly(ug)
+						.draw(new ULine(-getArrowDeltaX(), getArrowDeltaY()).rotate(Math.atan2(inclination2, lenFull)));
 
 		} else if (dressing.getHead() == ArrowHead.CROSSX) {
 			ug = ug.apply(new UStroke(2));
