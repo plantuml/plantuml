@@ -122,7 +122,12 @@ public class CompositeDiagramShape extends DiagramComponent {
 		if(workGrid.cellContainsDashedLineChar(previousCell)) shape.setStrokeDashed(true);
 
 		boolean finished = false;
+		int nb = 0;
 		while(!finished) {
+			// https://github.com/plantuml/plantuml/issues/1036
+			nb++;
+			if (nb > 1000)
+				return result;
 			visitedCells.add(cell);
 			if(workGrid.isPointCell(cell)) {
 				if(DEBUG) System.out.println("point at "+cell+" (call from line: "+DebugUtils.getLineNumber()+")");
