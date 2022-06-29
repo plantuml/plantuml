@@ -313,8 +313,8 @@ public class TimingDiagram extends UmlDiagram implements Clocks {
 		return CommandExecutionResult.ok();
 	}
 
-	public PlayerAnalog createAnalog(String code, String full, boolean compact) {
-		final PlayerAnalog player = new PlayerAnalog(full, getSkinParam(), ruler, compactByDefault);
+	public PlayerAnalog createAnalog(String code, String full, boolean compact, Stereotype stereotype) {
+		final PlayerAnalog player = new PlayerAnalog(full, getSkinParam(), ruler, compactByDefault, stereotype);
 		players.put(code, player);
 		return player;
 	}

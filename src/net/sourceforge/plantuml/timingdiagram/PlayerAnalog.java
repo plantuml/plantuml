@@ -35,6 +35,8 @@
 package net.sourceforge.plantuml.timingdiagram;
 
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.SortedMap;
@@ -45,6 +47,7 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -52,6 +55,7 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.timingdiagram.graphic.IntricatedPoint;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -61,14 +65,17 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 public class PlayerAnalog extends Player {
 
 	private final SortedMap<TimeTick, Double> values = new TreeMap<TimeTick, Double>();
+
+	private final List<TimeConstraint> constraints = new ArrayList<>();
+
 	private final double ymargin = 8;
 	private Double initialState;
 	private Double start;
 	private Double end;
 	private Integer ticksEvery;
 
-	public PlayerAnalog(String code, ISkinParam skinParam, TimingRuler ruler, boolean compact) {
-		super(code, skinParam, ruler, compact, null);
+	public PlayerAnalog(String code, ISkinParam skinParam, TimingRuler ruler, boolean compact, Stereotype stereotype) {
+		super(code, skinParam, ruler, compact, stereotype);
 		this.suggestedHeight = 100;
 	}
 
@@ -94,16 +101,17 @@ public class PlayerAnalog extends Player {
 	}
 
 	public double getFullHeight(StringBounder stringBounder) {
-		return suggestedHeight;
+		return getHeightForConstraints(stringBounder) + suggestedHeight;
 	}
 
 	public IntricatedPoint getTimeProjection(StringBounder stringBounder, TimeTick tick) {
 		final double x = ruler.getPosInPixel(tick);
-		final double value = getValueAt(tick);
-		return new IntricatedPoint(new Point2D.Double(x, getYpos(value)), new Point2D.Double(x, getYpos(value)));
+		final double value = getValueAt(stringBounder, tick);
+		return new IntricatedPoint(new Point2D.Double(x, getYpos(stringBounder, value)),
+				new Point2D.Double(x, getYpos(stringBounder, value)));
 	}
 
-	private double getValueAt(TimeTick tick) {
+	private double getValueAt(StringBounder stringBounder, TimeTick tick) {
 		final Double result = values.get(tick);
 		if (result != null)
 			return result;
@@ -155,14 +163,14 @@ public class PlayerAnalog extends Player {
 		}
 	}
 
+	@Override
 	public void createConstraint(TimeTick tick1, TimeTick tick2, String message) {
-		throw new UnsupportedOperationException();
+		this.constraints.add(new TimeConstraint(tick1, tick2, message, skinParam));
 	}
 
-	private double getYpos(double value) {
-		final double fullHeight = getFullHeight(null);
-		final double y = (value - getMin()) * (fullHeight - 2 * ymargin) / (getMax() - getMin());
-		return fullHeight - ymargin - y;
+	private double getYpos(StringBounder stringBounder, double value) {
+		final double y = (value - getMin()) * (suggestedHeight - 2 * ymargin) / (getMax() - getMin());
+		return getHeightForConstraints(stringBounder) + suggestedHeight - ymargin - y;
 	}
 
 	public TextBlock getPart1(final double fullAvailableWidth, final double specialVSpace) {
@@ -224,7 +232,7 @@ public class PlayerAnalog extends Player {
 		final TextBlock label = getTextBlock(value);
 		final Dimension2D dim = label.calculateDimension(ug.getStringBounder());
 		ug = ug.apply(UTranslate.dx(fullAvailableWidth - dim.getWidth() - 2));
-		label.drawU(ug.apply(UTranslate.dy(getYpos(value) - dim.getHeight() / 2)));
+		label.drawU(ug.apply(UTranslate.dy(getYpos(ug.getStringBounder(), value) - dim.getHeight() / 2)));
 	}
 
 	private TextBlock getTextBlock(double value) {
@@ -239,7 +247,7 @@ public class PlayerAnalog extends Player {
 		final ULine hline = ULine.hline(ruler.getWidth());
 		for (int i = first; i <= last; i++)
 			if (i % ticksEvery == 0)
-				ug.apply(UTranslate.dy(getYpos(i))).draw(hline);
+				ug.apply(UTranslate.dy(getYpos(ug.getStringBounder(), i))).draw(hline);
 
 	}
 
@@ -253,14 +261,18 @@ public class PlayerAnalog extends Player {
 				double lastx = 0;
 				double lastValue = initialState == null ? 0 : initialState;
 				for (Map.Entry<TimeTick, Double> ent : values.entrySet()) {
-					final double y1 = getYpos(lastValue);
-					final double y2 = getYpos(ent.getValue());
+					final double y1 = getYpos(ug.getStringBounder(), lastValue);
+					final double y2 = getYpos(ug.getStringBounder(), ent.getValue());
 					final double x = ruler.getPosInPixel(ent.getKey());
 					ug.apply(new UTranslate(lastx, y1)).draw(new ULine(x - lastx, y2 - y1));
 					lastx = x;
 					lastValue = ent.getValue();
 				}
-				ug.apply(new UTranslate(lastx, getYpos(lastValue))).draw(ULine.hline(ruler.getWidth() - lastx));
+				ug.apply(new UTranslate(lastx, getYpos(ug.getStringBounder(), lastValue)))
+						.draw(ULine.hline(ruler.getWidth() - lastx));
+
+				drawConstraints(ug.apply(UTranslate.dy(getHeightForConstraints(ug.getStringBounder()))));
+
 			}
 		};
 	}
@@ -275,8 +287,19 @@ public class PlayerAnalog extends Player {
 	}
 
 	@Override
-	protected StyleSignatureBasic getStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram);
+	protected StyleSignature getStyleSignature() {
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, SName.analog)
+				.withTOBECHANGED(stereotype);
+	}
+
+	private void drawConstraints(final UGraphic ug) {
+		for (TimeConstraint constraint : constraints) {
+			constraint.drawU(ug, ruler);
+		}
+	}
+
+	private double getHeightForConstraints(StringBounder stringBounder) {
+		return TimeConstraint.getHeightForConstraints(stringBounder, constraints);
 	}
 
 }

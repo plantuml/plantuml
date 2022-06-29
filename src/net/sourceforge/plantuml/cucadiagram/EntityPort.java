@@ -48,9 +48,9 @@ public class EntityPort {
 	}
 
 	public String getFullString() {
-		if (portId != null) {
+		if (portId != null)
 			return entityUid + ":" + portId;
-		}
+
 		return entityUid;
 	}
 
@@ -59,9 +59,9 @@ public class EntityPort {
 	}
 
 	public String getPrefix() {
-		if (isShielded()) {
+		if (isShielded())
 			return entityUid.substring(0, entityUid.length() - 2);
-		}
+
 		return entityUid;
 	}
 

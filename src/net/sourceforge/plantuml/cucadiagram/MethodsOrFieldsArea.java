@@ -36,8 +36,11 @@
 package net.sourceforge.plantuml.cucadiagram;
 
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.EmbeddedDiagram;
@@ -130,21 +133,37 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlock,
 		return new Dimension2DDouble(x, y);
 	}
 
+	private Collection<String> sortBySize(Collection<String> all) {
+		final List<String> result = new ArrayList<String>(all);
+		Collections.sort(result, new Comparator<String>() {
+			@Override
+			public int compare(String s1, String s2) {
+				final int diff = s2.length() - s1.length();
+				if (diff != 0)
+					return diff;
+				return s1.compareTo(s2);
+			}
+		});
+		return result;
+	}
+
 	@Override
 	public Ports getPorts(StringBounder stringBounder) {
-		final Ports result = new Ports();
+		final Ports ports = new Ports();
 		double y = 0;
+
+		final Collection<String> shortNames = sortBySize(leaf.getPortShortNames());
 
 		for (CharSequence cs : members) {
 			final TextBlock bloc = createTextBlock(cs);
 			final Dimension2D dim = bloc.calculateDimension(stringBounder);
-			final Elected port = getElected(leaf.getPortShortNames(), convert(cs));
-			if (port != null)
-				result.add(port.getShortName(), port.getScore(), y, dim.getHeight());
+			final Elected elected = getElected(convert(cs), shortNames);
+			if (elected != null)
+				ports.add(elected.getShortName(), elected.getScore(), y, dim.getHeight());
 
 			y += dim.getHeight();
 		}
-		return result;
+		return ports;
 	}
 
 	private String convert(CharSequence cs) {
@@ -153,16 +172,16 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlock,
 		return cs.toString();
 	}
 
-	public Elected getElected(Collection<String> shortNames, String cs) {
-		for (String shortName : new HashSet<>(shortNames)) {
-			final int score = getScore(shortName, cs);
+	public Elected getElected(String cs, Collection<String> shortNames) {
+		for (String shortName : shortNames) {
+			final int score = getScore(cs, shortName);
 			if (score > 0)
 				return new Elected(shortName, score);
 		}
 		return null;
 	}
 
-	private int getScore(String shortName, String cs) {
+	private int getScore(String cs, String shortName) {
 		if (cs.matches(".*\\b" + shortName + "\\b.*"))
 			return 100;
 

@@ -41,6 +41,7 @@ public enum SName {
 	activityDiagram, //
 	actor, //
 	agent, //
+	analog, //
 	archimate, //
 	arrow, //
 	artifact, //
