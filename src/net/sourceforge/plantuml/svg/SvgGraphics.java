@@ -71,6 +71,7 @@ import net.sourceforge.plantuml.SignatureUtils;
 import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.code.Base64Coder;
 import net.sourceforge.plantuml.security.SImageIO;
+import net.sourceforge.plantuml.security.SecurityProfile;
 import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.tikz.TikzGraphics;
 import net.sourceforge.plantuml.ugraphic.UGroupType;
@@ -641,8 +642,19 @@ public class SvgGraphics {
 	}
 
 	public void createXml(OutputStream os) throws TransformerException, IOException {
-		createXmlInternal(os);
-//		s = removeXmlHeader(s);
+		if (images.size() == 0) {
+			createXmlInternal(os);
+			return;
+		}
+		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		createXmlInternal(baos);
+		String s = new String(baos.toByteArray());
+		for (Map.Entry<String, String> ent : images.entrySet()) {
+			final String k = "<" + ent.getKey() + "/>";
+			s = s.replace(k, ent.getValue());
+		}
+		s = removeXmlHeader(s);
+		os.write(s.getBytes());
 	}
 
 	private String removeXmlHeader(String s) {
@@ -882,7 +894,30 @@ public class SvgGraphics {
 		ensureVisible(x + image.getWidth(), y + image.getHeight());
 	}
 
+	private final Map<String, String> images = new HashMap<String, String>();
+
+	
+	private void svgImageUnsecure(UImageSvg image, double x, double y) {
+		if (hidden == false) {
+			String svg = manageScale(image);
+			final String pos = "<svg x=\"" + format(x) + "\" y=\"" + format(y) + "\">";
+			svg = pos + svg.substring(5);
+			final String key = "imagesvginlined" + image.getMD5Hex() + images.size();
+			final Element elt = (Element) document.createElement(key);
+			getG().appendChild(elt);
+			images.put(key, svg);
+		}
+		ensureVisible(x, y);
+		ensureVisible(x + image.getData("width"), y + image.getData("height"));
+	}
+
+
 	public void svgImage(UImageSvg image, double x, double y) {
+		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE) {
+			svgImageUnsecure(image, x, y);
+			return;
+		}
+
 		// https://developer.mozilla.org/fr/docs/Web/SVG/Element/image
 		if (hidden == false) {
 			final Element elt = (Element) document.createElement("image");
