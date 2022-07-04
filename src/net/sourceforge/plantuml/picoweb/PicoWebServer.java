@@ -223,6 +223,7 @@ public class PicoWebServer implements Runnable {
 		write(out, "Cache-Control: no-cache");
 		write(out, "Server: PlantUML PicoWebServer " + Version.versionString());
 		write(out, "Date: " + new Date());
+		write(out, "Access-Control-Allow-Origin: *");
 		write(out, "Content-type: " + fileFormatOption.getFileFormat().getMimeType());
 		write(out, "Content-length: " + fileData.length);
 		write(out, "X-PlantUML-Diagram-Width: " + imageData.getWidth());
