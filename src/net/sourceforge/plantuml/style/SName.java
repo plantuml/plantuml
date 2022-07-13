@@ -143,6 +143,7 @@ public enum SName {
 	spotProtocol, //
 	spotStruct, //
 	spotEntity, //
+	spotException, //
 	spotClass, //
 	spotAbstractClass, //
 
