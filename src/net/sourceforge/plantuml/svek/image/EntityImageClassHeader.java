@@ -198,6 +198,8 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 			return StyleSignatureBasic.of(SName.root, SName.element, SName.spot, SName.spotProtocol);
 		case STRUCT:
 			return StyleSignatureBasic.of(SName.root, SName.element, SName.spot, SName.spotStruct);
+		case EXCEPTION:
+			return StyleSignatureBasic.of(SName.root, SName.element, SName.spot, SName.spotException);
 		}
 		throw new IllegalStateException();
 	}
@@ -220,6 +222,8 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 			return 'P';
 		case STRUCT:
 			return 'S';
+		case EXCEPTION:
+			return 'X';
 		}
 		assert false;
 		return '?';

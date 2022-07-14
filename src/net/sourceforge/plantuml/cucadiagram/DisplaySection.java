@@ -95,7 +95,7 @@ public class DisplaySection {
 			return null;
 
 		if (style != null)
-			return style.createTextBlockBordered(display, spriteContainer.getIHtmlColorSet(), spriteContainer);
+			return style.createTextBlockBordered(display, spriteContainer.getIHtmlColorSet(), spriteContainer, null);
 
 		return display.create(fontConfiguration, getHorizontalAlignment(), spriteContainer);
 	}

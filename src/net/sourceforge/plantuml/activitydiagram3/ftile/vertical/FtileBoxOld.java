@@ -57,7 +57,6 @@ import net.sourceforge.plantuml.creole.SheetBlock1;
 import net.sourceforge.plantuml.creole.SheetBlock2;
 import net.sourceforge.plantuml.creole.Stencil;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.Rainbow;
@@ -133,23 +132,6 @@ public class FtileBoxOld extends AbstractFtile {
 			return dim.getWidth() - padding.getRight();
 		}
 
-	}
-
-	public static FtileBoxOld create(ISkinParam skinParam, Display label, Swimlane swimlane, BoxStyle boxStyle,
-			Stereotype stereotype) {
-		final Style style = getDefaultStyleDefinitionActivity().withTOBECHANGED(stereotype)
-				.getMergedStyle(skinParam.getCurrentStyleBuilder());
-		final Style styleArrow = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam.getCurrentStyleBuilder());
-
-		return new FtileBoxOld(skinParam, label, swimlane, boxStyle, style, styleArrow);
-	}
-
-	public static TextBlock createWbs(StyleBuilder styleBuilder, ISkinParam skinParam, Display label,
-			StyleSignatureBasic styleDefinition) {
-		final Style style = styleDefinition.getMergedStyle(styleBuilder);
-		final Style styleArrow = style;
-
-		return new FtileBoxOld(skinParam, label, null, BoxStyle.PLAIN, style, styleArrow);
 	}
 
 	public static TextBlock createWbs(Style style, ISkinParam skinParam, Display label) {
@@ -232,8 +214,7 @@ public class FtileBoxOld extends AbstractFtile {
 			tb.drawU(ug.apply(new UTranslate(dimTotal.getWidth() - tbWidth(stringBounder) - padding.getRight(),
 					padding.getBottom())));
 		else if (horizontalAlignment == HorizontalAlignment.CENTER)
-			tb.drawU(ug.apply(new UTranslate(padding.getRight() + (dimTotal.getWidth() - tbWidth(stringBounder)) / 2,
-					padding.getBottom())));
+			tb.drawU(ug.apply(new UTranslate((dimTotal.getWidth() - tbWidth(stringBounder)) / 2, padding.getBottom())));
 
 	}
 

@@ -151,7 +151,8 @@ public class Ribbon implements PDrawing {
 	private void drawNotes(UGraphic ug, final Position position) {
 		for (TimingNote note : notes)
 			if (note.getPosition() == position) {
-				final double x = ruler.getPosInPixel(note.getWhen());
+				final TimeTick when = note.getWhen();
+				final double x = when == null ? 0 : ruler.getPosInPixel(when);
 				note.drawU(ug.apply(UTranslate.dx(x)));
 			}
 	}

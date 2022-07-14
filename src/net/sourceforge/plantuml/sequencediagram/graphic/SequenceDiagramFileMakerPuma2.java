@@ -149,7 +149,7 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 			final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.title)
 					.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
 			compTitle = style.createTextBlockBordered(page.getTitle(), diagram.getSkinParam().getIHtmlColorSet(),
-					diagram.getSkinParam());
+					diagram.getSkinParam(), Style.ID_TITLE);
 			final Dimension2D dimTitle = compTitle.calculateDimension(stringBounder);
 			area.setTitleArea(dimTitle.getWidth(), dimTitle.getHeight());
 		}
@@ -163,7 +163,7 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 			final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.legend)
 					.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
 			legendBlock = style.createTextBlockBordered(diagram.getLegend().getDisplay(),
-					diagram.getSkinParam().getIHtmlColorSet(), diagram.getSkinParam());
+					diagram.getSkinParam().getIHtmlColorSet(), diagram.getSkinParam(), Style.ID_LEGEND);
 		}
 		final Dimension2D dimLegend = legendBlock.calculateDimension(stringBounder);
 		area.setLegend(dimLegend, isLegendTop(), diagram.getLegend().getHorizontalAlignment());

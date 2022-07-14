@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.ugraphic.UBackground;
 import net.sourceforge.plantuml.ugraphic.UChange;
+import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UEmpty;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UGraphicNo;
@@ -111,6 +112,8 @@ public class Footprint {
 				drawPath(x, y, (UPath) shape);
 			} else if (shape instanceof URectangle) {
 				drawRectangle(x, y, (URectangle) shape);
+			} else if (shape instanceof UEllipse) {
+				drawEllipse(x, y, (UEllipse) shape);
 			} else if (shape instanceof UEmpty) {
 				drawEmpty(x, y, (UEmpty) shape);
 			} else {
@@ -149,6 +152,11 @@ public class Footprint {
 		}
 
 		private void drawRectangle(double x, double y, URectangle rect) {
+			addPoint(x, y);
+			addPoint(x + rect.getWidth(), y + rect.getHeight());
+		}
+
+		private void drawEllipse(double x, double y, UEllipse rect) {
 			addPoint(x, y);
 			addPoint(x + rect.getWidth(), y + rect.getHeight());
 		}

@@ -146,9 +146,9 @@ final public class EntityImpl implements ILeaf, IGroup {
 	private EntityImpl(Ident ident, EntityFactory entityFactory, Code code, Bodier bodier, IGroup parentContainer,
 			String namespaceSeparator, int rawLayout) {
 		this.ident = Objects.requireNonNull(ident);
-		if (entityFactory.namespaceSeparator.V1972()) {
+		if (entityFactory.namespaceSeparator.V1972())
 			code = ident;
-		}
+
 		this.code = Objects.requireNonNull(code);
 		this.entityFactory = entityFactory;
 		this.bodier = bodier;
@@ -188,9 +188,9 @@ final public class EntityImpl implements ILeaf, IGroup {
 		checkNotGroup();
 		Objects.requireNonNull(newType);
 		if (leafType != LeafType.STILL_UNKNOWN) {
-			if (newType == this.leafType) {
+			if (newType == this.leafType)
 				return true;
-			}
+
 			if (leafType != LeafType.ANNOTATION && leafType != LeafType.ABSTRACT_CLASS && leafType != LeafType.CLASS
 					&& leafType != LeafType.ENUM && leafType != LeafType.INTERFACE) {
 				return false;
@@ -202,9 +202,9 @@ final public class EntityImpl implements ILeaf, IGroup {
 				// throw new IllegalArgumentException("newtype=" + newType);
 			}
 		}
-		if (leafType == LeafType.CLASS && newType == LeafType.OBJECT) {
+		if (leafType == LeafType.CLASS && newType == LeafType.OBJECT)
 			bodier.muteClassToObject();
-		}
+
 		this.leafType = newType;
 		this.symbol = newSymbol;
 		return true;
@@ -223,9 +223,9 @@ final public class EntityImpl implements ILeaf, IGroup {
 	}
 
 	public Display getDisplay() {
-		if (intricated) {
+		if (intricated)
 			return entityFactory.getIntricatedDisplay(ident);
-		}
+
 		return display;
 	}
 
@@ -266,12 +266,12 @@ final public class EntityImpl implements ILeaf, IGroup {
 	}
 
 	public boolean hasUrl() {
-		if (Display.isNull(display) == false && display.hasUrl()) {
+		if (Display.isNull(display) == false && display.hasUrl())
 			return true;
-		}
-		if (bodier.hasUrl()) {
+
+		if (bodier.hasUrl())
 			return true;
-		}
+
 		return url != null;
 	}
 
@@ -325,25 +325,25 @@ final public class EntityImpl implements ILeaf, IGroup {
 
 	public EntityPosition getEntityPosition() {
 		checkNotGroup();
-		if (leafType == LeafType.PORT) {
+		if (leafType == LeafType.PORT)
 			return EntityPosition.PORT;
-		}
-		if (leafType == LeafType.PORTIN) {
+
+		if (leafType == LeafType.PORTIN)
 			return EntityPosition.PORTIN;
-		}
-		if (leafType == LeafType.PORTOUT) {
+
+		if (leafType == LeafType.PORTOUT)
 			return EntityPosition.PORTOUT;
-		}
-		if (leafType != LeafType.STATE) {
+
+		if (leafType != LeafType.STATE)
 			return EntityPosition.NORMAL;
-		}
-		if (getParentContainer() instanceof GroupRoot) {
+
+		if (getParentContainer() instanceof GroupRoot)
 			return EntityPosition.NORMAL;
-		}
+
 		final Stereotype stereotype = getStereotype();
-		if (stereotype == null) {
+		if (stereotype == null)
 			return EntityPosition.NORMAL;
-		}
+
 		return EntityPosition.fromStereotype(stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR));
 
 	}
@@ -351,30 +351,29 @@ final public class EntityImpl implements ILeaf, IGroup {
 	// ----------
 
 	private void checkGroup() {
-		if (isGroup() == false) {
+		if (isGroup() == false)
 			throw new UnsupportedOperationException();
-		}
+
 	}
 
 	private void checkNotGroup() {
-		if (isGroup()) {
+		if (isGroup())
 			throw new UnsupportedOperationException();
-		}
+
 	}
 
 	public boolean containsLeafRecurse(ILeaf leaf) {
-		if (Objects.requireNonNull(leaf).isGroup()) {
+		if (Objects.requireNonNull(leaf).isGroup())
 			throw new IllegalArgumentException();
-		}
+
 		checkGroup();
-		if (leaf.getParentContainer() == this) {
+		if (leaf.getParentContainer() == this)
 			return true;
-		}
-		for (IGroup child : getChildren()) {
-			if (child.containsLeafRecurse(leaf)) {
+
+		for (IGroup child : getChildren())
+			if (child.containsLeafRecurse(leaf))
 				return true;
-			}
-		}
+
 		return false;
 	}
 
@@ -382,12 +381,12 @@ final public class EntityImpl implements ILeaf, IGroup {
 		checkGroup();
 		final List<ILeaf> result = new ArrayList<>();
 		for (ILeaf ent : entityFactory.leafs()) {
-			if (ent.isGroup()) {
+			if (ent.isGroup())
 				throw new IllegalStateException();
-			}
-			if (ent.getParentContainer() == this) {
+
+			if (ent.getParentContainer() == this)
 				result.add(ent);
-			}
+
 		}
 		return Collections.unmodifiableCollection(result);
 	}
@@ -395,11 +394,10 @@ final public class EntityImpl implements ILeaf, IGroup {
 	public Collection<IGroup> getChildren() {
 		checkGroup();
 		final Collection<IGroup> result = new ArrayList<>();
-		for (IGroup g : entityFactory.groups()) {
-			if (g != this && g.getParentContainer() == this) {
+		for (IGroup g : entityFactory.groups())
+			if (g != this && g.getParentContainer() == this)
 				result.add(g);
-			}
-		}
+
 		return Collections.unmodifiableCollection(result);
 	}
 
@@ -409,21 +407,20 @@ final public class EntityImpl implements ILeaf, IGroup {
 			return;
 		}
 		checkGroup();
-		if (dest.isGroup() == false) {
+		if (dest.isGroup() == false)
 			throw new UnsupportedOperationException();
-		}
-		for (ILeaf ent : getLeafsDirect()) {
+
+		for (ILeaf ent : getLeafsDirect())
 			((EntityImpl) ent).parentContainer = dest;
-		}
-		for (IGroup g : dest.getChildren()) {
+
+		for (IGroup g : dest.getChildren())
 			// ((EntityImpl) g).parentContainer = dest;
 			throw new IllegalStateException();
-		}
 
 		for (IGroup g : getChildren()) {
-			if (g == dest) {
+			if (g == dest)
 				continue;
-			}
+
 			((EntityImpl) g).parentContainer = dest;
 		}
 
@@ -510,23 +507,23 @@ final public class EntityImpl implements ILeaf, IGroup {
 
 	public PackageStyle getPackageStyle() {
 		checkGroup();
-		if (stereotype == null) {
+		if (stereotype == null)
 			return null;
-		}
+
 		return stereotype.getPackageStyle();
 	}
 
 	public boolean isGroup() {
-		if (groupType != null && leafType != null) {
+		if (groupType != null && leafType != null)
 			throw new IllegalStateException();
-		}
+
 		assert groupType == null || leafType == null;
-		if (groupType != null) {
+		if (groupType != null)
 			return true;
-		}
-		if (leafType != null) {
+
+		if (leafType != null)
 			return false;
-		}
+
 		throw new IllegalStateException();
 	}
 
@@ -537,26 +534,21 @@ final public class EntityImpl implements ILeaf, IGroup {
 		this.svekImage = img;
 		this.url = null;
 
-		for (final Link link : new ArrayList<>(entityFactory.getLinks())) {
-			if (EntityUtils.isPureInnerLink12(this, link)) {
+		for (final Link link : new ArrayList<>(entityFactory.getLinks()))
+			if (EntityUtils.isPureInnerLink12(this, link))
 				entityFactory.removeLink(link);
-			}
-		}
 
 		if (entityFactory.namespaceSeparator.V1972()) {
 			entityFactory.removeGroup(getIdent());
-			for (ILeaf ent : new ArrayList<>(entityFactory.leafs())) {
-				if (this != ent && getIdent().equals(ent.getIdent().parent())) {
+			for (ILeaf ent : new ArrayList<>(entityFactory.leafs()))
+				if (this != ent && getIdent().equals(ent.getIdent().parent()))
 					entityFactory.removeLeaf(ent.getIdent());
-				}
-			}
+
 		} else {
 			entityFactory.removeGroup(getCodeGetName());
-			for (ILeaf ent : new ArrayList<>(entityFactory.leafs())) {
-				if (this != ent && this == ent.getParentContainer()) {
+			for (ILeaf ent : new ArrayList<>(entityFactory.leafs()))
+				if (this != ent && this == ent.getParentContainer())
 					entityFactory.removeLeaf(ent.getCodeGetName());
-				}
-			}
 		}
 
 		entityFactory.addLeaf(this);
@@ -566,9 +558,9 @@ final public class EntityImpl implements ILeaf, IGroup {
 
 	void muteToGroup(Code namespaceNew, GroupType groupType, IGroup parentContainer) {
 		checkNotGroup();
-		if (parentContainer.isGroup() == false) {
+		if (parentContainer.isGroup() == false)
 			throw new IllegalArgumentException();
-		}
+
 		this.namespace = namespaceNew;
 		this.groupType = groupType;
 		this.leafType = null;
@@ -576,9 +568,9 @@ final public class EntityImpl implements ILeaf, IGroup {
 	}
 
 	public USymbol getUSymbol() {
-		if (getLeafType() == LeafType.CIRCLE) {
+		if (getLeafType() == LeafType.CIRCLE)
 			return USymbols.INTERFACE;
-		}
+
 		// if (symbol != null && stereotype != null && stereotype.getSprite() != null) {
 		// return symbol.withStereoAlignment(HorizontalAlignment.RIGHT);
 		// }
@@ -594,74 +586,69 @@ final public class EntityImpl implements ILeaf, IGroup {
 	}
 
 	public boolean isHidden() {
-		if (parentContainer != null && parentContainer.isHidden()) {
+		if (parentContainer != null && parentContainer.isHidden())
 			return true;
-		}
+
 		return isHiddenInternal();
 	}
 
 	private boolean isHiddenInternal() {
 		if (isGroup()) {
-			if (entityFactory.isHidden(this)) {
+			if (entityFactory.isHidden(this))
 				return true;
-			}
-			if (getLeafsDirect().size() == 0) {
+
+			if (getLeafsDirect().size() == 0)
 				return false;
-			}
-			for (ILeaf leaf : getLeafsDirect()) {
-				if (((EntityImpl) leaf).isHiddenInternal() == false) {
+
+			for (ILeaf leaf : getLeafsDirect())
+				if (((EntityImpl) leaf).isHiddenInternal() == false)
 					return false;
-				}
-			}
-			for (IGroup g : getChildren()) {
-				if (((EntityImpl) g).isHiddenInternal() == false) {
+
+			for (IGroup g : getChildren())
+				if (((EntityImpl) g).isHiddenInternal() == false)
 					return false;
-				}
-			}
+
 			return true;
 		}
 		return entityFactory.isHidden(this);
 	}
 
 	public boolean isRemoved() {
-		if (parentContainer != null && parentContainer.isRemoved()) {
+		if (parentContainer != null && parentContainer.isRemoved())
 			return true;
-		}
+
 		return isRemovedInternal();
 	}
 
 	private boolean isRemovedInternal() {
 		if (isGroup()) {
-			if (entityFactory.isRemoved(this)) {
+			if (entityFactory.isRemoved(this))
 				return true;
-			}
-			if (getLeafsDirect().size() == 0 && getChildren().size() == 0) {
+
+			if (getLeafsDirect().size() == 0 && getChildren().size() == 0)
 				return false;
-			}
-			for (ILeaf leaf : getLeafsDirect()) {
-				if (((EntityImpl) leaf).isRemovedInternal() == false) {
+
+			for (ILeaf leaf : getLeafsDirect())
+				if (((EntityImpl) leaf).isRemovedInternal() == false)
 					return false;
-				}
-			}
-			for (IGroup g : getChildren()) {
-				if (((EntityImpl) g).isRemovedInternal() == false) {
+
+			for (IGroup g : getChildren())
+				if (((EntityImpl) g).isRemovedInternal() == false)
 					return false;
-				}
-			}
+
 			return true;
 		}
 		return entityFactory.isRemoved(this);
 	}
 
 	public boolean isAloneAndUnlinked() {
-		if (isGroup()) {
+		if (isGroup())
 			return false;
-		}
-		for (Link link : entityFactory.getLinks()) {
-			if (link.contains(this) && link.getType().isInvisible() == false) {
+
+		for (Link link : entityFactory.getLinks())
+			if (link.contains(this) && link.getType().isInvisible() == false)
 				return false;
-			}
-		}
+
 		return true;
 	}
 
@@ -721,9 +708,9 @@ final public class EntityImpl implements ILeaf, IGroup {
 	}
 
 	public void setSpecificColorTOBEREMOVED(ColorType type, HColor color) {
-		if (color != null) {
+		if (color != null)
 			this.colors = colors.add(type, color);
-		}
+
 	}
 
 	public Collection<String> getPortShortNames() {
@@ -780,9 +767,9 @@ final public class EntityImpl implements ILeaf, IGroup {
 	}
 
 	public String getCodeLine() {
-		if (this.codeLine == null) {
+		if (this.codeLine == null)
 			return null;
-		}
+
 		return "" + this.codeLine.getPosition();
 	}
 

@@ -81,8 +81,7 @@ public abstract class CommandMultilines3<S extends Diagram> implements Command<S
 		if (m1 == false)
 			return CommandControl.OK_PARTIAL;
 
-		actionIfCommandValid();
-		return CommandControl.OK;
+		return finalVerification();
 	}
 
 	public final CommandExecutionResult execute(S system, BlocLines lines) {
@@ -96,7 +95,8 @@ public abstract class CommandMultilines3<S extends Diagram> implements Command<S
 		return false;
 	}
 
-	protected void actionIfCommandValid() {
+	protected CommandControl finalVerification() {
+		return CommandControl.OK;
 	}
 
 	protected final IRegex getStartingPattern() {

@@ -321,9 +321,9 @@ public class Snake implements UShape {
 
 		if (same(this.getLast(), other.getFirst())) {
 			final UPolygon oneOf = other.endDecoration == null ? endDecoration : other.endDecoration;
-			if (this.startDecoration != null || other.startDecoration != null) {
+			if (this.startDecoration != null || other.startDecoration != null)
 				throw new UnsupportedOperationException("Not yet coded: to be done");
-			}
+
 			final ArrayList<Text> mergeTexts = new ArrayList<Text>(this.texts);
 			mergeTexts.addAll(other.texts);
 			final Snake result = new Snake(skinParam, null, color, oneOf, this.worm.merge(other.worm, strategy),

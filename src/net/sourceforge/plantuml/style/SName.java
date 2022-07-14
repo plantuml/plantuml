@@ -41,6 +41,7 @@ public enum SName {
 	activityDiagram, //
 	actor, //
 	agent, //
+	analog, //
 	archimate, //
 	arrow, //
 	artifact, //
@@ -142,6 +143,7 @@ public enum SName {
 	spotProtocol, //
 	spotStruct, //
 	spotEntity, //
+	spotException, //
 	spotClass, //
 	spotAbstractClass, //
 

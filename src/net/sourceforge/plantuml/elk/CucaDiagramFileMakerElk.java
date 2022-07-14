@@ -110,6 +110,7 @@ import net.sourceforge.plantuml.graphic.QuoteUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
+import net.sourceforge.plantuml.graphic.USymbolFolder;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
@@ -310,8 +311,16 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 			// Unfortunately, we have to translate "edge" in its own "cluster" coordinate
 			final Point2D translate = getPosition(edge.getContainingNode());
 
+			final double magicY2 = 0;
+			final IEntity dest = link.getEntity2();
+			if (dest.getUSymbol() instanceof USymbolFolder) {
+//				System.err.println("dest=" + dest);
+//				final IEntityImage image = printEntityInternal((ILeaf) dest);
+//				System.err.println("image=" + image);
+
+			}
 			final ElkPath elkPath = new ElkPath(diagram, SName.classDiagram, link, edge, getLabel(link),
-					getQualifier(link, 1), getQualifier(link, 2));
+					getQualifier(link, 1), getQualifier(link, 2), magicY2);
 			elkPath.drawU(ug.apply(new UTranslate(translate)));
 		}
 

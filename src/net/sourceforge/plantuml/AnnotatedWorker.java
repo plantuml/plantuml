@@ -179,7 +179,8 @@ public class AnnotatedWorker {
 
 		final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.caption)
 				.getMergedStyle(skinParam.getCurrentStyleBuilder());
-		return style.createTextBlockBordered(caption.getDisplay(), skinParam.getIHtmlColorSet(), skinParam);
+		return style.createTextBlockBordered(caption.getDisplay(), skinParam.getIHtmlColorSet(), skinParam,
+				Style.ID_CAPTION);
 
 	}
 
@@ -191,7 +192,7 @@ public class AnnotatedWorker {
 		final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.title)
 				.getMergedStyle(skinParam.getCurrentStyleBuilder());
 		final TextBlock block = style.createTextBlockBordered(title.getDisplay(), skinParam.getIHtmlColorSet(),
-				skinParam);
+				skinParam, Style.ID_TITLE);
 
 		return DecorateEntityImage.addTop(original, block, HorizontalAlignment.CENTER);
 	}

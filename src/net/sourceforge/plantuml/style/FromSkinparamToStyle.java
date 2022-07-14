@@ -144,6 +144,7 @@ public class FromSkinparamToStyle {
 		addConvert("arrowThickness", PName.LineThickness, SName.arrow);
 		addConvert("arrowColor", PName.LineColor, SName.arrow);
 		addConvert("arrowStyle", PName.LineStyle, SName.arrow);
+		addConvert("arrowHeadColor", PName.HeadColor, SName.arrow);
 
 		addConvert("defaulttextalignment", PName.HorizontalAlignment, SName.root);
 		addConvert("defaultFontName", PName.FontName, SName.root);
@@ -210,14 +211,21 @@ public class FromSkinparamToStyle {
 		addMagic(SName.usecase);
 		addMagic(SName.map);
 		addMagic(SName.archimate);
-		
-		
+
+		addConvert("IconPrivateColor", PName.LineColor, SName.visibilityIcon, SName.private_);
+		addConvert("IconPrivateBackgroundColor", PName.BackGroundColor, SName.visibilityIcon, SName.private_);
+		addConvert("IconPackageColor", PName.LineColor, SName.visibilityIcon, SName.package_);
+		addConvert("IconPackageBackgroundColor", PName.BackGroundColor, SName.visibilityIcon, SName.package_);
+		addConvert("IconProtectedColor", PName.LineColor, SName.visibilityIcon, SName.protected_);
+		addConvert("IconProtectedBackgroundColor", PName.BackGroundColor, SName.visibilityIcon, SName.protected_);
+		addConvert("IconPublicColor", PName.LineColor, SName.visibilityIcon, SName.public_);
+		addConvert("IconPublicBackgroundColor", PName.BackGroundColor, SName.visibilityIcon, SName.public_);
+
 //		addConvert("nodeStereotypeFontSize", PName.FontSize, SName.node, SName.stereotype);
 //		addConvert("sequenceStereotypeFontSize", PName.FontSize, SName.stereotype);
 //		addConvert("sequenceStereotypeFontStyle", PName.FontStyle, SName.stereotype);
 //		addConvert("sequenceStereotypeFontColor", PName.FontColor, SName.stereotype);
 //		addConvert("sequenceStereotypeFontName", PName.FontName, SName.stereotype);
-
 
 	}
 
@@ -231,7 +239,7 @@ public class FromSkinparamToStyle {
 		addConvert(cleanName + "BorderStyle", PName.LineStyle, sname);
 		addConFont(cleanName, sname);
 		addConvert(cleanName + "Shadowing", PName.Shadowing, sname);
-		
+
 		addConvert(cleanName + "StereotypeFontSize", PName.FontSize, SName.stereotype, sname);
 		addConvert(cleanName + "StereotypeFontStyle", PName.FontStyle, SName.stereotype, sname);
 		addConvert(cleanName + "StereotypeFontColor", PName.FontColor, SName.stereotype, sname);

@@ -169,14 +169,14 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 
 		double shadow = 0;
 
-		HColor classBorder = lineConfig.getColors().getColor(ColorType.LINE);
+		HColor borderColor = lineConfig.getColors().getColor(ColorType.LINE);
 		HColor headerBackcolor = getEntity().getColors().getColor(ColorType.HEADER);
 		HColor backcolor = getEntity().getColors().getColor(ColorType.BACK);
 
 		shadow = getStyle().value(PName.Shadowing).asDouble();
 
-		if (classBorder == null)
-			classBorder = getStyle().value(PName.LineColor).asColor(getSkinParam().getThemeStyle(),
+		if (borderColor == null)
+			borderColor = getStyle().value(PName.LineColor).asColor(getSkinParam().getThemeStyle(),
 					getSkinParam().getIHtmlColorSet());
 
 		if (headerBackcolor == null)
@@ -189,7 +189,7 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 
 		rect.setDeltaShadow(shadow);
 
-		ug = ug.apply(classBorder);
+		ug = ug.apply(borderColor);
 		ug = ug.apply(backcolor.bg());
 
 		final UStroke stroke = getStyle().getStroke(lineConfig.getColors());

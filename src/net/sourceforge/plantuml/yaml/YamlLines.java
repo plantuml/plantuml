@@ -44,15 +44,15 @@ import java.util.regex.Pattern;
 
 public class YamlLines implements Iterable<String> {
 
-	public static final String KEY = "([^:\\s]+)";
+	public static final String KEY = "([^:]+)";
 
 	private List<String> lines = new ArrayList<>();
 
 	public YamlLines(List<String> rawLines) {
 		for (String s : rawLines) {
-			if (s.startsWith("#")) {
+			if (s.startsWith("#"))
 				continue;
-			}
+
 			s = removeDiese(s);
 			if (s.trim().length() == 0)
 				continue;
@@ -79,9 +79,9 @@ public class YamlLines implements Iterable<String> {
 
 	private String removeDiese(String s) {
 		final int idx = s.indexOf(" #");
-		if (idx == -1) {
+		if (idx == -1)
 			return s;
-		}
+
 		return s.substring(0, idx);
 	}
 
@@ -104,9 +104,9 @@ public class YamlLines implements Iterable<String> {
 	}
 
 	private void removeFirstCols(int startingEmptyCols) {
-		if (startingEmptyCols == 0) {
+		if (startingEmptyCols == 0)
 			return;
-		}
+
 		for (ListIterator<String> it = lines.listIterator(); it.hasNext();) {
 			final String s = it.next().substring(startingEmptyCols);
 			it.set(s);
@@ -117,9 +117,8 @@ public class YamlLines implements Iterable<String> {
 		int result = Integer.MAX_VALUE;
 		for (String s : lines) {
 			result = Math.min(result, startingSpaces(s));
-			if (result == 0) {
+			if (result == 0)
 				return 0;
-			}
 		}
 		return result;
 	}
@@ -127,9 +126,9 @@ public class YamlLines implements Iterable<String> {
 	private static int startingSpaces(String s) {
 		final Pattern p1 = Pattern.compile("^(\\s*).*");
 		final Matcher m1 = p1.matcher(s);
-		if (m1.matches()) {
+		if (m1.matches())
 			return m1.group(1).length();
-		}
+
 		return 0;
 	}
 
