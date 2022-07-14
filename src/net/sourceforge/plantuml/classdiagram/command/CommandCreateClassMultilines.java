@@ -93,7 +93,7 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 		return RegexConcat.build(CommandCreateClassMultilines.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("VISIBILITY", "(" + VisibilityModifier.regexForVisibilityCharacterInClassName() + ")?"), //
 				new RegexLeaf("TYPE",
-						"(interface|enum|annotation|abstract[%s]+class|abstract|class|entity|protocol|struct)"), //
+						"(interface|enum|annotation|abstract[%s]+class|abstract|class|entity|protocol|struct|exception)"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexOr(//
 						new RegexConcat(//
