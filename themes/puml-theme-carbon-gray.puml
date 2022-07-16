@@ -529,6 +529,26 @@ skinparam useBetaStyle true
 
 <style>
 
+boardDiagram {
+	node {
+	$primary_scheme ()
+    BackGroundColor  $PRIMARY
+    LineColor $PRIMARY_DARK
+    FontName IBM Plex Sans, Noto Sans, Verdana
+    'FontColor 
+    FontSize 12
+    'FontStyle bold
+    RoundCorner 0
+    'LineThickness 2
+    'LineStyle 10;5
+    separator {
+      LineThickness $LINE_THICKNESS
+      LineColor $PRIMARY_DARK
+      'LineStyle 1;5
+    }
+  }
+}
+
 ganttDiagram {
 	
   task {
@@ -569,6 +589,7 @@ ganttDiagram {
 		'LineStyle 8.0;13.0
 		'LineThickness 3.0
 	}
+
   milestone {
 		FontColor $PRIMARY_TEXT
 		FontSize 12
@@ -647,6 +668,16 @@ mindmapDiagram {
   }
 }
 
+'Salt Diagram only has limited skinning
+saltDiagram {
+  BackGroundColor $BG_COLOR
+  'Fontname Monospaced
+  'FontSize 10
+  'FontStyle italic
+  'LineThickness 0.5
+  'LineColor PRIMARY_DARK
+}
+
 timingDiagram {
   document {
     BackGroundColor $BG_COLOR
@@ -700,6 +731,10 @@ wbsDiagram {
   }
   
   noteBorderColor $DARK
+}
+
+'Placeholder for adding wirediagram skins
+wireDiagram {
 }
 
 yamlDiagram {
