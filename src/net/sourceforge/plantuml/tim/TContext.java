@@ -113,6 +113,7 @@ import net.sourceforge.plantuml.tim.stdlib.LoadJson;
 import net.sourceforge.plantuml.tim.stdlib.LogicalNot;
 import net.sourceforge.plantuml.tim.stdlib.Lower;
 import net.sourceforge.plantuml.tim.stdlib.Newline;
+import net.sourceforge.plantuml.tim.stdlib.Now;
 import net.sourceforge.plantuml.tim.stdlib.RetrieveProcedure;
 import net.sourceforge.plantuml.tim.stdlib.ReverseColor;
 import net.sourceforge.plantuml.tim.stdlib.ReverseHsluvColor;
@@ -189,6 +190,7 @@ public class TContext {
 		functionsSet.addFunction(new GetJsonType());
 		functionsSet.addFunction(new SplitStr());
 		functionsSet.addFunction(new JsonKeyExists());
+		functionsSet.addFunction(new Now());
 		// %standard_exists_function
 		// %str_replace
 		// !exit
