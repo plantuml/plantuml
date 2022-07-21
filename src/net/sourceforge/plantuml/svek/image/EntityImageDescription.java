@@ -162,13 +162,11 @@ public class EntityImageDescription extends AbstractEntityImage {
 
 		final Display codeDisplay = Display.getWithNewlines(entity.getCodeGetName());
 		if ((entity.getDisplay().equals(codeDisplay) && symbol.getSName() == SName.package_)
-				|| entity.getDisplay().isWhite()) {
+				|| entity.getDisplay().isWhite())
 			desc = TextBlockUtils.empty(getSkinParam().minClassWidth(), 0);
-		} else {
-			final HorizontalAlignment align = getSkinParam().getDefaultTextAlignment(defaultAlign);
-			desc = BodyFactory.create3(entity.getDisplay(), getSkinParam(), align, fcTitle, getSkinParam().wrapWidth(),
-					style);
-		}
+		else
+			desc = BodyFactory.create3(entity.getDisplay(), getSkinParam(), defaultAlign, fcTitle,
+					getSkinParam().wrapWidth(), style);
 
 		stereo = TextBlockUtils.empty(0, 0);
 
