@@ -92,9 +92,8 @@ public abstract class CommandParticipant extends SingleLineCommand2<SequenceDiag
 		}
 
 		Display strings = Display.NULL;
-		if (arg.get("FULL", 0) != null) {
+		if (arg.get("FULL", 0) != null)
 			strings = Display.getWithNewlines(arg.get("FULL", 0));
-		}
 
 		final String typeString1 = arg.get("TYPE", 0);
 		final String typeCreate1 = arg.get("CREATE", 0);
@@ -136,9 +135,8 @@ public abstract class CommandParticipant extends SingleLineCommand2<SequenceDiag
 
 		if (create) {
 			final String error = diagram.activate(participant, LifeEventType.CREATE, null);
-			if (error != null) {
+			if (error != null)
 				return CommandExecutionResult.error(error);
-			}
 
 		}
 
