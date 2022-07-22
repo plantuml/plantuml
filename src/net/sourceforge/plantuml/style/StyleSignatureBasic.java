@@ -132,18 +132,43 @@ public class StyleSignatureBasic implements StyleSignature {
 	}
 
 	public boolean matchAll(StyleSignatureBasic other) {
-		if (other.isStarred() && names.contains("*") == false)
+		final boolean namesContainsStar = names.contains("*");
+		if (other.isStarred() && namesContainsStar == false)
 			return false;
+
+		final int depthInNames = depthFromTokens(other.names);
 
 		for (String token : names) {
 			if (token.equals("*"))
 				continue;
 
-			if (other.names.contains(token) == false)
-				return false;
+			if (namesContainsStar && depthInNames != -1 && depthFromToken(token) != -1) {
+				// depth comparaison
+				if (depthInNames < depthFromToken(token))
+					return false;
+			} else {
+				if (other.names.contains(token) == false)
+					return false;
+			}
 
 		}
 		return true;
+	}
+
+	private static int depthFromToken(String token) {
+		if (token.startsWith("depth("))
+			return Integer.parseInt(token.substring("depth(".length(), token.length() - 1));
+		return -1;
+	}
+
+	private static int depthFromTokens(Collection<String> tokens) {
+		for (String token : tokens) {
+			final int depth = depthFromToken(token);
+			if (depth != -1)
+				return depth;
+		}
+		return -1;
+
 	}
 
 	public final Set<String> getNames() {
@@ -159,7 +184,7 @@ public class StyleSignatureBasic implements StyleSignature {
 	}
 
 	public StyleSignature forStereotypeItself(Stereotype stereotype) {
-		if (stereotype == null || stereotype.getStyleNames().size()==0)
+		if (stereotype == null || stereotype.getStyleNames().size() == 0)
 			return this;
 
 		final StyleSignatures result = new StyleSignatures();
@@ -175,7 +200,7 @@ public class StyleSignatureBasic implements StyleSignature {
 
 	@Override
 	public StyleSignature withTOBECHANGED(Stereotype stereotype) {
-		if (stereotype == null || stereotype.getStyleNames().size()==0)
+		if (stereotype == null || stereotype.getStyleNames().size() == 0)
 			return this;
 
 		final StyleSignatures result = new StyleSignatures();

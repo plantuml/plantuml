@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.mindmap;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,19 +43,17 @@ import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SkinParamColors;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileBoxOld;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.creole.CreoleMode;
-import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -65,55 +62,16 @@ import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class FingerImpl implements Finger, UDrawable {
 
-	private final Display label;
-	private final HColor backColor;
-	private final String stereotype;
+	private final Idea idea;
 	private final ISkinParam skinParam;
-	private final StyleBuilder styleBuilder;
-	private final IdeaShape shape;
 	private final Direction direction;
-	private final int level;
 	private boolean drawPhalanx = true;
-	private double marginLeft = 10;
-	private double marginRight = 10;
-	private double marginTop = 10;
-	private double marginBottom = 10;
 
 	private final List<FingerImpl> nail = new ArrayList<>();
 	private Tetris tetris = null;
 
-	private StyleSignatureBasic getDefaultStyleDefinitionNode() {
-		final String depth = SName.depth(level);
-		if (level == 0) {
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.rootNode)
-					.add(stereotype).add(depth);
-		}
-		if (shape == IdeaShape.NONE && nail.size() == 0) {
-			return StyleSignatureBasic
-					.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.leafNode, SName.boxless)
-					.add(stereotype).add(depth);
-		}
-		if (shape == IdeaShape.NONE) {
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.boxless)
-					.add(stereotype).add(depth);
-		}
-		if (nail.size() == 0) {
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.leafNode)
-					.add(stereotype).add(depth);
-		}
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.mindmapDiagram, SName.node).add(stereotype)
-				.add(depth);
-	}
-
-	public StyleSignatureBasic getDefaultStyleDefinitionArrow() {
-		final String depth = SName.depth(level);
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.mindmapDiagram, SName.arrow).add(stereotype)
-				.add(depth);
-	}
-
 	public static FingerImpl build(Idea idea, ISkinParam skinParam, Direction direction) {
-		final FingerImpl result = new FingerImpl(idea.getStyleBuilder(), idea.getBackColor(), idea.getLabel(),
-				skinParam, idea.getShape(), direction, idea.getLevel(), idea.getStereotype());
+		final FingerImpl result = new FingerImpl(idea, skinParam, direction);
 		for (Idea child : idea.getChildren())
 			result.addInNail(build(child, skinParam, direction));
 
@@ -124,21 +82,14 @@ public class FingerImpl implements Finger, UDrawable {
 		nail.add(child);
 	}
 
-	private FingerImpl(StyleBuilder styleBuilder, HColor backColor, Display label, ISkinParam skinParam,
-			IdeaShape shape, Direction direction, int level, String stereotype) {
-		this.backColor = backColor;
-		this.stereotype = stereotype;
-		this.level = level;
-		this.label = label;
+	private FingerImpl(Idea idea, ISkinParam skinParam, Direction direction) {
+		this.idea = idea;
 		this.skinParam = skinParam;
-		this.shape = shape;
-		this.styleBuilder = styleBuilder;
 		this.direction = direction;
-		final Style styleNode = getDefaultStyleDefinitionNode().getMergedStyle(styleBuilder);
-		this.marginLeft = styleNode.getMargin().getLeft();
-		this.marginRight = styleNode.getMargin().getRight();
-		this.marginTop = styleNode.getMargin().getTop();
-		this.marginBottom = styleNode.getMargin().getBottom();
+	}
+
+	private ClockwiseTopRightBottomLeft getMargin() {
+		return getStyle().getMargin();
 	}
 
 	public void drawU(final UGraphic ug) {
@@ -166,12 +117,12 @@ public class FingerImpl implements Finger, UDrawable {
 	}
 
 	private HColor getLinkColor() {
-		final Style styleArrow = getDefaultStyleDefinitionArrow().getMergedStyle(styleBuilder);
+		final Style styleArrow = getStyleArrow();
 		return styleArrow.value(PName.LineColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
 	}
 
 	private UStroke getUStroke() {
-		final Style styleArrow = getDefaultStyleDefinitionArrow().getMergedStyle(styleBuilder);
+		final Style styleArrow = getStyleArrow();
 		return styleArrow.getStroke();
 	}
 
@@ -190,7 +141,7 @@ public class FingerImpl implements Finger, UDrawable {
 
 	private Tetris getTetris(StringBounder stringBounder) {
 		if (tetris == null) {
-			tetris = new Tetris(label.toString());
+			tetris = new Tetris(idea.getLabel().toString());
 			for (FingerImpl child : nail)
 				tetris.add(child.asSymetricalTee(stringBounder));
 
@@ -211,11 +162,11 @@ public class FingerImpl implements Finger, UDrawable {
 	}
 
 	private double getX1() {
-		return marginLeft;
+		return getMargin().getLeft();
 	}
 
 	private double getX2() {
-		return marginRight + 30;
+		return getMargin().getRight() + 30;
 	}
 
 	public double getX12() {
@@ -234,21 +185,35 @@ public class FingerImpl implements Finger, UDrawable {
 		if (drawPhalanx == false)
 			return TextBlockUtils.empty(0, 0);
 
-		if (shape == IdeaShape.BOX) {
-			final ISkinParam foo = new SkinParamColors(skinParam, Colors.empty().add(ColorType.BACK, backColor));
-			final TextBlock box = FtileBoxOld.createMindMap(styleBuilder, foo, label, getDefaultStyleDefinitionNode());
-			return TextBlockUtils.withMargin(box, 0, 0, marginTop, marginBottom);
+		final Style style = getStyle();
+
+		if (idea.getShape() == IdeaShape.BOX) {
+			final ISkinParam foo = new SkinParamColors(skinParam,
+					Colors.empty().add(ColorType.BACK, idea.getBackColor()));
+			final TextBlock box = FtileBoxOld.createMindMap(style, foo, idea.getLabel());
+			final ClockwiseTopRightBottomLeft margin = getMargin();
+			return TextBlockUtils.withMargin(box, 0, 0, margin.getTop(), margin.getBottom());
 		}
 
-		assert shape == IdeaShape.NONE;
-		final Style styleNode = getDefaultStyleDefinitionNode().getMergedStyle(styleBuilder);
-		final TextBlock text = label.create0(
-				styleNode.getFontConfiguration(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet()),
-				styleNode.getHorizontalAlignment(), skinParam, styleNode.wrapWidth(), CreoleMode.FULL, null, null);
+		assert idea.getShape() == IdeaShape.NONE;
+		final TextBlock text = idea.getLabel().create0(
+				style.getFontConfiguration(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet()),
+				style.getHorizontalAlignment(), skinParam, style.wrapWidth(), CreoleMode.FULL, null, null);
 		if (direction == Direction.RIGHT)
 			return TextBlockUtils.withMargin(text, 3, 0, 1, 1);
 
 		return TextBlockUtils.withMargin(text, 0, 3, 1, 1);
+	}
+
+	private Style getStyle() {
+		if (nail.size() != idea.getChildren().size())
+			throw new IllegalStateException();
+
+		return idea.getStyle();
+	}
+
+	private Style getStyleArrow() {
+		return idea.getStyleArrow();
 	}
 
 	public double getNailThickness(StringBounder stringBounder) {

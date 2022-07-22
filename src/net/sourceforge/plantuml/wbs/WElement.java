@@ -54,7 +54,7 @@ import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
-final class WElement {
+final public class WElement {
 
 	private final HColor backColor;
 	private final Display label;
@@ -95,7 +95,7 @@ final class WElement {
 		return new SkinParamColors(skinParam, Colors.empty().add(ColorType.BACK, backColor));
 	}
 
-	private static final int STEP_BY_PARENT = 1000_1000;
+	public static final int STEP_BY_PARENT = 1000_1000;
 
 	public Style getStyle() {
 		int deltaPriority = STEP_BY_PARENT * 1000;

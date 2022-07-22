@@ -71,18 +71,16 @@ public class CommandWBSItem extends SingleLineCommand2<WBSDiagram> {
 		final String label = arg.get("LABEL", 0);
 		final String stringColor = arg.get("BACKCOLOR", 0);
 		HColor backColor = null;
-		if (stringColor != null) {
+		if (stringColor != null)
 			backColor = diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(),
 					stringColor);
-		}
 
 		Direction dir = type.contains("-") ? Direction.LEFT : Direction.RIGHT;
 		final String direction = arg.get("DIRECTION", 0);
-		if ("<".equals(direction)) {
+		if ("<".equals(direction))
 			dir = Direction.LEFT;
-		} else if (">".equals(direction)) {
+		else if (">".equals(direction))
 			dir = Direction.RIGHT;
-		}
 
 		return diagram.addIdea(backColor, diagram.getSmartLevel(type), label, dir,
 				IdeaShape.fromDesc(arg.get("SHAPE", 0)));

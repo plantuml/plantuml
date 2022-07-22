@@ -68,7 +68,6 @@ import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -139,11 +138,8 @@ public class FtileBoxOld extends AbstractFtile {
 		return new FtileBoxOld(skinParam, label, null, BoxStyle.PLAIN, style, styleArrow);
 	}
 
-	public static TextBlock createMindMap(StyleBuilder styleBuilder, ISkinParam skinParam, Display label,
-			StyleSignatureBasic styleDefinition) {
-		final Style style = styleDefinition.getMergedStyle(styleBuilder);
-		final Style styleArrow = style;
-		return new FtileBoxOld(skinParam, label, null, BoxStyle.PLAIN, style, styleArrow);
+	public static TextBlock createMindMap(Style style, ISkinParam skinParam, Display label) {
+		return new FtileBoxOld(skinParam, label, null, BoxStyle.PLAIN, style, style);
 	}
 
 	private FtileBoxOld(ISkinParam skinParam, Display label, Swimlane swimlane, BoxStyle boxStyle, Style style,
