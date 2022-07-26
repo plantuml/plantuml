@@ -67,38 +67,38 @@ import net.sourceforge.plantuml.tim.expression.TValue;
  * <pre>
  *     &#64; startuml
  *     ' loads a local file
- *     !$JSON_LOCAL_RELATIVE=%load_json("file.json")
+ *     !$JSON_LOCAL_RELATIVE=%loadJSON("file.json")
  *
  *     ' loads a local file from an absolute file path
- *     !$JSON_LOCAL_ABS=%load_json("c:/loaded/data/file.json")
+ *     !$JSON_LOCAL_ABS=%loadJSON("c:/loaded/data/file.json")
  *
  *     ' tries to load a local file and returns an empty JSON
- *     !$JSON_LOCAL_REL_EMPTY=%load_json("file-not-existing.json")
+ *     !$JSON_LOCAL_REL_EMPTY=%loadJSON("file-not-existing.json")
  *
  *     ' tries to load a local file and returns an default JSON
  *     !$DEF_JSON={"status":"No data found"}
- *     !$JSON_LOCAL_REL_DEF=%load_json("file-not-existing.json", $DEF_JSON)
+ *     !$JSON_LOCAL_REL_DEF=%loadJSON("file-not-existing.json", $DEF_JSON)
  *
  *     ' loads a local file with a specific charset (default is UTF-8)
- *     !$JSON_LOCAL_RELATIVE_CHARSET=%load_json("file.json", "{}", "iso-8859-1")
+ *     !$JSON_LOCAL_RELATIVE_CHARSET=%loadJSON("file.json", "{}", "iso-8859-1")
  *
  *     ' loads a remote JSON from an endpoint (and default, if not reachable)
  *     !$STATUS_NO_CONNECTION={"status": "No connection"}
- *     !$JSON_REMOTE_DEF=%load_json("https://localhost:7778/management/health", $STATUS_NO_CONNECTION)
+ *     !$JSON_REMOTE_DEF=%loadJSON("https://localhost:7778/management/health", $STATUS_NO_CONNECTION)
  *     status -> $JSON_REMOTE_DEF.status
  *     &#64; enduml
  * </pre>
  * 
  * @author Aljoscha Rittner
  */
-public class LoadJson extends SimpleReturnFunction {
+public class LoadJsonLegacy extends SimpleReturnFunction {
 
 	private static final String VALUE_CHARSET_DEFAULT = "UTF-8";
 
 	private static final String VALUE_DEFAULT_DEFAULT = "{}";
 
 	public TFunctionSignature getSignature() {
-		return new TFunctionSignature("%load_json", 3);
+		return new TFunctionSignature("%loadJSON", 3);
 	}
 
 	public boolean canCover(int nbArg, Set<String> namedArgument) {

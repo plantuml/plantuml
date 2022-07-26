@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.mindmap;
 
-import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -74,7 +73,7 @@ public class CommandMindMapPlus extends SingleLineCommand2<MindMapDiagram> {
 			backColor = diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(),
 					stringColor);
 		}
-		final Direction direction = type.contains("-") ? Direction.LEFT : Direction.RIGHT;
+		final boolean direction = type.contains("-") ? false : true;
 		return diagram.addIdea(backColor, type.length() - 1, Display.getWithNewlines(label),
 				IdeaShape.fromDesc(arg.get("SHAPE", 0)), direction);
 	}

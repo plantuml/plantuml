@@ -37,14 +37,14 @@ package net.sourceforge.plantuml.command;
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.Rankdir;
 
-public class CommandRankDir extends SingleLineCommand2<CucaDiagram> {
+public class CommandRankDir extends SingleLineCommand2<TitledDiagram> {
 
 	public CommandRankDir() {
 		super(getRegexConcat());
@@ -59,7 +59,7 @@ public class CommandRankDir extends SingleLineCommand2<CucaDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(CucaDiagram diagram, LineLocation location, RegexResult arg) {
+	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg) {
 		final String s = StringUtils.goUpperCase(arg.get("DIRECTION", 0)).replace(' ', '_');
 		((SkinParam) diagram.getSkinParam()).setRankdir(Rankdir.valueOf(s));
 		// diagram.setRankdir(Rankdir.valueOf(s));

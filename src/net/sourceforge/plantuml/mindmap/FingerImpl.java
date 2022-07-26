@@ -39,12 +39,12 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SkinParamColors;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileBoxOld;
 import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.creole.CreoleMode;
+import net.sourceforge.plantuml.cucadiagram.Rankdir;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
@@ -64,13 +64,13 @@ public class FingerImpl implements Finger, UDrawable {
 
 	private final Idea idea;
 	private final ISkinParam skinParam;
-	private final Direction direction;
+	private final int direction;
 	private boolean drawPhalanx = true;
 
 	private final List<FingerImpl> nail = new ArrayList<>();
 	private Tetris tetris = null;
 
-	public static FingerImpl build(Idea idea, ISkinParam skinParam, Direction direction) {
+	public static FingerImpl build(Idea idea, ISkinParam skinParam, boolean direction) {
 		final FingerImpl result = new FingerImpl(idea, skinParam, direction);
 		for (Idea child : idea.getChildren())
 			result.addInNail(build(child, skinParam, direction));
@@ -78,14 +78,18 @@ public class FingerImpl implements Finger, UDrawable {
 		return result;
 	}
 
+	private boolean isTopToBottom() {
+		return skinParam.getRankdir() == Rankdir.TOP_TO_BOTTOM;
+	}
+
 	public void addInNail(FingerImpl child) {
 		nail.add(child);
 	}
 
-	private FingerImpl(Idea idea, ISkinParam skinParam, Direction direction) {
+	private FingerImpl(Idea idea, ISkinParam skinParam, boolean direction) {
 		this.idea = idea;
 		this.skinParam = skinParam;
-		this.direction = direction;
+		this.direction = direction ? 1 : -1;
 	}
 
 	private ClockwiseTopRightBottomLeft getMargin() {
@@ -97,19 +101,32 @@ public class FingerImpl implements Finger, UDrawable {
 		final TextBlock phalanx = getPhalanx();
 		final Dimension2D dimPhalanx = phalanx.calculateDimension(stringBounder);
 		if (drawPhalanx) {
-			final double posY = -getPhalanxThickness(stringBounder) / 2;
-			final double posX = direction == Direction.RIGHT ? 0 : -dimPhalanx.getWidth();
+			final double posX;
+			final double posY;
+			if (isTopToBottom()) {
+				posX = -getPhalanxThickness(stringBounder) / 2;
+				posY = direction == 1 ? 0 : -dimPhalanx.getHeight();
+			} else {
+				posX = direction == 1 ? 0 : -dimPhalanx.getWidth();
+				posY = -getPhalanxThickness(stringBounder) / 2;
+			}
 			phalanx.drawU(ug.apply(new UTranslate(posX, posY)));
 		}
-		final Point2D p1 = new Point2D.Double(
-				direction == Direction.RIGHT ? dimPhalanx.getWidth() : -dimPhalanx.getWidth(), 0);
+		final Point2D p1;
+		if (isTopToBottom())
+			p1 = new Point2D.Double(0, direction * dimPhalanx.getHeight());
+		else
+			p1 = new Point2D.Double(direction * dimPhalanx.getWidth(), 0);
 
 		for (int i = 0; i < nail.size(); i++) {
 			final FingerImpl child = nail.get(i);
 			final SymetricalTeePositioned stp = getTetris(stringBounder).getElements().get(i);
-			final double x = direction == Direction.RIGHT ? dimPhalanx.getWidth() + getX12()
-					: -dimPhalanx.getWidth() - getX12();
-			final Point2D p2 = new Point2D.Double(x, stp.getY());
+			final Point2D p2;
+			if (isTopToBottom())
+				p2 = new Point2D.Double(stp.getY(), direction * (dimPhalanx.getHeight() + getX12()));
+			else
+				p2 = new Point2D.Double(direction * (dimPhalanx.getWidth() + getX12()), stp.getY());
+
 			child.drawU(ug.apply(new UTranslate(p2)));
 			drawLine(ug.apply(getLinkColor()).apply(getUStroke()), p1, p2);
 		}
@@ -127,14 +144,19 @@ public class FingerImpl implements Finger, UDrawable {
 	}
 
 	private void drawLine(UGraphic ug, Point2D p1, Point2D p2) {
-		// final ULine line = new ULine(p1, p2);
-		// ug.apply(new UTranslate(p1)).draw(line);
 		final UPath path = new UPath();
-		final double delta1 = direction == Direction.RIGHT ? 10 : -10;
-		final double delta2 = direction == Direction.RIGHT ? 25 : -25;
 		path.moveTo(p1);
-		path.lineTo(p1.getX() + delta1, p1.getY());
-		path.cubicTo(p1.getX() + delta2, p1.getY(), p2.getX() - delta2, p2.getY(), p2.getX() - delta1, p2.getY());
+		if (isTopToBottom()) {
+			final double delta1 = direction * 3;
+			final double delta2 = direction * 10;
+			path.lineTo(p1.getX(), p1.getY() + delta1);
+			path.cubicTo(p1.getX(), p1.getY() + delta2, p2.getX(), p2.getY() - delta2, p2.getX(), p2.getY() - delta1);
+		} else {
+			final double delta1 = direction * 10;
+			final double delta2 = direction * 25;
+			path.lineTo(p1.getX() + delta1, p1.getY());
+			path.cubicTo(p1.getX() + delta2, p1.getY(), p2.getX() - delta2, p2.getY(), p2.getX() - delta1, p2.getY());
+		}
 		path.lineTo(p2);
 		ug.draw(path);
 	}
@@ -162,11 +184,17 @@ public class FingerImpl implements Finger, UDrawable {
 	}
 
 	private double getX1() {
-		return getMargin().getLeft();
+		if (isTopToBottom())
+			return getMargin().getTop();
+		else
+			return getMargin().getLeft();
 	}
 
 	private double getX2() {
-		return getMargin().getRight() + 30;
+		if (isTopToBottom())
+			return getMargin().getBottom() + 5;
+		else
+			return getMargin().getRight() + 30;
 	}
 
 	public double getX12() {
@@ -174,10 +202,14 @@ public class FingerImpl implements Finger, UDrawable {
 	}
 
 	public double getPhalanxThickness(StringBounder stringBounder) {
+		if (isTopToBottom())
+			return getPhalanx().calculateDimension(stringBounder).getWidth();
 		return getPhalanx().calculateDimension(stringBounder).getHeight();
 	}
 
 	public double getPhalanxElongation(StringBounder stringBounder) {
+		if (isTopToBottom())
+			return getPhalanx().calculateDimension(stringBounder).getHeight();
 		return getPhalanx().calculateDimension(stringBounder).getWidth();
 	}
 
@@ -192,14 +224,17 @@ public class FingerImpl implements Finger, UDrawable {
 					Colors.empty().add(ColorType.BACK, idea.getBackColor()));
 			final TextBlock box = FtileBoxOld.createMindMap(style, foo, idea.getLabel());
 			final ClockwiseTopRightBottomLeft margin = getMargin();
-			return TextBlockUtils.withMargin(box, 0, 0, margin.getTop(), margin.getBottom());
+			if (isTopToBottom())
+				return TextBlockUtils.withMargin(box, margin.getLeft(), margin.getRight(), 0, 0);
+			else
+				return TextBlockUtils.withMargin(box, 0, 0, margin.getTop(), margin.getBottom());
 		}
 
 		assert idea.getShape() == IdeaShape.NONE;
 		final TextBlock text = idea.getLabel().create0(
 				style.getFontConfiguration(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet()),
 				style.getHorizontalAlignment(), skinParam, style.wrapWidth(), CreoleMode.FULL, null, null);
-		if (direction == Direction.RIGHT)
+		if (direction == 1)
 			return TextBlockUtils.withMargin(text, 3, 0, 1, 1);
 
 		return TextBlockUtils.withMargin(text, 0, 3, 1, 1);
@@ -227,7 +262,6 @@ public class FingerImpl implements Finger, UDrawable {
 	public double getFullThickness(StringBounder stringBounder) {
 		final double thickness1 = getPhalanxThickness(stringBounder);
 		final double thickness2 = getNailThickness(stringBounder);
-		// System.err.println("thickness1=" + thickness1 + " thickness2=" + thickness2);
 		return Math.max(thickness1, thickness2);
 	}
 

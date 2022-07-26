@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.mindmap;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -45,14 +44,17 @@ import java.util.List;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.api.ThemeStyle;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.cucadiagram.Rankdir;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
@@ -65,10 +67,10 @@ public class MindMapDiagram extends UmlDiagram {
 
 	private final List<MindMap> mindmaps = new ArrayList<>();
 
-	private Direction defaultDirection = Direction.RIGHT;
+	private boolean defaultDirection = true;
 
-	public final void setDefaultDirection(Direction defaultDirection) {
-		this.defaultDirection = defaultDirection;
+	public final void setDefaultDirection(Direction direction) {
+		this.defaultDirection = direction == Direction.RIGHT || direction == Direction.DOWN;
 	}
 
 	public DiagramDescription getDescription() {
@@ -77,6 +79,7 @@ public class MindMapDiagram extends UmlDiagram {
 
 	public MindMapDiagram(ThemeStyle style, UmlSource source) {
 		super(style, source, UmlDiagramType.MINDMAP, null);
+		((SkinParam) getSkinParam()).setRankdir(Rankdir.LEFT_TO_RIGHT);
 		this.mindmaps.add(new MindMap(getSkinParam()));
 	}
 
@@ -132,7 +135,7 @@ public class MindMapDiagram extends UmlDiagram {
 	}
 
 	public CommandExecutionResult addIdea(HColor backColor, int level, Display label, IdeaShape shape,
-			Direction direction) {
+			boolean direction) {
 		String stereotype = label.getEndingStereotype();
 		if (stereotype != null)
 			label = label.removeEndingStereotype();

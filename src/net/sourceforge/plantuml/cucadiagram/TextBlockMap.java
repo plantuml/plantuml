@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.cucadiagram;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
@@ -45,12 +44,14 @@ import java.util.Map;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
+import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.svek.Ports;
 import net.sourceforge.plantuml.svek.WithPorts;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
@@ -75,7 +76,9 @@ public class TextBlockMap extends AbstractTextBlock implements WithPorts {
 		this.skinParam = skinParam;
 		this.fontConfiguration = fontConfiguration;
 		for (Map.Entry<String, String> ent : map.entrySet()) {
-			final String key = ent.getKey();
+			String key = ent.getKey();
+			if (VisibilityModifier.isVisibilityCharacter(key))
+				key = key.substring(1);
 			this.keys.add(key);
 			final String value = ent.getValue();
 			final TextBlock block1 = getTextBlock(key);

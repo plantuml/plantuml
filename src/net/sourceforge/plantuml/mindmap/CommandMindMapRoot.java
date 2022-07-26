@@ -60,7 +60,7 @@ public class CommandMindMapRoot extends SingleLineCommand2<MindMapDiagram> {
 	@Override
 	protected CommandExecutionResult executeArg(MindMapDiagram diagram, LineLocation location, RegexResult arg) {
 		final String label = arg.get("LABEL", 0);
-		return diagram.addIdea(null, 0, Display.getWithNewlines(label), IdeaShape.BOX, null);
+		return diagram.addIdea(null, 0, Display.getWithNewlines(label), IdeaShape.BOX, true);
 	}
 
 }

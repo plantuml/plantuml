@@ -41,21 +41,21 @@ public enum Direction {
 	RIGHT, LEFT, DOWN, UP;
 
 	public Direction getInv() {
-		if (this == RIGHT) {
+		if (this == RIGHT)
 			return LEFT;
-		}
-		if (this == LEFT) {
+
+		if (this == LEFT)
 			return RIGHT;
-		}
-		if (this == DOWN) {
+
+		if (this == DOWN)
 			return UP;
-		}
-		if (this == UP) {
+
+		if (this == UP)
 			return DOWN;
-		}
+
 		throw new IllegalStateException();
 	}
-	
+
 	public String getShortCode() {
 		return name().substring(0, 1);
 	}
@@ -121,5 +121,14 @@ public enum Direction {
 		}
 		throw new IllegalArgumentException("Not a H or V line!");
 
+	}
+
+	public static Direction lazzyValueOf(String s) {
+		s = s.toUpperCase();
+		if ("TOP".equals(s))
+			return Direction.UP;
+		if ("BOTTOM".equals(s))
+			return Direction.DOWN;
+		return valueOf(s);
 	}
 }

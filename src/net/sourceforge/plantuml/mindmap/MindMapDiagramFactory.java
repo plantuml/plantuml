@@ -41,8 +41,9 @@ import java.util.List;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.command.Command;
-import net.sourceforge.plantuml.command.PSystemCommandFactory;
+import net.sourceforge.plantuml.command.CommandRankDir;
 import net.sourceforge.plantuml.command.CommonCommands;
+import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 
@@ -58,6 +59,7 @@ public class MindMapDiagramFactory extends PSystemCommandFactory {
 		final List<Command> cmds = new ArrayList<>();
 		CommonCommands.addCommonCommands1(cmds);
 		// cmds.add(new CommandMindMapTabulation());
+		cmds.add(new CommandRankDir());
 		cmds.add(new CommandMindMapOrgmode());
 		cmds.add(new CommandMindMapOrgmodeMultiline());
 		cmds.add(new CommandMindMapRoot());

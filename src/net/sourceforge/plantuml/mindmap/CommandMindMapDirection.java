@@ -54,15 +54,19 @@ public class CommandMindMapDirection extends SingleLineCommand2<MindMapDiagram> 
 		return RegexConcat.build(CommandMindMapDirection.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("[^*]*"), //
 				new RegexLeaf("\\b"), //
-				new RegexLeaf("DIRECTION", "(left|right)"), //
+				new RegexLeaf("DIRECTION", "(left|right|top|bottom)"), //
 				new RegexLeaf("\\b"), //
-				new RegexLeaf("[^*]*"), RegexLeaf.end());
+				new RegexLeaf("[^*]*"), //
+				new RegexLeaf("(side|direction)"), //
+				new RegexLeaf("[^*]*"), //
+				RegexLeaf.end());
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(MindMapDiagram diagram, LineLocation location, RegexResult arg) {
-		final String direction = arg.get("DIRECTION", 0);
-		diagram.setDefaultDirection(Direction.valueOf(direction.toUpperCase()));
+		final String dir = arg.get("DIRECTION", 0);
+		final Direction direction = Direction.lazzyValueOf(dir);
+		diagram.setDefaultDirection(direction);
 		return CommandExecutionResult.ok();
 	}
 

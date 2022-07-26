@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.mindmap;
 
-import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -55,7 +54,7 @@ class Branch implements UDrawable {
 		last = root;
 	}
 
-	void initFinger(ISkinParam skinParam, Direction direction) {
+	void initFinger(ISkinParam skinParam, boolean direction) {
 		finger = FingerImpl.build(root, skinParam, direction);
 	}
 
