@@ -77,7 +77,9 @@ public final class CommonCommands {
 		final CommandFactorySprite factorySpriteCommand = new CommandFactorySprite();
 		cmds.add(factorySpriteCommand.createMultiLine(false));
 		cmds.add(factorySpriteCommand.createSingleLine());
+		cmds.add(new CommandSpriteSvg());
 		cmds.add(new CommandSpriteFile());
+		cmds.add(new CommandSpriteSvgMultiline());
 
 		cmds.add(new CommandStyleMultilinesCSS());
 		cmds.add(new CommandStyleImport());

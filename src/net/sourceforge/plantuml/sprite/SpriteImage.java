@@ -66,15 +66,12 @@ public class SpriteImage implements Sprite {
 		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
-				if (colorMapper instanceof ColorMapperMonochrome) {
+				if (colorMapper instanceof ColorMapperMonochrome)
 					ug.draw(img.monochrome().scale(scale));
-				} else if (color == null)
+				else if (color == null)
 					ug.draw(img.scale(scale));
 				else
 					ug.draw(img.muteColor(colorMapper.toColor(color)).scale(scale));
-
-//				ug.draw(img.muteColor(((HColorSimple) color).getColor999()).scale(scale));
-
 			}
 
 			public Dimension2D calculateDimension(StringBounder stringBounder) {

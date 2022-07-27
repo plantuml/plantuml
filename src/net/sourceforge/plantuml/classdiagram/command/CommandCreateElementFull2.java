@@ -185,6 +185,12 @@ public class CommandCreateElementFull2 extends SingleLineCommand2<ClassDiagram> 
 		} else if (symbol.equalsIgnoreCase("port")) {
 			type = LeafType.PORT;
 			usymbol = null;
+		} else if (symbol.equalsIgnoreCase("portin")) {
+			type = LeafType.PORTIN;
+			usymbol = null;
+		} else if (symbol.equalsIgnoreCase("portout")) {
+			type = LeafType.PORTOUT;
+			usymbol = null;
 		} else if (symbol.equalsIgnoreCase("usecase")) {
 			type = LeafType.USECASE;
 			usymbol = null;

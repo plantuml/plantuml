@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.Cluster;
@@ -70,8 +71,8 @@ public class EntityImagePort extends AbstractEntityImageBorder {
 		this.sname = sname;
 	}
 
-	private StyleSignatureBasic getSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, sname, SName.boundary);
+	private StyleSignature getSignature() {
+		return StyleSignatureBasic.of(SName.root, SName.element, sname, SName.boundary).withTOBECHANGED(getStereo());
 	}
 
 	private boolean upPosition() {
@@ -107,17 +108,21 @@ public class EntityImagePort extends AbstractEntityImageBorder {
 
 		desc.drawU(ug.apply(new UTranslate(x, y)));
 
-		HColor backcolor = getEntity().getColors().getColor(ColorType.BACK);
-
 		final Style style = getSignature().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
-		final HColor borderColor = style.value(PName.LineColor).asColor(getSkinParam().getThemeStyle(),
-				getSkinParam().getIHtmlColorSet());
+
+		HColor backcolor = getEntity().getColors().getColor(ColorType.BACK);
+		HColor borderColor = getEntity().getColors().getColor(ColorType.LINE);
+
+		if (borderColor == null)
+			borderColor = style.value(PName.LineColor).asColor(getSkinParam().getThemeStyle(),
+					getSkinParam().getIHtmlColorSet());
+
 		if (backcolor == null)
 			backcolor = style.value(PName.BackGroundColor).asColor(getSkinParam().getThemeStyle(),
 					getSkinParam().getIHtmlColorSet());
 
-		ug = ug.apply(backcolor);
-		ug = ug.apply(getUStroke()).apply(borderColor.bg());
+		ug = ug.apply(borderColor);
+		ug = ug.apply(getUStroke()).apply(backcolor.bg());
 
 		drawSymbol(ug);
 	}

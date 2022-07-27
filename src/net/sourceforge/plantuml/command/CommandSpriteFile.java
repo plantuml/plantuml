@@ -69,7 +69,7 @@ public class CommandSpriteFile extends SingleLineCommand2<TitledDiagram> {
 				new RegexLeaf("\\$?"), //
 				new RegexLeaf("NAME", "([-%pLN_]+)"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("FILE", "(.*)"), RegexLeaf.end());
+				new RegexLeaf("FILE", "([^<>%g#]*)"), RegexLeaf.end());
 	}
 
 	@Override
@@ -80,37 +80,37 @@ public class CommandSpriteFile extends SingleLineCommand2<TitledDiagram> {
 			if (src.startsWith("jar:")) {
 				final String inner = src.substring(4) + ".png";
 				final InputStream is = SpriteImage.getInternalSprite(inner);
-				if (is == null) {
+				if (is == null)
 					return CommandExecutionResult.error("No such internal sprite: " + inner);
-				}
+
 				sprite = new SpriteImage(SImageIO.read(is));
 			} else if (src.contains("~")) {
 				final int idx = src.lastIndexOf("~");
 				final SFile f = FileSystem.getInstance().getFile(src.substring(0, idx));
-				if (f.exists() == false) {
+				if (f.exists() == false)
 					return CommandExecutionResult.error("Cannot read: " + src);
-				}
+
 				final String name = src.substring(idx + 1);
 				sprite = getImageFromZip(f, name);
-				if (sprite == null) {
+				if (sprite == null)
 					return CommandExecutionResult.error("Cannot read: " + src);
-				}
+
 			} else {
 				final SFile f = FileSystem.getInstance().getFile(src);
-				if (f.exists() == false) {
+				if (f.exists() == false)
 					return CommandExecutionResult.error("Cannot read: " + src);
-				}
+
 				if (isSvg(f.getName())) {
 					final String tmp = FileUtils.readSvg(f);
-					if (tmp == null) {
+					if (tmp == null)
 						return CommandExecutionResult.error("Cannot read: " + src);
-					}
+
 					sprite = new SpriteSvg(tmp);
 				} else {
 					final BufferedImage tmp = f.readRasterImageFromFile();
-					if (tmp == null) {
+					if (tmp == null)
 						return CommandExecutionResult.error("Cannot read: " + src);
-					}
+
 					sprite = new SpriteImage(tmp);
 				}
 			}

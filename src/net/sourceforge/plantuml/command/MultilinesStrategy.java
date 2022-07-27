@@ -44,17 +44,17 @@ public enum MultilinesStrategy {
 	REMOVE_STARTING_QUOTE, KEEP_STARTING_QUOTE;
 
 	public void cleanList(List<StringLocated> lines) {
-		if (this == REMOVE_STARTING_QUOTE) {
+		if (this == REMOVE_STARTING_QUOTE)
 			filterQuote(lines);
-		}
+
 	}
 
 	private void filterQuote(List<StringLocated> lines) {
 		for (final Iterator<StringLocated> it = lines.iterator(); it.hasNext();) {
 			final StringLocated s = it.next();
-			if (hasStartingQuote(s)) {
+			if (hasStartingQuote(s))
 				it.remove();
-			}
+
 		}
 	}
 

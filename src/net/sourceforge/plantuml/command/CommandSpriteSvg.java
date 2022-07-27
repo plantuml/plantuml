@@ -33,39 +33,38 @@
  * 
  *
  */
-package net.sourceforge.plantuml.sprite;
+package net.sourceforge.plantuml.command;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.LineLocation;
+import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.command.regex.IRegex;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.emoji.SvgNanoParser;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.graphic.AbstractTextBlock;
-import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.UImageSvg;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
+public class CommandSpriteSvg extends SingleLineCommand2<TitledDiagram> {
 
-public class SpriteSvg implements Sprite {
-
-	private final String svg;
-
-	public SpriteSvg(String svg) {
-		this.svg = svg;
+	public CommandSpriteSvg() {
+		super(getRegexConcat());
 	}
 
-	public TextBlock asTextBlock(final HColor color, final double scale, ColorMapper colorMapper) {
-		final UImageSvg img = new UImageSvg(svg, scale);
-		return new AbstractTextBlock() {
-
-			public void drawU(UGraphic ug) {
-				ug.draw(img);
-			}
-
-			public Dimension2D calculateDimension(StringBounder stringBounder) {
-				return new Dimension2DDouble(img.getWidth() * scale, img.getHeight() * scale);
-			}
-		};
+	private static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandSpriteSvg.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("sprite"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("\\$?"), //
+				new RegexLeaf("NAME", "([-%pLN_]+)"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("SVG", "(\\<svg\\b.*\\</svg\\>)"), RegexLeaf.end());
 	}
 
+	@Override
+	protected CommandExecutionResult executeArg(TitledDiagram system, LineLocation location, RegexResult arg) {
+		final String svg = arg.get("SVG", 0);
+		final SvgNanoParser nanoParser = new SvgNanoParser(svg, true);
+		system.addSprite(arg.get("NAME", 0), nanoParser);
+
+		return CommandExecutionResult.ok();
+	}
 }
