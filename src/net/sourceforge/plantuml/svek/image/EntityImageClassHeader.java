@@ -154,20 +154,17 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 		final LeafType leafType = entity.getLeafType();
 
 		final Style style = spotStyleSignature(leafType).getMergedStyle(skinParam.getCurrentStyleBuilder());
-		HColor spotBorder = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(),
+		final HColor spotBorder = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(),
 				skinParam.getIHtmlColorSet());
 		final HColor spotBackColor = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
 				skinParam.getIHtmlColorSet());
-		final HColor classBorder = SkinParamUtils.getColor(getSkinParam(), stereotype, ColorParam.classBorder);
+
 		final HColor fontColor = style.value(PName.FontColor).asColor(skinParam.getThemeStyle(),
 				skinParam.getIHtmlColorSet());
 
 		if (stereotype != null && stereotype.getCharacter() != 0)
 			return new CircledCharacter(stereotype.getCharacter(), getSkinParam().getCircledCharacterRadius(), font,
-					stereotype.getHtmlColor(), classBorder, fontColor);
-
-		if (spotBorder == null)
-			spotBorder = classBorder;
+					stereotype.getHtmlColor(), spotBorder, fontColor);
 
 		char circledChar = 0;
 		if (stereotype != null)

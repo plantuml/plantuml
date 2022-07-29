@@ -61,7 +61,9 @@ public class SvgNanoParser implements Sprite {
 				if (s.contains("<path") || s.contains("<g ") || s.contains("<g>") || s.contains("</g>")
 						|| s.contains("<circle ") || s.contains("<ellipse "))
 					data.add(s);
-				else
+				else if (s.startsWith("<svg") || s.startsWith("</svg")) {
+					// Ignore
+				} else
 					System.err.println("???=" + s);
 			}
 		}

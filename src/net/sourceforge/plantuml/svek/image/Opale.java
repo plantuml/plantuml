@@ -107,19 +107,19 @@ public class Opale extends AbstractTextBlock implements TextBlock {
 		final StringBounder stringBounder = ug.getStringBounder();
 		ug = ug.apply(noteBackgroundColor.bg()).apply(borderColor);
 		final UPath polygon;
-		if (withLink == false) {
+		if (withLink == false)
 			polygon = getPolygonNormal(stringBounder);
-		} else if (strategy == Direction.LEFT) {
+		else if (strategy == Direction.LEFT)
 			polygon = getPolygonLeft(stringBounder, pp1, pp2);
-		} else if (strategy == Direction.RIGHT) {
+		else if (strategy == Direction.RIGHT)
 			polygon = getPolygonRight(stringBounder, pp1, pp2);
-		} else if (strategy == Direction.UP) {
+		else if (strategy == Direction.UP)
 			polygon = getPolygonUp(stringBounder, pp1, pp2);
-		} else if (strategy == Direction.DOWN) {
+		else if (strategy == Direction.DOWN)
 			polygon = getPolygonDown(stringBounder, pp1, pp2);
-		} else {
+		else
 			throw new IllegalArgumentException();
-		}
+
 		polygon.setDeltaShadow(shadowing2);
 		if (stroke != null)
 			ug = ug.apply(stroke);

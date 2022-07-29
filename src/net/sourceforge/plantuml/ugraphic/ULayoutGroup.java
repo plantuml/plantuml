@@ -69,9 +69,9 @@ public class ULayoutGroup {
 	public Rectangle2D getInnerPosition(String member, double width, double height, StringBounder stringBounder) {
 		final Set<Entry<TextBlock, Point2D>> all = placementStrategy.getPositions(width, height).entrySet();
 		Rectangle2D result = tryOne(all, member, stringBounder, InnerStrategy.STRICT);
-		if (result == null) {
+		if (result == null)
 			result = tryOne(all, member, stringBounder, InnerStrategy.LAZZY);
-		}
+
 		return result;
 	}
 
