@@ -141,7 +141,16 @@ public class TaskDrawDiamond extends AbstractTaskDraw {
 		final double x2 = timeScale.getEndingPosition(start);
 		final double width = getShapeHeight(ug.getStringBounder());
 		final double delta = x2 - x1 - width;
+
+		if (url != null) {
+			ug.startUrl(url);
+		}
+
 		drawShape(applyColors(ug).apply(UTranslate.dx(x1 + delta / 2)));
+
+		if (url != null) {
+			ug.closeUrl();
+		}
 	}
 
 	private UGraphic applyColors(UGraphic ug) {
