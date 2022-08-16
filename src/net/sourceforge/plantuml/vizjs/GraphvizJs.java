@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.vizjs;
@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.cucadiagram.dot.ExeState;
 import net.sourceforge.plantuml.cucadiagram.dot.Graphviz;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizVersion;
 import net.sourceforge.plantuml.cucadiagram.dot.ProcessState;
+import net.sourceforge.plantuml.log.Logger;
 
 public class GraphvizJs implements Graphviz {
 
@@ -72,7 +73,7 @@ public class GraphvizJs implements Graphviz {
 				try {
 					this.engine = new VizJsEngine();
 				} catch (Exception e) {
-					e.printStackTrace();
+					Logger.error(e);
 				}
 			}
 			runnable.run();
@@ -92,7 +93,7 @@ public class GraphvizJs implements Graphviz {
 			os.write(svg.getBytes());
 			return ProcessState.TERMINATED_OK();
 		} catch (Exception e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new GraphvizJsRuntimeException(e);
 		}
 	}

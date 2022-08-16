@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -45,6 +45,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import net.sourceforge.plantuml.log.Logger;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.DirectoryScanner;
@@ -130,10 +132,10 @@ public class PlantUmlTask extends Task {
 			}
 			this.log("Nb images generated: " + nbFiles.get());
 		} catch (IOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new BuildException(e.toString());
 		} catch (InterruptedException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new BuildException(e.toString());
 		}
 

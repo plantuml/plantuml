@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -142,7 +142,7 @@ public class WBSDiagram extends UmlDiagram {
 			}
 			return add(backColor, level, display, stereotype, direction, shape);
 		} catch (NoStyleAvailableException e) {
-			// e.printStackTrace();
+			// Logger.error(e);
 			return CommandExecutionResult.error("General failure: no style available.");
 		}
 	}
@@ -204,7 +204,7 @@ public class WBSDiagram extends UmlDiagram {
 			}
 			return CommandExecutionResult.error("Bad tree structure");
 		} catch (NoStyleAvailableException e) {
-			// e.printStackTrace();
+			// Logger.error(e);
 			return CommandExecutionResult.error("General failure: no style available.");
 		}
 	}

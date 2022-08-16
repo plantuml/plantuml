@@ -2,6 +2,7 @@ package net.sourceforge.plantuml.picoweb;
 
 import net.sourceforge.plantuml.json.Json;
 import net.sourceforge.plantuml.json.JsonObject;
+import net.sourceforge.plantuml.log.Logger;
 
 import javax.imageio.ImageIO;
 import javax.imageio.stream.MemoryCacheImageInputStream;
@@ -294,7 +295,7 @@ public class PicoWebServerTest {
 				try {
 					PicoWebServer.serverLoop(serverSocket);
 				} catch (IOException e) {
-					e.printStackTrace();
+					Logger.error(e);
 				}
 			}
 		};

@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.security.authentication.oauth;
 import net.sourceforge.plantuml.json.Json;
 import net.sourceforge.plantuml.json.JsonObject;
 import net.sourceforge.plantuml.json.JsonValue;
+import net.sourceforge.plantuml.log.Logger;
 import net.sourceforge.plantuml.security.SURL;
 import net.sourceforge.plantuml.security.authentication.SecurityAuthentication;
 import net.sourceforge.plantuml.security.authentication.SecurityAuthorizeManager;
@@ -133,7 +134,7 @@ public abstract class AbstractOAuth2AccessAuthorizeManager implements SecurityAu
 		try {
 			return URLEncoder.encode(data, "UTF-8");
 		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			return data;
 		}
 	}

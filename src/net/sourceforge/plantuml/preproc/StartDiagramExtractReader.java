@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.preproc;
@@ -43,6 +43,7 @@ import java.nio.charset.Charset;
 
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.StringLocated;
+import net.sourceforge.plantuml.log.Logger;
 import net.sourceforge.plantuml.security.SURL;
 import net.sourceforge.plantuml.utils.StartUtils;
 
@@ -86,7 +87,7 @@ public class StartDiagramExtractReader implements ReadLine {
 				}
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			Log.error("Error " + e);
 		}
 		finished = true;

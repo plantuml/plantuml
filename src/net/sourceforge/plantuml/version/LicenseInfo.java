@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -49,6 +49,7 @@ import java.util.prefs.Preferences;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.SignatureUtils;
+import net.sourceforge.plantuml.log.Logger;
 import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.security.SFile;
 
@@ -121,7 +122,7 @@ public class LicenseInfo {
 				}
 			} catch (IOException e) {
 				Log.info("Error " + e);
-				// e.printStackTrace();
+				// Logger.error(e);
 			}
 		}
 		return cache;
@@ -133,7 +134,7 @@ public class LicenseInfo {
 				final String sig = SignatureUtils.toHexString(PLSSignature.signature());
 				return PLSSignature.retrieveNamed(sig, key, true);
 			} catch (Exception e) {
-				// e.printStackTrace();
+				// Logger.error(e);
 				Log.info("Error retrieving license info" + e);
 			}
 		}
@@ -160,7 +161,7 @@ public class LicenseInfo {
 				dis.close();
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Logger.error(e);
 		}
 		return null;
 	}
@@ -184,7 +185,7 @@ public class LicenseInfo {
 			}
 			return null;
 		} catch (Exception e) {
-			e.printStackTrace();
+			Logger.error(e);
 			return null;
 		}
 	}

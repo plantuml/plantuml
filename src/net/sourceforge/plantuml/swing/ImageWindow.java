@@ -5,9 +5,9 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
  *
@@ -71,6 +71,7 @@ import javax.swing.WindowConstants;
 import net.sourceforge.plantuml.GeneratedImage;
 import net.sourceforge.plantuml.ImageSelection;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
+import net.sourceforge.plantuml.log.Logger;
 import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
@@ -337,7 +338,7 @@ class ImageWindow extends JFrame {
 				final byte[] bytes = plainPngBuilder(error).writeByteArray();
 				image = SImageIO.read(bytes);
 			} catch (IOException e) {
-				e.printStackTrace();
+				Logger.error(e);
 			}
 		}
 		final ImageIcon imageIcon = new ImageIcon(image, simpleLine.toString());
@@ -393,7 +394,7 @@ class ImageWindow extends JFrame {
 			final ImageSelection imgSel = new ImageSelection(image);
 			Toolkit.getDefaultToolkit().getSystemClipboard().setContents(imgSel, null);
 		} catch (IOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 		}
 	}
 

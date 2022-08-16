@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.xmi;
@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 import net.sourceforge.plantuml.descdiagram.DescriptionDiagram;
+import net.sourceforge.plantuml.log.Logger;
 import net.sourceforge.plantuml.statediagram.StateDiagram;
 
 public final class CucaDiagramXmiMaker {
@@ -82,11 +83,11 @@ public final class CucaDiagramXmiMaker {
 			xmi.transformerXml(fos);
 		} catch (ParserConfigurationException e) {
 			Log.error(e.toString());
-			e.printStackTrace();
+			Logger.error(e);
 			throw new IOException(e.toString());
 		} catch (TransformerException e) {
 			Log.error(e.toString());
-			e.printStackTrace();
+			Logger.error(e);
 			throw new IOException(e.toString());
 		}
 	}

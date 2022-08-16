@@ -43,6 +43,7 @@ import java.io.UnsupportedEncodingException;
 
 import net.sourceforge.plantuml.AFile;
 import net.sourceforge.plantuml.StringLocated;
+import net.sourceforge.plantuml.log.Logger;
 import net.sourceforge.plantuml.preproc.FileWithSuffix;
 import net.sourceforge.plantuml.preproc.ImportedFiles;
 import net.sourceforge.plantuml.preproc.ReadLine;
@@ -96,7 +97,7 @@ public class EaterTheme extends Eater {
 						return ReadLineReader.create(br, "theme " + realName);
 				}
 			} catch (IOException e) {
-				e.printStackTrace();
+				Logger.error(e);
 			}
 			throw EaterException.located("Cannot load " + realName);
 
@@ -108,7 +109,7 @@ public class EaterTheme extends Eater {
 			try {
 				return PreprocessorUtils.getReaderInclude(url, getLineLocation(), UTF_8);
 			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
+				Logger.error(e);
 				throw EaterException.located("Cannot decode charset");
 			}
 		}
@@ -121,7 +122,7 @@ public class EaterTheme extends Eater {
 
 			return ReadLineReader.create(tmp, "theme " + realName);
 		} catch (IOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw EaterException.located("Cannot load " + realName);
 		}
 

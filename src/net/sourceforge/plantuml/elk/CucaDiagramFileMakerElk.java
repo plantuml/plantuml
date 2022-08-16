@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.elk;
@@ -67,13 +67,13 @@ import net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
 
 /*
  * You can choose between real "org.eclipse.elk..." classes or proxied "net.sourceforge.plantuml.elk.proxy..."
- * 
+ *
  * Using proxied classes allows to compile PlantUML without having ELK available on the classpath.
  * Since GraphViz is the default layout engine up to now, we do not want to enforce the use of ELK just for compilation.
  * (for people not using maven)
- * 
+ *
  * If you are debugging, you should probably switch to "org.eclipse.elk..." classes
- * 
+ *
  */
 
 /*
@@ -111,6 +111,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.USymbolFolder;
+import net.sourceforge.plantuml.log.Logger;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
@@ -134,7 +135,7 @@ import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 /*
  * Some notes:
- * 
+ *
 https://www.eclipse.org/elk/documentation/tooldevelopers/graphdatastructure.html
 https://www.eclipse.org/elk/documentation/tooldevelopers/graphdatastructure/coordinatesystem.html
 
@@ -521,7 +522,7 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 	}
 
 	static private List<String> getFailureText3(Throwable exception) {
-		exception.printStackTrace();
+		Logger.error(exception);
 		final List<String> strings = new ArrayList<>();
 		strings.add("An error has occured : " + exception);
 		final String quote = StringUtils.rot(QuoteUtils.getSomeQuote());
