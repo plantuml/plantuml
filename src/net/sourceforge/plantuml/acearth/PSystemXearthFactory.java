@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.log.Logger;
 
 public class PSystemXearthFactory extends PSystemBasicFactory<PSystemXearth> {
 
@@ -100,7 +101,7 @@ public class PSystemXearthFactory extends PSystemBasicFactory<PSystemXearth> {
 				return system;
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Logger.error(e);
 			return null;
 		}
 		return null;

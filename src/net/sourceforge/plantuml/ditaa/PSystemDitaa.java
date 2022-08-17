@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.log.Logger;
 import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.svek.GraphvizCrash;
 
@@ -85,7 +86,7 @@ public class PSystemDitaa extends AbstractPSystem {
 			this.processingOptions.getClass().getMethod("setAllCornersAreRound", boolean.class)
 					.invoke(this.processingOptions, allCornersAreRound);
 		} catch (Exception e) {
-			e.printStackTrace();
+			Logger.error(e);
 			this.processingOptions = null;
 		}
 		this.transparentBackground = transparentBackground;

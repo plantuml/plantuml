@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,10 +30,12 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.security;
+
+import net.sourceforge.plantuml.log.Logger;
 
 import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
@@ -219,7 +221,7 @@ public class SFile implements Comparable<SFile> {
 			try {
 				return internal.getCanonicalPath();
 			} catch (IOException e) {
-				e.printStackTrace();
+				Logger.error(e);
 			}
 		}
 		return "";
@@ -348,7 +350,7 @@ public class SFile implements Comparable<SFile> {
 			try {
 				return SecurityUtils.readRasterImage(new ImageIcon(this.getAbsolutePath()));
 			} catch (Exception e) {
-				e.printStackTrace();
+				Logger.error(e);
 			}
 		return null;
 	}
@@ -358,7 +360,7 @@ public class SFile implements Comparable<SFile> {
 			try {
 				return new BufferedReader(new FileReader(internal));
 			} catch (FileNotFoundException e) {
-				e.printStackTrace();
+				Logger.error(e);
 			}
 		}
 		return null;
@@ -373,7 +375,7 @@ public class SFile implements Comparable<SFile> {
 			try {
 				return new BufferedInputStream(new FileInputStream(internal));
 			} catch (FileNotFoundException e) {
-				e.printStackTrace();
+				Logger.error(e);
 			}
 		return null;
 	}

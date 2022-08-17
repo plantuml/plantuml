@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.salt;
@@ -63,6 +63,7 @@ import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.log.Logger;
 import net.sourceforge.plantuml.salt.element.Element;
 import net.sourceforge.plantuml.salt.factory.AbstractElementFactoryComplex;
 import net.sourceforge.plantuml.salt.factory.ElementFactory;
@@ -120,7 +121,7 @@ public class PSystemSalt extends TitledDiagram implements WithSprite {
 			final Dimension2D size = salt.getPreferredDimension(stringBounder, 0, 0);
 			return createImageBuilder(fileFormatOption).drawable(getTextBlock(salt, size)).write(os);
 		} catch (Exception e) {
-			e.printStackTrace();
+			Logger.error(e);
 			UmlDiagram.exportDiagramError(os, e, fileFormatOption, seed(), getMetadata(), "none",
 					new ArrayList<String>());
 			return ImageDataSimple.error();

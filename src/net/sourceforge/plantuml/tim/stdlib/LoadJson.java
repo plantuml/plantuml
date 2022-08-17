@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.json.Json;
 import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.json.ParseException;
+import net.sourceforge.plantuml.log.Logger;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SURL;
 import net.sourceforge.plantuml.tim.EaterException;
@@ -63,7 +64,7 @@ import net.sourceforge.plantuml.tim.expression.TValue;
  * datasource will be checked against the security rules.
  * <p>
  * Examples:<br/>
- * 
+ *
  * <pre>
  *     &#64; startuml
  *     ' loads a local file
@@ -88,7 +89,7 @@ import net.sourceforge.plantuml.tim.expression.TValue;
  *     status -> $JSON_REMOTE_DEF.status
  *     &#64; enduml
  * </pre>
- * 
+ *
  * @author Aljoscha Rittner
  */
 public class LoadJson extends SimpleReturnFunction {
@@ -116,17 +117,17 @@ public class LoadJson extends SimpleReturnFunction {
 			JsonValue jsonValue = Json.parse(data);
 			return TValue.fromJson(jsonValue);
 		} catch (ParseException pe) {
-			pe.printStackTrace();
+			Logger.error(pe);
 			throw EaterException.unlocated("JSON parse issue in source " + path + " on location " + pe.getLocation());
 		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw EaterException.unlocated("JSON encoding issue in source " + path + ": " + e.getMessage());
 		}
 	}
 
 	/**
 	 * Returns the JSON default, if the data source contains no data.
-	 * 
+	 *
 	 * @param values value parameters
 	 * @return the defined default JSON or {@code "{}"}
 	 */
@@ -139,7 +140,7 @@ public class LoadJson extends SimpleReturnFunction {
 
 	/**
 	 * Returns the charset name (if set)
-	 * 
+	 *
 	 * @param values value parameters
 	 * @return defined charset or {@code "UTF-8"}
 	 */
@@ -153,7 +154,7 @@ public class LoadJson extends SimpleReturnFunction {
 	/**
 	 * Loads String data from a data source {@code path} (file or URL) and expects
 	 * the data encoded in {@code charset}.
-	 * 
+	 *
 	 * @param path    path to data source (http(s)-URL or file).
 	 * @param charset character set to encode the string data
 	 * @return the decoded String from the data source
@@ -176,7 +177,7 @@ public class LoadJson extends SimpleReturnFunction {
 					byteData = out.toByteArray();
 				}
 			} catch (IOException e) {
-				e.printStackTrace();
+				Logger.error(e);
 				throw EaterException.located("load JSON: Cannot read file " + path + ". " + e.getMessage());
 			}
 		}

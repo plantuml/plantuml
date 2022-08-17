@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -51,6 +51,7 @@ import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import net.sourceforge.plantuml.log.Logger;
 import net.sourceforge.plantuml.version.PSystemVersion;
 
 public class Splash extends Window implements MouseListener, MouseMotionListener {
@@ -139,7 +140,7 @@ public class Splash extends Window implements MouseListener, MouseMotionListener
 			try {
 				Desktop.getDesktop().browse(new URL("https://plantuml.com").toURI());
 			} catch (Exception e) {
-				e.printStackTrace();
+				Logger.error(e);
 			}
 			return;
 		}

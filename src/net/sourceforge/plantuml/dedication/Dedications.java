@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.dedication;
@@ -44,6 +44,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.FileUtils;
+import net.sourceforge.plantuml.log.Logger;
 
 public class Dedications {
 
@@ -64,7 +65,7 @@ public class Dedications {
 			all.add(secret(1, "ae8a7cf3997ccd6418866fc59e596502e1bd1c0265bba2fc380ad7f51c76518f", new BigInteger(
 					"987988542836850639056829173787067531749177506648884857100630852970876999799588072360773169026225182488073794585127241896588994816566037813451743416913613428321215803586563629080034406083114565732322220091545330060636171674602040157")));
 		} catch (Throwable t) {
-			t.printStackTrace();
+			Logger.error(t);
 		}
 	}
 

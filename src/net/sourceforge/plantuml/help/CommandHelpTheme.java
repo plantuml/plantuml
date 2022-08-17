@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.log.Logger;
 import net.sourceforge.plantuml.theme.ThemeUtils;
 
 public class CommandHelpTheme extends SingleLineCommand2<Help> {
@@ -76,7 +77,7 @@ public class CommandHelpTheme extends SingleLineCommand2<Help> {
 		} catch (IOException e) {
 			final String message = "Unexpected error listing themes: " + e.getMessage();
 			Log.error(message);
-			e.printStackTrace();
+			Logger.error(e);
 			return CommandExecutionResult.error(message);
 		}
 

@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -35,23 +35,34 @@
  */
 package net.sourceforge.plantuml;
 
-public abstract class Log {
+import net.sourceforge.plantuml.log.Logger;
+
+public class Log {
 
 	private static final long start = System.currentTimeMillis();
 
 	public synchronized static void debug(String s) {
+		// noop
+	}
+
+	public static void println(Object s) {
+		// noop
+	}
+
+	public static void header(String s) {
+		// noop
 	}
 
 	public synchronized static void info(String s) {
 		if (OptionFlags.getInstance().isVerbose()) {
 			ProgressBar.clear();
-			System.err.println(format(s));
+			Logger.error(format(s));
 		}
 	}
 
 	public synchronized static void error(String s) {
 		ProgressBar.clear();
-		System.err.println(s);
+		Logger.error(s);
 	}
 
 	private static String format(String s) {
@@ -93,20 +104,5 @@ public abstract class Log {
 		sb.append(" Mo - ");
 		sb.append(s);
 		return sb.toString();
-
-	}
-
-	public static void println(Object s) {
-		// if (header2.get() == null) {
-		// System.err.println("L = " + s);
-		// } else {
-		// System.err.println(header2.get() + " " + s);
-		// }
-	}
-
-	// private static final ThreadLocal<String> header2 = new ThreadLocal<>();
-	//
-	public static void header(String s) {
-		// header2.set(s);
 	}
 }

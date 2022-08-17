@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -65,6 +65,7 @@ import net.sourceforge.plantuml.fun.IconLoader;
 import net.sourceforge.plantuml.graphic.GraphicPosition;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
 import net.sourceforge.plantuml.graphic.UDrawable;
+import net.sourceforge.plantuml.log.Logger;
 import net.sourceforge.plantuml.mjpeg.MJPEGGenerator;
 import net.sourceforge.plantuml.pdf.PdfConverter;
 import net.sourceforge.plantuml.security.SImageIO;
@@ -135,13 +136,13 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 			this.lastInfo = new Dimension2DDouble(imageData.getWidth(), imageData.getHeight());
 			return imageData;
 		} catch (NoStyleAvailableException e) {
-			// e.printStackTrace();
+			// Logger.error(e);
 			exportDiagramError(os, e, fileFormatOption, null);
 		} catch (UnparsableGraphvizException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			exportDiagramError(os, e.getCause(), fileFormatOption, e.getGraphvizVersion());
 		} catch (Throwable e) {
-			// e.printStackTrace();
+			// Logger.error(e);
 			exportDiagramError(os, e, fileFormatOption, null);
 		}
 		return ImageDataSimple.error();
@@ -170,7 +171,7 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 				im2 = utils.exportFlashcode(flash, Color.BLACK, Color.WHITE);
 			} catch (Throwable e) {
 				Log.error("Issue in flashcode generation " + e);
-				// e.printStackTrace();
+				// Logger.error(e);
 			}
 			if (im2 != null)
 				GraphvizCrash.addDecodeHint(strings);

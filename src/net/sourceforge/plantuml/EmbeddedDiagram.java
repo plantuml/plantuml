@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml;
@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.Line;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.log.Logger;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.ugraphic.AffineTransformType;
@@ -81,9 +82,9 @@ class EmbeddedDiagramDraw extends AbstractTextBlock implements Line, Atom {
 			final BufferedImage im = getImage();
 			return new Dimension2DDouble(im.getWidth(), im.getHeight());
 		} catch (IOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 		} catch (InterruptedException e) {
-			e.printStackTrace();
+			Logger.error(e);
 		}
 		return new Dimension2DDouble(42, 42);
 	}
@@ -101,9 +102,9 @@ class EmbeddedDiagramDraw extends AbstractTextBlock implements Line, Atom {
 			final UShape image = new UImage(new PixelImage(im, AffineTransformType.TYPE_BILINEAR));
 			ug.draw(image);
 		} catch (IOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 		} catch (InterruptedException e) {
-			e.printStackTrace();
+			Logger.error(e);
 		}
 
 	}

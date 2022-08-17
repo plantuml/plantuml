@@ -26,6 +26,7 @@
 package net.sourceforge.plantuml.argon2.blake2;
 
 
+import net.sourceforge.plantuml.log.Logger;
 import static net.sourceforge.plantuml.argon2.blake2.Blake2b.Engine.Assert.*;
 import static net.sourceforge.plantuml.argon2.blake2.Blake2b.Engine.LittleEndian.*;
 
@@ -896,7 +897,7 @@ public interface Blake2b {
 			public final static String exclusiveLowerBound = "'%s' %d is <= %d";
 			public final static String inclusiveLowerBound = "'%s' %d is < %d";
 			static <T extends Number> String assertFail(final String name, final T v, final String err, final T spec) {
-				new Exception().printStackTrace();
+				Logger.error(new Exception());
 				return String.format(err, name, v, spec);
 			}
 		}

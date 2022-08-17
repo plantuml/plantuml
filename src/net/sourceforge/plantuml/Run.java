@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -58,6 +58,7 @@ import net.sourceforge.plantuml.code.NoPlantumlCompressionException;
 import net.sourceforge.plantuml.code.Transcoder;
 import net.sourceforge.plantuml.code.TranscoderUtil;
 import net.sourceforge.plantuml.ftp.FtpServer;
+import net.sourceforge.plantuml.log.Logger;
 import net.sourceforge.plantuml.picoweb.PicoWebServer;
 import net.sourceforge.plantuml.png.MetadataTag;
 import net.sourceforge.plantuml.preproc.Stdlib;
@@ -403,7 +404,7 @@ public class Run {
 					return;
 				}
 			} catch (IOException e) {
-				e.printStackTrace();
+				Logger.error(e);
 			}
 		}
 	}
@@ -426,9 +427,9 @@ public class Run {
 						try {
 							manageFileInternal(f, option, error);
 						} catch (IOException e) {
-							e.printStackTrace();
+							Logger.error(e);
 						} catch (InterruptedException e) {
-							e.printStackTrace();
+							Logger.error(e);
 						}
 						incDone(error.hasError());
 					}

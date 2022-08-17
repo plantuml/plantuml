@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.emoji;
@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.log.Logger;
 import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.sprite.Sprite;
 import net.sourceforge.plantuml.ugraphic.AffineTransformType;
@@ -95,7 +96,7 @@ public class SpriteSvgNanoParser implements Sprite {
 		try {
 			return new SpriteSvgNanoParser(SImageIO.read(is));
 		} catch (IOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			return null;
 		}
 

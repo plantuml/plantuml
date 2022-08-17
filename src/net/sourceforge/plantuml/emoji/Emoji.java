@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import net.sourceforge.plantuml.emoji.data.Dummy;
+import net.sourceforge.plantuml.log.Logger;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
@@ -29,7 +30,7 @@ public class Emoji {
 				new Emoji(s);
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 		}
 	}
 
@@ -87,7 +88,7 @@ public class Emoji {
 		try {
 			loadIfNeed();
 		} catch (IOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 		}
 		nano.drawU(ug, scale, colorForMonochrome);
 	}

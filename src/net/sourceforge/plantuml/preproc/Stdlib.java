@@ -24,6 +24,7 @@ import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.brotli.BrotliInputStream;
+import net.sourceforge.plantuml.log.Logger;
 import net.sourceforge.plantuml.security.SFile;
 
 public class Stdlib {
@@ -53,7 +54,7 @@ public class Stdlib {
 			}
 			return new ByteArrayInputStream(data.getBytes(UTF_8));
 		} catch (IOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			return null;
 		}
 	}

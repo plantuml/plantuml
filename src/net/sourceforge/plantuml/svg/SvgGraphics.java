@@ -60,6 +60,8 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import net.sourceforge.plantuml.log.Logger;
+
 import org.w3c.dom.CDATASection;
 import org.w3c.dom.Comment;
 import org.w3c.dom.Document;
@@ -178,7 +180,7 @@ public class SvgGraphics {
 					defs.appendChild(script);
 			}
 		} catch (ParserConfigurationException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new IllegalStateException(e);
 		}
 	}
@@ -238,7 +240,7 @@ public class SvgGraphics {
 			final InputStream is = SvgGraphics.class.getResourceAsStream("/svg/" + name);
 			return FileUtils.readText(is);
 		} catch (IOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			return null;
 		}
 	}
@@ -896,7 +898,7 @@ public class SvgGraphics {
 
 	private final Map<String, String> images = new HashMap<String, String>();
 
-	
+
 	private void svgImageUnsecure(UImageSvg image, double x, double y) {
 		if (hidden == false) {
 			String svg = manageScale(image);

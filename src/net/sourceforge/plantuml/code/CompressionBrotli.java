@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -41,6 +41,7 @@ import java.io.IOException;
 
 import net.sourceforge.plantuml.FileUtils;
 import net.sourceforge.plantuml.brotli.BrotliInputStream;
+import net.sourceforge.plantuml.log.Logger;
 
 public class CompressionBrotli implements Compression {
 
@@ -56,7 +57,7 @@ public class CompressionBrotli implements Compression {
 			FileUtils.copyToStream(brotli, result);
 			return ByteArray.from(result.toByteArray());
 		} catch (IOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new NoPlantumlCompressionException(e);
 		}
 	}

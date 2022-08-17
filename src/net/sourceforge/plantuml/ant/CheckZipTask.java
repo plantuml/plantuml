@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -43,6 +43,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
+
+import net.sourceforge.plantuml.log.Logger;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
@@ -84,7 +86,7 @@ public class CheckZipTask extends Task {
 				manageFileList(fileList);
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new BuildException(e.toString());
 		}
 	}

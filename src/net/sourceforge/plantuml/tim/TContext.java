@@ -54,6 +54,7 @@ import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.json.Json;
 import net.sourceforge.plantuml.json.JsonValue;
+import net.sourceforge.plantuml.log.Logger;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.preproc.FileWithSuffix;
 import net.sourceforge.plantuml.preproc.ImportedFiles;
@@ -300,7 +301,7 @@ public class TContext {
 				throw (EaterException) e;
 			if (e instanceof EaterExceptionLocated)
 				throw (EaterExceptionLocated) e;
-			e.printStackTrace();
+			Logger.error(e);
 			throw EaterException.located("Fatal parsing error");
 		}
 	}
@@ -501,7 +502,7 @@ public class TContext {
 				return;
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw EaterException.located("Cannot import " + e.getMessage());
 		}
 
@@ -549,7 +550,7 @@ public class TContext {
 						}
 					}
 				} catch (IOException e) {
-					e.printStackTrace();
+					Logger.error(e);
 					throw EaterException.located("cannot include " + location);
 				}
 			}
@@ -585,13 +586,13 @@ public class TContext {
 				body.add(sl);
 			} while (true);
 		} catch (IOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw EaterException.located("" + e);
 		} finally {
 			try {
 				reader2.close();
 			} catch (IOException e) {
-				e.printStackTrace();
+				Logger.error(e);
 			}
 		}
 	}
@@ -614,13 +615,13 @@ public class TContext {
 				body.add(sl);
 			} while (true);
 		} catch (IOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw EaterException.located("Error reading theme " + e);
 		} finally {
 			try {
 				reader.close();
 			} catch (IOException e) {
-				e.printStackTrace();
+				Logger.error(e);
 			}
 		}
 	}
@@ -691,14 +692,14 @@ public class TContext {
 				}
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw EaterException.located("cannot include " + e);
 		} finally {
 			if (reader != null) {
 				try {
 					reader.close();
 				} catch (IOException e) {
-					e.printStackTrace();
+					Logger.error(e);
 				}
 			}
 		}

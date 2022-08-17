@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.jcckit;
@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.log.Logger;
 
 public class PSystemJcckitFactory extends PSystemBasicFactory<PSystemJcckit> {
 
@@ -99,7 +100,7 @@ public class PSystemJcckitFactory extends PSystemBasicFactory<PSystemJcckit> {
 			// p.load(new ByteArrayInputStream(data.toString().getBytes("ISO-8859-1")));
 		} catch (IOException e) {
 			Log.error("Error " + e);
-			e.printStackTrace();
+			Logger.error(e);
 			return null;
 		}
 		return new PSystemJcckit(source, p, width, height);

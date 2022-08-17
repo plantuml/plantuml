@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -32,7 +32,7 @@
  * Original Author:  Arnaud Roques
  * Contribution :  Hisashi Miyashita
  * Contribution :  Serge Wenger
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.svek;
@@ -98,6 +98,7 @@ import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.USymbolHexagon;
 import net.sourceforge.plantuml.graphic.USymbolInterface;
 import net.sourceforge.plantuml.graphic.USymbols;
+import net.sourceforge.plantuml.log.Logger;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
@@ -437,7 +438,7 @@ public final class GeneralImageBuilder {
 					}
 				}
 			} catch (IllegalStateException e) {
-				e.printStackTrace();
+				Logger.error(e);
 			}
 		}
 

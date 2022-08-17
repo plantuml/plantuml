@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.svek;
@@ -52,6 +52,7 @@ import net.sourceforge.plantuml.cucadiagram.dot.CucaDiagramSimplifierActivity;
 import net.sourceforge.plantuml.cucadiagram.dot.CucaDiagramSimplifierState;
 import net.sourceforge.plantuml.cucadiagram.dot.DotData;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.log.Logger;
 
 public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 
@@ -66,7 +67,7 @@ public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 		try {
 			return createFileInternal(os, dotStrings, fileFormatOption);
 		} catch (InterruptedException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new IOException(e);
 		}
 	}
@@ -114,7 +115,7 @@ public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 		if (widthwarning != null && widthwarning.matches("\\d+")) {
 			warningOrError = svek2.getWarningOrError(Integer.parseInt(widthwarning));
 		}
-		
+
 		// Sorry about this hack. There is a side effect in SvekResult::calculateDimension()
 		result.calculateDimension(stringBounder);  // Ensure text near the margins is not cut off
 

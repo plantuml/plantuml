@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.creole.atom;
@@ -54,6 +54,7 @@ import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.ImgValign;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TileImageSvg;
+import net.sourceforge.plantuml.log.Logger;
 import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SURL;
@@ -120,38 +121,38 @@ public class AtomImg extends AbstractAtom implements Atom {
 		try {
 			// Check if valid URL
 			if (src.startsWith("http:") || src.startsWith("https:")) {
-				if (src.endsWith(".svg")) 
+				if (src.endsWith(".svg"))
 					return buildSvgFromUrl(src, fc, SURL.create(src), scale, url);
-				
+
 				return buildRasterFromUrl(src, fc, SURL.create(src), scale, url);
 			}
 			final SFile f = FileSystem.getInstance().getFile(src);
 			if (f.exists() == false) {
-				if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE) 
+				if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE)
 					return AtomTextUtils.createLegacy("(File not found: " + f.getPrintablePath() + ")", fc);
-				
+
 				return AtomTextUtils.createLegacy("(Cannot decode)", fc);
 			}
 			if (f.getName().endsWith(".svg")) {
 				final String tmp = FileUtils.readSvg(f);
-				if (tmp == null) 
+				if (tmp == null)
 					return AtomTextUtils.createLegacy("(Cannot decode)", fc);
-				
+
 				return new AtomImgSvg(new TileImageSvg(tmp, scale));
 			}
 			final BufferedImage read = f.readRasterImageFromFile();
 			if (read == null) {
-				if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE) 
+				if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE)
 					return AtomTextUtils.createLegacy("(Cannot decode: " + f.getPrintablePath() + ")", fc);
-				
+
 				return AtomTextUtils.createLegacy("(Cannot decode)", fc);
 			}
 			return new AtomImg(f.readRasterImageFromFile(), scale, url, src);
 		} catch (IOException e) {
-			e.printStackTrace();
-			if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE) 
+			Logger.error(e);
+			if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE)
 				return AtomTextUtils.createLegacy("ERROR " + e.toString(), fc);
-			
+
 			return AtomTextUtils.createLegacy("ERROR", fc);
 		}
 	}
