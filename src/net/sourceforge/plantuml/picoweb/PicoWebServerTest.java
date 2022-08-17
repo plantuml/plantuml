@@ -1,11 +1,8 @@
 package net.sourceforge.plantuml.picoweb;
 
-import net.sourceforge.plantuml.json.Json;
-import net.sourceforge.plantuml.json.JsonObject;
-import net.sourceforge.plantuml.log.Logger;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static net.sourceforge.plantuml.code.TranscoderUtil.getDefaultTranscoder;
 
-import javax.imageio.ImageIO;
-import javax.imageio.stream.MemoryCacheImageInputStream;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -15,8 +12,12 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URL;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static net.sourceforge.plantuml.code.TranscoderUtil.getDefaultTranscoder;
+import javax.imageio.ImageIO;
+import javax.imageio.stream.MemoryCacheImageInputStream;
+
+import net.sourceforge.plantuml.json.Json;
+import net.sourceforge.plantuml.json.JsonObject;
+import net.sourceforge.plantuml.log.Logme;
 
 // Newer Java versions have nice built-in HTTP classes in the jdk.incubator.httpclient / java.net.http packages
 // but PlantUML supports older Java versions so the tests here use a kludgy approach to HTTP.
@@ -295,7 +296,7 @@ public class PicoWebServerTest {
 				try {
 					PicoWebServer.serverLoop(serverSocket);
 				} catch (IOException e) {
-					Logger.error(e);
+					Logme.error(e);
 				}
 			}
 		};

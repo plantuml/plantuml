@@ -62,10 +62,6 @@ public class Rose {
 	final private double paddingX = 5;
 	final public static double paddingY = 5;
 
-	public HColor getFontColor(ISkinParam skin, FontParam fontParam) {
-		return skin.getFontHtmlColor(null, fontParam);
-	}
-
 	public HColor getHtmlColor(ISkinParam skin, ColorParam color) {
 		return getHtmlColor(skin, null, color);
 	}

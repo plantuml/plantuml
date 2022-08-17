@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.api;
 
 import net.sourceforge.plantuml.annotation.HaxeIgnored;
 import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
 import net.sourceforge.plantuml.core.ImageData;
 
 public class ImageDataSimple extends ImageDataAbstract {

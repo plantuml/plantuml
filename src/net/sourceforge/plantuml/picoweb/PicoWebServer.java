@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- *
+ * 
  * If you like this project or if you find it useful, you can support us at:
- *
+ * 
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- *
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,9 +30,9 @@
  *
  *
  * Original Author:  Arnaud Roques
- *
+ * 
  * Highly inspired from https://www.ssaurel.com/blog/create-a-simple-http-web-server-in-java
- *
+ * 
  */
 package net.sourceforge.plantuml.picoweb;
 
@@ -69,7 +69,7 @@ import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.error.PSystemErrorUtils;
 import net.sourceforge.plantuml.graphic.QuoteUtils;
-import net.sourceforge.plantuml.log.Logger;
+import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.version.Version;
 
@@ -139,7 +139,7 @@ public class PicoWebServer implements Runnable {
 			try {
 				sendError(e, out);
 			} catch (Throwable e1) {
-				Logger.error(e);
+				Logme.error(e);
 			}
 		} finally {
 			try {
@@ -147,7 +147,7 @@ public class PicoWebServer implements Runnable {
 				out.close();
 				connect.close();
 			} catch (Throwable e) {
-				Logger.error(e);
+				Logme.error(e);
 			}
 		}
 	}

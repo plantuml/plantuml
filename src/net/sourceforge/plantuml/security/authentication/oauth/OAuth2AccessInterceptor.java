@@ -35,11 +35,11 @@
  */
 package net.sourceforge.plantuml.security.authentication.oauth;
 
+import java.net.URLConnection;
+
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.security.authentication.SecurityAccessInterceptor;
 import net.sourceforge.plantuml.security.authentication.SecurityAuthentication;
-
-import java.net.URLConnection;
 
 /**
  * Applies from {@link SecurityAuthentication} data an OAuth2 Authorization access header.

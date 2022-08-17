@@ -36,9 +36,9 @@
 package net.sourceforge.plantuml;
 
 import java.awt.Dimension;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.utils.MathUtils;
 
 public class Dimension2DDouble extends Dimension2D {

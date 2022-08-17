@@ -35,20 +35,20 @@
  */
 package net.sourceforge.plantuml.security.authentication.oauth;
 
-import net.sourceforge.plantuml.json.Json;
-import net.sourceforge.plantuml.json.JsonObject;
-import net.sourceforge.plantuml.json.JsonValue;
-import net.sourceforge.plantuml.log.Logger;
-import net.sourceforge.plantuml.security.SURL;
-import net.sourceforge.plantuml.security.authentication.SecurityAuthentication;
-import net.sourceforge.plantuml.security.authentication.SecurityAuthorizeManager;
-
 import java.io.UnsupportedEncodingException;
 import java.net.Proxy;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
+
+import net.sourceforge.plantuml.json.Json;
+import net.sourceforge.plantuml.json.JsonObject;
+import net.sourceforge.plantuml.json.JsonValue;
+import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.security.SURL;
+import net.sourceforge.plantuml.security.authentication.SecurityAuthentication;
+import net.sourceforge.plantuml.security.authentication.SecurityAuthorizeManager;
 
 /**
  * Default abstract OAuth2 AccessAuthorizeManager for OAuth2 managers.
@@ -134,7 +134,7 @@ public abstract class AbstractOAuth2AccessAuthorizeManager implements SecurityAu
 		try {
 			return URLEncoder.encode(data, "UTF-8");
 		} catch (UnsupportedEncodingException e) {
-			Logger.error(e);
+			Logme.error(e);
 			return data;
 		}
 	}

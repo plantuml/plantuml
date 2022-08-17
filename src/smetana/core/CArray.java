@@ -39,6 +39,8 @@ package smetana.core;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.plantuml.log.Logme;
+
 public class CArray<O> extends UnsupportedC {
 
 	private final Class<O> cl;
@@ -97,7 +99,7 @@ public class CArray<O> extends UnsupportedC {
 				data.add(cl.getDeclaredConstructor().newInstance());
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Logme.error(e);
 			throw new UnsupportedOperationException();
 		}
 	}

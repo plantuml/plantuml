@@ -35,11 +35,11 @@
  */
 package net.sourceforge.plantuml.eggs;
 
+import java.util.StringTokenizer;
+
 import net.sourceforge.plantuml.PlainStringsDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
-
-import java.util.StringTokenizer;
 
 public class PSystemEgg extends PlainStringsDiagram {
 

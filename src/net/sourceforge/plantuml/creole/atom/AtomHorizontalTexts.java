@@ -35,10 +35,10 @@
  */
 package net.sourceforge.plantuml.creole.atom;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.util.List;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;

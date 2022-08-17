@@ -44,11 +44,18 @@ import net.sourceforge.plantuml.project.GanttDiagram;
 public class ComplementOpen implements Something {
 
 	public IRegex toRegex(String suffix) {
-		return new RegexLeaf("OPEN" + suffix, "(opene?d?)");
+		return new RegexLeaf("OPEN" + suffix, "(opene?d?(?: for \\[([^\\[\\]]+?)\\])?)");
 	}
 
-	public Failable<Object> getMe(GanttDiagram project, RegexResult arg, String suffix) {
-		return Failable.ok(new Object());
+	public Failable<String> getMe(GanttDiagram project, RegexResult arg, String suffix) {
+		final String value = arg.get("OPEN" + suffix, 0);
+		final int x = value.indexOf('[');
+		if (x > 0) {
+			final int y = value.lastIndexOf(']');
+			final String s = value.substring(x + 1, y);
+			return Failable.ok(s);
+		}
+		return Failable.ok("");
 	}
 
 }

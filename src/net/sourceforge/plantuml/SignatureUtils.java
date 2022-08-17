@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- *
+ * 
  * If you like this project or if you find it useful, you can support us at:
- *
+ * 
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- *
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -50,7 +50,7 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
 import net.sourceforge.plantuml.code.AsciiEncoder;
-import net.sourceforge.plantuml.log.Logger;
+import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SFile;
 
 public class SignatureUtils {
@@ -78,10 +78,10 @@ public class SignatureUtils {
 			final byte[] digest = getMD5raw(s);
 			return toString(digest);
 		} catch (NoSuchAlgorithmException e) {
-			Logger.error(e);
+			Logme.error(e);
 			throw new UnsupportedOperationException(e);
 		} catch (UnsupportedEncodingException e) {
-			Logger.error(e);
+			Logme.error(e);
 			throw new UnsupportedOperationException(e);
 		}
 	}
@@ -105,10 +105,10 @@ public class SignatureUtils {
 			assert digest.length == 16;
 			return toHexString(digest);
 		} catch (NoSuchAlgorithmException e) {
-			Logger.error(e);
+			Logme.error(e);
 			throw new UnsupportedOperationException(e);
 		} catch (UnsupportedEncodingException e) {
-			Logger.error(e);
+			Logme.error(e);
 			throw new UnsupportedOperationException(e);
 		}
 	}
@@ -119,10 +119,10 @@ public class SignatureUtils {
 			assert digest.length == 64;
 			return toHexString(digest);
 		} catch (NoSuchAlgorithmException e) {
-			Logger.error(e);
+			Logme.error(e);
 			throw new UnsupportedOperationException(e);
 		} catch (UnsupportedEncodingException e) {
-			Logger.error(e);
+			Logme.error(e);
 			throw new UnsupportedOperationException(e);
 		}
 	}
@@ -161,10 +161,10 @@ public class SignatureUtils {
 			final byte[] digest = msgDigest.digest();
 			return toString(digest);
 		} catch (NoSuchAlgorithmException e) {
-			Logger.error(e);
+			Logme.error(e);
 			throw new UnsupportedOperationException(e);
 		} catch (UnsupportedEncodingException e) {
-			Logger.error(e);
+			Logme.error(e);
 			throw new UnsupportedOperationException(e);
 		}
 	}
@@ -195,10 +195,10 @@ public class SignatureUtils {
 			final byte[] digest = msgDigest.digest();
 			return toString(digest);
 		} catch (NoSuchAlgorithmException e) {
-			Logger.error(e);
+			Logme.error(e);
 			throw new UnsupportedOperationException(e);
 		} catch (UnsupportedEncodingException e) {
-			Logger.error(e);
+			Logme.error(e);
 			throw new UnsupportedOperationException(e);
 		}
 	}

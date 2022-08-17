@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
-import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.ISkinParam;
@@ -127,10 +126,17 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 					FontConfiguration.create(getSkinParam(), FontParam.CLASS_STEREOTYPE, stereotype),
 					HorizontalAlignment.CENTER, skinParam);
 			genericBlock = TextBlockUtils.withMargin(genericBlock, 1, 1);
-			final HColor classBackground = SkinParamUtils.getColor(getSkinParam(), stereotype, ColorParam.background);
 
-			final HColor classBorder = SkinParamUtils.getFontColor(getSkinParam(), FontParam.CLASS_STEREOTYPE,
-					stereotype);
+//			final HColor classBackground = SkinParamUtils.getColor(getSkinParam(), stereotype, ColorParam.background);
+//			final HColor classBorder = SkinParamUtils.getFontColor(getSkinParam(), FontParam.CLASS_STEREOTYPE,
+//					stereotype);
+
+//			final HColor classBackground = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
+//					skinParam.getIHtmlColorSet());
+			final HColor classBackground = skinParam.getBackgroundColor();
+			final HColor classBorder = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(),
+					skinParam.getIHtmlColorSet());
+
 			genericBlock = new TextBlockGeneric(genericBlock, classBackground, classBorder);
 			genericBlock = TextBlockUtils.withMargin(genericBlock, 1, 1);
 		}

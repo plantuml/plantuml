@@ -49,46 +49,46 @@ public class OpenClose implements Histogram, LoadPlanable {
 	private final Collection<DayOfWeek> closedDayOfWeek = EnumSet.noneOf(DayOfWeek.class);
 	private final Collection<Day> closedDays = new HashSet<>();
 	private final Collection<Day> openedDays = new HashSet<>();
-	private Day calendar;
+	private Day startingDay;
 
 	public int daysInWeek() {
 		return 7 - closedDayOfWeek.size();
 	}
 
 	private boolean isThereSomeChangeAfter(Day day) {
-		if (closedDayOfWeek.size() > 0) {
+		if (closedDayOfWeek.size() > 0)
 			return true;
-		}
-		for (Day tmp : closedDays) {
+
+		for (Day tmp : closedDays)
 			if (tmp.compareTo(day) >= 0)
 				return true;
-		}
-		for (Day tmp : openedDays) {
+
+		for (Day tmp : openedDays)
 			if (tmp.compareTo(day) >= 0)
 				return true;
-		}
+
 		return false;
 	}
 
 	private boolean isThereSomeChangeBefore(Day day) {
-		if (closedDayOfWeek.size() > 0) {
+		if (closedDayOfWeek.size() > 0)
 			return true;
-		}
-		for (Day tmp : closedDays) {
+
+		for (Day tmp : closedDays)
 			if (tmp.compareTo(day) <= 0)
 				return true;
-		}
-		for (Day tmp : openedDays) {
+
+		for (Day tmp : openedDays)
 			if (tmp.compareTo(day) <= 0)
 				return true;
-		}
+
 		return false;
 	}
 
 	public boolean isClosed(Day day) {
-		if (openedDays.contains(day)) {
+		if (openedDays.contains(day))
 			return false;
-		}
+
 		final DayOfWeek dayOfWeek = day.getDayOfWeek();
 		return closedDayOfWeek.contains(dayOfWeek) || closedDays.contains(day);
 	}
@@ -105,19 +105,18 @@ public class OpenClose implements Histogram, LoadPlanable {
 		openedDays.add(day);
 	}
 
-	public final Day getCalendar() {
-		return calendar;
+	public final Day getStartingDay() {
+		return startingDay;
 	}
 
-	public final void setCalendar(Day calendar) {
-		this.calendar = calendar;
+	public final void setStartingDay(Day startingDay) {
+		this.startingDay = startingDay;
 	}
 
 	public long getNext(long moment) {
 		Day day = Day.create(moment);
-		if (isThereSomeChangeAfter(day) == false) {
+		if (isThereSomeChangeAfter(day) == false)
 			return TimeLine.MAX_TIME;
-		}
 
 		final long current = getLoatAtInternal(day);
 		System.err.println("getNext:day=" + day + " current=" + current);
@@ -125,17 +124,16 @@ public class OpenClose implements Histogram, LoadPlanable {
 			day = day.increment();
 			final int tmp = getLoatAtInternal(day);
 			System.err.println("..day=" + day + " " + tmp);
-			if (tmp != current) {
+			if (tmp != current)
 				return day.getMillis();
-			}
+
 		}
 	}
 
 	public long getPrevious(long moment) {
 		Day day = Day.create(moment);
-		if (isThereSomeChangeBefore(day) == false) {
+		if (isThereSomeChangeBefore(day) == false)
 			return -TimeLine.MAX_TIME;
-		}
 
 		final long current = getLoatAtInternal(day);
 		System.err.println("getPrevious=" + day + " current=" + current);
@@ -143,32 +141,47 @@ public class OpenClose implements Histogram, LoadPlanable {
 			day = day.decrement();
 			final int tmp = getLoatAtInternal(day);
 			System.err.println("..day=" + day + " " + tmp);
-			if (tmp != current) {
+			if (tmp != current)
 				return day.getMillis();
-			}
+
 		}
 	}
 
 	public long getValueAt(long moment) {
 		final Day day = Day.create(moment);
-		if (isClosed(day)) {
+		if (isClosed(day))
 			return 0;
-		}
+
 		return 100;
 	}
 
 	public int getLoadAt(Day day) {
-		if (getCalendar() == null) {
+		if (getStartingDay() == null)
 			return 100;
-		}
+
 		return getLoatAtInternal(day);
 	}
 
 	private int getLoatAtInternal(Day day) {
-		if (isClosed(day)) {
+		if (isClosed(day))
 			return 0;
-		}
+
 		return 100;
+	}
+
+	public LoadPlanable mutateMe(final OpenClose except) {
+		if (except != null)
+			return new LoadPlanable() {
+				@Override
+				public int getLoadAt(Day instant) {
+					if (except.openedDays.contains(instant))
+						return 100;
+					if (except.closedDays.contains(instant))
+						return 0;
+					return OpenClose.this.getLoadAt(instant);
+				}
+			};
+		return this;
 	}
 
 }

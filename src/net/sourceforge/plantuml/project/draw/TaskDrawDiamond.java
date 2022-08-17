@@ -35,10 +35,9 @@
  */
 package net.sourceforge.plantuml.project.draw;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SpriteContainerEmpty;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -142,15 +141,13 @@ public class TaskDrawDiamond extends AbstractTaskDraw {
 		final double width = getShapeHeight(ug.getStringBounder());
 		final double delta = x2 - x1 - width;
 
-		if (url != null) {
+		if (url != null)
 			ug.startUrl(url);
-		}
 
 		drawShape(applyColors(ug).apply(UTranslate.dx(x1 + delta / 2)));
 
-		if (url != null) {
+		if (url != null)
 			ug.closeUrl();
-		}
 	}
 
 	private UGraphic applyColors(UGraphic ug) {

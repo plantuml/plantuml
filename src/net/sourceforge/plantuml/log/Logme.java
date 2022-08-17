@@ -29,32 +29,39 @@
  * USA.
  *
  *
- * Original Author:  Arnaud Roques
- * 
+ * Original Author:  Guillaume Grossetie
  *
+ * 
  */
-package net.sourceforge.plantuml.project.lang;
+package net.sourceforge.plantuml.log;
 
-import net.sourceforge.plantuml.command.regex.IRegex;
-import net.sourceforge.plantuml.command.regex.RegexLeaf;
-import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.project.Failable;
-import net.sourceforge.plantuml.project.GanttDiagram;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class ComplementClose implements Something {
+public class Logme {
 
-	public IRegex toRegex(String suffix) {
-		return new RegexLeaf("CLOSED" + suffix, "(closed?(?: for \\[([^\\[\\]]+?)\\])?)");
+	private static final Logger logger;
+
+	static {
+		logger = Logger.getLogger("com.plantuml");
+		logger.setUseParentHandlers(false);
+		final ConsoleHandler handler = new ConsoleHandler();
+		handler.setFormatter(new SimpleFormatter());
+		logger.addHandler(handler);
 	}
 
-	public Failable<String> getMe(GanttDiagram project, RegexResult arg, String suffix) {
-		final String value = arg.get("CLOSED" + suffix, 0);
-		final int x = value.indexOf('[');
-		if (x > 0) {
-			final int y = value.lastIndexOf(']');
-			final String s = value.substring(x + 1, y);
-			return Failable.ok(s);
-		}
-		return Failable.ok("");
+	public static void error(Throwable thrown) {
+		logger.log(Level.SEVERE, "", thrown);
 	}
+
+	// Unused right now
+	//
+	// public static void error(String msg, Throwable thrown) {
+	// logger.log(Level.SEVERE, msg, thrown);
+	// }
+	//
+	// public static void error(String msg) {
+	// logger.log(Level.SEVERE, msg);
+	// }
 }

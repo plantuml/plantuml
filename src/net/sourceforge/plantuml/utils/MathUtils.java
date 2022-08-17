@@ -35,10 +35,10 @@
  */
 package net.sourceforge.plantuml.utils;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 
 public class MathUtils {
 

@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- *
+ * 
  * If you like this project or if you find it useful, you can support us at:
- *
+ * 
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- *
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- *
+ * 
  *
  */
 package net.sourceforge.plantuml.command;
@@ -39,7 +39,7 @@ import java.util.Objects;
 
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.core.Diagram;
-import net.sourceforge.plantuml.log.Logger;
+import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.version.Version;
 
 public class ProtectedCommand<S extends Diagram> implements Command<S> {
@@ -59,11 +59,12 @@ public class ProtectedCommand<S extends Diagram> implements Command<S> {
 			// }
 			return result;
 		} catch (Throwable t) {
-			Logger.error("Error ", t);
+			Log.error("Error " + t);
+			Logme.error(t);
 			String msg = "You should send a mail to plantuml@gmail.com or post to http://plantuml.com/qa with this log (V"
 					+ Version.versionString() + ")";
-			Logger.error(msg);
-			msg += " " + t;
+			Log.error(msg);
+			msg += " " + t.toString();
 			return CommandExecutionResult.error(msg, t);
 		}
 	}

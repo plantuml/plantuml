@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- *
+ * 
  * If you like this project or if you find it useful, you can support us at:
- *
+ * 
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- *
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- *
+ * 
  *
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
@@ -44,7 +44,7 @@ import java.util.concurrent.locks.ReentrantLock;
 import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.api.MyRunnable;
 import net.sourceforge.plantuml.api.TimeoutExecutor;
-import net.sourceforge.plantuml.log.Logger;
+import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SFile;
 
 public class ProcessRunner {
@@ -163,14 +163,14 @@ public class ProcessRunner {
 			try {
 				process = Runtime.getRuntime().exec(cmd, null, dir == null ? null : dir.conv());
 			} catch (IOException e) {
-				Logger.error(e);
+				Logme.error(e);
 				changeState.lock();
 				try {
 					state = ProcessState.IO_EXCEPTION1(e);
 				} finally {
 					changeState.unlock();
 				}
-				Logger.error(e);
+				Logme.error(e);
 				return;
 			}
 			errorStream = new ThreadStream(process.getErrorStream(), null);
@@ -192,7 +192,7 @@ public class ProcessRunner {
 					} finally {
 						changeState.unlock();
 					}
-					Logger.error(e);
+					Logme.error(e);
 				}
 			}
 		}
@@ -249,9 +249,9 @@ public class ProcessRunner {
 				}
 			} catch (Throwable e) {
 				System.err.println("ProcessRunnerA " + e);
-				Logger.error(e);
+				Logme.error(e);
 				sb.append('\n');
-				sb.append(e);
+				sb.append(e.toString());
 			}
 		}
 	}
@@ -270,7 +270,7 @@ public class ProcessRunner {
 				is.close();
 			}
 		} catch (IOException e) {
-			Logger.error(e);
+			Logme.error(e);
 		}
 	}
 
@@ -280,7 +280,7 @@ public class ProcessRunner {
 				os.close();
 			}
 		} catch (IOException e) {
-			Logger.error(e);
+			Logme.error(e);
 		}
 	}
 

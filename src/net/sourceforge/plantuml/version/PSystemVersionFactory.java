@@ -42,8 +42,6 @@ import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
 import net.sourceforge.plantuml.core.UmlSource;
-import net.sourceforge.plantuml.security.SecurityProfile;
-import net.sourceforge.plantuml.security.SecurityUtils;
 
 public class PSystemVersionFactory extends PSystemSingleLineFactory {
 

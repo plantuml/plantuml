@@ -97,8 +97,4 @@ public class FtileFactoryDelegatorIf extends FtileFactoryDelegator {
 				conditionEndStyle, thens.get(0), elseBranch, skinParam(), getStringBounder(), fcArrow, fcTest, url);
 	}
 
-	private HColor fontColor(FontParam param) {
-		return skinParam().getFontHtmlColor(null, param);
-	}
-
 }

@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- *
+ * 
  * If you like this project or if you find it useful, you can support us at:
- *
+ * 
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- *
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,12 +30,12 @@
  *
  *
  * Original Author:  Arnaud Roques
- *
+ * 
  *
  */
 package net.sourceforge.plantuml.real;
 
-import net.sourceforge.plantuml.log.Logger;
+import net.sourceforge.plantuml.log.Logme;
 
 class PositiveForce {
 
@@ -70,11 +70,10 @@ class PositiveForce {
 		try {
 			fixedPointValue = fixedPoint.getCurrentValue();
 		} catch (IllegalStateException e) {
-			Logger.error("Pb with force " + this);
-			Logger.error("Pb with force " + this);
-			Logger.error("This force has been created here:");
-			Logger.error(creationPoint);
-			Logger.error("The fixed point has been created here: " + fixedPoint);
+			System.err.println("Pb with force " + this);
+			System.err.println("This force has been created here:");
+			Logme.error(creationPoint);
+			System.err.println("The fixed point has been created here: " + fixedPoint);
 			fixedPoint.printCreationStackTrace();
 			throw e;
 		}

@@ -36,12 +36,12 @@
 package net.sourceforge.plantuml.math;
 
 import java.awt.Color;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
 import javax.script.ScriptException;
 
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.ugraphic.MutableImage;
 import net.sourceforge.plantuml.ugraphic.UImageSvg;
 

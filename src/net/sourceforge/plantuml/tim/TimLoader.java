@@ -40,7 +40,7 @@ import java.util.Set;
 
 import net.sourceforge.plantuml.DefinitionsContainer;
 import net.sourceforge.plantuml.StringLocated;
-import net.sourceforge.plantuml.log.Logger;
+import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.preproc.FileWithSuffix;
 import net.sourceforge.plantuml.preproc.ImportedFiles;
@@ -58,7 +58,7 @@ public class TimLoader {
 		try {
 			defines.copyTo(global);
 		} catch (EaterException e) {
-			Logger.error(e);
+			Logme.error(e);
 		}
 	}
 

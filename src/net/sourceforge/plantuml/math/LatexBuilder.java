@@ -37,13 +37,13 @@ package net.sourceforge.plantuml.math;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.Icon;
 
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.ugraphic.MutableImage;
 import net.sourceforge.plantuml.ugraphic.UImageSvg;
 

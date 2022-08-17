@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.cucadiagram;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.Hideable;
@@ -45,6 +44,7 @@ import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.Removeable;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;

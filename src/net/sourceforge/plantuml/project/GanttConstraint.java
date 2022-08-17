@@ -78,13 +78,13 @@ public class GanttConstraint extends WithLinkType {
 	}
 
 	public boolean isThereRightArrow(Task task) {
-		if (dest.getMoment() == task && dest.getAttribute() == TaskAttribute.END) {
+		if (dest.getMoment() == task && dest.getAttribute() == TaskAttribute.END)
 			return true;
-		}
+
 		if (source.getMoment() == task && dest.getAttribute() == TaskAttribute.END
-				&& source.getAttribute() == TaskAttribute.END) {
+				&& source.getAttribute() == TaskAttribute.END)
 			return true;
-		}
+
 		return false;
 	}
 
@@ -105,22 +105,22 @@ public class GanttConstraint extends WithLinkType {
 	}
 
 	public boolean isHidden(Day min, Day max) {
-		if (isHidden(source.getInstantPrecise(), min, max)) {
+		if (isHidden(source.getInstantPrecise(), min, max))
 			return true;
-		}
-		if (isHidden(dest.getInstantPrecise(), min, max)) {
+
+		if (isHidden(dest.getInstantPrecise(), min, max))
 			return true;
-		}
+
 		return false;
 	}
 
 	private boolean isHidden(Day now, Day min, Day max) {
-		if (now.compareTo(min) < 0) {
+		if (now.compareTo(min) < 0)
 			return true;
-		}
-		if (now.compareTo(max) > 0) {
+
+		if (now.compareTo(max) > 0)
 			return true;
-		}
+
 		return false;
 	}
 

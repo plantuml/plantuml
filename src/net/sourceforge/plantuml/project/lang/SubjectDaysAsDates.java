@@ -158,9 +158,9 @@ public class SubjectDaysAsDates implements Subject {
 
 		@Override
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-			for (Day d : (DaysAsDates) subject) {
-				project.closeDayAsDate(d);
-			}
+			for (Day d : (DaysAsDates) subject)
+				project.closeDayAsDate(d, (String) complement);
+
 			return CommandExecutionResult.ok();
 
 		}
@@ -174,9 +174,9 @@ public class SubjectDaysAsDates implements Subject {
 
 		@Override
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-			for (Day d : (DaysAsDates) subject) {
-				project.openDayAsDate(d);
-			}
+			for (Day d : (DaysAsDates) subject)
+				project.openDayAsDate(d, (String) complement);
+
 			return CommandExecutionResult.ok();
 
 		}
@@ -192,9 +192,9 @@ public class SubjectDaysAsDates implements Subject {
 		@Override
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 			final HColor color = ((CenterBorderColor) complement).getCenter();
-			for (Day d : (DaysAsDates) subject) {
+			for (Day d : (DaysAsDates) subject)
 				project.colorDay(d, color);
-			}
+
 			return CommandExecutionResult.ok();
 
 		}

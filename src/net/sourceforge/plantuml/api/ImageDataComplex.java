@@ -35,10 +35,9 @@
  */
 package net.sourceforge.plantuml.api;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
 import net.sourceforge.plantuml.CMapData;
 import net.sourceforge.plantuml.annotation.HaxeIgnored;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 
 public class ImageDataComplex extends ImageDataAbstract {
 

@@ -311,8 +311,4 @@ public class ConditionalBuilder {
 				&& tile2.calculateDimension(stringBounder).hasPointOut();
 	}
 
-	// private HtmlColor fontColor() {
-	// return skinParam.getFontHtmlColor(FontParam.ACTIVITY_DIAMOND, null);
-	// }
-
 }

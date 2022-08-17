@@ -94,10 +94,6 @@ public class Gtiles {
 				swimlane);
 	}
 
-	private static HColor fontColor(ISkinParam skinParam, FontParam param) {
-		return skinParam.getFontHtmlColor(null, param);
-	}
-
 	static public Gtile withSouthMargin(Gtile orig, double south) {
 		return new GtileWithMargin((AbstractGtileRoot) orig, 0, south, 0);
 

@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- *
+ * 
  * If you like this project or if you find it useful, you can support us at:
- *
+ * 
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- *
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- *
+ * 
  *
  */
 package net.sourceforge.plantuml.eggs;
@@ -41,7 +41,7 @@ import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
 import net.sourceforge.plantuml.core.UmlSource;
-import net.sourceforge.plantuml.log.Logger;
+import net.sourceforge.plantuml.log.Logme;
 
 public class PSystemRIPFactory extends PSystemSingleLineFactory {
 
@@ -52,7 +52,7 @@ public class PSystemRIPFactory extends PSystemSingleLineFactory {
 				return new PSystemRIP(source);
 			} catch (IOException e) {
 				Log.error("Error " + e);
-				Logger.error(e);
+				Logme.error(e);
 			}
 		}
 		return null;

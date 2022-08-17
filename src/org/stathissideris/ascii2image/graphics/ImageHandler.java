@@ -51,7 +51,7 @@ public class ImageHandler {
 //			tracker.waitForID(0);
 //		} catch (InterruptedException e) {
 //			System.err.println("Failed to load image "+filename);
-//			e.printStackTrace();
+//			Logme.error(e);
 //		}
 //		tracker.removeImage(result, 0);
 //		

@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- *
+ * 
  * If you like this project or if you find it useful, you can support us at:
- *
+ * 
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- *
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -35,10 +35,10 @@
  */
 package net.sourceforge.plantuml.pdf;
 
-import net.sourceforge.plantuml.log.Logger;
-
 import java.io.File;
 import java.lang.reflect.Method;
+
+import net.sourceforge.plantuml.log.Logme;
 
 public class PdfConverter {
 
@@ -74,7 +74,7 @@ public class PdfConverter {
 			final Method execute = clSVGConverter.getMethod("execute");
 			execute.invoke(converter);
 		} catch (Exception e) {
-			Logger.error(e);
+			Logme.error(e);
 			throw new UnsupportedOperationException();
 		}
 		if (pdfFile.exists() == false) {

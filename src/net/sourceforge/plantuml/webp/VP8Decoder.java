@@ -15,13 +15,13 @@
  */
 package net.sourceforge.plantuml.webp;
 
-import net.sourceforge.plantuml.log.Logger;
-
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
 import javax.imageio.stream.ImageInputStream;
+
+import net.sourceforge.plantuml.log.Logme;
 
 public class VP8Decoder {
 	private int[][][][] coefProbs;
@@ -73,7 +73,7 @@ public class VP8Decoder {
 			out.write((byte) ' ');
 
 			out.write(("" + (f.getHeight() + uvHeight)).getBytes());
-
+			
 			out.write((byte) 0x0a);
 			out.write(("255").getBytes());
 			out.write((byte) 0xa);
@@ -95,12 +95,12 @@ public class VP8Decoder {
 			}
 
 		} catch (FileNotFoundException e) {
-			Logger.error(e);
+			Logme.error(e);
 		} catch (IOException e) {
-			Logger.error(e);
+			Logme.error(e);
 		}
 	}
-
+	
 	public void writeYV12File(String fileName, VP8Frame frame) {
 
 		FileOutputStream out;
@@ -134,9 +134,9 @@ public class VP8Decoder {
 					out.write(vData[x][y]);
 				}
 		} catch (FileNotFoundException e) {
-			Logger.error(e);
+			Logme.error(e);
 		} catch (IOException e) {
-			Logger.error(e);
+			Logme.error(e);
 		}
 	}
 }

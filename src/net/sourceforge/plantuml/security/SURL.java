@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- *
+ * 
  * If you like this project or if you find it useful, you can support us at:
- *
+ * 
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- *
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- *
+ * 
  *
  */
 package net.sourceforge.plantuml.security;
@@ -68,7 +68,7 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.swing.ImageIcon;
 
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.log.Logger;
+import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.authentication.SecurityAccessInterceptor;
 import net.sourceforge.plantuml.security.authentication.SecurityAuthentication;
 import net.sourceforge.plantuml.security.authentication.SecurityCredentials;
@@ -84,11 +84,11 @@ import net.sourceforge.plantuml.security.authentication.SecurityCredentials;
  * host.
  * <p>
  * Example:<br/>
- *
+ * 
  * <pre>
  *     SURL url = SURL.create ("https://jenkins-access@jenkins.mycompany.com/api/json")
  * </pre>
- *
+ * 
  * The {@code jenkins-access} will checked against the Security context access
  * token configuration. If a configuration exists for this token name, the token
  * will be removed from the URL and the credentials will be added to the
@@ -143,7 +143,7 @@ public class SURL {
 	 * <p>
 	 * The url must be http or https. Return null in case of error or if
 	 * <code>url</code> is null
-	 *
+	 * 
 	 * @param url plain url starting by http:// or https//
 	 * @return the secure URL or null
 	 */
@@ -155,7 +155,7 @@ public class SURL {
 			try {
 				return create(new URL(url));
 			} catch (MalformedURLException e) {
-				Logger.error(e);
+				Logme.error(e);
 			}
 		return null;
 	}
@@ -164,7 +164,7 @@ public class SURL {
 	 * Create a secure URL from a <code>java.net.URL</code> object.
 	 * <p>
 	 * It takes into account credentials.
-	 *
+	 * 
 	 * @param url
 	 * @return the secure URL
 	 * @throws MalformedURLException if <code>url</code> is null
@@ -400,7 +400,7 @@ public class SURL {
 
 	/**
 	 * Creates a GET request and response handler
-	 *
+	 * 
 	 * @param url            URL to request
 	 * @param proxy          proxy to apply
 	 * @param authentication the authentication to use
@@ -444,7 +444,7 @@ public class SURL {
 	 * content will be identified as form or JSON data. The charset encoding can be
 	 * set by header parameters or will be set to UTF-8. The method to some fancy
 	 * logic to simplify it for the user.
-	 *
+	 * 
 	 * @param url            URL to request via POST method
 	 * @param proxy          proxy to apply
 	 * @param authentication the authentication to use
@@ -489,7 +489,7 @@ public class SURL {
 			try {
 				return Charset.forName(matcher.group(1));
 			} catch (Exception e) {
-				Logger.error(e);
+				Logme.error(e);
 			}
 
 		return null;
@@ -520,7 +520,7 @@ public class SURL {
 
 	/**
 	 * Reads data in a byte[] array.
-	 *
+	 * 
 	 * @param input input stream
 	 * @return byte data
 	 * @throws IOException if something went wrong
@@ -538,7 +538,7 @@ public class SURL {
 
 	/**
 	 * Sends a request content payload to an endpoint.
-	 *
+	 * 
 	 * @param connection HTTP connection
 	 * @param data       data as byte array
 	 * @throws IOException if something went wrong
@@ -569,7 +569,7 @@ public class SURL {
 				final ImageIcon tmp = new ImageIcon(bytes);
 				return SecurityUtils.readRasterImage(tmp);
 			} catch (Exception e) {
-				Logger.error(e);
+				Logme.error(e);
 			}
 		return null;
 	}
@@ -610,7 +610,7 @@ public class SURL {
 
 	/**
 	 * Set the headers for a URL connection
-	 *
+	 * 
 	 * @param headers map Keys with values (can be String or list of String)
 	 */
 	private static void applyAdditionalHeaders(URLConnection http, Map<String, Object> headers) {
@@ -632,7 +632,7 @@ public class SURL {
 	/**
 	 * Removes the userInfo part from the URL, because we want to use the
 	 * SecurityCredentials instead.
-	 *
+	 * 
 	 * @param url URL with UserInfo part
 	 * @return url without UserInfo part
 	 * @throws MalformedURLException
@@ -644,7 +644,7 @@ public class SURL {
 	/**
 	 * Removes the userInfo part from the URL, because we want to use the
 	 * SecurityCredentials instead.
-	 *
+	 * 
 	 * @param url URL with UserInfo part
 	 * @return url without UserInfo part
 	 */

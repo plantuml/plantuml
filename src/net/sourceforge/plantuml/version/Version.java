@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- *
+ * 
  * If you like this project or if you find it useful, you can support us at:
- *
+ * 
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- *
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,14 +30,14 @@
  *
  *
  * Original Author:  Arnaud Roques
- *
+ * 
  *
  */
 package net.sourceforge.plantuml.version;
 
 import java.util.Date;
 
-import net.sourceforge.plantuml.log.Logger;
+import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SURL;
 
 public class Version {
@@ -81,7 +81,7 @@ public class Version {
 	}
 
 	public static int beta() {
-		final int beta = 9;
+		final int beta = 10;
 		return beta;
 	}
 
@@ -111,11 +111,14 @@ public class Version {
 				return "No ClassLoader?";
 			}
 			final SURL url = SURL.create(loader.getResource("net/sourceforge/plantuml/version/Version.class"));
+			if (url == null) {
+				return "No URL?";
+			}
 			String fullpath = url.toString();
 			fullpath = fullpath.replaceAll("net/sourceforge/plantuml/version/Version\\.class", "");
 			return fullpath;
 		} catch (Throwable t) {
-			Logger.error(t);
+			Logme.error(t);
 			return t.toString();
 		}
 	}

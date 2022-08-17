@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- *
+ * 
  * If you like this project or if you find it useful, you can support us at:
- *
+ * 
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- *
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -44,6 +44,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.logging.Filter;
 import java.util.logging.LogRecord;
+import java.util.logging.Logger;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
@@ -51,7 +52,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
 import net.sourceforge.plantuml.Log;
-import net.sourceforge.plantuml.log.Logger;
+import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.stats.api.Stats;
@@ -84,7 +85,7 @@ public class StatsUtils {
 	static {
 		try {
 			// Logger.getLogger("java.util.prefs").setLevel(Level.OFF);
-			java.util.logging.Logger.getLogger("java.util.prefs").setFilter(new Filter() {
+			Logger.getLogger("java.util.prefs").setFilter(new Filter() {
 				public boolean isLoggable(LogRecord record) {
 					final String message = record.getMessage();
 					System.err.println("SPECIAL TRACE FOR PLANTUML: " + message);
@@ -92,13 +93,13 @@ public class StatsUtils {
 				}
 			});
 		} catch (Exception e) {
-			Logger.error(e);
+			Logme.error(e);
 		}
 		if (prefs.getInt("VERSION", 0) != VERSION) {
 			try {
 				prefs.clear();
 			} catch (BackingStoreException e1) {
-				Logger.error(e1);
+				Logme.error(e1);
 			}
 			prefs.putInt("VERSION", VERSION);
 		}
@@ -154,7 +155,7 @@ public class StatsUtils {
 				htmlOutput(stats);
 			}
 		} catch (Exception e) {
-			Logger.error(e);
+			Logme.error(e);
 		}
 	}
 
@@ -171,8 +172,7 @@ public class StatsUtils {
 		}
 	}
 
-	static void xmlOutput(Stats stats)
-			throws TransformerException, ParserConfigurationException, IOException {
+	static void xmlOutput(Stats stats) throws TransformerException, ParserConfigurationException, IOException {
 		try (OutputStream os = SecurityUtils.createFileOutputStream("plantuml-stats.xml")) {
 			new XmlConverter(stats).createXml(os);
 		}

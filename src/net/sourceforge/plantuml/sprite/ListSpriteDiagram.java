@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.sprite;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -45,6 +44,7 @@ import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.api.ThemeStyle;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;

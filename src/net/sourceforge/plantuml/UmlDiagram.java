@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- *
+ * 
  * If you like this project or if you find it useful, you can support us at:
- *
+ * 
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- *
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -39,7 +39,6 @@ import static net.sourceforge.plantuml.ugraphic.ImageBuilder.plainImageBuilder;
 
 import java.awt.Color;
 import java.awt.geom.AffineTransform;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.awt.image.BufferedImage;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
@@ -53,6 +52,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.api.ThemeStyle;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.ImageData;
@@ -65,11 +65,11 @@ import net.sourceforge.plantuml.fun.IconLoader;
 import net.sourceforge.plantuml.graphic.GraphicPosition;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
 import net.sourceforge.plantuml.graphic.UDrawable;
-import net.sourceforge.plantuml.log.Logger;
+import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.mjpeg.MJPEGGenerator;
 import net.sourceforge.plantuml.pdf.PdfConverter;
-import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.style.NoStyleAvailableException;
 import net.sourceforge.plantuml.svek.EmptySvgException;
@@ -136,13 +136,13 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 			this.lastInfo = new Dimension2DDouble(imageData.getWidth(), imageData.getHeight());
 			return imageData;
 		} catch (NoStyleAvailableException e) {
-			// Logger.error(e);
+			// Logme.error(e);
 			exportDiagramError(os, e, fileFormatOption, null);
 		} catch (UnparsableGraphvizException e) {
-			Logger.error(e);
+			Logme.error(e);
 			exportDiagramError(os, e.getCause(), fileFormatOption, e.getGraphvizVersion());
 		} catch (Throwable e) {
-			// Logger.error(e);
+			// Logme.error(e);
 			exportDiagramError(os, e, fileFormatOption, null);
 		}
 		return ImageDataSimple.error();
@@ -171,7 +171,7 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 				im2 = utils.exportFlashcode(flash, Color.BLACK, Color.WHITE);
 			} catch (Throwable e) {
 				Log.error("Issue in flashcode generation " + e);
-				// Logger.error(e);
+				// Logme.error(e);
 			}
 			if (im2 != null)
 				GraphvizCrash.addDecodeHint(strings);

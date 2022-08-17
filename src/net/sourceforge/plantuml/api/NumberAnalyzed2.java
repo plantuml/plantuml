@@ -3,12 +3,12 @@
  * ========================================================================
  *
  * Project Info:  http://plantuml.com
- *
+ * 
  * If you like this project or if you find it useful, you can support us at:
- *
+ * 
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- *
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -34,7 +34,7 @@ import java.util.prefs.Preferences;
 
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.annotation.HaxeIgnored;
-import net.sourceforge.plantuml.log.Logger;
+import net.sourceforge.plantuml.log.Logme;
 
 @HaxeIgnored
 public class NumberAnalyzed2 implements INumberAnalyzed {
@@ -96,7 +96,7 @@ public class NumberAnalyzed2 implements INumberAnalyzed {
 					Long.parseLong(st.nextToken(), 36), Long.parseLong(st.nextToken(), 36), Long.parseLong(
 							st.nextToken(), 36), Long.parseLong(st.nextToken(), 36));
 		} catch (Exception e) {
-			Logger.error(e);
+			Logme.error(e);
 			Log.info("Error reading " + value);
 			return null;
 		}

@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- *
+ * 
  * If you like this project or if you find it useful, you can support us at:
- *
+ * 
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- *
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- *
+ * 
  *
  */
 package net.sourceforge.plantuml.donors;
@@ -57,7 +57,7 @@ import net.sourceforge.plantuml.graphic.GraphicStrings;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.UDrawable;
-import net.sourceforge.plantuml.log.Logger;
+import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.AffineTransformType;
 import net.sourceforge.plantuml.ugraphic.PixelImage;
@@ -98,7 +98,7 @@ public class PSystemDonors extends PlainDiagram {
 
 	/*
 	 * Special thanks to our sponsors and donors:
-	 *
+	 * 
 	 * - Noam Tamim
 	 */
 
@@ -154,7 +154,7 @@ public class PSystemDonors extends PlainDiagram {
 				lines.add(st.nextToken());
 			}
 		} catch (NoPlantumlCompressionException e) {
-			Logger.error(e);
+			Logme.error(e);
 		}
 		return lines;
 	}

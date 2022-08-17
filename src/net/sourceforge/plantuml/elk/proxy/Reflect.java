@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- *
+ * 
  * If you like this project or if you find it useful, you can support us at:
- *
+ * 
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- *
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -35,11 +35,11 @@
  */
 package net.sourceforge.plantuml.elk.proxy;
 
-import net.sourceforge.plantuml.log.Logger;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+
+import net.sourceforge.plantuml.log.Logme;
 
 /*
  * Various methods to do Java introspection
@@ -50,7 +50,7 @@ public class Reflect {
 		try {
 			return Class.forName(className);
 		} catch (Throwable t) {
-			Logger.error(t);
+			Logme.error(t);
 			throw new IllegalArgumentException(t);
 		}
 	}
@@ -65,7 +65,7 @@ public class Reflect {
 			}
 			throw new UnsupportedOperationException(name);
 		} catch (Throwable t) {
-			Logger.error(t);
+			Logme.error(t);
 			throw new IllegalArgumentException(t);
 		}
 	}
@@ -76,7 +76,7 @@ public class Reflect {
 			final Field field = cl.getField(fieldname);
 			return field.get(null);
 		} catch (Throwable t) {
-			Logger.error(t);
+			Logme.error(t);
 			throw new IllegalArgumentException(t);
 		}
 	}
@@ -86,7 +86,7 @@ public class Reflect {
 			final Class<?> cl = Class.forName(className);
 			return cl.newInstance();
 		} catch (Throwable t) {
-			Logger.error(t);
+			Logme.error(t);
 			throw new IllegalArgumentException(t);
 		}
 	}
@@ -97,7 +97,7 @@ public class Reflect {
 			final Constructor<?> m = cl.getConstructor(arg1.getClass());
 			return m.newInstance(arg1);
 		} catch (Throwable t) {
-			Logger.error(t);
+			Logme.error(t);
 			throw new IllegalArgumentException(t);
 		}
 	}
@@ -108,7 +108,7 @@ public class Reflect {
 			final Constructor<?> m = cl.getConstructor(Double.TYPE, Double.TYPE, Double.TYPE, Double.TYPE);
 			return m.newInstance(arg1, arg2, arg3, arg4);
 		} catch (Throwable t) {
-			Logger.error(t);
+			Logme.error(t);
 			throw new IllegalArgumentException(t);
 		}
 	}
@@ -119,7 +119,7 @@ public class Reflect {
 			final Field f = cl.getField(fieldName);
 			return f.get(null);
 		} catch (Throwable t) {
-			Logger.error(t);
+			Logme.error(t);
 			throw new IllegalArgumentException(t);
 		}
 	}
@@ -130,7 +130,7 @@ public class Reflect {
 			final Method m = cl.getMethod(method);
 			return m.invoke(null);
 		} catch (Throwable t) {
-			Logger.error(t);
+			Logme.error(t);
 			throw new IllegalArgumentException(t);
 		}
 	}
@@ -141,7 +141,7 @@ public class Reflect {
 			final Method m = cl.getMethod(method, arg1.getClass());
 			return m.invoke(null, arg1);
 		} catch (Throwable t) {
-			Logger.error(t);
+			Logme.error(t);
 			throw new IllegalArgumentException(t);
 		}
 	}
@@ -152,7 +152,7 @@ public class Reflect {
 			final Method m = cl.getMethod(method, arg1.getClass(), arg2.getClass());
 			return m.invoke(null, arg1, arg2);
 		} catch (Throwable t) {
-			Logger.error(t);
+			Logme.error(t);
 			throw new IllegalArgumentException(t);
 		}
 	}
@@ -163,7 +163,7 @@ public class Reflect {
 			final Method m = getStaticMethod(cl, method, 1);
 			return m.invoke(null, arg1);
 		} catch (Throwable t) {
-			Logger.error(t);
+			Logme.error(t);
 			throw new IllegalArgumentException(t);
 		}
 	}
@@ -174,7 +174,7 @@ public class Reflect {
 			final Method m = getStaticMethod(cl, method, 2);
 			return m.invoke(null, arg1, arg2);
 		} catch (Throwable t) {
-			Logger.error(t);
+			Logme.error(t);
 			throw new IllegalArgumentException(t);
 		}
 	}
@@ -193,7 +193,7 @@ public class Reflect {
 			final Method m = instance.getClass().getMethod(method);
 			return m.invoke(instance);
 		} catch (Throwable t) {
-			Logger.error(t);
+			Logme.error(t);
 			throw new IllegalArgumentException(t);
 		}
 	}
@@ -203,7 +203,7 @@ public class Reflect {
 			final Method m = instance.getClass().getMethod(method, arg1.getClass());
 			return m.invoke(instance, arg1);
 		} catch (Throwable t) {
-			Logger.error(t);
+			Logme.error(t);
 			throw new IllegalArgumentException(t);
 		}
 	}
@@ -213,7 +213,7 @@ public class Reflect {
 			final Method m = instance.getClass().getMethod(method, arg1.getClass(), arg2.getClass());
 			return m.invoke(instance, arg1, arg2);
 		} catch (Throwable t) {
-			Logger.error(t);
+			Logme.error(t);
 			throw new IllegalArgumentException(t);
 		}
 	}
@@ -223,7 +223,7 @@ public class Reflect {
 			final Method m = getMethod(instance, method, 2);
 			return m.invoke(instance, arg1, arg2);
 		} catch (Throwable t) {
-			Logger.error(t);
+			Logme.error(t);
 			throw new IllegalArgumentException(t);
 		}
 	}

@@ -35,13 +35,13 @@
  */
 package net.sourceforge.plantuml.creole.atom;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.salt.element.Skeleton2;
 import net.sourceforge.plantuml.ugraphic.UGraphic;

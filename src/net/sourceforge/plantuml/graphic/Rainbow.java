@@ -46,7 +46,6 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.Value;
 import net.sourceforge.plantuml.style.ValueNull;
-import net.sourceforge.plantuml.ugraphic.color.ColorUtils;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 import net.sourceforge.plantuml.ugraphic.color.HColorUtils;

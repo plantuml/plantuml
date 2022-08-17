@@ -405,7 +405,7 @@ public class BitmapRenderer {
 //			}
 //			g2.drawImage(graphic, bounds.x, bounds.y, null);
 //		} catch (IOException e) {
-//			e.printStackTrace();
+//			Logme.error(e);
 //		}
 //	}
 	

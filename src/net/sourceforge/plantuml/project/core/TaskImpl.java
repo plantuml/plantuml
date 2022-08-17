@@ -49,7 +49,6 @@ import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.project.Load;
 import net.sourceforge.plantuml.project.LoadPlanable;
-import net.sourceforge.plantuml.project.OpenClose;
 import net.sourceforge.plantuml.project.PlanUtils;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
 import net.sourceforge.plantuml.project.solver.Solver;
@@ -77,58 +76,56 @@ public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 		this.url = url;
 	}
 
-	public TaskImpl(StyleBuilder styleBuilder, TaskCode code, OpenClose openClose) {
+	public TaskImpl(StyleBuilder styleBuilder, TaskCode code, LoadPlanable plan, Day startingDay) {
 		super(styleBuilder, code);
-		this.defaultPlan = openClose;
+		this.defaultPlan = plan;
 		this.solver = new SolverImpl(this);
-		if (openClose.getCalendar() == null) {
+		if (startingDay == null)
 			setStart(Day.create(0));
-		} else {
-			setStart(openClose.getCalendar());
-		}
+		else
+			setStart(startingDay);
+
 		setLoad(Load.inWinks(1));
 	}
 
 	public int getLoadAt(Day instant) {
-		if (isPaused(instant)) {
+		if (isPaused(instant))
 			return 0;
-		}
 
 		LoadPlanable result = defaultPlan;
-		if (resources.size() > 0) {
+		if (resources.size() > 0)
 			result = PlanUtils.multiply(defaultPlan, getRessourcePlan());
-		}
+
 		return result.getLoadAt(instant);
 	}
 
 	private boolean isPaused(Day instant) {
-		if (pausedDay.contains(instant)) {
+		if (pausedDay.contains(instant))
 			return true;
-		}
-		if (pausedDayOfWeek(instant)) {
+
+		if (pausedDayOfWeek(instant))
 			return true;
-		}
+
 		return false;
 	}
 
 	private boolean pausedDayOfWeek(Day instant) {
-		for (DayOfWeek dayOfWeek : pausedDayOfWeek) {
-			if (instant.getDayOfWeek() == dayOfWeek) {
+		for (DayOfWeek dayOfWeek : pausedDayOfWeek)
+			if (instant.getDayOfWeek() == dayOfWeek)
 				return true;
-			}
-		}
+
 		return false;
 	}
 
 	public int loadForResource(Resource res, Day instant) {
 		if (resources.keySet().contains(res) && instant.compareTo(getStart()) >= 0
 				&& instant.compareTo(getEnd()) <= 0) {
-			if (isPaused(instant)) {
+			if (isPaused(instant))
 				return 0;
-			}
-			if (res.isClosedAt(instant)) {
+
+			if (res.isClosedAt(instant))
 				return 0;
-			}
+
 			return resources.get(res);
 		}
 		return 0;
@@ -143,17 +140,17 @@ public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 	}
 
 	private LoadPlanable getRessourcePlan() {
-		if (resources.size() == 0) {
+		if (resources.size() == 0)
 			throw new IllegalStateException();
-		}
+
 		return new LoadPlanable() {
 			public int getLoadAt(Day instant) {
 				int result = 0;
 				for (Map.Entry<Resource, Integer> ent : resources.entrySet()) {
 					final Resource res = ent.getKey();
-					if (res.isClosedAt(instant)) {
+					if (res.isClosedAt(instant))
 						continue;
-					}
+
 					final int percentage = ent.getValue();
 					result += percentage;
 				}
@@ -171,13 +168,13 @@ public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 				result.append("{");
 				result.append(ent.getKey().getName());
 				final int percentage = ent.getValue();
-				if (percentage != 100) {
+				if (percentage != 100)
 					result.append(":" + percentage + "%");
-				}
+
 				result.append("}");
-				if (it.hasNext()) {
+				if (it.hasNext())
 					result.append(" ");
-				}
+
 			}
 			return result.toString();
 		}
@@ -195,9 +192,9 @@ public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 
 	public Day getStart() {
 		Day result = (Day) solver.getData(TaskAttribute.START);
-		while (getLoadAt(result) == 0) {
+		while (getLoadAt(result) == 0)
 			result = result.increment();
-		}
+
 		return result;
 	}
 
@@ -246,12 +243,12 @@ public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 	}
 
 	public final CenterBorderColor getColors() {
-		if (colors == null) {
+		if (colors == null)
 			return null;
-		}
-		if (colors.length == 1) {
+
+		if (colors.length == 1)
 			return colors[0];
-		}
+
 		return colors[0].unlinearTo(colors[1], completion);
 	}
 
@@ -261,20 +258,19 @@ public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 
 	public final Collection<Day> getAllPaused() {
 		final SortedSet<Day> result = new TreeSet<>(pausedDay);
-		for (DayOfWeek dayOfWeek : pausedDayOfWeek) {
+		for (DayOfWeek dayOfWeek : pausedDayOfWeek)
 			addAll(result, dayOfWeek);
-		}
+
 		return Collections.unmodifiableCollection(result);
 	}
 
 	private void addAll(SortedSet<Day> result, DayOfWeek dayOfWeek) {
 		final Day start = getStart();
 		final Day end = getEnd();
-		for (Day current = start; current.compareTo(end) <= 0; current = current.increment()) {
-			if (current.getDayOfWeek() == dayOfWeek) {
+		for (Day current = start; current.compareTo(end) <= 0; current = current.increment())
+			if (current.getDayOfWeek() == dayOfWeek)
 				result.add(current);
-			}
-		}
+
 	}
 
 	public void setNote(Display note) {
@@ -283,6 +279,10 @@ public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 
 	public Display getNote() {
 		return note;
+	}
+
+	public LoadPlanable getDefaultPlan() {
+		return defaultPlan;
 	}
 
 }

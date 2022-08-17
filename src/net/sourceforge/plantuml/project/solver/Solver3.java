@@ -62,9 +62,9 @@ public class Solver3 extends AbstractSolver {
 			final long tmpWorkLoad = workLoad.getValueAt(currentTime);
 			final long nextChange = workLoad.getNext(currentTime);
 			final long duration = nextChange - currentTime;
-			if (duration <= 0) {
+			if (duration <= 0)
 				throw new IllegalArgumentException();
-			}
+
 			final long partialLoad = duration * tmpWorkLoad;
 			resultLoad.put(currentTime, tmpWorkLoad);
 

@@ -24,7 +24,7 @@ import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.brotli.BrotliInputStream;
-import net.sourceforge.plantuml.log.Logger;
+import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SFile;
 
 public class Stdlib {
@@ -40,21 +40,21 @@ public class Stdlib {
 	public static InputStream getResourceAsStream(String fullname) {
 		fullname = fullname.toLowerCase().replace(".puml", "");
 		final int last = fullname.indexOf('/');
-		if (last == -1) {
+		if (last == -1)
 			return null;
-		}
+
 		try {
 			final Stdlib folder = retrieve(fullname.substring(0, last));
-			if (folder == null || folder.info.size() == 0) {
+			if (folder == null || folder.info.size() == 0)
 				return null;
-			}
+
 			final String data = folder.loadRessource(fullname.substring(last + 1));
-			if (data == null) {
+			if (data == null)
 				return null;
-			}
+
 			return new ByteArrayInputStream(data.getBytes(UTF_8));
 		} catch (IOException e) {
-			Logger.error(e);
+			Logme.error(e);
 			return null;
 		}
 	}
@@ -63,9 +63,9 @@ public class Stdlib {
 		Stdlib result = all.get(name);
 		if (result == null) {
 			final DataInputStream dataStream = getDataStream(name);
-			if (dataStream == null) {
+			if (dataStream == null)
 				return null;
-			}
+
 			final String info = dataStream.readUTF();
 			dataStream.close();
 			result = new Stdlib(name, info);
@@ -85,9 +85,9 @@ public class Stdlib {
 		}
 		Log.info("No cache for " + file);
 		final DataInputStream dataStream = getDataStream();
-		if (dataStream == null) {
+		if (dataStream == null)
 			return null;
-		}
+
 		dataStream.readUTF();
 		final InputStream spriteStream = getSpriteStream();
 		if (spriteStream == null) {
@@ -102,9 +102,9 @@ public class Stdlib {
 					Log.info("Not found " + filename);
 					return null;
 				}
-				if (filename.equalsIgnoreCase(file)) {
+				if (filename.equalsIgnoreCase(file))
 					found = new StringBuilder();
-				}
+
 				while (true) {
 					final String s = dataStream.readUTF();
 					if (s.equals(SEPARATOR)) {
@@ -122,9 +122,9 @@ public class Stdlib {
 					if (isSpriteLine(s)) {
 						final Matcher m = sizePattern.matcher(s);
 						final boolean ok = m.find();
-						if (ok == false) {
+						if (ok == false)
 							throw new IOException(s);
-						}
+
 						final int width = Integer.parseInt(m.group(1));
 						final int height = Integer.parseInt(m.group(2));
 						if (found == null) {
@@ -189,19 +189,19 @@ public class Stdlib {
 	}
 
 	private void fillMap(String infoString) {
-		for (String s : infoString.split("\n")) {
+		for (String s : infoString.split("\n"))
 			if (s.contains("=")) {
 				final String data[] = s.split("=");
 				this.info.put(data[0], data[1]);
 			}
-		}
+
 	}
 
 	private static DataInputStream getDataStream(String name) throws IOException {
 		final InputStream raw = getInternalInputStream(name, "-abx.repx");
-		if (raw == null) {
+		if (raw == null)
 			return null;
-		}
+
 		return new DataInputStream(new BrotliInputStream(raw));
 	}
 
@@ -211,9 +211,9 @@ public class Stdlib {
 
 	private InputStream getSpriteStream() throws IOException {
 		final InputStream raw = getInternalInputStream(name, "-dex.repx");
-		if (raw == null) {
+		if (raw == null)
 			return null;
-		}
+
 		return new BrotliInputStream(raw);
 	}
 
@@ -234,40 +234,40 @@ public class Stdlib {
 		final InputStream home = getInternalInputStream("home", ".repx");
 		final BufferedReader br = new BufferedReader(new InputStreamReader(home));
 		String name;
-		while ((name = br.readLine()) != null) {
+		while ((name = br.readLine()) != null)
 			result.add(name);
-		}
+
 		return Collections.unmodifiableCollection(result);
 	}
 
 	private void extractMeFull() throws IOException {
 		final DataInputStream dataStream = getDataStream();
-		if (dataStream == null) {
+		if (dataStream == null)
 			return;
-		}
+
 		dataStream.readUTF();
 		final InputStream spriteStream = getSpriteStream();
 		try {
 			while (true) {
 				final String filename = dataStream.readUTF();
-				if (filename.equals(SEPARATOR)) {
+				if (filename.equals(SEPARATOR))
 					return;
-				}
+
 				final SFile f = new SFile("stdlib/" + name + "/" + filename + ".puml");
 				f.getParentFile().mkdirs();
 				final PrintWriter fos = f.createPrintWriter();
 				while (true) {
 					final String s = dataStream.readUTF();
-					if (s.equals(SEPARATOR)) {
+					if (s.equals(SEPARATOR))
 						break;
-					}
+
 					fos.println(s);
 					if (isSpriteLine(s)) {
 						final Matcher m = sizePattern.matcher(s);
 						final boolean ok = m.find();
-						if (ok == false) {
+						if (ok == false)
 							throw new IOException(s);
-						}
+
 						final int width = Integer.parseInt(m.group(1));
 						final int height = Integer.parseInt(m.group(2));
 						final String sprite = readSprite(width, height, spriteStream);
@@ -286,34 +286,34 @@ public class Stdlib {
 	public List<String> extractAllSprites() throws IOException {
 		final List<String> result = new ArrayList<>();
 		final DataInputStream dataStream = getDataStream();
-		if (dataStream == null) {
+		if (dataStream == null)
 			return Collections.unmodifiableList(result);
-		}
+
 		dataStream.readUTF();
 		final InputStream spriteStream = getSpriteStream();
 		try {
 			while (true) {
 				final String filename = dataStream.readUTF();
-				if (filename.equals(SEPARATOR)) {
+				if (filename.equals(SEPARATOR))
 					return Collections.unmodifiableList(result);
-				}
+
 				while (true) {
 					final String s = dataStream.readUTF();
-					if (s.equals(SEPARATOR)) {
+					if (s.equals(SEPARATOR))
 						break;
-					}
+
 					if (isSpriteLine(s)) {
 						final Matcher m = sizePattern.matcher(s);
 						final boolean ok = m.find();
-						if (ok == false) {
+						if (ok == false)
 							throw new IOException(s);
-						}
+
 						final int width = Integer.parseInt(m.group(1));
 						final int height = Integer.parseInt(m.group(2));
 						final String sprite = readSprite(width, height, spriteStream);
-						if (s.contains("_LARGE") == false) {
+						if (s.contains("_LARGE") == false)
 							result.add(s + "\n" + sprite + "}");
-						}
+
 					}
 				}
 			}
@@ -353,8 +353,8 @@ public class Stdlib {
 	public static void printStdLib() {
 		final List<String> print = new ArrayList<>();
 		addInfoVersion(print, true);
-		for (String s : print) {
+		for (String s : print)
 			System.out.println(s.replace("<b>", ""));
-		}
+
 	}
 }

@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- *
+ * 
  * If you like this project or if you find it useful, you can support us at:
- *
+ * 
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- *
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Thierry Kormann
- *
+ * 
  *
  */
 package net.sourceforge.plantuml.ugraphic.g2d;
@@ -54,8 +54,6 @@ package net.sourceforge.plantuml.ugraphic.g2d;
 
  */
 
-import net.sourceforge.plantuml.log.Logger;
-
 import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
@@ -66,15 +64,17 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Arrays;
 
+import net.sourceforge.plantuml.log.Logme;
+
 /**
  * The <code>ExtendedGeneralPath</code> class represents a geometric path constructed from straight lines, quadratic and
  * cubic (Bezier) curves and elliptical arc. This class delegates lines and curves to an enclosed
  * <code>GeneralPath</code>. Elliptical arc is implemented using an <code>Arc2D</code> in double precision.
- *
+ * 
  * <p>
  * <b>Warning</b> : An elliptical arc may be composed of several path segments. For further details, see the SVG
  * Appendix&nbsp;F.6
- *
+ * 
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
  * @version $Id: ExtendedGeneralPath.java 594018 2007-11-12 04:17:41Z cam $
  */
@@ -127,23 +127,23 @@ public class ExtendedGeneralPath implements Shape, Cloneable {
 	/**
 	 * Adds an elliptical arc, defined by two radii, an angle from the x-axis, a flag to choose the large arc or not, a
 	 * flag to indicate if we increase or decrease the angles and the final point of the arc.
-	 *
+	 * 
 	 * @param rx
 	 *            the x radius of the ellipse
 	 * @param ry
 	 *            the y radius of the ellipse
-	 *
+	 * 
 	 * @param angle
 	 *            the angle from the x-axis of the current coordinate system to the x-axis of the ellipse in degrees.
-	 *
+	 * 
 	 * @param largeArcFlag
 	 *            the large arc flag. If true the arc spanning less than or equal to 180 degrees is chosen, otherwise
 	 *            the arc spanning greater than 180 degrees is chosen
-	 *
+	 * 
 	 * @param sweepFlag
 	 *            the sweep flag. If true the line joining center to arc sweeps through decreasing angles otherwise it
 	 *            sweeps through increasing angles
-	 *
+	 * 
 	 * @param x
 	 *            the absolute x coordinate of the final point of the arc.
 	 * @param y
@@ -193,7 +193,7 @@ public class ExtendedGeneralPath implements Shape, Cloneable {
 	/**
 	 * This constructs an unrotated Arc2D from the SVG specification of an Elliptical arc. To get the final arc you need
 	 * to apply a rotation transform such as:
-	 *
+	 * 
 	 * AffineTransform.getRotateInstance (angle, arc.getX()+arc.getWidth()/2, arc.getY()+arc.getHeight()/2);
 	 */
 	public static Arc2D computeArc(double x0, double y0, double rx, double ry, double angle, boolean largeArcFlag,
@@ -727,7 +727,7 @@ public class ExtendedGeneralPath implements Shape, Cloneable {
 
 			return result;
 		} catch (CloneNotSupportedException ex) {
-			Logger.error(ex);
+			Logme.error(ex);
 		}
 		return null;
 	}
@@ -735,7 +735,7 @@ public class ExtendedGeneralPath implements Shape, Cloneable {
 	/**
 	 * Make sure, that the requested number of slots in vales[] are available. Must be called even for numValues = 0,
 	 * because it is also used for initialization of those arrays.
-	 *
+	 * 
 	 * @param numValues
 	 *            number of requested coordinates
 	 */

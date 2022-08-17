@@ -106,6 +106,7 @@ public enum SName {
 	participant, //
 	partition, //
 	person, //
+	port, //
 	queue, //
 	rectangle, //
 	reference, //

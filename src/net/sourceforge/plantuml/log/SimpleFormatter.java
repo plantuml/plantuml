@@ -29,32 +29,46 @@
  * USA.
  *
  *
- * Original Author:  Arnaud Roques
- * 
+ * Original Author:  Guillaume Grossetie
  *
+ * 
  */
-package net.sourceforge.plantuml.project.lang;
+package net.sourceforge.plantuml.log;
 
-import net.sourceforge.plantuml.command.regex.IRegex;
-import net.sourceforge.plantuml.command.regex.RegexLeaf;
-import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.project.Failable;
-import net.sourceforge.plantuml.project.GanttDiagram;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.logging.Formatter;
+import java.util.logging.LogRecord;
 
-public class ComplementClose implements Something {
+public class SimpleFormatter extends Formatter {
 
-	public IRegex toRegex(String suffix) {
-		return new RegexLeaf("CLOSED" + suffix, "(closed?(?: for \\[([^\\[\\]]+?)\\])?)");
-	}
-
-	public Failable<String> getMe(GanttDiagram project, RegexResult arg, String suffix) {
-		final String value = arg.get("CLOSED" + suffix, 0);
-		final int x = value.indexOf('[');
-		if (x > 0) {
-			final int y = value.lastIndexOf(']');
-			final String s = value.substring(x + 1, y);
-			return Failable.ok(s);
+	@Override
+	public synchronized String format(LogRecord record) {
+		final String throwable;
+		if (record.getThrown() == null) {
+			throwable = "";
+		} else {
+			final StringWriter sw = new StringWriter();
+			final PrintWriter pw = new PrintWriter(sw);
+			pw.println();
+			record.getThrown().printStackTrace(pw);
+			pw.close();
+			throwable = sw.toString().trim();
 		}
-		return Failable.ok("");
+
+		final String message = record.getMessage();
+		final StringBuilder sb = new StringBuilder();
+
+		if (message.trim().length() > 0) {
+			sb.append(message);
+			sb.append(System.lineSeparator());
+		}
+
+		if (throwable.length() > 0) {
+			sb.append(throwable);
+			sb.append(System.lineSeparator());
+		}
+
+		return sb.toString();
 	}
 }

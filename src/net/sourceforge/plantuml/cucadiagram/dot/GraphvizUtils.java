@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- *
+ * 
  * If you like this project or if you find it useful, you can support us at:
- *
+ * 
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- *
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- *
+ * 
  *
  */
 package net.sourceforge.plantuml.cucadiagram.dot;
@@ -45,7 +45,7 @@ import java.util.regex.Pattern;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.log.Logger;
+import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SecurityProfile;
 import net.sourceforge.plantuml.security.SecurityUtils;
@@ -187,7 +187,7 @@ public class GraphvizUtils {
 		try {
 			return create(null, "png").graphviz244onWindows();
 		} catch (Exception e) {
-			Logger.error(e);
+			Logme.error(e);
 			return false;
 		}
 	}
@@ -228,8 +228,8 @@ public class GraphvizUtils {
 					result.add(red + err);
 
 			} catch (Exception e) {
-				result.add(red + e);
-				Logger.error(e);
+				result.add(red + e.toString());
+				Logme.error(e);
 				error = -1;
 			}
 			return error;
@@ -269,8 +269,8 @@ public class GraphvizUtils {
 					}
 				}
 			} catch (Exception e) {
-				result.add(red + e);
-				Logger.error(e);
+				result.add(red + e.toString());
+				Logme.error(e);
 				error = -5;
 			}
 		} else {

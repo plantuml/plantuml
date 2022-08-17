@@ -92,13 +92,13 @@ public class ConversionOptions {
 //			}
 //		} catch (ParserConfigurationException e) {
 //			// TODO Auto-generated catch block
-//			e.printStackTrace();
+//			Logme.error(e);
 //		} catch (SAXException e) {
 //			// TODO Auto-generated catch block
-//			e.printStackTrace();
+//			Logme.error(e);
 //		} catch (IOException e) {
 //			// TODO Auto-generated catch block
-//			e.printStackTrace();
+//			Logme.error(e);
 //		}
 //	}
 }

@@ -72,7 +72,7 @@ public class EntityImagePort extends AbstractEntityImageBorder {
 	}
 
 	private StyleSignature getSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, sname, SName.boundary).withTOBECHANGED(getStereo());
+		return StyleSignatureBasic.of(SName.root, SName.element, sname, SName.port).withTOBECHANGED(getStereo());
 	}
 
 	private boolean upPosition() {

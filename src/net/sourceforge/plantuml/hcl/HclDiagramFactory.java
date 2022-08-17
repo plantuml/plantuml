@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- *
+ * 
  * If you like this project or if you find it useful, you can support us at:
- *
+ * 
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- *
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- *
+ * 
  *
  */
 package net.sourceforge.plantuml.hcl;
@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.jsondiagram.JsonDiagram;
 import net.sourceforge.plantuml.jsondiagram.StyleExtractor;
-import net.sourceforge.plantuml.log.Logger;
+import net.sourceforge.plantuml.log.Logme;
 
 public class HclDiagramFactory extends PSystemAbstractFactory {
 
@@ -77,7 +77,7 @@ public class HclDiagramFactory extends PSystemAbstractFactory {
 			HclParser parser = new HclParser(list);
 			data = parser.parseMe();
 		} catch (Exception e) {
-			Logger.error(e);
+			Logme.error(e);
 		}
 		final JsonDiagram result = new JsonDiagram(style, source, UmlDiagramType.HCL, data, highlighted);
 //		if (styleExtractor != null) {
