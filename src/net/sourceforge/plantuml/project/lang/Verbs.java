@@ -155,4 +155,16 @@ public class Verbs {
 		);
 	}
 
+	public static IRegex just() {
+		return new RegexLeaf("just");
+	}
+
+	public static IRegex justBefore() {
+		return new RegexLeaf("just[%s]*before");
+	}
+
+	public static IRegex justAfter() {
+		return new RegexLeaf("just[%s]*after");
+	}
+
 }

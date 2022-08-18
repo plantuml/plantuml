@@ -33,18 +33,39 @@
  * 
  *
  */
-package net.sourceforge.plantuml.project;
+package net.sourceforge.plantuml.project.command;
 
-import net.sourceforge.plantuml.project.core.Task;
-import net.sourceforge.plantuml.project.draw.TaskDraw;
-import net.sourceforge.plantuml.ugraphic.color.HColorSet;
+import net.sourceforge.plantuml.LineLocation;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.project.GanttDiagram;
 
-public interface ToTaskDraw {
+public class CommandGroupStart extends SingleLineCommand2<GanttDiagram> {
 
-	public TaskDraw getTaskDraw(Task task);
+	public CommandGroupStart() {
+		super(getRegexConcat());
+	}
 
-	public LoadPlanable getDefaultPlan();
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandGroupStart.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("group"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("\\["), //
+				new RegexLeaf("NAME", "([^\\[\\]]+)"), //
+				new RegexLeaf("\\]"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				RegexLeaf.end());
+	}
 
-	public HColorSet getIHtmlColorSet();
+	@Override
+	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg) {
+		final String name = arg.get("NAME", 0);
+		diagram.addGroup(name);
+		return CommandExecutionResult.ok();
+	}
 
 }

@@ -35,28 +35,27 @@
  */
 package net.sourceforge.plantuml.project.draw;
 
-import java.util.Map;
+import java.util.Set;
 
 import net.sourceforge.plantuml.SpriteContainerEmpty;
-import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.project.TimeHeaderParameters;
 import net.sourceforge.plantuml.project.core.PrintScale;
 import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.project.timescale.TimeScaleWink;
-import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 
 public class TimeHeaderSimple extends TimeHeader {
 
-	private final Map<Day, HColor> colorDays;
+	private final TimeHeaderParameters colorDays;
 	private final PrintScale printScale;
+	private final Set<Day> verticalSeparators;
 
 	@Override
 	public double getFullHeaderHeight() {
@@ -75,11 +74,26 @@ public class TimeHeaderSimple extends TimeHeader {
 		return 0;
 	}
 
-	public TimeHeaderSimple(PrintScale printScale, Style timelineStyle, Style closedStyle, double scale, Day min,
-			Day max, HColorSet colorSet, ThemeStyle themeStyle, Map<Day, HColor> colorDays) {
-		super(timelineStyle, closedStyle, min, max, new TimeScaleWink(scale, printScale), colorSet, themeStyle);
-		this.colorDays = colorDays;
+	public TimeHeaderSimple(TimeHeaderParameters thParam, PrintScale printScale) {
+		super(thParam.getTimelineStyle(), thParam.getClosedStyle(), thParam.getMin(), thParam.getMax(),
+				new TimeScaleWink(thParam.getScale(), printScale), thParam.getColorSet(), thParam.getThemeStyle());
+		this.colorDays = thParam;
 		this.printScale = printScale;
+		this.verticalSeparators = thParam.getVerticalSeparatorBefore();
+	}
+
+	private boolean isBold(Day wink) {
+		return verticalSeparators.contains(wink);
+	}
+
+	private void drawSeparatorsDay(UGraphic ug, TimeScale timeScale, double totalHeightWithoutFooter) {
+		final ULine vbar = ULine.vline(totalHeightWithoutFooter - getFullHeaderHeight() + 2);
+		ug = goBold(ug).apply(UTranslate.dy(getFullHeaderHeight() - 1));
+		for (Day i = min; i.compareTo(max.increment()) <= 0; i = i.increment(printScale))
+			if (isBold(i)) {
+				final double x1 = timeScale.getStartingPosition(i);
+				ug.apply(UTranslate.dx(x1)).draw(vbar);
+			}
 	}
 
 	private void drawSmallVlinesDay(UGraphic ug, TimeScale timeScale, double totalHeightWithoutFooter) {
@@ -119,7 +133,8 @@ public class TimeHeaderSimple extends TimeHeader {
 		drawTextsBackground(ug.apply(UTranslate.dy(-3)), totalHeightWithoutFooter + 6);
 		final double xmin = getTimeScale().getStartingPosition(min);
 		final double xmax = getTimeScale().getEndingPosition(max);
-		drawSmallVlinesDay(ug, getTimeScale(), totalHeightWithoutFooter);
+		drawSmallVlinesDay(ug, getTimeScale(), totalHeightWithoutFooter + 2);
+		drawSeparatorsDay(ug, getTimeScale(), totalHeightWithoutFooter);
 		drawSimpleDayCounter(ug, getTimeScale());
 		ug.apply(getBarColor()).draw(ULine.hline(xmax - xmin));
 		ug.apply(getBarColor()).apply(UTranslate.dy(getFullHeaderHeight() - 3)).draw(ULine.hline(xmax - xmin));
@@ -130,8 +145,8 @@ public class TimeHeaderSimple extends TimeHeader {
 	public void drawTimeFooter(UGraphic ug) {
 		final double xmin = getTimeScale().getStartingPosition(min);
 		final double xmax = getTimeScale().getEndingPosition(max);
-		drawSmallVlinesDay(ug, getTimeScale(), getTimeFooterHeight());
 		ug = ug.apply(UTranslate.dy(3));
+		drawSmallVlinesDay(ug, getTimeScale(), getTimeFooterHeight() - 3);
 		drawSimpleDayCounter(ug, getTimeScale());
 		ug.apply(getBarColor()).draw(ULine.hline(xmax - xmin));
 	}
@@ -161,7 +176,7 @@ public class TimeHeaderSimple extends TimeHeader {
 		for (Day wink = min; wink.compareTo(max) <= 0; wink = wink.increment()) {
 			final double x1 = getTimeScale().getStartingPosition(wink);
 			final double x2 = getTimeScale().getEndingPosition(wink);
-			HColor back = colorDays.get(wink);
+			HColor back = colorDays.getColor(wink);
 //			// Day of week should be stronger than period of time (back color).
 //			final HColor backDoW = colorDaysOfWeek.get(wink.getDayOfWeek());
 //			if (backDoW != null) {

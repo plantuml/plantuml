@@ -43,7 +43,7 @@ public class TimeScaleCompressed implements TimeScale {
 	private final TimeScale daily;
 
 	public TimeScaleCompressed(Day calendar, double scale) {
-		this.daily = new TimeScaleDaily(scale, calendar, null);
+		this.daily = new TimeScaleDaily(calendar, scale, null);
 	}
 
 	public double getStartingPosition(Day instant) {

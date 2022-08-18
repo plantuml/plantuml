@@ -52,6 +52,8 @@ import net.sourceforge.plantuml.project.command.CommandColorTask;
 import net.sourceforge.plantuml.project.command.CommandFootbox;
 import net.sourceforge.plantuml.project.command.CommandGanttArrow;
 import net.sourceforge.plantuml.project.command.CommandGanttArrow2;
+import net.sourceforge.plantuml.project.command.CommandGroupEnd;
+import net.sourceforge.plantuml.project.command.CommandGroupStart;
 import net.sourceforge.plantuml.project.command.CommandHideRessourceFootbox;
 import net.sourceforge.plantuml.project.command.CommandHideRessourceName;
 import net.sourceforge.plantuml.project.command.CommandLabelOnColumn;
@@ -71,6 +73,7 @@ import net.sourceforge.plantuml.project.lang.SubjectDayOfWeek;
 import net.sourceforge.plantuml.project.lang.SubjectDaysAsDates;
 import net.sourceforge.plantuml.project.lang.SubjectProject;
 import net.sourceforge.plantuml.project.lang.SubjectResource;
+import net.sourceforge.plantuml.project.lang.SubjectSeparator;
 import net.sourceforge.plantuml.project.lang.SubjectTask;
 import net.sourceforge.plantuml.project.lang.SubjectToday;
 import net.sourceforge.plantuml.style.CommandStyleImport;
@@ -80,7 +83,8 @@ public class GanttDiagramFactory extends PSystemCommandFactory {
 
 	static private final List<Subject> subjects() {
 		return Arrays.<Subject>asList(new SubjectTask(), new SubjectProject(), new SubjectDayOfWeek(),
-				new SubjectDayAsDate(), new SubjectDaysAsDates(), new SubjectResource(), new SubjectToday());
+				new SubjectDayAsDate(), new SubjectDaysAsDates(), new SubjectResource(), new SubjectToday(),
+				new SubjectSeparator());
 	}
 
 	public GanttDiagramFactory(DiagramType type) {
@@ -96,16 +100,17 @@ public class GanttDiagramFactory extends PSystemCommandFactory {
 		cmds.add(new CommandStyleMultilinesCSS());
 		cmds.add(new CommandStyleImport());
 
-		// addCommonCommands(cmds);
 		cmds.add(new CommandNope());
-		// cmds.add(new CommandComment());
-		// cmds.add(new CommandMultilinesComment());
+
 		cmds.addAll(getLanguageCommands());
+
 		cmds.add(new CommandGanttArrow());
 		cmds.add(new CommandGanttArrow2());
 		cmds.add(new CommandColorTask());
 		cmds.add(new CommandSeparator());
 		cmds.add(new CommandWeekNumberStrategy());
+		cmds.add(new CommandGroupStart());
+		cmds.add(new CommandGroupEnd());
 
 		cmds.add(new CommandLanguage());
 		cmds.add(new CommandPrintScale());
@@ -115,12 +120,6 @@ public class GanttDiagramFactory extends PSystemCommandFactory {
 		cmds.add(new CommandLabelOnColumn());
 		cmds.add(new CommandHideRessourceName());
 		cmds.add(new CommandHideRessourceFootbox());
-
-		// cmds.add(new CommandScaleWidthAndHeight());
-		// cmds.add(new CommandScaleWidthOrHeight());
-		// cmds.add(new CommandScaleMaxWidth());
-		// cmds.add(new CommandScaleMaxHeight());
-		// cmds.add(new CommandScaleMaxWidthAndHeight());
 
 		return cmds;
 	}

@@ -43,13 +43,12 @@ public final class TimeScaleDaily implements TimeScale {
 	private final TimeScaleWink basic;
 	private final double delta;
 
-	public TimeScaleDaily(double scale, Day calendar, Day zeroDay) {
+	public TimeScaleDaily(Day startingDay, double scale, Day zeroDay) {
 		this.basic = new TimeScaleWink(scale, PrintScale.DAILY);
-		if (zeroDay == null) {
-			this.delta = basic.getStartingPosition(calendar);
-		} else {
+		if (zeroDay == null)
+			this.delta = basic.getStartingPosition(startingDay);
+		else
 			this.delta = basic.getStartingPosition(zeroDay);
-		}
 
 	}
 

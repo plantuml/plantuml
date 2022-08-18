@@ -36,33 +36,29 @@
 package net.sourceforge.plantuml.project.draw;
 
 import java.util.Locale;
-import java.util.Map;
 
-import net.sourceforge.plantuml.api.ThemeStyle;
-import net.sourceforge.plantuml.project.LoadPlanable;
+import net.sourceforge.plantuml.project.TimeHeaderParameters;
 import net.sourceforge.plantuml.project.time.Day;
-import net.sourceforge.plantuml.project.time.DayOfWeek;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
-import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 
 public abstract class TimeHeaderCalendar extends TimeHeader {
 
-	protected final LoadPlanable defaultPlan;
-	protected final Map<Day, HColor> colorDays;
-	protected final Map<DayOfWeek, HColor> colorDaysOfWeek;
-	protected final Locale locale;
+	private final TimeHeaderParameters thParam;
 
-	public TimeHeaderCalendar(Locale locale, Style timelineStyle, Style closedStyle, Day calendar, Day min, Day max,
-			LoadPlanable defaultPlan, Map<Day, HColor> colorDays, Map<DayOfWeek, HColor> colorDaysOfWeek,
-			TimeScale timeScale, HColorSet colorSet, ThemeStyle themeStyle) {
-		super(timelineStyle, closedStyle, min, max, timeScale, colorSet, themeStyle);
-		this.locale = locale;
-		this.defaultPlan = defaultPlan;
-		this.colorDays = colorDays;
-		this.colorDaysOfWeek = colorDaysOfWeek;
+	public TimeHeaderCalendar(TimeHeaderParameters thParam, TimeScale timeScale) {
+		super(thParam.getTimelineStyle(), thParam.getClosedStyle(), thParam.getMin(), thParam.getMax(), timeScale,
+				thParam.getColorSet(), thParam.getThemeStyle());
+		this.thParam = thParam;
+	}
+
+	protected final Locale locale() {
+		return thParam.getLocale();
+	}
+
+	protected final int getLoadAt(Day instant) {
+		return thParam.getLoadPlanable().getLoadAt(instant);
 	}
 
 	// Duplicate in TimeHeaderSimple
@@ -90,15 +86,15 @@ public abstract class TimeHeaderCalendar extends TimeHeader {
 		for (Day wink = min; wink.compareTo(max) <= 0; wink = wink.increment()) {
 			final double x1 = getTimeScale().getStartingPosition(wink);
 			final double x2 = getTimeScale().getEndingPosition(wink);
-			HColor back = colorDays.get(wink);
+			HColor back = thParam.getColor(wink);
 			// Day of week should be stronger than period of time (back color).
-			final HColor backDoW = colorDaysOfWeek.get(wink.getDayOfWeek());
-			if (backDoW != null) {
+			final HColor backDoW = thParam.getColor(wink.getDayOfWeek());
+			if (backDoW != null)
 				back = backDoW;
-			}
-			if (back == null && defaultPlan.getLoadAt(wink) == 0) {
+
+			if (back == null && getLoadAt(wink) == 0)
 				back = closedBackgroundColor();
-			}
+
 			if (back == null) {
 				if (pending != null)
 					pending.draw(ug, height);
@@ -108,11 +104,11 @@ public abstract class TimeHeaderCalendar extends TimeHeader {
 					pending.draw(ug, height);
 					pending = null;
 				}
-				if (pending == null) {
+				if (pending == null)
 					pending = new Pending(back, x1, x2);
-				} else {
+				else
 					pending.x2 = x2;
-				}
+
 			}
 		}
 	}

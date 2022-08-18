@@ -48,17 +48,19 @@ import net.sourceforge.plantuml.project.core.TaskInstant;
 public class ComplementBeforeOrAfterOrAtTaskStartOrEnd implements Something {
 
 	private static final int POS_NB1 = 0;
-	private static final int POS_DAY_OR_WEEK1 = 1;
-	private static final int POS_NB2 = 2;
-	private static final int POS_DAY_OR_WEEK2 = 3;
-	private static final int POS_BEFORE_OR_AFTER = 4;
-	private static final int POS_CODE_OTHER = 5;
-	private static final int POS_START_OR_END = 6;
+	private static final int POS_WORKING1 = 1;
+	private static final int POS_DAY_OR_WEEK1 = 2;
+	private static final int POS_NB2 = 3;
+	private static final int POS_WORKING2 = 4;
+	private static final int POS_DAY_OR_WEEK2 = 5;
+	private static final int POS_BEFORE_OR_AFTER = 6;
+	private static final int POS_CODE_OTHER = 7;
+	private static final int POS_START_OR_END = 8;
 
 	public IRegex toRegex(String suffix) { // "+"
 		return new RegexLeaf("COMPLEMENT" + suffix, "(?:at|with|after|" + //
-				"(\\d+)[%s]+(day|week)s?" + //
-				"(?:[%s]+and[%s]+(\\d+)[%s]+(day|week)s?)?" + //
+				"(\\d+)[%s]+(working[%s]+)?(day|week)s?" + //
+				"(?:[%s]+and[%s]+(\\d+)[%s]+(working[%s]+)?(day|week)s?)?" + //
 				"[%s]+(before|after))[%s]+\\[([^\\[\\]]+?)\\].?s[%s]+(start|end)");
 	}
 
@@ -89,7 +91,11 @@ public class ComplementBeforeOrAfterOrAtTaskStartOrEnd implements Something {
 			if ("before".equalsIgnoreCase(arg.get("COMPLEMENT" + suffix, POS_BEFORE_OR_AFTER)))
 				delta = -delta;
 
-			final GanttConstraintMode mode = GanttConstraintMode.IGNORE_CALENDAR;
+			final boolean working = arg.get("COMPLEMENT" + suffix, POS_WORKING1) != null
+					|| arg.get("COMPLEMENT" + suffix, POS_WORKING2) != null;
+
+			final GanttConstraintMode mode = working ? GanttConstraintMode.DO_NOT_COUNT_CLOSE_DAY
+					: GanttConstraintMode.IGNORE_CALENDAR;
 
 			result = result.withDelta(delta, mode, system.getDefaultPlan());
 		}

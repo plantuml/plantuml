@@ -35,21 +35,13 @@
  */
 package net.sourceforge.plantuml.project.draw;
 
-import java.util.Locale;
-import java.util.Map;
-
-import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.project.LoadPlanable;
+import net.sourceforge.plantuml.project.TimeHeaderParameters;
 import net.sourceforge.plantuml.project.time.Day;
-import net.sourceforge.plantuml.project.time.DayOfWeek;
 import net.sourceforge.plantuml.project.time.MonthYear;
 import net.sourceforge.plantuml.project.timescale.TimeScaleCompressed;
-import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 
 public class TimeHeaderQuarterly extends TimeHeaderCalendar {
 
@@ -61,11 +53,8 @@ public class TimeHeaderQuarterly extends TimeHeaderCalendar {
 		return 16 + 13 - 1;
 	}
 
-	public TimeHeaderQuarterly(Locale locale, Style timelineStyle, Style closedStyle, double scale, Day calendar, Day min, Day max,
-			LoadPlanable defaultPlan, Map<Day, HColor> colorDays, Map<DayOfWeek, HColor> colorDaysOfWeek,
-			HColorSet colorSet, ThemeStyle themeStyle) {
-		super(locale, timelineStyle, closedStyle, calendar, min, max, defaultPlan, colorDays, colorDaysOfWeek,
-				new TimeScaleCompressed(calendar, scale), colorSet, themeStyle);
+	public TimeHeaderQuarterly(TimeHeaderParameters thParam) {
+		super(thParam, new TimeScaleCompressed(thParam.getStartingDay(), thParam.getScale()));
 	}
 
 	@Override
@@ -94,7 +83,7 @@ public class TimeHeaderQuarterly extends TimeHeaderCalendar {
 		for (Day wink = min; wink.compareTo(max) < 0; wink = wink.increment()) {
 			final double x1 = getTimeScale().getStartingPosition(wink);
 			if (last == null || wink.monthYear().year() != last.year()) {
-				drawVbar(ug, x1, 0, 15);
+				drawVbar(ug, x1, 0, 15, false);
 				if (last != null) {
 					printYear(ug, last, lastChange, x1);
 				}
@@ -106,7 +95,7 @@ public class TimeHeaderQuarterly extends TimeHeaderCalendar {
 		if (x1 > lastChange) {
 			printYear(ug, last, lastChange, x1);
 		}
-		drawVbar(ug, getTimeScale().getEndingPosition(max), 0, 15);
+		drawVbar(ug, getTimeScale().getEndingPosition(max), 0, 15, false);
 	}
 
 	private void drawQuarters(UGraphic ug) {
@@ -115,7 +104,7 @@ public class TimeHeaderQuarterly extends TimeHeaderCalendar {
 		for (Day wink = min; wink.compareTo(max) < 0; wink = wink.increment()) {
 			final double x1 = getTimeScale().getStartingPosition(wink);
 			if (quarter(wink).equals(last) == false) {
-				drawVbar(ug, x1, 0, 12);
+				drawVbar(ug, x1, 0, 12, false);
 				if (last != null) {
 					printQuarter(ug, last, lastChange, x1);
 				}
@@ -127,7 +116,7 @@ public class TimeHeaderQuarterly extends TimeHeaderCalendar {
 		if (x1 > lastChange) {
 			printQuarter(ug, last, lastChange, x1);
 		}
-		drawVbar(ug, getTimeScale().getEndingPosition(max), 0, 12);
+		drawVbar(ug, getTimeScale().getEndingPosition(max), 0, 12, false);
 	}
 
 	private String quarter(Day day) {

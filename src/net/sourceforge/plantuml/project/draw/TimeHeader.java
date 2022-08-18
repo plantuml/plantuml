@@ -51,10 +51,12 @@ import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.URectangle;
+import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorNone;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
+import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
 
 public abstract class TimeHeader {
 
@@ -120,9 +122,13 @@ public abstract class TimeHeader {
 		ug.apply(getBarColor()).apply(UTranslate.dy(y)).draw(hline);
 	}
 
-	protected final void drawVbar(UGraphic ug, double x, double y1, double y2) {
+	protected final void drawVbar(UGraphic ug, double x, double y1, double y2, boolean bold) {
 		final ULine vbar = ULine.vline(y2 - y1);
-		ug.apply(getBarColor()).apply(new UTranslate(x, y1)).draw(vbar);
+		if (bold)
+			ug = goBold(ug);
+		else
+			ug = ug.apply(getBarColor());
+		ug.apply(new UTranslate(x, y1)).draw(vbar);
 	}
 
 	final protected FontConfiguration getFontConfiguration(int size, boolean bold, HColor color) {
@@ -171,5 +177,11 @@ public abstract class TimeHeader {
 		ug = ug.apply(new UTranslate(x1, getFullHeaderHeight()));
 		ug.draw(new URectangle(x2 - x1, height));
 	}
+	
+	protected final UGraphic goBold(UGraphic ug) {
+		return ug.apply(HColorUtils.BLACK).apply(new UStroke(2));
+	}
+
+
 
 }
