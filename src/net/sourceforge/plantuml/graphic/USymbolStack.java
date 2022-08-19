@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphicStencil;
 import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.ugraphic.color.HColorNone;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 class USymbolStack extends USymbol {
 
@@ -58,7 +58,7 @@ class USymbolStack extends USymbol {
 		final double border = 15;
 
 		final URectangle rect = new URectangle(width - 2 * border, height).rounded(roundCorner);
-		ug.apply(new HColorNone()).apply(UTranslate.dx(border)).draw(rect);
+		ug.apply(HColors.none()).apply(UTranslate.dx(border)).draw(rect);
 
 		final UPath path = new UPath();
 		if (roundCorner == 0) {
@@ -81,7 +81,7 @@ class USymbolStack extends USymbol {
 			path.lineTo(width, 0);
 		}
 		path.setDeltaShadow(shadowing);
-		ug.apply(new HColorNone().bg()).draw(path);
+		ug.apply(HColors.none().bg()).draw(path);
 	}
 
 	private Margin getMargin() {

@@ -51,7 +51,7 @@ import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorMiddle;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class FtileCircleStop extends AbstractFtile {
 
@@ -104,7 +104,7 @@ public class FtileCircleStop extends AbstractFtile {
 		// if (skinParam().shadowing(null)) {
 		// circleSmall.setDeltaShadow(3);
 		// }
-		ug.apply(new HColorMiddle(borderColor, backColor)).apply(borderColor.bg()).apply(new UTranslate(delta, delta))
+		ug.apply(HColors.middle(borderColor, backColor)).apply(borderColor.bg()).apply(new UTranslate(delta, delta))
 				.draw(circleSmall);
 	}
 

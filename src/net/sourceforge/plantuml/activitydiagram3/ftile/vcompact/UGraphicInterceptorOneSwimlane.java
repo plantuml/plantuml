@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.ugraphic.UChange;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UShape;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class UGraphicInterceptorOneSwimlane extends UGraphicDelegator {
 
@@ -109,7 +109,7 @@ public class UGraphicInterceptorOneSwimlane extends UGraphicDelegator {
 	}
 
 	private void drawGoto() {
-		final UGraphic ugGoto = getUg().apply(HColorUtils.GREEN).apply(HColorUtils.GREEN.bg());
+		final UGraphic ugGoto = getUg().apply(HColors.GREEN).apply(HColors.GREEN.bg());
 		ugGoto.draw(new ULine(100, 100));
 	}
 

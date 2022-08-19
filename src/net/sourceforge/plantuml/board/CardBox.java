@@ -48,7 +48,7 @@ import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class CardBox extends AbstractTextBlock {
 
@@ -72,7 +72,7 @@ public class CardBox extends AbstractTextBlock {
 		final URectangle rect = new URectangle(calculateDimension(ug.getStringBounder()));
 		rect.setDeltaShadow(1);
 
-		ug.apply(HColorUtils.BLACK).apply(HColorUtils.LIGHT_GRAY.bg()).draw(rect);
+		ug.apply(HColors.BLACK).apply(HColors.LIGHT_GRAY.bg()).draw(rect);
 
 		label.create(FontConfiguration.blackBlueTrue(UFont.sansSerif(14)), HorizontalAlignment.LEFT, skinParam)
 				.drawU(ug.apply(new UTranslate(3, 3)));

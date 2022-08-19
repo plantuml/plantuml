@@ -62,7 +62,7 @@ import net.sourceforge.plantuml.ugraphic.PixelImage;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 import net.sourceforge.plantuml.version.PSystemVersion;
 import net.sourceforge.plantuml.version.Version;
 
@@ -194,7 +194,7 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 	}
 
 	public HColor getBackcolor() {
-		return HColorUtils.WHITE;
+		return HColors.WHITE;
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {

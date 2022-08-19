@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.ugraphic.UHorizontalLine;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.ugraphic.color.HColorNone;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 class USymbolNode extends USymbol {
 
@@ -112,7 +112,7 @@ class USymbolNode extends USymbol {
 		}
 
 		private void drawHlineInternal(UGraphic ug, UHorizontalLine line) {
-			ug = ug.apply(line.getStroke()).apply(new HColorNone().bg());
+			ug = ug.apply(line.getStroke()).apply(HColors.none().bg());
 			ug.draw(ULine.hline(endingX - 10));
 			ug.apply(UTranslate.dx(endingX - 10)).draw(new ULine(10, -10));
 		}

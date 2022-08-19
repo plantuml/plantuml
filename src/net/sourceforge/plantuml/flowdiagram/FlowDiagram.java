@@ -71,7 +71,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class FlowDiagram extends UmlDiagram implements TextBlock {
 
@@ -157,8 +157,8 @@ public class FlowDiagram extends UmlDiagram implements TextBlock {
 			box.drawU(ug.apply(
 					new UTranslate((x + xmin * SINGLE_SIZE_X + deltaX / 2), (y + ymin * SINGLE_SIZE_Y + deltaY / 2))));
 		}
-		ug = ug.apply(HColorUtils.MY_RED);
-		ug = ug.apply(HColorUtils.MY_RED.bg());
+		ug = ug.apply(HColors.MY_RED);
+		ug = ug.apply(HColors.MY_RED.bg());
 		final UShape arrow = new UEllipse(7, 7);
 		for (Path p : field.getPaths()) {
 			final TileArea start = p.getStart();

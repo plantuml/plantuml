@@ -52,7 +52,7 @@ import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorNone;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class Highlight {
 
@@ -118,7 +118,7 @@ public class Highlight {
 	}
 
 	public void drawHighlightsBack(UGraphic ug, TimingRuler ruler, double height) {
-		ug = ug.apply(new HColorNone()).apply(getBackColor().bg());
+		ug = ug.apply(HColors.none()).apply(getBackColor().bg());
 		final double start = ruler.getPosInPixel(this.getTickFrom());
 		final double end = ruler.getPosInPixel(this.getTickTo());
 		final URectangle rect = new URectangle(end - start, height);

@@ -40,7 +40,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class Spot {
 
@@ -51,7 +51,7 @@ public class Spot {
 
 	public Spot(WBlock block, HColor color, String x, String y) {
 		this.block = block;
-		this.color = color == null ? HColorUtils.RED : color;
+		this.color = color == null ? HColors.RED : color;
 		this.x = x == null ? "0" : x;
 		this.y = y == null ? "0" : y;
 	}

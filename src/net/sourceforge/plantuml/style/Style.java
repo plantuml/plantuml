@@ -55,8 +55,8 @@ import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorNone;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class Style {
 
@@ -292,7 +292,7 @@ public class Style {
 	public UGraphic applyStrokeAndLineColor(UGraphic ug, HColorSet colorSet, ThemeStyle themeStyle) {
 		final HColor color = value(PName.LineColor).asColor(themeStyle, colorSet);
 		if (color == null)
-			ug = ug.apply(new HColorNone());
+			ug = ug.apply(HColors.none());
 		else
 			ug = ug.apply(color);
 

@@ -64,7 +64,7 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 import net.sourceforge.plantuml.ugraphic.color.HColorSimple;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 // http://www.redblobgames.com/grids/hexagons/
 public class PSystemColors extends PlainDiagram implements UDrawable {
@@ -169,7 +169,7 @@ public class PSystemColors extends PlainDiagram implements UDrawable {
 				continue;
 			}
 			final String candidat = colorName.substring(0, i) + BackSlash.BS_BS_N + colorName.substring(i);
-			final TextBlock tt = getTextName(font, candidat, (HColorSimple) HColorUtils.BLACK);
+			final TextBlock tt = getTextName(font, candidat, (HColorSimple) HColors.BLACK);
 			final double width = tt.calculateDimension(stringBounder).getWidth();
 			if (width < min) {
 				result = candidat;
@@ -239,7 +239,7 @@ public class PSystemColors extends PlainDiagram implements UDrawable {
 	private void drawFull(UGraphic ug) {
 		final UFont font = UFont.sansSerif(14).bold();
 
-		ug = ug.apply(HColorUtils.BLACK);
+		ug = ug.apply(HColors.BLACK);
 		int i = 0;
 		int j = 0;
 		for (String name : colors.names()) {
@@ -260,7 +260,7 @@ public class PSystemColors extends PlainDiagram implements UDrawable {
 
 	private TextBlock getTextName(final UFont font, String name, final HColorSimple color) {
 		final HColorSimple opposite = color.opposite();
-		final FontConfiguration fc = FontConfiguration.create(font, opposite, HColorUtils.BLUE, true);
+		final FontConfiguration fc = FontConfiguration.create(font, opposite, HColors.BLUE, true);
 		final TextBlock tt = Display.getWithNewlines(name).create(fc, HorizontalAlignment.CENTER,
 				new SpriteContainerEmpty());
 		return tt;

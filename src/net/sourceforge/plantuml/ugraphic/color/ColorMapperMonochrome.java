@@ -50,10 +50,10 @@ public class ColorMapperMonochrome extends AbstractColorMapper implements ColorM
 			return null;
 
 		final Color color = new ColorMapperIdentity().toColor(htmlColor);
-		if (HColorUtils.isTransparent(htmlColor))
+		if (HColors.isTransparent(htmlColor))
 			return color;
 
-		if (reverse && HColorUtils.isTransparent(htmlColor) == false)
+		if (reverse && HColors.isTransparent(htmlColor) == false)
 			return ColorUtils.getGrayScaleColorReverse(color);
 
 		return ColorUtils.getGrayScaleColor(color);

@@ -48,10 +48,12 @@ import net.sourceforge.plantuml.style.StyleBuilder;
 
 public class TaskGroup extends AbstractTask implements Task {
 
+	private final TaskGroup parent;
 	private final List<Task> children = new ArrayList<>();
 
-	public TaskGroup(StyleBuilder styleBuilder, String comment) {
-		super(styleBuilder, new TaskCode(comment));
+	public TaskGroup(TaskGroup parent, StyleBuilder styleBuilder, String name) {
+		super(styleBuilder, new TaskCode(name));
+		this.parent = parent;
 	}
 
 	public Day getStart() {
@@ -131,6 +133,10 @@ public class TaskGroup extends AbstractTask implements Task {
 
 	public void addTask(Task child) {
 		children.add(child);
+	}
+
+	public final TaskGroup getParent() {
+		return parent;
 	}
 
 }

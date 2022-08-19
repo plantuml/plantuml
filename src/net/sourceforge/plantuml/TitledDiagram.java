@@ -61,7 +61,7 @@ import net.sourceforge.plantuml.style.StyleLoader;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public abstract class TitledDiagram extends AbstractPSystem implements Diagram, Annotated {
 
@@ -281,7 +281,7 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 		HColor backgroundColor = style.value(PName.BackGroundColor).asColor(this.getSkinParam().getThemeStyle(),
 				this.getSkinParam().getIHtmlColorSet());
 		if (backgroundColor == null)
-			backgroundColor = HColorUtils.transparent();
+			backgroundColor = HColors.transparent();
 
 		return backgroundColor;
 	}

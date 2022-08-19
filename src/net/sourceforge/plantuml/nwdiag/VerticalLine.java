@@ -39,7 +39,7 @@ import java.util.Set;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPath;
-import net.sourceforge.plantuml.ugraphic.color.HColorNone;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class VerticalLine implements UDrawable {
 
@@ -54,7 +54,7 @@ public class VerticalLine implements UDrawable {
 	}
 
 	public void drawU(UGraphic ug) {
-		ug = ug.apply(new HColorNone().bg());
+		ug = ug.apply(HColors.none().bg());
 		boolean drawn = false;
 		double current = y1;
 		UPath path = new UPath();

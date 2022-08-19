@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class GtileWhile extends GtileTopDown3 {
 
@@ -58,7 +58,7 @@ public class GtileWhile extends GtileTopDown3 {
 
 	private static Gtile getShape1(Gtile toto, Swimlane swimlane, Display test, Display yes) {
 		GtileHexagonInside tmp0 = Gtiles.hexagonInside(swimlane, toto.getStringBounder(), toto.skinParam(),
-				getDefaultStyleDefinitionDiamond(), HColorUtils.BLUE, test);
+				getDefaultStyleDefinitionDiamond(), HColors.BLUE, test);
 
 //		final TextBlock tmp0 = branches.get(0).getTextBlockPositive();
 //		return Gtiles.withSouthMargin(tmp.withSouthLabel(tmp0), 10);

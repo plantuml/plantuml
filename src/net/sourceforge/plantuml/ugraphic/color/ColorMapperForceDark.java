@@ -52,10 +52,10 @@ public class ColorMapperForceDark extends AbstractColorMapper implements ColorMa
 		if (color instanceof HColorMiddle) {
 			return ((HColorMiddle) color).getMappedColor(this);
 		}
-		if (color instanceof HColorAutomatic) {
+		if (color instanceof HColorScheme) {
 			throw new IllegalStateException();
 		}
-		if (color instanceof HColorAutomaticLegacy) {
+		if (color instanceof HColorAutomagic) {
 			throw new IllegalStateException();
 		}
 		final HColor tmp = ((HColorSimple) color).darkSchemeTheme();

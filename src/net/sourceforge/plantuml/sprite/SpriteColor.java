@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorGradient;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class SpriteColor implements Sprite {
 
@@ -103,12 +103,12 @@ public class SpriteColor implements Sprite {
 		final BufferedImage im = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
 		if (backcolor == null) {
-			backcolor = HColorUtils.WHITE;
+			backcolor = HColors.WHITE;
 		}
 		if (forecolor == null) {
-			forecolor = HColorUtils.BLACK;
+			forecolor = HColors.BLACK;
 		}
-		final HColorGradient gradient = new HColorGradient(backcolor, forecolor, '\0');
+		final HColorGradient gradient = HColors.gradient(backcolor, forecolor, '\0');
 		for (int col = 0; col < width; col++) {
 			for (int line = 0; line < height; line++) {
 				final int localColor = color[line][col];

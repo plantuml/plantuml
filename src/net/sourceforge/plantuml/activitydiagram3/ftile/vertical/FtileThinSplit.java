@@ -51,7 +51,7 @@ import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorNone;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class FtileThinSplit extends AbstractFtile {
 
@@ -88,7 +88,7 @@ public class FtileThinSplit extends AbstractFtile {
 		final UShape rect = ULine.hline(last - first);
 		ug = ug.apply(UTranslate.dx(first));
 		if (colorBar == null) {
-			ug = ug.apply(new HColorNone());
+			ug = ug.apply(HColors.none());
 		} else {
 			ug = ug.apply(colorBar);
 		}

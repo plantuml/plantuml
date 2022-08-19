@@ -35,10 +35,10 @@
  */
 package net.sourceforge.plantuml.skin;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.SymbolContext;
@@ -48,7 +48,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.ugraphic.color.HColorNone;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class ActorStickMan extends AbstractTextBlock implements TextBlock {
 
@@ -93,7 +93,7 @@ public class ActorStickMan extends AbstractTextBlock implements TextBlock {
 		if (actorBusiness) {
 			specialBusiness(ug.apply(new UTranslate(startX + headDiam / 2, thickness() + headDiam / 2)));
 		}
-		ug.apply(new UTranslate(centerX, headDiam + thickness())).apply(new HColorNone().bg()).draw(path);
+		ug.apply(new UTranslate(centerX, headDiam + thickness())).apply(HColors.none().bg()).draw(path);
 	}
 
 	private void specialBusiness(UGraphic ug) {

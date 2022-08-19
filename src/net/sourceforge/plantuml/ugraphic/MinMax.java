@@ -40,7 +40,7 @@ import java.awt.geom.Point2D;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class MinMax {
 
@@ -154,7 +154,7 @@ public class MinMax {
 	}
 
 	public void drawGray(UGraphic ug) {
-		draw(ug, HColorUtils.GRAY);
+		draw(ug, HColors.GRAY);
 	}
 
 	public void draw(UGraphic ug, HColor color) {

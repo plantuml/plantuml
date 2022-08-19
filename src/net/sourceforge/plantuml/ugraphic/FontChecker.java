@@ -61,7 +61,7 @@ import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.svg.DarkStrategy;
 import net.sourceforge.plantuml.svg.LengthAdjust;
 import net.sourceforge.plantuml.svg.SvgGraphics;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class FontChecker {
 
@@ -174,7 +174,7 @@ public class FontChecker {
 		final double dim = 20;
 		final UDrawable drawable = new UDrawable() {
 			public void drawU(UGraphic ug) {
-				ug = ug.apply(HColorUtils.BLACK);
+				ug = ug.apply(HColors.BLACK);
 				ug.draw(new URectangle(dim - 1, dim - 1));
 				if (!(ug instanceof LimitFinder)) {
 					ug = ug.apply(new UTranslate(dim / 3, 2 * dim / 3));

@@ -53,7 +53,7 @@ import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorGradient;
 import net.sourceforge.plantuml.ugraphic.color.HColorSimple;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class SpriteMonochrome implements Sprite {
 
@@ -180,14 +180,14 @@ public class SpriteMonochrome implements Sprite {
 
 	public UImage toUImage(ColorMapper colorMapper, HColor backcolor, HColor color) {
 
-		if (backcolor == null || HColorUtils.isTransparent(backcolor))
-			backcolor = HColorUtils.WHITE.withDark(HColorUtils.BLACK);
+		if (backcolor == null || HColors.isTransparent(backcolor))
+			backcolor = HColors.WHITE.withDark(HColors.BLACK);
 
-		if (color == null || HColorUtils.isTransparent(color))
-			color = HColorUtils.BLACK.withDark(HColorUtils.WHITE);
+		if (color == null || HColors.isTransparent(color))
+			color = HColors.BLACK.withDark(HColors.WHITE);
 
 		final BufferedImage im = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-		final HColorGradient gradient = new HColorGradient(backcolor, color, '\0');
+		final HColorGradient gradient = HColors.gradient(backcolor, color, '\0');
 		for (int col = 0; col < width; col++) {
 			for (int line = 0; line < height; line++) {
 				final double coef = 1.0 * gray[line][col] / (grayLevel - 1);
@@ -204,7 +204,7 @@ public class SpriteMonochrome implements Sprite {
 			for (int line = 0; line < height; line++) {
 				final HColor backColorLocal = new HColorSimple(backcolor.getColor(colorMapper, 1.0 * line / height),
 						false);
-				final HColorGradient gradient = new HColorGradient(backColorLocal, color, '\0');
+				final HColorGradient gradient = HColors.gradient(backColorLocal, color, '\0');
 				final double coef = 1.0 * gray[line][col] / (grayLevel - 1);
 				final Color c = gradient.getColor(colorMapper, coef);
 				im.setRGB(col, line, c.getRGB());

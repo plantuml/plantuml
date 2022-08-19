@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.svek.WithPorts;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UHorizontalLine;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorNone;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class TextBlockLineBefore extends AbstractTextBlock implements TextBlock, WithPorts {
 
@@ -84,7 +84,7 @@ public class TextBlockLineBefore extends AbstractTextBlock implements TextBlock,
 
 		textBlock.drawU(ug);
 		if (color == null)
-			ug = ug.apply(new HColorNone());
+			ug = ug.apply(HColors.none());
 		else
 			ug = ug.apply(color);
 

@@ -60,7 +60,7 @@ import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class BoardDiagram extends UmlDiagram {
 
@@ -120,7 +120,7 @@ public class BoardDiagram extends UmlDiagram {
 
 		for (int i = 0; i < getMaxStage(); i++) {
 			final double dy = (i + 1) * PostIt.getHeight() - 10;
-			ug.apply(HColorUtils.BLACK).apply(new UStroke(5, 5, 0.5)).apply(UTranslate.dy(dy)).draw(line);
+			ug.apply(HColors.BLACK).apply(new UStroke(5, 5, 0.5)).apply(UTranslate.dy(dy)).draw(line);
 		}
 	}
 

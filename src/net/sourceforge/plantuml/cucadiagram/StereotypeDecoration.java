@@ -53,7 +53,7 @@ import net.sourceforge.plantuml.creole.Parser;
 import net.sourceforge.plantuml.sprite.SpriteUtils;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public class StereotypeDecoration {
@@ -155,7 +155,7 @@ public class StereotypeDecoration {
 
 				final String colName = mCircleSprite.get("COLOR", 0);
 				final HColor col = colName == null ? null : htmlColorSet.getColorLEGACY(colName);
-				htmlColor = col == null ? HColorUtils.BLACK : col;
+				htmlColor = col == null ? HColors.BLACK : col;
 				character = '\0';
 				spriteName = mCircleSprite.get("NAME", 0);
 				spriteScale = Parser.getScale(mCircleSprite.get("SCALE", 0), 1);

@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.project.lang;
 
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class CenterBorderColor {
 
@@ -81,8 +81,8 @@ public class CenterBorderColor {
 	}
 
 	public CenterBorderColor unlinearTo(CenterBorderColor other, int completion) {
-		final HColor newCenter = HColorUtils.unlinear(this.center, other.center, completion);
-		final HColor newBorder = HColorUtils.unlinear(this.border, other.border, completion);
+		final HColor newCenter = HColors.unlinear(this.center, other.center, completion);
+		final HColor newBorder = HColors.unlinear(this.border, other.border, completion);
 
 		return new CenterBorderColor(newCenter, newBorder, style);
 	}

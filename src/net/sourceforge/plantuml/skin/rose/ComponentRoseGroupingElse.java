@@ -53,8 +53,7 @@ import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorBackground;
-import net.sourceforge.plantuml.ugraphic.color.HColorNone;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class ComponentRoseGroupingElse extends AbstractTextualComponent {
 
@@ -76,11 +75,11 @@ public class ComponentRoseGroupingElse extends AbstractTextualComponent {
 		if (backgroundColor instanceof HColorBackground)
 			return;
 
-		if (HColorUtils.isTransparent(backgroundColor))
+		if (HColors.isTransparent(backgroundColor))
 			return;
 
 		final Dimension2D dimensionToUse = area.getDimensionToUse();
-		ug = ug.apply(new HColorNone()).apply(backgroundColor.bg());
+		ug = ug.apply(HColors.none()).apply(backgroundColor.bg());
 		final double width = dimensionToUse.getWidth();
 		final double height = dimensionToUse.getHeight();
 		final UShape rect;

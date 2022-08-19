@@ -58,7 +58,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class Block extends AbstractTextBlock {
 
@@ -145,7 +145,7 @@ public class Block extends AbstractTextBlock {
 	}
 
 	private HColor getBlack() {
-		return HColorUtils.BLACK.withDark(HColorUtils.WHITE);
+		return HColors.BLACK.withDark(HColors.WHITE);
 	}
 
 	private void drawPins(Position pos, UGraphic ug) {

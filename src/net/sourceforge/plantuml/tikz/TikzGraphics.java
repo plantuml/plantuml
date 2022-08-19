@@ -57,7 +57,7 @@ import net.sourceforge.plantuml.ugraphic.USegment;
 import net.sourceforge.plantuml.ugraphic.USegmentType;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 import net.sourceforge.plantuml.version.Version;
 
 public class TikzGraphics {
@@ -68,8 +68,8 @@ public class TikzGraphics {
 	private final List<String> cmd = new ArrayList<>();
 	private final boolean withPreamble;
 
-	private HColor color = HColorUtils.BLACK;
-	private HColor fillcolor = HColorUtils.BLACK;
+	private HColor color = HColors.BLACK;
+	private HColor fillcolor = HColors.BLACK;
 	private HColor fillcolorGradient2 = null;
 	private char gradientPolicy;
 	private double thickness = 1.0;
@@ -124,7 +124,7 @@ public class TikzGraphics {
 		if (fillcolor == null)
 			return false;
 
-		if (HColorUtils.isTransparent(fillcolor))
+		if (HColors.isTransparent(fillcolor))
 			return false;
 
 		if (mapper.toColor(fillcolor).getAlpha() == 0)

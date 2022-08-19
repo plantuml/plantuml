@@ -40,7 +40,7 @@ import java.awt.Color;
 import net.sourceforge.plantuml.ugraphic.UChange;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
-public class HColorUtils {
+public class HColors {
 
 	public static final HColorSimple BLACK;
 	public static final HColorSimple WHITE;
@@ -128,7 +128,7 @@ public class HColorUtils {
 	public static UChange changeBack(UGraphic ug) {
 		final HColor color = ug.getParam().getColor();
 		if (color == null)
-			return new HColorNone().bg();
+			return HColors.none().bg();
 
 		return color.bg();
 	}
@@ -163,6 +163,18 @@ public class HColorUtils {
 			return HColorSimple.unlinear((HColorSimple) color1, (HColorSimple) color2, completion);
 
 		return color1;
+	}
+
+	public static HColor none() {
+		return new HColorNone();
+	}
+
+	public static HColor middle(HColor c1, HColor c2) {
+		return new HColorMiddle(c1, c2);
+	}
+
+	public static HColorGradient gradient(HColor color1, HColor color2, char policy) {
+		return new HColorGradient(color1, color2, policy);
 	}
 
 }

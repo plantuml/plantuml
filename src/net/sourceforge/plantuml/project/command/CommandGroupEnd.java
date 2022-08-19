@@ -62,7 +62,7 @@ public class CommandGroupEnd extends SingleLineCommand2<GanttDiagram> {
 
 	@Override
 	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg) {
-		return CommandExecutionResult.ok();
+		return diagram.endGroup();
 	}
 
 }

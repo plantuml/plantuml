@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorNone;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class EntityImageCircleStart extends AbstractEntityImage {
 
@@ -76,7 +76,7 @@ public class EntityImageCircleStart extends AbstractEntityImage {
 		final double shadowing = style.value(PName.Shadowing).asDouble();
 
 		circle.setDeltaShadow(shadowing);
-		ug.apply(color.bg()).apply(new HColorNone()).draw(circle);
+		ug.apply(color.bg()).apply(HColors.none()).draw(circle);
 	}
 
 	public ShapeType getShapeType() {

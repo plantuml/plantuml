@@ -39,7 +39,7 @@ import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -87,7 +87,7 @@ public abstract class UGraphicNo implements UGraphic {
 
 	@Override
 	public HColor getDefaultBackground() {
-		return HColorUtils.BLACK;
+		return HColors.BLACK;
 	}
 
 	@Override

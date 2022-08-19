@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class ConnectorPuzzleEmpty extends AbstractConnectorPuzzle implements Placeable, TextBlock, ConnectorPuzzle {
 
@@ -88,7 +88,7 @@ public class ConnectorPuzzleEmpty extends AbstractConnectorPuzzle implements Pla
 
 	public void drawU(UGraphic ug) {
 		// System.err.println("DRAWING " + toString());
-		ug = ug.apply(HColorUtils.BLUE);
+		ug = ug.apply(HColors.BLUE);
 		for (Where w : Where.values()) {
 			if (have(w)) {
 				drawLine(ug, w);

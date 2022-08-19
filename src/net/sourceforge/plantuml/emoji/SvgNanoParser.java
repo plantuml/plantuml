@@ -22,9 +22,9 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.ColorChangerMonochrome;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorNone;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 import net.sourceforge.plantuml.ugraphic.color.HColorSimple;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 // Emojji from https://twemoji.twitter.com/
 // Shorcut from https://api.github.com/emojis
@@ -129,7 +129,7 @@ public class SvgNanoParser implements Sprite {
 			final String strokeString = extractData("stroke", s);
 			if (strokeString == null)
 				return ugs;
-			ugs = ugs.apply(new HColorNone().bg());
+			ugs = ugs.apply(HColors.none().bg());
 			final HColor stroke = getTrueColor(strokeString, colorForMonochrome);
 			ugs = ugs.apply(stroke);
 			final String strokeWidth = extractData("stroke-width", s);

@@ -115,7 +115,7 @@ import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprite {
 
@@ -227,7 +227,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 
 					final HColor back = timelineStyle.value(PName.BackGroundColor)
 							.asColor(getSkinParam().getThemeStyle(), getIHtmlColorSet());
-					if (HColorUtils.isTransparent(back) == false) {
+					if (HColors.isTransparent(back) == false) {
 						final URectangle rect1 = new URectangle(calculateDimension(ug.getStringBounder()).getWidth(),
 								timeHeader.getTimeHeaderHeight());
 						ug.apply(back.bg()).draw(rect1);
@@ -388,8 +388,15 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		}
 	}
 
-	public void closeDayOfWeek(DayOfWeek day) {
+	public void closeDayOfWeek(DayOfWeek day, String task) {
 		openClose.close(day);
+	}
+
+	public void openDayOfWeek(DayOfWeek day, String task) {
+		if (task.length() == 0)
+			openClose.open(day);
+		else
+			getOpenCloseForTask(task).open(day);
 	}
 
 	public void closeDayAsDate(Day day, String task) {
@@ -634,10 +641,24 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 
 	private TaskGroup currentGroup = null;
 
-	public void addGroup(String comment) {
-		TaskGroup group = new TaskGroup(getSkinParam().getCurrentStyleBuilder(), comment);
-		currentGroup = group;
+	public CommandExecutionResult addGroup(String name) {
+		TaskGroup group = new TaskGroup(this.currentGroup, getSkinParam().getCurrentStyleBuilder(), name);
+
+		if (this.currentGroup != null)
+			this.currentGroup.addTask(group);
+
+		this.currentGroup = group;
 		tasks.put(group.getCode(), group);
+		return CommandExecutionResult.ok();
+	}
+
+	public CommandExecutionResult endGroup() {
+		if (this.currentGroup == null)
+			return CommandExecutionResult.error("No group to be closed");
+
+		this.currentGroup = this.currentGroup.getParent();
+
+		return CommandExecutionResult.ok();
 	}
 
 	public void addContraint(GanttConstraint constraint) {
@@ -771,7 +792,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 	}
 
 	public CommandExecutionResult deleteTask(Task task) {
-		task.setColors(new CenterBorderColor(HColorUtils.WHITE, HColorUtils.BLACK));
+		task.setColors(new CenterBorderColor(HColors.WHITE, HColors.BLACK));
 		return CommandExecutionResult.ok();
 	}
 

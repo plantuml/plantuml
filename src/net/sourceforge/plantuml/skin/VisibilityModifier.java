@@ -35,12 +35,12 @@
  */
 package net.sourceforge.plantuml.skin;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.awt.geom.Rectangle2D;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -54,7 +54,7 @@ import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorNone;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public enum VisibilityModifier {
 	PRIVATE_FIELD(StringUtils.PRIVATE_FIELD, ColorParam.iconPrivate, null),
@@ -108,7 +108,7 @@ public enum VisibilityModifier {
 
 			public void drawU(UGraphic ug) {
 				if (withInvisibleRectanble)
-					ug.apply(new HColorNone()).draw(new URectangle(size * 2, size));
+					ug.apply(HColors.none()).draw(new URectangle(size * 2, size));
 
 				drawInternal(ug, size, foregroundColor, backgoundColor, 0, 0);
 			}
@@ -118,7 +118,7 @@ public enum VisibilityModifier {
 	private void drawInternal(UGraphic ug, int size, final HColor foregroundColor, final HColor backgoundColor,
 			double x, double y) {
 		if (backgoundColor == null)
-			ug = ug.apply(new HColorNone().bg());
+			ug = ug.apply(HColors.none().bg());
 		else
 			ug = ug.apply(backgoundColor.bg());
 

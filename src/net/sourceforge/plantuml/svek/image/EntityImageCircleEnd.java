@@ -51,7 +51,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorNone;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class EntityImageCircleEnd extends AbstractEntityImage {
 
@@ -78,11 +78,11 @@ public class EntityImageCircleEnd extends AbstractEntityImage {
 		final double shadowing = style.value(PName.Shadowing).asDouble();
 
 		circle.setDeltaShadow(shadowing);
-		ug.apply(new HColorNone().bg()).apply(color).draw(circle);
+		ug.apply(HColors.none().bg()).apply(color).draw(circle);
 
 		final double delta = 4;
 		final UShape circleSmall = new UEllipse(SIZE - delta * 2, SIZE - delta * 2);
-		ug.apply(color.bg()).apply(new HColorNone()).apply(new UTranslate(delta + 0.5, delta + 0.5)).draw(circleSmall);
+		ug.apply(color.bg()).apply(HColors.none()).apply(new UTranslate(delta + 0.5, delta + 0.5)).draw(circleSmall);
 	}
 
 	public ShapeType getShapeType() {

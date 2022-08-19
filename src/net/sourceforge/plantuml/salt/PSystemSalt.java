@@ -90,7 +90,7 @@ import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public class PSystemSalt extends TitledDiagram implements WithSprite {
@@ -261,6 +261,6 @@ public class PSystemSalt extends TitledDiagram implements WithSprite {
 	}
 
 	private HColor getBlack() {
-		return HColorUtils.BLACK;
+		return HColors.BLACK;
 	}
 }

@@ -36,13 +36,11 @@
 package net.sourceforge.plantuml.creole;
 
 import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.ugraphic.color.HColorNone;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class Position {
 
@@ -97,7 +95,7 @@ public class Position {
 	}
 
 	public void drawDebug(UGraphic ug) {
-		ug = ug.apply(HColorUtils.BLACK).apply(new HColorNone().bg());
+		ug = ug.apply(HColors.BLACK).apply(HColors.none().bg());
 		ug = ug.apply(new UTranslate(x, y));
 		ug.draw(new URectangle(dim));
 	}

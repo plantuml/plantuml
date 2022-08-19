@@ -59,7 +59,20 @@ public class SubjectDayOfWeek implements Subject {
 	}
 
 	public Collection<? extends SentenceSimple> getSentences() {
-		return Arrays.asList(new AreClose(), new InColor());
+		return Arrays.asList(new AreClose(), new AreOpen(), new InColor());
+	}
+
+	class AreOpen extends SentenceSimple {
+		public AreOpen() {
+			super(SubjectDayOfWeek.this, Verbs.are(), new ComplementOpen());
+		}
+
+		@Override
+		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+			final DayOfWeek day = (DayOfWeek) subject;
+			project.openDayOfWeek(day, (String) complement);
+			return CommandExecutionResult.ok();
+		}
 	}
 
 	class AreClose extends SentenceSimple {
@@ -71,7 +84,7 @@ public class SubjectDayOfWeek implements Subject {
 		@Override
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 			final DayOfWeek day = (DayOfWeek) subject;
-			project.closeDayOfWeek(day);
+			project.closeDayOfWeek(day, (String) complement);
 			return CommandExecutionResult.ok();
 		}
 

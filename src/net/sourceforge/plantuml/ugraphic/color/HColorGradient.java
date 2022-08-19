@@ -43,13 +43,13 @@ public class HColorGradient extends HColorAbstract implements HColor {
 	private final HColor color2;
 	private final char policy;
 
-	public HColorGradient(HColor color1, HColor color2, char policy) {
-		if (color1 instanceof HColorGradient) {
+	HColorGradient(HColor color1, HColor color2, char policy) {
+		if (color1 instanceof HColorGradient)
 			color1 = ((HColorGradient) color1).color1;
-		}
-		if (color2 instanceof HColorGradient) {
+
+		if (color2 instanceof HColorGradient)
 			color2 = ((HColorGradient) color2).color2;
-		}
+
 		this.color1 = Objects.requireNonNull(color1);
 		this.color2 = Objects.requireNonNull(color2);
 		this.policy = policy;
@@ -64,9 +64,9 @@ public class HColorGradient extends HColorAbstract implements HColor {
 	}
 
 	public final Color getColor(ColorMapper mapper, double coeff) {
-		if (coeff > 1 || coeff < 0) {
+		if (coeff > 1 || coeff < 0)
 			throw new IllegalArgumentException("c=" + coeff);
-		}
+
 		final Color c1 = mapper.toColor(color1);
 		final Color c2 = mapper.toColor(color2);
 		final int vred = c2.getRed() - c1.getRed();

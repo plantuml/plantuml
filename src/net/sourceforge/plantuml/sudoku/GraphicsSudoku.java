@@ -62,8 +62,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
-import net.sourceforge.plantuml.ugraphic.color.HColorNone;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 import net.sourceforge.plantuml.ugraphic.eps.UGraphicEps;
 import net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d;
 import net.sourceforge.plantuml.ugraphic.svg.UGraphicSvg;
@@ -80,7 +79,7 @@ public class GraphicsSudoku {
 	}
 
 	public ImageData writeImageEps(OutputStream os) throws IOException {
-		final UGraphicEps ug = new UGraphicEps(HColorUtils.WHITE, new ColorMapperIdentity(),
+		final UGraphicEps ug = new UGraphicEps(HColors.WHITE, new ColorMapperIdentity(),
 				FileFormat.EPS_TEXT.getDefaultStringBounder(), EpsStrategy.WITH_MACRO_AND_TEXT);
 		drawInternal(ug);
 		os.write(ug.getEPSCode().getBytes());
@@ -88,7 +87,7 @@ public class GraphicsSudoku {
 	}
 
 	public ImageData writeImageSvg(OutputStream os) throws IOException {
-		final UGraphicSvg ug = new UGraphicSvg(HColorUtils.WHITE, true, new Dimension2DDouble(0, 0),
+		final UGraphicSvg ug = new UGraphicSvg(HColors.WHITE, true, new Dimension2DDouble(0, 0),
 				new ColorMapperIdentity(), false, 1.0, null, null, 0, "none", FileFormat.SVG.getDefaultStringBounder(),
 				LengthAdjust.defaultValue(), false);
 		drawInternal(ug);
@@ -97,7 +96,7 @@ public class GraphicsSudoku {
 	}
 
 	public ImageData writeImageLatex(OutputStream os, FileFormat fileFormat) throws IOException {
-		final UGraphicTikz ug = new UGraphicTikz(HColorUtils.WHITE, new ColorMapperIdentity(), FileFormat.LATEX.getDefaultStringBounder(), 1,
+		final UGraphicTikz ug = new UGraphicTikz(HColors.WHITE, new ColorMapperIdentity(), FileFormat.LATEX.getDefaultStringBounder(), 1,
 				fileFormat == FileFormat.LATEX);
 		drawInternal(ug);
 		ug.writeToStream(os, null, -1); // dpi param is not used
@@ -111,7 +110,7 @@ public class GraphicsSudoku {
 		final BufferedImage im = builder.getBufferedImage();
 		final Graphics2D g3d = builder.getGraphics2D();
 
-		final UGraphic ug = new UGraphicG2d(HColorUtils.WHITE, new ColorMapperIdentity(), stringBounder, g3d, 1.0);
+		final UGraphic ug = new UGraphicG2d(HColors.WHITE, new ColorMapperIdentity(), stringBounder, g3d, 1.0);
 
 		drawInternal(ug);
 		g3d.dispose();
@@ -149,7 +148,7 @@ public class GraphicsSudoku {
 			}
 		}
 
-		ug = ug.apply(HColorUtils.BLACK.bg()).apply(new HColorNone());
+		ug = ug.apply(HColors.BLACK.bg()).apply(HColors.none());
 		for (int i = 0; i < 10; i++) {
 			final boolean bold = i % boldWidth == 0;
 			final int w = bold ? boldWidth : 1;

@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public final class RoundedContainer {
 
@@ -78,7 +78,7 @@ public final class RoundedContainer {
 
 		if (shadowing > 0) {
 			rect.setDeltaShadow(shadowing);
-			ug.apply(HColorUtils.transparent().bg()).draw(rect);
+			ug.apply(HColors.transparent().bg()).draw(rect);
 			rect.setDeltaShadow(0);
 			
 		}
@@ -88,7 +88,7 @@ public final class RoundedContainer {
 		new RoundedSouth(dim.getWidth(), dim.getHeight() - headerHeight, imgBackcolor, rounded)
 				.drawU(ug.apply(UTranslate.dy(headerHeight)));
 
-		ug.apply(HColorUtils.transparent().bg()).draw(rect);
+		ug.apply(HColors.transparent().bg()).draw(rect);
 
 		if (headerHeight > 0)
 			ug.apply(UTranslate.dy(headerHeight)).draw(ULine.hline(dim.getWidth()));

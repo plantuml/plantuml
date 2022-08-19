@@ -21,7 +21,7 @@ import net.sourceforge.plantuml.svek.ConditionStyle;
 import net.sourceforge.plantuml.svek.PackageStyle;
 import net.sourceforge.plantuml.svg.LengthAdjust;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 class SkinParamTest {
 
@@ -44,7 +44,7 @@ class SkinParamTest {
 
 		assertThat(skinParam.getAllSpriteNames()).isEmpty();
 
-		assertThat(skinParam.getBackgroundColor()).isEqualTo(HColorUtils.WHITE);
+		assertThat(skinParam.getBackgroundColor()).isEqualTo(HColors.WHITE);
 
 		assertThat(skinParam.getCircledCharacter(fooStereotype)).isEqualTo('\0');
 
@@ -94,7 +94,7 @@ class SkinParamTest {
 
 		assertThat(skinParam.forceSequenceParticipantUnderlined()).isFalse();
 
-		assertThat(skinParam.getHyperlinkColor()).isEqualTo(HColorUtils.BLUE);
+		assertThat(skinParam.getHyperlinkColor()).isEqualTo(HColors.BLUE);
 
 		assertThat(skinParam.getlengthAdjust()).isEqualTo(LengthAdjust.SPACING);
 

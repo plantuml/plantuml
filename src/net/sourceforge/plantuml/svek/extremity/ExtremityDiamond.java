@@ -39,8 +39,7 @@ import java.awt.geom.Point2D;
 
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
-import net.sourceforge.plantuml.ugraphic.color.HColorNone;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 class ExtremityDiamond extends Extremity {
 
@@ -70,9 +69,9 @@ class ExtremityDiamond extends Extremity {
 
 	public void drawU(UGraphic ug) {
 		if (fill)
-			ug = ug.apply(HColorUtils.changeBack(ug));
+			ug = ug.apply(HColors.changeBack(ug));
 		else
-			ug = ug.apply(new HColorNone().bg());
+			ug = ug.apply(HColors.none().bg());
 
 		ug.draw(polygon);
 	}

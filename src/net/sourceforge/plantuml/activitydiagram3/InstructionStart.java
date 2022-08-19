@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.activitydiagram3.gtile.GtileCircleStart;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class InstructionStart extends MonoSwimable implements Instruction {
 
@@ -64,7 +64,7 @@ public class InstructionStart extends MonoSwimable implements Instruction {
 
 	@Override
 	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
-		return new GtileCircleStart(stringBounder, skinParam, HColorUtils.BLACK, getSwimlaneIn());
+		return new GtileCircleStart(stringBounder, skinParam, HColors.BLACK, getSwimlaneIn());
 	}
 
 	@Override

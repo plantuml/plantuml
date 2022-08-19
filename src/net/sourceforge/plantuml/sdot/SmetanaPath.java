@@ -62,8 +62,7 @@ import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorNone;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 import smetana.core.Macro;
 
 public class SmetanaPath implements UDrawable {
@@ -181,7 +180,7 @@ public class SmetanaPath implements UDrawable {
 	}
 
 	private void printDebug(UGraphic ug) {
-		ug = ug.apply(HColorUtils.BLUE).apply(HColorUtils.BLUE.bg());
+		ug = ug.apply(HColors.BLUE).apply(HColors.BLUE.bg());
 		final ST_splines splines = getSplines(edge);
 		final ST_bezier beziers = splines.list.get__(0);
 		for (int i = 0; i < beziers.size; i++) {
@@ -192,7 +191,7 @@ public class SmetanaPath implements UDrawable {
 			ug.apply(new UTranslate(pt).compose(new UTranslate(-1, -1))).draw(new UEllipse(3, 3));
 		}
 		if (getLabelRectangleTranslate("label") != null && getLabelURectangle() != null) {
-			ug = ug.apply(HColorUtils.BLUE).apply(new HColorNone().bg());
+			ug = ug.apply(HColors.BLUE).apply(HColors.none().bg());
 			ug.apply(getLabelRectangleTranslate("label")).draw(getLabelURectangle());
 		}
 

@@ -41,7 +41,7 @@ import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class PSystemOpenIconic extends PlainDiagram {
 
@@ -59,7 +59,7 @@ public class PSystemOpenIconic extends PlainDiagram {
 		final OpenIcon icon = OpenIcon.retrieve(iconName);
 		// final Dimension2D dim = new Dimension2DDouble(100, 100);
 
-		return icon.asTextBlock(HColorUtils.BLACK, factor);
+		return icon.asTextBlock(HColors.BLACK, factor);
 
 		// UGraphic2 ug = fileFormat.createUGraphic(dim);
 		// ug = (UGraphic2) ug.apply(new UTranslate(10, 10));

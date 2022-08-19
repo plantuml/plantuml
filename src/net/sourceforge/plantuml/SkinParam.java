@@ -88,7 +88,7 @@ import net.sourceforge.plantuml.ugraphic.color.ColorMapperReverse;
 import net.sourceforge.plantuml.ugraphic.color.ColorOrder;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public class SkinParam implements ISkinParam {
@@ -251,14 +251,14 @@ public class SkinParam implements ISkinParam {
 	public HColor getHyperlinkColor() {
 		final HColor result = getHtmlColor(ColorParam.hyperlink, null, false);
 		if (result == null)
-			return HColorUtils.BLUE;
+			return HColors.BLUE;
 
 		return result;
 	}
 
 	public HColor getBackgroundColor() {
 		final HColor result = getHtmlColor(ColorParam.background, null, false);
-		return result != null ? result : HColorUtils.WHITE;
+		return result != null ? result : HColors.WHITE;
 	}
 
 	public String getValue(String key) {
@@ -316,7 +316,7 @@ public class SkinParam implements ISkinParam {
 		}
 		if ((param == ColorParam.background || param == ColorParam.arrowHead)
 				&& (value.equalsIgnoreCase("transparent") || value.equalsIgnoreCase("none"))) {
-			return HColorUtils.transparent();
+			return HColors.transparent();
 		}
 		if (param == ColorParam.background) {
 			return getIHtmlColorSet().getColorOrWhite(themeStyle, value);

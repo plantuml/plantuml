@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class ResourceDraw implements UDrawable {
 
@@ -75,7 +75,7 @@ public class ResourceDraw implements UDrawable {
 				HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 		title.drawU(ug);
 		final ULine line = ULine.hline(timeScale.getEndingPosition(max) - timeScale.getStartingPosition(min));
-		ug.apply(HColorUtils.BLACK).apply(UTranslate.dy(title.calculateDimension(ug.getStringBounder()).getHeight()))
+		ug.apply(HColors.BLACK).apply(UTranslate.dy(title.calculateDimension(ug.getStringBounder()).getHeight()))
 				.draw(line);
 
 		double startingPosition = -1;
@@ -89,7 +89,7 @@ public class ResourceDraw implements UDrawable {
 				if (totalLoad > 0) {
 					final boolean over = totalLoad > totalLimit;
 					final FontConfiguration fontConfiguration = getFontConfiguration(9,
-							over ? HColorUtils.RED : HColorUtils.BLACK);
+							over ? HColors.RED : HColors.BLACK);
 					final TextBlock value = Display.getWithNewlines("" + totalLoad).create(fontConfiguration,
 							HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 					if (startingPosition == -1)
@@ -111,7 +111,7 @@ public class ResourceDraw implements UDrawable {
 	}
 
 	private FontConfiguration getFontConfiguration(int size) {
-		return getFontConfiguration(size, HColorUtils.BLACK);
+		return getFontConfiguration(size, HColors.BLACK);
 	}
 
 	private FontConfiguration getFontConfiguration(int size, HColor color) {

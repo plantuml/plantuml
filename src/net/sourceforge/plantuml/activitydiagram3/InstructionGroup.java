@@ -54,7 +54,7 @@ import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class InstructionGroup extends AbstractInstruction implements Instruction, InstructionCollection {
 
@@ -96,7 +96,7 @@ public class InstructionGroup extends AbstractInstruction implements Instruction
 	@Override
 	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
 		Gtile tmp = list.createGtile(skinParam, stringBounder);
-		return new GtileGroup(tmp, title, null, HColorUtils.BLUE, backColor, titleColor, tmp.skinParam(), borderColor,
+		return new GtileGroup(tmp, title, null, HColors.BLUE, backColor, titleColor, tmp.skinParam(), borderColor,
 				type, roundCorner);
 	}
 

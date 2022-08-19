@@ -59,7 +59,7 @@ import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.ugraphic.color.HColorNone;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class EntityImageLollipopInterfaceEye1 extends AbstractEntityImage {
 
@@ -95,7 +95,7 @@ public class EntityImageLollipopInterfaceEye1 extends AbstractEntityImage {
 			// circle.setDeltaShadow(4);
 		}
 		ug.apply(new UStroke(1.5)).apply(new UTranslate(diff, diff)).draw(circle1);
-		ug = ug.apply(new HColorNone().bg());
+		ug = ug.apply(HColors.none().bg());
 
 		Point2D pos = bibliotekon.getNode(getEntity()).getPosition();
 

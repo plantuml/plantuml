@@ -42,7 +42,7 @@ public class HColorMiddle extends HColorAbstract implements HColor {
 	private final HColor c1;
 	private final HColor c2;
 
-	public HColorMiddle(HColor c1, HColor c2) {
+	HColorMiddle(HColor c1, HColor c2) {
 		this.c1 = c1;
 		this.c2 = c2;
 	}

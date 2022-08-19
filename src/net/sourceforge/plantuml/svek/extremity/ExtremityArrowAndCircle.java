@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 class ExtremityArrowAndCircle extends Extremity {
 
@@ -77,7 +77,7 @@ class ExtremityArrowAndCircle extends Extremity {
 	}
 
 	public void drawU(UGraphic ug) {
-		ug.apply(HColorUtils.changeBack(ug)).draw(polygon);
+		ug.apply(HColors.changeBack(ug)).draw(polygon);
 		ug.apply(new UStroke(1.5)).apply(backgroundColor.bg())
 				.apply(new UTranslate(dest.getX() - radius, dest.getY() - radius))
 				.draw(new UEllipse(radius * 2, radius * 2));

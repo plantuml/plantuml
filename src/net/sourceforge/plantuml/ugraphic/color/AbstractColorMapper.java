@@ -59,7 +59,7 @@ public abstract class AbstractColorMapper implements ColorMapper {
 //			System.exit(0);
 //			return toHtml(result);
 		}
-		if (HColorUtils.isTransparent(hcolor))
+		if (HColors.isTransparent(hcolor))
 			return "#00000000";
 
 		final Color color = toColor(hcolor);

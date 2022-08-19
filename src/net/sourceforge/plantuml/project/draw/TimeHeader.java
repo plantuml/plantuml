@@ -54,9 +54,8 @@ import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorNone;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public abstract class TimeHeader {
 
@@ -173,13 +172,13 @@ public abstract class TimeHeader {
 		if (height == 0)
 			return;
 
-		ug = ug.apply(new HColorNone());
+		ug = ug.apply(HColors.none());
 		ug = ug.apply(new UTranslate(x1, getFullHeaderHeight()));
 		ug.draw(new URectangle(x2 - x1, height));
 	}
 	
 	protected final UGraphic goBold(UGraphic ug) {
-		return ug.apply(HColorUtils.BLACK).apply(new UStroke(2));
+		return ug.apply(HColors.BLACK).apply(new UStroke(2));
 	}
 
 

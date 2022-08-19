@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class PSystemDefinition extends PlainDiagram implements UDrawable {
 
@@ -73,7 +73,7 @@ public class PSystemDefinition extends PlainDiagram implements UDrawable {
 
 	public void drawU(UGraphic ug) {
 		final UFont font = UFont.sansSerif(14);
-		final FontConfiguration fc = FontConfiguration.create(font, HColorUtils.BLACK, HColorUtils.BLACK, false);
+		final FontConfiguration fc = FontConfiguration.create(font, HColors.BLACK, HColors.BLACK, false);
 		Display.getWithNewlines(startLine).create(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty()).drawU(ug);
 	}
 

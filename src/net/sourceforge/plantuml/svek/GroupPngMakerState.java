@@ -128,6 +128,11 @@ public final class GroupPngMakerState {
 				.withTOBECHANGED(group.getStereotype()).getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
 	}
 
+	private Style getStyleStateBody() {
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.stateDiagram, SName.stateBody)
+				.withTOBECHANGED(group.getStereotype()).getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
+	}
+
 	public IEntityImage getImage() {
 		final Display display = group.getDisplay();
 		final ISkinParam skinParam = diagram.getSkinParam();
@@ -181,8 +186,10 @@ public final class GroupPngMakerState {
 		final IEntityImage image = containsOnlyConcurrentStates ? buildImageForConcurrentState(dotData)
 				: svek2.buildImage(null, new String[0]);
 
+		final HColor bodyColor = getStyleStateBody().value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
+				skinParam.getIHtmlColorSet());
 		return new InnerStateAutonom(image, title, attribute, borderColor, backColor, group.getUrl99(), withSymbol,
-				stroke, rounded, shadowing);
+				stroke, rounded, shadowing, bodyColor);
 
 	}
 

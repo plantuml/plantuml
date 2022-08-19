@@ -81,7 +81,7 @@ public class Version {
 	}
 
 	public static int beta() {
-		final int beta = 11;
+		final int beta = 12;
 		return beta;
 	}
 

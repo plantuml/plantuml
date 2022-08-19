@@ -34,6 +34,6 @@
  */
 package net.sourceforge.plantuml.ugraphic.color;
 
-public class HColorAutomaticLegacy extends HColorAbstract implements HColor {
+public class HColorAutomagic extends HColorAbstract implements HColor {
 
 }

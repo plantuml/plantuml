@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public final class RoundedNorth implements UDrawable {
 
@@ -64,7 +64,7 @@ public final class RoundedNorth implements UDrawable {
 	}
 
 	public void drawU(UGraphic ug) {
-		if (HColorUtils.isTransparent(backColor))
+		if (HColors.isTransparent(backColor))
 			return;
 
 		final UShape header;

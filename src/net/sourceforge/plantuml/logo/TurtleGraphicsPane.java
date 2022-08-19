@@ -53,7 +53,7 @@ import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 class TurtleGraphicsPane {
 	final private double width;
@@ -63,7 +63,7 @@ class TurtleGraphicsPane {
 	private double turtleDirection = 90;
 	private boolean penIsDown = true;
 	private boolean showTurtle = true;
-	private HColor penColor = HColorUtils.BLACK;
+	private HColor penColor = HColors.BLACK;
 	private List<Rectangle2D.Double> lines = new ArrayList<Rectangle2D.Double>();
 	private List<HColor> colors = new ArrayList<>();
 

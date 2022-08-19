@@ -97,7 +97,7 @@ import net.sourceforge.plantuml.ugraphic.color.HColorBackground;
 import net.sourceforge.plantuml.ugraphic.color.HColorGradient;
 import net.sourceforge.plantuml.ugraphic.color.HColorNone;
 import net.sourceforge.plantuml.ugraphic.color.HColorSimple;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 import net.sourceforge.plantuml.ugraphic.debug.UGraphicDebug;
 import net.sourceforge.plantuml.ugraphic.eps.UGraphicEps;
 import net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d;
@@ -155,7 +155,7 @@ public class ImageBuilder {
 	}
 
 	public ImageBuilder blackBackcolor() {
-		return backcolor(HColorUtils.BLACK);
+		return backcolor(HColors.BLACK);
 	}
 
 	public ImageBuilder dimension(Dimension2D dimension) {
@@ -310,7 +310,7 @@ public class ImageBuilder {
 				dim.getHeight() - stroke.getThickness())
 						.rounded(skinParam.getRoundCorner(CornerParam.diagramBorder, null));
 
-		ug.apply(color == null ? HColorUtils.BLACK : color).apply(stroke).draw(rectangle);
+		ug.apply(color == null ? HColors.BLACK : color).apply(stroke).draw(rectangle);
 	}
 
 	private void drawRandomPoint(UGraphic ug2) {
@@ -482,7 +482,7 @@ public class ImageBuilder {
 	}
 
 	static private HColor getDefaultHBackColor() {
-		return HColorUtils.WHITE;
+		return HColors.WHITE;
 	}
 
 	private String getHoverPathColorRGB() {

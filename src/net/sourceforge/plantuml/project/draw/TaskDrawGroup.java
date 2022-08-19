@@ -57,10 +57,8 @@ import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPath;
-import net.sourceforge.plantuml.ugraphic.URectangle;
-import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class TaskDrawGroup extends AbstractTaskDraw {
 
@@ -79,7 +77,17 @@ public class TaskDrawGroup extends AbstractTaskDraw {
 	protected double getShapeHeight(StringBounder stringBounder) {
 		final Style style = getStyle();
 		final ClockwiseTopRightBottomLeft padding = style.getPadding();
-		return padding.getTop() + getTitle().calculateDimension(stringBounder).getHeight() + padding.getBottom() + 8;
+		// return padding.getTop() +
+		// getTitle().calculateDimension(stringBounder).getHeight() +
+		// padding.getBottom() + 8;
+		final double pos1 = timeScale.getStartingPosition(start) + 6;
+		final double pos2 = timeScale.getEndingPosition(end) - 6;
+		final TextBlock title = getTitle();
+		final Dimension2D dim = title.calculateDimension(stringBounder);
+		if (pos2 - pos1 > dim.getWidth())
+			return dim.getHeight() + 2;
+		else
+			return dim.getHeight();
 	}
 
 	@Override
@@ -92,27 +100,19 @@ public class TaskDrawGroup extends AbstractTaskDraw {
 		final ClockwiseTopRightBottomLeft margin = style.getMargin();
 		final ClockwiseTopRightBottomLeft padding = style.getPadding();
 
-		ug = ug.apply(UTranslate.dy(margin.getTop() + padding.getTop()));
-
-//		if (labelStrategy.titleInFirstColumn()) {
-//			if (labelStrategy.rightAligned())
-//				title.drawU(ug.apply(UTranslate.dx(colTitles - dim.getWidth() - margin.getRight())));
-//			else
-//				title.drawU(ug.apply(UTranslate.dx(margin.getLeft())));
-//			return;
-//		} else if (labelStrategy.titleInLastColumn()) {
-//			title.drawU(ug.apply(UTranslate.dx(colBars + margin.getLeft())));
-//			return;
-//		}
-//
 		final double pos1 = timeScale.getStartingPosition(start) + 6;
 		final double pos2 = timeScale.getEndingPosition(end) - 6;
 		final double pos;
-		if (pos2 - pos1 > dim.getWidth())
+		final double y;
+		if (pos2 - pos1 > dim.getWidth()) {
 			pos = pos1 + (pos2 - pos1 - dim.getWidth()) / 2;
-		else
-			pos = pos2 + 3;
-		title.drawU(ug.apply(UTranslate.dx(pos)));
+			// y = margin.getTop() + padding.getTop();
+			y = 0;
+		} else {
+			pos = pos2 + 6;
+			y = (getFullHeightTask(stringBounder) - dim.getHeight());
+		}
+		title.drawU(ug.apply(new UTranslate(pos, y)));
 	}
 
 	@Override
@@ -127,7 +127,7 @@ public class TaskDrawGroup extends AbstractTaskDraw {
 	}
 
 	public void drawU(UGraphic ug) {
-		final double startPos = timeScale.getStartingPosition(start);
+		// final double startPos = timeScale.getStartingPosition(start);
 		ug = applyColors(ug);
 		drawShape(ug);
 	}
@@ -183,9 +183,9 @@ public class TaskDrawGroup extends AbstractTaskDraw {
 			ug.startUrl(url);
 
 		// ug = ug.apply(UTranslate.dy(margin.getTop() + 7));
-		ug = ug.apply(UTranslate.dy(getShapeHeight(ug.getStringBounder()) - 10));
+		ug = ug.apply(UTranslate.dy(getFullHeightTask(ug.getStringBounder()) - height));
 
-		ug = ug.apply(HColorUtils.BLACK).apply(HColorUtils.BLACK.bg());
+		ug = ug.apply(HColors.BLACK).apply(HColors.BLACK.bg());
 		ug.draw(getShape(startPos, endPos));
 
 		if (url != null)
@@ -193,10 +193,11 @@ public class TaskDrawGroup extends AbstractTaskDraw {
 
 	}
 
+	final private double height = 10;
+
 	private UPath getShape(final double startPos, final double endPos) {
 		final UPath rect = new UPath();
 
-		final double height = 10;
 		final double thick = 2;
 		final double y1 = (height - thick) / 2;
 		final double y2 = height - (height - thick) / 2;

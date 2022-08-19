@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorNone;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class GtileCircleStart extends AbstractGtile {
 
@@ -72,7 +72,7 @@ public class GtileCircleStart extends AbstractGtile {
 	protected void drawUInternal(UGraphic ug) {
 		final UEllipse circle = new UEllipse(SIZE, SIZE);
 		circle.setDeltaShadow(shadowing);
-		ug.apply(new HColorNone()).apply(backColor.bg()).draw(circle);
+		ug.apply(HColors.none()).apply(backColor.bg()).draw(circle);
 	}
 
 	@Override

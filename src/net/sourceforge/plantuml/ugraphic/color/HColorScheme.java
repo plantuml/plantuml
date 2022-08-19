@@ -34,20 +34,20 @@
  */
 package net.sourceforge.plantuml.ugraphic.color;
 
-public class HColorAutomatic extends HColorAbstract implements HColor {
+public class HColorScheme extends HColorAbstract implements HColor {
 
 	private final HColor colorForLight;
 	private final HColor colorForDark;
 	private final HColor colorForTransparent;
 
-	public HColorAutomatic(HColor colorForLight, HColor colorForDark, HColor colorForTransparent) {
+	public HColorScheme(HColor colorForLight, HColor colorForDark, HColor colorForTransparent) {
 		this.colorForLight = colorForLight;
 		this.colorForDark = colorForDark;
 		this.colorForTransparent = colorForTransparent;
 	}
 
 	public HColor getAppropriateColor(HColor back) {
-		if (back == null || HColorUtils.isTransparent(back)) {
+		if (back == null || HColors.isTransparent(back)) {
 			if (colorForTransparent != null)
 				return colorForTransparent;
 

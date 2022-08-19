@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphicStencil;
 import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.ugraphic.color.HColorNone;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 class USymbolFrame extends USymbol {
 
@@ -80,7 +80,7 @@ class USymbolFrame extends USymbol {
 		polygon.lineTo(textWidth - cornersize, textHeight);
 
 		polygon.lineTo(0, textHeight);
-		ug.apply(new HColorNone().bg()).draw(polygon);
+		ug.apply(HColors.none().bg()).draw(polygon);
 
 	}
 

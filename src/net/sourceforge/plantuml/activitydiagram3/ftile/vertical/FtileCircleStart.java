@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorNone;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class FtileCircleStart extends AbstractFtile {
 
@@ -65,7 +65,7 @@ public class FtileCircleStart extends AbstractFtile {
 		super(skinParam);
 		this.swimlane = swimlane;
 		this.backColor = backColor;
-		this.borderColor = new HColorNone();
+		this.borderColor = HColors.none();
 		this.shadowing = style.value(PName.Shadowing).asDouble();
 		this.backColor = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(), getIHtmlColorSet());
 		this.borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), getIHtmlColorSet());

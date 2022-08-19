@@ -48,7 +48,7 @@ import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorGradient;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class DriverPolygonG2d extends DriverShadowedG2d implements UDriver<UPolygon, Graphics2D> {
 
@@ -85,7 +85,7 @@ public class DriverPolygonG2d extends DriverShadowedG2d implements UDriver<UPoly
 		}
 
 		if (shape.getDeltaShadow() != 0) {
-			if (HColorUtils.isTransparent(back)) {
+			if (HColors.isTransparent(back)) {
 				drawOnlyLineShadowSpecial(g2d, path, shape.getDeltaShadow(), dpiFactor);
 			} else {
 				drawShadow(g2d, path, shape.getDeltaShadow(), dpiFactor);

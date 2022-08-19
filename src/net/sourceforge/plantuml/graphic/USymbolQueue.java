@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UHorizontalLine;
 import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.ugraphic.color.HColorNone;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 class USymbolQueue extends USymbol {
 
@@ -71,7 +71,7 @@ class USymbolQueue extends USymbol {
 		ug.draw(shape);
 
 		final UPath closing = getClosingPath(width, height);
-		ug.apply(new HColorNone().bg()).draw(closing);
+		ug.apply(HColors.none().bg()).draw(closing);
 
 	}
 

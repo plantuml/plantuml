@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class LinkConstraint {
 
@@ -85,7 +85,7 @@ public class LinkConstraint {
 		if (x2 == 0 && y2 == 0) {
 			return;
 		}
-		ug = ug.apply(HColorUtils.BLACK);
+		ug = ug.apply(HColors.BLACK);
 //		ug.apply(new UTranslate(x1, y1)).draw(new URectangle(10, 10));
 //		ug.apply(new UTranslate(x2, y2)).draw(new URectangle(10, 10));
 

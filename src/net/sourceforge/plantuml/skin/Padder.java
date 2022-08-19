@@ -35,9 +35,8 @@
  */
 package net.sourceforge.plantuml.skin;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -45,7 +44,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorNone;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class Padder {
 
@@ -119,12 +118,12 @@ public class Padder {
 				ug = ug.apply(new UTranslate(margin, margin));
 				UGraphic ug2 = ug;
 				if (borderColor == null) {
-					ug2 = ug2.apply(new HColorNone());
+					ug2 = ug2.apply(HColors.none());
 				} else {
 					ug2 = ug2.apply(borderColor);
 				}
 				if (backgroundColor == null) {
-					ug2 = ug2.apply(new HColorNone().bg());
+					ug2 = ug2.apply(HColors.none().bg());
 				} else {
 					ug2 = ug2.apply(backgroundColor.bg());
 				}

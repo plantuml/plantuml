@@ -55,7 +55,7 @@ import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorGradient;
 import net.sourceforge.plantuml.ugraphic.color.HColorSimple;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class DriverRectangleG2d extends DriverShadowedG2d implements UDriver<URectangle, Graphics2D> {
 
@@ -85,7 +85,7 @@ public class DriverRectangleG2d extends DriverShadowedG2d implements UDriver<URe
 
 		// Shadow
 		if (rect.getDeltaShadow() != 0) {
-			if (HColorUtils.isTransparent(back)) {
+			if (HColors.isTransparent(back)) {
 				drawOnlyLineShadowSpecial(g2d, shape, rect.getDeltaShadow(), dpiFactor);
 			} else {
 				drawShadow(g2d, shape, rect.getDeltaShadow(), dpiFactor);

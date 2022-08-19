@@ -41,7 +41,7 @@ import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class ValueNull extends ValueAbstract implements Value {
 
@@ -77,7 +77,7 @@ public class ValueNull extends ValueAbstract implements Value {
 
 	@Override
 	public HColor asColor(ThemeStyle themeStyle, HColorSet set) {
-		return HColorUtils.BLACK;
+		return HColors.BLACK;
 	}
 
 	@Override

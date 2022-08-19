@@ -52,7 +52,7 @@ import net.sourceforge.plantuml.png.PngSplitter;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class PSystemUtils {
 
@@ -179,7 +179,7 @@ public class PSystemUtils {
 				fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null,
 				diagram.getSkinParam().getDpi(),
 				diagram instanceof GanttDiagram
-						? new SplitParam(HColorUtils.BLACK, null, 5)  // for backwards compatibility
+						? new SplitParam(HColors.BLACK, null, 5)  // for backwards compatibility
 						: diagram.getSkinParam().getSplitParam()
 		).getFiles();
 

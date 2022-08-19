@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorAutomatic;
+import net.sourceforge.plantuml.ugraphic.color.HColorScheme;
 
 public class CircledCharacter extends AbstractTextBlock implements TextBlock {
 
@@ -61,8 +61,8 @@ public class CircledCharacter extends AbstractTextBlock implements TextBlock {
 		this.font = font;
 		this.spotBackColor = spotBackColor;
 		this.spotBorder = spotBorder;
-		if (fontColor instanceof HColorAutomatic)
-			this.fontColor = ((HColorAutomatic) fontColor).getAppropriateColor(spotBackColor);
+		if (fontColor instanceof HColorScheme)
+			this.fontColor = ((HColorScheme) fontColor).getAppropriateColor(spotBackColor);
 		else
 			this.fontColor = fontColor;
 	}

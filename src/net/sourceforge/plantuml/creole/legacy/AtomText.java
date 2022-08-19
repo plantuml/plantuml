@@ -58,8 +58,8 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UText;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorAutomatic;
-import net.sourceforge.plantuml.ugraphic.color.HColorAutomaticLegacy;
+import net.sourceforge.plantuml.ugraphic.color.HColorScheme;
+import net.sourceforge.plantuml.ugraphic.color.HColorAutomagic;
 import net.sourceforge.plantuml.ugraphic.color.HColorSimple;
 import net.sourceforge.plantuml.utils.CharHidder;
 
@@ -79,9 +79,8 @@ public final class AtomText extends AbstractAtom implements Atom {
 
 	protected AtomText(String text, FontConfiguration style, Url url, DelayedDouble marginLeft,
 			DelayedDouble marginRight, boolean manageSpecialChars) {
-		if (text.contains("" + BackSlash.hiddenNewLine())) {
+		if (text.contains("" + BackSlash.hiddenNewLine()))
 			throw new IllegalArgumentException(text);
-		}
 
 //		if (text.length() > 0) {
 //			final VisibilityModifier visibilityModifier = VisibilityModifier.getByUnicode(text.charAt(0));
@@ -118,23 +117,22 @@ public final class AtomText extends AbstractAtom implements Atom {
 		Log.debug("g2d=" + rect);
 		Log.debug("Size for " + text + " is " + rect);
 		double h = rect.getHeight();
-		if (h < 10) {
+		if (h < 10)
 			h = 10;
-		}
+
 		double width = text.indexOf("\t") == -1 ? rect.getWidth() : getWidth(stringBounder, text);
 		final double left = marginLeft.getDouble(stringBounder);
 		final double right = marginRight.getDouble(stringBounder);
-		if (visibility != null) {
+		if (visibility != null)
 			width += visibility.calculateDimension(stringBounder).getWidth();
-		}
 
 		return new Dimension2DDouble(width + left + right, h);
 	}
 
 	public void drawU(UGraphic ug) {
-		if (url != null) {
+		if (url != null)
 			ug.startUrl(url);
-		}
+
 		if (ug.matchesProperty("SPECIALTXT")) {
 			ug.draw(this);
 		} else {
@@ -145,21 +143,21 @@ public final class AtomText extends AbstractAtom implements Atom {
 			}
 			HColor textColor = fontConfiguration.getColor();
 			FontConfiguration useFontConfiguration = fontConfiguration;
-			if (textColor instanceof HColorAutomaticLegacy && ug.getParam().getBackcolor() != null) {
+			if (textColor instanceof HColorAutomagic && ug.getParam().getBackcolor() != null) {
 				textColor = ((HColorSimple) ug.getParam().getBackcolor()).opposite();
 				useFontConfiguration = fontConfiguration.changeColor(textColor);
 			}
-			if (textColor instanceof HColorAutomatic) {
+			if (textColor instanceof HColorScheme) {
 				HColor backcolor = ug.getParam().getBackcolor();
-				if (backcolor == null) {
+				if (backcolor == null)
 					backcolor = ug.getDefaultBackground();
-				}
-				textColor = ((HColorAutomatic) textColor).getAppropriateColor(backcolor);
+
+				textColor = ((HColorScheme) textColor).getAppropriateColor(backcolor);
 				useFontConfiguration = fontConfiguration.changeColor(textColor);
 			}
-			if (marginLeft != AtomTextUtils.ZERO) {
+
+			if (marginLeft != AtomTextUtils.ZERO)
 				ug = ug.apply(UTranslate.dx(marginLeft.getDouble(ug.getStringBounder())));
-			}
 
 			final StringTokenizer tokenizer = new StringTokenizer(text, "\t", true);
 
@@ -186,9 +184,9 @@ public final class AtomText extends AbstractAtom implements Atom {
 				}
 			}
 		}
-		if (url != null) {
+		if (url != null)
 			ug.closeUrl();
-		}
+
 	}
 
 	private double getWidth(StringBounder stringBounder, String text) {
@@ -210,9 +208,9 @@ public final class AtomText extends AbstractAtom implements Atom {
 
 	private String tabString() {
 		final int nb = fontConfiguration.getTabSize();
-		if (nb >= 1 && nb < 7) {
+		if (nb >= 1 && nb < 7)
 			return "        ".substring(0, nb);
-		}
+
 		return "        ";
 	}
 
@@ -268,9 +266,9 @@ public final class AtomText extends AbstractAtom implements Atom {
 
 	public List<Atom> getSplitted(StringBounder stringBounder, LineBreakStrategy maxWidthAsString) {
 		final double maxWidth = maxWidthAsString.getMaxWidth();
-		if (maxWidth == 0) {
+		if (maxWidth == 0)
 			throw new IllegalStateException();
-		}
+
 		final List<Atom> result = new ArrayList<>();
 		final StringTokenizer st = new StringTokenizer(text, " ", true);
 		final StringBuilder currentLine = new StringBuilder();
@@ -281,9 +279,9 @@ public final class AtomText extends AbstractAtom implements Atom {
 				if (w > maxWidth) {
 					result.add(withText(currentLine.toString()));
 					currentLine.setLength(0);
-					if (tmp.startsWith(" ") == false) {
+					if (tmp.startsWith(" ") == false)
 						currentLine.append(tmp);
-					}
+
 				} else {
 					currentLine.append(tmp);
 				}
@@ -300,9 +298,8 @@ public final class AtomText extends AbstractAtom implements Atom {
 			if (tmp.length() > 0 && getWidth(stringBounder, tmp.toString() + token) > width) {
 				final Atom part1 = withText(tmp.toString());
 				String remain = text.substring(tmp.length());
-				while (remain.startsWith(" ")) {
+				while (remain.startsWith(" "))
 					remain = remain.substring(1);
-				}
 
 				final Atom part2 = withText(remain);
 				return Arrays.asList(part1, part2);

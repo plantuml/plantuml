@@ -35,8 +35,6 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
-import java.util.Objects;
-
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.Guillemet;
@@ -53,7 +51,6 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
-import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
@@ -64,7 +61,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class EntityImageLollipopInterfaceEye2 extends AbstractEntityImage {
 
@@ -93,7 +90,7 @@ public class EntityImageLollipopInterfaceEye2 extends AbstractEntityImage {
 //		if (backcolor == null)
 //			backcolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), symbol.getColorParamBack());
 
-		final HColor forecolor = HColorUtils.BLACK;
+		final HColor forecolor = HColors.BLACK;
 		// final HColor forecolor = SkinParamUtils.getColor(getSkinParam(), getStereo(),
 		// symbol.getColorParamBorder());
 		this.ctx = new SymbolContext(backcolor, forecolor).withStroke(new UStroke(1.5))

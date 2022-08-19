@@ -121,6 +121,7 @@ public enum SName {
 	stack, //
 	stateDiagram, //
 	state, //
+	stateBody, //
 	stereotype, //
 	storage, //
 	swimlane, //

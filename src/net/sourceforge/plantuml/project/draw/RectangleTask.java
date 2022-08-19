@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorNone;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class RectangleTask {
 
@@ -113,11 +113,11 @@ public class RectangleTask {
 				ug.apply(UTranslate.dx(segment.getPos1())).draw(partial);
 		} else {
 			final double x1 = width * completion / 100;
-			ug.apply(new HColorNone()).apply(UTranslate.dx(segment.getPos1()))
+			ug.apply(HColors.none()).apply(UTranslate.dx(segment.getPos1()))
 					.draw(PathUtils.UtoLeft(x1, height, round));
-			ug.apply(documentBackground.bg()).apply(new HColorNone()).apply(UTranslate.dx(segment.getPos1() + x1))
+			ug.apply(documentBackground.bg()).apply(HColors.none()).apply(UTranslate.dx(segment.getPos1() + x1))
 					.draw(PathUtils.UtoRight(width * (100 - completion) / 100, height, round));
-			ug.apply(new HColorNone().bg()).apply(UTranslate.dx(segment.getPos1())).draw(partial);
+			ug.apply(HColors.none().bg()).apply(UTranslate.dx(segment.getPos1())).draw(partial);
 		}
 
 	}
@@ -197,7 +197,7 @@ public class RectangleTask {
 			width++;
 		}
 		if (width > 0) {
-			drawRect(widthCompletion, ug.apply(new HColorNone()).apply(UTranslate.dx(segment.getPos1())),
+			drawRect(widthCompletion, ug.apply(HColors.none()).apply(UTranslate.dx(segment.getPos1())),
 					documentBackground, width, height);
 		}
 

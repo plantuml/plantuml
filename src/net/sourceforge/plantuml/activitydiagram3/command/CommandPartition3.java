@@ -57,7 +57,7 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public class CommandPartition3 extends SingleLineCommand2<ActivityDiagram3> {
@@ -133,7 +133,7 @@ public class CommandPartition3 extends SingleLineCommand2<ActivityDiagram3> {
 			backColor = stylePartition.value(PName.BackGroundColor).asColor(diagram.getSkinParam().getThemeStyle(),
 					diagram.getSkinParam().getIHtmlColorSet());
 
-		final HColor titleColor = HColorUtils.BLUE;// stylePartition.value(PName.FontColor).asColor(diagram.getSkinParam().getIHtmlColorSet());
+		final HColor titleColor = HColors.BLUE;// stylePartition.value(PName.FontColor).asColor(diagram.getSkinParam().getIHtmlColorSet());
 		final double roundCorner = stylePartition.value(PName.RoundCorner).asDouble();
 
 		diagram.startGroup(Display.getWithNewlines(partitionTitle), backColor, titleColor, borderColor, symbol,

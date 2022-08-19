@@ -86,52 +86,48 @@ public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 	private ImageData createFileInternal(OutputStream os, List<String> dotStrings, FileFormatOption fileFormatOption)
 			throws IOException, InterruptedException {
 		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(diagram.getSkinParam());
-		if (diagram.getUmlDiagramType() == UmlDiagramType.ACTIVITY) {
+		if (diagram.getUmlDiagramType() == UmlDiagramType.ACTIVITY)
 			new CucaDiagramSimplifierActivity(diagram, dotStrings, stringBounder);
-		} else if (diagram.getUmlDiagramType() == UmlDiagramType.STATE) {
+		else if (diagram.getUmlDiagramType() == UmlDiagramType.STATE)
 			new CucaDiagramSimplifierState(diagram, dotStrings, stringBounder);
-		}
 
-		// System.err.println("FOO11 type=" + os.getClass());
 		GeneralImageBuilder svek2 = createDotDataImageBuilder(DotMode.NORMAL, stringBounder);
 		BaseFile basefile = null;
-		if (fileFormatOption.isDebugSvek() && os instanceof NamedOutputStream) {
+		if (fileFormatOption.isDebugSvek() && os instanceof NamedOutputStream)
 			basefile = ((NamedOutputStream) os).getBasefile();
-		}
-		// System.err.println("FOO11 basefile=" + basefile);
 
 		TextBlockBackcolored result = svek2.buildImage(basefile, diagram.getDotStringSkek());
 		if (result instanceof GraphvizCrash) {
 			svek2 = createDotDataImageBuilder(DotMode.NO_LEFT_RIGHT_AND_XLABEL, stringBounder);
 			result = svek2.buildImage(basefile, diagram.getDotStringSkek());
 		}
-		// TODO There is something strange with the left margin of mainframe, I think because AnnotatedWorker is used here
-		//      It can be looked at in another PR
+		// TODO There is something strange with the left margin of mainframe, I think
+		// because AnnotatedWorker is used here
+		// It can be looked at in another PR
 		result = new AnnotatedWorker(diagram, diagram.getSkinParam(), stringBounder).addAdd(result);
 
-		// TODO UmlDiagram.getWarningOrError() looks similar so this might be simplified? - will leave for a separate PR
+		// TODO UmlDiagram.getWarningOrError() looks similar so this might be
+		// simplified? - will leave for a separate PR
 		final String widthwarning = diagram.getSkinParam().getValue("widthwarning");
 		String warningOrError = null;
-		if (widthwarning != null && widthwarning.matches("\\d+")) {
+		if (widthwarning != null && widthwarning.matches("\\d+"))
 			warningOrError = svek2.getWarningOrError(Integer.parseInt(widthwarning));
-		}
-		
-		// Sorry about this hack. There is a side effect in SvekResult::calculateDimension()
-		result.calculateDimension(stringBounder);  // Ensure text near the margins is not cut off
 
-		return diagram.createImageBuilder(fileFormatOption)
-				.annotations(false)  // backwards compatibility (AnnotatedWorker is used above)
-				.drawable(result)
-				.status(result instanceof GraphvizCrash ? 503 : 0)
-				.warningOrError(warningOrError)
+		// Sorry about this hack. There is a side effect in
+		// SvekResult::calculateDimension()
+		result.calculateDimension(stringBounder); // Ensure text near the margins is not cut off
+
+		return diagram.createImageBuilder(fileFormatOption).annotations(false) // backwards compatibility
+																				// (AnnotatedWorker is used above)
+				.drawable(result).status(result instanceof GraphvizCrash ? 503 : 0).warningOrError(warningOrError)
 				.write(os);
 	}
 
 	private List<Link> getOrderedLinks() {
 		final List<Link> result = new ArrayList<>();
-		for (Link l : diagram.getLinks()) {
+		for (Link l : diagram.getLinks())
 			addLinkNew(result, l);
-		}
+
 		return result;
 	}
 
@@ -139,14 +135,14 @@ public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 		for (int i = 0; i < result.size(); i++) {
 			final Link other = result.get(i);
 			if (other.sameConnections(link)) {
-				while (i < result.size() && result.get(i).sameConnections(link)) {
+				while (i < result.size() && result.get(i).sameConnections(link))
 					i++;
-				}
-				if (i == result.size()) {
+
+				if (i == result.size())
 					result.add(link);
-				} else {
+				else
 					result.add(i, link);
-				}
+
 				return;
 			}
 		}

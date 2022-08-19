@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UHorizontalLine;
 import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.ugraphic.color.HColorNone;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 class USymbolDatabase extends USymbol {
 
@@ -68,7 +68,7 @@ class USymbolDatabase extends USymbol {
 		ug.draw(shape);
 
 		final UPath closing = getClosingPath(width);
-		ug.apply(new HColorNone().bg()).draw(closing);
+		ug.apply(HColors.none().bg()).draw(closing);
 		ug.apply(new UTranslate(width, height)).draw(new UEmpty(10, 10));
 
 	}
@@ -99,9 +99,9 @@ class USymbolDatabase extends USymbol {
 		protected void drawHline(UGraphic ug, UHorizontalLine line, UTranslate translate) {
 			final UPath closing = getClosingPath(endingX);
 			ug = ug.apply(translate);
-			ug.apply(line.getStroke()).apply(new HColorNone().bg()).apply(UTranslate.dy(-15)).draw(closing);
+			ug.apply(line.getStroke()).apply(HColors.none().bg()).apply(UTranslate.dy(-15)).draw(closing);
 			if (line.isDouble()) {
-				ug.apply(line.getStroke()).apply(new HColorNone().bg()).apply(UTranslate.dy(-15 + 2)).draw(closing);
+				ug.apply(line.getStroke()).apply(HColors.none().bg()).apply(UTranslate.dy(-15 + 2)).draw(closing);
 			}
 			line.drawTitleInternal(ug, 0, endingX, 0, true);
 		}

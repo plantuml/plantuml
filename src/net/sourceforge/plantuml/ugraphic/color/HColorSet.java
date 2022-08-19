@@ -245,7 +245,7 @@ public class HColorSet {
 		}
 
 		HColorGradient buildInternal(HColor background) {
-			return new HColorGradient(build(s1, background), build(s2, background), sep);
+			return HColors.gradient(build(s1, background), build(s2, background), sep);
 		}
 
 	}
@@ -265,11 +265,11 @@ public class HColorSet {
 			return true;
 		}
 
-		HColorAutomatic buildInternal(HColor background) {
+		HColorScheme buildInternal(HColor background) {
 			if (colors.length == 2)
-				return new HColorAutomatic(build(colors[0], background), build(colors[1], background), null);
+				return new HColorScheme(build(colors[0], background), build(colors[1], background), null);
 
-			return new HColorAutomatic(build(colors[0], background), build(colors[1], background),
+			return new HColorScheme(build(colors[0], background), build(colors[1], background),
 					build(colors[2], background));
 		}
 
@@ -311,13 +311,13 @@ public class HColorSet {
 
 	public HColor getColorOrWhite(ThemeStyle UNUSED, String s, HColor background) {
 		if (isColorValid(Objects.requireNonNull(s)) == false)
-			return HColorUtils.WHITE;
+			return HColors.WHITE;
 
 		try {
 			return getColor(null, s, background);
 		} catch (NoSuchColorException e) {
 			assert false;
-			return HColorUtils.WHITE;
+			return HColors.WHITE;
 		}
 	}
 
@@ -373,7 +373,7 @@ public class HColorSet {
 		if (s.equalsIgnoreCase("transparent") || s.equalsIgnoreCase("background")) {
 			return new HColorBackground(background);
 		} else if (s.equalsIgnoreCase("automatic")) {
-			return new HColorAutomaticLegacy();
+			return new HColorAutomagic();
 		} else if (s.matches("[0-9A-Fa-f]")) {
 			s = "" + s.charAt(0) + s.charAt(0) + s.charAt(0) + s.charAt(0) + s.charAt(0) + s.charAt(0);
 			color = new Color(Integer.parseInt(s, 16));

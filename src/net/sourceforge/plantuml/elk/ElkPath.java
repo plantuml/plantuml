@@ -82,7 +82,7 @@ import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class ElkPath implements UDrawable {
 
@@ -151,8 +151,8 @@ public class ElkPath implements UDrawable {
 			drawSections(ug, sections);
 		}
 
-		final UDrawable extremityFactory1 = getDecors(link.getType().getDecor1(), Math.PI / 2, HColorUtils.WHITE);
-		final UDrawable extremityFactory2 = getDecors(link.getType().getDecor2(), -Math.PI / 2, HColorUtils.WHITE);
+		final UDrawable extremityFactory1 = getDecors(link.getType().getDecor1(), Math.PI / 2, HColors.WHITE);
+		final UDrawable extremityFactory2 = getDecors(link.getType().getDecor2(), -Math.PI / 2, HColors.WHITE);
 
 		if (extremityFactory1 != null) {
 			final double x = sections.get(0).getEndX();

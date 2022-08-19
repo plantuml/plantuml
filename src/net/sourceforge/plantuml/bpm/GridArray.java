@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class GridArray implements UDrawable {
 
@@ -154,7 +154,7 @@ public class GridArray implements UDrawable {
 		for (int c = 0; c < cols; c++) {
 			widthMax += getWidthOfCol(ug.getStringBounder(), c) + margin;
 		}
-		ug = ug.apply(HColorUtils.BLACK);
+		ug = ug.apply(HColors.BLACK);
 		double y = 0;
 		for (int l = 0; l < lines; l++) {
 			ug.apply(UTranslate.dy(y)).draw(ULine.hline(widthMax));
@@ -169,7 +169,7 @@ public class GridArray implements UDrawable {
 	}
 
 	private void drawArrow(UGraphic ug, Point2D pt1, Point2D pt2) {
-		ug = ug.apply(HColorUtils.BLUE);
+		ug = ug.apply(HColors.BLUE);
 		final ULine line = new ULine(pt2.getX() - pt1.getX(), pt2.getY() - pt1.getY());
 		ug.apply(new UTranslate(pt1)).draw(line);
 	}

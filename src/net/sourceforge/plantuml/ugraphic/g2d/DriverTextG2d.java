@@ -60,7 +60,7 @@ import net.sourceforge.plantuml.ugraphic.UText;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorGradient;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class DriverTextG2d implements UDriver<UText, Graphics2D> {
 
@@ -75,7 +75,7 @@ public class DriverTextG2d implements UDriver<UText, Graphics2D> {
 	public void draw(UText shape, double x, double y, ColorMapper mapper, UParam param, Graphics2D g2d) {
 		final FontConfiguration fontConfiguration = shape.getFontConfiguration();
 
-		if (HColorUtils.isTransparent(fontConfiguration.getColor())) {
+		if (HColors.isTransparent(fontConfiguration.getColor())) {
 			return;
 		}
 		final String text = shape.getText();

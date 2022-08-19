@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.ugraphic.USegmentType;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorGradient;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class DriverPathG2d extends DriverShadowedG2d implements UDriver<UPath, Graphics2D> {
 
@@ -93,7 +93,7 @@ public class DriverPathG2d extends DriverShadowedG2d implements UDriver<UPath, G
 
 		// Shadow
 		if (shape.getDeltaShadow() != 0) {
-			if (back == null || HColorUtils.isTransparent(back)) {
+			if (back == null || HColors.isTransparent(back)) {
 				drawOnlyLineShadowSpecial(g2d, p, shape.getDeltaShadow(), dpiFactor);
 			} else {
 				drawShadow(g2d, p, shape.getDeltaShadow(), dpiFactor);

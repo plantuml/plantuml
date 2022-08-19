@@ -52,7 +52,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class ActivityBox extends AbstractTextBlock {
 
@@ -92,8 +92,8 @@ public class ActivityBox extends AbstractTextBlock {
 		final double widthTotal = dimTotal.getWidth();
 		final double heightTotal = dimTotal.getHeight();
 		final Shadowable rect = new URectangle(widthTotal, heightTotal).rounded(CORNER);
-		ug = ug.apply(HColorUtils.MY_RED);
-		ug = ug.apply(HColorUtils.MY_YELLOW.bg());
+		ug = ug.apply(HColors.MY_RED);
+		ug = ug.apply(HColors.MY_YELLOW.bg());
 		ug.apply(new UStroke(1.5)).draw(rect);
 
 		tb.drawU(ug.apply(new UTranslate(MARGIN, MARGIN)));

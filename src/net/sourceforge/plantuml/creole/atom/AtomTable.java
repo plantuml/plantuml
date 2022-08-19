@@ -51,7 +51,7 @@ import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorNone;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class AtomTable extends AbstractAtom implements Atom {
 
@@ -107,7 +107,7 @@ public class AtomTable extends AbstractAtom implements Atom {
 				final double y2 = getStartingY(i + 1);
 				final double x1 = getStartingX(0);
 				final double x2 = getStartingX(getNbCols());
-				ug.apply(new HColorNone()).apply(line.lineBackColor.bg()).apply(new UTranslate(x1, y1))
+				ug.apply(HColors.none()).apply(line.lineBackColor.bg()).apply(new UTranslate(x1, y1))
 						.draw(new URectangle(x2 - x1, y2 - y1));
 			}
 			for (int j = 0; j < getNbCols(); j++) {
@@ -126,7 +126,7 @@ public class AtomTable extends AbstractAtom implements Atom {
 				if (cellBackColor != null) {
 					final double y1 = getStartingY(i);
 					final double y2 = getStartingY(i + 1);
-					ug.apply(new HColorNone()).apply(cellBackColor.bg()).apply(new UTranslate(x1, y1))
+					ug.apply(HColors.none()).apply(cellBackColor.bg()).apply(new UTranslate(x1, y1))
 							.draw(new URectangle(x2 - x1, y2 - y1));
 				}
 				final Position pos = positions.get(cell);

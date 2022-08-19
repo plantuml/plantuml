@@ -131,7 +131,7 @@ import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 /*
  * Some notes:
@@ -263,8 +263,9 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 			final UStroke stroke = Cluster.getStrokeInternal(group, style);
 
 			HColor backColor = getBackColor(umlDiagramType);
-			backColor = Cluster.getBackColor(backColor, skinParam, group.getStereotype(), umlDiagramType.getStyleName(),
-					group.getUSymbol());
+			backColor = Cluster.getBackColor(backColor, group.getStereotype(), umlDiagramType.getStyleName(),
+					group.getUSymbol(), skinParam.getCurrentStyleBuilder(), skinParam.getThemeStyle(),
+					skinParam.getIHtmlColorSet());
 
 			final double roundCorner = style.value(PName.RoundCorner).asDouble();
 //			final double roundCorner = group.getUSymbol() == null ? 0
@@ -276,7 +277,7 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 			final ClusterDecoration decoration = new ClusterDecoration(packageStyle, group.getUSymbol(), ztitle,
 					zstereo, 0, 0, elkNode.getWidth(), elkNode.getHeight(), stroke);
 
-			final HColor borderColor = HColorUtils.BLACK;
+			final HColor borderColor = HColors.BLACK;
 			decoration.drawU(ug.apply(new UTranslate(corner)), backColor, borderColor, shadowing, roundCorner,
 					skinParam.getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null, false, null),
 					skinParam.getStereotypeAlignment(), 0);

@@ -73,7 +73,7 @@ import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorNone;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class EntityImageClass extends AbstractEntityImage implements Stencil, WithPorts {
 
@@ -211,7 +211,7 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 			ugHeader.apply(stroke).draw(rect2);
 			ugHeader.apply(stroke).apply(UTranslate.dy(dimHeader.getHeight() - rect3.getHeight())).draw(rect3);
 			rect.setDeltaShadow(0);
-			ug.apply(stroke).apply(new HColorNone().bg()).draw(rect);
+			ug.apply(stroke).apply(HColors.none().bg()).draw(rect);
 		} else {
 			ug.apply(stroke).draw(rect);
 		}

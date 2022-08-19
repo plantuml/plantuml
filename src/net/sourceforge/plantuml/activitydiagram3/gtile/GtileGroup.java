@@ -62,7 +62,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 import net.sourceforge.plantuml.utils.MathUtils;
 
 public class GtileGroup extends AbstractGtileRoot {
@@ -96,9 +96,9 @@ public class GtileGroup extends AbstractGtileRoot {
 		super(inner.getStringBounder(), skinParam);
 		this.roundCorner = roundCorner;
 		this.type = type;
-		this.backColor = backColor == null ? HColorUtils.WHITE : backColor;
+		this.backColor = backColor == null ? HColors.WHITE : backColor;
 		this.inner = inner;
-		this.borderColor = borderColor == null ? HColorUtils.BLACK : borderColor;
+		this.borderColor = borderColor == null ? HColors.BLACK : borderColor;
 
 		final Style style = getDefaultStyleDefinitionPartition().getMergedStyle(skinParam.getCurrentStyleBuilder());
 		final FontConfiguration fc = style.getFontConfiguration(skinParam.getThemeStyle(),

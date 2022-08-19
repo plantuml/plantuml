@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 class ExtremityCircle extends Extremity {
 
@@ -74,7 +74,7 @@ class ExtremityCircle extends Extremity {
 
 		ug = ug.apply(new UStroke(1.5));
 		if (fill) {
-			ug = ug.apply(HColorUtils.changeBack(ug));
+			ug = ug.apply(HColors.changeBack(ug));
 		} else {
 			ug = ug.apply(backgroundColor.bg());
 		}

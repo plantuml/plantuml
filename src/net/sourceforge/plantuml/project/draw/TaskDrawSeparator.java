@@ -63,7 +63,7 @@ import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class TaskDrawSeparator implements TaskDraw {
 
@@ -142,7 +142,7 @@ public class TaskDrawSeparator implements TaskDraw {
 		final HColor backColor = getStyle().value(PName.BackGroundColor)
 				.asColor(styleBuilder.getSkinParam().getThemeStyle(), colorSet);
 
-		if (HColorUtils.isTransparent(backColor) == false) {
+		if (HColors.isTransparent(backColor) == false) {
 			final double height = padding.getTop() + getTextHeight(stringBounder) + padding.getBottom();
 			if (height > 0) {
 				final URectangle rect = new URectangle(end - start, height);

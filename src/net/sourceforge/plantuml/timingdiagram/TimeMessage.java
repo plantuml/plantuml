@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class TimeMessage extends WithLinkType {
 
@@ -77,7 +77,7 @@ public class TimeMessage extends WithLinkType {
 	private HColor getColor() {
 //		return HColorUtils.BLUE;
 		if (styleBuilder == null) {
-			return HColorUtils.MY_RED;
+			return HColors.MY_RED;
 		}
 		return getStyle().value(PName.LineColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
 	}

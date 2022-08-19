@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorNone;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class TextBlockBordered extends AbstractTextBlock implements TextBlock {
 
@@ -118,13 +118,13 @@ public class TextBlockBordered extends AbstractTextBlock implements TextBlock {
 			polygon.setDeltaShadow(4);
 
 		if (backgroundColor == null)
-			ug = ug.apply(new HColorNone().bg());
+			ug = ug.apply(HColors.none().bg());
 		else
 			ug = ug.apply(backgroundColor.bg());
 
 		HColor color = noBorder() ? backgroundColor : borderColor;
 		if (color == null)
-			color = new HColorNone();
+			color = HColors.none();
 
 		ug = ug.apply(color);
 		ug = applyStroke(ug);

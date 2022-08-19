@@ -38,62 +38,62 @@ package net.sourceforge.plantuml;
 import net.sourceforge.plantuml.annotation.HaxeIgnored;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 @HaxeIgnored
 public enum ColorParam {
-	background(HColorUtils.WHITE, true, ColorType.BACK), 
-	hyperlink(HColorUtils.BLUE),
+	background(HColors.WHITE, true, ColorType.BACK), 
+	hyperlink(HColors.BLUE),
 
-	activityBackground(HColorUtils.MY_YELLOW, true, ColorType.BACK), 
-	activityBorder(HColorUtils.MY_RED, ColorType.LINE),
+	activityBackground(HColors.MY_YELLOW, true, ColorType.BACK), 
+	activityBorder(HColors.MY_RED, ColorType.LINE),
 
-	classBackground(HColorUtils.MY_YELLOW, true, ColorType.BACK),
+	classBackground(HColors.MY_YELLOW, true, ColorType.BACK),
 
-	classBorder(HColorUtils.MY_RED, ColorType.LINE),
+	classBorder(HColors.MY_RED, ColorType.LINE),
 
-	arrowHead(HColorUtils.MY_RED, null),
+	arrowHead(HColors.MY_RED, null),
 
-	stateBorder(HColorUtils.MY_RED, ColorType.LINE),
+	stateBorder(HColors.MY_RED, ColorType.LINE),
 
-	noteBackground(HColorUtils.COL_FBFB77, true, ColorType.BACK), 
-	noteBorder(HColorUtils.MY_RED, ColorType.LINE),
+	noteBackground(HColors.COL_FBFB77, true, ColorType.BACK), 
+	noteBorder(HColors.MY_RED, ColorType.LINE),
 
 	diagramBorder(null, ColorType.LINE),
 
-	actorBackground(HColorUtils.MY_YELLOW, true, ColorType.BACK), 
-	actorBorder(HColorUtils.MY_RED, ColorType.LINE),
-	sequenceGroupBodyBackground(HColorUtils.RED, true, ColorType.BACK),
-	sequenceReferenceHeaderBackground(HColorUtils.COL_EEEEEE, true, ColorType.BACK),
-	sequenceReferenceBackground(HColorUtils.WHITE, true, ColorType.BACK),
-	sequenceLifeLineBorder(HColorUtils.MY_RED, ColorType.LINE),
-	sequenceNewpageSeparator(HColorUtils.BLACK, ColorType.LINE), 
-	sequenceBoxBorder(HColorUtils.MY_RED, ColorType.LINE),
+	actorBackground(HColors.MY_YELLOW, true, ColorType.BACK), 
+	actorBorder(HColors.MY_RED, ColorType.LINE),
+	sequenceGroupBodyBackground(HColors.RED, true, ColorType.BACK),
+	sequenceReferenceHeaderBackground(HColors.COL_EEEEEE, true, ColorType.BACK),
+	sequenceReferenceBackground(HColors.WHITE, true, ColorType.BACK),
+	sequenceLifeLineBorder(HColors.MY_RED, ColorType.LINE),
+	sequenceNewpageSeparator(HColors.BLACK, ColorType.LINE), 
+	sequenceBoxBorder(HColors.MY_RED, ColorType.LINE),
 
-	iconPrivate(HColorUtils.COL_C82930), 
-	iconPrivateBackground(HColorUtils.COL_F24D5C),
-	iconPackage(HColorUtils.COL_1963A0), 
-	iconPackageBackground(HColorUtils.COL_4177AF),
-	iconProtected(HColorUtils.COL_B38D22), 
-	iconProtectedBackground(HColorUtils.COL_FFFF44),
-	iconPublic(HColorUtils.COL_038048), 
-	iconPublicBackground(HColorUtils.COL_84BE84),
-	iconIEMandatory(HColorUtils.BLACK),
+	iconPrivate(HColors.COL_C82930), 
+	iconPrivateBackground(HColors.COL_F24D5C),
+	iconPackage(HColors.COL_1963A0), 
+	iconPackageBackground(HColors.COL_4177AF),
+	iconProtected(HColors.COL_B38D22), 
+	iconProtectedBackground(HColors.COL_FFFF44),
+	iconPublic(HColors.COL_038048), 
+	iconPublicBackground(HColors.COL_84BE84),
+	iconIEMandatory(HColors.BLACK),
 
-	arrowLollipop(HColorUtils.WHITE),
+	arrowLollipop(HColors.WHITE),
 
-	machineBackground(HColorUtils.WHITE), 
-	machineBorder(HColorUtils.BLACK, ColorType.LINE),
-	requirementBackground(HColorUtils.WHITE), 
-	requirementBorder(HColorUtils.BLACK, ColorType.LINE),
-	designedBackground(HColorUtils.WHITE), 
-	designedBorder(HColorUtils.BLACK, ColorType.LINE),
-	domainBackground(HColorUtils.WHITE), 
-	domainBorder(HColorUtils.BLACK, ColorType.LINE),
-	lexicalBackground(HColorUtils.WHITE), 
-	lexicalBorder(HColorUtils.BLACK, ColorType.LINE),
-	biddableBackground(HColorUtils.WHITE), 
-	biddableBorder(HColorUtils.BLACK, ColorType.LINE);
+	machineBackground(HColors.WHITE), 
+	machineBorder(HColors.BLACK, ColorType.LINE),
+	requirementBackground(HColors.WHITE), 
+	requirementBorder(HColors.BLACK, ColorType.LINE),
+	designedBackground(HColors.WHITE), 
+	designedBorder(HColors.BLACK, ColorType.LINE),
+	domainBackground(HColors.WHITE), 
+	domainBorder(HColors.BLACK, ColorType.LINE),
+	lexicalBackground(HColors.WHITE), 
+	lexicalBorder(HColors.BLACK, ColorType.LINE),
+	biddableBackground(HColors.WHITE), 
+	biddableBorder(HColors.BLACK, ColorType.LINE);
 
 	private final boolean isBackground;
 	private final HColor defaultValue;

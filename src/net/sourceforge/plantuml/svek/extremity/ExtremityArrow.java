@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorNone;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 class ExtremityArrow extends Extremity {
 
@@ -89,7 +89,7 @@ class ExtremityArrow extends Extremity {
 	public void drawU(UGraphic ug) {
 		final HColor color = ug.getParam().getColor();
 		if (color == null) {
-			ug = ug.apply(new HColorNone().bg());
+			ug = ug.apply(HColors.none().bg());
 		} else {
 			ug = ug.apply(color.bg());
 		}

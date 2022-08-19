@@ -56,7 +56,7 @@ import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public abstract class AbstractTaskDraw implements TaskDraw {
 
@@ -107,7 +107,7 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 				.asColor(getStyleBuilder().getSkinParam().getThemeStyle(), getColorSet());
 		final HColor regular = getStyle().value(PName.LineColor)
 				.asColor(getStyleBuilder().getSkinParam().getThemeStyle(), getColorSet());
-		return HColorUtils.unlinear(unstarted, regular, completion);
+		return HColors.unlinear(unstarted, regular, completion);
 	}
 
 	final protected HColor getBackgroundColor() {
@@ -115,7 +115,7 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 				.asColor(getStyleBuilder().getSkinParam().getThemeStyle(), getColorSet());
 		final HColor regular = getStyle().value(PName.BackGroundColor)
 				.asColor(getStyleBuilder().getSkinParam().getThemeStyle(), getColorSet());
-		return HColorUtils.unlinear(unstarted, regular, completion);
+		return HColors.unlinear(unstarted, regular, completion);
 	}
 
 	final protected FontConfiguration getFontConfiguration() {

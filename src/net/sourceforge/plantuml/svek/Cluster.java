@@ -50,13 +50,12 @@ import java.util.Objects;
 import java.util.Set;
 
 import net.sourceforge.plantuml.AlignmentParam;
-import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.cucadiagram.EntityPosition;
 import net.sourceforge.plantuml.cucadiagram.EntityUtils;
@@ -75,6 +74,7 @@ import net.sourceforge.plantuml.posimo.Moveable;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.image.EntityImageState;
@@ -86,7 +86,8 @@ import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColorSet;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 import net.sourceforge.plantuml.utils.UniqueSequence;
 
 public class Cluster implements Moveable {
@@ -281,10 +282,6 @@ public class Cluster implements Moveable {
 		this.yTitle = y;
 	}
 
-	private static HColor getColor(ColorParam colorParam, ISkinParam skinParam, Stereotype stereotype) {
-		return SkinParamUtils.getColor(skinParam, stereotype, colorParam);
-	}
-
 	static public StyleSignatureBasic getDefaultStyleDefinition(SName diagramStyleName, USymbol symbol) {
 		if (diagramStyleName == SName.stateDiagram)
 			return StyleSignatureBasic.of(SName.root, SName.element, SName.stateDiagram, SName.state, SName.group);
@@ -347,8 +344,9 @@ public class Cluster implements Moveable {
 			final UStroke stroke = getStrokeInternal(group, style);
 
 			HColor backColor = getBackColor(umlDiagramType, style);
-			backColor = getBackColor(backColor, skinParam, group.getStereotype(), umlDiagramType.getStyleName(),
-					group.getUSymbol());
+			backColor = getBackColor(backColor, group.getStereotype(), umlDiagramType.getStyleName(),
+					group.getUSymbol(), skinParam.getCurrentStyleBuilder(), skinParam.getThemeStyle(),
+					skinParam.getIHtmlColorSet());
 			if (ztitle != null || zstereo != null) {
 				final ClusterDecoration decoration = new ClusterDecoration(packageStyle, group.getUSymbol(), ztitle,
 						zstereo, minX, minY, maxX, maxY, stroke);
@@ -425,6 +423,12 @@ public class Cluster implements Moveable {
 		return StyleSignatureBasic.of(SName.root, SName.element, SName.stateDiagram, SName.state)
 				.withTOBECHANGED(group.getStereotype()).getMergedStyle(skinParam.getCurrentStyleBuilder());
 	}
+
+	private Style getStyleStateBody() {
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.stateDiagram, SName.stateBody)
+				.withTOBECHANGED(group.getStereotype()).getMergedStyle(skinParam.getCurrentStyleBuilder());
+	}
+
 	// GroupPngMakerState
 
 	private void drawUState(UGraphic ug, UmlDiagramType umlDiagramType, double rounded, double shadowing) {
@@ -449,7 +453,12 @@ public class Cluster implements Moveable {
 			backColor = getStyleState().value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
 					skinParam.getIHtmlColorSet());
 
-		final HColor imgBackcolor = getBackColor(umlDiagramType, styleGroup);
+		// final HColor imgBackcolor = HColorUtils.transparent();
+
+		final HColor imgBackcolor = getStyleStateBody().value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
+				skinParam.getIHtmlColorSet());
+
+		// final HColor imgBackcolor = getBackColor(umlDiagramType, styleGroup);
 
 		// final Style style = getStyle(FontParam.STATE_ATTRIBUTE, skinParam2);
 
@@ -889,17 +898,15 @@ public class Cluster implements Moveable {
 		return group == ent;
 	}
 
-	public static HColor getBackColor(HColor backColor, ISkinParam skinParam, Stereotype stereotype, SName styleName,
-			USymbol symbol) {
+	public static HColor getBackColor(HColor backColor, Stereotype stereotype, SName styleName, USymbol symbol,
+			StyleBuilder styleBuilder, ThemeStyle themeStyle, HColorSet colorSet) {
 
-		final Style style = getDefaultStyleDefinition(styleName, symbol)
-				.getMergedStyle(skinParam.getCurrentStyleBuilder());
+		final Style style = getDefaultStyleDefinition(styleName, symbol).getMergedStyle(styleBuilder);
 		if (backColor == null)
-			backColor = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
-					skinParam.getIHtmlColorSet());
+			backColor = style.value(PName.BackGroundColor).asColor(themeStyle, colorSet);
 
-		if (backColor == null || backColor.equals(HColorUtils.transparent()))
-			backColor = HColorUtils.transparent();
+		if (backColor == null || backColor.equals(HColors.transparent()))
+			backColor = HColors.transparent();
 
 		return backColor;
 	}

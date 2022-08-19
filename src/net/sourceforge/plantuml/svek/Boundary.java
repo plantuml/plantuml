@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.ugraphic.color.HColorNone;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class Boundary extends AbstractTextBlock {
 
@@ -79,7 +79,7 @@ public class Boundary extends AbstractTextBlock {
 		path.moveTo(0, radius);
 		path.lineTo(left, radius);
 		path.setDeltaShadow(symbolContext.getDeltaShadow());
-		ug.apply(new UTranslate(x, y)).apply(new HColorNone().bg()).draw(path);
+		ug.apply(new UTranslate(x, y)).apply(HColors.none().bg()).draw(path);
 
 		// final ULine line1 = ULine.dy(radius * 2);
 		// line1.setDeltaShadow(deltaShadow);

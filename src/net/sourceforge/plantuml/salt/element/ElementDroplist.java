@@ -52,7 +52,7 @@ import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class ElementDroplist extends AbstractElementText implements Element {
 
@@ -106,7 +106,7 @@ public class ElementDroplist extends AbstractElementText implements Element {
 			final Dimension2D dimText = getPureTextDimension(ug.getStringBounder());
 			poly.addPoint((box - 6) / 2, dimText.getHeight() - 8);
 
-			ug.apply(HColorUtils.changeBack(ug)).apply(new UTranslate(xline + 3, 6)).draw(poly);
+			ug.apply(HColors.changeBack(ug)).apply(new UTranslate(xline + 3, 6)).draw(poly);
 		}
 
 		if (openDrop != null) {

@@ -215,6 +215,9 @@ stateDiagram {
   state {
     RoundCorner 25
   }
+  stateBody {
+    BackGroundColor transparent
+  }
   element {
 	title {
 	  FontStyle plain

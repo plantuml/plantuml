@@ -56,7 +56,7 @@ import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.UText;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class DriverTextEps implements UDriver<UText, EpsGraphics> {
 
@@ -75,7 +75,7 @@ public class DriverTextEps implements UDriver<UText, EpsGraphics> {
 		}
 
 		final FontConfiguration fontConfiguration = shape.getFontConfiguration();
-		if (HColorUtils.isTransparent(fontConfiguration.getColor())) {
+		if (HColors.isTransparent(fontConfiguration.getColor())) {
 			return;
 		}
 

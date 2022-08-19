@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
-import net.sourceforge.plantuml.ugraphic.color.HColorUtils;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class BrailleDrawer implements UDrawable {
 
@@ -64,7 +64,7 @@ public class BrailleDrawer implements UDrawable {
 			ug.apply(UTranslate.dy(y * step + spotSize + 1))
 					.draw(ULine.hline((grid.getMaxX() - grid.getMinX()) * step));
 		}
-		ug = ug.apply(HColorUtils.BLACK).apply(HColorUtils.BLACK.bg());
+		ug = ug.apply(HColors.BLACK).apply(HColors.BLACK.bg());
 		for (int x = grid.getMinX(); x <= grid.getMaxX(); x++) {
 			for (int y = grid.getMinY(); y <= grid.getMaxY(); y++) {
 				if (grid.getState(x, y)) {
