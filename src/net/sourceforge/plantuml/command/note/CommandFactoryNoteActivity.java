@@ -167,13 +167,13 @@ public final class CommandFactoryNoteActivity implements SingleMultiFactoryComma
 		final LinkType type = new LinkType(LinkDecor.NONE, LinkDecor.NONE).goDashed();
 
 		if (position == Position.RIGHT) {
-			link = new Link(activity, note, type, Display.NULL, 1, diagram.getSkinParam().getCurrentStyleBuilder());
+			link = new Link(diagram.getSkinParam().getCurrentStyleBuilder(), activity, note, type, Display.NULL, 1);
 		} else if (position == Position.LEFT) {
-			link = new Link(note, activity, type, Display.NULL, 1, diagram.getSkinParam().getCurrentStyleBuilder());
+			link = new Link(diagram.getSkinParam().getCurrentStyleBuilder(), note, activity, type, Display.NULL, 1);
 		} else if (position == Position.BOTTOM) {
-			link = new Link(activity, note, type, Display.NULL, 2, diagram.getSkinParam().getCurrentStyleBuilder());
+			link = new Link(diagram.getSkinParam().getCurrentStyleBuilder(), activity, note, type, Display.NULL, 2);
 		} else if (position == Position.TOP) {
-			link = new Link(note, activity, type, Display.NULL, 2, diagram.getSkinParam().getCurrentStyleBuilder());
+			link = new Link(diagram.getSkinParam().getCurrentStyleBuilder(), note, activity, type, Display.NULL, 2);
 		} else {
 			throw new IllegalArgumentException();
 		}

@@ -53,12 +53,6 @@ public abstract class AbstractColorMapper implements ColorMapper {
 		if (hcolor == null)
 			return "none";
 
-		if (hcolor instanceof HColorBackground) {
-			hcolor = ((HColorBackground) hcolor).getBack();
-//			Thread.dumpStack();
-//			System.exit(0);
-//			return toHtml(result);
-		}
 		if (HColors.isTransparent(hcolor))
 			return "#00000000";
 

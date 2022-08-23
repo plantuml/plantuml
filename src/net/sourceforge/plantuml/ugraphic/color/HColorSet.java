@@ -244,8 +244,8 @@ public class HColorSet {
 			return isColorValid(s1) && isColorValid(s2);
 		}
 
-		HColorGradient buildInternal(HColor background) {
-			return HColors.gradient(build(s1, background), build(s2, background), sep);
+		HColorGradient buildInternal() {
+			return HColors.gradient(build(s1), build(s2), sep);
 		}
 
 	}
@@ -265,12 +265,11 @@ public class HColorSet {
 			return true;
 		}
 
-		HColorScheme buildInternal(HColor background) {
+		HColorScheme buildInternal() {
 			if (colors.length == 2)
-				return new HColorScheme(build(colors[0], background), build(colors[1], background), null);
+				return new HColorScheme(build(colors[0]), build(colors[1]), null);
 
-			return new HColorScheme(build(colors[0], background), build(colors[1], background),
-					build(colors[2], background));
+			return new HColorScheme(build(colors[0]), build(colors[1]), build(colors[2]));
 		}
 
 	}
@@ -302,49 +301,41 @@ public class HColorSet {
 	}
 
 	public HColor getColorOrWhite(String s) {
-		return getColorOrWhite(null, s, null);
+		return getColorOrWhite(null, s);
 	}
 
 	public HColor getColorOrWhite(ThemeStyle UNUSED, String s) {
-		return getColorOrWhite(null, s, null);
-	}
-
-	public HColor getColorOrWhite(ThemeStyle UNUSED, String s, HColor background) {
 		if (isColorValid(Objects.requireNonNull(s)) == false)
 			return HColors.WHITE;
 
 		try {
-			return getColor(null, s, background);
+			return getColor(null, s);
 		} catch (NoSuchColorException e) {
 			assert false;
 			return HColors.WHITE;
 		}
 	}
 
-	public HColor getColor(ThemeStyle UNUSED, String s) throws NoSuchColorException {
-		return getColor(null, s, null);
-	}
-
 	public HColor getColorLEGACY(String s) throws NoSuchColorException {
-		return getColor(null, s, null);
+		return getColor(null, s);
 	}
 
-	public HColor getColor(ThemeStyle UNUSED, String s, HColor background) throws NoSuchColorException {
+	public HColor getColor(ThemeStyle UNUSED, String s) throws NoSuchColorException {
 		if (isColorValid(Objects.requireNonNull(s)) == false)
 			throw new NoSuchColorException();
 
 		final Automatic automatic = automaticFromString(s);
 		if (automatic != null)
-			return automatic.buildInternal(background);
+			return automatic.buildInternal();
 
 		final Gradient gradient = gradientFromString(s);
 		if (gradient != null)
-			return gradient.buildInternal(background);
+			return gradient.buildInternal();
 
-		if (background == null && (s.equalsIgnoreCase("#transparent") || s.equalsIgnoreCase("transparent")))
+		if (s.equalsIgnoreCase("#transparent") || s.equalsIgnoreCase("transparent"))
 			s = "#00000000";
 
-		return build(s, background);
+		return build(s);
 	}
 
 	private boolean isColorValid(String s) {
@@ -367,11 +358,11 @@ public class HColorSet {
 
 	}
 
-	private HColor build(String s, HColor background) {
+	private HColor build(String s) {
 		s = removeFirstDieseAndgoLowerCase(s);
 		final Color color;
 		if (s.equalsIgnoreCase("transparent") || s.equalsIgnoreCase("background")) {
-			return new HColorBackground(background);
+			return HColors.generalBackground();
 		} else if (s.equalsIgnoreCase("automatic")) {
 			return new HColorAutomagic();
 		} else if (s.matches("[0-9A-Fa-f]")) {
@@ -388,7 +379,7 @@ public class HColorSet {
 			final String value = Objects.requireNonNull(htmlNames.get(s));
 			color = new Color(Integer.parseInt(value.substring(1), 16));
 		}
-		return new HColorSimple(color, false);
+		return HColors.simple(color);
 	}
 
 	private Color fromRGBa(String s) {

@@ -68,16 +68,16 @@ public class SplitParam {
 	}
 
 	public Color getBorderColor() {
-		if (borderColor == null) {
+		if (borderColor == null)
 			return null;
-		}
+
 		return ((HColorSimple) borderColor).getColor999();
 	}
 
 	public Color getExternalColor() {
-		if (externalColor == null) {
+		if (externalColor == null)
 			return null;
-		}
+
 		return ((HColorSimple) externalColor).getColor999();
 	}
 

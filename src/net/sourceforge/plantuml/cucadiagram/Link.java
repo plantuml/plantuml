@@ -121,21 +121,20 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 		return new UComment("link " + getEntity1().getCodeGetName() + " to " + getEntity2().getCodeGetName());
 	}
 
-	public Link(IEntity cl1, IEntity cl2, LinkType type, Display label, int length, StyleBuilder styleBuilder) {
-		this(cl1, cl2, type, label, length, null, null, null, null, null, styleBuilder);
+	public Link(StyleBuilder styleBuilder, IEntity cl1, IEntity cl2, LinkType type, Display label, int length) {
+		this(styleBuilder, cl1, cl2, type, label, length, null, null, null, null, null);
 	}
 
-	public Link(IEntity cl1, IEntity cl2, LinkType type, Display label, int length, String qualifier1,
-			String qualifier2, String labeldistance, String labelangle, StyleBuilder styleBuilder) {
-		this(cl1, cl2, type, label, length, qualifier1, qualifier2, labeldistance, labelangle, null, styleBuilder);
+	public Link(StyleBuilder styleBuilder, IEntity cl1, IEntity cl2, LinkType type, Display label, int length,
+			String qualifier1, String qualifier2, String labeldistance, String labelangle) {
+		this(styleBuilder, cl1, cl2, type, label, length, qualifier1, qualifier2, labeldistance, labelangle, null);
 	}
 
-	public Link(IEntity cl1, IEntity cl2, LinkType type, Display label, int length, String qualifier1,
-			String qualifier2, String labeldistance, String labelangle, HColor specificColor,
-			StyleBuilder styleBuilder) {
-		if (length < 1) 
+	public Link(StyleBuilder styleBuilder, IEntity cl1, IEntity cl2, LinkType type, Display label, int length,
+			String qualifier1, String qualifier2, String labeldistance, String labelangle, HColor specificColor) {
+		if (length < 1)
 			throw new IllegalArgumentException();
-		
+
 		this.styleBuilder = styleBuilder;
 		this.cl1 = Objects.requireNonNull(cl1);
 		this.cl2 = Objects.requireNonNull(cl2);
@@ -144,9 +143,8 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 			this.label = Display.NULL;
 		} else {
 			this.label = label.manageGuillemet();
-			if (VisibilityModifier.isVisibilityCharacter(label.get(0))) {
+			if (VisibilityModifier.isVisibilityCharacter(label.get(0)))
 				visibilityModifier = VisibilityModifier.getVisibilityModifier(label.get(0), false);
-			}
 
 		}
 		this.length = length;
@@ -164,8 +162,8 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 	}
 
 	public Link getInv() {
-		final Link result = new Link(cl2, cl1, getType().getInversed(), label, length, qualifier2, qualifier1,
-				labeldistance, labelangle, getSpecificColor(), styleBuilder);
+		final Link result = new Link(styleBuilder, cl2, cl1, getType().getInversed(), label, length, qualifier2,
+				qualifier1, labeldistance, labelangle, getSpecificColor());
 		result.inverted = !this.inverted;
 		result.port1 = this.port2;
 		result.port2 = this.port1;

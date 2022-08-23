@@ -45,8 +45,19 @@ public class ColorUtils {
 
 	public static int getGrayScale(int red, int green, int blue) {
 		// YIQ equation from http://24ways.org/2010/calculating-color-contrast
-		final int grayScale = (red * 299 + green * 587 + blue * 114) / 1000;
-		return grayScale;
+		return getGrayScaleInternal(red, green, blue) / 1000;
+	}
+
+	public static int distance(Color c1, Color c2) {
+		final int diffRed = Math.abs(c1.getRed() - c2.getRed());
+		final int diffGreen = Math.abs(c1.getGreen() - c2.getGreen());
+		final int diffBlue = Math.abs(c1.getBlue() - c2.getBlue());
+		return getGrayScaleInternal(diffRed, diffGreen, diffBlue);
+	}
+
+	private static int getGrayScaleInternal(int red, int green, int blue) {
+		// YIQ equation from http://24ways.org/2010/calculating-color-contrast
+		return red * 299 + green * 587 + blue * 114;
 	}
 
 	public static int getGrayScale(int rgb) {
@@ -151,12 +162,12 @@ public class ColorUtils {
 
 	private static int to255(final double value) {
 		final int result = (int) (255 * value);
-		if (result < 0) {
+		if (result < 0)
 			return 0;
-		}
-		if (result > 255) {
+
+		if (result > 255)
 			return 255;
-		}
+
 		return result;
 	}
 

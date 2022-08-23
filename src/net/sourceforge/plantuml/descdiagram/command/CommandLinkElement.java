@@ -258,9 +258,9 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 			cl1 = getFoo1(diagram, code1, ident1, ident1pure);
 			cl2 = getFoo1(diagram, code2, ident2, ident2pure);
 		}
-		Link link = new Link(cl1, cl2, linkType, Display.getWithNewlines(labels.getLabelLink()), queue.length(),
-				labels.getFirstLabel(), labels.getSecondLabel(), diagram.getLabeldistance(), diagram.getLabelangle(),
-				diagram.getSkinParam().getCurrentStyleBuilder());
+		Link link = new Link(diagram.getSkinParam().getCurrentStyleBuilder(), cl1, cl2, linkType, Display.getWithNewlines(labels.getLabelLink()),
+				queue.length(), labels.getFirstLabel(), labels.getSecondLabel(), diagram.getLabeldistance(),
+				diagram.getLabelangle());
 		link.setLinkArrow(labels.getLinkArrow());
 		if (dir == Direction.LEFT || dir == Direction.UP)
 			link = link.getInv();

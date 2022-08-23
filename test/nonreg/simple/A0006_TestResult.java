@@ -23,7 +23,7 @@ RECTANGLE:
   yCorner: 0
   stroke: 0.0-0.0-1.0
   shadow: 0
-  color: 0
+  color: NULL_COLOR
   backcolor: ffffff00
 
 TEXT:
@@ -45,7 +45,7 @@ RECTANGLE:
   yCorner: 0
   stroke: 0.0-0.0-1.0
   shadow: 0
-  color: 0
+  color: NULL_COLOR
   backcolor: ff800080
 
 TEXT:
@@ -171,7 +171,7 @@ RECTANGLE:
   yCorner: 0
   stroke: 0.0-0.0-1.0
   shadow: 0
-  color: 0
+  color: NULL_COLOR
   backcolor: ffff0000
 
 TEXT:
@@ -193,7 +193,7 @@ RECTANGLE:
   yCorner: 0
   stroke: 0.0-0.0-1.0
   shadow: 0
-  color: 0
+  color: NULL_COLOR
   backcolor: ff0000ff
 
 TEXT:

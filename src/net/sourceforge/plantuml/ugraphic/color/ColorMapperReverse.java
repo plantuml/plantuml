@@ -46,12 +46,15 @@ public class ColorMapperReverse extends AbstractColorMapper implements ColorMapp
 	}
 
 	public Color toColor(HColor color) {
-		if (color == null) {
+		if (color == null)
 			return null;
-		}
-		if (color instanceof HColorMiddle) {
+
+		if (color instanceof HColorMiddle)
 			return ((HColorMiddle) color).getMappedColor(this);
-		}
+
+		if (color instanceof HColorNone)
+			return getReverse(new Color(0, 0, 0, 0));
+
 		return getReverse(((HColorSimple) color).getColor999());
 	}
 

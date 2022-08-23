@@ -52,7 +52,6 @@ import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorGradient;
-import net.sourceforge.plantuml.ugraphic.color.HColorSimple;
 import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class SpriteMonochrome implements Sprite {
@@ -202,8 +201,8 @@ public class SpriteMonochrome implements Sprite {
 		final BufferedImage im = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		for (int col = 0; col < width; col++) {
 			for (int line = 0; line < height; line++) {
-				final HColor backColorLocal = new HColorSimple(backcolor.getColor(colorMapper, 1.0 * line / height),
-						false);
+				final HColor backColorLocal = HColors
+						.simple(backcolor.getColor(colorMapper, 1.0 * line / height));
 				final HColorGradient gradient = HColors.gradient(backColorLocal, color, '\0');
 				final double coef = 1.0 * gray[line][col] / (grayLevel - 1);
 				final Color c = gradient.getColor(colorMapper, coef);

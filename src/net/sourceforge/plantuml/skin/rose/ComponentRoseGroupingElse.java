@@ -52,7 +52,6 @@ import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorBackground;
 import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class ComponentRoseGroupingElse extends AbstractTextualComponent {
@@ -72,9 +71,6 @@ public class ComponentRoseGroupingElse extends AbstractTextualComponent {
 
 	@Override
 	protected void drawBackgroundInternalU(UGraphic ug, Area area) {
-		if (backgroundColor instanceof HColorBackground)
-			return;
-
 		if (HColors.isTransparent(backgroundColor))
 			return;
 

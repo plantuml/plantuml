@@ -54,7 +54,6 @@ import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorAutomagic;
-import net.sourceforge.plantuml.ugraphic.color.HColorSimple;
 
 public class OpenIcon {
 
@@ -103,7 +102,7 @@ public class OpenIcon {
 	}
 
 	void saveCopy(SFile fnew) throws IOException {
-		try(PrintWriter pw = fnew.createPrintWriter()) {
+		try (PrintWriter pw = fnew.createPrintWriter()) {
 			pw.println(rawData.get(0));
 			pw.println(svgPath.toSvg());
 			pw.println(rawData.get(rawData.size() - 1));
@@ -136,9 +135,9 @@ public class OpenIcon {
 		return new AbstractTextBlock() {
 			public void drawU(UGraphic ug) {
 				HColor textColor = color;
-				if (textColor instanceof HColorAutomagic && ug.getParam().getBackcolor() != null) {
-					textColor = ((HColorSimple) ug.getParam().getBackcolor()).opposite();
-				}
+				if (textColor instanceof HColorAutomagic && ug.getParam().getBackcolor() != null)
+					textColor = ug.getParam().getBackcolor().opposite();
+
 				svgPath.drawMe(ug.apply(textColor), factor);
 			}
 

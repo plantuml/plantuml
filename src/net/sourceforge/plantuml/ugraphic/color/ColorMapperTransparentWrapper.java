@@ -47,13 +47,12 @@ public class ColorMapperTransparentWrapper extends AbstractColorMapper implement
 	}
 
 	public Color toColor(HColor color) {
-		if (color == null) {
+		if (color == null)
 			return null;
-		}
-		if (color instanceof HColorBackground) {
-			final HColor back = ((HColorBackground) color).getBack();
-			return mapper.toColor(back);
-		}
+
+		if (color instanceof HColorNone)
+			return null;
+
 		return mapper.toColor(color);
 	}
 

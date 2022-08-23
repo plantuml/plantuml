@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.creole.legacy;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -49,6 +48,7 @@ import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.creole.atom.AbstractAtom;
 import net.sourceforge.plantuml.creole.atom.Atom;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -58,9 +58,8 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UText;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorScheme;
 import net.sourceforge.plantuml.ugraphic.color.HColorAutomagic;
-import net.sourceforge.plantuml.ugraphic.color.HColorSimple;
+import net.sourceforge.plantuml.ugraphic.color.HColorScheme;
 import net.sourceforge.plantuml.utils.CharHidder;
 
 public final class AtomText extends AbstractAtom implements Atom {
@@ -144,7 +143,7 @@ public final class AtomText extends AbstractAtom implements Atom {
 			HColor textColor = fontConfiguration.getColor();
 			FontConfiguration useFontConfiguration = fontConfiguration;
 			if (textColor instanceof HColorAutomagic && ug.getParam().getBackcolor() != null) {
-				textColor = ((HColorSimple) ug.getParam().getBackcolor()).opposite();
+				textColor = ug.getParam().getBackcolor().opposite();
 				useFontConfiguration = fontConfiguration.changeColor(textColor);
 			}
 			if (textColor instanceof HColorScheme) {

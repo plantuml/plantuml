@@ -261,8 +261,6 @@ public class UGraphicDebug extends AbstractCommonUGraphic implements ClipContain
 		if (color instanceof HColorSimple) {
 			final HColorSimple simple = (HColorSimple) color;
 			final Color internal = simple.getColor999();
-			if (simple.isMonochrome())
-				return "monochrome " + Integer.toHexString(internal.getRGB());
 
 			return Integer.toHexString(internal.getRGB());
 		}

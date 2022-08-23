@@ -84,7 +84,16 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 						)), new RegexOr( //
 								new RegexLeaf("ENT1", getClassIdentifier()), //
 								new RegexLeaf("COUPLE1", COUPLE)), //
+
 				RegexLeaf.spaceZeroOrMore(), //
+
+				new RegexOptional(new RegexConcat( //
+						RegexLeaf.spaceOneOrMore(), //
+						new RegexLeaf("[\\[]"), //
+						new RegexLeaf("QUALIFIER1", "([^\\[\\]]+)"), //
+						new RegexLeaf("[\\]]"), //
+						RegexLeaf.spaceOneOrMore() //
+				)), //
 				new RegexOptional(new RegexLeaf("FIRST_LABEL", "[%g]([^%g]+)[%g]")), //
 
 				RegexLeaf.spaceZeroOrMore(), //
@@ -101,8 +110,20 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 						new RegexLeaf("ARROW_BODY2", "([-=.]*)"), //
 						new RegexLeaf("ARROW_HEAD2",
 								"([ox][%s]+|:\\>\\>?|_\\>|[(#\\]>*+^\\{]|[\\|\\:]\\|\\>|\\|[>\\]]|o\\{|\\|\\{|o\\||\\|\\|)?")), //
-				RegexLeaf.spaceZeroOrMore(), new RegexOptional(new RegexLeaf("SECOND_LABEL", "[%g]([^%g]+)[%g]")), //
+
 				RegexLeaf.spaceZeroOrMore(), //
+
+				new RegexOptional(new RegexLeaf("SECOND_LABEL", "[%g]([^%g]+)[%g]")), //
+				new RegexOptional(new RegexConcat( //
+						RegexLeaf.spaceOneOrMore(), //
+						new RegexLeaf("[\\[]"), //
+						new RegexLeaf("QUALIFIER2", "([^\\[\\]]+)"), //
+						new RegexLeaf("[\\]]"), //
+						RegexLeaf.spaceOneOrMore() //
+				)), //
+
+				RegexLeaf.spaceZeroOrMore(), //
+
 				new RegexOr( //
 						new RegexLeaf("ENT2", getClassIdentifier()), //
 						new RegexLeaf("COUPLE2", COUPLE)), //
@@ -210,9 +231,9 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 
 		final Labels labels = new Labels(arg);
 
-		Link link = new Link(cl1, cl2, linkType, labels.getDisplay(), queue, labels.getFirstLabel(),
-				labels.getSecondLabel(), diagram.getLabeldistance(), diagram.getLabelangle(),
-				diagram.getSkinParam().getCurrentStyleBuilder());
+		Link link = new Link(diagram.getSkinParam().getCurrentStyleBuilder(), cl1, cl2, linkType, labels.getDisplay(), queue,
+				labels.getFirstLabel(), labels.getSecondLabel(), diagram.getLabeldistance(),
+				diagram.getLabelangle());
 		if (arg.get("URL", 0) != null) {
 			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), UrlMode.STRICT);
 			final Url url = urlBuilder.getUrl(arg.get("URL", 0));
@@ -350,8 +371,8 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		final Display labelLink = Display.getWithNewlines(arg.get("LABEL_LINK", 0));
 		final String firstLabel = arg.get("FIRST_LABEL", 0);
 		final String secondLabel = arg.get("SECOND_LABEL", 0);
-		final Link link = new Link(cl1, cl2, linkType, labelLink, queue, firstLabel, secondLabel,
-				diagram.getLabeldistance(), diagram.getLabelangle(), diagram.getSkinParam().getCurrentStyleBuilder());
+		final Link link = new Link(diagram.getSkinParam().getCurrentStyleBuilder(), cl1, cl2, linkType, labelLink, queue, firstLabel,
+				secondLabel, diagram.getLabeldistance(), diagram.getLabelangle());
 		link.setColors(color().getColor(diagram.getSkinParam().getThemeStyle(), arg,
 				diagram.getSkinParam().getIHtmlColorSet()));
 

@@ -93,7 +93,6 @@ import net.sourceforge.plantuml.svg.LengthAdjust;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorBackground;
 import net.sourceforge.plantuml.ugraphic.color.HColorGradient;
 import net.sourceforge.plantuml.ugraphic.color.HColorNone;
 import net.sourceforge.plantuml.ugraphic.color.HColorSimple;
@@ -169,9 +168,9 @@ public class ImageBuilder {
 
 	public ImageBuilder drawable(UDrawable drawable) {
 		this.udrawable = drawable;
-		if (backcolor == null && drawable instanceof TextBlockBackcolored) {
+		if (backcolor == null && drawable instanceof TextBlockBackcolored)
 			backcolor = ((TextBlockBackcolored) drawable).getBackcolor();
-		}
+
 		return this;
 	}
 
@@ -201,13 +200,13 @@ public class ImageBuilder {
 	}
 
 	private String getSvgLinkTarget() {
-		if (fileFormatOption.getSvgLinkTarget() != null) {
+		if (fileFormatOption.getSvgLinkTarget() != null)
 			return fileFormatOption.getSvgLinkTarget();
-		} else if (skinParam != null) {
+		else if (skinParam != null)
 			return skinParam.getSvgLinkTarget();
-		} else {
+		else
 			return null;
-		}
+
 	}
 
 	public ImageBuilder warningOrError(String warningOrError) {
@@ -272,12 +271,13 @@ public class ImageBuilder {
 				/ 96.0;
 		if (scaleFactor <= 0)
 			throw new IllegalStateException("Bad scaleFactor");
+
 		UGraphic ug = createUGraphic(fileFormatOption, dim, animationArg, dx, dy, scaleFactor,
 				titledDiagram == null ? new Pragma() : titledDiagram.getPragma());
 		maybeDrawBorder(ug, dim);
-		if (randomPixel) {
+		if (randomPixel)
 			drawRandomPoint(ug);
-		}
+
 		ug = handwritten(ug.apply(new UTranslate(margin.getLeft(), margin.getTop())));
 		udrawable.drawU(ug);
 		ug.flushUg();
@@ -319,7 +319,7 @@ public class ImageBuilder {
 		final int green = rnd.nextInt(40);
 		final int blue = rnd.nextInt(40);
 		final Color c = new Color(red, green, blue);
-		final HColor color = new HColorSimple(c, false);
+		final HColor color = HColors.simple(c);
 		ug2.apply(color).apply(color.bg()).draw(new URectangle(1, 1));
 	}
 
@@ -334,9 +334,9 @@ public class ImageBuilder {
 	}
 
 	private UGraphic handwritten(UGraphic ug) {
-		if (skinParam != null && skinParam.handwritten()) {
+		if (skinParam != null && skinParam.handwritten())
 			return new UGraphicHandwritten(ug);
-		}
+
 //		if (OptionFlags.OMEGA_CROSSING) {
 //			return new UGraphicCrossing(ug);
 //		} else {
@@ -450,16 +450,14 @@ public class ImageBuilder {
 			double dy, String watermark) {
 		Color backColor = getDefaultBackColor();
 
-		if (this.backcolor instanceof HColorSimple) {
+		if (this.backcolor instanceof HColorSimple)
 			backColor = colorMapper.toColor(this.backcolor);
-		} else if (this.backcolor instanceof HColorBackground || this.backcolor instanceof HColorNone) {
+		else if (this.backcolor instanceof HColorNone)
 			backColor = null;
-		}
 
 		if (OptionFlags.getInstance().isReplaceWhiteBackgroundByTransparent() && backColor != null
-				&& backColor.equals(Color.WHITE)) {
+				&& backColor.equals(Color.WHITE))
 			backColor = new Color(0, 0, 0, 0);
-		}
 
 		final EmptyImageBuilder builder = new EmptyImageBuilder(watermark, (int) (dim.getWidth() * scaleFactor),
 				(int) (dim.getHeight() * scaleFactor), backColor, stringBounder);
@@ -469,10 +467,9 @@ public class ImageBuilder {
 				affineTransforms == null ? null : affineTransforms.getFirst(), dx, dy);
 		ug.setBufferedImage(builder.getBufferedImage());
 		final BufferedImage im = ug.getBufferedImage();
-		if (this.backcolor instanceof HColorGradient) {
+		if (this.backcolor instanceof HColorGradient)
 			ug.apply(this.backcolor.bg())
 					.draw(new URectangle(im.getWidth() / scaleFactor, im.getHeight() / scaleFactor));
-		}
 
 		return ug;
 	}
@@ -490,9 +487,9 @@ public class ImageBuilder {
 			return fileFormatOption.getHoverColor();
 		} else if (skinParam != null) {
 			final HColor color = skinParam.hoverPathColor();
-			if (color != null) {
+			if (color != null)
 				return colorMapper.toRGB(color);
-			}
+
 		}
 		return null;
 	}
@@ -507,13 +504,13 @@ public class ImageBuilder {
 	}
 
 	public String getPreserveAspectRatio() {
-		if (fileFormatOption.getPreserveAspectRatio() != null) {
+		if (fileFormatOption.getPreserveAspectRatio() != null)
 			return fileFormatOption.getPreserveAspectRatio();
-		} else if (skinParam != null) {
+		else if (skinParam != null)
 			return skinParam.getPreserveAspectRatio();
-		} else {
+		else
 			return DEFAULT_PRESERVE_ASPECT_RATIO;
-		}
+
 	}
 
 	private ImageDataSimple createImageData(Dimension2D dim) {

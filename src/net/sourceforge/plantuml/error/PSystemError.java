@@ -35,7 +35,6 @@
 package net.sourceforge.plantuml.error;
 
 import java.awt.Color;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -58,6 +57,7 @@ import net.sourceforge.plantuml.SpriteContainerEmpty;
 import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.asciiart.UmlCharArea;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
@@ -368,7 +368,7 @@ public abstract class PSystemError extends PlainDiagram {
 	}
 
 	private TextBlockBackcolored getMessageAdopt() {
-		final HColorSimple backColor = (HColorSimple) HColorSet.instance().getColorOrWhite("#eff4d2");
+		final HColor backColor = HColorSet.instance().getColorOrWhite("#eff4d2");
 
 		final Display disp = Display.create("<b>Adopt-a-Word and put your message here!", " ",
 				"Details on <i>[[http://plantuml.com/adopt]]", " ");
@@ -387,7 +387,7 @@ public abstract class PSystemError extends PlainDiagram {
 		final UImage message = new UImage(
 				new PixelImage(PSystemVersion.getTime01(), AffineTransformType.TYPE_BILINEAR));
 		final Color back = new Color(message.getImage(1).getRGB(0, 0));
-		final HColor backColor = new HColorSimple(back, false);
+		final HColor backColor = HColors.simple(back);
 
 		final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();
 		final BufferedImage qrcode = smaller(
@@ -434,7 +434,7 @@ public abstract class PSystemError extends PlainDiagram {
 		final UImage message = new UImage(
 				new PixelImage(PSystemVersion.getTime15(), AffineTransformType.TYPE_BILINEAR));
 		final Color back = new Color(message.getImage(1).getRGB(0, 0));
-		final HColor backColor = new HColorSimple(back, false);
+		final HColor backColor = HColors.simple(back);
 
 		final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();
 		final BufferedImage qrcode = smaller(utils.exportFlashcode("http://plantuml.com/lp", Color.BLACK, Color.WHITE));

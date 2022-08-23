@@ -765,7 +765,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff222222
-  backcolor: 0
+  backcolor: NULL_COLOR
 
 ELLIPSE:
   pt1: [ 484.2327 ; 862.5000 ]

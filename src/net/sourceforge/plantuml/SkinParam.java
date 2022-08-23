@@ -311,20 +311,19 @@ public class SkinParam implements ISkinParam {
 			}
 		}
 		final String value = getValue(getParamName(param, clickable));
-		if (value == null) {
+		if (value == null)
 			return null;
-		}
+
 		if ((param == ColorParam.background || param == ColorParam.arrowHead)
-				&& (value.equalsIgnoreCase("transparent") || value.equalsIgnoreCase("none"))) {
+				&& (value.equalsIgnoreCase("transparent") || value.equalsIgnoreCase("none")))
 			return HColors.transparent();
-		}
-		if (param == ColorParam.background) {
+
+		if (param == ColorParam.background)
 			return getIHtmlColorSet().getColorOrWhite(themeStyle, value);
-		}
+
 		assert param != ColorParam.background;
-//		final boolean acceptTransparent = param == ColorParam.background
-//				|| param == ColorParam.sequenceGroupBodyBackground || param == ColorParam.sequenceBoxBackground;
-		return getIHtmlColorSet().getColorOrWhite(themeStyle, value, getBackgroundColor());
+
+		return getIHtmlColorSet().getColorOrWhite(themeStyle, value);
 	}
 
 	public char getCircledCharacter(Stereotype stereotype) {
@@ -1040,7 +1039,7 @@ public class SkinParam implements ISkinParam {
 		if (value == null)
 			return null;
 
-		return getIHtmlColorSet().getColorOrWhite(themeStyle, value, null);
+		return getIHtmlColorSet().getColorOrWhite(themeStyle, value);
 	}
 
 	public double getPadding() {

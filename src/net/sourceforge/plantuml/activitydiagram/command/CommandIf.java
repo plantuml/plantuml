@@ -123,9 +123,9 @@ public class CommandIf extends SingleLineCommand2<ActivityDiagram> {
 
 		final IEntity branch = diagram.getCurrentContext().getBranch();
 
-		Link link = new Link(entity1, branch, new LinkType(LinkDecor.ARROW, LinkDecor.NONE),
-				Display.getWithNewlines(arg.get("BRACKET", 0)), lenght, null, ifLabel, diagram.getLabeldistance(),
-				diagram.getLabelangle(), diagram.getSkinParam().getCurrentStyleBuilder());
+		Link link = new Link(diagram.getSkinParam().getCurrentStyleBuilder(), entity1, branch,
+				new LinkType(LinkDecor.ARROW, LinkDecor.NONE), Display.getWithNewlines(arg.get("BRACKET", 0)), lenght, null, ifLabel,
+				diagram.getLabeldistance(), diagram.getLabelangle());
 		if (arg.get("ARROW", 0) != null) {
 			final Direction direction = StringUtils.getArrowDirection(arg.get("ARROW", 0));
 			if (direction == Direction.LEFT || direction == Direction.UP) {

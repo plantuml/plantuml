@@ -214,9 +214,9 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 				if (type2 == LeafType.INTERFACE && entity.getLeafType() != LeafType.INTERFACE)
 					typeLink = typeLink.goDashed();
 
-				final Link link = new Link(cl2, entity, typeLink, Display.NULL, 2, null, null,
-						diagram.getLabeldistance(), diagram.getLabelangle(),
-						diagram.getSkinParam().getCurrentStyleBuilder());
+				final Link link = new Link(diagram.getSkinParam().getCurrentStyleBuilder(), cl2, entity, typeLink, Display.NULL, 2, null,
+						null, diagram.getLabeldistance(),
+						diagram.getLabelangle());
 				diagram.addLink(link);
 			}
 		}

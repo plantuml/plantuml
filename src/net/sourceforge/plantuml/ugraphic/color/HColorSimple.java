@@ -42,8 +42,7 @@ import net.sourceforge.plantuml.StringUtils;
 public class HColorSimple extends HColorAbstract implements HColor {
 
 	private final Color color;
-	private final boolean monochrome;
-	private HColor dark;
+	private final HColor dark;
 
 	@Override
 	public int hashCode() {
@@ -52,8 +51,6 @@ public class HColorSimple extends HColorAbstract implements HColor {
 
 	@Override
 	public String toString() {
-		if (isTransparent())
-			return "transparent";
 
 		final boolean withDark = this != dark;
 
@@ -63,8 +60,8 @@ public class HColorSimple extends HColorAbstract implements HColor {
 		sb.append(color.toString());
 		sb.append(" \u03B1=");
 		sb.append(color.getAlpha());
-		if (monochrome)
-			sb.append("MONOCHROME");
+		if (isTransparent())
+			sb.append(" transparent");
 		return sb.toString();
 	}
 
@@ -83,24 +80,24 @@ public class HColorSimple extends HColorAbstract implements HColor {
 	public HColor lighten(int ratio) {
 		final float[] hsl = new HSLColor(color).getHSL();
 		hsl[2] += hsl[2] * (ratio / 100.0);
-		return new HColorSimple(new HSLColor(hsl).getRGB(), false);
+		return new HColorSimple(new HSLColor(hsl).getRGB());
 	}
 
 	@Override
 	public HColor darken(int ratio) {
 		final float[] hsl = new HSLColor(color).getHSL();
 		hsl[2] -= hsl[2] * (ratio / 100.0);
-		return new HColorSimple(new HSLColor(hsl).getRGB(), false);
+		return new HColorSimple(new HSLColor(hsl).getRGB());
 	}
 
 	@Override
 	public HColor reverseHsluv() {
-		return new HColorSimple(ColorUtils.reverseHsluv(color), false);
+		return new HColorSimple(ColorUtils.reverseHsluv(color));
 	}
 
 	@Override
 	public HColor reverse() {
-		return new HColorSimple(ColorOrder.RGB.getReverse(color), false);
+		return new HColorSimple(ColorOrder.RGB.getReverse(color));
 	}
 
 	@Override
@@ -120,15 +117,13 @@ public class HColorSimple extends HColorAbstract implements HColor {
 		return this.color.equals(((HColorSimple) other).color);
 	}
 
-	public HColorSimple(Color c, boolean monochrome) {
+	HColorSimple(Color c) {
 		this.color = c;
-		this.monochrome = monochrome;
 		this.dark = this;
 	}
 
-	private HColorSimple(Color c, boolean monochrome, HColor dark) {
+	private HColorSimple(Color c, HColor dark) {
 		this.color = c;
-		this.monochrome = monochrome;
 		this.dark = dark;
 	}
 
@@ -136,8 +131,8 @@ public class HColorSimple extends HColorAbstract implements HColor {
 		return color;
 	}
 
-	public HColorSimple asMonochrome() {
-		return new HColorSimple(new ColorChangerMonochrome().getChangedColor(color), monochrome);
+	public HColor asMonochrome() {
+		return new HColorSimple(new ColorChangerMonochrome().getChangedColor(color));
 	}
 
 	public HColor asMonochrome(HColorSimple colorForMonochrome, double minGray, double maxGray) {
@@ -148,32 +143,22 @@ public class HColorSimple extends HColorAbstract implements HColor {
 
 		final double coef = (gray - minGray) / 256.0;
 		final Color result = ColorUtils.grayToColor(coef, colorForMonochrome.color);
-		return new HColorSimple(result, monochrome);
+		return new HColorSimple(result);
 	}
 
-	public HColorSimple opposite() {
+	@Override
+	public HColor opposite() {
 		final Color mono = new ColorChangerMonochrome().getChangedColor(color);
 		final int grayScale = 255 - mono.getGreen() > 127 ? 255 : 0;
-		return new HColorSimple(new Color(grayScale, grayScale, grayScale), true);
+		return new HColorSimple(new Color(grayScale, grayScale, grayScale));
 	}
 
-	public double distance(HColorSimple other) {
-		final int diffRed = Math.abs(this.color.getRed() - other.color.getRed());
-		final int diffGreen = Math.abs(this.color.getGreen() - other.color.getGreen());
-		final int diffBlue = Math.abs(this.color.getBlue() - other.color.getBlue());
-		return diffRed * .3 + diffGreen * .59 + diffBlue * .11;
-	}
-
-	public final boolean isMonochrome() {
-		return monochrome;
+	public int distanceTo(HColorSimple other) {
+		return ColorUtils.distance(this.color, other.color);
 	}
 
 	public boolean isGray() {
-		if (monochrome)
-			return true;
-		if (color.getRed() == color.getGreen() && color.getGreen() == color.getBlue())
-			return true;
-		return false;
+		return color.getRed() == color.getGreen() && color.getGreen() == color.getBlue();
 	}
 
 	public static HColorSimple unlinear(HColorSimple color1, HColorSimple color2, int completionInt) {
@@ -192,7 +177,7 @@ public class HColorSimple extends HColorAbstract implements HColor {
 
 		final HSLColor col = new HSLColor(hsl);
 
-		return new HColorSimple(col.getRGB(), color1.monochrome);
+		return new HColorSimple(col.getRGB());
 	}
 
 	private static float[] linear(float factor, float[] hsl1, float[] hsl2) {
@@ -203,11 +188,12 @@ public class HColorSimple extends HColorAbstract implements HColor {
 	}
 
 	private static float linear(float factor, float x, float y) {
-		return (x + (y - x) * factor);
+		return x + (y - x) * factor;
 	}
 
+	@Override
 	public HColor withDark(HColor dark) {
-		return new HColorSimple(color, monochrome, dark);
+		return new HColorSimple(color, dark);
 	}
 
 	@Override

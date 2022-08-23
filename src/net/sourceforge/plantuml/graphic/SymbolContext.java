@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.graphic;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorBackground;
 import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class SymbolContext {
@@ -86,14 +85,6 @@ public class SymbolContext {
 
 	public UGraphic applyStroke(UGraphic ug) {
 		return ug.apply(stroke);
-	}
-
-	public SymbolContext transparentBackColorToNull() {
-		if (backColor instanceof HColorBackground) {
-			return new SymbolContext(((HColorBackground) backColor).getNull(), foreColor, stroke, deltaShadow,
-					roundCorner, diagonalCorner);
-		}
-		return this;
 	}
 
 	public SymbolContext(HColor backColor, HColor foreColor) {

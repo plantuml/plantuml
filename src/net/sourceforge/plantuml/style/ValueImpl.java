@@ -42,7 +42,6 @@ import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
-import net.sourceforge.plantuml.ugraphic.color.HColorSimple;
 import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class ValueImpl implements Value {
@@ -105,7 +104,7 @@ public class ValueImpl implements Value {
 		final HColor result = set.getColorOrWhite(themeStyle, value1);
 		if (value.getValue2() != null) {
 			final HColor dark = set.getColorOrWhite(themeStyle, value.getValue2());
-			return ((HColorSimple) result).withDark(dark);
+			return result.withDark(dark);
 		}
 		return result;
 	}

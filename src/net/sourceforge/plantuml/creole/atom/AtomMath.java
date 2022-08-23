@@ -101,9 +101,9 @@ public class AtomMath extends AbstractAtom implements Atom {
 	}
 
 	private Color getColor(HColor color, Color defaultValue) {
-		if (color instanceof HColorSimple) {
+		if (color instanceof HColorSimple)
 			return colorMapper.toColor(color);
-		}
+
 		return defaultValue;
 
 	}

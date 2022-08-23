@@ -40,24 +40,24 @@ import java.awt.Color;
 public class ColorMapperIdentity extends AbstractColorMapper implements ColorMapper {
 
 	public Color toColor(HColor color) {
-		if (color == null) {
+		if (color == null)
 			return null;
-		}
-		if (color instanceof HColorBackground) {
-			throw new UnsupportedOperationException();
-		}
-		if (color instanceof HColorGradient) {
+
+		if (color instanceof HColorNone)
+			return new Color(0, 0, 0, 0);
+
+		if (color instanceof HColorGradient)
 			return toColor(((HColorGradient) color).getColor1());
-		}
-		if (color instanceof HColorMiddle) {
+
+		if (color instanceof HColorMiddle)
 			return ((HColorMiddle) color).getMappedColor(this);
-		}
-		if (color instanceof HColorScheme) {
+
+		if (color instanceof HColorScheme)
 			throw new IllegalStateException();
-		}
-		if (color instanceof HColorAutomagic) {
+
+		if (color instanceof HColorAutomagic)
 			throw new IllegalStateException();
-		}
+
 		return ((HColorSimple) color).getColor999();
 	}
 }

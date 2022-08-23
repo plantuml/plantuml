@@ -42,6 +42,8 @@ public interface HColor extends UChange {
 
 	public UBackground bg();
 
+	public HColor withDark(HColor dark);
+
 	public HColor darken(int ratio);
 
 	public HColor lighten(int ratio);
@@ -55,5 +57,7 @@ public interface HColor extends UChange {
 	public HColor reverse();
 
 	public HColor darkSchemeTheme();
+
+	public HColor opposite();
 
 }

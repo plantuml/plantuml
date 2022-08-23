@@ -79,13 +79,12 @@ public class CommandGrouping extends SingleLineCommand2<SequenceDiagram> {
 		final HColorSet colorSet = diagram.getSkinParam().getIHtmlColorSet();
 		HColor backColorElement = null;
 		if (s != null) {
-			backColorElement = colorSet.getColor(diagram.getSkinParam().getThemeStyle(), s, null);
+			backColorElement = colorSet.getColor(diagram.getSkinParam().getThemeStyle(), s);
 		}
 		final String s2 = arg.get("COLORS", 1);
 		HColor backColorGeneral = null;
 		if (s2 != null) {
-			backColorGeneral = colorSet.getColor(diagram.getSkinParam().getThemeStyle(), s2,
-					diagram.getSkinParam().getBackgroundColor());
+			backColorGeneral = colorSet.getColor(diagram.getSkinParam().getThemeStyle(), s2);
 		}
 		String comment = arg.get("COMMENT", 0);
 		final GroupingType groupingType = GroupingType.getType(type);
