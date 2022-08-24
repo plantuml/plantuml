@@ -87,12 +87,6 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 		return pragma;
 	}
 
-//	public TitledDiagram(ThemeStyle style, UmlSource source, UmlDiagramType type) {
-//		super(source);
-//		this.type = type;
-//		this.skinParam = SkinParam.create(type, style);
-//	}
-
 	public TitledDiagram(ThemeStyle style, UmlSource source, UmlDiagramType type, ISkinSimple orig) {
 		super(source);
 		this.type = type;

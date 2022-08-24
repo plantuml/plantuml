@@ -91,20 +91,20 @@ public class CommandExoArrowLeft extends CommandExoArrowAny {
 		final String dressing1 = arg2.get("ARROW_DRESSING1", 0);
 		final String dressing2 = arg2.get("ARROW_DRESSING2", 0);
 		if (start != null && start.contains("]")) {
-			if (dressing1 != null) {
+			if (dressing1 != null)
 				return MessageExoType.FROM_RIGHT;
-			}
-			if (dressing2 != null) {
+
+			if (dressing2 != null)
 				return MessageExoType.TO_RIGHT;
-			}
+
 			throw new IllegalArgumentException();
 		}
-		if (dressing1 != null) {
+		if (dressing1 != null)
 			return MessageExoType.FROM_LEFT;
-		}
-		if (dressing2 != null) {
+
+		if (dressing2 != null)
 			return MessageExoType.TO_LEFT;
-		}
+
 		throw new IllegalArgumentException();
 	}
 

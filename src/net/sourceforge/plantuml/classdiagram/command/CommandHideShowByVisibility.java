@@ -81,7 +81,7 @@ public class CommandHideShowByVisibility extends SingleLineCommand2<UmlDiagram> 
 
 		final EntityPortion portion = getEntityPortion(arg.get("PORTION", 0));
 
-		final Set<VisibilityModifier> visibilities = EnumSet.<VisibilityModifier> noneOf(VisibilityModifier.class);
+		final Set<VisibilityModifier> visibilities = EnumSet.<VisibilityModifier>noneOf(VisibilityModifier.class);
 		final StringTokenizer st = new StringTokenizer(StringUtils.goLowerCase(arg.get("VISIBILITY", 0)), " ,");
 		while (st.hasMoreTokens()) {
 			addVisibilities(st.nextToken(), portion, visibilities);

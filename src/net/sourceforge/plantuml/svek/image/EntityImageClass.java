@@ -78,7 +78,8 @@ import net.sourceforge.plantuml.ugraphic.color.HColors;
 public class EntityImageClass extends AbstractEntityImage implements Stencil, WithPorts {
 
 	final private TextBlock body;
-	final private Margins shield;
+	// final private Margins shield;
+	final private GraphvizVersion version;
 	final private EntityImageClassHeader header;
 	final private Url url;
 	final private double roundCorner;
@@ -92,9 +93,8 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 		this.lineConfig = entity;
 
 		this.roundCorner = getStyle().value(PName.RoundCorner).asDouble();
+		this.version = version;
 
-		this.shield = version != null && version.useShield() && entity.hasNearDecoration() ? Margins.uniform(16)
-				: Margins.NONE;
 		final boolean showMethods = portionShower.showPortion(EntityPortion.METHOD, entity);
 		final boolean showFields = portionShower.showPortion(EntityPortion.FIELD, entity);
 		this.body = entity.getBodier().getBody(FontParam.CLASS_ATTRIBUTE, getSkinParam(), showMethods, showFields,
@@ -241,7 +241,10 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 
 	@Override
 	public Margins getShield(StringBounder stringBounder) {
-		return shield;
+		if (version != null && version.useShield())
+			return ((ILeaf) getEntity()).getMargins();
+
+		return Margins.NONE;
 	}
 
 	public double getStartingX(StringBounder stringBounder, double y) {

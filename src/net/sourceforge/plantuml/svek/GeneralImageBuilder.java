@@ -551,25 +551,25 @@ public final class GeneralImageBuilder {
 		if (ent.getSvekImage() == null) {
 			ISkinParam skinParam = dotData.getSkinParam();
 			if (skinParam.sameClassWidth()) {
-				final double width = getMaxWidth(dotStringFactory);
+				final double width = getMaxWidth();
 				skinParam = new SkinParamSameClassWidth(skinParam, width);
 			}
 
 			return createEntityImageBlock(ent, skinParam, dotData.isHideEmptyDescriptionForState(), dotData,
-					dotStringFactory.getBibliotekon(), dotStringFactory.getGraphvizVersion(),
-					dotData.getUmlDiagramType(), dotData.getLinks());
+					dotStringFactory.getBibliotekon(), dotData.getGraphvizVersion(), dotData.getUmlDiagramType(),
+					dotData.getLinks());
 		}
 		return ent.getSvekImage();
 	}
 
-	private double getMaxWidth(DotStringFactory dotStringFactory) {
+	private double getMaxWidth() {
 		double result = 0;
 		for (ILeaf ent : dotData.getLeafs()) {
 			if (ent.getLeafType().isLikeClass() == false)
 				continue;
 
-			final IEntityImage im = new EntityImageClass(dotStringFactory.getGraphvizVersion(), ent,
-					dotData.getSkinParam(), dotData);
+			final IEntityImage im = new EntityImageClass(dotData.getGraphvizVersion(), ent, dotData.getSkinParam(),
+					dotData);
 			final double w = im.calculateDimension(stringBounder).getWidth();
 			if (w > result)
 				result = w;
@@ -697,7 +697,7 @@ public final class GeneralImageBuilder {
 				.getMergedStyle(skinParam.getCurrentStyleBuilder());
 
 		final FontConfiguration fontConfiguration = style.getFontConfiguration(skinParam.getThemeStyle(),
-				skinParam.getIHtmlColorSet());
+				skinParam.getIHtmlColorSet(), g.getColors());
 
 		final HorizontalAlignment alignment = HorizontalAlignment.CENTER;
 		return label.create(fontConfiguration, alignment, dotData.getSkinParam());

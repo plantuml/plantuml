@@ -36,52 +36,74 @@
 package net.sourceforge.plantuml.cucadiagram;
 
 import net.sourceforge.plantuml.skin.VisibilityModifier;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class LinkArg {
 
 	private final Display label;
-	private final int length;
 	private final String qualifier1;
 	private final String qualifier2;
 	private final String labeldistance;
 	private final String labelangle;
-	private final HColor specificColor;
-	private VisibilityModifier visibilityModifier;
 
-	public LinkArg(Display label, int length) {
-		this(label, length, null, null, null, null, null);
+	private final String kal1;
+	private final String kal2;
+
+	private VisibilityModifier visibilityModifier;
+	private int length;
+
+	public static LinkArg build(final Display label, int length) {
+		return build(label, length, true);
+	}
+	public static LinkArg noDisplay(int length) {
+		return build(Display.NULL, length, true);
+	}
+
+
+	public static LinkArg build(final Display label, int length, boolean manageVisibilityModifier) {
+		VisibilityModifier visibilityModifier = null;
+		final Display newLabel;
+		if (Display.isNull(label)) {
+			newLabel = Display.NULL;
+		} else {
+			newLabel = label.manageGuillemet(manageVisibilityModifier);
+			if (manageVisibilityModifier && VisibilityModifier.isVisibilityCharacter(label.get(0)))
+				visibilityModifier = VisibilityModifier.getVisibilityModifier(label.get(0), false);
+		}
+		return new LinkArg(newLabel, length, null, null, null, null, visibilityModifier, null, null);
 	}
 
 	public LinkArg withQualifier(String qualifier1, String qualifier2) {
-		return new LinkArg(label, length, qualifier1, qualifier2, labeldistance, labelangle, specificColor);
+		return new LinkArg(label, length, qualifier1, qualifier2, labeldistance, labelangle, visibilityModifier, kal1,
+				kal2);
+	}
+
+	public LinkArg withKal(String kal1) {
+		return new LinkArg(label, length, qualifier1, qualifier2, labeldistance, labelangle, visibilityModifier, kal1,
+				kal2);
 	}
 
 	public LinkArg withDistanceAngle(String labeldistance, String labelangle) {
-		return new LinkArg(label, length, qualifier1, qualifier2, labeldistance, labelangle, specificColor);
-	}
-
-	public LinkArg withColor(HColor specificColor) {
-		return new LinkArg(label, length, qualifier1, qualifier2, labeldistance, labelangle, specificColor);
+		return new LinkArg(label, length, qualifier1, qualifier2, labeldistance, labelangle, visibilityModifier, kal1,
+				kal2);
 	}
 
 	private LinkArg(Display label, int length, String qualifier1, String qualifier2, String labeldistance,
-			String labelangle, HColor specificColor) {
+			String labelangle, VisibilityModifier visibilityModifier, String kal1, String kal2) {
 
-		if (Display.isNull(label)) {
-			this.label = Display.NULL;
-		} else {
-			this.label = label.manageGuillemet();
-			if (VisibilityModifier.isVisibilityCharacter(label.get(0)))
-				visibilityModifier = VisibilityModifier.getVisibilityModifier(label.get(0), false);
-		}
-
+		this.label = label;
+		this.visibilityModifier = visibilityModifier;
 		this.length = length;
 		this.qualifier1 = qualifier1;
 		this.qualifier2 = qualifier2;
 		this.labeldistance = labeldistance;
 		this.labelangle = labelangle;
-		this.specificColor = specificColor;
+		this.kal1 = kal1;
+		this.kal2 = kal2;
+	}
+
+	public LinkArg getInv() {
+		return new LinkArg(label, length, qualifier2, qualifier1, labeldistance, labelangle, visibilityModifier, kal1,
+				kal2);
 	}
 
 	public final Display getLabel() {
@@ -108,11 +130,24 @@ public class LinkArg {
 		return labelangle;
 	}
 
-	public final HColor getSpecificColor() {
-		return specificColor;
-	}
-
 	public final VisibilityModifier getVisibilityModifier() {
 		return visibilityModifier;
 	}
+
+	public final void setVisibilityModifier(VisibilityModifier visibilityModifier) {
+		this.visibilityModifier = visibilityModifier;
+	}
+
+	public final void setLength(int length) {
+		this.length = length;
+	}
+
+	public final String getKal1() {
+		return kal1;
+	}
+
+	public final String getKal2() {
+		return kal2;
+	}
+
 }

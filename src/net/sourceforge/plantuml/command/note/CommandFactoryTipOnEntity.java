@@ -56,6 +56,7 @@ import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
+import net.sourceforge.plantuml.cucadiagram.LinkArg;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
@@ -88,7 +89,7 @@ public final class CommandFactoryTipOnEntity implements SingleMultiFactoryComman
 					RegexLeaf.spaceZeroOrMore(), //
 					new RegexLeaf("\\{"), //
 					RegexLeaf.end() //
-					);
+			);
 		}
 		return RegexConcat.build(CommandFactoryTipOnEntity.class.getName() + key + withBracket, RegexLeaf.start(), //
 				new RegexLeaf("note"), //
@@ -103,7 +104,7 @@ public final class CommandFactoryTipOnEntity implements SingleMultiFactoryComman
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
 				RegexLeaf.end() //
-				);
+		);
 	}
 
 	public Command<AbstractEntityDiagram> createSingleLine() {
@@ -122,7 +123,8 @@ public final class CommandFactoryTipOnEntity implements SingleMultiFactoryComman
 				return "^[%s]*(end[%s]?note)$";
 			}
 
-			protected CommandExecutionResult executeNow(final AbstractEntityDiagram system, BlocLines lines) throws NoSuchColorException {
+			protected CommandExecutionResult executeNow(final AbstractEntityDiagram system, BlocLines lines)
+					throws NoSuchColorException {
 				// StringUtils.trim(lines, false);
 				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 				lines = lines.subExtract(1, 1);
@@ -154,8 +156,8 @@ public final class CommandFactoryTipOnEntity implements SingleMultiFactoryComman
 			return CommandExecutionResult.error("Nothing to note to");
 		}
 		final IEntity cl1 = diagram.getOrCreateLeaf(identShort, codeShort, null, null);
-		final Position position = Position.valueOf(StringUtils.goUpperCase(pos)).withRankdir(
-				diagram.getSkinParam().getRankdir());
+		final Position position = Position.valueOf(StringUtils.goUpperCase(pos))
+				.withRankdir(diagram.getSkinParam().getRankdir());
 
 		final Ident identTip = diagram.buildLeafIdent(idShort + "$$$" + position.name());
 		IEntity tips = diagram.getLeafStrict(identTip);
@@ -164,11 +166,11 @@ public final class CommandFactoryTipOnEntity implements SingleMultiFactoryComman
 			final LinkType type = new LinkType(LinkDecor.NONE, LinkDecor.NONE).getInvisible();
 			final Link link;
 			if (position == Position.RIGHT) {
-				link = new Link(diagram.getSkinParam()
-						.getCurrentStyleBuilder(), cl1, (IEntity) tips, type, Display.NULL, 1);
+				link = new Link(diagram.getSkinParam().getCurrentStyleBuilder(), cl1, (IEntity) tips, type,
+						LinkArg.noDisplay(1));
 			} else {
-				link = new Link(diagram.getSkinParam()
-						.getCurrentStyleBuilder(), (IEntity) tips, cl1, type, Display.NULL, 1);
+				link = new Link(diagram.getSkinParam().getCurrentStyleBuilder(), (IEntity) tips, cl1, type,
+						LinkArg.noDisplay(1));
 			}
 			diagram.addLink(link);
 		}

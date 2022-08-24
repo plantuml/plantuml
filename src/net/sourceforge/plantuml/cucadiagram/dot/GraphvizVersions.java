@@ -53,13 +53,13 @@ public class GraphvizVersions {
 	}
 
 	public GraphvizVersion getVersion(File f) {
-		if (f == null) {
+		if (f == null)
 			return null;
-		}
+
 		GraphvizVersion result = map.get(f);
-		if (result != null) {
+		if (result != null)
 			return result;
-		}
+
 		result = checkVersionSlow(f.getAbsolutePath());
 		map.put(f, result);
 		return result;

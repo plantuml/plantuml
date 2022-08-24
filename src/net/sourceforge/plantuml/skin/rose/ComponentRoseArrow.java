@@ -83,15 +83,16 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 
 	@Override
 	public void drawInternalU(UGraphic ug, Area area) {
-		if (getArrowConfiguration().isHidden())
+		final ArrowConfiguration arrowConfiguration = getArrowConfiguration();
+		if (arrowConfiguration.isHidden())
 			return;
 
 		final Dimension2D dimensionToUse = area.getDimensionToUse();
 		final StringBounder stringBounder = ug.getStringBounder();
 		ug = ug.apply(getForegroundColor());
 
-		final ArrowDressing dressing1 = getArrowConfiguration().getDressing1();
-		final ArrowDressing dressing2 = getArrowConfiguration().getDressing2();
+		final ArrowDressing dressing1 = arrowConfiguration.getDressing1();
+		final ArrowDressing dressing2 = arrowConfiguration.getDressing2();
 
 		double start = 0;
 		double len = dimensionToUse.getWidth() - 1;
@@ -100,18 +101,18 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 		final double pos1 = start + 1;
 		final double pos2 = len - 1;
 
-		if (getArrowConfiguration().getDecoration2() == ArrowDecoration.CIRCLE && dressing2.getHead() == ArrowHead.NONE)
+		if (arrowConfiguration.getDecoration2() == ArrowDecoration.CIRCLE && dressing2.getHead() == ArrowHead.NONE)
 			len -= diamCircle / 2;
 
-		if (getArrowConfiguration().getDecoration2() == ArrowDecoration.CIRCLE && dressing2.getHead() != ArrowHead.NONE)
+		if (arrowConfiguration.getDecoration2() == ArrowDecoration.CIRCLE && dressing2.getHead() != ArrowHead.NONE)
 			len -= diamCircle / 2 + thinCircle;
 
-		if (getArrowConfiguration().getDecoration1() == ArrowDecoration.CIRCLE
+		if (arrowConfiguration.getDecoration1() == ArrowDecoration.CIRCLE
 				&& dressing1.getHead() == ArrowHead.NONE) {
 			start += diamCircle / 2;
 			len -= diamCircle / 2;
 		}
-		if (getArrowConfiguration().getDecoration1() == ArrowDecoration.CIRCLE
+		if (arrowConfiguration.getDecoration1() == ArrowDecoration.CIRCLE
 				&& dressing1.getHead() == ArrowHead.NORMAL) {
 			start += diamCircle + thinCircle;
 			len -= diamCircle + thinCircle;
@@ -144,16 +145,16 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 		}
 
 		drawDressing1(ug.apply(new UTranslate(pos1, posArrow + inclination1)), dressing1,
-				getArrowConfiguration().getDecoration1(), lenFull);
+				arrowConfiguration.getDecoration1(), lenFull);
 		drawDressing2(ug.apply(new UTranslate(pos2, posArrow + inclination2)), dressing2,
-				getArrowConfiguration().getDecoration2(), lenFull);
+				arrowConfiguration.getDecoration2(), lenFull);
 
 		if (inclination1 == 0 && inclination2 == 0)
-			getArrowConfiguration().applyStroke(ug).apply(new UTranslate(start, posArrow)).draw(new ULine(len, 0));
+			arrowConfiguration.applyStroke(ug).apply(new UTranslate(start, posArrow)).draw(new ULine(len, 0));
 		else if (inclination1 != 0)
-			drawLine(getArrowConfiguration().applyStroke(ug), start + len, posArrow, 0, posArrow + inclination1);
+			drawLine(arrowConfiguration.applyStroke(ug), start + len, posArrow, 0, posArrow + inclination1);
 		else if (inclination2 != 0)
-			drawLine(getArrowConfiguration().applyStroke(ug), start, posArrow, pos2, posArrow + inclination2);
+			drawLine(arrowConfiguration.applyStroke(ug), start, posArrow, pos2, posArrow + inclination2);
 
 		final ArrowDirection direction2 = getDirection2();
 		final double textPos;

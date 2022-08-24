@@ -98,7 +98,8 @@ public class BodierLikeClassOrObject implements Bodier {
 
 	private boolean isBodyEnhanced() {
 		for (CharSequence s : rawBody)
-			if (BodyEnhanced1.isBlockSeparator(s) || CreoleParser.isTableLine(s.toString()) || Parser.isTreeStart(s.toString()))
+			if (BodyEnhanced1.isBlockSeparator(s) || CreoleParser.isTableLine(s.toString())
+					|| Parser.isTreeStart(s.toString()))
 				return true;
 
 		return false;

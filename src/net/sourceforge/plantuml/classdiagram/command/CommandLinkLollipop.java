@@ -54,6 +54,7 @@ import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
+import net.sourceforge.plantuml.cucadiagram.LinkArg;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
 import net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
@@ -72,8 +73,9 @@ final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassO
 								new RegexLeaf("HEADER", "@([\\d.]+)"), //
 								RegexLeaf.spaceOneOrMore() //
 						)), //
-				new RegexLeaf("ENT1", "(?:" + optionalKeywords(umlDiagramType) + "[%s]+)?"
-						+ "(\\.?[%pLN_]+(?:\\.[%pLN_]+)*|[%g][^%g]+[%g])[%s]*(\\<\\<.*\\>\\>)?"), //
+				new RegexLeaf("ENT1",
+						"(?:" + optionalKeywords(umlDiagramType) + "[%s]+)?"
+								+ "(\\.?[%pLN_]+(?:\\.[%pLN_]+)*|[%g][^%g]+[%g])[%s]*(\\<\\<.*\\>\\>)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexLeaf("FIRST_LABEL", "[%g]([^%g]+)[%g]")), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -82,8 +84,9 @@ final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassO
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexLeaf("SECOND_LABEL", "[%g]([^%g]+)[%g]")), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("ENT2", "(?:" + optionalKeywords(umlDiagramType) + "[%s]+)?"
-						+ "(\\.?[%pLN_]+(?:\\.[%pLN_]+)*|[%g][^%g]+[%g])[%s]*(\\<\\<.*\\>\\>)?"), //
+				new RegexLeaf("ENT2",
+						"(?:" + optionalKeywords(umlDiagramType) + "[%s]+)?"
+								+ "(\\.?[%pLN_]+(?:\\.[%pLN_]+)*|[%g][^%g]+[%g])[%s]*(\\<\\<.*\\>\\>)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional( //
 						new RegexConcat( //
@@ -94,19 +97,19 @@ final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassO
 	}
 
 	private static String optionalKeywords(UmlDiagramType type) {
-		if (type == UmlDiagramType.CLASS) {
+		if (type == UmlDiagramType.CLASS)
 			return "(interface|enum|annotation|abstract[%s]+class|abstract|class|entity|protocol|struct|exception)";
-		}
-		if (type == UmlDiagramType.OBJECT) {
+
+		if (type == UmlDiagramType.OBJECT)
 			return "(object)";
-		}
+
 		throw new IllegalArgumentException();
 	}
 
 	private LeafType getType(String desc) {
-		if (desc.charAt(0) == desc.charAt(1)) {
+		if (desc.charAt(0) == desc.charAt(1))
 			return LeafType.LOLLIPOP_HALF;
-		}
+
 		return LeafType.LOLLIPOP_FULL;
 	}
 
@@ -145,9 +148,8 @@ final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassO
 		final String queue = getQueue(arg);
 
 		int length = queue.length();
-		if (length == 1 && diagram.getNbOfHozizontalLollipop(normalEntity) > 1) {
+		if (length == 1 && diagram.getNbOfHozizontalLollipop(normalEntity) > 1)
 			length++;
-		}
 
 		String firstLabel = arg.get("FIRST_LABEL", 0);
 		String secondLabel = arg.get("SECOND_LABEL", 0);
@@ -161,8 +163,8 @@ final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassO
 				final Matcher2 m1 = p1.matcher(labelLink);
 				if (m1.matches()) {
 					firstLabel = m1.group(1);
-					labelLink = StringUtils.trin(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(StringUtils
-							.trin(m1.group(2))));
+					labelLink = StringUtils.trin(
+							StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(StringUtils.trin(m1.group(2))));
 					secondLabel = m1.group(3);
 				} else {
 					final Pattern2 p2 = MyPattern.cmpile("^\"([^\"]+)\"([^\"]+)$");
@@ -185,16 +187,12 @@ final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassO
 				}
 			}
 			labelLink = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(labelLink);
-		} /*
-		 * else if (arg.get("LABEL_LINK_XT").get(0) != null || arg.get("LABEL_LINK_XT").get(1) != null ||
-		 * arg.get("LABEL_LINK_XT").get(2) != null) { labelLink = arg.get("LABEL_LINK_XT").get(1); firstLabel =
-		 * merge(firstLabel, arg.get("LABEL_LINK_XT").get(0)); secondLabel = merge(arg.get("LABEL_LINK_XT").get(2),
-		 * secondLabel); }
-		 */
-
-		final Link link = new Link(diagram.getSkinParam()
-				.getCurrentStyleBuilder(), cl1, cl2, linkType, Display.getWithNewlines(labelLink), length,
-				firstLabel, secondLabel, diagram.getLabeldistance(), diagram.getLabelangle());
+		}
+		final LinkArg linkArg = LinkArg.build(Display.getWithNewlines(labelLink), length,
+				diagram.getSkinParam().classAttributeIconSize() > 0);
+		final Link link = new Link(diagram.getSkinParam().getCurrentStyleBuilder(), cl1, cl2, linkType,
+				linkArg.withQualifier(firstLabel, secondLabel).withDistanceAngle(diagram.getLabeldistance(),
+						diagram.getLabelangle()));
 		diagram.resetPragmaLabel();
 		addLink(diagram, link, arg.get("HEADER", 0));
 
@@ -204,27 +202,12 @@ final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassO
 	private IEntity getFoo1(AbstractClassOrObjectDiagram diagram, final Code code, final Ident ident) {
 		if (diagram.V1972()) {
 			final IEntity result = ident.size() == 1 ? diagram.getLeafVerySmart(ident) : diagram.getLeafStrict(ident);
-			if (result != null) {
+			if (result != null)
 				return result;
-			}
+
 		}
 		return diagram.getOrCreateLeaf(ident, code, null, null);
 	}
-
-	// private String merge(String a, String b) {
-	// if (a == null && b == null) {
-	// return null;
-	// }
-	// if (a == null && b != null) {
-	// return StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(b);
-	// }
-	// if (b == null && a != null) {
-	// return StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(a);
-	// }
-	// return StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(a) +
-	// BackSlash.VV1
-	// + StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(b);
-	// }
 
 	private void addLink(AbstractClassOrObjectDiagram diagram, Link link, String weight) {
 		diagram.addLink(link);
@@ -253,12 +236,12 @@ final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassO
 	}
 
 	private String getQueue(RegexResult arg) {
-		if (arg.get("LOL_THEN_ENT", 1) != null) {
+		if (arg.get("LOL_THEN_ENT", 1) != null)
 			return StringUtils.trin(arg.get("LOL_THEN_ENT", 1));
-		}
-		if (arg.get("ENT_THEN_LOL", 0) != null) {
+
+		if (arg.get("ENT_THEN_LOL", 0) != null)
 			return StringUtils.trin(arg.get("ENT_THEN_LOL", 0));
-		}
+
 		throw new IllegalArgumentException();
 	}
 

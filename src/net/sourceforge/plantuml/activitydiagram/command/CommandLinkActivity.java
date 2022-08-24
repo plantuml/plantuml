@@ -60,6 +60,7 @@ import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
+import net.sourceforge.plantuml.cucadiagram.LinkArg;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
 import net.sourceforge.plantuml.cucadiagram.NamespaceStrategy;
@@ -125,12 +126,12 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 	protected CommandExecutionResult executeArg(ActivityDiagram diagram, LineLocation location, RegexResult arg)
 			throws NoSuchColorException {
 		final IEntity entity1 = getEntity(diagram, arg, true);
-		if (entity1 == null) {
+		if (entity1 == null)
 			return CommandExecutionResult.error("No such activity");
-		}
-		if (arg.get("STEREOTYPE", 0) != null) {
+
+		if (arg.get("STEREOTYPE", 0) != null)
 			entity1.setStereotype(Stereotype.build(arg.get("STEREOTYPE", 0)));
-		}
+
 		if (arg.get("BACKCOLOR", 0) != null) {
 			String s = arg.get("BACKCOLOR", 0);
 			entity1.setSpecificColorTOBEREMOVED(ColorType.BACK,
@@ -138,17 +139,16 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 		}
 
 		final IEntity entity2 = getEntity(diagram, arg, false);
-		if (entity2 == null) {
+		if (entity2 == null)
 			return CommandExecutionResult.error("No such activity");
-		}
+
 		if (arg.get("BACKCOLOR2", 0) != null) {
 			String s = arg.get("BACKCOLOR2", 0);
 			entity2.setSpecificColorTOBEREMOVED(ColorType.BACK,
 					diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(), s));
 		}
-		if (arg.get("STEREOTYPE2", 0) != null) {
+		if (arg.get("STEREOTYPE2", 0) != null)
 			entity2.setStereotype(Stereotype.build(arg.get("STEREOTYPE2", 0)));
-		}
 
 		final Display linkLabel = Display.getWithNewlines(arg.get("BRACKET", 0));
 
@@ -158,24 +158,22 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 
 		final String arrow = StringUtils.manageArrowForCuca(arrowBody1 + arrowDirection + arrowBody2 + ">");
 		int lenght = arrow.length() - 1;
-		if (arrowDirection.contains("*")) {
+		if (arrowDirection.contains("*"))
 			lenght = 2;
-		}
 
 		LinkType type = new LinkType(LinkDecor.ARROW, LinkDecor.NONE);
-		if ((arrowBody1 + arrowBody2).contains(".")) {
+		if ((arrowBody1 + arrowBody2).contains("."))
 			type = type.goDotted();
-		}
 
-		Link link = new Link(diagram.getSkinParam().getCurrentStyleBuilder(), entity1, entity2, type, linkLabel,
-				lenght);
-		if (arrowDirection.contains("*")) {
+		final LinkArg linkArg = LinkArg.build(linkLabel, lenght, diagram.getSkinParam().classAttributeIconSize() > 0);
+		Link link = new Link(diagram.getSkinParam().getCurrentStyleBuilder(), entity1, entity2, type, linkArg);
+		if (arrowDirection.contains("*"))
 			link.setConstraint(false);
-		}
+
 		final Direction direction = StringUtils.getArrowDirection(arrowBody1 + arrowDirection + arrowBody2 + ">");
-		if (direction == Direction.LEFT || direction == Direction.UP) {
+		if (direction == Direction.LEFT || direction == Direction.UP)
 			link = link.getInv();
-		}
+
 		if (arg.get("URL", 0) != null) {
 			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), UrlMode.STRICT);
 			final Url urlLink = urlBuilder.getUrl(arg.get("URL", 0));
@@ -193,23 +191,23 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 		final String suf = start ? "" : "2";
 
 		final String openBracket2 = arg.get("OPENBRACKET" + suf, 0);
-		if (openBracket2 != null) {
+		if (openBracket2 != null)
 			return diagram.createInnerActivity();
-		}
+
 		if (arg.get("STAR" + suf, 0) != null) {
 			final String suppId = arg.get("STAR" + suf, 1);
 			if (start) {
-				if (suppId != null) {
+				if (suppId != null)
 					diagram.getStart().setTop(true);
-				}
+
 				return diagram.getStart();
 			}
 			return diagram.getEnd(suppId);
 		}
 		String partition = arg.get("PARTITION" + suf, 0);
-		if (partition != null) {
+		if (partition != null)
 			partition = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(partition);
-		}
+
 		final String idShort = arg.get("CODE" + suf, 0);
 		if (idShort != null) {
 			if (partition != null) {
@@ -229,9 +227,9 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 					result = diagram.getOrCreate(ident, code, Display.getWithNewlines(code), type);
 			} else
 				result = diagram.getOrCreate(ident, code, Display.getWithNewlines(code), type);
-			if (partition != null) {
+			if (partition != null)
 				diagram.endGroup();
-			}
+
 			return result;
 		}
 		final String bar = arg.get("BAR" + suf, 0);
@@ -240,9 +238,9 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 			final Code codeBar = diagram.V1972() ? identBar : diagram.buildCode(bar);
 			if (diagram.V1972()) {
 				final ILeaf result = diagram.getLeafVerySmart(identBar);
-				if (result != null) {
+				if (result != null)
 					return result;
-				}
+
 			}
 			return diagram.getOrCreate(identBar, codeBar, Display.getWithNewlines(bar), LeafType.SYNCHRO_BAR);
 		}
@@ -261,9 +259,9 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 					: getTypeIfExisting(diagram, quotedCode);
 			final IEntity result = diagram.getOrCreate(quotedIdent, quotedCode, Display.getWithNewlines(quoted.get(0)),
 					type);
-			if (partition != null) {
+			if (partition != null)
 				diagram.endGroup();
-			}
+
 			return result;
 		}
 		final String quoteInvisibleString = arg.get("QUOTED_INVISIBLE" + suf, 0);
@@ -278,35 +276,33 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 			final Code quotedInvisible = diagram.V1972() ? identInvisible : diagram.buildCode(quoteInvisibleString);
 			final IEntity result = diagram.getOrCreate(identInvisible, quotedInvisible,
 					Display.getWithNewlines(quotedInvisible), LeafType.ACTIVITY);
-			if (partition != null) {
+			if (partition != null)
 				diagram.endGroup();
-			}
+
 			return result;
 		}
 		final String first = arg.get("FIRST" + suf, 0);
-		if (first == null) {
+		if (first == null)
 			return diagram.getLastEntityConsulted();
-		}
 
 		return null;
 	}
 
 	private static LeafType getTypeIfExistingSmart(ActivityDiagram system, Ident ident) {
 		final IEntity ent = system.getLeafSmart(ident);
-		if (ent != null) {
-			if (ent.getLeafType() == LeafType.BRANCH) {
+		if (ent != null)
+			if (ent.getLeafType() == LeafType.BRANCH)
 				return LeafType.BRANCH;
-			}
-		}
+
 		return LeafType.ACTIVITY;
 	}
 
 	private static LeafType getTypeIfExisting(ActivityDiagram system, Code code) {
 		if (system.leafExist(code)) {
 			final IEntity ent = system.getLeaf(code);
-			if (ent.getLeafType() == LeafType.BRANCH) {
+			if (ent.getLeafType() == LeafType.BRANCH)
 				return LeafType.BRANCH;
-			}
+
 		}
 		return LeafType.ACTIVITY;
 	}

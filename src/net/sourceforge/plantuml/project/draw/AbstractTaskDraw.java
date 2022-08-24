@@ -142,15 +142,15 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 		return margin.getTop() + getShapeHeight(stringBounder) + margin.getBottom();
 	}
 
-	public TaskDraw getTrueRow() {
+	final public TaskDraw getTrueRow() {
 		return toTaskDraw.getTaskDraw(task.getRow());
 	}
 
 	@Override
 	final public Real getY(StringBounder stringBounder) {
-		if (task.getRow() == null) {
+		if (task.getRow() == null)
 			return y;
-		}
+
 		return getTrueRow().getY(stringBounder);
 	}
 
@@ -167,12 +167,12 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 		final double y1 = margin.getTop() + getY(stringBounder).getCurrentValue();
 		final double y2 = y1 + getShapeHeight(stringBounder);
 
-		if (direction == Direction.UP) {
+		if (direction == Direction.UP)
 			return y1;
-		}
-		if (direction == Direction.DOWN) {
+
+		if (direction == Direction.DOWN)
 			return y2;
-		}
+
 		return (y1 + y2) / 2;
 
 	}

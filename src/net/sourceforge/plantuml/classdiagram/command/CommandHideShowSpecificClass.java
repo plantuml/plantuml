@@ -62,9 +62,11 @@ public class CommandHideShowSpecificClass extends SingleLineCommand2<CucaDiagram
 
 		// final String codeString = arg.get("CODE", 0);
 		// if (codeString.equals("class")) {
-		// diagram.hideOrShow(LeafType.CLASS, arg.get("COMMAND", 0).equalsIgnoreCase("show"));
+		// diagram.hideOrShow(LeafType.CLASS, arg.get("COMMAND",
+		// 0).equalsIgnoreCase("show"));
 		// } else if (codeString.equals("interface")) {
-		// diagram.hideOrShow(LeafType.INTERFACE, arg.get("COMMAND", 0).equalsIgnoreCase("show"));
+		// diagram.hideOrShow(LeafType.INTERFACE, arg.get("COMMAND",
+		// 0).equalsIgnoreCase("show"));
 		// } else {
 		// final Code code = diagram.buildCode(codeString);
 		// IEntity hidden = diagram.getEntityFactory().getLeafsget(code);
@@ -72,7 +74,8 @@ public class CommandHideShowSpecificClass extends SingleLineCommand2<CucaDiagram
 		// hidden = diagram.getEntityFactory().getGroupsget(code);
 		// }
 		// if (hidden == null) {
-		// return CommandExecutionResult.error("Class/Package does not exist : " + code.getFullName());
+		// return CommandExecutionResult.error("Class/Package does not exist : " +
+		// code.getFullName());
 		// }
 		// diagram.hideOrShow(hidden, arg.get("COMMAND", 0).equalsIgnoreCase("show"));
 		// }

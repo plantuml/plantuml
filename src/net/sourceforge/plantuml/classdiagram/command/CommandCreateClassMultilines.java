@@ -59,6 +59,7 @@ import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
+import net.sourceforge.plantuml.cucadiagram.LinkArg;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
 import net.sourceforge.plantuml.cucadiagram.Stereotag;
@@ -214,9 +215,10 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 				if (type2 == LeafType.INTERFACE && entity.getLeafType() != LeafType.INTERFACE)
 					typeLink = typeLink.goDashed();
 
-				final Link link = new Link(diagram.getSkinParam().getCurrentStyleBuilder(), cl2, entity, typeLink, Display.NULL, 2, null,
-						null, diagram.getLabeldistance(),
-						diagram.getLabelangle());
+				final LinkArg linkArg = LinkArg.noDisplay(2);
+				final Link link = new Link(diagram.getSkinParam().getCurrentStyleBuilder(), cl2, entity, typeLink,
+						linkArg.withQualifier(null, null).withDistanceAngle(diagram.getLabeldistance(),
+								diagram.getLabelangle()));
 				diagram.addLink(link);
 			}
 		}

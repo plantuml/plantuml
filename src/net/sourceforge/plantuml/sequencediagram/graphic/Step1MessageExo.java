@@ -132,13 +132,13 @@ class Step1MessageExo extends Step1Abstract {
 		final MessageExoType type = m.getType();
 		ArrowConfiguration result = null;
 
-		if (type.getDirection() == 1) {
+		if (type.getDirection() == 1) 
 			result = m.getArrowConfiguration();
-		} else {
+		 else 
 			result = m.getArrowConfiguration().reverse();
-		}
-		result = result.withDecoration1(m.getArrowConfiguration().getDecoration1());
-		result = result.withDecoration2(m.getArrowConfiguration().getDecoration2());
+		
+//		result = result.withDecoration1(m.getArrowConfiguration().getDecoration1());
+//		result = result.withDecoration2(m.getArrowConfiguration().getDecoration2());
 		return result;
 		// ArrowConfiguration result = null;
 		// if (type.getDirection() == 1) {

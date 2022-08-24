@@ -58,6 +58,7 @@ import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
+import net.sourceforge.plantuml.cucadiagram.LinkArg;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
@@ -167,13 +168,17 @@ public final class CommandFactoryNoteActivity implements SingleMultiFactoryComma
 		final LinkType type = new LinkType(LinkDecor.NONE, LinkDecor.NONE).goDashed();
 
 		if (position == Position.RIGHT) {
-			link = new Link(diagram.getSkinParam().getCurrentStyleBuilder(), activity, note, type, Display.NULL, 1);
+			link = new Link(diagram.getSkinParam().getCurrentStyleBuilder(), activity, note, type,
+					LinkArg.noDisplay(1));
 		} else if (position == Position.LEFT) {
-			link = new Link(diagram.getSkinParam().getCurrentStyleBuilder(), note, activity, type, Display.NULL, 1);
+			link = new Link(diagram.getSkinParam().getCurrentStyleBuilder(), note, activity, type,
+					LinkArg.noDisplay(1));
 		} else if (position == Position.BOTTOM) {
-			link = new Link(diagram.getSkinParam().getCurrentStyleBuilder(), activity, note, type, Display.NULL, 2);
+			link = new Link(diagram.getSkinParam().getCurrentStyleBuilder(), activity, note, type,
+					LinkArg.noDisplay(2));
 		} else if (position == Position.TOP) {
-			link = new Link(diagram.getSkinParam().getCurrentStyleBuilder(), note, activity, type, Display.NULL, 2);
+			link = new Link(diagram.getSkinParam().getCurrentStyleBuilder(), note, activity, type,
+					LinkArg.noDisplay(2));
 		} else {
 			throw new IllegalArgumentException();
 		}

@@ -66,8 +66,8 @@ public class CommandAddData extends SingleLineCommand2<AbstractClassOrObjectDiag
 	protected CommandExecutionResult executeArg(AbstractClassOrObjectDiagram diagram, LineLocation location,
 			RegexResult arg) throws NoSuchColorException {
 		final String name = arg.get("NAME", 0);
-		final IEntity entity = diagram.getOrCreateLeaf(diagram.buildLeafIdent(name),
-				diagram.buildCode(name), null, null);
+		final IEntity entity = diagram.getOrCreateLeaf(diagram.buildLeafIdent(name), diagram.buildCode(name), null,
+				null);
 
 		final String field = arg.get("DATA", 0);
 		if (field.length() > 0 && VisibilityModifier.isVisibilityCharacter(field)) {

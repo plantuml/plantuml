@@ -77,7 +77,8 @@ public final class CommandConstraintOnLinks extends SingleLineCommand2<CucaDiagr
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(CucaDiagram diagram, LineLocation location, RegexResult arg) throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(CucaDiagram diagram, LineLocation location, RegexResult arg)
+			throws NoSuchColorException {
 		final List<Link> links = diagram.getTwoLastLinks();
 		if (links == null) {
 			return CommandExecutionResult.error("Cannot put constraint on two last links");

@@ -65,15 +65,16 @@ public class CommandStereotype extends SingleLineCommand2<ClassDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg) throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg)
+			throws NoSuchColorException {
 		final String name = arg.get("NAME", 0);
 		final Ident ident = diagram.buildLeafIdent(name);
 		final Code code = diagram.V1972() ? ident : diagram.buildCode(name);
 		final String stereotype = arg.get("STEREO", 0);
 		final IEntity entity = diagram.getOrCreateLeaf(ident, code, null, null);
-		entity.setStereotype(Stereotype.build(stereotype, diagram.getSkinParam().getCircledCharacterRadius(), diagram
-				.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER), diagram.getSkinParam()
-				.getIHtmlColorSet()));
+		entity.setStereotype(Stereotype.build(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),
+				diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),
+				diagram.getSkinParam().getIHtmlColorSet()));
 		return CommandExecutionResult.ok();
 	}
 

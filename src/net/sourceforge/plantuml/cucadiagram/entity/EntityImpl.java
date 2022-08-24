@@ -77,6 +77,7 @@ import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.svek.IEntityImage;
+import net.sourceforge.plantuml.svek.Margins;
 import net.sourceforge.plantuml.svek.PackageStyle;
 import net.sourceforge.plantuml.svek.SingleStrategy;
 import net.sourceforge.plantuml.ugraphic.UFont;
@@ -112,7 +113,7 @@ final public class EntityImpl implements ILeaf, IGroup {
 	private GroupType groupType;
 
 	// Other
-	private boolean nearDecoration = false;
+	private Margins margins = Margins.NONE;
 	private final Collection<String> portShortNames = new HashSet<>();
 	private int xposition;
 	private IEntityImage svekImage;
@@ -279,14 +280,15 @@ final public class EntityImpl implements ILeaf, IGroup {
 		this.url = url;
 	}
 
-	public final boolean hasNearDecoration() {
+	public final Margins getMargins() {
 		checkNotGroup();
-		return nearDecoration;
+		System.err.println("GETTING MARGIN!");
+		return margins;
 	}
 
-	public final void setNearDecoration(boolean nearDecoration) {
+	public final void ensureMargins(Margins newMargins) {
 		// checkNotGroup();
-		this.nearDecoration = nearDecoration;
+		this.margins = this.margins.merge(newMargins);
 	}
 
 	public int getXposition() {

@@ -42,11 +42,8 @@ public enum LeafType {
 
 	EMPTY_PACKAGE,
 
-	ABSTRACT_CLASS, CLASS, INTERFACE, ANNOTATION,
-	PROTOCOL, STRUCT,
-	EXCEPTION,
-	LOLLIPOP_FULL, LOLLIPOP_HALF, NOTE, TIPS, OBJECT, MAP, JSON, ASSOCIATION,
-	ENUM, CIRCLE,
+	ABSTRACT_CLASS, CLASS, INTERFACE, ANNOTATION, PROTOCOL, STRUCT, EXCEPTION, LOLLIPOP_FULL, LOLLIPOP_HALF, NOTE, TIPS,
+	OBJECT, MAP, JSON, ASSOCIATION, ENUM, CIRCLE,
 
 	USECASE, USECASE_BUSINESS,
 
@@ -79,8 +76,8 @@ public enum LeafType {
 
 	public boolean isLikeClass() {
 		return this == LeafType.ANNOTATION || this == LeafType.ABSTRACT_CLASS || this == LeafType.CLASS
-				|| this == LeafType.INTERFACE || this == LeafType.ENUM   || this == LeafType.ENTITY
-				|| this == LeafType.PROTOCOL  || this == LeafType.STRUCT || this == LeafType.EXCEPTION;
+				|| this == LeafType.INTERFACE || this == LeafType.ENUM || this == LeafType.ENTITY
+				|| this == LeafType.PROTOCOL || this == LeafType.STRUCT || this == LeafType.EXCEPTION;
 	}
 
 	public String toHtml() {

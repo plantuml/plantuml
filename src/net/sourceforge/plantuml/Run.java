@@ -334,7 +334,7 @@ public class Run {
 	}
 
 	private static void goPicoweb(Option option) throws IOException {
-		PicoWebServer.startServer(option.getPicowebPort(), option.getPicowebBindAddress());
+		PicoWebServer.startServer(option.getPicowebPort(), option.getPicowebBindAddress(), option.getPicowebEnableStop());
 	}
 
 	public static void printFonts() {

@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
+import net.sourceforge.plantuml.cucadiagram.LinkArg;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
@@ -76,19 +77,18 @@ abstract class CommandLinkStateCommon extends SingleLineCommand2<StateDiagram> {
 		final String ent2 = arg.get("ENT2", 0);
 
 		final IEntity cl1 = getEntityStart(diagram, ent1);
-		if (cl1 == null) {
+		if (cl1 == null)
 			return CommandExecutionResult
 					.error("The state " + ent1 + " has been created in a concurrent state : it cannot be used here.");
-		}
+
 		final IEntity cl2 = getEntityEnd(diagram, ent2);
-		if (cl2 == null) {
+		if (cl2 == null)
 			return CommandExecutionResult
 					.error("The state " + ent2 + " has been created in a concurrent state : it cannot be used here.");
-		}
 
-		if (arg.get("ENT1", 1) != null) {
+		if (arg.get("ENT1", 1) != null)
 			cl1.setStereotype(Stereotype.build(arg.get("ENT1", 1)));
-		}
+
 		if (arg.get("ENT1", 2) != null) {
 			final String s = arg.get("ENT1", 2);
 			cl1.setSpecificColorTOBEREMOVED(ColorType.BACK,
@@ -106,9 +106,8 @@ abstract class CommandLinkStateCommon extends SingleLineCommand2<StateDiagram> {
 		String queue = arg.get("ARROW_BODY1", 0) + arg.get("ARROW_BODY2", 0);
 		final Direction dir = getDirection(arg);
 
-		if (dir == Direction.LEFT || dir == Direction.RIGHT) {
+		if (dir == Direction.LEFT || dir == Direction.RIGHT)
 			queue = "-";
-		}
 
 		final int lenght = queue.length();
 
@@ -118,10 +117,11 @@ abstract class CommandLinkStateCommon extends SingleLineCommand2<StateDiagram> {
 				crossStart ? LinkDecor.CIRCLE_CROSS : LinkDecor.NONE);
 
 		final Display label = Display.getWithNewlines(arg.get("LABEL", 0));
-		Link link = new Link(diagram.getSkinParam().getCurrentStyleBuilder(), cl1, cl2, linkType, label, lenght);
-		if (dir == Direction.LEFT || dir == Direction.UP) {
+		final LinkArg linkArg = LinkArg.build(label, lenght, diagram.getSkinParam().classAttributeIconSize() > 0);
+		Link link = new Link(diagram.getSkinParam().getCurrentStyleBuilder(), cl1, cl2, linkType, linkArg);
+		if (dir == Direction.LEFT || dir == Direction.UP)
 			link = link.getInv();
-		}
+
 		link.applyStyle(diagram.getSkinParam().getThemeStyle(), arg.getLazzy("ARROW_STYLE", 0));
 		link.setUmlDiagramType(UmlDiagramType.STATE);
 		diagram.addLink(link);
@@ -131,9 +131,9 @@ abstract class CommandLinkStateCommon extends SingleLineCommand2<StateDiagram> {
 
 	private Direction getDirection(RegexResult arg) {
 		final String arrowDirection = arg.get("ARROW_DIRECTION", 0);
-		if (arrowDirection != null) {
+		if (arrowDirection != null)
 			return StringUtils.getQueueDirection(arrowDirection);
-		}
+
 		return getDefaultDirection();
 	}
 
@@ -142,32 +142,32 @@ abstract class CommandLinkStateCommon extends SingleLineCommand2<StateDiagram> {
 	}
 
 	private IEntity getEntityStart(StateDiagram diagram, final String codeString) {
-		if (codeString.startsWith("[*]")) {
+		if (codeString.startsWith("[*]"))
 			return diagram.getStart();
-		}
+
 		return getFoo1(diagram, codeString);
 	}
 
 	private IEntity getEntityEnd(StateDiagram diagram, final String codeString) {
-		if (codeString.startsWith("[*]")) {
+		if (codeString.startsWith("[*]"))
 			return diagram.getEnd();
-		}
+
 		return getFoo1(diagram, codeString);
 	}
 
 	private IEntity getFoo1(StateDiagram diagram, final String codeString) {
-		if (codeString.equalsIgnoreCase("[H]")) {
+		if (codeString.equalsIgnoreCase("[H]"))
 			return diagram.getHistorical();
-		}
-		if (codeString.endsWith("[H]")) {
+
+		if (codeString.endsWith("[H]"))
 			return diagram.getHistorical(codeString.substring(0, codeString.length() - 3));
-		}
-		if (codeString.equalsIgnoreCase("[H*]")) {
+
+		if (codeString.equalsIgnoreCase("[H*]"))
 			return diagram.getDeepHistory();
-		}
-		if (codeString.endsWith("[H*]")) {
+
+		if (codeString.endsWith("[H*]"))
 			return diagram.getDeepHistory(codeString.substring(0, codeString.length() - 4));
-		}
+
 		if (codeString.startsWith("=") && codeString.endsWith("=")) {
 			final String codeString1 = removeEquals(codeString);
 			final Ident ident1 = diagram.buildLeafIdent(codeString1);
@@ -176,19 +176,19 @@ abstract class CommandLinkStateCommon extends SingleLineCommand2<StateDiagram> {
 		}
 		final Ident ident = diagram.buildLeafIdent(codeString);
 		final Code code = diagram.V1972() ? ident : diagram.buildCode(codeString);
-		if (diagram.checkConcurrentStateOk(ident, code) == false) {
+		if (diagram.checkConcurrentStateOk(ident, code) == false)
 			return null;
-		}
+
 		return diagram.getOrCreateLeaf(ident, code, null, null);
 	}
 
 	private String removeEquals(String code) {
-		while (code.startsWith("=")) {
+		while (code.startsWith("="))
 			code = code.substring(1);
-		}
-		while (code.endsWith("=")) {
+
+		while (code.endsWith("="))
 			code = code.substring(0, code.length() - 1);
-		}
+
 		return code;
 	}
 

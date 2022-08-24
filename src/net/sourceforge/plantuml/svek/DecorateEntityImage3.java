@@ -47,7 +47,7 @@ public class DecorateEntityImage3 extends AbstractTextBlock  implements TextBloc
 	private final TextBlock original;
 	private final HColor color;
 
-	public DecorateEntityImage3(TextBlock original, HColor color) {
+	private DecorateEntityImage3(TextBlock original, HColor color) {
 		this.original = original;
 		this.color = color;
 	}

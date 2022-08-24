@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.compositediagram.CompositeDiagram;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.Link;
+import net.sourceforge.plantuml.cucadiagram.LinkArg;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
 
@@ -77,10 +78,8 @@ public class CommandLinkBlock extends SingleLineCommand2<CompositeDiagram> {
 	protected CommandExecutionResult executeArg(CompositeDiagram diagram, LineLocation location, RegexResult arg) {
 		final String ent1 = arg.get("ENT1", 0);
 		final String ent2 = arg.get("ENT2", 0);
-		final IEntity cl1 = diagram.getOrCreateLeaf(diagram.buildLeafIdent(ent1),
-				diagram.buildCode(ent1), null, null);
-		final IEntity cl2 = diagram.getOrCreateLeaf(diagram.buildLeafIdent(ent2),
-				diagram.buildCode(ent2), null, null);
+		final IEntity cl1 = diagram.getOrCreateLeaf(diagram.buildLeafIdent(ent1), diagram.buildCode(ent1), null, null);
+		final IEntity cl2 = diagram.getOrCreateLeaf(diagram.buildLeafIdent(ent2), diagram.buildCode(ent2), null, null);
 
 		final String deco1 = arg.get("DECO1", 0);
 		final String deco2 = arg.get("DECO2", 0);
@@ -94,16 +93,17 @@ public class CommandLinkBlock extends SingleLineCommand2<CompositeDiagram> {
 
 		final String queue = arg.get("QUEUE", 0);
 
-		final Link link = new Link(diagram.getSkinParam().getCurrentStyleBuilder(), cl1, cl2, linkType, Display.getWithNewlines(arg.get("DISPLAY", 0)),
-				queue.length());
+		final LinkArg linkArg = LinkArg.build(Display.getWithNewlines(arg.get("DISPLAY", 0)), queue.length(),
+				diagram.getSkinParam().classAttributeIconSize() > 0);
+		final Link link = new Link(diagram.getSkinParam().getCurrentStyleBuilder(), cl1, cl2, linkType, linkArg);
 		diagram.addLink(link);
 		return CommandExecutionResult.ok();
 	}
 
 	private LinkDecor getLinkDecor(String s) {
-		if ("[]".equals(s)) {
+		if ("[]".equals(s))
 			return LinkDecor.SQUARE_toberemoved;
-		}
+
 		return LinkDecor.NONE;
 	}
 

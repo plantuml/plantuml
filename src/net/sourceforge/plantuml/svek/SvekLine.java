@@ -58,6 +58,7 @@ import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.command.Position;
+import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.EntityPort;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
@@ -100,6 +101,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UGroupType;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
+import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
@@ -260,7 +262,8 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 			if (hasSeveralGuideLines)
 				block = StringWithArrow.addSeveralMagicArrows(link.getLabel(), this, font, alignment, skinParam);
 			else
-				block = link.getLabel().create9(font, alignment, skinParam, skinParam.maxMessageSize());
+				block = link.getLabel().create0(font, alignment, skinParam, skinParam.maxMessageSize(),
+						CreoleMode.SIMPLE_LINE, null, null);
 
 			labelOnly = addVisibilityModifier(block, link, skinParam);
 			if (getLinkArrow() != LinkArrow.NONE_OR_SEVERAL && hasSeveralGuideLines == false)
@@ -305,7 +308,15 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		else
 			this.labelShield = 7;
 
+		if (link.getLinkArg().getKal1() != null) {
+			this.kal1 = Display.getWithNewlines(link.getLinkArg().getKal1()).create7(font, HorizontalAlignment.LEFT,
+					skinParam, CreoleMode.SIMPLE_LINE);
+
+		}
+
 	}
+
+	private TextBlock kal1;
 
 	private TextBlock addVisibilityModifier(TextBlock block, Link link, ISkinParam skinParam) {
 		final VisibilityModifier visibilityModifier = link.getVisibilityModifier();
@@ -753,6 +764,16 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 
 			link.getLinkConstraint().setPosition(link, minPt);
 			link.getLinkConstraint().drawMe(ug, skinParam);
+		}
+
+		if (kal1 != null) {
+			final Dimension2D dim1 = kal1.calculateDimension(stringBounder);
+			final URectangle rect = new URectangle(dim1);
+			final UTranslate tr = new UTranslate(dotPath.getStartPoint()).compose(new UTranslate(dx, dy))
+					.compose(UTranslate.dx(-dim1.getWidth() / 2));
+			final UGraphic ug1 = ug.apply(tr);
+			ug1.apply(HColors.WHITE.bg()).draw(rect);
+			kal1.drawU(ug1);
 		}
 
 		ug.closeGroup();

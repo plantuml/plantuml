@@ -67,7 +67,8 @@ public class CommandAddField extends SingleLineCommand2<StateDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(StateDiagram diagram, LineLocation location, RegexResult arg) throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(StateDiagram diagram, LineLocation location, RegexResult arg)
+			throws NoSuchColorException {
 		final String codeString = arg.getLazzy("CODE", 0);
 		final String field = arg.get("FIELD", 0);
 

@@ -56,6 +56,7 @@ import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
+import net.sourceforge.plantuml.cucadiagram.LinkArg;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
@@ -128,8 +129,8 @@ public class CommandCreateMap extends CommandMultilines2<AbstractEntityDiagram> 
 
 				final LinkType linkType = new LinkType(LinkDecor.ARROW, LinkDecor.NONE);
 				final int length = linkStr.length() - 2;
-				final Link link = new Link(diagram.getSkinParam().getCurrentStyleBuilder(), entity1, entity2, linkType, Display.NULL,
-						length);
+				final Link link = new Link(diagram.getSkinParam().getCurrentStyleBuilder(), entity1, entity2, linkType,
+						LinkArg.noDisplay(length));
 				link.setPortMembers(key, null);
 				diagram.addLink(link);
 			}

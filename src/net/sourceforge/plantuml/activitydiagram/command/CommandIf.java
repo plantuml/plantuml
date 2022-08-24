@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.Link;
+import net.sourceforge.plantuml.cucadiagram.LinkArg;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
 import net.sourceforge.plantuml.descdiagram.command.CommandLinkElement;
@@ -70,15 +71,16 @@ public class CommandIf extends SingleLineCommand2<ActivityDiagram> {
 								new RegexLeaf("BAR", "(?:==+)[%s]*([%pLN_.]+)[%s]*(?:==+)"), //
 								new RegexLeaf("QUOTED", "[%g]([^%g]+)[%g](?:[%s]+as[%s]+([%pLN_.]+))?"))), //
 				RegexLeaf.spaceZeroOrMore(), //
-				//new RegexOptional(new RegexLeaf("ARROW", "([=-]+(?:(left|right|up|down|le?|ri?|up?|do?)(?=[-=.]))?[=-]*\\>)")), //
-				new RegexOptional(new RegexConcat( // 
+				// new RegexOptional(new RegexLeaf("ARROW",
+				// "([=-]+(?:(left|right|up|down|le?|ri?|up?|do?)(?=[-=.]))?[=-]*\\>)")), //
+				new RegexOptional(new RegexConcat( //
 						new RegexLeaf("ARROW_BODY1", "([-.]+)"), //
 						new RegexLeaf("ARROW_STYLE1", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
 						new RegexLeaf("ARROW_DIRECTION", "(\\*|left|right|up|down|le?|ri?|up?|do?)?"), //
 						new RegexLeaf("ARROW_STYLE2", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
 						new RegexLeaf("ARROW_BODY2", "([-.]*)"), //
 						new RegexLeaf("\\>") //
-						)), //
+				)), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexLeaf("BRACKET", "\\[([^\\]*]+[^\\]]*)\\]")), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -93,9 +95,8 @@ public class CommandIf extends SingleLineCommand2<ActivityDiagram> {
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram diagram, LineLocation location, RegexResult arg) {
 		final IEntity entity1 = CommandLinkActivity.getEntity(diagram, arg, true);
-		if (entity1 == null) {
+		if (entity1 == null)
 			return CommandExecutionResult.error("No if possible at this point");
-		}
 
 		final String ifCode;
 		final String ifLabel;
@@ -123,14 +124,15 @@ public class CommandIf extends SingleLineCommand2<ActivityDiagram> {
 
 		final IEntity branch = diagram.getCurrentContext().getBranch();
 
+		final LinkArg linkArg = LinkArg.build(Display.getWithNewlines(arg.get("BRACKET", 0)), lenght);
 		Link link = new Link(diagram.getSkinParam().getCurrentStyleBuilder(), entity1, branch,
-				new LinkType(LinkDecor.ARROW, LinkDecor.NONE), Display.getWithNewlines(arg.get("BRACKET", 0)), lenght, null, ifLabel,
-				diagram.getLabeldistance(), diagram.getLabelangle());
+				new LinkType(LinkDecor.ARROW, LinkDecor.NONE), linkArg.withQualifier(null, ifLabel)
+						.withDistanceAngle(diagram.getLabeldistance(), diagram.getLabelangle()));
 		if (arg.get("ARROW", 0) != null) {
 			final Direction direction = StringUtils.getArrowDirection(arg.get("ARROW", 0));
-			if (direction == Direction.LEFT || direction == Direction.UP) {
+			if (direction == Direction.LEFT || direction == Direction.UP)
 				link = link.getInv();
-			}
+
 		}
 
 		link.applyStyle(diagram.getSkinParam().getThemeStyle(), arg.getLazzy("ARROW_STYLE", 0));

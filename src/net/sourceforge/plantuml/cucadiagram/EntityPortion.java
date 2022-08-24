@@ -43,8 +43,8 @@ public enum EntityPortion {
 
 	public Set<EntityPortion> asSet() {
 		if (this == MEMBER) {
-			return EnumSet.<EntityPortion> of(FIELD, METHOD);
+			return EnumSet.<EntityPortion>of(FIELD, METHOD);
 		}
-		return EnumSet.<EntityPortion> of(this);
+		return EnumSet.<EntityPortion>of(this);
 	}
 }

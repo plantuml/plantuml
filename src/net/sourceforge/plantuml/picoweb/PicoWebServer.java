@@ -52,6 +52,7 @@ import java.net.URLEncoder;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import net.sourceforge.plantuml.BlockUml;
 import net.sourceforge.plantuml.ErrorUml;
@@ -69,6 +70,9 @@ import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.error.PSystemErrorUtils;
 import net.sourceforge.plantuml.graphic.QuoteUtils;
+import net.sourceforge.plantuml.json.Json;
+import net.sourceforge.plantuml.json.JsonArray;
+import net.sourceforge.plantuml.json.JsonObject;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.version.Version;
@@ -76,16 +80,19 @@ import net.sourceforge.plantuml.version.Version;
 public class PicoWebServer implements Runnable {
 
 	private final Socket connect;
+	private static final AtomicBoolean stopRequested = new AtomicBoolean(false);
+	private static boolean enableStop;
 
 	public PicoWebServer(Socket c) {
 		this.connect = c;
 	}
 
 	public static void main(String[] args) throws IOException {
-		startServer(8080, null);
+		startServer(8080, null, false);
 	}
 
-	public static void startServer(final int port, final String bindAddress) throws IOException {
+	public static void startServer(final int port, final String bindAddress, final boolean argEnableStop) throws IOException {
+		PicoWebServer.enableStop = argEnableStop;
 		final InetAddress bindAddress1 = bindAddress == null ? null : InetAddress.getByName(bindAddress);
 		final ServerSocket serverConnect = new ServerSocket(port, 50, bindAddress1);
 		System.err.println("webPort=" + serverConnect.getLocalPort());
@@ -93,7 +100,7 @@ public class PicoWebServer implements Runnable {
 	}
 
 	public static void serverLoop(final ServerSocket serverConnect) throws IOException {
-		while (true) {
+		while (stopRequested.get() == false) {
 			final PicoWebServer myServer = new PicoWebServer(serverConnect.accept());
 			final Thread thread = new Thread(myServer);
 			thread.start();
@@ -126,6 +133,14 @@ public class PicoWebServer implements Runnable {
 					return;
 				if (request.getPath().startsWith("/plantuml/utxt/") && handleGET(request, out, FileFormat.UTXT))
 					return;
+				if (request.getPath().startsWith("/serverinfo") && handleInfo(out))
+					return;
+				if (request.getPath().startsWith("/plantuml/serverinfo") && handleInfo(out))
+					return;
+				if (enableStop && request.getPath().startsWith("/stopserver")) {
+					stopRequested.set(true);
+					return;
+				}
 			} else if (request.getMethod().equals("POST") && request.getPath().equals("/render")) {
 				handleRenderRequest(request, out);
 				return;
@@ -150,6 +165,29 @@ public class PicoWebServer implements Runnable {
 				Logme.error(e);
 			}
 		}
+	}
+
+	private boolean handleInfo(BufferedOutputStream out) throws IOException {
+		write(out, "HTTP/1.1 " + "200");
+		write(out, "Cache-Control: no-cache");
+		write(out, "Server: PlantUML PicoWebServer " + Version.versionString());
+		write(out, "Date: " + new Date());
+		write(out, "Content-Type: application/json");
+		write(out, "");
+
+		final JsonArray formats = new JsonArray();
+		formats.add("png");
+		formats.add("svg");
+		formats.add("txt");
+		final JsonObject json = Json.object() //
+				.add("version", Version.versionString()) //
+				.add("PicoWebServer", true) //
+				.add("formats", formats); //
+		write(out, json.toString());
+
+		out.flush();
+
+		return true;
 	}
 
 	private boolean handleGET(ReceivedHTTPRequest request, BufferedOutputStream out, final FileFormat format)

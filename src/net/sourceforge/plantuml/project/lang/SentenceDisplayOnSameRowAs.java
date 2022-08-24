@@ -49,9 +49,9 @@ public class SentenceDisplayOnSameRowAs extends SentenceSimple {
 	public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 		final Task task1 = (Task) subject;
 		final Task task2 = project.getExistingTask((String) complement);
-		if (task2 == null) {
+		if (task2 == null)
 			return CommandExecutionResult.error("No such task " + task2);
-		}
+
 		task1.putInSameRowAs(task2);
 		return CommandExecutionResult.ok();
 	}

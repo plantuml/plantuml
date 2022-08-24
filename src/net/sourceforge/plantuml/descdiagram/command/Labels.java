@@ -54,9 +54,8 @@ public class Labels {
 		this.secondLabel = arg.get("SECOND_LABEL", 0);
 		String labelLink = arg.get("LABEL_LINK", 0);
 
-		if (labelLink != null) {
+		if (labelLink != null) 
 			labelLink = init(labelLink);
-		}
 
 		this.stringWithArrow = new StringWithArrow(labelLink);
 

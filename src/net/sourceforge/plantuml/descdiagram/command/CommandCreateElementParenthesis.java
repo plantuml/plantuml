@@ -132,7 +132,6 @@ public class CommandCreateElementParenthesis extends SingleLineCommand2<ClassDia
 		return ColorParser.simpleColor(ColorType.BACK, "COLOR2");
 	}
 
-
 	@Override
 	final protected boolean isForbidden(CharSequence line) {
 		if (line.toString().matches("^[\\p{L}0-9_.]+$")) {

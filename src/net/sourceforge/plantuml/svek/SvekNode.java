@@ -106,9 +106,8 @@ public class SvekNode implements Positionable, IShapePseudo, Hideable {
 		this.uid = String.format("sh%04d", color);
 		this.shield = image.getShield(stringBounder);
 		if (shield.isZero() == false && type != ShapeType.RECTANGLE && type != ShapeType.RECTANGLE_HTML_FOR_PORTS
-				&& type != ShapeType.RECTANGLE_WITH_CIRCLE_INSIDE) {
+				&& type != ShapeType.RECTANGLE_WITH_CIRCLE_INSIDE)
 			throw new IllegalArgumentException();
-		}
 
 		if (((EntityImpl) ent).getOriginalGroup() == null) {
 			this.group = null;
@@ -221,15 +220,15 @@ public class SvekNode implements Positionable, IShapePseudo, Hideable {
 	}
 
 	private void appendTr(StringBuilder sb, String portId, double height) {
-		if (height <= 0) {
+		if (height <= 0)
 			return;
-		}
+
 		sb.append("<TR>");
 		sb.append("<TD ");
 		sb.append(" FIXEDSIZE=\"TRUE\" WIDTH=\"" + getWidth() + "\" HEIGHT=\"" + height + "\"");
-		if (portId != null) {
+		if (portId != null)
 			sb.append(" PORT=\"" + portId + "\"");
-		}
+
 		sb.append(">");
 		sb.append("</TD>");
 		sb.append("</TR>");
@@ -248,36 +247,36 @@ public class SvekNode implements Positionable, IShapePseudo, Hideable {
 	}
 
 	private void appendShapeInternal(StringBuilder sb) {
-		if (type == ShapeType.RECTANGLE && shield.isZero() == false) {
+		if (type == ShapeType.RECTANGLE && shield.isZero() == false)
 			throw new UnsupportedOperationException();
-		} else if (type == ShapeType.RECTANGLE || type == ShapeType.RECTANGLE_WITH_CIRCLE_INSIDE
-				|| type == ShapeType.FOLDER) {
+		else if (type == ShapeType.RECTANGLE || type == ShapeType.RECTANGLE_WITH_CIRCLE_INSIDE
+				|| type == ShapeType.FOLDER)
 			sb.append("shape=rect");
-		} else if (type == ShapeType.RECTANGLE_HTML_FOR_PORTS) {
+		else if (type == ShapeType.RECTANGLE_HTML_FOR_PORTS)
 			throw new UnsupportedOperationException();
-		} else if (type == ShapeType.OCTAGON) {
+		else if (type == ShapeType.OCTAGON)
 			sb.append("shape=octagon");
-		} else if (type == ShapeType.HEXAGON) {
+		else if (type == ShapeType.HEXAGON)
 			sb.append("shape=hexagon");
-		} else if (type == ShapeType.DIAMOND) {
+		else if (type == ShapeType.DIAMOND)
 			sb.append("shape=diamond");
-		} else if (type == ShapeType.CIRCLE) {
+		else if (type == ShapeType.CIRCLE)
 			sb.append("shape=circle");
-		} else if (type == ShapeType.CIRCLE_IN_RECT) {
+		else if (type == ShapeType.CIRCLE_IN_RECT)
 			sb.append("shape=circle");
-		} else if (type == ShapeType.OVAL) {
+		else if (type == ShapeType.OVAL)
 			sb.append("shape=ellipse");
-		} else if (type == ShapeType.ROUND_RECTANGLE) {
+		else if (type == ShapeType.ROUND_RECTANGLE)
 			sb.append("shape=rect,style=rounded");
-		} else {
+		else
 			throw new IllegalStateException(type.toString());
-		}
+
 	}
 
 	public final String getUid() {
-		if (uid == null) {
+		if (uid == null)
 			throw new IllegalStateException();
-		}
+
 		return uid;
 	}
 
@@ -347,15 +346,15 @@ public class SvekNode implements Positionable, IShapePseudo, Hideable {
 	}
 
 	public Point2D projection(Point2D pt, StringBounder stringBounder) {
-		if (getType() != ShapeType.FOLDER) {
+		if (getType() != ShapeType.FOLDER)
 			return pt;
-		}
+
 		final ClusterPosition clusterPosition = new ClusterPosition(minX, minY, minX + width, minY + height);
 		if (clusterPosition.isPointJustUpper(pt)) {
 			final Dimension2D dimName = ((EntityImageDescription) image).getNameDimension(stringBounder);
-			if (pt.getX() < minX + dimName.getWidth()) {
+			if (pt.getX() < minX + dimName.getWidth())
 				return pt;
-			}
+
 			return new Point2D.Double(pt.getX(), pt.getY() + dimName.getHeight() + 4);
 		}
 		return pt;

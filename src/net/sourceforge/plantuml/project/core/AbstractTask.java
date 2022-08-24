@@ -49,8 +49,9 @@ public abstract class AbstractTask implements Task {
 		this.code = code;
 	}
 
-	public void putInSameRowAs(Task row) {
-		this.row = row;
+	final public void putInSameRowAs(Task row) {
+		if (this != row)
+			this.row = row;
 	}
 
 	public final Task getRow() {

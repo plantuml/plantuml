@@ -53,6 +53,14 @@ public class Margins {
 		return "MARGIN[" + x1 + "," + x2 + "," + y1 + "," + y2 + "]";
 	}
 
+	public Margins merge(Margins other) {
+		return new Margins(//
+				Math.max(this.x1, other.x1), //
+				Math.max(this.x2, other.x2), //
+				Math.max(this.y1, other.y1), //
+				Math.max(this.y2, other.y2));
+	}
+
 	public Margins(double x1, double x2, double y1, double y2) {
 		this.x1 = x1;
 		this.x2 = x2;

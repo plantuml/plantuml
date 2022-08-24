@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.cucadiagram;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -59,6 +60,10 @@ import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.dot.CucaDiagramTxtMaker;
+import net.sourceforge.plantuml.cucadiagram.dot.Graphviz;
+import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
+import net.sourceforge.plantuml.cucadiagram.dot.GraphvizVersion;
+import net.sourceforge.plantuml.cucadiagram.dot.GraphvizVersions;
 import net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
 import net.sourceforge.plantuml.elk.CucaDiagramFileMakerElk;
 import net.sourceforge.plantuml.graphic.USymbol;
@@ -70,6 +75,7 @@ import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.svek.CucaDiagramFileMaker;
 import net.sourceforge.plantuml.svek.CucaDiagramFileMakerSvek;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+import net.sourceforge.plantuml.vizjs.GraphvizJs;
 import net.sourceforge.plantuml.xmi.CucaDiagramXmiMaker;
 import net.sourceforge.plantuml.xmlsc.StateDiagramScxmlMaker;
 
@@ -873,4 +879,24 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		// Strange numbers here for backwards compatibility
 		return ClockwiseTopRightBottomLeft.topRightBottomLeft(0, 5, 5, 0);
 	}
+	
+	private GraphvizVersion graphvizVersion;
+
+	public GraphvizVersion getGraphvizVersion() {
+		if (graphvizVersion == null)
+			graphvizVersion = getGraphvizVersionInternal();
+
+		return graphvizVersion;
+	}
+
+	private GraphvizVersion getGraphvizVersionInternal() {
+		final Graphviz graphviz = GraphvizUtils.create(getSkinParam(), "foo;", "svg");
+		if (graphviz instanceof GraphvizJs)
+			return GraphvizJs.getGraphvizVersion(false);
+
+		final File f = graphviz.getDotExe();
+		return GraphvizVersions.getInstance().getVersion(f);
+	}
+
+
 }
