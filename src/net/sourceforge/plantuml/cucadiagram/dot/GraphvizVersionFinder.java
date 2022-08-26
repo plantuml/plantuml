@@ -45,7 +45,7 @@ public class GraphvizVersionFinder {
 
 	final private File dotExe;
 	final public static GraphvizVersion DEFAULT = new GraphvizVersion() {
-		public boolean useShield() {
+		public boolean useShieldForQuantifier() {
 			return true;
 		}
 
@@ -82,7 +82,7 @@ public class GraphvizVersionFinder {
 		final int minor = Integer.parseInt(m.group(2));
 		final int v = 100 * major + minor;
 		return new GraphvizVersion() {
-			public boolean useShield() {
+			public boolean useShieldForQuantifier() {
 				return v <= 228;
 			}
 

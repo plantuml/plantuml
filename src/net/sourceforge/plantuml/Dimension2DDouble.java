@@ -87,9 +87,9 @@ public class Dimension2DDouble extends Dimension2D {
 	}
 
 	public static Dimension2D delta(Dimension2D dim, double deltaWidth, double deltaHeight) {
-		if (deltaHeight == 0 && deltaWidth == 0) {
+		if (deltaHeight == 0 && deltaWidth == 0)
 			return dim;
-		}
+
 		return new Dimension2DDouble(dim.getWidth() + deltaWidth, dim.getHeight() + deltaHeight);
 	}
 
@@ -124,15 +124,15 @@ public class Dimension2DDouble extends Dimension2D {
 	public static Dimension2D atLeast(Dimension2D dim, double minWidth, double minHeight) {
 		double h = dim.getHeight();
 		double w = dim.getWidth();
-		if (w > minWidth && h > minHeight) {
+		if (w > minWidth && h > minHeight)
 			return dim;
-		}
-		if (h < minHeight) {
+
+		if (h < minHeight)
 			h = minHeight;
-		}
-		if (w < minWidth) {
+
+		if (w < minWidth)
 			w = minWidth;
-		}
+
 		return new Dimension2DDouble(w, h);
 	}
 

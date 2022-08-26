@@ -40,6 +40,7 @@ import java.util.EnumMap;
 import java.util.Map;
 
 import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineConfigurable;
@@ -50,7 +51,7 @@ import net.sourceforge.plantuml.cucadiagram.EntityPortion;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.PortionShower;
-import net.sourceforge.plantuml.cucadiagram.dot.GraphvizVersion;
+import net.sourceforge.plantuml.cucadiagram.entity.EntityImpl;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -60,6 +61,7 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
+import net.sourceforge.plantuml.svek.Kal;
 import net.sourceforge.plantuml.svek.Margins;
 import net.sourceforge.plantuml.svek.Ports;
 import net.sourceforge.plantuml.svek.ShapeType;
@@ -78,8 +80,7 @@ import net.sourceforge.plantuml.ugraphic.color.HColors;
 public class EntityImageClass extends AbstractEntityImage implements Stencil, WithPorts {
 
 	final private TextBlock body;
-	// final private Margins shield;
-	final private GraphvizVersion version;
+
 	final private EntityImageClassHeader header;
 	final private Url url;
 	final private double roundCorner;
@@ -87,13 +88,12 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 
 	final private LineConfigurable lineConfig;
 
-	public EntityImageClass(GraphvizVersion version, ILeaf entity, ISkinParam skinParam, PortionShower portionShower) {
+	public EntityImageClass(ILeaf entity, ISkinParam skinParam, PortionShower portionShower) {
 		super(entity, entity.getColors().mute(skinParam));
 		this.leafType = entity.getLeafType();
 		this.lineConfig = entity;
 
 		this.roundCorner = getStyle().value(PName.RoundCorner).asDouble();
-		this.version = version;
 
 		final boolean showMethods = portionShower.showPortion(EntityPortion.METHOD, entity);
 		final boolean showFields = portionShower.showPortion(EntityPortion.FIELD, entity);
@@ -112,7 +112,21 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 			width = getSkinParam().minClassWidth();
 
 		final double height = dimBody.getHeight() + dimHeader.getHeight();
-		return new Dimension2DDouble(width, height);
+		return new Dimension2DDouble(Math.max(width, getKalWidth() * 1.3), height);
+		// return new Dimension2DDouble(width + getKalWidth(), height);
+	}
+
+	private double getKalWidth() {
+		double widthUp = 0;
+		double widthDown = 0;
+		for (Kal kal : ((EntityImpl) getEntity()).getKals(Direction.UP))
+			widthUp += kal.getDimension().getWidth();
+
+		for (Kal kal : ((EntityImpl) getEntity()).getKals(Direction.DOWN))
+			widthDown += kal.getDimension().getWidth();
+
+		return Math.max(widthUp, widthDown);
+
 	}
 
 	@Override
@@ -241,10 +255,7 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 
 	@Override
 	public Margins getShield(StringBounder stringBounder) {
-		if (version != null && version.useShield())
-			return ((ILeaf) getEntity()).getMargins();
-
-		return Margins.NONE;
+		return ((ILeaf) getEntity()).getMargins();
 	}
 
 	public double getStartingX(StringBounder stringBounder, double y) {

@@ -155,8 +155,7 @@ public final class GeneralImageBuilder {
 			throw new IllegalStateException();
 
 		if (leaf.getLeafType().isLikeClass()) {
-			final EntityImageClass entityImageClass = new EntityImageClass(graphvizVersion, (ILeaf) leaf, skinParam,
-					portionShower);
+			final EntityImageClass entityImageClass = new EntityImageClass((ILeaf) leaf, skinParam, portionShower);
 			final Neighborhood neighborhood = leaf.getNeighborhood();
 			if (neighborhood != null)
 				return new EntityImageProtected(entityImageClass, 20, neighborhood, bibliotekon);
@@ -418,7 +417,7 @@ public final class GeneralImageBuilder {
 				final FontConfiguration labelFont = getFontForLink(link, skinParam);
 
 				final SvekLine line = new SvekLine(link, dotStringFactory.getColorSequence(), skinParam, stringBounder,
-						labelFont, dotStringFactory.getBibliotekon(), pragma);
+						labelFont, dotStringFactory.getBibliotekon(), pragma, dotStringFactory.getGraphvizVersion());
 
 				dotStringFactory.getBibliotekon().addLine(line);
 
@@ -556,8 +555,8 @@ public final class GeneralImageBuilder {
 			}
 
 			return createEntityImageBlock(ent, skinParam, dotData.isHideEmptyDescriptionForState(), dotData,
-					dotStringFactory.getBibliotekon(), dotData.getGraphvizVersion(), dotData.getUmlDiagramType(),
-					dotData.getLinks());
+					dotStringFactory.getBibliotekon(), dotStringFactory.getGraphvizVersion(),
+					dotData.getUmlDiagramType(), dotData.getLinks());
 		}
 		return ent.getSvekImage();
 	}
@@ -568,8 +567,7 @@ public final class GeneralImageBuilder {
 			if (ent.getLeafType().isLikeClass() == false)
 				continue;
 
-			final IEntityImage im = new EntityImageClass(dotData.getGraphvizVersion(), ent, dotData.getSkinParam(),
-					dotData);
+			final IEntityImage im = new EntityImageClass(ent, dotData.getSkinParam(), dotData);
 			final double w = im.calculateDimension(stringBounder).getWidth();
 			if (w > result)
 				result = w;

@@ -54,10 +54,10 @@ public class LinkArg {
 	public static LinkArg build(final Display label, int length) {
 		return build(label, length, true);
 	}
+
 	public static LinkArg noDisplay(int length) {
 		return build(Display.NULL, length, true);
 	}
-
 
 	public static LinkArg build(final Display label, int length, boolean manageVisibilityModifier) {
 		VisibilityModifier visibilityModifier = null;
@@ -77,7 +77,7 @@ public class LinkArg {
 				kal2);
 	}
 
-	public LinkArg withKal(String kal1) {
+	public LinkArg withKal(String kal1, String kal2) {
 		return new LinkArg(label, length, qualifier1, qualifier2, labeldistance, labelangle, visibilityModifier, kal1,
 				kal2);
 	}

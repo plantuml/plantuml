@@ -186,7 +186,7 @@ public class TContext {
 		functionsSet.addFunction(new Dec2hex());
 		functionsSet.addFunction(new HslColor());
 		functionsSet.addFunction(new LoadJson());
-		functionsSet.addFunction(new LoadJsonLegacy());
+		// functionsSet.addFunction(new LoadJsonLegacy());
 		functionsSet.addFunction(new Chr());
 		functionsSet.addFunction(new Size());
 		functionsSet.addFunction(new GetJsonKey());

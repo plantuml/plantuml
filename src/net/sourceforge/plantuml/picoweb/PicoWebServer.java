@@ -80,7 +80,6 @@ import net.sourceforge.plantuml.version.Version;
 public class PicoWebServer implements Runnable {
 
 	private final Socket connect;
-	private static final AtomicBoolean stopRequested = new AtomicBoolean(false);
 	private static boolean enableStop;
 
 	public PicoWebServer(Socket c) {
@@ -91,7 +90,8 @@ public class PicoWebServer implements Runnable {
 		startServer(8080, null, false);
 	}
 
-	public static void startServer(final int port, final String bindAddress, final boolean argEnableStop) throws IOException {
+	public static void startServer(final int port, final String bindAddress, final boolean argEnableStop)
+			throws IOException {
 		PicoWebServer.enableStop = argEnableStop;
 		final InetAddress bindAddress1 = bindAddress == null ? null : InetAddress.getByName(bindAddress);
 		final ServerSocket serverConnect = new ServerSocket(port, 50, bindAddress1);
@@ -100,7 +100,7 @@ public class PicoWebServer implements Runnable {
 	}
 
 	public static void serverLoop(final ServerSocket serverConnect) throws IOException {
-		while (stopRequested.get() == false) {
+		while (true) {
 			final PicoWebServer myServer = new PicoWebServer(serverConnect.accept());
 			final Thread thread = new Thread(myServer);
 			thread.start();
@@ -137,10 +137,10 @@ public class PicoWebServer implements Runnable {
 					return;
 				if (request.getPath().startsWith("/plantuml/serverinfo") && handleInfo(out))
 					return;
-				if (enableStop && request.getPath().startsWith("/stopserver")) {
-					stopRequested.set(true);
+				if (enableStop && (request.getPath().startsWith("/stopserver")
+						|| request.getPath().startsWith("/plantuml/stopserver")) && handleStop(out))
 					return;
-				}
+
 			} else if (request.getMethod().equals("POST") && request.getPath().equals("/render")) {
 				handleRenderRequest(request, out);
 				return;
@@ -165,6 +165,32 @@ public class PicoWebServer implements Runnable {
 				Logme.error(e);
 			}
 		}
+	}
+
+	private boolean handleStop(BufferedOutputStream out) throws IOException {
+		write(out, "HTTP/1.1 " + "200");
+		write(out, "Cache-Control: no-cache");
+		write(out, "Server: PlantUML PicoWebServer " + Version.versionString());
+		write(out, "Date: " + new Date());
+		write(out, "");
+
+		write(out, "<html>Stoping...</html>");
+
+		out.flush();
+
+		final Thread stop = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					Thread.sleep(3000L);
+				} catch (InterruptedException e) {
+				}
+				System.exit(0);
+			}
+		});
+		stop.start();
+
+		return true;
 	}
 
 	private boolean handleInfo(BufferedOutputStream out) throws IOException {

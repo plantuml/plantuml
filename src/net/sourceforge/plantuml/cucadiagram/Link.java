@@ -46,7 +46,6 @@ import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.command.Position;
-import net.sourceforge.plantuml.cucadiagram.entity.EntityImpl;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -56,7 +55,6 @@ import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.svek.Bibliotekon;
-import net.sourceforge.plantuml.svek.Margins;
 import net.sourceforge.plantuml.ugraphic.UComment;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.utils.UniqueSequence;
@@ -125,13 +123,6 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 		this.type = type;
 
 		this.linkArg = linkArg;
-
-		if (linkArg.getQualifier1() != null)
-			((EntityImpl) cl1).ensureMargins(Margins.uniform(16));
-
-		if (linkArg.getQualifier2() != null)
-			((EntityImpl) cl2).ensureMargins(Margins.uniform(16));
-
 	}
 
 	public Link getInv() {

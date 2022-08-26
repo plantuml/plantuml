@@ -240,6 +240,14 @@ public class DotPath implements UShape, Moveable {
 		beziers.get(0).ctrlx1 = x;
 		beziers.get(0).ctrly1 = y;
 	}
+	
+	public void moveStartPoint(double dx, double dy) {
+		beziers.get(0).x1 += dx;
+		beziers.get(0).y1 += dy;
+		beziers.get(0).ctrlx1 += dx;
+		beziers.get(0).ctrly1 += dy;
+	}
+
 
 	public Point2D getEndPoint() {
 		return beziers.get(beziers.size() - 1).getP2();

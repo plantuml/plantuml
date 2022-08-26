@@ -162,7 +162,7 @@ public class SequenceDiagram extends UmlDiagram {
 		return participantsget(code) != null;
 	}
 
-	public String addMessage(AbstractMessage m) {
+	public CommandExecutionResult addMessage(AbstractMessage m) {
 		if (m.isParallel())
 			m.setParallelBrother(getLastAbstractMessage());
 
@@ -171,12 +171,13 @@ public class SequenceDiagram extends UmlDiagram {
 		events.add(m);
 		if (pendingCreate != null) {
 			if (m.compatibleForCreate(pendingCreate.getParticipant()) == false)
-				return "After create command, you have to send a message to \"" + pendingCreate.getParticipant() + "\"";
+				return CommandExecutionResult.error("After create command, you have to send a message to \""
+						+ pendingCreate.getParticipant() + "\"");
 
 			m.addLifeEvent(pendingCreate);
 			pendingCreate = null;
 		}
-		return null;
+		return CommandExecutionResult.ok();
 	}
 
 	private AbstractMessage getLastAbstractMessage() {

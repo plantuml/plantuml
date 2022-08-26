@@ -80,7 +80,7 @@ public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 	private static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandCreateClass.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("TYPE", //
-						"(interface|enum|annotation|abstract[%s]+class|abstract|class|entity|circle|diamond|protocol|struct|exception)"), //
+						"(interface|enum|annotation|abstract[%s]+class|static[%s]+class|abstract|class|entity|circle|diamond|protocol|struct|exception)"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexOr(//
 						new RegexConcat(//

@@ -93,6 +93,8 @@ public final class SvekResult extends AbstractTextBlock implements IEntityImage 
 
 		final Set<String> ids = new HashSet<>();
 
+		computeKal();
+
 		for (SvekLine line : dotStringFactory.getBibliotekon().allLines()) {
 			final UGraphic ug2 = line.isHidden() ? ug.apply(UHidden.HIDDEN) : ug;
 
@@ -105,6 +107,16 @@ public final class SvekResult extends AbstractTextBlock implements IEntityImage 
 			line.drawU(ug2, styleLine.getStroke(), color, ids);
 		}
 
+		for (SvekNode node : dotStringFactory.getBibliotekon().allNodes())
+			node.drawKals(ug);
+
+	}
+
+	private void computeKal() {
+		for (SvekLine line : dotStringFactory.getBibliotekon().allLines())
+			line.computeKal();
+		for (SvekNode node : dotStringFactory.getBibliotekon().allNodes())
+			node.fixOverlap();
 	}
 
 	private StyleSignature getDefaultStyleDefinition(Stereotype stereotype) {

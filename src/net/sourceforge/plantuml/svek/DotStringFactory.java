@@ -60,6 +60,7 @@ import net.sourceforge.plantuml.cucadiagram.dot.DotSplines;
 import net.sourceforge.plantuml.cucadiagram.dot.Graphviz;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizVersion;
+import net.sourceforge.plantuml.cucadiagram.dot.GraphvizVersions;
 import net.sourceforge.plantuml.cucadiagram.dot.ProcessState;
 import net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -86,8 +87,6 @@ public class DotStringFactory implements Moveable {
 
 	private final StringBounder stringBounder;
 
-	private GraphvizVersion graphvizVersion;
-
 	public DotStringFactory(StringBounder stringBounder, DotData dotData) {
 		this.skinParam = dotData.getSkinParam();
 		this.umlDiagramType = dotData.getUmlDiagramType();
@@ -97,7 +96,6 @@ public class DotStringFactory implements Moveable {
 		this.stringBounder = stringBounder;
 		this.root = new Cluster(colorSequence, skinParam, dotData.getRootGroup());
 		this.current = root;
-		this.graphvizVersion = dotData.getGraphvizVersion();
 	}
 
 	public DotStringFactory(StringBounder stringBounder, CucaDiagram diagram) {
@@ -109,7 +107,6 @@ public class DotStringFactory implements Moveable {
 		this.stringBounder = stringBounder;
 		this.root = new Cluster(colorSequence, skinParam, diagram.getEntityFactory().getRootGroup());
 		this.current = root;
-		this.graphvizVersion = diagram.getGraphvizVersion();
 	}
 
 	public void addNode(SvekNode node) {
@@ -215,14 +212,14 @@ public class DotStringFactory implements Moveable {
 
 		root.printCluster1(sb, bibliotekon.allLines(), stringBounder);
 		for (SvekLine line : bibliotekon.lines0())
-			line.appendLine(graphvizVersion, sb, dotMode, dotSplines);
+			line.appendLine(getGraphvizVersion(), sb, dotMode, dotSplines);
 
 		root.fillRankMin(rankMin);
-		root.printCluster2(sb, bibliotekon.allLines(), stringBounder, dotMode, graphvizVersion, umlDiagramType);
+		root.printCluster2(sb, bibliotekon.allLines(), stringBounder, dotMode, getGraphvizVersion(), umlDiagramType);
 		printMinRanking(sb);
 
 		for (SvekLine line : bibliotekon.lines1())
-			line.appendLine(graphvizVersion, sb, dotMode, dotSplines);
+			line.appendLine(getGraphvizVersion(), sb, dotMode, dotSplines);
 
 		SvekUtils.println(sb);
 		sb.append("}");
@@ -281,6 +278,24 @@ public class DotStringFactory implements Moveable {
 		return 35;
 	}
 
+	private GraphvizVersion graphvizVersion;
+
+	public GraphvizVersion getGraphvizVersion() {
+		if (graphvizVersion == null)
+			graphvizVersion = getGraphvizVersionInternal();
+
+		return graphvizVersion;
+	}
+
+	private GraphvizVersion getGraphvizVersionInternal() {
+		final Graphviz graphviz = GraphvizUtils.create(skinParam, "foo;", "svg");
+		if (graphviz instanceof GraphvizJs)
+			return GraphvizJs.getGraphvizVersion(false);
+
+		final File f = graphviz.getDotExe();
+		return GraphvizVersions.getInstance().getVersion(f);
+	}
+
 	public String getSvg(BaseFile basefile, String[] dotOptions) throws IOException {
 		String dotString = createDotString(dotOptions);
 
@@ -299,7 +314,7 @@ public class DotStringFactory implements Moveable {
 			}
 		} catch (GraphvizJsRuntimeException e) {
 			System.err.println("GraphvizJsRuntimeException");
-			this.graphvizVersion = GraphvizJs.getGraphvizVersion(true);
+			graphvizVersion = GraphvizJs.getGraphvizVersion(true);
 			dotString = createDotString(dotOptions);
 			graphviz = GraphvizUtils.create(skinParam, dotString, "svg");
 			baos = new ByteArrayOutputStream();

@@ -83,18 +83,17 @@ public class CommandReturn extends SingleLineCommand2<SequenceDiagram> {
 		boolean doDeactivation = true;
 		if (message1 == null) {
 			final EventWithDeactivate last = diagram.getLastEventWithDeactivate();
-			if (last instanceof Message == false) {
+			if (last instanceof Message == false)
 				return CommandExecutionResult.error("Nowhere to return to.");
-			}
+
 			message1 = (Message) last;
 			doDeactivation = false;
 		}
 
 		ArrowConfiguration arrow = message1.getArrowConfiguration().withBody(ArrowBody.DOTTED);
 		final String color = arg.get("COLOR", 0);
-		if (color != null) {
+		if (color != null)
 			arrow = arrow.withColor(HColorSet.instance().getColor(diagram.getSkinParam().getThemeStyle(), color));
-		}
 
 		final Display display = Display.getWithNewlines(arg.get("MESSAGE", 0));
 		final AbstractMessage message2;
@@ -106,17 +105,19 @@ public class CommandReturn extends SingleLineCommand2<SequenceDiagram> {
 			message2 = new Message(diagram.getSkinParam().getCurrentStyleBuilder(), message1.getParticipant2(),
 					message1.getParticipant1(), display, arrow, diagram.getNextMessageNumber());
 			final boolean parallel = arg.get("PARALLEL", 0) != null;
-			if (parallel) {
+			if (parallel)
 				message2.goParallel();
-			}
+
 		}
-		diagram.addMessage(message2);
+		final CommandExecutionResult status = diagram.addMessage(message2);
+		if (status.isOk() == false)
+			return status;
 
 		if (doDeactivation) {
 			final String error = diagram.activate(message1.getParticipant2(), LifeEventType.DEACTIVATE, null);
-			if (error != null) {
+			if (error != null)
 				return CommandExecutionResult.error(error);
-			}
+
 		}
 		return CommandExecutionResult.ok();
 

@@ -59,18 +59,18 @@ public class Bibliotekon {
 	private final List<SvekLine> lines1 = new ArrayList<>();
 	private final List<SvekLine> allLines = new ArrayList<>();
 
-	public SvekNode createNode(ILeaf ent, IEntityImage image, ColorSequence colorSequence, StringBounder stringBounder) {
+	public SvekNode createNode(ILeaf ent, IEntityImage image, ColorSequence colorSequence,
+			StringBounder stringBounder) {
 		final SvekNode node = new SvekNode(ent, image, colorSequence, stringBounder);
 		nodeMap.put(ent, node);
 		return node;
 	}
 
 	public Cluster getCluster(IGroup ent) {
-		for (Cluster cl : allCluster) {
-			if (cl.getGroups().contains(ent)) {
+		for (Cluster cl : allCluster)
+			if (cl.getGroups().contains(ent))
 				return cl;
-			}
-		}
+
 		return null;
 	}
 
@@ -97,9 +97,9 @@ public class Bibliotekon {
 
 	private static boolean first(SvekLine line) {
 		final int length = line.getLength();
-		if (length == 1) {
+		if (length == 1)
 			return true;
-		}
+
 		return false;
 	}
 
@@ -115,18 +115,16 @@ public class Bibliotekon {
 		final SvekNode result = getNode(ent);
 		if (result != null) {
 			String uid = result.getUid();
-			if (result.isShielded()) {
+			if (result.isShielded())
 				uid = uid + ":h";
-			}
+
 			return uid;
 		}
 		assert result == null;
 		if (ent.isGroup()) {
-			for (IEntity i : nodeMap.keySet()) {
-				if (ent.getCodeGetName().equals(i.getCodeGetName())) {
+			for (IEntity i : nodeMap.keySet())
+				if (ent.getCodeGetName().equals(i.getCodeGetName()))
 					return getNode(i).getUid();
-				}
-			}
 			return Cluster.getSpecialPointId(ent);
 		}
 		throw new IllegalStateException();
@@ -180,39 +178,36 @@ public class Bibliotekon {
 
 	public List<SvekLine> getAllLineConnectedTo(IEntity leaf) {
 		final List<SvekLine> result = new ArrayList<>();
-		for (SvekLine line : allLines) {
-			if (line.isLinkFromOrTo(leaf)) {
+		for (SvekLine line : allLines)
+			if (line.isLinkFromOrTo(leaf))
 				result.add(line);
-			}
-		}
+
 		return Collections.unmodifiableList(result);
 	}
 
 	public SvekLine getLine(Link link) {
-		for (SvekLine line : allLines) {
-			if (line.isLink(link)) {
+		for (SvekLine line : allLines)
+			if (line.isLink(link))
 				return line;
-			}
-		}
+
 		throw new IllegalArgumentException();
 	}
 
 	public IEntity getOnlyOther(IEntity entity) {
 		for (SvekLine line : allLines) {
 			final IEntity other = line.getOther(entity);
-			if (other != null) {
+			if (other != null)
 				return other;
-			}
+
 		}
 		return null;
 	}
 
 	public ILeaf getLeaf(SvekNode node) {
-		for (Map.Entry<ILeaf, SvekNode> ent : nodeMap.entrySet()) {
-			if (ent.getValue() == node) {
+		for (Map.Entry<ILeaf, SvekNode> ent : nodeMap.entrySet())
+			if (ent.getValue() == node)
 				return ent.getKey();
-			}
-		}
+
 		throw new IllegalArgumentException();
 	}
 }

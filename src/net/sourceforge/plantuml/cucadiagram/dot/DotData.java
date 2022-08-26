@@ -74,7 +74,6 @@ final public class DotData implements PortionShower {
 
 	private final ColorMapper colorMapper;
 	private final EntityFactory entityFactory;
-	private final GraphvizVersion graphvizVersion;
 
 	public EntityFactory getEntityFactory() {
 		return entityFactory;
@@ -83,7 +82,7 @@ final public class DotData implements PortionShower {
 	public DotData(IGroup topParent, List<Link> links, Collection<ILeaf> leafs, UmlDiagramType umlDiagramType,
 			ISkinParam skinParam, GroupHierarchy groupHierarchy, PortionShower portionShower, ColorMapper colorMapper,
 			EntityFactory entityFactory, boolean isHideEmptyDescriptionForState, DotMode dotMode,
-			String namespaceSeparator, Pragma pragma, GraphvizVersion graphvizVersion) {
+			String namespaceSeparator, Pragma pragma) {
 		this.namespaceSeparator = namespaceSeparator;
 		this.pragma = pragma;
 		this.topParent = Objects.requireNonNull(topParent);
@@ -98,19 +97,16 @@ final public class DotData implements PortionShower {
 		this.groupHierarchy = groupHierarchy;
 		this.portionShower = portionShower;
 		this.entityFactory = entityFactory;
-		this.graphvizVersion = graphvizVersion;
 	}
 
 	public DotData(IGroup topParent, List<Link> links, Collection<ILeaf> leafs, UmlDiagramType umlDiagramType,
 			ISkinParam skinParam, GroupHierarchy groupHierarchy, ColorMapper colorMapper, EntityFactory entityFactory,
-			boolean isHideEmptyDescriptionForState, DotMode dotMode, String namespaceSeparator, Pragma pragma,
-			GraphvizVersion graphvizVersion) {
+			boolean isHideEmptyDescriptionForState, DotMode dotMode, String namespaceSeparator, Pragma pragma) {
 		this(topParent, links, leafs, umlDiagramType, skinParam, groupHierarchy, new PortionShower() {
 			public boolean showPortion(EntityPortion portion, IEntity entity) {
 				return true;
 			}
-		}, colorMapper, entityFactory, isHideEmptyDescriptionForState, dotMode, namespaceSeparator, pragma,
-				graphvizVersion);
+		}, colorMapper, entityFactory, isHideEmptyDescriptionForState, dotMode, namespaceSeparator, pragma);
 	}
 
 	public UmlDiagramType getUmlDiagramType() {
@@ -234,10 +230,6 @@ final public class DotData implements PortionShower {
 		}
 		return null;
 
-	}
-
-	public GraphvizVersion getGraphvizVersion() {
-		return graphvizVersion;
 	}
 
 }

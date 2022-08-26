@@ -81,6 +81,7 @@ import net.sourceforge.plantuml.descdiagram.command.CommandPackageWithUSymbol;
 import net.sourceforge.plantuml.objectdiagram.command.CommandCreateEntityObject;
 import net.sourceforge.plantuml.objectdiagram.command.CommandCreateEntityObjectMultilines;
 import net.sourceforge.plantuml.objectdiagram.command.CommandCreateJson;
+import net.sourceforge.plantuml.objectdiagram.command.CommandCreateJsonSingleLine;
 import net.sourceforge.plantuml.objectdiagram.command.CommandCreateMap;
 
 public class ClassDiagramFactory extends PSystemCommandFactory {
@@ -108,6 +109,7 @@ public class ClassDiagramFactory extends PSystemCommandFactory {
 		cmds.add(new CommandCreateEntityObjectMultilines());
 		cmds.add(new CommandCreateMap());
 		cmds.add(new CommandCreateJson());
+		cmds.add(new CommandCreateJsonSingleLine());
 		cmds.add(new CommandCreateClass());
 		cmds.add(new CommandCreateEntityObject());
 

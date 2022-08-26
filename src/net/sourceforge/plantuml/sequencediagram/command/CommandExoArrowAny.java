@@ -149,9 +149,9 @@ abstract class CommandExoArrowAny extends SingleLineCommand2<SequenceDiagram> {
 		msg.setPart1Anchor(arg.get("PART1ANCHOR", 1));
 		msg.setPart2Anchor(arg.get("PART2ANCHOR", 1));
 
-		final String error = diagram.addMessage(msg);
-		if (error != null)
-			return CommandExecutionResult.error(error);
+		final CommandExecutionResult status = diagram.addMessage(msg);
+		if (status.isOk() == false)
+			return status;
 
 		final String s = arg.get("LIFECOLOR", 0);
 

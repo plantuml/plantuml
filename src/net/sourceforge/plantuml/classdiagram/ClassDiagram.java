@@ -212,7 +212,7 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 	}
 
 	private TextBlock getEntityImageClass(ILeaf entity) {
-		return new EntityImageClass(null, entity, getSkinParam(), this);
+		return new EntityImageClass(entity, getSkinParam(), this);
 	}
 
 	@Override

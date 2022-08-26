@@ -245,7 +245,7 @@ public class GroupingTile extends AbstractTile {
 		tiles = removeEmptyCloseToParallel(tiles);
 		final List<Tile> result = new ArrayList<>();
 		for (Tile tile : tiles) {
-			if (isParallel(tile)) {
+			if (result.size() > 0 && isParallel(tile)) {
 				if (pending == null) {
 					pending = new TileParallel(stringBounder);
 					final Tile tmp = result.get(result.size() - 1);

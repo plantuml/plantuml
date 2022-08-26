@@ -39,6 +39,7 @@ package net.sourceforge.plantuml.cucadiagram.entity;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.EnumMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -47,6 +48,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.ISkinParam;
@@ -77,6 +79,7 @@ import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.svek.IEntityImage;
+import net.sourceforge.plantuml.svek.Kal;
 import net.sourceforge.plantuml.svek.Margins;
 import net.sourceforge.plantuml.svek.PackageStyle;
 import net.sourceforge.plantuml.svek.SingleStrategy;
@@ -282,7 +285,6 @@ final public class EntityImpl implements ILeaf, IGroup {
 
 	public final Margins getMargins() {
 		checkNotGroup();
-		System.err.println("GETTING MARGIN!");
 		return margins;
 	}
 
@@ -787,6 +789,25 @@ final public class EntityImpl implements ILeaf, IGroup {
 	@Override
 	public Stereostyles getStereostyles() {
 		return stereostyles;
+	}
+
+	private final Map<Direction, List<Kal>> kals = new EnumMap<>(Direction.class);
+
+	public void addKal(Kal kal) {
+		final Direction position = kal.getPosition();
+		List<Kal> list = kals.get(position);
+		if (list == null) {
+			list = new ArrayList<>();
+			kals.put(position, list);
+		}
+		list.add(kal);
+	}
+
+	public List<Kal> getKals(Direction position) {
+		final List<Kal> result = kals.get(position);
+		if (result == null)
+			return Collections.emptyList();
+		return Collections.unmodifiableList(result);
 	}
 
 }

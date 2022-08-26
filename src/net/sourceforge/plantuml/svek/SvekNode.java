@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.svek;
 import java.awt.geom.Point2D;
 import java.util.List;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.Hideable;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.awt.geom.Dimension2D;
@@ -52,23 +52,24 @@ import net.sourceforge.plantuml.svek.image.AbstractEntityImageBorder;
 import net.sourceforge.plantuml.svek.image.EntityImageDescription;
 import net.sourceforge.plantuml.svek.image.EntityImageLollipopInterface;
 import net.sourceforge.plantuml.ugraphic.Shadowable;
+import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 
 public class SvekNode implements Positionable, IShapePseudo, Hideable {
 
 	private final ShapeType type;
-	private final double width;
-	private final double height;
+	private Dimension2D dimImage;
 
 	private final String uid;
 	private final int color;
 
 	private double minX;
 	private double minY;
-	private final Margins shield;
+	private Margins shield;
 
 	private final EntityPosition entityPosition;
 	private final IEntityImage image;
+	private final StringBounder stringBounder;
 
 	public EntityPosition getEntityPosition() {
 		return entityPosition;
@@ -95,19 +96,14 @@ public class SvekNode implements Positionable, IShapePseudo, Hideable {
 	private final IGroup group;
 
 	SvekNode(ILeaf ent, IEntityImage image, ColorSequence colorSequence, StringBounder stringBounder) {
-		final Dimension2D dim = image.calculateDimension(stringBounder);
+		this.stringBounder = stringBounder;
 		this.entityPosition = ent.getEntityPosition();
 		this.image = image;
 		this.top = ent.isTop();
 		this.type = image.getShapeType();
-		this.width = dim.getWidth();
-		this.height = dim.getHeight();
+
 		this.color = colorSequence.getValue();
 		this.uid = String.format("sh%04d", color);
-		this.shield = image.getShield(stringBounder);
-		if (shield.isZero() == false && type != ShapeType.RECTANGLE && type != ShapeType.RECTANGLE_HTML_FOR_PORTS
-				&& type != ShapeType.RECTANGLE_WITH_CIRCLE_INSIDE)
-			throw new IllegalArgumentException();
 
 		if (((EntityImpl) ent).getOriginalGroup() == null) {
 			this.group = null;
@@ -118,16 +114,22 @@ public class SvekNode implements Positionable, IShapePseudo, Hideable {
 		}
 	}
 
+	private Dimension2D getDimImage() {
+		if (dimImage == null)
+			this.dimImage = image.calculateDimension(stringBounder);
+		return dimImage;
+	}
+
 	public final ShapeType getType() {
 		return type;
 	}
 
 	public final double getWidth() {
-		return width;
+		return getDimImage().getWidth();
 	}
 
 	public final double getHeight() {
-		return height;
+		return getDimImage().getHeight();
 	}
 
 	public void appendShape(StringBuilder sb, StringBounder stringBounder) {
@@ -139,7 +141,7 @@ public class SvekNode implements Positionable, IShapePseudo, Hideable {
 			appendHtml(sb);
 			return;
 		}
-		if (type == ShapeType.RECTANGLE && shield.isZero() == false) {
+		if (type == ShapeType.RECTANGLE && shield().isZero() == false) {
 			appendHtml(sb);
 			return;
 		}
@@ -156,6 +158,17 @@ public class SvekNode implements Positionable, IShapePseudo, Hideable {
 		sb.append("color=\"" + StringUtils.sharp000000(color) + "\"");
 		sb.append("];");
 		SvekUtils.println(sb);
+	}
+
+	private Margins shield() {
+		if (shield == null) {
+			this.shield = image.getShield(stringBounder);
+			if (shield.isZero() == false && type != ShapeType.RECTANGLE && type != ShapeType.RECTANGLE_HTML_FOR_PORTS
+					&& type != ShapeType.RECTANGLE_WITH_CIRCLE_INSIDE)
+				throw new IllegalStateException();
+		}
+
+		return shield;
 	}
 
 	private void appendHtml(StringBuilder sb) {
@@ -175,20 +188,20 @@ public class SvekNode implements Positionable, IShapePseudo, Hideable {
 		sb.append("<TABLE BORDER=\"0\" CELLBORDER=\"0\" CELLSPACING=\"0\" CELLPADDING=\"0\">");
 		sb.append("<TR>");
 		appendTd(sb);
-		appendTd(sb, 1, shield.getY1());
+		appendTd(sb, 1, shield().getY1());
 		appendTd(sb);
 		sb.append("</TR>");
 		sb.append("<TR>");
-		appendTd(sb, shield.getX1(), 1);
+		appendTd(sb, shield().getX1(), 1);
 		sb.append("<TD BGCOLOR=\"" + StringUtils.sharp000000(color) + "\"");
 		sb.append(" FIXEDSIZE=\"TRUE\" WIDTH=\"" + getWidth() + "\" HEIGHT=\"" + getHeight() + "\"");
 		sb.append(" PORT=\"h\">");
 		sb.append("</TD>");
-		appendTd(sb, shield.getX2(), 1);
+		appendTd(sb, shield().getX2(), 1);
 		sb.append("</TR>");
 		sb.append("<TR>");
 		appendTd(sb);
-		appendTd(sb, 1, shield.getY2());
+		appendTd(sb, 1, shield().getY2());
 		appendTd(sb);
 		sb.append("</TR>");
 		sb.append("</TABLE>");
@@ -247,7 +260,7 @@ public class SvekNode implements Positionable, IShapePseudo, Hideable {
 	}
 
 	private void appendShapeInternal(StringBuilder sb) {
-		if (type == ShapeType.RECTANGLE && shield.isZero() == false)
+		if (type == ShapeType.RECTANGLE && shield().isZero() == false)
 			throw new UnsupportedOperationException();
 		else if (type == ShapeType.RECTANGLE || type == ShapeType.RECTANGLE_WITH_CIRCLE_INSIDE
 				|| type == ShapeType.FOLDER)
@@ -301,15 +314,15 @@ public class SvekNode implements Positionable, IShapePseudo, Hideable {
 	}
 
 	public Dimension2D getSize() {
-		return new Dimension2DDouble(width, height);
+		return getDimImage();
 	}
 
 	public ClusterPosition getClusterPosition() {
-		return new ClusterPosition(minX, minY, minX + width, minY + height);
+		return new ClusterPosition(minX, minY, minX + getWidth(), minY + getHeight());
 	}
 
 	public boolean isShielded() {
-		return shield.isZero() == false;
+		return shield().isZero() == false;
 	}
 
 	public void moveSvek(double deltaX, double deltaY) {
@@ -349,7 +362,7 @@ public class SvekNode implements Positionable, IShapePseudo, Hideable {
 		if (getType() != ShapeType.FOLDER)
 			return pt;
 
-		final ClusterPosition clusterPosition = new ClusterPosition(minX, minY, minX + width, minY + height);
+		final ClusterPosition clusterPosition = new ClusterPosition(minX, minY, minX + getWidth(), minY + getHeight());
 		if (clusterPosition.isPointJustUpper(pt)) {
 			final Dimension2D dimName = ((EntityImageDescription) image).getNameDimension(stringBounder);
 			if (pt.getX() < minX + dimName.getWidth())
@@ -366,5 +379,42 @@ public class SvekNode implements Positionable, IShapePseudo, Hideable {
 
 	public void addImpact(double angle) {
 		((EntityImageLollipopInterface) image).addImpact(angle);
+	}
+
+	public void drawKals(UGraphic ug) {
+		if (leaf instanceof EntityImpl == false)
+			return;
+
+		drawList(ug, ((EntityImpl) leaf).getKals(Direction.DOWN));
+		drawList(ug, ((EntityImpl) leaf).getKals(Direction.UP));
+		drawList(ug, ((EntityImpl) leaf).getKals(Direction.LEFT));
+		drawList(ug, ((EntityImpl) leaf).getKals(Direction.RIGHT));
+
+	}
+
+	public void fixOverlap() {
+		if (leaf instanceof EntityImpl == false)
+			return;
+
+		fixHoverlap(((EntityImpl) leaf).getKals(Direction.DOWN));
+		fixHoverlap(((EntityImpl) leaf).getKals(Direction.UP));
+	}
+
+	private void fixHoverlap(final List<Kal> list) {
+		final LineOfSegments los = new LineOfSegments();
+		for (Kal kal : list)
+			los.addSegment(kal.getX1(), kal.getX2());
+
+		final double[] res = los.solveOverlaps();
+		for (int i = 0; i < list.size(); i++) {
+			final Kal kal = list.get(i);
+			final double diff = res[i] - kal.getX1();
+			kal.moveX(diff);
+		}
+	}
+
+	private void drawList(UGraphic ug, final List<Kal> list) {
+		for (Kal kal : list)
+			kal.drawU(ug);
 	}
 }

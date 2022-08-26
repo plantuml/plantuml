@@ -151,7 +151,7 @@ public final class GroupPngMakerState {
 		final DotData dotData = new DotData(group, links, group.getLeafsDirect(), diagram.getUmlDiagramType(),
 				skinParam, new InnerGroupHierarchy(), diagram.getColorMapper(), diagram.getEntityFactory(),
 				diagram.isHideEmptyDescriptionForState(), DotMode.NORMAL, diagram.getNamespaceSeparator(),
-				diagram.getPragma(), diagram.getGraphvizVersion());
+				diagram.getPragma());
 
 		final GeneralImageBuilder svek2 = new GeneralImageBuilder(false, dotData, diagram.getEntityFactory(),
 				diagram.getSource(), diagram.getPragma(), stringBounder, SName.stateDiagram);

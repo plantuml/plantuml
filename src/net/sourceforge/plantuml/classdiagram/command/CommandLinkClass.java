@@ -233,11 +233,12 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		final Labels labels = new Labels(arg);
 
 		final String kal1 = arg.get("QUALIFIER1", 0);
+		final String kal2 = arg.get("QUALIFIER2", 0);
 
 		final LinkArg linkArg = LinkArg
 				.build(labels.getDisplay(), queue, diagram.getSkinParam().classAttributeIconSize() > 0)
 				.withQualifier(labels.getFirstLabel(), labels.getSecondLabel())
-				.withDistanceAngle(diagram.getLabeldistance(), diagram.getLabelangle()).withKal(kal1);
+				.withDistanceAngle(diagram.getLabeldistance(), diagram.getLabelangle()).withKal(kal1, kal2);
 
 		Link link = new Link(diagram.getSkinParam().getCurrentStyleBuilder(), cl1, cl2, linkType, linkArg);
 		if (arg.get("URL", 0) != null) {

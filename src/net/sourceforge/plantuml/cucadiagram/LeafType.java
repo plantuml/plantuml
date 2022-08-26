@@ -65,12 +65,15 @@ public enum LeafType {
 
 	public static LeafType getLeafType(String type) {
 		type = StringUtils.goUpperCase(type);
-		if (type.startsWith("ABSTRACT")) {
+		if (type.startsWith("ABSTRACT"))
 			return LeafType.ABSTRACT_CLASS;
-		}
-		if (type.startsWith("DIAMOND")) {
+
+		if (type.startsWith("DIAMOND"))
 			return LeafType.STATE_CHOICE;
-		}
+
+		if (type.startsWith("STATIC"))
+			return LeafType.CLASS;
+
 		return LeafType.valueOf(type);
 	}
 

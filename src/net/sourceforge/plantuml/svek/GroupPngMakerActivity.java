@@ -128,7 +128,7 @@ public final class GroupPngMakerActivity {
 
 		final DotData dotData = new DotData(group, links, group.getLeafsDirect(), diagram.getUmlDiagramType(),
 				skinParam, new InnerGroupHierarchy(), diagram.getColorMapper(), diagram.getEntityFactory(), false,
-				DotMode.NORMAL, diagram.getNamespaceSeparator(), diagram.getPragma(), diagram.getGraphvizVersion());
+				DotMode.NORMAL, diagram.getNamespaceSeparator(), diagram.getPragma());
 
 		final GeneralImageBuilder svek2 = new GeneralImageBuilder(false, dotData, diagram.getEntityFactory(),
 				diagram.getSource(), diagram.getPragma(), stringBounder, SName.activityDiagram);

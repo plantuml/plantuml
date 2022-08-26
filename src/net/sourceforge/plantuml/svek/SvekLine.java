@@ -73,6 +73,7 @@ import net.sourceforge.plantuml.cucadiagram.NoteLinkStrategy;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.cucadiagram.dot.DotSplines;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizVersion;
+import net.sourceforge.plantuml.cucadiagram.entity.EntityImpl;
 import net.sourceforge.plantuml.descdiagram.command.StringWithArrow;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -211,7 +212,21 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 	}
 
 	public SvekLine(Link link, ColorSequence colorSequence, ISkinParam skinParam, StringBounder stringBounder,
-			FontConfiguration font, Bibliotekon bibliotekon, Pragma pragma) {
+			FontConfiguration font, Bibliotekon bibliotekon, Pragma pragma, GraphvizVersion graphvizVersion) {
+
+		if (graphvizVersion.useShieldForQuantifier() && link.getLinkArg().getQualifier1() != null)
+			((EntityImpl) link.getEntity1()).ensureMargins(Margins.uniform(16));
+
+		if (graphvizVersion.useShieldForQuantifier() && link.getLinkArg().getQualifier2() != null)
+			((EntityImpl) link.getEntity2()).ensureMargins(Margins.uniform(16));
+
+		if (link.getLinkArg().getKal1() != null)
+			this.kal1 = new Kal(this, link.getLinkArg().getKal1(), font, skinParam, (EntityImpl) link.getEntity1(),
+					link, stringBounder);
+
+		if (link.getLinkArg().getKal2() != null)
+			this.kal2 = new Kal(this, link.getLinkArg().getKal2(), font, skinParam, (EntityImpl) link.getEntity2(),
+					link, stringBounder);
 
 		this.link = Objects.requireNonNull(link);
 		this.skinParam = skinParam;
@@ -308,15 +323,10 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		else
 			this.labelShield = 7;
 
-		if (link.getLinkArg().getKal1() != null) {
-			this.kal1 = Display.getWithNewlines(link.getLinkArg().getKal1()).create7(font, HorizontalAlignment.LEFT,
-					skinParam, CreoleMode.SIMPLE_LINE);
-
-		}
-
 	}
 
-	private TextBlock kal1;
+	private Kal kal1;
+	private Kal kal2;
 
 	private TextBlock addVisibilityModifier(TextBlock block, Link link, ISkinParam skinParam) {
 		final VisibilityModifier visibilityModifier = link.getVisibilityModifier();
@@ -766,17 +776,18 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 			link.getLinkConstraint().drawMe(ug, skinParam);
 		}
 
-		if (kal1 != null) {
-			final Dimension2D dim1 = kal1.calculateDimension(stringBounder);
-			final URectangle rect = new URectangle(dim1);
-			final UTranslate tr = new UTranslate(dotPath.getStartPoint()).compose(new UTranslate(dx, dy))
-					.compose(UTranslate.dx(-dim1.getWidth() / 2));
-			final UGraphic ug1 = ug.apply(tr);
-			ug1.apply(HColors.WHITE.bg()).draw(rect);
-			kal1.drawU(ug1);
-		}
-
 		ug.closeGroup();
+	}
+
+	public void computeKal() {
+		if (kal1 != null) {
+			final UTranslate tr = new UTranslate(dotPath.getStartPoint()).compose(new UTranslate(dx, dy));
+			kal1.setTranslate(tr);
+		}
+		if (kal2 != null) {
+			final UTranslate tr = new UTranslate(dotPath.getEndPoint()).compose(new UTranslate(dx, dy));
+			kal2.setTranslate(tr);
+		}
 	}
 
 	private List<Point2D> getSquare(double x, double y) {
@@ -1051,6 +1062,14 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 
 	public Stereotype getStereotype() {
 		return link.getStereotype();
+	}
+
+	public void moveStartPoint(double dx, double dy) {
+		dotPath.moveStartPoint(dx, dy);
+	}
+
+	public void moveEndPoint(double dx, double dy) {
+		dotPath.moveEndPoint(dx, dy);
 	}
 
 }
