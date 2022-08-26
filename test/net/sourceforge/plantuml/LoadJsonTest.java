@@ -34,7 +34,7 @@ class LoadJsonTest {
     // ************ Test DSL data
     private static final String DIAGRAM = "" +
             "@startuml\n" +
-            "!$JSON_DATA=%loadJSON(test.json)\n" +
+            "!$JSON_DATA=%load_json(test.json)\n" +
 
             // title should have the value from the JSON file
             "title $JSON_DATA.jsonTestKey\n" +
@@ -44,7 +44,7 @@ class LoadJsonTest {
     private static final String DIAGRAM_DEF = "" +
             "@startuml\n" +
             "!$DEF_JSON=" + DEF_JSON + "\n" +
-            "!$JSON_DATA=%loadJSON(\"test-notfound.json\", $DEF_JSON)\n" +
+            "!$JSON_DATA=%load_json(\"test-notfound.json\", $DEF_JSON)\n" +
 
             // title should have the value from the default (because the file doesn't exist)
             "title $JSON_DATA.jsonTestKey\n" +
@@ -53,7 +53,7 @@ class LoadJsonTest {
 
     private static final String DIAGRAM_DEF_EMPTY = "" +
             "@startuml\n" +
-            "!$JSON_DATA=%loadJSON(\"test-notfound.json\")\n" +
+            "!$JSON_DATA=%load_json(\"test-notfound.json\")\n" +
             // JSON_DATA is defined, but empty (loadJSON default). So, title contains only  "xx  yy".
             "title xx $JSON_DATA.jsonTestKey yy\n" +
             "a -> b\n" +
