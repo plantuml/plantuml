@@ -33,7 +33,7 @@ Expected result MUST be put between triple brackets
         <XMI.metamodel xmi.name="UML" xmi.version="1.3"/>
     </XMI.header>
     <XMI.content>
-        <UML:Model name="PlantUML 1.2022.8beta2" xmi.id="model1">
+        <UML:Model name="PlantUML" xmi.id="model1">
             <UML:Namespace.ownedElement>
                 <UML:Component name="test" namespace="model1" xmi.id="cl0002">
                     <UML:Classifier.feature/>
@@ -76,7 +76,7 @@ Expected result MUST be put between triple brackets
         <XMI.metamodel xmi.name="UML" xmi.version="1.3"/>
     </XMI.header>
     <XMI.content>
-        <UML:Model name="PlantUML 1.2022.8beta2" xmi.id="model1">
+        <UML:Model name="PlantUML" xmi.id="model1">
             <UML:Namespace.ownedElement>
                 <UML:Component name="test" namespace="model1" xmi.id="cl0002">
                     <UML:Classifier.feature/>

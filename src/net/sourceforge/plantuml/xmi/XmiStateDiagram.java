@@ -92,12 +92,9 @@ public class XmiStateDiagram implements XmlDiagramTransformer {
 		final Element content = document.createElement("XMI.content");
 		xmi.appendChild(content);
 
-		// <UML:Model xmi.id="UMLModel.4" name="Design Model"
-		// visibility="public" isSpecification="false" isRoot="false"
-		// isLeaf="false" isAbstract="false">
 		final Element model = document.createElement("UML:Model");
 		model.setAttribute("xmi.id", CucaDiagramXmiMaker.getModel(diagram));
-		model.setAttribute("name", "PlantUML "+Version.versionString());
+		model.setAttribute("name", "PlantUML");
 		content.appendChild(model);
 
 		// <UML:Namespace.ownedElement>

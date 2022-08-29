@@ -8,7 +8,6 @@ import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.Message;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
-import net.sourceforge.plantuml.version.Version;
 
 public class XmiSequenceDiagramArgo extends XmiSequenceDiagram {
 	public XmiSequenceDiagramArgo(SequenceDiagram diagram, Document document) {
@@ -33,11 +32,8 @@ public class XmiSequenceDiagramArgo extends XmiSequenceDiagram {
 		final Element content = document.createElement("XMI.content");
 		xmi.appendChild(content);
 
-		// <UML:Model xmi.id="UMLModel.4" name="Design Model"
-		// visibility="public" isSpecification="false" isRoot="false"
-		// isLeaf="false" isAbstract="false">
 		final Element model = createElement(diagram, "UML:Model");
-		model.setAttribute("name", "PlantUML " + Version.versionString());
+		model.setAttribute("name", "PlantUML");
 		content.appendChild(model);
 
 		Element ownedElement = document.createElement("UML:Namespace.ownedElement");
@@ -84,19 +80,17 @@ public class XmiSequenceDiagramArgo extends XmiSequenceDiagram {
 
 	private Node createSendAction(Message message) {
 		Element sendAction = createElement(message, "UML:SendAction");
-		sendAction.appendChild(document.createElement("UML:Action.script")).appendChild(createElement(
-				"UML:ActionExpression", new String[][] { 
-					{"xmi.id", getXmiId("UML:ActionExpression", message)},
-					{"body", getDisplayString(message.getLabel()) }
-				}));
+		sendAction.appendChild(document.createElement("UML:Action.script"))
+				.appendChild(createElement("UML:ActionExpression",
+						new String[][] { { "xmi.id", getXmiId("UML:ActionExpression", message) },
+								{ "body", getDisplayString(message.getLabel()) } }));
 		return sendAction;
 	}
 
 	private Element createElement(Object object, String tag) {
-		return createElement(tag, 
-				new String[][] { {"xmi.id", getXmiId("UML:ActionExpression", object)}});
+		return createElement(tag, new String[][] { { "xmi.id", getXmiId("UML:ActionExpression", object) } });
 	}
-	
+
 	private Node createRef(String tag, Object target) {
 		Element role = document.createElement(tag);
 		role.setAttribute("xmi.idref", getXmiId(tag, target));
