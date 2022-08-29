@@ -64,7 +64,6 @@ import net.sourceforge.plantuml.cucadiagram.LinkType;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
-import net.sourceforge.plantuml.utils.UniqueSequence;
 
 public final class CommandFactoryNoteActivity implements SingleMultiFactoryCommand<ActivityDiagram> {
 
@@ -121,7 +120,7 @@ public final class CommandFactoryNoteActivity implements SingleMultiFactoryComma
 
 				// final String s = StringUtils.getMergedLines(strings);
 
-				final String codeString = UniqueSequence.getString("GMN");
+				final String codeString = diagram.getUniqueSequence("GMN");
 				final Ident ident = diagram.buildLeafIdent(codeString);
 				final Code code = diagram.V1972() ? ident : diagram.buildCode(codeString);
 				final IEntity note = diagram.createLeaf(ident, code, strings, LeafType.NOTE, null);
@@ -139,7 +138,7 @@ public final class CommandFactoryNoteActivity implements SingleMultiFactoryComma
 			@Override
 			protected CommandExecutionResult executeArg(final ActivityDiagram diagram, LineLocation location,
 					RegexResult arg) throws NoSuchColorException {
-				final String tmp = UniqueSequence.getString("GN");
+				final String tmp = diagram.getUniqueSequence("GN");
 				final Ident ident = diagram.buildLeafIdent(tmp);
 				final Code code = diagram.V1972() ? ident : diagram.buildCode(tmp);
 				final IEntity note = diagram.createNote(ident, code, Display.getWithNewlines(arg.get("NOTE", 0)));

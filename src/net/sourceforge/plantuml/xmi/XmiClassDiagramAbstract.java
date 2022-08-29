@@ -57,14 +57,14 @@ import org.w3c.dom.Element;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
+import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Member;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
-import net.sourceforge.plantuml.utils.UniqueSequence;
 import net.sourceforge.plantuml.xml.XmlFactories;
 
-abstract class XmiClassDiagramAbstract implements IXmiClassDiagram {
+abstract class XmiClassDiagramAbstract implements XmlDiagramTransformer {
 
 	// https://www.ibm.com/developerworks/library/x-wxxm24/
 	// http://pierre.ree7.fr/blog/?p=5
@@ -99,9 +99,6 @@ abstract class XmiClassDiagramAbstract implements IXmiClassDiagram {
 		final Element content = document.createElement("XMI.content");
 		xmi.appendChild(content);
 
-		// <UML:Model xmi.id="UMLModel.4" name="Design Model"
-		// visibility="public" isSpecification="false" isRoot="false"
-		// isLeaf="false" isAbstract="false">
 		final Element model = document.createElement("UML:Model");
 		model.setAttribute("xmi.id", CucaDiagramXmiMaker.getModel(classDiagram));
 		model.setAttribute("name", "PlantUML");
@@ -131,32 +128,24 @@ abstract class XmiClassDiagramAbstract implements IXmiClassDiagram {
 
 		final Transformer transformer = XmlFactories.newTransformer();
 		transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-		// transformer.setOutputProperty(OutputKeys.ENCODING, "ISO-8859-1");
 		transformer.setOutputProperty(OutputKeys.ENCODING, UTF_8.name());
 		// tf.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
 		transformer.transform(source, resultat);
 	}
 
 	final protected Element createEntityNode(IEntity entity) {
-		// <UML:Class xmi.id="UMLClass.5" name="Class1" visibility="public"
-		// isSpecification="false"
-		// namespace="UMLModel.4" isRoot="false" isLeaf="false"
-		// isAbstract="false" participant="UMLAssociationEnd.11"
-		// isActive="false">
 		final Element cla = document.createElement("UML:Class");
-		if (entity.getLeafType() == LeafType.NOTE) {
+		if (entity.getLeafType() == LeafType.NOTE)
 			return null;
-		}
 
 		cla.setAttribute("xmi.id", entity.getUid());
 		cla.setAttribute("name", entity.getDisplay().get(0).toString());
 		final String parentCode = entity.getIdent().parent().forXmi();
-		// final LongCode parentCode = entity.getParentContainer().getLongCode();
-		if (parentCode.length() == 0) {
+
+		if (parentCode.length() == 0)
 			cla.setAttribute("namespace", CucaDiagramXmiMaker.getModel(classDiagram));
-		} else {
+		else
 			cla.setAttribute("namespace", parentCode);
-		}
 
 		final Stereotype stereotype = entity.getStereotype();
 		if (stereotype != null) {
@@ -170,45 +159,47 @@ abstract class XmiClassDiagramAbstract implements IXmiClassDiagram {
 		}
 
 		final LeafType type = entity.getLeafType();
-		if (type == LeafType.ABSTRACT_CLASS) {
+		if (type == LeafType.ABSTRACT_CLASS)
 			cla.setAttribute("isAbstract", "true");
-		} else if (type == LeafType.INTERFACE) {
+		else if (type == LeafType.INTERFACE)
 			cla.setAttribute("isInterface", "true");
-		}
+
+		if (((ILeaf) entity).isStatic())
+			cla.setAttribute("isStatic", "true");
+
+		if (((ILeaf) entity).getVisibilityModifier() == VisibilityModifier.PRIVATE_FIELD
+				|| ((ILeaf) entity).getVisibilityModifier() == VisibilityModifier.PRIVATE_METHOD)
+			cla.setAttribute("visibility", ((ILeaf) entity).getVisibilityModifier().getXmiVisibility());
 
 		final Element feature = document.createElement("UML:Classifier.feature");
 		cla.appendChild(feature);
 
 		for (CharSequence cs : entity.getBodier().getFieldsToDisplay()) {
 			final Member m = (Member) cs;
-			// <UML:Attribute xmi.id="UMLAttribute.6" name="Attribute1"
-			// visibility="public" isSpecification="false"
-			// ownerScope="instance" changeability="changeable"
-			// targetScope="instance" type="" owner="UMLClass.5"/>
+
 			final Element attribute = document.createElement("UML:Attribute");
-			attribute.setAttribute("xmi.id", "att" + UniqueSequence.getValue());
+			attribute.setAttribute("xmi.id", "att" + classDiagram.getUniqueSequence());
 			attribute.setAttribute("name", m.getDisplay(false));
 			final VisibilityModifier visibility = m.getVisibilityModifier();
-			if (visibility != null) {
+			if (visibility != null)
 				attribute.setAttribute("visibility", visibility.getXmiVisibility());
-			}
+			if (m.isStatic())
+				attribute.setAttribute("isStatic", "true");
+
 			feature.appendChild(attribute);
 		}
 
 		for (CharSequence cs : entity.getBodier().getMethodsToDisplay()) {
 			final Member m = (Member) cs;
-			// <UML:Operation xmi.id="UMLOperation.7" name="Operation1"
-			// visibility="public" isSpecification="false"
-			// ownerScope="instance" isQuery="false" concurrency="sequential"
-			// isRoot="false" isLeaf="false"
-			// isAbstract="false" specification="" owner="UMLClass.5"/>
 			final Element operation = document.createElement("UML:Operation");
-			operation.setAttribute("xmi.id", "att" + UniqueSequence.getValue());
+			operation.setAttribute("xmi.id", "att" + classDiagram.getUniqueSequence());
 			operation.setAttribute("name", m.getDisplay(false));
 			final VisibilityModifier visibility = m.getVisibilityModifier();
-			if (visibility != null) {
+			if (visibility != null)
 				operation.setAttribute("visibility", visibility.getXmiVisibility());
-			}
+			if (m.isStatic())
+				operation.setAttribute("isStatic", "true");
+
 			feature.appendChild(operation);
 		}
 		return cla;

@@ -58,7 +58,6 @@ import net.sourceforge.plantuml.cucadiagram.LinkArg;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
 import net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
-import net.sourceforge.plantuml.utils.UniqueSequence;
 
 final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassOrObjectDiagram> {
 
@@ -124,7 +123,7 @@ final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassO
 		final IEntity cl2;
 		final IEntity normalEntity;
 
-		final String suffix = "lol" + UniqueSequence.getValue();
+		final String suffix = "lol" + diagram.getUniqueSequence();
 		if (arg.get("LOL_THEN_ENT", 1) == null) {
 			assert arg.get("ENT_THEN_LOL", 0) != null;
 			final Ident ident1 = diagram.buildLeafIdent(ent1);

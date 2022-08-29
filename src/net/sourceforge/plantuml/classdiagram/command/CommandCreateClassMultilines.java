@@ -226,7 +226,8 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 
 	private IEntity executeArg0(ClassDiagram diagram, RegexResult line0) throws NoSuchColorException {
 
-		final LeafType type = LeafType.getLeafType(StringUtils.goUpperCase(line0.get("TYPE", 0)));
+		final String typeString = StringUtils.goUpperCase(line0.get("TYPE", 0));
+		final LeafType type = LeafType.getLeafType(typeString);
 		final String visibilityString = line0.get("VISIBILITY", 0);
 		VisibilityModifier visibilityModifier = null;
 		if (visibilityString != null)
@@ -294,6 +295,9 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 
 		if (generic != null)
 			result.setGeneric(generic);
+
+		if (typeString.contains("STATIC"))
+			result.setStatic(true);
 
 		return result;
 	}

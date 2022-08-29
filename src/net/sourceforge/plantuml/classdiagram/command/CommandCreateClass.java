@@ -126,7 +126,8 @@ public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 	@Override
 	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg)
 			throws NoSuchColorException {
-		final LeafType type = LeafType.getLeafType(StringUtils.goUpperCase(arg.get("TYPE", 0)));
+		final String typeString = StringUtils.goUpperCase(arg.get("TYPE", 0));
+		final LeafType type = LeafType.getLeafType(typeString);
 		final String idShort = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.getLazzy("CODE", 0),
 				"\"([:");
 		final String display = arg.getLazzy("DISPLAY", 0);
@@ -190,6 +191,9 @@ public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 		CommandCreateClassMultilines.manageExtends("EXTENDS", diagram, arg, entity);
 		CommandCreateClassMultilines.manageExtends("IMPLEMENTS", diagram, arg, entity);
 		CommandCreateClassMultilines.addTags(entity, arg.get("TAGS", 0));
+
+		if (typeString.contains("STATIC"))
+			entity.setStatic(true);
 
 		return CommandExecutionResult.ok();
 	}

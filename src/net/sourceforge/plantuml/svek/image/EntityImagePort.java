@@ -132,6 +132,6 @@ public class EntityImagePort extends AbstractEntityImageBorder {
 	}
 
 	public ShapeType getShapeType() {
-		return ShapeType.RECTANGLE;
+		return ShapeType.RECTANGLE_PORT;
 	}
 }

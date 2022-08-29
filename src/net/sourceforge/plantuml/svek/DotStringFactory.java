@@ -94,7 +94,7 @@ public class DotStringFactory implements Moveable {
 
 		this.colorSequence = new ColorSequence();
 		this.stringBounder = stringBounder;
-		this.root = new Cluster(colorSequence, skinParam, dotData.getRootGroup());
+		this.root = new Cluster(dotData.getEntityFactory().getDiagram(), colorSequence, skinParam, dotData.getRootGroup());
 		this.current = root;
 	}
 
@@ -105,7 +105,7 @@ public class DotStringFactory implements Moveable {
 
 		this.colorSequence = new ColorSequence();
 		this.stringBounder = stringBounder;
-		this.root = new Cluster(colorSequence, skinParam, diagram.getEntityFactory().getRootGroup());
+		this.root = new Cluster(diagram, colorSequence, skinParam, diagram.getEntityFactory().getRootGroup());
 		this.current = root;
 	}
 
@@ -173,13 +173,13 @@ public class DotStringFactory implements Moveable {
 		SvekUtils.println(sb);
 
 		for (String s : dotStrings) {
-			if (s.startsWith("ranksep")) {
+			if (s.startsWith("ranksep"))
 				sb.append("ranksep=" + ranksepInches + ";");
-			} else if (s.startsWith("nodesep")) {
+			else if (s.startsWith("nodesep"))
 				sb.append("nodesep=" + nodesepInches + ";");
-			} else {
+			else
 				sb.append(s);
-			}
+
 			SvekUtils.println(sb);
 		}
 		// sb.append("newrank=true;");
@@ -309,9 +309,9 @@ public class DotStringFactory implements Moveable {
 		try {
 			final ProcessState state = graphviz.createFile3(baos);
 			baos.close();
-			if (state.differs(ProcessState.TERMINATED_OK())) {
+			if (state.differs(ProcessState.TERMINATED_OK()))
 				throw new IllegalStateException("Timeout4 " + state, state.getCause());
-			}
+
 		} catch (GraphvizJsRuntimeException e) {
 			System.err.println("GraphvizJsRuntimeException");
 			graphvizVersion = GraphvizJs.getGraphvizVersion(true);
@@ -367,7 +367,7 @@ public class DotStringFactory implements Moveable {
 			int idx = svg.indexOf("<title>" + node.getUid() + "</title>");
 			if (node.getType() == ShapeType.RECTANGLE || node.getType() == ShapeType.RECTANGLE_HTML_FOR_PORTS
 					|| node.getType() == ShapeType.RECTANGLE_WITH_CIRCLE_INSIDE || node.getType() == ShapeType.FOLDER
-					|| node.getType() == ShapeType.DIAMOND) {
+					|| node.getType() == ShapeType.DIAMOND || node.getType() == ShapeType.RECTANGLE_PORT) {
 				final List<Point2D.Double> points = svgResult.substring(idx).extractList(SvgResult.POINTS_EQUALS);
 				final double minY = SvekUtils.getMinY(points);
 				final double overscanX = node.getOverscanX(stringBounder);

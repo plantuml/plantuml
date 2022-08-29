@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.command.Position;
+import net.sourceforge.plantuml.cucadiagram.entity.EntityImpl;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -57,7 +58,6 @@ import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.ugraphic.UComment;
 import net.sourceforge.plantuml.ugraphic.UFont;
-import net.sourceforge.plantuml.utils.UniqueSequence;
 
 public class Link extends WithLinkType implements Hideable, Removeable {
 
@@ -73,7 +73,7 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 
 	private final LinkArg linkArg;
 
-	final private String uid = "LNK" + UniqueSequence.getValue();
+	final private String uid;
 
 	private Display note;
 	private Position notePosition;
@@ -120,7 +120,9 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 		this.styleBuilder = styleBuilder;
 		this.cl1 = Objects.requireNonNull(cl1);
 		this.cl2 = Objects.requireNonNull(cl2);
+
 		this.type = type;
+		this.uid = "LNK" + ((EntityImpl) cl1).getDiagram().getUniqueSequence();
 
 		this.linkArg = linkArg;
 	}

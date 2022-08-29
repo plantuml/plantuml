@@ -57,7 +57,6 @@ import net.sourceforge.plantuml.cucadiagram.LinkArg;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
 import net.sourceforge.plantuml.cucadiagram.NoteLinkStrategy;
-import net.sourceforge.plantuml.utils.UniqueSequence;
 
 public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram {
 
@@ -138,8 +137,8 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 		final List<Association> same1 = getExistingAssociatedPoints(entity1A, entity1B);
 		final List<Association> same2 = getExistingAssociatedPoints(entity2A, entity2B);
 		if (same1.size() == 0 && same2.size() == 0) {
-			final String tmp1 = UniqueSequence.getString("apoint");
-			final String tmp2 = UniqueSequence.getString("apoint");
+			final String tmp1 = this.getUniqueSequence("apoint");
+			final String tmp2 = this.getUniqueSequence("apoint");
 			final Ident ident1 = buildLeafIdent(tmp1);
 			final Ident ident2 = buildLeafIdent(tmp2);
 			final Code code1 = this.V1972() ? ident1 : buildCode(tmp1);
@@ -252,7 +251,7 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 			this.entity1 = entity1;
 			this.entity2 = entity2;
 			this.associed = associed;
-			final String idShort = UniqueSequence.getString("apoint");
+			final String idShort = AbstractClassOrObjectDiagram.this.getUniqueSequence("apoint");
 			final Ident ident = buildLeafIdent(idShort);
 			final Code code = AbstractClassOrObjectDiagram.this.V1972() ? ident : buildCode(idShort);
 			point = getOrCreateLeaf(ident, code, LeafType.POINT_FOR_ASSOCIATION, null);

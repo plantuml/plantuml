@@ -64,7 +64,6 @@ import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
-import net.sourceforge.plantuml.utils.UniqueSequence;
 
 public class CommandPackageWithUSymbol extends SingleLineCommand2<AbstractEntityDiagram> {
 
@@ -141,7 +140,7 @@ public class CommandPackageWithUSymbol extends SingleLineCommand2<AbstractEntity
 		final String display;
 		final String idShort;
 		if (codeRaw.length() == 0) {
-			idShort = UniqueSequence.getString("##");
+			idShort = diagram.getUniqueSequence("##");
 			display = null;
 		} else {
 			idShort = codeRaw;

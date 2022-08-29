@@ -81,4 +81,8 @@ public interface ILeaf extends IEntity {
 
 	public VisibilityModifier getVisibilityModifier();
 
+	public void setStatic(boolean isStatic);
+
+	public boolean isStatic();
+
 }

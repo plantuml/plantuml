@@ -54,7 +54,6 @@ import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.NamespaceStrategy;
 import net.sourceforge.plantuml.graphic.USymbol;
-import net.sourceforge.plantuml.utils.UniqueSequence;
 
 public class StateDiagram extends AbstractEntityDiagram {
 
@@ -228,7 +227,7 @@ public class StateDiagram extends AbstractEntityDiagram {
 			super.endGroup();
 		}
 		getCurrentGroup().setConcurrentSeparator(direction);
-		final String tmp1 = UniqueSequence.getString(CONCURRENT_PREFIX);
+		final String tmp1 = this.getUniqueSequence(CONCURRENT_PREFIX);
 		final Ident ident1 = buildLeafIdent(tmp1);
 		final Code code1 = this.V1972() ? ident1 : buildCode(tmp1);
 		gotoGroup(ident1, code1, Display.create(""), GroupType.CONCURRENT_STATE, getCurrentGroup(),
@@ -237,7 +236,7 @@ public class StateDiagram extends AbstractEntityDiagram {
 		if (EntityUtils.groupRoot(cur) == false && cur.getGroupType() == GroupType.STATE) {
 			cur.moveEntitiesTo(conc1);
 			super.endGroup();
-			final String tmp2 = UniqueSequence.getString(CONCURRENT_PREFIX);
+			final String tmp2 = this.getUniqueSequence(CONCURRENT_PREFIX);
 			final Ident ident2 = buildLeafIdent(tmp2);
 			final Code code2 = this.V1972() ? ident2 : buildCode(tmp2);
 			gotoGroup(ident2, code2, Display.create(""), GroupType.CONCURRENT_STATE, getCurrentGroup(),

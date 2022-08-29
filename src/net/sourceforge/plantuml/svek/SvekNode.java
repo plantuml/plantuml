@@ -137,6 +137,10 @@ public class SvekNode implements Positionable, IShapePseudo, Hideable {
 			appendLabelHtmlSpecialForLink(sb, stringBounder);
 			return;
 		}
+		if (type == ShapeType.RECTANGLE_PORT) {
+			appendLabelHtmlSpecialForPort(sb, stringBounder);
+			return;
+		}
 		if (type == ShapeType.RECTANGLE_WITH_CIRCLE_INSIDE) {
 			appendHtml(sb);
 			return;
@@ -158,6 +162,21 @@ public class SvekNode implements Positionable, IShapePseudo, Hideable {
 		sb.append("color=\"" + StringUtils.sharp000000(color) + "\"");
 		sb.append("];");
 		SvekUtils.println(sb);
+	}
+
+	private void appendLabelHtmlSpecialForPort(StringBuilder sb, StringBounder stringBounder2) {
+		sb.append(uid);
+		sb.append(" [");
+		sb.append("shape=rect");
+		sb.append(",");
+		sb.append("label=\"\"");
+		sb.append(",");
+		sb.append("width=" + SvekUtils.pixelToInches(getWidth()));
+		sb.append(",");
+		sb.append("height=" + SvekUtils.pixelToInches(getHeight()));
+		sb.append(",");
+		sb.append("color=\"" + StringUtils.sharp000000(color) + "\"");
+		sb.append("];");
 	}
 
 	private Margins shield() {

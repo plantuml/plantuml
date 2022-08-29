@@ -30,18 +30,54 @@
  *
  *
  * Original Author:  Arnaud Roques
- *
+ * 
  *
  */
-package net.sourceforge.plantuml.xmi;
+package net.sourceforge.plantuml.graphml;
 
+import java.io.IOException;
 import java.io.OutputStream;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
-public interface IXmiClassDiagram {
+import net.sourceforge.plantuml.Log;
+import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
+import net.sourceforge.plantuml.descdiagram.DescriptionDiagram;
+import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.xmi.XmlDiagramTransformer;
 
-	void transformerXml(OutputStream os) throws TransformerException, ParserConfigurationException;
+public final class CucaDiagramGraphmlMaker {
+
+	private final CucaDiagram diagram;
+
+	public CucaDiagramGraphmlMaker(CucaDiagram diagram) throws IOException {
+		this.diagram = diagram;
+	}
+
+	public static String getModel(UmlDiagram classDiagram) {
+		return "model1";
+	}
+
+	public void createFiles(OutputStream fos) throws IOException {
+		try {
+			final XmlDiagramTransformer xmi;
+			if (diagram instanceof DescriptionDiagram)
+				xmi = new GraphmlDescriptionDiagram((DescriptionDiagram) diagram);
+			else
+				throw new UnsupportedOperationException();
+
+			xmi.transformerXml(fos);
+		} catch (ParserConfigurationException e) {
+			Log.error(e.toString());
+			Logme.error(e);
+			throw new IOException(e.toString());
+		} catch (TransformerException e) {
+			Log.error(e.toString());
+			Logme.error(e);
+			throw new IOException(e.toString());
+		}
+	}
 
 }

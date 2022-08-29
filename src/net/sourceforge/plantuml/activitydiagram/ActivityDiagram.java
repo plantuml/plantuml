@@ -55,7 +55,6 @@ import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.NamespaceStrategy;
 import net.sourceforge.plantuml.graphic.USymbol;
-import net.sourceforge.plantuml.utils.UniqueSequence;
 
 public class ActivityDiagram extends CucaDiagram {
 
@@ -73,7 +72,7 @@ public class ActivityDiagram extends CucaDiagram {
 	}
 
 	private String getAutoBranch() {
-		return "#" + UniqueSequence.getValue();
+		return "#" + this.getUniqueSequence();
 	}
 
 	public IEntity getOrCreate(Ident idNewLong, Code code, Display display, LeafType type) {
@@ -173,7 +172,7 @@ public class ActivityDiagram extends CucaDiagram {
 
 	public IEntity createInnerActivity() {
 		// Log.println("createInnerActivity A");
-		final String idShort = "##" + UniqueSequence.getValue();
+		final String idShort = "##" + this.getUniqueSequence();
 		final Ident idNewLong = buildLeafIdent(idShort);
 		final Code code = this.V1972() ? idNewLong : buildCode(idShort);
 		gotoGroup(idNewLong, code, Display.getWithNewlines(code), GroupType.INNER_ACTIVITY, getCurrentGroup(),
@@ -193,7 +192,7 @@ public class ActivityDiagram extends CucaDiagram {
 			endGroup();
 			// Log.println("endgroup");
 		}
-		final String idShort = "##" + UniqueSequence.getValue();
+		final String idShort = "##" + this.getUniqueSequence();
 		// Log.println("concurrentActivity A name=" + name+" "+getCurrentGroup());
 		final Code code = buildCode(idShort);
 		if (getCurrentGroup().getGroupType() != GroupType.INNER_ACTIVITY) {

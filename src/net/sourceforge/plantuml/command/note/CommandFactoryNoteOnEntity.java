@@ -56,7 +56,6 @@ import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Code;
-import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
@@ -70,7 +69,6 @@ import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
-import net.sourceforge.plantuml.utils.UniqueSequence;
 
 public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryCommand<AbstractEntityDiagram> {
 
@@ -229,7 +227,7 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 			}
 		}
 
-		final String tmp = UniqueSequence.getString("GMN");
+		final String tmp = diagram.getUniqueSequence("GMN");
 		final Ident idNewLong = diagram.buildLeafIdent(tmp);
 		final IEntity note;
 		if (diagram.V1972())

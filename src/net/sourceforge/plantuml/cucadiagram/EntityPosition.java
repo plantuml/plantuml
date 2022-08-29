@@ -95,9 +95,9 @@ public enum EntityPosition {
 
 	public Dimension2D getDimension(Rankdir rankdir) {
 		if (this == EXPANSION_INPUT || this == EXPANSION_OUTPUT) {
-			if (rankdir == Rankdir.TOP_TO_BOTTOM) {
+			if (rankdir == Rankdir.TOP_TO_BOTTOM)
 				return new Dimension2DDouble(EntityPosition.RADIUS * 2 * 4, EntityPosition.RADIUS * 2);
-			}
+
 			return new Dimension2DDouble(EntityPosition.RADIUS * 2, EntityPosition.RADIUS * 2 * 4);
 		}
 		return new Dimension2DDouble(EntityPosition.RADIUS * 2, EntityPosition.RADIUS * 2);
@@ -117,37 +117,37 @@ public enum EntityPosition {
 	}
 
 	public ShapeType getShapeType() {
-		if (this == NORMAL) {
+		if (this == NORMAL)
 			throw new IllegalStateException();
-		}
-		if (this == ENTRY_POINT || this == EXIT_POINT) {
+
+		if (this == ENTRY_POINT || this == EXIT_POINT)
 			return ShapeType.CIRCLE;
-		}
+
 		return ShapeType.RECTANGLE;
 	}
 
 	public static EntityPosition fromStereotype(String label) {
-		if ("<<port>>".equalsIgnoreCase(label)) {
+		if ("<<port>>".equalsIgnoreCase(label))
 			return PORT;
-		}
-		if ("<<entrypoint>>".equalsIgnoreCase(label)) {
+
+		if ("<<entrypoint>>".equalsIgnoreCase(label))
 			return ENTRY_POINT;
-		}
-		if ("<<exitpoint>>".equalsIgnoreCase(label)) {
+
+		if ("<<exitpoint>>".equalsIgnoreCase(label))
 			return EXIT_POINT;
-		}
-		if ("<<inputpin>>".equalsIgnoreCase(label)) {
+
+		if ("<<inputpin>>".equalsIgnoreCase(label))
 			return INPUT_PIN;
-		}
-		if ("<<outputpin>>".equalsIgnoreCase(label)) {
+
+		if ("<<outputpin>>".equalsIgnoreCase(label))
 			return OUTPUT_PIN;
-		}
-		if ("<<expansioninput>>".equalsIgnoreCase(label)) {
+
+		if ("<<expansioninput>>".equalsIgnoreCase(label))
 			return EXPANSION_INPUT;
-		}
-		if ("<<expansionoutput>>".equalsIgnoreCase(label)) {
+
+		if ("<<expansionoutput>>".equalsIgnoreCase(label))
 			return EXPANSION_OUTPUT;
-		}
+
 		return EntityPosition.NORMAL;
 	}
 

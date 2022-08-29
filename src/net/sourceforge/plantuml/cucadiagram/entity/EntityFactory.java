@@ -512,4 +512,8 @@ public final class EntityFactory {
 		return Objects.requireNonNull(parentContainer);
 	}
 
+	public CucaDiagram getDiagram() {
+		return namespaceSeparator;
+	}
+
 }

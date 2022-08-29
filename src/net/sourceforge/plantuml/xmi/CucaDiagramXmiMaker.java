@@ -66,20 +66,20 @@ public final class CucaDiagramXmiMaker {
 
 	public void createFiles(OutputStream fos) throws IOException {
 		try {
-			final IXmiClassDiagram xmi;
-			if (diagram instanceof StateDiagram) {
+			final XmlDiagramTransformer xmi;
+			if (diagram instanceof StateDiagram)
 				xmi = new XmiStateDiagram((StateDiagram) diagram);
-			} else if (diagram instanceof DescriptionDiagram) {
+			else if (diagram instanceof DescriptionDiagram)
 				xmi = new XmiDescriptionDiagram((DescriptionDiagram) diagram);
-			} else if (fileFormat == FileFormat.XMI_STANDARD) {
+			else if (fileFormat == FileFormat.XMI_STANDARD)
 				xmi = new XmiClassDiagramStandard((ClassDiagram) diagram);
-			} else if (fileFormat == FileFormat.XMI_ARGO) {
+			else if (fileFormat == FileFormat.XMI_ARGO)
 				xmi = new XmiClassDiagramArgo((ClassDiagram) diagram);
-			} else if (fileFormat == FileFormat.XMI_STAR) {
+			else if (fileFormat == FileFormat.XMI_STAR)
 				xmi = new XmiClassDiagramStar((ClassDiagram) diagram);
-			} else {
+			else
 				throw new UnsupportedOperationException();
-			}
+
 			xmi.transformerXml(fos);
 		} catch (ParserConfigurationException e) {
 			Log.error(e.toString());

@@ -30,23 +30,18 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
- * 
+ *
+ *
  */
-package net.sourceforge.plantuml.utils;
+package net.sourceforge.plantuml.xmi;
 
-import java.util.concurrent.atomic.AtomicInteger;
+import java.io.OutputStream;
 
-public class UniqueSequence {
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 
-	private static final AtomicInteger cpt = new AtomicInteger(1);
+public interface XmlDiagramTransformer {
 
-	public static int getValue() {
-		return cpt.addAndGet(1);
-	}
-
-	public static String getString(String prefix) {
-		return prefix + getValue();
-	}
+	void transformerXml(OutputStream os) throws TransformerException, ParserConfigurationException;
 
 }

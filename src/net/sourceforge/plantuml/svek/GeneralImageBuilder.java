@@ -99,6 +99,8 @@ import net.sourceforge.plantuml.graphic.USymbolHexagon;
 import net.sourceforge.plantuml.graphic.USymbolInterface;
 import net.sourceforge.plantuml.graphic.USymbols;
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.security.SecurityProfile;
+import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
@@ -444,7 +446,10 @@ public final class GeneralImageBuilder {
 		if (dotStringFactory.illegalDotExe())
 			return error(dotStringFactory.getDotExe());
 
-		if (basefile == null && isSvekTrace())
+		if (basefile == null && isSvekTrace()
+				&& (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE
+						|| SecurityUtils.getSecurityProfile() == SecurityProfile.LEGACY
+						|| SecurityUtils.getSecurityProfile() == SecurityProfile.SANDBOX))
 			basefile = new BaseFile(null);
 
 		final String svg;

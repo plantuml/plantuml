@@ -57,6 +57,7 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.Bodier;
 import net.sourceforge.plantuml.cucadiagram.Code;
+import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.DisplayPositioned;
 import net.sourceforge.plantuml.cucadiagram.EntityPosition;
@@ -85,7 +86,6 @@ import net.sourceforge.plantuml.svek.PackageStyle;
 import net.sourceforge.plantuml.svek.SingleStrategy;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.utils.UniqueSequence;
 
 final public class EntityImpl implements ILeaf, IGroup {
 
@@ -98,7 +98,7 @@ final public class EntityImpl implements ILeaf, IGroup {
 	private Url url;
 
 	private final Bodier bodier;
-	private final String uid = StringUtils.getUid("cl", UniqueSequence.getValue());
+	private final String uid;
 	private Display display = Display.empty();
 	private DisplayPositioned legend = null;
 
@@ -150,6 +150,7 @@ final public class EntityImpl implements ILeaf, IGroup {
 	private EntityImpl(Ident ident, EntityFactory entityFactory, Code code, Bodier bodier, IGroup parentContainer,
 			String namespaceSeparator, int rawLayout) {
 		this.ident = Objects.requireNonNull(ident);
+		this.uid = StringUtils.getUid("cl", entityFactory.getDiagram().getUniqueSequence());
 		if (entityFactory.namespaceSeparator.V1972())
 			code = ident;
 
@@ -808,6 +809,22 @@ final public class EntityImpl implements ILeaf, IGroup {
 		if (result == null)
 			return Collections.emptyList();
 		return Collections.unmodifiableList(result);
+	}
+
+	public CucaDiagram getDiagram() {
+		return entityFactory.getDiagram();
+	}
+
+	private boolean isStatic;
+
+	@Override
+	public void setStatic(boolean isStatic) {
+		this.isStatic = isStatic;
+	}
+
+	@Override
+	public boolean isStatic() {
+		return isStatic;
 	}
 
 }
