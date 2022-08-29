@@ -95,7 +95,7 @@ jobs:
         run: gradle -q compileJava --no-daemon
 
       - name: Test
-        run: gradle test --no-daemon
+        run: gradle test --no-daemon -i
 
       - name: Upload test reports
         uses: actions/upload-artifact@v3
