@@ -35,13 +35,7 @@ public class GML0001_Test extends GraphmlTest {
 
 	@Test
 	void testSimple() throws IOException {
-		final String xml = getXmlAndCheckXmlAndDescription("(2 entities)");
-
-		// Those tests are ULGY: please improve them!
-		assertTrue(xml.contains("<graphml "));
-		assertTrue(xml.contains("<graph edgedefault=\"undirected\">"));
-		assertTrue(xml.contains("<node id=\"comp1\"/>"));
-		assertTrue(xml.contains("<node id=\"comp2\"/>"));
+		checkXmlAndDescription("(2 entities)");
 	}
 
 }

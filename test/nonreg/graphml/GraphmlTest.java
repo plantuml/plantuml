@@ -25,7 +25,7 @@ public class GraphmlTest {
 
 	private static final String TRIPLE_QUOTE = "\"\"\"";
 
-	protected String getXmlAndCheckXmlAndDescription(final String expectedDescription)
+	protected void checkXmlAndDescription(final String expectedDescription)
 			throws IOException, UnsupportedEncodingException {
 		final String actualResult = runPlantUML(expectedDescription);
 		final String xmlExpected = readStringFromSourceFile(getDiagramFile(), "{{{", "}}}");
@@ -38,8 +38,6 @@ public class GraphmlTest {
 		if (sortString(actualResult).equals(sortString(xmlExpected)) == false) {
 			assertEquals(xmlExpected, actualResult, "Generated GraphML is not ok");
 		}
-
-		return actualResult;
 	}
 
 	private String sortString(String s) {
