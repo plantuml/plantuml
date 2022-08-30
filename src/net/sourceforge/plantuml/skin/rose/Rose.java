@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.PaddingParam;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
+import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.skin.ArrowComponent;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
@@ -75,12 +76,6 @@ public class Rose {
 		return colorParams[0].getDefaultValue();
 	}
 
-	public Component createComponentNote(Style[] styles, ComponentType type, ISkinParam param,
-			Display stringsToDisplay) {
-		checkRose();
-		return createComponentNote(styles, type, param, stringsToDisplay, null);
-	}
-
 	private void checkRose() {
 		// Quite ugly, but we want to ensure that TextSkin overrides those methods
 		if (this.getClass() != Rose.class)
@@ -89,7 +84,13 @@ public class Rose {
 	}
 
 	public Component createComponentNote(Style[] styles, ComponentType type, ISkinParam param, Display stringsToDisplay,
-			NotePosition notePosition) {
+			Colors colors) {
+		checkRose();
+		return createComponentNote(styles, type, param, stringsToDisplay, colors, null);
+	}
+
+	public Component createComponentNote(Style[] styles, ComponentType type, ISkinParam param, Display stringsToDisplay,
+			Colors colors, NotePosition notePosition) {
 		checkRose();
 		final HorizontalAlignment textAlign;
 		final HorizontalAlignment position;
@@ -109,13 +110,13 @@ public class Rose {
 
 		if (type == ComponentType.NOTE)
 			return new ComponentRoseNote(styles == null ? null : styles[0], stringsToDisplay, paddingX, paddingY, param,
-					textAlign, position);
+					textAlign, position, colors);
 
 		if (type == ComponentType.NOTE_HEXAGONAL)
-			return new ComponentRoseNoteHexagonal(styles == null ? null : styles[0], stringsToDisplay, param);
+			return new ComponentRoseNoteHexagonal(styles == null ? null : styles[0], stringsToDisplay, param, colors);
 
 		if (type == ComponentType.NOTE_BOX)
-			return new ComponentRoseNoteBox(styles == null ? null : styles[0], stringsToDisplay, param);
+			return new ComponentRoseNoteBox(styles == null ? null : styles[0], stringsToDisplay, param, colors);
 
 		throw new UnsupportedOperationException(type.toString());
 	}

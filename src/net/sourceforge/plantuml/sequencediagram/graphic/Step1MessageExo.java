@@ -68,8 +68,9 @@ class Step1MessageExo extends Step1Abstract {
 		final List<Note> noteOnMessages = message.getNoteOnMessages();
 		for (Note noteOnMessage : noteOnMessages) {
 			final ISkinParam skinParam = noteOnMessage.getSkinParamBackcolored(drawingSet.getSkinParam());
-			addNote(drawingSet.getSkin().createComponentNote(noteOnMessage.getUsedStyles(), ComponentType.NOTE, skinParam,
-					noteOnMessage.getStrings()));
+			final Component note = drawingSet.getSkin().createComponentNote(noteOnMessage.getUsedStyles(),
+					ComponentType.NOTE, skinParam, noteOnMessage.getStrings(), noteOnMessage.getColors());
+			addNote(note);
 		}
 
 	}
@@ -132,11 +133,11 @@ class Step1MessageExo extends Step1Abstract {
 		final MessageExoType type = m.getType();
 		ArrowConfiguration result = null;
 
-		if (type.getDirection() == 1) 
+		if (type.getDirection() == 1)
 			result = m.getArrowConfiguration();
-		 else 
+		else
 			result = m.getArrowConfiguration().reverse();
-		
+
 //		result = result.withDecoration1(m.getArrowConfiguration().getDecoration1());
 //		result = result.withDecoration2(m.getArrowConfiguration().getDecoration2());
 		return result;

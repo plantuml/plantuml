@@ -200,11 +200,19 @@ public class Style {
 		return FontConfiguration.create(font, color, hyperlinkColor, true);
 	}
 
-	public SymbolContext getSymbolContext(ThemeStyle themeStyle, HColorSet set) {
-		final HColor backColor = value(PName.BackGroundColor).asColor(themeStyle, set);
-		final HColor foreColor = value(PName.LineColor).asColor(themeStyle, set);
+	public SymbolContext getSymbolContext(ThemeStyle themeStyle, HColorSet set, Colors colors) {
+		HColor backColor = colors == null ? null : colors.getColor(ColorType.BACK);
+		if (backColor == null)
+			backColor = value(PName.BackGroundColor).asColor(themeStyle, set);
+		HColor foreColor = colors == null ? null : colors.getColor(ColorType.LINE);
+		if (foreColor == null)
+			foreColor = value(PName.LineColor).asColor(themeStyle, set);
 		final double deltaShadowing = value(PName.Shadowing).asDouble();
 		return new SymbolContext(backColor, foreColor).withStroke(getStroke()).withDeltaShadow(deltaShadowing);
+	}
+
+	public SymbolContext getSymbolContext(ThemeStyle themeStyle, HColorSet set) {
+		return getSymbolContext(themeStyle, set, null);
 	}
 
 	public Style eventuallyOverride(UStroke stroke) {
@@ -269,7 +277,7 @@ public class Style {
 		final FontConfiguration fc = getFontConfiguration(spriteContainer.getThemeStyle(), set);
 		return display.create(fc, alignment, spriteContainer);
 	}
-	
+
 	public static final String ID_TITLE = "_title";
 	public static final String ID_CAPTION = "_caption";
 	public static final String ID_LEGEND = "_legend";

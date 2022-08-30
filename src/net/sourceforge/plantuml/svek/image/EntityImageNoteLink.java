@@ -63,7 +63,7 @@ public class EntityImageNoteLink extends AbstractTextBlock implements IEntityIma
 		final Rose skin = new Rose();
 		comp = skin.createComponentNote(
 				new Style[] { ComponentType.NOTE.getStyleSignature().getMergedStyle(styleBuilder) }, ComponentType.NOTE,
-				colors.mute(skinParam), note);
+				skinParam, note, colors);
 	}
 
 	public Dimension2D calculateDimension(StringBounder stringBounder) {

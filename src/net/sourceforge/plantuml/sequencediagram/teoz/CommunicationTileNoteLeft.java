@@ -35,9 +35,8 @@
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.real.Real;
@@ -87,8 +86,8 @@ public class CommunicationTileNoteLeft extends AbstractTile {
 	}
 
 	private Component getComponent(StringBounder stringBounder) {
-		final Component comp = skin.createComponentNote(noteOnMessage.getUsedStyles(), ComponentType.NOTE, noteOnMessage.getSkinParamBackcolored(skinParam),
-				noteOnMessage.getStrings());
+		final Component comp = skin.createComponentNote(noteOnMessage.getUsedStyles(), ComponentType.NOTE,
+				noteOnMessage.getSkinParamBackcolored(skinParam), noteOnMessage.getStrings(), noteOnMessage.getColors());
 		return comp;
 	}
 

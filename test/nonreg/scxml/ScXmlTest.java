@@ -1,4 +1,4 @@
-package nonreg.xmi;
+package nonreg.scxml;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -21,29 +21,17 @@ import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.SourceStringReader;
 import net.sourceforge.plantuml.core.DiagramDescription;
 
-public class XmiTest {
+public class ScXmlTest {
 
 	private static final String TRIPLE_QUOTE = "\"\"\"";
 
 	protected void checkXmlAndDescription(final String expectedDescription)
 			throws IOException, UnsupportedEncodingException {
-		final String star = runPlantUML(expectedDescription, FileFormat.XMI_STAR);
-		final String starExpected = readStringFromSourceFile(getDiagramFile(), "{{{star", "}}}star");
+		final String actual = runPlantUML(expectedDescription, FileFormat.SCXML);
+		final String expected = readStringFromSourceFile(getDiagramFile(), "{{{", "}}}");
 
-		// This is really a hack. Since XML generation does not guarantee the order of
-		// attributes, we make an easy to do check by sorting characters.
-		// Of course, this is really incomplete: a faulty String may match the expected
-		// result if, for example, an attribute is moved from a node to another.
-		// However, we consider that it is a good start.
-		if (sortString(star).equals(sortString(starExpected)) == false) {
-			assertEquals(starExpected, star, "XmiStar: Generated GraphML is not ok");
-		}
-
-		final String argo = runPlantUML(expectedDescription, FileFormat.XMI_ARGO);
-		final String argoExpected = readStringFromSourceFile(getDiagramFile(), "{{{argo", "}}}argo");
-
-		if (sortString(argo).equals(sortString(argoExpected)) == false) {
-			assertEquals(argoExpected, argo, "XmiArgo: Generated GraphML is not ok");
+		if (sortString(actual).equals(sortString(expected)) == false) {
+			assertEquals(expected, actual, "Generated ScXml is not ok");
 		}
 
 	}

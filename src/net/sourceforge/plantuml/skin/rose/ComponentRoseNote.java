@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.SymbolContext;
+import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.style.PName;
@@ -61,13 +62,14 @@ final public class ComponentRoseNote extends AbstractTextualComponent implements
 	private final HorizontalAlignment position;
 
 	public ComponentRoseNote(Style style, Display strings, double paddingX, double paddingY,
-			ISkinSimple spriteContainer, HorizontalAlignment textAlignment, HorizontalAlignment position) {
-		super(style, spriteContainer.wrapWidth(), textAlignment == HorizontalAlignment.CENTER ? 15 : 6, 15, 5, spriteContainer,
-				strings, true);
+			ISkinSimple spriteContainer, HorizontalAlignment textAlignment, HorizontalAlignment position,
+			Colors colors) {
+		super(style, spriteContainer.wrapWidth(), textAlignment == HorizontalAlignment.CENTER ? 15 : 6, 15, 5,
+				spriteContainer, strings, true);
 		this.paddingX = paddingX;
 		this.paddingY = paddingY;
 		this.position = position;
-		this.symbolContext = style.getSymbolContext(spriteContainer.getThemeStyle(), getIHtmlColorSet());
+		this.symbolContext = style.getSymbolContext(spriteContainer.getThemeStyle(), getIHtmlColorSet(), colors);
 		this.roundCorner = style.value(PName.RoundCorner).asInt();
 
 	}
