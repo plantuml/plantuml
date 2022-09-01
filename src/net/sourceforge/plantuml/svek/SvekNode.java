@@ -48,14 +48,15 @@ import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.entity.EntityImpl;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.posimo.Positionable;
-import net.sourceforge.plantuml.svek.image.AbstractEntityImageBorder;
 import net.sourceforge.plantuml.svek.image.EntityImageDescription;
 import net.sourceforge.plantuml.svek.image.EntityImageLollipopInterface;
+import net.sourceforge.plantuml.svek.image.EntityImagePort;
+import net.sourceforge.plantuml.svek.image.EntityImageStateBorder;
 import net.sourceforge.plantuml.ugraphic.Shadowable;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 
-public class SvekNode implements Positionable, IShapePseudo, Hideable {
+public class SvekNode implements Positionable, Hideable {
 
 	private final ShapeType type;
 	private Dimension2D dimImage;
@@ -164,7 +165,46 @@ public class SvekNode implements Positionable, IShapePseudo, Hideable {
 		SvekUtils.println(sb);
 	}
 
-	private void appendLabelHtmlSpecialForPort(StringBuilder sb, StringBounder stringBounder2) {
+	private double getMaxWidthFromLabelForEntryExit(StringBounder stringBounder) {
+		if (image instanceof EntityImagePort) {
+			final EntityImagePort im = (EntityImagePort) image;
+			return im.getMaxWidthFromLabelForEntryExit(stringBounder);
+		}
+		if (image instanceof EntityImageStateBorder) {
+			final EntityImageStateBorder im = (EntityImageStateBorder) image;
+			return im.getMaxWidthFromLabelForEntryExit(stringBounder);
+		}
+		throw new UnsupportedOperationException();
+	}
+
+	private void appendLabelHtmlSpecialForPort(StringBuilder sb, StringBounder stringBounder) {
+		final int width1 = (int) getWidth();
+		final int width2 = (int) getMaxWidthFromLabelForEntryExit(stringBounder);
+		if (width2 > 40)
+			appendLabelHtmlSpecialForPortHtml(sb, stringBounder, width2 - 40);
+		else
+			appendLabelHtmlSpecialForPortBasic(sb, stringBounder);
+	}
+
+	private void appendLabelHtmlSpecialForPortHtml(StringBuilder sb, StringBounder stringBounder, int fullWidth) {
+		if (fullWidth < 10)
+			fullWidth = 10;
+		sb.append(uid);
+		sb.append(" [");
+		sb.append("shape=plaintext");
+		sb.append(",");
+		sb.append("label=<");
+		sb.append("<TABLE BORDER=\"0\" CELLBORDER=\"0\" CELLSPACING=\"0\" CELLPADDING=\"0\">");
+		sb.append("<TR><TD WIDTH=\"" + fullWidth + "\" HEIGHT=\"1\" COLSPAN=\"3\"></TD></TR>");
+		sb.append("<TR><TD></TD><TD FIXEDSIZE=\"TRUE\" PORT=\"P\"  BORDER=\"1\" COLOR=\""
+				+ StringUtils.sharp000000(color) + "\" WIDTH=\"" + (int) getWidth() + "\" HEIGHT=\"" + (int) getHeight()
+				+ "\"></TD><TD></TD></TR>");
+		sb.append("<TR><TD WIDTH=\"" + fullWidth + "\" HEIGHT=\"1\" COLSPAN=\"3\"></TD></TR>");
+		sb.append("</TABLE>");
+		sb.append(">];");
+	}
+
+	private void appendLabelHtmlSpecialForPortBasic(StringBuilder sb, StringBounder stringBounder) {
 		sb.append(uid);
 		sb.append(" [");
 		sb.append("shape=rect");
@@ -294,8 +334,6 @@ public class SvekNode implements Positionable, IShapePseudo, Hideable {
 			sb.append("shape=diamond");
 		else if (type == ShapeType.CIRCLE)
 			sb.append("shape=circle");
-		else if (type == ShapeType.CIRCLE_IN_RECT)
-			sb.append("shape=circle");
 		else if (type == ShapeType.OVAL)
 			sb.append("shape=ellipse");
 		else if (type == ShapeType.ROUND_RECTANGLE)
@@ -347,16 +385,6 @@ public class SvekNode implements Positionable, IShapePseudo, Hideable {
 	public void moveSvek(double deltaX, double deltaY) {
 		this.minX += deltaX;
 		this.minY += deltaY;
-	}
-
-	public double getMaxWidthFromLabelForEntryExit(StringBounder stringBounder) {
-		if (image instanceof AbstractEntityImageBorder) {
-			final AbstractEntityImageBorder im = (AbstractEntityImageBorder) image;
-			return im.getMaxWidthFromLabelForEntryExit(stringBounder);
-		} else {
-			final Dimension2D dim = image.calculateDimension(stringBounder);
-			return dim.getWidth();
-		}
 	}
 
 	public boolean isHidden() {

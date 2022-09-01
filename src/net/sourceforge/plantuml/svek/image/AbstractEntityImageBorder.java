@@ -82,11 +82,6 @@ public abstract class AbstractEntityImageBorder extends AbstractEntityImage {
 		return entityPosition.getDimension(rankdir);
 	}
 
-	public double getMaxWidthFromLabelForEntryExit(StringBounder stringBounder) {
-		final Dimension2D dimDesc = desc.calculateDimension(stringBounder);
-		return dimDesc.getWidth();
-	}
-
 	public ShapeType getShapeType() {
 		return entityPosition.getShapeType();
 	}

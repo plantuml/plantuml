@@ -211,9 +211,9 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 		final IEntity cl1;
 		if (idShort == null) {
 			cl1 = diagram.getLastEntity();
-			if (cl1 == null) {
+			if (cl1 == null)
 				return CommandExecutionResult.error("Nothing to note to");
-			}
+
 		} else {
 			final Ident ident = diagram.buildLeafIdent(idShort);
 			final Code code = diagram.V1972() ? ident : diagram.buildCode(idShort);
@@ -247,9 +247,9 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 		}
 
 		note.setColors(colors);
-		if (url != null) {
+		if (url != null)
 			note.addUrl(url);
-		}
+
 		CommandCreateClassMultilines.addTags(note, line0.get("TAGS", 0));
 
 		final Position position = Position.valueOf(StringUtils.goUpperCase(pos))
@@ -258,19 +258,15 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 
 		final LinkType type = new LinkType(LinkDecor.NONE, LinkDecor.NONE).goDashed();
 		if (position == Position.RIGHT) {
-			link = new Link(diagram.getSkinParam().getCurrentStyleBuilder(), cl1, note, type,
-					LinkArg.noDisplay(1));
+			link = new Link(diagram.getSkinParam().getCurrentStyleBuilder(), cl1, note, type, LinkArg.noDisplay(1));
 			link.setHorizontalSolitary(true);
 		} else if (position == Position.LEFT) {
-			link = new Link(diagram.getSkinParam().getCurrentStyleBuilder(), note, cl1, type,
-					LinkArg.noDisplay(1));
+			link = new Link(diagram.getSkinParam().getCurrentStyleBuilder(), note, cl1, type, LinkArg.noDisplay(1));
 			link.setHorizontalSolitary(true);
 		} else if (position == Position.BOTTOM) {
-			link = new Link(diagram.getSkinParam().getCurrentStyleBuilder(), cl1, note, type,
-					LinkArg.noDisplay(2));
+			link = new Link(diagram.getSkinParam().getCurrentStyleBuilder(), cl1, note, type, LinkArg.noDisplay(2));
 		} else if (position == Position.TOP) {
-			link = new Link(diagram.getSkinParam().getCurrentStyleBuilder(), note, cl1, type,
-					LinkArg.noDisplay(2));
+			link = new Link(diagram.getSkinParam().getCurrentStyleBuilder(), note, cl1, type, LinkArg.noDisplay(2));
 		} else {
 			throw new IllegalArgumentException();
 		}

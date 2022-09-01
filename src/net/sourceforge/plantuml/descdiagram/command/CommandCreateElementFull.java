@@ -209,7 +209,7 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 			type = LeafType.PORTOUT;
 			usymbol = null;
 		} else if (symbol.equalsIgnoreCase("port")) {
-			type = LeafType.PORT;
+			type = LeafType.PORTIN;
 			usymbol = null;
 		} else if (symbol.equalsIgnoreCase("usecase")) {
 			type = LeafType.USECASE;

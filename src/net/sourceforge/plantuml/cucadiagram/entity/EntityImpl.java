@@ -329,9 +329,8 @@ final public class EntityImpl implements ILeaf, IGroup {
 	}
 
 	public EntityPosition getEntityPosition() {
-		checkNotGroup();
-		if (leafType == LeafType.PORT)
-			return EntityPosition.PORT;
+//		if (leafType == LeafType.PORT)
+//			return EntityPosition.PORT;
 
 		if (leafType == LeafType.PORTIN)
 			return EntityPosition.PORTIN;

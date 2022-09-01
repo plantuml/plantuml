@@ -90,10 +90,9 @@ import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class Cluster implements Moveable {
 
-	/* private */ static final String RANK_SAME = "same";
+	// /* private */ static final String RANK_SAME = "same";
 	/* private */ static final String RANK_SOURCE = "source";
 	/* private */ static final String RANK_SINK = "sink";
-	/* private */ static final String ID_EE = "ee";
 	public final static String CENTER_ID = "za";
 
 	private final Cluster parentCluster;

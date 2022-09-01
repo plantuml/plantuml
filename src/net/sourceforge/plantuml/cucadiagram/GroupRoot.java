@@ -67,11 +67,10 @@ public class GroupRoot implements IGroup {
 	@Override
 	public Collection<ILeaf> getLeafsDirect() {
 		final List<ILeaf> result = new ArrayList<>();
-		for (ILeaf ent : entityFactory.leafs()) {
-			if (ent.getParentContainer() == this) {
+		for (ILeaf ent : entityFactory.leafs())
+			if (ent.getParentContainer() == this)
 				result.add(ent);
-			}
-		}
+
 		return Collections.unmodifiableCollection(result);
 
 	}
@@ -157,18 +156,13 @@ public class GroupRoot implements IGroup {
 	public Collection<IGroup> getChildren() {
 		final List<IGroup> result = new ArrayList<>();
 		if (entityFactory.namespaceSeparator.V1972()) {
-			for (IGroup ent : entityFactory.groups()) {
-				if (ent.getIdent().size() == 1) {
+			for (IGroup ent : entityFactory.groups())
+				if (ent.getIdent().size() == 1)
 					result.add(ent);
-				}
-			}
-
 		} else {
-			for (IGroup ent : entityFactory.groups()) {
-				if (ent.getParentContainer() == this) {
+			for (IGroup ent : entityFactory.groups())
+				if (ent.getParentContainer() == this)
 					result.add(ent);
-				}
-			}
 		}
 		return Collections.unmodifiableCollection(result);
 	}

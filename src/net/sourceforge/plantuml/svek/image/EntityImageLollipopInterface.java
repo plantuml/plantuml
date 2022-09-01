@@ -135,7 +135,7 @@ public class EntityImageLollipopInterface extends AbstractEntityImage {
 	}
 
 	public ShapeType getShapeType() {
-		return ShapeType.CIRCLE_IN_RECT;
+		return ShapeType.CIRCLE;
 	}
 
 	private double angle;

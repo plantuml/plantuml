@@ -193,11 +193,17 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 	}
 
 	public EntityPort getEntityPort1(Bibliotekon bibliotekon) {
-		return new EntityPort(bibliotekon.getNodeUid((ILeaf) cl1), port1);
+		return getEntityPort((ILeaf) cl1, port1, bibliotekon);
 	}
 
 	public EntityPort getEntityPort2(Bibliotekon bibliotekon) {
-		return new EntityPort(bibliotekon.getNodeUid((ILeaf) cl2), port2);
+		return getEntityPort((ILeaf) cl2, port2, bibliotekon);
+	}
+
+	private EntityPort getEntityPort(ILeaf leaf, String port, Bibliotekon bibliotekon) {
+		if (leaf.getEntityPosition().usePortP())
+			return EntityPort.forPort(bibliotekon.getNodeUid(leaf));
+		return EntityPort.create(bibliotekon.getNodeUid(leaf), port);
 	}
 
 	@Override

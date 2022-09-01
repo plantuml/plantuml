@@ -170,8 +170,8 @@ public final class GeneralImageBuilder {
 		if (leaf.getLeafType() == LeafType.ACTIVITY)
 			return new EntityImageActivity(leaf, skinParam, bibliotekon);
 
-		if ((leaf.getLeafType() == LeafType.PORT) || (leaf.getLeafType() == LeafType.PORTIN)
-				|| (leaf.getLeafType() == LeafType.PORTOUT)) {
+		if (/*(leaf.getLeafType() == LeafType.PORT) || */leaf.getLeafType() == LeafType.PORTIN
+				|| leaf.getLeafType() == LeafType.PORTOUT) {
 			final Cluster parent = bibliotekon.getCluster(leaf.getParentContainer());
 			return new EntityImagePort(leaf, skinParam, parent, bibliotekon, umlDiagramType.getStyleName());
 		}

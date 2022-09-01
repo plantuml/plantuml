@@ -43,7 +43,6 @@ public enum ShapeType {
 	RECTANGLE_HTML_FOR_PORTS, //
 	ROUND_RECTANGLE, //
 	CIRCLE, //
-	CIRCLE_IN_RECT, //
 	OVAL, //
 	DIAMOND, //
 	OCTAGON, //

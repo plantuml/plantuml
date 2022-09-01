@@ -33,20 +33,22 @@ Expected result MUST be put between triple brackets
 
 {{{
 <?xml version="1.0" encoding="UTF-8"?><scxml xmlns="http://www.w3.org/2005/07/scxml" initial="startcounter" version="1.0">
-    <state id="count_start"/>
-    <state id="count_done"/>
-    <state id="count_val[3:0]"/>
-    <state id="startcounter">
-        <transition target="count_idle"/>
-    </state>
-    <state id="count_idle">
-        <transition event="count_start" target="count_ongoing"/>
-    </state>
-    <state id="count_ongoing">
-        <transition event="count_val != MAX_VAL" target="count_finish"/>
-    </state>
-    <state id="count_finish">
-        <transition target="count_idle"/>
+    <state id="counter">
+        <state id="count_start"/>
+        <state id="count_done"/>
+        <state id="count_val[3:0]"/>
+        <state id="startcounter">
+            <transition target="count_idle"/>
+        </state>
+        <state id="count_idle">
+            <transition event="count_start" target="count_ongoing"/>
+        </state>
+        <state id="count_ongoing">
+            <transition event="count_val != MAX_VAL" target="count_finish"/>
+        </state>
+        <state id="count_finish">
+            <transition target="count_idle"/>
+        </state>
     </state>
 </scxml>
 }}}

@@ -183,7 +183,7 @@ public class CommandCreateElementFull2 extends SingleLineCommand2<ClassDiagram> 
 			type = LeafType.DESCRIPTION;
 			usymbol = diagram.getSkinParam().actorStyle().toUSymbol();
 		} else if (symbol.equalsIgnoreCase("port")) {
-			type = LeafType.PORT;
+			type = LeafType.PORTIN;
 			usymbol = null;
 		} else if (symbol.equalsIgnoreCase("portin")) {
 			type = LeafType.PORTIN;

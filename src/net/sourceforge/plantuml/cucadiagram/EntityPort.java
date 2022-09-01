@@ -42,9 +42,17 @@ public class EntityPort {
 	private final String entityUid;
 	private final String portId;
 
-	public EntityPort(String entityUid, String portName) {
+	private EntityPort(String entityUid, String portId) {
 		this.entityUid = entityUid;
-		this.portId = portName == null ? null : Ports.encodePortNameToId(portName);
+		this.portId = portId;
+	}
+
+	public static EntityPort create(String entityUid, String portName) {
+		return new EntityPort(entityUid, portName == null ? null : Ports.encodePortNameToId(portName));
+	}
+
+	public static EntityPort forPort(String entityUid) {
+		return new EntityPort(entityUid, "P");
 	}
 
 	public String getFullString() {
@@ -72,4 +80,5 @@ public class EntityPort {
 	public boolean equalsId(EntityPort other) {
 		return this.entityUid.equals(other.entityUid);
 	}
+
 }

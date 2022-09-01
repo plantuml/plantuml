@@ -58,6 +58,7 @@ public class ClusterDotString {
 
 	private final Cluster cluster;
 	private final ISkinParam skinParam;
+	private static final String ID_EE = "ee";
 
 	public ClusterDotString(Cluster cluster, ISkinParam skinParam) {
 		this.cluster = cluster;
@@ -113,9 +114,9 @@ public class ClusterDotString {
 		if (entityPositionsExceptNormal.size() > 0) {
 			printClusterEntryExit(sb, stringBounder);
 			if (hasPort())
-				subgraphClusterNoLabel(sb, Cluster.ID_EE);
+				subgraphClusterNoLabel(sb, ID_EE);
 			else
-				subgraphClusterWithLabel(sb, Cluster.ID_EE, label);
+				subgraphClusterWithLabel(sb, ID_EE, label);
 
 		} else {
 			sb.append("label=" + label + ";");
@@ -225,31 +226,29 @@ public class ClusterDotString {
 	}
 
 	private void printClusterEntryExit(StringBuilder sb, StringBounder stringBounder) {
-		printRanks(Cluster.RANK_SOURCE, withPositionProtected(stringBounder, EntityPosition.getInputs()), sb,
-				stringBounder);
-		printRanks(Cluster.RANK_SAME, withPositionProtected(stringBounder, EntityPosition.getSame()), sb,
-				stringBounder);
-		printRanks(Cluster.RANK_SINK, withPositionProtected(stringBounder, EntityPosition.getOutputs()), sb,
-				stringBounder);
+		printRanks(Cluster.RANK_SOURCE, withPosition(EntityPosition.getInputs()), sb, stringBounder);
+		// printRanks(Cluster.RANK_SAME, withPosition(EntityPosition.getSame()), sb,
+		// stringBounder);
+		printRanks(Cluster.RANK_SINK, withPosition(EntityPosition.getOutputs()), sb, stringBounder);
 	}
 
-	private void printRanks(String rank, List<? extends IShapePseudo> entries, StringBuilder sb,
+	private void printRanks(String rank, List<? extends SvekNode> entries, StringBuilder sb,
 			StringBounder stringBounder) {
 		if (entries.size() > 0) {
 			sb.append("{rank=" + rank + ";");
-			for (IShapePseudo sh1 : entries)
+			for (SvekNode sh1 : entries)
 				sb.append(sh1.getUid() + ";");
 
 			sb.append("}");
 			SvekUtils.println(sb);
-			for (IShapePseudo sh2 : entries)
+			for (SvekNode sh2 : entries)
 				sh2.appendShape(sb, stringBounder);
 
 			SvekUtils.println(sb);
 			if (hasPort()) {
 				boolean arrow = false;
 				String node = null;
-				for (IShapePseudo sh : entries) {
+				for (SvekNode sh : entries) {
 					if (arrow)
 						sb.append("->");
 
@@ -268,28 +267,6 @@ public class ClusterDotString {
 		}
 	}
 
-	private List<? extends IShapePseudo> withPositionProtected(StringBounder stringBounder,
-			Set<EntityPosition> targets) {
-		final List<SvekNode> result = withPosition(targets);
-		final double maxWith = getMaxWidthFromLabelForEntryExit(result, stringBounder);
-		final double naturalSpace = 70;
-		if (maxWith > naturalSpace)
-			return addProtection(result, maxWith - naturalSpace);
-
-		return result;
-	}
-
-	private List<IShapePseudo> addProtection(List<? extends IShapePseudo> entries, double width) {
-		final List<IShapePseudo> result = new ArrayList<>();
-		result.add(entries.get(0));
-		for (int i = 1; i < entries.size(); i++) {
-			// Pseudo space for the label
-			result.add(new ShapePseudoImpl("psd" + cluster.diagram.getUniqueSequence(), width, 5));
-			result.add(entries.get(i));
-		}
-		return result;
-	}
-
 	private List<SvekNode> withPosition(Set<EntityPosition> positions) {
 		final List<SvekNode> result = new ArrayList<>();
 		for (final Iterator<SvekNode> it = cluster.getNodes().iterator(); it.hasNext();) {
@@ -299,21 +276,6 @@ public class ClusterDotString {
 
 		}
 		return result;
-	}
-
-	private double getMaxWidthFromLabelForEntryExit(List<? extends IShapePseudo> entries, StringBounder stringBounder) {
-		double result = -Double.MAX_VALUE;
-		for (IShapePseudo node : entries) {
-			final double w = getMaxWidthFromLabelForEntryExit(node, stringBounder);
-			if (w > result)
-				result = w;
-
-		}
-		return result;
-	}
-
-	private double getMaxWidthFromLabelForEntryExit(IShapePseudo node, StringBounder stringBounder) {
-		return node.getMaxWidthFromLabelForEntryExit(stringBounder);
 	}
 
 	private boolean protection0(UmlDiagramType type) {

@@ -94,7 +94,8 @@ public class DotStringFactory implements Moveable {
 
 		this.colorSequence = new ColorSequence();
 		this.stringBounder = stringBounder;
-		this.root = new Cluster(dotData.getEntityFactory().getDiagram(), colorSequence, skinParam, dotData.getRootGroup());
+		this.root = new Cluster(dotData.getEntityFactory().getDiagram(), colorSequence, skinParam,
+				dotData.getRootGroup());
 		this.current = root;
 	}
 
@@ -401,8 +402,7 @@ public class DotStringFactory implements Moveable {
 				// corner1.manage(minX, minY);
 				node.moveSvek(minX, minY);
 				node.setPolygon(minX, minY, points);
-			} else if (node.getType() == ShapeType.CIRCLE || node.getType() == ShapeType.CIRCLE_IN_RECT
-					|| node.getType() == ShapeType.OVAL) {
+			} else if (node.getType() == ShapeType.CIRCLE || node.getType() == ShapeType.OVAL) {
 				final double cx = SvekUtils.getValue(svg, idx, "cx");
 				final double cy = SvekUtils.getValue(svg, idx, "cy") + fullHeight;
 				final double rx = SvekUtils.getValue(svg, idx, "rx");

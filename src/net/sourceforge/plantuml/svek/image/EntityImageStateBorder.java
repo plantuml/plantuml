@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.cucadiagram.EntityPosition;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
+import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
@@ -106,5 +107,11 @@ public class EntityImageStateBorder extends AbstractEntityImageBorder {
 	private UStroke getUStroke() {
 		return new UStroke(1.5);
 	}
+	
+	public double getMaxWidthFromLabelForEntryExit(StringBounder stringBounder) {
+		final Dimension2D dimDesc = desc.calculateDimension(stringBounder);
+		return dimDesc.getWidth();
+	}
+
 
 }
