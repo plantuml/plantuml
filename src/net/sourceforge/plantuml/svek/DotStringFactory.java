@@ -42,14 +42,13 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.BaseFile;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
@@ -73,8 +72,6 @@ import net.sourceforge.plantuml.vizjs.GraphvizJsRuntimeException;
 public class DotStringFactory implements Moveable {
 
 	private final Bibliotekon bibliotekon = new Bibliotekon();
-
-	final private Set<String> rankMin = new HashSet<>();
 
 	private final ColorSequence colorSequence;
 	private final Cluster root;
@@ -114,19 +111,6 @@ public class DotStringFactory implements Moveable {
 		current.addNode(node);
 	}
 
-	private void printMinRanking(StringBuilder sb) {
-		if (rankMin.size() == 0)
-			return;
-
-		sb.append("{ rank = min;");
-		for (String id : rankMin) {
-			sb.append(id);
-			sb.append(";");
-		}
-		sb.append("}");
-
-	}
-
 	private double getHorizontalDzeta() {
 		double max = 0;
 		for (SvekLine l : bibliotekon.allLines()) {
@@ -146,6 +130,8 @@ public class DotStringFactory implements Moveable {
 				max = c;
 
 		}
+		if (OptionFlags.USE_KERMOR)
+			return max / 100;
 		return max / 10;
 	}
 
@@ -211,16 +197,28 @@ public class DotStringFactory implements Moveable {
 
 		manageMinMaxCluster(sb);
 
-		root.printCluster1(sb, bibliotekon.allLines(), stringBounder);
-		for (SvekLine line : bibliotekon.lines0())
-			line.appendLine(getGraphvizVersion(), sb, dotMode, dotSplines);
+		if (OptionFlags.USE_KERMOR) {
+			for (SvekLine line : bibliotekon.lines0())
+				line.appendLine(getGraphvizVersion(), sb, dotMode, dotSplines);
+			for (SvekLine line : bibliotekon.lines1())
+				line.appendLine(getGraphvizVersion(), sb, dotMode, dotSplines);
 
-		root.fillRankMin(rankMin);
-		root.printCluster2(sb, bibliotekon.allLines(), stringBounder, dotMode, getGraphvizVersion(), umlDiagramType);
-		printMinRanking(sb);
+			root.printCluster3_forKermor(sb, bibliotekon.allLines(), stringBounder, dotMode, getGraphvizVersion(),
+					umlDiagramType);
 
-		for (SvekLine line : bibliotekon.lines1())
-			line.appendLine(getGraphvizVersion(), sb, dotMode, dotSplines);
+		} else {
+			root.printCluster1(sb, bibliotekon.allLines(), stringBounder);
+
+			for (SvekLine line : bibliotekon.lines0())
+				line.appendLine(getGraphvizVersion(), sb, dotMode, dotSplines);
+
+			root.printCluster2(sb, bibliotekon.allLines(), stringBounder, dotMode, getGraphvizVersion(),
+					umlDiagramType);
+
+			for (SvekLine line : bibliotekon.lines1())
+				line.appendLine(getGraphvizVersion(), sb, dotMode, dotSplines);
+
+		}
 
 		SvekUtils.println(sb);
 		sb.append("}");
@@ -268,6 +266,8 @@ public class DotStringFactory implements Moveable {
 			// return 29;
 			return 40;
 		}
+		if (OptionFlags.USE_KERMOR)
+			return 40;
 		return 60;
 	}
 
@@ -370,11 +370,8 @@ public class DotStringFactory implements Moveable {
 					|| node.getType() == ShapeType.RECTANGLE_WITH_CIRCLE_INSIDE || node.getType() == ShapeType.FOLDER
 					|| node.getType() == ShapeType.DIAMOND || node.getType() == ShapeType.RECTANGLE_PORT) {
 				final List<Point2D.Double> points = svgResult.substring(idx).extractList(SvgResult.POINTS_EQUALS);
-				final double minY = SvekUtils.getMinY(points);
-				final double overscanX = node.getOverscanX(stringBounder);
-				final double minX = SvekUtils.getMinX(points);
-//				corner1.manage(minX - overscanX, minY);
-				node.moveSvek(minX, minY);
+				final Point2D min = SvekUtils.getMinXY(points);
+				node.moveSvek(min.getX(), min.getY());
 			} else if (node.getType() == ShapeType.ROUND_RECTANGLE) {
 				final int idx2 = svg.indexOf("d=\"", idx + 1);
 				idx = svg.indexOf("points=\"", idx + 1);
@@ -389,19 +386,16 @@ public class DotStringFactory implements Moveable {
 						points.addAll(svgResult.substring(idx).extractList(SvgResult.POINTS_EQUALS));
 					}
 				}
-				final double minX = SvekUtils.getMinX(points);
-				final double minY = SvekUtils.getMinY(points);
-//				corner1.manage(minX, minY);
-				node.moveSvek(minX, minY);
+				final Point2D min = SvekUtils.getMinXY(points);
+				node.moveSvek(min.getX(), min.getY());
 			} else if (node.getType() == ShapeType.OCTAGON || node.getType() == ShapeType.HEXAGON) {
 				idx = svg.indexOf("points=\"", idx + 1);
 				final int starting = idx;
 				final List<Point2D.Double> points = svgResult.substring(starting).extractList(SvgResult.POINTS_EQUALS);
-				final double minX = SvekUtils.getMinX(points);
-				final double minY = SvekUtils.getMinY(points);
+				final Point2D min = SvekUtils.getMinXY(points);
 				// corner1.manage(minX, minY);
-				node.moveSvek(minX, minY);
-				node.setPolygon(minX, minY, points);
+				node.moveSvek(min.getX(), min.getY());
+				node.setPolygon(min.getX(), min.getY(), points);
 			} else if (node.getType() == ShapeType.CIRCLE || node.getType() == ShapeType.OVAL) {
 				final double cx = SvekUtils.getValue(svg, idx, "cx");
 				final double cy = SvekUtils.getValue(svg, idx, "cy") + fullHeight;
@@ -423,23 +417,24 @@ public class DotStringFactory implements Moveable {
 			int idx = getClusterIndex(svg, cluster.getColor());
 			final int starting = idx;
 			final List<Point2D.Double> points = svgResult.substring(starting).extractList(SvgResult.POINTS_EQUALS);
-			final double minX = SvekUtils.getMinX(points);
-			final double minY = SvekUtils.getMinY(points);
-			final double maxX = SvekUtils.getMaxX(points);
-			final double maxY = SvekUtils.getMaxY(points);
-			cluster.setPosition(minX, minY, maxX, maxY);
-			// corner1.manage(minX, minY);
+			final Point2D min = SvekUtils.getMinXY(points);
+			final Point2D max = SvekUtils.getMaxXY(points);
+			cluster.setPosition(min, max);
 
 			if (cluster.getTitleAndAttributeWidth() == 0 || cluster.getTitleAndAttributeHeight() == 0)
 				continue;
 
 			idx = getClusterIndex(svg, cluster.getTitleColor());
-			final int starting1 = idx;
-			final List<Point2D.Double> pointsTitle = svgResult.substring(starting1)
-					.extractList(SvgResult.POINTS_EQUALS);
-			final double minXtitle = SvekUtils.getMinX(pointsTitle);
-			final double minYtitle = SvekUtils.getMinY(pointsTitle);
-			cluster.setTitlePosition(minXtitle, minYtitle);
+			final List<Point2D.Double> pointsTitle = svgResult.substring(idx).extractList(SvgResult.POINTS_EQUALS);
+			cluster.setTitlePosition(SvekUtils.getMinXY(pointsTitle));
+
+			if (OptionFlags.USE_KERMOR) {
+				if (cluster.getGroup().getNotes().size() > 0) {
+					idx = getClusterIndex(svg, cluster.getColorNoteUp());
+					final List<Point2D.Double> noteUp = svgResult.substring(idx).extractList(SvgResult.POINTS_EQUALS);
+					cluster.setNoteUpPosition(SvekUtils.getMinXY(noteUp));
+				}
+			}
 		}
 
 		for (SvekLine line : bibliotekon.allLines())

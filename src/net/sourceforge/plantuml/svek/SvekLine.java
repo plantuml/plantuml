@@ -59,6 +59,7 @@ import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.creole.CreoleMode;
+import net.sourceforge.plantuml.cucadiagram.CucaNote;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.EntityPort;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
@@ -285,25 +286,26 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 
 		}
 
-		final TextBlock noteOnly;
-		if (link.getNote() == null) {
-			noteOnly = TextBlockUtils.EMPTY_TEXT_BLOCK;
+		final CucaNote note = link.getNote();
+		if (note == null) {
+			labelText = labelOnly;
 		} else {
-			noteOnly = new EntityImageNoteLink(link.getNote(), link.getNoteColors(), skinParam, link.getStyleBuilder());
-			if (link.getNoteLinkStrategy() == NoteLinkStrategy.HALF_NOT_PRINTED
-					|| link.getNoteLinkStrategy() == NoteLinkStrategy.HALF_PRINTED_FULL)
+			final TextBlock noteOnly = new EntityImageNoteLink(note.getDisplay(), note.getColors(), skinParam,
+					link.getStyleBuilder());
+			if (note.getStrategy() == NoteLinkStrategy.HALF_NOT_PRINTED
+					|| note.getStrategy() == NoteLinkStrategy.HALF_PRINTED_FULL)
 				divideLabelWidthByTwo = true;
 
-		}
+			if (note.getPosition() == Position.LEFT)
+				labelText = TextBlockUtils.mergeLR(noteOnly, labelOnly, VerticalAlignment.CENTER);
+			else if (note.getPosition() == Position.RIGHT)
+				labelText = TextBlockUtils.mergeLR(labelOnly, noteOnly, VerticalAlignment.CENTER);
+			else if (note.getPosition() == Position.TOP)
+				labelText = TextBlockUtils.mergeTB(noteOnly, labelOnly, HorizontalAlignment.CENTER);
+			else
+				labelText = TextBlockUtils.mergeTB(labelOnly, noteOnly, HorizontalAlignment.CENTER);
 
-		if (link.getNotePosition() == Position.LEFT)
-			labelText = TextBlockUtils.mergeLR(noteOnly, labelOnly, VerticalAlignment.CENTER);
-		else if (link.getNotePosition() == Position.RIGHT)
-			labelText = TextBlockUtils.mergeLR(labelOnly, noteOnly, VerticalAlignment.CENTER);
-		else if (link.getNotePosition() == Position.TOP)
-			labelText = TextBlockUtils.mergeTB(noteOnly, labelOnly, HorizontalAlignment.CENTER);
-		else
-			labelText = TextBlockUtils.mergeTB(labelOnly, noteOnly, HorizontalAlignment.CENTER);
+		}
 
 		if (link.getQualifier1() == null)
 			startTailText = null;
@@ -632,7 +634,7 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		return dotPath.getBeziers().size() <= 1;
 	}
 
-	private Point2D.Double getXY(SvgResult svgResult, int color) {
+	private Point2D getXY(SvgResult svgResult, int color) {
 		final int idx = svgResult.getIndexFromColor(color);
 		if (idx == -1)
 			return null;
@@ -730,7 +732,7 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		ug = ug.apply(new UStroke()).apply(color);
 
 		if (hasNoteLabelText() && this.labelXY != null
-				&& link.getNoteLinkStrategy() != NoteLinkStrategy.HALF_NOT_PRINTED)
+				&& (link.getNote() == null || link.getNote().getStrategy() != NoteLinkStrategy.HALF_NOT_PRINTED))
 			this.labelText.drawU(ug.apply(new UTranslate(x + this.labelXY.getPosition().getX() + labelShield,
 					y + this.labelXY.getPosition().getY() + labelShield)));
 

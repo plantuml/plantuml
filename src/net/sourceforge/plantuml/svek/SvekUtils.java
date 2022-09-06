@@ -65,48 +65,29 @@ public class SvekUtils {
 
 	}
 
-	public static double getMaxX(List<Point2D.Double> points) {
-		double result = points.get(0).x;
+	public static Point2D getMinXY(List<Point2D.Double> points) {
+		double minx = points.get(0).x;
+		double miny = points.get(0).y;
 		for (int i = 1; i < points.size(); i++) {
-			if (points.get(i).x > result) {
-				result = points.get(i).x;
-			}
+			if (points.get(i).x < minx)
+				minx = points.get(i).x;
+			if (points.get(i).y < miny)
+				miny = points.get(i).y;
 		}
-		return result;
+		return new Point2D.Double(minx, miny);
 	}
 
-	public static double getMinX(List<Point2D.Double> points) {
-		double result = points.get(0).x;
+	public static Point2D getMaxXY(List<Point2D.Double> points) {
+		double maxx = points.get(0).x;
+		double maxy = points.get(0).y;
 		for (int i = 1; i < points.size(); i++) {
-			if (points.get(i).x < result) {
-				result = points.get(i).x;
-			}
+			if (points.get(i).x > maxx)
+				maxx = points.get(i).x;
+			if (points.get(i).y > maxy)
+				maxy = points.get(i).y;
 		}
-		return result;
-	}
 
-	public static Point2D.Double getMinXY(List<Point2D.Double> points) {
-		return new Point2D.Double(getMinX(points), getMinY(points));
-	}
-
-	public static double getMaxY(List<Point2D.Double> points) {
-		double result = points.get(0).y;
-		for (int i = 1; i < points.size(); i++) {
-			if (points.get(i).y > result) {
-				result = points.get(i).y;
-			}
-		}
-		return result;
-	}
-
-	public static double getMinY(List<Point2D.Double> points) {
-		double result = points.get(0).y;
-		for (int i = 1; i < points.size(); i++) {
-			if (points.get(i).y < result) {
-				result = points.get(i).y;
-			}
-		}
-		return result;
+		return new Point2D.Double(maxx, maxy);
 	}
 
 	public static void println(StringBuilder sb) {

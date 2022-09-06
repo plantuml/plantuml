@@ -55,9 +55,11 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.cucadiagram.Bodier;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
+import net.sourceforge.plantuml.cucadiagram.CucaNote;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.DisplayPositioned;
 import net.sourceforge.plantuml.cucadiagram.EntityPosition;
@@ -108,8 +110,6 @@ final public class EntityImpl implements ILeaf, IGroup {
 	private String generic;
 	private IGroup parentContainer;
 
-	private boolean top;
-
 	// Group
 	private Code namespace;
 
@@ -127,6 +127,17 @@ final public class EntityImpl implements ILeaf, IGroup {
 	private LineLocation codeLine;
 
 	private Set<Stereotag> tags = new LinkedHashSet<>();
+	private final List<CucaNote> notes = new ArrayList<>();
+
+	@Override
+	public void addNote(Display note, Position position, Colors colors) {
+		notes.add(CucaNote.build(note, position, colors));
+	}
+
+	@Override
+	public List<CucaNote> getNotes() {
+		return Collections.unmodifiableList(notes);
+	}
 
 	public void addStereotag(Stereotag tag) {
 		this.tags.add(tag);
@@ -137,16 +148,6 @@ final public class EntityImpl implements ILeaf, IGroup {
 	}
 
 	// Back to Entity
-	public final boolean isTop() {
-		checkNotGroup();
-		return top;
-	}
-
-	public final void setTop(boolean top) {
-		checkNotGroup();
-		this.top = top;
-	}
-
 	private EntityImpl(Ident ident, EntityFactory entityFactory, Code code, Bodier bodier, IGroup parentContainer,
 			String namespaceSeparator, int rawLayout) {
 		this.ident = Objects.requireNonNull(ident);

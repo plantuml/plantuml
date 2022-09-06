@@ -55,6 +55,30 @@ public enum EntityPosition {
 
 	public static final double RADIUS = 6;
 
+	public static EnumSet<EntityPosition> getInputs() {
+		return EnumSet.of(ENTRY_POINT, INPUT_PIN, EXPANSION_INPUT, PORTIN);
+	}
+
+	public static EnumSet<EntityPosition> getOutputs() {
+		return EnumSet.of(EXIT_POINT, OUTPUT_PIN, EXPANSION_OUTPUT, PORTOUT);
+	}
+
+	public static EnumSet<EntityPosition> getNormals() {
+		return EnumSet.of(NORMAL);
+	}
+
+	public boolean isNormal() {
+		return this == NORMAL;
+	}
+
+	public boolean isInput() {
+		return getInputs().contains(this);
+	}
+
+	public boolean isOutput() {
+		return getOutputs().contains(this);
+	}
+
 	public void drawSymbol(UGraphic ug, Rankdir rankdir) {
 		if (this == NORMAL) {
 			throw new IllegalStateException();
@@ -70,7 +94,7 @@ public enum EntityPosition {
 				drawLine(ug, getPointOnCircle(xc, yc, -Math.PI / 4, radius),
 						getPointOnCircle(xc, yc, Math.PI - Math.PI / 4, radius));
 			}
-		} else if (this == INPUT_PIN || this == OUTPUT_PIN /*|| this == PORT*/) {
+		} else if (this == INPUT_PIN || this == OUTPUT_PIN /* || this == PORT */) {
 			final Shadowable rectangle = new URectangle(RADIUS * 2, RADIUS * 2);
 			ug.draw(rectangle);
 		} else if (this == EXPANSION_INPUT || this == EXPANSION_OUTPUT) {
@@ -151,20 +175,12 @@ public enum EntityPosition {
 		return EntityPosition.NORMAL;
 	}
 
-	public static EnumSet<EntityPosition> getInputs() {
-		return EnumSet.of(ENTRY_POINT, INPUT_PIN, EXPANSION_INPUT, PORTIN);
-	}
-
-	public static EnumSet<EntityPosition> getOutputs() {
-		return EnumSet.of(EXIT_POINT, OUTPUT_PIN, EXPANSION_OUTPUT, PORTOUT);
-	}
-
 //	public static EnumSet<EntityPosition> getSame() {
 //		return EnumSet.of(PORT);
 //	}
 //
 	public boolean isPort() {
-		return /*this == PORT ||*/ this == PORTIN || this == PORTOUT;
+		return /* this == PORT || */ this == PORTIN || this == PORTOUT;
 	}
 
 	public boolean usePortP() {

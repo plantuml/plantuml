@@ -36,52 +36,40 @@
  */
 package net.sourceforge.plantuml.svek;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.EnumSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.plantuml.AlignmentParam;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
+import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.cucadiagram.CucaNote;
 import net.sourceforge.plantuml.cucadiagram.EntityPosition;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizVersion;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.USymbols;
+import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.svek.image.EntityImageNoteLink;
 
-public class ClusterDotString {
+public class ClusterDotStringKermor {
 
 	private final Cluster cluster;
 	private final ISkinParam skinParam;
 	private static final String ID_EE = "ee";
 
-	public ClusterDotString(Cluster cluster, ISkinParam skinParam) {
+	public ClusterDotStringKermor(Cluster cluster, ISkinParam skinParam) {
 		this.cluster = cluster;
 		this.skinParam = skinParam;
 	}
 
 	void printInternal(StringBuilder sb, Collection<SvekLine> lines, StringBounder stringBounder, DotMode dotMode,
 			GraphvizVersion graphvizVersion, UmlDiagramType type) {
-		if (OptionFlags.USE_KERMOR) {
-			new ClusterDotStringKermor(cluster, skinParam).printInternal(sb, lines, stringBounder, dotMode,
-					graphvizVersion, type);
-			return;
-		}
-		final boolean thereALinkFromOrToGroup2 = isThereALinkFromOrToGroup(lines);
-		boolean thereALinkFromOrToGroup1 = thereALinkFromOrToGroup2;
-		final boolean useProtectionWhenThereALinkFromOrToGroup = graphvizVersion
-				.useProtectionWhenThereALinkFromOrToGroup();
-		if (useProtectionWhenThereALinkFromOrToGroup == false)
-			thereALinkFromOrToGroup1 = false;
-
-		if (thereALinkFromOrToGroup1)
-			subgraphClusterNoLabel(sb, "a");
 
 		final Set<EntityPosition> entityPositionsExceptNormal = entityPositionsExceptNormal();
 		if (entityPositionsExceptNormal.size() > 0)
@@ -89,18 +77,44 @@ public class ClusterDotString {
 				if (line.isLinkFromOrTo(cluster.getGroup()))
 					line.setProjectionCluster(cluster);
 
-		boolean protection0 = protection0(type);
-		boolean protection1 = protection1(type);
-		if (entityPositionsExceptNormal.size() > 0 || useProtectionWhenThereALinkFromOrToGroup == false) {
-			protection0 = false;
-			protection1 = false;
+		final boolean useAlphaAndBeta = useAlphaAndBeta();
+
+		if (useAlphaAndBeta) {
+			sb.append("subgraph " + cluster.getClusterId() + "alpha {");
+			SvekUtils.println(sb);
+
+			final TextBlock noteOnly = cluster.getCucaNote();
+			if (noteOnly == null) {
+				sb.append("label=\"\";color=\"#FFFF00\";");
+				SvekUtils.println(sb);
+			} else {
+
+				final Dimension2D dim = noteOnly.calculateDimension(stringBounder);
+				System.err.println("dim=" + dim);
+
+				final StringBuilder sblabel = new StringBuilder("<");
+				SvekLine.appendTable(sblabel, (int) dim.getWidth(), (int) dim.getHeight(), cluster.getColorNoteUp());
+				sblabel.append(">");
+				sb.append("label=" + sblabel + ";");
+				sb.append("color=\"#FFFF00\";");
+			}
+
 		}
 
-		if (protection0)
-			subgraphClusterNoLabel(sb, "p0");
+		sb.append("subgraph " + cluster.getClusterId() + "beta {");
+		SvekUtils.println(sb);
+		sb.append("label=\"\";color=\"#FFFF00\";");
+		// sb.append("label=\"NOTEDOWN\";labelloc=\"b\";");
+		SvekUtils.println(sb);
+		printRanks(Cluster.RANK_SOURCE, cluster.getNodes(EntityPosition.getInputs()), sb, stringBounder);
+		SvekUtils.println(sb);
 
-		sb.append("subgraph " + cluster.getClusterId() + " {");
+		sb.append("subgraph " + cluster.getClusterId() + "gamma {");
+		SvekUtils.println(sb);
+		sb.append("labelloc=\"t\";");
+		SvekUtils.println(sb);
 		sb.append("style=solid;");
+		SvekUtils.println(sb);
 		sb.append("color=\"" + StringUtils.sharp000000(cluster.getColor()) + "\";");
 
 		final String label;
@@ -117,71 +131,30 @@ public class ClusterDotString {
 			label = "\"\"";
 		}
 
-		if (entityPositionsExceptNormal.size() > 0) {
-			printRanks(Cluster.RANK_SOURCE, withPosition(EntityPosition.getInputs()), sb, stringBounder);
-			printRanks(Cluster.RANK_SINK, withPosition(EntityPosition.getOutputs()), sb, stringBounder);
-			if (hasPort())
-				subgraphClusterNoLabel(sb, ID_EE);
-			else
-				subgraphClusterWithLabel(sb, ID_EE, label);
-
-		} else {
-			sb.append("label=" + label + ";");
-			SvekUtils.println(sb);
-		}
-
-		if (thereALinkFromOrToGroup2)
-			sb.append(Cluster.getSpecialPointId(cluster.getGroup()) + " [shape=point,width=.01,label=\"\"];");
-
-		if (thereALinkFromOrToGroup1)
-			subgraphClusterNoLabel(sb, "i");
-
-		if (protection1)
-			subgraphClusterNoLabel(sb, "p1");
-
-		if (skinParam.useSwimlanes(type)) {
-			sb.append("{rank = source; ");
-			sb.append(getSourceInPoint(type));
-			sb.append(" [shape=point,width=.01,label=\"\"];");
-			sb.append(cluster.getMinPoint(type) + "->" + getSourceInPoint(type) + "  [weight=999];");
-			sb.append("}");
-			SvekUtils.println(sb);
-			sb.append("{rank = sink; ");
-			sb.append(getSinkInPoint(type));
-			sb.append(" [shape=point,width=.01,label=\"\"];");
-			sb.append("}");
-			sb.append(getSinkInPoint(type) + "->" + cluster.getMaxPoint(type) + "  [weight=999];");
-			SvekUtils.println(sb);
-		}
+		sb.append("label=" + label + ";");
 		SvekUtils.println(sb);
-		cluster.printCluster1(sb, lines, stringBounder);
 
-		final SvekNode added = cluster.printCluster2(sb, lines, stringBounder, dotMode, graphvizVersion, type);
-		if (entityPositionsExceptNormal.size() > 0)
-			if (hasPort()) {
-				sb.append(empty() + " [shape=rect,width=.01,height=.01,label=");
-				sb.append(label);
-				sb.append("];");
-			} else if (added == null) {
-				sb.append(empty() + " [shape=point,width=.01,label=\"\"];");
-			}
+		cluster.printCluster3_forKermor(sb, lines, stringBounder, dotMode, graphvizVersion, type);
+
+		SvekUtils.println(sb);
+		printRanks(Cluster.RANK_SINK, cluster.getNodes(EntityPosition.getOutputs()), sb, stringBounder);
 		SvekUtils.println(sb);
 
 		sb.append("}");
-		if (protection1)
-			sb.append("}");
-
-		if (thereALinkFromOrToGroup1) {
-			sb.append("}");
+		sb.append("}");
+		if (useAlphaAndBeta) {
 			sb.append("}");
 		}
-		if (entityPositionsExceptNormal.size() > 0)
-			sb.append("}");
-
-		if (protection0)
-			sb.append("}");
 
 		SvekUtils.println(sb);
+
+	}
+
+	private boolean useAlphaAndBeta() {
+		if (cluster.getGroup().getNotes().size() > 0)
+			return true;
+
+		return false;
 	}
 
 	private String getSourceInPoint(UmlDiagramType type) {
@@ -232,6 +205,13 @@ public class ClusterDotString {
 		sb.append("label=" + label + ";");
 	}
 
+//	private void printClusterEntryExit(StringBuilder sb, StringBounder stringBounder) {
+//		printRanks(Cluster.RANK_SOURCE, withPosition(EntityPosition.getInputs()), sb, stringBounder);
+//		// printRanks(Cluster.RANK_SAME, withPosition(EntityPosition.getSame()), sb,
+//		// stringBounder);
+//		printRanks(Cluster.RANK_SINK, withPosition(EntityPosition.getOutputs()), sb, stringBounder);
+//	}
+
 	private void printRanks(String rank, List<? extends SvekNode> entries, StringBuilder sb,
 			StringBounder stringBounder) {
 		if (entries.size() > 0) {
@@ -245,38 +225,19 @@ public class ClusterDotString {
 				sh2.appendShape(sb, stringBounder);
 
 			SvekUtils.println(sb);
-			if (hasPort()) {
-				boolean arrow = false;
-				String node = null;
-				for (SvekNode sh : entries) {
-					if (arrow)
-						sb.append("->");
-
-					arrow = true;
-					node = sh.getUid();
-					sb.append(node);
-				}
-				if (arrow)
-					sb.append(" [arrowhead=none]");
-
-				sb.append(';');
-				SvekUtils.println(sb);
-				sb.append(node + "->" + empty() + ";");
-				SvekUtils.println(sb);
-			}
 		}
 	}
 
-	private List<SvekNode> withPosition(Set<EntityPosition> positions) {
-		final List<SvekNode> result = new ArrayList<>();
-		for (final Iterator<SvekNode> it = cluster.getNodes().iterator(); it.hasNext();) {
-			final SvekNode sh = it.next();
-			if (positions.contains(sh.getEntityPosition()))
-				result.add(sh);
-
-		}
-		return result;
-	}
+//	private List<SvekNode> withPosition(Set<EntityPosition> positions) {
+//		final List<SvekNode> result = new ArrayList<>();
+//		for (final Iterator<SvekNode> it = cluster.getNodes().iterator(); it.hasNext();) {
+//			final SvekNode sh = it.next();
+//			if (positions.contains(sh.getEntityPosition()))
+//				result.add(sh);
+//
+//		}
+//		return result;
+//	}
 
 	private boolean protection0(UmlDiagramType type) {
 		if (skinParam.useSwimlanes(type))

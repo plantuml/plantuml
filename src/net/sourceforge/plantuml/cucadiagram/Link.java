@@ -45,14 +45,12 @@ import net.sourceforge.plantuml.Removeable;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.awt.geom.Dimension2D;
-import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.cucadiagram.entity.EntityImpl;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.USymbolInterface;
-import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.svek.Bibliotekon;
@@ -75,10 +73,7 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 
 	final private String uid;
 
-	private Display note;
-	private Position notePosition;
-	private Colors noteColors;
-	private NoteLinkStrategy noteLinkStrategy;
+	private CucaNote note;
 
 	private boolean invis = false;
 	private double weight = 1.0;
@@ -125,6 +120,11 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 		this.uid = "LNK" + ((EntityImpl) cl1).getDiagram().getUniqueSequence();
 
 		this.linkArg = linkArg;
+
+		if (OptionFlags.USE_KERMOR) {
+			if (cl1.getEntityPosition().isNormal() == false ^ cl2.getEntityPosition().isNormal() == false)
+				setConstraint(false);
+		}
 	}
 
 	public Link getInv() {
@@ -293,34 +293,17 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 		this.weight = weight;
 	}
 
-	public final Display getNote() {
+	public final CucaNote getNote() {
 		return note;
 	}
 
-	public final NoteLinkStrategy getNoteLinkStrategy() {
-		return noteLinkStrategy;
-	}
-
-	public final Colors getNoteColors() {
-		return noteColors;
-	}
-
-	public final Position getNotePosition() {
-		return notePosition;
-	}
-
-	public final void addNote(Display note, Position position, Colors colors) {
+	public final void addNote(CucaNote note) {
 		this.note = note;
-		this.notePosition = position;
-		this.noteColors = colors;
-		this.noteLinkStrategy = NoteLinkStrategy.NORMAL;
 	}
 
 	public final void addNoteFrom(Link other, NoteLinkStrategy strategy) {
-		this.note = other.note;
-		this.notePosition = other.notePosition;
-		this.noteColors = other.noteColors;
-		this.noteLinkStrategy = strategy;
+		if (other.note != null)
+			this.note = other.note.withStrategy(strategy);
 	}
 
 	public boolean isAutoLinkOfAGroup() {
@@ -419,15 +402,14 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 	}
 
 	public boolean hasEntryPoint() {
-		return (getEntity1().isGroup() == false && ((ILeaf) getEntity1()).getEntityPosition() != EntityPosition.NORMAL)
-				|| (getEntity2().isGroup() == false
-						&& ((ILeaf) getEntity2()).getEntityPosition() != EntityPosition.NORMAL);
+		return (getEntity1().isGroup() == false && getEntity1().getEntityPosition() != EntityPosition.NORMAL)
+				|| (getEntity2().isGroup() == false && getEntity2().getEntityPosition() != EntityPosition.NORMAL);
 	}
 
 	public boolean hasTwoEntryPointsSameContainer() {
 		return getEntity1().isGroup() == false && getEntity2().isGroup() == false
-				&& ((ILeaf) getEntity1()).getEntityPosition() != EntityPosition.NORMAL
-				&& ((ILeaf) getEntity2()).getEntityPosition() != EntityPosition.NORMAL
+				&& getEntity1().getEntityPosition() != EntityPosition.NORMAL
+				&& getEntity2().getEntityPosition() != EntityPosition.NORMAL
 				&& getEntity1().getParentContainer() == getEntity2().getParentContainer();
 	}
 

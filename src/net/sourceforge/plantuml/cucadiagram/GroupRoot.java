@@ -45,6 +45,7 @@ import java.util.Set;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.USymbol;
@@ -332,6 +333,21 @@ public class GroupRoot implements IGroup {
 
 	@Override
 	public Stereostyles getStereostyles() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void addNote(Display note, Position position, Colors colors) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public EntityPosition getEntityPosition() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public List<CucaNote> getNotes() {
 		throw new UnsupportedOperationException();
 	}
 }

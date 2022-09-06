@@ -49,6 +49,7 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.w3c.dom.Comment;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -119,15 +120,33 @@ public class ScxmlStateDiagramStandard {
 	}
 
 	private Element createState(IEntity entity) {
+		final LeafType type = entity.getLeafType();
+
 		final Element state = document.createElement("state");
-		state.setAttribute("id", getId(entity));
-		final Stereotype stereotype = entity.getStereotype();
-		if (stereotype != null) {
-			state.setAttribute("stereotype", stereotype.getLabels(Guillemet.NONE).get(0));
+		if (type == LeafType.NOTE) {
+			state.setAttribute("stereotype", "note");
+			state.setAttribute("id", entity.getCode().getName());
+			final Display display = entity.getDisplay();
+			final StringBuilder sb = new StringBuilder();
+			for (CharSequence s : display) {
+				sb.append(s);
+				sb.append("\n");
+			}
+			if (sb.length() > 0)
+				sb.setLength(sb.length() - 1);
+			final Comment comment = document.createComment(sb.toString());
+			state.appendChild(comment);
+
+		} else {
+			state.setAttribute("id", getId(entity));
+			final Stereotype stereotype = entity.getStereotype();
+			if (stereotype != null)
+				state.setAttribute("stereotype", stereotype.getLabels(Guillemet.NONE).get(0));
+
+			for (final Link link : diagram.getLinks())
+				if (link.getEntity1() == entity)
+					addLink(state, link);
 		}
-		for (final Link link : diagram.getLinks())
-			if (link.getEntity1() == entity)
-				addLink(state, link);
 
 		return state;
 	}

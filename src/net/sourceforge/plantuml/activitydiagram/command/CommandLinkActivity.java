@@ -197,9 +197,8 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 		if (arg.get("STAR" + suf, 0) != null) {
 			final String suppId = arg.get("STAR" + suf, 1);
 			if (start) {
-				if (suppId != null)
-					diagram.getStart().setTop(true);
-
+//				if (suppId != null)
+//					diagram.getStart().setTop(true);
 				return diagram.getStart();
 			}
 			return diagram.getEnd(suppId);

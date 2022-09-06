@@ -35,50 +35,45 @@
  */
 package net.sourceforge.plantuml.cucadiagram;
 
-import java.util.Collection;
+import net.sourceforge.plantuml.command.Position;
+import net.sourceforge.plantuml.graphic.color.Colors;
 
-import net.sourceforge.plantuml.cucadiagram.dot.Neighborhood;
-import net.sourceforge.plantuml.graphic.USymbol;
-import net.sourceforge.plantuml.skin.VisibilityModifier;
-import net.sourceforge.plantuml.svek.IEntityImage;
-import net.sourceforge.plantuml.svek.Margins;
+public class CucaNote {
 
-public interface ILeaf extends IEntity {
+	private final Display display;
+	private final Position position;
+	private final Colors colors;
+	private final NoteLinkStrategy strategy;
 
-	public EntityPosition getEntityPosition();
+	private CucaNote(Display display, Position position, Colors colors, NoteLinkStrategy strategy) {
+		this.display = display;
+		this.position = position;
+		this.colors = colors;
+		this.strategy = strategy;
+	}
 
-	public void setContainer(IGroup container);
+	public static CucaNote build(Display display, Position position, Colors colors) {
+		return new CucaNote(display, position, colors, NoteLinkStrategy.NORMAL);
+	}
 
-	public Margins getMargins();
+	public CucaNote withStrategy(NoteLinkStrategy strategy) {
+		return new CucaNote(display, position, colors, strategy);
+	}
 
-	public int getXposition();
+	public final Display getDisplay() {
+		return display;
+	}
 
-	public void setXposition(int pos);
+	public final NoteLinkStrategy getStrategy() {
+		return strategy;
+	}
 
-	public IEntityImage getSvekImage();
+	public final Colors getColors() {
+		return colors;
+	}
 
-	public String getGeneric();
-
-	public boolean muteToType(LeafType newType, USymbol newSymbol);
-
-	public void setGeneric(String generic);
-
-	public void setSvekImage(IEntityImage svekImage);
-
-	public void setNeighborhood(Neighborhood neighborhood);
-
-	public Neighborhood getNeighborhood();
-
-	public Collection<String> getPortShortNames();
-
-	public void addPortShortName(String portShortName);
-
-	public void setVisibilityModifier(VisibilityModifier visibility);
-
-	public VisibilityModifier getVisibilityModifier();
-
-	public void setStatic(boolean isStatic);
-
-	public boolean isStatic();
+	public final Position getPosition() {
+		return position;
+	}
 
 }

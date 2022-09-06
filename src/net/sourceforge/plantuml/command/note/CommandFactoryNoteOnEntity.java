@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.command.note;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.LineLocation;
+import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
@@ -227,6 +228,24 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 			}
 		}
 
+		final Position position = Position.valueOf(StringUtils.goUpperCase(pos))
+				.withRankdir(diagram.getSkinParam().getRankdir());
+		Colors colors = color().getColor(diagram.getSkinParam().getThemeStyle(), line0,
+				diagram.getSkinParam().getIHtmlColorSet());
+
+		final String stereotypeString = line0.get("STEREO", 0);
+		Stereotype stereotype = null;
+		if (stereotypeString != null) {
+			stereotype = Stereotype.build(stereotypeString);
+			colors = colors.applyStereotypeForNote(stereotype, diagram.getSkinParam(), ColorParam.noteBackground,
+					ColorParam.noteBorder);
+		}
+
+		if (OptionFlags.USE_KERMOR && cl1.isGroup()) {
+			cl1.addNote(strings.toDisplay(), position, colors);
+			return CommandExecutionResult.ok();
+		}
+
 		final String tmp = diagram.getUniqueSequence("GMN");
 		final Ident idNewLong = diagram.buildLeafIdent(tmp);
 		final IEntity note;
@@ -235,16 +254,8 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 		else
 			note = diagram.createLeaf(idNewLong, diagram.buildCode(tmp), strings.toDisplay(), LeafType.NOTE, null);
 
-		Colors colors = color().getColor(diagram.getSkinParam().getThemeStyle(), line0,
-				diagram.getSkinParam().getIHtmlColorSet());
-
-		final String stereotypeString = line0.get("STEREO", 0);
-		if (stereotypeString != null) {
-			final Stereotype stereotype = Stereotype.build(stereotypeString);
-			colors = colors.applyStereotypeForNote(stereotype, diagram.getSkinParam(), ColorParam.noteBackground,
-					ColorParam.noteBorder);
+		if (stereotypeString != null)
 			note.setStereotype(stereotype);
-		}
 
 		note.setColors(colors);
 		if (url != null)
@@ -252,8 +263,6 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 
 		CommandCreateClassMultilines.addTags(note, line0.get("TAGS", 0));
 
-		final Position position = Position.valueOf(StringUtils.goUpperCase(pos))
-				.withRankdir(diagram.getSkinParam().getRankdir());
 		final Link link;
 
 		final LinkType type = new LinkType(LinkDecor.NONE, LinkDecor.NONE).goDashed();

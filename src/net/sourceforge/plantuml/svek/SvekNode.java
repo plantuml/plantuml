@@ -78,8 +78,6 @@ public class SvekNode implements Positionable, Hideable {
 
 	private Cluster cluster;
 
-	private final boolean top;
-
 	public final Cluster getCluster() {
 		return cluster;
 	}
@@ -100,7 +98,6 @@ public class SvekNode implements Positionable, Hideable {
 		this.stringBounder = stringBounder;
 		this.entityPosition = ent.getEntityPosition();
 		this.image = image;
-		this.top = ent.isTop();
 		this.type = image.getShapeType();
 
 		this.color = colorSequence.getValue();
@@ -136,18 +133,22 @@ public class SvekNode implements Positionable, Hideable {
 	public void appendShape(StringBuilder sb, StringBounder stringBounder) {
 		if (type == ShapeType.RECTANGLE_HTML_FOR_PORTS) {
 			appendLabelHtmlSpecialForLink(sb, stringBounder);
+			SvekUtils.println(sb);
 			return;
 		}
 		if (type == ShapeType.RECTANGLE_PORT) {
 			appendLabelHtmlSpecialForPort(sb, stringBounder);
+			SvekUtils.println(sb);
 			return;
 		}
 		if (type == ShapeType.RECTANGLE_WITH_CIRCLE_INSIDE) {
 			appendHtml(sb);
+			SvekUtils.println(sb);
 			return;
 		}
 		if (type == ShapeType.RECTANGLE && shield().isZero() == false) {
 			appendHtml(sb);
+			SvekUtils.println(sb);
 			return;
 		}
 		sb.append(uid);
@@ -360,10 +361,6 @@ public class SvekNode implements Positionable, Hideable {
 
 	public IEntityImage getImage() {
 		return image;
-	}
-
-	public final boolean isTop() {
-		return top;
 	}
 
 	public Point2D getPosition() {
