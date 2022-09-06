@@ -10,14 +10,17 @@ import java.util.regex.Pattern;
 import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
+import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.openiconic.SvgPath;
 import net.sourceforge.plantuml.sprite.Sprite;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
+import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImageSvg;
 import net.sourceforge.plantuml.ugraphic.UStroke;
+import net.sourceforge.plantuml.ugraphic.UText;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.ColorChangerMonochrome;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
@@ -54,12 +57,13 @@ public class SvgNanoParser implements Sprite {
 		this.keepColors = keepColors;
 
 		for (String singleLine : svg) {
-			final Pattern p = Pattern.compile("\\<[^<>]+\\>");
+			final Pattern p = Pattern
+					.compile("(\\<text .*?\\</text\\>)|(\\<(svg|path|g|circle|ellipse)[^<>]*\\>)|(\\</[^<>]*\\>)");
 			final Matcher m = p.matcher(singleLine);
 			while (m.find()) {
 				final String s = m.group(0);
-				if (s.contains("<path") || s.contains("<g ") || s.contains("<g>") || s.contains("</g>")
-						|| s.contains("<circle ") || s.contains("<ellipse "))
+				if (s.startsWith("<path") || s.startsWith("<g ") || s.startsWith("<g>") || s.startsWith("</g>")
+						|| s.startsWith("<circle ") || s.startsWith("<ellipse ") || s.startsWith("<text "))
 					data.add(s);
 				else if (s.startsWith("<svg") || s.startsWith("</svg")) {
 					// Ignore
@@ -79,21 +83,22 @@ public class SvgNanoParser implements Sprite {
 
 		final List<UGraphicWithScale> stack = new ArrayList<>();
 		for (String s : data) {
-			if (s.contains("<path ")) {
+			if (s.startsWith("<path ")) {
 				drawPath(ugs, s, colorForMonochrome);
-			} else if (s.contains("</g>")) {
+			} else if (s.startsWith("</g>")) {
 				ugs = stack.remove(0);
-			} else if (s.contains("<g>")) {
+			} else if (s.startsWith("<g>")) {
 				stack.add(0, ugs);
-			} else if (s.contains("<g ")) {
+			} else if (s.startsWith("<g ")) {
 				stack.add(0, ugs);
 				ugs = applyFill(ugs, s, colorForMonochrome);
 				ugs = applyTransform(ugs, s);
-
-			} else if (s.contains("<circle ")) {
+			} else if (s.startsWith("<circle ")) {
 				drawCircle(ugs, s, colorForMonochrome);
-			} else if (s.contains("<ellipse ")) {
+			} else if (s.startsWith("<ellipse ")) {
 				drawEllipse(ugs, s, colorForMonochrome);
+			} else if (s.startsWith("<text ")) {
+				drawText(ugs, s, colorForMonochrome);
 			} else {
 				System.err.println("**?=" + s);
 			}
@@ -133,10 +138,8 @@ public class SvgNanoParser implements Sprite {
 			final HColor stroke = getTrueColor(strokeString, colorForMonochrome);
 			ugs = ugs.apply(stroke);
 			final String strokeWidth = extractData("stroke-width", s);
-			if (strokeWidth != null) {
+			if (strokeWidth != null)
 				ugs = ugs.apply(new UStroke(Double.parseDouble(strokeWidth)));
-
-			}
 
 		} else {
 			final HColor fill = getTrueColor(fillString, colorForMonochrome);
@@ -213,6 +216,25 @@ public class SvgNanoParser implements Sprite {
 
 		final UTranslate translate = new UTranslate(deltax + cx - rx, deltay + cy - ry);
 		ugs.apply(translate).draw(new UEllipse(rx * 2, ry * 2));
+	}
+
+	private void drawText(UGraphicWithScale ugs, String s, HColor colorForMonochrome) {
+		final double x = Double.parseDouble(extractData("x", s));
+		final double y = Double.parseDouble(extractData("y", s));
+		final String fill = extractData("fill", s);
+		final int fontSize = Integer.parseInt(extractData("font-size", s));
+
+		final Pattern p = Pattern.compile("\\<text[^<>]*\\>(.*?)\\</text\\>");
+		final Matcher m = p.matcher(s);
+		if (m.find()) {
+			final String text = m.group(1);
+			HColor color = HColorSet.instance().getColorOrWhite(fill);
+			final FontConfiguration fc = FontConfiguration.create(UFont.sansSerif(fontSize), color, color, false);
+			final UText utext = new UText(text, fc);
+			UGraphic ug = ugs.getUg();
+			ug = ug.apply(new UTranslate(x, y));
+			ug.draw(utext);
+		}
 	}
 
 	private void drawPath(UGraphicWithScale ugs, String s, HColor colorForMonochrome) {
