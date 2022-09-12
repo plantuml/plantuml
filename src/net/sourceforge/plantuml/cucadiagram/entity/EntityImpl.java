@@ -127,16 +127,24 @@ final public class EntityImpl implements ILeaf, IGroup {
 	private LineLocation codeLine;
 
 	private Set<Stereotag> tags = new LinkedHashSet<>();
-	private final List<CucaNote> notes = new ArrayList<>();
+	private final List<CucaNote> notesTop = new ArrayList<>();
+	private final List<CucaNote> notesBottom = new ArrayList<>();
 
 	@Override
 	public void addNote(Display note, Position position, Colors colors) {
-		notes.add(CucaNote.build(note, position, colors));
+		if (position == Position.TOP)
+			notesTop.add(CucaNote.build(note, position, colors));
+		else if (position == Position.BOTTOM)
+			notesBottom.add(CucaNote.build(note, position, colors));
 	}
 
 	@Override
-	public List<CucaNote> getNotes() {
-		return Collections.unmodifiableList(notes);
+	public List<CucaNote> getNotes(Position position) {
+		if (position == Position.TOP)
+			return Collections.unmodifiableList(notesTop);
+		if (position == Position.BOTTOM)
+			return Collections.unmodifiableList(notesBottom);
+		throw new IllegalArgumentException();
 	}
 
 	public void addStereotag(Stereotag tag) {

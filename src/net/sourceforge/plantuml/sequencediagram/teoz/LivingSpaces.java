@@ -35,12 +35,12 @@
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
@@ -111,7 +111,7 @@ public class LivingSpaces {
 			final double x = livingSpace.getPosB(stringBounder).getCurrentValue();
 			double y = 0;
 			if (verticalAlignment == VerticalAlignment.BOTTOM) {
-				final Dimension2D dimHead = livingSpace.getHeadPreferredDimension(stringBounder);
+				final XDimension2D dimHead = livingSpace.getHeadPreferredDimension(stringBounder);
 				y = headHeight - dimHead.getHeight();
 			}
 			livingSpace.drawHead(ug.apply(new UTranslate(x, y)), context, verticalAlignment, HorizontalAlignment.LEFT);
@@ -121,7 +121,7 @@ public class LivingSpaces {
 	public double getHeadHeight(StringBounder stringBounder) {
 		double headHeight = 0;
 		for (LivingSpace livingSpace : values()) {
-			final Dimension2D headDim = livingSpace.getHeadPreferredDimension(stringBounder);
+			final XDimension2D headDim = livingSpace.getHeadPreferredDimension(stringBounder);
 			headHeight = Math.max(headHeight, headDim.getHeight());
 		}
 		return headHeight;

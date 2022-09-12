@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.jsondiagram;
 
-import java.awt.geom.Point2D;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 
 public class Mirror {
 
@@ -52,16 +52,16 @@ public class Mirror {
 		return max - v;
 	}
 
-	public Point2D invAndXYSwitch(Point2D pt) {
+	public XPoint2D invAndXYSwitch(XPoint2D pt) {
 		final double x = inv(pt.getY());
 		final double y = pt.getX();
-		return new Point2D.Double(x, y);
+		return new XPoint2D(x, y);
 	}
 
-	public Point2D invGit(Point2D pt) {
+	public XPoint2D invGit(XPoint2D pt) {
 		final double x = pt.getX();
 		final double y = inv(pt.getY());
-		return new Point2D.Double(x, y);
+		return new XPoint2D(x, y);
 	}
 
 }

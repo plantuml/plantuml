@@ -35,11 +35,10 @@
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.util.List;
 import java.util.Objects;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -56,7 +55,7 @@ import net.sourceforge.plantuml.ugraphic.color.HColors;
 public class PlayingSpaceWithParticipants extends AbstractTextBlock implements TextBlock {
 
 	private final PlayingSpace playingSpace;
-	private Dimension2D cacheDimension;
+	private XDimension2D cacheDimension;
 	private double ymin;
 	private double ymax;
 
@@ -64,7 +63,7 @@ public class PlayingSpaceWithParticipants extends AbstractTextBlock implements T
 		this.playingSpace = Objects.requireNonNull(playingSpace);
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		if (cacheDimension == null) {
 			final double width = playingSpace.getMaxX(stringBounder).getCurrentValue()
 					- playingSpace.getMinX(stringBounder).getCurrentValue();
@@ -73,7 +72,7 @@ public class PlayingSpaceWithParticipants extends AbstractTextBlock implements T
 			final double height = playingSpace.getPreferredHeight(stringBounder)
 					+ factor * playingSpace.getLivingSpaces().getHeadHeight(stringBounder);
 
-			cacheDimension = new Dimension2DDouble(width, height);
+			cacheDimension = new XDimension2D(width, height);
 		}
 		return cacheDimension;
 	}

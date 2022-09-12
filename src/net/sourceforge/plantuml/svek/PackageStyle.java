@@ -38,8 +38,7 @@ package net.sourceforge.plantuml.svek;
 
 import java.util.EnumSet;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.USymbols;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -91,9 +90,9 @@ public enum PackageStyle {
 		return null;
 	}
 
-	public void drawU(UGraphic ug, Dimension2D dim, Dimension2D titleDim, boolean shadowing) {
+	public void drawU(UGraphic ug, XDimension2D dim, XDimension2D titleDim, boolean shadowing) {
 		if (titleDim == null) {
-			titleDim = new Dimension2DDouble(0, 0);
+			titleDim = new XDimension2D(0, 0);
 		}
 		final double width = dim.getWidth();
 		final double height = dim.getHeight();
@@ -226,7 +225,7 @@ public enum PackageStyle {
 		return path;
 	}
 
-	private void drawFrame(UGraphic ug, double width, double height, Dimension2D dimTitle, boolean shadowing) {
+	private void drawFrame(UGraphic ug, double width, double height, XDimension2D dimTitle, boolean shadowing) {
 		final URectangle shape = new URectangle(width, height);
 		if (shadowing) {
 			shape.setDeltaShadow(3.0);

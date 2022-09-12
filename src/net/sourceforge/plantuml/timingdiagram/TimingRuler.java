@@ -44,7 +44,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -232,7 +232,7 @@ public class TimingRuler {
 			if (label.length() == 0)
 				continue;
 			final TextBlock text = getTimeTextBlock(label);
-			final Dimension2D dim = text.calculateDimension(ug.getStringBounder());
+			final XDimension2D dim = text.calculateDimension(ug.getStringBounder());
 			text.drawU(ug.apply(new UTranslate(getPosInPixel(tick) - dim.getWidth() / 2, tickHeight + 1)));
 
 		}
@@ -251,7 +251,7 @@ public class TimingRuler {
 
 		for (long round : roundValues()) {
 			final TextBlock text = getTimeTextBlock(round);
-			final Dimension2D dim = text.calculateDimension(ug.getStringBounder());
+			final XDimension2D dim = text.calculateDimension(ug.getStringBounder());
 			text.drawU(ug.apply(new UTranslate(getPosInPixelInternal(round) - dim.getWidth() / 2, tickHeight + 1)));
 		}
 	}

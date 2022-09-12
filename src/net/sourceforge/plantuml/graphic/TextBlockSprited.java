@@ -35,8 +35,7 @@
  */
 package net.sourceforge.plantuml.graphic;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
@@ -50,12 +49,12 @@ public class TextBlockSprited extends AbstractTextBlock {
 		this.parent = parent;
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		final double widthCircledCharacter = getCircledCharacterWithAndMargin(stringBounder);
 		final double heightCircledCharacter = sprite.calculateDimension(stringBounder).getHeight();
 
-		final Dimension2D dim = parent.calculateDimension(stringBounder);
-		return new Dimension2DDouble(dim.getWidth() + widthCircledCharacter,
+		final XDimension2D dim = parent.calculateDimension(stringBounder);
+		return new XDimension2D(dim.getWidth() + widthCircledCharacter,
 				Math.max(heightCircledCharacter, dim.getHeight()));
 	}
 

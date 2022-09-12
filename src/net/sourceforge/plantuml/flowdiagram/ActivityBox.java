@@ -35,10 +35,8 @@
  */
 package net.sourceforge.plantuml.flowdiagram;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.SpriteContainerEmpty;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.golem.Tile;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
@@ -86,7 +84,7 @@ public class ActivityBox extends AbstractTextBlock {
 	}
 
 	public void drawU(UGraphic ug) {
-		final Dimension2D dimTotal = calculateDimension(ug.getStringBounder());
+		final XDimension2D dimTotal = calculateDimension(ug.getStringBounder());
 		// final Dimension2D dimDesc = tb.calculateDimension(ug.getStringBounder());
 
 		final double widthTotal = dimTotal.getWidth();
@@ -99,10 +97,10 @@ public class ActivityBox extends AbstractTextBlock {
 		tb.drawU(ug.apply(new UTranslate(MARGIN, MARGIN)));
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		final Dimension2D dim = tb.calculateDimension(stringBounder);
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		final XDimension2D dim = tb.calculateDimension(stringBounder);
 
-		return Dimension2DDouble.delta(dim, 2 * MARGIN, 2 * MARGIN);
+		return XDimension2D.delta(dim, 2 * MARGIN, 2 * MARGIN);
 	}
 
 }

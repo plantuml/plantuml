@@ -35,12 +35,11 @@
  */
 package net.sourceforge.plantuml.salt.element;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -63,18 +62,18 @@ public class ElementMenuPopup extends AbstractElement {
 		entries.add(new ElementMenuEntry(s, font, spriteContainer));
 	}
 
-	public Dimension2D getPreferredDimension(StringBounder stringBounder, double x, double y) {
+	public XDimension2D getPreferredDimension(StringBounder stringBounder, double x, double y) {
 		double w = 0;
 		double h = 0;
 		for (ElementMenuEntry entry : entries) {
-			final Dimension2D dim = entry.getPreferredDimension(stringBounder, x, y);
+			final XDimension2D dim = entry.getPreferredDimension(stringBounder, x, y);
 			w = Math.max(w, dim.getWidth());
 			h += dim.getHeight();
 		}
-		return new Dimension2DDouble(w, h);
+		return new XDimension2D(w, h);
 	}
 
-	public void drawU(UGraphic ug, int zIndex, Dimension2D dimToUse) {
+	public void drawU(UGraphic ug, int zIndex, XDimension2D dimToUse) {
 		if (zIndex != 1)
 			return;
 

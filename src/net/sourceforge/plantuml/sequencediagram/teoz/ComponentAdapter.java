@@ -35,9 +35,7 @@
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
-import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -62,13 +60,13 @@ public class ComponentAdapter extends AbstractTextBlock implements TextBlock {
 
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		if (component == null) {
-			return new Dimension2DDouble(0, 0);
+			return new XDimension2D(0, 0);
 		}
 		final double width = component.getPreferredWidth(stringBounder);
 		final double height = component.getPreferredHeight(stringBounder);
-		return new Dimension2DDouble(width, height);
+		return new XDimension2D(width, height);
 	}
 
 }

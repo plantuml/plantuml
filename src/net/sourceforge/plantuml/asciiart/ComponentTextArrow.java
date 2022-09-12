@@ -35,13 +35,13 @@
  */
 package net.sourceforge.plantuml.asciiart;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-import java.awt.geom.Point2D;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.sequencediagram.MessageNumber;
@@ -108,7 +108,7 @@ public class ComponentTextArrow extends AbstractComponentText implements ArrowCo
 		if (config.isHidden()) {
 			return;
 		}
-		final Dimension2D dimensionToUse = area.getDimensionToUse();
+		final XDimension2D dimensionToUse = area.getDimensionToUse();
 		final UmlCharArea charArea = ((UGraphicTxt) ug).getCharArea();
 		final int width = (int) dimensionToUse.getWidth();
 		final int height = (int) dimensionToUse.getHeight();
@@ -153,12 +153,12 @@ public class ComponentTextArrow extends AbstractComponentText implements ArrowCo
 		return width;
 	}
 
-	public Point2D getStartPoint(StringBounder stringBounder, Dimension2D dimensionToUse) {
-		return new Point2D.Double(0, 0);
+	public XPoint2D getStartPoint(StringBounder stringBounder, XDimension2D dimensionToUse) {
+		return new XPoint2D(0, 0);
 	}
 
-	public Point2D getEndPoint(StringBounder stringBounder, Dimension2D dimensionToUse) {
-		return new Point2D.Double(0, 0);
+	public XPoint2D getEndPoint(StringBounder stringBounder, XDimension2D dimensionToUse) {
+		return new XPoint2D(0, 0);
 	}
 
 	public double getPaddingY() {

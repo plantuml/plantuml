@@ -36,12 +36,12 @@
 package net.sourceforge.plantuml.openiconic;
 
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPath;
 
@@ -195,7 +195,7 @@ public class SvgPath {
 				final double x_axis_rotation = move.getArgument(2);
 				final double large_arc_flag = move.getArgument(3);
 				final double sweep_flag = move.getArgument(4);
-				final Point2D tmp = lastPosition.affine(at);
+				final XPoint2D tmp = lastPosition.affine(at);
 				result.arcTo(rx * at.getScaleX(), ry * at.getScaleY(), x_axis_rotation, large_arc_flag, sweep_flag,
 						tmp.getX(), tmp.getY());
 			} else if (letter == 'Z') {

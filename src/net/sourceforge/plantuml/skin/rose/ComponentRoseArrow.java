@@ -35,11 +35,10 @@
  */
 package net.sourceforge.plantuml.skin.rose;
 
-import java.awt.geom.Point2D;
-
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.LineBreakStrategy;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -87,7 +86,7 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 		if (arrowConfiguration.isHidden())
 			return;
 
-		final Dimension2D dimensionToUse = area.getDimensionToUse();
+		final XDimension2D dimensionToUse = area.getDimensionToUse();
 		final StringBounder stringBounder = ug.getStringBounder();
 		ug = ug.apply(getForegroundColor());
 
@@ -304,20 +303,20 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 		return polygon;
 	}
 
-	public Point2D getStartPoint(StringBounder stringBounder, Dimension2D dimensionToUse) {
+	public XPoint2D getStartPoint(StringBounder stringBounder, XDimension2D dimensionToUse) {
 		final double y = getYPoint(stringBounder);
 		if (getDirection2() == ArrowDirection.LEFT_TO_RIGHT_NORMAL)
-			return new Point2D.Double(getPaddingX(), y + inclination2);
+			return new XPoint2D(getPaddingX(), y + inclination2);
 
-		return new Point2D.Double(dimensionToUse.getWidth() + getPaddingX(), y + inclination2);
+		return new XPoint2D(dimensionToUse.getWidth() + getPaddingX(), y + inclination2);
 	}
 
-	public Point2D getEndPoint(StringBounder stringBounder, Dimension2D dimensionToUse) {
+	public XPoint2D getEndPoint(StringBounder stringBounder, XDimension2D dimensionToUse) {
 		final double y = getYPoint(stringBounder);
 		if (getDirection2() == ArrowDirection.LEFT_TO_RIGHT_NORMAL)
-			return new Point2D.Double(dimensionToUse.getWidth() + getPaddingX(), y);
+			return new XPoint2D(dimensionToUse.getWidth() + getPaddingX(), y);
 
-		return new Point2D.Double(getPaddingX(), y);
+		return new XPoint2D(getPaddingX(), y);
 	}
 
 	@Override

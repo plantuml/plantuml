@@ -42,12 +42,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -95,7 +94,7 @@ class FtileForkInner extends AbstractFtile {
 		double xpos = 0;
 		for (Ftile ftile : forks) {
 			ug.apply(UTranslate.dx(xpos)).draw(ftile);
-			final Dimension2D dim = ftile.calculateDimension(stringBounder);
+			final XDimension2D dim = ftile.calculateDimension(stringBounder);
 			xpos += dim.getWidth();
 		}
 	}
@@ -105,13 +104,13 @@ class FtileForkInner extends AbstractFtile {
 		double height = 0;
 		double width = 0;
 		for (Ftile ftile : forks) {
-			final Dimension2D dim = ftile.calculateDimension(stringBounder);
+			final XDimension2D dim = ftile.calculateDimension(stringBounder);
 			width += dim.getWidth();
 			if (dim.getHeight() > height) {
 				height = dim.getHeight();
 			}
 		}
-		final Dimension2D dimTotal = new Dimension2DDouble(width, height);
+		final XDimension2D dimTotal = new XDimension2D(width, height);
 		return new FtileGeometry(dimTotal, dimTotal.getWidth() / 2, 0, dimTotal.getHeight());
 	}
 
@@ -121,7 +120,7 @@ class FtileForkInner extends AbstractFtile {
 			if (ftile == searched) {
 				return UTranslate.dx(xpos);
 			}
-			final Dimension2D dim = ftile.calculateDimension(stringBounder);
+			final XDimension2D dim = ftile.calculateDimension(stringBounder);
 			xpos += dim.getWidth();
 		}
 		throw new IllegalArgumentException();

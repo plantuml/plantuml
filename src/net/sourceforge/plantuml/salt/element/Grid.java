@@ -35,10 +35,10 @@
  */
 package net.sourceforge.plantuml.salt.element;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.util.HashSet;
 import java.util.Set;
 
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.salt.Cell;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -98,7 +98,7 @@ public class Grid {
 			ug.apply(new UTranslate(x + colsStart[col1], y + rowsStart[row1])).draw(ULine.vline(height));
 		}
 
-		final Dimension2D dim = title.calculateDimension(ug.getStringBounder());
+		final XDimension2D dim = title.calculateDimension(ug.getStringBounder());
 
 		if (dim.getWidth() > 0 && dim.getHeight() > 0) {
 			final UGraphic ug2 = ug.apply(new UTranslate(x + 6, y - dim.getHeight() * 0));

@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.graphic;
 
-import java.awt.geom.Point2D;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 
 class CoordinateChange {
 
@@ -50,7 +50,7 @@ class CoordinateChange {
 	private final double vect_v_y;
 	private final double len;
 
-	public static CoordinateChange create(Point2D p1, Point2D p2) {
+	public static CoordinateChange create(XPoint2D p1, XPoint2D p2) {
 		return new CoordinateChange(p1.getX(), p1.getY(), p2.getX(), p2.getY());
 	}
 
@@ -59,7 +59,7 @@ class CoordinateChange {
 		this.y1 = y1;
 		this.x2 = x2;
 		this.y2 = y2;
-		this.len = Point2D.distance(x1, y1, x2, y2);
+		this.len = XPoint2D.distance(x1, y1, x2, y2);
 		if (this.len == 0) {
 			throw new IllegalArgumentException();
 		}
@@ -72,10 +72,10 @@ class CoordinateChange {
 
 	}
 
-	public Point2D getTrueCoordinate(double a, double b) {
+	public XPoint2D getTrueCoordinate(double a, double b) {
 		final double x = a * vect_u_x + b * vect_v_x;
 		final double y = a * vect_u_y + b * vect_v_y;
-		return new Point2D.Double(x1 + x, y1 + y);
+		return new XPoint2D(x1 + x, y1 + y);
 	}
 
 	public final double getLength() {

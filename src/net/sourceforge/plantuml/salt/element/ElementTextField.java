@@ -35,10 +35,8 @@
  */
 package net.sourceforge.plantuml.salt.element;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -51,18 +49,18 @@ public class ElementTextField extends AbstractElementText implements Element {
 		super(text, font, true, spriteContainer);
 	}
 
-	public Dimension2D getPreferredDimension(StringBounder stringBounder, double x, double y) {
-		final Dimension2D dim = getTextDimensionAt(stringBounder, x);
-		return Dimension2DDouble.delta(dim, 6, 2);
+	public XDimension2D getPreferredDimension(StringBounder stringBounder, double x, double y) {
+		final XDimension2D dim = getTextDimensionAt(stringBounder, x);
+		return XDimension2D.delta(dim, 6, 2);
 	}
 
-	public void drawU(UGraphic ug, int zIndex, Dimension2D dimToUse) {
+	public void drawU(UGraphic ug, int zIndex, XDimension2D dimToUse) {
 		if (zIndex != 0) {
 			return;
 		}
 		drawText(ug, 3, 0);
-		final Dimension2D dim = getPreferredDimension(ug.getStringBounder(), 0, 0);
-		final Dimension2D textDim = getTextDimensionAt(ug.getStringBounder(), 0);
+		final XDimension2D dim = getPreferredDimension(ug.getStringBounder(), 0, 0);
+		final XDimension2D textDim = getTextDimensionAt(ug.getStringBounder(), 0);
 		ug.apply(new UTranslate(1, textDim.getHeight())).draw(ULine.hline(dim.getWidth() - 3));
 		final double y3 = textDim.getHeight() - 3;
 		ug.apply(new UTranslate(1, y3)).draw(ULine.vline(2));

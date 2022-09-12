@@ -35,12 +35,10 @@
  */
 package net.sourceforge.plantuml.skin;
 
-import java.awt.geom.Rectangle2D;
-
 import net.sourceforge.plantuml.ColorParam;
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XRectangle2D;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -97,12 +95,12 @@ public enum VisibilityModifier {
 			final boolean withInvisibleRectanble) {
 		return new AbstractTextBlock() {
 
-			public Dimension2D calculateDimension(StringBounder stringBounder) {
-				return new Dimension2DDouble(size + 1, size + 1);
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
+				return new XDimension2D(size + 1, size + 1);
 			}
 
 			@Override
-			public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+			public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
 				return null;
 			}
 

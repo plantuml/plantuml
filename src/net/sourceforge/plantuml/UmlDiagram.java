@@ -52,7 +52,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.api.ThemeStyle;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.ImageData;
@@ -133,7 +133,7 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 
 		try {
 			final ImageData imageData = exportDiagramInternal(os, index, fileFormatOption);
-			this.lastInfo = new Dimension2DDouble(imageData.getWidth(), imageData.getHeight());
+			this.lastInfo = new XDimension2D(imageData.getWidth(), imageData.getHeight());
 			return imageData;
 		} catch (NoStyleAvailableException e) {
 			// Logme.error(e);
@@ -265,7 +265,7 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 
 	}
 
-	private Dimension2D lastInfo;
+	private XDimension2D lastInfo;
 
 	private ImageData exportDiagramInternalPdf(OutputStream os, int index) throws IOException {
 		final File svg = FileUtils.createTempFileLegacy("pdf", ".svf");

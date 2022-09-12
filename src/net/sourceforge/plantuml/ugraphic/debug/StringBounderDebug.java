@@ -34,25 +34,24 @@
  */
 package net.sourceforge.plantuml.ugraphic.debug;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.util.Random;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.StringBounderRaw;
 import net.sourceforge.plantuml.ugraphic.UFont;
 
 public class StringBounderDebug extends StringBounderRaw {
 
 	@Override
-	protected Dimension2D calculateDimensionInternal(UFont font, String text) {
+	protected XDimension2D calculateDimensionInternal(UFont font, String text) {
 		final Random rnd = new Random(StringUtils.seed(text));
 		// We want a random factor between 80% et 130%
 		final double factor = 0.8 + 0.5 * rnd.nextDouble();
 		final double size = font.getSize2D();
 		final double height = size;
 		final double width = size * text.length() * factor;
-		return new Dimension2DDouble(width, height);
+		return new XDimension2D(width, height);
 	}
 
 	@Override

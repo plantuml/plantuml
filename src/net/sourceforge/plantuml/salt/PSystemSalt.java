@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.salt;
 
-import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -43,7 +42,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.ScaleSimple;
@@ -53,7 +51,8 @@ import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.WithSprite;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.api.ThemeStyle;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XRectangle2D;
 import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -118,7 +117,7 @@ public class PSystemSalt extends TitledDiagram implements WithSprite {
 		try {
 			final Element salt = createElement(manageSprite());
 			final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(getSkinParam());
-			final Dimension2D size = salt.getPreferredDimension(stringBounder, 0, 0);
+			final XDimension2D size = salt.getPreferredDimension(stringBounder, 0, 0);
 			return createImageBuilder(fileFormatOption).drawable(getTextBlock(salt, size)).write(os);
 		} catch (Exception e) {
 			Logme.error(e);
@@ -128,16 +127,16 @@ public class PSystemSalt extends TitledDiagram implements WithSprite {
 		}
 	}
 
-	private TextBlockBackcolored getTextBlock(final Element salt, final Dimension2D size) {
+	private TextBlockBackcolored getTextBlock(final Element salt, final XDimension2D size) {
 		return new TextBlockBackcolored() {
 
 			public void drawU(UGraphic ug) {
 				ug = ug.apply(getBlack());
-				salt.drawU(ug, 0, new Dimension2DDouble(size.getWidth(), size.getHeight()));
-				salt.drawU(ug, 1, new Dimension2DDouble(size.getWidth(), size.getHeight()));
+				salt.drawU(ug, 0, new XDimension2D(size.getWidth(), size.getHeight()));
+				salt.drawU(ug, 1, new XDimension2D(size.getWidth(), size.getHeight()));
 			}
 
-			public Dimension2D calculateDimension(StringBounder stringBounder) {
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
 				return size;
 			}
 
@@ -145,7 +144,7 @@ public class PSystemSalt extends TitledDiagram implements WithSprite {
 				throw new UnsupportedOperationException();
 			}
 
-			public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+			public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
 				return null;
 			}
 

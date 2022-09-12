@@ -37,8 +37,7 @@ package net.sourceforge.plantuml.svek;
 
 import java.util.Objects;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -92,10 +91,10 @@ public class DecorateEntityImage extends AbstractTextBlock implements TextBlockB
 
 	public void drawU(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
-		final Dimension2D dimOriginal = original.calculateDimension(stringBounder);
-		final Dimension2D dimText1 = getTextDim(text1, stringBounder);
-		final Dimension2D dimText2 = getTextDim(text2, stringBounder);
-		final Dimension2D dimTotal = calculateDimension(stringBounder);
+		final XDimension2D dimOriginal = original.calculateDimension(stringBounder);
+		final XDimension2D dimText1 = getTextDim(text1, stringBounder);
+		final XDimension2D dimText2 = getTextDim(text2, stringBounder);
+		final XDimension2D dimTotal = calculateDimension(stringBounder);
 
 		final double yImage = dimText1.getHeight();
 		final double yText2 = yImage + dimOriginal.getHeight();
@@ -115,14 +114,14 @@ public class DecorateEntityImage extends AbstractTextBlock implements TextBlockB
 		}
 	}
 
-	private Dimension2D getTextDim(TextBlock text, StringBounder stringBounder) {
+	private XDimension2D getTextDim(TextBlock text, StringBounder stringBounder) {
 		if (text == null) {
-			return new Dimension2DDouble(0, 0);
+			return new XDimension2D(0, 0);
 		}
 		return text.calculateDimension(stringBounder);
 	}
 
-	private double getTextX(final Dimension2D dimText, final Dimension2D dimTotal, HorizontalAlignment h) {
+	private double getTextX(final XDimension2D dimText, final XDimension2D dimTotal, HorizontalAlignment h) {
 		if (h == HorizontalAlignment.CENTER) {
 			return (dimTotal.getWidth() - dimText.getWidth()) / 2;
 		} else if (h == HorizontalAlignment.LEFT) {
@@ -141,12 +140,12 @@ public class DecorateEntityImage extends AbstractTextBlock implements TextBlockB
 		throw new UnsupportedOperationException();
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		final Dimension2D dimOriginal = original.calculateDimension(stringBounder);
-		final Dimension2D dim1 = getTextDim(text1, stringBounder);
-		final Dimension2D dim2 = getTextDim(text2, stringBounder);
-		final Dimension2D dimText = Dimension2DDouble.mergeTB(dim1, dim2);
-		return Dimension2DDouble.mergeTB(dimOriginal, dimText);
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		final XDimension2D dimOriginal = original.calculateDimension(stringBounder);
+		final XDimension2D dim1 = getTextDim(text1, stringBounder);
+		final XDimension2D dim2 = getTextDim(text2, stringBounder);
+		final XDimension2D dimText = XDimension2D.mergeTB(dim1, dim2);
+		return XDimension2D.mergeTB(dimOriginal, dimText);
 	}
 
 	@Override

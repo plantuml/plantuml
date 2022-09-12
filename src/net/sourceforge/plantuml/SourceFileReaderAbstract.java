@@ -54,6 +54,7 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.plantuml.api.ImageDataSimple;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.log.Logme;
@@ -175,7 +176,7 @@ public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 			if (noerror && system instanceof PSystemError) {
 				exportDiagrams = new ArrayList<FileImageData>();
 				exportDiagrams.add(
-						new FileImageData(null, new ImageDataSimple(new Dimension2DDouble(0, 0), FileImageData.ERROR)));
+						new FileImageData(null, new ImageDataSimple(new XDimension2D(0, 0), FileImageData.ERROR)));
 			} else
 				exportDiagrams = PSystemUtils.exportDiagrams(system, suggested, fileFormatOption, checkMetadata);
 

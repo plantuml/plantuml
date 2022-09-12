@@ -51,7 +51,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.WeldingPoint;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamond;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.Rainbow;
@@ -113,7 +113,7 @@ public class FtileFactoryDelegatorRepeat extends FtileFactoryDelegator {
 				public void drawU(UGraphic ug) {
 					final UTranslate tr1 = genealogy.getTranslate(ftileBreak, ug.getStringBounder());
 					final UTranslate tr2 = genealogy.getTranslate(diamondBreak, ug.getStringBounder());
-					final Dimension2D dimDiamond = diamondBreak.calculateDimension(ug.getStringBounder());
+					final XDimension2D dimDiamond = diamondBreak.calculateDimension(ug.getStringBounder());
 
 					final Snake snake = Snake.create(skinParam(), arrowColor, Arrows.asToRight());
 					snake.addPoint(tr1.getDx(), tr1.getDy());

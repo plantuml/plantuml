@@ -43,11 +43,11 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.EmptyImageBuilder;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.SpriteContainerEmpty;
 import net.sourceforge.plantuml.api.ImageDataSimple;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.eps.EpsStrategy;
@@ -87,7 +87,7 @@ public class GraphicsSudoku {
 	}
 
 	public ImageData writeImageSvg(OutputStream os) throws IOException {
-		final UGraphicSvg ug = new UGraphicSvg(HColors.WHITE, true, new Dimension2DDouble(0, 0),
+		final UGraphicSvg ug = new UGraphicSvg(HColors.WHITE, true, new XDimension2D(0, 0),
 				new ColorMapperIdentity(), false, 1.0, null, null, 0, "none", FileFormat.SVG.getDefaultStringBounder(),
 				LengthAdjust.defaultValue(), false);
 		drawInternal(ug);

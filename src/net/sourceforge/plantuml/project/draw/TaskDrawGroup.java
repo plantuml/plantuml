@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.project.draw;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SpriteContainerEmpty;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -83,7 +83,7 @@ public class TaskDrawGroup extends AbstractTaskDraw {
 		final double pos1 = timeScale.getStartingPosition(start) + 6;
 		final double pos2 = timeScale.getEndingPosition(end) - 6;
 		final TextBlock title = getTitle();
-		final Dimension2D dim = title.calculateDimension(stringBounder);
+		final XDimension2D dim = title.calculateDimension(stringBounder);
 		if (pos2 - pos1 > dim.getWidth())
 			return dim.getHeight() + 2;
 		else
@@ -94,7 +94,7 @@ public class TaskDrawGroup extends AbstractTaskDraw {
 	public void drawTitle(UGraphic ug, LabelStrategy labelStrategy, double colTitles, double colBars) {
 		final TextBlock title = getTitle();
 		final StringBounder stringBounder = ug.getStringBounder();
-		final Dimension2D dim = title.calculateDimension(stringBounder);
+		final XDimension2D dim = title.calculateDimension(stringBounder);
 
 		final Style style = getStyleSignature().getMergedStyle(getStyleBuilder());
 		final ClockwiseTopRightBottomLeft margin = style.getMargin();

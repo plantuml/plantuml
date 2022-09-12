@@ -35,24 +35,25 @@
  */
 package net.sourceforge.plantuml.posimo;
 
-import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 
-public abstract class RacorderAbstract implements Racorder {
+import net.sourceforge.plantuml.awt.geom.XLine2D;
 
-	public final DotPath getRacordOut(Rectangle2D rect, Line2D tangeante) {
+public abstract class RacorderAbstract implements Racorder {
+	
+	public final DotPath getRacordOut(Rectangle2D rect, XLine2D tangeante) {
 		tangeante = symetric(tangeante);
 		return getRacordIn(rect, tangeante).reverse();
 	}
 
-	private static Line2D symetric(Line2D line) {
+	private static XLine2D symetric(XLine2D line) {
 		final double x1 = line.getX1();
 		final double y1 = line.getY1();
 		final double x2 = line.getX2();
 		final double y2 = line.getY2();
 		final double dx = x2 - x1;
 		final double dy = y2 - y1;
-		return new Line2D.Double(x1, y1, x1 - dx, y1 - dy);
+		return new XLine2D(x1, y1, x1 - dx, y1 - dy);
 	}
 
 }

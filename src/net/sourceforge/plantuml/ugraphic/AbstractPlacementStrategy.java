@@ -35,18 +35,18 @@
  */
 package net.sourceforge.plantuml.ugraphic;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 
 public abstract class AbstractPlacementStrategy implements PlacementStrategy {
 
 	private final StringBounder stringBounder;
-	private final Map<TextBlock, Dimension2D> dimensions = new LinkedHashMap<TextBlock, Dimension2D>();
+	private final Map<TextBlock, XDimension2D> dimensions = new LinkedHashMap<TextBlock, XDimension2D>();
 
 	public AbstractPlacementStrategy(StringBounder stringBounder) {
 		this.stringBounder = stringBounder;
@@ -56,7 +56,7 @@ public abstract class AbstractPlacementStrategy implements PlacementStrategy {
 		this.dimensions.put(block, block.calculateDimension(stringBounder));
 	}
 
-	protected Map<TextBlock, Dimension2D> getDimensions() {
+	protected Map<TextBlock, XDimension2D> getDimensions() {
 		return dimensions;
 	}
 
@@ -76,7 +76,7 @@ public abstract class AbstractPlacementStrategy implements PlacementStrategy {
 		return getMaxWidth(dimensions.values().iterator());
 	}
 
-	protected double getSumWidth(Iterator<Dimension2D> it) {
+	protected double getSumWidth(Iterator<XDimension2D> it) {
 		double result = 0;
 		while (it.hasNext()) {
 			result += it.next().getWidth();
@@ -84,7 +84,7 @@ public abstract class AbstractPlacementStrategy implements PlacementStrategy {
 		return result;
 	}
 
-	protected double getSumHeight(Iterator<Dimension2D> it) {
+	protected double getSumHeight(Iterator<XDimension2D> it) {
 		double result = 0;
 		while (it.hasNext()) {
 			result += it.next().getHeight();
@@ -92,7 +92,7 @@ public abstract class AbstractPlacementStrategy implements PlacementStrategy {
 		return result;
 	}
 
-	protected double getMaxWidth(Iterator<Dimension2D> it) {
+	protected double getMaxWidth(Iterator<XDimension2D> it) {
 		double result = 0;
 		while (it.hasNext()) {
 			result = Math.max(result, it.next().getWidth());
@@ -100,7 +100,7 @@ public abstract class AbstractPlacementStrategy implements PlacementStrategy {
 		return result;
 	}
 
-	protected double getMaxHeight(Iterator<Dimension2D> it) {
+	protected double getMaxHeight(Iterator<XDimension2D> it) {
 		double result = 0;
 		while (it.hasNext()) {
 			result = Math.max(result, it.next().getHeight());

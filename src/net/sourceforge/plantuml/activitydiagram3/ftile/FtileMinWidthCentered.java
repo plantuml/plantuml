@@ -35,10 +35,8 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDecorate;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -76,17 +74,17 @@ public class FtileMinWidthCentered extends FtileDecorate {
 		return new FtileGeometry(getDimensionInternal(stringBounder), left, geo.getInY(), geo.getOutY());
 	}
 
-	private Dimension2D getDimensionInternal(StringBounder stringBounder) {
-		final Dimension2D dim = getFtileDelegated().calculateDimension(stringBounder);
+	private XDimension2D getDimensionInternal(StringBounder stringBounder) {
+		final XDimension2D dim = getFtileDelegated().calculateDimension(stringBounder);
 		if (dim.getWidth() < minWidth) {
-			return new Dimension2DDouble(minWidth, dim.getHeight());
+			return new XDimension2D(minWidth, dim.getHeight());
 		}
 		return dim;
 	}
 
 	private UTranslate getUTranslateInternal(final StringBounder stringBounder) {
-		final Dimension2D dimTile = getFtileDelegated().calculateDimension(stringBounder);
-		final Dimension2D dimTotal = getDimensionInternal(stringBounder);
+		final XDimension2D dimTile = getFtileDelegated().calculateDimension(stringBounder);
+		final XDimension2D dimTotal = getDimensionInternal(stringBounder);
 		final UTranslate change = UTranslate.dx((dimTotal.getWidth() - dimTile.getWidth()) / 2);
 		return change;
 	}
@@ -99,7 +97,7 @@ public class FtileMinWidthCentered extends FtileDecorate {
 	}
 
 	private double getPoint2(double x, StringBounder stringBounder) {
-		final Dimension2D dim = getFtileDelegated().calculateDimension(stringBounder);
+		final XDimension2D dim = getFtileDelegated().calculateDimension(stringBounder);
 		if (dim.getWidth() < minWidth) {
 			final double diff = minWidth - dim.getWidth();
 			return x + diff / 2;

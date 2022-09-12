@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.creole.Parser;
 import net.sourceforge.plantuml.creole.Sheet;
@@ -127,14 +127,14 @@ public class FtileNoteAlone extends AbstractFtile implements Stencil, Styleable 
 
 	@Override
 	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
-		final Dimension2D dimTotal = calculateDimensionInternal(stringBounder);
+		final XDimension2D dimTotal = calculateDimensionInternal(stringBounder);
 		if (withOutPoint) {
 			return new FtileGeometry(dimTotal, dimTotal.getWidth() / 2, 0, dimTotal.getHeight());
 		}
 		return new FtileGeometry(dimTotal, dimTotal.getWidth() / 2, 0);
 	}
 
-	private Dimension2D calculateDimensionInternal(StringBounder stringBounder) {
+	private XDimension2D calculateDimensionInternal(StringBounder stringBounder) {
 		return opale.calculateDimension(stringBounder);
 	}
 

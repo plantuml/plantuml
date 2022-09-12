@@ -40,9 +40,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -58,7 +57,7 @@ public class GtileColumns extends AbstractGtile {
 	protected final UTranslate getPosition(int pos) {
 		double dx = 0;
 		for (int i = 0; i < pos; i++) {
-			final Dimension2D dim = gtiles.get(i).calculateDimension(getStringBounder());
+			final XDimension2D dim = gtiles.get(i).calculateDimension(getStringBounder());
 			dx += dim.getWidth() + margin;
 		}
 		return new UTranslate(dx, dy);
@@ -99,12 +98,12 @@ public class GtileColumns extends AbstractGtile {
 	}
 
 	@Override
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		Dimension2D result = new Dimension2DDouble(0, 0);
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		XDimension2D result = new XDimension2D(0, 0);
 		for (int i = 0; i < gtiles.size(); i++) {
-			final Dimension2D dim = gtiles.get(i).calculateDimension(stringBounder);
+			final XDimension2D dim = gtiles.get(i).calculateDimension(stringBounder);
 			final UTranslate pos = getPosition(i);
-			final Dimension2D corner = pos.getTranslated(dim);
+			final XDimension2D corner = pos.getTranslated(dim);
 			result = MathUtils.max(result, corner);
 		}
 		return result;

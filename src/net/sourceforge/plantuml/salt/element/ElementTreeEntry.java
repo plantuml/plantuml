@@ -35,12 +35,11 @@
  */
 package net.sourceforge.plantuml.salt.element;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -60,8 +59,8 @@ public class ElementTreeEntry {
 		this.otherElements.add(elmt);
 	}
 
-	public Dimension2D getPreferredDimensionFirstCell(StringBounder stringBounder) {
-		return Dimension2DDouble.delta(firstElement.getPreferredDimension(stringBounder, 0, 0), getXDelta(), 0);
+	public XDimension2D getPreferredDimensionFirstCell(StringBounder stringBounder) {
+		return XDimension2D.delta(firstElement.getPreferredDimension(stringBounder, 0, 0), getXDelta(), 0);
 	}
 
 	public ListWidth getPreferredDimensionOtherCell(StringBounder stringBounder) {

@@ -39,14 +39,13 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.WithSprite;
 import net.sourceforge.plantuml.api.ThemeStyle;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandFactorySprite;
@@ -106,8 +105,8 @@ public class StdlibDiagram extends UmlDiagram {
 				}
 			}
 
-			public Dimension2D calculateDimension(StringBounder stringBounder) {
-				return new Dimension2DDouble(WIDTH, 4096);
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
+				return new XDimension2D(WIDTH, 4096);
 			}
 		};
 	}
@@ -147,7 +146,7 @@ public class StdlibDiagram extends UmlDiagram {
 			TextBlock tb = sprite.asTextBlock(getBlack(), 1.0, getSkinParam().getColorMapper());
 			tb = TextBlockUtils.mergeTB(tb, blockName, HorizontalAlignment.CENTER);
 			tb.drawU(ug.apply(new UTranslate(x, y)));
-			final Dimension2D dim = tb.calculateDimension(ug.getStringBounder());
+			final XDimension2D dim = tb.calculateDimension(ug.getStringBounder());
 			rawHeight = Math.max(rawHeight, dim.getHeight());
 			x += dim.getWidth();
 			x += 30;

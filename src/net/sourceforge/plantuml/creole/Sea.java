@@ -35,11 +35,11 @@
  */
 package net.sourceforge.plantuml.creole;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.creole.atom.Atom;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.MinMax;
@@ -55,7 +55,7 @@ public class Sea {
 	}
 
 	public void add(Atom atom) {
-		final Dimension2D dim = atom.calculateDimension(stringBounder);
+		final XDimension2D dim = atom.calculateDimension(stringBounder);
 		final double y = 0;
 		final Position position = new Position(currentX, y, dim);
 		positions.put(atom, position);

@@ -35,11 +35,10 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
@@ -77,25 +76,25 @@ public class EntityImageArcCircle extends AbstractEntityImage {
 
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		final Dimension2D dimName = name.calculateDimension(stringBounder);
-		final Dimension2D dimStereo = getStereoDimension(stringBounder);
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		final XDimension2D dimName = name.calculateDimension(stringBounder);
+		final XDimension2D dimStereo = getStereoDimension(stringBounder);
 		// final Dimension2D circle = new Dimension2DDouble(SIZE, SIZE);
-		return Dimension2DDouble.mergeTB(dimStereo, dimName);
+		return XDimension2D.mergeTB(dimStereo, dimName);
 	}
 
-	private Dimension2D getStereoDimension(StringBounder stringBounder) {
+	private XDimension2D getStereoDimension(StringBounder stringBounder) {
 		if (stereo == null) {
-			return new Dimension2DDouble(0, 0);
+			return new XDimension2D(0, 0);
 		}
 		return stereo.calculateDimension(stringBounder);
 	}
 
 	final public void drawU(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
-		final Dimension2D dimStereo = getStereoDimension(stringBounder);
-		final Dimension2D dimTotal = calculateDimension(stringBounder);
-		final Dimension2D dimName = name.calculateDimension(stringBounder);
+		final XDimension2D dimStereo = getStereoDimension(stringBounder);
+		final XDimension2D dimTotal = calculateDimension(stringBounder);
+		final XDimension2D dimName = name.calculateDimension(stringBounder);
 
 		final double nameX = (dimTotal.getWidth() - dimName.getWidth()) / 2;
 		final double nameY = dimStereo.getHeight();

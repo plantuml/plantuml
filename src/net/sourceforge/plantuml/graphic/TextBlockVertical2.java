@@ -35,12 +35,11 @@
  */
 package net.sourceforge.plantuml.graphic;
 
-import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XRectangle2D;
 import net.sourceforge.plantuml.svek.Ports;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.svek.WithPorts;
@@ -72,8 +71,8 @@ public class TextBlockVertical2 extends AbstractTextBlock implements TextBlock, 
 				ug.draw(image);
 			}
 
-			public Dimension2D calculateDimension(StringBounder stringBounder) {
-				return new Dimension2DDouble(image.getWidth(), image.getHeight());
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
+				return new XDimension2D(image.getWidth(), image.getHeight());
 			}
 		};
 	}
@@ -86,20 +85,20 @@ public class TextBlockVertical2 extends AbstractTextBlock implements TextBlock, 
 		this.horizontalAlignment = horizontalAlignment;
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		Dimension2D dim = blocks.get(0).calculateDimension(stringBounder);
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		XDimension2D dim = blocks.get(0).calculateDimension(stringBounder);
 		for (int i = 1; i < blocks.size(); i++) {
-			dim = Dimension2DDouble.mergeTB(dim, blocks.get(i).calculateDimension(stringBounder));
+			dim = XDimension2D.mergeTB(dim, blocks.get(i).calculateDimension(stringBounder));
 		}
 		return dim;
 	}
 
 	public void drawU(UGraphic ug) {
 		double y = 0;
-		final Dimension2D dimtotal = calculateDimension(ug.getStringBounder());
+		final XDimension2D dimtotal = calculateDimension(ug.getStringBounder());
 
 		for (TextBlock block : blocks) {
-			final Dimension2D dimb = block.calculateDimension(ug.getStringBounder());
+			final XDimension2D dimb = block.calculateDimension(ug.getStringBounder());
 			if (block instanceof TextBlockBackcolored) {
 				final HColor back = ((TextBlockBackcolored) block).getBackcolor();
 				if (back != null)
@@ -128,7 +127,7 @@ public class TextBlockVertical2 extends AbstractTextBlock implements TextBlock, 
 		// final Dimension2D dimtotal = calculateDimension(stringBounder);
 		final Ports result = new Ports();
 		for (TextBlock block : blocks) {
-			final Dimension2D dimb = block.calculateDimension(stringBounder);
+			final XDimension2D dimb = block.calculateDimension(stringBounder);
 			final Ports tmp = ((WithPorts) block).getPorts(stringBounder).translateY(y);
 			result.addThis(tmp);
 			y += dimb.getHeight();
@@ -137,11 +136,11 @@ public class TextBlockVertical2 extends AbstractTextBlock implements TextBlock, 
 	}
 
 	@Override
-	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+	public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
 		double y = 0;
 		for (TextBlock block : blocks) {
-			final Dimension2D dimb = block.calculateDimension(stringBounder);
-			final Rectangle2D result = block.getInnerPosition(member, stringBounder, strategy);
+			final XDimension2D dimb = block.calculateDimension(stringBounder);
+			final XRectangle2D result = block.getInnerPosition(member, stringBounder, strategy);
 			if (result != null) {
 				return UTranslate.dy(y).apply(result);
 			}

@@ -35,18 +35,17 @@
  */
 package net.sourceforge.plantuml.cucadiagram;
 
-import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.EmbeddedDiagram;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XRectangle2D;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -116,7 +115,7 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlock,
 		return false;
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		double smallIcon = 0;
 		if (hasSmallIcon())
 			smallIcon = skinParam.getCircledCharacterRadius() + 3;
@@ -125,12 +124,12 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlock,
 		double y = 0;
 		for (CharSequence cs : members) {
 			final TextBlock bloc = createTextBlock(cs);
-			final Dimension2D dim = bloc.calculateDimension(stringBounder);
+			final XDimension2D dim = bloc.calculateDimension(stringBounder);
 			x = Math.max(dim.getWidth(), x);
 			y += dim.getHeight();
 		}
 		x += smallIcon;
-		return new Dimension2DDouble(x, y);
+		return new XDimension2D(x, y);
 	}
 
 	private Collection<String> sortBySize(Collection<String> all) {
@@ -156,7 +155,7 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlock,
 
 		for (CharSequence cs : members) {
 			final TextBlock bloc = createTextBlock(cs);
-			final Dimension2D dim = bloc.calculateDimension(stringBounder);
+			final XDimension2D dim = bloc.calculateDimension(stringBounder);
 			final Elected elected = getElected(convert(cs), shortNames);
 			if (elected != null)
 				ports.add(elected.getShortName(), elected.getScore(), y, dim.getHeight());
@@ -242,13 +241,13 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlock,
 
 		}
 
-		public Dimension2D calculateDimension(StringBounder stringBounder) {
-			final Dimension2D dim = bloc.calculateDimension(stringBounder);
+		public XDimension2D calculateDimension(StringBounder stringBounder) {
+			final XDimension2D dim = bloc.calculateDimension(stringBounder);
 			return dim;
 		}
 
 		@Override
-		public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+		public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
 			return bloc.getInnerPosition(member, stringBounder, strategy);
 		}
 
@@ -262,13 +261,13 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlock,
 				}
 
 				@Override
-				public Rectangle2D getInnerPosition(String member, StringBounder stringBounder,
+				public XRectangle2D getInnerPosition(String member, StringBounder stringBounder,
 						InnerStrategy strategy) {
 					return null;
 				}
 
-				public Dimension2D calculateDimension(StringBounder stringBounder) {
-					return new Dimension2DDouble(1, 1);
+				public XDimension2D calculateDimension(StringBounder stringBounder) {
+					return new XDimension2D(1, 1);
 				}
 			};
 		}
@@ -295,9 +294,9 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlock,
 	}
 
 	@Override
-	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+	public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
 		final ULayoutGroup group = getLayout(stringBounder);
-		final Dimension2D dim = calculateDimension(stringBounder);
+		final XDimension2D dim = calculateDimension(stringBounder);
 		return group.getInnerPosition(member, dim.getWidth(), dim.getHeight(), stringBounder);
 	}
 
@@ -337,7 +336,7 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlock,
 
 	public void drawU(UGraphic ug) {
 		final ULayoutGroup group = getLayout(ug.getStringBounder());
-		final Dimension2D dim = calculateDimension(ug.getStringBounder());
+		final XDimension2D dim = calculateDimension(ug.getStringBounder());
 		group.drawU(ug, dim.getWidth(), dim.getHeight());
 	}
 

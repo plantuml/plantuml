@@ -35,10 +35,9 @@
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -147,7 +146,7 @@ public class CommunicationTile extends AbstractTile {
 		}
 
 		final AbstractComponentRoseArrow comp = (AbstractComponentRoseArrow) getComponent(getStringBounder());
-		final Dimension2D dim = comp.getPreferredDimension(getStringBounder());
+		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());
 
 		final double arrowY = comp.getStartPoint(getStringBounder(), dim).getY();
 
@@ -163,7 +162,7 @@ public class CommunicationTile extends AbstractTile {
 		}
 		final StringBounder stringBounder = ug.getStringBounder();
 		final ArrowComponent comp = getComponent(stringBounder);
-		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
+		final XDimension2D dim = comp.getPreferredDimension(stringBounder);
 		double x1 = getPoint1(stringBounder).getCurrentValue();
 		double x2 = getPoint2(stringBounder).getCurrentValue();
 		drawMulticast(ug.apply(UTranslate.dy(comp.getPosArrow(stringBounder))));
@@ -211,7 +210,7 @@ public class CommunicationTile extends AbstractTile {
 			final double x2 = livingSpaces.get(participant).getPosC(stringBounder).getCurrentValue();
 			final boolean reverse = x2 < x1;
 			final ArrowComponent comp = getComponentMulticast(stringBounder, reverse);
-			final Dimension2D dim = comp.getPreferredDimension(stringBounder);
+			final XDimension2D dim = comp.getPreferredDimension(stringBounder);
 			final Area area = Area.create(Math.abs(x2 - x1), dim.getHeight());
 			final UGraphic ug2 = ug.apply(UTranslate.dx(Math.min(x1, x2))).apply(UTranslate.dy(dy));
 			dy += 2;
@@ -222,7 +221,7 @@ public class CommunicationTile extends AbstractTile {
 
 	public double getPreferredHeight() {
 		final Component comp = getComponent(getStringBounder());
-		final Dimension2D dim = comp.getPreferredDimension(getStringBounder());
+		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());
 		double height = dim.getHeight();
 		if (isCreate()) {
 			height = Math.max(height, livingSpace2.getHeadPreferredDimension(getStringBounder()).getHeight());
@@ -232,7 +231,7 @@ public class CommunicationTile extends AbstractTile {
 
 	public void addConstraints() {
 		final Component comp = getComponent(getStringBounder());
-		final Dimension2D dim = comp.getPreferredDimension(getStringBounder());
+		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());
 		final double width = dim.getWidth();
 
 		Real point1 = getPoint1(getStringBounder());

@@ -35,9 +35,7 @@
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
-import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.Component;
@@ -68,7 +66,7 @@ class GraphicalDelayText extends GraphicalElement {
 		final double textWidth = compText.getPreferredWidth(stringBounder);
 		ug = ug.apply(new UTranslate(middle - textWidth / 2, getStartingY()));
 		// ug.translate(x1, getStartingY());
-		final Dimension2D dim = new Dimension2DDouble(textWidth, compText.getPreferredHeight(stringBounder));
+		final XDimension2D dim = new XDimension2D(textWidth, compText.getPreferredHeight(stringBounder));
 		compText.drawU(ug, new Area(dim), context);
 	}
 

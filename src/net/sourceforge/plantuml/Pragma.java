@@ -70,14 +70,20 @@ public class Pragma {
 		return isDefine("usenewpackage");
 	}
 
+	private boolean isTrue(final String s) {
+		return "true".equalsIgnoreCase(s) || "on".equalsIgnoreCase(s);
+	}
+
 	public boolean useVerticalIf() {
-		final String teoz = getValue("useverticalif");
-		return "true".equalsIgnoreCase(teoz) || "on".equalsIgnoreCase(teoz);
+		return isTrue(getValue("useverticalif"));
 	}
 
 	public boolean useTeozLayout() {
-		final String teoz = getValue("teoz");
-		return "true".equalsIgnoreCase(teoz) || "on".equalsIgnoreCase(teoz);
+		return isTrue(getValue("teoz"));
+	}
+
+	public boolean useKermor() {
+		return isTrue(getValue("kermor"));
 	}
 
 }

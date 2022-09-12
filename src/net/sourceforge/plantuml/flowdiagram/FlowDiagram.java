@@ -37,19 +37,18 @@ package net.sourceforge.plantuml.flowdiagram;
 
 import static net.sourceforge.plantuml.ugraphic.ImageBuilder.imageBuilder;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.api.ThemeStyle;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
+import net.sourceforge.plantuml.awt.geom.XRectangle2D;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
@@ -82,7 +81,7 @@ public class FlowDiagram extends UmlDiagram implements TextBlock {
 	private final Map<Tile, ActivityBox> tilesBoxes = new HashMap<Tile, ActivityBox>();
 	private Tile lastTile;
 
-	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+	public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -151,7 +150,7 @@ public class FlowDiagram extends UmlDiagram implements TextBlock {
 			final int xmin = pos.getXmin();
 			final int ymin = pos.getYmin();
 			final ActivityBox box = ent.getValue();
-			final Dimension2D dimBox = box.calculateDimension(stringBounder);
+			final XDimension2D dimBox = box.calculateDimension(stringBounder);
 			final double deltaX = SINGLE_SIZE_X * 2 - dimBox.getWidth();
 			final double deltaY = SINGLE_SIZE_Y * 2 - dimBox.getHeight();
 			box.drawU(ug.apply(
@@ -163,8 +162,8 @@ public class FlowDiagram extends UmlDiagram implements TextBlock {
 		for (Path p : field.getPaths()) {
 			final TileArea start = p.getStart();
 			final TileArea dest = p.getDest();
-			final Point2D pStart = movePoint(getCenter(start), start.getTile(), start.getGeometry(), stringBounder);
-			final Point2D pDest = movePoint(getCenter(dest), dest.getTile(), dest.getGeometry(), stringBounder);
+			final XPoint2D pStart = movePoint(getCenter(start), start.getTile(), start.getGeometry(), stringBounder);
+			final XPoint2D pDest = movePoint(getCenter(dest), dest.getTile(), dest.getGeometry(), stringBounder);
 			final ULine line = new ULine(pDest.getX() - pStart.getX(), pDest.getY() - pStart.getY());
 			ug.apply(new UTranslate(x + pStart.getX(), y + pStart.getY())).draw(line);
 			ug.apply(new UTranslate(x + pDest.getX() - 3, y + pDest.getY() - 3)).draw(arrow);
@@ -172,16 +171,16 @@ public class FlowDiagram extends UmlDiagram implements TextBlock {
 		}
 	}
 
-	private Point2D getCenter(TileArea area) {
+	private XPoint2D getCenter(TileArea area) {
 		final Tile tile = area.getTile();
 		final Position position = field.getPosition(tile);
 		final double x = position.getCenterX();
 		final double y = position.getCenterY();
-		return new Point2D.Double(x * SINGLE_SIZE_X, y * SINGLE_SIZE_Y);
+		return new XPoint2D(x * SINGLE_SIZE_X, y * SINGLE_SIZE_Y);
 	}
 
-	private Point2D movePoint(Point2D pt, Tile tile, TileGeometry tileGeometry, StringBounder stringBounder) {
-		final Dimension2D dim = tilesBoxes.get(tile).calculateDimension(stringBounder);
+	private XPoint2D movePoint(XPoint2D pt, Tile tile, TileGeometry tileGeometry, StringBounder stringBounder) {
+		final XDimension2D dim = tilesBoxes.get(tile).calculateDimension(stringBounder);
 		final double width = dim.getWidth();
 		final double height = dim.getHeight();
 		double x = pt.getX();
@@ -202,7 +201,7 @@ public class FlowDiagram extends UmlDiagram implements TextBlock {
 		default:
 			throw new IllegalStateException();
 		}
-		return new Point2D.Double(x, y);
+		return new XPoint2D(x, y);
 	}
 
 	private MinMaxGolem getMinMax() {
@@ -213,9 +212,9 @@ public class FlowDiagram extends UmlDiagram implements TextBlock {
 		return minMax;
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		final MinMaxGolem minMax = getMinMax();
-		return new Dimension2DDouble(minMax.getWidth() * SINGLE_SIZE_X, minMax.getHeight() * SINGLE_SIZE_Y);
+		return new XDimension2D(minMax.getWidth() * SINGLE_SIZE_X, minMax.getHeight() * SINGLE_SIZE_Y);
 	}
 
 	public MinMax getMinMax(StringBounder stringBounder) {

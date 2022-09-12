@@ -35,8 +35,7 @@
  */
 package net.sourceforge.plantuml.svek;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockEmpty;
@@ -65,26 +64,26 @@ public class HeaderLayout {
 		return block;
 	}
 
-	public Dimension2D getDimension(StringBounder stringBounder) {
-		final Dimension2D nameDim = name.calculateDimension(stringBounder);
-		final Dimension2D genericDim = generic.calculateDimension(stringBounder);
-		final Dimension2D stereoDim = stereo.calculateDimension(stringBounder);
-		final Dimension2D circleDim = circledCharacter.calculateDimension(stringBounder);
+	public XDimension2D getDimension(StringBounder stringBounder) {
+		final XDimension2D nameDim = name.calculateDimension(stringBounder);
+		final XDimension2D genericDim = generic.calculateDimension(stringBounder);
+		final XDimension2D stereoDim = stereo.calculateDimension(stringBounder);
+		final XDimension2D circleDim = circledCharacter.calculateDimension(stringBounder);
 
 		final double width = circleDim.getWidth() + Math.max(stereoDim.getWidth(), nameDim.getWidth())
 				+ genericDim.getWidth();
 		final double height = MathUtils.max(circleDim.getHeight(), stereoDim.getHeight() + nameDim.getHeight() + 10,
 				genericDim.getHeight());
-		return new Dimension2DDouble(width, height);
+		return new XDimension2D(width, height);
 	}
 
 	public void drawU(UGraphic ug, double width, double height) {
 
 		final StringBounder stringBounder = ug.getStringBounder();
-		final Dimension2D nameDim = name.calculateDimension(stringBounder);
-		final Dimension2D genericDim = generic.calculateDimension(stringBounder);
-		final Dimension2D stereoDim = stereo.calculateDimension(stringBounder);
-		final Dimension2D circleDim = circledCharacter.calculateDimension(stringBounder);
+		final XDimension2D nameDim = name.calculateDimension(stringBounder);
+		final XDimension2D genericDim = generic.calculateDimension(stringBounder);
+		final XDimension2D stereoDim = stereo.calculateDimension(stringBounder);
+		final XDimension2D circleDim = circledCharacter.calculateDimension(stringBounder);
 
 		final double widthStereoAndName = Math.max(stereoDim.getWidth(), nameDim.getWidth());
 		final double suppWith = Math.max(0, width - circleDim.getWidth() - widthStereoAndName - genericDim.getWidth());

@@ -35,11 +35,11 @@
  */
 package net.sourceforge.plantuml.security.authentication.token;
 
-import net.sourceforge.plantuml.security.authentication.SecurityAccessInterceptor;
-import net.sourceforge.plantuml.security.authentication.SecurityAuthentication;
-
 import java.net.URLConnection;
 import java.util.Map;
+
+import net.sourceforge.plantuml.security.authentication.SecurityAccessInterceptor;
+import net.sourceforge.plantuml.security.authentication.SecurityAuthentication;
 
 /**
  * Applies from {@link SecurityAuthentication} data plain token authentication access headers. This is a raw header

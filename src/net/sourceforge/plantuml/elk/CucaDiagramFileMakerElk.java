@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.elk;
 
-import java.awt.geom.Point2D;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -54,7 +53,8 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.api.ImageDataSimple;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -191,7 +191,7 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 	}
 
 	// Retrieve the real position of a node, depending on its parents
-	private Point2D getPosition(ElkNode elkNode) {
+	private XPoint2D getPosition(ElkNode elkNode) {
 		final ElkNode parent = elkNode.getParent();
 
 		final double x = elkNode.getX();
@@ -199,12 +199,12 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 
 		// This nasty test checks that parent is "root"
 		if (parent == null || parent.getLabels().size() == 0) {
-			return new Point2D.Double(x, y);
+			return new XPoint2D(x, y);
 		}
 
 		// Right now, this is recursive
-		final Point2D parentPosition = getPosition(parent);
-		return new Point2D.Double(parentPosition.getX() + x, parentPosition.getY() + y);
+		final XPoint2D parentPosition = getPosition(parent);
+		return new XPoint2D(parentPosition.getX() + x, parentPosition.getY() + y);
 
 	}
 
@@ -247,7 +247,7 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 		}
 
 		private void drawSingleCluster(UGraphic ug, IGroup group, ElkNode elkNode) {
-			final Point2D corner = getPosition(elkNode);
+			final XPoint2D corner = getPosition(elkNode);
 			final URectangle rect = new URectangle(elkNode.getWidth(), elkNode.getHeight());
 
 			PackageStyle packageStyle = group.getPackageStyle();
@@ -303,7 +303,7 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 		private void drawSingleNode(UGraphic ug, ILeaf leaf, ElkNode elkNode) {
 			final IEntityImage image = printEntityInternal(leaf);
 			// Retrieve coord from ELK
-			final Point2D corner = getPosition(elkNode);
+			final XPoint2D corner = getPosition(elkNode);
 
 			// Print the node image at right coord
 			image.drawU(ug.apply(new UTranslate(corner)));
@@ -311,7 +311,7 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 
 		private void drawSingleEdge(UGraphic ug, Link link, ElkEdge edge) {
 			// Unfortunately, we have to translate "edge" in its own "cluster" coordinate
-			final Point2D translate = getPosition(edge.getContainingNode());
+			final XPoint2D translate = getPosition(edge.getContainingNode());
 
 			final double magicY2 = 0;
 			final IEntity dest = link.getEntity2();
@@ -326,7 +326,7 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 			elkPath.drawU(ug.apply(new UTranslate(translate)));
 		}
 
-		public Dimension2D calculateDimension(StringBounder stringBounder) {
+		public XDimension2D calculateDimension(StringBounder stringBounder) {
 			if (minMax == null)
 				throw new UnsupportedOperationException();
 
@@ -447,7 +447,7 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 		final IEntityImage image = printEntityInternal(leaf);
 
 		// Expected dimension of the node
-		final Dimension2D dimension = image.calculateDimension(stringBounder);
+		final XDimension2D dimension = image.calculateDimension(stringBounder);
 
 		// Here, we try to tell ELK to use this dimension as node dimension
 		final ElkNode node = ElkGraphUtil.createNode(root);
@@ -489,7 +489,7 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 		final TextBlock labelLink = getLabel(link);
 		if (labelLink != null) {
 			final ElkLabel edgeLabel = ElkGraphUtil.createLabel(edge);
-			final Dimension2D dim = labelLink.calculateDimension(stringBounder);
+			final XDimension2D dim = labelLink.calculateDimension(stringBounder);
 			edgeLabel.setText("X");
 			edgeLabel.setDimensions(dim.getWidth(), dim.getHeight());
 			// Duplicated, with qualifier, but who cares?
@@ -498,7 +498,7 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 		}
 		if (link.getQualifier1() != null) {
 			final ElkLabel edgeLabel = ElkGraphUtil.createLabel(edge);
-			final Dimension2D dim = getQualifier(link, 1).calculateDimension(stringBounder);
+			final XDimension2D dim = getQualifier(link, 1).calculateDimension(stringBounder);
 			// Nasty trick, we store the kind of label in the text
 			edgeLabel.setText("1");
 			edgeLabel.setDimensions(dim.getWidth(), dim.getHeight());
@@ -509,7 +509,7 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 		}
 		if (link.getQualifier2() != null) {
 			final ElkLabel edgeLabel = ElkGraphUtil.createLabel(edge);
-			final Dimension2D dim = getQualifier(link, 2).calculateDimension(stringBounder);
+			final XDimension2D dim = getQualifier(link, 2).calculateDimension(stringBounder);
 			// Nasty trick, we store the kind of label in the text
 			edgeLabel.setText("2");
 			edgeLabel.setDimensions(dim.getWidth(), dim.getHeight());

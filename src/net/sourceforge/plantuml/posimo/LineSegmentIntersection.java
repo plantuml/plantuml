@@ -35,16 +35,16 @@
  */
 package net.sourceforge.plantuml.posimo;
 
-import java.awt.geom.Line2D;
-import java.awt.geom.Point2D;
+import net.sourceforge.plantuml.awt.geom.XLine2D;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 
 public class LineSegmentIntersection {
 
-	private final Point2D inter;
+	private final XPoint2D inter;
 	
 	// http://local.wasp.uwa.edu.au/~pbourke/geometry/lineline2d/
 
-	public LineSegmentIntersection(Line2D segment, Line2D lineB) {
+	public LineSegmentIntersection(XLine2D segment, XLine2D lineB) {
 		final double x1 = segment.getX1();
 		final double y1 = segment.getY1();
 		final double x2 = segment.getX2();
@@ -67,14 +67,14 @@ public class LineSegmentIntersection {
 			final double y = y1 + uA * (y2 - y1);
 
 			if (uA >= 0 && uA <= 1) {
-				inter = new Point2D.Double(x, y);
+				inter = new XPoint2D(x, y);
 			} else {
 				inter = null;
 			}
 		}
 	}
 
-	public final Point2D getIntersection() {
+	public final XPoint2D getIntersection() {
 		return inter;
 	}
 

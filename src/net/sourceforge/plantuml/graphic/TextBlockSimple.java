@@ -39,10 +39,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.EmbeddedDiagram;
 import net.sourceforge.plantuml.SpriteContainer;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -139,24 +138,24 @@ public final class TextBlockSimple extends AbstractTextBlock implements TextBloc
 		return line.calculateDimension(stringBounder).getWidth();
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		return getTextDimension(stringBounder);
 	}
 
-	protected final Dimension2D getTextDimension(StringBounder stringBounder) {
+	protected final XDimension2D getTextDimension(StringBounder stringBounder) {
 		double width = 0;
 		double height = 0;
 		for (Line line : getLines(stringBounder)) {
-			final Dimension2D size2D = line.calculateDimension(stringBounder);
+			final XDimension2D size2D = line.calculateDimension(stringBounder);
 			height += size2D.getHeight();
 			width = Math.max(width, size2D.getWidth());
 		}
-		return new Dimension2DDouble(width, height);
+		return new XDimension2D(width, height);
 	}
 
 	public void drawU(UGraphic ug) {
 		double y = 0;
-		final Dimension2D dimText = getTextDimension(ug.getStringBounder());
+		final XDimension2D dimText = getTextDimension(ug.getStringBounder());
 
 		for (Line line : getLines(ug.getStringBounder())) {
 			final HorizontalAlignment lineHorizontalAlignment = line.getHorizontalAlignment();

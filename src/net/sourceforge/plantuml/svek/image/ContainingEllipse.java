@@ -35,8 +35,7 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
-import java.awt.geom.Point2D;
-
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 
 public class ContainingEllipse {
@@ -53,13 +52,13 @@ public class ContainingEllipse {
 		ytransformer = new YTransformer(coefY);
 	}
 
-	public void append(Point2D pt) {
+	public void append(XPoint2D pt) {
 		pt = ytransformer.getReversePoint2D(pt);
 		sec.append(pt);
 	}
 
 	public void append(double x, double y) {
-		append(new Point2D.Double(x, y));
+		append(new XPoint2D(x, y));
 	}
 
 	public double getWidth() {
@@ -70,7 +69,7 @@ public class ContainingEllipse {
 		return 2 * sec.getCircle().getRadius() * ytransformer.getAlpha();
 	}
 
-	public Point2D getCenter() {
+	public XPoint2D getCenter() {
 		return ytransformer.getPoint2D(sec.getCircle().getCenter());
 	}
 

@@ -36,7 +36,7 @@
 package net.sourceforge.plantuml.creole.atom;
 
 import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -64,7 +64,7 @@ public class AtomOpenIcon extends AbstractAtom implements Atom {
 		return TextBlockUtils.withMargin(openIcon.asTextBlock(color, factor), 1, 0);
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		return asTextBlock().calculateDimension(stringBounder);
 	}
 

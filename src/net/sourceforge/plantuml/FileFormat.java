@@ -43,7 +43,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.braille.BrailleCharFactory;
 import net.sourceforge.plantuml.braille.UGraphicBraille;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -157,7 +157,7 @@ public enum FileFormat {
 				return "FileFormat::getSvgStringBounder";
 			}
 
-			protected Dimension2D calculateDimensionInternal(UFont font, String text) {
+			protected XDimension2D calculateDimensionInternal(UFont font, String text) {
 				text = charSizeHack.transformStringForSizeHack(text);
 				return getJavaDimension(font, text);
 			}
@@ -172,18 +172,18 @@ public enum FileFormat {
 				return "FileFormat::getNormalStringBounder";
 			}
 
-			protected Dimension2D calculateDimensionInternal(UFont font, String text) {
+			protected XDimension2D calculateDimensionInternal(UFont font, String text) {
 				return getJavaDimension(font, text);
 			}
 
 		};
 	}
 
-	static private Dimension2DDouble getJavaDimension(UFont font, String text) {
+	static private XDimension2D getJavaDimension(UFont font, String text) {
 		final Font javaFont = font.getUnderlayingFont();
 		final FontMetrics fm = gg.getFontMetrics(javaFont);
 		final Rectangle2D rect = fm.getStringBounds(text, gg);
-		return new Dimension2DDouble(rect.getWidth(), rect.getHeight());
+		return new XDimension2D(rect.getWidth(), rect.getHeight());
 	}
 
 	private StringBounder getBrailleStringBounder() {
@@ -193,12 +193,12 @@ public enum FileFormat {
 				return "FileFormat::getBrailleStringBounder";
 			}
 
-			protected Dimension2D calculateDimensionInternal(UFont font, String text) {
+			protected XDimension2D calculateDimensionInternal(UFont font, String text) {
 				final int nb = BrailleCharFactory.build(text).size();
 				final double quanta = UGraphicBraille.QUANTA;
 				final double height = 5 * quanta;
 				final double width = 3 * nb * quanta + 1;
-				return new Dimension2DDouble(width, height);
+				return new XDimension2D(width, height);
 			}
 
 			@Override
@@ -215,11 +215,11 @@ public enum FileFormat {
 				return "FileFormat::getTikzStringBounder";
 			}
 
-			protected Dimension2D calculateDimensionInternal(UFont font, String text) {
+			protected XDimension2D calculateDimensionInternal(UFont font, String text) {
 				text = text.replace("\t", "    ");
-				final Dimension2DDouble w1 = getJavaDimension(font.goTikz(-1), text);
-				final Dimension2DDouble w2 = getJavaDimension(font.goTikz(0), text);
-				final Dimension2DDouble w3 = getJavaDimension(font.goTikz(1), text);
+				final XDimension2D w1 = getJavaDimension(font.goTikz(-1), text);
+				final XDimension2D w2 = getJavaDimension(font.goTikz(0), text);
+				final XDimension2D w3 = getJavaDimension(font.goTikz(1), text);
 				final double factor = (w3.getWidth() - w1.getWidth()) / w2.getWidth();
 				final double distortion = tikzFontDistortion.getDistortion();
 				final double magnify = tikzFontDistortion.getMagnify();

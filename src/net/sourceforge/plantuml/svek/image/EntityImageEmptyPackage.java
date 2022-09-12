@@ -36,13 +36,12 @@
 package net.sourceforge.plantuml.svek.image;
 
 import net.sourceforge.plantuml.AlignmentParam;
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.activitydiagram3.ftile.EntityImageLegend;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.DisplayPositioned;
 import net.sourceforge.plantuml.cucadiagram.EntityPortion;
@@ -139,12 +138,12 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		final Dimension2D dimDesc = desc.calculateDimension(stringBounder);
-		Dimension2D dim = TextBlockUtils.mergeTB(desc, stereoBlock, HorizontalAlignment.LEFT)
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		final XDimension2D dimDesc = desc.calculateDimension(stringBounder);
+		XDimension2D dim = TextBlockUtils.mergeTB(desc, stereoBlock, HorizontalAlignment.LEFT)
 				.calculateDimension(stringBounder);
-		dim = Dimension2DDouble.atLeast(dim, 0, 2 * dimDesc.getHeight());
-		return Dimension2DDouble.delta(dim, MARGIN * 2, MARGIN * 2);
+		dim = XDimension2D.atLeast(dim, 0, 2 * dimDesc.getHeight());
+		return XDimension2D.delta(dim, MARGIN * 2, MARGIN * 2);
 	}
 
 	final public void drawU(UGraphic ug) {
@@ -152,7 +151,7 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 			ug.startUrl(url);
 
 		final StringBounder stringBounder = ug.getStringBounder();
-		final Dimension2D dimTotal = calculateDimension(stringBounder);
+		final XDimension2D dimTotal = calculateDimension(stringBounder);
 
 		final double widthTotal = dimTotal.getWidth();
 		final double heightTotal = dimTotal.getHeight();

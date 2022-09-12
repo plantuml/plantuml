@@ -35,8 +35,7 @@
  */
 package net.sourceforge.plantuml.project.draw;
 
-import java.awt.geom.Point2D;
-
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.ugraphic.UPath;
 
 public class PathUtils {
@@ -46,9 +45,9 @@ public class PathUtils {
 		final UPath result = new UPath();
 		result.moveTo(0, 0);
 		result.lineTo(width - halfRound, 0);
-		result.arcTo(new Point2D.Double(width, halfRound), halfRound, 0, 1);
+		result.arcTo(new XPoint2D(width, halfRound), halfRound, 0, 1);
 		result.lineTo(width, height - halfRound);
-		result.arcTo(new Point2D.Double(width - halfRound, height), halfRound, 0, 1);
+		result.arcTo(new XPoint2D(width - halfRound, height), halfRound, 0, 1);
 		result.lineTo(0, height);
 		return result;
 	}
@@ -58,9 +57,9 @@ public class PathUtils {
 		final UPath result = new UPath();
 		result.moveTo(width, height);
 		result.lineTo(halfRound, height);
-		result.arcTo(new Point2D.Double(0, height - halfRound), halfRound, 0, 1);
+		result.arcTo(new XPoint2D(0, height - halfRound), halfRound, 0, 1);
 		result.lineTo(0, halfRound);
-		result.arcTo(new Point2D.Double(halfRound, 0), halfRound, 0, 1);
+		result.arcTo(new XPoint2D(halfRound, 0), halfRound, 0, 1);
 		result.lineTo(width, 0);
 		return result;
 	}

@@ -42,7 +42,7 @@ import java.util.TreeSet;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.SpriteContainerEmpty;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.creole.Parser;
 import net.sourceforge.plantuml.creole.Sheet;
@@ -112,7 +112,7 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 	public void drawTitle(UGraphic ug, LabelStrategy labelStrategy, double colTitles, double colBars) {
 		final TextBlock title = getTitle();
 		final StringBounder stringBounder = ug.getStringBounder();
-		final Dimension2D dim = title.calculateDimension(stringBounder);
+		final XDimension2D dim = title.calculateDimension(stringBounder);
 
 		final Style style = getStyleSignature().getMergedStyle(getStyleBuilder());
 		final ClockwiseTopRightBottomLeft margin = style.getMargin();
@@ -227,7 +227,7 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 		if (note == null)
 			return null;
 
-		final Dimension2D dim = getOpaleNote().calculateDimension(stringBounder);
+		final XDimension2D dim = getOpaleNote().calculateDimension(stringBounder);
 		final double startPos = timeScale.getStartingPosition(start);
 		// final double endPos = timeScale.getEndingPosition(end);
 		return new FingerPrint(startPos, getY(stringBounder).getCurrentValue() + getYNotePosition(stringBounder),

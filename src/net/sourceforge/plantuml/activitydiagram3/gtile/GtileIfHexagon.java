@@ -39,10 +39,9 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.activitydiagram3.Branch;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
@@ -83,11 +82,11 @@ public class GtileIfHexagon extends GtileColumns {
 		this.shape2 = Gtiles.diamondEmpty(swimlane, getStringBounder(), skinParam(), getDefaultStyleDefinitionDiamond(),
 				branches.get(0).getColor());
 
-		final Dimension2D dimShape1 = shape1.calculateDimension(stringBounder);
+		final XDimension2D dimShape1 = shape1.calculateDimension(stringBounder);
 		this.pushDown(dimShape1.getHeight());
 
 		final double posShape;
-		final Dimension2D totalDim;
+		final XDimension2D totalDim;
 		if (branches.size() == 2) {
 			final Gtile tile0 = branches.get(0).getGtile();
 			final Gtile tile1 = branches.get(1).getGtile();
@@ -158,23 +157,23 @@ public class GtileIfHexagon extends GtileColumns {
 	}
 
 	@Override
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		final Dimension2D rawDim = calculateDimensionRaw(stringBounder);
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		final XDimension2D rawDim = calculateDimensionRaw(stringBounder);
 		if (branches.size() == 2) {
-			final Dimension2D shape1Dim = shape1.calculateDimension(stringBounder);
+			final XDimension2D shape1Dim = shape1.calculateDimension(stringBounder);
 			final double shape1max = this.positionShape1.getDx() + shape1Dim.getWidth();
-			return Dimension2DDouble.atLeast(rawDim, shape1max, 0);
+			return XDimension2D.atLeast(rawDim, shape1max, 0);
 
 		}
 		// return MathUtils.max(rawDim, shape1Dim);
 		return rawDim;
 	}
 
-	private Dimension2D calculateDimensionRaw(StringBounder stringBounder) {
+	private XDimension2D calculateDimensionRaw(StringBounder stringBounder) {
 		final double height2 = shape2.calculateDimension(stringBounder).getHeight();
-		final Dimension2D nude = super.calculateDimension(stringBounder);
+		final XDimension2D nude = super.calculateDimension(stringBounder);
 		// +30 to be done only when branches.size()==1 ?
-		return Dimension2DDouble.delta(nude, 0, height2 + 30);
+		return XDimension2D.delta(nude, 0, height2 + 30);
 	}
 
 	final public StyleSignatureBasic getDefaultStyleDefinitionActivity() {

@@ -35,9 +35,8 @@
  */
 package net.sourceforge.plantuml.mindmap;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.Rankdir;
@@ -73,7 +72,7 @@ public class MindMap implements UDrawable {
 		}
 	}
 
-	Dimension2D calculateDimension(StringBounder stringBounder) {
+	XDimension2D calculateDimension(StringBounder stringBounder) {
 		this.computeFinger();
 		final double y1 = this.regular.getHalfThickness(stringBounder);
 		final double y2 = this.reverse.getHalfThickness(stringBounder);
@@ -83,9 +82,9 @@ public class MindMap implements UDrawable {
 		final double height = y
 				+ Math.max(this.reverse.getHalfThickness(stringBounder), this.regular.getHalfThickness(stringBounder));
 		if (skinParam.getRankdir() == Rankdir.TOP_TO_BOTTOM)
-			return new Dimension2DDouble(height, width);
+			return new XDimension2D(height, width);
 		else
-			return new Dimension2DDouble(width, height);
+			return new XDimension2D(width, height);
 
 	}
 

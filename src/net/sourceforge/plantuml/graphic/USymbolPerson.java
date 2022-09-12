@@ -35,8 +35,7 @@
  */
 package net.sourceforge.plantuml.graphic;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -51,7 +50,7 @@ class USymbolPerson extends USymbol {
 		return SName.person;
 	}
 
-	private void drawHeadAndBody(UGraphic ug, double shadowing, Dimension2D dimBody, double headSize) {
+	private void drawHeadAndBody(UGraphic ug, double shadowing, XDimension2D dimBody, double headSize) {
 		final UEllipse head = new UEllipse(headSize, headSize);
 		final URectangle body = new URectangle(dimBody).rounded(headSize);
 
@@ -63,7 +62,7 @@ class USymbolPerson extends USymbol {
 		ug.apply(UTranslate.dy(headSize)).draw(body);
 	}
 
-	private double headSize(Dimension2D dimBody) {
+	private double headSize(XDimension2D dimBody) {
 		final double surface = dimBody.getWidth() * dimBody.getHeight();
 		return Math.sqrt(surface) * .42;
 	}
@@ -78,8 +77,8 @@ class USymbolPerson extends USymbol {
 		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
-				final Dimension2D dimFull = calculateDimension(ug.getStringBounder());
-				final Dimension2D dimBody = bodyDimension(ug.getStringBounder());
+				final XDimension2D dimFull = calculateDimension(ug.getStringBounder());
+				final XDimension2D dimBody = bodyDimension(ug.getStringBounder());
 				ug = UGraphicStencil.create(ug, dimFull);
 				ug = symbolContext.apply(ug);
 				final double headSize = headSize(dimBody);
@@ -89,15 +88,15 @@ class USymbolPerson extends USymbol {
 				tb.drawU(ug.apply(new UTranslate(margin.getX1(), margin.getY1() + headSize)));
 			}
 
-			public Dimension2D calculateDimension(StringBounder stringBounder) {
-				final Dimension2D body = bodyDimension(stringBounder);
-				return Dimension2DDouble.delta(body, 0, headSize(body));
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
+				final XDimension2D body = bodyDimension(stringBounder);
+				return XDimension2D.delta(body, 0, headSize(body));
 			}
 
-			private Dimension2D bodyDimension(StringBounder stringBounder) {
-				final Dimension2D dimLabel = label.calculateDimension(stringBounder);
-				final Dimension2D dimStereo = stereotype.calculateDimension(stringBounder);
-				return getMargin().addDimension(Dimension2DDouble.mergeTB(dimStereo, dimLabel));
+			private XDimension2D bodyDimension(StringBounder stringBounder) {
+				final XDimension2D dimLabel = label.calculateDimension(stringBounder);
+				final XDimension2D dimStereo = stereotype.calculateDimension(stringBounder);
+				return getMargin().addDimension(XDimension2D.mergeTB(dimStereo, dimLabel));
 			}
 		};
 	}

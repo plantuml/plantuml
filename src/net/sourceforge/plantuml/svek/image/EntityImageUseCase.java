@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
-import java.awt.geom.Point2D;
 import java.util.EnumMap;
 import java.util.Map;
 
@@ -43,7 +42,8 @@ import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.creole.Stencil;
 import net.sourceforge.plantuml.cucadiagram.BodyFactory;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -111,7 +111,7 @@ public class EntityImageUseCase extends AbstractEntityImage {
 
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		return new TextBlockInEllipse(desc, stringBounder).calculateDimension(stringBounder);
 	}
 
@@ -156,20 +156,20 @@ public class EntityImageUseCase extends AbstractEntityImage {
 		final double theta2 = rotatedEllipse.getOtherTheta(theta1);
 
 		final UEllipse frontier2 = frontier.scale(0.99);
-		final Point2D p1 = frontier2.getPointAtAngle(-theta1);
-		final Point2D p2 = frontier2.getPointAtAngle(-theta2);
+		final XPoint2D p1 = frontier2.getPointAtAngle(-theta1);
+		final XPoint2D p2 = frontier2.getPointAtAngle(-theta2);
 		drawLine(ug, p1, p2);
 	}
 
 	private void specialBusiness0(UGraphic ug, UEllipse frontier) {
 		final double c = frontier.getWidth() / frontier.getHeight();
 		final double ouverture = Math.PI / 2;
-		final Point2D p1 = frontier.getPointAtAngle(getTrueAngle(c, Math.PI / 4 - ouverture));
-		final Point2D p2 = frontier.getPointAtAngle(getTrueAngle(c, Math.PI / 4 + ouverture));
+		final XPoint2D p1 = frontier.getPointAtAngle(getTrueAngle(c, Math.PI / 4 - ouverture));
+		final XPoint2D p2 = frontier.getPointAtAngle(getTrueAngle(c, Math.PI / 4 + ouverture));
 		drawLine(ug, p1, p2);
 	}
 
-	private void drawLine(UGraphic ug, final Point2D p1, final Point2D p2) {
+	private void drawLine(UGraphic ug, final XPoint2D p1, final XPoint2D p2) {
 		ug = ug.apply(new UTranslate(p1));
 		ug.draw(new ULine(p2.getX() - p1.getX(), p2.getY() - p1.getY()));
 	}

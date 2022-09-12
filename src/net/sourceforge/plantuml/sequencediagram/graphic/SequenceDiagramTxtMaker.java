@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.sequencediagram.graphic;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
@@ -48,6 +47,7 @@ import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.asciiart.TextSkin;
 import net.sourceforge.plantuml.asciiart.TextStringBounder;
 import net.sourceforge.plantuml.asciiart.UmlCharArea;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -62,7 +62,7 @@ public class SequenceDiagramTxtMaker implements FileMaker {
 
 	private final SequenceDiagram diagram;
 	private final DrawableSet drawableSet;
-	private final Dimension2D fullDimension;
+	private final XDimension2D fullDimension;
 	private final StringBounder dummyStringBounder = new TextStringBounder();
 	private final UGraphicTxt ug = new UGraphicTxt();
 	private final FileFormat fileFormat;

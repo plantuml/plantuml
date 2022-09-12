@@ -35,13 +35,13 @@
  */
 package net.sourceforge.plantuml.posimo;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-import java.awt.geom.Point2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 
 public interface Positionable extends Moveable {
 
-	public Dimension2D getSize();
+	public XDimension2D getSize();
 
-	public Point2D getPosition();
+	public XPoint2D getPosition();
 
 }

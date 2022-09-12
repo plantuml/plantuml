@@ -35,10 +35,9 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -85,9 +84,9 @@ public class EntityImageActivity extends AbstractEntityImage {
 		this.url = entity.getUrl99();
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		final Dimension2D dim = desc.calculateDimension(stringBounder);
-		return Dimension2DDouble.delta(dim, MARGIN * 2);
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		final XDimension2D dim = desc.calculateDimension(stringBounder);
+		return XDimension2D.delta(dim, MARGIN * 2);
 	}
 
 	final public void drawU(UGraphic ug) {
@@ -122,7 +121,7 @@ public class EntityImageActivity extends AbstractEntityImage {
 
 	private UGraphic drawNormal(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
-		final Dimension2D dimTotal = calculateDimension(stringBounder);
+		final XDimension2D dimTotal = calculateDimension(stringBounder);
 
 		final double widthTotal = dimTotal.getWidth();
 		final double heightTotal = dimTotal.getHeight();

@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.nwdiag;
 
-import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -50,7 +49,8 @@ import net.sourceforge.plantuml.SpriteContainerEmpty;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.api.ThemeStyle;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XRectangle2D;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
@@ -257,11 +257,11 @@ public class NwDiagram extends UmlDiagram {
 				drawMe(ug);
 			}
 
-			public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+			public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
 				return null;
 			}
 
-			public Dimension2D calculateDimension(StringBounder stringBounder) {
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
 				return getTotalDimension(stringBounder);
 			}
 
@@ -292,7 +292,7 @@ public class NwDiagram extends UmlDiagram {
 				new SpriteContainerEmpty());
 	}
 
-	private Dimension2D getTotalDimension(StringBounder stringBounder) {
+	private XDimension2D getTotalDimension(StringBounder stringBounder) {
 		return TextBlockUtils.getMinMax(new UDrawable() {
 			public void drawU(UGraphic ug) {
 				drawMe(ug);
@@ -316,7 +316,7 @@ public class NwDiagram extends UmlDiagram {
 			final Network current = networks.get(i);
 			final String address = current.getOwnAdress();
 			final TextBlock desc = toTextBlockForNetworkName(current.getDisplayName(), address);
-			final Dimension2D dim = desc.calculateDimension(stringBounder);
+			final XDimension2D dim = desc.calculateDimension(stringBounder);
 			if (i == 0)
 				deltaY = (dim.getHeight() - GridTextBlockDecorated.NETWORK_THIN) / 2;
 
@@ -327,7 +327,7 @@ public class NwDiagram extends UmlDiagram {
 			final Network current = networks.get(i);
 			final String address = current.getOwnAdress();
 			final TextBlock desc = toTextBlockForNetworkName(current.getDisplayName(), address);
-			final Dimension2D dim = desc.calculateDimension(stringBounder);
+			final XDimension2D dim = desc.calculateDimension(stringBounder);
 			desc.drawU(ug.apply(new UTranslate(deltaX - dim.getWidth(), y)));
 
 			y += grid.lineHeight(stringBounder, i);
@@ -335,7 +335,7 @@ public class NwDiagram extends UmlDiagram {
 		deltaX += 5;
 
 		grid.drawU(ug.apply(new UTranslate(deltaX, deltaY)));
-		final Dimension2D dimGrid = grid.calculateDimension(stringBounder);
+		final XDimension2D dimGrid = grid.calculateDimension(stringBounder);
 
 		ug.apply(new UTranslate(dimGrid.getWidth() + deltaX + margin, dimGrid.getHeight() + deltaY + margin))
 				.draw(new UEmpty(1, 1));

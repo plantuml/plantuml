@@ -35,8 +35,7 @@
  */
 package net.sourceforge.plantuml.svek;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -73,8 +72,8 @@ public class CircleInterface2 extends AbstractTextBlock implements TextBlock {
 		ug.apply(new UTranslate(x, y)).draw(circle);
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		return new Dimension2DDouble(radius * 2 + 2 * margin, radius * 2 + 2 * margin);
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		return new XDimension2D(radius * 2 + 2 * margin, radius * 2 + 2 * margin);
 	}
 
 }

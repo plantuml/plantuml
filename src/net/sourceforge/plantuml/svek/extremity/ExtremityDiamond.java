@@ -35,8 +35,7 @@
  */
 package net.sourceforge.plantuml.svek.extremity;
 
-import java.awt.geom.Point2D;
-
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.color.HColors;
@@ -45,16 +44,16 @@ class ExtremityDiamond extends Extremity {
 
 	private UPolygon polygon = new UPolygon();
 	private final boolean fill;
-	private final Point2D contact;
+	private final XPoint2D contact;
 
 	@Override
-	public Point2D somePoint() {
+	public XPoint2D somePoint() {
 		return contact;
 	}
 
-	public ExtremityDiamond(Point2D p1, double angle, boolean fill) {
+	public ExtremityDiamond(XPoint2D p1, double angle, boolean fill) {
 		this.fill = fill;
-		this.contact = new Point2D.Double(p1.getX(), p1.getY());
+		this.contact = new XPoint2D(p1.getX(), p1.getY());
 		angle = manageround(angle);
 		polygon.addPoint(0, 0);
 		final int xWing = 6;
@@ -77,9 +76,9 @@ class ExtremityDiamond extends Extremity {
 	}
 
 	@Override
-	public Point2D isTooSmallSoGiveThePointCloserToThisOne(Point2D pt) {
-		Point2D result = null;
-		for (Point2D p : polygon.getPoints())
+	public XPoint2D isTooSmallSoGiveThePointCloserToThisOne(XPoint2D pt) {
+		XPoint2D result = null;
+		for (XPoint2D p : polygon.getPoints())
 			if (result == null || p.distance(pt) < result.distance(pt))
 				result = p;
 

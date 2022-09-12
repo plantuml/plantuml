@@ -35,11 +35,10 @@
  */
 package net.sourceforge.plantuml.skin.rose;
 
-import java.awt.geom.Point2D;
-
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.LineBreakStrategy;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.skin.Area;
@@ -184,15 +183,15 @@ public class ComponentRoseSelfArrow extends AbstractComponentRoseArrow {
 		return polygon;
 	}
 
-	public Point2D getStartPoint(StringBounder stringBounder, Dimension2D dimensionToUse) {
+	public XPoint2D getStartPoint(StringBounder stringBounder, XDimension2D dimensionToUse) {
 		final double textHeight = getTextHeight(stringBounder);
-		return new Point2D.Double(getPaddingX(), textHeight + getPaddingY());
+		return new XPoint2D(getPaddingX(), textHeight + getPaddingY());
 	}
 
-	public Point2D getEndPoint(StringBounder stringBounder, Dimension2D dimensionToUse) {
+	public XPoint2D getEndPoint(StringBounder stringBounder, XDimension2D dimensionToUse) {
 		final double textHeight = getTextHeight(stringBounder);
 		final double textAndArrowHeight = textHeight + getArrowOnlyHeight(stringBounder);
-		return new Point2D.Double(getPaddingX(), textAndArrowHeight + getPaddingY());
+		return new XPoint2D(getPaddingX(), textAndArrowHeight + getPaddingY());
 	}
 
 	@Override

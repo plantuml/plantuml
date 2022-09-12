@@ -35,9 +35,8 @@
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.sequencediagram.Divider;
@@ -80,7 +79,7 @@ public class DividerTile extends AbstractTile implements Tile {
 	public void drawU(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final Component comp = getComponent(stringBounder);
-		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
+		final XDimension2D dim = comp.getPreferredDimension(stringBounder);
 		final Area area = Area.create(tileArguments.getBorder2() - tileArguments.getBorder1() - origin.getCurrentValue(),
 				dim.getHeight());
 
@@ -90,7 +89,7 @@ public class DividerTile extends AbstractTile implements Tile {
 
 	public double getPreferredHeight() {
 		final Component comp = getComponent(getStringBounder());
-		final Dimension2D dim = comp.getPreferredDimension(getStringBounder());
+		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());
 		return dim.getHeight();
 	}
 
@@ -106,7 +105,7 @@ public class DividerTile extends AbstractTile implements Tile {
 
 	public Real getMaxX() {
 		final Component comp = getComponent(getStringBounder());
-		final Dimension2D dim = comp.getPreferredDimension(getStringBounder());
+		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());
 		return origin.addFixed(dim.getWidth());
 	}
 

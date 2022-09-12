@@ -37,14 +37,14 @@ package net.sourceforge.plantuml.creole.atom;
 
 import java.util.List;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UShape;
 
 public interface Atom extends UShape {
 
-	public Dimension2D calculateDimension(StringBounder stringBounder);
+	public XDimension2D calculateDimension(StringBounder stringBounder);
 
 	public double getStartingAltitude(StringBounder stringBounder);
 

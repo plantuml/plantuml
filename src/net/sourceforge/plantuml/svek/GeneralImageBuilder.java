@@ -37,7 +37,6 @@
  */
 package net.sourceforge.plantuml.svek;
 
-import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -48,7 +47,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.BaseFile;
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.ISkinParam;
@@ -60,7 +58,8 @@ import net.sourceforge.plantuml.SkinParamSameClassWidth;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.activitydiagram3.ftile.EntityImageLegend;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XRectangle2D;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.DisplayPositioned;
@@ -353,15 +352,15 @@ public final class GeneralImageBuilder {
 			return backColor;
 		}
 
-		public Dimension2D calculateDimension(StringBounder stringBounder) {
-			return new Dimension2DDouble(10, 10);
+		public XDimension2D calculateDimension(StringBounder stringBounder) {
+			return new XDimension2D(10, 10);
 		}
 
 		public MinMax getMinMax(StringBounder stringBounder) {
 			return MinMax.fromDim(calculateDimension(stringBounder));
 		}
 
-		public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+		public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
 			return null;
 		}
 
@@ -624,9 +623,9 @@ public final class GeneralImageBuilder {
 		final TextBlock title = getTitleBlock(g);
 		final TextBlock stereo = getStereoBlock(g);
 		final TextBlock stereoAndTitle = TextBlockUtils.mergeTB(stereo, title, HorizontalAlignment.CENTER);
-		final Dimension2D dimLabel = stereoAndTitle.calculateDimension(stringBounder);
+		final XDimension2D dimLabel = stereoAndTitle.calculateDimension(stringBounder);
 		if (dimLabel.getWidth() > 0) {
-			final Dimension2D dimAttribute = stateHeader((IEntity) g, getStyleState(FontParam.STATE_ATTRIBUTE),
+			final XDimension2D dimAttribute = stateHeader((IEntity) g, getStyleState(FontParam.STATE_ATTRIBUTE),
 					dotData.getSkinParam()).calculateDimension(stringBounder);
 			final double attributeHeight = dimAttribute.getHeight();
 			final double attributeWidth = dimAttribute.getWidth();

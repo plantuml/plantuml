@@ -35,8 +35,7 @@
  */
 package net.sourceforge.plantuml.svek.extremity;
 
-import java.awt.geom.Point2D;
-
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.ugraphic.UBackground;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -52,10 +51,10 @@ abstract class ExtremityExtendsLike extends Extremity {
 
 	private final UPolygon trig;
 	private final UBackground back;
-	private final Point2D contact;
+	private final XPoint2D contact;
 
 	@Override
-	public Point2D somePoint() {
+	public XPoint2D somePoint() {
 		return contact;
 	}
 
@@ -76,11 +75,11 @@ abstract class ExtremityExtendsLike extends Extremity {
 			this.y = y;
 		}
 
-		public UTranslate getPos(Point2D pt) {
+		public UTranslate getPos(XPoint2D pt) {
 			return new UTranslate(x + pt.getX(), y + pt.getY());
 		}
 
-		public void translate(Point2D pt) {
+		public void translate(XPoint2D pt) {
 			x += pt.getX();
 			y += pt.getY();
 		}
@@ -96,7 +95,7 @@ abstract class ExtremityExtendsLike extends Extremity {
 		private final UTranslate pos;
 		private final ULine bar;
 
-		public Redefines(Point2D porig, double angle, HColor backgroundColor) {
+		public Redefines(XPoint2D porig, double angle, HColor backgroundColor) {
 			super(porig, angle, backgroundColor);
 
 			Point p1 = new Point(XSUFFIX, -HALF_WIDTH);
@@ -119,7 +118,7 @@ abstract class ExtremityExtendsLike extends Extremity {
 		private final UTranslate pos1, pos2;
 		private final UEllipse dot;
 
-		private static UTranslate getDotPos(double x, double y, double angle, double size, Point2D porig) {
+		private static UTranslate getDotPos(double x, double y, double angle, double size, XPoint2D porig) {
 			Point p = new Point(x, y);
 			p.rotate(angle);
 			p.x -= size;
@@ -127,7 +126,7 @@ abstract class ExtremityExtendsLike extends Extremity {
 			return p.getPos(porig);
 		}
 
-		public DefinedBy(Point2D porig, double angle, HColor backgroundColor) {
+		public DefinedBy(XPoint2D porig, double angle, HColor backgroundColor) {
 			super(porig, angle, backgroundColor);
 			double w = HALF_WIDTH - DOTHSIZE;
 
@@ -148,16 +147,16 @@ abstract class ExtremityExtendsLike extends Extremity {
 		}
 	}
 
-	private static void addTrigPoint(UPolygon up, double x, double y, double angle, Point2D porig) {
+	private static void addTrigPoint(UPolygon up, double x, double y, double angle, XPoint2D porig) {
 		Point p = new Point(x, y);
 		p.rotate(angle);
 		p.translate(porig);
 		p.add(up);
 	}
 
-	private ExtremityExtendsLike(Point2D porig, double angle, HColor backgroundColor) {
+	private ExtremityExtendsLike(XPoint2D porig, double angle, HColor backgroundColor) {
 		this.back = backgroundColor.bg();
-		this.contact = new Point2D.Double(porig.getX(), porig.getY());
+		this.contact = new XPoint2D(porig.getX(), porig.getY());
 		angle = manageround(angle);
 
 		this.trig = new UPolygon();

@@ -35,8 +35,7 @@
  */
 package net.sourceforge.plantuml.graphic;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPath;
@@ -57,7 +56,7 @@ public class USymbolHexagon extends USymbol {
 		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
-				final Dimension2D dim = calculateDimension(ug.getStringBounder());
+				final XDimension2D dim = calculateDimension(ug.getStringBounder());
 				// ug = UGraphicStencil.create(ug, dim);
 
 				final TextBlock tb = TextBlockUtils.mergeTB(stereotype, label, stereoAlignment);
@@ -65,11 +64,11 @@ public class USymbolHexagon extends USymbol {
 				tb.drawU(ug.apply(new UTranslate(deltaX, marginY)));
 			}
 
-			public Dimension2D calculateDimension(StringBounder stringBounder) {
-				final Dimension2D dimLabel = label.calculateDimension(stringBounder);
-				final Dimension2D dimStereo = stereotype.calculateDimension(stringBounder);
-				final Dimension2D full = Dimension2DDouble.mergeTB(dimStereo, dimLabel);
-				return new Dimension2DDouble(full.getWidth() * 2, full.getHeight() + 2 * marginY);
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
+				final XDimension2D dimLabel = label.calculateDimension(stringBounder);
+				final XDimension2D dimStereo = stereotype.calculateDimension(stringBounder);
+				final XDimension2D full = XDimension2D.mergeTB(dimStereo, dimLabel);
+				return new XDimension2D(full.getWidth() * 2, full.getHeight() + 2 * marginY);
 			}
 		};
 	}
@@ -103,11 +102,11 @@ public class USymbolHexagon extends USymbol {
 			final HorizontalAlignment stereoAlignment) {
 		return new AbstractTextBlock() {
 			public void drawU(UGraphic ug) {
-				final Dimension2D dim = calculateDimension(ug.getStringBounder());
+				final XDimension2D dim = calculateDimension(ug.getStringBounder());
 				ug = symbolContext.apply(ug);
 				drawRect(ug, dim.getWidth(), dim.getHeight(), symbolContext.getDeltaShadow(),
 						symbolContext.getRoundCorner(), 0);
-				final Dimension2D dimStereo = stereotype.calculateDimension(ug.getStringBounder());
+				final XDimension2D dimStereo = stereotype.calculateDimension(ug.getStringBounder());
 				final double posStereoX;
 				final double posStereoY;
 				if (stereoAlignment == HorizontalAlignment.RIGHT) {
@@ -118,7 +117,7 @@ public class USymbolHexagon extends USymbol {
 					posStereoY = 2;
 				}
 				stereotype.drawU(ug.apply(new UTranslate(posStereoX, posStereoY)));
-				final Dimension2D dimTitle = title.calculateDimension(ug.getStringBounder());
+				final XDimension2D dimTitle = title.calculateDimension(ug.getStringBounder());
 				final double posTitle;
 				if (labelAlignment == HorizontalAlignment.LEFT) {
 					posTitle = 3;
@@ -130,8 +129,8 @@ public class USymbolHexagon extends USymbol {
 				title.drawU(ug.apply(new UTranslate(posTitle, 2 + dimStereo.getHeight())));
 			}
 
-			public Dimension2D calculateDimension(StringBounder stringBounder) {
-				return new Dimension2DDouble(width, height);
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
+				return new XDimension2D(width, height);
 			}
 		};
 	}

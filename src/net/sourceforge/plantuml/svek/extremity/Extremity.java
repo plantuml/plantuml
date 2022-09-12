@@ -35,13 +35,11 @@
  */
 package net.sourceforge.plantuml.svek.extremity;
 
-import java.awt.geom.Point2D;
-
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.graphic.UDrawable;
 
 public abstract class Extremity implements UDrawable {
-
-
+	
 	protected double manageround(double angle) {
 		final double deg = angle * 180.0 / Math.PI;
 		if (isCloseTo(0, deg)) {
@@ -69,9 +67,9 @@ public abstract class Extremity implements UDrawable {
 		return false;
 	}
 	
-	public abstract Point2D somePoint();
+	public abstract XPoint2D somePoint();
 	
-	public Point2D isTooSmallSoGiveThePointCloserToThisOne(Point2D pt) {
+	public XPoint2D isTooSmallSoGiveThePointCloserToThisOne(XPoint2D pt) {
 		return null;
 	}
 

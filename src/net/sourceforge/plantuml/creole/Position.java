@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.creole;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
@@ -46,9 +46,9 @@ public class Position {
 
 	private final double x;
 	private final double y;
-	private final Dimension2D dim;
+	private final XDimension2D dim;
 
-	public Position(double x, double y, Dimension2D dim) {
+	public Position(double x, double y, XDimension2D dim) {
 		this.x = x;
 		this.y = y;
 		this.dim = dim;

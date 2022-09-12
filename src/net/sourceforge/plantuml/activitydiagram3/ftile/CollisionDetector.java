@@ -37,11 +37,11 @@ package net.sourceforge.plantuml.activitydiagram3.ftile;
 
 import static net.sourceforge.plantuml.utils.ObjectUtils.instanceOfAny;
 
-import java.awt.geom.Line2D;
 import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.annotation.HaxeIgnored;
+import net.sourceforge.plantuml.awt.geom.XLine2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UBackground;
@@ -101,18 +101,18 @@ public class CollisionDetector extends UGraphicNo {
 			final HColor color = HColors.BLACK;
 			ug = ug.apply(color).apply(new UStroke(5));
 			for (Snake snake : snakes)
-				for (Line2D line : snake.getHorizontalLines())
+				for (XLine2D line : snake.getHorizontalLines())
 					if (collision(line))
 						drawLine(ug, line);
 
 		}
 
-		private void drawLine(UGraphic ug, Line2D line) {
+		private void drawLine(UGraphic ug, XLine2D line) {
 			ug = ug.apply(new UTranslate(line.getX1(), line.getY1()));
 			ug.draw(new ULine(line.getX2() - line.getX1(), line.getY2() - line.getY1()));
 		}
 
-		private boolean collision(Line2D hline) {
+		private boolean collision(XLine2D hline) {
 			for (MinMax r : rectangles)
 				if (collisionCheck(r, hline))
 					return true;
@@ -122,7 +122,7 @@ public class CollisionDetector extends UGraphicNo {
 
 		private boolean collision(MinMax r) {
 			for (Snake snake : snakes) {
-				for (Line2D hline : snake.getHorizontalLines()) {
+				for (XLine2D hline : snake.getHorizontalLines()) {
 					if (collisionCheck(r, hline)) {
 						return true;
 					}
@@ -133,7 +133,7 @@ public class CollisionDetector extends UGraphicNo {
 
 	}
 
-	private static boolean collisionCheck(MinMax rect, Line2D hline) {
+	private static boolean collisionCheck(MinMax rect, XLine2D hline) {
 		if (hline.getY1() != hline.getY2())
 			throw new IllegalArgumentException();
 

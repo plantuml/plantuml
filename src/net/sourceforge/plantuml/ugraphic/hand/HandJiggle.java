@@ -35,16 +35,16 @@
 package net.sourceforge.plantuml.ugraphic.hand;
 
 import java.awt.geom.CubicCurve2D;
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Random;
 
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 
 public class HandJiggle {
-	private final Collection<Point2D> points = new ArrayList<>();
+	private final Collection<XPoint2D> points = new ArrayList<>();
 
 	private double startX;
 	private double startY;
@@ -60,14 +60,14 @@ public class HandJiggle {
 		this.startY = startY;
 		this.defaultVariation = defaultVariation;
 		this.rnd = rnd;
-		points.add(new Point2D.Double(startX, startY));
+		points.add(new XPoint2D(startX, startY));
 	}
 
-	public static HandJiggle create(Point2D start, double defaultVariation, Random rnd) {
+	public static HandJiggle create(XPoint2D start, double defaultVariation, Random rnd) {
 		return new HandJiggle(start.getX(), start.getY(), defaultVariation, rnd);
 	}
 
-	public void lineTo(Point2D end) {
+	public void lineTo(XPoint2D end) {
 		lineTo(end.getX(), end.getY());
 	}
 
@@ -76,10 +76,10 @@ public class HandJiggle {
 		lineTo(pointOnCircle(centerX, centerY, angle1, rx, ry));
 	}
 
-	private static Point2D pointOnCircle(double centerX, double centerY, double angle, double rx, double ry) {
+	private static XPoint2D pointOnCircle(double centerX, double centerY, double angle, double rx, double ry) {
 		final double x = centerX + Math.cos(angle) * rx;
 		final double y = centerY + Math.sin(angle) * ry;
-		return new Point2D.Double(x, y);
+		return new XPoint2D(x, y);
 
 	}
 
@@ -110,9 +110,9 @@ public class HandJiggle {
 			double y = stepY * s + startY;
 
 			final double offset = (randomMe() - 0.5) * variation;
-			points.add(new Point2D.Double(x - offset * fy, y - offset * fx));
+			points.add(new XPoint2D(x - offset * fy, y - offset * fx));
 		}
-		points.add(new Point2D.Double(endX, endY));
+		points.add(new XPoint2D(endX, endY));
 
 		this.startX = endX;
 		this.startY = endY;
@@ -129,12 +129,12 @@ public class HandJiggle {
 			curveTo(right);
 			return;
 		}
-		lineTo(curve.getP2());
+		lineTo(new XPoint2D(curve.getP2()));
 	}
 
 	public UPolygon toUPolygon() {
 		final UPolygon result = new UPolygon();
-		for (Point2D p : points) {
+		for (XPoint2D p : points) {
 			result.addPoint(p.getX(), p.getY());
 		}
 		return result;
@@ -142,7 +142,7 @@ public class HandJiggle {
 
 	public UPath toUPath() {
 		UPath path = null;
-		for (Point2D p : points) {
+		for (XPoint2D p : points) {
 			if (path == null) {
 				path = new UPath();
 				path.moveTo(p);
@@ -157,7 +157,7 @@ public class HandJiggle {
 	}
 
 	public void appendTo(UPath result) {
-		for (Point2D p : points) {
+		for (XPoint2D p : points) {
 			result.lineTo(p);
 		}
 	}

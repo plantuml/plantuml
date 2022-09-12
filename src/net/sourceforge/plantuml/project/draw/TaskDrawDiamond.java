@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.project.draw;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SpriteContainerEmpty;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -100,7 +100,7 @@ public class TaskDrawDiamond extends AbstractTaskDraw {
 		ug = ug.apply(UTranslate.dy(margin.getTop()));
 
 		final StringBounder stringBounder = ug.getStringBounder();
-		final Dimension2D titleDim = title.calculateDimension(stringBounder);
+		final XDimension2D titleDim = title.calculateDimension(stringBounder);
 		final double h = (getShapeHeight(stringBounder) - titleDim.getHeight()) / 2;
 
 		final double x;

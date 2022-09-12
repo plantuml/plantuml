@@ -47,8 +47,6 @@ import net.sourceforge.plantuml.security.SecurityUtils;
 
 public class OptionFlags {
 
-	static public final boolean USE_KERMOR = false;
-	
 	private static final OptionFlags singleton = new OptionFlags();
 
 	// static public final boolean PBBACK = false;

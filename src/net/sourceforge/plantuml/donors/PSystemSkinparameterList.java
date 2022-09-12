@@ -42,7 +42,7 @@ import java.util.List;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.PlainDiagram;
 import net.sourceforge.plantuml.SkinParam;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
@@ -67,7 +67,7 @@ public class PSystemSkinparameterList extends PlainDiagram {
 				double x = 0;
 				double y = 0;
 				for (TextBlock tb : cols) {
-					final Dimension2D dim = tb.calculateDimension(stringBounder);
+					final XDimension2D dim = tb.calculateDimension(stringBounder);
 					tb.drawU(ug.apply(UTranslate.dx(x)));
 					x += dim.getWidth() + 10;
 					y = Math.max(y, dim.getHeight());

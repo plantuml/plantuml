@@ -36,7 +36,7 @@
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.real.Real;
@@ -93,14 +93,14 @@ public class CommunicationTileNoteLeft extends AbstractTile {
 
 	private Real getNotePosition(StringBounder stringBounder) {
 		final Component comp = getComponent(stringBounder);
-		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
+		final XDimension2D dim = comp.getPreferredDimension(stringBounder);
 		return livingSpace.getPosC(stringBounder).addFixed(-dim.getWidth());
 	}
 
 	public void drawU(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final Component comp = getComponent(stringBounder);
-		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
+		final XDimension2D dim = comp.getPreferredDimension(stringBounder);
 		final Area area = Area.create(dim.getWidth(), dim.getHeight());
 		((UDrawable) tile).drawU(ug);
 		final Real p = getNotePosition(stringBounder);
@@ -110,7 +110,7 @@ public class CommunicationTileNoteLeft extends AbstractTile {
 
 	public double getPreferredHeight() {
 		final Component comp = getComponent(getStringBounder());
-		final Dimension2D dim = comp.getPreferredDimension(getStringBounder());
+		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());
 		return Math.max(tile.getPreferredHeight(), dim.getHeight());
 	}
 

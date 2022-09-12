@@ -35,11 +35,9 @@
  */
 package net.sourceforge.plantuml.ugraphic;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
-
-import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
+import net.sourceforge.plantuml.awt.geom.XRectangle2D;
 
 public class UTranslate implements UChange {
 
@@ -68,7 +66,7 @@ public class UTranslate implements UChange {
 		return new UTranslate(0, dy);
 	}
 
-	public UTranslate(Point2D p) {
+	public UTranslate(XPoint2D p) {
 		this(p.getX(), p.getY());
 	}
 
@@ -88,15 +86,15 @@ public class UTranslate implements UChange {
 		return this.dx == other.dx || this.dy == other.dy;
 	}
 
-	public Point2D getTranslated(Point2D p) {
-		if (p == null) {
+	public XPoint2D getTranslated(XPoint2D p) {
+		if (p == null)
 			return null;
-		}
-		return new Point2D.Double(p.getX() + dx, p.getY() + dy);
+
+		return new XPoint2D(p.getX() + dx, p.getY() + dy);
 	}
 
-	public Dimension2D getTranslated(Dimension2D dim) {
-		return new Dimension2DDouble(dim.getWidth() + dx, dim.getHeight() + dy);
+	public XDimension2D getTranslated(XDimension2D dim) {
+		return new XDimension2D(dim.getWidth() + dx, dim.getHeight() + dy);
 	}
 
 	public UTranslate scaled(double scale) {
@@ -111,8 +109,8 @@ public class UTranslate implements UChange {
 		return new UTranslate(-dx, -dy);
 	}
 
-	public Rectangle2D apply(Rectangle2D rect) {
-		return new Rectangle2D.Double(rect.getX() + dx, rect.getY() + dy, rect.getWidth(), rect.getHeight());
+	public XRectangle2D apply(XRectangle2D rect) {
+		return new XRectangle2D(rect.getX() + dx, rect.getY() + dy, rect.getWidth(), rect.getHeight());
 	}
 
 	public UTranslate multiplyBy(double v) {
@@ -123,8 +121,8 @@ public class UTranslate implements UChange {
 		return new UTranslate(dy, dx);
 	}
 
-	public Point2D getPosition() {
-		return new Point2D.Double(dx, dy);
+	public XPoint2D getPosition() {
+		return new XPoint2D(dx, dy);
 	}
 
 }

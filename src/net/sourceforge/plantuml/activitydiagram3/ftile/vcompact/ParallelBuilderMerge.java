@@ -35,11 +35,9 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractConnection;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Arrows;
@@ -52,7 +50,8 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileUtils;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileBlackBlock;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamond;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -77,7 +76,7 @@ public class ParallelBuilderMerge extends AbstractParallelFtilesBuilder {
 		final Ftile black = new FtileBlackBlock(skinParam(), list99.get(0).getSwimlaneIn());
 		double x = 0;
 		for (Ftile tmp : list99) {
-			final Dimension2D dim = tmp.calculateDimension(getStringBounder());
+			final XDimension2D dim = tmp.calculateDimension(getStringBounder());
 			Style style = getStyleSignature().getMergedStyle(skinParam().getCurrentStyleBuilder());
 			final Rainbow def = Rainbow.build(style, skinParam().getIHtmlColorSet(), skinParam().getThemeStyle());
 			final Rainbow rainbow = tmp.getInLinkRendering().getRainbow(def);
@@ -108,7 +107,7 @@ public class ParallelBuilderMerge extends AbstractParallelFtilesBuilder {
 
 		double x = 0;
 		for (Ftile tmp : list99) {
-			final Dimension2D dim = tmp.calculateDimension(getStringBounder());
+			final XDimension2D dim = tmp.calculateDimension(getStringBounder());
 			final UTranslate translate0 = new UTranslate(x, barHeight);
 			final Rainbow def = Rainbow.build(style, skinParam().getIHtmlColorSet(), skinParam().getThemeStyle());
 			final Rainbow rainbow = tmp.getOutLinkRendering().getRainbow(def);
@@ -137,8 +136,8 @@ public class ParallelBuilderMerge extends AbstractParallelFtilesBuilder {
 
 		public void drawU(UGraphic ug) {
 			final StringBounder stringBounder = ug.getStringBounder();
-			final Point2D p1 = getP1(stringBounder);
-			final Point2D p2 = getP2(stringBounder, p1.getX());
+			final XPoint2D p1 = getP1(stringBounder);
+			final XPoint2D p2 = getP2(stringBounder, p1.getX());
 			final double x1 = p1.getX();
 			final double y1 = p1.getY();
 			final double x2 = p2.getX();
@@ -161,22 +160,22 @@ public class ParallelBuilderMerge extends AbstractParallelFtilesBuilder {
 			ug.draw(snake);
 		}
 
-		private Point2D getP1(StringBounder stringBounder) {
+		private XPoint2D getP1(StringBounder stringBounder) {
 			return translate0.getTranslated(getFtile1().calculateDimension(stringBounder).getPointOut());
 		}
 
-		private Point2D getP2(StringBounder stringBounder, double startX) {
+		private XPoint2D getP2(StringBounder stringBounder, double startX) {
 			final UTranslate arrival = arrivalOnDiamond(stringBounder, startX);
 			return arrival.getTranslated(getDiamondOut(stringBounder));
 		}
 
-		public Point2D getDiamondOut(StringBounder stringBounder) {
+		public XPoint2D getDiamondOut(StringBounder stringBounder) {
 			return diamondTranslate.getTranslated(getFtile2().calculateDimension(stringBounder).getPointOut());
 		}
 
 		public UTranslate arrivalOnDiamond(StringBounder stringBounder, double startX) {
-			final Point2D result = getDiamondOut(stringBounder);
-			final Dimension2D dim = getFtile2().calculateDimension(stringBounder);
+			final XPoint2D result = getDiamondOut(stringBounder);
+			final XDimension2D dim = getFtile2().calculateDimension(stringBounder);
 			final double a = result.getX() - dim.getWidth() / 2;
 			final double b = result.getX() + dim.getWidth() / 2;
 
@@ -222,15 +221,15 @@ public class ParallelBuilderMerge extends AbstractParallelFtilesBuilder {
 		public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
 			ug = ug.apply(UTranslate.dx(x));
 			final FtileGeometry geo = getFtile2().calculateDimension(getStringBounder());
-			final Point2D p1 = new Point2D.Double(geo.getLeft(), 0);
-			final Point2D p2 = new Point2D.Double(geo.getLeft(), geo.getInY());
+			final XPoint2D p1 = new XPoint2D(geo.getLeft(), 0);
+			final XPoint2D p2 = new XPoint2D(geo.getLeft(), geo.getInY());
 
 			Snake snake = Snake.create(skinParam(), arrowColor, Arrows.asToDown());
 			if (Display.isNull(label) == false)
 				snake = snake.withLabel(getTextBlock(label), arrowHorizontalAlignment());
 
-			final Point2D mp1a = translate1.getTranslated(p1);
-			final Point2D mp2b = translate2.getTranslated(p2);
+			final XPoint2D mp1a = translate1.getTranslated(p1);
+			final XPoint2D mp2b = translate2.getTranslated(p2);
 			final double middle = mp1a.getY() + 4;
 			snake.addPoint(mp1a);
 			snake.addPoint(mp1a.getX(), middle);

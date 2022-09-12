@@ -35,8 +35,7 @@
  */
 package net.sourceforge.plantuml.svek.extremity;
 
-import java.awt.geom.Point2D;
-
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.svek.image.EntityImageLollipopInterfaceEye2;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -44,32 +43,32 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 class ExtremityParenthesis2 extends Extremity {
 
-	private final Point2D contact;
-	private final Point2D center;
+	private final XPoint2D contact;
+	private final XPoint2D center;
 
 	private final double ortho;
 	private final double ang = 30;
 
-	public ExtremityParenthesis2(Point2D contact, double ortho, Point2D p1) {
-		this.contact = new Point2D.Double(contact.getX(), contact.getY());
+	public ExtremityParenthesis2(XPoint2D contact, double ortho, XPoint2D p1) {
+		this.contact = new XPoint2D(contact.getX(), contact.getY());
 		this.ortho = ortho;
 		final double dx = p1.getX() - contact.getX();
 		final double dy = p1.getY() - contact.getY();
 		final double distance1 = Math.round(contact.distance(p1));
 		// System.err.println("distance=" + distance1);
 		final double len = Math.round(distance1 + EntityImageLollipopInterfaceEye2.SIZE / 2);
-		this.center = new Point2D.Double(contact.getX() + dx / distance1 * len, contact.getY() + dy / distance1 * len);
+		this.center = new XPoint2D(contact.getX() + dx / distance1 * len, contact.getY() + dy / distance1 * len);
 	}
 	
 	@Override
-	public Point2D somePoint() {
+	public XPoint2D somePoint() {
 		return contact;
 	}
 
 
 	public void drawU(UGraphic ug) {
 		final double deg = -ortho * 180 / Math.PI + 90 - ang;
-		// final Point2D other = new Point2D.Double(contact.getX() + 10 * Math.cos(deg), contact.getY() + 10
+		// final XPoint2D other = new XPoint2D(contact.getX() + 10 * Math.cos(deg), contact.getY() + 10
 		// * Math.sin(deg));
 		// final ULine line = new ULine(1, 1);
 		// ug.apply(UChangeColor.nnn(HtmlColorUtils.GREEN)).apply(new UTranslate(contact.getX(), contact.getY()))

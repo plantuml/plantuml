@@ -53,11 +53,11 @@ import java.util.Set;
 
 import javax.xml.transform.TransformerException;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.UDrawable;
-import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.svg.DarkStrategy;
 import net.sourceforge.plantuml.svg.LengthAdjust;
 import net.sourceforge.plantuml.svg.SvgGraphics;
@@ -158,7 +158,7 @@ public class FontChecker {
 	}
 
 	private String getSvgImage(char c) throws IOException, TransformerException {
-		final SvgGraphics svg = new SvgGraphics(null, true, new Dimension2DDouble(0, 0), 1.0, null, 42, "none",
+		final SvgGraphics svg = new SvgGraphics(null, true, new XDimension2D(0, 0), 1.0, null, 42, "none",
 				LengthAdjust.defaultValue(), DarkStrategy.IGNORE_DARK_COLOR, false);
 		svg.setStrokeColor("black");
 		svg.svgImage(getBufferedImage(c), 0, 0);

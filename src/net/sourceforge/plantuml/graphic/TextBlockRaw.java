@@ -38,8 +38,7 @@ package net.sourceforge.plantuml.graphic;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
@@ -68,19 +67,19 @@ public class TextBlockRaw extends AbstractTextBlock implements TextBlock {
 		return lines2;
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		return getTextDimension(stringBounder);
 	}
 
-	protected final Dimension2D getTextDimension(StringBounder stringBounder) {
+	protected final XDimension2D getTextDimension(StringBounder stringBounder) {
 		double width = 0;
 		double height = 0;
 		for (Line line : getLines(stringBounder)) {
-			final Dimension2D size2D = line.calculateDimension(stringBounder);
+			final XDimension2D size2D = line.calculateDimension(stringBounder);
 			height += size2D.getHeight();
 			width = Math.max(width, size2D.getWidth());
 		}
-		return new Dimension2DDouble(width, height);
+		return new XDimension2D(width, height);
 	}
 
 	public void drawU(UGraphic ug) {

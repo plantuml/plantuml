@@ -11,23 +11,19 @@ public class PathIterator {
 	public static final int SEG_CLOSE = java.awt.geom.PathIterator.SEG_CLOSE;
 
 	public boolean isDone() {
-		// TODO Auto-generated method stub
-		return false;
+		throw new UnsupportedOperationException();
 	}
 
 	public void next() {
-		// TODO Auto-generated method stub
-		
+		throw new UnsupportedOperationException();
 	}
 
 	public int getWindingRule() {
-		// TODO Auto-generated method stub
-		return 0;
+		throw new UnsupportedOperationException();
 	}
 
 	public int currentSegment(double[] coord) {
-		// TODO Auto-generated method stub
-		return 0;
+		throw new UnsupportedOperationException();
 	}
 
 }

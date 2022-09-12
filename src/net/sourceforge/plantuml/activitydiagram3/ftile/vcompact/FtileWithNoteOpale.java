@@ -35,14 +35,12 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 
-import java.awt.geom.Point2D;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.plantuml.AlignmentParam;
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineBreakStrategy;
@@ -51,7 +49,8 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.creole.Parser;
 import net.sourceforge.plantuml.creole.Sheet;
@@ -155,9 +154,9 @@ public class FtileWithNoteOpale extends AbstractFtile implements Stencil, Stylea
 	}
 
 	private UTranslate getTranslate(StringBounder stringBounder) {
-		final Dimension2D dimTotal = calculateDimensionInternal(stringBounder);
-		final Dimension2D dimNote = opale.calculateDimension(stringBounder);
-		final Dimension2D dimTile = tile.calculateDimension(stringBounder);
+		final XDimension2D dimTotal = calculateDimensionInternal(stringBounder);
+		final XDimension2D dimNote = opale.calculateDimension(stringBounder);
+		final XDimension2D dimTile = tile.calculateDimension(stringBounder);
 		final double yForFtile = (dimTotal.getHeight() - dimTile.getHeight()) / 2;
 		final double marge;
 		if (notePosition == NotePosition.LEFT)
@@ -178,8 +177,8 @@ public class FtileWithNoteOpale extends AbstractFtile implements Stencil, Stylea
 
 	private UTranslate getTranslateForOpale(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
-		final Dimension2D dimTotal = calculateDimension(stringBounder);
-		final Dimension2D dimNote = opale.calculateDimension(stringBounder);
+		final XDimension2D dimTotal = calculateDimension(stringBounder);
+		final XDimension2D dimNote = opale.calculateDimension(stringBounder);
 
 		final double yForNote;
 		if (verticalAlignment == VerticalAlignment.CENTER)
@@ -202,17 +201,17 @@ public class FtileWithNoteOpale extends AbstractFtile implements Stencil, Stylea
 			intoSw = null;
 
 		final StringBounder stringBounder = ug.getStringBounder();
-		final Dimension2D dimNote = opale.calculateDimension(stringBounder);
+		final XDimension2D dimNote = opale.calculateDimension(stringBounder);
 
 		if (notePosition == NotePosition.LEFT) {
 			final Direction strategy = Direction.RIGHT;
-			final Point2D pp1 = new Point2D.Double(dimNote.getWidth(), dimNote.getHeight() / 2);
-			final Point2D pp2 = new Point2D.Double(dimNote.getWidth() + suppSpace, dimNote.getHeight() / 2);
+			final XPoint2D pp1 = new XPoint2D(dimNote.getWidth(), dimNote.getHeight() / 2);
+			final XPoint2D pp2 = new XPoint2D(dimNote.getWidth() + suppSpace, dimNote.getHeight() / 2);
 			opale.setOpale(strategy, pp1, pp2);
 		} else {
 			final Direction strategy = Direction.LEFT;
-			final Point2D pp1 = new Point2D.Double(0, dimNote.getHeight() / 2);
-			final Point2D pp2 = new Point2D.Double(-suppSpace, dimNote.getHeight() / 2);
+			final XPoint2D pp1 = new XPoint2D(0, dimNote.getHeight() / 2);
+			final XPoint2D pp2 = new XPoint2D(-suppSpace, dimNote.getHeight() / 2);
 			opale.setOpale(strategy, pp1, pp2);
 		}
 
@@ -224,7 +223,7 @@ public class FtileWithNoteOpale extends AbstractFtile implements Stencil, Stylea
 
 	@Override
 	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
-		final Dimension2D dimTotal = calculateDimensionInternal(stringBounder);
+		final XDimension2D dimTotal = calculateDimensionInternal(stringBounder);
 		final FtileGeometry orig = tile.calculateDimension(stringBounder);
 		final UTranslate translate = getTranslate(stringBounder);
 		if (orig.hasPointOut())
@@ -234,11 +233,11 @@ public class FtileWithNoteOpale extends AbstractFtile implements Stencil, Stylea
 		return new FtileGeometry(dimTotal, orig.getLeft() + translate.getDx(), orig.getInY() + translate.getDy());
 	}
 
-	private Dimension2D calculateDimensionInternal(StringBounder stringBounder) {
-		final Dimension2D dimNote = opale.calculateDimension(stringBounder);
-		final Dimension2D dimTile = tile.calculateDimension(stringBounder);
+	private XDimension2D calculateDimensionInternal(StringBounder stringBounder) {
+		final XDimension2D dimNote = opale.calculateDimension(stringBounder);
+		final XDimension2D dimTile = tile.calculateDimension(stringBounder);
 		final double height = Math.max(dimNote.getHeight(), dimTile.getHeight());
-		return new Dimension2DDouble(dimTile.getWidth() + 1 * dimNote.getWidth() + suppSpace, height);
+		return new XDimension2D(dimTile.getWidth() + 1 * dimNote.getWidth() + suppSpace, height);
 	}
 
 	public double getStartingX(StringBounder stringBounder, double y) {

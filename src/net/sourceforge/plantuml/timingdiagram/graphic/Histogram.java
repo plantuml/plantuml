@@ -34,16 +34,15 @@
  */
 package net.sourceforge.plantuml.timingdiagram.graphic;
 
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -104,13 +103,13 @@ public class Histogram implements PDrawing {
 		final double heightForConstraints = getHeightForConstraints(stringBounder);
 		if (states.size() == 1) {
 			final double y = yOfState(states.get(0)) + heightForConstraints;
-			return new IntricatedPoint(new Point2D.Double(x, y), new Point2D.Double(x, y));
+			return new IntricatedPoint(new XPoint2D(x, y), new XPoint2D(x, y));
 		}
 		assert states.size() == 2;
 		final double y1 = yOfState(states.get(0)) + heightForConstraints;
 		final double y2 = yOfState(states.get(1)) + heightForConstraints;
 		assert y1 != y2;
-		return new IntricatedPoint(new Point2D.Double(x, y1), new Point2D.Double(x, y2));
+		return new IntricatedPoint(new XPoint2D(x, y1), new XPoint2D(x, y2));
 	}
 
 	private List<String> getStatesAt(TimeTick tick) {
@@ -156,15 +155,15 @@ public class Histogram implements PDrawing {
 
 	}
 
-	private Point2D[] getPoints(int n) {
+	private XPoint2D[] getPoints(int n) {
 		final ChangeState change = changes.get(n);
 		final double x = ruler.getPosInPixel(change.getWhen());
 		final List<String> states = change.getStates();
 		if (states.size() == 2)
-			return new Point2D[] { new Point2D.Double(x, yOfState(states.get(0))),
-					new Point2D.Double(x, yOfState(states.get(1))) };
+			return new XPoint2D[] { new XPoint2D(x, yOfState(states.get(0))),
+					new XPoint2D(x, yOfState(states.get(1))) };
 
-		return new Point2D[] { new Point2D.Double(x, yOfState(states.get(0))) };
+		return new XPoint2D[] { new XPoint2D(x, yOfState(states.get(0))) };
 	}
 
 	private double getPointx(int n) {
@@ -211,7 +210,7 @@ public class Histogram implements PDrawing {
 				drawPart1(ug, fullAvailableWidth);
 			}
 
-			public Dimension2D calculateDimension(StringBounder stringBounder) {
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
 				return calculateDimensionPart1(stringBounder);
 			}
 		};
@@ -225,11 +224,11 @@ public class Histogram implements PDrawing {
 		};
 	}
 
-	private Dimension2D calculateDimensionPart1(StringBounder stringBounder) {
+	private XDimension2D calculateDimensionPart1(StringBounder stringBounder) {
 		double width = 0;
 		for (String state : allStates) {
 			final TextBlock label = getTextBlock(state);
-			final Dimension2D dim = label.calculateDimension(stringBounder);
+			final XDimension2D dim = label.calculateDimension(stringBounder);
 			width = Math.max(width, dim.getWidth());
 		}
 		if (initialState != null)
@@ -238,7 +237,7 @@ public class Histogram implements PDrawing {
 		if (compact)
 			width += title.calculateDimension(stringBounder).getWidth() + 15;
 
-		return new Dimension2DDouble(width, getFullHeight(stringBounder));
+		return new XDimension2D(width, getFullHeight(stringBounder));
 	}
 
 	private void drawPart1(UGraphic ug, double fullAvailableWidth) {
@@ -260,7 +259,7 @@ public class Histogram implements PDrawing {
 			ug = ug.apply(UTranslate.dx(fullAvailableWidth - width));
 		for (String state : allStates) {
 			final TextBlock label = getTextBlock(state);
-			final Dimension2D dim = label.calculateDimension(stringBounder);
+			final XDimension2D dim = label.calculateDimension(stringBounder);
 			label.drawU(ug.apply(UTranslate.dy(yOfState(state) - dim.getHeight() / 2 + 1)));
 		}
 	}
@@ -269,7 +268,7 @@ public class Histogram implements PDrawing {
 		double result = 0;
 		for (String state : allStates) {
 			final TextBlock label = getTextBlock(state);
-			final Dimension2D dim = label.calculateDimension(stringBounder);
+			final XDimension2D dim = label.calculateDimension(stringBounder);
 			result = Math.max(result, dim.getWidth());
 		}
 		return result;
@@ -289,7 +288,7 @@ public class Histogram implements PDrawing {
 
 	private void drawHlines(UGraphic ug) {
 		if (initialState != null)
-			for (Point2D pt : getPoints(0))
+			for (XPoint2D pt : getPoints(0))
 				drawHLine(ug, getInitialPoint(), getInitialWidth() + pt.getX());
 
 		for (int i = 0; i < changes.size(); i++) {
@@ -298,28 +297,28 @@ public class Histogram implements PDrawing {
 
 			final double x2 = i < changes.size() - 1 ? getPointx(i + 1) : ruler.getWidth();
 			final double len = x2 - getPointx(i);
-			final Point2D[] points = getPoints(i);
+			final XPoint2D[] points = getPoints(i);
 			if (points.length == 2)
 				drawHBlock(ug.apply(changes.get(i).getBackColor(skinParam, style).bg()), points[0], points[1], len);
 
 			if (i < changes.size() - 1)
-				for (Point2D pt : points)
+				for (XPoint2D pt : points)
 					drawHLine(ug, pt, len);
 
 		}
 
 		if (changes.get(changes.size() - 1).isCompletelyHidden() == false) {
-			for (Point2D pt : getPoints(changes.size() - 1)) {
+			for (XPoint2D pt : getPoints(changes.size() - 1)) {
 				final double len = ruler.getWidth() - pt.getX();
 				drawHLine(ug, pt, len);
 			}
 		}
 	}
 
-	private void drawHBlock(UGraphic ug, Point2D pt1, Point2D pt2, double len) {
+	private void drawHBlock(UGraphic ug, XPoint2D pt1, XPoint2D pt2, double len) {
 		final double minY = Math.min(pt1.getY(), pt2.getY());
 		final double maxY = Math.max(pt1.getY(), pt2.getY());
-		final Point2D pt = new Point2D.Double(pt1.getX(), minY);
+		final XPoint2D pt = new XPoint2D(pt1.getX(), minY);
 		ug = ug.apply(new UTranslate(pt));
 		ug.draw(new URectangle(len, maxY - minY));
 		for (double x = 0; x < len; x += 5)
@@ -327,14 +326,14 @@ public class Histogram implements PDrawing {
 
 	}
 
-	private void drawHLine(UGraphic ug, final Point2D pt, final double len) {
+	private void drawHLine(UGraphic ug, final XPoint2D pt, final double len) {
 		ug.apply(new UTranslate(pt)).draw(ULine.hline(len));
 	}
 
 	private void drawVlines(UGraphic ug) {
 		if (initialState != null) {
-			final Point2D before = getInitialPoint();
-			final Point2D current = getPoints(0)[0];
+			final XPoint2D before = getInitialPoint();
+			final XPoint2D current = getPoints(0)[0];
 			ug.apply(new UTranslate(current)).draw(ULine.vline(before.getY() - current.getY()));
 		}
 		for (int i = 1; i < changes.size(); i++) {
@@ -349,13 +348,13 @@ public class Histogram implements PDrawing {
 
 	private void drawLabels(UGraphic ug) {
 		for (int i = 0; i < changes.size(); i++) {
-			final Point2D ptLabel = getPoints(i)[0];
+			final XPoint2D ptLabel = getPoints(i)[0];
 			final String comment = changes.get(i).getComment();
 			if (comment == null)
 				continue;
 
 			final TextBlock label = getTextBlock(comment);
-			final Dimension2D dim = label.calculateDimension(ug.getStringBounder());
+			final XDimension2D dim = label.calculateDimension(ug.getStringBounder());
 			label.drawU(ug.apply(new UTranslate(ptLabel).compose(new UTranslate(2, -dim.getHeight()))));
 		}
 	}
@@ -371,8 +370,8 @@ public class Histogram implements PDrawing {
 		}
 	}
 
-	private Point2D.Double getInitialPoint() {
-		return new Point2D.Double(-getInitialWidth(), yOfState(initialState));
+	private XPoint2D getInitialPoint() {
+		return new XPoint2D(-getInitialWidth(), yOfState(initialState));
 	}
 
 	private double getHeightForConstraints(StringBounder stringBounder) {

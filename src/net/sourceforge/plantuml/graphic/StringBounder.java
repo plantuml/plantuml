@@ -35,12 +35,12 @@
  */
 package net.sourceforge.plantuml.graphic;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.ugraphic.UFont;
 
 public interface StringBounder {
 
-	public Dimension2D calculateDimension(UFont font, String text);
+	public XDimension2D calculateDimension(UFont font, String text);
 
 	public double getDescent(UFont font, String text);
 

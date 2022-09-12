@@ -55,7 +55,6 @@ import net.sourceforge.plantuml.AnnotatedWorker;
 import net.sourceforge.plantuml.CMapData;
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.CornerParam;
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.EmptyImageBuilder;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
@@ -72,7 +71,7 @@ import net.sourceforge.plantuml.anim.AffineTransformation;
 import net.sourceforge.plantuml.anim.Animation;
 import net.sourceforge.plantuml.api.ImageDataComplex;
 import net.sourceforge.plantuml.api.ImageDataSimple;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.braille.UGraphicBraille;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.eps.EpsStrategy;
@@ -113,7 +112,7 @@ public class ImageBuilder {
 	private boolean annotations;
 	private HColor backcolor = getDefaultHBackColor();
 	private ColorMapper colorMapper = new ColorMapperIdentity();
-	private Dimension2D dimension;
+	private XDimension2D dimension;
 	private final FileFormatOption fileFormatOption;
 	private UDrawable udrawable;
 	private ClockwiseTopRightBottomLeft margin = ClockwiseTopRightBottomLeft.none();
@@ -157,7 +156,7 @@ public class ImageBuilder {
 		return backcolor(HColors.BLACK);
 	}
 
-	public ImageBuilder dimension(Dimension2D dimension) {
+	public ImageBuilder dimension(XDimension2D dimension) {
 		this.dimension = dimension;
 		return this;
 	}
@@ -256,7 +255,7 @@ public class ImageBuilder {
 
 	private ImageData writeImageInternal(FileFormatOption fileFormatOption, OutputStream os, Animation animationArg)
 			throws IOException {
-		Dimension2D dim = getFinalDimension();
+		XDimension2D dim = getFinalDimension();
 		double dx = 0;
 		double dy = 0;
 		if (animationArg != null) {
@@ -294,7 +293,7 @@ public class ImageBuilder {
 		return createImageData(dim);
 	}
 
-	private void maybeDrawBorder(UGraphic ug, Dimension2D dim) {
+	private void maybeDrawBorder(UGraphic ug, XDimension2D dim) {
 		if (skinParam == null)
 			return;
 
@@ -323,11 +322,11 @@ public class ImageBuilder {
 		ug2.apply(color).apply(color.bg()).draw(new URectangle(1, 1));
 	}
 
-	private Dimension2D getFinalDimension() {
+	private XDimension2D getFinalDimension() {
 		if (dimension == null) {
 			final LimitFinder limitFinder = LimitFinder.create(stringBounder, true);
 			udrawable.drawU(limitFinder);
-			dimension = new Dimension2DDouble(limitFinder.getMaxX() + 1 + margin.getLeft() + margin.getRight(),
+			dimension = new XDimension2D(limitFinder.getMaxX() + 1 + margin.getLeft() + margin.getRight(),
 					limitFinder.getMaxY() + 1 + margin.getTop() + margin.getBottom());
 		}
 		return dimension;
@@ -346,7 +345,7 @@ public class ImageBuilder {
 
 	private ImageData writeImageMjpeg(OutputStream os) throws IOException {
 
-		final Dimension2D dim = getFinalDimension();
+		final XDimension2D dim = getFinalDimension();
 
 		final SFile f = new SFile("c:/tmp.avi");
 
@@ -373,7 +372,7 @@ public class ImageBuilder {
 
 	private ImageData writeImageAnimatedGif(OutputStream os) throws IOException {
 
-		final Dimension2D dim = getFinalDimension();
+		final XDimension2D dim = getFinalDimension();
 
 		final MinMax minmax = animation.getMinMax(dim);
 
@@ -401,7 +400,7 @@ public class ImageBuilder {
 		return SImageIO.read(baos.toByteArray());
 	}
 
-	private UGraphic createUGraphic(FileFormatOption option, final Dimension2D dim, Animation animationArg, double dx,
+	private UGraphic createUGraphic(FileFormatOption option, final XDimension2D dim, Animation animationArg, double dx,
 			double dy, double scaleFactor, Pragma pragma) {
 		switch (option.getFileFormat()) {
 		case PNG:
@@ -434,7 +433,7 @@ public class ImageBuilder {
 		}
 	}
 
-	private UGraphic createUGraphicSVG(double scaleFactor, Dimension2D dim, boolean interactive) {
+	private UGraphic createUGraphicSVG(double scaleFactor, XDimension2D dim, boolean interactive) {
 		final String hoverPathColorRGB = getHoverPathColorRGB();
 		final LengthAdjust lengthAdjust = skinParam == null ? LengthAdjust.defaultValue() : skinParam.getlengthAdjust();
 		final String preserveAspectRatio = getPreserveAspectRatio();
@@ -446,7 +445,7 @@ public class ImageBuilder {
 
 	}
 
-	private UGraphic createUGraphicPNG(double scaleFactor, final Dimension2D dim, Animation affineTransforms, double dx,
+	private UGraphic createUGraphicPNG(double scaleFactor, final XDimension2D dim, Animation affineTransforms, double dx,
 			double dy, String watermark) {
 		Color backColor = getDefaultBackColor();
 
@@ -513,7 +512,7 @@ public class ImageBuilder {
 
 	}
 
-	private ImageDataSimple createImageData(Dimension2D dim) {
+	private ImageDataSimple createImageData(XDimension2D dim) {
 		return new ImageDataSimple(dim, status);
 	}
 

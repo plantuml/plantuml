@@ -34,13 +34,12 @@
  */
 package net.sourceforge.plantuml.timingdiagram.graphic;
 
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
@@ -96,10 +95,10 @@ public class Ribbon implements PDrawing {
 				+ getHeightForTopComment(stringBounder) + getRibbonHeight() / 2;
 		for (ChangeState change : changes)
 			if (change.getWhen().compareTo(tick) == 0)
-				return new IntricatedPoint(new Point2D.Double(x, y), new Point2D.Double(x, y));
+				return new IntricatedPoint(new XPoint2D(x, y), new XPoint2D(x, y));
 
-		return new IntricatedPoint(new Point2D.Double(x, y - getRibbonHeight() / 2),
-				new Point2D.Double(x, y + getRibbonHeight() / 2));
+		return new IntricatedPoint(new XPoint2D(x, y - getRibbonHeight() / 2),
+				new XPoint2D(x, y + getRibbonHeight() / 2));
 	}
 
 	public void addChange(ChangeState change) {
@@ -130,12 +129,12 @@ public class Ribbon implements PDrawing {
 				}
 			}
 
-			public Dimension2D calculateDimension(StringBounder stringBounder) {
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
 				double width = getInitialWidth(stringBounder);
 				if (compact)
 					width += title.calculateDimension(stringBounder).getWidth() + 10;
 
-				return new Dimension2DDouble(width, getRibbonHeight());
+				return new XDimension2D(width, getRibbonHeight());
 			}
 		};
 	}
@@ -260,7 +259,7 @@ public class Ribbon implements PDrawing {
 		final StringBounder stringBounder = ug.getStringBounder();
 		if (initialState != null) {
 			final TextBlock initial = createTextBlock(initialState);
-			final Dimension2D dimInital = initial.calculateDimension(stringBounder);
+			final XDimension2D dimInital = initial.calculateDimension(stringBounder);
 			initial.drawU(ug.apply(new UTranslate(-getMarginX() - dimInital.getWidth(), -dimInital.getHeight() / 2)));
 		}
 	}
@@ -292,7 +291,7 @@ public class Ribbon implements PDrawing {
 			final double x = ruler.getPosInPixel(change.getWhen());
 			if (change.isBlank() == false && change.isCompletelyHidden() == false && change.isFlat() == false) {
 				final TextBlock state = createTextBlock(change.getState());
-				final Dimension2D dim = state.calculateDimension(stringBounder);
+				final XDimension2D dim = state.calculateDimension(stringBounder);
 				final double xtext;
 				if (i == changes.size() - 1) {
 					xtext = x + getMarginX();
@@ -303,7 +302,7 @@ public class Ribbon implements PDrawing {
 				state.drawU(ug.apply(new UTranslate(xtext, -dim.getHeight() / 2)));
 			}
 			final TextBlock commentTopBlock = getCommentTopBlock(change);
-			final Dimension2D dimComment = commentTopBlock.calculateDimension(stringBounder);
+			final XDimension2D dimComment = commentTopBlock.calculateDimension(stringBounder);
 			commentTopBlock
 					.drawU(ug.apply(new UTranslate(x + getMarginX(), -getRibbonHeight() / 2 - dimComment.getHeight())));
 		}

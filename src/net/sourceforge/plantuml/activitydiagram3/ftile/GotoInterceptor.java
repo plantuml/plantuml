@@ -35,9 +35,8 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.UGraphicInterceptorGoto;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -56,7 +55,7 @@ public class GotoInterceptor extends AbstractTextBlock implements TextBlock {
 
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		return swinlanes.calculateDimension(stringBounder);
 	}
 

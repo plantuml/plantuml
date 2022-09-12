@@ -36,11 +36,11 @@
 package net.sourceforge.plantuml.braille;
 
 import java.awt.geom.CubicCurve2D;
-import java.awt.geom.Point2D;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.posimo.DotPath;
 
 public class BrailleGrid {
@@ -148,8 +148,8 @@ public class BrailleGrid {
 	}
 
 	private void drawCubic(double x, double y, CubicCurve2D.Double bez) {
-		drawPointInternal(x, y, bez.getP1());
-		drawPointInternal(x, y, bez.getP2());
+		drawPointInternal(x, y, new XPoint2D(bez.getP1()));
+		drawPointInternal(x, y, new XPoint2D(bez.getP2()));
 		if (bez.getP1().distance(bez.getP2()) > quanta) {
 			final CubicCurve2D.Double part1 = new CubicCurve2D.Double();
 			final CubicCurve2D.Double part2 = new CubicCurve2D.Double();
@@ -159,11 +159,11 @@ public class BrailleGrid {
 		}
 	}
 
-	private void drawPointInternal(double x, double y, Point2D pt) {
+	private void drawPointInternal(double x, double y, XPoint2D pt) {
 		setStateDouble(x + pt.getX(), y + pt.getY(), true);
 	}
 
-	public void drawPolygon(List<Point2D> points) {
+	public void drawPolygon(List<XPoint2D> points) {
 		for (int i = 0; i < points.size() - 1; i++) {
 			drawLineInternal(points.get(i), points.get(i + 1));
 		}
@@ -171,11 +171,11 @@ public class BrailleGrid {
 
 	}
 
-	private void drawLineInternal(Point2D a, Point2D b) {
+	private void drawLineInternal(XPoint2D a, XPoint2D b) {
 		drawPointInternal(0, 0, a);
 		drawPointInternal(0, 0, b);
 		if (a.distance(b) > quanta) {
-			final Point2D middle = new Point2D.Double((a.getX() + b.getX()) / 2, (a.getY() + b.getY()) / 2);
+			final XPoint2D middle = new XPoint2D((a.getX() + b.getX()) / 2, (a.getY() + b.getY()) / 2);
 			drawLineInternal(a, middle);
 			drawLineInternal(middle, b);
 

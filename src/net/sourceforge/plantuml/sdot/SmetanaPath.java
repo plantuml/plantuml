@@ -35,8 +35,6 @@
  */
 package net.sourceforge.plantuml.sdot;
 
-import java.awt.geom.Point2D;
-
 import h.ST_Agedge_s;
 import h.ST_Agedgeinfo_t;
 import h.ST_bezier;
@@ -44,6 +42,7 @@ import h.ST_pointf;
 import h.ST_splines;
 import h.ST_textlabel_t;
 import net.sourceforge.plantuml.LineParam;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
@@ -139,7 +138,7 @@ public class SmetanaPath implements UDrawable {
 
 		final ST_splines splines = getSplines(edge);
 		DotPath s = getDotPath(splines);
-		Point2D p0 = s.getStartPoint();
+		XPoint2D p0 = s.getStartPoint();
 		double startAngle = s.getStartAngle();
 		if (ymirror != null) {
 			p0 = ymirror.getMirrored(p0);
@@ -163,7 +162,7 @@ public class SmetanaPath implements UDrawable {
 
 		final ST_splines splines = getSplines(edge);
 		DotPath s = getDotPath(splines);
-		Point2D p0 = s.getEndPoint();
+		XPoint2D p0 = s.getEndPoint();
 		double endAngle = s.getEndAngle();
 		if (ymirror != null) {
 			p0 = ymirror.getMirrored(p0);
@@ -184,7 +183,7 @@ public class SmetanaPath implements UDrawable {
 		final ST_splines splines = getSplines(edge);
 		final ST_bezier beziers = splines.list.get__(0);
 		for (int i = 0; i < beziers.size; i++) {
-			Point2D pt = getPoint(splines, i);
+			XPoint2D pt = getPoint(splines, i);
 			if (ymirror != null)
 				pt = ymirror.getMirrored(pt);
 
@@ -259,25 +258,25 @@ public class SmetanaPath implements UDrawable {
 		}
 		DotPath result = new DotPath();
 		final ST_bezier beziers = (ST_bezier) splines.list.get__(0);
-		final Point2D pt1 = getPoint(splines, 0);
-		final Point2D pt2 = getPoint(splines, 1);
-		final Point2D pt3 = getPoint(splines, 2);
-		final Point2D pt4 = getPoint(splines, 3);
+		final XPoint2D pt1 = getPoint(splines, 0);
+		final XPoint2D pt2 = getPoint(splines, 1);
+		final XPoint2D pt3 = getPoint(splines, 2);
+		final XPoint2D pt4 = getPoint(splines, 3);
 		result = result.addCurve(pt1, pt2, pt3, pt4);
 		final int n = beziers.size;
 		for (int i = 4; i < n; i += 3) {
-			final Point2D ppt2 = getPoint(splines, i);
-			final Point2D ppt3 = getPoint(splines, i + 1);
-			final Point2D ppt4 = getPoint(splines, i + 2);
+			final XPoint2D ppt2 = getPoint(splines, i);
+			final XPoint2D ppt3 = getPoint(splines, i + 1);
+			final XPoint2D ppt4 = getPoint(splines, i + 2);
 			result = result.addCurve(ppt2, ppt3, ppt4);
 		}
 		return result;
 	}
 
-	private Point2D getPoint(ST_splines splines, int i) {
+	private XPoint2D getPoint(ST_splines splines, int i) {
 		final ST_bezier beziers = (ST_bezier) splines.list.get__(0);
 		final ST_pointf pt = beziers.list.get__(i);
-		return new Point2D.Double(pt.x, pt.y);
+		return new XPoint2D(pt.x, pt.y);
 	}
 
 }

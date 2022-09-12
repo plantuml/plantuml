@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond;
 
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,6 +47,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileUtils;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -73,8 +73,8 @@ public class FtileSwitchWithOneLink extends FtileSwitchWithDiamonds {
 
 		public void drawU(UGraphic ug) {
 			final StringBounder stringBounder = ug.getStringBounder();
-			final Point2D p1 = getP1(stringBounder);
-			final Point2D p2 = getP2(stringBounder);
+			final XPoint2D p1 = getP1(stringBounder);
+			final XPoint2D p2 = getP2(stringBounder);
 			final double x1 = p1.getX();
 			final double y1 = p1.getY();
 			final double x2 = p2.getX();
@@ -89,12 +89,12 @@ public class FtileSwitchWithOneLink extends FtileSwitchWithDiamonds {
 			ug.draw(snake);
 		}
 
-		private Point2D getP1(StringBounder stringBounder) {
+		private XPoint2D getP1(StringBounder stringBounder) {
 			final FtileGeometry dimDiamond1 = diamond1.calculateDimension(stringBounder);
 			return getTranslateDiamond1(stringBounder).getTranslated(dimDiamond1.getPointC());
 		}
 
-		private Point2D getP2(final StringBounder stringBounder) {
+		private XPoint2D getP2(final StringBounder stringBounder) {
 			return getTranslateOf(getFtile2(), stringBounder)
 					.getTranslated(getFtile2().calculateDimension(stringBounder).getPointIn());
 		}
@@ -108,8 +108,8 @@ public class FtileSwitchWithOneLink extends FtileSwitchWithDiamonds {
 
 		public void drawU(UGraphic ug) {
 			final StringBounder stringBounder = ug.getStringBounder();
-			final Point2D p1 = getP1(stringBounder);
-			final Point2D p2 = getP2(stringBounder);
+			final XPoint2D p1 = getP1(stringBounder);
+			final XPoint2D p2 = getP2(stringBounder);
 			final double x1 = p1.getX();
 			final double y1 = p1.getY();
 			final double x2 = p2.getX();
@@ -123,12 +123,12 @@ public class FtileSwitchWithOneLink extends FtileSwitchWithDiamonds {
 			ug.draw(snake);
 		}
 
-		private Point2D getP1(StringBounder stringBounder) {
+		private XPoint2D getP1(StringBounder stringBounder) {
 			return getTranslateOf(getFtile1(), stringBounder)
 					.getTranslated(getFtile1().calculateDimension(stringBounder).getPointOut());
 		}
 
-		private Point2D getP2(StringBounder stringBounder) {
+		private XPoint2D getP2(StringBounder stringBounder) {
 			final FtileGeometry dimDiamond2 = diamond2.calculateDimension(stringBounder);
 			return getTranslateDiamond2(stringBounder).getTranslated(dimDiamond2.getPointA());
 		}

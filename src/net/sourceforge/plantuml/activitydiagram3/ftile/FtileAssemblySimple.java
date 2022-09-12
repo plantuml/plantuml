@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -48,6 +47,7 @@ import java.util.Set;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -138,7 +138,7 @@ public class FtileAssemblySimple extends AbstractTextBlock implements Ftile {
 	}
 
 	private UTranslate getTranslated2(StringBounder stringBounder) {
-		final Dimension2D dim1 = tile1.calculateDimension(stringBounder);
+		final XDimension2D dim1 = tile1.calculateDimension(stringBounder);
 		final double left = calculateDimension(stringBounder).getLeft();
 		return new UTranslate(left - tile2.calculateDimension(stringBounder).getLeft(), dim1.getHeight());
 	}

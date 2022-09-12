@@ -35,8 +35,6 @@
  */
 package net.sourceforge.plantuml.golem;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -44,7 +42,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -240,7 +239,7 @@ public class TilesField extends AbstractTextBlock implements TextBlock {
 		double y = 0;
 		final int xmin = getXmin();
 		final int ymin = getYmin();
-		final Dimension2D dimSingle = root.calculateDimension(ug.getStringBounder());
+		final XDimension2D dimSingle = root.calculateDimension(ug.getStringBounder());
 		x -= xmin * dimSingle.getWidth() / 2;
 		y -= ymin * dimSingle.getHeight() / 2;
 		for (Map.Entry<Tile, Position> ent : positions.entrySet()) {
@@ -254,14 +253,14 @@ public class TilesField extends AbstractTextBlock implements TextBlock {
 		for (Path p : paths) {
 			final TileArea start = p.getStart();
 			final TileArea dest = p.getDest();
-			final Point2D pstart = getPoint2D(dimSingle, start);
-			final Point2D pdest = getPoint2D(dimSingle, dest);
+			final XPoint2D pstart = getPoint2D(dimSingle, start);
+			final XPoint2D pdest = getPoint2D(dimSingle, dest);
 			ug.apply(new UTranslate(x + pstart.getX(), y + pstart.getY())).draw(new ULine(pdest.getX() - pstart.getX(), pdest.getY()
 			- pstart.getY()));
 		}
 	}
 
-	private Point2D getPoint2D(Dimension2D dimSingle, TileArea area) {
+	private XPoint2D getPoint2D(XDimension2D dimSingle, TileArea area) {
 		final Position p = getPosition(area.getTile());
 		double xt = p.getXmin() * dimSingle.getWidth() / 2;
 		double yt = p.getYmin() * dimSingle.getHeight() / 2;
@@ -284,18 +283,18 @@ public class TilesField extends AbstractTextBlock implements TextBlock {
 		default:
 			throw new IllegalStateException();
 		}
-		return new Point2D.Double(xt, yt);
+		return new XPoint2D(xt, yt);
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		final int xmin = getXmin();
 		final int xmax = getXmax();
 		final int ymin = getYmin();
 		final int ymax = getYmax();
 		final int width = (xmax - xmin) / 2 + 1;
 		final int height = (ymax - ymin) / 2 + 1;
-		final Dimension2D dimSingle = root.calculateDimension(stringBounder);
-		return new Dimension2DDouble(width * dimSingle.getWidth(), height * dimSingle.getHeight());
+		final XDimension2D dimSingle = root.calculateDimension(stringBounder);
+		return new XDimension2D(width * dimSingle.getWidth(), height * dimSingle.getHeight());
 	}
 
 }

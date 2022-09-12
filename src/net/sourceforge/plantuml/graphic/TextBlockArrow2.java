@@ -35,11 +35,10 @@
  */
 package net.sourceforge.plantuml.graphic;
 
-import java.awt.geom.Point2D;
 import java.util.Objects;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.svek.GuideLine;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
@@ -76,13 +75,13 @@ public class TextBlockArrow2 extends AbstractTextBlock implements TextBlock {
 		ug.draw(triangle);
 	}
 
-	private Point2D getPoint(double len, double alpha) {
+	private XPoint2D getPoint(double len, double alpha) {
 		final double dx = len * Math.sin(alpha);
 		final double dy = len * Math.cos(alpha);
-		return new Point2D.Double(dx, dy);
+		return new XPoint2D(dx, dy);
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		return new Dimension2DDouble(size, size);
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		return new XDimension2D(size, size);
 	}
 }

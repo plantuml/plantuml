@@ -35,9 +35,8 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -66,10 +65,10 @@ public class EntityImageNoteLink extends AbstractTextBlock implements IEntityIma
 				skinParam, note, colors);
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		final double height = comp.getPreferredHeight(stringBounder);
 		final double width = comp.getPreferredWidth(stringBounder);
-		return new Dimension2DDouble(width, height);
+		return new XDimension2D(width, height);
 	}
 
 	public void drawU(UGraphic ug) {

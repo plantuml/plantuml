@@ -35,10 +35,8 @@
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FontParam;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -48,20 +46,20 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 public class TeozLayer extends AbstractTextBlock implements TextBlock {
 
 	private final PngTitler titler;
-	private Dimension2D dimension;
+	private XDimension2D dimension;
 	private final FontParam param;
 
 	public TeozLayer(PngTitler titler, StringBounder stringBounder, FontParam param) {
 		this.titler = titler;
 		this.param = param;
 
-		dimension = new Dimension2DDouble(0, 0);
+		dimension = new XDimension2D(0, 0);
 		if (titler != null && titler.getRibbonBlock() != null) {
 			dimension = titler.getRibbonBlock().calculateDimension(stringBounder);
 		}
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		return dimension;
 	}
 

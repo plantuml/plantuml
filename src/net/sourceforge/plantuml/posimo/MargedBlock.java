@@ -35,9 +35,8 @@
  */
 package net.sourceforge.plantuml.posimo;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-import java.awt.geom.Point2D;
-
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 
 public class MargedBlock {
@@ -45,7 +44,7 @@ public class MargedBlock {
 	private final Block block;
 	private final IEntityImageBlock imageBlock;
 	private final double marginDecorator;
-	private final Dimension2D imageDimension;
+	private final XDimension2D imageDimension;
 
 	static private int uid = 1;
 
@@ -72,13 +71,13 @@ public class MargedBlock {
 	public Positionable getImagePosition() {
 		return new Positionable() {
 
-			public Dimension2D getSize() {
+			public XDimension2D getSize() {
 				return imageDimension;
 			}
 
-			public Point2D getPosition() {
-				final Point2D pos = block.getPosition();
-				return new Point2D.Double(pos.getX() + marginDecorator, pos.getY() + marginDecorator);
+			public XPoint2D getPosition() {
+				final XPoint2D pos = block.getPosition();
+				return new XPoint2D(pos.getX() + marginDecorator, pos.getY() + marginDecorator);
 			}
 
 			public void moveSvek(double deltaX, double deltaY) {

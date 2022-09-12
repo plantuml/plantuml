@@ -35,8 +35,7 @@
  */
 package net.sourceforge.plantuml.graphic;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UGraphicStencil;
@@ -77,7 +76,7 @@ class USymbolComponent1 extends USymbol {
 
 			public void drawU(UGraphic ug) {
 				final StringBounder stringBounder = ug.getStringBounder();
-				final Dimension2D dimTotal = calculateDimension(stringBounder);
+				final XDimension2D dimTotal = calculateDimension(stringBounder);
 				ug = UGraphicStencil.create(ug, dimTotal);
 				ug = symbolContext.apply(ug);
 				drawComponent1(ug, dimTotal.getWidth(), dimTotal.getHeight(), symbolContext.getDeltaShadow(),
@@ -87,10 +86,10 @@ class USymbolComponent1 extends USymbol {
 				tb.drawU(ug.apply(new UTranslate(margin.getX1(), margin.getY1())));
 			}
 
-			public Dimension2D calculateDimension(StringBounder stringBounder) {
-				final Dimension2D dimLabel = label.calculateDimension(stringBounder);
-				final Dimension2D dimStereo = stereotype.calculateDimension(stringBounder);
-				return getMargin().addDimension(Dimension2DDouble.mergeTB(dimStereo, dimLabel));
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
+				final XDimension2D dimLabel = label.calculateDimension(stringBounder);
+				final XDimension2D dimStereo = stereotype.calculateDimension(stringBounder);
+				return getMargin().addDimension(XDimension2D.mergeTB(dimStereo, dimLabel));
 			}
 		};
 	}

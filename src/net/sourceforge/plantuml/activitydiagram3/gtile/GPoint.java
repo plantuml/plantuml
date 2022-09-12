@@ -35,10 +35,9 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.gtile;
 
-import java.awt.geom.Point2D;
-
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class GPoint {
@@ -88,7 +87,7 @@ public class GPoint {
 		return gtile.getCoord(name);
 	}
 
-	public Point2D getPoint2D() {
+	public XPoint2D getPoint2D() {
 		return getCoord().getPosition();
 	}
 

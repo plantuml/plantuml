@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.eggs;
 
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -47,7 +46,8 @@ import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.PlainDiagram;
 import net.sourceforge.plantuml.SpriteContainerEmpty;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -131,11 +131,11 @@ public class PSystemColors extends PlainDiagram implements UDrawable {
 		drawOneHexa(ug, friends.get(idx++), 1, -1, hexa);
 	}
 
-	private Point2D centerHexa(int i, int j) {
+	private XPoint2D centerHexa(int i, int j) {
 		final double width = getWidth();
 		final double x = width * i + (j % 2 == 0 ? 0 : width / 2);
 		final double y = size * j * 1.5;
-		return new Point2D.Double(x, y);
+		return new XPoint2D(x, y);
 
 	}
 
@@ -152,7 +152,7 @@ public class PSystemColors extends PlainDiagram implements UDrawable {
 		final UFont font = UFont.sansSerif(14).bold();
 
 		TextBlock tt = getTextName(font, colorName, color);
-		Dimension2D dimText = tt.calculateDimension(ug.getStringBounder());
+		XDimension2D dimText = tt.calculateDimension(ug.getStringBounder());
 		if (dimText.getWidth() > getWidth()) {
 			tt = getTextName(font, findShortest(ug.getStringBounder(), font, colorName), color);
 			dimText = tt.calculateDimension(ug.getStringBounder());
@@ -182,10 +182,10 @@ public class PSystemColors extends PlainDiagram implements UDrawable {
 		return ug.apply(color).apply(color.bg());
 	}
 
-	private Point2D corner(int i) {
+	private XPoint2D corner(int i) {
 		double angle_deg = 60 * i + 30;
 		double angle_rad = Math.PI / 180 * angle_deg;
-		return new Point2D.Double(size * Math.cos(angle_rad), size * Math.sin(angle_rad));
+		return new XPoint2D(size * Math.cos(angle_rad), size * Math.sin(angle_rad));
 	}
 
 	private UPolygon getHexa() {
@@ -245,7 +245,7 @@ public class PSystemColors extends PlainDiagram implements UDrawable {
 			final HColor color = colors.getColorOrWhite(name);
 			applyColor(tmp, color).draw(new URectangle(rectangleWidth, rectangleHeight));
 			final TextBlock tt = getTextName(font, name, color);
-			final Dimension2D dimText = tt.calculateDimension(ug.getStringBounder());
+			final XDimension2D dimText = tt.calculateDimension(ug.getStringBounder());
 			final double dy = (rectangleHeight - dimText.getHeight()) / 2;
 			final double dx = (rectangleWidth - dimText.getWidth()) / 2;
 			tt.drawU(tmp.apply(new UTranslate(dx, dy)));

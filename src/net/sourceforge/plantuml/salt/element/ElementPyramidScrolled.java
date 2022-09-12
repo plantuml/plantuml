@@ -35,10 +35,8 @@
  */
 package net.sourceforge.plantuml.salt.element;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.salt.Positionner2;
 import net.sourceforge.plantuml.salt.factory.ScrollStrategy;
@@ -61,22 +59,22 @@ public class ElementPyramidScrolled extends ElementPyramid {
 	}
 
 	@Override
-	public Dimension2D getPreferredDimension(StringBounder stringBounder, double x, double y) {
-		final Dimension2D result = super.getPreferredDimension(stringBounder, x, y);
+	public XDimension2D getPreferredDimension(StringBounder stringBounder, double x, double y) {
+		final XDimension2D result = super.getPreferredDimension(stringBounder, x, y);
 		if (scrollStrategy == ScrollStrategy.HORIZONTAL_ONLY)
-			return Dimension2DDouble.delta(result, 0, 30);
+			return XDimension2D.delta(result, 0, 30);
 
 		if (scrollStrategy == ScrollStrategy.VERTICAL_ONLY)
-			return Dimension2DDouble.delta(result, 30, 0);
+			return XDimension2D.delta(result, 30, 0);
 
-		return Dimension2DDouble.delta(result, 30);
+		return XDimension2D.delta(result, 30);
 	}
 
 	@Override
-	public void drawU(UGraphic ug, int zIndex, Dimension2D dimToUse) {
+	public void drawU(UGraphic ug, int zIndex, XDimension2D dimToUse) {
 		super.drawU(ug, zIndex, dimToUse);
 		ug = ug.apply(getBlack());
-		final Dimension2D dim = super.getPreferredDimension(ug.getStringBounder(), 0, 0);
+		final XDimension2D dim = super.getPreferredDimension(ug.getStringBounder(), 0, 0);
 		if (scrollStrategy == ScrollStrategy.BOTH || scrollStrategy == ScrollStrategy.VERTICAL_ONLY)
 			drawV(ug.apply(UTranslate.dx(dim.getWidth() + 4)), v1, dim.getHeight());
 

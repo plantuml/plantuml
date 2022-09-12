@@ -37,8 +37,7 @@ package net.sourceforge.plantuml.creole.atom;
 
 import java.util.List;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -50,15 +49,15 @@ public class AtomHorizontalTexts extends AbstractAtom implements Atom {
 		this.all = texts;
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		double width = 0;
 		double height = 0;
 		for (Atom text : all) {
-			final Dimension2D dim = text.calculateDimension(stringBounder);
+			final XDimension2D dim = text.calculateDimension(stringBounder);
 			height = Math.max(height, dim.getHeight());
 			width += dim.getWidth();
 		}
-		return new Dimension2DDouble(width, height);
+		return new XDimension2D(width, height);
 	}
 
 	public double getStartingAltitude(StringBounder stringBounder) {
@@ -71,7 +70,7 @@ public class AtomHorizontalTexts extends AbstractAtom implements Atom {
 	public void drawU(UGraphic ug) {
 		double x = 0;
 		for (Atom text : all) {
-			final Dimension2D dim = text.calculateDimension(ug.getStringBounder());
+			final XDimension2D dim = text.calculateDimension(ug.getStringBounder());
 			text.drawU(ug.apply(UTranslate.dx(x)));
 			x += dim.getWidth();
 		}

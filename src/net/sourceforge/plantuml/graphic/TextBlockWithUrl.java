@@ -35,10 +35,9 @@
  */
 package net.sourceforge.plantuml.graphic;
 
-import java.awt.geom.Rectangle2D;
-
 import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XRectangle2D;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
@@ -66,7 +65,7 @@ public class TextBlockWithUrl implements TextBlock {
 		ug.closeUrl();
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		return block.calculateDimension(stringBounder);
 	}
 
@@ -74,7 +73,7 @@ public class TextBlockWithUrl implements TextBlock {
 		return block.getMinMax(stringBounder);
 	}
 
-	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+	public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
 		return block.getInnerPosition(member, stringBounder, strategy);
 	}
 

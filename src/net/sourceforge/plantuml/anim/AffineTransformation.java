@@ -36,14 +36,14 @@
 package net.sourceforge.plantuml.anim;
 
 import java.awt.geom.AffineTransform;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-import java.awt.geom.Point2D;
 import java.util.Objects;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 
 public class AffineTransformation {
@@ -55,7 +55,7 @@ public class AffineTransformation {
 	static private final Pattern color = Pattern.compile("color\\s+.*");
 
 	private final AffineTransform affineTransform;
-	private Dimension2D dimension;
+	private XDimension2D dimension;
 
 	private AffineTransformation(AffineTransform affineTransform) {
 		this.affineTransform = Objects.requireNonNull(affineTransform);
@@ -123,7 +123,7 @@ public class AffineTransformation {
 		return getAffineTransform(dimension);
 	}
 
-	private AffineTransform getAffineTransform(Dimension2D dimension) {
+	private AffineTransform getAffineTransform(XDimension2D dimension) {
 		if (dimension == null) {
 			throw new IllegalStateException();
 		}
@@ -135,18 +135,20 @@ public class AffineTransformation {
 		return at;
 	}
 
-	public void setDimension(Dimension2D dim) {
+	public void setDimension(XDimension2D dim) {
 		this.dimension = dim;
 
 	}
 
-	public MinMax getMinMax(Dimension2D rect) {
+	public MinMax getMinMax(XDimension2D rect) {
 		MinMax result = MinMax.getEmpty(false);
 		final AffineTransform tmp = getAffineTransform(rect);
-		result = result.addPoint(tmp.transform(new Point2D.Double(0, 0), null));
-		result = result.addPoint(tmp.transform(new Point2D.Double(0, rect.getHeight()), null));
-		result = result.addPoint(tmp.transform(new Point2D.Double(rect.getWidth(), 0), null));
-		result = result.addPoint(tmp.transform(new Point2D.Double(rect.getWidth(), rect.getHeight()), null));
+		
+		result = result.addPoint(new XPoint2D(0, 0).getTransform(tmp));
+		result = result.addPoint(new XPoint2D(0, rect.getHeight()).getTransform(tmp));
+		result = result.addPoint(new XPoint2D(rect.getWidth(), 0).getTransform(tmp));
+		result = result.addPoint(new XPoint2D(rect.getWidth(), rect.getHeight()).getTransform(tmp));
+		
 		return result;
 	}
 

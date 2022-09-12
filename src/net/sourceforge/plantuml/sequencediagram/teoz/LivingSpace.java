@@ -35,11 +35,11 @@
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.util.List;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
@@ -172,7 +172,7 @@ public class LivingSpace {
 		}
 		final Component comp = rose.createComponent(p.getUsedStyles(), headType, null,
 				skinParam, p.getDisplay(skinParam.forceSequenceParticipantUnderlined()));
-		final Dimension2D dim = comp.getPreferredDimension(ug.getStringBounder());
+		final XDimension2D dim = comp.getPreferredDimension(ug.getStringBounder());
 		if (horizontalAlignment == HorizontalAlignment.RIGHT) {
 			ug = ug.apply(UTranslate.dx(-dim.getWidth()));
 		}
@@ -190,10 +190,10 @@ public class LivingSpace {
 		}
 	}
 
-	public Dimension2D getHeadPreferredDimension(StringBounder stringBounder) {
+	public XDimension2D getHeadPreferredDimension(StringBounder stringBounder) {
 		final Component comp = rose.createComponent(p.getUsedStyles(), headType, null, skinParam,
 				p.getDisplay(skinParam.forceSequenceParticipantUnderlined()));
-		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
+		final XDimension2D dim = comp.getPreferredDimension(stringBounder);
 		return dim;
 	}
 

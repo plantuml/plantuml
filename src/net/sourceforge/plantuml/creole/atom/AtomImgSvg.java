@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.creole.atom;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TileImageSvg;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -48,7 +48,7 @@ public class AtomImgSvg extends AbstractAtom implements Atom {
 		this.tileImageSvg = tileImageSvg;
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		return tileImageSvg.calculateDimension(stringBounder);
 	}
 

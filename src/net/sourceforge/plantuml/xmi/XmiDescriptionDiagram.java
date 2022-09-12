@@ -59,7 +59,6 @@ import net.sourceforge.plantuml.cucadiagram.IGroup;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.descdiagram.DescriptionDiagram;
-import net.sourceforge.plantuml.version.Version;
 import net.sourceforge.plantuml.xml.XmlFactories;
 
 public class XmiDescriptionDiagram implements XmlDiagramTransformer {

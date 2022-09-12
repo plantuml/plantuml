@@ -38,9 +38,8 @@ package net.sourceforge.plantuml.svek.image;
 import java.util.EnumMap;
 import java.util.Map;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.style.PName;
@@ -67,8 +66,8 @@ public class EntityImageBranch extends AbstractEntityImage {
 		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond);
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		return new Dimension2DDouble(SIZE * 2, SIZE * 2);
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		return new XDimension2D(SIZE * 2, SIZE * 2);
 	}
 
 	final public void drawU(UGraphic ug) {

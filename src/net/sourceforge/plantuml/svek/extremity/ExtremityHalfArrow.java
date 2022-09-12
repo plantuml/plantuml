@@ -36,8 +36,8 @@
 package net.sourceforge.plantuml.svek.extremity;
 
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Point2D;
 
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -47,26 +47,27 @@ class ExtremityHalfArrow extends Extremity {
 
 	private final ULine line;
 	private final ULine otherLine;
-	private final Point2D contact;
+	private final XPoint2D contact;
 
 	@Override
-	public Point2D somePoint() {
+	public XPoint2D somePoint() {
 		return contact;
 	}
 
-	public ExtremityHalfArrow(Point2D p1, double angle, Point2D center) {
+	public ExtremityHalfArrow(XPoint2D p1, double angle, XPoint2D center) {
 		angle = manageround(angle);
 		final AffineTransform rotate = AffineTransform.getRotateInstance(angle + Math.PI / 2);
 		final int xWing = 9;
 		final int yAperture = 4;
-		final Point2D other = new Point2D.Double(-xWing, -yAperture);
-		rotate.transform(other, other);
+		final XPoint2D other = new XPoint2D(-xWing, -yAperture);
+		other.transform(rotate);
+
 		this.contact = p1;
 		this.line = new ULine(center.getX() - contact.getX(), center.getY() - contact.getY());
 		this.otherLine = new ULine(other.getX(), other.getY());
 	}
 
-	public ExtremityHalfArrow(Point2D p0, double angle) {
+	public ExtremityHalfArrow(XPoint2D p0, double angle) {
 		throw new UnsupportedOperationException();
 	}
 

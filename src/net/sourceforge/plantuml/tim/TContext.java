@@ -111,7 +111,6 @@ import net.sourceforge.plantuml.tim.stdlib.IsLight;
 import net.sourceforge.plantuml.tim.stdlib.JsonKeyExists;
 import net.sourceforge.plantuml.tim.stdlib.Lighten;
 import net.sourceforge.plantuml.tim.stdlib.LoadJson;
-import net.sourceforge.plantuml.tim.stdlib.LoadJsonLegacy;
 import net.sourceforge.plantuml.tim.stdlib.LogicalNot;
 import net.sourceforge.plantuml.tim.stdlib.Lower;
 import net.sourceforge.plantuml.tim.stdlib.Newline;

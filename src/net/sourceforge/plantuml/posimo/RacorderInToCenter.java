@@ -36,18 +36,20 @@
 package net.sourceforge.plantuml.posimo;
 
 import java.awt.geom.CubicCurve2D;
-import java.awt.geom.Line2D;
-import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+
+import net.sourceforge.plantuml.awt.geom.XLine2D;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 
 public class RacorderInToCenter extends RacorderAbstract implements Racorder {
 
-	public DotPath getRacordIn(Rectangle2D rect, Line2D tangeante) {
+	@Override
+	public DotPath getRacordIn(Rectangle2D rect, XLine2D tangeante) {
 		final DotPath result = new DotPath();
 
-		final Point2D center = new Point2D.Double(rect.getCenterX(), rect.getCenterY());
-		final Line2D.Double line = new Line2D.Double(tangeante.getP1(), center);
-		final Point2D inter = BezierUtils.intersect(line, rect);
+		final XPoint2D center = new XPoint2D(rect.getCenterX(), rect.getCenterY());
+		final XLine2D line = new XLine2D(tangeante.getP1(), center);
+		final XPoint2D inter = BezierUtils.intersect(line, rect);
 
 		final CubicCurve2D.Double curv = new CubicCurve2D.Double(line.getX1(), line.getY1(), line.getX1(),
 				line.getY1(), inter.getX(), inter.getY(), inter.getX(), inter.getY());

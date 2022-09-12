@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.svek;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -50,14 +51,14 @@ class CircleAndArrow implements UDrawable {
 	private final AffineTransform at;
 	private final AffineTransform at2;
 	private int radius;
-	private final Point2D center;
-	private final Point2D p1;
-	private final Point2D p2;
-	private Point2D p3;
-	private Point2D p4;
+	private final XPoint2D center;
+	private final XPoint2D p1;
+	private final XPoint2D p2;
+	private XPoint2D p3;
+	private XPoint2D p4;
 
-	public CircleAndArrow(Point2D p1, Point2D p2) {
-		this.center = new Point2D.Double((p1.getX() + p2.getX()) / 2, (p1.getY() + p2.getY()) / 2);
+	public CircleAndArrow(XPoint2D p1, XPoint2D p2) {
+		this.center = new XPoint2D((p1.getX() + p2.getX()) / 2, (p1.getY() + p2.getY()) / 2);
 		at = AffineTransform.getTranslateInstance(-center.getX(), -center.getY());
 		at2 = AffineTransform.getTranslateInstance(center.getX(), center.getY());
 		radius = (int) (p1.distance(p2) / 2);
@@ -67,20 +68,20 @@ class CircleAndArrow implements UDrawable {
 		this.p1 = putOnCircle(p1);
 		this.p2 = putOnCircle(p2);
 
-		this.p3 = at.transform(this.p1, null);
-		this.p3 = new Point2D.Double(p3.getY(), -p3.getX());
-		this.p3 = at2.transform(p3, null);
+		this.p3 = this.p1.getTransform(at);
+		this.p3 = new XPoint2D(p3.getY(), -p3.getX());
+		this.p3 = this.p3.getTransform(at2);
 
-		this.p4 = at.transform(this.p2, null);
-		this.p4 = new Point2D.Double(p4.getY(), -p4.getX());
-		this.p4 = at2.transform(p4, null);
+		this.p4 = this.p2.getTransform(at);
+		this.p4 = new XPoint2D(p4.getY(), -p4.getX());
+		this.p4 = this.p4.getTransform(at2);
 	}
 
-	private Point2D putOnCircle(Point2D p) {
-		p = at.transform(p, null);
-		final double coef = p.distance(new Point2D.Double()) / radius;
-		p = new Point2D.Double(p.getX() / coef, p.getY() / coef);
-		return at2.transform(p, null);
+	private XPoint2D putOnCircle(XPoint2D p) {
+		p = p.getTransform(at);
+		final double coef = p.distance(new XPoint2D()) / radius;
+		p = new XPoint2D(p.getX() / coef, p.getY() / coef);
+		return p.getTransform(at2);
 	}
 
 	public void drawU(UGraphic ug) {

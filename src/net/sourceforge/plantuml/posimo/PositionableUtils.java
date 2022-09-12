@@ -35,81 +35,34 @@
  */
 package net.sourceforge.plantuml.posimo;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
-
-import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
+import net.sourceforge.plantuml.awt.geom.XRectangle2D;
 
 public class PositionableUtils {
 
-	static public Rectangle2D convert(Positionable positionable) {
-		final Point2D position = positionable.getPosition();
-		final Dimension2D size = positionable.getSize();
-		return new Rectangle2D.Double(position.getX(), position.getY(), size.getWidth(), size.getHeight());
-	}
-
-	static public boolean contains(Positionable positionable, Point2D p) {
-		final Point2D position = positionable.getPosition();
-		final Dimension2D size = positionable.getSize();
-		final double width = size.getWidth();
-		final double height = size.getHeight();
-
-		if (p.getX() < position.getX()) {
-			return false;
-		}
-		if (p.getX() > position.getX() + width) {
-			return false;
-		}
-		if (p.getY() < position.getY()) {
-			return false;
-		}
-		if (p.getY() > position.getY() + height) {
-			return false;
-		}
-		return true;
+	static private XRectangle2D convert(Positionable positionable) {
+		final XPoint2D position = positionable.getPosition();
+		final XDimension2D size = positionable.getSize();
+		return new XRectangle2D(position.getX(), position.getY(), size.getWidth(), size.getHeight());
 	}
 
 	static public boolean intersect(Positionable big, Positionable small) {
-		final Rectangle2D bigR = convert(big);
-		final Rectangle2D smallR = convert(small);
+		final XRectangle2D bigR = convert(big);
+		final XRectangle2D smallR = convert(small);
 		return bigR.intersects(smallR);
-		// final Point2D pt = small.getPosition();
-		// final Dimension2D dim = small.getSize();
-		//
-		// if (contains(big, pt)) {
-		// return true;
-		// }
-		// if (contains(big, new Point2D.Double(pt.getX() + dim.getWidth(),
-		// pt.getY()))) {
-		// return true;
-		// }
-		// if (contains(big, new Point2D.Double(pt.getX() + dim.getWidth(),
-		// pt.getY() + dim.getHeight()))) {
-		// return true;
-		// }
-		// if (contains(big, new Point2D.Double(pt.getX(), pt.getY() +
-		// dim.getHeight()))) {
-		// return true;
-		// }
-		// return false;
 	}
-
-	//
-	// public boolean intersect(Positionable p) {
-	// return intersect(p.getPosition(), p.getSize());
-	// }
 
 	static public Positionable addMargin(final Positionable pos, final double widthMargin, final double heightMargin) {
 		return new Positionable() {
 
-			public Point2D getPosition() {
-				final Point2D p = pos.getPosition();
-				return new Point2D.Double(p.getX() - widthMargin, p.getY() - heightMargin);
+			public XPoint2D getPosition() {
+				final XPoint2D p = pos.getPosition();
+				return new XPoint2D(p.getX() - widthMargin, p.getY() - heightMargin);
 			}
 
-			public Dimension2D getSize() {
-				return Dimension2DDouble.delta(pos.getSize(), 2 * widthMargin, 2 * heightMargin);
+			public XDimension2D getSize() {
+				return XDimension2D.delta(pos.getSize(), 2 * widthMargin, 2 * heightMargin);
 			}
 
 			public void moveSvek(double deltaX, double deltaY) {
@@ -118,27 +71,23 @@ public class PositionableUtils {
 		};
 	}
 
-	static Rectangle2D move(Rectangle2D rect, double dx, double dy) {
-		return new Rectangle2D.Double(rect.getX() + dx, rect.getY() + dy, rect.getWidth(), rect.getHeight());
+	static private XPoint2D getCenter(Positionable p) {
+		final XPoint2D pt = p.getPosition();
+		final XDimension2D dim = p.getSize();
+		return new XPoint2D(pt.getX() + dim.getWidth() / 2, pt.getY() + dim.getHeight() / 2);
 	}
 
-	static public Point2D getCenter(Positionable p) {
-		final Point2D pt = p.getPosition();
-		final Dimension2D dim = p.getSize();
-		return new Point2D.Double(pt.getX() + dim.getWidth() / 2, pt.getY() + dim.getHeight() / 2);
-	}
-
-	static public Positionable move(Positionable p, double deltaX, double deltaY) {
-		final Point2D pt = p.getPosition();
-		final Dimension2D dim = p.getSize();
+	static private Positionable move(Positionable p, double deltaX, double deltaY) {
+		final XPoint2D pt = p.getPosition();
+		final XDimension2D dim = p.getSize();
 		return new PositionableImpl(pt.getX() + deltaX, pt.getY() + deltaY, dim);
 
 	}
 
 	public static Positionable moveAwayFrom(Positionable fixe, Positionable toMove) {
-		final Point2D centerFixe = getCenter(fixe);
-		final Point2D centerToMove = getCenter(toMove);
-		// final Point2D pt = toMove.getPosition();
+		final XPoint2D centerFixe = getCenter(fixe);
+		final XPoint2D centerToMove = getCenter(toMove);
+		// final XPoint2D pt = toMove.getPosition();
 		// return new PositionableImpl(pt.getX() + 20, pt.getY(),
 		// toMove.getSize());
 
@@ -146,22 +95,22 @@ public class PositionableUtils {
 		final double deltaY = centerToMove.getY() - centerFixe.getY();
 
 		double min = 0.0;
-		if (doesIntersectWithThisCoef(fixe, toMove, deltaX, deltaY, min) == false) {
+		if (doesIntersectWithThisCoef(fixe, toMove, deltaX, deltaY, min) == false)
 			throw new IllegalArgumentException();
-		}
+
 		double max = 0.1;
-		while (doesIntersectWithThisCoef(fixe, toMove, deltaX, deltaY, max)) {
+		while (doesIntersectWithThisCoef(fixe, toMove, deltaX, deltaY, max))
 			max = max * 2;
-		}
+
 		for (int i = 0; i < 5; i++) {
 			assert doesIntersectWithThisCoef(fixe, toMove, deltaX, deltaY, min);
 			assert doesIntersectWithThisCoef(fixe, toMove, deltaX, deltaY, max) == false;
 			final double candidat = (min + max) / 2.0;
-			if (doesIntersectWithThisCoef(fixe, toMove, deltaX, deltaY, candidat)) {
+			if (doesIntersectWithThisCoef(fixe, toMove, deltaX, deltaY, candidat))
 				min = candidat;
-			} else {
+			else
 				max = candidat;
-			}
+
 			// Log.println("min=" + min + " max=" + max);
 		}
 		final double candidat = (min + max) / 2.0;

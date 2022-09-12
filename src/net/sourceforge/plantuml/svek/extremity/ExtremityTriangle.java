@@ -35,8 +35,7 @@
  */
 package net.sourceforge.plantuml.svek.extremity;
 
-import java.awt.geom.Point2D;
-
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
@@ -47,17 +46,17 @@ class ExtremityTriangle extends Extremity {
 	private UPolygon polygon = new UPolygon();
 	private final boolean fill;
 	private final HColor backgroundColor;
-	private final Point2D contact;
+	private final XPoint2D contact;
 
 	@Override
-	public Point2D somePoint() {
+	public XPoint2D somePoint() {
 		return contact;
 	}
 
-	public ExtremityTriangle(Point2D p1, double angle, boolean fill, HColor backgroundColor, int xWing, int yAperture) {
+	public ExtremityTriangle(XPoint2D p1, double angle, boolean fill, HColor backgroundColor, int xWing, int yAperture) {
 		this.backgroundColor = backgroundColor;
 		this.fill = fill;
-		this.contact = new Point2D.Double(p1.getX(), p1.getY());
+		this.contact = new XPoint2D(p1.getX(), p1.getY());
 		angle = manageround(angle);
 		polygon.addPoint(0, 0);
 

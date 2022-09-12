@@ -35,16 +35,15 @@
  */
 package net.sourceforge.plantuml.wire;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
@@ -78,7 +77,7 @@ public class Block extends AbstractTextBlock {
 
 	private final Map<Block, Pos> children = new LinkedHashMap<Block, Pos>();
 	private final Display display;
-	private final Dimension2DDouble fixedDim;
+	private final XDimension2D fixedDim;
 	private final ISkinParam skinParam;
 
 	private final List<String> left = new ArrayList<>();
@@ -96,7 +95,7 @@ public class Block extends AbstractTextBlock {
 		this(skinParam, Display.empty(), null);
 	}
 
-	private Block(ISkinParam skinParam, Display display, Dimension2DDouble fixedDim) {
+	private Block(ISkinParam skinParam, Display display, XDimension2D fixedDim) {
 		this.skinParam = skinParam;
 		this.display = display;
 		this.fixedDim = fixedDim;
@@ -117,7 +116,7 @@ public class Block extends AbstractTextBlock {
 		throw new IllegalArgumentException();
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		if (fixedDim == null)
 			return minMax.getDimension();
 
@@ -180,7 +179,7 @@ public class Block extends AbstractTextBlock {
 	}
 
 	public Block addNewBlock(String name, int width, int height) {
-		final Dimension2DDouble dim = new Dimension2DDouble(width, height);
+		final XDimension2D dim = new XDimension2D(width, height);
 		final Block child = new Block(skinParam, Display.create(name), dim);
 		children.put(child, new Pos(x, y));
 		y += dim.getHeight() + 10;

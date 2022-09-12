@@ -35,16 +35,15 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
-import java.awt.geom.Point2D;
 import java.util.List;
 
 import net.sourceforge.plantuml.ColorParam;
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -78,8 +77,8 @@ public class EntityImageLollipopInterfaceEye1 extends AbstractEntityImage {
 
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		return new Dimension2DDouble(SIZE, SIZE);
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		return new XDimension2D(SIZE, SIZE);
 	}
 
 	final public void drawU(UGraphic ug) {
@@ -97,13 +96,13 @@ public class EntityImageLollipopInterfaceEye1 extends AbstractEntityImage {
 		ug.apply(new UStroke(1.5)).apply(new UTranslate(diff, diff)).draw(circle1);
 		ug = ug.apply(HColors.none().bg());
 
-		Point2D pos = bibliotekon.getNode(getEntity()).getPosition();
+		XPoint2D pos = bibliotekon.getNode(getEntity()).getPosition();
 
 		final List<SvekLine> lines = bibliotekon.getAllLineConnectedTo(getEntity());
 		final UTranslate reverse = new UTranslate(pos).reverse();
 		final ConnectedCircle connectedCircle = new ConnectedCircle(SIZE / 2);
 		for (SvekLine line : lines) {
-			Point2D pt = line.getMyPoint(getEntity());
+			XPoint2D pt = line.getMyPoint(getEntity());
 			pt = reverse.getTranslated(pt);
 			connectedCircle.addSecondaryConnection(pt);
 

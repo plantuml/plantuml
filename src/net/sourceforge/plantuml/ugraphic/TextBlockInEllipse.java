@@ -35,9 +35,8 @@
  */
 package net.sourceforge.plantuml.ugraphic;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-import java.awt.geom.Point2D;
-
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -51,7 +50,7 @@ public class TextBlockInEllipse extends AbstractTextBlock implements TextBlock {
 
 	public TextBlockInEllipse(TextBlock text, StringBounder stringBounder) {
 		this.text = text;
-		final Dimension2D textDim = text.calculateDimension(stringBounder);
+		final XDimension2D textDim = text.calculateDimension(stringBounder);
 		double alpha = textDim.getHeight() / textDim.getWidth();
 		if (alpha < .2) {
 			alpha = .2;
@@ -69,7 +68,7 @@ public class TextBlockInEllipse extends AbstractTextBlock implements TextBlock {
 
 	public void drawU(UGraphic ug) {
 		final UEllipse sh = getUEllipse();
-		final Point2D center = ellipse.getCenter();
+		final XPoint2D center = ellipse.getCenter();
 		
 		final double dx = sh.getWidth() / 2 - center.getX();
 		final double dy = sh.getHeight() / 2 - center.getY();
@@ -79,7 +78,7 @@ public class TextBlockInEllipse extends AbstractTextBlock implements TextBlock {
 		text.drawU(ug.apply(new UTranslate(dx, (dy - 2))));
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		return getUEllipse().getDimension();
 	}
 

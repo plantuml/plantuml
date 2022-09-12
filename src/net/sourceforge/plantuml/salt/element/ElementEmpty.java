@@ -35,18 +35,16 @@
  */
 package net.sourceforge.plantuml.salt.element;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
-import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 public class ElementEmpty extends AbstractElement {
 
-	public Dimension2D getPreferredDimension(StringBounder stringBounder, double x, double y) {
-		return new Dimension2DDouble(1, 1);
+	public XDimension2D getPreferredDimension(StringBounder stringBounder, double x, double y) {
+		return new XDimension2D(1, 1);
 	}
 
-	public void drawU(UGraphic ug, int zIndex, Dimension2D dimToUse) {
+	public void drawU(UGraphic ug, int zIndex, XDimension2D dimToUse) {
 	}
 }

@@ -43,7 +43,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.activitydiagram3.Branch;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
@@ -53,7 +52,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileMinWidthCentered;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamondInside2;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -165,18 +164,18 @@ class FtileSwitch extends AbstractFtile {
 	}
 
 	private FtileGeometry calculateDimensionInternal(StringBounder stringBounder) {
-		Dimension2D result = new Dimension2DDouble(0, 0);
+		XDimension2D result = new XDimension2D(0, 0);
 		for (Ftile couple : tiles)
-			result = Dimension2DDouble.mergeLR(result, couple.calculateDimension(stringBounder));
+			result = XDimension2D.mergeLR(result, couple.calculateDimension(stringBounder));
 
-		result = Dimension2DDouble.delta(result, xSeparation * (tiles.size() - 1), 100);
+		result = XDimension2D.delta(result, xSeparation * (tiles.size() - 1), 100);
 
 		return new FtileGeometry(result, result.getWidth() / 2, 0);
 	}
 
 	@Override
 	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
-		final Dimension2D dimTotal = calculateDimensionInternal(stringBounder);
+		final XDimension2D dimTotal = calculateDimensionInternal(stringBounder);
 
 		final List<Ftile> all = new ArrayList<>(tiles);
 		for (Ftile tmp : all)

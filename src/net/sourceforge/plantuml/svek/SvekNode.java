@@ -35,13 +35,13 @@
  */
 package net.sourceforge.plantuml.svek;
 
-import java.awt.geom.Point2D;
 import java.util.List;
 
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.Hideable;
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.cucadiagram.EntityPosition;
 import net.sourceforge.plantuml.cucadiagram.IGroup;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
@@ -59,7 +59,7 @@ import net.sourceforge.plantuml.ugraphic.UPolygon;
 public class SvekNode implements Positionable, Hideable {
 
 	private final ShapeType type;
-	private Dimension2D dimImage;
+	private XDimension2D dimImage;
 
 	private final String uid;
 	private final int color;
@@ -112,7 +112,7 @@ public class SvekNode implements Positionable, Hideable {
 		}
 	}
 
-	private Dimension2D getDimImage() {
+	private XDimension2D getDimImage() {
 		if (dimImage == null)
 			this.dimImage = image.calculateDimension(stringBounder);
 		return dimImage;
@@ -363,11 +363,11 @@ public class SvekNode implements Positionable, Hideable {
 		return image;
 	}
 
-	public Point2D getPosition() {
-		return new Point2D.Double(minX, minY);
+	public XPoint2D getPosition() {
+		return new XPoint2D(minX, minY);
 	}
 
-	public Dimension2D getSize() {
+	public XDimension2D getSize() {
 		return getDimImage();
 	}
 
@@ -390,7 +390,7 @@ public class SvekNode implements Positionable, Hideable {
 
 	private Shadowable polygon;
 
-	public void setPolygon(double minX, double minY, List<Point2D.Double> points) {
+	public void setPolygon(double minX, double minY, List<XPoint2D> points) {
 		this.polygon = new UPolygon(points).translate(-minX, -minY);
 	}
 
@@ -398,21 +398,21 @@ public class SvekNode implements Positionable, Hideable {
 		return polygon;
 	}
 
-	public Point2D getPoint2D(double x, double y) {
-		return new Point2D.Double(minX + x, minY + y);
+	public XPoint2D getPoint2D(double x, double y) {
+		return new XPoint2D(minX + x, minY + y);
 	}
 
-	public Point2D projection(Point2D pt, StringBounder stringBounder) {
+	public XPoint2D projection(XPoint2D pt, StringBounder stringBounder) {
 		if (getType() != ShapeType.FOLDER)
 			return pt;
 
 		final ClusterPosition clusterPosition = new ClusterPosition(minX, minY, minX + getWidth(), minY + getHeight());
 		if (clusterPosition.isPointJustUpper(pt)) {
-			final Dimension2D dimName = ((EntityImageDescription) image).getNameDimension(stringBounder);
+			final XDimension2D dimName = ((EntityImageDescription) image).getNameDimension(stringBounder);
 			if (pt.getX() < minX + dimName.getWidth())
 				return pt;
 
-			return new Point2D.Double(pt.getX(), pt.getY() + dimName.getHeight() + 4);
+			return new XPoint2D(pt.getX(), pt.getY() + dimName.getHeight() + 4);
 		}
 		return pt;
 	}

@@ -43,11 +43,10 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.cucadiagram.BodyFactory;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.EntityPortion;
@@ -194,14 +193,14 @@ public class EntityImageDescription extends AbstractEntityImage {
 		return Objects.requireNonNull(result);
 	}
 
-	public Dimension2D getNameDimension(StringBounder stringBounder) {
+	public XDimension2D getNameDimension(StringBounder stringBounder) {
 		if (hideText)
-			return new Dimension2DDouble(0, 0);
+			return new XDimension2D(0, 0);
 
 		return name.calculateDimension(stringBounder);
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		return asSmall.calculateDimension(stringBounder);
 	}
 
@@ -219,9 +218,9 @@ public class EntityImageDescription extends AbstractEntityImage {
 		if (hasSomeHorizontalLinkDoubleDecorated((ILeaf) getEntity(), links))
 			return Margins.NONE;
 
-		final Dimension2D dimStereo = stereo.calculateDimension(stringBounder);
-		final Dimension2D dimDesc = desc.calculateDimension(stringBounder);
-		final Dimension2D dimSmall = asSmall.calculateDimension(stringBounder);
+		final XDimension2D dimStereo = stereo.calculateDimension(stringBounder);
+		final XDimension2D dimDesc = desc.calculateDimension(stringBounder);
+		final XDimension2D dimSmall = asSmall.calculateDimension(stringBounder);
 		final double x = Math.max(dimStereo.getWidth(), dimDesc.getWidth());
 		double suppX = x - dimSmall.getWidth();
 		if (suppX < 1)
@@ -278,15 +277,15 @@ public class EntityImageDescription extends AbstractEntityImage {
 
 		if (hideText) {
 			final double space = 8;
-			final Dimension2D dimSmall = asSmall.calculateDimension(ug.getStringBounder());
-			final Dimension2D dimDesc = desc.calculateDimension(ug.getStringBounder());
+			final XDimension2D dimSmall = asSmall.calculateDimension(ug.getStringBounder());
+			final XDimension2D dimDesc = desc.calculateDimension(ug.getStringBounder());
 			final double posx1 = (dimSmall.getWidth() - dimDesc.getWidth()) / 2;
 
 			UGraphic ugDesc = ug.apply(new UTranslate(posx1, space + dimSmall.getHeight()));
 			ugDesc = UGraphicStencil.create(ugDesc, dimDesc);
 			desc.drawU(ugDesc);
 
-			final Dimension2D dimStereo = stereo.calculateDimension(ug.getStringBounder());
+			final XDimension2D dimStereo = stereo.calculateDimension(ug.getStringBounder());
 			final double posx2 = (dimSmall.getWidth() - dimStereo.getWidth()) / 2;
 			stereo.drawU(ug.apply(new UTranslate(posx2, -space - dimStereo.getHeight())));
 		}
@@ -316,9 +315,9 @@ public class EntityImageDescription extends AbstractEntityImage {
 	@Override
 	public double getOverscanX(StringBounder stringBounder) {
 		if (hideText) {
-			final Dimension2D dimSmall = asSmall.calculateDimension(stringBounder);
-			final Dimension2D dimDesc = desc.calculateDimension(stringBounder);
-			final Dimension2D dimStereo = stereo.calculateDimension(stringBounder);
+			final XDimension2D dimSmall = asSmall.calculateDimension(stringBounder);
+			final XDimension2D dimDesc = desc.calculateDimension(stringBounder);
+			final XDimension2D dimStereo = stereo.calculateDimension(stringBounder);
 			final double posx1 = (dimSmall.getWidth() - dimDesc.getWidth()) / 2;
 			final double posx2 = (dimSmall.getWidth() - dimStereo.getWidth()) / 2;
 			return MathUtils.max(-posx1, -posx2, 0);

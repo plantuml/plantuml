@@ -34,10 +34,8 @@
  */
 package net.sourceforge.plantuml.gitlog;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -83,14 +81,14 @@ public class MagicBox {
 
 	}
 
-	public Dimension2D getBigDim(StringBounder stringBounder) {
-		final Dimension2D dimComment = getCommentBlock().calculateDimension(stringBounder);
-		final Dimension2D dimSmall = getSmallBlock().calculateDimension(stringBounder);
-		final Dimension2D mergeTB = Dimension2DDouble.mergeTB(dimComment, dimSmall);
-		return Dimension2DDouble.delta(mergeTB, 8, 2);
+	public XDimension2D getBigDim(StringBounder stringBounder) {
+		final XDimension2D dimComment = getCommentBlock().calculateDimension(stringBounder);
+		final XDimension2D dimSmall = getSmallBlock().calculateDimension(stringBounder);
+		final XDimension2D mergeTB = XDimension2D.mergeTB(dimComment, dimSmall);
+		return XDimension2D.delta(mergeTB, 8, 2);
 	}
 
-	public void drawBorder(UGraphic ug, Dimension2D sizeInDot) {
+	public void drawBorder(UGraphic ug, XDimension2D sizeInDot) {
 
 		final TextBlock comment = getCommentBlock();
 		final TextBlock small = getSmallBlock();

@@ -35,10 +35,8 @@
  */
 package net.sourceforge.plantuml.ugraphic;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-import java.awt.geom.Point2D;
-
-import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColors;
 
@@ -49,30 +47,30 @@ public class MinMax {
 	private final double minX;
 	private final double minY;
 
-	public boolean doesHorizontalCross(Point2D.Double pt1, Point2D.Double pt2) {
-		if (pt1.getY() != pt2.getY()) {
+	public boolean doesHorizontalCross(XPoint2D pt1, XPoint2D pt2) {
+		if (pt1.getY() != pt2.getY())
 			throw new IllegalArgumentException();
-		}
-		if (pt1.getX() == pt2.getX()) {
+
+		if (pt1.getX() == pt2.getX())
 			throw new IllegalArgumentException();
-		}
+
 		final double y = pt1.getY();
-		if (y < minY || y > maxY) {
+		if (y < minY || y > maxY)
 			return false;
-		}
-		if (pt1.getX() < minX && pt2.getX() > maxX) {
+
+		if (pt1.getX() < minX && pt2.getX() > maxX)
 			return true;
-		}
-		if (pt2.getX() < minX && pt1.getX() > maxX) {
+
+		if (pt2.getX() < minX && pt1.getX() > maxX)
 			return true;
-		}
+
 		return false;
 	}
 
 	public static MinMax getEmpty(boolean initToZero) {
-		if (initToZero) {
+		if (initToZero)
 			return new MinMax(0, 0, 0, 0);
-		}
+
 		return new MinMax(Double.MAX_VALUE, Double.MAX_VALUE, -Double.MAX_VALUE, -Double.MAX_VALUE);
 	}
 
@@ -90,21 +88,21 @@ public class MinMax {
 		this.minY = minY;
 		this.maxX = maxX;
 		this.maxY = maxY;
-		if (Double.isNaN(minX)) {
+		if (Double.isNaN(minX))
 			throw new IllegalArgumentException();
-		}
-		if (Double.isNaN(maxX)) {
+
+		if (Double.isNaN(maxX))
 			throw new IllegalArgumentException();
-		}
-		if (Double.isNaN(minY)) {
+
+		if (Double.isNaN(minY))
 			throw new IllegalArgumentException();
-		}
-		if (Double.isNaN(maxY)) {
+
+		if (Double.isNaN(maxY))
 			throw new IllegalArgumentException();
-		}
+
 	}
 
-	public MinMax addPoint(Point2D pt) {
+	public MinMax addPoint(XPoint2D pt) {
 		return addPoint(pt.getX(), pt.getY());
 	}
 
@@ -113,15 +111,15 @@ public class MinMax {
 	}
 
 	public MinMax addMinMax(MinMax other) {
-		return new MinMax(Math.min(other.minX, minX), Math.min(other.minY, minY), Math.max(other.maxX, maxX), Math.max(
-				other.maxY, maxY));
+		return new MinMax(Math.min(other.minX, minX), Math.min(other.minY, minY), Math.max(other.maxX, maxX),
+				Math.max(other.maxY, maxY));
 	}
 
 	public static MinMax fromMax(double maxX, double maxY) {
 		return MinMax.getEmpty(true).addPoint(maxX, maxY);
 	}
 
-	public static MinMax fromDim(Dimension2D dim) {
+	public static MinMax fromDim(XDimension2D dim) {
 		return fromMax(dim.getWidth(), dim.getHeight());
 	}
 
@@ -149,8 +147,8 @@ public class MinMax {
 		return maxX - minX;
 	}
 
-	public Dimension2D getDimension() {
-		return new Dimension2DDouble(maxX - minX, maxY - minY);
+	public XDimension2D getDimension() {
+		return new XDimension2D(maxX - minX, maxY - minY);
 	}
 
 	public void drawGray(UGraphic ug) {

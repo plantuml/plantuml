@@ -35,11 +35,10 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.gtile;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Hexagon;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
@@ -57,7 +56,7 @@ public class GtileHexagonInside extends AbstractGtile {
 	protected final HColor borderColor;
 
 	protected final TextBlock label;
-	protected final Dimension2D dimLabel;
+	protected final XDimension2D dimLabel;
 
 	protected final double shadowing;
 
@@ -97,13 +96,13 @@ public class GtileHexagonInside extends AbstractGtile {
 	}
 
 	@Override
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		final Dimension2D dim;
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		final XDimension2D dim;
 		if (dimLabel.getWidth() == 0 || dimLabel.getHeight() == 0) {
-			dim = new Dimension2DDouble(Hexagon.hexagonHalfSize * 2, Hexagon.hexagonHalfSize * 2);
+			dim = new XDimension2D(Hexagon.hexagonHalfSize * 2, Hexagon.hexagonHalfSize * 2);
 		} else {
-			dim = Dimension2DDouble.delta(
-					Dimension2DDouble.atLeast(dimLabel, Hexagon.hexagonHalfSize * 2, Hexagon.hexagonHalfSize * 2),
+			dim = XDimension2D.delta(
+					XDimension2D.atLeast(dimLabel, Hexagon.hexagonHalfSize * 2, Hexagon.hexagonHalfSize * 2),
 					Hexagon.hexagonHalfSize * 2, 0);
 		}
 		return dim;
@@ -112,7 +111,7 @@ public class GtileHexagonInside extends AbstractGtile {
 	@Override
 	protected void drawUInternal(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
-		final Dimension2D dimTotal = calculateDimension(stringBounder);
+		final XDimension2D dimTotal = calculateDimension(stringBounder);
 		ug = ug.apply(borderColor).apply(getThickness()).apply(backColor.bg());
 		ug.draw(Hexagon.asPolygon(shadowing, dimTotal.getWidth(), dimTotal.getHeight()));
 

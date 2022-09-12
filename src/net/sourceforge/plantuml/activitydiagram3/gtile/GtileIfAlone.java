@@ -38,11 +38,10 @@ package net.sourceforge.plantuml.activitydiagram3.gtile;
 import java.util.Arrays;
 import java.util.Collection;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.activitydiagram3.Branch;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
@@ -87,8 +86,8 @@ public class GtileIfAlone extends GtileTopDown3 {
 	}
 
 	@Override
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		return Dimension2DDouble.delta(super.calculateDimension(stringBounder), SUPP_WIDTH, 0);
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		return XDimension2D.delta(super.calculateDimension(stringBounder), SUPP_WIDTH, 0);
 	}
 
 	@Override

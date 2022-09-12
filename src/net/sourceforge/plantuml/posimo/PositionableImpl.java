@@ -35,29 +35,29 @@
  */
 package net.sourceforge.plantuml.posimo;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-import java.awt.geom.Point2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 
 public class PositionableImpl implements Positionable {
 
-	private final Point2D pos;
+	private final XPoint2D pos;
 
-	private final Dimension2D dim;
+	private final XDimension2D dim;
 
-	public PositionableImpl(double x, double y, Dimension2D dim) {
-		this.pos = new Point2D.Double(x, y);
+	public PositionableImpl(double x, double y, XDimension2D dim) {
+		this.pos = new XPoint2D(x, y);
 		this.dim = dim;
 	}
 
-	public PositionableImpl(Point2D pt, Dimension2D dim) {
+	public PositionableImpl(XPoint2D pt, XDimension2D dim) {
 		this(pt.getX(), pt.getY(), dim);
 	}
 
-	public Point2D getPosition() {
+	public XPoint2D getPosition() {
 		return pos;
 	}
 
-	public Dimension2D getSize() {
+	public XDimension2D getSize() {
 		return dim;
 	}
 

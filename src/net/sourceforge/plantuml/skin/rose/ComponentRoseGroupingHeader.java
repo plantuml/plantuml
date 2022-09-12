@@ -39,7 +39,7 @@ import java.util.Objects;
 
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.LineBreakStrategy;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -108,7 +108,7 @@ public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 		if (commentTextBlock == null) {
 			sup = commentMargin * 2;
 		} else {
-			final Dimension2D size = commentTextBlock.calculateDimension(stringBounder);
+			final XDimension2D size = commentTextBlock.calculateDimension(stringBounder);
 			sup = getMarginX1() + commentMargin + size.getWidth();
 
 		}
@@ -122,7 +122,7 @@ public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 
 	@Override
 	protected void drawBackgroundInternalU(UGraphic ug, Area area) {
-		final Dimension2D dimensionToUse = area.getDimensionToUse();
+		final XDimension2D dimensionToUse = area.getDimensionToUse();
 		ug = symbolContext.applyStroke(ug).apply(symbolContext.getForeColor());
 		final URectangle rect = new URectangle(dimensionToUse.getWidth(), dimensionToUse.getHeight())
 				.rounded(roundCorner);
@@ -132,7 +132,7 @@ public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 
 	@Override
 	protected void drawInternalU(UGraphic ug, Area area) {
-		final Dimension2D dimensionToUse = area.getDimensionToUse();
+		final XDimension2D dimensionToUse = area.getDimensionToUse();
 		final StringBounder stringBounder = ug.getStringBounder();
 		final double textWidth = getTextWidth(stringBounder);
 		final double textHeight = getTextHeight(stringBounder);

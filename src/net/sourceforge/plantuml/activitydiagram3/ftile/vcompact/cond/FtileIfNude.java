@@ -41,11 +41,10 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -101,8 +100,8 @@ public class FtileIfNude extends FtileDimensionMemoize {
 	}
 
 	protected UTranslate getTranslate2(StringBounder stringBounder) {
-		final Dimension2D dimTotal = calculateDimensionInternal(stringBounder);
-		final Dimension2D dim2 = tile2.calculateDimension(stringBounder);
+		final XDimension2D dimTotal = calculateDimensionInternal(stringBounder);
+		final XDimension2D dim2 = tile2.calculateDimension(stringBounder);
 
 		final double x2 = dimTotal.getWidth() - dim2.getWidth();
 		final double y2 = 0;
@@ -146,7 +145,7 @@ public class FtileIfNude extends FtileDimensionMemoize {
 		final double innerMargin = widthInner(stringBounder);
 		final double width = dim1.getLeft() + innerMargin + (dim2.getWidth() - dim2.getLeft());
 
-		final Dimension2D dim12 = Dimension2DDouble.mergeLR(dim1, dim2);
+		final XDimension2D dim12 = XDimension2D.mergeLR(dim1, dim2);
 
 		return new FtileGeometry(width, dim12.getHeight(), dim1.getLeft() + innerMargin / 2, 0);
 	}

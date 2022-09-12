@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.timingdiagram;
 
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -42,9 +41,9 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
@@ -93,8 +92,8 @@ public class PlayerBinary extends Player {
 
 	public IntricatedPoint getTimeProjection(StringBounder stringBounder, TimeTick tick) {
 		final double x = ruler.getPosInPixel(tick);
-		return new IntricatedPoint(new Point2D.Double(x, getYpos(stringBounder, HIGH_STRING)),
-				new Point2D.Double(x, getYpos(stringBounder, HIGH_STRING)));
+		return new IntricatedPoint(new XPoint2D(x, getYpos(stringBounder, HIGH_STRING)),
+				new XPoint2D(x, getYpos(stringBounder, HIGH_STRING)));
 	}
 
 	public void addNote(TimeTick now, Display note, Position position) {
@@ -153,14 +152,14 @@ public class PlayerBinary extends Player {
 			public void drawU(UGraphic ug) {
 				final StringBounder stringBounder = ug.getStringBounder();
 				final TextBlock title = getTitle();
-				final Dimension2D dim = title.calculateDimension(stringBounder);
+				final XDimension2D dim = title.calculateDimension(stringBounder);
 				final double y = (getFullHeight(stringBounder) - dim.getHeight()) / 2;
 				title.drawU(ug.apply(UTranslate.dy(y)));
 			}
 
-			public Dimension2D calculateDimension(StringBounder stringBounder) {
-				final Dimension2D dim = getTitle().calculateDimension(stringBounder);
-				return Dimension2DDouble.delta(dim, 5, 0);
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
+				final XDimension2D dim = getTitle().calculateDimension(stringBounder);
+				return XDimension2D.delta(dim, 5, 0);
 			}
 		};
 	}

@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.svek.extremity;
 
 import java.awt.geom.Point2D;
 
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
@@ -48,12 +49,12 @@ import net.sourceforge.plantuml.ugraphic.color.HColors;
 class ExtremityStateLine1 extends Extremity {
 
 	private UPolygon polygon = new UPolygon();
-	private final Point2D dest;
+	private final XPoint2D dest;
 	private final double radius = 7;
 	private final double angle;
 	
 	@Override
-	public Point2D somePoint() {
+	public XPoint2D somePoint() {
 		return dest;
 	}
 
@@ -61,7 +62,7 @@ class ExtremityStateLine1 extends Extremity {
 	public ExtremityStateLine1(double angle, Point2D center) {
 		this.angle = manageround(angle);
 		polygon.addPoint(0, 0);
-		this.dest = new Point2D.Double(center.getX(), center.getY());
+		this.dest = new XPoint2D(center.getX(), center.getY());
 		final int xWing = 9;
 		final int yAperture = 4;
 		polygon.addPoint(-xWing, -yAperture);
@@ -83,13 +84,13 @@ class ExtremityStateLine1 extends Extremity {
 				getPointOnCircle(dest.getX(), dest.getY(), Math.PI - Math.PI / 4));
 	}
 
-	private Point2D getPointOnCircle(double centerX, double centerY, double angle) {
+	private XPoint2D getPointOnCircle(double centerX, double centerY, double angle) {
 		final double x = centerX + radius * Math.cos(angle);
 		final double y = centerY + radius * Math.sin(angle);
-		return new Point2D.Double(x, y);
+		return new XPoint2D(x, y);
 	}
 
-	static private void drawLine(UGraphic ug, Point2D p1, Point2D p2) {
+	static private void drawLine(UGraphic ug, XPoint2D p1, XPoint2D p2) {
 		final double dx = p2.getX() - p1.getX();
 		final double dy = p2.getY() - p1.getY();
 		ug.apply(new UTranslate(p1.getX(), p1.getY())).draw(new ULine(dx, dy));

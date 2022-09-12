@@ -35,12 +35,11 @@
  */
 package net.sourceforge.plantuml.skin;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 
 public class Area {
 
-	private final Dimension2D dimensionToUse;
+	private final XDimension2D dimensionToUse;
 	private double deltaX1;
 
 	@Override
@@ -48,15 +47,15 @@ public class Area {
 		return dimensionToUse.toString() + " (" + deltaX1 + ")";
 	}
 
-	public Area(Dimension2D dimensionToUse) {
+	public Area(XDimension2D dimensionToUse) {
 		this.dimensionToUse = dimensionToUse;
 	}
 
 	public static Area create(double with, double height) {
-		return new Area(new Dimension2DDouble(with, height));
+		return new Area(new XDimension2D(with, height));
 	}
 
-	public Dimension2D getDimensionToUse() {
+	public XDimension2D getDimensionToUse() {
 		return dimensionToUse;
 	}
 

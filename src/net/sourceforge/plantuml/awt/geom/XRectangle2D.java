@@ -1,28 +1,19 @@
 package net.sourceforge.plantuml.awt.geom;
 
-import net.sourceforge.plantuml.awt.Shape;
+import net.sourceforge.plantuml.awt.XShape;
 
-public class Rectangle2D implements Shape {
+public class XRectangle2D implements XShape {
 
 	public final double x;
 	public final double y;
 	public final double width;
 	public final double height;
 
-	public Rectangle2D(double x, double y, double width, double height) {
+	public XRectangle2D(double x, double y, double width, double height) {
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
-
-	}
-
-	public static class Double extends Rectangle2D {
-
-		public Double(double x, double y, double width, double height) {
-			super(x, y, width, height);
-
-		}
 
 	}
 
@@ -43,11 +34,11 @@ public class Rectangle2D implements Shape {
 	}
 
 	public double getCenterX() {
-		return x;
+		return x + width / 2;
 	}
 
 	public double getCenterY() {
-		return y;
+		return y + height / 2;
 	}
 
 	public double getMinX() {
@@ -66,14 +57,17 @@ public class Rectangle2D implements Shape {
 		return y + height;
 	}
 
-	public boolean intersects(Rectangle2D rectangle) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean intersects(XRectangle2D other) {
+		return intersects(other.getX(), other.getY(), other.getWidth(), other.getHeight());
 	}
 
-	public boolean contains(Point2D point) {
-		// TODO Auto-generated method stub
-		return false;
+	private boolean intersects(double x, double y, double w, double h) {
+		return w > 0 && h > 0 && getWidth() > 0 && getHeight() > 0 && x < getX() + getWidth() && x + w > getX()
+				&& y < getY() + getHeight() && y + h > getY();
+	}
+
+	public boolean contains(XPoint2D point) {
+		throw new UnsupportedOperationException();
 	}
 
 }

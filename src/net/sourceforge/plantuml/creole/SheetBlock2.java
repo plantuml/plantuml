@@ -35,11 +35,11 @@
  */
 package net.sourceforge.plantuml.creole;
 
-import java.awt.geom.Rectangle2D;
 import java.util.List;
 import java.util.Objects;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XRectangle2D;
 import net.sourceforge.plantuml.creole.atom.Atom;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
@@ -86,7 +86,7 @@ final public class SheetBlock2 extends AbstractTextBlock implements TextBlock, A
 		return block.toString();
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		return block.calculateDimension(stringBounder);
 	}
 
@@ -102,7 +102,7 @@ final public class SheetBlock2 extends AbstractTextBlock implements TextBlock, A
 	}
 
 	@Override
-	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+	public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
 		return block.getInnerPosition(member, stringBounder, strategy);
 	}
 

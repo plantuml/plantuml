@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.asciiart;
 
 import java.util.Collection;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.sequencediagram.MessageNumber;
 
 public class UmlCharAreaImpl extends BasicCharAreaImpl implements UmlCharArea {

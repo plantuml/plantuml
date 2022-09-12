@@ -44,11 +44,11 @@ import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsEnvironment;
 import java.awt.font.TextLayout;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.awt.geom.Rectangle2D;
 
 import net.sourceforge.plantuml.EnsureVisible;
 import net.sourceforge.plantuml.Log;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.FontStyle;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -82,7 +82,7 @@ public class DriverTextAsPathG2d implements UDriver<UText, Graphics2D> {
 		final FontConfiguration fontConfiguration = shape.getFontConfiguration();
 
 		final UFont font = fontConfiguration.getFont();
-		final Dimension2D dim = stringBounder.calculateDimension(font, shape.getText());
+		final XDimension2D dim = stringBounder.calculateDimension(font, shape.getText());
 		final double height = max(10, dim.getHeight());
 		final double width = dim.getWidth();
 		

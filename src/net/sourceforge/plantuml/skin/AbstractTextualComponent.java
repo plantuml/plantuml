@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.skin;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.LineBreakStrategy;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.BodyFactory;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -116,7 +116,7 @@ public abstract class AbstractTextualComponent extends AbstractComponent {
 
 	protected double getPureTextWidth(StringBounder stringBounder) {
 		final TextBlock textBlock = getTextBlock();
-		final Dimension2D size = textBlock.calculateDimension(stringBounder);
+		final XDimension2D size = textBlock.calculateDimension(stringBounder);
 		return size.getWidth();
 	}
 
@@ -126,7 +126,7 @@ public abstract class AbstractTextualComponent extends AbstractComponent {
 
 	final protected double getTextHeight(StringBounder stringBounder) {
 		final TextBlock textBlock = getTextBlock();
-		final Dimension2D size = textBlock.calculateDimension(stringBounder);
+		final XDimension2D size = textBlock.calculateDimension(stringBounder);
 		return size.getHeight() + 2 * marginY;
 	}
 

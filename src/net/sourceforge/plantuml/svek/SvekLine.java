@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.svek;
 
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.EnumMap;
@@ -46,7 +45,6 @@ import java.util.Set;
 
 import net.sourceforge.plantuml.AlignmentParam;
 import net.sourceforge.plantuml.ColorParam;
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.Hideable;
 import net.sourceforge.plantuml.ISkinParam;
@@ -56,7 +54,8 @@ import net.sourceforge.plantuml.Pragma;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.CucaNote;
@@ -110,7 +109,7 @@ import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class SvekLine implements Moveable, Hideable, GuideLine {
 
-	private static final Dimension2DDouble CONSTRAINT_SPOT = new Dimension2DDouble(10, 10);
+	private static final XDimension2D CONSTRAINT_SPOT = new XDimension2D(10, 10);
 
 	private final Cluster ltail;
 	private final Cluster lhead;
@@ -173,8 +172,8 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 			final double startAngle = dotPath.getStartAngle();
 			return Direction.LEFT;
 		}
-		final Point2D start = dotPath.getStartPoint();
-		final Point2D end = dotPath.getEndPoint();
+		final XPoint2D start = dotPath.getStartPoint();
+		final XPoint2D end = dotPath.getEndPoint();
 		final double ang = Math.atan2(end.getX() - start.getX(), end.getY() - start.getY());
 		if (ang > -Math.PI / 4 && ang < Math.PI / 4)
 			return Direction.DOWN;
@@ -197,8 +196,8 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 			final double startAngle = dotPath.getStartAngle();
 			return startAngle;
 		}
-		final Point2D start = dotPath.getStartPoint();
-		final Point2D end = dotPath.getEndPoint();
+		final XPoint2D start = dotPath.getStartPoint();
+		final XPoint2D end = dotPath.getEndPoint();
 		final double ang = Math.atan2(end.getX() - start.getX(), end.getY() - start.getY());
 		return ang;
 	}
@@ -400,8 +399,8 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 			} else {
 				sb.append("label=<");
 			}
-			Dimension2D dimNote = hasNoteLabelText() ? labelText.calculateDimension(stringBounder) : CONSTRAINT_SPOT;
-			dimNote = Dimension2DDouble.delta(dimNote, 2 * labelShield);
+			XDimension2D dimNote = hasNoteLabelText() ? labelText.calculateDimension(stringBounder) : CONSTRAINT_SPOT;
+			dimNote = XDimension2D.delta(dimNote, 2 * labelShield);
 
 			appendTable(sb, eventuallyDivideByTwo(dimNote), noteLabelColor, graphvizVersion);
 			sb.append(">");
@@ -435,9 +434,9 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		SvekUtils.println(sb);
 	}
 
-	private Dimension2D eventuallyDivideByTwo(Dimension2D dim) {
+	private XDimension2D eventuallyDivideByTwo(XDimension2D dim) {
 		if (divideLabelWidthByTwo)
-			return new Dimension2DDouble(dim.getWidth() / 2, dim.getHeight());
+			return new XDimension2D(dim.getWidth() / 2, dim.getHeight());
 
 		return dim;
 	}
@@ -453,7 +452,7 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		return null;
 	}
 
-	public static void appendTable(StringBuilder sb, Dimension2D dim, int col, GraphvizVersion graphvizVersion) {
+	public static void appendTable(StringBuilder sb, XDimension2D dim, int col, GraphvizVersion graphvizVersion) {
 		final int w = (int) dim.getWidth();
 		final int h = (int) dim.getHeight();
 		appendTable(sb, w, h, col);
@@ -482,7 +481,7 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		return endUid.getPrefix();
 	}
 
-	private UDrawable getExtremity(LinkDecor decor, PointListIterator pointListIterator, final Point2D center,
+	private UDrawable getExtremity(LinkDecor decor, PointListIterator pointListIterator, final XPoint2D center,
 			double angle, Cluster cluster, SvekNode nodeContact) {
 		final ExtremityFactory extremityFactory = decor.getExtremityFactory(backgroundColor);
 
@@ -498,13 +497,13 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		}
 
 		if (extremityFactory != null) {
-			final List<Point2D.Double> points = pointListIterator.next();
+			final List<XPoint2D> points = pointListIterator.next();
 			if (points.size() == 0)
 				return extremityFactory.createUDrawable(center, angle, null);
 
-			final Point2D p0 = points.get(0);
-			final Point2D p1 = points.get(1);
-			final Point2D p2 = points.get(2);
+			final XPoint2D p0 = points.get(0);
+			final XPoint2D p1 = points.get(1);
+			final XPoint2D p2 = points.get(2);
 			Side side = null;
 			if (nodeContact != null)
 				side = nodeContact.getClusterPosition().getClosestSide(p1);
@@ -512,7 +511,7 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 			return extremityFactory.createUDrawable(p0, p1, p2, side);
 		} else if (decor == LinkDecor.NONE) {
 			final UPolygon sh = new UPolygon(pointListIterator.cloneMe().next());
-			final Point2D contact = sh.checkMiddleContactForSpecificTriangle(center);
+			final XPoint2D contact = sh.checkMiddleContactForSpecificTriangle(center);
 			if (contact != null) {
 				return new UDrawable() {
 					public void drawU(UGraphic ug) {
@@ -580,8 +579,8 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 			bibliotekon.getNode(link.getEntity2()).addImpact(dotPath.getEndAngle());
 
 		if (extremity1 instanceof Extremity && extremity2 instanceof Extremity) {
-			final Point2D p1 = ((Extremity) extremity1).somePoint();
-			final Point2D p2 = ((Extremity) extremity2).somePoint();
+			final XPoint2D p1 = ((Extremity) extremity1).somePoint();
+			final XPoint2D p2 = ((Extremity) extremity2).somePoint();
 			if (p1 != null && p2 != null) {
 				// http://plantuml.sourceforge.net/qa/?qa=4240/some-relations-point-wrong-direction-when-the-linetype-ortho
 				final double dist1start = p1.distance(dotPath.getStartPoint());
@@ -600,7 +599,7 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		}
 
 		if (hasNoteLabelText() || link.getLinkConstraint() != null) {
-			final Point2D pos = getXY(fullSvg, this.noteLabelColor);
+			final XPoint2D pos = getXY(fullSvg, this.noteLabelColor);
 			if (pos != null) {
 //				corner1.manage(pos);
 				this.labelXY = hasNoteLabelText() ? TextBlockUtils.asPositionable(labelText, stringBounder, pos)
@@ -609,7 +608,7 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		}
 
 		if (this.startTailText != null) {
-			final Point2D pos = getXY(fullSvg, this.startTailColor);
+			final XPoint2D pos = getXY(fullSvg, this.startTailColor);
 			if (pos != null) {
 //				corner1.manage(pos);
 				this.startTailLabelXY = TextBlockUtils.asPositionable(startTailText, stringBounder, pos);
@@ -617,7 +616,7 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		}
 
 		if (this.endHeadText != null) {
-			final Point2D pos = getXY(fullSvg, this.endHeadColor);
+			final XPoint2D pos = getXY(fullSvg, this.endHeadColor);
 			if (pos != null) {
 //				corner1.manage(pos);
 				this.endHeadLabelXY = TextBlockUtils.asPositionable(endHeadText, stringBounder, pos);
@@ -634,7 +633,7 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		return dotPath.getBeziers().size() <= 1;
 	}
 
-	private Point2D getXY(SvgResult svgResult, int color) {
+	private XPoint2D getXY(SvgResult svgResult, int color) {
 		final int idx = svgResult.getIndexFromColor(color);
 		if (idx == -1)
 			return null;
@@ -654,7 +653,7 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 			Log.info("DotPath is null for " + this);
 			return;
 		}
-
+		
 		ug.draw(link.commentForSvg());
 		final Map<UGroupType, String> typeIDent = new EnumMap<>(UGroupType.class);
 		typeIDent.put(UGroupType.CLASS,
@@ -713,11 +712,11 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 
 		if (extremity1 instanceof Extremity && extremity2 instanceof Extremity) {
 			// http://forum.plantuml.net/9421/arrow-inversion-with-skinparam-linetype-ortho-missing-arrow
-			final Point2D p1 = ((Extremity) extremity1).isTooSmallSoGiveThePointCloserToThisOne(todraw.getStartPoint());
+			final XPoint2D p1 = ((Extremity) extremity1).isTooSmallSoGiveThePointCloserToThisOne(todraw.getStartPoint());
 			if (p1 != null)
 				todraw.forceStartPoint(p1.getX(), p1.getY());
 
-			final Point2D p2 = ((Extremity) extremity2).isTooSmallSoGiveThePointCloserToThisOne(todraw.getEndPoint());
+			final XPoint2D p2 = ((Extremity) extremity2).isTooSmallSoGiveThePointCloserToThisOne(todraw.getEndPoint());
 			if (p2 != null)
 				todraw.forceEndPoint(p2.getX(), p2.getY());
 
@@ -760,12 +759,12 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 			final double xConstraint = x + this.labelXY.getPosition().getX();
 			final double yConstraint = y + this.labelXY.getPosition().getY();
 //			ug.apply(new UTranslate(xConstraint, yConstraint)).draw(new URectangle(10, 10));
-			final List<Point2D> square = getSquare(xConstraint, yConstraint);
-			final Set<Point2D> bez = dotPath.sample();
-			Point2D minPt = null;
+			final List<XPoint2D> square = getSquare(xConstraint, yConstraint);
+			final Set<XPoint2D> bez = dotPath.sample();
+			XPoint2D minPt = null;
 			double minDist = Double.MAX_VALUE;
-			for (Point2D pt : square)
-				for (Point2D pt2 : bez) {
+			for (XPoint2D pt : square)
+				for (XPoint2D pt2 : bez) {
 					final double distance = pt2.distance(pt);
 					if (minPt == null || distance < minDist) {
 						minPt = pt;
@@ -791,16 +790,16 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		}
 	}
 
-	private List<Point2D> getSquare(double x, double y) {
-		final List<Point2D> result = new ArrayList<>();
-		result.add(new Point2D.Double(x, y));
-		result.add(new Point2D.Double(x + 5, y));
-		result.add(new Point2D.Double(x + 10, y));
-		result.add(new Point2D.Double(x, y + 5));
-		result.add(new Point2D.Double(x + 10, y + 5));
-		result.add(new Point2D.Double(x, y + 10));
-		result.add(new Point2D.Double(x + 5, y + 10));
-		result.add(new Point2D.Double(x + 10, y + 10));
+	private List<XPoint2D> getSquare(double x, double y) {
+		final List<XPoint2D> result = new ArrayList<>();
+		result.add(new XPoint2D(x, y));
+		result.add(new XPoint2D(x + 5, y));
+		result.add(new XPoint2D(x + 10, y));
+		result.add(new XPoint2D(x, y + 5));
+		result.add(new XPoint2D(x + 10, y + 5));
+		result.add(new XPoint2D(x, y + 10));
+		result.add(new XPoint2D(x + 5, y + 10));
+		result.add(new XPoint2D(x + 10, y + 10));
 		return result;
 	}
 
@@ -940,11 +939,11 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 
 	}
 
-	private void avoid(Point2D.Double move, Positionable pos, SvekNode sh) {
+	private void avoid(XPoint2D move, Positionable pos, SvekNode sh) {
 		final Oscillator oscillator = new Oscillator();
-		final Point2D.Double orig = new Point2D.Double(move.x, move.y);
+		final XPoint2D orig = new XPoint2D(move.x, move.y);
 		while (cut(pos, sh)) {
-			final Point2D.Double m = oscillator.nextPosition();
+			final XPoint2D m = oscillator.nextPosition();
 			move.setLocation(orig.x + m.x, orig.y + m.y);
 		}
 	}
@@ -955,7 +954,7 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 
 	private boolean tooClose(Positionable pos) {
 		final double dist = dotPath.getMinDist(BezierUtils.getCenter(pos));
-		final Dimension2D dim = pos.getSize();
+		final XDimension2D dim = pos.getSize();
 		// Log.println("dist=" + dist);
 		return dist < (dim.getWidth() / 2 + 2) || dist < (dim.getHeight() / 2 + 2);
 	}
@@ -1014,7 +1013,7 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		return link.getEntity1() == link.getEntity2();
 	}
 
-	public Point2D getMyPoint(IEntity entity) {
+	public XPoint2D getMyPoint(IEntity entity) {
 		if (link.getEntity1() == entity)
 			return moveDelta(dotPath.getStartPoint());
 
@@ -1024,30 +1023,30 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		throw new IllegalArgumentException();
 	}
 
-	private Point2D moveDelta(Point2D pt) {
-		return new Point2D.Double(pt.getX() + dx, pt.getY() + dy);
+	private XPoint2D moveDelta(XPoint2D pt) {
+		return new XPoint2D(pt.getX() + dx, pt.getY() + dy);
 	}
 
 	public boolean isLink(Link link) {
 		return this.link == link;
 	}
 
-	public Point2D getStartContactPoint() {
+	public XPoint2D getStartContactPoint() {
 		if (dotPath == null)
 			return null;
-		final Point2D start = dotPath.getStartPoint();
+		final XPoint2D start = dotPath.getStartPoint();
 		if (start == null)
 			return null;
 
-		return new Point2D.Double(dx + start.getX(), dy + start.getY());
+		return new XPoint2D(dx + start.getX(), dy + start.getY());
 	}
 
-	public Point2D getEndContactPoint() {
-		final Point2D end = dotPath.getEndPoint();
+	public XPoint2D getEndContactPoint() {
+		final XPoint2D end = dotPath.getEndPoint();
 		if (end == null)
 			return null;
 
-		return new Point2D.Double(dx + end.getX(), dy + end.getY());
+		return new XPoint2D(dx + end.getX(), dy + end.getY());
 	}
 
 	public IEntity getOther(IEntity entity) {

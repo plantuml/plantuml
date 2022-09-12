@@ -35,11 +35,10 @@
  */
 package net.sourceforge.plantuml.posimo;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-import java.awt.geom.Point2D;
 import java.util.Locale;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 
 public class Block implements Clusterable {
 
@@ -74,12 +73,12 @@ public class Block implements Clusterable {
 		return parent;
 	}
 
-	public Point2D getPosition() {
-		return new Point2D.Double(x, y);
+	public XPoint2D getPosition() {
+		return new XPoint2D(x, y);
 	}
 
-	public Dimension2D getSize() {
-		return new Dimension2DDouble(width, height);
+	public XDimension2D getSize() {
+		return new XDimension2D(width, height);
 	}
 
 	public void setCenterX(double center) {

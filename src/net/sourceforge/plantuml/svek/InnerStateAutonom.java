@@ -35,9 +35,8 @@
  */
 package net.sourceforge.plantuml.svek;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -78,9 +77,9 @@ public final class InnerStateAutonom extends AbstractTextBlock implements IEntit
 	}
 
 	public void drawU(UGraphic ug) {
-		final Dimension2D text = title.calculateDimension(ug.getStringBounder());
-		final Dimension2D attr = attribute.calculateDimension(ug.getStringBounder());
-		final Dimension2D total = calculateDimension(ug.getStringBounder());
+		final XDimension2D text = title.calculateDimension(ug.getStringBounder());
+		final XDimension2D attr = attribute.calculateDimension(ug.getStringBounder());
+		final XDimension2D total = calculateDimension(ug.getStringBounder());
 		final double marginForFields = attr.getHeight() > 0 ? IEntityImage.MARGIN : 0;
 
 		final double titreHeight = IEntityImage.MARGIN + text.getHeight() + IEntityImage.MARGIN_LINE;
@@ -108,8 +107,8 @@ public final class InnerStateAutonom extends AbstractTextBlock implements IEntit
 	}
 
 	private double getSpaceYforURL(StringBounder stringBounder) {
-		final Dimension2D text = title.calculateDimension(stringBounder);
-		final Dimension2D attr = attribute.calculateDimension(stringBounder);
+		final XDimension2D text = title.calculateDimension(stringBounder);
+		final XDimension2D attr = attribute.calculateDimension(stringBounder);
 		final double marginForFields = attr.getHeight() > 0 ? IEntityImage.MARGIN : 0;
 		final double titreHeight = IEntityImage.MARGIN + text.getHeight() + IEntityImage.MARGIN_LINE;
 		final double suppY = titreHeight + marginForFields + attr.getHeight();
@@ -120,15 +119,15 @@ public final class InnerStateAutonom extends AbstractTextBlock implements IEntit
 		return null;
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		final Dimension2D img = im.calculateDimension(stringBounder);
-		final Dimension2D text = title.calculateDimension(stringBounder);
-		final Dimension2D attr = attribute.calculateDimension(stringBounder);
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		final XDimension2D img = im.calculateDimension(stringBounder);
+		final XDimension2D text = title.calculateDimension(stringBounder);
+		final XDimension2D attr = attribute.calculateDimension(stringBounder);
 
-		final Dimension2D dim = Dimension2DDouble.mergeTB(text, attr, img);
+		final XDimension2D dim = XDimension2D.mergeTB(text, attr, img);
 		final double marginForFields = attr.getHeight() > 0 ? IEntityImage.MARGIN : 0;
 
-		final Dimension2D result = Dimension2DDouble.delta(dim,
+		final XDimension2D result = XDimension2D.delta(dim,
 				IEntityImage.MARGIN * 2 + 2 * IEntityImage.MARGIN_LINE + marginForFields);
 
 		return result;

@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.ugraphic.svg;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Map;
@@ -42,6 +41,7 @@ import java.util.Map;
 import javax.xml.transform.TransformerException;
 
 import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.posimo.DotPath;
 import net.sourceforge.plantuml.svg.DarkStrategy;
@@ -89,7 +89,7 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 		register();
 	}
 
-	public UGraphicSvg(HColor defaultBackground, boolean svgDimensionStyle, Dimension2D minDim, ColorMapper colorMapper,
+	public UGraphicSvg(HColor defaultBackground, boolean svgDimensionStyle, XDimension2D minDim, ColorMapper colorMapper,
 			boolean textAsPath, double scale, String linkTarget, String hover, long seed, String preserveAspectRatio,
 			StringBounder stringBounder, LengthAdjust lengthAdjust, boolean interactive) {
 		this(defaultBackground, minDim, colorMapper,
@@ -117,7 +117,7 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 		getGraphicObject().setHidden(false);
 	}
 
-	private UGraphicSvg(HColor defaultBackground, Dimension2D minDim, ColorMapper colorMapper, SvgGraphics svg,
+	private UGraphicSvg(HColor defaultBackground, XDimension2D minDim, ColorMapper colorMapper, SvgGraphics svg,
 			boolean textAsPath, String linkTarget, StringBounder stringBounder, boolean interactive) {
 		super(defaultBackground, colorMapper, stringBounder, svg);
 		this.textAsPath2 = textAsPath;

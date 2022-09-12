@@ -35,11 +35,10 @@
  */
 package net.sourceforge.plantuml.cucadiagram;
 
-import java.awt.geom.Point2D;
-
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -66,7 +65,7 @@ public class LinkConstraint {
 		this.display = display;
 	}
 
-	public void setPosition(Link link, Point2D pt) {
+	public void setPosition(Link link, XPoint2D pt) {
 		if (link == link1) {
 			x1 = pt.getX();
 			y1 = pt.getY();
@@ -95,7 +94,7 @@ public class LinkConstraint {
 
 		final TextBlock label = display.create(FontConfiguration.create(skinParam, FontParam.ARROW, null),
 				HorizontalAlignment.CENTER, skinParam);
-		final Dimension2D dimLabel = label.calculateDimension(ug.getStringBounder());
+		final XDimension2D dimLabel = label.calculateDimension(ug.getStringBounder());
 		final double x = (x1 + x2) / 2 - dimLabel.getWidth() / 2;
 		final double y = (y1 + y2) / 2 - dimLabel.getHeight() / 2;
 		label.drawU(ug.apply(new UTranslate(x, y)));

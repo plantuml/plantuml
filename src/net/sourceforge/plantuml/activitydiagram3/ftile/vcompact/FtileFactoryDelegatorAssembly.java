@@ -35,14 +35,13 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 
-import java.awt.geom.Point2D;
-
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactoryDelegator;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileMargedRight;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileUtils;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -71,9 +70,9 @@ public class FtileFactoryDelegatorAssembly extends FtileFactoryDelegator {
 			return result;
 		}
 		final UTranslate translate1 = result.getTranslateFor(tile1andSpace, stringBounder);
-		final Point2D p1 = geo.translate(translate1).getPointOut();
+		final XPoint2D p1 = geo.translate(translate1).getPointOut();
 		final UTranslate translate2 = result.getTranslateFor(tile2, stringBounder);
-		final Point2D p2 = tile2.calculateDimension(stringBounder).translate(translate2).getPointIn();
+		final XPoint2D p2 = tile2.calculateDimension(stringBounder).translate(translate2).getPointIn();
 
 		final Rainbow color = getInLinkRenderingColor(tile2);
 

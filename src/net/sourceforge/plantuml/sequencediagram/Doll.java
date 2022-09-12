@@ -39,10 +39,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.PaddingParam;
 import net.sourceforge.plantuml.SkinParamBackcolored;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.sequencediagram.teoz.LivingSpace;
@@ -193,7 +193,7 @@ public class Doll implements WithStyle {
 			height -= titlePreferredHeight;
 		}
 
-		final Dimension2DDouble dim = new Dimension2DDouble(x2 - x1, height);
+		final XDimension2D dim = new XDimension2D(x2 - x1, height);
 		getComponent().drawU(ug.apply(new UTranslate(x1, 1)), new Area(dim), context);
 	}
 

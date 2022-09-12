@@ -35,8 +35,7 @@
  */
 package net.sourceforge.plantuml.skin;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -110,8 +109,8 @@ public class Padder {
 			return orig;
 		}
 		return new AbstractTextBlock() {
-			public Dimension2D calculateDimension(StringBounder stringBounder) {
-				return Dimension2DDouble.delta(orig.calculateDimension(stringBounder), 2 * (margin + padding));
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
+				return XDimension2D.delta(orig.calculateDimension(stringBounder), 2 * (margin + padding));
 			}
 
 			public void drawU(UGraphic ug) {
@@ -127,8 +126,8 @@ public class Padder {
 				} else {
 					ug2 = ug2.apply(backgroundColor.bg());
 				}
-				final Dimension2D originalDim = orig.calculateDimension(ug.getStringBounder());
-				final URectangle rect = new URectangle(Dimension2DDouble.delta(originalDim, 2 * padding))
+				final XDimension2D originalDim = orig.calculateDimension(ug.getStringBounder());
+				final URectangle rect = new URectangle(XDimension2D.delta(originalDim, 2 * padding))
 						.rounded(roundCorner);
 				ug2.draw(rect);
 				orig.drawU(ug.apply(new UTranslate(padding, padding)));

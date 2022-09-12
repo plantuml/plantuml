@@ -35,15 +35,14 @@
  */
 package net.sourceforge.plantuml.wire;
 
-import java.awt.geom.Point2D;
-
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class WCursor {
 
 	private UTranslate position = new UTranslate();
 
-	public Point2D getPosition() {
+	public XPoint2D getPosition() {
 		return position.getPosition();
 	}
 

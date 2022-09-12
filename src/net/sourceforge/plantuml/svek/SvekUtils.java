@@ -35,13 +35,13 @@
  */
 package net.sourceforge.plantuml.svek;
 
-import java.awt.geom.Point2D;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 import java.util.Locale;
 
 import net.sourceforge.plantuml.Log;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.security.SFile;
 
 public class SvekUtils {
@@ -65,7 +65,7 @@ public class SvekUtils {
 
 	}
 
-	public static Point2D getMinXY(List<Point2D.Double> points) {
+	public static XPoint2D getMinXY(List<XPoint2D> points) {
 		double minx = points.get(0).x;
 		double miny = points.get(0).y;
 		for (int i = 1; i < points.size(); i++) {
@@ -74,10 +74,10 @@ public class SvekUtils {
 			if (points.get(i).y < miny)
 				miny = points.get(i).y;
 		}
-		return new Point2D.Double(minx, miny);
+		return new XPoint2D(minx, miny);
 	}
 
-	public static Point2D getMaxXY(List<Point2D.Double> points) {
+	public static XPoint2D getMaxXY(List<XPoint2D> points) {
 		double maxx = points.get(0).x;
 		double maxy = points.get(0).y;
 		for (int i = 1; i < points.size(); i++) {
@@ -87,7 +87,7 @@ public class SvekUtils {
 				maxy = points.get(i).y;
 		}
 
-		return new Point2D.Double(maxx, maxy);
+		return new XPoint2D(maxx, maxy);
 	}
 
 	public static void println(StringBuilder sb) {

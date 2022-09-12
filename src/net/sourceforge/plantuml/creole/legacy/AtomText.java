@@ -43,12 +43,11 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.BackSlash;
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.creole.atom.AbstractAtom;
 import net.sourceforge.plantuml.creole.atom.Atom;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -111,8 +110,8 @@ public final class AtomText extends AbstractAtom implements Atom {
 		return new AtomText(text, fontConfiguration, url, marginLeft, marginRight, manageSpecialChars);
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		final Dimension2D rect = stringBounder.calculateDimension(fontConfiguration.getFont(), text);
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		final XDimension2D rect = stringBounder.calculateDimension(fontConfiguration.getFont(), text);
 		Log.debug("g2d=" + rect);
 		Log.debug("Size for " + text + " is " + rect);
 		double h = rect.getHeight();
@@ -125,7 +124,7 @@ public final class AtomText extends AbstractAtom implements Atom {
 		if (visibility != null)
 			width += visibility.calculateDimension(stringBounder).getWidth();
 
-		return new Dimension2DDouble(width + left + right, h);
+		return new XDimension2D(width + left + right, h);
 	}
 
 	public void drawU(UGraphic ug) {
@@ -161,7 +160,7 @@ public final class AtomText extends AbstractAtom implements Atom {
 			final StringTokenizer tokenizer = new StringTokenizer(text, "\t", true);
 
 			// final int ypos = fontConfiguration.getSpace();
-			final Dimension2D rect = ug.getStringBounder().calculateDimension(fontConfiguration.getFont(), text);
+			final XDimension2D rect = ug.getStringBounder().calculateDimension(fontConfiguration.getFont(), text);
 			final double descent = getDescent(ug.getStringBounder());
 			final double ypos = rect.getHeight() - descent;
 
@@ -174,7 +173,7 @@ public final class AtomText extends AbstractAtom implements Atom {
 						final double remainder = x % tabSize;
 						x += tabSize - remainder;
 					} else {
-						final Dimension2D dim = ug.getStringBounder().calculateDimension(fontConfiguration.getFont(),
+						final XDimension2D dim = ug.getStringBounder().calculateDimension(fontConfiguration.getFont(),
 								s);
 						final UText utext = new UText(s, useFontConfiguration);
 						ug.apply(new UTranslate(x, ypos)).draw(utext);
@@ -198,7 +197,7 @@ public final class AtomText extends AbstractAtom implements Atom {
 				final double remainder = x % tabSize;
 				x += tabSize - remainder;
 			} else {
-				final Dimension2D dim = stringBounder.calculateDimension(fontConfiguration.getFont(), s);
+				final XDimension2D dim = stringBounder.calculateDimension(fontConfiguration.getFont(), s);
 				x += dim.getWidth();
 			}
 		}

@@ -38,8 +38,7 @@ package net.sourceforge.plantuml.creole.atom;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.math.ScientificEquationSafe;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -63,14 +62,14 @@ public class AtomMath extends AbstractAtom implements Atom {
 		this.background = background;
 	}
 
-	private Dimension2D calculateDimensionSlow(StringBounder stringBounder) {
+	private XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
 		final BufferedImage image = math.getImage(Color.BLACK, Color.WHITE).withScale(1).getImage();
-		return new Dimension2DDouble(image.getWidth(), image.getHeight());
+		return new XDimension2D(image.getWidth(), image.getHeight());
 	}
 
-	private Dimension2D dim;
+	private XDimension2D dim;
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		if (dim == null) {
 			dim = calculateDimensionSlow(stringBounder);
 		}

@@ -35,8 +35,7 @@
  */
 package net.sourceforge.plantuml.svek.extremity;
 
-import java.awt.geom.Point2D;
-
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
@@ -48,21 +47,21 @@ import net.sourceforge.plantuml.ugraphic.color.HColors;
 class ExtremityArrowAndCircle extends Extremity {
 
 	private UPolygon polygon = new UPolygon();
-	private final Point2D contact;
-	private final Point2D dest;
+	private final XPoint2D contact;
+	private final XPoint2D dest;
 	private final double radius = 5;
 	private final HColor backgroundColor;
 
 	@Override
-	public Point2D somePoint() {
+	public XPoint2D somePoint() {
 		return contact;
 	}
 
-	public ExtremityArrowAndCircle(Point2D p1, double angle, Point2D center, HColor backgroundColor) {
+	public ExtremityArrowAndCircle(XPoint2D p1, double angle, XPoint2D center, HColor backgroundColor) {
 		angle = manageround(angle);
 		polygon.addPoint(0, 0);
 		this.backgroundColor = backgroundColor;
-		this.dest = new Point2D.Double(p1.getX(), p1.getY());
+		this.dest = new XPoint2D(p1.getX(), p1.getY());
 		final int xWing = 9;
 		final int yAperture = 4;
 		polygon.addPoint(-xWing, -yAperture);
@@ -72,7 +71,7 @@ class ExtremityArrowAndCircle extends Extremity {
 		polygon.addPoint(0, 0);
 		polygon.rotate(angle + Math.PI / 2);
 		polygon = polygon.translate(p1.getX() + radius * Math.sin(angle), p1.getY() - radius * Math.cos(angle));
-		contact = new Point2D.Double(p1.getX() - xContact * Math.cos(angle + Math.PI / 2),
+		contact = new XPoint2D(p1.getX() - xContact * Math.cos(angle + Math.PI / 2),
 				p1.getY() - xContact * Math.sin(angle + Math.PI / 2));
 	}
 

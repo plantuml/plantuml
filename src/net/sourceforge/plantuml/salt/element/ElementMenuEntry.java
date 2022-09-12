@@ -35,10 +35,8 @@
  */
 package net.sourceforge.plantuml.salt.element;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -62,17 +60,17 @@ public class ElementMenuEntry extends AbstractElement {
 		this.text = text;
 	}
 
-	public Dimension2D getPreferredDimension(StringBounder stringBounder, double x, double y) {
+	public XDimension2D getPreferredDimension(StringBounder stringBounder, double x, double y) {
 		if (text.equals("-")) {
-			return new Dimension2DDouble(10, 5);
+			return new XDimension2D(10, 5);
 		}
 		return block.calculateDimension(stringBounder);
 	}
 
-	public void drawU(UGraphic ug, int zIndex, Dimension2D dimToUse) {
+	public void drawU(UGraphic ug, int zIndex, XDimension2D dimToUse) {
 		ug = ug.apply(getBlack());
 		if (background != null) {
-			final Dimension2D dim = getPreferredDimension(ug.getStringBounder(), 0, 0);
+			final XDimension2D dim = getPreferredDimension(ug.getStringBounder(), 0, 0);
 			ug.apply(background.bg()).draw(new URectangle(dim.getWidth(), dim.getHeight()));
 		}
 		block.drawU(ug);

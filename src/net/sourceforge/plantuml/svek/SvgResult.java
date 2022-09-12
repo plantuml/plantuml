@@ -35,13 +35,13 @@
  */
 package net.sourceforge.plantuml.svek;
 
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 
 public class SvgResult {
 
@@ -60,7 +60,7 @@ public class SvgResult {
 		return PointListIteratorImpl.create(this, lineColor);
 	}
 
-	public List<Point2D.Double> extractList(final String searched) {
+	public List<XPoint2D> extractList(final String searched) {
 		final int p2 = this.indexOf(searched, 0);
 		if (p2 == -1)
 			return Collections.emptyList();
@@ -94,10 +94,10 @@ public class SvgResult {
 
 	}
 
-	public List<Point2D.Double> getPoints(String separator) {
+	public List<XPoint2D> getPoints(String separator) {
 		try {
 			final StringTokenizer st = new StringTokenizer(svg, separator);
-			final List<Point2D.Double> result = new ArrayList<Point2D.Double>();
+			final List<XPoint2D> result = new ArrayList<XPoint2D>();
 			while (st.hasMoreTokens())
 				result.add(getFirstPoint(st.nextToken()));
 
@@ -107,15 +107,15 @@ public class SvgResult {
 		}
 	}
 
-	public Point2D.Double getNextPoint() {
+	public XPoint2D getNextPoint() {
 		return getFirstPoint(svg);
 	}
 
-	private Point2D.Double getFirstPoint(final String tmp) {
+	private XPoint2D getFirstPoint(final String tmp) {
 		final StringTokenizer st = new StringTokenizer(tmp, ",");
 		final double startX = Double.parseDouble(st.nextToken());
 		final double startY = Double.parseDouble(st.nextToken());
-		return function.apply(new Point2D.Double(startX, startY));
+		return function.apply(new XPoint2D(startX, startY));
 	}
 
 	public int indexOf(String s, int pos) {

@@ -35,9 +35,8 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
@@ -55,8 +54,8 @@ public class EntityImageAssociationPoint extends AbstractEntityImage {
 		super(entity, skinParam);
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		return new Dimension2DDouble(SIZE, SIZE);
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		return new XDimension2D(SIZE, SIZE);
 	}
 
 	final public void drawU(UGraphic ug) {

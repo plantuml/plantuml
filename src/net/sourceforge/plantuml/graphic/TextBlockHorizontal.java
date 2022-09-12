@@ -38,8 +38,7 @@ package net.sourceforge.plantuml.graphic;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
@@ -62,19 +61,19 @@ public class TextBlockHorizontal extends AbstractTextBlock implements TextBlock 
 		this.alignment = alignment;
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		Dimension2D dim = blocks.get(0).calculateDimension(stringBounder);
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		XDimension2D dim = blocks.get(0).calculateDimension(stringBounder);
 		for (int i = 1; i < blocks.size(); i++) {
-			dim = Dimension2DDouble.mergeLR(dim, blocks.get(i).calculateDimension(stringBounder));
+			dim = XDimension2D.mergeLR(dim, blocks.get(i).calculateDimension(stringBounder));
 		}
 		return dim;
 	}
 
 	public void drawU(UGraphic ug) {
 		double x = 0;
-		final Dimension2D dimtotal = calculateDimension(ug.getStringBounder());
+		final XDimension2D dimtotal = calculateDimension(ug.getStringBounder());
 		for (TextBlock block : blocks) {
-			final Dimension2D dimb = block.calculateDimension(ug.getStringBounder());
+			final XDimension2D dimb = block.calculateDimension(ug.getStringBounder());
 			if (alignment == VerticalAlignment.CENTER) {
 				final double dy = (dimtotal.getHeight() - dimb.getHeight()) / 2;
 				block.drawU(ug.apply(new UTranslate(x, dy)));

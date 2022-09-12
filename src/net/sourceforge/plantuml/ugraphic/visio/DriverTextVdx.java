@@ -34,9 +34,8 @@
  */
 package net.sourceforge.plantuml.ugraphic.visio;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UDriver;
@@ -70,7 +69,7 @@ public class DriverTextVdx implements UDriver<UText, VisioGraphics> {
 		}
 
 		text = StringUtils.trin(text);
-		final Dimension2D dim = stringBounder.calculateDimension(font, text);
+		final XDimension2D dim = stringBounder.calculateDimension(font, text);
 		visio.text(text, x, y, font.getFamily(UFontContext.SVG), font.getSize(), dim.getWidth(), dim.getHeight(),
 				fontConfiguration.getAttributes());
 

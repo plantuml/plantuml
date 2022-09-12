@@ -41,11 +41,10 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FileSystem;
 import net.sourceforge.plantuml.FileUtils;
 import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.code.Base64Coder;
 import net.sourceforge.plantuml.creole.legacy.AtomTextUtils;
 import net.sourceforge.plantuml.flashcode.FlashCodeFactory;
@@ -192,8 +191,8 @@ public class AtomImg extends AbstractAtom implements Atom {
 
 	// End
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		return new Dimension2DDouble(image.getWidth() * scale, image.getHeight() * scale);
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		return new XDimension2D(image.getWidth() * scale, image.getHeight() * scale);
 	}
 
 	public double getStartingAltitude(StringBounder stringBounder) {

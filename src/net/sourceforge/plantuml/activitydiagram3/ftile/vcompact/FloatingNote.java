@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineBreakStrategy;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.creole.Parser;
 import net.sourceforge.plantuml.creole.Sheet;
@@ -89,7 +89,7 @@ public class FloatingNote extends AbstractTextBlock implements Stencil, TextBloc
 		opale.drawU(ug);
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		return opale.calculateDimension(stringBounder);
 	}
 

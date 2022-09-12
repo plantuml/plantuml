@@ -35,10 +35,8 @@
  */
 package net.sourceforge.plantuml.svek;
 
-import java.awt.geom.Rectangle2D;
-
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XRectangle2D;
 import net.sourceforge.plantuml.cucadiagram.dot.Neighborhood;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
@@ -54,9 +52,9 @@ public class EntityImageProtected extends AbstractTextBlock implements IEntityIm
 	private final Bibliotekon bibliotekon;
 	private final Neighborhood neighborhood;
 
-	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
-		final Rectangle2D result = orig.getInnerPosition(member, stringBounder, strategy);
-		return new Rectangle2D.Double(result.getMinX() + border, result.getMinY() + border, result.getWidth(),
+	public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+		final XRectangle2D result = orig.getInnerPosition(member, stringBounder, strategy);
+		return new XRectangle2D(result.getMinX() + border, result.getMinY() + border, result.getWidth(),
 				result.getHeight());
 	}
 
@@ -75,8 +73,8 @@ public class EntityImageProtected extends AbstractTextBlock implements IEntityIm
 		return orig.getBackcolor();
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		return Dimension2DDouble.delta(orig.calculateDimension(stringBounder), 2 * border);
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		return XDimension2D.delta(orig.calculateDimension(stringBounder), 2 * border);
 	}
 
 	public void drawU(UGraphic ug) {
@@ -84,7 +82,7 @@ public class EntityImageProtected extends AbstractTextBlock implements IEntityIm
 	}
 
 	public void drawUntranslated(UGraphic ug, double minX, double minY) {
-		final Dimension2D dim = orig.calculateDimension(ug.getStringBounder());
+		final XDimension2D dim = orig.calculateDimension(ug.getStringBounder());
 		neighborhood.drawU(ug, minX + border, minY + border, bibliotekon, dim);
 	}
 

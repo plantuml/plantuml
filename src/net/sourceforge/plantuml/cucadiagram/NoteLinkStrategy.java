@@ -35,19 +35,18 @@
  */
 package net.sourceforge.plantuml.cucadiagram;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 
 public enum NoteLinkStrategy {
 	NORMAL, HALF_PRINTED_FULL, HALF_NOT_PRINTED;
 
-	public Dimension2D computeDimension(double width, double height) {
+	public XDimension2D computeDimension(double width, double height) {
 		if (this == HALF_PRINTED_FULL) {
-			return new Dimension2DDouble(width / 2, height);
+			return new XDimension2D(width / 2, height);
 		}
 		if (this == HALF_NOT_PRINTED) {
-			return new Dimension2DDouble(0, 0);
+			return new XDimension2D(0, 0);
 		}
-		return new Dimension2DDouble(width, height);
+		return new XDimension2D(width, height);
 	}
 }

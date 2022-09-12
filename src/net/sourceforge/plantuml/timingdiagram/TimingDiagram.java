@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.timingdiagram;
 
-import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.math.BigDecimal;
@@ -46,12 +45,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.api.ThemeStyle;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XRectangle2D;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
@@ -114,14 +113,14 @@ public class TimingDiagram extends UmlDiagram implements Clocks {
 				drawInternal(ug);
 			}
 
-			public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+			public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
 				return null;
 			}
 
-			public Dimension2D calculateDimension(StringBounder stringBounder) {
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
 				final double withBeforeRuler = getPart1MaxWidth(stringBounder);
 				final double totalWith = withBeforeRuler + ruler.getWidth() + marginX1 + marginX2;
-				return new Dimension2DDouble(totalWith, getHeightTotal(stringBounder));
+				return new XDimension2D(totalWith, getHeightTotal(stringBounder));
 			}
 
 			public MinMax getMinMax(StringBounder stringBounder) {

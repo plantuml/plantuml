@@ -35,8 +35,7 @@
  */
 package net.sourceforge.plantuml.graphic;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 public class TextBlockEmpty extends AbstractTextBlock {
@@ -53,8 +52,8 @@ public class TextBlockEmpty extends AbstractTextBlock {
 		this(0, 0);
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		return new Dimension2DDouble(width, height);
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		return new XDimension2D(width, height);
 	}
 
 	public void drawU(UGraphic ug) {

@@ -33,20 +33,22 @@
  *
  *
  */
-package net.sourceforge.plantuml;
+package net.sourceforge.plantuml.awt.geom;
 
 import java.awt.Dimension;
-import java.awt.geom.Point2D;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import net.sourceforge.plantuml.utils.MathUtils;
 
-public class Dimension2DDouble extends Dimension2D {
+public class XDimension2D {
 
 	final private double width;
 	final private double height;
 
-	public Dimension2DDouble(double width, double height) {
+	public XDimension2D() {
+		this(0, 0);
+	}
+
+	public XDimension2D(double width, double height) {
 		if (Double.isNaN(width) || Double.isNaN(height))
 			throw new IllegalArgumentException();
 
@@ -54,74 +56,63 @@ public class Dimension2DDouble extends Dimension2D {
 		this.height = height;
 	}
 
-	private static Dimension2DDouble fromPoint(Point2D point) {
-		return new Dimension2DDouble(point.getX(), point.getY());
-	}
-
 	@Override
 	public String toString() {
 		return "[" + width + "," + height + "]";
 	}
 
-	@Override
 	public double getHeight() {
 		return height;
 	}
 
-	@Override
 	public double getWidth() {
 		return width;
 	}
 
-	@Override
-	public void setSize(double width, double height) {
-		throw new UnsupportedOperationException();
-	}
-
-	public static Dimension2D delta(Dimension2D dim, double delta) {
+	public static XDimension2D delta(XDimension2D dim, double delta) {
 		return delta(dim, delta, delta);
 	}
 
-	public Dimension2DDouble withWidth(double newWidth) {
-		return new Dimension2DDouble(newWidth, height);
+	public XDimension2D withWidth(double newWidth) {
+		return new XDimension2D(newWidth, height);
 	}
 
-	public static Dimension2D delta(Dimension2D dim, double deltaWidth, double deltaHeight) {
+	public static XDimension2D delta(XDimension2D dim, double deltaWidth, double deltaHeight) {
 		if (deltaHeight == 0 && deltaWidth == 0)
 			return dim;
 
-		return new Dimension2DDouble(dim.getWidth() + deltaWidth, dim.getHeight() + deltaHeight);
+		return new XDimension2D(dim.getWidth() + deltaWidth, dim.getHeight() + deltaHeight);
 	}
 
-	public static Dimension2D mergeTB(Dimension2D top, Dimension2D bottom) {
+	public static XDimension2D mergeTB(XDimension2D top, XDimension2D bottom) {
 		final double width = Math.max(top.getWidth(), bottom.getWidth());
 		final double height = top.getHeight() + bottom.getHeight();
-		return new Dimension2DDouble(width, height);
+		return new XDimension2D(width, height);
 	}
 
-	public static Dimension2D mergeTB(Dimension2D a, Dimension2D b, Dimension2D c) {
+	public static XDimension2D mergeTB(XDimension2D a, XDimension2D b, XDimension2D c) {
 		final double width = MathUtils.max(a.getWidth(), b.getWidth(), c.getWidth());
 		final double height = a.getHeight() + b.getHeight() + c.getHeight();
-		return new Dimension2DDouble(width, height);
+		return new XDimension2D(width, height);
 	}
 
-	public static Dimension2D mergeLR(Dimension2D left, Dimension2D right) {
+	public static XDimension2D mergeLR(XDimension2D left, XDimension2D right) {
 		final double height = Math.max(left.getHeight(), right.getHeight());
 		final double width = left.getWidth() + right.getWidth();
-		return new Dimension2DDouble(width, height);
+		return new XDimension2D(width, height);
 	}
 
-	public static Dimension2D mergeLayoutT12B3(Dimension2D top1, Dimension2D top2, Dimension2D bottom) {
+	public static XDimension2D mergeLayoutT12B3(XDimension2D top1, XDimension2D top2, XDimension2D bottom) {
 		final double width = MathUtils.max(top1.getWidth(), top2.getWidth(), bottom.getWidth());
 		final double height = top1.getHeight() + top2.getHeight() + bottom.getHeight();
-		return new Dimension2DDouble(width, height);
+		return new XDimension2D(width, height);
 	}
 
-	public static Dimension2D max(Dimension2D dim1, Dimension2D dim2) {
+	public static XDimension2D max(XDimension2D dim1, XDimension2D dim2) {
 		return atLeast(dim1, dim2.getWidth(), dim2.getHeight());
 	}
 
-	public static Dimension2D atLeast(Dimension2D dim, double minWidth, double minHeight) {
+	public static XDimension2D atLeast(XDimension2D dim, double minWidth, double minHeight) {
 		double h = dim.getHeight();
 		double w = dim.getWidth();
 		if (w > minWidth && h > minHeight)
@@ -133,11 +124,11 @@ public class Dimension2DDouble extends Dimension2D {
 		if (w < minWidth)
 			w = minWidth;
 
-		return new Dimension2DDouble(w, h);
+		return new XDimension2D(w, h);
 	}
 
-	public static Dimension2D fromDimension(Dimension dimension) {
-		return new Dimension2D(dimension.getWidth(), dimension.getHeight());
+	public static XDimension2D fromDimension(Dimension dimension) {
+		return new XDimension2D(dimension.getWidth(), dimension.getHeight());
 	}
 
 }

@@ -35,8 +35,7 @@
  */
 package net.sourceforge.plantuml.svek.extremity;
 
-import java.awt.geom.Point2D;
-
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -46,16 +45,16 @@ import net.sourceforge.plantuml.ugraphic.color.HColor;
 class ExtremitySquare extends Extremity {
 
 	private final HColor backgroundColor;
-	private final Point2D dest;
+	private final XPoint2D dest;
 	private final double radius = 5;
 
 	@Override
-	public Point2D somePoint() {
+	public XPoint2D somePoint() {
 		return dest;
 	}
 
-	public ExtremitySquare(Point2D p1, HColor backgroundColor) {
-		this.dest = new Point2D.Double(p1.getX(), p1.getY());
+	public ExtremitySquare(XPoint2D p1, HColor backgroundColor) {
+		this.dest = new XPoint2D(p1.getX(), p1.getY());
 		this.backgroundColor = backgroundColor;
 	}
 

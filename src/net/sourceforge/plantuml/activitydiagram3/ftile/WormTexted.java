@@ -35,11 +35,11 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-import java.awt.geom.Point2D;
 import java.util.Iterator;
 
 import net.sourceforge.plantuml.Direction;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.graphic.HtmlColorAndStyle;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class WormTexted implements Iterable<Point2D.Double> {
+public class WormTexted implements Iterable<XPoint2D> {
 
 	private final Worm worm;
 	private TextBlock textBlock;
@@ -62,7 +62,7 @@ public class WormTexted implements Iterable<Point2D.Double> {
 		this.worm = worm;
 	}
 
-	public Iterator<Point2D.Double> iterator() {
+	public Iterator<XPoint2D> iterator() {
 		return worm.iterator();
 	}
 
@@ -79,7 +79,7 @@ public class WormTexted implements Iterable<Point2D.Double> {
 		return worm;
 	}
 
-	public Point2D get(int i) {
+	public XPoint2D get(int i) {
 		return worm.get(i);
 	}
 
@@ -108,26 +108,26 @@ public class WormTexted implements Iterable<Point2D.Double> {
 		return TextBlockUtils.isEmpty(textBlock, stringBounder);
 	}
 
-	private Point2D getTextBlockPosition(StringBounder stringBounder) {
-		final Point2D pt1 = get(0);
-		final Point2D pt2 = get(1);
-		final Dimension2D dim = textBlock.calculateDimension(stringBounder);
+	private XPoint2D getTextBlockPosition(StringBounder stringBounder) {
+		final XPoint2D pt1 = get(0);
+		final XPoint2D pt2 = get(1);
+		final XDimension2D dim = textBlock.calculateDimension(stringBounder);
 		// if (worm.getDirectionsCode().startsWith("LD")) {
 		// final double y = pt1.getY() - dim.getHeight();
-		// return new Point2D.Double(Math.max(pt1.getX(), pt2.getX()) - dim.getWidth(), y);
+		// return new XPoint2D(Math.max(pt1.getX(), pt2.getX()) - dim.getWidth(), y);
 		// }
 		final double y = (pt1.getY() + pt2.getY()) / 2 - dim.getHeight() / 2;
-		return new Point2D.Double(Math.max(pt1.getX(), pt2.getX()) + 4, y);
+		return new XPoint2D(Math.max(pt1.getX(), pt2.getX()) + 4, y);
 	}
 
 	public double getMaxX(StringBounder stringBounder) {
 		double result = -Double.MAX_VALUE;
-		for (Point2D pt : this) {
+		for (XPoint2D pt : this) {
 			result = Math.max(result, pt.getX());
 		}
 		if (textBlock != null) {
-			final Point2D position = getTextBlockPosition(stringBounder);
-			final Dimension2D dim = textBlock.calculateDimension(stringBounder);
+			final XPoint2D position = getTextBlockPosition(stringBounder);
+			final XDimension2D dim = textBlock.calculateDimension(stringBounder);
 			result = Math.max(result, position.getX() + dim.getWidth());
 		}
 		return result;
@@ -135,7 +135,7 @@ public class WormTexted implements Iterable<Point2D.Double> {
 
 	void drawInternalLabel(UGraphic ug) {
 		if (textBlock != null) {
-			final Point2D position = getTextBlockPosition(ug.getStringBounder());
+			final XPoint2D position = getTextBlockPosition(ug.getStringBounder());
 			textBlock.drawU(ug.apply(new UTranslate(position)));
 		}
 	}

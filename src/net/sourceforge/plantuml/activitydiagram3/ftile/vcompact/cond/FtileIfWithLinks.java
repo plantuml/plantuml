@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond;
 
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +52,8 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.MergeStrategy;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.UGraphicInterceptorOneSwimlane;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -93,8 +93,8 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 
 		public void drawU(UGraphic ug) {
 			final StringBounder stringBounder = ug.getStringBounder();
-			final Point2D p1 = getP1(stringBounder);
-			final Point2D p2 = getP2(stringBounder);
+			final XPoint2D p1 = getP1(stringBounder);
+			final XPoint2D p2 = getP2(stringBounder);
 			final double x1 = p1.getX();
 			final double y1 = p1.getY();
 			final double x2 = p2.getX();
@@ -108,9 +108,9 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 			ug.draw(snake);
 		}
 
-		private Point2D getP1(StringBounder stringBounder) {
+		private XPoint2D getP1(StringBounder stringBounder) {
 			final FtileGeometry dimDiamond1 = diamond1.calculateDimension(stringBounder);
-			final Point2D pt;
+			final XPoint2D pt;
 			if (getFtile2() == tile1) {
 				pt = dimDiamond1.getPointD();
 			} else if (getFtile2() == tile2) {
@@ -121,7 +121,7 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 			return getTranslateDiamond1(stringBounder).getTranslated(pt);
 		}
 
-		private Point2D getP2(final StringBounder stringBounder) {
+		private XPoint2D getP2(final StringBounder stringBounder) {
 			return translate(stringBounder).getTranslated(getFtile2().calculateDimension(stringBounder).getPointIn());
 		}
 
@@ -138,15 +138,15 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 		@Override
 		public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
 			final StringBounder stringBounder = ug.getStringBounder();
-			Point2D p1 = getP1(stringBounder);
-			Point2D p2 = getP2(stringBounder);
+			XPoint2D p1 = getP1(stringBounder);
+			XPoint2D p2 = getP2(stringBounder);
 			final Direction originalDirection = Direction.leftOrRight(p1, p2);
 			p1 = translate1.getTranslated(p1);
 			p2 = translate2.getTranslated(p2);
 			final Direction newDirection = Direction.leftOrRight(p1, p2);
 			if (originalDirection != newDirection) {
 				final double delta = (originalDirection == Direction.RIGHT ? -1 : 1) * Hexagon.hexagonHalfSize;
-				final Dimension2D dimDiamond1 = diamond1.calculateDimension(stringBounder);
+				final XDimension2D dimDiamond1 = diamond1.calculateDimension(stringBounder);
 				final Snake small = Snake.create(skinParam(), color);
 				small.addPoint(p1);
 				small.addPoint(p1.getX() + delta, p1.getY());
@@ -181,8 +181,8 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 			if (geo.hasPointOut() == false) {
 				return;
 			}
-			final Point2D p1 = geo.translate(translate(stringBounder)).getPointOut();
-			final Point2D p2 = getP2(stringBounder);
+			final XPoint2D p1 = geo.translate(translate(stringBounder)).getPointOut();
+			final XPoint2D p2 = getP2(stringBounder);
 
 			final double x1 = p1.getX();
 			final double y1 = p1.getY();
@@ -201,9 +201,9 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 			ug.draw(snake);
 		}
 
-		private Point2D getP2(StringBounder stringBounder) {
+		private XPoint2D getP2(StringBounder stringBounder) {
 			final FtileGeometry dimDiamond2 = diamond2.calculateDimension(stringBounder);
-			final Point2D pt;
+			final XPoint2D pt;
 			if (getFtile1() == tile1) {
 				pt = dimDiamond2.getPointD();
 			} else if (getFtile1() == tile2) {
@@ -231,19 +231,19 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 			if (geo.hasPointOut() == false) {
 				return;
 			}
-			final Point2D p2 = getP2(stringBounder);
-			final Point2D p1 = geo.translate(translate(stringBounder)).getPointOut();
+			final XPoint2D p2 = getP2(stringBounder);
+			final XPoint2D p1 = geo.translate(translate(stringBounder)).getPointOut();
 			final Direction originalDirection = Direction.leftOrRight(p1, p2);
 
 			final double x1 = p1.getX();
 			final double x2 = p2.getX();
-			final Point2D mp1a = translate1.getTranslated(p1);
-			final Point2D mp2b = translate2.getTranslated(p2);
+			final XPoint2D mp1a = translate1.getTranslated(p1);
+			final XPoint2D mp2b = translate2.getTranslated(p2);
 			final Direction newDirection = Direction.leftOrRight(mp1a, mp2b);
 			final UPolygon arrow = x2 > x1 ? Arrows.asToRight() : Arrows.asToLeft();
 			if (originalDirection == newDirection) {
 				final double delta = (x2 > x1 ? -1 : 1) * 1.5 * Hexagon.hexagonHalfSize;
-				final Point2D mp2bc = new Point2D.Double(mp2b.getX() + delta, mp2b.getY());
+				final XPoint2D mp2bc = new XPoint2D(mp2b.getX() + delta, mp2b.getY());
 				final Snake snake = Snake.create(skinParam(), myArrowColor).withMerge(MergeStrategy.LIMITED);
 				final double middle = (mp1a.getY() + mp2b.getY()) / 2.0;
 				snake.addPoint(mp1a);
@@ -258,7 +258,7 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 				ug.draw(small);
 			} else {
 				final double delta = (x2 > x1 ? -1 : 1) * 1.5 * Hexagon.hexagonHalfSize;
-				final Point2D mp2bb = new Point2D.Double(mp2b.getX() + delta,
+				final XPoint2D mp2bb = new XPoint2D(mp2b.getX() + delta,
 						mp2b.getY() - 1.5 * Hexagon.hexagonHalfSize);
 				final Snake snake = Snake.create(skinParam(), myArrowColor).withMerge(MergeStrategy.LIMITED);
 				snake.addPoint(mp1a);
@@ -295,8 +295,8 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 			if (geo.hasPointOut() == false) {
 				return;
 			}
-			final Point2D p1 = geo.translate(translate(stringBounder)).getPointOut();
-			final Point2D p2 = new Point2D.Double(dimTotal.getLeft(), dimTotal.getHeight());
+			final XPoint2D p1 = geo.translate(translate(stringBounder)).getPointOut();
+			final XPoint2D p2 = new XPoint2D(dimTotal.getLeft(), dimTotal.getHeight());
 
 			final double x1 = p1.getX();
 			final double y1 = p1.getY();
@@ -324,11 +324,11 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 			if (geo.hasPointOut() == false) {
 				return;
 			}
-			final Point2D p1 = geo.translate(translate(stringBounder)).getPointOut();
-			final Point2D p2 = new Point2D.Double(dimTotal.getLeft(), dimTotal.getHeight() - Hexagon.hexagonHalfSize);
+			final XPoint2D p1 = geo.translate(translate(stringBounder)).getPointOut();
+			final XPoint2D p2 = new XPoint2D(dimTotal.getLeft(), dimTotal.getHeight() - Hexagon.hexagonHalfSize);
 
-			final Point2D mp1a = translate1.getTranslated(p1);
-			final Point2D mp2b = translate2.getTranslated(p2);
+			final XPoint2D mp1a = translate1.getTranslated(p1);
+			final XPoint2D mp2b = translate2.getTranslated(p2);
 
 			final Snake snake = Snake.create(skinParam(), myArrowColor).withMerge(MergeStrategy.LIMITED);
 			// snake.emphasizeDirection(Direction.DOWN);
@@ -377,14 +377,14 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 				return;
 			}
 
-			final Point2D p1 = geo.translate(translate(stringBounder)).getPointOut();
+			final XPoint2D p1 = geo.translate(translate(stringBounder)).getPointOut();
 
 			final double totalHeight = calculateDimensionInternal(stringBounder).getHeight();
-			// final Point2D p1 = getP1(stringBounder);
+			// final XPoint2D p1 = getP1(stringBounder);
 			if (p1 == null) {
 				return;
 			}
-			final Point2D p2 = new Point2D.Double(p1.getX(), totalHeight);
+			final XPoint2D p2 = new XPoint2D(p1.getX(), totalHeight);
 
 			final Snake snake = Snake.create(skinParam(), color, Arrows.asToDown()).withLabel(out2,
 					arrowHorizontalAlignment());
@@ -403,10 +403,10 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 			throw new IllegalStateException();
 		}
 		/*
-		 * private Point2D getP1(StringBounder stringBounder) {
+		 * private XPoint2D getP1(StringBounder stringBounder) {
 		 * 
 		 * final FtileGeometry geo = getFtile1().calculateDimension(stringBounder); if
-		 * (geo.hasPointOut() == false) { return null; } final Point2D p =
+		 * (geo.hasPointOut() == false) { return null; } final XPoint2D p =
 		 * geo.getPointOut(); return getTranslate1(stringBounder).getTranslated(p); }
 		 */
 	}
@@ -423,7 +423,7 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 
 		public void drawU(UGraphic ug) {
 			final StringBounder stringBounder = ug.getStringBounder();
-			final Dimension2D totalDim = calculateDimensionInternal(stringBounder);
+			final XDimension2D totalDim = calculateDimensionInternal(stringBounder);
 
 			final List<Ftile> allTiles = new ArrayList<>();
 			allTiles.add(tile1);

@@ -42,7 +42,7 @@ import java.util.Set;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -73,7 +73,7 @@ public abstract class AbstractGtile extends AbstractGtileRoot implements Gtile {
 
 	@Override
 	protected UTranslate getCoordImpl(String name) {
-		final Dimension2D dim = calculateDimension(stringBounder);
+		final XDimension2D dim = calculateDimension(stringBounder);
 		if (name.equals(GPoint.NORTH_HOOK))
 			return new UTranslate(dim.getWidth() / 2, 0);
 		if (name.equals(GPoint.SOUTH_HOOK))

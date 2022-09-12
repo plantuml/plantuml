@@ -34,10 +34,10 @@
  */
 package net.sourceforge.plantuml.braille;
 
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.ugraphic.ClipContainer;
 import net.sourceforge.plantuml.ugraphic.UClip;
 import net.sourceforge.plantuml.ugraphic.UDriver;
@@ -55,16 +55,16 @@ public class DriverPolygonBraille implements UDriver<UPolygon, BrailleGrid> {
 	}
 
 	public void draw(UPolygon shape, double x, double y, ColorMapper mapper, UParam param, BrailleGrid grid) {
-		final List<Point2D> points = new ArrayList<>();
+		final List<XPoint2D> points = new ArrayList<>();
 		int i = 0;
 
-		for (Point2D pt : shape.getPoints()) {
+		for (XPoint2D pt : shape.getPoints()) {
 			points.add(new UTranslate(x, y).getTranslated(pt));
 		}
 
 		final UClip clip = clipContainer.getClip();
 		if (clip != null) {
-			for (Point2D pt : points) {
+			for (XPoint2D pt : points) {
 				if (clip.isInside(pt) == false) {
 					return;
 				}

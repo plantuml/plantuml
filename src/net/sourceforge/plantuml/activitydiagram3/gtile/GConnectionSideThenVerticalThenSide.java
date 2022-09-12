@@ -35,11 +35,10 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.gtile;
 
-import java.awt.geom.Point2D;
-
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Arrows;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -72,8 +71,8 @@ public class GConnectionSideThenVerticalThenSide extends GAbstractConnection {
 
 	@Override
 	public void drawU(UGraphic ug) {
-		final Point2D p1 = pos1.getTranslated(gpoint1.getPoint2D());
-		final Point2D p2 = pos2.getTranslated(gpoint2.getPoint2D());
+		final XPoint2D p1 = pos1.getTranslated(gpoint1.getPoint2D());
+		final XPoint2D p2 = pos2.getTranslated(gpoint2.getPoint2D());
 		final Direction direction = p1.getY() < p2.getY() ? Direction.DOWN : Direction.UP;
 		final UPolygon tmp = p1.getX() < p2.getX() ? Arrows.asToRight() : Arrows.asToLeft();
 		final Snake snake = Snake.create(skinParam(), getInLinkRenderingColor(), tmp).emphasizeDirection(direction)
@@ -81,8 +80,8 @@ public class GConnectionSideThenVerticalThenSide extends GAbstractConnection {
 		// final double maxX = Math.max(p1.getX(), p2.getX());
 		final double maxX = xpos;
 		snake.addPoint(p1);
-		snake.addPoint(new Point2D.Double(maxX, p1.getY()));
-		snake.addPoint(new Point2D.Double(maxX, p2.getY()));
+		snake.addPoint(new XPoint2D(maxX, p1.getY()));
+		snake.addPoint(new XPoint2D(maxX, p2.getY()));
 		snake.addPoint(p2);
 		ug.draw(snake);
 	}
@@ -121,8 +120,8 @@ public class GConnectionSideThenVerticalThenSide extends GAbstractConnection {
 //	@Override
 //	public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
 //		final Snake snake = Snake.create(color, Arrows.asToDown()).withLabel(textBlock, HorizontalAlignment.LEFT);
-//		final Point2D mp1a = translate1.getTranslated(p1);
-//		final Point2D mp2b = translate2.getTranslated(p2);
+//		final XPoint2D mp1a = translate1.getTranslated(p1);
+//		final XPoint2D mp2b = translate2.getTranslated(p2);
 //		final double middle = (mp1a.getY() + mp2b.getY()) / 2.0;
 //		snake.addPoint(mp1a);
 //		snake.addPoint(mp1a.getX(), middle);

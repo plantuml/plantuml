@@ -35,12 +35,10 @@
  */
 package net.sourceforge.plantuml.graphic;
 
-import java.awt.geom.Rectangle2D;
-
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.LineBreakStrategy;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XRectangle2D;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.ugraphic.MinMax;
@@ -66,18 +64,18 @@ public class TextBlockTitle implements TextBlock {
 		textBlock.drawU(ug.apply(UTranslate.dx(outMargin)));
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		final Dimension2D textDim = textBlock.calculateDimension(stringBounder);
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		final XDimension2D textDim = textBlock.calculateDimension(stringBounder);
 		final double width = textDim.getWidth() + outMargin * 2;
 		final double height = textDim.getHeight();
-		return new Dimension2DDouble(width, height);
+		return new XDimension2D(width, height);
 	}
 
 	public MinMax getMinMax(StringBounder stringBounder) {
 		throw new UnsupportedOperationException();
 	}
 
-	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+	public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
 		return null;
 	}
 

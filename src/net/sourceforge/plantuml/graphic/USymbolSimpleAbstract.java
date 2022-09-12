@@ -37,8 +37,7 @@ package net.sourceforge.plantuml.graphic;
 
 import java.util.Objects;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UGraphicStencil;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -54,10 +53,10 @@ abstract class USymbolSimpleAbstract extends USymbol {
 
 			public void drawU(UGraphic ug) {
 				final StringBounder stringBounder = ug.getStringBounder();
-				final Dimension2D dimLabel = label.calculateDimension(stringBounder);
-				final Dimension2D dimStereo = stereotype.calculateDimension(stringBounder);
-				final Dimension2D dimStickMan = stickman.calculateDimension(stringBounder);
-				final Dimension2D dimTotal = calculateDimension(stringBounder);
+				final XDimension2D dimLabel = label.calculateDimension(stringBounder);
+				final XDimension2D dimStereo = stereotype.calculateDimension(stringBounder);
+				final XDimension2D dimStickMan = stickman.calculateDimension(stringBounder);
+				final XDimension2D dimTotal = calculateDimension(stringBounder);
 				final double stickmanX = (dimTotal.getWidth() - dimStickMan.getWidth()) / 2;
 				final double stickmanY = dimStereo.getHeight();
 				ug = symbolContext.apply(ug);
@@ -74,11 +73,11 @@ abstract class USymbolSimpleAbstract extends USymbol {
 				stereotype.drawU(ug.apply(UTranslate.dx(stereoX)));
 			}
 
-			public Dimension2D calculateDimension(StringBounder stringBounder) {
-				final Dimension2D dimLabel = label.calculateDimension(stringBounder);
-				final Dimension2D dimStereo = stereotype.calculateDimension(stringBounder);
-				final Dimension2D dimActor = stickman.calculateDimension(stringBounder);
-				return Dimension2DDouble.mergeLayoutT12B3(dimStereo, dimActor, dimLabel);
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
+				final XDimension2D dimLabel = label.calculateDimension(stringBounder);
+				final XDimension2D dimStereo = stereotype.calculateDimension(stringBounder);
+				final XDimension2D dimActor = stickman.calculateDimension(stringBounder);
+				return XDimension2D.mergeLayoutT12B3(dimStereo, dimActor, dimLabel);
 			}
 		};
 	}

@@ -42,7 +42,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
@@ -119,7 +119,7 @@ public final class PlayerRobustConcise extends Player {
 				getTimeDrawing().getPart1(fullAvailableWidth).drawU(ug);
 			}
 
-			public Dimension2D calculateDimension(StringBounder stringBounder) {
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
 				return getTimeDrawing().getPart1(fullAvailableWidth).calculateDimension(stringBounder);
 			}
 		};

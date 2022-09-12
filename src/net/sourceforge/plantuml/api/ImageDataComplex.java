@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.api;
 
 import net.sourceforge.plantuml.CMapData;
 import net.sourceforge.plantuml.annotation.HaxeIgnored;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 
 public class ImageDataComplex extends ImageDataAbstract {
 
@@ -46,13 +46,13 @@ public class ImageDataComplex extends ImageDataAbstract {
 
 	@SuppressWarnings("unused")  // available publicly so retained for backwards compatibility
 	@HaxeIgnored
-	public ImageDataComplex(Dimension2D info, CMapData cmap, String warningOrError) {
+	public ImageDataComplex(XDimension2D info, CMapData cmap, String warningOrError) {
 		super(info);
 		this.cmap = cmap;
 		this.warningOrError = warningOrError;
 	}
 
-	public ImageDataComplex(Dimension2D info, CMapData cmap, String warningOrError, int status) {
+	public ImageDataComplex(XDimension2D info, CMapData cmap, String warningOrError, int status) {
 		super(info);
 		this.cmap = cmap;
 		this.warningOrError = warningOrError;

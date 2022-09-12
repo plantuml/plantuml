@@ -35,8 +35,7 @@
  */
 package net.sourceforge.plantuml.skin;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
@@ -89,10 +88,10 @@ public abstract class AbstractComponent implements Component {
 
 	public abstract double getPreferredHeight(StringBounder stringBounder);
 
-	public final Dimension2D getPreferredDimension(StringBounder stringBounder) {
+	public final XDimension2D getPreferredDimension(StringBounder stringBounder) {
 		final double w = getPreferredWidth(stringBounder);
 		final double h = getPreferredHeight(stringBounder);
-		return new Dimension2DDouble(w, h);
+		return new XDimension2D(w, h);
 	}
 
 }

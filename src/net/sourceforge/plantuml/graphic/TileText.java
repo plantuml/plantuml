@@ -37,10 +37,9 @@ package net.sourceforge.plantuml.graphic;
 
 import java.util.StringTokenizer;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UText;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -57,8 +56,8 @@ public class TileText extends AbstractTextBlock implements TextBlock {
 		this.url = url;
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		final Dimension2D rect = stringBounder.calculateDimension(fontConfiguration.getFont(), text);
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		final XDimension2D rect = stringBounder.calculateDimension(fontConfiguration.getFont(), text);
 		final int spaceBottom = Math.abs(fontConfiguration.getSpace());
 		Log.debug("g2d=" + rect);
 		Log.debug("Size for " + text + " is " + rect);
@@ -67,7 +66,7 @@ public class TileText extends AbstractTextBlock implements TextBlock {
 			h = 10;
 		}
 		final double width = text.indexOf('\t') == -1 ? rect.getWidth() : getWidth(stringBounder);
-		return new Dimension2DDouble(width, h + spaceBottom);
+		return new XDimension2D(width, h + spaceBottom);
 	}
 
 	public double getFontSize2D() {
@@ -96,7 +95,7 @@ public class TileText extends AbstractTextBlock implements TextBlock {
 					x += tabSize - remainder;
 				} else {
 					final UText utext = new UText(s, fontConfiguration);
-					final Dimension2D dim = ug.getStringBounder().calculateDimension(fontConfiguration.getFont(), s);
+					final XDimension2D dim = ug.getStringBounder().calculateDimension(fontConfiguration.getFont(), s);
 					final int space = fontConfiguration.getSpace();
 					final double ypos;
 					if (space < 0) {
@@ -124,7 +123,7 @@ public class TileText extends AbstractTextBlock implements TextBlock {
 				final double remainder = x % tabSize;
 				x += tabSize - remainder;
 			} else {
-				final Dimension2D dim = stringBounder.calculateDimension(fontConfiguration.getFont(), s);
+				final XDimension2D dim = stringBounder.calculateDimension(fontConfiguration.getFont(), s);
 				x += dim.getWidth();
 			}
 		}

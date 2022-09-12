@@ -46,16 +46,14 @@ import net.sourceforge.plantuml.AlignmentParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-import net.sourceforge.plantuml.cucadiagram.CucaNote;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.cucadiagram.EntityPosition;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizVersion;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.USymbols;
-import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.svek.image.EntityImageNoteLink;
 
 public class ClusterDotStringKermor {
 
@@ -83,28 +81,44 @@ public class ClusterDotStringKermor {
 			sb.append("subgraph " + cluster.getClusterId() + "alpha {");
 			SvekUtils.println(sb);
 
-			final TextBlock noteOnly = cluster.getCucaNote();
-			if (noteOnly == null) {
-				sb.append("label=\"\";color=\"#FFFF00\";");
+			sb.append("color=\"#FFFF00\";");
+			SvekUtils.println(sb);
+			final TextBlock noteTop = cluster.getCucaNote(Position.TOP);
+			if (noteTop == null) {
+				sb.append("label=\"\";");
 				SvekUtils.println(sb);
 			} else {
-
-				final Dimension2D dim = noteOnly.calculateDimension(stringBounder);
-				System.err.println("dim=" + dim);
-
+				final XDimension2D dim = noteTop.calculateDimension(stringBounder);
 				final StringBuilder sblabel = new StringBuilder("<");
-				SvekLine.appendTable(sblabel, (int) dim.getWidth(), (int) dim.getHeight(), cluster.getColorNoteUp());
+				SvekLine.appendTable(sblabel, (int) dim.getWidth(), (int) dim.getHeight(), cluster.getColorNoteTop());
 				sblabel.append(">");
 				sb.append("label=" + sblabel + ";");
-				sb.append("color=\"#FFFF00\";");
+				SvekUtils.println(sb);
 			}
 
 		}
 
+		SvekUtils.println(sb);
 		sb.append("subgraph " + cluster.getClusterId() + "beta {");
 		SvekUtils.println(sb);
-		sb.append("label=\"\";color=\"#FFFF00\";");
-		// sb.append("label=\"NOTEDOWN\";labelloc=\"b\";");
+		final TextBlock noteBottom = cluster.getCucaNote(Position.BOTTOM);
+
+		sb.append("labelloc=\"b\";");
+		SvekUtils.println(sb);
+		sb.append("color=\"#FFFF00\";");
+		SvekUtils.println(sb);
+		if (noteBottom == null) {
+			sb.append("label=\"\";");
+			SvekUtils.println(sb);
+		} else {
+			final XDimension2D dim = noteBottom.calculateDimension(stringBounder);
+			final StringBuilder sblabel = new StringBuilder("<");
+			SvekLine.appendTable(sblabel, (int) dim.getWidth(), (int) dim.getHeight(), cluster.getColorNoteBottom());
+			sblabel.append(">");
+			sb.append("label=" + sblabel + ";");
+			SvekUtils.println(sb);
+		}
+
 		SvekUtils.println(sb);
 		printRanks(Cluster.RANK_SOURCE, cluster.getNodes(EntityPosition.getInputs()), sb, stringBounder);
 		SvekUtils.println(sb);
@@ -151,7 +165,9 @@ public class ClusterDotStringKermor {
 	}
 
 	private boolean useAlphaAndBeta() {
-		if (cluster.getGroup().getNotes().size() > 0)
+		if (cluster.getGroup().getNotes(Position.TOP).size() > 0)
+			return true;
+		if (cluster.getGroup().getNotes(Position.BOTTOM).size() > 0)
 			return true;
 
 		return false;

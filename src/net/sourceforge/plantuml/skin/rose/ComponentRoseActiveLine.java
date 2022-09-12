@@ -36,7 +36,7 @@
 package net.sourceforge.plantuml.skin.rose;
 
 import net.sourceforge.plantuml.api.ThemeStyle;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.skin.AbstractComponent;
@@ -63,7 +63,7 @@ public class ComponentRoseActiveLine extends AbstractComponent {
 	}
 
 	protected void drawInternalU(UGraphic ug, Area area) {
-		final Dimension2D dimensionToUse = area.getDimensionToUse();
+		final XDimension2D dimensionToUse = area.getDimensionToUse();
 		final StringBounder stringBounder = ug.getStringBounder();
 		final int x = (int) (dimensionToUse.getWidth() - getPreferredWidth(stringBounder)) / 2;
 

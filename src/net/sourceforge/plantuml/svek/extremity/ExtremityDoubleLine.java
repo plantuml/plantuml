@@ -36,53 +36,52 @@
 package net.sourceforge.plantuml.svek.extremity;
 
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Point2D;
 
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 class ExtremityDoubleLine extends Extremity {
 
-	private final Point2D contact;
+	private final XPoint2D contact;
 	private final double angle;
 	private final double lineHeight = 4;
 
 	@Override
-	public Point2D somePoint() {
+	public XPoint2D somePoint() {
 		return contact;
 	}
 
-	public ExtremityDoubleLine(Point2D p1, double angle) {
-		this.contact = new Point2D.Double(p1.getX(), p1.getY());
+	public ExtremityDoubleLine(XPoint2D p1, double angle) {
+		this.contact = new XPoint2D(p1.getX(), p1.getY());
 		this.angle = manageround(angle + Math.PI / 2);
 	}
 
 	public void drawU(UGraphic ug) {
 		final int xWing = 4;
 		final AffineTransform rotate = AffineTransform.getRotateInstance(this.angle);
-		Point2D firstLineTop = new Point2D.Double(-xWing, -lineHeight);
-		Point2D firstLineBottom = new Point2D.Double(-xWing, lineHeight);
-		Point2D secondLineTop = new Point2D.Double(-xWing - 3, -lineHeight);
-		Point2D secondLineBottom = new Point2D.Double(-xWing - 3, lineHeight);
+		XPoint2D firstLineTop = new XPoint2D(-xWing, -lineHeight);
+		XPoint2D firstLineBottom = new XPoint2D(-xWing, lineHeight);
+		XPoint2D secondLineTop = new XPoint2D(-xWing - 3, -lineHeight);
+		XPoint2D secondLineBottom = new XPoint2D(-xWing - 3, lineHeight);
 
-		Point2D middle = new Point2D.Double(0, 0);
-		Point2D base = new Point2D.Double(-xWing - 4, 0);
+		XPoint2D middle = new XPoint2D(0, 0);
+		XPoint2D base = new XPoint2D(-xWing - 4, 0);
 
-		rotate.transform(middle, middle);
-		rotate.transform(base, base);
-
-		rotate.transform(firstLineTop, firstLineTop);
-		rotate.transform(firstLineBottom, firstLineBottom);
-		rotate.transform(secondLineTop, secondLineTop);
-		rotate.transform(secondLineBottom, secondLineBottom);
+		middle.transform(rotate);
+		base.transform(rotate);
+		firstLineTop.transform(rotate);
+		firstLineBottom.transform(rotate);
+		secondLineTop.transform(rotate);
+		secondLineBottom.transform(rotate);
 
 		drawLine(ug, contact.getX(), contact.getY(), firstLineTop, firstLineBottom);
 		drawLine(ug, contact.getX(), contact.getY(), secondLineTop, secondLineBottom);
 		drawLine(ug, contact.getX(), contact.getY(), base, middle);
 	}
 
-	static private void drawLine(UGraphic ug, double x, double y, Point2D p1, Point2D p2) {
+	static private void drawLine(UGraphic ug, double x, double y, XPoint2D p1, XPoint2D p2) {
 		final double dx = p2.getX() - p1.getX();
 		final double dy = p2.getY() - p1.getY();
 		ug.apply(new UTranslate(x + p1.getX(), y + p1.getY())).draw(new ULine(dx, dy));

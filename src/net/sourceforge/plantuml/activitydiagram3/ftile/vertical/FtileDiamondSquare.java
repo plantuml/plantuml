@@ -35,13 +35,12 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vertical;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Hexagon;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
@@ -84,8 +83,8 @@ public class FtileDiamondSquare extends FtileDiamondWIP {
 
 	public void drawU(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
-		final Dimension2D dimLabel = label.calculateDimension(stringBounder);
-		final Dimension2D dimTotal = calculateDimensionInternal(stringBounder);
+		final XDimension2D dimLabel = label.calculateDimension(stringBounder);
+		final XDimension2D dimTotal = calculateDimensionInternal(stringBounder);
 		ug = ug.apply(borderColor).apply(getThickness(getStyle())).apply(backColor.bg());
 
 		ug.draw(Hexagon.asPolygonSquare(shadowing, dimTotal.getWidth(), dimTotal.getHeight()));
@@ -98,27 +97,27 @@ public class FtileDiamondSquare extends FtileDiamondWIP {
 		final double ly = (dimTotal.getHeight() - dimLabel.getHeight()) / 2;
 		label.drawU(ug.apply(new UTranslate(lx, ly)));
 
-		final Dimension2D dimWeat = west.calculateDimension(stringBounder);
+		final XDimension2D dimWeat = west.calculateDimension(stringBounder);
 		west.drawU(ug.apply(new UTranslate(-dimWeat.getWidth(), -dimWeat.getHeight() + Hexagon.hexagonHalfSize)));
 
-		final Dimension2D dimEast = east.calculateDimension(stringBounder);
+		final XDimension2D dimEast = east.calculateDimension(stringBounder);
 		east.drawU(ug.apply(new UTranslate(dimTotal.getWidth(), -dimEast.getHeight() + Hexagon.hexagonHalfSize)));
 
 	}
 
 	@Override
 	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
-		final Dimension2D dim = calculateDimensionInternal(stringBounder);
+		final XDimension2D dim = calculateDimensionInternal(stringBounder);
 		return new FtileGeometry(dim, dim.getWidth() / 2, 0, dim.getHeight());
 	}
 
-	private Dimension2D calculateDimensionInternal(StringBounder stringBounder) {
-		final Dimension2D dimLabel = label.calculateDimension(stringBounder);
+	private XDimension2D calculateDimensionInternal(StringBounder stringBounder) {
+		final XDimension2D dimLabel = label.calculateDimension(stringBounder);
 		if (dimLabel.getWidth() == 0 || dimLabel.getHeight() == 0)
-			return new Dimension2DDouble(Hexagon.hexagonHalfSize * 2, Hexagon.hexagonHalfSize * 2);
+			return new XDimension2D(Hexagon.hexagonHalfSize * 2, Hexagon.hexagonHalfSize * 2);
 
-		Dimension2D result = dimLabel;
-		result = Dimension2DDouble.delta(result, Hexagon.hexagonHalfSize * 2, Hexagon.hexagonHalfSize * 2);
+		XDimension2D result = dimLabel;
+		result = XDimension2D.delta(result, Hexagon.hexagonHalfSize * 2, Hexagon.hexagonHalfSize * 2);
 		return result;
 	}
 

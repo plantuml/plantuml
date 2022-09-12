@@ -35,8 +35,7 @@
  */
 package net.sourceforge.plantuml.svek.extremity;
 
-import java.awt.geom.Point2D;
-
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -62,12 +61,12 @@ class ExtremityPlus extends Extremity {
 	}
 	
 	@Override
-	public Point2D somePoint() {
-		return new Point2D.Double(px, py);
+	public XPoint2D somePoint() {
+		return new XPoint2D(px, py);
 	}
 
 
-	public static UDrawable create(Point2D p1, double angle, HColor backgroundColor) {
+	public static UDrawable create(XPoint2D p1, double angle, HColor backgroundColor) {
 		final double x = p1.getX() - radius + radius * Math.sin(angle);
 		final double y = p1.getY() - radius - radius * Math.cos(angle);
 		return new ExtremityPlus(x, y, angle, backgroundColor);
@@ -79,13 +78,13 @@ class ExtremityPlus extends Extremity {
 		drawLine(ug, 0, 0, getPointOnCircle(angle), getPointOnCircle(angle + Math.PI));
 	}
 
-	private Point2D getPointOnCircle(double angle) {
+	private XPoint2D getPointOnCircle(double angle) {
 		final double x = px + radius + radius * Math.cos(angle);
 		final double y = py + radius + radius * Math.sin(angle);
-		return new Point2D.Double(x, y);
+		return new XPoint2D(x, y);
 	}
 
-	static private void drawLine(UGraphic ug, double x, double y, Point2D p1, Point2D p2) {
+	static private void drawLine(UGraphic ug, double x, double y, XPoint2D p1, XPoint2D p2) {
 		final double dx = p2.getX() - p1.getX();
 		final double dy = p2.getY() - p1.getY();
 		ug.apply(new UTranslate(x + p1.getX(), y + p1.getY())).draw(new ULine(dx, dy));

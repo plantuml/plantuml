@@ -40,8 +40,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.salt.element.Skeleton2;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -59,17 +58,17 @@ public class AtomTree extends AbstractAtom implements Atom {
 		this.lineColor = lineColor;
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		final Skeleton2 skeleton = new Skeleton2();
 		double width = 0;
 		double height = 0;
 		for (Atom cell : cells) {
-			final Dimension2D dim = cell.calculateDimension(stringBounder);
+			final XDimension2D dim = cell.calculateDimension(stringBounder);
 			height += dim.getHeight();
 			final int level = getLevel(cell);
 			width = Math.max(width, skeleton.getXEndForLevel(level) + margin + dim.getWidth());
 		}
-		return new Dimension2DDouble(width, height);
+		return new XDimension2D(width, height);
 	}
 
 	public double getStartingAltitude(StringBounder stringBounder) {
@@ -83,7 +82,7 @@ public class AtomTree extends AbstractAtom implements Atom {
 		for (Atom cell : cells) {
 			final int level = getLevel(cell);
 			cell.drawU(ug.apply(UTranslate.dx(margin + skeleton.getXEndForLevel(level))));
-			final Dimension2D dim = cell.calculateDimension(ug.getStringBounder());
+			final XDimension2D dim = cell.calculateDimension(ug.getStringBounder());
 			skeleton.add(level, y + dim.getHeight() / 2);
 			ug = ug.apply(UTranslate.dy(dim.getHeight()));
 			y += dim.getHeight();

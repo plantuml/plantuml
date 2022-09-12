@@ -36,11 +36,11 @@
  */
 package net.sourceforge.plantuml.ugraphic;
 
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.ugraphic.comp.CompressionMode;
 
 public class UPath extends AbstractShadowable implements Iterable<USegment>, UShapeIgnorableForCompression {
@@ -101,11 +101,11 @@ public class UPath extends AbstractShadowable implements Iterable<USegment>, USh
 		return result;
 	}
 
-	public void moveTo(Point2D pt) {
+	public void moveTo(XPoint2D pt) {
 		moveTo(pt.getX(), pt.getY());
 	}
 
-	public void lineTo(Point2D pt) {
+	public void lineTo(XPoint2D pt) {
 		lineTo(pt.getX(), pt.getY());
 	}
 
@@ -117,7 +117,7 @@ public class UPath extends AbstractShadowable implements Iterable<USegment>, USh
 		add(new double[] { x, y }, USegmentType.SEG_LINETO);
 	}
 
-	public void cubicTo(Point2D p1, Point2D p2, Point2D p) {
+	public void cubicTo(XPoint2D p1, XPoint2D p2, XPoint2D p) {
 		cubicTo(p1.getX(), p1.getY(), p2.getX(), p2.getY(), p.getX(), p.getY());
 	}
 
@@ -129,7 +129,7 @@ public class UPath extends AbstractShadowable implements Iterable<USegment>, USh
 		add(new double[] { ctrlx, ctrly, ctrlx, ctrly, x2, y2 }, USegmentType.SEG_CUBICTO);
 	}
 
-	public void quadTo(Point2D ctrl, Point2D pt) {
+	public void quadTo(XPoint2D ctrl, XPoint2D pt) {
 		quadTo(ctrl.getX(), ctrl.getY(), pt.getX(), pt.getY());
 	}
 
@@ -139,7 +139,7 @@ public class UPath extends AbstractShadowable implements Iterable<USegment>, USh
 		// lineTo(x, y);
 	}
 
-	public void arcTo(Point2D pt, double radius, double large_arc_flag, double sweep_flag) {
+	public void arcTo(XPoint2D pt, double radius, double large_arc_flag, double sweep_flag) {
 		add(new double[] { radius, radius, 0, large_arc_flag, sweep_flag, pt.getX(), pt.getY() },
 				USegmentType.SEG_ARCTO);
 		// lineTo(x, y);

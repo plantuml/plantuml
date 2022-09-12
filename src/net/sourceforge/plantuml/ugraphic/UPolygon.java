@@ -36,15 +36,15 @@
 package net.sourceforge.plantuml.ugraphic;
 
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.ugraphic.comp.CompressionMode;
 
 public class UPolygon extends AbstractShadowable {
 
-	private final List<Point2D.Double> all = new ArrayList<Point2D.Double>();
+	private final List<XPoint2D> all = new ArrayList<XPoint2D>();
 	private final String name;
 
 	private MinMax minmax = MinMax.getEmpty(false);
@@ -53,10 +53,10 @@ public class UPolygon extends AbstractShadowable {
 		this((String) null);
 	}
 
-	public UPolygon(List<Point2D.Double> points) {
+	public UPolygon(List<XPoint2D> points) {
 		this((String) null);
 		all.addAll(points);
-		for (Point2D.Double pt : all)
+		for (XPoint2D pt : all)
 			manageMinMax(pt.getX(), pt.getY());
 
 	}
@@ -65,11 +65,11 @@ public class UPolygon extends AbstractShadowable {
 		this.name = name;
 	}
 
-	public Point2D checkMiddleContactForSpecificTriangle(Point2D center) {
+	public XPoint2D checkMiddleContactForSpecificTriangle(XPoint2D center) {
 		for (int i = 0; i < all.size() - 1; i++) {
-			final Point2D.Double pt1 = all.get(i);
-			final Point2D.Double pt2 = all.get(i + 1);
-			final Point2D.Double middle = new Point2D.Double((pt1.getX() + pt2.getX()) / 2,
+			final XPoint2D pt1 = all.get(i);
+			final XPoint2D pt2 = all.get(i + 1);
+			final XPoint2D middle = new XPoint2D((pt1.getX() + pt2.getX()) / 2,
 					(pt1.getY() + pt2.getY()) / 2);
 			final double delta = middle.distance(center);
 			if (delta < 1)
@@ -80,11 +80,11 @@ public class UPolygon extends AbstractShadowable {
 	}
 
 	public void addPoint(double x, double y) {
-		all.add(new Point2D.Double(x, y));
+		all.add(new XPoint2D(x, y));
 		manageMinMax(x, y);
 	}
 
-	public void addPoint(Point2D point) {
+	public void addPoint(XPoint2D point) {
 		addPoint(point.getX(), point.getY());
 	}
 
@@ -92,13 +92,13 @@ public class UPolygon extends AbstractShadowable {
 		minmax = minmax.addPoint(x, y);
 	}
 
-	public List<Point2D.Double> getPoints() {
+	public List<XPoint2D> getPoints() {
 		return all;
 	}
 
 	public UPolygon translate(double dx, double dy) {
 		final UPolygon result = new UPolygon();
-		for (Point2D.Double pt : all)
+		for (XPoint2D pt : all)
 			result.addPoint(pt.x + dx, pt.y + dy);
 
 		return result;
@@ -111,8 +111,8 @@ public class UPolygon extends AbstractShadowable {
 	}
 
 	public void affine(AffineTransform rotate) {
-		for (Point2D.Double pt : all)
-			rotate.transform(pt, pt);
+		for (XPoint2D pt : all)
+			pt.transform(rotate);
 
 	}
 
@@ -157,7 +157,7 @@ public class UPolygon extends AbstractShadowable {
 		final double points[] = new double[getPoints().size() * 2];
 		int i = 0;
 
-		for (Point2D pt : getPoints()) {
+		for (XPoint2D pt : getPoints()) {
 			points[i++] = pt.getX() + x;
 			points[i++] = pt.getY() + y;
 		}

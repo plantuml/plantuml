@@ -35,8 +35,7 @@
  */
 package net.sourceforge.plantuml.creole.atom;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
@@ -52,8 +51,8 @@ public class AtomSpace extends AbstractAtom implements Atom {
 		this.width = width;
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		return new Dimension2DDouble(width, 1);
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		return new XDimension2D(width, 1);
 	}
 
 	public double getStartingAltitude(StringBounder stringBounder) {

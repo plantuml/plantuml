@@ -35,8 +35,6 @@
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -47,11 +45,12 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.SkinParamBackcolored;
 import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XRectangle2D;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -82,7 +81,7 @@ public class DrawableSet {
 	private final List<Event> eventsList = new ArrayList<>();
 	private final Rose skin;
 	private final ISkinParam skinParam;
-	private Dimension2D dimension;
+	private XDimension2D dimension;
 	private double topStartingY;
 
 	DrawableSet(Rose skin, ISkinParam skinParam) {
@@ -234,14 +233,14 @@ public class DrawableSet {
 		assert events.size() == eventsList.size();
 	}
 
-	void setDimension(Dimension2D dim) {
+	void setDimension(XDimension2D dim) {
 		if (dimension != null)
 			throw new IllegalStateException();
 
 		this.dimension = dim;
 	}
 
-	public Dimension2D getDimension() {
+	public XDimension2D getDimension() {
 		return dimension;
 	}
 
@@ -252,16 +251,16 @@ public class DrawableSet {
 				drawU22(ug, delta, width, page, showTail);
 			}
 
-			public Dimension2D calculateDimension(StringBounder stringBounder) {
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
 				final double height = page.getHeight();
-				return new Dimension2DDouble(width, height);
+				return new XDimension2D(width, height);
 			}
 
 			public MinMax getMinMax(StringBounder stringBounder) {
 				throw new UnsupportedOperationException();
 			}
 
-			public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+			public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
 				throw new UnsupportedOperationException();
 			}
 
@@ -375,10 +374,10 @@ public class DrawableSet {
 				// if (englober.getFirst2() == englober.getLast2()) {
 				x1 -= (preferedWidth - width) / 2;
 				// }
-				final Dimension2DDouble dim = new Dimension2DDouble(preferedWidth, height);
+				final XDimension2D dim = new XDimension2D(preferedWidth, height);
 				comp.drawU(ug.apply(new UTranslate(x1, 1)), new Area(dim), context);
 			} else {
-				final Dimension2DDouble dim = new Dimension2DDouble(width, height);
+				final XDimension2D dim = new XDimension2D(width, height);
 				comp.drawU(ug.apply(new UTranslate(x1, 1)), new Area(dim), context);
 			}
 		}

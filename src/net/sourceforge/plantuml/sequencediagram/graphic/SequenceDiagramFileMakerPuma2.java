@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.AnnotatedWorker;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.DisplaySection;
@@ -72,7 +72,7 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 
 	private final SequenceDiagram diagram;
 	private final DrawableSet drawableSet;
-	private final Dimension2D fullDimension;
+	private final XDimension2D fullDimension;
 	private final List<Page> pages;
 	private final FileFormatOption fileFormatOption;
 	private final StringBounder stringBounder;
@@ -150,7 +150,7 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 					.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
 			compTitle = style.createTextBlockBordered(page.getTitle(), diagram.getSkinParam().getIHtmlColorSet(),
 					diagram.getSkinParam(), Style.ID_TITLE);
-			final Dimension2D dimTitle = compTitle.calculateDimension(stringBounder);
+			final XDimension2D dimTitle = compTitle.calculateDimension(stringBounder);
 			area.setTitleArea(dimTitle.getWidth(), dimTitle.getHeight());
 		}
 		area.initFooter(getPngTitler(FontParam.FOOTER, index), stringBounder);
@@ -165,7 +165,7 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 			legendBlock = style.createTextBlockBordered(diagram.getLegend().getDisplay(),
 					diagram.getSkinParam().getIHtmlColorSet(), diagram.getSkinParam(), Style.ID_LEGEND);
 		}
-		final Dimension2D dimLegend = legendBlock.calculateDimension(stringBounder);
+		final XDimension2D dimLegend = legendBlock.calculateDimension(stringBounder);
 		area.setLegend(dimLegend, isLegendTop(), diagram.getLegend().getHorizontalAlignment());
 
 		final UDrawable drawable = new UDrawable() {

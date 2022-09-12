@@ -35,9 +35,7 @@
  */
 package net.sourceforge.plantuml.ugraphic;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
-import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 
 public class MinMaxMutable {
 
@@ -122,8 +120,8 @@ public class MinMaxMutable {
 		return minY;
 	}
 
-	public Dimension2D getDimension() {
-		return new Dimension2DDouble(maxX - minX, maxY - minY);
+	public XDimension2D getDimension() {
+		return new XDimension2D(maxX - minX, maxY - minY);
 	}
 
 }

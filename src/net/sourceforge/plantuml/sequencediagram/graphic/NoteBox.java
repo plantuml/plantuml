@@ -35,11 +35,10 @@
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.util.Objects;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.sequencediagram.InGroupable;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
@@ -105,7 +104,7 @@ final class NoteBox extends GraphicalElement implements InGroupable {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final double xStart = getStartingX(stringBounder);
 		ug = ug.apply(new UTranslate(xStart, getStartingY()));
-		final Dimension2D dimensionToUse = new Dimension2DDouble(getPreferredWidth(stringBounder),
+		final XDimension2D dimensionToUse = new XDimension2D(getPreferredWidth(stringBounder),
 				comp.getPreferredHeight(stringBounder));
 		if (url != null) {
 			ug.startUrl(url);

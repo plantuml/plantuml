@@ -35,8 +35,7 @@
  */
 package net.sourceforge.plantuml.ugraphic;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.creole.Stencil;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -85,7 +84,7 @@ public class UHorizontalLine implements UShape {
 			drawHLine(stencil, y, ugStroke);
 			return;
 		}
-		final Dimension2D dimTitle = title.calculateDimension(ug.getStringBounder());
+		final XDimension2D dimTitle = title.calculateDimension(ug.getStringBounder());
 		drawHLine(firstHalf(stencil, dimTitle.getWidth()), y, ugStroke);
 		final double startingX = stencil.getStartingX(ug.getStringBounder(), y);
 		final double endingX = stencil.getEndingX(ug.getStringBounder(), y);
@@ -153,7 +152,7 @@ public class UHorizontalLine implements UShape {
 			return;
 		}
 		final double widthToUse = endingX - startingX;
-		final Dimension2D dimTitle = title.calculateDimension(ug.getStringBounder());
+		final XDimension2D dimTitle = title.calculateDimension(ug.getStringBounder());
 		final double space = (widthToUse - dimTitle.getWidth()) / 2;
 		final double x1 = startingX + space;
 		final double y1 = y - dimTitle.getHeight() / 2 - 0.5;

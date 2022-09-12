@@ -36,16 +36,15 @@ package net.sourceforge.plantuml.ugraphic.txt;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.asciiart.TextStringBounder;
 import net.sourceforge.plantuml.asciiart.TranslatedCharArea;
 import net.sourceforge.plantuml.asciiart.UmlCharArea;
 import net.sourceforge.plantuml.asciiart.UmlCharAreaImpl;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.FontStyle;
 import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
@@ -106,8 +105,8 @@ public class UGraphicTxt extends AbstractCommonUGraphic implements ClipContainer
 		return (int) getTranslateX();
 	}
 
-	public Dimension2D getDimension() {
-		return new Dimension2DDouble(0, 0);
+	public XDimension2D getDimension() {
+		return new XDimension2D(0, 0);
 	}
 
 	@Override

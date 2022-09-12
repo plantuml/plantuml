@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.ugraphic;
 
 import static net.sourceforge.plantuml.utils.ObjectUtils.instanceOfAny;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
@@ -72,7 +72,7 @@ public class TextLimitFinder extends UGraphicNo {
 	}
 
 	private void drawText(double x, double y, UText text) {
-		final Dimension2D dim = getStringBounder().calculateDimension(text.getFontConfiguration().getFont(),
+		final XDimension2D dim = getStringBounder().calculateDimension(text.getFontConfiguration().getFont(),
 				text.getText());
 		y -= dim.getHeight() - 1.5;
 		minmax.addPoint(x, y);

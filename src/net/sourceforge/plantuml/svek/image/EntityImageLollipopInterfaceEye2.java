@@ -35,12 +35,11 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.cucadiagram.BodyFactory;
 import net.sourceforge.plantuml.cucadiagram.EntityPortion;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
@@ -114,8 +113,8 @@ public class EntityImageLollipopInterfaceEye2 extends AbstractEntityImage {
 				.getMergedStyle(getSkinParam().getCurrentStyleBuilder());
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		return new Dimension2DDouble(SIZE, SIZE);
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		return new XDimension2D(SIZE, SIZE);
 	}
 
 	final public void drawU(UGraphic ug) {
@@ -128,12 +127,12 @@ public class EntityImageLollipopInterfaceEye2 extends AbstractEntityImage {
 		}
 		ctx.apply(ug).draw(circle);
 
-		final Dimension2D dimDesc = desc.calculateDimension(ug.getStringBounder());
+		final XDimension2D dimDesc = desc.calculateDimension(ug.getStringBounder());
 		final double x1 = SIZE / 2 - dimDesc.getWidth() / 2;
 		final double y1 = SIZE * 1.4;
 		desc.drawU(ug.apply(new UTranslate(x1, y1)));
 
-		final Dimension2D dimStereo = stereo.calculateDimension(ug.getStringBounder());
+		final XDimension2D dimStereo = stereo.calculateDimension(ug.getStringBounder());
 		final double x2 = SIZE / 2 - dimStereo.getWidth() / 2;
 		final double y2 = -dimStereo.getHeight();
 		stereo.drawU(ug.apply(new UTranslate(x2, y2)));

@@ -34,25 +34,24 @@
  */
 package net.sourceforge.plantuml.timingdiagram.graphic;
 
-import java.awt.geom.Point2D;
-
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class IntricatedPoint {
 
-	private final Point2D pta;
-	private final Point2D ptb;
+	private final XPoint2D pta;
+	private final XPoint2D ptb;
 
-	public IntricatedPoint(Point2D pta, Point2D ptb) {
+	public IntricatedPoint(XPoint2D pta, XPoint2D ptb) {
 		this.pta = pta;
 		this.ptb = ptb;
 	}
 
-	public final Point2D getPointA() {
+	public final XPoint2D getPointA() {
 		return pta;
 	}
 
-	public final Point2D getPointB() {
+	public final XPoint2D getPointB() {
 		return ptb;
 	}
 

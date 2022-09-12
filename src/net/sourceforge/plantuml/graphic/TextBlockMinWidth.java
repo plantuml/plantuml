@@ -35,8 +35,7 @@
  */
 package net.sourceforge.plantuml.graphic;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
@@ -52,22 +51,22 @@ class TextBlockMinWidth extends AbstractTextBlock implements TextBlock {
 		this.horizontalAlignment = horizontalAlignment;
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		final Dimension2D dim = textBlock.calculateDimension(stringBounder);
-		return Dimension2DDouble.atLeast(dim, minWidth, 0);
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		final XDimension2D dim = textBlock.calculateDimension(stringBounder);
+		return XDimension2D.atLeast(dim, minWidth, 0);
 	}
 
 	public void drawU(UGraphic ug) {
 		if (horizontalAlignment == HorizontalAlignment.LEFT) {
 			textBlock.drawU(ug);
 		} else if (horizontalAlignment == HorizontalAlignment.CENTER) {
-			final Dimension2D dimText = textBlock.calculateDimension(ug.getStringBounder());
-			final Dimension2D dimFull = calculateDimension(ug.getStringBounder());
+			final XDimension2D dimText = textBlock.calculateDimension(ug.getStringBounder());
+			final XDimension2D dimFull = calculateDimension(ug.getStringBounder());
 			final double diffx = dimFull.getWidth() - dimText.getWidth();
 			textBlock.drawU(ug.apply(UTranslate.dx(diffx / 2)));
 		} else if (horizontalAlignment == HorizontalAlignment.RIGHT) {
-			final Dimension2D dimText = textBlock.calculateDimension(ug.getStringBounder());
-			final Dimension2D dimFull = calculateDimension(ug.getStringBounder());
+			final XDimension2D dimText = textBlock.calculateDimension(ug.getStringBounder());
+			final XDimension2D dimFull = calculateDimension(ug.getStringBounder());
 			final double diffx = dimFull.getWidth() - dimText.getWidth();
 			textBlock.drawU(ug.apply(UTranslate.dx(diffx)));
 		} else {

@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.sdot;
 import java.awt.geom.CubicCurve2D;
 import java.awt.geom.Point2D;
 
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.posimo.DotPath;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
@@ -56,9 +57,14 @@ public class YMirror {
 		return max - v;
 	}
 
-	public Point2D getMirrored(Point2D pt) {
+	public XPoint2D getMirrored(XPoint2D pt) {
 		// return pt;
-		return new Point2D.Double(pt.getX(), max - pt.getY());
+		return new XPoint2D(pt.getX(), max - pt.getY());
+	}
+
+	private XPoint2D getMirrored(Point2D pt) {
+		// return pt;
+		return new XPoint2D(pt.getX(), max - pt.getY());
 	}
 
 	public DotPath getMirrored(DotPath path) {

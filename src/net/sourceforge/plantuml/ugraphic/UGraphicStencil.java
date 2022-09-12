@@ -35,8 +35,7 @@
  */
 package net.sourceforge.plantuml.ugraphic;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.creole.Stencil;
 import net.sourceforge.plantuml.graphic.StringBounder;
 
@@ -49,11 +48,11 @@ public class UGraphicStencil extends AbstractUGraphicHorizontalLine {
 		return new UGraphicStencil(ug, stencil, defaultStroke);
 	}
 
-	public static UGraphic create(UGraphic ug, Dimension2D dim) {
+	public static UGraphic create(UGraphic ug, XDimension2D dim) {
 		return new UGraphicStencil(ug, getRectangleStencil(dim), new UStroke());
 	}
 
-	private static Stencil getRectangleStencil(final Dimension2D dim) {
+	private static Stencil getRectangleStencil(final XDimension2D dim) {
 		return new Stencil() {
 			public double getStartingX(StringBounder stringBounder, double y) {
 				return 0;

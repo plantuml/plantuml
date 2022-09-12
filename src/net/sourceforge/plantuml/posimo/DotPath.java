@@ -55,6 +55,7 @@ import java.util.Set;
 
 import net.sourceforge.plantuml.EnsureVisible;
 import net.sourceforge.plantuml.asciiart.BasicCharArea;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.eps.EpsGraphics;
 import net.sourceforge.plantuml.svek.Cluster;
 import net.sourceforge.plantuml.svek.ClusterPosition;
@@ -70,7 +71,7 @@ import net.sourceforge.plantuml.ugraphic.UShape;
 public class DotPath implements UShape, Moveable {
 
 	static class TriPoints {
-		public TriPoints(Point2D.Double p1, Point2D.Double p2, Point2D.Double p) {
+		public TriPoints(XPoint2D p1, XPoint2D p2, XPoint2D p) {
 			x1 = p1.getX();
 			y1 = p1.getY();
 			x2 = p2.getX();
@@ -122,13 +123,13 @@ public class DotPath implements UShape, Moveable {
 		if (posC == -1)
 			throw new IllegalArgumentException();
 
-		final Point2D start = fullSvg.substring(1, posC).getNextPoint();
+		final XPoint2D start = fullSvg.substring(1, posC).getNextPoint();
 
 		final List<TriPoints> triPoints = new ArrayList<>();
-		for (Iterator<Point2D.Double> it = fullSvg.substring(posC + 1).getPoints(" ").iterator(); it.hasNext();) {
-			final Point2D.Double p1 = it.next();
-			final Point2D.Double p2 = it.next();
-			final Point2D.Double p = it.next();
+		for (Iterator<XPoint2D> it = fullSvg.substring(posC + 1).getPoints(" ").iterator(); it.hasNext();) {
+			final XPoint2D p1 = it.next();
+			final XPoint2D p2 = it.next();
+			final XPoint2D p = it.next();
 			triPoints.add(new TriPoints(p1, p2, p));
 		}
 		double x = start.getX();
@@ -142,23 +143,23 @@ public class DotPath implements UShape, Moveable {
 		// this.print = triPoints.toString();
 	}
 
-	public DotPath addCurve(Point2D pt1, Point2D pt2, Point2D pt3, Point2D pt4) {
+	public DotPath addCurve(XPoint2D pt1, XPoint2D pt2, XPoint2D pt3, XPoint2D pt4) {
 		final List<CubicCurve2D.Double> beziersNew = new ArrayList<>(beziers);
 		beziersNew.add(new CubicCurve2D.Double(pt1.getX(), pt1.getY(), pt2.getX(), pt2.getY(), pt3.getX(), pt3.getY(),
 				pt4.getX(), pt4.getY()));
 		return fromBeziers(beziersNew);
 	}
 
-	public DotPath addCurve(Point2D pt2, Point2D pt3, Point2D pt4) {
+	public DotPath addCurve(XPoint2D pt2, XPoint2D pt3, XPoint2D pt4) {
 		final CubicCurve2D.Double last = beziers.get(beziers.size() - 1);
-		final Point2D p1 = last.getP2();
+		final XPoint2D p1 = new XPoint2D(last.getP2());
 		return addCurve(p1, pt2, pt3, pt4);
 	}
 
-	private Point2D mirror(Point2D center, Point2D pt) {
+	private XPoint2D mirror(Point2D center, Point2D pt) {
 		final double x = 2 * center.getX() - pt.getX();
 		final double y = 2 * center.getY() - pt.getY();
-		return new Point2D.Double(x, y);
+		return new XPoint2D(x, y);
 	}
 
 	public static boolean isPathConsistent(String init) {
@@ -170,21 +171,21 @@ public class DotPath implements UShape, Moveable {
 
 	// private final String print;
 
-	public Point2D getStartPoint() {
-		return beziers.get(0).getP1();
+	public XPoint2D getStartPoint() {
+		return new XPoint2D(beziers.get(0).getP1());
 	}
 
-	public Set<Point2D> sample() {
-		final Set<Point2D> result = new HashSet<>();
+	public Set<XPoint2D> sample() {
+		final Set<XPoint2D> result = new HashSet<>();
 		for (CubicCurve2D.Double bez : beziers)
 			sample(bez, result);
 
 		return Collections.unmodifiableSet(result);
 	}
 
-	private static void sample(CubicCurve2D bez, Set<Point2D> result) {
-		final Point2D p1 = bez.getCtrlP1();
-		final Point2D p2 = bez.getCtrlP2();
+	private static void sample(CubicCurve2D bez, Set<XPoint2D> result) {
+		final XPoint2D p1 = new XPoint2D(bez.getCtrlP1());
+		final XPoint2D p2 = new XPoint2D(bez.getCtrlP2());
 		if (bez.getFlatnessSq() > 0.5 || p1.distance(p2) > 4) {
 			final CubicCurve2D.Double left = new CubicCurve2D.Double();
 			final CubicCurve2D.Double right = new CubicCurve2D.Double();
@@ -198,16 +199,16 @@ public class DotPath implements UShape, Moveable {
 	}
 
 	public PointAndAngle getMiddle() {
-		Point2D result = null;
+		XPoint2D result = null;
 		double angle = 0;
 		for (CubicCurve2D.Double bez : beziers) {
 			final CubicCurve2D.Double left = new CubicCurve2D.Double();
 			final CubicCurve2D.Double right = new CubicCurve2D.Double();
 			bez.subdivide(left, right);
-			final Point2D p1 = left.getP1();
-			final Point2D p2 = left.getP2();
-			final Point2D p3 = right.getP1();
-			final Point2D p4 = right.getP2();
+			final XPoint2D p1 = new XPoint2D(left.getP1());
+			final XPoint2D p2 = new XPoint2D(left.getP2());
+			final XPoint2D p3 = new XPoint2D(right.getP1());
+			final XPoint2D p4 = new XPoint2D(right.getP2());
 			if (result == null || getCost(p1) < getCost(result)) {
 				result = p1;
 				angle = BezierUtils.getStartingAngle(left);
@@ -228,9 +229,9 @@ public class DotPath implements UShape, Moveable {
 		return new PointAndAngle(result, angle);
 	}
 
-	private double getCost(Point2D pt) {
-		final Point2D start = getStartPoint();
-		final Point2D end = getEndPoint();
+	private double getCost(XPoint2D pt) {
+		final XPoint2D start = getStartPoint();
+		final XPoint2D end = getEndPoint();
 		return pt.distanceSq(start) + pt.distanceSq(end);
 	}
 
@@ -249,8 +250,8 @@ public class DotPath implements UShape, Moveable {
 	}
 
 
-	public Point2D getEndPoint() {
-		return beziers.get(beziers.size() - 1).getP2();
+	public XPoint2D getEndPoint() {
+		return new XPoint2D(beziers.get(beziers.size() - 1).getP2());
 	}
 
 	public void forceEndPoint(double x, double y) {
@@ -289,7 +290,7 @@ public class DotPath implements UShape, Moveable {
 		return result;
 	}
 
-	public double getMinDist(Point2D ref) {
+	public double getMinDist(XPoint2D ref) {
 		double result = Double.MAX_VALUE;
 		for (CubicCurve2D.Double c : beziers) {
 			final double d1 = ref.distance(c.x1, c.y1);
@@ -453,7 +454,7 @@ public class DotPath implements UShape, Moveable {
 		return result;
 	}
 
-	private Point2D getFrontierIntersection(Shape shape, Rectangle2D... notIn) {
+	private XPoint2D getFrontierIntersection(Shape shape, Rectangle2D... notIn) {
 		final List<CubicCurve2D.Double> all = new ArrayList<>(beziers);
 		for (int i = 0; i < 8; i++) {
 			for (CubicCurve2D.Double immutable : all) {
@@ -466,7 +467,7 @@ public class DotPath implements UShape, Moveable {
 					while (BezierUtils.dist(bez) > 1.0)
 						BezierUtils.shorten(bez, shape);
 
-					final Point2D.Double result = new Point2D.Double((bez.x1 + bez.x2) / 2, (bez.y1 + bez.y2) / 2);
+					final XPoint2D result = new XPoint2D((bez.x1 + bez.x2) / 2, (bez.y1 + bez.y2) / 2);
 					if (contains(result, notIn) == false)
 						return result;
 
@@ -489,9 +490,9 @@ public class DotPath implements UShape, Moveable {
 		}
 	}
 
-	static private boolean contains(Point2D.Double point, Rectangle2D... rects) {
+	static private boolean contains(XPoint2D point, Rectangle2D... rects) {
 		for (Rectangle2D r : rects)
-			if (r.contains(point))
+			if (r.contains(point.toLegacy()))
 				return true;
 
 		return false;
@@ -524,10 +525,6 @@ public class DotPath implements UShape, Moveable {
 
 		}
 		return fromBeziers(list);
-	}
-
-	private Point2D getFrontierIntersection(Positionable p) {
-		return getFrontierIntersection(PositionableUtils.convert(p));
 	}
 
 	public void draw(BasicCharArea area, double pixelXPerChar, double pixelYPerChar) {

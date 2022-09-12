@@ -46,7 +46,6 @@ import java.util.Set;
 
 import net.sourceforge.plantuml.AlignmentParam;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.cucadiagram.EntityPosition;
@@ -68,7 +67,7 @@ public class ClusterDotString {
 
 	void printInternal(StringBuilder sb, Collection<SvekLine> lines, StringBounder stringBounder, DotMode dotMode,
 			GraphvizVersion graphvizVersion, UmlDiagramType type) {
-		if (OptionFlags.USE_KERMOR) {
+		if (cluster.diagram.getPragma().useKermor()) {
 			new ClusterDotStringKermor(cluster, skinParam).printInternal(sb, lines, stringBounder, dotMode,
 					graphvizVersion, type);
 			return;

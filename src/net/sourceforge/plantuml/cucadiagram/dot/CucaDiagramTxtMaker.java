@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.cucadiagram.dot;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
-import java.awt.geom.Point2D;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -50,6 +49,7 @@ import java.util.Map;
 import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.EntityPortion;
@@ -122,7 +122,7 @@ public final class CucaDiagramTxtMaker {
 		}
 		for (IEntity ent : diagram.getLeafsvalues()) {
 			final Block b = blocks.get(ent);
-			final Point2D p = b.getPosition();
+			final XPoint2D p = b.getPosition();
 			printClass(ent, (UGraphicTxt) globalUg
 					.apply(new UTranslate(p.getX() / getXPixelPerChar(), p.getY() / getYPixelPerChar())));
 		}

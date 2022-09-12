@@ -43,7 +43,7 @@ import java.util.List;
 import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.OptionPrint;
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
 import net.sourceforge.plantuml.flashcode.FlashCodeFactory;
@@ -197,7 +197,7 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 		return HColors.WHITE;
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		return getMain().calculateDimension(stringBounder);
 	}
 

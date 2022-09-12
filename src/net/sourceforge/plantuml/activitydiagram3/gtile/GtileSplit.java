@@ -37,9 +37,8 @@ package net.sourceforge.plantuml.activitydiagram3.gtile;
 
 import java.util.List;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
@@ -90,8 +89,8 @@ public class GtileSplit extends GtileColumns {
 	}
 
 	@Override
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		return Dimension2DDouble.delta(super.calculateDimension(stringBounder), 0, 0);
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		return XDimension2D.delta(super.calculateDimension(stringBounder), 0, 0);
 	}
 
 //	@Override

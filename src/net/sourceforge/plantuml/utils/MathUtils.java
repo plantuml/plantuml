@@ -35,10 +35,7 @@
  */
 package net.sourceforge.plantuml.utils;
 
-import java.awt.geom.Point2D;
-
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 
 public class MathUtils {
 
@@ -89,22 +86,14 @@ public class MathUtils {
 		return v;
 	}
 
-	public static Dimension2D max(Dimension2D dim1, Dimension2D dim2) {
-		return new Dimension2DDouble(Math.max(dim1.getWidth(), dim2.getWidth()),
+	public static XDimension2D max(XDimension2D dim1, XDimension2D dim2) {
+		return new XDimension2D(Math.max(dim1.getWidth(), dim2.getWidth()),
 				Math.max(dim1.getHeight(), dim2.getHeight()));
 	}
 
-	public static Dimension2D max(Dimension2D dim1, Dimension2D dim2, Dimension2D dim3) {
-		return new Dimension2DDouble(MathUtils.max(dim1.getWidth(), dim2.getWidth(), dim3.getWidth()),
+	public static XDimension2D max(XDimension2D dim1, XDimension2D dim2, XDimension2D dim3) {
+		return new XDimension2D(MathUtils.max(dim1.getWidth(), dim2.getWidth(), dim3.getWidth()),
 				MathUtils.max(dim1.getHeight(), dim2.getHeight(), dim3.getHeight()));
-	}
-
-	public static Point2D max(Point2D pt1, Point2D pt2) {
-		return new Point2D.Double(Math.max(pt1.getX(), pt2.getX()), Math.max(pt1.getY(), pt2.getY()));
-	}
-
-	public static Point2D max(Point2D pt1, Point2D pt2, Point2D pt3) {
-		return new Point2D.Double(max(pt1.getX(), pt2.getX(), pt3.getX()), max(pt1.getY(), pt2.getY(), pt3.getY()));
 	}
 
 }

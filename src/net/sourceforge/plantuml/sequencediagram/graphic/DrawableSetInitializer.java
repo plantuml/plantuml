@@ -39,12 +39,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.PaddingParam;
 import net.sourceforge.plantuml.SkinParamBackcolored;
 import net.sourceforge.plantuml.SkinParamBackcoloredReference;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.sequencediagram.AbstractMessage;
@@ -201,7 +201,7 @@ class DrawableSetInitializer {
 
 		prepareMissingSpace(stringBounder);
 
-		drawableSet.setDimension(new Dimension2DDouble(freeX,
+		drawableSet.setDimension(new XDimension2D(freeX,
 				getTotalHeight(freeY2.getFreeY(getFullParticipantRange()), stringBounder)));
 		return drawableSet;
 	}

@@ -40,8 +40,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import net.sourceforge.plantuml.Log;
-import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.security.SImageIO;
 
 public class PngIO {
 

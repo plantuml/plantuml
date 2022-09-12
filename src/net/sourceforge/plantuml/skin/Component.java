@@ -35,14 +35,14 @@
  */
 package net.sourceforge.plantuml.skin;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.style.WithStyle;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 public interface Component extends WithStyle {
 
-	Dimension2D getPreferredDimension(StringBounder stringBounder);
+	XDimension2D getPreferredDimension(StringBounder stringBounder);
 
 	double getPreferredWidth(StringBounder stringBounder);
 

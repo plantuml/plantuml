@@ -39,7 +39,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.SkinParamColors;
@@ -49,7 +48,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.creole.Parser;
 import net.sourceforge.plantuml.creole.Sheet;
@@ -127,7 +126,7 @@ public class FtileBoxOld extends AbstractFtile {
 		}
 
 		public double getEndingX(StringBounder stringBounder, double y) {
-			final Dimension2D dim = calculateDimension(stringBounder);
+			final XDimension2D dim = calculateDimension(stringBounder);
 			return dim.getWidth();
 			// return dim.getWidth() - padding.getRight();
 		}
@@ -188,7 +187,7 @@ public class FtileBoxOld extends AbstractFtile {
 
 	public void drawU(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
-		final Dimension2D dimTotal = calculateDimension(stringBounder);
+		final XDimension2D dimTotal = calculateDimension(stringBounder);
 		final double widthTotal = dimTotal.getWidth();
 		final double heightTotal = dimTotal.getHeight();
 		final UDrawable shape = boxStyle.getUDrawable(widthTotal, heightTotal, shadowing, roundCorner);
@@ -231,10 +230,10 @@ public class FtileBoxOld extends AbstractFtile {
 
 	@Override
 	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
-		Dimension2D dimRaw = tb.calculateDimension(stringBounder);
+		XDimension2D dimRaw = tb.calculateDimension(stringBounder);
 //		dimRaw = Dimension2DDouble.delta(dimRaw, padding.getLeft() + padding.getRight(),
 //				padding.getBottom() + padding.getTop());
-		dimRaw = Dimension2DDouble.atLeast(dimRaw, minimumWidth, 0);
+		dimRaw = XDimension2D.atLeast(dimRaw, minimumWidth, 0);
 		return new FtileGeometry(dimRaw.getWidth() + boxStyle.getShield(), dimRaw.getHeight(), dimRaw.getWidth() / 2, 0,
 				dimRaw.getHeight());
 	}

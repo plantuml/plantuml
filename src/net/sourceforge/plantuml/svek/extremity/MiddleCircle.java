@@ -35,8 +35,7 @@
  */
 package net.sourceforge.plantuml.svek.extremity;
 
-import java.awt.geom.Point2D;
-
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -55,7 +54,7 @@ class MiddleCircle extends Extremity {
 
 
 	@Override
-	public Point2D somePoint() {
+	public XPoint2D somePoint() {
 		return null;
 	}
 

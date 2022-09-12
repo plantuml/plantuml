@@ -35,9 +35,8 @@
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.sequencediagram.Event;
@@ -94,7 +93,7 @@ public class CommunicationExoTile extends AbstractTile {
 	public void drawU(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final Component comp = getComponent(stringBounder);
-		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
+		final XDimension2D dim = comp.getPreferredDimension(stringBounder);
 		double x1 = getPoint1Value(stringBounder);
 		double x2 = getPoint2Value(stringBounder);
 		final int level = livingSpace.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);
@@ -132,19 +131,19 @@ public class CommunicationExoTile extends AbstractTile {
 
 	public double getPreferredHeight() {
 		final Component comp = getComponent(getStringBounder());
-		final Dimension2D dim = comp.getPreferredDimension(getStringBounder());
+		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());
 		return dim.getHeight();
 	}
 
 	private double getPreferredWidth(StringBounder stringBounder) {
 		final Component comp = getComponent(stringBounder);
-		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
+		final XDimension2D dim = comp.getPreferredDimension(stringBounder);
 		return dim.getWidth();
 	}
 
 	public void addConstraints() {
 		final Component comp = getComponent(getStringBounder());
-		final Dimension2D dim = comp.getPreferredDimension(getStringBounder());
+		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());
 		final double width = dim.getWidth();
 
 		if (message.getType().isRightBorder()) {
@@ -169,7 +168,7 @@ public class CommunicationExoTile extends AbstractTile {
 	@Override
 	final protected void callbackY_internal(double y) {
 		final ArrowComponent comp = getComponent(getStringBounder());
-		final Dimension2D dim = comp.getPreferredDimension(getStringBounder());
+		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());
 		final double arrowY = comp.getStartPoint(getStringBounder(), dim).getY();
 
 		livingSpace.addStepForLivebox(getEvent(), y + arrowY);
@@ -209,7 +208,7 @@ public class CommunicationExoTile extends AbstractTile {
 
 	public Real getMaxX() {
 		final Component comp = getComponent(getStringBounder());
-		final Dimension2D dim = comp.getPreferredDimension(getStringBounder());
+		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());
 		final double width = dim.getWidth();
 		return getPoint1(getStringBounder()).addFixed(width);
 	}

@@ -35,13 +35,12 @@
  */
 package net.sourceforge.plantuml.salt.element;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -84,13 +83,13 @@ public class ElementDroplist extends AbstractElementText implements Element {
 		return text.substring(0, idx);
 	}
 
-	public Dimension2D getPreferredDimension(StringBounder stringBounder, double x, double y) {
-		final Dimension2D dim = getTextDimensionAt(stringBounder, x + 2);
-		return Dimension2DDouble.delta(dim, 4 + box, 4);
+	public XDimension2D getPreferredDimension(StringBounder stringBounder, double x, double y) {
+		final XDimension2D dim = getTextDimensionAt(stringBounder, x + 2);
+		return XDimension2D.delta(dim, 4 + box, 4);
 	}
 
-	public void drawU(UGraphic ug, int zIndex, Dimension2D dimToUse) {
-		final Dimension2D dim = getPreferredDimension(ug.getStringBounder(), 0, 0);
+	public void drawU(UGraphic ug, int zIndex, XDimension2D dimToUse) {
+		final XDimension2D dim = getPreferredDimension(ug.getStringBounder(), 0, 0);
 		ug = ug.apply(getBlack());
 		
 		if (zIndex == 0) {
@@ -103,14 +102,14 @@ public class ElementDroplist extends AbstractElementText implements Element {
 			final UPolygon poly = new UPolygon();
 			poly.addPoint(0, 0);
 			poly.addPoint(box - 6, 0);
-			final Dimension2D dimText = getPureTextDimension(ug.getStringBounder());
+			final XDimension2D dimText = getPureTextDimension(ug.getStringBounder());
 			poly.addPoint((box - 6) / 2, dimText.getHeight() - 8);
 
 			ug.apply(HColors.changeBack(ug)).apply(new UTranslate(xline + 3, 6)).draw(poly);
 		}
 
 		if (openDrop != null) {
-			final Dimension2D dimOpen = Dimension2DDouble.atLeast(openDrop.calculateDimension(ug.getStringBounder()),
+			final XDimension2D dimOpen = XDimension2D.atLeast(openDrop.calculateDimension(ug.getStringBounder()),
 					dim.getWidth() - 1, 0);
 			ug = ug.apply(UTranslate.dy(dim.getHeight() - 1));
 			ug.apply(getColorEE().bg())

@@ -34,9 +34,8 @@
  */
 package net.sourceforge.plantuml.ugraphic.svg;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.FontStyle;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -106,7 +105,7 @@ public class DriverTextSvg implements UDriver<UText, SvgGraphics> {
 			}
 		}
 		text = StringUtils.trin(text);
-		final Dimension2D dim = stringBounder.calculateDimension(font, text);
+		final XDimension2D dim = stringBounder.calculateDimension(font, text);
 
 		String backColor = null;
 		final double width = dim.getWidth();

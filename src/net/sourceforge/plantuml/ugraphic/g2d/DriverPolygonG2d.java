@@ -39,9 +39,9 @@ import java.awt.BasicStroke;
 import java.awt.GradientPaint;
 import java.awt.Graphics2D;
 import java.awt.geom.GeneralPath;
-import java.awt.geom.Point2D;
 
 import net.sourceforge.plantuml.EnsureVisible;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
@@ -67,8 +67,8 @@ public class DriverPolygonG2d extends DriverShadowedG2d implements UDriver<UPoly
 
 		final HColor back = param.getBackcolor();
 
-		Point2D.Double last = null;
-		for (Point2D pt : shape.getPoints()) {
+		XPoint2D last = null;
+		for (XPoint2D pt : shape.getPoints()) {
 			final double xp = pt.getX() + x;
 			final double yp = pt.getY() + y;
 			visible.ensureVisible(xp, yp);
@@ -77,7 +77,7 @@ public class DriverPolygonG2d extends DriverShadowedG2d implements UDriver<UPoly
 			} else {
 				path.lineTo((float) xp, (float) yp);
 			}
-			last = new Point2D.Double(xp, yp);
+			last = new XPoint2D(xp, yp);
 		}
 
 		if (last != null) {

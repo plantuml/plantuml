@@ -26,8 +26,14 @@
 package net.sourceforge.plantuml.argon2.blake2;
 
 
-import static net.sourceforge.plantuml.argon2.blake2.Blake2b.Engine.Assert.*;
-import static net.sourceforge.plantuml.argon2.blake2.Blake2b.Engine.LittleEndian.*;
+import static net.sourceforge.plantuml.argon2.blake2.Blake2b.Engine.Assert.assertFail;
+import static net.sourceforge.plantuml.argon2.blake2.Blake2b.Engine.Assert.exclusiveLowerBound;
+import static net.sourceforge.plantuml.argon2.blake2.Blake2b.Engine.Assert.inclusiveLowerBound;
+import static net.sourceforge.plantuml.argon2.blake2.Blake2b.Engine.Assert.inclusiveUpperBound;
+import static net.sourceforge.plantuml.argon2.blake2.Blake2b.Engine.LittleEndian.readInt;
+import static net.sourceforge.plantuml.argon2.blake2.Blake2b.Engine.LittleEndian.readLong;
+import static net.sourceforge.plantuml.argon2.blake2.Blake2b.Engine.LittleEndian.writeInt;
+import static net.sourceforge.plantuml.argon2.blake2.Blake2b.Engine.LittleEndian.writeLong;
 
 import java.io.PrintStream;
 import java.security.Key;

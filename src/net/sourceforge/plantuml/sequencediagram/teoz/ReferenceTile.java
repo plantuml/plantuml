@@ -35,8 +35,7 @@
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.real.Real;
@@ -82,7 +81,7 @@ public class ReferenceTile extends AbstractTile implements Tile {
 			}
 		}
 		final Component comp = getComponent(stringBounder);
-		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
+		final XDimension2D dim = comp.getPreferredDimension(stringBounder);
 		if (reference.getParticipant().size() == 1) {
 			this.last = this.last.addAtLeast(0);
 		}
@@ -104,7 +103,7 @@ public class ReferenceTile extends AbstractTile implements Tile {
 		final StringBounder stringBounder = ug.getStringBounder();
 		init(stringBounder);
 		final Component comp = getComponent(stringBounder);
-		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
+		final XDimension2D dim = comp.getPreferredDimension(stringBounder);
 		final Area area = Area.create(last.getCurrentValue() - first.getCurrentValue(), dim.getHeight());
 
 		ug = ug.apply(UTranslate.dx(first.getCurrentValue()));
@@ -113,7 +112,7 @@ public class ReferenceTile extends AbstractTile implements Tile {
 
 	public double getPreferredHeight() {
 		final Component comp = getComponent(getStringBounder());
-		final Dimension2D dim = comp.getPreferredDimension(getStringBounder());
+		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());
 		return dim.getHeight();
 	}
 

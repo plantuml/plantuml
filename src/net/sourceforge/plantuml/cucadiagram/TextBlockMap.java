@@ -41,10 +41,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -103,8 +102,8 @@ public class TextBlockMap extends AbstractTextBlock implements WithPorts {
 		return ports;
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		return new Dimension2DDouble(getWidthColA(stringBounder) + getWidthColB(stringBounder),
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		return new XDimension2D(getWidthColA(stringBounder) + getWidthColB(stringBounder),
 				getTotalHeight(stringBounder));
 	}
 
@@ -126,7 +125,7 @@ public class TextBlockMap extends AbstractTextBlock implements WithPorts {
 
 	public void drawU(final UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
-		final Dimension2D fullDim = calculateDimension(stringBounder);
+		final XDimension2D fullDim = calculateDimension(stringBounder);
 		final double trueWidth = Math.max(fullDim.getWidth(), totalWidth);
 		final double widthColA = getWidthColA(stringBounder);
 		final double widthColB = getWidthColB(stringBounder);
@@ -188,8 +187,8 @@ public class TextBlockMap extends AbstractTextBlock implements WithPorts {
 			this.color = color;
 		}
 
-		public Dimension2D calculateDimension(StringBounder stringBounder) {
-			return new Dimension2DDouble(getDiameter(), getDiameter());
+		public XDimension2D calculateDimension(StringBounder stringBounder) {
+			return new XDimension2D(getDiameter(), getDiameter());
 		}
 
 		public void drawU(UGraphic ug) {

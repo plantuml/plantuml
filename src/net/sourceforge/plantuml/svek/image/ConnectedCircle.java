@@ -35,10 +35,10 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -49,7 +49,7 @@ public class ConnectedCircle implements UDrawable {
 
 	private final double radius;
 	private final List<Double> angles = new ArrayList<>();
-	private final List<Point2D> points = new ArrayList<>();
+	private final List<XPoint2D> points = new ArrayList<>();
 
 	public ConnectedCircle(double radius) {
 		this.radius = radius;
@@ -64,14 +64,14 @@ public class ConnectedCircle implements UDrawable {
 			ug.draw(part);
 		}
 		ug = ug.apply(HColors.GREEN).apply(HColors.GREEN.bg());
-		for (Point2D pt : points) {
+		for (XPoint2D pt : points) {
 			final UTranslate tr = new UTranslate(pt);
 			// ug.apply(tr).draw(new UEllipse(2, 2));
 		}
 
 	}
 
-	public void addSecondaryConnection(Point2D pt) {
+	public void addSecondaryConnection(XPoint2D pt) {
 		points.add(pt);
 		// double angle = Math.atan2(pt.getY() - radius, pt.getX() - radius);
 		// double angle = Math.atan2(pt.getX() - radius, pt.getY() - radius);

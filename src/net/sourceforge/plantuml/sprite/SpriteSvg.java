@@ -35,8 +35,7 @@
  */
 package net.sourceforge.plantuml.sprite;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -61,8 +60,8 @@ public class SpriteSvg implements Sprite {
 				ug.draw(img);
 			}
 
-			public Dimension2D calculateDimension(StringBounder stringBounder) {
-				return new Dimension2DDouble(img.getWidth() * scale, img.getHeight() * scale);
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
+				return new XDimension2D(img.getWidth() * scale, img.getHeight() * scale);
 			}
 		};
 	}

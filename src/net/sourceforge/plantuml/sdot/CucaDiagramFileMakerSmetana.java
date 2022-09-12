@@ -43,8 +43,6 @@ import static gen.lib.cgraph.subg__c.agsubg;
 import static gen.lib.gvc.gvc__c.gvContext;
 import static gen.lib.gvc.gvlayout__c.gvLayoutJobs;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-import java.awt.geom.Point2D;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -69,6 +67,8 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.api.ImageDataSimple;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -102,7 +102,6 @@ import net.sourceforge.plantuml.svek.SvekNode;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import smetana.core.CString;
@@ -147,7 +146,7 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 			for (Map.Entry<ILeaf, ST_Agnode_s> ent : nodes.entrySet()) {
 				final ILeaf leaf = ent.getKey();
 				final ST_Agnode_s agnode = ent.getValue();
-				final Point2D corner = getCorner(agnode);
+				final XPoint2D corner = getCorner(agnode);
 
 				final SvekNode node = dotStringFactory.getBibliotekon().getNode(leaf);
 				final IEntityImage image = node.getImage();
@@ -165,14 +164,14 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 			}
 		}
 
-		public Dimension2D calculateDimension(StringBounder stringBounder) {
+		public XDimension2D calculateDimension(StringBounder stringBounder) {
 			if (minMax == null) {
 				throw new UnsupportedOperationException();
 			}
 			return minMax.getDimension();
 		}
 
-		private Point2D getCorner(ST_Agnode_s n) {
+		private XPoint2D getCorner(ST_Agnode_s n) {
 			final ST_Agnodeinfo_t data = (ST_Agnodeinfo_t) Macro.AGDATA(n);
 			final double width = data.width * 72;
 			final double height = data.height * 72;
@@ -180,9 +179,9 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 			final double y = data.coord.y;
 
 			if (ymirror == null) {
-				return new Point2D.Double(x - width / 2, y - height / 2);
+				return new XPoint2D(x - width / 2, y - height / 2);
 			}
-			return ymirror.getMirrored(new Point2D.Double(x - width / 2, y + height / 2));
+			return ymirror.getMirrored(new XPoint2D(x - width / 2, y + height / 2));
 		}
 
 		public HColor getBackcolor() {
@@ -255,12 +254,12 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 		final TextBlock title = getTitleBlock(g);
 		final TextBlock stereo = getStereoBlock(g);
 		final TextBlock stereoAndTitle = TextBlockUtils.mergeTB(stereo, title, HorizontalAlignment.CENTER);
-		final Dimension2D dimLabel = stereoAndTitle.calculateDimension(stringBounder);
+		final XDimension2D dimLabel = stereoAndTitle.calculateDimension(stringBounder);
 		if (dimLabel.getWidth() > 0) {
 
 			final TextBlock attribute = GeneralImageBuilder.stateHeader(g, null, diagram.getSkinParam());
 
-			final Dimension2D dimAttribute = attribute.calculateDimension(stringBounder);
+			final XDimension2D dimAttribute = attribute.calculateDimension(stringBounder);
 			final double attributeHeight = dimAttribute.getHeight();
 			final double attributeWidth = dimAttribute.getWidth();
 			final double marginForFields = attributeHeight > 0 ? IEntityImage.MARGIN : 0;
@@ -571,7 +570,7 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 
 		final TextBlock label = getLabel(link);
 		if (TextBlockUtils.isEmpty(label, stringBounder) == false) {
-			final Dimension2D dimLabel = label.calculateDimension(stringBounder);
+			final XDimension2D dimLabel = label.calculateDimension(stringBounder);
 			// System.err.println("dimLabel = " + dimLabel);
 			final CString hackDim = Macro.createHackInitDimensionFromLabel((int) dimLabel.getWidth(),
 					(int) dimLabel.getHeight());
@@ -580,7 +579,7 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 		}
 		final TextBlock q1 = getQualifier(link, 1);
 		if (q1 != null) {
-			final Dimension2D dimLabel = q1.calculateDimension(stringBounder);
+			final XDimension2D dimLabel = q1.calculateDimension(stringBounder);
 			// System.err.println("dimLabel = " + dimLabel);
 			final CString hackDim = Macro.createHackInitDimensionFromLabel((int) dimLabel.getWidth(),
 					(int) dimLabel.getHeight());
@@ -588,7 +587,7 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 		}
 		final TextBlock q2 = getQualifier(link, 2);
 		if (q2 != null) {
-			final Dimension2D dimLabel = q2.calculateDimension(stringBounder);
+			final XDimension2D dimLabel = q2.calculateDimension(stringBounder);
 			// System.err.println("dimLabel = " + dimLabel);
 			final CString hackDim = Macro.createHackInitDimensionFromLabel((int) dimLabel.getWidth(),
 					(int) dimLabel.getHeight());

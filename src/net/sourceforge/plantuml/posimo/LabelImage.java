@@ -35,10 +35,10 @@
  */
 package net.sourceforge.plantuml.posimo;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -65,8 +65,8 @@ public class LabelImage {
 		throw new UnsupportedOperationException();
 	}
 
-	public Dimension2D getDimension(StringBounder stringBounder) {
-		final Dimension2D dim = name.calculateDimension(stringBounder);
+	public XDimension2D getDimension(StringBounder stringBounder) {
+		final XDimension2D dim = name.calculateDimension(stringBounder);
 		return dim;
 		// return Dimension2DDouble.delta(dim, 2 * margin);
 	}

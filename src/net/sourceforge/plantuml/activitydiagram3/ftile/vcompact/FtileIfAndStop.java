@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -58,7 +57,8 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamond;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamondInside;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.creole.Parser;
 import net.sourceforge.plantuml.creole.Sheet;
@@ -164,15 +164,15 @@ class FtileIfAndStop extends AbstractFtile {
 
 	private UTranslate getTranslateDiamond1(StringBounder stringBounder) {
 		final double y1 = 0;
-		final Dimension2D dimDiamond1 = diamond1.calculateDimension(stringBounder);
+		final XDimension2D dimDiamond1 = diamond1.calculateDimension(stringBounder);
 		// final double x1 = getLeft(stringBounder) - dimDiamond1.getWidth() / 2;
 		final double x1 = calculateDimension(stringBounder).getLeft() - dimDiamond1.getWidth() / 2;
 		return new UTranslate(x1, y1);
 	}
 
 	private UTranslate getTranslateStop(StringBounder stringBounder) {
-		final Dimension2D dimDiamond1 = diamond1.calculateDimension(stringBounder);
-		final Dimension2D dimStop = stop2.calculateDimension(stringBounder);
+		final XDimension2D dimDiamond1 = diamond1.calculateDimension(stringBounder);
+		final XDimension2D dimStop = stop2.calculateDimension(stringBounder);
 		final double y1 = (dimDiamond1.getHeight() - dimStop.getHeight()) / 2;
 		final double x1 = calculateDimension(stringBounder).getLeft() + dimDiamond1.getWidth() / 2
 				+ getDiamondStopDistance();
@@ -194,8 +194,8 @@ class FtileIfAndStop extends AbstractFtile {
 
 		public void drawU(UGraphic ug) {
 			final StringBounder stringBounder = ug.getStringBounder();
-			final Point2D p1 = getP1(stringBounder);
-			final Point2D p2 = getP2(stringBounder);
+			final XPoint2D p1 = getP1(stringBounder);
+			final XPoint2D p2 = getP2(stringBounder);
 
 			final Snake snake = Snake.create(skinParam(), color, Arrows.asToRight());
 			snake.addPoint(p1);
@@ -203,16 +203,16 @@ class FtileIfAndStop extends AbstractFtile {
 			ug.draw(snake);
 		}
 
-		private Point2D getP1(StringBounder stringBounder) {
-			final Dimension2D dimDiamond1 = getFtile1().calculateDimension(stringBounder);
-			final Point2D p = new Point2D.Double(dimDiamond1.getWidth(), dimDiamond1.getHeight() / 2);
+		private XPoint2D getP1(StringBounder stringBounder) {
+			final XDimension2D dimDiamond1 = getFtile1().calculateDimension(stringBounder);
+			final XPoint2D p = new XPoint2D(dimDiamond1.getWidth(), dimDiamond1.getHeight() / 2);
 
 			return getTranslateDiamond1(stringBounder).getTranslated(p);
 		}
 
-		private Point2D getP2(StringBounder stringBounder) {
-			final Dimension2D dimStop = getFtile2().calculateDimension(stringBounder);
-			final Point2D p = new Point2D.Double(0, dimStop.getHeight() / 2);
+		private XPoint2D getP2(StringBounder stringBounder) {
+			final XDimension2D dimStop = getFtile2().calculateDimension(stringBounder);
+			final XPoint2D p = new XPoint2D(0, dimStop.getHeight() / 2);
 			return getTranslateStop(stringBounder).getTranslated(p);
 		}
 
@@ -237,7 +237,7 @@ class FtileIfAndStop extends AbstractFtile {
 
 	@Override
 	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
-		final Dimension2D dimStop2 = stop2.calculateDimension(stringBounder);
+		final XDimension2D dimStop2 = stop2.calculateDimension(stringBounder);
 		final FtileGeometry dim1 = tile1.calculateDimension(stringBounder).addDim(0,
 				getDiamondStopDistance() + dimStop2.getWidth());
 		final FtileGeometry dimDiamond1 = diamond1.calculateDimension(stringBounder);

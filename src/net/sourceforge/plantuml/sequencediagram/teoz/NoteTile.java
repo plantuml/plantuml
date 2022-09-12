@@ -35,9 +35,8 @@
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.real.RealUtils;
@@ -99,7 +98,7 @@ public class NoteTile extends AbstractTile implements Tile {
 	public void drawU(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final Component comp = getComponent(stringBounder);
-		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
+		final XDimension2D dim = comp.getPreferredDimension(stringBounder);
 		final double x = getX(stringBounder).getCurrentValue();
 		final Area area = Area.create(getUsedWidth(stringBounder), dim.getHeight());
 
@@ -109,7 +108,7 @@ public class NoteTile extends AbstractTile implements Tile {
 
 	private double getUsedWidth(StringBounder stringBounder) {
 		final Component comp = getComponent(stringBounder);
-		final Dimension2D dim = comp.getPreferredDimension(stringBounder);
+		final XDimension2D dim = comp.getPreferredDimension(stringBounder);
 		final double width = dim.getWidth();
 		if (note.getPosition() == NotePosition.OVER_SEVERAL) {
 			final double x1 = livingSpace1.getPosB(stringBounder).getCurrentValue();
@@ -144,7 +143,7 @@ public class NoteTile extends AbstractTile implements Tile {
 
 	public double getPreferredHeight() {
 		final Component comp = getComponent(getStringBounder());
-		final Dimension2D dim = comp.getPreferredDimension(getStringBounder());
+		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());
 		return dim.getHeight();
 	}
 

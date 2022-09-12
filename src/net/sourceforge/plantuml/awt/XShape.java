@@ -1,5 +1,5 @@
 package net.sourceforge.plantuml.awt;
 
-public interface Shape {
+public interface XShape {
 
 }

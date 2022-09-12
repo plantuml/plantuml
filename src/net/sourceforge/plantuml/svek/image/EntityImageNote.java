@@ -35,21 +35,20 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
-import java.awt.geom.Line2D;
-import java.awt.geom.Point2D;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.CornerParam;
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SkinParamBackcolored;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XLine2D;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.creole.Stencil;
 import net.sourceforge.plantuml.cucadiagram.BodyFactory;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -160,13 +159,13 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 		return getTextHeight(stringBounder);
 	}
 
-	private Dimension2D getSize(StringBounder stringBounder, final TextBlock textBlock) {
+	private XDimension2D getSize(StringBounder stringBounder, final TextBlock textBlock) {
 		return textBlock.calculateDimension(stringBounder);
 	}
 
 	final protected double getTextHeight(StringBounder stringBounder) {
 		final TextBlock textBlock = getTextBlock();
-		final Dimension2D size = getSize(stringBounder, textBlock);
+		final XDimension2D size = getSize(stringBounder, textBlock);
 		return size.getHeight() + 2 * marginY;
 	}
 
@@ -176,7 +175,7 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 
 	final protected double getPureTextWidth(StringBounder stringBounder) {
 		final TextBlock textBlock = getTextBlock();
-		final Dimension2D size = getSize(stringBounder, textBlock);
+		final XDimension2D size = getSize(stringBounder, textBlock);
 		return size.getWidth();
 	}
 
@@ -184,10 +183,10 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 		return getPureTextWidth(stringBounder) + marginX1 + marginX2;
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		final double height = getPreferredHeight(stringBounder);
 		final double width = getPreferredWidth(stringBounder);
-		return new Dimension2DDouble(width, height);
+		return new XDimension2D(width, height);
 	}
 
 	private StyleSignatureBasic getDefaultStyleDefinition(SName sname) {
@@ -212,21 +211,21 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 			final StringBounder stringBounder = ug.getStringBounder();
 			DotPath path = opaleLine.getDotPath();
 			path.moveSvek(-node.getMinX(), -node.getMinY());
-			Point2D p1 = path.getStartPoint();
-			Point2D p2 = path.getEndPoint();
+			XPoint2D p1 = path.getStartPoint();
+			XPoint2D p2 = path.getEndPoint();
 			final double textWidth = getTextWidth(stringBounder);
 			final double textHeight = getTextHeight(stringBounder);
-			final Point2D center = new Point2D.Double(textWidth / 2, textHeight / 2);
+			final XPoint2D center = new XPoint2D(textWidth / 2, textHeight / 2);
 			if (p1.distance(center) > p2.distance(center)) {
 				path = path.reverse();
 				p1 = path.getStartPoint();
 				// p2 = path.getEndPoint();
 			}
 			final Direction strategy = getOpaleStrategy(textWidth, textHeight, p1);
-			final Point2D pp1 = path.getStartPoint();
-			final Point2D pp2 = path.getEndPoint();
-			final Point2D newRefpp2 = move(pp2, node.getMinX(), node.getMinY());
-			final Point2D projection = move(other.projection(newRefpp2, stringBounder), -node.getMinX(),
+			final XPoint2D pp1 = path.getStartPoint();
+			final XPoint2D pp2 = path.getEndPoint();
+			final XPoint2D newRefpp2 = move(pp2, node.getMinX(), node.getMinY());
+			final XPoint2D projection = move(other.projection(newRefpp2, stringBounder), -node.getMinX(),
 					-node.getMinY());
 			final Opale opale = new Opale(shadowing, borderColor, noteBackgroundColor, textBlock, true, getStroke());
 			opale.setRoundCorner(getRoundCorner());
@@ -244,8 +243,8 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 		return skinParam.getRoundCorner(CornerParam.DEFAULT, null);
 	}
 
-	private static Point2D move(Point2D pt, double dx, double dy) {
-		return new Point2D.Double(pt.getX() + dx, pt.getY() + dy);
+	private static XPoint2D move(XPoint2D pt, double dx, double dy) {
+		return new XPoint2D(pt.getX() + dx, pt.getY() + dy);
 	}
 
 	private void drawNormal(UGraphic ug) {
@@ -272,11 +271,11 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 		return style.getStroke();
 	}
 
-	private Direction getOpaleStrategy(double width, double height, Point2D pt) {
-		final double d1 = getOrthoDistance(new Line2D.Double(width, 0, width, height), pt);
-		final double d2 = getOrthoDistance(new Line2D.Double(0, height, width, height), pt);
-		final double d3 = getOrthoDistance(new Line2D.Double(0, 0, 0, height), pt);
-		final double d4 = getOrthoDistance(new Line2D.Double(0, 0, width, 0), pt);
+	private Direction getOpaleStrategy(double width, double height, XPoint2D pt) {
+		final double d1 = getOrthoDistance(new XLine2D(width, 0, width, height), pt);
+		final double d2 = getOrthoDistance(new XLine2D(0, height, width, height), pt);
+		final double d3 = getOrthoDistance(new XLine2D(0, 0, 0, height), pt);
+		final double d4 = getOrthoDistance(new XLine2D(0, 0, width, 0), pt);
 		if (d3 <= d1 && d3 <= d2 && d3 <= d4)
 			return Direction.LEFT;
 
@@ -293,7 +292,7 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 
 	}
 
-	private static double getOrthoDistance(Line2D.Double seg, Point2D pt) {
+	private static double getOrthoDistance(XLine2D seg, XPoint2D pt) {
 		if (isHorizontal(seg))
 			return Math.abs(seg.getP1().getY() - pt.getY());
 
@@ -303,11 +302,11 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 		throw new IllegalArgumentException();
 	}
 
-	private static boolean isHorizontal(Line2D.Double seg) {
+	private static boolean isHorizontal(XLine2D seg) {
 		return seg.getP1().getY() == seg.getP2().getY();
 	}
 
-	private static boolean isVertical(Line2D.Double seg) {
+	private static boolean isVertical(XLine2D seg) {
 		return seg.getP1().getX() == seg.getP2().getX();
 	}
 

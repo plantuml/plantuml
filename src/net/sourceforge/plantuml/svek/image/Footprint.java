@@ -37,11 +37,11 @@ package net.sourceforge.plantuml.svek.image;
 
 import static net.sourceforge.plantuml.utils.ObjectUtils.instanceOfAny;
 
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.ugraphic.UBackground;
@@ -74,7 +74,7 @@ public class Footprint {
 
 	class MyUGraphic extends UGraphicNo {
 
-		private final List<Point2D.Double> all;
+		private final List<XPoint2D> all;
 
 		public MyUGraphic() {
 			super(stringBounder, new UTranslate());
@@ -126,11 +126,11 @@ public class Footprint {
 		}
 
 		private void addPoint(double x, double y) {
-			all.add(new Point2D.Double(x, y));
+			all.add(new XPoint2D(x, y));
 		}
 
 		private void drawText(double x, double y, UText text) {
-			final Dimension2D dim = getStringBounder().calculateDimension(text.getFontConfiguration().getFont(),
+			final XDimension2D dim = getStringBounder().calculateDimension(text.getFontConfiguration().getFont(),
 					text.getText());
 			y -= dim.getHeight() - 1.5;
 			addPoint(x, y);
@@ -170,11 +170,11 @@ public class Footprint {
 	public ContainingEllipse getEllipse(UDrawable drawable, double alpha) {
 		final MyUGraphic ug = new MyUGraphic();
 		drawable.drawU(ug);
-		final List<Point2D.Double> all = ug.all;
+		final List<XPoint2D> all = ug.all;
 		final ContainingEllipse circle = new ContainingEllipse(alpha);
-		for (Point2D pt : all) {
+		for (XPoint2D pt : all) 
 			circle.append(pt);
-		}
+			
 		return circle;
 	}
 

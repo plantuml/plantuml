@@ -35,13 +35,12 @@
  */
 package net.sourceforge.plantuml.golem;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.Map;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.SpriteContainerEmpty;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -80,8 +79,8 @@ public class Tile extends AbstractTextBlock implements TextBlock {
 	public void drawU(UGraphic ug) {
 		ug = ug.apply(HColors.BLACK);
 		final TextBlock n = Display.create("" + num).create(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty());
-		final Dimension2D dimNum = n.calculateDimension(ug.getStringBounder());
-		final Dimension2D dimTotal = calculateDimension(ug.getStringBounder());
+		final XDimension2D dimNum = n.calculateDimension(ug.getStringBounder());
+		final XDimension2D dimTotal = calculateDimension(ug.getStringBounder());
 		final double diffx = dimTotal.getWidth() - dimNum.getWidth();
 		final double diffy = dimTotal.getHeight() - dimNum.getHeight();
 		final double radius = Math.max(dimNum.getWidth(), dimNum.getHeight());
@@ -92,7 +91,7 @@ public class Tile extends AbstractTextBlock implements TextBlock {
 		ug.apply(new UTranslate(diffx2 / 2, diffy2 / 2)).draw(new UEllipse(radius, radius));
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		return new Dimension2DDouble(SIZE, SIZE);
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		return new XDimension2D(SIZE, SIZE);
 	}
 }

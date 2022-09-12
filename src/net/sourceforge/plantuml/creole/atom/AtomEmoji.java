@@ -35,8 +35,7 @@
  */
 package net.sourceforge.plantuml.creole.atom;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.emoji.Emoji;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -55,9 +54,9 @@ public class AtomEmoji extends AbstractAtom implements Atom {
 		this.color = color;
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		final double size = 36 * factor;
-		return new Dimension2DDouble(size, size);
+		return new XDimension2D(size, size);
 	}
 
 	public double getStartingAltitude(StringBounder stringBounder) {

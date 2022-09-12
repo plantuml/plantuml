@@ -35,14 +35,13 @@
  */
 package net.sourceforge.plantuml.posimo;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 public interface IEntityImageBlock {
 
-	Dimension2D getDimension(StringBounder stringBounder);
+	XDimension2D getDimension(StringBounder stringBounder);
 
 	void drawU(UGraphic ug, double xTheoricalPosition, double yTheoricalPosition, double marginWidth,
 			double marginHeight);

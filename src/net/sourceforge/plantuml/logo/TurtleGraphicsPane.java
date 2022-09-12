@@ -36,12 +36,12 @@
 package net.sourceforge.plantuml.logo;
 
 import java.awt.Font;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.SpriteContainerEmpty;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -199,7 +199,7 @@ class TurtleGraphicsPane {
 			final FontConfiguration font = FontConfiguration.blackBlueTrue(new UFont("", Font.PLAIN, 14));
 			final TextBlock text = Display.create(message).create(font, HorizontalAlignment.LEFT,
 					new SpriteContainerEmpty());
-			final Dimension2D dim = text.calculateDimension(ug.getStringBounder());
+			final XDimension2D dim = text.calculateDimension(ug.getStringBounder());
 			final double textHeight = dim.getHeight();
 			text.drawU(ug.apply(UTranslate.dy((height - textHeight))));
 		}

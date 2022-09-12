@@ -35,8 +35,7 @@
  */
 package net.sourceforge.plantuml.svek.extremity;
 
-import java.awt.geom.Point2D;
-
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -44,19 +43,19 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 class ExtremityParenthesis extends Extremity {
 
-	private final Point2D dest;
+	private final XPoint2D dest;
 	private final double radius2 = 9;
 	private final double ortho;
 
 	private final double ang = 70;
 
-	public ExtremityParenthesis(Point2D p1, double ortho) {
-		this.dest = new Point2D.Double(p1.getX(), p1.getY());
+	public ExtremityParenthesis(XPoint2D p1, double ortho) {
+		this.dest = new XPoint2D(p1.getX(), p1.getY());
 		this.ortho = ortho;
 	}
 	
 	@Override
-	public Point2D somePoint() {
+	public XPoint2D somePoint() {
 		return dest;
 	}
 

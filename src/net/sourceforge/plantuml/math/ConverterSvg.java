@@ -49,8 +49,7 @@ import javax.swing.Icon;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.log.Logme;
 
 public class ConverterSvg {
@@ -122,8 +121,8 @@ public class ConverterSvg {
 		return out.toString();
 	}
 
-	public Dimension2D getDimension() {
-		return Dimension2DDouble.fromDimension(dimension);
+	public XDimension2D getDimension() {
+		return XDimension2D.fromDimension(dimension);
 	}
 
 }

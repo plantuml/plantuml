@@ -36,14 +36,15 @@
 package net.sourceforge.plantuml.ugraphic;
 
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Point2D;
+
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 
 public class ULine extends AbstractShadowable implements UShapeSized {
 
 	private final double dx;
 	private final double dy;
 
-	public ULine(Point2D p1, Point2D p2) {
+	public ULine(XPoint2D p1, XPoint2D p2) {
 		this(p2.getX() - p1.getX(), p2.getY() - p1.getY());
 	}
 
@@ -56,8 +57,9 @@ public class ULine extends AbstractShadowable implements UShapeSized {
 		if (theta == 0)
 			return this;
 		final AffineTransform rot = AffineTransform.getRotateInstance(theta);
-		final Point2D result = rot.transform(new Point2D.Double(dx, dy), null);
-		return new ULine(result.getX(), result.getY());
+		final XPoint2D tmp = new XPoint2D(dx, dy);
+		tmp.transform(rot);
+		return new ULine(tmp.getX(), tmp.getY());
 	}
 
 	public static ULine hline(double dx) {

@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.timingdiagram;
 import java.math.BigDecimal;
 
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
@@ -123,7 +123,7 @@ public class PlayerClock extends Player {
 					new PlayerFrame(getTitle(), skinParam).drawFrameTitle(ug);
 				}
 
-				public Dimension2D calculateDimension(StringBounder stringBounder) {
+				public XDimension2D calculateDimension(StringBounder stringBounder) {
 					return getTitle().calculateDimension(stringBounder);
 				}
 			};

@@ -35,8 +35,7 @@
  */
 package net.sourceforge.plantuml.descdiagram;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -89,7 +88,7 @@ public class BoxedCharacter extends AbstractTextBlock implements TextBlock {
 		return 2 * radius;
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		return new Dimension2DDouble(getPreferredWidth(stringBounder), getPreferredHeight(stringBounder));
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		return new XDimension2D(getPreferredWidth(stringBounder), getPreferredHeight(stringBounder));
 	}
 }

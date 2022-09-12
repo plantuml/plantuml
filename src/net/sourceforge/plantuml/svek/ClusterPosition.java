@@ -38,8 +38,8 @@ package net.sourceforge.plantuml.svek;
 import java.awt.geom.CubicCurve2D;
 import java.awt.geom.Point2D;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.posimo.BezierUtils;
 
 public class ClusterPosition {
@@ -61,15 +61,19 @@ public class ClusterPosition {
 	}
 
 	public ClusterPosition merge(ClusterPosition other) {
-		return new ClusterPosition(Math.min(this.minX, other.minX), Math.min(this.minY, other.minY), Math.max(
-				this.maxX, other.maxX), Math.max(this.maxY, other.maxY));
+		return new ClusterPosition(Math.min(this.minX, other.minX), Math.min(this.minY, other.minY),
+				Math.max(this.maxX, other.maxX), Math.max(this.maxY, other.maxY));
 	}
 
-	public ClusterPosition merge(Point2D point) {
+	public ClusterPosition merge(XPoint2D point) {
 		final double x = point.getX();
 		final double y = point.getY();
-		return new ClusterPosition(Math.min(this.minX, x), Math.min(this.minY, y), Math.max(this.maxX, x), Math.max(
-				this.maxY, y));
+		return new ClusterPosition(Math.min(this.minX, x), Math.min(this.minY, y), Math.max(this.maxX, x),
+				Math.max(this.maxY, y));
+	}
+
+	public boolean contains(XPoint2D p) {
+		return contains(p.getX(), p.getY());
 	}
 
 	public boolean contains(Point2D p) {
@@ -98,9 +102,9 @@ public class ClusterPosition {
 	}
 
 	public PointDirected getIntersection(CubicCurve2D.Double bez) {
-		if (contains(bez.x1, bez.y1) == contains(bez.x2, bez.y2)) {
+		if (contains(bez.x1, bez.y1) == contains(bez.x2, bez.y2))
 			return null;
-		}
+
 		final double dist = bez.getP1().distance(bez.getP2());
 		if (dist < 2) {
 			final double angle = BezierUtils.getStartingAngle(bez);
@@ -110,18 +114,18 @@ public class ClusterPosition {
 		final CubicCurve2D.Double right = new CubicCurve2D.Double();
 		bez.subdivide(left, right);
 		final PointDirected int1 = getIntersection(left);
-		if (int1 != null) {
+		if (int1 != null)
 			return int1;
-		}
+
 		final PointDirected int2 = getIntersection(right);
-		if (int2 != null) {
+		if (int2 != null)
 			return int2;
-		}
+
 		throw new IllegalStateException();
 	}
 
-	public Point2D getPointCenter() {
-		return new Point2D.Double((minX + maxX) / 2, (minY + maxY) / 2);
+	public XPoint2D getPointCenter() {
+		return new XPoint2D((minX + maxX) / 2, (minY + maxY) / 2);
 	}
 
 	public ClusterPosition withMinX(double d) {
@@ -156,56 +160,56 @@ public class ClusterPosition {
 		return new ClusterPosition(minX, minY, maxX, d);
 	}
 
-	public Point2D getProjectionOnFrontier(Point2D pt) {
+	public XPoint2D getProjectionOnFrontier(XPoint2D pt) {
 		final double x = pt.getX();
 		final double y = pt.getY();
-		if (x > maxX && y >= minY && y <= maxY) {
-			return new Point2D.Double(maxX - 1, y);
-		}
-		if (x < minX && y >= minY && y <= maxY) {
-			return new Point2D.Double(minX + 1, y);
-		}
-		if (y > maxY && x >= minX && x <= maxX) {
-			return new Point2D.Double(x, maxY - 1);
-		}
-		if (y < minY && x >= minX && x <= maxX) {
-			return new Point2D.Double(x, minY + 1);
-		}
-		return new Point2D.Double(x, y);
+		if (x > maxX && y >= minY && y <= maxY)
+			return new XPoint2D(maxX - 1, y);
+
+		if (x < minX && y >= minY && y <= maxY)
+			return new XPoint2D(minX + 1, y);
+
+		if (y > maxY && x >= minX && x <= maxX)
+			return new XPoint2D(x, maxY - 1);
+
+		if (y < minY && x >= minX && x <= maxX)
+			return new XPoint2D(x, minY + 1);
+
+		return new XPoint2D(x, y);
 	}
 
 	public ClusterPosition delta(double m1, double m2) {
 		return new ClusterPosition(minX, minY, maxX + m1, maxY + m2);
 	}
 
-	public Dimension2D getDimension() {
-		return new Dimension2DDouble(maxX - minX, maxY - minY);
+	public XDimension2D getDimension() {
+		return new XDimension2D(maxX - minX, maxY - minY);
 	}
 
-	public boolean isPointJustUpper(Point2D pt) {
+	public boolean isPointJustUpper(XPoint2D pt) {
 		if (pt.getX() >= minX && pt.getX() <= maxX && pt.getY() <= minY) {
 			return true;
 		}
 		return false;
 	}
 
-	public Side getClosestSide(Point2D pt) {
+	public Side getClosestSide(XPoint2D pt) {
 		final double distNorth = Math.abs(minY - pt.getY());
 		final double distSouth = Math.abs(maxY - pt.getY());
 		final double distWest = Math.abs(minX - pt.getX());
 		final double distEast = Math.abs(maxX - pt.getX());
-		if (isSmallerThan(distNorth, distWest, distEast, distSouth)) {
+		if (isSmallerThan(distNorth, distWest, distEast, distSouth))
 			return Side.NORTH;
-		}
-		if (isSmallerThan(distSouth, distNorth, distWest, distEast)) {
+
+		if (isSmallerThan(distSouth, distNorth, distWest, distEast))
 			return Side.SOUTH;
-		}
-		if (isSmallerThan(distEast, distNorth, distWest, distSouth)) {
+
+		if (isSmallerThan(distEast, distNorth, distWest, distSouth))
 			return Side.EAST;
-		}
-		if (isSmallerThan(distWest, distNorth, distEast, distSouth)) {
+
+		if (isSmallerThan(distWest, distNorth, distEast, distSouth))
 			return Side.WEST;
-		}
+
 		return null;
 	}
 

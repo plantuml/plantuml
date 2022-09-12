@@ -35,19 +35,17 @@
  */
 package net.sourceforge.plantuml.asciiart;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
-import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.StringBounderRaw;
 import net.sourceforge.plantuml.ugraphic.UFont;
 
 public class TextStringBounder extends StringBounderRaw {
 
-	protected Dimension2D calculateDimensionInternal(UFont font, String text) {
+	protected XDimension2D calculateDimensionInternal(UFont font, String text) {
 		final int length1 = text.codePointCount(0, text.length());
 		final int length2 = text.length();
 		final int length3 = Wcwidth.length(text);
-		return new Dimension2DDouble(length2, 1);
+		return new XDimension2D(length2, 1);
 	}
 
 }

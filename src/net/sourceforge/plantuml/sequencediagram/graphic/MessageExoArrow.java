@@ -35,10 +35,8 @@
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.sequencediagram.MessageExoType;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
@@ -155,8 +153,8 @@ public class MessageExoArrow extends Arrow {
 		endUrl(ug);
 	}
 
-	private Dimension2D getActualDimension(StringBounder stringBounder, double maxX) {
-		return new Dimension2DDouble(getActualWidth(stringBounder, maxX), getArrowComponent().getPreferredHeight(
+	private XDimension2D getActualDimension(StringBounder stringBounder, double maxX) {
+		return new XDimension2D(getActualWidth(stringBounder, maxX), getArrowComponent().getPreferredHeight(
 				stringBounder));
 	}
 
@@ -164,7 +162,7 @@ public class MessageExoArrow extends Arrow {
 	public double getArrowYStartLevel(StringBounder stringBounder) {
 		if (getArrowComponent() instanceof AbstractComponentRoseArrow) {
 			final AbstractComponentRoseArrow arrowComponent = (AbstractComponentRoseArrow) getArrowComponent();
-			final Dimension2D dim = new Dimension2DDouble(arrowComponent.getPreferredWidth(stringBounder),
+			final XDimension2D dim = new XDimension2D(arrowComponent.getPreferredWidth(stringBounder),
 					arrowComponent.getPreferredHeight(stringBounder));
 			return getStartingY() + arrowComponent.getStartPoint(stringBounder, dim).getY();
 		}
@@ -175,7 +173,7 @@ public class MessageExoArrow extends Arrow {
 	public double getArrowYEndLevel(StringBounder stringBounder) {
 		if (getArrowComponent() instanceof AbstractComponentRoseArrow) {
 			final AbstractComponentRoseArrow arrowComponent = (AbstractComponentRoseArrow) getArrowComponent();
-			final Dimension2D dim = new Dimension2DDouble(arrowComponent.getPreferredWidth(stringBounder),
+			final XDimension2D dim = new XDimension2D(arrowComponent.getPreferredWidth(stringBounder),
 					arrowComponent.getPreferredHeight(stringBounder));
 			return getStartingY() + arrowComponent.getEndPoint(stringBounder, dim).getY();
 		}

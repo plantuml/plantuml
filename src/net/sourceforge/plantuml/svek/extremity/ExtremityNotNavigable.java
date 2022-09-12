@@ -35,23 +35,22 @@
  */
 package net.sourceforge.plantuml.svek.extremity;
 
-import java.awt.geom.Point2D;
-
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPath;
 
 class ExtremityNotNavigable extends Extremity {
 
 	private UPath path = new UPath();
-	private final Point2D contact;
+	private final XPoint2D contact;
 
 	@Override
-	public Point2D somePoint() {
+	public XPoint2D somePoint() {
 		return contact;
 	}
 
-	public ExtremityNotNavigable(Point2D p1, double angle) {
-		this.contact = new Point2D.Double(p1.getX(), p1.getY());
+	public ExtremityNotNavigable(XPoint2D p1, double angle) {
+		this.contact = new XPoint2D(p1.getX(), p1.getY());
 		angle = manageround(angle);
 
 		final double size = 4;

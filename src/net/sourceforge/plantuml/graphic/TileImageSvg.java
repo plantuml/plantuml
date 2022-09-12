@@ -35,8 +35,7 @@
  */
 package net.sourceforge.plantuml.graphic;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImageSvg;
 
@@ -50,8 +49,8 @@ public class TileImageSvg extends AbstractTextBlock implements TextBlock {
 		this.scale = scale;
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		return new Dimension2DDouble(svg.getWidth(), svg.getHeight());
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		return new XDimension2D(svg.getWidth(), svg.getHeight());
 	}
 
 	public void drawU(UGraphic ug) {

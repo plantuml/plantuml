@@ -35,11 +35,9 @@
  */
 package net.sourceforge.plantuml.salt.element;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -77,12 +75,12 @@ abstract class AbstractElementText extends AbstractElement {
 		block.drawU(ug.apply(new UTranslate(x, y)));
 	}
 
-	protected Dimension2D getPureTextDimension(StringBounder stringBounder) {
+	protected XDimension2D getPureTextDimension(StringBounder stringBounder) {
 		return block.calculateDimension(stringBounder);
 	}
 
-	protected Dimension2D getTextDimensionAt(StringBounder stringBounder, double x) {
-		final Dimension2D result = block.calculateDimension(stringBounder);
+	protected XDimension2D getTextDimensionAt(StringBounder stringBounder, double x) {
+		final XDimension2D result = block.calculateDimension(stringBounder);
 		if (charLength == 0) {
 			return result;
 		}
@@ -91,7 +89,7 @@ abstract class AbstractElementText extends AbstractElement {
 		// final double mod = endx % CHAR_SIZE;
 		// final double delta = charLength * CHAR_SIZE - mod;
 		// return Dimension2DDouble.delta(result, delta, 0);
-		return new Dimension2DDouble(Math.max(result.getWidth(), charLength * dimSpace), result.getHeight());
+		return new XDimension2D(Math.max(result.getWidth(), charLength * dimSpace), result.getHeight());
 	}
 
 	private double getSingleSpace(StringBounder stringBounder) {

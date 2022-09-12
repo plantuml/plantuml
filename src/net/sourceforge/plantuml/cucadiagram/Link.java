@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.Removeable;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.cucadiagram.entity.EntityImpl;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -117,11 +117,12 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 		this.cl2 = Objects.requireNonNull(cl2);
 
 		this.type = type;
-		this.uid = "LNK" + ((EntityImpl) cl1).getDiagram().getUniqueSequence();
+		final CucaDiagram diagram = ((EntityImpl) cl1).getDiagram();
+		this.uid = "LNK" + diagram.getUniqueSequence();
 
 		this.linkArg = linkArg;
 
-		if (OptionFlags.USE_KERMOR) {
+		if (diagram.getPragma().useKermor()) {
 			if (cl1.getEntityPosition().isNormal() == false ^ cl2.getEntityPosition().isNormal() == false)
 				setConstraint(false);
 		}
@@ -360,7 +361,7 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 		if (qualif != null) {
 			final TextBlock b = Display.create(qualif).create(FontConfiguration.blackBlueTrue(fontQualif),
 					HorizontalAlignment.LEFT, spriteContainer);
-			final Dimension2D dim = b.calculateDimension(stringBounder);
+			final XDimension2D dim = b.calculateDimension(stringBounder);
 			return Math.max(dim.getWidth(), dim.getHeight());
 		}
 		return 0;

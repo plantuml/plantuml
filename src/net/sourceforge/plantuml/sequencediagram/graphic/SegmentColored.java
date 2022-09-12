@@ -35,12 +35,11 @@
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.util.AbstractCollection;
 import java.util.Collection;
 import java.util.Iterator;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.skin.Area;
@@ -102,7 +101,7 @@ class SegmentColored {
 		final StringBounder stringBounder = ug.getStringBounder();
 		ug = ug.apply(
 				new UTranslate((level - 1) * compAliveBox.getPreferredWidth(stringBounder) / 2, segment.getPos1()));
-		final Dimension2D dim = new Dimension2DDouble(compAliveBox.getPreferredWidth(stringBounder),
+		final XDimension2D dim = new XDimension2D(compAliveBox.getPreferredWidth(stringBounder),
 				segment.getPos2() - segment.getPos1());
 		compAliveBox.drawU(ug, new Area(dim), new SimpleContext2D(false));
 	}

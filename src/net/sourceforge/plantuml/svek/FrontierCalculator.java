@@ -35,9 +35,9 @@
  */
 package net.sourceforge.plantuml.svek;
 
-import java.awt.geom.Point2D;
 import java.util.Collection;
 
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.cucadiagram.EntityPosition;
 
 public class FrontierCalculator {
@@ -47,100 +47,93 @@ public class FrontierCalculator {
 	private final ClusterPosition initial;
 
 	public FrontierCalculator(final ClusterPosition initial, Collection<ClusterPosition> insides,
-			Collection<Point2D> points) {
+			Collection<XPoint2D> points) {
 		this.initial = initial;
-		for (ClusterPosition in : insides) {
-			if (core == null) {
+		for (ClusterPosition in : insides)
+			if (core == null)
 				core = in;
-			} else {
+			else
 				core = core.merge(in);
-			}
-		}
+
 		if (core == null) {
-			final Point2D center = initial.getPointCenter();
+			final XPoint2D center = initial.getPointCenter();
 			core = new ClusterPosition(center.getX() - 1, center.getY() - 1, center.getX() + 1, center.getY() + 1);
 		}
-		for (Point2D p : points) {
+		for (XPoint2D p : points)
 			core = core.merge(p);
-		}
+
 		boolean touchMinX = false;
 		boolean touchMaxX = false;
 		boolean touchMinY = false;
 		boolean touchMaxY = false;
-		for (Point2D p : points) {
-			if (p.getX() == core.getMinX()) {
+		for (XPoint2D p : points) {
+			if (p.getX() == core.getMinX())
 				touchMinX = true;
-			}
-			if (p.getX() == core.getMaxX()) {
+
+			if (p.getX() == core.getMaxX())
 				touchMaxX = true;
-			}
-			if (p.getY() == core.getMinY()) {
+
+			if (p.getY() == core.getMinY())
 				touchMinY = true;
-			}
-			if (p.getY() == core.getMaxY()) {
+
+			if (p.getY() == core.getMaxY())
 				touchMaxY = true;
-			}
+
 		}
-		if (touchMinX == false) {
+		if (touchMinX == false)
 			core = core.withMinX(initial.getMinX());
-		}
-		if (touchMaxX == false) {
+
+		if (touchMaxX == false)
 			core = core.withMaxX(initial.getMaxX());
-		}
-		if (touchMinY == false) {
+
+		if (touchMinY == false)
 			core = core.withMinY(initial.getMinY());
-		}
-		if (touchMaxY == false) {
+
+		if (touchMaxY == false)
 			core = core.withMaxY(initial.getMaxY());
-		}
+
 		boolean pushMinX = false;
 		boolean pushMaxX = false;
 		boolean pushMinY = false;
 		boolean pushMaxY = false;
-		for (Point2D p : points) {
+		for (XPoint2D p : points) {
 			if (p.getY() == core.getMinY() || p.getY() == core.getMaxY()) {
-				if (Math.abs(p.getX() - core.getMaxX()) < DELTA) {
+				if (Math.abs(p.getX() - core.getMaxX()) < DELTA)
 					pushMaxX = true;
-				}
-				if (Math.abs(p.getX() - core.getMinX()) < DELTA) {
+
+				if (Math.abs(p.getX() - core.getMinX()) < DELTA)
 					pushMinX = true;
-				}
+
 			}
 			if (p.getX() == core.getMinX() || p.getX() == core.getMaxX()) {
-				if (Math.abs(p.getY() - core.getMaxY()) < DELTA) {
+				if (Math.abs(p.getY() - core.getMaxY()) < DELTA)
 					pushMaxY = true;
-				}
-				if (Math.abs(p.getY() - core.getMinY()) < DELTA) {
+
+				if (Math.abs(p.getY() - core.getMinY()) < DELTA)
 					pushMinY = true;
-				}
+
 			}
 		}
-		for (Point2D p : points) {
-//			if (p.getX() == core.getMinX() && (p.getY() == core.getMinY() || p.getY() == core.getMaxY())) {
-//				pushMinX = false;
-//			}
-//			if (p.getX() == core.getMaxX() && (p.getY() == core.getMinY() || p.getY() == core.getMaxY())) {
-//				pushMaxX = false;
-//			}
-			if (p.getY() == core.getMinY() && (p.getX() == core.getMinX() || p.getX() == core.getMaxX())) {
+		for (XPoint2D p : points) {
+			if (p.getY() == core.getMinY() && (p.getX() == core.getMinX() || p.getX() == core.getMaxX()))
 				pushMinY = false;
-			}
-			if (p.getY() == core.getMaxY() && (p.getX() == core.getMinX() || p.getX() == core.getMaxX())) {
+
+			if (p.getY() == core.getMaxY() && (p.getX() == core.getMinX() || p.getX() == core.getMaxX()))
 				pushMaxY = false;
-			}
+
 		}
-		if (pushMaxX) {
+		if (pushMaxX)
 			core = core.addMaxX(DELTA);
-		}
-		if (pushMinX) {
+
+		if (pushMinX)
 			core = core.addMinX(-DELTA);
-		}
-		if (pushMaxY) {
+
+		if (pushMaxY)
 			core = core.addMaxY(DELTA);
-		}
-		if (pushMinY) {
+
+		if (pushMinY)
 			core = core.addMinY(-DELTA);
-		}
+
 	}
 
 	public ClusterPosition getSuggestedPosition() {

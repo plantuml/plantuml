@@ -44,7 +44,7 @@ import java.util.StringTokenizer;
 import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.PlainDiagram;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.code.AsciiEncoder;
 import net.sourceforge.plantuml.code.CompressionBrotli;
 import net.sourceforge.plantuml.code.NoPlantumlCompressionException;
@@ -120,7 +120,7 @@ public class PSystemDonors extends PlainDiagram {
 				double lastX = 0;
 				double y = 0;
 				for (TextBlock tb : cols) {
-					final Dimension2D dim = tb.calculateDimension(stringBounder);
+					final XDimension2D dim = tb.calculateDimension(stringBounder);
 					tb.drawU(ug.apply(UTranslate.dx(x)));
 					lastX = x;
 					x += dim.getWidth() + 10;

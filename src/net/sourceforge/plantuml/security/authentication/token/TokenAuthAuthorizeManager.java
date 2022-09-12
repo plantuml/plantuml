@@ -35,12 +35,11 @@
  */
 package net.sourceforge.plantuml.security.authentication.token;
 
+import java.util.HashMap;
+
 import net.sourceforge.plantuml.security.authentication.SecurityAuthentication;
 import net.sourceforge.plantuml.security.authentication.SecurityAuthorizeManager;
 import net.sourceforge.plantuml.security.authentication.SecurityCredentials;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * The {@link TokenAuthAuthorizeManager} creates the authentication on the fly from the credentials without

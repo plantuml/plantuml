@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.svek.image;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineConfigurable;
 import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -99,7 +99,7 @@ public abstract class EntityImageStateCommon extends AbstractEntityImage {
 		return ShapeType.ROUND_RECTANGLE;
 	}
 
-	final protected URectangle getShape(final Dimension2D dimTotal) {
+	final protected URectangle getShape(final XDimension2D dimTotal) {
 
 		final double corner = getStyleState().value(PName.RoundCorner).asDouble();
 		final double deltaShadow = getStyleState().value(PName.Shadowing).asDouble();

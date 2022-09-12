@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.svek;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -60,7 +60,7 @@ public final class InnerActivity extends AbstractTextBlock implements IEntityIma
 	public final static double THICKNESS_BORDER = 1.5;
 
 	public void drawU(UGraphic ug) {
-		final Dimension2D total = calculateDimension(ug.getStringBounder());
+		final XDimension2D total = calculateDimension(ug.getStringBounder());
 
 		ug = ug.apply(backColor.bg()).apply(borderColor).apply(new UStroke(THICKNESS_BORDER));
 		final URectangle rect = new URectangle(total.getWidth(), total.getHeight()).rounded(IEntityImage.CORNER);
@@ -74,8 +74,8 @@ public final class InnerActivity extends AbstractTextBlock implements IEntityIma
 		return im.getBackcolor();
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		final Dimension2D img = im.calculateDimension(stringBounder);
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		final XDimension2D img = im.calculateDimension(stringBounder);
 		return img;
 	}
 

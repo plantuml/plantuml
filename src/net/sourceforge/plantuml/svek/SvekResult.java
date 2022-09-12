@@ -38,8 +38,7 @@ package net.sourceforge.plantuml.svek;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.cucadiagram.dot.DotData;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
@@ -136,12 +135,12 @@ public final class SvekResult extends AbstractTextBlock implements IEntityImage 
 
 	private MinMax minMax;
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		if (minMax == null) {
 			minMax = TextBlockUtils.getMinMax(this, stringBounder, false);
 			dotStringFactory.moveSvek(6 - minMax.getMinX(), 6 - minMax.getMinY());
 		}
-		return Dimension2DDouble.delta(minMax.getDimension(), 0, 12);
+		return XDimension2D.delta(minMax.getDimension(), 0, 12);
 	}
 
 	public ShapeType getShapeType() {

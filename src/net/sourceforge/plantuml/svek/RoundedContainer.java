@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.svek;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.URectangle;
@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public final class RoundedContainer {
 
-	private final Dimension2D dim;
+	private final XDimension2D dim;
 	private final double titleHeight;
 	private final double attributeHeight;
 	private final HColor borderColor;
@@ -56,7 +56,7 @@ public final class RoundedContainer {
 	private final double rounded;
 	private final double shadowing;
 
-	public RoundedContainer(Dimension2D dim, double titleHeight, double attributeHeight, HColor borderColor,
+	public RoundedContainer(XDimension2D dim, double titleHeight, double attributeHeight, HColor borderColor,
 			HColor backColor, HColor imgBackcolor, UStroke stroke, double rounded, double shadowing) {
 		if (dim.getWidth() == 0)
 			throw new IllegalArgumentException();

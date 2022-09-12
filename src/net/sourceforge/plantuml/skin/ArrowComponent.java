@@ -35,16 +35,15 @@
  */
 package net.sourceforge.plantuml.skin;
 
-import java.awt.geom.Point2D;
-
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 
 public interface ArrowComponent extends Component {
 
-	Point2D getStartPoint(StringBounder stringBounder, Dimension2D dimensionToUse);
+	XPoint2D getStartPoint(StringBounder stringBounder, XDimension2D dimensionToUse);
 
-	Point2D getEndPoint(StringBounder stringBounder, Dimension2D dimensionToUse);
+	XPoint2D getEndPoint(StringBounder stringBounder, XDimension2D dimensionToUse);
 	
 	double getPaddingY();
 	

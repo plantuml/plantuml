@@ -41,7 +41,7 @@ import java.util.Collection;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -136,7 +136,7 @@ public class FtileIfWithDiamonds extends FtileIfNude {
 		return new UTranslate(x2, y2);
 	}
 
-	public double computeMarginNeedForBranchLabe1(StringBounder stringBounder, Dimension2D label1) {
+	public double computeMarginNeedForBranchLabe1(StringBounder stringBounder, XDimension2D label1) {
 		final double widthLabelBranch1 = label1.getWidth();
 		final double dxDiamond = getTranslateDiamond1(stringBounder).getDx();
 		final double diff = widthLabelBranch1 - dxDiamond;
@@ -146,7 +146,7 @@ public class FtileIfWithDiamonds extends FtileIfNude {
 		return 0;
 	}
 
-	public double computeMarginNeedForBranchLabe2(StringBounder stringBounder, Dimension2D label2) {
+	public double computeMarginNeedForBranchLabe2(StringBounder stringBounder, XDimension2D label2) {
 		final double widthLabelBranch2 = label2.getWidth();
 		final double theoricalEndNeeded = getTranslateDiamond1(stringBounder).getDx()
 				+ diamond1.calculateDimension(stringBounder).getWidth() + widthLabelBranch2;
@@ -157,8 +157,8 @@ public class FtileIfWithDiamonds extends FtileIfNude {
 		return 0;
 	}
 
-	public double computeVerticalMarginNeedForBranchs(StringBounder stringBounder, Dimension2D label1,
-			Dimension2D label2) {
+	public double computeVerticalMarginNeedForBranchs(StringBounder stringBounder, XDimension2D label1,
+			XDimension2D label2) {
 		final double heightLabels = Math.max(label1.getHeight(), label2.getHeight());
 		final FtileGeometry dimDiamond1 = diamond1.calculateDimension(stringBounder);
 		final double dyDiamond = dimDiamond1.getHeight();

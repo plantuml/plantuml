@@ -111,6 +111,6 @@ public interface IEntity extends SpecificBackcolorable, Hideable, Removeable, Li
 
 	public EntityPosition getEntityPosition();
 
-	public List<CucaNote> getNotes();
+	public List<CucaNote> getNotes(Position position);
 
 }

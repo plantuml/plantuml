@@ -51,7 +51,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileIfDown;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamond;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamondInside;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamondSquare;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.creole.Parser;
 import net.sourceforge.plantuml.creole.Sheet;
@@ -199,8 +199,8 @@ public class ConditionalBuilder {
 		final Ftile diamond2 = getShape2(branch1, branch2, false);
 		final FtileIfWithDiamonds ftile = new FtileIfWithDiamonds(diamond1, tile1, tile2, diamond2, swimlane,
 				stringBounder);
-		final Dimension2D label1 = getLabelPositive(branch1).calculateDimension(stringBounder);
-		final Dimension2D label2 = getLabelPositive(branch2).calculateDimension(stringBounder);
+		final XDimension2D label1 = getLabelPositive(branch1).calculateDimension(stringBounder);
+		final XDimension2D label2 = getLabelPositive(branch2).calculateDimension(stringBounder);
 		final double diff1 = ftile.computeMarginNeedForBranchLabe1(stringBounder, label1);
 		final double diff2 = ftile.computeMarginNeedForBranchLabe2(stringBounder, label2);
 		Ftile result = FtileUtils.addHorizontalMargin(ftile, diff1, diff2);
@@ -219,8 +219,8 @@ public class ConditionalBuilder {
 		final Ftile tmp2 = FtileUtils.addHorizontalMargin(tile2, 10);
 		final FtileIfWithLinks ftile = new FtileIfWithLinks(diamond1, tmp1, tmp2, diamond2, swimlane, arrowColor,
 				conditionEndStyle, stringBounder);
-		final Dimension2D label1 = getLabelPositive(branch1).calculateDimension(stringBounder);
-		final Dimension2D label2 = getLabelPositive(branch2).calculateDimension(stringBounder);
+		final XDimension2D label1 = getLabelPositive(branch1).calculateDimension(stringBounder);
+		final XDimension2D label2 = getLabelPositive(branch2).calculateDimension(stringBounder);
 		final double diff1 = ftile.computeMarginNeedForBranchLabe1(stringBounder, label1);
 		final double diff2 = ftile.computeMarginNeedForBranchLabe2(stringBounder, label2);
 		final double suppHeight = ftile.computeVerticalMarginNeedForBranchs(stringBounder, label1, label2);

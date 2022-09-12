@@ -35,10 +35,8 @@
  */
 package net.sourceforge.plantuml.graphic;
 
-import java.awt.geom.Rectangle2D;
-
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XRectangle2D;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.svek.Ports;
 import net.sourceforge.plantuml.svek.WithPorts;
@@ -70,15 +68,15 @@ class TextBlockMarged extends AbstractTextBlock implements TextBlock, WithPorts 
 		this.left = margins.getLeft();
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		final Dimension2D dim = textBlock.calculateDimension(stringBounder);
-		return Dimension2DDouble.delta(dim, left + right, top + bottom);
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		final XDimension2D dim = textBlock.calculateDimension(stringBounder);
+		return XDimension2D.delta(dim, left + right, top + bottom);
 	}
 
 	public void drawU(UGraphic ug) {
 		// ug.apply(HColorUtils.BLUE).draw(new
 		// URectangle(calculateDimension(ug.getStringBounder())));
-		final Dimension2D dim = calculateDimension(ug.getStringBounder());
+		final XDimension2D dim = calculateDimension(ug.getStringBounder());
 		if (dim.getWidth() > 0) {
 			ug.draw(new UEmpty(dim));
 			final UTranslate translate = new UTranslate(left, top);
@@ -87,8 +85,8 @@ class TextBlockMarged extends AbstractTextBlock implements TextBlock, WithPorts 
 	}
 
 	@Override
-	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
-		final Rectangle2D parent = textBlock.getInnerPosition(member, stringBounder, strategy);
+	public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+		final XRectangle2D parent = textBlock.getInnerPosition(member, stringBounder, strategy);
 		if (parent == null) {
 			return null;
 		}

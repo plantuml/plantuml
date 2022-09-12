@@ -35,13 +35,12 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 
-import java.awt.geom.Point2D;
-
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractConnection;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Arrows;
 import net.sourceforge.plantuml.activitydiagram3.ftile.ConnectionTranslatable;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -50,12 +49,12 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class ConnectionVerticalDown extends AbstractConnection implements ConnectionTranslatable {
 
-	private final Point2D p1;
-	private final Point2D p2;
+	private final XPoint2D p1;
+	private final XPoint2D p2;
 	private final Rainbow color;
 	private final TextBlock textBlock;
 
-	public ConnectionVerticalDown(Ftile ftile1, Ftile ftile2, Point2D p1, Point2D p2, Rainbow color,
+	public ConnectionVerticalDown(Ftile ftile1, Ftile ftile2, XPoint2D p1, XPoint2D p2, Rainbow color,
 			TextBlock textBlock) {
 		super(ftile1, ftile2);
 		if (color.size() == 0) {
@@ -87,8 +86,8 @@ public class ConnectionVerticalDown extends AbstractConnection implements Connec
 	public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
 		final Snake snake = Snake.create(getFtile1().skinParam(), color, Arrows.asToDown()).withLabel(textBlock,
 				arrowHorizontalAlignment());
-		final Point2D mp1a = translate1.getTranslated(p1);
-		final Point2D mp2b = translate2.getTranslated(p2);
+		final XPoint2D mp1a = translate1.getTranslated(p1);
+		final XPoint2D mp2b = translate2.getTranslated(p2);
 		final double middle = (mp1a.getY() + mp2b.getY()) / 2.0;
 		snake.addPoint(mp1a);
 		snake.addPoint(mp1a.getX(), middle);

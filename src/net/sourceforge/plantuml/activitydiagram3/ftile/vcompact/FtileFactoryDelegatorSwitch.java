@@ -53,7 +53,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond.FtileSwitch
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDecorateInLabel;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDecorateOutLabel;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamondInside;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -104,8 +104,8 @@ public class FtileFactoryDelegatorSwitch extends FtileFactoryDelegator {
 		final Ftile diamond2 = getDiamond2(swimlane, branches.get(0));
 
 		for (Branch branch : branches) {
-			final Dimension2D dimLabelIn = branch.getTextBlockPositive().calculateDimension(getStringBounder());
-			final Dimension2D dimLabelOut = branch.getTextBlockSpecial().calculateDimension(getStringBounder());
+			final XDimension2D dimLabelIn = branch.getTextBlockPositive().calculateDimension(getStringBounder());
+			final XDimension2D dimLabelOut = branch.getTextBlockSpecial().calculateDimension(getStringBounder());
 			ftiles.add(new FtileDecorateOutLabel(new FtileDecorateInLabel(branch.getFtile(), dimLabelIn), dimLabelOut));
 		}
 

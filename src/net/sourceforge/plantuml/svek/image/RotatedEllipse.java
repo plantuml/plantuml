@@ -35,8 +35,7 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
-import java.awt.geom.Point2D;
-
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 
 public class RotatedEllipse {
@@ -61,14 +60,14 @@ public class RotatedEllipse {
 		return beta;
 	}
 
-	public Point2D getPoint(double theta) {
+	public XPoint2D getPoint(double theta) {
 		final double x = getA() * Math.cos(theta);
 		final double y = getB() * Math.sin(theta);
 
 		final double xp = x * Math.cos(beta) - y * Math.sin(beta);
 		final double yp = x * Math.sin(beta) + y * Math.cos(beta);
 
-		return new Point2D.Double(xp, yp);
+		return new XPoint2D(xp, yp);
 	}
 
 	public double getOtherTheta(double theta1) {

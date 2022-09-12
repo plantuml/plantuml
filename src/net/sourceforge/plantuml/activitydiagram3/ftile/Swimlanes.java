@@ -59,7 +59,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.UGraphicIntercep
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.VCompactFactory;
 import net.sourceforge.plantuml.activitydiagram3.gtile.GConnection;
 import net.sourceforge.plantuml.activitydiagram3.gtile.Gtile;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -293,7 +293,7 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock, Styleable
 
 		drawTitlesBackground(ug);
 
-		final Dimension2D dimensionFull = full.calculateDimension(stringBounder);
+		final XDimension2D dimensionFull = full.calculateDimension(stringBounder);
 		int i = 0;
 		assert dividers.size() == swimlanes().size() + 1;
 		for (Swimlane swimlane : swimlanesSpecial()) {
@@ -380,7 +380,7 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock, Styleable
 		}
 
 		final UTranslate titleHeightTranslate = getTitleHeightTranslate(stringBounder);
-		final Dimension2D dimensionFull = full.calculateDimension(stringBounder);
+		final XDimension2D dimensionFull = full.calculateDimension(stringBounder);
 
 		dividers.clear();
 		double xpos = 0;
@@ -419,7 +419,7 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock, Styleable
 		return swimlane.getMinMax().getWidth();
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		return getMinMax(stringBounder).getDimension();
 	}
 

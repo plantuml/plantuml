@@ -7,8 +7,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -350,8 +349,8 @@ public class SvgNanoParser implements Sprite {
 				SvgNanoParser.this.drawU(ug, scale, keepColors ? null : color);
 			}
 
-			public Dimension2D calculateDimension(StringBounder stringBounder) {
-				return new Dimension2DDouble(width, height);
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
+				return new XDimension2D(width, height);
 			}
 		};
 	}

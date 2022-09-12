@@ -38,8 +38,7 @@ package net.sourceforge.plantuml.graphic;
 import java.awt.image.BufferedImage;
 import java.util.Objects;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.ugraphic.AffineTransformType;
 import net.sourceforge.plantuml.ugraphic.PixelImage;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -56,8 +55,8 @@ public class TileImage extends AbstractTextBlock implements TextBlock {
 		this.vspace = vspace;
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		return new Dimension2DDouble(image.getWidth(), image.getHeight() + 2 * vspace);
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		return new XDimension2D(image.getWidth(), image.getHeight() + 2 * vspace);
 	}
 
 	public void drawU(UGraphic ug) {

@@ -36,14 +36,13 @@
 package net.sourceforge.plantuml.descdiagram;
 
 import net.sourceforge.plantuml.ColorParam;
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
@@ -97,15 +96,15 @@ public class EntityImageDomain extends AbstractEntityImage {
 		return stroke;
 	}
 
-	private Dimension2D getTitleDimension(StringBounder stringBounder) {
+	private XDimension2D getTitleDimension(StringBounder stringBounder) {
 		return getNameAndSteretypeDimension(stringBounder);
 	}
 
-	private Dimension2D getNameAndSteretypeDimension(StringBounder stringBounder) {
-		final Dimension2D nameDim = name.calculateDimension(stringBounder);
-		final Dimension2D stereoDim = stereo == null ? new Dimension2DDouble(0, 0) : stereo
+	private XDimension2D getNameAndSteretypeDimension(StringBounder stringBounder) {
+		final XDimension2D nameDim = name.calculateDimension(stringBounder);
+		final XDimension2D stereoDim = stereo == null ? new XDimension2D(0, 0) : stereo
 				.calculateDimension(stringBounder);
-		final Dimension2D nameAndStereo = new Dimension2DDouble(Math.max(nameDim.getWidth(), stereoDim.getWidth()),
+		final XDimension2D nameAndStereo = new XDimension2D(Math.max(nameDim.getWidth(), stereoDim.getWidth()),
 				nameDim.getHeight() + stereoDim.getHeight());
 		return nameAndStereo;
 	}
@@ -120,9 +119,9 @@ public class EntityImageDomain extends AbstractEntityImage {
 
 	final public void drawU(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
-		final Dimension2D dimTotal = calculateDimension(stringBounder);
-		final Dimension2D dimTitle = getTitleDimension(stringBounder);
-		final Dimension2D dimTag = getTagDimension(stringBounder);
+		final XDimension2D dimTotal = calculateDimension(stringBounder);
+		final XDimension2D dimTitle = getTitleDimension(stringBounder);
+		final XDimension2D dimTag = getTagDimension(stringBounder);
 		final double widthTotal = dimTotal.getWidth();
 		final double heightTotal = dimTotal.getHeight();
 		final URectangle rect = new URectangle(widthTotal, heightTotal);
@@ -152,8 +151,8 @@ public class EntityImageDomain extends AbstractEntityImage {
 		}
 	}
 
-	private Dimension2D getTagDimension(StringBounder stringBounder) {
-		final Dimension2D tagDim = tag == null ? new Dimension2DDouble(0, 0) : tag.calculateDimension(stringBounder);
+	private XDimension2D getTagDimension(StringBounder stringBounder) {
+		final XDimension2D tagDim = tag == null ? new XDimension2D(0, 0) : tag.calculateDimension(stringBounder);
 		return tagDim;
 	}
 
@@ -161,12 +160,12 @@ public class EntityImageDomain extends AbstractEntityImage {
 		return ShapeType.RECTANGLE;
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		final Dimension2D dimTitle = getTitleDimension(stringBounder);
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		final XDimension2D dimTitle = getTitleDimension(stringBounder);
 		final double width = dimTitle.getWidth();
 		final double height = dimTitle.getHeight();
-		final Dimension2D dimTag = getTagDimension(stringBounder);
-		return new Dimension2DDouble(width, height + dimTag.getHeight());
+		final XDimension2D dimTag = getTagDimension(stringBounder);
+		return new XDimension2D(width, height + dimTag.getHeight());
 	}
 
 }

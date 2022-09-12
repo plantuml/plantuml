@@ -37,9 +37,8 @@ package net.sourceforge.plantuml.svek;
 
 import java.util.List;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -73,23 +72,23 @@ public final class CucaDiagramFileMakerSvek2InternalImage extends AbstractTextBl
 			throw new IllegalArgumentException();
 		}
 
-		UTranslate move(Dimension2D dim) {
+		UTranslate move(XDimension2D dim) {
 			if (this == VERTICAL)
 				return UTranslate.dx(dim.getWidth());
 
 			return UTranslate.dy(dim.getHeight());
 		}
 
-		Dimension2D add(Dimension2D orig, Dimension2D other) {
+		XDimension2D add(XDimension2D orig, XDimension2D other) {
 			if (this == VERTICAL)
-				return new Dimension2DDouble(orig.getWidth() + other.getWidth(),
+				return new XDimension2D(orig.getWidth() + other.getWidth(),
 						Math.max(orig.getHeight(), other.getHeight()));
 
-			return new Dimension2DDouble(Math.max(orig.getWidth(), other.getWidth()),
+			return new XDimension2D(Math.max(orig.getWidth(), other.getWidth()),
 					orig.getHeight() + other.getHeight());
 		}
 
-		void drawSeparator(UGraphic ug, Dimension2D dimTotal) {
+		void drawSeparator(UGraphic ug, XDimension2D dimTotal) {
 			final double THICKNESS_BORDER = 1.5;
 			final int DASH = 8;
 			ug = ug.apply(new UStroke(DASH, 10, THICKNESS_BORDER));
@@ -121,12 +120,12 @@ public final class CucaDiagramFileMakerSvek2InternalImage extends AbstractTextBl
 		final HColor borderColor = getStyle().value(PName.LineColor).asColor(skinParam.getThemeStyle(),
 				skinParam.getIHtmlColorSet());
 		final StringBounder stringBounder = ug.getStringBounder();
-		final Dimension2D dimTotal = calculateDimension(stringBounder);
+		final XDimension2D dimTotal = calculateDimension(stringBounder);
 
 		for (int i = 0; i < inners.size(); i++) {
 			final IEntityImage inner = inners.get(i);
 			inner.drawU(ug);
-			final Dimension2D dim = inner.calculateDimension(stringBounder);
+			final XDimension2D dim = inner.calculateDimension(stringBounder);
 			ug = ug.apply(separator.move(dim));
 			if (i < inners.size() - 1)
 				separator.drawSeparator(ug.apply(borderColor), dimTotal);
@@ -135,10 +134,10 @@ public final class CucaDiagramFileMakerSvek2InternalImage extends AbstractTextBl
 
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		Dimension2D result = new Dimension2DDouble(0, 0);
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		XDimension2D result = new XDimension2D(0, 0);
 		for (IEntityImage inner : inners) {
-			final Dimension2D dim = inner.calculateDimension(stringBounder);
+			final XDimension2D dim = inner.calculateDimension(stringBounder);
 			result = separator.add(result, dim);
 		}
 		return result;

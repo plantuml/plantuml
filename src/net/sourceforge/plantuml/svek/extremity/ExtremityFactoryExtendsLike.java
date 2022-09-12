@@ -35,8 +35,7 @@
  */
 package net.sourceforge.plantuml.svek.extremity;
 
-import java.awt.geom.Point2D;
-
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.svek.AbstractExtremityFactory;
 import net.sourceforge.plantuml.svek.Side;
@@ -53,7 +52,7 @@ public class ExtremityFactoryExtendsLike extends AbstractExtremityFactory implem
 	}
 
 	@Override
-	public UDrawable createUDrawable(Point2D p0, double angle, Side side) {
+	public UDrawable createUDrawable(XPoint2D p0, double angle, Side side) {
 		if (definedBy) {
 			return new ExtremityExtendsLike.DefinedBy(p0, angle, backgroundColor);
 		} else {
@@ -61,7 +60,8 @@ public class ExtremityFactoryExtendsLike extends AbstractExtremityFactory implem
 		}
 	}
 
-	public UDrawable createUDrawable(Point2D p0, Point2D p1, Point2D p2, Side side) {
+	@Override
+	public UDrawable createUDrawable(XPoint2D p0, XPoint2D p1, XPoint2D p2, Side side) {
 		final double ortho = atan2(p0, p2) + (Math.PI / 2.0);
 		if (definedBy) {
 			return new ExtremityExtendsLike.DefinedBy(p1, ortho, backgroundColor);

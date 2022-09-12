@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 
 import java.util.List;
 
-import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.Pragma;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.activitydiagram3.Branch;

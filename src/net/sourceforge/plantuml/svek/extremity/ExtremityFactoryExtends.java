@@ -35,8 +35,7 @@
  */
 package net.sourceforge.plantuml.svek.extremity;
 
-import java.awt.geom.Point2D;
-
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.svek.AbstractExtremityFactory;
 import net.sourceforge.plantuml.svek.Side;
@@ -51,11 +50,12 @@ public class ExtremityFactoryExtends extends AbstractExtremityFactory implements
 	}
 
 	@Override
-	public UDrawable createUDrawable(Point2D p0, double angle, Side side) {
+	public UDrawable createUDrawable(XPoint2D p0, double angle, Side side) {
 		return new ExtremityExtends(p0, angle - Math.PI / 2, backgroundColor);
 	}
 
-	public UDrawable createUDrawable(Point2D p0, Point2D p1, Point2D p2, Side side) {
+	@Override
+	public UDrawable createUDrawable(XPoint2D p0, XPoint2D p1, XPoint2D p2, Side side) {
 		throw new UnsupportedOperationException();
 		// final double ortho = atan2(p0, p2);
 		// return new ExtremityExtends(p1, ortho, true);

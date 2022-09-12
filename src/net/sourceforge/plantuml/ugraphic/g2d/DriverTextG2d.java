@@ -44,11 +44,11 @@ import java.awt.GradientPaint;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
 
 import net.sourceforge.plantuml.EnsureVisible;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.FontStyle;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -94,7 +94,7 @@ public class DriverTextG2d implements UDriver<UText, Graphics2D> {
 		final UFont font = fontConfiguration.getFont();
 		final HColor extended = fontConfiguration.getExtendedColor();
 		
-		final Dimension2D dim = stringBounder.calculateDimension(font, text);
+		final XDimension2D dim = stringBounder.calculateDimension(font, text);
 		final double height = max(10, dim.getHeight());
 		final double width = dim.getWidth();
 

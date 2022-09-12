@@ -68,7 +68,7 @@ import org.w3c.dom.Element;
 import net.sourceforge.plantuml.FileUtils;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.SignatureUtils;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.code.Base64Coder;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SImageIO;
@@ -143,7 +143,7 @@ public class SvgGraphics {
 		}
 	}
 
-	public SvgGraphics(String backcolor, boolean svgDimensionStyle, Dimension2D minDim, double scale, String hover,
+	public SvgGraphics(String backcolor, boolean svgDimensionStyle, XDimension2D minDim, double scale, String hover,
 			long seed, String preserveAspectRatio, LengthAdjust lengthAdjust, DarkStrategy darkStrategy,
 			boolean interactive) {
 		try {

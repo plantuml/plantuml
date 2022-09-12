@@ -34,12 +34,12 @@
  */
 package net.sourceforge.plantuml.timingdiagram;
 
-import java.awt.geom.Point2D;
 import java.util.List;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -106,11 +106,11 @@ public class TimeConstraint {
 		ug = ug.apply(UTranslate.dx(x1));
 		ug.apply(getUStroke()).draw(ULine.hline(x2 - x1));
 
-		ug.draw(getPolygon(-Math.PI / 2, new Point2D.Double(0, 0)));
-		ug.draw(getPolygon(Math.PI / 2, new Point2D.Double(x2 - x1, 0)));
+		ug.draw(getPolygon(-Math.PI / 2, new XPoint2D(0, 0)));
+		ug.draw(getPolygon(Math.PI / 2, new XPoint2D(x2 - x1, 0)));
 
 		final TextBlock text = getTextBlock(label);
-		final Dimension2D dimText = text.calculateDimension(ug.getStringBounder());
+		final XDimension2D dimText = text.calculateDimension(ug.getStringBounder());
 		final double x = (x2 - x1 - dimText.getWidth()) / 2;
 		text.drawU(ug.apply(new UTranslate(x, -getConstraintHeight(ug.getStringBounder()))));
 	}
@@ -133,7 +133,7 @@ public class TimeConstraint {
 
 	public double getConstraintHeight(StringBounder stringBounder) {
 		final TextBlock text = getTextBlock(label);
-		final Dimension2D dimText = text.calculateDimension(stringBounder);
+		final XDimension2D dimText = text.calculateDimension(stringBounder);
 		return dimText.getHeight() + getTopMargin();
 
 	}
@@ -142,10 +142,10 @@ public class TimeConstraint {
 		return 5;
 	}
 
-	private UPolygon getPolygon(final double angle, final Point2D end) {
+	private UPolygon getPolygon(final double angle, final XPoint2D end) {
 		final double delta = 20.0 * Math.PI / 180.0;
-		final Point2D pt1 = TimeArrow.onCircle(end, angle + delta);
-		final Point2D pt2 = TimeArrow.onCircle(end, angle - delta);
+		final XPoint2D pt1 = TimeArrow.onCircle(end, angle + delta);
+		final XPoint2D pt2 = TimeArrow.onCircle(end, angle - delta);
 
 		final UPolygon polygon = new UPolygon();
 		polygon.addPoint(pt1.getX(), pt1.getY());

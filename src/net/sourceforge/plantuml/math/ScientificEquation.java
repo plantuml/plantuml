@@ -39,13 +39,13 @@ import java.awt.Color;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.ugraphic.MutableImage;
 import net.sourceforge.plantuml.ugraphic.UImageSvg;
 
 public interface ScientificEquation {
 
-	public Dimension2D getDimension();
+	public XDimension2D getDimension();
 
 	public UImageSvg getSvg(double scale, Color foregroundColor, Color backgroundColor)
 			throws ClassNotFoundException, IllegalAccessException, IllegalArgumentException, InvocationTargetException,

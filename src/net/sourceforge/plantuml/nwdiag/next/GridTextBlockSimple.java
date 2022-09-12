@@ -34,11 +34,9 @@
  */
 package net.sourceforge.plantuml.nwdiag.next;
 
-import java.awt.geom.Rectangle2D;
-
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XRectangle2D;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -95,9 +93,9 @@ public class GridTextBlockSimple implements TextBlock {
 		return height;
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		if (data.getNbLines() == 0)
-			return new Dimension2DDouble(0, 0);
+			return new XDimension2D(0, 0);
 
 		double height = 0;
 		for (int i = 0; i < data.getNbLines(); i++)
@@ -107,10 +105,10 @@ public class GridTextBlockSimple implements TextBlock {
 		for (int j = 0; j < data.getNbCols(); j++)
 			width += colWidth(stringBounder, j);
 
-		return new Dimension2DDouble(width, height);
+		return new XDimension2D(width, height);
 	}
 
-	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+	public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
 		throw new UnsupportedOperationException("member=" + member + " " + getClass().toString());
 	}
 

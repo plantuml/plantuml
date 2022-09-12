@@ -37,11 +37,12 @@ package net.sourceforge.plantuml.posimo;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Collection;
+
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 
 public class SimpleDrawer {
 
@@ -57,8 +58,8 @@ public class SimpleDrawer {
 		g2d.setColor(Color.BLACK);
 		for (Clusterable cl : root.getContents()) {
 			final Block b = (Block) cl;
-			final Point2D pos = b.getPosition();
-			final Dimension2D dim = b.getSize();
+			final XPoint2D pos = b.getPosition();
+			final XDimension2D dim = b.getSize();
 			// drawRectCentered(g2d, pos, dim);
 			drawRect(g2d, pos, dim);
 		}
@@ -66,8 +67,8 @@ public class SimpleDrawer {
 		g2d.setColor(Color.GREEN);
 		for (Path p : paths) {
 			final Label label = p.getLabel();
-			final Point2D labelPos = label.getPosition();
-			final Dimension2D labelDim = label.getSize();
+			final XPoint2D labelPos = label.getPosition();
+			final XDimension2D labelDim = label.getSize();
 			// final double x1 = labelPos.getX();
 			// final double y1 = labelPos.getY();
 			// g2d.draw(new Ellipse2D.Double(x1 - 1, y1 - 1, 3, 3));
@@ -86,13 +87,13 @@ public class SimpleDrawer {
 
 	}
 
-	private void drawRectCentered(Graphics2D g2d, final Point2D pos, final Dimension2D dim) {
+	private void drawRectCentered(Graphics2D g2d, final XPoint2D pos, final XDimension2D dim) {
 		final Rectangle2D rect = new Rectangle2D.Double(pos.getX() - dim.getWidth() / 2, pos.getY() - dim.getHeight()
 				/ 2, dim.getWidth(), dim.getHeight());
 		g2d.draw(rect);
 	}
 
-	private void drawRect(Graphics2D g2d, final Point2D pos, final Dimension2D dim) {
+	private void drawRect(Graphics2D g2d, final XPoint2D pos, final XDimension2D dim) {
 		final Rectangle2D rect = new Rectangle2D.Double(pos.getX(), pos.getY(), dim.getWidth(), dim.getHeight());
 		g2d.draw(rect);
 	}

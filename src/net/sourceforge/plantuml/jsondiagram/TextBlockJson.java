@@ -35,14 +35,13 @@
  */
 package net.sourceforge.plantuml.jsondiagram;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineBreakStrategy;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
@@ -231,8 +230,8 @@ public class TextBlockJson extends AbstractTextBlock implements TextBlockBackcol
 		return Collections.unmodifiableList(result);
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		return new Dimension2DDouble(getWidthColA(stringBounder) + getWidthColB(stringBounder),
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		return new XDimension2D(getWidthColA(stringBounder) + getWidthColB(stringBounder),
 				getTotalHeight(stringBounder));
 	}
 
@@ -256,7 +255,7 @@ public class TextBlockJson extends AbstractTextBlock implements TextBlockBackcol
 	public void drawU(final UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
 
-		final Dimension2D fullDim = calculateDimension(stringBounder);
+		final XDimension2D fullDim = calculateDimension(stringBounder);
 		double trueWidth = Math.max(fullDim.getWidth(), totalWidth);
 		final double widthColA = getWidthColA(stringBounder);
 		final double widthColB = getWidthColB(stringBounder);

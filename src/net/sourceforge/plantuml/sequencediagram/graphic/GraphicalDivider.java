@@ -35,9 +35,7 @@
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
-import net.sourceforge.plantuml.Dimension2DDouble;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.Component;
@@ -58,7 +56,7 @@ class GraphicalDivider extends GraphicalElement {
 	protected void drawInternalU(UGraphic ug, double maxX, Context2D context) {
 		ug = ug.apply(UTranslate.dy(getStartingY()));
 		final StringBounder stringBounder = ug.getStringBounder();
-		final Dimension2D dim = new Dimension2DDouble(maxX, comp.getPreferredHeight(stringBounder));
+		final XDimension2D dim = new XDimension2D(maxX, comp.getPreferredHeight(stringBounder));
 		comp.drawU(ug, new Area(dim), context);
 	}
 

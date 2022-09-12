@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.command.note;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.LineLocation;
-import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
@@ -241,7 +240,7 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 					ColorParam.noteBorder);
 		}
 
-		if (OptionFlags.USE_KERMOR && cl1.isGroup()) {
+		if (diagram.getPragma().useKermor() && cl1.isGroup()) {
 			cl1.addNote(strings.toDisplay(), position, colors);
 			return CommandExecutionResult.ok();
 		}

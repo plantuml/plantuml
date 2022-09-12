@@ -35,9 +35,8 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.style.PName;
@@ -79,8 +78,8 @@ public class LaneDivider extends AbstractTextBlock {
 		return style;
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		return new Dimension2DDouble(x1 + x2, height);
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		return new XDimension2D(x1 + x2, height);
 	}
 
 	public void drawU(UGraphic ug) {

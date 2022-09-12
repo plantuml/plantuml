@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.graphic;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -73,7 +73,7 @@ public class TextBlockRecentred extends AbstractTextBlock implements TextBlockBa
 	// return result;
 	// }
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		final MinMax minMax = getMinMax(stringBounder);
 		return minMax.getDimension();
 	}

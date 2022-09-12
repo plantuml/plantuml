@@ -35,11 +35,10 @@
  */
 package net.sourceforge.plantuml.graphic;
 
-import java.awt.geom.Point2D;
 import java.util.Objects;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.ugraphic.Shadowable;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -76,7 +75,7 @@ public class USymbolFolder extends USymbol {
 		return sname;
 	}
 
-	private void drawFolder(UGraphic ug, double width, double height, Dimension2D dimTitle, double shadowing,
+	private void drawFolder(UGraphic ug, double width, double height, XDimension2D dimTitle, double shadowing,
 			double roundCorner) {
 
 		final double wtitle;
@@ -104,16 +103,16 @@ public class USymbolFolder extends USymbol {
 			path.moveTo(roundCorner / 2, 0);
 			path.lineTo(wtitle - roundCorner / 2, 0);
 			// path.lineTo(wtitle, roundCorner / 2);
-			path.arcTo(new Point2D.Double(wtitle, roundCorner / 2), roundCorner / 2 * 1.5, 0, 1);
+			path.arcTo(new XPoint2D(wtitle, roundCorner / 2), roundCorner / 2 * 1.5, 0, 1);
 			path.lineTo(wtitle + marginTitleX3, htitle);
 			path.lineTo(width - roundCorner / 2, htitle);
-			path.arcTo(new Point2D.Double(width, htitle + roundCorner / 2), roundCorner / 2, 0, 1);
+			path.arcTo(new XPoint2D(width, htitle + roundCorner / 2), roundCorner / 2, 0, 1);
 			path.lineTo(width, height - roundCorner / 2);
-			path.arcTo(new Point2D.Double(width - roundCorner / 2, height), roundCorner / 2, 0, 1);
+			path.arcTo(new XPoint2D(width - roundCorner / 2, height), roundCorner / 2, 0, 1);
 			path.lineTo(roundCorner / 2, height);
-			path.arcTo(new Point2D.Double(0, height - roundCorner / 2), roundCorner / 2, 0, 1);
+			path.arcTo(new XPoint2D(0, height - roundCorner / 2), roundCorner / 2, 0, 1);
 			path.lineTo(0, roundCorner / 2);
-			path.arcTo(new Point2D.Double(roundCorner / 2, 0), roundCorner / 2, 0, 1);
+			path.arcTo(new XPoint2D(roundCorner / 2, 0), roundCorner / 2, 0, 1);
 			path.closePath();
 			shape = path;
 		}
@@ -123,7 +122,7 @@ public class USymbolFolder extends USymbol {
 		ug.apply(UTranslate.dy(htitle)).draw(ULine.hline(wtitle + marginTitleX3));
 	}
 
-	private double getHTitle(Dimension2D dimTitle) {
+	private double getHTitle(XDimension2D dimTitle) {
 		final double htitle;
 		if (dimTitle.getWidth() == 0) {
 			htitle = 10;
@@ -144,10 +143,10 @@ public class USymbolFolder extends USymbol {
 		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
-				final Dimension2D dim = calculateDimension(ug.getStringBounder());
+				final XDimension2D dim = calculateDimension(ug.getStringBounder());
 				ug = UGraphicStencil.create(ug, dim);
 				ug = symbolContext.apply(ug);
-				final Dimension2D dimName = getDimName(ug.getStringBounder());
+				final XDimension2D dimName = getDimName(ug.getStringBounder());
 				drawFolder(ug, dim.getWidth(), dim.getHeight(), dimName, symbolContext.getDeltaShadow(),
 						symbolContext.getRoundCorner());
 				final Margin margin = getMargin();
@@ -158,15 +157,15 @@ public class USymbolFolder extends USymbol {
 				tb.drawU(ug.apply(new UTranslate(margin.getX1(), margin.getY1() + dimName.getHeight())));
 			}
 
-			private Dimension2D getDimName(StringBounder stringBounder) {
-				return showTitle ? name.calculateDimension(stringBounder) : new Dimension2DDouble(40, 15);
+			private XDimension2D getDimName(StringBounder stringBounder) {
+				return showTitle ? name.calculateDimension(stringBounder) : new XDimension2D(40, 15);
 			}
 
-			public Dimension2D calculateDimension(StringBounder stringBounder) {
-				final Dimension2D dimName = getDimName(stringBounder);
-				final Dimension2D dimLabel = label.calculateDimension(stringBounder);
-				final Dimension2D dimStereo = stereotype.calculateDimension(stringBounder);
-				return getMargin().addDimension(Dimension2DDouble.mergeTB(dimName, dimStereo, dimLabel));
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
+				final XDimension2D dimName = getDimName(stringBounder);
+				final XDimension2D dimLabel = label.calculateDimension(stringBounder);
+				final XDimension2D dimStereo = stereotype.calculateDimension(stringBounder);
+				return getMargin().addDimension(XDimension2D.mergeTB(dimName, dimStereo, dimLabel));
 			}
 		};
 	}
@@ -179,20 +178,20 @@ public class USymbolFolder extends USymbol {
 
 			public void drawU(UGraphic ug) {
 				final StringBounder stringBounder = ug.getStringBounder();
-				final Dimension2D dim = calculateDimension(stringBounder);
+				final XDimension2D dim = calculateDimension(stringBounder);
 				ug = symbolContext.apply(ug);
-				final Dimension2D dimTitle = title.calculateDimension(stringBounder);
+				final XDimension2D dimTitle = title.calculateDimension(stringBounder);
 				drawFolder(ug, dim.getWidth(), dim.getHeight(), dimTitle, symbolContext.getDeltaShadow(),
 						symbolContext.getRoundCorner());
 				title.drawU(ug.apply(new UTranslate(4, 2)));
-				final Dimension2D dimStereo = stereotype.calculateDimension(stringBounder);
+				final XDimension2D dimStereo = stereotype.calculateDimension(stringBounder);
 				final double posStereo = (width - dimStereo.getWidth()) / 2;
 
 				stereotype.drawU(ug.apply(new UTranslate(4 + posStereo, 2 + getHTitle(dimTitle))));
 			}
 
-			public Dimension2D calculateDimension(StringBounder stringBounder) {
-				return new Dimension2DDouble(width, height);
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
+				return new XDimension2D(width, height);
 			}
 
 		};

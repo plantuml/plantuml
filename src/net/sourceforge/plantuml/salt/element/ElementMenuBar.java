@@ -35,14 +35,13 @@
  */
 package net.sourceforge.plantuml.salt.element;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -88,19 +87,19 @@ public class ElementMenuBar extends AbstractElement {
 		throw new IllegalArgumentException();
 	}
 
-	public Dimension2D getPreferredDimension(StringBounder stringBounder, double x, double y) {
+	public XDimension2D getPreferredDimension(StringBounder stringBounder, double x, double y) {
 		double w = 0;
 		double h = 0;
 		for (ElementMenuEntry entry : entries) {
-			final Dimension2D dim = entry.getPreferredDimension(stringBounder, x, y);
+			final XDimension2D dim = entry.getPreferredDimension(stringBounder, x, y);
 			w += dim.getWidth() + 10;
 			h = Math.max(h, dim.getHeight());
 		}
-		return new Dimension2DDouble(w, h);
+		return new XDimension2D(w, h);
 	}
 
-	public void drawU(UGraphic ug, int zIndex, Dimension2D dimToUse) {
-		final Dimension2D preferred = getPreferredDimension(ug.getStringBounder(), 0, 0);
+	public void drawU(UGraphic ug, int zIndex, XDimension2D dimToUse) {
+		final XDimension2D preferred = getPreferredDimension(ug.getStringBounder(), 0, 0);
 
 		ug = ug.apply(getBlack());
 

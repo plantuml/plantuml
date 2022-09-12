@@ -40,7 +40,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -51,8 +51,8 @@ public class GtileTopDown extends AbstractGtile {
 	protected final Gtile tile1;
 	protected final Gtile tile2;
 
-	private final Dimension2D dim1;
-	private final Dimension2D dim2;
+	private final XDimension2D dim1;
+	private final XDimension2D dim2;
 
 	private final UTranslate pos1;
 	private final UTranslate pos2;
@@ -115,9 +115,9 @@ public class GtileTopDown extends AbstractGtile {
 	}
 
 	@Override
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		final Dimension2D corner1 = getPos1().getTranslated(dim1);
-		final Dimension2D corner2 = getPos2().getTranslated(dim2);
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		final XDimension2D corner1 = getPos1().getTranslated(dim1);
+		final XDimension2D corner2 = getPos2().getTranslated(dim2);
 		return MathUtils.max(corner1, corner2);
 	}
 

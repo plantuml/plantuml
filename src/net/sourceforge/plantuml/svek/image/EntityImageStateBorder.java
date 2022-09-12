@@ -35,11 +35,10 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
-import java.awt.geom.Point2D;
-
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.cucadiagram.EntityPosition;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -74,14 +73,14 @@ public class EntityImageStateBorder extends AbstractEntityImageBorder {
 		if (parent == null)
 			return false;
 
-		final Point2D clusterCenter = parent.getClusterPosition().getPointCenter();
+		final XPoint2D clusterCenter = parent.getClusterPosition().getPointCenter();
 		final SvekNode node = bibliotekon.getNode(getEntity());
 		return node.getMinY() < clusterCenter.getY();
 	}
 
 	final public void drawU(UGraphic ug) {
 		double y = 0;
-		final Dimension2D dimDesc = desc.calculateDimension(ug.getStringBounder());
+		final XDimension2D dimDesc = desc.calculateDimension(ug.getStringBounder());
 		final double x = 0 - (dimDesc.getWidth() - 2 * EntityPosition.RADIUS) / 2;
 		if (upPosition())
 			y -= 2 * EntityPosition.RADIUS + dimDesc.getHeight();
@@ -109,7 +108,7 @@ public class EntityImageStateBorder extends AbstractEntityImageBorder {
 	}
 	
 	public double getMaxWidthFromLabelForEntryExit(StringBounder stringBounder) {
-		final Dimension2D dimDesc = desc.calculateDimension(stringBounder);
+		final XDimension2D dimDesc = desc.calculateDimension(stringBounder);
 		return dimDesc.getWidth();
 	}
 

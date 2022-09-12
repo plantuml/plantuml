@@ -35,19 +35,19 @@
  */
 package net.sourceforge.plantuml.svek;
 
-import java.awt.geom.Point2D;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 
 public class PointAndAngle {
 
-	private final Point2D pt;
+	private final XPoint2D pt;
 	private final double angle;
 
-	public PointAndAngle(Point2D pt, double angle) {
+	public PointAndAngle(XPoint2D pt, double angle) {
 		this.pt = pt;
 		this.angle = angle;
 	}
 
-	public Point2D getPt() {
+	public XPoint2D getPt() {
 		return pt;
 	}
 

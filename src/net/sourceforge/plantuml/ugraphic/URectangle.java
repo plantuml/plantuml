@@ -35,8 +35,7 @@
  */
 package net.sourceforge.plantuml.ugraphic;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.ugraphic.comp.CompressionMode;
 
 public class URectangle extends AbstractShadowable implements UShapeSized, UShapeIgnorableForCompression {
@@ -106,7 +105,7 @@ public class URectangle extends AbstractShadowable implements UShapeSized, UShap
 		this(width, height, 0, 0, null, false, false, null);
 	}
 
-	public URectangle(Dimension2D dim) {
+	public URectangle(XDimension2D dim) {
 		this(dim.getWidth(), dim.getHeight());
 	}
 

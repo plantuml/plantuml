@@ -35,9 +35,8 @@
  */
 package net.sourceforge.plantuml.wire;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -89,7 +88,7 @@ public class WLinkHorizontal {
 	public void drawMe(UGraphic ug) {
 		ug = ug.apply(color);
 		final TextBlock textBlock = getTextBlock();
-		final Dimension2D dimText = textBlock.calculateDimension(ug.getStringBounder());
+		final XDimension2D dimText = textBlock.calculateDimension(ug.getStringBounder());
 
 		UGraphic ugText = ug.apply(start);
 		final double len = destination - start.getDx();

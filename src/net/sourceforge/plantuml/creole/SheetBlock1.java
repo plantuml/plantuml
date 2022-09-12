@@ -35,17 +35,16 @@
  */
 package net.sourceforge.plantuml.creole;
 
-import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.annotation.HaxeIgnored;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XRectangle2D;
 import net.sourceforge.plantuml.creole.atom.Atom;
 import net.sourceforge.plantuml.creole.legacy.StripeSimple;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
@@ -174,13 +173,13 @@ public class SheetBlock1 extends AbstractTextBlock implements TextBlock, Atom, S
 		}
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		initMap(stringBounder);
-		return Dimension2DDouble.delta(minMax.getDimension(), padding.getBottom() + padding.getTop());
+		return XDimension2D.delta(minMax.getDimension(), padding.getBottom() + padding.getTop());
 	}
 
 	@Override
-	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+	public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
 		return null;
 	}
 

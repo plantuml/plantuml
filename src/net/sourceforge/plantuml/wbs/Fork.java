@@ -35,13 +35,12 @@
  */
 package net.sourceforge.plantuml.wbs;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -68,7 +67,7 @@ class Fork extends WBSTextBlock {
 
 	public void drawU(final UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
-		final Dimension2D mainDim = main.calculateDimension(stringBounder);
+		final XDimension2D mainDim = main.calculateDimension(stringBounder);
 
 		final double y0 = mainDim.getHeight();
 		final double y1 = y0 + deltay / 2;
@@ -98,7 +97,7 @@ class Fork extends WBSTextBlock {
 			posMain = firstX + (lastX - firstX - mainWidth) / 2;
 		} else {
 			assert lastX == firstX;
-			final Dimension2D fullDim = calculateDimension(stringBounder);
+			final XDimension2D fullDim = calculateDimension(stringBounder);
 			posMain = (fullDim.getWidth() - mainWidth) / 2;
 			drawLine(ug, firstX, y1, posMain + mainWidth / 2, y1);
 		}
@@ -107,19 +106,19 @@ class Fork extends WBSTextBlock {
 
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		double width = 0;
 		double height = 0;
 		for (ITF child : right) {
-			final Dimension2D childDim = child.calculateDimension(stringBounder);
+			final XDimension2D childDim = child.calculateDimension(stringBounder);
 			height = Math.max(height, childDim.getHeight());
 			width += childDim.getWidth();
 		}
-		final Dimension2D mainDim = main.calculateDimension(stringBounder);
+		final XDimension2D mainDim = main.calculateDimension(stringBounder);
 		height += mainDim.getHeight();
 		height += deltay;
 		width = Math.max(width, mainDim.getWidth());
-		return new Dimension2DDouble(width, height);
+		return new XDimension2D(width, height);
 	}
 
 }

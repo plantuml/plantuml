@@ -37,9 +37,8 @@ package net.sourceforge.plantuml.graphic;
 
 import java.util.Objects;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.Direction;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -98,7 +97,7 @@ public class TextBlockArrow extends AbstractTextBlock implements TextBlock {
 		return triangle;
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		return new Dimension2DDouble(size, size);
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		return new XDimension2D(size, size);
 	}
 }

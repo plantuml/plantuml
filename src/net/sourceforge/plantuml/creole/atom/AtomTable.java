@@ -40,8 +40,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.creole.Position;
 import net.sourceforge.plantuml.creole.SheetBlock1;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -87,11 +86,11 @@ public class AtomTable extends AbstractAtom implements Atom {
 		this.lineColor = lineColor;
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		initMap(stringBounder);
 		final double width = getEndingX(getNbCols() - 1);
 		final double height = getEndingY(getNbLines() - 1);
-		return new Dimension2DDouble(width, height);
+		return new XDimension2D(width, height);
 	}
 
 	public double getStartingAltitude(StringBounder stringBounder) {
@@ -130,7 +129,7 @@ public class AtomTable extends AbstractAtom implements Atom {
 							.draw(new URectangle(x2 - x1, y2 - y1));
 				}
 				final Position pos = positions.get(cell);
-				final Dimension2D dimCell = cell.calculateDimension(ug.getStringBounder());
+				final XDimension2D dimCell = cell.calculateDimension(ug.getStringBounder());
 				final double dx;
 				if (align == HorizontalAlignment.RIGHT) {
 					dx = cellWidth - dimCell.getWidth();
@@ -161,7 +160,7 @@ public class AtomTable extends AbstractAtom implements Atom {
 		}
 		for (Line line : lines) {
 			for (Atom cell : line.cells) {
-				final Dimension2D dim = cell.calculateDimension(stringBounder);
+				final XDimension2D dim = cell.calculateDimension(stringBounder);
 				final Position pos = new Position(0, 0, dim);
 				positions.put(cell, pos);
 			}
@@ -169,7 +168,7 @@ public class AtomTable extends AbstractAtom implements Atom {
 		for (int i = 0; i < lines.size(); i++) {
 			for (int j = 0; j < lines.get(i).size(); j++) {
 				final Atom cell = lines.get(i).cells.get(j);
-				final Dimension2D dim = cell.calculateDimension(stringBounder);
+				final XDimension2D dim = cell.calculateDimension(stringBounder);
 				final double x = getStartingX(j);
 				final double y = getStartingY(i);
 				final Position pos = new Position(x, y, dim);

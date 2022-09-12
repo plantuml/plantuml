@@ -35,10 +35,8 @@
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.skin.Area;
@@ -76,7 +74,7 @@ class MessageSelfArrow extends Arrow {
 	protected void drawInternalU(UGraphic ug, double maxX, Context2D context) {
 		final StringBounder stringBounder = ug.getStringBounder();
 		ug = ug.apply(new UTranslate(getStartingX(stringBounder), getStartingY() + deltaY));
-		final Area area = new Area(new Dimension2DDouble(getPreferredWidth(stringBounder),
+		final Area area = new Area(new XDimension2D(getPreferredWidth(stringBounder),
 				getPreferredHeight(stringBounder)));
 		area.setDeltaX1(deltaY);
 		startUrl(ug);
@@ -105,7 +103,7 @@ class MessageSelfArrow extends Arrow {
 	public double getArrowYStartLevel(StringBounder stringBounder) {
 		if (getArrowComponent() instanceof ArrowComponent) {
 			final ArrowComponent arrowComponent = (ArrowComponent) getArrowComponent();
-			final Dimension2D dim = new Dimension2DDouble(arrowComponent.getPreferredWidth(stringBounder),
+			final XDimension2D dim = new XDimension2D(arrowComponent.getPreferredWidth(stringBounder),
 					arrowComponent.getPreferredHeight(stringBounder));
 			return getStartingY() + arrowComponent.getStartPoint(stringBounder, dim).getY();
 		}
@@ -116,7 +114,7 @@ class MessageSelfArrow extends Arrow {
 	public double getArrowYEndLevel(StringBounder stringBounder) {
 		if (getArrowComponent() instanceof ArrowComponent) {
 			final ArrowComponent arrowComponent = (ArrowComponent) getArrowComponent();
-			final Dimension2D dim = new Dimension2DDouble(arrowComponent.getPreferredWidth(stringBounder),
+			final XDimension2D dim = new XDimension2D(arrowComponent.getPreferredWidth(stringBounder),
 					arrowComponent.getPreferredHeight(stringBounder));
 			return getStartingY() + arrowComponent.getEndPoint(stringBounder, dim).getY();
 		}

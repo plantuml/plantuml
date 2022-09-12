@@ -38,12 +38,11 @@ package net.sourceforge.plantuml.activitydiagram3.gtile;
 import java.util.Collection;
 import java.util.Set;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.activitydiagram3.PositionedNote;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.creole.Parser;
 import net.sourceforge.plantuml.creole.Sheet;
@@ -161,24 +160,24 @@ public class GtileWithNotes extends AbstractGtile {
 	}
 
 	private UTranslate getTranslate(StringBounder stringBounder) {
-		final Dimension2D dimTotal = calculateDimension(stringBounder);
-		final Dimension2D dimTile = tile.calculateDimension(stringBounder);
+		final XDimension2D dimTotal = calculateDimension(stringBounder);
+		final XDimension2D dimTile = tile.calculateDimension(stringBounder);
 		final double xDelta = left.calculateDimension(stringBounder).getWidth();
 		final double yDelta = (dimTotal.getHeight() - dimTile.getHeight()) / 2;
 		return new UTranslate(xDelta, yDelta);
 	}
 
 	private UTranslate getTranslateForLeft(StringBounder stringBounder) {
-		final Dimension2D dimTotal = calculateDimension(stringBounder);
-		final Dimension2D dimLeft = left.calculateDimension(stringBounder);
+		final XDimension2D dimTotal = calculateDimension(stringBounder);
+		final XDimension2D dimLeft = left.calculateDimension(stringBounder);
 		final double xDelta = 0;
 		final double yDelta = (dimTotal.getHeight() - dimLeft.getHeight()) / 2;
 		return new UTranslate(xDelta, yDelta);
 	}
 
 	private UTranslate getTranslateForRight(StringBounder stringBounder) {
-		final Dimension2D dimTotal = calculateDimension(stringBounder);
-		final Dimension2D dimRight = right.calculateDimension(stringBounder);
+		final XDimension2D dimTotal = calculateDimension(stringBounder);
+		final XDimension2D dimRight = right.calculateDimension(stringBounder);
 		final double xDelta = dimTotal.getWidth() - dimRight.getWidth();
 		final double yDelta = (dimTotal.getHeight() - dimRight.getHeight()) / 2;
 		return new UTranslate(xDelta, yDelta);
@@ -205,12 +204,12 @@ public class GtileWithNotes extends AbstractGtile {
 //	}
 
 	@Override
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		final Dimension2D dimTile = tile.calculateDimension(stringBounder);
-		final Dimension2D dimLeft = left.calculateDimension(stringBounder);
-		final Dimension2D dimRight = right.calculateDimension(stringBounder);
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		final XDimension2D dimTile = tile.calculateDimension(stringBounder);
+		final XDimension2D dimLeft = left.calculateDimension(stringBounder);
+		final XDimension2D dimRight = right.calculateDimension(stringBounder);
 		final double height = MathUtils.max(dimLeft.getHeight(), dimRight.getHeight(), dimTile.getHeight());
-		return new Dimension2DDouble(dimTile.getWidth() + dimLeft.getWidth() + dimRight.getWidth(), height);
+		return new XDimension2D(dimTile.getWidth() + dimLeft.getWidth() + dimRight.getWidth(), height);
 	}
 
 }

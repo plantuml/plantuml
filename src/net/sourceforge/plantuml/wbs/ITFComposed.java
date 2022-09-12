@@ -35,15 +35,14 @@
  */
 package net.sourceforge.plantuml.wbs;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.style.Style;
@@ -85,51 +84,51 @@ class ITFComposed extends WBSTextBlock implements ITF {
 	}
 
 	final protected double getw1(StringBounder stringBounder) {
-		final Dimension2D mainDim = main.calculateDimension(stringBounder);
+		final XDimension2D mainDim = main.calculateDimension(stringBounder);
 		final double mainWidth = mainDim.getWidth();
 		return Math.max(mainWidth / 2, delta1x + getCollWidth(stringBounder, left));
 	}
 
-	final public Point2D getT1(StringBounder stringBounder) {
+	final public XPoint2D getT1(StringBounder stringBounder) {
 		final double x = getw1(stringBounder);
 		final double y = 0;
-		return new Point2D.Double(x, y);
+		return new XPoint2D(x, y);
 	}
 
-	final public Point2D getT2(StringBounder stringBounder) {
-		final Dimension2D mainDim = main.calculateDimension(stringBounder);
+	final public XPoint2D getT2(StringBounder stringBounder) {
+		final XDimension2D mainDim = main.calculateDimension(stringBounder);
 		final double x = getw1(stringBounder);
 		final double y = mainDim.getHeight();
-		return new Point2D.Double(x, y);
+		return new XPoint2D(x, y);
 	}
 
-	final public Point2D getF1(StringBounder stringBounder) {
-		final Dimension2D mainDim = main.calculateDimension(stringBounder);
+	final public XPoint2D getF1(StringBounder stringBounder) {
+		final XDimension2D mainDim = main.calculateDimension(stringBounder);
 		final double x = getw1(stringBounder) - mainDim.getWidth() / 2;
 		final double y = mainDim.getHeight() / 2;
-		return new Point2D.Double(x, y);
+		return new XPoint2D(x, y);
 	}
 
-	final public Point2D getF2(StringBounder stringBounder) {
-		final Dimension2D mainDim = main.calculateDimension(stringBounder);
+	final public XPoint2D getF2(StringBounder stringBounder) {
+		final XDimension2D mainDim = main.calculateDimension(stringBounder);
 		final double x = getw1(stringBounder) + mainDim.getWidth() / 2;
 		final double y = mainDim.getHeight() / 2;
-		return new Point2D.Double(x, y);
+		return new XPoint2D(x, y);
 	}
 
-	public final Dimension2D calculateDimension(StringBounder stringBounder) {
-		final Dimension2D mainDim = main.calculateDimension(stringBounder);
+	public final XDimension2D calculateDimension(StringBounder stringBounder) {
+		final XDimension2D mainDim = main.calculateDimension(stringBounder);
 		final double mainWidth = mainDim.getWidth();
 		final double height = mainDim.getHeight() + Math.max(getCollHeight(stringBounder, left, marginBottom),
 				getCollHeight(stringBounder, right, marginBottom));
 		final double width = Math.max(mainWidth / 2, delta1x + getCollWidth(stringBounder, left))
 				+ Math.max(mainWidth / 2, delta1x + getCollWidth(stringBounder, right));
-		return new Dimension2DDouble(width, height);
+		return new XDimension2D(width, height);
 	}
 
 	public void drawU(final UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
-		final Dimension2D mainDim = main.calculateDimension(stringBounder);
+		final XDimension2D mainDim = main.calculateDimension(stringBounder);
 		final double wx = getw1(stringBounder) - mainDim.getWidth() / 2;
 		main.drawU(ug.apply(UTranslate.dx(wx)));
 		final double x = getw1(stringBounder);
@@ -137,7 +136,7 @@ class ITFComposed extends WBSTextBlock implements ITF {
 		double lastY1 = y;
 		for (ITF child : left) {
 			y += marginBottom;
-			final Dimension2D childDim = child.calculateDimension(stringBounder);
+			final XDimension2D childDim = child.calculateDimension(stringBounder);
 			lastY1 = y + child.getF2(stringBounder).getY();
 			drawLine(ug, x - childDim.getWidth() - delta1x + child.getF2(stringBounder).getX(), lastY1, x, lastY1);
 			child.drawU(ug.apply(new UTranslate(x - childDim.getWidth() - delta1x, y)));
@@ -148,7 +147,7 @@ class ITFComposed extends WBSTextBlock implements ITF {
 		double lastY2 = y;
 		for (ITF child : right) {
 			y += marginBottom;
-			final Dimension2D childDim = child.calculateDimension(stringBounder);
+			final XDimension2D childDim = child.calculateDimension(stringBounder);
 			lastY2 = y + child.getF1(stringBounder).getY();
 			drawLine(ug, x, lastY2, x + delta1x + child.getF1(stringBounder).getX(), lastY2);
 			child.drawU(ug.apply(new UTranslate(x + delta1x, y)));

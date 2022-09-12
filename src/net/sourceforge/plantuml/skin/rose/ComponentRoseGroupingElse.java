@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.skin.rose;
 
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.LineBreakStrategy;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
@@ -74,7 +74,7 @@ public class ComponentRoseGroupingElse extends AbstractTextualComponent {
 		if (HColors.isTransparent(backgroundColor))
 			return;
 
-		final Dimension2D dimensionToUse = area.getDimensionToUse();
+		final XDimension2D dimensionToUse = area.getDimensionToUse();
 		ug = ug.apply(HColors.none()).apply(backgroundColor.bg());
 		final double width = dimensionToUse.getWidth();
 		final double height = dimensionToUse.getHeight();
@@ -100,7 +100,7 @@ public class ComponentRoseGroupingElse extends AbstractTextualComponent {
 
 	@Override
 	protected void drawInternalU(UGraphic ug, Area area) {
-		final Dimension2D dimensionToUse = area.getDimensionToUse();
+		final XDimension2D dimensionToUse = area.getDimensionToUse();
 		ug = ArrowConfiguration.stroke(ug, 2, 2, 1).apply(groupBorder);
 		ug.apply(UTranslate.dy(1)).draw(ULine.hline(dimensionToUse.getWidth()));
 		ug = ug.apply(new UStroke());

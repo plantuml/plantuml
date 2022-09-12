@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.nwdiag.core;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
@@ -42,6 +41,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -132,7 +132,7 @@ public class NwGroup implements NStackable {
 		if (block == null)
 			return 0;
 
-		final Dimension2D blockDim = block.calculateDimension(stringBounder);
+		final XDimension2D blockDim = block.calculateDimension(stringBounder);
 		return blockDim.getHeight();
 	}
 
@@ -145,7 +145,7 @@ public class NwGroup implements NStackable {
 		final Style style = getStyleDefinition().getMergedStyle(styleBuilder);
 		final TextBlock block = buildHeaderName(skinParam);
 		if (block != null) {
-			final Dimension2D blockDim = block.calculateDimension(ug.getStringBounder());
+			final XDimension2D blockDim = block.calculateDimension(ug.getStringBounder());
 			final double dy = size.getMinY() - blockDim.getHeight();
 			size = size.addPoint(size.getMinX(), dy);
 		}

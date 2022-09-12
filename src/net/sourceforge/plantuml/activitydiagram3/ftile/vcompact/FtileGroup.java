@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileUtils;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -140,7 +140,7 @@ public class FtileGroup extends AbstractFtile {
 	}
 
 	private double diffHeightTitle(StringBounder stringBounder) {
-		final Dimension2D dimTitle = name.calculateDimension(stringBounder);
+		final XDimension2D dimTitle = name.calculateDimension(stringBounder);
 		return Math.max(25, dimTitle.getHeight() + 20);
 	}
 
@@ -161,8 +161,8 @@ public class FtileGroup extends AbstractFtile {
 
 	public double suppWidth(StringBounder stringBounder) {
 		final FtileGeometry orig = getInnerDimension(stringBounder);
-		final Dimension2D dimTitle = name.calculateDimension(stringBounder);
-		final Dimension2D dimHeaderNote = headerNote.calculateDimension(stringBounder);
+		final XDimension2D dimTitle = name.calculateDimension(stringBounder);
+		final XDimension2D dimHeaderNote = headerNote.calculateDimension(stringBounder);
 		final double suppWidth = MathUtils.max(orig.getWidth(), dimTitle.getWidth() + 20, dimHeaderNote.getWidth() + 20)
 				- orig.getWidth();
 		return suppWidth;
@@ -210,7 +210,7 @@ public class FtileGroup extends AbstractFtile {
 
 	public void drawU(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
-		final Dimension2D dimTotal = calculateDimension(stringBounder);
+		final XDimension2D dimTotal = calculateDimension(stringBounder);
 
 		final SymbolContext symbolContext = new SymbolContext(backColor, borderColor).withShadow(shadowing)
 				.withStroke(stroke).withCorner(roundCorner, 0);
@@ -220,7 +220,7 @@ public class FtileGroup extends AbstractFtile {
 		type.asBig(name, align, TextBlockUtils.empty(0, 0), dimTotal.getWidth(), dimTotal.getHeight(), symbolContext,
 				skinParam().getStereotypeAlignment()).drawU(ug);
 
-		final Dimension2D dimHeaderNote = headerNote.calculateDimension(stringBounder);
+		final XDimension2D dimHeaderNote = headerNote.calculateDimension(stringBounder);
 		headerNote.drawU(ug.apply(new UTranslate(dimTotal.getWidth() - dimHeaderNote.getWidth() - 10,
 				diffHeightTitle(ug.getStringBounder()) - 10)));
 

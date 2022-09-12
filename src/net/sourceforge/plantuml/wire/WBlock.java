@@ -35,14 +35,13 @@
  */
 package net.sourceforge.plantuml.wire;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SpriteContainerEmpty;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -158,7 +157,7 @@ public class WBlock {
 
 	public CommandExecutionResult newColumn(int level) {
 		if (level == 0) {
-			final Dimension2D max = getNaturalDimension();
+			final XDimension2D max = getNaturalDimension();
 			this.cursor = new UTranslate(max.getWidth() + 10, STARTING_Y);
 			this.addedToCursor = null;
 			return CommandExecutionResult.ok();
@@ -218,7 +217,7 @@ public class WBlock {
 
 	private UTranslate getNextPosition() {
 		if (this.addedToCursor != null) {
-			final Dimension2D dim = this.addedToCursor.getMaxDimension();
+			final XDimension2D dim = this.addedToCursor.getMaxDimension();
 			this.cursor = this.cursor.compose(UTranslate.dy(dim.getHeight()));
 		}
 		this.addedToCursor = null;
@@ -264,27 +263,27 @@ public class WBlock {
 		}
 	}
 
-	private Dimension2D getMaxDimension() {
+	private XDimension2D getMaxDimension() {
 		if (children.size() > 0) {
 			if (forcedWidth != 0) {
-				return new Dimension2DDouble(forcedWidth, forcedHeight);
+				return new XDimension2D(forcedWidth, forcedHeight);
 			}
 			return getNaturalDimension();
 		}
 		final double x = forcedWidth == 0 ? 100 : forcedWidth;
 		final double y = forcedHeight == 0 ? 100 : forcedHeight;
-		return new Dimension2DDouble(x, y);
+		return new XDimension2D(x, y);
 	}
 
-	private Dimension2D getNaturalDimension() {
+	private XDimension2D getNaturalDimension() {
 		double x = 0;
 		double y = 0;
 		for (WBlock child : children) {
-			final Dimension2D dim = child.getMaxDimension();
+			final XDimension2D dim = child.getMaxDimension();
 			x = Math.max(x, child.position.getDx() + dim.getWidth() + 10);
 			y = Math.max(y, child.position.getDy() + dim.getHeight() + 10);
 		}
-		return new Dimension2DDouble(x, y);
+		return new XDimension2D(x, y);
 	}
 
 	public UTranslate getNextOutHorizontal(String x, String y, WLinkType type) {

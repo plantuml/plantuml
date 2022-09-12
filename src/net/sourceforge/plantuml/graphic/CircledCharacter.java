@@ -35,8 +35,7 @@
  */
 package net.sourceforge.plantuml.graphic;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.ugraphic.UCenteredCharacter;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UFont;
@@ -107,7 +106,7 @@ public class CircledCharacter extends AbstractTextBlock implements TextBlock {
 	// return result;
 	// }
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		return new Dimension2DDouble(getPreferredWidth(stringBounder), getPreferredHeight(stringBounder));
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		return new XDimension2D(getPreferredWidth(stringBounder), getPreferredHeight(stringBounder));
 	}
 }

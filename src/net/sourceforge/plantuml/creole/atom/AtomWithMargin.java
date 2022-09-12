@@ -39,8 +39,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -75,8 +74,8 @@ public class AtomWithMargin extends AbstractAtom implements Atom {
 		return Collections.unmodifiableList(result);
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		return Dimension2DDouble.delta(atom.calculateDimension(stringBounder), 0, marginY1 + marginY2);
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		return XDimension2D.delta(atom.calculateDimension(stringBounder), 0, marginY1 + marginY2);
 	}
 
 	public double getStartingAltitude(StringBounder stringBounder) {

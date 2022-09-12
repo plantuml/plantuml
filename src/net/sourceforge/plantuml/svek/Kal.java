@@ -35,10 +35,9 @@
  */
 package net.sourceforge.plantuml.svek;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.Link;
@@ -58,7 +57,7 @@ public class Kal implements UDrawable {
 
 	private final TextBlock textBlock;
 	private final Direction position;
-	private Dimension2D dim;
+	private XDimension2D dim;
 	private UTranslate translate;
 	private final SvekLine svekLine;
 	private final EntityImpl entity;
@@ -71,7 +70,7 @@ public class Kal implements UDrawable {
 		this.link = link;
 		this.textBlock = Display.getWithNewlines(text).create7(font, HorizontalAlignment.LEFT, skinParam,
 				CreoleMode.SIMPLE_LINE);
-		this.dim = Dimension2DDouble.delta(this.textBlock.calculateDimension(stringBounder), 4, 2);
+		this.dim = XDimension2D.delta(this.textBlock.calculateDimension(stringBounder), 4, 2);
 
 		if (link.getLength() == 1 && link.getEntity1() == entity) {
 			this.position = Direction.RIGHT;
@@ -97,7 +96,7 @@ public class Kal implements UDrawable {
 
 	}
 
-	public Dimension2D getDimension() {
+	public XDimension2D getDimension() {
 		return dim;
 	}
 

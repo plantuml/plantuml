@@ -35,8 +35,7 @@
  */
 package net.sourceforge.plantuml.svek;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.SymbolContext;
@@ -92,8 +91,8 @@ public class Boundary extends AbstractTextBlock {
 
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		return new Dimension2DDouble(radius * 2 + left + 2 * margin, radius * 2 + 2 * margin);
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		return new XDimension2D(radius * 2 + left + 2 * margin, radius * 2 + 2 * margin);
 	}
 
 }

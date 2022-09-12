@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.svek;
 
-import java.awt.geom.Point2D;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 
 public class YDelta implements Point2DFunction {
 
@@ -51,8 +51,8 @@ public class YDelta implements Point2DFunction {
 		this.factor = factor;
 	}
 
-	public Point2D.Double apply(Point2D pt) {
-		return new Point2D.Double(pt.getX(), pt.getY() * factor + delta);
+	public XPoint2D apply(XPoint2D pt) {
+		return new XPoint2D(pt.getX(), pt.getY() * factor + delta);
 
 	}
 

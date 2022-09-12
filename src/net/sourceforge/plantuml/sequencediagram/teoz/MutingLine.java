@@ -35,12 +35,12 @@
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.sequencediagram.Delay;
 import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.Participant;
@@ -113,7 +113,7 @@ public class MutingLine {
 		final Style style = defaultLineType.getStyleSignature().getMergedStyle(styleBuilder);
 		final Component comp = skin.createComponent(new Style[] { style }, defaultLineType, null, skinParam,
 				participant.getDisplay(skinParam.forceSequenceParticipantUnderlined()));
-		final Dimension2D dim = comp.getPreferredDimension(ug.getStringBounder());
+		final XDimension2D dim = comp.getPreferredDimension(ug.getStringBounder());
 		final Area area = Area.create(dim.getWidth(), y2 - y1);
 		comp.drawU(ug.apply(UTranslate.dy(y1)), area, context);
 	}

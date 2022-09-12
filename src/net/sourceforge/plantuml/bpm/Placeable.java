@@ -35,15 +35,14 @@
  */
 package net.sourceforge.plantuml.bpm;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 
 public interface Placeable {
 
-	public Dimension2D getDimension(StringBounder stringBounder, ISkinParam skinParam);
+	public XDimension2D getDimension(StringBounder stringBounder, ISkinParam skinParam);
 
 	public TextBlock toTextBlock(ISkinParam skinParam);
 

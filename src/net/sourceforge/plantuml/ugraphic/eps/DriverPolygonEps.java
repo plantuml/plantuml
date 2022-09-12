@@ -34,8 +34,7 @@
  */
 package net.sourceforge.plantuml.ugraphic.eps;
 
-import java.awt.geom.Point2D;
-
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.eps.EpsGraphics;
 import net.sourceforge.plantuml.ugraphic.ClipContainer;
 import net.sourceforge.plantuml.ugraphic.UClip;
@@ -58,7 +57,7 @@ public class DriverPolygonEps implements UDriver<UPolygon, EpsGraphics> {
 		final double points[] = new double[shape.getPoints().size() * 2];
 		int i = 0;
 
-		for (Point2D pt : shape.getPoints()) {
+		for (XPoint2D pt : shape.getPoints()) {
 			points[i++] = pt.getX() + x;
 			points[i++] = pt.getY() + y;
 		}

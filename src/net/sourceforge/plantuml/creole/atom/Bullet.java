@@ -35,8 +35,7 @@
  */
 package net.sourceforge.plantuml.creole.atom;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
@@ -57,7 +56,7 @@ public class Bullet extends AbstractAtom implements Atom {
 	}
 
 	private double getWidth(StringBounder stringBounder) {
-		final Dimension2D dim = stringBounder.calculateDimension(fontConfiguration.getFont(), "W");
+		final XDimension2D dim = stringBounder.calculateDimension(fontConfiguration.getFont(), "W");
 		return dim.getWidth() * (order + 1);
 	}
 
@@ -69,7 +68,7 @@ public class Bullet extends AbstractAtom implements Atom {
 		}
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		if (order == 0) {
 			return calculateDimension0(stringBounder);
 		}
@@ -88,8 +87,8 @@ public class Bullet extends AbstractAtom implements Atom {
 		return -5;
 	}
 
-	private Dimension2D calculateDimension0(StringBounder stringBounder) {
-		return new Dimension2DDouble(getWidth(stringBounder), 5);
+	private XDimension2D calculateDimension0(StringBounder stringBounder) {
+		return new XDimension2D(getWidth(stringBounder), 5);
 	}
 
 	private void drawU1(UGraphic ug) {
@@ -100,8 +99,8 @@ public class Bullet extends AbstractAtom implements Atom {
 		ug.draw(new URectangle(3.5, 3.5));
 	}
 
-	private Dimension2D calculateDimension1(StringBounder stringBounder) {
-		return new Dimension2DDouble(getWidth(stringBounder), 3);
+	private XDimension2D calculateDimension1(StringBounder stringBounder) {
+		return new XDimension2D(getWidth(stringBounder), 3);
 	}
 
 }

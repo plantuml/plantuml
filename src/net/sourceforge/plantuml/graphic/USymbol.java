@@ -35,8 +35,7 @@
  */
 package net.sourceforge.plantuml.graphic;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.style.SName;
 
 public abstract class USymbol {
@@ -70,8 +69,8 @@ public abstract class USymbol {
 			return y1 + y2;
 		}
 
-		public Dimension2D addDimension(Dimension2D dim) {
-			return new Dimension2DDouble(dim.getWidth() + x1 + x2, dim.getHeight() + y1 + y2);
+		public XDimension2D addDimension(XDimension2D dim) {
+			return new XDimension2D(dim.getWidth() + x1 + x2, dim.getHeight() + y1 + y2);
 		}
 
 		public double getX1() {

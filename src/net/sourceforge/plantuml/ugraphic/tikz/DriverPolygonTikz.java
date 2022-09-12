@@ -34,8 +34,6 @@
  */
 package net.sourceforge.plantuml.ugraphic.tikz;
 
-import java.awt.Color;
-
 import net.sourceforge.plantuml.tikz.TikzGraphics;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UParam;

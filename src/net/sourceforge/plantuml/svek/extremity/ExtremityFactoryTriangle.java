@@ -35,8 +35,7 @@
  */
 package net.sourceforge.plantuml.svek.extremity;
 
-import java.awt.geom.Point2D;
-
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.svek.AbstractExtremityFactory;
 import net.sourceforge.plantuml.svek.Side;
@@ -55,11 +54,12 @@ public class ExtremityFactoryTriangle extends AbstractExtremityFactory implement
 	}
 
 	@Override
-	public UDrawable createUDrawable(Point2D p0, double angle, Side side) {
+	public UDrawable createUDrawable(XPoint2D p0, double angle, Side side) {
 		return new ExtremityTriangle(p0, angle - Math.PI / 2, false, backgroundColor, xWing, yAperture);
 	}
 
-	public UDrawable createUDrawable(Point2D p0, Point2D p1, Point2D p2, Side side) {
+	@Override
+	public UDrawable createUDrawable(XPoint2D p0, XPoint2D p1, XPoint2D p2, Side side) {
 		final double ortho = atan2(p0, p2);
 		return new ExtremityTriangle(p1, ortho, true, backgroundColor, xWing, yAperture);
 	}

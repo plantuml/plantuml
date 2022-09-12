@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.svek;
 
-import java.awt.geom.Point2D;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 
 public class Oscillator {
 
@@ -46,10 +46,10 @@ public class Oscillator {
 	private int x = -1;
 	private int y = -1;
 
-	public Point2D.Double nextPosition() {
+	public XPoint2D nextPosition() {
 		assert n % 2 == 1;
 		final int halfN = (n - 1) / 2;
-		final Point2D.Double result = new Point2D.Double(x, y);
+		final XPoint2D result = new XPoint2D(x, y);
 		i++;
 		if (seg == 'A') {
 			x++;

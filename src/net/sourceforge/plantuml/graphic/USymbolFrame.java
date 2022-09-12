@@ -35,8 +35,7 @@
  */
 package net.sourceforge.plantuml.graphic;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.ugraphic.Shadowable;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -53,7 +52,7 @@ class USymbolFrame extends USymbol {
 		return SName.frame;
 	}
 
-	private void drawFrame(UGraphic ug, double width, double height, Dimension2D dimTitle, double shadowing,
+	private void drawFrame(UGraphic ug, double width, double height, XDimension2D dimTitle, double shadowing,
 			double roundCorner) {
 		final Shadowable shape = new URectangle(width, height).rounded(roundCorner).ignoreForCompressionOnX()
 				.ignoreForCompressionOnY();
@@ -84,7 +83,7 @@ class USymbolFrame extends USymbol {
 
 	}
 
-	private double getYpos(Dimension2D dimTitle) {
+	private double getYpos(XDimension2D dimTitle) {
 		if (dimTitle.getWidth() == 0)
 			return 12;
 
@@ -101,20 +100,20 @@ class USymbolFrame extends USymbol {
 		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
-				final Dimension2D dim = calculateDimension(ug.getStringBounder());
+				final XDimension2D dim = calculateDimension(ug.getStringBounder());
 				ug = UGraphicStencil.create(ug, dim);
 				ug = symbolContext.apply(ug);
-				drawFrame(ug, dim.getWidth(), dim.getHeight(), new Dimension2DDouble(0, 0),
+				drawFrame(ug, dim.getWidth(), dim.getHeight(), new XDimension2D(0, 0),
 						symbolContext.getDeltaShadow(), symbolContext.getRoundCorner());
 				final Margin margin = getMargin();
 				final TextBlock tb = TextBlockUtils.mergeTB(stereotype, label, HorizontalAlignment.CENTER);
 				tb.drawU(ug.apply(new UTranslate(margin.getX1(), margin.getY1())));
 			}
 
-			public Dimension2D calculateDimension(StringBounder stringBounder) {
-				final Dimension2D dimLabel = label.calculateDimension(stringBounder);
-				final Dimension2D dimStereo = stereotype.calculateDimension(stringBounder);
-				return getMargin().addDimension(Dimension2DDouble.mergeTB(dimStereo, dimLabel));
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
+				final XDimension2D dimLabel = label.calculateDimension(stringBounder);
+				final XDimension2D dimStereo = stereotype.calculateDimension(stringBounder);
+				return getMargin().addDimension(XDimension2D.mergeTB(dimStereo, dimLabel));
 			}
 		};
 	}
@@ -127,9 +126,9 @@ class USymbolFrame extends USymbol {
 
 			public void drawU(UGraphic ug) {
 				final StringBounder stringBounder = ug.getStringBounder();
-				final Dimension2D dim = calculateDimension(stringBounder);
+				final XDimension2D dim = calculateDimension(stringBounder);
 				ug = symbolContext.apply(ug);
-				final Dimension2D dimTitle = title.calculateDimension(stringBounder);
+				final XDimension2D dimTitle = title.calculateDimension(stringBounder);
 				final double widthFull = dim.getWidth();
 				drawFrame(ug, widthFull, dim.getHeight(), dimTitle, symbolContext.getDeltaShadow(),
 						symbolContext.getRoundCorner());
@@ -141,14 +140,14 @@ class USymbolFrame extends USymbol {
 				else
 					ug.apply(new UTranslate(3, 1)).draw(new SpecialText(title));
 
-				final Dimension2D dimStereo = stereotype.calculateDimension(stringBounder);
+				final XDimension2D dimStereo = stereotype.calculateDimension(stringBounder);
 				final double posStereo = (width - dimStereo.getWidth()) / 2;
 
 				stereotype.drawU(ug.apply(new UTranslate(4 + posStereo, 2 + getYpos(dimTitle))));
 			}
 
-			public Dimension2D calculateDimension(StringBounder stringBounder) {
-				return new Dimension2DDouble(width, height);
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
+				return new XDimension2D(width, height);
 			}
 		};
 	}

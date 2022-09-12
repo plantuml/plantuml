@@ -41,7 +41,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.creole.atom.Atom;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -77,16 +77,16 @@ class EmbeddedDiagramDraw extends AbstractTextBlock implements Line, Atom {
 		return 0;
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		try {
 			final BufferedImage im = getImage();
-			return new Dimension2DDouble(im.getWidth(), im.getHeight());
+			return new XDimension2D(im.getWidth(), im.getHeight());
 		} catch (IOException e) {
 			Logme.error(e);
 		} catch (InterruptedException e) {
 			Logme.error(e);
 		}
-		return new Dimension2DDouble(42, 42);
+		return new XDimension2D(42, 42);
 	}
 
 	public void drawU(UGraphic ug) {

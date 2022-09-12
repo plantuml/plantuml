@@ -64,6 +64,7 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Arrays;
 
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.log.Logme;
 
 /**
@@ -518,11 +519,11 @@ public class ExtendedGeneralPath implements Shape, Cloneable {
 	/**
 	 * get the current position or <code>null</code>.
 	 */
-	public Point2D getCurrentPoint() {
+	public XPoint2D getCurrentPoint() {
 		if (numVals == 0) {
 			return null;
 		}
-		return new Point2D.Double(cx, cy);
+		return new XPoint2D(cx, cy);
 	}
 
 	/**

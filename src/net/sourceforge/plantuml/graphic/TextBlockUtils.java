@@ -37,12 +37,11 @@ package net.sourceforge.plantuml.graphic;
 
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FileFormat;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
+import net.sourceforge.plantuml.awt.geom.XRectangle2D;
 import net.sourceforge.plantuml.posimo.Positionable;
 import net.sourceforge.plantuml.posimo.PositionableImpl;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
@@ -91,22 +90,22 @@ public class TextBlockUtils {
 			public void drawU(UGraphic ug) {
 			}
 
-			public Dimension2D calculateDimension(StringBounder stringBounder) {
-				return new Dimension2DDouble(width, height);
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
+				return new XDimension2D(width, height);
 			}
 
-			public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+			public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
 				return null;
 			}
 
 		};
 	}
 
-	public static Positionable asPositionable(TextBlock textBlock, StringBounder stringBounder, Point2D pt) {
+	public static Positionable asPositionable(TextBlock textBlock, StringBounder stringBounder, XPoint2D pt) {
 		return new PositionableImpl(pt, textBlock.calculateDimension(stringBounder));
 	}
 
-	public static Positionable asPositionable(Dimension2D dim, StringBounder stringBounder, Point2D pt) {
+	public static Positionable asPositionable(XDimension2D dim, StringBounder stringBounder, XPoint2D pt) {
 		return new PositionableImpl(pt, dim);
 	}
 
@@ -153,7 +152,7 @@ public class TextBlockUtils {
 		if (text == null) {
 			return true;
 		}
-		final Dimension2D dim = text.calculateDimension(dummyStringBounder);
+		final XDimension2D dim = text.calculateDimension(dummyStringBounder);
 		return dim.getHeight() == 0 && dim.getWidth() == 0;
 	}
 
@@ -176,7 +175,7 @@ public class TextBlockUtils {
 				bloc.drawU(ug);
 			}
 
-			public Dimension2D calculateDimension(StringBounder stringBounder) {
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
 				return bloc.calculateDimension(stringBounder);
 			}
 
@@ -184,10 +183,10 @@ public class TextBlockUtils {
 				return bloc.getMinMax(stringBounder);
 			}
 
-			public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+			public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
 				if (strategy.check(display, member)) {
-					final Dimension2D dim = calculateDimension(stringBounder);
-					return new Rectangle2D.Double(0, 0, dim.getWidth(), dim.getHeight());
+					final XDimension2D dim = calculateDimension(stringBounder);
+					return new XRectangle2D(0, 0, dim.getWidth(), dim.getHeight());
 				}
 				return null;
 			}
@@ -205,11 +204,11 @@ public class TextBlockUtils {
 				return text.getMinMax(stringBounder);
 			}
 
-			public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+			public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
 				return text.getInnerPosition(member, stringBounder, strategy);
 			}
 
-			public Dimension2D calculateDimension(StringBounder stringBounder) {
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
 				return text.calculateDimension(stringBounder);
 			}
 
@@ -226,15 +225,15 @@ public class TextBlockUtils {
 				ug.draw(image);
 			}
 
-			public Dimension2D calculateDimension(StringBounder stringBounder) {
-				return new Dimension2DDouble(image.getWidth(), image.getHeight());
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
+				return new XDimension2D(image.getWidth(), image.getHeight());
 			}
 
 			public MinMax getMinMax(StringBounder stringBounder) {
 				return MinMax.fromMax(image.getWidth(), image.getHeight());
 			}
 
-			public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+			public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
 				return null;
 			}
 

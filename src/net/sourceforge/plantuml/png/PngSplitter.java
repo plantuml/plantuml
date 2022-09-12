@@ -45,8 +45,8 @@ import java.util.List;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.SplitParam;
 import net.sourceforge.plantuml.SuggestedFile;
-import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.security.SImageIO;
 
 public class PngSplitter {
 

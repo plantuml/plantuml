@@ -35,12 +35,12 @@
  */
 package net.sourceforge.plantuml.security.authentication.basicauth;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import net.sourceforge.plantuml.security.authentication.SecurityAuthentication;
 import net.sourceforge.plantuml.security.authentication.SecurityAuthorizeManager;
 import net.sourceforge.plantuml.security.authentication.SecurityCredentials;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * The {@link BasicAuthAuthorizeManager} creates the authentication on the fly from the credentials without

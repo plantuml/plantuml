@@ -35,15 +35,15 @@
  */
 package net.sourceforge.plantuml.ugraphic;
 
-import java.awt.geom.Point2D;
 import java.util.Map;
 
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.graphic.TextBlock;
 
 public interface PlacementStrategy {
 
 	public void add(TextBlock block);
 
-	public Map<TextBlock, Point2D> getPositions(double width, double height);
+	public Map<TextBlock, XPoint2D> getPositions(double width, double height);
 
 }

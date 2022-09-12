@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.svek;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
-import java.awt.geom.Point2D;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -48,9 +47,10 @@ import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.BaseFile;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
+import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.IGroup;
 import net.sourceforge.plantuml.cucadiagram.Rankdir;
@@ -130,7 +130,7 @@ public class DotStringFactory implements Moveable {
 				max = c;
 
 		}
-		if (OptionFlags.USE_KERMOR)
+		if (root.diagram.getPragma().useKermor())
 			return max / 100;
 		return max / 10;
 	}
@@ -197,7 +197,7 @@ public class DotStringFactory implements Moveable {
 
 		manageMinMaxCluster(sb);
 
-		if (OptionFlags.USE_KERMOR) {
+		if (root.diagram.getPragma().useKermor()) {
 			for (SvekLine line : bibliotekon.lines0())
 				line.appendLine(getGraphvizVersion(), sb, dotMode, dotSplines);
 			for (SvekLine line : bibliotekon.lines1())
@@ -266,7 +266,7 @@ public class DotStringFactory implements Moveable {
 			// return 29;
 			return 40;
 		}
-		if (OptionFlags.USE_KERMOR)
+		if (root.diagram.getPragma().useKermor())
 			return 40;
 		return 60;
 	}
@@ -369,13 +369,13 @@ public class DotStringFactory implements Moveable {
 			if (node.getType() == ShapeType.RECTANGLE || node.getType() == ShapeType.RECTANGLE_HTML_FOR_PORTS
 					|| node.getType() == ShapeType.RECTANGLE_WITH_CIRCLE_INSIDE || node.getType() == ShapeType.FOLDER
 					|| node.getType() == ShapeType.DIAMOND || node.getType() == ShapeType.RECTANGLE_PORT) {
-				final List<Point2D.Double> points = svgResult.substring(idx).extractList(SvgResult.POINTS_EQUALS);
-				final Point2D min = SvekUtils.getMinXY(points);
+				final List<XPoint2D> points = svgResult.substring(idx).extractList(SvgResult.POINTS_EQUALS);
+				final XPoint2D min = SvekUtils.getMinXY(points);
 				node.moveSvek(min.getX(), min.getY());
 			} else if (node.getType() == ShapeType.ROUND_RECTANGLE) {
 				final int idx2 = svg.indexOf("d=\"", idx + 1);
 				idx = svg.indexOf("points=\"", idx + 1);
-				final List<Point2D.Double> points;
+				final List<XPoint2D> points;
 				if (idx2 != -1 && (idx == -1 || idx2 < idx)) {
 					// GraphViz 2.30
 					points = svgResult.substring(idx2).extractList(SvgResult.D_EQUALS);
@@ -386,13 +386,13 @@ public class DotStringFactory implements Moveable {
 						points.addAll(svgResult.substring(idx).extractList(SvgResult.POINTS_EQUALS));
 					}
 				}
-				final Point2D min = SvekUtils.getMinXY(points);
+				final XPoint2D min = SvekUtils.getMinXY(points);
 				node.moveSvek(min.getX(), min.getY());
 			} else if (node.getType() == ShapeType.OCTAGON || node.getType() == ShapeType.HEXAGON) {
 				idx = svg.indexOf("points=\"", idx + 1);
 				final int starting = idx;
-				final List<Point2D.Double> points = svgResult.substring(starting).extractList(SvgResult.POINTS_EQUALS);
-				final Point2D min = SvekUtils.getMinXY(points);
+				final List<XPoint2D> points = svgResult.substring(starting).extractList(SvgResult.POINTS_EQUALS);
+				final XPoint2D min = SvekUtils.getMinXY(points);
 				// corner1.manage(minX, minY);
 				node.moveSvek(min.getX(), min.getY());
 				node.setPolygon(min.getX(), min.getY(), points);
@@ -416,23 +416,29 @@ public class DotStringFactory implements Moveable {
 			}
 			int idx = getClusterIndex(svg, cluster.getColor());
 			final int starting = idx;
-			final List<Point2D.Double> points = svgResult.substring(starting).extractList(SvgResult.POINTS_EQUALS);
-			final Point2D min = SvekUtils.getMinXY(points);
-			final Point2D max = SvekUtils.getMaxXY(points);
+			final List<XPoint2D> points = svgResult.substring(starting).extractList(SvgResult.POINTS_EQUALS);
+			final XPoint2D min = SvekUtils.getMinXY(points);
+			final XPoint2D max = SvekUtils.getMaxXY(points);
 			cluster.setPosition(min, max);
 
 			if (cluster.getTitleAndAttributeWidth() == 0 || cluster.getTitleAndAttributeHeight() == 0)
 				continue;
 
 			idx = getClusterIndex(svg, cluster.getTitleColor());
-			final List<Point2D.Double> pointsTitle = svgResult.substring(idx).extractList(SvgResult.POINTS_EQUALS);
+			final List<XPoint2D> pointsTitle = svgResult.substring(idx).extractList(SvgResult.POINTS_EQUALS);
 			cluster.setTitlePosition(SvekUtils.getMinXY(pointsTitle));
 
-			if (OptionFlags.USE_KERMOR) {
-				if (cluster.getGroup().getNotes().size() > 0) {
-					idx = getClusterIndex(svg, cluster.getColorNoteUp());
-					final List<Point2D.Double> noteUp = svgResult.substring(idx).extractList(SvgResult.POINTS_EQUALS);
-					cluster.setNoteUpPosition(SvekUtils.getMinXY(noteUp));
+			if (root.diagram.getPragma().useKermor()) {
+				if (cluster.getGroup().getNotes(Position.TOP).size() > 0) {
+					final List<XPoint2D> noteUp = svgResult.substring(getClusterIndex(svg, cluster.getColorNoteTop()))
+							.extractList(SvgResult.POINTS_EQUALS);
+					cluster.setNoteTopPosition(SvekUtils.getMinXY(noteUp));
+				}
+				if (cluster.getGroup().getNotes(Position.BOTTOM).size() > 0) {
+					final List<XPoint2D> noteBottom = svgResult
+							.substring(getClusterIndex(svg, cluster.getColorNoteBottom()))
+							.extractList(SvgResult.POINTS_EQUALS);
+					cluster.setNoteBottomPosition(SvekUtils.getMinXY(noteBottom));
 				}
 			}
 		}

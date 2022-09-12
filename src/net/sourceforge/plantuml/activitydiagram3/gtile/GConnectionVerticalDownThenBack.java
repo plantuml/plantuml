@@ -35,11 +35,10 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.gtile;
 
-import java.awt.geom.Point2D;
-
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Arrows;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -65,19 +64,19 @@ public class GConnectionVerticalDownThenBack extends GAbstractConnection {
 
 	@Override
 	public void drawU(UGraphic ug) {
-		final Point2D p1 = pos1.getTranslated(gpoint1.getPoint2D());
-		final Point2D p2 = pos2.getTranslated(gpoint2.getPoint2D());
+		final XPoint2D p1 = pos1.getTranslated(gpoint1.getPoint2D());
+		final XPoint2D p2 = pos2.getTranslated(gpoint2.getPoint2D());
 		final UPolygon arrow = Arrows.asToLeft();
 		final Snake snake = Snake.create(skinParam(), getInLinkRenderingColor(), arrow)
 				.withLabel(textBlock, HorizontalAlignment.LEFT).emphasizeDirection(Direction.UP);
 
 		snake.addPoint(p1);
-		final Point2D p1bis = UTranslate.dy(10).getTranslated(p1);
+		final XPoint2D p1bis = UTranslate.dy(10).getTranslated(p1);
 		snake.addPoint(p1bis);
 		final double border = xpos;
 
-		snake.addPoint(new Point2D.Double(border, p1bis.getY()));
-		snake.addPoint(new Point2D.Double(border, p2.getY()));
+		snake.addPoint(new XPoint2D(border, p1bis.getY()));
+		snake.addPoint(new XPoint2D(border, p2.getY()));
 		snake.addPoint(p2);
 		ug.draw(snake);
 	}
@@ -85,8 +84,8 @@ public class GConnectionVerticalDownThenBack extends GAbstractConnection {
 	@Override
 	public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
 		// throw new UnsupportedOperationException("wip");
-		Point2D p1 = pos1.getTranslated(gpoint1.getPoint2D());
-		Point2D p2 = pos2.getTranslated(gpoint2.getPoint2D());
+		XPoint2D p1 = pos1.getTranslated(gpoint1.getPoint2D());
+		XPoint2D p2 = pos2.getTranslated(gpoint2.getPoint2D());
 
 //		final Direction originalDirection = Direction.leftOrRight(p1, p2);
 //
@@ -98,23 +97,23 @@ public class GConnectionVerticalDownThenBack extends GAbstractConnection {
 				.withLabel(textBlock, HorizontalAlignment.LEFT).emphasizeDirection(Direction.UP);
 
 		snake.addPoint(p1);
-		final Point2D p1bis = UTranslate.dy(10).getTranslated(p1);
+		final XPoint2D p1bis = UTranslate.dy(10).getTranslated(p1);
 		snake.addPoint(p1bis);
-		snake.addPoint(new Point2D.Double(p2.getX() + 20, p1bis.getY()));
-		snake.addPoint(new Point2D.Double(p2.getX() + 20, p2.getY()));
+		snake.addPoint(new XPoint2D(p2.getX() + 20, p1bis.getY()));
+		snake.addPoint(new XPoint2D(p2.getX() + 20, p2.getY()));
 		snake.addPoint(p2);
 		ug.draw(snake);
 
 //
 //		final double x1 = p1.getX();
 //		final double x2 = p2.getX();
-//		final Point2D mp1a = translate1.getTranslated(p1);
-//		final Point2D mp2b = translate2.getTranslated(p2);
+//		final XPoint2D mp1a = translate1.getTranslated(p1);
+//		final XPoint2D mp2b = translate2.getTranslated(p2);
 //		final Direction newDirection = Direction.leftOrRight(mp1a, mp2b);
 //		final UPolygon arrow = x2 > x1 ? Arrows.asToRight() : Arrows.asToLeft();
 //		if (originalDirection == newDirection) {
 //			final double delta = (x2 > x1 ? -1 : 1) * 1.5 * Hexagon.hexagonHalfSize;
-//			final Point2D mp2bc = new Point2D.Double(mp2b.getX() + delta, mp2b.getY());
+//			final XPoint2D mp2bc = new XPoint2D(mp2b.getX() + delta, mp2b.getY());
 //			final Snake snake = Snake.create(getInLinkRenderingColor()).withMerge(MergeStrategy.LIMITED);
 //			final double middle = (mp1a.getY() + mp2b.getY()) / 2.0;
 //			snake.addPoint(mp1a);
@@ -129,7 +128,7 @@ public class GConnectionVerticalDownThenBack extends GAbstractConnection {
 //			ug.draw(small);
 //		} else {
 //			final double delta = (x2 > x1 ? -1 : 1) * 1.5 * Hexagon.hexagonHalfSize;
-//			final Point2D mp2bb = new Point2D.Double(mp2b.getX() + delta, mp2b.getY() - 1.5 * Hexagon.hexagonHalfSize);
+//			final XPoint2D mp2bb = new XPoint2D(mp2b.getX() + delta, mp2b.getY() - 1.5 * Hexagon.hexagonHalfSize);
 //			final Snake snake = Snake.create(getInLinkRenderingColor()).withMerge(MergeStrategy.LIMITED);
 //			snake.addPoint(mp1a);
 //			snake.addPoint(mp1a.getX(), mp2bb.getY());
@@ -185,8 +184,8 @@ public class GConnectionVerticalDownThenBack extends GAbstractConnection {
 //	@Override
 //	public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
 //		final Snake snake = Snake.create(color, Arrows.asToDown()).withLabel(textBlock, HorizontalAlignment.LEFT);
-//		final Point2D mp1a = translate1.getTranslated(p1);
-//		final Point2D mp2b = translate2.getTranslated(p2);
+//		final XPoint2D mp1a = translate1.getTranslated(p1);
+//		final XPoint2D mp2b = translate2.getTranslated(p2);
 //		final double middle = (mp1a.getY() + mp2b.getY()) / 2.0;
 //		snake.addPoint(mp1a);
 //		snake.addPoint(mp1a.getX(), middle);

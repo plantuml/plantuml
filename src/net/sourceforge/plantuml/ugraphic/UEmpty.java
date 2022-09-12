@@ -34,7 +34,7 @@
  */
 package net.sourceforge.plantuml.ugraphic;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 
 public class UEmpty implements UShape {
 
@@ -49,7 +49,7 @@ public class UEmpty implements UShape {
 		this.height = height;
 	}
 
-	public UEmpty(Dimension2D dim) {
+	public UEmpty(XDimension2D dim) {
 		this(dim.getWidth(), dim.getHeight());
 	}
 

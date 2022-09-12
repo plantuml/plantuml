@@ -35,10 +35,10 @@
  */
 package net.sourceforge.plantuml.svek;
 
-import java.awt.geom.Point2D;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 
 public interface Point2DFunction {
 
-	Point2D.Double apply(Point2D pt);
+	XPoint2D apply(XPoint2D pt);
 
 }

@@ -35,10 +35,10 @@
  */
 package net.sourceforge.plantuml.salt.element;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.util.List;
 
 import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -60,11 +60,11 @@ public class ElementText extends AbstractElement {
 		this.text = text.get(0);
 	}
 
-	public Dimension2D getPreferredDimension(StringBounder stringBounder, double x, double y) {
+	public XDimension2D getPreferredDimension(StringBounder stringBounder, double x, double y) {
 		return block.calculateDimension(stringBounder);
 	}
 
-	public void drawU(UGraphic ug, int zIndex, Dimension2D dimToUse) {
+	public void drawU(UGraphic ug, int zIndex, XDimension2D dimToUse) {
 		if (zIndex != 0) {
 			return;
 		}

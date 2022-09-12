@@ -30,8 +30,7 @@
  */
 package net.sourceforge.plantuml.jsondiagram;
 
-import java.awt.geom.Point2D;
-
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPath;
@@ -39,10 +38,10 @@ import net.sourceforge.plantuml.ugraphic.UStroke;
 
 public class Arrow {
 
-	private final Point2D p1;
-	private final Point2D p2;
+	private final XPoint2D p1;
+	private final XPoint2D p2;
 
-	public Arrow(Point2D p1, Point2D p2) {
+	public Arrow(XPoint2D p1, XPoint2D p2) {
 		this.p1 = p1;
 		this.p2 = p2;
 	}
@@ -58,9 +57,9 @@ public class Arrow {
 		final double factor = .4;
 		final double factor2 = .3;
 		
-		final Point2D p3 = getPoint(p1, alpha + Math.PI / 2, dist * factor);
-		final Point2D p4 = getPoint(p1, alpha - Math.PI / 2, dist * factor);
-		final Point2D p11 = getPoint(p1, alpha, dist * factor2);
+		final XPoint2D p3 = getPoint(p1, alpha + Math.PI / 2, dist * factor);
+		final XPoint2D p4 = getPoint(p1, alpha - Math.PI / 2, dist * factor);
+		final XPoint2D p11 = getPoint(p1, alpha, dist * factor2);
 
 		
 		final UPath path = new UPath();
@@ -75,10 +74,10 @@ public class Arrow {
 
 	}
 
-	private Point2D getPoint(Point2D center, double alpha, double len) {
+	private XPoint2D getPoint(XPoint2D center, double alpha, double len) {
 		final double x = center.getX() + len * Math.sin(alpha);
 		final double y = center.getY() + len * Math.cos(alpha);
-		return new Point2D.Double(x, y);
+		return new XPoint2D(x, y);
 	}
 
 }

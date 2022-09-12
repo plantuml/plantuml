@@ -35,11 +35,11 @@
  */
 package net.sourceforge.plantuml.ugraphic;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-import java.awt.geom.Point2D;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 
@@ -49,16 +49,16 @@ public class PlacementStrategyX1X2 extends AbstractPlacementStrategy {
 		super(stringBounder);
 	}
 
-	public Map<TextBlock, Point2D> getPositions(double width, double height) {
+	public Map<TextBlock, XPoint2D> getPositions(double width, double height) {
 		final double usedWidth = getSumWidth();
 		//double maxHeight = getMaxHeight();
 
 		final double space = (width - usedWidth) / (getDimensions().size() + 1);
-		final Map<TextBlock, Point2D> result = new LinkedHashMap<TextBlock, Point2D>();
+		final Map<TextBlock, XPoint2D> result = new LinkedHashMap<>();
 		double x = space;
-		for (Map.Entry<TextBlock, Dimension2D> ent : getDimensions().entrySet()) {
+		for (Map.Entry<TextBlock, XDimension2D> ent : getDimensions().entrySet()) {
 			final double y = (height - ent.getValue().getHeight()) / 2;
-			result.put(ent.getKey(), new Point2D.Double(x, y));
+			result.put(ent.getKey(), new XPoint2D(x, y));
 			x += ent.getValue().getWidth() + space;
 		}
 		return result;

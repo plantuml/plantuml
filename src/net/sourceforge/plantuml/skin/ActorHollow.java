@@ -35,8 +35,7 @@
  */
 package net.sourceforge.plantuml.skin;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.SymbolContext;
@@ -109,7 +108,7 @@ public class ActorHollow extends AbstractTextBlock implements TextBlock {
 		return headDiam + neckHeight + bodyHeight + thickness() * 2 + symbolContext.getDeltaShadow();
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		return new Dimension2DDouble(getPreferredWidth(), getPreferredHeight());
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		return new XDimension2D(getPreferredWidth(), getPreferredHeight());
 	}
 }

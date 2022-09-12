@@ -36,7 +36,6 @@
  */
 package net.sourceforge.plantuml.svek;
 
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -50,13 +49,13 @@ import java.util.Objects;
 import java.util.Set;
 
 import net.sourceforge.plantuml.AlignmentParam;
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.api.ThemeStyle;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
+import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.CucaNote;
 import net.sourceforge.plantuml.cucadiagram.EntityPosition;
@@ -104,8 +103,8 @@ public class Cluster implements Moveable {
 	private final List<Cluster> children = new ArrayList<>();
 	private final int color;
 	private final int colorTitle;
-	private final int colorNoteUp;
-	private final int colorNoteDown;
+	private final int colorNoteTop;
+	private final int colorNoteBottom;
 	private final ISkinParam skinParam;
 	protected final CucaDiagram diagram;
 
@@ -117,8 +116,8 @@ public class Cluster implements Moveable {
 	private double xTitle;
 	private double yTitle;
 
-	private double xNoteup;
-	private double yNoteup;
+	private XPoint2D xyNoteTop;
+	private XPoint2D xyNoteBottom;
 
 	private double minX;
 	private double minY;
@@ -126,8 +125,11 @@ public class Cluster implements Moveable {
 	private double maxY;
 
 	public void moveSvek(double deltaX, double deltaY) {
-		this.xNoteup += deltaX;
-		this.yNoteup += deltaY;
+		if (this.xyNoteTop != null)
+			this.xyNoteTop = this.xyNoteTop.move(deltaX, deltaY);
+		if (this.xyNoteBottom != null)
+			this.xyNoteBottom = this.xyNoteBottom.move(deltaX, deltaY);
+
 		this.xTitle += deltaX;
 		this.yTitle += deltaY;
 		this.minX += deltaX;
@@ -161,8 +163,8 @@ public class Cluster implements Moveable {
 
 		this.color = colorSequence.getValue();
 		this.colorTitle = colorSequence.getValue();
-		this.colorNoteUp = colorSequence.getValue();
-		this.colorNoteDown = colorSequence.getValue();
+		this.colorNoteTop = colorSequence.getValue();
+		this.colorNoteBottom = colorSequence.getValue();
 		this.skinParam = group.getColors().mute(skinParam);
 	}
 
@@ -279,14 +281,17 @@ public class Cluster implements Moveable {
 		return new ClusterPosition(minX, minY, maxX, maxY);
 	}
 
-	public void setTitlePosition(Point2D pos) {
+	public void setTitlePosition(XPoint2D pos) {
 		this.xTitle = pos.getX();
 		this.yTitle = pos.getY();
 	}
 
-	public void setNoteUpPosition(Point2D pos) {
-		this.xNoteup = pos.getX();
-		this.yNoteup = pos.getY();
+	public void setNoteTopPosition(XPoint2D pos) {
+		this.xyNoteTop = pos;
+	}
+
+	public void setNoteBottomPosition(XPoint2D pos) {
+		this.xyNoteBottom = pos;
 	}
 
 	static public StyleSignatureBasic getDefaultStyleDefinition(SName diagramStyleName, USymbol symbol) {
@@ -308,10 +313,12 @@ public class Cluster implements Moveable {
 		if (group.isHidden())
 			return;
 
-		if (OptionFlags.USE_KERMOR) {
-			if (xNoteup > 0 && yNoteup > 0) {
-				getCucaNote().drawU(ug.apply(new UTranslate(xNoteup, yNoteup)));
-			}
+		if (diagram.getPragma().useKermor()) {
+			if (xyNoteTop != null) 
+				getCucaNote(Position.TOP).drawU(ug.apply(new UTranslate(xyNoteTop)));
+			if (xyNoteBottom != null) 
+				getCucaNote(Position.BOTTOM).drawU(ug.apply(new UTranslate(xyNoteBottom)));
+			
 		}
 
 		final String fullName = group.getCodeGetName();
@@ -380,10 +387,11 @@ public class Cluster implements Moveable {
 		}
 	}
 
-	EntityImageNoteLink getCucaNote() {
-		if (getGroup().getNotes().size() == 0)
+	EntityImageNoteLink getCucaNote(Position position) {
+		final List<CucaNote> notes = getGroup().getNotes(position);
+		if (notes.size() == 0)
 			return null;
-		final CucaNote note = getGroup().getNotes().get(0);
+		final CucaNote note = notes.get(0);
 		return new EntityImageNoteLink(note.getDisplay(), note.getColors(), skinParam,
 				skinParam.getCurrentStyleBuilder());
 	}
@@ -398,7 +406,7 @@ public class Cluster implements Moveable {
 
 	void manageEntryExitPoint(StringBounder stringBounder) {
 		final Collection<ClusterPosition> insides = new ArrayList<>();
-		final List<Point2D> points = new ArrayList<>();
+		final List<XPoint2D> points = new ArrayList<>();
 		for (SvekNode sh : nodes)
 			if (sh.getEntityPosition() == EntityPosition.NORMAL)
 				insides.add(sh.getClusterPosition());
@@ -413,7 +421,7 @@ public class Cluster implements Moveable {
 			frontierCalculator.ensureMinWidth(titleAndAttributeWidth + 10);
 
 		final ClusterPosition forced = frontierCalculator.getSuggestedPosition();
-		xTitle += ((forced.getMinX() - minX) + (forced.getMaxX() - maxX)) / 2;
+		// xTitle += ((forced.getMinX() - minX) + (forced.getMaxX() - maxX)) / 2;
 		minX = forced.getMinX();
 		minY = forced.getMinY();
 		maxX = forced.getMaxX();
@@ -453,7 +461,7 @@ public class Cluster implements Moveable {
 	// GroupPngMakerState
 
 	private void drawUState(UGraphic ug, UmlDiagramType umlDiagramType, double rounded, double shadowing) {
-		final Dimension2D total = new Dimension2DDouble(maxX - minX, maxY - minY);
+		final XDimension2D total = new XDimension2D(maxX - minX, maxY - minY);
 		final double suppY;
 		if (ztitle == null)
 			suppY = 0;
@@ -513,7 +521,7 @@ public class Cluster implements Moveable {
 
 	}
 
-	public void setPosition(Point2D min, Point2D max) {
+	public void setPosition(XPoint2D min, XPoint2D max) {
 		this.minX = min.getX();
 		this.minY = min.getY();
 		this.maxX = max.getX();
@@ -690,12 +698,12 @@ public class Cluster implements Moveable {
 		return backColor;
 	}
 
-	double checkFolderPosition(Point2D pt, StringBounder stringBounder) {
+	double checkFolderPosition(XPoint2D pt, StringBounder stringBounder) {
 		if (getClusterPosition().isPointJustUpper(pt)) {
 			if (ztitle == null)
 				return 0;
 
-			final Dimension2D dimTitle = ztitle.calculateDimension(stringBounder);
+			final XDimension2D dimTitle = ztitle.calculateDimension(stringBounder);
 
 			if (pt.getX() < getClusterPosition().getMinX() + dimTitle.getWidth())
 				return 0;
@@ -705,30 +713,30 @@ public class Cluster implements Moveable {
 		return 0;
 	}
 
-	public final int getColorNoteUp() {
-		return colorNoteUp;
+	public final int getColorNoteTop() {
+		return colorNoteTop;
 	}
 
-	public final int getColorNoteDown() {
-		return colorNoteDown;
+	public final int getColorNoteBottom() {
+		return colorNoteBottom;
 	}
 
-	// public Point2D projection(double x, double y) {
+	// public XPoint2D projection(double x, double y) {
 	// final double v1 = Math.abs(minX - x);
 	// final double v2 = Math.abs(maxX - x);
 	// final double v3 = Math.abs(minY - y);
 	// final double v4 = Math.abs(maxY - y);
 	// if (v1 <= v2 && v1 <= v3 && v1 <= v4) {
-	// return new Point2D.Double(minX, y);
+	// return new XPoint2D(minX, y);
 	// }
 	// if (v2 <= v1 && v2 <= v3 && v2 <= v4) {
-	// return new Point2D.Double(maxX, y);
+	// return new XPoint2D(maxX, y);
 	// }
 	// if (v3 <= v1 && v3 <= v2 && v3 <= v4) {
-	// return new Point2D.Double(x, minY);
+	// return new XPoint2D(x, minY);
 	// }
 	// if (v4 <= v1 && v4 <= v1 && v4 <= v3) {
-	// return new Point2D.Double(x, maxY);
+	// return new XPoint2D(x, maxY);
 	// }
 	// throw new IllegalStateException();
 	// }

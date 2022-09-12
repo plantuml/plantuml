@@ -347,7 +347,7 @@ public class GroupRoot implements IGroup {
 	}
 
 	@Override
-	public List<CucaNote> getNotes() {
+	public List<CucaNote> getNotes(Position position) {
 		throw new UnsupportedOperationException();
 	}
 }

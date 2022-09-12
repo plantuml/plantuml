@@ -35,8 +35,7 @@
  */
 package net.sourceforge.plantuml.ugraphic.comp;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -78,12 +77,12 @@ public class PiecewiseAffineOnXorYBuilder extends AbstractTextBlock implements T
 		return cachedMinMax;
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		final Dimension2D dim = textBlock.calculateDimension(stringBounder);
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		final XDimension2D dim = textBlock.calculateDimension(stringBounder);
 		if (mode == CompressionMode.ON_X) {
-			return new Dimension2DDouble(piecewiseAffineTransform.transform(dim.getWidth()), dim.getHeight());
+			return new XDimension2D(piecewiseAffineTransform.transform(dim.getWidth()), dim.getHeight());
 		} else {
-			return new Dimension2DDouble(dim.getWidth(), piecewiseAffineTransform.transform(dim.getHeight()));
+			return new XDimension2D(dim.getWidth(), piecewiseAffineTransform.transform(dim.getHeight()));
 		}
 	}
 

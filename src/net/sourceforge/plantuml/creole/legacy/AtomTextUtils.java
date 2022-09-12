@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.creole.legacy;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -43,6 +42,7 @@ import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.creole.Parser;
 import net.sourceforge.plantuml.creole.atom.Atom;
 import net.sourceforge.plantuml.creole.atom.AtomHorizontalTexts;
@@ -142,13 +142,13 @@ public class AtomTextUtils {
 	public static Atom createListNumber(final FontConfiguration fontConfiguration, final int order, int localNumber) {
 		final DelayedDouble left = new DelayedDouble() {
 			public double getDouble(StringBounder stringBounder) {
-				final Dimension2D dim = stringBounder.calculateDimension(fontConfiguration.getFont(), "9. ");
+				final XDimension2D dim = stringBounder.calculateDimension(fontConfiguration.getFont(), "9. ");
 				return dim.getWidth() * order;
 			}
 		};
 		final DelayedDouble right = new DelayedDouble() {
 			public double getDouble(StringBounder stringBounder) {
-				final Dimension2D dim = stringBounder.calculateDimension(fontConfiguration.getFont(), ".");
+				final XDimension2D dim = stringBounder.calculateDimension(fontConfiguration.getFont(), ".");
 				return dim.getWidth();
 			}
 		};

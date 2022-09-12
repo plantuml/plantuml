@@ -35,12 +35,12 @@
  */
 package net.sourceforge.plantuml.ugraphic;
 
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
+import net.sourceforge.plantuml.awt.geom.XRectangle2D;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -54,9 +54,9 @@ public class ULayoutGroup {
 	}
 
 	public void drawU(UGraphic ug, double width, double height) {
-		for (Map.Entry<TextBlock, Point2D> ent : placementStrategy.getPositions(width, height).entrySet()) {
+		for (Map.Entry<TextBlock, XPoint2D> ent : placementStrategy.getPositions(width, height).entrySet()) {
 			final TextBlock block = ent.getKey();
-			final Point2D pos = ent.getValue();
+			final XPoint2D pos = ent.getValue();
 			block.drawU(ug.apply(new UTranslate(pos)));
 		}
 	}
@@ -66,20 +66,20 @@ public class ULayoutGroup {
 
 	}
 
-	public Rectangle2D getInnerPosition(String member, double width, double height, StringBounder stringBounder) {
-		final Set<Entry<TextBlock, Point2D>> all = placementStrategy.getPositions(width, height).entrySet();
-		Rectangle2D result = tryOne(all, member, stringBounder, InnerStrategy.STRICT);
+	public XRectangle2D getInnerPosition(String member, double width, double height, StringBounder stringBounder) {
+		final Set<Entry<TextBlock, XPoint2D>> all = placementStrategy.getPositions(width, height).entrySet();
+		XRectangle2D result = tryOne(all, member, stringBounder, InnerStrategy.STRICT);
 		if (result == null)
 			result = tryOne(all, member, stringBounder, InnerStrategy.LAZZY);
 
 		return result;
 	}
 
-	private Rectangle2D tryOne(final Set<Entry<TextBlock, Point2D>> all, String member, StringBounder stringBounder,
+	private XRectangle2D tryOne(final Set<Entry<TextBlock, XPoint2D>> all, String member, StringBounder stringBounder,
 			InnerStrategy mode) {
-		for (Map.Entry<TextBlock, Point2D> ent : all) {
+		for (Map.Entry<TextBlock, XPoint2D> ent : all) {
 			final TextBlock block = ent.getKey();
-			final Rectangle2D result = block.getInnerPosition(member, stringBounder, mode);
+			final XRectangle2D result = block.getInnerPosition(member, stringBounder, mode);
 			if (result != null) {
 				final UTranslate translate = new UTranslate(ent.getValue());
 				return translate.apply(result);

@@ -39,9 +39,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -72,9 +71,9 @@ public class GtileWithMargin extends AbstractGtileRoot implements Gtile {
 	}
 
 	@Override
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		final Dimension2D result = orig.calculateDimension(stringBounder);
-		return Dimension2DDouble.delta(result, east, north + south);
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		final XDimension2D result = orig.calculateDimension(stringBounder);
+		return XDimension2D.delta(result, east, north + south);
 	}
 
 	private UTranslate getTranslate() {

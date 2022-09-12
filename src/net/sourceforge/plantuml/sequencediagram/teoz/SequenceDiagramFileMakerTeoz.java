@@ -39,12 +39,11 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import net.sourceforge.plantuml.AnnotatedWorker;
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.activitydiagram3.ftile.EntityImageLegend;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.DisplaySection;
@@ -109,7 +108,7 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 				+ legend.calculateDimension(stringBounder).getHeight()
 				+ caption.calculateDimension(stringBounder).getHeight()
 				+ footer.calculateDimension(stringBounder).getHeight() + (annotatedWorker.hasMainFrame() ? 10 : 0);
-		this.dimTotal = new Dimension2DDouble(totalWidth, totalHeight);
+		this.dimTotal = new XDimension2D(totalWidth, totalHeight);
 	}
 
 	private Dolls dolls;
@@ -123,7 +122,7 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 	private final TextBlock title;
 	private final TextBlock legend;
 	private final TextBlock caption;
-	private final Dimension2D dimTotal;
+	private final XDimension2D dimTotal;
 	private final Real min1;
 
 	private final LivingSpaces livingSpaces = new LivingSpaces();

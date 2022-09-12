@@ -35,10 +35,10 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile;
 
-import java.awt.geom.Point2D;
 import java.util.Map;
 
 import net.sourceforge.plantuml.activitydiagram3.gtile.Gtile;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.graphic.UGraphicDelegator;
 import net.sourceforge.plantuml.svek.UGraphicForSnake;
@@ -94,7 +94,7 @@ public class UGraphicInterceptorUDrawable2 extends UGraphicDelegator {
 		final HColor gotoColor = HColors.MY_RED;
 
 		final FtileGeometry geom = ftile.calculateDimension(getStringBounder());
-		final Point2D pt = geom.getPointIn();
+		final XPoint2D pt = geom.getPointIn();
 		UGraphic ugGoto = getUg().apply(gotoColor).apply(gotoColor.bg());
 		ugGoto = ugGoto.apply(new UTranslate(pt));
 		final UTranslate posNow = getPosition();

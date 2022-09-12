@@ -35,8 +35,9 @@
 package net.sourceforge.plantuml.ugraphic;
 
 import java.awt.geom.Line2D;
-import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 
 public class UClip implements UChange {
 
@@ -85,7 +86,7 @@ public class UClip implements UChange {
 		return height;
 	}
 
-	public boolean isInside(Point2D pt) {
+	public boolean isInside(XPoint2D pt) {
 		return isInside(pt.getX(), pt.getY());
 	}
 

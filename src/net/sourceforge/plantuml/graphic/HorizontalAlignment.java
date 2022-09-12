@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.graphic;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
@@ -80,10 +80,10 @@ public enum HorizontalAlignment {
 		if (this == HorizontalAlignment.LEFT) {
 			tb.drawU(ug.apply(new UTranslate(padding, padding)));
 		} else if (this == HorizontalAlignment.RIGHT) {
-			final Dimension2D dimTb = tb.calculateDimension(ug.getStringBounder());
+			final XDimension2D dimTb = tb.calculateDimension(ug.getStringBounder());
 			tb.drawU(ug.apply(new UTranslate(width - dimTb.getWidth() - padding, padding)));
 		} else if (this == HorizontalAlignment.CENTER) {
-			final Dimension2D dimTb = tb.calculateDimension(ug.getStringBounder());
+			final XDimension2D dimTb = tb.calculateDimension(ug.getStringBounder());
 			tb.drawU(ug.apply(new UTranslate((width - dimTb.getWidth()) / 2, padding)));
 		}
 

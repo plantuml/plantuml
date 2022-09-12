@@ -38,9 +38,8 @@ package net.sourceforge.plantuml.activitydiagram3.gtile;
 import java.util.Collection;
 import java.util.Collections;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -74,11 +73,11 @@ public class GtileAssembly extends GtileTopDown {
 	}
 
 	@Override
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		final Dimension2D raw = super.calculateDimension(stringBounder);
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		final XDimension2D raw = super.calculateDimension(stringBounder);
 		final double textBlockWidth = textBlock.calculateDimension(stringBounder).getWidth();
 		final double pos1 = tile1.getCoord(GPoint.SOUTH_HOOK).compose(getPos1()).getDx();
-		return Dimension2DDouble.atLeast(raw, pos1 + textBlockWidth, 0);
+		return XDimension2D.atLeast(raw, pos1 + textBlockWidth, 0);
 	}
 
 	protected final TextBlock getTextBlock(Display display) {

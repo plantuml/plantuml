@@ -40,8 +40,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeSet;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.nwdiag.VerticalLine;
@@ -90,7 +89,7 @@ public class LinkedElement {
 	public MinMax getMinMax(StringBounder stringBounder, double width, double height) {
 		final double xMiddle = width / 2;
 		final double yMiddle = height / 2;
-		final Dimension2D dimBox = box.calculateDimension(stringBounder);
+		final XDimension2D dimBox = box.calculateDimension(stringBounder);
 
 		final double x1 = xMiddle - dimBox.getWidth() / 2;
 		final double y1 = yMiddle - dimBox.getHeight() / 2;
@@ -112,7 +111,7 @@ public class LinkedElement {
 		final double ynet1 = network.getY();
 		final double yMiddle = height / 2;
 		final StringBounder stringBounder = ug.getStringBounder();
-		final Dimension2D dimBox = box.calculateDimension(stringBounder);
+		final XDimension2D dimBox = box.calculateDimension(stringBounder);
 
 		final double alpha = yMiddle - dimBox.getHeight() / 2;
 		final double posLink1 = (yMiddle - dimBox.getHeight() / 2 - topMargin + MAGIC) / 2;
@@ -177,22 +176,22 @@ public class LinkedElement {
 		if (block == null) 
 			return;
 		
-		final Dimension2D dim = block.calculateDimension(ug.getStringBounder());
+		final XDimension2D dim = block.calculateDimension(ug.getStringBounder());
 		block.drawU(ug.apply(new UTranslate(x - dim.getWidth() / 2, y - dim.getHeight() / 2)));
 
 	}
 
-	public Dimension2D naturalDimension(StringBounder stringBounder) {
-		final Dimension2D dimLink1 = link1() == null ? new Dimension2DDouble(0, 0)
+	public XDimension2D naturalDimension(StringBounder stringBounder) {
+		final XDimension2D dimLink1 = link1() == null ? new XDimension2D(0, 0)
 				: link1().calculateDimension(stringBounder);
-		final Dimension2D dimBox = box.calculateDimension(stringBounder);
-		final Dimension2D dimLink2 = link2() == null ? new Dimension2DDouble(0, 0)
+		final XDimension2D dimBox = box.calculateDimension(stringBounder);
+		final XDimension2D dimLink2 = link2() == null ? new XDimension2D(0, 0)
 				: link2().calculateDimension(stringBounder);
 		final double width = MathUtils.max(dimLink1.getWidth() + 2 * marginAd, dimBox.getWidth() + 2 * marginBoxW(),
 				dimLink2.getWidth() + 2 * marginAd);
 		final double height = dimLink1.getHeight() + 2 * marginAd + 2 * marginBoxH() + dimBox.getHeight()
 				+ dimLink2.getHeight() + 2 * marginAd;
-		return new Dimension2DDouble(width, height);
+		return new XDimension2D(width, height);
 	}
 
 	public final Network getNetwork() {

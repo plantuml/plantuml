@@ -35,13 +35,12 @@
  */
 package net.sourceforge.plantuml.graphic;
 
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UGraphicStencil;
@@ -71,7 +70,7 @@ class USymbolCloud extends USymbol {
 
 	private UPath getSpecificFrontierForCloudNew(double width, double height) {
 		final Random rnd = new Random((long) width + 7919L * (long) height);
-		final List<Point2D> points = new ArrayList<>();
+		final List<XPoint2D> points = new ArrayList<>();
 
 		double bubbleSize = 11;
 		if (Math.max(width, height) / bubbleSize > 16) {
@@ -80,10 +79,10 @@ class USymbolCloud extends USymbol {
 
 		final double margin1 = 8;
 
-		final Point2D.Double pointA = new Point2D.Double(margin1, margin1);
-		final Point2D.Double pointB = new Point2D.Double(width - margin1, margin1);
-		final Point2D.Double pointC = new Point2D.Double(width - margin1, height - margin1);
-		final Point2D.Double pointD = new Point2D.Double(margin1, height - margin1);
+		final XPoint2D pointA = new XPoint2D(margin1, margin1);
+		final XPoint2D pointB = new XPoint2D(width - margin1, margin1);
+		final XPoint2D pointC = new XPoint2D(width - margin1, height - margin1);
+		final XPoint2D pointD = new XPoint2D(margin1, height - margin1);
 
 		if (width > 100 && height > 100) {
 			complex(rnd, points, bubbleSize, pointA, pointB, pointC, pointD);
@@ -106,8 +105,8 @@ class USymbolCloud extends USymbol {
 
 	}
 
-	private void complex(final Random rnd, final List<Point2D> points, double bubbleSize, final Point2D.Double pointA,
-			final Point2D.Double pointB, final Point2D.Double pointC, final Point2D.Double pointD) {
+	private void complex(final Random rnd, final List<XPoint2D> points, double bubbleSize, final XPoint2D pointA,
+			final XPoint2D pointB, final XPoint2D pointC, final XPoint2D pointD) {
 		final double margin2 = 7;
 		specialLine(bubbleSize, rnd, points, mvX(pointA, margin2), mvX(pointB, -margin2));
 		points.add(mvY(pointB, margin2));
@@ -119,27 +118,27 @@ class USymbolCloud extends USymbol {
 		points.add(mvX(pointA, margin2));
 	}
 
-	private void simple(final Random rnd, final List<Point2D> points, double bubbleSize, final Point2D.Double pointA,
-			final Point2D.Double pointB, final Point2D.Double pointC, final Point2D.Double pointD) {
+	private void simple(final Random rnd, final List<XPoint2D> points, double bubbleSize, final XPoint2D pointA,
+			final XPoint2D pointB, final XPoint2D pointC, final XPoint2D pointD) {
 		specialLine(bubbleSize, rnd, points, pointA, pointB);
 		specialLine(bubbleSize, rnd, points, pointB, pointC);
 		specialLine(bubbleSize, rnd, points, pointC, pointD);
 		specialLine(bubbleSize, rnd, points, pointD, pointA);
 	}
 
-	private static Point2D mvX(Point2D pt, double dx) {
-		return new Point2D.Double(pt.getX() + dx, pt.getY());
+	private static XPoint2D mvX(XPoint2D pt, double dx) {
+		return new XPoint2D(pt.getX() + dx, pt.getY());
 	}
 
-	private static Point2D mvY(Point2D pt, double dy) {
-		return new Point2D.Double(pt.getX(), pt.getY() + dy);
+	private static XPoint2D mvY(XPoint2D pt, double dy) {
+		return new XPoint2D(pt.getX(), pt.getY() + dy);
 	}
 
-	private void specialLine(double bubbleSize, Random rnd, List<Point2D> points, Point2D p1, Point2D p2) {
+	private void specialLine(double bubbleSize, Random rnd, List<XPoint2D> points, XPoint2D p1, XPoint2D p2) {
 		final CoordinateChange change = CoordinateChange.create(p1, p2);
 		final double length = change.getLength();
-		final Point2D middle = change.getTrueCoordinate(length / 2, -rnd(rnd, 1, 1 + Math.min(12, bubbleSize * 0.8)));
-		// final Point2D middle = change.getTrueCoordinate(length / 2, -13);
+		final XPoint2D middle = change.getTrueCoordinate(length / 2, -rnd(rnd, 1, 1 + Math.min(12, bubbleSize * 0.8)));
+		// final XPoint2D middle = change.getTrueCoordinate(length / 2, -13);
 		if (DEBUG) {
 			points.add(middle);
 			points.add(p2);
@@ -149,7 +148,7 @@ class USymbolCloud extends USymbol {
 		}
 	}
 
-	private void bubbleLine(Random rnd, List<Point2D> points, Point2D p1, Point2D p2, double bubbleSize) {
+	private void bubbleLine(Random rnd, List<XPoint2D> points, XPoint2D p1, XPoint2D p2, double bubbleSize) {
 		final CoordinateChange change = CoordinateChange.create(p1, p2);
 		final double length = change.getLength();
 		int nb = (int) (length / bubbleSize);
@@ -162,12 +161,12 @@ class USymbolCloud extends USymbol {
 		}
 	}
 
-	private void addCurve(Random rnd, UPath path, Point2D p1, Point2D p2) {
+	private void addCurve(Random rnd, UPath path, XPoint2D p1, XPoint2D p2) {
 		final CoordinateChange change = CoordinateChange.create(p1, p2);
 		final double length = change.getLength();
 		final double coef = rnd(rnd, .25, .35);
-		final Point2D middle = change.getTrueCoordinate(length * coef, -length * rnd(rnd, .4, .55));
-		final Point2D middle2 = change.getTrueCoordinate(length * (1 - coef), -length * rnd(rnd, .4, .55));
+		final XPoint2D middle = change.getTrueCoordinate(length * coef, -length * rnd(rnd, .4, .55));
+		final XPoint2D middle2 = change.getTrueCoordinate(length * (1 - coef), -length * rnd(rnd, .4, .55));
 		path.cubicTo(middle, middle2, p2);
 
 	}
@@ -176,10 +175,10 @@ class USymbolCloud extends USymbol {
 		return rnd.nextDouble() * (b - a) + a;
 	}
 
-	static private Point2D rnd(Random rnd, Point2D pt, double v) {
+	static private XPoint2D rnd(Random rnd, XPoint2D pt, double v) {
 		final double x = pt.getX() + v * rnd.nextDouble();
 		final double y = pt.getY() + v * rnd.nextDouble();
-		return new Point2D.Double(x, y);
+		return new XPoint2D(x, y);
 	}
 
 	private UPath getSpecificFrontierForCloud(double width, double height) {
@@ -223,7 +222,7 @@ class USymbolCloud extends USymbol {
 		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
-				final Dimension2D dim = calculateDimension(ug.getStringBounder());
+				final XDimension2D dim = calculateDimension(ug.getStringBounder());
 				ug = UGraphicStencil.create(ug, dim);
 				ug = symbolContext.apply(ug);
 				drawCloud(ug, dim.getWidth(), dim.getHeight(), symbolContext.getDeltaShadow());
@@ -232,10 +231,10 @@ class USymbolCloud extends USymbol {
 				tb.drawU(ug.apply(new UTranslate(margin.getX1(), margin.getY1())));
 			}
 
-			public Dimension2D calculateDimension(StringBounder stringBounder) {
-				final Dimension2D dimLabel = label.calculateDimension(stringBounder);
-				final Dimension2D dimStereo = stereotype.calculateDimension(stringBounder);
-				return getMargin().addDimension(Dimension2DDouble.mergeTB(dimStereo, dimLabel));
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
+				final XDimension2D dimLabel = label.calculateDimension(stringBounder);
+				final XDimension2D dimStereo = stereotype.calculateDimension(stringBounder);
+				return getMargin().addDimension(XDimension2D.mergeTB(dimStereo, dimLabel));
 			}
 		};
 	}
@@ -247,19 +246,19 @@ class USymbolCloud extends USymbol {
 		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
-				final Dimension2D dim = calculateDimension(ug.getStringBounder());
+				final XDimension2D dim = calculateDimension(ug.getStringBounder());
 				ug = symbolContext.apply(ug);
 				drawCloud(ug, dim.getWidth(), dim.getHeight(), symbolContext.getDeltaShadow());
-				final Dimension2D dimStereo = stereotype.calculateDimension(ug.getStringBounder());
+				final XDimension2D dimStereo = stereotype.calculateDimension(ug.getStringBounder());
 				final double posStereo = (width - dimStereo.getWidth()) / 2;
 				stereotype.drawU(ug.apply(new UTranslate(posStereo, 13)));
-				final Dimension2D dimTitle = title.calculateDimension(ug.getStringBounder());
+				final XDimension2D dimTitle = title.calculateDimension(ug.getStringBounder());
 				final double posTitle = (width - dimTitle.getWidth()) / 2;
 				title.drawU(ug.apply(new UTranslate(posTitle, 13 + dimStereo.getHeight())));
 			}
 
-			public Dimension2D calculateDimension(StringBounder stringBounder) {
-				return new Dimension2DDouble(width, height);
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
+				return new XDimension2D(width, height);
 			}
 		};
 	}

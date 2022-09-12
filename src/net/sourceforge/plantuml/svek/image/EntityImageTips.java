@@ -35,16 +35,14 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
 import java.util.Map;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.UmlDiagramType;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
+import net.sourceforge.plantuml.awt.geom.XRectangle2D;
 import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.cucadiagram.BodyFactory;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -115,17 +113,17 @@ public class EntityImageTips extends AbstractEntityImage {
 		return ShapeType.RECTANGLE;
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		double width = 0;
 		double height = 0;
 		for (Map.Entry<String, Display> ent : getEntity().getTips().entrySet()) {
 			final Display display = ent.getValue();
-			final Dimension2D dim = getOpale(display).calculateDimension(stringBounder);
+			final XDimension2D dim = getOpale(display).calculateDimension(stringBounder);
 			height += dim.getHeight();
 			height += ySpacing;
 			width = Math.max(width, dim.getWidth());
 		}
-		return new Dimension2DDouble(width, height);
+		return new XDimension2D(width, height);
 	}
 
 	public void drawU(UGraphic ug) {
@@ -135,26 +133,26 @@ public class EntityImageTips extends AbstractEntityImage {
 
 		final SvekNode nodeMe = bibliotekon.getNode(getEntity());
 		final SvekNode nodeOther = bibliotekon.getNode(other);
-		final Point2D positionMe = nodeMe.getPosition();
+		final XPoint2D positionMe = nodeMe.getPosition();
 		if (nodeOther == null) {
 			System.err.println("Error in EntityImageTips");
 			return;
 		}
-		final Point2D positionOther = nodeOther.getPosition();
+		final XPoint2D positionOther = nodeOther.getPosition();
 		bibliotekon.getNode(getEntity());
 		final Position position = getPosition();
 		Direction direction = position.reverseDirection();
 		double height = 0;
 		for (Map.Entry<String, Display> ent : getEntity().getTips().entrySet()) {
 			final Display display = ent.getValue();
-			final Rectangle2D memberPosition = nodeOther.getImage().getInnerPosition(ent.getKey(), stringBounder,
+			final XRectangle2D memberPosition = nodeOther.getImage().getInnerPosition(ent.getKey(), stringBounder,
 					InnerStrategy.STRICT);
 			if (memberPosition == null)
 				return;
 
 			final Opale opale = getOpale(display);
-			final Dimension2D dim = opale.calculateDimension(stringBounder);
-			final Point2D pp1 = new Point2D.Double(0, dim.getHeight() / 2);
+			final XDimension2D dim = opale.calculateDimension(stringBounder);
+			final XPoint2D pp1 = new XPoint2D(0, dim.getHeight() / 2);
 			double x = positionOther.getX() - positionMe.getX();
 			if (direction == Direction.RIGHT && x < 0)
 				direction = direction.getInv();
@@ -165,7 +163,7 @@ public class EntityImageTips extends AbstractEntityImage {
 				x += 4;
 
 			final double y = positionOther.getY() - positionMe.getY() - height + memberPosition.getCenterY();
-			final Point2D pp2 = new Point2D.Double(x, y);
+			final XPoint2D pp2 = new XPoint2D(x, y);
 			opale.setOpale(direction, pp1, pp2);
 			opale.drawU(ug);
 			ug = ug.apply(UTranslate.dy(dim.getHeight() + ySpacing));

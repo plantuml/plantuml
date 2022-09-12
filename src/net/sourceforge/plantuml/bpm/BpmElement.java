@@ -34,8 +34,6 @@
  */
 package net.sourceforge.plantuml.bpm;
 
-import java.awt.geom.Rectangle2D;
-
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SkinParamUtils;
@@ -43,7 +41,8 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileBox;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileCircleStart;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamond;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XRectangle2D;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -107,11 +106,11 @@ public class BpmElement extends AbstractConnectorPuzzle implements ConnectorPuzz
 				}
 			}
 
-			public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+			public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
 				return raw.getInnerPosition(member, stringBounder, strategy);
 			}
 
-			public Dimension2D calculateDimension(StringBounder stringBounder) {
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
 				return raw.calculateDimension(stringBounder);
 			}
 
@@ -121,7 +120,7 @@ public class BpmElement extends AbstractConnectorPuzzle implements ConnectorPuzz
 		};
 	}
 
-	private void drawLine(UGraphic ug, Where w, Dimension2D total) {
+	private void drawLine(UGraphic ug, Where w, XDimension2D total) {
 		final double width = total.getWidth();
 		final double height = total.getHeight();
 		if (w == Where.WEST) {
@@ -167,9 +166,9 @@ public class BpmElement extends AbstractConnectorPuzzle implements ConnectorPuzz
 		return display.create(fc, HorizontalAlignment.LEFT, skinParam);
 	}
 
-	private Dimension2D dimension;
+	private XDimension2D dimension;
 
-	public Dimension2D getDimension(StringBounder stringBounder, ISkinParam skinParam) {
+	public XDimension2D getDimension(StringBounder stringBounder, ISkinParam skinParam) {
 		if (dimension == null) {
 			dimension = toTextBlock(skinParam).calculateDimension(stringBounder);
 		}

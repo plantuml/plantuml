@@ -35,7 +35,7 @@
 package net.sourceforge.plantuml.timingdiagram.graphic;
 
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
@@ -74,7 +74,7 @@ public class PlayerFrame {
 
 	public void drawFrameTitle(UGraphic ug) {
 		title.drawU(ug);
-		final Dimension2D dimTitle = title.calculateDimension(ug.getStringBounder());
+		final XDimension2D dimTitle = title.calculateDimension(ug.getStringBounder());
 		ug = ug.apply(getLineColor()).apply(getUStroke());
 		final double widthTmp = dimTitle.getWidth() + 1;
 		final double height = title.calculateDimension(ug.getStringBounder()).getHeight() + 1;

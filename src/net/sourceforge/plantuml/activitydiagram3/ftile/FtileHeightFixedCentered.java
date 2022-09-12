@@ -35,12 +35,12 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
 
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -91,7 +91,7 @@ public class FtileHeightFixedCentered extends AbstractFtile {
 	}
 
 	private UTranslate getTranslate(StringBounder stringBounder) {
-		final Dimension2D dim = tile.calculateDimension(stringBounder);
+		final XDimension2D dim = tile.calculateDimension(stringBounder);
 		if (dim.getHeight() > fixedHeight) {
 			throw new IllegalStateException();
 		}

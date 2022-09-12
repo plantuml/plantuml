@@ -52,7 +52,6 @@ import java.net.URLEncoder;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import net.sourceforge.plantuml.BlockUml;
 import net.sourceforge.plantuml.ErrorUml;

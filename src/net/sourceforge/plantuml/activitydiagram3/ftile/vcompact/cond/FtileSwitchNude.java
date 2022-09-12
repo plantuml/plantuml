@@ -41,11 +41,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -126,11 +125,11 @@ public class FtileSwitchNude extends FtileDimensionMemoize {
 
 	@Override
 	protected FtileGeometry calculateDimensionInternalSlow(StringBounder stringBounder) {
-		Dimension2D result = new Dimension2DDouble(0, 0);
+		XDimension2D result = new XDimension2D(0, 0);
 		for (Ftile couple : tiles)
-			result = Dimension2DDouble.mergeLR(result, couple.calculateDimension(stringBounder));
+			result = XDimension2D.mergeLR(result, couple.calculateDimension(stringBounder));
 
-		result = Dimension2DDouble.delta(result, xSeparation * (tiles.size() - 1), 100);
+		result = XDimension2D.delta(result, xSeparation * (tiles.size() - 1), 100);
 
 		return new FtileGeometry(result, result.getWidth() / 2, 0);
 	}

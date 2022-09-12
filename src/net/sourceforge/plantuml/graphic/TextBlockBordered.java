@@ -35,8 +35,7 @@
  */
 package net.sourceforge.plantuml.graphic;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.creole.SheetBlock2;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.ugraphic.Shadowable;
@@ -77,12 +76,12 @@ public class TextBlockBordered extends AbstractTextBlock implements TextBlock {
 	}
 
 	private double getTextHeight(StringBounder stringBounder) {
-		final Dimension2D size = textBlock.calculateDimension(stringBounder);
+		final XDimension2D size = textBlock.calculateDimension(stringBounder);
 		return size.getHeight() + top + bottom;
 	}
 
 	private double getPureTextWidth(StringBounder stringBounder) {
-		final Dimension2D size = textBlock.calculateDimension(stringBounder);
+		final XDimension2D size = textBlock.calculateDimension(stringBounder);
 		return size.getWidth();
 	}
 
@@ -90,10 +89,10 @@ public class TextBlockBordered extends AbstractTextBlock implements TextBlock {
 		return getPureTextWidth(stringBounder) + left + right;
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		final double height = getTextHeight(stringBounder);
 		final double width = getTextWidth(stringBounder);
-		return new Dimension2DDouble(width + 1, height + 1);
+		return new XDimension2D(width + 1, height + 1);
 	}
 
 	private UGraphic applyStroke(UGraphic ug) {

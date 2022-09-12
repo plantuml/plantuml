@@ -1,8 +1,8 @@
 package net.sourceforge.plantuml.awt.geom;
 
-import net.sourceforge.plantuml.awt.Shape;
+import net.sourceforge.plantuml.awt.XShape;
 
-public class CubicCurve2D implements Shape {
+public class XCubicCurve2D implements XShape {
 
 	public double x1;
 	public double y1;
@@ -13,7 +13,7 @@ public class CubicCurve2D implements Shape {
 	public double x2;
 	public double y2;
 
-	public CubicCurve2D(double x1, double y1, double ctrlx1, double ctrly1, double ctrlx2, double ctrly2, double x2,
+	public XCubicCurve2D(double x1, double y1, double ctrlx1, double ctrly1, double ctrlx2, double ctrly2, double x2,
 			double y2) {
 		this.x1 = x1;
 		this.y1 = y1;
@@ -26,12 +26,12 @@ public class CubicCurve2D implements Shape {
 
 	}
 
-	public Point2D getP1() {
-		return new Point2D.Double(x1, y1);
+	public XPoint2D getP1() {
+		return new XPoint2D(x1, y1);
 	}
 
-	public Point2D getP2() {
-		return new Point2D.Double(x2, y2);
+	public XPoint2D getP2() {
+		return new XPoint2D(x2, y2);
 	}
 
 	public void setCurve(double x1, double y1, double ctrlx1, double ctrly1, double ctrlx2, double ctrly2, double x2,
@@ -47,13 +47,13 @@ public class CubicCurve2D implements Shape {
 
 	}
 
-	public void setCurve(CubicCurve2D other) {
+	public void setCurve(XCubicCurve2D other) {
 		setCurve(other.x1, other.y1, other.ctrlx1, other.ctrly1, other.ctrlx2, other.ctrly2, other.ctrlx2,
 				other.ctrly2);
 
 	}
 
-	public void subdivide(CubicCurve2D left, CubicCurve2D right) {
+	public void subdivide(XCubicCurve2D left, XCubicCurve2D right) {
 		double x1 = this.getX1();
 		double y1 = this.getY1();
 		double ctrlx1 = this.getCtrlX1();
@@ -79,19 +79,6 @@ public class CubicCurve2D implements Shape {
 
 		if (right != null)
 			right.setCurve(centerx, centery, ctrlx21, ctrly21, ctrlx2, ctrly2, x2, y2);
-
-	}
-
-	public static class Double extends CubicCurve2D {
-		public Double() {
-			this(0, 0, 0, 0, 0, 0, 0, 0);
-		}
-
-		public Double(double x1, double y1, double ctrlx1, double ctrly1, double ctrlx2, double ctrly2, double x2,
-				double y2) {
-			super(x1, y1, ctrlx1, ctrly1, ctrlx2, ctrly2, x2, y2);
-
-		}
 
 	}
 
@@ -127,12 +114,12 @@ public class CubicCurve2D implements Shape {
 		return y2;
 	}
 
-	public Point2D getCtrlP1() {
-		return new Point2D.Double(ctrlx1, ctrly1);
+	public XPoint2D getCtrlP1() {
+		return new XPoint2D(ctrlx1, ctrly1);
 	}
 
-	public Point2D getCtrlP2() {
-		return new Point2D.Double(ctrlx2, ctrly2);
+	public XPoint2D getCtrlP2() {
+		return new XPoint2D(ctrlx2, ctrly2);
 	}
 
 	public double getFlatnessSq() {

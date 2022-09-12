@@ -35,8 +35,7 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.creole.Stencil;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -94,12 +93,12 @@ public class Hexagon {
 			}
 
 			public double getStartingX(StringBounder stringBounder, double y) {
-				final Dimension2D dim = tb.calculateDimension(stringBounder);
+				final XDimension2D dim = tb.calculateDimension(stringBounder);
 				return -getDeltaX(dim.getHeight(), y);
 			}
 
 			public double getEndingX(StringBounder stringBounder, double y) {
-				final Dimension2D dim = tb.calculateDimension(stringBounder);
+				final XDimension2D dim = tb.calculateDimension(stringBounder);
 				return dim.getWidth() + getDeltaX(dim.getHeight(), y);
 			}
 		};

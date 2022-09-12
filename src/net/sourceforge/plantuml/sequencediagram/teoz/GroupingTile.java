@@ -35,13 +35,13 @@
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.UDrawable;
@@ -104,7 +104,7 @@ public class GroupingTile extends AbstractTile {
 		final List<Real> max2 = new ArrayList<>();
 
 		final List<Tile> allElses = new ArrayList<>();
-		final Dimension2D dim1 = getPreferredDimensionIfEmpty(stringBounder);
+		final XDimension2D dim1 = getPreferredDimensionIfEmpty(stringBounder);
 
 		while (it.hasNext()) {
 			final Event ev = it.next();
@@ -148,7 +148,7 @@ public class GroupingTile extends AbstractTile {
 		return comp;
 	}
 
-	private Dimension2D getPreferredDimensionIfEmpty(StringBounder stringBounder) {
+	private XDimension2D getPreferredDimensionIfEmpty(StringBounder stringBounder) {
 		return getComponent(stringBounder).getPreferredDimension(stringBounder);
 	}
 
@@ -156,7 +156,7 @@ public class GroupingTile extends AbstractTile {
 		final StringBounder stringBounder = ug.getStringBounder();
 
 		final Component comp = getComponent(stringBounder);
-		final Dimension2D dim1 = getPreferredDimensionIfEmpty(stringBounder);
+		final XDimension2D dim1 = getPreferredDimensionIfEmpty(stringBounder);
 		final Area area = Area.create(max.getCurrentValue() - min.getCurrentValue(), getTotalHeight(stringBounder));
 
 		comp.drawU(ug.apply(UTranslate.dx(min.getCurrentValue())), area, (Context2D) ug);
@@ -171,7 +171,7 @@ public class GroupingTile extends AbstractTile {
 	}
 
 	private double getTotalHeight(StringBounder stringBounder) {
-		final Dimension2D dimIfEmpty = getPreferredDimensionIfEmpty(stringBounder);
+		final XDimension2D dimIfEmpty = getPreferredDimensionIfEmpty(stringBounder);
 		return bodyHeight + dimIfEmpty.getHeight() + MARGINY_MAGIC / 2;
 	}
 
@@ -200,7 +200,7 @@ public class GroupingTile extends AbstractTile {
 	}
 
 	public double getPreferredHeight() {
-		final Dimension2D dim1 = getPreferredDimensionIfEmpty(getStringBounder());
+		final XDimension2D dim1 = getPreferredDimensionIfEmpty(getStringBounder());
 		return dim1.getHeight() + bodyHeight + MARGINY_MAGIC;
 	}
 

@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.gtile;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -69,15 +69,15 @@ public class GtileHexagonInsideLabelled extends GtileWithMargin {
 	}
 
 	private static double getNorthMargin(GtileHexagonInside diamond, TextBlock eastLabel, TextBlock westLabel) {
-		final Dimension2D dimWest = westLabel.calculateDimension(diamond.getStringBounder());
-		final Dimension2D dimEast = eastLabel.calculateDimension(diamond.getStringBounder());
+		final XDimension2D dimWest = westLabel.calculateDimension(diamond.getStringBounder());
+		final XDimension2D dimEast = eastLabel.calculateDimension(diamond.getStringBounder());
 		final UTranslate east = diamond.getCoord(GPoint.EAST_HOOK);
 		final UTranslate west = diamond.getCoord(GPoint.WEST_HOOK);
 		return MathUtils.max(0, dimWest.getHeight() - west.getDy(), dimEast.getHeight() - east.getDy());
 	}
 
 	private static double getSouthMargin(GtileHexagonInside diamond, TextBlock southLabel) {
-		final Dimension2D dimSouth = southLabel.calculateDimension(diamond.getStringBounder());
+		final XDimension2D dimSouth = southLabel.calculateDimension(diamond.getStringBounder());
 		return dimSouth.getHeight();
 	}
 
@@ -92,20 +92,20 @@ public class GtileHexagonInsideLabelled extends GtileWithMargin {
 		eastLabel.drawU(
 				ug.apply(east.compose(UTranslate.dy(-eastLabel.calculateDimension(getStringBounder()).getHeight()))));
 
-		final Dimension2D tmp = westLabel.calculateDimension(getStringBounder());
+		final XDimension2D tmp = westLabel.calculateDimension(getStringBounder());
 		final UTranslate west = getCoord(GPoint.WEST_HOOK);
 		westLabel.drawU(ug.apply(west.compose(new UTranslate(-tmp.getWidth(), -tmp.getHeight()))));
 
 	}
 
 	@Override
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		final Dimension2D tmp = super.calculateDimension(stringBounder);
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		final XDimension2D tmp = super.calculateDimension(stringBounder);
 		final UTranslate south = getCoord(GPoint.SOUTH_HOOK);
-		final Dimension2D southCorner = south.getTranslated(southLabel.calculateDimension(stringBounder));
+		final XDimension2D southCorner = south.getTranslated(southLabel.calculateDimension(stringBounder));
 
 		final UTranslate east = getCoord(GPoint.EAST_HOOK);
-		final Dimension2D eastCorner = east.getTranslated(eastLabel.calculateDimension(stringBounder));
+		final XDimension2D eastCorner = east.getTranslated(eastLabel.calculateDimension(stringBounder));
 
 		return MathUtils.max(tmp, southCorner, eastCorner);
 	}

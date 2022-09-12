@@ -36,7 +36,7 @@
 package net.sourceforge.plantuml.png;
 
 import net.sourceforge.plantuml.ISkinSimple;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.DisplaySection;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -60,7 +60,7 @@ public class PngTitler {
 
 	}
 
-	public Dimension2D getTextDimension(StringBounder stringBounder) {
+	public XDimension2D getTextDimension(StringBounder stringBounder) {
 		final TextBlock textBloc = getRibbonBlock();
 		if (textBloc == null)
 			return null;

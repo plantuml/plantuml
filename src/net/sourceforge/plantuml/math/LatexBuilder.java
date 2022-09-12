@@ -43,7 +43,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.Icon;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.ugraphic.MutableImage;
 import net.sourceforge.plantuml.ugraphic.UImageSvg;
 
@@ -55,9 +55,9 @@ public class LatexBuilder implements ScientificEquation {
 		this.tex = tex;
 	}
 
-	private Dimension2D dimension;
+	private XDimension2D dimension;
 
-	public Dimension2D getDimension() {
+	public XDimension2D getDimension() {
 		return dimension;
 	}
 

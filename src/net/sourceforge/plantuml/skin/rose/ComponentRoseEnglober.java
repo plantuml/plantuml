@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.skin.rose;
 
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.LineBreakStrategy;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.SymbolContext;
@@ -62,7 +62,7 @@ public class ComponentRoseEnglober extends AbstractTextualComponent {
 
 	@Override
 	protected void drawBackgroundInternalU(UGraphic ug, Area area) {
-		final Dimension2D dimensionToUse = area.getDimensionToUse();
+		final XDimension2D dimensionToUse = area.getDimensionToUse();
 		ug = symbolContext.apply(ug);
 		ug.draw(new URectangle(dimensionToUse.getWidth(), dimensionToUse.getHeight()).rounded(roundCorner));
 		final double xpos = (dimensionToUse.getWidth() - getPureTextWidth(ug.getStringBounder())) / 2;

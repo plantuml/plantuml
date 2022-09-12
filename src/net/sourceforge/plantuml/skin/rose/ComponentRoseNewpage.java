@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.skin.rose;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.skin.AbstractComponent;
 import net.sourceforge.plantuml.skin.Area;
@@ -56,7 +56,7 @@ public class ComponentRoseNewpage extends AbstractComponent {
 
 	@Override
 	protected void drawInternalU(UGraphic ug, Area area) {
-		final Dimension2D dimensionToUse = area.getDimensionToUse();
+		final XDimension2D dimensionToUse = area.getDimensionToUse();
 		ug = ArrowConfiguration.stroke(ug, 2, 2, 1).apply(foregroundColor);
 		ug.draw(ULine.hline(dimensionToUse.getWidth()));
 	}

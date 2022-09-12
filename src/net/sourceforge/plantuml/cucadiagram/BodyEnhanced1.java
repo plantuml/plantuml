@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.cucadiagram;
 
-import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -47,6 +46,7 @@ import net.sourceforge.plantuml.EmbeddedDiagram;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.awt.geom.XRectangle2D;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.creole.Parser;
 import net.sourceforge.plantuml.creole.legacy.CreoleParser;
@@ -246,7 +246,7 @@ public class BodyEnhanced1 extends BodyEnhancedAbstract implements TextBlock, Wi
 		return Collections.unmodifiableList(urls);
 	}
 
-	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+	public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
 		return getArea(stringBounder).getInnerPosition(member, stringBounder, strategy);
 	}
 

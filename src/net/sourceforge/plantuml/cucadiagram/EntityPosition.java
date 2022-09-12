@@ -36,11 +36,10 @@
  */
 package net.sourceforge.plantuml.cucadiagram;
 
-import java.awt.geom.Point2D;
 import java.util.EnumSet;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.ugraphic.Shadowable;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
@@ -117,23 +116,23 @@ public enum EntityPosition {
 
 	}
 
-	public Dimension2D getDimension(Rankdir rankdir) {
+	public XDimension2D getDimension(Rankdir rankdir) {
 		if (this == EXPANSION_INPUT || this == EXPANSION_OUTPUT) {
 			if (rankdir == Rankdir.TOP_TO_BOTTOM)
-				return new Dimension2DDouble(EntityPosition.RADIUS * 2 * 4, EntityPosition.RADIUS * 2);
+				return new XDimension2D(EntityPosition.RADIUS * 2 * 4, EntityPosition.RADIUS * 2);
 
-			return new Dimension2DDouble(EntityPosition.RADIUS * 2, EntityPosition.RADIUS * 2 * 4);
+			return new XDimension2D(EntityPosition.RADIUS * 2, EntityPosition.RADIUS * 2 * 4);
 		}
-		return new Dimension2DDouble(EntityPosition.RADIUS * 2, EntityPosition.RADIUS * 2);
+		return new XDimension2D(EntityPosition.RADIUS * 2, EntityPosition.RADIUS * 2);
 	}
 
-	private Point2D getPointOnCircle(double xc, double yc, double angle, double radius) {
+	private XPoint2D getPointOnCircle(double xc, double yc, double angle, double radius) {
 		final double x = xc + radius * Math.cos(angle);
 		final double y = yc + radius * Math.sin(angle);
-		return new Point2D.Double(x, y);
+		return new XPoint2D(x, y);
 	}
 
-	static private void drawLine(UGraphic ug, Point2D p1, Point2D p2) {
+	static private void drawLine(UGraphic ug, XPoint2D p1, XPoint2D p2) {
 		final double dx = p2.getX() - p1.getX();
 		final double dy = p2.getY() - p1.getY();
 		ug.apply(new UTranslate(p1.getX(), p1.getY())).draw(new ULine(dx, dy));

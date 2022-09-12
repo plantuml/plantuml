@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
-import java.awt.geom.Point2D;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 
 public class YTransformer {
 
@@ -45,12 +45,12 @@ public class YTransformer {
 		this.alpha = alpha;
 	}
 
-	public Point2D getPoint2D(Point2D pt) {
-		return new Point2D.Double(pt.getX(), pt.getY() * alpha);
+	public XPoint2D getPoint2D(XPoint2D pt) {
+		return new XPoint2D(pt.getX(), pt.getY() * alpha);
 	}
 
-	public Point2D getReversePoint2D(Point2D pt) {
-		return new Point2D.Double(pt.getX(), pt.getY() / alpha);
+	public XPoint2D getReversePoint2D(XPoint2D pt) {
+		return new XPoint2D(pt.getX(), pt.getY() / alpha);
 	}
 
 	public double getAlpha() {

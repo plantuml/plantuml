@@ -35,11 +35,12 @@
  */
 package net.sourceforge.plantuml.svek;
 
-import java.awt.geom.Point2D;
 import java.util.Iterator;
 import java.util.List;
 
-public interface PointListIterator extends Iterator<List<Point2D.Double>> {
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
+
+public interface PointListIterator extends Iterator<List<XPoint2D>> {
 
 	public PointListIterator cloneMe();
 

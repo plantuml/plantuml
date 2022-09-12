@@ -35,10 +35,8 @@
  */
 package net.sourceforge.plantuml.svek;
 
-import java.awt.geom.Rectangle2D;
-
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XRectangle2D;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.MinMax;
@@ -67,8 +65,8 @@ public class EntityImageDegenerated implements IEntityImage {
 		return backcolor;
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		return Dimension2DDouble.delta(orig.calculateDimension(stringBounder), delta * 2, delta * 2);
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		return XDimension2D.delta(orig.calculateDimension(stringBounder), delta * 2, delta * 2);
 	}
 
 	public MinMax getMinMax(StringBounder stringBounder) {
@@ -77,14 +75,14 @@ public class EntityImageDegenerated implements IEntityImage {
 		// return orig.getMinMax(stringBounder).appendToMax(delta, delta);
 	}
 
-	public Rectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+	public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
 		return orig.getInnerPosition(member, stringBounder, strategy);
 	}
 
 	public void drawU(UGraphic ug) {
 		orig.drawU(ug.apply(new UTranslate(delta, delta)));
 
-		final Dimension2D dim = calculateDimension(ug.getStringBounder());
+		final XDimension2D dim = calculateDimension(ug.getStringBounder());
 		ug.apply(new UTranslate(dim.getWidth() - delta, dim.getHeight() - delta)).draw(new UEmpty(delta, delta));
 
 	}

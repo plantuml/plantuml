@@ -35,15 +35,15 @@
  */
 package net.sourceforge.plantuml.svek.extremity;
 
-import java.awt.geom.Point2D;
-
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.svek.AbstractExtremityFactory;
 import net.sourceforge.plantuml.svek.Side;
 
 public class ExtremityFactoryCircleLine extends AbstractExtremityFactory implements ExtremityFactory {
 
-	public UDrawable createUDrawable(Point2D p0, Point2D p1, Point2D p2, Side side) {
+	@Override
+	public UDrawable createUDrawable(XPoint2D p0, XPoint2D p1, XPoint2D p2, Side side) {
 		final double ortho = atan2(p0, p2);
 		return new ExtremityCircleLine(p1, ortho);
 	}

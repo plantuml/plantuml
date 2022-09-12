@@ -38,31 +38,30 @@ package net.sourceforge.plantuml.graphic;
 import java.awt.font.FontRenderContext;
 import java.awt.font.LineMetrics;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FileFormat;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.text.RichText;
 import net.sourceforge.plantuml.text.StyledString;
 import net.sourceforge.plantuml.ugraphic.UFont;
 
 public abstract class StringBounderRaw implements StringBounder {
 
-	public final Dimension2D calculateDimension(UFont font, String text) {
+	public final XDimension2D calculateDimension(UFont font, String text) {
 		if (RichText.isRich(text)) {
 			double width = 0;
 			double height = 0;
 			for (StyledString s : StyledString.build(text)) {
 				final UFont newFont = s.getStyle().mutateFont(font);
-				final Dimension2D rect = calculateDimensionInternal(newFont, s.getText());
+				final XDimension2D rect = calculateDimensionInternal(newFont, s.getText());
 				width += rect.getWidth();
 				height = Math.max(height, rect.getHeight());
 			}
-			return new Dimension2DDouble(width, height);
+			return new XDimension2D(width, height);
 		}
 		return calculateDimensionInternal(font, text);
 	}
 
-	protected abstract Dimension2D calculateDimensionInternal(UFont font, String text);
+	protected abstract XDimension2D calculateDimensionInternal(UFont font, String text);
 
 	public double getDescent(UFont font, String text) {
 		final FontRenderContext frc = FileFormat.gg.getFontRenderContext();

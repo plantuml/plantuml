@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.ugraphic.visio;
 
-import java.awt.geom.Point2D;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -43,6 +42,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.plantuml.Log;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.golem.MinMaxDouble;
 import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
@@ -137,7 +137,7 @@ public class VisioGraphics {
 		shapes.add(line);
 	}
 
-	private void line(Point2D p1, Point2D p2) {
+	private void line(XPoint2D p1, XPoint2D p2) {
 		line(p1.getX(), p1.getY(), p2.getX(), p2.getY());
 	}
 
@@ -178,8 +178,8 @@ public class VisioGraphics {
 	}
 
 	public void polygon(UPolygon poly) {
-		Point2D last = null;
-		for (Point2D pt : poly.getPoints()) {
+		XPoint2D last = null;
+		for (XPoint2D pt : poly.getPoints()) {
 			if (last != null) {
 				line(last, pt);
 			}

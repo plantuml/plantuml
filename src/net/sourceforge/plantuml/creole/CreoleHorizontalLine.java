@@ -35,11 +35,9 @@
  */
 package net.sourceforge.plantuml.creole;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.LineBreakStrategy;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.creole.atom.AbstractAtom;
 import net.sourceforge.plantuml.creole.atom.Atom;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -94,14 +92,14 @@ public class CreoleHorizontalLine extends AbstractAtom implements Atom {
 
 	public void drawU(UGraphic ug) {
 		// ug = ug.apply(UChangeColor.nnn(fontConfiguration.getColor()));
-		final Dimension2D dim = calculateDimension(ug.getStringBounder());
+		final XDimension2D dim = calculateDimension(ug.getStringBounder());
 		ug = ug.apply(UTranslate.dy(dim.getHeight() / 2));
 		ug.draw(getHorizontalLine());
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		if (line.length() == 0) {
-			return new Dimension2DDouble(10, 10);
+			return new XDimension2D(10, 10);
 		}
 		final TextBlock tb = getTitle();
 		return tb.calculateDimension(stringBounder);

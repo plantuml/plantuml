@@ -37,9 +37,8 @@ package net.sourceforge.plantuml.svek.image;
 
 import java.util.Collections;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
@@ -84,15 +83,15 @@ public class EntityImageState extends EntityImageStateCommon {
 
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		final Dimension2D dim = Dimension2DDouble.mergeTB(desc.calculateDimension(stringBounder),
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		final XDimension2D dim = XDimension2D.mergeTB(desc.calculateDimension(stringBounder),
 				fields.calculateDimension(stringBounder));
 		double heightSymbol = 0;
 		if (withSymbol)
 			heightSymbol += 2 * smallRadius + smallMarginY;
 
-		final Dimension2D result = Dimension2DDouble.delta(dim, MARGIN * 2 + 2 * MARGIN_LINE + heightSymbol);
-		return Dimension2DDouble.atLeast(result, MIN_WIDTH, MIN_HEIGHT);
+		final XDimension2D result = XDimension2D.delta(dim, MARGIN * 2 + 2 * MARGIN_LINE + heightSymbol);
+		return XDimension2D.atLeast(result, MIN_WIDTH, MIN_HEIGHT);
 	}
 
 	final public void drawU(UGraphic ug) {
@@ -101,8 +100,8 @@ public class EntityImageState extends EntityImageStateCommon {
 			ug.startUrl(url);
 
 		final StringBounder stringBounder = ug.getStringBounder();
-		final Dimension2D dimTotal = calculateDimension(stringBounder);
-		final Dimension2D dimDesc = desc.calculateDimension(stringBounder);
+		final XDimension2D dimTotal = calculateDimension(stringBounder);
+		final XDimension2D dimDesc = desc.calculateDimension(stringBounder);
 
 		final UStroke stroke = getStyleState().getStroke(lineConfig.getColors());
 

@@ -40,8 +40,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -220,8 +219,8 @@ public class SpriteMonochrome implements Sprite {
 				ug.draw(image.scale(scale));
 			}
 
-			public Dimension2D calculateDimension(StringBounder stringBounder) {
-				return new Dimension2DDouble(getWidth() * scale, getHeight() * scale);
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
+				return new XDimension2D(getWidth() * scale, getHeight() * scale);
 			}
 		};
 	}

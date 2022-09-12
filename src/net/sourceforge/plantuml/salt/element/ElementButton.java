@@ -35,10 +35,8 @@
  */
 package net.sourceforge.plantuml.salt.element;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -56,22 +54,22 @@ public class ElementButton extends AbstractElementText implements Element {
 		super(text, font, true, spriteContainer);
 	}
 
-	public Dimension2D getPreferredDimension(StringBounder stringBounder, double x, double y) {
-		Dimension2D dim = getTextDimensionAt(stringBounder, x + stroke + marginX);
-		dim = Dimension2DDouble.delta(dim, 2 * marginX, 2 * marginY);
-		return Dimension2DDouble.delta(dim, 2 * stroke);
+	public XDimension2D getPreferredDimension(StringBounder stringBounder, double x, double y) {
+		XDimension2D dim = getTextDimensionAt(stringBounder, x + stroke + marginX);
+		dim = XDimension2D.delta(dim, 2 * marginX, 2 * marginY);
+		return XDimension2D.delta(dim, 2 * stroke);
 	}
 
-	public void drawU(UGraphic ug, int zIndex, Dimension2D dimToUse) {
+	public void drawU(UGraphic ug, int zIndex, XDimension2D dimToUse) {
 		if (zIndex != 0)
 			return;
 
-		final Dimension2D dim = getPreferredDimension(ug.getStringBounder(), 0, 0);
+		final XDimension2D dim = getPreferredDimension(ug.getStringBounder(), 0, 0);
 		ug = ug.apply(new UStroke(stroke));
 		ug = ug.apply(getColorEE().bg()).apply(getBlack());
 		ug.apply(new UTranslate(stroke, stroke))
 				.draw(new URectangle(dim.getWidth() - 2 * stroke, dim.getHeight() - 2 * stroke).rounded(10));
-		final Dimension2D dimPureText = getPureTextDimension(ug.getStringBounder());
+		final XDimension2D dimPureText = getPureTextDimension(ug.getStringBounder());
 		drawText(ug, (dim.getWidth() - dimPureText.getWidth()) / 2, stroke + marginY);
 	}
 }

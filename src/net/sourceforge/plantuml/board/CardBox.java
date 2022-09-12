@@ -35,10 +35,8 @@
  */
 package net.sourceforge.plantuml.board;
 
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
-
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -64,8 +62,8 @@ public class CardBox extends AbstractTextBlock {
 //		return StyleSignature.of(SName.root, SName.element, SName.mindmapDiagram, SName.node);
 //	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
-		return new Dimension2DDouble(150, 70);
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		return new XDimension2D(150, 70);
 	}
 
 	public void drawU(UGraphic ug) {

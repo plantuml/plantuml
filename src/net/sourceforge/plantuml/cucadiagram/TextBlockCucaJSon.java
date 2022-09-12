@@ -35,10 +35,9 @@
  */
 package net.sourceforge.plantuml.cucadiagram;
 
-import net.sourceforge.plantuml.Dimension2DDouble;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.awt.geom.Dimension2D;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -84,7 +83,7 @@ public class TextBlockCucaJSon extends AbstractTextBlock implements WithPorts {
 		return new Ports();
 	}
 
-	public Dimension2D calculateDimension(StringBounder stringBounder) {
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		return getJsonTextBlock().calculateDimension(stringBounder);
 	}
 
@@ -103,8 +102,8 @@ public class TextBlockCucaJSon extends AbstractTextBlock implements WithPorts {
 		}
 
 		@Override
-		public Dimension2D calculateDimension(StringBounder stringBounder) {
-			return new Dimension2DDouble(getWidth1(stringBounder) + getWidth2(stringBounder), getHeight(stringBounder));
+		public XDimension2D calculateDimension(StringBounder stringBounder) {
+			return new XDimension2D(getWidth1(stringBounder) + getWidth2(stringBounder), getHeight(stringBounder));
 		}
 
 		private double getWidth1(StringBounder stringBounder) {
@@ -130,8 +129,8 @@ public class TextBlockCucaJSon extends AbstractTextBlock implements WithPorts {
 			for (JsonObject.Member s : obj) {
 				final TextBlock tb1 = getTextBlockKey(s.getName());
 				final TextBlock tb2 = getTextBlockValue(s.getValue(), totalWidth);
-				final Dimension2D dim1 = tb1.calculateDimension(stringBounder);
-				final Dimension2D dim2 = tb2.calculateDimension(stringBounder);
+				final XDimension2D dim1 = tb1.calculateDimension(stringBounder);
+				final XDimension2D dim2 = tb2.calculateDimension(stringBounder);
 				result += Math.max(dim1.getHeight(), dim2.getHeight());
 			}
 			return result;
@@ -148,8 +147,8 @@ public class TextBlockCucaJSon extends AbstractTextBlock implements WithPorts {
 			for (JsonObject.Member s : obj) {
 				final TextBlock tb1 = getTextBlockKey(s.getName());
 				final TextBlock tb2 = getTextBlockValue(s.getValue(), width2);
-				final Dimension2D dim1 = tb1.calculateDimension(stringBounder);
-				final Dimension2D dim2 = tb2.calculateDimension(stringBounder);
+				final XDimension2D dim1 = tb1.calculateDimension(stringBounder);
+				final XDimension2D dim2 = tb2.calculateDimension(stringBounder);
 				ug.draw(hline);
 				tb1.drawU(ug);
 				tb2.drawU(ug.apply(UTranslate.dx(width1)));
@@ -191,12 +190,12 @@ public class TextBlockCucaJSon extends AbstractTextBlock implements WithPorts {
 		}
 
 		@Override
-		public Dimension2D calculateDimension(StringBounder stringBounder) {
-			Dimension2D result = new Dimension2DDouble(0, 0);
+		public XDimension2D calculateDimension(StringBounder stringBounder) {
+			XDimension2D result = new XDimension2D(0, 0);
 			for (JsonValue element : array) {
 				final TextBlock tb = getTextBlockValue(element, totalWidth);
-				final Dimension2D dim = tb.calculateDimension(stringBounder);
-				result = Dimension2DDouble.mergeTB(result, dim);
+				final XDimension2D dim = tb.calculateDimension(stringBounder);
+				result = XDimension2D.mergeTB(result, dim);
 			}
 			return result;
 		}
