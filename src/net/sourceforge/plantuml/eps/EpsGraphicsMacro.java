@@ -51,9 +51,9 @@ public class EpsGraphicsMacro extends EpsGraphics {
 
 	@Override
 	protected void append(String s, boolean checkConsistence) {
-		if (checkConsistence && s.indexOf("  ") != -1) {
+		if (checkConsistence && s.indexOf("  ") != -1)
 			throw new IllegalArgumentException(s);
-		}
+
 		data.add(new PostScriptCommandRaw(s, checkConsistence));
 	}
 
@@ -90,14 +90,14 @@ public class EpsGraphicsMacro extends EpsGraphics {
 
 	@Override
 	public void fill(int windingRule) {
-		if (macroInProgress != null) {
+		if (macroInProgress != null)
 			closeMacro();
-		}
-		if (windingRule == PathIterator.WIND_EVEN_ODD) {
+
+		if (windingRule == PathIterator.WIND_EVEN_ODD)
 			append("eofill", true);
-		} else if (windingRule == PathIterator.WIND_NON_ZERO) {
+		else if (windingRule == PathIterator.WIND_NON_ZERO)
 			append("fill", true);
-		}
+
 	}
 
 	private PostScriptCommandMacro macroInProgress = null;
@@ -143,9 +143,9 @@ public class EpsGraphicsMacro extends EpsGraphics {
 	}
 
 	private void openMacro() {
-		if (macroInProgress != null) {
+		if (macroInProgress != null)
 			throw new IllegalStateException();
-		}
+
 		macroInProgress = new PostScriptCommandMacro(macroName());
 	}
 
@@ -154,9 +154,9 @@ public class EpsGraphicsMacro extends EpsGraphics {
 	}
 
 	private void closeMacro() {
-		if (macroInProgress == null) {
+		if (macroInProgress == null)
 			throw new IllegalStateException();
-		}
+
 		final String existingName = macros.get(macroInProgress);
 		if (existingName == null) {
 			macros.put(macroInProgress, macroInProgress.getName());
@@ -183,9 +183,9 @@ public class EpsGraphicsMacro extends EpsGraphics {
 		append("0 " + getDashVisible() + " rlineto", true);
 		append("0 " + getDashSpace() + " rmoveto", true);
 		append("} repeat", true);
-		if (v > 0) {
+		if (v > 0)
 			append("0 " + v + " rlineto", true);
-		}
+
 	}
 
 	@Override
@@ -203,9 +203,9 @@ public class EpsGraphicsMacro extends EpsGraphics {
 		append("" + getDashVisible() + " 0 rlineto", true);
 		append("" + getDashSpace() + " 0 rmoveto", true);
 		append("} repeat", true);
-		if (v > 0) {
+		if (v > 0)
 			append(v + " 0 rlineto", true);
-		}
+
 	}
 
 }

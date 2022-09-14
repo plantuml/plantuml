@@ -30,7 +30,6 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
  *
  */
 package net.sourceforge.plantuml.ugraphic.color;
@@ -38,26 +37,54 @@ package net.sourceforge.plantuml.ugraphic.color;
 import net.sourceforge.plantuml.ugraphic.UBackground;
 import net.sourceforge.plantuml.ugraphic.UChange;
 
-public interface HColor extends UChange {
+public abstract class HColor implements UChange {
 
-	public UBackground bg();
+	public UBackground bg() {
+		return new UBackground() {
+			public HColor getBackColor() {
+				return HColor.this;
+			}
+		};
+	}
 
-	public HColor withDark(HColor dark);
+	public HColor lighten(int ratio) {
+		return this;
+	}
 
-	public HColor darken(int ratio);
+	public HColor darken(int ratio) {
+		return this;
+	}
 
-	public HColor lighten(int ratio);
+	public HColor reverseHsluv() {
+		return this;
+	}
 
-	public String asString();
+	public HColor reverse() {
+		return this;
+	}
 
-	public boolean isDark();
+	public boolean isDark() {
+		return true;
+	}
 
-	public HColor reverseHsluv();
+	public String asString() {
+		return "?" + getClass().getSimpleName();
+	}
 
-	public HColor reverse();
+	public HColor darkSchemeTheme() {
+		return this;
+	}
 
-	public HColor darkSchemeTheme();
+	public HColor getAppropriateColor(HColor back) {
+		return this;
+	}
 
-	public HColor opposite();
+	public HColor withDark(HColor dark) {
+		throw new UnsupportedOperationException();
+	}
+
+	public HColor opposite() {
+		throw new UnsupportedOperationException();
+	}
 
 }

@@ -35,13 +35,12 @@
  */
 package net.sourceforge.plantuml.posimo;
 
-import java.awt.geom.Rectangle2D;
-
 import net.sourceforge.plantuml.awt.geom.XLine2D;
+import net.sourceforge.plantuml.awt.geom.XRectangle2D;
 
 public abstract class RacorderAbstract implements Racorder {
 	
-	public final DotPath getRacordOut(Rectangle2D rect, XLine2D tangeante) {
+	public final DotPath getRacordOut(XRectangle2D rect, XLine2D tangeante) {
 		tangeante = symetric(tangeante);
 		return getRacordIn(rect, tangeante).reverse();
 	}

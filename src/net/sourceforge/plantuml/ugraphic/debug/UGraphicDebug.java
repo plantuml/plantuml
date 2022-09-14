@@ -96,8 +96,8 @@ public class UGraphicDebug extends AbstractCommonUGraphic implements ClipContain
 		this.preserveAspectRatio = preserveAspectRatio;
 	}
 
-	public UGraphicDebug(double scaleFactor, XDimension2D dim, String svgLinkTarget, String hoverPathColorRGB, long seed,
-			String preserveAspectRatio) {
+	public UGraphicDebug(double scaleFactor, XDimension2D dim, String svgLinkTarget, String hoverPathColorRGB,
+			long seed, String preserveAspectRatio) {
 		super(HColors.WHITE, new ColorMapperIdentity(), new StringBounderDebug());
 		this.output = new ArrayList<>();
 		this.scaleFactor = scaleFactor;
@@ -266,7 +266,7 @@ public class UGraphicDebug extends AbstractCommonUGraphic implements ClipContain
 		}
 		if (color instanceof HColorMiddle) {
 			final HColorMiddle middle = (HColorMiddle) color;
-			return "middle(" + colorToString(middle.getC1()) + " & " + colorToString(middle.getC1()) + " )";
+			return "middle(" + colorToString(middle.getColor1()) + " & " + colorToString(middle.getColor1()) + " )";
 		}
 		System.err.println("Error colorToString " + color.getClass().getSimpleName());
 		return color.getClass().getSimpleName() + " " + new Date();
@@ -283,9 +283,9 @@ public class UGraphicDebug extends AbstractCommonUGraphic implements ClipContain
 		print(os, "preserveAspectRatio: " + preserveAspectRatio);
 		print(os, "");
 
-		for (String s : output) {
+		for (String s : output)
 			print(os, s);
-		}
+
 		os.flush();
 	}
 

@@ -35,16 +35,15 @@
  */
 package net.sourceforge.plantuml.posimo;
 
-import java.awt.geom.Rectangle2D;
-
 import net.sourceforge.plantuml.awt.geom.XLine2D;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
+import net.sourceforge.plantuml.awt.geom.XRectangle2D;
 
 public class LineRectIntersection {
 
 	private final XPoint2D inter;
 
-	public LineRectIntersection(XLine2D line, Rectangle2D rect) {
+	public LineRectIntersection(XLine2D line, XRectangle2D rect) {
 		final XPoint2D p1 = new XPoint2D(rect.getMinX(), rect.getMinY());
 		final XPoint2D p2 = new XPoint2D(rect.getMaxX(), rect.getMinY());
 		final XPoint2D p3 = new XPoint2D(rect.getMaxX(), rect.getMaxY());
@@ -64,7 +63,7 @@ public class LineRectIntersection {
 		double minDist = Double.MAX_VALUE;
 		XPoint2D result = null;
 
-		for (XPoint2D pt : other) {
+		for (XPoint2D pt : other)
 			if (pt != null) {
 				final double dist = pt.distanceSq(o);
 				if (dist < minDist) {
@@ -72,7 +71,6 @@ public class LineRectIntersection {
 					result = pt;
 				}
 			}
-		}
 
 		return result;
 	}

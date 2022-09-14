@@ -35,8 +35,6 @@
  */
 package net.sourceforge.plantuml.svek;
 
-import java.awt.geom.Point2D;
-
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
 
 public class PointDirected {
@@ -45,7 +43,7 @@ public class PointDirected {
 	final private double y;
 	final private double angle;
 
-	public PointDirected(Point2D p, double angle) {
+	public PointDirected(XPoint2D p, double angle) {
 		this.x = p.getX();
 		this.y = p.getY();
 		this.angle = angle;

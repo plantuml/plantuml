@@ -47,7 +47,6 @@ class ExtremityLineCrowfoot extends Extremity {
 	private final XPoint2D contact;
 	private final double angle;
 	private final double lineHeight = 4;
-	
 
 	@Override
 	public XPoint2D somePoint() {
@@ -60,22 +59,22 @@ class ExtremityLineCrowfoot extends Extremity {
 	}
 
 	public void drawU(UGraphic ug) {
-		
+
 		final int xWing = 8;
 		final int yAperture = 6;
 		final AffineTransform rotate = AffineTransform.getRotateInstance(this.angle);
 		XPoint2D middle = new XPoint2D(0, 0);
 		XPoint2D left = new XPoint2D(0, -yAperture);
 		XPoint2D base = new XPoint2D(-xWing, 0);
-		XPoint2D lineTop = new XPoint2D(-xWing-2, -lineHeight);
-		XPoint2D lineBottom = new XPoint2D(-xWing-2, lineHeight);
+		XPoint2D lineTop = new XPoint2D(-xWing - 2, -lineHeight);
+		XPoint2D lineBottom = new XPoint2D(-xWing - 2, lineHeight);
 		XPoint2D right = new XPoint2D(0, yAperture);
-		
-		left.transform(rotate);
-		base.transform(rotate);
-		right.transform(rotate);
-		lineTop.transform(rotate);
-		lineBottom.transform(rotate);
+
+		left = left.transform(rotate);
+		base = base.transform(rotate);
+		right = right.transform(rotate);
+		lineTop = lineTop.transform(rotate);
+		lineBottom = lineBottom.transform(rotate);
 
 		drawLine(ug, contact.getX(), contact.getY(), base, left);
 		drawLine(ug, contact.getX(), contact.getY(), base, right);

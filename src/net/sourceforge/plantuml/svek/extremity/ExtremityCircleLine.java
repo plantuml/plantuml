@@ -72,16 +72,15 @@ class ExtremityCircleLine extends Extremity {
 		XPoint2D lineTop = new XPoint2D(-xWing, -lineHeight);
 		XPoint2D lineBottom = new XPoint2D(-xWing, lineHeight);
 
-		lineTop.transform(rotate);
-		lineBottom.transform(rotate);
-		base.transform(rotate);
-		circleBase.transform(rotate);
+		lineTop = lineTop.transform(rotate);
+		lineBottom = lineBottom.transform(rotate);
+		base = base.transform(rotate);
+		circleBase = circleBase.transform(rotate);
 
 		drawLine(ug, contact.getX(), contact.getY(), base, middle);
 		final UStroke stroke = new UStroke(thickness);
-		ug.apply(
-				new UTranslate(contact.getX() + circleBase.getX() - radius, contact.getY() + circleBase.getY() - radius))
-				.apply(stroke).draw(new UEllipse(2 * radius, 2 * radius));
+		ug.apply(new UTranslate(contact.getX() + circleBase.getX() - radius,
+				contact.getY() + circleBase.getY() - radius)).apply(stroke).draw(new UEllipse(2 * radius, 2 * radius));
 		drawLine(ug.apply(stroke), contact.getX(), contact.getY(), lineTop, lineBottom);
 	}
 

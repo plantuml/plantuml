@@ -35,8 +35,6 @@
  */
 package net.sourceforge.plantuml.svek.extremity;
 
-import java.awt.geom.Point2D;
-
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -51,14 +49,13 @@ class ExtremityStateLine2 extends Extremity {
 	private final XPoint2D dest;
 	private final double radius = 5;
 	private final double angle;
-	
+
 	@Override
 	public XPoint2D somePoint() {
 		return dest;
 	}
 
-
-	public ExtremityStateLine2(double angle, Point2D center) {
+	public ExtremityStateLine2(double angle, XPoint2D center) {
 		this.angle = manageround(angle);
 		polygon.addPoint(0, 0);
 		this.dest = new XPoint2D(center.getX(), center.getY());
@@ -74,8 +71,11 @@ class ExtremityStateLine2 extends Extremity {
 	}
 
 	public void drawU(UGraphic ug) {
-		ug.apply(ug.getParam().getColor().bg()).apply(new UTranslate(-radius * Math.cos(angle), -radius * Math.sin(angle))).draw(polygon);
-		ug.apply(new UStroke(1.5)).apply(HColors.WHITE.bg()).apply(new UTranslate(dest.getX() - radius, dest.getY() - radius)).draw(new UEllipse(radius * 2, radius * 2));
+		ug.apply(ug.getParam().getColor().bg())
+				.apply(new UTranslate(-radius * Math.cos(angle), -radius * Math.sin(angle))).draw(polygon);
+		ug.apply(new UStroke(1.5)).apply(HColors.WHITE.bg())
+				.apply(new UTranslate(dest.getX() - radius, dest.getY() - radius))
+				.draw(new UEllipse(radius * 2, radius * 2));
 	}
 
 }

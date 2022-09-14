@@ -95,9 +95,9 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> implements EnsureV
 	@Override
 	public UGraphic apply(UChange change) {
 		final UGraphicG2d copy = (UGraphicG2d) super.apply(change);
-		if (change instanceof UAntiAliasing) {
+		if (change instanceof UAntiAliasing)
 			copy.antiAliasing = (UAntiAliasing) change;
-		}
+
 		return copy;
 	}
 
@@ -140,11 +140,11 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> implements EnsureV
 
 	private void register(double dpiFactor) {
 		registerDriver(URectangle.class, new DriverRectangleG2d(dpiFactor, this));
-		if (this.hasAffineTransform || dpiFactor != 1.0) {
+		if (this.hasAffineTransform || dpiFactor != 1.0)
 			registerDriver(UText.class, new DriverTextAsPathG2d(this, getStringBounder()));
-		} else {
+		else
 			registerDriver(UText.class, new DriverTextG2d(this, getStringBounder()));
-		}
+
 		registerDriver(ULine.class, new DriverLineG2d(dpiFactor));
 		registerDriver(UPixel.class, new DriverPixelG2d());
 		registerDriver(UPolygon.class, new DriverPolygonG2d(dpiFactor, this));

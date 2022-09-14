@@ -38,9 +38,9 @@ package net.sourceforge.plantuml.posimo;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
 
-public class PositionableImpl implements Positionable {
+public final class PositionableImpl implements Positionable {
 
-	private final XPoint2D pos;
+	private XPoint2D pos;
 
 	private final XDimension2D dim;
 
@@ -62,7 +62,7 @@ public class PositionableImpl implements Positionable {
 	}
 
 	public void moveSvek(double deltaX, double deltaY) {
-		this.pos.setLocation(pos.getX() + deltaX, pos.getY() + deltaY);
+		this.pos = this.pos.move(deltaX, deltaY);
 	}
 
 }

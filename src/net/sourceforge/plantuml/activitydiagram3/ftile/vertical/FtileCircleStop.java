@@ -104,8 +104,8 @@ public class FtileCircleStop extends AbstractFtile {
 		// if (skinParam().shadowing(null)) {
 		// circleSmall.setDeltaShadow(3);
 		// }
-		ug.apply(HColors.middle(borderColor, backColor)).apply(borderColor.bg()).apply(new UTranslate(delta, delta))
-				.draw(circleSmall);
+		final HColor middle = HColors.middle(borderColor, backColor);
+		ug.apply(middle).apply(borderColor.bg()).apply(new UTranslate(delta, delta)).draw(circleSmall);
 	}
 
 	@Override

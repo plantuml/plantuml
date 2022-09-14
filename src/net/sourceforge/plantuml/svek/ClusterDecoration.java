@@ -52,20 +52,14 @@ public class ClusterDecoration {
 	final private TextBlock title;
 	final private TextBlock stereo;
 
-	final private double minX;
-	final private double minY;
-	final private double maxX;
-	final private double maxY;
+	final private ClusterPosition clusterPosition;
 
-	public ClusterDecoration(PackageStyle style, USymbol symbol, TextBlock title, TextBlock stereo, double minX,
-			double minY, double maxX, double maxY, UStroke stroke) {
+	public ClusterDecoration(PackageStyle style, USymbol symbol, TextBlock title, TextBlock stereo,
+			ClusterPosition clusterPosition, UStroke stroke) {
 		this.symbol = guess(symbol, style);
 		this.stereo = stereo;
 		this.title = title;
-		this.minX = minX;
-		this.minY = minY;
-		this.maxX = maxX;
-		this.maxY = maxY;
+		this.clusterPosition = clusterPosition;
 		this.defaultStroke = stroke;
 	}
 
@@ -84,8 +78,8 @@ public class ClusterDecoration {
 
 		final SymbolContext symbolContext = biColor.withShadow(shadowing).withStroke(defaultStroke)
 				.withCorner(roundCorner, diagonalCorner);
-		symbol.asBig(title, titleAlignment, stereo, maxX - minX, maxY - minY, symbolContext, stereoAlignment)
-				.drawU(ug.apply(new UTranslate(minX, minY)));
+		symbol.asBig(title, titleAlignment, stereo, clusterPosition.getWidth(), clusterPosition.getHeight(),
+				symbolContext, stereoAlignment).drawU(ug.apply(clusterPosition.getPosition()));
 	}
 
 }

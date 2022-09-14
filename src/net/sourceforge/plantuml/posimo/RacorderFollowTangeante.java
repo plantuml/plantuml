@@ -35,28 +35,19 @@
  */
 package net.sourceforge.plantuml.posimo;
 
-import java.awt.geom.CubicCurve2D;
-import java.awt.geom.Rectangle2D;
-
+import net.sourceforge.plantuml.awt.geom.XCubicCurve2D;
 import net.sourceforge.plantuml.awt.geom.XLine2D;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
+import net.sourceforge.plantuml.awt.geom.XRectangle2D;
 
 public class RacorderFollowTangeante extends RacorderAbstract implements Racorder {
 
 	@Override
-	public DotPath getRacordIn(Rectangle2D rect, XLine2D tangeante) {
-
-// Log.println("rect x=" + rect.getX() + " y=" + rect.getY() + " w=" + rect.getWidth() + " h="
-//				+ rect.getHeight());
-// Log.println("tangeante (" + tangeante.getX1() + "," + tangeante.getY1() + ") (" + tangeante.getX2()
-//				+ "," + tangeante.getY2() + ")");
+	public DotPath getRacordIn(XRectangle2D rect, XLine2D tangeante) {
 
 		final DotPath result = new DotPath();
 
-		// final XPoint2D inter = BezierUtils.intersect((Line2D.Double)
-		// tangeante, rect);
 		XPoint2D inter = new LineRectIntersection(tangeante, rect).getIntersection();
-// Log.println("inter=" + inter);
 
 		if (inter == null) {
 			final XPoint2D p1 = new XPoint2D(rect.getMinX(), rect.getMinY());
@@ -67,8 +58,8 @@ public class RacorderFollowTangeante extends RacorderAbstract implements Racorde
 			inter = LineRectIntersection.getCloser(tangeante.getP1(), p1, p2, p3, p4);
 		}
 
-		final CubicCurve2D.Double curv = new CubicCurve2D.Double(tangeante.getX1(), tangeante.getY1(),
-				tangeante.getX1(), tangeante.getY1(), inter.getX(), inter.getY(), inter.getX(), inter.getY());
+		final XCubicCurve2D curv = new XCubicCurve2D(tangeante.getX1(), tangeante.getY1(), tangeante.getX1(),
+				tangeante.getY1(), inter.getX(), inter.getY(), inter.getX(), inter.getY());
 		return result.addAfter(curv);
 	}
 

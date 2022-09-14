@@ -34,7 +34,7 @@
  */
 package net.sourceforge.plantuml.ugraphic.color;
 
-public class HColorScheme extends HColorAbstract implements HColor {
+class HColorScheme extends HColor {
 
 	private final HColor colorForLight;
 	private final HColor colorForDark;
@@ -46,12 +46,13 @@ public class HColorScheme extends HColorAbstract implements HColor {
 		this.colorForTransparent = colorForTransparent;
 	}
 
+	@Override
 	public HColor getAppropriateColor(HColor back) {
-		if (back == null || HColors.isTransparent(back)) {
+		if (HColors.isTransparent(back)) {
 			if (colorForTransparent != null)
 				return colorForTransparent;
 
-			return ((HColorSimple) colorForLight).withDark(colorForDark);
+			return colorForLight.withDark(colorForDark);
 
 		}
 		if (back.isDark())

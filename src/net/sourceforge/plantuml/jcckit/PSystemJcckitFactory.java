@@ -95,7 +95,9 @@ public class PSystemJcckitFactory extends PSystemBasicFactory<PSystemJcckit> {
 	private PSystemJcckit createSystem(UmlSource source) {
 		final Properties p = new Properties();
 		try {
-			p.load(new StringReader(data.toString()));
+			final String tmp = data.toString();
+			final StringReader sr = new StringReader(tmp);
+			p.load(sr);
 			// For Java 1.5
 			// p.load(new ByteArrayInputStream(data.toString().getBytes("ISO-8859-1")));
 		} catch (IOException e) {
@@ -113,9 +115,9 @@ public class PSystemJcckitFactory extends PSystemBasicFactory<PSystemJcckit> {
 			extractDimension(line);
 			return createSystem(source);
 		}
-		if (data == null) {
+		if (data == null)
 			return null;
-		}
+
 		data.append(StringUtils.trin(line));
 		data.append(BackSlash.NEWLINE);
 		return createSystem(source);

@@ -41,24 +41,24 @@ public enum ColorOrder {
 	RGB, RBG, GRB, GBR, BRG, BGR;
 
 	public Color getColor(Color color) {
-		if (this == RGB) {
+		if (this == RGB)
 			return new Color(color.getRed(), color.getGreen(), color.getBlue());
-		}
-		if (this == RBG) {
+
+		if (this == RBG)
 			return new Color(color.getRed(), color.getBlue(), color.getGreen());
-		}
-		if (this == GRB) {
+
+		if (this == GRB)
 			return new Color(color.getGreen(), color.getRed(), color.getBlue());
-		}
-		if (this == GBR) {
+
+		if (this == GBR)
 			return new Color(color.getGreen(), color.getBlue(), color.getRed());
-		}
-		if (this == BRG) {
+
+		if (this == BRG)
 			return new Color(color.getBlue(), color.getRed(), color.getGreen());
-		}
-		if (this == BGR) {
+
+		if (this == BGR)
 			return new Color(color.getBlue(), color.getGreen(), color.getRed());
-		}
+
 		throw new IllegalStateException();
 	}
 

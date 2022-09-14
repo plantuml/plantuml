@@ -37,11 +37,12 @@ package net.sourceforge.plantuml.ugraphic.color;
 
 import java.awt.Color;
 
-public class ColorMapperIdentity extends AbstractColorMapper implements ColorMapper {
+public class ColorMapperIdentity extends ColorMapper {
 
+	@Override
 	public Color toColor(HColor color) {
 		if (color == null)
-			return null;
+			throw new IllegalArgumentException();
 
 		if (color instanceof HColorNone)
 			return new Color(0, 0, 0, 0);

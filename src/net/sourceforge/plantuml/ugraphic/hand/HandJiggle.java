@@ -34,11 +34,11 @@
  */
 package net.sourceforge.plantuml.ugraphic.hand;
 
-import java.awt.geom.CubicCurve2D;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Random;
 
+import net.sourceforge.plantuml.awt.geom.XCubicCurve2D;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
@@ -88,9 +88,8 @@ public class HandJiggle {
 		final double diffX = Math.abs(endX - startX);
 		final double diffY = Math.abs(endY - startY);
 		final double distance = Math.sqrt(diffX * diffX + diffY * diffY);
-		if (distance < 0.001) {
+		if (distance < 0.001)
 			return;
-		}
 
 		int segments = (int) Math.round(distance / 10);
 		double variation = defaultVariation;
@@ -118,25 +117,25 @@ public class HandJiggle {
 		this.startY = endY;
 	}
 
-	public void curveTo(CubicCurve2D curve) {
+	public void curveTo(XCubicCurve2D curve) {
 		final double flatness = curve.getFlatness();
 		final double dist = curve.getP1().distance(curve.getP2());
 		if (flatness > 0.1 && dist > 20) {
-			final CubicCurve2D left = new CubicCurve2D.Double();
-			final CubicCurve2D right = new CubicCurve2D.Double();
+			final XCubicCurve2D left = new XCubicCurve2D();
+			final XCubicCurve2D right = new XCubicCurve2D();
 			curve.subdivide(left, right);
 			curveTo(left);
 			curveTo(right);
 			return;
 		}
-		lineTo(new XPoint2D(curve.getP2()));
+		lineTo(curve.getP2());
 	}
 
 	public UPolygon toUPolygon() {
 		final UPolygon result = new UPolygon();
-		for (XPoint2D p : points) {
+		for (XPoint2D p : points)
 			result.addPoint(p.getX(), p.getY());
-		}
+
 		return result;
 	}
 
@@ -150,16 +149,16 @@ public class HandJiggle {
 				path.lineTo(p);
 			}
 		}
-		if (path == null) {
+		if (path == null)
 			throw new IllegalStateException();
-		}
+
 		return path;
 	}
 
 	public void appendTo(UPath result) {
-		for (XPoint2D p : points) {
+		for (XPoint2D p : points)
 			result.lineTo(p);
-		}
+
 	}
 
 }

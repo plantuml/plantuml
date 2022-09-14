@@ -35,11 +35,11 @@
  */
 package net.sourceforge.plantuml.braille;
 
-import java.awt.geom.CubicCurve2D;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.plantuml.awt.geom.XCubicCurve2D;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.posimo.DotPath;
 
@@ -141,18 +141,18 @@ public class BrailleGrid {
 	}
 
 	public void drawDotPath(double x, double y, DotPath shape) {
-		for (CubicCurve2D.Double bez : shape.getBeziers()) {
+		for (XCubicCurve2D bez : shape.getBeziers()) {
 			drawCubic(x, y, bez);
 
 		}
 	}
 
-	private void drawCubic(double x, double y, CubicCurve2D.Double bez) {
-		drawPointInternal(x, y, new XPoint2D(bez.getP1()));
-		drawPointInternal(x, y, new XPoint2D(bez.getP2()));
+	private void drawCubic(double x, double y, XCubicCurve2D bez) {
+		drawPointInternal(x, y, bez.getP1());
+		drawPointInternal(x, y, bez.getP2());
 		if (bez.getP1().distance(bez.getP2()) > quanta) {
-			final CubicCurve2D.Double part1 = new CubicCurve2D.Double();
-			final CubicCurve2D.Double part2 = new CubicCurve2D.Double();
+			final XCubicCurve2D part1 = new XCubicCurve2D();
+			final XCubicCurve2D part2 = new XCubicCurve2D();
 			bez.subdivide(part1, part2);
 			drawCubic(x, y, part1);
 			drawCubic(x, y, part2);

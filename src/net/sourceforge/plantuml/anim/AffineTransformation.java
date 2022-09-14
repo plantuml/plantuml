@@ -144,10 +144,10 @@ public class AffineTransformation {
 		MinMax result = MinMax.getEmpty(false);
 		final AffineTransform tmp = getAffineTransform(rect);
 		
-		result = result.addPoint(new XPoint2D(0, 0).getTransform(tmp));
-		result = result.addPoint(new XPoint2D(0, rect.getHeight()).getTransform(tmp));
-		result = result.addPoint(new XPoint2D(rect.getWidth(), 0).getTransform(tmp));
-		result = result.addPoint(new XPoint2D(rect.getWidth(), rect.getHeight()).getTransform(tmp));
+		result = result.addPoint(new XPoint2D(0, 0).transform(tmp));
+		result = result.addPoint(new XPoint2D(0, rect.getHeight()).transform(tmp));
+		result = result.addPoint(new XPoint2D(rect.getWidth(), 0).transform(tmp));
+		result = result.addPoint(new XPoint2D(rect.getWidth(), rect.getHeight()).transform(tmp));
 		
 		return result;
 	}

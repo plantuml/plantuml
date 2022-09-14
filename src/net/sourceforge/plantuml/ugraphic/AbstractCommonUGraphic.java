@@ -41,17 +41,16 @@ import java.util.Objects;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapperTransparentWrapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorNone;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public abstract class AbstractCommonUGraphic implements UGraphic {
 
 	private UStroke stroke = new UStroke();
 	private UPattern pattern = UPattern.FULL;
 	private boolean hidden = false;
-	private HColor backColor = null;
-	private HColor color = null;
+	private HColor backColor = HColors.none();
+	private HColor color = HColors.none();
 	private boolean enlargeClip = false;
 
 	private final StringBounder stringBounder;
@@ -87,8 +86,6 @@ public abstract class AbstractCommonUGraphic implements UGraphic {
 			copy.hidden = change == UHidden.HIDDEN;
 		} else if (change instanceof UBackground) {
 			copy.backColor = ((UBackground) change).getBackColor();
-		} else if (change instanceof HColorNone) {
-			copy.color = null;
 		} else if (change instanceof HColor) {
 			copy.color = (HColor) change;
 		}
@@ -96,9 +93,9 @@ public abstract class AbstractCommonUGraphic implements UGraphic {
 	}
 
 	final public UClip getClip() {
-		if (enlargeClip && clip != null) {
+		if (enlargeClip && clip != null)
 			return clip.enlarge(1);
-		}
+
 		return clip;
 	}
 
@@ -107,6 +104,9 @@ public abstract class AbstractCommonUGraphic implements UGraphic {
 	}
 
 	public AbstractCommonUGraphic(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder) {
+		if (defaultBackground == null)
+			throw new IllegalArgumentException();
+
 		this.colorMapper = colorMapper;
 		this.defaultBackground = defaultBackground;
 		this.stringBounder = stringBounder;
@@ -114,6 +114,8 @@ public abstract class AbstractCommonUGraphic implements UGraphic {
 
 	protected AbstractCommonUGraphic(AbstractCommonUGraphic other) {
 		this.defaultBackground = other.defaultBackground;
+		if (defaultBackground == null)
+			throw new IllegalArgumentException();
 		this.enlargeClip = other.enlargeClip;
 		this.colorMapper = other.colorMapper;
 		this.stringBounder = other.stringBounder;
@@ -168,7 +170,7 @@ public abstract class AbstractCommonUGraphic implements UGraphic {
 	}
 
 	final public ColorMapper getColorMapper() {
-		return new ColorMapperTransparentWrapper(colorMapper);
+		return colorMapper;
 	}
 
 	final public void flushUg() {

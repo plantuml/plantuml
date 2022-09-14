@@ -63,6 +63,7 @@ import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ClusterDecoration;
+import net.sourceforge.plantuml.svek.ClusterPosition;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -156,8 +157,9 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 		final double widthTotal = dimTotal.getWidth();
 		final double heightTotal = dimTotal.getHeight();
 
+		final ClusterPosition clusterPosition = new ClusterPosition(0, 0, widthTotal, heightTotal);
 		final ClusterDecoration decoration = new ClusterDecoration(getSkinParam().packageStyle(), null, desc,
-				stereoBlock, 0, 0, widthTotal, heightTotal, stroke);
+				stereoBlock, clusterPosition, stroke);
 
 		final HorizontalAlignment horizontalAlignment = getSkinParam()
 				.getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null, false, null);

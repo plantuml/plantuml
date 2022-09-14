@@ -70,4 +70,10 @@ public class XRectangle2D implements XShape {
 		throw new UnsupportedOperationException();
 	}
 
+	public boolean contains(double xp, double yp) {
+		if (width <= 0 || height <= 0)
+			throw new IllegalStateException();
+		return xp >= getMinX() && xp < getMaxX() && yp >= getMinY() && yp < getMaxY();
+	}
+
 }

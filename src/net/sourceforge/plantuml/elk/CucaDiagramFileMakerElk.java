@@ -118,6 +118,7 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.Cluster;
 import net.sourceforge.plantuml.svek.ClusterDecoration;
+import net.sourceforge.plantuml.svek.ClusterPosition;
 import net.sourceforge.plantuml.svek.CucaDiagramFileMaker;
 import net.sourceforge.plantuml.svek.DotStringFactory;
 import net.sourceforge.plantuml.svek.GeneralImageBuilder;
@@ -274,8 +275,9 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 			final TextBlock ztitle = getTitleBlock(group);
 			final TextBlock zstereo = TextBlockUtils.empty(0, 0);
 
+			final ClusterPosition clusterPosition = new ClusterPosition(0, 0, elkNode.getWidth(), elkNode.getHeight());
 			final ClusterDecoration decoration = new ClusterDecoration(packageStyle, group.getUSymbol(), ztitle,
-					zstereo, 0, 0, elkNode.getWidth(), elkNode.getHeight(), stroke);
+					zstereo, clusterPosition, stroke);
 
 			final HColor borderColor = HColors.BLACK;
 			decoration.drawU(ug.apply(new UTranslate(corner)), backColor, borderColor, shadowing, roundCorner,

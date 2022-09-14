@@ -653,7 +653,7 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 			Log.info("DotPath is null for " + this);
 			return;
 		}
-		
+
 		ug.draw(link.commentForSvg());
 		final Map<UGroupType, String> typeIDent = new EnumMap<>(UGroupType.class);
 		typeIDent.put(UGroupType.CLASS,
@@ -669,8 +669,8 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		if (link.isAutoLinkOfAGroup()) {
 			final Cluster cl = bibliotekon.getCluster((IGroup) link.getEntity1());
 			if (cl != null) {
-				x += cl.getWidth();
-				x -= dotPath.getStartPoint().getX() - cl.getMinX();
+				x += cl.getClusterPosition().getWidth();
+				x -= dotPath.getStartPoint().getX() - cl.getClusterPosition().getMinX();
 			}
 		}
 
@@ -712,7 +712,8 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 
 		if (extremity1 instanceof Extremity && extremity2 instanceof Extremity) {
 			// http://forum.plantuml.net/9421/arrow-inversion-with-skinparam-linetype-ortho-missing-arrow
-			final XPoint2D p1 = ((Extremity) extremity1).isTooSmallSoGiveThePointCloserToThisOne(todraw.getStartPoint());
+			final XPoint2D p1 = ((Extremity) extremity1)
+					.isTooSmallSoGiveThePointCloserToThisOne(todraw.getStartPoint());
 			if (p1 != null)
 				todraw.forceStartPoint(p1.getX(), p1.getY());
 
@@ -919,33 +920,16 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 
 		}
 
-		// final Positionable start = getStartTailPositionnable();
-		// if (start != null) {
-		// for (Shape sh : allShapes) {
-		// if (cut(start, sh)) {
-		// avoid(startTailLabelXY, start, sh);
-		// }
-		// }
-		// }
-		//
-		// final Positionable end = getEndHeadPositionnable();
-		// if (end != null) {
-		// for (Shape sh : allShapes) {
-		// if (cut(end, sh)) {
-		// avoid(endHeadLabelXY, end, sh);
-		// }
-		// }
-		// }
-
 	}
 
-	private void avoid(XPoint2D move, Positionable pos, SvekNode sh) {
+	private XPoint2D avoid2(XPoint2D move, Positionable pos, SvekNode sh) {
 		final Oscillator oscillator = new Oscillator();
 		final XPoint2D orig = new XPoint2D(move.x, move.y);
 		while (cut(pos, sh)) {
 			final XPoint2D m = oscillator.nextPosition();
-			move.setLocation(orig.x + m.x, orig.y + m.y);
+			move = new XPoint2D(orig.x + m.x, orig.y + m.y);
 		}
+		return move;
 	}
 
 	private boolean cut(Positionable pos, SvekNode sh) {

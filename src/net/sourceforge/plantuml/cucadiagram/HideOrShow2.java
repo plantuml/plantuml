@@ -46,47 +46,48 @@ public class HideOrShow2 {
 	}
 
 	private boolean isApplyable(ILeaf leaf) {
-		if (what.startsWith("$")) {
+		if (what.startsWith("$"))
 			return isApplyableTag(leaf, what.substring(1));
-		}
-		if (what.startsWith("<<") && what.endsWith(">>")) {
+
+		if (what.startsWith("<<") && what.endsWith(">>"))
 			return isApplyableStereotype(leaf, what.substring(2, what.length() - 2).trim());
-		}
-		if (what.equalsIgnoreCase("@unlinked")) {
+
+		if (isAboutUnlinked())
 			return isApplyableUnlinked(leaf);
-		}
+
 		final String fullName = leaf.getCodeGetName();
 		// System.err.println("fullName=" + fullName);
 		return match(fullName, what);
 	}
 
+	public boolean isAboutUnlinked() {
+		return what.equalsIgnoreCase("@unlinked");
+	}
+
 	private boolean isApplyableUnlinked(ILeaf leaf) {
-		if (leaf.isAloneAndUnlinked()) {
+		if (leaf.isAloneAndUnlinked())
 			return true;
-		}
+
 		return false;
 	}
 
 	private boolean isApplyableStereotype(ILeaf leaf, String pattern) {
 		final Stereotype stereotype = leaf.getStereotype();
-		if (stereotype == null) {
+		if (stereotype == null)
 			return false;
-		}
-		for (String label : stereotype.getMultipleLabels()) {
-			if (match(label, pattern)) {
-				return true;
-			}
 
-		}
+		for (String label : stereotype.getMultipleLabels())
+			if (match(label, pattern))
+				return true;
+
 		return false;
 	}
 
 	private boolean isApplyableTag(ILeaf leaf, String pattern) {
-		for (Stereotag tag : leaf.stereotags()) {
-			if (match(tag.getName(), pattern)) {
+		for (Stereotag tag : leaf.stereotags())
+			if (match(tag.getName(), pattern))
 				return true;
-			}
-		}
+
 		return false;
 	}
 
@@ -108,9 +109,9 @@ public class HideOrShow2 {
 	}
 
 	public boolean apply(boolean hidden, ILeaf leaf) {
-		if (isApplyable(leaf)) {
+		if (isApplyable(leaf))
 			return !show;
-		}
+
 		return hidden;
 	}
 

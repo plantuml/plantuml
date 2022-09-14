@@ -83,6 +83,7 @@ import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 import net.sourceforge.plantuml.ugraphic.comp.CompressionMode;
 import net.sourceforge.plantuml.ugraphic.comp.SlotFinder;
 import net.sourceforge.plantuml.utils.MathUtils;
@@ -301,7 +302,7 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock, Styleable
 
 			final double xpos = swimlane.getTranslate().getDx() + swimlane.getMinMax().getMinX();
 			final HColor back = swimlane.getColors().getColor(ColorType.BACK);
-			if (back != null) {
+			if (HColors.isTransparent(back) == false) {
 				final LaneDivider divider2 = dividers.get(i + 1);
 				final UGraphic background = ug.apply(back.bg()).apply(back)
 						.apply(UTranslate.dx(xpos - divider1.getX2()));

@@ -93,8 +93,7 @@ public class SvgPosition {
 	}
 
 	public XPoint2D affine(AffineTransform at) {
-		final XPoint2D tmp = new XPoint2D(getXDouble(), getYDouble());
-		tmp.transform(at);
+		final XPoint2D tmp = new XPoint2D(getXDouble(), getYDouble()).transform(at);
 		return tmp;
 	}
 }

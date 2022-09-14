@@ -34,9 +34,9 @@
  */
 package net.sourceforge.plantuml.ugraphic.hand;
 
-import java.awt.geom.CubicCurve2D;
 import java.util.Random;
 
+import net.sourceforge.plantuml.awt.geom.XCubicCurve2D;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.USegment;
@@ -65,7 +65,7 @@ public class UPathHand {
 				final double y2 = segment.getCoord()[5];
 				final HandJiggle jiggle = HandJiggle.create(last, 2.0, rnd);
 
-				final CubicCurve2D tmp = new CubicCurve2D.Double(last.getX(), last.getY(), segment.getCoord()[0],
+				final XCubicCurve2D tmp = new XCubicCurve2D(last.getX(), last.getY(), segment.getCoord()[0],
 						segment.getCoord()[1], segment.getCoord()[2], segment.getCoord()[3], x2, y2);
 				jiggle.curveTo(tmp);
 				jiggle.appendTo(result);

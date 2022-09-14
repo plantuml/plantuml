@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorGradient;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class DriverEllipseG2d extends DriverShadowedG2d implements UDriver<UEllipse, Graphics2D> {
 
@@ -81,19 +82,19 @@ public class DriverEllipseG2d extends DriverShadowedG2d implements UDriver<UElli
 				g2d.fill(shape);
 				DriverRectangleG2d.drawBorder(param, color, mapper, ellipse, shape, g2d, x, y);
 			} else {
-				if (back != null) {
+				if (HColors.isTransparent(back) == false) {
 					g2d.setColor(mapper.toColor(param.getBackcolor()));
 					DriverRectangleG2d.managePattern(param, g2d);
 					g2d.fill(shape);
 				}
-				if (color != null && color.equals(param.getBackcolor()) == false) {
+				if (HColors.isTransparent(color) == false && color.equals(param.getBackcolor()) == false)
 					DriverRectangleG2d.drawBorder(param, color, mapper, ellipse, shape, g2d, x, y);
-				}
+
 			}
 		} else {
-			final Shape arc = new Arc2D.Double(x, y, ellipse.getWidth(), ellipse.getHeight(),
-					round(ellipse.getStart()), round(ellipse.getExtend()), Arc2D.OPEN);
-			if (color != null) {
+			final Shape arc = new Arc2D.Double(x, y, ellipse.getWidth(), ellipse.getHeight(), round(ellipse.getStart()),
+					round(ellipse.getExtend()), Arc2D.OPEN);
+			if (HColors.isTransparent(color) == false) {
 				g2d.setColor(mapper.toColor(color));
 				g2d.draw(arc);
 			}

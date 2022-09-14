@@ -68,17 +68,17 @@ class ExtremityCrowfoot extends Extremity {
 		XPoint2D left = new XPoint2D(0, -yAperture);
 		XPoint2D base = new XPoint2D(-xWing, 0);
 		XPoint2D right = new XPoint2D(0, yAperture);
-		left.transform(rotate);
-		base.transform(rotate);
-		right.transform(rotate);
+		left = left.transform(rotate);
+		base = base.transform(rotate);
+		right = right.transform(rotate);
 
 		if (side == Side.WEST || side == Side.EAST) {
-			left.setLocation(middle.getX(), left.getY());
-			right.setLocation(middle.getX(), right.getY());
+			left = new XPoint2D(middle.getX(), left.getY());
+			right = new XPoint2D(middle.getX(), right.getY());
 		}
 		if (side == Side.SOUTH || side == Side.NORTH) {
-			left.setLocation(left.getX(), middle.getY());
-			right.setLocation(right.getX(), middle.getY());
+			left = new XPoint2D(left.getX(), middle.getY());
+			right = new XPoint2D(right.getX(), middle.getY());
 		}
 
 		drawLine(ug, contact.getX(), contact.getY(), base, left);

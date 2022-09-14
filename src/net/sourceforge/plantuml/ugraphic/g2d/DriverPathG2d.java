@@ -92,13 +92,11 @@ public class DriverPathG2d extends DriverShadowedG2d implements UDriver<UPath, G
 		}
 
 		// Shadow
-		if (shape.getDeltaShadow() != 0) {
-			if (back == null || HColors.isTransparent(back)) {
+		if (shape.getDeltaShadow() != 0)
+			if (back == null || HColors.isTransparent(back))
 				drawOnlyLineShadowSpecial(g2d, p, shape.getDeltaShadow(), dpiFactor);
-			} else {
+			else
 				drawShadow(g2d, p, shape.getDeltaShadow(), dpiFactor);
-			}
-		}
 
 		if (back instanceof HColorGradient) {
 			final HColorGradient gr = (HColorGradient) back;
@@ -123,12 +121,12 @@ public class DriverPathG2d extends DriverShadowedG2d implements UDriver<UPath, G
 			}
 			g2d.setPaint(paint);
 			g2d.fill(p);
-		} else if (back != null) {
+		} else if (HColors.isTransparent(back) == false) {
 			g2d.setColor(mapper.toColor(back));
 			g2d.fill(p);
 		}
 
-		if (param.getColor() != null) {
+		if (HColors.isTransparent(param.getColor()) == false) {
 			g2d.setColor(mapper.toColor(param.getColor()));
 			g2d.draw(p);
 		}

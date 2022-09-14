@@ -35,15 +35,14 @@
  */
 package net.sourceforge.plantuml.posimo;
 
-import java.awt.geom.CubicCurve2D;
-import java.awt.geom.Rectangle2D;
-
+import net.sourceforge.plantuml.awt.geom.XCubicCurve2D;
 import net.sourceforge.plantuml.awt.geom.XLine2D;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
+import net.sourceforge.plantuml.awt.geom.XRectangle2D;
 
 public class RacorderFollowTangeanteOld extends RacorderAbstract implements Racorder {
 
-	public DotPath getRacordIn(Rectangle2D rect, XLine2D tangeante) {
+	public DotPath getRacordIn(XRectangle2D rect, XLine2D tangeante) {
 
 		final DotPath result = new DotPath();
 
@@ -51,8 +50,8 @@ public class RacorderFollowTangeanteOld extends RacorderAbstract implements Raco
 		final XLine2D line = new XLine2D(tangeante.getP1(), center);
 		final XPoint2D inter = BezierUtils.intersect(line, rect);
 
-		final CubicCurve2D.Double curv = new CubicCurve2D.Double(tangeante.getX1(), tangeante.getY1(), tangeante
-				.getX2(), tangeante.getY2(), tangeante.getX2(), tangeante.getY2(), inter.getX(), inter.getY());
+		final XCubicCurve2D curv = new XCubicCurve2D(tangeante.getX1(), tangeante.getY1(), tangeante.getX2(),
+				tangeante.getY2(), tangeante.getX2(), tangeante.getY2(), inter.getX(), inter.getY());
 		return result.addAfter(curv);
 	}
 

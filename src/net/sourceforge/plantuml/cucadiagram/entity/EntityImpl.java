@@ -659,8 +659,12 @@ final public class EntityImpl implements ILeaf, IGroup {
 			return false;
 
 		for (Link link : entityFactory.getLinks())
-			if (link.contains(this) && link.getType().isInvisible() == false)
-				return false;
+			if (link.contains(this)) {
+				final ILeaf other = (ILeaf) link.getOther(this);
+				final boolean removed = entityFactory.isRemovedIgnoreUnlinked(other);
+				if (removed == false && link.getType().isInvisible() == false)
+					return false;
+			}
 
 		return true;
 	}

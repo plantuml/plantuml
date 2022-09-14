@@ -50,6 +50,7 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.command.BlocLines;
@@ -215,20 +216,18 @@ public class SkinParam implements ISkinParam {
 		return result;
 	}
 
+	private static final Pattern patternCleanUnderscoreDot = Pattern.compile("_|\\.");
+	private static final Pattern patternCleanSequence = Pattern.compile("sequence(participant|actor)");
+	private static final Pattern patternCleanArrow = Pattern.compile("(activity|class|component|object|sequence|state|usecase)arrow");
+	private static final Pattern patternCleanAlign = Pattern.compile("align$");
+
 	List<String> cleanForKeySlow(String key) {
 		key = StringUtils.trin(StringUtils.goLowerCase(key));
-		key = key.replaceAll("_|\\.", "");
-		// key = replaceSmart(key, "partition", "package");
-		key = replaceSmart(key, "sequenceparticipant", "participant");
-		key = replaceSmart(key, "sequenceactor", "actor");
-		key = key.replaceAll("activityarrow", "arrow");
-		key = key.replaceAll("objectarrow", "arrow");
-		key = key.replaceAll("classarrow", "arrow");
-		key = key.replaceAll("componentarrow", "arrow");
-		key = key.replaceAll("statearrow", "arrow");
-		key = key.replaceAll("usecasearrow", "arrow");
-		key = key.replaceAll("sequencearrow", "arrow");
-		key = key.replaceAll("align$", "alignment");
+		key = patternCleanUnderscoreDot.matcher(key).replaceAll("");
+		key = patternCleanSequence.matcher(key).replaceAll("$1");
+		key = patternCleanArrow.matcher(key).replaceAll("arrow");
+		key = patternCleanAlign.matcher(key).replaceAll("alignment");
+
 		final Matcher2 mm = stereoPattern.matcher(key);
 		final List<String> result = new ArrayList<>();
 		while (mm.find()) {
@@ -239,13 +238,6 @@ public class SkinParam implements ISkinParam {
 			result.add(key);
 
 		return Collections.unmodifiableList(result);
-	}
-
-	private static String replaceSmart(String s, String src, String target) {
-		if (s.contains(src) == false) {
-			return s;
-		}
-		return s.replaceAll(src, target);
 	}
 
 	public HColor getHyperlinkColor() {

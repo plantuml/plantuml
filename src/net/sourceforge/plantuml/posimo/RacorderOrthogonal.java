@@ -35,16 +35,15 @@
  */
 package net.sourceforge.plantuml.posimo;
 
-import java.awt.geom.CubicCurve2D;
-import java.awt.geom.Rectangle2D;
-
+import net.sourceforge.plantuml.awt.geom.XCubicCurve2D;
 import net.sourceforge.plantuml.awt.geom.XLine2D;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
+import net.sourceforge.plantuml.awt.geom.XRectangle2D;
 
 public class RacorderOrthogonal extends RacorderAbstract implements Racorder {
 
 	@Override
-	public DotPath getRacordIn(Rectangle2D rect, XLine2D tangeante) {
+	public DotPath getRacordIn(XRectangle2D rect, XLine2D tangeante) {
 
 		final XPoint2D in = tangeante.getP1();
 
@@ -52,21 +51,21 @@ public class RacorderOrthogonal extends RacorderAbstract implements Racorder {
 		XPoint2D inter = null;
 
 		if (in.getX() > rect.getMinX() && in.getX() < rect.getMaxX()) {
-			if (in.getY() < rect.getMinY()) {
+			if (in.getY() < rect.getMinY())
 				inter = new XPoint2D(in.getX(), rect.getMinY());
-			} else if (in.getY() > rect.getMaxY()) {
+			else if (in.getY() > rect.getMaxY())
 				inter = new XPoint2D(in.getX(), rect.getMaxY());
-			} else {
+			else
 				throw new IllegalArgumentException();
-			}
+
 		} else if (in.getY() > rect.getMinY() && in.getY() < rect.getMaxY()) {
-			if (in.getX() < rect.getMinX()) {
+			if (in.getX() < rect.getMinX())
 				inter = new XPoint2D(rect.getMinX(), in.getY());
-			} else if (in.getX() > rect.getMaxX()) {
+			else if (in.getX() > rect.getMaxX())
 				inter = new XPoint2D(rect.getMaxX(), in.getY());
-			} else {
+			else
 				throw new IllegalArgumentException();
-			}
+
 		} else {
 			final XPoint2D p1 = new XPoint2D(rect.getMinX(), rect.getMinY());
 			final XPoint2D p2 = new XPoint2D(rect.getMaxX(), rect.getMinY());
@@ -77,8 +76,8 @@ public class RacorderOrthogonal extends RacorderAbstract implements Racorder {
 
 		}
 
-		final CubicCurve2D.Double curv = new CubicCurve2D.Double(tangeante.getX1(), tangeante.getY1(),
-				tangeante.getX1(), tangeante.getY1(), inter.getX(), inter.getY(), inter.getX(), inter.getY());
+		final XCubicCurve2D curv = new XCubicCurve2D(tangeante.getX1(), tangeante.getY1(), tangeante.getX1(),
+				tangeante.getY1(), inter.getX(), inter.getY(), inter.getX(), inter.getY());
 		return result.addAfter(curv);
 	}
 

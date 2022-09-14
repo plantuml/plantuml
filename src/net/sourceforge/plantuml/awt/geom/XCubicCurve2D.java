@@ -13,6 +13,10 @@ public class XCubicCurve2D implements XShape {
 	public double x2;
 	public double y2;
 
+	public XCubicCurve2D() {
+		this(0, 0, 0, 0, 0, 0, 0, 0);
+	}
+
 	public XCubicCurve2D(double x1, double y1, double ctrlx1, double ctrly1, double ctrlx2, double ctrly2, double x2,
 			double y2) {
 		this.x1 = x1;
@@ -123,8 +127,24 @@ public class XCubicCurve2D implements XShape {
 	}
 
 	public double getFlatnessSq() {
-		// TODO Auto-generated method stub
-		return 0;
+		return Math.max(XLine2D.ptSegDistSq(x1, y1, x2, y2, ctrlx1, ctrly1),
+				XLine2D.ptSegDistSq(x1, y1, x2, y2, ctrlx2, ctrly2));
+	}
+
+	public double getFlatness() {
+		return getFlatness(getX1(), getY1(), getCtrlX1(), getCtrlY1(), getCtrlX2(), getCtrlY2(), getX2(), getY2());
+	}
+
+	private static double getFlatness(double x1, double y1, double ctrlx1, double ctrly1, double ctrlx2, double ctrly2,
+			double x2, double y2) {
+		return Math.sqrt(getFlatnessSq(x1, y1, ctrlx1, ctrly1, ctrlx2, ctrly2, x2, y2));
+	}
+
+	private static double getFlatnessSq(double x1, double y1, double ctrlx1, double ctrly1, double ctrlx2, double ctrly2,
+			double x2, double y2) {
+		return Math.max(XLine2D.ptSegDistSq(x1, y1, x2, y2, ctrlx1, ctrly1),
+				XLine2D.ptSegDistSq(x1, y1, x2, y2, ctrlx2, ctrly2));
+
 	}
 
 }

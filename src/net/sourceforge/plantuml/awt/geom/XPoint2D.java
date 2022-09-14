@@ -5,8 +5,8 @@ import java.awt.geom.Point2D;
 
 public class XPoint2D {
 
-	public double x;
-	public double y;
+	final public double x;
+	final public double y;
 
 	public XPoint2D() {
 		this(0, 0);
@@ -31,10 +31,6 @@ public class XPoint2D {
 	@Override
 	public int hashCode() {
 		return new Double(x).hashCode() + new Double(y).hashCode();
-	}
-
-	public XPoint2D(Point2D pt) {
-		this(pt.getX(), pt.getY());
 	}
 
 	public final double getX() {
@@ -69,32 +65,18 @@ public class XPoint2D {
 		return Math.sqrt(px * px + py * py);
 	}
 
-	public void setLocation(double px, double py) {
-		this.x = px;
-		this.y = py;
-	}
-
 	public XPoint2D move(double dx, double dy) {
 		return new XPoint2D(x + dx, y + dy);
-
 	}
 
-	public void transform(AffineTransform rotate) {
+	public XPoint2D transform(AffineTransform rotate) {
 		final Point2D.Double tmp = new Point2D.Double(x, y);
 		rotate.transform(tmp, tmp);
-		this.x = tmp.x;
-		this.y = tmp.y;
-
+		return new XPoint2D(tmp.x, tmp.y);
 	}
 
-	public XPoint2D getTransform(AffineTransform rotate) {
-		final Point2D.Double tmp = new Point2D.Double(x, y);
-		rotate.transform(tmp, tmp);
-		return new XPoint2D(tmp);
-	}
-
-	public Point2D toLegacy() {
-		return new Point2D.Double(x, y);
+	public XPoint2D move(XPoint2D delta) {
+		return new XPoint2D(delta.x, delta.y);
 	}
 
 }

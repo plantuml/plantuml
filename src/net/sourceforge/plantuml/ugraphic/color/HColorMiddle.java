@@ -37,19 +37,19 @@ package net.sourceforge.plantuml.ugraphic.color;
 
 import java.awt.Color;
 
-public class HColorMiddle extends HColorAbstract implements HColor {
+public class HColorMiddle extends HColor {
 
-	private final HColor c1;
-	private final HColor c2;
+	private final HColor color1;
+	private final HColor color2;
 
 	HColorMiddle(HColor c1, HColor c2) {
-		this.c1 = c1;
-		this.c2 = c2;
+		this.color1 = c1;
+		this.color2 = c2;
 	}
 
 	public Color getMappedColor(ColorMapper colorMapper) {
-		final Color cc1 = colorMapper.toColor(c1);
-		final Color cc2 = colorMapper.toColor(c2);
+		final Color cc1 = colorMapper.toColor(color1);
+		final Color cc2 = colorMapper.toColor(color2);
 		final int r1 = cc1.getRed();
 		final int g1 = cc1.getGreen();
 		final int b1 = cc1.getBlue();
@@ -63,12 +63,12 @@ public class HColorMiddle extends HColorAbstract implements HColor {
 		return new Color(r, g, b);
 	}
 
-	public final HColor getC1() {
-		return c1;
+	public final HColor getColor1() {
+		return color1;
 	}
 
-	public final HColor getC2() {
-		return c2;
+	public final HColor getColor2() {
+		return color2;
 	}
 
 }

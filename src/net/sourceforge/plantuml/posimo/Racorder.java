@@ -35,11 +35,10 @@
  */
 package net.sourceforge.plantuml.posimo;
 
-import java.awt.geom.Rectangle2D;
-
 import net.sourceforge.plantuml.awt.geom.XLine2D;
+import net.sourceforge.plantuml.awt.geom.XRectangle2D;
 
 public interface Racorder {
-	public DotPath getRacordIn(Rectangle2D rect, XLine2D tangeante);
-	public DotPath getRacordOut(Rectangle2D rect, XLine2D tangeante);
+	public DotPath getRacordIn(XRectangle2D rect, XLine2D tangeante);
+	public DotPath getRacordOut(XRectangle2D rect, XLine2D tangeante);
 }

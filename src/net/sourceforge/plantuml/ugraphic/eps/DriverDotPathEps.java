@@ -40,16 +40,17 @@ import net.sourceforge.plantuml.posimo.DotPath;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class DriverDotPathEps implements UDriver<DotPath, EpsGraphics> {
 
 	public void draw(DotPath shape, double x, double y, ColorMapper mapper, UParam param, EpsGraphics eps) {
-		//DriverLineG2d.manageStroke(param, g2d);
+		// DriverLineG2d.manageStroke(param, g2d);
 
-		if (param.getColor() != null) {
+		if (HColors.isTransparent(param.getColor()) == false) {
 			eps.setStrokeColor(mapper.toColor(param.getColor()));
-			eps.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDashVisible(), param.getStroke()
-					.getDashSpace());
+			eps.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDashVisible(),
+					param.getStroke().getDashSpace());
 			shape.draw(eps, x, y);
 		}
 	}

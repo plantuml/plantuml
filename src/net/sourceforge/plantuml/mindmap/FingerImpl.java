@@ -59,6 +59,7 @@ import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class FingerImpl implements Finger, UDrawable {
 
@@ -128,7 +129,9 @@ public class FingerImpl implements Finger, UDrawable {
 				p2 = new XPoint2D(direction * (dimPhalanx.getWidth() + getX12()), stp.getY());
 
 			child.drawU(ug.apply(new UTranslate(p2)));
-			drawLine(ug.apply(getLinkColor()).apply(getUStroke()), p1, p2);
+			final HColor linkColor = getLinkColor();
+			if (HColors.isTransparent(linkColor) == false)
+				drawLine(ug.apply(linkColor).apply(getUStroke()), p1, p2);
 		}
 
 	}

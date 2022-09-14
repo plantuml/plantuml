@@ -39,7 +39,7 @@ import java.awt.Color;
 
 import net.sourceforge.plantuml.StringUtils;
 
-public class HColorSimple extends HColorAbstract implements HColor {
+public class HColorSimple extends HColor {
 
 	private final Color color;
 	private final HColor dark;

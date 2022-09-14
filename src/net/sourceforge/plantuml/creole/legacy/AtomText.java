@@ -57,8 +57,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UText;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorAutomagic;
-import net.sourceforge.plantuml.ugraphic.color.HColorScheme;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 import net.sourceforge.plantuml.utils.CharHidder;
 
 public final class AtomText extends AbstractAtom implements Atom {
@@ -141,18 +140,13 @@ public final class AtomText extends AbstractAtom implements Atom {
 			}
 			HColor textColor = fontConfiguration.getColor();
 			FontConfiguration useFontConfiguration = fontConfiguration;
-			if (textColor instanceof HColorAutomagic && ug.getParam().getBackcolor() != null) {
-				textColor = ug.getParam().getBackcolor().opposite();
-				useFontConfiguration = fontConfiguration.changeColor(textColor);
-			}
-			if (textColor instanceof HColorScheme) {
-				HColor backcolor = ug.getParam().getBackcolor();
-				if (backcolor == null)
-					backcolor = ug.getDefaultBackground();
 
-				textColor = ((HColorScheme) textColor).getAppropriateColor(backcolor);
-				useFontConfiguration = fontConfiguration.changeColor(textColor);
-			}
+			HColor backcolor = ug.getParam().getBackcolor();
+			if (HColors.isTransparent(backcolor))
+				backcolor = ug.getDefaultBackground();
+
+			textColor = textColor.getAppropriateColor(backcolor);
+			useFontConfiguration = fontConfiguration.changeColor(textColor);
 
 			if (marginLeft != AtomTextUtils.ZERO)
 				ug = ug.apply(UTranslate.dx(marginLeft.getDouble(ug.getStringBounder())));

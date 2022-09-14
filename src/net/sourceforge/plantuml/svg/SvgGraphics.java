@@ -379,23 +379,27 @@ public class SvgGraphics {
 	}
 
 	public final void setFillColor(String fill) {
-		this.fill = fill == null ? "none" : fill;
+		this.fill = fixColor(fill);
 		// this.fillDark = this.fill;
 	}
 
 	public final void setFillColor(String fill, String fillDark) {
-		this.fill = fill == null ? "none" : fill;
+		this.fill = fixColor(fill);
 		// this.fillDark = fillDark == null ? "none" : fillDark;
 	}
 
 	public final void setStrokeColor(String stroke) {
-		this.stroke = stroke == null ? "none" : stroke;
+		this.stroke = fixColor(stroke);
 		// this.strokeDark = stroke;
 	}
 
 	public final void setStrokeColor(String stroke, String strokeDark) {
-		this.stroke = stroke == null ? "none" : stroke;
+		this.stroke = fixColor(stroke);
 		// this.strokeDark = strokeDark == null ? "none" : strokeDark;
+	}
+
+	private String fixColor(String color) {
+		return color == null || "#00000000".equals(color) ? "none" : color;
 	}
 
 	public final void setStrokeWidth(double strokeWidth, String strokeDasharray) {
@@ -897,7 +901,6 @@ public class SvgGraphics {
 
 	private final Map<String, String> images = new HashMap<String, String>();
 
-	
 	private void svgImageUnsecure(UImageSvg image, double x, double y) {
 		if (hidden == false) {
 			String svg = manageScale(image);
@@ -911,7 +914,6 @@ public class SvgGraphics {
 		ensureVisible(x, y);
 		ensureVisible(x + image.getData("width"), y + image.getData("height"));
 	}
-
 
 	public void svgImage(UImageSvg image, double x, double y) {
 		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE) {

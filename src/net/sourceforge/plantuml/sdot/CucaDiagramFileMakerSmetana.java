@@ -139,9 +139,8 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 				ug = ug.apply(new UTranslate(6 - minMax.getMinX(), 6));
 			}
 
-			for (Map.Entry<IGroup, ST_Agraph_s> ent : clusters.entrySet()) {
+			for (Map.Entry<IGroup, ST_Agraph_s> ent : clusters.entrySet())
 				drawGroup(ug, ymirror, ent.getKey(), ent.getValue());
-			}
 
 			for (Map.Entry<ILeaf, ST_Agnode_s> ent : nodes.entrySet()) {
 				final ILeaf leaf = ent.getKey();
@@ -155,9 +154,9 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 
 			for (Map.Entry<Link, ST_Agedge_s> ent : edges.entrySet()) {
 				final Link link = ent.getKey();
-				if (link.isInvis()) {
+				if (link.isInvis())
 					continue;
-				}
+
 				final ST_Agedge_s edge = ent.getValue();
 				new SmetanaPath(link, edge, ymirror, diagram, getLabel(link), getQualifier(link, 1),
 						getQualifier(link, 2)).drawU(ug);
@@ -165,9 +164,9 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 		}
 
 		public XDimension2D calculateDimension(StringBounder stringBounder) {
-			if (minMax == null) {
+			if (minMax == null)
 				throw new UnsupportedOperationException();
-			}
+
 			return minMax.getDimension();
 		}
 
@@ -178,9 +177,9 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 			final double x = data.coord.x;
 			final double y = data.coord.y;
 
-			if (ymirror == null) {
+			if (ymirror == null)
 				return new XPoint2D(x - width / 2, y - height / 2);
-			}
+
 			return ymirror.getMirrored(new XPoint2D(x - width / 2, y + height / 2));
 		}
 
@@ -217,7 +216,13 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 			}
 
 			final Cluster cluster = dotStringFactory.getBibliotekon().getCluster(group);
-			cluster.setPosition(llx, lly, urx, ury);
+			cluster.setPosition(new XPoint2D(llx, lly), new XPoint2D(urx, ury));
+
+			final XDimension2D dimTitle = cluster.getTitleDimension(ug.getStringBounder());
+			if (dimTitle != null) {
+				final double x = (llx + urx) / 2 - dimTitle.getWidth() / 2;
+				cluster.setTitlePosition(new XPoint2D(x, lly));
+			}
 			JUtils.LOG2("cluster=" + cluster);
 			// ug.apply(new UTranslate(llx, lly)).apply(new
 			// UChangeColor(HtmlColorUtils.BLUE))
@@ -230,9 +235,9 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 
 	private void printAllSubgroups(IGroup parent) {
 		for (IGroup g : diagram.getChildrenGroups(parent)) {
-			if (g.isRemoved()) {
+			if (g.isRemoved())
 				continue;
-			}
+
 			if (diagram.isEmpty(g) && g.getGroupType() == GroupType.PACKAGE) {
 				final ISkinParam skinParam = diagram.getSkinParam();
 				final EntityFactory entityFactory = diagram.getEntityFactory();
@@ -245,9 +250,9 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 	}
 
 	private void printSingleGroup(IGroup g) {
-		if (g.getGroupType() == GroupType.CONCURRENT_STATE) {
+		if (g.getGroupType() == GroupType.CONCURRENT_STATE)
 			return;
-		}
+
 		int titleAndAttributeWidth = 0;
 		int titleAndAttributeHeight = 0;
 
@@ -287,18 +292,17 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 
 	private void printEntities(Collection<ILeaf> entities) {
 		for (ILeaf ent : entities) {
-			if (ent.isRemoved()) {
+			if (ent.isRemoved())
 				continue;
-			}
+
 			printEntity(ent);
 		}
 	}
 
 	private void exportEntities(ST_Agraph_s g, Collection<ILeaf> entities) {
 		for (ILeaf ent : entities) {
-			if (ent.isRemoved()) {
+			if (ent.isRemoved())
 				continue;
-			}
 			exportEntity(g, ent);
 		}
 	}
@@ -321,9 +325,9 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 	}
 
 	private void printEntity(ILeaf ent) {
-		if (ent.isRemoved()) {
+		if (ent.isRemoved())
 			throw new IllegalStateException();
-		}
+
 		final IEntityImage image = printEntityInternal(ent);
 		final SvekNode node = getBibliotekon().createNode(ent, image, dotStringFactory.getColorSequence(),
 				stringBounder);
@@ -332,9 +336,8 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 
 	private TextBlock getTitleBlock(IGroup g) {
 		final Display label = g.getDisplay();
-		if (label == null) {
+		if (label == null)
 			return TextBlockUtils.empty(0, 0);
-		}
 
 		final ISkinParam skinParam = diagram.getSkinParam();
 		final FontConfiguration fontConfiguration = g.getFontConfigurationForTitle(skinParam);
@@ -343,21 +346,20 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 
 	private TextBlock getStereoBlock(IGroup g) {
 		final Stereotype stereotype = g.getStereotype();
-		if (stereotype == null) {
+		if (stereotype == null)
 			return TextBlockUtils.empty(0, 0);
-		}
+
 		final TextBlock tmp = stereotype.getSprite(diagram.getSkinParam());
-		if (tmp != null) {
+		if (tmp != null)
 			return tmp;
-		}
+
 		final List<String> stereos = stereotype.getLabels(diagram.getSkinParam().guillemet());
-		if (stereos == null) {
+		if (stereos == null)
 			return TextBlockUtils.empty(0, 0);
-		}
+
 		final boolean show = diagram.showPortion(EntityPortion.STEREOTYPE, g);
-		if (show == false) {
+		if (show == false)
 			return TextBlockUtils.empty(0, 0);
-		}
 
 		final FontParam fontParam = FontParam.PACKAGE_STEREOTYPE;
 		return Display.create(stereos).create(FontConfiguration.create(diagram.getSkinParam(), fontParam, stereotype),
@@ -366,11 +368,10 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 
 	private Collection<ILeaf> getUnpackagedEntities() {
 		final List<ILeaf> result = new ArrayList<>();
-		for (ILeaf ent : diagram.getLeafsvalues()) {
-			if (diagram.getEntityFactory().getRootGroup() == ent.getParentContainer()) {
+		for (ILeaf ent : diagram.getLeafsvalues())
+			if (diagram.getEntityFactory().getRootGroup() == ent.getParentContainer())
 				result.add(ent);
-			}
-		}
+
 		return result;
 	}
 
@@ -403,9 +404,8 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 	private ImageData createFileLocked(OutputStream os, List<String> dotStrings, FileFormatOption fileFormatOption)
 			throws IOException {
 
-		for (ILeaf leaf : diagram.getLeafsvalues()) {
+		for (ILeaf leaf : diagram.getLeafsvalues())
 			printEntityNew(leaf);
-		}
 
 		Z.open();
 		try {
@@ -433,9 +433,9 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 				// System.err.println("link=" + link);
 				final ST_Agedge_s e = createEdge(g, link);
 				// System.err.println("Agedge_s=" + e);
-				if (e != null) {
+				if (e != null)
 					edges.put(link, e);
-				}
+
 			}
 
 			final ST_GVC_s gvc = gvContext();
@@ -464,9 +464,9 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 
 	private void exportGroups(ST_Agraph_s graph, IGroup parent) {
 		for (IGroup g : diagram.getChildrenGroups(parent)) {
-			if (g.isRemoved()) {
+			if (g.isRemoved())
 				continue;
-			}
+
 			if (diagram.isEmpty(g) && g.getGroupType() == GroupType.PACKAGE) {
 				final EntityFactory entityFactory = diagram.getEntityFactory();
 				final ILeaf folder = entityFactory.getLeafForEmptyGroup(g);
@@ -503,40 +503,39 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 		final FontConfiguration labelFont = FontConfiguration.create(skinParam, FontParam.ARROW, null);
 		final TextBlock label = link.getLabel().create(labelFont,
 				skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), skinParam);
-		if (TextBlockUtils.isEmpty(label, stringBounder)) {
+		if (TextBlockUtils.isEmpty(label, stringBounder))
 			return label;
-		}
+
 		return TextBlockUtils.withMargin(label, marginLabel, marginLabel);
 	}
 
 	private TextBlock getQualifier(Link link, int n) {
 		final String tmp = n == 1 ? link.getQualifier1() : link.getQualifier2();
-		if (tmp == null) {
+		if (tmp == null)
 			return null;
-		}
+
 		final double marginLabel = 1; // startUid.equals(endUid) ? 6 : 1;
 		ISkinParam skinParam = diagram.getSkinParam();
 		final FontConfiguration labelFont = FontConfiguration.create(skinParam, FontParam.ARROW, null);
 		final TextBlock label = Display.getWithNewlines(tmp).create(labelFont,
 				skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), skinParam);
-		if (TextBlockUtils.isEmpty(label, stringBounder)) {
+		if (TextBlockUtils.isEmpty(label, stringBounder))
 			return label;
-		}
+
 		return TextBlockUtils.withMargin(label, marginLabel, marginLabel);
 	}
 
 	private ST_Agnode_s getAgnodeFromLeaf(IEntity entity) {
 		final ST_Agnode_s n = nodes.get(entity);
-		if (n != null) {
+		if (n != null)
 			return n;
-		}
+
 		try {
 			final String id = getBibliotekon().getNodeUid((ILeaf) entity);
-			for (Map.Entry<ILeaf, ST_Agnode_s> ent : nodes.entrySet()) {
-				if (id.equals(getBibliotekon().getNodeUid(ent.getKey()))) {
+			for (Map.Entry<ILeaf, ST_Agnode_s> ent : nodes.entrySet())
+				if (id.equals(getBibliotekon().getNodeUid(ent.getKey())))
 					return ent.getValue();
-				}
-			}
+
 		} catch (IllegalStateException e) {
 			System.err.println("UNKNOWN ENTITY");
 		}
@@ -547,12 +546,12 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 	private ST_Agedge_s createEdge(final ST_Agraph_s g, Link link) {
 		final ST_Agnode_s n = getAgnodeFromLeaf(link.getEntity1());
 		final ST_Agnode_s m = getAgnodeFromLeaf(link.getEntity2());
-		if (n == null) {
+		if (n == null)
 			return null;
-		}
-		if (m == null) {
+
+		if (m == null)
 			return null;
-		}
+
 		final ST_Agedge_s e = agedge(g, n, m, null, true);
 		// System.err.println("createEdge " + link);
 		agsafeset(e, new CString("arrowtail"), new CString("none"), new CString(""));
@@ -630,9 +629,9 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 	}
 
 	private IEntityImage printEntityInternal(ILeaf ent) {
-		if (ent.isRemoved()) {
+		if (ent.isRemoved())
 			throw new IllegalStateException();
-		}
+
 		if (ent.getSvekImage() == null) {
 			ISkinParam skinParam = diagram.getSkinParam();
 			if (skinParam.sameClassWidth()) {

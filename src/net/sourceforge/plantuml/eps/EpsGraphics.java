@@ -109,22 +109,22 @@ public class EpsGraphics {
 	private int maxY = 10;
 
 	final protected void ensureVisible(double x, double y) {
-		if (x > maxX) {
+		if (x > maxX)
 			maxX = (int) (x + 1);
-		}
-		if (y > maxY) {
+
+		if (y > maxY)
 			maxY = (int) (y + 1);
-		}
-		if (urlArea != null) {
+
+		if (urlArea != null)
 			urlArea.ensureVisible((int) Math.round(x), (int) Math.round(y));
-		}
+
 	}
 
 	protected final Color getColor() {
 		return color;
 	}
 
-	public void close() {
+	final public void close() {
 		checkCloseDone();
 
 		header.append("%%BoundingBox: 0 0 " + maxX + " " + maxY + BackSlash.NEWLINE);
@@ -137,15 +137,14 @@ public class EpsGraphics {
 		header.append("0 " + maxY + " translate\n");
 		header.append(".01 -.01 scale\n");
 
-		if (setcolorgradientUsed) {
+		if (setcolorgradientUsed)
 			header.append(setcolorgradient.getPostStringDefinition());
-		}
-		if (simplerectUsed) {
+
+		if (simplerectUsed)
 			header.append(simplerect.getPostStringDefinition());
-		}
-		if (roundrectUsed) {
+
+		if (roundrectUsed)
 			header.append(roundrect.getPostStringDefinition());
-		}
 
 		append("grestore", true);
 
@@ -159,15 +158,15 @@ public class EpsGraphics {
 	}
 
 	private void checkCloseDone() {
-		if (closeDone) {
+		if (closeDone)
 			throw new IllegalStateException();
-		}
+
 	}
 
-	public String getEPSCode() {
-		if (closeDone == false) {
+	final public String getEPSCode() {
+		if (closeDone == false)
 			close();
-		}
+
 		return header.toString() + getBodyString();
 	}
 
@@ -180,7 +179,7 @@ public class EpsGraphics {
 		this.color = c;
 	}
 
-	public void setFillColor(Color c) {
+	final public void setFillColor(Color c) {
 		checkCloseDone();
 		this.fillcolor = c;
 	}
@@ -195,15 +194,18 @@ public class EpsGraphics {
 	private long dashVisible = 0;
 	private long dashSpace = 0;
 
-	public void newpathDot() {
+	final public void newpathDot() {
 		final boolean dashed = isDashed();
+		if (isNull(color))
+			throw new IllegalStateException();
+
 		checkCloseDone();
 		append(strokeWidth + " setlinewidth", true);
 		appendColor(color);
 
-		if (dashed) {
+		if (dashed)
 			append("[" + dashSpace + " " + dashVisible + "] 0 setdash", true);
-		}
+
 		append("newpath", true);
 	}
 
@@ -219,15 +221,17 @@ public class EpsGraphics {
 		return dashSpace != 0 && dashVisible != 0;
 	}
 
-	public void closepathDot() {
+	final public void closepathDot() {
 		final boolean dashed = isDashed();
 		append("stroke", true);
-		if (dashed) {
+		if (dashed)
 			append("[] 0 setdash", true);
-		}
+
 	}
 
-	public void epsLine(double x1, double y1, double x2, double y2) {
+	final public void epsLine(double x1, double y1, double x2, double y2) {
+		if (isNull(color))
+			throw new IllegalStateException();
 		ensureVisible(x1, y1);
 		ensureVisible(x2, y2);
 		checkCloseDone();
@@ -250,11 +254,11 @@ public class EpsGraphics {
 		append(format(x) + " " + format(ymin) + " moveto", true);
 		for (long y2 = (long) (ymin * COEF); y2 < (long) (ymax * COEF); y2 += (dashVisible + dashSpace)) {
 			final long v;
-			if (y2 + dashVisible > (long) (ymax * COEF)) {
+			if (y2 + dashVisible > (long) (ymax * COEF))
 				v = y2 - (long) (ymax * COEF);
-			} else {
+			else
 				v = dashSpace;
-			}
+
 			append("0 " + v + " rlineto", true);
 			append("0 " + dashSpace + " rmoveto", true);
 		}
@@ -264,19 +268,19 @@ public class EpsGraphics {
 		append(format(xmin) + " " + format(y) + " moveto", true);
 		for (long x2 = (long) (xmin * COEF); x2 < (long) (xmax * COEF); x2 += (dashVisible + dashSpace)) {
 			final long v;
-			if (x2 + dashVisible > (long) (xmax * COEF)) {
+			if (x2 + dashVisible > (long) (xmax * COEF))
 				v = x2 - (long) (xmax * COEF);
-			} else {
+			else
 				v = dashSpace;
-			}
+
 			append("" + v + " 0 rlineto", true);
 			append("" + dashSpace + " 0 rmoveto", true);
 		}
 	}
 
-	public void epsPath(double x, double y, UPath path) {
+	final public void epsPath(double x, double y, UPath path) {
 		checkCloseDone();
-		if (mustApplyFillColor()) {
+		if (isNull(fillcolor) == false) {
 			appendColor(fillcolor);
 			append("newpath", true);
 			for (USegment seg : path) {
@@ -301,7 +305,7 @@ public class EpsGraphics {
 			append("closepath eofill", true);
 		}
 
-		if (color != null) {
+		if (isNull(color) == false) {
 			append(strokeWidth + " setlinewidth", true);
 			appendColor(color);
 			append("newpath", true);
@@ -329,35 +333,31 @@ public class EpsGraphics {
 
 	}
 
-	private boolean mustApplyFillColor() {
-		if (fillcolor == null)
-			return false;
-		if (fillcolor.getAlpha() == 0)
-			return false;
-		return true;
+	private final boolean isNull(Color c) {
+		return c == null || c.getAlpha() == 0;
 	}
 
-	public void epsPolygon(HColorGradient gr, ColorMapper mapper, double... points) {
+	final public void epsPolygon(HColorGradient gr, ColorMapper mapper, double... points) {
 		assert points.length % 2 == 0;
 		setFillColor(mapper.toColor(gr.getColor1()));
 		epsPolygon(points);
 	}
 
-	public void epsPolygon(double... points) {
+	final public void epsPolygon(double... points) {
 		assert points.length % 2 == 0;
 		checkCloseDone();
 		double lastX = 0;
 		double lastY = 0;
-		if (mustApplyFillColor()) {
+		if (isNull(fillcolor) == false) {
 			appendColor(fillcolor);
 			append("newpath", true);
 			for (int i = 0; i < points.length; i += 2) {
 				ensureVisible(points[i], points[i + 1]);
-				if (i == 0) {
+				if (i == 0)
 					append(format(points[i]) + " " + format(points[i + 1]) + " moveto", true);
-				} else {
+				else
 					append(format(points[i] - lastX) + " " + format(points[i + 1] - lastY) + " rlineto", true);
-				}
+
 				lastX = points[i];
 				lastY = points[i + 1];
 			}
@@ -365,17 +365,17 @@ public class EpsGraphics {
 			append("closepath eofill", true);
 		}
 
-		if (color != null) {
+		if (isNull(color) == false) {
 			append(strokeWidth + " setlinewidth", true);
 			appendColor(color);
 			append("newpath", true);
 			for (int i = 0; i < points.length; i += 2) {
 				ensureVisible(points[i], points[i + 1]);
-				if (i == 0) {
+				if (i == 0)
 					append(format(points[i]) + " " + format(points[i + 1]) + " moveto", true);
-				} else {
+				else
 					append(format(points[i] - lastX) + " " + format(points[i + 1] - lastY) + " rlineto", true);
-				}
+
 				lastX = points[i];
 				lastY = points[i + 1];
 			}
@@ -385,33 +385,33 @@ public class EpsGraphics {
 
 	}
 
-	public void epsRectangle(double x, double y, double width, double height, double rx, double ry) {
+	final public void epsRectangle(double x, double y, double width, double height, double rx, double ry) {
 		checkCloseDone();
 		ensureVisible(x, y);
 		ensureVisible(x + width, y + height);
-		if (mustApplyFillColor()) {
+		if (isNull(fillcolor) == false) {
 			appendColor(fillcolor);
 			epsRectangleInternal(x, y, width, height, rx, ry, true);
 			append("closepath eofill", true);
-			if (isDashed3()) {
+			if (isDashed3())
 				append("[] 0 setdash", true);
-			}
-
 		}
 
-		if (color != null) {
+		if (isNull(color) == false) {
 			append(strokeWidth + " setlinewidth", true);
 			appendColor(color);
 			epsRectangleInternal(x, y, width, height, rx, ry, false);
 			append("closepath stroke", true);
-			if (isDashed3()) {
+			if (isDashed3())
 				append("[] 0 setdash", true);
-			}
+
 		}
 	}
 
-	public void epsRectangle(double x, double y, double width, double height, double rx, double ry, HColorGradient gr,
-			ColorMapper mapper) {
+	final public void epsRectangle(double x, double y, double width, double height, double rx, double ry,
+			HColorGradient gr, ColorMapper mapper) {
+		if (isNull(color))
+			throw new IllegalStateException();
 		checkCloseDone();
 		ensureVisible(x, y);
 		ensureVisible(x + width, y + height);
@@ -469,17 +469,17 @@ public class EpsGraphics {
 
 	private void epsRectangleInternal(double x, double y, double width, double height, double rx, double ry,
 			boolean fill) {
-		if (rx == 0 && ry == 0) {
+		if (rx == 0 && ry == 0)
 			simpleRectangle(x, y, width, height, fill);
-		} else {
+		else
 			roundRectangle(x, y, width, height, rx, ry);
-		}
+
 	}
 
 	private void roundRectangle(double x, double y, double width, double height, double rx, double ry) {
-		if (isDashed3()) {
+		if (isDashed3())
 			append("[" + dashSpace + " " + dashVisible + "] 0 setdash", true);
-		}
+
 		final double round = MathUtils.min((rx + ry) / 2, width / 2, height / 2);
 		append(format(width) + " " + format(height) + " " + format(x) + " " + format(y) + " " + format(round)
 				+ " roundrect", true);
@@ -487,9 +487,9 @@ public class EpsGraphics {
 	}
 
 	private void simpleRectangle(double x, double y, double width, double height, boolean fill) {
-		if (isDashed3()) {
+		if (isDashed3())
 			append("[" + dashSpace + " " + dashVisible + "] 0 setdash", true);
-		}
+
 		// if (isDashed3() || fill) {
 		append(format(width) + " " + format(height) + " " + format(x) + " " + format(y) + " simplerect", true);
 		simplerectUsed = true;
@@ -507,7 +507,7 @@ public class EpsGraphics {
 		return (int) (360.0 - counterClockwise);
 	}
 
-	public void epsEllipse(double x, double y, double xRadius, double yRadius, double start, double extend) {
+	final public void epsEllipse(double x, double y, double xRadius, double yRadius, double start, double extend) {
 		checkCloseDone();
 		ensureVisible(x + xRadius, y + yRadius);
 		double scale = 1;
@@ -524,7 +524,7 @@ public class EpsGraphics {
 		// append("closepath eofill", true);
 		// }
 
-		if (color != null) {
+		if (isNull(color) == false) {
 			append(strokeWidth + " setlinewidth", true);
 			appendColor(color);
 			append("newpath", true);
@@ -535,12 +535,12 @@ public class EpsGraphics {
 			append("stroke", true);
 		}
 
-		if (scale != 1) {
+		if (scale != 1)
 			append("grestore", true);
-		}
+
 	}
 
-	public void epsEllipse(double x, double y, double xRadius, double yRadius) {
+	final public void epsEllipse(double x, double y, double xRadius, double yRadius) {
 		checkCloseDone();
 		ensureVisible(x + xRadius, y + yRadius);
 		double scale = 1;
@@ -549,14 +549,14 @@ public class EpsGraphics {
 			append("gsave", true);
 			append("1 " + formatSimple4(scale) + " scale", true);
 		}
-		if (mustApplyFillColor()) {
+		if (isNull(fillcolor) == false) {
 			appendColor(fillcolor);
 			append("newpath", true);
 			append(format(x) + " " + format(y / scale) + " " + format(xRadius) + " 0 360 arc", true);
 			append("closepath eofill", true);
 		}
 
-		if (color != null) {
+		if (isNull(color) == false) {
 			append(strokeWidth + " setlinewidth", true);
 			appendColor(color);
 			append("newpath", true);
@@ -564,25 +564,25 @@ public class EpsGraphics {
 			append("closepath stroke", true);
 		}
 
-		if (scale != 1) {
+		if (scale != 1)
 			append("grestore", true);
-		}
+
 	}
 
-	protected void appendColor(Color c) {
-		if (c == null) {
+	final protected void appendColor(Color c) {
+		if (isNull(c))
 			return;
-		}
+
 		final double r = c.getRed() / 255.0;
 		final double g = c.getGreen() / 255.0;
 		final double b = c.getBlue() / 255.0;
 		append(formatSimple2(r) + " " + formatSimple2(g) + " " + formatSimple2(b) + " setrgbcolor", true);
 	}
 
-	protected void appendColorShort(Color c) {
-		if (c == null) {
+	final protected void appendColorShort(Color c) {
+		if (isNull(c))
 			return;
-		}
+
 		final double r = c.getRed() / 255.0;
 		final double g = c.getGreen() / 255.0;
 		final double b = c.getBlue() / 255.0;
@@ -590,40 +590,40 @@ public class EpsGraphics {
 	}
 
 	static String format(double x) {
-		if (x == 0) {
+		if (x == 0)
 			return "0";
-		}
+
 		return Long.toString((long) (x * COEF));
 	}
 
 	public static String formatSimple4(double x) {
-		if (x == 0) {
+		if (x == 0)
 			return "0";
-		}
+
 		String s = String.format(Locale.US, "%1.4f", x);
 		s = s.replaceAll("(\\.\\d*?)0+$", "$1");
-		if (s.endsWith(".")) {
+		if (s.endsWith("."))
 			s = s.substring(0, s.length() - 1);
-		}
+
 		return s;
 	}
 
 	private static String formatSimple2(double x) {
-		if (x == 0) {
+		if (x == 0)
 			return "0";
-		}
+
 		String s = String.format(Locale.US, "%1.2f", x);
 		s = s.replaceAll("(\\.\\d*?)0+$", "$1");
-		if (s.endsWith(".")) {
+		if (s.endsWith("."))
 			s = s.substring(0, s.length() - 1);
-		}
+
 		return s;
 	}
 
 	protected void append(String s, boolean checkConsistence) {
-		if (checkConsistence && s.indexOf("  ") != -1) {
+		if (checkConsistence && s.indexOf("  ") != -1)
 			throw new IllegalArgumentException(s);
-		}
+
 		body.append(s + BackSlash.NEWLINE);
 	}
 
@@ -683,14 +683,14 @@ public class EpsGraphics {
 
 	public void fill(int windingRule) {
 		append("%fill", true);
-		if (windingRule == PathIterator.WIND_EVEN_ODD) {
+		if (windingRule == PathIterator.WIND_EVEN_ODD)
 			append("eofill", true);
-		} else if (windingRule == PathIterator.WIND_NON_ZERO) {
+		else if (windingRule == PathIterator.WIND_NON_ZERO)
 			append("fill", true);
-		}
+
 	}
 
-	public void drawImage(BufferedImage image, double x, double y) {
+	final public void drawImage(BufferedImage image, double x, double y) {
 		final int width = image.getWidth();
 		final int height = image.getHeight();
 		append("gsave", true);
@@ -700,13 +700,13 @@ public class EpsGraphics {
 		// append("" + width + " " + height + " 8 [0 0 0 0 0 0]");
 		append("{<", true);
 		final StringBuilder sb = new StringBuilder();
-		for (int j = height - 1; j >= 0; j--) {
+		for (int j = height - 1; j >= 0; j--)
 			for (int i = 0; i < width; i++) {
 				final String hexString = getRgb(image.getRGB(i, j));
 				assert hexString.length() == 6;
 				sb.append(hexString);
 			}
-		}
+
 		append(sb.toString(), true);
 		// append(">} image");
 		append(">} false 3 colorimage", true);
@@ -719,12 +719,12 @@ public class EpsGraphics {
 		return s.substring(s.length() - 6);
 	}
 
-	public void drawEps(String eps, double x, double y) {
+	final public void drawEps(String eps, double x, double y) {
 
 		final int idx = eps.indexOf("%%BoundingBox:");
-		if (idx == -1) {
+		if (idx == -1)
 			throw new IllegalArgumentException();
-		}
+
 		final StringTokenizer st = new StringTokenizer(eps.substring(idx + "%%BoundingBox:".length()), " \n\t\r");
 		final int x1 = Integer.parseInt(st.nextToken());
 		final int y1 = Integer.parseInt(st.nextToken());
@@ -763,24 +763,24 @@ public class EpsGraphics {
 		}
 
 		void ensureVisible(int x, int y) {
-			if (x < xmin) {
+			if (x < xmin)
 				xmin = x;
-			}
-			if (x > xmax) {
+
+			if (x > xmax)
 				xmax = x;
-			}
-			if (y < ymin) {
+
+			if (y < ymin)
 				ymin = y;
-			}
-			if (y > ymax) {
+
+			if (y > ymax)
 				ymax = y;
-			}
+
 		}
 	}
 
 	private UrlArea urlArea;
 
-	public void closeLink() {
+	final public void closeLink() {
 		if (urlArea != null && urlArea.xmin != Integer.MAX_VALUE) {
 			final int width = urlArea.xmax - urlArea.xmin;
 			final int height = urlArea.ymax - urlArea.ymin;
@@ -790,7 +790,7 @@ public class EpsGraphics {
 		this.urlArea = null;
 	}
 
-	public void epsUrlLink(int x, int y, int width, int height, String url) {
+	final public void epsUrlLink(int x, int y, int width, int height, String url) {
 		append("[ /Rect [ " + x + " " + y + " " + (x + width) + " " + (y + height) + " ]", true);
 		append("/Border [ 0 0 0 ]", true);
 		append("/Action << /Subtype /URI /URI (" + url + ") >>", true);
@@ -798,7 +798,7 @@ public class EpsGraphics {
 		append("/ANN pdfmark", true);
 	}
 
-	public void openLink(String url) {
+	final public void openLink(String url) {
 		// javascript: security issue
 		if (SecurityUtils.ignoreThisLink(url))
 			return;
@@ -809,7 +809,7 @@ public class EpsGraphics {
 	// Shadow
 	final private ShadowManager shadowManager = new ShadowManager(50, 200);
 
-	public void epsRectangleShadow(double x, double y, double width, double height, double rx, double ry,
+	final public void epsRectangleShadow(double x, double y, double width, double height, double rx, double ry,
 			double deltaShadow) {
 		setStrokeColor(null);
 		for (double i = 0; i <= deltaShadow; i += 0.5) {
@@ -820,7 +820,7 @@ public class EpsGraphics {
 		}
 	}
 
-	public void epsPolygonShadow(double deltaShadow, double... points) {
+	final public void epsPolygonShadow(double deltaShadow, double... points) {
 		assert points.length % 2 == 0;
 		setStrokeColor(null);
 		for (double i = 0; i <= deltaShadow; i += 0.5) {
@@ -830,7 +830,7 @@ public class EpsGraphics {
 		}
 	}
 
-	public void epsEllipseShadow(double x, double y, double xRadius, double yRadius, double deltaShadow) {
+	final public void epsEllipseShadow(double x, double y, double xRadius, double yRadius, double deltaShadow) {
 		setStrokeColor(null);
 		for (double i = 0; i <= deltaShadow; i += 0.5) {
 			setFillColor(shadowManager.getColor(i, deltaShadow));

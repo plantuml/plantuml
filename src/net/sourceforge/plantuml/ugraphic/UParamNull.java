@@ -36,15 +36,16 @@
 package net.sourceforge.plantuml.ugraphic;
 
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class UParamNull implements UParam {
 
 	public HColor getColor() {
-		return null;
+		return HColors.BLACK;
 	}
 
 	public HColor getBackcolor() {
-		return null;
+		return HColors.BLACK;
 	}
 
 	public UStroke getStroke() {

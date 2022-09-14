@@ -35,12 +35,11 @@
  */
 package net.sourceforge.plantuml.svek;
 
-import java.awt.geom.CubicCurve2D;
-import java.awt.geom.Point2D;
-
+import net.sourceforge.plantuml.awt.geom.XCubicCurve2D;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.posimo.BezierUtils;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class ClusterPosition {
 
@@ -54,6 +53,22 @@ public class ClusterPosition {
 		this.minY = minY;
 		this.maxX = maxX;
 		this.maxY = maxY;
+	}
+
+	public ClusterPosition(XPoint2D min, XPoint2D max) {
+		this(min.x, min.y, max.x, max.y);
+	}
+
+	public ClusterPosition move(double deltaX, double deltaY) {
+		return new ClusterPosition(minX + deltaX, minY + deltaY, maxX + deltaX, maxY + deltaY);
+	}
+
+	public double getWidth() {
+		return maxX - minX;
+	}
+
+	public double getHeight() {
+		return maxY - minY;
 	}
 
 	public boolean contains(double x, double y) {
@@ -73,10 +88,6 @@ public class ClusterPosition {
 	}
 
 	public boolean contains(XPoint2D p) {
-		return contains(p.getX(), p.getY());
-	}
-
-	public boolean contains(Point2D p) {
 		return contains(p.getX(), p.getY());
 	}
 
@@ -101,7 +112,7 @@ public class ClusterPosition {
 		return maxY;
 	}
 
-	public PointDirected getIntersection(CubicCurve2D.Double bez) {
+	public PointDirected getIntersection(XCubicCurve2D bez) {
 		if (contains(bez.x1, bez.y1) == contains(bez.x2, bez.y2))
 			return null;
 
@@ -110,8 +121,8 @@ public class ClusterPosition {
 			final double angle = BezierUtils.getStartingAngle(bez);
 			return new PointDirected(bez.getP1(), angle);
 		}
-		final CubicCurve2D.Double left = new CubicCurve2D.Double();
-		final CubicCurve2D.Double right = new CubicCurve2D.Double();
+		final XCubicCurve2D left = new XCubicCurve2D();
+		final XCubicCurve2D right = new XCubicCurve2D();
 		bez.subdivide(left, right);
 		final PointDirected int1 = getIntersection(left);
 		if (int1 != null)
@@ -184,6 +195,10 @@ public class ClusterPosition {
 
 	public XDimension2D getDimension() {
 		return new XDimension2D(maxX - minX, maxY - minY);
+	}
+
+	public UTranslate getPosition() {
+		return new UTranslate(getMinX(), getMinY());
 	}
 
 	public boolean isPointJustUpper(XPoint2D pt) {

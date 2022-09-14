@@ -69,10 +69,10 @@ class ExtremityCircleCrowfoot extends Extremity {
 		XPoint2D right = new XPoint2D(0, yAperture);
 		XPoint2D circleBase = new XPoint2D(-xWing - radius - 2, 0);
 
-		left.transform(rotate);
-		base.transform(rotate);
-		right.transform(rotate);
-		circleBase.transform(rotate);
+		left = left.transform(rotate);
+		base = base.transform(rotate);
+		right = right.transform(rotate);
+		circleBase = circleBase.transform(rotate);
 
 		drawLine(ug, contact.getX(), contact.getY(), base, left);
 		drawLine(ug, contact.getX(), contact.getY(), base, right);

@@ -69,12 +69,12 @@ class ExtremityDoubleLine extends Extremity {
 		XPoint2D middle = new XPoint2D(0, 0);
 		XPoint2D base = new XPoint2D(-xWing - 4, 0);
 
-		middle.transform(rotate);
-		base.transform(rotate);
-		firstLineTop.transform(rotate);
-		firstLineBottom.transform(rotate);
-		secondLineTop.transform(rotate);
-		secondLineBottom.transform(rotate);
+		middle = middle.transform(rotate);
+		base = base.transform(rotate);
+		firstLineTop = firstLineTop.transform(rotate);
+		firstLineBottom = firstLineBottom.transform(rotate);
+		secondLineTop = secondLineTop.transform(rotate);
+		secondLineBottom = secondLineBottom.transform(rotate);
 
 		drawLine(ug, contact.getX(), contact.getY(), firstLineTop, firstLineBottom);
 		drawLine(ug, contact.getX(), contact.getY(), secondLineTop, secondLineBottom);

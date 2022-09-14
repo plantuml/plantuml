@@ -34,9 +34,9 @@
  */
 package net.sourceforge.plantuml.ugraphic.hand;
 
-import java.awt.geom.CubicCurve2D;
 import java.util.Random;
 
+import net.sourceforge.plantuml.awt.geom.XCubicCurve2D;
 import net.sourceforge.plantuml.posimo.DotPath;
 import net.sourceforge.plantuml.ugraphic.UPath;
 
@@ -47,9 +47,8 @@ public class UDotPathHand {
 	public UDotPathHand(DotPath source, Random rnd) {
 
 		final HandJiggle jiggle = HandJiggle.create(source.getStartPoint(), 2.0, rnd);
-		for (CubicCurve2D curve : source.getBeziers()) {
+		for (XCubicCurve2D curve : source.getBeziers())
 			jiggle.curveTo(curve);
-		}
 
 		this.path = jiggle.toUPath();
 	}

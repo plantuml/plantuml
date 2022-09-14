@@ -42,7 +42,6 @@ import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorScheme;
 
 public class CircledCharacter extends AbstractTextBlock implements TextBlock {
 
@@ -60,10 +59,7 @@ public class CircledCharacter extends AbstractTextBlock implements TextBlock {
 		this.font = font;
 		this.spotBackColor = spotBackColor;
 		this.spotBorder = spotBorder;
-		if (fontColor instanceof HColorScheme)
-			this.fontColor = ((HColorScheme) fontColor).getAppropriateColor(spotBackColor);
-		else
-			this.fontColor = fontColor;
+		this.fontColor = fontColor.getAppropriateColor(spotBackColor);
 	}
 
 	public void drawU(UGraphic ug) {
@@ -84,27 +80,6 @@ public class CircledCharacter extends AbstractTextBlock implements TextBlock {
 	final public double getPreferredHeight(StringBounder stringBounder) {
 		return 2 * radius;
 	}
-
-	// private PathIterator getPathIteratorCharacter(FontRenderContext frc) {
-	// final TextLayout textLayout = new TextLayout(c, font.getFont(), frc);
-	// final Shape s = textLayout.getOutline(null);
-	// return s.getPathIterator(null);
-	// }
-	//
-	// private UPath getUPath(FontRenderContext frc) {
-	// final UPath result = new UPath();
-	//
-	// final PathIterator path = getPathIteratorCharacter(frc);
-	//
-	// final double coord[] = new double[6];
-	// while (path.isDone() == false) {
-	// final int code = path.currentSegment(coord);
-	// result.add(coord, USegmentType.getByCode(code));
-	// path.next();
-	// }
-	//
-	// return result;
-	// }
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		return new XDimension2D(getPreferredWidth(stringBounder), getPreferredHeight(stringBounder));

@@ -77,7 +77,7 @@ public class USegment {
 		}
 		XPoint2D p1 = new XPoint2D(coord[0], coord[1]);
 		final AffineTransform rotate = AffineTransform.getRotateInstance(theta);
-		p1.transform(rotate);
+		p1 = p1.transform(rotate);
 
 		return new USegment(new double[] { p1.getX(), p1.getY() }, pathType);
 	}

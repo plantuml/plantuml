@@ -67,7 +67,7 @@ public class EntityImageStateEmptyDescription extends EntityImageStateCommon {
 		final XDimension2D dimTotal = calculateDimension(stringBounder);
 		final XDimension2D dimDesc = desc.calculateDimension(stringBounder);
 
-		final UStroke stroke = getStyleState().getStroke();
+		final UStroke stroke = getStyleState().getStroke(lineConfig.getColors());
 
 		ug = applyColor(ug);
 		ug = ug.apply(stroke);

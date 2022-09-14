@@ -35,10 +35,7 @@
  */
 package net.sourceforge.plantuml.posimo;
 
-import java.awt.Shape;
-import java.awt.geom.CubicCurve2D;
-import java.awt.geom.Point2D;
-
+import net.sourceforge.plantuml.awt.geom.XCubicCurve2D;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.awt.geom.XLine2D;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
@@ -46,34 +43,34 @@ import net.sourceforge.plantuml.awt.geom.XRectangle2D;
 
 public class BezierUtils {
 
-	static public double getEndingAngle(final CubicCurve2D.Double left) {
+	static public double getEndingAngle(final XCubicCurve2D left) {
 		if (left.getCtrlP2().equals(left.getP2())) {
 			return getAngle(left.getP1(), left.getP2());
 		}
 		return getAngle(left.getCtrlP2(), left.getP2());
 	}
 
-	static public double getStartingAngle(final CubicCurve2D.Double left) {
+	static public double getStartingAngle(final XCubicCurve2D left) {
 		if (left.getP1().equals(left.getCtrlP1()))
 			return getAngle(left.getP1(), left.getP2());
 
 		return getAngle(left.getP1(), left.getCtrlP1());
 	}
 
-	static double getAngle(Point2D p1, Point2D p2) {
+	static double getAngle(XPoint2D p1, XPoint2D p2) {
 		if (p1.equals(p2))
 			throw new IllegalArgumentException();
 
 		return Math.atan2(p2.getY() - p1.getY(), p2.getX() - p1.getX());
 	}
 
-	static boolean isCutting(CubicCurve2D.Double bez, Shape shape) {
+	private static boolean isCutting(XCubicCurve2D bez, XRectangle2D shape) {
 		final boolean contains1 = shape.contains(bez.x1, bez.y1);
 		final boolean contains2 = shape.contains(bez.x2, bez.y2);
 		return contains1 ^ contains2;
 	}
 
-	static void shorten(CubicCurve2D.Double bez, Shape shape) {
+	private static void shorten(XCubicCurve2D bez, XRectangle2D shape) {
 		final boolean contains1 = shape.contains(bez.x1, bez.y1);
 		final boolean contains2 = shape.contains(bez.x2, bez.y2);
 		if (contains1 ^ contains2 == false)
@@ -83,8 +80,8 @@ public class BezierUtils {
 			bez.setCurve(bez.x2, bez.y2, bez.ctrlx2, bez.ctrly2, bez.ctrlx1, bez.ctrly1, bez.x1, bez.y1);
 
 		assert shape.contains(bez.x1, bez.y1) && shape.contains(bez.x2, bez.y2) == false;
-		final CubicCurve2D.Double left = new CubicCurve2D.Double();
-		final CubicCurve2D.Double right = new CubicCurve2D.Double();
+		final XCubicCurve2D left = new XCubicCurve2D();
+		final XCubicCurve2D right = new XCubicCurve2D();
 		subdivide(bez, left, right, 0.5);
 
 		if (isCutting(left, shape) ^ isCutting(right, shape) == false)
@@ -97,7 +94,7 @@ public class BezierUtils {
 
 	}
 
-	private static void subdivide(CubicCurve2D src, CubicCurve2D left, CubicCurve2D right, final double coef) {
+	private static void subdivide(XCubicCurve2D src, XCubicCurve2D left, XCubicCurve2D right, final double coef) {
 		final double coef1 = coef;
 		final double coef2 = 1 - coef;
 		final double centerxA = src.getCtrlX1() * coef1 + src.getCtrlX2() * coef2;
@@ -122,7 +119,7 @@ public class BezierUtils {
 		right.setCurve(centerxB, centeryB, ctrlx21, ctrly21, ctrlx2, ctrly2, x2, y2);
 	}
 
-	static double dist(CubicCurve2D.Double seg) {
+	static double dist(XCubicCurve2D seg) {
 		return XPoint2D.distance(seg.x1, seg.y1, seg.x2, seg.y2);
 	}
 
@@ -138,8 +135,8 @@ public class BezierUtils {
 		return new XPoint2D((p1.getX() + p2.getX()) / 2, (p1.getY() + p2.getY()) / 2);
 	}
 
-	public static XPoint2D intersect(XLine2D orig, Shape shape) {
-		final XLine2D copy = new XLine2D(orig.x1, orig.y1, orig.x2, orig.y2);
+	public static XPoint2D intersect(XLine2D orig, XRectangle2D shape) {
+		XLine2D copy = new XLine2D(orig.x1, orig.y1, orig.x2, orig.y2);
 		final boolean contains1 = shape.contains(copy.x1, copy.y1);
 		final boolean contains2 = shape.contains(copy.x2, copy.y2);
 		if (contains1 ^ contains2 == false) {
@@ -147,22 +144,19 @@ public class BezierUtils {
 			throw new IllegalArgumentException();
 		}
 		while (true) {
-			final double mx = (copy.x1 + copy.x2) / 2;
-			final double my = (copy.y1 + copy.y2) / 2;
-			final boolean containsMiddle = shape.contains(mx, my);
-			if (contains1 == containsMiddle) {
-				copy.x1 = mx;
-				copy.y1 = my;
-			} else {
-				copy.x2 = mx;
-				copy.y2 = my;
-			}
+			final XPoint2D m = copy.getMiddle();
+			final boolean containsMiddle = shape.contains(m.x, m.y);
+			if (contains1 == containsMiddle)
+				copy = copy.withPoint1(m);
+			else
+				copy = copy.withPoint2(m);
+
 			if (dist(copy) < 0.1) {
 				if (contains1)
-					return new XPoint2D(copy.x2, copy.y2);
+					return copy.getP2();
 
 				if (contains2)
-					return new XPoint2D(copy.x1, copy.y1);
+					return copy.getP1();
 
 				throw new IllegalStateException();
 			}

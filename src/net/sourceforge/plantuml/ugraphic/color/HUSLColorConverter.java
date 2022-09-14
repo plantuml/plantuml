@@ -8,8 +8,7 @@ import java.util.List;
  * Taken from
  * https://github.com/hsluv/hsluv-java/blob/master/src/main/java/org/hsluv/HUSLColorConverter.java
  * 
- * Some other pointer:
- * https://twitter.com/kuon_orochi/ https://www.hsluv.org/
+ * Some other pointer: https://twitter.com/kuon_orochi/ https://www.hsluv.org/
  * https://www.kuon.ch/post/2020-03-08-hsluv/
  * 
  * 

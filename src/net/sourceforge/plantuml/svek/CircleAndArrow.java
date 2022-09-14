@@ -36,13 +36,11 @@
 package net.sourceforge.plantuml.svek;
 
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Point2D;
 
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
@@ -68,20 +66,20 @@ class CircleAndArrow implements UDrawable {
 		this.p1 = putOnCircle(p1);
 		this.p2 = putOnCircle(p2);
 
-		this.p3 = this.p1.getTransform(at);
+		this.p3 = this.p1.transform(at);
 		this.p3 = new XPoint2D(p3.getY(), -p3.getX());
-		this.p3 = this.p3.getTransform(at2);
+		this.p3 = this.p3.transform(at2);
 
-		this.p4 = this.p2.getTransform(at);
+		this.p4 = this.p2.transform(at);
 		this.p4 = new XPoint2D(p4.getY(), -p4.getX());
-		this.p4 = this.p4.getTransform(at2);
+		this.p4 = this.p4.transform(at2);
 	}
 
 	private XPoint2D putOnCircle(XPoint2D p) {
-		p = p.getTransform(at);
+		p = p.transform(at);
 		final double coef = p.distance(new XPoint2D()) / radius;
 		p = new XPoint2D(p.getX() / coef, p.getY() / coef);
-		return p.getTransform(at2);
+		return p.transform(at2);
 	}
 
 	public void drawU(UGraphic ug) {
@@ -89,13 +87,6 @@ class CircleAndArrow implements UDrawable {
 		ug.apply(new UTranslate(center.getX() - radius, center.getY() - radius)).draw(circle);
 		// drawLine(ug, x, y, p1, p2);
 		// drawLine(ug, x, y, p3, p4);
-	}
-
-	static private void drawLine(UGraphic ug, double x, double y, Point2D p1, Point2D p2) {
-		final double dx = p2.getX() - p1.getX();
-		final double dy = p2.getY() - p1.getY();
-		ug.apply(new UTranslate(x + p1.getX(), y + p1.getY())).draw(new ULine(dx, dy));
-
 	}
 
 }
