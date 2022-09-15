@@ -71,7 +71,7 @@ public class ComponentRoseGroupingElse extends AbstractTextualComponent {
 
 	@Override
 	protected void drawBackgroundInternalU(UGraphic ug, Area area) {
-		if (HColors.isTransparent(backgroundColor))
+		if (backgroundColor.isTransparent())
 			return;
 
 		final XDimension2D dimensionToUse = area.getDimensionToUse();

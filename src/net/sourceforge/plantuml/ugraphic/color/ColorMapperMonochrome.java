@@ -45,18 +45,19 @@ public class ColorMapperMonochrome extends ColorMapper {
 		this.reverse = reverse;
 	}
 
-	@Override
-	public Color toColor(HColor htmlColor) {
-		if (htmlColor == null)
-			throw new IllegalArgumentException();
-
-		final Color color = new ColorMapperIdentity().toColor(htmlColor);
-		if (HColors.isTransparent(htmlColor))
-			return color;
-
-		if (reverse)
-			return ColorUtils.getGrayScaleColorReverse(color);
-
-		return ColorUtils.getGrayScaleColor(color);
+	private boolean isReverse() {
+		return reverse;
 	}
+
+	@Override
+	public Color fromColorSimple(HColorSimple simple) {
+		if (simple.isTransparent())
+			return simple.getColor999();
+
+		if (isReverse())
+			return ColorUtils.getGrayScaleColorReverse(simple.getColor999());
+
+		return ColorUtils.getGrayScaleColor(simple.getColor999());
+	}
+
 }

@@ -76,16 +76,23 @@ import net.sourceforge.plantuml.cucadiagram.Stereotag;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.cucadiagram.dot.Neighborhood;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
+import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.graphic.TextBlockEmpty;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.USymbols;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.IEntityImage;
 import net.sourceforge.plantuml.svek.Kal;
 import net.sourceforge.plantuml.svek.Margins;
 import net.sourceforge.plantuml.svek.PackageStyle;
 import net.sourceforge.plantuml.svek.SingleStrategy;
+import net.sourceforge.plantuml.svek.image.EntityImageStateCommon;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
@@ -837,6 +844,31 @@ final public class EntityImpl implements ILeaf, IGroup {
 	@Override
 	public boolean isStatic() {
 		return isStatic;
+	}
+
+	// For group
+
+	public TextBlock getStateHeader(ISkinParam skinParam) {
+		checkGroup();
+		final Style style = EntityImageStateCommon.getStyleStateHeader(this, skinParam);
+		final List<CharSequence> details = getBodier().getRawBody();
+
+		if (details.size() == 0)
+			return new TextBlockEmpty();
+
+		if (style == null)
+			throw new IllegalArgumentException();
+		final FontConfiguration fontConfiguration = FontConfiguration.create(skinParam, style);
+
+		Display display = null;
+		for (CharSequence s : details)
+			if (display == null)
+				display = Display.getWithNewlines(s.toString());
+			else
+				display = display.addAll(Display.getWithNewlines(s.toString()));
+
+		return display.create(fontConfiguration, HorizontalAlignment.LEFT, skinParam);
+
 	}
 
 }

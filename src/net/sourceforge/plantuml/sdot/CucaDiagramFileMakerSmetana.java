@@ -72,14 +72,13 @@ import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.cucadiagram.EntityPortion;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.IGroup;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.Link;
-import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
+import net.sourceforge.plantuml.cucadiagram.entity.EntityImpl;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -87,12 +86,10 @@ import net.sourceforge.plantuml.graphic.QuoteUtils;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
-import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.log.Logme;
-import net.sourceforge.plantuml.style.SName;
-import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.Cluster;
+import net.sourceforge.plantuml.svek.ClusterHeader;
 import net.sourceforge.plantuml.svek.CucaDiagramFileMaker;
 import net.sourceforge.plantuml.svek.DotStringFactory;
 import net.sourceforge.plantuml.svek.GeneralImageBuilder;
@@ -253,41 +250,14 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 		if (g.getGroupType() == GroupType.CONCURRENT_STATE)
 			return;
 
-		int titleAndAttributeWidth = 0;
-		int titleAndAttributeHeight = 0;
-
-		final TextBlock title = getTitleBlock(g);
-		final TextBlock stereo = getStereoBlock(g);
-		final TextBlock stereoAndTitle = TextBlockUtils.mergeTB(stereo, title, HorizontalAlignment.CENTER);
-		final XDimension2D dimLabel = stereoAndTitle.calculateDimension(stringBounder);
-		if (dimLabel.getWidth() > 0) {
-
-			final TextBlock attribute = GeneralImageBuilder.stateHeader(g, null, diagram.getSkinParam());
-
-			final XDimension2D dimAttribute = attribute.calculateDimension(stringBounder);
-			final double attributeHeight = dimAttribute.getHeight();
-			final double attributeWidth = dimAttribute.getWidth();
-			final double marginForFields = attributeHeight > 0 ? IEntityImage.MARGIN : 0;
-			final USymbol uSymbol = g.getUSymbol();
-			final int suppHeightBecauseOfShape = uSymbol == null ? 0 : uSymbol.suppHeightBecauseOfShape();
-			final int suppWidthBecauseOfShape = uSymbol == null ? 0 : uSymbol.suppWidthBecauseOfShape();
-
-			titleAndAttributeWidth = (int) Math.max(dimLabel.getWidth(), attributeWidth) + suppWidthBecauseOfShape;
-			titleAndAttributeHeight = (int) (dimLabel.getHeight() + attributeHeight + marginForFields
-					+ suppHeightBecauseOfShape);
-		}
-
-		dotStringFactory.openCluster(titleAndAttributeWidth, titleAndAttributeHeight, title, stereo, g);
+		final ClusterHeader clusterHeader = new ClusterHeader((EntityImpl) g, diagram.getSkinParam(), diagram,
+				stringBounder);
+		dotStringFactory.openCluster(g, clusterHeader);
 		this.printEntities(g.getLeafsDirect());
 
 		printAllSubgroups(g);
 
 		dotStringFactory.closeCluster();
-	}
-
-	private Style getStyle(FontParam fontParam) {
-		return fontParam.getStyleDefinition(SName.stateDiagram)
-				.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
 	}
 
 	private void printEntities(Collection<ILeaf> entities) {
@@ -332,38 +302,6 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 		final SvekNode node = getBibliotekon().createNode(ent, image, dotStringFactory.getColorSequence(),
 				stringBounder);
 		dotStringFactory.addNode(node);
-	}
-
-	private TextBlock getTitleBlock(IGroup g) {
-		final Display label = g.getDisplay();
-		if (label == null)
-			return TextBlockUtils.empty(0, 0);
-
-		final ISkinParam skinParam = diagram.getSkinParam();
-		final FontConfiguration fontConfiguration = g.getFontConfigurationForTitle(skinParam);
-		return label.create(fontConfiguration, HorizontalAlignment.CENTER, skinParam);
-	}
-
-	private TextBlock getStereoBlock(IGroup g) {
-		final Stereotype stereotype = g.getStereotype();
-		if (stereotype == null)
-			return TextBlockUtils.empty(0, 0);
-
-		final TextBlock tmp = stereotype.getSprite(diagram.getSkinParam());
-		if (tmp != null)
-			return tmp;
-
-		final List<String> stereos = stereotype.getLabels(diagram.getSkinParam().guillemet());
-		if (stereos == null)
-			return TextBlockUtils.empty(0, 0);
-
-		final boolean show = diagram.showPortion(EntityPortion.STEREOTYPE, g);
-		if (show == false)
-			return TextBlockUtils.empty(0, 0);
-
-		final FontParam fontParam = FontParam.PACKAGE_STEREOTYPE;
-		return Display.create(stereos).create(FontConfiguration.create(diagram.getSkinParam(), fontParam, stereotype),
-				HorizontalAlignment.CENTER, diagram.getSkinParam());
 	}
 
 	private Collection<ILeaf> getUnpackagedEntities() {

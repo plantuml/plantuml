@@ -178,10 +178,10 @@ public class SpriteMonochrome implements Sprite {
 
 	public UImage toUImage(ColorMapper colorMapper, HColor backcolor, HColor color) {
 
-		if (backcolor == null || HColors.isTransparent(backcolor))
+		if (backcolor == null || backcolor.isTransparent())
 			backcolor = HColors.WHITE.withDark(HColors.BLACK);
 
-		if (color == null || HColors.isTransparent(color))
+		if (color == null || color.isTransparent())
 			color = HColors.BLACK.withDark(HColors.WHITE);
 
 		final BufferedImage im = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);

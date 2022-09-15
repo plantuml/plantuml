@@ -50,7 +50,6 @@ import net.sourceforge.plantuml.ugraphic.UText;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorGradient;
-import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class DriverTextSvg implements UDriver<UText, SvgGraphics> {
 
@@ -69,7 +68,7 @@ public class DriverTextSvg implements UDriver<UText, SvgGraphics> {
 		}
 
 		final FontConfiguration fontConfiguration = shape.getFontConfiguration();
-		if (HColors.isTransparent(fontConfiguration.getColor())) {
+		if (fontConfiguration.getColor().isTransparent()) {
 			return;
 		}
 		final UFont font = fontConfiguration.getFont();
@@ -114,7 +113,7 @@ public class DriverTextSvg implements UDriver<UText, SvgGraphics> {
 			final HColor back = fontConfiguration.getExtendedColor();
 			if (back instanceof HColorGradient) {
 				final HColorGradient gr = (HColorGradient) back;
-				final String id = svg.createSvgGradient(mapper.toRGB(gr.getColor1()), mapper.toRGB(gr.getColor2()),
+				final String id = svg.createSvgGradient(gr.getColor1().toRGB(mapper), gr.getColor2().toRGB(mapper),
 						gr.getPolicy());
 				svg.setFillColor("url(#" + id + ")");
 				svg.setStrokeColor(null);
@@ -122,16 +121,16 @@ public class DriverTextSvg implements UDriver<UText, SvgGraphics> {
 				svg.svgRectangle(x, y - height + deltaPatch, width, height, 0, 0, 0, null, null);
 
 			} else {
-				backColor = mapper.toRGB(back);
+				backColor = back.toRGB(mapper);
 			}
 		}
 
 		final HColor textColor = fontConfiguration.getColor();
 		final HColor dark = textColor == null ? null : textColor.darkSchemeTheme();
 		if (dark == textColor)
-			svg.setFillColor(mapper.toSvg(textColor));
+			svg.setFillColor(textColor.toSvg(mapper));
 		else
-			svg.setFillColor(mapper.toSvg(textColor), mapper.toSvg(dark));
+			svg.setFillColor(textColor.toSvg(mapper), dark.toSvg(mapper));
 
 		svg.text(text, x, y, font.getFamily(UFontContext.SVG), font.getSize(), fontWeight, fontStyle, textDecoration,
 				width, fontConfiguration.getAttributes(), backColor);

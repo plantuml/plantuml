@@ -55,7 +55,6 @@ import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorGradient;
 import net.sourceforge.plantuml.ugraphic.color.HColorSimple;
-import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class DriverRectangleG2d extends DriverShadowedG2d implements UDriver<URectangle, Graphics2D> {
 
@@ -84,7 +83,7 @@ public class DriverRectangleG2d extends DriverShadowedG2d implements UDriver<URe
 
 		// Shadow
 		if (rect.getDeltaShadow() != 0) {
-			if (HColors.isTransparent(back))
+			if (back.isTransparent())
 				drawOnlyLineShadowSpecial(g2d, shape, rect.getDeltaShadow(), dpiFactor);
 			else
 				drawShadow(g2d, shape, rect.getDeltaShadow(), dpiFactor);
@@ -100,8 +99,8 @@ public class DriverRectangleG2d extends DriverShadowedG2d implements UDriver<URe
 			g2d.fill(shape);
 			drawBorder(param, color, mapper, rect, shape, g2d, x, y);
 		} else {
-			if (HColors.isTransparent(param.getBackcolor()) == false) {
-				g2d.setColor(mapper.toColor(param.getBackcolor()));
+			if (param.getBackcolor().isTransparent() == false) {
+				g2d.setColor(param.getBackcolor().toColor(mapper));
 				DriverLineG2d.manageStroke(param, g2d);
 				managePattern(param, g2d);
 				g2d.fill(shape);
@@ -114,14 +113,14 @@ public class DriverRectangleG2d extends DriverShadowedG2d implements UDriver<URe
 
 	public static void drawBorder(UParam param, HColor color, ColorMapper mapper, UShapeSized sized, Shape shape,
 			Graphics2D g2d, double x, double y) {
-		if (HColors.isTransparent(color))
+		if (color.isTransparent())
 			return;
 
 		if (color instanceof HColorGradient) {
 			final GradientPaint paint = getPaintGradient(x, y, mapper, sized.getWidth(), sized.getHeight(), color);
 			g2d.setPaint(paint);
 		} else {
-			g2d.setColor(mapper.toColor(color));
+			g2d.setColor(color.toColor(mapper));
 		}
 		DriverLineG2d.manageStroke(param, g2d);
 		g2d.draw(shape);
@@ -133,18 +132,18 @@ public class DriverRectangleG2d extends DriverShadowedG2d implements UDriver<URe
 		final char policy = gr.getPolicy();
 		final GradientPaint paint;
 		if (policy == '|')
-			paint = new GradientPaint((float) x, (float) (y + height) / 2, mapper.toColor(gr.getColor1()),
-					(float) (x + width), (float) (y + height) / 2, mapper.toColor(gr.getColor2()));
+			paint = new GradientPaint((float) x, (float) (y + height) / 2, gr.getColor1().toColor(mapper),
+					(float) (x + width), (float) (y + height) / 2, gr.getColor2().toColor(mapper));
 		else if (policy == '\\')
-			paint = new GradientPaint((float) x, (float) (y + height), mapper.toColor(gr.getColor1()),
-					(float) (x + width), (float) y, mapper.toColor(gr.getColor2()));
+			paint = new GradientPaint((float) x, (float) (y + height), gr.getColor1().toColor(mapper),
+					(float) (x + width), (float) y, gr.getColor2().toColor(mapper));
 		else if (policy == '-')
-			paint = new GradientPaint((float) (x + width) / 2, (float) y, mapper.toColor(gr.getColor1()),
-					(float) (x + width) / 2, (float) (y + height), mapper.toColor(gr.getColor2()));
+			paint = new GradientPaint((float) (x + width) / 2, (float) y, gr.getColor1().toColor(mapper),
+					(float) (x + width) / 2, (float) (y + height), gr.getColor2().toColor(mapper));
 		else
 			// for /
-			paint = new GradientPaint((float) x, (float) y, mapper.toColor(gr.getColor1()), (float) (x + width),
-					(float) (y + height), mapper.toColor(gr.getColor2()));
+			paint = new GradientPaint((float) x, (float) y, gr.getColor1().toColor(mapper), (float) (x + width),
+					(float) (y + height), gr.getColor2().toColor(mapper));
 
 		return paint;
 	}

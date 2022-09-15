@@ -93,7 +93,6 @@ import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorGradient;
-import net.sourceforge.plantuml.ugraphic.color.HColorNone;
 import net.sourceforge.plantuml.ugraphic.color.HColorSimple;
 import net.sourceforge.plantuml.ugraphic.color.HColors;
 import net.sourceforge.plantuml.ugraphic.debug.UGraphicDebug;
@@ -445,21 +444,18 @@ public class ImageBuilder {
 
 	}
 
-	private UGraphic createUGraphicPNG(double scaleFactor, final XDimension2D dim, Animation affineTransforms, double dx,
-			double dy, String watermark) {
-		Color backColor = getDefaultBackColor();
+	private UGraphic createUGraphicPNG(double scaleFactor, final XDimension2D dim, Animation affineTransforms,
+			double dx, double dy, String watermark) {
+		Color pngBackColor = new Color(0, 0, 0, 0);
 
 		if (this.backcolor instanceof HColorSimple)
-			backColor = colorMapper.toColor(this.backcolor);
-		else if (this.backcolor instanceof HColorNone)
-			backColor = null;
+			pngBackColor = this.backcolor.toColor(colorMapper);
 
-		if (OptionFlags.getInstance().isReplaceWhiteBackgroundByTransparent() && backColor != null
-				&& backColor.equals(Color.WHITE))
-			backColor = new Color(0, 0, 0, 0);
+		if (OptionFlags.getInstance().isReplaceWhiteBackgroundByTransparent() && Color.WHITE.equals(pngBackColor))
+			pngBackColor = new Color(0, 0, 0, 0);
 
 		final EmptyImageBuilder builder = new EmptyImageBuilder(watermark, (int) (dim.getWidth() * scaleFactor),
-				(int) (dim.getHeight() * scaleFactor), backColor, stringBounder);
+				(int) (dim.getHeight() * scaleFactor), pngBackColor, stringBounder);
 		final Graphics2D graphics2D = builder.getGraphics2D();
 
 		final UGraphicG2d ug = new UGraphicG2d(backcolor, colorMapper, stringBounder, graphics2D, scaleFactor,
@@ -473,10 +469,6 @@ public class ImageBuilder {
 		return ug;
 	}
 
-	static private Color getDefaultBackColor() {
-		return Color.WHITE;
-	}
-
 	static private HColor getDefaultHBackColor() {
 		return HColors.WHITE;
 	}
@@ -487,7 +479,7 @@ public class ImageBuilder {
 		} else if (skinParam != null) {
 			final HColor color = skinParam.hoverPathColor();
 			if (color != null)
-				return colorMapper.toRGB(color);
+				return color.toRGB(colorMapper);
 
 		}
 		return null;

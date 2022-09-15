@@ -339,7 +339,7 @@ public class EpsGraphics {
 
 	final public void epsPolygon(HColorGradient gr, ColorMapper mapper, double... points) {
 		assert points.length % 2 == 0;
-		setFillColor(mapper.toColor(gr.getColor1()));
+		setFillColor(gr.getColor1().toColor(mapper));
 		epsPolygon(points);
 	}
 
@@ -419,8 +419,8 @@ public class EpsGraphics {
 
 		if (rx == 0 && ry == 0) {
 			simplerectUsed = true;
-			appendColorShort(mapper.toColor(gr.getColor1()));
-			appendColorShort(mapper.toColor(gr.getColor2()));
+			appendColorShort(gr.getColor1().toColor(mapper));
+			appendColorShort(gr.getColor2().toColor(mapper));
 			append(format(width) + " " + format(height) + " " + format(x) + " " + format(y), true);
 			append("100 -1 1 {", true);
 			append("100 div", true);
@@ -442,8 +442,8 @@ public class EpsGraphics {
 			append("initclip", true);
 		} else {
 			roundrectUsed = true;
-			appendColorShort(mapper.toColor(gr.getColor1()));
-			appendColorShort(mapper.toColor(gr.getColor2()));
+			appendColorShort(gr.getColor1().toColor(mapper));
+			appendColorShort(gr.getColor2().toColor(mapper));
 			append(format(width) + " " + format(height) + " " + format(x) + " " + format(y) + " "
 					+ format((rx + ry) / 2), true);
 			append("100 -1 1 {", true);

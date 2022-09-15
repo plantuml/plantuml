@@ -47,7 +47,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.BaseFile;
-import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
@@ -57,13 +56,9 @@ import net.sourceforge.plantuml.Pragma;
 import net.sourceforge.plantuml.SkinParamSameClassWidth;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
-import net.sourceforge.plantuml.activitydiagram3.ftile.EntityImageLegend;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.awt.geom.XRectangle2D;
 import net.sourceforge.plantuml.core.UmlSource;
-import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.cucadiagram.DisplayPositioned;
-import net.sourceforge.plantuml.cucadiagram.EntityPortion;
 import net.sourceforge.plantuml.cucadiagram.EntityPosition;
 import net.sourceforge.plantuml.cucadiagram.GroupRoot;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
@@ -81,22 +76,17 @@ import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizVersion;
 import net.sourceforge.plantuml.cucadiagram.dot.Neighborhood;
 import net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
+import net.sourceforge.plantuml.cucadiagram.entity.EntityImpl;
 import net.sourceforge.plantuml.descdiagram.EntityImageDesignedDomain;
 import net.sourceforge.plantuml.descdiagram.EntityImageDomain;
 import net.sourceforge.plantuml.descdiagram.EntityImageMachine;
 import net.sourceforge.plantuml.descdiagram.EntityImageRequirement;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
-import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.graphic.TextBlockEmpty;
-import net.sourceforge.plantuml.graphic.TextBlockUtils;
-import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.USymbolHexagon;
 import net.sourceforge.plantuml.graphic.USymbolInterface;
-import net.sourceforge.plantuml.graphic.USymbols;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SecurityProfile;
 import net.sourceforge.plantuml.security.SecurityUtils;
@@ -169,7 +159,7 @@ public final class GeneralImageBuilder {
 		if (leaf.getLeafType() == LeafType.ACTIVITY)
 			return new EntityImageActivity(leaf, skinParam, bibliotekon);
 
-		if (/*(leaf.getLeafType() == LeafType.PORT) || */leaf.getLeafType() == LeafType.PORTIN
+		if (/* (leaf.getLeafType() == LeafType.PORT) || */leaf.getLeafType() == LeafType.PORTIN
 				|| leaf.getLeafType() == LeafType.PORTOUT) {
 			final Cluster parent = bibliotekon.getCluster(leaf.getParentContainer());
 			return new EntityImagePort(leaf, skinParam, parent, bibliotekon, umlDiagramType.getStyleName());
@@ -617,134 +607,15 @@ public final class GeneralImageBuilder {
 				return;
 			}
 		}
-		int titleAndAttributeWidth = 0;
-		int titleAndAttributeHeight = 0;
 
-		final TextBlock title = getTitleBlock(g);
-		final TextBlock stereo = getStereoBlock(g);
-		final TextBlock stereoAndTitle = TextBlockUtils.mergeTB(stereo, title, HorizontalAlignment.CENTER);
-		final XDimension2D dimLabel = stereoAndTitle.calculateDimension(stringBounder);
-		if (dimLabel.getWidth() > 0) {
-			final XDimension2D dimAttribute = stateHeader((IEntity) g, getStyleState(FontParam.STATE_ATTRIBUTE),
-					dotData.getSkinParam()).calculateDimension(stringBounder);
-			final double attributeHeight = dimAttribute.getHeight();
-			final double attributeWidth = dimAttribute.getWidth();
-			final double marginForFields = attributeHeight > 0 ? IEntityImage.MARGIN : 0;
-			final USymbol uSymbol = g.getUSymbol();
-			final int suppHeightBecauseOfShape = uSymbol == null ? 0 : uSymbol.suppHeightBecauseOfShape();
-			final int suppWidthBecauseOfShape = uSymbol == null ? 0 : uSymbol.suppWidthBecauseOfShape();
-
-			titleAndAttributeWidth = (int) Math.max(dimLabel.getWidth(), attributeWidth) + suppWidthBecauseOfShape;
-			titleAndAttributeHeight = (int) (dimLabel.getHeight() + attributeHeight + marginForFields
-					+ suppHeightBecauseOfShape);
-		}
-
-		dotStringFactory.openCluster(titleAndAttributeWidth, titleAndAttributeHeight, title, stereo, g);
+		final ClusterHeader clusterHeader = new ClusterHeader((EntityImpl) g, dotData.getSkinParam(), dotData,
+				stringBounder);
+		dotStringFactory.openCluster(g, clusterHeader);
 		this.printEntities(dotStringFactory, g.getLeafsDirect());
 
 		printGroups(dotStringFactory, g);
 
 		dotStringFactory.closeCluster();
-	}
-
-	public static TextBlock stateHeader(IEntity group, Style style, ISkinParam skinParam) {
-		final List<CharSequence> details = group.getBodier().getRawBody();
-
-		if (details.size() == 0)
-			return new TextBlockEmpty();
-
-		final FontConfiguration fontConfiguration;
-		if (style == null)
-			fontConfiguration = FontConfiguration.create(skinParam, FontParam.STATE_ATTRIBUTE, null);
-		else
-			fontConfiguration = FontConfiguration.create(skinParam, style);
-
-		Display display = null;
-		for (CharSequence s : details)
-			if (display == null)
-				display = Display.getWithNewlines(s.toString());
-			else
-				display = display.addAll(Display.getWithNewlines(s.toString()));
-
-		return display.create(fontConfiguration, HorizontalAlignment.LEFT, skinParam);
-
-	}
-
-	private Style getStyleState(FontParam fontParam) {
-		return fontParam.getStyleDefinition(SName.stateDiagram)
-				.getMergedStyle(dotData.getSkinParam().getCurrentStyleBuilder());
-	}
-
-	private TextBlock getTitleBlock(IGroup g) {
-		final Display label = g.getDisplay();
-		if (label == null)
-			return TextBlockUtils.empty(0, 0);
-
-		final ISkinParam skinParam = dotData.getSkinParam();
-
-		final SName sname = dotData.getUmlDiagramType().getStyleName();
-		final StyleSignatureBasic signature;
-		final USymbol uSymbol = g.getUSymbol();
-		if (g.getGroupType() == GroupType.STATE)
-			signature = StyleSignatureBasic.of(SName.root, SName.element, SName.stateDiagram, SName.state,
-					SName.header);
-		else if (uSymbol == USymbols.RECTANGLE)
-			signature = StyleSignatureBasic.of(SName.root, SName.element, sname, uSymbol.getSName(), SName.title);
-		else
-			signature = StyleSignatureBasic.of(SName.root, SName.element, sname, SName.title);
-
-		final Style style = signature //
-				.withTOBECHANGED(g.getStereotype()) //
-				.with(g.getStereostyles()) //
-				.getMergedStyle(skinParam.getCurrentStyleBuilder());
-
-		final FontConfiguration fontConfiguration = style.getFontConfiguration(skinParam.getThemeStyle(),
-				skinParam.getIHtmlColorSet(), g.getColors());
-
-		final HorizontalAlignment alignment = HorizontalAlignment.CENTER;
-		return label.create(fontConfiguration, alignment, dotData.getSkinParam());
-	}
-
-	private TextBlock addLegend(TextBlock original, DisplayPositioned legend) {
-		if (legend == null || legend.isNull())
-			return original;
-
-		final TextBlock legendBlock = EntityImageLegend.create(legend.getDisplay(), dotData.getSkinParam());
-		return DecorateEntityImage.add(legendBlock, original, legend.getHorizontalAlignment(),
-				legend.getVerticalAlignment());
-	}
-
-	private TextBlock getStereoBlock(IGroup g) {
-		final DisplayPositioned legend = g.getLegend();
-		return addLegend(getStereoBlockWithoutLegend(g), legend);
-	}
-
-	private TextBlock getStereoBlockWithoutLegend(IGroup g) {
-		final Stereotype stereotype = g.getStereotype();
-		// final DisplayPositionned legend = g.getLegend();
-		if (stereotype == null)
-			return TextBlockUtils.empty(0, 0);
-
-		final TextBlock tmp = stereotype.getSprite(dotData.getSkinParam());
-		if (tmp != null)
-			return tmp;
-
-		final List<String> stereos = stereotype.getLabels(dotData.getSkinParam().guillemet());
-		if (stereos == null)
-			return TextBlockUtils.empty(0, 0);
-
-		final boolean show = dotData.showPortion(EntityPortion.STEREOTYPE, g);
-		if (show == false)
-			return TextBlockUtils.empty(0, 0);
-
-		final Style style = Cluster
-				.getDefaultStyleDefinition(dotData.getUmlDiagramType().getStyleName(), g.getUSymbol())
-				.forStereotypeItself(g.getStereotype()).getMergedStyle(dotData.getSkinParam().getCurrentStyleBuilder());
-
-		final FontConfiguration fontConfiguration = style.getFontConfiguration(dotData.getSkinParam().getThemeStyle(),
-				dotData.getSkinParam().getIHtmlColorSet());
-		return Display.create(stereos).create(fontConfiguration, HorizontalAlignment.CENTER, dotData.getSkinParam());
-
 	}
 
 	public String getWarningOrError(int warningOrError) {

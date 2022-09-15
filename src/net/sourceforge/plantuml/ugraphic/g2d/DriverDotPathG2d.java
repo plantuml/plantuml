@@ -42,7 +42,6 @@ import net.sourceforge.plantuml.posimo.DotPath;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
-import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class DriverDotPathG2d implements UDriver<DotPath, Graphics2D> {
 
@@ -55,8 +54,8 @@ public class DriverDotPathG2d implements UDriver<DotPath, Graphics2D> {
 	public void draw(DotPath shape, double x, double y, ColorMapper mapper, UParam param, Graphics2D g2d) {
 		DriverLineG2d.manageStroke(param, g2d);
 
-		if (HColors.isTransparent(param.getColor()) == false) {
-			g2d.setColor(mapper.toColor(param.getColor()));
+		if (param.getColor().isTransparent() == false) {
+			g2d.setColor(param.getColor().toColor(mapper));
 			shape.draw(g2d, x, y);
 			shape.manageEnsureVisible(x, y, visible);
 		}

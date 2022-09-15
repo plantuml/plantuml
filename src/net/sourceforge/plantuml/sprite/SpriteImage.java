@@ -71,7 +71,7 @@ public class SpriteImage implements Sprite {
 				else if (color == null)
 					ug.draw(img.scale(scale));
 				else
-					ug.draw(img.muteColor(colorMapper.toColor(color)).scale(scale));
+					ug.draw(img.muteColor(color.toColor(colorMapper)).scale(scale));
 			}
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {

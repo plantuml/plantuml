@@ -48,7 +48,6 @@ import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class TextBlockVertical2 extends AbstractTextBlock implements TextBlock, WithPorts {
 
@@ -102,7 +101,7 @@ public class TextBlockVertical2 extends AbstractTextBlock implements TextBlock, 
 			final XDimension2D dimb = block.calculateDimension(ug.getStringBounder());
 			if (block instanceof TextBlockBackcolored) {
 				final HColor back = ((TextBlockBackcolored) block).getBackcolor();
-				if (HColors.isTransparent(back) == false)
+				if (back != null && back.isTransparent() == false)
 					ug.apply(UTranslate.dy(y)).apply(back).apply(back.bg())
 							.draw(new URectangle(dimtotal.getWidth(), dimb.getHeight()));
 

@@ -468,10 +468,8 @@ public class DotStringFactory implements Moveable {
 		return idx;
 	}
 
-	public void openCluster(int titleAndAttributeWidth, int titleAndAttributeHeight, TextBlock title, TextBlock stereo,
-			IGroup g) {
-		this.current = current.createChild(titleAndAttributeWidth, titleAndAttributeHeight, title, stereo,
-				colorSequence, skinParam, g);
+	public void openCluster(IGroup g, ClusterHeader clusterHeader) {
+		this.current = current.createChild(clusterHeader, colorSequence, skinParam, g);
 		bibliotekon.addCluster(this.current);
 	}
 

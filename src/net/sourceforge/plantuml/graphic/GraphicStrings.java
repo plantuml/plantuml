@@ -111,7 +111,7 @@ public class GraphicStrings extends AbstractTextBlock implements IEntityImage {
 	public static TextBlockBackcolored createBlackOnWhite(List<String> strings, BufferedImage image,
 			GraphicPosition position) {
 		return new GraphicStrings(strings, sansSerif12(HColors.BLACK), HColors.WHITE, image, position,
-				CreoleMode.FULL);
+				CreoleMode.FULL_BUT_UNDERSCORE);
 	}
 
 	public static FontConfiguration sansSerif12(HColor color) {

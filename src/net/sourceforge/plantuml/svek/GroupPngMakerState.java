@@ -46,7 +46,6 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.EntityUtils;
 import net.sourceforge.plantuml.cucadiagram.GroupHierarchy;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
-import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.IGroup;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
@@ -54,6 +53,7 @@ import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.cucadiagram.SuperGroup;
 import net.sourceforge.plantuml.cucadiagram.dot.DotData;
+import net.sourceforge.plantuml.cucadiagram.entity.EntityImpl;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -62,8 +62,8 @@ import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.image.EntityImageState;
+import net.sourceforge.plantuml.svek.image.EntityImageStateCommon;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
@@ -118,30 +118,21 @@ public final class GroupPngMakerState {
 		return result;
 	}
 
-	private Style getStyleStateHeader() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.stateDiagram, SName.state, SName.header)
-				.withTOBECHANGED(group.getStereotype()).getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
-	}
-
-	private Style getStyleState() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.stateDiagram, SName.state)
-				.withTOBECHANGED(group.getStereotype()).getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
-	}
-
-	private Style getStyleStateBody() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.stateDiagram, SName.stateBody)
-				.withTOBECHANGED(group.getStereotype()).getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
-	}
-
 	public IEntityImage getImage() {
 		final Display display = group.getDisplay();
 		final ISkinParam skinParam = diagram.getSkinParam();
 
-		final double rounded = getStyleState().value(PName.RoundCorner).asDouble();
-		final double shadowing = getStyleState().value(PName.Shadowing).asDouble();
-		final FontConfiguration fontConfiguration = getStyleStateHeader()
-				.getFontConfiguration(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
-		final TextBlock title = display.create(fontConfiguration, HorizontalAlignment.CENTER, diagram.getSkinParam());
+		final Style style = EntityImageStateCommon.getStyleState(group, skinParam);
+		// final Style styleHeader = EntityImageStateCommon.getStyleStateHeader(group, skinParam);
+		final Style styleTitle = EntityImageStateCommon.getStyleStateTitle(group, skinParam);
+		final Style styleBody = EntityImageStateCommon.getStyleStateBody(group, skinParam);
+
+		final double rounded = style.value(PName.RoundCorner).asDouble();
+		final double shadowing = style.value(PName.Shadowing).asDouble();
+		final FontConfiguration titleFontConfiguration = styleTitle.getFontConfiguration(skinParam.getThemeStyle(),
+				skinParam.getIHtmlColorSet());
+		final TextBlock title = display.create(titleFontConfiguration, HorizontalAlignment.CENTER,
+				diagram.getSkinParam());
 
 		if (group.size() == 0 && group.getChildren().size() == 0)
 			return new EntityImageState(group, diagram.getSkinParam());
@@ -164,20 +155,19 @@ public final class GroupPngMakerState {
 
 		HColor borderColor = group.getColors().getColor(ColorType.LINE);
 		if (borderColor == null)
-			borderColor = getStyleState().value(PName.LineColor).asColor(skinParam.getThemeStyle(),
-					skinParam.getIHtmlColorSet());
+			borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
 
 		final Stereotype stereo = group.getStereotype();
 		HColor backColor = group.getColors().getColor(ColorType.BACK);
 		if (backColor == null)
-			backColor = getStyleState().value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
+			backColor = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
 					skinParam.getIHtmlColorSet());
 
 		UStroke stroke = group.getColors().getSpecificLineStroke();
 		if (stroke == null)
-			stroke = getStyleState().getStroke();
+			stroke = style.getStroke();
 
-		final TextBlock attribute = GeneralImageBuilder.stateHeader((IEntity) group, null, skinParam);
+		final TextBlock attribute = ((EntityImpl) group).getStateHeader(skinParam);
 
 		final Stereotype stereotype = group.getStereotype();
 		final boolean withSymbol = stereotype != null && stereotype.isWithOOSymbol();
@@ -186,7 +176,7 @@ public final class GroupPngMakerState {
 		final IEntityImage image = containsOnlyConcurrentStates ? buildImageForConcurrentState(dotData)
 				: svek2.buildImage(null, new String[0]);
 
-		final HColor bodyColor = getStyleStateBody().value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
+		final HColor bodyColor = styleBody.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
 				skinParam.getIHtmlColorSet());
 		return new InnerStateAutonom(image, title, attribute, borderColor, backColor, group.getUrl99(), withSymbol,
 				stroke, rounded, shadowing, bodyColor);

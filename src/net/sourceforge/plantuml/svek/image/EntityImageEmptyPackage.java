@@ -86,11 +86,8 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 	private final HColor back;
 
 	private Style getStyle() {
-		return getStyleSignature().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
-	}
-
-	private StyleSignature getStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, sname, SName.package_).withTOBECHANGED(stereotype);
+		return StyleSignatureBasic.of(SName.root, SName.element, sname, SName.package_, SName.title)
+				.withTOBECHANGED(stereotype).getMergedStyle(getSkinParam().getCurrentStyleBuilder());
 	}
 
 	public EntityImageEmptyPackage(ILeaf entity, ISkinParam skinParam, PortionShower portionShower, SName sname) {

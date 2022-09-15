@@ -79,8 +79,8 @@ public class DriverRectangleHtml5 implements UDriver<URectangle, Html5Drawer> {
 //			eps.setStrokeColor(mapper.getMappedColor(param.getColor()));
 //			eps.epsRectangle(x, y, width, height, rx / 2, ry / 2, (HtmlColorGradient) back, mapper);
 		} else {
-			final String color = param.getColor() == null ? null : mapper.toRGB(param.getColor());
-			final String backcolor = param.getColor() == null ? null : mapper.toRGB(param.getBackcolor());
+			final String color = param.getColor() == null ? null : param.getColor().toRGB(mapper);
+			final String backcolor = param.getColor() == null ? null : param.getBackcolor().toRGB(mapper);
 
 			html.setStrokeColor(color);
 			html.setFillColor(backcolor);

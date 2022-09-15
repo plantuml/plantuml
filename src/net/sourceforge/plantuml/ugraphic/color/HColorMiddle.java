@@ -47,9 +47,18 @@ public class HColorMiddle extends HColor {
 		this.color2 = c2;
 	}
 
-	public Color getMappedColor(ColorMapper colorMapper) {
-		final Color cc1 = colorMapper.toColor(color1);
-		final Color cc2 = colorMapper.toColor(color2);
+	public final HColor getColor1() {
+		return color1;
+	}
+
+	public final HColor getColor2() {
+		return color2;
+	}
+
+	@Override
+	public Color toColor(ColorMapper mapper) {
+		final Color cc1 = color1.toColor(mapper);
+		final Color cc2 = color2.toColor(mapper);
 		final int r1 = cc1.getRed();
 		final int g1 = cc1.getGreen();
 		final int b1 = cc1.getBlue();
@@ -61,14 +70,6 @@ public class HColorMiddle extends HColor {
 		final int g = (g1 + g2) / 2;
 		final int b = (b1 + b2) / 2;
 		return new Color(r, g, b);
-	}
-
-	public final HColor getColor1() {
-		return color1;
-	}
-
-	public final HColor getColor2() {
-		return color2;
 	}
 
 }

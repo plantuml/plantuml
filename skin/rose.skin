@@ -68,8 +68,10 @@ stereotype {
 
 element {
   Shadowing 4.0
-  title {
-    FontStyle bold
+  composite {
+    title {
+      FontStyle bold
+    }
   }
 }
 

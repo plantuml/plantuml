@@ -226,7 +226,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 
 					final HColor back = timelineStyle.value(PName.BackGroundColor)
 							.asColor(getSkinParam().getThemeStyle(), getIHtmlColorSet());
-					if (HColors.isTransparent(back) == false) {
+					if (back.isTransparent() == false) {
 						final URectangle rect1 = new URectangle(calculateDimension(ug.getStringBounder()).getWidth(),
 								timeHeader.getTimeHeaderHeight());
 						ug.apply(back.bg()).draw(rect1);

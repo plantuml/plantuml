@@ -114,7 +114,7 @@ public class PSystemMath extends AbstractPSystem {
 
 	private Color getColor(final String col) {
 		final HColor col2 = col == null ? null : HColorSet.instance().getColorOrWhite(col);
-		final Color col3 = new ColorMapperIdentity().toColor(col2);
+		final Color col3 = col2.toColor(new ColorMapperIdentity());
 		return col3;
 	}
 

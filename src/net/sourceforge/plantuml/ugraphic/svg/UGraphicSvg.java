@@ -93,7 +93,7 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 			boolean textAsPath, double scale, String linkTarget, String hover, long seed, String preserveAspectRatio,
 			StringBounder stringBounder, LengthAdjust lengthAdjust, boolean interactive) {
 		this(defaultBackground, minDim, colorMapper,
-				new SvgGraphics(colorMapper.toSvg(defaultBackground), svgDimensionStyle, minDim, scale, hover, seed,
+				new SvgGraphics(defaultBackground.toSvg(colorMapper), svgDimensionStyle, minDim, scale, hover, seed,
 						preserveAspectRatio, lengthAdjust, DarkStrategy.IGNORE_DARK_COLOR, interactive),
 				textAsPath, linkTarget, stringBounder, interactive);
 		if (defaultBackground instanceof HColorGradient) {

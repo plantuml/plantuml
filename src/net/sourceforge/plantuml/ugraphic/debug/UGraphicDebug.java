@@ -255,7 +255,7 @@ public class UGraphicDebug extends AbstractCommonUGraphic implements ClipContain
 	}
 
 	private String colorToString(HColor color) {
-		if (HColors.isTransparent(color))
+		if (color == null || color.isTransparent())
 			return "NULL_COLOR";
 
 		if (color instanceof HColorSimple) {

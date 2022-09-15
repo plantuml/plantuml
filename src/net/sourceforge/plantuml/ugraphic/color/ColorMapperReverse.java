@@ -45,22 +45,13 @@ public class ColorMapperReverse extends ColorMapper {
 		this.order = order;
 	}
 
-	@Override
-	public Color toColor(HColor color) {
-		if (color == null)
-			throw new IllegalArgumentException();
-
-		if (color instanceof HColorMiddle)
-			return ((HColorMiddle) color).getMappedColor(this);
-
-		if (color instanceof HColorNone)
-			return new Color(0, 0, 0, 0);
-
-		return getReverse(((HColorSimple) color).getColor999());
-	}
-
 	private Color getReverse(Color color) {
 		return order.getReverse(color);
+	}
+
+	@Override
+	public Color fromColorSimple(HColorSimple simple) {
+		return getReverse(simple.getColor999());
 	}
 
 }

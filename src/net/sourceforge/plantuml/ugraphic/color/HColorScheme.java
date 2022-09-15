@@ -34,6 +34,8 @@
  */
 package net.sourceforge.plantuml.ugraphic.color;
 
+import java.awt.Color;
+
 class HColorScheme extends HColor {
 
 	private final HColor colorForLight;
@@ -48,7 +50,7 @@ class HColorScheme extends HColor {
 
 	@Override
 	public HColor getAppropriateColor(HColor back) {
-		if (HColors.isTransparent(back)) {
+		if (back.isTransparent()) {
 			if (colorForTransparent != null)
 				return colorForTransparent;
 

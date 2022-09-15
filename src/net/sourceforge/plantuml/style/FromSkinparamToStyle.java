@@ -161,7 +161,7 @@ public class FromSkinparamToStyle {
 		addConvert("titleBorderColor", PName.LineColor, SName.title);
 		addConvert("titleBackgroundColor", PName.BackGroundColor, SName.title);
 		addConvert("titleBorderRoundCorner", PName.RoundCorner, SName.title);
-		addConFont("title", SName.title);
+		addConFont("title", SName.document, SName.title);
 
 		addConvert("legendBorderThickness", PName.LineThickness, SName.legend);
 		addConvert("legendBorderColor", PName.LineColor, SName.legend);

@@ -133,29 +133,14 @@ public class HColors {
 		return color.bg();
 	}
 
+	private static final HColorSimple TRANSPARENT = new HColorSimple(new Color(0, 0, 0, 0));
+
 	public static HColor transparent() {
-		return new HColorNone();
+		return TRANSPARENT;
 	}
 
 	public static HColor none() {
-		return new HColorNone();
-	}
-
-	public static HColor generalBackground() {
-		return new HColorNone();
-	}
-
-	public static boolean isTransparent(HColor back) {
-		if (back == null)
-			return true;
-
-		if (back instanceof HColorNone)
-			return true;
-
-		if (back instanceof HColorSimple && ((HColorSimple) back).isTransparent())
-			return true;
-
-		return false;
+		return TRANSPARENT;
 	}
 
 	public static HColor unlinear(HColor color1, HColor color2, int completion) {

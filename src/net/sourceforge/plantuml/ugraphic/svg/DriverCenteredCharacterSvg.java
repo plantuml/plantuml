@@ -62,9 +62,9 @@ public class DriverCenteredCharacterSvg implements UDriver<UCenteredCharacter, S
 		final HColor textColor = param.getColor();
 		final HColor dark = textColor == null ? null : textColor.darkSchemeTheme();
 		if (dark == textColor)
-			svg.setFillColor(mapper.toSvg(textColor));
+			svg.setFillColor(textColor.toSvg(mapper));
 		else
-			svg.setFillColor(mapper.toSvg(textColor), mapper.toSvg(dark));
+			svg.setFillColor(textColor.toSvg(mapper), dark.toSvg(mapper));
 
 		svg.drawPathIterator(xpos, ypos, t.getOutline(null).getPathIterator(null));
 	}

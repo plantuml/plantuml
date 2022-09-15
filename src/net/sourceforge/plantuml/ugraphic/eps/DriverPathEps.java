@@ -43,8 +43,8 @@ import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 public class DriverPathEps implements UDriver<UPath, EpsGraphics> {
 
 	public void draw(UPath shape, double x, double y, ColorMapper mapper, UParam param, EpsGraphics eps) {
-		eps.setStrokeColor(mapper.toColor(param.getColor()));
-		eps.setFillColor(mapper.toColor(param.getBackcolor()));
+		eps.setStrokeColor(param.getColor().toColor(mapper));
+		eps.setFillColor(param.getBackcolor().toColor(mapper));
 		eps.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDashVisible(), param
 				.getStroke().getDashSpace());
 

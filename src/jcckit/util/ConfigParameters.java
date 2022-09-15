@@ -306,7 +306,7 @@ static private HColorSet colors = HColorSet.instance();
 private Color decodeInternal(String value) {
 	if (value!=null) {
 		  try {
-			return new ColorMapperIdentity().toColor(colors.getColor(ThemeStyle.LIGHT_REGULAR, value));
+			return colors.getColor(ThemeStyle.LIGHT_REGULAR, value).toColor(new ColorMapperIdentity());
 		} catch (NoSuchColorException e) {
 			return Color.WHITE;
 		}

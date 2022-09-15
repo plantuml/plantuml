@@ -37,44 +37,8 @@ package net.sourceforge.plantuml.ugraphic.color;
 
 import java.awt.Color;
 
-import net.sourceforge.plantuml.StringUtils;
-
 public abstract class ColorMapper {
 
-	public abstract Color toColor(HColor color);
-
-	final public String toRGB(HColor hcolor) {
-		if (hcolor == null)
-			return null;
-
-		final Color color = toColor(hcolor);
-		return StringUtils.sharp000000(color.getRGB());
-	}
-
-	final public String toSvg(HColor hcolor) {
-		if (hcolor == null)
-			return "none";
-
-		if (HColors.isTransparent(hcolor))
-			return "#00000000";
-
-		final Color color = toColor(hcolor);
-		final int alpha = color.getAlpha();
-		if (alpha == 255)
-			return toRGB(hcolor);
-
-		String s = "0" + Integer.toHexString(alpha).toUpperCase();
-		s = s.substring(s.length() - 2);
-		return toRGB(hcolor) + s;
-	}
-
-	private static String sharpAlpha(int color) {
-		final int v = color & 0xFFFFFF;
-		String s = "00000" + Integer.toHexString(v).toUpperCase();
-		s = s.substring(s.length() - 6);
-		final int alpha = (int) (((long) color) & 0x000000FF) << 24;
-		final String s2 = "0" + Integer.toHexString(alpha).toUpperCase();
-		return "#" + s + s2.substring(0, 2);
-	}
+	public abstract Color fromColorSimple(HColorSimple simple);
 
 }

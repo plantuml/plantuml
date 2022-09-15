@@ -51,14 +51,13 @@ import net.sourceforge.plantuml.code.NoPlantumlCompressionException;
 import net.sourceforge.plantuml.code.PairInt;
 import net.sourceforge.plantuml.code.SpiralOnRectangle;
 import net.sourceforge.plantuml.log.Logme;
-import net.sourceforge.plantuml.ugraphic.color.ColorChangerMonochrome;
+import net.sourceforge.plantuml.ugraphic.color.ColorUtils;
 
 public enum SpriteGrayLevel {
 
 	GRAY_16(16), GRAY_8(8), GRAY_4(4);
 
 	private final int nbColor;
-	private static final ColorChangerMonochrome mono = new ColorChangerMonochrome();
 
 	private SpriteGrayLevel(int nbColor) {
 		this.nbColor = nbColor;
@@ -166,7 +165,7 @@ public enum SpriteGrayLevel {
 		if (y >= img.getHeight()) {
 			return 0;
 		}
-		final Color g = mono.getChangedColor(new Color(img.getRGB(x, y)));
+		final Color g = ColorUtils.getGrayScaleColor(new Color(img.getRGB(x, y)));
 		final int gray = 255 - g.getRed();
 		return gray / 16;
 	}

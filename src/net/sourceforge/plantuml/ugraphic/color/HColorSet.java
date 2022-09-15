@@ -362,7 +362,7 @@ public class HColorSet {
 		s = removeFirstDieseAndgoLowerCase(s);
 		final Color color;
 		if (s.equalsIgnoreCase("transparent") || s.equalsIgnoreCase("background")) {
-			return HColors.generalBackground();
+			return HColors.none();
 		} else if (s.equalsIgnoreCase("automatic")) {
 			return new HColorAutomagic();
 		} else if (s.matches("[0-9A-Fa-f]")) {

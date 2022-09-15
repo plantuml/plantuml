@@ -48,9 +48,9 @@ public class DriverPixelSvg implements UDriver<UPixel, SvgGraphics> {
 		final HColor color = param.getColor();
 		if (color instanceof HColorGradient) {
 			final HColorGradient gr = (HColorGradient) color;
-			svg.setStrokeColor(mapper.toSvg(gr.getColor1()));
+			svg.setStrokeColor(gr.getColor1().toSvg(mapper));
 		} else {
-			svg.setStrokeColor(mapper.toSvg(color));
+			svg.setStrokeColor(color.toSvg(mapper));
 		}
 		svg.setStrokeWidth(0.5, "");
 

@@ -77,12 +77,12 @@ public class DriverPolygonEps implements UDriver<UPolygon, EpsGraphics> {
 
 		final HColor back = param.getBackcolor();
 		if (back instanceof HColorGradient) {
-			eps.setStrokeColor(mapper.toColor(param.getColor()));
+			eps.setStrokeColor(param.getColor().toColor(mapper));
 			eps.epsPolygon((HColorGradient) back, mapper, points);
 		} else {
 
-			eps.setFillColor(mapper.toColor(back));
-			eps.setStrokeColor(mapper.toColor(param.getColor()));
+			eps.setFillColor(back.toColor(mapper));
+			eps.setStrokeColor(param.getColor().toColor(mapper));
 			eps.epsPolygon(points);
 		}
 	}

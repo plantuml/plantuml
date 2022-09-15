@@ -81,11 +81,11 @@ public class DriverRectangleEps implements UDriver<URectangle, EpsGraphics> {
 
 		final HColor back = param.getBackcolor();
 		if (back instanceof HColorGradient) {
-			eps.setStrokeColor(mapper.toColor(param.getColor()));
+			eps.setStrokeColor(param.getColor().toColor(mapper));
 			eps.epsRectangle(x, y, width, height, rx / 2, ry / 2, (HColorGradient) back, mapper);
 		} else {
-			eps.setStrokeColor(mapper.toColor(param.getColor()));
-			eps.setFillColor(mapper.toColor(param.getBackcolor()));
+			eps.setStrokeColor(param.getColor().toColor(mapper));
+			eps.setFillColor(param.getBackcolor().toColor(mapper));
 			eps.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDashVisible(), param
 					.getStroke().getDashSpace());
 			eps.epsRectangle(x, y, width, height, rx / 2, ry / 2);

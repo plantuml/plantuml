@@ -57,7 +57,6 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UText;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColors;
 import net.sourceforge.plantuml.utils.CharHidder;
 
 public final class AtomText extends AbstractAtom implements Atom {
@@ -142,7 +141,7 @@ public final class AtomText extends AbstractAtom implements Atom {
 			FontConfiguration useFontConfiguration = fontConfiguration;
 
 			HColor backcolor = ug.getParam().getBackcolor();
-			if (HColors.isTransparent(backcolor))
+			if (backcolor.isTransparent())
 				backcolor = ug.getDefaultBackground();
 
 			textColor = textColor.getAppropriateColor(backcolor);

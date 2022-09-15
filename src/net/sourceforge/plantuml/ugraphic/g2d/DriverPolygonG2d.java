@@ -48,7 +48,6 @@ import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorGradient;
-import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class DriverPolygonG2d extends DriverShadowedG2d implements UDriver<UPolygon, Graphics2D> {
 
@@ -84,7 +83,7 @@ public class DriverPolygonG2d extends DriverShadowedG2d implements UDriver<UPoly
 			path.closePath();
 
 		if (shape.getDeltaShadow() != 0)
-			if (HColors.isTransparent(back))
+			if (back.isTransparent())
 				drawOnlyLineShadowSpecial(g2d, path, shape.getDeltaShadow(), dpiFactor);
 			else
 				drawShadow(g2d, path, shape.getDeltaShadow(), dpiFactor);
@@ -95,31 +94,31 @@ public class DriverPolygonG2d extends DriverShadowedG2d implements UDriver<UPoly
 			final GradientPaint paint;
 			if (policy == '|')
 				paint = new GradientPaint((float) x, (float) (y + shape.getHeight()) / 2,
-						mapper.toColor(gr.getColor1()), (float) (x + shape.getWidth()),
-						(float) (y + shape.getHeight()) / 2, mapper.toColor(gr.getColor2()));
+						gr.getColor1().toColor(mapper), (float) (x + shape.getWidth()),
+						(float) (y + shape.getHeight()) / 2, gr.getColor2().toColor(mapper));
 			else if (policy == '\\')
-				paint = new GradientPaint((float) x, (float) (y + shape.getHeight()), mapper.toColor(gr.getColor1()),
-						(float) (x + shape.getWidth()), (float) y, mapper.toColor(gr.getColor2()));
+				paint = new GradientPaint((float) x, (float) (y + shape.getHeight()), gr.getColor1().toColor(mapper),
+						(float) (x + shape.getWidth()), (float) y, gr.getColor2().toColor(mapper));
 			else if (policy == '-')
-				paint = new GradientPaint((float) (x + shape.getWidth()) / 2, (float) y, mapper.toColor(gr.getColor1()),
+				paint = new GradientPaint((float) (x + shape.getWidth()) / 2, (float) y, gr.getColor1().toColor(mapper),
 						(float) (x + shape.getWidth()) / 2, (float) (y + shape.getHeight()),
-						mapper.toColor(gr.getColor2()));
+						gr.getColor2().toColor(mapper));
 			else
 				// for /
-				paint = new GradientPaint((float) x, (float) y, mapper.toColor(gr.getColor1()),
+				paint = new GradientPaint((float) x, (float) y, gr.getColor1().toColor(mapper),
 						(float) (x + shape.getWidth()), (float) (y + shape.getHeight()),
-						mapper.toColor(gr.getColor2()));
+						gr.getColor2().toColor(mapper));
 
 			g2d.setPaint(paint);
 			g2d.fill(path);
-		} else if (HColors.isTransparent(back) == false) {
-			g2d.setColor(mapper.toColor(back));
+		} else if (back.isTransparent() == false) {
+			g2d.setColor(back.toColor(mapper));
 			DriverRectangleG2d.managePattern(param, g2d);
 			g2d.fill(path);
 		}
 
-		if (HColors.isTransparent(param.getColor()) == false) {
-			g2d.setColor(mapper.toColor(param.getColor()));
+		if (param.getColor().isTransparent() == false) {
+			g2d.setColor(param.getColor().toColor(mapper));
 			DriverLineG2d.manageStroke(param, g2d);
 			g2d.draw(path);
 		}

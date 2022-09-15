@@ -210,7 +210,8 @@ try {
 	ST_adjmatrix_t rv = new ST_adjmatrix_t();
     rv.nrows = i;
     rv.ncols = j;
-    rv.data = new int[i][j]; // Or maybe new int[j][i] ?
+    // Arnaud 15/09/2022: the j+1 is needed in some case to avoid ArrayIndexOutOfBoundsException
+    rv.data = new int[i][j+1]; // Or maybe new int[j][i] ?
     return rv;
 } finally {
 LEAVING("756bre1tpxb1tq68p7xhkrxkc","new_matrix");

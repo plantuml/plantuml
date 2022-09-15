@@ -61,9 +61,9 @@ public class DriverPathSvg extends DriverShadowedG2d implements UDriver<UPath, S
 			final HColor color = param.getColor();
 			final HColor dark = color == null ? null : color.darkSchemeTheme();
 			if (dark == color)
-				svg.setFillColor(mapper.toSvg(color));
+				svg.setFillColor(color.toSvg(mapper));
 			else
-				svg.setFillColor(mapper.toSvg(color), mapper.toSvg(dark));
+				svg.setFillColor(color.toSvg(mapper), dark.toSvg(mapper));
 			svg.setStrokeColor("");
 			svg.setStrokeWidth(0, "");
 		} else {

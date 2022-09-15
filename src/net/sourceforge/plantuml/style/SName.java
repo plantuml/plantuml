@@ -60,6 +60,7 @@ public enum SName {
 	collection, //
 	collections, //
 	component, //
+	composite, //
 	robust, //
 	concise, //
 	clock, //

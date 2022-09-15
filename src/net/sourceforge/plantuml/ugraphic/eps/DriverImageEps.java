@@ -61,7 +61,7 @@ public class DriverImageEps implements UDriver<UImage, EpsGraphics> {
 			}
 		}
 
-		eps.drawImage(shape.muteTransparentColor(mapper.toColor(param.getBackcolor())).getImage(1), x, y);
+		eps.drawImage(shape.muteTransparentColor(param.getBackcolor().toColor(mapper)).getImage(1), x, y);
 	}
 
 }

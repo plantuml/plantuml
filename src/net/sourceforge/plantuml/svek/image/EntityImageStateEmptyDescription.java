@@ -54,7 +54,7 @@ public class EntityImageStateEmptyDescription extends EntityImageStateCommon {
 	}
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-		final XDimension2D dim = desc.calculateDimension(stringBounder);
+		final XDimension2D dim = title.calculateDimension(stringBounder);
 		final XDimension2D result = XDimension2D.delta(dim, MARGIN * 2);
 		return XDimension2D.atLeast(result, MIN_WIDTH, MIN_HEIGHT);
 	}
@@ -65,7 +65,7 @@ public class EntityImageStateEmptyDescription extends EntityImageStateCommon {
 
 		final StringBounder stringBounder = ug.getStringBounder();
 		final XDimension2D dimTotal = calculateDimension(stringBounder);
-		final XDimension2D dimDesc = desc.calculateDimension(stringBounder);
+		final XDimension2D dimDesc = title.calculateDimension(stringBounder);
 
 		final UStroke stroke = getStyleState().getStroke(lineConfig.getColors());
 
@@ -76,7 +76,7 @@ public class EntityImageStateEmptyDescription extends EntityImageStateCommon {
 
 		final double xDesc = (dimTotal.getWidth() - dimDesc.getWidth()) / 2;
 		final double yDesc = (dimTotal.getHeight() - dimDesc.getHeight()) / 2;
-		desc.drawU(ug.apply(new UTranslate(xDesc, yDesc)));
+		title.drawU(ug.apply(new UTranslate(xDesc, yDesc)));
 
 		if (url != null)
 			ug.closeUrl();

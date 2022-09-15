@@ -67,8 +67,8 @@ public class HColorGradient extends HColor {
 		if (coeff > 1 || coeff < 0)
 			throw new IllegalArgumentException("c=" + coeff);
 
-		final Color c1 = mapper.toColor(color1);
-		final Color c2 = mapper.toColor(color2);
+		final Color c1 = color1.toColor(mapper);
+		final Color c2 = color2.toColor(mapper);
 		final int vred = c2.getRed() - c1.getRed();
 		final int vgreen = c2.getGreen() - c1.getGreen();
 		final int vblue = c2.getBlue() - c1.getBlue();
@@ -83,6 +83,11 @@ public class HColorGradient extends HColor {
 
 	public final char getPolicy() {
 		return policy;
+	}
+
+	@Override
+	public Color toColor(ColorMapper mapper) {
+		return color1.toColor(mapper);
 	}
 
 }

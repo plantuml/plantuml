@@ -40,25 +40,8 @@ import java.awt.Color;
 public class ColorMapperIdentity extends ColorMapper {
 
 	@Override
-	public Color toColor(HColor color) {
-		if (color == null)
-			throw new IllegalArgumentException();
-
-		if (color instanceof HColorNone)
-			return new Color(0, 0, 0, 0);
-
-		if (color instanceof HColorGradient)
-			return toColor(((HColorGradient) color).getColor1());
-
-		if (color instanceof HColorMiddle)
-			return ((HColorMiddle) color).getMappedColor(this);
-
-		if (color instanceof HColorScheme)
-			throw new IllegalStateException();
-
-		if (color instanceof HColorAutomagic)
-			throw new IllegalStateException();
-
-		return ((HColorSimple) color).getColor999();
+	public Color fromColorSimple(HColorSimple simple) {
+		return simple.getColor999();
 	}
+
 }

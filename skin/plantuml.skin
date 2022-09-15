@@ -72,13 +72,12 @@ stereotype {
 
 element {
   Shadowing 0.0
-  title {
-    FontStyle bold
-  }
-}
-
-element {
   LineThickness 0.5
+  composite {
+    title {
+      FontStyle bold
+    }  
+  }
 }
 
 group {
@@ -225,6 +224,9 @@ stateDiagram {
   }
   group {
     LineThickness 0.5
+  }
+  header {
+    FontSize 12
   }
 }
 

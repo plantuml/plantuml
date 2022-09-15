@@ -78,13 +78,13 @@ public class DriverLineSvg implements UDriver<ULine, SvgGraphics> {
 		final HColor color = param.getColor();
 		if (color instanceof HColorGradient) {
 			final HColorGradient gr = (HColorGradient) color;
-			svg.setStrokeColor(mapper.toSvg(gr.getColor1()));
+			svg.setStrokeColor(gr.getColor1().toSvg(mapper));
 		} else {
 			final HColor dark = color == null ? null : color.darkSchemeTheme();
 			if (dark == color)
-				svg.setStrokeColor(mapper.toSvg(color));
+				svg.setStrokeColor(color.toSvg(mapper));
 			else
-				svg.setStrokeColor(mapper.toSvg(color), mapper.toSvg(dark));
+				svg.setStrokeColor(color.toSvg(mapper), dark.toSvg(mapper));
 		}
 		svg.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDasharraySvg());
 		svg.svgLine(x, y, x2, y2, shape.getDeltaShadow());
