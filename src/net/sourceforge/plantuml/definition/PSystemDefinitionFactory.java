@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.definition;
 
-import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.command.PSystemBasicFactory;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
@@ -47,7 +46,7 @@ public class PSystemDefinitionFactory extends PSystemBasicFactory<PSystemDefinit
 	}
 
 	@Override
-	public PSystemDefinition initDiagram(ThemeStyle style, UmlSource source, String startLine) {
+	public PSystemDefinition initDiagram(UmlSource source, String startLine) {
 		if (getDiagramType() == DiagramType.DEFINITION)
 			return new PSystemDefinition(source, startLine);
 
@@ -55,7 +54,7 @@ public class PSystemDefinitionFactory extends PSystemBasicFactory<PSystemDefinit
 	}
 
 	@Override
-	public PSystemDefinition executeLine(ThemeStyle style, UmlSource source, PSystemDefinition system, String line) {
+	public PSystemDefinition executeLine(UmlSource source, PSystemDefinition system, String line) {
 		system.doCommandLine(line);
 		return system;
 	}

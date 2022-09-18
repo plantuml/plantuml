@@ -43,7 +43,6 @@ import java.util.List;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
-import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.awt.geom.XRectangle2D;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -69,8 +68,8 @@ public class BoardDiagram extends UmlDiagram {
 		return new DiagramDescription("Board");
 	}
 
-	public BoardDiagram(ThemeStyle style, UmlSource source) {
-		super(style, source, UmlDiagramType.BOARD, null);
+	public BoardDiagram(UmlSource source) {
+		super(source, UmlDiagramType.BOARD, null);
 	}
 
 	@Override

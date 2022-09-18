@@ -72,8 +72,8 @@ public abstract class AbstractElement implements Element {
 	}
 
 	private HColor buildColor(String color1, String color2) {
-		final HColor tmp1 = HColorSet.instance().getColorOrWhite(null, color1);
-		final HColor tmp2 = HColorSet.instance().getColorOrWhite(null, color2);
+		final HColor tmp1 = HColorSet.instance().getColorOrWhite(color1);
+		final HColor tmp2 = HColorSet.instance().getColorOrWhite(color2);
 		return tmp1.withDark(tmp2);
 	}
 

@@ -129,8 +129,7 @@ public final class GroupPngMakerState {
 
 		final double rounded = style.value(PName.RoundCorner).asDouble();
 		final double shadowing = style.value(PName.Shadowing).asDouble();
-		final FontConfiguration titleFontConfiguration = styleTitle.getFontConfiguration(skinParam.getThemeStyle(),
-				skinParam.getIHtmlColorSet());
+		final FontConfiguration titleFontConfiguration = styleTitle.getFontConfiguration(skinParam.getIHtmlColorSet());
 		final TextBlock title = display.create(titleFontConfiguration, HorizontalAlignment.CENTER,
 				diagram.getSkinParam());
 
@@ -155,13 +154,12 @@ public final class GroupPngMakerState {
 
 		HColor borderColor = group.getColors().getColor(ColorType.LINE);
 		if (borderColor == null)
-			borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
+			borderColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 
 		final Stereotype stereo = group.getStereotype();
 		HColor backColor = group.getColors().getColor(ColorType.BACK);
 		if (backColor == null)
-			backColor = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
-					skinParam.getIHtmlColorSet());
+			backColor = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
 
 		UStroke stroke = group.getColors().getSpecificLineStroke();
 		if (stroke == null)
@@ -176,8 +174,7 @@ public final class GroupPngMakerState {
 		final IEntityImage image = containsOnlyConcurrentStates ? buildImageForConcurrentState(dotData)
 				: svek2.buildImage(null, new String[0]);
 
-		final HColor bodyColor = styleBody.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
-				skinParam.getIHtmlColorSet());
+		final HColor bodyColor = styleBody.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
 		return new InnerStateAutonom(image, title, attribute, borderColor, backColor, group.getUrl99(), withSymbol,
 				stroke, rounded, shadowing, bodyColor);
 

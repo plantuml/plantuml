@@ -151,7 +151,7 @@ public class NwGroup implements NStackable {
 		}
 		HColor color = getColor();
 		if (color == null)
-			color = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
+			color = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
 
 		size.draw(ug, color);
 
@@ -167,7 +167,7 @@ public class NwGroup implements NStackable {
 		final StyleBuilder styleBuilder = skinParam.getCurrentStyleBuilder();
 		final Style style = getStyleDefinition().getMergedStyle(styleBuilder);
 		return Display.getWithNewlines(getDescription()).create(
-				style.getFontConfiguration(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet()),
+				style.getFontConfiguration(skinParam.getIHtmlColorSet()),
 				HorizontalAlignment.LEFT, skinParam);
 	}
 

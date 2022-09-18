@@ -88,8 +88,7 @@ public class LaneDivider extends AbstractTextBlock {
 		final UShape back = new UEmpty(x1 + x2, 1);
 		ug.draw(back);
 
-		final HColor color = getStyle().value(PName.LineColor).asColor(skinParam.getThemeStyle(),
-				skinParam.getIHtmlColorSet());
+		final HColor color = getStyle().value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 		final UStroke thickness = getStyle().getStroke();
 
 		ug.apply(UTranslate.dx(x1)).apply(thickness).apply(color).draw(ULine.vline(height));

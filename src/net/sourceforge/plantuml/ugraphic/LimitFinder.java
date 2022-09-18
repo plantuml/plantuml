@@ -44,7 +44,6 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.posimo.DotPath;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class LimitFinder extends UGraphicNo {
@@ -185,7 +184,7 @@ public class LimitFinder extends UGraphicNo {
 	}
 
 	public ColorMapper getColorMapper() {
-		return new ColorMapperIdentity();
+		return ColorMapper.IDENTITY;
 	}
 
 	public double getMaxX() {

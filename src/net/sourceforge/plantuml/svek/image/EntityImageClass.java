@@ -189,16 +189,14 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 		shadow = getStyle().value(PName.Shadowing).asDouble();
 
 		if (borderColor == null)
-			borderColor = getStyle().value(PName.LineColor).asColor(getSkinParam().getThemeStyle(),
-					getSkinParam().getIHtmlColorSet());
+			borderColor = getStyle().value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
 
 		if (headerBackcolor == null)
 			headerBackcolor = backcolor == null ? getStyleHeader().value(PName.BackGroundColor)
-					.asColor(getSkinParam().getThemeStyle(), getSkinParam().getIHtmlColorSet()) : backcolor;
+					.asColor(getSkinParam().getIHtmlColorSet()) : backcolor;
 
 		if (backcolor == null)
-			backcolor = getStyle().value(PName.BackGroundColor).asColor(getSkinParam().getThemeStyle(),
-					getSkinParam().getIHtmlColorSet());
+			backcolor = getStyle().value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());
 
 		rect.setDeltaShadow(shadow);
 

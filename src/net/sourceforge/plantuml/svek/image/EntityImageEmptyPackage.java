@@ -101,20 +101,17 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 
 		Style style = getStyle();
 		style = style.eventuallyOverride(colors);
-		this.borderColor = style.value(PName.LineColor).asColor(getSkinParam().getThemeStyle(),
-				getSkinParam().getIHtmlColorSet());
+		this.borderColor = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
 		this.shadowing = style.value(PName.Shadowing).asDouble();
 		this.stroke = style.getStroke(colors);
 		this.roundCorner = style.value(PName.RoundCorner).asDouble();
 		this.diagonalCorner = style.value(PName.DiagonalCorner).asDouble();
 		if (specificBackColor == null)
-			this.back = style.value(PName.BackGroundColor).asColor(getSkinParam().getThemeStyle(),
-					getSkinParam().getIHtmlColorSet());
+			this.back = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());
 		else
 			this.back = specificBackColor;
 
-		final FontConfiguration titleFontConfiguration = style.getFontConfiguration(getSkinParam().getThemeStyle(),
-				getSkinParam().getIHtmlColorSet());
+		final FontConfiguration titleFontConfiguration = style.getFontConfiguration(getSkinParam().getIHtmlColorSet());
 		final HorizontalAlignment titleHorizontalAlignment = style.getHorizontalAlignment();
 
 		this.desc = entity.getDisplay().create(titleFontConfiguration, titleHorizontalAlignment, skinParam);

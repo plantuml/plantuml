@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.log.Logme;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 
@@ -114,7 +114,7 @@ public class PSystemMath extends AbstractPSystem {
 
 	private Color getColor(final String col) {
 		final HColor col2 = col == null ? null : HColorSet.instance().getColorOrWhite(col);
-		final Color col3 = col2.toColor(new ColorMapperIdentity());
+		final Color col3 = col2.toColor(ColorMapper.IDENTITY);
 		return col3;
 	}
 

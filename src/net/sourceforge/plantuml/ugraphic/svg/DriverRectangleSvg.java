@@ -88,11 +88,7 @@ public class DriverRectangleSvg implements UDriver<URectangle, SvgGraphics> {
 					gr.getPolicy());
 			svg.setFillColor("url(#" + id + ")");
 		} else {
-			final HColor dark = background == null ? null : background.darkSchemeTheme();
-			if (dark == background)
-				svg.setFillColor(background.toSvg(mapper));
-			else
-				svg.setFillColor(background.toSvg(mapper), dark.toSvg(mapper));
+			svg.setFillColor(background.toSvg(mapper));
 		}
 	}
 
@@ -104,11 +100,7 @@ public class DriverRectangleSvg implements UDriver<URectangle, SvgGraphics> {
 					gr.getPolicy());
 			svg.setStrokeColor("url(#" + id + ")");
 		} else {
-			final HColor dark = color == null ? null : color.darkSchemeTheme();
-			if (dark == color)
-				svg.setStrokeColor(color.toSvg(mapper));
-			else
-				svg.setStrokeColor(color.toSvg(mapper), dark.toSvg(mapper));
+			svg.setStrokeColor(color.toSvg(mapper));
 		}
 
 	}

@@ -77,8 +77,7 @@ public class CommandActivityLong3 extends CommandMultilines2<ActivityDiagram3> {
 	protected CommandExecutionResult executeNow(ActivityDiagram3 diagram, BlocLines lines) throws NoSuchColorException {
 		lines = lines.removeEmptyColumns();
 		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
-		final Colors colors = color().getColor(diagram.getSkinParam().getThemeStyle(), line0,
-				diagram.getSkinParam().getIHtmlColorSet());
+		final Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());
 
 		final BoxStyle style = BoxStyle.fromChar(lines.getLastChar());
 		lines = lines.removeStartingAndEnding(line0.get("DATA", 0), 1);

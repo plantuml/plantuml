@@ -276,7 +276,7 @@ public class StripeSimple implements Stripe {
 			col = fontConfiguration.getColor();
 		else
 			try {
-				col = skinParam.getIHtmlColorSet().getColor(skinParam.getThemeStyle(), forcedColor);
+				col = skinParam.getIHtmlColorSet().getColor(forcedColor);
 			} catch (NoSuchColorException e) {
 				col = null;
 			}

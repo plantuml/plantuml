@@ -201,16 +201,15 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 		final Style style = StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.note)
 				.getMergedStyle(getStyleBuilder());
 
-		final FontConfiguration fc = style.getFontConfiguration(skinParam.getThemeStyle(), getColorSet());
+		final FontConfiguration fc = style.getFontConfiguration(getColorSet());
 
 		final HorizontalAlignment horizontalAlignment = style.value(PName.HorizontalAlignment).asHorizontalAlignment();
 		final Sheet sheet = Parser.build(fc, horizontalAlignment, skinParam, CreoleMode.FULL).createSheet(note);
 		final double padding = style.value(PName.Padding).asDouble();
 		final SheetBlock1 sheet1 = new SheetBlock1(sheet, LineBreakStrategy.NONE, padding);
 
-		final HColor noteBackgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
-				getColorSet());
-		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), getColorSet());
+		final HColor noteBackgroundColor = style.value(PName.BackGroundColor).asColor(getColorSet());
+		final HColor borderColor = style.value(PName.LineColor).asColor(getColorSet());
 		final double shadowing = style.value(PName.Shadowing).asDouble();
 
 		return new Opale(shadowing, borderColor, noteBackgroundColor, sheet1, false, style.getStroke());
@@ -283,7 +282,7 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 
 		final HColor backUndone = StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.undone)
 				.getMergedStyle(getStyleBuilder()).value(PName.BackGroundColor)
-				.asColor(skinParam.getThemeStyle(), getColorSet());
+				.asColor(getColorSet());
 
 		final RectangleTask rectangleTask = new RectangleTask(startPos, endPos, round, getCompletion(), off);
 

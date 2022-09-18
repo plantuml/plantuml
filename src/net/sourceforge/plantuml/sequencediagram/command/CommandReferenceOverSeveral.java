@@ -84,7 +84,7 @@ public class CommandReferenceOverSeveral extends SingleLineCommand2<SequenceDiag
 			throws NoSuchColorException {
 		final String s1 = arg.get("REF", 0);
 		final HColor backColorElement = s1 == null ? null
-				: diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(), s1);
+				: diagram.getSkinParam().getIHtmlColorSet().getColor(s1);
 		// final HtmlColor backColorGeneral =
 		// HtmlColorSetSimple.instance().getColorIfValid(arg.get("REF").get(1));
 

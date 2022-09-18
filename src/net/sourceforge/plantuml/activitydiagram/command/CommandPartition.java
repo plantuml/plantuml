@@ -95,8 +95,7 @@ public class CommandPartition extends SingleLineCommand2<ActivityDiagram> {
 				NamespaceStrategy.SINGLE);
 		final IEntity p = diagram.getCurrentGroup();
 
-		final Colors colors = color().getColor(diagram.getSkinParam().getThemeStyle(), arg,
-				diagram.getSkinParam().getIHtmlColorSet());
+		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
 		if (colors.isEmpty() == false) {
 			p.setColors(colors);
 		}

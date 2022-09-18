@@ -86,14 +86,14 @@ public class ChangeState implements Comparable<ChangeState> {
 
 	public final HColor getBackColor(ISkinParam skinParam, Style style) {
 		if (colors == null || colors.getColor(ColorType.BACK) == null)
-			return style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
+			return style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
 
 		return colors.getColor(ColorType.BACK);
 	}
 
 	private final HColor getLineColor(ISkinParam skinParam, Style style) {
 		if (colors == null || colors.getColor(ColorType.LINE) == null)
-			return style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
+			return style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 
 		return colors.getColor(ColorType.LINE);
 	}

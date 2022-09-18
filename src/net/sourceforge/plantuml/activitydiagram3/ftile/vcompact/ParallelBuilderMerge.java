@@ -78,7 +78,7 @@ public class ParallelBuilderMerge extends AbstractParallelFtilesBuilder {
 		for (Ftile tmp : list99) {
 			final XDimension2D dim = tmp.calculateDimension(getStringBounder());
 			Style style = getStyleSignature().getMergedStyle(skinParam().getCurrentStyleBuilder());
-			final Rainbow def = Rainbow.build(style, skinParam().getIHtmlColorSet(), skinParam().getThemeStyle());
+			final Rainbow def = Rainbow.build(style, skinParam().getIHtmlColorSet());
 			final Rainbow rainbow = tmp.getInLinkRendering().getRainbow(def);
 			conns.add(new ConnectionIn(black, tmp, x, rainbow));
 			x += dim.getWidth();
@@ -95,10 +95,8 @@ public class ParallelBuilderMerge extends AbstractParallelFtilesBuilder {
 	protected Ftile doStep2(Ftile inner, Ftile result) {
 		final Style style = getStyleSignature().getMergedStyle(skinParam().getCurrentStyleBuilder());
 
-		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam().getThemeStyle(),
-				skinParam().getIHtmlColorSet());
-		final HColor backColor = style.value(PName.BackGroundColor).asColor(skinParam().getThemeStyle(),
-				skinParam().getIHtmlColorSet());
+		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam().getIHtmlColorSet());
+		final HColor backColor = style.value(PName.BackGroundColor).asColor(skinParam().getIHtmlColorSet());
 
 		final Ftile out = new FtileDiamond(skinParam(), backColor, borderColor, swimlaneOutForStep2());
 		result = new FtileAssemblySimple(result, out);
@@ -109,7 +107,7 @@ public class ParallelBuilderMerge extends AbstractParallelFtilesBuilder {
 		for (Ftile tmp : list99) {
 			final XDimension2D dim = tmp.calculateDimension(getStringBounder());
 			final UTranslate translate0 = new UTranslate(x, barHeight);
-			final Rainbow def = Rainbow.build(style, skinParam().getIHtmlColorSet(), skinParam().getThemeStyle());
+			final Rainbow def = Rainbow.build(style, skinParam().getIHtmlColorSet());
 			final Rainbow rainbow = tmp.getOutLinkRendering().getRainbow(def);
 			if (tmp.calculateDimension(getStringBounder()).hasPointOut())
 				conns.add(new ConnectionHorizontalThenVertical(tmp, out, rainbow, translate0, diamondTranslate));

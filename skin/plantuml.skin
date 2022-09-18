@@ -240,7 +240,7 @@ delay {
 
 
 swimlane {
-  BackGroundColor none
+  BackGroundColor transparent
   LineColor black
   LineThickness 1.5
   FontSize 18
@@ -293,9 +293,9 @@ activityDiagram {
 	    FontSize 12
 	    RoundCorner 25
 	}
-	partition {
+	composite {
 	    LineColor black
-	    BackgroundColor none
+	    BackgroundColor transparent
 	    LineThickness 1.5
 	}
 	diamond {

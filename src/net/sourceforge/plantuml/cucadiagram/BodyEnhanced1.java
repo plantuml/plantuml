@@ -76,7 +76,7 @@ public class BodyEnhanced1 extends BodyEnhancedAbstract implements TextBlock, Wi
 	BodyEnhanced1(HorizontalAlignment align, List<CharSequence> rawBody, ISkinParam skinParam, ILeaf entity,
 			Style style) {
 		super(align,
-				style.getFontConfiguration(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet(), entity.getColors()),
+				style.getFontConfiguration(skinParam.getIHtmlColorSet(), entity.getColors()),
 				style);
 		this.style = style;
 		this.rawBody2 = Display.create(rawBody);
@@ -91,7 +91,7 @@ public class BodyEnhanced1 extends BodyEnhancedAbstract implements TextBlock, Wi
 
 	BodyEnhanced1(HorizontalAlignment align, Display display, ISkinParam skinParam, ILeaf entity, Style style) {
 		super(align,
-				style.getFontConfiguration(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet(), entity.getColors()),
+				style.getFontConfiguration(skinParam.getIHtmlColorSet(), entity.getColors()),
 				style);
 
 		this.style = style;
@@ -166,8 +166,7 @@ public class BodyEnhanced1 extends BodyEnhancedAbstract implements TextBlock, Wi
 					title = null;
 					display = null;
 					final List<CharSequence> allTree = buildTreeOrTable(s, it);
-					final FontConfiguration fontConfiguration = style.getFontConfiguration(skinParam.getThemeStyle(),
-							skinParam.getIHtmlColorSet());
+					final FontConfiguration fontConfiguration = style.getFontConfiguration(skinParam.getIHtmlColorSet());
 					TextBlock bloc = Display.create(allTree).create7(fontConfiguration, align, skinParam,
 							CreoleMode.FULL);
 					if (isTable)

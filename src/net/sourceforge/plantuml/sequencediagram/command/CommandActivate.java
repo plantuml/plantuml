@@ -78,10 +78,10 @@ public class CommandActivate extends SingleLineCommand2<SequenceDiagram> {
 				.getOrCreateParticipant(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("WHO", 0)));
 		final String back = arg.get("BACK", 0);
 		final HColor backColor = back == null ? null
-				: diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(), back);
+				: diagram.getSkinParam().getIHtmlColorSet().getColor(back);
 		final String line = arg.get("LINE", 0);
 		final HColor lineColor = line == null ? null
-				: diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(), line);
+				: diagram.getSkinParam().getIHtmlColorSet().getColor(line);
 		final String error = diagram.activate(p, type, backColor, lineColor);
 		if (error == null) {
 			return CommandExecutionResult.ok();

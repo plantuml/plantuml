@@ -67,7 +67,7 @@ public class CommandLink3 extends SingleLineCommand2<ActivityDiagram3> {
 			throws NoSuchColorException {
 		final String s = arg.get("COLOR", 0);
 		final HColor color = s == null ? null
-				: diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(), s);
+				: diagram.getSkinParam().getIHtmlColorSet().getColor(s);
 		if (color != null) {
 			diagram.setColorNextArrow(Rainbow.fromColor(color, null));
 		}

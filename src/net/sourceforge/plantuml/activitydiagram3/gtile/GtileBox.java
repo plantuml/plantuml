@@ -134,10 +134,10 @@ public class GtileBox extends AbstractGtile {
 		this.boxStyle = boxStyle;
 
 		this.inRendering = LinkRendering
-				.create(Rainbow.build(styleArrow, getIHtmlColorSet(), skinParam.getThemeStyle()));
-		this.borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), getIHtmlColorSet());
-		this.backColor = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(), getIHtmlColorSet());
-		final FontConfiguration fc = style.getFontConfiguration(skinParam.getThemeStyle(), getIHtmlColorSet());
+				.create(Rainbow.build(styleArrow, getIHtmlColorSet()));
+		this.borderColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());
+		this.backColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
+		final FontConfiguration fc = style.getFontConfiguration(getIHtmlColorSet());
 		this.horizontalAlignment = style.getHorizontalAlignment();
 		this.padding = style.getPadding();
 		this.margin = style.getMargin();

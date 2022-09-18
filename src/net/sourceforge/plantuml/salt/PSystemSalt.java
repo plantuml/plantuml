@@ -50,7 +50,6 @@ import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.WithSprite;
 import net.sourceforge.plantuml.api.ImageDataSimple;
-import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.awt.geom.XRectangle2D;
 import net.sourceforge.plantuml.command.BlocLines;
@@ -98,13 +97,13 @@ public class PSystemSalt extends TitledDiagram implements WithSprite {
 	private final Dictionary dictionary = new Dictionary();
 
 	@Deprecated
-	public PSystemSalt(ThemeStyle style, UmlSource source, List<String> data) {
-		super(style, source, UmlDiagramType.SALT, null);
+	public PSystemSalt(UmlSource source, List<String> data) {
+		super(source, UmlDiagramType.SALT, null);
 		this.data = data;
 	}
 
-	public PSystemSalt(ThemeStyle style, UmlSource source) {
-		this(style, source, new ArrayList<String>());
+	public PSystemSalt(UmlSource source) {
+		this(source, new ArrayList<String>());
 	}
 
 	public void add(String s) {

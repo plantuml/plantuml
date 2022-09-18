@@ -52,7 +52,6 @@ import net.sourceforge.plantuml.AlignmentParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.command.Position;
@@ -303,7 +302,7 @@ public class Cluster implements Moveable {
 		if (group.getColors().getColor(ColorType.LINE) != null)
 			borderColor = group.getColors().getColor(ColorType.LINE);
 		else
-			borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
+			borderColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 		final double rounded = style.value(PName.RoundCorner).asDouble();
 		final double diagonalCorner = style.value(PName.DiagonalCorner).asDouble();
 
@@ -335,8 +334,7 @@ public class Cluster implements Moveable {
 
 			HColor backColor = getBackColor(umlDiagramType, style);
 			backColor = getBackColor(backColor, group.getStereotype(), umlDiagramType.getStyleName(),
-					group.getUSymbol(), skinParam.getCurrentStyleBuilder(), skinParam.getThemeStyle(),
-					skinParam.getIHtmlColorSet());
+					group.getUSymbol(), skinParam.getCurrentStyleBuilder(), skinParam.getIHtmlColorSet());
 
 			final ClusterDecoration decoration = new ClusterDecoration(packageStyle, group.getUSymbol(),
 					clusterHeader.getTitle(), clusterHeader.getStereo(), clusterPosition, stroke);
@@ -414,15 +412,15 @@ public class Cluster implements Moveable {
 		HColor borderColor = group.getColors().getColor(ColorType.LINE);
 		if (borderColor == null)
 			borderColor = EntityImageStateCommon.getStyleState(group, skinParam).value(PName.LineColor)
-					.asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
+					.asColor(skinParam.getIHtmlColorSet());
 
 		HColor backColor = group.getColors().getColor(ColorType.BACK);
 		if (backColor == null)
 			backColor = EntityImageStateCommon.getStyleState(group, skinParam).value(PName.BackGroundColor)
-					.asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
+					.asColor(skinParam.getIHtmlColorSet());
 
 		final HColor imgBackcolor = EntityImageStateCommon.getStyleStateBody(group, skinParam)
-				.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
+				.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
 
 		final TextBlock attribute = ((EntityImpl) group).getStateHeader(skinParam);
 		final double attributeHeight = attribute.calculateDimension(ug.getStringBounder()).getHeight();
@@ -584,7 +582,7 @@ public class Cluster implements Moveable {
 
 		final Stereotype stereo = group.getStereotype();
 
-		return style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
+		return style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
 
 //		final USymbol sym = group.getUSymbol() == null ? USymbols.PACKAGE : group.getUSymbol();
 //		final ColorParam backparam = umlDiagramType == UmlDiagramType.ACTIVITY ? ColorParam.partitionBackground
@@ -607,11 +605,11 @@ public class Cluster implements Moveable {
 	}
 
 	public static HColor getBackColor(HColor backColor, Stereotype stereotype, SName styleName, USymbol symbol,
-			StyleBuilder styleBuilder, ThemeStyle themeStyle, HColorSet colorSet) {
+			StyleBuilder styleBuilder, HColorSet colorSet) {
 
 		final Style style = getDefaultStyleDefinition(styleName, symbol).getMergedStyle(styleBuilder);
 		if (backColor == null)
-			backColor = style.value(PName.BackGroundColor).asColor(themeStyle, colorSet);
+			backColor = style.value(PName.BackGroundColor).asColor(colorSet);
 
 		if (backColor == null || backColor.equals(HColors.transparent()))
 			backColor = HColors.transparent();

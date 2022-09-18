@@ -101,8 +101,7 @@ public class CommandWBSItemMultiline extends CommandMultilines2<WBSDiagram> {
 		final String stringColor = line0.get("BACKCOLOR", 0);
 		HColor backColor = null;
 		if (stringColor != null) {
-			backColor = diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(),
-					stringColor);
+			backColor = diagram.getSkinParam().getIHtmlColorSet().getColor(stringColor);
 		}
 
 		Direction dir = Direction.RIGHT;

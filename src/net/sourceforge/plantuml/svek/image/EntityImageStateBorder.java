@@ -90,12 +90,10 @@ public class EntityImageStateBorder extends AbstractEntityImageBorder {
 		desc.drawU(ug.apply(new UTranslate(x, y)));
 
 		final Style style = getSignature().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
-		final HColor borderColor = style.value(PName.LineColor).asColor(getSkinParam().getThemeStyle(),
-				getSkinParam().getIHtmlColorSet());
+		final HColor borderColor = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
 		HColor backcolor = getEntity().getColors().getColor(ColorType.BACK);
 		if (backcolor == null)
-			backcolor = style.value(PName.BackGroundColor).asColor(getSkinParam().getThemeStyle(),
-					getSkinParam().getIHtmlColorSet());
+			backcolor = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());
 
 		ug = ug.apply(getUStroke()).apply(borderColor);
 		ug = ug.apply(backcolor.bg());

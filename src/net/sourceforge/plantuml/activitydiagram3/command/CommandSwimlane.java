@@ -69,7 +69,7 @@ public class CommandSwimlane extends SingleLineCommand2<ActivityDiagram3> {
 			throws NoSuchColorException {
 		final String s = arg.get("COLOR", 0);
 		final HColor color = s == null ? null
-				: diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(), s);
+				: diagram.getSkinParam().getIHtmlColorSet().getColor(s);
 		final String name = arg.get("SWIMLANE", 0);
 		final Display label = Display.getWithNewlines(arg.get("LABEL", 0));
 		return diagram.swimlane(name, color, label);

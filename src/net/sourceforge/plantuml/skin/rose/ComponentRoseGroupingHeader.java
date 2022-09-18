@@ -73,13 +73,11 @@ public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 		super(styleHeader, LineBreakStrategy.NONE, 15, 30, 1, spriteContainer, strings.get(0));
 
 		this.roundCorner = style.value(PName.RoundCorner).asInt();
-		this.background = style.value(PName.BackGroundColor).asColor(spriteContainer.getThemeStyle(),
-				getIHtmlColorSet());
-		this.symbolContext = style.getSymbolContext(spriteContainer.getThemeStyle(), getIHtmlColorSet());
-		this.symbolContextCorner = styleHeader.getSymbolContext(spriteContainer.getThemeStyle(), getIHtmlColorSet());
+		this.background = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
+		this.symbolContext = style.getSymbolContext(getIHtmlColorSet());
+		this.symbolContextCorner = styleHeader.getSymbolContext(getIHtmlColorSet());
 
-		final FontConfiguration smallFont2 = style.getFontConfiguration(spriteContainer.getThemeStyle(),
-				getIHtmlColorSet());
+		final FontConfiguration smallFont2 = style.getFontConfiguration(getIHtmlColorSet());
 
 		if (strings.size() == 1 || strings.get(1) == null) {
 			this.commentTextBlock = null;

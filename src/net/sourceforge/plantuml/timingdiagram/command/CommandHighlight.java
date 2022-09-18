@@ -89,8 +89,7 @@ public class CommandHighlight extends SingleLineCommand2<TimingDiagram> {
 		final TimeTick tickFrom = TimeTickBuilder.parseTimeTick("FROM", arg, diagram);
 		final TimeTick tickTo = TimeTickBuilder.parseTimeTick("TO", arg, diagram);
 		final Display display = Display.getWithNewlines(arg.get("CAPTION", 0));
-		final Colors colors = color().getColor(diagram.getSkinParam().getThemeStyle(), arg,
-				diagram.getSkinParam().getIHtmlColorSet());
+		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
 		return diagram.highlight(tickFrom, tickTo, display, colors);
 	}
 

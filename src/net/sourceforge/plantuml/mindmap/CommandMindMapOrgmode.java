@@ -70,8 +70,7 @@ public class CommandMindMapOrgmode extends SingleLineCommand2<MindMapDiagram> {
 		final String stringColor = arg.get("BACKCOLOR", 0);
 		HColor backColor = null;
 		if (stringColor != null) {
-			backColor = diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(),
-					stringColor);
+			backColor = diagram.getSkinParam().getIHtmlColorSet().getColor(stringColor);
 		}
 		return diagram.addIdea(backColor, diagram.getSmartLevel(type), Display.getWithNewlines(label),
 				IdeaShape.fromDesc(arg.get("SHAPE", 0)));

@@ -84,7 +84,7 @@ public class SmetanaForGit {
 	public SmetanaForGit(UGraphic ug, ISkinParam skinParam) {
 		this.stringBounder = ug.getStringBounder();
 		this.skinParam = skinParam;
-		this.ug = getStyle().applyStrokeAndLineColor(ug, skinParam.getIHtmlColorSet(), skinParam.getThemeStyle());
+		this.ug = getStyle().applyStrokeAndLineColor(ug, skinParam.getIHtmlColorSet());
 	}
 
 	private Style getStyle() {
@@ -93,7 +93,7 @@ public class SmetanaForGit {
 	}
 
 	private HColor arrowColor() {
-		return getStyle().value(PName.LineColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
+		return getStyle().value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 	}
 
 	public void drawMe(Collection<GNode> gnodes) {

@@ -101,8 +101,7 @@ public class AnnotatedWorker {
 		final double deltaShadow = style.value(PName.Shadowing).asDouble();
 		final FontConfiguration fontConfiguration = FontConfiguration.create(getSkinParam(), style);
 		final UStroke stroke = style.getStroke();
-		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(),
-				skinParam.getIHtmlColorSet());
+		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 
 		final SymbolContext symbolContext = new SymbolContext(getBackgroundColor(), borderColor).withShadow(deltaShadow)
 				.withStroke(stroke);

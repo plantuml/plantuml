@@ -64,7 +64,7 @@ public class SentenceTaskStartsWithColor extends SentenceSimple {
 			final HColor color = complement22.getCenter();
 			final GanttConstraint link = new GanttConstraint(diagram.getIHtmlColorSet(),
 					diagram.getCurrentStyleBuilder(), when, new TaskInstant(task, TaskAttribute.START), color);
-			link.applyStyle(diagram.getSkinParam().getThemeStyle(), complement22.getStyle());
+			link.applyStyle(complement22.getStyle());
 			diagram.addContraint(link);
 		}
 		return CommandExecutionResult.ok();

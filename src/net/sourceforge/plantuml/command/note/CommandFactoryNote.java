@@ -140,7 +140,7 @@ public final class CommandFactoryNote implements SingleMultiFactoryCommand<Abstr
 		assert entity != null;
 		final String s = arg.get("COLOR", 0);
 		entity.setSpecificColorTOBEREMOVED(ColorType.BACK, s == null ? null
-				: diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(), s));
+				: diagram.getSkinParam().getIHtmlColorSet().getColor(s));
 		CommandCreateClassMultilines.addTags(entity, arg.get("TAGS", 0));
 		return CommandExecutionResult.ok();
 	}

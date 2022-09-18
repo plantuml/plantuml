@@ -100,7 +100,7 @@ public class Branch {
 
 		final Style style = getDefaultStyleDefinitionDiamond().getMergedStyle(styleBuilder);
 		this.color = color == null ? style.value(PName.BackGroundColor).asColor(
-				styleBuilder.getSkinParam().getThemeStyle(), styleBuilder.getSkinParam().getIHtmlColorSet()) : color;
+				styleBuilder.getSkinParam().getIHtmlColorSet()) : color;
 
 		this.list = new InstructionList(swimlane);
 	}
@@ -243,8 +243,7 @@ public class Branch {
 
 		final Style style = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam().getCurrentStyleBuilder());
 		final LineBreakStrategy lineBreak = style.wrapWidth();
-		final FontConfiguration fcArrow = style.getFontConfiguration(skinParam().getThemeStyle(),
-				skinParam().getIHtmlColorSet());
+		final FontConfiguration fcArrow = style.getFontConfiguration(skinParam().getIHtmlColorSet());
 
 		return display.create0(fcArrow, HorizontalAlignment.LEFT, skinParam(), lineBreak, CreoleMode.SIMPLE_LINE, null,
 				null);

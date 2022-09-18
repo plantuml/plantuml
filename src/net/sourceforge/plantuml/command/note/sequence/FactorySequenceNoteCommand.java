@@ -153,8 +153,7 @@ public final class FactorySequenceNoteCommand implements SingleMultiFactoryComma
 			final boolean parallel = arg.get("PARALLEL", 0) != null;
 			final Display display = diagram.manageVariable(strings.toDisplay());
 			final Note note = new Note(p, position, display, diagram.getSkinParam().getCurrentStyleBuilder());
-			Colors colors = color().getColor(diagram.getSkinParam().getThemeStyle(), arg,
-					diagram.getSkinParam().getIHtmlColorSet());
+			Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
 			final String stereotypeString = arg.get("STEREO", 0);
 			if (stereotypeString != null) {
 				final Stereotype stereotype = Stereotype.build(stereotypeString);

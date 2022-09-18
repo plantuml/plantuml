@@ -104,17 +104,14 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 		this.style = getDefaultStyleDefinition(umlDiagramType.getStyleName())
 				.getMergedStyle(skinParam.getCurrentStyleBuilder());
 		if (entity.getColors().getColor(ColorType.BACK) == null)
-			this.noteBackgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
-					skinParam.getIHtmlColorSet());
+			this.noteBackgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
 		else
 			this.noteBackgroundColor = entity.getColors().getColor(ColorType.BACK);
 
-		this.borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(),
-				skinParam.getIHtmlColorSet());
+		this.borderColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 		this.shadowing = style.value(PName.Shadowing).asDouble();
 
-		final FontConfiguration fontConfiguration = style.getFontConfiguration(skinParam.getThemeStyle(),
-				skinParam.getIHtmlColorSet());
+		final FontConfiguration fontConfiguration = style.getFontConfiguration(skinParam.getIHtmlColorSet());
 		final HorizontalAlignment horizontalAlignment = style.getHorizontalAlignment();
 
 		if (strings.size() == 1 && strings.get(0).length() == 0)

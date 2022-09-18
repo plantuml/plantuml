@@ -133,7 +133,7 @@ public class ParallelBuilderFork extends AbstractParallelFtilesBuilder {
 		double x = 0;
 		for (Ftile tmp : list99) {
 			final XDimension2D dim = tmp.calculateDimension(getStringBounder());
-			final Rainbow def = Rainbow.build(style, skinParam().getIHtmlColorSet(), skinParam().getThemeStyle());
+			final Rainbow def = Rainbow.build(style, skinParam().getIHtmlColorSet());
 			final Rainbow rainbow = tmp.getInLinkRendering().getRainbow(def);
 			conns.add(new ConnectionIn(black, tmp, x, rainbow));
 			x += dim.getWidth();
@@ -192,7 +192,7 @@ public class ParallelBuilderFork extends AbstractParallelFtilesBuilder {
 		double x = 0;
 		for (Ftile tmp : list99) {
 			final XDimension2D dim = tmp.calculateDimension(getStringBounder());
-			final Rainbow def = Rainbow.build(style, skinParam().getIHtmlColorSet(), skinParam().getThemeStyle());
+			final Rainbow def = Rainbow.build(style, skinParam().getIHtmlColorSet());
 			final Rainbow rainbow = tmp.getOutLinkRendering().getRainbow(def);
 			if (tmp.calculateDimension(getStringBounder()).hasPointOut())
 				conns.add(new ConnectionOut(tmp, out, x, rainbow, getJustBeforeBar2(middle, getStringBounder())));

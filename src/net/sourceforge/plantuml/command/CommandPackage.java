@@ -155,8 +155,7 @@ public class CommandPackage extends SingleLineCommand2<AbstractEntityDiagram> {
 			p.addUrl(url);
 		}
 
-		final Colors colors = color().getColor(diagram.getSkinParam().getThemeStyle(), arg,
-				diagram.getSkinParam().getIHtmlColorSet());
+		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
 		p.setColors(colors);
 
 		return CommandExecutionResult.ok();

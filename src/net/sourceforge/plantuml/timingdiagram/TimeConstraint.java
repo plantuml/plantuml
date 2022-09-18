@@ -95,7 +95,7 @@ public class TimeConstraint {
 	}
 
 	private FontConfiguration getFontConfiguration() {
-		return getStyle().getFontConfiguration(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
+		return getStyle().getFontConfiguration(skinParam.getIHtmlColorSet());
 	}
 
 	public void drawU(UGraphic ug, TimingRuler ruler) {
@@ -116,7 +116,7 @@ public class TimeConstraint {
 	}
 
 	private HColor getArrowColor() {
-		return getStyle().value(PName.LineColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
+		return getStyle().value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 	}
 
 	private Style getStyle() {

@@ -154,8 +154,7 @@ public final class FactorySequenceNoteAcrossCommand implements SingleMultiFactor
 			final Display display = diagram.manageVariable(lines.toDisplay());
 			final Note note = new Note((Participant) null, (Participant) null, display,
 					diagram.getSkinParam().getCurrentStyleBuilder());
-			Colors colors = color().getColor(diagram.getSkinParam().getThemeStyle(), line0,
-					diagram.getSkinParam().getIHtmlColorSet());
+			Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());
 			final String stereotypeString = line0.get("STEREO", 0);
 			if (stereotypeString != null) {
 				final Stereotype stereotype = Stereotype.build(stereotypeString);

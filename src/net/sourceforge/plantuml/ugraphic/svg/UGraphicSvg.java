@@ -44,7 +44,6 @@ import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.posimo.DotPath;
-import net.sourceforge.plantuml.svg.DarkStrategy;
 import net.sourceforge.plantuml.svg.LengthAdjust;
 import net.sourceforge.plantuml.svg.SvgGraphics;
 import net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
@@ -89,12 +88,12 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 		register();
 	}
 
-	public UGraphicSvg(HColor defaultBackground, boolean svgDimensionStyle, XDimension2D minDim, ColorMapper colorMapper,
-			boolean textAsPath, double scale, String linkTarget, String hover, long seed, String preserveAspectRatio,
-			StringBounder stringBounder, LengthAdjust lengthAdjust, boolean interactive) {
+	public UGraphicSvg(HColor defaultBackground, boolean svgDimensionStyle, XDimension2D minDim,
+			ColorMapper colorMapper, boolean textAsPath, double scale, String linkTarget, String hover, long seed,
+			String preserveAspectRatio, StringBounder stringBounder, LengthAdjust lengthAdjust, boolean interactive) {
 		this(defaultBackground, minDim, colorMapper,
 				new SvgGraphics(defaultBackground.toSvg(colorMapper), svgDimensionStyle, minDim, scale, hover, seed,
-						preserveAspectRatio, lengthAdjust, DarkStrategy.IGNORE_DARK_COLOR, interactive),
+						preserveAspectRatio, lengthAdjust, interactive),
 				textAsPath, linkTarget, stringBounder, interactive);
 		if (defaultBackground instanceof HColorGradient) {
 			final SvgGraphics svg = getGraphicObject();
@@ -155,7 +154,8 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 				getGraphicObject().addComment(metadata);
 
 			if (interactive) {
-				// For performance reasons and also because we want the entire graph DOM to be create so we can register
+				// For performance reasons and also because we want the entire graph DOM to be
+				// create so we can register
 				// the event handlers on them we will append to the end of the document
 				getGraphicObject().addStyle("onmouseinteractivefooter.css");
 				getGraphicObject().addScriptTag("https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.0/dist/svg.min.js");

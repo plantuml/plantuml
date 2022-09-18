@@ -21,8 +21,7 @@ package jcckit.util;
 import java.awt.Color;
 import java.util.StringTokenizer;
 
-import net.sourceforge.plantuml.api.ThemeStyle;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
@@ -306,7 +305,7 @@ static private HColorSet colors = HColorSet.instance();
 private Color decodeInternal(String value) {
 	if (value!=null) {
 		  try {
-			return colors.getColor(ThemeStyle.LIGHT_REGULAR, value).toColor(new ColorMapperIdentity());
+			return colors.getColor(value).toColor(ColorMapper.IDENTITY);
 		} catch (NoSuchColorException e) {
 			return Color.WHITE;
 		}

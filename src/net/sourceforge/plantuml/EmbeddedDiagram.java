@@ -137,8 +137,7 @@ class EmbeddedDiagramDraw extends AbstractTextBlock implements Line, Atom {
 	}
 
 	private Diagram getSystem() throws IOException, InterruptedException {
-		final BlockUml blockUml = new BlockUml(skinParam.getThemeStyle(), as2, Defines.createEmpty(), skinParam, null,
-				null);
+		final BlockUml blockUml = new BlockUml(as2, Defines.createEmpty(), skinParam, null, null);
 		return blockUml.getDiagram();
 
 	}

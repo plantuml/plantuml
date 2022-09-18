@@ -310,7 +310,7 @@ collections {
 }
 
 swimlane {
-  BackGroundColor none
+  BackGroundColor transparent
   LineColor black
   LineThickness 2
   FontSize 18
@@ -370,9 +370,9 @@ activityDiagram {
 	    FontSize 12
 	    RoundCorner 25
 	}
-	partition {
+	composite {
 	    LineColor black
-	    BackgroundColor none
+	    BackgroundColor transparent
 	}
 	diamond {
 	    FontSize 11

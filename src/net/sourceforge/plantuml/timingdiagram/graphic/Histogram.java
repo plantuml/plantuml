@@ -196,10 +196,8 @@ public class Histogram implements PDrawing {
 	}
 
 	private SymbolContext getContext() {
-		final HColor lineColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(),
-				skinParam.getIHtmlColorSet());
-		final HColor backgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
-				skinParam.getIHtmlColorSet());
+		final HColor lineColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
+		final HColor backgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
 
 		return new SymbolContext(backgroundColor, lineColor).withStroke(getStroke());
 	}

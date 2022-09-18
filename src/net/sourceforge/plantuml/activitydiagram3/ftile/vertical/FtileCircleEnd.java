@@ -74,8 +74,8 @@ public class FtileCircleEnd extends AbstractFtile {
 		this.backColor = backColor;
 		this.swimlane = swimlane;
 		this.shadowing = style.value(PName.Shadowing).asDouble();
-		this.backColor = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(), getIHtmlColorSet());
-		this.borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), getIHtmlColorSet());
+		this.backColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
+		this.borderColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());
 
 	}
 

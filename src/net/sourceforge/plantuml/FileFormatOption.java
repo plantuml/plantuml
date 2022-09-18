@@ -40,8 +40,8 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.annotation.HaxeIgnored;
-import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 
 /**
  * A FileFormat with some parameters.
@@ -61,7 +61,7 @@ public final class FileFormatOption implements Serializable {
 	private final double scale;
 	private final String preserveAspectRatio;
 	private final String watermark;
-	private final ThemeStyle style;
+	private final ColorMapper colorMapper;
 
 	public double getScaleCoef() {
 		return scale;
@@ -69,17 +69,19 @@ public final class FileFormatOption implements Serializable {
 
 	@HaxeIgnored
 	public FileFormatOption(FileFormat fileFormat) {
-		this(fileFormat, true, false, null, false, null, TikzFontDistortion.getDefault(), 1.0, null, null, ThemeStyle.LIGHT_REGULAR);
+		this(fileFormat, true, false, null, false, null, TikzFontDistortion.getDefault(), 1.0, null, null,
+				ColorMapper.IDENTITY);
 	}
 
 	@HaxeIgnored
 	public FileFormatOption(FileFormat fileFormat, boolean withMetadata) {
-		this(fileFormat, withMetadata, false, null, false, null, TikzFontDistortion.getDefault(), 1.0, null, null, ThemeStyle.LIGHT_REGULAR);
+		this(fileFormat, withMetadata, false, null, false, null, TikzFontDistortion.getDefault(), 1.0, null, null,
+				ColorMapper.IDENTITY);
 	}
 
 	private FileFormatOption(FileFormat fileFormat, boolean withMetadata, boolean useRedForError, String svgLinkTarget,
 			boolean debugsvek, String hoverColor, TikzFontDistortion tikzFontDistortion, double scale,
-			String preserveAspectRatio, String watermark, ThemeStyle style) {
+			String preserveAspectRatio, String watermark, ColorMapper colorMapper) {
 		this.hoverColor = hoverColor;
 		this.watermark = watermark;
 		this.fileFormat = fileFormat;
@@ -90,7 +92,7 @@ public final class FileFormatOption implements Serializable {
 		this.tikzFontDistortion = Objects.requireNonNull(tikzFontDistortion);
 		this.scale = scale;
 		this.preserveAspectRatio = preserveAspectRatio;
-		this.style = style;
+		this.colorMapper = colorMapper;
 	}
 
 	public StringBounder getDefaultStringBounder(SvgCharSizeHack charSizeHack) {
@@ -111,42 +113,42 @@ public final class FileFormatOption implements Serializable {
 
 	public FileFormatOption withUseRedForError() {
 		return new FileFormatOption(fileFormat, withMetadata, true, svgLinkTarget, debugsvek, hoverColor,
-				tikzFontDistortion, scale, preserveAspectRatio, watermark, style);
+				tikzFontDistortion, scale, preserveAspectRatio, watermark, colorMapper);
 	}
 
 	public FileFormatOption withTikzFontDistortion(TikzFontDistortion tikzFontDistortion) {
 		return new FileFormatOption(fileFormat, withMetadata, true, svgLinkTarget, debugsvek, hoverColor,
-				tikzFontDistortion, scale, preserveAspectRatio, watermark, style);
+				tikzFontDistortion, scale, preserveAspectRatio, watermark, colorMapper);
 	}
 
 	public FileFormatOption withSvgLinkTarget(String svgLinkTarget) {
 		return new FileFormatOption(fileFormat, withMetadata, useRedForError, svgLinkTarget, debugsvek, hoverColor,
-				tikzFontDistortion, scale, preserveAspectRatio, watermark, style);
+				tikzFontDistortion, scale, preserveAspectRatio, watermark, colorMapper);
 	}
 
 	public FileFormatOption withPreserveAspectRatio(String preserveAspectRatio) {
 		return new FileFormatOption(fileFormat, withMetadata, useRedForError, svgLinkTarget, debugsvek, hoverColor,
-				tikzFontDistortion, scale, preserveAspectRatio, watermark, style);
+				tikzFontDistortion, scale, preserveAspectRatio, watermark, colorMapper);
 	}
 
 	public FileFormatOption withHoverColor(String hoverColor) {
 		return new FileFormatOption(fileFormat, withMetadata, useRedForError, svgLinkTarget, debugsvek, hoverColor,
-				tikzFontDistortion, scale, preserveAspectRatio, watermark, style);
+				tikzFontDistortion, scale, preserveAspectRatio, watermark, colorMapper);
 	}
 
 	public FileFormatOption withScale(double scale) {
 		return new FileFormatOption(fileFormat, withMetadata, useRedForError, svgLinkTarget, debugsvek, hoverColor,
-				tikzFontDistortion, scale, preserveAspectRatio, watermark, style);
+				tikzFontDistortion, scale, preserveAspectRatio, watermark, colorMapper);
 	}
 
 	public FileFormatOption withWartermark(String watermark) {
 		return new FileFormatOption(fileFormat, withMetadata, useRedForError, svgLinkTarget, debugsvek, hoverColor,
-				tikzFontDistortion, scale, preserveAspectRatio, watermark, style);
+				tikzFontDistortion, scale, preserveAspectRatio, watermark, colorMapper);
 	}
 
-	public FileFormatOption withStyle(ThemeStyle style) {
+	public FileFormatOption withColorMapper(ColorMapper colorMapper) {
 		return new FileFormatOption(fileFormat, withMetadata, useRedForError, svgLinkTarget, debugsvek, hoverColor,
-				tikzFontDistortion, scale, preserveAspectRatio, watermark, style);
+				tikzFontDistortion, scale, preserveAspectRatio, watermark, colorMapper);
 	}
 
 	@Override
@@ -193,8 +195,8 @@ public final class FileFormatOption implements Serializable {
 		return watermark;
 	}
 
-	public ThemeStyle getStyle() {
-		return style;
+	public ColorMapper getColorMapper() {
+		return colorMapper;
 	}
 
 }

@@ -75,8 +75,7 @@ public final class SvekResult extends AbstractTextBlock implements IEntityImage 
 		final Style style2 = getDefaultStyleDefinition(null)
 				.getMergedStyle(dotData.getSkinParam().getCurrentStyleBuilder());
 
-		HColor color = style2.value(PName.LineColor).asColor(dotData.getSkinParam().getThemeStyle(),
-				dotData.getSkinParam().getIHtmlColorSet());
+		HColor color = style2.value(PName.LineColor).asColor(dotData.getSkinParam().getIHtmlColorSet());
 		color = HColors.noGradient(color);
 
 		for (SvekNode node : dotStringFactory.getBibliotekon().allNodes()) {
@@ -99,8 +98,7 @@ public final class SvekResult extends AbstractTextBlock implements IEntityImage 
 
 			final StyleBuilder currentStyleBuilder = line.getCurrentStyleBuilder();
 			final Style styleLine = getDefaultStyleDefinition(line.getStereotype()).getMergedStyle(currentStyleBuilder);
-			color = styleLine.value(PName.LineColor).asColor(dotData.getSkinParam().getThemeStyle(),
-					dotData.getSkinParam().getIHtmlColorSet());
+			color = styleLine.value(PName.LineColor).asColor(dotData.getSkinParam().getIHtmlColorSet());
 			color = HColors.noGradient(color);
 
 			line.drawU(ug2, styleLine.getStroke(), color, ids);
@@ -129,8 +127,7 @@ public final class SvekResult extends AbstractTextBlock implements IEntityImage 
 	public HColor getBackcolor() {
 		final Style style = StyleSignatureBasic.of(SName.root, SName.document)
 				.getMergedStyle(dotData.getSkinParam().getCurrentStyleBuilder());
-		return style.value(PName.BackGroundColor).asColor(dotData.getSkinParam().getThemeStyle(),
-				dotData.getSkinParam().getIHtmlColorSet());
+		return style.value(PName.BackGroundColor).asColor(dotData.getSkinParam().getIHtmlColorSet());
 	}
 
 	private MinMax minMax;

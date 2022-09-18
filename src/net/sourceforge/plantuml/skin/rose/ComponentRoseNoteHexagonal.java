@@ -56,7 +56,7 @@ final public class ComponentRoseNoteHexagonal extends AbstractTextualComponent {
 	public ComponentRoseNoteHexagonal(Style style, Display strings, ISkinSimple spriteContainer, Colors colors) {
 		super(style, spriteContainer.wrapWidth(), 12, 12, 4, spriteContainer, strings, false);
 
-		this.symbolContext = style.getSymbolContext(spriteContainer.getThemeStyle(), getIHtmlColorSet(), colors);
+		this.symbolContext = style.getSymbolContext(getIHtmlColorSet(), colors);
 
 	}
 

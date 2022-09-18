@@ -22,7 +22,6 @@ import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UText;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapperMonochrome;
 import net.sourceforge.plantuml.ugraphic.color.ColorUtils;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
@@ -121,7 +120,7 @@ public class SvgNanoParser implements Sprite {
 	}
 
 	private int getGray(HColor col) {
-		final Color tmp = ColorUtils.getGrayScaleColor(col.toColor(new ColorMapperMonochrome(false)));
+		final Color tmp = ColorUtils.getGrayScaleColor(col.toColor(ColorMapper.MONOCHROME));
 		return tmp.getGreen();
 	}
 

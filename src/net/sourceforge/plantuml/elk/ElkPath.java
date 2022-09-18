@@ -124,8 +124,7 @@ public class ElkPath implements UDrawable {
 
 		final ISkinParam skinParam = diagram.getSkinParam();
 
-		HColor color = getStyle().value(PName.LineColor).asColor(skinParam.getThemeStyle(),
-				skinParam.getIHtmlColorSet());
+		HColor color = getStyle().value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 
 		if (this.link.getColors() != null) {
 			final HColor newColor = this.link.getColors().getColor(ColorType.ARROW, ColorType.LINE);

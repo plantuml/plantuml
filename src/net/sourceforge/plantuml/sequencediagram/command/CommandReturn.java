@@ -93,7 +93,7 @@ public class CommandReturn extends SingleLineCommand2<SequenceDiagram> {
 		ArrowConfiguration arrow = message1.getArrowConfiguration().withBody(ArrowBody.DOTTED);
 		final String color = arg.get("COLOR", 0);
 		if (color != null)
-			arrow = arrow.withColor(HColorSet.instance().getColor(diagram.getSkinParam().getThemeStyle(), color));
+			arrow = arrow.withColor(HColorSet.instance().getColor(color));
 
 		final Display display = Display.getWithNewlines(arg.get("MESSAGE", 0));
 		final AbstractMessage message2;

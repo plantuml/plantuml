@@ -39,7 +39,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.ISkinSimple;
-import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommonCommands;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
@@ -58,8 +57,8 @@ public class ListSpriteDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	public ListSpriteDiagram createEmptyDiagram(ThemeStyle style, UmlSource source, ISkinSimple skinParam) {
-		return new ListSpriteDiagram(style, source, skinParam);
+	public ListSpriteDiagram createEmptyDiagram(UmlSource source, ISkinSimple skinParam) {
+		return new ListSpriteDiagram(source, skinParam);
 	}
 
 }

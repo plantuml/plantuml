@@ -39,7 +39,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.ISkinSimple;
-import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandFootboxIgnored;
 import net.sourceforge.plantuml.command.CommonCommands;
@@ -54,8 +53,8 @@ public class NwDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	public NwDiagram createEmptyDiagram(ThemeStyle style, UmlSource source, ISkinSimple skinParam) {
-		return new NwDiagram(style, source);
+	public NwDiagram createEmptyDiagram(UmlSource source, ISkinSimple skinParam) {
+		return new NwDiagram(source);
 	}
 
 	@Override

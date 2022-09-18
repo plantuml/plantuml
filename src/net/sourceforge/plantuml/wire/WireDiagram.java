@@ -44,7 +44,6 @@ import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
-import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.awt.geom.XRectangle2D;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -71,8 +70,8 @@ public class WireDiagram extends UmlDiagram {
 		return new DiagramDescription("Wire Diagram");
 	}
 
-	public WireDiagram(ThemeStyle style, UmlSource source) {
-		super(style, source, UmlDiagramType.WIRE, null);
+	public WireDiagram(UmlSource source) {
+		super(source, UmlDiagramType.WIRE, null);
 	}
 
 	@Override

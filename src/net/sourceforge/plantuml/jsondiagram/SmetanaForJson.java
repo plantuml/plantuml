@@ -185,18 +185,16 @@ public class SmetanaForJson {
 
 		for (InternalNode node : nodes) {
 			node.block.drawU(
-					getStyleNode().applyStrokeAndLineColor(ug, skinParam.getIHtmlColorSet(), skinParam.getThemeStyle())
+					getStyleNode().applyStrokeAndLineColor(ug, skinParam.getIHtmlColorSet())
 							.apply(getPosition(node.node)));
 		}
-		final HColor color = getStyleArrow().value(PName.LineColor).asColor(skinParam.getThemeStyle(),
-				skinParam.getIHtmlColorSet());
+		final HColor color = getStyleArrow().value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 
 		for (ST_Agedge_s edge : edges) {
 			final JsonCurve curve = getCurve(edge, 13);
-			curve.drawCurve(color, getStyleArrow().applyStrokeAndLineColor(ug, skinParam.getIHtmlColorSet(),
-					skinParam.getThemeStyle()));
+			curve.drawCurve(color, getStyleArrow().applyStrokeAndLineColor(ug, skinParam.getIHtmlColorSet()));
 			curve.drawSpot(
-					getStyleArrow().applyStrokeAndLineColor(ug, skinParam.getIHtmlColorSet(), skinParam.getThemeStyle())
+					getStyleArrow().applyStrokeAndLineColor(ug, skinParam.getIHtmlColorSet())
 							.apply(color.bg()));
 		}
 	}

@@ -112,12 +112,10 @@ public class EntityImagePort extends AbstractEntityImageBorder {
 		HColor borderColor = getEntity().getColors().getColor(ColorType.LINE);
 
 		if (borderColor == null)
-			borderColor = style.value(PName.LineColor).asColor(getSkinParam().getThemeStyle(),
-					getSkinParam().getIHtmlColorSet());
+			borderColor = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
 
 		if (backcolor == null)
-			backcolor = style.value(PName.BackGroundColor).asColor(getSkinParam().getThemeStyle(),
-					getSkinParam().getIHtmlColorSet());
+			backcolor = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());
 
 		ug = ug.apply(borderColor);
 		ug = ug.apply(getUStroke()).apply(backcolor.bg());

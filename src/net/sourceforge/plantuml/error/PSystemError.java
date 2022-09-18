@@ -347,7 +347,7 @@ public abstract class PSystemError extends PlainDiagram {
 		final HColorSimple backColor = (HColorSimple) HColorSet.instance().getColorOrWhite("#eae2c9");
 
 		final BufferedImage qrcode = smaller(
-				utils.exportFlashcode("http://plantuml.com/dedication", Color.BLACK, backColor.getColor999()));
+				utils.exportFlashcode("http://plantuml.com/dedication", Color.BLACK, backColor.getAwtColor()));
 		final Display disp = Display.create("<b>Add your own dedication into PlantUML", " ", "For just $5 per month!",
 				"Details on <i>[[https://plantuml.com/dedication]]");
 

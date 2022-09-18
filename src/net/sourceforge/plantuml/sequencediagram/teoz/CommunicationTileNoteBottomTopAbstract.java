@@ -126,8 +126,7 @@ public abstract class CommunicationTileNoteBottomTopAbstract extends AbstractTil
 
 		final Style style = StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram)
 				.getMergedStyle(skinParam.getCurrentStyleBuilder());
-		final HColor color = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(),
-				skinParam.getIHtmlColorSet());
+		final HColor color = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 
 		final double dx = x2 - x1;
 		final double dy = y2 - y1;

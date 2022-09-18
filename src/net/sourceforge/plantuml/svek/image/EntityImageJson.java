@@ -90,8 +90,7 @@ public class EntityImageJson extends AbstractEntityImage implements Stencil, Wit
 		final Stereotype stereotype = entity.getStereotype();
 		this.roundCorner = skinParam.getRoundCorner(CornerParam.DEFAULT, null);
 
-		final FontConfiguration fcHeader = getStyleHeader().getFontConfiguration(getSkinParam().getThemeStyle(),
-				getSkinParam().getIHtmlColorSet());
+		final FontConfiguration fcHeader = getStyleHeader().getFontConfiguration(getSkinParam().getIHtmlColorSet());
 
 		this.name = TextBlockUtils
 				.withMargin(entity.getDisplay().create(fcHeader, HorizontalAlignment.CENTER, skinParam), 2, 2);
@@ -105,7 +104,7 @@ public class EntityImageJson extends AbstractEntityImage implements Stencil, Wit
 					HorizontalAlignment.CENTER, skinParam);
 
 		final FontConfiguration fontConfiguration = getStyleHeader()
-				.getFontConfiguration(getSkinParam().getThemeStyle(), getSkinParam().getIHtmlColorSet());
+				.getFontConfiguration(getSkinParam().getIHtmlColorSet());
 		this.entries = entity.getBodier().getBody(FontParam.OBJECT_ATTRIBUTE, skinParam, false, false,
 				entity.getStereotype(), getStyle(), fontConfiguration);
 
@@ -154,11 +153,9 @@ public class EntityImageJson extends AbstractEntityImage implements Stencil, Wit
 		HColor backcolor = getEntity().getColors().getColor(ColorType.BACK);
 
 		final Style style = getStyle();
-		final HColor borderColor = style.value(PName.LineColor).asColor(getSkinParam().getThemeStyle(),
-				getSkinParam().getIHtmlColorSet());
+		final HColor borderColor = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
 		if (backcolor == null)
-			backcolor = style.value(PName.BackGroundColor).asColor(getSkinParam().getThemeStyle(),
-					getSkinParam().getIHtmlColorSet());
+			backcolor = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());
 
 		rect.setDeltaShadow(style.value(PName.Shadowing).asDouble());
 		final UStroke stroke = style.getStroke();

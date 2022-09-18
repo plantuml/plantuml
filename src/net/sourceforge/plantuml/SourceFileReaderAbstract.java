@@ -85,8 +85,8 @@ public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 
 		this.file = file;
 		this.fileFormatOption = fileFormatOption;
-		this.builder = new BlockUmlBuilder(fileFormatOption.getStyle(), config, charset, defines, getReader(charset),
-				SFile.fromFile(file.getAbsoluteFile().getParentFile()), FileWithSuffix.getFileName(file));
+		this.builder = new BlockUmlBuilder(config, charset, defines, getReader(charset), SFile.fromFile(file.getAbsoluteFile().getParentFile()),
+				FileWithSuffix.getFileName(file));
 	}
 
 	public void setCheckMetadata(boolean checkMetadata) {

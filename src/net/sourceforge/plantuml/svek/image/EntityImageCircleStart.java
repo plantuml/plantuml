@@ -70,8 +70,7 @@ public class EntityImageCircleStart extends AbstractEntityImage {
 		final UEllipse circle = new UEllipse(SIZE, SIZE);
 
 		final Style style = getDefaultStyleDefinitionCircle().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
-		final HColor color = style.value(PName.LineColor).asColor(getSkinParam().getThemeStyle(),
-				getSkinParam().getIHtmlColorSet());
+		final HColor color = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
 		final double shadowing = style.value(PName.Shadowing).asDouble();
 
 		circle.setDeltaShadow(shadowing);

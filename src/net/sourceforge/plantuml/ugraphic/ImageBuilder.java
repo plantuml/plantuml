@@ -90,7 +90,6 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.svg.LengthAdjust;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorGradient;
 import net.sourceforge.plantuml.ugraphic.color.HColorSimple;
@@ -110,7 +109,7 @@ public class ImageBuilder {
 	private Animation animation;
 	private boolean annotations;
 	private HColor backcolor = getDefaultHBackColor();
-	private ColorMapper colorMapper = new ColorMapperIdentity();
+	private ColorMapper colorMapper;
 	private XDimension2D dimension;
 	private final FileFormatOption fileFormatOption;
 	private UDrawable udrawable;
@@ -139,6 +138,9 @@ public class ImageBuilder {
 	private ImageBuilder(FileFormatOption fileFormatOption) {
 		this.fileFormatOption = fileFormatOption;
 		this.stringBounder = fileFormatOption.getDefaultStringBounder(SvgCharSizeHack.NO_HACK);
+		this.colorMapper = fileFormatOption.getColorMapper();
+		if (this.colorMapper == null)
+			throw new IllegalArgumentException();
 	}
 
 	public ImageBuilder annotations(boolean annotations) {

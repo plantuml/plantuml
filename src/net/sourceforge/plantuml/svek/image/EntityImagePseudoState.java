@@ -94,10 +94,8 @@ public class EntityImagePseudoState extends AbstractEntityImage {
 		final UEllipse circle = new UEllipse(SIZE, SIZE);
 
 		final Style style = getStyle();
-		final HColor borderColor = style.value(PName.LineColor).asColor(getSkinParam().getThemeStyle(),
-				getSkinParam().getIHtmlColorSet());
-		final HColor backgroundColor = style.value(PName.BackGroundColor).asColor(getSkinParam().getThemeStyle(),
-				getSkinParam().getIHtmlColorSet());
+		final HColor borderColor = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
+		final HColor backgroundColor = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());
 		final double shadow = style.value(PName.Shadowing).asDouble();
 		final UStroke stroke = style.getStroke();
 

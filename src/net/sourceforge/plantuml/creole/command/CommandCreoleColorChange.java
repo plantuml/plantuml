@@ -87,7 +87,7 @@ public class CommandCreoleColorChange implements Command {
 		final FontConfiguration fc1 = stripe.getActualFontConfiguration();
 		final String s = m.group(2);
 		try {
-			final HColor color = HColorSet.instance().getColor(stripe.getSkinParam().getThemeStyle(), s);
+			final HColor color = HColorSet.instance().getColor(s);
 			final FontConfiguration fc2 = fc1.changeColor(color);
 			stripe.setActualFontConfiguration(fc2);
 		} catch (NoSuchColorException e) {

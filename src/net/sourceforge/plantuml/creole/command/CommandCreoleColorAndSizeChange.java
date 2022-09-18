@@ -93,7 +93,7 @@ public class CommandCreoleColorAndSizeChange implements Command {
 		try {
 			if (m.group(3) != null) {
 				final String s = m.group(3);
-				final HColor color = HColorSet.instance().getColor(stripe.getSkinParam().getThemeStyle(), s);
+				final HColor color = HColorSet.instance().getColor(s);
 				fc2 = fc2.changeColor(color);
 			}
 

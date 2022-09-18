@@ -131,7 +131,7 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 		final String stringColor = line0.get("BACKCOLOR", 0);
 		if (stringColor != null) {
 			entity1.setSpecificColorTOBEREMOVED(ColorType.BACK, diagram.getSkinParam().getIHtmlColorSet()
-					.getColor(diagram.getSkinParam().getThemeStyle(), stringColor));
+					.getColor(stringColor));
 		}
 		final StringBuilder sb = new StringBuilder();
 
@@ -199,7 +199,7 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 		if (lineLast.get(4) != null) {
 			String s = lineLast.get(4);
 			entity2.setSpecificColorTOBEREMOVED(ColorType.BACK,
-					diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(), s));
+					diagram.getSkinParam().getIHtmlColorSet().getColor(s));
 		}
 
 		final String arrowBody1 = CommandLinkClass.notNull(line0.get("ARROW_BODY1", 0));
@@ -228,7 +228,7 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 			link.setUrl(urlLink);
 		}
 
-		link.applyStyle(diagram.getSkinParam().getThemeStyle(), line0.getLazzy("ARROW_STYLE", 0));
+		link.applyStyle(line0.getLazzy("ARROW_STYLE", 0));
 		diagram.addLink(link);
 
 		return CommandExecutionResult.ok();

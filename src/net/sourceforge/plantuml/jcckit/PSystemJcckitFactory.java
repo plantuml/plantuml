@@ -42,7 +42,6 @@ import java.util.Properties;
 import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.command.PSystemBasicFactory;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
@@ -62,7 +61,7 @@ public class PSystemJcckitFactory extends PSystemBasicFactory<PSystemJcckit> {
 	}
 
 	@Override
-	public PSystemJcckit initDiagram(ThemeStyle style, UmlSource source, String startLine) {
+	public PSystemJcckit initDiagram(UmlSource source, String startLine) {
 		this.data = null;
 		this.width = 640;
 		this.height = 400;
@@ -109,7 +108,7 @@ public class PSystemJcckitFactory extends PSystemBasicFactory<PSystemJcckit> {
 	}
 
 	@Override
-	public PSystemJcckit executeLine(ThemeStyle style, UmlSource source, PSystemJcckit system, String line) {
+	public PSystemJcckit executeLine(UmlSource source, PSystemJcckit system, String line) {
 		if (system == null && line.startsWith("jcckit")) {
 			data = new StringBuilder();
 			extractDimension(line);

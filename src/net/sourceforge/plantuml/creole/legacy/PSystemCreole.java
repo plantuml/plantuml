@@ -77,11 +77,11 @@ public class PSystemCreole extends PlainDiagram {
 		final UFont font = UFont.serif(14);
 		final FontConfiguration fontConfiguration = FontConfiguration.blackBlueTrue(font);
 		final Sheet sheet = Parser.build(fontConfiguration, HorizontalAlignment.LEFT,
-				SkinParam.create(UmlDiagramType.SEQUENCE, fileFormatOption.getStyle()), CreoleMode.FULL).createSheet(display);
+				SkinParam.create(UmlDiagramType.SEQUENCE), CreoleMode.FULL).createSheet(display);
 		return new SheetBlock1(sheet, LineBreakStrategy.NONE, 0);
 
 		// final Dimension2D dim = TextBlockUtils.getDimension(sheetBlock);
-		// final UGraphic2 ug = fileFormat.createUGraphic(new ColorMapperIdentity(), 1,
+		// final UGraphic2 ug = fileFormat.createUGraphic(ColorMapper.IDENTITY, 1,
 		// dim, null, false);
 		// // sheetBlock.drawU(ug.apply(UTranslate.dy(10)));
 		// sheetBlock.drawU(ug);

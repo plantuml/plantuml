@@ -117,8 +117,7 @@ public final class CucaDiagramFileMakerSvek2InternalImage extends AbstractTextBl
 	}
 
 	public void drawU(UGraphic ug) {
-		final HColor borderColor = getStyle().value(PName.LineColor).asColor(skinParam.getThemeStyle(),
-				skinParam.getIHtmlColorSet());
+		final HColor borderColor = getStyle().value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 		final StringBounder stringBounder = ug.getStringBounder();
 		final XDimension2D dimTotal = calculateDimension(stringBounder);
 

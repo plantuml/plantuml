@@ -59,7 +59,7 @@ class SingleLine extends AbstractTextBlock implements Line {
 
 		final Splitter lineSplitter = new Splitter(text);
 
-		for (HtmlCommand cmd : lineSplitter.getHtmlCommands(spriteContainer.getThemeStyle(), false)) {
+		for (HtmlCommand cmd : lineSplitter.getHtmlCommands(false)) {
 			if (cmd instanceof Text) {
 				final String s = ((Text) cmd).getText();
 				result.blocs.add(new TileText(s, fontConfiguration, null));

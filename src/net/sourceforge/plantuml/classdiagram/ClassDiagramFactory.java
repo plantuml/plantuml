@@ -40,7 +40,6 @@ import java.util.List;
 
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.UmlDiagramType;
-import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.classdiagram.command.CommandAddMethod;
 import net.sourceforge.plantuml.classdiagram.command.CommandAllowMixing;
 import net.sourceforge.plantuml.classdiagram.command.CommandCreateClass;
@@ -87,8 +86,8 @@ import net.sourceforge.plantuml.objectdiagram.command.CommandCreateMap;
 public class ClassDiagramFactory extends PSystemCommandFactory {
 
 	@Override
-	public ClassDiagram createEmptyDiagram(ThemeStyle style, UmlSource source, ISkinSimple skinParam) {
-		return new ClassDiagram(style, source, skinParam);
+	public ClassDiagram createEmptyDiagram(UmlSource source, ISkinSimple skinParam) {
+		return new ClassDiagram(source, skinParam);
 	}
 
 	@Override

@@ -60,7 +60,6 @@ import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UText;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class Footprint {
@@ -122,7 +121,7 @@ public class Footprint {
 		}
 
 		public ColorMapper getColorMapper() {
-			return new ColorMapperIdentity();
+			return ColorMapper.IDENTITY;
 		}
 
 		private void addPoint(double x, double y) {

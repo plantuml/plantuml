@@ -78,7 +78,7 @@ public class ParallelBuilderSplit extends AbstractParallelFtilesBuilder {
 		Ftile result = inner;
 		final List<Connection> conns = new ArrayList<>();
 		final Style style = getStyleSignature().getMergedStyle(skinParam().getCurrentStyleBuilder());
-		final Rainbow thinColor = Rainbow.build(style, skinParam().getIHtmlColorSet(), skinParam().getThemeStyle());
+		final Rainbow thinColor = Rainbow.build(style, skinParam().getIHtmlColorSet());
 
 		final Ftile thin = new FtileThinSplit(skinParam(), getThin1Color(thinColor), list99.get(0).getSwimlaneIn());
 		double x = 0;
@@ -93,7 +93,7 @@ public class ParallelBuilderSplit extends AbstractParallelFtilesBuilder {
 
 			final LinkRendering inLinkRendering = tmp.getInLinkRendering();
 			final Rainbow rainbow = inLinkRendering
-					.getRainbow(Rainbow.build(style, skinParam().getIHtmlColorSet(), skinParam().getThemeStyle()));
+					.getRainbow(Rainbow.build(style, skinParam().getIHtmlColorSet()));
 
 			conns.add(new ConnectionIn(thin, tmp, x, rainbow));
 			x += dim.getWidth();
@@ -117,7 +117,7 @@ public class ParallelBuilderSplit extends AbstractParallelFtilesBuilder {
 		for (Ftile tmp : list99) {
 			final LinkRendering inLinkRendering = tmp.getInLinkRendering();
 			final Rainbow rainbow = inLinkRendering
-					.getRainbow(Rainbow.build(style, skinParam().getIHtmlColorSet(), skinParam().getThemeStyle()));
+					.getRainbow(Rainbow.build(style, skinParam().getIHtmlColorSet()));
 
 			if (rainbow.isInvisible() == false)
 				return thinColor.getColor();
@@ -144,7 +144,7 @@ public class ParallelBuilderSplit extends AbstractParallelFtilesBuilder {
 		final Style style = getStyleSignature().getMergedStyle(skinParam().getCurrentStyleBuilder());
 		final LinkRendering inLinkRendering = result.getInLinkRendering();
 		final Rainbow thinColor = inLinkRendering
-				.getRainbow(Rainbow.build(style, skinParam().getIHtmlColorSet(), skinParam().getThemeStyle()));
+				.getRainbow(Rainbow.build(style, skinParam().getIHtmlColorSet()));
 
 		final Ftile out = new FtileThinSplit(skinParam(), thinColor.getColor(), swimlaneOutForStep2());
 		result = new FtileAssemblySimple(result, out);
@@ -164,7 +164,7 @@ public class ParallelBuilderSplit extends AbstractParallelFtilesBuilder {
 
 			final LinkRendering outLinkRendering = tmp.getOutLinkRendering();
 			final Rainbow rainbow = outLinkRendering
-					.getRainbow(Rainbow.build(style, skinParam().getIHtmlColorSet(), skinParam().getThemeStyle()));
+					.getRainbow(Rainbow.build(style, skinParam().getIHtmlColorSet()));
 
 			if (tmp.calculateDimension(getStringBounder()).hasPointOut())
 				conns.add(new ConnectionOut(translate0, tmp, out, x, rainbow, getHeightOfMiddle(inner)));

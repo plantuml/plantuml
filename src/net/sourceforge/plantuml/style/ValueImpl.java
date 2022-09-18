@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.style;
 import java.awt.Font;
 import java.util.Objects;
 
-import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
@@ -90,10 +89,10 @@ public class ValueImpl implements Value {
 		return value.getValue1();
 	}
 
-	public HColor asColor(ThemeStyle themeStyle, HColorSet set) {
+	public HColor asColor(HColorSet set) {
 		final String value1 = value.getValue1();
 		if ("none".equalsIgnoreCase(value1))
-			return null;
+			return HColors.transparent();
 
 		if ("transparent".equalsIgnoreCase(value1))
 			return HColors.transparent();
@@ -101,9 +100,9 @@ public class ValueImpl implements Value {
 		if (value1 == null)
 			throw new IllegalArgumentException(value.toString());
 
-		final HColor result = set.getColorOrWhite(themeStyle, value1);
+		final HColor result = set.getColorOrWhite(value1);
 		if (value.getValue2() != null) {
-			final HColor dark = set.getColorOrWhite(themeStyle, value.getValue2());
+			final HColor dark = set.getColorOrWhite(value.getValue2());
 			return result.withDark(dark);
 		}
 		return result;

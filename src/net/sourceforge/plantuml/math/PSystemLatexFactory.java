@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.math;
 
-import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.command.PSystemBasicFactory;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
@@ -47,7 +46,7 @@ public class PSystemLatexFactory extends PSystemBasicFactory<PSystemLatex> {
 	}
 
 	@Override
-	public PSystemLatex initDiagram(ThemeStyle style, UmlSource source, String startLine) {
+	public PSystemLatex initDiagram(UmlSource source, String startLine) {
 		if (getDiagramType() == DiagramType.LATEX)
 			return new PSystemLatex(source);
 
@@ -55,7 +54,7 @@ public class PSystemLatexFactory extends PSystemBasicFactory<PSystemLatex> {
 	}
 
 	@Override
-	public PSystemLatex executeLine(ThemeStyle style, UmlSource source, PSystemLatex system, String line) {
+	public PSystemLatex executeLine(UmlSource source, PSystemLatex system, String line) {
 		system.doCommandLine(line);
 		return system;
 	}

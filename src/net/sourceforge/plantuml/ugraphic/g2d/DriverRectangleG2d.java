@@ -153,7 +153,7 @@ public class DriverRectangleG2d extends DriverShadowedG2d implements UDriver<URe
 		if (pattern == UPattern.VERTICAL_STRIPE) {
 			final BufferedImage bi = new BufferedImage(4, 4, BufferedImage.TYPE_INT_ARGB);
 			final Rectangle r = new Rectangle(0, 0, 4, 4);
-			final int rgb = ((HColorSimple) param.getBackcolor()).getColor999().getRGB();
+			final int rgb = ((HColorSimple) param.getBackcolor()).getAwtColor().getRGB();
 			for (int i = 0; i < 4; i++)
 				for (int j = 0; j < 4; j++)
 					if (i == 0 || i == 1)
@@ -163,7 +163,7 @@ public class DriverRectangleG2d extends DriverShadowedG2d implements UDriver<URe
 		} else if (pattern == UPattern.HORIZONTAL_STRIPE) {
 			final BufferedImage bi = new BufferedImage(4, 4, BufferedImage.TYPE_INT_ARGB);
 			final Rectangle r = new Rectangle(0, 0, 4, 4);
-			final int rgb = ((HColorSimple) param.getBackcolor()).getColor999().getRGB();
+			final int rgb = ((HColorSimple) param.getBackcolor()).getAwtColor().getRGB();
 			for (int i = 0; i < 4; i++)
 				for (int j = 0; j < 4; j++)
 					if (j == 0 || j == 1)
@@ -173,7 +173,7 @@ public class DriverRectangleG2d extends DriverShadowedG2d implements UDriver<URe
 		} else if (pattern == UPattern.SMALL_CIRCLE) {
 			final BufferedImage bi = new BufferedImage(4, 4, BufferedImage.TYPE_INT_ARGB);
 			final Rectangle r = new Rectangle(0, 0, 4, 4);
-			final int rgb = ((HColorSimple) param.getBackcolor()).getColor999().getRGB();
+			final int rgb = ((HColorSimple) param.getBackcolor()).getAwtColor().getRGB();
 			bi.setRGB(0, 1, rgb);
 			bi.setRGB(1, 0, rgb);
 			bi.setRGB(1, 1, rgb);

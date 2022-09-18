@@ -64,7 +64,7 @@ public class PlayerFrame {
 
 	private HColor getLineColor() {
 		final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
-		return style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
+		return style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 	}
 
 	private UStroke getUStroke() {

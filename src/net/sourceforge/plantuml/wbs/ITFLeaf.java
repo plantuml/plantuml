@@ -58,7 +58,7 @@ class ITFLeaf extends AbstractTextBlock implements ITF {
 			this.box = FtileBoxOld.createWbs(style, skinParam, label);
 		} else {
 			final TextBlock text = label.create0(
-					style.getFontConfiguration(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet()),
+					style.getFontConfiguration(skinParam.getIHtmlColorSet()),
 					style.getHorizontalAlignment(), skinParam, style.wrapWidth(), CreoleMode.FULL, null, null);
 			this.box = TextBlockUtils.withMargin(text, 0, 3, 1, 1);
 		}

@@ -48,7 +48,6 @@ import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.SpriteContainerEmpty;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
-import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.awt.geom.XRectangle2D;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -97,8 +96,8 @@ public class NwDiagram extends UmlDiagram {
 		return new DiagramDescription("(Nwdiag)");
 	}
 
-	public NwDiagram(ThemeStyle style, UmlSource source) {
-		super(style, source, UmlDiagramType.NWDIAG, null);
+	public NwDiagram(UmlSource source) {
+		super(source, UmlDiagramType.NWDIAG, null);
 	}
 
 	public void init() {
@@ -286,8 +285,7 @@ public class NwDiagram extends UmlDiagram {
 
 		final StyleBuilder styleBuilder = getSkinParam().getCurrentStyleBuilder();
 		final Style style = getStyleDefinitionNetwork(SName.network).getMergedStyle(styleBuilder);
-		final FontConfiguration fontConfiguration = style.getFontConfiguration(getSkinParam().getThemeStyle(),
-				getSkinParam().getIHtmlColorSet());
+		final FontConfiguration fontConfiguration = style.getFontConfiguration(getSkinParam().getIHtmlColorSet());
 		return Display.getWithNewlines(name).create(fontConfiguration, HorizontalAlignment.RIGHT,
 				new SpriteContainerEmpty());
 	}
@@ -402,7 +400,7 @@ public class NwDiagram extends UmlDiagram {
 
 		if ("color".equalsIgnoreCase(property)) {
 			final HColor color = value == null ? null
-					: getSkinParam().getIHtmlColorSet().getColorOrWhite(getSkinParam().getThemeStyle(), value);
+					: getSkinParam().getIHtmlColorSet().getColorOrWhite(value);
 			if (currentGroup != null)
 				currentGroup.setColor(color);
 			else if (lastNetwork() != null)

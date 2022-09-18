@@ -79,16 +79,11 @@ public class FtileFactoryDelegatorRepeat extends FtileFactoryDelegator {
 		final Style styleArrow = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam().getCurrentStyleBuilder());
 		final Style styleDiamond = getDefaultStyleDefinitionDiamond()
 				.getMergedStyle(skinParam().getCurrentStyleBuilder());
-		final HColor borderColor = styleDiamond.value(PName.LineColor).asColor(skinParam().getThemeStyle(),
-				skinParam().getIHtmlColorSet());
-		final HColor diamondColor = styleDiamond.value(PName.BackGroundColor).asColor(skinParam().getThemeStyle(),
-				skinParam().getIHtmlColorSet());
-		final Rainbow arrowColor = Rainbow.build(styleArrow, skinParam().getIHtmlColorSet(),
-				skinParam().getThemeStyle());
-		final FontConfiguration fcDiamond = styleDiamond.getFontConfiguration(skinParam().getThemeStyle(),
-				skinParam().getIHtmlColorSet());
-		final FontConfiguration fcArrow = styleArrow.getFontConfiguration(skinParam().getThemeStyle(),
-				skinParam().getIHtmlColorSet());
+		final HColor borderColor = styleDiamond.value(PName.LineColor).asColor(skinParam().getIHtmlColorSet());
+		final HColor diamondColor = styleDiamond.value(PName.BackGroundColor).asColor(skinParam().getIHtmlColorSet());
+		final Rainbow arrowColor = Rainbow.build(styleArrow, skinParam().getIHtmlColorSet());
+		final FontConfiguration fcDiamond = styleDiamond.getFontConfiguration(skinParam().getIHtmlColorSet());
+		final FontConfiguration fcArrow = styleArrow.getFontConfiguration(skinParam().getIHtmlColorSet());
 
 		final LinkRendering endRepeatLinkRendering = repeat.getOutLinkRendering();
 		final Rainbow endRepeatLinkColor = endRepeatLinkRendering == null ? null : endRepeatLinkRendering.getRainbow();

@@ -70,7 +70,7 @@ public class ComponentRoseParticipant extends AbstractTextualComponent {
 
 		this.roundCorner = style.value(PName.RoundCorner).asInt();
 		this.diagonalCorner = style.value(PName.DiagonalCorner).asInt();
-		final SymbolContext biColor = style.getSymbolContext(spriteContainer.getThemeStyle(), getIHtmlColorSet());
+		final SymbolContext biColor = style.getSymbolContext(getIHtmlColorSet());
 		this.stroke = style.getStroke();
 
 		this.padding = padding;

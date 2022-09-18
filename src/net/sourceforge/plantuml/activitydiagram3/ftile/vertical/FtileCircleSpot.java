@@ -100,10 +100,9 @@ public class FtileCircleSpot extends AbstractFtile {
 		final UEllipse circle = new UEllipse(SIZE, SIZE);
 
 		final HColor backColor = this.backColor == null
-				? style.value(PName.BackGroundColor).asColor(skinParam().getThemeStyle(), getIHtmlColorSet())
+				? style.value(PName.BackGroundColor).asColor(getIHtmlColorSet())
 				: this.backColor;
-		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam().getThemeStyle(),
-				getIHtmlColorSet());
+		final HColor borderColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());
 		final double shadow = style.value(PName.Shadowing).asDouble();
 
 		circle.setDeltaShadow(shadow);

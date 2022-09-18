@@ -115,8 +115,8 @@ public class ConditionalBuilder {
 
 		final Style styleArrow = getStyleSignatureArrow().getMergedStyle(skinParam.getCurrentStyleBuilder());
 		final Style styleDiamond = getStyleSignatureDiamond().getMergedStyle(skinParam.getCurrentStyleBuilder());
-		this.fontTest = styleDiamond.getFontConfiguration(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
-		this.fontArrow = styleArrow.getFontConfiguration(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
+		this.fontTest = styleDiamond.getFontConfiguration(skinParam.getIHtmlColorSet());
+		this.fontArrow = styleArrow.getFontConfiguration(skinParam.getIHtmlColorSet());
 		this.diamondLineBreak = styleDiamond.wrapWidth();
 		this.labelLineBreak = styleArrow.wrapWidth();
 		this.borderColor = borderColor;

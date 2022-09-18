@@ -102,7 +102,7 @@ public class CommandCreateEntityObject extends SingleLineCommand2<AbstractClassO
 		}
 		final String s = arg.get("COLOR", 0);
 		entity.setSpecificColorTOBEREMOVED(ColorType.BACK, s == null ? null
-				: diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(), s));
+				: diagram.getSkinParam().getIHtmlColorSet().getColor(s));
 		return CommandExecutionResult.ok();
 	}
 }

@@ -75,9 +75,9 @@ public class CommandColorTask extends SingleLineCommand2<GanttDiagram> {
 		final String color1 = arg.get("COLORS", 0);
 		final String color2 = arg.get("COLORS", 1);
 		final HColor col1 = color1 == null ? null
-				: diagram.getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(), color1);
+				: diagram.getIHtmlColorSet().getColor(color1);
 		final HColor col2 = color2 == null ? null
-				: diagram.getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(), color2);
+				: diagram.getIHtmlColorSet().getColor(color2);
 		task.setColors(new CenterBorderColor(col1, col2));
 
 		return CommandExecutionResult.ok();

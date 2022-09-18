@@ -62,13 +62,11 @@ public class Gtiles {
 			StyleSignatureBasic styleSignature, HColor color, Display label) {
 
 		final Style style = styleSignature.getMergedStyle(skinParam.getCurrentStyleBuilder());
-		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(),
-				skinParam.getIHtmlColorSet());
+		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 		final HColor backColor = color == null
-				? style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet())
+				? style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet())
 				: color;
-		final FontConfiguration fcTest = style.getFontConfiguration(skinParam.getThemeStyle(),
-				skinParam.getIHtmlColorSet());
+		final FontConfiguration fcTest = style.getFontConfiguration(skinParam.getIHtmlColorSet());
 
 		final Sheet sheet = Parser
 				.build(fcTest, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT), skinParam, CreoleMode.FULL)
@@ -83,10 +81,9 @@ public class Gtiles {
 			StyleSignatureBasic styleSignature, HColor color) {
 
 		final Style style = styleSignature.getMergedStyle(skinParam.getCurrentStyleBuilder());
-		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(),
-				skinParam.getIHtmlColorSet());
+		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 		final HColor backColor = color == null
-				? style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet())
+				? style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet())
 				: color;
 
 		return new GtileHexagonInside(stringBounder, TextBlockUtils.EMPTY_TEXT_BLOCK, skinParam, backColor, borderColor,

@@ -45,7 +45,6 @@ import java.util.Map;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
-import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.awt.geom.XRectangle2D;
@@ -89,8 +88,8 @@ public class FlowDiagram extends UmlDiagram implements TextBlock {
 		return new DiagramDescription("Flow Diagram");
 	}
 
-	public FlowDiagram(ThemeStyle style, UmlSource source) {
-		super(style, source, UmlDiagramType.FLOW, null);
+	public FlowDiagram(UmlSource source) {
+		super(source, UmlDiagramType.FLOW, null);
 	}
 
 	public void lineSimple(TileGeometry orientation, String idDest, String label) {

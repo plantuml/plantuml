@@ -128,7 +128,7 @@ public class CommandCreateJsonSingleLine extends SingleLineCommand2<AbstractClas
 
 		final String s = line0.get("COLOR", 0);
 		entity.setSpecificColorTOBEREMOVED(ColorType.BACK, s == null ? null
-				: diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(), s));
+				: diagram.getSkinParam().getIHtmlColorSet().getColor(s));
 		return entity;
 	}
 

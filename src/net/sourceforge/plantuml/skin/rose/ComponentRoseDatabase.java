@@ -62,7 +62,7 @@ public class ComponentRoseDatabase extends AbstractTextualComponent {
 		super(style, stereo, LineBreakStrategy.NONE, 3, 3, 0, spriteContainer, stringsToDisplay, false);
 		this.head = head;
 
-		final SymbolContext biColor = style.getSymbolContext(spriteContainer.getThemeStyle(), getIHtmlColorSet());
+		final SymbolContext biColor = style.getSymbolContext(getIHtmlColorSet());
 
 		final SymbolContext symbolContext = new SymbolContext(biColor.getBackColor(), biColor.getForeColor())
 				.withStroke(new UStroke(1.5)).withShadow(biColor.getDeltaShadow());

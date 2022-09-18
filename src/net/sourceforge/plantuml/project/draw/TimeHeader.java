@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.project.draw;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.SpriteContainerEmpty;
-import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -72,36 +71,33 @@ public abstract class TimeHeader {
 	private final Style timelineStyle;
 
 	private final HColorSet colorSet;
-	private final ThemeStyle themeStyle;
 
 	protected final Day min;
 	protected final Day max;
 
-	public TimeHeader(Style timelineStyle, Style closedStyle, Day min, Day max, TimeScale timeScale, HColorSet colorSet,
-			ThemeStyle themeStyle) {
+	public TimeHeader(Style timelineStyle, Style closedStyle, Day min, Day max, TimeScale timeScale, HColorSet colorSet) {
 		this.timeScale = timeScale;
 		this.min = min;
 		this.max = max;
 		this.closedStyle = Objects.requireNonNull(closedStyle);
 		this.timelineStyle = Objects.requireNonNull(timelineStyle);
 		this.colorSet = colorSet;
-		this.themeStyle = themeStyle;
 	}
 
 	protected final HColor closedBackgroundColor() {
-		return closedStyle.value(PName.BackGroundColor).asColor(themeStyle, colorSet);
+		return closedStyle.value(PName.BackGroundColor).asColor(colorSet);
 	}
 
 	protected final HColor closedFontColor() {
-		return closedStyle.value(PName.FontColor).asColor(themeStyle, colorSet);
+		return closedStyle.value(PName.FontColor).asColor(colorSet);
 	}
 
 	protected final HColor openFontColor() {
-		return timelineStyle.value(PName.FontColor).asColor(themeStyle, colorSet);
+		return timelineStyle.value(PName.FontColor).asColor(colorSet);
 	}
 
 	protected final HColor getBarColor() {
-		return timelineStyle.value(PName.LineColor).asColor(themeStyle, colorSet);
+		return timelineStyle.value(PName.LineColor).asColor(colorSet);
 	}
 
 	public abstract double getTimeHeaderHeight();

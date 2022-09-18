@@ -134,8 +134,7 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 //			final HColor classBackground = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
 //					skinParam.getIHtmlColorSet());
 			final HColor classBackground = skinParam.getBackgroundColor();
-			final HColor classBorder = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(),
-					skinParam.getIHtmlColorSet());
+			final HColor classBorder = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 
 			genericBlock = new TextBlockGeneric(genericBlock, classBackground, classBorder);
 			genericBlock = TextBlockUtils.withMargin(genericBlock, 1, 1);
@@ -160,13 +159,10 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 		final LeafType leafType = entity.getLeafType();
 
 		final Style style = spotStyleSignature(leafType).getMergedStyle(skinParam.getCurrentStyleBuilder());
-		final HColor spotBorder = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(),
-				skinParam.getIHtmlColorSet());
-		final HColor spotBackColor = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
-				skinParam.getIHtmlColorSet());
+		final HColor spotBorder = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
+		final HColor spotBackColor = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
 
-		final HColor fontColor = style.value(PName.FontColor).asColor(skinParam.getThemeStyle(),
-				skinParam.getIHtmlColorSet());
+		final HColor fontColor = style.value(PName.FontColor).asColor(skinParam.getIHtmlColorSet());
 
 		if (stereotype != null && stereotype.getCharacter() != 0)
 			return new CircledCharacter(stereotype.getCharacter(), getSkinParam().getCircledCharacterRadius(), font,

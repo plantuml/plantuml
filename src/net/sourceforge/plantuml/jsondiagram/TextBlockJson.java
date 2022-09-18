@@ -103,8 +103,7 @@ public class TextBlockJson extends AbstractTextBlock implements TextBlockBackcol
 	}
 
 	private HColor getBackColor() {
-		return styleNodeHightlight.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
-				skinParam.getIHtmlColorSet());
+		return styleNodeHightlight.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
 	}
 
 	TextBlockJson(ISkinParam skinParam, JsonValue root, List<String> allHighlighteds, Style styleNode,
@@ -261,8 +260,7 @@ public class TextBlockJson extends AbstractTextBlock implements TextBlockBackcol
 		final double widthColB = getWidthColB(stringBounder);
 
 		double y = 0;
-		final UGraphic ugNode = styleNode.applyStrokeAndLineColor(ug, skinParam.getIHtmlColorSet(),
-				skinParam.getThemeStyle());
+		final UGraphic ugNode = styleNode.applyStrokeAndLineColor(ug, skinParam.getIHtmlColorSet());
 		for (Line line : lines) {
 			final double heightOfRow = line.getHeightOfRow(stringBounder);
 			y += heightOfRow;
@@ -274,14 +272,12 @@ public class TextBlockJson extends AbstractTextBlock implements TextBlockBackcol
 
 		final double round = styleNode.value(PName.RoundCorner).asDouble();
 		final URectangle fullNodeRectangle = new URectangle(trueWidth, y).rounded(round);
-		final HColor backColor = styleNode.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
-				skinParam.getIHtmlColorSet());
+		final HColor backColor = styleNode.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
 		ugNode.apply(backColor.bg()).apply(backColor).draw(fullNodeRectangle);
 
 		final Style styleSeparator = styleNode.getSignature().add(SName.separator)
 				.getMergedStyle(skinParam.getCurrentStyleBuilder());
-		final UGraphic ugSeparator = styleSeparator.applyStrokeAndLineColor(ug, skinParam.getIHtmlColorSet(),
-				skinParam.getThemeStyle());
+		final UGraphic ugSeparator = styleSeparator.applyStrokeAndLineColor(ug, skinParam.getIHtmlColorSet());
 
 		y = 0;
 		for (Line line : lines) {
@@ -320,8 +316,7 @@ public class TextBlockJson extends AbstractTextBlock implements TextBlockBackcol
 
 	private TextBlock getTextBlock(Style style, String key) {
 		final Display display = Display.getWithNewlines(key);
-		final FontConfiguration fontConfiguration = style.getFontConfiguration(skinParam.getThemeStyle(),
-				skinParam.getIHtmlColorSet());
+		final FontConfiguration fontConfiguration = style.getFontConfiguration(skinParam.getIHtmlColorSet());
 		final LineBreakStrategy wrap = style.wrapWidth();
 		final HorizontalAlignment horizontalAlignment = style.getHorizontalAlignment();
 		TextBlock result = display.create0(fontConfiguration, horizontalAlignment, skinParam, wrap,

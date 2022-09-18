@@ -104,14 +104,14 @@ public class NServer {
 	private FontConfiguration getFontConfiguration(ISkinParam skinParam, SName sname) {
 		final StyleBuilder styleBuilder = skinParam.getCurrentStyleBuilder();
 		final Style style = getStyleDefinition(sname).getMergedStyle(styleBuilder);
-		return style.getFontConfiguration(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
+		return style.getFontConfiguration(skinParam.getIHtmlColorSet());
 	}
 
 	public LinkedElement getLinkedElement(double topMargin, Map<Network, String> conns, List<Network> networks,
 			ISkinParam skinParam) {
 		final StyleBuilder styleBuilder = skinParam.getCurrentStyleBuilder();
 		final SymbolContext symbolContext = getStyleDefinition(SName.server).getMergedStyle(styleBuilder)
-				.getSymbolContext(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
+				.getSymbolContext(skinParam.getIHtmlColorSet());
 
 		final Map<Network, TextBlock> conns2 = new LinkedHashMap<Network, TextBlock>();
 		for (Entry<Network, String> ent : conns.entrySet()) 

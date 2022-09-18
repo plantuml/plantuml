@@ -83,7 +83,12 @@ public class FtileGroup extends AbstractFtile {
 	private final double roundCorner;
 
 	final public StyleSignatureBasic getStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.partition);
+		return getStyleSignature(type);
+	}
+
+	final static public StyleSignatureBasic getStyleSignature(USymbol symbol) {
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, symbol.getSName(),
+				SName.composite);
 	}
 
 	public FtileGroup(Ftile inner, Display title, HColor backColor, HColor titleColor, ISkinParam skinParam,
@@ -94,13 +99,13 @@ public class FtileGroup extends AbstractFtile {
 		this.inner = FtileUtils.addHorizontalMargin(inner, 10);
 
 		final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
-		final FontConfiguration fc = style.getFontConfiguration(skinParam.getThemeStyle(), getIHtmlColorSet());
+		final FontConfiguration fc = style.getFontConfiguration(getIHtmlColorSet());
 		this.shadowing = style.value(PName.Shadowing).asDouble();
 		this.backColor = backColor == null
-				? style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(), getIHtmlColorSet())
+				? style.value(PName.BackGroundColor).asColor(getIHtmlColorSet())
 				: backColor;
 		this.borderColor = borderColor == null
-				? style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), getIHtmlColorSet())
+				? style.value(PName.LineColor).asColor(getIHtmlColorSet())
 				: borderColor;
 		final UStroke thickness = style.getStroke();
 

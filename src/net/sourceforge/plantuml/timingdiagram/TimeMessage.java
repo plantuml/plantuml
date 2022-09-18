@@ -79,7 +79,7 @@ public class TimeMessage extends WithLinkType {
 		if (styleBuilder == null) {
 			return HColors.MY_RED;
 		}
-		return getStyle().value(PName.LineColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
+		return getStyle().value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 	}
 
 	private Style getStyle() {

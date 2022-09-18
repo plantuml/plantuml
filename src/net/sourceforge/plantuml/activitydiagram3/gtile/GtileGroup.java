@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FloatingNote;
+import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileGroup;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -54,7 +55,6 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -77,8 +77,8 @@ public class GtileGroup extends AbstractGtileRoot {
 	private final USymbol type;
 	private final double roundCorner;
 
-	final public StyleSignatureBasic getDefaultStyleDefinitionPartition() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.partition);
+	final public StyleSignatureBasic getStyleSignature() {
+		return FtileGroup.getStyleSignature(type);
 	}
 
 	private double suppWidth(StringBounder stringBounder) {
@@ -99,9 +99,8 @@ public class GtileGroup extends AbstractGtileRoot {
 		this.inner = inner;
 		this.borderColor = borderColor == null ? HColors.BLACK : borderColor;
 
-		final Style style = getDefaultStyleDefinitionPartition().getMergedStyle(skinParam.getCurrentStyleBuilder());
-		final FontConfiguration fc = style.getFontConfiguration(skinParam.getThemeStyle(),
-				skinParam.getIHtmlColorSet());
+		final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
+		final FontConfiguration fc = style.getFontConfiguration(skinParam.getIHtmlColorSet());
 		this.shadowing = style.value(PName.Shadowing).asDouble();
 
 		if (title == null)

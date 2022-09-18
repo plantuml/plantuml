@@ -38,7 +38,6 @@ import java.awt.Font;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.command.PSystemBasicFactory;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
@@ -57,7 +56,7 @@ public class PSystemDitaaFactory extends PSystemBasicFactory<PSystemDitaa> {
 	}
 
 	@Override
-	public PSystemDitaa initDiagram(ThemeStyle style, UmlSource source, String startLine) {
+	public PSystemDitaa initDiagram(UmlSource source, String startLine) {
 		boolean performSeparationOfCommonEdges = true;
 		if (startLine != null && (startLine.contains("-E") || startLine.contains("--no-separation")))
 			performSeparationOfCommonEdges = false;
@@ -90,7 +89,7 @@ public class PSystemDitaaFactory extends PSystemBasicFactory<PSystemDitaa> {
 	}
 
 	@Override
-	public PSystemDitaa executeLine(ThemeStyle style, UmlSource source, PSystemDitaa system, String line) {
+	public PSystemDitaa executeLine(UmlSource source, PSystemDitaa system, String line) {
 		if (system == null && (line.equals("ditaa") || line.startsWith("ditaa("))) {
 			boolean performSeparationOfCommonEdges = true;
 			if (line.contains("-E") || line.contains("--no-separation"))

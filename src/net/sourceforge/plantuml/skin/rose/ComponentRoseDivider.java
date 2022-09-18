@@ -66,9 +66,8 @@ public class ComponentRoseDivider extends AbstractTextualComponent {
 	public ComponentRoseDivider(Style style, Display stringsToDisplay, ISkinSimple spriteContainer) {
 		super(style, LineBreakStrategy.NONE, 4, 4, 4, spriteContainer, stringsToDisplay, false);
 
-		this.background = style.value(PName.BackGroundColor).asColor(spriteContainer.getThemeStyle(),
-				getIHtmlColorSet());
-		this.borderColor = style.value(PName.LineColor).asColor(spriteContainer.getThemeStyle(), getIHtmlColorSet());
+		this.background = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
+		this.borderColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());
 		this.stroke = style.getStroke();
 		this.roundCorner = style.value(PName.RoundCorner).asInt();
 		this.shadow = style.value(PName.Shadowing).asDouble();

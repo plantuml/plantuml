@@ -81,7 +81,7 @@ public class CommandRepeat3 extends SingleLineCommand2<ActivityDiagram3> {
 			throws NoSuchColorException {
 		final String s = arg.get("COLOR", 0);
 		final HColor color = s == null ? null
-				: diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(), s);
+				: diagram.getSkinParam().getIHtmlColorSet().getColor(s);
 		final Display label = Display.getWithNewlines(arg.get("LABEL", 0));
 		final BoxStyle boxStyle;
 		final String styleString = arg.get("STYLE", 0);
@@ -90,8 +90,7 @@ public class CommandRepeat3 extends SingleLineCommand2<ActivityDiagram3> {
 		} else {
 			boxStyle = BoxStyle.fromChar(styleString.charAt(0));
 		}
-		Colors colors = color().getColor(diagram.getSkinParam().getThemeStyle(), arg,
-				diagram.getSkinParam().getIHtmlColorSet());
+		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
 		final String stereo = arg.get("STEREO", 0);
 		if (stereo != null) {
 			final Stereotype stereotype = Stereotype.build(stereo);

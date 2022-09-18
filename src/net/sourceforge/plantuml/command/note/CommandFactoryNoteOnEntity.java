@@ -229,8 +229,7 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 
 		final Position position = Position.valueOf(StringUtils.goUpperCase(pos))
 				.withRankdir(diagram.getSkinParam().getRankdir());
-		Colors colors = color().getColor(diagram.getSkinParam().getThemeStyle(), line0,
-				diagram.getSkinParam().getIHtmlColorSet());
+		Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());
 
 		final String stereotypeString = line0.get("STEREO", 0);
 		Stereotype stereotype = null;

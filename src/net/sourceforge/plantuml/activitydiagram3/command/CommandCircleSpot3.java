@@ -66,7 +66,7 @@ public class CommandCircleSpot3 extends SingleLineCommand2<ActivityDiagram3> {
 			throws NoSuchColorException {
 		String s = arg.get("COLOR", 0);
 		final HColor color = s == null ? null
-				: diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(), s);
+				: diagram.getSkinParam().getIHtmlColorSet().getColor(s);
 		diagram.addSpot(arg.get("SPOT", 0), color);
 		return CommandExecutionResult.ok();
 	}

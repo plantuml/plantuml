@@ -124,7 +124,7 @@ public abstract class CommandParticipant extends SingleLineCommand2<SequenceDiag
 		}
 		final String s = arg.get("COLOR", 0);
 		participant.setSpecificColorTOBEREMOVED(ColorType.BACK, s == null ? null
-				: diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(), s));
+				: diagram.getSkinParam().getIHtmlColorSet().getColor(s));
 
 		final String urlString = arg.get("URL", 0);
 		if (urlString != null) {

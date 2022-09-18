@@ -101,8 +101,7 @@ public class FtileBlackBlock extends AbstractFtile {
 		final Style style = getSignature().getMergedStyle(skinParam().getCurrentStyleBuilder());
 		final double shadowing = style.value(PName.Shadowing).asDouble();
 		rect.setDeltaShadow(shadowing);
-		final HColor colorBar = style.value(PName.BackGroundColor).asColor(skinParam().getThemeStyle(),
-				getIHtmlColorSet());
+		final HColor colorBar = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
 
 		ug.apply(colorBar).apply(colorBar.bg()).draw(rect);
 		final XDimension2D dimLabel = label.calculateDimension(ug.getStringBounder());

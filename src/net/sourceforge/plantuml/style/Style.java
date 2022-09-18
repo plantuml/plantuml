@@ -42,7 +42,6 @@ import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.LineBreakStrategy;
-import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -186,33 +185,33 @@ public class Style {
 		return new UFont(family, fontStyle, size);
 	}
 
-	public FontConfiguration getFontConfiguration(ThemeStyle themeStyle, HColorSet set) {
-		return getFontConfiguration(themeStyle, set, null);
+	public FontConfiguration getFontConfiguration(HColorSet set) {
+		return getFontConfiguration(set, null);
 	}
 
-	public FontConfiguration getFontConfiguration(ThemeStyle themeStyle, HColorSet set, Colors colors) {
+	public FontConfiguration getFontConfiguration(HColorSet set, Colors colors) {
 		final UFont font = getUFont();
 		HColor color = colors == null ? null : colors.getColor(ColorType.TEXT);
 		if (color == null)
-			color = value(PName.FontColor).asColor(themeStyle, set);
+			color = value(PName.FontColor).asColor(set);
 
-		final HColor hyperlinkColor = value(PName.HyperLinkColor).asColor(themeStyle, set);
+		final HColor hyperlinkColor = value(PName.HyperLinkColor).asColor(set);
 		return FontConfiguration.create(font, color, hyperlinkColor, true);
 	}
 
-	public SymbolContext getSymbolContext(ThemeStyle themeStyle, HColorSet set, Colors colors) {
+	public SymbolContext getSymbolContext(HColorSet set, Colors colors) {
 		HColor backColor = colors == null ? null : colors.getColor(ColorType.BACK);
 		if (backColor == null)
-			backColor = value(PName.BackGroundColor).asColor(themeStyle, set);
+			backColor = value(PName.BackGroundColor).asColor(set);
 		HColor foreColor = colors == null ? null : colors.getColor(ColorType.LINE);
 		if (foreColor == null)
-			foreColor = value(PName.LineColor).asColor(themeStyle, set);
+			foreColor = value(PName.LineColor).asColor(set);
 		final double deltaShadowing = value(PName.Shadowing).asDouble();
 		return new SymbolContext(backColor, foreColor).withStroke(getStroke()).withDeltaShadow(deltaShadowing);
 	}
 
-	public SymbolContext getSymbolContext(ThemeStyle themeStyle, HColorSet set) {
-		return getSymbolContext(themeStyle, set, null);
+	public SymbolContext getSymbolContext(HColorSet set) {
+		return getSymbolContext(set, null);
 	}
 
 	public Style eventuallyOverride(UStroke stroke) {
@@ -274,7 +273,7 @@ public class Style {
 
 	private TextBlock createTextBlockInternal(Display display, HColorSet set, ISkinSimple spriteContainer,
 			HorizontalAlignment alignment) {
-		final FontConfiguration fc = getFontConfiguration(spriteContainer.getThemeStyle(), set);
+		final FontConfiguration fc = getFontConfiguration(set);
 		return display.create(fc, alignment, spriteContainer);
 	}
 
@@ -286,8 +285,8 @@ public class Style {
 		final HorizontalAlignment alignment = this.getHorizontalAlignment();
 		final TextBlock textBlock = this.createTextBlockInternal(note, set, spriteContainer, alignment);
 
-		final HColor backgroundColor = this.value(PName.BackGroundColor).asColor(spriteContainer.getThemeStyle(), set);
-		final HColor lineColor = this.value(PName.LineColor).asColor(spriteContainer.getThemeStyle(), set);
+		final HColor backgroundColor = this.value(PName.BackGroundColor).asColor(set);
+		final HColor lineColor = this.value(PName.LineColor).asColor(set);
 		final UStroke stroke = this.getStroke();
 		final int cornersize = this.value(PName.RoundCorner).asInt();
 		final ClockwiseTopRightBottomLeft margin = this.getMargin();
@@ -297,8 +296,8 @@ public class Style {
 		return TextBlockUtils.withMargin(result, margin);
 	}
 
-	public UGraphic applyStrokeAndLineColor(UGraphic ug, HColorSet colorSet, ThemeStyle themeStyle) {
-		final HColor color = value(PName.LineColor).asColor(themeStyle, colorSet);
+	public UGraphic applyStrokeAndLineColor(UGraphic ug, HColorSet colorSet) {
+		final HColor color = value(PName.LineColor).asColor(colorSet);
 		if (color == null)
 			ug = ug.apply(HColors.none());
 		else

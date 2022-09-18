@@ -87,8 +87,7 @@ public class HtmlColorAndStyle {
 	public static HtmlColorAndStyle build(ISkinParam skinParam, String definition) throws NoSuchColorException {
 
 		final Style style = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam.getCurrentStyleBuilder());
-		HColor arrowColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(),
-				skinParam.getIHtmlColorSet());
+		HColor arrowColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 		final HColor arrowHeadColor = null;
 
 		LinkStyle linkStyle = LinkStyle.NORMAL();
@@ -99,7 +98,7 @@ public class HtmlColorAndStyle {
 				linkStyle = tmpStyle;
 				continue;
 			}
-			final HColor tmpColor = s == null ? null : set.getColor(skinParam.getThemeStyle(), s);
+			final HColor tmpColor = s == null ? null : set.getColor(s);
 			if (tmpColor != null)
 				arrowColor = tmpColor;
 

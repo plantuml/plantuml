@@ -70,7 +70,7 @@ public class CommandActivate2 extends SingleLineCommand2<SequenceDiagram> {
 		final Participant p = diagram.getOrCreateParticipant(arg.get("NAME", 0));
 		final String s = arg.get("COLOR", 0);
 		final String error = diagram.activate(p, type, s == null ? null
-				: diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(), s));
+				: diagram.getSkinParam().getIHtmlColorSet().getColor(s));
 		if (error == null) {
 			return CommandExecutionResult.ok();
 		}

@@ -52,9 +52,9 @@ public class ComplementInColors2 implements Something {
 		final String color1 = arg.get("COMPLEMENT" + suffix, 0);
 		final String color2 = arg.get("COMPLEMENT" + suffix, 1);
 		final HColor col1 = color1 == null ? null
-				: diagram.getIHtmlColorSet().getColorOrWhite(diagram.getSkinParam().getThemeStyle(), color1);
+				: diagram.getIHtmlColorSet().getColorOrWhite(color1);
 		final HColor col2 = color2 == null ? null
-				: diagram.getIHtmlColorSet().getColorOrWhite(diagram.getSkinParam().getThemeStyle(), color2);
+				: diagram.getIHtmlColorSet().getColorOrWhite(color2);
 		return Failable.ok(new CenterBorderColor(col1, col2));
 	}
 

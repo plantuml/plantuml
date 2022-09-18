@@ -94,8 +94,7 @@ public class LinkAnchor {
 				SName.arrow);
 		final Style style = signature.getMergedStyle(skinParam.getCurrentStyleBuilder());
 
-		final HColor color = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(),
-				skinParam.getIHtmlColorSet());
+		final HColor color = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 		final FontConfiguration fontConfiguration = FontConfiguration.create(skinParam, style);
 
 		final Rainbow rainbow = Rainbow.fromColor(color, null);

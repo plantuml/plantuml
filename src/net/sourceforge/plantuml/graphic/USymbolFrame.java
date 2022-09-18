@@ -49,7 +49,13 @@ class USymbolFrame extends USymbol {
 
 	@Override
 	public SName getSName() {
-		return SName.frame;
+		return sname;
+	}
+
+	private final SName sname;
+
+	public USymbolFrame(SName sname) {
+		this.sname = sname;
 	}
 
 	private void drawFrame(UGraphic ug, double width, double height, XDimension2D dimTitle, double shadowing,
@@ -103,8 +109,8 @@ class USymbolFrame extends USymbol {
 				final XDimension2D dim = calculateDimension(ug.getStringBounder());
 				ug = UGraphicStencil.create(ug, dim);
 				ug = symbolContext.apply(ug);
-				drawFrame(ug, dim.getWidth(), dim.getHeight(), new XDimension2D(0, 0),
-						symbolContext.getDeltaShadow(), symbolContext.getRoundCorner());
+				drawFrame(ug, dim.getWidth(), dim.getHeight(), new XDimension2D(0, 0), symbolContext.getDeltaShadow(),
+						symbolContext.getRoundCorner());
 				final Margin margin = getMargin();
 				final TextBlock tb = TextBlockUtils.mergeTB(stereotype, label, HorizontalAlignment.CENTER);
 				tb.drawU(ug.apply(new UTranslate(margin.getX1(), margin.getY1())));

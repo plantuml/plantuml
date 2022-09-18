@@ -137,7 +137,7 @@ public class FingerImpl implements Finger, UDrawable {
 
 	private HColor getLinkColor() {
 		final Style styleArrow = getStyleArrow();
-		return styleArrow.value(PName.LineColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
+		return styleArrow.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 	}
 
 	private UStroke getUStroke() {
@@ -234,7 +234,7 @@ public class FingerImpl implements Finger, UDrawable {
 
 		assert idea.getShape() == IdeaShape.NONE;
 		final TextBlock text = idea.getLabel().create0(
-				style.getFontConfiguration(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet()),
+				style.getFontConfiguration(skinParam.getIHtmlColorSet()),
 				style.getHorizontalAlignment(), skinParam, style.wrapWidth(), CreoleMode.FULL, null, null);
 		if (direction == 1)
 			return TextBlockUtils.withMargin(text, 3, 0, 1, 1);

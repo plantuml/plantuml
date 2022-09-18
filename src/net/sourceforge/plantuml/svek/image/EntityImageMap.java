@@ -94,8 +94,7 @@ public class EntityImageMap extends AbstractEntityImage implements Stencil, With
 		final Stereotype stereotype = entity.getStereotype();
 		this.roundCorner = skinParam.getRoundCorner(CornerParam.DEFAULT, null);
 
-		final FontConfiguration fcHeader = getStyleHeader().getFontConfiguration(getSkinParam().getThemeStyle(),
-				getSkinParam().getIHtmlColorSet());
+		final FontConfiguration fcHeader = getStyleHeader().getFontConfiguration(getSkinParam().getIHtmlColorSet());
 
 		this.name = TextBlockUtils
 				.withMargin(entity.getDisplay().create(fcHeader, HorizontalAlignment.CENTER, skinParam), 2, 2);
@@ -109,7 +108,7 @@ public class EntityImageMap extends AbstractEntityImage implements Stencil, With
 					HorizontalAlignment.CENTER, skinParam);
 
 		final FontConfiguration fontConfiguration = getStyleHeader()
-				.getFontConfiguration(getSkinParam().getThemeStyle(), getSkinParam().getIHtmlColorSet());
+				.getFontConfiguration(getSkinParam().getIHtmlColorSet());
 		this.entries = entity.getBodier().getBody(FontParam.OBJECT_ATTRIBUTE, skinParam, false, false,
 				entity.getStereotype(), getStyle(), fontConfiguration);
 
@@ -162,16 +161,14 @@ public class EntityImageMap extends AbstractEntityImage implements Stencil, With
 		final Style style = getStyle();
 
 		if (borderColor == null)
-			borderColor = getStyle().value(PName.LineColor).asColor(getSkinParam().getThemeStyle(),
-					getSkinParam().getIHtmlColorSet());
+			borderColor = getStyle().value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
 
 		if (headerBackcolor == null)
 			headerBackcolor = backcolor == null ? getStyleHeader().value(PName.BackGroundColor)
-					.asColor(getSkinParam().getThemeStyle(), getSkinParam().getIHtmlColorSet()) : backcolor;
+					.asColor(getSkinParam().getIHtmlColorSet()) : backcolor;
 
 		if (backcolor == null)
-			backcolor = style.value(PName.BackGroundColor).asColor(getSkinParam().getThemeStyle(),
-					getSkinParam().getIHtmlColorSet());
+			backcolor = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());
 
 		rect.setDeltaShadow(style.value(PName.Shadowing).asDouble());
 		final UStroke stroke = style.getStroke();

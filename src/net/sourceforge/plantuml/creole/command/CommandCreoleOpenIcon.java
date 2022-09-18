@@ -79,7 +79,7 @@ public class CommandCreoleOpenIcon implements Command {
 		HColor color = null;
 		if (colorName != null) {
 			final ISkinSimple skinParam = stripe.getSkinParam();
-			color = skinParam.getIHtmlColorSet().getColorOrWhite(skinParam.getThemeStyle(), colorName);
+			color = skinParam.getIHtmlColorSet().getColorOrWhite(colorName);
 		}
 		stripe.addOpenIcon(src, scale, color);
 		return line.substring(m.group(1).length());

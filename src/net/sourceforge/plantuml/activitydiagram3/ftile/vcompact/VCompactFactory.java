@@ -111,16 +111,14 @@ public class VCompactFactory implements FtileFactory {
 
 	public Ftile start(Swimlane swimlane) {
 		final Style style = getSignatureCircleStart().getMergedStyle(skinParam.getCurrentStyleBuilder());
-		final HColor color = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(),
-				skinParam.getIHtmlColorSet());
+		final HColor color = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 
 		return new FtileCircleStart(skinParam(), color, swimlane, style);
 	}
 
 	public Ftile stop(Swimlane swimlane) {
 		final Style style = getSignatureCircleStop().getMergedStyle(skinParam.getCurrentStyleBuilder());
-		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(),
-				skinParam.getIHtmlColorSet());
+		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 		final HColor backgroundColor = skinParam.getBackgroundColor();
 		return new FtileCircleStop(skinParam(), backgroundColor, borderColor, swimlane, style);
 	}
@@ -134,8 +132,7 @@ public class VCompactFactory implements FtileFactory {
 	public Ftile end(Swimlane swimlane) {
 
 		final Style style = getSignatureCircleEnd().getMergedStyle(skinParam.getCurrentStyleBuilder());
-		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(),
-				skinParam.getIHtmlColorSet());
+		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 		final HColor backgroundColor = skinParam.getBackgroundColor();
 
 		return new FtileCircleEnd(skinParam(), backgroundColor, borderColor, swimlane, style);

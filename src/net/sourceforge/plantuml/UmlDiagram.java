@@ -51,7 +51,6 @@ import java.io.PrintWriter;
 import java.util.List;
 
 import net.sourceforge.plantuml.api.ImageDataSimple;
-import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.Diagram;
@@ -92,8 +91,8 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 //		super(style, source, type);
 //	}
 
-	public UmlDiagram(ThemeStyle style, UmlSource source, UmlDiagramType type, ISkinSimple orig) {
-		super(style, source, type, orig);
+	public UmlDiagram(UmlSource source, UmlDiagramType type, ISkinSimple orig) {
+		super(source, type, orig);
 	}
 
 	final public int getMinwidth() {

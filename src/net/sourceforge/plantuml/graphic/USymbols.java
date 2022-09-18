@@ -61,7 +61,9 @@ public abstract class USymbols {
 	public final static USymbol DATABASE = record("DATABASE", new USymbolDatabase());
 	public final static USymbol CLOUD = record("CLOUD", new USymbolCloud());
 	public final static USymbol CARD = record("CARD", new USymbolCard());
-	public final static USymbol FRAME = record("FRAME", new USymbolFrame());
+	public final static USymbol FRAME = record("FRAME", new USymbolFrame(SName.frame));
+	public final static USymbol PARTITION = record("PARTITION", new USymbolFrame(SName.partition));
+	public final static USymbol GROUP = record("GROUP", new USymbolFrame(SName.group));
 	public final static USymbol NODE = record("NODE", new USymbolNode());
 	public final static USymbol ARTIFACT = record("ARTIFACT", new USymbolArtifact());
 	public final static USymbol PACKAGE = record("PACKAGE", new USymbolFolder(SName.package_, true));

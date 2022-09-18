@@ -104,22 +104,22 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 
 	final protected HColor getLineColor() {
 		final HColor unstarted = getStyleSignatureUnstarted().getMergedStyle(styleBuilder).value(PName.LineColor)
-				.asColor(getStyleBuilder().getSkinParam().getThemeStyle(), getColorSet());
+				.asColor(getColorSet());
 		final HColor regular = getStyle().value(PName.LineColor)
-				.asColor(getStyleBuilder().getSkinParam().getThemeStyle(), getColorSet());
+				.asColor(getColorSet());
 		return HColors.unlinear(unstarted, regular, completion);
 	}
 
 	final protected HColor getBackgroundColor() {
 		final HColor unstarted = getStyleSignatureUnstarted().getMergedStyle(styleBuilder).value(PName.BackGroundColor)
-				.asColor(getStyleBuilder().getSkinParam().getThemeStyle(), getColorSet());
+				.asColor(getColorSet());
 		final HColor regular = getStyle().value(PName.BackGroundColor)
-				.asColor(getStyleBuilder().getSkinParam().getThemeStyle(), getColorSet());
+				.asColor(getColorSet());
 		return HColors.unlinear(unstarted, regular, completion);
 	}
 
 	final protected FontConfiguration getFontConfiguration() {
-		return getStyle().getFontConfiguration(styleBuilder.getSkinParam().getThemeStyle(), getColorSet());
+		return getStyle().getFontConfiguration(getColorSet());
 	}
 
 	final protected Style getStyle() {

@@ -88,13 +88,11 @@ public class EntityImageTips extends AbstractEntityImage {
 
 		style = getDefaultStyleDefinition(type.getStyleName()).getMergedStyle(skinParam.getCurrentStyleBuilder());
 		if (entity.getColors().getColor(ColorType.BACK) == null)
-			this.noteBackgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
-					skinParam.getIHtmlColorSet());
+			this.noteBackgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
 		else
 			this.noteBackgroundColor = entity.getColors().getColor(ColorType.BACK);
 
-		this.borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(),
-				skinParam.getIHtmlColorSet());
+		this.borderColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 
 	}
 
@@ -176,8 +174,7 @@ public class EntityImageTips extends AbstractEntityImage {
 	private Opale getOpale(final Display display) {
 
 		final double shadowing = style.value(PName.Shadowing).asDouble();
-		final FontConfiguration fc = style.getFontConfiguration(skinParam.getThemeStyle(),
-				skinParam.getIHtmlColorSet());
+		final FontConfiguration fc = style.getFontConfiguration(skinParam.getIHtmlColorSet());
 		final UStroke stroke = style.getStroke();
 
 		final TextBlock textBlock = BodyFactory.create3(display, skinParam, HorizontalAlignment.LEFT, fc,

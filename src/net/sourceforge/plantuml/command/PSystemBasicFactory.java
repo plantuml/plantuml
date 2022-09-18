@@ -41,7 +41,6 @@ import net.sourceforge.plantuml.ErrorUmlType;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.annotation.HaxeIgnored;
-import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
@@ -60,20 +59,20 @@ public abstract class PSystemBasicFactory<P extends AbstractPSystem> extends PSy
 		this(DiagramType.UML);
 	}
 
-	public abstract P executeLine(ThemeStyle style, UmlSource source, P system, String line);
+	public abstract P executeLine(UmlSource source, P system, String line);
 
-	public abstract P initDiagram(ThemeStyle style, UmlSource source, String startLine);
+	public abstract P initDiagram(UmlSource source, String startLine);
 
 	private boolean isEmptyLine(StringLocated result) {
 		return result.getTrimmed().getString().length() == 0;
 	}
 
 	@Override
-	final public Diagram createSystem(ThemeStyle style, UmlSource source, ISkinSimple skinParam) {
+	final public Diagram createSystem(UmlSource source, ISkinSimple skinParam) {
 		source = source.removeInitialSkinparam();
 		final IteratorCounter2 it = source.iterator2();
 		final StringLocated startLine = it.next();
-		P system = initDiagram(style, source, startLine.getString());
+		P system = initDiagram(source, startLine.getString());
 		boolean first = true;
 		while (it.hasNext()) {
 			final StringLocated s = it.next();
@@ -87,7 +86,7 @@ public abstract class PSystemBasicFactory<P extends AbstractPSystem> extends PSy
 				}
 				return system;
 			}
-			system = executeLine(style, source, system, s.getString());
+			system = executeLine(source, system, s.getString());
 			if (system == null) {
 				final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, "Syntax Error?", 0, s.getLocation());
 				// return PSystemErrorUtils.buildV1(source, err, null);

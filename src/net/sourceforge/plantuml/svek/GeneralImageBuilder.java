@@ -375,8 +375,7 @@ public final class GeneralImageBuilder {
 	private HColor getBackcolor() {
 		final Style style = StyleSignatureBasic.of(SName.root, SName.document)
 				.getMergedStyle(dotData.getSkinParam().getCurrentStyleBuilder());
-		return style.value(PName.BackGroundColor).asColor(dotData.getSkinParam().getThemeStyle(),
-				dotData.getSkinParam().getIHtmlColorSet());
+		return style.value(PName.BackGroundColor).asColor(dotData.getSkinParam().getIHtmlColorSet());
 	}
 
 	public IEntityImage buildImage(BaseFile basefile, String dotStrings[]) {
@@ -466,7 +465,7 @@ public final class GeneralImageBuilder {
 
 	private FontConfiguration getFontForLink(Link link, final ISkinParam skinParam) {
 		final Style style = getDefaultStyleDefinitionArrow(link.getStereotype()).getMergedStyle(link.getStyleBuilder());
-		return style.getFontConfiguration(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
+		return style.getFontConfiguration(skinParam.getIHtmlColorSet());
 	}
 
 	private boolean isSvekTrace() {

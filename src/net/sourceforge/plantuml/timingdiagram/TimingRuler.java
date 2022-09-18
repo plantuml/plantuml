@@ -73,8 +73,7 @@ public class TimingRuler {
 
 	static UGraphic applyForVLines(UGraphic ug, Style style, ISkinParam skinParam) {
 		final UStroke stroke = new UStroke(3, 5, 0.5);
-		final HColor color = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(),
-				skinParam.getIHtmlColorSet());
+		final HColor color = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 
 		return ug.apply(stroke).apply(color);
 	}
@@ -203,8 +202,7 @@ public class TimingRuler {
 		final Style style = StyleSignatureBasic.of(SName.root, SName.timingDiagram, SName.timeline)
 				.getMergedStyle(skinParam.getCurrentStyleBuilder());
 
-		final HColor color = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(),
-				skinParam.getIHtmlColorSet());
+		final HColor color = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 		final UStroke stroke = style.getStroke();
 
 		ug = ug.apply(stroke).apply(color);

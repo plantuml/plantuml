@@ -62,7 +62,7 @@ import net.sourceforge.plantuml.ugraphic.USegment;
 import net.sourceforge.plantuml.ugraphic.USegmentType;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UText;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorMiddle;
 import net.sourceforge.plantuml.ugraphic.color.HColorSimple;
@@ -98,7 +98,7 @@ public class UGraphicDebug extends AbstractCommonUGraphic implements ClipContain
 
 	public UGraphicDebug(double scaleFactor, XDimension2D dim, String svgLinkTarget, String hoverPathColorRGB,
 			long seed, String preserveAspectRatio) {
-		super(HColors.WHITE, new ColorMapperIdentity(), new StringBounderDebug());
+		super(HColors.WHITE, ColorMapper.IDENTITY, new StringBounderDebug());
 		this.output = new ArrayList<>();
 		this.scaleFactor = scaleFactor;
 		this.dim = dim;
@@ -260,7 +260,7 @@ public class UGraphicDebug extends AbstractCommonUGraphic implements ClipContain
 
 		if (color instanceof HColorSimple) {
 			final HColorSimple simple = (HColorSimple) color;
-			final Color internal = simple.getColor999();
+			final Color internal = simple.getAwtColor();
 
 			return Integer.toHexString(internal.getRGB());
 		}

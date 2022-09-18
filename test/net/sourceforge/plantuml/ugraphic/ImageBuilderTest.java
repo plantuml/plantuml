@@ -3,7 +3,6 @@ package net.sourceforge.plantuml.ugraphic;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.PlainDiagram;
 import net.sourceforge.plantuml.StringLocated;
-import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.creole.legacy.PSystemCreole;
 import net.sourceforge.plantuml.wbs.WBSDiagram;
@@ -49,7 +48,7 @@ class ImageBuilderTest {
 			nullValues = {"NULL"}
 	)
 	public void test_preserveAspectRatio_styledDiagram(String inSkinParam, String inFileFormatOption, String expected) throws Exception {
-		final WBSDiagram diagram = new WBSDiagram(ThemeStyle.LIGHT_REGULAR, UmlSource.create(new ArrayList<StringLocated>(), false));
+		final WBSDiagram diagram = new WBSDiagram(UmlSource.create(new ArrayList<StringLocated>(), false));
 		FileFormatOption fileFormatOption = new FileFormatOption(DEBUG);
 
 		if (inSkinParam != null) diagram.setParam("preserveAspectRatio", inSkinParam);

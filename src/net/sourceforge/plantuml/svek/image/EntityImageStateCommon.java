@@ -69,7 +69,7 @@ public abstract class EntityImageStateCommon extends AbstractEntityImage {
 		this.lineConfig = entity;
 
 		final FontConfiguration titleFontConfiguration = getStyleStateTitle(entity, skinParam).getFontConfiguration(
-				getSkinParam().getThemeStyle(), getSkinParam().getIHtmlColorSet(), entity.getColors());
+				getSkinParam().getIHtmlColorSet(), entity.getColors());
 
 		this.title = entity.getDisplay().create8(titleFontConfiguration, HorizontalAlignment.CENTER, skinParam,
 				CreoleMode.FULL, skinParam.wrapWidth());
@@ -123,14 +123,12 @@ public abstract class EntityImageStateCommon extends AbstractEntityImage {
 
 		HColor border = lineConfig.getColors().getColor(ColorType.LINE);
 		if (border == null)
-			border = getStyleState().value(PName.LineColor).asColor(getSkinParam().getThemeStyle(),
-					getSkinParam().getIHtmlColorSet());
+			border = getStyleState().value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
 
 		ug = ug.apply(border);
 		HColor backcolor = lineConfig.getColors().getColor(ColorType.BACK);
 		if (backcolor == null)
-			backcolor = getStyleState().value(PName.BackGroundColor).asColor(getSkinParam().getThemeStyle(),
-					getSkinParam().getIHtmlColorSet());
+			backcolor = getStyleState().value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());
 
 		ug = ug.apply(backcolor.bg());
 

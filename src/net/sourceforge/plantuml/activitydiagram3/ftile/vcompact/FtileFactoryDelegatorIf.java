@@ -74,16 +74,12 @@ public class FtileFactoryDelegatorIf extends FtileFactoryDelegator {
 		final Style styleArrow = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam().getCurrentStyleBuilder());
 		final Style styleDiamond = getDefaultStyleDefinitionDiamond()
 				.getMergedStyle(skinParam().getCurrentStyleBuilder());
-		final HColor borderColor = styleDiamond.value(PName.LineColor).asColor(skinParam().getThemeStyle(),
-				skinParam().getIHtmlColorSet());
+		final HColor borderColor = styleDiamond.value(PName.LineColor).asColor(skinParam().getIHtmlColorSet());
 		final HColor backColor = branch0.getColor() == null ? styleDiamond.value(PName.BackGroundColor)
-				.asColor(skinParam().getThemeStyle(), skinParam().getIHtmlColorSet()) : branch0.getColor();
-		final Rainbow arrowColor = Rainbow.build(styleArrow, skinParam().getIHtmlColorSet(),
-				skinParam().getThemeStyle());
-		final FontConfiguration fcTest = styleDiamond.getFontConfiguration(skinParam().getThemeStyle(),
-				skinParam().getIHtmlColorSet());
-		final FontConfiguration fcArrow = styleArrow.getFontConfiguration(skinParam().getThemeStyle(),
-				skinParam().getIHtmlColorSet());
+				.asColor(skinParam().getIHtmlColorSet()) : branch0.getColor();
+		final Rainbow arrowColor = Rainbow.build(styleArrow, skinParam().getIHtmlColorSet());
+		final FontConfiguration fcTest = styleDiamond.getFontConfiguration(skinParam().getIHtmlColorSet());
+		final FontConfiguration fcArrow = styleArrow.getFontConfiguration(skinParam().getIHtmlColorSet());
 
 		if (thens.size() > 1) {
 			if (pragma.useVerticalIf()/* OptionFlags.USE_IF_VERTICAL */)

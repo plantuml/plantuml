@@ -164,8 +164,7 @@ public final class FactorySequenceNoteOverSeveralCommand implements SingleMultiF
 			final boolean parallel = line0.get("PARALLEL", 0) != null;
 			final Display display = diagram.manageVariable(lines.toDisplay());
 			final Note note = new Note(p1, p2, display, diagram.getSkinParam().getCurrentStyleBuilder());
-			Colors colors = color().getColor(diagram.getSkinParam().getThemeStyle(), line0,
-					diagram.getSkinParam().getIHtmlColorSet());
+			Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());
 			final String stereotypeString = line0.get("STEREO", 0);
 			if (stereotypeString != null) {
 				final Stereotype stereotype = Stereotype.build(stereotypeString);

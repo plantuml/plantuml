@@ -150,16 +150,16 @@ public class FtileBox extends AbstractFtile {
 		this.swimlane = swimlane;
 
 		this.inRendering = LinkRendering
-				.create(Rainbow.build(styleArrow, getIHtmlColorSet(), skinParam.getThemeStyle()));
+				.create(Rainbow.build(styleArrow, getIHtmlColorSet()));
 		Colors specBack = null;
 		if (skinParam instanceof SkinParamColors)
 			specBack = ((SkinParamColors) skinParam).getColors();
 
 		style = style.eventuallyOverride(specBack);
-		this.borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), getIHtmlColorSet());
-		this.backColor = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(), getIHtmlColorSet());
+		this.borderColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());
+		this.backColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
 
-		final FontConfiguration fc = style.getFontConfiguration(skinParam.getThemeStyle(), getIHtmlColorSet());
+		final FontConfiguration fc = style.getFontConfiguration(getIHtmlColorSet());
 
 		this.horizontalAlignment = style.getHorizontalAlignment();
 		this.padding = style.getPadding();

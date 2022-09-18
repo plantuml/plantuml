@@ -71,11 +71,10 @@ public class ComponentRoseReference extends AbstractTextualComponent {
 		super(style, LineBreakStrategy.NONE, 4, 4, 4, spriteContainer,
 				stringsToDisplay.subList(1, stringsToDisplay.size()), false);
 
-		this.symbolContextHeader = styleHeader.getSymbolContext(spriteContainer.getThemeStyle(), getIHtmlColorSet());
-		this.symbolContextBody = style.getSymbolContext(spriteContainer.getThemeStyle(), getIHtmlColorSet());
+		this.symbolContextHeader = styleHeader.getSymbolContext(getIHtmlColorSet());
+		this.symbolContextBody = style.getSymbolContext(getIHtmlColorSet());
 		this.roundCorner = style.value(PName.RoundCorner).asInt();
-		final FontConfiguration fcHeader = styleHeader.getFontConfiguration(spriteContainer.getThemeStyle(),
-				getIHtmlColorSet());
+		final FontConfiguration fcHeader = styleHeader.getFontConfiguration(getIHtmlColorSet());
 		this.position = style.getHorizontalAlignment();
 
 		this.textHeader = stringsToDisplay.subList(0, 1).create(fcHeader, HorizontalAlignment.LEFT, spriteContainer);

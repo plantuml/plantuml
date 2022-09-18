@@ -106,7 +106,7 @@ public class CommandPackageEmpty extends SingleLineCommand2<AbstractEntityDiagra
 		final String color = arg.get("COLOR", 0);
 		if (color != null) {
 			p.setSpecificColorTOBEREMOVED(ColorType.BACK,
-					diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(), color));
+					diagram.getSkinParam().getIHtmlColorSet().getColor(color));
 		}
 		diagram.endGroup();
 		return CommandExecutionResult.ok();

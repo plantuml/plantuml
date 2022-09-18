@@ -39,7 +39,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.ISkinSimple;
-import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommonCommands;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
@@ -85,8 +84,8 @@ import net.sourceforge.plantuml.sequencediagram.command.CommandUrl;
 public class SequenceDiagramFactory extends PSystemCommandFactory {
 
 	@Override
-	public SequenceDiagram createEmptyDiagram(ThemeStyle style, UmlSource source, ISkinSimple skinParam) {
-		return new SequenceDiagram(style, source, skinParam);
+	public SequenceDiagram createEmptyDiagram(UmlSource source, ISkinSimple skinParam) {
+		return new SequenceDiagram(source, skinParam);
 	}
 
 	@Override

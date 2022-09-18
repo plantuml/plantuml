@@ -41,7 +41,6 @@ import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.plantuml.ISkinSimple;
-import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandNope;
 import net.sourceforge.plantuml.command.CommonCommands;
@@ -166,8 +165,8 @@ public class GanttDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	public GanttDiagram createEmptyDiagram(ThemeStyle style, UmlSource source, ISkinSimple skinParam) {
-		return new GanttDiagram(style, source);
+	public GanttDiagram createEmptyDiagram(UmlSource source, ISkinSimple skinParam) {
+		return new GanttDiagram(source);
 	}
 
 }

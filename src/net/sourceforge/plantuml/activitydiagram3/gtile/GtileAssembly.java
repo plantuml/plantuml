@@ -86,8 +86,7 @@ public class GtileAssembly extends GtileTopDown {
 			return TextBlockUtils.EMPTY_TEXT_BLOCK;
 
 		final Style style = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam().getCurrentStyleBuilder());
-		final FontConfiguration fontConfiguration = style.getFontConfiguration(skinParam().getThemeStyle(),
-				skinParam().getIHtmlColorSet());
+		final FontConfiguration fontConfiguration = style.getFontConfiguration(skinParam().getIHtmlColorSet());
 		return display.create7(fontConfiguration, HorizontalAlignment.LEFT, skinParam(), CreoleMode.SIMPLE_LINE);
 	}
 

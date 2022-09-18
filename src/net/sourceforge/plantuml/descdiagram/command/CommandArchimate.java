@@ -147,8 +147,7 @@ public class CommandArchimate extends SingleLineCommand2<DescriptionDiagram> {
 							diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),
 							diagram.getSkinParam().getIHtmlColorSet()));
 
-		final Colors colors = color().getColor(diagram.getSkinParam().getThemeStyle(), arg,
-				diagram.getSkinParam().getIHtmlColorSet());
+		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
 		entity.setColors(colors);
 
 		return CommandExecutionResult.ok();

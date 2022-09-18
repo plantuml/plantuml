@@ -61,8 +61,7 @@ public abstract class AbstractComponentRoseArrow extends AbstractTextualComponen
 			ISkinSimple spriteContainer, LineBreakStrategy maxMessageSize) {
 		super(style, maxMessageSize, 7, 7, 1, spriteContainer, stringsToDisplay, false);
 
-		this.foregroundColor = style.value(PName.LineColor).asColor(spriteContainer.getThemeStyle(),
-				getIHtmlColorSet());
+		this.foregroundColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());
 		final UStroke stroke = style.getStroke();
 		this.arrowConfiguration = arrowConfiguration.withThickness(stroke.getThickness());
 

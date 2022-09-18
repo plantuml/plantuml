@@ -41,7 +41,6 @@ import java.io.InputStream;
 import net.sourceforge.plantuml.anim.Animation;
 import net.sourceforge.plantuml.anim.AnimationDecoder;
 import net.sourceforge.plantuml.api.ApiStable;
-import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.UmlSource;
@@ -87,10 +86,10 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 		return pragma;
 	}
 
-	public TitledDiagram(ThemeStyle style, UmlSource source, UmlDiagramType type, ISkinSimple orig) {
+	public TitledDiagram(UmlSource source, UmlDiagramType type, ISkinSimple orig) {
 		super(source);
 		this.type = type;
-		this.skinParam = SkinParam.create(type, style);
+		this.skinParam = SkinParam.create(type);
 		if (orig != null)
 			this.skinParam.copyAllFrom(orig);
 
@@ -272,8 +271,7 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 		final Style style = StyleSignatureBasic.of(SName.root, SName.document, this.getUmlDiagramType().getStyleName())
 				.getMergedStyle(this.getSkinParam().getCurrentStyleBuilder());
 
-		HColor backgroundColor = style.value(PName.BackGroundColor).asColor(this.getSkinParam().getThemeStyle(),
-				this.getSkinParam().getIHtmlColorSet());
+		HColor backgroundColor = style.value(PName.BackGroundColor).asColor(this.getSkinParam().getIHtmlColorSet());
 		if (backgroundColor == null)
 			backgroundColor = HColors.transparent();
 

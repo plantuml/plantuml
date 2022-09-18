@@ -40,7 +40,6 @@ import java.util.Objects;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
-import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.cucadiagram.Code;
@@ -52,8 +51,8 @@ import net.sourceforge.plantuml.graphic.USymbols;
 
 public class DescriptionDiagram extends AbstractEntityDiagram {
 
-	public DescriptionDiagram(ThemeStyle style, UmlSource source, ISkinSimple skinParam) {
-		super(style, source, UmlDiagramType.DESCRIPTION, skinParam);
+	public DescriptionDiagram(UmlSource source, ISkinSimple skinParam) {
+		super(source, UmlDiagramType.DESCRIPTION, skinParam);
 	}
 
 	@Override

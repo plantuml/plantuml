@@ -45,7 +45,6 @@ import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
-import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
@@ -75,8 +74,8 @@ public class BpmDiagram extends UmlDiagram {
 		return new DiagramDescription("(Bpm Diagram)");
 	}
 
-	public BpmDiagram(ThemeStyle style, UmlSource source) {
-		super(style, source, UmlDiagramType.BPM, null);
+	public BpmDiagram(UmlSource source) {
+		super(source, UmlDiagramType.BPM, null);
 	}
 
 	@Override
@@ -94,7 +93,7 @@ public class BpmDiagram extends UmlDiagram {
 	private UDrawable getUDrawable() {
 		final Grid grid = createGrid();
 		cleanGrid(grid);
-		final GridArray gridArray = grid.toArray(SkinParam.create(getUmlDiagramType(), ThemeStyle.LIGHT_REGULAR));
+		final GridArray gridArray = grid.toArray(SkinParam.create(getUmlDiagramType()));
 		// gridArray.addEdges(edges);
 		// System.err.println("gridArray=" + gridArray);
 		return gridArray;

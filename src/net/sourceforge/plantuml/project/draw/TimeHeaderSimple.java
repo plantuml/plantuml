@@ -76,7 +76,7 @@ public class TimeHeaderSimple extends TimeHeader {
 
 	public TimeHeaderSimple(TimeHeaderParameters thParam, PrintScale printScale) {
 		super(thParam.getTimelineStyle(), thParam.getClosedStyle(), thParam.getMin(), thParam.getMax(),
-				new TimeScaleWink(thParam.getScale(), printScale), thParam.getColorSet(), thParam.getThemeStyle());
+				new TimeScaleWink(thParam.getScale(), printScale), thParam.getColorSet());
 		this.colorDays = thParam;
 		this.printScale = printScale;
 		this.verticalSeparators = thParam.getVerticalSeparatorBefore();

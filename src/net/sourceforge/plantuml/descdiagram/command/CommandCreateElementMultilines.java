@@ -187,8 +187,7 @@ public class CommandCreateElementMultilines extends CommandMultilines2<AbstractE
 		// final HColor backColor =
 		// diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(line0.get("COLOR",
 		// 0));
-		final Colors colors = color().getColor(diagram.getSkinParam().getThemeStyle(), line0,
-				diagram.getSkinParam().getIHtmlColorSet());
+		final Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());
 		result.setColors(colors);
 		// result.setSpecificColorTOBEREMOVED(ColorType.BACK, backColor);
 

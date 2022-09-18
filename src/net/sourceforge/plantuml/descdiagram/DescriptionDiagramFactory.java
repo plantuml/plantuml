@@ -39,7 +39,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.ISkinSimple;
-import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.classdiagram.command.CommandHideShow2;
 import net.sourceforge.plantuml.classdiagram.command.CommandNamespaceSeparator;
 import net.sourceforge.plantuml.classdiagram.command.CommandRemoveRestore;
@@ -70,8 +69,8 @@ import net.sourceforge.plantuml.objectdiagram.command.CommandCreateMap;
 public class DescriptionDiagramFactory extends PSystemCommandFactory {
 
 	@Override
-	public DescriptionDiagram createEmptyDiagram(ThemeStyle style, UmlSource source, ISkinSimple skinParam) {
-		return new DescriptionDiagram(style, source, skinParam);
+	public DescriptionDiagram createEmptyDiagram(UmlSource source, ISkinSimple skinParam) {
+		return new DescriptionDiagram(source, skinParam);
 	}
 
 	@Override

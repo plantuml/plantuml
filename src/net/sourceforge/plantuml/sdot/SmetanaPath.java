@@ -94,7 +94,7 @@ public class SmetanaPath implements UDrawable {
 		HColor color = StyleSignatureBasic
 				.of(SName.root, SName.element, diagram.getUmlDiagramType().getStyleName(), SName.arrow)
 				.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder()).value(PName.LineColor)
-				.asColor(diagram.getSkinParam().getThemeStyle(), diagram.getSkinParam().getIHtmlColorSet());
+				.asColor(diagram.getSkinParam().getIHtmlColorSet());
 
 		if (this.link.getColors() != null) {
 			final HColor newColor = this.link.getColors().getColor(ColorType.ARROW, ColorType.LINE);

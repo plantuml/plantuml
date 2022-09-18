@@ -112,10 +112,6 @@ public class SvgGraphics {
 	private String fill = "black";
 	private String stroke = "black";
 
-//	private Collection<String> classesForDarkness = new LinkedHashSet<>();
-//	private String strokeDark = "black";
-//	private String fillDark = "black";
-
 	private String strokeWidth;
 	private String strokeDasharray = null;
 	private final String backcolor;
@@ -144,8 +140,7 @@ public class SvgGraphics {
 	}
 
 	public SvgGraphics(String backcolor, boolean svgDimensionStyle, XDimension2D minDim, double scale, String hover,
-			long seed, String preserveAspectRatio, LengthAdjust lengthAdjust, DarkStrategy darkStrategy,
-			boolean interactive) {
+			long seed, String preserveAspectRatio, LengthAdjust lengthAdjust, boolean interactive) {
 		try {
 			this.lengthAdjust = lengthAdjust;
 			this.svgDimensionStyle = svgDimensionStyle;
@@ -311,7 +306,6 @@ public class SvgGraphics {
 			elt.setAttribute("ry", format(yRadius));
 			fillMe(elt);
 			elt.setAttribute("style", getStyle());
-			manageDarkStroke(elt);
 			addFilterShadowId(elt, deltaShadow);
 			getG().appendChild(elt);
 		}
@@ -380,22 +374,10 @@ public class SvgGraphics {
 
 	public final void setFillColor(String fill) {
 		this.fill = fixColor(fill);
-		// this.fillDark = this.fill;
-	}
-
-	public final void setFillColor(String fill, String fillDark) {
-		this.fill = fixColor(fill);
-		// this.fillDark = fillDark == null ? "none" : fillDark;
 	}
 
 	public final void setStrokeColor(String stroke) {
 		this.stroke = fixColor(stroke);
-		// this.strokeDark = stroke;
-	}
-
-	public final void setStrokeColor(String stroke, String strokeDark) {
-		this.stroke = fixColor(stroke);
-		// this.strokeDark = strokeDark == null ? "none" : strokeDark;
 	}
 
 	private String fixColor(String color) {
@@ -450,18 +432,7 @@ public class SvgGraphics {
 		elt.setAttribute("height", format(height));
 		fillMe(elt);
 		elt.setAttribute("style", getStyleSpecial());
-		manageDarkStroke(elt);
 		return elt;
-	}
-
-	private void manageDarkStroke(final Element elt) {
-//		if (strokeDark != null && stroke.equals(strokeDark) == false) {
-//			final String attribute = elt.getAttribute("class");
-//			if (attribute == null || attribute.length() == 0)
-//				elt.setAttribute("class", getStrokeClassForDark());
-//			else
-//				elt.setAttribute("class", attribute + " " + getStrokeClassForDark());
-//		}
 	}
 
 	public void svgLine(double x1, double y1, double x2, double y2, double deltaShadow) {
@@ -473,7 +444,6 @@ public class SvgGraphics {
 			elt.setAttribute("x2", format(x2));
 			elt.setAttribute("y2", format(y2));
 			elt.setAttribute("style", getStyle());
-			manageDarkStroke(elt);
 			addFilterShadowId(elt, deltaShadow);
 			getG().appendChild(elt);
 		}
@@ -483,7 +453,7 @@ public class SvgGraphics {
 
 	private String getStyle() {
 		final StringBuilder style = new StringBuilder();
-		// if (stroke.equals(strokeDark))
+
 		style.append("stroke:" + stroke + ";");
 		style.append("stroke-width:" + strokeWidth + ";");
 		if (fill.equals("#00000000"))
@@ -498,7 +468,7 @@ public class SvgGraphics {
 	// https://forum.plantuml.net/12469/package-background-transparent-package-default-background?show=12479#c12479
 	private String getStyleSpecial() {
 		final StringBuilder style = new StringBuilder();
-		// if (stroke.equals(strokeDark))
+
 		style.append("stroke:" + stroke + ";");
 		style.append("stroke-width:" + strokeWidth + ";");
 		if (fill.equals("#00000000"))
@@ -525,7 +495,6 @@ public class SvgGraphics {
 			elt.setAttribute("points", sb.toString());
 			fillMe(elt);
 			elt.setAttribute("style", getStyleSpecial());
-			manageDarkStroke(elt);
 			addFilterShadowId(elt, deltaShadow);
 			getG().appendChild(elt);
 		}
@@ -668,9 +637,6 @@ public class SvgGraphics {
 	}
 
 	private void createXmlInternal(OutputStream os) throws TransformerException {
-//		if (this.classesForDarkness.size() > 0)
-//			defs.appendChild(getStylesForDarkness());
-
 		// Get a DOMSource object that represents the
 		// Document object
 		final DOMSource source = new DOMSource(document);
@@ -678,7 +644,7 @@ public class SvgGraphics {
 		final int maxXscaled = (int) (maxX * scale);
 		final int maxYscaled = (int) (maxY * scale);
 		String style = "width:" + maxXscaled + "px;height:" + maxYscaled + "px;";
-		if (/* this.classesForDarkness.size() == 0 && */ backcolor != null)
+		if (backcolor != null)
 			style += "background:" + backcolor + ";";
 
 		if (svgDimensionStyle) {
@@ -746,7 +712,6 @@ public class SvgGraphics {
 			elt.setAttribute("d", sb.toString());
 			elt.setAttribute("style", getStyle());
 			fillMe(elt);
-			manageDarkStroke(elt);
 			final String id = path.getComment();
 			if (id != null)
 				elt.setAttribute("id", id);
@@ -760,31 +725,9 @@ public class SvgGraphics {
 		}
 	}
 
-//	private String getFillClassForDark() {
-//		final String result = "f_" + fill.toLowerCase().replaceAll("\\#", "") + "_"
-//				+ fillDark.toLowerCase().replaceAll("\\#", "");
-//		this.classesForDarkness.add(result);
-//		return result;
-//	}
-//
-//	private String getStrokeClassForDark() {
-//		final String result = "s_" + stroke.toLowerCase().replaceAll("\\#", "") + "_"
-//				+ strokeDark.toLowerCase().replaceAll("\\#", "");
-//		this.classesForDarkness.add(result);
-//		return result;
-//	}
-
 	private void fillMe(Element elt) {
 		if (fill.equals("#00000000"))
 			return;
-
-//		if (fill.equals(fillDark) == false) {
-//			if (elt.getAttribute("class") != null && elt.getAttribute("class").length() != 0)
-//				throw new IllegalStateException();
-//
-//			elt.setAttribute("class", getFillClassForDark());
-//			return;
-//		}
 
 		if (fill.matches("#[0-9A-Fa-f]{8}")) {
 			elt.setAttribute("fill", fill.substring(0, 7));

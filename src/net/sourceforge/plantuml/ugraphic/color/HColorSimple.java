@@ -128,7 +128,7 @@ public class HColorSimple extends HColor {
 		this.dark = dark;
 	}
 
-	public Color getColor999() {
+	public Color getAwtColor() {
 		return color;
 	}
 
@@ -204,6 +204,8 @@ public class HColorSimple extends HColor {
 
 	@Override
 	public Color toColor(ColorMapper mapper) {
+		if (this.isTransparent())
+			return getAwtColor();
 		return mapper.fromColorSimple(this);
 	}
 

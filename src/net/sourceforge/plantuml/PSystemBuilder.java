@@ -43,7 +43,6 @@ import net.sourceforge.plantuml.acearth.PSystemXearthFactory;
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagramFactory;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagramFactory3;
 import net.sourceforge.plantuml.api.PSystemFactory;
-import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.board.BoardDiagramFactory;
 import net.sourceforge.plantuml.bpm.BpmDiagramFactory;
 import net.sourceforge.plantuml.classdiagram.ClassDiagramFactory;
@@ -106,8 +105,7 @@ public class PSystemBuilder {
 
 	public static final long startTime = System.currentTimeMillis();
 
-	final public Diagram createPSystem(ThemeStyle style, ISkinSimple skinParam, List<StringLocated> source,
-			List<StringLocated> rawSource) {
+	final public Diagram createPSystem(ISkinSimple skinParam, List<StringLocated> source, List<StringLocated> rawSource) {
 
 		final long now = System.currentTimeMillis();
 
@@ -133,7 +131,7 @@ public class PSystemBuilder {
 				if (diagramType != systemFactory.getDiagramType())
 					continue;
 
-				final Diagram sys = systemFactory.createSystem(style, umlSource, skinParam);
+				final Diagram sys = systemFactory.createSystem(umlSource, skinParam);
 				if (isOk(sys)) {
 					result = sys;
 					return sys;

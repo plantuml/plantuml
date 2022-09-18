@@ -135,7 +135,7 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 		if (arg.get("BACKCOLOR", 0) != null) {
 			String s = arg.get("BACKCOLOR", 0);
 			entity1.setSpecificColorTOBEREMOVED(ColorType.BACK,
-					diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(), s));
+					diagram.getSkinParam().getIHtmlColorSet().getColor(s));
 		}
 
 		final IEntity entity2 = getEntity(diagram, arg, false);
@@ -145,7 +145,7 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 		if (arg.get("BACKCOLOR2", 0) != null) {
 			String s = arg.get("BACKCOLOR2", 0);
 			entity2.setSpecificColorTOBEREMOVED(ColorType.BACK,
-					diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(), s));
+					diagram.getSkinParam().getIHtmlColorSet().getColor(s));
 		}
 		if (arg.get("STEREOTYPE2", 0) != null)
 			entity2.setStereotype(Stereotype.build(arg.get("STEREOTYPE2", 0)));
@@ -180,7 +180,7 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 			link.setUrl(urlLink);
 		}
 
-		link.applyStyle(diagram.getSkinParam().getThemeStyle(), arg.getLazzy("ARROW_STYLE", 0));
+		link.applyStyle(arg.getLazzy("ARROW_STYLE", 0));
 		diagram.addLink(link);
 
 		return CommandExecutionResult.ok();

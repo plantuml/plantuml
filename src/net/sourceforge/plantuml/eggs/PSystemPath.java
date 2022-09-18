@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 
 public class PSystemPath extends AbstractPSystem {
 
@@ -51,7 +51,7 @@ public class PSystemPath extends AbstractPSystem {
 
 	public PSystemPath(UmlSource source, String s) {
 		super(source);
-		this.path = new GraphicsPath(new ColorMapperIdentity(), s);
+		this.path = new GraphicsPath(ColorMapper.IDENTITY, s);
 	}
 
 	@Override

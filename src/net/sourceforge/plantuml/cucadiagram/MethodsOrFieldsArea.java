@@ -272,11 +272,10 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlock,
 			};
 		}
 		final Style style = modifier.getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
-		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(),
-				skinParam.getIHtmlColorSet());
+		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 		final boolean isField = modifier.isField();
 		final HColor backColor = isField ? null
-				: style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
+				: style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
 
 		final TextBlock uBlock = modifier.getUBlock(skinParam.classAttributeIconSize(), borderColor, backColor,
 				url != null);

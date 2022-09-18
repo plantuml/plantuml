@@ -39,7 +39,6 @@ import java.util.Objects;
 
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.UmlDiagramType;
-import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.cucadiagram.Code;
@@ -59,8 +58,8 @@ public class StateDiagram extends AbstractEntityDiagram {
 
 	private static final String CONCURRENT_PREFIX = "CONC";
 
-	public StateDiagram(ThemeStyle style, UmlSource source, ISkinSimple skinParam) {
-		super(style, source, UmlDiagramType.STATE, skinParam);
+	public StateDiagram(UmlSource source, ISkinSimple skinParam) {
+		super(source, UmlDiagramType.STATE, skinParam);
 		// setNamespaceSeparator(null);
 	}
 

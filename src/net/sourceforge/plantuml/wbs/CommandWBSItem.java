@@ -72,8 +72,7 @@ public class CommandWBSItem extends SingleLineCommand2<WBSDiagram> {
 		final String stringColor = arg.get("BACKCOLOR", 0);
 		HColor backColor = null;
 		if (stringColor != null)
-			backColor = diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(),
-					stringColor);
+			backColor = diagram.getSkinParam().getIHtmlColorSet().getColor(stringColor);
 
 		Direction dir = type.contains("-") ? Direction.LEFT : Direction.RIGHT;
 		final String direction = arg.get("DIRECTION", 0);

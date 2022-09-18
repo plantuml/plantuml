@@ -184,8 +184,7 @@ public class EntityImageUseCase extends AbstractEntityImage {
 			final Colors colors = getEntity().getColors();
 			Style style = getStyle();
 			style = style.eventuallyOverride(colors);
-			backcolor = style.value(PName.BackGroundColor).asColor(getSkinParam().getThemeStyle(),
-					getSkinParam().getIHtmlColorSet());
+			backcolor = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());
 		}
 		return backcolor;
 	}
@@ -203,8 +202,7 @@ public class EntityImageUseCase extends AbstractEntityImage {
 		HColor linecolor = getEntity().getColors().getColor(ColorType.LINE);
 		if (linecolor == null) {
 			final Style style = getStyle();
-			linecolor = style.value(PName.LineColor).asColor(getSkinParam().getThemeStyle(),
-					getSkinParam().getIHtmlColorSet());
+			linecolor = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
 		}
 		return linecolor;
 	}

@@ -145,8 +145,7 @@ public final class CommandFactoryNoteOnLink implements SingleMultiFactoryCommand
 			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), UrlMode.STRICT);
 			url = urlBuilder.getUrl(arg.get("URL", 0));
 		}
-		final Colors colors = color().getColor(diagram.getSkinParam().getThemeStyle(), arg,
-				diagram.getSkinParam().getIHtmlColorSet());
+		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
 		link.addNote(CucaNote.build(note.toDisplay(), position, colors));
 		return CommandExecutionResult.ok();
 	}

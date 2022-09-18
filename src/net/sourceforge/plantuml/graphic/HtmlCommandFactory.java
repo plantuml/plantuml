@@ -40,7 +40,6 @@ import java.util.EnumSet;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlMode;
-import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
 
@@ -68,7 +67,7 @@ class HtmlCommandFactory {
 
 	private Pattern2 htmlTag = MyPattern.cmpile(Splitter.htmlTag);
 
-	HtmlCommand getHtmlCommand(ThemeStyle themeStyle, String s) {
+	HtmlCommand getHtmlCommand(String s) {
 		if (htmlTag.matcher(s).matches() == false) {
 			return new Text(s);
 		}
@@ -88,11 +87,11 @@ class HtmlCommandFactory {
 		}
 
 		if (MyPattern.mtches(s, Splitter.fontPattern)) {
-			return new ColorAndSizeChange(themeStyle, s);
+			return new ColorAndSizeChange(s);
 		}
 
 		if (MyPattern.mtches(s, Splitter.fontColorPattern2)) {
-			return new ColorChange(themeStyle, s);
+			return new ColorChange(s);
 		}
 
 		if (MyPattern.mtches(s, Splitter.fontSizePattern2)) {

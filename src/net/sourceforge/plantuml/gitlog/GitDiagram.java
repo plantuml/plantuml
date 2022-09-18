@@ -41,7 +41,6 @@ import java.util.Collection;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
-import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.awt.geom.XRectangle2D;
 import net.sourceforge.plantuml.core.DiagramDescription;
@@ -58,8 +57,8 @@ public class GitDiagram extends UmlDiagram {
 
 	private final Collection<GNode> gnodes;
 
-	public GitDiagram(ThemeStyle style, UmlSource source, GitTextArea textArea) {
-		super(style, source, UmlDiagramType.GIT, null);
+	public GitDiagram(UmlSource source, GitTextArea textArea) {
+		super(source, UmlDiagramType.GIT, null);
 		this.gnodes = new GNodeBuilder(textArea.getAllCommits()).getAllNodes();
 		new GNodeBuilder(textArea.getAllCommits());
 	}

@@ -133,7 +133,7 @@ public class CommandCreateDomain extends SingleLineCommand2<DescriptionDiagram> 
 		}
 		final String s = arg.get("COLOR", 0);
 		entity.setSpecificColorTOBEREMOVED(ColorType.BACK, s == null ? null
-				: diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(), s));
+				: diagram.getSkinParam().getIHtmlColorSet().getColor(s));
 		if (type.equalsIgnoreCase("domain")) {
 			if (stereotype != null && stereotype.equalsIgnoreCase("<<Machine>>")) {
 				type = "machine";

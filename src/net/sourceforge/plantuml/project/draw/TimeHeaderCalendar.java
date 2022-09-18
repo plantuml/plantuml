@@ -49,7 +49,7 @@ public abstract class TimeHeaderCalendar extends TimeHeader {
 
 	public TimeHeaderCalendar(TimeHeaderParameters thParam, TimeScale timeScale) {
 		super(thParam.getTimelineStyle(), thParam.getClosedStyle(), thParam.getMin(), thParam.getMax(), timeScale,
-				thParam.getColorSet(), thParam.getThemeStyle());
+				thParam.getColorSet());
 		this.thParam = thParam;
 	}
 

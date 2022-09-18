@@ -39,7 +39,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.time.DayOfWeek;
 import net.sourceforge.plantuml.style.Style;
@@ -49,7 +48,6 @@ import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 public class TimeHeaderParameters {
 
 	private final Map<Day, HColor> colorDays;
-	private final ThemeStyle themeStyle;
 	private final double scale;
 	private final Day min;
 	private final Day max;
@@ -61,11 +59,10 @@ public class TimeHeaderParameters {
 	private final Map<DayOfWeek, HColor> colorDaysOfWeek;
 	private final Set<Day> verticalSeparatorBefore;
 
-	public TimeHeaderParameters(Map<Day, HColor> colorDays, ThemeStyle themeStyle, double scale, Day min, Day max,
-			HColorSet colorSet, Style timelineStyle, Style closedStyle, Locale locale, OpenClose openClose,
-			Map<DayOfWeek, HColor> colorDaysOfWeek, Set<Day> verticalSeparatorBefore) {
+	public TimeHeaderParameters(Map<Day, HColor> colorDays, double scale, Day min, Day max, HColorSet colorSet,
+			Style timelineStyle, Style closedStyle, Locale locale, OpenClose openClose, Map<DayOfWeek, HColor> colorDaysOfWeek,
+			Set<Day> verticalSeparatorBefore) {
 		this.colorDays = colorDays;
-		this.themeStyle = themeStyle;
 		this.scale = scale;
 		this.min = min;
 		this.max = max;
@@ -84,10 +81,6 @@ public class TimeHeaderParameters {
 
 	public HColor getColor(DayOfWeek dayOfWeek) {
 		return colorDaysOfWeek.get(dayOfWeek);
-	}
-
-	public ThemeStyle getThemeStyle() {
-		return themeStyle;
 	}
 
 	public final double getScale() {

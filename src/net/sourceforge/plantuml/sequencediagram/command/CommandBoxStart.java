@@ -95,8 +95,7 @@ public class CommandBoxStart extends SingleLineCommand2<SequenceDiagram> {
 			stereotype = Stereotype.build(stereo);
 		}
 
-		Colors colors = color().getColor(diagram.getSkinParam().getThemeStyle(), arg,
-				diagram.getSkinParam().getIHtmlColorSet());
+		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
 		final String title = argTitle == null ? "" : argTitle;
 		diagram.boxStart(Display.getWithNewlines(title), colors.getColor(ColorType.BACK), stereotype);
 		return CommandExecutionResult.ok();

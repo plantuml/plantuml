@@ -51,7 +51,6 @@ import net.sourceforge.plantuml.ugraphic.PixelImage;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapperMonochrome;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class SpriteImage implements Sprite {
@@ -66,7 +65,7 @@ public class SpriteImage implements Sprite {
 		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
-				if (colorMapper instanceof ColorMapperMonochrome)
+				if (colorMapper == ColorMapper.MONOCHROME)
 					ug.draw(img.monochrome().scale(scale));
 				else if (color == null)
 					ug.draw(img.scale(scale));

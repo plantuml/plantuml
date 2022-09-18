@@ -39,7 +39,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.ISkinSimple;
-import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandFootboxIgnored;
 import net.sourceforge.plantuml.command.CommonCommands;
@@ -70,8 +69,8 @@ import net.sourceforge.plantuml.timingdiagram.command.CommandUseDateFormat;
 public class TimingDiagramFactory extends PSystemCommandFactory {
 
 	@Override
-	public TimingDiagram createEmptyDiagram(ThemeStyle style, UmlSource source, ISkinSimple skinParam) {
-		return new TimingDiagram(style, source);
+	public TimingDiagram createEmptyDiagram(UmlSource source, ISkinSimple skinParam) {
+		return new TimingDiagram(source);
 	}
 
 	@Override

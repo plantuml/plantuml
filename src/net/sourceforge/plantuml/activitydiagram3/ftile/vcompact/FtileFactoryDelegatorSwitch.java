@@ -110,7 +110,7 @@ public class FtileFactoryDelegatorSwitch extends FtileFactoryDelegator {
 		}
 
 		final Style style = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam().getCurrentStyleBuilder());
-		final Rainbow arrowColor = Rainbow.build(style, skinParam().getIHtmlColorSet(), skinParam().getThemeStyle());
+		final Rainbow arrowColor = Rainbow.build(style, skinParam().getIHtmlColorSet());
 
 		if (ftiles.size() == 1) {
 			final FtileSwitchWithOneLink result = new FtileSwitchWithOneLink(ftiles, branches, swimlane, diamond1,
@@ -129,12 +129,10 @@ public class FtileFactoryDelegatorSwitch extends FtileFactoryDelegator {
 
 		final Style style = getDefaultStyleDefinitionDiamond().getMergedStyle(skinParam().getCurrentStyleBuilder());
 		lineBreak = style.wrapWidth();
-		final FontConfiguration fcDiamond = style.getFontConfiguration(skinParam().getThemeStyle(),
-				skinParam().getIHtmlColorSet());
-		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam().getThemeStyle(),
-				skinParam().getIHtmlColorSet());
+		final FontConfiguration fcDiamond = style.getFontConfiguration(skinParam().getIHtmlColorSet());
+		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam().getIHtmlColorSet());
 		final HColor backColor = branch0.getColor() == null ? style.value(PName.BackGroundColor)
-				.asColor(skinParam().getThemeStyle(), skinParam().getIHtmlColorSet()) : branch0.getColor();
+				.asColor(skinParam().getIHtmlColorSet()) : branch0.getColor();
 
 		final TextBlock tbTest;
 		if (Display.isNull(test) || test.isWhite())
@@ -149,10 +147,9 @@ public class FtileFactoryDelegatorSwitch extends FtileFactoryDelegator {
 	private Ftile getDiamond2(Swimlane swimlane, Branch branch0) {
 
 		final Style style = getDefaultStyleDefinitionDiamond().getMergedStyle(skinParam().getCurrentStyleBuilder());
-		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam().getThemeStyle(),
-				skinParam().getIHtmlColorSet());
+		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam().getIHtmlColorSet());
 		final HColor backColor = branch0.getColor() == null ? style.value(PName.BackGroundColor)
-				.asColor(skinParam().getThemeStyle(), skinParam().getIHtmlColorSet()) : branch0.getColor();
+				.asColor(skinParam().getIHtmlColorSet()) : branch0.getColor();
 
 		return new FtileDiamondInside(TextBlockUtils.empty(0, 0), branch0.skinParam(), backColor, borderColor,
 				swimlane);

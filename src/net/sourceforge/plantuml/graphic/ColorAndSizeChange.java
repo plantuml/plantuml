@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.graphic;
 
-import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
@@ -51,11 +50,11 @@ class ColorAndSizeChange implements FontChange {
 	private final HColor color;
 	private final Integer size;
 
-	ColorAndSizeChange(ThemeStyle themeStyle, String s) {
+	ColorAndSizeChange(String s) {
 		final Matcher2 matcherColor = colorPattern.matcher(s);
 		if (matcherColor.find()) {
 			final String s1 = matcherColor.group(1);
-			color = HColorSet.instance().getColorOrWhite(themeStyle, s1);
+			color = HColorSet.instance().getColorOrWhite(s1);
 		} else {
 			color = null;
 		}

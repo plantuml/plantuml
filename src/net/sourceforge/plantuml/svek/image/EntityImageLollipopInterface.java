@@ -96,10 +96,8 @@ public class EntityImageLollipopInterface extends AbstractEntityImage {
 	final public void drawU(UGraphic ug) {
 
 		final Style style = getSignature().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
-		final HColor backgroundColor = style.value(PName.BackGroundColor).asColor(getSkinParam().getThemeStyle(),
-				getSkinParam().getIHtmlColorSet());
-		final HColor borderColor = style.value(PName.LineColor).asColor(getSkinParam().getThemeStyle(),
-				getSkinParam().getIHtmlColorSet());
+		final HColor backgroundColor = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());
+		final HColor borderColor = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
 		final double shadow = style.value(PName.Shadowing).asDouble();
 
 		final UEllipse circle;

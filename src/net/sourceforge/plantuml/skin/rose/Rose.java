@@ -149,12 +149,10 @@ public class Rose {
 					stringsToDisplay, param, param.minClassWidth(), true, padding);
 
 		if (type == ComponentType.PARTICIPANT_LINE)
-			return new ComponentRoseLine(param.getThemeStyle(), styles == null ? null : styles[0], false,
-					param.getIHtmlColorSet());
+			return new ComponentRoseLine(styles == null ? null : styles[0], false, param.getIHtmlColorSet());
 
 		if (type == ComponentType.CONTINUE_LINE)
-			return new ComponentRoseLine(param.getThemeStyle(), styles == null ? null : styles[0], true,
-					param.getIHtmlColorSet());
+			return new ComponentRoseLine(styles == null ? null : styles[0], true, param.getIHtmlColorSet());
 
 		if (type == ComponentType.ACTOR_HEAD)
 			return new ComponentRoseActor(param.actorStyle(), styles == null ? null : styles[0],
@@ -224,20 +222,16 @@ public class Rose {
 			return new ComponentRoseGroupingSpace(7);
 
 		if (type == ComponentType.ALIVE_BOX_CLOSE_CLOSE)
-			return new ComponentRoseActiveLine(param.getThemeStyle(), styles == null ? null : styles[0], true, true,
-					param.getIHtmlColorSet());
+			return new ComponentRoseActiveLine(styles == null ? null : styles[0], true, true, param.getIHtmlColorSet());
 
 		if (type == ComponentType.ALIVE_BOX_CLOSE_OPEN)
-			return new ComponentRoseActiveLine(param.getThemeStyle(), styles == null ? null : styles[0], true, false,
-					param.getIHtmlColorSet());
+			return new ComponentRoseActiveLine(styles == null ? null : styles[0], true, false, param.getIHtmlColorSet());
 
 		if (type == ComponentType.ALIVE_BOX_OPEN_CLOSE) {
-			return new ComponentRoseActiveLine(param.getThemeStyle(), styles == null ? null : styles[0], false, true,
-					param.getIHtmlColorSet());
+			return new ComponentRoseActiveLine(styles == null ? null : styles[0], false, true, param.getIHtmlColorSet());
 		}
 		if (type == ComponentType.ALIVE_BOX_OPEN_OPEN)
-			return new ComponentRoseActiveLine(param.getThemeStyle(), styles == null ? null : styles[0], false, false,
-					param.getIHtmlColorSet());
+			return new ComponentRoseActiveLine(styles == null ? null : styles[0], false, false, param.getIHtmlColorSet());
 
 		if (type == ComponentType.DELAY_LINE)
 			return new ComponentRoseDelayLine(null, getHtmlColor(param, stereotype, ColorParam.sequenceLifeLineBorder));

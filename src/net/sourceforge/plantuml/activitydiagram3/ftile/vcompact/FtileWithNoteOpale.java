@@ -137,10 +137,9 @@ public class FtileWithNoteOpale extends AbstractFtile implements Stencil, Stylea
 
 		final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder())
 				.eventuallyOverride(note.getColors());
-		final HColor noteBackgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
-				getIHtmlColorSet());
-		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(), getIHtmlColorSet());
-		final FontConfiguration fc = style.getFontConfiguration(skinParam.getThemeStyle(), getIHtmlColorSet());
+		final HColor noteBackgroundColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
+		final HColor borderColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());
+		final FontConfiguration fc = style.getFontConfiguration(getIHtmlColorSet());
 		final double shadowing = style.value(PName.Shadowing).asDouble();
 		final LineBreakStrategy wrapWidth = style.wrapWidth();
 		final UStroke stroke = style.getStroke();

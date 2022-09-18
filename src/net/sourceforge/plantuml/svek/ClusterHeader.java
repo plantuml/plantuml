@@ -128,8 +128,8 @@ public final class ClusterHeader {
 				.with(g.getStereostyles()) //
 				.getMergedStyle(skinParam.getCurrentStyleBuilder());
 
-		final FontConfiguration fontConfiguration = style.getFontConfiguration(skinParam.getThemeStyle(),
-				skinParam.getIHtmlColorSet(), g.getColors());
+		final FontConfiguration fontConfiguration = style.getFontConfiguration(skinParam.getIHtmlColorSet(),
+				g.getColors());
 
 		final HorizontalAlignment alignment = HorizontalAlignment.CENTER;
 		return label.create(fontConfiguration, alignment, skinParam);
@@ -168,8 +168,7 @@ public final class ClusterHeader {
 				.getDefaultStyleDefinition(skinParam.getUmlDiagramType().getStyleName(), g.getUSymbol())
 				.forStereotypeItself(g.getStereotype()).getMergedStyle(skinParam.getCurrentStyleBuilder());
 
-		final FontConfiguration fontConfiguration = style.getFontConfiguration(skinParam.getThemeStyle(),
-				skinParam.getIHtmlColorSet());
+		final FontConfiguration fontConfiguration = style.getFontConfiguration(skinParam.getIHtmlColorSet());
 		return Display.create(stereos).create(fontConfiguration, HorizontalAlignment.CENTER, skinParam);
 
 	}

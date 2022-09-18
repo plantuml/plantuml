@@ -94,8 +94,8 @@ public class DriverTextSvg implements UDriver<UText, SvgGraphics> {
 
 		String text = shape.getText();
 		if (text.matches("^\\s*$"))
-			text = text.replace(' ', (char)160);
-		
+			text = text.replace(' ', (char) 160);
+
 		if (text.startsWith(" ")) {
 			final double space = stringBounder.calculateDimension(font, " ").getWidth();
 			while (text.startsWith(" ")) {
@@ -126,11 +126,7 @@ public class DriverTextSvg implements UDriver<UText, SvgGraphics> {
 		}
 
 		final HColor textColor = fontConfiguration.getColor();
-		final HColor dark = textColor == null ? null : textColor.darkSchemeTheme();
-		if (dark == textColor)
-			svg.setFillColor(textColor.toSvg(mapper));
-		else
-			svg.setFillColor(textColor.toSvg(mapper), dark.toSvg(mapper));
+		svg.setFillColor(textColor.toSvg(mapper));
 
 		svg.text(text, x, y, font.getFamily(UFontContext.SVG), font.getSize(), fontWeight, fontStyle, textDecoration,
 				width, fontConfiguration.getAttributes(), backColor);

@@ -69,7 +69,7 @@ final public class ComponentRoseNote extends AbstractTextualComponent implements
 		this.paddingX = paddingX;
 		this.paddingY = paddingY;
 		this.position = position;
-		this.symbolContext = style.getSymbolContext(spriteContainer.getThemeStyle(), getIHtmlColorSet(), colors);
+		this.symbolContext = style.getSymbolContext(getIHtmlColorSet(), colors);
 		this.roundCorner = style.value(PName.RoundCorner).asInt();
 
 	}

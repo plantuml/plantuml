@@ -124,8 +124,7 @@ public class CommandArchimateMultilines extends CommandMultilines2<AbstractEntit
 							diagram.getSkinParam().getIHtmlColorSet()));
 		}
 
-		final Colors colors = color().getColor(diagram.getSkinParam().getThemeStyle(), line0,
-				diagram.getSkinParam().getIHtmlColorSet());
+		final Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());
 		entity.setColors(colors);
 
 		return CommandExecutionResult.ok();

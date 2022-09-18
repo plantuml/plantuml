@@ -40,7 +40,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -115,7 +114,7 @@ public abstract class WithLinkType {
 		return single;
 	}
 
-	public void applyStyle(ThemeStyle themeStyle, String arrowStyle) {
+	public void applyStyle(String arrowStyle) {
 		if (arrowStyle == null) {
 			return;
 		}
@@ -123,12 +122,12 @@ public abstract class WithLinkType {
 		int i = 0;
 		while (st.hasMoreTokens()) {
 			final String s = st.nextToken();
-			applyOneStyle(themeStyle, s, i);
+			applyOneStyle(s, i);
 			i++;
 		}
 	}
 
-	private void applyOneStyle(ThemeStyle themeStyle, String arrowStyle, int i) {
+	private void applyOneStyle(String arrowStyle, int i) {
 		final StringTokenizer st = new StringTokenizer(arrowStyle, ",");
 		while (st.hasMoreTokens()) {
 			final String s = st.nextToken();
@@ -149,7 +148,7 @@ public abstract class WithLinkType {
 			} else if (s.startsWith("thickness=")) {
 				this.goThickness(Double.parseDouble(s.substring("thickness=".length())));
 			} else {
-				final HColor tmp = HColorSet.instance().getColorOrWhite(themeStyle, s);
+				final HColor tmp = HColorSet.instance().getColorOrWhite(s);
 				setSpecificColor(tmp, i);
 			}
 		}

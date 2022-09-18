@@ -84,10 +84,8 @@ public class TimingNote {
 
 		final FontConfiguration fc = FontConfiguration.create(skinParam, style);
 		final double shadowing = style.value(PName.Shadowing).asDouble();
-		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam.getThemeStyle(),
-				skinParam.getIHtmlColorSet());
-		final HColor noteBackgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
-				skinParam.getIHtmlColorSet());
+		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
+		final HColor noteBackgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
 		final UStroke stroke = style.getStroke();
 
 		final Sheet sheet = Parser

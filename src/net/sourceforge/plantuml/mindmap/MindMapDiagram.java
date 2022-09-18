@@ -45,7 +45,6 @@ import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
-import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.awt.geom.XRectangle2D;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -76,8 +75,8 @@ public class MindMapDiagram extends UmlDiagram {
 		return new DiagramDescription("MindMap");
 	}
 
-	public MindMapDiagram(ThemeStyle style, UmlSource source) {
-		super(style, source, UmlDiagramType.MINDMAP, null);
+	public MindMapDiagram(UmlSource source) {
+		super(source, UmlDiagramType.MINDMAP, null);
 		((SkinParam) getSkinParam()).setRankdir(Rankdir.LEFT_TO_RIGHT);
 		this.mindmaps.add(new MindMap(getSkinParam()));
 	}

@@ -68,7 +68,7 @@ public class EntityImageState2 extends AbstractEntityImage {
 		final Stereotype stereotype = entity.getStereotype();
 
 		final USymbol symbol = USymbols.FRAME;
-		final SymbolContext ctx = getStyle().getSymbolContext(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
+		final SymbolContext ctx = getStyle().getSymbolContext(skinParam.getIHtmlColorSet());
 
 		this.url = entity.getUrl99();
 		TextBlock stereo = TextBlockUtils.empty(0, 0);

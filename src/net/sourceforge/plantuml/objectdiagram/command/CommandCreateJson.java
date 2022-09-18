@@ -158,7 +158,7 @@ public class CommandCreateJson extends CommandMultilines2<AbstractClassOrObjectD
 
 		final String s = line0.get("COLOR", 0);
 		entity.setSpecificColorTOBEREMOVED(ColorType.BACK, s == null ? null
-				: diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(), s));
+				: diagram.getSkinParam().getIHtmlColorSet().getColor(s));
 		return entity;
 	}
 

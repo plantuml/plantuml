@@ -82,13 +82,12 @@ public abstract class AbstractTextualComponent extends AbstractComponent {
 		super(style);
 		this.spriteContainer = spriteContainer;
 
-		final FontConfiguration fc = style.getFontConfiguration(spriteContainer.getThemeStyle(), getIHtmlColorSet());
+		final FontConfiguration fc = style.getFontConfiguration(getIHtmlColorSet());
 		this.font = style.getUFont();
-		this.fontColor = style.value(PName.FontColor).asColor(spriteContainer.getThemeStyle(), getIHtmlColorSet());
+		this.fontColor = style.value(PName.FontColor).asColor(getIHtmlColorSet());
 		final HorizontalAlignment horizontalAlignment = style.getHorizontalAlignment();
 		final UFont fontForStereotype = stereo.getUFont();
-		final HColor htmlColorForStereotype = stereo.value(PName.FontColor).asColor(spriteContainer.getThemeStyle(),
-				getIHtmlColorSet());
+		final HColor htmlColorForStereotype = stereo.value(PName.FontColor).asColor(getIHtmlColorSet());
 		display = display.withoutStereotypeIfNeeded(style);
 
 		this.marginX1 = marginX1;

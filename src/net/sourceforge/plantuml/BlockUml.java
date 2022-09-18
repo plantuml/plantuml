@@ -48,7 +48,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.code.AsciiEncoder;
 import net.sourceforge.plantuml.code.Transcoder;
 import net.sourceforge.plantuml.code.TranscoderUtil;
@@ -72,15 +71,14 @@ public class BlockUml {
 	private final Defines localDefines;
 	private final ISkinSimple skinParam;
 	private final Set<FileWithSuffix> included = new HashSet<>();
-	private final ThemeStyle style;
 
 	public Set<FileWithSuffix> getIncluded() {
 		return Collections.unmodifiableSet(included);
 	}
 
 	@Deprecated
-	BlockUml(ThemeStyle style, String... strings) {
-		this(style, convert(strings), Defines.createEmpty(), null, null, null);
+	BlockUml(String... strings) {
+		this(convert(strings), Defines.createEmpty(), null, null, null);
 	}
 
 	public String getEncodedUrl() throws IOException {
@@ -122,12 +120,11 @@ public class BlockUml {
 	 */
 	@Deprecated
 	public BlockUml(List<StringLocated> strings, Defines defines, ISkinSimple skinParam, PreprocessorModeSet mode) {
-		this(ThemeStyle.LIGHT_REGULAR, strings, defines, skinParam, mode, charsetOrDefault(mode.getCharset()));
+		this(strings, defines, skinParam, mode, charsetOrDefault(mode.getCharset()));
 	}
 
-	public BlockUml(ThemeStyle style, List<StringLocated> strings, Defines defines, ISkinSimple skinParam,
-			PreprocessorModeSet mode, Charset charset) {
-		this.style = style;
+	public BlockUml(List<StringLocated> strings, Defines defines, ISkinSimple skinParam, PreprocessorModeSet mode,
+			Charset charset) {
 		this.rawSource = new ArrayList<>(strings);
 		this.localDefines = defines;
 		this.skinParam = skinParam;
@@ -179,7 +176,7 @@ public class BlockUml {
 			if (preprocessorError)
 				system = new PSystemErrorPreprocessor(data, debug);
 			else
-				system = new PSystemBuilder().createPSystem(style, skinParam, data, rawSource);
+				system = new PSystemBuilder().createPSystem(skinParam, data, rawSource);
 		}
 		return system;
 	}

@@ -152,7 +152,7 @@ public final class CommandFactoryNoteActivity implements SingleMultiFactoryComma
 
 		final String s = arg.get("COLOR", 0);
 		note.setSpecificColorTOBEREMOVED(ColorType.BACK, s == null ? null
-				: diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(), s));
+				: diagram.getSkinParam().getIHtmlColorSet().getColor(s));
 
 		IEntity activity = diagram.getLastEntityConsulted();
 		if (activity == null) {

@@ -41,7 +41,6 @@ import java.util.List;
 import java.util.Map;
 
 import ext.plantuml.com.ctreber.acearth.plugins.markers.Marker;
-import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.command.PSystemBasicFactory;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
@@ -57,7 +56,7 @@ public class PSystemXearthFactory extends PSystemBasicFactory<PSystemXearth> {
 	private int height;
 
 	@Override
-	public PSystemXearth initDiagram(ThemeStyle style, UmlSource source, String startLine) {
+	public PSystemXearth initDiagram(UmlSource source, String startLine) {
 		this.width = 512;
 		this.height = 512;
 		this.config.clear();
@@ -76,7 +75,7 @@ public class PSystemXearthFactory extends PSystemBasicFactory<PSystemXearth> {
 	}
 
 	@Override
-	public PSystemXearth executeLine(ThemeStyle style, UmlSource source, PSystemXearth system, String line) {
+	public PSystemXearth executeLine(UmlSource source, PSystemXearth system, String line) {
 		if (system == null && line.startsWith("xearth")) {
 			extractDimension(line);
 			system = new PSystemXearth(source, width, height, config, markers);

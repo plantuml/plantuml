@@ -96,12 +96,11 @@ public class FontConfiguration {
 	}
 
 	public static FontConfiguration create(ISkinParam skinParam, Style style, Colors colors) {
-		final HColor hyperlinkColor = style.value(PName.HyperLinkColor).asColor(skinParam.getThemeStyle(),
-				skinParam.getIHtmlColorSet());
+		final HColor hyperlinkColor = style.value(PName.HyperLinkColor).asColor(skinParam.getIHtmlColorSet());
 		final boolean useUnderlineForHyperlink = skinParam.useUnderlineForHyperlink();
 		HColor color = colors == null ? null : colors.getColor(ColorType.TEXT);
 		if (color == null)
-			color = style.value(PName.FontColor).asColor(skinParam.getThemeStyle(), skinParam.getIHtmlColorSet());
+			color = style.value(PName.FontColor).asColor(skinParam.getIHtmlColorSet());
 		return create(style.getUFont(), color, hyperlinkColor, useUnderlineForHyperlink, skinParam.getTabSize());
 	}
 

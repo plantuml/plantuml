@@ -97,8 +97,7 @@ abstract class CommandExoArrowAny extends SingleLineCommand2<SequenceDiagram> {
 		final MessageExoType messageExoType = getMessageExoType(arg);
 
 		config = config.withPart(getArrowPart(dressing, messageExoType));
-		config = CommandArrow.applyStyle(diagram.getSkinParam().getThemeStyle(), arg.getLazzy("ARROW_STYLE", 0),
-				config);
+		config = CommandArrow.applyStyle(arg.getLazzy("ARROW_STYLE", 0), config);
 
 		final String activationSpec = arg.get("ACTIVATION", 0);
 
@@ -156,7 +155,7 @@ abstract class CommandExoArrowAny extends SingleLineCommand2<SequenceDiagram> {
 		final String s = arg.get("LIFECOLOR", 0);
 
 		final HColor activationColor = s == null ? null
-				: diagram.getSkinParam().getIHtmlColorSet().getColor(diagram.getSkinParam().getThemeStyle(), s);
+				: diagram.getSkinParam().getIHtmlColorSet().getColor(s);
 
 		if (activationSpec != null) {
 			switch (activationSpec.charAt(0)) {

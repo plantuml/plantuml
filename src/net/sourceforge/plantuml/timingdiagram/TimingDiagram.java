@@ -48,7 +48,6 @@ import java.util.Map;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
-import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.awt.geom.XRectangle2D;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -95,8 +94,8 @@ public class TimingDiagram extends UmlDiagram implements Clocks {
 		return new DiagramDescription("(Timing Diagram)");
 	}
 
-	public TimingDiagram(ThemeStyle style, UmlSource source) {
-		super(style, source, UmlDiagramType.TIMING, null);
+	public TimingDiagram(UmlSource source) {
+		super(source, UmlDiagramType.TIMING, null);
 	}
 
 	@Override
@@ -139,7 +138,7 @@ public class TimingDiagram extends UmlDiagram implements Clocks {
 
 	private HColor black() {
 		final Style style = getStyleSignature().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
-		return style.value(PName.LineColor).asColor(getSkinParam().getThemeStyle(), getSkinParam().getIHtmlColorSet());
+		return style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
 
 	}
 

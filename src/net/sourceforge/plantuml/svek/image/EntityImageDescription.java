@@ -137,22 +137,18 @@ public class EntityImageDescription extends AbstractEntityImage {
 
 		final Style styleStereo = tmp.forStereotypeItself(stereotype)
 				.getMergedStyle(getSkinParam().getCurrentStyleBuilder());
-		final HColor forecolor = styleTitle.value(PName.LineColor).asColor(getSkinParam().getThemeStyle(),
-				getSkinParam().getIHtmlColorSet());
+		final HColor forecolor = styleTitle.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
 
 		HColor backcolor = colors.getColor(ColorType.BACK);
 		if (backcolor == null)
-			backcolor = styleTitle.value(PName.BackGroundColor).asColor(getSkinParam().getThemeStyle(),
-					getSkinParam().getIHtmlColorSet());
+			backcolor = styleTitle.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());
 
 		final double roundCorner = styleTitle.value(PName.RoundCorner).asDouble();
 		final double diagonalCorner = styleTitle.value(PName.DiagonalCorner).asDouble();
 		final double deltaShadow = styleTitle.value(PName.Shadowing).asDouble();
 		final UStroke stroke = styleTitle.getStroke(colors);
-		final FontConfiguration fcTitle = styleTitle.getFontConfiguration(getSkinParam().getThemeStyle(),
-				getSkinParam().getIHtmlColorSet());
-		final FontConfiguration fcStereo = styleStereo.getFontConfiguration(getSkinParam().getThemeStyle(),
-				getSkinParam().getIHtmlColorSet());
+		final FontConfiguration fcTitle = styleTitle.getFontConfiguration(getSkinParam().getIHtmlColorSet());
+		final FontConfiguration fcStereo = styleStereo.getFontConfiguration(getSkinParam().getIHtmlColorSet());
 		final HorizontalAlignment defaultAlign = styleTitle.getHorizontalAlignment();
 
 		assert getStereo() == stereotype;

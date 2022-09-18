@@ -61,7 +61,7 @@ import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColors;
 import net.sourceforge.plantuml.ugraphic.eps.UGraphicEps;
 import net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d;
@@ -79,7 +79,7 @@ public class GraphicsSudoku {
 	}
 
 	public ImageData writeImageEps(OutputStream os) throws IOException {
-		final UGraphicEps ug = new UGraphicEps(HColors.WHITE, new ColorMapperIdentity(),
+		final UGraphicEps ug = new UGraphicEps(HColors.WHITE, ColorMapper.IDENTITY,
 				FileFormat.EPS_TEXT.getDefaultStringBounder(), EpsStrategy.WITH_MACRO_AND_TEXT);
 		drawInternal(ug);
 		os.write(ug.getEPSCode().getBytes());
@@ -88,7 +88,7 @@ public class GraphicsSudoku {
 
 	public ImageData writeImageSvg(OutputStream os) throws IOException {
 		final UGraphicSvg ug = new UGraphicSvg(HColors.WHITE, true, new XDimension2D(0, 0),
-				new ColorMapperIdentity(), false, 1.0, null, null, 0, "none", FileFormat.SVG.getDefaultStringBounder(),
+				ColorMapper.IDENTITY, false, 1.0, null, null, 0, "none", FileFormat.SVG.getDefaultStringBounder(),
 				LengthAdjust.defaultValue(), false);
 		drawInternal(ug);
 		ug.writeToStream(os, null, -1); // dpi param is not used
@@ -96,7 +96,7 @@ public class GraphicsSudoku {
 	}
 
 	public ImageData writeImageLatex(OutputStream os, FileFormat fileFormat) throws IOException {
-		final UGraphicTikz ug = new UGraphicTikz(HColors.WHITE, new ColorMapperIdentity(), FileFormat.LATEX.getDefaultStringBounder(), 1,
+		final UGraphicTikz ug = new UGraphicTikz(HColors.WHITE, ColorMapper.IDENTITY, FileFormat.LATEX.getDefaultStringBounder(), 1,
 				fileFormat == FileFormat.LATEX);
 		drawInternal(ug);
 		ug.writeToStream(os, null, -1); // dpi param is not used
@@ -110,7 +110,7 @@ public class GraphicsSudoku {
 		final BufferedImage im = builder.getBufferedImage();
 		final Graphics2D g3d = builder.getGraphics2D();
 
-		final UGraphic ug = new UGraphicG2d(HColors.WHITE, new ColorMapperIdentity(), stringBounder, g3d, 1.0);
+		final UGraphic ug = new UGraphicG2d(HColors.WHITE, ColorMapper.IDENTITY, stringBounder, g3d, 1.0);
 
 		drawInternal(ug);
 		g3d.dispose();

@@ -255,8 +255,7 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock, Styleable
 
 	private TextBlock getTitle(Swimlane swimlane) {
 		final HorizontalAlignment horizontalAlignment = HorizontalAlignment.LEFT;
-		final FontConfiguration fontConfiguration = getStyle().getFontConfiguration(skinParam.getThemeStyle(),
-				skinParam.getIHtmlColorSet());
+		final FontConfiguration fontConfiguration = getStyle().getFontConfiguration(skinParam.getIHtmlColorSet());
 
 		LineBreakStrategy wrap = getWrap();
 		if (wrap.isAuto())
@@ -327,8 +326,7 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock, Styleable
 	}
 
 	private void drawTitlesBackground(UGraphic ug) {
-		final HColor color = getStyle().value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
-				skinParam.getIHtmlColorSet());
+		final HColor color = getStyle().value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
 
 		if (color != null) {
 			final double titleHeight = getTitlesHeight(ug.getStringBounder());

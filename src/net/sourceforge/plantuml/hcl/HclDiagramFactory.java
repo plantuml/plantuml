@@ -41,7 +41,6 @@ import java.util.List;
 
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.UmlDiagramType;
-import net.sourceforge.plantuml.api.ThemeStyle;
 import net.sourceforge.plantuml.command.PSystemAbstractFactory;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
@@ -58,7 +57,7 @@ public class HclDiagramFactory extends PSystemAbstractFactory {
 	}
 
 	@Override
-	public Diagram createSystem(ThemeStyle style, UmlSource source, ISkinSimple skinParam) {
+	public Diagram createSystem(UmlSource source, ISkinSimple skinParam) {
 		final List<String> highlighted = new ArrayList<>();
 		JsonValue data = null;
 		StyleExtractor styleExtractor = null;
@@ -79,7 +78,7 @@ public class HclDiagramFactory extends PSystemAbstractFactory {
 		} catch (Exception e) {
 			Logme.error(e);
 		}
-		final JsonDiagram result = new JsonDiagram(style, source, UmlDiagramType.HCL, data, highlighted);
+		final JsonDiagram result = new JsonDiagram(source, UmlDiagramType.HCL, data, highlighted);
 //		if (styleExtractor != null) {
 //			styleExtractor.applyStyles(result.getSkinParam());
 //			final String title = styleExtractor.getTitle();
