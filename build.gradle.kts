@@ -25,8 +25,8 @@ java {
 
 dependencies {
 	compileOnly("org.apache.ant:ant:1.10.12")
-	testImplementation("org.assertj:assertj-core:3.22.0")
-	testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
+	testImplementation("org.assertj:assertj-core:3.23.1")
+	testImplementation("org.junit.jupiter:junit-jupiter:5.9.0")
 	testImplementation("org.scilab.forge:jlatexmath:1.0.7")
 	"pdfRuntimeOnly"("org.apache.xmlgraphics:fop:2.7")
 	"pdfRuntimeOnly"("org.apache.xmlgraphics:batik-all:1.14")
