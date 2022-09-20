@@ -37,10 +37,10 @@ package net.sourceforge.plantuml.activitydiagram3;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Map;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.Url;
@@ -74,7 +74,7 @@ public class ActivityDiagram3 extends UmlDiagram {
 
 	private final Swimlanes swinlanes = new Swimlanes(getSkinParam(), getPragma());
 
-	public ActivityDiagram3(UmlSource source, ISkinSimple skinParam) {
+	public ActivityDiagram3(UmlSource source, Map<String, String> skinParam) {
 		super(source, UmlDiagramType.ACTIVITY, skinParam);
 	}
 

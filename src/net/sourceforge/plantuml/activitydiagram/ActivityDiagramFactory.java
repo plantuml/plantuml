@@ -37,8 +37,8 @@ package net.sourceforge.plantuml.activitydiagram;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.activitydiagram.command.CommandElse;
 import net.sourceforge.plantuml.activitydiagram.command.CommandEndPartition;
 import net.sourceforge.plantuml.activitydiagram.command.CommandEndif;
@@ -59,7 +59,7 @@ import net.sourceforge.plantuml.core.UmlSource;
 public class ActivityDiagramFactory extends PSystemCommandFactory {
 
 	@Override
-	public ActivityDiagram createEmptyDiagram(UmlSource source, ISkinSimple skinParam) {
+	public ActivityDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinParam) {
 		return new ActivityDiagram(source, skinParam);
 	}
 

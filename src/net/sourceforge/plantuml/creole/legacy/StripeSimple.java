@@ -255,7 +255,7 @@ public class StripeSimple implements Stripe {
 	public void addSprite(String src, double scale, HColor color) {
 		final Sprite sprite = skinParam.getSprite(src);
 		if (sprite != null)
-			atoms.add(new AtomSprite(color, scale, fontConfiguration, sprite, null, skinParam.getColorMapper()));
+			atoms.add(new AtomSprite(color, scale, fontConfiguration, sprite, null));
 	}
 
 	public void addOpenIcon(String src, double scale, HColor color) {
@@ -285,8 +285,7 @@ public class StripeSimple implements Stripe {
 	}
 
 	public void addMath(ScientificEquationSafe math) {
-		atoms.add(new AtomMath(math, fontConfiguration.getColor(), fontConfiguration.getExtendedColor(),
-				skinParam.getColorMapper()));
+		atoms.add(new AtomMath(math, fontConfiguration.getColor(), fontConfiguration.getExtendedColor()));
 	}
 
 	private void modifyStripe(String line) {

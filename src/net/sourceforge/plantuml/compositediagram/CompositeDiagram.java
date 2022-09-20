@@ -35,9 +35,9 @@
  */
 package net.sourceforge.plantuml.compositediagram;
 
+import java.util.Map;
 import java.util.Objects;
 
-import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.core.UmlSource;
@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.graphic.USymbol;
 
 public class CompositeDiagram extends AbstractEntityDiagram {
 
-	public CompositeDiagram(UmlSource source, ISkinSimple skinParam) {
+	public CompositeDiagram(UmlSource source, Map<String, String> skinParam) {
 		super(source, UmlDiagramType.COMPOSITE, skinParam);
 	}
 

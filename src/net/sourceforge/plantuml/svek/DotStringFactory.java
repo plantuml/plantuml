@@ -63,7 +63,6 @@ import net.sourceforge.plantuml.cucadiagram.dot.GraphvizVersions;
 import net.sourceforge.plantuml.cucadiagram.dot.ProcessState;
 import net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.posimo.Moveable;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.vizjs.GraphvizJs;

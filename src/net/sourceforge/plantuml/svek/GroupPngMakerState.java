@@ -123,7 +123,8 @@ public final class GroupPngMakerState {
 		final ISkinParam skinParam = diagram.getSkinParam();
 
 		final Style style = EntityImageStateCommon.getStyleState(group, skinParam);
-		// final Style styleHeader = EntityImageStateCommon.getStyleStateHeader(group, skinParam);
+		// final Style styleHeader = EntityImageStateCommon.getStyleStateHeader(group,
+		// skinParam);
 		final Style styleTitle = EntityImageStateCommon.getStyleStateTitle(group, skinParam);
 		final Style styleBody = EntityImageStateCommon.getStyleStateBody(group, skinParam);
 
@@ -139,7 +140,7 @@ public final class GroupPngMakerState {
 		final List<Link> links = getPureInnerLinks();
 
 		final DotData dotData = new DotData(group, links, group.getLeafsDirect(), diagram.getUmlDiagramType(),
-				skinParam, new InnerGroupHierarchy(), diagram.getColorMapper(), diagram.getEntityFactory(),
+				skinParam, new InnerGroupHierarchy(), diagram.getEntityFactory(),
 				diagram.isHideEmptyDescriptionForState(), DotMode.NORMAL, diagram.getNamespaceSeparator(),
 				diagram.getPragma());
 

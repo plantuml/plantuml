@@ -35,9 +35,9 @@
  */
 package net.sourceforge.plantuml.statediagram;
 
+import java.util.Map;
 import java.util.Objects;
 
-import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.core.UmlSource;
@@ -58,7 +58,7 @@ public class StateDiagram extends AbstractEntityDiagram {
 
 	private static final String CONCURRENT_PREFIX = "CONC";
 
-	public StateDiagram(UmlSource source, ISkinSimple skinParam) {
+	public StateDiagram(UmlSource source, Map<String, String> skinParam) {
 		super(source, UmlDiagramType.STATE, skinParam);
 		// setNamespaceSeparator(null);
 	}

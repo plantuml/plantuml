@@ -40,7 +40,6 @@ import java.util.Map;
 import net.sourceforge.plantuml.creole.Parser;
 import net.sourceforge.plantuml.sprite.Sprite;
 import net.sourceforge.plantuml.sprite.SpriteImage;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 
 public class SpriteContainerEmpty implements SpriteContainer, ISkinSimple {
@@ -81,11 +80,7 @@ public class SpriteContainerEmpty implements SpriteContainer, ISkinSimple {
 		return LineBreakStrategy.NONE;
 	}
 
-	public ColorMapper getColorMapper() {
-		return ColorMapper.IDENTITY;
-	}
-
-	public void copyAllFrom(ISkinSimple other) {
+	public void copyAllFrom(Map<String, String> other) {
 		throw new UnsupportedOperationException();
 	}
 

@@ -37,10 +37,10 @@ package net.sourceforge.plantuml.activitydiagram;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.Direction;
-import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
@@ -61,7 +61,7 @@ public class ActivityDiagram extends CucaDiagram {
 	private IEntity lastEntityBrancheConsulted;
 	private ConditionalContext currentContext;
 
-	public ActivityDiagram(UmlSource source, ISkinSimple skinParam) {
+	public ActivityDiagram(UmlSource source, Map<String, String> skinParam) {
 		super(source, UmlDiagramType.ACTIVITY, skinParam);
 		setNamespaceSeparator(null);
 	}

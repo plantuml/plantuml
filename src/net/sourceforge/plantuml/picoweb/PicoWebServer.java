@@ -223,9 +223,9 @@ public class PicoWebServer implements Runnable {
 		final String source = transcoder.decode(compressed);
 		final SourceStringReader ssr = new SourceStringReader(source);
 
+		final FileFormatOption fileFormatOption = new FileFormatOption(format);
 		final List<BlockUml> blocks = ssr.getBlocks();
 		if (blocks.size() > 0) {
-			final FileFormatOption fileFormatOption = new FileFormatOption(format);
 			final Diagram system = blocks.get(0).getDiagram();
 			final ByteArrayOutputStream os = new ByteArrayOutputStream();
 			final ImageData imageData = system.exportDiagram(os, 0, fileFormatOption);

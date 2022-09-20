@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.compositediagram;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.command.Command;
@@ -69,7 +70,7 @@ public class CompositeDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	public CompositeDiagram createEmptyDiagram(UmlSource source, ISkinSimple skinParam) {
+	public CompositeDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinParam) {
 		return new CompositeDiagram(source, skinParam);
 	}
 }

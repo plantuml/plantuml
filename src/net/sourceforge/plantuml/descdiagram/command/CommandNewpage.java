@@ -64,7 +64,7 @@ public class CommandNewpage extends SingleLineCommand2<UmlDiagram> {
 	protected CommandExecutionResult executeArg(UmlDiagram diagram, LineLocation location, RegexResult arg) {
 		final int dpi = diagram.getSkinParam().getDpi();
 		final UmlDiagram emptyDiagram = (UmlDiagram) factory.createEmptyDiagram(diagram.getSource(),
-				diagram.getSkinParam());
+				diagram.getSkinParam().values());
 		if (dpi != 96)
 			emptyDiagram.setParam("dpi", "" + dpi);
 

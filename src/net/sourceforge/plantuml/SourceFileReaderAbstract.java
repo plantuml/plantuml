@@ -65,28 +65,37 @@ import net.sourceforge.plantuml.security.SecurityUtils;
 
 public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 
-	protected File file;
-	protected File outputDirectory;
-	protected File outputFile;
+	final private File file;
 
-	protected final BlockUmlBuilder builder;
-	protected /* final */ FileFormatOption fileFormatOption;
+	private FileFormatOption fileFormatOption;
 	private boolean checkMetadata;
 	private boolean noerror;
+
+	final private Charset charset;
+
+	private final BlockUmlBuilder builder;
+	private int cpt;
+
+	protected final SuggestedFile getSuggestedFile(File outputDirectory, String newName) {
+		final File outFile = new File(outputDirectory, newName);
+		return SuggestedFile.fromOutputFile(outFile, getFileFormatOption().getFileFormat(), cpt++);
+	}
 
 	public SourceFileReaderAbstract(File file, FileFormatOption fileFormatOption, Defines defines, List<String> config,
 			String charsetName) throws IOException {
 
-		if (!file.exists()) {
+		if (file.exists() == false)
 			throw new IllegalArgumentException();
-		}
-
-		final Charset charset = charsetOrDefault(charsetName);
 
 		this.file = file;
+		this.charset = charsetOrDefault(charsetName);
 		this.fileFormatOption = fileFormatOption;
-		this.builder = new BlockUmlBuilder(config, charset, defines, getReader(charset), SFile.fromFile(file.getAbsoluteFile().getParentFile()),
-				FileWithSuffix.getFileName(file));
+		this.builder = new BlockUmlBuilder(config, charset, defines, getReader(charset),
+				SFile.fromFile(file.getAbsoluteFile().getParentFile()), FileWithSuffix.getFileName(file));
+	}
+
+	protected final FileFormatOption getFileFormatOption() {
+		return fileFormatOption;
 	}
 
 	public void setCheckMetadata(boolean checkMetadata) {
@@ -94,11 +103,9 @@ public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 	}
 
 	public boolean hasError() {
-		for (final BlockUml b : builder.getBlockUmls()) {
-			if (b.getDiagram() instanceof PSystemError) {
+		for (final BlockUml b : builder.getBlockUmls())
+			if (b.getDiagram() instanceof PSystemError)
 				return true;
-			}
-		}
 		return false;
 	}
 
@@ -110,13 +117,14 @@ public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 		return new InputStreamReader(new BufferedInputStream(new FileInputStream(file)), charset);
 	}
 
-	public final Set<FileWithSuffix> getIncludedFiles() {
+	public final Set<FileWithSuffix> getIncludedFiles() throws IOException {
 		return builder.getIncludedFiles();
 	}
 
-	@Deprecated
-	public final void setFileFormatOption(FileFormatOption fileFormatOption) {
+	@Override
+	public final ISourceFileReader setFileFormatOption(FileFormatOption fileFormatOption) {
 		this.fileFormatOption = fileFormatOption;
+		return this;
 	}
 
 	protected boolean endsWithSlashOrAntislash(String newName) {
@@ -145,8 +153,6 @@ public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 		}
 	}
 
-	protected int cpt;
-
 	final public List<GeneratedImage> getGeneratedImages() throws IOException {
 		Log.info("Reading file: " + file);
 
@@ -161,28 +167,26 @@ public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 				system = blockUml.getDiagram();
 			} catch (Throwable t) {
 				Logme.error(t);
-				if (OptionFlags.getInstance().isSilentlyCompletelyIgnoreErrors() || noerror) {
+				if (OptionFlags.getInstance().isSilentlyCompletelyIgnoreErrors() || noerror)
 					continue;
-				}
+
 				return getCrashedImage(blockUml, t, suggested.getFile(0));
 			}
 
-			if (OptionFlags.getInstance().isSilentlyCompletelyIgnoreErrors() && system instanceof PSystemError) {
+			if (OptionFlags.getInstance().isSilentlyCompletelyIgnoreErrors() && system instanceof PSystemError)
 				continue;
-			}
 
 			OptionFlags.getInstance().logData(SFile.fromFile(file), system);
 			final List<FileImageData> exportDiagrams;
 			if (noerror && system instanceof PSystemError) {
 				exportDiagrams = new ArrayList<FileImageData>();
-				exportDiagrams.add(
-						new FileImageData(null, new ImageDataSimple(new XDimension2D(0, 0), FileImageData.ERROR)));
+				exportDiagrams
+						.add(new FileImageData(null, new ImageDataSimple(new XDimension2D(0, 0), FileImageData.ERROR)));
 			} else
 				exportDiagrams = PSystemUtils.exportDiagrams(system, suggested, fileFormatOption, checkMetadata);
 
-			if (exportDiagrams.size() > 1) {
+			if (exportDiagrams.size() > 1)
 				cpt += exportDiagrams.size() - 1;
-			}
 
 			for (FileImageData fdata : exportDiagrams) {
 				final String desc = "[" + file.getName() + "] " + system.getDescription();
@@ -204,6 +208,10 @@ public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 	protected final void setNoerror(boolean noerror) {
 		this.noerror = noerror;
 
+	}
+
+	final protected String getFileName() {
+		return file.getName();
 	}
 
 }

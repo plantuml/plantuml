@@ -43,34 +43,23 @@ import net.sourceforge.plantuml.preproc.Defines;
 
 public class SourceFileReaderCopyCat extends SourceFileReaderAbstract implements ISourceFileReader {
 
+	private final File outputDirectory;
+
 	public SourceFileReaderCopyCat(Defines defines, final File file, File outputDirectory, List<String> config,
 			String charset, FileFormatOption fileFormatOption) throws IOException {
 		super(file, fileFormatOption, defines, config, charset);
 		final String path = file.getParentFile().getPath();
-		// System.err.println("SourceFileReaderCopyCat::path=" + path);
-		// System.err.println("SourceFileReaderCopyCat::outputDirectory=" +
-		// outputDirectory);
 		this.outputDirectory = new File(outputDirectory, path).getAbsoluteFile();
-		if (outputDirectory.exists() == false) {
+		if (outputDirectory.exists() == false)
 			outputDirectory.mkdirs();
-		}
-		// System.err.println("SourceFileReaderCopyCat=" +
-		// this.outputDirectory.getPath() + " "
-		// + this.outputDirectory.getAbsolutePath());
 	}
 
 	@Override
 	protected SuggestedFile getSuggestedFile(BlockUml blockUml) {
-		final String newName = blockUml.getFileOrDirname();
-		SuggestedFile suggested = null;
-		if (newName == null) {
-			suggested = SuggestedFile.fromOutputFile(new File(outputDirectory, file.getName()),
-					fileFormatOption.getFileFormat(), cpt++);
-		} else {
-			suggested = SuggestedFile.fromOutputFile(new File(outputDirectory, newName),
-					fileFormatOption.getFileFormat(), cpt++);
-		}
-		// System.err.println("SourceFileReaderCopyCat::suggested=" + suggested);
+		String newName = blockUml.getFileOrDirname();
+		if (newName == null)
+			newName = getFileName();
+		final SuggestedFile suggested = getSuggestedFile(outputDirectory, newName);
 		suggested.getParentFile().mkdirs();
 		return suggested;
 	}

@@ -35,10 +35,11 @@
  */
 package net.sourceforge.plantuml.command;
 
+import java.util.Map;
+
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.ErrorUml;
 import net.sourceforge.plantuml.ErrorUmlType;
-import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.annotation.HaxeIgnored;
 import net.sourceforge.plantuml.core.Diagram;
@@ -68,7 +69,7 @@ public abstract class PSystemBasicFactory<P extends AbstractPSystem> extends PSy
 	}
 
 	@Override
-	final public Diagram createSystem(UmlSource source, ISkinSimple skinParam) {
+	final public Diagram createSystem(UmlSource source, Map<String, String> skinParam) {
 		source = source.removeInitialSkinparam();
 		final IteratorCounter2 it = source.iterator2();
 		final StringLocated startLine = it.next();

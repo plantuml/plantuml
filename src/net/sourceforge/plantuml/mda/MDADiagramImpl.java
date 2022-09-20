@@ -41,6 +41,8 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.BlockUml;
+import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.SourceStringReader;
 import net.sourceforge.plantuml.api.mda.option2.MDADiagram;
 import net.sourceforge.plantuml.api.mda.option2.MDAPackage;

@@ -123,7 +123,7 @@ public class SpriteColor implements Sprite {
 		return new UImage(new PixelImage(im, AffineTransformType.TYPE_BILINEAR));
 	}
 
-	public TextBlock asTextBlock(final HColor color, final double scale, ColorMapper colorMapper) {
+	public TextBlock asTextBlock(final HColor color, final double scale) {
 		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {

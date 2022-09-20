@@ -37,8 +37,8 @@ package net.sourceforge.plantuml.sprite;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.core.UmlSource;
@@ -54,7 +54,7 @@ public class StdlibDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	public StdlibDiagram createEmptyDiagram(UmlSource source, ISkinSimple skinParam) {
+	public StdlibDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinParam) {
 		return new StdlibDiagram(source, skinParam);
 	}
 

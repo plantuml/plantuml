@@ -49,6 +49,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.Map;
 
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
@@ -91,7 +92,7 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 //		super(style, source, type);
 //	}
 
-	public UmlDiagram(UmlSource source, UmlDiagramType type, ISkinSimple orig) {
+	public UmlDiagram(UmlSource source, UmlDiagramType type, Map<String, String> orig) {
 		super(source, type, orig);
 	}
 

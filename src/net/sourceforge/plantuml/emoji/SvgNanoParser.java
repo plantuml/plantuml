@@ -337,7 +337,7 @@ public class SvgNanoParser implements Sprite {
 	}
 
 	@Override
-	public TextBlock asTextBlock(final HColor color, final double scale, final ColorMapper colorMapper) {
+	public TextBlock asTextBlock(final HColor color, final double scale) {
 
 		final UImageSvg data = new UImageSvg(svgStart, scale);
 		final double width = data.getWidth();

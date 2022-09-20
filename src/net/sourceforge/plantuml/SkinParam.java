@@ -79,8 +79,6 @@ import net.sourceforge.plantuml.svek.PackageStyle;
 import net.sourceforge.plantuml.svg.LengthAdjust;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UStroke;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
-import net.sourceforge.plantuml.ugraphic.color.ColorOrder;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 import net.sourceforge.plantuml.ugraphic.color.HColors;
@@ -145,8 +143,8 @@ public class SkinParam implements ISkinParam {
 	private final UmlDiagramType type;
 	private boolean useVizJs;
 
-	public void copyAllFrom(ISkinSimple other) {
-		this.params.putAll(other.values());
+	public void copyAllFrom(Map<String, String> other) {
+		this.params.putAll(other);
 	}
 
 	public Map<String, String> values() {
@@ -658,31 +656,6 @@ public class SkinParam implements ISkinParam {
 			return split[0];
 
 		return split[i];
-	}
-
-	public ColorMapper getColorMapper() {
-		if ("dark".equalsIgnoreCase(getValue("mode")))
-			return ColorMapper.FORCE_DARK;
-
-		final String monochrome = getValue("monochrome");
-		if ("true".equals(monochrome))
-			return ColorMapper.MONOCHROME;
-
-		if ("reverse".equals(monochrome))
-			return ColorMapper.MONOCHROME_REVERSE;
-
-		final String value = getValue("reversecolor");
-		if (value == null)
-			return ColorMapper.IDENTITY;
-
-		if ("dark".equalsIgnoreCase(value))
-			return ColorMapper.LIGTHNESS_INVERSE;
-
-		final ColorOrder order = ColorOrder.fromString(value);
-		if (order == null)
-			return ColorMapper.IDENTITY;
-
-		return ColorMapper.reverse(order);
 	}
 
 	public boolean shadowing(Stereotype stereotype) {

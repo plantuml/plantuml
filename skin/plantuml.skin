@@ -477,7 +477,7 @@ root {
   HyperLinkColor blue
   FontColor white
   LineColor #e7e7e7
-  BackGroundColor #070707
+  BackGroundColor #303030
 }
 
 document {
@@ -537,6 +537,11 @@ sequenceDiagram {
 	  LineColor white
 	  BackGroundColor #1
 	}
+
+	participant,actor,boundary,control,entity,queue,database,collections {
+	  BackgroundColor: #2;
+	  HorizontalAlignment center
+	}
 	
 }
 
@@ -570,7 +575,7 @@ swimlane {
 }
 
 note {
-  BackGroundColor #3
+  BackGroundColor #714137
 }
 
 
@@ -632,6 +637,9 @@ timingDiagram {
 
 
 ganttDiagram {
+	task {
+	    BackGroundColor #555
+	}
 	timeline {
 	    LineColor #3f3f3f
 	}
@@ -653,9 +661,12 @@ yamlDiagram,jsonDiagram {
 	  BackGroundColor #ccff02
     }
   }
-
+}
 
 nwdiagDiagram {
+	network {
+	    BackGroundColor #555
+	}
 	group {
 		BackGroundColor #2
 	}

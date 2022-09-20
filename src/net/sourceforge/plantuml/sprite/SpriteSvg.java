@@ -41,7 +41,6 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImageSvg;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class SpriteSvg implements Sprite {
@@ -52,7 +51,7 @@ public class SpriteSvg implements Sprite {
 		this.svg = svg;
 	}
 
-	public TextBlock asTextBlock(final HColor color, final double scale, ColorMapper colorMapper) {
+	public TextBlock asTextBlock(final HColor color, final double scale) {
 		final UImageSvg img = new UImageSvg(svg, scale);
 		return new AbstractTextBlock() {
 

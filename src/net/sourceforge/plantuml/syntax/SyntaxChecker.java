@@ -41,6 +41,8 @@ import java.util.List;
 import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.BlockUml;
 import net.sourceforge.plantuml.ErrorUml;
+import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.LineLocationImpl;
 import net.sourceforge.plantuml.OptionFlags;
@@ -78,7 +80,7 @@ public class SyntaxChecker {
 			return result;
 		}
 		final SourceStringReader sourceStringReader = new SourceStringReader(Defines.createEmpty(), source,
-				Collections.<String> emptyList());
+				Collections.<String>emptyList());
 
 		final List<BlockUml> blocks = sourceStringReader.getBlocks();
 		if (blocks.size() == 0) {
@@ -97,9 +99,9 @@ public class SyntaxChecker {
 			final PSystemError sys = (PSystemError) system;
 			result.setLineLocation(sys.getLineLocation());
 			result.setSystemError(sys);
-			for (ErrorUml er : sys.getErrorsUml()) {
+			for (ErrorUml er : sys.getErrorsUml())
 				result.addErrorText(er.getError());
-			}
+
 		} else {
 			result.setDescription(system.getDescription().getDescription());
 		}
@@ -109,7 +111,7 @@ public class SyntaxChecker {
 	public static SyntaxResult checkSyntaxFair(String source) {
 		final SyntaxResult result = new SyntaxResult();
 		final SourceStringReader sourceStringReader = new SourceStringReader(Defines.createEmpty(), source,
-				Collections.<String> emptyList());
+				Collections.<String>emptyList());
 
 		final List<BlockUml> blocks = sourceStringReader.getBlocks();
 		if (blocks.size() == 0) {

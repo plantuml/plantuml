@@ -37,10 +37,10 @@ package net.sourceforge.plantuml.classdiagram;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Map;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
@@ -61,7 +61,7 @@ import net.sourceforge.plantuml.svek.image.EntityImageClass;
 
 public class ClassDiagram extends AbstractClassOrObjectDiagram {
 
-	public ClassDiagram(UmlSource source, ISkinSimple skinParam) {
+	public ClassDiagram(UmlSource source, Map<String, String> skinParam) {
 		super(source, UmlDiagramType.CLASS, skinParam);
 	}
 

@@ -51,7 +51,6 @@ import java.util.Stack;
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
@@ -94,7 +93,7 @@ public class SequenceDiagram extends UmlDiagram {
 
 	private final Rose skin2 = new Rose();
 
-	public SequenceDiagram(UmlSource source, ISkinSimple skinParam) {
+	public SequenceDiagram(UmlSource source, Map<String, String> skinParam) {
 		super(source, UmlDiagramType.SEQUENCE, skinParam);
 	}
 

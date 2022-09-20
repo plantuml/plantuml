@@ -35,9 +35,9 @@
  */
 package net.sourceforge.plantuml.descdiagram;
 
+import java.util.Map;
 import java.util.Objects;
 
-import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
@@ -51,7 +51,7 @@ import net.sourceforge.plantuml.graphic.USymbols;
 
 public class DescriptionDiagram extends AbstractEntityDiagram {
 
-	public DescriptionDiagram(UmlSource source, ISkinSimple skinParam) {
+	public DescriptionDiagram(UmlSource source, Map<String, String> skinParam) {
 		super(source, UmlDiagramType.DESCRIPTION, skinParam);
 	}
 

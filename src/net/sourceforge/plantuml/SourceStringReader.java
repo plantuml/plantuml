@@ -151,7 +151,6 @@ public class SourceStringReader {
 
 	public DiagramDescription outputImage(OutputStream os, int numImage, FileFormatOption fileFormatOption)
 			throws IOException {
-		fileFormatOption = fileFormatOption;
 		if (blocks.size() == 0) {
 			noStartumlFound(os, fileFormatOption);
 			return null;
@@ -176,10 +175,9 @@ public class SourceStringReader {
 	}
 
 	public DiagramDescription generateDiagramDescription(int numImage, FileFormatOption fileFormatOption) {
-		fileFormatOption = fileFormatOption;
-		if (blocks.size() == 0) {
+		if (blocks.size() == 0)
 			return null;
-		}
+
 		for (BlockUml b : blocks) {
 			final Diagram system = b.getDiagram();
 			final int nbInSystem = system.getNbImages();
@@ -211,18 +209,17 @@ public class SourceStringReader {
 	}
 
 	public String getCMapData(int numImage, FileFormatOption fileFormatOption) throws IOException {
-		fileFormatOption = fileFormatOption;
-		if (blocks.size() == 0) {
+		if (blocks.size() == 0)
 			return null;
-		}
+
 		for (BlockUml b : blocks) {
 			final Diagram system = b.getDiagram();
 			final int nbInSystem = system.getNbImages();
 			if (numImage < nbInSystem) {
 				final ImageData imageData = system.exportDiagram(new NullOutputStream(), numImage, fileFormatOption);
-				if (imageData.containsCMapData()) {
+				if (imageData.containsCMapData())
 					return imageData.getCMapData("plantuml");
-				}
+
 				return null;
 			}
 			numImage -= nbInSystem;
@@ -232,7 +229,6 @@ public class SourceStringReader {
 	}
 
 	public ImageData noStartumlFound(OutputStream os, FileFormatOption fileFormatOption) throws IOException {
-		fileFormatOption = fileFormatOption;
 		final TextBlockBackcolored error = GraphicStrings.createForError(Arrays.asList("No @startuml/@enduml found"),
 				fileFormatOption.isUseRedForError());
 

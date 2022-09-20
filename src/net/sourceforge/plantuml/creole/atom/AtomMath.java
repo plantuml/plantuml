@@ -53,11 +53,9 @@ public class AtomMath extends AbstractAtom implements Atom {
 	private final ScientificEquationSafe math;
 	private final HColor foreground;
 	private final HColor background;
-	private final ColorMapper colorMapper;
 
-	public AtomMath(ScientificEquationSafe math, HColor foreground, HColor background, ColorMapper colorMapper) {
+	public AtomMath(ScientificEquationSafe math, HColor foreground, HColor background) {
 		this.math = math;
-		this.colorMapper = colorMapper;
 		this.foreground = foreground;
 		this.background = background;
 	}
@@ -81,14 +79,15 @@ public class AtomMath extends AbstractAtom implements Atom {
 	}
 
 	public void drawU(UGraphic ug) {
+		final ColorMapper colorMapper = ug.getColorMapper();
 		final boolean isSvg = ug.matchesProperty("SVG");
 		final Color back;
-		if (background == null) {
+		if (background == null)
 			back = null;
-		} else {
-			back = getColor(background, Color.WHITE);
-		}
-		final Color fore = getColor(foreground, Color.BLACK);
+		else
+			back = getColor(colorMapper, background, Color.WHITE);
+
+		final Color fore = getColor(colorMapper, foreground, Color.BLACK);
 		// final double dpiFactor = ug.dpiFactor();
 		if (isSvg) {
 			final UImageSvg svg = math.getSvg(1, fore, back);
@@ -99,7 +98,7 @@ public class AtomMath extends AbstractAtom implements Atom {
 		}
 	}
 
-	private Color getColor(HColor color, Color defaultValue) {
+	private Color getColor(ColorMapper colorMapper, HColor color, Color defaultValue) {
 		if (color instanceof HColorSimple)
 			return color.toColor(colorMapper);
 

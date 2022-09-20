@@ -119,8 +119,7 @@ public class AtomTextUtils {
 				final Sprite sprite = skinSimple.getSprite(valSprite);
 				if (sprite != null) {
 					final double scale = Parser.getScale(m.group(4), 1);
-					result.add(
-							new AtomSprite(null, scale, fontConfiguration, sprite, url, skinSimple.getColorMapper()));
+					result.add(new AtomSprite(null, scale, fontConfiguration, sprite, url));
 				}
 			} else if (valImg != null) {
 				final double scale = Parser.getScale(m.group(6), 1);

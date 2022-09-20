@@ -37,9 +37,9 @@ package net.sourceforge.plantuml.sprite;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Map;
 
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
@@ -61,7 +61,7 @@ import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class ListSpriteDiagram extends UmlDiagram {
 
-	public ListSpriteDiagram(UmlSource source, ISkinSimple skinParam) {
+	public ListSpriteDiagram(UmlSource source, Map<String, String> skinParam) {
 		super(source, UmlDiagramType.HELP, skinParam);
 	}
 
@@ -92,7 +92,7 @@ public class ListSpriteDiagram extends UmlDiagram {
 					final Sprite sprite = getSkinParam().getSprite(n);
 					TextBlock blockName = Display.create(n).create(FontConfiguration.blackBlueTrue(UFont.sansSerif(14)),
 							HorizontalAlignment.LEFT, getSkinParam());
-					TextBlock tb = sprite.asTextBlock(HColors.BLACK, 1.0, getSkinParam().getColorMapper());
+					TextBlock tb = sprite.asTextBlock(HColors.BLACK, 1.0);
 					tb = TextBlockUtils.mergeTB(tb, blockName, HorizontalAlignment.CENTER);
 					tb.drawU(ug.apply(new UTranslate(x, y)));
 					final XDimension2D dim = tb.calculateDimension(ug.getStringBounder());

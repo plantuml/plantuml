@@ -85,8 +85,8 @@ public final class BlockUmlBuilder implements DefinitionsContainer {
 		this(config, charset, defines, reader, null, null);
 	}
 
-	public BlockUmlBuilder(List<String> config, Charset charset, Defines defines, Reader readerInit, SFile newCurrentDir,
-			String desc) throws IOException {
+	public BlockUmlBuilder(List<String> config, Charset charset, Defines defines, Reader readerInit,
+			SFile newCurrentDir, String desc) throws IOException {
 
 		this.defines = defines;
 		this.charset = requireNonNull(charset);

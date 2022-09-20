@@ -38,6 +38,7 @@ package net.sourceforge.plantuml;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import net.sourceforge.plantuml.acearth.PSystemXearthFactory;
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagramFactory;
@@ -105,7 +106,7 @@ public class PSystemBuilder {
 
 	public static final long startTime = System.currentTimeMillis();
 
-	final public Diagram createPSystem(ISkinSimple skinParam, List<StringLocated> source, List<StringLocated> rawSource) {
+	final public Diagram createPSystem(List<StringLocated> source, List<StringLocated> rawSource, Map<String, String> skinParam) {
 
 		final long now = System.currentTimeMillis();
 

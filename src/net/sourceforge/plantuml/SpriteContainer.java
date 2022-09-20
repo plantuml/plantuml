@@ -36,14 +36,11 @@
 package net.sourceforge.plantuml;
 
 import net.sourceforge.plantuml.sprite.Sprite;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 
 public interface SpriteContainer extends SvgCharSizeHack {
 
 	public Sprite getSprite(String name);
 
 	public Guillemet guillemet();
-
-	public ColorMapper getColorMapper();
 
 }

@@ -56,6 +56,7 @@ import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.stats.StatsUtilsIncrement;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 import net.sourceforge.plantuml.version.License;
 import net.sourceforge.plantuml.version.Version;
@@ -193,7 +194,13 @@ public abstract class AbstractPSystem implements Diagram {
 	}
 
 	public ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) throws IOException {
-		return imageBuilder(fileFormatOption);
+		final ColorMapper init = fileFormatOption.getColorMapper();
+		final ColorMapper newColorMappter = muteColorMapper(init);
+		return imageBuilder(fileFormatOption.withColorMapper(newColorMappter));
+	}
+
+	protected ColorMapper muteColorMapper(ColorMapper init) {
+		return init;
 	}
 
 	// TODO "index" isnt really being used
@@ -203,7 +210,7 @@ public abstract class AbstractPSystem implements Diagram {
 	public ClockwiseTopRightBottomLeft getDefaultMargins() {
 		return ClockwiseTopRightBottomLeft.same(0);
 	}
-	
+
 	@Override
 	public Display getTitleDisplay() {
 		return null;

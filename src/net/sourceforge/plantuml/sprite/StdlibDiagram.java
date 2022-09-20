@@ -38,9 +38,9 @@ package net.sourceforge.plantuml.sprite;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
+import java.util.Map;
 
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.WithSprite;
@@ -73,7 +73,7 @@ public class StdlibDiagram extends UmlDiagram {
 	private static final int WIDTH = 1800;
 	private String name;
 
-	public StdlibDiagram(UmlSource source, ISkinSimple skinParam) {
+	public StdlibDiagram(UmlSource source, Map<String, String> skinParam) {
 		super(source, UmlDiagramType.HELP, skinParam);
 	}
 
@@ -142,7 +142,7 @@ public class StdlibDiagram extends UmlDiagram {
 			final Sprite sprite = getSkinParam().getSprite(n);
 			TextBlock blockName = Display.create(n).create(FontConfiguration.blackBlueTrue(UFont.sansSerif(14)),
 					HorizontalAlignment.LEFT, getSkinParam());
-			TextBlock tb = sprite.asTextBlock(getBlack(), 1.0, getSkinParam().getColorMapper());
+			TextBlock tb = sprite.asTextBlock(getBlack(), 1.0);
 			tb = TextBlockUtils.mergeTB(tb, blockName, HorizontalAlignment.CENTER);
 			tb.drawU(ug.apply(new UTranslate(x, y)));
 			final XDimension2D dim = tb.calculateDimension(ug.getStringBounder());

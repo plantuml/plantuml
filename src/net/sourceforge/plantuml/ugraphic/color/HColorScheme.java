@@ -34,8 +34,6 @@
  */
 package net.sourceforge.plantuml.ugraphic.color;
 
-import java.awt.Color;
-
 class HColorScheme extends HColor {
 
 	private final HColor colorForLight;

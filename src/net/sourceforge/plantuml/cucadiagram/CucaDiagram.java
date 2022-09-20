@@ -42,6 +42,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -49,7 +50,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
@@ -70,7 +70,6 @@ import net.sourceforge.plantuml.statediagram.StateDiagram;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.svek.CucaDiagramFileMaker;
 import net.sourceforge.plantuml.svek.CucaDiagramFileMakerSvek;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.xmi.CucaDiagramXmiMaker;
 import net.sourceforge.plantuml.xmlsc.StateDiagramScxmlMaker;
 
@@ -121,7 +120,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		return ident;
 	}
 
-	public CucaDiagram(UmlSource source, UmlDiagramType type, ISkinSimple orig) {
+	public CucaDiagram(UmlSource source, UmlDiagramType type, Map<String, String> orig) {
 		super(source, type, orig);
 		this.stacks2.add(Ident.empty());
 	}
@@ -786,10 +785,6 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 
 	public final Set<VisibilityModifier> getHides() {
 		return Collections.unmodifiableSet(hides);
-	}
-
-	public ColorMapper getColorMapper() {
-		return getSkinParam().getColorMapper();
 	}
 
 	final public boolean isStandalone(IEntity ent) {

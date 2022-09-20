@@ -37,8 +37,8 @@ package net.sourceforge.plantuml.help;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.core.UmlSource;
@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.core.UmlSource;
 public class HelpFactory extends PSystemCommandFactory {
 
 	@Override
-	public Help createEmptyDiagram(UmlSource source, ISkinSimple skinParam) {
+	public Help createEmptyDiagram(UmlSource source, Map<String, String> skinParam) {
 		return new Help(source);
 	}
 

@@ -37,8 +37,8 @@ package net.sourceforge.plantuml.classdiagram;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.classdiagram.command.CommandAddMethod;
 import net.sourceforge.plantuml.classdiagram.command.CommandAllowMixing;
@@ -86,7 +86,7 @@ import net.sourceforge.plantuml.objectdiagram.command.CommandCreateMap;
 public class ClassDiagramFactory extends PSystemCommandFactory {
 
 	@Override
-	public ClassDiagram createEmptyDiagram(UmlSource source, ISkinSimple skinParam) {
+	public ClassDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinParam) {
 		return new ClassDiagram(source, skinParam);
 	}
 

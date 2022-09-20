@@ -48,6 +48,8 @@ import net.sourceforge.plantuml.security.SFile;
 @HaxeIgnored
 public class SourceFileReader extends SourceFileReaderAbstract implements ISourceFileReader {
 
+	private File outputDirectory;
+
 	public SourceFileReader(File file) throws IOException {
 		this(file, file.getAbsoluteFile().getParentFile());
 	}
@@ -72,14 +74,14 @@ public class SourceFileReader extends SourceFileReaderAbstract implements ISourc
 			FileFormatOption fileFormatOption) throws IOException {
 		super(file, fileFormatOption, defines, config, charset);
 		FileSystem.getInstance().setCurrentDir(SFile.fromFile(file.getAbsoluteFile().getParentFile()));
-		if (outputDirectory == null) {
+		if (outputDirectory == null)
 			outputDirectory = file.getAbsoluteFile().getParentFile();
-		} else if (outputDirectory.isAbsolute() == false) {
+		else if (outputDirectory.isAbsolute() == false)
 			outputDirectory = FileSystem.getInstance().getFile(outputDirectory.getPath()).conv();
-		}
-		if (outputDirectory.exists() == false) {
+
+		if (outputDirectory.exists() == false)
 			outputDirectory.mkdirs();
-		}
+
 		this.outputDirectory = outputDirectory;
 
 	}
@@ -141,18 +143,17 @@ public class SourceFileReader extends SourceFileReaderAbstract implements ISourc
 			if (dir == null) {
 				Log.info(newName + " is not taken as a directory");
 				suggested = SuggestedFile.fromOutputFile(new File(outputDirectory, newName),
-						fileFormatOption.getFileFormat(), 0);
+						getFileFormatOption().getFileFormat(), 0);
 			} else {
 				Log.info("We are going to create files in directory " + dir);
-				suggested = SuggestedFile.fromOutputFile(new File(dir, file.getName()),
-						fileFormatOption.getFileFormat(), 0);
+				suggested = SuggestedFile.fromOutputFile(new File(dir, getFileName()),
+						getFileFormatOption().getFileFormat(), 0);
 			}
 			Log.info("We are going to put data in " + suggested);
 		}
-		if (suggested == null) {
-			suggested = SuggestedFile.fromOutputFile(new File(outputDirectory, file.getName()),
-					fileFormatOption.getFileFormat(), cpt++);
-		}
+		if (suggested == null)
+			suggested = getSuggestedFile(outputDirectory, getFileName());
+
 		suggested.getParentFile().mkdirs();
 		return suggested;
 	}

@@ -37,6 +37,7 @@ package net.sourceforge.plantuml;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Map;
 
 import net.sourceforge.plantuml.anim.Animation;
 import net.sourceforge.plantuml.anim.AnimationDecoder;
@@ -59,6 +60,8 @@ import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleLoader;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.color.ColorOrder;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColors;
 
@@ -86,7 +89,7 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 		return pragma;
 	}
 
-	public TitledDiagram(UmlSource source, UmlDiagramType type, ISkinSimple orig) {
+	public TitledDiagram(UmlSource source, UmlDiagramType type, Map<String, String> orig) {
 		super(source);
 		this.type = type;
 		this.skinParam = SkinParam.create(type);
@@ -276,6 +279,31 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 			backgroundColor = HColors.transparent();
 
 		return backgroundColor;
+	}
+
+	@Override
+	protected ColorMapper muteColorMapper(ColorMapper init) {
+		if ("dark".equalsIgnoreCase(getSkinParam().getValue("mode")))
+			return ColorMapper.FORCE_DARK;
+		final String monochrome = getSkinParam().getValue("monochrome");
+		if ("true".equals(monochrome))
+			return ColorMapper.MONOCHROME;
+		if ("reverse".equals(monochrome))
+			return ColorMapper.MONOCHROME_REVERSE;
+
+		final String value = getSkinParam().getValue("reversecolor");
+		if (value == null)
+			return init;
+
+		if ("dark".equalsIgnoreCase(value))
+			return ColorMapper.LIGTHNESS_INVERSE;
+
+		final ColorOrder order = ColorOrder.fromString(value);
+		if (order == null)
+			return init;
+
+		return ColorMapper.reverse(order);
+
 	}
 
 }

@@ -37,8 +37,8 @@ package net.sourceforge.plantuml.objectdiagram;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -59,7 +59,7 @@ import net.sourceforge.plantuml.cucadiagram.NoteLinkStrategy;
 
 public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram {
 
-	public AbstractClassOrObjectDiagram(UmlSource source, UmlDiagramType type, ISkinSimple orig) {
+	public AbstractClassOrObjectDiagram(UmlSource source, UmlDiagramType type, Map<String, String> orig) {
 		super(source, type, orig);
 	}
 
