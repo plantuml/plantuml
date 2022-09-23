@@ -107,11 +107,10 @@ public class TokenStack {
 
 	public TokenStack withoutSpace() {
 		final TokenStack result = new TokenStack();
-		for (Token token : tokens) {
-			if (token.getTokenType() != TokenType.SPACES) {
+		for (Token token : tokens)
+			if (token.getTokenType() != TokenType.SPACES)
 				result.add(token);
-			}
-		}
+
 		return result;
 	}
 
@@ -121,19 +120,19 @@ public class TokenStack {
 		while (true) {
 			eater.skipSpaces();
 			final char ch = eater.peekChar();
-			if (ch == 0) {
+			if (ch == 0)
 				throw EaterException.unlocated("until001");
-			}
-			if (level == 0 && (ch == ',' || ch == ')')) {
+
+			if (level == 0 && (ch == ',' || ch == ')'))
 				return result;
-			}
+
 			final Token token = TokenType.eatOneToken(eater, false);
 			final TokenType type = token.getTokenType();
-			if (type == TokenType.OPEN_PAREN_MATH) {
+			if (type == TokenType.OPEN_PAREN_MATH)
 				level++;
-			} else if (type == TokenType.CLOSE_PAREN_MATH) {
+			else if (type == TokenType.CLOSE_PAREN_MATH)
 				level--;
-			}
+
 			result.add(token);
 		}
 	}
@@ -142,42 +141,42 @@ public class TokenStack {
 		int level = 0;
 		while (true) {
 			final Token ch = it.peekToken();
-			if (ch == null) {
+			if (ch == null)
 				throw EaterException.unlocated("until002");
-			}
+
 			final TokenType typech = ch.getTokenType();
 			if (level == 0 && (typech == TokenType.COMMA || typech == TokenType.CLOSE_PAREN_MATH)
-					|| typech == TokenType.CLOSE_PAREN_FUNC) {
+					|| typech == TokenType.CLOSE_PAREN_FUNC)
 				return;
-			}
+
 			final Token token = it.nextToken();
 			final TokenType type = token.getTokenType();
-			if (type == TokenType.OPEN_PAREN_MATH || type == TokenType.OPEN_PAREN_FUNC) {
+			if (type == TokenType.OPEN_PAREN_MATH || type == TokenType.OPEN_PAREN_FUNC)
 				level++;
-			} else if (type == TokenType.CLOSE_PAREN_MATH || type == TokenType.CLOSE_PAREN_FUNC) {
+			else if (type == TokenType.CLOSE_PAREN_MATH || type == TokenType.CLOSE_PAREN_FUNC)
 				level--;
-			}
+
 		}
 	}
 
 	private int countFunctionArg(TokenIterator it) throws EaterException {
 		// return 42;
 		final TokenType type1 = it.peekToken().getTokenType();
-		if (type1 == TokenType.CLOSE_PAREN_MATH || type1 == TokenType.CLOSE_PAREN_FUNC) {
+		if (type1 == TokenType.CLOSE_PAREN_MATH || type1 == TokenType.CLOSE_PAREN_FUNC)
 			return 0;
-		}
+
 		int result = 1;
 		while (it.hasMoreTokens()) {
 			eatUntilCloseParenthesisOrComma(it);
 			final Token token = it.nextToken();
 			final TokenType type = token.getTokenType();
-			if (type == TokenType.CLOSE_PAREN_MATH || type == TokenType.CLOSE_PAREN_FUNC) {
+			if (type == TokenType.CLOSE_PAREN_MATH || type == TokenType.CLOSE_PAREN_FUNC)
 				return result;
-			} else if (type == TokenType.COMMA) {
+			else if (type == TokenType.COMMA)
 				result++;
-			} else {
+			else
 				throw EaterException.unlocated("count13");
-			}
+
 		}
 		throw EaterException.unlocated("count12");
 	}
@@ -187,11 +186,11 @@ public class TokenStack {
 		final Map<Integer, Integer> parens = new HashMap<Integer, Integer>();
 		for (int i = 0; i < tokens.size(); i++) {
 			final Token token = tokens.get(i);
-			if (token.getTokenType().equals(TokenType.OPEN_PAREN_MATH)) {
+			if (token.getTokenType().equals(TokenType.OPEN_PAREN_MATH))
 				open.addFirst(i);
-			} else if (token.getTokenType().equals(TokenType.CLOSE_PAREN_MATH)) {
+			else if (token.getTokenType().equals(TokenType.CLOSE_PAREN_MATH))
 				parens.put(open.pollFirst(), i);
-			}
+
 		}
 		// System.err.println("before=" + toString());
 		// System.err.println("guessFunctions2" + parens);
@@ -219,9 +218,9 @@ public class TokenStack {
 		}
 
 		public Token nextToken() {
-			if (hasMoreTokens() == false) {
+			if (hasMoreTokens() == false)
 				return null;
-			}
+
 			return tokens.get(pos++);
 		}
 

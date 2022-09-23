@@ -40,6 +40,7 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
 import net.sourceforge.plantuml.command.Position;
+import net.sourceforge.plantuml.command.Trim;
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
@@ -53,7 +54,7 @@ import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 public class CommandNoteLong extends CommandMultilines2<TimingDiagram> {
 
 	public CommandNoteLong() {
-		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE);
+		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH);
 	}
 
 	@Override

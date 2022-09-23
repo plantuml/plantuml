@@ -77,8 +77,8 @@ public class CreoleParser implements SheetBuilder {
 
 	private Stripe createStripe(String line, CreoleContext context, Stripe lastStripe,
 			FontConfiguration fontConfiguration) {
-		if (lastStripe instanceof StripeCode) {
-			final StripeCode code = (StripeCode) lastStripe;
+		if (lastStripe instanceof StripeRaw) {
+			final StripeRaw code = (StripeRaw) lastStripe;
 			if (code.isTerminated()) {
 				lastStripe = null;
 			} else {
@@ -100,7 +100,9 @@ public class CreoleParser implements SheetBuilder {
 		} else if (Parser.isTreeStart(line)) {
 			return new StripeTree(fontConfiguration, skinParam, line);
 		} else if (Parser.isCodeStart(line)) {
-			return new StripeCode(fontConfiguration.changeFamily(Parser.MONOSPACED), skinParam, line);
+			return new StripeCode(fontConfiguration.changeFamily(Parser.MONOSPACED));
+		} else if (Parser.isLatexStart(line)) {
+			return new StripeLatex(fontConfiguration);
 		}
 		return new CreoleStripeSimpleParser(line, context, fontConfiguration, skinParam, creoleMode)
 				.createStripe(context);

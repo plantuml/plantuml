@@ -58,6 +58,14 @@ public class Parser {
 		return new CreoleParser(fontConfiguration, horizontalAlignment, skinParam, creoleMode, stereotype);
 	}
 
+	public static boolean isLatexStart(String line) {
+		return line.equals("<latex>");
+	}
+
+	public static boolean isLatexEnd(String line) {
+		return line.equals("</latex>");
+	}
+
 	public static boolean isCodeStart(String line) {
 		return line.equals("<code>");
 	}

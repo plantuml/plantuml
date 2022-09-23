@@ -85,6 +85,7 @@ public class OptionPrint {
 		System.out.println("\t**\tmeans any characters (used to recurse through directories)");
 		System.out.println();
 		System.out.println("where options include:");
+		System.out.println("    -darkmode\t\tTo use dark mode for diagrams");
 		System.out.println("    -gui\t\tTo run the graphical user interface");
 		System.out.println("    -tpng\t\tTo generate images using PNG format (default)");
 		System.out.println("    -tsvg\t\tTo generate images using SVG format");

@@ -90,7 +90,7 @@ public final class CommandFactorySprite implements SingleMultiFactoryCommand<Wit
 	}
 
 	public Command<WithSprite> createMultiLine(boolean withBracket) {
-		return new CommandMultilines2<WithSprite>(getRegexConcatMultiLine(), MultilinesStrategy.REMOVE_STARTING_QUOTE) {
+		return new CommandMultilines2<WithSprite>(getRegexConcatMultiLine(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH) {
 
 			@Override
 			public String getPatternEnd() {

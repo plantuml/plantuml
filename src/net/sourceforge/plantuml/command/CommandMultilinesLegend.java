@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 public class CommandMultilinesLegend extends CommandMultilines2<TitledDiagram> {
 
 	public CommandMultilinesLegend() {
-		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE);
+		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH);
 	}
 
 	private static IRegex getRegexConcat() {

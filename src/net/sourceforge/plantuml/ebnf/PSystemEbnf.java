@@ -33,47 +33,45 @@
  * 
  *
  */
-package net.sourceforge.plantuml.creole.command;
+package net.sourceforge.plantuml.ebnf;
 
-import net.sourceforge.plantuml.command.regex.Matcher2;
-import net.sourceforge.plantuml.command.regex.MyPattern;
-import net.sourceforge.plantuml.command.regex.Pattern2;
-import net.sourceforge.plantuml.creole.legacy.StripeSimple;
-import net.sourceforge.plantuml.graphic.Splitter;
-import net.sourceforge.plantuml.math.ScientificEquationSafe;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
-public class CommandCreoleLatex implements Command {
+import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.UmlDiagramType;
+import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.graphic.UDrawable;
+
+public class PSystemEbnf extends TitledDiagram {
+
+	private final List<String> lines = new ArrayList<>();
+
+	public PSystemEbnf(UmlSource source) {
+		super(source, UmlDiagramType.EBNF, null);
+	}
+
+	public DiagramDescription getDescription() {
+		return new DiagramDescription("(EBNF)");
+	}
+
+	public void doCommandLine(String line) {
+		lines.add(line);
+	}
 
 	@Override
-	public String startingChars() {
-		return "<";
+	protected ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption)
+			throws IOException {
+		return createImageBuilder(fileFormatOption).drawable(getTextBlock()).write(os);
 	}
 
-	private static final Pattern2 pattern = MyPattern.cmpile("^(" + Splitter.latexPattern + ")");
-
-	private CommandCreoleLatex() {
+	private UDrawable getTextBlock() {
+		final EbnfExpression exp = new EbnfExpression(lines);
+		return exp.getUDrawable(getSkinParam());
 	}
-
-	public static Command create() {
-		return new CommandCreoleLatex();
-	}
-
-	public int matchingSize(String line) {
-		final Matcher2 m = pattern.matcher(line);
-		if (m.find() == false)
-			return 0;
-
-		return m.group(1).length();
-	}
-
-	public String executeAndGetRemaining(String line, StripeSimple stripe) {
-		final Matcher2 m = pattern.matcher(line);
-		if (m.find() == false)
-			throw new IllegalStateException();
-
-		final String latex = m.group(2);
-		stripe.addMath(ScientificEquationSafe.fromLatex(latex));
-		return line.substring(m.group(1).length());
-	}
-
 }

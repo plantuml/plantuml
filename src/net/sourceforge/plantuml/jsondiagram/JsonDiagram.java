@@ -78,12 +78,12 @@ public class JsonDiagram extends TitledDiagram {
 	}
 
 	public DiagramDescription getDescription() {
-		if (getUmlDiagramType() == UmlDiagramType.YAML) {
+		if (getUmlDiagramType() == UmlDiagramType.YAML)
 			return new DiagramDescription("(Yaml)");
-		}
-		if (getUmlDiagramType() == UmlDiagramType.HCL) {
+
+		if (getUmlDiagramType() == UmlDiagramType.HCL)
 			return new DiagramDescription("(HCL)");
-		}
+
 		return new DiagramDescription("(Json)");
 	}
 

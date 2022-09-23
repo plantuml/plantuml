@@ -59,6 +59,7 @@ import net.sourceforge.plantuml.directdot.PSystemDotFactory;
 import net.sourceforge.plantuml.ditaa.PSystemDitaaFactory;
 import net.sourceforge.plantuml.donors.PSystemDonorsFactory;
 import net.sourceforge.plantuml.donors.PSystemSkinparameterListFactory;
+import net.sourceforge.plantuml.ebnf.PSystemEbnfFactory;
 import net.sourceforge.plantuml.eggs.PSystemAppleTwoFactory;
 import net.sourceforge.plantuml.eggs.PSystemCharlieFactory;
 import net.sourceforge.plantuml.eggs.PSystemColorsFactory;
@@ -106,7 +107,8 @@ public class PSystemBuilder {
 
 	public static final long startTime = System.currentTimeMillis();
 
-	final public Diagram createPSystem(List<StringLocated> source, List<StringLocated> rawSource, Map<String, String> skinParam) {
+	final public Diagram createPSystem(List<StringLocated> source, List<StringLocated> rawSource,
+			Map<String, String> skinParam) {
 
 		final long now = System.currentTimeMillis();
 
@@ -224,6 +226,7 @@ public class PSystemBuilder {
 		factories.add(new BoardDiagramFactory());
 		factories.add(new YamlDiagramFactory());
 		factories.add(new HclDiagramFactory());
+		factories.add(new PSystemEbnfFactory());
 	}
 
 	private boolean isOk(Diagram ps) {

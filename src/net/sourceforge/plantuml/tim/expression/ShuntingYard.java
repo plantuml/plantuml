@@ -73,9 +73,9 @@ public class ShuntingYard {
 				final String name = token.getSurface();
 				final TValue variable = knowledge.getVariable(name);
 				if (variable == null) {
-					if (isVariableName(name) == false) {
+					if (isVariableName(name) == false)
 						throw EaterException.unlocated("Parsing syntax error about " + name);
-					}
+
 					ouputQueue.add(new Token(name, TokenType.QUOTED_STRING, null));
 				} else {
 					ouputQueue.add(variable.toToken());
@@ -84,9 +84,9 @@ public class ShuntingYard {
 				while ((thereIsAFunctionAtTheTopOfTheOperatorStack(token) //
 						|| thereIsAnOperatorAtTheTopOfTheOperatorStackWithGreaterPrecedence(token) //
 						|| theOperatorAtTheTopOfTheOperatorStackHasEqualPrecedenceAndIsLeftAssociative(token)) //
-						&& theOperatorAtTheTopOfTheOperatorStackIsNotALeftParenthesis(token)) {
+						&& theOperatorAtTheTopOfTheOperatorStackIsNotALeftParenthesis(token))
 					ouputQueue.add(operatorStack.removeFirst());
-				}
+
 				// push it onto the operator stack.
 				operatorStack.addFirst(token);
 			} else if (token.getTokenType() == TokenType.OPEN_PAREN_FUNC) {
@@ -97,17 +97,17 @@ public class ShuntingYard {
 				final Token first = operatorStack.removeFirst();
 				ouputQueue.add(first);
 			} else if (token.getTokenType() == TokenType.CLOSE_PAREN_MATH) {
-				while (operatorStack.peekFirst().getTokenType() != TokenType.OPEN_PAREN_MATH) {
+				while (operatorStack.peekFirst().getTokenType() != TokenType.OPEN_PAREN_MATH)
 					ouputQueue.add(operatorStack.removeFirst());
-				}
-				if (operatorStack.peekFirst().getTokenType() == TokenType.OPEN_PAREN_MATH) {
+
+				if (operatorStack.peekFirst().getTokenType() == TokenType.OPEN_PAREN_MATH)
 					operatorStack.removeFirst();
-				}
+
 			} else if (token.getTokenType() == TokenType.COMMA) {
 				while (operatorStack.peekFirst() != null
-						&& operatorStack.peekFirst().getTokenType() != TokenType.OPEN_PAREN_FUNC) {
+						&& operatorStack.peekFirst().getTokenType() != TokenType.OPEN_PAREN_FUNC)
 					ouputQueue.add(operatorStack.removeFirst());
-				}
+
 			} else {
 				throw new UnsupportedOperationException(token.toString());
 			}
@@ -133,26 +133,26 @@ public class ShuntingYard {
 	private boolean thereIsAnOperatorAtTheTopOfTheOperatorStackWithGreaterPrecedence(Token token) {
 		final Token top = operatorStack.peekFirst();
 		if (top != null && top.getTokenType() == TokenType.OPERATOR
-				&& top.getTokenOperator().getPrecedence() > token.getTokenOperator().getPrecedence()) {
+				&& top.getTokenOperator().getPrecedence() > token.getTokenOperator().getPrecedence())
 			return true;
-		}
+
 		return false;
 	}
 
 	private boolean theOperatorAtTheTopOfTheOperatorStackHasEqualPrecedenceAndIsLeftAssociative(Token token) {
 		final Token top = operatorStack.peekFirst();
 		if (top != null && top.getTokenType() == TokenType.OPERATOR && top.getTokenOperator().isLeftAssociativity()
-				&& top.getTokenOperator().getPrecedence() == token.getTokenOperator().getPrecedence()) {
+				&& top.getTokenOperator().getPrecedence() == token.getTokenOperator().getPrecedence())
 			return true;
-		}
+
 		return false;
 	}
 
 	private boolean theOperatorAtTheTopOfTheOperatorStackIsNotALeftParenthesis(Token token) {
 		final Token top = operatorStack.peekFirst();
-		if (top != null && top.getTokenType() == TokenType.OPEN_PAREN_MATH) {
+		if (top != null && top.getTokenType() == TokenType.OPEN_PAREN_MATH)
 			return true;
-		}
+
 		return true;
 	}
 

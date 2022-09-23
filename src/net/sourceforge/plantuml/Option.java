@@ -55,6 +55,7 @@ import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.stats.StatsUtils;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 
 @HaxeIgnored
 public class Option {
@@ -162,6 +163,8 @@ public class Option {
 				setFileFormatOption(new FileFormatOption(FileFormat.BASE64));
 			} else if (s.equalsIgnoreCase("-pdf") || s.equalsIgnoreCase("-tpdf")) {
 				setFileFormatOption(new FileFormatOption(FileFormat.PDF));
+			} else if (s.equalsIgnoreCase("-darkmode")) {
+				setFileFormatOption(this.fileFormatOption.withColorMapper(ColorMapper.FORCE_DARK));
 			} else if (s.equalsIgnoreCase("-overwrite")) {
 				OptionFlags.getInstance().setOverwrite(true);
 			} else if (s.equalsIgnoreCase("-output") || s.equalsIgnoreCase("-o")) {

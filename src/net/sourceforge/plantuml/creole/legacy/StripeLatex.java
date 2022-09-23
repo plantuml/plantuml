@@ -43,20 +43,21 @@ import java.util.List;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.creole.Parser;
 import net.sourceforge.plantuml.creole.atom.Atom;
+import net.sourceforge.plantuml.creole.atom.AtomMath;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.math.ScientificEquationSafe;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.UText;
-import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class StripeCode implements StripeRaw {
+public class StripeLatex implements StripeRaw {
 
 	final private FontConfiguration fontConfiguration;
-	private final List<String> raw = new ArrayList<>();
+	final private StringBuilder formula = new StringBuilder();
+	private AtomMath atom;
 
 	private boolean terminated;
 
-	public StripeCode(FontConfiguration fontConfiguration) {
+	public StripeLatex(FontConfiguration fontConfiguration) {
 		this.fontConfiguration = fontConfiguration;
 	}
 
@@ -70,11 +71,11 @@ public class StripeCode implements StripeRaw {
 
 	@Override
 	public boolean addAndCheckTermination(String line) {
-		if (Parser.isCodeEnd(line)) {
+		if (Parser.isLatexEnd(line)) {
 			this.terminated = true;
 			return true;
 		}
-		this.raw.add(line);
+		this.formula.append(line);
 		return false;
 	}
 
@@ -83,15 +84,16 @@ public class StripeCode implements StripeRaw {
 		return terminated;
 	}
 
-	public XDimension2D calculateDimension(StringBounder stringBounder) {
-		double width = 0;
-		double height = 0;
-		for (String s : raw) {
-			final XDimension2D dim = stringBounder.calculateDimension(fontConfiguration.getFont(), s);
-			width = Math.max(width, dim.getWidth());
-			height += dim.getHeight();
+	private Atom getAtom() {
+		if (atom == null) {
+			final ScientificEquationSafe math = ScientificEquationSafe.fromLatex(formula.toString());
+			atom = new AtomMath(math, fontConfiguration.getColor(), fontConfiguration.getExtendedColor());
 		}
-		return new XDimension2D(width, height);
+		return atom;
+	}
+
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		return getAtom().calculateDimension(stringBounder);
 	}
 
 	public double getStartingAltitude(StringBounder stringBounder) {
@@ -99,14 +101,7 @@ public class StripeCode implements StripeRaw {
 	}
 
 	public void drawU(UGraphic ug) {
-		double y = 0;
-		for (String s : raw) {
-			final UText shape = new UText(s, fontConfiguration);
-			final StringBounder stringBounder = ug.getStringBounder();
-			final XDimension2D dim = stringBounder.calculateDimension(fontConfiguration.getFont(), s);
-			y += dim.getHeight();
-			ug.apply(UTranslate.dy(y - shape.getDescent(stringBounder))).draw(shape);
-		}
+		getAtom().drawU(ug);
 	}
 
 	public List<Atom> splitInTwo(StringBounder stringBounder, double width) {

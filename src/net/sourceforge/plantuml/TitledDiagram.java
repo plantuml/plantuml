@@ -291,14 +291,14 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 		if ("reverse".equals(monochrome))
 			return ColorMapper.MONOCHROME_REVERSE;
 
-		final String value = getSkinParam().getValue("reversecolor");
-		if (value == null)
+		final String reversecolor = getSkinParam().getValue("reversecolor");
+		if (reversecolor == null)
 			return init;
 
-		if ("dark".equalsIgnoreCase(value))
+		if ("dark".equalsIgnoreCase(reversecolor))
 			return ColorMapper.LIGTHNESS_INVERSE;
 
-		final ColorOrder order = ColorOrder.fromString(value);
+		final ColorOrder order = ColorOrder.fromString(reversecolor);
 		if (order == null)
 			return init;
 

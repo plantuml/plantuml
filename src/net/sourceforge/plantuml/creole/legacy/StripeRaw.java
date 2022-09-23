@@ -33,47 +33,15 @@
  * 
  *
  */
-package net.sourceforge.plantuml.creole.command;
+package net.sourceforge.plantuml.creole.legacy;
 
-import net.sourceforge.plantuml.command.regex.Matcher2;
-import net.sourceforge.plantuml.command.regex.MyPattern;
-import net.sourceforge.plantuml.command.regex.Pattern2;
-import net.sourceforge.plantuml.creole.legacy.StripeSimple;
-import net.sourceforge.plantuml.graphic.Splitter;
-import net.sourceforge.plantuml.math.ScientificEquationSafe;
+import net.sourceforge.plantuml.creole.Stripe;
+import net.sourceforge.plantuml.creole.atom.Atom;
 
-public class CommandCreoleLatex implements Command {
+public interface StripeRaw extends Stripe, Atom {
 
-	@Override
-	public String startingChars() {
-		return "<";
-	}
+	public boolean addAndCheckTermination(String line);
 
-	private static final Pattern2 pattern = MyPattern.cmpile("^(" + Splitter.latexPattern + ")");
-
-	private CommandCreoleLatex() {
-	}
-
-	public static Command create() {
-		return new CommandCreoleLatex();
-	}
-
-	public int matchingSize(String line) {
-		final Matcher2 m = pattern.matcher(line);
-		if (m.find() == false)
-			return 0;
-
-		return m.group(1).length();
-	}
-
-	public String executeAndGetRemaining(String line, StripeSimple stripe) {
-		final Matcher2 m = pattern.matcher(line);
-		if (m.find() == false)
-			throw new IllegalStateException();
-
-		final String latex = m.group(2);
-		stripe.addMath(ScientificEquationSafe.fromLatex(latex));
-		return line.substring(m.group(1).length());
-	}
+	public boolean isTerminated();
 
 }

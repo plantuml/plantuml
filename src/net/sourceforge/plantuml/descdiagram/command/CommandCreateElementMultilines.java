@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
+import net.sourceforge.plantuml.command.Trim;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
@@ -73,23 +74,23 @@ public class CommandCreateElementMultilines extends CommandMultilines2<AbstractE
 	};
 
 	public CommandCreateElementMultilines(int type) {
-		super(getRegexConcat(type), MultilinesStrategy.REMOVE_STARTING_QUOTE);
+		super(getRegexConcat(type), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH);
 		this.type = type;
 	}
 
 	@Override
 	public String getPatternEnd() {
-		if (type == 0) {
+		if (type == 0)
 			return "^(.*)[%g]$";
-		}
-		if (type == 1) {
+
+		if (type == 1)
 			return "^([^\\[\\]]*)\\]$";
-		}
+
 		throw new IllegalArgumentException();
 	}
 
 	private static RegexConcat getRegexConcat(int type) {
-		if (type == 0) {
+		if (type == 0)
 			return RegexConcat.build(CommandCreateElementMultilines.class.getName() + type, RegexLeaf.start(), //
 					new RegexLeaf("TYPE", "(" + CommandCreateElementFull.ALL_TYPES + ")[%s]+"), //
 					new RegexLeaf("CODE", "([%pLN_.]+)"), //
@@ -105,8 +106,8 @@ public class CommandCreateElementMultilines extends CommandMultilines2<AbstractE
 					new RegexLeaf("[%g]"), //
 					new RegexLeaf("DESC", "([^%g]*)"), //
 					RegexLeaf.end());
-		}
-		if (type == 1) {
+
+		if (type == 1)
 			return RegexConcat.build(CommandCreateElementMultilines.class.getName() + type, RegexLeaf.start(), //
 					new RegexLeaf("TYPE", "(" + CommandCreateElementFull.ALL_TYPES + ")[%s]+"), //
 					new RegexLeaf("CODE", "([%pLN_.]+)"), //
@@ -120,7 +121,7 @@ public class CommandCreateElementMultilines extends CommandMultilines2<AbstractE
 					new RegexLeaf("\\["), //
 					new RegexLeaf("DESC", "(.*)"), //
 					RegexLeaf.end());
-		}
+
 		throw new IllegalArgumentException();
 	}
 
@@ -136,12 +137,15 @@ public class CommandCreateElementMultilines extends CommandMultilines2<AbstractE
 		if (symbol.equalsIgnoreCase("usecase")) {
 			type = LeafType.USECASE;
 			usymbol = null;
+		} else if (symbol.equalsIgnoreCase("usecase/")) {
+			type = LeafType.USECASE_BUSINESS;
+			usymbol = null;
 		} else {
 			usymbol = USymbols.fromString(symbol, diagram.getSkinParam().actorStyle(),
 					diagram.getSkinParam().componentStyle(), diagram.getSkinParam().packageStyle());
-			if (usymbol == null) {
+			if (usymbol == null)
 				throw new IllegalStateException();
-			}
+
 			type = LeafType.DESCRIPTION;
 		}
 
@@ -151,31 +155,28 @@ public class CommandCreateElementMultilines extends CommandMultilines2<AbstractE
 		lines = lines.subExtract(1, 1);
 		Display display = lines.toDisplay();
 		final String descStart = line0.get("DESC", 0);
-		if (StringUtils.isNotEmpty(descStart)) {
+		if (StringUtils.isNotEmpty(descStart))
 			display = display.addFirst(descStart);
-		}
 
-		if (StringUtils.isNotEmpty(lineLast.get(0))) {
+		if (StringUtils.isNotEmpty(lineLast.get(0)))
 			display = display.add(lineLast.get(0));
-		}
 
 		final String stereotype = line0.get("STEREO", 0);
 
 		final Ident ident = diagram.buildLeafIdent(idShort);
 		final Code code = diagram.V1972() ? ident : diagram.buildCode(idShort);
-		if (CommandCreateElementFull.existsWithBadType3(diagram, code, ident, type, usymbol)) {
+		if (CommandCreateElementFull.existsWithBadType3(diagram, code, ident, type, usymbol))
 			return CommandExecutionResult.error("This element (" + code.getName() + ") is already defined");
-		}
+
 		final ILeaf result = diagram.createLeaf(ident, code, display, type, usymbol);
-		if (result == null) {
+		if (result == null)
 			return CommandExecutionResult.error("This element (" + code.getName() + ") is already defined");
-		}
+
 		result.setUSymbol(usymbol);
-		if (stereotype != null) {
+		if (stereotype != null)
 			result.setStereotype(Stereotype.build(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),
 					diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),
 					diagram.getSkinParam().getIHtmlColorSet()));
-		}
 
 		final String urlString = line0.get("URL", 0);
 		if (urlString != null) {
@@ -184,12 +185,8 @@ public class CommandCreateElementMultilines extends CommandMultilines2<AbstractE
 			result.addUrl(url);
 		}
 
-		// final HColor backColor =
-		// diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(line0.get("COLOR",
-		// 0));
 		final Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());
 		result.setColors(colors);
-		// result.setSpecificColorTOBEREMOVED(ColorType.BACK, backColor);
 
 		return CommandExecutionResult.ok();
 	}

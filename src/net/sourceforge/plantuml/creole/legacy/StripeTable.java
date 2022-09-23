@@ -73,9 +73,9 @@ public class StripeTable implements Stripe {
 		this.skinParam = skinParam;
 		this.fontConfiguration = fontConfiguration;
 		HColor lineColor = getBackOrFrontColor(line, 1);
-		if (lineColor == null) {
+		if (lineColor == null)
 			lineColor = fontConfiguration.getColor();
-		}
+
 		this.table = new AtomTable(lineColor);
 		this.marged = new AtomWithMargin(table, 2, 2);
 		analyzeAndAddInternal(line);
@@ -91,9 +91,9 @@ public class StripeTable implements Stripe {
 
 	static Atom asAtom(List<StripeSimple> cells, double padding) {
 		final Sheet sheet = new Sheet(HorizontalAlignment.LEFT);
-		for (StripeSimple cell : cells) {
+		for (StripeSimple cell : cells)
 			sheet.add(cell);
-		}
+
 		return new SheetBlock1(sheet, LineBreakStrategy.NONE, padding);
 	}
 
@@ -101,9 +101,9 @@ public class StripeTable implements Stripe {
 		if (CreoleParser.doesStartByColor(line)) {
 			final int idx1 = line.indexOf('#');
 			final int idx2 = line.indexOf('>');
-			if (idx2 == -1) {
+			if (idx2 == -1)
 				throw new IllegalStateException();
-			}
+
 			final String[] color = line.substring(idx1, idx2).split(",");
 			if (idx < color.length) {
 				final String s = color[idx];
@@ -115,9 +115,9 @@ public class StripeTable implements Stripe {
 
 	private String withouBackColor(String line) {
 		final int idx2 = line.indexOf('>');
-		if (idx2 == -1) {
+		if (idx2 == -1)
 			throw new IllegalStateException();
-		}
+
 		return line.substring(idx2 + 1);
 	}
 
@@ -126,9 +126,9 @@ public class StripeTable implements Stripe {
 	private void analyzeAndAddInternal(String line) {
 		line = line.replace("\\|", hiddenBar);
 		HColor lineBackColor = getBackOrFrontColor(line, 0);
-		if (lineBackColor != null) {
+		if (lineBackColor != null)
 			line = withouBackColor(line);
-		}
+
 		table.newLine(lineBackColor);
 		for (final StringTokenizer st = new StringTokenizer(line, "|"); st.hasMoreTokens();) {
 			Mode mode = Mode.NORMAL;
@@ -138,9 +138,9 @@ public class StripeTable implements Stripe {
 				mode = Mode.HEADER;
 			}
 			HColor cellBackColor = getBackOrFrontColor(v, 0);
-			if (cellBackColor != null) {
+			if (cellBackColor != null)
 				v = withouBackColor(v);
-			}
+
 			final List<String> lines = getWithNewlinesInternal(v);
 			final List<StripeSimple> cells = new ArrayList<>();
 			for (String s : lines) {
@@ -186,9 +186,9 @@ public class StripeTable implements Stripe {
 	}
 
 	private FontConfiguration getFontConfiguration(Mode mode) {
-		if (mode == Mode.NORMAL) {
+		if (mode == Mode.NORMAL)
 			return fontConfiguration;
-		}
+
 		return fontConfiguration.bold();
 	}
 

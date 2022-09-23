@@ -33,47 +33,30 @@
  * 
  *
  */
-package net.sourceforge.plantuml.creole.command;
+package net.sourceforge.plantuml.ebnf;
 
-import net.sourceforge.plantuml.command.regex.Matcher2;
-import net.sourceforge.plantuml.command.regex.MyPattern;
-import net.sourceforge.plantuml.command.regex.Pattern2;
-import net.sourceforge.plantuml.creole.legacy.StripeSimple;
-import net.sourceforge.plantuml.graphic.Splitter;
-import net.sourceforge.plantuml.math.ScientificEquationSafe;
+import net.sourceforge.plantuml.command.PSystemBasicFactory;
+import net.sourceforge.plantuml.core.DiagramType;
+import net.sourceforge.plantuml.core.UmlSource;
 
-public class CommandCreoleLatex implements Command {
+public class PSystemEbnfFactory extends PSystemBasicFactory<PSystemEbnf> {
+
+	public PSystemEbnfFactory() {
+		super(DiagramType.EBNF);
+	}
 
 	@Override
-	public String startingChars() {
-		return "<";
+	public PSystemEbnf initDiagram(UmlSource source, String startLine) {
+		if (getDiagramType() == DiagramType.EBNF)
+			return new PSystemEbnf(source);
+
+		return null;
 	}
 
-	private static final Pattern2 pattern = MyPattern.cmpile("^(" + Splitter.latexPattern + ")");
-
-	private CommandCreoleLatex() {
-	}
-
-	public static Command create() {
-		return new CommandCreoleLatex();
-	}
-
-	public int matchingSize(String line) {
-		final Matcher2 m = pattern.matcher(line);
-		if (m.find() == false)
-			return 0;
-
-		return m.group(1).length();
-	}
-
-	public String executeAndGetRemaining(String line, StripeSimple stripe) {
-		final Matcher2 m = pattern.matcher(line);
-		if (m.find() == false)
-			throw new IllegalStateException();
-
-		final String latex = m.group(2);
-		stripe.addMath(ScientificEquationSafe.fromLatex(latex));
-		return line.substring(m.group(1).length());
+	@Override
+	public PSystemEbnf executeLine(UmlSource source, PSystemEbnf system, String line) {
+		system.doCommandLine(line);
+		return system;
 	}
 
 }

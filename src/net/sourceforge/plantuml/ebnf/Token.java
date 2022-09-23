@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -30,50 +30,34 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
-package net.sourceforge.plantuml.creole.command;
+package net.sourceforge.plantuml.ebnf;
 
-import net.sourceforge.plantuml.command.regex.Matcher2;
-import net.sourceforge.plantuml.command.regex.MyPattern;
-import net.sourceforge.plantuml.command.regex.Pattern2;
-import net.sourceforge.plantuml.creole.legacy.StripeSimple;
-import net.sourceforge.plantuml.graphic.Splitter;
-import net.sourceforge.plantuml.math.ScientificEquationSafe;
+public class Token {
 
-public class CommandCreoleLatex implements Command {
+	private final Symbol symbol;
+	private final String data;
+
+	public Token(Symbol symbol, String data) {
+		this.symbol = symbol;
+		this.data = data;
+	}
 
 	@Override
-	public String startingChars() {
-		return "<";
+	public String toString() {
+		if (data == null)
+			return symbol.toString();
+		return symbol.toString() + " " + data;
 	}
 
-	private static final Pattern2 pattern = MyPattern.cmpile("^(" + Splitter.latexPattern + ")");
-
-	private CommandCreoleLatex() {
+	public final Symbol getSymbol() {
+		return symbol;
 	}
 
-	public static Command create() {
-		return new CommandCreoleLatex();
-	}
-
-	public int matchingSize(String line) {
-		final Matcher2 m = pattern.matcher(line);
-		if (m.find() == false)
-			return 0;
-
-		return m.group(1).length();
-	}
-
-	public String executeAndGetRemaining(String line, StripeSimple stripe) {
-		final Matcher2 m = pattern.matcher(line);
-		if (m.find() == false)
-			throw new IllegalStateException();
-
-		final String latex = m.group(2);
-		stripe.addMath(ScientificEquationSafe.fromLatex(latex));
-		return line.substring(m.group(1).length());
+	public final String getData() {
+		return data;
 	}
 
 }
