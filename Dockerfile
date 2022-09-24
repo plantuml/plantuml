@@ -21,7 +21,6 @@ RUN apk add --no-cache \
 COPY --from=loader /opt/plantuml.jar /opt/plantuml.jar
 
 WORKDIR /data
-VOLUME ["/data"]
 
 ENTRYPOINT ["java", "-jar", "/opt/plantuml.jar"]
 CMD ["-version"]
