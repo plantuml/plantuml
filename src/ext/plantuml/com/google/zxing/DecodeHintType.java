@@ -16,8 +16,6 @@
 
 package ext.plantuml.com.google.zxing;
 
-import java.io.Reader;
-
 /**
  * Encapsulates a type of hint that a caller may pass to a barcode reader to help it
  * more quickly or accurately decode it. It is up to implementations to decide what,
@@ -25,7 +23,7 @@ import java.io.Reader;
  *
  * @author Sean Owen
  * @author dswitkin@google.com (Daniel Switkin)
- * @see Reader#decode(BinaryBitmap,java.util.Hashtable)
+ * see Reader#decode(BinaryBitmap,java.util.Hashtable)
  */
 public final class DecodeHintType {
 
@@ -71,7 +69,7 @@ public final class DecodeHintType {
 
   /**
    * The caller needs to be notified via callback when a possible {@link ResultPoint}
-   * is found. Maps to a {@link ResultPointCallback}.
+   * is found. Maps to a ResultPointCallback.
    */
   public static final DecodeHintType NEED_RESULT_POINT_CALLBACK = new DecodeHintType();
 

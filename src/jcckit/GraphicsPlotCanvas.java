@@ -35,16 +35,16 @@ import jcckit.util.Factory;
 
 /**
  * Class which handles plotting into a <tt>Graphics</tt> context based on the
- * {@link jcckit.renderer.GraphicsRenderer}. This class is not a subclass of
+ * {link jcckit.renderer.GraphicsRenderer}. This class is not a subclass of
  * <tt>java.awt.Component</tt>. The actual AWT component presenting the plot
  * is an innerclass. Its instance wrapped by <tt>GraphicsPlotCanvas</tt> can
- * be obtained with {@link #getGraphicsCanvas}.
+ * be obtained with {link #getGraphicsCanvas}.
  * <p>
  * The plot is painted by using double-buffering and pre-rendered view of the
  * coordinate system. That is, the coordinate system is drawn into an off-screen
  * image. It will be redrawn only if the size of the embedding AWT component is
  * changed.
- * 
+ *
  * @author Franz-Josef Elmer
  */
 public class GraphicsPlotCanvas extends PlotCanvas {
@@ -57,7 +57,7 @@ public class GraphicsPlotCanvas extends PlotCanvas {
 	 * Class which does the actual painting. Needs the <tt>Component</tt> into
 	 * which the plot is painted for some resources like size, background color,
 	 * etc.
-	 * 
+	 *
 	 * @author Franz-Josef Elmer
 	 */
 	private final BufferedImage img3;
@@ -95,7 +95,7 @@ public class GraphicsPlotCanvas extends PlotCanvas {
 	 * <tr>
 	 * <td><tt>doubleBuffering = true</tt></td>
 	 *     <td><tt>boolean</tt></td><td>no</td>
-	 *     <td>If <tt>true</tt> the plot will be painted by using 
+	 *     <td>If <tt>true</tt> the plot will be painted by using
 	 *         double-buffering and pre-rendered view of the coordinate system.
 	 *     </td></tr>
 	 * </table>
@@ -120,7 +120,7 @@ public class GraphicsPlotCanvas extends PlotCanvas {
 	private final Color foreground;
 
 	/**
-	 * Paints the plot. If {@link GraphicsPlotCanvas#_doubleBuffering} is set
+	 * Paints the plot. If {link GraphicsPlotCanvas#_doubleBuffering} is set
 	 * double-buffering and pre-rendered view of the coordinate system is used.
 	 */
 	public void paint() {
@@ -192,8 +192,8 @@ public class GraphicsPlotCanvas extends PlotCanvas {
 
 	/**
 	 * Sets the renderer used to render the plot. The default value is
-	 * {@link GraphicsRenderer}.
-	 * 
+	 * {link GraphicsRenderer}.
+	 *
 	 * @param className
 	 *            Fully qualified name of the renderer class.
 	 */
@@ -217,7 +217,7 @@ public class GraphicsPlotCanvas extends PlotCanvas {
 	/**
 	 * Defines a graphical marker which will be drawn on top of the plot. To
 	 * remove the marker call this method with argument <tt>null</tt>.
-	 * 
+	 *
 	 * @param marker
 	 *            Marker element. Can be <tt>null</tt>.
 	 */
