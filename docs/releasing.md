@@ -10,6 +10,10 @@ Tags [cannot][3] be part of a pull request, so you need to push directly to the 
 
 The release will only happen if the username making the push is matched in the CI `Configure job` step.
 
+# Docker Images
+
+Docker images are released as [Github Packages][7] and to [Docker hub][8].
+
 # Artifact Signing
 
 The CI workflow will sign artifacts if the `ARTIFACT_SIGNING_KEY` [GitHub secret][4] is present.  This should be a
@@ -28,3 +32,5 @@ PlantUML is released to other places, currently that happens outside of GitHub a
 [4]: https://docs.github.com/en/actions/security-guides/encrypted-secrets
 [5]: https://central.sonatype.org/publish/requirements/gpg/#generating-a-key-pair
 [6]: https://github.com/plantuml/plantuml/releases/tag/snapshot
+[7]: https://github.com/plantuml/plantuml/pkgs/container/plantuml
+[8]: https://hub.docker.com/r/plantuml/plantuml
