@@ -18,7 +18,7 @@ package ext.plantuml.com.google.zxing.qrcode.encoder;
 
 /**
  * A class which wraps a 2D array of bytes. The default usage is signed. If you want to use it as a
- * unsigned container, it's up to you to do byteValue & 0xff at each location.
+ * unsigned container, it's up to you to do byteValue {@literal &} 0xff at each location.
  *
  * JAVAPORT: The original code was a 2D array of ints, but since it only ever gets assigned
  * -1, 0, and 1, I'm going to use less memory and go with bytes.
