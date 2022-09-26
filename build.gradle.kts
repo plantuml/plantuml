@@ -113,15 +113,13 @@ publishing {
 	}
 	repositories {
 		maven {
-			name = "fstest"
-			url = uri(layout.buildDirectory.dir("repo"))
-		}
-		maven {
 			name = "OSSRH"
-			url = uri("https://oss.sonatype.org/service/local/staging/deploy/maven2/")
+			val releasesRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+			val snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
+			url = uri(if (version.toString().endsWith("SNAPSHOT")) snapshotsRepoUrl else releasesRepoUrl)
 			credentials {
-				username = System.getenv("MAVEN_USERNAME")
-				password = System.getenv("MAVEN_PASSWORD")
+				username = System.getenv("OSSRH_USERNAME")
+				password = System.getenv("OSSRH_PASSWORD")
 			}
 		}
 	}

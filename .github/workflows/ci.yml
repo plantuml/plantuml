@@ -153,14 +153,22 @@ jobs:
         if: needs.workflow_config.outputs.do_snapshot_release == 'true'
         env:
           GITHUB_TOKEN: ${{ github.token }}
-        run: .github/scripts/release-snapshot.sh
+          OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+        run: |
+          .github/scripts/release-snapshot.sh
+          gradle publish
 
       - name: Create release in GitHub
         if: needs.workflow_config.outputs.do_release == 'true'
         env:
           GITHUB_TOKEN: ${{ github.token }}
           TAG: ${{ github.event.ref }}
-        run: .github/scripts/release.sh
+          OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+        run: |
+          .github/scripts/release.sh
+          gradle publish
 
   push_to_registry:
     needs: [ workflow_config, test, upload ]
