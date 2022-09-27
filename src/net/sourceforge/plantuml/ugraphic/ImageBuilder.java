@@ -450,7 +450,8 @@ public class ImageBuilder {
 		if (this.backcolor instanceof HColorSimple)
 			pngBackColor = this.backcolor.toColor(fileFormatOption.getColorMapper());
 
-		if (OptionFlags.getInstance().isReplaceWhiteBackgroundByTransparent() && Color.WHITE.equals(pngBackColor))
+		if (OptionFlags.getInstance().isReplaceWhiteBackgroundByTransparent()
+				&& (Color.WHITE.equals(pngBackColor) || Color.BLACK.equals(pngBackColor)))
 			pngBackColor = new Color(0, 0, 0, 0);
 
 		final EmptyImageBuilder builder = new EmptyImageBuilder(watermark, (int) (dim.getWidth() * scaleFactor),

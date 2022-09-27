@@ -42,4 +42,6 @@ public interface ETile extends TextBlock {
 
 	public double linePos(StringBounder stringBounder);
 
+	public void push(ETile tile);
+
 }

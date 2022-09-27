@@ -38,71 +38,34 @@ package net.sourceforge.plantuml.ebnf;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
+import net.sourceforge.plantuml.graphic.FontStyle;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.URectangle;
-import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UText;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 
-public class ETileBox extends AbstractTextBlock implements ETile {
+public class TitleBox extends AbstractTextBlock {
 
 	private final String value;
 	private final FontConfiguration fc;
-	private final Style style;
 	private final UText utext;
-	private final HColorSet colorSet;
-	private final Symbol symbol;
 
-	public ETileBox(String value, Symbol symbol, FontConfiguration fc, Style style, HColorSet colorSet) {
-		this.symbol = symbol;
+	public TitleBox(String value, FontConfiguration fc) {
 		this.value = value;
-		this.fc = fc;
-		this.utext = new UText(value, fc);
-		this.style = style;
-		this.colorSet = colorSet;
+		this.fc = fc.add(FontStyle.BOLD);
+		this.utext = new UText(value, this.fc);
 	}
 
 	@Override
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-		return XDimension2D.delta(getTextDim(stringBounder), 10);
-	}
-
-	private XDimension2D getTextDim(StringBounder stringBounder) {
 		return stringBounder.calculateDimension(fc.getFont(), value);
 	}
 
 	@Override
 	public void drawU(UGraphic ug) {
-		final XDimension2D dim = calculateDimension(ug.getStringBounder());
-		final XDimension2D dimText = getTextDim(ug.getStringBounder());
-		final HColor lineColor = style.value(PName.LineColor).asColor(colorSet);
-		final HColor backgroundColor = style.value(PName.BackGroundColor).asColor(colorSet);
+		final XDimension2D dimText = calculateDimension(ug.getStringBounder());
 
-		if (symbol == Symbol.TERMINAL_STRING1 || symbol == Symbol.TERMINAL_STRING2) {
-			final URectangle rect = new URectangle(dim);
-			ug.apply(lineColor).apply(new UStroke(0.5)).draw(rect);
-		} else {
-			final URectangle rect = new URectangle(dim).rounded(10);
-			ug.apply(lineColor).apply(backgroundColor.bg()).apply(new UStroke(1.5)).draw(rect);
-		}
-
-		ug.apply(new UTranslate(5, 5 + dimText.getHeight() - utext.getDescent(ug.getStringBounder()))).draw(utext);
-	}
-
-	@Override
-	public double linePos(StringBounder stringBounder) {
-		final double height = calculateDimension(stringBounder).getHeight();
-		return height / 2;
-	}
-
-	@Override
-	public void push(ETile tile) {
-		throw new UnsupportedOperationException();
+		ug.apply(new UTranslate(0, dimText.getHeight() - utext.getDescent(ug.getStringBounder()))).draw(utext);
 	}
 
 }

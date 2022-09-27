@@ -37,38 +37,27 @@ package net.sourceforge.plantuml.ebnf;
 
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.ULine;
-import net.sourceforge.plantuml.ugraphic.UPath;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class HLineCurved implements UDrawable {
+public class VLineCurved implements UDrawable {
 
 	private final double height;
 	private final double delta;
+	private final UDrawable top;
+	private final UDrawable bottom;
 
-	public HLineCurved(double height, double delta) {
+	public VLineCurved(double height, double delta, UDrawable top, UDrawable bottom) {
 		this.height = height;
 		this.delta = delta;
+		this.bottom = bottom;
+		this.top = top;
 	}
 
 	@Override
 	public void drawU(UGraphic ug) {
-		if (delta == 0) {
-			ug.draw(ULine.vline(height));
-			return;
-		}
-		final UPath path = new UPath();
-		path.moveTo(-delta, 0);
-
-		final double a = delta / 4;
-		path.cubicTo(-a, 0, 0, Math.abs(a), 0, Math.abs(delta));
-		// path.lineTo(0, delta);
-
-		path.lineTo(0, height - Math.abs(delta));
-
-		path.cubicTo(0, height - a, a, height, delta, height);
-		// path.lineTo(delta, height);
-
-		ug.draw(path);
+		bottom.drawU(ug.apply(UTranslate.dy(height)));
+		ETileConcatenation.drawVline(ug, 0, delta, height - delta);
+		top.drawU(ug);
 	}
 
 }

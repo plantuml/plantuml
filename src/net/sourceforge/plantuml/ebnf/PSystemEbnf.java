@@ -46,7 +46,10 @@ import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
-import net.sourceforge.plantuml.graphic.UDrawable;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
+import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.graphic.TextBlockUtils;
+import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 
 public class PSystemEbnf extends TitledDiagram {
 
@@ -70,8 +73,11 @@ public class PSystemEbnf extends TitledDiagram {
 		return createImageBuilder(fileFormatOption).drawable(getTextBlock()).write(os);
 	}
 
-	private UDrawable getTextBlock() {
-		final EbnfExpression exp = new EbnfExpression(lines);
-		return exp.getUDrawable(getSkinParam());
+	private TextBlockBackcolored getTextBlock() {
+		final List<EbnfSingleExpression> all = EbnfExpressions.build(lines);
+		TextBlock result = all.get(0).getUDrawable(getSkinParam());
+		for (int i = 1; i < all.size(); i++)
+			result = TextBlockUtils.mergeTB(result, all.get(i).getUDrawable(getSkinParam()), HorizontalAlignment.LEFT);
+		return TextBlockUtils.addBackcolor(result, null);
 	}
 }

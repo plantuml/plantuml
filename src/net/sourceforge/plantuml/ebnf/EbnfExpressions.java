@@ -35,39 +35,20 @@
  */
 package net.sourceforge.plantuml.ebnf;
 
-public enum Symbol {
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-	LITTERAL, //
+public class EbnfExpressions {
 
-	// https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_form
-	DEFINITION, // =
-	CONCATENATION, // ,
-	TERMINATION, // ;
-	ALTERNATION, // |
-	OPTIONAL_OPEN, // [
-	OPTIONAL_CLOSE, // ]
-	REPETITION_OPEN, // {
-	REPETITION_CLOSE, // }
-	GROUPING_OPEN, // (
-	GROUPING_CLOSE, // )
-	TERMINAL_STRING1, // " "
-	TERMINAL_STRING2, // ' '
-	COMMENT, // (* *)
-	SPECIAL_SEQUENCE, // ? ?
-	EXCEPTION; // -
+	public static List<EbnfSingleExpression> build(List<String> data) {
+		final List<EbnfSingleExpression> all = new ArrayList<>();
 
-	public int getPriority() {
-		switch (this) {
-		case CONCATENATION:
-			return 2;
-		case ALTERNATION:
-			return 1;
-		}
-		throw new UnsupportedOperationException();
-	}
+		final CharIterator it = new CharIteratorImpl(data);
+		while (it.peek() != 0)
+			all.add(new EbnfSingleExpression(it));
 
-	boolean isOperator() {
-		return this == CONCATENATION || this == ALTERNATION;
+		return Collections.unmodifiableList(all);
 	}
 
 }

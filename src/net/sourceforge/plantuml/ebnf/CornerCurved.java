@@ -39,21 +39,61 @@ import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPath;
 
+enum CornerType {
+	NW, NE, SE, SW;
+}
+
 public class CornerCurved implements UDrawable {
 
 	private final double delta;
+	private final CornerType type;
 
-	public CornerCurved(double delta) {
+	private CornerCurved(CornerType type, double delta) {
 		this.delta = delta;
+		this.type = type;
+		if (delta <= 0)
+			throw new IllegalArgumentException();
+	}
+
+	public static UDrawable createSW(double delta) {
+		return new CornerCurved(CornerType.SW, delta);
+	}
+
+	public static UDrawable createSE(double delta) {
+		return new CornerCurved(CornerType.SE, delta);
+	}
+
+	public static UDrawable createNE(double delta) {
+		return new CornerCurved(CornerType.NE, delta);
+	}
+
+	public static UDrawable createNW(double delta) {
+		return new CornerCurved(CornerType.NW, delta);
 	}
 
 	@Override
 	public void drawU(UGraphic ug) {
 		final UPath path = new UPath();
-		path.moveTo(0, -Math.abs(delta));
-
 		final double a = delta / 4;
-		path.cubicTo(0, -Math.abs(a), a, 0, delta, 0);
+
+		switch (type) {
+		case SW:
+			path.moveTo(0, -delta);
+			path.cubicTo(0, -a, a, 0, delta, 0);
+			break;
+		case SE:
+			path.moveTo(0, -delta);
+			path.cubicTo(0, -a, -a, 0, -delta, 0);
+			break;
+		case NE:
+			path.moveTo(-delta, 0);
+			path.cubicTo(-a, 0, 0, a, 0, delta);
+			break;
+		case NW:
+			path.moveTo(0, delta);
+			path.cubicTo(0, a, a, 0, delta, 0);
+			break;
+		}
 
 		ug.draw(path);
 	}
