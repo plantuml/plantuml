@@ -138,7 +138,7 @@ jobs:
           ORG_GRADLE_PROJECT_signingKey: ${{ secrets.ARTIFACT_SIGNING_KEY }}
           ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.ARTIFACT_SIGNING_PASSPHRASE }}
         run: |
-          gradle -q signMavenPublication signPdfJar
+          gradle -i signMavenPublication signPdfJar
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
