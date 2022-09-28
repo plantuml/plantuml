@@ -59,6 +59,7 @@ public class EbnfSingleExpression {
 			} else if (isLetterOrDigit(ch)) {
 				final String litteral = readLitteral(it);
 				tokens.add(new Token(Symbol.LITTERAL, litteral));
+				continue;
 			} else if (ch == ',') {
 				tokens.add(new Token(Symbol.CONCATENATION, null));
 			} else if (ch == '|') {
@@ -125,9 +126,9 @@ public class EbnfSingleExpression {
 				engine.alternation();
 			else if (element.getSymbol() == Symbol.CONCATENATION)
 				engine.concatenation();
-			else if (element.getSymbol() == Symbol.OPTIONAL_CLOSE)
+			else if (element.getSymbol() == Symbol.OPTIONAL)
 				engine.optional();
-			else if (element.getSymbol() == Symbol.REPETITION_CLOSE)
+			else if (element.getSymbol() == Symbol.REPETITION)
 				engine.repetition();
 			else
 				throw new UnsupportedOperationException(element.toString());

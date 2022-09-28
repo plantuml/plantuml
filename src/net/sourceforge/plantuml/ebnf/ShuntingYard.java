@@ -65,21 +65,15 @@ public class ShuntingYard {
 				if (operatorStack.peekFirst().getSymbol() == Symbol.GROUPING_OPEN)
 					operatorStack.removeFirst();
 			} else if (token.getSymbol() == Symbol.OPTIONAL_OPEN) {
-				operatorStack.addFirst(token);
+				operatorStack.addFirst(new Token(Symbol.OPTIONAL, null));
 			} else if (token.getSymbol() == Symbol.OPTIONAL_CLOSE) {
-				while (operatorStack.peekFirst().getSymbol() != Symbol.OPTIONAL_OPEN)
-					ouputQueue.add(operatorStack.removeFirst());
-				if (operatorStack.peekFirst().getSymbol() == Symbol.OPTIONAL_OPEN)
-					operatorStack.removeFirst();
-				operatorStack.addFirst(token);
+				final Token first = operatorStack.removeFirst();
+				ouputQueue.add(first);
 			} else if (token.getSymbol() == Symbol.REPETITION_OPEN) {
-				operatorStack.addFirst(token);
+				operatorStack.addFirst(new Token(Symbol.REPETITION, null));
 			} else if (token.getSymbol() == Symbol.REPETITION_CLOSE) {
-				while (operatorStack.peekFirst().getSymbol() != Symbol.REPETITION_OPEN)
-					ouputQueue.add(operatorStack.removeFirst());
-				if (operatorStack.peekFirst().getSymbol() == Symbol.REPETITION_OPEN)
-					operatorStack.removeFirst();
-				operatorStack.addFirst(token);
+				final Token first = operatorStack.removeFirst();
+				ouputQueue.add(first);
 			} else {
 				throw new UnsupportedOperationException(token.toString());
 			}
