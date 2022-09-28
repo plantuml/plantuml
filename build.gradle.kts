@@ -89,6 +89,9 @@ publishing {
 	publications.create<MavenPublication>("maven") {
 		from(components["java"])
 		pom {
+			groupId = project.group as String
+			artifactId = project.name
+			version = project.version as String
 			url.set("https://plantuml.com/")
 			licenses {
 				license {
@@ -109,7 +112,6 @@ publishing {
 				url.set("https://github.com/plantuml/plantuml")
 			}
 		}
-		suppressAllPomMetadataWarnings()
 	}
 	repositories {
 		maven {
