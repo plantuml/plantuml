@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,41 +30,153 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.project.lang;
 
-import net.sourceforge.plantuml.command.regex.IRegex;
-import net.sourceforge.plantuml.command.regex.RegexConcat;
-import net.sourceforge.plantuml.command.regex.RegexLeaf;
-import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.command.regex.*;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.Load;
 
+import java.time.Period;
+import java.time.temporal.ChronoUnit;
+import java.util.Locale;
+import java.util.Objects;
+
+import static java.time.temporal.ChronoUnit.DAYS;
+import static java.time.temporal.ChronoUnit.valueOf;
+
 public class ComplementSeveralDays implements Something {
 
 	public IRegex toRegex(String suffix) {
-		return new RegexConcat( //
-				new RegexLeaf("COMPLEMENT" + suffix, "(\\d+)[%s]+(day|week)s?" + //
-						"(?:[%s]+and[%s]+(\\d+)[%s]+(day|week)s?)?" //
-				)); //
+		return new RegexConcat(
+			new RegexLeaf(
+				getKey(suffix),
+				"(\\d+)[%s]+(day|week|month|quarter|year)s?(?:[%s]+and[%s]+(\\d+)[%s]+(day|week|month|quarter|year)s?)?$"
+			)
+		);
 	}
 
-	public Failable<Load> getMe(GanttDiagram system, RegexResult arg, String suffix) {
-		final String nb1 = arg.get("COMPLEMENT" + suffix, 0);
-		final int factor1 = arg.get("COMPLEMENT" + suffix, 1).startsWith("w") ? system.daysInWeek() : 1;
-		final int days1 = Integer.parseInt(nb1) * factor1;
+	public Failable<Load> getMe(GanttDiagram diagram, RegexResult arg, String suffix) {
+		RegexPartialMatch partialRegexpMatch = arg.get(getKey(suffix));
 
-		final String nb2 = arg.get("COMPLEMENT" + suffix, 2);
-		int days2 = 0;
-		if (nb2 != null) {
-			final int factor2 = arg.get("COMPLEMENT" + suffix, 3).startsWith("w") ? system.daysInWeek() : 1;
-			days2 = Integer.parseInt(nb2) * factor2;
+		final Period period = getPeriod(diagram, partialRegexpMatch, 0);
+		final Period period2 = getPeriod(diagram, partialRegexpMatch, 1);
+
+		return Failable.ok(Load.inWinks(period.getDays() + period2.getDays()));
+	}
+
+	private static Period getPeriod(GanttDiagram diagram, RegexPartialMatch regexp, int periodIndex) {
+		if (!hasPeriod(regexp, periodIndex)) {
+			return Period.ZERO;
 		}
 
-		return Failable.ok(Load.inWinks(days1 + days2));
+		AmountUnit duration = mapDuration(regexp, periodIndex);
+		int amount = duration.getAmount();
+		ChronoUnit chronoUnit = duration.getUnit();
+
+		if (chronoUnit.compareTo(DAYS) < 0) {
+			throw new IllegalArgumentException("Lowest resolution of supported chrono units is " + DAYS + " but was " + chronoUnit);
+		}
+
+		if (chronoUnit.equals(DAYS)) {
+			return Period.ofDays(amount);
+		}
+
+		// Using ceiling with implicit assumption that the required time (in days) should be rounded, i.e.
+		//  when we have 2.1 days, we'd rather have 2 day slot on the chart
+		return Period.ofDays((int) Math.round(
+			chronoUnit.getDuration()
+				.multipliedBy(amount).toDays()
+				/ (double) 7
+				* diagram.daysInWeek()
+		));
 	}
 
+	private static AmountUnit mapDuration(RegexPartialMatch regexp, int periodIndex) {
+		final int amount = Integer.parseInt(getAmount(regexp, periodIndex));
+		String untypedChronoUnit = getChronoUnit(regexp, periodIndex);
+
+		if (untypedChronoUnit.toLowerCase(Locale.ROOT).equals("quarter")) {
+			return convertQuartersToMonths(amount);
+		}
+
+		return AmountUnit.of(amount, toTypedChronoUnit(untypedChronoUnit));
+	}
+
+	private static AmountUnit convertQuartersToMonths(int amount) {
+		return AmountUnit.of(amount * 3, ChronoUnit.MONTHS);
+	}
+
+	private static boolean hasPeriod(RegexPartialMatch regexp, int periodIndex) {
+		return getAmount(regexp, periodIndex) != null;
+	}
+
+	private static String getAmount(RegexPartialMatch regexp, int periodIndex) {
+		return regexp.get(indexToOffset(periodIndex));
+	}
+
+	private static String getChronoUnit(RegexPartialMatch regexp, int periodIndex) {
+		return regexp.get(indexToOffset(periodIndex) + 1);
+	}
+
+	private static ChronoUnit toTypedChronoUnit(String chronoUnit) {
+		return valueOf(
+			(chronoUnit + "S")
+				.toUpperCase(Locale.ROOT)
+		);
+	}
+
+	private static int indexToOffset(int periodIndex) {
+		return periodIndex * 2;
+	}
+
+	private static String getKey(String suffix) {
+		return "COMPLEMENT" + suffix;
+	}
+
+	private static class AmountUnit {
+		final int amount;
+		final ChronoUnit unit;
+
+		private AmountUnit(int amount, ChronoUnit unit) {
+			this.amount = amount;
+			this.unit = unit;
+		}
+
+		public static AmountUnit of(int amount, ChronoUnit unit) {
+			return new AmountUnit(amount, unit);
+		}
+
+		public int getAmount() {
+			return amount;
+		}
+
+		public ChronoUnit getUnit() {
+			return unit;
+		}
+
+		@Override
+		public boolean equals(Object o) {
+			if (this == o) return true;
+			if (o == null || getClass() != o.getClass()) return false;
+			AmountUnit that = (AmountUnit) o;
+			return amount == that.amount && unit == that.unit;
+		}
+
+		@Override
+		public int hashCode() {
+			return Objects.hash(amount, unit);
+		}
+
+		@Override
+		public String toString() {
+			return "AmountUnit{" +
+				"amount=" + amount +
+				", unit=" + unit +
+				'}';
+		}
+	}
 }
