@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -30,34 +30,11 @@
  *
  *
  * Original Author:  Arnaud Roques
- *
+ * 
  *
  */
-package net.sourceforge.plantuml.ebnf;
+package net.sourceforge.plantuml.ugraphic;
 
-import net.sourceforge.plantuml.graphic.UDrawable;
-import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.UTranslate;
-
-public class VLineCurved implements UDrawable {
-
-	private final double height;
-	private final double delta;
-	private final UDrawable top;
-	private final UDrawable bottom;
-
-	public VLineCurved(double height, double delta, UDrawable top, UDrawable bottom) {
-		this.height = height;
-		this.delta = delta;
-		this.bottom = bottom;
-		this.top = top;
-	}
-
-	@Override
-	public void drawU(UGraphic ug) {
-		bottom.drawU(ug.apply(UTranslate.dy(height)));
-		ETileConcatenation.drawVline(ug, 0, delta, height - delta);
-		top.drawU(ug);
-	}
+public class CopyForegroundColorToBackgroundColor implements UChange {
 
 }

@@ -105,8 +105,8 @@ public class EntityImageJson extends AbstractEntityImage implements Stencil, Wit
 
 		final FontConfiguration fontConfiguration = getStyleHeader()
 				.getFontConfiguration(getSkinParam().getIHtmlColorSet());
-		this.entries = entity.getBodier().getBody(FontParam.OBJECT_ATTRIBUTE, skinParam, false, false,
-				entity.getStereotype(), getStyle(), fontConfiguration);
+		this.entries = entity.getBodier().getBody(skinParam, false, false, entity.getStereotype(), getStyle(),
+				fontConfiguration);
 
 		this.url = entity.getUrl99();
 

@@ -43,6 +43,8 @@ public class Token {
 	public Token(Symbol symbol, String data) {
 		this.symbol = symbol;
 		this.data = data;
+		if (data != null && data.length() == 0)
+			throw new IllegalArgumentException();
 	}
 
 	@Override

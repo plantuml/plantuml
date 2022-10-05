@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.cucadiagram;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
@@ -55,17 +54,14 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 public class Body3 extends AbstractTextBlock implements TextBlock, WithPorts {
 
 	private final List<CharSequence> rawBody = new ArrayList<>();
-	private final FontParam fontParam;
 	private final ISkinParam skinParam;
 	private final Stereotype stereotype;
 	private final Style style;
 
-	public Body3(List<CharSequence> rawBody_, FontParam fontParam, ISkinParam skinParam, Stereotype stereotype,
-			Style style) {
-		for (CharSequence s : rawBody_) {
+	public Body3(List<CharSequence> rawBody_, ISkinParam skinParam, Stereotype stereotype, Style style) {
+		for (CharSequence s : rawBody_)
 			this.rawBody.add(VisibilityModifier.replaceVisibilityModifierByUnicodeChar(s.toString(), true));
-		}
-		this.fontParam = fontParam;
+
 		this.skinParam = skinParam;
 		this.stereotype = stereotype;
 		this.style = style;
@@ -77,17 +73,9 @@ public class Body3 extends AbstractTextBlock implements TextBlock, WithPorts {
 	}
 
 	private TextBlock getTextBlock() {
-		Display display = Display.create(rawBody);
-
-		FontConfiguration config;
-		if (style != null) {
-			config = FontConfiguration.create(skinParam, style);
-		} else {
-			config = FontConfiguration.create(skinParam, fontParam, stereotype);
-		}
-
-		TextBlock foo = display.create(config, HorizontalAlignment.LEFT, skinParam);
-		return foo;
+		final Display display = Display.create(rawBody);
+		final FontConfiguration config = FontConfiguration.create(skinParam, style);
+		return display.create(config, HorizontalAlignment.LEFT, skinParam);
 	}
 
 	@Override

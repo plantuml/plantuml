@@ -46,9 +46,11 @@ import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
+import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 
 public class PSystemEbnf extends TitledDiagram {
@@ -63,8 +65,8 @@ public class PSystemEbnf extends TitledDiagram {
 		return new DiagramDescription("(EBNF)");
 	}
 
-	public void doCommandLine(String line) {
-		lines.add(line);
+	public void addLine(String line) {
+		lines.add(line.trim());
 	}
 
 	@Override
@@ -74,7 +76,15 @@ public class PSystemEbnf extends TitledDiagram {
 	}
 
 	private TextBlockBackcolored getTextBlock() {
-		final List<EbnfSingleExpression> all = EbnfExpressions.build(lines);
+		final List<EbnfSingleExpression> all = EbnfExpressions.build(lines, getPragma());
+		if (all.size() == 0) {
+			final Style style = ETile.getStyleSignature().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+			final FontConfiguration fc = style.getFontConfiguration(getSkinParam().getIHtmlColorSet());
+
+			final TextBlock tmp = EbnfEngine.syntaxError(fc, getSkinParam());
+			return TextBlockUtils.addBackcolor(tmp, null);
+		}
+
 		TextBlock result = all.get(0).getUDrawable(getSkinParam());
 		for (int i = 1; i < all.size(); i++)
 			result = TextBlockUtils.mergeTB(result, all.get(i).getUDrawable(getSkinParam()), HorizontalAlignment.LEFT);

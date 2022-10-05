@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.UDrawable;
+import net.sourceforge.plantuml.svek.extremity.Extremity;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -141,8 +142,13 @@ public class Kal implements UDrawable {
 		return position;
 	}
 
-	public void setTranslate(UTranslate translate) {
+	public void setTranslate(UTranslate translate, UDrawable decoration) {
 		this.translate = translate;
+		if (decoration instanceof Extremity) {
+			final Extremity extremity = (Extremity) decoration;
+			final UTranslate deltaForKal = extremity.getDeltaForKal();
+			// this.translate = this.translate.compose(deltaForKal);
+		}
 	}
 
 	public double overlapx(Kal other) {

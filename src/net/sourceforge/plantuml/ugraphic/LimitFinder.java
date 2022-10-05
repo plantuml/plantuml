@@ -53,8 +53,8 @@ public class LimitFinder extends UGraphicNo {
 		final UTranslate tmp = change instanceof UTranslate ? this.getTranslate().compose((UTranslate) change)
 				: this.getTranslate();
 		final LimitFinder result = new LimitFinder(this.getStringBounder(), tmp, this.minmax);
-		if (!instanceOfAny(change, UAntiAliasing.class, UBackground.class, UClip.class, HColor.class, UHidden.class,
-				UStroke.class, UTranslate.class))
+		if (instanceOfAny(change, UAntiAliasing.class, UBackground.class, UClip.class, HColor.class, UHidden.class,
+				UStroke.class, UTranslate.class, CopyForegroundColorToBackgroundColor.class) == false)
 			throw new UnsupportedOperationException(change.getClass().toString());
 		result.clip = change instanceof UClip ? ((UClip) change).translate(result.getTranslate()) : this.clip;
 		return result;
@@ -112,6 +112,8 @@ public class LimitFinder extends UGraphicNo {
 		} else if (shape instanceof CenteredText) {
 			// Ignored
 		} else if (shape instanceof SpecialText) {
+			// Ignored
+		} else if (shape instanceof CopyForegroundColorToBackgroundColor) {
 			// Ignored
 		} else if (shape instanceof UPixel) {
 			addPoint(x, y);

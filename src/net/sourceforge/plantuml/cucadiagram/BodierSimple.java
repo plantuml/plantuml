@@ -40,7 +40,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -94,8 +93,8 @@ public class BodierSimple implements Bodier {
 	}
 
 	@Override
-	public TextBlock getBody(FontParam fontParam, ISkinParam skinParam, boolean showMethods, boolean showFields,
-			Stereotype stereotype, Style style, FontConfiguration fontConfiguration) {
+	public TextBlock getBody(ISkinParam skinParam, boolean showMethods, boolean showFields, Stereotype stereotype,
+			Style style, FontConfiguration fontConfiguration) {
 		return BodyFactory.create1(skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT), rawBody, skinParam,
 				stereotype, leaf, style);
 	}

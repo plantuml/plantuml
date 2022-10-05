@@ -126,7 +126,7 @@ public enum SecurityProfile {
 		case SANDBOX:
 			return "This is completely safe: no access to local files or to distant URL.";
 		case ALLOWLIST:
-			return "Some local ressource may be accessible.";
+			return "Some local resource may be accessible.";
 		case INTERNET:
 			return "<i>Mode designed for server connected to Internet.";
 		case LEGACY:

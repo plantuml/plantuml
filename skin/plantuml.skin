@@ -5,6 +5,7 @@ root {
   
   FontName SansSerif
   HyperLinkColor blue
+  HyperLinkUnderlineThickness 1
   FontColor black
   FontSize 14
   FontStyle plain
@@ -47,8 +48,8 @@ document {
     BackGroundColor #D
     FontSize 14
     RoundCorner 15
-    Padding 6
-    Margin 8
+    Padding 5
+    Margin 12
   }
   caption {
     HorizontalAlignment center
@@ -69,6 +70,11 @@ stereotype {
 }
 
 
+mainframe {
+  Padding 1 5
+  LineThickness 1.5
+  Margin 10 5
+}
 
 element {
   Shadowing 0.0

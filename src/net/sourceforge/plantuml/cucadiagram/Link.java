@@ -278,12 +278,12 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 		this.getLinkArg().setLength(length);
 	}
 
-	public String getQualifier1() {
-		return getLinkArg().getQualifier1();
+	public String getQuantifier1() {
+		return getLinkArg().getQuantifier1();
 	}
 
-	public String getQualifier2() {
-		return getLinkArg().getQualifier2();
+	public String getQuantifier2() {
+		return getLinkArg().getQuantifier2();
 	}
 
 	public final double getWeight() {
@@ -356,7 +356,7 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 //		return decor.getMargin() + q;
 //	}
 
-	private double getQualifierMargin(StringBounder stringBounder, UFont fontQualif, String qualif,
+	private double getQuantifierMargin(StringBounder stringBounder, UFont fontQualif, String qualif,
 			ISkinSimple spriteContainer) {
 		if (qualif != null) {
 			final TextBlock b = Display.create(qualif).create(FontConfiguration.blackBlueTrue(fontQualif),

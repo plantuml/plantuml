@@ -243,7 +243,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 					drawTasksRect(ug);
 					drawTasksTitle(ugOrig, getTitlesColumnWidth(ug.getStringBounder()), getBarsColumnWidth(timeHeader));
 
-					if (hideRessourceFoobox == false)
+					if (hideResourceFoobox == false)
 						drawResources(ug);
 
 					if (showFootbox)
@@ -437,7 +437,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 						getEnd(taskGroup), getSkinParam(), task, this, task.getStyleBuilder());
 			} else {
 				final TaskImpl tmp = (TaskImpl) task;
-				final String disp = hideRessourceName ? tmp.getCode().getSimpleDisplay() : tmp.getPrettyDisplay();
+				final String disp = hideResourceName ? tmp.getCode().getSimpleDisplay() : tmp.getPrettyDisplay();
 				if (tmp.isDiamond()) {
 					draw = new TaskDrawDiamond(timeScale, y, disp, getStart(tmp), getSkinParam(), task, this,
 							task.getStyleBuilder());
@@ -459,7 +459,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		double yy = lastY(stringBounder);
 		if (yy == 0) {
 			yy = headerHeight;
-		} else if (this.hideRessourceFoobox == false)
+		} else if (this.hideResourceFoobox == false)
 			for (Resource res : resources.values()) {
 				final ResourceDraw draw = new ResourceDraw(this, res, timeScale, yy, min, max);
 				res.setTaskDraw(draw);
@@ -839,16 +839,16 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		this.withCalendarDate = withCalendarDate;
 	}
 
-	private boolean hideRessourceName;
-	private boolean hideRessourceFoobox;
+	private boolean hideResourceName;
+	private boolean hideResourceFoobox;
 
-	public CommandExecutionResult hideRessourceName() {
-		this.hideRessourceName = true;
+	public CommandExecutionResult hideResourceName() {
+		this.hideResourceName = true;
 		return CommandExecutionResult.ok();
 	}
 
-	public CommandExecutionResult hideRessourceFootbox() {
-		this.hideRessourceFoobox = true;
+	public CommandExecutionResult hideResourceFootbox() {
+		this.hideResourceFoobox = true;
 		return CommandExecutionResult.ok();
 	}
 

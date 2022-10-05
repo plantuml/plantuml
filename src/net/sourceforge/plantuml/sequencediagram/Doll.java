@@ -88,9 +88,8 @@ public class Doll implements WithStyle {
 		this.styleBuilder = styleBuilder;
 		this.tileArguments = Objects.requireNonNull(tileArguments);
 
-		if (first != null) {
+		if (first != null)
 			this.participants.add(first);
-		}
 
 	}
 

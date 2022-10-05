@@ -56,6 +56,7 @@ import net.sourceforge.plantuml.text.StyledString;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UParam;
+import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UText;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
@@ -74,9 +75,9 @@ public class DriverTextG2d implements UDriver<UText, Graphics2D> {
 	public void draw(UText shape, double x, double y, ColorMapper mapper, UParam param, Graphics2D g2d) {
 		final FontConfiguration fontConfiguration = shape.getFontConfiguration();
 
-		if (fontConfiguration.getColor().isTransparent()) {
+		if (fontConfiguration.getColor().isTransparent())
 			return;
-		}
+
 		final String text = shape.getText();
 
 		final List<StyledString> strings = StyledString.build(text);
@@ -88,11 +89,11 @@ public class DriverTextG2d implements UDriver<UText, Graphics2D> {
 		}
 	}
 
-	private double printSingleText(Graphics2D g2d, final FontConfiguration fontConfiguration, final String text, double x,
-			double y, ColorMapper mapper) {
+	private double printSingleText(Graphics2D g2d, final FontConfiguration fontConfiguration, final String text,
+			double x, double y, ColorMapper mapper) {
 		final UFont font = fontConfiguration.getFont();
 		final HColor extended = fontConfiguration.getExtendedColor();
-		
+
 		final XDimension2D dim = stringBounder.calculateDimension(font, text);
 		final double height = max(10, dim.getHeight());
 		final double width = dim.getWidth();
@@ -114,7 +115,8 @@ public class DriverTextG2d implements UDriver<UText, Graphics2D> {
 			if (fontConfiguration.containsStyle(FontStyle.BACKCOLOR)) {
 				final Rectangle2D.Double area = new Rectangle2D.Double(x, y - height + 1.5, width, height);
 				if (extended instanceof HColorGradient) {
-					final GradientPaint paint = DriverRectangleG2d.getPaintGradient(x, y, mapper, width, height, extended);
+					final GradientPaint paint = DriverRectangleG2d.getPaintGradient(x, y, mapper, width, height,
+							extended);
 					g2d.setPaint(paint);
 					g2d.fill(area);
 				} else {
@@ -135,19 +137,22 @@ public class DriverTextG2d implements UDriver<UText, Graphics2D> {
 			g2d.drawString(text, (float) x, (float) y);
 
 			if (fontConfiguration.containsStyle(FontStyle.UNDERLINE)) {
-				if (extended != null) {
+				if (extended != null)
 					g2d.setColor(extended.toColor(mapper));
+
+				final UStroke stroke = fontConfiguration.getUnderlineStroke();
+				if (stroke.getThickness() > 0) {
+					DriverLineG2d.manageStroke(stroke, g2d);
+					final int ypos = (int) (y + 2.5);
+					g2d.drawLine((int) x, ypos, (int) (x + width), ypos);
+					g2d.setStroke(new BasicStroke());
 				}
-				final int ypos = (int) (y + 2.5);
-				g2d.setStroke(new BasicStroke((float) 1));
-				g2d.drawLine((int) x, ypos, (int) (x + width), ypos);
-				g2d.setStroke(new BasicStroke());
 			}
 			if (fontConfiguration.containsStyle(FontStyle.WAVE)) {
 				final int ypos = (int) (y + 2.5) - 1;
-				if (extended != null) {
+				if (extended != null)
 					g2d.setColor(extended.toColor(mapper));
-				}
+
 				for (int i = (int) x; i < x + width - 5; i += 6) {
 					g2d.drawLine(i, ypos - 0, i + 3, ypos + 1);
 					g2d.drawLine(i + 3, ypos + 1, i + 6, ypos - 0);
@@ -156,9 +161,9 @@ public class DriverTextG2d implements UDriver<UText, Graphics2D> {
 			if (fontConfiguration.containsStyle(FontStyle.STRIKE)) {
 				final FontMetrics fm = g2d.getFontMetrics(font.getUnderlayingFont());
 				final int ypos = (int) (y - fm.getDescent() - 0.5);
-				if (extended != null) {
+				if (extended != null)
 					g2d.setColor(extended.toColor(mapper));
-				}
+
 				g2d.setStroke(new BasicStroke((float) 1.5));
 				g2d.drawLine((int) x, ypos, (int) (x + width), ypos);
 				g2d.setStroke(new BasicStroke());

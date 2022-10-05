@@ -69,14 +69,12 @@ public class DriverTextEps implements UDriver<UText, EpsGraphics> {
 
 	public void draw(UText shape, double x, double y, ColorMapper mapper, UParam param, EpsGraphics eps) {
 		final UClip clip = clipContainer.getClip();
-		if (clip != null && clip.isInside(x, y) == false) {
+		if (clip != null && clip.isInside(x, y) == false)
 			return;
-		}
 
 		final FontConfiguration fontConfiguration = shape.getFontConfiguration();
-		if (fontConfiguration.getColor().isTransparent()) {
+		if (fontConfiguration.getColor().isTransparent())
 			return;
-		}
 
 		if (strategy == EpsStrategy.WITH_MACRO_AND_TEXT) {
 			drawAsText(shape, x, y, param, eps, mapper);
@@ -93,9 +91,9 @@ public class DriverTextEps implements UDriver<UText, EpsGraphics> {
 				eps.setStrokeColor(extended);
 				eps.setFillColor(extended);
 				eps.setStrokeWidth(1, 0, 0);
-				if (dim == null) {
+				if (dim == null)
 					dim = getMinMax(x, y, getOutline(textLayout).getPathIterator(null));
-				}
+
 				eps.epsRectangle(dim.getMinX() - 1, dim.getMinY() - 1, dim.getWidth() + 2, dim.getHeight() + 2, 0, 0);
 			}
 		}
@@ -105,25 +103,25 @@ public class DriverTextEps implements UDriver<UText, EpsGraphics> {
 
 		if (fontConfiguration.containsStyle(FontStyle.UNDERLINE)) {
 			final HColor extended = fontConfiguration.getExtendedColor();
-			if (extended != null) {
+			if (extended != null)
 				eps.setStrokeColor(extended.toColor(mapper));
-			}
-			if (dim == null) {
+
+			if (dim == null)
 				dim = getMinMax(x, y, getOutline(textLayout).getPathIterator(null));
-			}
+
 			eps.setStrokeWidth(1.1, 0, 0);
 			eps.epsLine(x, y + 1.5, x + dim.getWidth(), y + 1.5);
 			eps.setStrokeWidth(1, 0, 0);
 		}
 		if (fontConfiguration.containsStyle(FontStyle.WAVE)) {
-			if (dim == null) {
+			if (dim == null)
 				dim = getMinMax(x, y, getOutline(textLayout).getPathIterator(null));
-			}
+
 			final int ypos = (int) (y + 2.5) - 1;
 			final HColor extended = fontConfiguration.getExtendedColor();
-			if (extended != null) {
+			if (extended != null)
 				eps.setStrokeColor(extended.toColor(mapper));
-			}
+
 			eps.setStrokeWidth(1.1, 0, 0);
 			for (int i = (int) x; i < x + dim.getWidth() - 5; i += 6) {
 				eps.epsLine(i, ypos - 0, i + 3, ypos + 1);
@@ -133,12 +131,12 @@ public class DriverTextEps implements UDriver<UText, EpsGraphics> {
 		}
 		if (fontConfiguration.containsStyle(FontStyle.STRIKE)) {
 			final HColor extended = fontConfiguration.getExtendedColor();
-			if (extended != null) {
+			if (extended != null)
 				eps.setStrokeColor(extended.toColor(mapper));
-			}
-			if (dim == null) {
+
+			if (dim == null)
 				dim = getMinMax(x, y, getOutline(textLayout).getPathIterator(null));
-			}
+
 			// final FontMetrics fm = font.getFontMetrics();
 			final double ypos = (dim.getMinY() + dim.getMaxY() * 2) / 3;
 			eps.setStrokeWidth(1.3, 0, 0);
@@ -188,19 +186,18 @@ public class DriverTextEps implements UDriver<UText, EpsGraphics> {
 		final double coord[] = new double[6];
 		while (path.isDone() == false) {
 			final int code = path.currentSegment(coord);
-			if (code == PathIterator.SEG_MOVETO) {
+			if (code == PathIterator.SEG_MOVETO)
 				eps.moveto(coord[0] + x, coord[1] + y);
-			} else if (code == PathIterator.SEG_LINETO) {
+			else if (code == PathIterator.SEG_LINETO)
 				eps.lineto(coord[0] + x, coord[1] + y);
-			} else if (code == PathIterator.SEG_CLOSE) {
+			else if (code == PathIterator.SEG_CLOSE)
 				eps.closepath();
-			} else if (code == PathIterator.SEG_CUBICTO) {
+			else if (code == PathIterator.SEG_CUBICTO)
 				eps.curveto(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y, coord[4] + x, coord[5] + y);
-			} else if (code == PathIterator.SEG_QUADTO) {
+			else if (code == PathIterator.SEG_QUADTO)
 				eps.quadto(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y);
-			} else {
+			else
 				throw new UnsupportedOperationException("code=" + code);
-			}
 
 			path.next();
 		}
@@ -213,16 +210,16 @@ public class DriverTextEps implements UDriver<UText, EpsGraphics> {
 		final List<Integer> closings = getClosings(shape.getPathIterator(null));
 		final List<Integer> result = new ArrayList<>();
 		for (Integer cl : closings) {
-			if (cl + 2 >= count) {
+			if (cl + 2 >= count)
 				break;
-			}
+
 			final PathIterator path1 = new PathIteratorLimited(shape, 0, cl);
 			final PathIterator path2 = new PathIteratorLimited(shape, cl + 1, Integer.MAX_VALUE);
 			final double max1 = getMinMax(0, 0, path1).getMaxX();
 			final double min2 = getMinMax(0, 0, path2).getMinX();
-			if (min2 > max1) {
+			if (min2 > max1)
 				result.add(cl);
-			}
+
 		}
 		return result;
 	}
@@ -233,9 +230,9 @@ public class DriverTextEps implements UDriver<UText, EpsGraphics> {
 		final double coord[] = new double[6];
 		while (path.isDone() == false) {
 			final int code = path.currentSegment(coord);
-			if (code == PathIterator.SEG_CLOSE) {
+			if (code == PathIterator.SEG_CLOSE)
 				result.add(current);
-			}
+
 			current++;
 			path.next();
 		}

@@ -352,7 +352,7 @@ public abstract class PSystemError extends PlainDiagram {
 				"Details on <i>[[https://plantuml.com/dedication]]");
 
 		final UFont font = UFont.sansSerif(14);
-		final FontConfiguration fc = FontConfiguration.create(font, HColors.BLACK, HColors.BLACK, false);
+		final FontConfiguration fc = FontConfiguration.create(font, HColors.BLACK, HColors.BLACK, null);
 		final TextBlock text = TextBlockUtils
 				.withMargin(disp.create(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty()), 10, 0);
 		final TextBlock result;
@@ -373,7 +373,7 @@ public abstract class PSystemError extends PlainDiagram {
 				"Details on <i>[[http://plantuml.com/adopt]]", " ");
 
 		final UFont font = UFont.sansSerif(14);
-		final FontConfiguration fc = FontConfiguration.create(font, HColors.BLACK, HColors.BLACK, false);
+		final FontConfiguration fc = FontConfiguration.create(font, HColors.BLACK, HColors.BLACK, null);
 		final TextBlock text = TextBlockUtils
 				.withMargin(disp.create(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty()), 10, 0);
 		final TextBlock result;

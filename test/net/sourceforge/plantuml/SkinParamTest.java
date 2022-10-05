@@ -29,8 +29,8 @@ class SkinParamTest {
 	//
 
 	/**
-	 * A long and verbose test method!
-	 * But it helps us to avoid accidentally changing a default style.
+	 * A long and verbose test method! But it helps us to avoid accidentally
+	 * changing a default style.
 	 */
 	@ParameterizedTest
 	@EnumSource(UmlDiagramType.class)
@@ -257,7 +257,7 @@ class SkinParamTest {
 
 		assertThat(skinParam.useSwimlanes(umlDiagramType)).isFalse();
 
-		assertThat(skinParam.useUnderlineForHyperlink()).isTrue();
+		assertThat(skinParam.useUnderlineForHyperlink()).isNotNull();
 
 		final LineBreakStrategy wrapWidth = skinParam.wrapWidth();
 		assertThat(wrapWidth.isAuto()).isFalse();
@@ -289,63 +289,41 @@ class SkinParamTest {
 	}
 
 	@ParameterizedTest
-	@CsvSource({
-			"true,        true",
-			"tRUe,        true",
-			"TRUE,        true",
-			"other_value, false",
-	})
+	@CsvSource({ "true,        true", "tRUe,        true", "TRUE,        true", "other_value, false", })
 	public void test_fixCircleLabelOverlapping(String paramValue, boolean expected) {
 		final SkinParam skinParam = createSkinParam("fixCircleLabelOverlapping", paramValue);
 		assertThat(skinParam.fixCircleLabelOverlapping()).isEqualTo(expected);
 	}
 
 	@ParameterizedTest
-	@CsvSource({
-			"old,         true",
-			"oLd,         true",
-			"OLD,         true",
-			"other_value, false",
-	})
+	@CsvSource({ "old,         true", "oLd,         true", "OLD,         true", "other_value, false", })
 	public void test_genericDisplay(String paramValue, boolean expected) {
 		final SkinParam skinParam = createSkinParam("genericDisplay", paramValue);
 		assertThat(skinParam.displayGenericWithOldFashion()).isEqualTo(expected);
 	}
 
 	@ParameterizedTest
-	@CsvSource({
-			"0, MAX_VALUE",
-			"1, MAX_VALUE",
-			"2, 2",
-			"123, 123"
-	})
+	@CsvSource({ "0, MAX_VALUE", "1, MAX_VALUE", "2, 2", "123, 123" })
 	public void test_groupInheritance(String paramValue, String expectedValue) {
 		final SkinParam skinParam = createSkinParam("groupInheritance", paramValue);
 		assertThat(skinParam.groupInheritance()).isEqualTo(intFromCsv(expectedValue));
 	}
 
 	@ParameterizedTest
-	@CsvSource({
-			"true,        true",
-			"tRUe,        true",
-			"TRUE,        true",
-			"other_value, false",
-	})
+	@CsvSource({ "true,        true", "tRUe,        true", "TRUE,        true", "other_value, false", })
 	public void test_handwritten(String paramValue, boolean expected) {
 		final SkinParam skinParam = createSkinParam("handwritten", paramValue);
 		assertThat(skinParam.handwritten()).isEqualTo(expected);
 	}
 
 	@ParameterizedTest
-	@CsvSource({
-			"false,       false",
-			"fALSe,       false",
-			"FALSE,       false",
-			"other_value, true",
-	})
+	@CsvSource({ "false,       false", "fALSe,       false", "FALSE,       false", "other_value, true", })
 	public void test_hyperlinkUnderline(String paramValue, boolean expected) {
 		final SkinParam skinParam = createSkinParam("hyperlinkUnderline", paramValue);
-		assertThat(skinParam.useUnderlineForHyperlink()).isEqualTo(expected);
+		if (expected)
+			assertThat(skinParam.useUnderlineForHyperlink()).isNotNull();
+		else
+			assertThat(skinParam.useUnderlineForHyperlink()).isNull();
 	}
 
 	@Test
@@ -379,36 +357,21 @@ class SkinParamTest {
 	}
 
 	@ParameterizedTest
-	@CsvSource({
-			"true,        true",
-			"tRUe,        true",
-			"TRUE,        true",
-			"other_value, false",
-	})
+	@CsvSource({ "true,        true", "tRUe,        true", "TRUE,        true", "other_value, false", })
 	public void test_responseMessageBelowArrow(String paramValue, boolean expected) {
 		final SkinParam skinParam = createSkinParam("responseMessageBelowArrow", paramValue);
 		assertThat(skinParam.responseMessageBelowArrow()).isEqualTo(expected);
 	}
 
 	@ParameterizedTest
-	@CsvSource({
-			"true,        true",
-			"tRUe,        true",
-			"TRUE,        true",
-			"other_value, false",
-	})
+	@CsvSource({ "true,        true", "tRUe,        true", "TRUE,        true", "other_value, false", })
 	public void test_sameClassWidth(String paramValue, boolean expected) {
 		final SkinParam skinParam = createSkinParam("sameClassWidth", paramValue);
 		assertThat(skinParam.sameClassWidth()).isEqualTo(expected);
 	}
 
 	@ParameterizedTest
-	@CsvSource({
-			"underline,   true",
-			"undERLine,   true",
-			"UNDERLINE,   true",
-			"other_value, false",
-	})
+	@CsvSource({ "underline,   true", "undERLine,   true", "UNDERLINE,   true", "other_value, false", })
 	public void test_sequenceParticipant(String paramValue, boolean expected) {
 		final SkinParam skinParam = createSkinParam("sequenceParticipant", paramValue);
 		assertThat(skinParam.forceSequenceParticipantUnderlined()).isEqualTo(expected);
@@ -416,11 +379,8 @@ class SkinParamTest {
 
 	@Test
 	public void testSplitParam() {
-		final SkinParam skinParam = createSkinParam(
-				"pageBorderColor", "red",
-				"pageExternalColor", "yellow",
-				"pageMargin", "123"
-		);
+		final SkinParam skinParam = createSkinParam("pageBorderColor", "red", "pageExternalColor", "yellow",
+				"pageMargin", "123");
 
 		final SplitParam splitParam = skinParam.getSplitParam();
 		assertThat(splitParam.getBorderColor()).isEqualTo(Color.RED);
@@ -429,36 +389,21 @@ class SkinParamTest {
 	}
 
 	@ParameterizedTest
-	@CsvSource({
-			"bottom,      false",
-			"boTTom,      false",
-			"BOTTOM,      false",
-			"other_value, true",
-	})
+	@CsvSource({ "bottom,      false", "boTTom,      false", "BOTTOM,      false", "other_value, true", })
 	public void test_stereotypePosition(String paramValue, boolean expected) {
 		final SkinParam skinParam = createSkinParam("stereotypePosition", paramValue);
 		assertThat(skinParam.stereotypePositionTop()).isEqualTo(expected);
 	}
 
 	@ParameterizedTest
-	@CsvSource({
-			"strictuml,   true",
-			"strICTuml,   true",
-			"STRICTUML,   true",
-			"other_value, false",
-	})
+	@CsvSource({ "strictuml,   true", "strICTuml,   true", "STRICTUML,   true", "other_value, false", })
 	public void test_style(String paramValue, boolean expected) {
 		final SkinParam skinParam = createSkinParam("style", paramValue);
 		assertThat(skinParam.strictUmlStyle()).isEqualTo(expected);
 	}
 
 	@ParameterizedTest
-	@CsvSource({
-			"false,       false",
-			"fALSe,       false",
-			"FALSE,       false",
-			"other_value, true",
-	})
+	@CsvSource({ "false,       false", "fALSe,       false", "FALSE,       false", "other_value, true", })
 	public void test_svgDimensionStyle(String paramValue, boolean expected) {
 		final SkinParam skinParam = createSkinParam("svgDimensionStyle", paramValue);
 		assertThat(skinParam.svgDimensionStyle()).isEqualTo(expected);
@@ -472,20 +417,12 @@ class SkinParamTest {
 
 	@ParameterizedTest
 	@CsvSource({
-			// swimlane     swimlanes    expected
-			"  true,        any_value,   true",
-			"  tRUe,        any_value,   true",
-			"  TRUE,        any_value,   true",
-			"  other_value, true,        true",
-			"  other_value, tRUe,        true",
-			"  other_value, TRUE,        true",
-			"  other_value, other_value, false",
-	})
+			// swimlane swimlanes expected
+			"  true,        any_value,   true", "  tRUe,        any_value,   true", "  TRUE,        any_value,   true",
+			"  other_value, true,        true", "  other_value, tRUe,        true", "  other_value, TRUE,        true",
+			"  other_value, other_value, false", })
 	public void test_swimlanes(String swimlane, String swimlanes, boolean expected) {
-		final SkinParam skinParam = createSkinParam(
-				"swimlane", swimlane,
-				"swimlanes", swimlanes
-		);
+		final SkinParam skinParam = createSkinParam("swimlane", swimlane, "swimlanes", swimlanes);
 		assertThat(skinParam.swimlanes()).isEqualTo(expected);
 	}
 
@@ -500,7 +437,8 @@ class SkinParamTest {
 	//
 
 	private SkinParam createSkinParam(String... keyValuePairs) {
-		// Using SEQUENCE here is an arbitrary decision that should not affect test outcome
+		// Using SEQUENCE here is an arbitrary decision that should not affect test
+		// outcome
 		final SkinParam skinParam = SkinParam.create(UmlDiagramType.SEQUENCE);
 		for (int i = 0; i < keyValuePairs.length; i += 2) {
 			skinParam.setParam(StringUtils.goLowerCase(keyValuePairs[i]), keyValuePairs[i + 1]);

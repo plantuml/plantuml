@@ -62,7 +62,7 @@ public interface ISkinParam extends ISkinSimple {
 
 	public HColor getHyperlinkColor();
 
-	public boolean useUnderlineForHyperlink();
+	public UStroke useUnderlineForHyperlink();
 
 	public HColor getBackgroundColor();
 

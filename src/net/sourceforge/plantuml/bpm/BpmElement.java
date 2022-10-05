@@ -159,7 +159,7 @@ public class BpmElement extends AbstractConnectorPuzzle implements ConnectorPuzz
 			return FtileBox.create(skinParam, display, null, BoxStyle.PLAIN, null);
 		}
 		final UFont font = UFont.serif(14);
-		final FontConfiguration fc = FontConfiguration.create(font, HColors.RED, HColors.RED, false);
+		final FontConfiguration fc = FontConfiguration.create(font, HColors.RED, HColors.RED, null);
 		if (Display.isNull(display)) {
 			return Display.getWithNewlines(type.toString()).create(fc, HorizontalAlignment.LEFT, skinParam);
 		}

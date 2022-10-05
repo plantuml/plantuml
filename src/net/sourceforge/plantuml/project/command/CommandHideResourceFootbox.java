@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -30,33 +30,39 @@
  *
  *
  * Original Author:  Arnaud Roques
- *
+ * 
  *
  */
-package net.sourceforge.plantuml.ebnf;
+package net.sourceforge.plantuml.project.command;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import net.sourceforge.plantuml.LineLocation;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.project.GanttDiagram;
 
-import net.sourceforge.plantuml.Pragma;
+public class CommandHideResourceFootbox extends SingleLineCommand2<GanttDiagram> {
 
-public class EbnfExpressions {
+	public CommandHideResourceFootbox() {
+		super(getRegexConcat());
+	}
 
-	public static List<EbnfSingleExpression> build(List<String> data, Pragma pragma) {
-		final List<EbnfSingleExpression> all = new ArrayList<>();
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandHideResourceFootbox.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("hide"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("ress?ources?"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("footbox"), //
+				RegexLeaf.end()); //
+	}
 
-		final boolean isTheo = pragma.isDefine("theo");
-
-		final CharIterator it = new CharIteratorImpl(data);
-		while (it.peek() != 0) {
-			final EbnfSingleExpression tmp = EbnfSingleExpression.create(it, isTheo);
-			if (tmp.isEmpty())
-				break;
-			all.add(tmp);
-		}
-
-		return Collections.unmodifiableList(all);
+	@Override
+	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg) {
+		return diagram.hideResourceFootbox();
 	}
 
 }

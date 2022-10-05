@@ -41,9 +41,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -62,16 +63,14 @@ import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class TextBlockMap extends AbstractTextBlock implements WithPorts {
 
-	private final FontParam fontParam;
 	private final ISkinParam skinParam;
 	private final FontConfiguration fontConfiguration;
 	private final Map<TextBlock, TextBlock> blocksMap = new LinkedHashMap<>();
 	private final List<String> keys = new ArrayList<>();
 	private double totalWidth;
 
-	public TextBlockMap(FontConfiguration fontConfiguration, FontParam fontParam, ISkinParam skinParam,
-			Map<String, String> map) {
-		this.fontParam = fontParam;
+	public TextBlockMap(FontConfiguration fontConfiguration, ISkinParam skinParam, Map<String, String> map,
+			LineBreakStrategy wordWrap) {
 		this.skinParam = skinParam;
 		this.fontConfiguration = fontConfiguration;
 		for (Map.Entry<String, String> ent : map.entrySet()) {
@@ -80,8 +79,8 @@ public class TextBlockMap extends AbstractTextBlock implements WithPorts {
 				key = key.substring(1);
 			this.keys.add(key);
 			final String value = ent.getValue();
-			final TextBlock block1 = getTextBlock(key);
-			final TextBlock block2 = getTextBlock(value);
+			final TextBlock block1 = getTextBlock(key, wordWrap);
+			final TextBlock block2 = getTextBlock(value, wordWrap);
 			this.blocksMap.put(block1, block2);
 		}
 	}
@@ -117,9 +116,9 @@ public class TextBlockMap extends AbstractTextBlock implements WithPorts {
 
 	private double getMaxWidth(StringBounder stringBounder, Collection<TextBlock> blocks) {
 		double width = 0;
-		for (TextBlock block : blocks) {
+		for (TextBlock block : blocks)
 			width = Math.max(width, block.calculateDimension(stringBounder).getWidth());
-		}
+
 		return width;
 	}
 
@@ -137,10 +136,6 @@ public class TextBlockMap extends AbstractTextBlock implements WithPorts {
 			ugline.draw(ULine.hline(trueWidth));
 			final double heightOfRow = getHeightOfRow(stringBounder, key, value);
 			if (value instanceof Point) {
-//				final Dimension2D dimPoint = value.calculateDimension(stringBounder);
-//				final double xp = widthColA + (widthColB - dimPoint.getWidth()) / 2;
-//				final double yp = (heightOfRow - dimPoint.getHeight()) / 2;
-//				value.drawU(ugline.apply(new UTranslate(xp, yp)));
 				final double posColA = (trueWidth - key.calculateDimension(stringBounder).getWidth()) / 2;
 				key.drawU(ugline.apply(UTranslate.dx(posColA)));
 			} else {
@@ -151,7 +146,6 @@ public class TextBlockMap extends AbstractTextBlock implements WithPorts {
 			}
 			y += heightOfRow;
 		}
-		// ug.apply(UTranslate.dx(widthColA)).draw(ULine.vline(fullDim.getHeight()));
 	}
 
 	private double getTotalHeight(StringBounder stringBounder) {
@@ -169,12 +163,13 @@ public class TextBlockMap extends AbstractTextBlock implements WithPorts {
 				value.calculateDimension(stringBounder).getHeight());
 	}
 
-	private TextBlock getTextBlock(String key) {
-		if (key.equals("\0")) {
-			return new Point(getFontConfiguration().getColor());
-		}
+	private TextBlock getTextBlock(String key, LineBreakStrategy wordWrap) {
+		if (key.equals("\0"))
+			return new Point(fontConfiguration.getColor());
+
 		final Display display = Display.getWithNewlines(key);
-		TextBlock result = display.create(getFontConfiguration(), HorizontalAlignment.LEFT, skinParam);
+		TextBlock result = display.create0(fontConfiguration, HorizontalAlignment.LEFT, skinParam, wordWrap,
+				CreoleMode.FULL, null, null);
 		result = TextBlockUtils.withMargin(result, 5, 2);
 		return result;
 	}
@@ -201,12 +196,6 @@ public class TextBlockMap extends AbstractTextBlock implements WithPorts {
 			return 7;
 		}
 
-	}
-
-	private FontConfiguration getFontConfiguration() {
-		if (fontConfiguration == null)
-			return FontConfiguration.create(skinParam, fontParam, null);
-		return fontConfiguration;
 	}
 
 	public void setTotalWidth(double totalWidth) {

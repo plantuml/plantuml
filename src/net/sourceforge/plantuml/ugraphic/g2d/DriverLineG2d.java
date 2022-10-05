@@ -69,7 +69,10 @@ public class DriverLineG2d extends DriverShadowedG2d implements UDriver<ULine, G
 	}
 
 	static void manageStroke(UParam param, Graphics2D g2d) {
-		final UStroke stroke = param.getStroke();
+		manageStroke(param.getStroke(), g2d);
+	}
+
+	static void manageStroke(UStroke stroke, Graphics2D g2d) {
 		final float thickness = (float) stroke.getThickness();
 		if (stroke.getDashVisible() == 0) {
 			g2d.setStroke(new BasicStroke(thickness));

@@ -102,7 +102,7 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 				new RegexConcat(
 						//
 						new RegexLeaf("ARROW_HEAD1",
-								"([%s]+[ox]|[)#\\[<*+^}]|\\<_|\\<\\|[\\:\\|]|[<\\[]\\||\\}o|\\}\\||\\|o|\\|\\|)?"), //
+								"((?<=[%s])+[ox]|[)#\\[<*+^}]|\\<_|\\<\\|[\\:\\|]|[<\\[]\\||\\}o|\\}\\||\\|o|\\|\\|)?"), //
 						new RegexLeaf("ARROW_BODY1", "([-=.]+)"), //
 						new RegexLeaf("ARROW_STYLE1", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
 						new RegexLeaf("ARROW_DIRECTION", "(left|right|up|down|le?|ri?|up?|do?)?"), //
@@ -237,7 +237,7 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 
 		final LinkArg linkArg = LinkArg
 				.build(labels.getDisplay(), queue, diagram.getSkinParam().classAttributeIconSize() > 0)
-				.withQualifier(labels.getFirstLabel(), labels.getSecondLabel())
+				.withQuantifier(labels.getFirstLabel(), labels.getSecondLabel())
 				.withDistanceAngle(diagram.getLabeldistance(), diagram.getLabelangle()).withKal(kal1, kal2);
 
 		Link link = new Link(diagram.getSkinParam().getCurrentStyleBuilder(), cl1, cl2, linkType, linkArg);
@@ -379,7 +379,7 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		final String secondLabel = arg.get("SECOND_LABEL", 0);
 		final LinkArg linkArg = LinkArg.build(labelLink, queue, diagram.getSkinParam().classAttributeIconSize() > 0);
 		final Link link = new Link(diagram.getSkinParam().getCurrentStyleBuilder(), cl1, cl2, linkType,
-				linkArg.withQualifier(firstLabel, secondLabel).withDistanceAngle(diagram.getLabeldistance(),
+				linkArg.withQuantifier(firstLabel, secondLabel).withDistanceAngle(diagram.getLabeldistance(),
 						diagram.getLabelangle()));
 		link.setColors(color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet()));
 

@@ -97,12 +97,12 @@ class RealLine {
 				for (AbstractReal real : all) {
 					final double v = real.getCurrentValue();
 					// System.err.println("RealLine::compile v=" + v);
-					if (v > max) {
+					if (v > max)
 						max = v;
-					}
-					if (v < min) {
+
+					if (v < min)
 						min = v;
-					}
+
 				}
 				// System.err.println("RealLine::compile min=" + min + " max=" + max);
 				return;
@@ -117,12 +117,12 @@ class RealLine {
 	}
 
 	private void printCounter(Map<PositiveForce, Integer> counter) {
-		for (PositiveForce f : forces) {
+		for (PositiveForce f : forces)
 			System.err.println("force=" + f);
-		}
-		for (Map.Entry<PositiveForce, Integer> ent : counter.entrySet()) {
+
+		for (Map.Entry<PositiveForce, Integer> ent : counter.entrySet())
 			System.err.println("count=" + ent.getValue() + " for " + ent.getKey());
-		}
+
 	}
 
 	private static void incCounter(Map<PositiveForce, Integer> counter, PositiveForce f) {

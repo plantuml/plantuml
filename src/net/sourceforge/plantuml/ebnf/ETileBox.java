@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.ebnf;
 
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
-import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.style.PName;
@@ -49,7 +48,7 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 
-public class ETileBox extends AbstractTextBlock implements ETile {
+public class ETileBox extends ETile {
 
 	private final String value;
 	private final FontConfiguration fc;
@@ -68,8 +67,19 @@ public class ETileBox extends AbstractTextBlock implements ETile {
 	}
 
 	@Override
-	public XDimension2D calculateDimension(StringBounder stringBounder) {
-		return XDimension2D.delta(getTextDim(stringBounder), 10);
+	public double getH1(StringBounder stringBounder) {
+		final double height = getTextDim(stringBounder).getHeight() + 10;
+		return height / 2;
+	}
+
+	@Override
+	public double getH2(StringBounder stringBounder) {
+		return getH1(stringBounder);
+	}
+
+	@Override
+	public double getWidth(StringBounder stringBounder) {
+		return getTextDim(stringBounder).getWidth() + 10;
 	}
 
 	private XDimension2D getTextDim(StringBounder stringBounder) {
@@ -92,12 +102,6 @@ public class ETileBox extends AbstractTextBlock implements ETile {
 		}
 
 		ug.apply(new UTranslate(5, 5 + dimText.getHeight() - utext.getDescent(ug.getStringBounder()))).draw(utext);
-	}
-
-	@Override
-	public double linePos(StringBounder stringBounder) {
-		final double height = calculateDimension(stringBounder).getHeight();
-		return height / 2;
 	}
 
 	@Override

@@ -262,7 +262,7 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 		final LinkArg linkArg = LinkArg.build(Display.getWithNewlines(labels.getLabelLink()), queue.length(),
 				diagram.getSkinParam().classAttributeIconSize() > 0);
 		Link link = new Link(diagram.getSkinParam().getCurrentStyleBuilder(), cl1, cl2, linkType,
-				linkArg.withQualifier(labels.getFirstLabel(), labels.getSecondLabel())
+				linkArg.withQuantifier(labels.getFirstLabel(), labels.getSecondLabel())
 						.withDistanceAngle(diagram.getLabeldistance(), diagram.getLabelangle()));
 		link.setLinkArrow(labels.getLinkArrow());
 		if (dir == Direction.LEFT || dir == Direction.UP)

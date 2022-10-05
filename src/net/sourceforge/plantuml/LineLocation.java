@@ -48,8 +48,8 @@ public interface LineLocation extends Comparable<LineLocation> {
 	public int getPosition();
 	
 	/**
-	 * A description of the ressource.
-	 * If the ressource is a file, this is the complete path of the file.
+	 * A description of the resource.
+	 * If the resource is a file, this is the complete path of the file.
 	 */
 	public String getDescription();
 	

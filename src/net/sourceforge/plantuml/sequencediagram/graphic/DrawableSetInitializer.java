@@ -385,7 +385,7 @@ class DrawableSetInitializer {
 				freeY2 = ((FrontierStack) freeY2).restore();
 
 			final Component compElse = drawableSet.getSkin().createComponent(m.getUsedStyles(),
-					ComponentType.GROUPING_ELSE, null, skinParam, Display.create(m.getComment()));
+					ComponentType.GROUPING_ELSE_LEGACY, null, skinParam, Display.create(m.getComment()));
 			final Lazy lazy = new Lazy() {
 				public double getNow() {
 					final GraphicalElement after = drawableSet.getEvent(m.getJustAfter());

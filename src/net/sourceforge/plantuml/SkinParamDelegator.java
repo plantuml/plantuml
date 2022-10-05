@@ -234,7 +234,7 @@ public class SkinParamDelegator implements ISkinParam {
 	}
 
 	@Override
-	public boolean useUnderlineForHyperlink() {
+	public UStroke useUnderlineForHyperlink() {
 		return skinParam.useUnderlineForHyperlink();
 	}
 

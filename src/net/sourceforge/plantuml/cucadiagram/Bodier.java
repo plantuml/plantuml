@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.cucadiagram;
 
 import java.util.List;
 
-import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -54,8 +53,8 @@ public interface Bodier {
 
 	public boolean addFieldOrMethod(String s) throws NoSuchColorException;
 
-	public TextBlock getBody(FontParam fontParam, ISkinParam skinParam, boolean showMethods, boolean showFields,
-			Stereotype stereotype, Style style, FontConfiguration fontConfiguration);
+	public TextBlock getBody(ISkinParam skinParam, boolean showMethods, boolean showFields, Stereotype stereotype,
+			Style style, FontConfiguration fontConfiguration);
 
 	public List<CharSequence> getRawBody();
 

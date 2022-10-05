@@ -65,9 +65,9 @@ public class UStroke implements UChange {
 	}
 
 	private UStroke applyThickness(UStroke thickness) {
-		if (thickness == null) {
+		if (thickness == null)
 			return this;
-		}
+
 		return new UStroke(dashVisible, dashSpace, thickness.thickness);
 	}
 
@@ -84,9 +84,9 @@ public class UStroke implements UChange {
 	}
 
 	public String getDasharraySvg() {
-		if (dashVisible == 0) {
+		if (dashVisible == 0)
 			return null;
-		}
+
 		return "" + dashVisible + "," + dashSpace;
 	}
 

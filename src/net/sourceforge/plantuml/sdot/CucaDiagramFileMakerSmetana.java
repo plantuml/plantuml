@@ -155,8 +155,8 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 					continue;
 
 				final ST_Agedge_s edge = ent.getValue();
-				new SmetanaPath(link, edge, ymirror, diagram, getLabel(link), getQualifier(link, 1),
-						getQualifier(link, 2)).drawU(ug);
+				new SmetanaPath(link, edge, ymirror, diagram, getLabel(link), getQuantifier(link, 1),
+						getQuantifier(link, 2)).drawU(ug);
 			}
 		}
 
@@ -447,8 +447,8 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 		return TextBlockUtils.withMargin(label, marginLabel, marginLabel);
 	}
 
-	private TextBlock getQualifier(Link link, int n) {
-		final String tmp = n == 1 ? link.getQualifier1() : link.getQualifier2();
+	private TextBlock getQuantifier(Link link, int n) {
+		final String tmp = n == 1 ? link.getQuantifier1() : link.getQuantifier2();
 		if (tmp == null)
 			return null;
 
@@ -514,7 +514,7 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 			agsafeset(e, new CString("label"), hackDim, new CString(""));
 			// System.err.print("label=" + hackDim.getContent());
 		}
-		final TextBlock q1 = getQualifier(link, 1);
+		final TextBlock q1 = getQuantifier(link, 1);
 		if (q1 != null) {
 			final XDimension2D dimLabel = q1.calculateDimension(stringBounder);
 			// System.err.println("dimLabel = " + dimLabel);
@@ -522,7 +522,7 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 					(int) dimLabel.getHeight());
 			agsafeset(e, new CString("taillabel"), hackDim, new CString(""));
 		}
-		final TextBlock q2 = getQualifier(link, 2);
+		final TextBlock q2 = getQuantifier(link, 2);
 		if (q2 != null) {
 			final XDimension2D dimLabel = q2.calculateDimension(stringBounder);
 			// System.err.println("dimLabel = " + dimLabel);

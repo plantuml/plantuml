@@ -73,16 +73,16 @@ public final class LinkHtmlPrinter {
 		String label = link.getLabel() == null ? null : StringUtils.unicodeForHtml(link.getLabel());
 		String ent1 = ent1h;
 		String ent2 = ent2h;
-		if (link.getQualifier1() != null) {
-			ent1 = ent1 + " (" + link.getQualifier1() + ")";
+		if (link.getQuantifier1() != null) {
+			ent1 = ent1 + " (" + link.getQuantifier1() + ")";
 			if (label != null) {
-				label = "(" + link.getQualifier1() + " " + ent1h + ") " + label;
+				label = "(" + link.getQuantifier1() + " " + ent1h + ") " + label;
 			}
 		}
-		if (link.getQualifier2() != null) {
-			ent2 = ent2 + " (" + link.getQualifier2() + ")";
+		if (link.getQuantifier2() != null) {
+			ent2 = ent2 + " (" + link.getQuantifier2() + ")";
 			if (label != null) {
-				label = label + " (" + link.getQualifier2() + " " + ent2h + ")";
+				label = label + " (" + link.getQuantifier2() + " " + ent2h + ")";
 			}
 		}
 		if (chiral) {

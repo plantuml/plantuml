@@ -40,6 +40,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.plantuml.AnnotatedBuilder;
 import net.sourceforge.plantuml.AnnotatedWorker;
 import net.sourceforge.plantuml.BaseFile;
 import net.sourceforge.plantuml.FileFormatOption;
@@ -104,7 +105,8 @@ public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 		// TODO There is something strange with the left margin of mainframe, I think
 		// because AnnotatedWorker is used here
 		// It can be looked at in another PR
-		result = new AnnotatedWorker(diagram, diagram.getSkinParam(), stringBounder).addAdd(result);
+		final AnnotatedBuilder builder = new AnnotatedBuilder(diagram, diagram.getSkinParam(), stringBounder);
+		result = new AnnotatedWorker(diagram, diagram.getSkinParam(), stringBounder, builder).addAdd(result);
 
 		// TODO UmlDiagram.getWarningOrError() looks similar so this might be
 		// simplified? - will leave for a separate PR

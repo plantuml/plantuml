@@ -33,36 +33,43 @@
  * 
  *
  */
-package net.sourceforge.plantuml.project.command;
+package net.sourceforge.plantuml.ebnf;
 
-import net.sourceforge.plantuml.LineLocation;
+import net.sourceforge.plantuml.StringLocated;
+import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.CommandMultilines2;
+import net.sourceforge.plantuml.command.MultilinesStrategy;
+import net.sourceforge.plantuml.command.Trim;
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
-import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.project.GanttDiagram;
+import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
-public class CommandHideRessourceName extends SingleLineCommand2<GanttDiagram> {
+public class CommandEbnfMultiline extends CommandMultilines2<PSystemEbnf> {
 
-	public CommandHideRessourceName() {
-		super(getRegexConcat());
+	public CommandEbnfMultiline() {
+		super(getRegexConcat(), MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH);
 	}
 
 	static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandHideRessourceName.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("hide"), //
-				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("ressources?"), //
-				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("names?"), //
-				RegexLeaf.end()); //
+		return RegexConcat.build(CommandEbnfMultiline.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("LINE", "(\\w[-\\w]*[%s]*=.*)"), //
+				RegexLeaf.end());
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg) {
-		return diagram.hideRessourceName();
+	public String getPatternEnd() {
+		return "^(.*);$";
+	}
+
+	@Override
+	protected CommandExecutionResult executeNow(PSystemEbnf diagram, BlocLines lines) throws NoSuchColorException {
+		for (StringLocated s : lines)
+			diagram.addLine(s.getString());
+
+		return CommandExecutionResult.ok();
+
 	}
 
 }

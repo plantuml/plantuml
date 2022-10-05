@@ -925,8 +925,10 @@ public class SkinParam implements ISkinParam {
 		return htmlColorSet;
 	}
 
-	public boolean useUnderlineForHyperlink() {
-		return !valueIs("hyperlinkunderline", "false");
+	public UStroke useUnderlineForHyperlink() {
+		if (valueIs("hyperlinkunderline", "false") == false)
+			return new UStroke();
+		return null;
 	}
 
 	public int groupInheritance() {

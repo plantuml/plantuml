@@ -213,10 +213,10 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 	public SvekLine(Link link, ColorSequence colorSequence, ISkinParam skinParam, StringBounder stringBounder,
 			FontConfiguration font, Bibliotekon bibliotekon, Pragma pragma, GraphvizVersion graphvizVersion) {
 
-		if (graphvizVersion.useShieldForQuantifier() && link.getLinkArg().getQualifier1() != null)
+		if (graphvizVersion.useShieldForQuantifier() && link.getLinkArg().getQuantifier1() != null)
 			((EntityImpl) link.getEntity1()).ensureMargins(Margins.uniform(16));
 
-		if (graphvizVersion.useShieldForQuantifier() && link.getLinkArg().getQualifier2() != null)
+		if (graphvizVersion.useShieldForQuantifier() && link.getLinkArg().getQuantifier2() != null)
 			((EntityImpl) link.getEntity2()).ensureMargins(Margins.uniform(16));
 
 		if (link.getLinkArg().getKal1() != null)
@@ -306,16 +306,16 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 
 		}
 
-		if (link.getQualifier1() == null)
+		if (link.getQuantifier1() == null)
 			startTailText = null;
 		else
-			startTailText = Display.getWithNewlines(link.getQualifier1()).create(font, HorizontalAlignment.CENTER,
+			startTailText = Display.getWithNewlines(link.getQuantifier1()).create(font, HorizontalAlignment.CENTER,
 					skinParam);
 
-		if (link.getQualifier2() == null)
+		if (link.getQuantifier2() == null)
 			endHeadText = null;
 		else
-			endHeadText = Display.getWithNewlines(link.getQualifier2()).create(font, HorizontalAlignment.CENTER,
+			endHeadText = Display.getWithNewlines(link.getQuantifier2()).create(font, HorizontalAlignment.CENTER,
 					skinParam);
 
 		if (link.getType().getMiddleDecor() == LinkMiddleDecor.NONE)
@@ -783,11 +783,11 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 	public void computeKal() {
 		if (kal1 != null) {
 			final UTranslate tr = new UTranslate(dotPath.getStartPoint()).compose(new UTranslate(dx, dy));
-			kal1.setTranslate(tr);
+			kal1.setTranslate(tr, extremity1);
 		}
 		if (kal2 != null) {
 			final UTranslate tr = new UTranslate(dotPath.getEndPoint()).compose(new UTranslate(dx, dy));
-			kal2.setTranslate(tr);
+			kal2.setTranslate(tr, extremity2);
 		}
 	}
 

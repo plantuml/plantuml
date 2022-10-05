@@ -42,7 +42,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.plantuml.AnnotatedWorker;
+import net.sourceforge.plantuml.AnnotatedBuilder;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
@@ -136,11 +136,15 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 	public ImageData createOne(OutputStream os, final int index, boolean isWithMetadata) throws IOException {
 
 		final Page page = pages.get(index);
-		final SequenceDiagramArea area = new SequenceDiagramArea(fullDimension.getWidth(), page.getHeight());
+		final AnnotatedBuilder builder = new AnnotatedBuilder(diagram, diagram.getSkinParam(), stringBounder);
+		double pageHeight = page.getHeight();
+		if (builder.hasMainFrame())
+			pageHeight += builder.mainFrameSuppHeight();
+
+		final SequenceDiagramArea area = new SequenceDiagramArea(fullDimension.getWidth(), pageHeight);
 
 		final TextBlock compTitle;
-		final AnnotatedWorker annotatedWorker = new AnnotatedWorker(diagram, diagram.getSkinParam(), stringBounder);
-		final TextBlock caption = annotatedWorker.getCaption();
+		final TextBlock caption = builder.getCaption();
 		area.setCaptionArea(caption.calculateDimension(stringBounder));
 
 		if (Display.isNull(page.getTitle())) {
@@ -190,7 +194,7 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 						area.getSequenceAreaY());
 				TextBlock core = drawableSet.asTextBlock(delta, fullDimension.getWidth(), page,
 						diagram.isShowFootbox());
-				core = annotatedWorker.addFrame(core);
+				core = builder.decoreWithFrame(core);
 				core.drawU(ug.apply(forCore));
 
 				drawHeader(area, ug, index);

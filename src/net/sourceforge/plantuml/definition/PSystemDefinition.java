@@ -73,7 +73,7 @@ public class PSystemDefinition extends PlainDiagram implements UDrawable {
 
 	public void drawU(UGraphic ug) {
 		final UFont font = UFont.sansSerif(14);
-		final FontConfiguration fc = FontConfiguration.create(font, HColors.BLACK, HColors.BLACK, false);
+		final FontConfiguration fc = FontConfiguration.create(font, HColors.BLACK, HColors.BLACK, null);
 		Display.getWithNewlines(startLine).create(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty()).drawU(ug);
 	}
 

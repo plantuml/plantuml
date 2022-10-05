@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.ugraphic.PixelImage;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImage;
+import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColors;
@@ -63,7 +64,7 @@ public class GraphicStrings extends AbstractTextBlock implements IEntityImage {
 
 	private final static HColor hyperlinkColor = HColors.BLUE;
 
-	private final static boolean useUnderlineForHyperlink = true;
+	private final static UStroke useUnderlineForHyperlink = new UStroke();
 
 	private final List<String> strings;
 
@@ -99,13 +100,11 @@ public class GraphicStrings extends AbstractTextBlock implements IEntityImage {
 	}
 
 	public static TextBlockBackcolored createBlackOnWhite(List<String> strings) {
-		return new GraphicStrings(strings, sansSerif12(HColors.BLACK), HColors.WHITE, null, null,
-				CreoleMode.FULL);
+		return new GraphicStrings(strings, sansSerif12(HColors.BLACK), HColors.WHITE, null, null, CreoleMode.FULL);
 	}
 
 	public static TextBlockBackcolored createBlackOnWhiteMonospaced(List<String> strings) {
-		return new GraphicStrings(strings, monospaced14(HColors.BLACK), HColors.WHITE, null, null,
-				CreoleMode.FULL);
+		return new GraphicStrings(strings, monospaced14(HColors.BLACK), HColors.WHITE, null, null, CreoleMode.FULL);
 	}
 
 	public static TextBlockBackcolored createBlackOnWhite(List<String> strings, BufferedImage image,

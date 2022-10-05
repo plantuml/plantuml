@@ -73,9 +73,9 @@ public class DriverTextAsPathG2d implements UDriver<UText, Graphics2D> {
 		final GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		final String fontNames[] = ge.getAvailableFontFamilyNames();
 		final int j = fontNames.length;
-		for (int i = 0; i < j; i++) {
+		for (int i = 0; i < j; i++)
 			Log.info("Available fonts: " + fontNames[i]);
-		}
+
 	}
 
 	public void draw(UText shape, double x, double y, ColorMapper mapper, UParam param, Graphics2D g2d) {
@@ -85,7 +85,7 @@ public class DriverTextAsPathG2d implements UDriver<UText, Graphics2D> {
 		final XDimension2D dim = stringBounder.calculateDimension(font, shape.getText());
 		final double height = max(10, dim.getHeight());
 		final double width = dim.getWidth();
-		
+
 		if (fontConfiguration.containsStyle(FontStyle.BACKCOLOR)) {
 			final Color extended = fontConfiguration.getExtendedColor().toColor(mapper);
 			if (extended != null) {
@@ -106,9 +106,9 @@ public class DriverTextAsPathG2d implements UDriver<UText, Graphics2D> {
 
 		if (fontConfiguration.containsStyle(FontStyle.UNDERLINE)) {
 			final HColor extended = fontConfiguration.getExtendedColor();
-			if (extended != null) {
+			if (extended != null)
 				g2d.setColor(extended.toColor(mapper));
-			}
+
 			final int ypos = (int) (y + 2.5);
 			g2d.setStroke(new BasicStroke((float) 1));
 			g2d.drawLine((int) x, ypos, (int) (x + width), ypos);
@@ -117,9 +117,9 @@ public class DriverTextAsPathG2d implements UDriver<UText, Graphics2D> {
 		if (fontConfiguration.containsStyle(FontStyle.WAVE)) {
 			final int ypos = (int) (y + 2.5) - 1;
 			final HColor extended = fontConfiguration.getExtendedColor();
-			if (extended != null) {
+			if (extended != null)
 				g2d.setColor(extended.toColor(mapper));
-			}
+
 			for (int i = (int) x; i < x + width - 5; i += 6) {
 				g2d.drawLine(i, ypos - 0, i + 3, ypos + 1);
 				g2d.drawLine(i + 3, ypos + 1, i + 6, ypos - 0);
@@ -129,9 +129,9 @@ public class DriverTextAsPathG2d implements UDriver<UText, Graphics2D> {
 			final FontMetrics fm = g2d.getFontMetrics(font.getUnderlayingFont());
 			final int ypos = (int) (y - fm.getDescent() - 0.5);
 			final HColor extended = fontConfiguration.getExtendedColor();
-			if (extended != null) {
+			if (extended != null)
 				g2d.setColor(extended.toColor(mapper));
-			}
+
 			g2d.setStroke(new BasicStroke((float) 1.5));
 			g2d.drawLine((int) x, ypos, (int) (x + width), ypos);
 			g2d.setStroke(new BasicStroke());

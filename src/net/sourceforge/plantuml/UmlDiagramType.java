@@ -42,54 +42,57 @@ public enum UmlDiagramType {
 	HELP, GANTT, SALT, JSON, GIT, BOARD, YAML, HCL, EBNF;
 
 	public SName getStyleName() {
-		if (this == SEQUENCE) {
+		if (this == SEQUENCE) 
 			return SName.sequenceDiagram;
-		}
-		if (this == STATE) {
+		
+		if (this == STATE) 
 			return SName.stateDiagram;
-		}
-		if (this == CLASS) {
+		
+		if (this == CLASS) 
 			return SName.classDiagram;
-		}
-		if (this == OBJECT) {
+		
+		if (this == OBJECT) 
 			return SName.objectDiagram;
-		}
-		if (this == ACTIVITY) {
+		
+		if (this == ACTIVITY) 
 			return SName.activityDiagram;
-		}
-		if (this == DESCRIPTION) {
+		
+		if (this == DESCRIPTION) 
 			return SName.componentDiagram;
-		}
-		if (this == COMPOSITE) {
+		
+		if (this == COMPOSITE) 
 			return SName.componentDiagram;
-		}
-		if (this == MINDMAP) {
+		
+		if (this == MINDMAP) 
 			return SName.mindmapDiagram;
-		}
-		if (this == WBS) {
+		
+		if (this == WBS) 
 			return SName.wbsDiagram;
-		}
-		if (this == GANTT) {
+		
+		if (this == GANTT) 
 			return SName.ganttDiagram;
-		}
-		if (this == SALT) {
+		
+		if (this == SALT) 
 			return SName.saltDiagram;
-		}
-		if (this == YAML) {
+		
+		if (this == YAML) 
 			return SName.yamlDiagram;
-		}
-		if (this == HCL) {
+		
+		if (this == HCL) 
 			return SName.yamlDiagram;
-		}
-		if (this == JSON) {
+		
+		if (this == JSON) 
 			return SName.jsonDiagram;
-		}
-		if (this == TIMING) {
+		
+		if (this == TIMING) 
 			return SName.timingDiagram;
-		}
-		if (this == NWDIAG) {
+		
+		if (this == NWDIAG) 
 			return SName.nwdiagDiagram;
-		}
+		
+		if (this == EBNF) 
+			return SName.ebnf;
+		
 		return SName.activityDiagram;
 	}
 }

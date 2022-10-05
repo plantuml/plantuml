@@ -176,8 +176,8 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 		return label;
 	}
 
-	private TextBlock getQualifier(Link link, int n) {
-		final String tmp = n == 1 ? link.getQualifier1() : link.getQualifier2();
+	private TextBlock getQuantifier(Link link, int n) {
+		final String tmp = n == 1 ? link.getQuantifier1() : link.getQuantifier2();
 		if (tmp == null)
 			return null;
 
@@ -323,7 +323,7 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 
 			}
 			final ElkPath elkPath = new ElkPath(diagram, SName.classDiagram, link, edge, getLabel(link),
-					getQualifier(link, 1), getQualifier(link, 2), magicY2);
+					getQuantifier(link, 1), getQuantifier(link, 2), magicY2);
 			elkPath.drawU(ug.apply(new UTranslate(translate)));
 		}
 
@@ -497,9 +497,9 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 			edge.setProperty(CoreOptions.EDGE_LABELS_INLINE, true);
 			// edge.setProperty(CoreOptions.EDGE_TYPE, EdgeType.ASSOCIATION);
 		}
-		if (link.getQualifier1() != null) {
+		if (link.getQuantifier1() != null) {
 			final ElkLabel edgeLabel = ElkGraphUtil.createLabel(edge);
-			final XDimension2D dim = getQualifier(link, 1).calculateDimension(stringBounder);
+			final XDimension2D dim = getQuantifier(link, 1).calculateDimension(stringBounder);
 			// Nasty trick, we store the kind of label in the text
 			edgeLabel.setText("1");
 			edgeLabel.setDimensions(dim.getWidth(), dim.getHeight());
@@ -508,9 +508,9 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 			edge.setProperty(CoreOptions.EDGE_LABELS_INLINE, true);
 			// edge.setProperty(CoreOptions.EDGE_TYPE, EdgeType.ASSOCIATION);
 		}
-		if (link.getQualifier2() != null) {
+		if (link.getQuantifier2() != null) {
 			final ElkLabel edgeLabel = ElkGraphUtil.createLabel(edge);
-			final XDimension2D dim = getQualifier(link, 2).calculateDimension(stringBounder);
+			final XDimension2D dim = getQuantifier(link, 2).calculateDimension(stringBounder);
 			// Nasty trick, we store the kind of label in the text
 			edgeLabel.setText("2");
 			edgeLabel.setDimensions(dim.getWidth(), dim.getHeight());

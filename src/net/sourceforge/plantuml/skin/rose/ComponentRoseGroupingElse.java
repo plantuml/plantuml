@@ -59,10 +59,12 @@ public class ComponentRoseGroupingElse extends AbstractTextualComponent {
 	private final HColor groupBorder;
 	private final HColor backgroundColor;
 	private final double roundCorner;
+	private final boolean teoz;
 
-	public ComponentRoseGroupingElse(Style style, CharSequence comment, ISkinSimple spriteContainer) {
+	public ComponentRoseGroupingElse(boolean teoz, Style style, CharSequence comment, ISkinSimple spriteContainer) {
 		super(style, LineBreakStrategy.NONE, 5, 5, 1, spriteContainer, comment == null ? null : "[" + comment + "]");
 
+		this.teoz = teoz;
 		this.roundCorner = style.value(PName.RoundCorner).asInt();
 		this.groupBorder = style.value(PName.LineColor).asColor(getIHtmlColorSet());
 		this.backgroundColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
@@ -103,12 +105,18 @@ public class ComponentRoseGroupingElse extends AbstractTextualComponent {
 		ug = ArrowConfiguration.stroke(ug, 2, 2, 1).apply(groupBorder);
 		ug.apply(UTranslate.dy(1)).draw(ULine.hline(dimensionToUse.getWidth()));
 		ug = ug.apply(new UStroke());
-		getTextBlock().drawU(ug.apply(new UTranslate(getMarginX1(), getMarginY())));
+		if (teoz)
+			getTextBlock().drawU(ug.apply(new UTranslate(getMarginX1(), getMarginY() + 2)));
+		else
+			getTextBlock().drawU(ug.apply(new UTranslate(getMarginX1(), getMarginY())));
 	}
 
 	@Override
 	public double getPreferredHeight(StringBounder stringBounder) {
-		return getTextHeight(stringBounder);
+		if (teoz)
+			return getTextHeight(stringBounder) + 16;
+		else
+			return getTextHeight(stringBounder);
 	}
 
 	@Override

@@ -39,18 +39,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
-import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.style.SName;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.ugraphic.color.HColors;
 
-public class ETileAlternation extends AbstractTextBlock implements ETile {
+public class ETileAlternation extends ETile {
 
 	private final List<ETile> tiles = new ArrayList<>();
 	private final double marginx = 12;
+	private boolean inZeroOrMore;
 
 	@Override
 	public void push(ETile tile) {
@@ -58,14 +55,37 @@ public class ETileAlternation extends AbstractTextBlock implements ETile {
 	}
 
 	@Override
-	public double linePos(StringBounder stringBounder) {
-		return tiles.get(0).linePos(stringBounder);
+	public double getH1(StringBounder stringBounder) {
+		return tiles.get(0).getH1(stringBounder);
+	}
+
+	@Override
+	public double getH2(StringBounder stringBounder) {
+		double height = tiles.get(0).getH2(stringBounder);
+		for (int i = 1; i < tiles.size(); i++) {
+			final ETile tile = tiles.get(i);
+			height += tile.getH1(stringBounder);
+			height += tile.getH2(stringBounder);
+			height += 10;
+		}
+		return height;
+	}
+
+	@Override
+	public double getWidth(StringBounder stringBounder) {
+		double width = 0;
+		for (ETile tile : tiles) {
+			final XDimension2D dim = tile.calculateDimension(stringBounder);
+			width = Math.max(width, dim.getWidth());
+		}
+		width += 2 * 2 * marginx;
+		return width;
 	}
 
 	@Override
 	public void drawU(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
-		ug = ug.apply(HColors.BLACK);
+
 		double y = 0;
 		double lastLinePos = 0;
 
@@ -79,53 +99,65 @@ public class ETileAlternation extends AbstractTextBlock implements ETile {
 		final double q = r - marginx;
 		final double p = q - marginx;
 
-		for (int i = 0; i < tiles.size(); i++) {
-			final ETile tile = tiles.get(i);
-			final XDimension2D dim = tile.calculateDimension(stringBounder);
-			lastLinePos = y + tile.linePos(stringBounder);
-			tile.drawU(ug.apply(new UTranslate(c, y)));
+		final double linePos = getH1(stringBounder);
 
-			if (i == 0) {
-				ETileConcatenation.drawHline(ug, lastLinePos, a, c);
-				ETileConcatenation.drawHline(ug, lastLinePos, c + dim.getWidth(), r);
-			} else if (i > 0 && i < tiles.size() - 1) {
+		if (inZeroOrMore) {
+			for (int i = 0; i < tiles.size(); i++) {
+				final ETile tile = tiles.get(i);
+				final XDimension2D dim = tile.calculateDimension(stringBounder);
+				lastLinePos = y + tile.getH1(stringBounder);
+				tile.drawU(ug.apply(new UTranslate(c, y)));
+
 				CornerCurved.createSW(marginx).drawU(ug.apply(new UTranslate(b, lastLinePos)));
-				ETileConcatenation.drawHline(ug, lastLinePos, c + dim.getWidth(), p);
+				drawHlineDirected(ug, lastLinePos, c + dim.getWidth(), p, 0.3);
 				CornerCurved.createSE(marginx).drawU(ug.apply(new UTranslate(q, lastLinePos)));
-			} else if (i == tiles.size() - 1) {
-				ETileConcatenation.drawHline(ug, lastLinePos, c + dim.getWidth(), p);
+
+				y += dim.getHeight() + 10;
 
 			}
-			y += dim.getHeight() + 10;
+			drawVline(ug, b, 0, lastLinePos - marginx);
+			drawVline(ug, q, 0, lastLinePos - marginx);
+
+		} else {
+			for (int i = 0; i < tiles.size(); i++) {
+				final ETile tile = tiles.get(i);
+				final XDimension2D dim = tile.calculateDimension(stringBounder);
+				lastLinePos = y + tile.getH1(stringBounder);
+				tile.drawU(ug.apply(new UTranslate(c, y)));
+
+				if (i == 0) {
+					drawHline(ug, lastLinePos, a, c);
+					drawHline(ug, lastLinePos, c + dim.getWidth(), r);
+				} else if (i > 0 && i < tiles.size() - 1) {
+					CornerCurved.createSW(marginx).drawU(ug.apply(new UTranslate(b, lastLinePos)));
+					drawHlineDirected(ug, lastLinePos, c + dim.getWidth(), p, 0.5);
+					CornerCurved.createSE(marginx).drawU(ug.apply(new UTranslate(q, lastLinePos)));
+				} else if (i == tiles.size() - 1) {
+					drawHlineDirected(ug, lastLinePos, c + dim.getWidth(), p, 0.5);
+
+				}
+				y += dim.getHeight() + 10;
+			}
+
+			final double height42 = lastLinePos - linePos;
+			final UGraphic ug_b = ug.apply(new UTranslate(b, linePos));
+			final UGraphic ug_q = ug.apply(new UTranslate(q, linePos));
+
+			CornerCurved.createSW(marginx).drawU(ug_b.apply(UTranslate.dy(height42)));
+			drawVline(ug_b, 0, marginx, height42 - marginx);
+			CornerCurved.createNE(marginx).drawU(ug_b);
+
+			CornerCurved.createSE(marginx).drawU(ug_q.apply(UTranslate.dy(height42)));
+			drawVline(ug_q, 0, marginx, height42 - marginx);
+			CornerCurved.createNW(marginx).drawU(ug_q);
+
 		}
-		final double linePos = linePos(stringBounder);
-
-		final VLineCurved hlineIn = new VLineCurved(lastLinePos - linePos, marginx, CornerCurved.createNE(marginx),
-				CornerCurved.createSW(marginx));
-		hlineIn.drawU(ug.apply(new UTranslate(b, linePos)));
-
-		final VLineCurved hlineOut = new VLineCurved(lastLinePos - linePos, marginx, CornerCurved.createNW(marginx),
-				CornerCurved.createSE(marginx));
-		hlineOut.drawU(ug.apply(new UTranslate(q, linePos)));
 
 	}
 
-	@Override
-	public XDimension2D calculateDimension(StringBounder stringBounder) {
-		double width = 0;
-		double height = 0;
-		for (ETile tile : tiles) {
-			final XDimension2D dim = tile.calculateDimension(stringBounder);
-			height += dim.getHeight();
-			height += 10;
-			width = Math.max(width, dim.getWidth());
-		}
-		width += 2 * 2 * marginx;
-		return new XDimension2D(width, height);
-	}
+	public void setInZeroOrMore(boolean inZeroOrMore) {
+		this.inZeroOrMore = true;
 
-	private StyleSignatureBasic getStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.activity);
 	}
 
 }

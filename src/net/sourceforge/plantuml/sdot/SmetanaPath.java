@@ -150,6 +150,7 @@ public class SmetanaPath implements UDrawable {
 				extremity2.drawU(ug);
 
 		} catch (UnsupportedOperationException e) {
+			e.printStackTrace();
 			System.err.println("CANNOT DRAW printExtremityAtStart");
 		}
 	}
@@ -174,6 +175,7 @@ public class SmetanaPath implements UDrawable {
 				extremity1.drawU(ug);
 
 		} catch (UnsupportedOperationException e) {
+			e.printStackTrace();
 			System.err.println("CANNOT DRAW printExtremityAtEnd");
 		}
 	}

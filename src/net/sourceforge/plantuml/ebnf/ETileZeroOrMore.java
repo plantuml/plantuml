@@ -42,28 +42,29 @@ import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColors;
 
-public class ETileOptional extends ETile {
+public class ETileZeroOrMore extends ETile {
 
 	private final double deltax;
-	private final double deltay = 16;
+	private final double deltay = 20;
 	private final ETile orig;
-
 	private final boolean specialForAlternate;
 
-	public ETileOptional(ETile orig) {
+	public ETileZeroOrMore(ETile orig) {
 		this.orig = orig;
 		this.specialForAlternate = orig instanceof ETileAlternation;
-		this.deltax = this.specialForAlternate ? 0 : 15;
+		this.deltax = this.specialForAlternate ? 0 : 20;
+		if (this.specialForAlternate)
+			((ETileAlternation) orig).setInZeroOrMore(true);
 	}
 
 	@Override
 	public double getH1(StringBounder stringBounder) {
-		return deltay + orig.getH1(stringBounder);
+		return 10;
 	}
 
 	@Override
 	public double getH2(StringBounder stringBounder) {
-		return orig.getH2(stringBounder);
+		return 10 + orig.getH1(stringBounder) + orig.getH2(stringBounder);
 	}
 
 	@Override
@@ -73,28 +74,42 @@ public class ETileOptional extends ETile {
 
 	@Override
 	public void drawU(UGraphic ug) {
-		final XDimension2D fullDim = calculateDimension(ug.getStringBounder());
-		if (TRACE)
-			ug.apply(HColors.BLUE).draw(new URectangle(fullDim));
+		final StringBounder stringBounder = ug.getStringBounder();
+		final XDimension2D fullDim = calculateDimension(stringBounder);
+		if (TRACE) {
+			if (specialForAlternate)
+				ug.apply(HColors.COL_B38D22).draw(new URectangle(fullDim));
+			else
+				ug.apply(HColors.GREEN).draw(new URectangle(fullDim));
+		}
 
-		final double linePos = getH1(ug.getStringBounder());
+		final double linePos = getH1(stringBounder);
 
-		final double posA = specialForAlternate ? 12 : 8;
-		final double corner = specialForAlternate ? 12 : 8;
-		final double posB = fullDim.getWidth() - posA;
+		drawHline(ug, linePos, 0, fullDim.getWidth());
+		final double corner = 12;
 
-		CornerCurved.createSE(corner).drawU(ug.apply(new UTranslate(posA, linePos)));
-		drawVline(ug, posA, corner + 5, linePos - corner);
-		CornerCurved.createNW(corner).drawU(ug.apply(new UTranslate(posA, 5)));
+		if (specialForAlternate) {
+			CornerCurved.createNE_arrow(corner).drawU(ug.apply(new UTranslate(corner, linePos)));
+			CornerCurved.createNW(corner).drawU(ug.apply(new UTranslate(corner, linePos)));
 
-		drawHlineDirected(ug, 5, posA + corner, posB - corner, 0.4);
+			final double posB = fullDim.getWidth() - corner;
+			CornerCurved.createNW_arrow(corner).drawU(ug.apply(new UTranslate(posB, linePos)));
+			CornerCurved.createNE(corner).drawU(ug.apply(new UTranslate(posB, linePos)));
 
-		CornerCurved.createSW(corner).drawU(ug.apply(new UTranslate(posB, linePos)));
-		drawVline(ug, posB, corner + 5, linePos - corner);
-		CornerCurved.createNE(corner).drawU(ug.apply(new UTranslate(posB, 5)));
+		} else {
 
-		drawHline(ug, linePos, 0, deltax);
-		drawHline(ug, linePos, fullDim.getWidth() - deltax, fullDim.getWidth());
+			CornerCurved.createNE_arrow(corner).drawU(ug.apply(new UTranslate(deltax - corner, linePos)));
+			CornerCurved.createNW(corner).drawU(ug.apply(new UTranslate(deltax - corner, linePos)));
+			drawVline(ug, deltax - corner, linePos + corner, deltay + orig.getH1(stringBounder) - corner);
+			CornerCurved.createSW(corner)
+					.drawU(ug.apply(new UTranslate(deltax - corner, deltay + orig.getH1(stringBounder))));
+
+			final double posB = fullDim.getWidth() - deltax + corner;
+			CornerCurved.createSE(corner).drawU(ug.apply(new UTranslate(posB, deltay + orig.getH1(stringBounder))));
+			drawVline(ug, posB, linePos + corner, deltay + orig.getH1(stringBounder) - corner);
+			CornerCurved.createNW_arrow(corner).drawU(ug.apply(new UTranslate(posB, linePos)));
+			CornerCurved.createNE(corner).drawU(ug.apply(new UTranslate(posB, linePos)));
+		}
 
 		orig.drawU(ug.apply(new UTranslate(deltax, deltay)));
 	}

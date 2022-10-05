@@ -109,8 +109,8 @@ public class EntityImageMap extends AbstractEntityImage implements Stencil, With
 
 		final FontConfiguration fontConfiguration = getStyleHeader()
 				.getFontConfiguration(getSkinParam().getIHtmlColorSet());
-		this.entries = entity.getBodier().getBody(FontParam.OBJECT_ATTRIBUTE, skinParam, false, false,
-				entity.getStereotype(), getStyle(), fontConfiguration);
+		this.entries = entity.getBodier().getBody(skinParam, false, false, entity.getStereotype(), getStyle(),
+				fontConfiguration);
 
 		this.url = entity.getUrl99();
 
@@ -164,8 +164,9 @@ public class EntityImageMap extends AbstractEntityImage implements Stencil, With
 			borderColor = getStyle().value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
 
 		if (headerBackcolor == null)
-			headerBackcolor = backcolor == null ? getStyleHeader().value(PName.BackGroundColor)
-					.asColor(getSkinParam().getIHtmlColorSet()) : backcolor;
+			headerBackcolor = backcolor == null
+					? getStyleHeader().value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet())
+					: backcolor;
 
 		if (backcolor == null)
 			backcolor = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());

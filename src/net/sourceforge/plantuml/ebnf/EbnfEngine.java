@@ -39,11 +39,14 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 
 public class EbnfEngine {
@@ -52,11 +55,15 @@ public class EbnfEngine {
 	private final FontConfiguration fontConfiguration;
 	private final Style style;
 	private final HColorSet colorSet;
+	private final ISkinSimple spriteContainer;
+	private final HColor lineColor;
 
 	public EbnfEngine(ISkinParam skinParam) {
-		this.style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
+		this.spriteContainer = skinParam;
+		this.style = ETile.getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
 		this.fontConfiguration = style.getFontConfiguration(skinParam.getIHtmlColorSet());
 		this.colorSet = skinParam.getIHtmlColorSet();
+		this.lineColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 
 	}
 
@@ -69,9 +76,17 @@ public class EbnfEngine {
 		stack.addFirst(new ETileOptional(arg1));
 	}
 
-	public void repetition() {
+	public void repetitionZeroOrMore(boolean isTheo) {
 		final ETile arg1 = stack.removeFirst();
-		stack.addFirst(new ETileRepetition(arg1));
+		if (isTheo)
+			stack.addFirst(new ETileOptional(new ETileOneOrMore(arg1)));
+		else
+			stack.addFirst(new ETileZeroOrMore(arg1));
+	}
+
+	public void repetitionOneOrMore() {
+		final ETile arg1 = stack.removeFirst();
+		stack.addFirst(new ETileOneOrMore(arg1));
 	}
 
 	public void alternation() {
@@ -111,12 +126,13 @@ public class EbnfEngine {
 
 	public TextBlock getTextBlock() {
 		if (stack.size() != 1)
-			throw new IllegalStateException();
-		return new ETileWithCircles(stack.peekFirst());
+			return syntaxError(fontConfiguration, spriteContainer);
+		return new ETileWithCircles(stack.peekFirst(), lineColor);
 	}
 
-	private StyleSignatureBasic getStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.activity);
+	public static TextBlock syntaxError(FontConfiguration fontConfiguration, ISkinSimple spriteContainer) {
+		final Display msg = Display.create("Syntax error!");
+		return msg.create(fontConfiguration, HorizontalAlignment.LEFT, spriteContainer);
 	}
 
 }

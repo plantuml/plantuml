@@ -49,8 +49,9 @@ public abstract class AbstractUGraphic<O> extends AbstractCommonUGraphic {
 	private final O graphic;
 
 	// It would be nice to do something like this but not sure how:
-	//     Map<Class<SHAPE>, UDriver<SHAPE, O>>
-	// See https://stackoverflow.com/questions/416540/java-map-with-values-limited-by-keys-type-parameter
+	// Map<Class<SHAPE>, UDriver<SHAPE, O>>
+	// See
+	// https://stackoverflow.com/questions/416540/java-map-with-values-limited-by-keys-type-parameter
 	private final Map<Class<? extends UShape>, UDriver<?, O>> drivers = new HashMap<>();
 
 	public AbstractUGraphic(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder, O graphic) {
@@ -76,25 +77,25 @@ public abstract class AbstractUGraphic<O> extends AbstractCommonUGraphic {
 		this.drivers.put(cl, driver);
 	}
 
-	private static final UDriver<?,?> NOOP_DRIVER = new UDriver<UShape, Object>() {
+	private static final UDriver<?, ?> NOOP_DRIVER = new UDriver<UShape, Object>() {
 		@Override
 		public void draw(UShape shape, double x, double y, ColorMapper mapper, UParam param, Object object) {
 		}
 	};
-	
+
 	@SuppressWarnings("unchecked")
 	final protected <SHAPE extends UShape> void ignoreShape(Class<SHAPE> cl) {
 		registerDriver(cl, (UDriver<SHAPE, O>) NOOP_DRIVER);
 	}
-	
+
 	public final <SHAPE extends UShape> void draw(SHAPE shape) {
 		if (shape instanceof SpecialText) {
 			((SpecialText) shape).getTitle().drawU(this);
 			return;
 		}
-		if (shape instanceof UEmpty) {
+		if (shape instanceof UEmpty)
 			return;
-		}
+
 		if (shape instanceof UComment) {
 			drawComment((UComment) shape);
 			return;
@@ -103,12 +104,12 @@ public abstract class AbstractUGraphic<O> extends AbstractCommonUGraphic {
 		@SuppressWarnings("unchecked")
 		final UDriver<SHAPE, O> driver = (UDriver<SHAPE, O>) drivers.get(shape.getClass());
 
-		if (driver == null) {
+		if (driver == null)
 			throw new UnsupportedOperationException(shape.getClass().toString() + " " + this.getClass());
-		}
-		if (getParam().isHidden() && manageHiddenAutomatically()) {
+
+		if (getParam().isHidden() && manageHiddenAutomatically())
 			return;
-		}
+
 		beforeDraw();
 		driver.draw(shape, getTranslateX(), getTranslateY(), getColorMapper(), getParam(), graphic);
 		afterDraw();

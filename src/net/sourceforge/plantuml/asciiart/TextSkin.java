@@ -141,7 +141,7 @@ public class TextSkin extends Rose {
 		if (type == ComponentType.GROUPING_SPACE)
 			return new ComponentRoseGroupingSpace(1);
 
-		if (type == ComponentType.GROUPING_ELSE)
+		if (type == ComponentType.GROUPING_ELSE_LEGACY || type == ComponentType.GROUPING_ELSE_TEOZ)
 			return new ComponentTextGroupingElse(type, stringsToDisplay, fileFormat);
 
 		if (type == ComponentType.DELAY_TEXT)

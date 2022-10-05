@@ -126,9 +126,9 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 				new RegexOptional(new RegexConcat(new RegexLeaf("##"),
 						new RegexLeaf("LINECOLOR", "(?:\\[(dotted|dashed|bold)\\])?(\\w+)?"))), //
 				new RegexOptional(new RegexConcat(RegexLeaf.spaceOneOrMore(),
-						new RegexLeaf("EXTENDS", "(extends)[%s]+(" + CommandCreateClassMultilines.CODES + ")"))), //
+						new RegexLeaf("EXTENDS", "(extends)[%s]+(" + CommandCreateClassMultilines.CODES + "|[%g]([^%g]+)[%g])"))), //
 				new RegexOptional(new RegexConcat(RegexLeaf.spaceOneOrMore(),
-						new RegexLeaf("IMPLEMENTS", "(implements)[%s]+(" + CommandCreateClassMultilines.CODES + ")"))), //
+						new RegexLeaf("IMPLEMENTS", "(implements)[%s]+(" + CommandCreateClassMultilines.CODES + "|[%g]([^%g]+)[%g])"))), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("\\{"), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -206,7 +206,7 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 			if (mode == Mode.EXTENDS && entity.getLeafType() == LeafType.INTERFACE)
 				type2 = LeafType.INTERFACE;
 
-			final String codes = arg.get(keyword, 1);
+			final String codes = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(keyword, 1));
 			for (String s : codes.split(",")) {
 				final String idShort = StringUtils.trin(s);
 				final Ident ident = diagram.buildLeafIdent(idShort);
@@ -218,7 +218,7 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 
 				final LinkArg linkArg = LinkArg.noDisplay(2);
 				final Link link = new Link(diagram.getSkinParam().getCurrentStyleBuilder(), cl2, entity, typeLink,
-						linkArg.withQualifier(null, null).withDistanceAngle(diagram.getLabeldistance(),
+						linkArg.withQuantifier(null, null).withDistanceAngle(diagram.getLabeldistance(),
 								diagram.getLabelangle()));
 				diagram.addLink(link);
 			}
@@ -283,8 +283,7 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 		Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());
 		final String s = line0.get("LINECOLOR", 1);
 
-		final HColor lineColor = s == null ? null
-				: diagram.getSkinParam().getIHtmlColorSet().getColor(s);
+		final HColor lineColor = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);
 		if (lineColor != null)
 			colors = colors.add(ColorType.LINE, lineColor);
 

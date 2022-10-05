@@ -1,6 +1,7 @@
 root {
   FontName SansSerif
   HyperLinkColor blue
+  HyperLinkUnderlineThickness 1
   FontColor black
   FontSize 14
   FontStyle plain

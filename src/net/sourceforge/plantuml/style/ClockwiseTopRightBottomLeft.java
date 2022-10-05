@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.style;
 
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
+
 public class ClockwiseTopRightBottomLeft {
 
 	private final double top;
@@ -94,6 +97,10 @@ public class ClockwiseTopRightBottomLeft {
 		this.left = left;
 	}
 
+	public ClockwiseTopRightBottomLeft incTop(double delta) {
+		return new ClockwiseTopRightBottomLeft(top + delta, right, bottom, left);
+	}
+
 	@Override
 	public String toString() {
 		return "" + top + ":" + right + ":" + bottom + ":" + left;
@@ -118,6 +125,14 @@ public class ClockwiseTopRightBottomLeft {
 	public static ClockwiseTopRightBottomLeft marginForDocument(StyleBuilder styleBuilder) {
 		final Style style = StyleSignatureBasic.of(SName.root, SName.document).getMergedStyle(styleBuilder);
 		return style.getMargin();
+	}
+
+	public UTranslate getTranslate() {
+		return new UTranslate(left, top);
+	}
+
+	public XDimension2D apply(XDimension2D dim) {
+		return new XDimension2D(left + dim.getWidth() + right, top + dim.getHeight() + bottom);
 	}
 
 }

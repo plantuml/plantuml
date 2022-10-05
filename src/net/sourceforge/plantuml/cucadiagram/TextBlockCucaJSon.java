@@ -35,9 +35,10 @@
  */
 package net.sourceforge.plantuml.cucadiagram;
 
-import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -55,26 +56,26 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class TextBlockCucaJSon extends AbstractTextBlock implements WithPorts {
 
-	private final FontParam fontParam;
 	private final ISkinParam skinParam;
 	private final FontConfiguration fontConfiguration;
 	private final JsonValue json;
 	private TextBlockJson jsonTextBlock;
-	private double totalWidth;
+	private double mainTotalWidth;
+	private final LineBreakStrategy wordWrap;
 
-	public TextBlockCucaJSon(FontConfiguration fontConfiguration, FontParam fontParam, ISkinParam skinParam,
-			JsonValue json) {
-		this.fontParam = fontParam;
+	public TextBlockCucaJSon(FontConfiguration fontConfiguration, ISkinParam skinParam, JsonValue json,
+			LineBreakStrategy wordWrap) {
 		this.skinParam = skinParam;
 		this.json = json;
 		this.fontConfiguration = fontConfiguration;
+		this.wordWrap = wordWrap;
 	}
 
 	private TextBlockJson getJsonTextBlock() {
 		if (jsonTextBlock == null)
 			this.jsonTextBlock = new TextBlockJson(json, 0);
 
-		jsonTextBlock.totalWidth = totalWidth;
+		jsonTextBlock.jsonTotalWidth = mainTotalWidth;
 		return jsonTextBlock;
 	}
 
@@ -94,11 +95,11 @@ public class TextBlockCucaJSon extends AbstractTextBlock implements WithPorts {
 	class TextBlockJson extends AbstractTextBlock {
 
 		private final JsonObject obj;
-		private double totalWidth;
+		private double jsonTotalWidth;
 
 		public TextBlockJson(JsonValue json, double totalWidth) {
 			this.obj = json.asObject();
-			this.totalWidth = totalWidth;
+			this.jsonTotalWidth = totalWidth;
 		}
 
 		@Override
@@ -109,7 +110,7 @@ public class TextBlockCucaJSon extends AbstractTextBlock implements WithPorts {
 		private double getWidth1(StringBounder stringBounder) {
 			double result = 0;
 			for (JsonObject.Member s : obj) {
-				final TextBlock tb1 = getTextBlockKey(s.getName());
+				final TextBlock tb1 = getTextBlock(s.getName());
 				result = Math.max(result, tb1.calculateDimension(stringBounder).getWidth());
 			}
 			return result;
@@ -118,7 +119,7 @@ public class TextBlockCucaJSon extends AbstractTextBlock implements WithPorts {
 		private double getWidth2(StringBounder stringBounder) {
 			double result = 0;
 			for (JsonObject.Member s : obj) {
-				final TextBlock tb2 = getTextBlockValue(s.getValue(), totalWidth);
+				final TextBlock tb2 = getTextBlockValue(s.getValue(), jsonTotalWidth);
 				result = Math.max(result, tb2.calculateDimension(stringBounder).getWidth());
 			}
 			return result;
@@ -127,8 +128,8 @@ public class TextBlockCucaJSon extends AbstractTextBlock implements WithPorts {
 		private double getHeight(StringBounder stringBounder) {
 			double result = 0;
 			for (JsonObject.Member s : obj) {
-				final TextBlock tb1 = getTextBlockKey(s.getName());
-				final TextBlock tb2 = getTextBlockValue(s.getValue(), totalWidth);
+				final TextBlock tb1 = getTextBlock(s.getName());
+				final TextBlock tb2 = getTextBlockValue(s.getValue(), jsonTotalWidth);
 				final XDimension2D dim1 = tb1.calculateDimension(stringBounder);
 				final XDimension2D dim2 = tb2.calculateDimension(stringBounder);
 				result += Math.max(dim1.getHeight(), dim2.getHeight());
@@ -140,13 +141,12 @@ public class TextBlockCucaJSon extends AbstractTextBlock implements WithPorts {
 		public void drawU(UGraphic ug) {
 			final StringBounder stringBounder = ug.getStringBounder();
 			final double width1 = getWidth1(stringBounder);
-			final double width2 = getWidth2(stringBounder);
 			final double height = getHeight(stringBounder);
 			ug.apply(UTranslate.dx(width1)).draw(ULine.vline(height));
-			final ULine hline = ULine.hline(this.totalWidth);
+			final ULine hline = ULine.hline(this.jsonTotalWidth);
 			for (JsonObject.Member s : obj) {
-				final TextBlock tb1 = getTextBlockKey(s.getName());
-				final TextBlock tb2 = getTextBlockValue(s.getValue(), width2);
+				final TextBlock tb1 = getTextBlock(s.getName());
+				final TextBlock tb2 = getTextBlockValue(s.getValue(), this.jsonTotalWidth - width1);
 				final XDimension2D dim1 = tb1.calculateDimension(stringBounder);
 				final XDimension2D dim2 = tb2.calculateDimension(stringBounder);
 				ug.draw(hline);
@@ -162,10 +162,7 @@ public class TextBlockCucaJSon extends AbstractTextBlock implements WithPorts {
 	private TextBlock getTextBlockValue(JsonValue value, double width2) {
 		if (value.isString() || value.isNull() || value.isTrue() || value.isFalse() || value.isNumber()) {
 			final String tmp = value.isString() ? value.asString() : value.toString();
-			final Display display = Display.getWithNewlines(tmp);
-			TextBlock result = display.create(getFontConfiguration(), HorizontalAlignment.LEFT, skinParam);
-			result = TextBlockUtils.withMargin(result, 5, 2);
-			return result;
+			return getTextBlock(tmp);
 		}
 		if (value.isArray())
 			return new TextBlockArray(value.asArray(), width2);
@@ -173,8 +170,13 @@ public class TextBlockCucaJSon extends AbstractTextBlock implements WithPorts {
 			return new TextBlockJson(value, width2);
 
 		final String tmp = value.getClass().getSimpleName();
-		final Display display = Display.getWithNewlines(tmp);
-		TextBlock result = display.create(getFontConfiguration(), HorizontalAlignment.LEFT, skinParam);
+		return getTextBlock(tmp);
+	}
+
+	private TextBlock getTextBlock(String key) {
+		final Display display = Display.getWithNewlines(key);
+		TextBlock result = display.create0(getFontConfiguration(), HorizontalAlignment.LEFT, skinParam, wordWrap,
+				CreoleMode.FULL, null, null);
 		result = TextBlockUtils.withMargin(result, 5, 2);
 		return result;
 	}
@@ -182,18 +184,18 @@ public class TextBlockCucaJSon extends AbstractTextBlock implements WithPorts {
 	class TextBlockArray extends AbstractTextBlock {
 
 		private final JsonArray array;
-		private final double totalWidth;
+		private final double arrayTotalWidth;
 
 		public TextBlockArray(JsonArray array, double totalWidth) {
 			this.array = array;
-			this.totalWidth = totalWidth;
+			this.arrayTotalWidth = totalWidth;
 		}
 
 		@Override
 		public XDimension2D calculateDimension(StringBounder stringBounder) {
 			XDimension2D result = new XDimension2D(0, 0);
 			for (JsonValue element : array) {
-				final TextBlock tb = getTextBlockValue(element, totalWidth);
+				final TextBlock tb = getTextBlockValue(element, arrayTotalWidth);
 				final XDimension2D dim = tb.calculateDimension(stringBounder);
 				result = XDimension2D.mergeTB(result, dim);
 			}
@@ -202,10 +204,10 @@ public class TextBlockCucaJSon extends AbstractTextBlock implements WithPorts {
 
 		@Override
 		public void drawU(UGraphic ug) {
-			final ULine hline = ULine.hline(this.totalWidth);
+			final ULine hline = ULine.hline(this.arrayTotalWidth);
 			int nb = 0;
 			for (JsonValue element : array) {
-				final TextBlock tb = getTextBlockValue(element, totalWidth);
+				final TextBlock tb = getTextBlockValue(element, arrayTotalWidth);
 				if (nb > 0)
 					ug.draw(hline);
 				nb++;
@@ -216,21 +218,12 @@ public class TextBlockCucaJSon extends AbstractTextBlock implements WithPorts {
 
 	}
 
-	private TextBlock getTextBlockKey(String key) {
-		final Display display = Display.getWithNewlines(key);
-		TextBlock result = display.create(getFontConfiguration(), HorizontalAlignment.LEFT, skinParam);
-		result = TextBlockUtils.withMargin(result, 5, 2);
-		return result;
-	}
-
 	private FontConfiguration getFontConfiguration() {
-		if (fontConfiguration == null)
-			return FontConfiguration.create(skinParam, fontParam, null);
 		return fontConfiguration;
 	}
 
 	public void setTotalWidth(double totalWidth) {
-		this.totalWidth = totalWidth;
+		this.mainTotalWidth = totalWidth;
 	}
 
 }

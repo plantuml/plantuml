@@ -190,7 +190,7 @@ final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassO
 		final LinkArg linkArg = LinkArg.build(Display.getWithNewlines(labelLink), length,
 				diagram.getSkinParam().classAttributeIconSize() > 0);
 		final Link link = new Link(diagram.getSkinParam().getCurrentStyleBuilder(), cl1, cl2, linkType,
-				linkArg.withQualifier(firstLabel, secondLabel).withDistanceAngle(diagram.getLabeldistance(),
+				linkArg.withQuantifier(firstLabel, secondLabel).withDistanceAngle(diagram.getLabeldistance(),
 						diagram.getLabelangle()));
 		diagram.resetPragmaLabel();
 		addLink(diagram, link, arg.get("HEADER", 0));

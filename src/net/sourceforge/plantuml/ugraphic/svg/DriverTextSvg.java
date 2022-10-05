@@ -63,25 +63,25 @@ public class DriverTextSvg implements UDriver<UText, SvgGraphics> {
 
 	public void draw(UText shape, double x, double y, ColorMapper mapper, UParam param, SvgGraphics svg) {
 		final UClip clip = clipContainer.getClip();
-		if (clip != null && clip.isInside(x, y) == false) {
+		if (clip != null && clip.isInside(x, y) == false)
 			return;
-		}
 
 		final FontConfiguration fontConfiguration = shape.getFontConfiguration();
-		if (fontConfiguration.getColor().isTransparent()) {
+		if (fontConfiguration.getColor().isTransparent())
 			return;
-		}
+
 		final UFont font = fontConfiguration.getFont();
 		String fontWeight = null;
-		if (fontConfiguration.containsStyle(FontStyle.BOLD) || font.isBold()) {
+		if (fontConfiguration.containsStyle(FontStyle.BOLD) || font.isBold())
 			fontWeight = "bold";
-		}
+
 		String fontStyle = null;
-		if (fontConfiguration.containsStyle(FontStyle.ITALIC) || font.isItalic()) {
+		if (fontConfiguration.containsStyle(FontStyle.ITALIC) || font.isItalic())
 			fontStyle = "italic";
-		}
+
 		String textDecoration = null;
-		if (fontConfiguration.containsStyle(FontStyle.UNDERLINE)) {
+		if (fontConfiguration.containsStyle(FontStyle.UNDERLINE)
+				&& fontConfiguration.getUnderlineStroke().getThickness() > 0) {
 			textDecoration = "underline";
 		} else if (fontConfiguration.containsStyle(FontStyle.STRIKE)) {
 			textDecoration = "line-through";

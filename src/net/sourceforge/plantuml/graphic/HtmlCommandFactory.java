@@ -68,59 +68,47 @@ class HtmlCommandFactory {
 	private Pattern2 htmlTag = MyPattern.cmpile(Splitter.htmlTag);
 
 	HtmlCommand getHtmlCommand(String s) {
-		if (htmlTag.matcher(s).matches() == false) {
+		if (htmlTag.matcher(s).matches() == false)
 			return new Text(s);
-		}
-		if (MyPattern.mtches(s, Splitter.imgPattern)) {
+
+		if (MyPattern.mtches(s, Splitter.imgPattern))
 			return Img.getInstance(s, true);
-		}
 
-		if (MyPattern.mtches(s, Splitter.imgPatternNoSrcColon)) {
+		if (MyPattern.mtches(s, Splitter.imgPatternNoSrcColon))
 			return Img.getInstance(s, false);
-		}
 
-		if (addStyle.matcher(s).matches()) {
+		if (addStyle.matcher(s).matches())
 			return AddStyle.fromString(s);
-		}
-		if (removeStyle.matcher(s).matches()) {
+
+		if (removeStyle.matcher(s).matches())
 			return new RemoveStyle(FontStyle.getStyle(s));
-		}
 
-		if (MyPattern.mtches(s, Splitter.fontPattern)) {
+		if (MyPattern.mtches(s, Splitter.fontPattern))
 			return new ColorAndSizeChange(s);
-		}
 
-		if (MyPattern.mtches(s, Splitter.fontColorPattern2)) {
+		if (MyPattern.mtches(s, Splitter.fontColorPattern2))
 			return new ColorChange(s);
-		}
 
-		if (MyPattern.mtches(s, Splitter.fontSizePattern2)) {
+		if (MyPattern.mtches(s, Splitter.fontSizePattern2))
 			return new SizeChange(s);
-		}
 
-		if (MyPattern.mtches(s, Splitter.fontSup)) {
+		if (MyPattern.mtches(s, Splitter.fontSup))
 			return new ExposantChange(FontPosition.EXPOSANT);
-		}
 
-		if (MyPattern.mtches(s, Splitter.fontSub)) {
+		if (MyPattern.mtches(s, Splitter.fontSub))
 			return new ExposantChange(FontPosition.INDICE);
-		}
 
-		if (MyPattern.mtches(s, Splitter.endFontPattern)) {
+		if (MyPattern.mtches(s, Splitter.endFontPattern))
 			return new ResetFont();
-		}
 
-		if (MyPattern.mtches(s, Splitter.endSupSub)) {
+		if (MyPattern.mtches(s, Splitter.endSupSub))
 			return new ExposantChange(FontPosition.NORMAL);
-		}
 
-		if (MyPattern.mtches(s, Splitter.fontFamilyPattern)) {
+		if (MyPattern.mtches(s, Splitter.fontFamilyPattern))
 			return new FontFamilyChange(s);
-		}
 
-		if (MyPattern.mtches(s, Splitter.spritePatternForMatch)) {
+		if (MyPattern.mtches(s, Splitter.spritePatternForMatch))
 			return new SpriteCommand(s);
-		}
 
 		if (MyPattern.mtches(s, Splitter.linkPattern)) {
 			final UrlBuilder urlBuilder = new UrlBuilder(null, UrlMode.STRICT);
@@ -129,9 +117,8 @@ class HtmlCommandFactory {
 			return new TextLink(url);
 		}
 
-		if (MyPattern.mtches(s, Splitter.svgAttributePattern)) {
+		if (MyPattern.mtches(s, Splitter.svgAttributePattern))
 			return new SvgAttributesChange(s);
-		}
 
 		return null;
 	}

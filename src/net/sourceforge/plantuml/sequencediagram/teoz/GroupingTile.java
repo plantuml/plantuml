@@ -108,12 +108,12 @@ public class GroupingTile extends AbstractTile {
 
 		while (it.hasNext()) {
 			final Event ev = it.next();
-			if (ev instanceof GroupingLeaf && ((Grouping) ev).getType() == GroupingType.END) {
+			if (ev instanceof GroupingLeaf && ((Grouping) ev).getType() == GroupingType.END)
 				break;
-			}
-			for (Tile tile : TileBuilder.buildOne(it, tileArgumentsOriginal, ev, this)) {
+
+			for (Tile tile : TileBuilder.buildOne(it, tileArgumentsOriginal, ev, this))
 				tiles.add(tile);
-			}
+
 		}
 
 		tiles = mergeParallel(getStringBounder(), tiles);
@@ -131,13 +131,13 @@ public class GroupingTile extends AbstractTile {
 			max2.add(m.addFixed(MARGINX));
 		}
 		final double width = dim1.getWidth();
-		if (min2.size() == 0) {
+		if (min2.size() == 0)
 			min2.add(tileArgumentsOriginal.getOrigin());
-		}
+
 		this.min = RealUtils.min(min2);
-		for (Tile anElse : allElses) {
+		for (Tile anElse : allElses)
 			max2.add(anElse.getMaxX());
-		}
+
 		max2.add(this.min.addFixed(width + 16));
 		this.max = RealUtils.max(max2);
 	}
@@ -205,9 +205,9 @@ public class GroupingTile extends AbstractTile {
 	}
 
 	public void addConstraints() {
-		for (Tile tile : tiles) {
+		for (Tile tile : tiles)
 			tile.addConstraints();
-		}
+
 	}
 
 	public Real getMinX() {
@@ -272,9 +272,9 @@ public class GroupingTile extends AbstractTile {
 	private static List<Tile> removeEmptyCloseToParallel(List<Tile> tiles) {
 		final List<Tile> result = new ArrayList<>();
 		for (Tile tile : tiles) {
-			if (isParallel(tile)) {
+			if (isParallel(tile))
 				removeHeadEmpty(result);
-			}
+
 			result.add(tile);
 		}
 		return result;
@@ -282,9 +282,9 @@ public class GroupingTile extends AbstractTile {
 	}
 
 	private static void removeHeadEmpty(List<Tile> tiles) {
-		while (tiles.size() > 0 && tiles.get(tiles.size() - 1) instanceof EmptyTile) {
+		while (tiles.size() > 0 && tiles.get(tiles.size() - 1) instanceof EmptyTile)
 			tiles.remove(tiles.size() - 1);
-		}
+
 	}
 
 	public static boolean isParallel(Tile tile) {
@@ -293,17 +293,13 @@ public class GroupingTile extends AbstractTile {
 
 	void addYNewPages(Collection<Double> yNewPages) {
 		for (Tile tile : tiles) {
-			if (tile instanceof GroupingTile) {
+			if (tile instanceof GroupingTile)
 				((GroupingTile) tile).addYNewPages(yNewPages);
-			}
+
 			if (tile instanceof NewpageTile) {
 				final double y = ((NewpageTile) tile).getY();
 				yNewPages.add(y);
 			}
 		}
 	}
-
-	// public double getStartY() {
-	// return y + MARGINY;
-	// }
 }

@@ -72,6 +72,7 @@ public enum SName {
 	destroy, //
 	diamond, //
 	document, //
+	ebnf, //
 	element, //
 	entity, //
 	end, //
@@ -94,6 +95,7 @@ public enum SName {
 	leafNode, //
 	legend, //
 	lifeLine, //
+	mainframe, //
 	map, //
 	milestone, //
 	mindmapDiagram, //

@@ -65,6 +65,10 @@ public class UPolygon extends AbstractShadowable {
 		this.name = name;
 	}
 
+	public XPoint2D getPoint(int idx) {
+		return all.get(idx);
+	}
+
 	public XPoint2D checkMiddleContactForSpecificTriangle(XPoint2D center) {
 		for (int i = 0; i < all.size() - 1; i++) {
 			final XPoint2D pt1 = all.get(i);

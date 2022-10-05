@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.sequencediagram;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -75,7 +76,7 @@ public class Reference extends AbstractEvent implements Event {
 
 	public Reference(List<Participant> participants, Url url, Display strings, HColor backColorGeneral,
 			HColor backColorElement, StyleBuilder styleBuilder) {
-		this.participants = participants;
+		this.participants = uniq(participants);
 		this.url = url;
 		this.strings = strings;
 		this.backColorGeneral = backColorGeneral;
@@ -84,8 +85,16 @@ public class Reference extends AbstractEvent implements Event {
 		this.styleHeader = getHeaderStyleDefinition().getMergedStyle(styleBuilder);
 	}
 
+	static private List<Participant> uniq(List<Participant> all) {
+		final List<Participant> result = new ArrayList<Participant>();
+		for (Participant p : all)
+			if (result.contains(p) == false)
+				result.add(p);
+		return Collections.unmodifiableList(result);
+	}
+
 	public List<Participant> getParticipant() {
-		return Collections.unmodifiableList(participants);
+		return participants;
 	}
 
 	public Display getStrings() {

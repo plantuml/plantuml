@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -30,33 +30,36 @@
  *
  *
  * Original Author:  Arnaud Roques
- *
+ * 
  *
  */
 package net.sourceforge.plantuml.ebnf;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import net.sourceforge.plantuml.LineLocation;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
-import net.sourceforge.plantuml.Pragma;
+public class CommandEBnfSingleLine extends SingleLineCommand2<PSystemEbnf> {
 
-public class EbnfExpressions {
-
-	public static List<EbnfSingleExpression> build(List<String> data, Pragma pragma) {
-		final List<EbnfSingleExpression> all = new ArrayList<>();
-
-		final boolean isTheo = pragma.isDefine("theo");
-
-		final CharIterator it = new CharIteratorImpl(data);
-		while (it.peek() != 0) {
-			final EbnfSingleExpression tmp = EbnfSingleExpression.create(it, isTheo);
-			if (tmp.isEmpty())
-				break;
-			all.add(tmp);
-		}
-
-		return Collections.unmodifiableList(all);
+	public CommandEBnfSingleLine() {
+		super(true, getRegexConcat());
 	}
 
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandEBnfSingleLine.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("LINE", "(\\w[-\\w]*[%s]*=.*;)"), //
+				RegexLeaf.end());
+	}
+
+	@Override
+	protected CommandExecutionResult executeArg(PSystemEbnf diagram, LineLocation location, RegexResult arg)
+			throws NoSuchColorException {
+		diagram.addLine(arg.get("LINE", 0));
+		return CommandExecutionResult.ok();
+	}
 }

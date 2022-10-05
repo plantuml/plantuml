@@ -60,6 +60,7 @@ import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.URectangle;
+import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
@@ -258,7 +259,7 @@ public class PSystemColors extends PlainDiagram implements UDrawable {
 
 	private TextBlock getTextName(final UFont font, String name, final HColor color) {
 		final HColor opposite = color.opposite();
-		final FontConfiguration fc = FontConfiguration.create(font, opposite, HColors.BLUE, true);
+		final FontConfiguration fc = FontConfiguration.create(font, opposite, HColors.BLUE, new UStroke());
 		final TextBlock tt = Display.getWithNewlines(name).create(fc, HorizontalAlignment.CENTER,
 				new SpriteContainerEmpty());
 		return tt;

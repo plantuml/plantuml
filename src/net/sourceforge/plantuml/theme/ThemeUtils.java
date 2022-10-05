@@ -48,7 +48,7 @@ import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.preproc.ReadLine;
 import net.sourceforge.plantuml.preproc.ReadLineReader;
 import net.sourceforge.plantuml.preproc.Stdlib;
-import net.sourceforge.plantuml.sprite.RessourcesUtils;
+import net.sourceforge.plantuml.sprite.ResourcesUtils;
 
 public class ThemeUtils {
 
@@ -59,7 +59,7 @@ public class ThemeUtils {
 	private static final String THEME_PATH = "themes";
 
 	public static List<String> getAllThemeNames() throws IOException {
-		final Collection<String> filenames = Objects.requireNonNull(RessourcesUtils.getJarFile(THEME_PATH, false));
+		final Collection<String> filenames = Objects.requireNonNull(ResourcesUtils.getJarFile(THEME_PATH, false));
 		final List<String> result = new ArrayList<>();
 		for (String f : filenames) {
 			if (f.startsWith(THEME_FILE_PREFIX) && f.endsWith(THEME_FILE_SUFFIX)) {

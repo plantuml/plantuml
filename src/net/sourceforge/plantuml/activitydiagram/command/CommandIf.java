@@ -126,7 +126,7 @@ public class CommandIf extends SingleLineCommand2<ActivityDiagram> {
 
 		final LinkArg linkArg = LinkArg.build(Display.getWithNewlines(arg.get("BRACKET", 0)), lenght);
 		Link link = new Link(diagram.getSkinParam().getCurrentStyleBuilder(), entity1, branch,
-				new LinkType(LinkDecor.ARROW, LinkDecor.NONE), linkArg.withQualifier(null, ifLabel)
+				new LinkType(LinkDecor.ARROW, LinkDecor.NONE), linkArg.withQuantifier(null, ifLabel)
 						.withDistanceAngle(diagram.getLabeldistance(), diagram.getLabelangle()));
 		if (arg.get("ARROW", 0) != null) {
 			final Direction direction = StringUtils.getArrowDirection(arg.get("ARROW", 0));

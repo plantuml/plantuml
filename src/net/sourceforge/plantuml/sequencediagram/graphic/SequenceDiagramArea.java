@@ -139,9 +139,9 @@ public class SequenceDiagramArea {
 	}
 
 	public double getLegendY() {
-		if (isLegendTop) {
+		if (isLegendTop)
 			return titleHeight + headerHeight + headerMargin;
-		}
+
 		return sequenceHeight + headerHeight + headerMargin + titleHeight;
 
 	}

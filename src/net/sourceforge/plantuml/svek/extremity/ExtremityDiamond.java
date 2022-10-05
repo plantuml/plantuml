@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.svek.extremity;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 class ExtremityDiamond extends Extremity {
@@ -45,6 +46,7 @@ class ExtremityDiamond extends Extremity {
 	private UPolygon polygon = new UPolygon();
 	private final boolean fill;
 	private final XPoint2D contact;
+	private final UTranslate deltaForKal;
 
 	@Override
 	public XPoint2D somePoint() {
@@ -63,7 +65,13 @@ class ExtremityDiamond extends Extremity {
 		polygon.addPoint(-xWing, yAperture);
 		polygon.addPoint(0, 0);
 		polygon.rotate(angle + Math.PI / 2);
+		this.deltaForKal = new UTranslate(polygon.getPoint(2)).reverse();
 		polygon = polygon.translate(p1.getX(), p1.getY());
+	}
+
+	@Override
+	public UTranslate getDeltaForKal() {
+		return deltaForKal;
 	}
 
 	public void drawU(UGraphic ug) {

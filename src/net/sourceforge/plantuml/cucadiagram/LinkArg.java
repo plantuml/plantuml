@@ -40,8 +40,8 @@ import net.sourceforge.plantuml.skin.VisibilityModifier;
 public class LinkArg {
 
 	private final Display label;
-	private final String qualifier1;
-	private final String qualifier2;
+	private final String quantifier1;
+	private final String quantifier2;
 	private final String labeldistance;
 	private final String labelangle;
 
@@ -72,29 +72,29 @@ public class LinkArg {
 		return new LinkArg(newLabel, length, null, null, null, null, visibilityModifier, null, null);
 	}
 
-	public LinkArg withQualifier(String qualifier1, String qualifier2) {
-		return new LinkArg(label, length, qualifier1, qualifier2, labeldistance, labelangle, visibilityModifier, kal1,
+	public LinkArg withQuantifier(String quantifier1, String quantifier2) {
+		return new LinkArg(label, length, quantifier1, quantifier2, labeldistance, labelangle, visibilityModifier, kal1,
 				kal2);
 	}
 
 	public LinkArg withKal(String kal1, String kal2) {
-		return new LinkArg(label, length, qualifier1, qualifier2, labeldistance, labelangle, visibilityModifier, kal1,
+		return new LinkArg(label, length, quantifier1, quantifier2, labeldistance, labelangle, visibilityModifier, kal1,
 				kal2);
 	}
 
 	public LinkArg withDistanceAngle(String labeldistance, String labelangle) {
-		return new LinkArg(label, length, qualifier1, qualifier2, labeldistance, labelangle, visibilityModifier, kal1,
+		return new LinkArg(label, length, quantifier1, quantifier2, labeldistance, labelangle, visibilityModifier, kal1,
 				kal2);
 	}
 
-	private LinkArg(Display label, int length, String qualifier1, String qualifier2, String labeldistance,
+	private LinkArg(Display label, int length, String quantifier1, String quantifier2, String labeldistance,
 			String labelangle, VisibilityModifier visibilityModifier, String kal1, String kal2) {
 
 		this.label = label;
 		this.visibilityModifier = visibilityModifier;
 		this.length = length;
-		this.qualifier1 = qualifier1;
-		this.qualifier2 = qualifier2;
+		this.quantifier1 = quantifier1;
+		this.quantifier2 = quantifier2;
 		this.labeldistance = labeldistance;
 		this.labelangle = labelangle;
 		this.kal1 = kal1;
@@ -102,7 +102,7 @@ public class LinkArg {
 	}
 
 	public LinkArg getInv() {
-		return new LinkArg(label, length, qualifier2, qualifier1, labeldistance, labelangle, visibilityModifier, kal1,
+		return new LinkArg(label, length, quantifier2, quantifier1, labeldistance, labelangle, visibilityModifier, kal1,
 				kal2);
 	}
 
@@ -114,12 +114,12 @@ public class LinkArg {
 		return length;
 	}
 
-	public final String getQualifier1() {
-		return qualifier1;
+	public final String getQuantifier1() {
+		return quantifier1;
 	}
 
-	public final String getQualifier2() {
-		return qualifier2;
+	public final String getQuantifier2() {
+		return quantifier2;
 	}
 
 	public final String getLabeldistance() {

@@ -44,18 +44,30 @@ import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
-import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
 public class EbnfSingleExpression {
 
-	final List<Token> tokens = new ArrayList<>();
+	private final List<Token> tokens = new ArrayList<>();
+	private final boolean isTheo;
 
-	EbnfSingleExpression(CharIterator it) {
+	public static EbnfSingleExpression create(CharIterator it, boolean isTheo) {
+		return new EbnfSingleExpression(it, isTheo);
+	}
+
+	private EbnfSingleExpression(CharIterator it, boolean isTheo) {
+		this.isTheo = isTheo;
 		while (true) {
 			final char ch = it.peek();
 			if (Character.isWhitespace(ch)) {
+			} else if (ch == '-') {
+				final int size = tokens.size();
+				if (size > 0 && tokens.get(size - 1).getSymbol() == Symbol.REPETITION_CLOSE) {
+					tokens.set(size - 1, new Token(Symbol.REPETITION_MINUS_CLOSE, null));
+				} else {
+					tokens.clear();
+					return;
+				}
 			} else if (isLetterOrDigit(ch)) {
 				final String litteral = readLitteral(it);
 				tokens.add(new Token(Symbol.LITTERAL, litteral));
@@ -87,32 +99,43 @@ public class EbnfSingleExpression {
 			} else if (ch == '\'') {
 				final String litteral = readString(it);
 				tokens.add(new Token(Symbol.TERMINAL_STRING2, litteral));
-			} else
-				throw new UnsupportedOperationException("" + ch);
+			} else {
+				tokens.clear();
+				return;
+			}
 			it.next();
 			continue;
 		}
 	}
 
-	private StyleSignatureBasic getStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.activity);
-	}
-
 	public TextBlock getUDrawable(ISkinParam skinParam) {
-		final Iterator<Token> iterator = tokens.iterator();
-		final Token name = iterator.next();
-		final Token definition = iterator.next();
-		final List<Token> full = new ShuntingYard(iterator).getOuputQueue();
-
-		final TextBlock main = getMainDrawing(skinParam, full.iterator());
-
-		final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
+		final Style style = ETile.getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
 		final FontConfiguration fc = style.getFontConfiguration(skinParam.getIHtmlColorSet());
 
-		final TitleBox titleBox = new TitleBox(name.getData() + ":", fc);
+		if (tokens.size() == 0)
+			return EbnfEngine.syntaxError(fc, skinParam);
 
-		return TextBlockUtils.mergeTB(titleBox, TextBlockUtils.withMargin(main, 0, 0, 10, 15),
-				HorizontalAlignment.LEFT);
+		try {
+			final Iterator<Token> iterator = tokens.iterator();
+			final Token name = iterator.next();
+			final Token definition = iterator.next();
+			if (definition.getSymbol() != Symbol.DEFINITION)
+				return EbnfEngine.syntaxError(fc, skinParam);
+
+			final List<Token> full = new ShuntingYard(iterator).getOuputQueue();
+			// System.err.println("full=" + full);
+			if (full.size() == 0)
+				return EbnfEngine.syntaxError(fc, skinParam);
+
+			final TextBlock main = getMainDrawing(skinParam, full.iterator());
+			final TitleBox titleBox = new TitleBox(name.getData(), fc);
+
+			return TextBlockUtils.mergeTB(titleBox, TextBlockUtils.withMargin(main, 0, 0, 10, 15),
+					HorizontalAlignment.LEFT);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return EbnfEngine.syntaxError(fc, skinParam);
+		}
 	}
 
 	private TextBlock getMainDrawing(ISkinParam skinParam, Iterator<Token> it) {
@@ -128,8 +151,10 @@ public class EbnfSingleExpression {
 				engine.concatenation();
 			else if (element.getSymbol() == Symbol.OPTIONAL)
 				engine.optional();
-			else if (element.getSymbol() == Symbol.REPETITION)
-				engine.repetition();
+			else if (element.getSymbol() == Symbol.REPETITION_ZERO_OR_MORE)
+				engine.repetitionZeroOrMore(isTheo);
+			else if (element.getSymbol() == Symbol.REPETITION_ONE_OR_MORE)
+				engine.repetitionOneOrMore();
 			else
 				throw new UnsupportedOperationException(element.toString());
 		}
@@ -165,6 +190,10 @@ public class EbnfSingleExpression {
 		return ch == '-' || ch == '_' || Character.isLetterOrDigit(ch);
 	}
 
+	public boolean isEmpty() {
+		return tokens.size() == 0;
+	}
+
 }
 
 interface CharIterator {
@@ -175,12 +204,14 @@ interface CharIterator {
 
 class CharIteratorImpl implements CharIterator {
 
-	final private List<String> data;
+	final private List<String> data = new ArrayList<>();
 	private int line = 0;
 	private int pos = 0;
 
-	public CharIteratorImpl(List<String> data) {
-		this.data = data;
+	public CharIteratorImpl(List<String> input) {
+		for (String s : input)
+			if (s.trim().length() > 0)
+				data.add(s.trim());
 	}
 
 	public char peek() {

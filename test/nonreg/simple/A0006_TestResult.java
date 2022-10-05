@@ -5,7 +5,7 @@ public class A0006_TestResult {
 /*
 """
 DPI: 96
-dimension: [ 149.3989 ; 225.0000 ]
+dimension: [ 149.3989 ; 231.0000 ]
 scaleFactor: 1.0000
 seed: -2375783792654745998
 svgLinkTarget: _top
@@ -35,12 +35,12 @@ TEXT:
   extendedColor: NULL_COLOR
 
 EMPTY:
-  pt1: [ 13.3206 ; 186.0000 ]
-  pt2: [ 130.0783 ; 203.0000 ]
+  pt1: [ 13.3206 ; 192.0000 ]
+  pt2: [ 130.0783 ; 209.0000 ]
 
 RECTANGLE:
-  pt1: [ 14.3206 ; 187.0000 ]
-  pt2: [ 128.0783 ; 201.0000 ]
+  pt1: [ 14.3206 ; 193.0000 ]
+  pt2: [ 128.0783 ; 207.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-1.0
@@ -50,7 +50,7 @@ RECTANGLE:
 
 TEXT:
   text: caption
-  position: [ 14.3206 ; 197.8889 ]
+  position: [ 14.3206 ; 203.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
@@ -183,12 +183,12 @@ TEXT:
   extendedColor: NULL_COLOR
 
 EMPTY:
-  pt1: [ 27.6323 ; 203.0000 ]
-  pt2: [ 115.7666 ; 219.0000 ]
+  pt1: [ 27.6323 ; 209.0000 ]
+  pt2: [ 115.7666 ; 225.0000 ]
 
 RECTANGLE:
-  pt1: [ 27.6323 ; 203.0000 ]
-  pt2: [ 114.7666 ; 218.0000 ]
+  pt1: [ 27.6323 ; 209.0000 ]
+  pt2: [ 114.7666 ; 224.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-1.0
@@ -198,19 +198,19 @@ RECTANGLE:
 
 TEXT:
   text: footer
-  position: [ 27.6323 ; 214.6667 ]
+  position: [ 27.6323 ; 220.6667 ]
   orientation: 0
   font: SansSerif.plain/15 []
   color: ffff0000
   extendedColor: NULL_COLOR
 
 EMPTY:
-  pt1: [ 10.6527 ; 143.0000 ]
-  pt2: [ 132.7462 ; 186.0000 ]
+  pt1: [ 7.6527 ; 143.0000 ]
+  pt2: [ 135.7462 ; 192.0000 ]
 
 RECTANGLE:
-  pt1: [ 18.6527 ; 151.0000 ]
-  pt2: [ 123.7462 ; 177.0000 ]
+  pt1: [ 19.6527 ; 155.0000 ]
+  pt2: [ 122.7462 ; 179.0000 ]
   xCorner: 15
   yCorner: 15
   stroke: 0.0-0.0-1.0
@@ -220,7 +220,7 @@ RECTANGLE:
 
 TEXT:
   text: legend
-  position: [ 24.6527 ; 167.8889 ]
+  position: [ 24.6527 ; 170.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000

@@ -62,10 +62,10 @@ public class PSystemListInternalSprites extends PlainDiagram {
 		lines.add("<i>Credit to");
 		lines.add("http://www.archimatetool.com");
 		lines.add(" ");
-		for (String folder : RessourcesUtils.getJarFile("sprites", true)) {
+		for (String folder : ResourcesUtils.getJarFile("sprites", true)) {
 			lines.add("<u>" + folder + "</u> :");
 			lines.add(" ");
-			for (String png : RessourcesUtils.getJarFile("sprites/" + folder, false)) {
+			for (String png : ResourcesUtils.getJarFile("sprites/" + folder, false)) {
 				if (png.endsWith(".png")) {
 					final String spriteName = png.substring(0, png.length() - 4);
 					lines.add("<$archimate/" + spriteName + "> " + spriteName);

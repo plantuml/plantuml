@@ -49,7 +49,9 @@ public enum Symbol {
 	OPTIONAL,
 	REPETITION_OPEN, // {
 	REPETITION_CLOSE, // }
-	REPETITION, // 
+	REPETITION_MINUS_CLOSE, // }
+	REPETITION_ZERO_OR_MORE, // 
+	REPETITION_ONE_OR_MORE, // 
 	GROUPING_OPEN, // (
 	GROUPING_CLOSE, // )
 	TERMINAL_STRING1, // " "
@@ -70,6 +72,10 @@ public enum Symbol {
 
 	boolean isOperator() {
 		return this == CONCATENATION || this == ALTERNATION;
+	}
+
+	boolean isFunction() {
+		return this == OPTIONAL || this == REPETITION_ZERO_OR_MORE;
 	}
 
 }

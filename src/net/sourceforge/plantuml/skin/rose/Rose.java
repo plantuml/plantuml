@@ -215,8 +215,11 @@ public class Rose {
 			return new ComponentRoseGroupingHeader(styles == null ? null : styles[0], styles == null ? null : styles[1],
 					stringsToDisplay, param);
 
-		if (type == ComponentType.GROUPING_ELSE)
-			return new ComponentRoseGroupingElse(styles == null ? null : styles[0], stringsToDisplay.get(0), param);
+		if (type == ComponentType.GROUPING_ELSE_LEGACY)
+			return new ComponentRoseGroupingElse(false, styles == null ? null : styles[0], stringsToDisplay.get(0), param);
+
+		if (type == ComponentType.GROUPING_ELSE_TEOZ)
+			return new ComponentRoseGroupingElse(true, styles == null ? null : styles[0], stringsToDisplay.get(0), param);
 
 		if (type == ComponentType.GROUPING_SPACE)
 			return new ComponentRoseGroupingSpace(7);
@@ -225,13 +228,16 @@ public class Rose {
 			return new ComponentRoseActiveLine(styles == null ? null : styles[0], true, true, param.getIHtmlColorSet());
 
 		if (type == ComponentType.ALIVE_BOX_CLOSE_OPEN)
-			return new ComponentRoseActiveLine(styles == null ? null : styles[0], true, false, param.getIHtmlColorSet());
+			return new ComponentRoseActiveLine(styles == null ? null : styles[0], true, false,
+					param.getIHtmlColorSet());
 
 		if (type == ComponentType.ALIVE_BOX_OPEN_CLOSE) {
-			return new ComponentRoseActiveLine(styles == null ? null : styles[0], false, true, param.getIHtmlColorSet());
+			return new ComponentRoseActiveLine(styles == null ? null : styles[0], false, true,
+					param.getIHtmlColorSet());
 		}
 		if (type == ComponentType.ALIVE_BOX_OPEN_OPEN)
-			return new ComponentRoseActiveLine(styles == null ? null : styles[0], false, false, param.getIHtmlColorSet());
+			return new ComponentRoseActiveLine(styles == null ? null : styles[0], false, false,
+					param.getIHtmlColorSet());
 
 		if (type == ComponentType.DELAY_LINE)
 			return new ComponentRoseDelayLine(null, getHtmlColor(param, stereotype, ColorParam.sequenceLifeLineBorder));

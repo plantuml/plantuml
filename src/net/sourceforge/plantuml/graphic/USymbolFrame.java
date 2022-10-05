@@ -60,11 +60,11 @@ class USymbolFrame extends USymbol {
 
 	private void drawFrame(UGraphic ug, double width, double height, XDimension2D dimTitle, double shadowing,
 			double roundCorner) {
-		final Shadowable shape = new URectangle(width, height).rounded(roundCorner).ignoreForCompressionOnX()
+		final Shadowable rectangle = new URectangle(width, height).rounded(roundCorner).ignoreForCompressionOnX()
 				.ignoreForCompressionOnY();
-		shape.setDeltaShadow(shadowing);
+		rectangle.setDeltaShadow(shadowing);
 
-		ug.draw(shape);
+		ug.draw(rectangle);
 
 		final double textWidth;
 		final int cornersize;
@@ -77,15 +77,15 @@ class USymbolFrame extends USymbol {
 		}
 		final double textHeight = getYpos(dimTitle);
 
-		final UPath polygon = new UPath();
-		polygon.setIgnoreForCompressionOnX();
-		polygon.moveTo(textWidth, 0);
+		final UPath line = new UPath();
+		line.setIgnoreForCompressionOnX();
+		line.moveTo(textWidth, 0);
 
-		polygon.lineTo(textWidth, textHeight - cornersize);
-		polygon.lineTo(textWidth - cornersize, textHeight);
+		line.lineTo(textWidth, textHeight - cornersize);
+		line.lineTo(textWidth - cornersize, textHeight);
 
-		polygon.lineTo(0, textHeight);
-		ug.apply(HColors.none().bg()).draw(polygon);
+		line.lineTo(0, textHeight);
+		ug.apply(HColors.none().bg()).draw(line);
 
 	}
 

@@ -52,7 +52,7 @@ import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.version.Version;
 
-public class RessourcesUtils {
+public class ResourcesUtils {
 
 	public static Set<String> getJarFile(String path, boolean folder) throws IOException {
 		if (path.startsWith("/") || path.endsWith("/")) {

@@ -79,11 +79,11 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 		}
 		final Link l1 = new Link(getSkinParam().getCurrentStyleBuilder(), entity1, node, link.getType(),
 				LinkArg.build(link.getLabel(), link.getLength(), getSkinParam().classAttributeIconSize() > 0)
-						.withQualifier(link.getQualifier1(), null)
+						.withQuantifier(link.getQuantifier1(), null)
 						.withDistanceAngle(link.getLabeldistance(), link.getLabelangle()));
 		final Link l2 = new Link(getSkinParam().getCurrentStyleBuilder(), node, entity2, link.getType(),
 				LinkArg.build(link.getLabel(), link.getLength(), getSkinParam().classAttributeIconSize() > 0)
-						.withQualifier(null, link.getQualifier2())
+						.withQuantifier(null, link.getQuantifier2())
 						.withDistanceAngle(link.getLabeldistance(), link.getLabelangle()));
 		addLink(l1);
 		addLink(l2);
@@ -175,13 +175,13 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 		final Link entity1ToPoint = new Link(getSkinParam().getCurrentStyleBuilder(), entity1real, point1,
 				existingLink1.getType().getPart2(),
 				LinkArg.build(existingLink1.getLabel(), existingLink1.getLength())
-						.withQualifier(existingLink1.getQualifier1(), null)
+						.withQuantifier(existingLink1.getQuantifier1(), null)
 						.withDistanceAngle(existingLink1.getLabeldistance(), existingLink1.getLabelangle()));
 		entity1ToPoint.setLinkArrow(existingLink1.getLinkArrow());
 		final Link pointToEntity2 = new Link(getSkinParam().getCurrentStyleBuilder(), point1, entity2real,
 				existingLink1.getType().getPart1(),
 				LinkArg.noDisplay(existingLink1.getLength())
-						.withQualifier(null, existingLink1.getQualifier2())
+						.withQuantifier(null, existingLink1.getQuantifier2())
 						.withDistanceAngle(existingLink1.getLabeldistance(), existingLink1.getLabelangle()));
 
 		// int length = 1;
@@ -287,13 +287,13 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 			entity1ToPoint = new Link(getSkinParam().getCurrentStyleBuilder(), entity1real, point,
 					existingLink.getType().getPart2(),
 					LinkArg.build(existingLink.getLabel(), existingLink.getLength())
-							.withQualifier(existingLink.getQualifier1(), null)
+							.withQuantifier(existingLink.getQuantifier1(), null)
 							.withDistanceAngle(existingLink.getLabeldistance(), existingLink.getLabelangle()));
 			entity1ToPoint.setLinkArrow(existingLink.getLinkArrow());
 			pointToEntity2 = new Link(getSkinParam().getCurrentStyleBuilder(), point, entity2real,
 					existingLink.getType().getPart1(),
 					LinkArg.noDisplay(existingLink.getLength())
-							.withQualifier(null, existingLink.getQualifier2())
+							.withQuantifier(null, existingLink.getQuantifier2())
 							.withDistanceAngle(existingLink.getLabeldistance(), existingLink.getLabelangle()));
 
 			int length = 1;
@@ -333,11 +333,11 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 
 			entity1ToPoint = new Link(getSkinParam().getCurrentStyleBuilder(), entity1, point,
 					existingLink.getType().getPart2(),
-					LinkArg.build(existingLink.getLabel(), 2).withQualifier(existingLink.getQualifier1(), null)
+					LinkArg.build(existingLink.getLabel(), 2).withQuantifier(existingLink.getQuantifier1(), null)
 							.withDistanceAngle(existingLink.getLabeldistance(), existingLink.getLabelangle()));
 			pointToEntity2 = new Link(getSkinParam().getCurrentStyleBuilder(), point, entity2,
 					existingLink.getType().getPart1(),
-					LinkArg.noDisplay(2).withQualifier(null, existingLink.getQualifier2())
+					LinkArg.noDisplay(2).withQuantifier(null, existingLink.getQuantifier2())
 							.withDistanceAngle(existingLink.getLabeldistance(), existingLink.getLabelangle()));
 			// entity1ToPoint = new Link(entity1, point, existingLink.getType(),
 			// null, 2);

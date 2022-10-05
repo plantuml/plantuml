@@ -50,6 +50,9 @@ public class ShuntingYard {
 	public ShuntingYard(Iterator<Token> it) {
 		while (it.hasNext()) {
 			final Token token = it.next();
+			// System.err.println("token=" + token);
+			// System.err.println("ouputQueue=" + ouputQueue);
+			// System.err.println("operatorStack=" + operatorStack);
 			if (token.getSymbol() == Symbol.LITTERAL || token.getSymbol() == Symbol.TERMINAL_STRING1
 					|| token.getSymbol() == Symbol.TERMINAL_STRING2) {
 				ouputQueue.add(token);
@@ -67,13 +70,28 @@ public class ShuntingYard {
 			} else if (token.getSymbol() == Symbol.OPTIONAL_OPEN) {
 				operatorStack.addFirst(new Token(Symbol.OPTIONAL, null));
 			} else if (token.getSymbol() == Symbol.OPTIONAL_CLOSE) {
+				while (thereIsAnOperatorAtTheTopOfTheOperatorStack())
+					ouputQueue.add(operatorStack.removeFirst());
 				final Token first = operatorStack.removeFirst();
+				if (first.getSymbol() != Symbol.OPTIONAL)
+					throw new IllegalStateException();
 				ouputQueue.add(first);
 			} else if (token.getSymbol() == Symbol.REPETITION_OPEN) {
-				operatorStack.addFirst(new Token(Symbol.REPETITION, null));
+				operatorStack.addFirst(new Token(Symbol.REPETITION_ZERO_OR_MORE, null));
 			} else if (token.getSymbol() == Symbol.REPETITION_CLOSE) {
+				while (thereIsAnOperatorAtTheTopOfTheOperatorStack())
+					ouputQueue.add(operatorStack.removeFirst());
 				final Token first = operatorStack.removeFirst();
+				if (first.getSymbol() != Symbol.REPETITION_ZERO_OR_MORE)
+					throw new IllegalStateException();
 				ouputQueue.add(first);
+			} else if (token.getSymbol() == Symbol.REPETITION_MINUS_CLOSE) {
+				while (thereIsAnOperatorAtTheTopOfTheOperatorStack())
+					ouputQueue.add(operatorStack.removeFirst());
+				final Token first = operatorStack.removeFirst();
+				if (first.getSymbol() != Symbol.REPETITION_ZERO_OR_MORE)
+					throw new IllegalStateException();
+				ouputQueue.add(new Token(Symbol.REPETITION_ONE_OR_MORE, null));
 			} else {
 				throw new UnsupportedOperationException(token.toString());
 			}
@@ -81,8 +99,23 @@ public class ShuntingYard {
 		}
 		while (operatorStack.isEmpty() == false) {
 			final Token token = operatorStack.removeFirst();
+			if (token.getSymbol() == Symbol.OPTIONAL || token.getSymbol() == Symbol.REPETITION_ONE_OR_MORE
+					|| token.getSymbol() == Symbol.REPETITION_ZERO_OR_MORE) {
+				ouputQueue.clear();
+				return;
+			}
 			ouputQueue.add(token);
 		}
+	}
+
+	private boolean thereIsAFunctionAtTheTopOfTheOperatorStack() {
+		final Token top = operatorStack.peekFirst();
+		return top != null && top.getSymbol().isFunction();
+	}
+
+	private boolean thereIsAnOperatorAtTheTopOfTheOperatorStack() {
+		final Token top = operatorStack.peekFirst();
+		return top != null && top.getSymbol().isOperator();
 	}
 
 	private boolean thereIsAnOperatorAtTheTopOfTheOperatorStackWithGreaterPrecedence(Token token) {

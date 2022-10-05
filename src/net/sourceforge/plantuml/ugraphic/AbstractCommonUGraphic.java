@@ -88,6 +88,8 @@ public abstract class AbstractCommonUGraphic implements UGraphic {
 			copy.backColor = ((UBackground) change).getBackColor();
 		} else if (change instanceof HColor) {
 			copy.color = (HColor) change;
+		} else if (change instanceof CopyForegroundColorToBackgroundColor) {
+			copy.backColor = this.color;
 		}
 		return copy;
 	}

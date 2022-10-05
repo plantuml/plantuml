@@ -228,7 +228,7 @@ public class SvgNanoParser implements Sprite {
 		if (m.find()) {
 			final String text = m.group(1);
 			HColor color = HColorSet.instance().getColorOrWhite(fill);
-			final FontConfiguration fc = FontConfiguration.create(UFont.sansSerif(fontSize), color, color, false);
+			final FontConfiguration fc = FontConfiguration.create(UFont.sansSerif(fontSize), color, color, null);
 			final UText utext = new UText(text, fc);
 			UGraphic ug = ugs.getUg();
 			ug = ug.apply(new UTranslate(x, y));

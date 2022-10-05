@@ -44,8 +44,8 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.style.Style;
@@ -110,9 +110,10 @@ public class BodierMap implements Bodier {
 	}
 
 	@Override
-	public TextBlock getBody(FontParam fontParam, ISkinParam skinParam, final boolean showMethods,
-			final boolean showFields, Stereotype stereotype, Style style, FontConfiguration fontConfiguration) {
-		return new TextBlockMap(fontConfiguration, fontParam, skinParam, map);
+	public TextBlock getBody(ISkinParam skinParam, final boolean showMethods, final boolean showFields,
+			Stereotype stereotype, Style style, FontConfiguration fontConfiguration) {
+		final LineBreakStrategy wordWrap = style.wrapWidth();
+		return new TextBlockMap(fontConfiguration, skinParam, map, wordWrap);
 	}
 
 	@Override

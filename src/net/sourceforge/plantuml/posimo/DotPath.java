@@ -111,9 +111,9 @@ public class DotPath implements UShape, Moveable {
 	}
 
 	public DotPath(SvgResult fullSvg) {
-		if (isPathConsistent(fullSvg.getSvg()) == false) {
+		if (isPathConsistent(fullSvg.getSvg()) == false)
 			throw new IllegalArgumentException();
-		}
+
 		final int posC = fullSvg.indexOf("C", 0);
 		if (posC == -1)
 			throw new IllegalArgumentException();
@@ -282,21 +282,21 @@ public class DotPath implements UShape, Moveable {
 		double result = Double.MAX_VALUE;
 		for (XCubicCurve2D c : beziers) {
 			final double d1 = ref.distance(c.x1, c.y1);
-			if (d1 < result) {
+			if (d1 < result) 
 				result = d1;
-			}
+			
 			final double d2 = ref.distance(c.x2, c.y2);
-			if (d2 < result) {
+			if (d2 < result) 
 				result = d2;
-			}
+			
 			final double d3 = ref.distance(c.ctrlx1, c.ctrly1);
-			if (d3 < result) {
+			if (d3 < result) 
 				result = d3;
-			}
+			
 			final double d4 = ref.distance(c.ctrlx2, c.ctrly2);
-			if (d4 < result) {
+			if (d4 < result) 
 				result = d4;
-			}
+			
 		}
 		return result;
 

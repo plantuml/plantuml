@@ -41,6 +41,12 @@ import net.sourceforge.plantuml.svek.AbstractExtremityFactory;
 import net.sourceforge.plantuml.svek.Side;
 
 public class ExtremityFactoryLineCrowfoot extends AbstractExtremityFactory implements ExtremityFactory {
+	
+	@Override
+	public UDrawable createUDrawable(XPoint2D p0, double angle, Side side) {
+		angle -= Math.PI / 2;
+		return new ExtremityLineCrowfoot(p0, angle);
+	}
 
 	@Override
 	public UDrawable createUDrawable(XPoint2D p0, XPoint2D p1, XPoint2D p2, Side side) {

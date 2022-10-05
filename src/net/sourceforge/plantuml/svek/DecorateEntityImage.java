@@ -69,9 +69,9 @@ public class DecorateEntityImage extends AbstractTextBlock implements TextBlockB
 
 	public static TextBlock add(TextBlock original, TextBlock text, HorizontalAlignment horizontal,
 			VerticalAlignment verticalAlignment) {
-		if (verticalAlignment == VerticalAlignment.TOP) {
+		if (verticalAlignment == VerticalAlignment.TOP)
 			return addTop(original, text, horizontal);
-		}
+
 		return addBottom(original, text, horizontal);
 	}
 
@@ -115,28 +115,28 @@ public class DecorateEntityImage extends AbstractTextBlock implements TextBlockB
 	}
 
 	private XDimension2D getTextDim(TextBlock text, StringBounder stringBounder) {
-		if (text == null) {
+		if (text == null)
 			return new XDimension2D(0, 0);
-		}
+
 		return text.calculateDimension(stringBounder);
 	}
 
 	private double getTextX(final XDimension2D dimText, final XDimension2D dimTotal, HorizontalAlignment h) {
-		if (h == HorizontalAlignment.CENTER) {
+		if (h == HorizontalAlignment.CENTER)
 			return (dimTotal.getWidth() - dimText.getWidth()) / 2;
-		} else if (h == HorizontalAlignment.LEFT) {
+		else if (h == HorizontalAlignment.LEFT)
 			return 0;
-		} else if (h == HorizontalAlignment.RIGHT) {
+		else if (h == HorizontalAlignment.RIGHT)
 			return dimTotal.getWidth() - dimText.getWidth();
-		} else {
+		else
 			throw new IllegalStateException();
-		}
+
 	}
 
 	public HColor getBackcolor() {
-		if (original instanceof TextBlockBackcolored) {
+		if (original instanceof TextBlockBackcolored)
 			return ((TextBlockBackcolored) original).getBackcolor();
-		}
+
 		throw new UnsupportedOperationException();
 	}
 

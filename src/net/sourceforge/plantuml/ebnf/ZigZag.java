@@ -35,28 +35,27 @@
  */
 package net.sourceforge.plantuml.ebnf;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import net.sourceforge.plantuml.graphic.UDrawable;
+import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UPath;
 
-import net.sourceforge.plantuml.Pragma;
+public class ZigZag implements UDrawable {
 
-public class EbnfExpressions {
+	private final double dx;
+	private final double dy;
 
-	public static List<EbnfSingleExpression> build(List<String> data, Pragma pragma) {
-		final List<EbnfSingleExpression> all = new ArrayList<>();
+	public ZigZag(double dx, double dy) {
+		this.dx = dx;
+		this.dy = dy;
+	}
 
-		final boolean isTheo = pragma.isDefine("theo");
-
-		final CharIterator it = new CharIteratorImpl(data);
-		while (it.peek() != 0) {
-			final EbnfSingleExpression tmp = EbnfSingleExpression.create(it, isTheo);
-			if (tmp.isEmpty())
-				break;
-			all.add(tmp);
-		}
-
-		return Collections.unmodifiableList(all);
+	@Override
+	public void drawU(UGraphic ug) {
+		final UPath path = new UPath();
+		path.moveTo(0, 0);
+		final double a = 0.8;
+		path.cubicTo(dx * a, 0, dx - dx * a, dy, dx, dy);
+		ug.draw(path);
 	}
 
 }

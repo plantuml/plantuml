@@ -114,8 +114,8 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil, W
 			this.fields = new TextBlockLineBefore(getStyle().value(PName.LineThickness).asDouble(),
 					new TextBlockEmpty(10, 16));
 		else
-			this.fields = entity.getBodier().getBody(FontParam.OBJECT_ATTRIBUTE, skinParam, false, showFields,
-					entity.getStereotype(), getStyle(), null);
+			this.fields = entity.getBodier().getBody(skinParam, false, showFields, entity.getStereotype(), getStyle(),
+					null);
 
 		this.url = entity.getUrl99();
 
@@ -167,8 +167,9 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil, W
 		final HColor borderColor = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
 
 		if (headerBackcolor == null)
-			headerBackcolor = backcolor == null ? getStyleHeader().value(PName.BackGroundColor)
-					.asColor(getSkinParam().getIHtmlColorSet()) : backcolor;
+			headerBackcolor = backcolor == null
+					? getStyleHeader().value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet())
+					: backcolor;
 
 		if (backcolor == null)
 			backcolor = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());

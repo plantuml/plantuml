@@ -36,57 +36,58 @@
 package net.sourceforge.plantuml.ebnf;
 
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
-import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColors;
 
-public class ETileRepetition extends AbstractTextBlock implements ETile {
+public class ETileOneOrMore extends ETile {
 
-	private final double deltax = 20;
-	private final double deltay = 10;
+	private final double deltax = 15;
+	private final double deltay = 12;
 	private final ETile orig;
 
-	public ETileRepetition(ETile orig) {
+	public ETileOneOrMore(ETile orig) {
 		this.orig = orig;
 	}
 
 	@Override
-	public XDimension2D calculateDimension(StringBounder stringBounder) {
-		return XDimension2D.delta(orig.calculateDimension(stringBounder), 2 * deltax, deltay);
+	public double getH1(StringBounder stringBounder) {
+		return deltay + orig.getH1(stringBounder);
+	}
+
+	@Override
+	public double getH2(StringBounder stringBounder) {
+		return orig.getH2(stringBounder);
+	}
+
+	@Override
+	public double getWidth(StringBounder stringBounder) {
+		return orig.getWidth(stringBounder) + 2 * deltax;
 	}
 
 	@Override
 	public void drawU(UGraphic ug) {
 		final XDimension2D fullDim = calculateDimension(ug.getStringBounder());
-		ug = ug.apply(HColors.BLACK);
-		final double linePos = linePos(ug.getStringBounder());
+		if (TRACE)
+			ug.apply(HColors.RED).draw(new URectangle(fullDim));
 
-		final double posA = 7;
-		final double posB = fullDim.getWidth() - 7;
-		
-		final double corner = 12;
+		final double linePos = getH1(ug.getStringBounder());
+		CornerCurved.createSW(8).drawU(ug.apply(new UTranslate(8, linePos)));
+		drawVline(ug, 8, 8 + 5, linePos - 8);
+		CornerCurved.createNW(8).drawU(ug.apply(new UTranslate(8, 5)));
 
-		CornerCurved.createNW(corner).drawU(ug.apply(new UTranslate(posA, linePos)));
-		ETileConcatenation.drawVline(ug, posA, linePos + corner, fullDim.getHeight() - 1 - corner);
-		CornerCurved.createSW(corner).drawU(ug.apply(new UTranslate(posA, fullDim.getHeight() - 1)));
+		drawHlineAntiDirected(ug, 5, deltax, fullDim.getWidth() - deltax, 0.6);
 
-		CornerCurved.createNE(corner).drawU(ug.apply(new UTranslate(posB, linePos)));
-		ETileConcatenation.drawVline(ug, posB, linePos + corner, fullDim.getHeight() - 1 - corner);
-		CornerCurved.createSE(corner).drawU(ug.apply(new UTranslate(posB, fullDim.getHeight() - 1)));
+		CornerCurved.createSE(8).drawU(ug.apply(new UTranslate(fullDim.getWidth() - 8, linePos)));
+		drawVline(ug, fullDim.getWidth() - 8, 8 + 5, linePos - 8);
+		CornerCurved.createNE(8).drawU(ug.apply(new UTranslate(fullDim.getWidth() - 8, 5)));
 
-		ETileConcatenation.drawHline(ug, fullDim.getHeight() - 1, posA + corner, posB - corner);
+		drawHline(ug, linePos, 0, deltax);
+		drawHline(ug, linePos, fullDim.getWidth() - deltax, fullDim.getWidth());
 
-		ETileConcatenation.drawHline(ug, linePos, 0, deltax);
-		ETileConcatenation.drawHline(ug, linePos, fullDim.getWidth() - deltax, fullDim.getWidth());
-
-		orig.drawU(ug.apply(new UTranslate(deltax, 0)));
-	}
-
-	@Override
-	public double linePos(StringBounder stringBounder) {
-		return orig.linePos(stringBounder);
+		orig.drawU(ug.apply(new UTranslate(deltax, deltay)));
 	}
 
 	@Override

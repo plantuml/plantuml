@@ -39,7 +39,6 @@ import java.util.EnumMap;
 import java.util.Map;
 
 import net.sourceforge.plantuml.Direction;
-import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineConfigurable;
 import net.sourceforge.plantuml.Url;
@@ -96,8 +95,8 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 
 		final boolean showMethods = portionShower.showPortion(EntityPortion.METHOD, entity);
 		final boolean showFields = portionShower.showPortion(EntityPortion.FIELD, entity);
-		this.body = entity.getBodier().getBody(FontParam.CLASS_ATTRIBUTE, getSkinParam(), showMethods, showFields,
-				entity.getStereotype(), getStyle(), null);
+		this.body = entity.getBodier().getBody(getSkinParam(), showMethods, showFields, entity.getStereotype(),
+				getStyle(), null);
 
 		this.header = new EntityImageClassHeader(entity, getSkinParam(), portionShower);
 		this.url = entity.getUrl99();
@@ -192,8 +191,9 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 			borderColor = getStyle().value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
 
 		if (headerBackcolor == null)
-			headerBackcolor = backcolor == null ? getStyleHeader().value(PName.BackGroundColor)
-					.asColor(getSkinParam().getIHtmlColorSet()) : backcolor;
+			headerBackcolor = backcolor == null
+					? getStyleHeader().value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet())
+					: backcolor;
 
 		if (backcolor == null)
 			backcolor = getStyle().value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());

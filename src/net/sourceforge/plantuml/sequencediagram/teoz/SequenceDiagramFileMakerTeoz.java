@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.sequencediagram.teoz;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import net.sourceforge.plantuml.AnnotatedWorker;
+import net.sourceforge.plantuml.AnnotatedBuilder;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
@@ -74,7 +74,8 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 	private final SequenceDiagram diagram;
 	private final FileFormatOption fileFormatOption;
 	private final Rose skin;
-	private final AnnotatedWorker annotatedWorker;
+	private final AnnotatedBuilder annotatedBuilder;
+
 	private final int index;
 
 	public SequenceDiagramFileMakerTeoz(SequenceDiagram diagram, Rose skin, FileFormatOption fileFormatOption,
@@ -87,13 +88,13 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 		this.body = new PlayingSpaceWithParticipants(createMainTile());
 		this.footer = getFooterOrHeader(FontParam.FOOTER);
 		this.header = getFooterOrHeader(FontParam.HEADER);
-		this.annotatedWorker = new AnnotatedWorker(diagram, diagram.getSkinParam(), stringBounder);
+		this.annotatedBuilder = new AnnotatedBuilder(diagram, diagram.getSkinParam(), stringBounder);
 
 		this.min1 = body.getMinX(stringBounder);
 
 		this.title = getTitle();
 		this.legend = getLegend();
-		this.caption = annotatedWorker.getCaption();
+		this.caption = annotatedBuilder.getCaption();
 
 		this.heightEnglober1 = dolls.getOffsetForEnglobers(stringBounder);
 		this.heightEnglober2 = heightEnglober1 == 0 ? 0 : 10;
@@ -107,7 +108,7 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 				+ header.calculateDimension(stringBounder).getHeight()
 				+ legend.calculateDimension(stringBounder).getHeight()
 				+ caption.calculateDimension(stringBounder).getHeight()
-				+ footer.calculateDimension(stringBounder).getHeight() + (annotatedWorker.hasMainFrame() ? 10 : 0);
+				+ footer.calculateDimension(stringBounder).getHeight() + (annotatedBuilder.hasMainFrame() ? 10 : 0);
 		this.dimTotal = new XDimension2D(totalWidth, totalHeight);
 	}
 
@@ -264,8 +265,8 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 		}
 
 		ug = ug.apply(UTranslate.dy(heightEnglober1));
-		final TextBlock bodyFramed = annotatedWorker.addFrame(body);
-		printAligned(ug.apply(UTranslate.dx((annotatedWorker.hasMainFrame() ? 4 : 0))), HorizontalAlignment.CENTER,
+		final TextBlock bodyFramed = annotatedBuilder.decoreWithFrame(body);
+		printAligned(ug.apply(UTranslate.dx((annotatedBuilder.hasMainFrame() ? 4 : 0))), HorizontalAlignment.CENTER,
 				bodyFramed);
 		ug = goDown(ug, bodyFramed);
 		ug = ug.apply(UTranslate.dy(heightEnglober2));

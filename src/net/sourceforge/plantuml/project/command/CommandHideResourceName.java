@@ -44,25 +44,25 @@ import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.project.GanttDiagram;
 
-public class CommandHideRessourceFootbox extends SingleLineCommand2<GanttDiagram> {
+public class CommandHideResourceName extends SingleLineCommand2<GanttDiagram> {
 
-	public CommandHideRessourceFootbox() {
+	public CommandHideResourceName() {
 		super(getRegexConcat());
 	}
 
 	static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandHideRessourceFootbox.class.getName(), RegexLeaf.start(), //
+		return RegexConcat.build(CommandHideResourceName.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("hide"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("ressources?"), //
+				new RegexLeaf("ress?ources?"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("footbox"), //
+				new RegexLeaf("names?"), //
 				RegexLeaf.end()); //
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg) {
-		return diagram.hideRessourceFootbox();
+		return diagram.hideResourceName();
 	}
 
 }

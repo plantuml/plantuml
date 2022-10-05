@@ -35,28 +35,35 @@
  */
 package net.sourceforge.plantuml.ebnf;
 
-import net.sourceforge.plantuml.command.PSystemBasicFactory;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import net.sourceforge.plantuml.command.Command;
+import net.sourceforge.plantuml.command.CommonCommands;
+import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 
-public class PSystemEbnfFactory extends PSystemBasicFactory<PSystemEbnf> {
+public class PSystemEbnfFactory extends PSystemCommandFactory {
 
 	public PSystemEbnfFactory() {
 		super(DiagramType.EBNF);
 	}
 
 	@Override
-	public PSystemEbnf initDiagram(UmlSource source, String startLine) {
-		if (getDiagramType() == DiagramType.EBNF)
-			return new PSystemEbnf(source);
+	protected List<Command> createCommands() {
 
-		return null;
+		final List<Command> cmds = new ArrayList<>();
+		CommonCommands.addCommonCommands1(cmds);
+		cmds.add(new CommandEBnfSingleLine());
+		cmds.add(new CommandEbnfMultiline());
+		return cmds;
 	}
 
 	@Override
-	public PSystemEbnf executeLine(UmlSource source, PSystemEbnf system, String line) {
-		system.doCommandLine(line);
-		return system;
+	public PSystemEbnf createEmptyDiagram(UmlSource source, Map<String, String> skinParam) {
+		return new PSystemEbnf(source);
 	}
 
 }

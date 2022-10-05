@@ -53,8 +53,8 @@ import net.sourceforge.plantuml.project.command.CommandGanttArrow;
 import net.sourceforge.plantuml.project.command.CommandGanttArrow2;
 import net.sourceforge.plantuml.project.command.CommandGroupEnd;
 import net.sourceforge.plantuml.project.command.CommandGroupStart;
-import net.sourceforge.plantuml.project.command.CommandHideRessourceFootbox;
-import net.sourceforge.plantuml.project.command.CommandHideRessourceName;
+import net.sourceforge.plantuml.project.command.CommandHideResourceFootbox;
+import net.sourceforge.plantuml.project.command.CommandHideResourceName;
 import net.sourceforge.plantuml.project.command.CommandLabelOnColumn;
 import net.sourceforge.plantuml.project.command.CommandLanguage;
 import net.sourceforge.plantuml.project.command.CommandNoteBottom;
@@ -117,8 +117,8 @@ public class GanttDiagramFactory extends PSystemCommandFactory {
 		cmds.add(new CommandNoteBottom());
 		cmds.add(new CommandFootbox());
 		cmds.add(new CommandLabelOnColumn());
-		cmds.add(new CommandHideRessourceName());
-		cmds.add(new CommandHideRessourceFootbox());
+		cmds.add(new CommandHideResourceName());
+		cmds.add(new CommandHideResourceFootbox());
 
 		return cmds;
 	}

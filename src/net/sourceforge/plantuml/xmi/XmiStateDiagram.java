@@ -155,8 +155,8 @@ public class XmiStateDiagram implements XmlDiagramTransformer {
 		end1.setAttribute("xmi.id", "end" + diagram.getUniqueSequence());
 		end1.setAttribute("association", assId);
 		end1.setAttribute("type", link.getEntity1().getUid());
-		if (link.getQualifier1() != null) {
-			end1.setAttribute("name", forXMI(link.getQualifier1()));
+		if (link.getQuantifier1() != null) {
+			end1.setAttribute("name", forXMI(link.getQuantifier1()));
 		}
 		final Element endparticipant1 = document.createElement("UML:AssociationEnd.participant");
 
@@ -174,8 +174,8 @@ public class XmiStateDiagram implements XmlDiagramTransformer {
 		end2.setAttribute("xmi.id", "end" + diagram.getUniqueSequence());
 		end2.setAttribute("association", assId);
 		end2.setAttribute("type", link.getEntity2().getUid());
-		if (link.getQualifier2() != null) {
-			end2.setAttribute("name", forXMI(link.getQualifier2()));
+		if (link.getQuantifier2() != null) {
+			end2.setAttribute("name", forXMI(link.getQuantifier2()));
 		}
 		final Element endparticipant2 = document.createElement("UML:AssociationEnd.participant");
 		if (link.getType().getDecor1() == LinkDecor.COMPOSITION) {

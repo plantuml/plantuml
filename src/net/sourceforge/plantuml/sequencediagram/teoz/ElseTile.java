@@ -78,7 +78,7 @@ public class ElseTile extends AbstractTile {
 				anElse.getBackColorGeneral());
 
 		final Display display = Display.create(anElse.getComment());
-		final Component comp = skin.createComponent(anElse.getUsedStyles(), ComponentType.GROUPING_ELSE, null, tmp,
+		final Component comp = skin.createComponent(anElse.getUsedStyles(), ComponentType.GROUPING_ELSE_TEOZ, null, tmp,
 				display);
 		return comp;
 	}
@@ -107,9 +107,10 @@ public class ElseTile extends AbstractTile {
 		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());
 
 		double height = dim.getHeight();
-		if (anElse.getComment() != null) {
-			height += 10;
-		}
+//		if (anElse.getComment() != null)
+//			height += 10;
+//
+//		return height + 20;
 		return height;
 	}
 

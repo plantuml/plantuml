@@ -38,17 +38,13 @@ package net.sourceforge.plantuml.ebnf;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.plantuml.awt.geom.XDimension2D;
-import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.ugraphic.color.HColors;
 
-public class ETileConcatenation extends AbstractTextBlock implements ETile {
+public class ETileConcatenation extends ETile {
 
-	private final double marginx = 16;
+	private final double marginx = 20;
 	private final List<ETile> tiles = new ArrayList<>();
 
 	@Override
@@ -57,58 +53,55 @@ public class ETileConcatenation extends AbstractTextBlock implements ETile {
 	}
 
 	@Override
-	public double linePos(StringBounder stringBounder) {
-		double result = 0;
-
-		for (ETile tile : tiles)
-			result = Math.max(result, tile.linePos(stringBounder));
-
-		return result;
-	}
-
-	@Override
 	public void drawU(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
-		ug = ug.apply(HColors.BLACK);
 
-		final double fullLinePos = linePos(stringBounder);
+		final double fullLinePos = getH1(stringBounder);
 		double x = 0;
 		drawHline(ug, fullLinePos, 0, x);
 		for (int i = 0; i < tiles.size(); i++) {
 			final ETile tile = tiles.get(i);
-			final double linePos = tile.linePos(stringBounder);
+			final double linePos = tile.getH1(stringBounder);
 			tile.drawU(ug.apply(new UTranslate(x, fullLinePos - linePos)));
 			x += tile.calculateDimension(stringBounder).getWidth();
 			if (i != tiles.size() - 1) {
-				drawHline(ug, fullLinePos, x, x + marginx);
+				drawHlineDirected(ug, fullLinePos, x, x + marginx, 0.5);
 				x += marginx;
 			}
 		}
 
 	}
 
-	public static void drawHline(UGraphic ug, double y, double x1, double x2) {
-		ug.apply(new UTranslate(x1, y)).draw(ULine.hline(x2 - x1));
-	}
+	@Override
+	public double getH1(StringBounder stringBounder) {
+		double result = 0;
 
-	public static void drawVline(UGraphic ug, double x, double y1, double y2) {
-		ug.apply(new UTranslate(x, y1)).draw(ULine.vline(y2 - y1));
+		for (ETile tile : tiles)
+			result = Math.max(result, tile.getH1(stringBounder));
+
+		return result;
 	}
 
 	@Override
-	public XDimension2D calculateDimension(StringBounder stringBounder) {
-		double width = 0;
-		double height = 0;
+	public double getH2(StringBounder stringBounder) {
+		double result = 0;
 
+		for (ETile tile : tiles)
+			result = Math.max(result, tile.getH2(stringBounder));
+
+		return result;
+	}
+
+	@Override
+	public double getWidth(StringBounder stringBounder) {
+		double width = 0;
 		for (int i = 0; i < tiles.size(); i++) {
 			final ETile tile = tiles.get(i);
-			final XDimension2D dim = tile.calculateDimension(stringBounder);
-			height = Math.max(height, dim.getHeight());
-			width += dim.getWidth();
+			width += tile.getWidth(stringBounder);
 			if (i != tiles.size() - 1)
 				width += marginx;
 		}
-		return new XDimension2D(width, height);
+		return width;
 	}
 
 }
