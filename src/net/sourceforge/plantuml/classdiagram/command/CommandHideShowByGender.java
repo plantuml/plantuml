@@ -137,6 +137,10 @@ public class CommandHideShowByGender extends SingleLineCommand2<UmlDiagram> {
 			gender = EntityGenderUtils.byEntityType(LeafType.STRUCT);
 		} else if (arg1.equalsIgnoreCase("exception")) {
 			gender = EntityGenderUtils.byEntityType(LeafType.EXCEPTION);
+		} else if (arg1.equalsIgnoreCase("metaclass")) {
+			gender = EntityGenderUtils.byEntityType(LeafType.METACLASS);
+		} else if (arg1.equalsIgnoreCase("stereotype")) {
+			gender = EntityGenderUtils.byEntityType(LeafType.STEREOTYPE);
 		} else if (arg1.startsWith("<<")) {
 			gender = EntityGenderUtils.byStereotype(arg1);
 		} else {
@@ -175,6 +179,10 @@ public class CommandHideShowByGender extends SingleLineCommand2<UmlDiagram> {
 			gender = EntityGenderUtils.byEntityType(LeafType.STRUCT);
 		} else if (arg1.equalsIgnoreCase("exception")) {
 			gender = EntityGenderUtils.byEntityType(LeafType.EXCEPTION);
+		} else if (arg1.equalsIgnoreCase("metaclass")) {
+			gender = EntityGenderUtils.byEntityType(LeafType.METACLASS);
+		} else if (arg1.equalsIgnoreCase("stereotype")) {
+			gender = EntityGenderUtils.byEntityType(LeafType.STEREOTYPE);
 		} else if (arg1.startsWith("<<")) {
 			gender = EntityGenderUtils.byStereotype(arg1);
 		} else {

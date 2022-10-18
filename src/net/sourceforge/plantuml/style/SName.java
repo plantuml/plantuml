@@ -151,6 +151,8 @@ public enum SName {
 	spotException, //
 	spotClass, //
 	spotAbstractClass, //
+	spotMetaClass, //
+	spotStereotype, //
 
 	wbsDiagram, //
 	yamlDiagram; //

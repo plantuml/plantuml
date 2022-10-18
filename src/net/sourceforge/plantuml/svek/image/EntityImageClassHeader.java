@@ -199,6 +199,10 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 			return StyleSignatureBasic.of(SName.root, SName.element, SName.spot, SName.spotStruct);
 		case EXCEPTION:
 			return StyleSignatureBasic.of(SName.root, SName.element, SName.spot, SName.spotException);
+		case METACLASS:
+			return StyleSignatureBasic.of(SName.root, SName.element, SName.spot, SName.spotMetaClass);
+		case STEREOTYPE:
+			return StyleSignatureBasic.of(SName.root, SName.element, SName.spot, SName.spotStereotype);
 		}
 		throw new IllegalStateException();
 	}
@@ -223,6 +227,10 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 			return 'S';
 		case EXCEPTION:
 			return 'X';
+		case METACLASS:
+			return 'M';
+		case STEREOTYPE:
+			return 'S';
 		}
 		assert false;
 		return '?';
