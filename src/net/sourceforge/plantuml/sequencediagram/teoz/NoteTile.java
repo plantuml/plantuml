@@ -59,6 +59,7 @@ public class NoteTile extends AbstractTile implements Tile {
 	private final Rose skin;
 	private final ISkinParam skinParam;
 	private final Note note;
+	private final YGauge yGauge;
 
 	public Event getEvent() {
 		return note;
@@ -70,13 +71,19 @@ public class NoteTile extends AbstractTile implements Tile {
 	}
 
 	public NoteTile(StringBounder stringBounder, LivingSpace livingSpace1, LivingSpace livingSpace2, Note note,
-			Rose skin, ISkinParam skinParam) {
-		super(stringBounder);
+			Rose skin, ISkinParam skinParam, YGauge currentY) {
+		super(stringBounder, currentY);
 		this.livingSpace1 = livingSpace1;
 		this.livingSpace2 = livingSpace2;
 		this.note = note;
 		this.skin = skin;
 		this.skinParam = skinParam;
+		this.yGauge = YGauge.create(currentY.getMax(), getPreferredHeight());
+	}
+
+	@Override
+	public YGauge getYGauge() {
+		return yGauge;
 	}
 
 	private Component getComponent(StringBounder stringBounder) {
@@ -86,16 +93,18 @@ public class NoteTile extends AbstractTile implements Tile {
 	}
 
 	private ComponentType getNoteComponentType(NoteStyle noteStyle) {
-		if (noteStyle == NoteStyle.HEXAGONAL) {
+		if (noteStyle == NoteStyle.HEXAGONAL)
 			return ComponentType.NOTE_HEXAGONAL;
-		}
-		if (noteStyle == NoteStyle.BOX) {
+
+		if (noteStyle == NoteStyle.BOX)
 			return ComponentType.NOTE_BOX;
-		}
+
 		return ComponentType.NOTE;
 	}
 
 	public void drawU(UGraphic ug) {
+		if (YGauge.USE_ME)
+			ug = ug.apply(UTranslate.dy(getYGauge().getMin().getCurrentValue()));
 		final StringBounder stringBounder = ug.getStringBounder();
 		final Component comp = getComponent(stringBounder);
 		final XDimension2D dim = comp.getPreferredDimension(stringBounder);
@@ -114,9 +123,9 @@ public class NoteTile extends AbstractTile implements Tile {
 			final double x1 = livingSpace1.getPosB(stringBounder).getCurrentValue();
 			final double x2 = livingSpace2.getPosD(stringBounder).getCurrentValue();
 			final double w = x2 - x1;
-			if (width < w) {
+			if (width < w)
 				return w;
-			}
+
 		}
 		return width;
 	}
@@ -141,6 +150,7 @@ public class NoteTile extends AbstractTile implements Tile {
 		}
 	}
 
+	@Override
 	public double getPreferredHeight() {
 		final Component comp = getComponent(getStringBounder());
 		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());
@@ -153,6 +163,7 @@ public class NoteTile extends AbstractTile implements Tile {
 		// final double width = dim.getWidth();
 	}
 
+	@Override
 	public Real getMinX() {
 		final Real result = getX(getStringBounder());
 		if (note.getPosition() == NotePosition.OVER_SEVERAL) {
@@ -162,6 +173,7 @@ public class NoteTile extends AbstractTile implements Tile {
 		return result;
 	}
 
+	@Override
 	public Real getMaxX() {
 		final Real result = getX(getStringBounder()).addFixed(getUsedWidth(getStringBounder()));
 		if (note.getPosition() == NotePosition.OVER_SEVERAL) {

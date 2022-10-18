@@ -76,7 +76,7 @@ public abstract class ETile extends AbstractTextBlock {
 
 	protected final void drawHlineDirected(UGraphic ug, double y, double x1, double x2, double coef) {
 		ug.apply(new UTranslate(x1, y)).draw(ULine.hline(x2 - x1));
-		if (x2 > x1 + 20)
+		if (x2 > x1 + 25)
 			ug.apply(new CopyForegroundColorToBackgroundColor())
 					.apply(new UTranslate(x1 * (1 - coef) + x2 * coef - 2, y)).draw(getArrowToRight());
 
@@ -149,6 +149,18 @@ public abstract class ETile extends AbstractTextBlock {
 		arrow.lineTo(0, 0);
 		arrow.closePath();
 		return arrow;
+	}
+
+	protected void addCommentBelow(String comment) {
+		System.err.println("Ignoring below comment " + comment + " " + getClass());
+	}
+
+	protected void addCommentAbove(String comment) {
+		System.err.println("Ignoring above comment " + comment + " " + getClass());
+	}
+
+	protected String getRepetitionLabel() {
+		return "?";
 	}
 
 }

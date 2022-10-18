@@ -109,14 +109,14 @@ public class Rose {
 		}
 
 		if (type == ComponentType.NOTE)
-			return new ComponentRoseNote(styles == null ? null : styles[0], stringsToDisplay, paddingX, paddingY, param,
-					textAlign, position, colors);
+			return new ComponentRoseNote(styles[0], stringsToDisplay, paddingX, paddingY, param, textAlign, position,
+					colors);
 
 		if (type == ComponentType.NOTE_HEXAGONAL)
-			return new ComponentRoseNoteHexagonal(styles == null ? null : styles[0], stringsToDisplay, param, colors);
+			return new ComponentRoseNoteHexagonal(styles[0], stringsToDisplay, param, colors);
 
 		if (type == ComponentType.NOTE_BOX)
-			return new ComponentRoseNoteBox(styles == null ? null : styles[0], stringsToDisplay, param, colors);
+			return new ComponentRoseNoteBox(styles[0], stringsToDisplay, param, colors);
 
 		throw new UnsupportedOperationException(type.toString());
 	}
@@ -124,6 +124,13 @@ public class Rose {
 	public Component createComponent(Style[] styles, ComponentType type, ArrowConfiguration config, ISkinParam param,
 			Display stringsToDisplay) {
 		checkRose();
+
+		if (type == ComponentType.DELAY_LINE || type == ComponentType.GROUPING_SPACE || type == ComponentType.DESTROY) {
+
+		} else {
+			if (styles == null)
+				throw new UnsupportedOperationException(type.toString());
+		}
 
 		final Stereotype stereotype = stringsToDisplay == null ? null : stringsToDisplay.getStereotypeIfAny();
 
@@ -133,74 +140,64 @@ public class Rose {
 		final double padding = param.getPadding(PaddingParam.PARTICIPANT);
 
 		if (type == ComponentType.PARTICIPANT_HEAD)
-			return new ComponentRoseParticipant(styles == null ? null : styles[0], styles == null ? null : styles[1],
-					stringsToDisplay, param, param.minClassWidth(), false, padding);
+			return new ComponentRoseParticipant(styles[0], styles[1], stringsToDisplay, param,
+					getMinClassWidth(styles[0]), false, padding);
 
 		if (type == ComponentType.PARTICIPANT_TAIL)
-			return new ComponentRoseParticipant(styles == null ? null : styles[0], styles == null ? null : styles[1],
-					stringsToDisplay, param, param.minClassWidth(), false, padding);
+			return new ComponentRoseParticipant(styles[0], styles[1], stringsToDisplay, param,
+					getMinClassWidth(styles[0]), false, padding);
 
 		if (type == ComponentType.COLLECTIONS_HEAD)
-			return new ComponentRoseParticipant(styles == null ? null : styles[0], styles == null ? null : styles[1],
-					stringsToDisplay, param, param.minClassWidth(), true, padding);
+			return new ComponentRoseParticipant(styles[0], styles[1], stringsToDisplay, param,
+					getMinClassWidth(styles[0]), true, padding);
 
 		if (type == ComponentType.COLLECTIONS_TAIL)
-			return new ComponentRoseParticipant(styles == null ? null : styles[0], styles == null ? null : styles[1],
-					stringsToDisplay, param, param.minClassWidth(), true, padding);
+			return new ComponentRoseParticipant(styles[0], styles[1], stringsToDisplay, param,
+					getMinClassWidth(styles[0]), true, padding);
 
 		if (type == ComponentType.PARTICIPANT_LINE)
-			return new ComponentRoseLine(styles == null ? null : styles[0], false, param.getIHtmlColorSet());
+			return new ComponentRoseLine(styles[0], false, param.getIHtmlColorSet());
 
 		if (type == ComponentType.CONTINUE_LINE)
-			return new ComponentRoseLine(styles == null ? null : styles[0], true, param.getIHtmlColorSet());
+			return new ComponentRoseLine(styles[0], true, param.getIHtmlColorSet());
 
 		if (type == ComponentType.ACTOR_HEAD)
-			return new ComponentRoseActor(param.actorStyle(), styles == null ? null : styles[0],
-					styles == null ? null : styles[1], stringsToDisplay, true, param);
+			return new ComponentRoseActor(param.actorStyle(), styles[0], styles == null ? null : styles[1],
+					stringsToDisplay, true, param);
 
 		if (type == ComponentType.ACTOR_TAIL)
-			return new ComponentRoseActor(param.actorStyle(), styles == null ? null : styles[0],
-					styles == null ? null : styles[1], stringsToDisplay, false, param);
+			return new ComponentRoseActor(param.actorStyle(), styles[0], styles == null ? null : styles[1],
+					stringsToDisplay, false, param);
 
 		if (type == ComponentType.BOUNDARY_HEAD)
-			return new ComponentRoseBoundary(styles == null ? null : styles[0], styles == null ? null : styles[1],
-					stringsToDisplay, true, param);
+			return new ComponentRoseBoundary(styles[0], styles[1], stringsToDisplay, true, param);
 
 		if (type == ComponentType.BOUNDARY_TAIL)
-			return new ComponentRoseBoundary(styles == null ? null : styles[0], styles == null ? null : styles[1],
-					stringsToDisplay, false, param);
+			return new ComponentRoseBoundary(styles[0], styles[1], stringsToDisplay, false, param);
 
 		if (type == ComponentType.CONTROL_HEAD)
-			return new ComponentRoseControl(styles == null ? null : styles[0], styles == null ? null : styles[1],
-					stringsToDisplay, true, param);
+			return new ComponentRoseControl(styles[0], styles[1], stringsToDisplay, true, param);
 
 		if (type == ComponentType.CONTROL_TAIL)
-			return new ComponentRoseControl(styles == null ? null : styles[0], styles == null ? null : styles[1],
-					stringsToDisplay, false, param);
+			return new ComponentRoseControl(styles[0], styles[1], stringsToDisplay, false, param);
 
 		if (type == ComponentType.ENTITY_HEAD)
-			return new ComponentRoseEntity(styles == null ? null : styles[0], styles == null ? null : styles[1],
-					stringsToDisplay, true, param);
+			return new ComponentRoseEntity(styles[0], styles[1], stringsToDisplay, true, param);
 
 		if (type == ComponentType.ENTITY_TAIL)
-			return new ComponentRoseEntity(styles == null ? null : styles[0], styles == null ? null : styles[1],
-					stringsToDisplay, false, param);
+			return new ComponentRoseEntity(styles[0], styles[1], stringsToDisplay, false, param);
 
 		if (type == ComponentType.QUEUE_HEAD)
-			return new ComponentRoseQueue(styles == null ? null : styles[0], styles == null ? null : styles[1],
-					stringsToDisplay, true, param);
+			return new ComponentRoseQueue(styles[0], styles[1], stringsToDisplay, true, param);
 
 		if (type == ComponentType.QUEUE_TAIL)
-			return new ComponentRoseQueue(styles == null ? null : styles[0], styles == null ? null : styles[1],
-					stringsToDisplay, false, param);
+			return new ComponentRoseQueue(styles[0], styles[1], stringsToDisplay, false, param);
 
 		if (type == ComponentType.DATABASE_HEAD)
-			return new ComponentRoseDatabase(styles == null ? null : styles[0], styles == null ? null : styles[1],
-					stringsToDisplay, true, param);
+			return new ComponentRoseDatabase(styles[0], styles[1], stringsToDisplay, true, param);
 
 		if (type == ComponentType.DATABASE_TAIL)
-			return new ComponentRoseDatabase(styles == null ? null : styles[0], styles == null ? null : styles[1],
-					stringsToDisplay, false, param);
+			return new ComponentRoseDatabase(styles[0], styles[1], stringsToDisplay, false, param);
 
 		if (type == ComponentType.NOTE)
 			throw new UnsupportedOperationException();
@@ -212,38 +209,34 @@ public class Rose {
 			throw new UnsupportedOperationException();
 
 		if (type == ComponentType.GROUPING_HEADER)
-			return new ComponentRoseGroupingHeader(styles == null ? null : styles[0], styles == null ? null : styles[1],
-					stringsToDisplay, param);
+			return new ComponentRoseGroupingHeader(styles[0], styles[1], stringsToDisplay, param);
 
 		if (type == ComponentType.GROUPING_ELSE_LEGACY)
-			return new ComponentRoseGroupingElse(false, styles == null ? null : styles[0], stringsToDisplay.get(0), param);
+			return new ComponentRoseGroupingElse(false, styles[0], stringsToDisplay.get(0), param);
 
 		if (type == ComponentType.GROUPING_ELSE_TEOZ)
-			return new ComponentRoseGroupingElse(true, styles == null ? null : styles[0], stringsToDisplay.get(0), param);
+			return new ComponentRoseGroupingElse(true, styles[0], stringsToDisplay.get(0), param);
 
 		if (type == ComponentType.GROUPING_SPACE)
 			return new ComponentRoseGroupingSpace(7);
 
 		if (type == ComponentType.ALIVE_BOX_CLOSE_CLOSE)
-			return new ComponentRoseActiveLine(styles == null ? null : styles[0], true, true, param.getIHtmlColorSet());
+			return new ComponentRoseActiveLine(styles[0], true, true, param.getIHtmlColorSet());
 
 		if (type == ComponentType.ALIVE_BOX_CLOSE_OPEN)
-			return new ComponentRoseActiveLine(styles == null ? null : styles[0], true, false,
-					param.getIHtmlColorSet());
+			return new ComponentRoseActiveLine(styles[0], true, false, param.getIHtmlColorSet());
 
 		if (type == ComponentType.ALIVE_BOX_OPEN_CLOSE) {
-			return new ComponentRoseActiveLine(styles == null ? null : styles[0], false, true,
-					param.getIHtmlColorSet());
+			return new ComponentRoseActiveLine(styles[0], false, true, param.getIHtmlColorSet());
 		}
 		if (type == ComponentType.ALIVE_BOX_OPEN_OPEN)
-			return new ComponentRoseActiveLine(styles == null ? null : styles[0], false, false,
-					param.getIHtmlColorSet());
+			return new ComponentRoseActiveLine(styles[0], false, false, param.getIHtmlColorSet());
 
 		if (type == ComponentType.DELAY_LINE)
 			return new ComponentRoseDelayLine(null, getHtmlColor(param, stereotype, ColorParam.sequenceLifeLineBorder));
 
 		if (type == ComponentType.DELAY_TEXT)
-			return new ComponentRoseDelayText(styles == null ? null : styles[0], stringsToDisplay, param);
+			return new ComponentRoseDelayText(styles[0], stringsToDisplay, param);
 
 		if (type == ComponentType.DESTROY)
 			return new ComponentRoseDestroy(styles == null ? null : styles[0],
@@ -253,16 +246,20 @@ public class Rose {
 			throw new UnsupportedOperationException();
 
 		if (type == ComponentType.DIVIDER)
-			return new ComponentRoseDivider(styles == null ? null : styles[0], stringsToDisplay, param);
+			return new ComponentRoseDivider(styles[0], stringsToDisplay, param);
 
 		if (type == ComponentType.REFERENCE)
-			return new ComponentRoseReference(styles == null ? null : styles[0], styles == null ? null : styles[1],
-					stringsToDisplay, param, getHtmlColor(param, stereotype, ColorParam.sequenceReferenceBackground));
+			return new ComponentRoseReference(styles[0], styles[1], stringsToDisplay, param,
+					getHtmlColor(param, stereotype, ColorParam.sequenceReferenceBackground));
 
 		if (type == ComponentType.ENGLOBER)
-			return new ComponentRoseEnglober(styles == null ? null : styles[0], stringsToDisplay, param);
+			return new ComponentRoseEnglober(styles[0], stringsToDisplay, param);
 
 		throw new UnsupportedOperationException();
+	}
+
+	private double getMinClassWidth(Style style) {
+		return style.value(PName.MinimumWidth).asDouble();
 	}
 
 	public Component createComponentNewPage(ISkinParam param) {
@@ -275,8 +272,8 @@ public class Rose {
 		checkRose();
 
 		if (config.getArrowDirection() == ArrowDirection.SELF)
-			return new ComponentRoseSelfArrow(styles == null ? null : styles[0], stringsToDisplay, config, param,
-					param.maxMessageSize(), param.strictUmlStyle() == false);
+			return new ComponentRoseSelfArrow(styles[0], stringsToDisplay, config, param, param.maxMessageSize(),
+					param.strictUmlStyle() == false);
 
 		final ArrowDirection arrowDirection = config.getArrowDirection();
 
@@ -319,9 +316,8 @@ public class Rose {
 
 		}
 
-		return new ComponentRoseArrow(styles == null ? null : styles[0], stringsToDisplay, config,
-				messageHorizontalAlignment, param, param.maxMessageSize(), param.strictUmlStyle() == false,
-				param.responseMessageBelowArrow());
+		return new ComponentRoseArrow(styles[0], stringsToDisplay, config, messageHorizontalAlignment, param,
+				param.maxMessageSize(), param.strictUmlStyle() == false, param.responseMessageBelowArrow());
 	}
 
 	static public UStroke getStroke(ISkinParam param, LineParam lineParam, double defaultValue) {

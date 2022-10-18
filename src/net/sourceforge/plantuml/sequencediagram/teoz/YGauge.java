@@ -33,54 +33,39 @@
  * 
  *
  */
-package net.sourceforge.plantuml.command.regex;
+package net.sourceforge.plantuml.sequencediagram.teoz;
 
-import java.util.Collections;
-import java.util.Map;
+import net.sourceforge.plantuml.real.Real;
 
-public class RegexResult {
+public final class YGauge {
 
-	private final Map<String, RegexPartialMatch> data;
+	public static final boolean USE_ME = false;
 
-	public RegexResult(Map<String, RegexPartialMatch> data) {
-		this.data = Collections.unmodifiableMap(data);
+	private final Real min;
+	private final Real max;
+
+	public YGauge(Real min, Real max) {
+		this.min = min;
+		this.max = max;
 	}
 
 	@Override
 	public String toString() {
-		return data.toString();
+		return min.getCurrentValue() + " " + max.getCurrentValue();
 	}
 
-	public RegexPartialMatch get(String key) {
-		return data.get(key);
+	public static YGauge create(Real min, double height) {
+		if (height < 0)
+			throw new IllegalArgumentException();
+		return new YGauge(min, min.addFixed(height));
 	}
 
-	public String get(String key, int num) {
-		final RegexPartialMatch reg = data.get(key);
-		if (reg == null)
-			return null;
-
-		return reg.get(num);
+	public final Real getMin() {
+		return min;
 	}
 
-	public String getLazzy(String key, int num) {
-		for (Map.Entry<String, RegexPartialMatch> ent : data.entrySet()) {
-			if (ent.getKey().startsWith(key) == false)
-				continue;
-
-			final RegexPartialMatch match = ent.getValue();
-			if (num >= match.size())
-				continue;
-
-			if (match.get(num) != null)
-				return ent.getValue().get(num);
-
-		}
-		return null;
-	}
-
-	public int size() {
-		return data.size();
+	public final Real getMax() {
+		return max;
 	}
 
 }

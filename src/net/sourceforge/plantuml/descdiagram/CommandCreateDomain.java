@@ -90,9 +90,9 @@ public class CommandCreateDomain extends SingleLineCommand2<DescriptionDiagram> 
 		String type = arg.get("TYPE", 0);
 		String display = arg.getLazzy("DISPLAY", 0);
 		String codeString = arg.getLazzy("CODE", 0);
-		if (codeString == null) {
+		if (codeString == null)
 			codeString = display;
-		}
+
 		// final String genericOption = arg.getLazzy("DISPLAY", 1);
 		// final String generic = genericOption != null ? genericOption :
 		// arg.get("GENERIC", 0);
@@ -132,24 +132,24 @@ public class CommandCreateDomain extends SingleLineCommand2<DescriptionDiagram> 
 			entity.addUrl(url);
 		}
 		final String s = arg.get("COLOR", 0);
-		entity.setSpecificColorTOBEREMOVED(ColorType.BACK, s == null ? null
-				: diagram.getSkinParam().getIHtmlColorSet().getColor(s));
+		entity.setSpecificColorTOBEREMOVED(ColorType.BACK,
+				s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s));
 		if (type.equalsIgnoreCase("domain")) {
-			if (stereotype != null && stereotype.equalsIgnoreCase("<<Machine>>")) {
+			if (stereotype != null && stereotype.equalsIgnoreCase("<<Machine>>"))
 				type = "machine";
-			}
-			if (stereotype != null && stereotype.equalsIgnoreCase("<<Causal>>")) {
+
+			if (stereotype != null && stereotype.equalsIgnoreCase("<<Causal>>"))
 				type = "causal";
-			}
-			if (stereotype != null && stereotype.equalsIgnoreCase("<<Designed>>")) {
+
+			if (stereotype != null && stereotype.equalsIgnoreCase("<<Designed>>"))
 				type = "designed";
-			}
-			if (stereotype != null && stereotype.equalsIgnoreCase("<<Lexical>>")) {
+
+			if (stereotype != null && stereotype.equalsIgnoreCase("<<Lexical>>"))
 				type = "lexical";
-			}
-			if (stereotype != null && stereotype.equalsIgnoreCase("<<Biddable>>")) {
+
+			if (stereotype != null && stereotype.equalsIgnoreCase("<<Biddable>>"))
 				type = "biddable";
-			}
+
 		}
 		USymbol usymbol = USymbols.fromString(type, diagram.getSkinParam());
 		entity.setUSymbol(usymbol);

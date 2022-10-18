@@ -46,22 +46,27 @@ public enum Symbol {
 	ALTERNATION, // |
 	OPTIONAL_OPEN, // [
 	OPTIONAL_CLOSE, // ]
-	OPTIONAL,
+	OPTIONAL, //
+	REPETITION_SYMBOL, // *
 	REPETITION_OPEN, // {
 	REPETITION_CLOSE, // }
 	REPETITION_MINUS_CLOSE, // }
-	REPETITION_ZERO_OR_MORE, // 
-	REPETITION_ONE_OR_MORE, // 
+	REPETITION_ZERO_OR_MORE, //
+	REPETITION_ONE_OR_MORE, //
 	GROUPING_OPEN, // (
 	GROUPING_CLOSE, // )
 	TERMINAL_STRING1, // " "
 	TERMINAL_STRING2, // ' '
-	COMMENT, // (* *)
+	COMMENT_TOKEN, // (* *)
+	COMMENT_BELOW, // (* *)
+	COMMENT_ABOVE, // (* *)
 	SPECIAL_SEQUENCE, // ? ?
 	EXCEPTION; // -
 
 	public int getPriority() {
 		switch (this) {
+		case REPETITION_SYMBOL:
+			return 3;
 		case CONCATENATION:
 			return 2;
 		case ALTERNATION:
@@ -71,7 +76,7 @@ public enum Symbol {
 	}
 
 	boolean isOperator() {
-		return this == CONCATENATION || this == ALTERNATION;
+		return this == CONCATENATION || this == ALTERNATION || this == REPETITION_SYMBOL;
 	}
 
 	boolean isFunction() {

@@ -60,19 +60,26 @@ public class CommunicationExoTile extends AbstractTile {
 	private final Rose skin;
 	private final ISkinParam skinParam;
 	private final TileArguments tileArguments;
+	private final YGauge yGauge;
 
 	public Event getEvent() {
 		return message;
 	}
 
 	public CommunicationExoTile(LivingSpace livingSpace, MessageExo message, Rose skin, ISkinParam skinParam,
-			TileArguments tileArguments) {
-		super(tileArguments.getStringBounder());
+			TileArguments tileArguments, YGauge currentY) {
+		super(tileArguments.getStringBounder(), currentY);
 		this.tileArguments = tileArguments;
 		this.livingSpace = livingSpace;
 		this.message = message;
 		this.skin = skin;
 		this.skinParam = skinParam;
+		this.yGauge = YGauge.create(currentY.getMax(), getPreferredHeight());
+	}
+
+	@Override
+	public YGauge getYGauge() {
+		return yGauge;
 	}
 
 	@Override
@@ -82,15 +89,17 @@ public class CommunicationExoTile extends AbstractTile {
 
 	private ArrowComponent getComponent(StringBounder stringBounder) {
 		ArrowConfiguration arrowConfiguration = message.getArrowConfiguration();
-		if (message.getType().getDirection() == -1) {
+		if (message.getType().getDirection() == -1)
 			arrowConfiguration = arrowConfiguration.reverse();
-		}
+
 		final ArrowComponent comp = skin.createComponentArrow(message.getUsedStyles(), arrowConfiguration, skinParam,
 				message.getLabelNumbered());
 		return comp;
 	}
 
 	public void drawU(UGraphic ug) {
+		if (YGauge.USE_ME)
+			ug = ug.apply(UTranslate.dy(getYGauge().getMin().getCurrentValue()));
 		final StringBounder stringBounder = ug.getStringBounder();
 		final Component comp = getComponent(stringBounder);
 		final XDimension2D dim = comp.getPreferredDimension(stringBounder);
@@ -98,27 +107,26 @@ public class CommunicationExoTile extends AbstractTile {
 		double x2 = getPoint2Value(stringBounder);
 		final int level = livingSpace.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);
 		if (level > 0) {
-			if (message.getType().isRightBorder()) {
+			if (message.getType().isRightBorder())
 				x1 += CommunicationTile.LIVE_DELTA_SIZE * level;
-			} else {
+			else
 				x2 += CommunicationTile.LIVE_DELTA_SIZE * (level - 2);
-			}
+
 		}
 
 		final ArrowConfiguration arrowConfiguration = message.getArrowConfiguration();
 		final MessageExoType type = message.getType();
-		if (arrowConfiguration.getDecoration1() == ArrowDecoration.CIRCLE && type == MessageExoType.FROM_LEFT) {
+		if (arrowConfiguration.getDecoration1() == ArrowDecoration.CIRCLE && type == MessageExoType.FROM_LEFT)
 			x1 += ComponentRoseArrow.diamCircle / 2 + 2;
-		}
-		if (arrowConfiguration.getDecoration2() == ArrowDecoration.CIRCLE && type == MessageExoType.TO_LEFT) {
+
+		if (arrowConfiguration.getDecoration2() == ArrowDecoration.CIRCLE && type == MessageExoType.TO_LEFT)
 			x1 += ComponentRoseArrow.diamCircle / 2 + 2;
-		}
-		if (arrowConfiguration.getDecoration2() == ArrowDecoration.CIRCLE && type == MessageExoType.TO_RIGHT) {
+
+		if (arrowConfiguration.getDecoration2() == ArrowDecoration.CIRCLE && type == MessageExoType.TO_RIGHT)
 			x2 -= ComponentRoseArrow.diamCircle / 2 + 2;
-		}
-		if (arrowConfiguration.getDecoration1() == ArrowDecoration.CIRCLE && type == MessageExoType.FROM_RIGHT) {
+
+		if (arrowConfiguration.getDecoration1() == ArrowDecoration.CIRCLE && type == MessageExoType.FROM_RIGHT)
 			x2 -= ComponentRoseArrow.diamCircle / 2 + 2;
-		}
 
 		final Area area = Area.create(x2 - x1, dim.getHeight());
 		ug = ug.apply(UTranslate.dx(x1));
@@ -129,6 +137,7 @@ public class CommunicationExoTile extends AbstractTile {
 		return message.isShortArrow();
 	}
 
+	@Override
 	public double getPreferredHeight() {
 		final Component comp = getComponent(getStringBounder());
 		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());
@@ -147,9 +156,8 @@ public class CommunicationExoTile extends AbstractTile {
 		final double width = dim.getWidth();
 
 		if (message.getType().isRightBorder()) {
-
 		} else {
-			livingSpace.getPosC(getStringBounder()).ensureBiggerThan(tileArguments.getOrigin().addFixed(width));
+			livingSpace.getPosC(getStringBounder()).ensureBiggerThan(tileArguments.getXOrigin().addFixed(width));
 		}
 
 		// final Real point1 = getPoint1(stringBounder);
@@ -166,37 +174,38 @@ public class CommunicationExoTile extends AbstractTile {
 	}
 
 	@Override
-	final protected void callbackY_internal(double y) {
+	final protected void callbackY_internal(TimeHook y) {
+		super.callbackY_internal(y);
 		final ArrowComponent comp = getComponent(getStringBounder());
 		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());
 		final double arrowY = comp.getStartPoint(getStringBounder(), dim).getY();
 
-		livingSpace.addStepForLivebox(getEvent(), y + arrowY);
+		livingSpace.addStepForLivebox(getEvent(), y.getValue() + arrowY);
 
 	}
 
 	private Real getPoint1(final StringBounder stringBounder) {
-		if (message.getType().isRightBorder()) {
+		if (message.getType().isRightBorder())
 			return livingSpace.getPosC(stringBounder);
-		}
-		return tileArguments.getOrigin();
+
+		return tileArguments.getXOrigin();
 	}
 
 	private double getPoint1Value(final StringBounder stringBounder) {
-		if (message.getType().isRightBorder()) {
+		if (message.getType().isRightBorder())
 			return livingSpace.getPosC(stringBounder).getCurrentValue();
-		}
-		if (isShortArrow()) {
+
+		if (isShortArrow())
 			return getPoint2Value(stringBounder) - getPreferredWidth(stringBounder);
-		}
+
 		return tileArguments.getBorder1();
 	}
 
 	private double getPoint2Value(final StringBounder stringBounder) {
 		if (message.getType().isRightBorder()) {
-			if (isShortArrow()) {
+			if (isShortArrow())
 				return getPoint1Value(stringBounder) + getPreferredWidth(stringBounder);
-			}
+
 			return tileArguments.getBorder2();
 		}
 		return livingSpace.getPosC(stringBounder).getCurrentValue();

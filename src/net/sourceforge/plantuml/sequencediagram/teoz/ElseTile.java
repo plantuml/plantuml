@@ -43,10 +43,13 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.GroupingLeaf;
+import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
+import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class ElseTile extends AbstractTile {
 
@@ -54,6 +57,7 @@ public class ElseTile extends AbstractTile {
 	private final ISkinParam skinParam;
 	private final GroupingLeaf anElse;
 	private final Tile parent;
+	private final YGauge yGauge;
 
 	public Event getEvent() {
 		return anElse;
@@ -64,12 +68,18 @@ public class ElseTile extends AbstractTile {
 		return 0;
 	}
 
-	public ElseTile(GroupingLeaf anElse, Rose skin, ISkinParam skinParam, Tile parent) {
-		super(((AbstractTile) parent).getStringBounder());
+	public ElseTile(GroupingLeaf anElse, Rose skin, ISkinParam skinParam, Tile parent, YGauge currentY) {
+		super(((AbstractTile) parent).getStringBounder(), currentY);
 		this.anElse = anElse;
 		this.skin = skin;
 		this.skinParam = skinParam;
 		this.parent = parent;
+		this.yGauge = YGauge.create(currentY.getMax(), getPreferredHeight());
+	}
+
+	@Override
+	public YGauge getYGauge() {
+		return yGauge;
 	}
 
 	public Component getComponent(StringBounder stringBounder) {
@@ -84,22 +94,24 @@ public class ElseTile extends AbstractTile {
 	}
 
 	public void drawU(UGraphic ug) {
-		// final StringBounder stringBounder = ug.getStringBounder();
-		// final Component comp = getComponent(stringBounder);
-		// final Dimension2D dim = comp.getPreferredDimension(stringBounder);
-		// final Real min = getMinX(stringBounder);
-		// final Real max = getMaxX(stringBounder);
-		// final Context2D context = (Context2D) ug;
-		// double height = dim.getHeight();
-		// // if (context.isBackground() && parent instanceof GroupingTile) {
-		// // final double startingY = ((GroupingTile) parent).getStartY();
-		// // final double totalParentHeight = parent.getPreferredHeight(stringBounder);
-		// // height = totalParentHeight - (startingY - y);
-		// // }
-		// final Area area = new Area(max.getCurrentValue() - min.getCurrentValue(),
-		// height);
-		// ug = ug.apply(new UTranslate(min.getCurrentValue(), 0));
-		// comp.drawU(ug, area, context);
+		if (YGauge.USE_ME == false)
+			return;
+
+		final StringBounder stringBounder = ug.getStringBounder();
+		final Component comp = getComponent(stringBounder);
+		final XDimension2D dim = comp.getPreferredDimension(stringBounder);
+		final Real min = parent.getMinX().addFixed(GroupingTile.EXTERNAL_MARGINX1);
+		final Real max = parent.getMaxX().addFixed(-GroupingTile.EXTERNAL_MARGINX2);
+		final Context2D context = (Context2D) ug;
+		double height = dim.getHeight();
+		// if (context.isBackground() && parent instanceof GroupingTile) {
+		// final double startingY = ((GroupingTile) parent).getStartY();
+		// final double totalParentHeight = parent.getPreferredHeight(stringBounder);
+		// height = totalParentHeight - (startingY - y);
+		// }
+		final Area area = Area.create(max.getCurrentValue() - min.getCurrentValue(), height);
+		ug = ug.apply(new UTranslate(min.getCurrentValue(), 0));
+		comp.drawU(ug, area, context);
 	}
 
 	public double getPreferredHeight() {

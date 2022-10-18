@@ -41,7 +41,6 @@ import java.util.Set;
 
 import net.sourceforge.plantuml.AlignmentParam;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FloatingNote;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileGroup;
@@ -55,6 +54,7 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -91,15 +91,14 @@ public class GtileGroup extends AbstractGtileRoot {
 	}
 
 	public GtileGroup(Gtile inner, Display title, Display displayNote, HColor arrowColor, HColor backColor,
-			HColor titleColor, ISkinParam skinParam, HColor borderColor, USymbol type, double roundCorner) {
+			ISkinParam skinParam, USymbol type, Style style) {
 		super(inner.getStringBounder(), skinParam);
-		this.roundCorner = roundCorner;
 		this.type = type;
 		this.backColor = backColor == null ? HColors.WHITE : backColor;
 		this.inner = inner;
-		this.borderColor = borderColor == null ? HColors.BLACK : borderColor;
+		this.borderColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
+		this.roundCorner = style.value(PName.RoundCorner).asDouble();
 
-		final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
 		final FontConfiguration fc = style.getFontConfiguration(skinParam.getIHtmlColorSet());
 		this.shadowing = style.value(PName.Shadowing).asDouble();
 
@@ -111,10 +110,9 @@ public class GtileGroup extends AbstractGtileRoot {
 		if (Display.isNull(displayNote))
 			this.headerNote = TextBlockUtils.empty(0, 0);
 		else
-			this.headerNote = new FloatingNote(displayNote, skinParam);
+			this.headerNote = FloatingNote.create(displayNote, skinParam, SName.activityDiagram);
 
-		final UStroke thickness = skinParam.getThickness(LineParam.partitionBorder, null);
-		this.stroke = thickness == null ? new UStroke(2) : thickness;
+		this.stroke = style.getStroke();
 	}
 
 	@Override

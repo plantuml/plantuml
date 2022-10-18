@@ -66,11 +66,10 @@ public class InstructionList extends WithNote implements Instruction, Instructio
 
 	@Override
 	public boolean containsBreak() {
-		for (Instruction ins : all) {
-			if (ins.containsBreak()) {
+		for (Instruction ins : all)
+			if (ins.containsBreak())
 				return true;
-			}
-		}
+
 		return false;
 	}
 
@@ -87,12 +86,12 @@ public class InstructionList extends WithNote implements Instruction, Instructio
 	}
 
 	public boolean isOnlySingleStopOrSpot() {
-		if (all.size() != 1) {
+		if (all.size() != 1)
 			return false;
-		}
-		if (getLast() instanceof InstructionSpot) {
+
+		if (getLast() instanceof InstructionSpot)
 			return true;
-		}
+
 		return getLast() instanceof InstructionStop && ((InstructionStop) getLast()).hasNotes() == false;
 	}
 
@@ -104,60 +103,55 @@ public class InstructionList extends WithNote implements Instruction, Instructio
 
 	@Override
 	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
-		if (all.size() == 0) {
+		if (all.size() == 0)
 			return new GtileEmpty(stringBounder, skinParam, defaultSwimlane);
-		}
+
 		Gtile result = null;
 		for (Instruction ins : all) {
 			final Gtile cur = ins.createGtile(skinParam, stringBounder);
 
-			if (result == null) {
+			if (result == null)
 				result = cur;
-			} else {
+			else
 				result = new GtileAssembly(result, cur, ins.getInLinkRendering());
-			}
+
 		}
 		return result;
 	}
 
 	@Override
 	public Ftile createFtile(FtileFactory factory) {
-		if (all.size() == 0) {
+		if (all.size() == 0)
 			return new FtileEmpty(factory.skinParam(), defaultSwimlane);
-		}
+
 		final List<WeldingPoint> breaks = new ArrayList<>();
 		Ftile result = eventuallyAddNote(factory, null, getSwimlaneIn(), VerticalAlignment.CENTER);
 		for (Instruction ins : all) {
 			Ftile cur = ins.createFtile(factory);
 			breaks.addAll(cur.getWeldingPoints());
-			if (ins.getInLinkRendering().isNone() == false) {
+			if (ins.getInLinkRendering().isNone() == false)
 				cur = factory.decorateIn(cur, ins.getInLinkRendering());
-			}
 
-			if (result == null) {
+			if (result == null)
 				result = cur;
-			} else {
+			else
 				result = factory.assembly(result, cur);
-			}
-		}
-		if (outlinkRendering != null) {
-			result = factory.decorateOut(result, outlinkRendering);
-		}
-		if (breaks.size() > 0) {
-			result = new FtileDecorateWelding(result, breaks);
 		}
 
-		// if (killed) {
-		// result = new FtileKilled(result);
-		// }
+		if (outlinkRendering != null)
+			result = factory.decorateOut(result, outlinkRendering);
+
+		if (breaks.size() > 0)
+			result = new FtileDecorateWelding(result, breaks);
+
 		return result;
 	}
 
 	@Override
 	final public boolean kill() {
-		if (all.size() == 0) {
+		if (all.size() == 0)
 			return false;
-		}
+
 		return getLast().kill();
 	}
 
@@ -168,17 +162,17 @@ public class InstructionList extends WithNote implements Instruction, Instructio
 
 	@Override
 	public Instruction getLast() {
-		if (all.size() == 0) {
+		if (all.size() == 0)
 			return null;
-		}
+
 		return all.get(all.size() - 1);
 	}
 
 	@Override
 	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote) {
-		if (getLast() == null) {
+		if (getLast() == null)
 			return super.addNote(note, position, type, colors, swimlaneNote);
-		}
+
 		return getLast().addNote(note, position, type, colors, swimlaneNote);
 	}
 
@@ -195,20 +189,20 @@ public class InstructionList extends WithNote implements Instruction, Instructio
 	@Override
 	public Swimlane getSwimlaneOut() {
 		final Set<Swimlane> swimlanes = getSwimlanes();
-		if (swimlanes.size() == 0) {
+		if (swimlanes.size() == 0)
 			return null;
-		}
-		if (swimlanes.size() == 1) {
+
+		if (swimlanes.size() == 1)
 			return swimlanes.iterator().next();
-		}
+
 		return getLast().getSwimlaneOut();
 	}
 
 	public static Set<Swimlane> getSwimlanes2(List<? extends Instruction> list) {
 		final Set<Swimlane> result = new HashSet<>();
-		for (Instruction ins : list) {
+		for (Instruction ins : list)
 			result.addAll(ins.getSwimlanes());
-		}
+
 		return Collections.unmodifiableSet(result);
 	}
 

@@ -141,9 +141,9 @@ public class LivingSpaces {
 	}
 
 	public void delayOn(double y, double height) {
-		for (LivingSpace livingSpace : values()) {
+		for (LivingSpace livingSpace : values())
 			livingSpace.delayOn(y, height);
-		}
+
 	}
 
 	public int size() {

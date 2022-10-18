@@ -110,29 +110,29 @@ public class TextBlockUtils {
 	}
 
 	public static TextBlock mergeLR(TextBlock b1, TextBlock b2, VerticalAlignment verticallAlignment) {
-		if (b1 == EMPTY_TEXT_BLOCK) {
+		if (b1 == EMPTY_TEXT_BLOCK)
 			return b2;
-		}
-		if (b2 == EMPTY_TEXT_BLOCK) {
+
+		if (b2 == EMPTY_TEXT_BLOCK)
 			return b1;
-		}
+
 		return new TextBlockHorizontal(b1, b2, verticallAlignment);
 	}
 
 	public static TextBlock mergeTB(TextBlock b1, TextBlock b2, HorizontalAlignment horizontalAlignment) {
-		if (b1 == EMPTY_TEXT_BLOCK) {
+		if (b1 == EMPTY_TEXT_BLOCK)
 			return b2;
-		}
-		if (b2 == EMPTY_TEXT_BLOCK) {
+
+		if (b2 == EMPTY_TEXT_BLOCK)
 			return b1;
-		}
+
 		return new TextBlockVertical2(b1, b2, horizontalAlignment);
 	}
 
 	public static TextBlock mergeTB(TextBlock b1, UImage image, HorizontalAlignment horizontalAlignment) {
-		if (b1 == EMPTY_TEXT_BLOCK) {
+		if (b1 == EMPTY_TEXT_BLOCK)
 			throw new IllegalArgumentException();
-		}
+
 		return new TextBlockVertical2(b1, image, horizontalAlignment);
 	}
 

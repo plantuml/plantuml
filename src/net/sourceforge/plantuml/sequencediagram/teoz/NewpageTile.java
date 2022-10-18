@@ -50,8 +50,8 @@ public class NewpageTile extends AbstractTile {
 		return 0;
 	}
 
-	public NewpageTile(Newpage newpage, TileArguments tileArguments) {
-		super(tileArguments.getStringBounder());
+	public NewpageTile(Newpage newpage, TileArguments tileArguments, YGauge currentY) {
+		super(tileArguments.getStringBounder(), currentY);
 		this.newpage = newpage;
 		this.tileArguments = tileArguments;
 	}
@@ -67,11 +67,11 @@ public class NewpageTile extends AbstractTile {
 	}
 
 	public Real getMinX() {
-		return tileArguments.getOrigin();
+		return tileArguments.getXOrigin();
 	}
 
 	public Real getMaxX() {
-		return tileArguments.getOrigin();
+		return tileArguments.getXOrigin();
 	}
 
 	public Event getEvent() {

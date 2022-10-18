@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public interface FtileFactory {
@@ -95,7 +96,7 @@ public interface FtileFactory {
 
 	public Ftile createParallel(List<Ftile> all, ForkStyle style, String label, Swimlane in, Swimlane out);
 
-	public Ftile createGroup(Ftile list, Display name, HColor backColor, HColor titleColor, PositionedNote note,
-			HColor borderColor, USymbol type, double roundCorner);
+	public Ftile createGroup(Ftile list, Display name, HColor backColor, PositionedNote note, USymbol type,
+			Style style);
 
 }

@@ -59,6 +59,7 @@ public class CommunicationTileNoteLeft extends AbstractTile {
 	private final ISkinParam skinParam;
 	private final LivingSpace livingSpace;
 	private final Note noteOnMessage;
+	private final YGauge yGauge;
 
 	public Event getEvent() {
 		return message;
@@ -70,24 +71,32 @@ public class CommunicationTileNoteLeft extends AbstractTile {
 	}
 
 	public CommunicationTileNoteLeft(Tile tile, AbstractMessage message, Rose skin, ISkinParam skinParam,
-			LivingSpace livingSpace, Note noteOnMessage) {
-		super(((AbstractTile) tile).getStringBounder());
+			LivingSpace livingSpace, Note noteOnMessage, YGauge currentY) {
+		super(((AbstractTile) tile).getStringBounder(), currentY);
 		this.tile = tile;
 		this.message = message;
 		this.skin = skin;
 		this.skinParam = skinParam;
 		this.noteOnMessage = noteOnMessage;
 		this.livingSpace = livingSpace;
+		this.yGauge = YGauge.create(currentY.getMax(), getPreferredHeight());
 	}
 
 	@Override
-	final protected void callbackY_internal(double y) {
+	public YGauge getYGauge() {
+		return yGauge;
+	}
+
+	@Override
+	final protected void callbackY_internal(TimeHook y) {
+		super.callbackY_internal(y);
 		tile.callbackY(y);
 	}
 
 	private Component getComponent(StringBounder stringBounder) {
 		final Component comp = skin.createComponentNote(noteOnMessage.getUsedStyles(), ComponentType.NOTE,
-				noteOnMessage.getSkinParamBackcolored(skinParam), noteOnMessage.getStrings(), noteOnMessage.getColors());
+				noteOnMessage.getSkinParamBackcolored(skinParam), noteOnMessage.getStrings(),
+				noteOnMessage.getColors());
 		return comp;
 	}
 

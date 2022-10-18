@@ -50,7 +50,7 @@ public abstract class ColorMapper {
 			return simple.getAwtColor();
 		}
 	};
-	public final static ColorMapper FORCE_DARK = new ColorMapper() {
+	public final static ColorMapper DARK_MODE = new ColorMapper() {
 		@Override
 		public Color fromColorSimple(HColorSimple simple) {
 			return ((HColorSimple) simple.darkSchemeTheme()).getAwtColor();

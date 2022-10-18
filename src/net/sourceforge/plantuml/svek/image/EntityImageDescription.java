@@ -137,6 +137,11 @@ public class EntityImageDescription extends AbstractEntityImage {
 
 		final Style styleStereo = tmp.forStereotypeItself(stereotype)
 				.getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+
+		final Style style = StyleSignatureBasic.of(SName.root, SName.element, styleName, symbol.getSName())
+				.withTOBECHANGED(stereotype).getMergedStyle(getSkinParam().getCurrentStyleBuilder())
+				.eventuallyOverride(colors);
+
 		final HColor forecolor = styleTitle.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
 
 		HColor backcolor = colors.getColor(ColorType.BACK);
@@ -159,7 +164,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 		final Display codeDisplay = Display.getWithNewlines(entity.getCodeGetName());
 		if ((entity.getDisplay().equals(codeDisplay) && symbol.getSName() == SName.package_)
 				|| entity.getDisplay().isWhite())
-			desc = TextBlockUtils.empty(getSkinParam().minClassWidth(), 0);
+			desc = TextBlockUtils.empty(style.value(PName.MinimumWidth).asDouble(), 0);
 		else
 			desc = BodyFactory.create3(entity.getDisplay(), getSkinParam(), defaultAlign, fcTitle,
 					getSkinParam().wrapWidth(), styleTitle);

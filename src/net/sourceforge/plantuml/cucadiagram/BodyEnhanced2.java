@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.TextBlockVertical2;
+import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 
 public class BodyEnhanced2 extends BodyEnhancedAbstract {
@@ -72,9 +73,9 @@ public class BodyEnhanced2 extends BodyEnhancedAbstract {
 
 	@Override
 	protected TextBlock getArea(StringBounder stringBounder) {
-		if (area != null) {
+		if (area != null)
 			return area;
-		}
+
 		// urls.clear();
 		final List<TextBlock> blocks = new ArrayList<>();
 
@@ -83,28 +84,27 @@ public class BodyEnhanced2 extends BodyEnhancedAbstract {
 		Display display = Display.empty();
 		for (CharSequence s : rawBody) {
 			if (isBlockSeparator(s.toString())) {
-				blocks.add(decorate(stringBounder, getTextBlock(display), separator, title));
+				blocks.add(decorate(getTextBlock(display), separator, title, stringBounder));
 				separator = s.charAt(0);
 				title = getTitle(s.toString(), skinParam);
 				display = Display.empty();
 			} else {
-				if (s instanceof String) {
+				if (s instanceof String)
 					s = Guillemet.GUILLEMET.manageGuillemet(s.toString());
-				}
+
 				display = display.add(s);
 			}
 		}
-		blocks.add(decorate(stringBounder, getTextBlock(display), separator, title));
+		blocks.add(decorate(getTextBlock(display), separator, title, stringBounder));
 
-		if (blocks.size() == 1) {
+		if (blocks.size() == 1)
 			this.area = blocks.get(0);
-		} else {
+		else
 			this.area = new TextBlockVertical2(blocks, align);
-		}
 
-		if (skinParam.minClassWidth() > 0) {
-			this.area = TextBlockUtils.withMinWidth(this.area, skinParam.minClassWidth(), align);
-		}
+		final double minClassWidth = getStyle().value(PName.MinimumWidth).asDouble();
+		if (minClassWidth > 0)
+			this.area = TextBlockUtils.withMinWidth(this.area, minClassWidth, align);
 
 		return area;
 	}

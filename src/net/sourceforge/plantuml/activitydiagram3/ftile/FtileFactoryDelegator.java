@@ -188,9 +188,9 @@ public class FtileFactoryDelegator implements FtileFactory {
 		return factory.createParallel(all, style, label, in, out);
 	}
 
-	public Ftile createGroup(Ftile list, Display name, HColor backColor, HColor titleColor, PositionedNote note,
-			HColor borderColor, USymbol type, double roundCorner) {
-		return factory.createGroup(list, name, backColor, titleColor, note, borderColor, type, roundCorner);
+	public Ftile createGroup(Ftile list, Display name, HColor backColor, PositionedNote note, USymbol type,
+			Style style) {
+		return factory.createGroup(list, name, backColor, note, type, style);
 	}
 
 	public StringBounder getStringBounder() {

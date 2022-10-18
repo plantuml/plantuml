@@ -194,6 +194,8 @@ public final class PlayerRobustConcise extends Player {
 	}
 
 	public final IntricatedPoint getTimeProjection(StringBounder stringBounder, TimeTick tick) {
+		if (tick == null)
+			return null;
 		final IntricatedPoint point = getTimeDrawing().getTimeProjection(stringBounder, tick);
 		if (point == null)
 			return null;

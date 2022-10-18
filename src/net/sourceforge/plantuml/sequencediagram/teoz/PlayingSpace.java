@@ -69,15 +69,17 @@ public class PlayingSpace implements Bordered {
 		final List<Real> min2 = new ArrayList<>();
 		final List<Real> max2 = new ArrayList<>();
 
-		min2.add(tileArguments.getOrigin());
-		max2.add(tileArguments.getOrigin());
+		min2.add(tileArguments.getXOrigin());
+		max2.add(tileArguments.getXOrigin());
 
 		if (dolls.size() > 0) {
 			min2.add(dolls.getMinX(tileArguments.getStringBounder()));
 			max2.add(dolls.getMaxX(tileArguments.getStringBounder()));
 		}
 
-		tiles.addAll(TileBuilder.buildSeveral(diagram.events().iterator(), tileArguments, null));
+		final YGauge ycurrent = YGauge.create(tileArguments.getYOrigin().addAtLeast(0), 0);
+
+		tiles.addAll(TileBuilder.buildSeveral(diagram.events().iterator(), tileArguments, null, ycurrent));
 
 		for (Tile tile : tiles) {
 			min2.add(tile.getMinX());
@@ -109,28 +111,31 @@ public class PlayingSpace implements Bordered {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final List<CommonTile> local = new ArrayList<>();
 		final List<CommonTile> full = new ArrayList<>();
-		final double y = GroupingTile.fillPositionelTiles(stringBounder, startingY, tiles, local, full);
+		final TimeHook y = GroupingTile.fillPositionelTiles(stringBounder, new TimeHook(startingY), tiles, local, full);
 		for (CommonTile tile : local) {
-			final UTranslate dy = UTranslate.dy(((CommonTile) tile).getY());
-			((CommonTile) tile).drawU(ug.apply(dy));
+			if (YGauge.USE_ME) {
+				((CommonTile) tile).drawU(ug);
+			} else {
+				final double posy = ((CommonTile) tile).getTimeHook().getValue();
+				((CommonTile) tile).drawU(ug.apply(UTranslate.dy(posy)));
+			}
 		}
 		for (LinkAnchor linkAnchor : linkAnchors) {
 			final CommonTile ytile1 = getFromAnchor(full, linkAnchor.getAnchor1());
 			final CommonTile ytile2 = getFromAnchor(full, linkAnchor.getAnchor2());
-			if (ytile1 != null && ytile2 != null) {
+			if (ytile1 != null && ytile2 != null)
 				linkAnchor.drawAnchor(ug, ytile1, ytile2, skinParam);
-			}
+
 		}
 		// System.err.println("MainTile::drawUInternal finalY=" + y);
-		return y;
+		return y.getValue();
 	}
 
 	private CommonTile getFromAnchor(List<CommonTile> positionedTiles, String anchor) {
-		for (CommonTile ytile : positionedTiles) {
-			if (ytile.matchAnchor(anchor)) {
+		for (CommonTile ytile : positionedTiles)
+			if (ytile.matchAnchor(anchor))
 				return ytile;
-			}
-		}
+
 		return null;
 	}
 
@@ -144,9 +149,9 @@ public class PlayingSpace implements Bordered {
 	}
 
 	public void addConstraints() {
-		for (Tile tile : tiles) {
+		for (Tile tile : tiles)
 			tile.addConstraints();
-		}
+
 	}
 
 	public Real getMinX(StringBounder stringBounder) {
@@ -177,11 +182,11 @@ public class PlayingSpace implements Bordered {
 		final List<Double> yNewPages = new ArrayList<>();
 		yNewPages.add((double) 0);
 		for (Tile tile : tiles) {
-			if (tile instanceof GroupingTile) {
+			if (tile instanceof GroupingTile)
 				((GroupingTile) tile).addYNewPages(yNewPages);
-			}
+
 			if (tile instanceof NewpageTile) {
-				final double y = ((NewpageTile) tile).getY();
+				final double y = ((NewpageTile) tile).getTimeHook().getValue();
 				yNewPages.add(y);
 			}
 		}

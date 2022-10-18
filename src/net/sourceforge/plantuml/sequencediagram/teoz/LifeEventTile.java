@@ -58,12 +58,14 @@ public class LifeEventTile extends AbstractTile {
 	private final LivingSpace livingSpace;
 	private final Rose skin;
 	private final ISkinParam skinParam;
+	private final YGauge yGauge;
 
 	@Override
-	final protected void callbackY_internal(double y) {
+	final protected void callbackY_internal(TimeHook y) {
+		super.callbackY_internal(y);
 		// System.err.println("LifeEventTile::updateStairs " + lifeEvent + " " +
 		// livingSpace.getParticipant() + " y=" + y);
-		livingSpace.addStepForLivebox(getEvent(), y);
+		livingSpace.addStepForLivebox(getEvent(), y.getValue());
 	}
 
 	public Event getEvent() {
@@ -76,13 +78,19 @@ public class LifeEventTile extends AbstractTile {
 	}
 
 	public LifeEventTile(LifeEvent lifeEvent, TileArguments tileArguments, LivingSpace livingSpace, Rose skin,
-			ISkinParam skinParam) {
-		super(tileArguments.getStringBounder());
+			ISkinParam skinParam, YGauge currentY) {
+		super(tileArguments.getStringBounder(), currentY);
 		this.lifeEvent = lifeEvent;
 		this.tileArguments = tileArguments;
 		this.livingSpace = livingSpace;
 		this.skin = skin;
 		this.skinParam = skinParam;
+		this.yGauge = YGauge.create(currentY.getMax(), getPreferredHeight());
+	}
+
+	@Override
+	public YGauge getYGauge() {
+		return yGauge;
 	}
 
 	private StyleSignatureBasic getStyleSignature() {
@@ -90,6 +98,8 @@ public class LifeEventTile extends AbstractTile {
 	}
 
 	public void drawU(UGraphic ug) {
+		if (YGauge.USE_ME)
+			ug = ug.apply(UTranslate.dy(getYGauge().getMin().getCurrentValue()));
 		if (isDestroyWithoutMessage()) {
 			final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
 			final Component cross = skin.createComponent(new Style[] { style }, ComponentType.DESTROY, null, skinParam,

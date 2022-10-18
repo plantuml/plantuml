@@ -190,4 +190,6 @@ public interface ISkinParam extends ISkinSimple {
 	public void setSvgSize(String origin, String sizeToUse);
 
 	public LengthAdjust getlengthAdjust();
+
+	public double getParamSameClassWidth();
 }

@@ -50,17 +50,30 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class TileParallel extends CommonTile {
 
-	public TileParallel(StringBounder stringBounder) {
+	public TileParallel(StringBounder stringBounder, Real currentY) {
 		super(stringBounder);
 	}
 
 	private final List<Tile> tiles = new ArrayList<>();
 
 	@Override
-	final protected void callbackY_internal(double y) {
+	public YGauge getYGauge() {
+		final List<Real> mins = new ArrayList<>();
+		final List<Real> maxs = new ArrayList<>();
 		for (Tile tile : tiles) {
-			tile.callbackY(y);
+			final YGauge yGauge = tile.getYGauge();
+			mins.add(yGauge.getMin());
+			maxs.add(yGauge.getMax());
 		}
+		return new YGauge(RealUtils.min(mins), RealUtils.max(maxs));
+	}
+
+	@Override
+	final protected void callbackY_internal(TimeHook y) {
+		super.callbackY_internal(y);
+		for (Tile tile : tiles)
+			tile.callbackY(y);
+
 	}
 
 	public void add(Tile tile) {
@@ -77,17 +90,17 @@ public class TileParallel extends CommonTile {
 
 	public double getContactPointRelative() {
 		double result = 0;
-		for (Tile tile : tiles) {
+		for (Tile tile : tiles)
 			result = Math.max(result, tile.getContactPointRelative());
-		}
+
 		return result;
 	}
 
 	public double getZZZ() {
 		double result = 0;
-		for (Tile tile : tiles) {
+		for (Tile tile : tiles)
 			result = Math.max(result, tile.getZZZ());
-		}
+
 		return result;
 	}
 
@@ -96,9 +109,9 @@ public class TileParallel extends CommonTile {
 	}
 
 	public void addConstraints() {
-		for (Tile tile : tiles) {
+		for (Tile tile : tiles)
 			tile.addConstraints();
-		}
+
 	}
 
 	public Real getMinX() {
@@ -158,11 +171,10 @@ public class TileParallel extends CommonTile {
 	}
 
 	public boolean matchAnchor(String anchor) {
-		for (Tile tile : tiles) {
-			if (tile.matchAnchor(anchor)) {
+		for (Tile tile : tiles)
+			if (tile.matchAnchor(anchor))
 				return true;
-			}
-		}
+
 		return false;
 	}
 

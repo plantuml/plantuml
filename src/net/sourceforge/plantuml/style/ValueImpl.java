@@ -113,11 +113,15 @@ public class ValueImpl implements Value {
 	}
 
 	public int asInt() {
-		return Integer.parseInt(value.getValue1());
+		String s = value.getValue1();
+		s = s.replaceAll("[^0-9]", "");
+		return Integer.parseInt(s);
 	}
 
 	public double asDouble() {
-		return Double.parseDouble(value.getValue1());
+		String s = value.getValue1();
+		s = s.replaceAll("[^.0-9]", "");
+		return Double.parseDouble(s);
 	}
 
 	public int asFontStyle() {

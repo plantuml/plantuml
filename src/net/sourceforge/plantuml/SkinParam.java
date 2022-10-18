@@ -97,25 +97,29 @@ public class SkinParam implements ISkinParam {
 		this.type = type;
 	}
 
+	@Override
 	public StyleBuilder getCurrentStyleBuilder() {
-		if (styleBuilder == null) {
+		if (styleBuilder == null)
 			try {
 				this.styleBuilder = getCurrentStyleBuilderInternal();
 			} catch (IOException e) {
 				Logme.error(e);
 			}
-		}
+
 		return styleBuilder;
 	}
 
+	@Override
 	public void muteStyle(Style modifiedStyle) {
 		styleBuilder = getCurrentStyleBuilder().muteStyle(modifiedStyle);
 	}
 
+	@Override
 	public String getDefaultSkin() {
 		return skin;
 	}
 
+	@Override
 	public void setDefaultSkin(String newSkin) {
 		this.skin = newSkin;
 	}
@@ -143,10 +147,12 @@ public class SkinParam implements ISkinParam {
 	private final UmlDiagramType type;
 	private boolean useVizJs;
 
+	@Override
 	public void copyAllFrom(Map<String, String> other) {
 		this.params.putAll(other);
 	}
 
+	@Override
 	public Map<String, String> values() {
 		return Collections.unmodifiableMap(params);
 	}
@@ -230,6 +236,7 @@ public class SkinParam implements ISkinParam {
 		return Collections.unmodifiableList(result);
 	}
 
+	@Override
 	public HColor getHyperlinkColor() {
 		final HColor result = getHtmlColor(ColorParam.hyperlink, null, false);
 		if (result == null)
@@ -238,11 +245,13 @@ public class SkinParam implements ISkinParam {
 		return result;
 	}
 
+	@Override
 	public HColor getBackgroundColor() {
 		final HColor result = getHtmlColor(ColorParam.background, null, false);
 		return result != null ? result : HColors.WHITE;
 	}
 
+	@Override
 	public String getValue(String key) {
 		applyPendingStyleMigration();
 		for (String key2 : cleanForKey(key)) {
@@ -282,6 +291,7 @@ public class SkinParam implements ISkinParam {
 		return sb.toString();
 	}
 
+	@Override
 	public HColor getHtmlColor(ColorParam param, Stereotype stereotype, boolean clickable) {
 		if (stereotype != null) {
 			checkStereotype(stereotype);
@@ -308,6 +318,7 @@ public class SkinParam implements ISkinParam {
 		return getIHtmlColorSet().getColorOrWhite(value);
 	}
 
+	@Override
 	public char getCircledCharacter(Stereotype stereotype) {
 		final String value2 = getValue(
 				"spotchar" + Objects.requireNonNull(stereotype).getLabel(Guillemet.DOUBLE_COMPARATOR));
@@ -317,6 +328,7 @@ public class SkinParam implements ISkinParam {
 		return 0;
 	}
 
+	@Override
 	public Colors getColors(ColorParam param, Stereotype stereotype) throws NoSuchColorException {
 		if (stereotype != null) {
 			checkStereotype(stereotype);
@@ -391,6 +403,7 @@ public class SkinParam implements ISkinParam {
 		return param[0].getDefaultFamily();
 	}
 
+	@Override
 	public HColor getFontHtmlColor(Stereotype stereotype, FontParam... param) {
 		String value = null;
 		if (stereotype != null) {
@@ -450,6 +463,7 @@ public class SkinParam implements ISkinParam {
 		return result;
 	}
 
+	@Override
 	public UFont getFont(Stereotype stereotype, boolean inPackageTitle, FontParam... fontParam) {
 		if (stereotype != null)
 			checkStereotype(stereotype);
@@ -460,11 +474,13 @@ public class SkinParam implements ISkinParam {
 		return new UFont(fontFamily, fontStyle, fontSize);
 	}
 
+	@Override
 	public int getCircledCharacterRadius() {
 		final int value = getAsInt("circledCharacterRadius", -1);
 		return value == -1 ? getFontSize(null, FontParam.CIRCLED_CHARACTER) / 3 + 6 : value;
 	}
 
+	@Override
 	public int classAttributeIconSize() {
 		return getAsInt("classAttributeIconSize", 10);
 	}
@@ -551,6 +567,7 @@ public class SkinParam implements ISkinParam {
 		return StringUtils.goUpperCase(name.substring(0, 1)) + name.substring(1);
 	}
 
+	@Override
 	public int getDpi() {
 		final int defaultValue = 96;
 		final int dpi = getAsInt("dpi", defaultValue);
@@ -559,6 +576,7 @@ public class SkinParam implements ISkinParam {
 		return dpi;
 	}
 
+	@Override
 	public DotSplines getDotSplines() {
 		final String value = getValue("linetype");
 		if ("polyline".equalsIgnoreCase(value))
@@ -570,6 +588,7 @@ public class SkinParam implements ISkinParam {
 		return DotSplines.SPLINES;
 	}
 
+	@Override
 	public HorizontalAlignment getHorizontalAlignment(AlignmentParam param, ArrowDirection arrowDirection,
 			boolean isReverseDefine, HorizontalAlignment overrideDefault) {
 		final String value;
@@ -629,6 +648,7 @@ public class SkinParam implements ISkinParam {
 		return result;
 	}
 
+	@Override
 	public HorizontalAlignment getDefaultTextAlignment(HorizontalAlignment defaultValue) {
 		final String value = getValue("defaulttextalignment");
 		final HorizontalAlignment result = HorizontalAlignment.fromString(value);
@@ -638,6 +658,7 @@ public class SkinParam implements ISkinParam {
 		return result;
 	}
 
+	@Override
 	public HorizontalAlignment getStereotypeAlignment() {
 		final String value = getValue("stereotypealignment");
 		final HorizontalAlignment result = HorizontalAlignment.fromString(value);
@@ -658,6 +679,7 @@ public class SkinParam implements ISkinParam {
 		return split[i];
 	}
 
+	@Override
 	public boolean shadowing(Stereotype stereotype) {
 		if (stereotype != null) {
 			checkStereotype(stereotype);
@@ -679,6 +701,7 @@ public class SkinParam implements ISkinParam {
 		return true;
 	}
 
+	@Override
 	public boolean shadowingForNote(Stereotype stereotype) {
 		if (stereotype != null) {
 			checkStereotype(stereotype);
@@ -696,6 +719,7 @@ public class SkinParam implements ISkinParam {
 
 	private final Map<String, Sprite> sprites = new HashMap<String, Sprite>();
 
+	@Override
 	public Collection<String> getAllSpriteNames() {
 		return Collections.unmodifiableCollection(new TreeSet<>(sprites.keySet()));
 	}
@@ -704,6 +728,7 @@ public class SkinParam implements ISkinParam {
 		sprites.put(name, sprite);
 	}
 
+	@Override
 	public Sprite getSprite(String name) {
 		Sprite result = sprites.get(name);
 		if (result == null)
@@ -712,6 +737,7 @@ public class SkinParam implements ISkinParam {
 		return result;
 	}
 
+	@Override
 	public PackageStyle packageStyle() {
 		final String value = getValue("packageStyle");
 		final PackageStyle p = PackageStyle.fromString(value);
@@ -721,6 +747,7 @@ public class SkinParam implements ISkinParam {
 		return p;
 	}
 
+	@Override
 	public ComponentStyle componentStyle() {
 		if (strictUmlStyle())
 			return ComponentStyle.UML2;
@@ -735,10 +762,12 @@ public class SkinParam implements ISkinParam {
 		return ComponentStyle.UML2;
 	}
 
+	@Override
 	public boolean stereotypePositionTop() {
 		return !valueIs("stereotypePosition", "bottom");
 	}
 
+	@Override
 	public boolean useSwimlanes(UmlDiagramType type) {
 		if (type != UmlDiagramType.ACTIVITY)
 			return false;
@@ -750,15 +779,19 @@ public class SkinParam implements ISkinParam {
 		return isTrue("swimlane") || isTrue("swimlanes");
 	}
 
+	@Override
 	public double getNodesep() {
 		// TODO strange, this returns a double but only accepts integer values
 		return getAsInt("nodesep", 0);
 	}
 
+	@Override
 	public double getRanksep() {
 		// TODO strange, this returns a double but only accepts integer values
 		return getAsInt("ranksep", 0);
 	}
+
+	@Override
 
 	public double getDiagonalCorner(CornerParam param, Stereotype stereotype) {
 		final String key = param.getDiagonalKey();
@@ -776,6 +809,7 @@ public class SkinParam implements ISkinParam {
 		return getDiagonalCorner(CornerParam.DEFAULT, stereotype);
 	}
 
+	@Override
 	public double getRoundCorner(CornerParam param, Stereotype stereotype) {
 		final String key = param.getRoundKey();
 		Double result = getCornerInternal(key, param, stereotype);
@@ -803,6 +837,7 @@ public class SkinParam implements ISkinParam {
 		return null;
 	}
 
+	@Override
 	public UStroke getThickness(LineParam param, Stereotype stereotype) {
 		LinkStyle style = null;
 		if (stereotype != null) {
@@ -841,6 +876,7 @@ public class SkinParam implements ISkinParam {
 		return null;
 	}
 
+	@Override
 	public LineBreakStrategy maxMessageSize() {
 		String value = getValue("wrapmessagewidth");
 		if (value == null)
@@ -849,24 +885,29 @@ public class SkinParam implements ISkinParam {
 		return new LineBreakStrategy(value);
 	}
 
+	@Override
 	public LineBreakStrategy wrapWidth() {
 		final String value = getValue("wrapwidth");
 		return new LineBreakStrategy(value);
 	}
 
+	@Override
 	public LineBreakStrategy swimlaneWrapTitleWidth() {
 		final String value = getValue("swimlanewraptitlewidth");
 		return new LineBreakStrategy(value);
 	}
 
+	@Override
 	public boolean strictUmlStyle() {
 		return valueIs("style", "strictuml");
 	}
 
+	@Override
 	public boolean forceSequenceParticipantUnderlined() {
 		return valueIs("sequenceParticipant", "underline");
 	}
 
+	@Override
 	public ConditionStyle getConditionStyle() {
 		final String value = getValue("conditionStyle");
 		final ConditionStyle p = ConditionStyle.fromString(value);
@@ -876,6 +917,7 @@ public class SkinParam implements ISkinParam {
 		return p;
 	}
 
+	@Override
 	public ConditionEndStyle getConditionEndStyle() {
 		final String value = getValue("conditionEndStyle");
 		final ConditionEndStyle p = ConditionEndStyle.fromString(value);
@@ -885,14 +927,12 @@ public class SkinParam implements ISkinParam {
 		return p;
 	}
 
-	public double minClassWidth() {
-		return getAsInt("minclasswidth", 0);
-	}
-
+	@Override
 	public boolean sameClassWidth() {
 		return isTrue("sameclasswidth");
 	}
 
+	@Override
 	public final Rankdir getRankdir() {
 		return rankdir;
 	}
@@ -901,6 +941,7 @@ public class SkinParam implements ISkinParam {
 		this.rankdir = rankdir;
 	}
 
+	@Override
 	public boolean useOctagonForActivity(Stereotype stereotype) {
 		String value = getValue("activityshape");
 		if (stereotype != null) {
@@ -921,54 +962,66 @@ public class SkinParam implements ISkinParam {
 
 	private final HColorSet htmlColorSet = HColorSet.instance();
 
+	@Override
 	public HColorSet getIHtmlColorSet() {
 		return htmlColorSet;
 	}
 
+	@Override
 	public UStroke useUnderlineForHyperlink() {
 		if (valueIs("hyperlinkunderline", "false") == false)
 			return new UStroke();
 		return null;
 	}
 
+	@Override
 	public int groupInheritance() {
 		final int value = getAsInt("groupinheritance", Integer.MAX_VALUE);
 		return value <= 1 ? Integer.MAX_VALUE : value;
 	}
 
+	@Override
 	public Guillemet guillemet() {
 		final String value = getValue("guillemet");
 		return Guillemet.GUILLEMET.fromDescription(value);
 	}
 
+	@Override
 	public boolean handwritten() {
 		return isTrue("handwritten");
 	}
 
+	@Override
 	public String getSvgLinkTarget() {
 		return getValue("svglinktarget", "_top");
 	}
 
+	@Override
 	public String getPreserveAspectRatio() {
 		return getValue("preserveaspectratio", DEFAULT_PRESERVE_ASPECT_RATIO);
 	}
 
+	@Override
 	public String getMonospacedFamily() {
 		return getValue("defaultMonospacedFontName", Parser.MONOSPACED);
 	}
 
+	@Override
 	public int getTabSize() {
 		return getAsInt("tabsize", 8);
 	}
 
+	@Override
 	public int maxAsciiMessageLength() {
 		return getAsInt("maxasciimessagelength", -1);
 	}
 
+	@Override
 	public int colorArrowSeparationSpace() {
 		return getAsInt("colorarrowseparationspace", 0);
 	}
 
+	@Override
 	public SplitParam getSplitParam() {
 		final String border = getValue("pageBorderColor");
 		final String external = getValue("pageExternalColor");
@@ -978,6 +1031,7 @@ public class SkinParam implements ISkinParam {
 		return new SplitParam(borderColor, externalColor, margin);
 	}
 
+	@Override
 	public int swimlaneWidth() {
 		final String value = getValue("swimlanewidth");
 		if ("same".equalsIgnoreCase(value))
@@ -989,10 +1043,12 @@ public class SkinParam implements ISkinParam {
 		return 0;
 	}
 
+	@Override
 	public UmlDiagramType getUmlDiagramType() {
 		return type;
 	}
 
+	@Override
 	public HColor hoverPathColor() {
 		final String value = getValue("pathhovercolor");
 		if (value == null)
@@ -1001,11 +1057,13 @@ public class SkinParam implements ISkinParam {
 		return getIHtmlColorSet().getColorOrWhite(value);
 	}
 
+	@Override
 	public double getPadding() {
 		final String name = "padding";
 		return getAsDouble(name);
 	}
 
+	@Override
 	public double getPadding(PaddingParam param) {
 		final String name = param.getSkinName();
 		return getAsDouble(name);
@@ -1027,39 +1085,48 @@ public class SkinParam implements ISkinParam {
 		return defaultValue;
 	}
 
+	@Override
 	public boolean useRankSame() {
 		return false;
 	}
 
+	@Override
 	public boolean displayGenericWithOldFashion() {
 		return valueIs("genericDisplay", "old");
 	}
 
+	@Override
 	public boolean responseMessageBelowArrow() {
 		return isTrue("responsemessagebelowarrow");
 	}
 
+	@Override
 	public TikzFontDistortion getTikzFontDistortion() {
 		final String value = getValue("tikzFont");
 		return TikzFontDistortion.fromValue(value);
 	}
 
+	@Override
 	public boolean svgDimensionStyle() {
 		return !valueIs("svgdimensionstyle", "false");
 	}
 
+	@Override
 	public boolean fixCircleLabelOverlapping() {
 		return isTrue("fixcirclelabeloverlapping");
 	}
 
+	@Override
 	public void setUseVizJs(boolean useVizJs) {
 		this.useVizJs = useVizJs;
 	}
 
+	@Override
 	public boolean isUseVizJs() {
 		return useVizJs;
 	}
 
+	@Override
 	public Padder sequenceDiagramPadder() {
 		final double padding = getAsDouble("SequenceMessagePadding");
 		final double margin = getAsDouble("SequenceMessageMargin");
@@ -1075,6 +1142,7 @@ public class SkinParam implements ISkinParam {
 				.withBorderColor(border).withRoundCorner(roundCorner);
 	}
 
+	@Override
 	public ActorStyle actorStyle() {
 		final String value = getValue("actorstyle");
 		if ("awesome".equalsIgnoreCase(value))
@@ -1086,11 +1154,13 @@ public class SkinParam implements ISkinParam {
 		return ActorStyle.STICKMAN;
 	}
 
+	@Override
 	public void setSvgSize(String origin, String sizeToUse) {
 		svgCharSizes.put(StringUtils.manageUnicodeNotationUplus(origin),
 				StringUtils.manageUnicodeNotationUplus(sizeToUse));
 	}
 
+	@Override
 	public String transformStringForSizeHack(String s) {
 		for (Entry<String, String> ent : svgCharSizes.entrySet())
 			s = s.replace(ent.getKey(), ent.getValue());
@@ -1098,6 +1168,7 @@ public class SkinParam implements ISkinParam {
 		return s;
 	}
 
+	@Override
 	public LengthAdjust getlengthAdjust() {
 		final String value = getValue("lengthAdjust");
 		if ("spacingAndGlyphs".equalsIgnoreCase(value))
@@ -1110,6 +1181,18 @@ public class SkinParam implements ISkinParam {
 			return LengthAdjust.NONE;
 
 		return LengthAdjust.defaultValue();
+	}
+
+	private double paramSameClassWidth;
+
+	public void setParamSameClassWidth(double width) {
+		this.paramSameClassWidth = width;
+
+	}
+
+	@Override
+	public final double getParamSameClassWidth() {
+		return paramSameClassWidth;
 	}
 
 }

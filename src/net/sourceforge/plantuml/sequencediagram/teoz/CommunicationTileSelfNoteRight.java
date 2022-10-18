@@ -57,6 +57,7 @@ public class CommunicationTileSelfNoteRight extends AbstractTile {
 	private final Rose skin;
 	private final ISkinParam skinParam;
 	private final Note noteOnMessage;
+	private final YGauge yGauge;
 
 	public Event getEvent() {
 		return message;
@@ -68,17 +69,25 @@ public class CommunicationTileSelfNoteRight extends AbstractTile {
 	}
 
 	public CommunicationTileSelfNoteRight(CommunicationTileSelf tile, Message message, Rose skin, ISkinParam skinParam,
-			Note noteOnMessage) {
-		super(((AbstractTile) tile).getStringBounder());
+			Note noteOnMessage, YGauge currentY) {
+		super(((AbstractTile) tile).getStringBounder(), currentY);
 		this.tile = tile;
 		this.message = message;
 		this.skin = skin;
 		this.skinParam = skinParam;
 		this.noteOnMessage = noteOnMessage;
+		this.yGauge = YGauge.create(currentY.getMax(), getPreferredHeight());
 	}
 
 	@Override
-	final protected void callbackY_internal(double y) {
+	public YGauge getYGauge() {
+		return yGauge;
+	}
+
+
+	@Override
+	final protected void callbackY_internal(TimeHook y) {
+		super.callbackY_internal(y);
 		tile.callbackY(y);
 	}
 

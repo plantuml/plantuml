@@ -57,6 +57,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.TextBlockVertical2;
+import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.svek.Ports;
 import net.sourceforge.plantuml.svek.WithPorts;
@@ -75,9 +76,7 @@ public class BodyEnhanced1 extends BodyEnhancedAbstract implements TextBlock, Wi
 
 	BodyEnhanced1(HorizontalAlignment align, List<CharSequence> rawBody, ISkinParam skinParam, ILeaf entity,
 			Style style) {
-		super(align,
-				style.getFontConfiguration(skinParam.getIHtmlColorSet(), entity.getColors()),
-				style);
+		super(align, style.getFontConfiguration(skinParam.getIHtmlColorSet(), entity.getColors()), style);
 		this.style = style;
 		this.rawBody2 = Display.create(rawBody);
 
@@ -90,9 +89,7 @@ public class BodyEnhanced1 extends BodyEnhancedAbstract implements TextBlock, Wi
 	}
 
 	BodyEnhanced1(HorizontalAlignment align, Display display, ISkinParam skinParam, ILeaf entity, Style style) {
-		super(align,
-				style.getFontConfiguration(skinParam.getIHtmlColorSet(), entity.getColors()),
-				style);
+		super(align, style.getFontConfiguration(skinParam.getIHtmlColorSet(), entity.getColors()), style);
 
 		this.style = style;
 		this.entity = entity;
@@ -138,8 +135,7 @@ public class BodyEnhanced1 extends BodyEnhancedAbstract implements TextBlock, Wi
 				if (display == null)
 					display = Display.empty();
 				if (display.size() > 0 || separator != 0) {
-					blocks.add(decorate(stringBounder,
-							new MethodsOrFieldsArea(display, skinParam, align, entity, style), separator, title));
+					blocks.add(buildTextBlock(display, separator, title, stringBounder));
 					separator = 0;
 					title = null;
 					display = null;
@@ -150,8 +146,7 @@ public class BodyEnhanced1 extends BodyEnhancedAbstract implements TextBlock, Wi
 				if (isBlockSeparator(s)) {
 					if (display == null)
 						display = Display.empty();
-					blocks.add(decorate(stringBounder,
-							new MethodsOrFieldsArea(display, skinParam, align, entity, style), separator, title));
+					blocks.add(buildTextBlock(display, separator, title, stringBounder));
 					separator = s.charAt(0);
 					title = getTitle(s, skinParam);
 					display = null;
@@ -159,14 +154,14 @@ public class BodyEnhanced1 extends BodyEnhancedAbstract implements TextBlock, Wi
 					final boolean isTable = CreoleParser.isTableLine(s);
 					if (display == null)
 						display = Display.empty();
-					blocks.add(decorate(stringBounder,
-							new MethodsOrFieldsArea(display, skinParam, align, entity, style), separator, title));
+					blocks.add(buildTextBlock(display, separator, title, stringBounder));
 
 					separator = 0;
 					title = null;
 					display = null;
 					final List<CharSequence> allTree = buildTreeOrTable(s, it);
-					final FontConfiguration fontConfiguration = style.getFontConfiguration(skinParam.getIHtmlColorSet());
+					final FontConfiguration fontConfiguration = style
+							.getFontConfiguration(skinParam.getIHtmlColorSet());
 					TextBlock bloc = Display.create(allTree).create7(fontConfiguration, align, skinParam,
 							CreoleMode.FULL);
 					if (isTable)
@@ -189,18 +184,26 @@ public class BodyEnhanced1 extends BodyEnhancedAbstract implements TextBlock, Wi
 		if (inEllipse && display.size() == 0)
 			display = display.add("");
 
-		blocks.add(decorate(stringBounder, new MethodsOrFieldsArea(display, skinParam, align, entity, style), separator,
-				title));
+		blocks.add(buildTextBlock(display, separator, title, stringBounder));
 
 		if (blocks.size() == 1)
 			this.area = blocks.get(0);
 		else
 			this.area = new TextBlockVertical2(blocks, align);
 
-		if (skinParam.minClassWidth() > 0)
-			this.area = TextBlockUtils.withMinWidth(this.area, skinParam.minClassWidth(), align);
+		final double minClassWidth = style.value(PName.MinimumWidth).asDouble();
+		if (minClassWidth > 0)
+			this.area = TextBlockUtils.withMinWidth(this.area, minClassWidth, align);
 
 		return area;
+	}
+
+	private TextBlock buildTextBlock(Display display, char separator, TextBlock title, StringBounder stringBounder) {
+		// TextBlock result = display.create9(titleConfig, align, skinParam,
+		// LineBreakStrategy.NONE);
+		TextBlock result = new MethodsOrFieldsArea(display, skinParam, align, entity, style);
+		result = decorate(result, separator, title, stringBounder);
+		return result;
 	}
 
 	private static List<CharSequence> buildTreeOrTable(String init, ListIterator<CharSequence> it) {

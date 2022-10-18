@@ -35,28 +35,11 @@
  */
 package net.sourceforge.plantuml.ebnf;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.graphic.TextBlock;
 
-import net.sourceforge.plantuml.Pragma;
+public interface TextBlockable {
 
-public class EbnfExpressions {
-
-	public static List<EbnfSingleExpression> build(List<String> data, Pragma pragma) {
-		final List<EbnfSingleExpression> all = new ArrayList<>();
-
-		final boolean isTheo = pragma.isDefine("theo");
-
-		final CharIterator it = new CharIteratorImpl(data);
-		while (it.peek() != 0) {
-			final EbnfSingleExpression tmp = EbnfSingleExpression.create(it, isTheo);
-			if (tmp.isEmpty())
-				break;
-			all.add(tmp);
-		}
-
-		return Collections.unmodifiableList(all);
-	}
+	public TextBlock getUDrawable(ISkinParam skinParam);
 
 }

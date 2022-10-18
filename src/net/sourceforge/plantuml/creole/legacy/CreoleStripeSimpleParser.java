@@ -62,9 +62,9 @@ public class CreoleStripeSimpleParser {
 
 	public CreoleStripeSimpleParser(String line, CreoleContext creoleContext, FontConfiguration fontConfiguration,
 			ISkinSimple skinParam, CreoleMode mode) {
-		if (line.contains("" + BackSlash.hiddenNewLine())) {
+		if (line.contains("" + BackSlash.hiddenNewLine()))
 			throw new IllegalArgumentException(line);
-		}
+
 		this.fontConfiguration = fontConfiguration;
 		this.modeSimpleLine = mode;
 		this.skinParam = Objects.requireNonNull(skinParam);
@@ -108,6 +108,17 @@ public class CreoleStripeSimpleParser {
 
 		if (mode == CreoleMode.FULL) {
 			final Pattern2 p1 = MyPattern.cmpile("^(\\*+)([^*]+(?:[^*]|\\*\\*[^*]+\\*\\*)*)$");
+			final Matcher2 m1 = p1.matcher(line);
+			if (m1.find()) {
+				this.line = StringUtils.trin(m1.group(2));
+				final int order = m1.group(1).length() - 1;
+				this.style = new StripeStyle(StripeStyleType.LIST_WITHOUT_NUMBER, order, '\0');
+				return;
+			}
+		}
+
+		if (mode == CreoleMode.FULL) {
+			final Pattern2 p1 = MyPattern.cmpile("^(\\*+)([%s].+)$");
 			final Matcher2 m1 = p1.matcher(line);
 			if (m1.find()) {
 				this.line = StringUtils.trin(m1.group(2));

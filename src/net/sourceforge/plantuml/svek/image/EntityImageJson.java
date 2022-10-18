@@ -124,20 +124,23 @@ public class EntityImageJson extends AbstractEntityImage implements Stencil, Wit
 		final XDimension2D dimTitle = getTitleDimension(stringBounder);
 		final XDimension2D dimFields = entries.calculateDimension(stringBounder);
 		double width = Math.max(dimFields.getWidth(), dimTitle.getWidth() + 2 * xMarginCircle);
-		if (width < getSkinParam().minClassWidth())
-			width = getSkinParam().minClassWidth();
+		final Style style = getStyle();
+
+		final double minimumWidth = style.value(PName.MinimumWidth).asDouble();
+		if (width < minimumWidth)
+			width = minimumWidth;
 
 		final double height = getMethodOrFieldHeight(dimFields) + dimTitle.getHeight();
 		return new XDimension2D(width, height);
 	}
 
 	private Style getStyle() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.objectDiagram, SName.map)
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.objectDiagram, SName.json)
 				.withTOBECHANGED(getEntity().getStereotype()).getMergedStyle(getSkinParam().getCurrentStyleBuilder());
 	}
 
 	private Style getStyleHeader() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.objectDiagram, SName.map, SName.header)
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.objectDiagram, SName.json, SName.header)
 				.withTOBECHANGED(getEntity().getStereotype()).getMergedStyle(getSkinParam().getCurrentStyleBuilder());
 	}
 

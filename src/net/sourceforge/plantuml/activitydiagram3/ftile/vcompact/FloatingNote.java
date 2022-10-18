@@ -35,9 +35,11 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 
+import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.creole.Parser;
 import net.sourceforge.plantuml.creole.Sheet;
@@ -63,9 +65,9 @@ public class FloatingNote extends AbstractTextBlock implements Stencil, TextBloc
 
 	private final Opale opale;
 
-	public FloatingNote(Display note, ISkinParam skinParam) {
+	private FloatingNote(Display note, ISkinParam skinParam, SName sname, boolean withLink) {
 
-		final Style style = StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.note)
+		final Style style = StyleSignatureBasic.of(SName.root, SName.element, sname, SName.note)
 				.getMergedStyle(skinParam.getCurrentStyleBuilder());
 		final LineBreakStrategy wrapWidth = style.wrapWidth();
 		final FontConfiguration fc = FontConfiguration.create(skinParam, style);
@@ -79,7 +81,20 @@ public class FloatingNote extends AbstractTextBlock implements Stencil, TextBloc
 				.createSheet(note);
 		final SheetBlock2 sheetBlock2 = new SheetBlock2(new SheetBlock1(sheet, wrapWidth, skinParam.getPadding()), this,
 				stroke);
-		this.opale = new Opale(shadowing, borderColor, noteBackgroundColor, sheetBlock2, false, stroke);
+		this.opale = new Opale(shadowing, borderColor, noteBackgroundColor, sheetBlock2, withLink, stroke);
+
+	}
+
+	public static FloatingNote create(Display note, ISkinParam skinParam, SName sname) {
+		return new FloatingNote(note, skinParam, sname, false);
+	}
+
+	public static FloatingNote createOpale(Display note, ISkinParam skinParam, SName sname) {
+		return new FloatingNote(note, skinParam, sname, true);
+	}
+
+	public void setOpale(Direction strategy, XPoint2D pp1, XPoint2D pp2) {
+		opale.setOpale(strategy, pp1, pp2);
 
 	}
 

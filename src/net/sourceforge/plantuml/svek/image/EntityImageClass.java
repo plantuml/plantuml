@@ -106,8 +106,13 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 		final XDimension2D dimHeader = header.calculateDimension(stringBounder);
 		final XDimension2D dimBody = body == null ? new XDimension2D(0, 0) : body.calculateDimension(stringBounder);
 		double width = Math.max(dimBody.getWidth(), dimHeader.getWidth());
-		if (width < getSkinParam().minClassWidth())
-			width = getSkinParam().minClassWidth();
+		final double minClassWidth = getStyle().value(PName.MinimumWidth).asDouble();
+		if (width < minClassWidth)
+			width = minClassWidth;
+
+		final double paramSameClassWidth = getSkinParam().getParamSameClassWidth();
+		if (width < paramSameClassWidth)
+			width = paramSameClassWidth;
 
 		final double height = dimBody.getHeight() + dimHeader.getHeight();
 		return new XDimension2D(Math.max(width, getKalWidth() * 1.3), height);

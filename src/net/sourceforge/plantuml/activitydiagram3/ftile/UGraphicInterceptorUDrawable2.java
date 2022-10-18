@@ -99,6 +99,8 @@ public class UGraphicInterceptorUDrawable2 extends UGraphicDelegator {
 		ugGoto = ugGoto.apply(new UTranslate(pt));
 		final UTranslate posNow = getPosition();
 		final UTranslate dest = positions.get(ftile.getName());
+		if (dest == null)
+			return;
 		final double dx = dest.getDx() - posNow.getDx();
 		final double dy = dest.getDy() - posNow.getDy();
 		ugGoto.draw(new UEllipse(3, 3));

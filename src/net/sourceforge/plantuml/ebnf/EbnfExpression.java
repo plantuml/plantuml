@@ -39,38 +39,50 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FloatingNote;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.awt.geom.XPoint2D;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
+import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
-public class EbnfSingleExpression {
+public class EbnfExpression implements TextBlockable {
 
 	private final List<Token> tokens = new ArrayList<>();
-	private final boolean isTheo;
+	private final boolean isCompact;
+	private final String commentAbove;
+	private final String commentBelow;
 
-	public static EbnfSingleExpression create(CharIterator it, boolean isTheo) {
-		return new EbnfSingleExpression(it, isTheo);
+	public static EbnfExpression create(CharIterator it, boolean isCompact, String commentAbove, String commentBelow) {
+		return new EbnfExpression(it, isCompact, commentAbove, commentBelow);
 	}
 
-	private EbnfSingleExpression(CharIterator it, boolean isTheo) {
-		this.isTheo = isTheo;
+	private EbnfExpression(CharIterator it, boolean isCompact, String commentAbove, String commentBelow) {
+		this.isCompact = isCompact;
+		this.commentAbove = commentAbove;
+		this.commentBelow = commentBelow;
 		while (true) {
-			final char ch = it.peek();
+			final char ch = it.peek(0);
 			if (Character.isWhitespace(ch)) {
-			} else if (ch == '-') {
-				final int size = tokens.size();
-				if (size > 0 && tokens.get(size - 1).getSymbol() == Symbol.REPETITION_CLOSE) {
-					tokens.set(size - 1, new Token(Symbol.REPETITION_MINUS_CLOSE, null));
-				} else {
-					tokens.clear();
-					return;
-				}
 			} else if (isLetterOrDigit(ch)) {
 				final String litteral = readLitteral(it);
 				tokens.add(new Token(Symbol.LITTERAL, litteral));
+				continue;
+			} else if (ch == '*') {
+				tokens.add(new Token(Symbol.REPETITION_SYMBOL, null));
+			} else if (ch == '(' && it.peek(1) == '*') {
+				final String comment = readComment(it);
+				if (comment.trim().length() > 0)
+					tokens.add(new Token(Symbol.COMMENT_TOKEN, comment));
 				continue;
 			} else if (ch == ',') {
 				tokens.add(new Token(Symbol.CONCATENATION, null));
@@ -88,10 +100,13 @@ public class EbnfSingleExpression {
 				tokens.add(new Token(Symbol.OPTIONAL_CLOSE, null));
 			} else if (ch == '{') {
 				tokens.add(new Token(Symbol.REPETITION_OPEN, null));
+			} else if (ch == '}' && it.peek(1) == '-') {
+				tokens.add(new Token(Symbol.REPETITION_MINUS_CLOSE, null));
+				it.next();
 			} else if (ch == '}') {
 				tokens.add(new Token(Symbol.REPETITION_CLOSE, null));
 			} else if (ch == ';' || ch == 0) {
-				it.next();
+				// it.next();
 				break;
 			} else if (ch == '\"') {
 				final String litteral = readString(it);
@@ -122,13 +137,23 @@ public class EbnfSingleExpression {
 			if (definition.getSymbol() != Symbol.DEFINITION)
 				return EbnfEngine.syntaxError(fc, skinParam);
 
-			final List<Token> full = new ShuntingYard(iterator).getOuputQueue();
-			// System.err.println("full=" + full);
-			if (full.size() == 0)
-				return EbnfEngine.syntaxError(fc, skinParam);
+			final TextBlock main;
+			if (iterator.hasNext()) {
+				final List<Token> full = new ShuntingYard(iterator).getOuputQueue();
+				if (full.size() == 0)
+					return EbnfEngine.syntaxError(fc, skinParam);
 
-			final TextBlock main = getMainDrawing(skinParam, full.iterator());
-			final TitleBox titleBox = new TitleBox(name.getData(), fc);
+				main = getMainDrawing(skinParam, full.iterator());
+			} else {
+				final HColor lineColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
+				main = new ETileWithCircles(new ETileEmpty(), lineColor);
+			}
+
+			TextBlock titleBox = new TitleBox(name.getData(), fc);
+			if (commentAbove != null)
+				titleBox = TextBlockUtils.mergeTB(getNoteAbove(skinParam), titleBox, HorizontalAlignment.CENTER);
+			if (commentBelow != null)
+				titleBox = TextBlockUtils.mergeTB(titleBox, getNoteBelow(skinParam), HorizontalAlignment.CENTER);
 
 			return TextBlockUtils.mergeTB(titleBox, TextBlockUtils.withMargin(main, 0, 0, 10, 15),
 					HorizontalAlignment.LEFT);
@@ -138,6 +163,20 @@ public class EbnfSingleExpression {
 		}
 	}
 
+	private TextBlock getNoteAbove(ISkinParam skinParam) {
+		if (commentAbove == null)
+			return null;
+		final FloatingNote note = FloatingNote.create(Display.getWithNewlines(commentAbove), skinParam, SName.ebnf);
+		return note;
+	}
+
+	private TextBlock getNoteBelow(ISkinParam skinParam) {
+		if (commentBelow == null)
+			return null;
+		final FloatingNote note = FloatingNote.create(Display.getWithNewlines(commentBelow), skinParam, SName.ebnf);
+		return note;
+	}
+
 	private TextBlock getMainDrawing(ISkinParam skinParam, Iterator<Token> it) {
 		final EbnfEngine engine = new EbnfEngine(skinParam);
 		while (it.hasNext()) {
@@ -145,6 +184,10 @@ public class EbnfSingleExpression {
 			if (element.getSymbol() == Symbol.TERMINAL_STRING1 || element.getSymbol() == Symbol.TERMINAL_STRING2
 					|| element.getSymbol() == Symbol.LITTERAL)
 				engine.push(element);
+			else if (element.getSymbol() == Symbol.COMMENT_ABOVE)
+				engine.commentAbove(element.getData());
+			else if (element.getSymbol() == Symbol.COMMENT_BELOW)
+				engine.commentBelow(element.getData());
 			else if (element.getSymbol() == Symbol.ALTERNATION)
 				engine.alternation();
 			else if (element.getSymbol() == Symbol.CONCATENATION)
@@ -152,9 +195,11 @@ public class EbnfSingleExpression {
 			else if (element.getSymbol() == Symbol.OPTIONAL)
 				engine.optional();
 			else if (element.getSymbol() == Symbol.REPETITION_ZERO_OR_MORE)
-				engine.repetitionZeroOrMore(isTheo);
+				engine.repetitionZeroOrMore(isCompact);
 			else if (element.getSymbol() == Symbol.REPETITION_ONE_OR_MORE)
 				engine.repetitionOneOrMore();
+			else if (element.getSymbol() == Symbol.REPETITION_SYMBOL)
+				engine.repetitionSymbol();
 			else
 				throw new UnsupportedOperationException(element.toString());
 		}
@@ -163,11 +208,11 @@ public class EbnfSingleExpression {
 	}
 
 	private String readString(CharIterator it) {
-		final char separator = it.peek();
+		final char separator = it.peek(0);
 		it.next();
 		final StringBuilder sb = new StringBuilder();
 		while (true) {
-			final char ch = it.peek();
+			final char ch = it.peek(0);
 			if (ch == separator)
 				return sb.toString();
 			sb.append(ch);
@@ -178,9 +223,27 @@ public class EbnfSingleExpression {
 	private String readLitteral(CharIterator it) {
 		final StringBuilder sb = new StringBuilder();
 		while (true) {
-			final char ch = it.peek();
+			final char ch = it.peek(0);
 			if (isLetterOrDigit(ch) == false)
 				return sb.toString();
+			sb.append(ch);
+			it.next();
+		}
+	}
+
+	private String readComment(CharIterator it) {
+		final StringBuilder sb = new StringBuilder();
+		it.next();
+		it.next();
+		while (true) {
+			final char ch = it.peek(0);
+			if (ch == '\0')
+				return sb.toString();
+			if (ch == '*' && it.peek(1) == ')') {
+				it.next();
+				it.next();
+				return sb.toString();
+			}
 			sb.append(ch);
 			it.next();
 		}
@@ -194,43 +257,4 @@ public class EbnfSingleExpression {
 		return tokens.size() == 0;
 	}
 
-}
-
-interface CharIterator {
-	char peek();
-
-	void next();
-}
-
-class CharIteratorImpl implements CharIterator {
-
-	final private List<String> data = new ArrayList<>();
-	private int line = 0;
-	private int pos = 0;
-
-	public CharIteratorImpl(List<String> input) {
-		for (String s : input)
-			if (s.trim().length() > 0)
-				data.add(s.trim());
-	}
-
-	public char peek() {
-		if (line == -1)
-			return 0;
-		return data.get(line).charAt(pos);
-	}
-
-	public void next() {
-		if (line == -1)
-			throw new IllegalStateException();
-		pos++;
-		if (pos >= data.get(line).length()) {
-			line++;
-			pos = 0;
-		}
-		while (line < data.size() && data.get(line).length() == 0)
-			line++;
-		if (line >= data.size())
-			line = -1;
-	}
 }

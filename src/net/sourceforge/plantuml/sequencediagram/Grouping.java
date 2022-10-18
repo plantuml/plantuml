@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.style.WithStyle;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
-public abstract class Grouping implements Event, WithStyle {
+public abstract class Grouping extends AbstractEvent implements Event, WithStyle {
 
 	private final String title;
 	private final GroupingType type;

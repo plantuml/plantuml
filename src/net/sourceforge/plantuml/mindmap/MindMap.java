@@ -109,6 +109,8 @@ public class MindMap implements UDrawable {
 		this.reverse.drawU(ug);
 	}
 
+	private int multiplier = 0;
+
 	CommandExecutionResult addIdeaInternal(String stereotype, HColor backColor, int level, Display label,
 			IdeaShape shape, boolean direction) {
 		try {
@@ -120,6 +122,15 @@ public class MindMap implements UDrawable {
 				this.reverse.initRoot(skinParam.getCurrentStyleBuilder(), backColor, label, shape, stereotype);
 				return CommandExecutionResult.ok();
 			}
+
+			if (multiplier == 0)
+				multiplier = level;
+			assert multiplier > 0;
+
+			if (level % multiplier != 0)
+				return CommandExecutionResult.error("Bad indentation");
+
+			level /= multiplier;
 			if (direction == false)
 				return this.reverse.add(skinParam.getCurrentStyleBuilder(), backColor, level, label, shape, stereotype);
 

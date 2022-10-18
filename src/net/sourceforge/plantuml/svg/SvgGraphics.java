@@ -644,7 +644,7 @@ public class SvgGraphics {
 		final int maxXscaled = (int) (maxX * scale);
 		final int maxYscaled = (int) (maxY * scale);
 		String style = "width:" + maxXscaled + "px;height:" + maxYscaled + "px;";
-		if (backcolor != null)
+		if (backcolor != null && "#00000000".equals(backcolor) == false)
 			style += "background:" + backcolor + ";";
 
 		if (svgDimensionStyle) {

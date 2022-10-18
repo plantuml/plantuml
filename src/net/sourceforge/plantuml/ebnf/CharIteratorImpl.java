@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -30,46 +30,49 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.ebnf;
 
-import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.command.BlocLines;
-import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.CommandMultilines2;
-import net.sourceforge.plantuml.command.MultilinesStrategy;
-import net.sourceforge.plantuml.command.Trim;
-import net.sourceforge.plantuml.command.regex.IRegex;
-import net.sourceforge.plantuml.command.regex.RegexConcat;
-import net.sourceforge.plantuml.command.regex.RegexLeaf;
-import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
-public class CommandEbnfMultiline extends CommandMultilines2<PSystemEbnf> {
+class CharIteratorImpl implements CharIterator {
 
-	public CommandEbnfMultiline() {
-		super(getRegexConcat(), MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH);
-	}
+	final private BlocLines data;
+	private int line = 0;
+	private int pos = 0;
 
-	static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandEbnfMultiline.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("LINE", "(\\w[-\\w]*[%s]*=.*)"), //
-				RegexLeaf.end());
+	public CharIteratorImpl(BlocLines input) {
+		data = input;
 	}
 
 	@Override
-	public String getPatternEnd() {
-		return "^(.*);$";
+	public char peek(int ahead) {
+		if (line == -1)
+			return 0;
+		final String currentLine = getCurrentLine();
+		if (pos + ahead >= currentLine.length())
+			return '\0';
+		return currentLine.charAt(pos + ahead);
+	}
+
+	private String getCurrentLine() {
+		return data.getAt(line).getTrimmed().getString();
 	}
 
 	@Override
-	protected CommandExecutionResult executeNow(PSystemEbnf diagram, BlocLines lines) throws NoSuchColorException {
-		for (StringLocated s : lines)
-			diagram.addLine(s.getString());
-
-		return CommandExecutionResult.ok();
-
+	public void next() {
+		if (line == -1)
+			throw new IllegalStateException();
+		pos++;
+		if (pos >= getCurrentLine().length()) {
+			line++;
+			pos = 0;
+		}
+		while (line < data.size() && getCurrentLine().length() == 0)
+			line++;
+		if (line >= data.size())
+			line = -1;
 	}
-
 }

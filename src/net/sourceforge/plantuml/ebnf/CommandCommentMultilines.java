@@ -35,40 +35,40 @@
  */
 package net.sourceforge.plantuml.ebnf;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import net.sourceforge.plantuml.command.BlocLines;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.CommandMultilines2;
+import net.sourceforge.plantuml.command.MultilinesStrategy;
+import net.sourceforge.plantuml.command.Trim;
+import net.sourceforge.plantuml.command.regex.IRegex;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
-import net.sourceforge.plantuml.command.Command;
-import net.sourceforge.plantuml.command.CommonCommands;
-import net.sourceforge.plantuml.command.PSystemCommandFactory;
-import net.sourceforge.plantuml.core.DiagramType;
-import net.sourceforge.plantuml.core.UmlSource;
+public class CommandCommentMultilines extends CommandMultilines2<PSystemEbnf> {
 
-public class PSystemEbnfFactory extends PSystemCommandFactory {
+	public CommandCommentMultilines() {
+		super(getRegexConcat(), MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH);
+	}
 
-	public PSystemEbnfFactory() {
-		super(DiagramType.EBNF);
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandCommentMultilines.class.getName(), RegexLeaf.start(), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("\\(\\*"), //
+				new RegexLeaf(".*"), //
+				RegexLeaf.end());
 	}
 
 	@Override
-	protected List<Command> createCommands() {
-
-		final List<Command> cmds = new ArrayList<>();
-		CommonCommands.addCommonCommands1(cmds);
-		cmds.add(new CommandComment());
-		cmds.add(new CommandCommentMultilines2());
-		cmds.add(new CommandCommentMultilines());
-		cmds.add(new CommandEBnfSingleLine());
-		cmds.add(new CommandEbnfMultilines());
-		// cmds.add(new CommandNoteMultilines());
-
-		return cmds;
+	public String getPatternEnd() {
+		return "^.*\\*\\)[%s]*$";
 	}
 
 	@Override
-	public PSystemEbnf createEmptyDiagram(UmlSource source, Map<String, String> skinParam) {
-		return new PSystemEbnf(source);
+	protected CommandExecutionResult executeNow(PSystemEbnf diagram, BlocLines lines) throws NoSuchColorException {
+		final Display note = lines.removeFewChars(2).toDisplay();
+		return diagram.addNote(note, null);
 	}
 
 }

@@ -33,54 +33,38 @@
  * 
  *
  */
-package net.sourceforge.plantuml.command.regex;
+package net.sourceforge.plantuml.ebnf;
 
-import java.util.Collections;
-import java.util.Map;
+import net.sourceforge.plantuml.command.BlocLines;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.CommandMultilines2;
+import net.sourceforge.plantuml.command.MultilinesStrategy;
+import net.sourceforge.plantuml.command.Trim;
+import net.sourceforge.plantuml.command.regex.IRegex;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
-public class RegexResult {
+public class CommandEbnfMultilines extends CommandMultilines2<PSystemEbnf> {
 
-	private final Map<String, RegexPartialMatch> data;
+	public CommandEbnfMultilines() {
+		super(getRegexConcat(), MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH);
+	}
 
-	public RegexResult(Map<String, RegexPartialMatch> data) {
-		this.data = Collections.unmodifiableMap(data);
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandEbnfMultilines.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("LINE", "(\\w[-\\w]*[%s]*=.*)"), //
+				RegexLeaf.end());
 	}
 
 	@Override
-	public String toString() {
-		return data.toString();
+	public String getPatternEnd() {
+		return "^(.*);$";
 	}
 
-	public RegexPartialMatch get(String key) {
-		return data.get(key);
-	}
-
-	public String get(String key, int num) {
-		final RegexPartialMatch reg = data.get(key);
-		if (reg == null)
-			return null;
-
-		return reg.get(num);
-	}
-
-	public String getLazzy(String key, int num) {
-		for (Map.Entry<String, RegexPartialMatch> ent : data.entrySet()) {
-			if (ent.getKey().startsWith(key) == false)
-				continue;
-
-			final RegexPartialMatch match = ent.getValue();
-			if (num >= match.size())
-				continue;
-
-			if (match.get(num) != null)
-				return ent.getValue().get(num);
-
-		}
-		return null;
-	}
-
-	public int size() {
-		return data.size();
+	@Override
+	protected CommandExecutionResult executeNow(PSystemEbnf diagram, BlocLines lines) throws NoSuchColorException {
+		return diagram.addBlocLines(lines, null, null);
 	}
 
 }

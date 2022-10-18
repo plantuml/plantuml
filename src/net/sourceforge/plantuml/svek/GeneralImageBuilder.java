@@ -53,7 +53,7 @@ import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.Pragma;
-import net.sourceforge.plantuml.SkinParamSameClassWidth;
+import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
@@ -544,7 +544,7 @@ public final class GeneralImageBuilder {
 			ISkinParam skinParam = dotData.getSkinParam();
 			if (skinParam.sameClassWidth()) {
 				final double width = getMaxWidth();
-				skinParam = new SkinParamSameClassWidth(skinParam, width);
+				((SkinParam) skinParam).setParamSameClassWidth(width);
 			}
 
 			return createEntityImageBlock(ent, skinParam, dotData.isHideEmptyDescriptionForState(), dotData,

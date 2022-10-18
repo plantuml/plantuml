@@ -78,18 +78,18 @@ public class TextBlockVertical2 extends AbstractTextBlock implements TextBlock, 
 	}
 
 	public TextBlockVertical2(List<TextBlock> all, HorizontalAlignment horizontalAlignment) {
-		if (all.size() < 2) {
+		if (all.size() < 2)
 			throw new IllegalArgumentException();
-		}
+
 		this.blocks.addAll(all);
 		this.horizontalAlignment = horizontalAlignment;
 	}
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		XDimension2D dim = blocks.get(0).calculateDimension(stringBounder);
-		for (int i = 1; i < blocks.size(); i++) {
+		for (int i = 1; i < blocks.size(); i++)
 			dim = XDimension2D.mergeTB(dim, blocks.get(i).calculateDimension(stringBounder));
-		}
+
 		return dim;
 	}
 

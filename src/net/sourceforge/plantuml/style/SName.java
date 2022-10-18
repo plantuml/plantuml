@@ -89,6 +89,7 @@ public enum SName {
 	hexagon, //
 	highlight, //
 	interface_, //
+	json,
 	jsonDiagram, //
 	gitDiagram, //
 	label, //

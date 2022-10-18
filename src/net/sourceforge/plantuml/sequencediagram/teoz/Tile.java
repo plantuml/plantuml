@@ -42,7 +42,9 @@ public interface Tile {
 
 	public double getPreferredHeight();
 
-	public void callbackY(double y);
+	public void callbackY(TimeHook y);
+
+	public YGauge getYGauge();
 
 	public void addConstraints();
 

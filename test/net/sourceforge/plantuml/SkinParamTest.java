@@ -113,7 +113,7 @@ class SkinParamTest {
 
 		assertThat(skinParam.maxAsciiMessageLength()).isEqualTo(-1);
 
-		assertThat(skinParam.minClassWidth()).isZero();
+		// assertThat(skinParam.minClassWidth()).isZero();
 
 		assertThat(skinParam.getMonospacedFamily()).isEqualTo("monospaced");
 
@@ -332,11 +332,11 @@ class SkinParamTest {
 		assertThat(skinParam.maxAsciiMessageLength()).isEqualTo(123);
 	}
 
-	@Test
-	public void test_minClassWidth() {
-		final SkinParam skinParam = createSkinParam("minClassWidth", "123");
-		assertThat(skinParam.minClassWidth()).isEqualTo(123);
-	}
+//	@Test
+//	public void test_minClassWidth() {
+//		final SkinParam skinParam = createSkinParam("minClassWidth", "123");
+//		assertThat(skinParam.minClassWidth()).isEqualTo(123);
+//	}
 
 	@Test
 	public void test_nodeSep() {

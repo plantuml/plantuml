@@ -55,52 +55,29 @@ public class Bullet extends AbstractAtom implements Atom {
 		this.order = order;
 	}
 
-	private double getWidth(StringBounder stringBounder) {
-		final XDimension2D dim = stringBounder.calculateDimension(fontConfiguration.getFont(), "W");
-		return dim.getWidth() * (order + 1);
-	}
-
 	public void drawU(UGraphic ug) {
+		final HColor color = fontConfiguration.getColor();
+		ug = ug.apply(color).apply(color.bg()).apply(new UStroke(0));
 		if (order == 0) {
-			drawU0(ug);
+			ug = ug.apply(UTranslate.dx(3));
+			ug.draw(new UEllipse(5, 5));
 		} else {
-			drawU1(ug);
+			ug = ug.apply(UTranslate.dx(1 + 8 * order));
+			ug.draw(new URectangle(3.5, 3.5));
 		}
+
 	}
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-		if (order == 0) {
-			return calculateDimension0(stringBounder);
-		}
-		return calculateDimension1(stringBounder);
-	}
-
-	private void drawU0(UGraphic ug) {
-		final HColor color = fontConfiguration.getColor();
-		ug = ug.apply(color).apply(color.bg()).apply(new UStroke(0));
-		// final double width = getWidth(ug.getStringBounder());
-		ug = ug.apply(UTranslate.dx(3));
-		ug.draw(new UEllipse(5, 5));
+		if (order == 0)
+			return new XDimension2D(12, 5);
+		return new XDimension2D(8 + 8 * order, 3);
 	}
 
 	public double getStartingAltitude(StringBounder stringBounder) {
-		return -5;
-	}
-
-	private XDimension2D calculateDimension0(StringBounder stringBounder) {
-		return new XDimension2D(getWidth(stringBounder), 5);
-	}
-
-	private void drawU1(UGraphic ug) {
-		final HColor color = fontConfiguration.getColor();
-		ug = ug.apply(color).apply(color.bg()).apply(new UStroke(0));
-		final double width = getWidth(ug.getStringBounder());
-		ug = ug.apply(UTranslate.dx(width - 5));
-		ug.draw(new URectangle(3.5, 3.5));
-	}
-
-	private XDimension2D calculateDimension1(StringBounder stringBounder) {
-		return new XDimension2D(getWidth(stringBounder), 3);
+		if (order == 0)
+			return -5;
+		return -7;
 	}
 
 }

@@ -79,7 +79,7 @@ public class Doll implements WithStyle {
 
 	private static TileArguments convertFunctionToBeRemoved(ISkinParam skinParam, Rose skin,
 			StringBounder stringBounder) {
-		return new TileArguments(stringBounder, null, skin, skinParam, null);
+		return new TileArguments(stringBounder, null, skin, skinParam, null, null);
 	}
 
 	private Doll(ParticipantEnglober englober, TileArguments tileArguments, StyleBuilder styleBuilder,
@@ -150,9 +150,9 @@ public class Doll implements WithStyle {
 
 	private Real getPosAA(StringBounder stringBounder) {
 		final LivingSpace previous = tileArguments.getLivingSpaces().previous(getFirstLivingSpace());
-		if (previous == null) {
-			return tileArguments.getOrigin();
-		}
+		if (previous == null)
+			return tileArguments.getXOrigin();
+
 		return previous.getPosD(stringBounder);
 	}
 

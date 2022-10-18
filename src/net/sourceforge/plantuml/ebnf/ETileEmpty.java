@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -30,57 +30,38 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
-package net.sourceforge.plantuml.command.regex;
+package net.sourceforge.plantuml.ebnf;
 
-import java.util.Collections;
-import java.util.Map;
+import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.ugraphic.UGraphic;
 
-public class RegexResult {
+public class ETileEmpty extends ETile {
 
-	private final Map<String, RegexPartialMatch> data;
-
-	public RegexResult(Map<String, RegexPartialMatch> data) {
-		this.data = Collections.unmodifiableMap(data);
+	@Override
+	public void drawU(UGraphic ug) {
 	}
 
 	@Override
-	public String toString() {
-		return data.toString();
+	public void push(ETile tile) {
+		throw new UnsupportedOperationException();
 	}
 
-	public RegexPartialMatch get(String key) {
-		return data.get(key);
+	@Override
+	public double getWidth(StringBounder stringBounder) {
+		return 0;
 	}
 
-	public String get(String key, int num) {
-		final RegexPartialMatch reg = data.get(key);
-		if (reg == null)
-			return null;
-
-		return reg.get(num);
+	@Override
+	public double getH1(StringBounder stringBounder) {
+		return 0;
 	}
 
-	public String getLazzy(String key, int num) {
-		for (Map.Entry<String, RegexPartialMatch> ent : data.entrySet()) {
-			if (ent.getKey().startsWith(key) == false)
-				continue;
-
-			final RegexPartialMatch match = ent.getValue();
-			if (num >= match.size())
-				continue;
-
-			if (match.get(num) != null)
-				return ent.getValue().get(num);
-
-		}
-		return null;
-	}
-
-	public int size() {
-		return data.size();
+	@Override
+	public double getH2(StringBounder stringBounder) {
+		return 0;
 	}
 
 }

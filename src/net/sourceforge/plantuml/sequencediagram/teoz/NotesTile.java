@@ -62,18 +62,25 @@ public class NotesTile extends AbstractTile implements Tile {
 	private final Rose skin;
 	private final ISkinParam skinParam;
 	private final Notes notes;
+	private final YGauge yGauge;
 
 	public Event getEvent() {
 		return notes;
 	}
 
 	public NotesTile(StringBounder stringBounder, LivingSpaces livingSpaces, Notes notes, Rose skin,
-			ISkinParam skinParam) {
-		super(stringBounder);
+			ISkinParam skinParam, YGauge currentY) {
+		super(stringBounder, currentY);
 		this.livingSpaces = livingSpaces;
 		this.notes = notes;
 		this.skin = skin;
 		this.skinParam = skinParam;
+		this.yGauge = YGauge.create(currentY.getMax(), getPreferredHeight());
+	}
+
+	@Override
+	public YGauge getYGauge() {
+		return yGauge;
 	}
 
 	private Component getComponent(StringBounder stringBounder, Note note) {
@@ -83,16 +90,18 @@ public class NotesTile extends AbstractTile implements Tile {
 	}
 
 	private ComponentType getNoteComponentType(NoteStyle noteStyle) {
-		if (noteStyle == NoteStyle.HEXAGONAL) {
+		if (noteStyle == NoteStyle.HEXAGONAL)
 			return ComponentType.NOTE_HEXAGONAL;
-		}
-		if (noteStyle == NoteStyle.BOX) {
+
+		if (noteStyle == NoteStyle.BOX)
 			return ComponentType.NOTE_BOX;
-		}
+
 		return ComponentType.NOTE;
 	}
 
 	public void drawU(UGraphic ug) {
+		if (YGauge.USE_ME)
+			ug = ug.apply(UTranslate.dy(getYGauge().getMin().getCurrentValue()));
 		final StringBounder stringBounder = ug.getStringBounder();
 
 		for (Note note : notes) {
@@ -171,9 +180,9 @@ public class NotesTile extends AbstractTile implements Tile {
 
 	public Real getMinX() {
 		final List<Real> reals = new ArrayList<>();
-		for (Note note : notes) {
+		for (Note note : notes)
 			reals.add(getX(getStringBounder(), note));
-		}
+
 		return RealUtils.min(reals);
 	}
 
@@ -183,9 +192,9 @@ public class NotesTile extends AbstractTile implements Tile {
 
 	public Real getMaxX() {
 		final List<Real> reals = new ArrayList<>();
-		for (Note note : notes) {
+		for (Note note : notes)
 			reals.add(getX2(getStringBounder(), note));
-		}
+
 		return RealUtils.max(reals);
 	}
 

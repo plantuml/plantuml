@@ -446,18 +446,18 @@ final public class EntityImpl implements ILeaf, IGroup {
 
 	private void moveEntitiesTo1972(IGroup dest) {
 		checkGroup();
-		if (dest.isGroup() == false) {
+		if (dest.isGroup() == false)
 			throw new UnsupportedOperationException();
-		}
+
 		// System.err.println("moveEntitiesTo1972::before1::groups2=" +
 		// entityFactory.groups2());
 		final Ident firstIdent = getIdent();
 		final Ident destIdent = dest.getIdent();
 		// System.err.println("moveEntitiesTo1972::this=" + firstIdent);
 		// System.err.println("moveEntitiesTo1972::dest=" + destIdent);
-		if (destIdent.startsWith(firstIdent) == false) {
+		if (destIdent.startsWith(firstIdent) == false)
 			throw new UnsupportedOperationException();
-		}
+
 		// System.err.println("moveEntitiesTo1972::before2::groups2=" +
 		// entityFactory.groups2());
 		for (ILeaf ent : new ArrayList<>(entityFactory.leafs2())) {

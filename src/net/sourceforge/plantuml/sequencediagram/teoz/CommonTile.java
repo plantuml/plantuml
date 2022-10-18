@@ -41,18 +41,24 @@ import net.sourceforge.plantuml.graphic.UDrawable;
 public abstract class CommonTile implements Tile, UDrawable {
 
 	private final StringBounder stringBounder;
-	private double y = -1;
+	private TimeHook y = new TimeHook(-1);
 
 	public CommonTile(StringBounder stringBounder) {
 		this.stringBounder = stringBounder;
 	}
 
-	final public void callbackY(double y) {
-		this.y = y;
-		callbackY_internal(y);
+	final public void callbackY(TimeHook y) {
+		if (YGauge.USE_ME) {
+		} else {
+			this.y = y;
+			callbackY_internal(y);
+		}
 	}
 
-	protected void callbackY_internal(double y) {
+	protected void callbackY_internal(TimeHook y) {
+		if (YGauge.USE_ME) {
+			System.err.println("callbackY_internal::y=" + y + " gauge=" + getYGauge() + " " + getClass());
+		}
 	}
 
 	protected final StringBounder getStringBounder() {
@@ -65,7 +71,10 @@ public abstract class CommonTile implements Tile, UDrawable {
 		return (min + max) / 2;
 	}
 
-	public final double getY() {
+	public final TimeHook getTimeHook() {
+		if (YGauge.USE_ME) {
+			throw new IllegalStateException();
+		}
 		return y;
 	}
 

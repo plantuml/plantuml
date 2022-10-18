@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -30,32 +30,12 @@
  *
  *
  * Original Author:  Arnaud Roques
- *
+ * 
  *
  */
-package net.sourceforge.plantuml.ebnf;
+package net.sourceforge.plantuml.sequencediagram.teoz;
 
-import net.sourceforge.plantuml.graphic.UDrawable;
-import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.UPath;
-
-public class ZigZag implements UDrawable {
-
-	private final double dx;
-	private final double dy;
-
-	public ZigZag(double dx, double dy) {
-		this.dx = dx;
-		this.dy = dy;
-	}
-
-	@Override
-	public void drawU(UGraphic ug) {
-		final UPath path = new UPath();
-		path.moveTo(0, 0);
-		final double a = 0.8;
-		path.cubicTo(dx * a, 0, dx - dx * a, dy, dx, dy);
-		ug.draw(path);
-	}
+public enum HookType {
+	NEGATIVE, POSITIVE;
 
 }

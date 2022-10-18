@@ -164,7 +164,7 @@ public class Option {
 			} else if (s.equalsIgnoreCase("-pdf") || s.equalsIgnoreCase("-tpdf")) {
 				setFileFormatOption(new FileFormatOption(FileFormat.PDF));
 			} else if (s.equalsIgnoreCase("-darkmode")) {
-				setFileFormatOption(this.fileFormatOption.withColorMapper(ColorMapper.FORCE_DARK));
+				setFileFormatOption(this.fileFormatOption.withColorMapper(ColorMapper.DARK_MODE));
 			} else if (s.equalsIgnoreCase("-overwrite")) {
 				OptionFlags.getInstance().setOverwrite(true);
 			} else if (s.equalsIgnoreCase("-output") || s.equalsIgnoreCase("-o")) {

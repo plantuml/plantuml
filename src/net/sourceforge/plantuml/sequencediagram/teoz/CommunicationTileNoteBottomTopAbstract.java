@@ -65,6 +65,7 @@ public abstract class CommunicationTileNoteBottomTopAbstract extends AbstractTil
 	protected final Rose skin;
 	protected final ISkinParam skinParam;
 	protected final Note noteOnMessage;
+	private final YGauge yGauge;
 
 	final public Event getEvent() {
 		return message;
@@ -76,23 +77,32 @@ public abstract class CommunicationTileNoteBottomTopAbstract extends AbstractTil
 	}
 
 	public CommunicationTileNoteBottomTopAbstract(Tile tile, AbstractMessage message, Rose skin, ISkinParam skinParam,
-			Note noteOnMessage) {
-		super(((AbstractTile) tile).getStringBounder());
+			Note noteOnMessage, YGauge currentY) {
+		super(((AbstractTile) tile).getStringBounder(), currentY);
 		this.tile = tile;
 		this.message = message;
 		this.skin = skin;
 		this.skinParam = skinParam;
 		this.noteOnMessage = noteOnMessage;
+		this.yGauge = YGauge.create(currentY.getMax(), getPreferredHeight());
 	}
 
 	@Override
-	final protected void callbackY_internal(double y) {
+	public YGauge getYGauge() {
+		return yGauge;
+	}
+
+
+	@Override
+	final protected void callbackY_internal(TimeHook y) {
+		super.callbackY_internal(y);
 		tile.callbackY(y);
 	}
 
 	final protected Component getComponent(StringBounder stringBounder) {
 		final Component comp = skin.createComponentNote(noteOnMessage.getUsedStyles(), ComponentType.NOTE,
-				noteOnMessage.getSkinParamBackcolored(skinParam), noteOnMessage.getStrings(), noteOnMessage.getColors());
+				noteOnMessage.getSkinParamBackcolored(skinParam), noteOnMessage.getStrings(),
+				noteOnMessage.getColors());
 		return comp;
 	}
 

@@ -47,4 +47,6 @@ public interface Event {
 
 	boolean isParallel();
 
+	void setY(double y);
+
 }

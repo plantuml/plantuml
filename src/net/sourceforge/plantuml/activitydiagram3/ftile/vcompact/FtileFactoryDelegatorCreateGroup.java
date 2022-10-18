@@ -44,21 +44,19 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactoryDelegator;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
-import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class FtileFactoryDelegatorCreateGroup extends FtileFactoryDelegator {
-
-	private final Rose rose = new Rose();
 
 	public FtileFactoryDelegatorCreateGroup(FtileFactory factory) {
 		super(factory);
 	}
 
 	@Override
-	public Ftile createGroup(Ftile list, Display name, HColor backColor, HColor titleColor, PositionedNote note,
-			HColor borderColor, USymbol type, double roundCorner) {
-		Ftile result = new FtileGroup(list, name, backColor, titleColor, skinParam(), borderColor, type, roundCorner);
+	public Ftile createGroup(Ftile list, Display name, HColor backColor, PositionedNote note, USymbol type,
+			Style style) {
+		Ftile result = new FtileGroup(list, name, backColor, skinParam(), type, style);
 		if (note != null)
 			result = new FtileWithNotes(result, Collections.singleton(note), skinParam(), VerticalAlignment.CENTER);
 

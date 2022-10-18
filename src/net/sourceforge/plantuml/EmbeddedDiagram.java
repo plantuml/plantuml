@@ -146,40 +146,43 @@ class EmbeddedDiagramDraw extends AbstractTextBlock implements Line, Atom {
 public class EmbeddedDiagram implements CharSequence {
 
 	public static String getEmbeddedType(CharSequence s) {
-		if (s == null) {
+		if (s == null)
 			return null;
-		}
+
 		s = StringUtils.trin(s.toString());
-		if (s.equals("{{")) {
+		if (s.equals("{{"))
 			return "uml";
-		}
-		if (s.equals("{{uml")) {
+
+		if (s.equals("{{uml"))
 			return "uml";
-		}
-		if (s.equals("{{wbs")) {
+
+		if (s.equals("{{wbs"))
 			return "wbs";
-		}
-		if (s.equals("{{mindmap")) {
+
+		if (s.equals("{{mindmap"))
 			return "mindmap";
-		}
-		if (s.equals("{{gantt")) {
+
+		if (s.equals("{{gantt"))
 			return "gantt";
-		}
-		if (s.equals("{{json")) {
+
+		if (s.equals("{{json"))
 			return "json";
-		}
-		if (s.equals("{{yaml")) {
+
+		if (s.equals("{{yaml"))
 			return "yaml";
-		}
-		if (s.equals("{{wire")) {
+
+		if (s.equals("{{wire"))
 			return "wire";
-		}
-		if (s.equals("{{creole")) {
+
+		if (s.equals("{{creole"))
 			return "creole";
-		}
-		if (s.equals("{{board")) {
+
+		if (s.equals("{{board"))
 			return "board";
-		}
+
+		if (s.equals("{{ebnf"))
+			return "ebnf";
+
 		return null;
 	}
 

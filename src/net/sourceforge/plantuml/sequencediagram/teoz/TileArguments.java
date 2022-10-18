@@ -47,15 +47,17 @@ import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class TileArguments implements Bordered {
 	private final StringBounder stringBounder;
-	private final Real origin;
+	private final Real xorigin;
+	private final Real yorigin;
 	private final LivingSpaces livingSpaces;
 	private final Rose skin;
 	private final ISkinParam skinParam;
 
 	public TileArguments(StringBounder stringBounder, LivingSpaces livingSpaces, Rose skin, ISkinParam skinParam,
-			Real origin) {
+			Real xorigin, Real yorigin) {
 		this.stringBounder = stringBounder;
-		this.origin = origin;
+		this.xorigin = xorigin;
+		this.yorigin = yorigin;
 		this.livingSpaces = livingSpaces;
 		this.skin = skin;
 		this.skinParam = skinParam;
@@ -63,25 +65,25 @@ public class TileArguments implements Bordered {
 
 	public TileArguments withBackColorGeneral(HColor backColorElement, HColor backColorGeneral) {
 		return new TileArguments(stringBounder, livingSpaces, skin,
-				new SkinParamBackcolored(skinParam, backColorElement, backColorGeneral), origin);
+				new SkinParamBackcolored(skinParam, backColorElement, backColorGeneral), xorigin, yorigin);
 	}
 
 	public TileArguments withBackColor(Reference reference) {
 		final ISkinParam newSkinParam = new SkinParamBackcoloredReference(skinParam, reference.getBackColorElement(),
 				reference.getBackColorGeneral());
-		return new TileArguments(stringBounder, livingSpaces, skin, newSkinParam, origin);
+		return new TileArguments(stringBounder, livingSpaces, skin, newSkinParam, xorigin, yorigin);
 	}
 
 	public final StringBounder getStringBounder() {
 		return stringBounder;
 	}
 
-	// public final Real getMaxAbsolute() {
-	// return origin.getMaxAbsolute();
-	// }
+	public final Real getXOrigin() {
+		return xorigin;
+	}
 
-	public final Real getOrigin() {
-		return origin;
+	public final Real getYOrigin() {
+		return yorigin;
 	}
 
 	public final LivingSpaces getLivingSpaces() {
@@ -106,9 +108,9 @@ public class TileArguments implements Bordered {
 
 	public LivingSpace getLastLivingSpace() {
 		LivingSpace result = null;
-		for (LivingSpace v : livingSpaces.values()) {
+		for (LivingSpace v : livingSpaces.values())
 			result = v;
-		}
+
 		return result;
 	}
 
@@ -125,18 +127,5 @@ public class TileArguments implements Bordered {
 	public double getBorder2() {
 		return bordered.getBorder2();
 	}
-
-	// public double getAbsoluteMin() {
-	// return line.getAbsoluteMin();
-	// }
-	//
-	// public double getAbsoluteMax() {
-	// return line.getAbsoluteMax();
-	// }
-
-	// public void ensure(Tile tile) {
-	// getAlpha().ensureLowerThan(tile.getMinX(getStringBounder()));
-	// getOmega().ensureBiggerThan(tile.getMaxX(getStringBounder()));
-	// }
 
 }

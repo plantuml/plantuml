@@ -56,7 +56,6 @@ import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColors;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public class CommandPartition3 extends SingleLineCommand2<ActivityDiagram3> {
@@ -125,16 +124,15 @@ public class CommandPartition3 extends SingleLineCommand2<ActivityDiagram3> {
 
 		final Style stylePartition = FtileGroup.getStyleSignature(symbol).withTOBECHANGED(stereotype)
 				.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
-		final HColor borderColor = stylePartition.value(PName.LineColor).asColor(diagram.getSkinParam().getIHtmlColorSet());
 		HColor backColor = colors.getColor(ColorType.BACK);
 		if (backColor == null)
 			backColor = stylePartition.value(PName.BackGroundColor).asColor(diagram.getSkinParam().getIHtmlColorSet());
 
-		final HColor titleColor = HColors.BLUE;// stylePartition.value(PName.FontColor).asColor(diagram.getSkinParam().getIHtmlColorSet());
-		final double roundCorner = stylePartition.value(PName.RoundCorner).asDouble();
+//		final HColor borderColor = stylePartition.value(PName.LineColor).asColor(diagram.getSkinParam().getIHtmlColorSet());
+//		final HColor titleColor = HColors.BLUE;// stylePartition.value(PName.FontColor).asColor(diagram.getSkinParam().getIHtmlColorSet());
+//		final double roundCorner = stylePartition.value(PName.RoundCorner).asDouble();
 
-		diagram.startGroup(Display.getWithNewlines(partitionTitle), backColor, titleColor, borderColor, symbol,
-				roundCorner);
+		diagram.startGroup(Display.getWithNewlines(partitionTitle), backColor, symbol, stylePartition);
 
 		return CommandExecutionResult.ok();
 	}

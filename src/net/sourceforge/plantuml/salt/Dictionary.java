@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.creole.Parser;
 import net.sourceforge.plantuml.salt.element.Element;
 import net.sourceforge.plantuml.salt.element.WrappedElement;
 import net.sourceforge.plantuml.sprite.Sprite;
+import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 
 public class Dictionary implements SpriteContainer, ISkinSimple {
@@ -113,7 +114,7 @@ public class Dictionary implements SpriteContainer, ISkinSimple {
 		throw new UnsupportedOperationException();
 	}
 
-	public double minClassWidth() {
+	public double minClassWidthTOBEREMOVED(Style style) {
 		return 0;
 	}
 

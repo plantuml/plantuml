@@ -30,49 +30,57 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
-package net.sourceforge.plantuml.mindmap;
+package net.sourceforge.plantuml.ebnf;
 
-import net.sourceforge.plantuml.LineLocation;
+import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.CommandMultilines2;
+import net.sourceforge.plantuml.command.MultilinesStrategy;
+import net.sourceforge.plantuml.command.Trim;
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
-import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.graphic.color.ColorParser;
+import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
-public class CommandMindMapOrgmode extends SingleLineCommand2<MindMapDiagram> {
+public class CommandNoteMultilines extends CommandMultilines2<PSystemEbnf> {
 
-	public CommandMindMapOrgmode() {
-		super(false, getRegexConcat());
+	public CommandNoteMultilines() {
+		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH);
+	}
+
+	private static ColorParser color() {
+		return ColorParser.simpleColor(ColorType.BACK);
 	}
 
 	static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandMindMapOrgmode.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("TYPE", "([ \t]*[*]+)"), //
-				new RegexOptional(new RegexLeaf("BACKCOLOR", "\\[(#\\w+)\\]")), //
-				new RegexLeaf("SHAPE", "(_)?"), //
-				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("LABEL", "([^%s].*)"), RegexLeaf.end());
+		return RegexConcat.build(CommandNoteMultilines.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("note"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				color().getRegex(), //
+				RegexLeaf.end());
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(MindMapDiagram diagram, LineLocation location, RegexResult arg)
-			throws NoSuchColorException {
-		final String type = arg.get("TYPE", 0);
-		final String label = arg.get("LABEL", 0);
-		final String stringColor = arg.get("BACKCOLOR", 0);
-		HColor backColor = null;
-		if (stringColor != null)
-			backColor = diagram.getSkinParam().getIHtmlColorSet().getColor(stringColor);
-
-		return diagram.addIdea(backColor, diagram.getSmartLevel(type), Display.getWithNewlines(label),
-				IdeaShape.fromDesc(arg.get("SHAPE", 0)));
+	public String getPatternEnd() {
+		return "^end[%s]?note$";
 	}
+
+	@Override
+	protected CommandExecutionResult executeNow(PSystemEbnf diagram, BlocLines lines) throws NoSuchColorException {
+		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
+		lines = lines.subExtract(1, 1);
+		lines = lines.removeEmptyColumns();
+		final Display note = lines.toDisplay();
+		final Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());
+		return diagram.addNote(note, colors);
+	}
+
 }

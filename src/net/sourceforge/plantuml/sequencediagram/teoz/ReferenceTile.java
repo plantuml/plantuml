@@ -55,16 +55,24 @@ public class ReferenceTile extends AbstractTile implements Tile {
 	private final TileArguments tileArguments;
 	private Real first;
 	private Real last;
+	private final YGauge yGauge;
 
 	public Event getEvent() {
 		return reference;
 	}
 
-	public ReferenceTile(Reference reference, TileArguments tileArguments) {
-		super(tileArguments.getStringBounder());
+	public ReferenceTile(Reference reference, TileArguments tileArguments, YGauge currentY) {
+		super(tileArguments.getStringBounder(), currentY);
 		this.reference = reference;
 		this.tileArguments = tileArguments;
+		this.yGauge = YGauge.create(currentY.getMax(), getPreferredHeight());
 	}
+
+	@Override
+	public YGauge getYGauge() {
+		return yGauge;
+	}
+
 
 	private void init(StringBounder stringBounder) {
 		if (first != null) {

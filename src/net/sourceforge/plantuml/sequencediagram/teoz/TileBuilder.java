@@ -62,19 +62,25 @@ import net.sourceforge.plantuml.skin.rose.Rose;
 
 public class TileBuilder {
 
-	public static List<Tile> buildSeveral(Iterator<Event> it, TileArguments tileArguments, Tile parent) {
+	public static List<Tile> buildSeveral(Iterator<Event> it, TileArguments tileArguments, Tile parent,
+			YGauge currentY) {
 		final List<Tile> tiles = new ArrayList<>();
 		while (it.hasNext()) {
 			final Event ev = it.next();
-			for (Tile tile : TileBuilder.buildOne(it, tileArguments, ev, parent)) {
+			for (Tile tile : TileBuilder.buildOne(it, tileArguments, ev, parent, currentY)) {
 				tiles.add(tile);
 				final Real tmpMax = tile.getMaxX();
+				if (YGauge.USE_ME) {
+					final YGauge gauge = tile.getYGauge();
+					currentY = gauge;
+				}
 			}
 		}
 		return Collections.unmodifiableList(tiles);
 	}
 
-	public static List<Tile> buildOne(Iterator<Event> it, TileArguments tileArguments, final Event ev, Tile parent) {
+	public static List<Tile> buildOne(Iterator<Event> it, TileArguments tileArguments, final Event ev, Tile parent,
+			YGauge currentY) {
 
 		final StringBounder stringBounder = tileArguments.getStringBounder();
 		final Rose skin = tileArguments.getSkin();
@@ -91,41 +97,43 @@ public class TileBuilder {
 			Tile result = null;
 			if (msg.isSelfMessage()) {
 				result = new CommunicationTileSelf(tileArguments.getStringBounder(), livingSpace1, msg, skin, skinParam,
-						livingSpaces);
+						livingSpaces, currentY);
 			} else {
-				result = new CommunicationTile(tileArguments.getStringBounder(), livingSpaces, msg, skin, skinParam);
+				result = new CommunicationTile(tileArguments.getStringBounder(), livingSpaces, msg, skin, skinParam,
+						currentY);
 				reverse = ((CommunicationTile) result).isReverse(stringBounder);
 			}
 			for (Note noteOnMessage : msg.getNoteOnMessages()) {
 				final NotePosition notePosition = noteOnMessage.getPosition();
-				if (notePosition == NotePosition.LEFT) {
+				if (notePosition == NotePosition.LEFT)
 					result = new CommunicationTileNoteLeft(result, msg, skin, skinParam,
-							reverse ? livingSpace2 : livingSpace1, noteOnMessage);
-				} else if (notePosition == NotePosition.RIGHT && msg.isSelfMessage()) {
+							reverse ? livingSpace2 : livingSpace1, noteOnMessage, currentY);
+				else if (notePosition == NotePosition.RIGHT && msg.isSelfMessage())
 					result = new CommunicationTileSelfNoteRight((CommunicationTileSelf) result, msg, skin, skinParam,
-							noteOnMessage);
-				} else if (notePosition == NotePosition.RIGHT) {
+							noteOnMessage, currentY);
+				else if (notePosition == NotePosition.RIGHT)
 					result = new CommunicationTileNoteRight(result, msg, skin, skinParam,
-							reverse ? livingSpace1 : livingSpace2, noteOnMessage);
-				} else if (notePosition == NotePosition.BOTTOM) {
-					result = new CommunicationTileNoteBottom(result, msg, skin, skinParam, noteOnMessage);
-				} else if (notePosition == NotePosition.TOP) {
-					result = new CommunicationTileNoteTop(result, msg, skin, skinParam, noteOnMessage);
-				}
+							reverse ? livingSpace1 : livingSpace2, noteOnMessage, currentY);
+				else if (notePosition == NotePosition.BOTTOM)
+					result = new CommunicationTileNoteBottom(result, msg, skin, skinParam, noteOnMessage, currentY);
+				else if (notePosition == NotePosition.TOP)
+					result = new CommunicationTileNoteTop(result, msg, skin, skinParam, noteOnMessage, currentY);
+
 			}
 			tiles.add(result);
 		} else if (ev instanceof MessageExo) {
 			final MessageExo exo = (MessageExo) ev;
 			final LivingSpace livingSpace1 = livingSpaces.get(exo.getParticipant());
 			Tile result = null;
-			result = new CommunicationExoTile(livingSpace1, exo, skin, skinParam, tileArguments);
+			result = new CommunicationExoTile(livingSpace1, exo, skin, skinParam, tileArguments, currentY);
 			for (Note noteOnMessage : exo.getNoteOnMessages()) {
 				final NotePosition notePosition = exo.getNoteOnMessages().get(0).getPosition();
-				if (notePosition == NotePosition.LEFT) {
-					result = new CommunicationTileNoteLeft(result, exo, skin, skinParam, livingSpace1, noteOnMessage);
-				} else if (notePosition == NotePosition.RIGHT) {
-					result = new CommunicationTileNoteRight(result, exo, skin, skinParam, livingSpace1, noteOnMessage);
-				}
+				if (notePosition == NotePosition.LEFT)
+					result = new CommunicationTileNoteLeft(result, exo, skin, skinParam, livingSpace1, noteOnMessage,
+							currentY);
+				else if (notePosition == NotePosition.RIGHT)
+					result = new CommunicationTileNoteRight(result, exo, skin, skinParam, livingSpace1, noteOnMessage,
+							currentY);
 			}
 			tiles.add(result);
 		} else if (ev instanceof Note) {
@@ -136,42 +144,44 @@ public class TileBuilder {
 				livingSpace1 = tileArguments.getFirstLivingSpace();
 				livingSpace2 = tileArguments.getLastLivingSpace();
 			}
-			tiles.add(
-					new NoteTile(tileArguments.getStringBounder(), livingSpace1, livingSpace2, note, skin, skinParam));
+			tiles.add(new NoteTile(tileArguments.getStringBounder(), livingSpace1, livingSpace2, note, skin, skinParam,
+					currentY));
 		} else if (ev instanceof Notes) {
 			final Notes notes = (Notes) ev;
-			tiles.add(new NotesTile(tileArguments.getStringBounder(), livingSpaces, notes, skin, skinParam));
+			tiles.add(new NotesTile(tileArguments.getStringBounder(), livingSpaces, notes, skin, skinParam, currentY));
 		} else if (ev instanceof Divider) {
 			final Divider divider = (Divider) ev;
-			tiles.add(new DividerTile(divider, tileArguments));
+			tiles.add(new DividerTile(divider, tileArguments, currentY));
 		} else if (ev instanceof GroupingStart) {
 			final GroupingStart start = (GroupingStart) ev;
 			final GroupingTile groupingTile = new GroupingTile(it, start,
 					tileArguments.withBackColorGeneral(start.getBackColorElement(), start.getBackColorGeneral()),
-					tileArguments);
-			tiles.add(new EmptyTile(4, groupingTile));
+					tileArguments, currentY);
+			if (YGauge.USE_ME == false)
+				tiles.add(new EmptyTile(4, groupingTile, currentY));
 			tiles.add(groupingTile);
-			tiles.add(new EmptyTile(4, groupingTile));
-			// tiles.add(TileUtils.withMargin(tile, 0, 0, 4, 4);
+			if (YGauge.USE_ME == false)
+				tiles.add(new EmptyTile(4, groupingTile, currentY));
+
 		} else if (ev instanceof GroupingLeaf && ((GroupingLeaf) ev).getType() == GroupingType.ELSE) {
 			final GroupingLeaf anElse = (GroupingLeaf) ev;
-			tiles.add(new ElseTile(anElse, skin, skinParam, parent));
+			tiles.add(new ElseTile(anElse, skin, skinParam, parent, currentY));
 		} else if (ev instanceof Reference) {
 			final Reference ref = (Reference) ev;
-			tiles.add(new ReferenceTile(ref, tileArguments.withBackColor(ref)));
+			tiles.add(new ReferenceTile(ref, tileArguments.withBackColor(ref), currentY));
 		} else if (ev instanceof Delay) {
 			final Delay delay = (Delay) ev;
-			tiles.add(new DelayTile(delay, tileArguments));
+			tiles.add(new DelayTile(delay, tileArguments, currentY));
 		} else if (ev instanceof HSpace) {
 			final HSpace hspace = (HSpace) ev;
-			tiles.add(new HSpaceTile(hspace, tileArguments));
+			tiles.add(new HSpaceTile(hspace, tileArguments, currentY));
 		} else if (ev instanceof LifeEvent) {
 			final LifeEvent lifeEvent = (LifeEvent) ev;
 			final LivingSpace livingSpace = livingSpaces.get(lifeEvent.getParticipant());
-			tiles.add(new LifeEventTile(lifeEvent, tileArguments, livingSpace, skin, skinParam));
+			tiles.add(new LifeEventTile(lifeEvent, tileArguments, livingSpace, skin, skinParam, currentY));
 		} else if (ev instanceof Newpage) {
 			final Newpage newpage = (Newpage) ev;
-			tiles.add(new NewpageTile(newpage, tileArguments));
+			tiles.add(new NewpageTile(newpage, tileArguments, currentY));
 		} else {
 			System.err.println("TileBuilder::Ignoring " + ev.getClass());
 		}

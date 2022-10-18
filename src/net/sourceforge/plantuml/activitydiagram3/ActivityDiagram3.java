@@ -60,6 +60,7 @@ import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
+import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.comp.CompressionMode;
 import net.sourceforge.plantuml.ugraphic.comp.CompressionXorYBuilder;
@@ -416,11 +417,10 @@ public class ActivityDiagram3 extends UmlDiagram {
 		return CommandExecutionResult.ok();
 	}
 
-	public void startGroup(Display name, HColor backColor, HColor titleColor, HColor borderColor, USymbol type,
-			double roundCorner) {
+	public void startGroup(Display name, HColor backColor, USymbol type, Style style) {
 		manageSwimlaneStrategy();
-		final InstructionGroup instructionGroup = new InstructionGroup(current(), name, backColor, titleColor,
-				swinlanes.getCurrentSwimlane(), borderColor, nextLinkRenderer(), type, roundCorner);
+		final InstructionGroup instructionGroup = new InstructionGroup(current(), name, backColor,
+				swinlanes.getCurrentSwimlane(), nextLinkRenderer(), type, style);
 		current().add(instructionGroup);
 		setCurrent(instructionGroup);
 	}

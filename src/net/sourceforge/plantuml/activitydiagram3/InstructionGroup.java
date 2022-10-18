@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
+import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColors;
 
@@ -61,31 +62,27 @@ public class InstructionGroup extends AbstractInstruction implements Instruction
 	private final InstructionList list;
 	private final Instruction parent;
 	private final HColor backColor;
-	private final HColor borderColor;
-	private final HColor titleColor;
 	private final LinkRendering linkRendering;
 	private final USymbol type;
 
 	private final Display title;
-	private final double roundCorner;
 	private PositionedNote note = null;
+	private final Style style;
 
 	@Override
 	public boolean containsBreak() {
 		return list.containsBreak();
 	}
 
-	public InstructionGroup(Instruction parent, Display title, HColor backColor, HColor titleColor, Swimlane swimlane,
-			HColor borderColor, LinkRendering linkRendering, USymbol type, double roundCorner) {
+	public InstructionGroup(Instruction parent, Display title, HColor backColor, Swimlane swimlane,
+			LinkRendering linkRendering, USymbol type, Style style) {
 		this.list = new InstructionList(swimlane);
 		this.type = type;
 		this.linkRendering = linkRendering;
 		this.parent = parent;
 		this.title = title;
-		this.borderColor = borderColor;
+		this.style = style;
 		this.backColor = backColor;
-		this.titleColor = titleColor;
-		this.roundCorner = roundCorner;
 	}
 
 	@Override
@@ -96,8 +93,7 @@ public class InstructionGroup extends AbstractInstruction implements Instruction
 	@Override
 	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
 		Gtile tmp = list.createGtile(skinParam, stringBounder);
-		return new GtileGroup(tmp, title, null, HColors.BLUE, backColor, titleColor, tmp.skinParam(), borderColor,
-				type, roundCorner);
+		return new GtileGroup(tmp, title, null, HColors.BLUE, backColor, tmp.skinParam(), type, style);
 	}
 
 	@Override
@@ -106,7 +102,7 @@ public class InstructionGroup extends AbstractInstruction implements Instruction
 		if (note != null)
 			tmp = new FtileWithNotes(tmp, Collections.singleton(note), factory.skinParam(), VerticalAlignment.CENTER);
 
-		return factory.createGroup(tmp, title, backColor, titleColor, null, borderColor, type, roundCorner);
+		return factory.createGroup(tmp, title, backColor, null, type, style);
 	}
 
 	public Instruction getParent() {

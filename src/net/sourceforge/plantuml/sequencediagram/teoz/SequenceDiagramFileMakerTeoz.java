@@ -176,24 +176,28 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 	}
 
 	private PlayingSpace createMainTile() {
-		final RealOrigin origin = RealUtils.createOrigin();
-		Real currentPos = origin.addAtLeast(0);
+		final RealOrigin xorigin = RealUtils.createOrigin();
+		Real xcurrent = xorigin.addAtLeast(0);
+		final RealOrigin yorigin = RealUtils.createOrigin();
 		for (Participant p : diagram.participants()) {
-			final LivingSpace livingSpace = new LivingSpace(p, diagram.getEnglober(p), skin, getSkinParam(), currentPos,
+			final LivingSpace livingSpace = new LivingSpace(p, diagram.getEnglober(p), skin, getSkinParam(), xcurrent,
 					diagram.events());
 			livingSpaces.put(p, livingSpace);
-			currentPos = livingSpace.getPosD(stringBounder).addAtLeast(0);
+			xcurrent = livingSpace.getPosD(stringBounder).addAtLeast(0);
 		}
 
 		final TileArguments tileArguments = new TileArguments(stringBounder, livingSpaces, skin, diagram.getSkinParam(),
-				origin);
+				xorigin, yorigin);
 
 		this.dolls = new Dolls(tileArguments);
 		final PlayingSpace mainTile = new PlayingSpace(diagram, dolls, tileArguments);
 		this.livingSpaces.addConstraints(stringBounder);
 		mainTile.addConstraints();
 		this.dolls.addConstraints(stringBounder);
-		origin.compileNow();
+		xorigin.compileNow();
+		if (YGauge.USE_ME)
+			System.err.println("COMPILING Y");
+		yorigin.compileNow();
 		tileArguments.setBordered(mainTile);
 		return mainTile;
 	}

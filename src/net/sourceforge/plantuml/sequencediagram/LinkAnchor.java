@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.sequencediagram.teoz.CommonTile;
+import net.sourceforge.plantuml.sequencediagram.teoz.YGauge;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
@@ -82,8 +83,17 @@ public class LinkAnchor {
 
 	public void drawAnchor(UGraphic ug, CommonTile tile1, CommonTile tile2, ISkinParam skinParam) {
 
-		final double y1 = tile1.getY() + tile1.getContactPointRelative();
-		final double y2 = tile2.getY() + tile2.getContactPointRelative();
+		final double y1;
+		final double y2;
+		if (YGauge.USE_ME) {
+			y1 = (tile1.getYGauge().getMin().getCurrentValue() + tile1.getYGauge().getMax().getCurrentValue()) / 2
+					+ tile1.getContactPointRelative();
+			y2 = (tile2.getYGauge().getMin().getCurrentValue() + tile2.getYGauge().getMax().getCurrentValue()) / 2
+					+ tile2.getContactPointRelative();
+		} else {
+			y1 = tile1.getTimeHook().getValue() + tile1.getContactPointRelative();
+			y2 = tile2.getTimeHook().getValue() + tile2.getContactPointRelative();
+		}
 		final double xx1 = tile1.getMiddleX();
 		final double xx2 = tile2.getMiddleX();
 		final double x = (xx1 + xx2) / 2;

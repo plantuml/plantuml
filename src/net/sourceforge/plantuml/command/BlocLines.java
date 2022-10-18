@@ -301,16 +301,16 @@ public class BlocLines implements Iterable<StringLocated> {
 	}
 
 	private static StringLocated removeStartingSpaces(StringLocated arg, int nbStartingSpace) {
-		if (arg.getString().length() == 0) {
+		if (arg.getString().length() == 0)
 			return arg;
-		}
+
 		int i = 0;
-		while (i < nbStartingSpace && i < arg.getString().length() && isSpaceOrTab(arg.getString().charAt(i))) {
+		while (i < nbStartingSpace && i < arg.getString().length() && isSpaceOrTab(arg.getString().charAt(i)))
 			i++;
-		}
-		if (i == 0) {
+
+		if (i == 0)
 			return arg;
-		}
+
 		return arg.substring(i, arg.getString().length());
 	}
 
@@ -357,6 +357,15 @@ public class BlocLines implements Iterable<StringLocated> {
 				result.add(line);
 			}
 
+		return new BlocLines(result);
+	}
+
+	public BlocLines removeFewChars(int nb) {
+		final List<StringLocated> result = new ArrayList<>();
+		result.add(getFirst().substring(nb).getTrimmed());
+		result.addAll(this.lines.subList(1, this.lines.size() - 1));
+		final StringLocated last = getLast();
+		result.add(last.substring(0, last.length() - nb).getTrimmed());
 		return new BlocLines(result);
 	}
 

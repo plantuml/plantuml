@@ -5,7 +5,7 @@ public class A0002_TestResult {
 /*
 """
 DPI: 96
-dimension: [ 763.0498 ; 890.5000 ]
+dimension: [ 762.1795 ; 890.5000 ]
 scaleFactor: 1.0000
 seed: -9181376250803721714
 svgLinkTarget: _top
@@ -14,7 +14,7 @@ preserveAspectRatio: none
 
 RECTANGLE:
   pt1: [ 15.0000 ; 12.5000 ]
-  pt2: [ 746.0498 ; 30.5000 ]
+  pt2: [ 745.1795 ; 30.5000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-1.0
@@ -94,7 +94,7 @@ TEXT:
 
 EMPTY:
   pt1: [ 218.3794 ; 65.5000 ]
-  pt2: [ 441.7562 ; 443.5000 ]
+  pt2: [ 441.3210 ; 443.5000 ]
 
 PATH:
    - type: SEG_MOVETO
@@ -102,11 +102,11 @@ PATH:
    - type: SEG_LINETO
      pt1: [ 0.0000 ; 358.0000 ]
    - type: SEG_LINETO
-     pt1: [ 203.3768 ; 358.0000 ]
+     pt1: [ 202.9416 ; 358.0000 ]
    - type: SEG_LINETO
-     pt1: [ 203.3768 ; 10.0000 ]
+     pt1: [ 202.9416 ; 10.0000 ]
    - type: SEG_LINETO
-     pt1: [ 193.3768 ; 0.0000 ]
+     pt1: [ 192.9416 ; 0.0000 ]
    - type: SEG_LINETO
      pt1: [ 0.0000 ; 0.0000 ]
   stroke: 0.0-0.0-0.5
@@ -116,13 +116,13 @@ PATH:
 
 PATH:
    - type: SEG_MOVETO
-     pt1: [ 193.3768 ; 0.0000 ]
+     pt1: [ 192.9416 ; 0.0000 ]
    - type: SEG_LINETO
-     pt1: [ 193.3768 ; 10.0000 ]
+     pt1: [ 192.9416 ; 10.0000 ]
    - type: SEG_LINETO
-     pt1: [ 203.3768 ; 10.0000 ]
+     pt1: [ 202.9416 ; 10.0000 ]
    - type: SEG_LINETO
-     pt1: [ 193.3768 ; 0.0000 ]
+     pt1: [ 192.9416 ; 0.0000 ]
   stroke: 0.0-0.0-0.5
   shadow: 0
   color: ff181818
@@ -314,14 +314,14 @@ TEXT:
 
 LINE:
   pt1: [ 228.3794 ; 358.5000 ]
-  pt2: [ 431.7562 ; 358.5000 ]
+  pt2: [ 431.3210 ; 358.5000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
   pt1: [ 228.3794 ; 360.5000 ]
-  pt2: [ 431.7562 ; 360.5000 ]
+  pt2: [ 431.3210 ; 360.5000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
@@ -338,7 +338,7 @@ ELLIPSE:
 
 TEXT:
   text: Calling 
-  position: [ 246.8146 ; 373.6111 ]
+  position: [ 246.3794 ; 373.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -346,7 +346,7 @@ TEXT:
 
 TEXT:
   text: the 
-  position: [ 246.8146 ; 386.6111 ]
+  position: [ 246.3794 ; 386.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -354,7 +354,7 @@ TEXT:
 
 TEXT:
   text: method 
-  position: [ 246.8146 ; 399.6111 ]
+  position: [ 246.3794 ; 399.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -362,7 +362,7 @@ TEXT:
 
 TEXT:
   text: foo()
-  position: [ 342.9676 ; 399.6111 ]
+  position: [ 342.5324 ; 399.6111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
@@ -370,7 +370,7 @@ TEXT:
 
 TEXT:
   text:  is 
-  position: [ 246.8146 ; 412.6111 ]
+  position: [ 246.3794 ; 412.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -378,7 +378,7 @@ TEXT:
 
 TEXT:
   text: prohibited
-  position: [ 304.4687 ; 412.6111 ]
+  position: [ 304.0335 ; 412.6111 ]
   orientation: 0
   font: SansSerif.plain/13 [BACKCOLOR]
   color: ff000000
@@ -386,7 +386,7 @@ TEXT:
 
 TEXT:
   text: overlap
-  position: [ 246.8146 ; 425.6111 ]
+  position: [ 246.3794 ; 425.6111 ]
   orientation: 0
   font: SansSerif.plain/13 [BACKCOLOR]
   color: ff000000
@@ -439,17 +439,17 @@ PATH:
      sweepFlag: false
      dest: [ 0.0000 ; 384.0000 ]
    - type: SEG_LINETO
-     pt1: [ 185.8127 ; 384.0000 ]
+     pt1: [ 185.3775 ; 384.0000 ]
    - type: SEG_ARCTO
      radius: [ 0.0000 ; 0.0000 ]
      angle: 0.0
      largeArcFlag: false
      sweepFlag: false
-     dest: [ 185.8127 ; 384.0000 ]
+     dest: [ 185.3775 ; 384.0000 ]
    - type: SEG_LINETO
-     pt1: [ 185.8127 ; 10.0000 ]
+     pt1: [ 185.3775 ; 10.0000 ]
    - type: SEG_LINETO
-     pt1: [ 175.8127 ; 0.0000 ]
+     pt1: [ 175.3775 ; 0.0000 ]
    - type: SEG_LINETO
      pt1: [ 0.0000 ; 0.0000 ]
    - type: SEG_ARCTO
@@ -465,13 +465,13 @@ PATH:
 
 PATH:
    - type: SEG_MOVETO
-     pt1: [ 175.8127 ; 0.0000 ]
+     pt1: [ 175.3775 ; 0.0000 ]
    - type: SEG_LINETO
-     pt1: [ 175.8127 ; 10.0000 ]
+     pt1: [ 175.3775 ; 10.0000 ]
    - type: SEG_LINETO
-     pt1: [ 185.8127 ; 10.0000 ]
+     pt1: [ 185.3775 ; 10.0000 ]
    - type: SEG_LINETO
-     pt1: [ 175.8127 ; 0.0000 ]
+     pt1: [ 175.3775 ; 0.0000 ]
   stroke: 0.0-0.0-0.5
   shadow: 0
   color: ff181818
@@ -479,7 +479,7 @@ PATH:
 
 TEXT:
   text:  KO for 
-  position: [ 553.7092 ; 468.6111 ]
+  position: [ 553.2740 ; 468.6111 ]
   orientation: 0
   font: SansSerif.plain/13 [BACKCOLOR]
   color: ff000000
@@ -487,7 +487,7 @@ TEXT:
 
 TEXT:
   text: this note
-  position: [ 553.7092 ; 481.6111 ]
+  position: [ 553.2740 ; 481.6111 ]
   orientation: 0
   font: SansSerif.plain/13 [BACKCOLOR]
   color: ff000000
@@ -495,7 +495,7 @@ TEXT:
 
 TEXT:
   text: A Long
-  position: [ 553.7092 ; 494.6111 ]
+  position: [ 553.2740 ; 494.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -503,7 +503,7 @@ TEXT:
 
 TEXT:
   text: Long 
-  position: [ 553.7092 ; 507.6111 ]
+  position: [ 553.2740 ; 507.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -511,7 +511,7 @@ TEXT:
 
 TEXT:
   text: Long 
-  position: [ 553.7092 ; 520.6111 ]
+  position: [ 553.2740 ; 520.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -519,7 +519,7 @@ TEXT:
 
 TEXT:
   text: Long 
-  position: [ 553.7092 ; 533.6111 ]
+  position: [ 553.2740 ; 533.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -527,7 +527,7 @@ TEXT:
 
 TEXT:
   text: Long 
-  position: [ 553.7092 ; 546.6111 ]
+  position: [ 553.2740 ; 546.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -535,7 +535,7 @@ TEXT:
 
 TEXT:
   text: Long 
-  position: [ 553.7092 ; 559.6111 ]
+  position: [ 553.2740 ; 559.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -543,7 +543,7 @@ TEXT:
 
 TEXT:
   text: Long 
-  position: [ 553.7092 ; 572.6111 ]
+  position: [ 553.2740 ; 572.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -551,7 +551,7 @@ TEXT:
 
 TEXT:
   text: Long 
-  position: [ 553.7092 ; 585.6111 ]
+  position: [ 553.2740 ; 585.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -559,7 +559,7 @@ TEXT:
 
 TEXT:
   text: Long 
-  position: [ 553.7092 ; 598.6111 ]
+  position: [ 553.2740 ; 598.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -567,7 +567,7 @@ TEXT:
 
 TEXT:
   text: Long 
-  position: [ 553.7092 ; 611.6111 ]
+  position: [ 553.2740 ; 611.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -575,7 +575,7 @@ TEXT:
 
 TEXT:
   text: Long 
-  position: [ 553.7092 ; 624.6111 ]
+  position: [ 553.2740 ; 624.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -583,7 +583,7 @@ TEXT:
 
 TEXT:
   text: Long 
-  position: [ 553.7092 ; 637.6111 ]
+  position: [ 553.2740 ; 637.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -591,7 +591,7 @@ TEXT:
 
 TEXT:
   text: Long 
-  position: [ 553.7092 ; 650.6111 ]
+  position: [ 553.2740 ; 650.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -599,7 +599,7 @@ TEXT:
 
 TEXT:
   text: Long note
-  position: [ 553.7092 ; 663.6111 ]
+  position: [ 553.2740 ; 663.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -607,7 +607,7 @@ TEXT:
 
 TEXT:
   text: This 
-  position: [ 553.7092 ; 676.6111 ]
+  position: [ 553.2740 ; 676.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -615,7 +615,7 @@ TEXT:
 
 TEXT:
   text: note 
-  position: [ 553.7092 ; 689.6111 ]
+  position: [ 553.2740 ; 689.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -623,7 +623,7 @@ TEXT:
 
 TEXT:
   text: is on 
-  position: [ 553.7092 ; 702.6111 ]
+  position: [ 553.2740 ; 702.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -631,7 +631,7 @@ TEXT:
 
 TEXT:
   text: several
-  position: [ 553.7092 ; 715.6111 ]
+  position: [ 553.2740 ; 715.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -639,7 +639,7 @@ TEXT:
 
 TEXT:
   text: lines
-  position: [ 553.7092 ; 728.6111 ]
+  position: [ 553.2740 ; 728.6111 ]
   orientation: 0
   font: SansSerif.italic/13 [ITALIC]
   color: ff000000
@@ -647,7 +647,7 @@ TEXT:
 
 TEXT:
   text:  
-  position: [ 635.0906 ; 728.6111 ]
+  position: [ 634.6554 ; 728.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -655,7 +655,7 @@ TEXT:
 
 TEXT:
   text: and can
-  position: [ 553.7092 ; 741.6111 ]
+  position: [ 553.2740 ; 741.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -663,7 +663,7 @@ TEXT:
 
 TEXT:
   text: contain 
-  position: [ 553.7092 ; 754.6111 ]
+  position: [ 553.2740 ; 754.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -671,29 +671,29 @@ TEXT:
 
 TEXT:
   text: HTML
-  position: [ 640.9204 ; 754.6111 ]
+  position: [ 640.4852 ; 754.6111 ]
   orientation: 0
   font: SansSerif.bold/13 [BOLD]
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 547.7092 ; 762.5000 ]
-  pt2: [ 733.5219 ; 762.5000 ]
+  pt1: [ 547.2740 ; 762.5000 ]
+  pt2: [ 732.6515 ; 762.5000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 547.7092 ; 764.5000 ]
-  pt2: [ 733.5219 ; 764.5000 ]
+  pt1: [ 547.2740 ; 764.5000 ]
+  pt2: [ 732.6515 ; 764.5000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 ELLIPSE:
-  pt1: [ 556.7092 ; 770.5000 ]
-  pt2: [ 561.7092 ; 775.5000 ]
+  pt1: [ 556.2740 ; 770.5000 ]
+  pt2: [ 561.2740 ; 775.5000 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-0.0
@@ -703,7 +703,7 @@ ELLIPSE:
 
 TEXT:
   text: Calling 
-  position: [ 566.1444 ; 777.6111 ]
+  position: [ 565.2740 ; 777.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -711,7 +711,7 @@ TEXT:
 
 TEXT:
   text: the 
-  position: [ 566.1444 ; 790.6111 ]
+  position: [ 565.2740 ; 790.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -719,7 +719,7 @@ TEXT:
 
 TEXT:
   text: method 
-  position: [ 566.1444 ; 803.6111 ]
+  position: [ 565.2740 ; 803.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -727,7 +727,7 @@ TEXT:
 
 TEXT:
   text: foo()
-  position: [ 662.2974 ; 803.6111 ]
+  position: [ 661.4270 ; 803.6111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
@@ -735,7 +735,7 @@ TEXT:
 
 TEXT:
   text:  is 
-  position: [ 566.1444 ; 816.6111 ]
+  position: [ 565.2740 ; 816.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -743,15 +743,15 @@ TEXT:
 
 TEXT:
   text: prohibited
-  position: [ 566.1444 ; 829.6111 ]
+  position: [ 565.2740 ; 829.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 RECTANGLE:
-  pt1: [ 452.7562 ; 629.5000 ]
-  pt2: [ 527.7092 ; 661.5000 ]
+  pt1: [ 452.3210 ; 629.5000 ]
+  pt2: [ 527.2740 ; 661.5000 ]
   xCorner: 25
   yCorner: 25
   stroke: 0.0-0.0-0.5
@@ -761,15 +761,15 @@ RECTANGLE:
 
 TEXT:
   text: foo2
-  position: [ 462.7562 ; 648.8333 ]
+  position: [ 462.3210 ; 648.8333 ]
   orientation: 0
   font: SansSerif.plain/12 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 479.2327 ; 857.5000 ]
-  pt2: [ 501.2327 ; 879.5000 ]
+  pt1: [ 478.7975 ; 857.5000 ]
+  pt2: [ 500.7975 ; 879.5000 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.0
@@ -778,8 +778,8 @@ ELLIPSE:
   backcolor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 484.2327 ; 862.5000 ]
-  pt2: [ 496.2327 ; 874.5000 ]
+  pt1: [ 483.7975 ; 862.5000 ]
+  pt2: [ 495.7975 ; 874.5000 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.0
@@ -788,23 +788,23 @@ ELLIPSE:
   backcolor: ff222222
 
 EMPTY:
-  pt1: [ 441.7562 ; 12.5000 ]
-  pt2: [ 451.7562 ; 13.5000 ]
+  pt1: [ 441.3210 ; 12.5000 ]
+  pt2: [ 451.3210 ; 13.5000 ]
 
 LINE:
-  pt1: [ 446.7562 ; 12.5000 ]
-  pt2: [ 446.7562 ; 879.5000 ]
+  pt1: [ 446.3210 ; 12.5000 ]
+  pt2: [ 446.3210 ; 879.5000 ]
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff000000
 
 EMPTY:
-  pt1: [ 733.5219 ; 12.5000 ]
-  pt2: [ 752.0498 ; 13.5000 ]
+  pt1: [ 732.6515 ; 12.5000 ]
+  pt2: [ 751.1795 ; 13.5000 ]
 
 LINE:
-  pt1: [ 738.5219 ; 12.5000 ]
-  pt2: [ 738.5219 ; 879.5000 ]
+  pt1: [ 737.6515 ; 12.5000 ]
+  pt2: [ 737.6515 ; 879.5000 ]
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff000000
@@ -828,18 +828,18 @@ POLYGON:
   backcolor: ff181818
 
 LINE:
-  pt1: [ 490.2327 ; 661.5000 ]
-  pt2: [ 490.2327 ; 857.5000 ]
+  pt1: [ 489.7975 ; 661.5000 ]
+  pt2: [ 489.7975 ; 857.5000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 POLYGON:
   points:
-   - [ 486.2327 ; 847.5000 ]
-   - [ 490.2327 ; 857.5000 ]
-   - [ 494.2327 ; 847.5000 ]
-   - [ 490.2327 ; 851.5000 ]
+   - [ 485.7975 ; 847.5000 ]
+   - [ 489.7975 ; 857.5000 ]
+   - [ 493.7975 ; 847.5000 ]
+   - [ 489.7975 ; 851.5000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
@@ -854,24 +854,24 @@ LINE:
 
 LINE:
   pt1: [ 180.9019 ; 448.5000 ]
-  pt2: [ 490.2327 ; 448.5000 ]
+  pt2: [ 489.7975 ; 448.5000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 490.2327 ; 448.5000 ]
-  pt2: [ 490.2327 ; 629.5000 ]
+  pt1: [ 489.7975 ; 448.5000 ]
+  pt2: [ 489.7975 ; 629.5000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 POLYGON:
   points:
-   - [ 486.2327 ; 619.5000 ]
-   - [ 490.2327 ; 629.5000 ]
-   - [ 494.2327 ; 619.5000 ]
-   - [ 490.2327 ; 623.5000 ]
+   - [ 485.7975 ; 619.5000 ]
+   - [ 489.7975 ; 629.5000 ]
+   - [ 493.7975 ; 619.5000 ]
+   - [ 489.7975 ; 623.5000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
@@ -879,7 +879,7 @@ POLYGON:
 
 TEXT:
   text: Actor 1
-  position: [ 163.2884 ; 26.5000 ]
+  position: [ 163.0708 ; 26.5000 ]
   orientation: 0
   font: SansSerif.plain/18 []
   color: ff000000
@@ -887,7 +887,7 @@ TEXT:
 
 TEXT:
   text: Actor 2
-  position: [ 525.0409 ; 26.5000 ]
+  position: [ 524.3881 ; 26.5000 ]
   orientation: 0
   font: SansSerif.plain/18 []
   color: ff000000

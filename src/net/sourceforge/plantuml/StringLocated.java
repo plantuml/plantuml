@@ -72,9 +72,9 @@ final public class StringLocated {
 	}
 
 	public StringLocated mergeEndBackslash(StringLocated next) {
-		if (StringUtils.endsWithBackslash(s) == false) {
+		if (StringUtils.endsWithBackslash(s) == false)
 			throw new IllegalArgumentException();
-		}
+
 		return new StringLocated(s.substring(0, s.length() - 1) + next.s, location, preprocessorError);
 	}
 
@@ -105,28 +105,27 @@ final public class StringLocated {
 		final String trim = string.replace('\t', ' ').trim();
 		if (trim.startsWith("/'")) {
 			final int idx = string.indexOf("'/");
-			if (idx != -1) {
+			if (idx != -1)
 				return new StringLocated(removeSpecialInnerComment(s.substring(idx + 2, s.length())), location,
 						preprocessorError);
-			}
+
 		}
 		if (trim.endsWith("'/")) {
 			final int idx = string.lastIndexOf("/'");
-			if (idx != -1) {
+			if (idx != -1)
 				return new StringLocated(removeSpecialInnerComment(s.substring(0, idx)), location, preprocessorError);
-			}
+
 		}
-		if (trim.contains("/'''") && trim.contains("'''/")) {
+		if (trim.contains("/'''") && trim.contains("'''/"))
 			return new StringLocated(removeSpecialInnerComment(s), location, preprocessorError);
-		}
+
 		return this;
 	}
 
 	private String removeSpecialInnerComment(String s) {
-		if (s.contains("/'''") && s.contains("'''/")) {
+		if (s.contains("/'''") && s.contains("'''/"))
 			return s.replaceAll("/'''[-\\w]*'''/", "");
 
-		}
 		return s;
 	}
 
@@ -143,17 +142,21 @@ final public class StringLocated {
 	}
 
 	public long getFoxSignature() {
-		if (fox == -1) {
+		if (fox == -1)
 			fox = FoxSignature.getFoxSignature(getString());
-		}
+
 		return fox;
 	}
 
 	public TLineType getType() {
-		if (type == null) {
+		if (type == null)
 			type = TLineType.getFromLineInternal(s);
-		}
+
 		return type;
+	}
+
+	public int length() {
+		return s.length();
 	}
 
 }

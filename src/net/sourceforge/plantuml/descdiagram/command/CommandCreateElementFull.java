@@ -54,6 +54,7 @@ import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.cucadiagram.EntityUtils;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.Ident;
@@ -149,9 +150,9 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 
 	@Override
 	final protected boolean isForbidden(CharSequence line) {
-		if (line.toString().matches("^[\\p{L}0-9_.]+$")) {
+		if (line.toString().matches("^[\\p{L}0-9_.]+$"))
 			return true;
-		}
+
 		return false;
 	}
 
@@ -223,37 +224,40 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 		} else {
 			type = LeafType.DESCRIPTION;
 			usymbol = USymbols.fromString(symbol, diagram.getSkinParam());
-			if (usymbol == null) {
+			if (usymbol == null)
 				throw new IllegalStateException();
-			}
+
 		}
 
 		final String idShort = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(codeRaw);
 		final Ident ident = diagram.buildLeafIdent(idShort);
 		final Code code = diagram.V1972() ? ident : diagram.buildCode(idShort);
-		if (!diagram.V1972() && diagram.isGroup(code)) {
+		if (!diagram.V1972() && diagram.isGroup(code))
 			return CommandExecutionResult.error("This element (" + code.getName() + ") is already defined");
-		}
-		if (diagram.V1972() && diagram.isGroupStrict(ident)) {
+
+		if (diagram.V1972() && diagram.isGroupStrict(ident))
 			return CommandExecutionResult.error("This element (" + ident.getName() + ") is already defined");
-		}
+
 		String display = displayRaw;
-		if (display == null) {
+		if (display == null)
 			display = code.getName();
-		}
+
 		display = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(display);
 		final String stereotype = arg.getLazzy("STEREOTYPE", 0);
-		if (existsWithBadType3(diagram, code, ident, type, usymbol)) {
+		if (existsWithBadType3(diagram, code, ident, type, usymbol))
 			return CommandExecutionResult.error("This element (" + code.getName() + ") is already defined");
-		}
+
+		if ((type == LeafType.PORTIN || type == LeafType.PORTOUT) && EntityUtils.groupRoot(diagram.getCurrentGroup()))
+			return CommandExecutionResult.error("Port can only be used inside an element and not at root level");
+
 		final IEntity entity = diagram.getOrCreateLeaf(ident, code, type, usymbol);
 		entity.setDisplay(Display.getWithNewlines(display));
 		entity.setUSymbol(usymbol);
-		if (stereotype != null) {
+		if (stereotype != null)
 			entity.setStereotype(Stereotype.build(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),
 					diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),
 					diagram.getSkinParam().getIHtmlColorSet()));
-		}
+
 		CommandCreateClassMultilines.addTags(entity, arg.get("TAGS", 0));
 
 		final String urlString = arg.get("URL", 0);
@@ -266,11 +270,10 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
 		final String s = arg.get("LINECOLOR", 1);
 
-		final HColor lineColor = s == null ? null
-				: diagram.getSkinParam().getIHtmlColorSet().getColor(s);
-		if (lineColor != null) {
+		final HColor lineColor = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);
+		if (lineColor != null)
 			colors = colors.add(ColorType.LINE, lineColor);
-		}
+
 		entity.setColors(colors);
 
 		// entity.setSpecificColorTOBEREMOVED(ColorType.BACK,
@@ -282,28 +285,28 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 	public static boolean existsWithBadType3(AbstractEntityDiagram diagram, Code code, Ident ident, LeafType type,
 			USymbol usymbol) {
 		if (diagram.V1972()) {
-			if (diagram.leafExistSmart(ident) == false) {
+			if (diagram.leafExistSmart(ident) == false)
 				return false;
-			}
+
 			final ILeaf other = diagram.getLeafSmart(ident);
-			if (other.getLeafType() != type) {
+			if (other.getLeafType() != type)
 				return true;
-			}
-			if (usymbol != null && other.getUSymbol() != usymbol) {
+
+			if (usymbol != null && other.getUSymbol() != usymbol)
 				return true;
-			}
+
 			return false;
 		} else {
-			if (diagram.leafExist(code) == false) {
+			if (diagram.leafExist(code) == false)
 				return false;
-			}
+
 			final ILeaf other = diagram.getLeaf(code);
-			if (other.getLeafType() != type) {
+			if (other.getLeafType() != type)
 				return true;
-			}
-			if (usymbol != null && other.getUSymbol() != usymbol) {
+
+			if (usymbol != null && other.getUSymbol() != usymbol)
 				return true;
-			}
+
 			return false;
 		}
 	}

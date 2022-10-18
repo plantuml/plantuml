@@ -30,23 +30,41 @@
  *
  *
  * Original Author:  Arnaud Roques
- *
+ * 
  *
  */
-package net.sourceforge.plantuml;
+package net.sourceforge.plantuml.ebnf;
 
-public class SkinParamSameClassWidth extends SkinParamDelegator {
+import net.sourceforge.plantuml.LineLocation;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.regex.IRegex;
+import net.sourceforge.plantuml.command.regex.RegexConcat;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.cucadiagram.Display;
 
-	final private double width;
+public class CommandComment extends SingleLineCommand2<PSystemEbnf> {
 
-	public SkinParamSameClassWidth(ISkinParam skinParam, double width) {
-		super(skinParam);
-		this.width = width;
+	public CommandComment() {
+		super(getRegexConcat());
+	}
+
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandComment.class.getName(), //
+				RegexLeaf.start(), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("\\(\\*"), //
+				new RegexLeaf("COMMENT", "(.*[^%s].*)"), //
+				new RegexLeaf("\\*\\)"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				RegexLeaf.end());
 	}
 
 	@Override
-	public double minClassWidth() {
-		return width;
+	protected CommandExecutionResult executeArg(PSystemEbnf diagram, LineLocation location, RegexResult arg) {
+		final Display note = Display.getWithNewlines(arg.get("COMMENT", 0));
+		return diagram.addNote(note, null);
 	}
 
 }

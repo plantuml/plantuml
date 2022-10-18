@@ -43,17 +43,25 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 public class HSpaceTile extends AbstractTile implements Tile {
 
 	private final HSpace hspace;
-	private final Real origin;
+	private final Real xorigin;
+	private final YGauge yGauge;
 
 	public Event getEvent() {
 		return hspace;
 	}
 
-	public HSpaceTile(HSpace hspace, TileArguments tileArguments) {
-		super(tileArguments.getStringBounder());
+	public HSpaceTile(HSpace hspace, TileArguments tileArguments, YGauge currentY) {
+		super(tileArguments.getStringBounder(), currentY);
 		this.hspace = hspace;
-		this.origin = tileArguments.getOrigin();
+		this.xorigin = tileArguments.getXOrigin();
+		this.yGauge = YGauge.create(currentY.getMax(), getPreferredHeight());
 	}
+
+	@Override
+	public YGauge getYGauge() {
+		return yGauge;
+	}
+
 
 	public void drawU(UGraphic ug) {
 	}
@@ -66,11 +74,11 @@ public class HSpaceTile extends AbstractTile implements Tile {
 	}
 
 	public Real getMinX() {
-		return origin;
+		return xorigin;
 	}
 
 	public Real getMaxX() {
-		return origin.addFixed(10);
+		return xorigin.addFixed(10);
 	}
 
 }

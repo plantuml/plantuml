@@ -53,7 +53,7 @@ import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.style.WithStyle;
 
-public abstract class AbstractMessage implements EventWithDeactivate, WithStyle {
+public abstract class AbstractMessage extends AbstractEvent implements EventWithDeactivate, WithStyle {
 
 	private Stereotype stereotype;
 
@@ -154,10 +154,12 @@ public abstract class AbstractMessage implements EventWithDeactivate, WithStyle 
 		return lifeEventsType.contains(LifeEventType.CREATE);
 	}
 
+	@Deprecated
 	public boolean isActivate() {
 		return lifeEventsType.contains(LifeEventType.ACTIVATE);
 	}
 
+	@Deprecated
 	public boolean isDeactivate() {
 		return lifeEventsType.contains(LifeEventType.DEACTIVATE);
 	}
@@ -166,6 +168,7 @@ public abstract class AbstractMessage implements EventWithDeactivate, WithStyle 
 		return lifeEventsType.contains(LifeEventType.DESTROY);
 	}
 
+	@Deprecated
 	private boolean isDeactivateOrDestroy() {
 		return isDeactivate() || isDestroy();
 	}

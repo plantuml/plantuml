@@ -61,9 +61,9 @@ public class OpenIcon {
 
 	public static OpenIcon retrieve(String name) {
 		final InputStream is = getResource(name);
-		if (is == null) {
+		if (is == null)
 			return null;
-		}
+
 		try {
 			return new OpenIcon(is, name);
 		} catch (IOException e) {
@@ -94,9 +94,9 @@ public class OpenIcon {
 				}
 			}
 		}
-		if (rawData.size() != 3 && rawData.size() != 4) {
+		if (rawData.size() != 3 && rawData.size() != 4)
 			throw new IllegalStateException();
-		}
+
 	}
 
 	void saveCopy(SFile fnew) throws IOException {
@@ -115,17 +115,17 @@ public class OpenIcon {
 
 	private String getNumber(String s, String arg) {
 		int x1 = s.indexOf(arg);
-		if (x1 == -1) {
+		if (x1 == -1)
 			throw new IllegalArgumentException();
-		}
+
 		x1 = s.indexOf("\"", x1);
-		if (x1 == -1) {
+		if (x1 == -1)
 			throw new IllegalArgumentException();
-		}
+
 		final int x2 = s.indexOf("\"", x1 + 1);
-		if (x2 == -1) {
+		if (x2 == -1)
 			throw new IllegalArgumentException();
-		}
+
 		return s.substring(x1 + 1, x2);
 	}
 

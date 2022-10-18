@@ -38,8 +38,6 @@ package net.sourceforge.plantuml.api;
 import java.util.List;
 
 import net.sourceforge.plantuml.BlockUml;
-import net.sourceforge.plantuml.FileFormat;
-import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.SourceStringReader;
 import net.sourceforge.plantuml.core.Diagram;
 

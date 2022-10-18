@@ -51,8 +51,8 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 public class CommunicationTileNoteTop extends CommunicationTileNoteBottomTopAbstract {
 
 	public CommunicationTileNoteTop(Tile tile, AbstractMessage message, Rose skin, ISkinParam skinParam,
-			Note noteOnMessage) {
-		super(tile, message, skin, skinParam, noteOnMessage);
+			Note noteOnMessage, YGauge currentY) {
+		super(tile, message, skin, skinParam, noteOnMessage, currentY);
 	}
 
 	public void drawU(UGraphic ug) {

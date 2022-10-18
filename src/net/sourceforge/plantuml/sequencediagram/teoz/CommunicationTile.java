@@ -65,6 +65,7 @@ public class CommunicationTile extends AbstractTile {
 	private final Message message;
 	private final Rose skin;
 	private final ISkinParam skinParam;
+	private final YGauge yGauge;
 
 	public Event getEvent() {
 		return message;
@@ -76,8 +77,8 @@ public class CommunicationTile extends AbstractTile {
 	}
 
 	public CommunicationTile(StringBounder stringBounder, LivingSpaces livingSpaces, Message message, Rose skin,
-			ISkinParam skinParam) {
-		super(stringBounder);
+			ISkinParam skinParam, YGauge currentY) {
+		super(stringBounder, currentY);
 		this.livingSpace1 = livingSpaces.get(message.getParticipant1());
 		this.livingSpace2 = livingSpaces.get(message.getParticipant2());
 		this.livingSpaces = livingSpaces;
@@ -85,17 +86,29 @@ public class CommunicationTile extends AbstractTile {
 		this.skin = skin;
 		this.skinParam = skinParam;
 
-		if (message.isCreate()) {
+		if (message.isCreate())
 			livingSpace2.goCreate();
-		}
+
+		final ArrowComponent comp = getComponent(getStringBounder());
+		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());
+
+		if (message.isParallel())
+			this.yGauge = YGauge.create(currentY.getMin(), dim.getHeight());
+		else
+			this.yGauge = YGauge.create(currentY.getMax(), dim.getHeight());
+	}
+
+	@Override
+	public YGauge getYGauge() {
+		return yGauge;
 	}
 
 	public boolean isReverse(StringBounder stringBounder) {
 		final Real point1 = livingSpace1.getPosC(stringBounder);
 		final Real point2 = livingSpace2.getPosC(stringBounder);
-		if (point1.getCurrentValue() > point2.getCurrentValue()) {
+		if (point1.getCurrentValue() > point2.getCurrentValue())
 			return true;
-		}
+
 		return false;
 	}
 
@@ -105,17 +118,17 @@ public class CommunicationTile extends AbstractTile {
 
 	private double getArrowThickness() {
 		final UStroke result = skinParam.getThickness(LineParam.sequenceArrow, null);
-		if (result == null) {
+		if (result == null)
 			return 1;
-		}
+
 		return result.getThickness();
 	}
 
 	private ArrowComponent getComponent(StringBounder stringBounder) {
 		ArrowConfiguration arrowConfiguration = message.getArrowConfiguration();
-		if (isReverse(stringBounder)) {
+		if (isReverse(stringBounder))
 			arrowConfiguration = arrowConfiguration.reverse();
-		}
+
 		arrowConfiguration = arrowConfiguration.withThickness(getArrowThickness());
 
 		return skin.createComponentArrow(message.getUsedStyles(), arrowConfiguration, skinParam,
@@ -124,9 +137,9 @@ public class CommunicationTile extends AbstractTile {
 
 	private ArrowComponent getComponentMulticast(StringBounder stringBounder, boolean reverse) {
 		ArrowConfiguration arrowConfiguration = message.getArrowConfiguration();
-		if (reverse) {
+		if (reverse)
 			arrowConfiguration = arrowConfiguration.reverse();
-		}
+
 		arrowConfiguration = arrowConfiguration.withThickness(getArrowThickness());
 
 		return skin.createComponentArrow(message.getUsedStyles(), arrowConfiguration, skinParam, Display.NULL);
@@ -140,26 +153,28 @@ public class CommunicationTile extends AbstractTile {
 	public static final double LIVE_DELTA_SIZE = 5;
 
 	@Override
-	final protected void callbackY_internal(double y) {
-		if (message.isCreate()) {
-			livingSpace2.goCreate(y);
-		}
+	final protected void callbackY_internal(TimeHook y) {
+		super.callbackY_internal(y);
+		if (message.isCreate())
+			livingSpace2.goCreate(y.getValue());
 
 		final AbstractComponentRoseArrow comp = (AbstractComponentRoseArrow) getComponent(getStringBounder());
 		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());
 
 		final double arrowY = comp.getStartPoint(getStringBounder(), dim).getY();
 
-		livingSpace1.addStepForLivebox(getEvent(), y + arrowY);
-		livingSpace2.addStepForLivebox(getEvent(), y + arrowY);
+		livingSpace1.addStepForLivebox(getEvent(), y.getValue() + arrowY);
+		livingSpace2.addStepForLivebox(getEvent(), y.getValue() + arrowY);
 	}
 
 	public void drawU(UGraphic ug) {
+		if (YGauge.USE_ME)
+			ug = ug.apply(UTranslate.dy(getYGauge().getMin().getCurrentValue()));
 		final String anchor1 = message.getPart1Anchor();
 		final String anchor2 = message.getPart2Anchor();
-		if (anchor1 != null || anchor2 != null) {
+		if (anchor1 != null || anchor2 != null)
 			return;
-		}
+
 		final StringBounder stringBounder = ug.getStringBounder();
 		final ArrowComponent comp = getComponent(stringBounder);
 		final XDimension2D dim = comp.getPreferredDimension(stringBounder);
@@ -171,37 +186,37 @@ public class CommunicationTile extends AbstractTile {
 		if (isReverse(stringBounder)) {
 			final int level1 = livingSpace1.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);
 			final int level2 = livingSpace2.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);
-			if (level1 > 0) {
+			if (level1 > 0)
 				x1 -= LIVE_DELTA_SIZE;
-			}
+
 			x2 += LIVE_DELTA_SIZE * level2;
 			area = Area.create(x1 - x2, dim.getHeight());
 			ug = ug.apply(UTranslate.dx(x2));
-			if (isCreate()) {
+			if (isCreate())
 				livingSpace2.drawHead(ug, (Context2D) ug, VerticalAlignment.TOP, HorizontalAlignment.RIGHT);
-			}
+
 		} else {
 			final int level1 = livingSpace1.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);
 			int level2 = livingSpace2.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);
-			if (level2 > 0) {
+			if (level2 > 0)
 				level2 = level2 - 2;
-			}
+
 			x1 += LIVE_DELTA_SIZE * level1;
 			x2 += LIVE_DELTA_SIZE * level2;
 			area = Area.create(x2 - x1, dim.getHeight());
 			ug = ug.apply(UTranslate.dx(x1));
-			if (isCreate()) {
+			if (isCreate())
 				livingSpace2.drawHead(ug.apply(UTranslate.dx(area.getDimensionToUse().getWidth())), (Context2D) ug,
 						VerticalAlignment.TOP, HorizontalAlignment.LEFT);
-			}
+
 		}
 		comp.drawU(ug, area, (Context2D) ug);
 	}
 
 	private void drawMulticast(final UGraphic ug) {
-		if (message.getMulticast().size() == 0) {
+		if (message.getMulticast().size() == 0)
 			return;
-		}
+
 		final StringBounder stringBounder = ug.getStringBounder();
 
 		final double x1 = getPoint1(stringBounder).getCurrentValue();
@@ -223,9 +238,9 @@ public class CommunicationTile extends AbstractTile {
 		final Component comp = getComponent(getStringBounder());
 		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());
 		double height = dim.getHeight();
-		if (isCreate()) {
+		if (isCreate())
 			height = Math.max(height, livingSpace2.getHeadPreferredDimension(getStringBounder()).getHeight());
-		}
+
 		return height;
 	}
 
@@ -239,16 +254,16 @@ public class CommunicationTile extends AbstractTile {
 		if (isReverse(getStringBounder())) {
 			final int level1 = livingSpace1.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);
 			final int level2 = livingSpace2.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);
-			if (level1 > 0) {
+			if (level1 > 0)
 				point1 = point1.addFixed(-LIVE_DELTA_SIZE);
-			}
+
 			point2 = point2.addFixed(level2 * LIVE_DELTA_SIZE);
 			point1.ensureBiggerThan(point2.addFixed(width));
 		} else {
 			final int level2 = livingSpace2.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);
-			if (level2 > 0) {
+			if (level2 > 0)
 				point2 = point2.addFixed(-LIVE_DELTA_SIZE);
-			}
+
 			point2.ensureBiggerThan(point1.addFixed(width));
 		}
 	}
@@ -259,25 +274,25 @@ public class CommunicationTile extends AbstractTile {
 
 	private Real getPoint2(final StringBounder stringBounder) {
 		if (message.isCreate()) {
-			if (isReverse(stringBounder)) {
+			if (isReverse(stringBounder))
 				return livingSpace2.getPosD(stringBounder);
-			}
+
 			return livingSpace2.getPosB(stringBounder);
 		}
 		return livingSpace2.getPosC(stringBounder);
 	}
 
 	public Real getMinX() {
-		if (isReverse(getStringBounder())) {
+		if (isReverse(getStringBounder()))
 			return getPoint2(getStringBounder());
-		}
+
 		return getPoint1(getStringBounder());
 	}
 
 	public Real getMaxX() {
-		if (isReverse(getStringBounder())) {
+		if (isReverse(getStringBounder()))
 			return getPoint1(getStringBounder());
-		}
+
 		return getPoint2(getStringBounder());
 	}
 

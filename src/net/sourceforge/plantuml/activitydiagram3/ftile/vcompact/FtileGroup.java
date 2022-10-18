@@ -91,23 +91,16 @@ public class FtileGroup extends AbstractFtile {
 				SName.composite);
 	}
 
-	public FtileGroup(Ftile inner, Display title, HColor backColor, HColor titleColor, ISkinParam skinParam,
-			HColor borderColor, USymbol type, double roundCorner) {
+	public FtileGroup(Ftile inner, Display title, HColor backColor, ISkinParam skinParam, USymbol type, Style style) {
 		super(inner.skinParam());
-		this.roundCorner = roundCorner;
 		this.type = type;
 		this.inner = FtileUtils.addHorizontalMargin(inner, 10);
 
-		final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
 		final FontConfiguration fc = style.getFontConfiguration(getIHtmlColorSet());
 		this.shadowing = style.value(PName.Shadowing).asDouble();
-		this.backColor = backColor == null
-				? style.value(PName.BackGroundColor).asColor(getIHtmlColorSet())
-				: backColor;
-		this.borderColor = borderColor == null
-				? style.value(PName.LineColor).asColor(getIHtmlColorSet())
-				: borderColor;
-		final UStroke thickness = style.getStroke();
+		this.backColor = backColor == null ? style.value(PName.BackGroundColor).asColor(getIHtmlColorSet()) : backColor;
+		this.borderColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
+		this.roundCorner = style.value(PName.RoundCorner).asDouble();
 
 		if (title == null)
 			this.name = TextBlockUtils.empty(0, 0);
@@ -119,7 +112,7 @@ public class FtileGroup extends AbstractFtile {
 //		else
 //			this.headerNote = new FloatingNote(displayNote, skinParam);
 
-		this.stroke = thickness == null ? new UStroke(2) : thickness;
+		this.stroke = style.getStroke();
 	}
 
 	@Override
@@ -187,9 +180,9 @@ public class FtileGroup extends AbstractFtile {
 		final FtileGeometry orig = inner.calculateDimension(stringBounder);
 		final MinMax minMax = getInnerMinMax(stringBounder);
 		final double missingWidth = minMax.getMaxX() - orig.getWidth();
-		if (missingWidth > 0) {
+		if (missingWidth > 0)
 			return orig.addDim(missingWidth + 5, 0);
-		}
+
 		return orig;
 	}
 

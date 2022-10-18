@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -30,57 +30,41 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
-package net.sourceforge.plantuml.command.regex;
+package net.sourceforge.plantuml.ebnf;
 
-import java.util.Collections;
-import java.util.Map;
+import net.sourceforge.plantuml.graphic.UDrawable;
+import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.ULine;
+import net.sourceforge.plantuml.ugraphic.UStroke;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class RegexResult {
+public class Brace implements UDrawable {
 
-	private final Map<String, RegexPartialMatch> data;
+	private final double width;
+	private final double height;
 
-	public RegexResult(Map<String, RegexPartialMatch> data) {
-		this.data = Collections.unmodifiableMap(data);
+	public Brace(double width, double height) {
+		this.width = width;
+		this.height = height;
 	}
 
 	@Override
-	public String toString() {
-		return data.toString();
-	}
+	public void drawU(UGraphic ug) {
+		ug = ug.apply(new UStroke(0.5));
 
-	public RegexPartialMatch get(String key) {
-		return data.get(key);
-	}
+		final double cinq = 5;
+		CornerCurved.createNW(cinq).drawU(ug);
+		CornerCurved.createSE(cinq).drawU(ug.apply(new UTranslate(width / 2, 0)));
+		CornerCurved.createSW(cinq).drawU(ug.apply(new UTranslate(width / 2, 0)));
+		CornerCurved.createNE(cinq).drawU(ug.apply(new UTranslate(width, 0)));
 
-	public String get(String key, int num) {
-		final RegexPartialMatch reg = data.get(key);
-		if (reg == null)
-			return null;
+		ug.apply(new UTranslate(cinq, 0)).draw(new ULine(width / 2 - 2 * cinq, 0));
+		ug.apply(new UTranslate(cinq + width / 2, 0)).draw(new ULine(width / 2 - 2 * cinq, 0));
+//		ug.apply(new UTranslate(width / 2, -height)).draw(new ULine(width / 2, height));
 
-		return reg.get(num);
-	}
-
-	public String getLazzy(String key, int num) {
-		for (Map.Entry<String, RegexPartialMatch> ent : data.entrySet()) {
-			if (ent.getKey().startsWith(key) == false)
-				continue;
-
-			final RegexPartialMatch match = ent.getValue();
-			if (num >= match.size())
-				continue;
-
-			if (match.get(num) != null)
-				return ent.getValue().get(num);
-
-		}
-		return null;
-	}
-
-	public int size() {
-		return data.size();
 	}
 
 }
