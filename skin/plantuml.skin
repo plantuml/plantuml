@@ -213,6 +213,12 @@ spot {
   spotException {
 	BackgroundColor #D94321
   }
+  spotMetaClass {
+    BackgroundColor #CCCCCC
+  }
+  spotStereotype {
+    BackgroundColor #FF77FF
+  }
 }
 
 
@@ -572,6 +578,12 @@ spot {
   }
   spotException {
 	BackgroundColor #7D0000
+  }
+  spotMetaClass {
+    BackgroundColor #7C7C7C
+  }
+  spotStereotype {
+    BackgroundColor #890089
   }
 }
 
