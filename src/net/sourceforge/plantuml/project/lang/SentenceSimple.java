@@ -56,7 +56,7 @@ public abstract class SentenceSimple implements Sentence {
 	}
 
 	public final IRegex toRegex() {
-		if (complementii instanceof ComplementEmpty) {
+		if (complementii instanceof ComplementEmpty)
 			return new RegexConcat(//
 					RegexLeaf.start(), //
 					subjectii.toRegex(), //
@@ -64,7 +64,6 @@ public abstract class SentenceSimple implements Sentence {
 					verb, //
 					RegexLeaf.end());
 
-		}
 		return new RegexConcat(//
 				RegexLeaf.start(), //
 				subjectii.toRegex(), //
@@ -77,13 +76,13 @@ public abstract class SentenceSimple implements Sentence {
 
 	public final CommandExecutionResult execute(GanttDiagram project, RegexResult arg) {
 		final Failable<? extends Object> subject = subjectii.getMe(project, arg);
-		if (subject.isFail()) {
+		if (subject.isFail())
 			return CommandExecutionResult.error(subject.getError());
-		}
+
 		final Failable<? extends Object> complement = complementii.getMe(project, arg, "0");
-		if (complement.isFail()) {
+		if (complement.isFail())
 			return CommandExecutionResult.error(complement.getError());
-		}
+
 		return execute(project, subject.get(), complement.get());
 
 	}

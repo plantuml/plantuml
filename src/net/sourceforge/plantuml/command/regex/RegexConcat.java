@@ -54,12 +54,12 @@ public final class RegexConcat extends RegexComposed implements IRegex {
 		int nbCompiled = 0;
 		int nbInvoked = 0;
 		for (RegexConcat reg : cache.values()) {
-			if (reg.isCompiled()) {
+			if (reg.isCompiled())
 				nbCompiled++;
-			}
-			if (reg.invoked()) {
+
+			if (reg.invoked())
 				nbInvoked++;
-			}
+
 		}
 		Log.info("Regex total/invoked/compiled " + cache.size() + "/" + nbInvoked + "/" + nbCompiled);
 		Log.info("Matches created " + nbCreateMatches.get());
@@ -115,9 +115,9 @@ public final class RegexConcat extends RegexComposed implements IRegex {
 
 	@Override
 	public boolean match(StringLocated s) {
-		if (limitSize != 0 && s.getString().length() > limitSize) {
+		if (limitSize != 0 && s.getString().length() > limitSize)
 			return false;
-		}
+
 		final long foxRegex = foxRegex();
 		if (foxRegex != 0L) {
 			final long foxLine = s.getFoxSignature();
@@ -125,9 +125,8 @@ public final class RegexConcat extends RegexComposed implements IRegex {
 			// System.err.println("r=" + getFullSlow() + " s=" + s + " line=" + foxLine + "
 			// regex" + foxRegex + " "
 			// + check + " <" + FoxSignature.backToString(check) + ">");
-			if (check != foxRegex) {
+			if (check != foxRegex)
 				return false;
-			}
 
 		}
 		return super.match(s);
@@ -136,9 +135,9 @@ public final class RegexConcat extends RegexComposed implements IRegex {
 	@Override
 	protected String getFullSlow() {
 		final StringBuilder sb = new StringBuilder();
-		for (IRegex p : partials()) {
+		for (IRegex p : partials())
 			sb.append(p.getPattern());
-		}
+
 		return sb.toString();
 	}
 

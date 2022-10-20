@@ -143,40 +143,36 @@ public class RegexLeaf implements IRegex {
 	}
 
 	public long getFoxSignature() {
-		if (p1.matcher(pattern).matches()) {
+		if (p1.matcher(pattern).matches())
 			return FoxSignature.getFoxSignature(pattern);
-		}
-		if (p2.matcher(pattern).matches()) {
+
+		if (p2.matcher(pattern).matches())
 			return FoxSignature.getFoxSignature(pattern.substring(0, pattern.length() - 2));
-		}
-		if (p3.matcher(pattern).matches()) {
-			// System.err.println("special " + pattern);
-			// System.err.println("result " +
-			// FoxSignature.backToString(getSignatureP3(pattern)));
+
+		if (p3.matcher(pattern).matches())
 			return getSignatureP3(pattern);
-		}
-		if (pattern.length() == 2 && pattern.startsWith("\\")
-				&& Character.isLetterOrDigit(pattern.charAt(1)) == false) {
+
+		if (pattern.length() == 2 && pattern.startsWith("\\") && Character.isLetterOrDigit(pattern.charAt(1)) == false)
 			return FoxSignature.getFoxSignature(pattern.substring(1));
-		}
-		if (pattern.equals("\\<\\>") || pattern.equals("(\\<\\<.*\\>\\>)")) {
+
+		if (pattern.equals("\\<\\>") || pattern.equals("(\\<\\<.*\\>\\>)"))
 			return FoxSignature.getFoxSignature("<>");
-		}
-		if (pattern.equals("\\<-\\>")) {
+
+		if (pattern.equals("\\<-\\>"))
 			return FoxSignature.getFoxSignature("<->");
-		}
-		if (pattern.equals("(-+)")) {
+
+		if (pattern.equals("(-+)"))
 			return FoxSignature.getFoxSignature("-");
-		}
-		if (pattern.equals("\\|+") || pattern.equals("\\|\\|")) {
+
+		if (pattern.equals("\\|+") || pattern.equals("\\|\\|"))
 			return FoxSignature.getFoxSignature("|");
-		}
-		if (pattern.equals("([*]+)")) {
+
+		if (pattern.equals("([*]+)"))
 			return FoxSignature.getFoxSignature("*");
-		}
-		if (pattern.equals("[%s]+") || pattern.equals("[%s]*")) {
+
+		if (pattern.equals("[%s]+") || pattern.equals("[%s]*"))
 			return 0;
-		}
+
 //		synchronized (UNKNOWN) {
 //			final boolean changed = UNKNOWN.add(pattern);
 //			if (changed)

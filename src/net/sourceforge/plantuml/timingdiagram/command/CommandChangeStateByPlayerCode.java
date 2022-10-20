@@ -74,12 +74,13 @@ public class CommandChangeStateByPlayerCode extends CommandChangeState {
 	}
 
 	@Override
-	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg) throws NoSuchColorException {
+	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg)
+			throws NoSuchColorException {
 		final String code = arg.get("CODE", 0);
 		final Player player = diagram.getPlayer(code);
-		if (player == null) {
+		if (player == null)
 			return CommandExecutionResult.error("Unkown \"" + code + "\"");
-		}
+
 		final TimeTick now = diagram.getNow();
 		return addState(diagram, arg, player, now);
 	}

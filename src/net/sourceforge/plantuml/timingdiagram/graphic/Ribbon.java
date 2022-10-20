@@ -187,6 +187,9 @@ public class Ribbon implements PDrawing {
 		final HColor back = initialColors.getColor(ColorType.BACK);
 		if (back != null)
 			context = context.withBackColor(back);
+		final HColor line = initialColors.getColor(ColorType.LINE);
+		if (line != null)
+			context = context.withForeColor(line);
 
 		final PentaAShape shape = PentaAShape.create(len, getRibbonHeight(), context);
 		shape.drawU(ug);

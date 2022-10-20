@@ -80,17 +80,17 @@ public abstract class RegexComposed implements IRegex {
 	public Map<String, RegexPartialMatch> createPartialMatch(Iterator<String> it) {
 		nbCreateMatches.incrementAndGet();
 		final Map<String, RegexPartialMatch> result = new HashMap<String, RegexPartialMatch>();
-		for (IRegex r : partials) {
+		for (IRegex r : partials)
 			result.putAll(r.createPartialMatch(it));
-		}
+
 		return result;
 	}
 
 	final public int count() {
 		int cpt = getStartCount();
-		for (IRegex r : partials) {
+		for (IRegex r : partials)
 			cpt += r.count();
-		}
+
 		return cpt;
 	}
 
@@ -100,9 +100,8 @@ public abstract class RegexComposed implements IRegex {
 
 	public RegexResult matcher(String s) {
 		final Matcher2 matcher = getPattern2().matcher(s);
-		if (matcher.find() == false) {
+		if (matcher.find() == false)
 			return null;
-		}
 
 		final Iterator<String> it = new MatcherIterator(matcher);
 		return new RegexResult(createPartialMatch(it));
@@ -111,9 +110,9 @@ public abstract class RegexComposed implements IRegex {
 	public boolean match(StringLocated s) {
 		final String tmp = s.getString();
 		final Matcher2 matcher = getPattern2().matcher(tmp);
-		if (matcher == null) {
+		if (matcher == null)
 			return false;
-		}
+
 		return matcher.find();
 	}
 

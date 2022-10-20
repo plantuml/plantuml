@@ -75,11 +75,12 @@ public class CommandChangeStateByTime extends CommandChangeState {
 	}
 
 	@Override
-	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg) throws NoSuchColorException {
+	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg)
+			throws NoSuchColorException {
 		final Player player = diagram.getLastPlayer();
-		if (player == null) {
+		if (player == null)
 			return CommandExecutionResult.error("Missing @ line before this");
-		}
+
 		final TimeTick tick = TimeTickBuilder.parseTimeTick("TIME", arg, diagram);
 		diagram.addTime(tick, null);
 		return addState(diagram, arg, player, tick);
