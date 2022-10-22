@@ -110,6 +110,9 @@ public class CommunicationTileSelfNoteRight extends AbstractTile {
 		tile.drawU(ug);
 		final Real p = getNotePosition(stringBounder);
 
+		if (YGauge.USE_ME)
+			ug = ug.apply(UTranslate.dy(getYGauge().getMin().getCurrentValue()));
+
 		comp.drawU(ug.apply(UTranslate.dx(p.getCurrentValue())), area, (Context2D) ug);
 	}
 

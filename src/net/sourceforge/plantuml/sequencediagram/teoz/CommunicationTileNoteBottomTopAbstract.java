@@ -111,25 +111,6 @@ public abstract class CommunicationTileNoteBottomTopAbstract extends AbstractTil
 		return minX;
 	}
 
-	public void drawU(UGraphic ug) {
-		final StringBounder stringBounder = ug.getStringBounder();
-		final Component comp = getComponent(stringBounder);
-		final XDimension2D dim = comp.getPreferredDimension(stringBounder);
-		final Area area = Area.create(dim.getWidth(), dim.getHeight());
-		((UDrawable) tile).drawU(ug);
-
-		final double middleMsg = (tile.getMinX().getCurrentValue() + tile.getMaxX().getCurrentValue()) / 2;
-
-		final double xNote = getNotePosition(stringBounder).getCurrentValue();
-		final double yNote = tile.getPreferredHeight();
-
-		comp.drawU(ug.apply(new UTranslate(xNote, yNote + spacey)), area, (Context2D) ug);
-
-		drawLine(ug, middleMsg, tile.getContactPointRelative(), xNote + dim.getWidth() / 2,
-				yNote + spacey + Rose.paddingY);
-
-	}
-
 	protected final double spacey = 10;
 
 	protected final void drawLine(UGraphic ug, double x1, double y1, double x2, double y2) {
