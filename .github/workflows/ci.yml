@@ -56,14 +56,14 @@ jobs:
                 ( "${ACTOR}" == "arnaudroques" || "${ACTOR}" == "${GITHUB_REPOSITORY_OWNER}" ) \
              ]]; then
             echo "::notice title=::This run will release '${REF}'"
-            echo "::set-output name=do_release::true"
-            echo "::set-output name=pom_version::${REF#v}"  # pom_version is the tag without the 'v' prefix
+            echo "do_release=true" >> $GITHUB_OUTPUT
+            echo "pom_version=${REF#v}" >> $GITHUB_OUTPUT # pom_version is the tag without the 'v' prefix
 
           elif [[ "${GITHUB_EVENT_NAME}" =~ push|workflow_dispatch && "${REF}" == "refs/heads/master" ]]; then
             echo "::notice title=::This run will release a snapshot"
-            echo "::set-output name=do_snapshot_release::true"
+            echo "do_snapshot_release=true" >> $GITHUB_OUTPUT
             V=$(perl -ne 'if (/return (\d{6,7});/) {$v=$1} if (/final int beta = (\d+);/) {$b=$1} END{print(substr($v, 0, 1),".", substr($v, 1, 4),"."); if ($b) {print(int(substr($v+1, 5)), "beta", $b);} else {print(int(substr($v, 5)))}}' src/net/sourceforge/plantuml/version/Version.java)
-            echo "::set-output name=pom_version::$V-SNAPSHOT"  # pom_version is taken from Version.java
+            echo "pom_version=$V-SNAPSHOT" >> $GITHUB_OUTPUT # pom_version is taken from Version.java
 
           else
             echo "This run will NOT make a release"
