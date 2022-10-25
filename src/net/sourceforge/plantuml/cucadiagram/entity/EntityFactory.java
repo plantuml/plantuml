@@ -65,6 +65,7 @@ import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
+import net.sourceforge.plantuml.cucadiagram.Stereotag;
 import net.sourceforge.plantuml.cucadiagram.SuperGroup;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
@@ -124,6 +125,8 @@ public final class EntityFactory {
 		folder.setColors(g.getColors());
 		if (g.getUrl99() != null)
 			folder.addUrl(g.getUrl99());
+		for (Stereotag tag : g.stereotags())
+			folder.addStereotag(tag);
 
 //		if (UseStyle.useBetaStyle()) {
 //			// System.err.println("Backcolor ?");
@@ -193,6 +196,10 @@ public final class EntityFactory {
 	}
 
 	public boolean isHidden(ILeaf leaf) {
+		final IEntity other = isNoteWithSingleLinkAttachedTo(leaf);
+		if (other instanceof ILeaf)
+			return isHidden((ILeaf) other);
+
 		boolean hidden = false;
 		for (HideOrShow2 hide : hides2)
 			hidden = hide.apply(hidden, leaf);
@@ -201,11 +208,32 @@ public final class EntityFactory {
 	}
 
 	public boolean isRemoved(ILeaf leaf) {
+		final IEntity other = isNoteWithSingleLinkAttachedTo(leaf);
+		if (other instanceof ILeaf)
+			return isRemoved((ILeaf) other);
+
 		boolean result = false;
 		for (HideOrShow2 hide : removed)
 			result = hide.apply(result, leaf);
 
 		return result;
+	}
+
+	private IEntity isNoteWithSingleLinkAttachedTo(ILeaf leaf) {
+		if (leaf.getLeafType() != LeafType.NOTE)
+			return null;
+		IEntity result = null;
+		for (Link link : this.getLinks()) {
+			if (link.getType().isInvisible())
+				continue;
+			if (link.contains(leaf)) {
+				if (result != null)
+					return result;
+				result = link.getOther(leaf);
+			}
+		}
+		return result;
+
 	}
 
 	public boolean isRemovedIgnoreUnlinked(ILeaf leaf) {
@@ -215,12 +243,6 @@ public final class EntityFactory {
 				result = hide.apply(result, leaf);
 
 		return result;
-	}
-
-	public void thisIsGoingToBeALeaf(Ident ident) {
-	}
-
-	public void thisIsNotArealGroup(Ident ident) {
 	}
 
 	public ILeaf createLeaf(Ident ident, Code code, Display display, LeafType entityType, IGroup parentContainer,

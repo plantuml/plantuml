@@ -119,13 +119,12 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 								RegexLeaf.spaceOneOrMore(), //
 								new RegexLeaf("CODE4", CODE)) //
 				), //
-				new RegexOptional( //
-						new RegexConcat( //
-								RegexLeaf.spaceZeroOrMore(), //
-								new RegexLeaf("STEREOTYPE", "(\\<\\<.+\\>\\>)") //
-						)), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("TAGS", Stereotag.pattern() + "?"), //
+				new RegexLeaf("TAGS1", Stereotag.pattern() + "?"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("STEREOTYPE", "(\\<\\<.+\\>\\>)?"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("TAGS2", Stereotag.pattern() + "?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -258,7 +257,7 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 					diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),
 					diagram.getSkinParam().getIHtmlColorSet()));
 
-		CommandCreateClassMultilines.addTags(entity, arg.get("TAGS", 0));
+		CommandCreateClassMultilines.addTags(entity, arg.getLazzy("TAGS", 0));
 
 		final String urlString = arg.get("URL", 0);
 		if (urlString != null) {

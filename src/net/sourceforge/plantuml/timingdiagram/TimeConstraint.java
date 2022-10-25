@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
@@ -65,13 +66,16 @@ public class TimeConstraint {
 	private final Display label;
 	private final ISkinParam skinParam;
 	private final StyleBuilder styleBuilder;
+	private final ArrowConfiguration config;
 
-	public TimeConstraint(TimeTick tick1, TimeTick tick2, String label, ISkinParam skinParam) {
+	public TimeConstraint(TimeTick tick1, TimeTick tick2, String label, ISkinParam skinParam,
+			ArrowConfiguration config) {
 		this.tick1 = Objects.requireNonNull(tick1);
 		this.tick2 = Objects.requireNonNull(tick2);
 		this.label = Display.getWithNewlines(label);
 		this.skinParam = skinParam;
 		this.styleBuilder = skinParam.getCurrentStyleBuilder();
+		this.config = config;
 	}
 
 	public final boolean containsStrict(TimeTick other) {
@@ -116,6 +120,9 @@ public class TimeConstraint {
 	}
 
 	private HColor getArrowColor() {
+		final HColor configColor = config.getColor();
+		if (configColor != null)
+			return configColor;
 		return getStyle().value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 	}
 

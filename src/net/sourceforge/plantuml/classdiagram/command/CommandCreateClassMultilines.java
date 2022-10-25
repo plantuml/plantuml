@@ -115,9 +115,11 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 				new RegexOptional(new RegexConcat(RegexLeaf.spaceZeroOrMore(),
 						new RegexLeaf("GENERIC", "\\<(" + GenericRegexProducer.PATTERN + ")\\>"))), //
 				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("TAGS1", Stereotag.pattern() + "?"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("STEREO", "(\\<\\<.+\\>\\>)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("TAGS", Stereotag.pattern() + "?"), //
+				new RegexLeaf("TAGS2", Stereotag.pattern() + "?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -180,7 +182,7 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 
 		manageExtends("EXTENDS", diagram, line0, entity);
 		manageExtends("IMPLEMENTS", diagram, line0, entity);
-		addTags(entity, line0.get("TAGS", 0));
+		addTags(entity, line0.getLazzy("TAGS", 0));
 
 		return CommandExecutionResult.ok();
 	}

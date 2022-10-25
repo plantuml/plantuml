@@ -134,6 +134,10 @@ public class Rainbow {
 		return colors.get(0).getArrowColor();
 	}
 
+	public HColor getArrowHeadColor() {
+		return colors.get(0).getArrowHeadColor();
+	}
+
 	public int getColorArrowSeparationSpace() {
 		return colorArrowSeparationSpace;
 	}

@@ -82,9 +82,11 @@ public class CommandPackage extends SingleLineCommand2<AbstractEntityDiagram> {
 								new RegexLeaf("AS", "([%pLN_.]+)") //
 						)), //
 				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("TAGS1", Stereotag.pattern() + "?"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("STEREOTYPE", "(\\<\\<.*\\>\\>)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("TAGS", Stereotag.pattern() + "?"), //
+				new RegexLeaf("TAGS2", Stereotag.pattern() + "?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -146,7 +148,7 @@ public class CommandPackage extends SingleLineCommand2<AbstractEntityDiagram> {
 				p.setUSymbol(usymbol);
 			}
 		}
-		CommandCreateClassMultilines.addTags(p, arg.get("TAGS", 0));
+		CommandCreateClassMultilines.addTags(p, arg.getLazzy("TAGS", 0));
 
 		final String urlString = arg.get("URL", 0);
 		if (urlString != null) {

@@ -586,7 +586,6 @@ public final class GeneralImageBuilder {
 
 			if (dotData.isEmpty(g) && g.getGroupType() == GroupType.PACKAGE) {
 				final ISkinParam skinParam = dotData.getSkinParam();
-				entityFactory.thisIsGoingToBeALeaf(g.getIdent());
 				final ILeaf folder = entityFactory.createLeafForEmptyGroup(g, skinParam);
 				printEntity(dotStringFactory, folder);
 			} else {

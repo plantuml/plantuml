@@ -77,6 +77,7 @@ import net.sourceforge.plantuml.cucadiagram.entity.EntityImpl;
 import net.sourceforge.plantuml.descdiagram.command.StringWithArrow;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
+import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
@@ -94,6 +95,7 @@ import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.svek.extremity.Extremity;
+import net.sourceforge.plantuml.svek.extremity.ExtremityArrow;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactory;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryExtends;
 import net.sourceforge.plantuml.svek.extremity.ExtremityOther;
@@ -642,7 +644,7 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 
 	}
 
-	public void drawU(UGraphic ug, UStroke suggestedStroke, HColor color, Set<String> ids) {
+	public void drawU(UGraphic ug, Set<String> ids, UStroke suggestedStroke, Rainbow rainbow) {
 		if (opale)
 			return;
 
@@ -677,12 +679,19 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		x += dx;
 		y += dy;
 
+		HColor arrowHeadColor = rainbow.getArrowHeadColor();
+		HColor color = rainbow.getColor();
+
 		if (this.link.getColors() != null) {
 			final HColor newColor = this.link.getColors().getColor(ColorType.ARROW, ColorType.LINE);
-			if (newColor != null)
+			if (newColor != null) {
 				color = newColor;
-		} else if (this.link.getSpecificColor() != null)
+				arrowHeadColor = color;
+			}
+		} else if (this.link.getSpecificColor() != null) {
 			color = this.link.getSpecificColor();
+			arrowHeadColor = color;
+		}
 
 		ug = ug.apply(HColors.none().bg()).apply(color);
 		final LinkType linkType = link.getType();
@@ -727,7 +736,8 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		final String tmp = uniq(ids, comment);
 		todraw.setCommentAndCodeLine(tmp, link.getCodeLine());
 
-		drawRainbow(ug.apply(new UTranslate(x, y)), color, todraw, link.getSupplementaryColors(), stroke);
+		drawRainbow(ug.apply(new UTranslate(x, y)), color, arrowHeadColor, todraw, link.getSupplementaryColors(),
+				stroke);
 
 		ug = ug.apply(new UStroke()).apply(color);
 
@@ -820,31 +830,39 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		}
 	}
 
-	private void drawRainbow(UGraphic ug, HColor color, DotPath todraw, List<Colors> supplementaryColors,
-			UStroke stroke) {
+	private void drawRainbow(UGraphic ug, HColor color, HColor headColor, DotPath todraw,
+			List<Colors> supplementaryColors, UStroke stroke) {
 		ug.draw(todraw);
 		final LinkType linkType = link.getType();
 
-		if (this.extremity2 != null) {
-			UGraphic ug2 = ug.apply(color).apply(stroke.onlyThickness());
-			if (linkType.getDecor1().isFill())
-				ug2 = ug2.apply(color.bg());
-			else
-				ug2 = ug2.apply(HColors.none().bg());
-
-			// System.err.println("Line::draw EXTREMITY1");
-			this.extremity2.drawU(ug2);
-		}
-		if (this.extremity1 != null) {
-			UGraphic ug2 = ug.apply(color).apply(stroke.onlyThickness());
+		if (headColor.isTransparent()) {
+			if (this.extremity1 instanceof ExtremityArrow) {
+				final UGraphic ugHead = ug.apply(color).apply(stroke.onlyThickness());
+				((ExtremityArrow) this.extremity1).drawLineIfTransparent(ugHead);
+			}
+		} else if (this.extremity1 != null) {
+			UGraphic ugHead = ug.apply(headColor).apply(stroke.onlyThickness());
 			if (linkType.getDecor2().isFill())
-				ug2 = ug2.apply(color.bg());
+				ugHead = ugHead.apply(color.bg());
 			else
-				ug2 = ug2.apply(HColors.none().bg());
-
-			// System.err.println("Line::draw EXTREMITY2");
-			this.extremity1.drawU(ug2);
+				ugHead = ugHead.apply(HColors.none().bg());
+			this.extremity1.drawU(ugHead);
 		}
+
+		if (headColor.isTransparent()) {
+			if (this.extremity2 instanceof ExtremityArrow) {
+				final UGraphic ugHead = ug.apply(color).apply(stroke.onlyThickness());
+				((ExtremityArrow) this.extremity2).drawLineIfTransparent(ugHead);
+			}
+		} else if (this.extremity2 != null) {
+			UGraphic ugHead = ug.apply(headColor).apply(stroke.onlyThickness());
+			if (linkType.getDecor1().isFill())
+				ugHead = ugHead.apply(color.bg());
+			else
+				ugHead = ugHead.apply(HColors.none().bg());
+			this.extremity2.drawU(ugHead);
+		}
+
 		int i = 0;
 		for (Colors colors : supplementaryColors) {
 			ug.apply(new UTranslate(2 * (i + 1), 2 * (i + 1))).apply(colors.getColor(ColorType.LINE)).draw(todraw);

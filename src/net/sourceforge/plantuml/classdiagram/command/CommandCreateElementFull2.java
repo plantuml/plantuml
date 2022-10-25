@@ -99,13 +99,12 @@ public class CommandCreateElementFull2 extends SingleLineCommand2<ClassDiagram> 
 									RegexLeaf.spaceOneOrMore(), //
 									new RegexLeaf("CODE2", CommandCreateElementFull.CODE)) //
 					), //
-					new RegexOptional( //
-							new RegexConcat( //
-									RegexLeaf.spaceZeroOrMore(), //
-									new RegexLeaf("STEREOTYPE", "(\\<\\<.+\\>\\>)")//
-							)), //
 					RegexLeaf.spaceZeroOrMore(), //
-					new RegexLeaf("TAGS", Stereotag.pattern() + "?"), //
+					new RegexLeaf("TAGS1", Stereotag.pattern() + "?"), //
+					RegexLeaf.spaceZeroOrMore(), //
+					new RegexLeaf("STEREOTYPE", "(\\<\\<.+\\>\\>)?"), //
+					RegexLeaf.spaceZeroOrMore(), //
+					new RegexLeaf("TAGS2", Stereotag.pattern() + "?"), //
 					RegexLeaf.spaceZeroOrMore(), //
 					new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
 					RegexLeaf.spaceZeroOrMore(), //
@@ -130,13 +129,12 @@ public class CommandCreateElementFull2 extends SingleLineCommand2<ClassDiagram> 
 								RegexLeaf.spaceOneOrMore(), //
 								new RegexLeaf("CODE2", CommandCreateElementFull.CODE)) //
 				), //
-				new RegexOptional( //
-						new RegexConcat( //
-								RegexLeaf.spaceZeroOrMore(), //
-								new RegexLeaf("STEREOTYPE", "(\\<\\<.+\\>\\>)")//
-						)), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("TAGS", Stereotag.pattern() + "?"), //
+				new RegexLeaf("TAGS1", Stereotag.pattern() + "?"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("STEREOTYPE", "(\\<\\<.+\\>\\>)?"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("TAGS2", Stereotag.pattern() + "?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -224,7 +222,7 @@ public class CommandCreateElementFull2 extends SingleLineCommand2<ClassDiagram> 
 					diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),
 					diagram.getSkinParam().getIHtmlColorSet()));
 
-		CommandCreateClassMultilines.addTags(entity, arg.get("TAGS", 0));
+		CommandCreateClassMultilines.addTags(entity, arg.getLazzy("TAGS", 0));
 
 		final String urlString = arg.get("URL", 0);
 		if (urlString != null) {
@@ -234,8 +232,8 @@ public class CommandCreateElementFull2 extends SingleLineCommand2<ClassDiagram> 
 		}
 		final String s = arg.get("COLOR", 0);
 
-		entity.setSpecificColorTOBEREMOVED(ColorType.BACK, s == null ? null
-				: diagram.getSkinParam().getIHtmlColorSet().getColor(s));
+		entity.setSpecificColorTOBEREMOVED(ColorType.BACK,
+				s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s));
 		return CommandExecutionResult.ok();
 	}
 

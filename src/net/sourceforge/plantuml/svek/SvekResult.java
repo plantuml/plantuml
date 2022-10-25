@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.cucadiagram.dot.DotData;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
+import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.style.PName;
@@ -75,8 +76,8 @@ public final class SvekResult extends AbstractTextBlock implements IEntityImage 
 		final Style style2 = getDefaultStyleDefinition(null)
 				.getMergedStyle(dotData.getSkinParam().getCurrentStyleBuilder());
 
-		HColor color = style2.value(PName.LineColor).asColor(dotData.getSkinParam().getIHtmlColorSet());
-		color = HColors.noGradient(color);
+		final HColor borderColor = HColors
+				.noGradient(style2.value(PName.LineColor).asColor(dotData.getSkinParam().getIHtmlColorSet()));
 
 		for (SvekNode node : dotStringFactory.getBibliotekon().allNodes()) {
 			final double minX = node.getMinX();
@@ -85,7 +86,7 @@ public final class SvekResult extends AbstractTextBlock implements IEntityImage 
 			final IEntityImage image = node.getImage();
 			image.drawU(ug2.apply(new UTranslate(minX, minY)));
 			if (image instanceof Untranslated)
-				((Untranslated) image).drawUntranslated(ug.apply(color), minX, minY);
+				((Untranslated) image).drawUntranslated(ug.apply(borderColor), minX, minY);
 
 		}
 
@@ -98,10 +99,10 @@ public final class SvekResult extends AbstractTextBlock implements IEntityImage 
 
 			final StyleBuilder currentStyleBuilder = line.getCurrentStyleBuilder();
 			final Style styleLine = getDefaultStyleDefinition(line.getStereotype()).getMergedStyle(currentStyleBuilder);
-			color = styleLine.value(PName.LineColor).asColor(dotData.getSkinParam().getIHtmlColorSet());
-			color = HColors.noGradient(color);
 
-			line.drawU(ug2, styleLine.getStroke(), color, ids);
+			final Rainbow rainbow = Rainbow.build(styleLine, dotData.getSkinParam().getIHtmlColorSet());
+
+			line.drawU(ug2, ids, styleLine.getStroke(), rainbow);
 		}
 
 		for (SvekNode node : dotStringFactory.getBibliotekon().allNodes())

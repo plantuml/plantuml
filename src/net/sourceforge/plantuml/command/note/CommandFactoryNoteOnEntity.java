@@ -92,9 +92,11 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 								RegexLeaf.spaceOneOrMore(), partialPattern), //
 						new RegexLeaf("")), //
 				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("TAGS1", Stereotag.pattern() + "?"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("STEREO", "(\\<{2}.*\\>{2})?"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("TAGS", Stereotag.pattern() + "?"), //
+				new RegexLeaf("TAGS2", Stereotag.pattern() + "?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				color().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -125,9 +127,11 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 									partialPattern), //
 							new RegexLeaf("")), //
 					RegexLeaf.spaceZeroOrMore(), //
+					new RegexLeaf("TAGS1", Stereotag.pattern() + "?"), //
+					RegexLeaf.spaceZeroOrMore(), //
 					new RegexLeaf("STEREO", "(\\<{2}.*\\>{2})?"), //
 					RegexLeaf.spaceZeroOrMore(), //
-					new RegexLeaf("TAGS", Stereotag.pattern() + "?"), //
+					new RegexLeaf("TAGS2", Stereotag.pattern() + "?"), //
 					RegexLeaf.spaceZeroOrMore(), //
 					color().getRegex(), //
 					RegexLeaf.spaceZeroOrMore(), //
@@ -149,9 +153,11 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 								partialPattern), //
 						new RegexLeaf("")), //
 				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("TAGS1", Stereotag.pattern() + "?"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("STEREO", "(\\<{2}.*\\>{2})?"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("TAGS", Stereotag.pattern() + "?"), //
+				new RegexLeaf("TAGS2", Stereotag.pattern() + "?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				color().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -260,7 +266,7 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 		if (url != null)
 			note.addUrl(url);
 
-		CommandCreateClassMultilines.addTags(note, line0.get("TAGS", 0));
+		CommandCreateClassMultilines.addTags(note, line0.getLazzy("TAGS", 0));
 
 		final Link link;
 

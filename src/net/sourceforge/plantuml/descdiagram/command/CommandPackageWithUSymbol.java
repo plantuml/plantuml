@@ -117,9 +117,11 @@ public class CommandPackageWithUSymbol extends SingleLineCommand2<AbstractEntity
 						new RegexLeaf("CODE9", "([^#%s{}%g]*)") //
 				), //
 				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("TAGS1", Stereotag.pattern() + "?"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("STEREOTYPE", "(\\<\\<.*\\>\\>)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("TAGS", Stereotag.pattern() + "?"), //
+				new RegexLeaf("TAGS2", Stereotag.pattern() + "?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -144,11 +146,11 @@ public class CommandPackageWithUSymbol extends SingleLineCommand2<AbstractEntity
 			display = null;
 		} else {
 			idShort = codeRaw;
-			if (displayRaw == null) {
+			if (displayRaw == null)
 				display = idShort;
-			} else {
+			else
 				display = displayRaw;
-			}
+
 		}
 
 		final Ident ident = diagram.buildLeafIdent(idShort);
@@ -158,22 +160,22 @@ public class CommandPackageWithUSymbol extends SingleLineCommand2<AbstractEntity
 				NamespaceStrategy.SINGLE);
 		final IEntity p = diagram.getCurrentGroup();
 		final String symbol = arg.get("SYMBOL", 0);
-		if ("together".equalsIgnoreCase(symbol)) {
+		if ("together".equalsIgnoreCase(symbol))
 			p.setThisIsTogether();
-		}
+
 		p.setUSymbol(USymbols.fromString(symbol, diagram.getSkinParam().actorStyle(),
 				diagram.getSkinParam().componentStyle(), diagram.getSkinParam().packageStyle()));
 		final String stereotype = arg.getLazzy("STEREOTYPE", 0);
-		if (stereotype != null) {
+		if (stereotype != null)
 			p.setStereotype(Stereotype.build(stereotype, false));
-		}
+
 		final String urlString = arg.get("URL", 0);
 		if (urlString != null) {
 			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), UrlMode.STRICT);
 			final Url url = urlBuilder.getUrl(urlString);
 			p.addUrl(url);
 		}
-		CommandCreateClassMultilines.addTags(p, arg.get("TAGS", 0));
+		CommandCreateClassMultilines.addTags(p, arg.getLazzy("TAGS", 0));
 		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
 		p.setColors(colors);
 		return CommandExecutionResult.ok();

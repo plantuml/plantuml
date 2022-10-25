@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
@@ -72,7 +73,9 @@ public class EntityImageCircleEnd extends AbstractEntityImage {
 		final UEllipse circle = new UEllipse(SIZE, SIZE);
 
 		final Style style = getDefaultStyleDefinitionCircle().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
-		final HColor color = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
+		HColor color = getEntity().getColors().getColor(ColorType.BACK);
+		if (color == null)
+			color = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
 		final double shadowing = style.value(PName.Shadowing).asDouble();
 
 		circle.setDeltaShadow(shadowing);

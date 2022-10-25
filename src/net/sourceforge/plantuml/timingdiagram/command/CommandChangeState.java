@@ -55,7 +55,7 @@ abstract class CommandChangeState extends SingleLineCommand2<TimingDiagram> {
 		super(pattern);
 	}
 
-	static final String STATE_CODE = "([%pLN_][%pLN_.]*)";
+	static final String STATE_CODE = "([-%pLN_][-%pLN_.]*)";
 
 	static ColorParser color() {
 		return ColorParser.simpleColor(ColorType.BACK);

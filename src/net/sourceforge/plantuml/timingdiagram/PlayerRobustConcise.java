@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
@@ -204,8 +205,9 @@ public final class PlayerRobustConcise extends Player {
 		return point.translated(translation);
 	}
 
-	public final void createConstraint(TimeTick tick1, TimeTick tick2, String message) {
-		this.constraints.add(new TimeConstraint(tick1, tick2, message, skinParam));
+	@Override
+	public final void createConstraint(TimeTick tick1, TimeTick tick2, String message, ArrowConfiguration config) {
+		this.constraints.add(new TimeConstraint(tick1, tick2, message, skinParam, config));
 	}
 
 	public final void addNote(TimeTick now, Display note, Position position) {

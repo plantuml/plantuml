@@ -43,9 +43,12 @@ import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.sequencediagram.command.CommandArrow;
+import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.timingdiagram.Player;
 import net.sourceforge.plantuml.timingdiagram.TimeTick;
 import net.sourceforge.plantuml.timingdiagram.TimingDiagram;
+import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public class CommandConstraint extends SingleLineCommand2<TimingDiagram> {
 
@@ -59,7 +62,9 @@ public class CommandConstraint extends SingleLineCommand2<TimingDiagram> {
 				TimeTickBuilder.expressionAtWithArobase("TIME1"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("\\<"), //
-				new RegexLeaf("ARROW", "(-+)"), //
+				new RegexLeaf("(-+)"), //
+				new RegexLeaf("ARROW_STYLE1", CommandArrow.getColorOrStylePattern()), //
+				new RegexLeaf("(-*)"), //
 				new RegexLeaf("\\>"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				TimeTickBuilder.expressionAtWithArobase("TIME2"), //
@@ -74,32 +79,36 @@ public class CommandConstraint extends SingleLineCommand2<TimingDiagram> {
 	}
 
 	@Override
-	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg) {
+	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg)
+			throws NoSuchColorException {
 		final String part1 = arg.get("PART1", 0);
 		final Player player1;
 		if (part1 == null) {
 			player1 = diagram.getLastPlayer();
-			if (player1 == null) {
+			if (player1 == null)
 				return CommandExecutionResult.error("You have to provide a participant");
-			}
+
 		} else {
 			player1 = diagram.getPlayer(part1);
-			if (player1 == null) {
+			if (player1 == null)
 				return CommandExecutionResult.error("No such participant " + part1);
-			}
+
 		}
 		final TimeTick tick1 = TimeTickBuilder.parseTimeTick("TIME1", arg, diagram);
-		if (tick1 == null) {
+		if (tick1 == null)
 			return CommandExecutionResult.error("Unknown time label");
-		}
+
 		final TimeTick restore = diagram.getNow();
 		diagram.updateNow(tick1);
 		final TimeTick tick2 = TimeTickBuilder.parseTimeTick("TIME2", arg, diagram);
 		diagram.updateNow(restore);
-		if (tick2 == null) {
+		if (tick2 == null)
 			return CommandExecutionResult.error("Unknown time label");
-		}
-		player1.createConstraint(tick1, tick2, arg.get("MESSAGE", 0));
+
+		ArrowConfiguration config = ArrowConfiguration.withDirectionBoth();
+		config = CommandArrow.applyStyle(arg.getLazzy("ARROW_STYLE", 0), config);
+
+		player1.createConstraint(tick1, tick2, arg.get("MESSAGE", 0), config);
 		return CommandExecutionResult.ok();
 	}
 

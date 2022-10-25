@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlMode;
+import net.sourceforge.plantuml.classdiagram.command.CommandCreateClassMultilines;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.IRegex;
@@ -52,6 +53,7 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
+import net.sourceforge.plantuml.cucadiagram.Stereotag;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
@@ -83,7 +85,11 @@ public class CommandCreateState extends SingleLineCommand2<StateDiagram> {
 						new RegexLeaf("CODE3", "([%pLN_.]+)"), //
 						new RegexLeaf("CODE4", "[%g]([^%g]+)[%g]")), //
 				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("TAGS1", Stereotag.pattern() + "?"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("STEREOTYPE", "(\\<\\<.*\\>\\>)?"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("TAGS2", Stereotag.pattern() + "?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -110,21 +116,21 @@ public class CommandCreateState extends SingleLineCommand2<StateDiagram> {
 		final Ident ident = diagram.buildLeafIdent(idShort);
 		final Code code = diagram.V1972() ? ident : diagram.buildCode(idShort);
 		String display = arg.getLazzy("DISPLAY", 0);
-		if (display == null) {
+		if (display == null) 
 			display = code.getName();
-		}
+		
 		final String stereotype = arg.get("STEREOTYPE", 0);
 		final LeafType type = getTypeFromStereotype(stereotype);
-		if (diagram.checkConcurrentStateOk(ident, code) == false) {
+		if (diagram.checkConcurrentStateOk(ident, code) == false) 
 			return CommandExecutionResult.error("The state " + code.getName()
 					+ " has been created in a concurrent state : it cannot be used here.");
-		}
+		
 		final IEntity ent = diagram.getOrCreateLeaf(diagram.buildLeafIdent(idShort), code, type, null);
 		ent.setDisplay(Display.getWithNewlines(display));
 
-		if (stereotype != null) {
+		if (stereotype != null) 
 			ent.setStereotype(Stereotype.build(stereotype));
-		}
+		
 		final String urlString = arg.get("URL", 0);
 		if (urlString != null) {
 			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), UrlMode.STRICT);
@@ -137,12 +143,12 @@ public class CommandCreateState extends SingleLineCommand2<StateDiagram> {
 
 		final HColor lineColor = s == null ? null
 				: diagram.getSkinParam().getIHtmlColorSet().getColor(s);
-		if (lineColor != null) {
+		if (lineColor != null) 
 			colors = colors.add(ColorType.LINE, lineColor);
-		}
-		if (arg.get("LINECOLOR", 0) != null) {
+		
+		if (arg.get("LINECOLOR", 0) != null) 
 			colors = colors.addLegacyStroke(arg.get("LINECOLOR", 0));
-		}
+		
 		ent.setColors(colors);
 
 		// ent.setSpecificColorTOBEREMOVED(ColorType.BACK,
@@ -154,28 +160,36 @@ public class CommandCreateState extends SingleLineCommand2<StateDiagram> {
 		// ent.applyStroke(arg.get("LINECOLOR", 0));
 
 		final String addFields = arg.get("ADDFIELD", 0);
-		if (addFields != null) {
+		if (addFields != null) 
 			ent.getBodier().addFieldOrMethod(addFields);
-		}
+		
+		CommandCreateClassMultilines.addTags(ent, arg.getLazzy("TAGS", 0));
+
 		return CommandExecutionResult.ok();
 	}
 
 	private LeafType getTypeFromStereotype(String stereotype) {
-		if ("<<choice>>".equalsIgnoreCase(stereotype)) {
+		if ("<<choice>>".equalsIgnoreCase(stereotype)) 
 			return LeafType.STATE_CHOICE;
-		}
-		if ("<<fork>>".equalsIgnoreCase(stereotype)) {
+		
+		if ("<<fork>>".equalsIgnoreCase(stereotype)) 
 			return LeafType.STATE_FORK_JOIN;
-		}
-		if ("<<join>>".equalsIgnoreCase(stereotype)) {
+		
+		if ("<<join>>".equalsIgnoreCase(stereotype)) 
 			return LeafType.STATE_FORK_JOIN;
-		}
-		if ("<<start>>".equalsIgnoreCase(stereotype)) {
+		
+		if ("<<start>>".equalsIgnoreCase(stereotype)) 
 			return LeafType.CIRCLE_START;
-		}
-		if ("<<end>>".equalsIgnoreCase(stereotype)) {
+		
+		if ("<<end>>".equalsIgnoreCase(stereotype)) 
 			return LeafType.CIRCLE_END;
-		}
+		
+		if ("<<history>>".equalsIgnoreCase(stereotype)) 
+			return LeafType.PSEUDO_STATE;
+		
+		if ("<<history*>>".equalsIgnoreCase(stereotype)) 
+			return LeafType.DEEP_HISTORY;
+		
 		return null;
 	}
 
