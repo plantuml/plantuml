@@ -101,7 +101,7 @@ final public class UmlSource {
 
 	/**
 	 * Build the source from a text.
-	 * 
+	 *
 	 * @param source               the source of the diagram
 	 * @param checkEndingBackslash <code>true</code> if an ending backslash means
 	 *                             that a line has to be collapsed with the
@@ -168,7 +168,8 @@ final public class UmlSource {
 		final StringBuilder sb = new StringBuilder();
 		for (StringLocated s : source) {
 			sb.append(s.getString());
-			sb.append('\r');
+			//sb.append(System.lineSeparator());
+			//sb.append('\r');
 			sb.append(BackSlash.CHAR_NEWLINE);
 		}
 		return sb.toString();
@@ -178,7 +179,8 @@ final public class UmlSource {
 		final StringBuilder sb = new StringBuilder();
 		for (StringLocated s : rawSource) {
 			sb.append(s.getString());
-			sb.append('\r');
+			//sb.append(System.lineSeparator());
+			//sb.append('\r');
 			sb.append(BackSlash.CHAR_NEWLINE);
 		}
 		return sb.toString();
