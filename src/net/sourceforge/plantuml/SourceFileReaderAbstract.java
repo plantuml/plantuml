@@ -62,6 +62,7 @@ import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.preproc.FileWithSuffix;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SecurityUtils;
+import net.sourceforge.plantuml.EmbeddedDiagram;
 
 public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 
@@ -161,6 +162,8 @@ public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 
 		for (BlockUml blockUml : builder.getBlockUmls()) {
 			final SuggestedFile suggested = getSuggestedFile(blockUml);
+
+			EmbeddedDiagramDraw.clearImageCache();
 
 			final Diagram system;
 			try {

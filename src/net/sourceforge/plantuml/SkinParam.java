@@ -149,7 +149,9 @@ public class SkinParam implements ISkinParam {
 
 	@Override
 	public void copyAllFrom(Map<String, String> other) {
-		this.params.putAll(other);
+		for (Entry<String, String> entry : other.entrySet()) {
+			setParam(entry.getKey(), entry.getValue());
+		}
 	}
 
 	@Override

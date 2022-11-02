@@ -40,6 +40,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.HashMap;
 
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.core.Diagram;
@@ -63,6 +64,12 @@ class EmbeddedDiagramDraw extends AbstractTextBlock implements Line, Atom {
 	private BufferedImage image;
 	private final ISkinSimple skinParam;
 	private final List<StringLocated> as2;
+	private final static ThreadLocal<HashMap<String, BufferedImage>> imageCache = new ThreadLocal<HashMap<String, BufferedImage>>() {
+		@Override
+		protected HashMap<String, BufferedImage> initialValue() {
+			return new HashMap<String, BufferedImage>();
+		}
+	};
 
 	public List<Atom> splitInTwo(StringBounder stringBounder, double width) {
 		return Arrays.asList((Atom) this);
@@ -118,8 +125,14 @@ class EmbeddedDiagramDraw extends AbstractTextBlock implements Line, Atom {
 	}
 
 	private BufferedImage getImage() throws IOException, InterruptedException {
-		if (image == null)
-			image = getImageSlow();
+		if (image == null) {
+			image = imageCache.get().get(as2.toString());
+			if (image == null) {
+				image = getImageSlow();
+				if (image != null)
+					imageCache.get().put(as2.toString(), image);
+			}
+		}
 
 		return image;
 	}
@@ -140,6 +153,10 @@ class EmbeddedDiagramDraw extends AbstractTextBlock implements Line, Atom {
 		final BlockUml blockUml = new BlockUml(as2, Defines.createEmpty(), skinParam, null, null);
 		return blockUml.getDiagram();
 
+	}
+
+	public static void clearImageCache() {
+		imageCache.get().clear();
 	}
 }
 

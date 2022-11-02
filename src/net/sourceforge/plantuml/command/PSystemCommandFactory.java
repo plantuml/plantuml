@@ -193,12 +193,20 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 	private BlocLines addOneSingleLineManageEmbedded2(IteratorCounter2 it, BlocLines lines) {
 		final StringLocated linetoBeAdded = it.next();
 		lines = lines.add(linetoBeAdded);
-		if (linetoBeAdded.getTrimmed().getString().equals("{{")) {
+		if (linetoBeAdded.getTrimmed().getString().startsWith("{{")) {
+			int nested = 0;
 			while (it.hasNext()) {
 				final StringLocated s = it.next();
 				lines = lines.add(s);
-				if (s.getTrimmed().getString().equals("}}"))
-					return lines;
+				final String s2 = s.getTrimmed().getString();
+				if (s2.startsWith("{{"))
+					nested++;
+				else if (s2.equals("}}")) {
+					if (nested == 0)
+						return lines;
+					else
+						nested--;
+				}
 
 			}
 		}

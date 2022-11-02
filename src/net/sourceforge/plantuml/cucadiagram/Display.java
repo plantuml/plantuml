@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.cucadiagram;
@@ -91,6 +91,8 @@ public class Display implements Iterable<CharSequence> {
 	private final boolean isNull;
 	private final CreoleMode defaultCreoleMode;
 	private final boolean showStereotype;
+
+	private final static ThreadLocal<Boolean> nestedEmbeddedDiagrams = new ThreadLocal<>();
 
 	public final static Display NULL = new Display(true, null, null, true, CreoleMode.FULL);
 
@@ -251,18 +253,30 @@ public class Display implements Iterable<CharSequence> {
 		while (it.hasNext()) {
 			CharSequence s = it.next();
 			final String type = EmbeddedDiagram.getEmbeddedType(s);
-			if (type != null) {
+			if ((type != null) && (nestedEmbeddedDiagrams.get() == null)) {
 				final List<CharSequence> other = new ArrayList<>();
 				other.add("@start" + type);
+				int nested = 0;
 				while (it.hasNext()) {
 					final CharSequence s2 = it.next();
-					if (s2 != null && StringUtils.trin(s2.toString()).equals("}}"))
-						break;
+					if (s2 != null) {
+						final String s3 = StringUtils.trin(s2.toString());
+						if (s3.startsWith("{{"))
+							nested++;
+						else if (s3.equals("}}")) {
+							if (nested == 0)
+								break;
+							else
+								nested--;
+						}
+					}
 
 					other.add(s2);
 				}
 				other.add("@end" + type);
+				nestedEmbeddedDiagrams.set(true);
 				s = new EmbeddedDiagram(Display.create(other));
+				nestedEmbeddedDiagrams.remove();
 			}
 			result.add(s);
 		}
