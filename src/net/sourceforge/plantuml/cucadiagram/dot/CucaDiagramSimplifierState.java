@@ -41,10 +41,10 @@ import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.List;
 
-import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
+import net.sourceforge.plantuml.baraye.a.IGroup;
 import net.sourceforge.plantuml.cucadiagram.GroupRoot;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
-import net.sourceforge.plantuml.cucadiagram.IGroup;
+import net.sourceforge.plantuml.cucadiagram.ICucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.svek.GroupPngMakerState;
@@ -52,10 +52,10 @@ import net.sourceforge.plantuml.svek.IEntityImage;
 
 public final class CucaDiagramSimplifierState {
 
-	private final CucaDiagram diagram;
+	private final ICucaDiagram diagram;
 	private final StringBounder stringBounder;
 
-	public CucaDiagramSimplifierState(CucaDiagram diagram, List<String> dotStrings, StringBounder stringBounder)
+	public CucaDiagramSimplifierState(ICucaDiagram diagram, List<String> dotStrings, StringBounder stringBounder)
 			throws IOException, InterruptedException {
 		this.diagram = diagram;
 		this.stringBounder = stringBounder;

@@ -62,12 +62,12 @@ public class ElementPyramidScrolled extends ElementPyramid {
 	public XDimension2D getPreferredDimension(StringBounder stringBounder, double x, double y) {
 		final XDimension2D result = super.getPreferredDimension(stringBounder, x, y);
 		if (scrollStrategy == ScrollStrategy.HORIZONTAL_ONLY)
-			return XDimension2D.delta(result, 0, 30);
+			return result.delta(0, 30);
 
 		if (scrollStrategy == ScrollStrategy.VERTICAL_ONLY)
-			return XDimension2D.delta(result, 30, 0);
+			return result.delta(30, 0);
 
-		return XDimension2D.delta(result, 30);
+		return result.delta(30);
 	}
 
 	@Override

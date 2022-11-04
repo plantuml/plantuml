@@ -33,7 +33,7 @@
  * 
  *
  */
-package net.sourceforge.plantuml.cucadiagram.entity;
+package net.sourceforge.plantuml.baraye.a;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -54,36 +54,32 @@ import net.sourceforge.plantuml.cucadiagram.BodierJSon;
 import net.sourceforge.plantuml.cucadiagram.BodierMap;
 import net.sourceforge.plantuml.cucadiagram.BodyFactory;
 import net.sourceforge.plantuml.cucadiagram.Code;
-import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.GroupRoot;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
 import net.sourceforge.plantuml.cucadiagram.HideOrShow2;
-import net.sourceforge.plantuml.cucadiagram.IEntity;
-import net.sourceforge.plantuml.cucadiagram.IGroup;
-import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.Stereotag;
-import net.sourceforge.plantuml.cucadiagram.SuperGroup;
+import net.sourceforge.plantuml.cucadiagram.Stereotype;
+import net.sourceforge.plantuml.cucadiagram.entity.IEntityFactory;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 
-public final class EntityFactory {
+public final class EntityFactory implements IEntityFactory {
 
 	private final Map<String, ILeaf> leafsByCode;
 	private final Map<String, IGroup> groupsByCode;
 
-	/* private */final Map<Ident, ILeaf> leafs2 = new LinkedHashMap<Ident, ILeaf>();
-	/* private */final Map<Ident, IGroup> groups2 = new LinkedHashMap<Ident, IGroup>();
+	/* private */public final Map<Ident, ILeaf> leafs2 = new LinkedHashMap<Ident, ILeaf>();
+	/* private */public final Map<Ident, IGroup> groups2 = new LinkedHashMap<Ident, IGroup>();
 
 	private final List<Link> links = new ArrayList<>();
 
 	private int rawLayout;
 
 	private final IGroup rootGroup = new GroupRoot(this);
-	private final SuperGroup rootSuperGroup = new SuperGroup(rootGroup);
 
 	private final List<HideOrShow2> hides2;
 	private final List<HideOrShow2> removed;
@@ -95,30 +91,10 @@ public final class EntityFactory {
 		return emptyGroupsAsNode.get(g);
 	}
 
-	public SuperGroup getRootSuperGroup() {
-		return rootSuperGroup;
-	}
-
-	private Set<SuperGroup> superGroups = null;
-	final Map<IGroup, SuperGroup> groupToSuper = new LinkedHashMap<IGroup, SuperGroup>();
-
-	public Set<SuperGroup> getAllSuperGroups() {
-		return Collections.unmodifiableSet(superGroups);
-	}
-
-	public void buildSuperGroups() {
-		superGroups = new HashSet<>();
-		for (IGroup g : groups2.values()) {
-			final SuperGroup sg = new SuperGroup(g);
-			superGroups.add(sg);
-			groupToSuper.put(g, sg);
-		}
-	}
-
 	public ILeaf createLeafForEmptyGroup(IGroup g, ISkinParam skinParam) {
 		final ILeaf folder = this.createLeaf(g.getIdent(), g.getCode(), g.getDisplay(), LeafType.EMPTY_PACKAGE,
 				g.getParentContainer(), null, this.namespaceSeparator.getNamespaceSeparator());
-		((EntityImpl) folder).setOriginalGroup(g);
+		((EntityImp) folder).setOriginalGroup(g);
 		final USymbol symbol = g.getUSymbol();
 		folder.setUSymbol(symbol);
 		folder.setStereotype(g.getStereotype());
@@ -128,17 +104,6 @@ public final class EntityFactory {
 		for (Stereotag tag : g.stereotags())
 			folder.addStereotag(tag);
 
-//		if (UseStyle.useBetaStyle()) {
-//			// System.err.println("Backcolor ?");
-//		} else {
-//			if (g.getColors().getColor(ColorType.BACK) == null) {
-//				final ColorParam param = symbol == null ? ColorParam.packageBackground : symbol.getColorParamBack();
-//				final HColor c1 = skinParam.getHtmlColor(param, g.getStereotype(), false);
-//				folder.setSpecificColorTOBEREMOVED(ColorType.BACK, c1 == null ? skinParam.getBackgroundColor() : c1);
-//			} else {
-//				folder.setSpecificColorTOBEREMOVED(ColorType.BACK, g.getColors().getColor(ColorType.BACK));
-//			}
-//		}
 		emptyGroupsAsNode.put(g, folder);
 		return folder;
 	}
@@ -173,7 +138,7 @@ public final class EntityFactory {
 				if (link.contains(parent))
 					return null;
 
-			((EntityImpl) g).setIntricated(true);
+			((EntityImp) g).setIntricated(true);
 			hiddenBecauseOfIntrication.add(parent.getIdent());
 			return g;
 		}
@@ -205,6 +170,14 @@ public final class EntityFactory {
 			hidden = hide.apply(hidden, leaf);
 
 		return hidden;
+	}
+
+	public boolean isRemoved(Stereotype stereotype) {
+		boolean result = false;
+		for (HideOrShow2 hide : removed)
+			result = hide.apply(result, stereotype);
+
+		return result;
 	}
 
 	public boolean isRemoved(ILeaf leaf) {
@@ -255,7 +228,7 @@ public final class EntityFactory {
 		else
 			bodier = BodyFactory.createLeaf(entityType, hides);
 
-		final EntityImpl result = new EntityImpl(ident, code, this, bodier, parentContainer, entityType,
+		final EntityImp result = new EntityImp(ident, code, this, bodier, parentContainer, entityType,
 				namespaceSeparator, rawLayout);
 		bodier.setLeaf(result);
 		result.setDisplay(display);
@@ -270,7 +243,7 @@ public final class EntityFactory {
 				return ent.getValue();
 
 		final Bodier bodier = BodyFactory.createGroup(hides);
-		final EntityImpl result = new EntityImpl(ident, code, this, bodier, parentContainer, groupType, namespace,
+		final EntityImp result = new EntityImp(ident, code, this, bodier, parentContainer, groupType, namespace,
 				namespaceSeparator, rawLayout);
 		if (Display.isNull(display) == false)
 			result.setDisplay(display);
@@ -300,7 +273,7 @@ public final class EntityFactory {
 		getParentContainer(ident, null);
 	}
 
-	void removeGroup(String name) {
+	public /* private */ void removeGroup(String name) {
 		if (namespaceSeparator.V1972())
 			throw new UnsupportedOperationException();
 		final IEntity removed = Objects.requireNonNull(groupsByCode.remove(name));
@@ -310,7 +283,7 @@ public final class EntityFactory {
 		}
 	}
 
-	void removeGroup(Ident ident) {
+	public /* private */ void removeGroup(Ident ident) {
 		Objects.requireNonNull(groups2.remove(Objects.requireNonNull(ident)));
 	}
 
@@ -320,7 +293,7 @@ public final class EntityFactory {
 		// throw new IllegalArgumentException();
 	}
 
-	void removeLeaf(String name) {
+	public /* private */ void removeLeaf(String name) {
 		if (namespaceSeparator.V1972())
 			throw new UnsupportedOperationException();
 		final IEntity removed = Objects.requireNonNull(leafsByCode.remove(Objects.requireNonNull(name)));
@@ -330,7 +303,7 @@ public final class EntityFactory {
 		}
 	}
 
-	void removeLeaf(Ident ident) {
+	public /* private */ void removeLeaf(Ident ident) {
 		final IEntity removed = leafs2.remove(Objects.requireNonNull(ident));
 		if (removed == null) {
 			System.err.println("leafs2=" + leafs2.keySet());
@@ -350,7 +323,7 @@ public final class EntityFactory {
 		if (namespaceSeparator.V1972())
 			throw new UnsupportedOperationException();
 		final ILeaf leaf = leafsByCode.get(name);
-		((EntityImpl) leaf).muteToGroup(namespace, type, parent);
+		((EntityImp) leaf).muteToGroup(namespace, type, parent);
 		final IGroup result = (IGroup) leaf;
 		removeLeaf(name);
 		return result;
@@ -364,7 +337,7 @@ public final class EntityFactory {
 			leaf = getLeafVerySmart(ident);
 		else
 			leaf = leafs2.get(ident);
-		((EntityImpl) leaf).muteToGroup(namespace, type, parent);
+		((EntityImp) leaf).muteToGroup(namespace, type, parent);
 		final IGroup result = (IGroup) leaf;
 		removeLeaf1972(leaf);
 		return result;

@@ -42,13 +42,13 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.activitydiagram3.ftile.EntityImageLegend;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.baraye.a.EntityImp;
+import net.sourceforge.plantuml.baraye.a.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.DisplayPositioned;
 import net.sourceforge.plantuml.cucadiagram.EntityPortion;
-import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.PortionShower;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
-import net.sourceforge.plantuml.cucadiagram.entity.EntityImpl;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -115,7 +115,7 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 
 		this.desc = entity.getDisplay().create(titleFontConfiguration, titleHorizontalAlignment, skinParam);
 
-		final DisplayPositioned legend = ((EntityImpl) entity).getLegend();
+		final DisplayPositioned legend = ((EntityImp) entity).getLegend();
 		if (legend != null) {
 			final TextBlock legendBlock = EntityImageLegend.create(legend.getDisplay(), skinParam);
 			stereoBlock = legendBlock;
@@ -136,8 +136,8 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 		final XDimension2D dimDesc = desc.calculateDimension(stringBounder);
 		XDimension2D dim = TextBlockUtils.mergeTB(desc, stereoBlock, HorizontalAlignment.LEFT)
 				.calculateDimension(stringBounder);
-		dim = XDimension2D.atLeast(dim, 0, 2 * dimDesc.getHeight());
-		return XDimension2D.delta(dim, MARGIN * 2, MARGIN * 2);
+		dim = dim.atLeast(0, 2 * dimDesc.getHeight());
+		return dim.delta(MARGIN * 2, MARGIN * 2);
 	}
 
 	final public void drawU(UGraphic ug) {

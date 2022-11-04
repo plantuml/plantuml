@@ -34,7 +34,7 @@
  * Contribution:  Miguel Esteves
  *
  */
-package net.sourceforge.plantuml.cucadiagram.entity;
+package net.sourceforge.plantuml.baraye.b;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -51,23 +51,25 @@ import java.util.Set;
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.Guillemet;
+import net.sourceforge.plantuml.Hideable;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.LineConfigurable;
 import net.sourceforge.plantuml.LineLocation;
+import net.sourceforge.plantuml.Removeable;
+import net.sourceforge.plantuml.SpecificBackcolorable;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.baraye.Quark;
 import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.cucadiagram.Bodier;
 import net.sourceforge.plantuml.cucadiagram.Code;
-import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.CucaNote;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.DisplayPositioned;
 import net.sourceforge.plantuml.cucadiagram.EntityPosition;
 import net.sourceforge.plantuml.cucadiagram.EntityUtils;
-import net.sourceforge.plantuml.cucadiagram.GroupRoot;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
-import net.sourceforge.plantuml.cucadiagram.IGroup;
-import net.sourceforge.plantuml.cucadiagram.ILeaf;
+import net.sourceforge.plantuml.cucadiagram.ICucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
@@ -94,13 +96,12 @@ import net.sourceforge.plantuml.svek.image.EntityImageStateCommon;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
-final public class EntityImpl implements ILeaf, IGroup {
+final public class EntityImp
+		implements SpecificBackcolorable, Hideable, Removeable, LineConfigurable, ILeaf, IGroup {
 
-	private final EntityFactory entityFactory;
+	private final ZEntityFactory entityFactory;
 
-	// Entity
-	private/* final */Code code;
-	private/* final */Ident ident;
+	private Quark quark;
 
 	private Url url;
 
@@ -113,10 +114,6 @@ final public class EntityImpl implements ILeaf, IGroup {
 	private Stereotype stereotype;
 	private Stereostyles stereostyles = Stereostyles.NONE;
 	private String generic;
-	private IGroup parentContainer;
-
-	// Group
-	private Code namespace;
 
 	private GroupType groupType;
 
@@ -135,7 +132,7 @@ final public class EntityImpl implements ILeaf, IGroup {
 	private final List<CucaNote> notesTop = new ArrayList<>();
 	private final List<CucaNote> notesBottom = new ArrayList<>();
 
-	@Override
+	// @Override
 	public void addNote(Display note, Position position, Colors colors) {
 		if (position == Position.TOP)
 			notesTop.add(CucaNote.build(note, position, colors));
@@ -143,7 +140,7 @@ final public class EntityImpl implements ILeaf, IGroup {
 			notesBottom.add(CucaNote.build(note, position, colors));
 	}
 
-	@Override
+	// @Override
 	public List<CucaNote> getNotes(Position position) {
 		if (position == Position.TOP)
 			return Collections.unmodifiableList(notesTop);
@@ -161,42 +158,25 @@ final public class EntityImpl implements ILeaf, IGroup {
 	}
 
 	// Back to Entity
-	private EntityImpl(Ident ident, EntityFactory entityFactory, Code code, Bodier bodier, IGroup parentContainer,
-			String namespaceSeparator, int rawLayout) {
-		this.ident = Objects.requireNonNull(ident);
+	private EntityImp(Quark quark, ZEntityFactory entityFactory, Bodier bodier, int rawLayout) {
+		this.quark = Objects.requireNonNull(quark);
 		this.uid = StringUtils.getUid("cl", entityFactory.getDiagram().getUniqueSequence());
-		if (entityFactory.namespaceSeparator.V1972())
-			code = ident;
-
-		this.code = Objects.requireNonNull(code);
 		this.entityFactory = entityFactory;
 		this.bodier = bodier;
-		this.parentContainer = parentContainer;
 		this.rawLayout = rawLayout;
 	}
 
-	EntityImpl(Ident ident, Code code, EntityFactory entityFactory, Bodier bodier, IGroup parentContainer,
-			LeafType leafType, String namespaceSeparator, int rawLayout) {
-		this(Objects.requireNonNull(ident), entityFactory, code, bodier, parentContainer, namespaceSeparator,
-				rawLayout);
+	EntityImp(Quark quark, ZEntityFactory entityFactory, Bodier bodier, LeafType leafType, int rawLayout) {
+		this(Objects.requireNonNull(quark), entityFactory, bodier, rawLayout);
 		// System.err.println("ID for leaf=" + code + " " + ident);
 		// ident.checkSameAs(code, namespaceSeparator);
 		this.leafType = leafType;
 	}
 
-	EntityImpl(Ident ident, Code code, EntityFactory entityFactory, Bodier bodier, IGroup parentContainer,
-			GroupType groupType, Code namespace, String namespaceSeparator, int rawLayout) {
-		this(Objects.requireNonNull(ident), entityFactory, code, bodier, parentContainer, namespaceSeparator,
-				rawLayout);
+	EntityImp(Quark quark, ZEntityFactory entityFactory, Bodier bodier, GroupType groupType, int rawLayout) {
+		this(Objects.requireNonNull(quark), entityFactory, bodier, rawLayout);
 		// System.err.println("ID for group=" + code + " " + ident);
-		ident.checkSameAs(code, namespaceSeparator, entityFactory.namespaceSeparator);
 		this.groupType = groupType;
-		this.namespace = namespace;
-	}
-
-	public void setContainer(IGroup container) {
-		checkNotGroup();
-		this.parentContainer = Objects.requireNonNull(container);
 	}
 
 	public LeafType getLeafType() {
@@ -229,22 +209,17 @@ final public class EntityImpl implements ILeaf, IGroup {
 		return true;
 	}
 
-	public Code getCode() {
-		return code;
+	public Quark getQuark() {
+		return quark;
 	}
 
 	public String getCodeGetName() {
-		return getCode().getName();
-	}
-
-	public Ident getIdent() {
-		return ident;
+		return getQuark().getName();
 	}
 
 	public Display getDisplay() {
-		if (intricated)
-			return entityFactory.getIntricatedDisplay(ident);
-
+//		if (intricated)
+//			return entityFactory.getIntricatedDisplay(ident);
 		return display;
 	}
 
@@ -264,20 +239,15 @@ final public class EntityImpl implements ILeaf, IGroup {
 		this.stereotype = stereotype;
 	}
 
-	public final IGroup getParentContainer() {
-		return entityFactory.getParentContainer(ident, parentContainer);
-		// Objects.requireNonNull(parentContainer);
-		// return parentContainer;
-	}
+//	public final IGroup getParentContainer() {
+//		return entityFactory.getParentContainer(ident, parentContainer);
+//		// Objects.requireNonNull(parentContainer);
+//		// return parentContainer;
+//	}
 
 	@Override
 	public String toString() {
-		// return super.toString() + code + " " + display + "(" + leafType + ")[" +
-		// groupType + "] " + xposition + " "
-		// + getUid();
-		if (entityFactory.namespaceSeparator.V1972())
-			return getUid() + " " + ident + " " + display + "(" + leafType + ")[" + groupType + "]";
-		return "EntityImpl " + code + ident + " " + display + "(" + leafType + ")[" + groupType + "] " + getUid();
+		return quark.toString() + " " + display + "(" + leafType + ")[" + groupType + "] " + getUid();
 	}
 
 	public final Url getUrl99() {
@@ -355,7 +325,7 @@ final public class EntityImpl implements ILeaf, IGroup {
 		if (leafType != LeafType.STATE)
 			return EntityPosition.NORMAL;
 
-		if (getParentContainer() instanceof GroupRoot)
+		if (quark.isRoot())
 			return EntityPosition.NORMAL;
 
 		final Stereotype stereotype = getStereotype();
@@ -380,148 +350,148 @@ final public class EntityImpl implements ILeaf, IGroup {
 
 	}
 
-	public boolean containsLeafRecurse(ILeaf leaf) {
-		if (Objects.requireNonNull(leaf).isGroup())
-			throw new IllegalArgumentException();
+//	public boolean containsLeafRecurse(ILeaf leaf) {
+//		if (Objects.requireNonNull(leaf).isGroup())
+//			throw new IllegalArgumentException();
+//
+//		checkGroup();
+//		if (leaf.getParentContainer() == this)
+//			return true;
+//
+//		for (IGroup child : getChildren())
+//			if (child.containsLeafRecurse(leaf))
+//				return true;
+//
+//		return false;
+//	}
 
-		checkGroup();
-		if (leaf.getParentContainer() == this)
-			return true;
+//	public Collection<ILeaf> getLeafsDirect() {
+//		checkGroup();
+//		final List<ILeaf> result = new ArrayList<>();
+//		for (ILeaf ent : entityFactory.leafs()) {
+//			if (ent.isGroup())
+//				throw new IllegalStateException();
+//
+//			if (ent.getParentContainer() == this)
+//				result.add(ent);
+//
+//		}
+//		return Collections.unmodifiableCollection(result);
+//	}
 
-		for (IGroup child : getChildren())
-			if (child.containsLeafRecurse(leaf))
-				return true;
+//	public Collection<IGroup> getChildren() {
+//		checkGroup();
+//		final Collection<IGroup> result = new ArrayList<>();
+//		for (IGroup g : entityFactory.groups())
+//			if (g != this && g.getParentContainer() == this)
+//				result.add(g);
+//
+//		return Collections.unmodifiableCollection(result);
+//	}
 
-		return false;
-	}
+//	public void moveEntitiesTo(IGroup dest) {
+//		if (entityFactory.namespaceSeparator.V1972()) {
+//			moveEntitiesTo1972(dest);
+//			return;
+//		}
+//		checkGroup();
+//		if (dest.isGroup() == false)
+//			throw new UnsupportedOperationException();
+//
+//		for (ILeaf ent : getLeafsDirect())
+//			((ZEntityImpl) ent).parentContainer = dest;
+//
+//		for (IGroup g : dest.getChildren())
+//			// ((EntityImpl) g).parentContainer = dest;
+//			throw new IllegalStateException();
+//
+//		for (IGroup g : getChildren()) {
+//			if (g == dest)
+//				continue;
+//
+//			((ZEntityImpl) g).parentContainer = dest;
+//		}
+//
+//	}
 
-	public Collection<ILeaf> getLeafsDirect() {
-		checkGroup();
-		final List<ILeaf> result = new ArrayList<>();
-		for (ILeaf ent : entityFactory.leafs()) {
-			if (ent.isGroup())
-				throw new IllegalStateException();
+//	private void moveEntitiesTo1972(IGroup dest) {
+//		checkGroup();
+//		if (dest.isGroup() == false)
+//			throw new UnsupportedOperationException();
+//
+//		// System.err.println("moveEntitiesTo1972::before1::groups2=" +
+//		// entityFactory.groups2());
+//		final Ident firstIdent = getIdent();
+//		final Ident destIdent = dest.getIdent();
+//		// System.err.println("moveEntitiesTo1972::this=" + firstIdent);
+//		// System.err.println("moveEntitiesTo1972::dest=" + destIdent);
+//		if (destIdent.startsWith(firstIdent) == false)
+//			throw new UnsupportedOperationException();
+//
+//		// System.err.println("moveEntitiesTo1972::before2::groups2=" +
+//		// entityFactory.groups2());
+//		for (ILeaf ent : new ArrayList<>(entityFactory.leafs2())) {
+//			Ident ident = ent.getIdent();
+//			if (ident.equals(firstIdent) == false && ident.startsWith(firstIdent)
+//					&& ident.startsWith(destIdent) == false) {
+//				// System.err.print("moving leaf ident1=" + ident);
+//				entityFactory.leafs2.remove(ident);
+//				ident = ident.move(firstIdent, destIdent);
+//				// System.err.println(" to ident2=" + ident);
+//				((ZEntityImpl) ent).ident = ident;
+//				((ZEntityImpl) ent).code = ident;
+//				entityFactory.leafs2.put(ident, ent);
+//			}
+//		}
+//		// System.err.println("moveEntitiesTo1972::before3::groups2=" +
+//		// entityFactory.groups2());
+//		for (IGroup ent : new ArrayList<>(entityFactory.groups2())) {
+//			Ident ident = ent.getIdent();
+//			// System.err.println("found=" + ident + " " + ident.startsWith(firstIdent) + "
+//			// "
+//			// + ident.startsWith(destIdent));
+//			if (ident.equals(firstIdent) == false && ident.startsWith(firstIdent)
+//					&& ident.startsWith(destIdent) == false) {
+//				// System.err.print("moving gr ident1=" + ident);
+//				entityFactory.groups2.remove(ident);
+//				ident = ident.move(firstIdent, destIdent);
+//				// System.err.println(" to ident2=" + ident);
+//				((ZEntityImpl) ent).ident = ident;
+//				((ZEntityImpl) ent).code = ident;
+//				entityFactory.groups2.put(ident, ent);
+//				// System.err.println("-->groups2=" + entityFactory.groups2());
+//			}
+//		}
+//		// System.err.println("moveEntitiesTo1972::after::groups2=" +
+//		// entityFactory.groups2());
+//		// for (IGroup g : dest.getChildren()) {
+//		// // ((EntityImpl) g).parentContainer = dest;
+//		// throw new IllegalStateException();
+//		// }
+//		//
+//		// for (IGroup g : getChildren()) {
+//		// if (g == dest) {
+//		// continue;
+//		// }
+//		// ((EntityImpl) g).parentContainer = dest;
+//		// }
+//
+//	}
 
-			if (ent.getParentContainer() == this)
-				result.add(ent);
-
-		}
-		return Collections.unmodifiableCollection(result);
-	}
-
-	public Collection<IGroup> getChildren() {
-		checkGroup();
-		final Collection<IGroup> result = new ArrayList<>();
-		for (IGroup g : entityFactory.groups())
-			if (g != this && g.getParentContainer() == this)
-				result.add(g);
-
-		return Collections.unmodifiableCollection(result);
-	}
-
-	public void moveEntitiesTo(IGroup dest) {
-		if (entityFactory.namespaceSeparator.V1972()) {
-			moveEntitiesTo1972(dest);
-			return;
-		}
-		checkGroup();
-		if (dest.isGroup() == false)
-			throw new UnsupportedOperationException();
-
-		for (ILeaf ent : getLeafsDirect())
-			((EntityImpl) ent).parentContainer = dest;
-
-		for (IGroup g : dest.getChildren())
-			// ((EntityImpl) g).parentContainer = dest;
-			throw new IllegalStateException();
-
-		for (IGroup g : getChildren()) {
-			if (g == dest)
-				continue;
-
-			((EntityImpl) g).parentContainer = dest;
-		}
-
-	}
-
-	private void moveEntitiesTo1972(IGroup dest) {
-		checkGroup();
-		if (dest.isGroup() == false)
-			throw new UnsupportedOperationException();
-
-		// System.err.println("moveEntitiesTo1972::before1::groups2=" +
-		// entityFactory.groups2());
-		final Ident firstIdent = getIdent();
-		final Ident destIdent = dest.getIdent();
-		// System.err.println("moveEntitiesTo1972::this=" + firstIdent);
-		// System.err.println("moveEntitiesTo1972::dest=" + destIdent);
-		if (destIdent.startsWith(firstIdent) == false)
-			throw new UnsupportedOperationException();
-
-		// System.err.println("moveEntitiesTo1972::before2::groups2=" +
-		// entityFactory.groups2());
-		for (ILeaf ent : new ArrayList<>(entityFactory.leafs2())) {
-			Ident ident = ent.getIdent();
-			if (ident.equals(firstIdent) == false && ident.startsWith(firstIdent)
-					&& ident.startsWith(destIdent) == false) {
-				// System.err.print("moving leaf ident1=" + ident);
-				entityFactory.leafs2.remove(ident);
-				ident = ident.move(firstIdent, destIdent);
-				// System.err.println(" to ident2=" + ident);
-				((EntityImpl) ent).ident = ident;
-				((EntityImpl) ent).code = ident;
-				entityFactory.leafs2.put(ident, ent);
-			}
-		}
-		// System.err.println("moveEntitiesTo1972::before3::groups2=" +
-		// entityFactory.groups2());
-		for (IGroup ent : new ArrayList<>(entityFactory.groups2())) {
-			Ident ident = ent.getIdent();
-			// System.err.println("found=" + ident + " " + ident.startsWith(firstIdent) + "
-			// "
-			// + ident.startsWith(destIdent));
-			if (ident.equals(firstIdent) == false && ident.startsWith(firstIdent)
-					&& ident.startsWith(destIdent) == false) {
-				// System.err.print("moving gr ident1=" + ident);
-				entityFactory.groups2.remove(ident);
-				ident = ident.move(firstIdent, destIdent);
-				// System.err.println(" to ident2=" + ident);
-				((EntityImpl) ent).ident = ident;
-				((EntityImpl) ent).code = ident;
-				entityFactory.groups2.put(ident, ent);
-				// System.err.println("-->groups2=" + entityFactory.groups2());
-			}
-		}
-		// System.err.println("moveEntitiesTo1972::after::groups2=" +
-		// entityFactory.groups2());
-		// for (IGroup g : dest.getChildren()) {
-		// // ((EntityImpl) g).parentContainer = dest;
-		// throw new IllegalStateException();
-		// }
-		//
-		// for (IGroup g : getChildren()) {
-		// if (g == dest) {
-		// continue;
-		// }
-		// ((EntityImpl) g).parentContainer = dest;
-		// }
-
-	}
-
-	public int size() {
-		checkGroup();
-		return getLeafsDirect().size();
-	}
+//	public int size() {
+//		checkGroup();
+//		return getLeafsDirect().size();
+//	}
 
 	public GroupType getGroupType() {
 		checkGroup();
 		return groupType;
 	}
 
-	public Code getNamespace() {
-		checkGroup();
-		return namespace;
-	}
+//	public Code getNamespace() {
+//		checkGroup();
+//		return namespace;
+//	}
 
 	public PackageStyle getPackageStyle() {
 		checkGroup();
@@ -556,34 +526,35 @@ final public class EntityImpl implements ILeaf, IGroup {
 			if (EntityUtils.isPureInnerLink12(this, link))
 				entityFactory.removeLink(link);
 
-		if (entityFactory.namespaceSeparator.V1972()) {
-			entityFactory.removeGroup(getIdent());
-			for (ILeaf ent : new ArrayList<>(entityFactory.leafs()))
-				if (this != ent && getIdent().equals(ent.getIdent().parent()))
-					entityFactory.removeLeaf(ent.getIdent());
-
-		} else {
-			entityFactory.removeGroup(getCodeGetName());
-			for (ILeaf ent : new ArrayList<>(entityFactory.leafs()))
-				if (this != ent && this == ent.getParentContainer())
-					entityFactory.removeLeaf(ent.getCodeGetName());
-		}
-
-		entityFactory.addLeaf(this);
-		this.groupType = null;
-		this.leafType = leafType;
+//		if (entityFactory.namespaceSeparator.V1972()) {
+//			entityFactory.removeGroup(getIdent());
+//			for (ILeaf ent : new ArrayList<>(entityFactory.leafs()))
+//				if (this != ent && getIdent().equals(ent.getIdent().parent()))
+//					entityFactory.removeLeaf(ent.getIdent());
+//
+//		} else {
+//			entityFactory.removeGroup(getCodeGetName());
+//			for (ILeaf ent : new ArrayList<>(entityFactory.leafs()))
+//				if (this != ent && this == ent.getParentContainer())
+//					entityFactory.removeLeaf(ent.getCodeGetName());
+//		}
+//
+//		entityFactory.addLeaf(this);
+//		this.groupType = null;
+//		this.leafType = leafType;
+		throw new UnsupportedOperationException("to be finished");
 	}
 
-	void muteToGroup(Code namespaceNew, GroupType groupType, IGroup parentContainer) {
-		checkNotGroup();
-		if (parentContainer.isGroup() == false)
-			throw new IllegalArgumentException();
-
-		this.namespace = namespaceNew;
-		this.groupType = groupType;
-		this.leafType = null;
-		this.parentContainer = parentContainer;
-	}
+//	void muteToGroup(Code namespaceNew, GroupType groupType, IGroup parentContainer) {
+//		checkNotGroup();
+//		if (parentContainer.isGroup() == false)
+//			throw new IllegalArgumentException();
+//
+//		this.namespace = namespaceNew;
+//		this.groupType = groupType;
+//		this.leafType = null;
+//		this.parentContainer = parentContainer;
+//	}
 
 	public USymbol getUSymbol() {
 		if (getLeafType() == LeafType.CIRCLE)
@@ -604,74 +575,77 @@ final public class EntityImpl implements ILeaf, IGroup {
 	}
 
 	public boolean isHidden() {
-		if (parentContainer != null && parentContainer.isHidden())
-			return true;
-
-		return isHiddenInternal();
+		return false;
+//		if (parentContainer != null && parentContainer.isHidden())
+//			return true;
+//
+//		return isHiddenInternal();
 	}
 
-	private boolean isHiddenInternal() {
-		if (isGroup()) {
-			if (entityFactory.isHidden(this))
-				return true;
-
-			if (getLeafsDirect().size() == 0)
-				return false;
-
-			for (ILeaf leaf : getLeafsDirect())
-				if (((EntityImpl) leaf).isHiddenInternal() == false)
-					return false;
-
-			for (IGroup g : getChildren())
-				if (((EntityImpl) g).isHiddenInternal() == false)
-					return false;
-
-			return true;
-		}
-		return entityFactory.isHidden(this);
-	}
+//	private boolean isHiddenInternal() {
+//		if (isGroup()) {
+//			if (entityFactory.isHidden(this))
+//				return true;
+//
+//			if (getLeafsDirect().size() == 0)
+//				return false;
+//
+//			for (ILeaf leaf : getLeafsDirect())
+//				if (((ZEntityImpl) leaf).isHiddenInternal() == false)
+//					return false;
+//
+//			for (IGroup g : getChildren())
+//				if (((ZEntityImpl) g).isHiddenInternal() == false)
+//					return false;
+//
+//			return true;
+//		}
+//		return entityFactory.isHidden(this);
+//	}
 
 	public boolean isRemoved() {
-		if (parentContainer != null && parentContainer.isRemoved())
-			return true;
-
-		return isRemovedInternal();
+		return false;
+//		if (parentContainer != null && parentContainer.isRemoved())
+//			return true;
+//
+//		return isRemovedInternal();
 	}
 
-	private boolean isRemovedInternal() {
-		if (isGroup()) {
-			if (entityFactory.isRemoved(this))
-				return true;
-
-			if (getLeafsDirect().size() == 0 && getChildren().size() == 0)
-				return false;
-
-			for (ILeaf leaf : getLeafsDirect())
-				if (((EntityImpl) leaf).isRemovedInternal() == false)
-					return false;
-
-			for (IGroup g : getChildren())
-				if (((EntityImpl) g).isRemovedInternal() == false)
-					return false;
-
-			return true;
-		}
-		return entityFactory.isRemoved(this);
-	}
+//	private boolean isRemovedInternal() {
+//		if (isGroup()) {
+//			if (entityFactory.isRemoved(this))
+//				return true;
+//
+//			if (getLeafsDirect().size() == 0 && getChildren().size() == 0)
+//				return false;
+//
+//			for (ILeaf leaf : getLeafsDirect())
+//				if (((ZEntityImpl) leaf).isRemovedInternal() == false)
+//					return false;
+//
+//			for (IGroup g : getChildren())
+//				if (((ZEntityImpl) g).isRemovedInternal() == false)
+//					return false;
+//
+//			return true;
+//		}
+//		return entityFactory.isRemoved(this);
+//	}
 
 	public boolean isAloneAndUnlinked() {
-		if (isGroup())
-			return false;
-
-		for (Link link : entityFactory.getLinks())
-			if (link.contains(this)) {
-				final ILeaf other = (ILeaf) link.getOther(this);
-				final boolean removed = entityFactory.isRemovedIgnoreUnlinked(other);
-				if (removed == false && link.getType().isInvisible() == false)
-					return false;
-			}
-
-		return true;
+		return false;
+//		if (isGroup())
+//			return false;
+//
+//		for (Link link : entityFactory.getLinks())
+//			if (link.contains(this)) {
+//				final ILeaf other = (ILeaf) link.getOther(this);
+//				final boolean removed = entityFactory.isRemovedIgnoreUnlinked(other);
+//				if (removed == false && link.getType().isInvisible() == false)
+//					return false;
+//			}
+//
+//		return true;
 	}
 
 	private FontParam getTitleFontParam() {
@@ -764,22 +738,22 @@ final public class EntityImpl implements ILeaf, IGroup {
 		return legend;
 	}
 
-	private boolean intricated;
+//	private boolean intricated;
+//
+//	public void setIntricated(boolean intricated) {
+//		this.intricated = intricated;
+//	}
 
-	public void setIntricated(boolean intricated) {
-		this.intricated = intricated;
-
-	}
-
-	private IGroup originalGroup;
-
-	public void setOriginalGroup(IGroup originalGroup) {
-		this.originalGroup = originalGroup;
-		this.legend = originalGroup.getLegend();
-	}
+//	private IGroup originalGroup;
+//
+//	public void setOriginalGroup(IGroup originalGroup) {
+//		this.originalGroup = originalGroup;
+//		this.legend = originalGroup.getLegend();
+//	}
 
 	public IGroup getOriginalGroup() {
-		return originalGroup;
+		throw new UnsupportedOperationException();
+		// return originalGroup;
 	}
 
 	private boolean together;
@@ -799,12 +773,12 @@ final public class EntityImpl implements ILeaf, IGroup {
 		this.codeLine = codeLine;
 	}
 
-	@Override
+	// @Override
 	public void setStereostyle(String stereo) {
 		this.stereostyles = Stereostyles.build(stereo);
 	}
 
-	@Override
+	// @Override
 	public Stereostyles getStereostyles() {
 		return stereostyles;
 	}
@@ -828,18 +802,18 @@ final public class EntityImpl implements ILeaf, IGroup {
 		return Collections.unmodifiableList(result);
 	}
 
-	public CucaDiagram getDiagram() {
+	public ICucaDiagram getDiagram() {
 		return entityFactory.getDiagram();
 	}
 
 	private boolean isStatic;
 
-	@Override
+	// @Override
 	public void setStatic(boolean isStatic) {
 		this.isStatic = isStatic;
 	}
 
-	@Override
+	// @Override
 	public boolean isStatic() {
 		return isStatic;
 	}
@@ -867,6 +841,56 @@ final public class EntityImpl implements ILeaf, IGroup {
 
 		return display.create(fontConfiguration, HorizontalAlignment.LEFT, skinParam);
 
+	}
+
+	@Override
+	public Code getCode() {
+		return quark;
+	}
+
+	@Override
+	public Ident getIdent() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public IGroup getParentContainer() {
+		return (IGroup) quark.getParent().getData();
+	}
+
+	@Override
+	public void setContainer(IGroup container) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public boolean containsLeafRecurse(ILeaf entity) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public Collection<ILeaf> getLeafsDirect() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public Collection<IGroup> getChildren() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void moveEntitiesTo(IGroup dest) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public int size() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public Code getNamespace() {
+		throw new UnsupportedOperationException();
 	}
 
 }

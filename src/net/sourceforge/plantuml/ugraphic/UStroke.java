@@ -42,6 +42,18 @@ public class UStroke implements UChange {
 	private final double thickness;
 
 	@Override
+	public int hashCode() {
+		return Double.hashCode(dashVisible) + Double.hashCode(dashSpace) + Double.hashCode(thickness);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		final UStroke other = (UStroke) obj;
+		return this.dashVisible == other.dashVisible && this.dashSpace == other.dashSpace
+				&& this.thickness == other.thickness;
+	}
+
+	@Override
 	public String toString() {
 		return "" + dashVisible + "-" + dashSpace + "-" + thickness;
 	}

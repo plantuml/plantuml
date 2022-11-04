@@ -42,13 +42,13 @@ import java.util.List;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.activitydiagram3.ftile.EntityImageLegend;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.baraye.a.EntityImp;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.DisplayPositioned;
 import net.sourceforge.plantuml.cucadiagram.EntityPortion;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
 import net.sourceforge.plantuml.cucadiagram.PortionShower;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
-import net.sourceforge.plantuml.cucadiagram.entity.EntityImpl;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -66,14 +66,14 @@ public final class ClusterHeader {
 	final private TextBlock title;
 	final private TextBlock stereo;
 
-	public ClusterHeader(EntityImpl g, ISkinParam skinParam, PortionShower portionShower, StringBounder stringBounder) {
+	public ClusterHeader(EntityImp g, ISkinParam skinParam, PortionShower portionShower, StringBounder stringBounder) {
 
 		this.title = getTitleBlock(g, skinParam);
 		this.stereo = getStereoBlock(g, skinParam, portionShower);
 		final TextBlock stereoAndTitle = TextBlockUtils.mergeTB(stereo, title, HorizontalAlignment.CENTER);
 		final XDimension2D dimLabel = stereoAndTitle.calculateDimension(stringBounder);
 		if (dimLabel.getWidth() > 0) {
-			final XDimension2D dimAttribute = ((EntityImpl) g).getStateHeader(skinParam)
+			final XDimension2D dimAttribute = ((EntityImp) g).getStateHeader(skinParam)
 					.calculateDimension(stringBounder);
 			final double attributeHeight = dimAttribute.getHeight();
 			final double attributeWidth = dimAttribute.getWidth();
@@ -105,7 +105,7 @@ public final class ClusterHeader {
 		return stereo;
 	}
 
-	private TextBlock getTitleBlock(EntityImpl g, ISkinParam skinParam) {
+	private TextBlock getTitleBlock(EntityImp g, ISkinParam skinParam) {
 		final Display label = g.getDisplay();
 		if (label == null)
 			return TextBlockUtils.empty(0, 0);
@@ -134,7 +134,7 @@ public final class ClusterHeader {
 		return label.create(fontConfiguration, alignment, skinParam);
 	}
 
-	private TextBlock getStereoBlock(EntityImpl g, ISkinParam skinParam, PortionShower portionShower) {
+	private TextBlock getStereoBlock(EntityImp g, ISkinParam skinParam, PortionShower portionShower) {
 		final TextBlock stereo = getStereoBlockWithoutLegend(g, portionShower, skinParam);
 		final DisplayPositioned legend = g.getLegend();
 		if (legend == null || legend.isNull())
@@ -145,7 +145,7 @@ public final class ClusterHeader {
 				legend.getVerticalAlignment());
 	}
 
-	private TextBlock getStereoBlockWithoutLegend(EntityImpl g, PortionShower portionShower, ISkinParam skinParam) {
+	private TextBlock getStereoBlockWithoutLegend(EntityImp g, PortionShower portionShower, ISkinParam skinParam) {
 		final Stereotype stereotype = g.getStereotype();
 		// final DisplayPositionned legend = g.getLegend();
 		if (stereotype == null)

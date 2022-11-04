@@ -50,9 +50,10 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
+import net.sourceforge.plantuml.baraye.a.EntityFactory;
+import net.sourceforge.plantuml.baraye.a.IGroup;
 import net.sourceforge.plantuml.command.Position;
-import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
-import net.sourceforge.plantuml.cucadiagram.IGroup;
+import net.sourceforge.plantuml.cucadiagram.ICucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.Rankdir;
 import net.sourceforge.plantuml.cucadiagram.dot.DotData;
 import net.sourceforge.plantuml.cucadiagram.dot.DotSplines;
@@ -61,7 +62,6 @@ import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizVersion;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizVersions;
 import net.sourceforge.plantuml.cucadiagram.dot.ProcessState;
-import net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.posimo.Moveable;
 import net.sourceforge.plantuml.security.SFile;
@@ -95,7 +95,7 @@ public class DotStringFactory implements Moveable {
 		this.current = root;
 	}
 
-	public DotStringFactory(StringBounder stringBounder, CucaDiagram diagram) {
+	public DotStringFactory(StringBounder stringBounder, ICucaDiagram diagram) {
 		this.skinParam = diagram.getSkinParam();
 		this.umlDiagramType = diagram.getUmlDiagramType();
 		this.dotMode = DotMode.NORMAL;

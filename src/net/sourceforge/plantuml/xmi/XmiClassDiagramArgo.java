@@ -39,8 +39,8 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Element;
 
+import net.sourceforge.plantuml.baraye.a.IEntity;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
-import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.Link;
 
 public class XmiClassDiagramArgo extends XmiClassDiagramAbstract implements XmlDiagramTransformer {

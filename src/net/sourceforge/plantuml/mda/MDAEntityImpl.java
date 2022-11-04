@@ -36,7 +36,7 @@
 package net.sourceforge.plantuml.mda;
 
 import net.sourceforge.plantuml.api.mda.option2.MDAEntity;
-import net.sourceforge.plantuml.cucadiagram.ILeaf;
+import net.sourceforge.plantuml.baraye.a.ILeaf;
 
 public class MDAEntityImpl implements MDAEntity {
 

@@ -38,6 +38,8 @@ package net.sourceforge.plantuml.cucadiagram;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import net.sourceforge.plantuml.baraye.a.IGroup;
+import net.sourceforge.plantuml.baraye.a.ILeaf;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SFile;
 

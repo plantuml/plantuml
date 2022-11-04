@@ -110,7 +110,7 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock, Styleable
 	private List<Swimlane> swimlanesSpecial() {
 		if (swimlanesSpecial.size() == 0) {
 			swimlanesSpecial.addAll(swimlanesRaw);
-			final Swimlane last = new Swimlane("");
+			final Swimlane last = new Swimlane("", Integer.MAX_VALUE);
 			last.setMinMax(MinMax.getEmpty(true));
 			swimlanesSpecial.add(last);
 		}
@@ -151,21 +151,20 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock, Styleable
 
 	public void swimlane(String name, HColor color, Display label) {
 		currentSwimlane = getOrCreate(name);
-		if (color != null) {
+		if (color != null)
 			currentSwimlane.setSpecificColorTOBEREMOVED(ColorType.BACK, color);
-		}
-		if (Display.isNull(label) == false) {
+
+		if (Display.isNull(label) == false)
 			currentSwimlane.setDisplay(label);
-		}
+
 	}
 
 	private Swimlane getOrCreate(String name) {
-		for (Swimlane s : swimlanes()) {
-			if (s.getName().equals(name)) {
+		for (Swimlane s : swimlanes())
+			if (s.getName().equals(name))
 				return s;
-			}
-		}
-		final Swimlane result = new Swimlane(name);
+
+		final Swimlane result = new Swimlane(name, swimlanesRaw.size());
 		swimlanesRaw.add(result);
 		return result;
 	}
@@ -186,9 +185,9 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock, Styleable
 				final Ftile tile1 = connection.getFtile1();
 				final Ftile tile2 = connection.getFtile2();
 
-				if (tile1 == null || tile2 == null) {
+				if (tile1 == null || tile2 == null)
 					return;
-				}
+
 				if (tile1.getSwimlaneOut() != tile2.getSwimlaneIn()) {
 					final ConnectionCross connectionCross = new ConnectionCross(connection);
 					connectionCross.drawU(getUg());
@@ -364,11 +363,10 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock, Styleable
 
 		double min = skinParam.swimlaneWidth();
 
-		if (min == ISkinParam.SWIMLANE_WIDTH_SAME) {
-			for (Swimlane swimlane : swimlanes()) {
+		if (min == ISkinParam.SWIMLANE_WIDTH_SAME)
+			for (Swimlane swimlane : swimlanes())
 				min = Math.max(min, getWidthWithoutTitle(swimlane));
-			}
-		}
+
 		final StringBounder stringBounder = ug.getStringBounder();
 
 		for (int i = 0; i < swimlanesSpecial().size(); i++) {
@@ -400,15 +398,15 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock, Styleable
 	}
 
 	public double getHalfMissingSpace(StringBounder stringBounder, int i, double min) {
-		if (i == 0 || i > swimlanesSpecial().size()) {
+		if (i == 0 || i > swimlanesSpecial().size())
 			return 5;
-		}
+
 		final Swimlane swimlane = swimlanesSpecial().get(i - 1);
 		final double swimlaneActualWidth = Math.max(min, getWidthWithoutTitle(swimlane));
 		final double titleWidth = getTitle(swimlane).calculateDimension(stringBounder).getWidth();
-		if (titleWidth <= swimlaneActualWidth) {
+		if (titleWidth <= swimlaneActualWidth)
 			return 5;
-		}
+
 		assert titleWidth > swimlaneActualWidth;
 		return Math.max(5, 5 + (titleWidth - swimlaneActualWidth) / 2);
 	}
@@ -445,9 +443,9 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock, Styleable
 
 	@Override
 	public MinMax getMinMax(StringBounder stringBounder) {
-		if (cachedMinMax == null) {
+		if (cachedMinMax == null)
 			cachedMinMax = TextBlockUtils.getMinMax(this, stringBounder, false);
-		}
+
 		return cachedMinMax;
 	}
 

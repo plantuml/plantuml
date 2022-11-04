@@ -38,9 +38,12 @@ package net.sourceforge.plantuml;
 import java.util.Collection;
 import java.util.Map;
 
+import net.sourceforge.plantuml.creole.CreoleMode;
+import net.sourceforge.plantuml.creole.SheetBuilder;
 import net.sourceforge.plantuml.cucadiagram.Rankdir;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.cucadiagram.dot.DotSplines;
+import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.skin.ActorStyle;
@@ -441,6 +444,18 @@ public class SkinParamDelegator implements ISkinParam {
 	@Override
 	public double getParamSameClassWidth() {
 		return skinParam.getParamSameClassWidth();
+	}
+
+	@Override
+	public SheetBuilder sheet(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
+			CreoleMode creoleMode) {
+		return skinParam.sheet(fontConfiguration, horizontalAlignment, creoleMode);
+	}
+
+	@Override
+	public SheetBuilder sheet(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
+			CreoleMode creoleMode, FontConfiguration stereo) {
+		return skinParam.sheet(fontConfiguration, horizontalAlignment, creoleMode, stereo);
 	}
 
 }

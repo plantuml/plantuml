@@ -55,15 +55,15 @@ import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
+import net.sourceforge.plantuml.baraye.a.EntityFactory;
+import net.sourceforge.plantuml.baraye.a.IEntity;
+import net.sourceforge.plantuml.baraye.a.IGroup;
+import net.sourceforge.plantuml.baraye.a.ILeaf;
 import net.sourceforge.plantuml.core.ImageData;
-import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
-import net.sourceforge.plantuml.cucadiagram.IEntity;
-import net.sourceforge.plantuml.cucadiagram.IGroup;
-import net.sourceforge.plantuml.cucadiagram.ILeaf;
+import net.sourceforge.plantuml.cucadiagram.ICucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.Link;
-import net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
 
 /*
  * You can choose between real "org.eclipse.elk..." classes or proxied "net.sourceforge.plantuml.elk.proxy..."
@@ -147,7 +147,7 @@ https://rtsys.informatik.uni-kiel.de/~biblio/downloads/theses/thw-bt.pdf
  */
 public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 
-	private final CucaDiagram diagram;
+	private final ICucaDiagram diagram;
 	private final StringBounder stringBounder;
 	private final DotStringFactory dotStringFactory;
 
@@ -155,7 +155,7 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 	private final Map<IGroup, ElkNode> clusters = new LinkedHashMap<IGroup, ElkNode>();
 	private final Map<Link, ElkEdge> edges = new LinkedHashMap<Link, ElkEdge>();
 
-	public CucaDiagramFileMakerElk(CucaDiagram diagram, StringBounder stringBounder) {
+	public CucaDiagramFileMakerElk(ICucaDiagram diagram, StringBounder stringBounder) {
 		this.diagram = diagram;
 		this.stringBounder = stringBounder;
 		this.dotStringFactory = new DotStringFactory(stringBounder, diagram);

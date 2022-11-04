@@ -110,10 +110,13 @@ public class EbnfExpression implements TextBlockable {
 				break;
 			} else if (ch == '\"') {
 				final String litteral = readString(it);
-				tokens.add(new Token(Symbol.TERMINAL_STRING1, litteral));
+				tokens.add(new Token(Symbol.TERMINAL_STRING1, protect(litteral)));
 			} else if (ch == '\'') {
 				final String litteral = readString(it);
-				tokens.add(new Token(Symbol.TERMINAL_STRING2, litteral));
+				tokens.add(new Token(Symbol.TERMINAL_STRING2, protect(litteral)));
+			} else if (ch == '?') {
+				final String litteral = readString(it);
+				tokens.add(new Token(Symbol.SPECIAL_SEQUENCE, protect(litteral)));
 			} else {
 				tokens.clear();
 				return;
@@ -121,6 +124,10 @@ public class EbnfExpression implements TextBlockable {
 			it.next();
 			continue;
 		}
+	}
+
+	private static String protect(final String litteral) {
+		return litteral.length() == 0 ? " " : litteral;
 	}
 
 	public TextBlock getUDrawable(ISkinParam skinParam) {
@@ -182,7 +189,7 @@ public class EbnfExpression implements TextBlockable {
 		while (it.hasNext()) {
 			final Token element = it.next();
 			if (element.getSymbol() == Symbol.TERMINAL_STRING1 || element.getSymbol() == Symbol.TERMINAL_STRING2
-					|| element.getSymbol() == Symbol.LITTERAL)
+					|| element.getSymbol() == Symbol.LITTERAL || element.getSymbol() == Symbol.SPECIAL_SEQUENCE)
 				engine.push(element);
 			else if (element.getSymbol() == Symbol.COMMENT_ABOVE)
 				engine.commentAbove(element.getData());

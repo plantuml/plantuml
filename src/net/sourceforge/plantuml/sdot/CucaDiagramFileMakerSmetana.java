@@ -69,16 +69,16 @@ import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
+import net.sourceforge.plantuml.baraye.a.EntityFactory;
+import net.sourceforge.plantuml.baraye.a.EntityImp;
+import net.sourceforge.plantuml.baraye.a.IEntity;
+import net.sourceforge.plantuml.baraye.a.IGroup;
+import net.sourceforge.plantuml.baraye.a.ILeaf;
 import net.sourceforge.plantuml.core.ImageData;
-import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
-import net.sourceforge.plantuml.cucadiagram.IEntity;
-import net.sourceforge.plantuml.cucadiagram.IGroup;
-import net.sourceforge.plantuml.cucadiagram.ILeaf;
+import net.sourceforge.plantuml.cucadiagram.ICucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.Link;
-import net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
-import net.sourceforge.plantuml.cucadiagram.entity.EntityImpl;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -109,7 +109,7 @@ import smetana.core.debug.SmetanaDebug;
 
 public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 
-	private final CucaDiagram diagram;
+	private final ICucaDiagram diagram;
 
 	private final StringBounder stringBounder;
 	private final Map<ILeaf, ST_Agnode_s> nodes = new LinkedHashMap<ILeaf, ST_Agnode_s>();
@@ -186,7 +186,7 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 
 	}
 
-	public CucaDiagramFileMakerSmetana(CucaDiagram diagram, StringBounder stringBounder) {
+	public CucaDiagramFileMakerSmetana(ICucaDiagram diagram, StringBounder stringBounder) {
 		this.diagram = diagram;
 		this.stringBounder = stringBounder;
 		this.dotStringFactory = new DotStringFactory(stringBounder, diagram);
@@ -250,7 +250,7 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 		if (g.getGroupType() == GroupType.CONCURRENT_STATE)
 			return;
 
-		final ClusterHeader clusterHeader = new ClusterHeader((EntityImpl) g, diagram.getSkinParam(), diagram,
+		final ClusterHeader clusterHeader = new ClusterHeader((EntityImp) g, diagram.getSkinParam(), diagram,
 				stringBounder);
 		dotStringFactory.openCluster(g, clusterHeader);
 		this.printEntities(g.getLeafsDirect());

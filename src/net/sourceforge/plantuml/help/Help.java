@@ -47,7 +47,6 @@ import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.creole.CreoleMode;
-import net.sourceforge.plantuml.creole.Parser;
 import net.sourceforge.plantuml.creole.Sheet;
 import net.sourceforge.plantuml.creole.SheetBlock1;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -80,7 +79,7 @@ public class Help extends UmlDiagram {
 		final Display display = Display.create(lines);
 		final UFont font = UFont.serif(16);
 		final FontConfiguration fontConfiguration = FontConfiguration.blackBlueTrue(font);
-		final Sheet sheet = Parser.build(fontConfiguration, HorizontalAlignment.LEFT, getSkinParam(), CreoleMode.FULL)
+		final Sheet sheet = getSkinParam().sheet(fontConfiguration, HorizontalAlignment.LEFT, CreoleMode.FULL)
 				.createSheet(display);
 		final SheetBlock1 sheetBlock = new SheetBlock1(sheet, LineBreakStrategy.NONE, 0);
 		return createImageBuilder(fileFormat).drawable(sheetBlock).write(os);

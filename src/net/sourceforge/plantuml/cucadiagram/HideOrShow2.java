@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.cucadiagram;
 
+import net.sourceforge.plantuml.baraye.a.ILeaf;
+
 public class HideOrShow2 {
 
 	private final String what;
@@ -50,7 +52,7 @@ public class HideOrShow2 {
 			return isApplyableTag(leaf, what.substring(1));
 
 		if (what.startsWith("<<") && what.endsWith(">>"))
-			return isApplyableStereotype(leaf, what.substring(2, what.length() - 2).trim());
+			return isApplyableStereotype(leaf.getStereotype(), what.substring(2, what.length() - 2).trim());
 
 		if (isAboutUnlinked())
 			return isApplyableUnlinked(leaf);
@@ -58,6 +60,12 @@ public class HideOrShow2 {
 		final String fullName = leaf.getCodeGetName();
 		// System.err.println("fullName=" + fullName);
 		return match(fullName, what);
+	}
+
+	private boolean isApplyable(Stereotype stereotype) {
+		if (what.startsWith("<<") && what.endsWith(">>"))
+			return isApplyableStereotype(stereotype, what.substring(2, what.length() - 2).trim());
+		return false;
 	}
 
 	public boolean isAboutUnlinked() {
@@ -71,8 +79,7 @@ public class HideOrShow2 {
 		return false;
 	}
 
-	private boolean isApplyableStereotype(ILeaf leaf, String pattern) {
-		final Stereotype stereotype = leaf.getStereotype();
+	private boolean isApplyableStereotype(Stereotype stereotype, String pattern) {
 		if (stereotype == null)
 			return false;
 
@@ -110,6 +117,13 @@ public class HideOrShow2 {
 
 	public boolean apply(boolean hidden, ILeaf leaf) {
 		if (isApplyable(leaf))
+			return !show;
+
+		return hidden;
+	}
+
+	public boolean apply(boolean hidden, Stereotype stereotype) {
+		if (isApplyable(stereotype))
 			return !show;
 
 		return hidden;

@@ -106,15 +106,15 @@ public enum SecurityProfile {
 	 */
 	static SecurityProfile init() {
 		final String env = SecurityUtils.getenv("PLANTUML_SECURITY_PROFILE");
-		if ("SANDBOX".equalsIgnoreCase(env)) {
+		if ("SANDBOX".equalsIgnoreCase(env))
 			return SANDBOX;
-		} else if ("ALLOWLIST".equalsIgnoreCase(env)) {
+		else if ("ALLOWLIST".equalsIgnoreCase(env))
 			return ALLOWLIST;
-		} else if ("INTERNET".equalsIgnoreCase(env)) {
+		else if ("INTERNET".equalsIgnoreCase(env))
 			return INTERNET;
-		} else if ("UNSECURE".equalsIgnoreCase(env)) {
+		else if ("UNSECURE".equalsIgnoreCase(env))
 			return UNSECURE;
-		}
+
 		return LEGACY;
 	}
 

@@ -73,6 +73,7 @@ public class SheetBlock1 extends AbstractTextBlock implements TextBlock, Atom, S
 	private final ClockwiseTopRightBottomLeft padding;
 	private final double marginX1;
 	private final double marginX2;
+	private Class<? extends StringBounder> lastCaller;
 
 	@HaxeIgnored
 	public SheetBlock1(Sheet sheet, LineBreakStrategy maxWidth, double padding) {
@@ -113,9 +114,10 @@ public class SheetBlock1 extends AbstractTextBlock implements TextBlock, Atom, S
 	}
 
 	private void initMap(StringBounder stringBounder) {
-		if (positions != null)
+		final Class<? extends StringBounder> currentCaller = stringBounder.getClass();
+		if (lastCaller == currentCaller)
 			return;
-
+		this.lastCaller = currentCaller;
 		stripes = new ArrayList<>();
 		for (Stripe stripe : sheet)
 			stripes.addAll(new Fission(stripe, maxWidth).getSplitted(stringBounder));
@@ -175,7 +177,7 @@ public class SheetBlock1 extends AbstractTextBlock implements TextBlock, Atom, S
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		initMap(stringBounder);
-		return XDimension2D.delta(minMax.getDimension(), padding.getBottom() + padding.getTop());
+		return minMax.getDimension().delta(padding.getBottom() + padding.getTop());
 	}
 
 	@Override

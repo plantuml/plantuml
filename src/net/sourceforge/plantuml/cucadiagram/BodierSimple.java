@@ -41,6 +41,7 @@ import java.util.List;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.baraye.a.ILeaf;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.TextBlock;

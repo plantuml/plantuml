@@ -77,7 +77,7 @@ public class GtileAssembly extends GtileTopDown {
 		final XDimension2D raw = super.calculateDimension(stringBounder);
 		final double textBlockWidth = textBlock.calculateDimension(stringBounder).getWidth();
 		final double pos1 = tile1.getCoord(GPoint.SOUTH_HOOK).compose(getPos1()).getDx();
-		return XDimension2D.atLeast(raw, pos1 + textBlockWidth, 0);
+		return raw.atLeast(pos1 + textBlockWidth, 0);
 	}
 
 	protected final TextBlock getTextBlock(Display display) {

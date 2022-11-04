@@ -197,7 +197,7 @@ public class TextBlockCucaJSon extends AbstractTextBlock implements WithPorts {
 			for (JsonValue element : array) {
 				final TextBlock tb = getTextBlockValue(element, arrayTotalWidth);
 				final XDimension2D dim = tb.calculateDimension(stringBounder);
-				result = XDimension2D.mergeTB(result, dim);
+				result = result.mergeTB(dim);
 			}
 			return result;
 		}

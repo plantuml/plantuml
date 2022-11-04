@@ -44,9 +44,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import net.sourceforge.plantuml.baraye.a.CucaDiagram;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.ImageData;
-import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 import net.sourceforge.plantuml.html.CucaDiagramHtmlMaker;
 import net.sourceforge.plantuml.png.PngSplitter;
 import net.sourceforge.plantuml.project.GanttDiagram;
@@ -169,19 +169,14 @@ public class PSystemUtils {
 		return maker.create();
 	}
 
-	private static List<FileImageData> splitPng(TitledDiagram diagram, SuggestedFile pngFile, ImageData imageData, FileFormatOption fileFormatOption)
-			throws IOException {
+	private static List<FileImageData> splitPng(TitledDiagram diagram, SuggestedFile pngFile, ImageData imageData,
+			FileFormatOption fileFormatOption) throws IOException {
 
-		final List<SFile> files = new PngSplitter(
-				pngFile,
-				diagram.getSplitPagesHorizontal(),
-				diagram.getSplitPagesVertical(),
-				fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null,
-				diagram.getSkinParam().getDpi(),
-				diagram instanceof GanttDiagram
-						? new SplitParam(HColors.BLACK, null, 5)  // for backwards compatibility
-						: diagram.getSkinParam().getSplitParam()
-		).getFiles();
+		final List<SFile> files = new PngSplitter(fileFormatOption.getColorMapper(), pngFile,
+				diagram.getSplitPagesHorizontal(), diagram.getSplitPagesVertical(),
+				fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null, diagram.getSkinParam().getDpi(),
+				diagram instanceof GanttDiagram ? new SplitParam(HColors.BLACK, null, 5) // for backwards compatibility
+						: diagram.getSkinParam().getSplitParam()).getFiles();
 
 		final List<FileImageData> result = new ArrayList<>();
 		for (SFile f : files) {

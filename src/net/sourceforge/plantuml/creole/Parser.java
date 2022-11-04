@@ -47,17 +47,6 @@ public class Parser {
 
 	public static final String MONOSPACED = "monospaced";
 
-	public static SheetBuilder build(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
-			ISkinSimple skinParam, CreoleMode creoleMode) {
-		final FontConfiguration stereotype = fontConfiguration.forceFont(null, null);
-		return new CreoleParser(fontConfiguration, horizontalAlignment, skinParam, creoleMode, stereotype);
-	}
-
-	public static SheetBuilder build(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
-			ISkinSimple skinParam, CreoleMode creoleMode, FontConfiguration stereotype) {
-		return new CreoleParser(fontConfiguration, horizontalAlignment, skinParam, creoleMode, stereotype);
-	}
-
 	public static boolean isLatexStart(String line) {
 		return line.equals("<latex>");
 	}
@@ -79,26 +68,26 @@ public class Parser {
 	}
 
 	public static double getScale(String s, double def) {
-		if (s == null) {
+		if (s == null)
 			return def;
-		}
+
 		final Pattern p = Pattern.compile("(?:scale=|\\*)([0-9.]+)");
 		final Matcher m = p.matcher(s);
-		if (m.find()) {
+		if (m.find())
 			return Double.parseDouble(m.group(1));
-		}
+
 		return def;
 	}
 
 	public static String getColor(String s) {
-		if (s == null) {
+		if (s == null)
 			return null;
-		}
+
 		final Pattern p = Pattern.compile("color[= :](#[0-9a-fA-F]{6}|\\w+)");
 		final Matcher m = p.matcher(s);
-		if (m.find()) {
+		if (m.find())
 			return m.group(1);
-		}
+
 		return null;
 	}
 

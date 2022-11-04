@@ -162,7 +162,7 @@ public class GtileIfHexagon extends GtileColumns {
 		if (branches.size() == 2) {
 			final XDimension2D shape1Dim = shape1.calculateDimension(stringBounder);
 			final double shape1max = this.positionShape1.getDx() + shape1Dim.getWidth();
-			return XDimension2D.atLeast(rawDim, shape1max, 0);
+			return rawDim.atLeast(shape1max, 0);
 
 		}
 		// return MathUtils.max(rawDim, shape1Dim);
@@ -173,7 +173,7 @@ public class GtileIfHexagon extends GtileColumns {
 		final double height2 = shape2.calculateDimension(stringBounder).getHeight();
 		final XDimension2D nude = super.calculateDimension(stringBounder);
 		// +30 to be done only when branches.size()==1 ?
-		return XDimension2D.delta(nude, 0, height2 + 30);
+		return nude.delta(0, height2 + 30);
 	}
 
 	final public StyleSignatureBasic getDefaultStyleDefinitionActivity() {

@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.svek.image;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
-import net.sourceforge.plantuml.cucadiagram.ILeaf;
+import net.sourceforge.plantuml.baraye.a.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -85,7 +85,7 @@ public class EntityImageActivity extends AbstractEntityImage {
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		final XDimension2D dim = desc.calculateDimension(stringBounder);
-		return XDimension2D.delta(dim, MARGIN * 2);
+		return dim.delta(MARGIN * 2);
 	}
 
 	final public void drawU(UGraphic ug) {

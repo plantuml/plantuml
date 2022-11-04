@@ -44,12 +44,12 @@ import net.sourceforge.plantuml.LineConfigurable;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.awt.geom.XRectangle2D;
+import net.sourceforge.plantuml.baraye.a.EntityImp;
+import net.sourceforge.plantuml.baraye.a.ILeaf;
 import net.sourceforge.plantuml.creole.Stencil;
 import net.sourceforge.plantuml.cucadiagram.EntityPortion;
-import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.PortionShower;
-import net.sourceforge.plantuml.cucadiagram.entity.EntityImpl;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -122,10 +122,10 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 	private double getKalWidth() {
 		double widthUp = 0;
 		double widthDown = 0;
-		for (Kal kal : ((EntityImpl) getEntity()).getKals(Direction.UP))
+		for (Kal kal : ((EntityImp) getEntity()).getKals(Direction.UP))
 			widthUp += kal.getDimension().getWidth();
 
-		for (Kal kal : ((EntityImpl) getEntity()).getKals(Direction.DOWN))
+		for (Kal kal : ((EntityImp) getEntity()).getKals(Direction.DOWN))
 			widthDown += kal.getDimension().getWidth();
 
 		return Math.max(widthUp, widthDown);

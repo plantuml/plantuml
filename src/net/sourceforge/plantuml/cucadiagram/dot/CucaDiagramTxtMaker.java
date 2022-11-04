@@ -50,10 +50,10 @@ import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
-import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
+import net.sourceforge.plantuml.baraye.a.IEntity;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.EntityPortion;
-import net.sourceforge.plantuml.cucadiagram.IEntity;
+import net.sourceforge.plantuml.cucadiagram.ICucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.PortionShower;
 import net.sourceforge.plantuml.posimo.Block;
@@ -86,7 +86,7 @@ public final class CucaDiagramTxtMaker {
 		return showMethods || showFields;
 	}
 
-	public CucaDiagramTxtMaker(CucaDiagram diagram, FileFormat fileFormat) throws IOException {
+	public CucaDiagramTxtMaker(ICucaDiagram diagram, FileFormat fileFormat) throws IOException {
 		this.fileFormat = fileFormat;
 		this.portionShower = diagram;
 

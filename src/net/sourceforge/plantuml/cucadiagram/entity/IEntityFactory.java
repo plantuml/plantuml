@@ -33,21 +33,17 @@
  * 
  *
  */
-package net.sourceforge.plantuml.cucadiagram;
+package net.sourceforge.plantuml.cucadiagram.entity;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Collection;
 
-public class SuperGroup {
+import net.sourceforge.plantuml.baraye.a.ILeaf;
+import net.sourceforge.plantuml.cucadiagram.Stereotype;
 
-	private final Set<IGroup> groups = new HashSet<>();
+public interface IEntityFactory {
 
-	public SuperGroup(IGroup g) {
-		this.groups.add(g);
-	}
+	public boolean isRemoved(Stereotype stereotype);
 
-	public IGroup getFirstGroup() {
-		return groups.iterator().next();
-	}
+	public Collection<ILeaf> leafs();
 
 }

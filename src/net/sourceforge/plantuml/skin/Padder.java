@@ -110,7 +110,7 @@ public class Padder {
 		}
 		return new AbstractTextBlock() {
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-				return XDimension2D.delta(orig.calculateDimension(stringBounder), 2 * (margin + padding));
+				return orig.calculateDimension(stringBounder).delta(2 * (margin + padding));
 			}
 
 			public void drawU(UGraphic ug) {
@@ -127,8 +127,7 @@ public class Padder {
 					ug2 = ug2.apply(backgroundColor.bg());
 				}
 				final XDimension2D originalDim = orig.calculateDimension(ug.getStringBounder());
-				final URectangle rect = new URectangle(XDimension2D.delta(originalDim, 2 * padding))
-						.rounded(roundCorner);
+				final URectangle rect = new URectangle(originalDim.delta(2 * padding)).rounded(roundCorner);
 				ug2.draw(rect);
 				orig.drawU(ug.apply(new UTranslate(padding, padding)));
 			}

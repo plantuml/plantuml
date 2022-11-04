@@ -38,7 +38,9 @@ package net.sourceforge.plantuml.cucadiagram;
 import java.util.ArrayList;
 import java.util.List;
 
-class MagmaList {
+import net.sourceforge.plantuml.baraye.a.IGroup;
+
+public class MagmaList {
 
 	private final List<Magma> all = new ArrayList<>();
 

@@ -42,11 +42,11 @@ import java.util.ListIterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.sourceforge.plantuml.EmbeddedDiagram;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.awt.geom.XRectangle2D;
+import net.sourceforge.plantuml.baraye.a.ILeaf;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.creole.Parser;
 import net.sourceforge.plantuml.creole.legacy.CreoleParser;
@@ -131,52 +131,50 @@ public class BodyEnhanced1 extends BodyEnhancedAbstract implements TextBlock, Wi
 		Display display = null;
 		for (ListIterator<CharSequence> it = rawBody2.iterator(); it.hasNext();) {
 			final CharSequence cs = it.next();
-			if (cs instanceof EmbeddedDiagram) {
+//			if (cs instanceof EmbeddedDiagram) {
+//				if (display == null)
+//					display = Display.empty();
+//				if (display.size() > 0 || separator != 0) {
+//					blocks.add(buildTextBlock(display, separator, title, stringBounder));
+//					separator = 0;
+//					title = null;
+//					display = null;
+//				}
+//				blocks.add(TextBlockUtils.withMargin(((EmbeddedDiagram) cs).asDraw(), 2, 2));
+//			} else {
+			final String s = cs.toString();
+			if (isBlockSeparator(s)) {
 				if (display == null)
 					display = Display.empty();
-				if (display.size() > 0 || separator != 0) {
-					blocks.add(buildTextBlock(display, separator, title, stringBounder));
-					separator = 0;
-					title = null;
-					display = null;
-				}
-				blocks.add(TextBlockUtils.withMargin(((EmbeddedDiagram) cs).asDraw(skinParam), 2, 2));
+				blocks.add(buildTextBlock(display, separator, title, stringBounder));
+				separator = s.charAt(0);
+				title = getTitle(s, skinParam);
+				display = null;
+			} else if (isTreeOrTable(s)) {
+				final boolean isTable = CreoleParser.isTableLine(s);
+				if (display == null)
+					display = Display.empty();
+				blocks.add(buildTextBlock(display, separator, title, stringBounder));
+
+				separator = 0;
+				title = null;
+				display = null;
+				final List<CharSequence> allTree = buildTreeOrTable(s, it);
+				final FontConfiguration fontConfiguration = style.getFontConfiguration(skinParam.getIHtmlColorSet());
+				TextBlock bloc = Display.create(allTree).create7(fontConfiguration, align, skinParam, CreoleMode.FULL);
+				if (isTable)
+					bloc = TextBlockUtils.withMargin(bloc, 10, 10, 0, 5);
+
+				blocks.add(bloc);
 			} else {
-				final String s = cs.toString();
-				if (isBlockSeparator(s)) {
-					if (display == null)
-						display = Display.empty();
-					blocks.add(buildTextBlock(display, separator, title, stringBounder));
-					separator = s.charAt(0);
-					title = getTitle(s, skinParam);
-					display = null;
-				} else if (isTreeOrTable(s)) {
-					final boolean isTable = CreoleParser.isTableLine(s);
-					if (display == null)
-						display = Display.empty();
-					blocks.add(buildTextBlock(display, separator, title, stringBounder));
+				if (display == null)
+					display = Display.empty();
+				display = display.add(cs);
+				if (cs instanceof Member && ((Member) cs).getUrl() != null)
+					urls.add(((Member) cs).getUrl());
 
-					separator = 0;
-					title = null;
-					display = null;
-					final List<CharSequence> allTree = buildTreeOrTable(s, it);
-					final FontConfiguration fontConfiguration = style
-							.getFontConfiguration(skinParam.getIHtmlColorSet());
-					TextBlock bloc = Display.create(allTree).create7(fontConfiguration, align, skinParam,
-							CreoleMode.FULL);
-					if (isTable)
-						bloc = TextBlockUtils.withMargin(bloc, 10, 10, 0, 5);
-
-					blocks.add(bloc);
-				} else {
-					if (display == null)
-						display = Display.empty();
-					display = display.add(cs);
-					if (cs instanceof Member && ((Member) cs).getUrl() != null)
-						urls.add(((Member) cs).getUrl());
-
-				}
 			}
+//			}
 		}
 
 		if (display == null)

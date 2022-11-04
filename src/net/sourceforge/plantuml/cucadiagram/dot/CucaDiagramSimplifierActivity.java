@@ -40,8 +40,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
-import net.sourceforge.plantuml.cucadiagram.IGroup;
+import net.sourceforge.plantuml.baraye.a.IGroup;
+import net.sourceforge.plantuml.cucadiagram.ICucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.svek.GroupPngMakerActivity;
@@ -49,10 +49,10 @@ import net.sourceforge.plantuml.svek.IEntityImage;
 
 public final class CucaDiagramSimplifierActivity {
 
-	private final CucaDiagram diagram;
+	private final ICucaDiagram diagram;
 	private final StringBounder stringBounder;
 
-	public CucaDiagramSimplifierActivity(CucaDiagram diagram, List<String> dotStrings, StringBounder stringBounder)
+	public CucaDiagramSimplifierActivity(ICucaDiagram diagram, List<String> dotStrings, StringBounder stringBounder)
 			throws IOException, InterruptedException {
 		this.diagram = diagram;
 		this.stringBounder = stringBounder;

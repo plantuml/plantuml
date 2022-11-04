@@ -92,13 +92,9 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 			ColorMapper colorMapper, boolean textAsPath, double scale, String linkTarget, String hover, long seed,
 			String preserveAspectRatio, StringBounder stringBounder, LengthAdjust lengthAdjust, boolean interactive) {
 		this(defaultBackground, minDim, colorMapper,
-				new SvgGraphics(defaultBackground.toSvg(colorMapper), svgDimensionStyle, minDim, scale, hover, seed,
+				new SvgGraphics(colorMapper, defaultBackground, svgDimensionStyle, minDim, scale, hover, seed,
 						preserveAspectRatio, lengthAdjust, interactive),
 				textAsPath, linkTarget, stringBounder, interactive);
-		if (defaultBackground instanceof HColorGradient) {
-			final SvgGraphics svg = getGraphicObject();
-			svg.paintBackcolorGradient(colorMapper, (HColorGradient) defaultBackground);
-		}
 	}
 
 	@Override

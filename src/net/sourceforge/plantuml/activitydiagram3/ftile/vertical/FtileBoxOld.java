@@ -50,7 +50,6 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.creole.CreoleMode;
-import net.sourceforge.plantuml.creole.Parser;
 import net.sourceforge.plantuml.creole.Sheet;
 import net.sourceforge.plantuml.creole.SheetBlock1;
 import net.sourceforge.plantuml.creole.SheetBlock2;
@@ -154,8 +153,7 @@ public class FtileBoxOld extends AbstractFtile {
 		this.boxStyle = boxStyle;
 		this.swimlane = swimlane;
 
-		this.inRendering = LinkRendering
-				.create(Rainbow.build(styleArrow, getIHtmlColorSet()));
+		this.inRendering = LinkRendering.create(Rainbow.build(styleArrow, getIHtmlColorSet()));
 		this.borderColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());
 		this.backColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
 		final FontConfiguration fc = style.getFontConfiguration(getIHtmlColorSet());
@@ -168,7 +166,7 @@ public class FtileBoxOld extends AbstractFtile {
 
 		// final HorizontalAlignment alignment =
 		// skinParam.getDefaultTextAlignment(horizontalAlignment);
-		final Sheet sheet = Parser.build(fc, horizontalAlignment, skinParam, CreoleMode.FULL).createSheet(label);
+		final Sheet sheet = skinParam.sheet(fc, horizontalAlignment, CreoleMode.FULL).createSheet(label);
 //		this.tb = new SheetBlock1(sheet, wrapWidth, 0, this.padding.getLeft(), this.padding.getRight());
 //		this.tb = new SheetBlock2(new SheetBlock1(sheet, wrapWidth, 0, this.padding.getLeft(), this.padding.getRight()),
 //				new MyStencil(), new UStroke(1));
@@ -233,7 +231,7 @@ public class FtileBoxOld extends AbstractFtile {
 		XDimension2D dimRaw = tb.calculateDimension(stringBounder);
 //		dimRaw = Dimension2DDouble.delta(dimRaw, padding.getLeft() + padding.getRight(),
 //				padding.getBottom() + padding.getTop());
-		dimRaw = XDimension2D.atLeast(dimRaw, minimumWidth, 0);
+		dimRaw = dimRaw.atLeast(minimumWidth, 0);
 		return new FtileGeometry(dimRaw.getWidth() + boxStyle.getShield(), dimRaw.getHeight(), dimRaw.getWidth() / 2, 0,
 				dimRaw.getHeight());
 	}

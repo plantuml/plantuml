@@ -61,10 +61,17 @@ abstract class FtileDiamondWIP extends AbstractFtile implements Styleable {
 
 	protected final TextBlock north;
 	protected final TextBlock south;
-	protected final TextBlock west;
-	protected final TextBlock east;
+	protected /* final */ TextBlock west;
+	protected /* final */ TextBlock east;
 
 	protected final double shadowing;
+
+	public void swapEastWest() {
+		final TextBlock tmp = this.west;
+		this.west = this.east;
+		this.east = tmp;
+
+	}
 
 	final public StyleSignatureBasic getStyleSignature() {
 		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond);

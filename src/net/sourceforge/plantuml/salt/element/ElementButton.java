@@ -56,8 +56,8 @@ public class ElementButton extends AbstractElementText implements Element {
 
 	public XDimension2D getPreferredDimension(StringBounder stringBounder, double x, double y) {
 		XDimension2D dim = getTextDimensionAt(stringBounder, x + stroke + marginX);
-		dim = XDimension2D.delta(dim, 2 * marginX, 2 * marginY);
-		return XDimension2D.delta(dim, 2 * stroke);
+		dim = dim.delta(2 * marginX, 2 * marginY);
+		return dim.delta(2 * stroke);
 	}
 
 	public void drawU(UGraphic ug, int zIndex, XDimension2D dimToUse) {

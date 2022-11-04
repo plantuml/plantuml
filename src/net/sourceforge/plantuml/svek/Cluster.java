@@ -54,16 +54,16 @@ import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
+import net.sourceforge.plantuml.baraye.a.EntityImp;
+import net.sourceforge.plantuml.baraye.a.IEntity;
+import net.sourceforge.plantuml.baraye.a.IGroup;
 import net.sourceforge.plantuml.command.Position;
-import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.CucaNote;
 import net.sourceforge.plantuml.cucadiagram.EntityPosition;
 import net.sourceforge.plantuml.cucadiagram.EntityUtils;
-import net.sourceforge.plantuml.cucadiagram.IEntity;
-import net.sourceforge.plantuml.cucadiagram.IGroup;
+import net.sourceforge.plantuml.cucadiagram.ICucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizVersion;
-import net.sourceforge.plantuml.cucadiagram.entity.EntityImpl;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.USymbol;
@@ -105,7 +105,7 @@ public class Cluster implements Moveable {
 	private final int colorNoteTop;
 	private final int colorNoteBottom;
 	private final ISkinParam skinParam;
-	protected final CucaDiagram diagram;
+	protected final ICucaDiagram diagram;
 
 	private ClusterHeader clusterHeader;
 
@@ -137,11 +137,11 @@ public class Cluster implements Moveable {
 		return Collections.unmodifiableSet(result);
 	}
 
-	public Cluster(CucaDiagram diagram, ColorSequence colorSequence, ISkinParam skinParam, IGroup root) {
+	public Cluster(ICucaDiagram diagram, ColorSequence colorSequence, ISkinParam skinParam, IGroup root) {
 		this(diagram, null, colorSequence, skinParam, root);
 	}
 
-	private Cluster(CucaDiagram diagram, Cluster parentCluster, ColorSequence colorSequence, ISkinParam skinParam,
+	private Cluster(ICucaDiagram diagram, Cluster parentCluster, ColorSequence colorSequence, ISkinParam skinParam,
 			IGroup group) {
 		if (group == null)
 			throw new IllegalStateException();
@@ -422,7 +422,7 @@ public class Cluster implements Moveable {
 		final HColor imgBackcolor = EntityImageStateCommon.getStyleStateBody(group, skinParam)
 				.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
 
-		final TextBlock attribute = ((EntityImpl) group).getStateHeader(skinParam);
+		final TextBlock attribute = ((EntityImp) group).getStateHeader(skinParam);
 		final double attributeHeight = attribute.calculateDimension(ug.getStringBounder()).getHeight();
 		if (total.getWidth() == 0) {
 			System.err.println("Cluster::drawUState issue");

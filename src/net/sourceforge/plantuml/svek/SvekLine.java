@@ -56,13 +56,14 @@ import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
+import net.sourceforge.plantuml.baraye.a.EntityImp;
+import net.sourceforge.plantuml.baraye.a.IEntity;
+import net.sourceforge.plantuml.baraye.a.IGroup;
 import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.CucaNote;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.EntityPort;
-import net.sourceforge.plantuml.cucadiagram.IEntity;
-import net.sourceforge.plantuml.cucadiagram.IGroup;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkArrow;
@@ -73,7 +74,6 @@ import net.sourceforge.plantuml.cucadiagram.NoteLinkStrategy;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.cucadiagram.dot.DotSplines;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizVersion;
-import net.sourceforge.plantuml.cucadiagram.entity.EntityImpl;
 import net.sourceforge.plantuml.descdiagram.command.StringWithArrow;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -216,17 +216,17 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 			FontConfiguration font, Bibliotekon bibliotekon, Pragma pragma, GraphvizVersion graphvizVersion) {
 
 		if (graphvizVersion.useShieldForQuantifier() && link.getLinkArg().getQuantifier1() != null)
-			((EntityImpl) link.getEntity1()).ensureMargins(Margins.uniform(16));
+			((EntityImp) link.getEntity1()).ensureMargins(Margins.uniform(16));
 
 		if (graphvizVersion.useShieldForQuantifier() && link.getLinkArg().getQuantifier2() != null)
-			((EntityImpl) link.getEntity2()).ensureMargins(Margins.uniform(16));
+			((EntityImp) link.getEntity2()).ensureMargins(Margins.uniform(16));
 
 		if (link.getLinkArg().getKal1() != null)
-			this.kal1 = new Kal(this, link.getLinkArg().getKal1(), font, skinParam, (EntityImpl) link.getEntity1(),
+			this.kal1 = new Kal(this, link.getLinkArg().getKal1(), font, skinParam, (EntityImp) link.getEntity1(),
 					link, stringBounder);
 
 		if (link.getLinkArg().getKal2() != null)
-			this.kal2 = new Kal(this, link.getLinkArg().getKal2(), font, skinParam, (EntityImpl) link.getEntity2(),
+			this.kal2 = new Kal(this, link.getLinkArg().getKal2(), font, skinParam, (EntityImp) link.getEntity2(),
 					link, stringBounder);
 
 		this.link = Objects.requireNonNull(link);
@@ -402,7 +402,7 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 				sb.append("label=<");
 			}
 			XDimension2D dimNote = hasNoteLabelText() ? labelText.calculateDimension(stringBounder) : CONSTRAINT_SPOT;
-			dimNote = XDimension2D.delta(dimNote, 2 * labelShield);
+			dimNote = dimNote.delta(2 * labelShield);
 
 			appendTable(sb, eventuallyDivideByTwo(dimNote), noteLabelColor, graphvizVersion);
 			sb.append(">");

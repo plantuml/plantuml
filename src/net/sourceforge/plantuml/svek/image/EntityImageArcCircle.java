@@ -39,8 +39,8 @@ import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.baraye.a.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -80,7 +80,7 @@ public class EntityImageArcCircle extends AbstractEntityImage {
 		final XDimension2D dimName = name.calculateDimension(stringBounder);
 		final XDimension2D dimStereo = getStereoDimension(stringBounder);
 		// final Dimension2D circle = new Dimension2DDouble(SIZE, SIZE);
-		return XDimension2D.mergeTB(dimStereo, dimName);
+		return dimStereo.mergeTB(dimName);
 	}
 
 	private XDimension2D getStereoDimension(StringBounder stringBounder) {

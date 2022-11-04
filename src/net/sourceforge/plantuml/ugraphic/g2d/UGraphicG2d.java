@@ -216,7 +216,7 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> implements EnsureV
 	@Override
 	public void writeToStream(OutputStream os, String metadata, int dpi) throws IOException {
 		final BufferedImage im = getBufferedImage();
-		PngIO.write(im, os, metadata, dpi);
+		PngIO.write(im, getColorMapper(), os, metadata, dpi);
 	}
 
 	@Override

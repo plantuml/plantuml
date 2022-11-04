@@ -73,11 +73,10 @@ public class InstructionSplit extends AbstractInstruction implements Instruction
 
 	@Override
 	public boolean containsBreak() {
-		for (InstructionList split : splits) {
-			if (split.containsBreak()) {
+		for (InstructionList split : splits)
+			if (split.containsBreak())
 				return true;
-			}
-		}
+
 		return false;
 	}
 
@@ -112,9 +111,9 @@ public class InstructionSplit extends AbstractInstruction implements Instruction
 	@Override
 	public Ftile createFtile(FtileFactory factory) {
 		final List<Ftile> all = new ArrayList<>();
-		for (InstructionList list : splits) {
+		for (InstructionList list : splits)
 			all.add(list.createFtile(factory));
-		}
+
 		return factory.createParallel(all, ForkStyle.SPLIT, null, swimlaneIn, swimlaneOut);
 	}
 
@@ -123,17 +122,17 @@ public class InstructionSplit extends AbstractInstruction implements Instruction
 	}
 
 	public void splitAgain(LinkRendering inlinkRendering) {
-		if (inlinkRendering != null) {
+		if (inlinkRendering != null)
 			getLast().setOutRendering(inlinkRendering);
-		}
+
 		final InstructionList list = new InstructionList(swimlaneIn);
 		this.splits.add(list);
 	}
 
 	public void endSplit(LinkRendering inlinkRendering, Swimlane endSwimlane) {
-		if (inlinkRendering != null) {
+		if (inlinkRendering != null)
 			getLast().setOutRendering(inlinkRendering);
-		}
+
 		this.swimlaneOut = endSwimlane;
 
 	}

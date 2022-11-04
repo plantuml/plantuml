@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.cucadiagram;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
+import net.sourceforge.plantuml.baraye.a.EntityFactory;
 
 public class CodeImpl implements Code {
 
@@ -49,9 +49,9 @@ public class CodeImpl implements Code {
 	}
 
 	public static Code of(String code) {
-		if (code == null) {
+		if (code == null)
 			EntityFactory.bigError();
-		}
+
 		return new CodeImpl(code);
 	}
 

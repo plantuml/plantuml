@@ -39,9 +39,9 @@ import java.util.Collections;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.baraye.a.IEntity;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -85,14 +85,13 @@ public class EntityImageState extends EntityImageStateCommon {
 	}
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-		final XDimension2D dim = XDimension2D.mergeTB(title.calculateDimension(stringBounder),
-				fields.calculateDimension(stringBounder));
+		final XDimension2D dim = title.calculateDimension(stringBounder).mergeTB(fields.calculateDimension(stringBounder));
 		double heightSymbol = 0;
 		if (withSymbol)
 			heightSymbol += 2 * smallRadius + smallMarginY;
 
-		final XDimension2D result = XDimension2D.delta(dim, MARGIN * 2 + 2 * MARGIN_LINE + heightSymbol);
-		return XDimension2D.atLeast(result, MIN_WIDTH, MIN_HEIGHT);
+		final XDimension2D result = dim.delta(MARGIN * 2 + 2 * MARGIN_LINE + heightSymbol);
+		return result.atLeast(MIN_WIDTH, MIN_HEIGHT);
 	}
 
 	final public void drawU(UGraphic ug) {

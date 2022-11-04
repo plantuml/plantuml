@@ -42,6 +42,7 @@ import java.io.ByteArrayInputStream;
 import java.math.BigInteger;
 
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.utils.MTRandom;
 
 public class DedicationCrypted implements Dedication {
@@ -110,7 +111,7 @@ public class DedicationCrypted implements Dedication {
 			Noise.shuffle(current, rndMT);
 			current = Noise.reverse(current, rndMT.nextInt());
 
-			final BufferedImage img = PSystemDedication.getBufferedImage(new ByteArrayInputStream(current));
+			final BufferedImage img = SFile.getBufferedImageFromWebpButHeader(new ByteArrayInputStream(current));
 			this.solution = line;
 			return img;
 		} catch (Throwable t) {

@@ -51,7 +51,7 @@ public class ElementTextField extends AbstractElementText implements Element {
 
 	public XDimension2D getPreferredDimension(StringBounder stringBounder, double x, double y) {
 		final XDimension2D dim = getTextDimensionAt(stringBounder, x);
-		return XDimension2D.delta(dim, 6, 2);
+		return dim.delta(6, 2);
 	}
 
 	public void drawU(UGraphic ug, int zIndex, XDimension2D dimToUse) {

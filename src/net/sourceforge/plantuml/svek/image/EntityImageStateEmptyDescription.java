@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.svek.image;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
-import net.sourceforge.plantuml.cucadiagram.IEntity;
+import net.sourceforge.plantuml.baraye.a.IEntity;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -55,8 +55,8 @@ public class EntityImageStateEmptyDescription extends EntityImageStateCommon {
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		final XDimension2D dim = title.calculateDimension(stringBounder);
-		final XDimension2D result = XDimension2D.delta(dim, MARGIN * 2);
-		return XDimension2D.atLeast(result, MIN_WIDTH, MIN_HEIGHT);
+		final XDimension2D result = dim.delta(MARGIN * 2);
+		return result.atLeast(MIN_WIDTH, MIN_HEIGHT);
 	}
 
 	final public void drawU(UGraphic ug) {

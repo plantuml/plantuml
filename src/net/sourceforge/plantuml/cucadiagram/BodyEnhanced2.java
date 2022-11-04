@@ -82,19 +82,18 @@ public class BodyEnhanced2 extends BodyEnhancedAbstract {
 		char separator = 0;
 		TextBlock title = null;
 		Display display = Display.empty();
-		for (CharSequence s : rawBody) {
+		for (CharSequence s : rawBody)
 			if (isBlockSeparator(s.toString())) {
 				blocks.add(decorate(getTextBlock(display), separator, title, stringBounder));
 				separator = s.charAt(0);
 				title = getTitle(s.toString(), skinParam);
 				display = Display.empty();
 			} else {
-				if (s instanceof String)
-					s = Guillemet.GUILLEMET.manageGuillemet(s.toString());
-
+				// if (s instanceof String)
+				// s = Guillemet.GUILLEMET.manageGuillemet(s.toString());
 				display = display.add(s);
 			}
-		}
+
 		blocks.add(decorate(getTextBlock(display), separator, title, stringBounder));
 
 		if (blocks.size() == 1)

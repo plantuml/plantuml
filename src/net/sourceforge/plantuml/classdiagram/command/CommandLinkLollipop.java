@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.classdiagram.command;
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
+import net.sourceforge.plantuml.baraye.a.IEntity;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.Matcher2;
@@ -50,7 +51,6 @@ import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
@@ -189,9 +189,9 @@ final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassO
 		}
 		final LinkArg linkArg = LinkArg.build(Display.getWithNewlines(labelLink), length,
 				diagram.getSkinParam().classAttributeIconSize() > 0);
-		final Link link = new Link(diagram.getSkinParam().getCurrentStyleBuilder(), cl1, cl2, linkType,
-				linkArg.withQuantifier(firstLabel, secondLabel).withDistanceAngle(diagram.getLabeldistance(),
-						diagram.getLabelangle()));
+		final Link link = new Link(diagram.getIEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(), cl1,
+				cl2, linkType, linkArg.withQuantifier(firstLabel, secondLabel)
+						.withDistanceAngle(diagram.getLabeldistance(), diagram.getLabelangle()));
 		diagram.resetPragmaLabel();
 		addLink(diagram, link, arg.get("HEADER", 0));
 

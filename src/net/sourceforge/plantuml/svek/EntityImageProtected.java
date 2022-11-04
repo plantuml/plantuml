@@ -74,7 +74,7 @@ public class EntityImageProtected extends AbstractTextBlock implements IEntityIm
 	}
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-		return XDimension2D.delta(orig.calculateDimension(stringBounder), 2 * border);
+		return orig.calculateDimension(stringBounder).delta(2 * border);
 	}
 
 	public void drawU(UGraphic ug) {

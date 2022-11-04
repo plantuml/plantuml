@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.cucadiagram;
 
+import net.sourceforge.plantuml.baraye.a.IEntity;
+
 public interface EntityGender {
 	public boolean contains(IEntity test);
 }

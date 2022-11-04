@@ -38,22 +38,20 @@ package net.sourceforge.plantuml.svek;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
+import net.sourceforge.plantuml.baraye.a.EntityImp;
+import net.sourceforge.plantuml.baraye.a.IGroup;
+import net.sourceforge.plantuml.baraye.a.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.EntityUtils;
 import net.sourceforge.plantuml.cucadiagram.GroupHierarchy;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
-import net.sourceforge.plantuml.cucadiagram.IGroup;
-import net.sourceforge.plantuml.cucadiagram.ILeaf;
+import net.sourceforge.plantuml.cucadiagram.ICucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
-import net.sourceforge.plantuml.cucadiagram.SuperGroup;
 import net.sourceforge.plantuml.cucadiagram.dot.DotData;
-import net.sourceforge.plantuml.cucadiagram.entity.EntityImpl;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -69,21 +67,13 @@ import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public final class GroupPngMakerState {
 
-	private final CucaDiagram diagram;
+	private final ICucaDiagram diagram;
 	private final IGroup group;
 	private final StringBounder stringBounder;
 
 	class InnerGroupHierarchy implements GroupHierarchy {
 
-		public Set<SuperGroup> getAllSuperGroups() {
-			throw new UnsupportedOperationException();
-		}
-
 		public IGroup getRootGroup() {
-			throw new UnsupportedOperationException();
-		}
-
-		public SuperGroup getRootSuperGroup() {
 			throw new UnsupportedOperationException();
 		}
 
@@ -100,7 +90,7 @@ public final class GroupPngMakerState {
 
 	}
 
-	public GroupPngMakerState(CucaDiagram diagram, IGroup group, StringBounder stringBounder) {
+	public GroupPngMakerState(ICucaDiagram diagram, IGroup group, StringBounder stringBounder) {
 		this.diagram = diagram;
 		this.stringBounder = stringBounder;
 		this.group = group;
@@ -166,7 +156,7 @@ public final class GroupPngMakerState {
 		if (stroke == null)
 			stroke = style.getStroke();
 
-		final TextBlock attribute = ((EntityImpl) group).getStateHeader(skinParam);
+		final TextBlock attribute = ((EntityImp) group).getStateHeader(skinParam);
 
 		final Stereotype stereotype = group.getStereotype();
 		final boolean withSymbol = stereotype != null && stereotype.isWithOOSymbol();

@@ -70,6 +70,44 @@ public class FontConfiguration {
 
 	public String toStringDebug() {
 		return getFont().toStringDebug() + " " + styles.toString();
+//		return "" + currentFont + " " + styles.toString() + currentColor + extendedColor + hyperlinkColor
+//				+ hyperlinkUnderlineStroke + fontPosition + tabSize;
+	}
+
+	@Override
+	public int hashCode() {
+		return currentFont.hashCode()//
+				+ styles.hashCode() //
+				+ currentColor.hashCode()//
+				+ hashCode(extendedColor)//
+				+ hyperlinkColor.hashCode()//
+				+ hashCode(hyperlinkUnderlineStroke)//
+				+ fontPosition.hashCode() //
+				+ tabSize;
+	}
+
+	private int hashCode(Object obj) {
+		if (obj == null)
+			return 43;
+		return obj.hashCode();
+	}
+
+	private boolean same(Object obj1, Object obj2) {
+		if (obj1 == null && obj2 == null)
+			return true;
+		if (obj1 != null && obj2 != null)
+			return obj1.equals(obj2);
+		return false;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		final FontConfiguration other = (FontConfiguration) obj;
+		return currentFont.equals(other.currentFont) && styles.equals(other.styles)
+				&& currentColor.equals(other.currentColor) && same(extendedColor, other.extendedColor)
+				&& hyperlinkColor.equals(other.hyperlinkColor)
+				&& same(hyperlinkUnderlineStroke, other.hyperlinkUnderlineStroke)
+				&& fontPosition.equals(other.fontPosition) && tabSize == other.tabSize;
 	}
 
 	public static FontConfiguration create(UFont font, HColor color, HColor hyperlinkColor,

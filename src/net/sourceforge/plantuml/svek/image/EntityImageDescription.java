@@ -47,11 +47,11 @@ import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.baraye.a.IEntity;
+import net.sourceforge.plantuml.baraye.a.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.BodyFactory;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.EntityPortion;
-import net.sourceforge.plantuml.cucadiagram.IEntity;
-import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.PortionShower;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
@@ -162,7 +162,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 				diagonalCorner);
 
 		final Display codeDisplay = Display.getWithNewlines(entity.getCodeGetName());
-		if ((entity.getDisplay().equals(codeDisplay) && symbol.getSName() == SName.package_)
+		if ((entity.getDisplay().equalsLike(codeDisplay) && symbol.getSName() == SName.package_)
 				|| entity.getDisplay().isWhite())
 			desc = TextBlockUtils.empty(style.value(PName.MinimumWidth).asDouble(), 0);
 		else

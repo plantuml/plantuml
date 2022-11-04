@@ -42,10 +42,10 @@ import net.sourceforge.plantuml.Hideable;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
+import net.sourceforge.plantuml.baraye.a.EntityImp;
+import net.sourceforge.plantuml.baraye.a.IGroup;
+import net.sourceforge.plantuml.baraye.a.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.EntityPosition;
-import net.sourceforge.plantuml.cucadiagram.IGroup;
-import net.sourceforge.plantuml.cucadiagram.ILeaf;
-import net.sourceforge.plantuml.cucadiagram.entity.EntityImpl;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.posimo.Positionable;
 import net.sourceforge.plantuml.svek.image.EntityImageDescription;
@@ -103,11 +103,11 @@ public class SvekNode implements Positionable, Hideable {
 		this.color = colorSequence.getValue();
 		this.uid = String.format("sh%04d", color);
 
-		if (((EntityImpl) ent).getOriginalGroup() == null) {
+		if (((EntityImp) ent).getOriginalGroup() == null) {
 			this.group = null;
 			this.leaf = ent;
 		} else {
-			this.group = ((EntityImpl) ent).getOriginalGroup();
+			this.group = ((EntityImp) ent).getOriginalGroup();
 			this.leaf = null;
 		}
 	}
@@ -426,22 +426,22 @@ public class SvekNode implements Positionable, Hideable {
 	}
 
 	public void drawKals(UGraphic ug) {
-		if (leaf instanceof EntityImpl == false)
+		if (leaf instanceof EntityImp == false)
 			return;
 
-		drawList(ug, ((EntityImpl) leaf).getKals(Direction.DOWN));
-		drawList(ug, ((EntityImpl) leaf).getKals(Direction.UP));
-		drawList(ug, ((EntityImpl) leaf).getKals(Direction.LEFT));
-		drawList(ug, ((EntityImpl) leaf).getKals(Direction.RIGHT));
+		drawList(ug, ((EntityImp) leaf).getKals(Direction.DOWN));
+		drawList(ug, ((EntityImp) leaf).getKals(Direction.UP));
+		drawList(ug, ((EntityImp) leaf).getKals(Direction.LEFT));
+		drawList(ug, ((EntityImp) leaf).getKals(Direction.RIGHT));
 
 	}
 
 	public void fixOverlap() {
-		if (leaf instanceof EntityImpl == false)
+		if (leaf instanceof EntityImp == false)
 			return;
 
-		fixHoverlap(((EntityImpl) leaf).getKals(Direction.DOWN));
-		fixHoverlap(((EntityImpl) leaf).getKals(Direction.UP));
+		fixHoverlap(((EntityImp) leaf).getKals(Direction.DOWN));
+		fixHoverlap(((EntityImp) leaf).getKals(Direction.UP));
 	}
 
 	private void fixHoverlap(final List<Kal> list) {

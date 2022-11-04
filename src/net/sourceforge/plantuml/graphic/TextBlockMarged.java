@@ -70,7 +70,7 @@ class TextBlockMarged extends AbstractTextBlock implements TextBlock, WithPorts 
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		final XDimension2D dim = textBlock.calculateDimension(stringBounder);
-		return XDimension2D.delta(dim, left + right, top + bottom);
+		return dim.delta(left + right, top + bottom);
 	}
 
 	public void drawU(UGraphic ug) {

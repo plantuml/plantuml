@@ -138,7 +138,7 @@ public final class SvekResult extends AbstractTextBlock implements IEntityImage 
 			minMax = TextBlockUtils.getMinMax(this, stringBounder, false);
 			dotStringFactory.moveSvek(6 - minMax.getMinX(), 6 - minMax.getMinY());
 		}
-		return XDimension2D.delta(minMax.getDimension(), 0, 12);
+		return minMax.getDimension().delta(0, 12);
 	}
 
 	public ShapeType getShapeType() {

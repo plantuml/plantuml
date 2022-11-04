@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.NamedOutputStream;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.core.ImageData;
-import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
+import net.sourceforge.plantuml.cucadiagram.ICucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.dot.CucaDiagramSimplifierActivity;
 import net.sourceforge.plantuml.cucadiagram.dot.CucaDiagramSimplifierState;
@@ -57,9 +57,9 @@ import net.sourceforge.plantuml.log.Logme;
 
 public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 
-	private final CucaDiagram diagram;
+	private final ICucaDiagram diagram;
 
-	public CucaDiagramFileMakerSvek(CucaDiagram diagram) throws IOException {
+	public CucaDiagramFileMakerSvek(ICucaDiagram diagram) throws IOException {
 		this.diagram = diagram;
 	}
 

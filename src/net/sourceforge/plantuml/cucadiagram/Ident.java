@@ -40,7 +40,8 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
+import net.sourceforge.plantuml.baraye.a.CucaDiagram;
+import net.sourceforge.plantuml.baraye.a.EntityFactory;
 
 public class Ident implements Code {
 
@@ -56,23 +57,22 @@ public class Ident implements Code {
 	}
 
 	public boolean startsWith(Ident other) {
-		if (other.parts.size() > this.parts.size()) {
+		if (other.parts.size() > this.parts.size())
 			return false;
-		}
-		for (int i = 0; i < other.parts.size(); i++) {
-			if (other.parts.get(i).equals(this.parts.get(i)) == false) {
+
+		for (int i = 0; i < other.parts.size(); i++)
+			if (other.parts.get(i).equals(this.parts.get(i)) == false)
 				return false;
-			}
-		}
+
 		return true;
 	}
 
 	public String forXmi() {
 		final StringBuilder sb = new StringBuilder();
 		for (String s : parts) {
-			if (sb.length() > 0) {
+			if (sb.length() > 0)
 				sb.append(".");
-			}
+
 			sb.append(s);
 		}
 		return sb.toString();

@@ -42,10 +42,15 @@ import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.Removeable;
+import net.sourceforge.plantuml.SpecificBackcolorable;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
-import net.sourceforge.plantuml.cucadiagram.entity.EntityImpl;
+import net.sourceforge.plantuml.baraye.a.EntityImp;
+import net.sourceforge.plantuml.baraye.a.IEntity;
+import net.sourceforge.plantuml.baraye.a.IGroup;
+import net.sourceforge.plantuml.baraye.a.ILeaf;
+import net.sourceforge.plantuml.cucadiagram.entity.IEntityFactory;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -87,6 +92,7 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 	private String sametail;
 	private final StyleBuilder styleBuilder;
 	private Stereotype stereotype;
+	private final IEntityFactory entityFactory;
 
 	private Url url;
 
@@ -108,16 +114,18 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 		return new UComment("link " + getEntity1().getCodeGetName() + " to " + getEntity2().getCodeGetName());
 	}
 
-	public Link(StyleBuilder styleBuilder, IEntity cl1, IEntity cl2, LinkType type, LinkArg linkArg) {
+	public Link(IEntityFactory entityFactory, StyleBuilder styleBuilder, IEntity cl1, IEntity cl2, LinkType type,
+			LinkArg linkArg) {
 		if (linkArg.getLength() < 1)
 			throw new IllegalArgumentException();
 
+		this.entityFactory = entityFactory;
 		this.styleBuilder = styleBuilder;
 		this.cl1 = Objects.requireNonNull(cl1);
 		this.cl2 = Objects.requireNonNull(cl2);
 
 		this.type = type;
-		final CucaDiagram diagram = ((EntityImpl) cl1).getDiagram();
+		final ICucaDiagram diagram = ((EntityImp) cl1).getDiagram();
 		this.uid = "LNK" + diagram.getUniqueSequence();
 
 		this.linkArg = linkArg;
@@ -129,7 +137,7 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 	}
 
 	public Link getInv() {
-		final Link result = new Link(styleBuilder, cl2, cl1, getType().getInversed(), linkArg.getInv());
+		final Link result = new Link(entityFactory, styleBuilder, cl2, cl1, getType().getInversed(), linkArg.getInv());
 		result.inverted = !this.inverted;
 		result.port1 = this.port2;
 		result.port2 = this.port1;
@@ -183,6 +191,14 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 	@Override
 	public String toString() {
 		return super.toString() + " {" + linkArg.getLength() + "} " + cl1 + "-->" + cl2;
+	}
+
+	public SpecificBackcolorable getZEntity1() {
+		return cl1;
+	}
+
+	public SpecificBackcolorable getZEntity2() {
+		return cl2;
 	}
 
 	public IEntity getEntity1() {
@@ -339,9 +355,9 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 	static private boolean isSame(IEntity a, IEntity b) {
 		if (a == b)
 			return true;
-		if (((EntityImpl) a).getOriginalGroup() == b)
+		if (((EntityImp) a).getOriginalGroup() == b)
 			return true;
-		if (((EntityImpl) b).getOriginalGroup() == a)
+		if (((EntityImp) b).getOriginalGroup() == a)
 			return true;
 		return false;
 	}
@@ -469,6 +485,10 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 	}
 
 	public boolean isRemoved() {
+		final Stereotype stereotype = getStereotype();
+		if (stereotype != null && entityFactory.isRemoved(stereotype))
+			return true;
+
 		return cl1.isRemoved() || cl2.isRemoved();
 	}
 

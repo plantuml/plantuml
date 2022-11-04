@@ -53,7 +53,7 @@ class SimpleTextBlockBordered extends AbstractTextBlock implements TextBlock {
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		final XDimension2D dim = textBlock.calculateDimension(stringBounder);
-		return XDimension2D.delta(dim, 1, 1);
+		return dim.delta(1, 1);
 	}
 
 	public void drawU(UGraphic ug) {
