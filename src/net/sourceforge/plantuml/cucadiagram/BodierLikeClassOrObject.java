@@ -44,7 +44,7 @@ import java.util.Set;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UrlBuilder;
-import net.sourceforge.plantuml.baraye.a.ILeaf;
+import net.sourceforge.plantuml.baraye.ILeaf;
 import net.sourceforge.plantuml.creole.Parser;
 import net.sourceforge.plantuml.creole.legacy.CreoleParser;
 import net.sourceforge.plantuml.graphic.FontConfiguration;

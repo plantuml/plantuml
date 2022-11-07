@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlMode;
-import net.sourceforge.plantuml.baraye.a.IEntity;
+import net.sourceforge.plantuml.baraye.IEntity;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
@@ -168,8 +168,8 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		if (ent2String == null)
 			return executeArgSpecial2(diagram, arg);
 
-		Ident ident1 = diagram.buildLeafIdentSpecial(ent1String);
-		Ident ident2 = diagram.buildLeafIdentSpecial(ent2String);
+		Ident ident1 = diagram.buildLeafIdentSpecial2(ent1String);
+		Ident ident2 = diagram.buildLeafIdentSpecial2(ent2String);
 		Ident ident1pure = Ident.empty().add(ent1String, diagram.getNamespaceSeparator());
 		Ident ident2pure = Ident.empty().add(ent2String, diagram.getNamespaceSeparator());
 		Code code1 = diagram.V1972() ? ident1 : diagram.buildCode(ent1String);

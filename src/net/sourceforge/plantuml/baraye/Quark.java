@@ -39,26 +39,40 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.cucadiagram.Code;
+import net.sourceforge.plantuml.cucadiagram.Ident;
 
-public class Quark implements Code {
+public class Quark extends Ident implements Code {
 
 	private final Plasma plasma;
-	private final List<String> parts;
+	private /* final */ Quark parent;
+	// private final List<String> parts;
 	private Object data;
 
-	Quark(Plasma plasma, List<String> parts) {
+	Quark(Plasma plasma, Quark parent, List<String> parts) {
+		super(new ArrayList<String>(parts));
 		this.plasma = plasma;
-		this.parts = new ArrayList<String>(parts);
+		this.parent = parent;
+		if (parent == null) {
+			if (parts.size() != 0)
+				throw new IllegalStateException();
+		} else {
+			if (parent.parts.equals(parts.subList(0, parts.size() - 1)) == false)
+				throw new IllegalStateException();
+
+		}
+		// this.parts = new ArrayList<String>(parts);
 	}
 
 	public Quark getParent() {
-		if (parts.size() == 0)
-			return null;
-		return plasma.ensurePresent(parts.subList(0, parts.size() - 1));
+		return parent;
+//		if (parts.size() == 0)
+//			return null;
+//		return plasma.ensurePresent(parts.subList(0, parts.size() - 1));
 	}
 
 	@Override
 	public String toString() {
+		// return parts.toString() + "(parent=" + parent + ")";
 		return parts.toString();
 	}
 
@@ -119,6 +133,10 @@ public class Quark implements Code {
 		return parts.size() == 0;
 	}
 
+	public int getDepth() {
+		return parts.size();
+	}
+
 //	public int size() {
 //		return parts.size();
 //	}
@@ -136,8 +154,41 @@ public class Quark implements Code {
 	}
 
 	@Override
-	public Code eventuallyRemoveStartingAndEndingDoubleQuote(String format) {
-		throw new UnsupportedOperationException();
+	public Ident eventuallyRemoveStartingAndEndingDoubleQuote(String format) {
+		return this;
+		// throw new UnsupportedOperationException();
+	}
+
+	public Quark childIfExists(String name) {
+		final List<String> sig = new ArrayList<>(getSignature());
+		sig.add(name);
+		return plasma.getIfExists(sig);
+	}
+
+	public Quark child(String name) {
+		return plasma.parse(this, name);
+	}
+
+	public int countChildren() {
+		return plasma.countChildren(this);
+	}
+
+	public List<Quark> getChildren() {
+		return plasma.getChildren(this);
+	}
+
+	public void moveTo(Quark dest) {
+		plasma.moveAllTo(this, dest);
+	}
+
+	public void internalMove(Quark src, Quark dest) {
+		if (src.getDepth() + 1 != dest.getDepth())
+			throw new UnsupportedOperationException("to be finished");
+		final String name = getName();
+		parts.clear();
+		parts.addAll(dest.getSignature());
+		parts.add(name);
+		this.parent = dest;
 	}
 
 }

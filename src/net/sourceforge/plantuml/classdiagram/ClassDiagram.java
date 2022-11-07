@@ -42,14 +42,14 @@ import java.util.Objects;
 
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.UmlDiagramType;
-import net.sourceforge.plantuml.baraye.a.IGroup;
-import net.sourceforge.plantuml.baraye.a.ILeaf;
+import net.sourceforge.plantuml.baraye.EntityUtils;
+import net.sourceforge.plantuml.baraye.IGroup;
+import net.sourceforge.plantuml.baraye.ILeaf;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.cucadiagram.EntityUtils;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
 import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;

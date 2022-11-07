@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.cucadiagram;
 
 import java.util.Collection;
 
-import net.sourceforge.plantuml.baraye.a.IGroup;
+import net.sourceforge.plantuml.baraye.IGroup;
 
 public interface GroupHierarchy {
 

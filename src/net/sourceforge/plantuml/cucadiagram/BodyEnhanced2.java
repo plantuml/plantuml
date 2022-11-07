@@ -36,11 +36,13 @@
 package net.sourceforge.plantuml.cucadiagram;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.plantuml.Guillemet;
+import net.sourceforge.plantuml.EmbeddedDiagram;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.LineBreakStrategy;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -82,8 +84,14 @@ public class BodyEnhanced2 extends BodyEnhancedAbstract {
 		char separator = 0;
 		TextBlock title = null;
 		Display display = Display.empty();
-		for (CharSequence s : rawBody)
-			if (isBlockSeparator(s.toString())) {
+		final Iterator<CharSequence> it = rawBody.iterator();
+		while (it.hasNext()) {
+			final CharSequence s = it.next();
+			final String type = EmbeddedDiagram.getEmbeddedType(StringUtils.trinNoTrace(s));
+			if (type != null) {
+				display = display.add(s);
+				display = addOneSingleLineManageEmbedded2(it, display);
+			} else if (isBlockSeparator(s.toString())) {
 				blocks.add(decorate(getTextBlock(display), separator, title, stringBounder));
 				separator = s.charAt(0);
 				title = getTitle(s.toString(), skinParam);
@@ -93,6 +101,7 @@ public class BodyEnhanced2 extends BodyEnhancedAbstract {
 				// s = Guillemet.GUILLEMET.manageGuillemet(s.toString());
 				display = display.add(s);
 			}
+		}
 
 		blocks.add(decorate(getTextBlock(display), separator, title, stringBounder));
 
@@ -106,6 +115,23 @@ public class BodyEnhanced2 extends BodyEnhancedAbstract {
 			this.area = TextBlockUtils.withMinWidth(this.area, minClassWidth, align);
 
 		return area;
+	}
+
+	private static Display addOneSingleLineManageEmbedded2(Iterator<CharSequence> it, Display display) {
+		int nested = 1;
+		while (it.hasNext()) {
+			final CharSequence s = it.next();
+			display = display.add(s);
+			if (EmbeddedDiagram.getEmbeddedType(StringUtils.trinNoTrace(s)) != null)
+				// if (s.getTrimmed().getString().startsWith(EmbeddedDiagram.EMBEDDED_START))
+				nested++;
+			else if (StringUtils.trinNoTrace(s).equals(EmbeddedDiagram.EMBEDDED_END)) {
+				nested--;
+				if (nested == 0)
+					return display;
+			}
+		}
+		return display;
 	}
 
 	private TextBlock getTextBlock(Display display) {

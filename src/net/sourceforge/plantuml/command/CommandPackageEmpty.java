@@ -37,8 +37,8 @@ package net.sourceforge.plantuml.command;
 
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.baraye.a.IEntity;
-import net.sourceforge.plantuml.baraye.a.IGroup;
+import net.sourceforge.plantuml.baraye.IEntity;
+import net.sourceforge.plantuml.baraye.IGroup;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;

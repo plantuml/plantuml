@@ -43,9 +43,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.plantuml.baraye.a.IEntity;
-import net.sourceforge.plantuml.baraye.a.IGroup;
-import net.sourceforge.plantuml.baraye.a.ILeaf;
+import net.sourceforge.plantuml.baraye.IEntity;
+import net.sourceforge.plantuml.baraye.IGroup;
+import net.sourceforge.plantuml.baraye.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.graphic.StringBounder;
 
@@ -53,7 +53,7 @@ public class Bibliotekon {
 
 	private final List<Cluster> allCluster = new ArrayList<>();
 
-	private final Map<ILeaf, SvekNode> nodeMap = new LinkedHashMap<ILeaf, SvekNode>();;
+	private final Map<ILeaf, SvekNode> nodeMap = new LinkedHashMap<ILeaf, SvekNode>();
 
 	private final List<SvekLine> lines0 = new ArrayList<>();
 	private final List<SvekLine> lines1 = new ArrayList<>();

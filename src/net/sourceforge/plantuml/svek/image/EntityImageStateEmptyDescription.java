@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.svek.image;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
-import net.sourceforge.plantuml.baraye.a.IEntity;
+import net.sourceforge.plantuml.baraye.IEntity;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;

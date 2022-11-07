@@ -40,8 +40,8 @@ import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.plantuml.UmlDiagramType;
-import net.sourceforge.plantuml.baraye.a.IEntity;
-import net.sourceforge.plantuml.baraye.a.IGroup;
+import net.sourceforge.plantuml.baraye.IEntity;
+import net.sourceforge.plantuml.baraye.IGroup;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.UmlSource;

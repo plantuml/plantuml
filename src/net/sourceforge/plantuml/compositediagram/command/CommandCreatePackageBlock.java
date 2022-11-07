@@ -36,7 +36,7 @@
 package net.sourceforge.plantuml.compositediagram.command;
 
 import net.sourceforge.plantuml.LineLocation;
-import net.sourceforge.plantuml.baraye.a.IGroup;
+import net.sourceforge.plantuml.baraye.IGroup;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.IRegex;

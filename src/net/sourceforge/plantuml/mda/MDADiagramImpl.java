@@ -44,8 +44,8 @@ import net.sourceforge.plantuml.BlockUml;
 import net.sourceforge.plantuml.SourceStringReader;
 import net.sourceforge.plantuml.api.mda.option2.MDADiagram;
 import net.sourceforge.plantuml.api.mda.option2.MDAPackage;
-import net.sourceforge.plantuml.baraye.a.EntityFactory;
-import net.sourceforge.plantuml.baraye.a.IGroup;
+import net.sourceforge.plantuml.baraye.EntityFactory;
+import net.sourceforge.plantuml.baraye.IGroup;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.core.Diagram;
 

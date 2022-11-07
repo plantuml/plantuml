@@ -44,7 +44,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import net.sourceforge.plantuml.baraye.a.CucaDiagram;
+import net.sourceforge.plantuml.baraye.CucaDiagram;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.html.CucaDiagramHtmlMaker;

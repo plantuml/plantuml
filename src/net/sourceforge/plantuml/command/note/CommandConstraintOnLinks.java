@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.command.note;
 import java.util.List;
 
 import net.sourceforge.plantuml.LineLocation;
-import net.sourceforge.plantuml.baraye.a.CucaDiagram;
+import net.sourceforge.plantuml.baraye.CucaDiagram;
 import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;

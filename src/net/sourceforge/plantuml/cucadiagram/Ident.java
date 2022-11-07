@@ -40,14 +40,14 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.baraye.a.CucaDiagram;
-import net.sourceforge.plantuml.baraye.a.EntityFactory;
+import net.sourceforge.plantuml.baraye.CucaDiagram;
+import net.sourceforge.plantuml.baraye.EntityFactory;
 
 public class Ident implements Code {
 
-	private final List<String> parts;
+	final protected List<String> parts;
 
-	private Ident(List<String> parts) {
+	public /*private*/ Ident(List<String> parts) {
 		this.parts = parts;
 	}
 

@@ -33,50 +33,51 @@
  * 
  *
  */
-package net.sourceforge.plantuml.baraye.a;
+package net.sourceforge.plantuml.baraye;
 
 import java.util.Collection;
 
-import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.cucadiagram.Code;
-import net.sourceforge.plantuml.cucadiagram.DisplayPositioned;
-import net.sourceforge.plantuml.cucadiagram.GroupType;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
-import net.sourceforge.plantuml.graphic.FontConfiguration;
+import net.sourceforge.plantuml.cucadiagram.dot.Neighborhood;
+import net.sourceforge.plantuml.graphic.USymbol;
+import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.svek.IEntityImage;
-import net.sourceforge.plantuml.svek.PackageStyle;
-import net.sourceforge.plantuml.svek.SingleStrategy;
+import net.sourceforge.plantuml.svek.Margins;
 
-public interface IGroup extends IEntity {
+public interface ILeaf extends IEntity {
 
-	public boolean containsLeafRecurse(ILeaf entity);
+	public void setContainer(IGroup container);
 
-	public Collection<ILeaf> getLeafsDirect();
+	public Margins getMargins();
 
-	public Collection<IGroup> getChildren();
+	public int getXposition();
 
-	public void moveEntitiesTo(IGroup dest);
+	public void setXposition(int pos);
 
-	public int size();
+	public IEntityImage getSvekImage();
 
-	public GroupType getGroupType();
+	public String getGeneric();
 
-	public Code getNamespace();
+	public boolean muteToType(LeafType newType, USymbol newSymbol);
 
-	public PackageStyle getPackageStyle();
+	public void setGeneric(String generic);
 
-	public void overrideImage(IEntityImage img, LeafType state);
+	public void setSvekImage(IEntityImage svekImage);
 
-	public SingleStrategy getSingleStrategy();
+	public void setNeighborhood(Neighborhood neighborhood);
 
-	public FontConfiguration getFontConfigurationForTitle(ISkinParam skinParam);
+	public Neighborhood getNeighborhood();
 
-	public char getConcurrentSeparator();
+	public Collection<String> getPortShortNames();
 
-	public void setConcurrentSeparator(char separator);
+	public void addPortShortName(String portShortName);
 
-	public void setLegend(DisplayPositioned legend);
+	public void setVisibilityModifier(VisibilityModifier visibility);
 
-	public DisplayPositioned getLegend();
+	public VisibilityModifier getVisibilityModifier();
+
+	public void setStatic(boolean isStatic);
+
+	public boolean isStatic();
 
 }

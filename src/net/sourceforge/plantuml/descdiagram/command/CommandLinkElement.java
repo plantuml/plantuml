@@ -38,8 +38,8 @@ package net.sourceforge.plantuml.descdiagram.command;
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.baraye.a.IEntity;
-import net.sourceforge.plantuml.baraye.a.ILeaf;
+import net.sourceforge.plantuml.baraye.IEntity;
+import net.sourceforge.plantuml.baraye.ILeaf;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.IRegex;
@@ -244,10 +244,12 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 			throws NoSuchColorException {
 		final String ent1String = arg.get("ENT1", 0);
 		final String ent2String = arg.get("ENT2", 0);
-		final Ident ident1 = diagram.buildFullyQualified(ent1String);
-		final Ident ident2 = diagram.buildFullyQualified(ent2String);
-		Ident ident1pure = Ident.empty().add(ent1String, diagram.getNamespaceSeparator());
-		Ident ident2pure = Ident.empty().add(ent2String, diagram.getNamespaceSeparator());
+		final String ent1 = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(ent1String);
+		final String ent2 = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(ent2String);
+		final Ident ident1 = diagram.buildLeafIdentSpecial(ent1);
+		final Ident ident2 = diagram.buildLeafIdentSpecial(ent2);
+		Ident ident1pure = Ident.empty().add(ent1, diagram.getNamespaceSeparator());
+		Ident ident2pure = Ident.empty().add(ent2, diagram.getNamespaceSeparator());
 		final Code code1 = diagram.V1972() ? ident1 : diagram.buildCode(ent1String);
 		final Code code2 = diagram.V1972() ? ident2 : diagram.buildCode(ent2String);
 
@@ -309,13 +311,13 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 		final Ident ident3 = diagram.buildFullyQualified(tmp3);
 		final Code code3 = diagram.V1972() ? ident3 : diagram.buildCode(tmp3);
 		if (codeChar == '(') {
-			return getOrCreateLeaf1972(diagram, ident3, code3, LeafType.USECASE, USymbols.USECASE, pure);
+			return getOrCreateLeaf1972(diagram, ident, code3, LeafType.USECASE, USymbols.USECASE, pure);
 		} else if (codeChar == ':') {
-			return getOrCreateLeaf1972(diagram, ident3, code3, LeafType.DESCRIPTION,
+			return getOrCreateLeaf1972(diagram, ident, code3, LeafType.DESCRIPTION,
 					diagram.getSkinParam().actorStyle().toUSymbol(), pure);
 		} else if (codeChar == '[') {
 			final USymbol sym = diagram.getSkinParam().componentStyle().toUSymbol();
-			return getOrCreateLeaf1972(diagram, ident3, code3, LeafType.DESCRIPTION, sym, pure);
+			return getOrCreateLeaf1972(diagram, ident, code3, LeafType.DESCRIPTION, sym, pure);
 		}
 
 		return getOrCreateLeaf1972(diagram, ident, code, null, null, pure);

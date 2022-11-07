@@ -33,7 +33,7 @@
  * 
  *
  */
-package net.sourceforge.plantuml.baraye.b;
+package net.sourceforge.plantuml.baraye;
 
 import java.util.Collection;
 

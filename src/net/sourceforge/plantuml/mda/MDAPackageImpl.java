@@ -41,8 +41,8 @@ import java.util.Collections;
 
 import net.sourceforge.plantuml.api.mda.option2.MDAEntity;
 import net.sourceforge.plantuml.api.mda.option2.MDAPackage;
-import net.sourceforge.plantuml.baraye.a.IGroup;
-import net.sourceforge.plantuml.baraye.a.ILeaf;
+import net.sourceforge.plantuml.baraye.IGroup;
+import net.sourceforge.plantuml.baraye.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.GroupRoot;
 
 public class MDAPackageImpl implements MDAPackage {

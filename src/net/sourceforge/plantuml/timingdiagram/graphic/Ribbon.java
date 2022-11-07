@@ -52,6 +52,7 @@ import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.timingdiagram.ChangeState;
 import net.sourceforge.plantuml.timingdiagram.TimeConstraint;
@@ -183,13 +184,20 @@ public class Ribbon implements PDrawing {
 	}
 
 	private void drawPentaA(UGraphic ug, double len, ChangeState change) {
-		SymbolContext context = change.getContext(skinParam, style);
-		final HColor back = initialColors.getColor(ColorType.BACK);
-		if (back != null)
-			context = context.withBackColor(back);
-		final HColor line = initialColors.getColor(ColorType.LINE);
-		if (line != null)
-			context = context.withForeColor(line);
+		SymbolContext context;
+		if (change == null) {
+			final HColor back = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
+			final HColor line = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
+			context = new SymbolContext(back, line).withStroke(style.getStroke());
+		} else {
+			context = change.getContext(skinParam, style);
+			final HColor back = initialColors.getColor(ColorType.BACK);
+			final HColor line = initialColors.getColor(ColorType.LINE);
+			if (back != null)
+				context = context.withBackColor(back);
+			if (line != null)
+				context = context.withForeColor(line);
+		}
 
 		final PentaAShape shape = PentaAShape.create(len, getRibbonHeight(), context);
 		shape.drawU(ug);
@@ -250,8 +258,14 @@ public class Ribbon implements PDrawing {
 	}
 
 	private void drawBeforeZeroState(UGraphic ug) {
-		if (initialState != null && changes.size() > 0) {
-			final StringBounder stringBounder = ug.getStringBounder();
+		if (initialState == null)
+			return;
+		final StringBounder stringBounder = ug.getStringBounder();
+		if (changes.size() == 0) {
+			final double a = 0;
+			drawPentaA(ug.apply(UTranslate.dx(-getInitialWidth(stringBounder))), getInitialWidth(stringBounder) + a,
+					null);
+		} else {
 			final double a = getPosInPixel(changes.get(0));
 			drawPentaA(ug.apply(UTranslate.dx(-getInitialWidth(stringBounder))), getInitialWidth(stringBounder) + a,
 					changes.get(0));

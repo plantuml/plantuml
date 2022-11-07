@@ -36,7 +36,7 @@
 package net.sourceforge.plantuml.command.note;
 
 import net.sourceforge.plantuml.LineLocation;
-import net.sourceforge.plantuml.baraye.a.IEntity;
+import net.sourceforge.plantuml.baraye.IEntity;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.classdiagram.command.CommandCreateClassMultilines;
 import net.sourceforge.plantuml.command.BlocLines;

@@ -37,9 +37,9 @@ package net.sourceforge.plantuml.cucadiagram;
 
 import java.util.List;
 
-import net.sourceforge.plantuml.baraye.a.CucaDiagram;
-import net.sourceforge.plantuml.baraye.a.IGroup;
-import net.sourceforge.plantuml.baraye.a.ILeaf;
+import net.sourceforge.plantuml.baraye.CucaDiagram;
+import net.sourceforge.plantuml.baraye.IGroup;
+import net.sourceforge.plantuml.baraye.ILeaf;
 
 public class Magma {
 
