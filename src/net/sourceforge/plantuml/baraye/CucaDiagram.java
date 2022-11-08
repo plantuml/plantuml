@@ -139,6 +139,10 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		this.stacks2.add(Ident.empty());
 	}
 
+	final public String getPortFor(String ent1String, Ident ident1) {
+		return null;
+	}
+
 	private Ident getLastID() {
 		if (stacks2.size() == 0) {
 			// Thread.dumpStack();

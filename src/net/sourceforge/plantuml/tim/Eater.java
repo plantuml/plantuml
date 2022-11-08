@@ -79,7 +79,7 @@ public abstract class Eater {
 
 	final public TValue eatExpression(TContext context, TMemory memory) throws EaterException, EaterExceptionLocated {
 		if (peekChar() == '{') {
-			String data = eatAllToEnd();
+			final String data = eatAllToEnd();
 			// System.err.println("data=" + data);
 			final JsonValue json = Json.parse(data);
 			// System.err.println("json=" + json);
@@ -92,9 +92,9 @@ public abstract class Eater {
 	final protected TokenStack eatTokenStack() throws EaterException {
 		final TokenStack tokenStack = new TokenStack();
 		addIntoTokenStack(tokenStack, false);
-		if (tokenStack.size() == 0) {
+		if (tokenStack.size() == 0)
 			throw EaterException.located("Missing expression");
-		}
+
 		return tokenStack;
 	}
 
@@ -106,21 +106,23 @@ public abstract class Eater {
 	}
 
 	final protected void addIntoTokenStack(TokenStack tokenStack, boolean stopAtColon) throws EaterException {
+		Token lastToken = null;
 		while (true) {
-			final Token token = TokenType.eatOneToken(this, stopAtColon);
-			// System.err.println("token=" + token);
-			if (token == null) {
+			final Token token = TokenType.eatOneToken(lastToken, this, stopAtColon);
+			if (token == null)
 				return;
-			}
+
 			tokenStack.add(token);
+			if (token.getTokenType() != TokenType.SPACES)
+				lastToken = token;
 		}
 	}
 
 	final public String eatAndGetQuotedString() throws EaterException {
 		final char separator = peekChar();
-		if (TLineType.isQuote(separator) == false) {
+		if (TLineType.isQuote(separator) == false)
 			throw EaterException.located("quote10");
-		}
+
 		checkAndEatChar(separator);
 		final StringBuilder value = new StringBuilder();
 		addUpTo(separator, value);
@@ -130,27 +132,27 @@ public abstract class Eater {
 
 	final protected String eatAndGetOptionalQuotedString() throws EaterException {
 		final char quote = peekChar();
-		if (TLineType.isQuote(quote)) {
+		if (TLineType.isQuote(quote))
 			return eatAndGetQuotedString();
-		}
+
 		final StringBuilder value = new StringBuilder();
 		// DEPLICATE eatUntilCloseParenthesisOrComma
 
 		int level = 0;
 		while (true) {
 			char ch = peekChar();
-			if (ch == 0) {
+			if (ch == 0)
 				throw EaterException.located("until001");
-			}
-			if (level == 0 && (ch == ',' || ch == ')')) {
+
+			if (level == 0 && (ch == ',' || ch == ')'))
 				return value.toString().trim();
-			}
+
 			ch = eatOneChar();
-			if (ch == '(') {
+			if (ch == '(')
 				level++;
-			} else if (ch == ')') {
+			else if (ch == ')')
 				level--;
-			}
+
 			value.append(ch);
 		}
 
@@ -162,9 +164,14 @@ public abstract class Eater {
 		final StringBuilder result = new StringBuilder();
 		while (true) {
 			final char ch = peekChar();
-			if (ch == 0 || TLineType.isLatinDigit(ch) == false) {
-				return result.toString();
+			if (result.length() == 0 && ch == '-') {
+				result.append(eatOneChar());
+				continue;
 			}
+
+			if (ch == 0 || TLineType.isLatinDigit(ch) == false)
+				return result.toString();
+
 			result.append(eatOneChar());
 		}
 	}
@@ -173,47 +180,47 @@ public abstract class Eater {
 		final StringBuilder result = new StringBuilder();
 		while (true) {
 			final char ch = peekChar();
-			if (ch == 0 || TLineType.isSpaceChar(ch) == false) {
+			if (ch == 0 || TLineType.isSpaceChar(ch) == false)
 				return result.toString();
-			}
+
 			result.append(eatOneChar());
 		}
 	}
 
 	final protected String eatAndGetVarname() throws EaterException {
 		final StringBuilder varname = new StringBuilder("" + eatOneChar());
-		if (TLineType.isLetterOrUnderscoreOrDollar(varname.charAt(0)) == false) {
+		if (TLineType.isLetterOrUnderscoreOrDollar(varname.charAt(0)) == false)
 			throw EaterException.located("a002");
-		}
+
 		addUpToLastLetterOrUnderscoreOrDigit(varname);
 		return varname.toString();
 	}
 
 	final protected String eatAndGetFunctionName() throws EaterException {
 		final StringBuilder varname = new StringBuilder("" + eatOneChar());
-		if (TLineType.isLetterOrUnderscoreOrDollar(varname.charAt(0)) == false) {
+		if (TLineType.isLetterOrUnderscoreOrDollar(varname.charAt(0)) == false)
 			throw EaterException.located("a003");
-		}
+
 		addUpToLastLetterOrUnderscoreOrDigit(varname);
 		return varname.toString();
 	}
 
 	final public void skipSpaces() {
-		while (i < s.length() && Character.isWhitespace(s.charAt(i))) {
+		while (i < s.length() && Character.isWhitespace(s.charAt(i)))
 			i++;
-		}
+
 	}
 
 	final protected void skipUntilChar(char ch) {
-		while (i < s.length() && s.charAt(i) != ch) {
+		while (i < s.length() && s.charAt(i) != ch)
 			i++;
-		}
+
 	}
 
 	final public char peekChar() {
-		if (i >= s.length()) {
+		if (i >= s.length())
 			return 0;
-		}
+
 		return s.charAt(i);
 	}
 
@@ -224,9 +231,9 @@ public abstract class Eater {
 	}
 
 	final public char peekCharN2() {
-		if (i + 1 >= s.length()) {
+		if (i + 1 >= s.length())
 			return 0;
-		}
+
 		return s.charAt(i + 1);
 	}
 
@@ -241,40 +248,40 @@ public abstract class Eater {
 	}
 
 	final protected void checkAndEatChar(char ch) throws EaterException {
-		if (i >= s.length() || s.charAt(i) != ch) {
+		if (i >= s.length() || s.charAt(i) != ch)
 			throw EaterException.located("a001");
-		}
+
 		i++;
 	}
 
 	final protected boolean safeCheckAndEatChar(char ch) throws EaterException {
-		if (i >= s.length() || s.charAt(i) != ch) {
+		if (i >= s.length() || s.charAt(i) != ch)
 			return false;
-		}
+
 		i++;
 		return true;
 	}
 
 	final protected void optionallyEatChar(char ch) throws EaterException {
-		if (i >= s.length() || s.charAt(i) != ch) {
+		if (i >= s.length() || s.charAt(i) != ch)
 			return;
-		}
+
 		assert s.charAt(i) == ch;
 		i++;
 	}
 
 	final protected void checkAndEatChar(String s) throws EaterException {
-		for (int j = 0; j < s.length(); j++) {
+		for (int j = 0; j < s.length(); j++)
 			checkAndEatChar(s.charAt(j));
-		}
+
 	}
 
 	final protected void addUpToLastLetterOrUnderscoreOrDigit(StringBuilder sb) {
 		while (i < s.length()) {
 			final char ch = s.charAt(i);
-			if (TLineType.isLetterOrUnderscoreOrDigit(ch) == false) {
+			if (TLineType.isLetterOrUnderscoreOrDigit(ch) == false)
 				return;
-			}
+
 			i++;
 			sb.append(ch);
 		}
@@ -283,25 +290,13 @@ public abstract class Eater {
 	final protected void addUpTo(char separator, StringBuilder sb) {
 		while (i < s.length()) {
 			final char ch = peekChar();
-			if (ch == separator) {
+			if (ch == separator)
 				return;
-			}
+
 			i++;
 			sb.append(ch);
 		}
 	}
-
-	// final protected void addUpToUnused(char separator1, char separator2,
-	// StringBuilder sb) {
-	// while (i < s.length()) {
-	// final char ch = peekChar();
-	// if (ch == separator1 || ch == separator2) {
-	// return;
-	// }
-	// i++;
-	// sb.append(ch);
-	// }
-	// }
 
 	final protected TFunctionImpl eatDeclareFunction(TContext context, TMemory memory, boolean unquoted,
 			LineLocation location, boolean allowNoParenthesis, TFunctionType type)
@@ -310,9 +305,9 @@ public abstract class Eater {
 		final String functionName = eatAndGetFunctionName();
 		skipSpaces();
 		if (safeCheckAndEatChar('(') == false) {
-			if (allowNoParenthesis) {
+			if (allowNoParenthesis)
 				return new TFunctionImpl(functionName, args, unquoted, type);
-			}
+
 			throw EaterException.located("Missing opening parenthesis");
 		}
 		while (true) {

@@ -52,9 +52,8 @@ public class DedicationSimple implements Dedication {
 	}
 
 	public synchronized BufferedImage getImage(TinyHashableString sentence) {
-		if (same(this.sentence, sentence.getSentence()) == false) {
+		if (same(this.sentence, sentence.getSentence()) == false)
 			return null;
-		}
 
 		try {
 			byte[] current = crypted.clone();

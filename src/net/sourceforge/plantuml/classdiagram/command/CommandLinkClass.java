@@ -179,8 +179,8 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 			return executePackageLink(diagram, arg);
 		}
 
-		String port1 = null;
-		String port2 = null;
+		String port1 = diagram.getPortFor(ent1String, ident1);
+		String port2 = diagram.getPortFor(ent2String, ident2);
 
 		if (diagram.V1972()) {
 			if ("::".equals(diagram.getNamespaceSeparator())) {
@@ -207,12 +207,12 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 				}
 			}
 		} else {
-			if (removeMemberPartLegacy1972(diagram, ident1) != null) {
+			if (port1 == null && removeMemberPartLegacy1972(diagram, ident1) != null) {
 				port1 = ident1.getPortMember();
 				code1 = removeMemberPartLegacy1972(diagram, ident1);
 				ident1 = ident1.removeMemberPart();
 			}
-			if (removeMemberPartLegacy1972(diagram, ident2) != null) {
+			if (port2 == null && removeMemberPartLegacy1972(diagram, ident2) != null) {
 				port2 = ident2.getPortMember();
 				code2 = removeMemberPartLegacy1972(diagram, ident2);
 				ident2 = ident2.removeMemberPart();

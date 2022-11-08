@@ -92,15 +92,15 @@ public class CommandCreateEntityObjectMultilines extends CommandMultilines2<Abst
 		lines = lines.trim().removeEmptyLines();
 		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 		final IEntity entity = executeArg0(diagram, line0);
-		if (entity == null) {
+		if (entity == null)
 			return CommandExecutionResult.error("No such entity");
-		}
+
 		lines = lines.subExtract(1, 1);
 		for (StringLocated s : lines) {
 			assert s.getString().length() > 0;
-			if (VisibilityModifier.isVisibilityCharacter(s.getString())) {
+			if (VisibilityModifier.isVisibilityCharacter(s.getString()))
 				diagram.setVisibilityModifierPresent(true);
-			}
+
 			entity.getBodier().addFieldOrMethod(s.getString());
 		}
 		return CommandExecutionResult.ok();
@@ -113,9 +113,9 @@ public class CommandCreateEntityObjectMultilines extends CommandMultilines2<Abst
 		final String display = line0.get("NAME", 0);
 		final String stereotype = line0.get("STEREO", 0);
 		final boolean leafExist = diagram.V1972() ? diagram.leafExistSmart(ident) : diagram.leafExist(code);
-		if (leafExist) {
+		if (leafExist)
 			return diagram.getOrCreateLeaf(diagram.buildLeafIdent(name), code, LeafType.OBJECT, null);
-		}
+
 		final IEntity entity = diagram.createLeaf(ident, code, Display.getWithNewlines(display), LeafType.OBJECT, null);
 		if (stereotype != null) {
 			entity.setStereotype(Stereotype.build(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),
@@ -123,8 +123,8 @@ public class CommandCreateEntityObjectMultilines extends CommandMultilines2<Abst
 					diagram.getSkinParam().getIHtmlColorSet()));
 		}
 		final String s = line0.get("COLOR", 0);
-		entity.setSpecificColorTOBEREMOVED(ColorType.BACK, s == null ? null
-				: diagram.getSkinParam().getIHtmlColorSet().getColor(s));
+		entity.setSpecificColorTOBEREMOVED(ColorType.BACK,
+				s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s));
 		return entity;
 	}
 

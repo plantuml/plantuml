@@ -46,9 +46,9 @@ public class PSystemDedicationFactory extends PSystemSingleLineFactory {
 	@Override
 	protected AbstractPSystem executeLine(UmlSource source, String line) {
 		final BufferedImage dedication = Dedications.get(line);
-		if (dedication != null) {
+		if (dedication != null)
 			return new PSystemDedication(source, dedication);
-		}
+
 		return null;
 	}
 
