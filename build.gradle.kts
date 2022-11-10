@@ -28,7 +28,7 @@ dependencies {
 	testImplementation("org.assertj:assertj-core:3.23.1")
 	testImplementation("org.junit.jupiter:junit-jupiter:5.9.1")
 	testImplementation("org.scilab.forge:jlatexmath:1.0.7")
-	"pdfRuntimeOnly"("org.apache.xmlgraphics:fop:2.7")
+	"pdfRuntimeOnly"("org.apache.xmlgraphics:fop:2.8")
 	"pdfRuntimeOnly"("org.apache.xmlgraphics:batik-all:1.15")
 }
 
