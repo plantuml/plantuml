@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -45,10 +45,10 @@ import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 
 /**
  * A FileFormat with some parameters.
- * 
- * 
+ *
+ *
  * @author Arnaud Roques
- * 
+ *
  */
 public final class FileFormatOption implements Serializable {
 
@@ -63,6 +63,8 @@ public final class FileFormatOption implements Serializable {
 	private final String watermark;
 	private final ColorMapper colorMapper;
 
+	private final String gmlRoot;  // root directory for graphml output
+
 	public double getScaleCoef() {
 		return scale;
 	}
@@ -70,18 +72,24 @@ public final class FileFormatOption implements Serializable {
 	@HaxeIgnored
 	public FileFormatOption(FileFormat fileFormat) {
 		this(fileFormat, true, false, null, false, null, TikzFontDistortion.getDefault(), 1.0, null, null,
-				ColorMapper.IDENTITY);
+				ColorMapper.IDENTITY, null);
 	}
 
 	@HaxeIgnored
 	public FileFormatOption(FileFormat fileFormat, boolean withMetadata) {
 		this(fileFormat, withMetadata, false, null, false, null, TikzFontDistortion.getDefault(), 1.0, null, null,
-				ColorMapper.IDENTITY);
+				ColorMapper.IDENTITY, null);
+	}
+
+	@HaxeIgnored
+	public FileFormatOption(FileFormat fileFormat, String gmlRoot) {
+		this(fileFormat, false, false, null, false, null, TikzFontDistortion.getDefault(), 1.0, null, null,
+						ColorMapper.IDENTITY, null);
 	}
 
 	private FileFormatOption(FileFormat fileFormat, boolean withMetadata, boolean useRedForError, String svgLinkTarget,
 			boolean debugsvek, String hoverColor, TikzFontDistortion tikzFontDistortion, double scale,
-			String preserveAspectRatio, String watermark, ColorMapper colorMapper) {
+			String preserveAspectRatio, String watermark, ColorMapper colorMapper, String gmlRoot) {
 		this.hoverColor = hoverColor;
 		this.watermark = watermark;
 		this.fileFormat = fileFormat;
@@ -93,6 +101,7 @@ public final class FileFormatOption implements Serializable {
 		this.scale = scale;
 		this.preserveAspectRatio = preserveAspectRatio;
 		this.colorMapper = colorMapper;
+		this.gmlRoot = gmlRoot;
 	}
 
 	public StringBounder getDefaultStringBounder(SvgCharSizeHack charSizeHack) {
@@ -113,42 +122,47 @@ public final class FileFormatOption implements Serializable {
 
 	public FileFormatOption withUseRedForError() {
 		return new FileFormatOption(fileFormat, withMetadata, true, svgLinkTarget, debugsvek, hoverColor,
-				tikzFontDistortion, scale, preserveAspectRatio, watermark, colorMapper);
+				tikzFontDistortion, scale, preserveAspectRatio, watermark, colorMapper, null);
 	}
 
 	public FileFormatOption withTikzFontDistortion(TikzFontDistortion tikzFontDistortion) {
 		return new FileFormatOption(fileFormat, withMetadata, true, svgLinkTarget, debugsvek, hoverColor,
-				tikzFontDistortion, scale, preserveAspectRatio, watermark, colorMapper);
+				tikzFontDistortion, scale, preserveAspectRatio, watermark, colorMapper, null);
 	}
 
 	public FileFormatOption withSvgLinkTarget(String svgLinkTarget) {
 		return new FileFormatOption(fileFormat, withMetadata, useRedForError, svgLinkTarget, debugsvek, hoverColor,
-				tikzFontDistortion, scale, preserveAspectRatio, watermark, colorMapper);
+				tikzFontDistortion, scale, preserveAspectRatio, watermark, colorMapper, null);
 	}
 
 	public FileFormatOption withPreserveAspectRatio(String preserveAspectRatio) {
 		return new FileFormatOption(fileFormat, withMetadata, useRedForError, svgLinkTarget, debugsvek, hoverColor,
-				tikzFontDistortion, scale, preserveAspectRatio, watermark, colorMapper);
+				tikzFontDistortion, scale, preserveAspectRatio, watermark, colorMapper, null);
 	}
 
 	public FileFormatOption withHoverColor(String hoverColor) {
 		return new FileFormatOption(fileFormat, withMetadata, useRedForError, svgLinkTarget, debugsvek, hoverColor,
-				tikzFontDistortion, scale, preserveAspectRatio, watermark, colorMapper);
+				tikzFontDistortion, scale, preserveAspectRatio, watermark, colorMapper, null);
 	}
 
 	public FileFormatOption withScale(double scale) {
 		return new FileFormatOption(fileFormat, withMetadata, useRedForError, svgLinkTarget, debugsvek, hoverColor,
-				tikzFontDistortion, scale, preserveAspectRatio, watermark, colorMapper);
+				tikzFontDistortion, scale, preserveAspectRatio, watermark, colorMapper, null);
 	}
 
 	public FileFormatOption withWartermark(String watermark) {
 		return new FileFormatOption(fileFormat, withMetadata, useRedForError, svgLinkTarget, debugsvek, hoverColor,
-				tikzFontDistortion, scale, preserveAspectRatio, watermark, colorMapper);
+				tikzFontDistortion, scale, preserveAspectRatio, watermark, colorMapper, null);
 	}
 
 	public FileFormatOption withColorMapper(ColorMapper colorMapper) {
 		return new FileFormatOption(fileFormat, withMetadata, useRedForError, svgLinkTarget, debugsvek, hoverColor,
-				tikzFontDistortion, scale, preserveAspectRatio, watermark, colorMapper);
+				tikzFontDistortion, scale, preserveAspectRatio, watermark, colorMapper, null);
+	}
+
+	public FileFormatOption withGmlRoot(String gmlRoot) {
+		return new FileFormatOption(fileFormat, withMetadata, useRedForError, svgLinkTarget, debugsvek, hoverColor,
+						tikzFontDistortion, scale, preserveAspectRatio, watermark, colorMapper, gmlRoot);
 	}
 
 	@Override
@@ -199,4 +213,5 @@ public final class FileFormatOption implements Serializable {
 		return colorMapper;
 	}
 
+	public String getGmlRoot() {return gmlRoot; }
 }

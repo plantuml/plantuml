@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.baraye;
@@ -80,7 +80,6 @@ import net.sourceforge.plantuml.cucadiagram.dot.CucaDiagramTxtMaker;
 import net.sourceforge.plantuml.cucadiagram.entity.IEntityFactory;
 import net.sourceforge.plantuml.elk.CucaDiagramFileMakerElk;
 import net.sourceforge.plantuml.graphic.USymbol;
-import net.sourceforge.plantuml.graphml.CucaDiagramGraphmlMaker;
 import net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana;
 import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
@@ -577,11 +576,6 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		return result.toArray(new String[result.size()]);
 	}
 
-	private void createFilesGraphml(OutputStream suggestedFile) throws IOException {
-		final CucaDiagramGraphmlMaker maker = new CucaDiagramGraphmlMaker(this);
-		maker.createFiles(suggestedFile);
-	}
-
 	private void createFilesXmi(OutputStream suggestedFile, FileFormat fileFormat) throws IOException {
 		final CucaDiagramXmiMaker maker = new CucaDiagramXmiMaker(this, fileFormat);
 		maker.createFiles(suggestedFile);
@@ -603,11 +597,6 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 			} catch (Throwable t) {
 				t.printStackTrace(SecurityUtils.createPrintStream(os));
 			}
-			return ImageDataSimple.ok();
-		}
-
-		if (fileFormat == FileFormat.GRAPHML) {
-			createFilesGraphml(os);
 			return ImageDataSimple.ok();
 		}
 

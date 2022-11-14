@@ -1,3 +1,4 @@
+
 /* ========================================================================
  * PlantUML : a free UML diagram generator
  * ========================================================================
@@ -5,12 +6,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -29,85 +30,83 @@
  * USA.
  *
  *
- * Original Author:  Arnaud Roques
+ * Original Author:  Thomas Woyke, Robert Bosch GmbH
+ *
+ */
+/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2023, Arnaud Roques
+ *
+ * Project Info:  http://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * http://plantuml.com/patreon (only 1$ per month!)
+ * http://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Thomas Woyke, Robert Bosch GmbH
  *
  *
  */
 package net.sourceforge.plantuml.graphml;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-
 import java.io.OutputStream;
 
-import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Result;
-import javax.xml.transform.Source;
-import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-
-import net.sourceforge.plantuml.baraye.IEntity;
-import net.sourceforge.plantuml.cucadiagram.GroupRoot;
+import net.sourceforge.plantuml.SuggestedFile;
 import net.sourceforge.plantuml.descdiagram.DescriptionDiagram;
+import net.sourceforge.plantuml.genericdiagram.cucaprocessing.impl.Cuca2GenericConverter;
+import net.sourceforge.plantuml.genericdiagram.cucaprocessing.impl.CucaDiagramWrapper;
+import net.sourceforge.plantuml.genericdiagram.data.SimpleGenericModel;
 import net.sourceforge.plantuml.xmi.XmlDiagramTransformer;
-import net.sourceforge.plantuml.xml.XmlFactories;
 
 public class GraphmlDescriptionDiagram implements XmlDiagramTransformer {
 
 	private final DescriptionDiagram diagram;
-	private final Document document;
+ 	private final Cuca2GenericConverter converter;
+  private final GraphMLExporter exporter;
 
-	public GraphmlDescriptionDiagram(DescriptionDiagram diagram) throws ParserConfigurationException {
+
+	public GraphmlDescriptionDiagram(DescriptionDiagram diagram, SuggestedFile suggestedFile, String gmlRoot) throws ParserConfigurationException {
+
+		String parentDir = suggestedFile.getParentFile().toURI().getPath();
+		String sourceFileName = suggestedFile.getName().toString();
+		Integer blockCount = Integer.valueOf(String.valueOf(suggestedFile.toString().replaceAll("(\\[|\\])", "")));
+
 		this.diagram = diagram;
+		this.converter = new Cuca2GenericConverter(parentDir + sourceFileName, blockCount, gmlRoot);
+		this.exporter = new GraphMLExporter();
 
-		final DocumentBuilder builder = XmlFactories.newDocumentBuilder();
-		this.document = builder.newDocument();
-		document.setXmlVersion("1.0");
-		document.setXmlStandalone(true);
-
-		final Element graphml = document.createElement("graphml");
-		graphml.setAttribute("xmlns", "http://graphml.graphdrawing.org/xmlns");
-		graphml.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
-		graphml.setAttribute("xsi:schemaLocation", "http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd");
-		document.appendChild(graphml);
-
-		final Element graph = document.createElement("graph");
-		graph.setAttribute("edgedefault", "undirected");
-		graphml.appendChild(graph);
-
-		for (final IEntity ent : diagram.getLeafsvalues())
-			if (ent.getParentContainer() instanceof GroupRoot)
-				addElement(ent, graph);
-
+		converter.visitCucaDiagram(new CucaDiagramWrapper(diagram));
+		SimpleGenericModel genericModel = converter.getModel();
+		genericModel.acceptVisitor(exporter);
 	}
 
-	private void addElement(IEntity tobeAdded, Element container) {
-		final Element element = createEntityNode(tobeAdded);
-		container.appendChild(element);
-
-	}
-
-	private Element createEntityNode(IEntity entity) {
-		final Element cla = document.createElement("node");
-		cla.setAttribute("id", entity.getCode().getName());
-		return cla;
-	}
 
 	public void transformerXml(OutputStream os) throws TransformerException, ParserConfigurationException {
-		final Source source = new DOMSource(document);
-
-		final Result resultat = new StreamResult(os);
-
-		final Transformer transformer = XmlFactories.newTransformer();
-		transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-		transformer.setOutputProperty(OutputKeys.ENCODING, UTF_8.name());
-		transformer.transform(source, resultat);
+		this.exporter.transformerXml(os);
 	}
 
 }

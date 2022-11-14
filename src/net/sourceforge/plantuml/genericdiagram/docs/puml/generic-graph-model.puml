@@ -1,0 +1,4 @@
+@startuml
+SimpleGraphModel "nodes" -- "0..*" GenericModelEntity
+SimpleGraphModel "edges" -- "0..*" GenericModelEdge
+@enduml
