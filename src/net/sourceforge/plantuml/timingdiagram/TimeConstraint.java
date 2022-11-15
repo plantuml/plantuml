@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.timingdiagram;
 import java.util.List;
 import java.util.Objects;
 
+import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
@@ -108,14 +109,20 @@ public class TimeConstraint {
 		final double x1 = ruler.getPosInPixel(tick1);
 		final double x2 = ruler.getPosInPixel(tick2);
 		ug = ug.apply(UTranslate.dx(x1));
-		ug.apply(getUStroke()).draw(ULine.hline(x2 - x1));
+		final double len = x2 - x1;
+		ug.apply(getUStroke()).draw(ULine.hline(len));
 
-		ug.draw(getPolygon(-Math.PI / 2, new XPoint2D(0, 0)));
-		ug.draw(getPolygon(Math.PI / 2, new XPoint2D(x2 - x1, 0)));
+		if (len > 10) {
+			ug.draw(getPolygon(Direction.LEFT, new XPoint2D(0, 0)));
+			ug.draw(getPolygon(Direction.RIGHT, new XPoint2D(len, 0)));
+		} else {
+			ug.draw(getPolygon(Direction.RIGHT, new XPoint2D(0, 0)));
+			ug.draw(getPolygon(Direction.LEFT, new XPoint2D(len, 0)));
+		}
 
 		final TextBlock text = getTextBlock(label);
 		final XDimension2D dimText = text.calculateDimension(ug.getStringBounder());
-		final double x = (x2 - x1 - dimText.getWidth()) / 2;
+		final double x = (len - dimText.getWidth()) / 2;
 		text.drawU(ug.apply(new UTranslate(x, -getConstraintHeight(ug.getStringBounder()))));
 	}
 
@@ -149,15 +156,23 @@ public class TimeConstraint {
 		return 5;
 	}
 
-	private UPolygon getPolygon(final double angle, final XPoint2D end) {
-		final double delta = 20.0 * Math.PI / 180.0;
-		final XPoint2D pt1 = TimeArrow.onCircle(end, angle + delta);
-		final XPoint2D pt2 = TimeArrow.onCircle(end, angle - delta);
+	private UPolygon getPolygon(Direction dir, XPoint2D end) {
+		final double dx = 8;
+		final double dy = 4;
+		final XPoint2D pt1;
+		final XPoint2D pt2;
+		if (dir == Direction.RIGHT) {
+			pt1 = end.move(-dx, dy);
+			pt2 = end.move(-dx, -dy);
+		} else {
+			pt1 = end.move(dx, dy);
+			pt2 = end.move(dx, -dy);
+		}
 
 		final UPolygon polygon = new UPolygon();
-		polygon.addPoint(pt1.getX(), pt1.getY());
-		polygon.addPoint(pt2.getX(), pt2.getY());
-		polygon.addPoint(end.getX(), end.getY());
+		polygon.addPoint(pt1);
+		polygon.addPoint(pt2);
+		polygon.addPoint(end);
 
 		return polygon;
 	}

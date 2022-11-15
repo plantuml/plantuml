@@ -41,7 +41,10 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlMode;
+import net.sourceforge.plantuml.baraye.CucaDiagram;
+import net.sourceforge.plantuml.baraye.EntityImp;
 import net.sourceforge.plantuml.baraye.ILeaf;
+import net.sourceforge.plantuml.baraye.Quark;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -113,9 +116,11 @@ public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 				new RegexOptional(new RegexConcat(new RegexLeaf("##"),
 						new RegexLeaf("LINECOLOR", "(?:\\[(dotted|dashed|bold)\\])?(\\w+)?"))), //
 				new RegexOptional(new RegexConcat(RegexLeaf.spaceOneOrMore(),
-						new RegexLeaf("EXTENDS", "(extends)[%s]+(" + CommandCreateClassMultilines.CODES + "|[%g]([^%g]+)[%g])"))), //
+						new RegexLeaf("EXTENDS",
+								"(extends)[%s]+(" + CommandCreateClassMultilines.CODES + "|[%g]([^%g]+)[%g])"))), //
 				new RegexOptional(new RegexConcat(RegexLeaf.spaceOneOrMore(),
-						new RegexLeaf("IMPLEMENTS", "(implements)[%s]+(" + CommandCreateClassMultilines.CODES + "|[%g]([^%g]+)[%g])"))), //
+						new RegexLeaf("IMPLEMENTS",
+								"(implements)[%s]+(" + CommandCreateClassMultilines.CODES + "|[%g]([^%g]+)[%g])"))), //
 				new RegexOptional(new RegexConcat(RegexLeaf.spaceZeroOrMore(), new RegexLeaf("\\{"),
 						RegexLeaf.spaceZeroOrMore(), new RegexLeaf("\\}"))), //
 				RegexLeaf.end());
@@ -137,26 +142,50 @@ public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 		final String generic = genericOption != null ? genericOption : arg.get("GENERIC", 0);
 
 		final String stereo = arg.get("STEREO", 0);
-		final ILeaf entity;
-		final Ident idNewLong = diagram.buildLeafIdent(idShort);
-		if (diagram.V1972()) {
-			if (diagram.leafExistSmart(idNewLong)) {
-				entity = diagram.getOrCreateLeaf(idNewLong, idNewLong, type, null);
-				if (entity.muteToType(type, null) == false)
-					return CommandExecutionResult.error("Bad name");
+		/* final */ ILeaf entity;
 
-			} else {
+		if (CucaDiagram.QUARK) {
+			final Quark current = diagram.currentQuark();
+			final Quark idNewLong = (Quark) diagram.buildLeafIdent(idShort);
+			if (idNewLong.getData() == null)
 				entity = diagram.createLeaf(idNewLong, idNewLong, Display.getWithNewlines(display), type, null);
+			else
+				entity = (ILeaf) idNewLong.getData();
+			if (entity == null || entity.isGroup()) {
+				for (Quark tmp : diagram.getPlasma().quarks())
+					if (tmp.getData() instanceof EntityImp) {
+						final EntityImp tmp2 = (EntityImp) tmp.getData();
+						if (tmp2 != null && tmp.getName().equals(idShort) && tmp2.isGroup() == false) {
+							entity = (ILeaf) tmp.getData();
+							break;
+						}
+					}
+			}
+			if (entity == null) {
+				final Display withNewlines = Display.getWithNewlines(display);
+				entity = diagram.createLeaf(idNewLong, idNewLong, withNewlines, type, null);
 			}
 		} else {
-			final Code code = diagram.buildCode(idShort);
-			if (diagram.leafExist(code)) {
-				entity = diagram.getOrCreateLeaf(idNewLong, code, type, null);
-				if (entity.muteToType(type, null) == false)
-					return CommandExecutionResult.error("Bad name");
+			final Ident idNewLong = diagram.buildLeafIdent(idShort);
+			if (diagram.V1972()) {
+				if (diagram.leafExistSmart(idNewLong)) {
+					entity = diagram.getOrCreateLeaf(idNewLong, idNewLong, type, null);
+					if (entity.muteToType(type, null) == false)
+						return CommandExecutionResult.error("Bad name");
 
+				} else {
+					entity = diagram.createLeaf(idNewLong, idNewLong, Display.getWithNewlines(display), type, null);
+				}
 			} else {
-				entity = diagram.createLeaf(idNewLong, code, Display.getWithNewlines(display), type, null);
+				final Code code = diagram.buildCode(idShort);
+				if (diagram.leafExist(code)) {
+					entity = diagram.getOrCreateLeaf(idNewLong, code, type, null);
+					if (entity.muteToType(type, null) == false)
+						return CommandExecutionResult.error("Bad name");
+
+				} else {
+					entity = diagram.createLeaf(idNewLong, code, Display.getWithNewlines(display), type, null);
+				}
 			}
 		}
 		if (stereo != null) {
@@ -179,8 +208,7 @@ public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
 		final String s = arg.get("LINECOLOR", 1);
 
-		final HColor lineColor = s == null ? null
-				: diagram.getSkinParam().getIHtmlColorSet().getColor(s);
+		final HColor lineColor = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);
 		if (lineColor != null)
 			colors = colors.add(ColorType.LINE, lineColor);
 

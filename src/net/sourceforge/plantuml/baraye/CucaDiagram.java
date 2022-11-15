@@ -93,12 +93,22 @@ import net.sourceforge.plantuml.xmlsc.StateDiagramScxmlMaker;
 
 public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, PortionShower, ICucaDiagram {
 
+	static public final boolean QUARK = false;
+
 	static private final boolean G1972 = false;
 
 	// private String namespaceSeparator = ".";
 	// private String namespaceSeparator1 = GO1972 ? "::" : ".";
 	private String namespaceSeparator = null;
 	private boolean namespaceSeparatorHasBeenSet = false;
+
+	public Quark currentQuark() {
+		throw new UnsupportedOperationException();
+	}
+	
+	public /*protected*/ Plasma getPlasma() {
+		throw new UnsupportedOperationException();
+	}
 
 	public final boolean V1972() {
 		if (getPragma().backToLegacyPackage()) {

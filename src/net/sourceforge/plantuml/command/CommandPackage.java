@@ -40,8 +40,10 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlMode;
+import net.sourceforge.plantuml.baraye.CucaDiagram;
 import net.sourceforge.plantuml.baraye.IEntity;
 import net.sourceforge.plantuml.baraye.IGroup;
+import net.sourceforge.plantuml.baraye.Quark;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.classdiagram.command.CommandCreateClassMultilines;
 import net.sourceforge.plantuml.command.regex.IRegex;
@@ -123,30 +125,37 @@ public class CommandPackage extends SingleLineCommand2<AbstractEntityDiagram> {
 			display = name;
 			idShort = arg.get("AS", 0);
 		}
+
+		final Ident ident;
+		final Code code;
+		
+		if (CucaDiagram.QUARK) {
+			final Quark current = diagram.currentQuark();
+			code = current;
+			ident = current.child(idShort);
+		} else {
+			ident = diagram.buildLeafIdent(idShort);
+			code = diagram.V1972() ? ident : diagram.buildCode(idShort);
+			if (diagram.V1972() && override1972)
+				display = ident.getLast();
+		}
 		final IGroup currentPackage = diagram.getCurrentGroup();
-		// final Ident ident = diagram.buildLeafIdentSpecial(idShort);
-		final Ident ident = diagram.buildLeafIdent(idShort);
-		final Code code = diagram.V1972() ? ident : diagram.buildCode(idShort);
-		if (diagram.V1972() && override1972)
-			display = ident.getLast();
+
 		diagram.gotoGroup(ident, code, Display.getWithNewlines(display), GroupType.PACKAGE, currentPackage,
 				NamespaceStrategy.SINGLE);
+
 		final IEntity p = diagram.getCurrentGroup();
+
 		final String stereotype = arg.get("STEREOTYPE", 0);
-		// final USymbol type = USymbol.getFromString(arg.get("TYPE", 0),
-		// diagram.getSkinParam().getActorStyle());
-//		if (type == USymbol.TOGETHER) {
-//			p.setUSymbol(type);
-//			p.setThisIsTogether();
-//		} else 
+
 		if (stereotype != null) {
 			final USymbol usymbol = USymbols.fromString(stereotype, diagram.getSkinParam().actorStyle(),
 					diagram.getSkinParam().componentStyle(), diagram.getSkinParam().packageStyle());
-			if (usymbol == null) {
+			if (usymbol == null)
 				p.setStereotype(Stereotype.build(stereotype));
-			} else {
+			else
 				p.setUSymbol(usymbol);
-			}
+
 		}
 		CommandCreateClassMultilines.addTags(p, arg.getLazzy("TAGS", 0));
 

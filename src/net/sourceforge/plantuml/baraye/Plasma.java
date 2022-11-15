@@ -113,9 +113,16 @@ public class Plasma {
 //		return false;
 //	}
 
-	public Quark getIfExists(String name) {
+	public Quark getIfExistsFromName(String name) {
 		for (Quark quark : quarks.values())
 			if (quark.getName().equals(name))
+				return quark;
+		return null;
+	}
+
+	public Quark getIfExistsFromFullPath(String full) {
+		for (Quark quark : quarks.values())
+			if (quark.toString(separator).equals(full))
 				return quark;
 		return null;
 	}

@@ -165,6 +165,12 @@ public class Quark extends Ident implements Code {
 		return plasma.getIfExists(sig);
 	}
 
+	public Quark parse(Quark path) {
+		final List<String> sig = new ArrayList<>(getSignature());
+		sig.addAll(path.getSignature());
+		return plasma.ensurePresent(sig);
+	}
+
 	public Quark child(String name) {
 		return plasma.parse(this, name);
 	}
@@ -182,13 +188,15 @@ public class Quark extends Ident implements Code {
 	}
 
 	public void internalMove(Quark src, Quark dest) {
+		System.err.print("Intermal move from " + this + " to ");
 		if (src.getDepth() + 1 != dest.getDepth())
 			throw new UnsupportedOperationException("to be finished");
-		final String name = getName();
+		final List<String> previous = this.getSignature();
 		parts.clear();
 		parts.addAll(dest.getSignature());
-		parts.add(name);
-		this.parent = dest;
+		parts.addAll(previous.subList(src.getDepth(), previous.size()));
+		this.parent = plasma.ensurePresent(parts.subList(0, parts.size() - 1));
+		System.err.println(toString());
 	}
 
 }
