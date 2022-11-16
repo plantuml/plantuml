@@ -43,7 +43,6 @@ import javax.xml.transform.TransformerException;
 
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.SuggestedFile;
-import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.baraye.CucaDiagram;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.descdiagram.DescriptionDiagram;
@@ -58,10 +57,6 @@ public final class CucaDiagramGraphmlMaker {
 		this.diagram = diagram;
 	}
 
-	public static String getModel(UmlDiagram classDiagram) {
-		return "model1";
-	}
-
 	public void createFiles(OutputStream fos, SuggestedFile suggestedFile, String gmlRoot) throws IOException {
 		try {
 
@@ -74,11 +69,7 @@ public final class CucaDiagramGraphmlMaker {
 				throw new UnsupportedOperationException();
 
 			xmi.transformerXml(fos);
-		} catch (ParserConfigurationException e) {
-			Log.error(e.toString());
-			Logme.error(e);
-			throw new IOException(e.toString());
-		} catch (TransformerException e) {
+		} catch (ParserConfigurationException | TransformerException e) {
 			Log.error(e.toString());
 			Logme.error(e);
 			throw new IOException(e.toString());
