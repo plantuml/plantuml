@@ -121,6 +121,10 @@ public class Cuca2GenericConverter implements ICucaDiagramVisitor {
 
 		// Verify the root and file name match
 		// Verify that root is a directory
+		if (this.gmlRoot == null)
+		{
+			throw new IllegalArgumentException("missing command line parameter -gmlRoot");
+		}
 		File root  = new File(this.gmlRoot);
 		File sourceFile = new File(this.file);
 		boolean ok = root.exists() &&
