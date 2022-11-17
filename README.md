@@ -25,6 +25,13 @@ Generate UML diagram from textual description
 
 [PlantUML is **not** affected by the log4j vulnerability.](https://github.com/plantuml/plantuml/issues/826)
 
+> **EXPERIMENTAL BRANCH GRAPHML**
+> 
+> The graphml branch aims at creating a machine readable export of the plantUML diagram (graphML format)
+> More details [here](./src/net/sourceforge/plantuml/graphml/docs/overview.md) 
+>
+> NOTE: graphML format is subject to change at any time until
+ 
 PlantUML is a component that allows to quickly write:
 
  * [Sequence diagram](http://plantuml.com/sequence-diagram),

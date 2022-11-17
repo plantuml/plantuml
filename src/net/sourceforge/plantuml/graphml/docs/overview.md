@@ -59,7 +59,7 @@ defined semantics, e.g. UML or SysML. This can be realized as
   * another plantUML diagram generator which depends on the generic graph 
 		representation
 
-![Propsoal](./images/puml-generic-export.png)
+![Proposal](./images/puml-generic-export.png)
 
 ## Benefits
 
@@ -71,3 +71,18 @@ This enables model checks or script based exports to commercial UML models.
 
 Ultimately leading to a better adoption of plantUML usage within automotive SW 
 development contexts.
+
+## Current Status
+
+### Implementation 
+
+First shot is available, you can try it calling  
+
+`plantuml -tgraphml -graphml-root-dir /path/to/project \
+/path/to/project/some/dir/myArch.puml`
+
+
+### Supported Diagram Types
+
+* Class Diagram (most features)
+
