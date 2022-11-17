@@ -94,6 +94,9 @@ public class ShuntingYard {
 			} else if (token.getTokenType() == TokenType.OPEN_PAREN_MATH) {
 				operatorStack.addFirst(token);
 			} else if (token.getTokenType() == TokenType.CLOSE_PAREN_FUNC) {
+				while (operatorStack.peekFirst() != null
+						&& operatorStack.peekFirst().getTokenType() != TokenType.OPEN_PAREN_FUNC)
+					ouputQueue.add(operatorStack.removeFirst());
 				final Token first = operatorStack.removeFirst();
 				ouputQueue.add(first);
 			} else if (token.getTokenType() == TokenType.CLOSE_PAREN_MATH) {

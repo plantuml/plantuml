@@ -52,7 +52,6 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
-import net.sourceforge.plantuml.timingdiagram.graphic.TimeArrow;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
@@ -68,9 +67,11 @@ public class TimeConstraint {
 	private final ISkinParam skinParam;
 	private final StyleBuilder styleBuilder;
 	private final ArrowConfiguration config;
+	private final double marginx;
 
-	public TimeConstraint(TimeTick tick1, TimeTick tick2, String label, ISkinParam skinParam,
+	public TimeConstraint(double marginx, TimeTick tick1, TimeTick tick2, String label, ISkinParam skinParam,
 			ArrowConfiguration config) {
+		this.marginx = marginx;
 		this.tick1 = Objects.requireNonNull(tick1);
 		this.tick2 = Objects.requireNonNull(tick2);
 		this.label = Display.getWithNewlines(label);
@@ -106,8 +107,8 @@ public class TimeConstraint {
 	public void drawU(UGraphic ug, TimingRuler ruler) {
 		final HColor arrowColor = getArrowColor();
 		ug = ug.apply(arrowColor).apply(arrowColor.bg());
-		final double x1 = ruler.getPosInPixel(tick1);
-		final double x2 = ruler.getPosInPixel(tick2);
+		final double x1 = ruler.getPosInPixel(tick1) + marginx;
+		final double x2 = ruler.getPosInPixel(tick2) - marginx;
 		ug = ug.apply(UTranslate.dx(x1));
 		final double len = x2 - x1;
 		ug.apply(getUStroke()).draw(ULine.hline(len));

@@ -266,9 +266,9 @@ public class TContext {
 		try {
 			while ((s = it.peek()) != null) {
 				final TValue result = executeOneLineSafe(memory, s, ftype, modeSpecial);
-				if (result != null) {
+				if (result != null)
 					return result;
-				}
+
 				it.next();
 			}
 			return null;
@@ -428,9 +428,9 @@ public class TContext {
 		// https://en.wikipedia.org/wiki/String-searching_algorithm
 		// https://www.quora.com/What-is-the-most-efficient-algorithm-to-replace-all-occurrences-of-a-pattern-P-in-a-string-with-a-pattern-P
 		// https://en.wikipedia.org/wiki/Trie
-		if (memory.isEmpty() && functionsSet.size() == 0) {
+		if (memory.isEmpty() && functionsSet.size() == 0)
 			return str;
-		}
+
 		final StringBuilder result = new StringBuilder();
 		for (int i = 0; i < str.length(); i++) {
 			final char c = str.charAt(i);

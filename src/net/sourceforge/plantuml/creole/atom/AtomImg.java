@@ -67,7 +67,7 @@ import net.sourceforge.plantuml.ugraphic.UImage;
 
 public class AtomImg extends AbstractAtom implements Atom {
 
-	private static final String DATA_IMAGE_PNG_BASE64 = "data:image/png;base64,";
+	public static final String DATA_IMAGE_PNG_BASE64 = "data:image/png;base64,";
 	private static final String DATA_IMAGE_SVG_BASE64 = "data:image/svg+xml;base64,";
 	private final BufferedImage image;
 	private final double scale;

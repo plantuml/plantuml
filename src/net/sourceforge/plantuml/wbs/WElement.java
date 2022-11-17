@@ -70,22 +70,22 @@ final public class WElement {
 		final String depth = SName.depth(level);
 		if (level == 0)
 			return StyleSignatureBasic.of(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.rootNode)
-					.add(stereotype).add(depth);
+					.addS(stereotype).add(depth);
 
 		if (shape == IdeaShape.NONE && isLeaf())
 			return StyleSignatureBasic
 					.of(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.leafNode, SName.boxless)
-					.add(stereotype).add(depth);
+					.addS(stereotype).add(depth);
 
 		if (isLeaf())
 			return StyleSignatureBasic.of(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.leafNode)
-					.add(stereotype).add(depth);
+					.addS(stereotype).add(depth);
 
 		if (shape == IdeaShape.NONE)
 			return StyleSignatureBasic.of(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.boxless)
-					.add(stereotype).add(depth);
+					.addS(stereotype).add(depth);
 
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.wbsDiagram, SName.node).add(stereotype).add(depth);
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.wbsDiagram, SName.node).addS(stereotype).add(depth);
 	}
 
 	public ISkinParam withBackColor(ISkinParam skinParam) {

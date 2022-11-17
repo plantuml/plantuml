@@ -60,15 +60,15 @@ public class Substr extends SimpleReturnFunction {
 			Map<String, TValue> named) throws EaterException, EaterExceptionLocated {
 		final String full = values.get(0).toString();
 		final int pos = values.get(1).toInt();
-		if (pos >= full.length()) {
+		if (pos >= full.length())
 			return TValue.fromString("");
-		}
+
 		String result = full.substring(pos);
 		if (values.size() == 3) {
 			final int len = values.get(2).toInt();
-			if (len < result.length()) {
+			if (len < result.length())
 				result = result.substring(0, len);
-			}
+
 		}
 		return TValue.fromString(result);
 	}
