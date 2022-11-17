@@ -60,7 +60,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -234,17 +233,17 @@ public class GraphmlTest {
 		// i'd like to pass the reference to the original source file into the processing
 		// did not find an easy way to add the suggestedFile into the processing chain
 		// ==> use workaround to create a temp puml file and call similar to main processing
-		final String tmpTestFile = getTempPumlFile().toUri().getPath();
-		final FileOutputStream tmpTestFileOutStream = new FileOutputStream(Paths.get(tmpTestFile).toFile());
+		final Path tmpTestFile = getTempPumlFile().toAbsolutePath();
+		final FileOutputStream tmpTestFileOutStream = new FileOutputStream(tmpTestFile.toString());
 		tmpTestFileOutStream.write(diagramText.getBytes(UTF_8));
 		tmpTestFileOutStream.close();
 
 		// Essential activities when calling graphML export from command line
 		// Reverse Engineered from Run.java
-		String[] args = new String[] {"-tgraphml", "-graphml-root-dir", Paths.get("test").toUri().getPath() , tmpTestFile};
+		String[] args = new String[] {"-tgraphml", "-graphml-root-dir", Paths.get("test").toUri().getPath() , tmpTestFile.toString()};
 		final Option option = new Option(args);
 		final File outputDir = null;
-		final File f = Paths.get(tmpTestFile).toFile();
+		final File f = tmpTestFile.toFile();
 		SourceFileReader sourceFileReader = new SourceFileReader(option.getDefaultDefines(f), f, outputDir, option.getConfig(),
 						option.getCharset(), option.getFileFormatOption());
 		sourceFileReader.setCheckMetadata(option.isCheckMetadata());
