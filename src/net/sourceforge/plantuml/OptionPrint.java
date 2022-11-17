@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -90,6 +90,7 @@ public class OptionPrint {
 		System.out.println("    -tpng\t\tTo generate images using PNG format (default)");
 		System.out.println("    -tsvg\t\tTo generate images using SVG format");
 		System.out.println("    -teps\t\tTo generate images using EPS format");
+		System.out.println("    -tgraphml\t\tTo generate a generic diagram representation in graphml format");
 		System.out.println("    -tpdf\t\tTo generate images using PDF format");
 		System.out.println("    -tvdx\t\tTo generate images using VDX format");
 		System.out.println("    -txmi\t\tTo generate XMI file for class diagram");
@@ -160,6 +161,7 @@ public class OptionPrint {
 		System.out.println("    -preproc\t\tTo output preprocessor text of diagrams");
 		System.out.println("    -cypher\t\tTo cypher texts of diagrams so that you can share them");
 		System.out.println("    -picoweb\t\tTo start internal HTTP Server. See https://plantuml.com/picoweb");
+		System.out.println("    -graphml-root-dir\t\tto define the project root path (only for graphml files)");
 		System.out.println();
 		System.out.println("If needed, you can setup the environment variable GRAPHVIZ_DOT.");
 		exit(0);

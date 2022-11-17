@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.graphml;
@@ -42,38 +42,34 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
 import net.sourceforge.plantuml.Log;
-import net.sourceforge.plantuml.UmlDiagram;
-import net.sourceforge.plantuml.cucadiagram.ICucaDiagram;
+import net.sourceforge.plantuml.SuggestedFile;
+import net.sourceforge.plantuml.baraye.CucaDiagram;
+import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.descdiagram.DescriptionDiagram;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.xmi.XmlDiagramTransformer;
 
 public final class CucaDiagramGraphmlMaker {
 
-	private final ICucaDiagram diagram;
+	private final CucaDiagram diagram;
 
-	public CucaDiagramGraphmlMaker(ICucaDiagram diagram) throws IOException {
+	public CucaDiagramGraphmlMaker(CucaDiagram diagram) throws IOException {
 		this.diagram = diagram;
 	}
 
-	public static String getModel(UmlDiagram classDiagram) {
-		return "model1";
-	}
-
-	public void createFiles(OutputStream fos) throws IOException {
+	public void createFiles(OutputStream fos, SuggestedFile suggestedFile, String graphmlRootDir) throws IOException {
 		try {
+
 			final XmlDiagramTransformer xmi;
 			if (diagram instanceof DescriptionDiagram)
-				xmi = new GraphmlDescriptionDiagram((DescriptionDiagram) diagram);
-			else
+				xmi = new GraphmlDescriptionDiagram((DescriptionDiagram) diagram, suggestedFile, graphmlRootDir);
+			else if (diagram instanceof ClassDiagram) {
+				xmi = new GraphmlClassDiagram((ClassDiagram) diagram, suggestedFile, graphmlRootDir);
+			} else
 				throw new UnsupportedOperationException();
 
 			xmi.transformerXml(fos);
-		} catch (ParserConfigurationException e) {
-			Log.error(e.toString());
-			Logme.error(e);
-			throw new IOException(e.toString());
-		} catch (TransformerException e) {
+		} catch (ParserConfigurationException | TransformerException e) {
 			Log.error(e.toString());
 			Logme.error(e);
 			throw new IOException(e.toString());

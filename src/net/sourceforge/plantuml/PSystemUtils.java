@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -44,9 +44,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import net.sourceforge.plantuml.baraye.CucaDiagram;
+import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.baraye.CucaDiagram;
+import net.sourceforge.plantuml.graphml.CucaDiagramGraphmlMaker;
 import net.sourceforge.plantuml.html.CucaDiagramHtmlMaker;
 import net.sourceforge.plantuml.png.PngSplitter;
 import net.sourceforge.plantuml.project.GanttDiagram;
@@ -88,6 +90,10 @@ public class PSystemUtils {
 		}
 		if (system instanceof CucaDiagram && fileFormatOption.getFileFormat() == FileFormat.HTML) {
 			return createFilesHtml((CucaDiagram) system, suggestedFile);
+		}
+
+		if (system instanceof CucaDiagram && fileFormatOption.getFileFormat() == FileFormat.GRAPHML) {
+			return createFilesGraphML((CucaDiagram) system, suggestedFile, fileFormatOption.getGraphmlRootDir());
 		}
 
 		return exportDiagramsDefault(system, suggestedFile, fileFormatOption);
@@ -169,8 +175,34 @@ public class PSystemUtils {
 		return maker.create();
 	}
 
-	private static List<FileImageData> splitPng(TitledDiagram diagram, SuggestedFile pngFile, ImageData imageData,
-			FileFormatOption fileFormatOption) throws IOException {
+	private  static List<FileImageData> createFilesGraphML(CucaDiagram system, SuggestedFile suggestedFile, String graphmlRootDir) throws IOException {
+		final SFile outputFile = suggestedFile.getFile(0);
+
+		if (outputFile.isDirectory()) {
+			throw new IllegalArgumentException("File is a directory " + suggestedFile);
+		}
+
+		if (!canFileBeWritten(outputFile)) {
+			return emptyList();
+		}
+
+		final ImageData imageData;
+
+		try (OutputStream os = outputFile.createBufferedOutputStream()) {
+			final CucaDiagramGraphmlMaker maker = new CucaDiagramGraphmlMaker(system);
+			maker.createFiles(os, suggestedFile, graphmlRootDir);
+			imageData = ImageDataSimple.ok();
+		}
+
+		if (imageData == null) {
+			return emptyList();
+		}
+
+		return singletonList(new FileImageData(outputFile, imageData));
+	}
+
+	private static List<FileImageData> splitPng(TitledDiagram diagram, SuggestedFile pngFile, ImageData imageData, FileFormatOption fileFormatOption)
+			throws IOException {
 
 		final List<SFile> files = new PngSplitter(fileFormatOption.getColorMapper(), pngFile,
 				diagram.getSplitPagesHorizontal(), diagram.getSplitPagesVertical(),
