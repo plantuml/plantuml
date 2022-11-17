@@ -41,7 +41,7 @@ import java.util.List;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
-import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
+import net.sourceforge.plantuml.cucadiagram.ICucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
@@ -89,7 +89,7 @@ public class ElkPath implements UDrawable {
 	private final Link link;
 	private final ElkEdge edge;
 
-	private final CucaDiagram diagram;
+	private final ICucaDiagram diagram;
 	private final TextBlock centerLabel;
 	private final TextBlock headLabel;
 	private final TextBlock tailLabel;
@@ -98,7 +98,7 @@ public class ElkPath implements UDrawable {
 
 	private final double magicY2;
 
-	public ElkPath(CucaDiagram diagram, SName styleName, Link link, ElkEdge edge, TextBlock centerLabel,
+	public ElkPath(ICucaDiagram diagram, SName styleName, Link link, ElkEdge edge, TextBlock centerLabel,
 			TextBlock tailLabel, TextBlock headLabel, double magicY2) {
 		this.link = link;
 		this.edge = edge;

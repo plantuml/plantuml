@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile;
 
+import java.util.Set;
+
 import net.sourceforge.plantuml.SpecificBackcolorable;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.color.ColorType;
@@ -43,17 +45,19 @@ import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
-public class Swimlane implements SpecificBackcolorable {
+public class Swimlane implements SpecificBackcolorable, Comparable<Swimlane> {
 
 	private final String name;
+	private final int order;
 	private Display display;
 
 	private UTranslate translate = new UTranslate();
 	private double actualWidth;
 
-	public Swimlane(String name) {
+	public Swimlane(String name, int order) {
 		this.name = name;
 		this.display = Display.getWithNewlines(name);
+		this.order = order;
 
 	}
 
@@ -115,5 +119,19 @@ public class Swimlane implements SpecificBackcolorable {
 
 	public MinMax getMinMax() {
 		return minMax;
+	}
+
+	@Override
+	public int compareTo(Swimlane other) {
+		return Integer.compare(this.order, other.order);
+	}
+
+	public boolean isSmallerThanAllOthers(Set<Swimlane> others) {
+		if (others.size() == 1 && others.contains(this))
+			return false;
+		for (Swimlane sw : others)
+			if (sw.compareTo(this) < 0)
+				return false;
+		return true;
 	}
 }

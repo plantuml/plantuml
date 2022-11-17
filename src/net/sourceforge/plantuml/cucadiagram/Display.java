@@ -39,7 +39,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Objects;
@@ -47,14 +46,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.BackSlash;
-import net.sourceforge.plantuml.EmbeddedDiagram;
 import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.LineBreakStrategy;
-import net.sourceforge.plantuml.LineLocationImpl;
 import net.sourceforge.plantuml.SpriteContainer;
 import net.sourceforge.plantuml.StringLocated;
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlMode;
 import net.sourceforge.plantuml.command.regex.Matcher2;
@@ -93,6 +89,22 @@ public class Display implements Iterable<CharSequence> {
 	private final boolean showStereotype;
 
 	public final static Display NULL = new Display(true, null, null, true, CreoleMode.FULL);
+
+//	@Override
+//	public int hashCode() {
+//		if (isNull)
+//			return 42;
+//		return displayData.hashCode();
+//	}
+//
+//	@Override
+//	public boolean equals(Object other) {
+//		return this.displayData.equals(((Display) other).displayData);
+//	}
+
+	public boolean equalsLike(Display other) {
+		return this.displayData.equals(other.displayData);
+	}
 
 	public boolean showStereotype() {
 		return showStereotype;
@@ -162,6 +174,25 @@ public class Display implements Iterable<CharSequence> {
 		CreoleParser.checkColor(result);
 		return result;
 	}
+
+//	private static List<String> skip(String type, Iterator<StringLocated> it) {
+//		final List<String> result = new ArrayList<String>();
+//		result.add("@start" + type);
+//		int nested = 1;
+//		while (it.hasNext()) {
+//			final StringLocated s2 = it.next();
+//			result.add(s2.getString());
+//			if (s2.getTrimmed().getString().startsWith(EmbeddedDiagram.EMBEDDED_START))
+//				nested++;
+//			else if (s2.getTrimmed().getString().equals(EmbeddedDiagram.EMBEDDED_END)) {
+//				nested--;
+//				if (nested == 0)
+//					break;
+//			}
+//		}
+//		result.add("@end" + type);
+//		return result;
+//	}
 
 	public static Display create(Collection<? extends CharSequence> other) {
 		return new Display(true, other, null, false, CreoleMode.FULL);
@@ -241,48 +272,55 @@ public class Display implements Iterable<CharSequence> {
 			HorizontalAlignment naturalHorizontalAlignment, boolean isNull, CreoleMode defaultCreoleMode) {
 		this(showStereotype, naturalHorizontalAlignment, isNull, defaultCreoleMode);
 		if (isNull == false)
-			this.displayData.addAll(manageEmbeddedDiagrams(other));
+			// this.displayData.addAll(manageEmbeddedDiagrams(other));
+			this.displayData.addAll(other);
 
 	}
 
-	private static List<CharSequence> manageEmbeddedDiagrams(final Collection<? extends CharSequence> strings) {
-		final List<CharSequence> result = new ArrayList<>();
-		final Iterator<? extends CharSequence> it = strings.iterator();
-		while (it.hasNext()) {
-			CharSequence s = it.next();
-			final String type = EmbeddedDiagram.getEmbeddedType(s);
-			if (type != null) {
-				final List<CharSequence> other = new ArrayList<>();
-				other.add("@start" + type);
-				while (it.hasNext()) {
-					final CharSequence s2 = it.next();
-					if (s2 != null && StringUtils.trin(s2.toString()).equals("}}"))
-						break;
-
-					other.add(s2);
-				}
-				other.add("@end" + type);
-				s = new EmbeddedDiagram(Display.create(other));
-			}
-			result.add(s);
-		}
-		return result;
-	}
+//	private static List<CharSequence> manageEmbeddedDiagrams(final Collection<? extends CharSequence> strings) {
+//		System.err.println("tata=" + strings);
+//		final List<CharSequence> result = new ArrayList<>();
+//		final Iterator<? extends CharSequence> it = strings.iterator();
+//		while (it.hasNext()) {
+//			CharSequence s = it.next();
+//			if (s instanceof String == false)
+//				System.err.println("s=" + s.getClass());
+//			final String type = EmbeddedDiagram.getEmbeddedType(s);
+//			if (type != null) {
+//				final List<CharSequence> other = new ArrayList<>();
+//				other.add("@start" + type);
+//				int nested = 1;
+//				while (it.hasNext()) {
+//					final CharSequence s2 = it.next();
+//					if (StringUtils.trin(s2.toString()).equals(EmbeddedDiagram.EMBEDDED_END)) {
+//						nested--;
+//						if (nested == 0)
+//							break;
+//					}
+//					if (StringUtils.trin(s2.toString()).startsWith(EmbeddedDiagram.EMBEDDED_START))
+//						nested++;
+//
+//					other.add(s2);
+//				}
+//				other.add("@end" + type);
+//				s = new EmbeddedDiagram(Display.create(other));
+//			}
+//			result.add(s);
+//		}
+//		return result;
+//	}
 
 	public Display manageGuillemet(boolean manageVisibilityModifier) {
 		final List<CharSequence> result = new ArrayList<>();
 		boolean first = true;
 		for (CharSequence line : displayData) {
-			if (line instanceof EmbeddedDiagram) {
-				result.add(line);
-			} else {
-				String lineString = line.toString();
-				if (manageVisibilityModifier && first && VisibilityModifier.isVisibilityCharacter(line))
-					lineString = lineString.substring(1).trim();
+			String lineString = line.toString();
+			if (manageVisibilityModifier && first && VisibilityModifier.isVisibilityCharacter(line))
+				lineString = lineString.substring(1).trim();
 
-				final String withGuillement = Guillemet.GUILLEMET.manageGuillemet(lineString);
-				result.add(withGuillement);
-			}
+			final String withGuillement = Guillemet.GUILLEMET.manageGuillemet(lineString);
+			result.add(withGuillement);
+
 			first = false;
 		}
 		return new Display(showStereotype, result, this.naturalHorizontalAlignment, this.isNull,
@@ -366,16 +404,6 @@ public class Display implements Iterable<CharSequence> {
 		return displayData.toString();
 	}
 
-	@Override
-	public int hashCode() {
-		return displayData.hashCode();
-	}
-
-	@Override
-	public boolean equals(Object other) {
-		return this.displayData.equals(((Display) other).displayData);
-	}
-
 	public Display addAll(Display other) {
 		final Display result = new Display(this.showStereotype, this, this.defaultCreoleMode);
 		result.displayData.addAll(other.displayData);
@@ -429,15 +457,15 @@ public class Display implements Iterable<CharSequence> {
 		return Collections.unmodifiableList(displayData);
 	}
 
-	public List<StringLocated> as2() {
-		final List<StringLocated> result = new ArrayList<>();
-		LineLocationImpl location = new LineLocationImpl("inner", null);
-		for (CharSequence cs : displayData) {
-			location = location.oneLineRead();
-			result.add(new StringLocated(cs.toString(), location));
-		}
-		return Collections.unmodifiableList(result);
-	}
+//	public List<StringLocated> as2() {
+//		final List<StringLocated> result = new ArrayList<>();
+//		LineLocationImpl location = new LineLocationImpl("inner", null);
+//		for (CharSequence cs : displayData) {
+//			location = location.oneLineRead();
+//			result.add(new StringLocated(cs.toString(), location));
+//		}
+//		return Collections.unmodifiableList(result);
+//	}
 
 	public boolean hasUrl() {
 		final UrlBuilder urlBuilder = new UrlBuilder(null, UrlMode.ANYWHERE);
@@ -567,9 +595,8 @@ public class Display implements Iterable<CharSequence> {
 	private TextBlock getCreole(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
 			ISkinSimple spriteContainer, LineBreakStrategy maxMessageSize, CreoleMode creoleMode,
 			FontConfiguration stereotypeConfiguration, double marginX1, double marginX2) {
-		final Sheet sheet = Parser
-				.build(fontConfiguration, horizontalAlignment, spriteContainer, creoleMode, stereotypeConfiguration)
-				.createSheet(this);
+		final Sheet sheet = spriteContainer
+				.sheet(fontConfiguration, horizontalAlignment, creoleMode, stereotypeConfiguration).createSheet(this);
 		final double padding = spriteContainer == null ? 0 : spriteContainer.getPadding();
 		final SheetBlock1 sheetBlock1 = new SheetBlock1(sheet, maxMessageSize, padding, marginX1, marginX2);
 		return new SheetBlock2(sheetBlock1, sheetBlock1, new UStroke(1.5));
@@ -616,5 +643,24 @@ public class Display implements Iterable<CharSequence> {
 		}
 		return false;
 	}
+
+//	private Object data;
+//	private boolean mayHaveEmbedded;
+//
+//	public final Object getCachedDataForPerf() {
+//		return data;
+//	}
+//
+//	public final void setCachedDataForPerf(Object data) {
+//		this.data = data;
+//	}
+//
+//	public final void setMayHaveEmbedded() {
+//		this.mayHaveEmbedded = true;
+//	}
+//
+//	public final boolean mayHaveEmbedded() {
+//		return mayHaveEmbedded;
+//	}
 
 }

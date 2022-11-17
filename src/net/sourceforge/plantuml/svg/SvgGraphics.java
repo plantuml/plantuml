@@ -81,6 +81,7 @@ import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.USegment;
 import net.sourceforge.plantuml.ugraphic.USegmentType;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorGradient;
 import net.sourceforge.plantuml.xml.XmlFactories;
 
@@ -114,7 +115,7 @@ public class SvgGraphics {
 
 	private String strokeWidth;
 	private String strokeDasharray = null;
-	private final String backcolor;
+	private final String backcolorString;
 
 	private int maxX = 10;
 	private int maxY = 10;
@@ -130,6 +131,8 @@ public class SvgGraphics {
 
 	private final boolean interactive;
 
+	private Element pendingBackground;
+
 	final protected void ensureVisible(double x, double y) {
 		if (x > maxX) {
 			maxX = (int) (x + 1);
@@ -139,14 +142,15 @@ public class SvgGraphics {
 		}
 	}
 
-	public SvgGraphics(String backcolor, boolean svgDimensionStyle, XDimension2D minDim, double scale, String hover,
-			long seed, String preserveAspectRatio, LengthAdjust lengthAdjust, boolean interactive) {
+	public SvgGraphics(ColorMapper mapper, HColor backcolor, boolean svgDimensionStyle, XDimension2D minDim,
+			double scale, String hover, long seed, String preserveAspectRatio, LengthAdjust lengthAdjust,
+			boolean interactive) {
 		try {
 			this.lengthAdjust = lengthAdjust;
 			this.svgDimensionStyle = svgDimensionStyle;
 			this.scale = scale;
 			this.document = getDocument();
-			this.backcolor = backcolor;
+
 			this.preserveAspectRatio = preserveAspectRatio;
 			this.interactive = interactive;
 			ensureVisible(minDim.getWidth(), minDim.getHeight());
@@ -173,10 +177,34 @@ public class SvgGraphics {
 				if (script != null)
 					defs.appendChild(script);
 			}
+
+			if (backcolor instanceof HColorGradient) {
+				this.backcolorString = null;
+				HColorGradient gr = (HColorGradient) backcolor;
+				final String id = this.createSvgGradient(gr.getColor1().toRGB(mapper), gr.getColor2().toRGB(mapper),
+						gr.getPolicy());
+				this.paintBackcolor("url(#" + id + ")");
+			} else if (backcolor == null) {
+				this.backcolorString = null;
+			} else {
+				this.backcolorString = backcolor.toSvg(mapper);
+				final String color = backcolor.toSvg(mapper);
+				if (color.equals("#00000000") == false && color.equals("#000000") == false
+						&& color.equals("#FFFFFF") == false)
+					this.paintBackcolor(color);
+			}
+
 		} catch (ParserConfigurationException e) {
 			Logme.error(e);
 			throw new IllegalStateException(e);
 		}
+	}
+
+	private void paintBackcolor(String back) {
+		setFillColor(back);
+		setStrokeColor(null);
+		pendingBackground = createRectangleInternal(0, 0, 0, 0);
+		getG().appendChild(pendingBackground);
 	}
 
 	private Element getStylesForInteractiveMode() {
@@ -249,16 +277,6 @@ public class SvgGraphics {
 
 	private static String getSeed(final long seed) {
 		return Long.toString(Math.abs(seed), 36);
-	}
-
-	private Element pendingBackground;
-
-	public void paintBackcolorGradient(ColorMapper mapper, HColorGradient gr) {
-		final String id = createSvgGradient(gr.getColor1().toRGB(mapper), gr.getColor2().toRGB(mapper), gr.getPolicy());
-		setFillColor("url(#" + id + ")");
-		setStrokeColor(null);
-		pendingBackground = createRectangleInternal(0, 0, 0, 0);
-		getG().appendChild(pendingBackground);
 	}
 
 	// This method returns a reference to a simple XML
@@ -644,8 +662,9 @@ public class SvgGraphics {
 		final int maxXscaled = (int) (maxX * scale);
 		final int maxYscaled = (int) (maxY * scale);
 		String style = "width:" + maxXscaled + "px;height:" + maxYscaled + "px;";
-		if (backcolor != null && "#00000000".equals(backcolor) == false)
-			style += "background:" + backcolor + ";";
+
+		if (backcolorString != null && "#00000000".equals(backcolorString) == false)
+			style += "background:" + backcolorString + ";";
 
 		if (svgDimensionStyle) {
 			root.setAttribute("style", style);

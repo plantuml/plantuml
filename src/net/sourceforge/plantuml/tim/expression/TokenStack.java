@@ -53,33 +53,6 @@ public class TokenStack {
 
 	final private List<Token> tokens;
 
-//	public boolean isSpecialAffectationWhenFunctionCall() {
-//		if (tokens.size() != 1) {
-//			return false;
-//		}
-//		final Token single = tokens.get(0);
-//		if (single.getTokenType() != TokenType.PLAIN_TEXT) {
-//			return false;
-//		}
-//		return isSpecialAffectationWhenFunctionCall(single.getSurface());
-//	}
-//
-//	public static boolean isSpecialAffectationWhenFunctionCall(String surface) {
-//		final int idx = surface.indexOf('=');
-//		if (idx <= 0) {
-//			return false;
-//		}
-//		if (TLineType.isLetterOrUnderscoreOrDollar(surface.charAt(0)) == false) {
-//			return false;
-//		}
-//		for (int i = 1; i < idx; i++) {
-//			if (TLineType.isLetterOrUnderscoreOrDigit(surface.charAt(i)) == false) {
-//				return false;
-//			}
-//		}
-//		return true;
-//	}
-
 	public TokenStack() {
 		this(new ArrayList<Token>());
 	}
@@ -117,6 +90,7 @@ public class TokenStack {
 	static public TokenStack eatUntilCloseParenthesisOrComma(Eater eater) throws EaterException {
 		final TokenStack result = new TokenStack();
 		int level = 0;
+		Token lastToken = null;
 		while (true) {
 			eater.skipSpaces();
 			final char ch = eater.peekChar();
@@ -126,13 +100,15 @@ public class TokenStack {
 			if (level == 0 && (ch == ',' || ch == ')'))
 				return result;
 
-			final Token token = TokenType.eatOneToken(eater, false);
+			final Token token = TokenType.eatOneToken(lastToken, eater, false);
 			final TokenType type = token.getTokenType();
 			if (type == TokenType.OPEN_PAREN_MATH)
 				level++;
 			else if (type == TokenType.CLOSE_PAREN_MATH)
 				level--;
 
+			if (token.getTokenType() != TokenType.SPACES)
+				lastToken = token;
 			result.add(token);
 		}
 	}

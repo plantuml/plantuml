@@ -36,19 +36,13 @@
 package net.sourceforge.plantuml.dedication;
 
 import java.awt.image.BufferedImage;
-import java.io.InputStream;
-import java.lang.reflect.Method;
 import java.util.Objects;
-
-import javax.imageio.stream.ImageInputStream;
 
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.PlainDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.graphic.UDrawable;
-import net.sourceforge.plantuml.log.Logme;
-import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.ugraphic.AffineTransformType;
 import net.sourceforge.plantuml.ugraphic.PixelImage;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -71,26 +65,6 @@ public class PSystemDedication extends PlainDiagram {
 				ug.draw(new UImage(new PixelImage(img, AffineTransformType.TYPE_BILINEAR)));
 			}
 		};
-	}
-
-	public static BufferedImage getBufferedImage(InputStream is) {
-		try {
-			final Class<?> clVP8Decoder = Class.forName("net.sourceforge.plantuml.webp.VP8Decoder");
-			final Object vp8Decoder = clVP8Decoder.getDeclaredConstructor().newInstance();
-			// final VP8Decoder vp8Decoder = new VP8Decoder();
-			final Method decodeFrame = clVP8Decoder.getMethod("decodeFrame", ImageInputStream.class);
-			final ImageInputStream iis = SImageIO.createImageInputStream(is);
-			decodeFrame.invoke(vp8Decoder, iis);
-			// vp8Decoder.decodeFrame(iis);
-			iis.close();
-			final Object frame = clVP8Decoder.getMethod("getFrame").invoke(vp8Decoder);
-			return (BufferedImage) frame.getClass().getMethod("getBufferedImage").invoke(frame);
-			// final VP8Frame frame = vp8Decoder.getFrame();
-			// return frame.getBufferedImage();
-		} catch (Exception e) {
-			Logme.error(e);
-			return null;
-		}
 	}
 
 	public DiagramDescription getDescription() {

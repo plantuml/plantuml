@@ -116,18 +116,23 @@ public class TextBlockBordered extends AbstractTextBlock implements TextBlock {
 		if (withShadow)
 			polygon.setDeltaShadow(4);
 
-		if (backgroundColor == null)
-			ug = ug.apply(HColors.none().bg());
+		final HColor back;
+		if (backgroundColor == null || backgroundColor.isTransparent()
+				|| backgroundColor.equals(ug.getDefaultBackground()))
+			back = HColors.none();
 		else
-			ug = ug.apply(backgroundColor.bg());
+			back = backgroundColor;
 
-		HColor color = noBorder() ? backgroundColor : borderColor;
+		HColor color = noBorder() ? back : borderColor;
 		if (color == null)
 			color = HColors.none();
 
-		ug = ug.apply(color);
-		ug = applyStroke(ug);
-		ug.draw(polygon);
+		if (back.isTransparent() == false || color.isTransparent() == false) {
+			ug = ug.apply(back.bg());
+			ug = ug.apply(color);
+			ug = applyStroke(ug);
+			ug.draw(polygon);
+		}
 		TextBlock toDraw = textBlock;
 		if (textBlock instanceof SheetBlock2)
 			toDraw = ((SheetBlock2) textBlock).enlargeMe(left, right);

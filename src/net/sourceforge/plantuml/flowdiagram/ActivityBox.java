@@ -100,7 +100,7 @@ public class ActivityBox extends AbstractTextBlock {
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		final XDimension2D dim = tb.calculateDimension(stringBounder);
 
-		return XDimension2D.delta(dim, 2 * MARGIN, 2 * MARGIN);
+		return dim.delta((2 * MARGIN), (2 * MARGIN));
 	}
 
 }

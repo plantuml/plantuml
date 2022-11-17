@@ -90,13 +90,13 @@ class USymbolPerson extends USymbol {
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
 				final XDimension2D body = bodyDimension(stringBounder);
-				return XDimension2D.delta(body, 0, headSize(body));
+				return body.delta(0, headSize(body));
 			}
 
 			private XDimension2D bodyDimension(StringBounder stringBounder) {
 				final XDimension2D dimLabel = label.calculateDimension(stringBounder);
 				final XDimension2D dimStereo = stereotype.calculateDimension(stringBounder);
-				return getMargin().addDimension(XDimension2D.mergeTB(dimStereo, dimLabel));
+				return getMargin().addDimension(dimStereo.mergeTB(dimLabel));
 			}
 		};
 	}

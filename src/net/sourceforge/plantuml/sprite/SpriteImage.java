@@ -40,6 +40,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Objects;
 
+import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -99,6 +100,7 @@ public class SpriteImage implements Sprite {
 
 	public static InputStream getInternalSprite(final String inner) {
 		final String path = "/sprites/" + inner;
+		Log.info("Triying " + path);
 		final InputStream is = SpriteImage.class.getResourceAsStream(path);
 		return is;
 	}

@@ -85,16 +85,15 @@ public class ElementDroplist extends AbstractElementText implements Element {
 
 	public XDimension2D getPreferredDimension(StringBounder stringBounder, double x, double y) {
 		final XDimension2D dim = getTextDimensionAt(stringBounder, x + 2);
-		return XDimension2D.delta(dim, 4 + box, 4);
+		return dim.delta((4 + box), 4);
 	}
 
 	public void drawU(UGraphic ug, int zIndex, XDimension2D dimToUse) {
 		final XDimension2D dim = getPreferredDimension(ug.getStringBounder(), 0, 0);
 		ug = ug.apply(getBlack());
-		
+
 		if (zIndex == 0) {
-			ug.apply(getColorEE().bg())
-					.draw(new URectangle(dim.getWidth() - 1, dim.getHeight() - 1));
+			ug.apply(getColorEE().bg()).draw(new URectangle(dim.getWidth() - 1, dim.getHeight() - 1));
 			drawText(ug, 2, 2);
 			final double xline = dim.getWidth() - box;
 			ug.apply(UTranslate.dx(xline)).draw(ULine.vline(dim.getHeight() - 1));
@@ -109,11 +108,10 @@ public class ElementDroplist extends AbstractElementText implements Element {
 		}
 
 		if (openDrop != null) {
-			final XDimension2D dimOpen = XDimension2D.atLeast(openDrop.calculateDimension(ug.getStringBounder()),
-					dim.getWidth() - 1, 0);
+			final XDimension2D dimOpen = openDrop.calculateDimension(ug.getStringBounder()).atLeast(dim.getWidth() - 1,
+					0);
 			ug = ug.apply(UTranslate.dy(dim.getHeight() - 1));
-			ug.apply(getColorEE().bg())
-					.draw(new URectangle(dimOpen.getWidth() - 1, dimOpen.getHeight() - 1));
+			ug.apply(getColorEE().bg()).draw(new URectangle(dimOpen.getWidth() - 1, dimOpen.getHeight() - 1));
 			openDrop.drawU(ug);
 		}
 	}

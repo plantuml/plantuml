@@ -95,7 +95,7 @@ public class GtileRepeat extends GtileTopDown3 {
 
 	@Override
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-		return XDimension2D.delta(super.calculateDimension(stringBounder), SUPP_WIDTH, 0);
+		return super.calculateDimension(stringBounder).delta(SUPP_WIDTH, 0);
 	}
 
 	@Override

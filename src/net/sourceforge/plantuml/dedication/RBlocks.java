@@ -75,9 +75,9 @@ public class RBlocks {
 
 	public RBlocks change(BigInteger E, BigInteger N) {
 		final RBlocks result = new RBlocks();
-		for (RBlock rsa : all) {
+		for (RBlock rsa : all)
 			result.all.add(rsa.change(E, N));
-		}
+
 		return result;
 	}
 

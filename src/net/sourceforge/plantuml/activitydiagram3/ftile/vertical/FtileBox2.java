@@ -50,7 +50,6 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.creole.CreoleMode;
-import net.sourceforge.plantuml.creole.Parser;
 import net.sourceforge.plantuml.creole.Sheet;
 import net.sourceforge.plantuml.creole.SheetBlock1;
 import net.sourceforge.plantuml.creole.SheetBlock2;
@@ -155,8 +154,7 @@ public class FtileBox2 extends AbstractFtile {
 		this.boxStyle = boxStyle;
 		this.swimlane = swimlane;
 
-		this.inRendering = LinkRendering
-				.create(Rainbow.build(styleArrow, getIHtmlColorSet()));
+		this.inRendering = LinkRendering.create(Rainbow.build(styleArrow, getIHtmlColorSet()));
 		this.borderColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());
 		this.backColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
 
@@ -172,8 +170,7 @@ public class FtileBox2 extends AbstractFtile {
 
 		this.minimumWidth = style.value(PName.MinimumWidth).asDouble();
 
-		final Sheet sheet = Parser
-				.build(fc, skinParam.getDefaultTextAlignment(horizontalAlignment), skinParam, CreoleMode.FULL)
+		final Sheet sheet = skinParam.sheet(fc, skinParam.getDefaultTextAlignment(horizontalAlignment), CreoleMode.FULL)
 				.createSheet(label);
 		this.tb = new SheetBlock2(new SheetBlock1(sheet, wrapWidth, skinParam.getPadding()), new MyStencil(),
 				new UStroke(1));
@@ -235,9 +232,9 @@ public class FtileBox2 extends AbstractFtile {
 
 	private XDimension2D getDimRaw(StringBounder stringBounder) {
 		XDimension2D dimRaw = tb.calculateDimension(stringBounder);
-		dimRaw = XDimension2D.delta(dimRaw, padding.getLeft() + padding.getRight() + boxStyle.getShield(),
+		dimRaw = dimRaw.delta(padding.getLeft() + padding.getRight() + boxStyle.getShield(),
 				padding.getBottom() + padding.getTop());
-		dimRaw = XDimension2D.atLeast(dimRaw, minimumWidth, 0);
+		dimRaw = dimRaw.atLeast(minimumWidth, 0);
 		return dimRaw;
 	}
 

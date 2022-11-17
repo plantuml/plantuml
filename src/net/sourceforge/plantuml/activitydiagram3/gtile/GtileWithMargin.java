@@ -73,7 +73,7 @@ public class GtileWithMargin extends AbstractGtileRoot implements Gtile {
 	@Override
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		final XDimension2D result = orig.calculateDimension(stringBounder);
-		return XDimension2D.delta(result, east, north + south);
+		return result.delta(east, north + south);
 	}
 
 	private UTranslate getTranslate() {

@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.AlignmentParam;
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineBreakStrategy;
+import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.activitydiagram3.PositionedNote;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
@@ -52,7 +53,6 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.creole.CreoleMode;
-import net.sourceforge.plantuml.creole.Parser;
 import net.sourceforge.plantuml.creole.Sheet;
 import net.sourceforge.plantuml.creole.SheetBlock1;
 import net.sourceforge.plantuml.creole.SheetBlock2;
@@ -146,7 +146,7 @@ public class FtileWithNoteOpale extends AbstractFtile implements Stencil, Stylea
 
 		final HorizontalAlignment align = skinParam.getHorizontalAlignment(AlignmentParam.noteTextAlignment, null,
 				false, null);
-		final Sheet sheet = Parser.build(fc, align, skinParam, CreoleMode.FULL).createSheet(note.getDisplay());
+		final Sheet sheet = skinParam.sheet(fc, align, CreoleMode.FULL).createSheet(note.getDisplay());
 		final TextBlock text = new SheetBlock2(new SheetBlock1(sheet, wrapWidth, skinParam.getPadding()), this, stroke);
 		opale = new Opale(shadowing, borderColor, noteBackgroundColor, text, withLink, stroke);
 
@@ -246,5 +246,12 @@ public class FtileWithNoteOpale extends AbstractFtile implements Stencil, Stylea
 	public double getEndingX(StringBounder stringBounder, double y) {
 		return opale.calculateDimension(stringBounder).getWidth() - opale.getMarginX1();
 	}
+	
+	@Override
+	final public LinkRendering getInLinkRendering() {
+		return tile.getInLinkRendering();
+	}
+
+
 
 }

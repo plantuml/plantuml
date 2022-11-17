@@ -49,9 +49,9 @@ public class QBlock {
 		for (int i = 0; i < size; i++) {
 			final int read = source.read();
 			if (read == -1) {
-				if (i == 0) {
+				if (i == 0)
 					return null;
-				}
+
 				break;
 			}
 			block[i + 1] = (byte) read;
@@ -77,15 +77,15 @@ public class QBlock {
 
 	public byte[] getData512() {
 		final byte[] nb = big.toByteArray();
-		if (nb.length == 512) {
+		if (nb.length == 512)
 			return nb;
-		}
+
 		final byte[] result = new byte[512];
-		if (nb.length < 512) {
+		if (nb.length < 512)
 			System.arraycopy(nb, 0, result, 512 - nb.length, nb.length);
-		} else {
+		else
 			System.arraycopy(nb, nb.length - 512, result, 0, 512);
-		}
+
 		return result;
 	}
 
@@ -101,11 +101,10 @@ public class QBlock {
 	public void write(OutputStream os, int size) throws IOException {
 		final byte[] data = big.toByteArray();
 		final int start = data.length - size;
-		if (start < 0) {
-			for (int i = 0; i < -start; i++) {
+		if (start < 0)
+			for (int i = 0; i < -start; i++)
 				os.write(0);
-			}
-		}
+
 		for (int i = Math.max(start, 0); i < data.length; i++) {
 			int b = data[i];
 			os.write(b);

@@ -125,8 +125,8 @@ class FtileIfAndStop extends AbstractFtile {
 		final UStroke thickness = tileNonStop.getThickness(style);
 		final FontConfiguration fcTest = FontConfiguration.create(skinParam, style);
 
-		final Sheet sheet = Parser
-				.build(fcTest, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT), skinParam, CreoleMode.FULL)
+		final Sheet sheet = skinParam
+				.sheet(fcTest, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT), CreoleMode.FULL)
 				.createSheet(labelTest);
 		final SheetBlock1 sheetBlock1 = new SheetBlock1(sheet, LineBreakStrategy.NONE, skinParam.getPadding());
 

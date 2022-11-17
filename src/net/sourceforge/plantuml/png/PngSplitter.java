@@ -47,20 +47,22 @@ import net.sourceforge.plantuml.SplitParam;
 import net.sourceforge.plantuml.SuggestedFile;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SImageIO;
+import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 
 public class PngSplitter {
 
 	private final List<SFile> files = new ArrayList<>();
 
-	public PngSplitter(SuggestedFile pngFile, int horizontalPages, int verticalPages, String metadata, int dpi,
-			SplitParam splitParam) throws IOException {
+	public PngSplitter(ColorMapper colorMapper, SuggestedFile pngFile, int horizontalPages, int verticalPages,
+			String metadata, int dpi, SplitParam splitParam) throws IOException {
 		if (horizontalPages == 1 && verticalPages == 1) {
 			this.files.add(pngFile.getFile(0));
 			return;
 		}
 
 		Log.info("Splitting " + horizontalPages + " x " + verticalPages);
-		final SFile full = pngFile.getTmpFile(); // SecurityUtils.File(pngFile.getParentFile(), pngFile.getName() + ".tmp");
+		final SFile full = pngFile.getTmpFile(); // SecurityUtils.File(pngFile.getParentFile(), pngFile.getName() +
+													// ".tmp");
 		// Thread.yield();
 		full.delete();
 		// Thread.yield();
@@ -86,8 +88,8 @@ public class PngSplitter {
 				BufferedImage piece = im.getSubimage(horizontalSegment.getStart(i), verticalSegment.getStart(j), width,
 						height);
 				if (splitParam.isSet()) {
-					BufferedImage withMargin = new BufferedImage(width + 2 * splitParam.getExternalMargin(), height + 2
-							* splitParam.getExternalMargin(), BufferedImage.TYPE_INT_ARGB);
+					BufferedImage withMargin = new BufferedImage(width + 2 * splitParam.getExternalMargin(),
+							height + 2 * splitParam.getExternalMargin(), BufferedImage.TYPE_INT_ARGB);
 					final Graphics2D g2d = withMargin.createGraphics();
 					if (splitParam.getExternalColor() != null) {
 						g2d.setColor(splitParam.getExternalColor());
@@ -106,7 +108,7 @@ public class PngSplitter {
 					g2d.dispose();
 				}
 				// Thread.yield();
-				PngIO.write(piece, f, metadata, dpi);
+				PngIO.write(piece, colorMapper, f, metadata, dpi);
 				// Thread.yield();
 			}
 		}

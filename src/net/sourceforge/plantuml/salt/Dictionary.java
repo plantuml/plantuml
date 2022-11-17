@@ -43,7 +43,12 @@ import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.SpriteContainer;
+import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.creole.Parser;
+import net.sourceforge.plantuml.creole.SheetBuilder;
+import net.sourceforge.plantuml.creole.legacy.CreoleParser;
+import net.sourceforge.plantuml.graphic.FontConfiguration;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.salt.element.Element;
 import net.sourceforge.plantuml.salt.element.WrappedElement;
 import net.sourceforge.plantuml.sprite.Sprite;
@@ -63,34 +68,42 @@ public class Dictionary implements SpriteContainer, ISkinSimple {
 		return new WrappedElement(result);
 	}
 
+	@Override
 	public Sprite getSprite(String name) {
 		return sprites.get(name);
 	}
 
+	@Override
 	public String getValue(String key) {
 		return null;
 	}
 
+	@Override
 	public double getPadding() {
 		return 0;
 	}
 
+	@Override
 	public Guillemet guillemet() {
 		return Guillemet.GUILLEMET;
 	}
 
+	@Override
 	public String getMonospacedFamily() {
 		return Parser.MONOSPACED;
 	}
 
+	@Override
 	public int getTabSize() {
 		return 8;
 	}
 
+	@Override
 	public HColorSet getIHtmlColorSet() {
 		return HColorSet.instance();
 	}
 
+	@Override
 	public int getDpi() {
 		return 96;
 	}
@@ -102,14 +115,17 @@ public class Dictionary implements SpriteContainer, ISkinSimple {
 
 	}
 
+	@Override
 	public LineBreakStrategy wrapWidth() {
 		return LineBreakStrategy.NONE;
 	}
 
+	@Override
 	public void copyAllFrom(Map<String, String> other) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public Map<String, String> values() {
 		throw new UnsupportedOperationException();
 	}
@@ -118,8 +134,21 @@ public class Dictionary implements SpriteContainer, ISkinSimple {
 		return 0;
 	}
 
+	@Override
 	public String transformStringForSizeHack(String s) {
 		return s;
+	}
+
+	@Override
+	public SheetBuilder sheet(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
+			CreoleMode creoleMode) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public SheetBuilder sheet(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
+			CreoleMode creoleMode, FontConfiguration stereo) {
+		return new CreoleParser(fontConfiguration, horizontalAlignment, this, creoleMode, stereo);
 	}
 
 }

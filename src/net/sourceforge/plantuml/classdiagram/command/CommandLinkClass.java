@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlMode;
+import net.sourceforge.plantuml.baraye.IEntity;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
@@ -52,7 +53,6 @@ import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkArg;
@@ -168,8 +168,8 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		if (ent2String == null)
 			return executeArgSpecial2(diagram, arg);
 
-		Ident ident1 = diagram.buildLeafIdentSpecial(ent1String);
-		Ident ident2 = diagram.buildLeafIdentSpecial(ent2String);
+		Ident ident1 = diagram.buildLeafIdentSpecial2(ent1String);
+		Ident ident2 = diagram.buildLeafIdentSpecial2(ent2String);
 		Ident ident1pure = Ident.empty().add(ent1String, diagram.getNamespaceSeparator());
 		Ident ident2pure = Ident.empty().add(ent2String, diagram.getNamespaceSeparator());
 		Code code1 = diagram.V1972() ? ident1 : diagram.buildCode(ent1String);
@@ -179,8 +179,8 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 			return executePackageLink(diagram, arg);
 		}
 
-		String port1 = null;
-		String port2 = null;
+		String port1 = diagram.getPortFor(ent1String, ident1);
+		String port2 = diagram.getPortFor(ent2String, ident2);
 
 		if (diagram.V1972()) {
 			if ("::".equals(diagram.getNamespaceSeparator())) {
@@ -207,12 +207,12 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 				}
 			}
 		} else {
-			if (removeMemberPartLegacy1972(diagram, ident1) != null) {
+			if (port1 == null && removeMemberPartLegacy1972(diagram, ident1) != null) {
 				port1 = ident1.getPortMember();
 				code1 = removeMemberPartLegacy1972(diagram, ident1);
 				ident1 = ident1.removeMemberPart();
 			}
-			if (removeMemberPartLegacy1972(diagram, ident2) != null) {
+			if (port2 == null && removeMemberPartLegacy1972(diagram, ident2) != null) {
 				port2 = ident2.getPortMember();
 				code2 = removeMemberPartLegacy1972(diagram, ident2);
 				ident2 = ident2.removeMemberPart();
@@ -240,7 +240,8 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 				.withQuantifier(labels.getFirstLabel(), labels.getSecondLabel())
 				.withDistanceAngle(diagram.getLabeldistance(), diagram.getLabelangle()).withKal(kal1, kal2);
 
-		Link link = new Link(diagram.getSkinParam().getCurrentStyleBuilder(), cl1, cl2, linkType, linkArg);
+		Link link = new Link(diagram.getIEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(), cl1, cl2,
+				linkType, linkArg);
 		if (arg.get("URL", 0) != null) {
 			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), UrlMode.STRICT);
 			final Url url = urlBuilder.getUrl(arg.get("URL", 0));
@@ -378,9 +379,9 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		final String firstLabel = arg.get("FIRST_LABEL", 0);
 		final String secondLabel = arg.get("SECOND_LABEL", 0);
 		final LinkArg linkArg = LinkArg.build(labelLink, queue, diagram.getSkinParam().classAttributeIconSize() > 0);
-		final Link link = new Link(diagram.getSkinParam().getCurrentStyleBuilder(), cl1, cl2, linkType,
-				linkArg.withQuantifier(firstLabel, secondLabel).withDistanceAngle(diagram.getLabeldistance(),
-						diagram.getLabelangle()));
+		final Link link = new Link(diagram.getIEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(), cl1,
+				cl2, linkType, linkArg.withQuantifier(firstLabel, secondLabel)
+						.withDistanceAngle(diagram.getLabeldistance(), diagram.getLabelangle()));
 		link.setColors(color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet()));
 
 		diagram.resetPragmaLabel();

@@ -115,6 +115,7 @@ public class FtileIfDown extends AbstractFtile {
 			ConditionEndStyle conditionEndStyle, FtileFactory ftileFactory, Ftile optionalStop, Rainbow elseColor) {
 
 		elseColor = elseColor.withDefault(arrowColor);
+
 		final FtileIfDown result = new FtileIfDown(thenBlock, diamond1,
 				optionalStop == null ? diamond2 : new FtileEmpty(ftileFactory.skinParam()), optionalStop,
 				conditionEndStyle);
@@ -125,7 +126,13 @@ public class FtileIfDown extends AbstractFtile {
 		if (optionalStop == null) {
 			if (hasPointOut1) {
 				if (conditionEndStyle == ConditionEndStyle.DIAMOND) {
-					conns.add(result.new ConnectionElse(elseColor));
+					if (swimlane != null && swimlane.isSmallerThanAllOthers(thenBlock.getSwimlanes())) {
+						conns.add(result.new ConnectionElse1(elseColor));
+						if (diamond1 instanceof FtileDiamondInside)
+							((FtileDiamondInside) diamond1).swapEastWest();
+					} else {
+						conns.add(result.new ConnectionElse2(elseColor));
+					}
 				} else if (conditionEndStyle == ConditionEndStyle.HLINE) {
 					conns.add(result.new ConnectionElseHline(elseColor));
 					conns.add(result.new ConnectionHline(elseColor));
@@ -285,10 +292,62 @@ public class FtileIfDown extends AbstractFtile {
 		}
 	}
 
-	class ConnectionElse extends AbstractConnection {
+	class ConnectionElse1 extends AbstractConnection {
 		private final Rainbow endInlinkColor;
 
-		public ConnectionElse(Rainbow endInlinkColor) {
+		public ConnectionElse1(Rainbow endInlinkColor) {
+			super(diamond1, diamond2);
+			this.endInlinkColor = endInlinkColor;
+		}
+
+		protected XPoint2D getP1(StringBounder stringBounder) {
+			final FtileGeometry dimDiamond1 = diamond1.calculateDimension(stringBounder);
+			final double x = 0;
+			final double half = (dimDiamond1.getOutY() - dimDiamond1.getInY()) / 2;
+			return getTranslateDiamond1(stringBounder).getTranslated(new XPoint2D(x, dimDiamond1.getInY() + half));
+		}
+
+		protected XPoint2D getP2(final StringBounder stringBounder) {
+			final FtileGeometry dimDiamond2 = diamond2.calculateDimension(stringBounder);
+			final double x = 0;
+			final double half = (dimDiamond2.getOutY() - dimDiamond2.getInY()) / 2;
+			return getTranslateDiamond2(stringBounder).getTranslated(new XPoint2D(x, dimDiamond2.getInY() + half));
+		}
+
+		public void drawU(UGraphic ug) {
+			final StringBounder stringBounder = ug.getStringBounder();
+
+			final XPoint2D p1 = getP1(stringBounder);
+			if (calculateDimension(stringBounder).hasPointOut() == false)
+				return;
+
+			final XPoint2D p2 = getP2(stringBounder);
+
+			final double x1 = p1.getX();
+			final double y1 = p1.getY();
+			final double x2 = p2.getX();
+			final double y2 = p2.getY();
+
+			final double t11 = getTranslateForThen(stringBounder).getDx();
+			final double xmin = Math.min(x1 - Hexagon.hexagonHalfSize, getTranslateForThen(stringBounder).getDx());
+
+			final Snake snake = Snake.create(skinParam(), endInlinkColor, Arrows.asToRight())
+					.emphasizeDirection(Direction.DOWN);
+			snake.addPoint(x1, y1);
+			snake.addPoint(xmin, y1);
+			snake.addPoint(xmin, y2);
+			snake.addPoint(x2, y2);
+			ug.apply(new UTranslate(x2, y2 - Hexagon.hexagonHalfSize)).draw(new UEmpty(5, Hexagon.hexagonHalfSize));
+			ug.draw(snake);
+
+		}
+
+	}
+
+	class ConnectionElse2 extends AbstractConnection {
+		private final Rainbow endInlinkColor;
+
+		public ConnectionElse2(Rainbow endInlinkColor) {
 			super(diamond1, diamond2);
 			this.endInlinkColor = endInlinkColor;
 		}
@@ -338,7 +397,7 @@ public class FtileIfDown extends AbstractFtile {
 
 	}
 
-	class ConnectionElseHline extends ConnectionElse {
+	class ConnectionElseHline extends ConnectionElse2 {
 		private final Rainbow endInlinkColor;
 
 		public ConnectionElseHline(Rainbow endInlinkColor) {
@@ -389,7 +448,7 @@ public class FtileIfDown extends AbstractFtile {
 
 	}
 
-	class ConnectionElseNoDiamond extends ConnectionElse {
+	class ConnectionElseNoDiamond extends ConnectionElse2 {
 
 		public ConnectionElseNoDiamond(Rainbow endInlinkColor) {
 			super(endInlinkColor);

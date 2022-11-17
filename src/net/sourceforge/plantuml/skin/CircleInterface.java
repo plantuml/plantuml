@@ -61,7 +61,7 @@ public class CircleInterface implements UDrawable {
 		final UEllipse head = new UEllipse(headDiam, headDiam);
 		
 		ug.apply(new UStroke(thickness)).apply(backgroundColor.bg())
-		.apply(foregroundColor).apply(new UTranslate((double) thickness, (double) thickness)).draw(head);
+		.apply(foregroundColor).apply(new UTranslate(thickness, thickness)).draw(head);
 	}
 
 	public double getPreferredWidth(StringBounder stringBounder) {

@@ -61,9 +61,9 @@ public class RBlock {
 	}
 
 	public byte[] getData(int size) {
-		if (buffer.length == size) {
+		if (buffer.length == size)
 			return buffer;
-		}
+
 		final byte[] result = new byte[size];
 		System.arraycopy(buffer, buffer.length - size, result, 0, size);
 		return result;

@@ -104,12 +104,6 @@ public class UImageSvg implements UShape {
 	}
 
 	public int getData(String name) {
-		final Pattern p = Pattern.compile("(?i)<svg[^>]+" + name + "\\W+(\\d+)");
-		final Matcher m = p.matcher(svg);
-		if (m.find()) {
-			final String s = m.group(1);
-			return Integer.parseInt(s);
-		}
 		final Pattern p2 = Pattern.compile("viewBox[= \"\']+([0-9.]+)[\\s,]+([0-9.]+)[\\s,]+([0-9.]+)[\\s,]+([0-9.]+)");
 		final Matcher m2 = p2.matcher(svg);
 		if (m2.find()) {
@@ -123,6 +117,12 @@ public class UImageSvg implements UShape {
 				final int result = (int) Double.parseDouble(s);
 				return result;
 			}
+		}
+		final Pattern p = Pattern.compile("(?i)<svg[^>]+" + name + "\\W+(\\d+)");
+		final Matcher m = p.matcher(svg);
+		if (m.find()) {
+			final String s = m.group(1);
+			return Integer.parseInt(s);
 		}
 
 		throw new IllegalStateException("Cannot find " + name);

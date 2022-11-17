@@ -64,7 +64,7 @@ public class TextBlockHorizontal extends AbstractTextBlock implements TextBlock 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		XDimension2D dim = blocks.get(0).calculateDimension(stringBounder);
 		for (int i = 1; i < blocks.size(); i++) {
-			dim = XDimension2D.mergeLR(dim, blocks.get(i).calculateDimension(stringBounder));
+			dim = dim.mergeLR(blocks.get(i).calculateDimension(stringBounder));
 		}
 		return dim;
 	}

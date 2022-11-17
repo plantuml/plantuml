@@ -53,6 +53,8 @@ import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -73,14 +75,17 @@ public class SheetBlock1 extends AbstractTextBlock implements TextBlock, Atom, S
 	private final ClockwiseTopRightBottomLeft padding;
 	private final double marginX1;
 	private final double marginX2;
+	private Class<? extends StringBounder> lastCaller;
+	private double minimumWidth;
 
 	@HaxeIgnored
 	public SheetBlock1(Sheet sheet, LineBreakStrategy maxWidth, double padding) {
 		this(sheet, maxWidth, ClockwiseTopRightBottomLeft.same(padding), 0, 0);
 	}
 
-	public SheetBlock1(Sheet sheet, LineBreakStrategy maxWidth, ClockwiseTopRightBottomLeft padding) {
-		this(sheet, maxWidth, padding, 0, 0);
+	public SheetBlock1(Sheet sheet, LineBreakStrategy maxWidth, Style style) {
+		this(sheet, maxWidth, style.getPadding(), 0, 0);
+		this.minimumWidth = style.value(PName.MinimumWidth).asDouble();
 	}
 
 	public SheetBlock1(Sheet sheet, LineBreakStrategy maxWidth, double padding, double marginX1, double marginX2) {
@@ -112,10 +117,15 @@ public class SheetBlock1 extends AbstractTextBlock implements TextBlock, Atom, S
 		return HorizontalAlignment.LEFT;
 	}
 
-	private void initMap(StringBounder stringBounder) {
-		if (positions != null)
-			return;
+	public HorizontalAlignment getHorizontalAlignment() {
+		return sheet.getHorizontalAlignment();
+	}
 
+	private void initMap(StringBounder stringBounder) {
+		final Class<? extends StringBounder> currentCaller = stringBounder.getClass();
+		if (lastCaller == currentCaller)
+			return;
+		this.lastCaller = currentCaller;
 		stripes = new ArrayList<>();
 		for (Stripe stripe : sheet)
 			stripes.addAll(new Fission(stripe, maxWidth).getSplitted(stringBounder));
@@ -175,7 +185,7 @@ public class SheetBlock1 extends AbstractTextBlock implements TextBlock, Atom, S
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		initMap(stringBounder);
-		return XDimension2D.delta(minMax.getDimension(), padding.getBottom() + padding.getTop());
+		return minMax.getDimension().delta(padding.getBottom() + padding.getTop());
 	}
 
 	@Override
@@ -206,6 +216,10 @@ public class SheetBlock1 extends AbstractTextBlock implements TextBlock, Atom, S
 
 	public double getEndingX(StringBounder stringBounder, double y) {
 		return calculateDimension(stringBounder).getWidth() + marginX2;
+	}
+
+	public final double getMinimumWidth() {
+		return minimumWidth;
 	}
 
 }

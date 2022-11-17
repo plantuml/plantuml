@@ -67,7 +67,7 @@ public class USymbolHexagon extends USymbol {
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
 				final XDimension2D dimLabel = label.calculateDimension(stringBounder);
 				final XDimension2D dimStereo = stereotype.calculateDimension(stringBounder);
-				final XDimension2D full = XDimension2D.mergeTB(dimStereo, dimLabel);
+				final XDimension2D full = dimStereo.mergeTB(dimLabel);
 				return new XDimension2D(full.getWidth() * 2, full.getHeight() + 2 * marginY);
 			}
 		};

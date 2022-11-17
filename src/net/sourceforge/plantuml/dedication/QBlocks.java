@@ -54,18 +54,18 @@ public class QBlocks {
 		final QBlocks result = new QBlocks();
 		while (true) {
 			final QBlock block = QBlock.read(source, size);
-			if (block == null) {
+			if (block == null)
 				return result;
-			}
+
 			result.all.add(block);
 		}
 	}
 
 	public QBlocks change(BigInteger E, BigInteger N) {
 		final QBlocks result = new QBlocks();
-		for (QBlock rsa : all) {
+		for (QBlock rsa : all)
 			result.all.add(rsa.change(E, N));
-		}
+
 		return result;
 	}
 

@@ -47,28 +47,28 @@ public enum HorizontalAlignment {
 	LEFT, CENTER, RIGHT;
 
 	public static HorizontalAlignment fromString(String s) {
-		if (LEFT.name().equalsIgnoreCase(s)) {
+		if (LEFT.name().equalsIgnoreCase(s))
 			return LEFT;
-		}
-		if (CENTER.name().equalsIgnoreCase(s)) {
+
+		if (CENTER.name().equalsIgnoreCase(s))
 			return CENTER;
-		}
-		if (RIGHT.name().equalsIgnoreCase(s)) {
+
+		if (RIGHT.name().equalsIgnoreCase(s))
 			return RIGHT;
-		}
+
 		return null;
 	}
 
 	public static HorizontalAlignment fromString(String s, HorizontalAlignment defaultValue) {
 		Objects.requireNonNull(defaultValue);
-		if (s == null) {
+		if (s == null)
 			return defaultValue;
-		}
+
 		s = StringUtils.goUpperCase(s);
 		final HorizontalAlignment result = fromString(s);
-		if (result == null) {
+		if (result == null)
 			return defaultValue;
-		}
+
 		return result;
 	}
 

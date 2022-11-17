@@ -46,7 +46,6 @@ import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.creole.CreoleMode;
-import net.sourceforge.plantuml.creole.Parser;
 import net.sourceforge.plantuml.creole.Sheet;
 import net.sourceforge.plantuml.creole.SheetBlock1;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -76,8 +75,9 @@ public class PSystemCreole extends PlainDiagram {
 		final Display display = Display.create(lines);
 		final UFont font = UFont.serif(14);
 		final FontConfiguration fontConfiguration = FontConfiguration.blackBlueTrue(font);
-		final Sheet sheet = Parser.build(fontConfiguration, HorizontalAlignment.LEFT,
-				SkinParam.create(UmlDiagramType.SEQUENCE), CreoleMode.FULL).createSheet(display);
+		final SkinParam skinParam = SkinParam.create(UmlDiagramType.SEQUENCE);
+		final Sheet sheet = skinParam.sheet(fontConfiguration, HorizontalAlignment.LEFT, CreoleMode.FULL)
+				.createSheet(display);
 		return new SheetBlock1(sheet, LineBreakStrategy.NONE, 0);
 
 		// final Dimension2D dim = TextBlockUtils.getDimension(sheetBlock);

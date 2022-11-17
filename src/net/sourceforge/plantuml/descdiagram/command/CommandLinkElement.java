@@ -38,6 +38,8 @@ package net.sourceforge.plantuml.descdiagram.command;
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.baraye.IEntity;
+import net.sourceforge.plantuml.baraye.ILeaf;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.IRegex;
@@ -47,8 +49,6 @@ import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.cucadiagram.IEntity;
-import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
@@ -85,7 +85,7 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 				new RegexLeaf("HEAD2", "(0\\)|<<|<_|[<^*+#0@)]|<\\|[\\|\\:]?|[%s]+o)?"), //
 				new RegexLeaf("BODY1", "([-=.~]+)"), //
 				new RegexLeaf("ARROW_STYLE1", "(?:\\[(" + LINE_STYLE_MUTILPLES + ")\\])?"), //
-				new RegexOptional(new RegexLeaf("DIRECTION", "(left|right|up|down|le?|ri?|up?|do?)(?=[-=.~0()])")), //
+				new RegexOptional(new RegexLeaf("DIRECTION", "(left|right|up|down|le?|ri?|up?|do?)(?=[-=.~0()\\[])")), //
 				new RegexOptional(new RegexLeaf("INSIDE", "(0|\\(0\\)|\\(0|0\\))(?=[-=.~])")), //
 				new RegexLeaf("ARROW_STYLE2", "(?:\\[(" + LINE_STYLE + ")\\])?"), //
 				new RegexLeaf("BODY2", "([-=.~]*)"), //
@@ -244,10 +244,12 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 			throws NoSuchColorException {
 		final String ent1String = arg.get("ENT1", 0);
 		final String ent2String = arg.get("ENT2", 0);
-		final Ident ident1 = diagram.buildFullyQualified(ent1String);
-		final Ident ident2 = diagram.buildFullyQualified(ent2String);
-		Ident ident1pure = Ident.empty().add(ent1String, diagram.getNamespaceSeparator());
-		Ident ident2pure = Ident.empty().add(ent2String, diagram.getNamespaceSeparator());
+		final String ent1 = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(ent1String);
+		final String ent2 = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(ent2String);
+		final Ident ident1 = diagram.buildLeafIdentSpecial(ent1);
+		final Ident ident2 = diagram.buildLeafIdentSpecial(ent2);
+		Ident ident1pure = Ident.empty().add(ent1, diagram.getNamespaceSeparator());
+		Ident ident2pure = Ident.empty().add(ent2, diagram.getNamespaceSeparator());
 		final Code code1 = diagram.V1972() ? ident1 : diagram.buildCode(ent1String);
 		final Code code2 = diagram.V1972() ? ident2 : diagram.buildCode(ent2String);
 
@@ -274,8 +276,8 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 		}
 		final LinkArg linkArg = LinkArg.build(Display.getWithNewlines(labels.getLabelLink()), queue.length(),
 				diagram.getSkinParam().classAttributeIconSize() > 0);
-		Link link = new Link(diagram.getSkinParam().getCurrentStyleBuilder(), cl1, cl2, linkType,
-				linkArg.withQuantifier(labels.getFirstLabel(), labels.getSecondLabel())
+		Link link = new Link(diagram.getIEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(), cl1, cl2,
+				linkType, linkArg.withQuantifier(labels.getFirstLabel(), labels.getSecondLabel())
 						.withDistanceAngle(diagram.getLabeldistance(), diagram.getLabelangle()));
 		link.setLinkArrow(labels.getLinkArrow());
 		if (dir == Direction.LEFT || dir == Direction.UP)
@@ -309,13 +311,13 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 		final Ident ident3 = diagram.buildFullyQualified(tmp3);
 		final Code code3 = diagram.V1972() ? ident3 : diagram.buildCode(tmp3);
 		if (codeChar == '(') {
-			return getOrCreateLeaf1972(diagram, ident3, code3, LeafType.USECASE, USymbols.USECASE, pure);
+			return getOrCreateLeaf1972(diagram, ident, code3, LeafType.USECASE, USymbols.USECASE, pure);
 		} else if (codeChar == ':') {
-			return getOrCreateLeaf1972(diagram, ident3, code3, LeafType.DESCRIPTION,
+			return getOrCreateLeaf1972(diagram, ident, code3, LeafType.DESCRIPTION,
 					diagram.getSkinParam().actorStyle().toUSymbol(), pure);
 		} else if (codeChar == '[') {
 			final USymbol sym = diagram.getSkinParam().componentStyle().toUSymbol();
-			return getOrCreateLeaf1972(diagram, ident3, code3, LeafType.DESCRIPTION, sym, pure);
+			return getOrCreateLeaf1972(diagram, ident, code3, LeafType.DESCRIPTION, sym, pure);
 		}
 
 		return getOrCreateLeaf1972(diagram, ident, code, null, null, pure);

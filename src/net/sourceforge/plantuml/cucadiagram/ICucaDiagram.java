@@ -35,44 +35,61 @@
  */
 package net.sourceforge.plantuml.cucadiagram;
 
+import java.io.IOException;
 import java.util.Collection;
 
+import net.sourceforge.plantuml.Annotated;
+import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.svek.IEntityImage;
-import net.sourceforge.plantuml.svek.PackageStyle;
-import net.sourceforge.plantuml.svek.SingleStrategy;
+import net.sourceforge.plantuml.Pragma;
+import net.sourceforge.plantuml.UmlDiagramType;
+import net.sourceforge.plantuml.baraye.EntityFactory;
+import net.sourceforge.plantuml.baraye.IGroup;
+import net.sourceforge.plantuml.baraye.ILeaf;
+import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 
-public interface IGroup extends IEntity {
+public interface ICucaDiagram extends GroupHierarchy, PortionShower, Annotated {
 
-	public boolean containsLeafRecurse(ILeaf entity);
+	boolean V1972();
 
-	public Collection<ILeaf> getLeafsDirect();
+	ISkinParam getSkinParam();
 
-	public Collection<IGroup> getChildren();
+	UmlDiagramType getUmlDiagramType();
 
-	public void moveEntitiesTo(IGroup dest);
+	EntityFactory getEntityFactory();
 
-	public int size();
+	StyleBuilder getCurrentStyleBuilder();
 
-	public GroupType getGroupType();
+	boolean isHideEmptyDescriptionForState();
 
-	public Code getNamespace();
+	Collection<Link> getLinks();
 
-	public PackageStyle getPackageStyle();
+	Pragma getPragma();
 
-	public void overrideImage(IEntityImage img, LeafType state);
+	long seed();
 
-	public SingleStrategy getSingleStrategy();
+	String getMetadata();
 
-	public FontConfiguration getFontConfigurationForTitle(ISkinParam skinParam);
+	String getFlashData();
 
-	public char getConcurrentSeparator();
+	Collection<ILeaf> getLeafsvalues();
 
-	public void setConcurrentSeparator(char separator);
+	ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) throws IOException;
 
-	public void setLegend(DisplayPositioned legend);
+	String getNamespaceSeparator();
 
-	public DisplayPositioned getLegend();
+	boolean mergeIntricated();
+
+	Collection<IGroup> getGroups(boolean b);
+
+	UmlSource getSource();
+
+	String[] getDotStringSkek();
+
+	boolean isAutarkic(IGroup g);
+
+	int getUniqueSequence();
 
 }

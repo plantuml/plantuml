@@ -38,7 +38,6 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.creole.CreoleMode;
-import net.sourceforge.plantuml.creole.Parser;
 import net.sourceforge.plantuml.creole.Sheet;
 import net.sourceforge.plantuml.creole.SheetBlock1;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -88,8 +87,8 @@ public class TimingNote {
 		final HColor noteBackgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
 		final UStroke stroke = style.getStroke();
 
-		final Sheet sheet = Parser
-				.build(fc, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT), skinParam, CreoleMode.FULL)
+		final Sheet sheet = skinParam
+				.sheet(fc, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT), CreoleMode.FULL)
 				.createSheet(note);
 		final SheetBlock1 sheet1 = new SheetBlock1(sheet, LineBreakStrategy.NONE, skinParam.getPadding());
 		final Opale opale = new Opale(shadowing, borderColor, noteBackgroundColor, sheet1, false, stroke);

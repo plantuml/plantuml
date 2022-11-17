@@ -75,7 +75,7 @@ public class AtomWithMargin extends AbstractAtom implements Atom {
 	}
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-		return XDimension2D.delta(atom.calculateDimension(stringBounder), 0, marginY1 + marginY2);
+		return atom.calculateDimension(stringBounder).delta(0, marginY1 + marginY2);
 	}
 
 	public double getStartingAltitude(StringBounder stringBounder) {

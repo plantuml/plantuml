@@ -144,8 +144,8 @@ public class DecorateEntityImage extends AbstractTextBlock implements TextBlockB
 		final XDimension2D dimOriginal = original.calculateDimension(stringBounder);
 		final XDimension2D dim1 = getTextDim(text1, stringBounder);
 		final XDimension2D dim2 = getTextDim(text2, stringBounder);
-		final XDimension2D dimText = XDimension2D.mergeTB(dim1, dim2);
-		return XDimension2D.mergeTB(dimOriginal, dimText);
+		final XDimension2D dimText = dim1.mergeTB(dim2);
+		return dimOriginal.mergeTB(dimText);
 	}
 
 	@Override

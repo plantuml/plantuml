@@ -71,7 +71,7 @@ public class Noise {
 		}
 		return result;
 	}
-	
+
 	public static void shuffle(byte[] buffer, MTRandom rnd) {
 		for (int i = 0; i < buffer.length; i++) {
 			final int r1 = rnd.nextInt();
@@ -83,11 +83,11 @@ public class Noise {
 			buffer[b] = tmp;
 		}
 	}
-	
+
 	public static void xor(byte[] buffer, byte[] xor) {
-		for (int i = 0; i < buffer.length; i++) {
+		for (int i = 0; i < buffer.length; i++)
 			buffer[i] ^= xor[i % xor.length];
-		}
+
 	}
 
 	public static void xor(byte[] buffer, BlumBlumShub rnd) {
@@ -96,7 +96,7 @@ public class Noise {
 			buffer[i] = (byte) (buffer[i] ^ mask);
 		}
 	}
-	
+
 	public static byte[] reverse(byte[] buffer, int delta) {
 		delta = Math.abs(delta) % buffer.length;
 		final byte result[] = new byte[buffer.length];
@@ -104,11 +104,5 @@ public class Noise {
 			result[i] = buffer[(buffer.length - 1 - i + delta) % buffer.length];
 		return result;
 	}
-
-
-
-
-
-
 
 }

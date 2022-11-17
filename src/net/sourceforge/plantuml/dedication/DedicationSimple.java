@@ -39,6 +39,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.security.SFile;
 
 public class DedicationSimple implements Dedication {
 
@@ -51,9 +52,8 @@ public class DedicationSimple implements Dedication {
 	}
 
 	public synchronized BufferedImage getImage(TinyHashableString sentence) {
-		if (same(this.sentence, sentence.getSentence()) == false) {
+		if (same(this.sentence, sentence.getSentence()) == false)
 			return null;
-		}
 
 		try {
 			byte[] current = crypted.clone();
@@ -61,7 +61,7 @@ public class DedicationSimple implements Dedication {
 			final RBlocks init = RBlocks.readFrom(current, 513);
 			final RBlocks decoded = init.change(E, N);
 			current = decoded.toByteArray(512);
-			return PSystemDedication.getBufferedImage(new ByteArrayInputStream(current));
+			return SFile.getBufferedImageFromWebpButHeader(new ByteArrayInputStream(current));
 		} catch (Throwable t) {
 			Logme.error(t);
 			return null;

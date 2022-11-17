@@ -49,6 +49,7 @@ import java.io.InputStream;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Method;
 import java.net.URI;
 import java.nio.charset.Charset;
 import java.nio.file.Path;
@@ -58,6 +59,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import javax.imageio.stream.ImageInputStream;
 import javax.swing.ImageIcon;
 
 import net.sourceforge.plantuml.log.Logme;
@@ -84,13 +86,14 @@ public class SFile implements Comparable<SFile> {
 
 	@Override
 	public String toString() {
-		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE)
-			try {
-				return internal.getCanonicalPath();
-			} catch (IOException e) {
-				return internal.getAbsolutePath();
-			}
-		return super.toString();
+		if (SecurityUtils.getSecurityProfile() == SecurityProfile.INTERNET
+				|| SecurityUtils.getSecurityProfile() == SecurityProfile.ALLOWLIST)
+			return super.toString();
+		try {
+			return internal.getCanonicalPath();
+		} catch (IOException e) {
+			return internal.getAbsolutePath();
+		}
 	}
 
 	public SFile(String nameOrPath) {
@@ -184,9 +187,9 @@ public class SFile implements Comparable<SFile> {
 			return Collections.emptyList();
 
 		final List<SFile> result = new ArrayList<>(tmp.length);
-		for (File f : tmp) {
+		for (File f : tmp)
 			result.add(new SFile(f));
-		}
+
 		return Collections.unmodifiableCollection(result);
 	}
 
@@ -296,12 +299,11 @@ public class SFile implements Comparable<SFile> {
 
 	private boolean isInAllowList(List<SFile> allowlist) {
 		final String path = getCleanPathSecure();
-		for (SFile allow : allowlist) {
-			if (path.startsWith(allow.getCleanPathSecure())) {
+		for (SFile allow : allowlist)
+			if (path.startsWith(allow.getCleanPathSecure()))
 				// File directory is in the allowlist
 				return true;
-			}
-		}
+
 		return false;
 	}
 
@@ -348,11 +350,60 @@ public class SFile implements Comparable<SFile> {
 		// https://stackoverflow.com/questions/18743790/can-java-load-images-with-transparency
 		if (isFileOk())
 			try {
-				return SecurityUtils.readRasterImage(new ImageIcon(this.getAbsolutePath()));
+				if (internal.getName().endsWith(".webp"))
+					return readWebp();
+				else
+					return SecurityUtils.readRasterImage(new ImageIcon(this.getAbsolutePath()));
 			} catch (Exception e) {
 				Logme.error(e);
 			}
 		return null;
+	}
+
+	private BufferedImage readWebp() throws IOException {
+		try (InputStream is = openFile()) {
+			final int riff = read32(is);
+			if (riff != 0x46464952)
+				return null;
+			final int len1 = read32(is);
+			final int webp = read32(is);
+			if (webp != 0x50424557)
+				return null;
+			final int vp8_ = read32(is);
+			if (vp8_ != 0x20385056)
+				return null;
+			final int len2 = read32(is);
+			if (len1 != len2 + 12)
+				return null;
+
+			return getBufferedImageFromWebpButHeader(is);
+		}
+	}
+
+	private int read32(InputStream is) throws IOException {
+		return (is.read() << 0) + (is.read() << 8) + (is.read() << 16) + (is.read() << 24);
+	}
+
+	public static BufferedImage getBufferedImageFromWebpButHeader(InputStream is) {
+		if (is == null)
+			return null;
+		try {
+			final Class<?> clVP8Decoder = Class.forName("net.sourceforge.plantuml.webp.VP8Decoder");
+			final Object vp8Decoder = clVP8Decoder.getDeclaredConstructor().newInstance();
+			// final VP8Decoder vp8Decoder = new VP8Decoder();
+			final Method decodeFrame = clVP8Decoder.getMethod("decodeFrame", ImageInputStream.class);
+			final ImageInputStream iis = SImageIO.createImageInputStream(is);
+			decodeFrame.invoke(vp8Decoder, iis);
+			// vp8Decoder.decodeFrame(iis);
+			iis.close();
+			final Object frame = clVP8Decoder.getMethod("getFrame").invoke(vp8Decoder);
+			return (BufferedImage) frame.getClass().getMethod("getBufferedImage").invoke(frame);
+			// final VP8Frame frame = vp8Decoder.getFrame();
+			// return frame.getBufferedImage();
+		} catch (Exception e) {
+			Logme.error(e);
+			return null;
+		}
 	}
 
 	public BufferedReader openBufferedReader() {

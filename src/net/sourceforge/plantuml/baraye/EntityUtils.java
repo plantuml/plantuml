@@ -33,62 +33,65 @@
  * 
  *
  */
-package net.sourceforge.plantuml.cucadiagram;
+package net.sourceforge.plantuml.baraye;
+
+import net.sourceforge.plantuml.cucadiagram.GroupRoot;
+import net.sourceforge.plantuml.cucadiagram.Link;
 
 public abstract class EntityUtils {
 
 	public static boolean groupRoot(IGroup g) {
-		if (g == null) {
+		if (g == null)
 			throw new IllegalStateException();
-		}
+
 		return g instanceof GroupRoot;
 	}
 
 	private static boolean isParent(IGroup groupToBeTested, IGroup parentGroup) {
-		if (groupToBeTested.isGroup() == false) {
+		if (groupToBeTested.isGroup() == false)
 			// Very strange!
 			return false;
-		}
-		if (groupToBeTested.isGroup() == false) {
+
+		if (groupToBeTested.isGroup() == false)
 			throw new IllegalArgumentException();
-		}
+
 		while (EntityUtils.groupRoot(groupToBeTested) == false) {
-			if (groupToBeTested == parentGroup) {
+			if (groupToBeTested == parentGroup)
 				return true;
-			}
+
 			groupToBeTested = groupToBeTested.getParentContainer();
-			if (groupToBeTested.isGroup() == false) {
+			if (groupToBeTested.isGroup() == false)
 				throw new IllegalStateException();
-			}
+
 		}
 		return false;
 	}
 
 	public static boolean isPureInnerLink12(IGroup group, Link link) {
-		if (group.isGroup() == false) {
+		if (group.isGroup() == false)
 			throw new IllegalArgumentException();
-		}
+
 		final IEntity e1 = link.getEntity1();
 		final IEntity e2 = link.getEntity2();
 		final IGroup group1 = e1.getParentContainer();
 		final IGroup group2 = e2.getParentContainer();
-		if (isParent(group1, group) && isParent(group2, group)) {
+		if (isParent(group1, group) && isParent(group2, group))
 			return true;
-		}
+
 		return false;
 	}
 
 	public static boolean isPureInnerLink3(IGroup group, Link link) {
-		if (group.isGroup() == false) {
+		if (group.isGroup() == false)
 			throw new IllegalArgumentException();
-		}
+
 		final IEntity e1 = link.getEntity1();
 		final IEntity e2 = link.getEntity2();
 		final IGroup group1 = e1.getParentContainer();
 		final IGroup group2 = e2.getParentContainer();
-		if (isParent(group2, group) == isParent(group1, group)) {
+		if (isParent(group2, group) == isParent(group1, group))
 			return true;
-		}
+
 		return false;
 	}
 }

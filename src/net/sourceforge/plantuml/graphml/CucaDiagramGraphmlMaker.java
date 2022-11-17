@@ -43,16 +43,16 @@ import javax.xml.transform.TransformerException;
 
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.UmlDiagram;
-import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
+import net.sourceforge.plantuml.cucadiagram.ICucaDiagram;
 import net.sourceforge.plantuml.descdiagram.DescriptionDiagram;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.xmi.XmlDiagramTransformer;
 
 public final class CucaDiagramGraphmlMaker {
 
-	private final CucaDiagram diagram;
+	private final ICucaDiagram diagram;
 
-	public CucaDiagramGraphmlMaker(CucaDiagram diagram) throws IOException {
+	public CucaDiagramGraphmlMaker(ICucaDiagram diagram) throws IOException {
 		this.diagram = diagram;
 	}
 

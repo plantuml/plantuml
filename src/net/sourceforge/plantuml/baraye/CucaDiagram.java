@@ -33,7 +33,7 @@
  * 
  *
  */
-package net.sourceforge.plantuml.cucadiagram;
+package net.sourceforge.plantuml.baraye;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -58,8 +58,26 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.creole.CreoleMode;
+import net.sourceforge.plantuml.cucadiagram.Code;
+import net.sourceforge.plantuml.cucadiagram.CodeImpl;
+import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.cucadiagram.EntityGender;
+import net.sourceforge.plantuml.cucadiagram.EntityPortion;
+import net.sourceforge.plantuml.cucadiagram.EntityPosition;
+import net.sourceforge.plantuml.cucadiagram.GroupHierarchy;
+import net.sourceforge.plantuml.cucadiagram.GroupType;
+import net.sourceforge.plantuml.cucadiagram.HideOrShow2;
+import net.sourceforge.plantuml.cucadiagram.ICucaDiagram;
+import net.sourceforge.plantuml.cucadiagram.Ident;
+import net.sourceforge.plantuml.cucadiagram.LeafType;
+import net.sourceforge.plantuml.cucadiagram.Link;
+import net.sourceforge.plantuml.cucadiagram.LinkConstraint;
+import net.sourceforge.plantuml.cucadiagram.Magma;
+import net.sourceforge.plantuml.cucadiagram.MagmaList;
+import net.sourceforge.plantuml.cucadiagram.NamespaceStrategy;
+import net.sourceforge.plantuml.cucadiagram.PortionShower;
 import net.sourceforge.plantuml.cucadiagram.dot.CucaDiagramTxtMaker;
-import net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
+import net.sourceforge.plantuml.cucadiagram.entity.IEntityFactory;
 import net.sourceforge.plantuml.elk.CucaDiagramFileMakerElk;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphml.CucaDiagramGraphmlMaker;
@@ -73,7 +91,9 @@ import net.sourceforge.plantuml.svek.CucaDiagramFileMakerSvek;
 import net.sourceforge.plantuml.xmi.CucaDiagramXmiMaker;
 import net.sourceforge.plantuml.xmlsc.StateDiagramScxmlMaker;
 
-public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, PortionShower {
+public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, PortionShower, ICucaDiagram {
+
+	static public final boolean QUARK = false;
 
 	static private final boolean G1972 = false;
 
@@ -81,6 +101,14 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 	// private String namespaceSeparator1 = GO1972 ? "::" : ".";
 	private String namespaceSeparator = null;
 	private boolean namespaceSeparatorHasBeenSet = false;
+
+	public Quark currentQuark() {
+		throw new UnsupportedOperationException();
+	}
+	
+	public /*protected*/ Plasma getPlasma() {
+		throw new UnsupportedOperationException();
+	}
 
 	public final boolean V1972() {
 		if (getPragma().backToLegacyPackage()) {
@@ -101,10 +129,6 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		return this.V1972() && this.getUmlDiagramType() == UmlDiagramType.CLASS;
 	}
 
-	public Set<SuperGroup> getAllSuperGroups() {
-		return entityFactory.getAllSuperGroups();
-	}
-
 	private final List<HideOrShow2> hides2 = new ArrayList<>();
 	private final List<HideOrShow2> removed = new ArrayList<>();
 	protected final EntityFactory entityFactory = new EntityFactory(hides2, removed, this);
@@ -123,6 +147,10 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 	public CucaDiagram(UmlSource source, UmlDiagramType type, Map<String, String> orig) {
 		super(source, type, orig);
 		this.stacks2.add(Ident.empty());
+	}
+
+	final public String getPortFor(String ent1String, Ident ident1) {
+		return null;
 	}
 
 	private Ident getLastID() {
@@ -217,6 +245,10 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 	}
 
 	final public Ident buildLeafIdentSpecial(String id) {
+		return buildFullyQualified(id);
+	}
+
+	final public Ident buildLeafIdentSpecial2(String id) {
 		return buildFullyQualified(id);
 	}
 
@@ -499,10 +531,6 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		return entityFactory.getRootGroup();
 	}
 
-	public SuperGroup getRootSuperGroup() {
-		return entityFactory.getRootSuperGroup();
-	}
-
 	public final Collection<ILeaf> getLeafsvalues() {
 		return entityFactory.leafs2();
 	}
@@ -606,8 +634,6 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		if (getUmlDiagramType() == UmlDiagramType.COMPOSITE) {
 			throw new UnsupportedOperationException();
 		}
-
-		entityFactory.buildSuperGroups();
 
 		final CucaDiagramFileMaker maker;
 		if (this.isUseElk())
@@ -836,6 +862,10 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 
 	final public ILeaf getLastEntity() {
 		return lastEntity;
+	}
+
+	final public IEntityFactory getIEntityFactory() {
+		return entityFactory;
 	}
 
 	final public EntityFactory getEntityFactory() {

@@ -34,7 +34,7 @@
  * Contribution:  Miguel Esteves
  *
  */
-package net.sourceforge.plantuml.cucadiagram.entity;
+package net.sourceforge.plantuml.baraye;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -58,16 +58,12 @@ import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.cucadiagram.Bodier;
 import net.sourceforge.plantuml.cucadiagram.Code;
-import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.CucaNote;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.DisplayPositioned;
 import net.sourceforge.plantuml.cucadiagram.EntityPosition;
-import net.sourceforge.plantuml.cucadiagram.EntityUtils;
 import net.sourceforge.plantuml.cucadiagram.GroupRoot;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
-import net.sourceforge.plantuml.cucadiagram.IGroup;
-import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
@@ -94,7 +90,7 @@ import net.sourceforge.plantuml.svek.image.EntityImageStateCommon;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
-final public class EntityImpl implements ILeaf, IGroup {
+final public class EntityImp implements ILeaf, IGroup {
 
 	private final EntityFactory entityFactory;
 
@@ -161,7 +157,7 @@ final public class EntityImpl implements ILeaf, IGroup {
 	}
 
 	// Back to Entity
-	private EntityImpl(Ident ident, EntityFactory entityFactory, Code code, Bodier bodier, IGroup parentContainer,
+	private EntityImp(Ident ident, EntityFactory entityFactory, Code code, Bodier bodier, IGroup parentContainer,
 			String namespaceSeparator, int rawLayout) {
 		this.ident = Objects.requireNonNull(ident);
 		this.uid = StringUtils.getUid("cl", entityFactory.getDiagram().getUniqueSequence());
@@ -175,8 +171,8 @@ final public class EntityImpl implements ILeaf, IGroup {
 		this.rawLayout = rawLayout;
 	}
 
-	EntityImpl(Ident ident, Code code, EntityFactory entityFactory, Bodier bodier, IGroup parentContainer,
-			LeafType leafType, String namespaceSeparator, int rawLayout) {
+	public EntityImp(Ident ident, Code code, EntityFactory entityFactory, Bodier bodier,
+			IGroup parentContainer, LeafType leafType, String namespaceSeparator, int rawLayout) {
 		this(Objects.requireNonNull(ident), entityFactory, code, bodier, parentContainer, namespaceSeparator,
 				rawLayout);
 		// System.err.println("ID for leaf=" + code + " " + ident);
@@ -184,7 +180,7 @@ final public class EntityImpl implements ILeaf, IGroup {
 		this.leafType = leafType;
 	}
 
-	EntityImpl(Ident ident, Code code, EntityFactory entityFactory, Bodier bodier, IGroup parentContainer,
+	public EntityImp(Ident ident, Code code, EntityFactory entityFactory, Bodier bodier, IGroup parentContainer,
 			GroupType groupType, Code namespace, String namespaceSeparator, int rawLayout) {
 		this(Objects.requireNonNull(ident), entityFactory, code, bodier, parentContainer, namespaceSeparator,
 				rawLayout);
@@ -429,7 +425,7 @@ final public class EntityImpl implements ILeaf, IGroup {
 			throw new UnsupportedOperationException();
 
 		for (ILeaf ent : getLeafsDirect())
-			((EntityImpl) ent).parentContainer = dest;
+			((EntityImp) ent).parentContainer = dest;
 
 		for (IGroup g : dest.getChildren())
 			// ((EntityImpl) g).parentContainer = dest;
@@ -439,7 +435,7 @@ final public class EntityImpl implements ILeaf, IGroup {
 			if (g == dest)
 				continue;
 
-			((EntityImpl) g).parentContainer = dest;
+			((EntityImp) g).parentContainer = dest;
 		}
 
 	}
@@ -468,8 +464,8 @@ final public class EntityImpl implements ILeaf, IGroup {
 				entityFactory.leafs2.remove(ident);
 				ident = ident.move(firstIdent, destIdent);
 				// System.err.println(" to ident2=" + ident);
-				((EntityImpl) ent).ident = ident;
-				((EntityImpl) ent).code = ident;
+				((EntityImp) ent).ident = ident;
+				((EntityImp) ent).code = ident;
 				entityFactory.leafs2.put(ident, ent);
 			}
 		}
@@ -486,8 +482,8 @@ final public class EntityImpl implements ILeaf, IGroup {
 				entityFactory.groups2.remove(ident);
 				ident = ident.move(firstIdent, destIdent);
 				// System.err.println(" to ident2=" + ident);
-				((EntityImpl) ent).ident = ident;
-				((EntityImpl) ent).code = ident;
+				((EntityImp) ent).ident = ident;
+				((EntityImp) ent).code = ident;
 				entityFactory.groups2.put(ident, ent);
 				// System.err.println("-->groups2=" + entityFactory.groups2());
 			}
@@ -574,7 +570,7 @@ final public class EntityImpl implements ILeaf, IGroup {
 		this.leafType = leafType;
 	}
 
-	void muteToGroup(Code namespaceNew, GroupType groupType, IGroup parentContainer) {
+	public /* private */ void muteToGroup(Code namespaceNew, GroupType groupType, IGroup parentContainer) {
 		checkNotGroup();
 		if (parentContainer.isGroup() == false)
 			throw new IllegalArgumentException();
@@ -619,11 +615,11 @@ final public class EntityImpl implements ILeaf, IGroup {
 				return false;
 
 			for (ILeaf leaf : getLeafsDirect())
-				if (((EntityImpl) leaf).isHiddenInternal() == false)
+				if (((EntityImp) leaf).isHiddenInternal() == false)
 					return false;
 
 			for (IGroup g : getChildren())
-				if (((EntityImpl) g).isHiddenInternal() == false)
+				if (((EntityImp) g).isHiddenInternal() == false)
 					return false;
 
 			return true;
@@ -647,11 +643,11 @@ final public class EntityImpl implements ILeaf, IGroup {
 				return false;
 
 			for (ILeaf leaf : getLeafsDirect())
-				if (((EntityImpl) leaf).isRemovedInternal() == false)
+				if (((EntityImp) leaf).isRemovedInternal() == false)
 					return false;
 
 			for (IGroup g : getChildren())
-				if (((EntityImpl) g).isRemovedInternal() == false)
+				if (((EntityImp) g).isRemovedInternal() == false)
 					return false;
 
 			return true;

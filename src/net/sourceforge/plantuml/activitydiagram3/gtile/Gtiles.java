@@ -40,7 +40,6 @@ import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Hexagon;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.creole.CreoleMode;
-import net.sourceforge.plantuml.creole.Parser;
 import net.sourceforge.plantuml.creole.Sheet;
 import net.sourceforge.plantuml.creole.SheetBlock1;
 import net.sourceforge.plantuml.creole.SheetBlock2;
@@ -68,8 +67,8 @@ public class Gtiles {
 				: color;
 		final FontConfiguration fcTest = style.getFontConfiguration(skinParam.getIHtmlColorSet());
 
-		final Sheet sheet = Parser
-				.build(fcTest, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT), skinParam, CreoleMode.FULL)
+		final Sheet sheet = skinParam
+				.sheet(fcTest, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT), CreoleMode.FULL)
 				.createSheet(label);
 		final SheetBlock1 sheetBlock1 = new SheetBlock1(sheet, LineBreakStrategy.NONE, skinParam.getPadding());
 		final TextBlock tbTest = new SheetBlock2(sheetBlock1, Hexagon.asStencil(sheetBlock1), new UStroke());

@@ -88,9 +88,6 @@ public class PlayerAnalog extends Player {
 		for (Double val : values.values())
 			min = Math.min(min, val);
 
-		if (min == 0)
-			return 10;
-
 		return min;
 	}
 
@@ -190,7 +187,7 @@ public class PlayerAnalog extends Player {
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
 				final XDimension2D dim = getTitle().calculateDimension(stringBounder);
-				return XDimension2D.delta(dim, 5 + getMaxWidthForTicks(stringBounder), 0);
+				return dim.delta(5 + getMaxWidthForTicks(stringBounder), 0);
 			}
 		};
 	}

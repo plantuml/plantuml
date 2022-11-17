@@ -42,9 +42,9 @@ public class SvgCommandLetter implements SvgCommand {
 	final private char letter;
 
 	public SvgCommandLetter(String letter) {
-		if (letter.matches("[mlhvzsacMLHVZSAC]") == false) {
+		if (letter.matches("[mlhvzsacqtMLHVZSACQT]") == false) 
 			throw new IllegalArgumentException(letter);
-		}
+		
 		this.letter = letter.charAt(0);
 	}
 
@@ -61,6 +61,7 @@ public class SvgCommandLetter implements SvgCommand {
 		switch (StringUtils.goLowerCase(letter)) {
 		case 'm':
 		case 'l':
+		case 't':
 			return 2;
 		case 'h':
 		case 'v':
@@ -69,6 +70,7 @@ public class SvgCommandLetter implements SvgCommand {
 			return 0;
 		case 'c':
 			return 6;
+		case 'q':
 		case 's':
 			return 4;
 		case 'a':

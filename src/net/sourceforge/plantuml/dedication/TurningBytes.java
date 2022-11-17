@@ -45,14 +45,14 @@ public class TurningBytes {
 	}
 
 	public byte nextByte() {
-		if (key.length == 0) {
+		if (key.length == 0)
 			return 0;
-		}
+
 		final byte result = key[idx];
 		idx++;
-		if (idx >= key.length) {
+		if (idx >= key.length)
 			idx = 0;
-		}
+
 		return result;
 	}
 
