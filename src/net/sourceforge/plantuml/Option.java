@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -99,6 +99,8 @@ public class Option {
 
 	private final List<String> result = new ArrayList<>();
 
+	private String graphmlRootDir = null;
+
 	public Option() {
 	}
 
@@ -143,7 +145,9 @@ public class Option {
 				setFileFormatOption(new FileFormatOption(FileFormat.XMI_STAR));
 			} else if (s.equalsIgnoreCase("-teps") || s.equalsIgnoreCase("-eps")) {
 				setFileFormatOption(new FileFormatOption(FileFormat.EPS));
-			} else if (s.equalsIgnoreCase("-teps:text") || s.equalsIgnoreCase("-eps:text")) {
+			} else if (s.equalsIgnoreCase("-tgraphml") || (s.equalsIgnoreCase("-graphml"))) {
+				setFileFormatOption(new FileFormatOption(FileFormat.GRAPHML));
+			}	else if (s.equalsIgnoreCase("-teps:text") || s.equalsIgnoreCase("-eps:text")) {
 				setFileFormatOption(new FileFormatOption(FileFormat.EPS_TEXT));
 			} else if (s.equalsIgnoreCase("-ttxt") || s.equalsIgnoreCase("-txt")) {
 				setFileFormatOption(new FileFormatOption(FileFormat.ATXT));
@@ -373,6 +377,12 @@ public class Option {
 				stdrpt = 2;
 			} else if (s.equalsIgnoreCase("-stdrpt")) {
 				stdrpt = 2;
+			} else if (s.equalsIgnoreCase("-graphml-root-dir")) {
+				i++;
+				if (i == arg.length)
+					continue;
+				graphmlRootDir = arg[i];
+				setFileFormatOption(this.fileFormatOption.withGraphmlRootDir(graphmlRootDir));
 			} else if (s.equalsIgnoreCase("-pipeimageindex")) {
 				i++;
 				if (i == arg.length)
@@ -569,7 +579,10 @@ public class Option {
 
 	public void setCharset(String s) {
 		this.charset = s;
+	}
 
+	public String getgraphmlRootDir() {
+		return graphmlRootDir;
 	}
 
 	public final boolean isComputeurl() {

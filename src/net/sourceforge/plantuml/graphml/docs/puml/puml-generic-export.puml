@@ -1,0 +1,22 @@
+@startuml
+file file.puml  <<puml>> as puml
+file file.png <<graphic>> as png
+file file.xmi <<uml>> as xmi
+frame plantUML {
+   component plantuml
+   component [graphml] <<puml extension>> #LightGreen
+}
+file file.graphml  <<generic Graph>> as gml
+component [SemanticMapper] <<external>> #Yellow
+file SemacticModel.file as sm
+
+puml -r-> plantuml: input
+plantuml --> png: output
+plantuml --> xmi: output
+graphml .l.> plantuml: extends
+graphml --> gml: output
+gml --> SemanticMapper: input
+note left of SemanticMapper: e.g. 3rd party python code
+SemanticMapper --> sm: output
+note left of sm: Format and contents \ndepends on modelling context\nUML, sysML, JSON
+@enduml

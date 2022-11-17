@@ -1,0 +1,94 @@
+@startuml
+class GenericModelElement {
+	int: id
+	String: label
+	GenericEntityType: type
+}
+
+
+class GenericEntity {
+
+}
+
+enum GenericEntityType {
+CLASS
+PACKAGE
+OBJECT
+...
+STEREOTYPE
+EDGE
+DIAGRAM
+MEMBER
+}
+
+note left of GenericEntityType: enum represents the types \ndefined by the language specification\nhttps://plantuml.com/en/sitemap-language-specification\nplus additional types for generic model
+class GenericGroup {
+
+}
+
+class GenericLeaf {
+
+}
+
+
+class GenericLink {
+ GenericLinkStyle: style
+ GenericLinkDecor: srcDecor
+ GenericLinkDecor: tgtDecor
+ GenericLinkDecor: middleDecor
+ String: srcLabel
+ String: tgtLabel
+ String: direction
+}
+note top of GenericLink: GenericLinkStyle and GenericLinkDecor \nare enums representing the various \nstyles and arrow heads
+
+class GenericMember {
+}
+class GenericStereotype {
+}
+
+note as NOTE
+plantum ids are derived from parent id
+e.g. class1_m1, or class1_s1
+end note
+
+NOTE -- GenericMember
+NOTE -- GenericStereotype
+
+class GenericDiagram {
+	String: title
+	String: header
+	String: footer
+	String: caption
+	GenericDiagramType : diagramType
+	URL: source
+}
+
+class GenericEdge {
+	int diagram
+}
+
+enum GenericEdgeType {
+	  IS_TARGET
+  	IS_SOURCE
+  	STEREOTYPE
+  	MEMBER
+  	HIERARCHY
+  	DIAGRAM_CONTAINS
+}
+
+note top of GenericEdge: describes the connection \nbetween the model elements
+
+GenericDiagram --|> GenericEntity
+GenericEntity --|> GenericModelElement
+GenericModelElement -- GenericEntityType
+GenericGroup --|> GenericEntity
+GenericLeaf --|> GenericEntity
+GenericLink --|> GenericEntity
+GenericMember --|> GenericEntity
+GenericStereotype --|> GenericEntity
+GenericEdge --|> GenericModelElement
+GenericEdge -- GenericEdgeType
+
+
+@enduml

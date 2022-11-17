@@ -1,0 +1,10 @@
+@startuml
+file file.puml  <<puml>> as puml
+component plantuml
+file file.png <<graphic>> as png
+file file.xmi <<uml>> as xmi
+
+puml -r-> plantuml: input
+plantuml --> png: output
+plantuml --> xmi: output
+@enduml
