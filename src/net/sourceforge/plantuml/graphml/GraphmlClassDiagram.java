@@ -54,14 +54,14 @@ public class GraphmlClassDiagram implements XmlDiagramTransformer {
  	private final Cuca2GenericConverter converter;
 	 private final GraphMLExporter exporter;
 
-	public GraphmlClassDiagram(ClassDiagram diagram, SuggestedFile suggestedFile, String gmlRoot) throws ParserConfigurationException {
+	public GraphmlClassDiagram(ClassDiagram diagram, SuggestedFile suggestedFile, String graphmlRootDir) throws ParserConfigurationException {
 
 		String parentDir = suggestedFile.getParentFile().toURI().getPath();
 		String sourceFileName = suggestedFile.getName().toString();
 		Integer blockCount = Integer.valueOf(String.valueOf(suggestedFile.toString().replaceAll("(\\[|\\])", "")));
 
 		this.diagram = diagram;
-		this.converter = new Cuca2GenericConverter(parentDir + sourceFileName, blockCount, gmlRoot);
+		this.converter = new Cuca2GenericConverter(parentDir + sourceFileName, blockCount, graphmlRootDir);
 		this.exporter = new GraphMLExporter();
 
 		converter.visitCucaDiagram(new CucaDiagramWrapper(diagram));

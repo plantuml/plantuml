@@ -63,7 +63,7 @@ public final class FileFormatOption implements Serializable {
 	private final String watermark;
 	private final ColorMapper colorMapper;
 
-	private final String gmlRoot;  // root directory for graphml output
+	private final String graphmlRootDir;  // root directory for graphml output
 
 	public double getScaleCoef() {
 		return scale;
@@ -82,14 +82,14 @@ public final class FileFormatOption implements Serializable {
 	}
 
 	@HaxeIgnored
-	public FileFormatOption(FileFormat fileFormat, String gmlRoot) {
+	public FileFormatOption(FileFormat fileFormat, String graphmlRootDir) {
 		this(fileFormat, false, false, null, false, null, TikzFontDistortion.getDefault(), 1.0, null, null,
 						ColorMapper.IDENTITY, null);
 	}
 
 	private FileFormatOption(FileFormat fileFormat, boolean withMetadata, boolean useRedForError, String svgLinkTarget,
 			boolean debugsvek, String hoverColor, TikzFontDistortion tikzFontDistortion, double scale,
-			String preserveAspectRatio, String watermark, ColorMapper colorMapper, String gmlRoot) {
+			String preserveAspectRatio, String watermark, ColorMapper colorMapper, String graphmlRootDir) {
 		this.hoverColor = hoverColor;
 		this.watermark = watermark;
 		this.fileFormat = fileFormat;
@@ -101,7 +101,7 @@ public final class FileFormatOption implements Serializable {
 		this.scale = scale;
 		this.preserveAspectRatio = preserveAspectRatio;
 		this.colorMapper = colorMapper;
-		this.gmlRoot = gmlRoot;
+		this.graphmlRootDir = graphmlRootDir;
 	}
 
 	public StringBounder getDefaultStringBounder(SvgCharSizeHack charSizeHack) {
@@ -160,9 +160,9 @@ public final class FileFormatOption implements Serializable {
 				tikzFontDistortion, scale, preserveAspectRatio, watermark, colorMapper, null);
 	}
 
-	public FileFormatOption withGmlRoot(String gmlRoot) {
+	public FileFormatOption withGraphmlRootDir(String graphmlRootDir) {
 		return new FileFormatOption(fileFormat, withMetadata, useRedForError, svgLinkTarget, debugsvek, hoverColor,
-						tikzFontDistortion, scale, preserveAspectRatio, watermark, colorMapper, gmlRoot);
+						tikzFontDistortion, scale, preserveAspectRatio, watermark, colorMapper, graphmlRootDir);
 	}
 
 	@Override
@@ -213,5 +213,5 @@ public final class FileFormatOption implements Serializable {
 		return colorMapper;
 	}
 
-	public String getGmlRoot() {return gmlRoot; }
+	public String getGraphmlRootDir() {return graphmlRootDir; }
 }

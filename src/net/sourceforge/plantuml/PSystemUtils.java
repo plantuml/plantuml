@@ -93,7 +93,7 @@ public class PSystemUtils {
 		}
 
 		if (system instanceof CucaDiagram && fileFormatOption.getFileFormat() == FileFormat.GRAPHML) {
-			return createFilesGraphML((CucaDiagram) system, suggestedFile, fileFormatOption.getGmlRoot());
+			return createFilesGraphML((CucaDiagram) system, suggestedFile, fileFormatOption.getGraphmlRootDir());
 		}
 
 		return exportDiagramsDefault(system, suggestedFile, fileFormatOption);
@@ -175,7 +175,7 @@ public class PSystemUtils {
 		return maker.create();
 	}
 
-	private  static List<FileImageData> createFilesGraphML(CucaDiagram system, SuggestedFile suggestedFile, String gmlRoot) throws IOException {
+	private  static List<FileImageData> createFilesGraphML(CucaDiagram system, SuggestedFile suggestedFile, String graphmlRootDir) throws IOException {
 		final SFile outputFile = suggestedFile.getFile(0);
 
 		if (outputFile.isDirectory()) {
@@ -190,7 +190,7 @@ public class PSystemUtils {
 
 		try (OutputStream os = outputFile.createBufferedOutputStream()) {
 			final CucaDiagramGraphmlMaker maker = new CucaDiagramGraphmlMaker(system);
-			maker.createFiles(os, suggestedFile, gmlRoot);
+			maker.createFiles(os, suggestedFile, graphmlRootDir);
 			imageData = ImageDataSimple.ok();
 		}
 

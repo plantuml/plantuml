@@ -97,14 +97,14 @@ public class Cuca2GenericConverter implements ICucaDiagramVisitor {
 	IGenericModelCollector collector = new SimpleGenericModel();
 	GenericModelElementFactory elementFactory = new GenericModelElementFactory();
 	String file;  //path to source file
-	String gmlRoot; // path to directory which is assumed to be the root of the project
+	String graphmlRootDir; // path to directory which is assumed to be the root of the project
 	int blockCount; // a file can have multiple @startuml..@enduml blocks, zero based count
 
-	public Cuca2GenericConverter(String file, int blockCount, String gmlRoot) {
+	public Cuca2GenericConverter(String file, int blockCount, String graphmlRootDir) {
 
 		this.file = file;
 		this.blockCount = blockCount;
-		this.gmlRoot = gmlRoot;
+		this.graphmlRootDir = graphmlRootDir;
 
 		initLeafTypeMap();
 		initDecorMap();
@@ -114,18 +114,18 @@ public class Cuca2GenericConverter implements ICucaDiagramVisitor {
 		initVisibilityMap();
 		initDiagramTypeMap();
 		initCollector();
-		checkGmlRoot();
+		checkgraphmlRootDir();
 	}
 
-	private void checkGmlRoot(){
+	private void checkgraphmlRootDir(){
 
 		// Verify the root and file name match
 		// Verify that root is a directory
-		if (this.gmlRoot == null)
+		if (this.graphmlRootDir == null)
 		{
-			throw new IllegalArgumentException("missing command line parameter -gmlRoot");
+			throw new IllegalArgumentException("missing command line parameter -graphml-root-dir");
 		}
-		File root  = new File(this.gmlRoot);
+		File root  = new File(this.graphmlRootDir);
 		File sourceFile = new File(this.file);
 		boolean ok = root.exists() &&
 						root.isDirectory() &&
@@ -134,7 +134,7 @@ public class Cuca2GenericConverter implements ICucaDiagramVisitor {
 						sourceFile.getPath().startsWith(root.getPath());
 
 		if (!ok) {
-			throw new IllegalArgumentException("file and gmlRoot don't match");
+			throw new IllegalArgumentException("file and graphml-root-dir don't match");
 		}
 
 
@@ -679,10 +679,10 @@ public class Cuca2GenericConverter implements ICucaDiagramVisitor {
 		// to achieve file names relative to a root folder in the project
 		// aims at avoiding having user names in the path
 		String replace = ".";
-		if (gmlRoot.endsWith("/")) {
+		if (graphmlRootDir.endsWith("/")) {
 			replace = "./";
 		}
-		return filePath.replace(gmlRoot, replace);
+		return filePath.replace(graphmlRootDir, replace);
 	}
 	private String getFileName() {
 		String[] tmp = file.split("/");

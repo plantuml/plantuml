@@ -57,14 +57,14 @@ public final class CucaDiagramGraphmlMaker {
 		this.diagram = diagram;
 	}
 
-	public void createFiles(OutputStream fos, SuggestedFile suggestedFile, String gmlRoot) throws IOException {
+	public void createFiles(OutputStream fos, SuggestedFile suggestedFile, String graphmlRootDir) throws IOException {
 		try {
 
 			final XmlDiagramTransformer xmi;
 			if (diagram instanceof DescriptionDiagram)
-				xmi = new GraphmlDescriptionDiagram((DescriptionDiagram) diagram, suggestedFile, gmlRoot);
+				xmi = new GraphmlDescriptionDiagram((DescriptionDiagram) diagram, suggestedFile, graphmlRootDir);
 			else if (diagram instanceof ClassDiagram) {
-				xmi = new GraphmlClassDiagram((ClassDiagram) diagram, suggestedFile, gmlRoot);
+				xmi = new GraphmlClassDiagram((ClassDiagram) diagram, suggestedFile, graphmlRootDir);
 			} else
 				throw new UnsupportedOperationException();
 

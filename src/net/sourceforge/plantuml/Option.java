@@ -99,7 +99,7 @@ public class Option {
 
 	private final List<String> result = new ArrayList<>();
 
-	private String gmlRoot = null;
+	private String graphmlRootDir = null;
 
 	public Option() {
 	}
@@ -377,12 +377,12 @@ public class Option {
 				stdrpt = 2;
 			} else if (s.equalsIgnoreCase("-stdrpt")) {
 				stdrpt = 2;
-			} else if (s.equalsIgnoreCase("-gmlRoot")) {
+			} else if (s.equalsIgnoreCase("-graphml-root-dir")) {
 				i++;
 				if (i == arg.length)
 					continue;
-				gmlRoot = arg[i];
-				setFileFormatOption(this.fileFormatOption.withGmlRoot(gmlRoot));
+				graphmlRootDir = arg[i];
+				setFileFormatOption(this.fileFormatOption.withGraphmlRootDir(graphmlRootDir));
 			} else if (s.equalsIgnoreCase("-pipeimageindex")) {
 				i++;
 				if (i == arg.length)
@@ -581,8 +581,8 @@ public class Option {
 		this.charset = s;
 	}
 
-	public String getGmlRoot() {
-		return gmlRoot;
+	public String getgraphmlRootDir() {
+		return graphmlRootDir;
 	}
 
 	public final boolean isComputeurl() {
