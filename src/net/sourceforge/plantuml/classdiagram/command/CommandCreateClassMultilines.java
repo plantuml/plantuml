@@ -41,8 +41,11 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlMode;
+import net.sourceforge.plantuml.baraye.CucaDiagram;
+import net.sourceforge.plantuml.baraye.EntityImp;
 import net.sourceforge.plantuml.baraye.IEntity;
 import net.sourceforge.plantuml.baraye.ILeaf;
+import net.sourceforge.plantuml.baraye.Quark;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -249,7 +252,27 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 		final String stereotype = line0.get("STEREO", 0);
 
 		/* final */ILeaf result;
-		if (diagram.V1972()) {
+		if (CucaDiagram.QUARK) {
+			final Quark current = diagram.currentQuark();
+			final Quark idNewLong = (Quark) diagram.buildLeafIdent(idShort);
+			if (idNewLong.getData() == null)
+				result = diagram.createLeaf(idNewLong, code, Display.getWithNewlines(display), type, null);
+			else
+				result = (ILeaf) idNewLong.getData();
+			if (result == null || result.isGroup()) {
+				for (Quark tmp : diagram.getPlasma().quarks())
+					if (tmp.getData() instanceof EntityImp) {
+						final EntityImp tmp2 = (EntityImp) tmp.getData();
+						if (tmp2 != null && tmp.getName().equals(idShort) && tmp2.isGroup() == false) {
+							result = (ILeaf) tmp.getData();
+							break;
+						}
+					}
+			}
+			if (result == null)
+				result = diagram.createLeaf(idNewLong, idNewLong, Display.getWithNewlines(display), type, null);
+			diagram.setLastEntity(result);
+		} else if (diagram.V1972()) {
 			result = diagram.getLeafSmart(ident);
 			if (result != null) {
 				// result = diagram.getOrCreateLeaf(ident, code, null, null);
@@ -270,6 +293,7 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 				result = diagram.createLeaf(ident, code, Display.getWithNewlines(display), type, null);
 			}
 		}
+
 		result.setVisibilityModifier(visibilityModifier);
 		if (stereotype != null) {
 			result.setStereotype(Stereotype.build(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),

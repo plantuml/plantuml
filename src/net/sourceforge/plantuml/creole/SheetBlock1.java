@@ -53,6 +53,8 @@ import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -74,14 +76,16 @@ public class SheetBlock1 extends AbstractTextBlock implements TextBlock, Atom, S
 	private final double marginX1;
 	private final double marginX2;
 	private Class<? extends StringBounder> lastCaller;
+	private double minimumWidth;
 
 	@HaxeIgnored
 	public SheetBlock1(Sheet sheet, LineBreakStrategy maxWidth, double padding) {
 		this(sheet, maxWidth, ClockwiseTopRightBottomLeft.same(padding), 0, 0);
 	}
 
-	public SheetBlock1(Sheet sheet, LineBreakStrategy maxWidth, ClockwiseTopRightBottomLeft padding) {
-		this(sheet, maxWidth, padding, 0, 0);
+	public SheetBlock1(Sheet sheet, LineBreakStrategy maxWidth, Style style) {
+		this(sheet, maxWidth, style.getPadding(), 0, 0);
+		this.minimumWidth = style.value(PName.MinimumWidth).asDouble();
 	}
 
 	public SheetBlock1(Sheet sheet, LineBreakStrategy maxWidth, double padding, double marginX1, double marginX2) {
@@ -111,6 +115,10 @@ public class SheetBlock1 extends AbstractTextBlock implements TextBlock, Atom, S
 			return ((StripeSimple) simple).getCellAlignment();
 
 		return HorizontalAlignment.LEFT;
+	}
+
+	public HorizontalAlignment getHorizontalAlignment() {
+		return sheet.getHorizontalAlignment();
 	}
 
 	private void initMap(StringBounder stringBounder) {
@@ -208,6 +216,10 @@ public class SheetBlock1 extends AbstractTextBlock implements TextBlock, Atom, S
 
 	public double getEndingX(StringBounder stringBounder, double y) {
 		return calculateDimension(stringBounder).getWidth() + marginX2;
+	}
+
+	public final double getMinimumWidth() {
+		return minimumWidth;
 	}
 
 }

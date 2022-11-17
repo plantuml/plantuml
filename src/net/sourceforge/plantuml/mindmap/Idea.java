@@ -62,23 +62,23 @@ class Idea {
 
 	private StyleSignatureBasic getDefaultStyleDefinitionNode(int level) {
 		final String depth = SName.depth(level);
-		if (level == 0) {
+		if (level == 0)
 			return StyleSignatureBasic.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.rootNode)
 					.add(stereotype).add(depth);
-		}
-		if (shape == IdeaShape.NONE && children.size() == 0) {
+
+		if (shape == IdeaShape.NONE && children.size() == 0)
 			return StyleSignatureBasic
 					.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.leafNode, SName.boxless)
 					.add(stereotype).add(depth);
-		}
-		if (shape == IdeaShape.NONE) {
+
+		if (shape == IdeaShape.NONE)
 			return StyleSignatureBasic.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.boxless)
 					.add(stereotype).add(depth);
-		}
-		if (children.size() == 0) {
+
+		if (children.size() == 0)
 			return StyleSignatureBasic.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.leafNode)
 					.add(stereotype).add(depth);
-		}
+
 		return StyleSignatureBasic.of(SName.root, SName.element, SName.mindmapDiagram, SName.node).add(stereotype)
 				.add(depth);
 	}

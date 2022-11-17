@@ -101,14 +101,15 @@ public class FtileBox extends AbstractFtile {
 		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.arrow);
 	}
 
+	@Override
 	final public LinkRendering getInLinkRendering() {
 		return inRendering;
 	}
 
 	public Set<Swimlane> getSwimlanes() {
-		if (swimlane == null) {
+		if (swimlane == null)
 			return Collections.emptySet();
-		}
+
 		return Collections.singleton(swimlane);
 	}
 

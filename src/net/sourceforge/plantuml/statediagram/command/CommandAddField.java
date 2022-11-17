@@ -36,7 +36,9 @@
 package net.sourceforge.plantuml.statediagram.command;
 
 import net.sourceforge.plantuml.LineLocation;
+import net.sourceforge.plantuml.baraye.CucaDiagram;
 import net.sourceforge.plantuml.baraye.IEntity;
+import net.sourceforge.plantuml.baraye.Quark;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.IRegex;
@@ -66,9 +68,31 @@ public class CommandAddField extends SingleLineCommand2<StateDiagram> {
 				new RegexLeaf("FIELD", "(.*)"), RegexLeaf.end());
 	}
 
+	private CommandExecutionResult executeArgQuark(StateDiagram diagram, LineLocation location, RegexResult arg)
+			throws NoSuchColorException {
+		final String codeString = arg.getLazzy("CODE", 0);
+
+		final Quark quark = diagram.currentQuark();
+		Quark child = quark.childIfExists(codeString);
+		if (child == null && quark.getName().equals(codeString))
+			child = quark;
+		if (child == null)
+			child = quark.child(codeString);
+
+		final IEntity entity = diagram.getOrCreateLeaf(child, child, null, null);
+
+		final String field = arg.get("FIELD", 0);
+
+		entity.getBodier().addFieldOrMethod(field);
+		return CommandExecutionResult.ok();
+	}
+
 	@Override
 	protected CommandExecutionResult executeArg(StateDiagram diagram, LineLocation location, RegexResult arg)
 			throws NoSuchColorException {
+		if (CucaDiagram.QUARK)
+			return executeArgQuark(diagram, location, arg);
+
 		final String codeString = arg.getLazzy("CODE", 0);
 		final String field = arg.get("FIELD", 0);
 

@@ -164,13 +164,9 @@ public class FtileBoxOld extends AbstractFtile {
 		final LineBreakStrategy wrapWidth = style.wrapWidth();
 		this.minimumWidth = style.value(PName.MinimumWidth).asDouble();
 
-		// final HorizontalAlignment alignment =
-		// skinParam.getDefaultTextAlignment(horizontalAlignment);
 		final Sheet sheet = skinParam.sheet(fc, horizontalAlignment, CreoleMode.FULL).createSheet(label);
-//		this.tb = new SheetBlock1(sheet, wrapWidth, 0, this.padding.getLeft(), this.padding.getRight());
-//		this.tb = new SheetBlock2(new SheetBlock1(sheet, wrapWidth, 0, this.padding.getLeft(), this.padding.getRight()),
-//				new MyStencil(), new UStroke(1));
-		this.tb = new SheetBlock2(new SheetBlock1(sheet, wrapWidth, style.getPadding()), new MyStencil(),
+
+		this.tb = new SheetBlock2(new SheetBlock1(sheet, wrapWidth, style), new MyStencil(),
 				new UStroke(1));
 		this.print = label.toString();
 

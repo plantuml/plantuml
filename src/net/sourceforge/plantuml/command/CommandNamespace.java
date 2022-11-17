@@ -39,8 +39,10 @@ import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlMode;
+import net.sourceforge.plantuml.baraye.CucaDiagram;
 import net.sourceforge.plantuml.baraye.IEntity;
 import net.sourceforge.plantuml.baraye.IGroup;
+import net.sourceforge.plantuml.baraye.Quark;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
@@ -84,12 +86,20 @@ public class CommandNamespace extends SingleLineCommand2<ClassDiagram> {
 		final Code code;
 		final IGroup currentPackage;
 		final Display display;
-		final Ident idNewLong = diagram.buildLeafIdent(idShort);
-		if (diagram.V1972()) {
+		final Ident idNewLong;
+		if (CucaDiagram.QUARK) {
+			final Quark current = diagram.currentQuark();
+			code = current;
+			display = Display.getWithNewlines(idShort);
+			idNewLong = current.child(idShort);
+			currentPackage = (IGroup) current.getData();
+		} else if (diagram.V1972()) {
+			idNewLong = diagram.buildLeafIdent(idShort);
 			code = null;
 			currentPackage = null;
 			display = Display.getWithNewlines(idNewLong.getName());
 		} else {
+			idNewLong = diagram.buildLeafIdent(idShort);
 			code = diagram.buildCode(idShort);
 			currentPackage = diagram.getCurrentGroup();
 			display = Display.getWithNewlines(code);
@@ -110,8 +120,7 @@ public class CommandNamespace extends SingleLineCommand2<ClassDiagram> {
 
 		final String color = arg.get("COLOR", 0);
 		if (color != null) {
-			p.setSpecificColorTOBEREMOVED(ColorType.BACK,
-					diagram.getSkinParam().getIHtmlColorSet().getColor(color));
+			p.setSpecificColorTOBEREMOVED(ColorType.BACK, diagram.getSkinParam().getIHtmlColorSet().getColor(color));
 		}
 		return CommandExecutionResult.ok();
 	}

@@ -68,10 +68,26 @@ public class Stdlib {
 
 			final String info = dataStream.readUTF();
 			dataStream.close();
-			result = new Stdlib(name, info);
+
+			final String link = getLinkFromInfo(info);
+			if (link == null)
+				result = new Stdlib(name, info);
+			else
+				result = retrieve(link);
+
 			all.put(name, result);
 		}
 		return result;
+	}
+
+	private static String getLinkFromInfo(String infoString) {
+		for (String s : infoString.split("\n"))
+			if (s.contains("=")) {
+				final String data[] = s.split("=");
+				if (data[0].equals("LINK"))
+					return data[1];
+			}
+		return null;
 	}
 
 	private String loadResource(String file) throws IOException {
@@ -194,7 +210,6 @@ public class Stdlib {
 				final String data[] = s.split("=");
 				this.info.put(data[0], data[1]);
 			}
-
 	}
 
 	private static DataInputStream getDataStream(String name) throws IOException {

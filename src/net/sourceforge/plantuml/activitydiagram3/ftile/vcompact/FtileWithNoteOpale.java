@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.AlignmentParam;
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineBreakStrategy;
+import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.activitydiagram3.PositionedNote;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
@@ -245,5 +246,12 @@ public class FtileWithNoteOpale extends AbstractFtile implements Stencil, Stylea
 	public double getEndingX(StringBounder stringBounder, double y) {
 		return opale.calculateDimension(stringBounder).getWidth() - opale.getMarginX1();
 	}
+	
+	@Override
+	final public LinkRendering getInLinkRendering() {
+		return tile.getInLinkRendering();
+	}
+
+
 
 }
