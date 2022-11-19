@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.creole;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -46,7 +45,6 @@ import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.creole.atom.AbstractAtom;
 import net.sourceforge.plantuml.creole.atom.Atom;
-import net.sourceforge.plantuml.creole.legacy.AtomText;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
@@ -62,18 +60,18 @@ public class Fission {
 
 	public List<Stripe> getSplitted(StringBounder stringBounder) {
 		final double valueMaxWidth = maxWidth.getMaxWidth();
-		if (valueMaxWidth == 0) {
+		if (valueMaxWidth == 0)
 			return Arrays.asList(stripe);
-		}
+
 		final List<Stripe> result = new ArrayList<>();
 		StripeSimpleInternal current = new StripeSimpleInternal(stripe.getLHeader());
 		double remainingSpace = valueMaxWidth;
-		for (Atom atom : noHeader()) {
+		for (Atom atom : noHeader())
 			while (true) {
 				final List<Atom> splitInTwo = atom.splitInTwo(stringBounder, remainingSpace);
 				final Atom part1 = splitInTwo.get(0);
 				final double widthPart1 = part1.calculateDimension(stringBounder).getWidth();
-				current.addAtom(part1, widthPart1);
+				current.addAtom(part1);
 				remainingSpace -= widthPart1;
 				if (remainingSpace <= 0) {
 					result.add(current);
@@ -91,25 +89,25 @@ public class Fission {
 					remainingSpace = valueMaxWidth;
 				}
 			}
-		}
-		if (remainingSpace < valueMaxWidth) {
+
+		if (remainingSpace < valueMaxWidth)
 			result.add(current);
-		}
+
 		return Collections.unmodifiableList(result);
 	}
 
 	private List<Atom> noHeader() {
 		final List<Atom> atoms = stripe.getAtoms();
-		if (stripe.getLHeader() == null) {
+		if (stripe.getLHeader() == null)
 			return atoms;
-		}
+
 		return atoms.subList(1, atoms.size());
 	}
 
 	private static Atom blank(final Atom header) {
-		if (header == null) {
+		if (header == null)
 			return null;
-		}
+
 		return new AbstractAtom() {
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
@@ -126,31 +124,22 @@ public class Fission {
 		};
 	}
 
-	private Collection<? extends Atom> getSplitted(StringBounder stringBounder, Atom atom) {
-		if (atom instanceof AtomText) {
-			return ((AtomText) atom).getSplitted(stringBounder, maxWidth);
-		}
-		return Collections.singleton(atom);
-	}
-
 	static class StripeSimpleInternal implements Stripe {
 
 		private final List<Atom> atoms = new ArrayList<>();
-		private double totalWidth;
 
 		private StripeSimpleInternal(Atom header) {
-			if (header != null) {
+			if (header != null)
 				this.atoms.add(header);
-			}
+
 		}
 
 		public List<Atom> getAtoms() {
 			return Collections.unmodifiableList(atoms);
 		}
 
-		private void addAtom(Atom atom, double width) {
+		private void addAtom(Atom atom) {
 			this.atoms.add(atom);
-			this.totalWidth += width;
 		}
 
 		public Atom getLHeader() {

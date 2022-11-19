@@ -2,8 +2,10 @@ package net.sourceforge.plantuml.preproc;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,8 +24,12 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.imageio.ImageIO;
+
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.brotli.BrotliInputStream;
+import net.sourceforge.plantuml.code.Base64Coder;
+import net.sourceforge.plantuml.creole.atom.AtomImg;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SFile;
 
@@ -90,6 +96,14 @@ public class Stdlib {
 		return null;
 	}
 
+	private static int read1byte(InputStream is) throws IOException {
+		return is.read() & 0xFF;
+	}
+
+	private static int read2bytes(InputStream is) throws IOException {
+		return (read1byte(is) << 8) + read1byte(is);
+	}
+
 	private String loadResource(String file) throws IOException {
 		final SoftReference<String> cached = cache.get(file.toLowerCase());
 		if (cached != null) {
@@ -110,6 +124,8 @@ public class Stdlib {
 			dataStream.close();
 			return null;
 		}
+		InputStream dataImagePngBase64Stream = null;
+		final List<Integer> colors = new ArrayList<>();
 		try {
 			StringBuilder found = null;
 			while (true) {
@@ -122,7 +138,7 @@ public class Stdlib {
 					found = new StringBuilder();
 
 				while (true) {
-					final String s = dataStream.readUTF();
+					String s = dataStream.readUTF();
 					if (s.equals(SEPARATOR)) {
 						if (found != null) {
 							final String result = found.toString();
@@ -131,6 +147,24 @@ public class Stdlib {
 						}
 						break;
 					}
+
+					if (s.contains(AtomImg.DATA_IMAGE_PNG_BASE64)) {
+						if (dataImagePngBase64Stream == null) {
+							dataImagePngBase64Stream = getDataImagePngBase64();
+							final int size = read2bytes(dataImagePngBase64Stream);
+							for (int i = 0; i < size; i++) {
+								final int alpha = read1byte(dataImagePngBase64Stream);
+								final int red = read1byte(dataImagePngBase64Stream);
+								final int green = read1byte(dataImagePngBase64Stream);
+								final int blue = read1byte(dataImagePngBase64Stream);
+								final int rgb = (alpha << 24) + (red << 16) + (green << 8) + blue;
+								colors.add(rgb);
+							}
+						}
+						final String base64 = readOneImage(dataImagePngBase64Stream, colors);
+						s = s.replaceFirst(AtomImg.DATA_IMAGE_PNG_BASE64, AtomImg.DATA_IMAGE_PNG_BASE64 + base64);
+					}
+
 					if (found != null) {
 						found.append(s);
 						found.append("\n");
@@ -156,6 +190,27 @@ public class Stdlib {
 		} finally {
 			dataStream.close();
 			spriteStream.close();
+			if (dataImagePngBase64Stream != null)
+				dataImagePngBase64Stream.close();
+		}
+
+	}
+
+	private String readOneImage(InputStream is, List<Integer> colors) throws IOException {
+		final int width = is.read();
+		final int height = is.read();
+
+		final BufferedImage result = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+
+		for (int y = 0; y < height; y += 1)
+			for (int x = 0; x < width; x += 1) {
+				final int rgb = colors.get(read2bytes(is));
+				result.setRGB(x, y, rgb);
+			}
+
+		try (final ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+			ImageIO.write(result, "png", baos);
+			return new String(Base64Coder.encode(baos.toByteArray()));
 		}
 
 	}
@@ -228,7 +283,13 @@ public class Stdlib {
 		final InputStream raw = getInternalInputStream(name, "-dex.repx");
 		if (raw == null)
 			return null;
+		return new BrotliInputStream(raw);
+	}
 
+	private InputStream getDataImagePngBase64() throws IOException {
+		final InputStream raw = getInternalInputStream(name, "-ghx.repx");
+		if (raw == null)
+			return null;
 		return new BrotliInputStream(raw);
 	}
 

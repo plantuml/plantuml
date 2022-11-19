@@ -33,32 +33,41 @@
  *
  *
  */
-package net.sourceforge.plantuml;
+package net.sourceforge.plantuml.code;
 
-public class LineBreakStrategy {
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
-	public static final LineBreakStrategy NONE = new LineBreakStrategy(null);
+public class CompressionZip implements Compression {
 
-	private final String value;
-
-	public LineBreakStrategy(String value) {
-		this.value = value;
+	public byte[] compress(byte[] in) {
+		throw new UnsupportedOperationException();
 	}
 
-	@Override
-	public String toString() {
-		return value;
-	}
+	public ByteArray decompress(byte[] input) throws NoPlantumlCompressionException {
+		try {
+			try (final ZipInputStream zis = new ZipInputStream(new ByteArrayInputStream(input))) {
+				final ZipEntry ent = zis.getNextEntry();
+				final String name = ent.getName();
+				final byte[] buffer = new byte[10_000];
 
-	public boolean isAuto() {
-		return "auto".equalsIgnoreCase(value);
-	}
+				try (final ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+					int len;
+					while ((len = zis.read(buffer)) > 0) {
+						baos.write(buffer, 0, len);
+						if (baos.size() > 200_000)
+							throw new NoPlantumlCompressionException("Zip error");
+					}
+					return ByteArray.from(baos.toByteArray());
+				}
+			}
+		} catch (IOException e) {
+			throw new NoPlantumlCompressionException(e);
+		}
 
-	public double getMaxWidth() {
-		if (value != null && value.matches("-?\\d+"))
-			return Double.parseDouble(value);
-
-		return 0;
 	}
 
 }

@@ -134,31 +134,30 @@ public class GanttDiagramFactory extends PSystemCommandFactory {
 		synchronized (cache) {
 			if (cache.size() == 0) {
 
-				for (Subject subject : subjects()) {
+				for (Subject subject : subjects())
 					for (SentenceSimple sentenceA : subject.getSentences()) {
 						cache.add(NaturalCommand.create(sentenceA));
 						for (SentenceSimple sentenceB : subject.getSentences()) {
-							if (sentenceA.getVerbPattern().equals(sentenceB.getVerbPattern()) == false) {
+							final String signatureA = sentenceA.getSignature();
+							final String signatureB = sentenceB.getSignature();
+							if (signatureA.equals(signatureB) == false)
 								cache.add(NaturalCommand.create(new SentenceAnd(sentenceA, sentenceB)));
-							}
+
 						}
 					}
-				}
 
-				for (Subject subject : subjects()) {
-					for (SentenceSimple sentenceA : subject.getSentences()) {
-						for (SentenceSimple sentenceB : subject.getSentences()) {
+				for (Subject subject : subjects())
+					for (SentenceSimple sentenceA : subject.getSentences())
+						for (SentenceSimple sentenceB : subject.getSentences())
 							for (SentenceSimple sentenceC : subject.getSentences()) {
-								if (sentenceA.getVerbPattern().equals(sentenceB.getVerbPattern()) == false
-										&& sentenceA.getVerbPattern().equals(sentenceC.getVerbPattern()) == false
-										&& sentenceC.getVerbPattern().equals(sentenceB.getVerbPattern()) == false) {
+								final String signatureA = sentenceA.getSignature();
+								final String signatureB = sentenceB.getSignature();
+								final String signatureC = sentenceC.getSignature();
+								if (signatureA.equals(signatureB) == false && signatureA.equals(signatureC) == false
+										&& signatureC.equals(signatureB) == false)
 									cache.add(
 											NaturalCommand.create(new SentenceAndAnd(sentenceA, sentenceB, sentenceC)));
-								}
 							}
-						}
-					}
-				}
 			}
 		}
 		return cache;
