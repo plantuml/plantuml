@@ -45,6 +45,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.creole.Neutron;
 import net.sourceforge.plantuml.creole.atom.Atom;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -146,10 +147,6 @@ public class EmbeddedDiagram extends AbstractTextBlock implements Line, Atom {
 		return new EmbeddedDiagram(skinParam, BlockUml.convert(strings));
 	}
 
-	public List<Atom> splitInTwo(StringBounder stringBounder, double width) {
-		return Arrays.asList((Atom) this);
-	}
-
 	public double getStartingAltitude(StringBounder stringBounder) {
 		return 0;
 	}
@@ -217,6 +214,11 @@ public class EmbeddedDiagram extends AbstractTextBlock implements Line, Atom {
 		final BlockUml blockUml = new BlockUml(list, Defines.createEmpty(), skinParam, null, null);
 		return blockUml.getDiagram();
 
+	}
+
+	@Override
+	public List<Neutron> getNeutrons() {
+		return Arrays.asList(Neutron.create(this));
 	}
 
 }
