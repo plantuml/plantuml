@@ -45,14 +45,16 @@ public class UGraphicWithScale {
 
 	final private UGraphic ug;
 	final private AffineTransform at;
+	final private double angle;
 
 	public UGraphicWithScale(UGraphic ug, double scale) {
-		this(ug, AffineTransform.getScaleInstance(scale, scale));
+		this(ug, AffineTransform.getScaleInstance(scale, scale), 0);
 	}
 
-	private UGraphicWithScale(UGraphic ug, AffineTransform at) {
+	private UGraphicWithScale(UGraphic ug, AffineTransform at, double angle) {
 		this.ug = ug;
 		this.at = at;
+		this.angle = angle;
 	}
 
 	public UGraphic getUg() {
@@ -60,29 +62,29 @@ public class UGraphicWithScale {
 	}
 
 	public UGraphicWithScale apply(UChange change) {
-		return new UGraphicWithScale(ug.apply(change), at);
+		return new UGraphicWithScale(ug.apply(change), at, angle);
 	}
 
 	public UGraphicWithScale applyScale(double changex, double changey) {
 		final AffineTransform copy = new AffineTransform(at);
 		copy.scale(changex, changey);
-		return new UGraphicWithScale(ug, copy);
+		return new UGraphicWithScale(ug, copy, angle);
 	}
 
 	public void draw(UShape shape) {
 		ug.draw(shape);
 	}
 
-	public UGraphicWithScale applyRotate(double angle, double x, double y) {
+	public UGraphicWithScale applyRotate(double delta_angle, double x, double y) {
 		final AffineTransform copy = new AffineTransform(at);
-		copy.rotate(angle * Math.PI / 180, x, y);
-		return new UGraphicWithScale(ug, copy);
+		copy.rotate(delta_angle * Math.PI / 180, x, y);
+		return new UGraphicWithScale(ug, copy, this.angle + delta_angle);
 	}
 
 	public UGraphicWithScale applyTranslate(double x, double y) {
 		final AffineTransform copy = new AffineTransform(at);
 		copy.translate(x, y);
-		return new UGraphicWithScale(ug, copy);
+		return new UGraphicWithScale(ug, copy, angle);
 	}
 
 	public AffineTransform getAffineTransform() {
@@ -92,7 +94,11 @@ public class UGraphicWithScale {
 	public UGraphicWithScale applyMatrix(double v1, double v2, double v3, double v4, double v5, double v6) {
 		final AffineTransform copy = new AffineTransform(at);
 		copy.concatenate(new AffineTransform(new double[] { v1, v2, v3, v4, v5, v6 }));
-		return new UGraphicWithScale(ug, copy);
+		return new UGraphicWithScale(ug, copy, angle);
+	}
+
+	public final double getAngle() {
+		return angle;
 	}
 
 }

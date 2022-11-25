@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImageSvg;
+import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UText;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
@@ -233,23 +234,35 @@ public class SvgNanoParser implements Sprite {
 	}
 
 	private void drawEllipse(UGraphicWithScale ugs, String s, HColor colorForMonochrome) {
-
 		ugs = applyFill(ugs, s, colorForMonochrome);
 		ugs = applyTransform(ugs, s);
 
-		final double scalex = ugs.getAffineTransform().getScaleX();
-		final double scaley = ugs.getAffineTransform().getScaleY();
+		final double cx = Double.parseDouble(extractData("cx", s));
+		final double cy = Double.parseDouble(extractData("cy", s));
+		final double rx = Double.parseDouble(extractData("rx", s));
+		final double ry = Double.parseDouble(extractData("ry", s));
 
-		final double deltax = ugs.getAffineTransform().getTranslateX();
-		final double deltay = ugs.getAffineTransform().getTranslateY();
+		UPath path = new UPath();
+		path.moveTo(0, ry);
+		// path.lineTo(rx, 0);
+		path.arcTo(rx, ry, 0, 0, 1, rx, 0);
 
-		final double cx = Double.parseDouble(extractData("cx", s)) * scalex;
-		final double cy = Double.parseDouble(extractData("cy", s)) * scaley;
-		final double rx = Double.parseDouble(extractData("rx", s)) * scalex;
-		final double ry = Double.parseDouble(extractData("ry", s)) * scaley;
+		// path.lineTo(2 * rx, ry);
+		path.arcTo(rx, ry, 0, 0, 1, 2 * rx, ry);
 
-		final UTranslate translate = new UTranslate(deltax + cx - rx, deltay + cy - ry);
-		ugs.apply(translate).draw(new UEllipse(rx * 2, ry * 2));
+		// path.lineTo(rx, 2 * ry);
+		path.arcTo(rx, ry, 0, 0, 1, rx, 2 * ry);
+
+		// path.lineTo(0, ry);
+		path.arcTo(rx, ry, 0, 0, 1, 0, ry);
+
+		path.closePath();
+
+		path = path.translate(cx - rx, cy - ry);
+		path = path.affine(ugs.getAffineTransform(), ugs.getAngle());
+
+		ugs.draw(path);
+
 	}
 
 	private void drawText(UGraphicWithScale ugs, String s, HColor colorForMonochrome) {
@@ -320,7 +333,7 @@ public class SvgNanoParser implements Sprite {
 		return ugs;
 	}
 
-	private UGraphicWithScale applyRotate(UGraphicWithScale ugs, final String transform) {
+	private UGraphicWithScale applyRotate(UGraphicWithScale ugs, String transform) {
 		final Pattern p3 = Pattern.compile("rotate\\(([-.0-9]+)[ ,]+([-.0-9]+)[ ,]+([-.0-9]+)\\)");
 		final Matcher m3 = p3.matcher(transform);
 		if (m3.find()) {

@@ -51,7 +51,7 @@ import net.sourceforge.plantuml.tim.TMemory;
 public class ReversePolishInterpretor {
 
 	private final TValue result;
-	private boolean trace = false;
+	private final boolean trace = false;
 
 	public ReversePolishInterpretor(TokenStack queue, Knowledge knowledge, TMemory memory, TContext context)
 			throws EaterException, EaterExceptionLocated {

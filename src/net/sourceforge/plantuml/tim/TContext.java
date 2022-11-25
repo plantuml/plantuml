@@ -111,7 +111,9 @@ import net.sourceforge.plantuml.tim.stdlib.IsLight;
 import net.sourceforge.plantuml.tim.stdlib.JsonKeyExists;
 import net.sourceforge.plantuml.tim.stdlib.Lighten;
 import net.sourceforge.plantuml.tim.stdlib.LoadJson;
+import net.sourceforge.plantuml.tim.stdlib.LogicalAnd;
 import net.sourceforge.plantuml.tim.stdlib.LogicalNot;
+import net.sourceforge.plantuml.tim.stdlib.LogicalOr;
 import net.sourceforge.plantuml.tim.stdlib.Lower;
 import net.sourceforge.plantuml.tim.stdlib.Newline;
 import net.sourceforge.plantuml.tim.stdlib.Now;
@@ -193,6 +195,8 @@ public class TContext {
 		functionsSet.addFunction(new SplitStr());
 		functionsSet.addFunction(new JsonKeyExists());
 		functionsSet.addFunction(new Now());
+		functionsSet.addFunction(new LogicalAnd());
+		functionsSet.addFunction(new LogicalOr());
 		// %standard_exists_function
 		// %str_replace
 		// !exit

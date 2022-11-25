@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.creole.legacy;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -111,7 +112,8 @@ public class StripeCode implements StripeRaw {
 
 	@Override
 	public List<Neutron> getNeutrons() {
-		throw new UnsupportedOperationException();
+		return Arrays.asList(Neutron.create(this));
 	}
+
 
 }

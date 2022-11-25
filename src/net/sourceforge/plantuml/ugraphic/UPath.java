@@ -36,6 +36,7 @@
  */
 package net.sourceforge.plantuml.ugraphic;
 
+import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -87,17 +88,25 @@ public class UPath extends AbstractShadowable implements Iterable<USegment>, USh
 
 	public UPath translate(double dx, double dy) {
 		final UPath result = new UPath(comment, codeLine);
-		for (USegment seg : segments) {
+		for (USegment seg : segments)
 			result.addInternal(seg.translate(dx, dy));
-		}
+
 		return result;
 	}
 
 	public UPath rotate(double theta) {
 		final UPath result = new UPath(comment, codeLine);
-		for (USegment seg : segments) {
+		for (USegment seg : segments)
 			result.addInternal(seg.rotate(theta));
-		}
+
+		return result;
+	}
+
+	public UPath affine(AffineTransform transform, double angle) {
+		final UPath result = new UPath(comment, codeLine);
+		for (USegment seg : segments)
+			result.addInternal(seg.affine(transform, angle));
+
 		return result;
 	}
 

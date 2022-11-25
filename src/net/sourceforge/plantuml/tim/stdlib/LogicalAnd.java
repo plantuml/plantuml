@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,50 +30,39 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
  *
  */
-package net.sourceforge.plantuml.ugraphic;
+package net.sourceforge.plantuml.tim.stdlib;
 
-import java.awt.geom.PathIterator;
-import java.util.EnumSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-public enum USegmentType {
+import net.sourceforge.plantuml.LineLocation;
+import net.sourceforge.plantuml.tim.EaterException;
+import net.sourceforge.plantuml.tim.EaterExceptionLocated;
+import net.sourceforge.plantuml.tim.TContext;
+import net.sourceforge.plantuml.tim.TFunctionSignature;
+import net.sourceforge.plantuml.tim.TMemory;
+import net.sourceforge.plantuml.tim.expression.TValue;
 
-	SEG_MOVETO(PathIterator.SEG_MOVETO), //
-	SEG_LINETO(PathIterator.SEG_LINETO), //
-	SEG_QUADTO(PathIterator.SEG_QUADTO), //
-	SEG_CUBICTO(PathIterator.SEG_CUBICTO), //
-	SEG_CLOSE(PathIterator.SEG_CLOSE), //
-	SEG_ARCTO(4321);//
+public class LogicalAnd extends SimpleReturnFunction {
 
-	final public static int SEG_ARCTO_VALUE = 4321;
-
-	private final int code;
-
-	private USegmentType(int code) {
-		this.code = code;
+	public TFunctionSignature getSignature() {
+		return new TFunctionSignature("%and", 2);
 	}
 
-	public int getNbPoints() {
-		switch (this) {
-		case SEG_MOVETO:
-			return 1;
-		case SEG_LINETO:
-			return 1;
-		case SEG_CUBICTO:
-			return 3;
-		case SEG_CLOSE:
-			return 0;
-		}
-		throw new UnsupportedOperationException();
+	public boolean canCover(int nbArg, Set<String> namedArgument) {
+		return nbArg >= 2;
 	}
 
-	public static USegmentType getByCode(int code) {
-		for (USegmentType p : EnumSet.allOf(USegmentType.class))
-			if (p.code == code)
-				return p;
+	public TValue executeReturnFunction(TContext context, TMemory memory, LineLocation location, List<TValue> values,
+			Map<String, TValue> named) throws EaterException, EaterExceptionLocated {
+		for (TValue v : values)
+			if (v.toBoolean() == false)
+				return TValue.fromBoolean(false);
 
-		throw new IllegalArgumentException();
+		return TValue.fromBoolean(true);
+
 	}
 }
