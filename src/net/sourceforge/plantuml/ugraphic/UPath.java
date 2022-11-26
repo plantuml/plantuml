@@ -102,10 +102,10 @@ public class UPath extends AbstractShadowable implements Iterable<USegment>, USh
 		return result;
 	}
 
-	public UPath affine(AffineTransform transform, double angle) {
+	public UPath affine(AffineTransform transform, double angle, double scale) {
 		final UPath result = new UPath(comment, codeLine);
 		for (USegment seg : segments)
-			result.addInternal(seg.affine(transform, angle));
+			result.addInternal(seg.affine(transform, angle, scale));
 
 		return result;
 	}

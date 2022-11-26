@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.baraye.IEntity;
+import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.CommandControl;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -60,10 +61,9 @@ import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.json.Json.DefaultHandler;
 import net.sourceforge.plantuml.json.JsonParser;
 import net.sourceforge.plantuml.json.JsonValue;
-import net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
-public class CommandCreateJson extends CommandMultilines2<AbstractClassOrObjectDiagram> {
+public class CommandCreateJson extends CommandMultilines2<AbstractEntityDiagram> {
 
 	public CommandCreateJson() {
 		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH);
@@ -91,7 +91,7 @@ public class CommandCreateJson extends CommandMultilines2<AbstractClassOrObjectD
 	}
 
 	@Override
-	protected CommandExecutionResult executeNow(AbstractClassOrObjectDiagram diagram, BlocLines lines)
+	protected CommandExecutionResult executeNow(AbstractEntityDiagram diagram, BlocLines lines)
 			throws NoSuchColorException {
 		lines = lines.trim().removeEmptyLines();
 		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
@@ -141,7 +141,7 @@ public class CommandCreateJson extends CommandMultilines2<AbstractClassOrObjectD
 		return sb.toString();
 	}
 
-	private IEntity executeArg0(AbstractClassOrObjectDiagram diagram, RegexResult line0) throws NoSuchColorException {
+	private IEntity executeArg0(AbstractEntityDiagram diagram, RegexResult line0) throws NoSuchColorException {
 		final String name = line0.get("NAME", 1);
 		final Ident ident = diagram.buildLeafIdent(name);
 		final Code code = diagram.V1972() ? ident : diagram.buildCode(name);

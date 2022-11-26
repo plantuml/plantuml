@@ -88,14 +88,16 @@ public class USegment {
 		return new USegment(new double[] { p1.getX(), p1.getY() }, pathType);
 	}
 
-	public USegment affine(AffineTransform transform, double angle) {
+	public USegment affine(AffineTransform transform, double angle, double scale) {
 		if (pathType == USegmentType.SEG_ARCTO) {
 			XPoint2D p1 = new XPoint2D(coord[5], coord[6]);
 
 			p1 = p1.transform(transform);
-			return new USegment(
-					new double[] { coord[0], coord[1], coord[2] + angle, coord[3], coord[4], p1.getX(), p1.getY() },
-					pathType);
+
+			final double large_arc_flag = coord[3];
+			final double sweep_flag = coord[4];
+			return new USegment(new double[] { coord[0] * scale, coord[1] * scale, coord[2] + angle, large_arc_flag,
+					sweep_flag, p1.getX(), p1.getY() }, pathType);
 		}
 
 		if (coord.length != 2)

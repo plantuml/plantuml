@@ -173,8 +173,10 @@ public class SvgNanoParser implements Sprite {
 			final HColor stroke = getTrueColor(strokeString, colorForMonochrome);
 			ugs = ugs.apply(stroke);
 			final String strokeWidth = extractData("stroke-width", s);
-			if (strokeWidth != null)
-				ugs = ugs.apply(new UStroke(Double.parseDouble(strokeWidth)));
+			if (strokeWidth != null) {
+				final double scale = ugs.getScale();
+				ugs = ugs.apply(new UStroke(scale * Double.parseDouble(strokeWidth)));
+			}
 
 		} else {
 			final HColor fill = getTrueColor(fillString, colorForMonochrome);
@@ -234,6 +236,7 @@ public class SvgNanoParser implements Sprite {
 	}
 
 	private void drawEllipse(UGraphicWithScale ugs, String s, HColor colorForMonochrome) {
+		final boolean debug = false;
 		ugs = applyFill(ugs, s, colorForMonochrome);
 		ugs = applyTransform(ugs, s);
 
@@ -244,22 +247,31 @@ public class SvgNanoParser implements Sprite {
 
 		UPath path = new UPath();
 		path.moveTo(0, ry);
-		// path.lineTo(rx, 0);
-		path.arcTo(rx, ry, 0, 0, 1, rx, 0);
 
-		// path.lineTo(2 * rx, ry);
-		path.arcTo(rx, ry, 0, 0, 1, 2 * rx, ry);
+		if (debug)
+			path.lineTo(rx, 0);
+		else
+			path.arcTo(rx, ry, 0, 0, 1, rx, 0);
 
-		// path.lineTo(rx, 2 * ry);
-		path.arcTo(rx, ry, 0, 0, 1, rx, 2 * ry);
+		if (debug)
+			path.lineTo(2 * rx, ry);
+		else
+			path.arcTo(rx, ry, 0, 0, 1, 2 * rx, ry);
 
-		// path.lineTo(0, ry);
-		path.arcTo(rx, ry, 0, 0, 1, 0, ry);
+		if (debug)
+			path.lineTo(rx, 2 * ry);
+		else
+			path.arcTo(rx, ry, 0, 0, 1, rx, 2 * ry);
+
+		if (debug)
+			path.lineTo(0, ry);
+		else
+			path.arcTo(rx, ry, 0, 0, 1, 0, ry);
 
 		path.closePath();
 
 		path = path.translate(cx - rx, cy - ry);
-		path = path.affine(ugs.getAffineTransform(), ugs.getAngle());
+		path = path.affine(ugs.getAffineTransform(), ugs.getAngle(), ugs.getScale());
 
 		ugs.draw(path);
 
