@@ -67,7 +67,8 @@ public class ComponentRoseGroupingElse extends AbstractTextualComponent {
 		this.teoz = teoz;
 		this.roundCorner = style.value(PName.RoundCorner).asInt();
 		this.groupBorder = style.value(PName.LineColor).asColor(getIHtmlColorSet());
-		this.backgroundColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
+		this.backgroundColor = teoz ? HColors.transparent()
+				: style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
 	}
 
 	@Override

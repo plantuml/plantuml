@@ -56,6 +56,7 @@ import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 
@@ -69,11 +70,12 @@ public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 	private final SymbolContext symbolContextCorner;
 	private final double roundCorner;
 
-	public ComponentRoseGroupingHeader(Style style, Style styleHeader, Display strings, ISkinSimple spriteContainer) {
+	public ComponentRoseGroupingHeader(boolean teoz, Style style, Style styleHeader, Display strings,
+			ISkinSimple spriteContainer) {
 		super(styleHeader, LineBreakStrategy.NONE, 15, 30, 1, spriteContainer, strings.get(0));
 
 		this.roundCorner = style.value(PName.RoundCorner).asInt();
-		this.background = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
+		this.background = teoz ? HColors.transparent() : style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
 		this.symbolContext = style.getSymbolContext(getIHtmlColorSet());
 		this.symbolContextCorner = styleHeader.getSymbolContext(getIHtmlColorSet());
 

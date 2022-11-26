@@ -361,7 +361,7 @@ class DrawableSetInitializer {
 		final Display strings = start.getTitle().equals("group") ? Display.create(start.getComment())
 				: Display.create(start.getTitle(), start.getComment());
 		final Component header = drawableSet.getSkin().createComponent(start.getUsedStyles(),
-				ComponentType.GROUPING_HEADER, null, skinParam, strings);
+				ComponentType.GROUPING_HEADER_LEGACY, null, skinParam, strings);
 		final ParticipantBox veryfirst = drawableSet.getVeryfirst();
 		final InGroupableList inGroupableList = new InGroupableList(veryfirst, start, freeY2.getFreeY(range));
 		inGroupableStack.addList(inGroupableList);

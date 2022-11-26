@@ -78,9 +78,9 @@ final public class GroupingLeaf extends Grouping implements EventWithDeactivate 
 
 	@Override
 	public final HColor getBackColorGeneral() {
-		if (backColorGeneral == null) {
+		if (backColorGeneral == null)
 			return start.getBackColorGeneral();
-		}
+
 		return backColorGeneral;
 	}
 

@@ -57,8 +57,10 @@ import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class GroupingTile extends AbstractTile {
 
@@ -156,7 +158,7 @@ public class GroupingTile extends AbstractTile {
 	}
 
 	private Component getComponent(StringBounder stringBounder) {
-		final Component comp = skin.createComponent(start.getUsedStyles(), ComponentType.GROUPING_HEADER, null,
+		final Component comp = skin.createComponent(start.getUsedStyles(), ComponentType.GROUPING_HEADER_TEOZ, null,
 				skinParam, display);
 		return comp;
 	}
@@ -168,14 +170,19 @@ public class GroupingTile extends AbstractTile {
 	public void drawU(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
 
+		final Area area = Area.create(max.getCurrentValue() - min.getCurrentValue(), getTotalHeight(stringBounder));
+
 		final Component comp = getComponent(stringBounder);
 		final XDimension2D dim1 = getPreferredDimensionIfEmpty(stringBounder);
-		final Area area = Area.create(max.getCurrentValue() - min.getCurrentValue(), getTotalHeight(stringBounder));
 
 		if (YGauge.USE_ME) {
 			comp.drawU(ug.apply(new UTranslate(min.getCurrentValue(), getYGauge().getMin().getCurrentValue())), area,
 					(Context2D) ug);
 		} else {
+			if (((Context2D) ug).isBackground()) {
+				drawBackground(ug, area);
+				return;
+			}
 			comp.drawU(ug.apply(UTranslate.dx(min.getCurrentValue())), area, (Context2D) ug);
 			drawAllElses(ug);
 		}
@@ -191,6 +198,36 @@ public class GroupingTile extends AbstractTile {
 		}
 	}
 
+	private void drawBackground(UGraphic ug, Area area) {
+		final HColor back = start.getUsedStyles()[0].value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
+		final XDimension2D dimensionToUse = area.getDimensionToUse();
+		final Blotter blotter = new Blotter(dimensionToUse, back);
+
+		for (Tile tile : tiles)
+			if (tile instanceof ElseTile) {
+				final ElseTile elseTile = (ElseTile) tile;
+				final double ypos = elseTile.getTimeHook().getValue() - getTimeHook().getValue() + MARGINY_MAGIC / 2;
+				blotter.addChange(ypos, elseTile.getBackColorGeneral());
+			}
+
+		blotter.closeChanges();
+		blotter.drawU(ug.apply(UTranslate.dx(min.getCurrentValue())));
+
+		final StringBounder stringBounder = ug.getStringBounder();
+
+		final XDimension2D dim1 = getPreferredDimensionIfEmpty(stringBounder);
+		double h = dim1.getHeight() + MARGINY_MAGIC / 2;
+		for (Tile tile : tiles) {
+			if (YGauge.USE_ME)
+				((UDrawable) tile).drawU(ug);
+			else
+				((UDrawable) tile).drawU(ug.apply(UTranslate.dy(h)));
+			final double preferredHeight = tile.getPreferredHeight();
+			h += preferredHeight;
+		}
+
+	}
+
 	private double getTotalHeight(StringBounder stringBounder) {
 		final XDimension2D dimIfEmpty = getPreferredDimensionIfEmpty(stringBounder);
 		return bodyHeight + dimIfEmpty.getHeight() + MARGINY_MAGIC / 2;
@@ -198,7 +235,6 @@ public class GroupingTile extends AbstractTile {
 
 	private void drawAllElses(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
-		final double totalHeight = getTotalHeight(stringBounder);
 
 		final List<Double> ys = new ArrayList<>();
 		for (Tile tile : tiles) {
@@ -213,6 +249,7 @@ public class GroupingTile extends AbstractTile {
 				ys.add(ypos);
 			}
 		}
+		final double totalHeight = getTotalHeight(stringBounder);
 		ys.add(totalHeight);
 		int i = 0;
 		for (Tile tile : tiles) {
