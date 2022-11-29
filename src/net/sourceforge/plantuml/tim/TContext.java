@@ -112,8 +112,12 @@ import net.sourceforge.plantuml.tim.stdlib.JsonKeyExists;
 import net.sourceforge.plantuml.tim.stdlib.Lighten;
 import net.sourceforge.plantuml.tim.stdlib.LoadJson;
 import net.sourceforge.plantuml.tim.stdlib.LogicalAnd;
+import net.sourceforge.plantuml.tim.stdlib.LogicalNand;
+import net.sourceforge.plantuml.tim.stdlib.LogicalNor;
 import net.sourceforge.plantuml.tim.stdlib.LogicalNot;
+import net.sourceforge.plantuml.tim.stdlib.LogicalNxor;
 import net.sourceforge.plantuml.tim.stdlib.LogicalOr;
+import net.sourceforge.plantuml.tim.stdlib.LogicalXor;
 import net.sourceforge.plantuml.tim.stdlib.Lower;
 import net.sourceforge.plantuml.tim.stdlib.Newline;
 import net.sourceforge.plantuml.tim.stdlib.Now;
@@ -197,6 +201,10 @@ public class TContext {
 		functionsSet.addFunction(new Now());
 		functionsSet.addFunction(new LogicalAnd());
 		functionsSet.addFunction(new LogicalOr());
+		functionsSet.addFunction(new LogicalXor());
+		functionsSet.addFunction(new LogicalNand());
+		functionsSet.addFunction(new LogicalNor());
+		functionsSet.addFunction(new LogicalNxor());
 		// %standard_exists_function
 		// %str_replace
 		// !exit

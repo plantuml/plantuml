@@ -58,6 +58,7 @@ import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
@@ -199,9 +200,11 @@ public class GroupingTile extends AbstractTile {
 	}
 
 	private void drawBackground(UGraphic ug, Area area) {
-		final HColor back = start.getUsedStyles()[0].value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
+		final Style style = start.getUsedStyles()[0];
+		final HColor back = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
+		final double round = style.value(PName.RoundCorner).asDouble();
 		final XDimension2D dimensionToUse = area.getDimensionToUse();
-		final Blotter blotter = new Blotter(dimensionToUse, back);
+		final Blotter blotter = new Blotter(dimensionToUse, back, round);
 
 		for (Tile tile : tiles)
 			if (tile instanceof ElseTile) {

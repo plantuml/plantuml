@@ -42,7 +42,9 @@ import java.util.TreeMap;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.URectangle;
+import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColors;
@@ -51,12 +53,14 @@ public class Blotter implements UDrawable {
 
 	private final XDimension2D dim;
 	private final HColor defaultBackcolor;
+	private final double round;
 	private HColor last;
 	private final SortedMap<Double, HColor> changes = new TreeMap<>();
 
-	public Blotter(XDimension2D dim, HColor defaultBackcolor) {
+	public Blotter(XDimension2D dim, HColor defaultBackcolor, double round) {
 		if (defaultBackcolor == null)
 			defaultBackcolor = HColors.transparent();
+		this.round = round;
 		this.dim = dim;
 		this.defaultBackcolor = defaultBackcolor;
 		this.last = defaultBackcolor;
@@ -71,14 +75,52 @@ public class Blotter implements UDrawable {
 	public void drawU(UGraphic ug) {
 		HColor current = defaultBackcolor;
 		double y = 0;
+		int i = 0;
 		for (Entry<Double, HColor> ent : changes.entrySet()) {
 			if (current.isTransparent() == false) {
-				final URectangle rect = new URectangle(dim.getWidth(), ent.getKey() - y);
+				final UShape rect = getRectangleBackground(i, ent.getKey() - y);
 				ug.apply(current).apply(current.bg()).apply(UTranslate.dy(y)).draw(rect);
 			}
 			y = ent.getKey();
 			current = ent.getValue();
+			i++;
 		}
+	}
+
+	private UShape getRectangleBackground(int i, double height) {
+		final double width = dim.getWidth();
+		if (round == 0)
+			return new URectangle(width, height);
+
+		if (changes.size() == 1)
+			return new URectangle(width, height).rounded(round);
+
+		if (i == 0) {
+			final UPath result = new UPath();
+			result.moveTo(round / 2, 0);
+			result.lineTo(width - round / 2, 0);
+			result.arcTo(round / 2, round / 2, 0, 0, 1, width, round / 2);
+			result.lineTo(width, height);
+			result.lineTo(0, height);
+			result.lineTo(0, round / 2);
+			result.arcTo(round / 2, round / 2, 0, 0, 1, round / 2, 0);
+			result.closePath();
+			return result;
+		}
+		if (i == changes.size() - 1) {
+			final UPath result = new UPath();
+			result.moveTo(0, 0);
+			result.lineTo(width, 0);
+			result.lineTo(width, height - round / 2);
+			result.arcTo(round / 2, round / 2, 0, 0, 1, width - round / 2, height);
+			result.lineTo(round / 2, height);
+			result.arcTo(round / 2, round / 2, 0, 0, 1, 0, height - round / 2);
+			result.lineTo(0, 0);
+			result.closePath();
+			return result;
+
+		}
+		return new URectangle(width, height);
 	}
 
 	public void closeChanges() {
