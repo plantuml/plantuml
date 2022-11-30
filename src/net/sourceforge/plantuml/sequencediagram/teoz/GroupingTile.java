@@ -210,7 +210,7 @@ public class GroupingTile extends AbstractTile {
 			if (tile instanceof ElseTile) {
 				final ElseTile elseTile = (ElseTile) tile;
 				final double ypos = elseTile.getTimeHook().getValue() - getTimeHook().getValue() + MARGINY_MAGIC / 2;
-				blotter.addChange(ypos, elseTile.getBackColorGeneral());
+				blotter.addChange(ypos + 1, elseTile.getBackColorGeneral());
 			}
 
 		blotter.closeChanges();

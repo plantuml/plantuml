@@ -156,8 +156,8 @@ public class ETileBox extends ETile {
 		} else if (symbol == Symbol.SPECIAL_SEQUENCE) {
 			final URectangle rect1 = new URectangle(dimBox.delta(2)).rounded(12);
 			final URectangle rect2 = new URectangle(dimBox.delta(-2)).rounded(8);
-			ug.apply(new UTranslate(posxBox - 1, posy - 1)).apply(lineColor).apply(new UStroke(1.0)).draw(rect1);
-			ug.apply(new UTranslate(posxBox + 1, posy + 1)).apply(lineColor).apply(new UStroke(1.0)).draw(rect2);
+			ug.apply(new UTranslate(posxBox - 1, posy - 1)).apply(lineColor).apply(new UStroke(1.0, 1.0, 1.0)).draw(rect1);
+			ug.apply(new UTranslate(posxBox + 1, posy + 1)).apply(lineColor).apply(new UStroke(0.5)).draw(rect2);
 		} else {
 			final URectangle rect = new URectangle(dimBox).rounded(10);
 			ug.apply(new UTranslate(posxBox, posy)).apply(lineColor).apply(backgroundColor.bg()).apply(new UStroke(1.5))

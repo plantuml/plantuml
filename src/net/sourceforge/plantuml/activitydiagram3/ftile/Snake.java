@@ -149,20 +149,20 @@ public class Snake implements UShape {
 
 	public static Snake create(ISkinParam skinParam, Rainbow color) {
 		final Style style = StyleSignatureBasic.activityArrow().getMergedStyle(skinParam.getCurrentStyleBuilder());
-		return new Snake(skinParam, null, color, null, new Worm(style), MergeStrategy.FULL, null,
+		return new Snake(skinParam, null, color, null, new Worm(style, skinParam.arrows()), MergeStrategy.FULL, null,
 				new ArrayList<Text>());
 	}
 
 	public static Snake create(ISkinParam skinParam, Rainbow color, UPolygon endDecoration) {
 		final Style style = StyleSignatureBasic.activityArrow().getMergedStyle(skinParam.getCurrentStyleBuilder());
-		return new Snake(skinParam, null, color, endDecoration, new Worm(style), MergeStrategy.FULL, null,
-				new ArrayList<Text>());
+		return new Snake(skinParam, null, color, endDecoration, new Worm(style, skinParam.arrows()), MergeStrategy.FULL,
+				null, new ArrayList<Text>());
 	}
 
 	public static Snake create(ISkinParam skinParam, UPolygon startDecoration, Rainbow color, UPolygon endDecoration) {
 		final Style style = StyleSignatureBasic.activityArrow().getMergedStyle(skinParam.getCurrentStyleBuilder());
-		return new Snake(skinParam, startDecoration, color, endDecoration, new Worm(style), MergeStrategy.FULL, null,
-				new ArrayList<Text>());
+		return new Snake(skinParam, startDecoration, color, endDecoration, new Worm(style, skinParam.arrows()),
+				MergeStrategy.FULL, null, new ArrayList<Text>());
 	}
 
 	private Snake(ISkinParam skinParam, UPolygon startDecoration, Rainbow color, UPolygon endDecoration, Worm worm,

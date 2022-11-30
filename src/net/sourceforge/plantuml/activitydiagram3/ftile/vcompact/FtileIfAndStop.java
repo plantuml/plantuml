@@ -98,9 +98,9 @@ class FtileIfAndStop extends AbstractFtile {
 
 	public Set<Swimlane> getSwimlanes() {
 		final Set<Swimlane> result = new HashSet<>();
-		if (getSwimlaneIn() != null) {
+		if (getSwimlaneIn() != null) 
 			result.add(getSwimlaneIn());
-		}
+		
 		result.addAll(tile1.getSwimlanes());
 		return Collections.unmodifiableSet(result);
 	}
@@ -153,7 +153,6 @@ class FtileIfAndStop extends AbstractFtile {
 		final FtileGeometry dim1 = tile1.calculateDimension(stringBounder);
 
 		final double x1 = calculateDimension(stringBounder).getLeft() - dim1.getLeft();
-		// final double y1 = (dimTotal.getHeight() - 2 * h - dim1.getHeight()) / 2 + h;
 		final double y1 = dimDiamond1.getHeight() + getSuppHeight();
 		return new UTranslate(x1, y1);
 	}
@@ -165,7 +164,6 @@ class FtileIfAndStop extends AbstractFtile {
 	private UTranslate getTranslateDiamond1(StringBounder stringBounder) {
 		final double y1 = 0;
 		final XDimension2D dimDiamond1 = diamond1.calculateDimension(stringBounder);
-		// final double x1 = getLeft(stringBounder) - dimDiamond1.getWidth() / 2;
 		final double x1 = calculateDimension(stringBounder).getLeft() - dimDiamond1.getWidth() / 2;
 		return new UTranslate(x1, y1);
 	}
@@ -197,7 +195,7 @@ class FtileIfAndStop extends AbstractFtile {
 			final XPoint2D p1 = getP1(stringBounder);
 			final XPoint2D p2 = getP2(stringBounder);
 
-			final Snake snake = Snake.create(skinParam(), color, Arrows.asToRight());
+			final Snake snake = Snake.create(skinParam(), color, skinParam().arrows().asToRight());
 			snake.addPoint(p1);
 			snake.addPoint(p2);
 			ug.draw(snake);

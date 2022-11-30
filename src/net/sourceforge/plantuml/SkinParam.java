@@ -53,6 +53,9 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.activitydiagram3.ftile.Arrows;
+import net.sourceforge.plantuml.activitydiagram3.ftile.ArrowsRegular;
+import net.sourceforge.plantuml.activitydiagram3.ftile.ArrowsTriangle;
 import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
@@ -1219,6 +1222,13 @@ public class SkinParam implements ISkinParam {
 			cache.put(key, result);
 		}
 		return result;
+	}
+
+	@Override
+	public Arrows arrows() {
+		if (strictUmlStyle())
+			return new ArrowsTriangle();
+		return new ArrowsRegular();
 	}
 
 }

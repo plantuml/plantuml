@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.activitydiagram3.gtile;
 
 import net.sourceforge.plantuml.Direction;
-import net.sourceforge.plantuml.activitydiagram3.ftile.Arrows;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -66,7 +65,7 @@ public class GConnectionVerticalDownThenBack extends GAbstractConnection {
 	public void drawU(UGraphic ug) {
 		final XPoint2D p1 = pos1.getTranslated(gpoint1.getPoint2D());
 		final XPoint2D p2 = pos2.getTranslated(gpoint2.getPoint2D());
-		final UPolygon arrow = Arrows.asToLeft();
+		final UPolygon arrow = skinParam().arrows().asToLeft();
 		final Snake snake = Snake.create(skinParam(), getInLinkRenderingColor(), arrow)
 				.withLabel(textBlock, HorizontalAlignment.LEFT).emphasizeDirection(Direction.UP);
 
@@ -92,7 +91,7 @@ public class GConnectionVerticalDownThenBack extends GAbstractConnection {
 		p1 = translate1.getTranslated(p1);
 		p2 = translate2.getTranslated(p2);
 
-		final UPolygon arrow = Arrows.asToLeft();
+		final UPolygon arrow = skinParam().arrows().asToLeft();
 		final Snake snake = Snake.create(skinParam(), getInLinkRenderingColor(), arrow)
 				.withLabel(textBlock, HorizontalAlignment.LEFT).emphasizeDirection(Direction.UP);
 

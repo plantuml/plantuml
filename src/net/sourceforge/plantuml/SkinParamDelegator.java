@@ -38,6 +38,7 @@ package net.sourceforge.plantuml;
 import java.util.Collection;
 import java.util.Map;
 
+import net.sourceforge.plantuml.activitydiagram3.ftile.Arrows;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.creole.SheetBuilder;
 import net.sourceforge.plantuml.cucadiagram.Rankdir;
@@ -456,6 +457,11 @@ public class SkinParamDelegator implements ISkinParam {
 	public SheetBuilder sheet(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
 			CreoleMode creoleMode, FontConfiguration stereo) {
 		return skinParam.sheet(fontConfiguration, horizontalAlignment, creoleMode, stereo);
+	}
+
+	@Override
+	public Arrows arrows() {
+		return skinParam.arrows();
 	}
 
 }

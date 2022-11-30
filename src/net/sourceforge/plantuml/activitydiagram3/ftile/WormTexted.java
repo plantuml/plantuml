@@ -54,8 +54,8 @@ public class WormTexted implements Iterable<XPoint2D> {
 	private final Worm worm;
 	private TextBlock textBlock;
 
-	private WormTexted(Style style) {
-		this(new Worm(style));
+	private WormTexted(Style style, Arrows arrows) {
+		this(new Worm(style, arrows));
 	}
 
 	private WormTexted(Worm worm) {

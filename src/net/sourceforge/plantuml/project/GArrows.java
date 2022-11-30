@@ -35,14 +35,15 @@
  */
 package net.sourceforge.plantuml.project;
 
-import net.sourceforge.plantuml.Direction;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Arrows;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 
-public class Arrows {
+public class GArrows extends Arrows {
 
 	final static private double delta2 = 4;
 
-	private static UPolygon asToUp() {
+	@Override
+	public UPolygon asToUp() {
 		final UPolygon polygon = new UPolygon("asToUp");
 		polygon.addPoint(-delta2, 0);
 		polygon.addPoint(0, 0);
@@ -51,7 +52,8 @@ public class Arrows {
 		return polygon;
 	}
 
-	private static UPolygon asToDown() {
+	@Override
+	public UPolygon asToDown() {
 		final UPolygon polygon = new UPolygon("asToDown");
 		polygon.addPoint(-delta2, 0);
 		polygon.addPoint(0, 0);
@@ -60,7 +62,8 @@ public class Arrows {
 		return polygon;
 	}
 
-	private static UPolygon asToRight() {
+	@Override
+	public UPolygon asToRight() {
 		final UPolygon polygon = new UPolygon("asToRight");
 		polygon.addPoint(0, -delta2);
 		polygon.addPoint(0, 0);
@@ -69,29 +72,14 @@ public class Arrows {
 		return polygon.translate(-4, 0);
 	}
 
-	private static UPolygon asToLeft() {
+	@Override
+	public UPolygon asToLeft() {
 		final UPolygon polygon = new UPolygon("asToLeft");
 		polygon.addPoint(0, -delta2);
 		polygon.addPoint(0, 0);
 		polygon.addPoint(0, delta2);
 		polygon.addPoint(-4, 0);
 		return polygon.translate(4, 0);
-	}
-
-	public static UPolygon asTo(Direction direction) {
-		if (direction == Direction.UP) {
-			return asToUp();
-		}
-		if (direction == Direction.DOWN) {
-			return asToDown();
-		}
-		if (direction == Direction.LEFT) {
-			return asToLeft();
-		}
-		if (direction == Direction.RIGHT) {
-			return asToRight();
-		}
-		throw new IllegalArgumentException();
 	}
 
 }

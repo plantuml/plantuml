@@ -188,7 +188,7 @@ public class WormMutation {
 	}
 
 	public Worm mute(Worm original) {
-		final Worm result = new Worm(original.getStyle());
+		final Worm result = original.cloneEmpty();
 		for (int i = 0; i < original.size(); i++) {
 			result.addPoint(translations.get(i).getTranslated(original.get(i)));
 		}

@@ -152,9 +152,9 @@ public class GanttArrow implements UDrawable {
 			throw new IllegalArgumentException();
 		}
 
-		ug = ug.apply(new UStroke(1.5)).apply(
-				style.value(PName.LineColor).asColor(colorSet).bg());
-		ug.apply(new UTranslate(x2, y2)).draw(Arrows.asTo(atEnd));
+		ug = ug.apply(new UStroke(1.5)).apply(style.value(PName.LineColor).asColor(colorSet).bg());
+		final GArrows arrows = new GArrows();
+		ug.apply(new UTranslate(x2, y2)).draw(arrows.asTo(atEnd));
 
 	}
 

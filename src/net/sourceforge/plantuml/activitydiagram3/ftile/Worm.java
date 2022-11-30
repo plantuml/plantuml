@@ -61,9 +61,11 @@ public class Worm implements Iterable<XPoint2D> {
 
 	private final List<XPoint2D> points = new ArrayList<>();
 	private final Style style;
+	private final Arrows arrows;
 
-	public Worm(Style style) {
+	public Worm(Style style, Arrows arrows) {
 		this.style = style;
+		this.arrows = arrows;
 	}
 
 	public boolean isPureHorizontal() {
@@ -73,7 +75,7 @@ public class Worm implements Iterable<XPoint2D> {
 	private boolean ignoreForCompression;
 
 	public Worm cloneEmpty() {
-		final Worm result = new Worm(style);
+		final Worm result = new Worm(style, arrows);
 		result.ignoreForCompression = this.ignoreForCompression;
 		return result;
 	}
@@ -147,13 +149,13 @@ public class Worm implements Iterable<XPoint2D> {
 	private void drawLine(UGraphic ug, double x1, double y1, double x2, double y2, Direction direction) {
 		ug = ug.apply(new UTranslate(x1, y1));
 		if (direction != null)
-			ug.apply(new UTranslate((x2 - x1) / 2, (y2 - y1) / 2)).draw(Arrows.asTo(direction));
+			ug.apply(new UTranslate((x2 - x1) / 2, (y2 - y1) / 2)).draw(arrows.asTo(direction));
 
 		ug.draw(new ULine(x2 - x1, y2 - y1));
 	}
 
 	public Worm move(double dx, double dy) {
-		final Worm result = new Worm(style);
+		final Worm result = new Worm(style, arrows);
 		for (XPoint2D pt : points)
 			result.addPoint(pt.getX() + dx, pt.getY() + dy);
 
@@ -166,7 +168,7 @@ public class Worm implements Iterable<XPoint2D> {
 		if (dx != 0 && dy != 0)
 			throw new IllegalArgumentException("move=" + move);
 
-		final Worm result = new Worm(style);
+		final Worm result = new Worm(style, arrows);
 		double x0 = this.points.get(0).getX();
 		double y0 = this.points.get(0).getY();
 		double x1 = this.points.get(1).getX();
@@ -195,7 +197,7 @@ public class Worm implements Iterable<XPoint2D> {
 		if (dx != 0 && dy != 0)
 			throw new IllegalArgumentException("move=" + move);
 
-		final Worm result = new Worm(style);
+		final Worm result = new Worm(style, arrows);
 		double x8 = this.points.get(this.points.size() - 2).getX();
 		double y8 = this.points.get(this.points.size() - 2).getY();
 		double x9 = this.points.get(this.points.size() - 1).getX();
@@ -334,7 +336,7 @@ public class Worm implements Iterable<XPoint2D> {
 		if (Snake.same(this.getLast(), other.getFirst()) == false)
 			throw new IllegalArgumentException();
 
-		final Worm result = new Worm(style);
+		final Worm result = new Worm(style, arrows);
 		result.points.addAll(this.points);
 		result.points.addAll(other.points);
 		result.mergeMe(merge);

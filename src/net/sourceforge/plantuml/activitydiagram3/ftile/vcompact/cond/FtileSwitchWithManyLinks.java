@@ -41,7 +41,6 @@ import java.util.List;
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.activitydiagram3.Branch;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractConnection;
-import net.sourceforge.plantuml.activitydiagram3.ftile.Arrows;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Connection;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
@@ -88,7 +87,7 @@ public class FtileSwitchWithManyLinks extends FtileSwitchWithDiamonds {
 			final double x2 = p2.getX();
 			final double y2 = p2.getY();
 
-			final Snake snake = Snake.create(skinParam(), arrowColor, Arrows.asToDown())
+			final Snake snake = Snake.create(skinParam(), arrowColor, skinParam().arrows().asToDown())
 					.withLabel(branch.getTextBlockPositive(), arrowHorizontalAlignment());
 			snake.addPoint(x1, y1);
 
@@ -158,15 +157,15 @@ public class FtileSwitchWithManyLinks extends FtileSwitchWithDiamonds {
 			final Direction direction;
 			if (x1 < ptD.getX()) {
 				p2 = ptD;
-				arrow = Arrows.asToRight();
+				arrow = skinParam().arrows().asToRight();
 				direction = Direction.RIGHT;
 			} else if (x1 > ptB.getX()) {
 				p2 = ptB;
-				arrow = Arrows.asToLeft();
+				arrow = skinParam().arrows().asToLeft();
 				direction = Direction.LEFT;
 			} else {
 				p2 = ptA;
-				arrow = Arrows.asToDown();
+				arrow = skinParam().arrows().asToDown();
 				direction = Direction.DOWN;
 			}
 
@@ -215,7 +214,7 @@ public class FtileSwitchWithManyLinks extends FtileSwitchWithDiamonds {
 			final double x2 = p2.getX();
 			final double y2 = p2.getY();
 
-			final Snake snake = Snake.create(skinParam(), arrowColor, Arrows.asToDown())
+			final Snake snake = Snake.create(skinParam(), arrowColor, skinParam().arrows().asToDown())
 					.withLabel(branch.getTextBlockPositive(), VerticalAlignment.CENTER);
 			if (x2 < p1d.getX() - margin || x2 > p1b.getX() + margin) {
 				snake.addPoint(x2, p1d.getY());
@@ -271,8 +270,8 @@ public class FtileSwitchWithManyLinks extends FtileSwitchWithDiamonds {
 
 			final double ym = (y1 + y2) / 2;
 
-			final Snake snake = Snake.create(skinParam(), arrowColor, Arrows.asToDown()).withLabel(outLabel,
-					VerticalAlignment.CENTER);
+			final Snake snake = Snake.create(skinParam(), arrowColor, skinParam().arrows().asToDown())
+					.withLabel(outLabel, VerticalAlignment.CENTER);
 
 			if (x1 < p1d.getX() - margin || x1 > p1b.getX() + margin) {
 				snake.addPoint(x1, y1);
@@ -297,9 +296,9 @@ public class FtileSwitchWithManyLinks extends FtileSwitchWithDiamonds {
 	@Override
 	protected double getYdelta1a(StringBounder stringBounder) {
 		double max = 10;
-		for (Branch branch : branches) {
+		for (Branch branch : branches)
 			max = Math.max(max, branch.getTextBlockPositive().calculateDimension(stringBounder).getHeight());
-		}
+
 		if (mode == Mode.BIG_DIAMOND) {
 			final double diamondHeight = diamond1.calculateDimension(stringBounder).getHeight();
 			max += diamondHeight / 2;
