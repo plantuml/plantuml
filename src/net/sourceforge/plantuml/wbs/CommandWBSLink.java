@@ -33,7 +33,7 @@
  * 
  *
  */
-package net.sourceforge.plantuml.sequencediagram.command;
+package net.sourceforge.plantuml.wbs;
 
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -42,31 +42,30 @@ import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 
-public class CommandLinkAnchor extends SingleLineCommand2<SequenceDiagram> {
+public class CommandWBSLink extends SingleLineCommand2<WBSDiagram> {
 
-	public CommandLinkAnchor() {
+	public CommandWBSLink() {
 		super(getRegexConcat());
 	}
 
 	static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandLinkAnchor.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("ANCHOR1", "\\{([%pLN_]+)\\}"), //
+		return RegexConcat.build(CommandWBSLink.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("CODE1", "([%pLN_]+)"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("LINK", "\\<-\\>"), //
+				new RegexLeaf("LINK", "-+\\>"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("ANCHOR2", "\\{([%pLN_]+)\\}"), //
+				new RegexLeaf("CODE2", "([%pLN_]+)"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("MESSAGE", "(?::[%s]*(.*))?"), RegexLeaf.end());
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg) {
-		final String anchor1 = arg.get("ANCHOR1", 0);
-		final String anchor2 = arg.get("ANCHOR2", 0);
-		final String message = arg.get("MESSAGE", 0);
-		return diagram.linkAnchor(anchor1, anchor2, message);
+	protected CommandExecutionResult executeArg(WBSDiagram diagram, LineLocation location, RegexResult arg) {
+		final String code1 = arg.get("CODE1", 0);
+		final String code2 = arg.get("CODE2", 0);
+//		final String message = arg.get("MESSAGE", 0);
+		return diagram.link(code1, code2);
 	}
 
 }

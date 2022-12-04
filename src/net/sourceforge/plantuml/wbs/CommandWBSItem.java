@@ -50,18 +50,34 @@ import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public class CommandWBSItem extends SingleLineCommand2<WBSDiagram> {
 
-	public CommandWBSItem() {
-		super(false, getRegexConcat());
+	public CommandWBSItem(int mode) {
+		super(false, getRegexConcat(mode));
 	}
 
-	static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandWBSItem.class.getName(), RegexLeaf.start(), //
+	static IRegex getRegexConcat(int mode) {
+		if (mode == 0)
+			return RegexConcat.build(CommandWBSItem.class.getName() + mode, RegexLeaf.start(), //
+					new RegexLeaf("TYPE", "([ \t]*[*+-]+)"), //
+					new RegexOptional(new RegexLeaf("BACKCOLOR", "\\[(#\\w+)\\]")), //
+					new RegexOptional(new RegexLeaf("CODE", "\\(([%pLN_]+)\\)")), //
+					new RegexLeaf("SHAPE", "(_)?"), //
+					new RegexLeaf("DIRECTION", "([<>])?"), //
+					RegexLeaf.spaceOneOrMore(), //
+					new RegexLeaf("LABEL", "([^%s].*)"), //
+					RegexLeaf.end());
+
+		return RegexConcat.build(CommandWBSItem.class.getName() + mode, RegexLeaf.start(), //
 				new RegexLeaf("TYPE", "([ \t]*[*+-]+)"), //
 				new RegexOptional(new RegexLeaf("BACKCOLOR", "\\[(#\\w+)\\]")), //
 				new RegexLeaf("SHAPE", "(_)?"), //
 				new RegexLeaf("DIRECTION", "([<>])?"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("LABEL", "([^%s].*)"), RegexLeaf.end());
+				new RegexLeaf("LABEL", "[%g](.*)[%g]"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("as"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("CODE", "([%pLN_]+)"), //
+				RegexLeaf.end());
 	}
 
 	@Override
@@ -69,6 +85,7 @@ public class CommandWBSItem extends SingleLineCommand2<WBSDiagram> {
 			throws NoSuchColorException {
 		final String type = arg.get("TYPE", 0);
 		final String label = arg.get("LABEL", 0);
+		final String code = arg.get("CODE", 0);
 		final String stringColor = arg.get("BACKCOLOR", 0);
 		HColor backColor = null;
 		if (stringColor != null)
@@ -81,7 +98,7 @@ public class CommandWBSItem extends SingleLineCommand2<WBSDiagram> {
 		else if (">".equals(direction))
 			dir = Direction.RIGHT;
 
-		return diagram.addIdea(backColor, diagram.getSmartLevel(type), label, dir,
+		return diagram.addIdea(code, backColor, diagram.getSmartLevel(type), label, dir,
 				IdeaShape.fromDesc(arg.get("SHAPE", 0)));
 	}
 

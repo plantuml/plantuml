@@ -76,4 +76,30 @@ public class XRectangle2D implements XShape {
 		return xp >= getMinX() && xp < getMaxX() && yp >= getMinY() && yp < getMaxY();
 	}
 
+	public XPoint2D intersect(XLine2D line) {
+		final XPoint2D a = new XPoint2D(x, y);
+		final XPoint2D b = new XPoint2D(x + width, y);
+		final XPoint2D c = new XPoint2D(x + width, y + height);
+		final XPoint2D d = new XPoint2D(x, y + height);
+		final XLine2D line1 = new XLine2D(a, b);
+		final XLine2D line2 = new XLine2D(b, c);
+		final XLine2D line3 = new XLine2D(c, d);
+		final XLine2D line4 = new XLine2D(d, a);
+
+		XPoint2D result = line.intersect(line1);
+		if (result != null)
+			return result;
+		result = line.intersect(line2);
+		if (result != null)
+			return result;
+		result = line.intersect(line3);
+		if (result != null)
+			return result;
+		result = line.intersect(line4);
+		if (result != null)
+			return result;
+
+		return null;
+	}
+
 }

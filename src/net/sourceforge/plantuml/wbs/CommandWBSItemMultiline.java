@@ -94,20 +94,18 @@ public class CommandWBSItemMultiline extends CommandMultilines2<WBSDiagram> {
 		lines = lines.removeStartingAndEnding(line0.get("DATA", 0), 1);
 
 		final String stereotype = lineLast.get(1);
-		if (stereotype != null) {
+		if (stereotype != null)
 			lines = lines.overrideLastLine(lineLast.get(0));
-		}
 
 		final String type = line0.get("TYPE", 0);
 		final String stringColor = line0.get("BACKCOLOR", 0);
 		HColor backColor = null;
-		if (stringColor != null) {
+		if (stringColor != null)
 			backColor = diagram.getSkinParam().getIHtmlColorSet().getColor(stringColor);
-		}
 
 		Direction dir = Direction.RIGHT;
 
-		return diagram.addIdea(backColor, diagram.getSmartLevel(type), lines.toDisplay(), stereotype, dir,
+		return diagram.addIdea(null, backColor, diagram.getSmartLevel(type), lines.toDisplay(), stereotype, dir,
 				IdeaShape.fromDesc(line0.get("SHAPE", 0)));
 
 	}

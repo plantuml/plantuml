@@ -50,9 +50,9 @@ public class UFont {
 	private static final Set<String> names = new HashSet<>();
 
 	static {
-		for (String name : GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames()) {
+		for (String name : GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames())
 			names.add(name.toLowerCase());
-		}
+
 	}
 
 	public String toStringDebug() {
@@ -71,9 +71,9 @@ public class UFont {
 		if (fontFamily.contains(",")) {
 			for (String name : fontFamily.split(",")) {
 				name = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(name).trim();
-				if (doesFamilyExists(name)) {
+				if (doesFamilyExists(name))
 					return new Font(fontFamily, fontStyle, fontSize);
-				}
+
 			}
 		}
 		return new Font(fontFamily, fontStyle, fontSize);
@@ -154,21 +154,22 @@ public class UFont {
 
 	public String getFamily(UFontContext context) {
 		if (context == UFontContext.EPS) {
-			if (family == null) {
+			if (family == null)
 				return "Times-Roman";
-			}
+
 			return font.getPSName();
 		}
 		if (context == UFontContext.SVG) {
-			if (family.equalsIgnoreCase("sansserif")) {
+			if (family.equalsIgnoreCase("sansserif"))
 				return "sans-serif";
-			}
+
 			return family;
 		}
 		return family;
 	}
 
-	// Kludge for testing because font names on some machines (only macOS?) do not end with <DOT><STYLE>
+	// Kludge for testing because font names on some machines (only macOS?) do not
+	// end with <DOT><STYLE>
 	// See https://github.com/plantuml/plantuml/issues/720
 	private String getPortableFontName() {
 		final String name = font.getFontName();
@@ -194,9 +195,9 @@ public class UFont {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof UFont == false) {
+		if (obj instanceof UFont == false)
 			return false;
-		}
+
 		return this.font.equals(((UFont) obj).font);
 	}
 

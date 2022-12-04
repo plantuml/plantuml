@@ -43,6 +43,7 @@ import java.util.List;
 import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SkinParamColors;
+import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
@@ -52,6 +53,7 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 final public class WElement {
@@ -65,6 +67,8 @@ final public class WElement {
 	private final List<WElement> childrenLeft = new ArrayList<>();
 	private final List<WElement> childrenRight = new ArrayList<>();
 	private final IdeaShape shape;
+	private UTranslate position;
+	private XDimension2D dimension;
 
 	private StyleSignatureBasic getDefaultStyleDefinitionNode(int level) {
 		final String depth = SName.depth(level);
@@ -85,7 +89,8 @@ final public class WElement {
 			return StyleSignatureBasic.of(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.boxless)
 					.addS(stereotype).add(depth);
 
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.wbsDiagram, SName.node).addS(stereotype).add(depth);
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.wbsDiagram, SName.node).addS(stereotype)
+				.add(depth);
 	}
 
 	public ISkinParam withBackColor(ISkinParam skinParam) {
@@ -170,6 +175,19 @@ final public class WElement {
 
 	public final StyleBuilder getStyleBuilder() {
 		return styleBuilder;
+	}
+
+	public final void setGeometry(UTranslate position, XDimension2D dimension) {
+		this.position = position;
+		this.dimension = dimension;
+	}
+
+	public final UTranslate getPosition() {
+		return position;
+	}
+
+	public final XDimension2D getDimension() {
+		return dimension;
 	}
 
 }

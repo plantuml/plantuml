@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 
@@ -58,9 +59,11 @@ class ITFComposed extends WBSTextBlock implements ITF {
 
 	final private double delta1x = 10;
 	final private double marginBottom;// = 15;
+	private final WElement idea;
 
 	private ITFComposed(ISkinParam skinParam, WElement idea, List<ITF> left, List<ITF> right) {
 		super(skinParam, idea.getStyleBuilder(), idea.getLevel());
+		this.idea = idea;
 		this.left = left;
 		this.right = right;
 		this.main = buildMain(idea);
@@ -69,17 +72,17 @@ class ITFComposed extends WBSTextBlock implements ITF {
 	}
 
 	public static ITF build2(ISkinParam skinParam, WElement idea) {
-		if (idea.isLeaf()) {
-			return new ITFLeaf(idea.getStyle(), idea.withBackColor(skinParam), idea.getLabel(), idea.getShape());
-		}
+		if (idea.isLeaf())
+			return new ITFLeaf(idea, idea.withBackColor(skinParam));
+
 		final List<ITF> left = new ArrayList<>();
 		final List<ITF> right = new ArrayList<>();
-		for (WElement child : idea.getChildren(Direction.LEFT)) {
+		for (WElement child : idea.getChildren(Direction.LEFT))
 			left.add(build2(skinParam, child));
-		}
-		for (WElement child : idea.getChildren(Direction.RIGHT)) {
+
+		for (WElement child : idea.getChildren(Direction.RIGHT))
 			right.add(build2(skinParam, child));
-		}
+
 		return new ITFComposed(skinParam, idea, left, right);
 	}
 
@@ -128,7 +131,14 @@ class ITFComposed extends WBSTextBlock implements ITF {
 
 	public void drawU(final UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
+
 		final XDimension2D mainDim = main.calculateDimension(stringBounder);
+
+		if (ug instanceof AbstractCommonUGraphic) {
+			final UTranslate translate = ((AbstractCommonUGraphic) ug).getTranslate();
+			idea.setGeometry(translate, mainDim);
+		}
+
 		final double wx = getw1(stringBounder) - mainDim.getWidth() / 2;
 		main.drawU(ug.apply(UTranslate.dx(wx)));
 		final double x = getw1(stringBounder);
@@ -159,18 +169,18 @@ class ITFComposed extends WBSTextBlock implements ITF {
 
 	final private double getCollWidth(StringBounder stringBounder, Collection<? extends TextBlock> all) {
 		double result = 0;
-		for (TextBlock child : all) {
+		for (TextBlock child : all)
 			result = Math.max(result, child.calculateDimension(stringBounder).getWidth());
-		}
+
 		return result;
 	}
 
 	final private double getCollHeight(StringBounder stringBounder, Collection<? extends TextBlock> all,
 			double deltay) {
 		double result = 0;
-		for (TextBlock child : all) {
+		for (TextBlock child : all)
 			result += deltay + child.calculateDimension(stringBounder).getHeight();
-		}
+
 		return result;
 	}
 
