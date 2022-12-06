@@ -147,7 +147,7 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 	public void writeToStream(OutputStream os, String metadata, int dpi) throws IOException {
 		try {
 			if (metadata != null)
-				getGraphicObject().addComment(metadata);
+				getGraphicObject().addCommentMetadata(metadata);
 
 			if (interactive) {
 				// For performance reasons and also because we want the entire graph DOM to be

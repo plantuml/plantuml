@@ -67,9 +67,9 @@ import org.w3c.dom.Element;
 
 import net.sourceforge.plantuml.FileUtils;
 import net.sourceforge.plantuml.Log;
-import net.sourceforge.plantuml.SignatureUtils;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.code.Base64Coder;
+import net.sourceforge.plantuml.code.TranscoderUtil;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.security.SecurityProfile;
@@ -985,15 +985,25 @@ public class SvgGraphics {
 		this.hidden = hidden;
 	}
 
-	public static final String MD5_HEADER = "<!--MD5=[";
+	public static final String META_HEADER = "<!--SRC=[";
 
-	public static String getMD5Hex(String comment) {
-		return SignatureUtils.getMD5Hex(comment);
+	public static String getMetadataHex(String comment) {
+		try {
+			final String encoded = TranscoderUtil.getDefaultTranscoderProtected().encode(comment);
+			return encoded;
+		} catch (IOException e) {
+			return "ERROR42";
+		}
+	}
+
+	public void addCommentMetadata(String metadata) {
+		final String signature = getMetadataHex(metadata);
+		final String comment = "SRC=[" + signature + "]";
+		final Comment commentElement = document.createComment(comment);
+		getG().appendChild(commentElement);
 	}
 
 	public void addComment(String comment) {
-		final String signature = getMD5Hex(comment);
-		comment = "MD5=[" + signature + "]\n" + comment;
 		final Comment commentElement = document.createComment(comment);
 		getG().appendChild(commentElement);
 	}

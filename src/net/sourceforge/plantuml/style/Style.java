@@ -181,7 +181,9 @@ public class Style {
 	public UFont getUFont() {
 		final String family = value(PName.FontName).asString();
 		final int fontStyle = value(PName.FontStyle).asFontStyle();
-		final int size = value(PName.FontSize).asInt();
+		int size = value(PName.FontSize).asInt();
+		if (size == 0)
+			size = 14;
 		return new UFont(family, fontStyle, size);
 	}
 
