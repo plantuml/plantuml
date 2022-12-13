@@ -43,16 +43,20 @@ import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.svek.extremity.ExtremityArrow;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.ugraphic.color.HColors;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 class WBSLink implements UDrawable {
 
 	private final WElement element1;
 	private final WElement element2;
+	private final HColor color;
 
-	public WBSLink(WElement element1, WElement element2) {
+	public WBSLink(WElement element1, WElement element2, HColor color) {
 		this.element1 = element1;
 		this.element2 = element2;
+		this.color = color;
+		if (color == null)
+			throw new IllegalArgumentException();
 	}
 
 	public final WElement getElement1() {
@@ -83,7 +87,7 @@ class WBSLink implements UDrawable {
 			final XPoint2D c2 = rect2.intersect(line);
 
 			line = new XLine2D(c1, c2);
-			ug = ug.apply(HColors.RED);
+			ug = ug.apply(color);
 			line.drawU(ug);
 
 			final double angle = line.getAngle();

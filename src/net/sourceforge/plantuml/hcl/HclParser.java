@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.json.JsonObject;
 import net.sourceforge.plantuml.json.JsonString;
 import net.sourceforge.plantuml.json.JsonValue;
 
+// https://github.com/hashicorp/hcl
 public class HclParser {
 
 	private final List<HclTerm> terms = new ArrayList<HclTerm>();

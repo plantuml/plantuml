@@ -41,12 +41,12 @@ abstract class ScaleProtected implements Scale {
 
 	final public double getScale(double width, double height) {
 		final double result = getScaleInternal(width, height);
-		if (result <= 0) {
+		if (result <= 0)
 			return 1;
-		}
-		if (result > 4) {
+
+		if (result > 4)
 			return 4;
-		}
+
 		return result;
 	}
 

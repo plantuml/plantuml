@@ -68,6 +68,10 @@ public class ETileBox extends ETile {
 	private String commentAbove;
 	private String commentBelow;
 
+	public ETileBox mergeWith(ETileBox other) {
+		return new ETileBox(this.value + other.value, symbol, fc, style, colorSet, skinParam);
+	}
+
 	public ETileBox(String value, Symbol symbol, FontConfiguration fc, Style style, HColorSet colorSet,
 			ISkinParam skinParam) {
 		this.symbol = symbol;
@@ -223,6 +227,10 @@ public class ETileBox extends ETile {
 	@Override
 	protected String getRepetitionLabel() {
 		return value;
+	}
+
+	public final Symbol getSymbol() {
+		return symbol;
 	}
 
 }

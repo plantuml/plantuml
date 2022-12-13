@@ -39,6 +39,7 @@ import java.io.OutputStream;
 import java.util.List;
 
 import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.ScaleSimple;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
@@ -60,14 +61,18 @@ import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.ugraphic.hand.UGraphicHandwritten;
 
 public class JsonDiagram extends TitledDiagram {
 
 	private final JsonValue root;
 	private final List<String> highlighted;
+	private final boolean handwritten;
 
-	public JsonDiagram(UmlSource source, UmlDiagramType type, JsonValue json, List<String> highlighted) {
+	public JsonDiagram(UmlSource source, UmlDiagramType type, JsonValue json, List<String> highlighted,
+			StyleExtractor styleExtractor) {
 		super(source, type, null);
+		this.handwritten = styleExtractor.isHandwritten();
 		if (json != null && (json.isString() || json.isBoolean() || json.isNumber())) {
 			this.root = new JsonArray();
 			((JsonArray) this.root).add(json);
@@ -75,6 +80,7 @@ public class JsonDiagram extends TitledDiagram {
 			this.root = json;
 		}
 		this.highlighted = highlighted;
+		setScale(new ScaleSimple(styleExtractor.getScale()));
 	}
 
 	public DiagramDescription getDescription() {
@@ -95,6 +101,8 @@ public class JsonDiagram extends TitledDiagram {
 	}
 
 	private void drawInternal(UGraphic ug) {
+		if (handwritten)
+			ug = new UGraphicHandwritten(ug);
 		if (root == null) {
 			final Display display = Display
 					.getWithNewlines("Your data does not sound like " + getUmlDiagramType() + " data");

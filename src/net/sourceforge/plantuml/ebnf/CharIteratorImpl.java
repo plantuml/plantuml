@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.ebnf;
 
 import net.sourceforge.plantuml.command.BlocLines;
 
-class CharIteratorImpl implements CharIterator {
+public class CharIteratorImpl implements CharIterator {
 
 	final private BlocLines data;
 	private int line = 0;

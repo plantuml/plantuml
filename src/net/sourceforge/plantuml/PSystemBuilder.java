@@ -85,6 +85,7 @@ import net.sourceforge.plantuml.openiconic.PSystemListOpenIconicFactory;
 import net.sourceforge.plantuml.openiconic.PSystemOpenIconicFactory;
 import net.sourceforge.plantuml.oregon.PSystemOregonFactory;
 import net.sourceforge.plantuml.project.GanttDiagramFactory;
+import net.sourceforge.plantuml.regex.PSystemRegexFactory;
 import net.sourceforge.plantuml.salt.PSystemSaltFactory2;
 import net.sourceforge.plantuml.security.SecurityProfile;
 import net.sourceforge.plantuml.security.SecurityUtils;
@@ -212,7 +213,6 @@ public class PSystemBuilder {
 			factories.add(new PSystemXearthFactory());
 		}
 		factories.add(new GanttDiagramFactory(DiagramType.GANTT));
-		// factories.add(new GanttDiagramFactory(DiagramType.UML));
 		GanttDiagramFactory.clearCache();
 		factories.add(new FlowDiagramFactory());
 		// factories.add(new PSystemTreeFactory(DiagramType.JUNGLE));
@@ -227,6 +227,7 @@ public class PSystemBuilder {
 		factories.add(new YamlDiagramFactory());
 		factories.add(new HclDiagramFactory());
 		factories.add(new PSystemEbnfFactory());
+		factories.add(new PSystemRegexFactory());
 	}
 
 	private boolean isOk(Diagram ps) {

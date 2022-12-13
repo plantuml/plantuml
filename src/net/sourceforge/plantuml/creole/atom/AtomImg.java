@@ -84,9 +84,9 @@ public class AtomImg extends AbstractAtom implements Atom {
 	public static Atom createQrcode(String flash, double scale) {
 		final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();
 		BufferedImage im = utils.exportFlashcode(flash, Color.BLACK, Color.WHITE);
-		if (im == null) {
+		if (im == null)
 			im = new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB);
-		}
+
 		return new AtomImg(
 				new UImage(new PixelImage(im, AffineTransformType.TYPE_NEAREST_NEIGHBOR)).scale(scale).getImage(1), 1,
 				null, null);
@@ -120,38 +120,38 @@ public class AtomImg extends AbstractAtom implements Atom {
 		try {
 			// Check if valid URL
 			if (src.startsWith("http:") || src.startsWith("https:")) {
-				if (src.endsWith(".svg")) 
+				if (src.endsWith(".svg"))
 					return buildSvgFromUrl(src, fc, SURL.create(src), scale, url);
-				
+
 				return buildRasterFromUrl(src, fc, SURL.create(src), scale, url);
 			}
 			final SFile f = FileSystem.getInstance().getFile(src);
 			if (f.exists() == false) {
-				if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE) 
+				if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE)
 					return AtomTextUtils.createLegacy("(File not found: " + f.getPrintablePath() + ")", fc);
-				
+
 				return AtomTextUtils.createLegacy("(Cannot decode)", fc);
 			}
 			if (f.getName().endsWith(".svg")) {
 				final String tmp = FileUtils.readSvg(f);
-				if (tmp == null) 
+				if (tmp == null)
 					return AtomTextUtils.createLegacy("(Cannot decode)", fc);
-				
+
 				return new AtomImgSvg(new TileImageSvg(tmp, scale));
 			}
 			final BufferedImage read = f.readRasterImageFromFile();
 			if (read == null) {
-				if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE) 
+				if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE)
 					return AtomTextUtils.createLegacy("(Cannot decode: " + f.getPrintablePath() + ")", fc);
-				
+
 				return AtomTextUtils.createLegacy("(Cannot decode)", fc);
 			}
 			return new AtomImg(f.readRasterImageFromFile(), scale, url, src);
 		} catch (IOException e) {
 			Logme.error(e);
-			if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE) 
+			if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE)
 				return AtomTextUtils.createLegacy("ERROR " + e.toString(), fc);
-			
+
 			return AtomTextUtils.createLegacy("ERROR", fc);
 		}
 	}
@@ -159,33 +159,33 @@ public class AtomImg extends AbstractAtom implements Atom {
 	private static Atom buildRasterFromData(String source, final FontConfiguration fc, final byte[] data, double scale,
 			Url url) throws IOException {
 		final BufferedImage read = SImageIO.read(data);
-		if (read == null) {
+		if (read == null)
 			return AtomTextUtils.createLegacy("(Cannot decode: " + source + ")", fc);
-		}
+
 		return new AtomImg(read, scale, url, null);
 	}
 
 	private static Atom buildRasterFromUrl(String text, final FontConfiguration fc, SURL source, double scale, Url url)
 			throws IOException {
-		if (source == null) {
+		if (source == null)
 			return AtomTextUtils.createLegacy("(Cannot decode: " + text + ")", fc);
-		}
+
 		final BufferedImage read = source.readRasterImageFromURL();
-		if (read == null) {
+		if (read == null)
 			return AtomTextUtils.createLegacy("(Cannot decode: " + text + ")", fc);
-		}
+
 		return new AtomImg(read, scale, url, "http");
 	}
 
 	private static Atom buildSvgFromUrl(String text, final FontConfiguration fc, SURL source, double scale, Url url)
 			throws IOException {
-		if (source == null) {
+		if (source == null)
 			return AtomTextUtils.createLegacy("(Cannot decode SVG: " + text + ")", fc);
-		}
+
 		final byte[] read = source.getBytes();
-		if (read == null) {
+		if (read == null)
 			return AtomTextUtils.createLegacy("(Cannot decode SVG: " + text + ")", fc);
-		}
+
 		return new AtomImgSvg(new TileImageSvg(new String(read, UTF_8), scale));
 	}
 
@@ -200,14 +200,15 @@ public class AtomImg extends AbstractAtom implements Atom {
 	}
 
 	public void drawU(UGraphic ug) {
-		if (url != null) {
+		if (url != null)
 			ug.startUrl(url);
-		}
+
 		ug.draw(new UImage(new PixelImage(image, AffineTransformType.TYPE_BILINEAR)).withRawFileName(rawFileName)
 				.scale(scale));
-		if (url != null) {
+
+		if (url != null)
 			ug.closeUrl();
-		}
+
 	}
 
 }

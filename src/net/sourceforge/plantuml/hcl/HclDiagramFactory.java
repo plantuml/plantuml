@@ -78,7 +78,7 @@ public class HclDiagramFactory extends PSystemAbstractFactory {
 		} catch (Exception e) {
 			Logme.error(e);
 		}
-		final JsonDiagram result = new JsonDiagram(source, UmlDiagramType.HCL, data, highlighted);
+		final JsonDiagram result = new JsonDiagram(source, UmlDiagramType.HCL, data, highlighted, styleExtractor);
 //		if (styleExtractor != null) {
 //			styleExtractor.applyStyles(result.getSkinParam());
 //			final String title = styleExtractor.getTitle();

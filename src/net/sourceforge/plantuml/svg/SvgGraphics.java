@@ -260,11 +260,14 @@ public class SvgGraphics {
 	private static String getData(final String name) {
 		try {
 			final InputStream is = SvgGraphics.class.getResourceAsStream("/svg/" + name);
-			return FileUtils.readText(is);
+			if (is == null)
+				Log.error("Cannot retrieve " + name);
+			else
+				return FileUtils.readText(is);
 		} catch (IOException e) {
 			Logme.error(e);
-			return null;
 		}
+		return null;
 	}
 
 	private Element getPathHover(String hover) {

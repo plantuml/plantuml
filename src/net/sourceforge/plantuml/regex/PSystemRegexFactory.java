@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -30,13 +30,40 @@
  *
  *
  * Original Author:  Arnaud Roques
- *
+ * 
  *
  */
-package net.sourceforge.plantuml.ebnf;
+package net.sourceforge.plantuml.regex;
 
-public interface CharIterator {
-	char peek(int ahead);
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
-	void next();
+import net.sourceforge.plantuml.command.Command;
+import net.sourceforge.plantuml.command.CommonCommands;
+import net.sourceforge.plantuml.command.PSystemCommandFactory;
+import net.sourceforge.plantuml.core.DiagramType;
+import net.sourceforge.plantuml.core.UmlSource;
+
+public class PSystemRegexFactory extends PSystemCommandFactory {
+
+	public PSystemRegexFactory() {
+		super(DiagramType.REGEX);
+	}
+
+	@Override
+	protected List<Command> createCommands() {
+
+		final List<Command> cmds = new ArrayList<>();
+		CommonCommands.addCommonCommands1(cmds);
+		cmds.add(new CommandRegexfSingleLine());
+
+		return cmds;
+	}
+
+	@Override
+	public PSystemRegex createEmptyDiagram(UmlSource source, Map<String, String> skinParam) {
+		return new PSystemRegex(source);
+	}
+
 }

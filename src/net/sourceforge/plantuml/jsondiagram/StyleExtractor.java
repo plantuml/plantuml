@@ -51,27 +51,42 @@ public class StyleExtractor {
 	private final List<String> list = new ArrayList<>();
 	private final List<StringLocated> style = new ArrayList<>();
 	private String title = null;
+	private boolean handwritten = false;
+	private double scale = 1;
 
 	public StyleExtractor(Iterator<StringLocated> data) {
 		while (data.hasNext()) {
 			StringLocated line = data.next();
-			if (startStyle(line)) {
+			final String s = line.getString().trim();
+			if (s.length() == 0)
+				continue;
+			if (startStyle(s)) {
 				while (data.hasNext()) {
 					style.add(line);
 					if (endStyle(line))
 						break;
 					line = data.next();
 				}
-			} else if (line.getString().trim().startsWith("!assume ")) {
+			} else if (list.size() >= 1 && s.startsWith("!assume ")) {
 				// Ignore
-			} else if (line.getString().trim().startsWith("!pragma ")) {
+			} else if (list.size() >= 1 && s.startsWith("!pragma ")) {
 				// Ignore
-			} else if (line.getString().trim().startsWith("hide ")) {
+			} else if (list.size() >= 1 && s.startsWith("hide ")) {
 				// Ignore
-			} else if (line.getString().trim().startsWith("title ")) {
-				this.title = line.getString().trim().substring("title ".length()).trim();
-			} else if (line.getString().trim().startsWith("skinparam ")) {
-				if (line.getString().trim().contains("{")) {
+			} else if (list.size() >= 1 && s.startsWith("scale ")) {
+				// Ignore
+				try {
+					final double v = Double.parseDouble(s.replaceAll("\\D", ""));
+					if (v > 0)
+						scale = v;
+				} catch (Exception e) {
+				}
+			} else if (list.size() >= 1 && s.startsWith("title ")) {
+				this.title = s.substring("title ".length()).trim();
+			} else if (list.size() >= 1 && s.startsWith("skinparam ")) {
+				if (s.contains("handwritten") && s.contains("true"))
+					handwritten = true;
+				if (s.contains("{")) {
 					while (data.hasNext()) {
 						if (line.getString().trim().equals("}"))
 							break;
@@ -82,10 +97,11 @@ public class StyleExtractor {
 				list.add(line.getString());
 			}
 		}
+
 	}
 
-	private boolean startStyle(StringLocated line) {
-		return line.getString().trim().equals("<style>");
+	private boolean startStyle(String line) {
+		return line.equals("<style>");
 	}
 
 	private boolean endStyle(StringLocated line) {
@@ -108,6 +124,14 @@ public class StyleExtractor {
 
 	public String getTitle() {
 		return title;
+	}
+
+	public final boolean isHandwritten() {
+		return handwritten;
+	}
+
+	public double getScale() {
+		return scale;
 	}
 
 }

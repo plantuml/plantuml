@@ -33,10 +33,29 @@
  *
  *
  */
-package net.sourceforge.plantuml.ebnf;
+package net.sourceforge.plantuml.regex;
 
-public interface CharIterator {
-	char peek(int ahead);
+public class ReToken {
 
-	void next();
+	private final ReTokenType type;
+	private final String data;
+
+	public ReToken(ReTokenType type, String data) {
+		this.type = type;
+		this.data = data;
+	}
+
+	@Override
+	public String toString() {
+		return type.toString() + "[" + data + "]";
+	}
+
+	public final ReTokenType getType() {
+		return type;
+	}
+
+	public final String getData() {
+		return data;
+	}
+
 }
