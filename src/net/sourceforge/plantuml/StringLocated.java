@@ -143,7 +143,7 @@ final public class StringLocated {
 
 	public long getFoxSignature() {
 		if (fox == -1)
-			fox = FoxSignature.getFoxSignature(getString());
+			fox = FoxSignature.getFoxSignatureFromRealString(getString());
 
 		return fox;
 	}

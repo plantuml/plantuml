@@ -41,14 +41,16 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 import net.sourceforge.plantuml.StringLocated;
 
 public abstract class RegexComposed implements IRegex {
 
-	protected static final AtomicInteger nbCreateMatches = new AtomicInteger();
+//	protected static final AtomicInteger nbCreateMatches = new AtomicInteger();
+//	protected static final AtomicInteger vtot = new AtomicInteger();
+//	protected static final AtomicInteger vescaped = new AtomicInteger();
+
 	private final List<IRegex> partials;
 
 	protected final List<IRegex> partials() {
@@ -78,7 +80,7 @@ public abstract class RegexComposed implements IRegex {
 	}
 
 	public Map<String, RegexPartialMatch> createPartialMatch(Iterator<String> it) {
-		nbCreateMatches.incrementAndGet();
+		// nbCreateMatches.incrementAndGet();
 		final Map<String, RegexPartialMatch> result = new HashMap<String, RegexPartialMatch>();
 		for (IRegex r : partials)
 			result.putAll(r.createPartialMatch(it));

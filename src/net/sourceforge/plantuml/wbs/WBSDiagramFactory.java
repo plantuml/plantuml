@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.wbs;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -52,16 +51,12 @@ public class WBSDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	protected List<Command> createCommands() {
-
-		final List<Command> cmds = new ArrayList<>();
+	protected void initCommandsList(List<Command> cmds) {
 		CommonCommands.addCommonCommands1(cmds);
 		cmds.add(new CommandWBSItem(1));
 		cmds.add(new CommandWBSItem(0));
 		cmds.add(new CommandWBSItemMultiline());
 		cmds.add(new CommandWBSLink());
-
-		return cmds;
 	}
 
 	@Override

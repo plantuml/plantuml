@@ -44,7 +44,9 @@ import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public class CommandMultilinesCaption extends CommandMultilines<TitledDiagram> {
 
-	public CommandMultilinesCaption() {
+	public static final CommandMultilinesCaption ME = new CommandMultilinesCaption();
+
+	private CommandMultilinesCaption() {
 		super("^caption$");
 	}
 
@@ -58,7 +60,8 @@ public class CommandMultilinesCaption extends CommandMultilines<TitledDiagram> {
 		lines = lines.removeEmptyColumns();
 		final Display strings = lines.toDisplay();
 		if (strings.size() > 0) {
-			diagram.setCaption(DisplayPositioned.single(strings.replaceBackslashT(), HorizontalAlignment.CENTER, VerticalAlignment.BOTTOM));
+			diagram.setCaption(DisplayPositioned.single(strings.replaceBackslashT(), HorizontalAlignment.CENTER,
+					VerticalAlignment.BOTTOM));
 			return CommandExecutionResult.ok();
 		}
 		return CommandExecutionResult.error("No caption defined");

@@ -49,7 +49,9 @@ import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
 
 public class CommandPragma extends SingleLineCommand2<TitledDiagram> {
 
-	public CommandPragma() {
+	public static final CommandPragma ME = new CommandPragma();
+
+	private CommandPragma() {
 		super(getRegexConcat());
 	}
 

@@ -78,7 +78,7 @@ public class CommandPartition3 extends SingleLineCommand2<ActivityDiagram3> {
 								RegexLeaf.spaceOneOrMore(), //
 								color("BACK2").getRegex())), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("STEREO", "(\\<{2}.*\\>{2})?"), //
+				new RegexLeaf("STEREO", "(\\<\\<.*\\>\\>)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("\\{?"), //
 				RegexLeaf.end());

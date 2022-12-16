@@ -518,16 +518,6 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 
 	}
 
-	private UmlDiagramType umlType;
-
-	public void setUmlDiagramType(UmlDiagramType type) {
-		this.umlType = type;
-	}
-
-	public UmlDiagramType getUmlDiagramType() {
-		return umlType;
-	}
-
 	private LinkConstraint linkConstraint;
 
 	public void setLinkConstraint(LinkConstraint linkConstraint) {

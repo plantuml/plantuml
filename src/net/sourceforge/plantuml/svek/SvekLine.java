@@ -157,6 +157,8 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 
 	private final double labelShield;
 
+	private final UmlDiagramType type;
+
 	@Override
 	public String toString() {
 		return super.toString() + " color=" + lineColor;
@@ -222,13 +224,14 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 			((EntityImp) link.getEntity2()).ensureMargins(Margins.uniform(16));
 
 		if (link.getLinkArg().getKal1() != null)
-			this.kal1 = new Kal(this, link.getLinkArg().getKal1(), font, skinParam, (EntityImp) link.getEntity1(),
-					link, stringBounder);
+			this.kal1 = new Kal(this, link.getLinkArg().getKal1(), font, skinParam, (EntityImp) link.getEntity1(), link,
+					stringBounder);
 
 		if (link.getLinkArg().getKal2() != null)
-			this.kal2 = new Kal(this, link.getLinkArg().getKal2(), font, skinParam, (EntityImp) link.getEntity2(),
-					link, stringBounder);
+			this.kal2 = new Kal(this, link.getLinkArg().getKal2(), font, skinParam, (EntityImp) link.getEntity2(), link,
+					stringBounder);
 
+		this.type = skinParam.getUmlDiagramType();
 		this.link = Objects.requireNonNull(link);
 		this.skinParam = skinParam;
 		// this.umlType = link.getUmlDiagramType();
@@ -272,7 +275,7 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 				labelOnly = StringWithArrow.addMagicArrow(labelOnly, this, font);
 
 		} else {
-			final HorizontalAlignment alignment = getMessageTextAlignment(link.getUmlDiagramType(), skinParam);
+			final HorizontalAlignment alignment = getMessageTextAlignment(type, skinParam);
 			final boolean hasSeveralGuideLines = link.getLabel().hasSeveralGuideLines();
 			final TextBlock block;
 			if (hasSeveralGuideLines)

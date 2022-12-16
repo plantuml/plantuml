@@ -45,7 +45,9 @@ import net.sourceforge.plantuml.command.regex.RegexResult;
 
 public class CommandScaleMaxHeight extends SingleLineCommand2<AbstractPSystem> {
 
-	public CommandScaleMaxHeight() {
+	public static final CommandScaleMaxHeight ME = new CommandScaleMaxHeight();
+
+	private CommandScaleMaxHeight() {
 		super(getRegexConcat());
 	}
 

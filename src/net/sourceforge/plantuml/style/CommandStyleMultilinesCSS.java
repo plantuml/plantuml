@@ -48,7 +48,9 @@ import net.sourceforge.plantuml.command.regex.RegexLeaf;
 
 public class CommandStyleMultilinesCSS extends CommandMultilines2<TitledDiagram> {
 
-	public CommandStyleMultilinesCSS() {
+	public static final CommandStyleMultilinesCSS ME = new CommandStyleMultilinesCSS();
+
+	private CommandStyleMultilinesCSS() {
 		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH);
 	}
 

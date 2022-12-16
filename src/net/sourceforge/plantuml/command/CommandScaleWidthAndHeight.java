@@ -45,7 +45,9 @@ import net.sourceforge.plantuml.command.regex.RegexResult;
 
 public class CommandScaleWidthAndHeight extends SingleLineCommand2<AbstractPSystem> {
 
-	public CommandScaleWidthAndHeight() {
+	public static final CommandScaleWidthAndHeight ME = new CommandScaleWidthAndHeight();
+
+	private CommandScaleWidthAndHeight() {
 		super(getRegexConcat());
 	}
 

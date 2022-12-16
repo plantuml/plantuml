@@ -46,7 +46,9 @@ import net.sourceforge.plantuml.command.regex.RegexResult;
 
 public class CommandAffineTransform extends SingleLineCommand2<UmlDiagram> {
 
-	public CommandAffineTransform() {
+	public static final CommandAffineTransform ME = new CommandAffineTransform();
+
+	private CommandAffineTransform() {
 		super(getRegexConcat());
 	}
 

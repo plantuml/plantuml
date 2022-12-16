@@ -46,7 +46,9 @@ import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public class CommandSpriteSvgMultiline extends CommandMultilines2<TitledDiagram> {
 
-	public CommandSpriteSvgMultiline() {
+	public static final CommandSpriteSvgMultiline ME = new CommandSpriteSvgMultiline();
+
+	private CommandSpriteSvgMultiline() {
 		super(getRegexConcat(), MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH);
 	}
 

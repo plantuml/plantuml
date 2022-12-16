@@ -49,7 +49,9 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 
 public class CommandHeader extends SingleLineCommand2<TitledDiagram> {
 
-	public CommandHeader() {
+	public static final CommandHeader ME = new CommandHeader();
+
+	private CommandHeader() {
 		super(getRegexConcat());
 	}
 

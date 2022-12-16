@@ -44,7 +44,9 @@ import net.sourceforge.plantuml.core.Diagram;
 
 public class CommandNope extends SingleLineCommand2<Diagram> {
 
-	public CommandNope() {
+	public static final CommandNope ME = new CommandNope();
+
+	private CommandNope() {
 		super(getRegexConcat());
 	}
 

@@ -51,7 +51,8 @@ public class CommandListSprite extends SingleLineCommand2<UmlDiagram> {
 	}
 
 	private static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandListSprite.class.getName(), RegexLeaf.start(), //
+		return RegexConcat.build(CommandListSprite.class.getName(), //
+				RegexLeaf.start(), //
 				new RegexLeaf("listsprites?"), //
 				RegexLeaf.end());
 	}

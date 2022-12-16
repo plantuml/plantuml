@@ -45,7 +45,9 @@ import net.sourceforge.plantuml.emoji.SvgNanoParser;
 
 public class CommandSpriteSvg extends SingleLineCommand2<TitledDiagram> {
 
-	public CommandSpriteSvg() {
+	public static final CommandSpriteSvg ME = new CommandSpriteSvg();
+
+	private CommandSpriteSvg() {
 		super(getRegexConcat());
 	}
 

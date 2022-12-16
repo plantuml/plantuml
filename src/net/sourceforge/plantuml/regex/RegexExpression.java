@@ -98,6 +98,16 @@ public class RegexExpression {
 		it.next();
 		final StringBuilder result = new StringBuilder();
 		result.append(current0);
+		if (it.peek(0) == '?' && it.peek(1) == ':') {
+			it.next();
+			it.next();
+			result.append("?:");
+		}
+		if (it.peek(0) == '?' && it.peek(1) == '!') {
+			it.next();
+			it.next();
+			result.append("?!");
+		}
 		return result.toString();
 	}
 
@@ -134,7 +144,7 @@ public class RegexExpression {
 			final char current1 = it.peek(1);
 			if (current1 == '.' || current1 == '*' || current1 == '\\' || current1 == '?' || current1 == '^'
 					|| current1 == '$' || current1 == '|' || current1 == '(' || current1 == ')' || current1 == '['
-					|| current1 == ']' || current1 == '{' || current1 == '}')
+					|| current1 == ']' || current1 == '{' || current1 == '}' || current1 == '<' || current1 == '>')
 				return true;
 		}
 		return false;

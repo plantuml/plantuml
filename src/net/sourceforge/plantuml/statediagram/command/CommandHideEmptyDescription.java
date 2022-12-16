@@ -46,7 +46,9 @@ import net.sourceforge.plantuml.command.regex.RegexResult;
 
 public class CommandHideEmptyDescription extends SingleLineCommand2<UmlDiagram> {
 
-	public CommandHideEmptyDescription() {
+	public static final CommandHideEmptyDescription ME = new CommandHideEmptyDescription();
+
+	private CommandHideEmptyDescription() {
 		super(getRegexConcat());
 	}
 

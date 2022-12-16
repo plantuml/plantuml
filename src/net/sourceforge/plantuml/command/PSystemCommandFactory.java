@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.command;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -55,9 +56,9 @@ import net.sourceforge.plantuml.version.IteratorCounter2;
 
 public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 
-	private List<Command> cmds;
+	private final List<Command> cmds = new ArrayList<>();
 
-	protected abstract List<Command> createCommands();
+	protected abstract void initCommandsList(List<Command> cmds);
 
 	public abstract AbstractPSystem createEmptyDiagram(UmlSource source, Map<String, String> skinParam);
 
@@ -149,8 +150,10 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 
 	private Step getCandidate(final IteratorCounter2 it) {
 		final BlocLines single = BlocLines.single(it.peek());
-		if (cmds == null)
-			cmds = createCommands();
+		synchronized (cmds) {
+			if (cmds.size() == 0)
+				initCommandsList(cmds);
+		}
 
 		for (Command cmd : cmds) {
 			final CommandControl result = cmd.isValid(single);

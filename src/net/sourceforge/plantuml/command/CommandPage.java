@@ -44,7 +44,9 @@ import net.sourceforge.plantuml.command.regex.RegexResult;
 
 public class CommandPage extends SingleLineCommand2<AbstractPSystem> {
 
-	public CommandPage() {
+	public static final CommandPage ME = new CommandPage();
+
+	private CommandPage() {
 		super(getRegexConcat());
 	}
 
@@ -60,14 +62,13 @@ public class CommandPage extends SingleLineCommand2<AbstractPSystem> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(AbstractPSystem system, LineLocation location,
-			RegexResult arg) {
+	protected CommandExecutionResult executeArg(AbstractPSystem system, LineLocation location, RegexResult arg) {
 
 		final int horizontal = Integer.parseInt(arg.get("NB1", 0));
 		final int vertical = Integer.parseInt(arg.get("NB2", 0));
-		if (horizontal <= 0 || vertical <= 0) {
+		if (horizontal <= 0 || vertical <= 0)
 			return CommandExecutionResult.error("Argument must be positive");
-		}
+
 		system.setSplitPagesHorizontal(horizontal);
 		system.setSplitPagesVertical(vertical);
 		return CommandExecutionResult.ok();

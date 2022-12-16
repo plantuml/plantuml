@@ -60,6 +60,8 @@ import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public class CommandNamespace extends SingleLineCommand2<ClassDiagram> {
 
+	public static final String NAMESPACE_REGEX = "([%pLN_][-%pLN_.:\\\\/]*)";
+
 	public CommandNamespace() {
 		super(getRegexConcat());
 	}
@@ -68,7 +70,7 @@ public class CommandNamespace extends SingleLineCommand2<ClassDiagram> {
 		return RegexConcat.build(CommandNamespace.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("namespace"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("NAME", "([%pLN_][-%pLN_.:\\\\]*)"), //
+				new RegexLeaf("NAME", NAMESPACE_REGEX), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("STEREOTYPE", "(\\<\\<.*\\>\\>)?"), //
 				RegexLeaf.spaceZeroOrMore(), //

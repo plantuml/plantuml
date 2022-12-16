@@ -65,7 +65,7 @@ public class ComponentRoseGroupingElse extends AbstractTextualComponent {
 		super(style, LineBreakStrategy.NONE, 5, 5, 1, spriteContainer, comment == null ? null : "[" + comment + "]");
 
 		this.teoz = teoz;
-		this.roundCorner = style.value(PName.RoundCorner).asInt();
+		this.roundCorner = style.value(PName.RoundCorner).asInt(false);
 		this.groupBorder = style.value(PName.LineColor).asColor(getIHtmlColorSet());
 		this.backgroundColor = teoz ? HColors.transparent()
 				: style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());

@@ -112,11 +112,11 @@ public class ValueImpl implements Value {
 		return "true".equalsIgnoreCase(value.getValue1());
 	}
 
-	public int asInt() {
+	public int asInt(boolean minusOneIfError) {
 		String s = value.getValue1();
 		s = s.replaceAll("[^0-9]", "");
 		if (s.length() == 0)
-			return 0;
+			return minusOneIfError ? -1 : 0;
 		return Integer.parseInt(s);
 	}
 

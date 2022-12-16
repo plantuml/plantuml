@@ -39,7 +39,9 @@ import net.sourceforge.plantuml.TitledDiagram;
 
 public class CommandAffineTransformMultiline extends CommandMultilines<TitledDiagram> {
 
-	public CommandAffineTransformMultiline() {
+	public static final CommandAffineTransformMultiline ME = new CommandAffineTransformMultiline();
+
+	private CommandAffineTransformMultiline() {
 		super("^!transformation[%s]+\\{[%s]*$");
 	}
 

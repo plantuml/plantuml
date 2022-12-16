@@ -50,7 +50,7 @@ public class ValueNull extends ValueAbstract implements Value {
 	}
 
 	@Override
-	public int asInt() {
+	public int asInt(boolean minusOneIfError) {
 		return 0;
 	}
 

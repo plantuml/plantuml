@@ -44,7 +44,9 @@ import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public class CommandMultilinesTitle extends CommandMultilines<TitledDiagram> {
 
-	public CommandMultilinesTitle() {
+	public static final CommandMultilinesTitle ME = new CommandMultilinesTitle();
+
+	private CommandMultilinesTitle() {
 		super("^title$");
 	}
 
@@ -58,7 +60,8 @@ public class CommandMultilinesTitle extends CommandMultilines<TitledDiagram> {
 		lines = lines.removeEmptyColumns();
 		final Display strings = lines.toDisplay();
 		if (strings.size() > 0) {
-			diagram.setTitle(DisplayPositioned.single(strings.replaceBackslashT(), HorizontalAlignment.CENTER, VerticalAlignment.TOP));
+			diagram.setTitle(DisplayPositioned.single(strings.replaceBackslashT(), HorizontalAlignment.CENTER,
+					VerticalAlignment.TOP));
 			return CommandExecutionResult.ok();
 		}
 		return CommandExecutionResult.error("No title defined");

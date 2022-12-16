@@ -54,7 +54,9 @@ import net.sourceforge.plantuml.skin.VisibilityModifier;
 
 public class CommandHideShowByVisibility extends SingleLineCommand2<UmlDiagram> {
 
-	public CommandHideShowByVisibility() {
+	public static final CommandHideShowByVisibility ME = new CommandHideShowByVisibility();
+
+	private CommandHideShowByVisibility() {
 		super(getRegexConcat());
 	}
 

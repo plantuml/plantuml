@@ -56,56 +56,56 @@ public final class CommonCommands {
 	}
 
 	static public void addCommonCommands2(List<Command> cmds) {
-		cmds.add(new CommandNope());
-		cmds.add(new CommandPragma());
-		cmds.add(new CommandAssumeTransparent());
+		cmds.add(CommandNope.ME);
+		cmds.add(CommandPragma.ME);
+		cmds.add(CommandAssumeTransparent.ME);
 
-		cmds.add(new CommandSkinParam());
-		cmds.add(new CommandSkinParamMultilines());
-		cmds.add(new CommandSkin());
-		cmds.add(new CommandMinwidth());
-		cmds.add(new CommandPage());
-		cmds.add(new CommandRotate());
-		cmds.add(new CommandScale());
-		cmds.add(new CommandScaleWidthAndHeight());
-		cmds.add(new CommandScaleWidthOrHeight());
-		cmds.add(new CommandScaleMaxWidth());
-		cmds.add(new CommandScaleMaxHeight());
-		cmds.add(new CommandScaleMaxWidthAndHeight());
-		cmds.add(new CommandAffineTransform());
-		cmds.add(new CommandAffineTransformMultiline());
+		cmds.add(CommandSkinParam.ME);
+		cmds.add(CommandSkinParamMultilines.ME);
+		cmds.add(CommandSkin.ME);
+		cmds.add(CommandMinwidth.ME);
+		cmds.add(CommandPage.ME);
+		cmds.add(CommandRotate.ME);
+		cmds.add(CommandScale.ME);
+		cmds.add(CommandScaleWidthAndHeight.ME);
+		cmds.add(CommandScaleWidthOrHeight.ME);
+		cmds.add(CommandScaleMaxWidth.ME);
+		cmds.add(CommandScaleMaxHeight.ME);
+		cmds.add(CommandScaleMaxWidthAndHeight.ME);
+		cmds.add(CommandAffineTransform.ME);
+		cmds.add(CommandAffineTransformMultiline.ME);
 		final CommandFactorySprite factorySpriteCommand = new CommandFactorySprite();
 		cmds.add(factorySpriteCommand.createMultiLine(false));
 		cmds.add(factorySpriteCommand.createSingleLine());
-		cmds.add(new CommandSpriteSvg());
-		cmds.add(new CommandSpriteFile());
-		cmds.add(new CommandSpriteSvgMultiline());
+		cmds.add(CommandSpriteSvg.ME);
+		cmds.add(CommandSpriteFile.ME);
+		cmds.add(CommandSpriteSvgMultiline.ME);
 
-		cmds.add(new CommandStyleMultilinesCSS());
-		cmds.add(new CommandStyleImport());
+		cmds.add(CommandStyleMultilinesCSS.ME);
+		cmds.add(CommandStyleImport.ME);
 
 	}
 
 	static public void addCommonHides(List<Command> cmds) {
-		cmds.add(new CommandHideEmptyDescription());
-		cmds.add(new CommandHideShowByVisibility());
-		cmds.add(new CommandHideShowByGender());
+		cmds.add(CommandHideEmptyDescription.ME);
+		cmds.add(CommandHideShowByVisibility.ME);
+		cmds.add(CommandHideShowByGender.ME);
 	}
 
 	static public void addTitleCommands(List<Command> cmds) {
-		cmds.add(new CommandTitle());
-		cmds.add(new CommandMainframe());
-		cmds.add(new CommandCaption());
-		cmds.add(new CommandMultilinesCaption());
-		cmds.add(new CommandMultilinesTitle());
-		cmds.add(new CommandMultilinesLegend());
-		cmds.add(new CommandLegend());
+		cmds.add(CommandTitle.ME);
+		cmds.add(CommandMainframe.ME);
+		cmds.add(CommandCaption.ME);
+		cmds.add(CommandMultilinesCaption.ME);
+		cmds.add(CommandMultilinesTitle.ME);
+		cmds.add(CommandMultilinesLegend.ME);
+		cmds.add(CommandLegend.ME);
 
-		cmds.add(new CommandFooter());
-		cmds.add(new CommandMultilinesFooter());
+		cmds.add(CommandFooter.ME);
+		cmds.add(CommandMultilinesFooter.ME);
 
-		cmds.add(new CommandHeader());
-		cmds.add(new CommandMultilinesHeader());
+		cmds.add(CommandHeader.ME);
+		cmds.add(CommandMultilinesHeader.ME);
 	}
 
 }

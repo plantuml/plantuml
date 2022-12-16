@@ -71,7 +71,7 @@ public final class FactorySequenceNoteAcrossCommand implements SingleMultiFactor
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("STYLE", "(note|hnote|rnote)"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("STEREO", "(\\<{2}.*\\>{2})?"), //
+				new RegexLeaf("STEREO", "(\\<\\<.*\\>\\>)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("ACROSS", "(accross|across)"), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -87,7 +87,7 @@ public final class FactorySequenceNoteAcrossCommand implements SingleMultiFactor
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("STYLE", "(note|hnote|rnote)"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("STEREO", "(\\<{2}.*\\>{2})?"), //
+				new RegexLeaf("STEREO", "(\\<\\<.*\\>\\>)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("ACROSS", "(accross|across)"), //
 				RegexLeaf.spaceZeroOrMore(), //

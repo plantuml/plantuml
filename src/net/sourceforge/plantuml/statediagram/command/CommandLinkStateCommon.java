@@ -122,7 +122,6 @@ abstract class CommandLinkStateCommon extends SingleLineCommand2<StateDiagram> {
 			link = link.getInv();
 
 		link.applyStyle(arg.getLazzy("ARROW_STYLE", 0));
-		link.setUmlDiagramType(UmlDiagramType.STATE);
 		diagram.addLink(link);
 
 		return CommandExecutionResult.ok();

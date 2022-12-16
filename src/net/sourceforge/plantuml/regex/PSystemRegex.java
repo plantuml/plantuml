@@ -150,12 +150,12 @@ public class PSystemRegex extends TitledDiagram {
 	public CommandExecutionResult addBlocLines(BlocLines from) {
 		final CharIterator it = new CharIteratorImpl(from);
 		final List<ReToken> parsed1 = RegexExpression.parse(it);
-		System.err.println("parsed1=" + parsed1);
+		// System.err.println("parsed1=" + parsed1);
 		final List<ReToken> parsed2 = addImplicitConcatenation(parsed1);
-		System.err.println("parsed2=" + parsed2);
+		// System.err.println("parsed2=" + parsed2);
 		final ShuntingYard shuntingYard = new ShuntingYard(parsed2.iterator());
 		final List<ReToken> result = shuntingYard.getOuputQueue();
-		System.err.println("result=" + result);
+		// System.err.println("result=" + result);
 		for (ReToken token : result)
 			if (token.getType() == ReTokenType.SIMPLE_CHAR)
 				push(token, Symbol.TERMINAL_STRING1);
@@ -171,11 +171,11 @@ public class PSystemRegex extends TitledDiagram {
 				concatenation();
 			else if (token.getType() == ReTokenType.ALTERNATIVE)
 				alternation();
-			else if (token.getType() == ReTokenType.QUANTIFIER && token.getData().equals("*"))
+			else if (token.getType() == ReTokenType.QUANTIFIER && token.getData().startsWith("*"))
 				repetitionZeroOrMore(false);
-			else if (token.getType() == ReTokenType.QUANTIFIER && token.getData().equals("+"))
+			else if (token.getType() == ReTokenType.QUANTIFIER && token.getData().startsWith("+"))
 				repetitionOneOrMore();
-			else if (token.getType() == ReTokenType.QUANTIFIER && token.getData().equals("?"))
+			else if (token.getType() == ReTokenType.QUANTIFIER && token.getData().startsWith("?"))
 				optional();
 			else
 				throw new UnsupportedOperationException(token.toString());

@@ -49,7 +49,9 @@ import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public class CommandMultilinesLegend extends CommandMultilines2<TitledDiagram> {
 
-	public CommandMultilinesLegend() {
+	public static final CommandMultilinesLegend ME = new CommandMultilinesLegend();
+
+	private CommandMultilinesLegend() {
 		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH);
 	}
 

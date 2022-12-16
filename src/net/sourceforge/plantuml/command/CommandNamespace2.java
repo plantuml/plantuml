@@ -74,7 +74,7 @@ public class CommandNamespace2 extends SingleLineCommand2<ClassDiagram> {
 				new RegexLeaf("as"), //
 				RegexLeaf.spaceOneOrMore(), //
 
-				new RegexLeaf("NAME", "([%pLN_][-%pLN_.:\\\\]*)"), //
+				new RegexLeaf("NAME", CommandNamespace.NAMESPACE_REGEX), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("STEREOTYPE", "(\\<\\<.*\\>\\>)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -110,8 +110,7 @@ public class CommandNamespace2 extends SingleLineCommand2<ClassDiagram> {
 
 		final String color = arg.get("COLOR", 0);
 		if (color != null) {
-			p.setSpecificColorTOBEREMOVED(ColorType.BACK,
-					diagram.getSkinParam().getIHtmlColorSet().getColor(color));
+			p.setSpecificColorTOBEREMOVED(ColorType.BACK, diagram.getSkinParam().getIHtmlColorSet().getColor(color));
 		}
 		return CommandExecutionResult.ok();
 	}

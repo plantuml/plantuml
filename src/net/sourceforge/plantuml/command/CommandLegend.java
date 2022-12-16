@@ -49,7 +49,9 @@ import net.sourceforge.plantuml.graphic.VerticalAlignment;
 
 public class CommandLegend extends SingleLineCommand2<TitledDiagram> {
 
-	public CommandLegend() {
+	public static final CommandLegend ME = new CommandLegend();
+
+	private CommandLegend() {
 		super(getRegexConcat());
 	}
 

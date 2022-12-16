@@ -45,7 +45,9 @@ import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public class CommandMultilinesHeader extends CommandMultilines<TitledDiagram> {
 
-	public CommandMultilinesHeader() {
+	public static final CommandMultilinesHeader ME = new CommandMultilinesHeader();
+
+	private CommandMultilinesHeader() {
 		super("^(?:(left|right|center)?[%s]*)header$");
 	}
 

@@ -59,7 +59,9 @@ import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 
 public class CommandHideShowByGender extends SingleLineCommand2<UmlDiagram> {
 
-	public CommandHideShowByGender() {
+	public static final CommandHideShowByGender ME = new CommandHideShowByGender();
+
+	private CommandHideShowByGender() {
 		super(getRegexConcat());
 	}
 

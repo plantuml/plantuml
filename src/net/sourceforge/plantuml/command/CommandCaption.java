@@ -49,7 +49,9 @@ import net.sourceforge.plantuml.graphic.VerticalAlignment;
 
 public class CommandCaption extends SingleLineCommand2<TitledDiagram> {
 
-	public CommandCaption() {
+	public static final CommandCaption ME = new CommandCaption();
+
+	private CommandCaption() {
 		super(getRegexConcat());
 	}
 

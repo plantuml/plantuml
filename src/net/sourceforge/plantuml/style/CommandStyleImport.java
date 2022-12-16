@@ -52,7 +52,9 @@ import net.sourceforge.plantuml.security.SFile;
 
 public class CommandStyleImport extends SingleLineCommand2<TitledDiagram> {
 
-	public CommandStyleImport() {
+	public static final CommandStyleImport ME = new CommandStyleImport();
+
+	private CommandStyleImport() {
 		super(getRegexConcat());
 	}
 

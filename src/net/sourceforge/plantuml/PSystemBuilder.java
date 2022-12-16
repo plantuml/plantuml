@@ -212,8 +212,7 @@ public class PSystemBuilder {
 		if (License.getCurrent() == License.GPL || License.getCurrent() == License.GPLV2) {
 			factories.add(new PSystemXearthFactory());
 		}
-		factories.add(new GanttDiagramFactory(DiagramType.GANTT));
-		GanttDiagramFactory.clearCache();
+		factories.add(new GanttDiagramFactory());
 		factories.add(new FlowDiagramFactory());
 		// factories.add(new PSystemTreeFactory(DiagramType.JUNGLE));
 		// factories.add(new PSystemCuteFactory(DiagramType.CUTE));

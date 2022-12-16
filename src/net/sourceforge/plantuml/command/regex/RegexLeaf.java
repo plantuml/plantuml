@@ -41,6 +41,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.StringLocated;
@@ -95,9 +96,9 @@ public class RegexLeaf implements IRegex {
 	}
 
 	public int count() {
-		if (count == -1) {
+		if (count == -1)
 			count = MyPattern.cmpile(pattern).matcher("").groupCount();
-		}
+
 		return count;
 	}
 
@@ -107,9 +108,9 @@ public class RegexLeaf implements IRegex {
 			final String group = it.next();
 			m.add(group);
 		}
-		if (name == null) {
+		if (name == null)
 			return Collections.emptyMap();
-		}
+
 		return Collections.singletonMap(name, m);
 	}
 
@@ -121,63 +122,52 @@ public class RegexLeaf implements IRegex {
 		throw new UnsupportedOperationException();
 	}
 
-	static private final Set<String> UNKNOWN = new HashSet<>();
+	// static private final Set<String> UNKNOWN = new HashSet<>();
 
-	static private final Pattern p1 = Pattern.compile("^[-0A-Za-z_!:@;/=,\"]+$");
-	static private final Pattern p2 = Pattern.compile("^[-0A-Za-z_!:@;/=,\"]+\\?$");
-	static private final Pattern p3 = Pattern
-			.compile("^\\(?[-0A-Za-z_!:@;/=\" ]+\\??(\\|[-0A-Za-z_!:@;/=,\" ]+\\??)+\\)?$");
+	static private final Pattern p1 = Pattern.compile(
+			"^\\(?((?:[-0A-Za-z_!:@;/=,\" ][?+*]?|\\\\[b$(){}<>|*.+^\\[\\]][?+*]?|\\.\\*|\\.\\+)+)(?:\\)\\+|\\))?$");
 
-	private static long getSignatureP3(String s) {
+	static private final Pattern p2 = Pattern.compile("^\\([-?a-z ]+(\\|[-?a-z ]+)+\\)$");
+
+	static private final Pattern p3 = Pattern.compile("^\\(?\\[[-=.~]+\\]\\+\\)?$");
+
+	private static long getSignatureP2(String s) {
 		long result = -1L;
 		for (StringTokenizer st = new StringTokenizer(s, "()|"); st.hasMoreTokens();) {
 			final String val = st.nextToken();
-			final long sig = FoxSignature.getFoxSignature(val.endsWith("?") ? val.substring(0, val.length() - 2) : val);
-			result = result & sig;
+			result = result & FoxSignature.getFoxSignatureFromRegex(val);
 		}
 		return result;
 	}
 
-	public long getFoxSignatureNone() {
-		return 0;
-	}
-
 	public long getFoxSignature() {
-		if (p1.matcher(pattern).matches())
-			return FoxSignature.getFoxSignature(pattern);
-
-		if (p2.matcher(pattern).matches())
-			return FoxSignature.getFoxSignature(pattern.substring(0, pattern.length() - 2));
-
-		if (p3.matcher(pattern).matches())
-			return getSignatureP3(pattern);
-
-		if (pattern.length() == 2 && pattern.startsWith("\\") && Character.isLetterOrDigit(pattern.charAt(1)) == false)
-			return FoxSignature.getFoxSignature(pattern.substring(1));
-
-		if (pattern.equals("\\<\\>") || pattern.equals("(\\<\\<.*\\>\\>)"))
-			return FoxSignature.getFoxSignature("<>");
-
-		if (pattern.equals("\\<-\\>"))
-			return FoxSignature.getFoxSignature("<->");
-
-		if (pattern.equals("(-+)"))
-			return FoxSignature.getFoxSignature("-");
-
-		if (pattern.equals("\\|+") || pattern.equals("\\|\\|"))
-			return FoxSignature.getFoxSignature("|");
-
-		if (pattern.equals("([*]+)"))
-			return FoxSignature.getFoxSignature("*");
-
-		if (pattern.equals("[%s]+") || pattern.equals("[%s]*"))
+		if (pattern.equals("[%s]+"))
+			return FoxSignature.getSpecialSpaces();
+		if (pattern.equals("[%s]*"))
 			return 0;
+		final String pattern2 = pattern.replaceAll("\\[%s\\][+*?]?|\\(\\[([^\\\\\\[\\]])+\\]\\)[+*?]?", "");
+
+		final Matcher m1 = p1.matcher(pattern2);
+		if (m1.matches())
+			return FoxSignature.getFoxSignatureFromRegex(m1.group(1));
+
+		final Matcher m2 = p2.matcher(pattern2);
+		if (m2.matches())
+			return getSignatureP2(pattern2);
+
+		final Matcher m3 = p3.matcher(pattern2);
+		if (m3.matches())
+			return FoxSignature.getSpecial1();
 
 //		synchronized (UNKNOWN) {
-//			final boolean changed = UNKNOWN.add(pattern);
-//			if (changed)
-//				System.err.println("unknow=" + pattern);
-//
+//			final boolean changed = UNKNOWN.add(pattern2);
+//			if (changed) {
+//				if (pattern.equals(pattern2))
+//					System.err.println("unknow=" + UNKNOWN.size() + " " + pattern);
+//				else
+//					System.err.println("unknow=" + UNKNOWN.size() + " " + pattern2 + "        " + pattern);
+//				// Thread.dumpStack();
+//			}
 //		}
 		return 0;
 	}

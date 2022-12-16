@@ -294,7 +294,7 @@ skinparam sequence {
 	GroupFontColor $DARK
 	GroupHeaderFontColor $INFO_TEXT
 	''
-	DividerBackgroundColor $BGCOLOR
+	DividerBackgroundColor $LIGHT
     DividerBorderColor $GRAY
     DividerBorderThickness 2
     DividerFontColor $DARK

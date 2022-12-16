@@ -45,7 +45,9 @@ import net.sourceforge.plantuml.command.regex.RegexResult;
 
 public class CommandScaleMaxWidth extends SingleLineCommand2<AbstractPSystem> {
 
-	public CommandScaleMaxWidth() {
+	public static final CommandScaleMaxWidth ME = new CommandScaleMaxWidth();
+
+	private CommandScaleMaxWidth() {
 		super(getRegexConcat());
 	}
 

@@ -44,7 +44,9 @@ import net.sourceforge.plantuml.command.regex.RegexResult;
 
 public class CommandRotate extends SingleLineCommand2<UmlDiagram> {
 
-	public CommandRotate() {
+	public static final CommandRotate ME = new CommandRotate();
+
+	private CommandRotate() {
 		super(getRegexConcat());
 	}
 

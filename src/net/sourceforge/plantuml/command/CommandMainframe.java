@@ -46,7 +46,9 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 
 public class CommandMainframe extends SingleLineCommand2<TitledDiagram> {
 
-	public CommandMainframe() {
+	public static final CommandMainframe ME = new CommandMainframe();
+
+	private CommandMainframe() {
 		super(getRegexConcat());
 	}
 

@@ -58,7 +58,9 @@ import net.sourceforge.plantuml.sprite.SpriteSvg;
 
 public class CommandSpriteFile extends SingleLineCommand2<TitledDiagram> {
 
-	public CommandSpriteFile() {
+	public static final CommandSpriteFile ME = new CommandSpriteFile();
+
+	private CommandSpriteFile() {
 		super(getRegexConcat());
 	}
 

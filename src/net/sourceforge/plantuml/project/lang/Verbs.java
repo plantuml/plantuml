@@ -43,128 +43,80 @@ import net.sourceforge.plantuml.command.regex.RegexOr;
 
 public class Verbs {
 
-	public static IRegex are() {
-		return new RegexLeaf("are");
-	}
+	public static IRegex are = new RegexLeaf("are");
 
-	public static IRegex areColored() {
-		return new RegexLeaf("are[%s]+colou?red");
-	}
+	public static IRegex areColored = new RegexLeaf("are[%s]+colou?red");
 
-	public static IRegex displayOnSameRowAs() {
-		return new RegexLeaf("displays?[%s]+on[%s]+same[%s]+row[%s]+as");
-	}
+	public static IRegex displayOnSameRowAs = new RegexLeaf("displays?[%s]+on[%s]+same[%s]+row[%s]+as");
 
-	public static IRegex ends() {
-		return new RegexLeaf("ends");
-	}
+	public static IRegex ends = new RegexLeaf("ends");
 
-	public static IRegex ends2() {
-		return new RegexLeaf("ends[%s]*(the[%s]*|on[%s]*|at[%s]*)*");
-	}
+	public static IRegex ends2 = new RegexLeaf("ends[%s]*(the[%s]*|on[%s]*|at[%s]*)*");
 
-	public static IRegex happens() {
-		return new RegexLeaf("happens?[%s]*(at[%s]*|the[%s]*|on[%s]*)*");
-	}
+	public static IRegex happens = new RegexLeaf("happens?[%s]*(at[%s]*|the[%s]*|on[%s]*)*");
 
-	public static IRegex pauses() {
-		return new RegexLeaf("pauses?[%s]*(at[%s]*|the[%s]*|on[%s]*|from[%s]*)*");
-	}
+	public static IRegex pauses = new RegexLeaf("pauses?[%s]*(at[%s]*|the[%s]*|on[%s]*|from[%s]*)*");
 
-	public static IRegex isDeleted() {
-		return new RegexLeaf("is[%s]+deleted");
-	}
+	public static IRegex isDeleted = new RegexLeaf("is[%s]+deleted");
 
-	public static IRegex is() {
-		return new RegexLeaf("is");
-	}
+	public static IRegex is = new RegexLeaf("is");
 
-	public static IRegex isColored() {
-		return new RegexLeaf("is[%s]+colou?red");
-	}
+	public static IRegex isColored = new RegexLeaf("is[%s]+colou?red");
 
-	public static IRegex isColoredForCompletion() {
-		return new RegexLeaf("is[%s]+colou?red[%s]+for[%s]+completion");
-	}
+	public static IRegex isColoredForCompletion = new RegexLeaf("is[%s]+colou?red[%s]+for[%s]+completion");
 
-	public static IRegex isOff() {
-		return new RegexConcat(new RegexLeaf("is"), //
-				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("off"), //
-				RegexLeaf.spaceOneOrMore(), //
-				new RegexOr(//
-						new RegexLeaf("on"), //
-						new RegexLeaf("for"), //
-						new RegexLeaf("the"), //
-						new RegexLeaf("at") //
-				));
-	}
+	public static IRegex isOff = new RegexConcat(new RegexLeaf("is"), //
+			RegexLeaf.spaceOneOrMore(), //
+			new RegexLeaf("off"), //
+			RegexLeaf.spaceOneOrMore(), //
+			new RegexOr(//
+					new RegexLeaf("on"), //
+					new RegexLeaf("for"), //
+					new RegexLeaf("the"), //
+					new RegexLeaf("at") //
+			));
 
-	public static IRegex isOn() {
-		return new RegexConcat(new RegexLeaf("is"), //
-				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("on"), //
-				RegexLeaf.spaceOneOrMore(), //
-				new RegexOr(//
-						new RegexLeaf("on"), //
-						new RegexLeaf("for"), //
-						new RegexLeaf("the"), //
-						new RegexLeaf("at") //
-				) //
-		);
-	}
+	public static IRegex isOn = new RegexConcat(new RegexLeaf("is"), //
+			RegexLeaf.spaceOneOrMore(), //
+			new RegexLeaf("on"), //
+			RegexLeaf.spaceOneOrMore(), //
+			new RegexOr(//
+					new RegexLeaf("on"), //
+					new RegexLeaf("for"), //
+					new RegexLeaf("the"), //
+					new RegexLeaf("at") //
+			) //
+	);
 
-	public static IRegex isOrAre() {
-		return new RegexLeaf("(is|are)");
-	}
+	public static IRegex isOrAre = new RegexLeaf("(is|are)");
 
-	public static IRegex isOrAreNamed() {
-		return new RegexLeaf("(is|are)[%s]+named");
-	}
+	public static IRegex isOrAreNamed = new RegexLeaf("(is|are)[%s]+named");
 
-	public static IRegex lasts() {
-		return new RegexLeaf("(lasts|requires)");
-	}
+	public static IRegex lasts = new RegexLeaf("(lasts|requires)");
 
-	public static IRegex linksTo() {
-		return new RegexLeaf("links to");
-	}
+	public static IRegex linksTo = new RegexLeaf("links to");
 
-	public static IRegex occurs() {
-		return new RegexLeaf("occurs?");
-	}
+	public static IRegex occurs = new RegexLeaf("occurs?");
 
-	public static IRegex starts3() {
-		return new RegexLeaf("starts[%s]*(the[%s]*|on[%s]*|at[%s]*)*");
-	}
+	public static IRegex starts3 = new RegexLeaf("starts[%s]*(the[%s]*|on[%s]*|at[%s]*)*");
 
-	public static IRegex starts2() {
-		return new RegexLeaf("starts");
-	}
+	public static IRegex starts2 = new RegexLeaf("starts");
 
-	public static IRegex starts() {
-		return new RegexConcat(new RegexLeaf("start"), //
-				new RegexOptional(new RegexLeaf("s")), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexOptional(new RegexOr(//
-						new RegexLeaf("on"), //
-						new RegexLeaf("for"), //
-						new RegexLeaf("the"), //
-						new RegexLeaf("at") //
-				)) //
-		);
-	}
+	public static IRegex starts = new RegexConcat(new RegexLeaf("start"), //
+			new RegexOptional(new RegexLeaf("s")), //
+			RegexLeaf.spaceZeroOrMore(), //
+			new RegexOptional(new RegexOr(//
+					new RegexLeaf("on"), //
+					new RegexLeaf("for"), //
+					new RegexLeaf("the"), //
+					new RegexLeaf("at") //
+			)) //
+	);
 
-	public static IRegex just() {
-		return new RegexLeaf("just");
-	}
+	public static IRegex just = new RegexLeaf("just");
 
-	public static IRegex justBefore() {
-		return new RegexLeaf("just[%s]*before");
-	}
+	public static IRegex justBefore = new RegexLeaf("just[%s]*before");
 
-	public static IRegex justAfter() {
-		return new RegexLeaf("just[%s]*after");
-	}
+	public static IRegex justAfter = new RegexLeaf("just[%s]*after");
 
 }

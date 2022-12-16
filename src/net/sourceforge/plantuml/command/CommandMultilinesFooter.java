@@ -45,7 +45,9 @@ import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public class CommandMultilinesFooter extends CommandMultilines<TitledDiagram> {
 
-	public CommandMultilinesFooter() {
+	public static final CommandMultilinesFooter ME = new CommandMultilinesFooter();
+
+	private CommandMultilinesFooter() {
 		super("^(?:(left|right|center)?[%s]*)footer$");
 	}
 

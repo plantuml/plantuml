@@ -48,7 +48,9 @@ import net.sourceforge.plantuml.command.regex.RegexResult;
 
 public class CommandSkin extends SingleLineCommand2<TitledDiagram> {
 
-	public CommandSkin() {
+	public static final CommandSkin ME = new CommandSkin();
+
+	private CommandSkin() {
 		super(getRegexConcat());
 	}
 

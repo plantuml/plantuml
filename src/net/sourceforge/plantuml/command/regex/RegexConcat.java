@@ -35,34 +35,38 @@
  */
 package net.sourceforge.plantuml.command.regex;
 
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicLong;
 
-import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.StringLocated;
 
 public final class RegexConcat extends RegexComposed implements IRegex {
 
-	private static final ConcurrentMap<Object, RegexConcat> cache = new ConcurrentHashMap<Object, RegexConcat>();
 	private final AtomicLong foxRegex = new AtomicLong(-1L);
 	private int limitSize;
 
 	// private static final Set<String> PRINTED2 = new HashSet<>();
 
 	public static void printCacheInfo() {
-		int nbCompiled = 0;
-		int nbInvoked = 0;
-		for (RegexConcat reg : cache.values()) {
-			if (reg.isCompiled())
-				nbCompiled++;
-
-			if (reg.invoked())
-				nbInvoked++;
-
-		}
-		Log.info("Regex total/invoked/compiled " + cache.size() + "/" + nbInvoked + "/" + nbCompiled);
-		Log.info("Matches created " + nbCreateMatches.get());
+//		if (OptionFlags.getInstance().isVerbose())
+//			synchronized (cache) {
+//
+//				final NumberFormat nf = NumberFormat.getInstance(Locale.US);
+//
+//				int nbCompiled = 0;
+//				int nbInvoked = 0;
+//				for (RegexConcat reg : cache.values()) {
+//					if (reg.isCompiled())
+//						nbCompiled++;
+//
+//					if (reg.invoked())
+//						nbInvoked++;
+//
+//				}
+//				Log.info("Regex total/invoked/compiled " + nf.format(cache.size()) + "/" + nf.format(nbInvoked) + "/"
+//						+ nf.format(nbCompiled));
+//				Log.info("Matches escaped " + nf.format(vescaped.get()) + "/" + nf.format(vtot.get()));
+//				Log.info("Matches created " + nf.format(nbCreateMatches.get()));
+//			}
 	}
 
 	public RegexConcat(IRegex... partials) {
@@ -70,7 +74,8 @@ public final class RegexConcat extends RegexComposed implements IRegex {
 	}
 
 	private long foxRegex() {
-		if (foxRegex.get() == -1L) {
+		final long result = foxRegex.get();
+		if (result == -1L) {
 			long tmp = 0L;
 			for (int i = 1; i < partials().size() - 1; i++) {
 				final IRegex part = partials().get(i);
@@ -80,26 +85,27 @@ public final class RegexConcat extends RegexComposed implements IRegex {
 				}
 			}
 			foxRegex.set(tmp);
+			return tmp;
 		}
-		return foxRegex.get();
+		return result;
 	}
 
 	public static RegexConcat build(String key, IRegex... partials) {
-		// return buildInternal(partials);
-		RegexConcat result = cache.get(key);
-		if (result == null) {
-			cache.putIfAbsent(key, buildInternal(partials));
-			result = cache.get(key);
-			// System.err.println("cache size=" + cache.size());
-			// } else {
-			// synchronized (PRINTED2) {
-			// if (PRINTED2.contains(key) == false) {
-			// System.err.println("if (key.equals(\"" + key + "\")) return
-			// buildInternal(partials);");
-			// }
-			// PRINTED2.add(key);
-		}
-		return result;
+		return buildInternal(partials);
+//		RegexConcat result = cache.get(key);
+//		if (result == null) {
+//			cache.putIfAbsent(key, buildInternal(partials));
+//			result = cache.get(key);
+//			// System.err.println("cache size=" + cache.size());
+//			// } else {
+//			// synchronized (PRINTED2) {
+//			// if (PRINTED2.contains(key) == false) {
+//			// System.err.println("if (key.equals(\"" + key + "\")) return
+//			// buildInternal(partials);");
+//			// }
+//			// PRINTED2.add(key);
+//		}
+//		return result;
 	}
 
 	private static RegexConcat buildInternal(IRegex... partials) {
@@ -113,20 +119,35 @@ public final class RegexConcat extends RegexComposed implements IRegex {
 		return foxRegex.get() != -1L;
 	}
 
+//	static private final Set<String> PRINTED = new HashSet<>();
+//	static private final Set<String> ZERO = new HashSet<>();
+
 	@Override
 	public boolean match(StringLocated s) {
 		if (limitSize != 0 && s.getString().length() > limitSize)
 			return false;
 
+		// vtot.incrementAndGet();
 		final long foxRegex = foxRegex();
+//		synchronized (PRINTED) {
+//			final String full = getFullSlow();
+//			final boolean added = PRINTED.add(full);
+//			if (added && foxRegex == 0L) {
+//				ZERO.add(full);
+//				System.err.println("PR " + ZERO.size() + "/" + PRINTED.size() + " "
+//						+ FoxSignature.backToString(foxRegex) + " " + full);
+//			}
+//		}
 		if (foxRegex != 0L) {
 			final long foxLine = s.getFoxSignature();
 			final long check = foxRegex & foxLine;
 			// System.err.println("r=" + getFullSlow() + " s=" + s + " line=" + foxLine + "
 			// regex" + foxRegex + " "
 			// + check + " <" + FoxSignature.backToString(check) + ">");
-			if (check != foxRegex)
+			if (check != foxRegex) {
+				// vescaped.incrementAndGet();
 				return false;
+			}
 
 		}
 		return super.match(s);

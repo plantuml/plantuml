@@ -44,7 +44,9 @@ import net.sourceforge.plantuml.command.regex.RegexResult;
 
 public class CommandAssumeTransparent extends SingleLineCommand2<TitledDiagram> {
 
-	public CommandAssumeTransparent() {
+	public static final CommandAssumeTransparent ME = new CommandAssumeTransparent();
+
+	private CommandAssumeTransparent() {
 		super(getRegexConcat());
 	}
 

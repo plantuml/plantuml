@@ -35,9 +35,7 @@
  */
 package net.sourceforge.plantuml.project;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -81,27 +79,25 @@ import net.sourceforge.plantuml.style.CommandStyleMultilinesCSS;
 public class GanttDiagramFactory extends PSystemCommandFactory {
 
 	static private final List<Subject> subjects() {
-		return Arrays.<Subject>asList(new SubjectTask(), new SubjectProject(), new SubjectDayOfWeek(),
-				new SubjectDayAsDate(), new SubjectDaysAsDates(), new SubjectResource(), new SubjectToday(),
-				new SubjectSeparator());
+		return Arrays.<Subject>asList(SubjectTask.ME, SubjectProject.ME, SubjectDayOfWeek.ME, SubjectDayAsDate.ME,
+				SubjectDaysAsDates.ME, SubjectResource.ME, SubjectToday.ME, SubjectSeparator.ME);
 	}
 
-	public GanttDiagramFactory(DiagramType type) {
-		super(type);
+	public GanttDiagramFactory() {
+		super(DiagramType.GANTT);
 	}
 
 	@Override
-	protected List<Command> createCommands() {
-		final List<Command> cmds = new ArrayList<>();
+	protected void initCommandsList(List<Command> cmds) {
 		CommonCommands.addTitleCommands(cmds);
 		CommonCommands.addCommonCommands2(cmds);
 
-		cmds.add(new CommandStyleMultilinesCSS());
-		cmds.add(new CommandStyleImport());
+		cmds.add(CommandStyleMultilinesCSS.ME);
+		cmds.add(CommandStyleImport.ME);
 
-		cmds.add(new CommandNope());
+		cmds.add(CommandNope.ME);
 
-		cmds.addAll(getLanguageCommands());
+		addLanguageCommands(cmds);
 
 		cmds.add(new CommandGanttArrow());
 		cmds.add(new CommandGanttArrow2());
@@ -119,48 +115,32 @@ public class GanttDiagramFactory extends PSystemCommandFactory {
 		cmds.add(new CommandLabelOnColumn());
 		cmds.add(new CommandHideResourceName());
 		cmds.add(new CommandHideResourceFootbox());
-
-		return cmds;
 	}
 
-	static private final Collection<Command> cache = new ArrayList<>();
+	private void addLanguageCommands(List<Command> cmd) {
+		for (Subject subject : subjects())
+			for (SentenceSimple sentenceA : subject.getSentences()) {
+				cmd.add(NaturalCommand.create(sentenceA));
+				for (SentenceSimple sentenceB : subject.getSentences()) {
+					final String signatureA = sentenceA.getSignature();
+					final String signatureB = sentenceB.getSignature();
+					if (signatureA.equals(signatureB) == false)
+						cmd.add(NaturalCommand.create(new SentenceAnd(sentenceA, sentenceB)));
 
-	public static void clearCache() {
-		cache.clear();
-	}
-
-	private static Collection<Command> getLanguageCommands() {
-		// Useless synchronized now
-		synchronized (cache) {
-			if (cache.size() == 0) {
-
-				for (Subject subject : subjects())
-					for (SentenceSimple sentenceA : subject.getSentences()) {
-						cache.add(NaturalCommand.create(sentenceA));
-						for (SentenceSimple sentenceB : subject.getSentences()) {
-							final String signatureA = sentenceA.getSignature();
-							final String signatureB = sentenceB.getSignature();
-							if (signatureA.equals(signatureB) == false)
-								cache.add(NaturalCommand.create(new SentenceAnd(sentenceA, sentenceB)));
-
-						}
-					}
-
-				for (Subject subject : subjects())
-					for (SentenceSimple sentenceA : subject.getSentences())
-						for (SentenceSimple sentenceB : subject.getSentences())
-							for (SentenceSimple sentenceC : subject.getSentences()) {
-								final String signatureA = sentenceA.getSignature();
-								final String signatureB = sentenceB.getSignature();
-								final String signatureC = sentenceC.getSignature();
-								if (signatureA.equals(signatureB) == false && signatureA.equals(signatureC) == false
-										&& signatureC.equals(signatureB) == false)
-									cache.add(
-											NaturalCommand.create(new SentenceAndAnd(sentenceA, sentenceB, sentenceC)));
-							}
+				}
 			}
-		}
-		return cache;
+
+		for (Subject subject : subjects())
+			for (SentenceSimple sentenceA : subject.getSentences())
+				for (SentenceSimple sentenceB : subject.getSentences())
+					for (SentenceSimple sentenceC : subject.getSentences()) {
+						final String signatureA = sentenceA.getSignature();
+						final String signatureB = sentenceB.getSignature();
+						final String signatureC = sentenceC.getSignature();
+						if (signatureA.equals(signatureB) == false && signatureA.equals(signatureC) == false
+								&& signatureC.equals(signatureB) == false)
+							cmd.add(NaturalCommand.create(new SentenceAndAnd(sentenceA, sentenceB, sentenceC)));
+					}
 	}
 
 	@Override

@@ -44,7 +44,9 @@ import net.sourceforge.plantuml.command.regex.RegexResult;
 
 public class CommandMinwidth extends SingleLineCommand2<UmlDiagram> {
 
-	public CommandMinwidth() {
+	public static final CommandMinwidth ME = new CommandMinwidth();
+
+	private CommandMinwidth() {
 		super(getRegexConcat());
 	}
 

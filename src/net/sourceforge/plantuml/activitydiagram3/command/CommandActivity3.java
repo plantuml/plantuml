@@ -89,7 +89,7 @@ public class CommandActivity3 extends SingleLineCommand2<ActivityDiagram3> {
 				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
 				color().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("STEREO", "(\\<{2}.*\\>{2})?"), //
+				new RegexLeaf("STEREO", "(\\<\\<.*\\>\\>)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(":"), //
 				new RegexLeaf("LABEL", "(.*)"), //

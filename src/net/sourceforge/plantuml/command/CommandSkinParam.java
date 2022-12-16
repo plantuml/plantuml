@@ -45,7 +45,9 @@ import net.sourceforge.plantuml.style.NoStyleAvailableException;
 
 public class CommandSkinParam extends SingleLineCommand2<TitledDiagram> {
 
-	public CommandSkinParam() {
+	public static final CommandSkinParam ME = new CommandSkinParam();
+
+	private CommandSkinParam() {
 		super(getRegexConcat());
 	}
 

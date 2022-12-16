@@ -108,6 +108,7 @@ public class FromSkinparamToStyle {
 		addConFont("SequenceGroupHeader", SName.groupHeader);
 		addConvert("SequenceBoxBorderColor", PName.LineColor, SName.box);
 		addConvert("SequenceBoxBackgroundColor", PName.BackGroundColor, SName.box);
+		addConvert("SequenceBoxFontColor", PName.FontColor, SName.box);
 		addConvert("SequenceLifeLineBorderColor", PName.LineColor, SName.lifeLine);
 		addConvert("SequenceLifeLineBackgroundColor", PName.BackGroundColor, SName.lifeLine);
 		addConvert("sequenceDividerBackgroundColor", PName.BackGroundColor, SName.separator);
@@ -231,6 +232,8 @@ public class FromSkinparamToStyle {
 //		addConvert("sequenceStereotypeFontColor", PName.FontColor, SName.stereotype);
 //		addConvert("sequenceStereotypeFontName", PName.FontName, SName.stereotype);
 
+		addConvert("lifelineStrategy", PName.LineStyle, SName.lifeLine);
+
 	}
 
 	private static void addMagic(SName sname) {
@@ -274,7 +277,11 @@ public class FromSkinparamToStyle {
 				value = "0";
 			else if (value.equalsIgnoreCase("true"))
 				value = "3";
+		} else if (key.equals("lifelinestrategy")) {
+			if (value.equalsIgnoreCase("solid"))
+				value = "0";
 		}
+
 		if (value.equalsIgnoreCase("right:right"))
 			value = "right";
 		if (value.equalsIgnoreCase("dotted"))

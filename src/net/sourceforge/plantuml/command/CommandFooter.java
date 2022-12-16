@@ -49,7 +49,9 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 
 public class CommandFooter extends SingleLineCommand2<TitledDiagram> {
 
-	public CommandFooter() {
+	public static final CommandFooter ME = new CommandFooter();
+
+	private CommandFooter() {
 		super(getRegexConcat());
 	}
 

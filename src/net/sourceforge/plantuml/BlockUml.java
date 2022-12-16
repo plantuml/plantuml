@@ -175,10 +175,9 @@ public class BlockUml {
 		if (system == null) {
 			if (preprocessorError)
 				system = new PSystemErrorPreprocessor(data, debug);
-			else {
+			else
 				system = new PSystemBuilder().createPSystem(data, rawSource,
 						skinParam == null ? Collections.<String, String>emptyMap() : skinParam.values());
-			}
 		}
 		return system;
 	}

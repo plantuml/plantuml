@@ -46,7 +46,9 @@ import net.sourceforge.plantuml.command.regex.RegexResult;
 
 public class CommandScale extends SingleLineCommand2<AbstractPSystem> {
 
-	public CommandScale() {
+	public static final CommandScale ME = new CommandScale();
+
+	private CommandScale() {
 		super(getRegexConcat());
 	}
 
