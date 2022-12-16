@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -44,8 +44,11 @@ public class DriverImageTikz implements UDriver<UImage, TikzGraphics> {
 
 	public void draw(UImage shape, double x, double y, ColorMapper mapper, UParam param, TikzGraphics tikz) {
 		final String rawFileName = shape.getRawFileName();
+
+		// TODO how to get this from the <img:file{scale=?}> parameter?
+		double scale = 1.0;
 		if (rawFileName != null) {
-			final String raw = "\\includegraphics{" + rawFileName + "}";
+			final String raw = "\\includegraphics[scale=" + scale + "]{" + rawFileName + "}";
 			tikz.appendRaw(x, y, raw);
 			return;
 		}
