@@ -87,7 +87,8 @@ public final class FactorySequenceNoteOverSeveralCommand implements SingleMultiF
 				RegexLeaf.spaceZeroOrMore(), //
 				color().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), RegexLeaf.end() //
+				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
+				RegexLeaf.end() //
 		);
 	}
 

@@ -68,7 +68,8 @@ public class CommandUrl extends SingleLineCommand2<AbstractEntityDiagram> {
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexOptional(new RegexLeaf("is")), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")"), RegexLeaf.end()); //
+				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")"), //
+				RegexLeaf.end()); //
 	}
 
 	@Override

@@ -81,7 +81,8 @@ public final class FactorySequenceNoteOnArrowCommand implements SingleMultiFacto
 				RegexLeaf.spaceZeroOrMore(), //
 				ColorParser.exp1(), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), RegexLeaf.end());
+				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
+				RegexLeaf.end());
 	}
 
 	private IRegex getRegexConcatSingleLine() {

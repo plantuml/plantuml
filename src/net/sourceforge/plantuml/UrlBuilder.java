@@ -94,49 +94,44 @@ public class UrlBuilder {
 	public Url getUrl(String s) {
 		Matcher2 m;
 		m = QUOTED.matcher(s);
-		if (matchesOrFind(m)) {
+		if (matchesOrFind(m))
 			return new Url(withTopUrl(m.group(1)), m.group(2), m.group(3));
-		}
 
 		m = ONLY_TOOLTIP.matcher(s);
-		if (matchesOrFind(m)) {
+		if (matchesOrFind(m))
 			return new Url("", m.group(1), null);
-		}
 
 		m = ONLY_TOOLTIP_AND_LABEL.matcher(s);
-		if (matchesOrFind(m)) {
+		if (matchesOrFind(m))
 			return new Url("", m.group(1), m.group(2));
-		}
 
 		m = LINK_TOOLTIP_NOLABEL.matcher(s);
-		if (matchesOrFind(m)) {
+		if (matchesOrFind(m))
 			return new Url(withTopUrl(m.group(1)), m.group(2), null);
-		}
 
 		m = LINK_WITH_OPTIONAL_TOOLTIP_WITH_OPTIONAL_LABEL.matcher(s);
-		if (matchesOrFind(m)) {
+		if (matchesOrFind(m))
 			return new Url(withTopUrl(m.group(1)), m.group(2), m.group(3));
-		}
 
 		return null;
 
 	}
 
 	private boolean matchesOrFind(Matcher2 m) {
-		if (mode == UrlMode.STRICT) {
+		if (mode == UrlMode.STRICT)
 			return m.matches();
-		} else if (mode == UrlMode.ANYWHERE) {
+		else if (mode == UrlMode.ANYWHERE)
 			return m.find();
-		} else {
+		else
 			throw new IllegalStateException();
-		}
+
 	}
 
 	private String withTopUrl(String url) {
 		if (url.startsWith("http:") == false && url.startsWith("https:") == false && url.startsWith("file:") == false
-				&& topurl != null) {
+				&& topurl != null)
 			return topurl + url;
-		}
+
 		return url;
 	}
 
