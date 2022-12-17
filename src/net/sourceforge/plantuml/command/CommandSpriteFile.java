@@ -43,8 +43,6 @@ import java.util.zip.ZipInputStream;
 
 import net.sourceforge.plantuml.FileSystem;
 import net.sourceforge.plantuml.FileUtils;
-import net.sourceforge.plantuml.LineLocation;
-import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
@@ -55,6 +53,8 @@ import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.sprite.Sprite;
 import net.sourceforge.plantuml.sprite.SpriteImage;
 import net.sourceforge.plantuml.sprite.SpriteSvg;
+import net.sourceforge.plantuml.utils.LineLocation;
+import net.sourceforge.plantuml.utils.Log;
 
 public class CommandSpriteFile extends SingleLineCommand2<TitledDiagram> {
 

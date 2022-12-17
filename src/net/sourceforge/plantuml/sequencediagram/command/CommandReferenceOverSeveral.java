@@ -38,8 +38,6 @@ package net.sourceforge.plantuml.sequencediagram.command;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.plantuml.LineLocation;
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlMode;
@@ -55,6 +53,8 @@ import net.sourceforge.plantuml.sequencediagram.Reference;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
+import net.sourceforge.plantuml.utils.LineLocation;
+import net.sourceforge.plantuml.utils.StringUtils;
 
 public class CommandReferenceOverSeveral extends SingleLineCommand2<SequenceDiagram> {
 

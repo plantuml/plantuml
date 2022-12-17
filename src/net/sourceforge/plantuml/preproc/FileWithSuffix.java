@@ -51,8 +51,8 @@ import java.util.zip.ZipInputStream;
 import net.sourceforge.plantuml.AFile;
 import net.sourceforge.plantuml.AFileRegular;
 import net.sourceforge.plantuml.AParentFolder;
-import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.utils.Log;
 
 public class FileWithSuffix {
 

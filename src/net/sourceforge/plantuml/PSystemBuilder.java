@@ -97,6 +97,8 @@ import net.sourceforge.plantuml.statediagram.StateDiagramFactory;
 import net.sourceforge.plantuml.stats.StatsUtilsIncrement;
 import net.sourceforge.plantuml.sudoku.PSystemSudokuFactory;
 import net.sourceforge.plantuml.timingdiagram.TimingDiagramFactory;
+import net.sourceforge.plantuml.utils.Log;
+import net.sourceforge.plantuml.utils.StringLocated;
 import net.sourceforge.plantuml.version.License;
 import net.sourceforge.plantuml.version.PSystemLicenseFactory;
 import net.sourceforge.plantuml.version.PSystemVersionFactory;

@@ -39,7 +39,7 @@ import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.utils.StringUtils;
 
 public final class SvgData {
 

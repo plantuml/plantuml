@@ -59,7 +59,10 @@ import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.preproc.FileWithSuffix;
 import net.sourceforge.plantuml.preproc2.PreprocessorModeSet;
 import net.sourceforge.plantuml.tim.TimLoader;
+import net.sourceforge.plantuml.utils.LineLocationImpl;
 import net.sourceforge.plantuml.utils.StartUtils;
+import net.sourceforge.plantuml.utils.StringLocated;
+import net.sourceforge.plantuml.utils.StringUtils;
 import net.sourceforge.plantuml.version.Version;
 
 public class BlockUml {

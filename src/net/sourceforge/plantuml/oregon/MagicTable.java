@@ -40,7 +40,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import net.sourceforge.plantuml.Log;
+import net.sourceforge.plantuml.utils.Log;
 
 public class MagicTable {
 

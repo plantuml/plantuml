@@ -64,6 +64,7 @@ import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.ColorOrder;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColors;
+import net.sourceforge.plantuml.utils.StringUtils;
 
 public abstract class TitledDiagram extends AbstractPSystem implements Diagram, Annotated {
 

@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.command;
 
 import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandAffineTransformMultiline extends CommandMultilines<TitledDiagram> {
 

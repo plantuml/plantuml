@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.ugraphic.visio;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -44,6 +43,7 @@ import net.sourceforge.plantuml.ugraphic.UFontContext;
 import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.UText;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+import net.sourceforge.plantuml.utils.StringUtils;
 
 public class DriverTextVdx implements UDriver<UText, VisioGraphics> {
 

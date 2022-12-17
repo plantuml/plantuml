@@ -47,13 +47,10 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
-import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
-import net.sourceforge.plantuml.ebnf.CharIterator;
-import net.sourceforge.plantuml.ebnf.CharIteratorImpl;
 import net.sourceforge.plantuml.ebnf.ETile;
 import net.sourceforge.plantuml.ebnf.ETileAlternation;
 import net.sourceforge.plantuml.ebnf.ETileBox;
@@ -75,6 +72,8 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 import net.sourceforge.plantuml.ugraphic.color.HColors;
+import net.sourceforge.plantuml.utils.BlocLines;
+import net.sourceforge.plantuml.utils.CharInspector;
 
 public class PSystemRegex extends TitledDiagram {
 
@@ -148,7 +147,7 @@ public class PSystemRegex extends TitledDiagram {
 	}
 
 	public CommandExecutionResult addBlocLines(BlocLines from) {
-		final CharIterator it = new CharIteratorImpl(from);
+		final CharInspector it = from.inspector();
 		final List<ReToken> parsed1 = RegexExpression.parse(it);
 		// System.err.println("parsed1=" + parsed1);
 		final List<ReToken> parsed2 = addImplicitConcatenation(parsed1);

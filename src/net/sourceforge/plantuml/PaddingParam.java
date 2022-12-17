@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml;
 
+import net.sourceforge.plantuml.utils.StringUtils;
 
 public enum PaddingParam {
 	PARTICIPANT, BOX;

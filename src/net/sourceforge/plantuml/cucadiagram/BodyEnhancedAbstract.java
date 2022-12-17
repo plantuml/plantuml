@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.cucadiagram;
 
 import net.sourceforge.plantuml.ISkinSimple;
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -48,6 +47,7 @@ import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.utils.StringUtils;
 
 public abstract class BodyEnhancedAbstract extends AbstractTextBlock implements TextBlock {
 

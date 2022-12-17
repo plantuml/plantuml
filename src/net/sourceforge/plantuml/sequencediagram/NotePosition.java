@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.sequencediagram;
 
-import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.utils.StringUtils;
 
 public enum NotePosition {
 	LEFT, RIGHT, OVER, OVER_SEVERAL, BOTTOM, TOP;

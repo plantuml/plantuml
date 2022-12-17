@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.version;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.plantuml.StringLocated;
+import net.sourceforge.plantuml.utils.StringLocated;
 
 public interface IteratorCounter2 extends Iterator<StringLocated> {
 

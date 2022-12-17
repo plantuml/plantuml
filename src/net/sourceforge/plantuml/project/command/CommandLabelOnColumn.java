@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.project.command;
 
-import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.IRegex;
@@ -47,6 +46,7 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.LabelPosition;
 import net.sourceforge.plantuml.project.LabelStrategy;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandLabelOnColumn extends SingleLineCommand2<GanttDiagram> {
 

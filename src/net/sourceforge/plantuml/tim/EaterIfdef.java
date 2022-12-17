@@ -34,10 +34,10 @@
  */
 package net.sourceforge.plantuml.tim;
 
-import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.preproc.EvalBoolean;
 import net.sourceforge.plantuml.preproc.Truth;
 import net.sourceforge.plantuml.tim.expression.TValue;
+import net.sourceforge.plantuml.utils.StringLocated;
 
 public class EaterIfdef extends Eater {
 

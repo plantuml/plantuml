@@ -35,38 +35,48 @@
  */
 package net.sourceforge.plantuml;
 
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexOptional;
 
 public class UrlBuilder {
 
-	private static final String S_QUOTED = "\\[\\[[%s]*" + //
+	public static final IRegex MANDATORY = new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")");
+	public static final IRegex OPTIONAL = new RegexOptional(MANDATORY);
+
+	private static final String START_PART = "\\[\\[[%s]*";
+	private static final String END_PART = "[%s]*\\]\\]";
+
+	private static final String S_QUOTED = START_PART + //
 			"[%g]([^%g]+)[%g]" + // Quoted part
 			"(?:[%s]*\\{([^{}]*)\\})?" + // Optional tooltip
 			"(?:[%s]([^%s\\{\\}\\[\\]][^\\[\\]]*))?" + // Optional label
-			"[%s]*\\]\\]";
+			END_PART;
 
-	private static final String S_ONLY_TOOLTIP = "\\[\\[[%s]*" + //
+	private static final String S_ONLY_TOOLTIP = START_PART + //
 			"\\{(.*)\\}" + // Tooltip
-			"[%s]*\\]\\]";
+			END_PART;
 
-	private static final String S_ONLY_TOOLTIP_AND_LABEL = "\\[\\[[%s]*" + //
+	private static final String S_ONLY_TOOLTIP_AND_LABEL = START_PART + //
 			"\\{([^{}]*)\\}" + // Tooltip
 			"[%s]*" + //
 			"([^\\[%s\\{\\}\\[\\]][^\\[\\]]*)" // Label
-			+ "[%s]*\\]\\]";
+			+ END_PART;
 
-	private static final String S_LINK_TOOLTIP_NOLABEL = "\\[\\[[%s]*" + //
+	private static final String S_LINK_TOOLTIP_NOLABEL = START_PART + //
 			"([^\\s%g{}\\[\\]]+?)" + // Link
-			"[%s]*\\{(.+)\\}" + // Tooltip
-			"[%s]*\\]\\]";
+			"[%s]*" + //
+			"\\{(.+)\\}" + // Tooltip
+			END_PART;
 
-	private static final String S_LINK_WITH_OPTIONAL_TOOLTIP_WITH_OPTIONAL_LABEL = "\\[\\[[%s]*" + //
+	private static final String S_LINK_WITH_OPTIONAL_TOOLTIP_WITH_OPTIONAL_LABEL = START_PART + //
 			"([^%s%g\\[\\]]+?)" + // Link
 			"(?:[%s]*\\{([^{}]*)\\})?" + // Optional tooltip
 			"(?:[%s]([^%s\\{\\}\\[\\]][^\\[\\]]*))?" + // Optional label
-			"[%s]*\\]\\]";
+			END_PART;
 
 	public static String getRegexp() {
 		return S_QUOTED + "|" + //

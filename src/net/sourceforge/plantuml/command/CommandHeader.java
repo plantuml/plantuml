@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.command;
 
 import net.sourceforge.plantuml.FontParam;
-import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
@@ -46,6 +45,7 @@ import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandHeader extends SingleLineCommand2<TitledDiagram> {
 

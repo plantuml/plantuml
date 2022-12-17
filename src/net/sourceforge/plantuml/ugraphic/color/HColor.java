@@ -36,9 +36,9 @@ package net.sourceforge.plantuml.ugraphic.color;
 
 import java.awt.Color;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.ugraphic.UBackground;
 import net.sourceforge.plantuml.ugraphic.UChange;
+import net.sourceforge.plantuml.utils.StringUtils;
 
 public abstract class HColor implements UChange {
 

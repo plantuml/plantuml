@@ -38,14 +38,14 @@ package net.sourceforge.plantuml.code;
 import java.io.IOException;
 import java.io.StringReader;
 
-import net.sourceforge.plantuml.StringLocated;
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.preproc.ReadLine;
 import net.sourceforge.plantuml.preproc.ReadLineReader;
 import net.sourceforge.plantuml.preproc.UncommentReadLine;
+import net.sourceforge.plantuml.utils.StringLocated;
+import net.sourceforge.plantuml.utils.StringUtils;
 
 public class ArobaseStringCompressor implements StringCompressor {
 

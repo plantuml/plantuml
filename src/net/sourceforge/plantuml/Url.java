@@ -39,6 +39,7 @@ import java.util.Comparator;
 
 import net.sourceforge.plantuml.annotation.HaxeIgnored;
 import net.sourceforge.plantuml.cucadiagram.dot.DotMaker2;
+import net.sourceforge.plantuml.utils.StringUtils;
 
 public class Url implements EnsureVisible {
 

@@ -44,10 +44,6 @@ import java.nio.charset.Charset;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.sourceforge.plantuml.LineLocation;
-import net.sourceforge.plantuml.Log;
-import net.sourceforge.plantuml.StringLocated;
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.preproc.ReadLine;
 import net.sourceforge.plantuml.preproc.ReadLineReader;
@@ -56,6 +52,10 @@ import net.sourceforge.plantuml.preproc.StartDiagramExtractReader;
 import net.sourceforge.plantuml.preproc.Stdlib;
 import net.sourceforge.plantuml.security.SURL;
 import net.sourceforge.plantuml.tim.EaterException;
+import net.sourceforge.plantuml.utils.LineLocation;
+import net.sourceforge.plantuml.utils.Log;
+import net.sourceforge.plantuml.utils.StringLocated;
+import net.sourceforge.plantuml.utils.StringUtils;
 
 public class PreprocessorUtils {
 

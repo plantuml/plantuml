@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.text;
 
-import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.utils.StringUtils;
 
 public class RichText {
 

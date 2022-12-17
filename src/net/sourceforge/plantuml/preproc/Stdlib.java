@@ -26,12 +26,12 @@ import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
 
-import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.brotli.BrotliInputStream;
 import net.sourceforge.plantuml.code.Base64Coder;
 import net.sourceforge.plantuml.creole.atom.AtomImg;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.utils.Log;
 
 public class Stdlib {
 

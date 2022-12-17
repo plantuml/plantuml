@@ -41,11 +41,11 @@ import java.io.OutputStream;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
-import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.cucadiagram.ICucaDiagram;
 import net.sourceforge.plantuml.descdiagram.DescriptionDiagram;
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.utils.Log;
 import net.sourceforge.plantuml.xmi.XmlDiagramTransformer;
 
 public final class CucaDiagramGraphmlMaker {

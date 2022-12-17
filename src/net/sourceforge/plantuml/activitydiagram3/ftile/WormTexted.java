@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.activitydiagram3.ftile;
 
 import java.util.Iterator;
 
-import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.graphic.HtmlColorAndStyle;
@@ -48,6 +47,7 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.utils.Direction;
 
 public class WormTexted implements Iterable<XPoint2D> {
 

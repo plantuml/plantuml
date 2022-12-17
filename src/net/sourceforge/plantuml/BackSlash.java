@@ -40,6 +40,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.plantuml.utils.StringUtils;
+
 public class BackSlash {
 
 	public static final String BS_BS_N = "\\n";

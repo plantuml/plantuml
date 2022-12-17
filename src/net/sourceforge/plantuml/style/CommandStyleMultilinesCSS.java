@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.style;
 
 import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.TitledDiagram;
-import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
@@ -45,6 +44,8 @@ import net.sourceforge.plantuml.command.Trim;
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.style.parser.StyleParser;
+import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandStyleMultilinesCSS extends CommandMultilines2<TitledDiagram> {
 
@@ -69,7 +70,7 @@ public class CommandStyleMultilinesCSS extends CommandMultilines2<TitledDiagram>
 	protected CommandExecutionResult executeNow(TitledDiagram diagram, BlocLines lines) {
 		try {
 			final StyleBuilder styleBuilder = diagram.getSkinParam().getCurrentStyleBuilder();
-			for (Style modifiedStyle : StyleLoader.getDeclaredStyles(lines.subExtract(1, 1), styleBuilder))
+			for (Style modifiedStyle : StyleParser.parse(lines.subExtract(1, 1), styleBuilder))
 				diagram.getSkinParam().muteStyle(modifiedStyle);
 
 			((SkinParam) diagram.getSkinParam()).applyPendingStyleMigration();

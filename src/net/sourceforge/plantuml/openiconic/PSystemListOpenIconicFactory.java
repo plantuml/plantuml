@@ -36,9 +36,9 @@
 package net.sourceforge.plantuml.openiconic;
 
 import net.sourceforge.plantuml.AbstractPSystem;
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.utils.StringUtils;
 
 public class PSystemListOpenIconicFactory extends PSystemSingleLineFactory {
 

@@ -37,10 +37,10 @@ package net.sourceforge.plantuml.graphic;
 
 import java.util.Objects;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.utils.StringUtils;
 
 public enum HorizontalAlignment {
 

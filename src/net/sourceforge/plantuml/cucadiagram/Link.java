@@ -39,11 +39,9 @@ import java.util.Objects;
 
 import net.sourceforge.plantuml.Hideable;
 import net.sourceforge.plantuml.ISkinSimple;
-import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.Removeable;
 import net.sourceforge.plantuml.SpecificBackcolorable;
-import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.baraye.EntityImp;
@@ -61,6 +59,7 @@ import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.ugraphic.UComment;
 import net.sourceforge.plantuml.ugraphic.UFont;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public class Link extends WithLinkType implements Hideable, Removeable {
 

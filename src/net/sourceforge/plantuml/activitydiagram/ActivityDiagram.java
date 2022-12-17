@@ -40,7 +40,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.baraye.CucaDiagram;
 import net.sourceforge.plantuml.baraye.IEntity;
@@ -54,6 +53,7 @@ import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.NamespaceStrategy;
 import net.sourceforge.plantuml.graphic.USymbol;
+import net.sourceforge.plantuml.utils.Direction;
 
 public class ActivityDiagram extends CucaDiagram {
 

@@ -33,7 +33,7 @@
  *
  *
  */
-package net.sourceforge.plantuml;
+package net.sourceforge.plantuml.utils;
 
 import java.util.ArrayList;
 import java.util.Collections;

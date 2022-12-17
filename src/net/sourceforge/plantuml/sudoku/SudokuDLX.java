@@ -37,8 +37,8 @@ package net.sourceforge.plantuml.sudoku;
 
 import java.util.Random;
 
-import net.sourceforge.plantuml.Log;
-import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.utils.Log;
+import net.sourceforge.plantuml.utils.StringUtils;
 
 public class SudokuDLX implements ISudoku {
 

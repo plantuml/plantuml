@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 import net.sourceforge.plantuml.ugraphic.color.HColors;
+import net.sourceforge.plantuml.utils.Log;
 
 public class PSystemUtils {
 

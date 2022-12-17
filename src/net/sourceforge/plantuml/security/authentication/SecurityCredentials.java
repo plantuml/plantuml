@@ -43,9 +43,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.json.JsonObject;
 import net.sourceforge.plantuml.json.JsonValue;
+import net.sourceforge.plantuml.utils.StringUtils;
 
 /**
  * Defines a configuration for credentials.

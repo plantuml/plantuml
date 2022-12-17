@@ -39,9 +39,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.baraye.CucaDiagram;
 import net.sourceforge.plantuml.baraye.EntityFactory;
+import net.sourceforge.plantuml.utils.StringUtils;
 
 public class Ident implements Code {
 

@@ -40,11 +40,11 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.StringLocated;
-import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleLoader;
+import net.sourceforge.plantuml.style.parser.StyleParser;
+import net.sourceforge.plantuml.utils.BlocLines;
+import net.sourceforge.plantuml.utils.StringLocated;
 
 public class StyleExtractor {
 
@@ -112,7 +112,7 @@ public class StyleExtractor {
 		if (style.size() > 0) {
 			final StyleBuilder styleBuilder = skinParam.getCurrentStyleBuilder();
 			final BlocLines blocLines = BlocLines.from(style);
-			for (Style modifiedStyle : StyleLoader.getDeclaredStyles(blocLines.subExtract(1, 1), styleBuilder)) {
+			for (Style modifiedStyle : StyleParser.parse(blocLines.subExtract(1, 1), styleBuilder)) {
 				skinParam.muteStyle(modifiedStyle);
 			}
 		}

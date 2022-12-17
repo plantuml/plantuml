@@ -37,10 +37,7 @@ package net.sourceforge.plantuml.activitydiagram3.command;
 
 import java.util.List;
 
-import net.sourceforge.plantuml.StringLocated;
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
-import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines3;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
@@ -51,6 +48,9 @@ import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.Rainbow;
+import net.sourceforge.plantuml.utils.BlocLines;
+import net.sourceforge.plantuml.utils.StringLocated;
+import net.sourceforge.plantuml.utils.StringUtils;
 
 public class CommandRepeatWhile3Multilines extends CommandMultilines3<ActivityDiagram3> {
 

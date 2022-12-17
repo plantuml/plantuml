@@ -41,7 +41,6 @@ import java.util.Set;
 
 import net.sourceforge.plantuml.Hideable;
 import net.sourceforge.plantuml.LineConfigurable;
-import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.Removeable;
 import net.sourceforge.plantuml.SpecificBackcolorable;
 import net.sourceforge.plantuml.Url;
@@ -58,6 +57,7 @@ import net.sourceforge.plantuml.cucadiagram.Stereotag;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public interface IEntity extends SpecificBackcolorable, Hideable, Removeable, LineConfigurable {
 

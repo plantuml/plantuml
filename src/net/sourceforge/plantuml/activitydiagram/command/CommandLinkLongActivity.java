@@ -38,16 +38,12 @@ package net.sourceforge.plantuml.activitydiagram.command;
 import java.util.List;
 
 import net.sourceforge.plantuml.BackSlash;
-import net.sourceforge.plantuml.Direction;
-import net.sourceforge.plantuml.StringLocated;
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlMode;
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagram;
 import net.sourceforge.plantuml.baraye.IEntity;
 import net.sourceforge.plantuml.classdiagram.command.CommandLinkClass;
-import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
@@ -73,6 +69,10 @@ import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.descdiagram.command.CommandLinkElement;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
+import net.sourceforge.plantuml.utils.BlocLines;
+import net.sourceforge.plantuml.utils.Direction;
+import net.sourceforge.plantuml.utils.StringLocated;
+import net.sourceforge.plantuml.utils.StringUtils;
 
 public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram> {
 
@@ -98,7 +98,7 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("BACKCOLOR", "(#\\w+)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
+				UrlBuilder.OPTIONAL, //
 
 				new RegexLeaf("ARROW_BODY1", "([-.]+)"), //
 				new RegexLeaf("ARROW_STYLE1", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //

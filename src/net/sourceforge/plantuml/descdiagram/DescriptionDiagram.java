@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.descdiagram;
 import java.util.Map;
 import java.util.Objects;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.baraye.ILeaf;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
@@ -48,6 +47,7 @@ import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.USymbols;
+import net.sourceforge.plantuml.utils.StringUtils;
 
 public class DescriptionDiagram extends AbstractEntityDiagram {
 

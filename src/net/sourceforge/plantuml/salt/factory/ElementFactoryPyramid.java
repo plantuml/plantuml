@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.salt.factory;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.salt.DataSource;
 import net.sourceforge.plantuml.salt.Dictionary;
 import net.sourceforge.plantuml.salt.Positionner2;
@@ -45,6 +44,7 @@ import net.sourceforge.plantuml.salt.element.Element;
 import net.sourceforge.plantuml.salt.element.ElementPyramid;
 import net.sourceforge.plantuml.salt.element.ElementText;
 import net.sourceforge.plantuml.salt.element.TableStrategy;
+import net.sourceforge.plantuml.utils.StringUtils;
 
 public class ElementFactoryPyramid extends AbstractElementFactoryComplex {
 

@@ -61,17 +61,17 @@ public class CommandCreoleUrl implements Command {
 
 	public int matchingSize(String line) {
 		final Matcher2 m = pattern.matcher(line);
-		if (m.find() == false) {
+		if (m.find() == false)
 			return 0;
-		}
+
 		return m.group(1).length();
 	}
 
 	public String executeAndGetRemaining(String line, StripeSimple stripe) {
 		final Matcher2 m = pattern.matcher(line);
-		if (m.find() == false) {
+		if (m.find() == false)
 			throw new IllegalStateException();
-		}
+
 		final UrlBuilder urlBuilder = new UrlBuilder(stripe.getSkinParam().getValue("topurl"), UrlMode.STRICT);
 		final Url url = urlBuilder.getUrl(m.group(1));
 		stripe.addUrl(url);

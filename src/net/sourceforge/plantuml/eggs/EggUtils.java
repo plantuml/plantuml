@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.eggs;
 
 import java.math.BigInteger;
 
-import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.utils.StringUtils;
 
 public class EggUtils {
 

@@ -42,8 +42,8 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.utils.StringUtils;
 import net.sourceforge.plantuml.windowsdot.WindowsDotArchive;
 
 class GraphvizWindowsOld extends AbstractGraphviz {

@@ -37,6 +37,8 @@ package net.sourceforge.plantuml;
 
 import java.util.Objects;
 
+import net.sourceforge.plantuml.utils.LineLocation;
+
 public class ErrorUml {
 
 	private final String error;

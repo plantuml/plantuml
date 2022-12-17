@@ -38,11 +38,11 @@ package net.sourceforge.plantuml.gitlog;
 import java.util.Iterator;
 import java.util.Map;
 
-import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.command.PSystemAbstractFactory;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.utils.StringLocated;
 
 public class GitDiagramFactory extends PSystemAbstractFactory {
 

@@ -35,10 +35,10 @@
  */
 package net.sourceforge.plantuml.salt;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.PSystemBasicFactory;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.utils.StringUtils;
 
 public class PSystemSaltFactory extends PSystemBasicFactory<PSystemSalt> {
 

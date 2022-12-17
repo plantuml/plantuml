@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -33,37 +33,44 @@
  *
  *
  */
-package net.sourceforge.plantuml.style;
+package net.sourceforge.plantuml.utils;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+public class CharInspectorImpl implements CharInspector {
 
-public class CssVariables {
+	final private BlocLines data;
+	private int line = 0;
+	private int pos = 0;
 
-	private final Map<String, String> variables = new HashMap<>();
-
-	private final Pattern learnPattern = Pattern.compile("^--([_\\w][-_\\w]+)[ :]+(.*?);?");
-	private final Pattern retrieve = Pattern.compile("var\\(-*([_\\w][-_\\w]+)\\)");
-
-	public void learn(String s) {
-		final Matcher m = learnPattern.matcher(s);
-		if (m.matches())
-			variables.put(m.group(1), m.group(2));
+	CharInspectorImpl(BlocLines input) {
+		data = input;
 	}
 
-	public String value(String v) {
-		if (v.startsWith("var(")) {
-			final Matcher m = retrieve.matcher(v);
-			if (m.matches()) {
-				final String varname = m.group(1);
-				final String result = variables.get(varname);
-				if (result != null)
-					return result;
-			}
+	@Override
+	public char peek(int ahead) {
+		if (line == -1)
+			return 0;
+		final String currentLine = getCurrentLine();
+		if (pos + ahead >= currentLine.length())
+			return '\0';
+		return currentLine.charAt(pos + ahead);
+	}
+
+	private String getCurrentLine() {
+		return data.getAt(line).getTrimmed().getString();
+	}
+
+	@Override
+	public void next() {
+		if (line == -1)
+			throw new IllegalStateException();
+		pos++;
+		if (pos >= getCurrentLine().length()) {
+			line++;
+			pos = 0;
 		}
-		return v;
+		while (line < data.size() && getCurrentLine().length() == 0)
+			line++;
+		if (line >= data.size())
+			line = -1;
 	}
-
 }

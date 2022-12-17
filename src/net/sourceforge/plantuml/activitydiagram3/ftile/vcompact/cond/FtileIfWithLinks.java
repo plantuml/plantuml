@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.activitydiagram3.Branch;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractConnection;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Connection;
@@ -60,6 +59,7 @@ import net.sourceforge.plantuml.svek.ConditionEndStyle;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.utils.Direction;
 
 public class FtileIfWithLinks extends FtileIfWithDiamonds {
 

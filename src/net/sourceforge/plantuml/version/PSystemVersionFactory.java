@@ -39,9 +39,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.AbstractPSystem;
-import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.utils.Log;
 
 public class PSystemVersionFactory extends PSystemSingleLineFactory {
 

@@ -42,7 +42,6 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 
 import net.sourceforge.plantuml.FileFormat;
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.asciiart.TextSkin;
 import net.sourceforge.plantuml.asciiart.TextStringBounder;
@@ -57,6 +56,7 @@ import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt;
+import net.sourceforge.plantuml.utils.StringUtils;
 
 public class SequenceDiagramTxtMaker implements FileMaker {
 

@@ -38,11 +38,11 @@ package net.sourceforge.plantuml.regex;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.plantuml.ebnf.CharIterator;
+import net.sourceforge.plantuml.utils.CharInspector;
 
 public class RegexExpression {
 
-	public static List<ReToken> parse(CharIterator it) {
+	public static List<ReToken> parse(CharInspector it) {
 		final List<ReToken> result = new ArrayList<>();
 		while (true) {
 			final char current = it.peek(0);
@@ -86,14 +86,14 @@ public class RegexExpression {
 
 	}
 
-	private static boolean isStartOpenParenthesis(CharIterator it) {
+	private static boolean isStartOpenParenthesis(CharInspector it) {
 		final char current0 = it.peek(0);
 		if (current0 == '(')
 			return true;
 		return false;
 	}
 
-	private static String readOpenParenthesis(CharIterator it) {
+	private static String readOpenParenthesis(CharInspector it) {
 		final char current0 = it.peek(0);
 		it.next();
 		final StringBuilder result = new StringBuilder();
@@ -111,14 +111,14 @@ public class RegexExpression {
 		return result.toString();
 	}
 
-	private static boolean isStartQuantifier(CharIterator it) {
+	private static boolean isStartQuantifier(CharInspector it) {
 		final char current0 = it.peek(0);
 		if (current0 == '*' || current0 == '+' || current0 == '?' || current0 == '{')
 			return true;
 		return false;
 	}
 
-	private static String readQuantifier(CharIterator it) {
+	private static String readQuantifier(CharInspector it) {
 		final char current0 = it.peek(0);
 		it.next();
 		final StringBuilder result = new StringBuilder();
@@ -138,7 +138,7 @@ public class RegexExpression {
 		return result.toString();
 	}
 
-	private static boolean isEscapedChar(CharIterator it) {
+	private static boolean isEscapedChar(CharInspector it) {
 		final char current0 = it.peek(0);
 		if (current0 == '\\') {
 			final char current1 = it.peek(1);
@@ -150,7 +150,7 @@ public class RegexExpression {
 		return false;
 	}
 
-	private static String readGroup(CharIterator it) {
+	private static String readGroup(CharInspector it) {
 		final char current0 = it.peek(0);
 		if (current0 != '[')
 			throw new IllegalStateException();
@@ -172,7 +172,7 @@ public class RegexExpression {
 		return result.toString();
 	}
 
-	private static String readClass(CharIterator it) {
+	private static String readClass(CharInspector it) {
 		final char current0 = it.peek(0);
 		if (current0 == '.') {
 			it.next();
@@ -187,7 +187,7 @@ public class RegexExpression {
 		throw new IllegalStateException();
 	}
 
-	private static boolean isStartClass(CharIterator it) {
+	private static boolean isStartClass(CharInspector it) {
 		final char current0 = it.peek(0);
 		if (current0 == '.')
 			return true;
@@ -202,7 +202,7 @@ public class RegexExpression {
 		return true;
 	}
 
-	private static boolean isStartAnchor(CharIterator it) {
+	private static boolean isStartAnchor(CharInspector it) {
 		final char current0 = it.peek(0);
 		if (current0 == '^' || current0 == '$')
 			return true;
@@ -215,7 +215,7 @@ public class RegexExpression {
 		return false;
 	}
 
-	private static String readAnchor(CharIterator it) {
+	private static String readAnchor(CharInspector it) {
 		final char current0 = it.peek(0);
 		if (current0 == '^' || current0 == '$') {
 			it.next();

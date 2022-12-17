@@ -37,9 +37,6 @@ package net.sourceforge.plantuml.regex;
 
 import java.util.Collections;
 
-import net.sourceforge.plantuml.LineLocation;
-import net.sourceforge.plantuml.StringLocated;
-import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.IRegex;
@@ -47,6 +44,9 @@ import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
+import net.sourceforge.plantuml.utils.BlocLines;
+import net.sourceforge.plantuml.utils.LineLocation;
+import net.sourceforge.plantuml.utils.StringLocated;
 
 public class CommandRegexfSingleLine extends SingleLineCommand2<PSystemRegex> {
 

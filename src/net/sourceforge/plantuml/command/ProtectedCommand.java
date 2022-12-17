@@ -37,9 +37,10 @@ package net.sourceforge.plantuml.command;
 
 import java.util.Objects;
 
-import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.utils.BlocLines;
+import net.sourceforge.plantuml.utils.Log;
 import net.sourceforge.plantuml.version.Version;
 
 public class ProtectedCommand<S extends Diagram> implements Command<S> {

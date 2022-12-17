@@ -38,8 +38,8 @@ package net.sourceforge.plantuml.svek;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
+import net.sourceforge.plantuml.utils.Log;
 
 class PointListIteratorImpl implements PointListIterator {
 

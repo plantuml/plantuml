@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -33,10 +33,31 @@
  *
  *
  */
-package net.sourceforge.plantuml.ebnf;
+package net.sourceforge.plantuml.utils;
 
-public interface CharIterator {
-	char peek(int ahead);
+/**
+ * Indicates the location of a line of code within a resource.
+ * The resource maybe a local file or a remote URL.
+ *
+ */
+public interface LineLocation extends Comparable<LineLocation> {
+	
+	/**
+	 * Position of the line, starting at 0.
+	 */
+	public int getPosition();
+	
+	/**
+	 * A description of the resource.
+	 * If the resource is a file, this is the complete path of the file.
+	 */
+	public String getDescription();
+	
+	/**
+	 * Get the parent of this location.
+	 * If this resource has been included by a !include or !includeurl directive,
+	 * this return the location of the !include line.
+	 */
+	public LineLocation getParent();
 
-	void next();
 }

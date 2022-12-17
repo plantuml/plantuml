@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.command.regex;
 
 import java.util.concurrent.atomic.AtomicLong;
 
-import net.sourceforge.plantuml.StringLocated;
+import net.sourceforge.plantuml.utils.StringLocated;
 
 public final class RegexConcat extends RegexComposed implements IRegex {
 

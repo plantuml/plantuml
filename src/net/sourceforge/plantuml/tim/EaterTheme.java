@@ -42,7 +42,6 @@ import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 
 import net.sourceforge.plantuml.AFile;
-import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.preproc.FileWithSuffix;
 import net.sourceforge.plantuml.preproc.ImportedFiles;
@@ -51,6 +50,7 @@ import net.sourceforge.plantuml.preproc.ReadLineReader;
 import net.sourceforge.plantuml.preproc2.PreprocessorUtils;
 import net.sourceforge.plantuml.security.SURL;
 import net.sourceforge.plantuml.theme.ThemeUtils;
+import net.sourceforge.plantuml.utils.StringLocated;
 
 public class EaterTheme extends Eater {
 

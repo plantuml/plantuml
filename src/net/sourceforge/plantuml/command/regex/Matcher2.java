@@ -40,7 +40,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.sourceforge.plantuml.Log;
+import net.sourceforge.plantuml.utils.Log;
 
 public class Matcher2 {
 

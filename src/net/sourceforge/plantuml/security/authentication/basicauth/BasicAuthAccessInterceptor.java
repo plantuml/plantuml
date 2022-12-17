@@ -37,10 +37,10 @@ package net.sourceforge.plantuml.security.authentication.basicauth;
 
 import java.net.URLConnection;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.code.Base64Coder;
 import net.sourceforge.plantuml.security.authentication.SecurityAccessInterceptor;
 import net.sourceforge.plantuml.security.authentication.SecurityAuthentication;
+import net.sourceforge.plantuml.utils.StringUtils;
 
 /**
  * Applies from {@link SecurityAuthentication} data a BasicAuth authentication access header.

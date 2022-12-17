@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.project;
 
-import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.project.core.Task;
@@ -53,6 +52,7 @@ import net.sourceforge.plantuml.ugraphic.ULine;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
+import net.sourceforge.plantuml.utils.Direction;
 
 public class GanttArrow implements UDrawable {
 

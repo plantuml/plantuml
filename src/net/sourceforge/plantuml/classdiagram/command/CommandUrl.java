@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.classdiagram.command;
 
-import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlMode;
@@ -50,6 +49,7 @@ import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Ident;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandUrl extends SingleLineCommand2<AbstractEntityDiagram> {
 
@@ -68,7 +68,7 @@ public class CommandUrl extends SingleLineCommand2<AbstractEntityDiagram> {
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexOptional(new RegexLeaf("is")), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")"), //
+				UrlBuilder.MANDATORY, //
 				RegexLeaf.end()); //
 	}
 

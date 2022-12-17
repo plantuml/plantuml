@@ -36,16 +36,14 @@
 package net.sourceforge.plantuml.command.regex;
 
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.annotation.HaxeIgnored;
+import net.sourceforge.plantuml.utils.StringLocated;
 
 public class RegexLeaf implements IRegex {
 

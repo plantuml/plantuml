@@ -39,10 +39,10 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.TreeMap;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
+import net.sourceforge.plantuml.utils.StringUtils;
 
 public class SvgAttributes {
 

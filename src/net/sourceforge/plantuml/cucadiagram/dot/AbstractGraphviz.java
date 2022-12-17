@@ -42,11 +42,11 @@ import java.util.List;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.OptionFlags;
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.utils.Log;
+import net.sourceforge.plantuml.utils.StringUtils;
 
 abstract class AbstractGraphviz implements Graphviz {
 

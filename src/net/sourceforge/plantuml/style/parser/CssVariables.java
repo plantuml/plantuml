@@ -33,31 +33,37 @@
  *
  *
  */
-package net.sourceforge.plantuml;
+package net.sourceforge.plantuml.style.parser;
 
-/**
- * Indicates the location of a line of code within a resource.
- * The resource maybe a local file or a remote URL.
- *
- */
-public interface LineLocation extends Comparable<LineLocation> {
-	
-	/**
-	 * Position of the line, starting at 0.
-	 */
-	public int getPosition();
-	
-	/**
-	 * A description of the resource.
-	 * If the resource is a file, this is the complete path of the file.
-	 */
-	public String getDescription();
-	
-	/**
-	 * Get the parent of this location.
-	 * If this resource has been included by a !include or !includeurl directive,
-	 * this return the location of the !include line.
-	 */
-	public LineLocation getParent();
+import java.util.HashMap;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class CssVariables {
+
+	private final Map<String, String> variables = new HashMap<>();
+
+	private final Pattern learnPattern = Pattern.compile("^--([_\\w][-_\\w]+)[ :]+(.*?);?");
+	private final Pattern retrieve = Pattern.compile("var\\(-*([_\\w][-_\\w]+)\\)");
+
+	public void learn(String s) {
+		final Matcher m = learnPattern.matcher(s);
+		if (m.matches())
+			variables.put(m.group(1), m.group(2));
+	}
+
+	public String value(String v) {
+		if (v.startsWith("var(")) {
+			final Matcher m = retrieve.matcher(v);
+			if (m.matches()) {
+				final String varname = m.group(1);
+				final String result = variables.get(varname);
+				if (result != null)
+					return result;
+			}
+		}
+		return v;
+	}
 
 }

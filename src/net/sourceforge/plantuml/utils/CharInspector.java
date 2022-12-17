@@ -33,46 +33,10 @@
  *
  *
  */
-package net.sourceforge.plantuml.ebnf;
+package net.sourceforge.plantuml.utils;
 
-import net.sourceforge.plantuml.command.BlocLines;
+public interface CharInspector {
+	char peek(int ahead);
 
-public class CharIteratorImpl implements CharIterator {
-
-	final private BlocLines data;
-	private int line = 0;
-	private int pos = 0;
-
-	public CharIteratorImpl(BlocLines input) {
-		data = input;
-	}
-
-	@Override
-	public char peek(int ahead) {
-		if (line == -1)
-			return 0;
-		final String currentLine = getCurrentLine();
-		if (pos + ahead >= currentLine.length())
-			return '\0';
-		return currentLine.charAt(pos + ahead);
-	}
-
-	private String getCurrentLine() {
-		return data.getAt(line).getTrimmed().getString();
-	}
-
-	@Override
-	public void next() {
-		if (line == -1)
-			throw new IllegalStateException();
-		pos++;
-		if (pos >= getCurrentLine().length()) {
-			line++;
-			pos = 0;
-		}
-		while (line < data.size() && getCurrentLine().length() == 0)
-			line++;
-		if (line >= data.size())
-			line = -1;
-	}
+	void next();
 }

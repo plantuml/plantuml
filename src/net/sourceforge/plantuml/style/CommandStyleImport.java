@@ -39,9 +39,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import net.sourceforge.plantuml.FileSystem;
-import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.TitledDiagram;
-import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.IRegex;
@@ -49,6 +47,9 @@ import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.style.parser.StyleParser;
+import net.sourceforge.plantuml.utils.BlocLines;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandStyleImport extends SingleLineCommand2<TitledDiagram> {
 
@@ -91,7 +92,7 @@ public class CommandStyleImport extends SingleLineCommand2<TitledDiagram> {
 				return CommandExecutionResult.error("Cannot read: " + path);
 			}
 			final StyleBuilder styleBuilder = diagram.getSkinParam().getCurrentStyleBuilder();
-			for (Style modifiedStyle : StyleLoader.getDeclaredStyles(lines, styleBuilder)) {
+			for (Style modifiedStyle : StyleParser.parse(lines, styleBuilder)) {
 				diagram.getSkinParam().muteStyle(modifiedStyle);
 			}
 		} catch (IOException e) {

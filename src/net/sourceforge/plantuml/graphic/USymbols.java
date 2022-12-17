@@ -40,10 +40,10 @@ import java.util.Map;
 
 import net.sourceforge.plantuml.ComponentStyle;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.skin.ActorStyle;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.svek.PackageStyle;
+import net.sourceforge.plantuml.utils.StringUtils;
 
 public abstract class USymbols {
 

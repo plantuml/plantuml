@@ -57,8 +57,6 @@ import java.util.regex.Pattern;
 
 import javax.swing.ImageIcon;
 
-import net.sourceforge.plantuml.Log;
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.json.Json;
 import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.log.Logme;
@@ -75,6 +73,8 @@ import net.sourceforge.plantuml.security.authentication.oauth.OAuth2ClientAccess
 import net.sourceforge.plantuml.security.authentication.oauth.OAuth2ResourceOwnerAccessAuthorizeManager;
 import net.sourceforge.plantuml.security.authentication.token.TokenAuthAccessInterceptor;
 import net.sourceforge.plantuml.security.authentication.token.TokenAuthAuthorizeManager;
+import net.sourceforge.plantuml.utils.Log;
+import net.sourceforge.plantuml.utils.StringUtils;
 
 public class SecurityUtils {
 

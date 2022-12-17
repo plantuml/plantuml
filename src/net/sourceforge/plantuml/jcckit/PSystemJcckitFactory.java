@@ -40,8 +40,6 @@ import java.io.StringReader;
 import java.util.Properties;
 
 import net.sourceforge.plantuml.BackSlash;
-import net.sourceforge.plantuml.Log;
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.PSystemBasicFactory;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
@@ -49,6 +47,8 @@ import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.utils.Log;
+import net.sourceforge.plantuml.utils.StringUtils;
 
 public class PSystemJcckitFactory extends PSystemBasicFactory<PSystemJcckit> {
 
