@@ -92,7 +92,6 @@ import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 import net.sourceforge.plantuml.ugraphic.color.HColors;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 import net.sourceforge.plantuml.utils.BlocLines;
-import net.sourceforge.plantuml.utils.StringUtils;
 
 public class SkinParam implements ISkinParam {
 

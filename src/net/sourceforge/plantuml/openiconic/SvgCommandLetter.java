@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.openiconic;
 
-import net.sourceforge.plantuml.utils.StringUtils;
+import net.sourceforge.plantuml.StringUtils;
 
 public class SvgCommandLetter implements SvgCommand {
 

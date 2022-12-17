@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.code;
 
-import net.sourceforge.plantuml.utils.StringUtils;
+import net.sourceforge.plantuml.StringUtils;
 
 public class ArobaseStringCompressor2 implements StringCompressor {
 

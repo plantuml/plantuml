@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.classdiagram.command;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.baraye.EntityUtils;
 import net.sourceforge.plantuml.baraye.IEntity;
@@ -55,7 +56,6 @@ import net.sourceforge.plantuml.descdiagram.DescriptionDiagram;
 import net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 import net.sourceforge.plantuml.utils.LineLocation;
-import net.sourceforge.plantuml.utils.StringUtils;
 
 public class CommandHideShowByGender extends SingleLineCommand2<UmlDiagram> {
 

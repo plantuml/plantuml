@@ -62,7 +62,6 @@ import net.sourceforge.plantuml.tim.TimLoader;
 import net.sourceforge.plantuml.utils.LineLocationImpl;
 import net.sourceforge.plantuml.utils.StartUtils;
 import net.sourceforge.plantuml.utils.StringLocated;
-import net.sourceforge.plantuml.utils.StringUtils;
 import net.sourceforge.plantuml.version.Version;
 
 public class BlockUml {

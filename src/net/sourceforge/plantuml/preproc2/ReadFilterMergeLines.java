@@ -37,11 +37,11 @@ package net.sourceforge.plantuml.preproc2;
 
 import java.io.IOException;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.preproc.ReadLine;
 import net.sourceforge.plantuml.utils.StartUtils;
 import net.sourceforge.plantuml.utils.StringLocated;
-import net.sourceforge.plantuml.utils.StringUtils;
 
 public class ReadFilterMergeLines implements ReadFilter {
 

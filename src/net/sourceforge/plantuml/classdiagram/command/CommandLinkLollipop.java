@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.classdiagram.command;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.baraye.IEntity;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -57,7 +58,6 @@ import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
 import net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
 import net.sourceforge.plantuml.utils.LineLocation;
-import net.sourceforge.plantuml.utils.StringUtils;
 
 final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassOrObjectDiagram> {
 

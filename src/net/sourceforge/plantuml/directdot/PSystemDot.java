@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.CounterOutputStream;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.FileImageData;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
@@ -54,7 +55,6 @@ import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
 import net.sourceforge.plantuml.cucadiagram.dot.ProcessState;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.utils.StringUtils;
 
 public class PSystemDot extends AbstractPSystem {
 

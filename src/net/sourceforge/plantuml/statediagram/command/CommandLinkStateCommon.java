@@ -36,6 +36,7 @@
  */
 package net.sourceforge.plantuml.statediagram.command;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.baraye.IEntity;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -56,7 +57,6 @@ import net.sourceforge.plantuml.statediagram.StateDiagram;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 import net.sourceforge.plantuml.utils.Direction;
 import net.sourceforge.plantuml.utils.LineLocation;
-import net.sourceforge.plantuml.utils.StringUtils;
 
 abstract class CommandLinkStateCommon extends SingleLineCommand2<StateDiagram> {
 

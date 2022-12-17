@@ -39,10 +39,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
-import net.sourceforge.plantuml.utils.StringUtils;
 
 public class DataSourceImpl implements DataSource {
 

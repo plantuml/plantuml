@@ -61,7 +61,6 @@ import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.UImageSvg;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.utils.StringLocated;
-import net.sourceforge.plantuml.utils.StringUtils;
 
 public class EmbeddedDiagram extends AbstractTextBlock implements Line, Atom {
 

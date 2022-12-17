@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.AlignmentParam;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.api.ImageDataSimple;
@@ -132,7 +133,6 @@ import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColors;
-import net.sourceforge.plantuml.utils.StringUtils;
 
 /*
  * Some notes:

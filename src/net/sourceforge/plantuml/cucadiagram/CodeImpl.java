@@ -37,8 +37,8 @@ package net.sourceforge.plantuml.cucadiagram;
 
 import java.util.Objects;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.baraye.EntityFactory;
-import net.sourceforge.plantuml.utils.StringUtils;
 
 public class CodeImpl implements Code {
 

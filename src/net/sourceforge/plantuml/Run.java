@@ -72,7 +72,6 @@ import net.sourceforge.plantuml.swing.MainWindow;
 import net.sourceforge.plantuml.syntax.LanguageDescriptor;
 import net.sourceforge.plantuml.utils.Cypher;
 import net.sourceforge.plantuml.utils.Log;
-import net.sourceforge.plantuml.utils.StringUtils;
 import net.sourceforge.plantuml.version.Version;
 
 public class Run {

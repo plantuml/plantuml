@@ -21,7 +21,6 @@ import net.sourceforge.plantuml.svek.PackageStyle;
 import net.sourceforge.plantuml.svg.LengthAdjust;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColors;
-import net.sourceforge.plantuml.utils.StringUtils;
 
 class SkinParamTest {
 

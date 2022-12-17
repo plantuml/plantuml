@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.svek;
 import java.util.List;
 
 import net.sourceforge.plantuml.Hideable;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.baraye.EntityImp;
@@ -54,7 +55,6 @@ import net.sourceforge.plantuml.ugraphic.Shadowable;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.utils.Direction;
-import net.sourceforge.plantuml.utils.StringUtils;
 
 public class SvekNode implements Positionable, Hideable {
 

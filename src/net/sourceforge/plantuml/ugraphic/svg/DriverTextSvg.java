@@ -34,6 +34,7 @@
  */
 package net.sourceforge.plantuml.ugraphic.svg;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.FontStyle;
@@ -49,7 +50,6 @@ import net.sourceforge.plantuml.ugraphic.UText;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorGradient;
-import net.sourceforge.plantuml.utils.StringUtils;
 
 public class DriverTextSvg implements UDriver<UText, SvgGraphics> {
 

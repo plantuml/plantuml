@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.command;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileGroup;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -56,7 +57,6 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 import net.sourceforge.plantuml.utils.LineLocation;
-import net.sourceforge.plantuml.utils.StringUtils;
 
 public class CommandPartition3 extends SingleLineCommand2<ActivityDiagram3> {
 

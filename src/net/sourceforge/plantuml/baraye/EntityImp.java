@@ -51,6 +51,7 @@ import java.util.Set;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.cucadiagram.Bodier;
@@ -88,7 +89,6 @@ import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.utils.Direction;
 import net.sourceforge.plantuml.utils.LineLocation;
-import net.sourceforge.plantuml.utils.StringUtils;
 
 final public class EntityImp implements ILeaf, IGroup {
 

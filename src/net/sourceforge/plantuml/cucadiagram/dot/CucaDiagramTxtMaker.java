@@ -48,6 +48,7 @@ import java.util.Map;
 
 import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.baraye.IEntity;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -63,7 +64,6 @@ import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt;
-import net.sourceforge.plantuml.utils.StringUtils;
 
 public final class CucaDiagramTxtMaker {
 

@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.skin;
 
 import net.sourceforge.plantuml.ColorParam;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.awt.geom.XRectangle2D;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
@@ -52,7 +53,6 @@ import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColors;
-import net.sourceforge.plantuml.utils.StringUtils;
 
 public enum VisibilityModifier {
 	PRIVATE_FIELD(StringUtils.PRIVATE_FIELD, ColorParam.iconPrivate, null),

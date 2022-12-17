@@ -43,6 +43,7 @@ import java.util.StringTokenizer;
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SkinParamColors;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.cucadiagram.LinkStyle;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -50,7 +51,6 @@ import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
-import net.sourceforge.plantuml.utils.StringUtils;
 
 public class Colors {
 

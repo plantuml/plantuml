@@ -39,6 +39,7 @@ import java.util.EnumSet;
 import java.util.Set;
 import java.util.StringTokenizer;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -50,7 +51,6 @@ import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.EntityPortion;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.utils.LineLocation;
-import net.sourceforge.plantuml.utils.StringUtils;
 
 public class CommandHideShowByVisibility extends SingleLineCommand2<UmlDiagram> {
 

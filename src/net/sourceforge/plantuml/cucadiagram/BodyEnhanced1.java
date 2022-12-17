@@ -43,6 +43,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.awt.geom.XRectangle2D;
 import net.sourceforge.plantuml.baraye.ILeaf;
@@ -60,7 +61,6 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.svek.Ports;
 import net.sourceforge.plantuml.svek.WithPorts;
-import net.sourceforge.plantuml.utils.StringUtils;
 
 public class BodyEnhanced1 extends BodyEnhancedAbstract implements TextBlock, WithPorts {
 

@@ -33,7 +33,7 @@
  *
  *
  */
-package net.sourceforge.plantuml.utils;
+package net.sourceforge.plantuml;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -47,6 +47,8 @@ import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.utils.Direction;
+import net.sourceforge.plantuml.utils.Log;
 
 // Do not move
 public class StringUtils {

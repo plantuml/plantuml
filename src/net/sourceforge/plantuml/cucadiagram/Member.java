@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.cucadiagram;
 
 import net.sourceforge.plantuml.Guillemet;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlMode;
@@ -43,7 +44,6 @@ import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
-import net.sourceforge.plantuml.utils.StringUtils;
 
 public class Member implements CharSequence {
 

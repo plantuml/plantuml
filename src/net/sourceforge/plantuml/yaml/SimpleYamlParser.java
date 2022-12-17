@@ -39,11 +39,11 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.json.JsonArray;
 import net.sourceforge.plantuml.json.JsonObject;
 import net.sourceforge.plantuml.json.JsonString;
 import net.sourceforge.plantuml.json.JsonValue;
-import net.sourceforge.plantuml.utils.StringUtils;
 
 public class SimpleYamlParser {
 

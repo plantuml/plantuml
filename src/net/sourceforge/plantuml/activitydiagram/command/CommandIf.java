@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.activitydiagram.command;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagram;
 import net.sourceforge.plantuml.baraye.IEntity;
 import net.sourceforge.plantuml.classdiagram.command.CommandLinkClass;
@@ -54,7 +55,6 @@ import net.sourceforge.plantuml.cucadiagram.LinkType;
 import net.sourceforge.plantuml.descdiagram.command.CommandLinkElement;
 import net.sourceforge.plantuml.utils.Direction;
 import net.sourceforge.plantuml.utils.LineLocation;
-import net.sourceforge.plantuml.utils.StringUtils;
 
 public class CommandIf extends SingleLineCommand2<ActivityDiagram> {
 

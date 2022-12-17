@@ -45,6 +45,7 @@ import java.util.Objects;
 import net.sourceforge.plantuml.EmbeddedDiagram;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.SpriteContainerEmpty;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.creole.CreoleContext;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.creole.Parser;
@@ -59,7 +60,6 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorRuntimeException;
-import net.sourceforge.plantuml.utils.StringUtils;
 
 public class CreoleParser implements SheetBuilder {
 

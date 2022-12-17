@@ -41,7 +41,7 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import net.sourceforge.plantuml.utils.StringUtils;
+import net.sourceforge.plantuml.StringUtils;
 
 public enum DayOfWeek {
 

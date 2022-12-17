@@ -44,13 +44,13 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.FileImageData;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.baraye.CucaDiagram;
 import net.sourceforge.plantuml.baraye.IEntity;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.security.SFile;
-import net.sourceforge.plantuml.utils.StringUtils;
 
 public final class CucaDiagramHtmlMaker {
 

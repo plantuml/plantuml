@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.oregon;
 
 import java.util.Random;
 
-import net.sourceforge.plantuml.utils.StringUtils;
+import net.sourceforge.plantuml.StringUtils;
 
 public class OregonBasicGame implements BasicGame {
 

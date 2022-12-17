@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.sequencediagram;
 
-import net.sourceforge.plantuml.utils.StringUtils;
+import net.sourceforge.plantuml.StringUtils;
 
 public enum NoteType {
 	NOTE, FLOATING_NOTE;

@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.wbs;
 
 import java.util.List;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
@@ -52,7 +53,6 @@ import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.Direction;
-import net.sourceforge.plantuml.utils.StringUtils;
 
 public class CommandWBSItemMultiline extends CommandMultilines2<WBSDiagram> {
 

@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.Pragma;
 import net.sourceforge.plantuml.SkinParam;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.awt.geom.XRectangle2D;
@@ -126,7 +127,6 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.utils.Log;
-import net.sourceforge.plantuml.utils.StringUtils;
 
 public final class GeneralImageBuilder {
 

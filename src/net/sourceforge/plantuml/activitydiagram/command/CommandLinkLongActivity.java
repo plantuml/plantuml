@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.activitydiagram.command;
 import java.util.List;
 
 import net.sourceforge.plantuml.BackSlash;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlMode;
@@ -72,7 +73,6 @@ import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.Direction;
 import net.sourceforge.plantuml.utils.StringLocated;
-import net.sourceforge.plantuml.utils.StringUtils;
 
 public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram> {
 

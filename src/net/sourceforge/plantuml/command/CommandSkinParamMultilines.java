@@ -35,11 +35,11 @@
  */
 package net.sourceforge.plantuml.command;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.utils.BlocLines;
-import net.sourceforge.plantuml.utils.StringUtils;
 
 public class CommandSkinParamMultilines extends CommandMultilinesBracket<TitledDiagram> {
 

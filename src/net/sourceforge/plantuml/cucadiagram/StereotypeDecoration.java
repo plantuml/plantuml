@@ -40,6 +40,7 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.Guillemet;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
@@ -54,7 +55,6 @@ import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 import net.sourceforge.plantuml.ugraphic.color.HColors;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
-import net.sourceforge.plantuml.utils.StringUtils;
 
 public class StereotypeDecoration {
 	private final static RegexComposed circleChar = new RegexConcat( //

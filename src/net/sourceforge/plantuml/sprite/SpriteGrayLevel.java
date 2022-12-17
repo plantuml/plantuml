@@ -41,6 +41,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.code.AsciiEncoder;
 import net.sourceforge.plantuml.code.AsciiEncoderFinalZeros;
 import net.sourceforge.plantuml.code.ByteArray;
@@ -51,7 +52,6 @@ import net.sourceforge.plantuml.code.PairInt;
 import net.sourceforge.plantuml.code.SpiralOnRectangle;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.ugraphic.color.ColorUtils;
-import net.sourceforge.plantuml.utils.StringUtils;
 
 public enum SpriteGrayLevel {
 

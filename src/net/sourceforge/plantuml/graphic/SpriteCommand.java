@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.graphic;
 
 import java.util.Objects;
 
-import net.sourceforge.plantuml.utils.StringUtils;
+import net.sourceforge.plantuml.StringUtils;
 
 public class SpriteCommand implements HtmlCommand {
 

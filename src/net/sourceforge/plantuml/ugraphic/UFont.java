@@ -40,7 +40,7 @@ import java.awt.GraphicsEnvironment;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.sourceforge.plantuml.utils.StringUtils;
+import net.sourceforge.plantuml.StringUtils;
 
 public class UFont {
 

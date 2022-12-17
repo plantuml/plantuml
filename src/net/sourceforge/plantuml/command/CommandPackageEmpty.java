@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.command;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.baraye.IEntity;
 import net.sourceforge.plantuml.baraye.IGroup;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
@@ -51,7 +52,6 @@ import net.sourceforge.plantuml.cucadiagram.NamespaceStrategy;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 import net.sourceforge.plantuml.utils.LineLocation;
-import net.sourceforge.plantuml.utils.StringUtils;
 
 public class CommandPackageEmpty extends SingleLineCommand2<AbstractEntityDiagram> {
 

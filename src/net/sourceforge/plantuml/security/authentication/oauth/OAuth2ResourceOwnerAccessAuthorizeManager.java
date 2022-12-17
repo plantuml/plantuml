@@ -37,11 +37,11 @@ package net.sourceforge.plantuml.security.authentication.oauth;
 
 import java.util.Arrays;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.security.SURL;
 import net.sourceforge.plantuml.security.authentication.SecurityAuthentication;
 import net.sourceforge.plantuml.security.authentication.SecurityCredentials;
 import net.sourceforge.plantuml.security.authentication.basicauth.BasicAuthAuthorizeManager;
-import net.sourceforge.plantuml.utils.StringUtils;
 
 /**
  * Authorize via principal a resource owner (from {@link SecurityCredentials} and creates a

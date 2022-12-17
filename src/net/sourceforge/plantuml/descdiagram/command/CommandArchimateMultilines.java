@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.descdiagram.command;
 
 import net.sourceforge.plantuml.FontParam;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.baraye.IEntity;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
@@ -59,7 +60,6 @@ import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 import net.sourceforge.plantuml.utils.BlocLines;
-import net.sourceforge.plantuml.utils.StringUtils;
 
 public class CommandArchimateMultilines extends CommandMultilines2<AbstractEntityDiagram> {
 

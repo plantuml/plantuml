@@ -44,6 +44,7 @@ import java.util.Set;
 
 import net.sourceforge.plantuml.AlignmentParam;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.command.Position;
@@ -53,7 +54,6 @@ import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.USymbols;
-import net.sourceforge.plantuml.utils.StringUtils;
 
 public class ClusterDotStringKermor {
 

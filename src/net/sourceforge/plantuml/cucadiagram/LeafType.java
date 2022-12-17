@@ -37,7 +37,7 @@
  */
 package net.sourceforge.plantuml.cucadiagram;
 
-import net.sourceforge.plantuml.utils.StringUtils;
+import net.sourceforge.plantuml.StringUtils;
 
 public enum LeafType {
 

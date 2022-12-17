@@ -43,12 +43,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SecurityProfile;
 import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.utils.Log;
-import net.sourceforge.plantuml.utils.StringUtils;
 import net.sourceforge.plantuml.vizjs.GraphvizJs;
 import net.sourceforge.plantuml.vizjs.VizJsEngine;
 

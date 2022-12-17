@@ -41,12 +41,12 @@ import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.emoji.Emoji;
 import net.sourceforge.plantuml.sprite.SpriteUtils;
-import net.sourceforge.plantuml.utils.StringUtils;
 
 public class Splitter {
 

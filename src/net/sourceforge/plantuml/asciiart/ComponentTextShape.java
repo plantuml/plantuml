@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.asciiart;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -43,7 +44,6 @@ import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt;
-import net.sourceforge.plantuml.utils.StringUtils;
 
 public class ComponentTextShape extends AbstractComponentText {
 

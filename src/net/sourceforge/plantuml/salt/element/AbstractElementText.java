@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.salt.element;
 
 import net.sourceforge.plantuml.ISkinSimple;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -46,7 +47,6 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.utils.StringUtils;
 
 abstract class AbstractElementText extends AbstractElement {
 

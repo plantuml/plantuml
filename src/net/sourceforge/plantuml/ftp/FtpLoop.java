@@ -53,9 +53,9 @@ import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileUtils;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SecurityUtils;
-import net.sourceforge.plantuml.utils.StringUtils;
 
 class FtpLoop implements Runnable {
 	enum Mode {

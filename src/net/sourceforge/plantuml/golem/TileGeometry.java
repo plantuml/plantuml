@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.golem;
 
-import net.sourceforge.plantuml.utils.StringUtils;
+import net.sourceforge.plantuml.StringUtils;
 
 public enum TileGeometry {
 	NORTH, SOUTH, EAST, WEST, CENTER;
