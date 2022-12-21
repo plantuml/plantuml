@@ -34,19 +34,25 @@
     LineThickness 1
     Margin 5
   }
-  caption {
-    LineThickness 0
-  }
-  footer {
-    LineThickness 0
+  document {
+    caption {
+      LineThickness 0
+    }
+    footer {
+      LineThickness 0
+    }
+    header {
+      LineThickness 0
+    }
+    title {
+      FontSize 22
+      LineThickness 0
+    }
   }
   groupHeader {
     BackgroundColor $FGCOLOR
     FontColor $BGCOLOR
     FontStyle bold
-  }
-  header {
-    LineThickness 0
   }
   node {
     MaximumWidth 300
@@ -60,10 +66,6 @@
     BackgroundColor $FGCOLOR
     FontColor $BGCOLOR
     FontStyle bold
-  }
-  title {
-    FontSize 22
-    LineThickness 0
   }
 </style>
 
