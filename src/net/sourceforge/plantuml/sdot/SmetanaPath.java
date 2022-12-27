@@ -43,7 +43,7 @@ import h.ST_splines;
 import h.ST_textlabel_t;
 import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
-import net.sourceforge.plantuml.cucadiagram.CucaDiagram;
+import net.sourceforge.plantuml.cucadiagram.ICucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -69,13 +69,13 @@ public class SmetanaPath implements UDrawable {
 	private final Link link;
 	private final ST_Agedge_s edge;
 	private final YMirror ymirror;
-	private final CucaDiagram diagram;
+	private final ICucaDiagram diagram;
 	private final TextBlock label;
 	private final TextBlock headLabel;
 	private final TextBlock tailLabel;
 	private final Rose rose = new Rose();
 
-	public SmetanaPath(Link link, ST_Agedge_s edge, YMirror ymirror, CucaDiagram diagram, TextBlock label,
+	public SmetanaPath(Link link, ST_Agedge_s edge, YMirror ymirror, ICucaDiagram diagram, TextBlock label,
 			TextBlock tailLabel, TextBlock headLabel) {
 		this.link = link;
 		this.edge = edge;

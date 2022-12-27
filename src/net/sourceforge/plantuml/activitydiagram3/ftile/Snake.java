@@ -40,7 +40,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.awt.geom.XLine2D;
@@ -60,6 +59,7 @@ import net.sourceforge.plantuml.ugraphic.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.comp.PiecewiseAffineTransform;
+import net.sourceforge.plantuml.utils.Direction;
 
 public class Snake implements UShape {
 
@@ -149,20 +149,20 @@ public class Snake implements UShape {
 
 	public static Snake create(ISkinParam skinParam, Rainbow color) {
 		final Style style = StyleSignatureBasic.activityArrow().getMergedStyle(skinParam.getCurrentStyleBuilder());
-		return new Snake(skinParam, null, color, null, new Worm(style), MergeStrategy.FULL, null,
+		return new Snake(skinParam, null, color, null, new Worm(style, skinParam.arrows()), MergeStrategy.FULL, null,
 				new ArrayList<Text>());
 	}
 
 	public static Snake create(ISkinParam skinParam, Rainbow color, UPolygon endDecoration) {
 		final Style style = StyleSignatureBasic.activityArrow().getMergedStyle(skinParam.getCurrentStyleBuilder());
-		return new Snake(skinParam, null, color, endDecoration, new Worm(style), MergeStrategy.FULL, null,
-				new ArrayList<Text>());
+		return new Snake(skinParam, null, color, endDecoration, new Worm(style, skinParam.arrows()), MergeStrategy.FULL,
+				null, new ArrayList<Text>());
 	}
 
 	public static Snake create(ISkinParam skinParam, UPolygon startDecoration, Rainbow color, UPolygon endDecoration) {
 		final Style style = StyleSignatureBasic.activityArrow().getMergedStyle(skinParam.getCurrentStyleBuilder());
-		return new Snake(skinParam, startDecoration, color, endDecoration, new Worm(style), MergeStrategy.FULL, null,
-				new ArrayList<Text>());
+		return new Snake(skinParam, startDecoration, color, endDecoration, new Worm(style, skinParam.arrows()),
+				MergeStrategy.FULL, null, new ArrayList<Text>());
 	}
 
 	private Snake(ISkinParam skinParam, UPolygon startDecoration, Rainbow color, UPolygon endDecoration, Worm worm,

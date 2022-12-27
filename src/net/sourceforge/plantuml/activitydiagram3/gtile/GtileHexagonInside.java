@@ -101,9 +101,8 @@ public class GtileHexagonInside extends AbstractGtile {
 		if (dimLabel.getWidth() == 0 || dimLabel.getHeight() == 0) {
 			dim = new XDimension2D(Hexagon.hexagonHalfSize * 2, Hexagon.hexagonHalfSize * 2);
 		} else {
-			dim = XDimension2D.delta(
-					XDimension2D.atLeast(dimLabel, Hexagon.hexagonHalfSize * 2, Hexagon.hexagonHalfSize * 2),
-					Hexagon.hexagonHalfSize * 2, 0);
+			dim = dimLabel.atLeast(Hexagon.hexagonHalfSize * 2, Hexagon.hexagonHalfSize * 2)
+					.delta(Hexagon.hexagonHalfSize * 2, 0);
 		}
 		return dim;
 	}

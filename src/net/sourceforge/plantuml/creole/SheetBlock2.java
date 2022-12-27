@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.awt.geom.XRectangle2D;
 import net.sourceforge.plantuml.creole.atom.Atom;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -50,12 +51,9 @@ import net.sourceforge.plantuml.svek.WithPorts;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UGraphicStencil;
 import net.sourceforge.plantuml.ugraphic.UStroke;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 final public class SheetBlock2 extends AbstractTextBlock implements TextBlock, Atom, WithPorts {
-
-	public List<Atom> splitInTwo(StringBounder stringBounder, double width) {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
 
 	private final SheetBlock1 block;
 	private final UStroke defaultStroke;
@@ -81,6 +79,10 @@ final public class SheetBlock2 extends AbstractTextBlock implements TextBlock, A
 		this.defaultStroke = defaultStroke;
 	}
 
+	private HorizontalAlignment getHorizontalAlignment() {
+		return block.getHorizontalAlignment();
+	}
+
 	@Override
 	public String toString() {
 		return block.toString();
@@ -94,6 +96,11 @@ final public class SheetBlock2 extends AbstractTextBlock implements TextBlock, A
 		if (stencil != null)
 			ug = UGraphicStencil.create(ug, stencil, defaultStroke);
 
+		if (getHorizontalAlignment() == HorizontalAlignment.CENTER && block.getMinimumWidth() > 0) {
+			final double width = calculateDimension(ug.getStringBounder()).getWidth();
+			final double dx = (block.getMinimumWidth() - width) / 2;
+			ug = ug.apply(UTranslate.dx(dx));
+		}
 		block.drawU(ug);
 	}
 
@@ -109,6 +116,11 @@ final public class SheetBlock2 extends AbstractTextBlock implements TextBlock, A
 	@Override
 	public Ports getPorts(StringBounder stringBounder) {
 		return new Ports();
+	}
+
+	@Override
+	public List<Neutron> getNeutrons() {
+		throw new UnsupportedOperationException();
 	}
 
 }

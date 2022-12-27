@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.command;
 
 import java.util.StringTokenizer;
 
-import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.command.regex.IRegex;
@@ -46,10 +45,13 @@ import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandPragma extends SingleLineCommand2<TitledDiagram> {
 
-	public CommandPragma() {
+	public static final CommandPragma ME = new CommandPragma();
+
+	private CommandPragma() {
 		super(getRegexConcat());
 	}
 

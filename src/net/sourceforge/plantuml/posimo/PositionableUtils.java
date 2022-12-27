@@ -62,7 +62,7 @@ public class PositionableUtils {
 			}
 
 			public XDimension2D getSize() {
-				return XDimension2D.delta(pos.getSize(), 2 * widthMargin, 2 * heightMargin);
+				return pos.getSize().delta(2 * widthMargin, 2 * heightMargin);
 			}
 
 			public void moveSvek(double deltaX, double deltaY) {

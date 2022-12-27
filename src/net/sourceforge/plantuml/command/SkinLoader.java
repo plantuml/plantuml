@@ -38,12 +38,13 @@ package net.sourceforge.plantuml.command;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.style.NoStyleAvailableException;
+import net.sourceforge.plantuml.utils.BlocLines;
+import net.sourceforge.plantuml.utils.StringLocated;
 
 public class SkinLoader {
 

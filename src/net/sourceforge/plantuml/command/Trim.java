@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.command;
 
 import java.util.regex.Pattern;
 
-import net.sourceforge.plantuml.StringLocated;
+import net.sourceforge.plantuml.utils.StringLocated;
 
 public enum Trim {
 	BOTH, LEFT_ONLY;

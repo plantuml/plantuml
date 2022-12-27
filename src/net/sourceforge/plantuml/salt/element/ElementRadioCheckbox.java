@@ -74,7 +74,7 @@ public class ElementRadioCheckbox extends AbstractElement {
 
 	public XDimension2D getPreferredDimension(StringBounder stringBounder, double x, double y) {
 		final XDimension2D dim = block.calculateDimension(stringBounder);
-		return XDimension2D.delta(dim, margin, 0);
+		return dim.delta(margin, 0);
 	}
 
 	public void drawU(UGraphic ug, int zIndex, XDimension2D dimToUse) {

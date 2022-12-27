@@ -57,7 +57,7 @@ public class Position {
 
 	@Override
 	public int hashCode() {
-		return xmin + ymin << 8 + xmax << 16 + ymax << 24;
+		return xmin + (ymin << 8) + (xmax << 16) + (ymax << 24);
 	}
 
 	@Override

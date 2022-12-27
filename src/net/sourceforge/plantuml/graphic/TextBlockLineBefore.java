@@ -70,7 +70,7 @@ public class TextBlockLineBefore extends AbstractTextBlock implements TextBlock,
 		final XDimension2D dim = textBlock.calculateDimension(stringBounder);
 		if (title != null) {
 			final XDimension2D dimTitle = title.calculateDimension(stringBounder);
-			return XDimension2D.atLeast(dim, dimTitle.getWidth() + 8, dimTitle.getHeight());
+			return dim.atLeast(dimTitle.getWidth() + 8, dimTitle.getHeight());
 		}
 		return dim;
 	}

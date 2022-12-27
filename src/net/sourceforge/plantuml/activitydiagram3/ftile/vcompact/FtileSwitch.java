@@ -166,9 +166,9 @@ class FtileSwitch extends AbstractFtile {
 	private FtileGeometry calculateDimensionInternal(StringBounder stringBounder) {
 		XDimension2D result = new XDimension2D(0, 0);
 		for (Ftile couple : tiles)
-			result = XDimension2D.mergeLR(result, couple.calculateDimension(stringBounder));
+			result = result.mergeLR(couple.calculateDimension(stringBounder));
 
-		result = XDimension2D.delta(result, xSeparation * (tiles.size() - 1), 100);
+		result = result.delta(xSeparation * (tiles.size() - 1), 100);
 
 		return new FtileGeometry(result, result.getWidth() / 2, 0);
 	}

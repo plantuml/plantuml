@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.project.core.Task;
 public class SentenceIsColored extends SentenceSimple {
 
 	public SentenceIsColored() {
-		super(new SubjectTask(), Verbs.isColored(), new ComplementInColors());
+		super(SubjectTask.ME, Verbs.isColored, new ComplementInColors());
 	}
 
 	@Override

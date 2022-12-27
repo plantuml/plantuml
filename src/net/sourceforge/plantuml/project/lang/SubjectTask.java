@@ -50,6 +50,11 @@ import net.sourceforge.plantuml.project.core.Task;
 
 public class SubjectTask implements Subject {
 
+	public static final Subject ME = new SubjectTask();
+
+	private SubjectTask() {
+	}
+
 	public Failable<Task> getMe(GanttDiagram project, RegexResult arg) {
 		final String s = arg.get("SUBJECT", 0);
 		final String shortName = arg.get("SUBJECT", 1);

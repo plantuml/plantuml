@@ -39,7 +39,6 @@ import java.awt.geom.PathIterator;
 import java.util.EnumSet;
 
 public enum USegmentType {
-	
 
 	SEG_MOVETO(PathIterator.SEG_MOVETO), //
 	SEG_LINETO(PathIterator.SEG_LINETO), //
@@ -47,7 +46,7 @@ public enum USegmentType {
 	SEG_CUBICTO(PathIterator.SEG_CUBICTO), //
 	SEG_CLOSE(PathIterator.SEG_CLOSE), //
 	SEG_ARCTO(4321);//
-	
+
 	final public static int SEG_ARCTO_VALUE = 4321;
 
 	private final int code;
@@ -71,11 +70,10 @@ public enum USegmentType {
 	}
 
 	public static USegmentType getByCode(int code) {
-		for (USegmentType p : EnumSet.allOf(USegmentType.class)) {
-			if (p.code == code) {
+		for (USegmentType p : EnumSet.allOf(USegmentType.class))
+			if (p.code == code)
 				return p;
-			}
-		}
+
 		throw new IllegalArgumentException();
 	}
 }

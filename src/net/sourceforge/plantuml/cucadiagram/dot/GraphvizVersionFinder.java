@@ -75,9 +75,9 @@ public class GraphvizVersionFinder {
 		final Pattern p = Pattern.compile("(\\d)\\.(\\d\\d?)");
 		final Matcher m = p.matcher(dotVersion);
 		final boolean find = m.find();
-		if (find == false) {
+		if (find == false)
 			return DEFAULT;
-		}
+
 		final int major = Integer.parseInt(m.group(1));
 		final int minor = Integer.parseInt(m.group(2));
 		final int v = 100 * major + minor;
@@ -117,17 +117,17 @@ public class GraphvizVersionFinder {
 
 		final ProcessRunner p = new ProcessRunner(cmd);
 		final ProcessState state = p.run(null, null);
-		if (state.differs(ProcessState.TERMINATED_OK())) {
+		if (state.differs(ProcessState.TERMINATED_OK()))
 			return "?";
-		}
+
 		final StringBuilder sb = new StringBuilder();
-		if (StringUtils.isNotEmpty(p.getOut())) {
+		if (StringUtils.isNotEmpty(p.getOut()))
 			sb.append(p.getOut());
-		}
+
 		if (StringUtils.isNotEmpty(p.getError())) {
-			if (sb.length() > 0) {
+			if (sb.length() > 0)
 				sb.append(' ');
-			}
+
 			sb.append(p.getError());
 		}
 		return StringUtils.trin(sb.toString().replace('\n', ' '));

@@ -60,7 +60,7 @@ public class ElementTreeEntry {
 	}
 
 	public XDimension2D getPreferredDimensionFirstCell(StringBounder stringBounder) {
-		return XDimension2D.delta(firstElement.getPreferredDimension(stringBounder, 0, 0), getXDelta(), 0);
+		return firstElement.getPreferredDimension(stringBounder, 0, 0).delta(getXDelta(), 0);
 	}
 
 	public ListWidth getPreferredDimensionOtherCell(StringBounder stringBounder) {

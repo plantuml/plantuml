@@ -58,6 +58,7 @@ public class Dedications {
 			all.add(new DedicationSimple(load("boundaries"), "Boundaries allow discipline to create true strength"));
 			all.add(new DedicationSimple(load("dr_chet"), "Thank you, Dr. Chet. I wouldn't be where I am without you"));
 			all.add(new DedicationSimple(load("ben"), "Ben and Jen 2020"));
+			all.add(new DedicationSimple(load("baraye"), "baraye"));
 			all.add(secret(5, "835ff5d643b58cd35a20db6480071d05751aa6a0e01da78662ceafd0161f3f5e", new BigInteger(
 					"1182423723677118831606503500858825217076578422970565964857326298418401529955036896808663335300684244453386039908536275400945824932191521017102701344437753036730900076162922741167523337650578479960119614237031234925702200473053235777")));
 			all.add(secret(3, "514816d583044efbd336882227deb822194ff63e3bdc3cf707a01f17770d5a6a", new BigInteger(
@@ -87,9 +88,8 @@ public class Dedications {
 		final TinyHashableString sentence = new TinyHashableString(line);
 		for (Dedication dedication : all) {
 			final BufferedImage image = dedication.getImage(sentence);
-			if (image != null) {
+			if (image != null)
 				return image;
-			}
 		}
 		return null;
 	}

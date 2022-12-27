@@ -36,7 +36,6 @@ package net.sourceforge.plantuml.tim.iterator;
 
 import java.util.List;
 
-import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 import net.sourceforge.plantuml.tim.FunctionsSet;
@@ -44,6 +43,7 @@ import net.sourceforge.plantuml.tim.TContext;
 import net.sourceforge.plantuml.tim.TFunctionType;
 import net.sourceforge.plantuml.tim.TLineType;
 import net.sourceforge.plantuml.tim.TMemory;
+import net.sourceforge.plantuml.utils.StringLocated;
 
 public class CodeIteratorReturnFunction extends AbstractCodeIterator {
 

@@ -38,8 +38,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.tim.expression.TValue;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public interface TFunction {
 

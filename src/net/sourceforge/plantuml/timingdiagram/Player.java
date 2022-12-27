@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
@@ -109,7 +110,7 @@ public abstract class Player implements TimeProjected {
 
 	public abstract void setState(TimeTick now, String comment, Colors color, String... states);
 
-	public abstract void createConstraint(TimeTick tick1, TimeTick tick2, String message);
+	public abstract void createConstraint(TimeTick tick1, TimeTick tick2, String message, ArrowConfiguration config);
 
 	public abstract TextBlock getPart1(double fullAvailableWidth, double specialVSpace);
 

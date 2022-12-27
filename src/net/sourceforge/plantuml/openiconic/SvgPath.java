@@ -50,6 +50,7 @@ public class SvgPath {
 	// http://www.w3.org/TR/SVG11/paths.html#PathDataEllipticalArcCommands
 	// https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths
 	// http://tutorials.jenkov.com/svg/path-element.html
+	// https://www.w3.org/TR/SVG/paths.html#PathDataQuadraticBezierCommands
 
 	private List<Movement> movements = new ArrayList<>();
 	private List<SvgCommand> commands = new ArrayList<>();
@@ -145,19 +146,32 @@ public class SvgPath {
 
 	private UPath toUPath(double factorx, double factory) {
 		final UPath result = new UPath();
+		Movement previous = null;
 		for (Movement move : movements) {
 			final char letter = move.getLetter();
-			final SvgPosition lastPosition = move.lastPosition();
+			final SvgPosition position = move.lastPosition();
 			if (letter == 'M') {
-				result.moveTo(lastPosition.getXDouble() * factorx, lastPosition.getYDouble() * factory);
+				result.moveTo(position.getXDouble() * factorx, position.getYDouble() * factory);
 			} else if (letter == 'C') {
 				final SvgPosition ctl1 = move.getSvgPosition(0);
 				final SvgPosition ctl2 = move.getSvgPosition(2);
 				result.cubicTo(ctl1.getXDouble() * factorx, ctl1.getYDouble() * factory, ctl2.getXDouble() * factorx,
-						ctl2.getYDouble() * factory, lastPosition.getXDouble() * factorx,
-						lastPosition.getYDouble() * factory);
+						ctl2.getYDouble() * factory, position.getXDouble() * factorx, position.getYDouble() * factory);
+			} else if (letter == 'Q') {
+				final SvgPosition ctl = move.getSvgPosition(0);
+				result.cubicTo(ctl.getXDouble() * factorx, ctl.getYDouble() * factory, ctl.getXDouble() * factorx,
+						ctl.getYDouble() * factory, position.getXDouble() * factorx, position.getYDouble() * factory);
+			} else if (letter == 'T') {
+				if (previous.getLetter() != 'Q')
+					throw new IllegalArgumentException();
+				// https://stackoverflow.com/questions/5287559/calculating-control-points-for-a-shorthand-smooth-svg-path-bezier-curve
+				final SvgPosition lastCtl = previous.getSvgPosition(0);
+				final SvgPosition lastP = previous.lastPosition();
+				final SvgPosition ctl = lastP.getMirror(lastCtl);
+				result.cubicTo(ctl.getXDouble() * factorx, ctl.getYDouble() * factory, ctl.getXDouble() * factorx,
+						ctl.getYDouble() * factory, position.getXDouble() * factorx, position.getYDouble() * factory);
 			} else if (letter == 'L') {
-				result.lineTo(lastPosition.getXDouble() * factorx, lastPosition.getYDouble() * factory);
+				result.lineTo(position.getXDouble() * factorx, position.getYDouble() * factory);
 			} else if (letter == 'A') {
 				final double rx = move.getArgument(0);
 				final double ry = move.getArgument(1);
@@ -165,7 +179,7 @@ public class SvgPath {
 				final double large_arc_flag = move.getArgument(3);
 				final double sweep_flag = move.getArgument(4);
 				result.arcTo(rx * factorx, ry * factory, x_axis_rotation, large_arc_flag, sweep_flag,
-						lastPosition.getXDouble() * factorx, lastPosition.getYDouble() * factory);
+						position.getXDouble() * factorx, position.getYDouble() * factory);
 			} else if (letter == 'Z') {
 				result.closePath();
 			} else {
@@ -178,24 +192,36 @@ public class SvgPath {
 
 	private UPath toUPath(AffineTransform at) {
 		final UPath result = new UPath();
+		Movement previous = null;
 		for (Movement move : movements) {
 			final char letter = move.getLetter();
-			final SvgPosition lastPosition = move.lastPosition();
+			final SvgPosition position = move.lastPosition();
 			if (letter == 'M') {
-				result.moveTo(lastPosition.affine(at));
+				result.moveTo(position.affine(at));
 			} else if (letter == 'C') {
 				final SvgPosition ctl1 = move.getSvgPosition(0);
 				final SvgPosition ctl2 = move.getSvgPosition(2);
-				result.cubicTo(ctl1.affine(at), ctl2.affine(at), lastPosition.affine(at));
+				result.cubicTo(ctl1.affine(at), ctl2.affine(at), position.affine(at));
+			} else if (letter == 'Q') {
+				final SvgPosition ctl = move.getSvgPosition(0);
+				result.cubicTo(ctl.affine(at), ctl.affine(at), position.affine(at));
+			} else if (letter == 'T') {
+				if (previous.getLetter() != 'Q')
+					throw new IllegalArgumentException();
+				// https://stackoverflow.com/questions/5287559/calculating-control-points-for-a-shorthand-smooth-svg-path-bezier-curve
+				final SvgPosition lastCtl = previous.getSvgPosition(0);
+				final SvgPosition lastP = previous.lastPosition();
+				final SvgPosition ctl = lastP.getMirror(lastCtl);
+				result.cubicTo(ctl.affine(at), ctl.affine(at), position.affine(at));
 			} else if (letter == 'L') {
-				result.lineTo(lastPosition.affine(at));
+				result.lineTo(position.affine(at));
 			} else if (letter == 'A') {
 				final double rx = move.getArgument(0);
 				final double ry = move.getArgument(1);
 				final double x_axis_rotation = move.getArgument(2);
 				final double large_arc_flag = move.getArgument(3);
 				final double sweep_flag = move.getArgument(4);
-				final XPoint2D tmp = lastPosition.affine(at);
+				final XPoint2D tmp = position.affine(at);
 				result.arcTo(rx * at.getScaleX(), ry * at.getScaleY(), x_axis_rotation, large_arc_flag, sweep_flag,
 						tmp.getX(), tmp.getY());
 			} else if (letter == 'Z') {
@@ -203,6 +229,7 @@ public class SvgPath {
 			} else {
 				throw new UnsupportedOperationException("letter " + letter);
 			}
+			previous = move;
 		}
 		result.setOpenIconic(true);
 		return result;

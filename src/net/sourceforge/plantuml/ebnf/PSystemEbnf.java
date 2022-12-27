@@ -45,7 +45,6 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FloatingNote;
-import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
@@ -59,6 +58,8 @@ import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
+import net.sourceforge.plantuml.utils.BlocLines;
+import net.sourceforge.plantuml.utils.CharInspector;
 
 public class PSystemEbnf extends TitledDiagram {
 
@@ -74,7 +75,7 @@ public class PSystemEbnf extends TitledDiagram {
 
 	public CommandExecutionResult addBlocLines(BlocLines blines, String commentAbove, String commentBelow) {
 		final boolean isCompact = getPragma().isDefine("compact");
-		final CharIterator it = new CharIteratorImpl(blines);
+		final CharInspector it = blines.inspector();
 		final EbnfExpression tmp1 = EbnfExpression.create(it, isCompact, commentAbove, commentBelow);
 		if (tmp1.isEmpty())
 			return CommandExecutionResult.error("Unparsable expression");

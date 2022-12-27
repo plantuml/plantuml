@@ -36,14 +36,13 @@
 package net.sourceforge.plantuml.command.note;
 
 import net.sourceforge.plantuml.ColorParam;
-import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlMode;
+import net.sourceforge.plantuml.baraye.IEntity;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.classdiagram.command.CommandCreateClassMultilines;
-import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
@@ -57,7 +56,6 @@ import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Code;
-import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
@@ -70,6 +68,8 @@ import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
+import net.sourceforge.plantuml.utils.BlocLines;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryCommand<AbstractEntityDiagram> {
 
@@ -92,13 +92,15 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 								RegexLeaf.spaceOneOrMore(), partialPattern), //
 						new RegexLeaf("")), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("STEREO", "(\\<{2}.*\\>{2})?"), //
+				new RegexLeaf("TAGS1", Stereotag.pattern() + "?"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("TAGS", Stereotag.pattern() + "?"), //
+				new RegexLeaf("STEREO", "(\\<\\<.*\\>\\>)?"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("TAGS2", Stereotag.pattern() + "?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				color().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
+				UrlBuilder.OPTIONAL, //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(":"), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -125,13 +127,15 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 									partialPattern), //
 							new RegexLeaf("")), //
 					RegexLeaf.spaceZeroOrMore(), //
-					new RegexLeaf("STEREO", "(\\<{2}.*\\>{2})?"), //
+					new RegexLeaf("TAGS1", Stereotag.pattern() + "?"), //
 					RegexLeaf.spaceZeroOrMore(), //
-					new RegexLeaf("TAGS", Stereotag.pattern() + "?"), //
+					new RegexLeaf("STEREO", "(\\<\\<.*\\>\\>)?"), //
+					RegexLeaf.spaceZeroOrMore(), //
+					new RegexLeaf("TAGS2", Stereotag.pattern() + "?"), //
 					RegexLeaf.spaceZeroOrMore(), //
 					color().getRegex(), //
 					RegexLeaf.spaceZeroOrMore(), //
-					new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
+					UrlBuilder.OPTIONAL, //
 					RegexLeaf.spaceZeroOrMore(), //
 					new RegexLeaf("\\{"), //
 					RegexLeaf.end() //
@@ -149,13 +153,15 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 								partialPattern), //
 						new RegexLeaf("")), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("STEREO", "(\\<{2}.*\\>{2})?"), //
+				new RegexLeaf("TAGS1", Stereotag.pattern() + "?"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("TAGS", Stereotag.pattern() + "?"), //
+				new RegexLeaf("STEREO", "(\\<\\<.*\\>\\>)?"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("TAGS2", Stereotag.pattern() + "?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				color().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
+				UrlBuilder.OPTIONAL, //
 				RegexLeaf.end() //
 		);
 	}
@@ -178,9 +184,9 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 
 			@Override
 			public String getPatternEnd() {
-				if (withBracket) {
+				if (withBracket)
 					return "^(\\})$";
-				}
+
 				return "^[%s]*(end[%s]?note)$";
 			}
 
@@ -260,21 +266,25 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 		if (url != null)
 			note.addUrl(url);
 
-		CommandCreateClassMultilines.addTags(note, line0.get("TAGS", 0));
+		CommandCreateClassMultilines.addTags(note, line0.getLazzy("TAGS", 0));
 
 		final Link link;
 
 		final LinkType type = new LinkType(LinkDecor.NONE, LinkDecor.NONE).goDashed();
 		if (position == Position.RIGHT) {
-			link = new Link(diagram.getSkinParam().getCurrentStyleBuilder(), cl1, note, type, LinkArg.noDisplay(1));
+			link = new Link(diagram.getIEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(), cl1, note,
+					type, LinkArg.noDisplay(1));
 			link.setHorizontalSolitary(true);
 		} else if (position == Position.LEFT) {
-			link = new Link(diagram.getSkinParam().getCurrentStyleBuilder(), note, cl1, type, LinkArg.noDisplay(1));
+			link = new Link(diagram.getIEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(), note, cl1,
+					type, LinkArg.noDisplay(1));
 			link.setHorizontalSolitary(true);
 		} else if (position == Position.BOTTOM) {
-			link = new Link(diagram.getSkinParam().getCurrentStyleBuilder(), cl1, note, type, LinkArg.noDisplay(2));
+			link = new Link(diagram.getIEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(), cl1, note,
+					type, LinkArg.noDisplay(2));
 		} else if (position == Position.TOP) {
-			link = new Link(diagram.getSkinParam().getCurrentStyleBuilder(), note, cl1, type, LinkArg.noDisplay(2));
+			link = new Link(diagram.getIEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(), note, cl1,
+					type, LinkArg.noDisplay(2));
 		} else {
 			throw new IllegalArgumentException();
 		}

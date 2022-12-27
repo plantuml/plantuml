@@ -50,7 +50,6 @@ import net.sourceforge.plantuml.Run;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
-import net.sourceforge.plantuml.dedication.PSystemDedication;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.preproc.Stdlib;
 import net.sourceforge.plantuml.preproc2.PreprocessorUtils;
@@ -128,7 +127,7 @@ public class PSystemVersion extends PlainStringsDiagram {
 
 	private static BufferedImage getImageWebp(final String name) {
 		try (InputStream is = PSystemVersion.class.getResourceAsStream(name)) {
-			return PSystemDedication.getBufferedImage(is);
+			return SFile.getBufferedImageFromWebpButHeader(is);
 		} catch (IOException e) {
 			Logme.error(e);
 		}
@@ -186,7 +185,7 @@ public class PSystemVersion extends PlainStringsDiagram {
 		for (String v : OptionPrint.interestingValues()) {
 			strings.add(v);
 		}
-		
+
 		return new PSystemVersion(source, true, strings);
 	}
 

@@ -117,7 +117,7 @@ public class FtileDiamondSquare extends FtileDiamondWIP {
 			return new XDimension2D(Hexagon.hexagonHalfSize * 2, Hexagon.hexagonHalfSize * 2);
 
 		XDimension2D result = dimLabel;
-		result = XDimension2D.delta(result, Hexagon.hexagonHalfSize * 2, Hexagon.hexagonHalfSize * 2);
+		result = result.delta(Hexagon.hexagonHalfSize * 2, Hexagon.hexagonHalfSize * 2);
 		return result;
 	}
 

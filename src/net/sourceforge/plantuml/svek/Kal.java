@@ -35,13 +35,12 @@
  */
 package net.sourceforge.plantuml.svek;
 
-import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.baraye.EntityImp;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.Link;
-import net.sourceforge.plantuml.cucadiagram.entity.EntityImpl;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -53,6 +52,7 @@ import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColors;
+import net.sourceforge.plantuml.utils.Direction;
 
 public class Kal implements UDrawable {
 
@@ -61,17 +61,17 @@ public class Kal implements UDrawable {
 	private XDimension2D dim;
 	private UTranslate translate;
 	private final SvekLine svekLine;
-	private final EntityImpl entity;
+	private final EntityImp entity;
 	private final Link link;
 
-	public Kal(SvekLine svekLine, String text, FontConfiguration font, ISkinParam skinParam, EntityImpl entity,
+	public Kal(SvekLine svekLine, String text, FontConfiguration font, ISkinParam skinParam, EntityImp entity,
 			Link link, StringBounder stringBounder) {
 		this.svekLine = svekLine;
 		this.entity = entity;
 		this.link = link;
 		this.textBlock = Display.getWithNewlines(text).create7(font, HorizontalAlignment.LEFT, skinParam,
 				CreoleMode.SIMPLE_LINE);
-		this.dim = XDimension2D.delta(this.textBlock.calculateDimension(stringBounder), 4, 2);
+		this.dim = this.textBlock.calculateDimension(stringBounder).delta(4, 2);
 
 		if (link.getLength() == 1 && link.getEntity1() == entity) {
 			this.position = Direction.RIGHT;

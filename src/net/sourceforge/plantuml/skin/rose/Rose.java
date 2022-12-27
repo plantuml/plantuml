@@ -208,8 +208,11 @@ public class Rose {
 		if (type == ComponentType.NOTE_BOX)
 			throw new UnsupportedOperationException();
 
-		if (type == ComponentType.GROUPING_HEADER)
-			return new ComponentRoseGroupingHeader(styles[0], styles[1], stringsToDisplay, param);
+		if (type == ComponentType.GROUPING_HEADER_LEGACY)
+			return new ComponentRoseGroupingHeader(false, styles[0], styles[1], stringsToDisplay, param);
+
+		if (type == ComponentType.GROUPING_HEADER_TEOZ)
+			return new ComponentRoseGroupingHeader(true, styles[0], styles[1], stringsToDisplay, param);
 
 		if (type == ComponentType.GROUPING_ELSE_LEGACY)
 			return new ComponentRoseGroupingElse(false, styles[0], stringsToDisplay.get(0), param);

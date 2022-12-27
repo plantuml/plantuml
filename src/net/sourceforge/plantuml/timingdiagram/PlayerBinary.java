@@ -54,6 +54,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
@@ -126,8 +127,8 @@ public class PlayerBinary extends Player {
 	}
 
 	@Override
-	public void createConstraint(TimeTick tick1, TimeTick tick2, String message) {
-		this.constraints.add(new TimeConstraint(tick1, tick2, message, skinParam));
+	public void createConstraint(TimeTick tick1, TimeTick tick2, String message, ArrowConfiguration config) {
+		this.constraints.add(new TimeConstraint(2.5, tick1, tick2, message, skinParam, config));
 	}
 
 	private final double ymargin = 8;
@@ -159,7 +160,7 @@ public class PlayerBinary extends Player {
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
 				final XDimension2D dim = getTitle().calculateDimension(stringBounder);
-				return XDimension2D.delta(dim, 5, 0);
+				return dim.delta(5, 0);
 			}
 		};
 	}

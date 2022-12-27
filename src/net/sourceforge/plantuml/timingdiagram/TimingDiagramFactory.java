@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.timingdiagram;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -74,10 +73,7 @@ public class TimingDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	protected List<Command> createCommands() {
-
-		final List<Command> cmds = new ArrayList<>();
-
+	protected void initCommandsList(List<Command> cmds) {
 		CommonCommands.addCommonCommands1(cmds);
 		cmds.add(new CommandFootboxIgnored());
 		cmds.add(new CommandRobustConcise());
@@ -101,8 +97,6 @@ public class TimingDiagramFactory extends PSystemCommandFactory {
 		cmds.add(new CommandTicks());
 		cmds.add(new CommandPixelHeight());
 		cmds.add(new CommandUseDateFormat());
-
-		return cmds;
 	}
 
 }

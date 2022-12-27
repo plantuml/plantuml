@@ -32,9 +32,9 @@ import java.util.StringTokenizer;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.prefs.Preferences;
 
-import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.annotation.HaxeIgnored;
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.utils.Log;
 
 @HaxeIgnored
 public class NumberAnalyzed2 implements INumberAnalyzed {

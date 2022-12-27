@@ -36,11 +36,14 @@
 package net.sourceforge.plantuml.classdiagram.command;
 
 import net.sourceforge.plantuml.FontParam;
-import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlMode;
+import net.sourceforge.plantuml.baraye.CucaDiagram;
+import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.ILeaf;
+import net.sourceforge.plantuml.baraye.Quark;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -52,7 +55,6 @@ import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Stereotag;
@@ -62,6 +64,7 @@ import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 
@@ -100,20 +103,24 @@ public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 				new RegexOptional(new RegexConcat(RegexLeaf.spaceZeroOrMore(),
 						new RegexLeaf("GENERIC", "\\<(" + GenericRegexProducer.PATTERN + ")\\>"))), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("STEREO", "(\\<{2}.*\\>{2})?"), //
+				new RegexLeaf("TAGS1", Stereotag.pattern() + "?"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("TAGS", Stereotag.pattern() + "?"), //
+				new RegexLeaf("STEREO", "(\\<\\<.*\\>\\>)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
+				new RegexLeaf("TAGS2", Stereotag.pattern() + "?"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				UrlBuilder.OPTIONAL, //
 				RegexLeaf.spaceZeroOrMore(), //
 				color().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexConcat(new RegexLeaf("##"),
 						new RegexLeaf("LINECOLOR", "(?:\\[(dotted|dashed|bold)\\])?(\\w+)?"))), //
 				new RegexOptional(new RegexConcat(RegexLeaf.spaceOneOrMore(),
-						new RegexLeaf("EXTENDS", "(extends)[%s]+(" + CommandCreateClassMultilines.CODES + "|[%g]([^%g]+)[%g])"))), //
+						new RegexLeaf("EXTENDS",
+								"(extends)[%s]+(" + CommandCreateClassMultilines.CODES + "|[%g]([^%g]+)[%g])"))), //
 				new RegexOptional(new RegexConcat(RegexLeaf.spaceOneOrMore(),
-						new RegexLeaf("IMPLEMENTS", "(implements)[%s]+(" + CommandCreateClassMultilines.CODES + "|[%g]([^%g]+)[%g])"))), //
+						new RegexLeaf("IMPLEMENTS",
+								"(implements)[%s]+(" + CommandCreateClassMultilines.CODES + "|[%g]([^%g]+)[%g])"))), //
 				new RegexOptional(new RegexConcat(RegexLeaf.spaceZeroOrMore(), new RegexLeaf("\\{"),
 						RegexLeaf.spaceZeroOrMore(), new RegexLeaf("\\}"))), //
 				RegexLeaf.end());
@@ -135,26 +142,50 @@ public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 		final String generic = genericOption != null ? genericOption : arg.get("GENERIC", 0);
 
 		final String stereo = arg.get("STEREO", 0);
-		final ILeaf entity;
-		final Ident idNewLong = diagram.buildLeafIdent(idShort);
-		if (diagram.V1972()) {
-			if (diagram.leafExistSmart(idNewLong)) {
-				entity = diagram.getOrCreateLeaf(idNewLong, idNewLong, type, null);
-				if (entity.muteToType(type, null) == false)
-					return CommandExecutionResult.error("Bad name");
+		/* final */ ILeaf entity;
 
-			} else {
+		if (CucaDiagram.QUARK) {
+			final Quark current = diagram.currentQuark();
+			final Quark idNewLong = (Quark) diagram.buildLeafIdent(idShort);
+			if (idNewLong.getData() == null)
 				entity = diagram.createLeaf(idNewLong, idNewLong, Display.getWithNewlines(display), type, null);
+			else
+				entity = (ILeaf) idNewLong.getData();
+			if (entity == null || entity.isGroup()) {
+				for (Quark tmp : diagram.getPlasma().quarks())
+					if (tmp.getData() instanceof EntityImp) {
+						final EntityImp tmp2 = (EntityImp) tmp.getData();
+						if (tmp2 != null && tmp.getName().equals(idShort) && tmp2.isGroup() == false) {
+							entity = (ILeaf) tmp.getData();
+							break;
+						}
+					}
+			}
+			if (entity == null) {
+				final Display withNewlines = Display.getWithNewlines(display);
+				entity = diagram.createLeaf(idNewLong, idNewLong, withNewlines, type, null);
 			}
 		} else {
-			final Code code = diagram.buildCode(idShort);
-			if (diagram.leafExist(code)) {
-				entity = diagram.getOrCreateLeaf(idNewLong, code, type, null);
-				if (entity.muteToType(type, null) == false)
-					return CommandExecutionResult.error("Bad name");
+			final Ident idNewLong = diagram.buildLeafIdent(idShort);
+			if (diagram.V1972()) {
+				if (diagram.leafExistSmart(idNewLong)) {
+					entity = diagram.getOrCreateLeaf(idNewLong, idNewLong, type, null);
+					if (entity.muteToType(type, null) == false)
+						return CommandExecutionResult.error("Bad name");
 
+				} else {
+					entity = diagram.createLeaf(idNewLong, idNewLong, Display.getWithNewlines(display), type, null);
+				}
 			} else {
-				entity = diagram.createLeaf(idNewLong, code, Display.getWithNewlines(display), type, null);
+				final Code code = diagram.buildCode(idShort);
+				if (diagram.leafExist(code)) {
+					entity = diagram.getOrCreateLeaf(idNewLong, code, type, null);
+					if (entity.muteToType(type, null) == false)
+						return CommandExecutionResult.error("Bad name");
+
+				} else {
+					entity = diagram.createLeaf(idNewLong, code, Display.getWithNewlines(display), type, null);
+				}
 			}
 		}
 		if (stereo != null) {
@@ -177,8 +208,7 @@ public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
 		final String s = arg.get("LINECOLOR", 1);
 
-		final HColor lineColor = s == null ? null
-				: diagram.getSkinParam().getIHtmlColorSet().getColor(s);
+		final HColor lineColor = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);
 		if (lineColor != null)
 			colors = colors.add(ColorType.LINE, lineColor);
 
@@ -189,7 +219,7 @@ public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 
 		CommandCreateClassMultilines.manageExtends("EXTENDS", diagram, arg, entity);
 		CommandCreateClassMultilines.manageExtends("IMPLEMENTS", diagram, arg, entity);
-		CommandCreateClassMultilines.addTags(entity, arg.get("TAGS", 0));
+		CommandCreateClassMultilines.addTags(entity, arg.getLazzy("TAGS", 0));
 
 		if (typeString.contains("STATIC"))
 			entity.setStatic(true);

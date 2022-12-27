@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.timingdiagram.command;
 
-import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.IRegex;
@@ -45,6 +44,7 @@ import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.timingdiagram.TimeTick;
 import net.sourceforge.plantuml.timingdiagram.TimingDiagram;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandAtTime extends SingleLineCommand2<TimingDiagram> {
 
@@ -69,9 +69,9 @@ public class CommandAtTime extends SingleLineCommand2<TimingDiagram> {
 	@Override
 	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg) {
 		final TimeTick timeTick = TimeTickBuilder.parseTimeTick("TIME", arg, diagram);
-		if (timeTick == null) {
+		if (timeTick == null)
 			return CommandExecutionResult.error("What time?");
-		}
+
 		final String code = arg.get("CODE", 0);
 		diagram.addTime(timeTick, code);
 		return CommandExecutionResult.ok();

@@ -51,9 +51,9 @@ public final class TinyHashableString {
 	}
 
 	public synchronized int tinyHash() {
-		if (cachedTinyHash == -1) {
+		if (cachedTinyHash == -1)
 			cachedTinyHash = Noise.shortHash(sentence.getBytes(UTF_8), Dedication.N.toByteArray());
-		}
+
 		return cachedTinyHash;
 
 	}

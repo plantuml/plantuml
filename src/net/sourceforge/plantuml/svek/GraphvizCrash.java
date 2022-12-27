@@ -124,7 +124,7 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 	public static void youShouldSendThisDiagram(List<String> strings) {
 		strings.add("You should send this diagram and this image to <b>plantuml@gmail.com</b> or");
 		strings.add("post to <b>https://plantuml.com/qa</b> to solve this issue.");
-		strings.add("You can try to turn arround this issue by simplifing your diagram.");
+		strings.add("You can try to turn around this issue by simplifing your diagram.");
 	}
 
 	public static void thisMayBeCaused(final List<String> strings) {

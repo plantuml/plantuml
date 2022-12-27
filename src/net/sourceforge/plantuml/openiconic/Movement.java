@@ -150,12 +150,18 @@ public class Movement {
 		if (letter.is('l'))
 			return new Movement(new SvgCommandLetter("L"), delta.add(getSvgPosition(0)));
 
+		if (letter.is('t'))
+			return new Movement(new SvgCommandLetter("T"), delta.add(getSvgPosition(0)));
+
 		if (letter.is('z'))
 			return new Movement(new SvgCommandLetter("Z"));
 
 		if (letter.is('c'))
 			return new Movement(new SvgCommandLetter("C"), delta.add(getSvgPosition(0)), delta.add(getSvgPosition(2)),
 					delta.add(getSvgPosition(4)));
+
+		if (letter.is('q'))
+			return new Movement(new SvgCommandLetter("Q"), delta.add(getSvgPosition(0)), delta.add(getSvgPosition(2)));
 
 		if (letter.is('s'))
 			return new Movement(new SvgCommandLetter("S"), delta.add(getSvgPosition(0)), delta.add(getSvgPosition(2)));

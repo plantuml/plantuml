@@ -49,8 +49,6 @@ import java.util.Set;
 
 import net.sourceforge.plantuml.DefinitionsContainer;
 import net.sourceforge.plantuml.FileSystem;
-import net.sourceforge.plantuml.LineLocation;
-import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.json.Json;
 import net.sourceforge.plantuml.json.JsonValue;
@@ -111,7 +109,13 @@ import net.sourceforge.plantuml.tim.stdlib.IsLight;
 import net.sourceforge.plantuml.tim.stdlib.JsonKeyExists;
 import net.sourceforge.plantuml.tim.stdlib.Lighten;
 import net.sourceforge.plantuml.tim.stdlib.LoadJson;
+import net.sourceforge.plantuml.tim.stdlib.LogicalAnd;
+import net.sourceforge.plantuml.tim.stdlib.LogicalNand;
+import net.sourceforge.plantuml.tim.stdlib.LogicalNor;
 import net.sourceforge.plantuml.tim.stdlib.LogicalNot;
+import net.sourceforge.plantuml.tim.stdlib.LogicalNxor;
+import net.sourceforge.plantuml.tim.stdlib.LogicalOr;
+import net.sourceforge.plantuml.tim.stdlib.LogicalXor;
 import net.sourceforge.plantuml.tim.stdlib.Lower;
 import net.sourceforge.plantuml.tim.stdlib.Newline;
 import net.sourceforge.plantuml.tim.stdlib.Now;
@@ -127,6 +131,8 @@ import net.sourceforge.plantuml.tim.stdlib.Strpos;
 import net.sourceforge.plantuml.tim.stdlib.Substr;
 import net.sourceforge.plantuml.tim.stdlib.Upper;
 import net.sourceforge.plantuml.tim.stdlib.VariableExists;
+import net.sourceforge.plantuml.utils.LineLocation;
+import net.sourceforge.plantuml.utils.StringLocated;
 
 public class TContext {
 
@@ -193,6 +199,12 @@ public class TContext {
 		functionsSet.addFunction(new SplitStr());
 		functionsSet.addFunction(new JsonKeyExists());
 		functionsSet.addFunction(new Now());
+		functionsSet.addFunction(new LogicalAnd());
+		functionsSet.addFunction(new LogicalOr());
+		functionsSet.addFunction(new LogicalXor());
+		functionsSet.addFunction(new LogicalNand());
+		functionsSet.addFunction(new LogicalNor());
+		functionsSet.addFunction(new LogicalNxor());
 		// %standard_exists_function
 		// %str_replace
 		// !exit
@@ -266,9 +278,9 @@ public class TContext {
 		try {
 			while ((s = it.peek()) != null) {
 				final TValue result = executeOneLineSafe(memory, s, ftype, modeSpecial);
-				if (result != null) {
+				if (result != null)
 					return result;
-				}
+
 				it.next();
 			}
 			return null;
@@ -428,9 +440,9 @@ public class TContext {
 		// https://en.wikipedia.org/wiki/String-searching_algorithm
 		// https://www.quora.com/What-is-the-most-efficient-algorithm-to-replace-all-occurrences-of-a-pattern-P-in-a-string-with-a-pattern-P
 		// https://en.wikipedia.org/wiki/Trie
-		if (memory.isEmpty() && functionsSet.size() == 0) {
+		if (memory.isEmpty() && functionsSet.size() == 0)
 			return str;
-		}
+
 		final StringBuilder result = new StringBuilder();
 		for (int i = 0; i < str.length(); i++) {
 			final char c = str.charAt(i);

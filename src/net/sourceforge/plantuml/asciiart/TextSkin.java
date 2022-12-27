@@ -75,7 +75,7 @@ public class TextSkin extends Rose {
 	@Override
 	public Component createComponentNote(Style[] styles, ComponentType type, ISkinParam param, Display stringsToDisplay,
 			Colors colors, NotePosition notePosition) {
-		if (type == ComponentType.NOTE || type == ComponentType.NOTE_BOX)
+		if (type == ComponentType.NOTE || type == ComponentType.NOTE_BOX || type == ComponentType.NOTE_HEXAGONAL)
 			return new ComponentTextNote(type, stringsToDisplay, fileFormat);
 
 		throw new UnsupportedOperationException(type.toString());
@@ -135,7 +135,7 @@ public class TextSkin extends Rose {
 		if (type == ComponentType.DIVIDER)
 			return new ComponentTextDivider(type, stringsToDisplay, fileFormat);
 
-		if (type == ComponentType.GROUPING_HEADER)
+		if (type == ComponentType.GROUPING_HEADER_LEGACY || type == ComponentType.GROUPING_HEADER_TEOZ)
 			return new ComponentTextGroupingHeader(type, stringsToDisplay, fileFormat);
 
 		if (type == ComponentType.GROUPING_SPACE)

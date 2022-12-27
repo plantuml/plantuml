@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.svek;
 
-import net.sourceforge.plantuml.Direction;
+import net.sourceforge.plantuml.utils.Direction;
 
 public interface GuideLine {
 

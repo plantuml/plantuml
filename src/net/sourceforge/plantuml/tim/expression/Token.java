@@ -58,9 +58,9 @@ public class Token {
 	}
 
 	public TokenOperator getTokenOperator() {
-		if (this.tokenType != TokenType.OPERATOR) {
+		if (this.tokenType != TokenType.OPERATOR)
 			throw new IllegalStateException();
-		}
+
 		final char ch2 = surface.length() > 1 ? surface.charAt(1) : 0;
 		return TokenOperator.getTokenOperator(surface.charAt(0), ch2);
 	}
@@ -74,16 +74,16 @@ public class Token {
 	}
 
 	public Token muteToFunction() {
-		if (this.tokenType != TokenType.PLAIN_TEXT) {
+		if (this.tokenType != TokenType.PLAIN_TEXT)
 			throw new IllegalStateException();
-		}
+
 		return new Token(surface, TokenType.FUNCTION_NAME, null);
 	}
 
 	public JsonValue getJson() {
-		if (this.tokenType != TokenType.JSON_DATA) {
+		if (this.tokenType != TokenType.JSON_DATA)
 			throw new IllegalStateException();
-		}
+
 		return json;
 	}
 

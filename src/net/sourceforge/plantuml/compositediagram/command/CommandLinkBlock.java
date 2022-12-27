@@ -34,7 +34,7 @@
  */
 package net.sourceforge.plantuml.compositediagram.command;
 
-import net.sourceforge.plantuml.LineLocation;
+import net.sourceforge.plantuml.baraye.IEntity;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.IRegex;
@@ -44,11 +44,11 @@ import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.compositediagram.CompositeDiagram;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkArg;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandLinkBlock extends SingleLineCommand2<CompositeDiagram> {
 
@@ -95,7 +95,8 @@ public class CommandLinkBlock extends SingleLineCommand2<CompositeDiagram> {
 
 		final LinkArg linkArg = LinkArg.build(Display.getWithNewlines(arg.get("DISPLAY", 0)), queue.length(),
 				diagram.getSkinParam().classAttributeIconSize() > 0);
-		final Link link = new Link(diagram.getSkinParam().getCurrentStyleBuilder(), cl1, cl2, linkType, linkArg);
+		final Link link = new Link(diagram.getIEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(), cl1,
+				cl2, linkType, linkArg);
 		diagram.addLink(link);
 		return CommandExecutionResult.ok();
 	}

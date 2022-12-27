@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.project.command;
 
-import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.IRegex;
@@ -46,6 +45,7 @@ import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.PrintScale;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandPrintScale extends SingleLineCommand2<GanttDiagram> {
 

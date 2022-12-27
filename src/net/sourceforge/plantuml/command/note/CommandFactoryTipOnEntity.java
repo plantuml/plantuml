@@ -35,12 +35,13 @@
  */
 package net.sourceforge.plantuml.command.note;
 
+import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlMode;
+import net.sourceforge.plantuml.baraye.IEntity;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
-import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
@@ -52,15 +53,19 @@ import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Code;
-import net.sourceforge.plantuml.cucadiagram.IEntity;
 import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkArg;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
+import net.sourceforge.plantuml.cucadiagram.Stereotag;
+import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
+import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
+import net.sourceforge.plantuml.utils.BlocLines;
 
 public final class CommandFactoryTipOnEntity implements SingleMultiFactoryCommand<AbstractEntityDiagram> {
 
@@ -83,9 +88,15 @@ public final class CommandFactoryTipOnEntity implements SingleMultiFactoryComman
 					RegexLeaf.spaceOneOrMore(), //
 					partialPattern, //
 					RegexLeaf.spaceZeroOrMore(), //
+					new RegexLeaf("TAGS1", Stereotag.pattern() + "?"), //
+					RegexLeaf.spaceZeroOrMore(), //
+					new RegexLeaf("STEREO", "(\\<\\<.*\\>\\>)?"), //
+					RegexLeaf.spaceZeroOrMore(), //
+					new RegexLeaf("TAGS2", Stereotag.pattern() + "?"), //
+					RegexLeaf.spaceZeroOrMore(), //
 					ColorParser.exp1(), //
 					RegexLeaf.spaceZeroOrMore(), //
-					new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
+					UrlBuilder.OPTIONAL, //
 					RegexLeaf.spaceZeroOrMore(), //
 					new RegexLeaf("\\{"), //
 					RegexLeaf.end() //
@@ -100,11 +111,21 @@ public final class CommandFactoryTipOnEntity implements SingleMultiFactoryComman
 				RegexLeaf.spaceOneOrMore(), //
 				partialPattern, //
 				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("TAGS1", Stereotag.pattern() + "?"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("STEREO", "(\\<\\<.*\\>\\>)?"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("TAGS2", Stereotag.pattern() + "?"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				ColorParser.exp1(), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
+				UrlBuilder.OPTIONAL, //
 				RegexLeaf.end() //
 		);
+	}
+
+	private static ColorParser color() {
+		return ColorParser.simpleColor(ColorType.BACK);
 	}
 
 	public Command<AbstractEntityDiagram> createSingleLine() {
@@ -165,16 +186,31 @@ public final class CommandFactoryTipOnEntity implements SingleMultiFactoryComman
 			tips = diagram.getOrCreateLeaf(identTip, identTip.toCode(diagram), LeafType.TIPS, null);
 			final LinkType type = new LinkType(LinkDecor.NONE, LinkDecor.NONE).getInvisible();
 			final Link link;
-			if (position == Position.RIGHT) {
-				link = new Link(diagram.getSkinParam().getCurrentStyleBuilder(), cl1, (IEntity) tips, type,
-						LinkArg.noDisplay(1));
-			} else {
-				link = new Link(diagram.getSkinParam().getCurrentStyleBuilder(), (IEntity) tips, cl1, type,
-						LinkArg.noDisplay(1));
-			}
+			if (position == Position.RIGHT)
+				link = new Link(diagram.getIEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(), cl1,
+						(IEntity) tips, type, LinkArg.noDisplay(1));
+			else
+				link = new Link(diagram.getIEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(),
+						(IEntity) tips, cl1, type, LinkArg.noDisplay(1));
+
 			diagram.addLink(link);
 		}
 		tips.putTip(member, lines.toDisplay());
+
+		Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());
+
+		final String stereotypeString = line0.get("STEREO", 0);
+		Stereotype stereotype = null;
+		if (stereotypeString != null) {
+			stereotype = Stereotype.build(stereotypeString);
+			colors = colors.applyStereotypeForNote(stereotype, diagram.getSkinParam(), ColorParam.noteBackground,
+					ColorParam.noteBorder);
+		}
+		if (stereotypeString != null)
+			tips.setStereotype(stereotype);
+
+		tips.setColors(colors);
+
 		return CommandExecutionResult.ok();
 	}
 

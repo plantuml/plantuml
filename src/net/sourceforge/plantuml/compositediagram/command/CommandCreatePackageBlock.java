@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.compositediagram.command;
 
-import net.sourceforge.plantuml.LineLocation;
+import net.sourceforge.plantuml.baraye.IGroup;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.IRegex;
@@ -47,9 +47,9 @@ import net.sourceforge.plantuml.compositediagram.CompositeDiagram;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
-import net.sourceforge.plantuml.cucadiagram.IGroup;
 import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.NamespaceStrategy;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandCreatePackageBlock extends SingleLineCommand2<CompositeDiagram> {
 

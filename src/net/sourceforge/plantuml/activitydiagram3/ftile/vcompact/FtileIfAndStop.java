@@ -46,7 +46,6 @@ import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.activitydiagram3.Branch;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractConnection;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
-import net.sourceforge.plantuml.activitydiagram3.ftile.Arrows;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Connection;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
@@ -60,7 +59,6 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamondInsi
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.creole.CreoleMode;
-import net.sourceforge.plantuml.creole.Parser;
 import net.sourceforge.plantuml.creole.Sheet;
 import net.sourceforge.plantuml.creole.SheetBlock1;
 import net.sourceforge.plantuml.creole.SheetBlock2;
@@ -98,9 +96,9 @@ class FtileIfAndStop extends AbstractFtile {
 
 	public Set<Swimlane> getSwimlanes() {
 		final Set<Swimlane> result = new HashSet<>();
-		if (getSwimlaneIn() != null) {
+		if (getSwimlaneIn() != null) 
 			result.add(getSwimlaneIn());
-		}
+		
 		result.addAll(tile1.getSwimlanes());
 		return Collections.unmodifiableSet(result);
 	}
@@ -125,8 +123,8 @@ class FtileIfAndStop extends AbstractFtile {
 		final UStroke thickness = tileNonStop.getThickness(style);
 		final FontConfiguration fcTest = FontConfiguration.create(skinParam, style);
 
-		final Sheet sheet = Parser
-				.build(fcTest, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT), skinParam, CreoleMode.FULL)
+		final Sheet sheet = skinParam
+				.sheet(fcTest, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT), CreoleMode.FULL)
 				.createSheet(labelTest);
 		final SheetBlock1 sheetBlock1 = new SheetBlock1(sheet, LineBreakStrategy.NONE, skinParam.getPadding());
 
@@ -153,7 +151,6 @@ class FtileIfAndStop extends AbstractFtile {
 		final FtileGeometry dim1 = tile1.calculateDimension(stringBounder);
 
 		final double x1 = calculateDimension(stringBounder).getLeft() - dim1.getLeft();
-		// final double y1 = (dimTotal.getHeight() - 2 * h - dim1.getHeight()) / 2 + h;
 		final double y1 = dimDiamond1.getHeight() + getSuppHeight();
 		return new UTranslate(x1, y1);
 	}
@@ -165,7 +162,6 @@ class FtileIfAndStop extends AbstractFtile {
 	private UTranslate getTranslateDiamond1(StringBounder stringBounder) {
 		final double y1 = 0;
 		final XDimension2D dimDiamond1 = diamond1.calculateDimension(stringBounder);
-		// final double x1 = getLeft(stringBounder) - dimDiamond1.getWidth() / 2;
 		final double x1 = calculateDimension(stringBounder).getLeft() - dimDiamond1.getWidth() / 2;
 		return new UTranslate(x1, y1);
 	}
@@ -197,7 +193,7 @@ class FtileIfAndStop extends AbstractFtile {
 			final XPoint2D p1 = getP1(stringBounder);
 			final XPoint2D p2 = getP2(stringBounder);
 
-			final Snake snake = Snake.create(skinParam(), color, Arrows.asToRight());
+			final Snake snake = Snake.create(skinParam(), color, skinParam().arrows().asToRight());
 			snake.addPoint(p1);
 			snake.addPoint(p2);
 			ug.draw(snake);

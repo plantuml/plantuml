@@ -53,7 +53,6 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamondInsi
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamondSquare;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.creole.CreoleMode;
-import net.sourceforge.plantuml.creole.Parser;
 import net.sourceforge.plantuml.creole.Sheet;
 import net.sourceforge.plantuml.creole.SheetBlock1;
 import net.sourceforge.plantuml.creole.SheetBlock2;
@@ -145,18 +144,18 @@ public class ConditionalBuilder {
 		final ConditionalBuilder builder = new ConditionalBuilder(swimlane, borderColor, backColor, arrowColor,
 				ftileFactory, conditionStyle, conditionEndStyle, branch1, branch2, skinParam, stringBounder, fcArrow,
 				fcTest, url);
-		if (isEmptyOrOnlySingleStopOrSpot(branch2) && isEmptyOrOnlySingleStopOrSpot(branch1) == false) {
+		if (isEmptyOrOnlySingleStopOrSpot(branch2) && isEmptyOrOnlySingleStopOrSpot(branch1) == false)
 			return builder.createDown(builder.branch1, builder.branch2);
-		}
-		if (branch1.isEmpty() && branch2.isOnlySingleStopOrSpot()) {
+
+		if (branch1.isEmpty() && branch2.isOnlySingleStopOrSpot())
 			return builder.createDown(builder.branch1, builder.branch2);
-		}
-		if (isEmptyOrOnlySingleStopOrSpot(branch1) && isEmptyOrOnlySingleStopOrSpot(branch2) == false) {
+
+		if (isEmptyOrOnlySingleStopOrSpot(branch1) && isEmptyOrOnlySingleStopOrSpot(branch2) == false)
 			return builder.createDown(builder.branch2, builder.branch1);
-		}
-		if (branch2.isEmpty() && branch1.isOnlySingleStopOrSpot()) {
+
+		if (branch2.isEmpty() && branch1.isOnlySingleStopOrSpot())
 			return builder.createDown(builder.branch2, builder.branch1);
-		}
+
 		return builder.createWithLinks();
 		// return builder.createWithDiamonds();
 		// return builder.createNude();
@@ -173,18 +172,18 @@ public class ConditionalBuilder {
 		final TextBlock tb2 = getLabelPositive(branch2);
 		final Ftile diamond1 = getShape1(false, tb1, tb2);
 		final Ftile diamond2 = getShape2(branch1, branch2, true);
-		if (branch2.isOnlySingleStopOrSpot()) {
+		if (branch2.isOnlySingleStopOrSpot())
 			return FtileIfDown.create(diamond1, diamond2, swimlane, FtileUtils.addHorizontalMargin(tile1, 10),
 					arrowColor, conditionEndStyle, ftileFactory, branch2.getFtile(), branch2.getOut());
-		}
-		if (branch1.isOnlySingleStopOrSpot()) {
+
+		if (branch1.isOnlySingleStopOrSpot())
 			return FtileIfDown.create(diamond1, diamond2, swimlane, FtileUtils.addHorizontalMargin(tile2, 10),
 					arrowColor, conditionEndStyle, ftileFactory, branch1.getFtile(), branch1.getOut());
-		}
-		if (branch1.isEmpty()) {
+
+		if (branch1.isEmpty())
 			return FtileIfDown.create(diamond1, diamond2, swimlane, FtileUtils.addHorizontalMargin(tile2, 10),
 					arrowColor, conditionEndStyle, ftileFactory, null, null);
-		}
+
 		return FtileIfDown.create(diamond1, diamond2, swimlane, FtileUtils.addHorizontalMargin(tile1, 10), arrowColor,
 				conditionEndStyle, ftileFactory, null, branch2.getOut());
 	}
@@ -211,9 +210,9 @@ public class ConditionalBuilder {
 
 	private Ftile createWithLinks() {
 		Ftile diamond1 = getDiamond1(true);
-		if (url != null) {
+		if (url != null)
 			diamond1 = new FtileWithUrl(diamond1, url);
-		}
+
 		final Ftile diamond2 = getShape2(branch1, branch2, false);
 		final Ftile tmp1 = FtileUtils.addHorizontalMargin(tile1, 10);
 		final Ftile tmp2 = FtileUtils.addHorizontalMargin(tile2, 10);
@@ -237,8 +236,9 @@ public class ConditionalBuilder {
 	private Ftile getShape1(boolean eastWest, TextBlock tb1, TextBlock tb2) {
 		final Display labelTest = branch1.getLabelTest();
 
-		final Sheet sheet = Parser.build(fontTest, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT),
-				skinParam, CreoleMode.FULL).createSheet(labelTest);
+		final Sheet sheet = skinParam
+				.sheet(fontTest, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT), CreoleMode.FULL)
+				.createSheet(labelTest);
 		final SheetBlock1 sheetBlock1 = new SheetBlock1(sheet, diamondLineBreak, skinParam.getPadding());
 
 		final UStroke thickness = tile1
@@ -247,29 +247,28 @@ public class ConditionalBuilder {
 
 		final Ftile shape1;
 		if (conditionStyle == ConditionStyle.INSIDE_HEXAGON) {
-			if (eastWest) {
+			if (eastWest)
 				shape1 = new FtileDiamondInside(tbTest, tile1.skinParam(), backColor, borderColor, swimlane)
 						.withWestAndEast(tb1, tb2);
-			} else {
+			else
 				shape1 = new FtileDiamondInside(tbTest, tile1.skinParam(), backColor, borderColor, swimlane)
 						.withSouth(tb1).withEast(tb2);
-			}
+
 		} else if (conditionStyle == ConditionStyle.EMPTY_DIAMOND) {
-			if (eastWest) {
+			if (eastWest)
 				shape1 = new FtileDiamond(tile1.skinParam(), backColor, borderColor, swimlane).withNorth(tbTest)
 						.withWestAndEast(tb1, tb2);
-			} else {
+			else
 				shape1 = new FtileDiamond(tile1.skinParam(), backColor, borderColor, swimlane).withNorth(tbTest)
 						.withSouth(tb1).withEast(tb2);
-			}
+
 		} else if (conditionStyle == ConditionStyle.INSIDE_DIAMOND) {
-			if (eastWest) {
+			if (eastWest)
 				shape1 = new FtileDiamondSquare(tbTest, tile1.skinParam(), backColor, borderColor, swimlane)
 						.withWestAndEast(tb1, tb2);
-			} else {
+			else
 				shape1 = new FtileDiamondSquare(tbTest, tile1.skinParam(), backColor, borderColor, swimlane)
 						.withSouth(tb1).withEast(tb2);
-			}
 		} else {
 			throw new IllegalStateException();
 		}
@@ -283,9 +282,9 @@ public class ConditionalBuilder {
 
 	private Ftile getShape2(Branch branch1, Branch branch2, boolean useNorth) {
 		final Ftile shape2;
-		if (conditionEndStyle == ConditionEndStyle.HLINE) {
+		if (conditionEndStyle == ConditionEndStyle.HLINE)
 			return new FtileEmpty(tile1.skinParam(), 0, Hexagon.hexagonHalfSize, swimlane);
-		}
+
 		// else use default ConditionEndStyle.DIAMOND
 		if (hasTwoBranches()) {
 			final Display out1 = branch1.getFtile().getOutLinkRendering().getDisplay();

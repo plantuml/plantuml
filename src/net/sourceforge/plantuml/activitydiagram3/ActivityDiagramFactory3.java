@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.activitydiagram3;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -93,9 +92,8 @@ import net.sourceforge.plantuml.core.UmlSource;
 public class ActivityDiagramFactory3 extends PSystemCommandFactory {
 
 	@Override
-	protected List<Command> createCommands() {
+	protected void initCommandsList(List<Command> cmds) {
 
-		final List<Command> cmds = new ArrayList<>();
 		cmds.add(new CommandFootboxIgnored());
 
 		CommonCommands.addCommonCommands1(cmds);
@@ -155,8 +153,6 @@ public class ActivityDiagramFactory3 extends PSystemCommandFactory {
 		cmds.add(new CommandLabel());
 		cmds.add(new CommandGoto());
 		cmds.add(CommandDecoratorMultine.create(new CommandElseIf2(), 50));
-
-		return cmds;
 	}
 
 	@Override

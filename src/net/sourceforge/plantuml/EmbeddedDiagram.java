@@ -38,13 +38,15 @@ package net.sourceforge.plantuml;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.creole.Neutron;
 import net.sourceforge.plantuml.creole.atom.Atom;
-import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.Line;
@@ -58,19 +60,92 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.UImageSvg;
 import net.sourceforge.plantuml.ugraphic.UShape;
+import net.sourceforge.plantuml.utils.StringLocated;
 
-class EmbeddedDiagramDraw extends AbstractTextBlock implements Line, Atom {
-	private BufferedImage image;
-	private final ISkinSimple skinParam;
-	private final List<StringLocated> as2;
+public class EmbeddedDiagram extends AbstractTextBlock implements Line, Atom {
 
-	public List<Atom> splitInTwo(StringBounder stringBounder, double width) {
-		return Arrays.asList((Atom) this);
+	public static final String EMBEDDED_START = "{{";
+	public static final String EMBEDDED_END = "}}";
+
+	public static String getEmbeddedType(CharSequence cs) {
+		if (cs == null)
+			return null;
+
+		final String s = StringUtils.trin(cs.toString());
+		if (s.startsWith(EMBEDDED_START) == false)
+			return null;
+
+		if (s.equals(EMBEDDED_START))
+			return "uml";
+
+		if (s.equals(EMBEDDED_START))
+			return "uml";
+
+		if (s.equals(EMBEDDED_START + "uml"))
+			return "uml";
+
+		if (s.equals(EMBEDDED_START + "wbs"))
+			return "wbs";
+
+		if (s.equals(EMBEDDED_START + "mindmap"))
+			return "mindmap";
+
+		if (s.equals(EMBEDDED_START + "gantt"))
+			return "gantt";
+
+		if (s.equals(EMBEDDED_START + "json"))
+			return "json";
+
+		if (s.equals(EMBEDDED_START + "yaml"))
+			return "yaml";
+
+		if (s.equals(EMBEDDED_START + "wire"))
+			return "wire";
+
+		if (s.equals(EMBEDDED_START + "creole"))
+			return "creole";
+
+		if (s.equals(EMBEDDED_START + "board"))
+			return "board";
+
+		if (s.equals(EMBEDDED_START + "ebnf"))
+			return "ebnf";
+
+		return null;
 	}
 
-	EmbeddedDiagramDraw(ISkinSimple skinParam, List<StringLocated> as2) {
+	public static EmbeddedDiagram createAndSkip(String type, Iterator<CharSequence> it, ISkinSimple skinParam) {
+		final List<String> result = new ArrayList<String>();
+		result.add("@start" + type);
+		int nested = 1;
+		while (it.hasNext()) {
+			final CharSequence s2 = it.next();
+			if (EmbeddedDiagram.getEmbeddedType(StringUtils.trinNoTrace(s2)) != null)
+				// if (StringUtils.trinNoTrace(s2).startsWith(EmbeddedDiagram.EMBEDDED_START))
+				nested++;
+			else if (StringUtils.trinNoTrace(s2).equals(EmbeddedDiagram.EMBEDDED_END)) {
+				nested--;
+				if (nested == 0)
+					break;
+			}
+			result.add(s2.toString());
+		}
+		result.add("@end" + type);
+		return EmbeddedDiagram.from(skinParam, result);
+
+	}
+
+	private final List<StringLocated> list;
+	private final ISkinSimple skinParam;
+	private BufferedImage image;
+
+	private EmbeddedDiagram(ISkinSimple skinParam, List<StringLocated> system) {
+		this.list = system;
 		this.skinParam = skinParam;
-		this.as2 = as2;
+	}
+
+	public static EmbeddedDiagram from(ISkinSimple skinParam, List<String> strings) {
+		return new EmbeddedDiagram(skinParam, BlockUml.convert(strings));
 	}
 
 	public double getStartingAltitude(StringBounder stringBounder) {
@@ -137,75 +212,14 @@ class EmbeddedDiagramDraw extends AbstractTextBlock implements Line, Atom {
 	}
 
 	private Diagram getSystem() throws IOException, InterruptedException {
-		final BlockUml blockUml = new BlockUml(as2, Defines.createEmpty(), skinParam, null, null);
+		final BlockUml blockUml = new BlockUml(list, Defines.createEmpty(), skinParam, null, null);
 		return blockUml.getDiagram();
 
 	}
-}
 
-public class EmbeddedDiagram implements CharSequence {
-
-	public static String getEmbeddedType(CharSequence s) {
-		if (s == null)
-			return null;
-
-		s = StringUtils.trin(s.toString());
-		if (s.equals("{{"))
-			return "uml";
-
-		if (s.equals("{{uml"))
-			return "uml";
-
-		if (s.equals("{{wbs"))
-			return "wbs";
-
-		if (s.equals("{{mindmap"))
-			return "mindmap";
-
-		if (s.equals("{{gantt"))
-			return "gantt";
-
-		if (s.equals("{{json"))
-			return "json";
-
-		if (s.equals("{{yaml"))
-			return "yaml";
-
-		if (s.equals("{{wire"))
-			return "wire";
-
-		if (s.equals("{{creole"))
-			return "creole";
-
-		if (s.equals("{{board"))
-			return "board";
-
-		if (s.equals("{{ebnf"))
-			return "ebnf";
-
-		return null;
-	}
-
-	private final Display system;
-
-	public EmbeddedDiagram(Display system) {
-		this.system = system;
-	}
-
-	public int length() {
-		return toString().length();
-	}
-
-	public char charAt(int index) {
-		return toString().charAt(index);
-	}
-
-	public CharSequence subSequence(int start, int end) {
-		return toString().subSequence(start, end);
-	}
-
-	public EmbeddedDiagramDraw asDraw(ISkinSimple skinParam) {
-		return new EmbeddedDiagramDraw(skinParam, system.as2());
+	@Override
+	public List<Neutron> getNeutrons() {
+		return Arrays.asList(Neutron.create(this));
 	}
 
 }

@@ -36,7 +36,6 @@ package net.sourceforge.plantuml.ugraphic.svg;
 
 import java.io.IOException;
 
-import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.svg.SvgGraphics;
 import net.sourceforge.plantuml.ugraphic.ClipContainer;
 import net.sourceforge.plantuml.ugraphic.UClip;
@@ -44,6 +43,7 @@ import net.sourceforge.plantuml.ugraphic.UDriver;
 import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+import net.sourceforge.plantuml.utils.Log;
 
 public class DriverImagePng implements UDriver<UImage, SvgGraphics> {
 

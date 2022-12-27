@@ -124,11 +124,10 @@ public final class InnerStateAutonom extends AbstractTextBlock implements IEntit
 		final XDimension2D text = title.calculateDimension(stringBounder);
 		final XDimension2D attr = attribute.calculateDimension(stringBounder);
 
-		final XDimension2D dim = XDimension2D.mergeTB(text, attr, img);
+		final XDimension2D dim = text.mergeTB(attr, img);
 		final double marginForFields = attr.getHeight() > 0 ? IEntityImage.MARGIN : 0;
 
-		final XDimension2D result = XDimension2D.delta(dim,
-				IEntityImage.MARGIN * 2 + 2 * IEntityImage.MARGIN_LINE + marginForFields);
+		final XDimension2D result = dim.delta(IEntityImage.MARGIN * 2 + 2 * IEntityImage.MARGIN_LINE + marginForFields);
 
 		return result;
 	}

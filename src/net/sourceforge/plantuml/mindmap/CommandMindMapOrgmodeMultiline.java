@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.mindmap;
 import java.util.List;
 
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
@@ -51,6 +50,7 @@ import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
+import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandMindMapOrgmodeMultiline extends CommandMultilines2<MindMapDiagram> {
 
@@ -60,7 +60,7 @@ public class CommandMindMapOrgmodeMultiline extends CommandMultilines2<MindMapDi
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandMindMapOrgmodeMultiline.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("TYPE", "([*]+)"), //
+				new RegexLeaf("TYPE", "(\\*+)"), //
 				new RegexOptional(new RegexLeaf("BACKCOLOR", "\\[(#\\w+)\\]")), //
 				new RegexLeaf("SHAPE", "(_)?"), //
 				new RegexLeaf(":"), //

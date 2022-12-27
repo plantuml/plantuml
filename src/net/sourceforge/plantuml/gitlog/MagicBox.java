@@ -84,8 +84,8 @@ public class MagicBox {
 	public XDimension2D getBigDim(StringBounder stringBounder) {
 		final XDimension2D dimComment = getCommentBlock().calculateDimension(stringBounder);
 		final XDimension2D dimSmall = getSmallBlock().calculateDimension(stringBounder);
-		final XDimension2D mergeTB = XDimension2D.mergeTB(dimComment, dimSmall);
-		return XDimension2D.delta(mergeTB, 8, 2);
+		final XDimension2D mergeTB = dimComment.mergeTB(dimSmall);
+		return mergeTB.delta(8, 2);
 	}
 
 	public void drawBorder(UGraphic ug, XDimension2D sizeInDot) {

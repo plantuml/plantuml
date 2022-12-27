@@ -69,54 +69,44 @@ public class XDimension2D {
 		return width;
 	}
 
-	public static XDimension2D delta(XDimension2D dim, double delta) {
-		return delta(dim, delta, delta);
+	public XDimension2D delta(double delta) {
+		return this.delta(delta, delta);
 	}
 
 	public XDimension2D withWidth(double newWidth) {
 		return new XDimension2D(newWidth, height);
 	}
 
-	public static XDimension2D delta(XDimension2D dim, double deltaWidth, double deltaHeight) {
+	public XDimension2D delta(double deltaWidth, double deltaHeight) {
 		if (deltaHeight == 0 && deltaWidth == 0)
-			return dim;
+			return this;
 
-		return new XDimension2D(dim.getWidth() + deltaWidth, dim.getHeight() + deltaHeight);
+		return new XDimension2D(getWidth() + deltaWidth, getHeight() + deltaHeight);
 	}
 
-	public static XDimension2D mergeTB(XDimension2D top, XDimension2D bottom) {
-		final double width = Math.max(top.getWidth(), bottom.getWidth());
-		final double height = top.getHeight() + bottom.getHeight();
+	public XDimension2D mergeTB(XDimension2D bottom) {
+		final double width = Math.max(this.getWidth(), bottom.getWidth());
+		final double height = this.getHeight() + bottom.getHeight();
 		return new XDimension2D(width, height);
 	}
 
-	public static XDimension2D mergeTB(XDimension2D a, XDimension2D b, XDimension2D c) {
-		final double width = MathUtils.max(a.getWidth(), b.getWidth(), c.getWidth());
-		final double height = a.getHeight() + b.getHeight() + c.getHeight();
+	public XDimension2D mergeTB(XDimension2D b, XDimension2D c) {
+		final double width = MathUtils.max(this.getWidth(), b.getWidth(), c.getWidth());
+		final double height = this.getHeight() + b.getHeight() + c.getHeight();
 		return new XDimension2D(width, height);
 	}
 
-	public static XDimension2D mergeLR(XDimension2D left, XDimension2D right) {
-		final double height = Math.max(left.getHeight(), right.getHeight());
-		final double width = left.getWidth() + right.getWidth();
+	public XDimension2D mergeLR(XDimension2D right) {
+		final double height = Math.max(this.getHeight(), right.getHeight());
+		final double width = this.getWidth() + right.getWidth();
 		return new XDimension2D(width, height);
 	}
 
-	public static XDimension2D mergeLayoutT12B3(XDimension2D top1, XDimension2D top2, XDimension2D bottom) {
-		final double width = MathUtils.max(top1.getWidth(), top2.getWidth(), bottom.getWidth());
-		final double height = top1.getHeight() + top2.getHeight() + bottom.getHeight();
-		return new XDimension2D(width, height);
-	}
-
-	public static XDimension2D max(XDimension2D dim1, XDimension2D dim2) {
-		return atLeast(dim1, dim2.getWidth(), dim2.getHeight());
-	}
-
-	public static XDimension2D atLeast(XDimension2D dim, double minWidth, double minHeight) {
-		double h = dim.getHeight();
-		double w = dim.getWidth();
+	public XDimension2D atLeast(double minWidth, double minHeight) {
+		double h = getHeight();
+		double w = getWidth();
 		if (w > minWidth && h > minHeight)
-			return dim;
+			return this;
 
 		if (h < minHeight)
 			h = minHeight;
@@ -129,6 +119,16 @@ public class XDimension2D {
 
 	public static XDimension2D fromDimension(Dimension dimension) {
 		return new XDimension2D(dimension.getWidth(), dimension.getHeight());
+	}
+
+	public static XDimension2D mergeLayoutT12B3(XDimension2D top1, XDimension2D top2, XDimension2D bottom) {
+		final double width = MathUtils.max(top1.getWidth(), top2.getWidth(), bottom.getWidth());
+		final double height = top1.getHeight() + top2.getHeight() + bottom.getHeight();
+		return new XDimension2D(width, height);
+	}
+
+	public static XDimension2D max(XDimension2D dim1, XDimension2D dim2) {
+		return dim1.atLeast(dim2.getWidth(), dim2.getHeight());
 	}
 
 }

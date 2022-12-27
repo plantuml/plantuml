@@ -37,8 +37,8 @@ package net.sourceforge.plantuml.error;
 import java.util.List;
 
 import net.sourceforge.plantuml.ErrorUml;
-import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.utils.StringLocated;
 
 public class PSystemErrorV2 extends PSystemError {
 

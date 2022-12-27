@@ -38,12 +38,12 @@ package net.sourceforge.plantuml.creole.atom;
 import java.util.Arrays;
 import java.util.List;
 
-import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.creole.Neutron;
 
 public abstract class AbstractAtom implements Atom {
 
-	public List<Atom> splitInTwo(StringBounder stringBounder, double width) {
-		return Arrays.asList((Atom) this);
+	public List<Neutron> getNeutrons() {
+		return Arrays.asList(Neutron.create(this));
 	}
 
 }

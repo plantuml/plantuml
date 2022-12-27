@@ -54,6 +54,7 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
@@ -83,7 +84,11 @@ public class PlayerAnalog extends Player {
 		if (start != null)
 			return start;
 
-		return 0;
+		double min = 0;
+		for (Double val : values.values())
+			min = Math.min(min, val);
+
+		return min;
 	}
 
 	private double getMax() {
@@ -164,8 +169,8 @@ public class PlayerAnalog extends Player {
 	}
 
 	@Override
-	public void createConstraint(TimeTick tick1, TimeTick tick2, String message) {
-		this.constraints.add(new TimeConstraint(tick1, tick2, message, skinParam));
+	public void createConstraint(TimeTick tick1, TimeTick tick2, String message, ArrowConfiguration config) {
+		this.constraints.add(new TimeConstraint(1, tick1, tick2, message, skinParam, config));
 	}
 
 	private double getYpos(StringBounder stringBounder, double value) {
@@ -182,7 +187,7 @@ public class PlayerAnalog extends Player {
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
 				final XDimension2D dim = getTitle().calculateDimension(stringBounder);
-				return XDimension2D.delta(dim, 5 + getMaxWidthForTicks(stringBounder), 0);
+				return dim.delta(5 + getMaxWidthForTicks(stringBounder), 0);
 			}
 		};
 	}

@@ -49,7 +49,7 @@ public enum ComponentStyle {
 		case UML2:
 			return USymbols.COMPONENT2;
 		case RECTANGLE:
-			return USymbols.RECTANGLE;
+			return USymbols.COMPONENT_RECTANGLE;
 		}
 		throw new AssertionError();
 	}

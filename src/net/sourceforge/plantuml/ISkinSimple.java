@@ -37,6 +37,10 @@ package net.sourceforge.plantuml;
 
 import java.util.Map;
 
+import net.sourceforge.plantuml.creole.CreoleMode;
+import net.sourceforge.plantuml.creole.SheetBuilder;
+import net.sourceforge.plantuml.graphic.FontConfiguration;
+import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 
 public interface ISkinSimple extends SpriteContainer {
@@ -58,5 +62,11 @@ public interface ISkinSimple extends SpriteContainer {
 	public LineBreakStrategy wrapWidth();
 
 	public void copyAllFrom(Map<String, String> other);
+
+	public SheetBuilder sheet(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
+			CreoleMode creoleMode);
+
+	public SheetBuilder sheet(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
+			CreoleMode creoleMode, FontConfiguration stereo);
 
 }

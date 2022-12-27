@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.timingdiagram.graphic.IntricatedPoint;
@@ -107,7 +108,7 @@ public class PlayerClock extends Player {
 	}
 
 	@Override
-	public void createConstraint(TimeTick tick1, TimeTick tick2, String message) {
+	public void createConstraint(TimeTick tick1, TimeTick tick2, String message, ArrowConfiguration config) {
 		throw new UnsupportedOperationException();
 	}
 

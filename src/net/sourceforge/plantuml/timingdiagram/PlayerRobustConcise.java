@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
@@ -80,6 +81,12 @@ public final class PlayerRobustConcise extends Player {
 		super(full, skinParam, ruler, compact, stereotype);
 		this.type = type;
 		this.suggestedHeight = 0;
+	}
+
+	@Override
+	public final void createConstraint(TimeTick tick1, TimeTick tick2, String message, ArrowConfiguration config) {
+		final double margin = type == TimingStyle.ROBUST ? 2.5 : 1;
+		this.constraints.add(new TimeConstraint(margin, tick1, tick2, message, skinParam, config));
 	}
 
 	@Override
@@ -202,10 +209,6 @@ public final class PlayerRobustConcise extends Player {
 
 		final UTranslate translation = getTranslateForTimeDrawing(stringBounder);
 		return point.translated(translation);
-	}
-
-	public final void createConstraint(TimeTick tick1, TimeTick tick2, String message) {
-		this.constraints.add(new TimeConstraint(tick1, tick2, message, skinParam));
 	}
 
 	public final void addNote(TimeTick now, Display note, Position position) {

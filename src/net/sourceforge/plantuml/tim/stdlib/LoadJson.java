@@ -43,7 +43,6 @@ import java.util.Set;
 
 import net.sourceforge.plantuml.FileSystem;
 import net.sourceforge.plantuml.FileUtils;
-import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.json.Json;
 import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.json.ParseException;
@@ -56,6 +55,7 @@ import net.sourceforge.plantuml.tim.TContext;
 import net.sourceforge.plantuml.tim.TFunctionSignature;
 import net.sourceforge.plantuml.tim.TMemory;
 import net.sourceforge.plantuml.tim.expression.TValue;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 /**
  * Loads JSON data from file or URL source.

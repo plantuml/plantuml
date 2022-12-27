@@ -2,8 +2,6 @@ package net.sourceforge.plantuml.utils;
 
 import java.nio.charset.Charset;
 
-import net.sourceforge.plantuml.Log;
-
 public class CharsetUtils {
 
 	public static Charset charsetOrDefault(String charsetName) {

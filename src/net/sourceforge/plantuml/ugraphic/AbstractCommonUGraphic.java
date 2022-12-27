@@ -196,4 +196,8 @@ public abstract class AbstractCommonUGraphic implements UGraphic {
 		return false;
 	}
 
+	public final UTranslate getTranslate() {
+		return translate;
+	}
+
 }

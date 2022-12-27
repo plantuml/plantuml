@@ -38,7 +38,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.tim.EaterException;
@@ -47,6 +46,7 @@ import net.sourceforge.plantuml.tim.TContext;
 import net.sourceforge.plantuml.tim.TFunctionSignature;
 import net.sourceforge.plantuml.tim.TMemory;
 import net.sourceforge.plantuml.tim.expression.TValue;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public class Getenv extends SimpleReturnFunction {
 

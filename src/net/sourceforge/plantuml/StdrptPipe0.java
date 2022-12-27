@@ -40,6 +40,7 @@ import java.io.PrintStream;
 
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.error.PSystemError;
+import net.sourceforge.plantuml.utils.Log;
 
 public class StdrptPipe0 implements Stdrpt {
 

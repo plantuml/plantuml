@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.wire;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -52,9 +51,7 @@ public class WireDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	protected List<Command> createCommands() {
-
-		final List<Command> cmds = new ArrayList<>();
+	protected void initCommandsList(List<Command> cmds) {
 		CommonCommands.addCommonCommands1(cmds);
 		cmds.add(new CommandComponent());
 		cmds.add(new CommandSpot());
@@ -63,8 +60,6 @@ public class WireDiagramFactory extends PSystemCommandFactory {
 		cmds.add(new CommandWLink());
 		cmds.add(new CommandNewColumn());
 		cmds.add(new CommandPrint());
-
-		return cmds;
 	}
 
 	@Override

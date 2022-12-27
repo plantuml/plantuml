@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class ElseTile extends AbstractTile {
 
@@ -80,6 +81,10 @@ public class ElseTile extends AbstractTile {
 	@Override
 	public YGauge getYGauge() {
 		return yGauge;
+	}
+
+	public final HColor getBackColorGeneral() {
+		return anElse.getBackColorGeneral();
 	}
 
 	public Component getComponent(StringBounder stringBounder) {

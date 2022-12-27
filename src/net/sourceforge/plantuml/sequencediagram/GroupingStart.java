@@ -62,9 +62,9 @@ public class GroupingStart extends Grouping {
 
 	public Style[] getUsedStyles() {
 		final Style[] result = super.getUsedStyles();
-		if (result[0] != null) {
+		if (result[0] != null)
 			result[0] = result[0].eventuallyOverride(PName.BackGroundColor, backColorGeneral);
-		}
+
 		return result;
 	}
 
@@ -77,9 +77,9 @@ public class GroupingStart extends Grouping {
 	}
 
 	public int getLevel() {
-		if (parent == null) {
+		if (parent == null)
 			return 0;
-		}
+
 		return parent.getLevel() + 1;
 	}
 

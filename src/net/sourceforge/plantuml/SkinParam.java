@@ -39,6 +39,7 @@ import java.awt.Font;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.EnumSet;
@@ -52,15 +53,21 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.regex.Pattern;
 
-import net.sourceforge.plantuml.command.BlocLines;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Arrows;
+import net.sourceforge.plantuml.activitydiagram3.ftile.ArrowsRegular;
+import net.sourceforge.plantuml.activitydiagram3.ftile.ArrowsTriangle;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
+import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.creole.Parser;
+import net.sourceforge.plantuml.creole.SheetBuilder;
+import net.sourceforge.plantuml.creole.legacy.CreoleParser;
 import net.sourceforge.plantuml.cucadiagram.LinkStyle;
 import net.sourceforge.plantuml.cucadiagram.Rankdir;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.cucadiagram.dot.DotSplines;
+import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.log.Logme;
@@ -73,6 +80,7 @@ import net.sourceforge.plantuml.style.FromSkinparamToStyle;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleLoader;
+import net.sourceforge.plantuml.style.parser.StyleParser;
 import net.sourceforge.plantuml.svek.ConditionEndStyle;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 import net.sourceforge.plantuml.svek.PackageStyle;
@@ -83,6 +91,7 @@ import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 import net.sourceforge.plantuml.ugraphic.color.HColors;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
+import net.sourceforge.plantuml.utils.BlocLines;
 
 public class SkinParam implements ISkinParam {
 
@@ -171,7 +180,7 @@ public class SkinParam implements ISkinParam {
 			final StyleBuilder styleBuilder = this.getCurrentStyleBuilder();
 			try {
 				final BlocLines lines = BlocLines.load(internalIs, null);
-				for (Style modifiedStyle : StyleLoader.getDeclaredStyles(lines, styleBuilder))
+				for (Style modifiedStyle : StyleParser.parse(lines, styleBuilder))
 					this.muteStyle(modifiedStyle);
 
 			} catch (IOException e) {
@@ -1193,6 +1202,34 @@ public class SkinParam implements ISkinParam {
 	@Override
 	public final double getParamSameClassWidth() {
 		return paramSameClassWidth;
+	}
+
+	@Override
+	public SheetBuilder sheet(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
+			CreoleMode creoleMode) {
+		final FontConfiguration stereotype = fontConfiguration.forceFont(null, null);
+		return sheet(fontConfiguration, horizontalAlignment, creoleMode, stereotype);
+	}
+
+	private final Map<Object, CreoleParser> cache = new HashMap<>();
+
+	@Override
+	public SheetBuilder sheet(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
+			CreoleMode creoleMode, FontConfiguration stereo) {
+		final Object key = Arrays.asList(horizontalAlignment, creoleMode, fontConfiguration, stereo);
+		CreoleParser result = cache.get(key);
+		if (result == null) {
+			result = new CreoleParser(fontConfiguration, horizontalAlignment, this, creoleMode, stereo);
+			cache.put(key, result);
+		}
+		return result;
+	}
+
+	@Override
+	public Arrows arrows() {
+		if (strictUmlStyle())
+			return new ArrowsTriangle();
+		return new ArrowsRegular();
 	}
 
 }

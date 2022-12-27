@@ -90,7 +90,7 @@ public class GtileSplit extends GtileColumns {
 
 	@Override
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-		return XDimension2D.delta(super.calculateDimension(stringBounder), 0, 0);
+		return super.calculateDimension(stringBounder).delta(0, 0);
 	}
 
 //	@Override

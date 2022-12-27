@@ -45,24 +45,23 @@ import java.util.Set;
 
 import net.sourceforge.plantuml.AlignmentParam;
 import net.sourceforge.plantuml.ColorParam;
-import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.Hideable;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
-import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.Pragma;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
+import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.IEntity;
+import net.sourceforge.plantuml.baraye.IGroup;
 import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.CucaNote;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.EntityPort;
-import net.sourceforge.plantuml.cucadiagram.IEntity;
-import net.sourceforge.plantuml.cucadiagram.IGroup;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkArrow;
@@ -73,10 +72,10 @@ import net.sourceforge.plantuml.cucadiagram.NoteLinkStrategy;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.cucadiagram.dot.DotSplines;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizVersion;
-import net.sourceforge.plantuml.cucadiagram.entity.EntityImpl;
 import net.sourceforge.plantuml.descdiagram.command.StringWithArrow;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
+import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
@@ -94,6 +93,7 @@ import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.svek.extremity.Extremity;
+import net.sourceforge.plantuml.svek.extremity.ExtremityArrow;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactory;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryExtends;
 import net.sourceforge.plantuml.svek.extremity.ExtremityOther;
@@ -106,6 +106,8 @@ import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColors;
+import net.sourceforge.plantuml.utils.Direction;
+import net.sourceforge.plantuml.utils.Log;
 
 public class SvekLine implements Moveable, Hideable, GuideLine {
 
@@ -154,6 +156,8 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 	private final ISkinParam skinParam;
 
 	private final double labelShield;
+
+	private final UmlDiagramType type;
 
 	@Override
 	public String toString() {
@@ -214,19 +218,20 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 			FontConfiguration font, Bibliotekon bibliotekon, Pragma pragma, GraphvizVersion graphvizVersion) {
 
 		if (graphvizVersion.useShieldForQuantifier() && link.getLinkArg().getQuantifier1() != null)
-			((EntityImpl) link.getEntity1()).ensureMargins(Margins.uniform(16));
+			((EntityImp) link.getEntity1()).ensureMargins(Margins.uniform(16));
 
 		if (graphvizVersion.useShieldForQuantifier() && link.getLinkArg().getQuantifier2() != null)
-			((EntityImpl) link.getEntity2()).ensureMargins(Margins.uniform(16));
+			((EntityImp) link.getEntity2()).ensureMargins(Margins.uniform(16));
 
 		if (link.getLinkArg().getKal1() != null)
-			this.kal1 = new Kal(this, link.getLinkArg().getKal1(), font, skinParam, (EntityImpl) link.getEntity1(),
-					link, stringBounder);
+			this.kal1 = new Kal(this, link.getLinkArg().getKal1(), font, skinParam, (EntityImp) link.getEntity1(), link,
+					stringBounder);
 
 		if (link.getLinkArg().getKal2() != null)
-			this.kal2 = new Kal(this, link.getLinkArg().getKal2(), font, skinParam, (EntityImpl) link.getEntity2(),
-					link, stringBounder);
+			this.kal2 = new Kal(this, link.getLinkArg().getKal2(), font, skinParam, (EntityImp) link.getEntity2(), link,
+					stringBounder);
 
+		this.type = skinParam.getUmlDiagramType();
 		this.link = Objects.requireNonNull(link);
 		this.skinParam = skinParam;
 		// this.umlType = link.getUmlDiagramType();
@@ -270,7 +275,7 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 				labelOnly = StringWithArrow.addMagicArrow(labelOnly, this, font);
 
 		} else {
-			final HorizontalAlignment alignment = getMessageTextAlignment(link.getUmlDiagramType(), skinParam);
+			final HorizontalAlignment alignment = getMessageTextAlignment(type, skinParam);
 			final boolean hasSeveralGuideLines = link.getLabel().hasSeveralGuideLines();
 			final TextBlock block;
 			if (hasSeveralGuideLines)
@@ -400,7 +405,7 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 				sb.append("label=<");
 			}
 			XDimension2D dimNote = hasNoteLabelText() ? labelText.calculateDimension(stringBounder) : CONSTRAINT_SPOT;
-			dimNote = XDimension2D.delta(dimNote, 2 * labelShield);
+			dimNote = dimNote.delta(2 * labelShield);
 
 			appendTable(sb, eventuallyDivideByTwo(dimNote), noteLabelColor, graphvizVersion);
 			sb.append(">");
@@ -642,7 +647,7 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 
 	}
 
-	public void drawU(UGraphic ug, UStroke suggestedStroke, HColor color, Set<String> ids) {
+	public void drawU(UGraphic ug, Set<String> ids, UStroke suggestedStroke, Rainbow rainbow) {
 		if (opale)
 			return;
 
@@ -677,12 +682,19 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		x += dx;
 		y += dy;
 
+		HColor arrowHeadColor = rainbow.getArrowHeadColor();
+		HColor color = rainbow.getColor();
+
 		if (this.link.getColors() != null) {
 			final HColor newColor = this.link.getColors().getColor(ColorType.ARROW, ColorType.LINE);
-			if (newColor != null)
+			if (newColor != null) {
 				color = newColor;
-		} else if (this.link.getSpecificColor() != null)
+				arrowHeadColor = color;
+			}
+		} else if (this.link.getSpecificColor() != null) {
 			color = this.link.getSpecificColor();
+			arrowHeadColor = color;
+		}
 
 		ug = ug.apply(HColors.none().bg()).apply(color);
 		final LinkType linkType = link.getType();
@@ -727,7 +739,8 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		final String tmp = uniq(ids, comment);
 		todraw.setCommentAndCodeLine(tmp, link.getCodeLine());
 
-		drawRainbow(ug.apply(new UTranslate(x, y)), color, todraw, link.getSupplementaryColors(), stroke);
+		drawRainbow(ug.apply(new UTranslate(x, y)), color, arrowHeadColor, todraw, link.getSupplementaryColors(),
+				stroke);
 
 		ug = ug.apply(new UStroke()).apply(color);
 
@@ -820,31 +833,39 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		}
 	}
 
-	private void drawRainbow(UGraphic ug, HColor color, DotPath todraw, List<Colors> supplementaryColors,
-			UStroke stroke) {
+	private void drawRainbow(UGraphic ug, HColor color, HColor headColor, DotPath todraw,
+			List<Colors> supplementaryColors, UStroke stroke) {
 		ug.draw(todraw);
 		final LinkType linkType = link.getType();
 
-		if (this.extremity2 != null) {
-			UGraphic ug2 = ug.apply(color).apply(stroke.onlyThickness());
-			if (linkType.getDecor1().isFill())
-				ug2 = ug2.apply(color.bg());
-			else
-				ug2 = ug2.apply(HColors.none().bg());
-
-			// System.err.println("Line::draw EXTREMITY1");
-			this.extremity2.drawU(ug2);
-		}
-		if (this.extremity1 != null) {
-			UGraphic ug2 = ug.apply(color).apply(stroke.onlyThickness());
+		if (headColor.isTransparent()) {
+			if (this.extremity1 instanceof ExtremityArrow) {
+				final UGraphic ugHead = ug.apply(color).apply(stroke.onlyThickness());
+				((ExtremityArrow) this.extremity1).drawLineIfTransparent(ugHead);
+			}
+		} else if (this.extremity1 != null) {
+			UGraphic ugHead = ug.apply(headColor).apply(stroke.onlyThickness());
 			if (linkType.getDecor2().isFill())
-				ug2 = ug2.apply(color.bg());
+				ugHead = ugHead.apply(color.bg());
 			else
-				ug2 = ug2.apply(HColors.none().bg());
-
-			// System.err.println("Line::draw EXTREMITY2");
-			this.extremity1.drawU(ug2);
+				ugHead = ugHead.apply(HColors.none().bg());
+			this.extremity1.drawU(ugHead);
 		}
+
+		if (headColor.isTransparent()) {
+			if (this.extremity2 instanceof ExtremityArrow) {
+				final UGraphic ugHead = ug.apply(color).apply(stroke.onlyThickness());
+				((ExtremityArrow) this.extremity2).drawLineIfTransparent(ugHead);
+			}
+		} else if (this.extremity2 != null) {
+			UGraphic ugHead = ug.apply(headColor).apply(stroke.onlyThickness());
+			if (linkType.getDecor1().isFill())
+				ugHead = ugHead.apply(color.bg());
+			else
+				ugHead = ugHead.apply(HColors.none().bg());
+			this.extremity2.drawU(ugHead);
+		}
+
 		int i = 0;
 		for (Colors colors : supplementaryColors) {
 			ug.apply(new UTranslate(2 * (i + 1), 2 * (i + 1))).apply(colors.getColor(ColorType.LINE)).draw(todraw);

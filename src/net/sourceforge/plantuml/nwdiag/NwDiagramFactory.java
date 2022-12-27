@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.nwdiag;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -58,9 +57,7 @@ public class NwDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	protected List<Command> createCommands() {
-
-		final List<Command> cmds = new ArrayList<>();
+	protected void initCommandsList(List<Command> cmds) {
 		CommonCommands.addCommonCommands1(cmds);
 		cmds.add(new CommandNwDiagInit());
 		cmds.add(new CommandComment());
@@ -71,7 +68,6 @@ public class NwDiagramFactory extends PSystemCommandFactory {
 		cmds.add(new CommandProperty());
 		cmds.add(new CommandEndSomething());
 		cmds.add(new CommandFootboxIgnored());
-		return cmds;
 	}
 
 }

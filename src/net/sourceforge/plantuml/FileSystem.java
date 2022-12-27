@@ -39,6 +39,7 @@ import java.io.IOException;
 
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SecurityUtils;
+import net.sourceforge.plantuml.utils.Log;
 
 public class FileSystem {
 
@@ -72,13 +73,17 @@ public class FileSystem {
 	}
 
 	public SFile getFile(String nameOrPath) throws IOException {
-		if (isAbsolute(nameOrPath))
-			return new SFile(nameOrPath).getCanonicalFile();
+		if (isAbsolute(nameOrPath)) {
+			final SFile result = new SFile(nameOrPath);
+			Log.info("Trying " + result.getAbsolutePath());
+			return result.getCanonicalFile();
+		}
 
 		final SFile dir = getCurrentDir();
 		SFile filecurrent = null;
 		if (dir != null) {
 			filecurrent = dir.getAbsoluteFile().file(nameOrPath);
+			Log.info("Current dir is " + dir.getAbsolutePath() + " so trying " + filecurrent.getAbsolutePath());
 			if (filecurrent.exists())
 				return filecurrent.getCanonicalFile();
 

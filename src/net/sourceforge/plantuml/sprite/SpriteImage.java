@@ -52,6 +52,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.utils.Log;
 
 public class SpriteImage implements Sprite {
 
@@ -99,6 +100,7 @@ public class SpriteImage implements Sprite {
 
 	public static InputStream getInternalSprite(final String inner) {
 		final String path = "/sprites/" + inner;
+		Log.info("Triying " + path);
 		final InputStream is = SpriteImage.class.getResourceAsStream(path);
 		return is;
 	}

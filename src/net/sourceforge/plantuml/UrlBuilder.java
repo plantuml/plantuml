@@ -35,38 +35,48 @@
  */
 package net.sourceforge.plantuml;
 
+import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
+import net.sourceforge.plantuml.command.regex.RegexLeaf;
+import net.sourceforge.plantuml.command.regex.RegexOptional;
 
 public class UrlBuilder {
 
-	private static final String S_QUOTED = "\\[\\[[%s]*" + //
+	public static final IRegex MANDATORY = new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")");
+	public static final IRegex OPTIONAL = new RegexOptional(MANDATORY);
+
+	private static final String START_PART = "\\[\\[[%s]*";
+	private static final String END_PART = "[%s]*\\]\\]";
+
+	private static final String S_QUOTED = START_PART + //
 			"[%g]([^%g]+)[%g]" + // Quoted part
 			"(?:[%s]*\\{([^{}]*)\\})?" + // Optional tooltip
 			"(?:[%s]([^%s\\{\\}\\[\\]][^\\[\\]]*))?" + // Optional label
-			"[%s]*\\]\\]";
+			END_PART;
 
-	private static final String S_ONLY_TOOLTIP = "\\[\\[[%s]*" + //
+	private static final String S_ONLY_TOOLTIP = START_PART + //
 			"\\{(.*)\\}" + // Tooltip
-			"[%s]*\\]\\]";
+			END_PART;
 
-	private static final String S_ONLY_TOOLTIP_AND_LABEL = "\\[\\[[%s]*" + //
+	private static final String S_ONLY_TOOLTIP_AND_LABEL = START_PART + //
 			"\\{([^{}]*)\\}" + // Tooltip
 			"[%s]*" + //
 			"([^\\[%s\\{\\}\\[\\]][^\\[\\]]*)" // Label
-			+ "[%s]*\\]\\]";
+			+ END_PART;
 
-	private static final String S_LINK_TOOLTIP_NOLABEL = "\\[\\[[%s]*" + //
+	private static final String S_LINK_TOOLTIP_NOLABEL = START_PART + //
 			"([^\\s%g{}\\[\\]]+?)" + // Link
-			"[%s]*\\{(.+)\\}" + // Tooltip
-			"[%s]*\\]\\]";
+			"[%s]*" + //
+			"\\{(.+)\\}" + // Tooltip
+			END_PART;
 
-	private static final String S_LINK_WITH_OPTIONAL_TOOLTIP_WITH_OPTIONAL_LABEL = "\\[\\[[%s]*" + //
+	private static final String S_LINK_WITH_OPTIONAL_TOOLTIP_WITH_OPTIONAL_LABEL = START_PART + //
 			"([^%s%g\\[\\]]+?)" + // Link
 			"(?:[%s]*\\{([^{}]*)\\})?" + // Optional tooltip
 			"(?:[%s]([^%s\\{\\}\\[\\]][^\\[\\]]*))?" + // Optional label
-			"[%s]*\\]\\]";
+			END_PART;
 
 	public static String getRegexp() {
 		return S_QUOTED + "|" + //
@@ -94,49 +104,44 @@ public class UrlBuilder {
 	public Url getUrl(String s) {
 		Matcher2 m;
 		m = QUOTED.matcher(s);
-		if (matchesOrFind(m)) {
+		if (matchesOrFind(m))
 			return new Url(withTopUrl(m.group(1)), m.group(2), m.group(3));
-		}
 
 		m = ONLY_TOOLTIP.matcher(s);
-		if (matchesOrFind(m)) {
+		if (matchesOrFind(m))
 			return new Url("", m.group(1), null);
-		}
 
 		m = ONLY_TOOLTIP_AND_LABEL.matcher(s);
-		if (matchesOrFind(m)) {
+		if (matchesOrFind(m))
 			return new Url("", m.group(1), m.group(2));
-		}
 
 		m = LINK_TOOLTIP_NOLABEL.matcher(s);
-		if (matchesOrFind(m)) {
+		if (matchesOrFind(m))
 			return new Url(withTopUrl(m.group(1)), m.group(2), null);
-		}
 
 		m = LINK_WITH_OPTIONAL_TOOLTIP_WITH_OPTIONAL_LABEL.matcher(s);
-		if (matchesOrFind(m)) {
+		if (matchesOrFind(m))
 			return new Url(withTopUrl(m.group(1)), m.group(2), m.group(3));
-		}
 
 		return null;
 
 	}
 
 	private boolean matchesOrFind(Matcher2 m) {
-		if (mode == UrlMode.STRICT) {
+		if (mode == UrlMode.STRICT)
 			return m.matches();
-		} else if (mode == UrlMode.ANYWHERE) {
+		else if (mode == UrlMode.ANYWHERE)
 			return m.find();
-		} else {
+		else
 			throw new IllegalStateException();
-		}
+
 	}
 
 	private String withTopUrl(String url) {
 		if (url.startsWith("http:") == false && url.startsWith("https:") == false && url.startsWith("file:") == false
-				&& topurl != null) {
+				&& topurl != null)
 			return topurl + url;
-		}
+
 		return url;
 	}
 

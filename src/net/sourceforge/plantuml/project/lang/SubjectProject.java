@@ -48,6 +48,11 @@ import net.sourceforge.plantuml.project.time.Day;
 
 public class SubjectProject implements Subject {
 
+	public static final Subject ME = new SubjectProject();
+
+	private SubjectProject() {
+	}
+
 	public IRegex toRegex() {
 		return new RegexLeaf("SUBJECT", "project");
 	}
@@ -63,7 +68,7 @@ public class SubjectProject implements Subject {
 	class Starts extends SentenceSimple {
 
 		public Starts() {
-			super(SubjectProject.this, Verbs.starts(), new ComplementDate());
+			super(SubjectProject.this, Verbs.starts, new ComplementDate());
 		}
 
 		@Override

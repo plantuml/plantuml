@@ -85,9 +85,9 @@ public class PSystemWelcome extends PlainDiagram {
 	}
 
 	public TextBlockBackcolored getGraphicStrings() {
-		if (position != null) {
+		if (position != null)
 			return GraphicStrings.createBlackOnWhite(strings, PSystemVersion.getPlantumlImage(), position);
-		}
+
 		return GraphicStrings.createBlackOnWhite(strings);
 	}
 

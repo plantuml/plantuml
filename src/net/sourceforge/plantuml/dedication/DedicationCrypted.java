@@ -42,6 +42,7 @@ import java.io.ByteArrayInputStream;
 import java.math.BigInteger;
 
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.utils.MTRandom;
 
 public class DedicationCrypted implements Dedication {
@@ -64,18 +65,17 @@ public class DedicationCrypted implements Dedication {
 	public synchronized BufferedImage getImage(final TinyHashableString sentence) {
 		final String line = sentence.getSentence();
 
-		if (line.length() < 40) {
+		if (line.length() < 40)
 			return null;
-		}
 
 		try {
 			if (solution == null || line.equals(this.solution) == false) {
-				if (System.currentTimeMillis() < next) {
+				if (System.currentTimeMillis() < next)
 					return null;
-				}
-				if (this.tinyHash != sentence.tinyHash()) {
+
+				if (this.tinyHash != sentence.tinyHash())
 					return null;
-				}
+
 				this.next = System.currentTimeMillis() + 5000L;
 			}
 
@@ -104,13 +104,13 @@ public class DedicationCrypted implements Dedication {
 
 			final String argon = Noise.computeArgon2String(current, (pq.toString(34) + line).getBytes(UTF_8));
 
-			if (this.argon2.equals(argon) == false) {
+			if (this.argon2.equals(argon) == false)
 				return null;
-			}
+
 			Noise.shuffle(current, rndMT);
 			current = Noise.reverse(current, rndMT.nextInt());
 
-			final BufferedImage img = PSystemDedication.getBufferedImage(new ByteArrayInputStream(current));
+			final BufferedImage img = SFile.getBufferedImageFromWebpButHeader(new ByteArrayInputStream(current));
 			this.solution = line;
 			return img;
 		} catch (Throwable t) {

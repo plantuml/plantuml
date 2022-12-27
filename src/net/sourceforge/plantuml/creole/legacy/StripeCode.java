@@ -41,6 +41,7 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.creole.Neutron;
 import net.sourceforge.plantuml.creole.Parser;
 import net.sourceforge.plantuml.creole.atom.Atom;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -109,8 +110,10 @@ public class StripeCode implements StripeRaw {
 		}
 	}
 
-	public List<Atom> splitInTwo(StringBounder stringBounder, double width) {
-		return Arrays.asList((Atom) this);
+	@Override
+	public List<Neutron> getNeutrons() {
+		return Arrays.asList(Neutron.create(this));
 	}
+
 
 }

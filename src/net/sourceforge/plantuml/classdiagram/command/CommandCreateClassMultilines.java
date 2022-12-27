@@ -36,13 +36,16 @@
 package net.sourceforge.plantuml.classdiagram.command;
 
 import net.sourceforge.plantuml.FontParam;
-import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlMode;
+import net.sourceforge.plantuml.baraye.CucaDiagram;
+import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.IEntity;
+import net.sourceforge.plantuml.baraye.ILeaf;
+import net.sourceforge.plantuml.baraye.Quark;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
-import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
@@ -55,8 +58,6 @@ import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.cucadiagram.IEntity;
-import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
@@ -71,6 +72,8 @@ import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
+import net.sourceforge.plantuml.utils.BlocLines;
+import net.sourceforge.plantuml.utils.StringLocated;
 
 public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagram> {
 
@@ -115,20 +118,24 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 				new RegexOptional(new RegexConcat(RegexLeaf.spaceZeroOrMore(),
 						new RegexLeaf("GENERIC", "\\<(" + GenericRegexProducer.PATTERN + ")\\>"))), //
 				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("TAGS1", Stereotag.pattern() + "?"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("STEREO", "(\\<\\<.+\\>\\>)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("TAGS", Stereotag.pattern() + "?"), //
+				new RegexLeaf("TAGS2", Stereotag.pattern() + "?"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
+				UrlBuilder.OPTIONAL, //
 				RegexLeaf.spaceZeroOrMore(), //
 				color().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexConcat(new RegexLeaf("##"),
 						new RegexLeaf("LINECOLOR", "(?:\\[(dotted|dashed|bold)\\])?(\\w+)?"))), //
 				new RegexOptional(new RegexConcat(RegexLeaf.spaceOneOrMore(),
-						new RegexLeaf("EXTENDS", "(extends)[%s]+(" + CommandCreateClassMultilines.CODES + "|[%g]([^%g]+)[%g])"))), //
+						new RegexLeaf("EXTENDS",
+								"(extends)[%s]+(" + CommandCreateClassMultilines.CODES + "|[%g]([^%g]+)[%g])"))), //
 				new RegexOptional(new RegexConcat(RegexLeaf.spaceOneOrMore(),
-						new RegexLeaf("IMPLEMENTS", "(implements)[%s]+(" + CommandCreateClassMultilines.CODES + "|[%g]([^%g]+)[%g])"))), //
+						new RegexLeaf("IMPLEMENTS",
+								"(implements)[%s]+(" + CommandCreateClassMultilines.CODES + "|[%g]([^%g]+)[%g])"))), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("\\{"), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -180,7 +187,7 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 
 		manageExtends("EXTENDS", diagram, line0, entity);
 		manageExtends("IMPLEMENTS", diagram, line0, entity);
-		addTags(entity, line0.get("TAGS", 0));
+		addTags(entity, line0.getLazzy("TAGS", 0));
 
 		return CommandExecutionResult.ok();
 	}
@@ -217,9 +224,9 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 					typeLink = typeLink.goDashed();
 
 				final LinkArg linkArg = LinkArg.noDisplay(2);
-				final Link link = new Link(diagram.getSkinParam().getCurrentStyleBuilder(), cl2, entity, typeLink,
-						linkArg.withQuantifier(null, null).withDistanceAngle(diagram.getLabeldistance(),
-								diagram.getLabelangle()));
+				final Link link = new Link(diagram.getIEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(),
+						cl2, entity, typeLink, linkArg.withQuantifier(null, null)
+								.withDistanceAngle(diagram.getLabeldistance(), diagram.getLabelangle()));
 				diagram.addLink(link);
 			}
 		}
@@ -245,7 +252,27 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 		final String stereotype = line0.get("STEREO", 0);
 
 		/* final */ILeaf result;
-		if (diagram.V1972()) {
+		if (CucaDiagram.QUARK) {
+			final Quark current = diagram.currentQuark();
+			final Quark idNewLong = (Quark) diagram.buildLeafIdent(idShort);
+			if (idNewLong.getData() == null)
+				result = diagram.createLeaf(idNewLong, code, Display.getWithNewlines(display), type, null);
+			else
+				result = (ILeaf) idNewLong.getData();
+			if (result == null || result.isGroup()) {
+				for (Quark tmp : diagram.getPlasma().quarks())
+					if (tmp.getData() instanceof EntityImp) {
+						final EntityImp tmp2 = (EntityImp) tmp.getData();
+						if (tmp2 != null && tmp.getName().equals(idShort) && tmp2.isGroup() == false) {
+							result = (ILeaf) tmp.getData();
+							break;
+						}
+					}
+			}
+			if (result == null)
+				result = diagram.createLeaf(idNewLong, idNewLong, Display.getWithNewlines(display), type, null);
+			diagram.setLastEntity(result);
+		} else if (diagram.V1972()) {
 			result = diagram.getLeafSmart(ident);
 			if (result != null) {
 				// result = diagram.getOrCreateLeaf(ident, code, null, null);
@@ -266,6 +293,7 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 				result = diagram.createLeaf(ident, code, Display.getWithNewlines(display), type, null);
 			}
 		}
+
 		result.setVisibilityModifier(visibilityModifier);
 		if (stereotype != null) {
 			result.setStereotype(Stereotype.build(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),

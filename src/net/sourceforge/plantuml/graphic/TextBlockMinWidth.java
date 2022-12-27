@@ -53,7 +53,7 @@ class TextBlockMinWidth extends AbstractTextBlock implements TextBlock {
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		final XDimension2D dim = textBlock.calculateDimension(stringBounder);
-		return XDimension2D.atLeast(dim, minWidth, 0);
+		return dim.atLeast(minWidth, 0);
 	}
 
 	public void drawU(UGraphic ug) {

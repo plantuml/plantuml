@@ -66,7 +66,7 @@ public class EntityImageDegenerated implements IEntityImage {
 	}
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-		return XDimension2D.delta(orig.calculateDimension(stringBounder), delta * 2, delta * 2);
+		return orig.calculateDimension(stringBounder).delta(delta * 2, delta * 2);
 	}
 
 	public MinMax getMinMax(StringBounder stringBounder) {

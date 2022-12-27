@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.gtile;
 
-import net.sourceforge.plantuml.activitydiagram3.ftile.Arrows;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -60,8 +59,8 @@ public class GConnectionVerticalDown extends GAbstractConnection {
 
 	@Override
 	public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
-		final Snake snake = Snake.create(skinParam(), getInLinkRenderingColor(), Arrows.asToDown()).withLabel(textBlock,
-				HorizontalAlignment.LEFT);
+		final Snake snake = Snake.create(skinParam(), getInLinkRenderingColor(), skinParam().arrows().asToDown())
+				.withLabel(textBlock, HorizontalAlignment.LEFT);
 		final XPoint2D p1 = pos1.getTranslated(gpoint1.getPoint2D());
 		final XPoint2D p2 = pos2.getTranslated(gpoint2.getPoint2D());
 		final XPoint2D mp1a = translate1.getTranslated(p1);
@@ -77,8 +76,8 @@ public class GConnectionVerticalDown extends GAbstractConnection {
 
 	@Override
 	public void drawU(UGraphic ug) {
-		final Snake snake = Snake.create(skinParam(), getInLinkRenderingColor(), Arrows.asToDown()).withLabel(textBlock,
-				HorizontalAlignment.LEFT);
+		final Snake snake = Snake.create(skinParam(), getInLinkRenderingColor(), skinParam().arrows().asToDown())
+				.withLabel(textBlock, HorizontalAlignment.LEFT);
 		final XPoint2D p1 = pos1.getTranslated(gpoint1.getPoint2D());
 		final XPoint2D p2 = pos2.getTranslated(gpoint2.getPoint2D());
 		snake.addPoint(p1);

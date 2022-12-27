@@ -71,9 +71,11 @@ public class PSystemLogo extends AbstractPSystem {
 		final int width = 640;
 		final int height = 480;
 		final StringBounder stringBounder = FileFormat.PNG.getDefaultStringBounder();
-		final EmptyImageBuilder builder = new EmptyImageBuilder(fileFormat.getWatermark(), width, height, Color.WHITE, stringBounder);
+		final EmptyImageBuilder builder = new EmptyImageBuilder(fileFormat.getWatermark(), width, height, Color.WHITE,
+				stringBounder);
 		final BufferedImage im = builder.getBufferedImage();
-		final UGraphic ug = new UGraphicG2d(HColors.WHITE, ColorMapper.IDENTITY, stringBounder, builder.getGraphics2D(), 1.0);
+		final UGraphic ug = new UGraphicG2d(HColors.WHITE, ColorMapper.IDENTITY, stringBounder, builder.getGraphics2D(),
+				1.0);
 		((UGraphicG2d) ug).setBufferedImage(im);
 
 		final TurtleGraphicsPane turtleGraphicsPane = new TurtleGraphicsPane(width, height);
@@ -82,7 +84,7 @@ public class PSystemLogo extends AbstractPSystem {
 			tinyJavaLogo.doCommandLine(line);
 		}
 		turtleGraphicsPane.paint(ug);
-		PngIO.write(im, os, 96);
+		PngIO.write(im, ColorMapper.IDENTITY, os, null, 96);
 		return new ImageDataSimple(im.getWidth(), im.getHeight());
 	}
 

@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.help;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -51,10 +50,7 @@ public class HelpFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	protected List<Command> createCommands() {
-
-		final List<Command> cmds = new ArrayList<>();
-
+	protected void initCommandsList(List<Command> cmds) {
 		cmds.add(new CommandHelp());
 		cmds.add(new CommandHelpColor());
 		cmds.add(new CommandHelpFont());
@@ -62,8 +58,6 @@ public class HelpFactory extends PSystemCommandFactory {
 		cmds.add(new CommandHelpSkinparam());
 		cmds.add(new CommandHelpType());
 		cmds.add(new CommandHelpTheme());
-
-		return cmds;
 	}
 
 }

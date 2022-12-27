@@ -43,9 +43,9 @@ import java.net.Socket;
 
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.SourceStringReader;
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.utils.Log;
 
 class AcceptTelnetClient extends Thread {
 	final private Socket clientSocket;

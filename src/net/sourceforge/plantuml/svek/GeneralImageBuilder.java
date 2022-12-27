@@ -50,7 +50,6 @@ import net.sourceforge.plantuml.BaseFile;
 import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
-import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.Pragma;
 import net.sourceforge.plantuml.SkinParam;
@@ -58,13 +57,15 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.awt.geom.XRectangle2D;
+import net.sourceforge.plantuml.baraye.EntityFactory;
+import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.IEntity;
+import net.sourceforge.plantuml.baraye.IGroup;
+import net.sourceforge.plantuml.baraye.ILeaf;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.cucadiagram.EntityPosition;
 import net.sourceforge.plantuml.cucadiagram.GroupRoot;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
-import net.sourceforge.plantuml.cucadiagram.IEntity;
-import net.sourceforge.plantuml.cucadiagram.IGroup;
-import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.PortionShower;
@@ -75,8 +76,6 @@ import net.sourceforge.plantuml.cucadiagram.dot.ExeState;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizVersion;
 import net.sourceforge.plantuml.cucadiagram.dot.Neighborhood;
-import net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
-import net.sourceforge.plantuml.cucadiagram.entity.EntityImpl;
 import net.sourceforge.plantuml.descdiagram.EntityImageDesignedDomain;
 import net.sourceforge.plantuml.descdiagram.EntityImageDomain;
 import net.sourceforge.plantuml.descdiagram.EntityImageMachine;
@@ -127,6 +126,7 @@ import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.utils.Log;
 
 public final class GeneralImageBuilder {
 
@@ -586,7 +586,6 @@ public final class GeneralImageBuilder {
 
 			if (dotData.isEmpty(g) && g.getGroupType() == GroupType.PACKAGE) {
 				final ISkinParam skinParam = dotData.getSkinParam();
-				entityFactory.thisIsGoingToBeALeaf(g.getIdent());
 				final ILeaf folder = entityFactory.createLeafForEmptyGroup(g, skinParam);
 				printEntity(dotStringFactory, folder);
 			} else {
@@ -607,7 +606,7 @@ public final class GeneralImageBuilder {
 			}
 		}
 
-		final ClusterHeader clusterHeader = new ClusterHeader((EntityImpl) g, dotData.getSkinParam(), dotData,
+		final ClusterHeader clusterHeader = new ClusterHeader((EntityImp) g, dotData.getSkinParam(), dotData,
 				stringBounder);
 		dotStringFactory.openCluster(g, clusterHeader);
 		this.printEntities(dotStringFactory, g.getLeafsDirect());

@@ -62,24 +62,24 @@ class Idea {
 
 	private StyleSignatureBasic getDefaultStyleDefinitionNode(int level) {
 		final String depth = SName.depth(level);
-		if (level == 0) {
+		if (level == 0)
 			return StyleSignatureBasic.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.rootNode)
-					.add(stereotype).add(depth);
-		}
-		if (shape == IdeaShape.NONE && children.size() == 0) {
+					.addS(stereotype).add(depth);
+
+		if (shape == IdeaShape.NONE && children.size() == 0)
 			return StyleSignatureBasic
 					.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.leafNode, SName.boxless)
-					.add(stereotype).add(depth);
-		}
-		if (shape == IdeaShape.NONE) {
+					.addS(stereotype).add(depth);
+
+		if (shape == IdeaShape.NONE)
 			return StyleSignatureBasic.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.boxless)
-					.add(stereotype).add(depth);
-		}
-		if (children.size() == 0) {
+					.addS(stereotype).add(depth);
+
+		if (children.size() == 0)
 			return StyleSignatureBasic.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.leafNode)
-					.add(stereotype).add(depth);
-		}
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.mindmapDiagram, SName.node).add(stereotype)
+					.addS(stereotype).add(depth);
+
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.mindmapDiagram, SName.node).addS(stereotype)
 				.add(depth);
 	}
 
@@ -100,7 +100,7 @@ class Idea {
 	public Style getStyleArrow() {
 		final String depth = SName.depth(level);
 		final StyleSignatureBasic defaultStyleDefinitionArrow = StyleSignatureBasic
-				.of(SName.root, SName.element, SName.mindmapDiagram, SName.arrow).add(stereotype).add(depth);
+				.of(SName.root, SName.element, SName.mindmapDiagram, SName.arrow).addS(stereotype).add(depth);
 		return defaultStyleDefinitionArrow.getMergedStyle(styleBuilder);
 	}
 

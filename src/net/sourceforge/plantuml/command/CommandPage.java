@@ -36,15 +36,17 @@
 package net.sourceforge.plantuml.command;
 
 import net.sourceforge.plantuml.AbstractPSystem;
-import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandPage extends SingleLineCommand2<AbstractPSystem> {
 
-	public CommandPage() {
+	public static final CommandPage ME = new CommandPage();
+
+	private CommandPage() {
 		super(getRegexConcat());
 	}
 
@@ -60,14 +62,13 @@ public class CommandPage extends SingleLineCommand2<AbstractPSystem> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(AbstractPSystem system, LineLocation location,
-			RegexResult arg) {
+	protected CommandExecutionResult executeArg(AbstractPSystem system, LineLocation location, RegexResult arg) {
 
 		final int horizontal = Integer.parseInt(arg.get("NB1", 0));
 		final int vertical = Integer.parseInt(arg.get("NB2", 0));
-		if (horizontal <= 0 || vertical <= 0) {
+		if (horizontal <= 0 || vertical <= 0)
 			return CommandExecutionResult.error("Argument must be positive");
-		}
+
 		system.setSplitPagesHorizontal(horizontal);
 		system.setSplitPagesVertical(vertical);
 		return CommandExecutionResult.ok();

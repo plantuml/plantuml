@@ -36,7 +36,10 @@
 package net.sourceforge.plantuml.creole.legacy;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.EmbeddedDiagram;
@@ -116,23 +119,41 @@ public class CreoleParser implements SheetBuilder {
 		return line.matches("^\\=?\\s*(\\<#\\w+(,#?\\w+)?\\>).*");
 	}
 
+	private final Map<Display, Sheet> cache = new HashMap<>();
+
 	public Sheet createSheet(Display display) {
+		Sheet result = cache.get(display);
+		if (result == null) {
+			result = createSheetSlow(display, false);
+			cache.put(display, result);
+		}
+		return result;
+	}
+
+	private Sheet createSheetSlow(Display display, boolean checkColor) {
 		final Sheet sheet = new Sheet(horizontalAlignment);
 		if (Display.isNull(display) == false) {
 			final CreoleContext context = new CreoleContext();
-			for (CharSequence cs : display) {
+			final Iterator<CharSequence> it = display.iterator();
+			while (it.hasNext()) {
+				final CharSequence cs = it.next();
 				final Stripe stripe;
-				if (cs instanceof EmbeddedDiagram) {
-					final Atom atom = ((EmbeddedDiagram) cs).asDraw(skinParam);
-					stripe = new Stripe() {
-						public Atom getLHeader() {
-							return null;
-						}
+				final String type = EmbeddedDiagram.getEmbeddedType(StringUtils.trinNoTrace(cs));
+				if (type != null) {
+					final Atom embeddedDiagram = EmbeddedDiagram.createAndSkip(type, it, skinParam);
+					if (checkColor)
+						stripe = null;
+					else {
+						stripe = new Stripe() {
+							public Atom getLHeader() {
+								return null;
+							}
 
-						public List<Atom> getAtoms() {
-							return Arrays.asList(atom);
-						}
-					};
+							public List<Atom> getAtoms() {
+								return Arrays.asList(embeddedDiagram);
+							}
+						};
+					}
 				} else if (cs instanceof Stereotype) {
 					if (display.showStereotype())
 						for (String st : ((Stereotype) cs).getLabels(skinParam.guillemet()))
@@ -140,7 +161,8 @@ public class CreoleParser implements SheetBuilder {
 
 					continue;
 				} else {
-					stripe = createStripe(cs.toString(), context, sheet.getLastStripe(), fontConfiguration);
+					stripe = createStripe(skinParam.guillemet().manageGuillemet(cs.toString()), context,
+							sheet.getLastStripe(), fontConfiguration);
 				}
 
 				if (stripe != null)
@@ -155,7 +177,7 @@ public class CreoleParser implements SheetBuilder {
 		FontConfiguration fc = FontConfiguration.blackBlueTrue(UFont.byDefault(10));
 		try {
 			new CreoleParser(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty(), CreoleMode.FULL, fc)
-					.createSheet(result);
+					.createSheetSlow(result, true);
 		} catch (NoSuchColorRuntimeException e) {
 			throw new NoSuchColorException();
 		}

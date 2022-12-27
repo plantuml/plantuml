@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.project.core.Task;
 public class SentenceLinksTo extends SentenceSimple {
 
 	public SentenceLinksTo() {
-		super(new SubjectTask(), Verbs.linksTo(), new ComplementUrl());
+		super(SubjectTask.ME, Verbs.linksTo, new ComplementUrl());
 	}
 
 	@Override

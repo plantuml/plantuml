@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.sequencediagram;
 
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.activitydiagram3.ftile.Arrows;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -111,8 +110,9 @@ public class LinkAnchor {
 
 		final Display display = Display.getWithNewlines(message);
 		final TextBlock title = display.create(fontConfiguration, HorizontalAlignment.CENTER, skinParam);
-		final Snake snake = Snake.create(skinParam, Arrows.asToUp(), rainbow, Arrows.asToDown()).withLabel(title,
-				HorizontalAlignment.CENTER);
+		final Snake snake = Snake
+				.create(skinParam, skinParam.arrows().asToUp(), rainbow, skinParam.arrows().asToDown())
+				.withLabel(title, HorizontalAlignment.CENTER);
 
 		snake.addPoint(x, ymin + 2);
 		snake.addPoint(x, ymax - 2);

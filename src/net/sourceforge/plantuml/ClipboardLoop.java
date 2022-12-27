@@ -46,6 +46,7 @@ import java.io.IOException;
 
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.security.SImageIO;
+import net.sourceforge.plantuml.utils.Log;
 
 public class ClipboardLoop {
 

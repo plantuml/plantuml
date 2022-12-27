@@ -139,7 +139,7 @@ class USymbolNode extends USymbol {
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
 				final XDimension2D dimLabel = label.calculateDimension(stringBounder);
 				final XDimension2D dimStereo = stereotype.calculateDimension(stringBounder);
-				return getMargin().addDimension(XDimension2D.mergeTB(dimStereo, dimLabel));
+				return getMargin().addDimension(dimStereo.mergeTB(dimLabel));
 			}
 		};
 	}

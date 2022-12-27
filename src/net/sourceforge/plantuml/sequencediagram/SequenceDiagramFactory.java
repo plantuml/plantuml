@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.sequencediagram;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -89,10 +88,7 @@ public class SequenceDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	protected List<Command> createCommands() {
-
-		final List<Command> cmds = new ArrayList<>();
-
+	protected void initCommandsList(List<Command> cmds) {
 		CommonCommands.addCommonCommands1(cmds);
 		cmds.add(new CommandHideUnlinked());
 
@@ -149,8 +145,6 @@ public class SequenceDiagramFactory extends PSystemCommandFactory {
 		cmds.add(new CommandFootboxOld());
 		cmds.add(new CommandUrl());
 		cmds.add(new CommandLinkAnchor());
-
-		return cmds;
 	}
 
 }

@@ -39,10 +39,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 
-import net.sourceforge.plantuml.LineLocation;
-import net.sourceforge.plantuml.LineLocationImpl;
-import net.sourceforge.plantuml.Log;
-import net.sourceforge.plantuml.StringLocated;
+import net.sourceforge.plantuml.utils.LineLocation;
+import net.sourceforge.plantuml.utils.LineLocationImpl;
+import net.sourceforge.plantuml.utils.Log;
+import net.sourceforge.plantuml.utils.StringLocated;
 
 public class ReadLineReader implements ReadLine {
 

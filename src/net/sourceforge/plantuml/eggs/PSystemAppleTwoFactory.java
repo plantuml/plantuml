@@ -38,10 +38,10 @@ package net.sourceforge.plantuml.eggs;
 import java.io.IOException;
 
 import net.sourceforge.plantuml.AbstractPSystem;
-import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.utils.Log;
 
 public class PSystemAppleTwoFactory extends PSystemSingleLineFactory {
 

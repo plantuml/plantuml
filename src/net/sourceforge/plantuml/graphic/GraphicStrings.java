@@ -168,7 +168,7 @@ public class GraphicStrings extends AbstractTextBlock implements IEntityImage {
 	}
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-		return XDimension2D.delta(calculateDimensionInternal(stringBounder), 2 * margin);
+		return calculateDimensionInternal(stringBounder).delta(2 * margin);
 	}
 
 	private XDimension2D calculateDimensionInternal(StringBounder stringBounder) {
