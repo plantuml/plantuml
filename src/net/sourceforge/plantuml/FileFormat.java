@@ -109,8 +109,8 @@ public enum FileFormat {
 		if (this == MJPEG)
 			return ".avi";
 
-		if (this == LATEX_NO_PREAMBLE)
-			return ".latex";
+		if (this == LATEX || this == LATEX_NO_PREAMBLE)
+			return ".tex";
 
 		if (this == ANIMATED_GIF)
 			return ".gif";
