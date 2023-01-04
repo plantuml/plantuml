@@ -12,7 +12,7 @@ To update  it run
 
 ```
 cd plantuml/tools
-python3 generate_graphml_test_overview.py /path/to/test/nonreg/graphml`
+python3 generate_graphml_test_overview.py /path/to/test/nonreg/graphml
 ```
 
-
+For the result see [test_case_overview.md](test_overview.md)
