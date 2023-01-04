@@ -47,7 +47,6 @@ import java.util.Arrays;
 
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.eps.EpsGraphics;
@@ -59,6 +58,7 @@ import net.sourceforge.plantuml.ugraphic.AffineTransformType;
 import net.sourceforge.plantuml.ugraphic.MutableImage;
 import net.sourceforge.plantuml.ugraphic.PixelImage;
 import net.sourceforge.plantuml.ugraphic.UImageSvg;
+import net.sourceforge.plantuml.utils.Log;
 
 public class ScientificEquationSafe {
 

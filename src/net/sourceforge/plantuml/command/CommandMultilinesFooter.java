@@ -42,10 +42,13 @@ import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
+import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandMultilinesFooter extends CommandMultilines<TitledDiagram> {
 
-	public CommandMultilinesFooter() {
+	public static final CommandMultilinesFooter ME = new CommandMultilinesFooter();
+
+	private CommandMultilinesFooter() {
 		super("^(?:(left|right|center)?[%s]*)footer$");
 	}
 

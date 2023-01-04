@@ -33,7 +33,7 @@
  *
  *
  */
-package net.sourceforge.plantuml;
+package net.sourceforge.plantuml.utils;
 
 /**
  * Indicates the location of a line of code within a resource.

@@ -51,11 +51,11 @@ import java.util.prefs.Preferences;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
-import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.stats.api.Stats;
+import net.sourceforge.plantuml.utils.Log;
 
 public class StatsUtils {
 

@@ -33,63 +33,53 @@
  *
  *
  */
-package net.sourceforge.plantuml;
+package net.sourceforge.plantuml.project;
 
-import java.util.Objects;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Arrows;
+import net.sourceforge.plantuml.ugraphic.UPolygon;
 
-import net.sourceforge.plantuml.annotation.HaxeIgnored;
+public class GArrows extends Arrows {
 
-public class LineLocationImpl implements LineLocation {
-
-	private final String desc;
-	private final int position;
-	private final LineLocation parent;
+	final static private double delta2 = 4;
 
 	@Override
-	public String toString() {
-		return desc + " : " + position;
+	public UPolygon asToUp() {
+		final UPolygon polygon = new UPolygon("asToUp");
+		polygon.addPoint(-delta2, 0);
+		polygon.addPoint(0, 0);
+		polygon.addPoint(delta2, 0);
+		polygon.addPoint(0, -4);
+		return polygon;
 	}
 
-	public LineLocationImpl(String desc, LineLocation parent) {
-		this(desc, parent, -1);
+	@Override
+	public UPolygon asToDown() {
+		final UPolygon polygon = new UPolygon("asToDown");
+		polygon.addPoint(-delta2, 0);
+		polygon.addPoint(0, 0);
+		polygon.addPoint(delta2, 0);
+		polygon.addPoint(0, 4);
+		return polygon;
 	}
 
-	@HaxeIgnored
-	private LineLocationImpl(String desc, LineLocation parent, int position) {
-		this.parent = parent;
-		this.desc = Objects.requireNonNull(desc);
-		this.position = position;
+	@Override
+	public UPolygon asToRight() {
+		final UPolygon polygon = new UPolygon("asToRight");
+		polygon.addPoint(0, -delta2);
+		polygon.addPoint(0, 0);
+		polygon.addPoint(0, delta2);
+		polygon.addPoint(4, 0);
+		return polygon.translate(-4, 0);
 	}
 
-	public LineLocationImpl oneLineRead() {
-		return new LineLocationImpl(desc, parent, position + 1);
-	}
-
-	public int getPosition() {
-		return position;
-	}
-
-	public String getDescription() {
-		return desc;
-	}
-
-	public LineLocation getParent() {
-		return parent;
-	}
-
-	private boolean isStandardLibrary() {
-		return desc.startsWith("<");
-	}
-
-	public int compareTo(LineLocation other) {
-		final LineLocationImpl other2 = (LineLocationImpl) other;
-		if (this.isStandardLibrary() && other2.isStandardLibrary() == false) {
-			return -1;
-		}
-		if (this.isStandardLibrary() == false && other2.isStandardLibrary()) {
-			return 1;
-		}
-		return this.position - other2.position;
+	@Override
+	public UPolygon asToLeft() {
+		final UPolygon polygon = new UPolygon("asToLeft");
+		polygon.addPoint(0, -delta2);
+		polygon.addPoint(0, 0);
+		polygon.addPoint(0, delta2);
+		polygon.addPoint(-4, 0);
+		return polygon.translate(4, 0);
 	}
 
 }

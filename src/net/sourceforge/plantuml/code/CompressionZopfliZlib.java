@@ -43,13 +43,13 @@ import net.sourceforge.plantuml.zopfli.Zopfli;
 public class CompressionZopfliZlib implements Compression {
 
 	public byte[] compress(byte[] in) {
-		if (in.length == 0) {
+		if (in.length == 0)
 			return null;
-		}
+
 		int len = in.length * 2;
-		if (len < 100) {
+		if (len < 100)
 			len = 100;
-		}
+
 		final Zopfli compressor = new Zopfli(len);
 		final Options options = new Options(OutputFormat.DEFLATE, BlockSplitting.FIRST, 30);
 

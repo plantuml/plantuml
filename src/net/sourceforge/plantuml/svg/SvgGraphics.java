@@ -66,10 +66,9 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import net.sourceforge.plantuml.FileUtils;
-import net.sourceforge.plantuml.Log;
-import net.sourceforge.plantuml.SignatureUtils;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.code.Base64Coder;
+import net.sourceforge.plantuml.code.TranscoderUtil;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.security.SecurityProfile;
@@ -83,6 +82,7 @@ import net.sourceforge.plantuml.ugraphic.USegmentType;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorGradient;
+import net.sourceforge.plantuml.utils.Log;
 import net.sourceforge.plantuml.xml.XmlFactories;
 
 public class SvgGraphics {
@@ -260,11 +260,14 @@ public class SvgGraphics {
 	private static String getData(final String name) {
 		try {
 			final InputStream is = SvgGraphics.class.getResourceAsStream("/svg/" + name);
-			return FileUtils.readText(is);
+			if (is == null)
+				Log.error("Cannot retrieve " + name);
+			else
+				return FileUtils.readText(is);
 		} catch (IOException e) {
 			Logme.error(e);
-			return null;
 		}
+		return null;
 	}
 
 	private Element getPathHover(String hover) {
@@ -715,7 +718,7 @@ public class SvgGraphics {
 				ensureVisible(coord[4] + x + 2 * deltaShadow, coord[5] + y + 2 * deltaShadow);
 			} else if (type == USegmentType.SEG_ARCTO) {
 				// A25,25 0,0 5,395,40
-				sb.append("A" + format(coord[0]) + "," + format(coord[1]) + " " + formatBoolean(coord[2]) + " "
+				sb.append("A" + format(coord[0]) + "," + format(coord[1]) + " " + format(coord[2]) + " "
 						+ formatBoolean(coord[3]) + " " + formatBoolean(coord[4]) + " " + format(coord[5] + x) + ","
 						+ format(coord[6] + y) + " ");
 				ensureVisible(coord[5] + coord[0] + x + 2 * deltaShadow, coord[6] + coord[1] + y + 2 * deltaShadow);
@@ -985,15 +988,25 @@ public class SvgGraphics {
 		this.hidden = hidden;
 	}
 
-	public static final String MD5_HEADER = "<!--MD5=[";
+	public static final String META_HEADER = "<!--SRC=[";
 
-	public static String getMD5Hex(String comment) {
-		return SignatureUtils.getMD5Hex(comment);
+	public static String getMetadataHex(String comment) {
+		try {
+			final String encoded = TranscoderUtil.getDefaultTranscoderProtected().encode(comment);
+			return encoded;
+		} catch (IOException e) {
+			return "ERROR42";
+		}
+	}
+
+	public void addCommentMetadata(String metadata) {
+		final String signature = getMetadataHex(metadata);
+		final String comment = "SRC=[" + signature + "]";
+		final Comment commentElement = document.createComment(comment);
+		getG().appendChild(commentElement);
 	}
 
 	public void addComment(String comment) {
-		final String signature = getMD5Hex(comment);
-		comment = "MD5=[" + signature + "]\n" + comment;
 		final Comment commentElement = document.createComment(comment);
 		getG().appendChild(commentElement);
 	}

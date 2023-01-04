@@ -47,16 +47,16 @@ public class CompressionZlib implements Compression {
 	private static final int COMPRESSION_LEVEL = 9;
 
 	public byte[] compress(byte[] in) {
-		if (USE_ZOPFLI) {
+		if (USE_ZOPFLI)
 			return new CompressionZopfliZlib().compress(in);
-		}
-		if (in.length == 0) {
+
+		if (in.length == 0)
 			return null;
-		}
+
 		int len = in.length * 2;
-		if (len < 1000) {
+		if (len < 1000)
 			len = 1000;
-		}
+
 		// Compress the bytes
 		final Deflater compresser = new Deflater(COMPRESSION_LEVEL, true);
 		compresser.setInput(in);
@@ -64,9 +64,9 @@ public class CompressionZlib implements Compression {
 
 		final byte[] output = new byte[len];
 		final int compressedDataLength = compresser.deflate(output);
-		if (compresser.finished() == false) {
+		if (compresser.finished() == false)
 			return null;
-		}
+
 		return copyArray(output, compressedDataLength);
 	}
 

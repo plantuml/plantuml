@@ -33,7 +33,10 @@
  *
  *
  */
-package net.sourceforge.plantuml;
+package net.sourceforge.plantuml.utils;
+
+import net.sourceforge.plantuml.OptionFlags;
+import net.sourceforge.plantuml.ProgressBar;
 
 public abstract class Log {
 

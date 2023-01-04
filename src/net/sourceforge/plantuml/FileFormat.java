@@ -293,11 +293,11 @@ public enum FileFormat {
 				if (svg == null)
 					return false;
 
-				final String currentSignature = SvgGraphics.getMD5Hex(currentMetadata);
-				final int idx = svg.lastIndexOf(SvgGraphics.MD5_HEADER);
+				final String currentSignature = SvgGraphics.getMetadataHex(currentMetadata);
+				final int idx = svg.lastIndexOf(SvgGraphics.META_HEADER);
 				if (idx != -1) {
-					final String part = svg.substring(idx + SvgGraphics.MD5_HEADER.length());
-					return part.startsWith(currentSignature);
+					final String part = svg.substring(idx + SvgGraphics.META_HEADER.length());
+					return part.startsWith(currentSignature + "]");
 				}
 
 			}

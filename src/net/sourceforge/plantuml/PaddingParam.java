@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml;
 
-
 public enum PaddingParam {
 	PARTICIPANT, BOX;
 

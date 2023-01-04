@@ -53,7 +53,9 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.regex.Pattern;
 
-import net.sourceforge.plantuml.command.BlocLines;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Arrows;
+import net.sourceforge.plantuml.activitydiagram3.ftile.ArrowsRegular;
+import net.sourceforge.plantuml.activitydiagram3.ftile.ArrowsTriangle;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
@@ -78,6 +80,7 @@ import net.sourceforge.plantuml.style.FromSkinparamToStyle;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleLoader;
+import net.sourceforge.plantuml.style.parser.StyleParser;
 import net.sourceforge.plantuml.svek.ConditionEndStyle;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 import net.sourceforge.plantuml.svek.PackageStyle;
@@ -88,6 +91,7 @@ import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 import net.sourceforge.plantuml.ugraphic.color.HColors;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
+import net.sourceforge.plantuml.utils.BlocLines;
 
 public class SkinParam implements ISkinParam {
 
@@ -176,7 +180,7 @@ public class SkinParam implements ISkinParam {
 			final StyleBuilder styleBuilder = this.getCurrentStyleBuilder();
 			try {
 				final BlocLines lines = BlocLines.load(internalIs, null);
-				for (Style modifiedStyle : StyleLoader.getDeclaredStyles(lines, styleBuilder))
+				for (Style modifiedStyle : StyleParser.parse(lines, styleBuilder))
 					this.muteStyle(modifiedStyle);
 
 			} catch (IOException e) {
@@ -1219,6 +1223,13 @@ public class SkinParam implements ISkinParam {
 			cache.put(key, result);
 		}
 		return result;
+	}
+
+	@Override
+	public Arrows arrows() {
+		if (strictUmlStyle())
+			return new ArrowsTriangle();
+		return new ArrowsRegular();
 	}
 
 }

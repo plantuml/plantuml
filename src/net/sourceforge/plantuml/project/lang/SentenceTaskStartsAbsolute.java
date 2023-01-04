@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.project.time.Day;
 public class SentenceTaskStartsAbsolute extends SentenceSimple {
 
 	public SentenceTaskStartsAbsolute() {
-		super(new SubjectTask(), Verbs.starts3(), new ComplementDate());
+		super(SubjectTask.ME, Verbs.starts3, new ComplementDate());
 	}
 
 	@Override

@@ -36,12 +36,10 @@
 package net.sourceforge.plantuml.objectdiagram.command;
 
 import net.sourceforge.plantuml.FontParam;
-import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.baraye.IEntity;
 import net.sourceforge.plantuml.baraye.ILeaf;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
-import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
@@ -66,6 +64,8 @@ import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
+import net.sourceforge.plantuml.utils.BlocLines;
+import net.sourceforge.plantuml.utils.StringLocated;
 
 public class CommandCreateMap extends CommandMultilines2<AbstractEntityDiagram> {
 
@@ -81,7 +81,7 @@ public class CommandCreateMap extends CommandMultilines2<AbstractEntityDiagram> 
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("STEREO", "(\\<\\<.+\\>\\>)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
+				UrlBuilder.OPTIONAL, //
 				RegexLeaf.spaceZeroOrMore(), //
 				color().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //

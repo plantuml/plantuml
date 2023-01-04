@@ -36,16 +36,18 @@
 package net.sourceforge.plantuml.command;
 
 import net.sourceforge.plantuml.AbstractPSystem;
-import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.ScaleMaxWidthAndHeight;
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandScaleMaxWidthAndHeight extends SingleLineCommand2<AbstractPSystem> {
 
-	public CommandScaleMaxWidthAndHeight() {
+	public static final CommandScaleMaxWidthAndHeight ME = new CommandScaleMaxWidthAndHeight();
+
+	private CommandScaleMaxWidthAndHeight() {
 		super(getRegexConcat());
 	}
 

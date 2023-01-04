@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.descdiagram;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -74,9 +73,7 @@ public class DescriptionDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	protected List<Command> createCommands() {
-		final List<Command> cmds = new ArrayList<>();
-
+	protected void initCommandsList(List<Command> cmds) {
 		cmds.add(new CommandFootboxIgnored());
 		cmds.add(new CommandNamespaceSeparator());
 		cmds.add(new CommandRankDir());
@@ -126,8 +123,6 @@ public class DescriptionDiagramFactory extends PSystemCommandFactory {
 		cmds.add(new CommandArchimate());
 		cmds.add(new CommandArchimateMultilines());
 		cmds.add(new CommandCreateDomain());
-
-		return cmds;
 	}
 
 }

@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.creole.atom;
 import java.util.List;
 
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.creole.Neutron;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UShape;
@@ -50,6 +51,6 @@ public interface Atom extends UShape {
 
 	public void drawU(UGraphic ug);
 
-	public List<Atom> splitInTwo(StringBounder stringBounder, double width);
+	public List<Neutron> getNeutrons();
 
 }

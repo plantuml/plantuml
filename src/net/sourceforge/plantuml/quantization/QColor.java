@@ -36,9 +36,7 @@ public final class QColor {
 			red = alpha * red;
 			green = alpha * green;
 			blue = alpha * blue;
-
 		} else {
-
 			red = 1 - alpha * (1 - red);
 			green = 1 - alpha * (1 - green);
 			blue = 1 - alpha * (1 - blue);

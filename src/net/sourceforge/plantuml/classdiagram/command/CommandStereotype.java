@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.classdiagram.command;
 
 import net.sourceforge.plantuml.FontParam;
-import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.baraye.IEntity;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -49,6 +48,7 @@ import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandStereotype extends SingleLineCommand2<ClassDiagram> {
 

@@ -38,8 +38,8 @@ package net.sourceforge.plantuml.posimo;
 import java.util.Collection;
 import java.util.Objects;
 
-import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.utils.Log;
 
 public class DotxMaker {
 

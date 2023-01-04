@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.salt;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -52,17 +51,13 @@ public class PSystemSaltFactory2 extends PSystemCommandFactory {
 	}
 
 	@Override
-	protected List<Command> createCommands() {
-
-		final List<Command> cmds = new ArrayList<>();
-		if (getDiagramType() == DiagramType.UML) {
+	protected void initCommandsList(List<Command> cmds) {
+		if (getDiagramType() == DiagramType.UML) 
 			cmds.add(new CommandSalt());
-		}
+		
 		CommonCommands.addCommonCommands2(cmds);
 		CommonCommands.addTitleCommands(cmds);
 		cmds.add(new CommandAnything());
-
-		return cmds;
 	}
 
 	@Override

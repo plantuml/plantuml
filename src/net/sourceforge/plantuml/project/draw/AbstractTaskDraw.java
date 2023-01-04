@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.project.draw;
 
-import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -57,6 +56,7 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 import net.sourceforge.plantuml.ugraphic.color.HColors;
+import net.sourceforge.plantuml.utils.Direction;
 
 public abstract class AbstractTaskDraw implements TaskDraw {
 

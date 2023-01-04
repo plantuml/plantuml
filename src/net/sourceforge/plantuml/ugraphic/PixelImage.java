@@ -186,4 +186,9 @@ public class PixelImage implements MutableImage {
 		return result;
 	}
 
+	@Override
+	public final double getScale() {
+		return scale;
+	}
+
 }

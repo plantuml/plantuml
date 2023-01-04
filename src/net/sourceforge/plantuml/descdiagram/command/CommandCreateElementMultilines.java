@@ -44,7 +44,6 @@ import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlMode;
 import net.sourceforge.plantuml.baraye.ILeaf;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
-import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
@@ -64,6 +63,7 @@ import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
+import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandCreateElementMultilines extends CommandMultilines2<AbstractEntityDiagram> {
 
@@ -97,7 +97,7 @@ public class CommandCreateElementMultilines extends CommandMultilines2<AbstractE
 					RegexLeaf.spaceZeroOrMore(), //
 					new RegexLeaf("STEREO", "(\\<\\<.+\\>\\>)?"), //
 					RegexLeaf.spaceZeroOrMore(), //
-					new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
+					UrlBuilder.OPTIONAL, //
 					RegexLeaf.spaceZeroOrMore(), //
 					ColorParser.exp1(), //
 					RegexLeaf.spaceZeroOrMore(), //
@@ -114,7 +114,7 @@ public class CommandCreateElementMultilines extends CommandMultilines2<AbstractE
 					RegexLeaf.spaceZeroOrMore(), //
 					new RegexLeaf("STEREO", "(\\<\\<.+\\>\\>)?"), //
 					RegexLeaf.spaceZeroOrMore(), //
-					new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
+					UrlBuilder.OPTIONAL, //
 					RegexLeaf.spaceZeroOrMore(), //
 					ColorParser.exp1(), //
 					RegexLeaf.spaceZeroOrMore(), //

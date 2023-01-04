@@ -85,7 +85,7 @@ public class JsonDiagramFactory extends PSystemAbstractFactory {
 		} catch (ParseException e) {
 			json = null;
 		}
-		final JsonDiagram result = new JsonDiagram(source, UmlDiagramType.JSON, json, highlighted);
+		final JsonDiagram result = new JsonDiagram(source, UmlDiagramType.JSON, json, highlighted, styleExtractor);
 		if (styleExtractor != null)
 			styleExtractor.applyStyles(result.getSkinParam());
 

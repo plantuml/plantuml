@@ -40,7 +40,6 @@ import java.util.List;
 
 import net.sourceforge.plantuml.activitydiagram3.Branch;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractConnection;
-import net.sourceforge.plantuml.activitydiagram3.ftile.Arrows;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Connection;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
@@ -80,9 +79,8 @@ public class FtileSwitchWithOneLink extends FtileSwitchWithDiamonds {
 			final double x2 = p2.getX();
 			final double y2 = p2.getY();
 
-			final Snake snake = Snake.create(skinParam(), arrowColor, Arrows.asToDown())
+			final Snake snake = Snake.create(skinParam(), arrowColor, skinParam().arrows().asToDown())
 					.withLabel(branch.getTextBlockPositive(), arrowHorizontalAlignment());
-			// snake.addPoint(x1, y1);
 			snake.addPoint(x2, y1);
 			snake.addPoint(x2, y2);
 
@@ -115,8 +113,7 @@ public class FtileSwitchWithOneLink extends FtileSwitchWithDiamonds {
 			final double x2 = p2.getX();
 			final double y2 = p2.getY();
 
-			final Snake snake = Snake.create(skinParam(), arrowColor, Arrows.asToDown());
-			// snake.addPoint(x1, y1);
+			final Snake snake = Snake.create(skinParam(), arrowColor, skinParam().arrows().asToDown());
 			snake.addPoint(x2, y1);
 			snake.addPoint(x2, y2);
 

@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.command;
 
-import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
@@ -43,10 +42,14 @@ import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.emoji.SvgNanoParser;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
+import net.sourceforge.plantuml.utils.BlocLines;
+import net.sourceforge.plantuml.utils.StringLocated;
 
 public class CommandSpriteSvgMultiline extends CommandMultilines2<TitledDiagram> {
 
-	public CommandSpriteSvgMultiline() {
+	public static final CommandSpriteSvgMultiline ME = new CommandSpriteSvgMultiline();
+
+	private CommandSpriteSvgMultiline() {
 		super(getRegexConcat(), MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH);
 	}
 

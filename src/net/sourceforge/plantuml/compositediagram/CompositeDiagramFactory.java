@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.compositediagram;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -58,15 +57,12 @@ public class CompositeDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	protected List<Command> createCommands() {
-		final List<Command> cmds = new ArrayList<>();
+	protected void initCommandsList(List<Command> cmds) {
 		cmds.add(new CommandCreateBlock());
 		cmds.add(new CommandLinkBlock());
 		cmds.add(new CommandCreatePackageBlock());
 		cmds.add(new CommandEndPackageBlock());
 		CommonCommands.addCommonCommands1(cmds);
-
-		return cmds;
 	}
 
 	@Override

@@ -35,10 +35,6 @@
  */
 package net.sourceforge.plantuml.creole.atom;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
@@ -54,24 +50,6 @@ public class AtomWithMargin extends AbstractAtom implements Atom {
 		this.atom = atom;
 		this.marginY1 = marginY1;
 		this.marginY2 = marginY2;
-	}
-
-	@Override
-	public List<Atom> splitInTwo(StringBounder stringBounder, double width) {
-		final List<Atom> result = new ArrayList<>();
-		final List<Atom> list = atom.splitInTwo(stringBounder, width);
-		for (Atom a : list) {
-			double y1 = marginY1;
-			double y2 = marginY2;
-			if (list.size() == 2 && result.size() == 0) {
-				y2 = 0;
-			}
-			if (list.size() == 2 && result.size() == 1) {
-				y1 = 0;
-			}
-			result.add(new AtomWithMargin(a, y1, y2));
-		}
-		return Collections.unmodifiableList(result);
 	}
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {

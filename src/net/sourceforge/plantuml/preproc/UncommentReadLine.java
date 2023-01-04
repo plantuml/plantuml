@@ -37,11 +37,11 @@ package net.sourceforge.plantuml.preproc;
 
 import java.io.IOException;
 
-import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.utils.StartUtils;
+import net.sourceforge.plantuml.utils.StringLocated;
 
 public class UncommentReadLine implements ReadLine {
 

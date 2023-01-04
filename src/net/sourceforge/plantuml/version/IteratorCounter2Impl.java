@@ -38,7 +38,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.plantuml.StringLocated;
+import net.sourceforge.plantuml.utils.StringLocated;
 
 public class IteratorCounter2Impl implements IteratorCounter2 {
 

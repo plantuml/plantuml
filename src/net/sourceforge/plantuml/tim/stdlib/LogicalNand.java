@@ -2,15 +2,15 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -31,48 +31,38 @@
  *
  * Original Author:  Arnaud Roques
  *
- *
  */
-package net.sourceforge.plantuml.ebnf;
+package net.sourceforge.plantuml.tim.stdlib;
 
-import net.sourceforge.plantuml.command.BlocLines;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-class CharIteratorImpl implements CharIterator {
+import net.sourceforge.plantuml.tim.EaterException;
+import net.sourceforge.plantuml.tim.EaterExceptionLocated;
+import net.sourceforge.plantuml.tim.TContext;
+import net.sourceforge.plantuml.tim.TFunctionSignature;
+import net.sourceforge.plantuml.tim.TMemory;
+import net.sourceforge.plantuml.tim.expression.TValue;
+import net.sourceforge.plantuml.utils.LineLocation;
 
-	final private BlocLines data;
-	private int line = 0;
-	private int pos = 0;
+public class LogicalNand extends SimpleReturnFunction {
 
-	public CharIteratorImpl(BlocLines input) {
-		data = input;
+	public TFunctionSignature getSignature() {
+		return new TFunctionSignature("%nand", 2);
 	}
 
-	@Override
-	public char peek(int ahead) {
-		if (line == -1)
-			return 0;
-		final String currentLine = getCurrentLine();
-		if (pos + ahead >= currentLine.length())
-			return '\0';
-		return currentLine.charAt(pos + ahead);
+	public boolean canCover(int nbArg, Set<String> namedArgument) {
+		return nbArg >= 2;
 	}
 
-	private String getCurrentLine() {
-		return data.getAt(line).getTrimmed().getString();
-	}
+	public TValue executeReturnFunction(TContext context, TMemory memory, LineLocation location, List<TValue> values,
+			Map<String, TValue> named) throws EaterException, EaterExceptionLocated {
+		for (TValue v : values)
+			if (v.toBoolean() == false)
+				return TValue.fromBoolean(!false);
 
-	@Override
-	public void next() {
-		if (line == -1)
-			throw new IllegalStateException();
-		pos++;
-		if (pos >= getCurrentLine().length()) {
-			line++;
-			pos = 0;
-		}
-		while (line < data.size() && getCurrentLine().length() == 0)
-			line++;
-		if (line >= data.size())
-			line = -1;
+		return TValue.fromBoolean(!true);
+
 	}
 }

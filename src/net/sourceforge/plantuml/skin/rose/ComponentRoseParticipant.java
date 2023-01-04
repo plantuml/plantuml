@@ -68,8 +68,8 @@ public class ComponentRoseParticipant extends AbstractTextualComponent {
 			double minWidth, boolean collections, double padding) {
 		super(style, stereo, LineBreakStrategy.NONE, 7, 7, 7, spriteContainer, stringsToDisplay, false);
 
-		this.roundCorner = style.value(PName.RoundCorner).asInt();
-		this.diagonalCorner = style.value(PName.DiagonalCorner).asInt();
+		this.roundCorner = style.value(PName.RoundCorner).asInt(false);
+		this.diagonalCorner = style.value(PName.DiagonalCorner).asInt(false);
 		final SymbolContext biColor = style.getSymbolContext(getIHtmlColorSet());
 		this.stroke = style.getStroke();
 

@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.statediagram;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -71,8 +70,7 @@ public class StateDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	protected List<Command> createCommands() {
-		final List<Command> cmds = new ArrayList<>();
+	protected void initCommandsList(List<Command> cmds) {
 		cmds.add(new CommandFootboxIgnored());
 		cmds.add(new CommandRankDir());
 		cmds.add(new CommandRemoveRestore());
@@ -105,8 +103,6 @@ public class StateDiagramFactory extends PSystemCommandFactory {
 		CommonCommands.addCommonCommands1(cmds);
 		cmds.add(new CommandHideShow2());
 		cmds.add(new CommandNamespaceSeparator());
-
-		return cmds;
 	}
 
 }

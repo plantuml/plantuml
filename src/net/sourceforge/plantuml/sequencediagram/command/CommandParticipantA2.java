@@ -61,7 +61,7 @@ public class CommandParticipantA2 extends CommandParticipant {
 				RegexLeaf.spaceZeroOrMore(), //
 				getOrderRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
+				UrlBuilder.OPTIONAL, //
 				RegexLeaf.spaceZeroOrMore(), //
 				ColorParser.exp1(), RegexLeaf.end());
 	}

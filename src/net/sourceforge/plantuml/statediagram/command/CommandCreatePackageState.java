@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.statediagram.command;
 
-import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlMode;
@@ -63,6 +62,7 @@ import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.statediagram.StateDiagram;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandCreatePackageState extends SingleLineCommand2<StateDiagram> {
 
@@ -94,7 +94,7 @@ public class CommandCreatePackageState extends SingleLineCommand2<StateDiagram> 
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("TAGS2", Stereotag.pattern() + "?"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
+				UrlBuilder.OPTIONAL, //
 				RegexLeaf.spaceZeroOrMore(), //
 				color().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //

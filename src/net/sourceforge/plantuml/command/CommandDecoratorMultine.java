@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.command;
 
 import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandDecoratorMultine<D extends Diagram> implements Command<D> {
 

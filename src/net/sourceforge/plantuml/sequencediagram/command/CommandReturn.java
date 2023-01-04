@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.sequencediagram.command;
 
-import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.IRegex;
@@ -54,6 +53,7 @@ import net.sourceforge.plantuml.skin.ArrowBody;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandReturn extends SingleLineCommand2<SequenceDiagram> {
 

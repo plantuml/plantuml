@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.descdiagram.command;
 
-import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
@@ -64,6 +63,7 @@ import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandPackageWithUSymbol extends SingleLineCommand2<AbstractEntityDiagram> {
 
@@ -123,7 +123,7 @@ public class CommandPackageWithUSymbol extends SingleLineCommand2<AbstractEntity
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("TAGS2", Stereotag.pattern() + "?"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
+				UrlBuilder.OPTIONAL, //
 				RegexLeaf.spaceZeroOrMore(), //
 				color().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //

@@ -35,8 +35,6 @@
  */
 package net.sourceforge.plantuml.descdiagram.command;
 
-import net.sourceforge.plantuml.Direction;
-import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.baraye.IEntity;
 import net.sourceforge.plantuml.baraye.ILeaf;
@@ -62,6 +60,8 @@ import net.sourceforge.plantuml.graphic.USymbols;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
+import net.sourceforge.plantuml.utils.Direction;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 

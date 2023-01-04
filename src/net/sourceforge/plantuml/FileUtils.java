@@ -49,6 +49,7 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.utils.Log;
 
 // Used by the Eclipse Plugin, so do not change package location.
 public class FileUtils {

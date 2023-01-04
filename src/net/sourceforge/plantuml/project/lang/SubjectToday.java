@@ -50,6 +50,11 @@ import net.sourceforge.plantuml.project.time.Day;
 
 public class SubjectToday implements Subject {
 
+	public static final Subject ME = new SubjectToday();
+
+	private SubjectToday() {
+	}
+
 	public IRegex toRegex() {
 		return new RegexConcat( //
 				new RegexLeaf("today") //
@@ -67,7 +72,7 @@ public class SubjectToday implements Subject {
 	class InColor extends SentenceSimple {
 
 		public InColor() {
-			super(SubjectToday.this, Verbs.isColored(), new ComplementInColors());
+			super(SubjectToday.this, Verbs.isColored, new ComplementInColors());
 		}
 
 		@Override
@@ -84,7 +89,7 @@ public class SubjectToday implements Subject {
 	class IsDate extends SentenceSimple {
 
 		public IsDate() {
-			super(SubjectToday.this, Verbs.is(), new ComplementDate());
+			super(SubjectToday.this, Verbs.is, new ComplementDate());
 		}
 
 		@Override

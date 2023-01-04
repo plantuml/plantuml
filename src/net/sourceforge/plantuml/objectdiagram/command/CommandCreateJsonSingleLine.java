@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.objectdiagram.command;
 
 import net.sourceforge.plantuml.FontParam;
-import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.baraye.IEntity;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -58,6 +57,7 @@ import net.sourceforge.plantuml.json.JsonParser;
 import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandCreateJsonSingleLine extends SingleLineCommand2<AbstractClassOrObjectDiagram> {
 
@@ -73,7 +73,7 @@ public class CommandCreateJsonSingleLine extends SingleLineCommand2<AbstractClas
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("STEREO", "(\\<\\<.+\\>\\>)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
+				UrlBuilder.OPTIONAL, //
 				RegexLeaf.spaceZeroOrMore(), //
 				ColorParser.exp1(), //
 				RegexLeaf.spaceZeroOrMore(), //

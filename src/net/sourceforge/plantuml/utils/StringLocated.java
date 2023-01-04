@@ -33,10 +33,11 @@
  *
  *
  */
-package net.sourceforge.plantuml;
+package net.sourceforge.plantuml.utils;
 
 import java.util.Objects;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.annotation.HaxeIgnored;
 import net.sourceforge.plantuml.command.regex.FoxSignature;
 import net.sourceforge.plantuml.tim.TLineType;
@@ -143,7 +144,7 @@ final public class StringLocated {
 
 	public long getFoxSignature() {
 		if (fox == -1)
-			fox = FoxSignature.getFoxSignature(getString());
+			fox = FoxSignature.getFoxSignatureFromRealString(getString());
 
 		return fox;
 	}

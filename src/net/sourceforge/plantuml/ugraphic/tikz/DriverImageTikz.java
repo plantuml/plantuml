@@ -45,7 +45,12 @@ public class DriverImageTikz implements UDriver<UImage, TikzGraphics> {
 	public void draw(UImage shape, double x, double y, ColorMapper mapper, UParam param, TikzGraphics tikz) {
 		final String rawFileName = shape.getRawFileName();
 		if (rawFileName != null) {
-			final String raw = "\\includegraphics{" + rawFileName + "}";
+			final double scale = shape.getScale();
+			final String raw;
+			if (scale == 1)
+				raw = "\\includegraphics{" + rawFileName + "}";
+			else
+				raw = "\\includegraphics[scale=" + TikzGraphics.format(scale) + "]{" + rawFileName + "}";
 			tikz.appendRaw(x, y, raw);
 			return;
 		}

@@ -44,7 +44,7 @@ public class LineBreakStrategy {
 	public LineBreakStrategy(String value) {
 		this.value = value;
 	}
-	
+
 	@Override
 	public String toString() {
 		return value;
@@ -55,9 +55,9 @@ public class LineBreakStrategy {
 	}
 
 	public double getMaxWidth() {
-		if (value != null && value.matches("-?\\d+")) {
+		if (value != null && value.matches("-?\\d+"))
 			return Double.parseDouble(value);
-		}
+
 		return 0;
 	}
 

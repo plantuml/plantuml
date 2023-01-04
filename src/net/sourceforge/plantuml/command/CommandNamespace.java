@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.command;
 
-import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlMode;
@@ -57,8 +56,11 @@ import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandNamespace extends SingleLineCommand2<ClassDiagram> {
+
+	public static final String NAMESPACE_REGEX = "([%pLN_][-%pLN_.:\\\\/]*)";
 
 	public CommandNamespace() {
 		super(getRegexConcat());
@@ -68,11 +70,11 @@ public class CommandNamespace extends SingleLineCommand2<ClassDiagram> {
 		return RegexConcat.build(CommandNamespace.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("namespace"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("NAME", "([%pLN_][-%pLN_.:\\\\]*)"), //
+				new RegexLeaf("NAME", NAMESPACE_REGEX), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("STEREOTYPE", "(\\<\\<.*\\>\\>)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
+				UrlBuilder.OPTIONAL, //
 				RegexLeaf.spaceZeroOrMore(), //
 				ColorParser.exp1(), //
 				RegexLeaf.spaceZeroOrMore(), //

@@ -115,6 +115,7 @@ public enum SName {
 	rectangle, //
 	reference, //
 	referenceHeader, //
+	regex, //
 	requirement, //
 	root, //
 	rootNode, //
@@ -130,6 +131,7 @@ public enum SName {
 	storage, //
 	swimlane, //
 	task, //
+	timegrid, //
 	timeline, //
 	timingDiagram, //
 	title, //

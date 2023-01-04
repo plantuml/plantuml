@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.command;
 
-import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
@@ -46,10 +45,13 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.DisplayPositioned;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandLegend extends SingleLineCommand2<TitledDiagram> {
 
-	public CommandLegend() {
+	public static final CommandLegend ME = new CommandLegend();
+
+	private CommandLegend() {
 		super(getRegexConcat());
 	}
 

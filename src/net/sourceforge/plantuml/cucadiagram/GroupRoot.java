@@ -43,7 +43,6 @@ import java.util.Map;
 import java.util.Set;
 
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.baraye.EntityFactory;
 import net.sourceforge.plantuml.baraye.IGroup;
@@ -58,6 +57,7 @@ import net.sourceforge.plantuml.svek.PackageStyle;
 import net.sourceforge.plantuml.svek.SingleStrategy;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public class GroupRoot implements IGroup {
 

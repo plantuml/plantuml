@@ -44,7 +44,6 @@ import java.util.List;
 
 import net.sourceforge.plantuml.EmbeddedDiagram;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;

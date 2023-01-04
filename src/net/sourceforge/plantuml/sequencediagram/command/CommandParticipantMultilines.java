@@ -40,7 +40,6 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlMode;
-import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
@@ -57,6 +56,7 @@ import net.sourceforge.plantuml.sequencediagram.ParticipantType;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
+import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandParticipantMultilines extends CommandMultilines2<SequenceDiagram> {
 
@@ -79,7 +79,7 @@ public class CommandParticipantMultilines extends CommandMultilines2<SequenceDia
 				RegexLeaf.spaceZeroOrMore(), //
 				CommandParticipant.getOrderRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
+				UrlBuilder.OPTIONAL, //
 				RegexLeaf.spaceZeroOrMore(), //
 				ColorParser.exp1(), //
 				RegexLeaf.spaceZeroOrMore(), //

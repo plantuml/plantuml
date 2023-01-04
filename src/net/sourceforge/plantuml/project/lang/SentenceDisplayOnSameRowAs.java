@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.project.core.Task;
 public class SentenceDisplayOnSameRowAs extends SentenceSimple {
 
 	public SentenceDisplayOnSameRowAs() {
-		super(new SubjectTask(), Verbs.displayOnSameRowAs(), new ComplementNamed());
+		super(SubjectTask.ME, Verbs.displayOnSameRowAs, new ComplementNamed());
 	}
 
 	@Override

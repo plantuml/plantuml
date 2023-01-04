@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.command;
 
-import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlMode;
@@ -51,6 +50,7 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandIf2 extends SingleLineCommand2<ActivityDiagram3> {
 
@@ -60,7 +60,7 @@ public class CommandIf2 extends SingleLineCommand2<ActivityDiagram3> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandIf2.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
+				UrlBuilder.OPTIONAL, //
 				ColorParser.exp4(), //
 				new RegexLeaf("if"), //
 				RegexLeaf.spaceZeroOrMore(), //

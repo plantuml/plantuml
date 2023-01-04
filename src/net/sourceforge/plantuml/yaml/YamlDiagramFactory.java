@@ -85,7 +85,7 @@ public class YamlDiagramFactory extends PSystemAbstractFactory {
 		} catch (Exception e) {
 			Logme.error(e);
 		}
-		final JsonDiagram result = new JsonDiagram(source, UmlDiagramType.YAML, yaml, highlighted);
+		final JsonDiagram result = new JsonDiagram(source, UmlDiagramType.YAML, yaml, highlighted, styleExtractor);
 		if (styleExtractor != null) {
 			styleExtractor.applyStyles(result.getSkinParam());
 			final String title = styleExtractor.getTitle();

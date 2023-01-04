@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.classdiagram;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -91,8 +90,7 @@ public class ClassDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	protected List<Command> createCommands() {
-		final List<Command> cmds = new ArrayList<>();
+	protected void initCommandsList(List<Command> cmds) {
 		cmds.add(new CommandFootboxIgnored());
 
 		cmds.add(new CommandRankDir());
@@ -161,7 +159,5 @@ public class ClassDiagramFactory extends PSystemCommandFactory {
 		cmds.add(new CommandCreateElementMultilines(1));
 		CommonCommands.addTitleCommands(cmds);
 		CommonCommands.addCommonCommands2(cmds);
-
-		return cmds;
 	}
 }

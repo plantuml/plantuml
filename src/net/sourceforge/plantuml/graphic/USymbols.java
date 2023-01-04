@@ -83,6 +83,7 @@ public abstract class USymbols {
 	public final static USymbol USECASE = null;
 	public final static USymbol COMPONENT1 = record("COMPONENT1", new USymbolComponent1());
 	public final static USymbol COMPONENT2 = record("COMPONENT2", new USymbolComponent2());
+	public final static USymbol COMPONENT_RECTANGLE = record("COMPONENT_RECTANGLE", new USymbolRectangle(SName.component));
 	public final static USymbol BOUNDARY = record("BOUNDARY", new USymbolBoundary());
 	public final static USymbol ENTITY_DOMAIN = record("ENTITY_DOMAIN", new USymbolEntityDomain());
 	public final static USymbol CONTROL = record("CONTROL", new USymbolControl());

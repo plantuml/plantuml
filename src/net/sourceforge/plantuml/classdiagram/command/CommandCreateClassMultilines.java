@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.classdiagram.command;
 
 import net.sourceforge.plantuml.FontParam;
-import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
@@ -47,7 +46,6 @@ import net.sourceforge.plantuml.baraye.IEntity;
 import net.sourceforge.plantuml.baraye.ILeaf;
 import net.sourceforge.plantuml.baraye.Quark;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
-import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
@@ -74,6 +72,8 @@ import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
+import net.sourceforge.plantuml.utils.BlocLines;
+import net.sourceforge.plantuml.utils.StringLocated;
 
 public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagram> {
 
@@ -124,7 +124,7 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("TAGS2", Stereotag.pattern() + "?"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
+				UrlBuilder.OPTIONAL, //
 				RegexLeaf.spaceZeroOrMore(), //
 				color().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //

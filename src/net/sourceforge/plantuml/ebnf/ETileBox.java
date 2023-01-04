@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.ebnf;
 
-import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FloatingNote;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
@@ -55,6 +54,7 @@ import net.sourceforge.plantuml.ugraphic.UText;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
+import net.sourceforge.plantuml.utils.Direction;
 
 public class ETileBox extends ETile {
 
@@ -67,6 +67,10 @@ public class ETileBox extends ETile {
 	private final ISkinParam skinParam;
 	private String commentAbove;
 	private String commentBelow;
+
+	public ETileBox mergeWith(ETileBox other) {
+		return new ETileBox(this.value + other.value, symbol, fc, style, colorSet, skinParam);
+	}
 
 	public ETileBox(String value, Symbol symbol, FontConfiguration fc, Style style, HColorSet colorSet,
 			ISkinParam skinParam) {
@@ -154,10 +158,12 @@ public class ETileBox extends ETile {
 			final URectangle rect = new URectangle(dimBox);
 			ug.apply(new UTranslate(posxBox, posy)).apply(lineColor).apply(new UStroke(0.5)).draw(rect);
 		} else if (symbol == Symbol.SPECIAL_SEQUENCE) {
-			final URectangle rect1 = new URectangle(dimBox.delta(2)).rounded(12);
-			final URectangle rect2 = new URectangle(dimBox.delta(-2)).rounded(8);
-			ug.apply(new UTranslate(posxBox - 1, posy - 1)).apply(lineColor).apply(new UStroke(1.0)).draw(rect1);
-			ug.apply(new UTranslate(posxBox + 1, posy + 1)).apply(lineColor).apply(new UStroke(1.0)).draw(rect2);
+			final URectangle rect = new URectangle(dimBox);
+			ug.apply(new UTranslate(posxBox, posy)).apply(lineColor).apply(new UStroke(5, 5, 1)).draw(rect);
+//			final URectangle rect1 = new URectangle(dimBox.delta(2)).rounded(12);
+//			final URectangle rect2 = new URectangle(dimBox.delta(-2)).rounded(8);
+//			ug.apply(new UTranslate(posxBox - 1, posy - 1)).apply(lineColor).apply(new UStroke(5.0, 5.0, 1.0)).draw(rect1);
+//			ug.apply(new UTranslate(posxBox + 1, posy + 1)).apply(lineColor).apply(new UStroke(0.5)).draw(rect2);
 		} else {
 			final URectangle rect = new URectangle(dimBox).rounded(10);
 			ug.apply(new UTranslate(posxBox, posy)).apply(lineColor).apply(backgroundColor.bg()).apply(new UStroke(1.5))
@@ -221,6 +227,10 @@ public class ETileBox extends ETile {
 	@Override
 	protected String getRepetitionLabel() {
 		return value;
+	}
+
+	public final Symbol getSymbol() {
+		return symbol;
 	}
 
 }

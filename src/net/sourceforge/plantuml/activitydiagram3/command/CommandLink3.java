@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.command;
 
-import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -46,6 +45,7 @@ import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.graphic.Rainbow;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandLink3 extends SingleLineCommand2<ActivityDiagram3> {
 

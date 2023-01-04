@@ -30,40 +30,35 @@
  *
  *
  * Original Author:  Arnaud Roques
- *
+ * 
  *
  */
-package net.sourceforge.plantuml.style;
+package net.sourceforge.plantuml.regex;
 
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-public class CssVariables {
+import net.sourceforge.plantuml.command.Command;
+import net.sourceforge.plantuml.command.CommonCommands;
+import net.sourceforge.plantuml.command.PSystemCommandFactory;
+import net.sourceforge.plantuml.core.DiagramType;
+import net.sourceforge.plantuml.core.UmlSource;
 
-	private final Map<String, String> variables = new HashMap<>();
+public class PSystemRegexFactory extends PSystemCommandFactory {
 
-	private final Pattern learnPattern = Pattern.compile("^--([_\\w][-_\\w]+)[ :]+(.*?);?");
-	private final Pattern retrieve = Pattern.compile("var\\(-*([_\\w][-_\\w]+)\\)");
-
-	public void learn(String s) {
-		final Matcher m = learnPattern.matcher(s);
-		if (m.matches())
-			variables.put(m.group(1), m.group(2));
+	public PSystemRegexFactory() {
+		super(DiagramType.REGEX);
 	}
 
-	public String value(String v) {
-		if (v.startsWith("var(")) {
-			final Matcher m = retrieve.matcher(v);
-			if (m.matches()) {
-				final String varname = m.group(1);
-				final String result = variables.get(varname);
-				if (result != null)
-					return result;
-			}
-		}
-		return v;
+	@Override
+	protected void initCommandsList(List<Command> cmds) {
+		CommonCommands.addCommonCommands1(cmds);
+		cmds.add(new CommandRegexfSingleLine());
+	}
+
+	@Override
+	public PSystemRegex createEmptyDiagram(UmlSource source, Map<String, String> skinParam) {
+		return new PSystemRegex(source);
 	}
 
 }

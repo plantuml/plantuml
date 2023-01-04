@@ -47,7 +47,7 @@ import ext.plantuml.com.google.zxing.client.j2se.MatrixToImageWriter;
 import ext.plantuml.com.google.zxing.common.BitMatrix;
 import ext.plantuml.com.google.zxing.qrcode.QRCodeWriter;
 import ext.plantuml.com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
-import net.sourceforge.plantuml.Log;
+import net.sourceforge.plantuml.utils.Log;
 
 public class FlashCodeUtilsZxing implements FlashCodeUtils {
 

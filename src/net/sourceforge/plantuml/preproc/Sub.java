@@ -40,12 +40,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.EaterStartsub;
 import net.sourceforge.plantuml.tim.TContext;
 import net.sourceforge.plantuml.tim.TLineType;
 import net.sourceforge.plantuml.tim.TMemory;
+import net.sourceforge.plantuml.utils.StringLocated;
 
 public class Sub {
 

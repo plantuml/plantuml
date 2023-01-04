@@ -52,6 +52,11 @@ import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class SubjectDaysAsDates implements Subject {
 
+	public static final Subject ME = new SubjectDaysAsDates();
+
+	private SubjectDaysAsDates() {
+	}
+
 	public IRegex toRegex() {
 		return new RegexOr(toRegexB(), toRegexE(), andRegex(), thenRegex());
 	}
@@ -153,7 +158,7 @@ public class SubjectDaysAsDates implements Subject {
 	class Close extends SentenceSimple {
 
 		public Close() {
-			super(SubjectDaysAsDates.this, Verbs.isOrAre(), new ComplementClose());
+			super(SubjectDaysAsDates.this, Verbs.isOrAre, new ComplementClose());
 		}
 
 		@Override
@@ -169,7 +174,7 @@ public class SubjectDaysAsDates implements Subject {
 	class Open extends SentenceSimple {
 
 		public Open() {
-			super(SubjectDaysAsDates.this, Verbs.isOrAre(), new ComplementOpen());
+			super(SubjectDaysAsDates.this, Verbs.isOrAre, new ComplementOpen());
 		}
 
 		@Override
@@ -186,7 +191,7 @@ public class SubjectDaysAsDates implements Subject {
 	class InColor extends SentenceSimple {
 
 		public InColor() {
-			super(SubjectDaysAsDates.this, Verbs.isOrAre(), new ComplementInColors2());
+			super(SubjectDaysAsDates.this, Verbs.isOrAre, new ComplementInColors2());
 		}
 
 		@Override
@@ -204,7 +209,7 @@ public class SubjectDaysAsDates implements Subject {
 	class Named extends SentenceSimple {
 
 		public Named() {
-			super(SubjectDaysAsDates.this, Verbs.isOrAreNamed(), new ComplementNamed());
+			super(SubjectDaysAsDates.this, Verbs.isOrAreNamed, new ComplementNamed());
 		}
 
 		@Override
