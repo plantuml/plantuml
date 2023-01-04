@@ -41,7 +41,7 @@ import java.io.OutputStream;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
-import net.sourceforge.plantuml.Log;
+import net.sourceforge.plantuml.utils.Log;
 import net.sourceforge.plantuml.SuggestedFile;
 import net.sourceforge.plantuml.baraye.CucaDiagram;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
