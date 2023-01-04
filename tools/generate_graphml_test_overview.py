@@ -60,8 +60,8 @@ def add_entry(doc_builder: StringIO, file: str, image: str, uml: str):
 	image_str = f"<img alt=\"{file}\" src=\"{image}\" width=\"400\"/>"
 	add_table_item(doc_builder, image_str)
 
-	fixed = uml.replace("\n", "<br>")
-	fixed = fixed.replace("<<", "&laquo;")
+
+	fixed = uml.replace("<<", "&laquo;")
 	fixed = fixed.replace(">>", "&raquo;")
 	uml_str = f"<pre><code>{fixed}</code></pre>"
 	add_table_item(doc_builder, uml_str)
