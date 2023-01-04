@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="80px" preserveAspectRatio="none" style="width:60px;height:80px;" version="1.1" viewBox="0 0 60 80" width="60px" zoomAndPan="magnify"><defs><filter height="300%" id="f95wbflyp70hg" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><!--entity intf1--><ellipse cx="33" cy="37" fill="#FEFECE" filter="url(#f95wbflyp70hg)" rx="8" ry="8" style="stroke: #A80036; stroke-width: 2.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="30" x="18" y="66.9951">intf1</text><!--
+@startuml
+() intf1
+@enduml
+
+PlantUML version 1.2018.13(Mon Nov 26 18:11:51 CET 2018)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Java Version: 1.8.0_352-8u352-ga-1~20.04-b08
+Operating System: Linux
+OS Version: 5.14.0-1054-oem
+Default Encoding: UTF-8
+Language: en
+Country: US
+--></g></svg>

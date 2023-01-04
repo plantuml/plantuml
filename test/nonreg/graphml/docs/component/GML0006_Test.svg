@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="193px" preserveAspectRatio="none" style="width:85px;height:193px;" version="1.1" viewBox="0 0 85 193" width="85px" zoomAndPan="magnify"><defs><filter height="300%" id="f6q4prue03b96" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><!--entity comp1--><rect fill="#FEFECE" filter="url(#f6q4prue03b96)" height="36.2969" style="stroke: #A80036; stroke-width: 1.5;" width="68" x="6" y="8"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="1" y="13"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="1" y="34.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="48" x="16" y="30.9951">comp1</text><!--entity HTTP--><ellipse cx="40" cy="150" fill="#FEFECE" filter="url(#f6q4prue03b96)" rx="8" ry="8" style="stroke: #A80036; stroke-width: 2.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="37" x="21.5" y="179.9951">HTTP</text><!--link comp1 to HTTP--><path d="M40,44.22 C40,68.8 40,113.44 40,135.67 " fill="none" id="comp1-HTTP" style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#A80036" points="40,140.82,44,131.82,40,135.82,36,131.82,40,140.82" style="stroke: #A80036; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="23" x="41" y="87.0669">use</text><!--
+@startuml
+[comp1] ..> HTTP : use
+@enduml
+
+PlantUML version 1.2018.13(Mon Nov 26 18:11:51 CET 2018)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Java Version: 1.8.0_352-8u352-ga-1~20.04-b08
+Operating System: Linux
+OS Version: 5.14.0-1054-oem
+Default Encoding: UTF-8
+Language: en
+Country: US
+--></g></svg>
