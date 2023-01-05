@@ -291,5 +291,12 @@ database "database1" {
 }
 @enduml
 </code></pre></td></tr>
+<tr><td>GML0014_Test</td><td><img alt="GML0014_Test" src="./component/GML0014_Test.svg" width="400"/></td><td><pre><code>@startuml
+component C1 {
+component C2
+component C3
+}
+@enduml
+</code></pre></td></tr>
 </table>
 

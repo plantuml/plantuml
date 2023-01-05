@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="122px" preserveAspectRatio="none" style="width:179px;height:122px;" version="1.1" viewBox="0 0 179 122" width="179px" zoomAndPan="magnify"><defs><filter height="300%" id="f1h8wyw26w40we" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><!--cluster C1--><rect fill="#FFFFFF" filter="url(#f1h8wyw26w40we)" height="87" style="stroke: #000000; stroke-width: 1.5;" width="146" x="22" y="24"/><rect fill="#FFFFFF" height="10" style="stroke: #000000; stroke-width: 1.5;" width="15" x="148" y="29"/><rect fill="#FFFFFF" height="2" style="stroke: #000000; stroke-width: 1.5;" width="4" x="146" y="31"/><rect fill="#FFFFFF" height="2" style="stroke: #000000; stroke-width: 1.5;" width="4" x="146" y="35"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="21" x="84.5" y="49.9951">C1</text><!--entity C2--><rect fill="#FEFECE" filter="url(#f1h8wyw26w40we)" height="36.2969" style="stroke: #A80036; stroke-width: 1.5;" width="39" x="112.5" y="59"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="107.5" y="64"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="107.5" y="85.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="19" x="122.5" y="81.9951">C2</text><!--entity C3--><rect fill="#FEFECE" filter="url(#f1h8wyw26w40we)" height="36.2969" style="stroke: #A80036; stroke-width: 1.5;" width="39" x="38.5" y="59"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="33.5" y="64"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="33.5" y="85.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="19" x="48.5" y="81.9951">C3</text><!--
+@startuml
+component C1 {
+component C2
+component C3
+}
+@enduml
+
+PlantUML version 1.2018.13(Mon Nov 26 18:11:51 CET 2018)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Java Version: 1.8.0_352-8u352-ga-1~20.04-b08
+Operating System: Linux
+OS Version: 5.14.0-1055-oem
+Default Encoding: UTF-8
+Language: en
+Country: US
+--></g></svg>
