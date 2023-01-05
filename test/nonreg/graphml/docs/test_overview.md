@@ -211,6 +211,12 @@ Class07 "1\nitsClass07" --> "*\nitsClass08" Class08: has
 Class07 "itsClass07\n1" --> "itsClass08\n*" Class08: has
 @enduml
 </code></pre></td></tr>
+<tr><td>GML0038_Test</td><td><img alt="GML0038_Test" src="./classdiagram/GML0038_Test.svg" width="400"/></td><td><pre><code>@startuml
+' Floating Note
+class class1
+note "A note\nwith some\nlong text" as N
+@enduml
+</code></pre></td></tr>
 </table>
 
 ## component
@@ -267,6 +273,11 @@ package "pack1" {
 <tr><td>GML0008_Test</td><td><img alt="GML0008_Test" src="./component/GML0008_Test.svg" width="400"/></td><td><pre><code>@startuml
 component comp1
 note right of comp1: A note\nwith some\nlong text
+@enduml
+</code></pre></td></tr>
+<tr><td>GML0008b_Test</td><td><img alt="GML0008b_Test" src="./component/GML0008b_Test.svg" width="400"/></td><td><pre><code>@startuml
+component comp1
+note "A note\nwith some\nlong text" as N
 @enduml
 </code></pre></td></tr>
 <tr><td>GML0009_Test</td><td><img alt="GML0009_Test" src="./component/GML0009_Test.svg" width="400"/></td><td><pre><code>@startuml
