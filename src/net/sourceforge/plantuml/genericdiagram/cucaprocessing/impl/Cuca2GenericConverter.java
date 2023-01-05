@@ -163,7 +163,11 @@ public class Cuca2GenericConverter implements ICucaDiagramVisitor {
 		typeMap.put(SName.spotInterface, GenericEntityType.CIRCLE);
 		typeMap.put(SName.package_, GenericEntityType.PACKAGE);
 		typeMap.put(SName.class_, GenericEntityType.CLASS);
-
+		typeMap.put(SName.node, GenericEntityType.NODE);
+		typeMap.put(SName.folder, GenericEntityType.FOLDER);
+		typeMap.put(SName.frame, GenericEntityType.FRAME);
+		typeMap.put(SName.cloud, GenericEntityType.CLOUD);
+		typeMap.put(SName.database, GenericEntityType.DATABASE);
 		entityTypeMap = typeMap;
 
 	}
