@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="118px" preserveAspectRatio="none" style="width:142px;height:118px;" version="1.1" viewBox="0 0 142 118" width="142px" zoomAndPan="magnify"><defs><filter height="300%" id="fy37h6fla290g" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><!--cluster cloud1--><path d="M25,31 C25,28 27,26 30,26 C33,26 35,28 35,31 C35,28 37,26 40,26 C43,26 45,28 45,31 C45,28 47,26 50,26 C53,26 55,28 55,31 C55,28 57,26 60,26 C63,26 65,28 65,31 C65,28 67,26 70,26 C73,26 75,28 75,31 C75,28 77,26 80,26 C83,26 85,28 85,31 C85,28 87,26 90,26 C93,26 95,28 95,31 C95,28 97,26 100,26 C103,26 105,28 105,31 C105,28 107,26 110,26 C113,26 115,28 115,31 C115,28 117,26 120,26 C123,26 125,28 125,31 C128,31 130,33 130,36 C130,39 128,41 125,41 C128,41 130,43 130,46 C130,49 128,51 125,51 C128,51 130,53 130,56 C130,59 128,61 125,61 C128,61 130,63 130,66 C130,69 128,71 125,71 C128,71 130,73 130,76 C130,79 128,81 125,81 C128,81 130,83 130,86 C130,89 128,91 125,91 C128,91 130,93 130,96 C130,99 128,101 125,101 C125,104 122,106 120,106 C117,106 115,104 115,101 C115,104 112,106 110,106 C107,106 105,104 105,101 C105,104 102,106 100,106 C97,106 95,104 95,101 C95,104 92,106 90,106 C87,106 85,104 85,101 C85,104 82,106 80,106 C77,106 75,104 75,101 C75,104 72,106 70,106 C67,106 65,104 65,101 C65,104 62,106 60,106 C57,106 55,104 55,101 C55,104 52,106 50,106 C47,106 45,104 45,101 C45,104 42,106 40,106 C37,106 35,104 35,101 C35,104 32,106 30,106 C27,106 25,104 25,101 C22,101 20,99 20,96 C20,93 22,91 25,91 C22,91 20,89 20,86 C20,83 22,81 25,81 C22,81 20,79 20,76 C20,73 22,71 25,71 C22,71 20,69 20,66 C20,63 22,61 25,61 C22,61 20,59 20,56 C20,53 22,51 25,51 C22,51 20,49 20,46 C20,43 22,41 25,41 C22,41 20,39 20,36 C20,33 22,31 25,31 " fill="#FFFFFF" filter="url(#fy37h6fla290g)" style="stroke: #000000; stroke-width: 1.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="53" x="45.5" y="49.9951">cloud1</text><!--entity comp1--><rect fill="#FEFECE" filter="url(#fy37h6fla290g)" height="36.2969" style="stroke: #A80036; stroke-width: 1.5;" width="68" x="38" y="59"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="33" y="64"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="33" y="85.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="48" x="48" y="81.9951">comp1</text><!--
+@startuml
+cloud "cloud1" {
+	component comp1
+}
+@enduml
+
+PlantUML version 1.2018.13(Mon Nov 26 18:11:51 CET 2018)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Java Version: 1.8.0_352-8u352-ga-1~20.04-b08
+Operating System: Linux
+OS Version: 5.14.0-1055-oem
+Default Encoding: UTF-8
+Language: en
+Country: US
+--></g></svg>

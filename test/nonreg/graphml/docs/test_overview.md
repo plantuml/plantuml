@@ -261,5 +261,35 @@ component comp1
 note right of comp1: A note\nwith some\nlong text
 @enduml
 </code></pre></td></tr>
+<tr><td>GML0009_Test</td><td><img alt="GML0009_Test" src="./component/GML0009_Test.svg" width="400"/></td><td><pre><code>@startuml
+node "node1" {
+	component comp1
+}
+@enduml
+</code></pre></td></tr>
+<tr><td>GML0010_Test</td><td><img alt="GML0010_Test" src="./component/GML0010_Test.svg" width="400"/></td><td><pre><code>@startuml
+folder "folder1" {
+	component comp1
+}
+@enduml
+</code></pre></td></tr>
+<tr><td>GML0011_Test</td><td><img alt="GML0011_Test" src="./component/GML0011_Test.svg" width="400"/></td><td><pre><code>@startuml
+frame "frame1" {
+	component comp1
+}
+@enduml
+</code></pre></td></tr>
+<tr><td>GML0012_Test</td><td><img alt="GML0012_Test" src="./component/GML0012_Test.svg" width="400"/></td><td><pre><code>@startuml
+cloud "cloud1" {
+	component comp1
+}
+@enduml
+</code></pre></td></tr>
+<tr><td>GML0013_Test</td><td><img alt="GML0013_Test" src="./component/GML0013_Test.svg" width="400"/></td><td><pre><code>@startuml
+database "database1" {
+	component comp1
+}
+@enduml
+</code></pre></td></tr>
 </table>
 
