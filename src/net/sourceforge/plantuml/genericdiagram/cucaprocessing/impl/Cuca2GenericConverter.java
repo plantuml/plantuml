@@ -36,7 +36,7 @@
 package net.sourceforge.plantuml.genericdiagram.cucaprocessing.impl;
 
 import net.sourceforge.plantuml.Guillemet;
-import net.sourceforge.plantuml.Log;
+import net.sourceforge.plantuml.utils.Log;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.cucadiagram.Bodier;
 import net.sourceforge.plantuml.cucadiagram.BodierLikeClassOrObject;

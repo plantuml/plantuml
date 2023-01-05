@@ -52,7 +52,7 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import net.sourceforge.plantuml.Log;
+import net.sourceforge.plantuml.utils.Log;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
