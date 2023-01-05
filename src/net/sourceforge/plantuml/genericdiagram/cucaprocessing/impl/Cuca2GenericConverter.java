@@ -35,16 +35,25 @@
  */
 package net.sourceforge.plantuml.genericdiagram.cucaprocessing.impl;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+
 import net.sourceforge.plantuml.Guillemet;
-import net.sourceforge.plantuml.utils.Log;
-import net.sourceforge.plantuml.classdiagram.ClassDiagram;
-import net.sourceforge.plantuml.cucadiagram.Bodier;
-import net.sourceforge.plantuml.cucadiagram.BodierLikeClassOrObject;
 import net.sourceforge.plantuml.baraye.CucaDiagram;
-import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.baraye.IEntity;
 import net.sourceforge.plantuml.baraye.IGroup;
 import net.sourceforge.plantuml.baraye.ILeaf;
+import net.sourceforge.plantuml.classdiagram.ClassDiagram;
+import net.sourceforge.plantuml.cucadiagram.Bodier;
+import net.sourceforge.plantuml.cucadiagram.BodierLikeClassOrObject;
+import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.cucadiagram.CucaNote;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
@@ -56,9 +65,7 @@ import net.sourceforge.plantuml.genericdiagram.GenericEdgeType;
 import net.sourceforge.plantuml.genericdiagram.GenericEntityType;
 import net.sourceforge.plantuml.genericdiagram.GenericLinkDecor;
 import net.sourceforge.plantuml.genericdiagram.GenericLinkStyle;
-import net.sourceforge.plantuml.genericdiagram.data.SimpleGenericModel;
 import net.sourceforge.plantuml.genericdiagram.IGenericEdge;
-import net.sourceforge.plantuml.genericdiagram.genericprocessing.IGenericModelCollector;
 import net.sourceforge.plantuml.genericdiagram.IGenericModelElement;
 import net.sourceforge.plantuml.genericdiagram.MemberVisibility;
 import net.sourceforge.plantuml.genericdiagram.cucaprocessing.ICucaDiagramVisitor;
@@ -74,16 +81,10 @@ import net.sourceforge.plantuml.genericdiagram.data.GenericLink;
 import net.sourceforge.plantuml.genericdiagram.data.GenericMember;
 import net.sourceforge.plantuml.genericdiagram.data.GenericModelElement;
 import net.sourceforge.plantuml.genericdiagram.data.GenericStereotype;
+import net.sourceforge.plantuml.genericdiagram.data.SimpleGenericModel;
+import net.sourceforge.plantuml.genericdiagram.genericprocessing.IGenericModelCollector;
 import net.sourceforge.plantuml.style.SName;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
+import net.sourceforge.plantuml.utils.Log;
 
 public class Cuca2GenericConverter implements ICucaDiagramVisitor {
 
@@ -136,9 +137,6 @@ public class Cuca2GenericConverter implements ICucaDiagramVisitor {
 		if (!ok) {
 			throw new IllegalArgumentException("file and graphml-root-dir don't match");
 		}
-
-
-
 	}
 	private void initCollector() {
 		processedCucaElementsMap = new HashMap<>();
@@ -339,6 +337,9 @@ public class Cuca2GenericConverter implements ICucaDiagramVisitor {
 			collector.addEdge(sourceEdge);
 			collector.addEdge(targetEdge);
 		}
+		if (isTipsLink(link)){
+			Log.error("Comments on fields, methods and links not supported");
+		}
 	}
 
 	private boolean isPumlLayoutLink(ICucaLinkWrapper link){
@@ -346,6 +347,12 @@ public class Cuca2GenericConverter implements ICucaDiagramVisitor {
 		// these should not be added to the graphML output
 		// because they are not user defined links
 		return "NONE-INVISIBLE(null)-NONE".equals(link.getLink().getType().toString());
+	}
+
+	private boolean isTipsLink(ICucaLinkWrapper link){
+		// Notes on fields and methods are realized as invisible links of type TIPS
+		CucaNote note = link.getLink().getNote();
+		return link.getLink().toString().contains("](TIPS)[") || (note != null);
 	}
 	private List<ICucaLeafWrapper> getLeafsToProcess(ICucaGroupWrapper group) {
 		// only direct children ... other leafs are processed when iterating over the child groups
@@ -361,10 +368,10 @@ public class Cuca2GenericConverter implements ICucaDiagramVisitor {
 
 		// and its leafs
 		List<ICucaLeafWrapper> leafs = getLeafsToProcess(group);
-		List<GenericLeaf> genericLeaves = leafs.stream()
+		List<GenericLeaf> genericLeafs = leafs.stream()
 						.map(l -> processLeaf(l))
 						.collect(Collectors.toList());
-		genericLeaves.stream()
+		genericLeafs.stream()
 						.forEach(genericLeaf -> {
 							collector.addEdge(createGenericEdge(genericGroup, GenericEdgeType.HIERARCHY, genericLeaf));
 						});

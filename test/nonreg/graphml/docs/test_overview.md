@@ -217,6 +217,44 @@ class class1
 note "A note\nwith some\nlong text" as N
 @enduml
 </code></pre></td></tr>
+<tr><td>GML0039_Test</td><td><img alt="GML0039_Test" src="./classdiagram/GML0039_Test.svg" width="400"/></td><td><pre><code>@startuml
+' Note connected to one class
+class class1
+note top of class1: text
+@enduml
+</code></pre></td></tr>
+<tr><td>GML0040_Test</td><td><img alt="GML0040_Test" src="./classdiagram/GML0040_Test.svg" width="400"/></td><td><pre><code>@startuml
+' Note on several classes
+class class1
+class class2
+note "text" as N
+N .. class1
+N .. class2
+@enduml
+</code></pre></td></tr>
+<tr><td>GML0041_Test</td><td><img alt="GML0041_Test" src="./classdiagram/GML0041_Test.svg" width="400"/></td><td><pre><code>@startuml
+' Note on field and methods
+' NOT SUPPORTED FEATURE
+class A {
+{static} int counter
++void {abstract} start(int timeout)
+}
+note right of A::counter
+  This member is annotated
+end note
+note right of A::start
+  This method is now explained in a UML note
+end note
+@enduml
+</code></pre></td></tr>
+<tr><td>GML0042_Test</td><td><img alt="GML0042_Test" src="./classdiagram/GML0042_Test.svg" width="400"/></td><td><pre><code>@startuml
+' Note on field and methods
+' NOT SUPPORTED FEATURE
+class Dummy
+Dummy --> Foo : A link
+note on link #red: note that is red
+@enduml
+</code></pre></td></tr>
 </table>
 
 ## component
