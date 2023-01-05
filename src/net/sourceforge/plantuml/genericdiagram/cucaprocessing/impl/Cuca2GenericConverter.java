@@ -217,6 +217,8 @@ public class Cuca2GenericConverter implements ICucaDiagramVisitor {
 		this.leafTypeMap.put(LeafType.ANNOTATION, GenericEntityType.ANNOTATION);
 		this.leafTypeMap.put(LeafType.ABSTRACT_CLASS, GenericEntityType.ABSTRACT_CLASS);
 		this.leafTypeMap.put(LeafType.POINT_FOR_ASSOCIATION, GenericEntityType.POINT_FOR_ASSOCIATION);
+		this.leafTypeMap.put(LeafType.PORTIN, GenericEntityType.PORT_IN);
+		this.leafTypeMap.put(LeafType.PORTOUT, GenericEntityType.PORT_OUT);
 	}
 
 	private void initLinkTypeMap() {
@@ -319,25 +321,32 @@ public class Cuca2GenericConverter implements ICucaDiagramVisitor {
 
 	private void processLink(ICucaLinkWrapper link) {
 
-		// we consider source and target based on the occurrence in the diagram
-		// entity1 is ALWAYS source, entity2 is ALWAYS target
-		// the semantic interpretation in the UML sense may happen at a later stage
-		GenericLink genericLink = createGenericLink(link.getLink());
-		GenericModelElement source = getEntityByPumlId(link.getLink().getEntity1().getUid());
-		GenericModelElement target = getEntityByPumlId(link.getLink().getEntity2().getUid());
-		IGenericEdge sourceEdge = createGenericEdge(source,
-						GenericEdgeType.IS_SOURCE, genericLink);
-		((GenericEdge) sourceEdge).setPumlIdSource(link.getLink().getEntity1().getUid());
-		IGenericEdge targetEdge = createGenericEdge(target,
-						GenericEdgeType.IS_TARGET, genericLink);
-		((GenericEdge) targetEdge).setPumlIdTarget(link.getLink().getEntity2().getUid());
+		if (!isPumlLayoutLink(link)) {
+			// we consider source and target based on the occurrence in the diagram
+			// entity1 is ALWAYS source, entity2 is ALWAYS target
+			// the semantic interpretation in the UML sense may happen at a later stage
+			GenericLink genericLink = createGenericLink(link.getLink());
+			GenericModelElement source = getEntityByPumlId(link.getLink().getEntity1().getUid());
+			GenericModelElement target = getEntityByPumlId(link.getLink().getEntity2().getUid());
+			IGenericEdge sourceEdge = createGenericEdge(source,
+							GenericEdgeType.IS_SOURCE, genericLink);
+			((GenericEdge) sourceEdge).setPumlIdSource(link.getLink().getEntity1().getUid());
+			IGenericEdge targetEdge = createGenericEdge(target,
+							GenericEdgeType.IS_TARGET, genericLink);
+			((GenericEdge) targetEdge).setPumlIdTarget(link.getLink().getEntity2().getUid());
 
-		collector.addLink(genericLink);
-		collector.addEdge(sourceEdge);
-		collector.addEdge(targetEdge);
-
+			collector.addLink(genericLink);
+			collector.addEdge(sourceEdge);
+			collector.addEdge(targetEdge);
+		}
 	}
 
+	private boolean isPumlLayoutLink(ICucaLinkWrapper link){
+		// plantUML adds some links for layout purposes,
+		// these should not be added to the graphML output
+		// because they are not user defined links
+		return "NONE-INVISIBLE(null)-NONE".equals(link.getLink().getType().toString());
+	}
 	private List<ICucaLeafWrapper> getLeafsToProcess(ICucaGroupWrapper group) {
 		// only direct children ... other leafs are processed when iterating over the child groups
 		return group.getLeafs().stream()

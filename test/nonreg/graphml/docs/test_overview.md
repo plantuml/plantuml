@@ -228,6 +228,14 @@ component comp1
 component comp2
 @enduml
 </code></pre></td></tr>
+<tr><td>GML0001b_Test</td><td><img alt="GML0001b_Test" src="./component/GML0001b_Test.svg" width="400"/></td><td><pre><code>@startuml
+' multiple components with hidden layout links
+[First component]
+[Another component] as Comp2
+component Comp3
+component [Last\ncomponent] as Comp4
+@enduml
+</code></pre></td></tr>
 <tr><td>GML0002_Test</td><td><img alt="GML0002_Test" src="./component/GML0002_Test.svg" width="400"/></td><td><pre><code>@startuml
 package pack1
 @enduml
@@ -296,6 +304,34 @@ component C1 {
 component C2
 component C3
 }
+@enduml
+</code></pre></td></tr>
+<tr><td>GML0015_Test</td><td><img alt="GML0015_Test" src="./component/GML0015_Test.svg" width="400"/></td><td><pre><code>@startuml
+' several ports on component
+component comp1 {
+  port port1
+  portin port2_in
+  portout port3_out
+}
+@enduml
+</code></pre></td></tr>
+<tr><td>GML0016_Test</td><td><img alt="GML0016_Test" src="./component/GML0016_Test.svg" width="400"/></td><td><pre><code>@startuml
+'Connected ports on component
+[i]
+component C {
+  portin p1
+  portin p2
+  portout po1
+  portout po2
+  component c1
+}
+[o]
+i --> p1
+i --> p2
+p1 --> c1
+po1 --> o
+po2 --> o
+c1 --> po1
 @enduml
 </code></pre></td></tr>
 </table>

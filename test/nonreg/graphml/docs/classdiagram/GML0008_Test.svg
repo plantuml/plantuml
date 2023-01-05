@@ -1,16 +1,1 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="67px" preserveAspectRatio="none" style="width:92px;height:67px;" version="1.1" viewBox="0 0 92 67" width="92px" zoomAndPan="magnify"><defs><filter height="300%" id="f17fqkp95nlhzy" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><!--class enum1--><rect fill="#FEFECE" filter="url(#f17fqkp95nlhzy)" height="48" id="enum1" style="stroke: #A80036; stroke-width: 1.5;" width="75" x="6" y="8"/><ellipse cx="21" cy="24" fill="#EB937F" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/><path d="M25.1094,30 L17.3906,30 L17.3906,17.6094 L25.1094,17.6094 L25.1094,19.7656 L19.8438,19.7656 L19.8438,22.4375 L24.6094,22.4375 L24.6094,24.5938 L19.8438,24.5938 L19.8438,27.8438 L25.1094,27.8438 L25.1094,30 Z "/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="43" x="35" y="28.1543">enum1</text><line style="stroke: #A80036; stroke-width: 1.5;" x1="7" x2="80" y1="40" y2="40"/><line style="stroke: #A80036; stroke-width: 1.5;" x1="7" x2="80" y1="48" y2="48"/><!--
-@startuml
-enum enum1
-@enduml
-
-PlantUML version 1.2018.13(Mon Nov 26 18:11:51 CET 2018)
-(GPL source distribution)
-Java Runtime: OpenJDK Runtime Environment
-JVM: OpenJDK 64-Bit Server VM
-Java Version: 1.8.0_352-8u352-ga-1~20.04-b08
-Operating System: Linux
-OS Version: 5.14.0-1055-oem
-Default Encoding: UTF-8
-Language: en
-Country: US
---></g></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="69px" preserveAspectRatio="none" style="width:102px;height:69px;background:#FFFFFF;" version="1.1" viewBox="0 0 102 69" width="102px" zoomAndPan="magnify"><defs/><g><!--class enum1--><g id="elem_enum1"><rect codeLine="1" fill="#F1F1F1" height="48" id="enum1" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="81" x="7" y="7"/><ellipse cx="22" cy="23" fill="#EB937F" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M26.1094,29 L18.3906,29 L18.3906,16.6094 L26.1094,16.6094 L26.1094,18.7656 L20.8438,18.7656 L20.8438,21.4375 L25.6094,21.4375 L25.6094,23.5938 L20.8438,23.5938 L20.8438,26.8438 L26.1094,26.8438 L26.1094,29 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="49" x="36" y="27.8467">enum1</text><line style="stroke:#181818;stroke-width:0.5;" x1="8" x2="87" y1="39" y2="39"/><line style="stroke:#181818;stroke-width:0.5;" x1="8" x2="87" y1="47" y2="47"/></g><!--SRC=[IyqhpLL81HA60000]--></g></svg>

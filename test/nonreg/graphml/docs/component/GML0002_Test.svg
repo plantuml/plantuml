@@ -1,16 +1,1 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="59px" preserveAspectRatio="none" style="width:100px;height:59px;" version="1.1" viewBox="0 0 100 59" width="100px" zoomAndPan="magnify"><defs><filter height="300%" id="f4aw2o826bijp" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><!--entity pack1--><polygon fill="#FEFECE" filter="url(#f4aw2o826bijp)" points="6,8,54,8,61,30.2969,78,30.2969,78,47.2969,6,47.2969,6,8" style="stroke: #000000; stroke-width: 1.5;"/><line style="stroke: #000000; stroke-width: 1.5;" x1="6" x2="61" y1="30.2969" y2="30.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="42" x="10" y="23.9951">pack1</text><!--
-@startuml
-package pack1
-@enduml
-
-PlantUML version 1.2018.13(Mon Nov 26 18:11:51 CET 2018)
-(GPL source distribution)
-Java Runtime: OpenJDK Runtime Environment
-JVM: OpenJDK 64-Bit Server VM
-Java Version: 1.8.0_352-8u352-ga-1~20.04-b08
-Operating System: Linux
-OS Version: 5.14.0-1055-oem
-Default Encoding: UTF-8
-Language: en
-Country: US
---></g></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="60px" preserveAspectRatio="none" style="width:105px;height:60px;background:#FFFFFF;" version="1.1" viewBox="0 0 105 60" width="105px" zoomAndPan="magnify"><defs/><g><!--entity pack1--><g id="elem_pack1"><path d="M9.5,7 L64.5,7 A3.75,3.75 0 0 1 67,9.5 L74,29.2969 L88.5,29.2969 A2.5,2.5 0 0 1 91,31.7969 L91,43.7969 A2.5,2.5 0 0 1 88.5,46.2969 L9.5,46.2969 A2.5,2.5 0 0 1 7,43.7969 L7,9.5 A2.5,2.5 0 0 1 9.5,7 " fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/><line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="74" y1="29.2969" y2="29.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="42" x="17" y="22.9951">pack1</text></g><!--SRC=[AqXCpavCJrKe0DA60000]--></g></svg>

@@ -1,18 +1,1 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="128px" preserveAspectRatio="none" style="width:170px;height:128px;" version="1.1" viewBox="0 0 170 128" width="170px" zoomAndPan="magnify"><defs><filter height="300%" id="f1ghz4ywye17so" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><!--cluster node1--><polygon fill="#FFFFFF" filter="url(#f1ghz4ywye17so)" points="22,34,32,24,148,24,148,106,138,116,22,116,22,34" style="stroke: #000000; stroke-width: 1.5;"/><line style="stroke: #000000; stroke-width: 1.5;" x1="138" x2="147" y1="34" y2="25"/><line style="stroke: #000000; stroke-width: 1.5;" x1="22" x2="138" y1="34" y2="34"/><line style="stroke: #000000; stroke-width: 1.5;" x1="138" x2="138" y1="34" y2="116"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="50" x="56" y="49.9951">node1</text><!--entity comp1--><rect fill="#FEFECE" filter="url(#f1ghz4ywye17so)" height="36.2969" style="stroke: #A80036; stroke-width: 1.5;" width="68" x="51" y="64"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="46" y="69"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="46" y="90.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="48" x="61" y="86.9951">comp1</text><!--
-@startuml
-node "node1" {
-	component comp1
-}
-@enduml
-
-PlantUML version 1.2018.13(Mon Nov 26 18:11:51 CET 2018)
-(GPL source distribution)
-Java Runtime: OpenJDK Runtime Environment
-JVM: OpenJDK 64-Bit Server VM
-Java Version: 1.8.0_352-8u352-ga-1~20.04-b08
-Operating System: Linux
-OS Version: 5.14.0-1055-oem
-Default Encoding: UTF-8
-Language: en
-Country: US
---></g></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="125px" preserveAspectRatio="none" style="width:159px;height:125px;background:#FFFFFF;" version="1.1" viewBox="0 0 159 125" width="159px" zoomAndPan="magnify"><defs/><g><!--cluster node1--><g id="cluster_node1"><polygon fill="none" points="16,16,26,6,142,6,142,98,132,108,16,108,16,16" style="stroke:#181818;stroke-width:1.0;"/><line style="stroke:#181818;stroke-width:1.0;" x1="132" x2="142" y1="16" y2="6"/><line style="stroke:#181818;stroke-width:1.0;" x1="16" x2="132" y1="16" y2="16"/><line style="stroke:#181818;stroke-width:1.0;" x1="132" x2="132" y1="16" y2="108"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="50" x="50" y="31.9951">node1</text></g><!--entity comp1--><g id="elem_comp1"><rect fill="#F1F1F1" height="46.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="88" x="35" y="46"/><rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="103" y="51"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="101" y="53"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="101" y="57"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="48" x="50" y="78.9951">comp1</text></g><!--SRC=[oyjFILLGoWEIXaeArLoSoVcv1VbvgNab2Y2M8LSj0000]--></g></svg>
