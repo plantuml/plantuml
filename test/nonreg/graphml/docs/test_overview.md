@@ -276,6 +276,7 @@ note right of comp1: A note\nwith some\nlong text
 @enduml
 </code></pre></td></tr>
 <tr><td>GML0008b_Test</td><td><img alt="GML0008b_Test" src="./component/GML0008b_Test.svg" width="400"/></td><td><pre><code>@startuml
+' floating note
 component comp1
 note "A note\nwith some\nlong text" as N
 @enduml

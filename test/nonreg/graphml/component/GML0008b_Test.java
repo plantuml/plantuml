@@ -47,6 +47,7 @@ Test diagram MUST be put between triple quotes
 
 """
 @startuml
+' floating note
 component comp1
 note "A note\nwith some\nlong text" as N
 @enduml
