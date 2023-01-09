@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.style.parser.StyleParser;
+import net.sourceforge.plantuml.style.parser.StyleParsingException;
 import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.LineLocation;
 
@@ -84,17 +85,19 @@ public class CommandStyleImport extends SingleLineCommand2<TitledDiagram> {
 				lines = BlocLines.load(f, location);
 			} else {
 				final InputStream internalIs = StyleLoader.class.getResourceAsStream("/skin/" + path);
-				if (internalIs != null) {
+				if (internalIs != null)
 					lines = BlocLines.load(internalIs, location);
-				}
+
 			}
-			if (lines == null) {
+			if (lines == null)
 				return CommandExecutionResult.error("Cannot read: " + path);
-			}
+
 			final StyleBuilder styleBuilder = diagram.getSkinParam().getCurrentStyleBuilder();
-			for (Style modifiedStyle : StyleParser.parse(lines, styleBuilder)) {
+			for (Style modifiedStyle : StyleParser.parse(lines, styleBuilder))
 				diagram.getSkinParam().muteStyle(modifiedStyle);
-			}
+
+		} catch (StyleParsingException e) {
+			return CommandExecutionResult.error("Error in style definition: " + e.getMessage());
 		} catch (IOException e) {
 			return CommandExecutionResult.error("Cannot read: " + path);
 		}

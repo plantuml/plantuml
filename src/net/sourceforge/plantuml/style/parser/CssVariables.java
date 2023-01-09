@@ -40,7 +40,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class CssVariables {
+class CssVariables {
 
 	private final Map<String, String> variables = new HashMap<>();
 
@@ -51,6 +51,12 @@ public class CssVariables {
 		final Matcher m = learnPattern.matcher(s);
 		if (m.matches())
 			variables.put(m.group(1), m.group(2));
+	}
+
+	public void learn(String var, String value) {
+		if (var.startsWith("--"))
+			var = var.substring(2);
+		variables.put(var, value);
 	}
 
 	public String value(String v) {

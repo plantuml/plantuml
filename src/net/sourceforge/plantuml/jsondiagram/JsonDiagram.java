@@ -62,14 +62,15 @@ import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.hand.UGraphicHandwritten;
+import net.sourceforge.plantuml.yaml.Highlighted;
 
 public class JsonDiagram extends TitledDiagram {
 
 	private final JsonValue root;
-	private final List<String> highlighted;
+	private final List<Highlighted> highlighted;
 	private final boolean handwritten;
 
-	public JsonDiagram(UmlSource source, UmlDiagramType type, JsonValue json, List<String> highlighted,
+	public JsonDiagram(UmlSource source, UmlDiagramType type, JsonValue json, List<Highlighted> highlighted,
 			StyleExtractor styleExtractor) {
 		super(source, type, null);
 		this.handwritten = styleExtractor.isHandwritten();

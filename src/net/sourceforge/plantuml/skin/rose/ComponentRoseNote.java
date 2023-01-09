@@ -64,7 +64,7 @@ final public class ComponentRoseNote extends AbstractTextualComponent implements
 	public ComponentRoseNote(Style style, Display strings, double paddingX, double paddingY,
 			ISkinSimple spriteContainer, HorizontalAlignment textAlignment, HorizontalAlignment position,
 			Colors colors) {
-		super(style, spriteContainer.wrapWidth(), textAlignment == HorizontalAlignment.CENTER ? 15 : 6, 15, 5,
+		super(style, style.wrapWidth(), textAlignment == HorizontalAlignment.CENTER ? 15 : 6, 15, 5,
 				spriteContainer, strings, true);
 		this.paddingX = paddingX;
 		this.paddingY = paddingY;

@@ -105,8 +105,8 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 	public Quark currentQuark() {
 		throw new UnsupportedOperationException();
 	}
-	
-	public /*protected*/ Plasma getPlasma() {
+
+	public /* protected */ Plasma getPlasma() {
 		throw new UnsupportedOperationException();
 	}
 
@@ -305,13 +305,27 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		return Collections.unmodifiableCollection(result);
 	}
 
-	final public void gotoGroup(Ident ident, Code code, Display display, GroupType type, IGroup parent,
-			NamespaceStrategy strategy) {
-		if (this.V1972()) {
-			gotoGroupInternalWithNamespace(ident, code, display, code, type, parent);
-			return;
+	private NamespaceStrategy lastNamespaceStrategy;
+
+	final public CommandExecutionResult gotoGroup(Ident ident, Code code, Display display, GroupType type,
+			IGroup parent, NamespaceStrategy strategy) {
+		if (type == GroupType.TOGETHER) {
+			IGroup result = entityFactory.createGroup(ident, code, display, null, type, parent, getHides(),
+					getNamespaceSeparator());
+			entityFactory.addGroup(result);
+			currentGroup = result;
+			return CommandExecutionResult.ok();
 
 		}
+		if (this.V1972()) {
+			gotoGroupInternalWithNamespace(ident, code, display, code, type, parent);
+			return CommandExecutionResult.ok();
+		}
+
+		if (this.lastNamespaceStrategy != null && strategy != this.lastNamespaceStrategy)
+			return CommandExecutionResult.error("Cannot mix packages and namespaces");
+		this.lastNamespaceStrategy = strategy;
+
 		if (strategy == NamespaceStrategy.MULTIPLE) {
 			if (getNamespaceSeparator() != null)
 				code = getFullyQualifiedCode1972(code);
@@ -324,6 +338,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		} else {
 			throw new IllegalArgumentException();
 		}
+		return CommandExecutionResult.ok();
 	}
 
 	protected final String getNamespace1972(Code fullyCode, String separator) {
@@ -373,6 +388,12 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 	}
 
 	public void endGroup() {
+
+		if (currentGroup.getGroupType() == GroupType.TOGETHER) {
+			currentGroup = currentGroup.getParentContainer();
+			return;
+		}
+
 		if (stacks2.size() > 0) {
 			// Thread.dumpStack();
 			stacks2.remove(stacks2.size() - 1);
@@ -672,6 +693,9 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 	}
 
 	public boolean isAutarkic(IGroup g) {
+		if (g.getGroupType() == GroupType.TOGETHER)
+			return false;
+
 		if (g.getGroupType() == GroupType.PACKAGE)
 			return false;
 

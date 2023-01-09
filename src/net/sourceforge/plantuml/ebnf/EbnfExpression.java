@@ -99,7 +99,7 @@ public class EbnfExpression implements TextBlockable {
 				tokens.add(new Token(Symbol.REPETITION_OPEN, null));
 			} else if (ch == '}' && it.peek(1) == '-') {
 				tokens.add(new Token(Symbol.REPETITION_MINUS_CLOSE, null));
-				it.next();
+				it.jump();
 			} else if (ch == '}') {
 				tokens.add(new Token(Symbol.REPETITION_CLOSE, null));
 			} else if (ch == ';' || ch == 0) {
@@ -118,7 +118,7 @@ public class EbnfExpression implements TextBlockable {
 				tokens.clear();
 				return;
 			}
-			it.next();
+			it.jump();
 			continue;
 		}
 	}
@@ -213,14 +213,14 @@ public class EbnfExpression implements TextBlockable {
 
 	private String readString(CharInspector it) {
 		final char separator = it.peek(0);
-		it.next();
+		it.jump();
 		final StringBuilder sb = new StringBuilder();
 		while (true) {
 			final char ch = it.peek(0);
 			if (ch == separator)
 				return sb.toString();
 			sb.append(ch);
-			it.next();
+			it.jump();
 		}
 	}
 
@@ -231,25 +231,25 @@ public class EbnfExpression implements TextBlockable {
 			if (isLetterOrDigit(ch) == false)
 				return sb.toString();
 			sb.append(ch);
-			it.next();
+			it.jump();
 		}
 	}
 
 	private String readComment(CharInspector it) {
 		final StringBuilder sb = new StringBuilder();
-		it.next();
-		it.next();
+		it.jump();
+		it.jump();
 		while (true) {
 			final char ch = it.peek(0);
 			if (ch == '\0')
 				return sb.toString();
 			if (ch == '*' && it.peek(1) == ')') {
-				it.next();
-				it.next();
+				it.jump();
+				it.jump();
 				return sb.toString();
 			}
 			sb.append(ch);
-			it.next();
+			it.jump();
 		}
 	}
 

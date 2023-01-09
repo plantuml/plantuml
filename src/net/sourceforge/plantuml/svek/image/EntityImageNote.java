@@ -118,7 +118,7 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 			textBlock = new TextBlockEmpty();
 		else
 			textBlock = BodyFactory.create3(strings, getSkinParam(), horizontalAlignment, fontConfiguration,
-					getSkinParam().wrapWidth(), style);
+					style.wrapWidth(), style);
 
 	}
 

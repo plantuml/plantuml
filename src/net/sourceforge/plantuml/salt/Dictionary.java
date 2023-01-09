@@ -41,7 +41,6 @@ import java.util.Objects;
 
 import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.ISkinSimple;
-import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.SpriteContainer;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.creole.Parser;
@@ -113,11 +112,6 @@ public class Dictionary implements SpriteContainer, ISkinSimple {
 	public void addSprite(String name, Sprite sprite) {
 		sprites.put(name, sprite);
 
-	}
-
-	@Override
-	public LineBreakStrategy wrapWidth() {
-		return LineBreakStrategy.NONE;
 	}
 
 	@Override

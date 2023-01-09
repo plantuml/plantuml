@@ -177,7 +177,7 @@ public class EntityImageTips extends AbstractEntityImage {
 		final UStroke stroke = style.getStroke();
 
 		final TextBlock textBlock = BodyFactory.create3(display, skinParam, HorizontalAlignment.LEFT, fc,
-				skinParam.wrapWidth(), style);
+				style.wrapWidth(), style);
 		return new Opale(shadowing, borderColor, noteBackgroundColor, textBlock, true, stroke);
 	}
 

@@ -63,6 +63,7 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.yaml.Highlighted;
 import smetana.core.CString;
 import smetana.core.Macro;
 import smetana.core.Z;
@@ -125,24 +126,8 @@ public class SmetanaForJson {
 				.getMergedStyle(skinParam.getCurrentStyleBuilder());
 	}
 
-	private Style getStyleNodeHeader() {
-		return StyleSignatureBasic.of(SName.root, SName.element, getDiagramType(), SName.header, SName.node)
-				.getMergedStyle(skinParam.getCurrentStyleBuilder());
-	}
-
-	private Style getStyleNodeHighlight() {
-		return StyleSignatureBasic.of(SName.root, SName.element, getDiagramType(), SName.node, SName.highlight)
-				.getMergedStyle(skinParam.getCurrentStyleBuilder());
-	}
-
-	private Style getStyleNodeHeaderHighlight() {
-		return StyleSignatureBasic.of(SName.root, SName.element, getDiagramType(), SName.header, SName.node, SName.highlight)
-				.getMergedStyle(skinParam.getCurrentStyleBuilder());
-	}
-
-	private ST_Agnode_s manageOneNode(JsonValue current, List<String> highlighted) {
-		final TextBlockJson block = new TextBlockJson(skinParam, current, highlighted, getStyleNode(),
-				getStyleNodeHighlight(), getStyleNodeHeader(), getStyleNodeHeaderHighlight());
+	private ST_Agnode_s manageOneNode(JsonValue current, List<Highlighted> highlighted) {
+		final TextBlockJson block = new TextBlockJson(skinParam, current, highlighted);
 		final ST_Agnode_s node1 = createNode(block.calculateDimension(stringBounder), block.size(), current.isArray(),
 				(int) block.getWidthColA(stringBounder), (int) block.getWidthColB(stringBounder));
 		nodes.add(new InternalNode(block, node1));
@@ -151,7 +136,7 @@ public class SmetanaForJson {
 		for (int i = 0; i < children.size(); i++) {
 			final JsonValue tmp = children.get(i);
 			if (tmp != null) {
-				final ST_Agnode_s childBloc = manageOneNode(tmp, removeOneLevel(keys.get(i), highlighted));
+				final ST_Agnode_s childBloc = manageOneNode(tmp, upOneLevel(keys.get(i), highlighted));
 				final ST_Agedge_s edge = createEdge(node1, childBloc, i);
 				edges.add(edge);
 			}
@@ -160,49 +145,41 @@ public class SmetanaForJson {
 
 	}
 
-	private List<String> removeOneLevel(String key, List<String> list) {
-		final List<String> result = new ArrayList<>();
-		for (String tmp : list) {
-			if (tmp.startsWith("\"" + key + "\"") == false) {
-				continue;
-			}
-			tmp = tmp.trim().replaceFirst("\"([^\"]+)\"", "").trim();
-			if (tmp.length() > 0) {
-				tmp = tmp.substring(1).trim();
-				result.add(tmp);
-			}
+	private List<Highlighted> upOneLevel(String key, List<Highlighted> list) {
+		final List<Highlighted> result = new ArrayList<>();
+		for (Highlighted tmp : list) {
+			final Highlighted parent = tmp.upOneLevel(key);
+			if (parent != null)
+				result.add(parent);
 		}
 		return Collections.unmodifiableList(result);
 	}
 
-	public void drawMe(JsonValue root, List<String> highlighted) {
+	public void drawMe(JsonValue root, List<Highlighted> highlighted) {
 		initGraph(root, highlighted);
 		double max = 0;
-		for (InternalNode node : nodes) {
+		for (InternalNode node : nodes)
 			max = Math.max(max, node.getMaxX());
-		}
+
 		xMirror = new Mirror(max);
 
-		for (InternalNode node : nodes) {
-			node.block.drawU(
-					getStyleNode().applyStrokeAndLineColor(ug, skinParam.getIHtmlColorSet())
-							.apply(getPosition(node.node)));
-		}
+		for (InternalNode node : nodes)
+			node.block.drawU(getStyleNode().applyStrokeAndLineColor(ug, skinParam.getIHtmlColorSet())
+					.apply(getPosition(node.node)));
+
 		final HColor color = getStyleArrow().value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 
 		for (ST_Agedge_s edge : edges) {
 			final JsonCurve curve = getCurve(edge, 13);
 			curve.drawCurve(color, getStyleArrow().applyStrokeAndLineColor(ug, skinParam.getIHtmlColorSet()));
-			curve.drawSpot(
-					getStyleArrow().applyStrokeAndLineColor(ug, skinParam.getIHtmlColorSet())
-							.apply(color.bg()));
+			curve.drawSpot(getStyleArrow().applyStrokeAndLineColor(ug, skinParam.getIHtmlColorSet()).apply(color.bg()));
 		}
 	}
 
-	private void initGraph(JsonValue root, List<String> highlighted) {
-		if (g != null) {
+	private void initGraph(JsonValue root, List<Highlighted> highlighted) {
+		if (g != null)
 			return;
-		}
+
 		Z.open();
 		try {
 
@@ -268,9 +245,8 @@ public class SmetanaForJson {
 
 		final int lineHeight = 0;
 		final String dotLabel = getDotLabel(size, isArray, colAwidth - 8, colBwidth - 8, lineHeight);
-		if (size > 0) {
+		if (size > 0)
 			agsafeset(node, new CString("label"), new CString(dotLabel), new CString(""));
-		}
 
 		StringBuilder sb = new StringBuilder();
 		sb.append("N" + node.UID + " [");
@@ -284,19 +260,17 @@ public class SmetanaForJson {
 
 	private String getDotLabel(int size, boolean isArray, int widthA, int widthB, int height) {
 		final StringBuilder sb = new StringBuilder("");
-		if (isArray == false) {
-			// "+height+"
+		if (isArray == false)
 			sb.append("{_dim_" + height + "_" + widthA + "_|{");
-		}
+
 		for (int i = 0; i < size; i++) {
 			sb.append("<P" + i + ">");
 			sb.append("_dim_" + height + "_" + widthB + "_");
 			if (i < size - 1)
 				sb.append("|");
 		}
-		if (isArray == false) {
+		if (isArray == false)
 			sb.append("}}");
-		}
 
 		return sb.toString();
 	}

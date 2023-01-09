@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -30,13 +30,36 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
-package net.sourceforge.plantuml.cucadiagram;
+package net.sourceforge.plantuml.utils;
 
-public enum GroupType {
+import java.util.List;
 
-	PACKAGE, TOGETHER, STATE, CONCURRENT_STATE, INNER_ACTIVITY, CONCURRENT_ACTIVITY, DOMAIN, REQUIREMENT
+public abstract class InspectorUtils {
 
+	private InspectorUtils() {
+
+	}
+
+	public static <O> Inspector<O> inspector(final List<O> list) {
+		return new Inspector<O>() {
+
+			private int pos = 0;
+
+			@Override
+			public O peek(int ahead) {
+				final int tmp = pos + ahead;
+				if (tmp < list.size())
+					return list.get(tmp);
+				return null;
+			}
+
+			@Override
+			public void jump() {
+				pos++;
+			}
+		};
+	}
 }

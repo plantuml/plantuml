@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.FileSystem;
 import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.style.parser.StyleParser;
+import net.sourceforge.plantuml.style.parser.StyleParsingException;
 import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.LineLocationImpl;
 import net.sourceforge.plantuml.utils.Log;
@@ -59,7 +60,7 @@ public class StyleLoader {
 
 	private StyleBuilder styleBuilder;
 
-	public StyleBuilder loadSkin(String filename) throws IOException {
+	public StyleBuilder loadSkin(String filename) throws IOException, StyleParsingException {
 		this.styleBuilder = new StyleBuilder(skinParam);
 
 		final InputStream internalIs = getInputStreamForStyle(filename);
@@ -101,7 +102,7 @@ public class StyleLoader {
 		return internalIs;
 	}
 
-	private void loadSkinInternal(final BlocLines lines) {
+	private void loadSkinInternal(final BlocLines lines) throws StyleParsingException {
 		for (Style newStyle : StyleParser.parse(lines, styleBuilder))
 			this.styleBuilder.loadInternal(newStyle.getSignature(), newStyle);
 	}

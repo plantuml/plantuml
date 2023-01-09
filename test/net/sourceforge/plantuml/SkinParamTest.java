@@ -258,10 +258,6 @@ class SkinParamTest {
 		assertThat(skinParam.useSwimlanes(umlDiagramType)).isFalse();
 
 		assertThat(skinParam.useUnderlineForHyperlink()).isNotNull();
-
-		final LineBreakStrategy wrapWidth = skinParam.wrapWidth();
-		assertThat(wrapWidth.isAuto()).isFalse();
-		assertThat(wrapWidth.getMaxWidth()).isZero();
 	}
 
 	@Test

@@ -171,8 +171,8 @@ final public class EntityImp implements ILeaf, IGroup {
 		this.rawLayout = rawLayout;
 	}
 
-	public EntityImp(Ident ident, Code code, EntityFactory entityFactory, Bodier bodier,
-			IGroup parentContainer, LeafType leafType, String namespaceSeparator, int rawLayout) {
+	public EntityImp(Ident ident, Code code, EntityFactory entityFactory, Bodier bodier, IGroup parentContainer,
+			LeafType leafType, String namespaceSeparator, int rawLayout) {
 		this(Objects.requireNonNull(ident), entityFactory, code, bodier, parentContainer, namespaceSeparator,
 				rawLayout);
 		// System.err.println("ID for leaf=" + code + " " + ident);
@@ -782,6 +782,7 @@ final public class EntityImp implements ILeaf, IGroup {
 
 	public void setThisIsTogether() {
 		this.together = true;
+		setUSymbol(USymbols.TOGETHER);
 	}
 
 	public String getCodeLine() {

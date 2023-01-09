@@ -100,14 +100,15 @@ public class CommandPackageEmpty extends SingleLineCommand2<AbstractEntityDiagra
 		final IGroup currentPackage = diagram.getCurrentGroup();
 		final Ident ident = diagram.buildLeafIdent(idShort);
 		final Code code = diagram.V1972() ? ident : diagram.buildCode(idShort);
-		diagram.gotoGroup(ident, code, Display.getWithNewlines(display), GroupType.PACKAGE, currentPackage,
-				NamespaceStrategy.SINGLE);
+		final CommandExecutionResult status = diagram.gotoGroup(ident, code, Display.getWithNewlines(display),
+				GroupType.PACKAGE, currentPackage, NamespaceStrategy.SINGLE);
+		if (status.isOk() == false)
+			return status;
 		final IEntity p = diagram.getCurrentGroup();
 		final String color = arg.get("COLOR", 0);
-		if (color != null) {
-			p.setSpecificColorTOBEREMOVED(ColorType.BACK,
-					diagram.getSkinParam().getIHtmlColorSet().getColor(color));
-		}
+		if (color != null)
+			p.setSpecificColorTOBEREMOVED(ColorType.BACK, diagram.getSkinParam().getIHtmlColorSet().getColor(color));
+
 		diagram.endGroup();
 		return CommandExecutionResult.ok();
 	}

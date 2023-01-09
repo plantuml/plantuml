@@ -38,29 +38,38 @@ package net.sourceforge.plantuml.style.parser;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.EnumMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Map;
 
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleLoader;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.Value;
 
 class Context {
 
 	private final List<String> data = new ArrayList<String>();
+	private final Map<PName, Value> map = new EnumMap<>(PName.class);
+	private Context parent;
 
 	public Context push(String newString) {
+		if (newString.startsWith(":"))
+			newString = newString.substring(1);
 		final Context result = new Context();
 		result.data.addAll(this.data);
 		result.data.add(newString);
+		result.parent = this;
 		return result;
 	}
 
 	public Context pop() {
 		if (size() == 0)
 			throw new IllegalStateException();
-		final Context result = new Context();
-		result.data.addAll(this.data.subList(0, this.data.size() - 1));
-		return result;
+		return this.parent;
 	}
 
 	@Override
@@ -96,6 +105,24 @@ class Context {
 			}
 
 		return Collections.unmodifiableCollection(results);
+	}
+
+	public void putInContext(PName key, Value value) {
+		map.put(key, value);
+	}
+
+	public Collection<Style> toStyles() {
+		final Collection<Style> result = new ArrayList<>();
+		final Collection<StyleSignatureBasic> signatures = toSignatures();
+		for (StyleSignatureBasic signature : signatures) {
+			Map<PName, Value> tmp = map;
+			if (signature.isWithDot())
+				tmp = StyleLoader.addPriorityForStereotype(tmp);
+			if (tmp.size() > 0)
+				result.add(new Style(signature, tmp));
+
+		}
+		return result;
 	}
 
 }
