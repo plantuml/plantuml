@@ -53,8 +53,9 @@ import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.cucadiagram.Bodier;
 import net.sourceforge.plantuml.cucadiagram.BodierJSon;
 import net.sourceforge.plantuml.cucadiagram.BodierLikeClassOrObject;
-import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.CucaNote;
+import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.cucadiagram.GroupType;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
@@ -167,6 +168,7 @@ public class Cuca2GenericConverter implements ICucaDiagramVisitor {
 		typeMap.put(SName.frame, GenericEntityType.FRAME);
 		typeMap.put(SName.cloud, GenericEntityType.CLOUD);
 		typeMap.put(SName.database, GenericEntityType.DATABASE);
+		typeMap.put(SName.rectangle, GenericEntityType.RECTANGLE);
 		entityTypeMap = typeMap;
 
 	}
@@ -599,15 +601,26 @@ public class Cuca2GenericConverter implements ICucaDiagramVisitor {
 
 	private GenericEntityType determineEntityType(IEntity entity) {
 
+		IGroup group = null;
+		try {
+			group = (IGroup) entity;
+		} catch (ClassCastException e) {
+			// dont'care
+		}
 
 		if (entity.getUSymbol() != null) {
 			return this.entityTypeMap.getOrDefault(entity.getUSymbol().getSName(), GenericEntityType.UNKNOWN);
 		} else if (entity.getLeafType() != null) {
 			return this.leafTypeMap.getOrDefault(entity.getLeafType(), GenericEntityType.UNKNOWN);
 		}
-		else {
-			return GenericEntityType.UNKNOWN;
+
+		if (group != null) {
+			if (group.getGroupType().equals(GroupType.PACKAGE)) {
+				return GenericEntityType.PACKAGE;
+			}
 		}
+
+		return GenericEntityType.UNKNOWN;
 	}
 
 	private MemberVisibility determineMemberVisibility(String member) {

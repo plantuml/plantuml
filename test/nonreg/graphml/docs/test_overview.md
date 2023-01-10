@@ -208,7 +208,11 @@ Class07 "1\nitsClass07" --> "*\nitsClass08" Class08: has
 @enduml
 </code></pre></td></tr>
 <tr><td>GML0037_Test</td><td><img alt="GML0037_Test" src="./classdiagram/GML0037_Test.svg" width="400"/></td><td><pre><code>@startuml
-Class07 "itsClass07\n1" --> "itsClass08\n*" Class08: has
+package "net.plantuml" {
+package "net.plantuml.utils" {
+class Class01
+}
+}
 @enduml
 </code></pre></td></tr>
 <tr><td>GML0038_Test</td><td><img alt="GML0038_Test" src="./classdiagram/GML0038_Test.svg" width="400"/></td><td><pre><code>@startuml
@@ -261,6 +265,48 @@ class Class
 json JSON {
    "size":"Large",
    "color": ["Red", "Green"]
+}
+@enduml
+</code></pre></td></tr>
+<tr><td>GML0044_Test</td><td><img alt="GML0044_Test" src="./classdiagram/GML0044_Test.svg" width="400"/></td><td><pre><code>@startuml
+package "net.plantuml" {
+class Class01
+}
+@enduml
+</code></pre></td></tr>
+<tr><td>GML0045_Test</td><td><img alt="GML0045_Test" src="./classdiagram/GML0045_Test.svg" width="400"/></td><td><pre><code>@startuml
+package "net.plantuml" &laquo;Node&raquo; {
+class Class01
+}
+@enduml
+</code></pre></td></tr>
+<tr><td>GML0046_Test</td><td><img alt="GML0046_Test" src="./classdiagram/GML0046_Test.svg" width="400"/></td><td><pre><code>@startuml
+package "net.plantuml" &laquo;Rectangle&raquo; {
+class Class01
+}
+@enduml
+</code></pre></td></tr>
+<tr><td>GML0047_Test</td><td><img alt="GML0047_Test" src="./classdiagram/GML0047_Test.svg" width="400"/></td><td><pre><code>@startuml
+package "net.plantuml" &laquo;Folder&raquo; {
+class Class01
+}
+@enduml
+</code></pre></td></tr>
+<tr><td>GML0048_Test</td><td><img alt="GML0048_Test" src="./classdiagram/GML0048_Test.svg" width="400"/></td><td><pre><code>@startuml
+package "net.plantuml" &laquo;Frame&raquo; {
+class Class01
+}
+@enduml
+</code></pre></td></tr>
+<tr><td>GML0049_Test</td><td><img alt="GML0049_Test" src="./classdiagram/GML0049_Test.svg" width="400"/></td><td><pre><code>@startuml
+package "net.plantuml" &laquo;Cloud&raquo; {
+class Class01
+}
+@enduml
+</code></pre></td></tr>
+<tr><td>GML0050_Test</td><td><img alt="GML0050_Test" src="./classdiagram/GML0050_Test.svg" width="400"/></td><td><pre><code>@startuml
+package "net.plantuml" &laquo;Database&raquo; {
+class Class01
 }
 @enduml
 </code></pre></td></tr>

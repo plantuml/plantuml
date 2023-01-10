@@ -36,6 +36,7 @@
 package nonreg.graphml.classdiagram;
 
 import nonreg.graphml.GraphmlTest;
+
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -48,10 +49,8 @@ Test diagram MUST be put between triple quotes
 
 """
 @startuml
-package "net.plantuml" {
-package "net.plantuml.utils" {
+package "net.plantuml" <<Folder>> {
 class Class01
-}
 }
 @enduml
 """
@@ -72,46 +71,33 @@ Expected result MUST be put between triple brackets
 <node id="1">
 <data key="d1">Diagram</data>
 <data key="d2">DIAGRAM</data>
-<data key="d0">GML0037_Test.puml</data>
+<data key="d0">GML0047_Test.puml</data>
 <data key="d20">diag0</data>
-<data key="d21">./nonreg/graphml/classdiagram/GML0037_Test/0/diag0</data>
+<data key="d21">./nonreg/graphml/classdiagram/GML0047_Test/0/diag0</data>
 <data key="d18">CLASS</data>
-<data key="d19">./nonreg/graphml/classdiagram/GML0037_Test.puml</data>
+<data key="d19">./nonreg/graphml/classdiagram/GML0047_Test.puml</data>
 </node>
 <node id="2">
 <data key="d1">Group</data>
-<data key="d2">PACKAGE</data>
+<data key="d2">FOLDER</data>
 <data key="d0">net.plantuml</data>
 <data key="d20">cl0002</data>
-<data key="d21">./nonreg/graphml/classdiagram/GML0037_Test/0/cl0002</data>
+<data key="d21">./nonreg/graphml/classdiagram/GML0047_Test/0/cl0002</data>
 </node>
 <node id="3">
-<data key="d1">Group</data>
-<data key="d2">PACKAGE</data>
-<data key="d0">net.plantuml.utils</data>
-<data key="d20">cl0003</data>
-<data key="d21">./nonreg/graphml/classdiagram/GML0037_Test/0/cl0003</data>
-</node>
-<node id="4">
 <data key="d1">Leaf</data>
 <data key="d2">CLASS</data>
 <data key="d0">Class01</data>
-<data key="d20">cl0004</data>
-<data key="d21">./nonreg/graphml/classdiagram/GML0037_Test/0/cl0004</data>
+<data key="d20">cl0003</data>
+<data key="d21">./nonreg/graphml/classdiagram/GML0047_Test/0/cl0003</data>
 </node>
-<edge id="1" source="3" target="4">
+<edge id="1" source="2" target="3">
 <data key="d13">HIERARCHY</data>
 </edge>
-<edge id="2" source="2" target="3">
-<data key="d13">HIERARCHY</data>
-</edge>
-<edge id="3" source="1" target="2">
+<edge id="2" source="1" target="2">
 <data key="d13">DIAGRAM_CONTAINS</data>
 </edge>
-<edge id="4" source="1" target="3">
-<data key="d13">DIAGRAM_CONTAINS</data>
-</edge>
-<edge id="5" source="1" target="4">
+<edge id="3" source="1" target="3">
 <data key="d13">DIAGRAM_CONTAINS</data>
 </edge>
 </graph>
@@ -119,7 +105,7 @@ Expected result MUST be put between triple brackets
 }}}
 
  */
-public class GML0037_Test extends GraphmlTest {
+public class GML0047_Test extends GraphmlTest {
 
 	@Test
 	void testSimple() throws IOException, InterruptedException {
