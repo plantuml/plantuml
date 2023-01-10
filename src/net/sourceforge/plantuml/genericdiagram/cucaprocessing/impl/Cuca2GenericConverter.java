@@ -58,6 +58,7 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
+import net.sourceforge.plantuml.cucadiagram.LinkArrow;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkStyle;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
@@ -65,6 +66,7 @@ import net.sourceforge.plantuml.descdiagram.DescriptionDiagram;
 import net.sourceforge.plantuml.genericdiagram.GenericDiagramType;
 import net.sourceforge.plantuml.genericdiagram.GenericEdgeType;
 import net.sourceforge.plantuml.genericdiagram.GenericEntityType;
+import net.sourceforge.plantuml.genericdiagram.GenericLinkArrow;
 import net.sourceforge.plantuml.genericdiagram.GenericLinkDecor;
 import net.sourceforge.plantuml.genericdiagram.GenericLinkStyle;
 import net.sourceforge.plantuml.genericdiagram.IGenericEdge;
@@ -93,6 +95,8 @@ public class Cuca2GenericConverter implements ICucaDiagramVisitor {
 	Map<LeafType, GenericEntityType> leafTypeMap;
 	Map<LinkDecor, GenericLinkDecor> decorMap;
 	Map<String, GenericLinkStyle> linkTypeMap;
+
+	Map<LinkArrow, GenericLinkArrow> linkArrowMap;
 	Map<SName, GenericEntityType> entityTypeMap;
 	Map<Character, MemberVisibility> visibilityMap;
 	Map<Class<?>, GenericDiagramType> diagramTypeMap;
@@ -116,6 +120,7 @@ public class Cuca2GenericConverter implements ICucaDiagramVisitor {
 		initLeafTypeMap();
 		initVisibilityMap();
 		initDiagramTypeMap();
+		initLinkArrowMap();
 		initCollector();
 		checkgraphmlRootDir();
 	}
@@ -231,6 +236,13 @@ public class Cuca2GenericConverter implements ICucaDiagramVisitor {
 		this.linkTypeMap.put(LinkStyle.DOTTED().toString(), GenericLinkStyle.DOTTED);
 		this.linkTypeMap.put(LinkStyle.INVISIBLE().toString(), GenericLinkStyle.INVISIBLE);
 		this.linkTypeMap.put(LinkStyle.NORMAL().toString(), GenericLinkStyle.NORMAL);
+	}
+
+	private void initLinkArrowMap() {
+		this.linkArrowMap = new HashMap<>();
+		this.linkArrowMap.put(LinkArrow.BACKWARD, GenericLinkArrow.BACKWARD);
+		this.linkArrowMap.put(LinkArrow.DIRECT_NORMAL, GenericLinkArrow.DIRECT_NORMAL);
+		this.linkArrowMap.put(LinkArrow.NONE_OR_SEVERAL, GenericLinkArrow.NONE_OR_SEVERAL);
 	}
 
 	private void processStereotype(Stereotype stereotype, GenericModelElement containingEntity) {
@@ -671,6 +683,12 @@ public class Cuca2GenericConverter implements ICucaDiagramVisitor {
 
 	}
 
+	private GenericLinkArrow determineLinkArrow(Link link) {
+
+		LinkArrow arrow = link.getLinkArrow();
+		return this.linkArrowMap.getOrDefault(arrow, GenericLinkArrow.NONE_OR_SEVERAL);
+	}
+
 	private GenericLinkDecor determineDecorType(LinkDecor linkDecor) {
 
 		return this.decorMap.getOrDefault(linkDecor, GenericLinkDecor.UNKNOWN);
@@ -696,8 +714,7 @@ public class Cuca2GenericConverter implements ICucaDiagramVisitor {
 		genericLink.setSourceLabel(stringToJSONString(link.getQuantifier1()));
 		genericLink.setTargetLabel(stringToJSONString(link.getQuantifier2()));
 		genericLink.setStyle(determineLinkType(link));
-		// TODO deal with direction later
-		genericLink.setDirection(link.getLinkArrow().toString());
+		genericLink.setDirection(determineLinkArrow(link));
 
 		return genericLink;
 	}

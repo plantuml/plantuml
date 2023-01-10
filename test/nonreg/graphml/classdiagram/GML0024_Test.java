@@ -62,6 +62,7 @@ Expected result MUST be put between triple brackets
 <key attr.name="style" attr.type="string" for="node" id="d3"/>
 <key attr.name="sourceDecor" attr.type="string" for="node" id="d4"/>
 <key attr.name="targetDecor" attr.type="string" for="node" id="d5"/>
+<key attr.name="direction" attr.type="string" for="node" id="d9"/>
 <key attr.name="edgeType" attr.type="string" for="edge" id="d13"/>
 <key attr.name="diagramType" attr.type="string" for="node" id="d18"/>
 <key attr.name="sourceFile" attr.type="string" for="node" id="d19"/>
@@ -106,6 +107,7 @@ Expected result MUST be put between triple brackets
 <data key="d3">NORMAL</data>
 <data key="d4">NOT_NAVIGABLE</data>
 <data key="d5">NONE</data>
+<data key="d9">NONE_OR_SEVERAL</data>
 </node>
 <edge id="1" source="3" target="5">
 <data key="d13">IS_SOURCE</data>

@@ -63,6 +63,7 @@ Expected result MUST be put between triple brackets
 <key attr.name="targetDecor" attr.type="string" for="node" id="d5"/>
 <key attr.name="sourceLabel" attr.type="string" for="node" id="d7"/>
 <key attr.name="targetLabel" attr.type="string" for="node" id="d8"/>
+<key attr.name="direction" attr.type="string" for="node" id="d9"/>
 <key attr.name="edgeType" attr.type="string" for="edge" id="d13"/>
 <key attr.name="diagramType" attr.type="string" for="node" id="d18"/>
 <key attr.name="sourceFile" attr.type="string" for="node" id="d19"/>
@@ -99,6 +100,7 @@ Expected result MUST be put between triple brackets
 <data key="d3">NORMAL</data>
 <data key="d4">NONE</data>
 <data key="d5">NONE</data>
+<data key="d9">NONE_OR_SEVERAL</data>
 <data key="d7">1</data>
 <data key="d8">*</data>
 <data key="d20">cl0002_LNK4_cl0003</data>

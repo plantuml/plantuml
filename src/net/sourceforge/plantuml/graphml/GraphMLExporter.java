@@ -271,6 +271,7 @@ public class GraphMLExporter implements IGenericDiagramVisitor, XmlDiagramTransf
 		addDataNode(domNode, GML_KEY_LINK_TARGET_DECOR, genericLink.getTargetDecor().toString());
 		addDataNode(domNode, GML_KEY_LINK_SOURCE_LABEL, genericLink.getSourceLabel());
 		addDataNode(domNode, GML_KEY_LINK_TARGET_LABEL, genericLink.getTargetLabel());
+		addDataNode(domNode, GML_KEY_LINK_DIRECTION, genericLink.getDirection().toString());
 		domNodes.add(domNode);
 	}
 

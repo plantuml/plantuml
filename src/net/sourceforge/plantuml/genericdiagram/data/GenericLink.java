@@ -6,12 +6,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.genericdiagram.data;
 
 import net.sourceforge.plantuml.genericdiagram.GenericEntityType;
+import net.sourceforge.plantuml.genericdiagram.GenericLinkArrow;
 import net.sourceforge.plantuml.genericdiagram.GenericLinkDecor;
 import net.sourceforge.plantuml.genericdiagram.GenericLinkStyle;
 import net.sourceforge.plantuml.genericdiagram.IGenericLink;
@@ -59,7 +60,7 @@ public class GenericLink extends GenericModelElement implements IGenericLink, IG
 	String targetLabel;
 
 	// special cases
-	String direction;      // Class / Object diagram only
+	GenericLinkArrow direction;      // Class / Object diagram only
 
 	public GenericLink(int elementCount) {
 		super(elementCount);
@@ -98,8 +99,8 @@ public class GenericLink extends GenericModelElement implements IGenericLink, IG
 		this.targetLabel = targetLabel;
 	}
 
-	public void setDirection(String direction) {
-		this.direction = direction;
+	public void setDirection(GenericLinkArrow linkArrow) {
+		this.direction = linkArrow;
 	}
 
 	@Override
@@ -134,7 +135,7 @@ public class GenericLink extends GenericModelElement implements IGenericLink, IG
 	}
 
 	@Override
-	public String getDirection() {
+	public GenericLinkArrow getDirection() {
 		return direction;
 	}
 

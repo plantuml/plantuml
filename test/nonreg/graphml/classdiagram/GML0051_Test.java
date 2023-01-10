@@ -43,13 +43,14 @@ import java.io.IOException;
 
 /*
 
-Test verifies that dealing with directions is done within PlantUML already
+Verify proper method and field visibility and abstract / static analysis
 
 Test diagram MUST be put between triple quotes
 
 """
 @startuml
-Class04 --* Class03
+Driver - Car: drives >
+Car -- Person: < owns
 @enduml
 """
 
@@ -73,49 +74,82 @@ Expected result MUST be put between triple brackets
 <node id="1">
 <data key="d1">Diagram</data>
 <data key="d2">DIAGRAM</data>
-<data key="d0">GML0014b_Test.puml</data>
+<data key="d0">GML0051_Test.puml</data>
 <data key="d20">diag0</data>
-<data key="d21">./nonreg/graphml/classdiagram/GML0014b_Test/0/diag0</data>
+<data key="d21">./nonreg/graphml/classdiagram/GML0051_Test/0/diag0</data>
 <data key="d18">CLASS</data>
-<data key="d19">./nonreg/graphml/classdiagram/GML0014b_Test.puml</data>
+<data key="d19">./nonreg/graphml/classdiagram/GML0051_Test.puml</data>
 </node>
 <node id="2">
 <data key="d1">Leaf</data>
 <data key="d2">CLASS</data>
-<data key="d0">Class04</data>
+<data key="d0">Driver</data>
 <data key="d20">cl0002</data>
-<data key="d21">./nonreg/graphml/classdiagram/GML0014b_Test/0/cl0002</data>
+<data key="d21">./nonreg/graphml/classdiagram/GML0051_Test/0/cl0002</data>
 </node>
 <node id="3">
 <data key="d1">Leaf</data>
 <data key="d2">CLASS</data>
-<data key="d0">Class03</data>
+<data key="d0">Car</data>
 <data key="d20">cl0003</data>
-<data key="d21">./nonreg/graphml/classdiagram/GML0014b_Test/0/cl0003</data>
+<data key="d21">./nonreg/graphml/classdiagram/GML0051_Test/0/cl0003</data>
 </node>
 <node id="4">
+<data key="d1">Leaf</data>
+<data key="d2">CLASS</data>
+<data key="d0">Person</data>
+<data key="d20">cl0005</data>
+<data key="d21">./nonreg/graphml/classdiagram/GML0051_Test/0/cl0005</data>
+</node>
+<node id="5">
 <data key="d1">Link</data>
 <data key="d2">LINK</data>
+<data key="d0">drives</data>
 <data key="d20">cl0002_LNK4_cl0003</data>
-<data key="d21">./nonreg/graphml/classdiagram/GML0014b_Test/0/cl0002_LNK4_cl0003</data>
+<data key="d21">./nonreg/graphml/classdiagram/GML0051_Test/0/cl0002_LNK4_cl0003</data>
 <data key="d3">NORMAL</data>
 <data key="d4">NONE</data>
-<data key="d5">COMPOSITION</data>
+<data key="d5">NONE</data>
 <data key="d9">NONE_OR_SEVERAL</data>
+<data key="d9">DIRECT_NORMAL</data>
 </node>
-<edge id="1" source="2" target="4">
+<node id="6">
+<data key="d1">Link</data>
+<data key="d2">LINK</data>
+<data key="d0">owns</data>
+<data key="d20">cl0003_LNK6_cl0005</data>
+<data key="d21">./nonreg/graphml/classdiagram/GML0051_Test/0/cl0003_LNK6_cl0005</data>
+<data key="d3">NORMAL</data>
+<data key="d4">NONE</data>
+<data key="d5">NONE</data>
+<data key="d9">NONE_OR_SEVERAL</data>
+<data key="d9">BACKWARD</data>
+</node>
+<edge id="1" source="2" target="5">
 <data key="d13">IS_SOURCE</data>
 </edge>
-<edge id="2" source="3" target="4">
+<edge id="2" source="3" target="5">
 <data key="d13">IS_TARGET</data>
 </edge>
-<edge id="3" source="1" target="2">
+<edge id="3" source="3" target="6">
+<data key="d13">IS_SOURCE</data>
+</edge>
+<edge id="4" source="4" target="6">
+<data key="d13">IS_TARGET</data>
+</edge>
+<edge id="5" source="1" target="2">
 <data key="d13">DIAGRAM_CONTAINS</data>
 </edge>
-<edge id="4" source="1" target="3">
+<edge id="6" source="1" target="3">
 <data key="d13">DIAGRAM_CONTAINS</data>
 </edge>
-<edge id="5" source="1" target="4">
+<edge id="7" source="1" target="4">
+<data key="d13">DIAGRAM_CONTAINS</data>
+</edge>
+<edge id="8" source="1" target="5">
+<data key="d13">DIAGRAM_CONTAINS</data>
+</edge>
+<edge id="9" source="1" target="6">
 <data key="d13">DIAGRAM_CONTAINS</data>
 </edge>
 </graph>
@@ -123,11 +157,11 @@ Expected result MUST be put between triple brackets
 }}}
 
  */
-public class GML0014b_Test extends GraphmlTest {
+public class GML0051_Test extends GraphmlTest {
 
 	@Test
 	void testSimple() throws IOException, InterruptedException {
-		checkXmlAndDescription("(2 entities)");
+		checkXmlAndDescription("(3 entities)");
 	}
 
 }

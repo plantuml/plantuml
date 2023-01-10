@@ -310,6 +310,11 @@ class Class01
 }
 @enduml
 </code></pre></td></tr>
+<tr><td>GML0051_Test</td><td><img alt="GML0051_Test" src="./classdiagram/GML0051_Test.svg" width="400"/></td><td><pre><code>@startuml
+Driver - Car: drives >
+Car -- Person: < owns
+@enduml
+</code></pre></td></tr>
 </table>
 
 ## component

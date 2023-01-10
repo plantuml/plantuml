@@ -64,6 +64,7 @@ Expected result MUST be put between triple brackets
 <key attr.name="targetDecor" attr.type="string" for="node" id="d5"/>
 <key attr.name="sourceLabel" attr.type="string" for="node" id="d7"/>
 <key attr.name="targetLabel" attr.type="string" for="node" id="d8"/>
+<key attr.name="direction" attr.type="string" for="node" id="d9"/>
 <key attr.name="edgeType" attr.type="string" for="edge" id="d13"/>
 <key attr.name="diagramType" attr.type="string" for="node" id="d18"/>
 <key attr.name="sourceFile" attr.type="string" for="node" id="d19"/>
@@ -104,6 +105,7 @@ Expected result MUST be put between triple brackets
 <data key="d5">ARROW</data>
 <data key="d7">{["1","itsClass07"]}</data>
 <data key="d8">{["*","itsClass08"]}</data>
+<data key="d9">NONE_OR_SEVERAL</data>
 </node>
 <edge id="1" source="2" target="4">
 <data key="d13">IS_SOURCE</data>
