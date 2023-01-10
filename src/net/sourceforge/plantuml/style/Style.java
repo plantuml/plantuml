@@ -227,7 +227,7 @@ public class Style {
 		Style result = this.eventuallyOverride(PName.LineThickness, stroke.getThickness());
 		final double space = stroke.getDashSpace();
 		final double visible = stroke.getDashVisible();
-		result = result.eventuallyOverride(PName.LineStyle, "" + visible + ";" + space);
+		result = result.eventuallyOverride(PName.LineStyle, "" + visible + "-" + space);
 		return result;
 	}
 

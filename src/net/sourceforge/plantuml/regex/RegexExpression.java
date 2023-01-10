@@ -54,11 +54,11 @@ public class RegexExpression {
 				result.add(new ReToken(ReTokenType.ANCHOR, s));
 			} else if (isEscapedChar(it)) {
 				result.add(new ReToken(ReTokenType.ESCAPED_CHAR, "" + it.peek(1)));
-				it.next();
-				it.next();
+				it.jump();
+				it.jump();
 			} else if (current == '|') {
 				result.add(new ReToken(ReTokenType.ALTERNATIVE, "|"));
-				it.next();
+				it.jump();
 			} else if (current == '[') {
 				final String s = readGroup(it);
 				result.add(new ReToken(ReTokenType.GROUP, s));
@@ -67,7 +67,7 @@ public class RegexExpression {
 				result.add(new ReToken(ReTokenType.PARENTHESIS_OPEN, s));
 			} else if (current == ')') {
 				result.add(new ReToken(ReTokenType.PARENTHESIS_CLOSE, ")"));
-				it.next();
+				it.jump();
 			} else if (isStartQuantifier(it)) {
 				final String s = readQuantifier(it);
 				result.add(new ReToken(ReTokenType.QUANTIFIER, s));
@@ -76,7 +76,7 @@ public class RegexExpression {
 				result.add(new ReToken(ReTokenType.CLASS, s));
 			} else if (isSimpleLetter(current)) {
 				result.add(new ReToken(ReTokenType.SIMPLE_CHAR, "" + current));
-				it.next();
+				it.jump();
 			} else {
 				throw new IllegalStateException();
 			}
@@ -95,17 +95,17 @@ public class RegexExpression {
 
 	private static String readOpenParenthesis(CharInspector it) {
 		final char current0 = it.peek(0);
-		it.next();
+		it.jump();
 		final StringBuilder result = new StringBuilder();
 		result.append(current0);
 		if (it.peek(0) == '?' && it.peek(1) == ':') {
-			it.next();
-			it.next();
+			it.jump();
+			it.jump();
 			result.append("?:");
 		}
 		if (it.peek(0) == '?' && it.peek(1) == '!') {
-			it.next();
-			it.next();
+			it.jump();
+			it.jump();
 			result.append("?!");
 		}
 		return result.toString();
@@ -120,20 +120,20 @@ public class RegexExpression {
 
 	private static String readQuantifier(CharInspector it) {
 		final char current0 = it.peek(0);
-		it.next();
+		it.jump();
 		final StringBuilder result = new StringBuilder();
 		result.append(current0);
 		if (current0 == '{')
 			while (it.peek(0) != 0) {
 				final char ch = it.peek(0);
 				result.append(ch);
-				it.next();
+				it.jump();
 				if (ch == '}')
 					break;
 			}
 		if (it.peek(0) == '?') {
 			result.append('?');
-			it.next();
+			it.jump();
 		}
 		return result.toString();
 	}
@@ -154,17 +154,17 @@ public class RegexExpression {
 		final char current0 = it.peek(0);
 		if (current0 != '[')
 			throw new IllegalStateException();
-		it.next();
+		it.jump();
 		final StringBuilder result = new StringBuilder();
 		while (it.peek(0) != 0) {
 			char ch = it.peek(0);
-			it.next();
+			it.jump();
 			if (ch == ']')
 				break;
 			result.append(ch);
 			if (ch == '\\') {
 				ch = it.peek(0);
-				it.next();
+				it.jump();
 				result.append(ch);
 			}
 
@@ -175,13 +175,13 @@ public class RegexExpression {
 	private static String readClass(CharInspector it) {
 		final char current0 = it.peek(0);
 		if (current0 == '.') {
-			it.next();
+			it.jump();
 			return "" + current0;
 		}
 		if (current0 == '\\') {
-			it.next();
+			it.jump();
 			final String result = "" + current0 + it.peek(0);
-			it.next();
+			it.jump();
 			return result;
 		}
 		throw new IllegalStateException();
@@ -218,13 +218,13 @@ public class RegexExpression {
 	private static String readAnchor(CharInspector it) {
 		final char current0 = it.peek(0);
 		if (current0 == '^' || current0 == '$') {
-			it.next();
+			it.jump();
 			return "" + current0;
 		}
 		if (current0 == '\\') {
-			it.next();
+			it.jump();
 			final String result = "" + current0 + it.peek(0);
-			it.next();
+			it.jump();
 			return result;
 		}
 		throw new IllegalStateException();

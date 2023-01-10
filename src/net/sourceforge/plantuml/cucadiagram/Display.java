@@ -513,11 +513,6 @@ public class Display implements Iterable<CharSequence> {
 		return create7(fontConfiguration, horizontalAlignment, spriteContainer, CreoleMode.FULL);
 	}
 
-	public TextBlock createWithNiceCreoleMode(FontConfiguration fontConfiguration,
-			HorizontalAlignment horizontalAlignment, ISkinSimple spriteContainer) {
-		return create7(fontConfiguration, horizontalAlignment, spriteContainer, defaultCreoleMode);
-	}
-
 	public TextBlock create7(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
 			ISkinSimple spriteContainer, CreoleMode creoleMode) {
 		return create0(fontConfiguration, horizontalAlignment, spriteContainer, LineBreakStrategy.NONE, creoleMode,

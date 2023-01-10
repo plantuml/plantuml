@@ -460,7 +460,7 @@ yamlDiagram,jsonDiagram {
   LineColor black
   arrow {
     LineThickness 1
-    LineStyle 3;3
+    LineStyle 3-3
   }
   node {
     LineThickness 1.5
@@ -517,7 +517,7 @@ timingDiagram {
 	highlight {
 	  BackgroundColor #e
 	  LineThickness 2
-	  LineStyle 4;4
+	  LineStyle 4-4
 	}
 }
 

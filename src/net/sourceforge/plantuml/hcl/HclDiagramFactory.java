@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.jsondiagram.JsonDiagram;
 import net.sourceforge.plantuml.jsondiagram.StyleExtractor;
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.yaml.Highlighted;
 
 public class HclDiagramFactory extends PSystemAbstractFactory {
 
@@ -58,7 +59,7 @@ public class HclDiagramFactory extends PSystemAbstractFactory {
 
 	@Override
 	public Diagram createSystem(UmlSource source, Map<String, String> skinParam) {
-		final List<String> highlighted = new ArrayList<>();
+		final List<Highlighted> highlighted = new ArrayList<>();
 		JsonValue data = null;
 		StyleExtractor styleExtractor = null;
 		try {

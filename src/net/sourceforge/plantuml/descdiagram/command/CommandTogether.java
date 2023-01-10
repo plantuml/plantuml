@@ -33,14 +33,13 @@
  * 
  *
  */
-package net.sourceforge.plantuml.command;
+package net.sourceforge.plantuml.descdiagram.command;
 
-import net.sourceforge.plantuml.Url;
-import net.sourceforge.plantuml.UrlBuilder;
-import net.sourceforge.plantuml.UrlMode;
 import net.sourceforge.plantuml.baraye.IEntity;
 import net.sourceforge.plantuml.baraye.IGroup;
-import net.sourceforge.plantuml.classdiagram.ClassDiagram;
+import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
@@ -50,71 +49,37 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
 import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.NamespaceStrategy;
-import net.sourceforge.plantuml.cucadiagram.Stereotype;
-import net.sourceforge.plantuml.graphic.color.ColorParser;
-import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 import net.sourceforge.plantuml.utils.LineLocation;
 
-public class CommandNamespace2 extends SingleLineCommand2<ClassDiagram> {
+public class CommandTogether extends SingleLineCommand2<AbstractEntityDiagram> {
 
-	public CommandNamespace2() {
+	public CommandTogether() {
 		super(getRegexConcat());
 	}
 
 	private static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandNamespace2.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("namespace"), //
-				RegexLeaf.spaceOneOrMore(), //
-
-				new RegexLeaf("[%g]"), //
-				new RegexLeaf("DISPLAY", "([^%g]+)"), //
-				new RegexLeaf("[%g]"), //
-				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("as"), //
-				RegexLeaf.spaceOneOrMore(), //
-
-				new RegexLeaf("NAME", CommandNamespace.NAMESPACE_REGEX), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("STEREOTYPE", "(\\<\\<.*\\>\\>)?"), //
-				RegexLeaf.spaceZeroOrMore(), //
-				UrlBuilder.OPTIONAL, //
-				RegexLeaf.spaceZeroOrMore(), //
-				ColorParser.exp1(), //
+		return RegexConcat.build(CommandTogether.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("together"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("\\{"), RegexLeaf.end());
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg)
+	protected CommandExecutionResult executeArg(AbstractEntityDiagram diagram, LineLocation location, RegexResult arg)
 			throws NoSuchColorException {
-		final String idShort = arg.get("NAME", 0);
+		final String idShort = diagram.getUniqueSequence("##");
 		final Ident ident = diagram.buildLeafIdent(idShort);
 		final Code code = diagram.V1972() ? ident : diagram.buildCode(idShort);
+
 		final IGroup currentPackage = diagram.getCurrentGroup();
-		final String disp = arg.getLazzy("DISPLAY", 0);
-		final Display display = Display.getWithNewlines(disp);
-		final CommandExecutionResult status = diagram.gotoGroup(ident, code, display, GroupType.PACKAGE,
-				currentPackage, NamespaceStrategy.MULTIPLE);
+		final CommandExecutionResult status = diagram.gotoGroup(ident, code, Display.NULL, GroupType.TOGETHER,
+				currentPackage, NamespaceStrategy.SINGLE);
 		if (status.isOk() == false)
 			return status;
 		final IEntity p = diagram.getCurrentGroup();
-		final String stereotype = arg.get("STEREOTYPE", 0);
-		if (stereotype != null)
-			p.setStereotype(Stereotype.build(stereotype));
-
-		final String urlString = arg.get("URL", 0);
-		if (urlString != null) {
-			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), UrlMode.STRICT);
-			final Url url = urlBuilder.getUrl(urlString);
-			p.addUrl(url);
-		}
-
-		final String color = arg.get("COLOR", 0);
-		if (color != null)
-			p.setSpecificColorTOBEREMOVED(ColorType.BACK, diagram.getSkinParam().getIHtmlColorSet().getColor(color));
+		p.setThisIsTogether();
 
 		return CommandExecutionResult.ok();
 	}
-
 }

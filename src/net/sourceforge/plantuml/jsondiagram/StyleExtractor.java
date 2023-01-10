@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.parser.StyleParser;
+import net.sourceforge.plantuml.style.parser.StyleParsingException;
 import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.StringLocated;
 
@@ -108,13 +109,12 @@ public class StyleExtractor {
 		return line.getString().trim().equals("</style>");
 	}
 
-	public void applyStyles(ISkinParam skinParam) {
+	public void applyStyles(ISkinParam skinParam) throws StyleParsingException {
 		if (style.size() > 0) {
 			final StyleBuilder styleBuilder = skinParam.getCurrentStyleBuilder();
 			final BlocLines blocLines = BlocLines.from(style);
-			for (Style modifiedStyle : StyleParser.parse(blocLines.subExtract(1, 1), styleBuilder)) {
+			for (Style modifiedStyle : StyleParser.parse(blocLines.subExtract(1, 1), styleBuilder))
 				skinParam.muteStyle(modifiedStyle);
-			}
 		}
 	}
 

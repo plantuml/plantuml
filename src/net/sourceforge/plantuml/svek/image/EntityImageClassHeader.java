@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.baraye.ILeaf;
+import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.EntityPortion;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
@@ -95,7 +96,8 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 		if (displayGenericWithOldFashion && entity.getGeneric() != null)
 			display = display.addGeneric(entity.getGeneric());
 
-		TextBlock name = display.createWithNiceCreoleMode(fontConfigurationName, HorizontalAlignment.CENTER, skinParam);
+		TextBlock name = display.create8(fontConfigurationName, HorizontalAlignment.CENTER, skinParam,
+				CreoleMode.FULL_BUT_UNDERSCORE, style.wrapWidth());
 		final VisibilityModifier modifier = entity.getVisibilityModifier();
 		if (modifier == null) {
 			name = TextBlockUtils.withMargin(name, 3, 3, 0, 0);
@@ -127,12 +129,6 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 					HorizontalAlignment.CENTER, skinParam);
 			genericBlock = TextBlockUtils.withMargin(genericBlock, 1, 1);
 
-//			final HColor classBackground = SkinParamUtils.getColor(getSkinParam(), stereotype, ColorParam.background);
-//			final HColor classBorder = SkinParamUtils.getFontColor(getSkinParam(), FontParam.CLASS_STEREOTYPE,
-//					stereotype);
-
-//			final HColor classBackground = style.value(PName.BackGroundColor).asColor(skinParam.getThemeStyle(),
-//					skinParam.getIHtmlColorSet());
 			final HColor classBackground = skinParam.getBackgroundColor();
 			final HColor classBorder = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 

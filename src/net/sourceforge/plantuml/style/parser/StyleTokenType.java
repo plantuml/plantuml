@@ -30,13 +30,19 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
-package net.sourceforge.plantuml.cucadiagram;
+package net.sourceforge.plantuml.style.parser;
 
-public enum GroupType {
-
-	PACKAGE, TOGETHER, STATE, CONCURRENT_STATE, INNER_ACTIVITY, CONCURRENT_ACTIVITY, DOMAIN, REQUIREMENT
-
+enum StyleTokenType {
+	OPEN_BRACKET, //
+	CLOSE_BRACKET, //
+	STRING, //
+	COMMA, //
+	STAR, //
+	NEWLINE, //
+	SEMICOLON, //
+	COLON, //
+	AROBASE_MEDIA, //
 }

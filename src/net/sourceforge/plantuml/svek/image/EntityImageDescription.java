@@ -167,7 +167,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 			desc = TextBlockUtils.empty(style.value(PName.MinimumWidth).asDouble(), 0);
 		else
 			desc = BodyFactory.create3(entity.getDisplay(), getSkinParam(), defaultAlign, fcTitle,
-					getSkinParam().wrapWidth(), styleTitle);
+					style.wrapWidth(), styleTitle);
 
 		stereo = TextBlockUtils.empty(0, 0);
 

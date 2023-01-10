@@ -128,7 +128,7 @@ public class CommandPackage extends SingleLineCommand2<AbstractEntityDiagram> {
 
 		final Ident ident;
 		final Code code;
-		
+
 		if (CucaDiagram.QUARK) {
 			final Quark current = diagram.currentQuark();
 			code = current;
@@ -140,9 +140,10 @@ public class CommandPackage extends SingleLineCommand2<AbstractEntityDiagram> {
 				display = ident.getLast();
 		}
 		final IGroup currentPackage = diagram.getCurrentGroup();
-
-		diagram.gotoGroup(ident, code, Display.getWithNewlines(display), GroupType.PACKAGE, currentPackage,
-				NamespaceStrategy.SINGLE);
+		final CommandExecutionResult status = diagram.gotoGroup(ident, code, Display.getWithNewlines(display),
+				GroupType.PACKAGE, currentPackage, NamespaceStrategy.SINGLE);
+		if (status.isOk() == false)
+			return status;
 
 		final IEntity p = diagram.getCurrentGroup();
 

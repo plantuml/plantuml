@@ -78,13 +78,12 @@ public class CommandCreatePackageBlock extends SingleLineCommand2<CompositeDiagr
 		String display = arg.get("DISPLAY", 0);
 		final String idShort = arg.get("CODE", 0);
 		final Code code = diagram.buildCode(idShort);
-		if (display == null) {
+		if (display == null)
 			display = code.getName();
-		}
+
 		final Ident idNewLong = diagram.buildLeafIdent(idShort);
-		diagram.gotoGroup(idNewLong, code, Display.getWithNewlines(display), GroupType.PACKAGE, currentPackage,
+		return diagram.gotoGroup(idNewLong, code, Display.getWithNewlines(display), GroupType.PACKAGE, currentPackage,
 				NamespaceStrategy.SINGLE);
-		return CommandExecutionResult.ok();
 	}
 
 }

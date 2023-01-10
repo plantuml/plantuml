@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
  * 
@@ -30,13 +30,32 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
-package net.sourceforge.plantuml.cucadiagram;
+package net.sourceforge.plantuml.style.parser;
 
-public enum GroupType {
+public class StyleToken {
 
-	PACKAGE, TOGETHER, STATE, CONCURRENT_STATE, INNER_ACTIVITY, CONCURRENT_ACTIVITY, DOMAIN, REQUIREMENT
+	private final StyleTokenType type;
+	private final String data;
+
+	public StyleToken(StyleTokenType type, String data) {
+		this.type = type;
+		this.data = data;
+	}
+
+	@Override
+	public String toString() {
+		return type.toString() + "[" + data + "]";
+	}
+
+	public final StyleTokenType getType() {
+		return type;
+	}
+
+	public final String getData() {
+		return data;
+	}
 
 }

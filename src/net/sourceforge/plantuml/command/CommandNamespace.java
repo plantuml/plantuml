@@ -106,12 +106,14 @@ public class CommandNamespace extends SingleLineCommand2<ClassDiagram> {
 			currentPackage = diagram.getCurrentGroup();
 			display = Display.getWithNewlines(code);
 		}
-		diagram.gotoGroup(idNewLong, code, display, GroupType.PACKAGE, currentPackage, NamespaceStrategy.MULTIPLE);
+		final CommandExecutionResult status = diagram.gotoGroup(idNewLong, code, display, GroupType.PACKAGE,
+				currentPackage, NamespaceStrategy.MULTIPLE);
+		if (status.isOk() == false)
+			return status;
 		final IEntity p = diagram.getCurrentGroup();
 		final String stereotype = arg.get("STEREOTYPE", 0);
-		if (stereotype != null) {
+		if (stereotype != null)
 			p.setStereotype(Stereotype.build(stereotype));
-		}
 
 		final String urlString = arg.get("URL", 0);
 		if (urlString != null) {
@@ -121,9 +123,9 @@ public class CommandNamespace extends SingleLineCommand2<ClassDiagram> {
 		}
 
 		final String color = arg.get("COLOR", 0);
-		if (color != null) {
+		if (color != null)
 			p.setSpecificColorTOBEREMOVED(ColorType.BACK, diagram.getSkinParam().getIHtmlColorSet().getColor(color));
-		}
+
 		return CommandExecutionResult.ok();
 	}
 

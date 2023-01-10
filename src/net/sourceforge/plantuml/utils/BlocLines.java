@@ -369,7 +369,11 @@ public class BlocLines implements Iterable<StringLocated> {
 	}
 
 	public CharInspector inspector() {
-		return new CharInspectorImpl(this);
+		return new CharInspectorImpl(this, false);
+	}
+
+	public CharInspector inspectorWithNewlines() {
+		return new CharInspectorImpl(this, true);
 	}
 
 }

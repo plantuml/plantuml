@@ -38,11 +38,13 @@ package net.sourceforge.plantuml.utils;
 public class CharInspectorImpl implements CharInspector {
 
 	final private BlocLines data;
+	final private boolean insertNewlines;
 	private int line = 0;
 	private int pos = 0;
 
-	CharInspectorImpl(BlocLines input) {
-		data = input;
+	CharInspectorImpl(BlocLines input, boolean insertNewlines) {
+		this.data = input;
+		this.insertNewlines = insertNewlines;
 	}
 
 	@Override
@@ -56,11 +58,13 @@ public class CharInspectorImpl implements CharInspector {
 	}
 
 	private String getCurrentLine() {
+		if (insertNewlines)
+			return data.getAt(line).getTrimmed().getString() + "\n";
 		return data.getAt(line).getTrimmed().getString();
 	}
 
 	@Override
-	public void next() {
+	public void jump() {
 		if (line == -1)
 			throw new IllegalStateException();
 		pos++;

@@ -74,7 +74,7 @@ public class CommandPackageWithUSymbol extends SingleLineCommand2<AbstractEntity
 	private static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandPackageWithUSymbol.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("SYMBOL",
-						"(package|rectangle|hexagon|node|artifact|folder|file|frame|cloud|database|storage|component|card|together|queue|stack)"), //
+						"(package|rectangle|hexagon|node|artifact|folder|file|frame|cloud|database|storage|component|card|queue|stack)"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexOr(//
 						new RegexConcat( //
@@ -156,12 +156,12 @@ public class CommandPackageWithUSymbol extends SingleLineCommand2<AbstractEntity
 		final Ident ident = diagram.buildLeafIdent(idShort);
 		final Code code = diagram.V1972() ? ident : diagram.buildCode(idShort);
 		final IGroup currentPackage = diagram.getCurrentGroup();
-		diagram.gotoGroup(ident, code, Display.getWithNewlines(display), GroupType.PACKAGE, currentPackage,
-				NamespaceStrategy.SINGLE);
+		final CommandExecutionResult status = diagram.gotoGroup(ident, code, Display.getWithNewlines(display),
+				GroupType.PACKAGE, currentPackage, NamespaceStrategy.SINGLE);
+		if (status.isOk() == false)
+			return status;
 		final IEntity p = diagram.getCurrentGroup();
 		final String symbol = arg.get("SYMBOL", 0);
-		if ("together".equalsIgnoreCase(symbol))
-			p.setThisIsTogether();
 
 		p.setUSymbol(USymbols.fromString(symbol, diagram.getSkinParam().actorStyle(),
 				diagram.getSkinParam().componentStyle(), diagram.getSkinParam().packageStyle()));

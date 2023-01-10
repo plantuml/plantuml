@@ -81,6 +81,7 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleLoader;
 import net.sourceforge.plantuml.style.parser.StyleParser;
+import net.sourceforge.plantuml.style.parser.StyleParsingException;
 import net.sourceforge.plantuml.svek.ConditionEndStyle;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 import net.sourceforge.plantuml.svek.PackageStyle;
@@ -111,6 +112,8 @@ public class SkinParam implements ISkinParam {
 		if (styleBuilder == null)
 			try {
 				this.styleBuilder = getCurrentStyleBuilderInternal();
+			} catch (StyleParsingException e) {
+				Logme.error(e);
 			} catch (IOException e) {
 				Logme.error(e);
 			}
@@ -133,7 +136,7 @@ public class SkinParam implements ISkinParam {
 		this.skin = newSkin;
 	}
 
-	public StyleBuilder getCurrentStyleBuilderInternal() throws IOException {
+	public StyleBuilder getCurrentStyleBuilderInternal() throws IOException, StyleParsingException {
 		final StyleLoader tmp = new StyleLoader(this);
 		StyleBuilder result = tmp.loadSkin(this.getDefaultSkin());
 		if (result == null)
@@ -183,6 +186,8 @@ public class SkinParam implements ISkinParam {
 				for (Style modifiedStyle : StyleParser.parse(lines, styleBuilder))
 					this.muteStyle(modifiedStyle);
 
+			} catch (StyleParsingException e) {
+				Logme.error(e);
 			} catch (IOException e) {
 				Logme.error(e);
 			}
@@ -891,12 +896,6 @@ public class SkinParam implements ISkinParam {
 		if (value == null)
 			value = getValue("maxmessagesize");
 
-		return new LineBreakStrategy(value);
-	}
-
-	@Override
-	public LineBreakStrategy wrapWidth() {
-		final String value = getValue("wrapwidth");
 		return new LineBreakStrategy(value);
 	}
 

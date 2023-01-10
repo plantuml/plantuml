@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.jsondiagram.JsonDiagram;
 import net.sourceforge.plantuml.jsondiagram.StyleExtractor;
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.style.parser.StyleParsingException;
 
 public class YamlDiagramFactory extends PSystemAbstractFactory {
 
@@ -62,7 +63,7 @@ public class YamlDiagramFactory extends PSystemAbstractFactory {
 
 	@Override
 	public Diagram createSystem(UmlSource source, Map<String, String> skinParam) {
-		final List<String> highlighted = new ArrayList<>();
+		final List<Highlighted> highlighted = new ArrayList<>();
 		JsonValue yaml = null;
 		StyleExtractor styleExtractor = null;
 		try {
@@ -75,8 +76,8 @@ public class YamlDiagramFactory extends PSystemAbstractFactory {
 				if (it.hasNext() == false)
 					break;
 
-				if (line.startsWith("#highlight ")) {
-					highlighted.add(line.substring("#highlight ".length()).trim());
+				if (Highlighted.matchesDefinition(line)) {
+					highlighted.add(Highlighted.build(line));
 					continue;
 				}
 				list.add(line);
@@ -87,7 +88,11 @@ public class YamlDiagramFactory extends PSystemAbstractFactory {
 		}
 		final JsonDiagram result = new JsonDiagram(source, UmlDiagramType.YAML, yaml, highlighted, styleExtractor);
 		if (styleExtractor != null) {
-			styleExtractor.applyStyles(result.getSkinParam());
+			try {
+				styleExtractor.applyStyles(result.getSkinParam());
+			} catch (StyleParsingException e) {
+				Logme.error(e);
+			}
 			final String title = styleExtractor.getTitle();
 			if (title != null)
 				result.setTitle(DisplayPositioned.single(Display.getWithNewlines(title), HorizontalAlignment.CENTER,

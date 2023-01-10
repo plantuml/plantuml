@@ -188,11 +188,6 @@ public class SkinParamDelegator implements ISkinParam {
 	}
 
 	@Override
-	public LineBreakStrategy wrapWidth() {
-		return skinParam.wrapWidth();
-	}
-
-	@Override
 	public boolean strictUmlStyle() {
 		return skinParam.strictUmlStyle();
 	}

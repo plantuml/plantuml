@@ -323,7 +323,17 @@ public final class GeneralImageBuilder {
 		if (strictUmlStyle)
 			return false;
 
-		return entity.isGroup() == false && entity.getLeafType() == LeafType.NOTE && onlyOneLink(entity);
+		if (entity.isGroup())
+			return false;
+
+		if (entity.getLeafType() != LeafType.NOTE)
+			return false;
+
+		final Link single = onlyOneLink(entity);
+		if (single == null)
+			return false;
+
+		return single.getOther(entity).getLeafType() != LeafType.NOTE;
 	}
 
 	static class EntityImageSimpleEmpty implements IEntityImage {
@@ -482,20 +492,19 @@ public final class GeneralImageBuilder {
 		return null;
 	}
 
-	private boolean onlyOneLink(IEntity ent) {
-		int nb = 0;
+	private Link onlyOneLink(IEntity ent) {
+		Link single = null;
 		for (Link link : dotData.getLinks()) {
 			if (link.isInvis())
 				continue;
+			if (link.contains(ent) == false)
+				continue;
 
-			if (link.contains(ent))
-				nb++;
-
-			if (nb > 1)
-				return false;
-
+			if (single != null)
+				return null;
+			single = link;
 		}
-		return nb == 1;
+		return single;
 	}
 
 	private IEntityImage error(File dotExe) {
@@ -584,7 +593,8 @@ public final class GeneralImageBuilder {
 			if (g.isRemoved())
 				continue;
 
-			if (dotData.isEmpty(g) && g.getGroupType() == GroupType.PACKAGE) {
+			if (dotData.isEmpty(g)
+					&& (g.getGroupType() == GroupType.PACKAGE || g.getGroupType() == GroupType.TOGETHER)) {
 				final ISkinParam skinParam = dotData.getSkinParam();
 				final ILeaf folder = entityFactory.createLeafForEmptyGroup(g, skinParam);
 				printEntity(dotStringFactory, folder);

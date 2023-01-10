@@ -131,7 +131,8 @@ public final class EntityFactory implements IEntityFactory {
 		final Collection<IGroup> children = parent.getChildren();
 		if (leafs == 0 && children.size() == 1) {
 			final IGroup g = children.iterator().next();
-			if (g.getLeafsDirect().size() == 0 && g.getChildren().size() == 0 && g.getGroupType() == GroupType.PACKAGE)
+			if (g.getLeafsDirect().size() == 0 && g.getChildren().size() == 0
+					&& (g.getGroupType() == GroupType.PACKAGE || g.getGroupType() == GroupType.TOGETHER))
 				return null;
 
 			for (Link link : this.getLinks())
@@ -192,20 +193,24 @@ public final class EntityFactory implements IEntityFactory {
 		return result;
 	}
 
-	private IEntity isNoteWithSingleLinkAttachedTo(ILeaf leaf) {
-		if (leaf.getLeafType() != LeafType.NOTE)
+	private IEntity isNoteWithSingleLinkAttachedTo(ILeaf note) {
+		if (note.getLeafType() != LeafType.NOTE)
 			return null;
-		IEntity result = null;
+		assert note.getLeafType() == LeafType.NOTE;
+		IEntity other = null;
 		for (Link link : this.getLinks()) {
 			if (link.getType().isInvisible())
 				continue;
-			if (link.contains(leaf)) {
-				if (result != null)
-					return result;
-				result = link.getOther(leaf);
-			}
+			if (link.contains(note) == false)
+				continue;
+			if (other != null)
+				return null;
+			other = link.getOther(note);
+			if (other.getLeafType() == LeafType.NOTE)
+				return null;
+
 		}
-		return result;
+		return other;
 
 	}
 

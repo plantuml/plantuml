@@ -87,6 +87,7 @@ public class FromSkinparamToStyle {
 
 		addConFont("header", SName.document, SName.header);
 		addConFont("footer", SName.document, SName.footer);
+		addConFont("caption", SName.document, SName.caption);
 
 		addConvert("defaultFontSize", PName.FontSize, SName.element);
 
@@ -119,6 +120,7 @@ public class FromSkinparamToStyle {
 
 		addConFont("note", SName.note);
 		addConvert("noteBorderThickness", PName.LineThickness, SName.note);
+		addConvert("noteBorderColor", PName.LineColor, SName.note);
 		addConvert("noteBackgroundColor", PName.BackGroundColor, SName.note);
 
 		addConvert("packageBackgroundColor", PName.BackGroundColor, SName.group);
@@ -233,6 +235,9 @@ public class FromSkinparamToStyle {
 //		addConvert("sequenceStereotypeFontName", PName.FontName, SName.stereotype);
 
 		addConvert("lifelineStrategy", PName.LineStyle, SName.lifeLine);
+		addConvert("wrapWidth", PName.MaximumWidth, SName.element);
+		addConvert("HyperlinkUnderline", PName.HyperlinkUnderlineThickness, SName.element);
+
 
 	}
 
@@ -279,6 +284,9 @@ public class FromSkinparamToStyle {
 				value = "3";
 		} else if (key.equals("lifelinestrategy")) {
 			if (value.equalsIgnoreCase("solid"))
+				value = "0";
+		} else if (key.equals("hyperlinkunderline")) {
+			if (value.equalsIgnoreCase("false"))
 				value = "0";
 		}
 

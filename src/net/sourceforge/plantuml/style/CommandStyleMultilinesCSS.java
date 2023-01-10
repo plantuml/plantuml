@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.style.parser.StyleParser;
+import net.sourceforge.plantuml.style.parser.StyleParsingException;
 import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandStyleMultilinesCSS extends CommandMultilines2<TitledDiagram> {
@@ -57,7 +58,7 @@ public class CommandStyleMultilinesCSS extends CommandMultilines2<TitledDiagram>
 
 	@Override
 	public String getPatternEnd() {
-		return "^[%s]*\\</style\\>[%s]*$";
+		return "^[%s]*\\</?style\\>[%s]*$";
 	}
 
 	private static IRegex getRegexConcat() {
@@ -75,6 +76,8 @@ public class CommandStyleMultilinesCSS extends CommandMultilines2<TitledDiagram>
 
 			((SkinParam) diagram.getSkinParam()).applyPendingStyleMigration();
 			return CommandExecutionResult.ok();
+		} catch (StyleParsingException e) {
+			return CommandExecutionResult.error("Error in style definition: " + e.getMessage());
 		} catch (NoStyleAvailableException e) {
 			// Logme.error(e);
 			return CommandExecutionResult.error("General failure: no style available.");

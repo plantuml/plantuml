@@ -242,7 +242,7 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlock,
 				config = config.underline();
 
 			TextBlock bloc = Display.getWithNewlines(s).create8(config, align, skinParam, CreoleMode.SIMPLE_LINE,
-					skinParam.wrapWidth());
+					style.wrapWidth());
 			bloc = TextBlockUtils.fullInnerPosition(bloc, m.getDisplay(false));
 			return new TextBlockTracer(m, bloc);
 		}
@@ -251,7 +251,7 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlock,
 //			return ((EmbeddedDiagram) cs).asDraw(skinParam);
 
 		return Display.getWithNewlines(cs.toString()).create8(config, align, skinParam, CreoleMode.SIMPLE_LINE,
-				skinParam.wrapWidth());
+				style.wrapWidth());
 
 	}
 

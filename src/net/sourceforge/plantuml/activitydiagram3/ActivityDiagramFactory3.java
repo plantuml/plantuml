@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.activitydiagram3.command.CommandCase;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandCircleSpot3;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandElse3;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandElseIf2;
+import net.sourceforge.plantuml.activitydiagram3.command.CommandElseIf3;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandElseLegacy1;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandEnd3;
 import net.sourceforge.plantuml.activitydiagram3.command.CommandEndPartition3;
@@ -111,6 +112,7 @@ public class ActivityDiagramFactory3 extends PSystemCommandFactory {
 		cmds.add(new CommandIf2());
 		cmds.add(CommandDecoratorMultine.create(new CommandIf2(), 50));
 		cmds.add(new CommandIfLegacy1());
+		cmds.add(new CommandElseIf3());
 		cmds.add(new CommandElseIf2());
 		cmds.add(new CommandElse3());
 		cmds.add(CommandDecoratorMultine.create(new CommandElse3(), 50));

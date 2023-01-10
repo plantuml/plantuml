@@ -30,13 +30,15 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
  *
+ * 
  */
-package net.sourceforge.plantuml.cucadiagram;
+package net.sourceforge.plantuml.style.parser;
 
-public enum GroupType {
+public class StyleParsingException extends Exception {
 
-	PACKAGE, TOGETHER, STATE, CONCURRENT_STATE, INNER_ACTIVITY, CONCURRENT_ACTIVITY, DOMAIN, REQUIREMENT
+	public StyleParsingException(String msg) {
+		super(msg);
+	}
 
 }
