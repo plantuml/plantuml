@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.baraye.IGroup;
 import net.sourceforge.plantuml.baraye.ILeaf;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.cucadiagram.Bodier;
+import net.sourceforge.plantuml.cucadiagram.BodierJSon;
 import net.sourceforge.plantuml.cucadiagram.BodierLikeClassOrObject;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.CucaNote;
@@ -217,6 +218,7 @@ public class Cuca2GenericConverter implements ICucaDiagramVisitor {
 		this.leafTypeMap.put(LeafType.POINT_FOR_ASSOCIATION, GenericEntityType.POINT_FOR_ASSOCIATION);
 		this.leafTypeMap.put(LeafType.PORTIN, GenericEntityType.PORT_IN);
 		this.leafTypeMap.put(LeafType.PORTOUT, GenericEntityType.PORT_OUT);
+		this.leafTypeMap.put(LeafType.JSON, GenericEntityType.JSON);
 	}
 
 	private void initLinkTypeMap() {
@@ -466,6 +468,10 @@ public class Cuca2GenericConverter implements ICucaDiagramVisitor {
 
 		GenericLeaf genericLeaf = elementFactory.genericLeafSupplier.get();
 		transferCommonAttributes(genericLeaf, leaf);
+		if (leaf.getLeafType() == LeafType.JSON) {
+			String json = ((BodierJSon) leaf.getBodier()).getJson().toString();
+			genericLeaf.setJson(json);
+		}
 		processedCucaElementsMap.put(leaf.getUid(), genericLeaf);
 
 		return genericLeaf;
@@ -558,7 +564,6 @@ public class Cuca2GenericConverter implements ICucaDiagramVisitor {
 		genericModelElement.setPumlRootPath(this.getPumlElementRootPath());
 		genericModelElement.setLabel(displayToString(entity.getDisplay()));
 		genericModelElement.setType(determineEntityType(entity));
-
 	}
 
 	private GenericStereotype createGenericStereotype(String stereotype, String id) {

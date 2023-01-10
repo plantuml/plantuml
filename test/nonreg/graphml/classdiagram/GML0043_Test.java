@@ -36,7 +36,6 @@
 package nonreg.graphml.classdiagram;
 
 import nonreg.graphml.GraphmlTest;
-
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -47,7 +46,12 @@ Test diagram MUST be put between triple quotes
 
 """
 @startuml
-circle intf1
+' JSON Data
+class Class
+json JSON {
+   "size":"Large",
+   "color": ["Red", "Green"]
+}
 @enduml
 """
 
@@ -63,24 +67,36 @@ Expected result MUST be put between triple brackets
 <key attr.name="sourceFile" attr.type="string" for="node" id="d19"/>
 <key attr.name="pumlId" attr.type="string" for="node" id="d20"/>
 <key attr.name="pumlPath" attr.type="string" for="node" id="d21"/>
+<key attr.name="json" attr.type="string" for="node" id="d22"/>
 <graph edgedefault="undirected">
 <node id="1">
 <data key="d1">Diagram</data>
 <data key="d2">DIAGRAM</data>
-<data key="d0">GML0003_Test.puml</data>
-<data key="d18">CLASS</data>
-<data key="d19">./nonreg/graphml/classdiagram/GML0003_Test.puml</data>
+<data key="d0">GML0043_Test.puml</data>
 <data key="d20">diag0</data>
-<data key="d21">./nonreg/graphml/classdiagram/GML0003_Test/0/diag0</data>
+<data key="d21">./nonreg/graphml/classdiagram/GML0043_Test/0/diag0</data>
+<data key="d18">CLASS</data>
+<data key="d19">./nonreg/graphml/classdiagram/GML0043_Test.puml</data>
 </node>
 <node id="2">
 <data key="d1">Leaf</data>
-<data key="d2">CIRCLE</data>
-<data key="d0">intf1</data>
+<data key="d2">CLASS</data>
+<data key="d0">Class</data>
 <data key="d20">cl0002</data>
-<data key="d21">./nonreg/graphml/classdiagram/GML0003_Test/0/cl0002</data>
+<data key="d21">./nonreg/graphml/classdiagram/GML0043_Test/0/cl0002</data>
+</node>
+<node id="3">
+<data key="d1">Leaf</data>
+<data key="d2">JSON</data>
+<data key="d0">JSON</data>
+<data key="d20">cl0003</data>
+<data key="d21">./nonreg/graphml/classdiagram/GML0043_Test/0/cl0003</data>
+<data key="d22">{"size":"Large","color":["Red","Green"]}</data>
 </node>
 <edge id="1" source="1" target="2">
+<data key="d13">DIAGRAM_CONTAINS</data>
+</edge>
+<edge id="2" source="1" target="3">
 <data key="d13">DIAGRAM_CONTAINS</data>
 </edge>
 </graph>
@@ -88,11 +104,11 @@ Expected result MUST be put between triple brackets
 }}}
 
  */
-public class GML0003_Test extends GraphmlTest {
+public class GML0043_Test extends GraphmlTest {
 
 	@Test
 	void testSimple() throws IOException, InterruptedException {
-		checkXmlAndDescription("(1 entities)");
+		checkXmlAndDescription("(2 entities)");
 	}
 
 }

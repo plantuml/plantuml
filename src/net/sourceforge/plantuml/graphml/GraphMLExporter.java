@@ -36,11 +36,39 @@
 package net.sourceforge.plantuml.graphml;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static net.sourceforge.plantuml.graphml.GraphMLKeyDefinition.*;
+import static net.sourceforge.plantuml.graphml.GraphMLKeyDefinition.GML_KEY_DIAG_CAPTION;
+import static net.sourceforge.plantuml.graphml.GraphMLKeyDefinition.GML_KEY_DIAG_FOOTER;
+import static net.sourceforge.plantuml.graphml.GraphMLKeyDefinition.GML_KEY_DIAG_HEADER;
+import static net.sourceforge.plantuml.graphml.GraphMLKeyDefinition.GML_KEY_DIAG_SOURCE_FILE;
+import static net.sourceforge.plantuml.graphml.GraphMLKeyDefinition.GML_KEY_DIAG_TITLE;
+import static net.sourceforge.plantuml.graphml.GraphMLKeyDefinition.GML_KEY_DIAG_TYPE;
+import static net.sourceforge.plantuml.graphml.GraphMLKeyDefinition.GML_KEY_EDGE_TYPE;
+import static net.sourceforge.plantuml.graphml.GraphMLKeyDefinition.GML_KEY_ENTITY_TYPE;
+import static net.sourceforge.plantuml.graphml.GraphMLKeyDefinition.GML_KEY_ID;
+import static net.sourceforge.plantuml.graphml.GraphMLKeyDefinition.GML_KEY_JSON;
+import static net.sourceforge.plantuml.graphml.GraphMLKeyDefinition.GML_KEY_LABEL;
+import static net.sourceforge.plantuml.graphml.GraphMLKeyDefinition.GML_KEY_LINK_DIRECTION;
+import static net.sourceforge.plantuml.graphml.GraphMLKeyDefinition.GML_KEY_LINK_MIDDLE_DECOR;
+import static net.sourceforge.plantuml.graphml.GraphMLKeyDefinition.GML_KEY_LINK_SOURCE_DECOR;
+import static net.sourceforge.plantuml.graphml.GraphMLKeyDefinition.GML_KEY_LINK_SOURCE_LABEL;
+import static net.sourceforge.plantuml.graphml.GraphMLKeyDefinition.GML_KEY_LINK_STYLE;
+import static net.sourceforge.plantuml.graphml.GraphMLKeyDefinition.GML_KEY_LINK_TARGET_DECOR;
+import static net.sourceforge.plantuml.graphml.GraphMLKeyDefinition.GML_KEY_LINK_TARGET_LABEL;
+import static net.sourceforge.plantuml.graphml.GraphMLKeyDefinition.GML_KEY_MEMBER_ABSTRACT;
+import static net.sourceforge.plantuml.graphml.GraphMLKeyDefinition.GML_KEY_MEMBER_STATIC;
+import static net.sourceforge.plantuml.graphml.GraphMLKeyDefinition.GML_KEY_MEMBER_VISIBILITY;
+import static net.sourceforge.plantuml.graphml.GraphMLKeyDefinition.GML_KEY_PUML_ID;
+import static net.sourceforge.plantuml.graphml.GraphMLKeyDefinition.GML_KEY_PUML_PATH;
+import static net.sourceforge.plantuml.graphml.GraphMLKeyDefinition.GML_KEY_TYPE;
 
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.ParserConfigurationException;
@@ -52,10 +80,9 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import net.sourceforge.plantuml.utils.Log;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 import net.sourceforge.plantuml.genericdiagram.data.GenericDiagram;
 import net.sourceforge.plantuml.genericdiagram.data.GenericEdge;
@@ -66,16 +93,23 @@ import net.sourceforge.plantuml.genericdiagram.data.GenericMember;
 import net.sourceforge.plantuml.genericdiagram.data.GenericModelElement;
 import net.sourceforge.plantuml.genericdiagram.data.GenericStereotype;
 import net.sourceforge.plantuml.genericdiagram.genericprocessing.IGenericDiagramVisitor;
+import net.sourceforge.plantuml.utils.Log;
 import net.sourceforge.plantuml.xmi.XmlDiagramTransformer;
 import net.sourceforge.plantuml.xml.XmlFactories;
+
 
 public class GraphMLExporter implements IGenericDiagramVisitor, XmlDiagramTransformer {
 	Map<String, DataKeyInfo> dataKeyLookup;
 	DocumentBuilder builder;
 	Document document;
 	Element graph;
+	Set<String> usedAttributes;
+	List<Node> domNodes;
+
 	public GraphMLExporter() {
 		initDataKeyMap();
+		usedAttributes = new HashSet<>();
+		domNodes = new ArrayList<>();
 	}
 
 	private void initDataKeyMap() {
@@ -91,6 +125,8 @@ public class GraphMLExporter implements IGenericDiagramVisitor, XmlDiagramTransf
 						DataKeyInfo.with("d20", "string", "node"));
 		dataKeyLookup.put(GML_KEY_PUML_PATH,
 						DataKeyInfo.with("d21", "string", "node"));
+		dataKeyLookup.put(GML_KEY_JSON,
+						DataKeyInfo.with("d22", "string", "node"));
 		// Links
 		dataKeyLookup.put(GML_KEY_LINK_STYLE,
 						DataKeyInfo.with("d3", "string", "node"));
@@ -137,38 +173,11 @@ public class GraphMLExporter implements IGenericDiagramVisitor, XmlDiagramTransf
 	@Override
 	public void visitDiagram(GenericDiagram diagram) {
 		try {
-
 			// initial dom structure for graph and attribute definitions
 			builder = XmlFactories.newDocumentBuilder();
 			document = builder.newDocument();
 			document.setXmlVersion("1.0");
 			document.setXmlStandalone(true);
-
-			final Element graphml = document.createElement("graphml");
-			graphml.setAttribute("xmlns", "http://graphml.graphdrawing.org/xmlns");
-			graphml.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
-			graphml.setAttribute("xsi:schemaLocation", "http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd");
-			document.appendChild(graphml);
-
-			// add data definitions
-			for (Map.Entry<String, DataKeyInfo> kv : dataKeyLookup.entrySet()) {
-				String attrName = kv.getKey();
-				String keyName = kv.getValue().getId();
-				String attrType = kv.getValue().getType();
-				String attrScope = kv.getValue().getScope();
-
-				Element keyDef = document.createElement("key");
-				keyDef.setAttribute("id", keyName);
-				keyDef.setAttribute("for", attrScope);
-				keyDef.setAttribute("attr.name", attrName);
-				keyDef.setAttribute("attr.type", attrType);
-				graphml.appendChild(keyDef);
-			}
-
-			// add graph element
-			graph = document.createElement("graph");
-			graph.setAttribute("edgedefault", "undirected");
-			graphml.appendChild(graph);
 
 			// add the diagram node
 			Element domNode = createNode(diagram);
@@ -179,12 +188,13 @@ public class GraphMLExporter implements IGenericDiagramVisitor, XmlDiagramTransf
 			addDataNode(domNode, GML_KEY_DIAG_CAPTION, diagram.getFooter());
 			addDataNode(domNode, GML_KEY_DIAG_TYPE, diagram.getDiagramType().toString());
 			addDataNode(domNode, GML_KEY_DIAG_SOURCE_FILE, diagram.getSourceFile());
-			graph.appendChild(domNode);
+			domNodes.add(domNode);
 
 		} catch (ParserConfigurationException e) {
-			Log.error("Fatal error when exporting puml diagram " + diagram.getSourceFile());
+			Log.error("Fatal error when exporting puml diagram ");
 			System.exit(1);
 		}
+
 	}
 
 	@Override
@@ -192,19 +202,19 @@ public class GraphMLExporter implements IGenericDiagramVisitor, XmlDiagramTransf
 
 		//we ignore the diagram in the graphML
 
-			Element domEdge = createEdge(edge);
-			domEdge.setAttribute("source", Integer.toString(edge.getSource()));
-			domEdge.setAttribute("target", Integer.toString(edge.getTarget()));
-			// domEdge.setAttribute("source", edge.getPumlIdSource());
-			// domEdge.setAttribute("target", edge.getPumlIdTarget());
-			// data values
-			String edgeType = edge.getEdgeType().toString();
-			Element dataEdgeType = document.createElement("data");
-			dataEdgeType.setAttribute("key", dataKeyLookup.get(GML_KEY_EDGE_TYPE).getId());
-			dataEdgeType.setTextContent(edgeType);
-			domEdge.appendChild(dataEdgeType);
-
-			graph.appendChild(domEdge);
+		Element domEdge = createEdge(edge);
+		domEdge.setAttribute("source", Integer.toString(edge.getSource()));
+		domEdge.setAttribute("target", Integer.toString(edge.getTarget()));
+		// domEdge.setAttribute("source", edge.getPumlIdSource());
+		// domEdge.setAttribute("target", edge.getPumlIdTarget());
+		// data values
+		String edgeType = edge.getEdgeType().toString();
+		Element dataEdgeType = document.createElement("data");
+		dataEdgeType.setAttribute("key", dataKeyLookup.get(GML_KEY_EDGE_TYPE).getId());
+		dataEdgeType.setTextContent(edgeType);
+		domEdge.appendChild(dataEdgeType);
+		usedAttributes.add(GML_KEY_EDGE_TYPE);
+		domNodes.add(domEdge);
 
 	}
 
@@ -212,7 +222,7 @@ public class GraphMLExporter implements IGenericDiagramVisitor, XmlDiagramTransf
 	public void visitGroup(GenericGroup group) {
 		Element domNode = createNode(group);
 		addCommonAttributes(group, domNode);
-		graph.appendChild(domNode);
+		domNodes.add(domNode);
 
 
 	}
@@ -222,7 +232,11 @@ public class GraphMLExporter implements IGenericDiagramVisitor, XmlDiagramTransf
 
 		Element domNode = createNode(leaf);
 		addCommonAttributes(leaf, domNode);
-		graph.appendChild(domNode);
+		if (leaf.getJson() != null) {
+			String json = leaf.getJson();
+			addDataNode(domNode, GML_KEY_JSON, json);
+		}
+		domNodes.add(domNode);
 
 	}
 
@@ -243,6 +257,7 @@ public class GraphMLExporter implements IGenericDiagramVisitor, XmlDiagramTransf
 			typeData.setAttribute("key", dataKeyLookup.get(attributeName).getId());
 			typeData.setTextContent(attributeValue);
 			domNode.appendChild(typeData);
+			usedAttributes.add(attributeName);
 		}
 	}
 
@@ -256,7 +271,7 @@ public class GraphMLExporter implements IGenericDiagramVisitor, XmlDiagramTransf
 		addDataNode(domNode, GML_KEY_LINK_TARGET_DECOR, genericLink.getTargetDecor().toString());
 		addDataNode(domNode, GML_KEY_LINK_SOURCE_LABEL, genericLink.getSourceLabel());
 		addDataNode(domNode, GML_KEY_LINK_TARGET_LABEL, genericLink.getTargetLabel());
-		graph.appendChild(domNode);
+		domNodes.add(domNode);
 	}
 
 	@Override
@@ -267,7 +282,7 @@ public class GraphMLExporter implements IGenericDiagramVisitor, XmlDiagramTransf
 		addDataNode(domNode, GML_KEY_MEMBER_STATIC, member.isAbstract().toString().toLowerCase());
 		addDataNode(domNode, GML_KEY_MEMBER_ABSTRACT, member.isStatic().toString().toLowerCase());
 		addDataNode(domNode, GML_KEY_MEMBER_VISIBILITY, member.getVisibility().toString());
-		graph.appendChild(domNode);
+		domNodes.add(domNode);
 
 	}
 
@@ -275,7 +290,7 @@ public class GraphMLExporter implements IGenericDiagramVisitor, XmlDiagramTransf
 
 		Element node = document.createElement("node");
 		node.setAttribute(GML_KEY_ID, Integer.toString(genericModelElement.getId()));
-
+		usedAttributes.add(GML_KEY_ID);
 		return node;
 	}
 
@@ -283,8 +298,8 @@ public class GraphMLExporter implements IGenericDiagramVisitor, XmlDiagramTransf
 	private Element createEdge(GenericEdge genericEdge) {
 
 		Element edge = document.createElement("edge");
-		edge.setAttribute( GML_KEY_ID, Integer.toString(genericEdge.getId()));
-
+		edge.setAttribute(GML_KEY_ID, Integer.toString(genericEdge.getId()));
+		usedAttributes.add(GML_KEY_ID);
 		return edge;
 	}
 
@@ -292,18 +307,62 @@ public class GraphMLExporter implements IGenericDiagramVisitor, XmlDiagramTransf
 	public void visitStereotype(GenericStereotype stereotype) {
 		Element domNode = createNode(stereotype);
 		addCommonAttributes(stereotype, domNode);
-		graph.appendChild(domNode);
+		domNodes.add(domNode);
 	}
 
 	@Override
 	public void transformerXml(OutputStream os) throws TransformerException, ParserConfigurationException {
 
 		final Source source = new DOMSource(document);
-		final Result resultat = new StreamResult(os);
+		final Result result = new StreamResult(os);
 
 		final Transformer transformer = XmlFactories.newTransformer();
 		transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 		transformer.setOutputProperty(OutputKeys.ENCODING, UTF_8.name());
-		transformer.transform(source, resultat);
+		transformer.transform(source, result);
+	}
+
+	public void finish() {
+
+
+			final Element graphml = document.createElement("graphml");
+			graphml.setAttribute("xmlns", "http://graphml.graphdrawing.org/xmlns");
+			graphml.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
+			graphml.setAttribute("xsi:schemaLocation", "http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd");
+			document.appendChild(graphml);
+
+			// add used data keys before exporting
+			List<DataKeyInfo> sortedDataKeys = dataKeyLookup.values().stream().sorted().collect(Collectors.toList());
+			for (DataKeyInfo info : sortedDataKeys) {
+				String attrName = "";
+				for (Map.Entry<String, DataKeyInfo> kv : this.dataKeyLookup.entrySet()) {
+					if (kv.getValue().equals(info)) {
+						attrName = kv.getKey();
+					}
+				}
+				String keyName = info.getId();
+				String attrType = info.getType();
+				String attrScope = info.getScope();
+
+				if (this.usedAttributes.contains(attrName)) {
+					Element keyDef = document.createElement("key");
+					keyDef.setAttribute("id", keyName);
+					keyDef.setAttribute("for", attrScope);
+					keyDef.setAttribute("attr.name", attrName);
+					keyDef.setAttribute("attr.type", attrType);
+					graphml.appendChild(keyDef);
+				}
+			}
+
+			// add graph element
+			graph = document.createElement("graph");
+			graph.setAttribute("edgedefault", "undirected");
+			graphml.appendChild(graph);
+
+			// add dom Nodes
+			for (Node n : this.domNodes) {
+				graph.appendChild(n);
+			}
+
 	}
 }

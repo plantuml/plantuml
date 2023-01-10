@@ -6,12 +6,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -61,18 +61,9 @@ Expected result MUST be put between triple brackets
 <key attr.name="style" attr.type="string" for="node" id="d3"/>
 <key attr.name="sourceDecor" attr.type="string" for="node" id="d4"/>
 <key attr.name="targetDecor" attr.type="string" for="node" id="d5"/>
-<key attr.name="middleDecor" attr.type="string" for="node" id="d6"/>
 <key attr.name="sourceLabel" attr.type="string" for="node" id="d7"/>
 <key attr.name="targetLabel" attr.type="string" for="node" id="d8"/>
-<key attr.name="direction" attr.type="string" for="node" id="d9"/>
-<key attr.name="static" attr.type="boolean" for="node" id="d10"/>
-<key attr.name="abstract" attr.type="boolean" for="node" id="d11"/>
-<key attr.name="visibility" attr.type="string" for="node" id="d12"/>
 <key attr.name="edgeType" attr.type="string" for="edge" id="d13"/>
-<key attr.name="title" attr.type="string" for="node" id="d14"/>
-<key attr.name="header" attr.type="string" for="node" id="d15"/>
-<key attr.name="footer" attr.type="string" for="node" id="d16"/>
-<key attr.name="caption" attr.type="string" for="node" id="d17"/>
 <key attr.name="diagramType" attr.type="string" for="node" id="d18"/>
 <key attr.name="sourceFile" attr.type="string" for="node" id="d19"/>
 <key attr.name="pumlId" attr.type="string" for="node" id="d20"/>
@@ -136,7 +127,7 @@ Expected result MUST be put between triple brackets
 public class GML0028_Test extends GraphmlTest {
 
 	@Test
-	void testSimple() throws IOException, InterruptedException, InterruptedException {
+	void testSimple() throws IOException, InterruptedException {
 		checkXmlAndDescription("(2 entities)");
 	}
 

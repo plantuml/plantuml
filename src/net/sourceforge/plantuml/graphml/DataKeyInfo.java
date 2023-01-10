@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.graphml;
 /**
  * Helper class to hold info on data keys for the key data concept of graphML
  */
-public class DataKeyInfo {
+public class DataKeyInfo implements Comparable<DataKeyInfo> {
 
 	String id;
 	String type;
@@ -66,5 +66,11 @@ public class DataKeyInfo {
 
 	public String getScope() {
 		return scope;
+	}
+
+	@Override
+	public int compareTo(DataKeyInfo dataKeyInfo) {
+		return Integer.compare(Integer.parseInt(this.getId().replace("d", "")),
+						Integer.parseInt(dataKeyInfo.getId().replace("d", "")));
 	}
 }

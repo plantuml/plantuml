@@ -255,6 +255,15 @@ Dummy --> Foo : A link
 note on link #red: note that is red
 @enduml
 </code></pre></td></tr>
+<tr><td>GML0043_Test</td><td><img alt="GML0043_Test" src="./classdiagram/GML0043_Test.svg" width="400"/></td><td><pre><code>@startuml
+' JSON Data
+class Class
+json JSON {
+   "size":"Large",
+   "color": ["Red", "Green"]
+}
+@enduml
+</code></pre></td></tr>
 </table>
 
 ## component

@@ -64,6 +64,7 @@ public enum GenericEntityType {
 	FRAME,
 	CLOUD,
 	DATABASE,
+	JSON,
 	// component diagram
 	// plantUML maps port to PORTIN
 	// this is apparently only an indication for drawing IN on top, OUT on bottom of component

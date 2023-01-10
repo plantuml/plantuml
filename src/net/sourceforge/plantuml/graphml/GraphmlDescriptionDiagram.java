@@ -92,8 +92,8 @@ public class GraphmlDescriptionDiagram implements XmlDiagramTransformer {
 	public GraphmlDescriptionDiagram(DescriptionDiagram diagram, SuggestedFile suggestedFile, String graphmlRootDir) throws ParserConfigurationException {
 
 		String parentDir = suggestedFile.getParentFile().toURI().getPath();
-		String sourceFileName = suggestedFile.getName().toString();
-		Integer blockCount = Integer.valueOf(String.valueOf(suggestedFile.toString().replaceAll("(\\[|\\])", "")));
+		String sourceFileName = suggestedFile.getName();
+		Integer blockCount = Integer.valueOf(suggestedFile.toString().replaceAll("(\\[|\\])", ""));
 
 		this.diagram = diagram;
 		this.converter = new Cuca2GenericConverter(parentDir + sourceFileName, blockCount, graphmlRootDir);
@@ -102,6 +102,7 @@ public class GraphmlDescriptionDiagram implements XmlDiagramTransformer {
 		converter.visitCucaDiagram(new CucaDiagramWrapper(diagram));
 		SimpleGenericModel genericModel = converter.getModel();
 		genericModel.acceptVisitor(exporter);
+		exporter.finish();
 	}
 
 
