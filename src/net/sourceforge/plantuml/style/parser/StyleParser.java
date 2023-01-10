@@ -250,6 +250,9 @@ public class StyleParser {
 				ins.jump();
 			} else if (current == '@') {
 				result.add(new StyleToken(StyleTokenType.AROBASE_MEDIA, readArobaseMedia(ins)));
+			} else if (current == '\"') {
+				final String s = readQuotedString(ins);
+				result.add(new StyleToken(StyleTokenType.STRING, s));
 			} else {
 				final String s = readString(ins);
 				if (s.startsWith("<"))
@@ -295,6 +298,21 @@ public class StyleParser {
 				break;
 			result.append(ch);
 		}
+		return result.toString();
+	}
+
+	private static String readQuotedString(CharInspector ins) {
+		final StringBuilder result = new StringBuilder();
+		if (ins.peek(0) != '\"')
+			throw new IllegalStateException();
+		ins.jump();
+		while (ins.peek(0) != 0 && ins.peek(0) != '\"') {
+			char ch = ins.peek(0);
+			ins.jump();
+			result.append(ch);
+		}
+		if (ins.peek(0) == '\"')
+			ins.jump();
 		return result.toString();
 	}
 

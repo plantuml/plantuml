@@ -53,6 +53,8 @@ import net.sourceforge.plantuml.cucadiagram.GroupType;
 import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.NamespaceStrategy;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
+import net.sourceforge.plantuml.graphic.USymbol;
+import net.sourceforge.plantuml.graphic.USymbols;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
@@ -112,8 +114,15 @@ public class CommandNamespace extends SingleLineCommand2<ClassDiagram> {
 			return status;
 		final IEntity p = diagram.getCurrentGroup();
 		final String stereotype = arg.get("STEREOTYPE", 0);
-		if (stereotype != null)
-			p.setStereotype(Stereotype.build(stereotype));
+		if (stereotype != null) {
+			final USymbol usymbol = USymbols.fromString(stereotype, diagram.getSkinParam().actorStyle(),
+					diagram.getSkinParam().componentStyle(), diagram.getSkinParam().packageStyle());
+			if (usymbol == null)
+				p.setStereotype(Stereotype.build(stereotype));
+			else
+				p.setUSymbol(usymbol);
+
+		}
 
 		final String urlString = arg.get("URL", 0);
 		if (urlString != null) {
