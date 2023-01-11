@@ -30,62 +30,12 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ * Contribution:  Hisashi Miyashita
+ * Contribution:  Miguel Esteves
  *
  */
 package net.sourceforge.plantuml.cucadiagram;
 
-import java.io.IOException;
-import java.util.Collection;
-
-import net.sourceforge.plantuml.Annotated;
-import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.Pragma;
-import net.sourceforge.plantuml.UmlDiagramType;
-import net.sourceforge.plantuml.baraye.EntityFactory;
-import net.sourceforge.plantuml.baraye.IGroup;
-import net.sourceforge.plantuml.baraye.ILeaf;
-import net.sourceforge.plantuml.core.UmlSource;
-import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.ugraphic.ImageBuilder;
-
-public interface ICucaDiagram extends GroupHierarchy, PortionShower, Annotated {
-
-	ISkinParam getSkinParam();
-
-	UmlDiagramType getUmlDiagramType();
-
-	EntityFactory getEntityFactory();
-
-	StyleBuilder getCurrentStyleBuilder();
-
-	boolean isHideEmptyDescriptionForState();
-
-	Collection<Link> getLinks();
-
-	Pragma getPragma();
-
-	long seed();
-
-	String getMetadata();
-
-	String getFlashData();
-
-	Collection<ILeaf> getLeafsvalues();
-
-	ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) throws IOException;
-
-	String getNamespaceSeparator();
-
-	Collection<IGroup> getGroups(boolean b);
-
-	UmlSource getSource();
-
-	String[] getDotStringSkek();
-
-	boolean isAutarkic(IGroup g);
-
-	int getUniqueSequence();
+final public class Together {
 
 }

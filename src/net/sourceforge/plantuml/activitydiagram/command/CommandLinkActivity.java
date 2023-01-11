@@ -41,7 +41,6 @@ import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlMode;
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagram;
 import net.sourceforge.plantuml.baraye.IEntity;
-import net.sourceforge.plantuml.baraye.ILeaf;
 import net.sourceforge.plantuml.classdiagram.command.CommandLinkClass;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -210,21 +209,14 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 		if (idShort != null) {
 			if (partition != null) {
 				final Ident idNewLong = diagram.buildLeafIdent(partition);
-				final Code codeP = diagram.V1972() ? idNewLong : diagram.buildCode(partition);
+				final Code codeP = diagram.buildCode(partition);
 				diagram.gotoGroup(idNewLong, codeP, Display.getWithNewlines(partition), GroupType.PACKAGE,
 						diagram.getRootGroup(), NamespaceStrategy.SINGLE);
 			}
 			final Ident ident = diagram.buildLeafIdent(idShort);
-			final Code code = diagram.V1972() ? ident : diagram.buildCode(idShort);
-			final LeafType type = diagram.V1972() ? getTypeIfExistingSmart(diagram, ident)
-					: getTypeIfExisting(diagram, code);
-			IEntity result;
-			if (diagram.V1972()) {
-				result = diagram.getLeafVerySmart(ident);
-				if (result == null)
-					result = diagram.getOrCreate(ident, code, Display.getWithNewlines(code), type);
-			} else
-				result = diagram.getOrCreate(ident, code, Display.getWithNewlines(code), type);
+			final Code code = diagram.buildCode(idShort);
+			final LeafType type = getTypeIfExisting(diagram, code);
+			final IEntity result = diagram.getOrCreate(ident, code, Display.getWithNewlines(code), type);
 			if (partition != null)
 				diagram.endGroup();
 
@@ -233,13 +225,7 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 		final String bar = arg.get("BAR" + suf, 0);
 		if (bar != null) {
 			final Ident identBar = diagram.buildLeafIdent(bar);
-			final Code codeBar = diagram.V1972() ? identBar : diagram.buildCode(bar);
-			if (diagram.V1972()) {
-				final ILeaf result = diagram.getLeafVerySmart(identBar);
-				if (result != null)
-					return result;
-
-			}
+			final Code codeBar = diagram.buildCode(bar);
 			return diagram.getOrCreate(identBar, codeBar, Display.getWithNewlines(bar), LeafType.SYNCHRO_BAR);
 		}
 		final RegexPartialMatch quoted = arg.get("QUOTED" + suf);
@@ -247,14 +233,13 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 			final String quotedString = quoted.get(1) == null ? quoted.get(0) : quoted.get(1);
 			if (partition != null) {
 				final Ident idNewLong = diagram.buildLeafIdent(partition);
-				final Code codeP = diagram.V1972() ? idNewLong : diagram.buildCode(partition);
+				final Code codeP = diagram.buildCode(partition);
 				diagram.gotoGroup(idNewLong, codeP, Display.getWithNewlines(partition), GroupType.PACKAGE,
 						diagram.getRootGroup(), NamespaceStrategy.SINGLE);
 			}
 			final Ident quotedIdent = diagram.buildLeafIdent(quotedString);
-			final Code quotedCode = diagram.V1972() ? quotedIdent : diagram.buildCode(quotedString);
-			final LeafType type = diagram.V1972() ? getTypeIfExistingSmart(diagram, quotedIdent)
-					: getTypeIfExisting(diagram, quotedCode);
+			final Code quotedCode = diagram.buildCode(quotedString);
+			final LeafType type = getTypeIfExisting(diagram, quotedCode);
 			final IEntity result = diagram.getOrCreate(quotedIdent, quotedCode, Display.getWithNewlines(quoted.get(0)),
 					type);
 			if (partition != null)
@@ -266,12 +251,12 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 		if (quoteInvisibleString != null) {
 			if (partition != null) {
 				final Ident idNewLong = diagram.buildLeafIdent(partition);
-				final Code codeP = diagram.V1972() ? idNewLong : diagram.buildCode(partition);
+				final Code codeP = diagram.buildCode(partition);
 				diagram.gotoGroup(idNewLong, codeP, Display.getWithNewlines(partition), GroupType.PACKAGE,
 						diagram.getRootGroup(), NamespaceStrategy.SINGLE);
 			}
 			final Ident identInvisible = diagram.buildLeafIdent(quoteInvisibleString);
-			final Code quotedInvisible = diagram.V1972() ? identInvisible : diagram.buildCode(quoteInvisibleString);
+			final Code quotedInvisible = diagram.buildCode(quoteInvisibleString);
 			final IEntity result = diagram.getOrCreate(identInvisible, quotedInvisible,
 					Display.getWithNewlines(quotedInvisible), LeafType.ACTIVITY);
 			if (partition != null)
@@ -284,15 +269,6 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 			return diagram.getLastEntityConsulted();
 
 		return null;
-	}
-
-	private static LeafType getTypeIfExistingSmart(ActivityDiagram system, Ident ident) {
-		final IEntity ent = system.getLeafSmart(ident);
-		if (ent != null)
-			if (ent.getLeafType() == LeafType.BRANCH)
-				return LeafType.BRANCH;
-
-		return LeafType.ACTIVITY;
 	}
 
 	private static LeafType getTypeIfExisting(ActivityDiagram system, Code code) {

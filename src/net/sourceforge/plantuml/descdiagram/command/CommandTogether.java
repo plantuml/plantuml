@@ -45,10 +45,8 @@ import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Code;
-import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.cucadiagram.GroupType;
 import net.sourceforge.plantuml.cucadiagram.Ident;
-import net.sourceforge.plantuml.cucadiagram.NamespaceStrategy;
+import net.sourceforge.plantuml.graphic.USymbols;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 import net.sourceforge.plantuml.utils.LineLocation;
 
@@ -70,15 +68,14 @@ public class CommandTogether extends SingleLineCommand2<AbstractEntityDiagram> {
 			throws NoSuchColorException {
 		final String idShort = diagram.getUniqueSequence("##");
 		final Ident ident = diagram.buildLeafIdent(idShort);
-		final Code code = diagram.V1972() ? ident : diagram.buildCode(idShort);
+		final Code code = diagram.buildCode(idShort);
 
 		final IGroup currentPackage = diagram.getCurrentGroup();
-		final CommandExecutionResult status = diagram.gotoGroup(ident, code, Display.NULL, GroupType.TOGETHER,
-				currentPackage, NamespaceStrategy.SINGLE);
+		final CommandExecutionResult status = diagram.gotoTogether(ident, code, currentPackage);
 		if (status.isOk() == false)
 			return status;
 		final IEntity p = diagram.getCurrentGroup();
-		p.setThisIsTogether();
+		p.setUSymbol(USymbols.TOGETHER);
 
 		return CommandExecutionResult.ok();
 	}

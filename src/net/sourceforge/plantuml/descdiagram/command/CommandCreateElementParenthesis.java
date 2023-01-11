@@ -154,22 +154,19 @@ public class CommandCreateElementParenthesis extends SingleLineCommand2<ClassDia
 
 		final String idShort = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(codeRaw);
 		final Ident ident = diagram.buildLeafIdent(idShort);
-		final Code code = diagram.V1972() ? ident : diagram.buildCode(idShort);
-		if (!diagram.V1972() && diagram.isGroup(code)) {
+		final Code code = diagram.buildCode(idShort);
+		if (diagram.isGroup(code))
 			return CommandExecutionResult.error("This element (" + code.getName() + ") is already defined");
-		}
-		if (diagram.V1972() && diagram.isGroupStrict(ident)) {
-			return CommandExecutionResult.error("This element (" + ident.getName() + ") is already defined");
-		}
+
 		String display = displayRaw;
-		if (display == null) {
+		if (display == null)
 			display = code.getName();
-		}
+
 		display = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(display);
 		final String stereotype = arg.getLazzy("STEREOTYPE", 0);
-		if (existsWithBadType3(diagram, code, ident, type, usymbol)) {
+		if (existsWithBadType3(diagram, code, ident, type, usymbol))
 			return CommandExecutionResult.error("This element (" + code.getName() + ") is already defined");
-		}
+
 		final IEntity entity = diagram.getOrCreateLeaf(ident, code, type, usymbol);
 		entity.setDisplay(Display.getWithNewlines(display));
 		entity.setUSymbol(usymbol);
@@ -189,11 +186,10 @@ public class CommandCreateElementParenthesis extends SingleLineCommand2<ClassDia
 		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
 		final String s = arg.get("LINECOLOR", 1);
 
-		final HColor lineColor = s == null ? null
-				: diagram.getSkinParam().getIHtmlColorSet().getColor(s);
-		if (lineColor != null) {
+		final HColor lineColor = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);
+		if (lineColor != null)
 			colors = colors.add(ColorType.LINE, lineColor);
-		}
+
 		entity.setColors(colors);
 
 		// entity.setSpecificColorTOBEREMOVED(ColorType.BACK,
@@ -204,31 +200,17 @@ public class CommandCreateElementParenthesis extends SingleLineCommand2<ClassDia
 
 	public static boolean existsWithBadType3(AbstractEntityDiagram diagram, Code code, Ident ident, LeafType type,
 			USymbol usymbol) {
-		if (diagram.V1972()) {
-			if (diagram.leafExistSmart(ident) == false) {
-				return false;
-			}
-			final ILeaf other = diagram.getLeafSmart(ident);
-			if (other.getLeafType() != type) {
-				return true;
-			}
-			if (usymbol != null && other.getUSymbol() != usymbol) {
-				return true;
-			}
+		if (diagram.leafExist(code) == false)
 			return false;
-		} else {
-			if (diagram.leafExist(code) == false) {
-				return false;
-			}
-			final ILeaf other = diagram.getLeaf(code);
-			if (other.getLeafType() != type) {
-				return true;
-			}
-			if (usymbol != null && other.getUSymbol() != usymbol) {
-				return true;
-			}
-			return false;
-		}
+
+		final ILeaf other = diagram.getLeaf(code);
+		if (other.getLeafType() != type)
+			return true;
+
+		if (usymbol != null && other.getUSymbol() != usymbol)
+			return true;
+
+		return false;
 	}
 
 	private char getCharEncoding(final String codeRaw) {

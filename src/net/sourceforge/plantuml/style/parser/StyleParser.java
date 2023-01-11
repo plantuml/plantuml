@@ -79,6 +79,11 @@ public class StyleParser {
 			if (token.getType() == StyleTokenType.SEMICOLON)
 				continue;
 
+			if (token.getType() == StyleTokenType.STRING && token.getData().equalsIgnoreCase("<style>"))
+				continue;
+			if (token.getType() == StyleTokenType.STRING && token.getData().equalsIgnoreCase("</style>"))
+				continue;
+
 			if (ins.peek(0).getType() == StyleTokenType.COMMA) {
 				final String full = token.getData() + readWithComma(ins);
 				skipNewLines(ins);
@@ -255,8 +260,6 @@ public class StyleParser {
 				result.add(new StyleToken(StyleTokenType.STRING, s));
 			} else {
 				final String s = readString(ins);
-				if (s.startsWith("<"))
-					throw new StyleParsingException("Cannot understand <");
 				result.add(new StyleToken(StyleTokenType.STRING, s));
 			}
 		}

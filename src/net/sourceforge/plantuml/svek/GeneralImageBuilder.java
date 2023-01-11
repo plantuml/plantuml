@@ -296,11 +296,10 @@ public final class GeneralImageBuilder {
 	private Map<String, Double> maxX;
 
 	private final StringBounder stringBounder;
-	private final boolean mergeIntricated;
 	private final SName styleName;
 
-	public GeneralImageBuilder(boolean mergeIntricated, DotData dotData, EntityFactory entityFactory, UmlSource source,
-			Pragma pragma, StringBounder stringBounder, SName styleName) {
+	public GeneralImageBuilder(DotData dotData, EntityFactory entityFactory, UmlSource source, Pragma pragma,
+			StringBounder stringBounder, SName styleName) {
 		this.dotData = dotData;
 		this.styleName = styleName;
 		this.entityFactory = entityFactory;
@@ -308,7 +307,6 @@ public final class GeneralImageBuilder {
 		this.pragma = pragma;
 		this.stringBounder = stringBounder;
 		this.strictUmlStyle = dotData.getSkinParam().strictUmlStyle();
-		this.mergeIntricated = mergeIntricated;
 	}
 
 	final public StyleSignature getDefaultStyleDefinitionArrow(Stereotype stereotype) {
@@ -462,7 +460,7 @@ public final class GeneralImageBuilder {
 
 		final String graphvizVersion = extractGraphvizVersion(svg);
 		try {
-			dotStringFactory.solve(mergeIntricated, dotData.getEntityFactory(), svg);
+			dotStringFactory.solve(dotData.getEntityFactory(), svg);
 			final SvekResult result = new SvekResult(dotData, dotStringFactory);
 			this.maxX = dotStringFactory.getBibliotekon().getMaxX();
 			return result;
@@ -607,14 +605,6 @@ public final class GeneralImageBuilder {
 	private void printGroup(DotStringFactory dotStringFactory, IGroup g) {
 		if (g.getGroupType() == GroupType.CONCURRENT_STATE)
 			return;
-
-		if (mergeIntricated) {
-			final IGroup intricated = dotData.getEntityFactory().isIntricated(g);
-			if (intricated != null) {
-				printGroup(dotStringFactory, intricated);
-				return;
-			}
-		}
 
 		final ClusterHeader clusterHeader = new ClusterHeader((EntityImp) g, dotData.getSkinParam(), dotData,
 				stringBounder);

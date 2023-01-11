@@ -114,23 +114,23 @@ public class CommandCreateState extends SingleLineCommand2<StateDiagram> {
 			throws NoSuchColorException {
 		final String idShort = arg.getLazzy("CODE", 0);
 		final Ident ident = diagram.buildLeafIdent(idShort);
-		final Code code = diagram.V1972() ? ident : diagram.buildCode(idShort);
+		final Code code = diagram.buildCode(idShort);
 		String display = arg.getLazzy("DISPLAY", 0);
-		if (display == null) 
+		if (display == null)
 			display = code.getName();
-		
+
 		final String stereotype = arg.get("STEREOTYPE", 0);
 		final LeafType type = getTypeFromStereotype(stereotype);
-		if (diagram.checkConcurrentStateOk(ident, code) == false) 
+		if (diagram.checkConcurrentStateOk(ident, code) == false)
 			return CommandExecutionResult.error("The state " + code.getName()
 					+ " has been created in a concurrent state : it cannot be used here.");
-		
+
 		final IEntity ent = diagram.getOrCreateLeaf(diagram.buildLeafIdent(idShort), code, type, null);
 		ent.setDisplay(Display.getWithNewlines(display));
 
-		if (stereotype != null) 
+		if (stereotype != null)
 			ent.setStereotype(Stereotype.build(stereotype));
-		
+
 		final String urlString = arg.get("URL", 0);
 		if (urlString != null) {
 			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), UrlMode.STRICT);
@@ -141,14 +141,13 @@ public class CommandCreateState extends SingleLineCommand2<StateDiagram> {
 		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
 		final String s = arg.get("LINECOLOR", 1);
 
-		final HColor lineColor = s == null ? null
-				: diagram.getSkinParam().getIHtmlColorSet().getColor(s);
-		if (lineColor != null) 
+		final HColor lineColor = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);
+		if (lineColor != null)
 			colors = colors.add(ColorType.LINE, lineColor);
-		
-		if (arg.get("LINECOLOR", 0) != null) 
+
+		if (arg.get("LINECOLOR", 0) != null)
 			colors = colors.addLegacyStroke(arg.get("LINECOLOR", 0));
-		
+
 		ent.setColors(colors);
 
 		// ent.setSpecificColorTOBEREMOVED(ColorType.BACK,
@@ -160,36 +159,36 @@ public class CommandCreateState extends SingleLineCommand2<StateDiagram> {
 		// ent.applyStroke(arg.get("LINECOLOR", 0));
 
 		final String addFields = arg.get("ADDFIELD", 0);
-		if (addFields != null) 
+		if (addFields != null)
 			ent.getBodier().addFieldOrMethod(addFields);
-		
+
 		CommandCreateClassMultilines.addTags(ent, arg.getLazzy("TAGS", 0));
 
 		return CommandExecutionResult.ok();
 	}
 
 	private LeafType getTypeFromStereotype(String stereotype) {
-		if ("<<choice>>".equalsIgnoreCase(stereotype)) 
+		if ("<<choice>>".equalsIgnoreCase(stereotype))
 			return LeafType.STATE_CHOICE;
-		
-		if ("<<fork>>".equalsIgnoreCase(stereotype)) 
+
+		if ("<<fork>>".equalsIgnoreCase(stereotype))
 			return LeafType.STATE_FORK_JOIN;
-		
-		if ("<<join>>".equalsIgnoreCase(stereotype)) 
+
+		if ("<<join>>".equalsIgnoreCase(stereotype))
 			return LeafType.STATE_FORK_JOIN;
-		
-		if ("<<start>>".equalsIgnoreCase(stereotype)) 
+
+		if ("<<start>>".equalsIgnoreCase(stereotype))
 			return LeafType.CIRCLE_START;
-		
-		if ("<<end>>".equalsIgnoreCase(stereotype)) 
+
+		if ("<<end>>".equalsIgnoreCase(stereotype))
 			return LeafType.CIRCLE_END;
-		
-		if ("<<history>>".equalsIgnoreCase(stereotype)) 
+
+		if ("<<history>>".equalsIgnoreCase(stereotype))
 			return LeafType.PSEUDO_STATE;
-		
-		if ("<<history*>>".equalsIgnoreCase(stereotype)) 
+
+		if ("<<history*>>".equalsIgnoreCase(stereotype))
 			return LeafType.DEEP_HISTORY;
-		
+
 		return null;
 	}
 

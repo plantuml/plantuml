@@ -120,7 +120,7 @@ public final class GroupPngMakerActivity {
 				skinParam, new InnerGroupHierarchy(), diagram.getEntityFactory(), false, DotMode.NORMAL,
 				diagram.getNamespaceSeparator(), diagram.getPragma());
 
-		final GeneralImageBuilder svek2 = new GeneralImageBuilder(false, dotData, diagram.getEntityFactory(),
+		final GeneralImageBuilder svek2 = new GeneralImageBuilder(dotData, diagram.getEntityFactory(),
 				diagram.getSource(), diagram.getPragma(), stringBounder, SName.activityDiagram);
 
 		if (group.getGroupType() == GroupType.INNER_ACTIVITY) {

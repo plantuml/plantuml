@@ -167,25 +167,14 @@ public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 			}
 		} else {
 			final Ident idNewLong = diagram.buildLeafIdent(idShort);
-			if (diagram.V1972()) {
-				if (diagram.leafExistSmart(idNewLong)) {
-					entity = diagram.getOrCreateLeaf(idNewLong, idNewLong, type, null);
-					if (entity.muteToType(type, null) == false)
-						return CommandExecutionResult.error("Bad name");
+			final Code code = diagram.buildCode(idShort);
+			if (diagram.leafExist(code)) {
+				entity = diagram.getOrCreateLeaf(idNewLong, code, type, null);
+				if (entity.muteToType(type, null) == false)
+					return CommandExecutionResult.error("Bad name");
 
-				} else {
-					entity = diagram.createLeaf(idNewLong, idNewLong, Display.getWithNewlines(display), type, null);
-				}
 			} else {
-				final Code code = diagram.buildCode(idShort);
-				if (diagram.leafExist(code)) {
-					entity = diagram.getOrCreateLeaf(idNewLong, code, type, null);
-					if (entity.muteToType(type, null) == false)
-						return CommandExecutionResult.error("Bad name");
-
-				} else {
-					entity = diagram.createLeaf(idNewLong, code, Display.getWithNewlines(display), type, null);
-				}
+				entity = diagram.createLeaf(idNewLong, code, Display.getWithNewlines(display), type, null);
 			}
 		}
 		if (stereo != null) {

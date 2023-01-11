@@ -127,10 +127,10 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 		final Ident ident1B = buildLeafIdent(name1B);
 		final Ident ident2A = buildLeafIdent(name2A);
 		final Ident ident2B = buildLeafIdent(name2B);
-		final Code code1A = this.V1972() ? ident1A : buildCode(name1A);
-		final Code code1B = this.V1972() ? ident1B : buildCode(name1B);
-		final Code code2A = this.V1972() ? ident2A : buildCode(name2A);
-		final Code code2B = this.V1972() ? ident2B : buildCode(name2B);
+		final Code code1A = buildCode(name1A);
+		final Code code1B = buildCode(name1B);
+		final Code code2A = buildCode(name2A);
+		final Code code2B = buildCode(name2B);
 		final IEntity entity1A = getOrCreateLeaf(ident1A, code1A, null, null);
 		final IEntity entity1B = getOrCreateLeaf(ident1B, code1B, null, null);
 		final IEntity entity2A = getOrCreateLeaf(ident2A, code2A, null, null);
@@ -142,8 +142,8 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 			final String tmp2 = this.getUniqueSequence("apoint");
 			final Ident ident1 = buildLeafIdent(tmp1);
 			final Ident ident2 = buildLeafIdent(tmp2);
-			final Code code1 = this.V1972() ? ident1 : buildCode(tmp1);
-			final Code code2 = this.V1972() ? ident2 : buildCode(tmp2);
+			final Code code1 = buildCode(tmp1);
+			final Code code2 = buildCode(tmp2);
 			final IEntity point1 = getOrCreateLeaf(ident1, code1, LeafType.POINT_FOR_ASSOCIATION, null);
 			final IEntity point2 = getOrCreateLeaf(ident2, code2, LeafType.POINT_FOR_ASSOCIATION, null);
 
@@ -201,8 +201,8 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 			Display label) {
 		final Ident ident1 = buildLeafIdent(name1);
 		final Ident ident2 = buildLeafIdent(name2);
-		final Code code1 = this.V1972() ? ident1 : buildCode(name1);
-		final Code code2 = this.V1972() ? ident2 : buildCode(name2);
+		final Code code1 = buildCode(name1);
+		final Code code2 = buildCode(name2);
 		final IEntity entity1 = getOrCreateLeaf(ident1, code1, null, null);
 		final IEntity entity2 = getOrCreateLeaf(ident2, code2, null, null);
 		final List<Association> same = getExistingAssociatedPoints(entity1, entity2);
@@ -253,7 +253,7 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 			this.associed = associed;
 			final String idShort = AbstractClassOrObjectDiagram.this.getUniqueSequence("apoint");
 			final Ident ident = buildLeafIdent(idShort);
-			final Code code = AbstractClassOrObjectDiagram.this.V1972() ? ident : buildCode(idShort);
+			final Code code = buildCode(idShort);
 			point = getOrCreateLeaf(ident, code, LeafType.POINT_FOR_ASSOCIATION, null);
 
 		}
@@ -313,11 +313,11 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 			addLink(pointToEntity2);
 
 			if (mode == 1) {
-				pointToAssocied = new Link(getIEntityFactory(), getSkinParam().getCurrentStyleBuilder(), point, associed,
-						linkType, LinkArg.build(label, length));
+				pointToAssocied = new Link(getIEntityFactory(), getSkinParam().getCurrentStyleBuilder(), point,
+						associed, linkType, LinkArg.build(label, length));
 			} else {
-				pointToAssocied = new Link(getIEntityFactory(), getSkinParam().getCurrentStyleBuilder(), associed, point,
-						linkType, LinkArg.build(label, length));
+				pointToAssocied = new Link(getIEntityFactory(), getSkinParam().getCurrentStyleBuilder(), associed,
+						point, linkType, LinkArg.build(label, length));
 			}
 			addLink(pointToAssocied);
 		}

@@ -78,12 +78,6 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 	@Override
 	public ILeaf getOrCreateLeaf(Ident ident, Code code, LeafType type, USymbol symbol) {
 		Objects.requireNonNull(ident);
-		if (this.V1972()) {
-			if (type == null) {
-				type = LeafType.CLASS;
-			}
-			return getOrCreateLeafDefault(ident, code, type, symbol);
-		}
 		if (type == null) {
 			code = code.eventuallyRemoveStartingAndEndingDoubleQuote("\"([:");
 			if (getNamespaceSeparator() == null) {
@@ -114,23 +108,18 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 				&& type != LeafType.LOLLIPOP_HALF && type != LeafType.NOTE) {
 			return super.createLeaf(idNewLong, code, display, type, symbol);
 		}
-		if (this.V1972()) {
+		if (getNamespaceSeparator() == null)
 			return super.createLeaf(idNewLong, code, display, type, symbol);
-		}
-		if (getNamespaceSeparator() == null) {
-			return super.createLeaf(idNewLong, code, display, type, symbol);
-		}
+
 		code = getFullyQualifiedCode1972(code);
-		if (super.leafExist(code)) {
+		if (super.leafExist(code))
 			throw new IllegalArgumentException("Already known: " + code);
-		}
+
 		return createEntityWithNamespace1972(idNewLong, code, display, type, symbol);
 	}
 
 	private ILeaf createEntityWithNamespace1972(Ident id, Code fullyCode, Display display, LeafType type,
 			USymbol symbol) {
-		if (this.V1972())
-			throw new UnsupportedOperationException();
 		Objects.requireNonNull(id);
 		final IGroup backupCurrentGroup = getCurrentGroup();
 		final IGroup group = backupCurrentGroup;

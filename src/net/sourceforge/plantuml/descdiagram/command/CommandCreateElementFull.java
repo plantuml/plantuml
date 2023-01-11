@@ -230,12 +230,9 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 
 		final String idShort = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(codeRaw);
 		final Ident ident = diagram.buildLeafIdent(idShort);
-		final Code code = diagram.V1972() ? ident : diagram.buildCode(idShort);
-		if (!diagram.V1972() && diagram.isGroup(code))
+		final Code code = diagram.buildCode(idShort);
+		if (diagram.isGroup(code))
 			return CommandExecutionResult.error("This element (" + code.getName() + ") is already defined");
-
-		if (diagram.V1972() && diagram.isGroupStrict(ident))
-			return CommandExecutionResult.error("This element (" + ident.getName() + ") is already defined");
 
 		String display = displayRaw;
 		if (display == null)
@@ -283,31 +280,17 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 
 	public static boolean existsWithBadType3(AbstractEntityDiagram diagram, Code code, Ident ident, LeafType type,
 			USymbol usymbol) {
-		if (diagram.V1972()) {
-			if (diagram.leafExistSmart(ident) == false)
-				return false;
-
-			final ILeaf other = diagram.getLeafSmart(ident);
-			if (other.getLeafType() != type)
-				return true;
-
-			if (usymbol != null && other.getUSymbol() != usymbol)
-				return true;
-
+		if (diagram.leafExist(code) == false)
 			return false;
-		} else {
-			if (diagram.leafExist(code) == false)
-				return false;
 
-			final ILeaf other = diagram.getLeaf(code);
-			if (other.getLeafType() != type)
-				return true;
+		final ILeaf other = diagram.getLeaf(code);
+		if (other.getLeafType() != type)
+			return true;
 
-			if (usymbol != null && other.getUSymbol() != usymbol)
-				return true;
+		if (usymbol != null && other.getUSymbol() != usymbol)
+			return true;
 
-			return false;
-		}
+		return false;
 	}
 
 	private char getCharEncoding(final String codeRaw) {

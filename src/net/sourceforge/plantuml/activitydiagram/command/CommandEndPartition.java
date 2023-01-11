@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.activitydiagram.command;
 
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagram;
-import net.sourceforge.plantuml.baraye.IEntity;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.IRegex;
@@ -65,11 +64,10 @@ public class CommandEndPartition extends SingleLineCommand2<ActivityDiagram> {
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram diagram, LineLocation location, RegexResult arg) {
-		final IEntity currentPackage = diagram.getCurrentGroup();
-		if (currentPackage == null) {
+		final boolean result = diagram.endGroup();
+		if (result == false)
 			return CommandExecutionResult.error("No partition defined");
-		}
-		diagram.endGroup();
+
 		return CommandExecutionResult.ok();
 	}
 

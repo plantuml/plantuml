@@ -70,21 +70,13 @@ public class CommandAddMethod extends SingleLineCommand2<ClassDiagram> {
 			throws NoSuchColorException {
 		final String idShort = arg.get("NAME", 0);
 		final Ident ident = diagram.buildLeafIdent(idShort);
-		final Code code = diagram.V1972() ? ident : diagram.buildCode(idShort);
-		/* final */IEntity entity;
-		if (diagram.V1972()) {
-			entity = diagram.getLeafVerySmart(diagram.cleanIdent(ident));
-			if (entity == null) {
-				entity = diagram.getOrCreateLeaf(ident, code, null, null);
-			}
-		} else {
-			entity = diagram.getOrCreateLeaf(ident, code, null, null);
-		}
+		final Code code = diagram.buildCode(idShort);
+		final IEntity entity = diagram.getOrCreateLeaf(ident, code, null, null);
 
 		final String field = arg.get("DATA", 0);
-		if (field.length() > 0 && VisibilityModifier.isVisibilityCharacter(field)) {
+		if (field.length() > 0 && VisibilityModifier.isVisibilityCharacter(field))
 			diagram.setVisibilityModifierPresent(true);
-		}
+
 		entity.getBodier().addFieldOrMethod(field);
 		return CommandExecutionResult.ok();
 	}

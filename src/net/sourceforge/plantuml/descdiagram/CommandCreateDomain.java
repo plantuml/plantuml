@@ -100,13 +100,10 @@ public class CommandCreateDomain extends SingleLineCommand2<DescriptionDiagram> 
 		final String stereotype = arg.get("STEREO", 0);
 
 		final Ident ident = diagram.buildLeafIdent(codeString);
-		final Code code = diagram.V1972() ? ident : diagram.buildCode(codeString);
-		if (diagram.V1972() && diagram.leafExistSmart(ident)) {
+		final Code code = diagram.buildCode(codeString);
+		if (diagram.leafExist(code))
 			return CommandExecutionResult.error("Object already exists : " + codeString);
-		}
-		if (!diagram.V1972() && diagram.leafExist(code)) {
-			return CommandExecutionResult.error("Object already exists : " + codeString);
-		}
+
 		Display d = Display.getWithNewlines(display);
 		final String urlString = arg.get("URL", 0);
 		final String group = arg.get("GROUP", 0);

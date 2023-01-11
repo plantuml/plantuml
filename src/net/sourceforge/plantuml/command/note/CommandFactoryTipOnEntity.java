@@ -170,7 +170,7 @@ public final class CommandFactoryTipOnEntity implements SingleMultiFactoryComman
 
 		final String idShort = line0.get("ENTITY", 0);
 		final Ident identShort = diagram.buildLeafIdent(idShort);
-		final Code codeShort = diagram.V1972() ? identShort : diagram.buildCode(idShort);
+		final Code codeShort = diagram.buildCode(idShort);
 		final String member = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(line0.get("ENTITY", 1));
 		if (codeShort == null) {
 			assert false;

@@ -108,7 +108,7 @@ public class CommandArchimateMultilines extends CommandMultilines2<AbstractEntit
 
 		final String idShort = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(codeRaw);
 		final Ident ident = diagram.buildLeafIdent(idShort);
-		final Code code = diagram.V1972() ? ident : diagram.buildCode(idShort);
+		final Code code = diagram.buildCode(idShort);
 		final String icon = line0.getLazzy("STEREOTYPE", 0);
 
 		final IEntity entity = diagram.getOrCreateLeaf(ident, code, LeafType.DESCRIPTION, USymbols.RECTANGLE);

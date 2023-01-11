@@ -97,11 +97,6 @@ public class CommandNamespace extends SingleLineCommand2<ClassDiagram> {
 			display = Display.getWithNewlines(idShort);
 			idNewLong = current.child(idShort);
 			currentPackage = (IGroup) current.getData();
-		} else if (diagram.V1972()) {
-			idNewLong = diagram.buildLeafIdent(idShort);
-			code = null;
-			currentPackage = null;
-			display = Display.getWithNewlines(idNewLong.getName());
 		} else {
 			idNewLong = diagram.buildLeafIdent(idShort);
 			code = diagram.buildCode(idShort);

@@ -190,7 +190,7 @@ public class CommandHideShowByGender extends SingleLineCommand2<UmlDiagram> {
 		} else {
 			arg1 = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg1);
 			final Ident ident = diagram.buildLeafIdent(arg1);
-			final Code code = diagram.V1972() ? ident : diagram.buildCode(arg1);
+			final Code code = diagram.buildCode(arg1);
 			final IEntity entity = diagram.getOrCreateLeaf(ident, code, null, null);
 			gender = EntityGenderUtils.byEntityAlone(entity);
 		}
