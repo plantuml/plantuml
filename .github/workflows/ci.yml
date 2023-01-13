@@ -188,18 +188,18 @@ jobs:
           # list of Docker images to use as base name for tags
           images: |
             ${{ github.repository }}
-             ghcr.io/${{ github.repository }}
+            ghcr.io/${{ github.repository }}
           # generate Docker tags based on the following events/attributes
           tags: |
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
             type=semver,pattern={{major}}
             type=sha
-       - name: Log into Docker Hub
-         uses: docker/login-action@v2
-         with:
-           username: ${{ secrets.DOCKERHUB_USERNAME }}
-           password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Log into Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Log in to GitHub Docker Registry
         uses: docker/login-action@v2
         with:
