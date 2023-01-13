@@ -841,7 +841,7 @@ final public class EntityImp implements ILeaf, IGroup {
 	}
 
 	@Override
-	public void getTogether(Together together) {
+	public void setTogether(Together together) {
 		this.together = together;
 	}
 

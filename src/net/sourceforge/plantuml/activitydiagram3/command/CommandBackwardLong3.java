@@ -39,32 +39,35 @@ import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.CommandMultilines2;
+import net.sourceforge.plantuml.command.CommandMultilines3;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
 import net.sourceforge.plantuml.command.Trim;
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.graphic.color.ColorParser;
-import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 import net.sourceforge.plantuml.utils.BlocLines;
 
-public class CommandBackwardLong3 extends CommandMultilines2<ActivityDiagram3> {
+public class CommandBackwardLong3 extends CommandMultilines3<ActivityDiagram3> {
 
 	public CommandBackwardLong3() {
 		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH);
 	}
 
 	@Override
-	public String getPatternEnd() {
-		return "^(.*)" + CommandActivity3.endingGroup() + "$";
+	public RegexConcat getPatternEnd2() {
+		return new RegexConcat(//
+				new RegexLeaf("TEXT", "(.*)"), //
+				new RegexLeaf("END", CommandActivity3.endingGroup()), //
+				RegexLeaf.end());
 	}
 
-	private static ColorParser color() {
-		return ColorParser.simpleColor(ColorType.BACK);
-	}
+//
+//	@Override
+//	public String getPatternEnd() {
+//		return "^(.*)" + CommandActivity3.endingGroup() + "$";
+//	}
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandBackwardLong3.class.getName(), RegexLeaf.start(), //
@@ -81,19 +84,15 @@ public class CommandBackwardLong3 extends CommandMultilines2<ActivityDiagram3> {
 	protected CommandExecutionResult executeNow(ActivityDiagram3 diagram, BlocLines lines) throws NoSuchColorException {
 		lines = lines.removeEmptyColumns();
 		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
-//		final Colors colors = color().getColor(diagram.getSkinParam().getThemeStyle(), line0,
-//				diagram.getSkinParam().getIHtmlColorSet());
-//
-		final BoxStyle style = BoxStyle.fromChar(lines.getLastChar());
-		lines = lines.removeStartingAndEnding(line0.get("DATA", 0), 1);
-		
+		final RegexResult lineLast = getPatternEnd2().matcher(lines.getLast().getString());
+		final String end = lineLast.get("END", 0);
+
+		final BoxStyle style = BoxStyle.fromString(end);
+		lines = lines.removeStartingAndEnding(line0.get("DATA", 0), end.length());
+
 		final LinkRendering in = LinkRendering.none();
 		final LinkRendering out = LinkRendering.none();
 
-//		return diagram.addActivity(lines.toDisplay(), style, null, colors, null);
-		
 		return diagram.backward(lines.toDisplay(), style, in, out);
-
-//		return CommandExecutionResult.ok();
 	}
 }

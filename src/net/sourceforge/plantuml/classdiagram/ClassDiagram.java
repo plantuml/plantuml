@@ -69,9 +69,9 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 		final String separator = Objects.requireNonNull(getNamespaceSeparator());
 		final String codeString = code.getName();
 		final String namespace = getNamespace1972(code, getNamespaceSeparator());
-		if (namespace == null) {
+		if (namespace == null)
 			return buildCode(codeString);
-		}
+
 		return buildCode(codeString.substring(namespace.length() + separator.length()));
 	}
 
@@ -80,23 +80,23 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 		Objects.requireNonNull(ident);
 		if (type == null) {
 			code = code.eventuallyRemoveStartingAndEndingDoubleQuote("\"([:");
-			if (getNamespaceSeparator() == null) {
+			if (getNamespaceSeparator() == null)
 				return getOrCreateLeafDefault(ident, code, LeafType.CLASS, symbol);
-			}
+
 			code = getFullyQualifiedCode1972(code);
-			if (super.leafExist(code)) {
+			if (super.leafExist(code))
 				return getOrCreateLeafDefault(ident, code, LeafType.CLASS, symbol);
-			}
+
 			return createEntityWithNamespace1972(ident, code, Display.getWithNewlines(ident.getLast()), LeafType.CLASS,
 					symbol);
 		}
-		if (getNamespaceSeparator() == null) {
+		if (getNamespaceSeparator() == null)
 			return getOrCreateLeafDefault(ident, code, type, symbol);
-		}
+
 		code = getFullyQualifiedCode1972(code);
-		if (super.leafExist(code)) {
+		if (super.leafExist(code))
 			return getOrCreateLeafDefault(ident, code, type, symbol);
-		}
+
 		return createEntityWithNamespace1972(ident, code, Display.getWithNewlines(ident.getLast()), type, symbol);
 	}
 
@@ -105,9 +105,9 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 		Objects.requireNonNull(idNewLong);
 		if (type != LeafType.ABSTRACT_CLASS && type != LeafType.ANNOTATION && type != LeafType.CLASS
 				&& type != LeafType.INTERFACE && type != LeafType.ENUM && type != LeafType.LOLLIPOP_FULL
-				&& type != LeafType.LOLLIPOP_HALF && type != LeafType.NOTE) {
+				&& type != LeafType.LOLLIPOP_HALF && type != LeafType.NOTE)
 			return super.createLeaf(idNewLong, code, display, type, symbol);
-		}
+
 		if (getNamespaceSeparator() == null)
 			return super.createLeaf(idNewLong, code, display, type, symbol);
 
@@ -133,11 +133,11 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 			gotoGroupExternal(newIdLong, namespace, tmp, namespace, GroupType.PACKAGE, getRootGroup());
 		}
 		final Display tmpDisplay;
-		if (Display.isNull(display)) {
+		if (Display.isNull(display))
 			tmpDisplay = Display.getWithNewlines(getShortName1972(fullyCode)).withCreoleMode(CreoleMode.SIMPLE_LINE);
-		} else {
+		else
 			tmpDisplay = display;
-		}
+
 		final ILeaf result = createLeafInternal(id, fullyCode, tmpDisplay, type, symbol);
 		gotoThisGroup(backupCurrentGroup);
 		return result;
@@ -145,9 +145,9 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 
 	@Override
 	public final boolean leafExist(Code code) {
-		if (getNamespaceSeparator() == null) {
+		if (getNamespaceSeparator() == null)
 			return super.leafExist(code);
-		}
+
 		return super.leafExist(getFullyQualifiedCode1972(code));
 	}
 
@@ -171,9 +171,9 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 	@Override
 	final protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
-		if (useLayoutExplicit != 0) {
+		if (useLayoutExplicit != 0)
 			return exportLayoutExplicit(os, index, fileFormatOption);
-		}
+
 		return super.exportDiagramInternal(os, index, fileFormatOption);
 	}
 
@@ -191,11 +191,10 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 
 	private RowLayout getRawLayout(int raw) {
 		final RowLayout rawLayout = new RowLayout();
-		for (ILeaf leaf : entityFactory.leafs()) {
-			if (leaf.getRawLayout() == raw) {
+		for (ILeaf leaf : entityFactory.leafs())
+			if (leaf.getRawLayout() == raw)
 				rawLayout.addLeaf(getEntityImageClass(leaf));
-			}
-		}
+
 		return rawLayout;
 	}
 
@@ -207,13 +206,11 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 	public String checkFinalError() {
 		for (Link link : this.getLinks()) {
 			final int len = link.getLength();
-			if (len == 1) {
-				for (Link link2 : this.getLinks()) {
-					if (link2.sameConnections(link) && link2.getLength() != 1) {
+			if (len == 1)
+				for (Link link2 : this.getLinks())
+					if (link2.sameConnections(link) && link2.getLength() != 1)
 						link2.setLength(1);
-					}
-				}
-			}
+
 		}
 		this.applySingleStrategy();
 		return super.checkFinalError();

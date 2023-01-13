@@ -80,16 +80,16 @@ public class CommandRepeat3 extends SingleLineCommand2<ActivityDiagram3> {
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg)
 			throws NoSuchColorException {
 		final String s = arg.get("COLOR", 0);
-		final HColor color = s == null ? null
-				: diagram.getSkinParam().getIHtmlColorSet().getColor(s);
+		final HColor color = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);
 		final Display label = Display.getWithNewlines(arg.get("LABEL", 0));
 		final BoxStyle boxStyle;
 		final String styleString = arg.get("STYLE", 0);
-		if (styleString == null) {
+
+		if (styleString == null)
 			boxStyle = BoxStyle.PLAIN;
-		} else {
-			boxStyle = BoxStyle.fromChar(styleString.charAt(0));
-		}
+		else
+			boxStyle = BoxStyle.fromString(styleString);
+
 		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
 		final String stereo = arg.get("STEREO", 0);
 		if (stereo != null) {

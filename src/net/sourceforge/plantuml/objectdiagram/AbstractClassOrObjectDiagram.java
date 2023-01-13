@@ -66,17 +66,17 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 	@Override
 	public Ident cleanIdent(Ident ident) {
 		String codeString = ident.getName();
-		if (codeString.startsWith("\"") && codeString.endsWith("\"")) {
+		if (codeString.startsWith("\"") && codeString.endsWith("\""))
 			return ident.eventuallyRemoveStartingAndEndingDoubleQuote("\"");
-		}
+
 		return ident;
 	}
 
 	final public boolean insertBetween(IEntity entity1, IEntity entity2, IEntity node) {
 		final Link link = foundLink(entity1, entity2);
-		if (link == null) {
+		if (link == null)
 			return false;
-		}
+
 		final Link l1 = new Link(getIEntityFactory(), getSkinParam().getCurrentStyleBuilder(), entity1, node,
 				link.getType(),
 				LinkArg.build(link.getLabel(), link.getLength(), getSkinParam().classAttributeIconSize() > 0)
@@ -97,23 +97,22 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 		final List<Link> links = getLinks();
 		for (int i = links.size() - 1; i >= 0; i--) {
 			final Link l = links.get(i);
-			if (l.isBetween(entity1, entity2)) {
+			if (l.isBetween(entity1, entity2))
 				return l;
-			}
+
 		}
 		return null;
 	}
 
 	public int getNbOfHozizontalLollipop(IEntity entity) {
-		if (entity.getLeafType() == LeafType.LOLLIPOP_FULL || entity.getLeafType() == LeafType.LOLLIPOP_HALF) {
+		if (entity.getLeafType() == LeafType.LOLLIPOP_FULL || entity.getLeafType() == LeafType.LOLLIPOP_HALF)
 			throw new IllegalArgumentException();
-		}
+
 		int result = 0;
 		for (Link link : getLinks()) {
 			if (link.getLength() == 1 && link.contains(entity)
-					&& (link.containsType(LeafType.LOLLIPOP_FULL) || link.containsType(LeafType.LOLLIPOP_HALF))) {
+					&& (link.containsType(LeafType.LOLLIPOP_FULL) || link.containsType(LeafType.LOLLIPOP_HALF)))
 				result++;
-			}
 
 		}
 		return result;
@@ -162,12 +161,11 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 
 	private void insertPointBetween(final IEntity entity1A, final IEntity entity1B, final IEntity point1) {
 		Link existingLink1 = foundLink(entity1A, entity1B);
-		if (existingLink1 == null) {
+		if (existingLink1 == null)
 			existingLink1 = new Link(getIEntityFactory(), getSkinParam().getCurrentStyleBuilder(), entity1A, entity1B,
 					new LinkType(LinkDecor.NONE, LinkDecor.NONE), LinkArg.noDisplay(2));
-		} else {
+		else
 			removeLink(existingLink1);
-		}
 
 		final IEntity entity1real = existingLink1.isInverted() ? existingLink1.getEntity2()
 				: existingLink1.getEntity1();
@@ -225,11 +223,10 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 
 	private List<Association> getExistingAssociatedPoints(final IEntity entity1, final IEntity entity2) {
 		final List<Association> same = new ArrayList<>();
-		for (Association existing : associations) {
-			if (existing.sameCouple(entity1, entity2)) {
+		for (Association existing : associations)
+			if (existing.sameCouple(entity1, entity2))
 				same.add(existing);
-			}
-		}
+
 		return same;
 	}
 
@@ -273,12 +270,11 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 
 		void createNew(int mode, LinkType linkType, Display label) {
 			existingLink = foundLink(entity1, entity2);
-			if (existingLink == null) {
+			if (existingLink == null)
 				existingLink = new Link(getIEntityFactory(), getSkinParam().getCurrentStyleBuilder(), entity1, entity2,
 						new LinkType(LinkDecor.NONE, LinkDecor.NONE), LinkArg.noDisplay(2));
-			} else {
+			else
 				removeLink(existingLink);
-			}
 
 			final IEntity entity1real = existingLink.isInverted() ? existingLink.getEntity2()
 					: existingLink.getEntity1();
@@ -297,12 +293,12 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 							.withDistanceAngle(existingLink.getLabeldistance(), existingLink.getLabelangle()));
 
 			int length = 1;
-			if (existingLink.getLength() == 1 && entity1 != entity2) {
+			if (existingLink.getLength() == 1 && entity1 != entity2)
 				length = 2;
-			}
-			if (existingLink.getLength() == 2 && entity1 == entity2) {
+
+			if (existingLink.getLength() == 2 && entity1 == entity2)
 				length = 2;
-			}
+
 			if (length == 1) {
 				entity1ToPoint.addNoteFrom(existingLink, NoteLinkStrategy.NORMAL);
 			} else {
@@ -312,24 +308,23 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 			addLink(entity1ToPoint);
 			addLink(pointToEntity2);
 
-			if (mode == 1) {
+			if (mode == 1)
 				pointToAssocied = new Link(getIEntityFactory(), getSkinParam().getCurrentStyleBuilder(), point,
 						associed, linkType, LinkArg.build(label, length));
-			} else {
+			else
 				pointToAssocied = new Link(getIEntityFactory(), getSkinParam().getCurrentStyleBuilder(), associed,
 						point, linkType, LinkArg.build(label, length));
-			}
+
 			addLink(pointToAssocied);
 		}
 
 		void createInSecond(LinkType linkType, Display label) {
 			existingLink = foundLink(entity1, entity2);
-			if (existingLink == null) {
+			if (existingLink == null)
 				existingLink = new Link(getIEntityFactory(), getSkinParam().getCurrentStyleBuilder(), entity1, entity2,
 						new LinkType(LinkDecor.NONE, LinkDecor.NONE), LinkArg.noDisplay(2));
-			} else {
+			else
 				removeLink(existingLink);
-			}
 
 			entity1ToPoint = new Link(getIEntityFactory(), getSkinParam().getCurrentStyleBuilder(), entity1, point,
 					existingLink.getType().getPart2(),
@@ -362,12 +357,12 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 		}
 
 		boolean sameCouple(IEntity entity1, IEntity entity2) {
-			if (this.entity1 == entity1 && this.entity2 == entity2) {
+			if (this.entity1 == entity1 && this.entity2 == entity2)
 				return true;
-			}
-			if (this.entity1 == entity2 && this.entity2 == entity1) {
+
+			if (this.entity1 == entity2 && this.entity2 == entity1)
 				return true;
-			}
+
 			return false;
 		}
 	}

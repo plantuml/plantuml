@@ -61,6 +61,7 @@ import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.Stereotag;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
+import net.sourceforge.plantuml.cucadiagram.Together;
 import net.sourceforge.plantuml.cucadiagram.entity.IEntityFactory;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
@@ -89,7 +90,7 @@ public final class EntityFactory implements IEntityFactory {
 	}
 
 	public ILeaf createLeafForEmptyGroup(IGroup g, ISkinParam skinParam) {
-		final ILeaf folder = this.createLeaf(g.getIdent(), g.getCode(), g.getDisplay(), LeafType.EMPTY_PACKAGE,
+		final ILeaf folder = this.createLeaf(null, g.getIdent(), g.getCode(), g.getDisplay(), LeafType.EMPTY_PACKAGE,
 				g.getParentContainer(), null, this.namespaceSeparator.getNamespaceSeparator());
 		((EntityImp) folder).setOriginalGroup(g);
 		final USymbol symbol = g.getUSymbol();
@@ -175,8 +176,8 @@ public final class EntityFactory implements IEntityFactory {
 		return result;
 	}
 
-	public ILeaf createLeaf(Ident ident, Code code, Display display, LeafType entityType, IGroup parentContainer,
-			Set<VisibilityModifier> hides, String namespaceSeparator) {
+	public ILeaf createLeaf(Together together, Ident ident, Code code, Display display, LeafType entityType,
+			IGroup parentContainer, Set<VisibilityModifier> hides, String namespaceSeparator) {
 		final Bodier bodier;
 		if (Objects.requireNonNull(entityType) == LeafType.MAP)
 			bodier = new BodierMap();
@@ -189,6 +190,7 @@ public final class EntityFactory implements IEntityFactory {
 				namespaceSeparator, rawLayout);
 		bodier.setLeaf(result);
 		result.setDisplay(display);
+		result.setTogether(together);
 		return result;
 	}
 

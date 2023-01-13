@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.activitydiagram3.command;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.CommandMultilines2;
+import net.sourceforge.plantuml.command.CommandMultilines3;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
 import net.sourceforge.plantuml.command.Trim;
 import net.sourceforge.plantuml.command.regex.IRegex;
@@ -51,15 +51,18 @@ import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 import net.sourceforge.plantuml.utils.BlocLines;
 
-public class CommandActivityLong3 extends CommandMultilines2<ActivityDiagram3> {
+public class CommandActivityLong3 extends CommandMultilines3<ActivityDiagram3> {
 
 	public CommandActivityLong3() {
-		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.LEFT_ONLY);
+		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.NONE);
 	}
 
 	@Override
-	public String getPatternEnd() {
-		return "^(.*)" + CommandActivity3.endingGroup() + "$";
+	public RegexConcat getPatternEnd2() {
+		return new RegexConcat(//
+				new RegexLeaf("TEXT", "(.*)"), //
+				new RegexLeaf("END", CommandActivity3.endingGroup()), //
+				RegexLeaf.end());
 	}
 
 	private static ColorParser color() {
@@ -80,8 +83,11 @@ public class CommandActivityLong3 extends CommandMultilines2<ActivityDiagram3> {
 		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 		final Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());
 
-		final BoxStyle style = BoxStyle.fromChar(lines.getLastChar());
-		lines = lines.removeStartingAndEnding(line0.get("DATA", 0), 1);
+		final RegexResult lineLast = getPatternEnd2().matcher(lines.getLast().getString());
+		final String end = lineLast.get("END", 0);
+
+		final BoxStyle style = BoxStyle.fromString(end);
+		lines = lines.removeStartingAndEnding(line0.get("DATA", 0), end.length());
 		return diagram.addActivity(lines.toDisplay(), style, null, colors, null);
 	}
 }

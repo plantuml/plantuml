@@ -35,8 +35,6 @@
  */
 package net.sourceforge.plantuml.descdiagram.command;
 
-import net.sourceforge.plantuml.baraye.IEntity;
-import net.sourceforge.plantuml.baraye.IGroup;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -44,9 +42,6 @@ import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.cucadiagram.Code;
-import net.sourceforge.plantuml.cucadiagram.Ident;
-import net.sourceforge.plantuml.graphic.USymbols;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 import net.sourceforge.plantuml.utils.LineLocation;
 
@@ -66,17 +61,7 @@ public class CommandTogether extends SingleLineCommand2<AbstractEntityDiagram> {
 	@Override
 	protected CommandExecutionResult executeArg(AbstractEntityDiagram diagram, LineLocation location, RegexResult arg)
 			throws NoSuchColorException {
-		final String idShort = diagram.getUniqueSequence("##");
-		final Ident ident = diagram.buildLeafIdent(idShort);
-		final Code code = diagram.buildCode(idShort);
-
-		final IGroup currentPackage = diagram.getCurrentGroup();
-		final CommandExecutionResult status = diagram.gotoTogether(ident, code, currentPackage);
-		if (status.isOk() == false)
-			return status;
-		final IEntity p = diagram.getCurrentGroup();
-		p.setUSymbol(USymbols.TOGETHER);
-
-		return CommandExecutionResult.ok();
+		final CommandExecutionResult status = diagram.gotoTogether();
+		return status;
 	}
 }

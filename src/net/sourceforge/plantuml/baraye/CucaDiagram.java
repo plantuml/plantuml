@@ -116,6 +116,9 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 
 	private boolean visibilityModifierPresent;
 
+	private NamespaceStrategy lastNamespaceStrategy;
+	private Together currentTogether;
+
 	public abstract IEntity getOrCreateLeaf(Ident ident, Code code, LeafType type, USymbol symbol);
 
 	public Ident cleanIdent(Ident ident) {
@@ -206,8 +209,8 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		if (Display.isNull(display))
 			display = Display.getWithNewlines(code).withCreoleMode(CreoleMode.SIMPLE_LINE);
 
-		final ILeaf leaf = entityFactory.createLeaf(newIdent, code, display, type, getCurrentGroup(), getHides(),
-				getNamespaceSeparator());
+		final ILeaf leaf = entityFactory.createLeaf(currentTogether, newIdent, code, display, type, getCurrentGroup(),
+				getHides(), getNamespaceSeparator());
 		entityFactory.addLeaf(leaf);
 		this.lastEntity = leaf;
 		leaf.setUSymbol(symbol);
@@ -224,15 +227,6 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 
 	final public Ident buildLeafIdentSpecial2(String id) {
 		return buildFullyQualified(id);
-	}
-
-	private Ident buildLeafIdentSpecialUnused(String id) {
-//		if (namespaceSeparator != null) {
-//			if (id.contains(namespaceSeparator)) {
-		return Ident.empty().add(id, ".");
-//			}
-//		}
-//		return getLastID().add(id, namespaceSeparator);
 	}
 
 	final public Ident buildFullyQualified(String id) {
@@ -260,22 +254,19 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		return Collections.unmodifiableCollection(result);
 	}
 
-	private NamespaceStrategy lastNamespaceStrategy;
-	private Together currentTogether;
-
-	final public CommandExecutionResult gotoTogether(Ident ident, Code code, IGroup parent) {
-		IGroup result = entityFactory.createGroup(ident, code, Display.NULL, null, GroupType.TOGETHER, parent,
-				getHides(), getNamespaceSeparator());
+	final public CommandExecutionResult gotoTogether() {
 		if (currentTogether != null)
 			return CommandExecutionResult.error("Cannot nest together");
 
-		entityFactory.addGroup(result);
-		currentGroup = result;
+		this.currentTogether = new Together();
 		return CommandExecutionResult.ok();
 	}
 
 	final public CommandExecutionResult gotoGroup(Ident ident, Code code, Display display, GroupType type,
 			IGroup parent, NamespaceStrategy strategy) {
+		if (currentTogether != null)
+			return CommandExecutionResult.error("Cannot be done inside 'together'");
+
 		if (this.lastNamespaceStrategy != null && strategy != this.lastNamespaceStrategy)
 			return CommandExecutionResult.error("Cannot mix packages and namespaces");
 		this.lastNamespaceStrategy = strategy;
@@ -341,12 +332,13 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 
 		if (this.currentTogether != null) {
 			this.currentTogether = null;
-		}
-
-		if (currentGroup.getGroupType() == GroupType.TOGETHER) {
-			currentGroup = currentGroup.getParentContainer();
 			return true;
 		}
+
+//		if (currentGroup.getGroupType() == GroupType.TOGETHER) {
+//			currentGroup = currentGroup.getParentContainer();
+//			return true;
+//		}
 
 		if (stacks2.size() > 0) {
 			// Thread.dumpStack();
@@ -599,8 +591,8 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 	}
 
 	public boolean isAutarkic(IGroup g) {
-		if (g.getGroupType() == GroupType.TOGETHER)
-			return false;
+//		if (g.getGroupType() == GroupType.TOGETHER)
+//			return false;
 
 		if (g.getGroupType() == GroupType.PACKAGE)
 			return false;

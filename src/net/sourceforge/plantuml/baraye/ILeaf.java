@@ -83,6 +83,6 @@ public interface ILeaf extends IEntity {
 
 	public Together getTogether();
 
-	public void getTogether(Together together);
+	public void setTogether(Together together);
 
 }
