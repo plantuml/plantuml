@@ -134,7 +134,7 @@ public class LinkedElement {
 				new VerticalLine(ynet1, ynet1 + alpha, Collections.<Double>emptySet())
 						.drawU(ug.apply(UTranslate.dx(xLinkPos + network.magicDelta())));
 
-		drawCenter(ug, link1(), xMiddle + network.magicDelta(), ynet1 + posLink1);
+		drawCenter(ug, getTextBlockLink1(), xMiddle + network.magicDelta(), ynet1 + posLink1);
 
 		final double seven = 9.0;
 		double x = xLinkPos - (conns.size() - 2) * seven / 2;
@@ -160,7 +160,7 @@ public class LinkedElement {
 
 	}
 
-	private TextBlock link1() {
+	private TextBlock getTextBlockLink1() {
 		return conns.get(network);
 	}
 
@@ -182,8 +182,8 @@ public class LinkedElement {
 	}
 
 	public XDimension2D naturalDimension(StringBounder stringBounder) {
-		final XDimension2D dimLink1 = link1() == null ? new XDimension2D(0, 0)
-				: link1().calculateDimension(stringBounder);
+		final XDimension2D dimLink1 = getTextBlockLink1() == null ? new XDimension2D(0, 0)
+				: getTextBlockLink1().calculateDimension(stringBounder);
 		final XDimension2D dimBox = box.calculateDimension(stringBounder);
 		final XDimension2D dimLink2 = link2() == null ? new XDimension2D(0, 0)
 				: link2().calculateDimension(stringBounder);

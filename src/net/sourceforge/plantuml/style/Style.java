@@ -42,6 +42,7 @@ import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.LineBreakStrategy;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -179,7 +180,8 @@ public class Style {
 	}
 
 	public UFont getUFont() {
-		final String family = value(PName.FontName).asString();
+		final String family = StringUtils
+				.eventuallyRemoveStartingAndEndingDoubleQuote(value(PName.FontName).asString());
 		final int fontStyle = value(PName.FontStyle).asFontStyle();
 		int size = value(PName.FontSize).asInt(true);
 		if (size == -1)
