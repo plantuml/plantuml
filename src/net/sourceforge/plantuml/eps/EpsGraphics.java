@@ -297,7 +297,7 @@ public class EpsGraphics {
 				} else if (type == USegmentType.SEG_CLOSE) {
 					// Nothing
 				} else if (type == USegmentType.SEG_ARCTO) {
-					// Nothing
+					linetoNoMacro(coord[5] + x, coord[6] + y);
 				} else {
 					Log.println("unknown1 " + seg);
 				}
@@ -323,7 +323,7 @@ public class EpsGraphics {
 				} else if (type == USegmentType.SEG_CLOSE) {
 					// Nothing
 				} else if (type == USegmentType.SEG_ARCTO) {
-					// Nothing
+					linetoNoMacro(coord[5] + x, coord[6] + y);
 				} else {
 					Log.println("unknown2 " + seg);
 				}

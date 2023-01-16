@@ -46,24 +46,30 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.nwdiag.VerticalLine;
 import net.sourceforge.plantuml.nwdiag.core.NServer;
 import net.sourceforge.plantuml.nwdiag.core.Network;
+import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.utils.MathUtils;
 
-public class LinkedElement {
+public class NServerDraw {
 
 	public static final int MAGIC = 15;
 
 	private final TextBlock box;
 	private final Network network;
 	private final NServer server;
-	private final Map<Network, TextBlock> conns;
+	private final Map<Network, String> conns;
 	private final List<Network> networks;
 	private final double topMargin;
 
-	public LinkedElement(double topMargin, NServer server, TextBlock box, Map<Network, TextBlock> conns,
-			List<Network> networks) {
+	@Override
+	public String toString() {
+		return server.toString() + " " + conns;
+	}
+
+	public NServerDraw(NServer server, TextBlock box, Map<Network, String> conns, List<Network> networks,
+			double topMargin) {
 		this.topMargin = topMargin;
 		this.networks = networks;
 		this.box = box;
@@ -121,10 +127,9 @@ public class LinkedElement {
 
 		final TreeSet<Double> skip = new TreeSet<>();
 
-		for (Network n : networks) {
+		for (Network n : networks)
 			if (xstart + xMiddle > n.getXmin() && xstart + xMiddle < n.getXmax())
 				skip.add(n.getY());
-		}
 
 		if (server.printFirstLink())
 			if (network.isVisible())
@@ -134,25 +139,29 @@ public class LinkedElement {
 				new VerticalLine(ynet1, ynet1 + alpha, Collections.<Double>emptySet())
 						.drawU(ug.apply(UTranslate.dx(xLinkPos + network.magicDelta())));
 
-		drawCenter(ug, getTextBlockLink1(), xMiddle + network.magicDelta(), ynet1 + posLink1);
+		final TextBlock link = getTextBlockLink1();
+		drawCenter(ug, link, xMiddle + network.magicDelta(), ynet1 + posLink1);
 
 		final double seven = 9.0;
 		double x = xLinkPos - (conns.size() - 2) * seven / 2;
 		boolean first = true;
-		for (Entry<Network, TextBlock> ent : conns.entrySet()) {
+		for (Entry<Network, String> ent : conns.entrySet()) {
 			if (ent.getKey() == network)
 				continue;
 
 			final double ynet2 = ent.getKey().getY();
 			new VerticalLine(ynet1 + yMiddle + dimBox.getHeight() / 2, ynet2, skip)
 					.drawU(ug.apply(UTranslate.dx(x - ent.getKey().magicDelta())));
+
+			final TextBlock block = server.toTextBlock(SName.arrow, ent.getValue());
+
 			final double xtext;
 			if (first && conns.size() > 2)
-				xtext = x - ent.getValue().calculateDimension(stringBounder).getWidth() / 2;
+				xtext = x - block.calculateDimension(stringBounder).getWidth() / 2;
 			else
 				xtext = x;
 
-			drawCenter(ug, ent.getValue(), xtext - ent.getKey().magicDelta(), ynet2 - alpha / 2);
+			drawCenter(ug, block, xtext - ent.getKey().magicDelta(), ynet2 - alpha / 2);
 			x += seven;
 			first = false;
 
@@ -161,21 +170,21 @@ public class LinkedElement {
 	}
 
 	private TextBlock getTextBlockLink1() {
-		return conns.get(network);
+		return server.toTextBlock(SName.arrow, conns.get(network));
 	}
 
 	private TextBlock link2() {
 		final int i = networks.indexOf(network);
-		if (i == networks.size() - 1) 
+		if (i == networks.size() - 1)
 			return null;
-		
-		return conns.get(networks.get(i + 1));
+
+		return server.toTextBlock(SName.arrow, conns.get(networks.get(i + 1)));
 	}
 
 	private void drawCenter(UGraphic ug, TextBlock block, double x, double y) {
-		if (block == null) 
+		if (block == null)
 			return;
-		
+
 		final XDimension2D dim = block.calculateDimension(ug.getStringBounder());
 		block.drawU(ug.apply(new UTranslate(x - dim.getWidth() / 2, y - dim.getHeight() / 2)));
 

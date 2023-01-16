@@ -36,10 +36,15 @@ package net.sourceforge.plantuml.nwdiag.next;
 
 public class NwArray {
 
-	private final LinkedElement data[][];
+	private final NServerDraw data[][];
 
 	public NwArray(int lines, int cols) {
-		this.data = new LinkedElement[lines][cols];
+		this.data = new NServerDraw[lines][cols];
+	}
+
+	@Override
+	public String toString() {
+		return "lines=" + getNbLines() + " cols=" + getNbCols();
 	}
 
 	public int getNbLines() {
@@ -50,15 +55,15 @@ public class NwArray {
 		return data[0].length;
 	}
 
-	public LinkedElement get(int i, int j) {
+	public NServerDraw get(int i, int j) {
 		return data[i][j];
 	}
 
-	public LinkedElement[] getLine(int i) {
+	public NServerDraw[] getLine(int i) {
 		return data[i];
 	}
 
-	public void set(int i, int j, LinkedElement value) {
+	public void set(int i, int j, NServerDraw value) {
 		data[i][j] = value;
 	}
 
