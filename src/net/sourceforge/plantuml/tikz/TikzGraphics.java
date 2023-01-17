@@ -546,15 +546,32 @@ public class TikzGraphics {
 
 				final double newx = coord[5] + x;
 				final double newy = coord[6] + y;
+				final boolean easyCase = coord[2] == 0 && coord[3] == 0 && coord[4] == 1;
 
-//				if (newx > lastx && newy < lasty) {
-//					final int start = 180;
-//					final int end = 270;
-//					final String radius = format(coord[0]);
-//					sb.append(" arc(" + start + ":" + end + ":" + radius + "pt) ");
-//				}
-				sb.append(" -- ");
-				sb.append(couple(coord[5] + x, coord[6] + y));
+				if (easyCase && newx > lastx && newy < lasty) {
+					final int start = 180;
+					final int end = 270;
+					final String radius = format(coord[0]);
+					sb.append(" arc(" + start + ":" + end + ":" + radius + "pt) ");
+				} else if (easyCase && newx > lastx && newy > lasty) {
+					final int start = 270;
+					final int end = 360;
+					final String radius = format(coord[0]);
+					sb.append(" arc(" + start + ":" + end + ":" + radius + "pt) ");
+				} else if (easyCase && newx < lastx && newy > lasty) {
+					final int start = 0;
+					final int end = 90;
+					final String radius = format(coord[0]);
+					sb.append(" arc(" + start + ":" + end + ":" + radius + "pt) ");
+				} else if (easyCase && newx < lastx && newy < lasty) {
+					final int start = 90;
+					final int end = 180;
+					final String radius = format(coord[0]);
+					sb.append(" arc(" + start + ":" + end + ":" + radius + "pt) ");
+				} else {
+					sb.append(" -- ");
+					sb.append(couple(coord[5] + x, coord[6] + y));
+				}
 
 				lastx = newx;
 				lasty = newy;
