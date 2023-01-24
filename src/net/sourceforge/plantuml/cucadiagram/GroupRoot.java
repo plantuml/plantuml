@@ -43,7 +43,6 @@ import java.util.Map;
 import java.util.Set;
 
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.baraye.EntityFactory;
 import net.sourceforge.plantuml.baraye.IGroup;
@@ -58,6 +57,7 @@ import net.sourceforge.plantuml.svek.PackageStyle;
 import net.sourceforge.plantuml.svek.SingleStrategy;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public class GroupRoot implements IGroup {
 
@@ -158,15 +158,10 @@ public class GroupRoot implements IGroup {
 	@Override
 	public Collection<IGroup> getChildren() {
 		final List<IGroup> result = new ArrayList<>();
-		if (entityFactory.namespaceSeparator.V1972()) {
-			for (IGroup ent : entityFactory.groups())
-				if (ent.getIdent().size() == 1)
-					result.add(ent);
-		} else {
-			for (IGroup ent : entityFactory.groups())
-				if (ent.getParentContainer() == this)
-					result.add(ent);
-		}
+		for (IGroup ent : entityFactory.groups())
+			if (ent.getParentContainer() == this)
+				result.add(ent);
+
 		return Collections.unmodifiableCollection(result);
 	}
 
@@ -310,11 +305,6 @@ public class GroupRoot implements IGroup {
 
 	@Override
 	public boolean isAloneAndUnlinked() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void setThisIsTogether() {
 		throw new UnsupportedOperationException();
 	}
 

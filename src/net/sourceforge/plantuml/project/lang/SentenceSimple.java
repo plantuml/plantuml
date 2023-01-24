@@ -55,6 +55,10 @@ public abstract class SentenceSimple implements Sentence {
 		this.complementii = complement;
 	}
 
+	public String getSignature() {
+		return subjectii.getClass() + "/" + verb.getPattern() + "/" + complementii.getClass();
+	}
+
 	public final IRegex toRegex() {
 		if (complementii instanceof ComplementEmpty)
 			return new RegexConcat(//
@@ -88,10 +92,6 @@ public abstract class SentenceSimple implements Sentence {
 	}
 
 	public abstract CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement);
-
-	public final String getVerbPattern() {
-		return verb.getPattern();
-	}
 
 	public IRegex getVerbRegex() {
 		return verb;

@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.command;
 
-import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
@@ -64,6 +63,7 @@ import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandPackage extends SingleLineCommand2<AbstractEntityDiagram> {
 
@@ -90,7 +90,7 @@ public class CommandPackage extends SingleLineCommand2<AbstractEntityDiagram> {
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("TAGS2", Stereotag.pattern() + "?"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
+				UrlBuilder.OPTIONAL, //
 				RegexLeaf.spaceZeroOrMore(), //
 				color().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), new RegexLeaf("\\{"), RegexLeaf.end());
@@ -128,21 +128,20 @@ public class CommandPackage extends SingleLineCommand2<AbstractEntityDiagram> {
 
 		final Ident ident;
 		final Code code;
-		
+
 		if (CucaDiagram.QUARK) {
 			final Quark current = diagram.currentQuark();
 			code = current;
 			ident = current.child(idShort);
 		} else {
 			ident = diagram.buildLeafIdent(idShort);
-			code = diagram.V1972() ? ident : diagram.buildCode(idShort);
-			if (diagram.V1972() && override1972)
-				display = ident.getLast();
+			code = diagram.buildCode(idShort);
 		}
 		final IGroup currentPackage = diagram.getCurrentGroup();
-
-		diagram.gotoGroup(ident, code, Display.getWithNewlines(display), GroupType.PACKAGE, currentPackage,
-				NamespaceStrategy.SINGLE);
+		final CommandExecutionResult status = diagram.gotoGroup(ident, code, Display.getWithNewlines(display),
+				GroupType.PACKAGE, currentPackage, NamespaceStrategy.SINGLE);
+		if (status.isOk() == false)
+			return status;
 
 		final IEntity p = diagram.getCurrentGroup();
 

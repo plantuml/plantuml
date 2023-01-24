@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.command;
 import java.util.Arrays;
 import java.util.List;
 
-import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.WithSprite;
 import net.sourceforge.plantuml.command.note.SingleMultiFactoryCommand;
@@ -50,6 +49,8 @@ import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.sprite.Sprite;
 import net.sourceforge.plantuml.sprite.SpriteColorBuilder4096;
 import net.sourceforge.plantuml.sprite.SpriteGrayLevel;
+import net.sourceforge.plantuml.utils.BlocLines;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public final class CommandFactorySprite implements SingleMultiFactoryCommand<WithSprite> {
 

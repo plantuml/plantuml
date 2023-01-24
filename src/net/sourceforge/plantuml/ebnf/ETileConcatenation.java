@@ -52,6 +52,10 @@ public class ETileConcatenation extends ETile {
 		tiles.add(0, tile);
 	}
 
+	public void overideFirst(ETile tile) {
+		tiles.set(0, tile);
+	}
+
 	@Override
 	public void drawU(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
@@ -102,6 +106,10 @@ public class ETileConcatenation extends ETile {
 				width += marginx;
 		}
 		return width;
+	}
+
+	public ETile getFirst() {
+		return tiles.get(0);
 	}
 
 }

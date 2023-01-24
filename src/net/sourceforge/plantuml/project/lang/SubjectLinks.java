@@ -47,6 +47,10 @@ import net.sourceforge.plantuml.project.GanttDiagram;
 
 // Removed
 public class SubjectLinks implements Subject {
+	
+	private SubjectLinks() {
+	}
+
 
 	public IRegex toRegex() {
 		return new RegexLeaf("SUBJECT", "links?");
@@ -63,7 +67,7 @@ public class SubjectLinks implements Subject {
 	public class InColor extends SentenceSimple {
 
 		public InColor() {
-			super(SubjectLinks.this, Verbs.areColored(), new ComplementInColors());
+			super(SubjectLinks.this, Verbs.areColored, new ComplementInColors());
 		}
 
 		@Override

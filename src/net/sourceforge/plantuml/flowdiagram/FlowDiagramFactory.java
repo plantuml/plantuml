@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.flowdiagram;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -56,11 +55,9 @@ public class FlowDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	protected List<Command> createCommands() {
-		final List<Command> cmds = new ArrayList<>();
+	protected void initCommandsList(List<Command> cmds) {
 		cmds.add(new CommandLineSimple());
 		cmds.add(new CommandLink());
-		return cmds;
 	}
 
 }

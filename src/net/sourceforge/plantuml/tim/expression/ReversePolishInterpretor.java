@@ -40,18 +40,18 @@ import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
 
-import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 import net.sourceforge.plantuml.tim.TContext;
 import net.sourceforge.plantuml.tim.TFunction;
 import net.sourceforge.plantuml.tim.TFunctionSignature;
 import net.sourceforge.plantuml.tim.TMemory;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public class ReversePolishInterpretor {
 
 	private final TValue result;
-	private boolean trace = false;
+	private final boolean trace = false;
 
 	public ReversePolishInterpretor(TokenStack queue, Knowledge knowledge, TMemory memory, TContext context)
 			throws EaterException, EaterExceptionLocated {

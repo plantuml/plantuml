@@ -84,6 +84,12 @@ public final class PlayerRobustConcise extends Player {
 	}
 
 	@Override
+	public final void createConstraint(TimeTick tick1, TimeTick tick2, String message, ArrowConfiguration config) {
+		final double margin = type == TimingStyle.ROBUST ? 2.5 : 1;
+		this.constraints.add(new TimeConstraint(margin, tick1, tick2, message, skinParam, config));
+	}
+
+	@Override
 	protected StyleSignature getStyleSignature() {
 		if (type == TimingStyle.CONCISE)
 			return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, SName.concise)
@@ -203,11 +209,6 @@ public final class PlayerRobustConcise extends Player {
 
 		final UTranslate translation = getTranslateForTimeDrawing(stringBounder);
 		return point.translated(translation);
-	}
-
-	@Override
-	public final void createConstraint(TimeTick tick1, TimeTick tick2, String message, ArrowConfiguration config) {
-		this.constraints.add(new TimeConstraint(tick1, tick2, message, skinParam, config));
 	}
 
 	public final void addNote(TimeTick now, Display note, Position position) {

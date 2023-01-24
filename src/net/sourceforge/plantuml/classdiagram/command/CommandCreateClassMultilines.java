@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.classdiagram.command;
 
 import net.sourceforge.plantuml.FontParam;
-import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
@@ -47,7 +46,6 @@ import net.sourceforge.plantuml.baraye.IEntity;
 import net.sourceforge.plantuml.baraye.ILeaf;
 import net.sourceforge.plantuml.baraye.Quark;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
-import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
@@ -74,6 +72,8 @@ import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
+import net.sourceforge.plantuml.utils.BlocLines;
+import net.sourceforge.plantuml.utils.StringLocated;
 
 public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagram> {
 
@@ -124,7 +124,7 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("TAGS2", Stereotag.pattern() + "?"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
+				UrlBuilder.OPTIONAL, //
 				RegexLeaf.spaceZeroOrMore(), //
 				color().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -217,7 +217,7 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 			for (String s : codes.split(",")) {
 				final String idShort = StringUtils.trin(s);
 				final Ident ident = diagram.buildLeafIdent(idShort);
-				final Code other = diagram.V1972() ? ident : diagram.buildCode(idShort);
+				final Code other = diagram.buildCode(idShort);
 				final IEntity cl2 = diagram.getOrCreateLeaf(ident, other, type2, null);
 				LinkType typeLink = new LinkType(LinkDecor.NONE, LinkDecor.EXTENDS);
 				if (type2 == LeafType.INTERFACE && entity.getLeafType() != LeafType.INTERFACE)
@@ -244,7 +244,7 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 		final String idShort = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(line0.getLazzy("CODE", 0),
 				"\"([:");
 		final Ident ident = diagram.buildLeafIdent(idShort);
-		final Code code = diagram.V1972() ? ident : diagram.buildCode(idShort);
+		final Code code = diagram.buildCode(idShort);
 		final String display = line0.getLazzy("DISPLAY", 0);
 		final String genericOption = line0.getLazzy("DISPLAY", 1);
 		final String generic = genericOption != null ? genericOption : line0.get("GENERIC", 0);
@@ -272,17 +272,6 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 			if (result == null)
 				result = diagram.createLeaf(idNewLong, idNewLong, Display.getWithNewlines(display), type, null);
 			diagram.setLastEntity(result);
-		} else if (diagram.V1972()) {
-			result = diagram.getLeafSmart(ident);
-			if (result != null) {
-				// result = diagram.getOrCreateLeaf(ident, code, null, null);
-				diagram.setLastEntity(result);
-				if (result.muteToType(type, null) == false)
-					return null;
-
-			} else {
-				result = diagram.createLeaf(ident, code, Display.getWithNewlines(display), type, null);
-			}
 		} else {
 			if (diagram.leafExist(code)) {
 				result = diagram.getOrCreateLeaf(ident, code, null, null);
@@ -299,6 +288,7 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 			result.setStereotype(Stereotype.build(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),
 					diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),
 					diagram.getSkinParam().getIHtmlColorSet()));
+			result.setStereostyle(stereotype);
 		}
 
 		final String urlString = line0.get("URL", 0);

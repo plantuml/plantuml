@@ -48,7 +48,11 @@ Test diagram MUST be put between triple quotes
 
 """
 @startuml
-Class07 "itsClass07\n1" --> "itsClass08\n*" Class08: has
+package "net.plantuml" {
+package "net.plantuml.utils" {
+class Class01
+}
+}
 @enduml
 """
 
@@ -59,21 +63,7 @@ Expected result MUST be put between triple brackets
 <key attr.name="label" attr.type="string" for="node" id="d0"/>
 <key attr.name="type" attr.type="string" for="node" id="d1"/>
 <key attr.name="entityType" attr.type="string" for="node" id="d2"/>
-<key attr.name="style" attr.type="string" for="node" id="d3"/>
-<key attr.name="sourceDecor" attr.type="string" for="node" id="d4"/>
-<key attr.name="targetDecor" attr.type="string" for="node" id="d5"/>
-<key attr.name="middleDecor" attr.type="string" for="node" id="d6"/>
-<key attr.name="sourceLabel" attr.type="string" for="node" id="d7"/>
-<key attr.name="targetLabel" attr.type="string" for="node" id="d8"/>
-<key attr.name="direction" attr.type="string" for="node" id="d9"/>
-<key attr.name="static" attr.type="boolean" for="node" id="d10"/>
-<key attr.name="abstract" attr.type="boolean" for="node" id="d11"/>
-<key attr.name="visibility" attr.type="string" for="node" id="d12"/>
 <key attr.name="edgeType" attr.type="string" for="edge" id="d13"/>
-<key attr.name="title" attr.type="string" for="node" id="d14"/>
-<key attr.name="header" attr.type="string" for="node" id="d15"/>
-<key attr.name="footer" attr.type="string" for="node" id="d16"/>
-<key attr.name="caption" attr.type="string" for="node" id="d17"/>
 <key attr.name="diagramType" attr.type="string" for="node" id="d18"/>
 <key attr.name="sourceFile" attr.type="string" for="node" id="d19"/>
 <key attr.name="pumlId" attr.type="string" for="node" id="d20"/>
@@ -89,36 +79,31 @@ Expected result MUST be put between triple brackets
 <data key="d19">./nonreg/graphml/classdiagram/GML0037_Test.puml</data>
 </node>
 <node id="2">
-<data key="d1">Leaf</data>
-<data key="d2">CLASS</data>
-<data key="d0">Class07</data>
+<data key="d1">Group</data>
+<data key="d2">PACKAGE</data>
+<data key="d0">net.plantuml</data>
 <data key="d20">cl0002</data>
 <data key="d21">./nonreg/graphml/classdiagram/GML0037_Test/0/cl0002</data>
 </node>
 <node id="3">
-<data key="d1">Leaf</data>
-<data key="d2">CLASS</data>
-<data key="d0">Class08</data>
+<data key="d1">Group</data>
+<data key="d2">PACKAGE</data>
+<data key="d0">net.plantuml.utils</data>
 <data key="d20">cl0003</data>
 <data key="d21">./nonreg/graphml/classdiagram/GML0037_Test/0/cl0003</data>
 </node>
 <node id="4">
-<data key="d1">Link</data>
-<data key="d2">LINK</data>
-<data key="d0">has</data>
-<data key="d20">cl0002_LNK4_cl0003</data>
-<data key="d21">./nonreg/graphml/classdiagram/GML0037_Test/0/cl0002_LNK4_cl0003</data>
-<data key="d3">NORMAL</data>
-<data key="d4">NONE</data>
-<data key="d5">ARROW</data>
-<data key="d7">{["itsClass07","1"]}</data>
-<data key="d8">{["itsClass08","*"]}</data>
+<data key="d1">Leaf</data>
+<data key="d2">CLASS</data>
+<data key="d0">Class01</data>
+<data key="d20">cl0004</data>
+<data key="d21">./nonreg/graphml/classdiagram/GML0037_Test/0/cl0004</data>
 </node>
-<edge id="1" source="2" target="4">
-<data key="d13">IS_SOURCE</data>
+<edge id="1" source="3" target="4">
+<data key="d13">HIERARCHY</data>
 </edge>
-<edge id="2" source="3" target="4">
-<data key="d13">IS_TARGET</data>
+<edge id="2" source="2" target="3">
+<data key="d13">HIERARCHY</data>
 </edge>
 <edge id="3" source="1" target="2">
 <data key="d13">DIAGRAM_CONTAINS</data>
@@ -138,7 +123,7 @@ public class GML0037_Test extends GraphmlTest {
 
 	@Test
 	void testSimple() throws IOException, InterruptedException {
-		checkXmlAndDescription("(2 entities)");
+		checkXmlAndDescription("(1 entities)");
 	}
 
 }

@@ -55,10 +55,6 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 final public class SheetBlock2 extends AbstractTextBlock implements TextBlock, Atom, WithPorts {
 
-	public List<Atom> splitInTwo(StringBounder stringBounder, double width) {
-		throw new UnsupportedOperationException(getClass().toString());
-	}
-
 	private final SheetBlock1 block;
 	private final UStroke defaultStroke;
 	private final Stencil stencil;
@@ -120,6 +116,11 @@ final public class SheetBlock2 extends AbstractTextBlock implements TextBlock, A
 	@Override
 	public Ports getPorts(StringBounder stringBounder) {
 		return new Ports();
+	}
+
+	@Override
+	public List<Neutron> getNeutrons() {
+		throw new UnsupportedOperationException();
 	}
 
 }

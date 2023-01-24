@@ -40,9 +40,9 @@ import java.io.PrintWriter;
 import java.util.List;
 import java.util.Locale;
 
-import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.utils.Log;
 
 public class SvekUtils {
 

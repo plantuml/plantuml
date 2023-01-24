@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.ugraphic.color.HColor;
 public class SentenceTaskStartsWithColor extends SentenceSimple {
 
 	public SentenceTaskStartsWithColor() {
-		super(new SubjectTask(), Verbs.starts2(),
+		super(SubjectTask.ME, Verbs.starts2,
 				new PairOfSomething(new ComplementBeforeOrAfterOrAtTaskStartOrEnd(), new ComplementWithColorLink()));
 	}
 

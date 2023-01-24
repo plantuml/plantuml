@@ -128,7 +128,7 @@ public class PlayerBinary extends Player {
 
 	@Override
 	public void createConstraint(TimeTick tick1, TimeTick tick2, String message, ArrowConfiguration config) {
-		this.constraints.add(new TimeConstraint(tick1, tick2, message, skinParam, config));
+		this.constraints.add(new TimeConstraint(2.5, tick1, tick2, message, skinParam, config));
 	}
 
 	private final double ymargin = 8;

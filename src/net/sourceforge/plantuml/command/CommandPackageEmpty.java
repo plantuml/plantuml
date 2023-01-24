@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.command;
 
-import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.baraye.IEntity;
 import net.sourceforge.plantuml.baraye.IGroup;
@@ -52,6 +51,7 @@ import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.NamespaceStrategy;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandPackageEmpty extends SingleLineCommand2<AbstractEntityDiagram> {
 
@@ -99,15 +99,16 @@ public class CommandPackageEmpty extends SingleLineCommand2<AbstractEntityDiagra
 		}
 		final IGroup currentPackage = diagram.getCurrentGroup();
 		final Ident ident = diagram.buildLeafIdent(idShort);
-		final Code code = diagram.V1972() ? ident : diagram.buildCode(idShort);
-		diagram.gotoGroup(ident, code, Display.getWithNewlines(display), GroupType.PACKAGE, currentPackage,
-				NamespaceStrategy.SINGLE);
+		final Code code = diagram.buildCode(idShort);
+		final CommandExecutionResult status = diagram.gotoGroup(ident, code, Display.getWithNewlines(display),
+				GroupType.PACKAGE, currentPackage, NamespaceStrategy.SINGLE);
+		if (status.isOk() == false)
+			return status;
 		final IEntity p = diagram.getCurrentGroup();
 		final String color = arg.get("COLOR", 0);
-		if (color != null) {
-			p.setSpecificColorTOBEREMOVED(ColorType.BACK,
-					diagram.getSkinParam().getIHtmlColorSet().getColor(color));
-		}
+		if (color != null)
+			p.setSpecificColorTOBEREMOVED(ColorType.BACK, diagram.getSkinParam().getIHtmlColorSet().getColor(color));
+
 		diagram.endGroup();
 		return CommandExecutionResult.ok();
 	}

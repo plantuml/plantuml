@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.project.core.Task;
 public class SentenceLasts extends SentenceSimple {
 
 	public SentenceLasts() {
-		super(new SubjectTask(), Verbs.lasts(), new ComplementSeveralDays());
+		super(SubjectTask.ME, Verbs.lasts, new ComplementSeveralDays());
 	}
 
 	@Override

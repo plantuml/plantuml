@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.activitydiagram;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -64,8 +63,7 @@ public class ActivityDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	protected List<Command> createCommands() {
-		final List<Command> cmds = new ArrayList<>();
+	protected void initCommandsList(List<Command> cmds) {
 		cmds.add(new CommandFootboxIgnored());
 		CommonCommands.addCommonCommands1(cmds);
 		cmds.add(new CommandRankDir());
@@ -89,8 +87,6 @@ public class ActivityDiagramFactory extends PSystemCommandFactory {
 		cmds.add(new CommandLinkActivity());
 		cmds.add(new CommandHideShow2());
 		// addCommand(new CommandInnerConcurrent(system));
-
-		return cmds;
 
 	}
 

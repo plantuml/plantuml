@@ -47,13 +47,13 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 // Created from Luc Trudeau original work
 public enum BoxStyle {
-	PLAIN('\0', 0) {
+	PLAIN(null, '\0', 0) {
 		@Override
 		protected Shadowable getShape(double width, double height, double roundCorner) {
 			return new URectangle(width, height).rounded(roundCorner);
 		}
 	},
-	SDL_INPUT('<', 10) {
+	SDL_INPUT("input", '<', 10) {
 		@Override
 		protected Shadowable getShape(double width, double height, double roundCorner) {
 			final UPolygon result = new UPolygon();
@@ -65,7 +65,7 @@ public enum BoxStyle {
 			return result;
 		}
 	},
-	SDL_OUTPUT('>', 10) {
+	SDL_OUTPUT("output", '>', 10) {
 		@Override
 		protected Shadowable getShape(double width, double height, double roundCorner) {
 			final UPolygon result = new UPolygon();
@@ -77,7 +77,7 @@ public enum BoxStyle {
 			return result;
 		}
 	},
-	SDL_PROCEDURE('|', 0) {
+	SDL_PROCEDURE("procedure", '|', 0) {
 		@Override
 		protected void drawInternal(UGraphic ug, double width, double height, double shadowing, double roundCorner) {
 			final URectangle rect = new URectangle(width, height);
@@ -88,7 +88,7 @@ public enum BoxStyle {
 			ug.apply(UTranslate.dx(width - PADDING)).draw(vline);
 		}
 	},
-	SDL_SAVE('\\', 0) {
+	SDL_SAVE("save", '\\', 0) {
 		@Override
 		protected Shadowable getShape(double width, double height, double roundCorner) {
 			final UPolygon result = new UPolygon();
@@ -99,7 +99,7 @@ public enum BoxStyle {
 			return result;
 		}
 	},
-	SDL_ANTISAVE('/', 0) {
+	SDL_ANTISAVE("load", '/', 0) {
 		@Override
 		protected Shadowable getShape(double width, double height, double roundCorner) {
 			final UPolygon result = new UPolygon();
@@ -110,7 +110,7 @@ public enum BoxStyle {
 			return result;
 		}
 	},
-	SDL_CONTINUOUS('}', 0) {
+	SDL_CONTINUOUS("continuous", '}', 0) {
 		@Override
 		protected Shadowable getShape(double width, double height, double roundCorner) {
 			final UPath result = new UPath();
@@ -132,13 +132,14 @@ public enum BoxStyle {
 			return result;
 		}
 	},
-	SDL_TASK(']', 0) {
+	SDL_TASK("task", ']', 0) {
 		@Override
 		protected Shadowable getShape(double width, double height, double roundCorner) {
 			return new URectangle(width, height);
 		}
 	};
 
+	private final String stereotype;
 	private final char style;
 	private final double shield;
 
@@ -146,17 +147,24 @@ public enum BoxStyle {
 	private static double DELTA_CONTINUOUS = 5.0;
 	private static int PADDING = 5;
 
-	private BoxStyle(char style, double shield) {
+	private BoxStyle(String stereotype, char style, double shield) {
+		this.stereotype = stereotype;
 		this.style = style;
 		this.shield = shield;
 	}
 
-	public static BoxStyle fromChar(char style) {
-		for (BoxStyle bs : BoxStyle.values()) {
-			if (bs.style == style) {
+	public static BoxStyle fromString(String style) {
+		if (style.length() == 1)
+			for (BoxStyle bs : BoxStyle.values())
+				if (bs.style == style.charAt(0))
+					return bs;
+
+		style = style.replaceAll("\\W", "");
+
+		for (BoxStyle bs : BoxStyle.values())
+			if (style.equalsIgnoreCase(bs.stereotype))
 				return bs;
-			}
-		}
+
 		return PLAIN;
 	}
 

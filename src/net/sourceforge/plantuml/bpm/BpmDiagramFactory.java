@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.bpm;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -52,8 +51,7 @@ public class BpmDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	protected List<Command> createCommands() {
-		final List<Command> result = new ArrayList<>();
+	protected void initCommandsList(List<Command> result) {
 		result.add(new CommandDockedEvent());
 		result.add(new CommandMerge());
 		result.add(new CommandResume());
@@ -61,7 +59,6 @@ public class BpmDiagramFactory extends PSystemCommandFactory {
 		result.add(new CommandNewBranch());
 		result.add(new CommandElseBranch());
 		result.add(new CommandEndBranch());
-		return result;
 	}
 
 	@Override

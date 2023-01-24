@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.command.note;
 
 import net.sourceforge.plantuml.ColorParam;
-import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
@@ -44,7 +43,6 @@ import net.sourceforge.plantuml.UrlMode;
 import net.sourceforge.plantuml.baraye.IEntity;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.classdiagram.command.CommandCreateClassMultilines;
-import net.sourceforge.plantuml.command.BlocLines;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
@@ -70,6 +68,8 @@ import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
+import net.sourceforge.plantuml.utils.BlocLines;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryCommand<AbstractEntityDiagram> {
 
@@ -94,13 +94,13 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("TAGS1", Stereotag.pattern() + "?"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("STEREO", "(\\<{2}.*\\>{2})?"), //
+				new RegexLeaf("STEREO", "(\\<\\<.*\\>\\>)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("TAGS2", Stereotag.pattern() + "?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				color().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
+				UrlBuilder.OPTIONAL, //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(":"), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -129,13 +129,13 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 					RegexLeaf.spaceZeroOrMore(), //
 					new RegexLeaf("TAGS1", Stereotag.pattern() + "?"), //
 					RegexLeaf.spaceZeroOrMore(), //
-					new RegexLeaf("STEREO", "(\\<{2}.*\\>{2})?"), //
+					new RegexLeaf("STEREO", "(\\<\\<.*\\>\\>)?"), //
 					RegexLeaf.spaceZeroOrMore(), //
 					new RegexLeaf("TAGS2", Stereotag.pattern() + "?"), //
 					RegexLeaf.spaceZeroOrMore(), //
 					color().getRegex(), //
 					RegexLeaf.spaceZeroOrMore(), //
-					new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
+					UrlBuilder.OPTIONAL, //
 					RegexLeaf.spaceZeroOrMore(), //
 					new RegexLeaf("\\{"), //
 					RegexLeaf.end() //
@@ -155,13 +155,13 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("TAGS1", Stereotag.pattern() + "?"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("STEREO", "(\\<{2}.*\\>{2})?"), //
+				new RegexLeaf("STEREO", "(\\<\\<.*\\>\\>)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("TAGS2", Stereotag.pattern() + "?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				color().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
+				UrlBuilder.OPTIONAL, //
 				RegexLeaf.end() //
 		);
 	}
@@ -184,9 +184,9 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 
 			@Override
 			public String getPatternEnd() {
-				if (withBracket) {
+				if (withBracket)
 					return "^(\\})$";
-				}
+
 				return "^[%s]*(end[%s]?note)$";
 			}
 
@@ -223,15 +223,12 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 
 		} else {
 			final Ident ident = diagram.buildLeafIdent(idShort);
-			final Code code = diagram.V1972() ? ident : diagram.buildCode(idShort);
-			if (diagram.isGroup(code)) {
-				cl1 = diagram.V1972() ? diagram.getGroupStrict(ident) : diagram.getGroup(code);
-			} else {
-				if (diagram.V1972() && diagram.leafExistSmart(diagram.cleanIdent(ident)))
-					cl1 = diagram.getLeafSmart(diagram.cleanIdent(ident));
-				else
-					cl1 = diagram.getOrCreateLeaf(ident, code, null, null);
-			}
+			final Code code = diagram.buildCode(idShort);
+			if (diagram.isGroup(code))
+				cl1 = diagram.getGroup(code);
+			else
+				cl1 = diagram.getOrCreateLeaf(ident, code, null, null);
+
 		}
 
 		final Position position = Position.valueOf(StringUtils.goUpperCase(pos))
@@ -253,11 +250,8 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 
 		final String tmp = diagram.getUniqueSequence("GMN");
 		final Ident idNewLong = diagram.buildLeafIdent(tmp);
-		final IEntity note;
-		if (diagram.V1972())
-			note = diagram.createLeaf(idNewLong, idNewLong, strings.toDisplay(), LeafType.NOTE, null);
-		else
-			note = diagram.createLeaf(idNewLong, diagram.buildCode(tmp), strings.toDisplay(), LeafType.NOTE, null);
+		final IEntity note = diagram.createLeaf(idNewLong, diagram.buildCode(tmp), strings.toDisplay(), LeafType.NOTE,
+				null);
 
 		if (stereotypeString != null)
 			note.setStereotype(stereotype);

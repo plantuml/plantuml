@@ -35,8 +35,8 @@
  */
 package net.sourceforge.plantuml.cucadiagram;
 
-import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.svek.GuideLine;
+import net.sourceforge.plantuml.utils.Direction;
 
 public enum LinkArrow {
 

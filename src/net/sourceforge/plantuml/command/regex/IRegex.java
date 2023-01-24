@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.command.regex;
 import java.util.Iterator;
 import java.util.Map;
 
-import net.sourceforge.plantuml.StringLocated;
+import net.sourceforge.plantuml.utils.StringLocated;
 
 public interface IRegex {
 

@@ -37,8 +37,11 @@ package net.sourceforge.plantuml.wbs;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
-import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.UmlDiagramType;
@@ -52,17 +55,32 @@ import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
 import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.graphic.color.ColorType;
+import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.mindmap.IdeaShape;
 import net.sourceforge.plantuml.style.NoStyleAvailableException;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
+import net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
 import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.utils.Direction;
 
 public class WBSDiagram extends UmlDiagram {
+
+	private WElement root;
+	private WElement last;
+	private String first;
+	private final Map<String, WElement> codes = new LinkedHashMap<>();
+	private final List<WBSLink> links = new ArrayList<>();
 
 	public DiagramDescription getDescription() {
 		return new DiagramDescription("Work Breakdown Structure");
@@ -106,18 +124,30 @@ public class WBSDiagram extends UmlDiagram {
 	}
 
 	private void drawMe(UGraphic ug) {
-		getDrawingElement().drawU(ug);
+		UTranslate translate = null;
+		if (ug instanceof AbstractCommonUGraphic)
+			translate = ((AbstractCommonUGraphic) ug).getTranslate();
+
+		final Fork fork = getDrawingElement();
+		fork.drawU(ug);
+
+		if (translate == null)
+			return;
+
+		ug = ug.apply(translate.reverse());
+		for (WBSLink link : links)
+			link.drawU(ug);
 
 	}
 
-	private TextBlock getDrawingElement() {
+	private Fork getDrawingElement() {
 		return new Fork(getSkinParam(), root);
 	}
 
 	public final static Pattern2 patternStereotype = MyPattern
 			.cmpile("^\\s*(.*?)(?:\\s*\\<\\<\\s*(.*)\\s*\\>\\>)\\s*$");
 
-	public CommandExecutionResult addIdea(HColor backColor, int level, String label, Direction direction,
+	public CommandExecutionResult addIdea(String code, HColor backColor, int level, String label, Direction direction,
 			IdeaShape shape) {
 		final Matcher2 m = patternStereotype.matcher(label);
 		String stereotype = null;
@@ -126,10 +156,10 @@ public class WBSDiagram extends UmlDiagram {
 			stereotype = m.group(2);
 		}
 		final Display display = Display.getWithNewlines(label);
-		return addIdea(backColor, level, display, stereotype, direction, shape);
+		return addIdea(code, backColor, level, display, stereotype, direction, shape);
 	}
 
-	public CommandExecutionResult addIdea(HColor backColor, int level, Display display, String stereotype,
+	public CommandExecutionResult addIdea(String code, HColor backColor, int level, Display display, String stereotype,
 			Direction direction, IdeaShape shape) {
 		try {
 			if (level == 0) {
@@ -139,16 +169,12 @@ public class WBSDiagram extends UmlDiagram {
 				initRoot(backColor, display, stereotype, shape);
 				return CommandExecutionResult.ok();
 			}
-			return add(backColor, level, display, stereotype, direction, shape);
+			return add(code, backColor, level, display, stereotype, direction, shape);
 		} catch (NoStyleAvailableException e) {
 			// Logme.error(e);
 			return CommandExecutionResult.error("General failure: no style available.");
 		}
 	}
-
-	private WElement root;
-	private WElement last;
-	private String first;
 
 	private void initRoot(HColor backColor, Display display, String stereotype, IdeaShape shape) {
 		root = new WElement(backColor, display, stereotype, getSkinParam().getCurrentStyleBuilder(), shape);
@@ -185,13 +211,15 @@ public class WBSDiagram extends UmlDiagram {
 		throw new UnsupportedOperationException("type=<" + type + ">[" + first + "]");
 	}
 
-	private CommandExecutionResult add(HColor backColor, int level, Display display, String stereotype,
+	private CommandExecutionResult add(String code, HColor backColor, int level, Display display, String stereotype,
 			Direction direction, IdeaShape shape) {
 		try {
 			if (level == last.getLevel() + 1) {
 				final WElement newIdea = last.createElement(backColor, level, display, stereotype, direction, shape,
 						getSkinParam().getCurrentStyleBuilder());
 				last = newIdea;
+				if (code != null)
+					codes.put(code, newIdea);
 				return CommandExecutionResult.ok();
 			}
 			if (level <= last.getLevel()) {
@@ -199,6 +227,8 @@ public class WBSDiagram extends UmlDiagram {
 				final WElement newIdea = getParentOfLast(diff).createElement(backColor, level, display, stereotype,
 						direction, shape, getSkinParam().getCurrentStyleBuilder());
 				last = newIdea;
+				if (code != null)
+					codes.put(code, newIdea);
 				return CommandExecutionResult.ok();
 			}
 			return CommandExecutionResult.error("Bad tree structure");
@@ -206,6 +236,27 @@ public class WBSDiagram extends UmlDiagram {
 			// Logme.error(e);
 			return CommandExecutionResult.error("General failure: no style available.");
 		}
+	}
+
+	public CommandExecutionResult link(String code1, String code2, Colors colors, Stereotype stereotype) {
+		final WElement element1 = codes.get(code1);
+		if (element1 == null)
+			return CommandExecutionResult.error("No such node " + code1);
+		final WElement element2 = codes.get(code2);
+		if (element2 == null)
+			return CommandExecutionResult.error("No such node " + code2);
+		HColor color = colors.getColor(ColorType.LINE);
+
+		if (color == null) {
+			final Style style = StyleSignatureBasic.of(SName.root, SName.element, SName.wbsDiagram, SName.arrow)
+					.withTOBECHANGED(stereotype).getMergedStyle(getCurrentStyleBuilder());
+
+			color = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
+		}
+
+		links.add(new WBSLink(element1, element2, color));
+
+		return CommandExecutionResult.ok();
 	}
 
 }

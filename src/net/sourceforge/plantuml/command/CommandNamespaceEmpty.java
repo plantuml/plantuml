@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.command;
 
-import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlMode;
@@ -55,6 +54,7 @@ import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandNamespaceEmpty extends SingleLineCommand2<ClassDiagram> {
 
@@ -66,11 +66,11 @@ public class CommandNamespaceEmpty extends SingleLineCommand2<ClassDiagram> {
 		return RegexConcat.build(CommandNamespaceEmpty.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("namespace"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("NAME", "([%pLN_][-%pLN_.:\\\\]*)"), //
+				new RegexLeaf("NAME", CommandNamespace.NAMESPACE_REGEX), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("STEREOTYPE", "(\\<\\<.*\\>\\>)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
+				UrlBuilder.OPTIONAL, //
 				RegexLeaf.spaceZeroOrMore(), //
 				ColorParser.exp1(), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -85,15 +85,17 @@ public class CommandNamespaceEmpty extends SingleLineCommand2<ClassDiagram> {
 			throws NoSuchColorException {
 		final String idShort = arg.get("NAME", 0);
 		final Ident idNewLong = diagram.buildLeafIdent(idShort);
-		final Code code = diagram.V1972() ? idNewLong : diagram.buildCode(idShort);
+		final Code code = diagram.buildCode(idShort);
 		final IGroup currentPackage = diagram.getCurrentGroup();
 		final Display display = Display.getWithNewlines(code);
-		diagram.gotoGroup(idNewLong, code, display, GroupType.PACKAGE, currentPackage, NamespaceStrategy.MULTIPLE);
+		final CommandExecutionResult status = diagram.gotoGroup(idNewLong, code, display, GroupType.PACKAGE,
+				currentPackage, NamespaceStrategy.MULTIPLE);
+		if (status.isOk() == false)
+			return status;
 		final IEntity p = diagram.getCurrentGroup();
 		final String stereotype = arg.get("STEREOTYPE", 0);
-		if (stereotype != null) {
+		if (stereotype != null)
 			p.setStereotype(Stereotype.build(stereotype));
-		}
 
 		final String urlString = arg.get("URL", 0);
 		if (urlString != null) {
@@ -103,10 +105,9 @@ public class CommandNamespaceEmpty extends SingleLineCommand2<ClassDiagram> {
 		}
 
 		final String color = arg.get("COLOR", 0);
-		if (color != null) {
-			p.setSpecificColorTOBEREMOVED(ColorType.BACK,
-					diagram.getSkinParam().getIHtmlColorSet().getColor(color));
-		}
+		if (color != null)
+			p.setSpecificColorTOBEREMOVED(ColorType.BACK, diagram.getSkinParam().getIHtmlColorSet().getColor(color));
+
 		diagram.endGroup();
 		return CommandExecutionResult.ok();
 	}

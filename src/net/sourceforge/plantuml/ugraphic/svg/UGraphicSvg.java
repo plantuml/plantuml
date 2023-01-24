@@ -63,7 +63,6 @@ import net.sourceforge.plantuml.ugraphic.URectangle;
 import net.sourceforge.plantuml.ugraphic.UText;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorGradient;
 
 public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipContainer {
 
@@ -147,7 +146,7 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 	public void writeToStream(OutputStream os, String metadata, int dpi) throws IOException {
 		try {
 			if (metadata != null)
-				getGraphicObject().addComment(metadata);
+				getGraphicObject().addCommentMetadata(metadata);
 
 			if (interactive) {
 				// For performance reasons and also because we want the entire graph DOM to be

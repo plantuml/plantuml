@@ -49,9 +49,9 @@ public class ReadFilterAnd implements ReadFilter {
 	}
 
 	public ReadLine applyFilter(ReadLine current) {
-		for (ReadFilter f : all) {
+		for (ReadFilter f : all)
 			current = f.applyFilter(current);
-		}
+
 		return current;
 	}
 

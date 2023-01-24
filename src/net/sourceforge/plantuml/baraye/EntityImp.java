@@ -48,11 +48,9 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.command.Position;
@@ -70,6 +68,7 @@ import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.Stereostyles;
 import net.sourceforge.plantuml.cucadiagram.Stereotag;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
+import net.sourceforge.plantuml.cucadiagram.Together;
 import net.sourceforge.plantuml.cucadiagram.dot.Neighborhood;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -89,6 +88,8 @@ import net.sourceforge.plantuml.svek.SingleStrategy;
 import net.sourceforge.plantuml.svek.image.EntityImageStateCommon;
 import net.sourceforge.plantuml.ugraphic.UFont;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.utils.Direction;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 final public class EntityImp implements ILeaf, IGroup {
 
@@ -131,6 +132,8 @@ final public class EntityImp implements ILeaf, IGroup {
 	private final List<CucaNote> notesTop = new ArrayList<>();
 	private final List<CucaNote> notesBottom = new ArrayList<>();
 
+	private Together together;
+
 	@Override
 	public void addNote(Display note, Position position, Colors colors) {
 		if (position == Position.TOP)
@@ -161,9 +164,6 @@ final public class EntityImp implements ILeaf, IGroup {
 			String namespaceSeparator, int rawLayout) {
 		this.ident = Objects.requireNonNull(ident);
 		this.uid = StringUtils.getUid("cl", entityFactory.getDiagram().getUniqueSequence());
-		if (entityFactory.namespaceSeparator.V1972())
-			code = ident;
-
 		this.code = Objects.requireNonNull(code);
 		this.entityFactory = entityFactory;
 		this.bodier = bodier;
@@ -171,8 +171,8 @@ final public class EntityImp implements ILeaf, IGroup {
 		this.rawLayout = rawLayout;
 	}
 
-	public EntityImp(Ident ident, Code code, EntityFactory entityFactory, Bodier bodier,
-			IGroup parentContainer, LeafType leafType, String namespaceSeparator, int rawLayout) {
+	public EntityImp(Ident ident, Code code, EntityFactory entityFactory, Bodier bodier, IGroup parentContainer,
+			LeafType leafType, String namespaceSeparator, int rawLayout) {
 		this(Objects.requireNonNull(ident), entityFactory, code, bodier, parentContainer, namespaceSeparator,
 				rawLayout);
 		// System.err.println("ID for leaf=" + code + " " + ident);
@@ -238,9 +238,6 @@ final public class EntityImp implements ILeaf, IGroup {
 	}
 
 	public Display getDisplay() {
-		if (intricated)
-			return entityFactory.getIntricatedDisplay(ident);
-
 		return display;
 	}
 
@@ -271,8 +268,6 @@ final public class EntityImp implements ILeaf, IGroup {
 		// return super.toString() + code + " " + display + "(" + leafType + ")[" +
 		// groupType + "] " + xposition + " "
 		// + getUid();
-		if (entityFactory.namespaceSeparator.V1972())
-			return getUid() + " " + ident + " " + display + "(" + leafType + ")[" + groupType + "]";
 		return "EntityImpl " + code + ident + " " + display + "(" + leafType + ")[" + groupType + "] " + getUid();
 	}
 
@@ -416,10 +411,6 @@ final public class EntityImp implements ILeaf, IGroup {
 	}
 
 	public void moveEntitiesTo(IGroup dest) {
-		if (entityFactory.namespaceSeparator.V1972()) {
-			moveEntitiesTo1972(dest);
-			return;
-		}
 		checkGroup();
 		if (dest.isGroup() == false)
 			throw new UnsupportedOperationException();
@@ -552,18 +543,10 @@ final public class EntityImp implements ILeaf, IGroup {
 			if (EntityUtils.isPureInnerLink12(this, link))
 				entityFactory.removeLink(link);
 
-		if (entityFactory.namespaceSeparator.V1972()) {
-			entityFactory.removeGroup(getIdent());
-			for (ILeaf ent : new ArrayList<>(entityFactory.leafs()))
-				if (this != ent && getIdent().equals(ent.getIdent().parent()))
-					entityFactory.removeLeaf(ent.getIdent());
-
-		} else {
-			entityFactory.removeGroup(getCodeGetName());
-			for (ILeaf ent : new ArrayList<>(entityFactory.leafs()))
-				if (this != ent && this == ent.getParentContainer())
-					entityFactory.removeLeaf(ent.getCodeGetName());
-		}
+		entityFactory.removeGroup(getCodeGetName());
+		for (ILeaf ent : new ArrayList<>(entityFactory.leafs()))
+			if (this != ent && this == ent.getParentContainer())
+				entityFactory.removeLeaf(ent.getCodeGetName());
 
 		entityFactory.addLeaf(this);
 		this.groupType = null;
@@ -760,13 +743,6 @@ final public class EntityImp implements ILeaf, IGroup {
 		return legend;
 	}
 
-	private boolean intricated;
-
-	public void setIntricated(boolean intricated) {
-		this.intricated = intricated;
-
-	}
-
 	private IGroup originalGroup;
 
 	public void setOriginalGroup(IGroup originalGroup) {
@@ -776,12 +752,6 @@ final public class EntityImp implements ILeaf, IGroup {
 
 	public IGroup getOriginalGroup() {
 		return originalGroup;
-	}
-
-	private boolean together;
-
-	public void setThisIsTogether() {
-		this.together = true;
 	}
 
 	public String getCodeLine() {
@@ -863,6 +833,16 @@ final public class EntityImp implements ILeaf, IGroup {
 
 		return display.create(fontConfiguration, HorizontalAlignment.LEFT, skinParam);
 
+	}
+
+	@Override
+	public Together getTogether() {
+		return together;
+	}
+
+	@Override
+	public void setTogether(Together together) {
+		this.together = together;
 	}
 
 }

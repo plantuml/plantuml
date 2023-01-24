@@ -2,9 +2,9 @@ package net.sourceforge.plantuml.ugraphic;
 
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.PlainDiagram;
-import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.creole.legacy.PSystemCreole;
+import net.sourceforge.plantuml.utils.StringLocated;
 import net.sourceforge.plantuml.wbs.WBSDiagram;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;

@@ -45,6 +45,7 @@ import java.util.Set;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.Stereostyles;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
+import net.sourceforge.plantuml.cucadiagram.StereotypeDecoration;
 
 public class StyleSignatureBasic implements StyleSignature {
 
@@ -91,6 +92,18 @@ public class StyleSignatureBasic implements StyleSignature {
 
 		final Set<String> result = new LinkedHashSet<>(names);
 		result.add(clean(s));
+		return new StyleSignatureBasic(withDot || s.contains("."), result);
+	}
+
+	public StyleSignatureBasic addS(String s) {
+		if (s == null)
+			return this;
+
+		if (s.contains("&"))
+			throw new IllegalArgumentException();
+
+		final Set<String> result = new LinkedHashSet<>(names);
+		result.add(StereotypeDecoration.PREFIX + clean(s));
 		return new StyleSignatureBasic(withDot || s.contains("."), result);
 	}
 
@@ -218,12 +231,15 @@ public class StyleSignatureBasic implements StyleSignature {
 			return this;
 		final List<String> result = new ArrayList<>(names);
 		for (String name : stereostyles.getStyleNames())
-			result.add(clean(name));
+			result.add(StereotypeDecoration.PREFIX + clean(name));
 
 		return new StyleSignatureBasic(true, result);
 	}
 
 	private String clean(String name) {
+		if (name.startsWith("."))
+			name = StereotypeDecoration.PREFIX + name;
+
 		return name.toLowerCase().replace("_", "").replace(".", "");
 	}
 

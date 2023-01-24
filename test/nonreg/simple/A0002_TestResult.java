@@ -5,7 +5,7 @@ public class A0002_TestResult {
 /*
 """
 DPI: 96
-dimension: [ 762.1795 ; 890.5000 ]
+dimension: [ 660.1096 ; 994.5000 ]
 scaleFactor: 1.0000
 seed: -9181376250803721714
 svgLinkTarget: _top
@@ -14,7 +14,7 @@ preserveAspectRatio: none
 
 RECTANGLE:
   pt1: [ 15.0000 ; 12.5000 ]
-  pt2: [ 745.1795 ; 30.5000 ]
+  pt2: [ 643.1096 ; 30.5000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-1.0
@@ -23,8 +23,8 @@ RECTANGLE:
   backcolor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 170.9019 ; 35.5000 ]
-  pt2: [ 190.9019 ; 55.5000 ]
+  pt1: [ 166.5761 ; 35.5000 ]
+  pt2: [ 186.5761 ; 55.5000 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.0
@@ -33,20 +33,20 @@ ELLIPSE:
   backcolor: ff222222
 
 EMPTY:
-  pt1: [ 20.0000 ; 220.0000 ]
-  pt2: [ 143.4243 ; 289.0000 ]
+  pt1: [ 20.0000 ; 252.5000 ]
+  pt2: [ 139.0985 ; 308.5000 ]
 
 PATH:
    - type: SEG_MOVETO
      pt1: [ 0.0000 ; 0.0000 ]
    - type: SEG_LINETO
-     pt1: [ 0.0000 ; 49.0000 ]
+     pt1: [ 0.0000 ; 36.0000 ]
    - type: SEG_LINETO
-     pt1: [ 103.4243 ; 49.0000 ]
+     pt1: [ 99.0985 ; 36.0000 ]
    - type: SEG_LINETO
-     pt1: [ 103.4243 ; 10.0000 ]
+     pt1: [ 99.0985 ; 10.0000 ]
    - type: SEG_LINETO
-     pt1: [ 93.4243 ; 0.0000 ]
+     pt1: [ 89.0985 ; 0.0000 ]
    - type: SEG_LINETO
      pt1: [ 0.0000 ; 0.0000 ]
   stroke: 0.0-0.0-0.5
@@ -56,29 +56,53 @@ PATH:
 
 PATH:
    - type: SEG_MOVETO
-     pt1: [ 93.4243 ; 0.0000 ]
+     pt1: [ 89.0985 ; 0.0000 ]
    - type: SEG_LINETO
-     pt1: [ 93.4243 ; 10.0000 ]
+     pt1: [ 89.0985 ; 10.0000 ]
    - type: SEG_LINETO
-     pt1: [ 103.4243 ; 10.0000 ]
+     pt1: [ 99.0985 ; 10.0000 ]
    - type: SEG_LINETO
-     pt1: [ 93.4243 ; 0.0000 ]
+     pt1: [ 89.0985 ; 0.0000 ]
   stroke: 0.0-0.0-0.5
   shadow: 0
   color: ff181818
   backcolor: fffeffdd
 
 TEXT:
-  text: This 
-  position: [ 36.0000 ; 245.1111 ]
+  text: This
+  position: [ 36.0000 ; 277.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 TEXT:
-  text: is a 
-  position: [ 36.0000 ; 258.1111 ]
+  text:  
+  position: [ 78.5404 ; 277.6111 ]
+  orientation: 0
+  font: SansSerif.plain/13 []
+  color: ff000000
+  extendedColor: NULL_COLOR
+
+TEXT:
+  text: is
+  position: [ 90.8586 ; 277.6111 ]
+  orientation: 0
+  font: SansSerif.plain/13 []
+  color: ff000000
+  extendedColor: NULL_COLOR
+
+TEXT:
+  text: a
+  position: [ 36.0000 ; 290.6111 ]
+  orientation: 0
+  font: SansSerif.plain/13 []
+  color: ff000000
+  extendedColor: NULL_COLOR
+
+TEXT:
+  text:  
+  position: [ 48.4270 ; 290.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -86,27 +110,27 @@ TEXT:
 
 TEXT:
   text: note
-  position: [ 36.0000 ; 271.1111 ]
+  position: [ 60.7452 ; 290.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 EMPTY:
-  pt1: [ 218.3794 ; 65.5000 ]
-  pt2: [ 441.3210 ; 443.5000 ]
+  pt1: [ 214.0537 ; 65.5000 ]
+  pt2: [ 379.3412 ; 495.5000 ]
 
 PATH:
    - type: SEG_MOVETO
      pt1: [ 0.0000 ; 0.0000 ]
    - type: SEG_LINETO
-     pt1: [ 0.0000 ; 358.0000 ]
+     pt1: [ 0.0000 ; 410.0000 ]
    - type: SEG_LINETO
-     pt1: [ 202.9416 ; 358.0000 ]
+     pt1: [ 145.2875 ; 410.0000 ]
    - type: SEG_LINETO
-     pt1: [ 202.9416 ; 10.0000 ]
+     pt1: [ 145.2875 ; 10.0000 ]
    - type: SEG_LINETO
-     pt1: [ 192.9416 ; 0.0000 ]
+     pt1: [ 135.2875 ; 0.0000 ]
    - type: SEG_LINETO
      pt1: [ 0.0000 ; 0.0000 ]
   stroke: 0.0-0.0-0.5
@@ -116,149 +140,189 @@ PATH:
 
 PATH:
    - type: SEG_MOVETO
-     pt1: [ 192.9416 ; 0.0000 ]
+     pt1: [ 135.2875 ; 0.0000 ]
    - type: SEG_LINETO
-     pt1: [ 192.9416 ; 10.0000 ]
+     pt1: [ 135.2875 ; 10.0000 ]
    - type: SEG_LINETO
-     pt1: [ 202.9416 ; 10.0000 ]
+     pt1: [ 145.2875 ; 10.0000 ]
    - type: SEG_LINETO
-     pt1: [ 192.9416 ; 0.0000 ]
+     pt1: [ 135.2875 ; 0.0000 ]
   stroke: 0.0-0.0-0.5
   shadow: 0
   color: ff181818
   backcolor: fffeffdd
 
 TEXT:
-  text: A Long
-  position: [ 234.3794 ; 90.6111 ]
+  text: A
+  position: [ 230.0537 ; 90.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 TEXT:
-  text: Long 
-  position: [ 234.3794 ; 103.6111 ]
+  text:  
+  position: [ 242.3503 ; 90.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 TEXT:
-  text: Long 
-  position: [ 234.3794 ; 116.6111 ]
+  text: Long
+  position: [ 254.6684 ; 90.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 TEXT:
-  text: Long 
-  position: [ 234.3794 ; 129.6111 ]
+  text: Long
+  position: [ 230.0537 ; 103.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 TEXT:
-  text: Long 
-  position: [ 234.3794 ; 142.6111 ]
+  text: Long
+  position: [ 230.0537 ; 116.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 TEXT:
-  text: Long 
-  position: [ 234.3794 ; 155.6111 ]
+  text: Long
+  position: [ 230.0537 ; 129.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 TEXT:
-  text: Long 
-  position: [ 234.3794 ; 168.6111 ]
+  text: Long
+  position: [ 230.0537 ; 142.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 TEXT:
-  text: Long 
-  position: [ 234.3794 ; 181.6111 ]
+  text: Long
+  position: [ 230.0537 ; 155.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 TEXT:
-  text: Long 
-  position: [ 234.3794 ; 194.6111 ]
+  text: Long
+  position: [ 230.0537 ; 168.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 TEXT:
-  text: Long 
-  position: [ 234.3794 ; 207.6111 ]
+  text: Long
+  position: [ 230.0537 ; 181.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 TEXT:
-  text: Long 
-  position: [ 234.3794 ; 220.6111 ]
+  text: Long
+  position: [ 230.0537 ; 194.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 TEXT:
-  text: Long 
-  position: [ 234.3794 ; 233.6111 ]
+  text: Long
+  position: [ 230.0537 ; 207.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 TEXT:
-  text: Long 
-  position: [ 234.3794 ; 246.6111 ]
+  text: Long
+  position: [ 230.0537 ; 220.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 TEXT:
-  text: Long note
-  position: [ 234.3794 ; 259.6111 ]
+  text: Long
+  position: [ 230.0537 ; 233.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 TEXT:
-  text: This 
-  position: [ 234.3794 ; 272.6111 ]
+  text: Long
+  position: [ 230.0537 ; 246.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 TEXT:
-  text: note 
-  position: [ 234.3794 ; 285.6111 ]
+  text: Long
+  position: [ 230.0537 ; 259.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 TEXT:
-  text: is on 
-  position: [ 234.3794 ; 298.6111 ]
+  text: note
+  position: [ 230.0537 ; 272.6111 ]
+  orientation: 0
+  font: SansSerif.plain/13 []
+  color: ff000000
+  extendedColor: NULL_COLOR
+
+TEXT:
+  text: This
+  position: [ 230.0537 ; 285.6111 ]
+  orientation: 0
+  font: SansSerif.plain/13 []
+  color: ff000000
+  extendedColor: NULL_COLOR
+
+TEXT:
+  text: note
+  position: [ 230.0537 ; 298.6111 ]
+  orientation: 0
+  font: SansSerif.plain/13 []
+  color: ff000000
+  extendedColor: NULL_COLOR
+
+TEXT:
+  text:  
+  position: [ 279.4261 ; 298.6111 ]
+  orientation: 0
+  font: SansSerif.plain/13 []
+  color: ff000000
+  extendedColor: NULL_COLOR
+
+TEXT:
+  text: is
+  position: [ 291.7443 ; 298.6111 ]
+  orientation: 0
+  font: SansSerif.plain/13 []
+  color: ff000000
+  extendedColor: NULL_COLOR
+
+TEXT:
+  text: on
+  position: [ 230.0537 ; 311.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -266,7 +330,7 @@ TEXT:
 
 TEXT:
   text: several
-  position: [ 234.3794 ; 311.6111 ]
+  position: [ 230.0537 ; 324.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -274,31 +338,39 @@ TEXT:
 
 TEXT:
   text: lines
-  position: [ 234.3794 ; 324.6111 ]
+  position: [ 230.0537 ; 337.6111 ]
   orientation: 0
   font: SansSerif.italic/13 [ITALIC]
   color: ff000000
   extendedColor: NULL_COLOR
 
 TEXT:
+  text: and
+  position: [ 230.0537 ; 350.6111 ]
+  orientation: 0
+  font: SansSerif.plain/13 []
+  color: ff000000
+  extendedColor: NULL_COLOR
+
+TEXT:
   text:  
-  position: [ 315.7608 ; 324.6111 ]
+  position: [ 277.0323 ; 350.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 TEXT:
-  text: and can
-  position: [ 234.3794 ; 337.6111 ]
+  text: can
+  position: [ 289.3504 ; 350.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 TEXT:
-  text: contain 
-  position: [ 234.3794 ; 350.6111 ]
+  text: contain
+  position: [ 230.0537 ; 363.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -306,29 +378,29 @@ TEXT:
 
 TEXT:
   text: HTML
-  position: [ 321.5906 ; 350.6111 ]
+  position: [ 230.0537 ; 376.6111 ]
   orientation: 0
   font: SansSerif.bold/13 [BOLD]
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 228.3794 ; 358.5000 ]
-  pt2: [ 431.3210 ; 358.5000 ]
+  pt1: [ 224.0537 ; 384.5000 ]
+  pt2: [ 369.3412 ; 384.5000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 228.3794 ; 360.5000 ]
-  pt2: [ 431.3210 ; 360.5000 ]
+  pt1: [ 224.0537 ; 386.5000 ]
+  pt2: [ 369.3412 ; 386.5000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 ELLIPSE:
-  pt1: [ 237.3794 ; 366.5000 ]
-  pt2: [ 242.3794 ; 371.5000 ]
+  pt1: [ 233.0537 ; 392.5000 ]
+  pt2: [ 238.0537 ; 397.5000 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-0.0
@@ -337,24 +409,24 @@ ELLIPSE:
   backcolor: ff000000
 
 TEXT:
-  text: Calling 
-  position: [ 246.3794 ; 373.6111 ]
+  text: Calling
+  position: [ 242.0537 ; 399.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 TEXT:
-  text: the 
-  position: [ 246.3794 ; 386.6111 ]
+  text: the
+  position: [ 242.0537 ; 412.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 TEXT:
-  text: method 
-  position: [ 246.3794 ; 399.6111 ]
+  text: method
+  position: [ 242.0537 ; 425.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -362,15 +434,15 @@ TEXT:
 
 TEXT:
   text: foo()
-  position: [ 342.5324 ; 399.6111 ]
+  position: [ 242.0537 ; 438.6111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 TEXT:
-  text:  is 
-  position: [ 246.3794 ; 412.6111 ]
+  text: is
+  position: [ 242.0537 ; 451.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -378,7 +450,7 @@ TEXT:
 
 TEXT:
   text: prohibited
-  position: [ 304.0335 ; 412.6111 ]
+  position: [ 242.0537 ; 464.6111 ]
   orientation: 0
   font: SansSerif.plain/13 [BACKCOLOR]
   color: ff000000
@@ -386,15 +458,15 @@ TEXT:
 
 TEXT:
   text: overlap
-  position: [ 246.3794 ; 425.6111 ]
+  position: [ 242.0537 ; 477.6111 ]
   orientation: 0
   font: SansSerif.plain/13 [BACKCOLOR]
   color: ff000000
   extendedColor: ffff0000
 
 RECTANGLE:
-  pt1: [ 143.4243 ; 238.5000 ]
-  pt2: [ 218.3794 ; 270.5000 ]
+  pt1: [ 139.0985 ; 264.5000 ]
+  pt2: [ 214.0537 ; 296.5000 ]
   xCorner: 25
   yCorner: 25
   stroke: 0.0-0.0-0.5
@@ -404,7 +476,7 @@ RECTANGLE:
 
 TEXT:
   text: foo1
-  position: [ 153.4243 ; 257.8333 ]
+  position: [ 149.0985 ; 283.8333 ]
   orientation: 0
   font: SansSerif.plain/12 []
   color: ff000000
@@ -416,7 +488,7 @@ EMPTY:
 
 LINE:
   pt1: [ 15.0000 ; 12.5000 ]
-  pt2: [ 15.0000 ; 879.5000 ]
+  pt2: [ 15.0000 ; 983.5000 ]
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff000000
@@ -425,31 +497,31 @@ PATH:
    - type: SEG_MOVETO
      pt1: [ 0.0000 ; 0.0000 ]
    - type: SEG_LINETO
-     pt1: [ 0.0000 ; 188.0000 ]
+     pt1: [ 0.0000 ; 214.0000 ]
    - type: SEG_LINETO
-     pt1: [ -20.0000 ; 192.0000 ]
+     pt1: [ -20.0000 ; 218.0000 ]
    - type: SEG_LINETO
-     pt1: [ 0.0000 ; 196.0000 ]
+     pt1: [ 0.0000 ; 222.0000 ]
    - type: SEG_LINETO
-     pt1: [ 0.0000 ; 384.0000 ]
+     pt1: [ 0.0000 ; 436.0000 ]
    - type: SEG_ARCTO
      radius: [ 0.0000 ; 0.0000 ]
      angle: 0.0
      largeArcFlag: false
      sweepFlag: false
-     dest: [ 0.0000 ; 384.0000 ]
+     dest: [ 0.0000 ; 436.0000 ]
    - type: SEG_LINETO
-     pt1: [ 185.3775 ; 384.0000 ]
+     pt1: [ 145.2875 ; 436.0000 ]
    - type: SEG_ARCTO
      radius: [ 0.0000 ; 0.0000 ]
      angle: 0.0
      largeArcFlag: false
      sweepFlag: false
-     dest: [ 185.3775 ; 384.0000 ]
+     dest: [ 145.2875 ; 436.0000 ]
    - type: SEG_LINETO
-     pt1: [ 185.3775 ; 10.0000 ]
+     pt1: [ 145.2875 ; 10.0000 ]
    - type: SEG_LINETO
-     pt1: [ 175.3775 ; 0.0000 ]
+     pt1: [ 135.2875 ; 0.0000 ]
    - type: SEG_LINETO
      pt1: [ 0.0000 ; 0.0000 ]
    - type: SEG_ARCTO
@@ -465,165 +537,237 @@ PATH:
 
 PATH:
    - type: SEG_MOVETO
-     pt1: [ 175.3775 ; 0.0000 ]
+     pt1: [ 135.2875 ; 0.0000 ]
    - type: SEG_LINETO
-     pt1: [ 175.3775 ; 10.0000 ]
+     pt1: [ 135.2875 ; 10.0000 ]
    - type: SEG_LINETO
-     pt1: [ 185.3775 ; 10.0000 ]
+     pt1: [ 145.2875 ; 10.0000 ]
    - type: SEG_LINETO
-     pt1: [ 175.3775 ; 0.0000 ]
+     pt1: [ 135.2875 ; 0.0000 ]
   stroke: 0.0-0.0-0.5
   shadow: 0
   color: ff181818
   backcolor: fffeffdd
 
 TEXT:
-  text:  KO for 
-  position: [ 553.2740 ; 468.6111 ]
+  text:  
+  position: [ 491.2942 ; 520.6111 ]
   orientation: 0
   font: SansSerif.plain/13 [BACKCOLOR]
   color: ff000000
   extendedColor: ffff0000
 
 TEXT:
-  text: this note
-  position: [ 553.2740 ; 481.6111 ]
+  text: KO
+  position: [ 503.6123 ; 520.6111 ]
   orientation: 0
   font: SansSerif.plain/13 [BACKCOLOR]
   color: ff000000
   extendedColor: ffff0000
 
 TEXT:
-  text: A Long
-  position: [ 553.2740 ; 494.6111 ]
+  text:  
+  position: [ 527.0782 ; 520.6111 ]
+  orientation: 0
+  font: SansSerif.plain/13 [BACKCOLOR]
+  color: ff000000
+  extendedColor: ffff0000
+
+TEXT:
+  text: for
+  position: [ 539.3963 ; 520.6111 ]
+  orientation: 0
+  font: SansSerif.plain/13 [BACKCOLOR]
+  color: ff000000
+  extendedColor: ffff0000
+
+TEXT:
+  text: this
+  position: [ 491.2942 ; 533.6111 ]
+  orientation: 0
+  font: SansSerif.plain/13 [BACKCOLOR]
+  color: ff000000
+  extendedColor: ffff0000
+
+TEXT:
+  text: note
+  position: [ 491.2942 ; 546.6111 ]
+  orientation: 0
+  font: SansSerif.plain/13 [BACKCOLOR]
+  color: ff000000
+  extendedColor: ffff0000
+
+TEXT:
+  text: A
+  position: [ 491.2942 ; 559.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 TEXT:
-  text: Long 
-  position: [ 553.2740 ; 507.6111 ]
+  text:  
+  position: [ 503.5908 ; 559.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 TEXT:
-  text: Long 
-  position: [ 553.2740 ; 520.6111 ]
+  text: Long
+  position: [ 515.9089 ; 559.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 TEXT:
-  text: Long 
-  position: [ 553.2740 ; 533.6111 ]
+  text: Long
+  position: [ 491.2942 ; 572.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 TEXT:
-  text: Long 
-  position: [ 553.2740 ; 546.6111 ]
+  text: Long
+  position: [ 491.2942 ; 585.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 TEXT:
-  text: Long 
-  position: [ 553.2740 ; 559.6111 ]
+  text: Long
+  position: [ 491.2942 ; 598.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 TEXT:
-  text: Long 
-  position: [ 553.2740 ; 572.6111 ]
+  text: Long
+  position: [ 491.2942 ; 611.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 TEXT:
-  text: Long 
-  position: [ 553.2740 ; 585.6111 ]
+  text: Long
+  position: [ 491.2942 ; 624.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 TEXT:
-  text: Long 
-  position: [ 553.2740 ; 598.6111 ]
+  text: Long
+  position: [ 491.2942 ; 637.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 TEXT:
-  text: Long 
-  position: [ 553.2740 ; 611.6111 ]
+  text: Long
+  position: [ 491.2942 ; 650.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 TEXT:
-  text: Long 
-  position: [ 553.2740 ; 624.6111 ]
+  text: Long
+  position: [ 491.2942 ; 663.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 TEXT:
-  text: Long 
-  position: [ 553.2740 ; 637.6111 ]
+  text: Long
+  position: [ 491.2942 ; 676.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 TEXT:
-  text: Long 
-  position: [ 553.2740 ; 650.6111 ]
+  text: Long
+  position: [ 491.2942 ; 689.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 TEXT:
-  text: Long note
-  position: [ 553.2740 ; 663.6111 ]
+  text: Long
+  position: [ 491.2942 ; 702.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 TEXT:
-  text: This 
-  position: [ 553.2740 ; 676.6111 ]
+  text: Long
+  position: [ 491.2942 ; 715.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 TEXT:
-  text: note 
-  position: [ 553.2740 ; 689.6111 ]
+  text: Long
+  position: [ 491.2942 ; 728.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 TEXT:
-  text: is on 
-  position: [ 553.2740 ; 702.6111 ]
+  text: note
+  position: [ 491.2942 ; 741.6111 ]
+  orientation: 0
+  font: SansSerif.plain/13 []
+  color: ff000000
+  extendedColor: NULL_COLOR
+
+TEXT:
+  text: This
+  position: [ 491.2942 ; 754.6111 ]
+  orientation: 0
+  font: SansSerif.plain/13 []
+  color: ff000000
+  extendedColor: NULL_COLOR
+
+TEXT:
+  text: note
+  position: [ 491.2942 ; 767.6111 ]
+  orientation: 0
+  font: SansSerif.plain/13 []
+  color: ff000000
+  extendedColor: NULL_COLOR
+
+TEXT:
+  text:  
+  position: [ 540.6666 ; 767.6111 ]
+  orientation: 0
+  font: SansSerif.plain/13 []
+  color: ff000000
+  extendedColor: NULL_COLOR
+
+TEXT:
+  text: is
+  position: [ 552.9847 ; 767.6111 ]
+  orientation: 0
+  font: SansSerif.plain/13 []
+  color: ff000000
+  extendedColor: NULL_COLOR
+
+TEXT:
+  text: on
+  position: [ 491.2942 ; 780.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -631,7 +775,7 @@ TEXT:
 
 TEXT:
   text: several
-  position: [ 553.2740 ; 715.6111 ]
+  position: [ 491.2942 ; 793.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -639,31 +783,39 @@ TEXT:
 
 TEXT:
   text: lines
-  position: [ 553.2740 ; 728.6111 ]
+  position: [ 491.2942 ; 806.6111 ]
   orientation: 0
   font: SansSerif.italic/13 [ITALIC]
   color: ff000000
   extendedColor: NULL_COLOR
 
 TEXT:
+  text: and
+  position: [ 491.2942 ; 819.6111 ]
+  orientation: 0
+  font: SansSerif.plain/13 []
+  color: ff000000
+  extendedColor: NULL_COLOR
+
+TEXT:
   text:  
-  position: [ 634.6554 ; 728.6111 ]
+  position: [ 538.2727 ; 819.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 TEXT:
-  text: and can
-  position: [ 553.2740 ; 741.6111 ]
+  text: can
+  position: [ 550.5909 ; 819.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 TEXT:
-  text: contain 
-  position: [ 553.2740 ; 754.6111 ]
+  text: contain
+  position: [ 491.2942 ; 832.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -671,29 +823,29 @@ TEXT:
 
 TEXT:
   text: HTML
-  position: [ 640.4852 ; 754.6111 ]
+  position: [ 491.2942 ; 845.6111 ]
   orientation: 0
   font: SansSerif.bold/13 [BOLD]
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 547.2740 ; 762.5000 ]
-  pt2: [ 732.6515 ; 762.5000 ]
+  pt1: [ 485.2942 ; 853.5000 ]
+  pt2: [ 630.5816 ; 853.5000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 547.2740 ; 764.5000 ]
-  pt2: [ 732.6515 ; 764.5000 ]
+  pt1: [ 485.2942 ; 855.5000 ]
+  pt2: [ 630.5816 ; 855.5000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 ELLIPSE:
-  pt1: [ 556.2740 ; 770.5000 ]
-  pt2: [ 561.2740 ; 775.5000 ]
+  pt1: [ 494.2942 ; 861.5000 ]
+  pt2: [ 499.2942 ; 866.5000 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-0.0
@@ -702,24 +854,24 @@ ELLIPSE:
   backcolor: ff000000
 
 TEXT:
-  text: Calling 
-  position: [ 565.2740 ; 777.6111 ]
+  text: Calling
+  position: [ 503.2942 ; 868.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 TEXT:
-  text: the 
-  position: [ 565.2740 ; 790.6111 ]
+  text: the
+  position: [ 503.2942 ; 881.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 TEXT:
-  text: method 
-  position: [ 565.2740 ; 803.6111 ]
+  text: method
+  position: [ 503.2942 ; 894.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -727,15 +879,15 @@ TEXT:
 
 TEXT:
   text: foo()
-  position: [ 661.4270 ; 803.6111 ]
+  position: [ 503.2942 ; 907.6111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 TEXT:
-  text:  is 
-  position: [ 565.2740 ; 816.6111 ]
+  text: is
+  position: [ 503.2942 ; 920.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -743,15 +895,15 @@ TEXT:
 
 TEXT:
   text: prohibited
-  position: [ 565.2740 ; 829.6111 ]
+  position: [ 503.2942 ; 933.6111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 RECTANGLE:
-  pt1: [ 452.3210 ; 629.5000 ]
-  pt2: [ 527.2740 ; 661.5000 ]
+  pt1: [ 390.3412 ; 707.5000 ]
+  pt2: [ 465.2942 ; 739.5000 ]
   xCorner: 25
   yCorner: 25
   stroke: 0.0-0.0-0.5
@@ -761,15 +913,15 @@ RECTANGLE:
 
 TEXT:
   text: foo2
-  position: [ 462.3210 ; 648.8333 ]
+  position: [ 400.3412 ; 726.8333 ]
   orientation: 0
   font: SansSerif.plain/12 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 478.7975 ; 857.5000 ]
-  pt2: [ 500.7975 ; 879.5000 ]
+  pt1: [ 416.8177 ; 961.5000 ]
+  pt2: [ 438.8177 ; 983.5000 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.0
@@ -778,8 +930,8 @@ ELLIPSE:
   backcolor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 483.7975 ; 862.5000 ]
-  pt2: [ 495.7975 ; 874.5000 ]
+  pt1: [ 421.8177 ; 966.5000 ]
+  pt2: [ 433.8177 ; 978.5000 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.0
@@ -788,90 +940,90 @@ ELLIPSE:
   backcolor: ff222222
 
 EMPTY:
-  pt1: [ 441.3210 ; 12.5000 ]
-  pt2: [ 451.3210 ; 13.5000 ]
+  pt1: [ 379.3412 ; 12.5000 ]
+  pt2: [ 389.3412 ; 13.5000 ]
 
 LINE:
-  pt1: [ 446.3210 ; 12.5000 ]
-  pt2: [ 446.3210 ; 879.5000 ]
+  pt1: [ 384.3412 ; 12.5000 ]
+  pt2: [ 384.3412 ; 983.5000 ]
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff000000
 
 EMPTY:
-  pt1: [ 732.6515 ; 12.5000 ]
-  pt2: [ 751.1795 ; 13.5000 ]
+  pt1: [ 630.5816 ; 12.5000 ]
+  pt2: [ 649.1096 ; 13.5000 ]
 
 LINE:
-  pt1: [ 737.6515 ; 12.5000 ]
-  pt2: [ 737.6515 ; 879.5000 ]
+  pt1: [ 635.5816 ; 12.5000 ]
+  pt2: [ 635.5816 ; 983.5000 ]
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff000000
 
 LINE:
-  pt1: [ 180.9019 ; 55.5000 ]
-  pt2: [ 180.9019 ; 238.5000 ]
+  pt1: [ 176.5761 ; 55.5000 ]
+  pt2: [ 176.5761 ; 264.5000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 POLYGON:
   points:
-   - [ 176.9019 ; 228.5000 ]
-   - [ 180.9019 ; 238.5000 ]
-   - [ 184.9019 ; 228.5000 ]
-   - [ 180.9019 ; 232.5000 ]
+   - [ 172.5761 ; 254.5000 ]
+   - [ 176.5761 ; 264.5000 ]
+   - [ 180.5761 ; 254.5000 ]
+   - [ 176.5761 ; 258.5000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: ff181818
 
 LINE:
-  pt1: [ 489.7975 ; 661.5000 ]
-  pt2: [ 489.7975 ; 857.5000 ]
+  pt1: [ 427.8177 ; 739.5000 ]
+  pt2: [ 427.8177 ; 961.5000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 POLYGON:
   points:
-   - [ 485.7975 ; 847.5000 ]
-   - [ 489.7975 ; 857.5000 ]
-   - [ 493.7975 ; 847.5000 ]
-   - [ 489.7975 ; 851.5000 ]
+   - [ 423.8177 ; 951.5000 ]
+   - [ 427.8177 ; 961.5000 ]
+   - [ 431.8177 ; 951.5000 ]
+   - [ 427.8177 ; 955.5000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: ff181818
 
 LINE:
-  pt1: [ 180.9019 ; 270.5000 ]
-  pt2: [ 180.9019 ; 448.5000 ]
+  pt1: [ 176.5761 ; 296.5000 ]
+  pt2: [ 176.5761 ; 500.5000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 180.9019 ; 448.5000 ]
-  pt2: [ 489.7975 ; 448.5000 ]
+  pt1: [ 176.5761 ; 500.5000 ]
+  pt2: [ 427.8177 ; 500.5000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 489.7975 ; 448.5000 ]
-  pt2: [ 489.7975 ; 629.5000 ]
+  pt1: [ 427.8177 ; 500.5000 ]
+  pt2: [ 427.8177 ; 707.5000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 POLYGON:
   points:
-   - [ 485.7975 ; 619.5000 ]
-   - [ 489.7975 ; 629.5000 ]
-   - [ 493.7975 ; 619.5000 ]
-   - [ 489.7975 ; 623.5000 ]
+   - [ 423.8177 ; 697.5000 ]
+   - [ 427.8177 ; 707.5000 ]
+   - [ 431.8177 ; 697.5000 ]
+   - [ 427.8177 ; 701.5000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
@@ -879,7 +1031,7 @@ POLYGON:
 
 TEXT:
   text: Actor 1
-  position: [ 163.0708 ; 26.5000 ]
+  position: [ 132.0809 ; 26.5000 ]
   orientation: 0
   font: SansSerif.plain/18 []
   color: ff000000
@@ -887,7 +1039,7 @@ TEXT:
 
 TEXT:
   text: Actor 2
-  position: [ 524.3881 ; 26.5000 ]
+  position: [ 442.3632 ; 26.5000 ]
   orientation: 0
   font: SansSerif.plain/18 []
   color: ff000000

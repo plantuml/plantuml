@@ -42,9 +42,9 @@ import java.util.Collections;
 import java.util.TreeSet;
 
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.error.PSystemError;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public class SyntaxResult {
 

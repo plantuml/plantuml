@@ -49,6 +49,11 @@ import net.sourceforge.plantuml.project.time.Day;
 
 public class SubjectSeparator implements Subject {
 
+	public static final Subject ME = new SubjectSeparator();
+
+	private SubjectSeparator() {
+	}
+
 	public IRegex toRegex() {
 		return new RegexLeaf("SUBJECT", "separator");
 	}
@@ -64,7 +69,7 @@ public class SubjectSeparator implements Subject {
 	class JustBefore extends SentenceSimple {
 
 		public JustBefore() {
-			super(SubjectSeparator.this, Verbs.justBefore(), new ComplementDate());
+			super(SubjectSeparator.this, Verbs.justBefore, new ComplementDate());
 		}
 
 		@Override
@@ -80,7 +85,7 @@ public class SubjectSeparator implements Subject {
 	class JustAfter extends SentenceSimple {
 
 		public JustAfter() {
-			super(SubjectSeparator.this, Verbs.justAfter(), new ComplementDate());
+			super(SubjectSeparator.this, Verbs.justAfter, new ComplementDate());
 		}
 
 		@Override
@@ -96,7 +101,7 @@ public class SubjectSeparator implements Subject {
 	class Just extends SentenceSimple {
 
 		public Just() {
-			super(SubjectSeparator.this, Verbs.just(), new ComplementBeforeOrAfterOrAtTaskStartOrEnd());
+			super(SubjectSeparator.this, Verbs.just, new ComplementBeforeOrAfterOrAtTaskStartOrEnd());
 		}
 
 		@Override

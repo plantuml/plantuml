@@ -35,14 +35,12 @@
  */
 package net.sourceforge.plantuml.command;
 
-import net.sourceforge.plantuml.LineLocation;
-import net.sourceforge.plantuml.baraye.EntityUtils;
-import net.sourceforge.plantuml.baraye.IGroup;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandEndPackage extends SingleLineCommand2<AbstractEntityDiagram> {
 
@@ -58,11 +56,10 @@ public class CommandEndPackage extends SingleLineCommand2<AbstractEntityDiagram>
 
 	@Override
 	protected CommandExecutionResult executeArg(AbstractEntityDiagram diagram, LineLocation location, RegexResult arg) {
-		final IGroup currentPackage = diagram.getCurrentGroup();
-		if (EntityUtils.groupRoot(currentPackage)) {
+		final boolean result = diagram.endGroup();
+		if (result == false) {
 			return CommandExecutionResult.error("No package or namespace defined");
 		}
-		diagram.endGroup();
 		return CommandExecutionResult.ok();
 	}
 

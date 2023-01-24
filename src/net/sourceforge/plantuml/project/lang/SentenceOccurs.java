@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.project.core.TaskInstant;
 public class SentenceOccurs extends SentenceSimple {
 
 	public SentenceOccurs() {
-		super(new SubjectTask(), Verbs.occurs(), new ComplementFromTo());
+		super(SubjectTask.ME, Verbs.occurs, new ComplementFromTo());
 	}
 
 	@Override

@@ -37,6 +37,7 @@ package net.sourceforge.plantuml;
 
 import java.util.Collection;
 
+import net.sourceforge.plantuml.activitydiagram3.ftile.Arrows;
 import net.sourceforge.plantuml.cucadiagram.Rankdir;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.cucadiagram.dot.DotSplines;
@@ -112,8 +113,6 @@ public interface ISkinParam extends ISkinSimple {
 	public double getDiagonalCorner(CornerParam param, Stereotype stereotype);
 
 	public LineBreakStrategy maxMessageSize();
-
-	public LineBreakStrategy wrapWidth();
 
 	public LineBreakStrategy swimlaneWrapTitleWidth();
 
@@ -192,4 +191,6 @@ public interface ISkinParam extends ISkinSimple {
 	public LengthAdjust getlengthAdjust();
 
 	public double getParamSameClassWidth();
+
+	public Arrows arrows();
 }

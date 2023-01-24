@@ -67,9 +67,9 @@ import net.sourceforge.plantuml.nwdiag.core.NStackable;
 import net.sourceforge.plantuml.nwdiag.core.Network;
 import net.sourceforge.plantuml.nwdiag.core.NwGroup;
 import net.sourceforge.plantuml.nwdiag.next.GridTextBlockDecorated;
-import net.sourceforge.plantuml.nwdiag.next.LinkedElement;
 import net.sourceforge.plantuml.nwdiag.next.NBar;
 import net.sourceforge.plantuml.nwdiag.next.NPlayField;
+import net.sourceforge.plantuml.nwdiag.next.NServerDraw;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
@@ -160,21 +160,33 @@ public class NwDiagram extends UmlDiagram {
 		if (initDone == false)
 			return errorNoInit();
 
+		String existingAddress = "";
 		final NServer server2;
 		if (lastNetwork() == null) {
 			createNetwork(name1);
-			server2 = NServer.create(name2);
+			server2 = NServer.create(name2, getSkinParam());
 		} else {
 			final NServer server1 = servers.get(name1);
+			final NServer previous2 = servers.get(name2);
+			if (previous2 != null)
+				existingAddress = previous2.someAddress();
 			final Network network1 = createNetwork("");
 			network1.goInvisible();
-			if (server1 != null)
-				server1.connectTo(lastNetwork());
+			if (server1 != null) {
+				final Network someNetwork = server1.someNetwork();
+				if (someNetwork != null && someNetwork.isVisible() == false && someNetwork.getUp() == null) {
+					final String tmp = server1.someAddress();
+					server1.blankSomeAddress();
+					server1.connectTo(lastNetwork(), tmp);
+				} else {
+					server1.connectTo(lastNetwork(), "");
+				}
+			}
 
-			server2 = new NServer(name2, server1.getBar());
+			server2 = new NServer(name2, server1.getBar(), getSkinParam());
 		}
 		servers.put(name2, server2);
-		server2.connectTo(lastNetwork());
+		server2.connectTo(lastNetwork(), existingAddress);
 		playField.addInPlayfield(server2.getBar());
 		return CommandExecutionResult.ok();
 	}
@@ -198,13 +210,13 @@ public class NwDiagram extends UmlDiagram {
 			assert currentGroup == null;
 			final Network network1 = createNetwork("");
 			network1.goInvisible();
-			server = NServer.create(name);
+			server = NServer.create(name, getSkinParam());
 			servers.put(name, server);
 			server.doNotPrintFirstLink();
 		} else {
 			server = servers.get(name);
 			if (server == null) {
-				server = NServer.create(name);
+				server = NServer.create(name, getSkinParam());
 				servers.put(name, server);
 			}
 		}
@@ -216,7 +228,7 @@ public class NwDiagram extends UmlDiagram {
 	}
 
 	private boolean alreadyInSomeGroup(String name) {
-		for (NwGroup g : groups) 
+		for (NwGroup g : groups)
 			if (g.names().contains(name))
 				return true;
 
@@ -368,11 +380,11 @@ public class NwDiagram extends UmlDiagram {
 					final Integer col = layout.get(server.getBar());
 					if (col == null)
 						continue;
-					double topMargin = LinkedElement.MAGIC;
+					double topMargin = NServerDraw.MAGIC;
 					NwGroup group = getGroupOf(server);
 					if (group != null)
 						topMargin += group.getTopHeaderHeight(stringBounder, getSkinParam());
-					grid.add(i, col, server.getLinkedElement(topMargin, conns, networks, getSkinParam()));
+					grid.add(i, col, server.getDraw(topMargin, conns, networks, getSkinParam()));
 				}
 			}
 		}
@@ -399,8 +411,7 @@ public class NwDiagram extends UmlDiagram {
 			lastNetwork().setFullWidth("full".equalsIgnoreCase(value));
 
 		if ("color".equalsIgnoreCase(property)) {
-			final HColor color = value == null ? null
-					: getSkinParam().getIHtmlColorSet().getColorOrWhite(value);
+			final HColor color = value == null ? null : getSkinParam().getIHtmlColorSet().getColorOrWhite(value);
 			if (currentGroup != null)
 				currentGroup.setColor(color);
 			else if (lastNetwork() != null)
