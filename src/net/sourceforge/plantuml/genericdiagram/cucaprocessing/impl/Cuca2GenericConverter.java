@@ -36,6 +36,8 @@
 package net.sourceforge.plantuml.genericdiagram.cucaprocessing.impl;
 
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -501,7 +503,7 @@ public class Cuca2GenericConverter implements ICucaDiagramVisitor {
 
 		String pumlId = "diag" + this.blockCount;
 		String label = this.getSourceFileName();
-		genericDiagram.setSourceFile(this.getSourceFile());
+		genericDiagram.setSourceFile(this.getSourceFileRelative());
 		genericDiagram.setPumlId(pumlId);
 		genericDiagram.setLabel(label);
 		genericDiagram.setPumlRootPath(this.getPumlElementRootPath());
@@ -726,23 +728,28 @@ public class Cuca2GenericConverter implements ICucaDiagramVisitor {
 	private String getPumlElementRootPath() {
 		// since we may have multiple blocks within a diagram,
 		// we add the block count to have a unique path to all puml elements
-		return stripRoot(sourceFile.toString().substring(0, sourceFile.toString().lastIndexOf('.'))
-						+ "/" + this.blockCount + "/");
+
+		String srcFile = getSourceFileRelative();
+		return srcFile
+						.substring(0, srcFile.lastIndexOf('.')) //remove puml suffix
+						+ "/" + this.blockCount + "/";
 
 	}
 
-	private String getSourceFile() {
+	private String getSourceFileRelative() {
 		return stripRoot(sourceFile.getAbsolutePath());
 	}
 
 	private String stripRoot(String filePath) {
 		// to achieve file names relative to a root folder in the project
+		// use unix form as common rel path contents
 		// aims at avoiding having user names in the path
-		String replace = ".";
-		if (graphmlRootDir.endsWith(File.separator)) {
-			replace = "." + File.separator;
-		}
-		return filePath.replace(graphmlRootDir, replace);
+		Path graphmlRoot = Paths.get(graphmlRootDir);
+		Path file = Paths.get(filePath);
+		Path relPath = graphmlRoot.relativize(file);
+
+		return ("./" + relPath.toString()).replace("\\", "/");
+
 	}
 	private String getSourceFileName() {
 
