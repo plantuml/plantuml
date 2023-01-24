@@ -727,7 +727,7 @@ public class Cuca2GenericConverter implements ICucaDiagramVisitor {
 		// since we may have multiple blocks within a diagram,
 		// we add the block count to have a unique path to all puml elements
 		return stripRoot(sourceFile.toString().substring(0, sourceFile.toString().lastIndexOf('.'))
-						+ "/" + this.blockCount + "/");
+						+ File.separator + this.blockCount + File.separator);
 
 	}
 
@@ -738,6 +738,7 @@ public class Cuca2GenericConverter implements ICucaDiagramVisitor {
 	private String stripRoot(String filePath) {
 		// to achieve file names relative to a root folder in the project
 		// aims at avoiding having user names in the path
+		Log.info("strip root: graphmlRootDir " + graphmlRootDir);
 		String replace = ".";
 		if (graphmlRootDir.endsWith(File.separator)) {
 			replace = "." + File.separator;
