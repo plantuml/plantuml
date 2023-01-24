@@ -236,16 +236,16 @@ public class GraphmlTest {
 		// did not find an easy way to add the suggestedFile into the processing chain
 		// ==> use workaround to create a temp puml file and call similar to main processing
 		final Path tmpTestFile = getTempPumlFile().toAbsolutePath();
+		final Path rootDir = Paths.get("test").toAbsolutePath();
+
 		final FileOutputStream tmpTestFileOutStream = new FileOutputStream(tmpTestFile.toString());
 		tmpTestFileOutStream.write(diagramText.getBytes(UTF_8));
 		tmpTestFileOutStream.close();
 
 		// Essential activities when calling graphML export from command line
 		// Reverse Engineered from Run.java
-		String rootDir = Paths.get("test").toUri().getPath();
-		String pumlFile = tmpTestFile.toString();
-		Log.info("Test started with rootDir " + rootDir + " file " + pumlFile);
-		String[] args = new String[] {"-tgraphml", "-graphml-root-dir", rootDir , pumlFile };
+
+		String[] args = new String[] {"-tgraphml", "-graphml-root-dir", rootDir.toString() , tmpTestFile.toString() };
 		final Option option = new Option(args);
 		final File outputDir = null;
 		final File f = tmpTestFile.toFile();
