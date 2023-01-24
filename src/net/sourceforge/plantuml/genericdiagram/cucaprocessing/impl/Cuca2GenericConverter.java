@@ -739,8 +739,8 @@ public class Cuca2GenericConverter implements ICucaDiagramVisitor {
 		// to achieve file names relative to a root folder in the project
 		// aims at avoiding having user names in the path
 		String replace = ".";
-		if (graphmlRootDir.endsWith("/")) {
-			replace = "./";
+		if (graphmlRootDir.endsWith(File.separator)) {
+			replace = "." + File.separator;
 		}
 		return filePath.replace(graphmlRootDir, replace);
 	}
