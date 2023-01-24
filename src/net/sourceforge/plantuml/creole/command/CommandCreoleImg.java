@@ -61,22 +61,22 @@ public class CommandCreoleImg implements Command {
 
 	public int matchingSize(String line) {
 		final Matcher2 m = pattern.matcher(line);
-		if (m.find() == false) {
+		if (m.find() == false)
 			return 0;
-		}
+
 		return m.group(1).length();
 	}
 
 	public String executeAndGetRemaining(String line, StripeSimple stripe) {
 		final Matcher2 m = pattern.matcher(line);
-		if (m.find() == false) {
+		if (m.find() == false)
 			throw new IllegalStateException();
-		}
+
 		String src = m.group(2);
 		final double scale = Parser.getScale(m.group(3), 1);
-		if (src.toLowerCase().startsWith("src=")) {
+		if (src.toLowerCase().startsWith("src="))
 			src = src.substring(4);
-		}
+
 		src = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(src, "\"");
 		stripe.addImage(src, scale);
 		return line.substring(m.group(1).length());

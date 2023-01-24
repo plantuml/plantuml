@@ -42,6 +42,7 @@ import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.LineBreakStrategy;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -179,9 +180,12 @@ public class Style {
 	}
 
 	public UFont getUFont() {
-		final String family = value(PName.FontName).asString();
+		final String family = StringUtils
+				.eventuallyRemoveStartingAndEndingDoubleQuote(value(PName.FontName).asString());
 		final int fontStyle = value(PName.FontStyle).asFontStyle();
-		final int size = value(PName.FontSize).asInt();
+		int size = value(PName.FontSize).asInt(true);
+		if (size == -1)
+			size = 14;
 		return new UFont(family, fontStyle, size);
 	}
 
@@ -225,7 +229,7 @@ public class Style {
 		Style result = this.eventuallyOverride(PName.LineThickness, stroke.getThickness());
 		final double space = stroke.getDashSpace();
 		final double visible = stroke.getDashVisible();
-		result = result.eventuallyOverride(PName.LineStyle, "" + visible + ";" + space);
+		result = result.eventuallyOverride(PName.LineStyle, "" + visible + "-" + space);
 		return result;
 	}
 
@@ -296,7 +300,7 @@ public class Style {
 		final HColor backgroundColor = this.value(PName.BackGroundColor).asColor(set);
 		final HColor lineColor = this.value(PName.LineColor).asColor(set);
 		final UStroke stroke = this.getStroke();
-		final int cornersize = this.value(PName.RoundCorner).asInt();
+		final int cornersize = this.value(PName.RoundCorner).asInt(false);
 		final ClockwiseTopRightBottomLeft margin = this.getMargin();
 		final ClockwiseTopRightBottomLeft padding = this.getPadding();
 		final TextBlock result = TextBlockUtils.bordered(textBlock, stroke, lineColor, backgroundColor, cornersize,

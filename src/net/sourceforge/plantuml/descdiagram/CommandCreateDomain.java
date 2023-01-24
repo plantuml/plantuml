@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.descdiagram;
 
 import net.sourceforge.plantuml.FontParam;
-import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlMode;
@@ -60,6 +59,7 @@ import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.USymbols;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandCreateDomain extends SingleLineCommand2<DescriptionDiagram> {
 	public static final String DISPLAY_WITH_GENERIC = "[%g](.+?)(?:\\<(" + GenericRegexProducer.PATTERN + ")\\>)?[%g]";
@@ -100,13 +100,10 @@ public class CommandCreateDomain extends SingleLineCommand2<DescriptionDiagram> 
 		final String stereotype = arg.get("STEREO", 0);
 
 		final Ident ident = diagram.buildLeafIdent(codeString);
-		final Code code = diagram.V1972() ? ident : diagram.buildCode(codeString);
-		if (diagram.V1972() && diagram.leafExistSmart(ident)) {
+		final Code code = diagram.buildCode(codeString);
+		if (diagram.leafExist(code))
 			return CommandExecutionResult.error("Object already exists : " + codeString);
-		}
-		if (!diagram.V1972() && diagram.leafExist(code)) {
-			return CommandExecutionResult.error("Object already exists : " + codeString);
-		}
+
 		Display d = Display.getWithNewlines(display);
 		final String urlString = arg.get("URL", 0);
 		final String group = arg.get("GROUP", 0);

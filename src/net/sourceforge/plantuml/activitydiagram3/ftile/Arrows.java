@@ -35,63 +35,32 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile;
 
-import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.ugraphic.UPolygon;
+import net.sourceforge.plantuml.utils.Direction;
 
-public class Arrows {
+public abstract class Arrows {
 
-	final static private double delta1 = 10;
-	final static private double delta2 = 4;
+	public abstract UPolygon asToUp();
 
-	public static UPolygon asToUp() {
-		final UPolygon polygon = new UPolygon("asToUp");
-		polygon.addPoint(-delta2, delta1);
-		polygon.addPoint(0, 0);
-		polygon.addPoint(delta2, delta1);
-		polygon.addPoint(0, delta1 - 4);
-		return polygon;
-	}
+	public abstract UPolygon asToDown();
 
-	public static UPolygon asToDown() {
-		final UPolygon polygon = new UPolygon("asToDown");
-		polygon.addPoint(-delta2, -delta1);
-		polygon.addPoint(0, 0);
-		polygon.addPoint(delta2, -delta1);
-		polygon.addPoint(0, -delta1 + 4);
-		return polygon;
-	}
+	public abstract UPolygon asToRight();
 
-	public static UPolygon asToRight() {
-		final UPolygon polygon = new UPolygon("asToRight");
-		polygon.addPoint(-delta1, -delta2);
-		polygon.addPoint(0, 0);
-		polygon.addPoint(-delta1, delta2);
-		polygon.addPoint(-delta1 + 4, 0);
-		return polygon;
-	}
+	public abstract UPolygon asToLeft();
 
-	public static UPolygon asToLeft() {
-		final UPolygon polygon = new UPolygon("asToLeft");
-		polygon.addPoint(delta1, -delta2);
-		polygon.addPoint(0, 0);
-		polygon.addPoint(delta1, delta2);
-		polygon.addPoint(delta1 - 4, 0);
-		return polygon;
-	}
-
-	public static UPolygon asTo(Direction direction) {
-		if (direction == Direction.UP) {
+	public final UPolygon asTo(Direction direction) {
+		if (direction == Direction.UP)
 			return asToUp();
-		}
-		if (direction == Direction.DOWN) {
+
+		if (direction == Direction.DOWN)
 			return asToDown();
-		}
-		if (direction == Direction.LEFT) {
+
+		if (direction == Direction.LEFT)
 			return asToLeft();
-		}
-		if (direction == Direction.RIGHT) {
+
+		if (direction == Direction.RIGHT)
 			return asToRight();
-		}
+
 		throw new IllegalArgumentException();
 	}
 

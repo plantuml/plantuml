@@ -73,7 +73,7 @@ public class ComponentRoseReference extends AbstractTextualComponent {
 
 		this.symbolContextHeader = styleHeader.getSymbolContext(getIHtmlColorSet());
 		this.symbolContextBody = style.getSymbolContext(getIHtmlColorSet());
-		this.roundCorner = style.value(PName.RoundCorner).asInt();
+		this.roundCorner = style.value(PName.RoundCorner).asInt(false);
 		final FontConfiguration fcHeader = styleHeader.getFontConfiguration(getIHtmlColorSet());
 		this.position = style.getHorizontalAlignment();
 

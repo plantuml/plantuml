@@ -50,7 +50,6 @@ import net.sourceforge.plantuml.BaseFile;
 import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
-import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.Pragma;
 import net.sourceforge.plantuml.SkinParam;
@@ -127,6 +126,7 @@ import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.utils.Log;
 
 public final class GeneralImageBuilder {
 
@@ -296,11 +296,10 @@ public final class GeneralImageBuilder {
 	private Map<String, Double> maxX;
 
 	private final StringBounder stringBounder;
-	private final boolean mergeIntricated;
 	private final SName styleName;
 
-	public GeneralImageBuilder(boolean mergeIntricated, DotData dotData, EntityFactory entityFactory, UmlSource source,
-			Pragma pragma, StringBounder stringBounder, SName styleName) {
+	public GeneralImageBuilder(DotData dotData, EntityFactory entityFactory, UmlSource source, Pragma pragma,
+			StringBounder stringBounder, SName styleName) {
 		this.dotData = dotData;
 		this.styleName = styleName;
 		this.entityFactory = entityFactory;
@@ -308,7 +307,6 @@ public final class GeneralImageBuilder {
 		this.pragma = pragma;
 		this.stringBounder = stringBounder;
 		this.strictUmlStyle = dotData.getSkinParam().strictUmlStyle();
-		this.mergeIntricated = mergeIntricated;
 	}
 
 	final public StyleSignature getDefaultStyleDefinitionArrow(Stereotype stereotype) {
@@ -323,7 +321,17 @@ public final class GeneralImageBuilder {
 		if (strictUmlStyle)
 			return false;
 
-		return entity.isGroup() == false && entity.getLeafType() == LeafType.NOTE && onlyOneLink(entity);
+		if (entity.isGroup())
+			return false;
+
+		if (entity.getLeafType() != LeafType.NOTE)
+			return false;
+
+		final Link single = onlyOneLink(entity);
+		if (single == null)
+			return false;
+
+		return single.getOther(entity).getLeafType() != LeafType.NOTE;
 	}
 
 	static class EntityImageSimpleEmpty implements IEntityImage {
@@ -452,7 +460,7 @@ public final class GeneralImageBuilder {
 
 		final String graphvizVersion = extractGraphvizVersion(svg);
 		try {
-			dotStringFactory.solve(mergeIntricated, dotData.getEntityFactory(), svg);
+			dotStringFactory.solve(dotData.getEntityFactory(), svg);
 			final SvekResult result = new SvekResult(dotData, dotStringFactory);
 			this.maxX = dotStringFactory.getBibliotekon().getMaxX();
 			return result;
@@ -482,20 +490,19 @@ public final class GeneralImageBuilder {
 		return null;
 	}
 
-	private boolean onlyOneLink(IEntity ent) {
-		int nb = 0;
+	private Link onlyOneLink(IEntity ent) {
+		Link single = null;
 		for (Link link : dotData.getLinks()) {
 			if (link.isInvis())
 				continue;
+			if (link.contains(ent) == false)
+				continue;
 
-			if (link.contains(ent))
-				nb++;
-
-			if (nb > 1)
-				return false;
-
+			if (single != null)
+				return null;
+			single = link;
 		}
-		return nb == 1;
+		return single;
 	}
 
 	private IEntityImage error(File dotExe) {
@@ -597,14 +604,6 @@ public final class GeneralImageBuilder {
 	private void printGroup(DotStringFactory dotStringFactory, IGroup g) {
 		if (g.getGroupType() == GroupType.CONCURRENT_STATE)
 			return;
-
-		if (mergeIntricated) {
-			final IGroup intricated = dotData.getEntityFactory().isIntricated(g);
-			if (intricated != null) {
-				printGroup(dotStringFactory, intricated);
-				return;
-			}
-		}
 
 		final ClusterHeader clusterHeader = new ClusterHeader((EntityImp) g, dotData.getSkinParam(), dotData,
 				stringBounder);

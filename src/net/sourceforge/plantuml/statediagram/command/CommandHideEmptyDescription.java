@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.statediagram.command;
 
-import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -43,10 +42,13 @@ import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandHideEmptyDescription extends SingleLineCommand2<UmlDiagram> {
 
-	public CommandHideEmptyDescription() {
+	public static final CommandHideEmptyDescription ME = new CommandHideEmptyDescription();
+
+	private CommandHideEmptyDescription() {
 		super(getRegexConcat());
 	}
 

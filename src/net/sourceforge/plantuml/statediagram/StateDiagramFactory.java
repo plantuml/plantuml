@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.statediagram;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -54,6 +53,9 @@ import net.sourceforge.plantuml.command.note.CommandFactoryNoteOnLink;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.objectdiagram.command.CommandCreateJson;
+import net.sourceforge.plantuml.objectdiagram.command.CommandCreateJsonSingleLine;
+import net.sourceforge.plantuml.objectdiagram.command.CommandCreateMap;
 import net.sourceforge.plantuml.statediagram.command.CommandAddField;
 import net.sourceforge.plantuml.statediagram.command.CommandConcurrentState;
 import net.sourceforge.plantuml.statediagram.command.CommandCreatePackage2;
@@ -71,8 +73,7 @@ public class StateDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	protected List<Command> createCommands() {
-		final List<Command> cmds = new ArrayList<>();
+	protected void initCommandsList(List<Command> cmds) {
 		cmds.add(new CommandFootboxIgnored());
 		cmds.add(new CommandRankDir());
 		cmds.add(new CommandRemoveRestore());
@@ -102,11 +103,13 @@ public class StateDiagramFactory extends PSystemCommandFactory {
 		cmds.add(factoryNoteCommand.createSingleLine());
 		cmds.add(factoryNoteCommand.createMultiLine(false));
 
+		cmds.add(new CommandCreateMap());
+		cmds.add(new CommandCreateJson());
+		cmds.add(new CommandCreateJsonSingleLine());
+
 		CommonCommands.addCommonCommands1(cmds);
 		cmds.add(new CommandHideShow2());
 		cmds.add(new CommandNamespaceSeparator());
-
-		return cmds;
 	}
 
 }

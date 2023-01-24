@@ -38,11 +38,6 @@ package net.sourceforge.plantuml.creole;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.sourceforge.plantuml.ISkinSimple;
-import net.sourceforge.plantuml.creole.legacy.CreoleParser;
-import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-
 public class Parser {
 
 	public static final String MONOSPACED = "monospaced";

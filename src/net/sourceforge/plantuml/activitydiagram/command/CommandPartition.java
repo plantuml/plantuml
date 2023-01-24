@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.activitydiagram.command;
 
-import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagram;
 import net.sourceforge.plantuml.baraye.IEntity;
@@ -57,6 +56,7 @@ import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandPartition extends SingleLineCommand2<ActivityDiagram> {
 
@@ -89,7 +89,7 @@ public class CommandPartition extends SingleLineCommand2<ActivityDiagram> {
 			throws NoSuchColorException {
 		final String idShort = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("NAME", 0));
 		final Ident ident = diagram.buildLeafIdent(idShort);
-		final Code code = diagram.V1972() ? ident : diagram.buildCode(idShort);
+		final Code code = diagram.buildCode(idShort);
 		final IGroup currentPackage = diagram.getCurrentGroup();
 		diagram.gotoGroup(ident, code, Display.getWithNewlines(code), GroupType.PACKAGE, currentPackage,
 				NamespaceStrategy.SINGLE);

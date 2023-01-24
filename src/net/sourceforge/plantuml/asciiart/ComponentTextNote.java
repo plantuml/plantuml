@@ -65,23 +65,22 @@ public class ComponentTextNote extends AbstractComponentText {
 		final int height = (int) dimensionToUse.getHeight();
 		charArea.fillRect(' ', 2, 1, width - 3, height - 2);
 		if (type == ComponentType.NOTE) {
-			if (fileFormat == FileFormat.UTXT) {
+			if (fileFormat == FileFormat.UTXT)
 				charArea.drawNoteSimpleUnicode(2, 0, width - 2, height);
-			} else {
+			else
 				charArea.drawNoteSimple(2, 0, width - 2, height);
-			}
-		} else if (type == ComponentType.NOTE_BOX) {
-			if (fileFormat == FileFormat.UTXT) {
+		} else if (type == ComponentType.NOTE_BOX || type == ComponentType.NOTE_HEXAGONAL) {
+			if (fileFormat == FileFormat.UTXT)
 				charArea.drawBoxSimpleUnicode(2, 0, width - 2, height);
-			} else {
+			else
 				charArea.drawBoxSimple(2, 0, width - 2, height);
-			}
 		}
-		if (fileFormat == FileFormat.UTXT) {
+
+		if (fileFormat == FileFormat.UTXT)
 			charArea.drawStringsLRUnicode(stringsToDisplay.asList(), 3, 1);
-		} else {
+		else
 			charArea.drawStringsLRSimple(stringsToDisplay.asList(), 3, 1);
-		}
+
 	}
 
 	public double getPreferredHeight(StringBounder stringBounder) {

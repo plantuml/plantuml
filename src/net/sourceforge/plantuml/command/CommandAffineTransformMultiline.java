@@ -36,10 +36,13 @@
 package net.sourceforge.plantuml.command;
 
 import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandAffineTransformMultiline extends CommandMultilines<TitledDiagram> {
 
-	public CommandAffineTransformMultiline() {
+	public static final CommandAffineTransformMultiline ME = new CommandAffineTransformMultiline();
+
+	private CommandAffineTransformMultiline() {
 		super("^!transformation[%s]+\\{[%s]*$");
 	}
 

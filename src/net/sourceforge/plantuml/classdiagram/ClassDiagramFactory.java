@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.classdiagram;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -77,6 +76,7 @@ import net.sourceforge.plantuml.descdiagram.command.CommandCreateElementMultilin
 import net.sourceforge.plantuml.descdiagram.command.CommandCreateElementParenthesis;
 import net.sourceforge.plantuml.descdiagram.command.CommandNewpage;
 import net.sourceforge.plantuml.descdiagram.command.CommandPackageWithUSymbol;
+import net.sourceforge.plantuml.descdiagram.command.CommandTogether;
 import net.sourceforge.plantuml.objectdiagram.command.CommandCreateEntityObject;
 import net.sourceforge.plantuml.objectdiagram.command.CommandCreateEntityObjectMultilines;
 import net.sourceforge.plantuml.objectdiagram.command.CommandCreateJson;
@@ -91,8 +91,7 @@ public class ClassDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	protected List<Command> createCommands() {
-		final List<Command> cmds = new ArrayList<>();
+	protected void initCommandsList(List<Command> cmds) {
 		cmds.add(new CommandFootboxIgnored());
 
 		cmds.add(new CommandRankDir());
@@ -120,6 +119,7 @@ public class ClassDiagramFactory extends PSystemCommandFactory {
 		cmds.add(new CommandEndPackage());
 		cmds.add(new CommandPackageEmpty());
 		cmds.add(new CommandPackageWithUSymbol());
+		cmds.add(new CommandTogether());
 
 		cmds.add(new CommandCreateElementFull2(Mode.NORMAL_KEYWORD));
 		cmds.add(new CommandCreateElementFull2(Mode.WITH_MIX_PREFIX));
@@ -161,7 +161,5 @@ public class ClassDiagramFactory extends PSystemCommandFactory {
 		cmds.add(new CommandCreateElementMultilines(1));
 		CommonCommands.addTitleCommands(cmds);
 		CommonCommands.addCommonCommands2(cmds);
-
-		return cmds;
 	}
 }

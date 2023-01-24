@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.mindmap;
 
-import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.IRegex;
@@ -46,6 +45,7 @@ import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandMindMapOrgmode extends SingleLineCommand2<MindMapDiagram> {
 
@@ -55,7 +55,7 @@ public class CommandMindMapOrgmode extends SingleLineCommand2<MindMapDiagram> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandMindMapOrgmode.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("TYPE", "([ \t]*[*]+)"), //
+				new RegexLeaf("TYPE", "([ \t]*\\*+)"), //
 				new RegexOptional(new RegexLeaf("BACKCOLOR", "\\[(#\\w+)\\]")), //
 				new RegexLeaf("SHAPE", "(_)?"), //
 				RegexLeaf.spaceOneOrMore(), //

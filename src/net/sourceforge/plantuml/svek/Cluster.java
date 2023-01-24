@@ -43,6 +43,7 @@ import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -63,6 +64,7 @@ import net.sourceforge.plantuml.cucadiagram.CucaNote;
 import net.sourceforge.plantuml.cucadiagram.EntityPosition;
 import net.sourceforge.plantuml.cucadiagram.ICucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
+import net.sourceforge.plantuml.cucadiagram.Together;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizVersion;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -192,15 +194,18 @@ public class Cluster implements Moveable {
 			shs.put(node.getUid(), node);
 		}
 
-		for (SvekLine l : lines) {
+		for (SvekLine l : lines)
 			if (l.isInverted()) {
 				final SvekNode sh = shs.get(l.getStartUidPrefix());
-				if (sh != null && sh.getEntityPosition() == EntityPosition.NORMAL)
+				if (sh != null && isNormalPosition(sh))
 					firsts.add(0, sh);
 			}
-		}
 
 		return firsts;
+	}
+
+	private boolean isNormalPosition(final SvekNode sh) {
+		return sh.getEntityPosition() == EntityPosition.NORMAL;
 	}
 
 	private List<SvekNode> getNodesOrderedWithoutTop(Collection<SvekLine> lines) {
@@ -209,20 +214,19 @@ public class Cluster implements Moveable {
 
 		for (final Iterator<SvekNode> it = all.iterator(); it.hasNext();) {
 			final SvekNode sh = it.next();
-			if (sh.getEntityPosition() != EntityPosition.NORMAL) {
+			if (isNormalPosition(sh) == false) {
 				it.remove();
 				continue;
 			}
 			shs.put(sh.getUid(), sh);
 		}
 
-		for (SvekLine l : lines) {
+		for (SvekLine l : lines)
 			if (l.isInverted()) {
 				final SvekNode sh = shs.get(l.getStartUidPrefix());
 				if (sh != null)
 					all.remove(sh);
 			}
-		}
 
 		return all;
 	}
@@ -372,7 +376,7 @@ public class Cluster implements Moveable {
 		final Collection<ClusterPosition> insides = new ArrayList<>();
 		final List<XPoint2D> points = new ArrayList<>();
 		for (SvekNode sh : nodes)
-			if (sh.getEntityPosition() == EntityPosition.NORMAL)
+			if (isNormalPosition(sh))
 				insides.add(sh.getClusterPosition());
 			else
 				points.add(sh.getClusterPosition().getPointCenter());
@@ -461,6 +465,7 @@ public class Cluster implements Moveable {
 			return false;
 		for (SvekNode node : tmp)
 			node.appendShape(sb, stringBounder);
+
 		return true;
 
 	}
@@ -469,9 +474,29 @@ public class Cluster implements Moveable {
 			DotMode dotMode, GraphvizVersion graphvizVersion, UmlDiagramType type) {
 
 		SvekNode added = null;
+		final Map<Together, List<SvekNode>> togethers = new LinkedHashMap<>();
 		for (SvekNode node : getNodesOrderedWithoutTop(lines)) {
-			node.appendShape(sb, stringBounder);
+			final Together together = node.getTogether();
+			if (together == null) {
+				node.appendShape(sb, stringBounder);
+			} else {
+				List<SvekNode> list = togethers.get(together);
+				if (list == null) {
+					list = new ArrayList<>();
+					togethers.put(together, list);
+				}
+				list.add(node);
+			}
 			added = node;
+		}
+
+		int t = 0;
+		for (List<SvekNode> list : togethers.values()) {
+			sb.append("subgraph " + getClusterId() + "t" + t + " {\n");
+			for (SvekNode node : list)
+				node.appendShape(sb, stringBounder);
+			sb.append("}\n");
+			t++;
 		}
 
 		if (skinParam.useRankSame() && dotMode != DotMode.NO_LEFT_RIGHT_AND_XLABEL
@@ -491,10 +516,10 @@ public class Cluster implements Moveable {
 		if (tmp.size() == 0) {
 			sb.append(getClusterId() + "empty [shape=point,label=\"\"];");
 			SvekUtils.println(sb);
-		} else
-			for (SvekNode node : tmp) {
+		} else {
+			for (SvekNode node : tmp)
 				node.appendShape(sb, stringBounder);
-			}
+		}
 
 		for (Cluster child : getChildren())
 			child.printInternal(sb, lines, stringBounder, dotMode, graphvizVersion, type);

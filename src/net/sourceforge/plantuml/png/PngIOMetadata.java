@@ -50,8 +50,8 @@ import javax.imageio.metadata.IIOMetadata;
 import javax.imageio.metadata.IIOMetadataNode;
 import javax.imageio.stream.ImageOutputStream;
 
-import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.security.SImageIO;
+import net.sourceforge.plantuml.utils.Log;
 
 public class PngIOMetadata {
 

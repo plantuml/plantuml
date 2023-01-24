@@ -46,20 +46,24 @@ public class TranscoderSmart implements Transcoder {
 			new CompressionZlib());
 	private final Transcoder hexOnly = TranscoderImpl.utf8(new AsciiEncoderHex(), new ArobaseStringCompressor(),
 			new CompressionNone());
+	private final Transcoder zip = TranscoderImpl.utf8(new AsciiEncoder(), new ArobaseStringCompressor(),
+			new CompressionZip());
 
 	public String decode(String code) throws NoPlantumlCompressionException {
 		// Work in progress
 		// See https://github.com/plantuml/plantuml/issues/117
 
-		if (code.startsWith("~0")) {
+		if (code.startsWith("~0"))
 			return zlib.decode(code.substring(2));
-		}
-		if (code.startsWith("~1")) {
+
+		if (code.startsWith("~1"))
 			return oldOne.decode(code.substring(2));
-		}
-		if (code.startsWith("~h")) {
+
+		if (code.startsWith("~h"))
 			return hexOnly.decode(code.substring(2));
-		}
+
+		if (code.startsWith("~zip~"))
+			return zip.decode(code.substring(5));
 
 		try {
 			return zlib.decode(code);

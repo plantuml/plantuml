@@ -40,8 +40,8 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
 
-import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.tim.expression.TValue;
+import net.sourceforge.plantuml.utils.Log;
 
 public class TMemoryLocal extends ExecutionContexts implements TMemory {
 

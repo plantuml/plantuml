@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.classdiagram.command;
 
-import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlMode;
@@ -50,6 +49,7 @@ import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Ident;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandUrl extends SingleLineCommand2<AbstractEntityDiagram> {
 
@@ -68,24 +68,25 @@ public class CommandUrl extends SingleLineCommand2<AbstractEntityDiagram> {
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexOptional(new RegexLeaf("is")), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")"), RegexLeaf.end()); //
+				UrlBuilder.MANDATORY, //
+				RegexLeaf.end()); //
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(AbstractEntityDiagram diagram, LineLocation location, RegexResult arg) {
 		final String idShort = arg.get("CODE", 0);
 		final Ident ident = diagram.buildLeafIdent(idShort);
-		final Code code = diagram.V1972() ? ident : diagram.buildCode(idShort);
+		final Code code = diagram.buildCode(idShort);
 		final String urlString = arg.get("URL", 0);
 		final IEntity entity;
-		final boolean leafExist = diagram.V1972() ? diagram.leafExistSmart(ident) : diagram.leafExist(code);
-		if (leafExist) {
+		final boolean leafExist = diagram.leafExist(code);
+		if (leafExist)
 			entity = diagram.getOrCreateLeaf(ident, code, null, null);
-		} else if (diagram.V1972() ? diagram.isGroupStrict(ident) : diagram.isGroup(code)) {
-			entity = diagram.V1972() ? diagram.getGroupStrict(ident) : diagram.getGroup(code);
-		} else {
+		else if (diagram.isGroup(code))
+			entity = diagram.getGroup(code);
+		else
 			return CommandExecutionResult.error(code + " does not exist");
-		}
+
 		// final IEntity entity = diagram.getOrCreateLeaf(code, null);
 		final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), UrlMode.STRICT);
 		final Url url = urlBuilder.getUrl(urlString);

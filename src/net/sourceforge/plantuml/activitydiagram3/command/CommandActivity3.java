@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.activitydiagram3.command;
 import java.util.regex.Matcher;
 
 import net.sourceforge.plantuml.ColorParam;
-import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlMode;
@@ -56,22 +55,39 @@ import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandActivity3 extends SingleLineCommand2<ActivityDiagram3> {
 
 	public static final String endingGroup() {
 		return "(" //
-				+ ";" //
+				+ ";(?:[%s]*\\<\\<\\w+\\>\\>)?" //
 				+ "|" //
 				+ Matcher.quoteReplacement("\\\\") // that is simply \ character
 				+ "|" //
-				+ "(?<![/|<>}\\]])[/<}]" // About /<}
+				+ "(?<![/|<}\\]])[/<}]" // About /<}
 				+ "|" //
 				+ "(?<![/|}\\]])\\]" // About ]
 				+ "|" //
 				+ "(?<!\\</?\\w{1,5})(?<!\\<img[^>]{1,999})(?<!\\<[&$]\\w{1,999})(?<!\\>)\\>" // About >
 				+ "|" //
 				+ "(?<!\\|.{1,999})\\|" // About |
+				+ ")";
+	}
+
+	private static final String endingGroupShort() {
+		return "(" //
+				+ ";(?:[%s]*\\<\\<\\w+\\>\\>)?" //
+				+ "|" //
+				+ Matcher.quoteReplacement("\\\\") // that is simply \ character
+				+ "|" //
+				+ "(?<![/|<}\\]])[/<}]" // About /<}
+				+ "|" //
+				+ "(?<![/|}\\]])\\]" // About ]
+				+ "|" //
+				+ "(?<!\\</?\\w{1,5})(?<!\\<img[^>]{1,999})(?<!\\<[&$]\\w{1,999})(?<!\\>)\\>" // About >
+				+ "|" //
+				+ "\\|" // About |
 				+ ")";
 	}
 
@@ -86,14 +102,14 @@ public class CommandActivity3 extends SingleLineCommand2<ActivityDiagram3> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandActivity3.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
+				UrlBuilder.OPTIONAL, //
 				color().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("STEREO", "(\\<{2}.*\\>{2})?"), //
+				new RegexLeaf("STEREO", "(\\<\\<.*\\>\\>)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(":"), //
-				new RegexLeaf("LABEL", "(.*)"), //
-				new RegexLeaf("STYLE", endingGroup()), //
+				new RegexLeaf("LABEL", "(.*?)"), //
+				new RegexLeaf("STYLE", endingGroupShort()), //
 				RegexLeaf.end());
 	}
 
@@ -120,7 +136,7 @@ public class CommandActivity3 extends SingleLineCommand2<ActivityDiagram3> {
 			stereotype = Stereotype.build(stereo);
 			colors = colors.applyStereotype(stereotype, diagram.getSkinParam(), ColorParam.activityBackground);
 		}
-		final BoxStyle style = BoxStyle.fromChar(arg.get("STYLE", 0).charAt(0));
+		final BoxStyle style = BoxStyle.fromString(arg.get("STYLE", 0));
 		final Display display = Display.getWithNewlines2(arg.get("LABEL", 0));
 		return diagram.addActivity(display, style, url, colors, stereotype);
 	}

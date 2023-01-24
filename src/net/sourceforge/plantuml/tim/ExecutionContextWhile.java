@@ -34,10 +34,10 @@
  */
 package net.sourceforge.plantuml.tim;
 
-import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.tim.expression.TValue;
 import net.sourceforge.plantuml.tim.expression.TokenStack;
 import net.sourceforge.plantuml.tim.iterator.CodePosition;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public class ExecutionContextWhile {
 

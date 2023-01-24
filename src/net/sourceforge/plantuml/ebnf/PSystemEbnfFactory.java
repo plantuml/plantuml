@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.ebnf;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -52,9 +51,7 @@ public class PSystemEbnfFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	protected List<Command> createCommands() {
-
-		final List<Command> cmds = new ArrayList<>();
+	protected void initCommandsList(List<Command> cmds) {
 		CommonCommands.addCommonCommands1(cmds);
 		cmds.add(new CommandComment());
 		cmds.add(new CommandCommentMultilines2());
@@ -62,8 +59,6 @@ public class PSystemEbnfFactory extends PSystemCommandFactory {
 		cmds.add(new CommandEBnfSingleLine());
 		cmds.add(new CommandEbnfMultilines());
 		// cmds.add(new CommandNoteMultilines());
-
-		return cmds;
 	}
 
 	@Override

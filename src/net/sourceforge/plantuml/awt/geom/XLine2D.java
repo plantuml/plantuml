@@ -1,8 +1,12 @@
 package net.sourceforge.plantuml.awt.geom;
 
 import net.sourceforge.plantuml.awt.XShape;
+import net.sourceforge.plantuml.graphic.UDrawable;
+import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.ugraphic.ULine;
+import net.sourceforge.plantuml.ugraphic.UTranslate;
 
-public class XLine2D implements XShape {
+public class XLine2D implements XShape, UDrawable {
 
 	final public double x1;
 	final public double y1;
@@ -18,17 +22,16 @@ public class XLine2D implements XShape {
 		this.y1 = y1;
 		this.x2 = x2;
 		this.y2 = y2;
+	}
 
+	public XLine2D(XPoint2D p1, XPoint2D p2) {
+		this(p1.getX(), p1.getY(), p2.getX(), p2.getY());
 	}
 
 	public XPoint2D getMiddle() {
 		final double mx = (this.x1 + this.x2) / 2;
 		final double my = (this.y1 + this.y2) / 2;
 		return new XPoint2D(mx, my);
-	}
-
-	public XLine2D(XPoint2D p1, XPoint2D p2) {
-		this(p1.getX(), p1.getY(), p2.getX(), p2.getY());
 	}
 
 	public final double getX1() {
@@ -128,5 +131,32 @@ public class XLine2D implements XShape {
 			lenSq = 0;
 		}
 		return lenSq;
+	}
+
+	public XPoint2D intersect(XLine2D line2) {
+
+		final double s1x = this.x2 - this.x1;
+		final double s1y = this.y2 - this.y1;
+
+		final double s2x = line2.x2 - line2.x1;
+		final double s2y = line2.y2 - line2.y1;
+
+		final double s = (-s1y * (this.x1 - line2.x1) + s1x * (this.y1 - line2.y1)) / (-s2x * s1y + s1x * s2y);
+		final double t = (s2x * (this.y1 - line2.y1) - s2y * (this.x1 - line2.x1)) / (-s2x * s1y + s1x * s2y);
+
+		if (s >= 0 && s <= 1 && t >= 0 && t <= 1)
+			return new XPoint2D(this.x1 + (t * s1x), this.y1 + (t * s1y));
+
+		return null;
+	}
+
+	public void drawU(UGraphic ug) {
+		ug = ug.apply(new UTranslate(x1, y1));
+		final ULine line = new ULine(x2 - x1, y2 - y1);
+		ug.draw(line);
+	}
+
+	public double getAngle() {
+		return Math.atan2(y2 - y1, x2 - x1);
 	}
 }

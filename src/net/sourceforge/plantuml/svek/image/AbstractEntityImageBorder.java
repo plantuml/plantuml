@@ -47,6 +47,8 @@ import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.Cluster;
@@ -58,7 +60,13 @@ public abstract class AbstractEntityImageBorder extends AbstractEntityImage {
 	protected final Bibliotekon bibliotekon;
 	protected final Rankdir rankdir;
 
-	protected final TextBlock desc;
+	protected abstract StyleSignatureBasic getSignature();
+
+	final protected Style getStyle() {
+		final ILeaf leaf = (ILeaf) getEntity();
+		final Stereotype stereotype = leaf.getStereotype();
+		return getSignature().withTOBECHANGED(stereotype).getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+	}
 
 	AbstractEntityImageBorder(ILeaf leaf, ISkinParam skinParam, Cluster parent, Bibliotekon bibliotekon,
 			FontParam fontParam) {
@@ -69,13 +77,14 @@ public abstract class AbstractEntityImageBorder extends AbstractEntityImage {
 		this.entityPosition = leaf.getEntityPosition();
 		this.rankdir = skinParam.getRankdir();
 
-		if (entityPosition == EntityPosition.NORMAL) {
+		if (entityPosition == EntityPosition.NORMAL)
 			throw new IllegalArgumentException();
-		}
+	}
 
-		final Stereotype stereotype = leaf.getStereotype();
-		final FontConfiguration fc = FontConfiguration.create(skinParam, fontParam, stereotype);
-		this.desc = leaf.getDisplay().create(fc, HorizontalAlignment.CENTER, skinParam);
+	protected final TextBlock getDesc() {
+		final ILeaf leaf = (ILeaf) getEntity();
+		final FontConfiguration fc = FontConfiguration.create(getSkinParam(), getStyle());
+		return leaf.getDisplay().create(fc, HorizontalAlignment.CENTER, getSkinParam());
 	}
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {

@@ -47,7 +47,6 @@ import java.awt.font.TextLayout;
 import java.awt.geom.Rectangle2D;
 
 import net.sourceforge.plantuml.EnsureVisible;
-import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.FontStyle;
@@ -58,6 +57,7 @@ import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.UText;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.utils.Log;
 
 public class DriverTextAsPathG2d implements UDriver<UText, Graphics2D> {
 

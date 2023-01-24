@@ -99,6 +99,7 @@ public class LatexBuilder implements ScientificEquation {
 			this.icon = icon;
 		}
 
+		@Override
 		public BufferedImage getImage() {
 			if (cache == null) {
 				cache = new BufferedImage((int) (icon.getIconWidth() * scale), (int) (icon.getIconHeight() * scale),
@@ -131,6 +132,11 @@ public class LatexBuilder implements ScientificEquation {
 		@Override
 		public MutableImage monochrome() {
 			return this;
+		}
+
+		@Override
+		public double getScale() {
+			return scale;
 		}
 
 	}

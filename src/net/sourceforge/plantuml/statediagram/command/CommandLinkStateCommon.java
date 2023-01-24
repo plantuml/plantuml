@@ -36,10 +36,7 @@
  */
 package net.sourceforge.plantuml.statediagram.command;
 
-import net.sourceforge.plantuml.Direction;
-import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.baraye.IEntity;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -58,6 +55,8 @@ import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.statediagram.StateDiagram;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
+import net.sourceforge.plantuml.utils.Direction;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 abstract class CommandLinkStateCommon extends SingleLineCommand2<StateDiagram> {
 
@@ -122,7 +121,6 @@ abstract class CommandLinkStateCommon extends SingleLineCommand2<StateDiagram> {
 			link = link.getInv();
 
 		link.applyStyle(arg.getLazzy("ARROW_STYLE", 0));
-		link.setUmlDiagramType(UmlDiagramType.STATE);
 		diagram.addLink(link);
 
 		return CommandExecutionResult.ok();
@@ -170,11 +168,11 @@ abstract class CommandLinkStateCommon extends SingleLineCommand2<StateDiagram> {
 		if (codeString.startsWith("=") && codeString.endsWith("=")) {
 			final String codeString1 = removeEquals(codeString);
 			final Ident ident1 = diagram.buildLeafIdent(codeString1);
-			final Code code1 = diagram.V1972() ? ident1 : diagram.buildCode(codeString1);
+			final Code code1 = diagram.buildCode(codeString1);
 			return diagram.getOrCreateLeaf(ident1, code1, LeafType.SYNCHRO_BAR, null);
 		}
 		final Ident ident = diagram.buildLeafIdent(codeString);
-		final Code code = diagram.V1972() ? ident : diagram.buildCode(codeString);
+		final Code code = diagram.buildCode(codeString);
 		if (diagram.checkConcurrentStateOk(ident, code) == false)
 			return null;
 

@@ -77,7 +77,7 @@ public class GraphMLKeyDefinition {
 	public final static String GML_KEY_ID = "id";
 	public final static String GML_KEY_LABEL = "label";
 	public final static String GML_KEY_TYPE = "type";
-
+	public final static String GML_KEY_JSON = "json";
 	public final static String GML_KEY_ENTITY_TYPE = "entityType";
 	public final static String GML_KEY_PUML_ID = "pumlId";
 	public final static String GML_KEY_PUML_PATH = "pumlPath";

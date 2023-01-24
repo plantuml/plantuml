@@ -37,12 +37,12 @@ package net.sourceforge.plantuml.graphic;
 
 import java.util.StringTokenizer;
 
-import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UText;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.utils.Log;
 
 public class TileText extends AbstractTextBlock implements TextBlock {
 

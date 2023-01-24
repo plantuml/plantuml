@@ -62,7 +62,6 @@ import h.ST_Agrec_s;
 import h.ST_GVC_s;
 import h.ST_boxf;
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagram;
@@ -87,6 +86,9 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.Cluster;
 import net.sourceforge.plantuml.svek.ClusterHeader;
@@ -435,10 +437,17 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 		this.exportGroups(cluster1, group);
 	}
 
+	private Style getStyle() {
+		return StyleSignatureBasic
+				.of(SName.root, SName.element, diagram.getUmlDiagramType().getStyleName(), SName.arrow)
+				.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
+	}
+
 	private TextBlock getLabel(Link link) {
 		final double marginLabel = 1; // startUid.equals(endUid) ? 6 : 1;
 		ISkinParam skinParam = diagram.getSkinParam();
-		final FontConfiguration labelFont = FontConfiguration.create(skinParam, FontParam.ARROW, null);
+		final Style style = getStyle();
+		final FontConfiguration labelFont = style.getFontConfiguration(skinParam.getIHtmlColorSet());
 		final TextBlock label = link.getLabel().create(labelFont,
 				skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), skinParam);
 		if (TextBlockUtils.isEmpty(label, stringBounder))
@@ -454,7 +463,8 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 
 		final double marginLabel = 1; // startUid.equals(endUid) ? 6 : 1;
 		ISkinParam skinParam = diagram.getSkinParam();
-		final FontConfiguration labelFont = FontConfiguration.create(skinParam, FontParam.ARROW, null);
+		final Style style = getStyle();
+		final FontConfiguration labelFont = style.getFontConfiguration(skinParam.getIHtmlColorSet());
 		final TextBlock label = Display.getWithNewlines(tmp).create(labelFont,
 				skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), skinParam);
 		if (TextBlockUtils.isEmpty(label, stringBounder))

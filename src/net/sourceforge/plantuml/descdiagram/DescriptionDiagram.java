@@ -91,12 +91,12 @@ public class DescriptionDiagram extends AbstractEntityDiagram {
 				codeString = StringUtils.trin(codeString.substring(2));
 				codeString = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(codeString);
 				final Ident idNewLong = buildLeafIdent(codeString);
-				final Code code99 = this.V1972() ? idNewLong : buildCode(codeString);
+				final Code code99 = buildCode(codeString);
 				return getOrCreateLeafDefault(idNewLong, code99, LeafType.DESCRIPTION, USymbols.INTERFACE);
 			}
 			final String tmp4 = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(code.getName(), "\"([:");
 			final Ident idNewLong = ident.eventuallyRemoveStartingAndEndingDoubleQuote("\"([:");
-			code = this.V1972() ? idNewLong : buildCode(tmp4);
+			code = buildCode(tmp4);
 			return getOrCreateLeafDefault(idNewLong, code, LeafType.STILL_UNKNOWN, symbol);
 		}
 		return getOrCreateLeafDefault(ident, code, type, symbol);

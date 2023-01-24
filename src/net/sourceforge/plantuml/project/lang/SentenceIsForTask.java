@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.project.core.Task;
 public class SentenceIsForTask extends SentenceSimple {
 
 	public SentenceIsForTask() {
-		super(new SubjectTask(), Verbs.is(), new ComplementCompleted());
+		super(SubjectTask.ME, Verbs.is, new ComplementCompleted());
 	}
 
 	@Override

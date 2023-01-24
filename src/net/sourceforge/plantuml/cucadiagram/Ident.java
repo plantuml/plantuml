@@ -47,7 +47,7 @@ public class Ident implements Code {
 
 	final protected List<String> parts;
 
-	public /*private*/ Ident(List<String> parts) {
+	public /* private */ Ident(List<String> parts) {
 		this.parts = parts;
 	}
 
@@ -96,8 +96,6 @@ public class Ident implements Code {
 	}
 
 	public Code toCode(CucaDiagram diagram) {
-		if (diagram.V1972())
-			return this;
 		return CodeImpl.of(getLast());
 	}
 
@@ -228,9 +226,6 @@ public class Ident implements Code {
 	}
 
 	public void checkSameAs(Code code, String separator, CucaDiagram diagram) {
-		if (diagram.V1972()) {
-			return;
-		}
 		final String last = parts.get(parts.size() - 1);
 		if (separator == null) {
 			if (code.getName().equals(last) != true && code.getName().equals(toString(separator)) == false) {

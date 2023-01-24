@@ -59,8 +59,6 @@ public interface ISkinSimple extends SpriteContainer {
 
 	public int getDpi();
 
-	public LineBreakStrategy wrapWidth();
-
 	public void copyAllFrom(Map<String, String> other);
 
 	public SheetBuilder sheet(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,

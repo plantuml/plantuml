@@ -41,7 +41,6 @@ import java.util.Objects;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.CornerParam;
-import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SkinParamBackcolored;
 import net.sourceforge.plantuml.UmlDiagramType;
@@ -67,6 +66,7 @@ import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
@@ -79,6 +79,7 @@ import net.sourceforge.plantuml.ugraphic.UPath;
 import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.utils.Direction;
 
 public class EntityImageNote extends AbstractEntityImage implements Stencil {
 
@@ -88,7 +89,7 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 	private final int marginX1 = 6;
 	private final int marginX2 = 15;
 	private final int marginY = 5;
-	private final boolean withShadow;
+
 	private final ISkinParam skinParam;
 	private final Style style;
 
@@ -98,7 +99,6 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 		super(entity, getSkin(getISkinParam(skinParam, entity), entity));
 		this.skinParam = getISkinParam(skinParam, entity);
 
-		this.withShadow = getSkinParam().shadowing(getEntity().getStereotype());
 		final Display strings = entity.getDisplay();
 
 		this.style = getDefaultStyleDefinition(umlDiagramType.getStyleName())
@@ -118,7 +118,7 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 			textBlock = new TextBlockEmpty();
 		else
 			textBlock = BodyFactory.create3(strings, getSkinParam(), horizontalAlignment, fontConfiguration,
-					getSkinParam().wrapWidth(), style);
+					style.wrapWidth(), style);
 
 	}
 
@@ -186,8 +186,8 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 		return new XDimension2D(width, height);
 	}
 
-	private StyleSignatureBasic getDefaultStyleDefinition(SName sname) {
-		return StyleSignatureBasic.of(SName.root, SName.element, sname, SName.note);
+	private StyleSignature getDefaultStyleDefinition(SName sname) {
+		return StyleSignatureBasic.of(SName.root, SName.element, sname, SName.note).withTOBECHANGED(getStereo());
 	}
 
 	final public void drawU(UGraphic ug) {

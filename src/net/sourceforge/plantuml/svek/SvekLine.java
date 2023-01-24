@@ -45,11 +45,9 @@ import java.util.Set;
 
 import net.sourceforge.plantuml.AlignmentParam;
 import net.sourceforge.plantuml.ColorParam;
-import net.sourceforge.plantuml.Direction;
 import net.sourceforge.plantuml.Hideable;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
-import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.Pragma;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
@@ -108,6 +106,8 @@ import net.sourceforge.plantuml.ugraphic.UStroke;
 import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColors;
+import net.sourceforge.plantuml.utils.Direction;
+import net.sourceforge.plantuml.utils.Log;
 
 public class SvekLine implements Moveable, Hideable, GuideLine {
 
@@ -156,6 +156,8 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 	private final ISkinParam skinParam;
 
 	private final double labelShield;
+
+	private final UmlDiagramType type;
 
 	@Override
 	public String toString() {
@@ -222,13 +224,14 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 			((EntityImp) link.getEntity2()).ensureMargins(Margins.uniform(16));
 
 		if (link.getLinkArg().getKal1() != null)
-			this.kal1 = new Kal(this, link.getLinkArg().getKal1(), font, skinParam, (EntityImp) link.getEntity1(),
-					link, stringBounder);
+			this.kal1 = new Kal(this, link.getLinkArg().getKal1(), font, skinParam, (EntityImp) link.getEntity1(), link,
+					stringBounder);
 
 		if (link.getLinkArg().getKal2() != null)
-			this.kal2 = new Kal(this, link.getLinkArg().getKal2(), font, skinParam, (EntityImp) link.getEntity2(),
-					link, stringBounder);
+			this.kal2 = new Kal(this, link.getLinkArg().getKal2(), font, skinParam, (EntityImp) link.getEntity2(), link,
+					stringBounder);
 
+		this.type = skinParam.getUmlDiagramType();
 		this.link = Objects.requireNonNull(link);
 		this.skinParam = skinParam;
 		// this.umlType = link.getUmlDiagramType();
@@ -272,7 +275,7 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 				labelOnly = StringWithArrow.addMagicArrow(labelOnly, this, font);
 
 		} else {
-			final HorizontalAlignment alignment = getMessageTextAlignment(link.getUmlDiagramType(), skinParam);
+			final HorizontalAlignment alignment = getMessageTextAlignment(type, skinParam);
 			final boolean hasSeveralGuideLines = link.getLabel().hasSeveralGuideLines();
 			final TextBlock block;
 			if (hasSeveralGuideLines)

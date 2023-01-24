@@ -44,10 +44,10 @@ import net.sourceforge.plantuml.AFile;
 import net.sourceforge.plantuml.AFileRegular;
 import net.sourceforge.plantuml.AFileZipEntry;
 import net.sourceforge.plantuml.AParentFolder;
-import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SecurityUtils;
+import net.sourceforge.plantuml.utils.Log;
 
 public class ImportedFiles {
 

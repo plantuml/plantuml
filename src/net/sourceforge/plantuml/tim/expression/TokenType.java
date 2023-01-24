@@ -115,7 +115,7 @@ public enum TokenType {
 		if (lastToken == null)
 			return false;
 		final TokenType type = lastToken.getTokenType();
-		if (type == TokenType.OPERATOR)
+		if (type == TokenType.OPERATOR || type == TokenType.OPEN_PAREN_MATH || type == TokenType.COMMA)
 			return false;
 		return true;
 	}

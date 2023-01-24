@@ -36,21 +36,23 @@
     LineThickness 1
     Margin 5
   }
-  caption {
-    LineThickness 0
-  }
-  footer {
-    LineThickness 0
-  }
-  header {
-    LineThickness 0
+  document {
+    caption {
+      LineThickness 0
+    }
+    footer {
+      LineThickness 0
+    }
+    header {
+      LineThickness 0
+    }
+    title {
+      FontSize 22
+      LineThickness 0
+    }
   }
   node {
     MaximumWidth 300
-  }
-  title {
-    FontSize 22
-    LineThickness 0
   }
 </style>
 

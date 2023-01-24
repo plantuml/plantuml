@@ -42,8 +42,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.SkinParam;
+import net.sourceforge.plantuml.utils.Log;
 
 public class StyleBuilder implements AutomaticCounter {
 

@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.classdiagram.command;
 
 import net.sourceforge.plantuml.FontParam;
-import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
@@ -65,6 +64,7 @@ import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 
@@ -105,11 +105,11 @@ public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("TAGS1", Stereotag.pattern() + "?"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("STEREO", "(\\<{2}.*\\>{2})?"), //
+				new RegexLeaf("STEREO", "(\\<\\<.*\\>\\>)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("TAGS2", Stereotag.pattern() + "?"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
+				UrlBuilder.OPTIONAL, //
 				RegexLeaf.spaceZeroOrMore(), //
 				color().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -167,25 +167,14 @@ public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 			}
 		} else {
 			final Ident idNewLong = diagram.buildLeafIdent(idShort);
-			if (diagram.V1972()) {
-				if (diagram.leafExistSmart(idNewLong)) {
-					entity = diagram.getOrCreateLeaf(idNewLong, idNewLong, type, null);
-					if (entity.muteToType(type, null) == false)
-						return CommandExecutionResult.error("Bad name");
+			final Code code = diagram.buildCode(idShort);
+			if (diagram.leafExist(code)) {
+				entity = diagram.getOrCreateLeaf(idNewLong, code, type, null);
+				if (entity.muteToType(type, null) == false)
+					return CommandExecutionResult.error("Bad name");
 
-				} else {
-					entity = diagram.createLeaf(idNewLong, idNewLong, Display.getWithNewlines(display), type, null);
-				}
 			} else {
-				final Code code = diagram.buildCode(idShort);
-				if (diagram.leafExist(code)) {
-					entity = diagram.getOrCreateLeaf(idNewLong, code, type, null);
-					if (entity.muteToType(type, null) == false)
-						return CommandExecutionResult.error("Bad name");
-
-				} else {
-					entity = diagram.createLeaf(idNewLong, code, Display.getWithNewlines(display), type, null);
-				}
+				entity = diagram.createLeaf(idNewLong, code, Display.getWithNewlines(display), type, null);
 			}
 		}
 		if (stereo != null) {

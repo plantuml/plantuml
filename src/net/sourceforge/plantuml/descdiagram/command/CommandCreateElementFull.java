@@ -37,7 +37,6 @@
 package net.sourceforge.plantuml.descdiagram.command;
 
 import net.sourceforge.plantuml.FontParam;
-import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
@@ -69,6 +68,7 @@ import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiagram> {
 
@@ -126,7 +126,7 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("TAGS2", Stereotag.pattern() + "?"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")?"), //
+				UrlBuilder.OPTIONAL, //
 				RegexLeaf.spaceZeroOrMore(), //
 				color().getRegex(), RegexLeaf.end());
 	}
@@ -230,12 +230,9 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 
 		final String idShort = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(codeRaw);
 		final Ident ident = diagram.buildLeafIdent(idShort);
-		final Code code = diagram.V1972() ? ident : diagram.buildCode(idShort);
-		if (!diagram.V1972() && diagram.isGroup(code))
+		final Code code = diagram.buildCode(idShort);
+		if (diagram.isGroup(code))
 			return CommandExecutionResult.error("This element (" + code.getName() + ") is already defined");
-
-		if (diagram.V1972() && diagram.isGroupStrict(ident))
-			return CommandExecutionResult.error("This element (" + ident.getName() + ") is already defined");
 
 		String display = displayRaw;
 		if (display == null)
@@ -283,31 +280,17 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 
 	public static boolean existsWithBadType3(AbstractEntityDiagram diagram, Code code, Ident ident, LeafType type,
 			USymbol usymbol) {
-		if (diagram.V1972()) {
-			if (diagram.leafExistSmart(ident) == false)
-				return false;
-
-			final ILeaf other = diagram.getLeafSmart(ident);
-			if (other.getLeafType() != type)
-				return true;
-
-			if (usymbol != null && other.getUSymbol() != usymbol)
-				return true;
-
+		if (diagram.leafExist(code) == false)
 			return false;
-		} else {
-			if (diagram.leafExist(code) == false)
-				return false;
 
-			final ILeaf other = diagram.getLeaf(code);
-			if (other.getLeafType() != type)
-				return true;
+		final ILeaf other = diagram.getLeaf(code);
+		if (other.getLeafType() != type)
+			return true;
 
-			if (usymbol != null && other.getUSymbol() != usymbol)
-				return true;
+		if (usymbol != null && other.getUSymbol() != usymbol)
+			return true;
 
-			return false;
-		}
+		return false;
 	}
 
 	private char getCharEncoding(final String codeRaw) {

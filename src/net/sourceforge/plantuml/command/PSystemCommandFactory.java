@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.command;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -42,22 +43,23 @@ import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.EmbeddedDiagram;
 import net.sourceforge.plantuml.ErrorUml;
 import net.sourceforge.plantuml.ErrorUmlType;
-import net.sourceforge.plantuml.LineLocation;
-import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.annotation.HaxeIgnored;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.error.PSystemErrorUtils;
+import net.sourceforge.plantuml.utils.BlocLines;
+import net.sourceforge.plantuml.utils.LineLocation;
 import net.sourceforge.plantuml.utils.StartUtils;
+import net.sourceforge.plantuml.utils.StringLocated;
 import net.sourceforge.plantuml.version.IteratorCounter2;
 
 public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 
-	private List<Command> cmds;
+	private final List<Command> cmds = new ArrayList<>();
 
-	protected abstract List<Command> createCommands();
+	protected abstract void initCommandsList(List<Command> cmds);
 
 	public abstract AbstractPSystem createEmptyDiagram(UmlSource source, Map<String, String> skinParam);
 
@@ -149,8 +151,10 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 
 	private Step getCandidate(final IteratorCounter2 it) {
 		final BlocLines single = BlocLines.single(it.peek());
-		if (cmds == null)
-			cmds = createCommands();
+		synchronized (cmds) {
+			if (cmds.size() == 0)
+				initCommandsList(cmds);
+		}
 
 		for (Command cmd : cmds) {
 			final CommandControl result = cmd.isValid(single);

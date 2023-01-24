@@ -53,7 +53,9 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.regex.Pattern;
 
-import net.sourceforge.plantuml.command.BlocLines;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Arrows;
+import net.sourceforge.plantuml.activitydiagram3.ftile.ArrowsRegular;
+import net.sourceforge.plantuml.activitydiagram3.ftile.ArrowsTriangle;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
@@ -78,6 +80,8 @@ import net.sourceforge.plantuml.style.FromSkinparamToStyle;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleLoader;
+import net.sourceforge.plantuml.style.parser.StyleParser;
+import net.sourceforge.plantuml.style.parser.StyleParsingException;
 import net.sourceforge.plantuml.svek.ConditionEndStyle;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 import net.sourceforge.plantuml.svek.PackageStyle;
@@ -88,6 +92,7 @@ import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorSet;
 import net.sourceforge.plantuml.ugraphic.color.HColors;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
+import net.sourceforge.plantuml.utils.BlocLines;
 
 public class SkinParam implements ISkinParam {
 
@@ -107,6 +112,8 @@ public class SkinParam implements ISkinParam {
 		if (styleBuilder == null)
 			try {
 				this.styleBuilder = getCurrentStyleBuilderInternal();
+			} catch (StyleParsingException e) {
+				Logme.error(e);
 			} catch (IOException e) {
 				Logme.error(e);
 			}
@@ -129,7 +136,7 @@ public class SkinParam implements ISkinParam {
 		this.skin = newSkin;
 	}
 
-	public StyleBuilder getCurrentStyleBuilderInternal() throws IOException {
+	public StyleBuilder getCurrentStyleBuilderInternal() throws IOException, StyleParsingException {
 		final StyleLoader tmp = new StyleLoader(this);
 		StyleBuilder result = tmp.loadSkin(this.getDefaultSkin());
 		if (result == null)
@@ -176,9 +183,11 @@ public class SkinParam implements ISkinParam {
 			final StyleBuilder styleBuilder = this.getCurrentStyleBuilder();
 			try {
 				final BlocLines lines = BlocLines.load(internalIs, null);
-				for (Style modifiedStyle : StyleLoader.getDeclaredStyles(lines, styleBuilder))
+				for (Style modifiedStyle : StyleParser.parse(lines, styleBuilder))
 					this.muteStyle(modifiedStyle);
 
+			} catch (StyleParsingException e) {
+				Logme.error(e);
 			} catch (IOException e) {
 				Logme.error(e);
 			}
@@ -891,12 +900,6 @@ public class SkinParam implements ISkinParam {
 	}
 
 	@Override
-	public LineBreakStrategy wrapWidth() {
-		final String value = getValue("wrapwidth");
-		return new LineBreakStrategy(value);
-	}
-
-	@Override
 	public LineBreakStrategy swimlaneWrapTitleWidth() {
 		final String value = getValue("swimlanewraptitlewidth");
 		return new LineBreakStrategy(value);
@@ -1219,6 +1222,13 @@ public class SkinParam implements ISkinParam {
 			cache.put(key, result);
 		}
 		return result;
+	}
+
+	@Override
+	public Arrows arrows() {
+		if (strictUmlStyle())
+			return new ArrowsTriangle();
+		return new ArrowsRegular();
 	}
 
 }
