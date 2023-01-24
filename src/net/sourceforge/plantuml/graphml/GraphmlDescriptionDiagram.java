@@ -71,6 +71,7 @@
 package net.sourceforge.plantuml.graphml;
 
 import java.io.OutputStream;
+import java.io.File;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -89,14 +90,13 @@ public class GraphmlDescriptionDiagram implements XmlDiagramTransformer {
   private final GraphMLExporter exporter;
 
 
-	public GraphmlDescriptionDiagram(DescriptionDiagram diagram, SuggestedFile suggestedFile, String graphmlRootDir) throws ParserConfigurationException {
+	public GraphmlDescriptionDiagram(DescriptionDiagram diagram, SuggestedFile suggestedFile,
+					String graphmlRootDir, File originalFile) throws ParserConfigurationException {
 
-		String parentDir = suggestedFile.getParentFile().toURI().getPath();
-		String sourceFileName = suggestedFile.getName();
 		Integer blockCount = Integer.valueOf(suggestedFile.toString().replaceAll("(\\[|\\])", ""));
 
 		this.diagram = diagram;
-		this.converter = new Cuca2GenericConverter(parentDir + sourceFileName, blockCount, graphmlRootDir);
+		this.converter = new Cuca2GenericConverter(suggestedFile.getFile(blockCount).toString(), blockCount, graphmlRootDir, originalFile);
 		this.exporter = new GraphMLExporter();
 
 		converter.visitCucaDiagram(new CucaDiagramWrapper(diagram));

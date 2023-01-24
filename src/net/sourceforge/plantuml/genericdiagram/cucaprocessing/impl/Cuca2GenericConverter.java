@@ -103,15 +103,17 @@ public class Cuca2GenericConverter implements ICucaDiagramVisitor {
 	Map<String, GenericModelElement> processedCucaElementsMap;
 	IGenericModelCollector collector = new SimpleGenericModel();
 	GenericModelElementFactory elementFactory = new GenericModelElementFactory();
-	String file;  //path to source file
+	String suggestedFile;  //path to suggested output file
+	File sourceFile; //path to source file
 	String graphmlRootDir; // path to directory which is assumed to be the root of the project
 	int blockCount; // a file can have multiple @startuml..@enduml blocks, zero based count
 
-	public Cuca2GenericConverter(String file, int blockCount, String graphmlRootDir) {
+	public Cuca2GenericConverter(String suggestedFile, int blockCount, String graphmlRootDir, File sourceFile) {
 
-		this.file = file;
+		this.suggestedFile = suggestedFile;
 		this.blockCount = blockCount;
 		this.graphmlRootDir = graphmlRootDir;
+		this.sourceFile = sourceFile;
 
 		initLeafTypeMap();
 		initDecorMap();
@@ -134,11 +136,13 @@ public class Cuca2GenericConverter implements ICucaDiagramVisitor {
 			throw new IllegalArgumentException("missing command line parameter -graphml-root-dir");
 		}
 		File root  = new File(this.graphmlRootDir);
-		File sourceFile = new File(this.file);
+		File sourceFile = this.sourceFile;
 		boolean ok = root.exists() &&
 						root.isDirectory() &&
 						sourceFile.exists() &&
 						sourceFile.isFile() &&
+						// sourcefile is within the root directory
+						// ensures that we can use rleative paths in graphML file
 						sourceFile.getPath().startsWith(root.getPath());
 
 		if (!ok) {
@@ -496,7 +500,7 @@ public class Cuca2GenericConverter implements ICucaDiagramVisitor {
 		GenericDiagram genericDiagram = elementFactory.genericDiagramSupplier.get();
 
 		String pumlId = "diag" + this.blockCount;
-		String label = this.getFileName();
+		String label = this.getSourceFileName();
 		genericDiagram.setSourceFile(this.getSourceFile());
 		genericDiagram.setPumlId(pumlId);
 		genericDiagram.setLabel(label);
@@ -722,12 +726,13 @@ public class Cuca2GenericConverter implements ICucaDiagramVisitor {
 	private String getPumlElementRootPath() {
 		// since we may have multiple blocks within a diagram,
 		// we add the block count to have a unique path to all puml elements
-		return stripRoot(file.substring(0, file.lastIndexOf('.')) + "/" + this.blockCount + "/");
+		return stripRoot(sourceFile.toString().substring(0, sourceFile.toString().lastIndexOf('.'))
+						+ "/" + this.blockCount + "/");
 
 	}
 
 	private String getSourceFile() {
-		return stripRoot(file);
+		return stripRoot(sourceFile.getAbsolutePath());
 	}
 
 	private String stripRoot(String filePath) {
@@ -739,9 +744,10 @@ public class Cuca2GenericConverter implements ICucaDiagramVisitor {
 		}
 		return filePath.replace(graphmlRootDir, replace);
 	}
-	private String getFileName() {
-		String[] tmp = file.split("/");
-		return tmp[tmp.length - 1];
+	private String getSourceFileName() {
+
+		return sourceFile.getName();
+
 	}
 
 	public SimpleGenericModel getModel() {

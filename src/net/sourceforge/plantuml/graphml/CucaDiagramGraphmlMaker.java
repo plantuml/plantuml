@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.graphml;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -57,14 +58,15 @@ public final class CucaDiagramGraphmlMaker {
 		this.diagram = diagram;
 	}
 
-	public void createFiles(OutputStream fos, SuggestedFile suggestedFile, String graphmlRootDir) throws IOException {
+	public void createFiles(OutputStream fos, SuggestedFile suggestedFile,
+					String graphmlRootDir, File  originalFile) throws IOException {
 		try {
 
 			final XmlDiagramTransformer xmi;
 			if (diagram instanceof DescriptionDiagram)
-				xmi = new GraphmlDescriptionDiagram((DescriptionDiagram) diagram, suggestedFile, graphmlRootDir);
+				xmi = new GraphmlDescriptionDiagram((DescriptionDiagram) diagram, suggestedFile, graphmlRootDir, originalFile);
 			else if (diagram instanceof ClassDiagram) {
-				xmi = new GraphmlClassDiagram((ClassDiagram) diagram, suggestedFile, graphmlRootDir);
+				xmi = new GraphmlClassDiagram((ClassDiagram) diagram, suggestedFile, graphmlRootDir, originalFile);
 			} else
 				throw new UnsupportedOperationException();
 

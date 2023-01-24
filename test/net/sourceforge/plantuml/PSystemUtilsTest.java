@@ -78,6 +78,6 @@ class PSystemUtilsTest {
 
 		final SuggestedFile suggestedFile = SuggestedFile.fromOutputFile(tempDir.resolve("output").toFile(), PNG, 0);
 
-		return PSystemUtils.exportDiagrams(diagram, suggestedFile, new FileFormatOption(PNG), false);
+		return PSystemUtils.exportDiagrams(diagram, suggestedFile, new FileFormatOption(PNG), false, null);
 	}
 }
