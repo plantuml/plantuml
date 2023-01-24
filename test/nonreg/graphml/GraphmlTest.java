@@ -60,6 +60,8 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import net.sourceforge.plantuml.utils.Log;
+
 import org.junit.jupiter.api.AfterEach;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -240,7 +242,10 @@ public class GraphmlTest {
 
 		// Essential activities when calling graphML export from command line
 		// Reverse Engineered from Run.java
-		String[] args = new String[] {"-tgraphml", "-graphml-root-dir", Paths.get("test").toUri().getPath() , tmpTestFile.toString()};
+		String rootDir = Paths.get("test").toUri().getPath();
+		String pumlFile = tmpTestFile.toString();
+		Log.info("Test started with rootDir " + rootDir + " file " + pumlFile);
+		String[] args = new String[] {"-tgraphml", "-graphml-root-dir", rootDir , pumlFile };
 		final Option option = new Option(args);
 		final File outputDir = null;
 		final File f = tmpTestFile.toFile();
