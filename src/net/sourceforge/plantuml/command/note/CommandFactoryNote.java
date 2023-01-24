@@ -137,8 +137,8 @@ public final class CommandFactoryNote implements SingleMultiFactoryCommand<Abstr
 			throws NoSuchColorException {
 		final String idShort = arg.get("CODE", 0);
 		final Ident ident = diagram.buildLeafIdent(idShort);
-		final Code code = diagram.V1972() ? ident : diagram.buildCode(idShort);
-		final boolean leafExist = diagram.V1972() ? diagram.leafExistSmart(ident) : diagram.leafExist(code);
+		final Code code = diagram.buildCode(idShort);
+		final boolean leafExist = diagram.leafExist(code);
 		if (leafExist)
 			return CommandExecutionResult.error("Note already created: " + code.getName());
 

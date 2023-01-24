@@ -123,11 +123,11 @@ public final class CommandFactoryNoteActivity implements SingleMultiFactoryComma
 
 				final String codeString = diagram.getUniqueSequence("GMN");
 				final Ident ident = diagram.buildLeafIdent(codeString);
-				final Code code = diagram.V1972() ? ident : diagram.buildCode(codeString);
+				final Code code = diagram.buildCode(codeString);
 				final IEntity note = diagram.createLeaf(ident, code, strings, LeafType.NOTE, null);
-				if (url != null) {
+				if (url != null)
 					note.addUrl(url);
-				}
+
 				return executeInternal(diagram, arg, note);
 			}
 		};
@@ -141,7 +141,7 @@ public final class CommandFactoryNoteActivity implements SingleMultiFactoryComma
 					RegexResult arg) throws NoSuchColorException {
 				final String tmp = diagram.getUniqueSequence("GN");
 				final Ident ident = diagram.buildLeafIdent(tmp);
-				final Code code = diagram.V1972() ? ident : diagram.buildCode(tmp);
+				final Code code = diagram.buildCode(tmp);
 				final IEntity note = diagram.createNote(ident, code, Display.getWithNewlines(arg.get("NOTE", 0)));
 				return executeInternal(diagram, arg, note);
 			}
@@ -156,9 +156,8 @@ public final class CommandFactoryNoteActivity implements SingleMultiFactoryComma
 				s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s));
 
 		IEntity activity = diagram.getLastEntityConsulted();
-		if (activity == null) {
+		if (activity == null)
 			activity = diagram.getStart();
-		}
 
 		final Link link;
 
@@ -167,21 +166,21 @@ public final class CommandFactoryNoteActivity implements SingleMultiFactoryComma
 
 		final LinkType type = new LinkType(LinkDecor.NONE, LinkDecor.NONE).goDashed();
 
-		if (position == Position.RIGHT) {
-			link = new Link(diagram.getIEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(), activity, note,
-					type, LinkArg.noDisplay(1));
-		} else if (position == Position.LEFT) {
-			link = new Link(diagram.getIEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(), note, activity,
-					type, LinkArg.noDisplay(1));
-		} else if (position == Position.BOTTOM) {
-			link = new Link(diagram.getIEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(), activity, note,
-					type, LinkArg.noDisplay(2));
-		} else if (position == Position.TOP) {
-			link = new Link(diagram.getIEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(), note, activity,
-					type, LinkArg.noDisplay(2));
-		} else {
+		if (position == Position.RIGHT)
+			link = new Link(diagram.getIEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(), activity,
+					note, type, LinkArg.noDisplay(1));
+		else if (position == Position.LEFT)
+			link = new Link(diagram.getIEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(), note,
+					activity, type, LinkArg.noDisplay(1));
+		else if (position == Position.BOTTOM)
+			link = new Link(diagram.getIEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(), activity,
+					note, type, LinkArg.noDisplay(2));
+		else if (position == Position.TOP)
+			link = new Link(diagram.getIEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(), note,
+					activity, type, LinkArg.noDisplay(2));
+		else
 			throw new IllegalArgumentException();
-		}
+
 		diagram.addLink(link);
 		return CommandExecutionResult.ok();
 	}

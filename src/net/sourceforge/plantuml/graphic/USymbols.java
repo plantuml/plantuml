@@ -77,20 +77,21 @@ public abstract class USymbols {
 	public final static USymbol COLLECTIONS = record("COLLECTIONS", new USymbolCollections());
 	public final static USymbol AGENT = record("AGENT", new USymbolRectangle(SName.agent));
 	public final static USymbol ACTOR_STICKMAN = record("ACTOR_STICKMAN", new USymbolActor(ActorStyle.STICKMAN));
-	public final static USymbol ACTOR_STICKMAN_BUSINESS = record("ACTOR_STICKMAN_BUSINESS", new USymbolActor(ActorStyle.STICKMAN_BUSINESS));
+	public final static USymbol ACTOR_STICKMAN_BUSINESS = record("ACTOR_STICKMAN_BUSINESS",
+			new USymbolActor(ActorStyle.STICKMAN_BUSINESS));
 	public final static USymbol ACTOR_AWESOME = record("ACTOR_AWESOME", new USymbolActor(ActorStyle.AWESOME));
 	public final static USymbol ACTOR_HOLLOW = record("ACTOR_HOLLOW", new USymbolActor(ActorStyle.HOLLOW));
 	public final static USymbol USECASE = null;
 	public final static USymbol COMPONENT1 = record("COMPONENT1", new USymbolComponent1());
 	public final static USymbol COMPONENT2 = record("COMPONENT2", new USymbolComponent2());
-	public final static USymbol COMPONENT_RECTANGLE = record("COMPONENT_RECTANGLE", new USymbolRectangle(SName.component));
+	public final static USymbol COMPONENT_RECTANGLE = record("COMPONENT_RECTANGLE",
+			new USymbolRectangle(SName.component));
 	public final static USymbol BOUNDARY = record("BOUNDARY", new USymbolBoundary());
 	public final static USymbol ENTITY_DOMAIN = record("ENTITY_DOMAIN", new USymbolEntityDomain());
 	public final static USymbol CONTROL = record("CONTROL", new USymbolControl());
 	public final static USymbol INTERFACE = record("INTERFACE", new USymbolInterface());
 	public final static USymbol QUEUE = record("QUEUE", new USymbolQueue());
 	public final static USymbol STACK = record("STACK", new USymbolStack());
-	public final static USymbol TOGETHER = record("TOGETHER", new USymbolTogether());
 
 	public static USymbol fromString(String s, ActorStyle actorStyle, ComponentStyle componentStyle,
 			PackageStyle packageStyle) {

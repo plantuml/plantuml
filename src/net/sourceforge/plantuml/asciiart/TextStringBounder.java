@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.asciiart;
 
+import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.StringBounderRaw;
 import net.sourceforge.plantuml.ugraphic.UFont;
@@ -46,6 +47,11 @@ public class TextStringBounder extends StringBounderRaw {
 		final int length2 = text.length();
 		final int length3 = Wcwidth.length(text);
 		return new XDimension2D(length2, 1);
+	}
+
+	@Override
+	public FileFormat getNativeFormat() {
+		return FileFormat.ATXT;
 	}
 
 }

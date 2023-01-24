@@ -52,8 +52,6 @@ import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 
 public interface ICucaDiagram extends GroupHierarchy, PortionShower, Annotated {
 
-	boolean V1972();
-
 	ISkinParam getSkinParam();
 
 	UmlDiagramType getUmlDiagramType();
@@ -79,8 +77,6 @@ public interface ICucaDiagram extends GroupHierarchy, PortionShower, Annotated {
 	ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) throws IOException;
 
 	String getNamespaceSeparator();
-
-	boolean mergeIntricated();
 
 	Collection<IGroup> getGroups(boolean b);
 

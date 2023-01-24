@@ -223,15 +223,12 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 
 		} else {
 			final Ident ident = diagram.buildLeafIdent(idShort);
-			final Code code = diagram.V1972() ? ident : diagram.buildCode(idShort);
-			if (diagram.isGroup(code)) {
-				cl1 = diagram.V1972() ? diagram.getGroupStrict(ident) : diagram.getGroup(code);
-			} else {
-				if (diagram.V1972() && diagram.leafExistSmart(diagram.cleanIdent(ident)))
-					cl1 = diagram.getLeafSmart(diagram.cleanIdent(ident));
-				else
-					cl1 = diagram.getOrCreateLeaf(ident, code, null, null);
-			}
+			final Code code = diagram.buildCode(idShort);
+			if (diagram.isGroup(code))
+				cl1 = diagram.getGroup(code);
+			else
+				cl1 = diagram.getOrCreateLeaf(ident, code, null, null);
+
 		}
 
 		final Position position = Position.valueOf(StringUtils.goUpperCase(pos))
@@ -253,11 +250,8 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 
 		final String tmp = diagram.getUniqueSequence("GMN");
 		final Ident idNewLong = diagram.buildLeafIdent(tmp);
-		final IEntity note;
-		if (diagram.V1972())
-			note = diagram.createLeaf(idNewLong, idNewLong, strings.toDisplay(), LeafType.NOTE, null);
-		else
-			note = diagram.createLeaf(idNewLong, diagram.buildCode(tmp), strings.toDisplay(), LeafType.NOTE, null);
+		final IEntity note = diagram.createLeaf(idNewLong, diagram.buildCode(tmp), strings.toDisplay(), LeafType.NOTE,
+				null);
 
 		if (stereotypeString != null)
 			note.setStereotype(stereotype);

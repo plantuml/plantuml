@@ -164,7 +164,7 @@ public class CommandCreateElementMultilines extends CommandMultilines2<AbstractE
 		final String stereotype = line0.get("STEREO", 0);
 
 		final Ident ident = diagram.buildLeafIdent(idShort);
-		final Code code = diagram.V1972() ? ident : diagram.buildCode(idShort);
+		final Code code = diagram.buildCode(idShort);
 		if (CommandCreateElementFull.existsWithBadType3(diagram, code, ident, type, usymbol))
 			return CommandExecutionResult.error("This element (" + code.getName() + ") is already defined");
 

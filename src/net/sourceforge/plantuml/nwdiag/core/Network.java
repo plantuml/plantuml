@@ -52,7 +52,7 @@ public class Network implements NStackable {
 
 	@Override
 	public String toString() {
-		return name;
+		return name + " visible=" + visible;
 	}
 
 	private boolean isEven() {
@@ -87,9 +87,9 @@ public class Network implements NStackable {
 	}
 
 	public final String getDisplayName() {
-		if (this.description == null) 
+		if (this.description == null)
 			return name;
-		
+
 		return this.description;
 	}
 

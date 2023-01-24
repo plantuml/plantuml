@@ -349,8 +349,7 @@ public class DotStringFactory implements Moveable {
 		return graphviz.getDotExe();
 	}
 
-	public void solve(boolean mergeIntricated, EntityFactory entityFactory, final String svg)
-			throws IOException, InterruptedException {
+	public void solve(EntityFactory entityFactory, final String svg) throws IOException, InterruptedException {
 		if (svg.length() == 0)
 			throw new EmptySvgException();
 
@@ -407,12 +406,6 @@ public class DotStringFactory implements Moveable {
 		}
 
 		for (Cluster cluster : bibliotekon.allCluster()) {
-			if (mergeIntricated) {
-				final IGroup group = cluster.getGroups().iterator().next();
-				if (entityFactory.isIntricated(group) != null)
-					continue;
-
-			}
 			int idx = getClusterIndex(svg, cluster.getColor());
 			final int starting = idx;
 			final List<XPoint2D> points = svgResult.substring(starting).extractList(SvgResult.POINTS_EQUALS);

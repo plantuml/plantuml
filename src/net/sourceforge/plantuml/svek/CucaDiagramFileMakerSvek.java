@@ -78,9 +78,8 @@ public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 				diagram.getLeafsvalues(), diagram.getUmlDiagramType(), diagram.getSkinParam(), diagram, diagram,
 				diagram.getEntityFactory(), diagram.isHideEmptyDescriptionForState(), dotMode,
 				diagram.getNamespaceSeparator(), diagram.getPragma());
-		final boolean intricated = diagram.mergeIntricated();
-		return new GeneralImageBuilder(intricated, dotData, diagram.getEntityFactory(), diagram.getSource(),
-				diagram.getPragma(), stringBounder, diagram.getUmlDiagramType().getStyleName());
+		return new GeneralImageBuilder(dotData, diagram.getEntityFactory(), diagram.getSource(), diagram.getPragma(),
+				stringBounder, diagram.getUmlDiagramType().getStyleName());
 
 	}
 

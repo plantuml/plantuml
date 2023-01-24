@@ -127,7 +127,7 @@ skinparam useBetaStyle false
 ''
 '' Global Default Values
 ''
-skinparam defaultFontName        IBM Plex Sans, Noto Sans, Verdana
+skinparam defaultFontName        "IBM Plex Sans, Noto Sans, Verdana"
 skinparam defaultFontSize        12
 'skinparam dpi                    125
 skinparam shadowing              false
@@ -531,20 +531,20 @@ skinparam useBetaStyle true
 
 boardDiagram {
 	node {
-	$primary_scheme ()
+	$primary_scheme()
     BackGroundColor  $PRIMARY
     LineColor $PRIMARY_DARK
-    FontName IBM Plex Sans, Noto Sans, Verdana
+    FontName "IBM Plex Sans, Noto Sans, Verdana"
     'FontColor 
     FontSize 12
     'FontStyle bold
     RoundCorner 0
     'LineThickness 2
-    'LineStyle 10;5
+    'LineStyle 10-5
     separator {
       LineThickness $LINE_THICKNESS
       LineColor $PRIMARY_DARK
-      'LineStyle 1;5
+      'LineStyle 1-5
     }
   }
 }
@@ -586,7 +586,7 @@ ganttDiagram {
 		FontStyle bold
 		'BackGroundColor GreenYellow
 		LineColor $PRIMARY_DARK
-		'LineStyle 8.0;13.0
+		'LineStyle 8.0-13.0
 		'LineThickness 3.0
 	}
 
@@ -599,7 +599,7 @@ ganttDiagram {
 	}
   separator {
 		BackgroundColor $PRIMARY
-		`LineStyle 8.0;3.0
+		'LineStyle 8.0-3.0
 		LineColor $PRIMARY
 		LineThickness 1.0
 		FontSize 12
@@ -616,27 +616,27 @@ ganttDiagram {
 
 jsonDiagram {
   node {
-	$primary_scheme ()
+	$primary_scheme()
     BackGroundColor  $PRIMARY
     LineColor $PRIMARY_DARK
-    FontName IBM Plex Sans, Noto Sans, Verdana
+    FontName "IBM Plex Sans, Noto Sans, Verdana"
     'FontColor 
     FontSize 12
     'FontStyle bold
     RoundCorner 0
     'LineThickness 2
-    'LineStyle 10;5
+    'LineStyle 10-5
     separator {
       LineThickness $LINE_THICKNESS
       LineColor $PRIMARY_DARK
-      'LineStyle 1;5
+      'LineStyle 1-5
     }
   }
   arrow {
     BackGroundColor $PRIMARY_DARK
     LineColor $PRIMARY_DARK
     LineThickness $LINE_THICKNESS
-    LineStyle 3;6
+    LineStyle 3-6
   }
   highlight {
     BackGroundColor $PRIMARY_DARK
@@ -739,27 +739,27 @@ wireDiagram {
 
 yamlDiagram {
   node {
-	$primary_scheme ()
+	$primary_scheme()
     BackGroundColor  $PRIMARY
     LineColor $PRIMARY_DARK
-    FontName IBM Plex Sans, Noto Sans, Verdana
+    FontName "IBM Plex Sans, Noto Sans, Verdana"
     'FontColor 
     FontSize 12
     'FontStyle bold
     RoundCorner 0
     'LineThickness 2
-    'LineStyle 10;5
+    'LineStyle 10-5
     separator {
       LineThickness $LINE_THICKNESS
       LineColor $PRIMARY_DARK
-      'LineStyle 1;5
+      'LineStyle 1-5
     }
   }
   arrow {
     BackGroundColor $PRIMARY_DARK
     LineColor $PRIMARY_DARK
     LineThickness $LINE_THICKNESS
-    LineStyle 3;6
+    LineStyle 3-6
   }
   highlight {
     BackGroundColor $PRIMARY_DARK

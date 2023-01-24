@@ -154,7 +154,7 @@ public class CommandPackageWithUSymbol extends SingleLineCommand2<AbstractEntity
 		}
 
 		final Ident ident = diagram.buildLeafIdent(idShort);
-		final Code code = diagram.V1972() ? ident : diagram.buildCode(idShort);
+		final Code code = diagram.buildCode(idShort);
 		final IGroup currentPackage = diagram.getCurrentGroup();
 		final CommandExecutionResult status = diagram.gotoGroup(ident, code, Display.getWithNewlines(display),
 				GroupType.PACKAGE, currentPackage, NamespaceStrategy.SINGLE);

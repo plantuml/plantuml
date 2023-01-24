@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.baraye.EntityImp;
 import net.sourceforge.plantuml.baraye.IGroup;
 import net.sourceforge.plantuml.baraye.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.EntityPosition;
+import net.sourceforge.plantuml.cucadiagram.Together;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.posimo.Positionable;
 import net.sourceforge.plantuml.svek.image.EntityImageDescription;
@@ -92,7 +93,13 @@ public class SvekNode implements Positionable, Hideable {
 	}
 
 	private final ILeaf leaf;
-	private final IGroup group;
+	// private final IGroup group;
+
+	public final Together getTogether() {
+		if (leaf == null)
+			return null;
+		return leaf.getTogether();
+	}
 
 	SvekNode(ILeaf ent, IEntityImage image, ColorSequence colorSequence, StringBounder stringBounder) {
 		this.stringBounder = stringBounder;
@@ -104,10 +111,10 @@ public class SvekNode implements Positionable, Hideable {
 		this.uid = String.format("sh%04d", color);
 
 		if (((EntityImp) ent).getOriginalGroup() == null) {
-			this.group = null;
+			// this.group = null;
 			this.leaf = ent;
 		} else {
-			this.group = ((EntityImp) ent).getOriginalGroup();
+			// this.group = ((EntityImp) ent).getOriginalGroup();
 			this.leaf = null;
 		}
 	}

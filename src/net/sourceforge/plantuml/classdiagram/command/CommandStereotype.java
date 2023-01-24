@@ -69,7 +69,7 @@ public class CommandStereotype extends SingleLineCommand2<ClassDiagram> {
 			throws NoSuchColorException {
 		final String name = arg.get("NAME", 0);
 		final Ident ident = diagram.buildLeafIdent(name);
-		final Code code = diagram.V1972() ? ident : diagram.buildCode(name);
+		final Code code = diagram.buildCode(name);
 		final String stereotype = arg.get("STEREO", 0);
 		final IEntity entity = diagram.getOrCreateLeaf(ident, code, null, null);
 		entity.setStereotype(Stereotype.build(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),

@@ -168,11 +168,11 @@ abstract class CommandLinkStateCommon extends SingleLineCommand2<StateDiagram> {
 		if (codeString.startsWith("=") && codeString.endsWith("=")) {
 			final String codeString1 = removeEquals(codeString);
 			final Ident ident1 = diagram.buildLeafIdent(codeString1);
-			final Code code1 = diagram.V1972() ? ident1 : diagram.buildCode(codeString1);
+			final Code code1 = diagram.buildCode(codeString1);
 			return diagram.getOrCreateLeaf(ident1, code1, LeafType.SYNCHRO_BAR, null);
 		}
 		final Ident ident = diagram.buildLeafIdent(codeString);
-		final Code code = diagram.V1972() ? ident : diagram.buildCode(codeString);
+		final Code code = diagram.buildCode(codeString);
 		if (diagram.checkConcurrentStateOk(ident, code) == false)
 			return null;
 

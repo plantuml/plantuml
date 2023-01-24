@@ -135,9 +135,7 @@ public class CommandPackage extends SingleLineCommand2<AbstractEntityDiagram> {
 			ident = current.child(idShort);
 		} else {
 			ident = diagram.buildLeafIdent(idShort);
-			code = diagram.V1972() ? ident : diagram.buildCode(idShort);
-			if (diagram.V1972() && override1972)
-				display = ident.getLast();
+			code = diagram.buildCode(idShort);
 		}
 		final IGroup currentPackage = diagram.getCurrentGroup();
 		final CommandExecutionResult status = diagram.gotoGroup(ident, code, Display.getWithNewlines(display),

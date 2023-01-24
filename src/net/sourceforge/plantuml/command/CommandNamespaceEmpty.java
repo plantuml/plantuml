@@ -85,7 +85,7 @@ public class CommandNamespaceEmpty extends SingleLineCommand2<ClassDiagram> {
 			throws NoSuchColorException {
 		final String idShort = arg.get("NAME", 0);
 		final Ident idNewLong = diagram.buildLeafIdent(idShort);
-		final Code code = diagram.V1972() ? idNewLong : diagram.buildCode(idShort);
+		final Code code = diagram.buildCode(idShort);
 		final IGroup currentPackage = diagram.getCurrentGroup();
 		final Display display = Display.getWithNewlines(code);
 		final CommandExecutionResult status = diagram.gotoGroup(idNewLong, code, display, GroupType.PACKAGE,

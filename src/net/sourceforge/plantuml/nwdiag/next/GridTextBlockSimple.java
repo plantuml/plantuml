@@ -46,6 +46,8 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class GridTextBlockSimple implements TextBlock {
 
+	public static final double MINIMUM_WIDTH = 70;
+
 	protected final NwArray data;
 	private final ISkinParam skinParam;
 
@@ -105,7 +107,7 @@ public class GridTextBlockSimple implements TextBlock {
 		for (int j = 0; j < data.getNbCols(); j++)
 			width += colWidth(stringBounder, j);
 
-		return new XDimension2D(width, height);
+		return new XDimension2D(Math.max(MINIMUM_WIDTH, width), height);
 	}
 
 	public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
@@ -116,7 +118,7 @@ public class GridTextBlockSimple implements TextBlock {
 		throw new UnsupportedOperationException(getClass().toString());
 	}
 
-	public void add(int i, int j, LinkedElement value) {
+	public void add(int i, int j, NServerDraw value) {
 		data.set(i, j, value);
 	}
 

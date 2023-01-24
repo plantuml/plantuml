@@ -142,10 +142,10 @@ public class CommandCreateMap extends CommandMultilines2<AbstractEntityDiagram> 
 	private IEntity executeArg0(AbstractEntityDiagram diagram, RegexResult line0) throws NoSuchColorException {
 		final String name = line0.get("NAME", 1);
 		final Ident ident = diagram.buildLeafIdent(name);
-		final Code code = diagram.V1972() ? ident : diagram.buildCode(name);
+		final Code code = diagram.buildCode(name);
 		final String display = line0.get("NAME", 0);
 		final String stereotype = line0.get("STEREO", 0);
-		final boolean leafExist = diagram.V1972() ? diagram.leafExistSmart(ident) : diagram.leafExist(code);
+		final boolean leafExist = diagram.leafExist(code);
 		if (leafExist)
 			return diagram.getOrCreateLeaf(diagram.buildLeafIdent(name), code, LeafType.MAP, null);
 

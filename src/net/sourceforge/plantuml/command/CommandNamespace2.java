@@ -90,12 +90,12 @@ public class CommandNamespace2 extends SingleLineCommand2<ClassDiagram> {
 			throws NoSuchColorException {
 		final String idShort = arg.get("NAME", 0);
 		final Ident ident = diagram.buildLeafIdent(idShort);
-		final Code code = diagram.V1972() ? ident : diagram.buildCode(idShort);
+		final Code code = diagram.buildCode(idShort);
 		final IGroup currentPackage = diagram.getCurrentGroup();
 		final String disp = arg.getLazzy("DISPLAY", 0);
 		final Display display = Display.getWithNewlines(disp);
-		final CommandExecutionResult status = diagram.gotoGroup(ident, code, display, GroupType.PACKAGE,
-				currentPackage, NamespaceStrategy.MULTIPLE);
+		final CommandExecutionResult status = diagram.gotoGroup(ident, code, display, GroupType.PACKAGE, currentPackage,
+				NamespaceStrategy.MULTIPLE);
 		if (status.isOk() == false)
 			return status;
 		final IEntity p = diagram.getCurrentGroup();

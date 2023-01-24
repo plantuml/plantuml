@@ -97,13 +97,7 @@ public class CommandAddField extends SingleLineCommand2<StateDiagram> {
 		final String field = arg.get("FIELD", 0);
 
 		Ident ident = diagram.buildLeafIdent(codeString);
-		if (diagram.V1972()) {
-			// This is very bad. xi04 xc06
-			if (ident.parent().getLast().equals(codeString)) {
-				ident = ident.parent();
-			}
-		}
-		final Code code = diagram.V1972() ? ident : diagram.buildCode(codeString);
+		final Code code = diagram.buildCode(codeString);
 		final IEntity entity = diagram.getOrCreateLeaf(ident, code, null, null);
 
 		entity.getBodier().addFieldOrMethod(field);

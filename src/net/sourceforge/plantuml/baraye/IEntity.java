@@ -107,8 +107,6 @@ public interface IEntity extends SpecificBackcolorable, Hideable, Removeable, Li
 
 	public boolean isAloneAndUnlinked();
 
-	public void setThisIsTogether();
-
 	public String getCodeLine();
 
 	public void setCodeLine(LineLocation codeLine);

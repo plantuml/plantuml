@@ -183,7 +183,7 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 					GroupType.PACKAGE, null, NamespaceStrategy.SINGLE);
 		}
 		final Ident ident = diagram.buildLeafIdent(idShort);
-		final Code code = diagram.V1972() ? ident : diagram.buildCode(idShort);
+		final Code code = diagram.buildCode(idShort);
 		final IEntity entity2 = diagram.getOrCreate(ident, code, Display.getWithNewlines(display), LeafType.ACTIVITY);
 		if (entity2 == null)
 			return CommandExecutionResult.error("No such entity");

@@ -76,7 +76,7 @@ public class ActivityDiagram extends CucaDiagram {
 
 	public IEntity getOrCreate(Ident idNewLong, Code code, Display display, LeafType type) {
 		final IEntity result;
-		final boolean leafExist = this.V1972() ? leafExistSmart(idNewLong) : leafExist(code);
+		final boolean leafExist = leafExist(code);
 		if (leafExist) {
 			result = getOrCreateLeafDefault(idNewLong, code, type, null);
 			if (result.getLeafType() != type) {
@@ -88,19 +88,11 @@ public class ActivityDiagram extends CucaDiagram {
 		updateLasts(result);
 		return result;
 	}
-	
-	@Override
-	public /*final*/ ILeaf getLeafVerySmart(Ident ident) {
-		final ILeaf result = super.getLeafVerySmart(ident);
-		updateLasts(result);
-		return result;
-	}
-
 
 	public void startIf(String optionalCodeString) {
 		final String idShort = optionalCodeString == null ? getAutoBranch() : optionalCodeString;
 		final Ident idNewLong = buildLeafIdent(idShort);
-		final Code code = this.V1972() ? idNewLong : buildCode(idShort);
+		final Code code = buildCode(idShort);
 		final IEntity br = createLeaf(idNewLong, code, Display.create(""), LeafType.BRANCH, null);
 		currentContext = new ConditionalContext(currentContext, br, Direction.DOWN);
 	}
@@ -111,14 +103,14 @@ public class ActivityDiagram extends CucaDiagram {
 
 	public ILeaf getStart() {
 		final Ident ident = buildLeafIdent("start");
-		final Code code = this.V1972() ? ident : buildCode("start");
+		final Code code = buildCode("start");
 		return (ILeaf) getOrCreate(ident, code, Display.getWithNewlines("start"), LeafType.CIRCLE_START);
 	}
 
 	public ILeaf getEnd(String suppId) {
 		final String tmp = suppId == null ? "end" : "end$" + suppId;
 		final Ident ident = buildLeafIdent(tmp);
-		final Code code = this.V1972() ? ident : buildCode(tmp);
+		final Code code = buildCode(tmp);
 		return (ILeaf) getOrCreate(ident, code, Display.getWithNewlines("end"), LeafType.CIRCLE_END);
 	}
 
@@ -173,7 +165,7 @@ public class ActivityDiagram extends CucaDiagram {
 		// Log.println("createInnerActivity A");
 		final String idShort = "##" + this.getUniqueSequence();
 		final Ident idNewLong = buildLeafIdent(idShort);
-		final Code code = this.V1972() ? idNewLong : buildCode(idShort);
+		final Code code = buildCode(idShort);
 		gotoGroup(idNewLong, code, Display.getWithNewlines(code), GroupType.INNER_ACTIVITY, getCurrentGroup(),
 				NamespaceStrategy.SINGLE);
 		final IEntity g = getCurrentGroup();

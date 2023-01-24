@@ -127,7 +127,7 @@ final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassO
 		if (arg.get("LOL_THEN_ENT", 1) == null) {
 			assert arg.get("ENT_THEN_LOL", 0) != null;
 			final Ident ident1 = diagram.buildLeafIdent(ent1);
-			final Code ent1code = diagram.V1972() ? ident1 : diagram.buildCode(ent1);
+			final Code ent1code = diagram.buildCode(ent1);
 			cl1 = getFoo1(diagram, ent1code, ident1);
 			final Ident idNewLong = diagram.buildLeafIdent(ent1 + suffix);
 			cl2 = diagram.createLeaf(idNewLong, idNewLong.toCode(diagram), Display.getWithNewlines(ent2),
@@ -135,7 +135,7 @@ final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassO
 			normalEntity = cl1;
 		} else {
 			final Ident ident2 = diagram.buildLeafIdent(ent2);
-			final Code ent2code = diagram.V1972() ? ident2 : diagram.buildCode(ent2);
+			final Code ent2code = diagram.buildCode(ent2);
 			cl2 = getFoo1(diagram, ent2code, ident2);
 			final Ident idNewLong = diagram.buildLeafIdent(ent2 + suffix);
 			cl1 = diagram.createLeaf(idNewLong, idNewLong.toCode(diagram), Display.getWithNewlines(ent1),
@@ -199,12 +199,6 @@ final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassO
 	}
 
 	private IEntity getFoo1(AbstractClassOrObjectDiagram diagram, final Code code, final Ident ident) {
-		if (diagram.V1972()) {
-			final IEntity result = ident.size() == 1 ? diagram.getLeafVerySmart(ident) : diagram.getLeafStrict(ident);
-			if (result != null)
-				return result;
-
-		}
 		return diagram.getOrCreateLeaf(ident, code, null, null);
 	}
 

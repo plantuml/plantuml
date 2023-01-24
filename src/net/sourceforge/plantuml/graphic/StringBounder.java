@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.graphic;
 
+import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.ugraphic.UFont;
 
@@ -43,5 +44,7 @@ public interface StringBounder {
 	public XDimension2D calculateDimension(UFont font, String text);
 
 	public double getDescent(UFont font, String text);
+
+	public FileFormat getNativeFormat();
 
 }

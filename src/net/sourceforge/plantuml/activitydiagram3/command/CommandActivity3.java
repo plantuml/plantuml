@@ -61,17 +61,33 @@ public class CommandActivity3 extends SingleLineCommand2<ActivityDiagram3> {
 
 	public static final String endingGroup() {
 		return "(" //
-				+ ";" //
+				+ ";(?:[%s]*\\<\\<\\w+\\>\\>)?" //
 				+ "|" //
 				+ Matcher.quoteReplacement("\\\\") // that is simply \ character
 				+ "|" //
-				+ "(?<![/|<>}\\]])[/<}]" // About /<}
+				+ "(?<![/|<}\\]])[/<}]" // About /<}
 				+ "|" //
 				+ "(?<![/|}\\]])\\]" // About ]
 				+ "|" //
 				+ "(?<!\\</?\\w{1,5})(?<!\\<img[^>]{1,999})(?<!\\<[&$]\\w{1,999})(?<!\\>)\\>" // About >
 				+ "|" //
 				+ "(?<!\\|.{1,999})\\|" // About |
+				+ ")";
+	}
+
+	private static final String endingGroupShort() {
+		return "(" //
+				+ ";(?:[%s]*\\<\\<\\w+\\>\\>)?" //
+				+ "|" //
+				+ Matcher.quoteReplacement("\\\\") // that is simply \ character
+				+ "|" //
+				+ "(?<![/|<}\\]])[/<}]" // About /<}
+				+ "|" //
+				+ "(?<![/|}\\]])\\]" // About ]
+				+ "|" //
+				+ "(?<!\\</?\\w{1,5})(?<!\\<img[^>]{1,999})(?<!\\<[&$]\\w{1,999})(?<!\\>)\\>" // About >
+				+ "|" //
+				+ "\\|" // About |
 				+ ")";
 	}
 
@@ -92,8 +108,8 @@ public class CommandActivity3 extends SingleLineCommand2<ActivityDiagram3> {
 				new RegexLeaf("STEREO", "(\\<\\<.*\\>\\>)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(":"), //
-				new RegexLeaf("LABEL", "(.*)"), //
-				new RegexLeaf("STYLE", endingGroup()), //
+				new RegexLeaf("LABEL", "(.*?)"), //
+				new RegexLeaf("STYLE", endingGroupShort()), //
 				RegexLeaf.end());
 	}
 
@@ -120,7 +136,7 @@ public class CommandActivity3 extends SingleLineCommand2<ActivityDiagram3> {
 			stereotype = Stereotype.build(stereo);
 			colors = colors.applyStereotype(stereotype, diagram.getSkinParam(), ColorParam.activityBackground);
 		}
-		final BoxStyle style = BoxStyle.fromChar(arg.get("STYLE", 0).charAt(0));
+		final BoxStyle style = BoxStyle.fromString(arg.get("STYLE", 0));
 		final Display display = Display.getWithNewlines2(arg.get("LABEL", 0));
 		return diagram.addActivity(display, style, url, colors, stereotype);
 	}

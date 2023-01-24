@@ -99,7 +99,7 @@ public class CommandPackageEmpty extends SingleLineCommand2<AbstractEntityDiagra
 		}
 		final IGroup currentPackage = diagram.getCurrentGroup();
 		final Ident ident = diagram.buildLeafIdent(idShort);
-		final Code code = diagram.V1972() ? ident : diagram.buildCode(idShort);
+		final Code code = diagram.buildCode(idShort);
 		final CommandExecutionResult status = diagram.gotoGroup(ident, code, Display.getWithNewlines(display),
 				GroupType.PACKAGE, currentPackage, NamespaceStrategy.SINGLE);
 		if (status.isOk() == false)
