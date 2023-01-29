@@ -310,6 +310,10 @@ public final class EntityFactory implements IEntityFactory {
 		if (result != null && result != leafs2.get(result.getIdent()))
 			bigError();
 
+		for (ILeaf tmp : leafsByCode.values())
+			if (tmp.getIdent().equals(code))
+				return tmp;
+
 		return result;
 	}
 

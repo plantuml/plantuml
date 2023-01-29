@@ -202,6 +202,10 @@ public class Ident implements Code {
 
 	@Override
 	public boolean equals(Object obj) {
+		if (obj instanceof CodeImpl) {
+			final CodeImpl other = (CodeImpl) obj;
+			return other.getName().equals(toString("."));
+		}
 		final Ident other = (Ident) obj;
 		return this.parts.equals(other.parts);
 	}
