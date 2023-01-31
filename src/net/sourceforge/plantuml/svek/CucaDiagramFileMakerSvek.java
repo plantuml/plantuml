@@ -56,6 +56,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.log.Logme;
 
 public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
+	// ::remove file when WASM
 
 	private final ICucaDiagram diagram;
 

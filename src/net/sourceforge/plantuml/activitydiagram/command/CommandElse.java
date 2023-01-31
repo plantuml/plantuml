@@ -36,7 +36,7 @@
 package net.sourceforge.plantuml.activitydiagram.command;
 
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagram;
-import net.sourceforge.plantuml.baraye.IEntity;
+import net.sourceforge.plantuml.baraye.EntityImp;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.IRegex;
@@ -66,7 +66,7 @@ public class CommandElse extends SingleLineCommand2<ActivityDiagram> {
 		if (system.getCurrentContext() == null) {
 			return CommandExecutionResult.error("No if for this else");
 		}
-		final IEntity branch = system.getCurrentContext().getBranch();
+		final EntityImp branch = system.getCurrentContext().getBranch();
 
 		system.setLastEntityConsulted(branch);
 

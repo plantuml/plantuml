@@ -59,6 +59,7 @@ import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public final class SvekResult extends AbstractTextBlock implements IEntityImage {
+	// ::remove file when WASM
 
 	private final DotData dotData;
 	private final DotStringFactory dotStringFactory;

@@ -44,8 +44,7 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.Pragma;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.baraye.EntityFactory;
-import net.sourceforge.plantuml.baraye.IGroup;
-import net.sourceforge.plantuml.baraye.ILeaf;
+import net.sourceforge.plantuml.baraye.EntityImp;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
@@ -72,19 +71,19 @@ public interface ICucaDiagram extends GroupHierarchy, PortionShower, Annotated {
 
 	String getFlashData();
 
-	Collection<ILeaf> getLeafsvalues();
+	Collection<EntityImp> getLeafsvalues();
 
 	ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) throws IOException;
 
 	String getNamespaceSeparator();
 
-	Collection<IGroup> getGroups(boolean b);
+	Collection<EntityImp> getGroups(boolean b);
 
 	UmlSource getSource();
 
 	String[] getDotStringSkek();
 
-	boolean isAutarkic(IGroup g);
+	boolean isAutarkic(EntityImp g);
 
 	int getUniqueSequence();
 

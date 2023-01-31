@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.compositediagram.command;
 
-import net.sourceforge.plantuml.baraye.IGroup;
+import net.sourceforge.plantuml.baraye.Quark;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.IRegex;
@@ -44,11 +44,8 @@ import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.compositediagram.CompositeDiagram;
-import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
-import net.sourceforge.plantuml.cucadiagram.Ident;
-import net.sourceforge.plantuml.cucadiagram.NamespaceStrategy;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandCreatePackageBlock extends SingleLineCommand2<CompositeDiagram> {
@@ -74,16 +71,14 @@ public class CommandCreatePackageBlock extends SingleLineCommand2<CompositeDiagr
 
 	@Override
 	protected CommandExecutionResult executeArg(CompositeDiagram diagram, LineLocation location, RegexResult arg) {
-		final IGroup currentPackage = diagram.getCurrentGroup();
+
 		String display = arg.get("DISPLAY", 0);
 		final String idShort = arg.get("CODE", 0);
-		final Code code = diagram.buildCode(idShort);
+		final Quark quark = diagram.quarkInContext(idShort, false);
 		if (display == null)
-			display = code.getName();
+			display = quark.getName();
 
-		final Ident idNewLong = diagram.buildLeafIdent(idShort);
-		return diagram.gotoGroup(idNewLong, code, Display.getWithNewlines(display), GroupType.PACKAGE, currentPackage,
-				NamespaceStrategy.SINGLE);
+		return diagram.gotoGroup(quark, Display.getWithNewlines(display), GroupType.PACKAGE);
 	}
 
 }

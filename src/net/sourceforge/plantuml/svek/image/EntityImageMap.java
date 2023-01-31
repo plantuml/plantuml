@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineConfigurable;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
-import net.sourceforge.plantuml.baraye.ILeaf;
+import net.sourceforge.plantuml.baraye.EntityImp;
 import net.sourceforge.plantuml.creole.Stencil;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.EntityPortion;
@@ -88,7 +88,7 @@ public class EntityImageMap extends AbstractEntityImage implements Stencil, With
 
 	final private LineConfigurable lineConfig;
 
-	public EntityImageMap(ILeaf entity, ISkinParam skinParam, PortionShower portionShower) {
+	public EntityImageMap(EntityImp entity, ISkinParam skinParam, PortionShower portionShower) {
 		super(entity, skinParam);
 		this.lineConfig = entity;
 		final Stereotype stereotype = entity.getStereotype();

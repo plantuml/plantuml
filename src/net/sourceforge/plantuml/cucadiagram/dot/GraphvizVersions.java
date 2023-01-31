@@ -40,6 +40,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class GraphvizVersions {
+	// ::remove file when WASM
 
 	private final static GraphvizVersions singleton = new GraphvizVersions();
 

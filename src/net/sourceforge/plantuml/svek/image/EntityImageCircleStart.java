@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.svek.image;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
-import net.sourceforge.plantuml.baraye.ILeaf;
+import net.sourceforge.plantuml.baraye.EntityImp;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.style.PName;
@@ -59,7 +59,7 @@ public class EntityImageCircleStart extends AbstractEntityImage {
 		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.circle, SName.start);
 	}
 
-	public EntityImageCircleStart(ILeaf entity, ISkinParam skinParam) {
+	public EntityImageCircleStart(EntityImp entity, ISkinParam skinParam) {
 		super(entity, skinParam);
 	}
 

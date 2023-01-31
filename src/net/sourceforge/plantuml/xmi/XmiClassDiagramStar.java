@@ -39,7 +39,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Element;
 
-import net.sourceforge.plantuml.baraye.IEntity;
+import net.sourceforge.plantuml.baraye.EntityImp;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.Link;
@@ -50,7 +50,7 @@ public class XmiClassDiagramStar extends XmiClassDiagramAbstract implements XmlD
 	public XmiClassDiagramStar(ClassDiagram classDiagram) throws ParserConfigurationException {
 		super(classDiagram);
 
-		for (final IEntity ent : classDiagram.getLeafsvalues()) {
+		for (final EntityImp ent : classDiagram.getLeafsvalues()) {
 			final Element cla = createEntityNode(ent);
 			if (cla == null)
 				continue;

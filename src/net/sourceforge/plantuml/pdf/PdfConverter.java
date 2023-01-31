@@ -41,6 +41,7 @@ import java.lang.reflect.Method;
 import net.sourceforge.plantuml.log.Logme;
 
 public class PdfConverter {
+	// ::remove folder when WASM
 
 	public static void convert(File svgFile, File pdfFile) {
 

@@ -52,10 +52,8 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import net.sourceforge.plantuml.baraye.IEntity;
-import net.sourceforge.plantuml.baraye.IGroup;
+import net.sourceforge.plantuml.baraye.EntityImp;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.cucadiagram.GroupRoot;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.descdiagram.DescriptionDiagram;
@@ -99,12 +97,12 @@ public class XmiDescriptionDiagram implements XmlDiagramTransformer {
 		this.ownedElement = document.createElement("UML:Namespace.ownedElement");
 		model.appendChild(ownedElement);
 
-		for (final IGroup gr : diagram.getGroups(false))
-			if (gr.getParentContainer() instanceof GroupRoot)
+		for (final EntityImp gr : diagram.getGroups(false))
+			if (gr.getParentContainer().instanceofGroupRoot())
 				addElement(gr, ownedElement);
 
-		for (final IEntity ent : diagram.getLeafsvalues())
-			if (ent.getParentContainer() instanceof GroupRoot)
+		for (final EntityImp ent : diagram.getLeafsvalues())
+			if (ent.getParentContainer().instanceofGroupRoot())
 				addElement(ent, ownedElement);
 
 		for (final Link link : diagram.getLinks())
@@ -112,14 +110,14 @@ public class XmiDescriptionDiagram implements XmlDiagramTransformer {
 
 	}
 
-	private void addElement(final IEntity tobeAdded, Element container) {
+	private void addElement(final EntityImp tobeAdded, Element container) {
 		final Element element = createEntityNode(tobeAdded);
 		container.appendChild(element);
-		for (final IEntity ent : diagram.getGroups(false))
+		for (final EntityImp ent : diagram.getGroups(false))
 			if (ent.getParentContainer() == tobeAdded)
 				addElement(ent, element);
 
-		for (final IEntity ent : diagram.getLeafsvalues())
+		for (final EntityImp ent : diagram.getLeafsvalues())
 			if (ent.getParentContainer() == tobeAdded)
 				addElement(ent, element);
 
@@ -184,7 +182,7 @@ public class XmiDescriptionDiagram implements XmlDiagramTransformer {
 
 	}
 
-	private Element createEntityNode(IEntity entity) {
+	private Element createEntityNode(EntityImp entity) {
 		final Element cla = document.createElement("UML:Component");
 
 		cla.setAttribute("xmi.id", entity.getUid());

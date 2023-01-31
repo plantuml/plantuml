@@ -171,15 +171,15 @@ public enum SpriteGrayLevel {
 	}
 
 	public Sprite buildSprite(int width, int height, List<String> strings) {
-		if (this == SpriteGrayLevel.GRAY_16) {
+		if (this == SpriteGrayLevel.GRAY_16)
 			return buildSprite16(strings);
-		}
-		if (this == SpriteGrayLevel.GRAY_8) {
+
+		if (this == SpriteGrayLevel.GRAY_8)
 			return buildSprite8(width, height, strings);
-		}
-		if (this == SpriteGrayLevel.GRAY_4) {
+
+		if (this == SpriteGrayLevel.GRAY_4)
 			return buildSprite4(width, height, strings);
-		}
+
 		throw new UnsupportedOperationException(toString());
 	}
 
@@ -239,6 +239,7 @@ public enum SpriteGrayLevel {
 		return result;
 	}
 
+	// ::comment when WASM
 	public List<String> encodeZ(BufferedImage img) {
 		final int width = img.getWidth();
 		final int height = img.getHeight();
@@ -281,6 +282,7 @@ public enum SpriteGrayLevel {
 		}
 		return Collections.unmodifiableList(result);
 	}
+	// ::done
 
 	public Sprite buildSpriteZ(int width, int height, String compressed) {
 		final byte comp[] = new AsciiEncoder().decode(compressed);
@@ -288,12 +290,10 @@ public enum SpriteGrayLevel {
 			final ByteArray img = new CompressionZlib().decompress(comp);
 			final SpriteMonochrome result = new SpriteMonochrome(width, height, nbColor);
 			int cpt = 0;
-			for (int line = 0; line < result.getHeight(); line++) {
-				for (int col = 0; col < result.getWidth(); col++) {
+			for (int line = 0; line < result.getHeight(); line++)
+				for (int col = 0; col < result.getWidth(); col++)
 					result.setGray(col, line, img.getByteAt(cpt++));
 
-				}
-			}
 			return result;
 		} catch (NoPlantumlCompressionException e) {
 			Logme.error(e);

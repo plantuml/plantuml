@@ -69,6 +69,7 @@ import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 import net.sourceforge.plantuml.utils.BlocLines;
 
 public class StdlibDiagram extends UmlDiagram {
+	// ::remove file when WASM
 
 	private static final int WIDTH = 1800;
 	private String name;

@@ -40,9 +40,8 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlMode;
-import net.sourceforge.plantuml.baraye.IEntity;
-import net.sourceforge.plantuml.baraye.ILeaf;
-import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
+import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Quark;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -52,9 +51,7 @@ import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.USymbol;
@@ -152,22 +149,27 @@ public class CommandCreateElementParenthesis extends SingleLineCommand2<ClassDia
 		type = LeafType.DESCRIPTION;
 		usymbol = USymbols.fromString(symbol, diagram.getSkinParam());
 
-		final String idShort = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(codeRaw);
-		final Ident ident = diagram.buildLeafIdent(idShort);
-		final Code code = diagram.buildCode(idShort);
-		if (diagram.isGroup(code))
-			return CommandExecutionResult.error("This element (" + code.getName() + ") is already defined");
+//		final String idShort = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(codeRaw);
+//		final Quark ident = diagram.buildFromName(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(idShort));
+//		final Quark code = diagram.buildFromFullPath(idShort);
+
+		final Quark quark = diagram.quarkInContext(diagram.cleanIdForQuark(codeRaw), true);
+		if (quark.getData() != null)
+			return CommandExecutionResult.error("This element (" + quark.getName() + ") is already defined");
+
+//		if (diagram.isGroup(idShort))
+//			return CommandExecutionResult.error("This element (" + code.getName() + ") is already defined");
 
 		String display = displayRaw;
 		if (display == null)
-			display = code.getName();
+			display = quark.getName();
 
 		display = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(display);
 		final String stereotype = arg.getLazzy("STEREOTYPE", 0);
-		if (existsWithBadType3(diagram, code, ident, type, usymbol))
-			return CommandExecutionResult.error("This element (" + code.getName() + ") is already defined");
+		if (CommandCreateElementFull.existsWithBadType3(diagram, quark, type, usymbol))
+			return CommandExecutionResult.error("This element (" + quark.getName() + ") is already defined");
 
-		final IEntity entity = diagram.getOrCreateLeaf(ident, code, type, usymbol);
+		final EntityImp entity = diagram.reallyCreateLeaf(quark, Display.getWithNewlines(display), type, usymbol);
 		entity.setDisplay(Display.getWithNewlines(display));
 		entity.setUSymbol(usymbol);
 		if (stereotype != null) {
@@ -196,21 +198,6 @@ public class CommandCreateElementParenthesis extends SingleLineCommand2<ClassDia
 		// diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR",
 		// 0)));
 		return CommandExecutionResult.ok();
-	}
-
-	public static boolean existsWithBadType3(AbstractEntityDiagram diagram, Code code, Ident ident, LeafType type,
-			USymbol usymbol) {
-		if (diagram.leafExist(code) == false)
-			return false;
-
-		final ILeaf other = diagram.getLeaf(code);
-		if (other.getLeafType() != type)
-			return true;
-
-		if (usymbol != null && other.getUSymbol() != usymbol)
-			return true;
-
-		return false;
 	}
 
 	private char getCharEncoding(final String codeRaw) {

@@ -77,6 +77,7 @@ import net.sourceforge.plantuml.utils.StringLocated;
 import net.sourceforge.plantuml.version.Version;
 
 public class PicoWebServer implements Runnable {
+	// ::remove folder when WASM
 
 	private final Socket connect;
 	private static boolean enableStop;

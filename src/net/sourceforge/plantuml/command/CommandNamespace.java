@@ -38,20 +38,15 @@ package net.sourceforge.plantuml.command;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlMode;
-import net.sourceforge.plantuml.baraye.CucaDiagram;
-import net.sourceforge.plantuml.baraye.IEntity;
-import net.sourceforge.plantuml.baraye.IGroup;
+import net.sourceforge.plantuml.baraye.EntityImp;
 import net.sourceforge.plantuml.baraye.Quark;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
-import net.sourceforge.plantuml.cucadiagram.Ident;
-import net.sourceforge.plantuml.cucadiagram.NamespaceStrategy;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.USymbols;
@@ -87,27 +82,14 @@ public class CommandNamespace extends SingleLineCommand2<ClassDiagram> {
 	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg)
 			throws NoSuchColorException {
 		final String idShort = arg.get("NAME", 0);
-		final Code code;
-		final IGroup currentPackage;
-		final Display display;
-		final Ident idNewLong;
-		if (CucaDiagram.QUARK) {
-			final Quark current = diagram.currentQuark();
-			code = current;
-			display = Display.getWithNewlines(idShort);
-			idNewLong = current.child(idShort);
-			currentPackage = (IGroup) current.getData();
-		} else {
-			idNewLong = diagram.buildLeafIdent(idShort);
-			code = diagram.buildCode(idShort);
-			currentPackage = diagram.getCurrentGroup();
-			display = Display.getWithNewlines(code);
-		}
-		final CommandExecutionResult status = diagram.gotoGroup(idNewLong, code, display, GroupType.PACKAGE,
-				currentPackage, NamespaceStrategy.MULTIPLE);
+//		final Quark current = diagram.currentQuark();
+//		final Quark idNewLong = current.child(idShort);
+		final Quark quark = diagram.quarkInContext(diagram.cleanIdForQuark(idShort), true);
+		final CommandExecutionResult status = diagram.gotoGroup(quark,
+				Display.getWithNewlines(quark.getQualifiedName()), GroupType.PACKAGE);
 		if (status.isOk() == false)
 			return status;
-		final IEntity p = diagram.getCurrentGroup();
+		final EntityImp p = diagram.getCurrentGroup();
 		final String stereotype = arg.get("STEREOTYPE", 0);
 		if (stereotype != null) {
 			final USymbol usymbol = USymbols.fromString(stereotype, diagram.getSkinParam().actorStyle(),

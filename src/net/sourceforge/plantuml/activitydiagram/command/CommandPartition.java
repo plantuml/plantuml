@@ -35,10 +35,9 @@
  */
 package net.sourceforge.plantuml.activitydiagram.command;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagram;
-import net.sourceforge.plantuml.baraye.IEntity;
-import net.sourceforge.plantuml.baraye.IGroup;
+import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Quark;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.IRegex;
@@ -46,11 +45,8 @@ import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
-import net.sourceforge.plantuml.cucadiagram.Ident;
-import net.sourceforge.plantuml.cucadiagram.NamespaceStrategy;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
@@ -87,13 +83,13 @@ public class CommandPartition extends SingleLineCommand2<ActivityDiagram> {
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram diagram, LineLocation location, RegexResult arg)
 			throws NoSuchColorException {
-		final String idShort = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("NAME", 0));
-		final Ident ident = diagram.buildLeafIdent(idShort);
-		final Code code = diagram.buildCode(idShort);
-		final IGroup currentPackage = diagram.getCurrentGroup();
-		diagram.gotoGroup(ident, code, Display.getWithNewlines(code), GroupType.PACKAGE, currentPackage,
-				NamespaceStrategy.SINGLE);
-		final IEntity p = diagram.getCurrentGroup();
+		final Quark quark = diagram.quarkInContext(diagram.cleanIdForQuark(arg.get("NAME", 0)), false);
+//		final String idShort = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("NAME", 0));
+//		final Quark ident = diagram.buildFromName(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(idShort));
+//		final Quark code = diagram.buildFromFullPath(idShort);
+
+		diagram.gotoGroup(quark, Display.getWithNewlines(quark.getName()), GroupType.PACKAGE);
+		final EntityImp p = diagram.getCurrentGroup();
 
 		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
 		if (colors.isEmpty() == false) {

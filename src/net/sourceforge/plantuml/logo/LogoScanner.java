@@ -39,6 +39,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 class LogoScanner {
+	// ::remove folder when WASM
 	final private Map<String, Integer> keywordTable = new HashMap<String, Integer>();
 	private char sourceString[];
 	private int sourceLength;

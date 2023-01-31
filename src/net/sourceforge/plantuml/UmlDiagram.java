@@ -129,8 +129,10 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 
 		fileFormatOption = fileFormatOption.withTikzFontDistortion(getSkinParam().getTikzFontDistortion());
 
+		// ::comment when WASM
 		if (fileFormatOption.getFileFormat() == FileFormat.PDF)
 			return exportDiagramInternalPdf(os, index);
+		// ::done
 
 		try {
 			final ImageData imageData = exportDiagramInternal(os, index, fileFormatOption);
@@ -158,14 +160,17 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 	public static void exportDiagramError(OutputStream os, Throwable exception, FileFormatOption fileFormat, long seed,
 			String metadata, String flash, List<String> strings) throws IOException {
 
+		// ::comment when WASM
 		if (fileFormat.getFileFormat() == FileFormat.ATXT || fileFormat.getFileFormat() == FileFormat.UTXT) {
 			exportDiagramErrorText(os, exception, strings);
 			return;
 		}
+		// ::done
 
 		strings.addAll(CommandExecutionResult.getStackTrace(exception));
 
 		BufferedImage im2 = null;
+		// ::comment when WASM
 		if (flash != null) {
 			final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();
 			try {
@@ -176,8 +181,9 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 			}
 			if (im2 != null)
 				GraphvizCrash.addDecodeHint(strings);
-
 		}
+		// ::done
+
 		final BufferedImage im = im2;
 		final TextBlockBackcolored graphicStrings = GraphicStrings.createBlackOnWhite(strings, IconLoader.getRandom(),
 				GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT);
@@ -245,6 +251,7 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 		return strings;
 	}
 
+	// ::comment when WASM
 	private void exportDiagramInternalMjpeg(OutputStream os) throws IOException {
 		final SFile f = new SFile("c:/test.avi");
 		final int nb = 150;
@@ -266,8 +273,6 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 
 	}
 
-	private XDimension2D lastInfo;
-
 	private ImageData exportDiagramInternalPdf(OutputStream os, int index) throws IOException {
 		final File svg = FileUtils.createTempFileLegacy("pdf", ".svf");
 		final File pdfFile = FileUtils.createTempFileLegacy("pdf", ".pdf");
@@ -279,9 +284,6 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 		FileUtils.copyToStream(pdfFile, os);
 		return result;
 	}
-
-	protected abstract ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
-			throws IOException;
 
 	final protected void exportCmap(SuggestedFile suggestedFile, int index, final ImageData cmapdata)
 			throws FileNotFoundException {
@@ -298,6 +300,12 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 	static String changeName(String name) {
 		return name.replaceAll("(?i)\\.\\w{3}$", ".cmapx");
 	}
+	// ::done
+
+	private XDimension2D lastInfo;
+
+	protected abstract ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
+			throws IOException;
 
 	@Override
 	public String getWarningOrError() {

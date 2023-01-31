@@ -78,6 +78,7 @@ public class GraphicsSudoku {
 		this.sudoku = sudoku;
 	}
 
+	// ::comment when WASM
 	public ImageData writeImageEps(OutputStream os) throws IOException {
 		final UGraphicEps ug = new UGraphicEps(HColors.WHITE, ColorMapper.IDENTITY,
 				FileFormat.EPS_TEXT.getDefaultStringBounder(), EpsStrategy.WITH_MACRO_AND_TEXT);
@@ -86,18 +87,19 @@ public class GraphicsSudoku {
 		return ImageDataSimple.ok();
 	}
 
-	public ImageData writeImageSvg(OutputStream os) throws IOException {
-		final UGraphicSvg ug = new UGraphicSvg(HColors.WHITE, true, new XDimension2D(0, 0), ColorMapper.IDENTITY, false,
-				1.0, null, null, 0, "none", FileFormat.SVG.getDefaultStringBounder(), LengthAdjust.defaultValue(),
-				false);
+	public ImageData writeImageLatex(OutputStream os, FileFormat fileFormat) throws IOException {
+		final UGraphicTikz ug = new UGraphicTikz(HColors.WHITE, ColorMapper.IDENTITY,
+				FileFormat.LATEX.getDefaultStringBounder(), 1, fileFormat == FileFormat.LATEX);
 		drawInternal(ug);
 		ug.writeToStream(os, null, -1); // dpi param is not used
 		return ImageDataSimple.ok();
 	}
+	// ::done
 
-	public ImageData writeImageLatex(OutputStream os, FileFormat fileFormat) throws IOException {
-		final UGraphicTikz ug = new UGraphicTikz(HColors.WHITE, ColorMapper.IDENTITY,
-				FileFormat.LATEX.getDefaultStringBounder(), 1, fileFormat == FileFormat.LATEX);
+	public ImageData writeImageSvg(OutputStream os) throws IOException {
+		final UGraphicSvg ug = new UGraphicSvg(HColors.WHITE, true, new XDimension2D(0, 0), ColorMapper.IDENTITY, false,
+				1.0, null, null, 0, "none", FileFormat.SVG.getDefaultStringBounder(), LengthAdjust.defaultValue(),
+				false);
 		drawInternal(ug);
 		ug.writeToStream(os, null, -1); // dpi param is not used
 		return ImageDataSimple.ok();

@@ -39,8 +39,8 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlMode;
-import net.sourceforge.plantuml.baraye.IEntity;
-import net.sourceforge.plantuml.baraye.IGroup;
+import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Quark;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.classdiagram.command.CommandCreateClassMultilines;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -51,11 +51,8 @@ import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
-import net.sourceforge.plantuml.cucadiagram.Ident;
-import net.sourceforge.plantuml.cucadiagram.NamespaceStrategy;
 import net.sourceforge.plantuml.cucadiagram.Stereotag;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.USymbols;
@@ -153,14 +150,12 @@ public class CommandPackageWithUSymbol extends SingleLineCommand2<AbstractEntity
 
 		}
 
-		final Ident ident = diagram.buildLeafIdent(idShort);
-		final Code code = diagram.buildCode(idShort);
-		final IGroup currentPackage = diagram.getCurrentGroup();
-		final CommandExecutionResult status = diagram.gotoGroup(ident, code, Display.getWithNewlines(display),
-				GroupType.PACKAGE, currentPackage, NamespaceStrategy.SINGLE);
+		final Quark ident = diagram.quarkInContext(diagram.cleanIdForQuark(idShort), true);
+
+		final CommandExecutionResult status = diagram.gotoGroup(ident, Display.getWithNewlines(display), GroupType.PACKAGE);
 		if (status.isOk() == false)
 			return status;
-		final IEntity p = diagram.getCurrentGroup();
+		final EntityImp p = diagram.getCurrentGroup();
 		final String symbol = arg.get("SYMBOL", 0);
 
 		p.setUSymbol(USymbols.fromString(symbol, diagram.getSkinParam().actorStyle(),

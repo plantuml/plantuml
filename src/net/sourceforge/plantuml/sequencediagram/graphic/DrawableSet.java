@@ -297,7 +297,12 @@ public class DrawableSet {
 
 	private void drawLineU22(UGraphic ug, boolean showTail, Page page) {
 		// http://plantuml.sourceforge.net/qa/?qa=4826/lifelines-broken-for-txt-seq-diagrams-when-create-is-used
+		// ::comment when WASM
 		final boolean isTxt = ug instanceof UGraphicTxt;
+		// ::done
+		// ::uncomment when WASM
+		// final boolean isTxt = false;
+		// ::done
 		for (LivingParticipantBox box : getAllLivingParticipantBox()) {
 			final double create = box.getCreate();
 			final double startMin = page.getBodyRelativePosition() - box.magicMargin(ug.getStringBounder());

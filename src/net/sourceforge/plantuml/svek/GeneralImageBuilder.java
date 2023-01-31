@@ -59,12 +59,8 @@ import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.awt.geom.XRectangle2D;
 import net.sourceforge.plantuml.baraye.EntityFactory;
 import net.sourceforge.plantuml.baraye.EntityImp;
-import net.sourceforge.plantuml.baraye.IEntity;
-import net.sourceforge.plantuml.baraye.IGroup;
-import net.sourceforge.plantuml.baraye.ILeaf;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.cucadiagram.EntityPosition;
-import net.sourceforge.plantuml.cucadiagram.GroupRoot;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
@@ -130,7 +126,7 @@ import net.sourceforge.plantuml.utils.Log;
 
 public final class GeneralImageBuilder {
 
-	public static IEntityImage createEntityImageBlock(ILeaf leaf, ISkinParam skinParam,
+	public static IEntityImage createEntityImageBlock(EntityImp leaf, ISkinParam skinParam,
 			boolean isHideEmptyDescriptionForState, PortionShower portionShower, Bibliotekon bibliotekon,
 			GraphvizVersion graphvizVersion, UmlDiagramType umlDiagramType, Collection<Link> links) {
 		final IEntityImage result = createEntityImageBlockInternal(leaf, skinParam, isHideEmptyDescriptionForState,
@@ -139,14 +135,14 @@ public final class GeneralImageBuilder {
 		return result;
 	}
 
-	private static IEntityImage createEntityImageBlockInternal(ILeaf leaf, ISkinParam skinParam,
+	private static IEntityImage createEntityImageBlockInternal(EntityImp leaf, ISkinParam skinParam,
 			boolean isHideEmptyDescriptionForState, PortionShower portionShower, Bibliotekon bibliotekon,
 			GraphvizVersion graphvizVersion, UmlDiagramType umlDiagramType, Collection<Link> links) {
 		if (leaf.isRemoved())
 			throw new IllegalStateException();
 
 		if (leaf.getLeafType().isLikeClass()) {
-			final EntityImageClass entityImageClass = new EntityImageClass((ILeaf) leaf, skinParam, portionShower);
+			final EntityImageClass entityImageClass = new EntityImageClass((EntityImp) leaf, skinParam, portionShower);
 			final Neighborhood neighborhood = leaf.getNeighborhood();
 			if (neighborhood != null)
 				return new EntityImageProtected(entityImageClass, 20, neighborhood, bibliotekon);
@@ -317,7 +313,7 @@ public final class GeneralImageBuilder {
 		return result;
 	}
 
-	private boolean isOpalisable(IEntity entity) {
+	private boolean isOpalisable(EntityImp entity) {
 		if (strictUmlStyle)
 			return false;
 
@@ -387,13 +383,14 @@ public final class GeneralImageBuilder {
 	}
 
 	public IEntityImage buildImage(BaseFile basefile, String dotStrings[]) {
+		// ::comment when WASM
 		if (dotData.isDegeneratedWithFewEntities(0))
 			return new EntityImageSimpleEmpty(dotData.getSkinParam().getBackgroundColor());
 
 		if (dotData.isDegeneratedWithFewEntities(1) && dotData.getUmlDiagramType() != UmlDiagramType.STATE) {
-			final ILeaf single = dotData.getLeafs().iterator().next();
-			final IGroup group = single.getParentContainer();
-			if (group instanceof GroupRoot && single.getUSymbol() instanceof USymbolHexagon == false) {
+			final EntityImp single = dotData.getLeafs().iterator().next();
+			final EntityImp group = single.getParentContainer();
+			if (group.instanceofGroupRoot() && single.getUSymbol() instanceof USymbolHexagon == false) {
 				final IEntityImage tmp = GeneralImageBuilder.createEntityImageBlock(single, dotData.getSkinParam(),
 						dotData.isHideEmptyDescriptionForState(), dotData, null, null, dotData.getUmlDiagramType(),
 						dotData.getLinks());
@@ -468,6 +465,10 @@ public final class GeneralImageBuilder {
 			Log.error("Exception " + e);
 			throw new UnparsableGraphvizException(e, graphvizVersion, svg, source.getPlainString());
 		}
+		// ::done
+		// ::uncomment when WASM
+		// return null;
+		// ::done
 
 	}
 
@@ -490,7 +491,7 @@ public final class GeneralImageBuilder {
 		return null;
 	}
 
-	private Link onlyOneLink(IEntity ent) {
+	private Link onlyOneLink(EntityImp ent) {
 		Link single = null;
 		for (Link link : dotData.getLinks()) {
 			if (link.isInvis())
@@ -505,8 +506,8 @@ public final class GeneralImageBuilder {
 		return single;
 	}
 
+	// ::comment when WASM
 	private IEntityImage error(File dotExe) {
-
 		final List<String> msg = new ArrayList<>();
 		msg.add("Dot Executable: " + dotExe);
 		final ExeState exeState = ExeState.checkFile(dotExe);
@@ -523,9 +524,10 @@ public final class GeneralImageBuilder {
 		msg.add(" ");
 		return GraphicStrings.createForError(msg, false);
 	}
+	// ::done
 
-	private void printEntities(DotStringFactory dotStringFactory, Collection<ILeaf> entities2) {
-		for (ILeaf ent : entities2) {
+	private void printEntities(DotStringFactory dotStringFactory, Collection<EntityImp> entities2) {
+		for (EntityImp ent : entities2) {
 			if (ent.isRemoved())
 				continue;
 
@@ -533,7 +535,7 @@ public final class GeneralImageBuilder {
 		}
 	}
 
-	private void printEntity(DotStringFactory dotStringFactory, ILeaf ent) {
+	private void printEntity(DotStringFactory dotStringFactory, EntityImp ent) {
 		if (ent.isRemoved())
 			throw new IllegalStateException();
 
@@ -543,7 +545,7 @@ public final class GeneralImageBuilder {
 		dotStringFactory.addNode(node);
 	}
 
-	private IEntityImage printEntityInternal(DotStringFactory dotStringFactory, ILeaf ent) {
+	private IEntityImage printEntityInternal(DotStringFactory dotStringFactory, EntityImp ent) {
 		if (ent.isRemoved())
 			throw new IllegalStateException();
 
@@ -563,7 +565,7 @@ public final class GeneralImageBuilder {
 
 	private double getMaxWidth() {
 		double result = 0;
-		for (ILeaf ent : dotData.getLeafs()) {
+		for (EntityImp ent : dotData.getLeafs()) {
 			if (ent.getLeafType().isLikeClass() == false)
 				continue;
 
@@ -576,24 +578,26 @@ public final class GeneralImageBuilder {
 		return result;
 	}
 
-	private Collection<ILeaf> getUnpackagedEntities() {
-		final List<ILeaf> result = new ArrayList<>();
-		for (ILeaf ent : dotData.getLeafs())
+	private Collection<EntityImp> getUnpackagedEntities() {
+		final List<EntityImp> result = new ArrayList<>();
+		for (EntityImp ent : dotData.getLeafs())
 			if (dotData.getTopParent() == ent.getParentContainer())
 				result.add(ent);
 
 		return result;
 	}
 
-	private void printGroups(DotStringFactory dotStringFactory, IGroup parent) {
-		final Collection<IGroup> groups = dotData.getGroupHierarchy().getChildrenGroups(parent);
-		for (IGroup g : groups) {
+	private void printGroups(DotStringFactory dotStringFactory, EntityImp parent) {
+		// System.err.println("PARENT=" + parent);
+		final Collection<EntityImp> groups = dotData.getGroupHierarchy().getChildrenGroups(parent);
+		// System.err.println("groups=" + groups);
+		for (EntityImp g : groups) {
 			if (g.isRemoved())
 				continue;
 
 			if (dotData.isEmpty(g) && g.getGroupType() == GroupType.PACKAGE) {
 				final ISkinParam skinParam = dotData.getSkinParam();
-				final ILeaf folder = entityFactory.createLeafForEmptyGroup(g, skinParam);
+				final EntityImp folder = entityFactory.createLeafForEmptyGroup(g, skinParam);
 				printEntity(dotStringFactory, folder);
 			} else {
 				printGroup(dotStringFactory, g);
@@ -601,7 +605,7 @@ public final class GeneralImageBuilder {
 		}
 	}
 
-	private void printGroup(DotStringFactory dotStringFactory, IGroup g) {
+	private void printGroup(DotStringFactory dotStringFactory, EntityImp g) {
 		if (g.getGroupType() == GroupType.CONCURRENT_STATE)
 			return;
 

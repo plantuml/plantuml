@@ -42,8 +42,6 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.baraye.EntityImp;
-import net.sourceforge.plantuml.baraye.IGroup;
-import net.sourceforge.plantuml.baraye.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.EntityPosition;
 import net.sourceforge.plantuml.cucadiagram.Together;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -92,8 +90,7 @@ public class SvekNode implements Positionable, Hideable {
 		return super.toString() + " " + image + " " + type;
 	}
 
-	private final ILeaf leaf;
-	// private final IGroup group;
+	private final EntityImp leaf;
 
 	public final Together getTogether() {
 		if (leaf == null)
@@ -101,7 +98,7 @@ public class SvekNode implements Positionable, Hideable {
 		return leaf.getTogether();
 	}
 
-	SvekNode(ILeaf ent, IEntityImage image, ColorSequence colorSequence, StringBounder stringBounder) {
+	SvekNode(EntityImp ent, IEntityImage image, ColorSequence colorSequence, StringBounder stringBounder) {
 		this.stringBounder = stringBounder;
 		this.entityPosition = ent.getEntityPosition();
 		this.image = image;
@@ -109,14 +106,7 @@ public class SvekNode implements Positionable, Hideable {
 
 		this.color = colorSequence.getValue();
 		this.uid = String.format("sh%04d", color);
-
-		if (((EntityImp) ent).getOriginalGroup() == null) {
-			// this.group = null;
-			this.leaf = ent;
-		} else {
-			// this.group = ((EntityImp) ent).getOriginalGroup();
-			this.leaf = null;
-		}
+		this.leaf = ent;
 	}
 
 	private XDimension2D getDimImage() {

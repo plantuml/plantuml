@@ -107,10 +107,12 @@ import net.sourceforge.plantuml.ugraphic.visio.UGraphicVdx;
 
 public class ImageBuilder {
 
+	// ::comment when WASM
 	private Animation animation;
+	// ::done
 	private boolean annotations;
 	private HColor backcolor = getDefaultHBackColor();
-	// private ColorMapper colorMapper;
+
 	private XDimension2D dimension;
 	private final FileFormatOption fileFormatOption;
 	private UDrawable udrawable;
@@ -215,7 +217,9 @@ public class ImageBuilder {
 	public ImageBuilder styled(TitledDiagram diagram) {
 		skinParam = diagram.getSkinParam();
 		stringBounder = fileFormatOption.getDefaultStringBounder(skinParam);
+		// ::comment when WASM
 		animation = diagram.getAnimation();
+		// ::done
 		annotations = true;
 		backcolor = diagram.calculateBackColor();
 		margin = calculateMargin(diagram);
@@ -236,6 +240,7 @@ public class ImageBuilder {
 			udrawable = annotatedWorker.addAdd((TextBlock) udrawable);
 		}
 
+		// ::comment when WASM
 		switch (fileFormatOption.getFileFormat()) {
 		case MJPEG:
 			return writeImageMjpeg(os);
@@ -243,7 +248,13 @@ public class ImageBuilder {
 			return writeImageAnimatedGif(os);
 		default:
 			return writeImageInternal(os, animation);
+		// ::done
+		// ::uncomment when WASM
+		// return writeImageInternal(os);
+		// ::done
+		// ::comment when WASM
 		}
+		// ::done
 	}
 
 	public byte[] writeByteArray() throws IOException {
@@ -253,10 +264,16 @@ public class ImageBuilder {
 		}
 	}
 
+	// ::comment when WASM
 	private ImageData writeImageInternal(OutputStream os, Animation animationArg) throws IOException {
+		// ::done
+		// ::uncomment when WASM
+		// private ImageData writeImageInternal(OutputStream os) throws IOException {
+		// ::done
 		XDimension2D dim = getFinalDimension();
 		double dx = 0;
 		double dy = 0;
+		// ::comment when WASM
 		if (animationArg != null) {
 			final MinMax minmax = animationArg.getMinMax(dim);
 			animationArg.setDimension(dim);
@@ -264,14 +281,21 @@ public class ImageBuilder {
 			dx = -minmax.getMinX();
 			dy = -minmax.getMinY();
 		}
+		// ::done
 		final Scale scale = titledDiagram == null ? null : titledDiagram.getScale();
 		final double scaleFactor = (scale == null ? 1 : scale.getScale(dim.getWidth(), dim.getHeight())) * getDpi()
 				/ 96.0;
 		if (scaleFactor <= 0)
 			throw new IllegalStateException("Bad scaleFactor");
 
+		// ::comment when WASM
 		UGraphic ug = createUGraphic(dim, animationArg, dx, dy, scaleFactor,
 				titledDiagram == null ? new Pragma() : titledDiagram.getPragma());
+		// ::done
+		// ::uncomment when WASM
+		// UGraphic ug = createUGraphic(dim, dx, dy, scaleFactor,
+		// titledDiagram == null ? new Pragma() : titledDiagram.getPragma());
+		// ::done
 		maybeDrawBorder(ug, dim);
 		if (randomPixel)
 			drawRandomPoint(ug);
@@ -335,13 +359,10 @@ public class ImageBuilder {
 		if (skinParam != null && skinParam.handwritten())
 			return new UGraphicHandwritten(ug);
 
-//		if (OptionFlags.OMEGA_CROSSING) {
-//			return new UGraphicCrossing(ug);
-//		} else {
 		return ug;
-//		}
 	}
 
+	// ::comment when WASM
 	private ImageData writeImageMjpeg(OutputStream os) throws IOException {
 
 		final XDimension2D dim = getFinalDimension();
@@ -398,16 +419,30 @@ public class ImageBuilder {
 		baos.close();
 		return SImageIO.read(baos.toByteArray());
 	}
+	// ::done
 
+	// ::comment when WASM
 	private UGraphic createUGraphic(final XDimension2D dim, Animation animationArg, double dx, double dy,
 			double scaleFactor, Pragma pragma) {
+		// ::done
+		// ::uncomment when WASM
+		// private UGraphic createUGraphic(final XDimension2D dim, double dx, double dy,
+		// double scaleFactor, Pragma pragma) {
+		// ::done
 		final ColorMapper colorMapper = fileFormatOption.getColorMapper();
 		switch (fileFormatOption.getFileFormat()) {
 		case PNG:
+			// ::comment when WASM
 			return createUGraphicPNG(scaleFactor, dim, animationArg, dx, dy, fileFormatOption.getWatermark());
+		// ::done
+		// ::uncomment when WASM
+		// return createUGraphicPNG(scaleFactor, dim, dx, dy,
+		// fileFormatOption.getWatermark());
+		// ::done
 		case SVG:
 			final boolean interactive = "true".equalsIgnoreCase(pragma.getValue("svginteractive"));
 			return createUGraphicSVG(scaleFactor, dim, interactive);
+		// ::comment when WASM
 		case EPS:
 			return new UGraphicEps(backcolor, colorMapper, stringBounder, EpsStrategy.getDefault2());
 		case EPS_TEXT:
@@ -428,6 +463,7 @@ public class ImageBuilder {
 		case DEBUG:
 			return new UGraphicDebug(scaleFactor, dim, getSvgLinkTarget(), getHoverPathColorRGB(), seed,
 					getPreserveAspectRatio());
+		// ::done
 		default:
 			throw new UnsupportedOperationException(fileFormatOption.getFileFormat().toString());
 		}
@@ -446,8 +482,14 @@ public class ImageBuilder {
 
 	}
 
+	// ::uncomment when WASM
+	// private UGraphic createUGraphicPNG(double scaleFactor, final XDimension2D
+	// dim, double dx, double dy, String watermark) {
+	// ::done
+	// ::comment when WASM
 	private UGraphic createUGraphicPNG(double scaleFactor, final XDimension2D dim, Animation affineTransforms,
 			double dx, double dy, String watermark) {
+		// ::done
 		Color pngBackColor = new Color(0, 0, 0, 0);
 
 		if (this.backcolor instanceof HColorSimple)
@@ -461,8 +503,15 @@ public class ImageBuilder {
 				(int) (dim.getHeight() * scaleFactor), pngBackColor, stringBounder);
 		final Graphics2D graphics2D = builder.getGraphics2D();
 
+		// ::comment when WASM
 		final UGraphicG2d ug = new UGraphicG2d(backcolor, fileFormatOption.getColorMapper(), stringBounder, graphics2D,
 				scaleFactor, affineTransforms == null ? null : affineTransforms.getFirst(), dx, dy);
+		// ::done
+		// ::uncomment when WASM
+		// final UGraphicG2d ug = new UGraphicG2d(backcolor,
+		// fileFormatOption.getColorMapper(), stringBounder, graphics2D,
+		// scaleFactor, dx, dy);
+		// ::done
 		ug.setBufferedImage(builder.getBufferedImage());
 		final BufferedImage im = ug.getBufferedImage();
 		if (this.backcolor instanceof HColorGradient)

@@ -38,48 +38,47 @@ package net.sourceforge.plantuml.cucadiagram;
 import java.util.List;
 
 import net.sourceforge.plantuml.baraye.CucaDiagram;
-import net.sourceforge.plantuml.baraye.IGroup;
-import net.sourceforge.plantuml.baraye.ILeaf;
+import net.sourceforge.plantuml.baraye.EntityImp;
 
 public class Magma {
 
 	private final CucaDiagram diagram;
-	private final List<ILeaf> standalones;
+	private final List<EntityImp> standalones;
 	private final LinkType linkType = new LinkType(LinkDecor.NONE, LinkDecor.NONE).getInvisible();
 
-	public Magma(CucaDiagram system, List<ILeaf> standalones) {
+	public Magma(CucaDiagram system, List<EntityImp> standalones) {
 		this.diagram = system;
 		this.standalones = standalones;
 	}
 
 	public void putInSquare() {
-		final SquareLinker<ILeaf> linker = new SquareLinker<ILeaf>() {
-			public void topDown(ILeaf top, ILeaf down) {
-				diagram.addLink(new Link(diagram.getIEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(),
+		final SquareLinker<EntityImp> linker = new SquareLinker<EntityImp>() {
+			public void topDown(EntityImp top, EntityImp down) {
+				diagram.addLink(new Link(diagram.getEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(),
 						top, down, linkType, LinkArg.noDisplay(2)));
 			}
 
-			public void leftRight(ILeaf left, ILeaf right) {
-				diagram.addLink(new Link(diagram.getIEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(),
+			public void leftRight(EntityImp left, EntityImp right) {
+				diagram.addLink(new Link(diagram.getEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(),
 						left, right, linkType, LinkArg.noDisplay(1)));
 			}
 		};
-		new SquareMaker<ILeaf>().putInSquare(standalones, linker);
+		new SquareMaker<EntityImp>().putInSquare(standalones, linker);
 	}
 
-	public IGroup getContainer() {
-		final IGroup parent = standalones.get(0).getParentContainer();
-		if (parent == null) {
+	public EntityImp getContainer() {
+		final EntityImp parent = standalones.get(0).getParentContainer();
+		if (parent == null)
 			return null;
-		}
+
 		return parent.getParentContainer();
 	}
 
 	public boolean isComplete() {
-		final IGroup parent = getContainer();
-		if (parent == null) {
+		final EntityImp parent = getContainer();
+		if (parent == null)
 			return false;
-		}
+
 		return parent.size() == standalones.size();
 	}
 
@@ -87,16 +86,16 @@ public class Magma {
 		return SquareMaker.computeBranch(standalones.size());
 	}
 
-	private ILeaf getTopLeft() {
+	private EntityImp getTopLeft() {
 		return standalones.get(0);
 	}
 
-	private ILeaf getBottomLeft() {
+	private EntityImp getBottomLeft() {
 		int result = SquareMaker.getBottomLeft(standalones.size());
 		return standalones.get(result);
 	}
 
-	private ILeaf getTopRight() {
+	private EntityImp getTopRight() {
 		final int s = squareSize();
 		return standalones.get(s - 1);
 	}
@@ -107,13 +106,13 @@ public class Magma {
 	}
 
 	public void linkToDown(Magma down) {
-		diagram.addLink(new Link(diagram.getIEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(),
+		diagram.addLink(new Link(diagram.getEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(),
 				this.getBottomLeft(), down.getTopLeft(), linkType, LinkArg.noDisplay(2)));
 
 	}
 
 	public void linkToRight(Magma right) {
-		diagram.addLink(new Link(diagram.getIEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(),
+		diagram.addLink(new Link(diagram.getEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(),
 				this.getTopRight(), right.getTopLeft(), linkType, LinkArg.noDisplay(1)));
 	}
 

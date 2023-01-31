@@ -42,23 +42,19 @@ import java.util.Objects;
 
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.baraye.CucaDiagram;
-import net.sourceforge.plantuml.baraye.IEntity;
-import net.sourceforge.plantuml.baraye.ILeaf;
+import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Quark;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
-import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
-import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
-import net.sourceforge.plantuml.cucadiagram.NamespaceStrategy;
-import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.utils.Direction;
 
 public class ActivityDiagram extends CucaDiagram {
 
-	private IEntity lastEntityConsulted;
-	private IEntity lastEntityBrancheConsulted;
+	private EntityImp lastEntityConsulted;
+	private EntityImp lastEntityBrancheConsulted;
 	private ConditionalContext currentContext;
 
 	public ActivityDiagram(UmlSource source, Map<String, String> skinParam) {
@@ -66,34 +62,33 @@ public class ActivityDiagram extends CucaDiagram {
 		setNamespaceSeparator(null);
 	}
 
-	public ILeaf getOrCreateLeaf(Ident ident, Code code, LeafType type, USymbol symbol) {
-		return getOrCreateLeafDefault(Objects.requireNonNull(ident), code, type, symbol);
-	}
-
 	private String getAutoBranch() {
 		return "#" + this.getUniqueSequence();
 	}
 
-	public IEntity getOrCreate(Ident idNewLong, Code code, Display display, LeafType type) {
-		final IEntity result;
-		final boolean leafExist = leafExist(code);
-		if (leafExist) {
-			result = getOrCreateLeafDefault(idNewLong, code, type, null);
-			if (result.getLeafType() != type) {
-				return null;
-			}
-		} else {
-			result = createLeaf(idNewLong, code, display, type, null);
-		}
-		updateLasts(result);
-		return result;
-	}
+//	public final IEntity getOrCreateInActivity(Quark idNewLong, String codeString, Display display, LeafType type) {
+//		final Quark code = buildFromFullPath(codeString);
+//		final IEntity result;
+//		if (code.getData() == null) {
+//			final Quark quark = getPlasma().getIfExistsFromName(code.getName());
+//			if (quark != null && quark.getData() != null)
+//				result = getFromName(code.getName());
+//			else
+//				result = reallyCreateLeaf(idNewLong, display, type, null);
+//		} else {
+//			result = (ILeaf) code.getData();
+//			if (result.getLeafType() != type)
+//				return null;
+//		}
+//		updateLasts(result);
+//		return result;
+//	}
 
 	public void startIf(String optionalCodeString) {
 		final String idShort = optionalCodeString == null ? getAutoBranch() : optionalCodeString;
-		final Ident idNewLong = buildLeafIdent(idShort);
-		final Code code = buildCode(idShort);
-		final IEntity br = createLeaf(idNewLong, code, Display.create(""), LeafType.BRANCH, null);
+		final Quark quark = quarkInContext(cleanIdForQuark(idShort), false);
+		// final Quark code = buildCode(idShort);
+		final EntityImp br = reallyCreateLeaf(quark, Display.create(""), LeafType.BRANCH, null);
 		currentContext = new ConditionalContext(currentContext, br, Direction.DOWN);
 	}
 
@@ -101,38 +96,37 @@ public class ActivityDiagram extends CucaDiagram {
 		currentContext = currentContext.getParent();
 	}
 
-	public ILeaf getStart() {
-		final Ident ident = buildLeafIdent("start");
-		final Code code = buildCode("start");
-		return (ILeaf) getOrCreate(ident, code, Display.getWithNewlines("start"), LeafType.CIRCLE_START);
+	public EntityImp getStart() {
+		final Quark quark = quarkInContext("start", false);
+		if (quark.getData() == null) {
+			quark.setData(reallyCreateLeaf(quark, Display.getWithNewlines("start"), LeafType.CIRCLE_START, null));
+		}
+		return (EntityImp) quark.getData();
 	}
 
-	public ILeaf getEnd(String suppId) {
+	public EntityImp getEnd(String suppId) {
 		final String tmp = suppId == null ? "end" : "end$" + suppId;
-		final Ident ident = buildLeafIdent(tmp);
-		final Code code = buildCode(tmp);
-		return (ILeaf) getOrCreate(ident, code, Display.getWithNewlines("end"), LeafType.CIRCLE_END);
-	}
-
-	private void updateLasts(final IEntity result) {
-		if (result == null || result.getLeafType() == LeafType.NOTE) {
-			return;
+		final Quark quark = quarkInContext(tmp, false);
+		if (quark.getData() == null) {
+			quark.setData(reallyCreateLeaf(quark, Display.getWithNewlines("end"), LeafType.CIRCLE_END, null));
 		}
-		this.lastEntityConsulted = result;
-		if (result.getLeafType() == LeafType.BRANCH) {
-			lastEntityBrancheConsulted = result;
-		}
+		return (EntityImp) quark.getData();
 	}
 
 	@Override
-	public ILeaf createLeaf(Ident idNewLong, Code code, Display display, LeafType type, USymbol symbol) {
-		final ILeaf result = super.createLeaf(Objects.requireNonNull(idNewLong), code, display, type, symbol);
-		updateLasts(result);
-		return result;
+	protected void updateLasts(EntityImp result) {
+		if (result == null || result.getLeafType() == LeafType.NOTE)
+			return;
+
+		// System.err.println("updateLasts " + result);
+		this.lastEntityConsulted = result;
+		if (result.getLeafType() == LeafType.BRANCH)
+			lastEntityBrancheConsulted = result;
+
 	}
 
-	public IEntity createNote(Ident idNewLong, Code code, Display display) {
-		return super.createLeaf(Objects.requireNonNull(idNewLong), code, display, LeafType.NOTE, null);
+	public EntityImp createNote(Quark idNewLong, String code__, Display display) {
+		return reallyCreateLeaf(Objects.requireNonNull(idNewLong), display, LeafType.NOTE, null);
 	}
 
 	final protected List<String> getDotStrings() {
@@ -144,12 +138,12 @@ public class ActivityDiagram extends CucaDiagram {
 		return new DiagramDescription("(" + getLeafssize() + " activities)");
 	}
 
-	public IEntity getLastEntityConsulted() {
+	public EntityImp getLastEntityConsulted() {
 		return lastEntityConsulted;
 	}
 
 	@Deprecated
-	public IEntity getLastEntityBrancheConsulted() {
+	public EntityImp getLastEntityBrancheConsulted() {
 		return lastEntityBrancheConsulted;
 	}
 
@@ -157,41 +151,36 @@ public class ActivityDiagram extends CucaDiagram {
 		return currentContext;
 	}
 
-	public final void setLastEntityConsulted(IEntity lastEntityConsulted) {
+	public final void setLastEntityConsulted(EntityImp lastEntityConsulted) {
+		// System.err.println("setLastEntityConsulted " + lastEntityConsulted);
 		this.lastEntityConsulted = lastEntityConsulted;
 	}
 
-	public IEntity createInnerActivity() {
-		// Log.println("createInnerActivity A");
+	public EntityImp createInnerActivity() {
+
 		final String idShort = "##" + this.getUniqueSequence();
-		final Ident idNewLong = buildLeafIdent(idShort);
-		final Code code = buildCode(idShort);
-		gotoGroup(idNewLong, code, Display.getWithNewlines(code), GroupType.INNER_ACTIVITY, getCurrentGroup(),
-				NamespaceStrategy.SINGLE);
-		final IEntity g = getCurrentGroup();
-		// g.setRankdir(Rankdir.LEFT_TO_RIGHT);
+
+		final Quark quark = quarkInContext(idShort, false);
+		gotoGroup(quark, Display.getWithNewlines(quark.getName()), GroupType.INNER_ACTIVITY);
+		final EntityImp g = getCurrentGroup();
+
 		lastEntityConsulted = null;
 		lastEntityBrancheConsulted = null;
-		// Log.println("createInnerActivity B "+getCurrentGroup());
+
 		return g;
 	}
 
 	public void concurrentActivity(String name) {
-		// Log.println("concurrentActivity A name=" + name+" "+getCurrentGroup());
-		if (getCurrentGroup().getGroupType() == GroupType.CONCURRENT_ACTIVITY) {
-			// getCurrentGroup().setRankdir(Rankdir.LEFT_TO_RIGHT);
+		if (getCurrentGroup().getGroupType() == GroupType.CONCURRENT_ACTIVITY)
 			endGroup();
-			// Log.println("endgroup");
-		}
+
 		final String idShort = "##" + this.getUniqueSequence();
-		// Log.println("concurrentActivity A name=" + name+" "+getCurrentGroup());
-		final Code code = buildCode(idShort);
-		if (getCurrentGroup().getGroupType() != GroupType.INNER_ACTIVITY) {
+
+		if (getCurrentGroup().getGroupType() != GroupType.INNER_ACTIVITY)
 			throw new IllegalStateException("type=" + getCurrentGroup().getGroupType());
-		}
-		final Ident idNewLong = buildLeafIdent(idShort);
-		gotoGroup(idNewLong, code, Display.getWithNewlines("code"), GroupType.CONCURRENT_ACTIVITY, getCurrentGroup(),
-				NamespaceStrategy.SINGLE);
+
+		final Quark idNewLong = quarkInContext(idShort, false);
+		gotoGroup(idNewLong, Display.getWithNewlines("code"), GroupType.CONCURRENT_ACTIVITY);
 		lastEntityConsulted = null;
 		lastEntityBrancheConsulted = null;
 	}

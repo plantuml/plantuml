@@ -36,8 +36,8 @@
 package net.sourceforge.plantuml.descdiagram.command;
 
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.baraye.IEntity;
-import net.sourceforge.plantuml.baraye.ILeaf;
+import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Quark;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.IRegex;
@@ -45,9 +45,7 @@ import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkArg;
@@ -242,16 +240,18 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 	@Override
 	protected CommandExecutionResult executeArg(DescriptionDiagram diagram, LineLocation location, RegexResult arg)
 			throws NoSuchColorException {
-		final String ent1String = arg.get("ENT1", 0);
-		final String ent2String = arg.get("ENT2", 0);
-		final String ent1 = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(ent1String);
-		final String ent2 = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(ent2String);
-		final Ident ident1 = diagram.buildLeafIdentSpecial(ent1);
-		final Ident ident2 = diagram.buildLeafIdentSpecial(ent2);
-		Ident ident1pure = Ident.empty().add(ent1, diagram.getNamespaceSeparator());
-		Ident ident2pure = Ident.empty().add(ent2, diagram.getNamespaceSeparator());
-		final Code code1 = diagram.buildCode(ent1String);
-		final Code code2 = diagram.buildCode(ent2String);
+		final String ent1 = arg.get("ENT1", 0);
+		final String ent2 = arg.get("ENT2", 0);
+		final String ent1clean = diagram.cleanIdForQuark(ent1);
+		final String ent2clean = diagram.cleanIdForQuark(ent2);
+//		final String ent1 = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(ent1String);
+//		final String ent2 = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(ent2String);
+//		final Quark ident1 = diagram.buildFullyQualified(ent1);
+//		final Quark ident2 = diagram.buildFullyQualified(ent2);
+//		Quark ident1pure = diagram.getPlasma().root().child(ent1);
+//		Quark ident2pure = diagram.getPlasma().root().child(ent2);
+//		final Quark code1 = diagram.buildFromFullPath(ent1String);
+//		final Quark code2 = diagram.buildFromFullPath(ent2String);
 
 		final LinkType linkType = getLinkType(arg);
 		final Direction dir = getDirection(arg);
@@ -263,18 +263,18 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 
 		final Labels labels = new Labels(arg);
 
-		final IEntity cl1;
-		final IEntity cl2;
-		if (diagram.isGroup(code1) && diagram.isGroup(code2)) {
-			cl1 = diagram.getGroup(diagram.buildCode(ent1String));
-			cl2 = diagram.getGroup(diagram.buildCode(ent2String));
+		final EntityImp cl1;
+		final EntityImp cl2;
+		if (diagram.isGroup(ent1clean) && diagram.isGroup(ent2clean)) {
+			cl1 = diagram.getGroup(ent1clean);
+			cl2 = diagram.getGroup(ent2clean);
 		} else {
-			cl1 = getFoo1(diagram, code1, ident1, ident1pure);
-			cl2 = getFoo1(diagram, code2, ident2, ident2pure);
+			cl1 = getDummy(diagram, ent1);
+			cl2 = getDummy(diagram, ent2);
 		}
 		final LinkArg linkArg = LinkArg.build(Display.getWithNewlines(labels.getLabelLink()), queue.length(),
 				diagram.getSkinParam().classAttributeIconSize() > 0);
-		Link link = new Link(diagram.getIEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(), cl1, cl2,
+		Link link = new Link(diagram.getEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(), cl1, cl2,
 				linkType, linkArg.withQuantifier(labels.getFirstLabel(), labels.getSecondLabel())
 						.withDistanceAngle(diagram.getLabeldistance(), diagram.getLabelangle()));
 		link.setLinkArrow(labels.getLinkArrow());
@@ -291,36 +291,43 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 		return CommandExecutionResult.ok();
 	}
 
-	private IEntity getFoo1(DescriptionDiagram diagram, Code code, Ident ident, Ident pure) {
-		if (diagram.isGroup(code))
-			return diagram.getGroup(code);
+//	private String removeStartingParenthesis(String s) {
+//		if (s.startsWith("()"))
+//			return s.substring(2);
+//		return s;
+//	}
 
-		final String codeString = code.getName();
-		if (ident.getLast().startsWith("()")) {
-			ident = ident.removeStartingParenthesis();
-			return getOrCreateLeaf1972(diagram, ident, ident.toCode(diagram), LeafType.DESCRIPTION, USymbols.INTERFACE,
-					pure);
+	private EntityImp getDummy(DescriptionDiagram diagram, String ident) {
+		if (ident.startsWith("()")) {
+			ident = diagram.cleanIdForQuark(ident);
+			final Quark quark = diagram.quarkInContext(ident, false);
+			if (quark.getData() != null)
+				return (EntityImp) quark.getData();
+			return diagram.reallyCreateLeaf(quark, Display.getWithNewlines(quark.getName()), LeafType.DESCRIPTION,
+					USymbols.INTERFACE);
 		}
-		final char codeChar = codeString.length() > 2 ? codeString.charAt(0) : 0;
-		final String tmp3 = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(codeString, "\"([:");
-		final Ident ident3 = diagram.buildFullyQualified(tmp3);
-		final Code code3 = diagram.buildCode(tmp3);
+
+		final char codeChar = ident.length() > 2 ? ident.charAt(0) : 0;
+		ident = diagram.cleanIdForQuark(ident);
+		final Quark quark = diagram.quarkInContext(ident, false);
+
+		if (diagram.isGroup(quark))
+			return (EntityImp) quark.getData();
+		if (quark.getData() != null)
+			return (EntityImp) quark.getData();
+		final Display display = Display.getWithNewlines(quark.getName());
+
 		if (codeChar == '(') {
-			return getOrCreateLeaf1972(diagram, ident, code3, LeafType.USECASE, USymbols.USECASE, pure);
+			return (EntityImp) diagram.reallyCreateLeaf(quark, display, LeafType.USECASE, USymbols.USECASE);
 		} else if (codeChar == ':') {
-			return getOrCreateLeaf1972(diagram, ident, code3, LeafType.DESCRIPTION,
-					diagram.getSkinParam().actorStyle().toUSymbol(), pure);
+			return (EntityImp) diagram.reallyCreateLeaf(quark, display, LeafType.DESCRIPTION,
+					diagram.getSkinParam().actorStyle().toUSymbol());
 		} else if (codeChar == '[') {
 			final USymbol sym = diagram.getSkinParam().componentStyle().toUSymbol();
-			return getOrCreateLeaf1972(diagram, ident, code3, LeafType.DESCRIPTION, sym, pure);
+			return (EntityImp) diagram.reallyCreateLeaf(quark, display, LeafType.DESCRIPTION, sym);
 		}
 
-		return getOrCreateLeaf1972(diagram, ident, code, null, null, pure);
-	}
-
-	private ILeaf getOrCreateLeaf1972(DescriptionDiagram diagram, Ident ident, Code code, LeafType type, USymbol symbol,
-			Ident pure) {
-		return diagram.getOrCreateLeaf(ident, code, type, symbol);
+		return (EntityImp) diagram.reallyCreateLeaf(quark, display, LeafType.STILL_UNKNOWN, null);
 	}
 
 }

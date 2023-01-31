@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.graphic.StringBounderRaw;
 import net.sourceforge.plantuml.ugraphic.UFont;
 
 public class StringBounderDebug extends StringBounderRaw {
+	// ::remove folder when WASM
 
 	@Override
 	protected XDimension2D calculateDimensionInternal(UFont font, String text) {

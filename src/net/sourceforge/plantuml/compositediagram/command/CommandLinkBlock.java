@@ -34,7 +34,8 @@
  */
 package net.sourceforge.plantuml.compositediagram.command;
 
-import net.sourceforge.plantuml.baraye.IEntity;
+import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Quark;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.IRegex;
@@ -78,8 +79,17 @@ public class CommandLinkBlock extends SingleLineCommand2<CompositeDiagram> {
 	protected CommandExecutionResult executeArg(CompositeDiagram diagram, LineLocation location, RegexResult arg) {
 		final String ent1 = arg.get("ENT1", 0);
 		final String ent2 = arg.get("ENT2", 0);
-		final IEntity cl1 = diagram.getOrCreateLeaf(diagram.buildLeafIdent(ent1), diagram.buildCode(ent1), null, null);
-		final IEntity cl2 = diagram.getOrCreateLeaf(diagram.buildLeafIdent(ent2), diagram.buildCode(ent2), null, null);
+		final Quark quark1 = diagram.quarkInContext(diagram.cleanIdForQuark(ent1), false);
+		final Quark quark2 = diagram.quarkInContext(diagram.cleanIdForQuark(ent2), false);
+		final EntityImp cl1 = (EntityImp) quark1.getData();
+		if (cl1 == null)
+			return CommandExecutionResult.error("No such element " + quark1.getName());
+
+		final EntityImp cl2 = (EntityImp) quark2.getData();
+		if (cl2 == null)
+			return CommandExecutionResult.error("No such element " + quark2.getName());
+//		final IEntity cl1 = diagram.getOrCreateLeaf(quark1, diagram.buildFromFullPath(ent1), null, null);
+//		final IEntity cl2 = diagram.getOrCreateLeaf(quark2, diagram.buildFromFullPath(ent2), null, null);
 
 		final String deco1 = arg.get("DECO1", 0);
 		final String deco2 = arg.get("DECO2", 0);
@@ -95,7 +105,7 @@ public class CommandLinkBlock extends SingleLineCommand2<CompositeDiagram> {
 
 		final LinkArg linkArg = LinkArg.build(Display.getWithNewlines(arg.get("DISPLAY", 0)), queue.length(),
 				diagram.getSkinParam().classAttributeIconSize() > 0);
-		final Link link = new Link(diagram.getIEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(), cl1,
+		final Link link = new Link(diagram.getEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(), cl1,
 				cl2, linkType, linkArg);
 		diagram.addLink(link);
 		return CommandExecutionResult.ok();

@@ -44,7 +44,6 @@ import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.awt.geom.XRectangle2D;
 import net.sourceforge.plantuml.baraye.EntityImp;
-import net.sourceforge.plantuml.baraye.ILeaf;
 import net.sourceforge.plantuml.creole.Stencil;
 import net.sourceforge.plantuml.cucadiagram.EntityPortion;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
@@ -86,7 +85,7 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 
 	final private LineConfigurable lineConfig;
 
-	public EntityImageClass(ILeaf entity, ISkinParam skinParam, PortionShower portionShower) {
+	public EntityImageClass(EntityImp entity, ISkinParam skinParam, PortionShower portionShower) {
 		super(entity, entity.getColors().mute(skinParam));
 		this.leafType = entity.getLeafType();
 		this.lineConfig = entity;
@@ -249,7 +248,7 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 	}
 
 	public ShapeType getShapeType() {
-		if (((ILeaf) getEntity()).getPortShortNames().size() > 0)
+		if (((EntityImp) getEntity()).getPortShortNames().size() > 0)
 			return ShapeType.RECTANGLE_HTML_FOR_PORTS;
 
 		return ShapeType.RECTANGLE;
@@ -257,7 +256,7 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 
 	@Override
 	public Margins getShield(StringBounder stringBounder) {
-		return ((ILeaf) getEntity()).getMargins();
+		return ((EntityImp) getEntity()).getMargins();
 	}
 
 	public double getStartingX(StringBounder stringBounder, double y) {

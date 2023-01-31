@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.svek.image;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
-import net.sourceforge.plantuml.baraye.ILeaf;
+import net.sourceforge.plantuml.baraye.EntityImp;
 import net.sourceforge.plantuml.cucadiagram.Rankdir;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.style.PName;
@@ -56,7 +56,7 @@ public class EntityImageSynchroBar extends AbstractEntityImage {
 
 	// private final SName styleName;
 
-	public EntityImageSynchroBar(ILeaf entity, ISkinParam skinParam, SName styleName) {
+	public EntityImageSynchroBar(EntityImp entity, ISkinParam skinParam, SName styleName) {
 		super(entity, skinParam);
 		// this.styleName = styleName;
 	}

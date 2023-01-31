@@ -59,6 +59,7 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt;
 
 public class SequenceDiagramTxtMaker implements FileMaker {
+	// ::remove file when WASM
 
 	private final SequenceDiagram diagram;
 	private final DrawableSet drawableSet;

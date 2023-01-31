@@ -41,8 +41,7 @@ import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.List;
 
-import net.sourceforge.plantuml.baraye.IGroup;
-import net.sourceforge.plantuml.cucadiagram.GroupRoot;
+import net.sourceforge.plantuml.baraye.EntityImp;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
 import net.sourceforge.plantuml.cucadiagram.ICucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
@@ -62,8 +61,8 @@ public final class CucaDiagramSimplifierState {
 		boolean changed;
 		do {
 			changed = false;
-			final Collection<IGroup> groups = getOrdered(diagram.getRootGroup());
-			for (IGroup g : groups) {
+			final Collection<EntityImp> groups = getOrdered(diagram.getRootGroup());
+			for (EntityImp g : groups)
 				if (diagram.isAutarkic(g)) {
 					final IEntityImage img = computeImage(g);
 					g.overrideImage(img, g.getGroupType() == GroupType.CONCURRENT_STATE ? LeafType.STATE_CONCURRENT
@@ -71,47 +70,45 @@ public final class CucaDiagramSimplifierState {
 
 					changed = true;
 				}
-			}
+
 		} while (changed);
 	}
 
-	private Collection<IGroup> getOrdered(IGroup root) {
-		final Collection<IGroup> ordered = new LinkedHashSet<>();
+	private Collection<EntityImp> getOrdered(EntityImp root) {
+		final Collection<EntityImp> ordered = new LinkedHashSet<>();
 		ordered.add(root);
 		int size = 1;
 		while (true) {
 			size = ordered.size();
 			addOneLevel(ordered);
-			if (size == ordered.size()) {
+			if (size == ordered.size())
 				break;
-			}
+
 		}
-		final List<IGroup> result = new ArrayList<>();
-		for (IGroup g : ordered) {
-			if (g instanceof GroupRoot == false) {
+		final List<EntityImp> result = new ArrayList<>();
+		for (EntityImp g : ordered)
+			if (g.instanceofGroupRoot() == false)
 				result.add(0, g);
-			}
-		}
+
 		return result;
 	}
 
-	private void addOneLevel(Collection<IGroup> currents) {
-		for (IGroup g : new ArrayList<>(currents)) {
-			for (IGroup child : reverse(g.getChildren())) {
+	private void addOneLevel(Collection<EntityImp> currents) {
+		for (EntityImp g : new ArrayList<>(currents))
+			for (EntityImp child : reverse(g.getChildren()))
 				currents.add(child);
-			}
-		}
+
 	}
 
-	private List<IGroup> reverse(Collection<IGroup> source) {
-		final List<IGroup> result = new ArrayList<>();
-		for (IGroup g : source) {
+	private List<EntityImp> reverse(Collection<EntityImp> source) {
+		final List<EntityImp> result = new ArrayList<>();
+		for (EntityImp g : source)
 			result.add(0, g);
-		}
+
 		return result;
 	}
 
-	private IEntityImage computeImage(IGroup g) throws IOException, InterruptedException {
+	private IEntityImage computeImage(EntityImp g) throws IOException, InterruptedException {
 		final GroupPngMakerState maker = new GroupPngMakerState(diagram, g, stringBounder);
 		return maker.getImage();
 	}

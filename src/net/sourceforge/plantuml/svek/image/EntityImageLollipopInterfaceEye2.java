@@ -40,7 +40,7 @@ import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
-import net.sourceforge.plantuml.baraye.ILeaf;
+import net.sourceforge.plantuml.baraye.EntityImp;
 import net.sourceforge.plantuml.cucadiagram.BodyFactory;
 import net.sourceforge.plantuml.cucadiagram.EntityPortion;
 import net.sourceforge.plantuml.cucadiagram.PortionShower;
@@ -70,7 +70,7 @@ public class EntityImageLollipopInterfaceEye2 extends AbstractEntityImage {
 	private final SymbolContext ctx;
 	final private Url url;
 
-	public EntityImageLollipopInterfaceEye2(ILeaf entity, ISkinParam skinParam, PortionShower portionShower) {
+	public EntityImageLollipopInterfaceEye2(EntityImp entity, ISkinParam skinParam, PortionShower portionShower) {
 		super(entity, skinParam);
 		final Stereotype stereotype = entity.getStereotype();
 

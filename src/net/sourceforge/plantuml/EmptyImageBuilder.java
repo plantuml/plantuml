@@ -74,6 +74,7 @@ public class EmptyImageBuilder {
 		if (width <= 0 || height <= 0)
 			throw new IllegalArgumentException("width and height must be positive");
 
+		// ::comment when WASM
 		if (width > GraphvizUtils.getenvImageLimit()) {
 			Log.info("Width too large " + width + ". You should set PLANTUML_LIMIT_SIZE");
 			width = GraphvizUtils.getenvImageLimit();
@@ -82,6 +83,7 @@ public class EmptyImageBuilder {
 			Log.info("Height too large " + height + ". You should set PLANTUML_LIMIT_SIZE");
 			height = GraphvizUtils.getenvImageLimit();
 		}
+		// ::done
 		this.background = background;
 		this.stringBounder = stringBounder;
 		Log.info("Creating image " + width + "x" + height);

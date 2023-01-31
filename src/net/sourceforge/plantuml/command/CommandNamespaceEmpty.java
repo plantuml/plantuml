@@ -38,18 +38,15 @@ package net.sourceforge.plantuml.command;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlMode;
-import net.sourceforge.plantuml.baraye.IEntity;
-import net.sourceforge.plantuml.baraye.IGroup;
+import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Quark;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
-import net.sourceforge.plantuml.cucadiagram.Ident;
-import net.sourceforge.plantuml.cucadiagram.NamespaceStrategy;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
@@ -84,15 +81,20 @@ public class CommandNamespaceEmpty extends SingleLineCommand2<ClassDiagram> {
 	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg)
 			throws NoSuchColorException {
 		final String idShort = arg.get("NAME", 0);
-		final Ident idNewLong = diagram.buildLeafIdent(idShort);
-		final Code code = diagram.buildCode(idShort);
-		final IGroup currentPackage = diagram.getCurrentGroup();
-		final Display display = Display.getWithNewlines(code);
-		final CommandExecutionResult status = diagram.gotoGroup(idNewLong, code, display, GroupType.PACKAGE,
-				currentPackage, NamespaceStrategy.MULTIPLE);
+
+		final Quark quark = diagram.quarkInContext(diagram.cleanIdForQuark(idShort), true);
+		if (quark.getData() != null)
+			return CommandExecutionResult.error("Already exists " + quark.getName());
+
+//		final Quark idNewLong = diagram
+//				.buildFromName(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(idShort));
+//		final Quark code = diagram.buildFromFullPath(idShort);
+
+		final Display display = Display.getWithNewlines(quark.getQualifiedName());
+		final CommandExecutionResult status = diagram.gotoGroup(quark, display, GroupType.PACKAGE);
 		if (status.isOk() == false)
 			return status;
-		final IEntity p = diagram.getCurrentGroup();
+		final EntityImp p = diagram.getCurrentGroup();
 		final String stereotype = arg.get("STEREOTYPE", 0);
 		if (stereotype != null)
 			p.setStereotype(Stereotype.build(stereotype));

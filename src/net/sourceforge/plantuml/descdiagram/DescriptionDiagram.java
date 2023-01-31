@@ -36,15 +36,12 @@
 package net.sourceforge.plantuml.descdiagram;
 
 import java.util.Map;
-import java.util.Objects;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
-import net.sourceforge.plantuml.baraye.ILeaf;
+import net.sourceforge.plantuml.baraye.EntityImp;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.core.UmlSource;
-import net.sourceforge.plantuml.cucadiagram.Code;
-import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.USymbols;
@@ -55,55 +52,76 @@ public class DescriptionDiagram extends AbstractEntityDiagram {
 		super(source, UmlDiagramType.DESCRIPTION, skinParam);
 	}
 
-	@Override
-	public Ident cleanIdent(Ident ident) {
-		String codeString = ident.getName();
-		if (codeString.startsWith("[") && codeString.endsWith("]")) {
-			return ident.eventuallyRemoveStartingAndEndingDoubleQuote("\"([:");
-		}
-		if (codeString.startsWith(":") && codeString.endsWith(":")) {
-			return ident.eventuallyRemoveStartingAndEndingDoubleQuote("\"([:");
-		}
-		if (codeString.startsWith("()")) {
-			codeString = StringUtils.trin(codeString.substring(2));
-			codeString = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(codeString);
-			return ident.parent().add(Ident.empty().add(codeString, null));
-		}
-		return ident;
-	}
+//	@Override
+//	public Ident cleanIdent(Ident ident) {
+//		String codeString = ident.getName();
+//		if (codeString.startsWith("[") && codeString.endsWith("]")) {
+//			return ident.eventuallyRemoveStartingAndEndingDoubleQuote("\"([:");
+//		}
+//		if (codeString.startsWith(":") && codeString.endsWith(":")) {
+//			return ident.eventuallyRemoveStartingAndEndingDoubleQuote("\"([:");
+//		}
+//		if (codeString.startsWith("()")) {
+//			codeString = StringUtils.trin(codeString.substring(2));
+//			codeString = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(codeString);
+//			return ident.parent().add(Ident.empty().add(codeString, null));
+//		}
+//		return ident;
+//	}
 
 	@Override
-	public ILeaf getOrCreateLeaf(Ident ident, Code code, LeafType type, USymbol symbol) {
-		Objects.requireNonNull(ident);
-		if (type == null) {
-			String codeString = code.getName();
-			if (codeString.startsWith("[") && codeString.endsWith("]")) {
-				final USymbol sym = getSkinParam().componentStyle().toUSymbol();
-				final Ident idNewLong = ident.eventuallyRemoveStartingAndEndingDoubleQuote("\"([:");
-				return getOrCreateLeafDefault(idNewLong, idNewLong.toCode(this), LeafType.DESCRIPTION, sym);
-			}
-			if (codeString.startsWith(":") && codeString.endsWith(":")) {
-				final Ident idNewLong = ident.eventuallyRemoveStartingAndEndingDoubleQuote("\"([:");
-				return getOrCreateLeafDefault(idNewLong, idNewLong.toCode(this), LeafType.DESCRIPTION,
-						getSkinParam().actorStyle().toUSymbol());
-			}
-			if (codeString.startsWith("()")) {
-				codeString = StringUtils.trin(codeString.substring(2));
-				codeString = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(codeString);
-				final Ident idNewLong = buildLeafIdent(codeString);
-				final Code code99 = buildCode(codeString);
-				return getOrCreateLeafDefault(idNewLong, code99, LeafType.DESCRIPTION, USymbols.INTERFACE);
-			}
-			final String tmp4 = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(code.getName(), "\"([:");
-			final Ident idNewLong = ident.eventuallyRemoveStartingAndEndingDoubleQuote("\"([:");
-			code = buildCode(tmp4);
-			return getOrCreateLeafDefault(idNewLong, code, LeafType.STILL_UNKNOWN, symbol);
-		}
-		return getOrCreateLeafDefault(ident, code, type, symbol);
+	public String cleanIdForQuark(String id) {
+		if (id == null)
+			return null;
+		if (id.startsWith("()"))
+			id = StringUtils.trin(id.substring(2));
+		return super.cleanIdForQuark(id);
 	}
+
+//	@Override
+//	protected ILeaf getOrCreateLeaf2(Quark ident, Quark code, LeafType type, USymbol symbol) {
+//		Objects.requireNonNull(ident);
+//		if (type == null) {
+//			String codeString = code.getName();
+//			if (codeString.startsWith("[") && codeString.endsWith("]")) {
+//				final USymbol sym = getSkinParam().componentStyle().toUSymbol();
+//				final Quark idNewLong = ident.eventuallyRemoveStartingAndEndingDoubleQuote("\"([:");
+//				if (idNewLong.getData() != null)
+//					return (ILeaf) idNewLong.getData();
+//				return reallyCreateLeaf(idNewLong, Display.getWithNewlines(idNewLong.getName()), LeafType.DESCRIPTION,
+//						sym);
+//			}
+//			if (codeString.startsWith(":") && codeString.endsWith(":")) {
+//				final Quark idNewLong = ident.eventuallyRemoveStartingAndEndingDoubleQuote("\"([:");
+//				if (idNewLong.getData() != null)
+//					return (ILeaf) idNewLong.getData();
+//				return reallyCreateLeaf(idNewLong, Display.getWithNewlines(idNewLong.getName()), LeafType.DESCRIPTION,
+//						getSkinParam().actorStyle().toUSymbol());
+//			}
+//			if (codeString.startsWith("()")) {
+//				codeString = StringUtils.trin(codeString.substring(2));
+//				codeString = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(codeString);
+//				final Quark idNewLong = buildFromName(
+//						StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(codeString));
+//				if (idNewLong.getData() != null)
+//					return (ILeaf) idNewLong.getData();
+//				return reallyCreateLeaf(idNewLong, Display.getWithNewlines(codeString), LeafType.DESCRIPTION,
+//						USymbols.INTERFACE);
+//			}
+//			final String tmp4 = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(code.getName(), "\"([:");
+//			final Quark idNewLong = ident.eventuallyRemoveStartingAndEndingDoubleQuote("\"([:");
+//			code = buildFromFullPath(tmp4);
+//			if (idNewLong.getData() != null)
+//				return (ILeaf) idNewLong.getData();
+//			return reallyCreateLeaf(idNewLong, Display.getWithNewlines(tmp4), LeafType.STILL_UNKNOWN, symbol);
+//		}
+//		if (ident.getData() != null)
+//			return (ILeaf) ident.getData();
+//		return reallyCreateLeaf(ident, Display.getWithNewlines(code.getName()), type, symbol);
+//	}
 
 	private boolean isUsecase() {
-		for (ILeaf leaf : getLeafsvalues()) {
+		for (EntityImp leaf : getLeafsvalues()) {
 			final LeafType type = leaf.getLeafType();
 			final USymbol usymbol = leaf.getUSymbol();
 			if (type == LeafType.USECASE || usymbol == getSkinParam().actorStyle().toUSymbol()) {
@@ -118,7 +136,7 @@ public class DescriptionDiagram extends AbstractEntityDiagram {
 		super.makeDiagramReady();
 		final LeafType defaultType = LeafType.DESCRIPTION;
 		final USymbol defaultSymbol = isUsecase() ? getSkinParam().actorStyle().toUSymbol() : USymbols.INTERFACE;
-		for (ILeaf leaf : getLeafsvalues()) {
+		for (EntityImp leaf : getLeafsvalues()) {
 			if (leaf.getLeafType() == LeafType.STILL_UNKNOWN) {
 				leaf.muteToType(defaultType, defaultSymbol);
 			}

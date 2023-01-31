@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.security.SImageIO;
 
 public class PSystemJcckit extends AbstractPSystem {
+	// ::remove folder when WASM
 
 	private final PropertiesBasedConfigData prop;
 	private final int width;

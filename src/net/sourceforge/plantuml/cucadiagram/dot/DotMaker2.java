@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.cucadiagram.dot;
 
 final public class DotMaker2 {
+	// ::remove file when WASM
 
 	private static boolean isJunit = false;
 

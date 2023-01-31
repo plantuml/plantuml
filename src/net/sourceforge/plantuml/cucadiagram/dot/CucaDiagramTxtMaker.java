@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
-import net.sourceforge.plantuml.baraye.IEntity;
+import net.sourceforge.plantuml.baraye.EntityImp;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.EntityPortion;
 import net.sourceforge.plantuml.cucadiagram.ICucaDiagram;
@@ -66,6 +66,7 @@ import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt;
 
 public final class CucaDiagramTxtMaker {
+	// ::remove file when WASM
 
 	// private final CucaDiagram diagram;
 	private final FileFormat fileFormat;
@@ -80,7 +81,7 @@ public final class CucaDiagramTxtMaker {
 		return 10;
 	}
 
-	private boolean showMember(IEntity entity) {
+	private boolean showMember(EntityImp entity) {
 		final boolean showMethods = portionShower.showPortion(EntityPortion.METHOD, entity);
 		final boolean showFields = portionShower.showPortion(EntityPortion.FIELD, entity);
 		return showMethods || showFields;
@@ -93,9 +94,9 @@ public final class CucaDiagramTxtMaker {
 		final Cluster root = new Cluster(null, 0, 0);
 		int uid = 0;
 
-		final Map<IEntity, Block> blocks = new HashMap<IEntity, Block>();
+		final Map<EntityImp, Block> blocks = new HashMap<EntityImp, Block>();
 
-		for (IEntity ent : diagram.getLeafsvalues()) {
+		for (EntityImp ent : diagram.getLeafsvalues()) {
 			// printClass(ent);
 			// ug.translate(0, getHeight(ent) + 1);
 			final double width = getWidth(ent) * getXPixelPerChar();
@@ -120,7 +121,7 @@ public final class CucaDiagramTxtMaker {
 			}
 			p.getDotPath().draw(globalUg.getCharArea(), getXPixelPerChar(), getYPixelPerChar());
 		}
-		for (IEntity ent : diagram.getLeafsvalues()) {
+		for (EntityImp ent : diagram.getLeafsvalues()) {
 			final Block b = blocks.get(ent);
 			final XPoint2D p = b.getPosition();
 			printClass(ent, (UGraphicTxt) globalUg
@@ -129,7 +130,7 @@ public final class CucaDiagramTxtMaker {
 
 	}
 
-	private void printClass(final IEntity ent, UGraphicTxt ug) {
+	private void printClass(final EntityImp ent, UGraphicTxt ug) {
 		final int w = getWidth(ent);
 		final int h = getHeight(ent);
 		ug.getCharArea().drawBoxSimple(0, 0, w, h);
@@ -167,7 +168,7 @@ public final class CucaDiagramTxtMaker {
 		return Collections.singletonList(suggestedFile);
 	}
 
-	private int getHeight(IEntity entity) {
+	private int getHeight(EntityImp entity) {
 		int result = StringUtils.getHeight(entity.getDisplay());
 		if (showMember(entity)) {
 			for (CharSequence att : entity.getBodier().getRawBody()) {
@@ -185,7 +186,7 @@ public final class CucaDiagramTxtMaker {
 		return result + 3;
 	}
 
-	private int getWidth(IEntity entity) {
+	private int getWidth(EntityImp entity) {
 		int result = StringUtils.getWcWidth(entity.getDisplay());
 		if (showMember(entity)) {
 			for (CharSequence att : entity.getBodier().getRawBody()) {

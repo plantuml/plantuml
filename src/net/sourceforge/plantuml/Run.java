@@ -75,6 +75,7 @@ import net.sourceforge.plantuml.utils.Log;
 import net.sourceforge.plantuml.version.Version;
 
 public class Run {
+	// ::remove file when WASM
 
 	private static Cypher cypher;
 
@@ -335,7 +336,8 @@ public class Run {
 	}
 
 	private static void goPicoweb(Option option) throws IOException {
-		PicoWebServer.startServer(option.getPicowebPort(), option.getPicowebBindAddress(), option.getPicowebEnableStop());
+		PicoWebServer.startServer(option.getPicowebPort(), option.getPicowebBindAddress(),
+				option.getPicowebEnableStop());
 	}
 
 	public static void printFonts() {

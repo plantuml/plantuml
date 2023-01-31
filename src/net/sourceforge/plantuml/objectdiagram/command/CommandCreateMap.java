@@ -37,8 +37,8 @@ package net.sourceforge.plantuml.objectdiagram.command;
 
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.UrlBuilder;
-import net.sourceforge.plantuml.baraye.IEntity;
-import net.sourceforge.plantuml.baraye.ILeaf;
+import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Quark;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
@@ -49,10 +49,9 @@ import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
+import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.BodierMap;
-import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkArg;
@@ -106,7 +105,7 @@ public class CommandCreateMap extends CommandMultilines2<AbstractEntityDiagram> 
 			throws NoSuchColorException {
 		lines = lines.trim().removeEmptyLines();
 		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
-		final IEntity entity1 = executeArg0(diagram, line0);
+		final EntityImp entity1 = executeArg0(diagram, line0);
 		if (entity1 == null)
 			return CommandExecutionResult.error("No such entity");
 
@@ -123,14 +122,14 @@ public class CommandCreateMap extends CommandMultilines2<AbstractEntityDiagram> 
 				final int x = line.indexOf(linkStr);
 				final String key = line.substring(0, x).trim();
 				final String dest = line.substring(x + linkStr.length()).trim();
-				final Ident ident2 = diagram.buildLeafIdentSpecial(dest);
-				final ILeaf entity2 = diagram.getEntityFactory().getLeafStrict(ident2);
+				final Quark ident2 = diagram.quarkInContext(dest, false);
+				final EntityImp entity2 = (EntityImp) ident2.getData();
 				if (entity2 == null)
 					return CommandExecutionResult.error("No such entity " + ident2.getName());
 
 				final LinkType linkType = new LinkType(LinkDecor.ARROW, LinkDecor.NONE);
 				final int length = linkStr.length() - 2;
-				final Link link = new Link(diagram.getIEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(),
+				final Link link = new Link(diagram.getEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(),
 						entity1, entity2, linkType, LinkArg.noDisplay(length));
 				link.setPortMembers(key, null);
 				diagram.addLink(link);
@@ -139,17 +138,26 @@ public class CommandCreateMap extends CommandMultilines2<AbstractEntityDiagram> 
 		return CommandExecutionResult.ok();
 	}
 
-	private IEntity executeArg0(AbstractEntityDiagram diagram, RegexResult line0) throws NoSuchColorException {
+	private EntityImp executeArg0(AbstractEntityDiagram diagram, RegexResult line0) throws NoSuchColorException {
 		final String name = line0.get("NAME", 1);
-		final Ident ident = diagram.buildLeafIdent(name);
-		final Code code = diagram.buildCode(name);
-		final String display = line0.get("NAME", 0);
+//		final Quark ident = diagram.buildFromName(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(name));
+//		final Quark code = diagram.buildFromFullPath(name);
+		final Quark quark = diagram.quarkInContext(diagram.cleanIdForQuark(name), false);
+		final String displayString = line0.get("NAME", 0);
 		final String stereotype = line0.get("STEREO", 0);
-		final boolean leafExist = diagram.leafExist(code);
-		if (leafExist)
-			return diagram.getOrCreateLeaf(diagram.buildLeafIdent(name), code, LeafType.MAP, null);
+		// final boolean leafExist = diagram.leafExist(code);
+//		if (leafExist)
+//			return diagram.getOrCreateLeaf(
+//					diagram.buildFromName(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(name)), code,
+//					LeafType.MAP, null);
+		if (quark.getData() != null)
+			return null;
 
-		final IEntity entity = diagram.createLeaf(ident, code, Display.getWithNewlines(display), LeafType.MAP, null);
+		Display display = Display.getWithNewlines(displayString);
+		if (Display.isNull(display))
+			display = Display.getWithNewlines(name).withCreoleMode(CreoleMode.SIMPLE_LINE);
+
+		final EntityImp entity = diagram.reallyCreateLeaf(quark, display, LeafType.MAP, null);
 		if (stereotype != null)
 			entity.setStereotype(Stereotype.build(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),
 					diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),

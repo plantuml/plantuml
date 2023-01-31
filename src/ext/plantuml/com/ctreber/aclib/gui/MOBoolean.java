@@ -9,6 +9,7 @@ package ext.plantuml.com.ctreber.aclib.gui;
  */
 public class MOBoolean extends MonitoredObject
 {
+  // :: remove folder when WASM
   private boolean fBoolean;
 
   public MOBoolean()

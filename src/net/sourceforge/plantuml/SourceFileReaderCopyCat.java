@@ -42,6 +42,7 @@ import java.util.List;
 import net.sourceforge.plantuml.preproc.Defines;
 
 public class SourceFileReaderCopyCat extends SourceFileReaderAbstract implements ISourceFileReader {
+	// ::remove file when WASM
 
 	private final File outputDirectory;
 

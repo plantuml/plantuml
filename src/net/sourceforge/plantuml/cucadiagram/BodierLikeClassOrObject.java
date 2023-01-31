@@ -44,7 +44,7 @@ import java.util.Set;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UrlBuilder;
-import net.sourceforge.plantuml.baraye.ILeaf;
+import net.sourceforge.plantuml.baraye.EntityImp;
 import net.sourceforge.plantuml.creole.Parser;
 import net.sourceforge.plantuml.creole.legacy.CreoleParser;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -63,7 +63,7 @@ public class BodierLikeClassOrObject implements Bodier {
 	private LeafType type;
 	private List<Member> methodsToDisplay;
 	private List<Member> fieldsToDisplay;
-	private ILeaf leaf;
+	private EntityImp leaf;
 
 	@Override
 	public void muteClassToObject() {
@@ -82,7 +82,7 @@ public class BodierLikeClassOrObject implements Bodier {
 	}
 
 	@Override
-	public void setLeaf(ILeaf leaf) {
+	public void setLeaf(EntityImp leaf) {
 		this.leaf = Objects.requireNonNull(leaf);
 
 	}

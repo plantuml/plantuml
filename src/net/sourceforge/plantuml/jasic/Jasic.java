@@ -101,6 +101,7 @@ import java.util.Map;
  * @author Bob Nystrom
  */
 public class Jasic {
+	// ::remove folder when WASM
 
 	// Tokenizing (lexing) -----------------------------------------------------
 

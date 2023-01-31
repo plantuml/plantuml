@@ -51,7 +51,7 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.baraye.EntityFactory;
-import net.sourceforge.plantuml.baraye.IGroup;
+import net.sourceforge.plantuml.baraye.EntityImp;
 import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.cucadiagram.ICucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.Rankdir;
@@ -134,6 +134,7 @@ public class DotStringFactory implements Moveable {
 		return max / 10;
 	}
 
+	// ::comment when WASM
 	String createDotString(String... dotStrings) {
 		final StringBuilder sb = new StringBuilder();
 
@@ -224,6 +225,7 @@ public class DotStringFactory implements Moveable {
 
 		return sb.toString();
 	}
+	// ::done
 
 	private void manageMinMaxCluster(final StringBuilder sb) {
 		final List<String> minPointCluster = new ArrayList<>();
@@ -278,6 +280,12 @@ public class DotStringFactory implements Moveable {
 		return 35;
 	}
 
+	// ::uncomment when WASM
+	// public GraphvizVersion getGraphvizVersion() {
+	// return null;
+	// }
+	// ::done
+	// ::comment when WASM
 	private GraphvizVersion graphvizVersion;
 
 	public GraphvizVersion getGraphvizVersion() {
@@ -459,8 +467,9 @@ public class DotStringFactory implements Moveable {
 
 		return idx;
 	}
+	// ::done
 
-	public void openCluster(IGroup g, ClusterHeader clusterHeader) {
+	public void openCluster(EntityImp g, ClusterHeader clusterHeader) {
 		this.current = current.createChild(clusterHeader, colorSequence, skinParam, g);
 		bibliotekon.addCluster(this.current);
 	}

@@ -58,6 +58,7 @@ import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 
 public class PSystemXearth extends AbstractPSystem {
+	// :: remove folder when WASM
 
 	final private int width;
 	final private int height;

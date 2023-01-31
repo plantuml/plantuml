@@ -36,7 +36,8 @@
 package net.sourceforge.plantuml.classdiagram.command;
 
 import net.sourceforge.plantuml.FontParam;
-import net.sourceforge.plantuml.baraye.IEntity;
+import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Quark;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -44,8 +45,6 @@ import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.cucadiagram.Code;
-import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 import net.sourceforge.plantuml.utils.LineLocation;
@@ -68,10 +67,16 @@ public class CommandStereotype extends SingleLineCommand2<ClassDiagram> {
 	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg)
 			throws NoSuchColorException {
 		final String name = arg.get("NAME", 0);
-		final Ident ident = diagram.buildLeafIdent(name);
-		final Code code = diagram.buildCode(name);
 		final String stereotype = arg.get("STEREO", 0);
-		final IEntity entity = diagram.getOrCreateLeaf(ident, code, null, null);
+
+//		final Quark ident = diagram.buildFromName(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(name));
+//		final Quark code = diagram.buildFromFullPath(name);
+//		final IEntity entity = diagram.getOrCreateLeaf(ident, code, null, null);
+		final Quark quark = diagram.quarkInContext(diagram.cleanIdForQuark(name), false);
+		final EntityImp entity = (EntityImp) quark.getData();
+		if (entity == null)
+			return CommandExecutionResult.error("No such class " + quark.getName());
+
 		entity.setStereotype(Stereotype.build(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),
 				diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),
 				diagram.getSkinParam().getIHtmlColorSet()));

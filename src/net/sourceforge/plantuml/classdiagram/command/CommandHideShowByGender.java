@@ -37,8 +37,9 @@ package net.sourceforge.plantuml.classdiagram.command;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.baraye.EntityImp;
 import net.sourceforge.plantuml.baraye.EntityUtils;
-import net.sourceforge.plantuml.baraye.IEntity;
+import net.sourceforge.plantuml.baraye.Quark;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.IRegex;
@@ -46,11 +47,9 @@ import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.EntityGender;
 import net.sourceforge.plantuml.cucadiagram.EntityGenderUtils;
 import net.sourceforge.plantuml.cucadiagram.EntityPortion;
-import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.descdiagram.DescriptionDiagram;
 import net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
@@ -146,8 +145,12 @@ public class CommandHideShowByGender extends SingleLineCommand2<UmlDiagram> {
 		} else if (arg1.startsWith("<<")) {
 			gender = EntityGenderUtils.byStereotype(arg1);
 		} else {
-			final IEntity entity = diagram.getOrCreateLeaf(diagram.buildLeafIdent(arg1), diagram.buildCode(arg1), null,
-					null);
+			final Quark quark = diagram.quarkInContext(diagram.cleanIdForQuark(arg1), false);
+			if (quark.getData() == null)
+				return CommandExecutionResult.error("No such element " + quark.getName());
+			// final IEntity entity = diagram.getOrCreateLeaf(quark,
+			// diagram.buildFromFullPath(arg1), null, null);
+			final EntityImp entity = (EntityImp) quark.getData();
 			gender = EntityGenderUtils.byEntityAlone(entity);
 		}
 
@@ -189,9 +192,15 @@ public class CommandHideShowByGender extends SingleLineCommand2<UmlDiagram> {
 			gender = EntityGenderUtils.byStereotype(arg1);
 		} else {
 			arg1 = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg1);
-			final Ident ident = diagram.buildLeafIdent(arg1);
-			final Code code = diagram.buildCode(arg1);
-			final IEntity entity = diagram.getOrCreateLeaf(ident, code, null, null);
+			final Quark quark = diagram.quarkInContext(diagram.cleanIdForQuark(arg1), false);
+			EntityImp entity = (EntityImp) quark.getData();
+			if (entity == null)
+				return CommandExecutionResult.error("No such element " + quark.getName());
+			// entity = diagram.reallyCreateLeaf(quark,
+			// Display.getWithNewlines(quark.getParent()), LeafType.CLASS, null);
+//			final Quark ident = diagram.buildFromName(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg1));
+//			final Quark code = diagram.buildFromFullPath(arg1);
+//			final IEntity entity = diagram.getOrCreateLeaf(ident, code, null, null);
 			gender = EntityGenderUtils.byEntityAlone(entity);
 		}
 		if (gender != null) {
@@ -200,7 +209,7 @@ public class CommandHideShowByGender extends SingleLineCommand2<UmlDiagram> {
 			if (empty == true && emptyMembers == false) {
 				gender = EntityGenderUtils.and(gender, emptyByGender(portion));
 			}
-			if (EntityUtils.groupRoot(diagram.getCurrentGroup()) == false) {
+			if (diagram.getCurrentGroup().getQuark().isRoot() == false) {
 				gender = EntityGenderUtils.and(gender, EntityGenderUtils.byPackage(diagram.getCurrentGroup()));
 			}
 

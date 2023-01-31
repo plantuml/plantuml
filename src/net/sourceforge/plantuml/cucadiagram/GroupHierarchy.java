@@ -37,13 +37,13 @@ package net.sourceforge.plantuml.cucadiagram;
 
 import java.util.Collection;
 
-import net.sourceforge.plantuml.baraye.IGroup;
+import net.sourceforge.plantuml.baraye.EntityImp;
 
 public interface GroupHierarchy {
 
-	public IGroup getRootGroup();
+	public EntityImp getRootGroup();
 
-	public Collection<IGroup> getChildrenGroups(IGroup parent);
+	public Collection<EntityImp> getChildrenGroups(EntityImp parent);
 
-	public boolean isEmpty(IGroup g);
+	public boolean isEmpty(EntityImp g);
 }

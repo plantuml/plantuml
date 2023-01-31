@@ -29,6 +29,7 @@ import net.sourceforge.plantuml.security.SImageIO;
  * @author monceaux
  */
 public class MJPEGGenerator {
+	// ::remove folder when WASM
 	/*
 	 * Info needed for MJPEG AVI
 	 *

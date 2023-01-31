@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.utils.Log;
 
 abstract class AbstractGraphviz implements Graphviz {
+	// ::remove file when WASM
 
 	private final File dotExe;
 	private final String dotString;
@@ -76,7 +77,7 @@ abstract class AbstractGraphviz implements Graphviz {
 		this.dotString = dotString;
 		this.type = Objects.requireNonNull(type);
 	}
-	
+
 	protected boolean findExecutableOnPath() {
 		return true;
 	}

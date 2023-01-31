@@ -39,7 +39,7 @@ import java.util.Collections;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
-import net.sourceforge.plantuml.baraye.IEntity;
+import net.sourceforge.plantuml.baraye.EntityImp;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
@@ -68,7 +68,7 @@ public class EntityImageState extends EntityImageStateCommon {
 	final static private double smallMarginX = 7;
 	final static private double smallMarginY = 4;
 
-	public EntityImageState(IEntity entity, ISkinParam skinParam) {
+	public EntityImageState(EntityImp entity, ISkinParam skinParam) {
 		super(entity, skinParam);
 
 		final Stereotype stereotype = entity.getStereotype();
@@ -95,7 +95,7 @@ public class EntityImageState extends EntityImageStateCommon {
 	}
 
 	final public void drawU(UGraphic ug) {
-		ug.startGroup(Collections.singletonMap(UGroupType.ID, getEntity().getIdent().toString(".")));
+		ug.startGroup(Collections.singletonMap(UGroupType.ID, getEntity().getQuark().toString(".")));
 		if (url != null)
 			ug.startUrl(url);
 

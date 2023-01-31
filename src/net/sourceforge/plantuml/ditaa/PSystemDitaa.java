@@ -58,6 +58,7 @@ import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.svek.GraphvizCrash;
 
 public class PSystemDitaa extends AbstractPSystem {
+	// ::remove folder when WASM
 
 	// private ProcessingOptions processingOptions;
 	private Object processingOptions;

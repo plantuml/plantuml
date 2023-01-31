@@ -40,7 +40,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.plantuml.baraye.IGroup;
+import net.sourceforge.plantuml.baraye.EntityImp;
 import net.sourceforge.plantuml.cucadiagram.ICucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -59,8 +59,8 @@ public final class CucaDiagramSimplifierActivity {
 		boolean changed;
 		do {
 			changed = false;
-			final Collection<IGroup> groups = new ArrayList<>(diagram.getGroups(false));
-			for (IGroup g : groups) {
+			final Collection<EntityImp> groups = new ArrayList<>(diagram.getGroups(false));
+			for (EntityImp g : groups) {
 				if (diagram.isAutarkic(g)) {
 					// final EntityType type;
 					// if (g.zgetGroupType() == GroupType.INNER_ACTIVITY) {
@@ -86,7 +86,7 @@ public final class CucaDiagramSimplifierActivity {
 	// proxy.setSvekImage(maker.getImage());
 	// }
 
-	private IEntityImage computeImage(IGroup g) throws IOException, InterruptedException {
+	private IEntityImage computeImage(EntityImp g) throws IOException, InterruptedException {
 		final GroupPngMakerActivity maker = new GroupPngMakerActivity(diagram, g, stringBounder);
 		return maker.getImage();
 	}

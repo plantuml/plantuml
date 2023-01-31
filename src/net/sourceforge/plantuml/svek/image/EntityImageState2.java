@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.svek.image;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
-import net.sourceforge.plantuml.baraye.ILeaf;
+import net.sourceforge.plantuml.baraye.EntityImp;
 import net.sourceforge.plantuml.cucadiagram.BodyFactory;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -62,7 +62,7 @@ public class EntityImageState2 extends AbstractEntityImage {
 
 	private final TextBlock asSmall;
 
-	public EntityImageState2(ILeaf entity, ISkinParam skinParam, SName sname) {
+	public EntityImageState2(EntityImp entity, ISkinParam skinParam, SName sname) {
 		super(entity, skinParam);
 		this.sname = sname;
 		final Stereotype stereotype = entity.getStereotype();

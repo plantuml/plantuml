@@ -57,6 +57,7 @@ import net.sourceforge.plantuml.dedication.TurningBytes;
 import net.sourceforge.plantuml.log.Logme;
 
 public class PLSSignature {
+	// ::remove file when WASM
 
 	private final int type;
 	private final byte[] sha;
@@ -167,8 +168,8 @@ public class PLSSignature {
 		return ll;
 	}
 
-	public static LicenseInfo retrieveNamed(String sig, String key, boolean doCheck) throws NoSuchAlgorithmException,
-			InvalidKeySpecException, IOException {
+	public static LicenseInfo retrieveNamed(String sig, String key, boolean doCheck)
+			throws NoSuchAlgorithmException, InvalidKeySpecException, IOException {
 		byte[] block = decode(key);
 		xor(block, SignatureUtils.getSHA512raw(SignatureUtils.salting(sig, getSalt(sig))));
 		final PLSSignature sig2 = PLSSignature.fromRaw512(block);

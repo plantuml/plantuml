@@ -35,7 +35,8 @@
  */
 package net.sourceforge.plantuml.compositediagram.command;
 
-import net.sourceforge.plantuml.baraye.IEntity;
+import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Quark;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.IRegex;
@@ -44,8 +45,8 @@ import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
 import net.sourceforge.plantuml.compositediagram.CompositeDiagram;
-import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandCreateBlock extends SingleLineCommand2<CompositeDiagram> {
@@ -72,12 +73,15 @@ public class CommandCreateBlock extends SingleLineCommand2<CompositeDiagram> {
 	protected CommandExecutionResult executeArg(CompositeDiagram diagram, LineLocation location, RegexResult arg) {
 		String display = arg.get("DISPLAY", 0);
 		final String idShort = arg.get("CODE", 0);
-		final Code code = diagram.buildCode(idShort);
-		if (display == null) {
-			display = code.getName();
-		}
-		final IEntity ent = diagram.getOrCreateLeaf(diagram.buildLeafIdent(idShort), code, null, null);
-		ent.setDisplay(Display.getWithNewlines(display));
+		final Quark quark = diagram.quarkInContext(idShort, false);
+		if (display == null)
+			display = quark.getName();
+
+		if (quark.getData() != null)
+			return CommandExecutionResult.error("Already exists " + quark.getName());
+
+		final EntityImp ent = diagram.reallyCreateLeaf(quark, Display.getWithNewlines(quark), LeafType.BLOCK, null);
+		// ent.setDisplay(Display.getWithNewlines(display));
 		return CommandExecutionResult.ok();
 	}
 

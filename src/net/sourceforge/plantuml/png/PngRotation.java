@@ -42,6 +42,7 @@ import java.awt.image.BufferedImage;
 import net.sourceforge.plantuml.utils.Log;
 
 public class PngRotation {
+	// ::remove file when WASM
 
 	public static BufferedImage process(BufferedImage im) {
 

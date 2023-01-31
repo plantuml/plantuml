@@ -56,6 +56,7 @@ import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class UGraphicTxt extends AbstractCommonUGraphic implements ClipContainer {
+	// ::remove folder when WASM
 
 	private final UmlCharArea charArea;
 

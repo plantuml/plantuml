@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 
 public class PSystemPath extends AbstractPSystem {
+	// ::remove file when WASM
 
 	private final GraphicsPath path;
 

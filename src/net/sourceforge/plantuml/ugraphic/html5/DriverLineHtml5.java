@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 
 public class DriverLineHtml5 implements UDriver<ULine, Html5Drawer> {
+	// ::remove folder when WASM
 
 	private final ClipContainer clipContainer;
 

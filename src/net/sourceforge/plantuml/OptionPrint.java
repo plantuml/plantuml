@@ -56,6 +56,7 @@ import net.sourceforge.plantuml.version.PSystemVersion;
 import net.sourceforge.plantuml.version.Version;
 
 public class OptionPrint {
+	//::remove file when WASM
 
 	static public void printTestDot() throws InterruptedException {
 		final List<String> result = new ArrayList<>();

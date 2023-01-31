@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.SourceStringReader;
 import net.sourceforge.plantuml.api.mda.option2.MDADiagram;
 import net.sourceforge.plantuml.api.mda.option2.MDAPackage;
 import net.sourceforge.plantuml.baraye.EntityFactory;
-import net.sourceforge.plantuml.baraye.IGroup;
+import net.sourceforge.plantuml.baraye.EntityImp;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.core.Diagram;
 
@@ -73,7 +73,7 @@ public class MDADiagramImpl implements MDADiagram {
 	private MDADiagramImpl(ClassDiagram classDiagram) {
 		final EntityFactory entityFactory = classDiagram.getEntityFactory();
 		packages.add(new MDAPackageImpl(entityFactory.getRootGroup()));
-		for (IGroup group : entityFactory.groups()) {
+		for (EntityImp group : entityFactory.groups()) {
 			packages.add(new MDAPackageImpl(group));
 		}
 	}

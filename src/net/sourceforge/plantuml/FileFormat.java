@@ -63,8 +63,7 @@ import net.sourceforge.plantuml.ugraphic.debug.StringBounderDebug;
  */
 public enum FileFormat {
 
-	PNG("image/png"), //
-	SVG("image/svg+xml"), //
+	// ::comment when WASM
 	EPS("application/postscript"), //
 	EPS_TEXT("application/postscript"), //
 	ATXT("text/plain"), //
@@ -85,7 +84,10 @@ public enum FileFormat {
 	BASE64("text/plain; charset=x-user-defined"), //
 	BRAILLE_PNG("image/png"), //
 	PREPROC("text/plain"), //
-	DEBUG("text/plain"); //
+	DEBUG("text/plain"), //
+	// ::done
+	PNG("image/png"), //
+	SVG("image/svg+xml"); //
 
 	private final String mimeType;
 
@@ -103,6 +105,7 @@ public enum FileFormat {
 	 * @return a string starting by a point.
 	 */
 	public String getFileSuffix() {
+		// ::comment when WASM
 		if (name().startsWith("XMI"))
 			return ".xmi";
 
@@ -120,6 +123,7 @@ public enum FileFormat {
 
 		if (this == EPS_TEXT)
 			return EPS.getFileSuffix();
+		// ::done
 
 		return "." + StringUtils.goLowerCase(name());
 	}
@@ -136,17 +140,19 @@ public enum FileFormat {
 	}
 
 	public StringBounder getDefaultStringBounder(TikzFontDistortion tikzFontDistortion, SvgCharSizeHack charSizeHack) {
+		// ::comment when WASM
 		if (this == LATEX || this == LATEX_NO_PREAMBLE)
 			return getTikzStringBounder(tikzFontDistortion);
 
 		if (this == BRAILLE_PNG)
 			return getBrailleStringBounder();
 
-		if (this == SVG)
-			return getSvgStringBounder(charSizeHack);
-
 		if (this == DEBUG)
 			return new StringBounderDebug();
+		// ::done
+
+		if (this == SVG)
+			return getSvgStringBounder(charSizeHack);
 
 		return getNormalStringBounder();
 	}
@@ -193,6 +199,7 @@ public enum FileFormat {
 		return new XDimension2D(rect.getWidth(), rect.getHeight());
 	}
 
+	// ::comment when WASM
 	private StringBounder getBrailleStringBounder() {
 		return new StringBounderRaw() {
 			public String toString() {
@@ -320,5 +327,6 @@ public enum FileFormat {
 		}
 		return false;
 	}
+	// ::done
 
 }

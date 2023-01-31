@@ -36,19 +36,16 @@
 package net.sourceforge.plantuml.command;
 
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.baraye.IEntity;
-import net.sourceforge.plantuml.baraye.IGroup;
+import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Quark;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
-import net.sourceforge.plantuml.cucadiagram.Ident;
-import net.sourceforge.plantuml.cucadiagram.NamespaceStrategy;
 import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 import net.sourceforge.plantuml.utils.LineLocation;
@@ -97,14 +94,12 @@ public class CommandPackageEmpty extends SingleLineCommand2<AbstractEntityDiagra
 			display = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("DISPLAY", 0));
 			idShort = arg.get("CODE", 0);
 		}
-		final IGroup currentPackage = diagram.getCurrentGroup();
-		final Ident ident = diagram.buildLeafIdent(idShort);
-		final Code code = diagram.buildCode(idShort);
-		final CommandExecutionResult status = diagram.gotoGroup(ident, code, Display.getWithNewlines(display),
-				GroupType.PACKAGE, currentPackage, NamespaceStrategy.SINGLE);
+		final Quark quark = diagram.quarkInContext(diagram.cleanIdForQuark(idShort), true);
+		final CommandExecutionResult status = diagram.gotoGroup(quark, Display.getWithNewlines(display),
+				GroupType.PACKAGE);
 		if (status.isOk() == false)
 			return status;
-		final IEntity p = diagram.getCurrentGroup();
+		final EntityImp p = diagram.getCurrentGroup();
 		final String color = arg.get("COLOR", 0);
 		if (color != null)
 			p.setSpecificColorTOBEREMOVED(ColorType.BACK, diagram.getSkinParam().getIHtmlColorSet().getColor(color));

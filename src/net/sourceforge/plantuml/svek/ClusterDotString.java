@@ -55,6 +55,7 @@ import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.USymbols;
 
 public class ClusterDotString {
+	// ::remove file when WASM
 
 	private final Cluster cluster;
 	private final ISkinParam skinParam;

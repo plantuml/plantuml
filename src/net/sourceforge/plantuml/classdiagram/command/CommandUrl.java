@@ -38,7 +38,8 @@ package net.sourceforge.plantuml.classdiagram.command;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlMode;
-import net.sourceforge.plantuml.baraye.IEntity;
+import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Quark;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -47,8 +48,6 @@ import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.cucadiagram.Code;
-import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandUrl extends SingleLineCommand2<AbstractEntityDiagram> {
@@ -75,17 +74,22 @@ public class CommandUrl extends SingleLineCommand2<AbstractEntityDiagram> {
 	@Override
 	protected CommandExecutionResult executeArg(AbstractEntityDiagram diagram, LineLocation location, RegexResult arg) {
 		final String idShort = arg.get("CODE", 0);
-		final Ident ident = diagram.buildLeafIdent(idShort);
-		final Code code = diagram.buildCode(idShort);
+//		final Quark ident = diagram.buildFromName(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(idShort));
+//		final Quark code = diagram.buildFromFullPath(idShort);
+
+		final Quark quark = diagram.quarkInContext(diagram.cleanIdForQuark(idShort), false);
+		final EntityImp entity = (EntityImp) quark.getData();
+		if (entity == null)
+			return CommandExecutionResult.error(quark.getName() + " does not exist");
+
 		final String urlString = arg.get("URL", 0);
-		final IEntity entity;
-		final boolean leafExist = diagram.leafExist(code);
-		if (leafExist)
-			entity = diagram.getOrCreateLeaf(ident, code, null, null);
-		else if (diagram.isGroup(code))
-			entity = diagram.getGroup(code);
-		else
-			return CommandExecutionResult.error(code + " does not exist");
+//		final boolean leafExist = code.getData() != null;
+//		if (leafExist)
+//			entity = diagram.getOrCreateLeaf(ident, code, null, null);
+//		else if (diagram.isGroup(idShort))
+//			entity = diagram.getGroup(idShort);
+//		else
+//			return CommandExecutionResult.error(code + " does not exist");
 
 		// final IEntity entity = diagram.getOrCreateLeaf(code, null);
 		final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), UrlMode.STRICT);

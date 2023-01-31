@@ -54,8 +54,7 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import net.sourceforge.plantuml.baraye.IEntity;
-import net.sourceforge.plantuml.baraye.ILeaf;
+import net.sourceforge.plantuml.baraye.EntityImp;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
@@ -73,7 +72,7 @@ abstract class XmiClassDiagramAbstract implements XmlDiagramTransformer {
 	protected final Document document;
 	protected Element ownedElement;
 
-	protected final Set<IEntity> done = new HashSet<>();
+	protected final Set<EntityImp> done = new HashSet<>();
 
 	public XmiClassDiagramAbstract(ClassDiagram classDiagram) throws ParserConfigurationException {
 		this.classDiagram = classDiagram;
@@ -133,14 +132,14 @@ abstract class XmiClassDiagramAbstract implements XmlDiagramTransformer {
 		transformer.transform(source, resultat);
 	}
 
-	final protected Element createEntityNode(IEntity entity) {
+	final protected Element createEntityNode(EntityImp entity) {
 		final Element cla = document.createElement("UML:Class");
 		if (entity.getLeafType() == LeafType.NOTE)
 			return null;
 
 		cla.setAttribute("xmi.id", entity.getUid());
 		cla.setAttribute("name", entity.getDisplay().get(0).toString());
-		final String parentCode = entity.getIdent().parent().forXmi();
+		final String parentCode = entity.getQuark().getParent().forXmi();
 
 		if (parentCode.length() == 0)
 			cla.setAttribute("namespace", CucaDiagramXmiMaker.getModel(classDiagram));
@@ -164,12 +163,12 @@ abstract class XmiClassDiagramAbstract implements XmlDiagramTransformer {
 		else if (type == LeafType.INTERFACE)
 			cla.setAttribute("isInterface", "true");
 
-		if (((ILeaf) entity).isStatic())
+		if (((EntityImp) entity).isStatic())
 			cla.setAttribute("isStatic", "true");
 
-		if (((ILeaf) entity).getVisibilityModifier() == VisibilityModifier.PRIVATE_FIELD
-				|| ((ILeaf) entity).getVisibilityModifier() == VisibilityModifier.PRIVATE_METHOD)
-			cla.setAttribute("visibility", ((ILeaf) entity).getVisibilityModifier().getXmiVisibility());
+		if (((EntityImp) entity).getVisibilityModifier() == VisibilityModifier.PRIVATE_FIELD
+				|| ((EntityImp) entity).getVisibilityModifier() == VisibilityModifier.PRIVATE_METHOD)
+			cla.setAttribute("visibility", ((EntityImp) entity).getVisibilityModifier().getXmiVisibility());
 
 		final Element feature = document.createElement("UML:Classifier.feature");
 		cla.appendChild(feature);

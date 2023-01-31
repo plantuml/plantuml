@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.utils.Log;
 
 public class PngSplitter {
+	// ::remove file when WASM
 
 	private final List<SFile> files = new ArrayList<>();
 

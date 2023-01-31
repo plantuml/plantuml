@@ -39,8 +39,8 @@ import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlMode;
-import net.sourceforge.plantuml.baraye.IEntity;
-import net.sourceforge.plantuml.baraye.IGroup;
+import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Quark;
 import net.sourceforge.plantuml.classdiagram.command.GenericRegexProducer;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -48,12 +48,9 @@ import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
-import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
-import net.sourceforge.plantuml.cucadiagram.NamespaceStrategy;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.USymbols;
@@ -87,36 +84,37 @@ public class CommandCreateDomain extends SingleLineCommand2<DescriptionDiagram> 
 	@Override
 	protected CommandExecutionResult executeArg(DescriptionDiagram diagram, LineLocation location, RegexResult arg)
 			throws NoSuchColorException {
-		String type = arg.get("TYPE", 0);
-		String display = arg.getLazzy("DISPLAY", 0);
+		String typeString = arg.get("TYPE", 0);
+		String displayString = arg.getLazzy("DISPLAY", 0);
 		String codeString = arg.getLazzy("CODE", 0);
 		if (codeString == null)
-			codeString = display;
+			codeString = displayString;
 
 		// final String genericOption = arg.getLazzy("DISPLAY", 1);
 		// final String generic = genericOption != null ? genericOption :
 		// arg.get("GENERIC", 0);
 
 		final String stereotype = arg.get("STEREO", 0);
+		final GroupType type = typeString.equalsIgnoreCase("domain") ? GroupType.DOMAIN : GroupType.REQUIREMENT;
+		final LeafType type2 = typeString.equalsIgnoreCase("domain") ? LeafType.DOMAIN : LeafType.REQUIREMENT;
 
-		final Ident ident = diagram.buildLeafIdent(codeString);
-		final Code code = diagram.buildCode(codeString);
-		if (diagram.leafExist(code))
+		final Quark quark = diagram.quarkInContext(diagram.cleanIdForQuark(codeString), false);
+
+//		final Quark ident = diagram.buildFromName(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(codeString));
+//		final Quark code = diagram.buildFromFullPath(codeString);
+		if (quark.getData() != null)
 			return CommandExecutionResult.error("Object already exists : " + codeString);
 
-		Display d = Display.getWithNewlines(display);
+		Display display = Display.getWithNewlines(displayString);
 		final String urlString = arg.get("URL", 0);
 		final String group = arg.get("GROUP", 0);
-		IEntity entity;
+		EntityImp entity;
 		if (group != null) {
-			final IGroup currentGroup = diagram.getCurrentGroup();
-			diagram.gotoGroup(ident, code, d,
-					type.equalsIgnoreCase("domain") ? GroupType.DOMAIN : GroupType.REQUIREMENT, currentGroup,
-					NamespaceStrategy.SINGLE);
+			final EntityImp currentGroup = diagram.getCurrentGroup();
+			diagram.gotoGroup(quark, display, type);
 			entity = diagram.getCurrentGroup();
 		} else {
-			entity = diagram.createLeaf(ident, code, d,
-					type.equalsIgnoreCase("domain") ? LeafType.DOMAIN : LeafType.REQUIREMENT, null);
+			entity = diagram.reallyCreateLeaf(quark, display, type2, null);
 		}
 		if (stereotype != null) {
 			entity.setStereotype(Stereotype.build(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),
@@ -131,24 +129,24 @@ public class CommandCreateDomain extends SingleLineCommand2<DescriptionDiagram> 
 		final String s = arg.get("COLOR", 0);
 		entity.setSpecificColorTOBEREMOVED(ColorType.BACK,
 				s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s));
-		if (type.equalsIgnoreCase("domain")) {
+		if (typeString.equalsIgnoreCase("domain")) {
 			if (stereotype != null && stereotype.equalsIgnoreCase("<<Machine>>"))
-				type = "machine";
+				typeString = "machine";
 
 			if (stereotype != null && stereotype.equalsIgnoreCase("<<Causal>>"))
-				type = "causal";
+				typeString = "causal";
 
 			if (stereotype != null && stereotype.equalsIgnoreCase("<<Designed>>"))
-				type = "designed";
+				typeString = "designed";
 
 			if (stereotype != null && stereotype.equalsIgnoreCase("<<Lexical>>"))
-				type = "lexical";
+				typeString = "lexical";
 
 			if (stereotype != null && stereotype.equalsIgnoreCase("<<Biddable>>"))
-				type = "biddable";
+				typeString = "biddable";
 
 		}
-		USymbol usymbol = USymbols.fromString(type, diagram.getSkinParam());
+		USymbol usymbol = USymbols.fromString(typeString, diagram.getSkinParam());
 		entity.setUSymbol(usymbol);
 		return CommandExecutionResult.ok();
 	}

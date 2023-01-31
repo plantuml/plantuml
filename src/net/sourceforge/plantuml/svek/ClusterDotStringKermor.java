@@ -56,6 +56,7 @@ import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.USymbols;
 
 public class ClusterDotStringKermor {
+	// ::remove file when WASM
 
 	private final Cluster cluster;
 	private final ISkinParam skinParam;

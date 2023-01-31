@@ -47,8 +47,7 @@ import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
-import net.sourceforge.plantuml.baraye.IEntity;
-import net.sourceforge.plantuml.baraye.ILeaf;
+import net.sourceforge.plantuml.baraye.EntityImp;
 import net.sourceforge.plantuml.cucadiagram.BodyFactory;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.EntityPortion;
@@ -104,7 +103,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 	private final Bibliotekon bibliotekon;
 	private final SymbolContext ctx;
 
-	public EntityImageDescription(ILeaf entity, ISkinParam skinParam2, PortionShower portionShower,
+	public EntityImageDescription(EntityImp entity, ISkinParam skinParam2, PortionShower portionShower,
 			Collection<Link> links, SName styleName, Bibliotekon bibliotekon) {
 		super(entity, entity.getColors().mute(skinParam2));
 		this.useRankSame = getSkinParam().useRankSame();
@@ -189,7 +188,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 
 	}
 
-	private USymbol getUSymbol(ILeaf entity) {
+	private USymbol getUSymbol(EntityImp entity) {
 		final USymbol result = entity.getUSymbol() == null ? getSkinParam().componentStyle().toUSymbol()
 				: entity.getUSymbol();
 		return Objects.requireNonNull(result);
@@ -211,13 +210,13 @@ public class EntityImageDescription extends AbstractEntityImage {
 		if (hideText == false)
 			return Margins.NONE;
 
-		if (isThereADoubleLink((ILeaf) getEntity(), links))
+		if (isThereADoubleLink((EntityImp) getEntity(), links))
 			return Margins.NONE;
 
-		if (fixCircleLabelOverlapping == false && hasSomeHorizontalLinkVisible((ILeaf) getEntity(), links))
+		if (fixCircleLabelOverlapping == false && hasSomeHorizontalLinkVisible((EntityImp) getEntity(), links))
 			return Margins.NONE;
 
-		if (hasSomeHorizontalLinkDoubleDecorated((ILeaf) getEntity(), links))
+		if (hasSomeHorizontalLinkDoubleDecorated((EntityImp) getEntity(), links))
 			return Margins.NONE;
 
 		final XDimension2D dimStereo = stereo.calculateDimension(stringBounder);
@@ -232,7 +231,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 		return new Margins(suppX / 2, suppX / 2, y, y);
 	}
 
-	private boolean hasSomeHorizontalLinkVisible(ILeaf leaf, Collection<Link> links) {
+	private boolean hasSomeHorizontalLinkVisible(EntityImp leaf, Collection<Link> links) {
 		for (Link link : links)
 			if (link.getLength() == 1 && link.contains(leaf) && link.isInvis() == false)
 				return true;
@@ -240,11 +239,11 @@ public class EntityImageDescription extends AbstractEntityImage {
 		return false;
 	}
 
-	private boolean isThereADoubleLink(ILeaf leaf, Collection<Link> links) {
-		final Set<IEntity> others = new HashSet<>();
+	private boolean isThereADoubleLink(EntityImp leaf, Collection<Link> links) {
+		final Set<EntityImp> others = new HashSet<>();
 		for (Link link : links) {
 			if (link.contains(leaf)) {
-				final IEntity other = link.getOther(leaf);
+				final EntityImp other = link.getOther(leaf);
 				final boolean changed = others.add(other);
 				if (changed == false)
 					return true;
@@ -254,7 +253,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 		return false;
 	}
 
-	private boolean hasSomeHorizontalLinkDoubleDecorated(ILeaf leaf, Collection<Link> links) {
+	private boolean hasSomeHorizontalLinkDoubleDecorated(EntityImp leaf, Collection<Link> links) {
 		for (Link link : links)
 			if (link.getLength() == 1 && link.contains(leaf) && link.getType().isDoubleDecorated())
 				return true;

@@ -61,10 +61,8 @@ import net.sourceforge.plantuml.version.PSystemVersion;
 import net.sourceforge.plantuml.version.Version;
 
 class AboutWindow extends JFrame {
+	// :: remove folder when WASM
 
-	/*
-	 * - the PlantUML version - the Dot version - the PlantUML authors - the PlantUML license
-	 */
 	public AboutWindow() {
 		super();
 		setIconImage(PSystemVersion.getPlantumlSmallIcon2());
@@ -121,12 +119,14 @@ class AboutWindow extends JFrame {
 	}
 
 	private JComponent getInfoVersion() {
-		final PSystemVersion p1 = PSystemVersion.createShowVersion2(UmlSource.create(new ArrayList<StringLocated>(), false));
+		final PSystemVersion p1 = PSystemVersion
+				.createShowVersion2(UmlSource.create(new ArrayList<StringLocated>(), false));
 		return getJComponent(skip(p1.getLines()));
 	}
 
 	private JComponent getInfoAuthors() {
-		final PSystemVersion p1 = PSystemVersion.createShowAuthors2(UmlSource.create(new ArrayList<StringLocated>(), false));
+		final PSystemVersion p1 = PSystemVersion
+				.createShowAuthors2(UmlSource.create(new ArrayList<StringLocated>(), false));
 		return getJComponent(skip(p1.getLines()));
 	}
 

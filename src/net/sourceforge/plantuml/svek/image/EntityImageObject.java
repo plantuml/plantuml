@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.LineConfigurable;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.awt.geom.XRectangle2D;
-import net.sourceforge.plantuml.baraye.ILeaf;
+import net.sourceforge.plantuml.baraye.EntityImp;
 import net.sourceforge.plantuml.creole.Stencil;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.EntityPortion;
@@ -90,7 +90,7 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil, W
 
 	final private LineConfigurable lineConfig;
 
-	public EntityImageObject(ILeaf entity, ISkinParam skinParam, PortionShower portionShower) {
+	public EntityImageObject(EntityImp entity, ISkinParam skinParam, PortionShower portionShower) {
 		super(entity, skinParam);
 		this.lineConfig = entity;
 		final Stereotype stereotype = entity.getStereotype();
@@ -131,7 +131,7 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil, W
 				.withTOBECHANGED(getEntity().getStereotype()).getMergedStyle(getSkinParam().getCurrentStyleBuilder());
 	}
 
-	private Display getUnderlinedName(ILeaf entity) {
+	private Display getUnderlinedName(EntityImp entity) {
 		if (getSkinParam().strictUmlStyle())
 			return entity.getDisplay().underlinedName();
 
@@ -240,7 +240,7 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil, W
 	}
 
 	public ShapeType getShapeType() {
-		if (((ILeaf) getEntity()).getPortShortNames().size() > 0)
+		if (((EntityImp) getEntity()).getPortShortNames().size() > 0)
 			return ShapeType.RECTANGLE_HTML_FOR_PORTS;
 
 		return ShapeType.RECTANGLE;

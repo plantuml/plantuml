@@ -61,7 +61,6 @@ import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.eggs.PSystemWelcome;
 import net.sourceforge.plantuml.flashcode.FlashCodeFactory;
-import net.sourceforge.plantuml.flashcode.FlashCodeUtils;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.GraphicPosition;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
@@ -233,6 +232,7 @@ public abstract class PSystemError extends PlainDiagram {
 	@Override
 	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
 			throws IOException {
+		// ::comment when WASM
 		if (fileFormat.getFileFormat() == FileFormat.ATXT || fileFormat.getFileFormat() == FileFormat.UTXT) {
 			final UGraphicTxt ugt = new UGraphicTxt();
 			final UmlCharArea area = ugt.getCharArea();
@@ -241,6 +241,7 @@ public abstract class PSystemError extends PlainDiagram {
 			return new ImageDataSimple(1, 1);
 
 		}
+		// ::done
 		return super.exportDiagramNow(os, num, fileFormat);
 	}
 
@@ -298,9 +299,11 @@ public abstract class PSystemError extends PlainDiagram {
 	}
 
 	private TextBlock addMessageLiberapay(final TextBlock source) throws IOException {
-		if (LicenseInfo.retrieveNamedOrDistributorQuickIsValid()) {
+		// ::comment when WASM
+		if (LicenseInfo.retrieveNamedOrDistributorQuickIsValid())
 			return source;
-		}
+		// ::done
+
 		final TextBlock message = getMessageLiberapay();
 		TextBlock result = TextBlockUtils.mergeTB(message, source, HorizontalAlignment.LEFT);
 		result = TextBlockUtils.mergeTB(result, message, HorizontalAlignment.LEFT);
@@ -308,9 +311,11 @@ public abstract class PSystemError extends PlainDiagram {
 	}
 
 	private TextBlock addMessagePatreon(final TextBlock source) throws IOException {
-		if (LicenseInfo.retrieveNamedOrDistributorQuickIsValid()) {
+		// ::comment when WASM
+		if (LicenseInfo.retrieveNamedOrDistributorQuickIsValid())
 			return source;
-		}
+		// ::done
+
 		final TextBlock message = getMessagePatreon();
 		TextBlock result = TextBlockUtils.mergeTB(message, source, HorizontalAlignment.LEFT);
 		result = TextBlockUtils.mergeTB(result, message, HorizontalAlignment.LEFT);
@@ -318,14 +323,17 @@ public abstract class PSystemError extends PlainDiagram {
 	}
 
 	private TextBlock addMessageDedication(final TextBlock source) throws IOException {
-		if (LicenseInfo.retrieveNamedOrDistributorQuickIsValid()) {
+		// ::comment when WASM
+		if (LicenseInfo.retrieveNamedOrDistributorQuickIsValid())
 			return source;
-		}
+		// ::done
+
 		final TextBlock message = getMessageDedication();
 		TextBlock result = TextBlockUtils.mergeTB(message, source, HorizontalAlignment.LEFT);
 		return result;
 	}
 
+	// ::comment when WASM
 	private TextBlock addMessageAdopt(final TextBlock source) throws IOException {
 		if (LicenseInfo.retrieveNamedOrDistributorQuickIsValid()) {
 			return source;
@@ -334,6 +342,7 @@ public abstract class PSystemError extends PlainDiagram {
 		TextBlock result = TextBlockUtils.mergeTB(message, source, HorizontalAlignment.LEFT);
 		return result;
 	}
+	// ::done
 
 	private TextBlock addMessageArecibo(final TextBlock source) throws IOException {
 		final UImage message = new UImage(
@@ -343,11 +352,12 @@ public abstract class PSystemError extends PlainDiagram {
 	}
 
 	private TextBlockBackcolored getMessageDedication() {
-		final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();
 		final HColorSimple backColor = (HColorSimple) HColorSet.instance().getColorOrWhite("#eae2c9");
 
-		final BufferedImage qrcode = smaller(
-				utils.exportFlashcode("http://plantuml.com/dedication", Color.BLACK, backColor.getAwtColor()));
+		// ::comment when WASM
+		final BufferedImage qrcode = smaller(FlashCodeFactory.getFlashCodeUtils()
+				.exportFlashcode("http://plantuml.com/dedication", Color.BLACK, backColor.getAwtColor()));
+		// ::done
 		final Display disp = Display.create("<b>Add your own dedication into PlantUML", " ", "For just $5 per month!",
 				"Details on <i>[[https://plantuml.com/dedication]]");
 
@@ -356,12 +366,16 @@ public abstract class PSystemError extends PlainDiagram {
 		final TextBlock text = TextBlockUtils
 				.withMargin(disp.create(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty()), 10, 0);
 		final TextBlock result;
+		// ::comment when WASM
 		if (qrcode == null) {
+			// ::done
 			result = text;
+			// ::comment when WASM
 		} else {
 			final UImage qr = new UImage(new PixelImage(qrcode, AffineTransformType.TYPE_NEAREST_NEIGHBOR)).scale(3);
 			result = TextBlockUtils.mergeLR(text, TextBlockUtils.fromUImage(qr), VerticalAlignment.CENTER);
 		}
+		// ::done
 		return TextBlockUtils.addBackcolor(result, backColor);
 
 	}
@@ -388,26 +402,41 @@ public abstract class PSystemError extends PlainDiagram {
 		final Color back = new Color(message.getImage(1).getRGB(0, 0));
 		final HColor backColor = HColors.simple(back);
 
-		final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();
-		final BufferedImage qrcode = smaller(
-				utils.exportFlashcode("http://plantuml.com/patreon", Color.BLACK, Color.WHITE));
+		// ::comment when WASM
+		final BufferedImage qrcode = smaller(FlashCodeFactory.getFlashCodeUtils()
+				.exportFlashcode("http://plantuml.com/patreon", Color.BLACK, Color.WHITE));
+		// ::done
 
 		final int scale = 2;
 
-		final double imWidth = message.getWidth() + (qrcode == null ? 0 : qrcode.getWidth() * scale + 20);
-		final double imHeight = qrcode == null ? message.getHeight()
-				: Math.max(message.getHeight(), qrcode.getHeight() * scale + 10);
+		final double imWidth;
+		final double imHeight;
+		// ::comment when WASM
+		if (qrcode == null) {
+			// ::done
+			imWidth = message.getWidth();
+			imHeight = message.getHeight();
+			// ::comment when WASM
+		} else {
+			imWidth = message.getWidth() + qrcode.getWidth() * scale + 20;
+			imHeight = Math.max(message.getHeight(), qrcode.getHeight() * scale + 10);
+		}
+		// ::done
 		return new TextBlockBackcolored() {
 
 			public void drawU(UGraphic ug) {
+				// ::comment when WASM
 				if (qrcode == null) {
+					// ::done
 					ug.apply(new UTranslate(1, 1)).draw(message);
+					// ::comment when WASM
 				} else {
 					final UImage qr = new UImage(new PixelImage(qrcode, AffineTransformType.TYPE_NEAREST_NEIGHBOR))
 							.scale(scale);
 					ug.apply(new UTranslate(1, (imHeight - message.getHeight()) / 2)).draw(message);
 					ug.apply(new UTranslate(1 + message.getWidth(), (imHeight - qr.getHeight()) / 2)).draw(qr);
 				}
+				// ::done
 			}
 
 			public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
@@ -435,25 +464,42 @@ public abstract class PSystemError extends PlainDiagram {
 		final Color back = new Color(message.getImage(1).getRGB(0, 0));
 		final HColor backColor = HColors.simple(back);
 
-		final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();
-		final BufferedImage qrcode = smaller(utils.exportFlashcode("http://plantuml.com/lp", Color.BLACK, Color.WHITE));
+		// ::comment when WASM
+		final BufferedImage qrcode = smaller(FlashCodeFactory.getFlashCodeUtils()
+				.exportFlashcode("http://plantuml.com/lp", Color.BLACK, Color.WHITE));
+		// ::done
 
 		final int scale = 2;
 
-		final double imWidth = message.getWidth() + (qrcode == null ? 0 : qrcode.getWidth() * scale + 20);
-		final double imHeight = qrcode == null ? message.getHeight()
-				: Math.max(message.getHeight(), qrcode.getHeight() * scale + 10);
+		final double imWidth;
+		final double imHeight;
+		// ::comment when WASM
+		if (qrcode == null) {
+			// ::done
+			imWidth = message.getWidth();
+			imHeight = message.getHeight();
+			// ::comment when WASM
+		} else {
+			imWidth = message.getWidth() + qrcode.getWidth() * scale + 20;
+			imHeight = Math.max(message.getHeight(), qrcode.getHeight() * scale + 10);
+		}
+		// ::done
+
 		return new TextBlockBackcolored() {
 
 			public void drawU(UGraphic ug) {
+				// ::comment when WASM
 				if (qrcode == null) {
+					// ::done
 					ug.apply(new UTranslate(1, 1)).draw(message);
+					// ::comment when WASM
 				} else {
 					final UImage qr = new UImage(new PixelImage(qrcode, AffineTransformType.TYPE_NEAREST_NEIGHBOR))
 							.scale(scale);
 					ug.apply(new UTranslate(1, (imHeight - message.getHeight()) / 2)).draw(message);
 					ug.apply(new UTranslate(1 + message.getWidth(), (imHeight - qr.getHeight()) / 2)).draw(qr);
 				}
+				// ::done
 			}
 
 			public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {

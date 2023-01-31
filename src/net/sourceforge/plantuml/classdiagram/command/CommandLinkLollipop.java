@@ -37,7 +37,8 @@ package net.sourceforge.plantuml.classdiagram.command;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
-import net.sourceforge.plantuml.baraye.IEntity;
+import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Quark;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.Matcher2;
@@ -48,9 +49,7 @@ import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkArg;
@@ -119,27 +118,40 @@ final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassO
 		final String ent1 = arg.get("ENT1", 1);
 		final String ent2 = arg.get("ENT2", 1);
 
-		final IEntity cl1;
-		final IEntity cl2;
-		final IEntity normalEntity;
+		final EntityImp cl1;
+		final EntityImp cl2;
+		final EntityImp normalEntity;
 
 		final String suffix = "lol" + diagram.getUniqueSequence();
 		if (arg.get("LOL_THEN_ENT", 1) == null) {
-			assert arg.get("ENT_THEN_LOL", 0) != null;
-			final Ident ident1 = diagram.buildLeafIdent(ent1);
-			final Code ent1code = diagram.buildCode(ent1);
-			cl1 = getFoo1(diagram, ent1code, ident1);
-			final Ident idNewLong = diagram.buildLeafIdent(ent1 + suffix);
-			cl2 = diagram.createLeaf(idNewLong, idNewLong.toCode(diagram), Display.getWithNewlines(ent2),
-					getType(arg.get("ENT_THEN_LOL", 1)), null);
+
+			final Quark quark = diagram.quarkInContext(diagram.cleanIdForQuark(ent1), false);
+			cl1 = (EntityImp) quark.getData();
+			if (cl1 == null)
+				return CommandExecutionResult.error("No class " + quark.getName());
+
+			final Quark idNewLong = diagram.quarkInContext(diagram.cleanIdForQuark(ent1) + suffix, false);
+			final LeafType type = getType(arg.get("ENT_THEN_LOL", 1));
+			cl2 = diagram.reallyCreateLeaf(idNewLong, Display.getWithNewlines(ent2), type, null);
 			normalEntity = cl1;
+
+//			assert arg.get("ENT_THEN_LOL", 0) != null;
+//			final Quark ident1 = diagram.buildFromName(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(ent1));
+//			final Quark ent1code = diagram.buildFromFullPath(ent1);
+//			cl1 = diagram.getOrCreateLeaf(ident1, ent1code, null, null);
+//			final Quark idNewLong = diagram.quarkInContext(diagram.cleanIdForQuark(ent1) + suffix);
+//			cl2 = diagram.reallyCreateLeaf(idNewLong, Display.getWithNewlines(ent2),
+//					getType(arg.get("ENT_THEN_LOL", 1)), null);
+//			normalEntity = cl1;
 		} else {
-			final Ident ident2 = diagram.buildLeafIdent(ent2);
-			final Code ent2code = diagram.buildCode(ent2);
-			cl2 = getFoo1(diagram, ent2code, ident2);
-			final Ident idNewLong = diagram.buildLeafIdent(ent2 + suffix);
-			cl1 = diagram.createLeaf(idNewLong, idNewLong.toCode(diagram), Display.getWithNewlines(ent1),
-					getType(arg.get("LOL_THEN_ENT", 0)), null);
+			final Quark quark = diagram.quarkInContext(diagram.cleanIdForQuark(ent2), false);
+			cl2 = (EntityImp) quark.getData();
+			if (cl2 == null)
+				return CommandExecutionResult.error("No class " + quark.getName());
+
+			final Quark idNewLong = diagram.quarkInContext(diagram.cleanIdForQuark(ent2) + suffix, false);
+			final LeafType type = getType(arg.get("LOL_THEN_ENT", 0));
+			cl1 = diagram.reallyCreateLeaf(idNewLong, Display.getWithNewlines(ent1), type, null);
 			normalEntity = cl2;
 		}
 
@@ -189,17 +201,13 @@ final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassO
 		}
 		final LinkArg linkArg = LinkArg.build(Display.getWithNewlines(labelLink), length,
 				diagram.getSkinParam().classAttributeIconSize() > 0);
-		final Link link = new Link(diagram.getIEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(), cl1,
+		final Link link = new Link(diagram.getEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(), cl1,
 				cl2, linkType, linkArg.withQuantifier(firstLabel, secondLabel)
 						.withDistanceAngle(diagram.getLabeldistance(), diagram.getLabelangle()));
 		diagram.resetPragmaLabel();
 		addLink(diagram, link, arg.get("HEADER", 0));
 
 		return CommandExecutionResult.ok();
-	}
-
-	private IEntity getFoo1(AbstractClassOrObjectDiagram diagram, final Code code, final Ident ident) {
-		return diagram.getOrCreateLeaf(ident, code, null, null);
 	}
 
 	private void addLink(AbstractClassOrObjectDiagram diagram, Link link, String weight) {

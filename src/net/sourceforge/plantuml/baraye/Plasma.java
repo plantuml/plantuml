@@ -38,20 +38,18 @@ package net.sourceforge.plantuml.baraye;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Plasma {
 
 	private String separator;
 	private final Quark root;
-	private final Map<List<String>, Quark> quarks = new LinkedHashMap<>();
+	private final List<Quark> quarks = new ArrayList<>();
 
 	public Plasma(String separator) {
-		final List<String> empty = Collections.emptyList();
-		this.root = ensurePresent(empty);
+		this.root = new Quark(this, null, "");
 		this.separator = separator;
+		this.quarks.add(root);
 	}
 
 	public Quark root() {
@@ -66,6 +64,10 @@ public class Plasma {
 		if (separator == null)
 			separator = "\u0000";
 		this.separator = separator;
+	}
+
+	public final boolean hasSeparator() {
+		return this.separator != null && this.separator != "\u0000";
 	}
 
 	public Quark parse(Quark root, String full) {
@@ -87,53 +89,63 @@ public class Plasma {
 	}
 
 	Quark ensurePresent(List<String> result) {
-		Quark quark = quarks.get(result);
+		Quark quark = getIfExists(result);
 		if (quark == null) {
-			if (result.size() == 0)
-				quark = new Quark(this, null, result);
-			else {
+			if (result.size() == 0) {
+				// quark = new Quark(this, null, result);
+				throw new UnsupportedOperationException();
+			} else {
 				final Quark parent = ensurePresent(result.subList(0, result.size() - 1));
-				quark = new Quark(this, parent, result);
+				quark = new Quark(this, parent, result.get(result.size() - 1));
 			}
-			System.err.println("PUTTING " + quark);
-			quarks.put(result, quark);
+			// System.err.println("PUTTING " + quark);
+			quarks.add(quark);
 		}
 		return quark;
 
 	}
 
 	public Collection<Quark> quarks() {
-		return Collections.unmodifiableCollection(new ArrayList<>(quarks.values()));
+		return Collections.unmodifiableCollection(quarks);
 	}
 
-//	public boolean exists(String name) {
-//		for (Quark quark : quarks.values())
-//			if (quark.getName().equals(name))
-//				return true;
-//		return false;
-//	}
-
 	public Quark getIfExistsFromName(String name) {
-		for (Quark quark : quarks.values())
+		Quark result = null;
+		for (Quark quark : quarks)
+			if (quark.getName().equals(name)) {
+//				if (result != null)
+//					throw new IllegalArgumentException("Duplicate name: " + name);
+				result = quark;
+				return result;
+			}
+		return result;
+	}
+
+	public int countByName(String name) {
+		int count = 0;
+		for (Quark quark : quarks)
 			if (quark.getName().equals(name))
-				return quark;
-		return null;
+				count++;
+		return count;
 	}
 
 	public Quark getIfExistsFromFullPath(String full) {
-		for (Quark quark : quarks.values())
+		for (Quark quark : quarks)
 			if (quark.toString(separator).equals(full))
 				return quark;
 		return null;
 	}
 
 	public Quark getIfExists(List<String> signature) {
-		return quarks.get(signature);
+		for (Quark quark : quarks)
+			if (quark.getSignature().equals(signature))
+				return quark;
+		return null;
 	}
 
 	public int countChildren(Quark parent) {
 		int count = 0;
-		for (Quark quark : new ArrayList<>(quarks.values()))
+		for (Quark quark : quarks)
 			if (quark.getParent() == parent)
 				count++;
 		return count;
@@ -141,21 +153,19 @@ public class Plasma {
 
 	public List<Quark> getChildren(Quark parent) {
 		final List<Quark> result = new ArrayList<>();
-		for (Quark quark : new ArrayList<>(quarks.values()))
+		for (Quark quark : quarks)
 			if (quark.getParent() == parent)
 				result.add(quark);
 		return Collections.unmodifiableList(result);
 	}
 
-	public void moveAllTo(Quark src, Quark dest) {
-		for (Quark quark : new ArrayList<>(quarks.values())) {
-			if (quark == dest)
+	public void moveAllChildOfToAnewFather(Quark oldFather, Quark newFather) {
+		for (Quark quark : quarks) {
+			if (quark == newFather)
 				continue;
-			if (src.containsLarge(quark)) {
-				quarks.remove(quark.getSignature());
-				quark.internalMove(src, dest);
-				quarks.put(quark.getSignature(), quark);
-			}
+
+			if (quark.getParent() == oldFather)
+				quark.setParent(newFather);
 		}
 
 	}

@@ -42,13 +42,14 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
 public abstract class AbstractComponentText implements Component {
+	// ::remove folder when WASM
 
 	public final XDimension2D getPreferredDimension(StringBounder stringBounder) {
 		final double w = getPreferredWidth(stringBounder);
 		final double h = getPreferredHeight(stringBounder);
 		return new XDimension2D(w, h);
 	}
-	
+
 	public Style[] getUsedStyles() {
 		throw new UnsupportedOperationException();
 	}
@@ -56,6 +57,5 @@ public abstract class AbstractComponentText implements Component {
 	public StyleSignatureBasic getStyleSignature() {
 		throw new UnsupportedOperationException();
 	}
-
 
 }

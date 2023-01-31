@@ -42,6 +42,7 @@ import java.util.zip.Inflater;
 
 @Deprecated
 public class CompressionZlibAttic implements Compression {
+	// ::remove file when WASM
 
 	private static boolean USE_ZOPFLI = false;
 	private static final int COMPRESSION_LEVEL = 9;

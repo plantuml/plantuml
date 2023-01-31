@@ -38,11 +38,7 @@ package net.sourceforge.plantuml.baraye;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
@@ -51,73 +47,58 @@ import net.sourceforge.plantuml.cucadiagram.Bodier;
 import net.sourceforge.plantuml.cucadiagram.BodierJSon;
 import net.sourceforge.plantuml.cucadiagram.BodierMap;
 import net.sourceforge.plantuml.cucadiagram.BodyFactory;
-import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.cucadiagram.GroupRoot;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
 import net.sourceforge.plantuml.cucadiagram.HideOrShow2;
-import net.sourceforge.plantuml.cucadiagram.Ident;
+import net.sourceforge.plantuml.cucadiagram.ICucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
-import net.sourceforge.plantuml.cucadiagram.Stereotag;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
-import net.sourceforge.plantuml.cucadiagram.Together;
 import net.sourceforge.plantuml.cucadiagram.entity.IEntityFactory;
-import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 
 public final class EntityFactory implements IEntityFactory {
-
-	private final Map<String, ILeaf> leafsByCode;
-	private final Map<String, IGroup> groupsByCode;
-
-	/* private */public final Map<Ident, ILeaf> leafs2 = new LinkedHashMap<Ident, ILeaf>();
-	/* private */public final Map<Ident, IGroup> groups2 = new LinkedHashMap<Ident, IGroup>();
 
 	private final List<Link> links = new ArrayList<>();
 
 	private int rawLayout;
 
-	private final IGroup rootGroup = new GroupRoot(this);
+	private final Plasma plasma;
+
+	private final EntityImp rootGroup;
 
 	private final List<HideOrShow2> hides2;
 	private final List<HideOrShow2> removed;
-	/* private */ final public CucaDiagram namespaceSeparator;
-	private Map<IGroup, ILeaf> emptyGroupsAsNode = new HashMap<IGroup, ILeaf>();
+	/* private */ final public ICucaDiagram namespaceSeparator;
 
-	public ILeaf getLeafForEmptyGroup(IGroup g) {
-		return emptyGroupsAsNode.get(g);
+	public EntityImp getLeafForEmptyGroup(EntityImp g) {
+		throw new UnsupportedOperationException();
 	}
 
-	public ILeaf createLeafForEmptyGroup(IGroup g, ISkinParam skinParam) {
-		final ILeaf folder = this.createLeaf(null, g.getIdent(), g.getCode(), g.getDisplay(), LeafType.EMPTY_PACKAGE,
-				g.getParentContainer(), null, this.namespaceSeparator.getNamespaceSeparator());
-		((EntityImp) folder).setOriginalGroup(g);
-		final USymbol symbol = g.getUSymbol();
-		folder.setUSymbol(symbol);
-		folder.setStereotype(g.getStereotype());
-		folder.setColors(g.getColors());
-		if (g.getUrl99() != null)
-			folder.addUrl(g.getUrl99());
-		for (Stereotag tag : g.stereotags())
-			folder.addStereotag(tag);
-
-		emptyGroupsAsNode.put(g, folder);
-		return folder;
+	public EntityImp createLeafForEmptyGroup(EntityImp g, ISkinParam skinPdaram) {
+		final EntityImp ent = (EntityImp) g;
+		ent.muteToType2(LeafType.EMPTY_PACKAGE);
+		return ent;
 	}
 
-	public EntityFactory(List<HideOrShow2> hides2, List<HideOrShow2> removed, CucaDiagram namespaceSeparator) {
+//
+	public EntityImp isIntricated(EntityImp parent) {
+		throw new UnsupportedOperationException();
+	}
+
+	public EntityFactory(List<HideOrShow2> hides2, List<HideOrShow2> removed, ICucaDiagram namespaceSeparator) {
 		this.hides2 = hides2;
 		this.removed = removed;
 		this.namespaceSeparator = namespaceSeparator;
-		this.leafsByCode = new LinkedHashMap<String, ILeaf>();
-		this.groupsByCode = new LinkedHashMap<String, IGroup>();
+		this.plasma = new Plasma(".");
+		this.rootGroup = new EntityImp(this.plasma.root(), this, null, GroupType.ROOT, 0);
+		this.plasma.root().setData(rootGroup);
 	}
 
-	public boolean isHidden(ILeaf leaf) {
-		final IEntity other = isNoteWithSingleLinkAttachedTo(leaf);
-		if (other instanceof ILeaf)
-			return isHidden((ILeaf) other);
+	public boolean isHidden(EntityImp leaf) {
+		final EntityImp other = isNoteWithSingleLinkAttachedTo(leaf);
+		if (other != null && other != leaf)
+			return isHidden(other);
 
 		boolean hidden = false;
 		for (HideOrShow2 hide : hides2)
@@ -134,10 +115,10 @@ public final class EntityFactory implements IEntityFactory {
 		return result;
 	}
 
-	public boolean isRemoved(ILeaf leaf) {
-		final IEntity other = isNoteWithSingleLinkAttachedTo(leaf);
-		if (other instanceof ILeaf)
-			return isRemoved((ILeaf) other);
+	public boolean isRemoved(EntityImp leaf) {
+		final EntityImp other = isNoteWithSingleLinkAttachedTo(leaf);
+		if (other instanceof EntityImp)
+			return isRemoved((EntityImp) other);
 
 		boolean result = false;
 		for (HideOrShow2 hide : removed)
@@ -146,11 +127,11 @@ public final class EntityFactory implements IEntityFactory {
 		return result;
 	}
 
-	private IEntity isNoteWithSingleLinkAttachedTo(ILeaf note) {
+	private EntityImp isNoteWithSingleLinkAttachedTo(EntityImp note) {
 		if (note.getLeafType() != LeafType.NOTE)
 			return null;
 		assert note.getLeafType() == LeafType.NOTE;
-		IEntity other = null;
+		EntityImp other = null;
 		for (Link link : this.getLinks()) {
 			if (link.getType().isInvisible())
 				continue;
@@ -167,7 +148,7 @@ public final class EntityFactory implements IEntityFactory {
 
 	}
 
-	public boolean isRemovedIgnoreUnlinked(ILeaf leaf) {
+	public boolean isRemovedIgnoreUnlinked(EntityImp leaf) {
 		boolean result = false;
 		for (HideOrShow2 hide : removed)
 			if (hide.isAboutUnlinked() == false)
@@ -176,8 +157,8 @@ public final class EntityFactory implements IEntityFactory {
 		return result;
 	}
 
-	public ILeaf createLeaf(Together together, Ident ident, Code code, Display display, LeafType entityType,
-			IGroup parentContainer, Set<VisibilityModifier> hides, String namespaceSeparator) {
+	final public EntityImp createLeaf(Quark quark, Display display, LeafType entityType,
+			Set<VisibilityModifier> hides) {
 		final Bodier bodier;
 		if (Objects.requireNonNull(entityType) == LeafType.MAP)
 			bodier = new BodierMap();
@@ -186,169 +167,68 @@ public final class EntityFactory implements IEntityFactory {
 		else
 			bodier = BodyFactory.createLeaf(entityType, hides);
 
-		final EntityImp result = new EntityImp(ident, code, this, bodier, parentContainer, entityType,
-				namespaceSeparator, rawLayout);
+		final EntityImp result = new EntityImp(quark, this, bodier, entityType, rawLayout);
 		bodier.setLeaf(result);
 		result.setDisplay(display);
-		result.setTogether(together);
 		return result;
 	}
 
-	public IGroup createGroup(Ident ident, Code code, Display display, Code namespace, GroupType groupType,
-			IGroup parentContainer, Set<VisibilityModifier> hides, String namespaceSeparator) {
+	public EntityImp createGroup(Quark quark, Display display, GroupType groupType, Set<VisibilityModifier> hides) {
 		Objects.requireNonNull(groupType);
-		for (Entry<Ident, IGroup> ent : groups2.entrySet())
-			if (ent.getKey().equals(ident))
-				return ent.getValue();
+		if (quark.getData() != null)
+			return (EntityImp) quark.getData();
+//		for (Entry<Ident, IGroup> ent : groups2.entrySet())
+//			if (ent.getKey().equals(ident))
+//				return ent.getValue();
 
 		final Bodier bodier = BodyFactory.createGroup(hides);
-		final EntityImp result = new EntityImp(ident, code, this, bodier, parentContainer, groupType, namespace,
-				namespaceSeparator, rawLayout);
+		final EntityImp result = new EntityImp(quark, this, bodier, groupType, rawLayout);
 		if (Display.isNull(display) == false)
 			result.setDisplay(display);
 
 		return result;
 	}
 
-	public void addLeaf(ILeaf entity) {
-		leafsByCode.put(entity.getCodeGetName(), entity);
-		leafs2.put(entity.getIdent(), entity);
-	}
-
-	public void addGroup(IGroup group) {
-		groupsByCode.put(group.getCodeGetName(), group);
-		groups2.put(group.getIdent(), group);
-	}
-
-	private void ensureParentIsCreated(Ident ident) {
-		if (groups2.get(ident.parent()) != null)
-			return;
-		getParentContainer(ident, null);
-	}
-
-	public /* private */ void removeGroup(String name) {
-		final IEntity removed = Objects.requireNonNull(groupsByCode.remove(name));
-		final IEntity removed2 = groups2.remove(removed.getIdent());
-		if (removed != removed2) {
-			bigError();
-		}
-	}
-
-	public /* private */ void removeGroup(Ident ident) {
-		Objects.requireNonNull(groups2.remove(Objects.requireNonNull(ident)));
-	}
-
-	public static void bigError() {
-		// Thread.dumpStack();
-		// System.exit(0);
-		// throw new IllegalArgumentException();
-	}
-
-	public /* private */ void removeLeaf(String name) {
-		final IEntity removed = Objects.requireNonNull(leafsByCode.remove(Objects.requireNonNull(name)));
-		final IEntity removed2 = leafs2.remove(removed.getIdent());
-		if (removed != removed2) {
-			bigError();
-		}
-	}
-
-	public /* private */ void removeLeaf(Ident ident) {
-		final IEntity removed = leafs2.remove(Objects.requireNonNull(ident));
-		if (removed == null) {
-			System.err.println("leafs2=" + leafs2.keySet());
-			throw new IllegalArgumentException(ident.toString());
-		}
-	}
-
-	public IGroup muteToGroup(String name, Code namespace, GroupType type, IGroup parent) {
-		final ILeaf leaf = leafsByCode.get(name);
-		((EntityImp) leaf).muteToGroup(namespace, type, parent);
-		final IGroup result = (IGroup) leaf;
-		removeLeaf(name);
-		return result;
-	}
-
-	public IGroup getRootGroup() {
+	public EntityImp getRootGroup() {
 		return rootGroup;
 	}
 
-	public final ILeaf getLeafStrict(Ident ident) {
-		return leafs2.get(ident);
-	}
-
-	public Ident buildFullyQualified(Ident currentPath, Ident id) {
-		if (currentPath.equals(id) == false)
-			if (leafs2.containsKey(id) || groups2.containsKey(id))
-				return id;
-
-		if (id.size() > 1)
-			return id;
-
-		return currentPath.add(id);
-	}
-
-	public final IGroup getGroupStrict(Ident ident) {
-		if (namespaceSeparator.getNamespaceSeparator() == null)
-			return getGroupVerySmart(ident);
-
-		final IGroup result = groups2.get(ident);
-		return result;
-	}
-
-	public final IGroup getGroupVerySmart(Ident ident) {
-		final IGroup result = groups2.get(ident);
+	public final EntityImp getLeafStrict(Quark ident) {
+		if (ident instanceof Quark == false)
+			throw new UnsupportedOperationException();
+		final Quark quark = (Quark) ident;
+		final EntityImp result = (EntityImp) quark.getData();
 		if (result == null)
-			for (Entry<Ident, IGroup> ent : groups2.entrySet())
-				if (ent.getKey().getLast().equals(ident.getLast()))
-					return ent.getValue();
-
+			throw new UnsupportedOperationException();
 		return result;
 	}
 
-	public final ILeaf getLeaf(Code code) {
-		final ILeaf result = leafsByCode.get(code.getName());
-		if (result != null && result != leafs2.get(result.getIdent()))
-			bigError();
+	public final Collection<EntityImp> leafs() {
 
-		for (ILeaf tmp : leafsByCode.values())
-			if (tmp.getIdent().equals(code))
-				return tmp;
-
-		return result;
-	}
-
-	public final IGroup getGroup(Code code) {
-		final IGroup result = groupsByCode.get(code.getName());
-		if (result != null && result != groups2.get(result.getIdent()))
-			bigError();
-
-		return result;
-	}
-
-	public final Collection<ILeaf> leafs() {
-		final Collection<ILeaf> result = Collections.unmodifiableCollection(leafsByCode.values());
-		if (new ArrayList<>(result).equals(new ArrayList<>(leafs2())) == false)
-			bigError();
-
-		return result;
-	}
-
-	public final Collection<IGroup> groups() {
-		final Collection<IGroup> result = Collections.unmodifiableCollection(groupsByCode.values());
-		if (new ArrayList<>(result).equals(new ArrayList<>(groups2())) == false)
-			bigError();
-
-		return result;
-	}
-
-	public final Collection<IGroup> groups2() {
-		final Collection<IGroup> result = Collections.unmodifiableCollection(groups2.values());
+		final List<EntityImp> result = new ArrayList<>();
+		for (Quark quark : getPlasma().quarks()) {
+			if (quark.isRoot())
+				continue;
+			final EntityImp data = (EntityImp) quark.getData();
+			if (data != null && data.isGroup() == false)
+				result.add(data);
+		}
 		return Collections.unmodifiableCollection(result);
+
 	}
 
-	public final Collection<ILeaf> leafs2() {
-		final Collection<ILeaf> result = Collections.unmodifiableCollection(leafs2.values());
+	public final Collection<EntityImp> groups() {
+		final List<EntityImp> result = new ArrayList<>();
+		for (Quark quark : getPlasma().quarks()) {
+			if (quark.isRoot())
+				continue;
+			final EntityImp data = (EntityImp) quark.getData();
+			if (data != null && data.isGroup())
+				result.add(data);
+		}
+		// System.err.println("GROUPS=" + result.size());
 		return Collections.unmodifiableCollection(result);
+
 	}
 
 	public void incRawLayout() {
@@ -381,12 +261,11 @@ public final class EntityFactory implements IEntityFactory {
 
 	}
 
-	public IGroup getParentContainer(Ident ident, IGroup parentContainer) {
-		return Objects.requireNonNull(parentContainer);
-	}
-
-	public CucaDiagram getDiagram() {
+	public ICucaDiagram getDiagram() {
 		return namespaceSeparator;
 	}
 
+	public Plasma getPlasma() {
+		return plasma;
+	}
 }

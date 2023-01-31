@@ -39,9 +39,7 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlMode;
-import net.sourceforge.plantuml.baraye.CucaDiagram;
-import net.sourceforge.plantuml.baraye.IEntity;
-import net.sourceforge.plantuml.baraye.IGroup;
+import net.sourceforge.plantuml.baraye.EntityImp;
 import net.sourceforge.plantuml.baraye.Quark;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.classdiagram.command.CommandCreateClassMultilines;
@@ -50,11 +48,8 @@ import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
-import net.sourceforge.plantuml.cucadiagram.Ident;
-import net.sourceforge.plantuml.cucadiagram.NamespaceStrategy;
 import net.sourceforge.plantuml.cucadiagram.Stereotag;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.USymbol;
@@ -108,42 +103,41 @@ public class CommandPackage extends SingleLineCommand2<AbstractEntityDiagram> {
 	@Override
 	protected CommandExecutionResult executeArg(AbstractEntityDiagram diagram, LineLocation location, RegexResult arg)
 			throws NoSuchColorException {
-		final String idShort;
-		/* final */String display;
+		String idShort;
+		String display;
 		final String name = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("NAME", 0));
-		boolean override1972 = false;
+
 		if (arg.get("AS", 0) == null) {
 			if (name.length() == 0) {
 				idShort = "##" + diagram.getUniqueSequence();
 				display = null;
+				throw new IllegalStateException("AS");
 			} else {
 				idShort = name;
 				display = idShort;
-				override1972 = true;
 			}
 		} else {
-			display = name;
+			display = name;		
 			idShort = arg.get("AS", 0);
 		}
 
-		final Ident ident;
-		final Code code;
-
-		if (CucaDiagram.QUARK) {
-			final Quark current = diagram.currentQuark();
-			code = current;
-			ident = current.child(idShort);
+//		final Quark current = diagram.currentQuark();
+//		final Quark ident = current.child(idShort);
+		final Quark quark;
+		if (arg.get("AS", 0) == null) {
+			quark = diagram.quarkInContext(diagram.cleanIdForQuark(name), true);
+			display = quark.getQualifiedName();
 		} else {
-			ident = diagram.buildLeafIdent(idShort);
-			code = diagram.buildCode(idShort);
+			quark = diagram.quarkInContext(diagram.cleanIdForQuark(arg.get("AS", 0)), true);
+			display = name;
 		}
-		final IGroup currentPackage = diagram.getCurrentGroup();
-		final CommandExecutionResult status = diagram.gotoGroup(ident, code, Display.getWithNewlines(display),
-				GroupType.PACKAGE, currentPackage, NamespaceStrategy.SINGLE);
+
+		final CommandExecutionResult status = diagram.gotoGroup(quark, Display.getWithNewlines(display),
+				GroupType.PACKAGE);
 		if (status.isOk() == false)
 			return status;
 
-		final IEntity p = diagram.getCurrentGroup();
+		final EntityImp p = diagram.getCurrentGroup();
 
 		final String stereotype = arg.get("STEREOTYPE", 0);
 

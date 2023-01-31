@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.cucadiagram.dot;
 import java.io.IOException;
 
 public class ProcessState {
+	// ::remove file when WASM
 
 	private final String name;
 	private final IOException cause;

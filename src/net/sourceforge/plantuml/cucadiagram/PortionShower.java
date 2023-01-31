@@ -35,9 +35,9 @@
  */
 package net.sourceforge.plantuml.cucadiagram;
 
-import net.sourceforge.plantuml.baraye.IEntity;
+import net.sourceforge.plantuml.baraye.EntityImp;
 
 public interface PortionShower {
 
-	boolean showPortion(EntityPortion portion, IEntity entity);
+	boolean showPortion(EntityPortion portion, EntityImp entity);
 }

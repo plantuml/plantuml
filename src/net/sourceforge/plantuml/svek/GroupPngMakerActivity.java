@@ -42,9 +42,8 @@ import java.util.List;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.baraye.EntityImp;
 import net.sourceforge.plantuml.baraye.EntityUtils;
-import net.sourceforge.plantuml.baraye.IEntity;
-import net.sourceforge.plantuml.baraye.IGroup;
 import net.sourceforge.plantuml.cucadiagram.GroupHierarchy;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
 import net.sourceforge.plantuml.cucadiagram.ICucaDiagram;
@@ -64,29 +63,29 @@ import net.sourceforge.plantuml.ugraphic.color.HColor;
 public final class GroupPngMakerActivity {
 
 	private final ICucaDiagram diagram;
-	private final IGroup group;
+	private final EntityImp group;
 	private final StringBounder stringBounder;
 
 	class InnerGroupHierarchy implements GroupHierarchy {
 
-		public IGroup getRootGroup() {
+		public EntityImp getRootGroup() {
 			throw new UnsupportedOperationException();
 		}
 
-		public Collection<IGroup> getChildrenGroups(IGroup parent) {
-			if (EntityUtils.groupRoot(parent)) {
+		public Collection<EntityImp> getChildrenGroups(EntityImp parent) {
+			if (parent.getQuark().isRoot()) {
 				return diagram.getChildrenGroups(group);
 			}
 			return diagram.getChildrenGroups(parent);
 		}
 
-		public boolean isEmpty(IGroup g) {
+		public boolean isEmpty(EntityImp g) {
 			return diagram.isEmpty(g);
 		}
 
 	}
 
-	public GroupPngMakerActivity(ICucaDiagram diagram, IGroup group, StringBounder stringBounder) {
+	public GroupPngMakerActivity(ICucaDiagram diagram, EntityImp group, StringBounder stringBounder) {
 		this.diagram = diagram;
 		this.group = group;
 		this.stringBounder = stringBounder;
@@ -95,8 +94,8 @@ public final class GroupPngMakerActivity {
 	private List<Link> getPureInnerLinks() {
 		final List<Link> result = new ArrayList<>();
 		for (Link link : diagram.getLinks()) {
-			final IEntity e1 = (IEntity) link.getEntity1();
-			final IEntity e2 = (IEntity) link.getEntity2();
+			final EntityImp e1 = (EntityImp) link.getEntity1();
+			final EntityImp e2 = (EntityImp) link.getEntity2();
 			if (e1.getParentContainer() == group && e1.isGroup() == false && e2.getParentContainer() == group
 					&& e2.isGroup() == false) {
 				result.add(link);

@@ -40,7 +40,6 @@ import net.sourceforge.plantuml.LineConfigurable;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.baraye.EntityImp;
-import net.sourceforge.plantuml.baraye.IEntity;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -63,7 +62,7 @@ public abstract class EntityImageStateCommon extends AbstractEntityImage {
 
 	final protected LineConfigurable lineConfig;
 
-	public EntityImageStateCommon(IEntity entity, ISkinParam skinParam) {
+	public EntityImageStateCommon(EntityImp entity, ISkinParam skinParam) {
 		super(entity, skinParam);
 
 		this.lineConfig = entity;
@@ -77,13 +76,8 @@ public abstract class EntityImageStateCommon extends AbstractEntityImage {
 
 	}
 
-	public static Style getStyleStateTitle(IEntity group, ISkinParam skinParam) {
+	public static Style getStyleStateTitle(EntityImp group, ISkinParam skinParam) {
 		return StyleSignatureBasic.of(SName.root, SName.element, SName.stateDiagram, SName.state, SName.title)
-				.withTOBECHANGED(group.getStereotype()).getMergedStyle(skinParam.getCurrentStyleBuilder());
-	}
-
-	public static Style getStyleStateHeader(IEntity group, ISkinParam skinParam) {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.stateDiagram, SName.state, SName.header)
 				.withTOBECHANGED(group.getStereotype()).getMergedStyle(skinParam.getCurrentStyleBuilder());
 	}
 
@@ -92,12 +86,12 @@ public abstract class EntityImageStateCommon extends AbstractEntityImage {
 				.withTOBECHANGED(group.getStereotype()).getMergedStyle(skinParam.getCurrentStyleBuilder());
 	}
 
-	public static Style getStyleState(IEntity group, ISkinParam skinParam) {
+	public static Style getStyleState(EntityImp group, ISkinParam skinParam) {
 		return StyleSignatureBasic.of(SName.root, SName.element, SName.stateDiagram, SName.state)
 				.withTOBECHANGED(group.getStereotype()).getMergedStyle(skinParam.getCurrentStyleBuilder());
 	}
 
-	public static Style getStyleStateBody(IEntity group, ISkinParam skinParam) {
+	public static Style getStyleStateBody(EntityImp group, ISkinParam skinParam) {
 		return StyleSignatureBasic.of(SName.root, SName.element, SName.stateDiagram, SName.stateBody)
 				.withTOBECHANGED(group.getStereotype()).getMergedStyle(skinParam.getCurrentStyleBuilder());
 	}

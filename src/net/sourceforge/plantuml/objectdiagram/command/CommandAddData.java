@@ -35,7 +35,8 @@
  */
 package net.sourceforge.plantuml.objectdiagram.command;
 
-import net.sourceforge.plantuml.baraye.IEntity;
+import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Quark;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.regex.IRegex;
@@ -66,13 +67,17 @@ public class CommandAddData extends SingleLineCommand2<AbstractClassOrObjectDiag
 	protected CommandExecutionResult executeArg(AbstractClassOrObjectDiagram diagram, LineLocation location,
 			RegexResult arg) throws NoSuchColorException {
 		final String name = arg.get("NAME", 0);
-		final IEntity entity = diagram.getOrCreateLeaf(diagram.buildLeafIdent(name), diagram.buildCode(name), null,
-				null);
+		final Quark quark = diagram.quarkInContext(diagram.cleanIdForQuark(name), false);
+		final EntityImp entity = (EntityImp) quark.getData();
+		if (entity == null)
+			return CommandExecutionResult.error("No such entity " + quark.getName());
+		// final IEntity entity = diagram.getOrCreateLeaf(quark,
+		// diagram.buildFromFullPath(name), null, null);
 
 		final String field = arg.get("DATA", 0);
-		if (field.length() > 0 && VisibilityModifier.isVisibilityCharacter(field)) {
+		if (field.length() > 0 && VisibilityModifier.isVisibilityCharacter(field))
 			diagram.setVisibilityModifierPresent(true);
-		}
+
 		entity.getBodier().addFieldOrMethod(field);
 		return CommandExecutionResult.ok();
 	}

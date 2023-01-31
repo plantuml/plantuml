@@ -37,17 +37,17 @@ package net.sourceforge.plantuml.activitydiagram;
 
 import java.util.Objects;
 
-import net.sourceforge.plantuml.baraye.IEntity;
+import net.sourceforge.plantuml.baraye.EntityImp;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.utils.Direction;
 
 public class ConditionalContext {
 
-	private final IEntity branch;
+	private final EntityImp branch;
 	private final Direction direction;
 	private final ConditionalContext parent;
 
-	public ConditionalContext(ConditionalContext parent, IEntity branch, Direction direction) {
+	public ConditionalContext(ConditionalContext parent, EntityImp branch, Direction direction) {
 		this.branch = Objects.requireNonNull(branch);
 		if (branch.getLeafType() != LeafType.BRANCH) {
 			throw new IllegalArgumentException();
@@ -64,7 +64,7 @@ public class ConditionalContext {
 		return parent;
 	}
 
-	public final IEntity getBranch() {
+	public final EntityImp getBranch() {
 		return branch;
 	}
 

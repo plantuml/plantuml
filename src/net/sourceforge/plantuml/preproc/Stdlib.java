@@ -32,16 +32,53 @@ import net.sourceforge.plantuml.creole.atom.AtomImg;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.utils.Log;
+// ::uncomment when WASM
+//import java.io.FileInputStream;
+//import java.io.FileNotFoundException;
+//import com.plantuml.wasm.RunInit;
+// ::done
 
 public class Stdlib {
 
+	// ::uncomment when WASM
+//	public static InputStream getResourceAsStream(String fullname) {
+//		fullname = fullname.replace(".puml", "");
+//		fullname = fullname.replace("awslib/", "awslib14/");
+//
+//		final String fullpath = RunInit.pathStdlib + fullname + ".puml";
+//		System.err.println("Trying to read " + fullpath);
+//		// See https://docs.leaningtech.com/cheerpj/File-System-support
+//		try {
+//			return new FileInputStream(fullpath);
+//		} catch (FileNotFoundException e) {
+//			System.err.println("Cannot load " + fullpath);
+//			return null;
+//		}
+//	}
+	// ::done
+
+	// ::comment when WASM
 	private static final Map<String, Stdlib> all = new ConcurrentHashMap<String, Stdlib>();
 	private static final String SEPARATOR = "\uF8FF";
 	private static final Pattern sizePattern = Pattern.compile("\\[(\\d+)x(\\d+)/16\\]");
 
 	private final Map<String, SoftReference<String>> cache = new ConcurrentHashMap<String, SoftReference<String>>();
+
 	private final String name;
 	private final Map<String, String> info = new HashMap<String, String>();
+
+	private Stdlib(String name, String info) throws IOException {
+		this.name = name;
+		fillMap(info);
+	}
+
+	private void fillMap(String infoString) {
+		for (String s : infoString.split("\n"))
+			if (s.contains("=")) {
+				final String data[] = s.split("=");
+				this.info.put(data[0], data[1]);
+			}
+	}
 
 	public static InputStream getResourceAsStream(String fullname) {
 		fullname = fullname.toLowerCase().replace(".puml", "");
@@ -215,11 +252,6 @@ public class Stdlib {
 
 	}
 
-	private Stdlib(String name, String info) throws IOException {
-		this.name = name;
-		fillMap(info);
-	}
-
 	private void skipSprite(int width, int height, InputStream inputStream) throws IOException {
 		final int nbLines = (height + 1) / 2;
 		inputStream.skip(nbLines * width);
@@ -257,14 +289,6 @@ public class Stdlib {
 
 	private boolean isSpriteLine(String s) {
 		return s.trim().startsWith("sprite") && s.trim().endsWith("{");
-	}
-
-	private void fillMap(String infoString) {
-		for (String s : infoString.split("\n"))
-			if (s.contains("=")) {
-				final String data[] = s.split("=");
-				this.info.put(data[0], data[1]);
-			}
 	}
 
 	private static DataInputStream getDataStream(String name) throws IOException {
@@ -433,4 +457,5 @@ public class Stdlib {
 			System.out.println(s.replace("<b>", ""));
 
 	}
+	// ::done
 }

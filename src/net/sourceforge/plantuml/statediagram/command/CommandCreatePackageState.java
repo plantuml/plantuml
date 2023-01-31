@@ -38,8 +38,8 @@ package net.sourceforge.plantuml.statediagram.command;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlMode;
-import net.sourceforge.plantuml.baraye.IEntity;
-import net.sourceforge.plantuml.baraye.IGroup;
+import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Quark;
 import net.sourceforge.plantuml.classdiagram.command.CommandCreateClassMultilines;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -49,11 +49,8 @@ import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
-import net.sourceforge.plantuml.cucadiagram.Ident;
-import net.sourceforge.plantuml.cucadiagram.NamespaceStrategy;
 import net.sourceforge.plantuml.cucadiagram.Stereotag;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
@@ -116,17 +113,18 @@ public class CommandCreatePackageState extends SingleLineCommand2<StateDiagram> 
 	@Override
 	protected CommandExecutionResult executeArg(StateDiagram diagram, LineLocation location, RegexResult arg)
 			throws NoSuchColorException {
-		final IGroup currentPackage = diagram.getCurrentGroup();
+
 		final String idShort = getNotNull(arg, "CODE1", "CODE2");
-		final Ident idNewLong = diagram.buildLeafIdentSpecial(idShort);
-		final Code code = diagram.buildCode(idShort);
+		final Quark quark = diagram.quarkInContext(idShort, false);
+//		final Quark idNewLong = diagram.buildFullyQualified(idShort);
+//		final Quark code = diagram.buildFromFullPath(idShort);
+		
 		String display = getNotNull(arg, "DISPLAY1", "DISPLAY2");
 		if (display == null)
-			display = code.getName();
+			display = quark.getName();
 
-		diagram.gotoGroup(idNewLong, code, Display.getWithNewlines(display), GroupType.STATE, currentPackage,
-				NamespaceStrategy.SINGLE);
-		final IEntity p = diagram.getCurrentGroup();
+		diagram.gotoGroup(quark, Display.getWithNewlines(display), GroupType.STATE);
+		final EntityImp p = diagram.getCurrentGroup();
 		final String stereotype = arg.get("STEREOTYPE", 0);
 		if (stereotype != null)
 			p.setStereotype(Stereotype.build(stereotype));

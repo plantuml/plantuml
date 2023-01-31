@@ -56,9 +56,11 @@ import net.sourceforge.plantuml.svek.SvgResult;
 import net.sourceforge.plantuml.svek.YDelta;
 
 public class GraphvizSolverB {
+	// ::remove file when WASM
 
 	// static private void traceDotString(String dotString) throws IOException {
-	// final File f = SecurityUtils.File("dottmpfile" + UniqueSequence.getValue() + ".tmp");
+	// final File f = SecurityUtils.File("dottmpfile" + UniqueSequence.getValue() +
+	// ".tmp");
 	// PrintWriter pw = null;
 	// try {
 	// pw = SecurityUtils.PrintWriter(new FileWriter(f));
@@ -72,7 +74,8 @@ public class GraphvizSolverB {
 	// }
 	//
 	// static private void traceSvgString(String svg) throws IOException {
-	// final File f = SecurityUtils.File("svgtmpfile" + UniqueSequence.getValue() + ".svg");
+	// final File f = SecurityUtils.File("svgtmpfile" + UniqueSequence.getValue() +
+	// ".svg");
 	// PrintWriter pw = null;
 	// try {
 	// pw = SecurityUtils.PrintWriter(new FileWriter(f));

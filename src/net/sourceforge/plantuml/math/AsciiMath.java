@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.ugraphic.MutableImage;
 import net.sourceforge.plantuml.ugraphic.UImageSvg;
 
 public class AsciiMath implements ScientificEquation {
+	// ::remove folder when WASM
 
 	private final LatexBuilder builder;
 	private final String tex;

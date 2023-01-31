@@ -56,9 +56,6 @@ import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.baraye.EntityImp;
-import net.sourceforge.plantuml.baraye.EntityUtils;
-import net.sourceforge.plantuml.baraye.IEntity;
-import net.sourceforge.plantuml.baraye.IGroup;
 import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.cucadiagram.CucaNote;
 import net.sourceforge.plantuml.cucadiagram.EntityPosition;
@@ -99,7 +96,7 @@ public class Cluster implements Moveable {
 	public final static String CENTER_ID = "za";
 
 	private final Cluster parentCluster;
-	private final IGroup group;
+	private final EntityImp group;
 	private final List<SvekNode> nodes = new ArrayList<>();
 	private final List<Cluster> children = new ArrayList<>();
 	private final int color;
@@ -139,12 +136,12 @@ public class Cluster implements Moveable {
 		return Collections.unmodifiableSet(result);
 	}
 
-	public Cluster(ICucaDiagram diagram, ColorSequence colorSequence, ISkinParam skinParam, IGroup root) {
+	public Cluster(ICucaDiagram diagram, ColorSequence colorSequence, ISkinParam skinParam, EntityImp root) {
 		this(diagram, null, colorSequence, skinParam, root);
 	}
 
 	private Cluster(ICucaDiagram diagram, Cluster parentCluster, ColorSequence colorSequence, ISkinParam skinParam,
-			IGroup group) {
+			EntityImp group) {
 		if (group == null)
 			throw new IllegalStateException();
 
@@ -236,18 +233,18 @@ public class Cluster implements Moveable {
 	}
 
 	public Cluster createChild(ClusterHeader clusterHeader, ColorSequence colorSequence, ISkinParam skinParam,
-			IGroup g) {
+			EntityImp g) {
 		final Cluster child = new Cluster(diagram, this, colorSequence, skinParam, g);
 		child.clusterHeader = clusterHeader;
 		this.children.add(child);
 		return child;
 	}
 
-	public final Set<IGroup> getGroups() {
+	public final Set<EntityImp> getGroups() {
 		return Collections.singleton(group);
 	}
 
-	final IGroup getGroup() {
+	final EntityImp getGroup() {
 		return group;
 	}
 
@@ -364,7 +361,7 @@ public class Cluster implements Moveable {
 				skinParam.getCurrentStyleBuilder());
 	}
 
-	static public UStroke getStrokeInternal(IGroup group, Style style) {
+	static public UStroke getStrokeInternal(EntityImp group, Style style) {
 		final Colors colors = group.getColors();
 		if (colors.getSpecificLineStroke() != null)
 			return colors.getSpecificLineStroke();
@@ -459,6 +456,7 @@ public class Cluster implements Moveable {
 		this.clusterPosition = new ClusterPosition(min, max);
 	}
 
+	// ::comment when WASM
 	public boolean printCluster1(StringBuilder sb, Collection<SvekLine> lines, StringBounder stringBounder) {
 		final List<SvekNode> tmp = getNodesOrderedTop(lines);
 		if (tmp.size() == 0)
@@ -536,6 +534,7 @@ public class Cluster implements Moveable {
 			SvekUtils.println(sb);
 		}
 	}
+	// ::done
 
 	private Set<String> getRankSame(Collection<SvekLine> lines) {
 		final Set<String> rankSame = new HashSet<>();
@@ -567,7 +566,7 @@ public class Cluster implements Moveable {
 		return "cluster" + color;
 	}
 
-	static String getSpecialPointId(IEntity group) {
+	static String getSpecialPointId(EntityImp group) {
 		return CENTER_ID + group.getUid();
 	}
 
@@ -598,7 +597,7 @@ public class Cluster implements Moveable {
 	}
 
 	private final HColor getBackColor(UmlDiagramType umlDiagramType, Style style) {
-		if (EntityUtils.groupRoot(group))
+		if (group.getQuark().isRoot())
 			return null;
 
 		final HColor result = group.getColors().getColor(ColorType.BACK);
@@ -622,7 +621,7 @@ public class Cluster implements Moveable {
 //		return parentCluster.getBackColor(umlDiagramType, style);
 	}
 
-	boolean isClusterOf(IEntity ent) {
+	boolean isClusterOf(EntityImp ent) {
 		if (ent.isGroup() == false)
 			return false;
 

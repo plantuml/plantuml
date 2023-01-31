@@ -36,12 +36,12 @@
 package net.sourceforge.plantuml.svek.image;
 
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.baraye.ILeaf;
+import net.sourceforge.plantuml.baraye.EntityImp;
 import net.sourceforge.plantuml.style.SName;
 
 public class EntityImageDeepHistory extends EntityImagePseudoState {
 
-	public EntityImageDeepHistory(ILeaf entity, ISkinParam skinParam, SName sname) {
+	public EntityImageDeepHistory(EntityImp entity, ISkinParam skinParam, SName sname) {
 		super(entity, skinParam, "H*", sname);
 
 	}

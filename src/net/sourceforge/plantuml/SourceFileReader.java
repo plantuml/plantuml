@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.utils.Log;
 
 @HaxeIgnored
 public class SourceFileReader extends SourceFileReaderAbstract implements ISourceFileReader {
+	// ::remove file when WASM
 
 	private File outputDirectory;
 

@@ -38,7 +38,8 @@ package net.sourceforge.plantuml.statediagram.command;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlMode;
-import net.sourceforge.plantuml.baraye.IEntity;
+import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Quark;
 import net.sourceforge.plantuml.classdiagram.command.CommandCreateClassMultilines;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -48,9 +49,7 @@ import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Stereotag;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
@@ -113,19 +112,27 @@ public class CommandCreateState extends SingleLineCommand2<StateDiagram> {
 	protected CommandExecutionResult executeArg(StateDiagram diagram, LineLocation location, RegexResult arg)
 			throws NoSuchColorException {
 		final String idShort = arg.getLazzy("CODE", 0);
-		final Ident ident = diagram.buildLeafIdent(idShort);
-		final Code code = diagram.buildCode(idShort);
+
+		final Quark quark = diagram.quarkInContext(diagram.cleanIdForQuark(idShort), false);
+//
+//		final Quark ident = diagram.buildFromName(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(idShort));
+//		final Quark code = diagram.buildFromFullPath(idShort);
 		String display = arg.getLazzy("DISPLAY", 0);
 		if (display == null)
-			display = code.getName();
+			display = quark.getName();
 
 		final String stereotype = arg.get("STEREOTYPE", 0);
-		final LeafType type = getTypeFromStereotype(stereotype);
-		if (diagram.checkConcurrentStateOk(ident, code) == false)
-			return CommandExecutionResult.error("The state " + code.getName()
+		LeafType type = getTypeFromStereotype(stereotype);
+		if (type == null)
+			type = LeafType.STATE;
+		if (diagram.checkConcurrentStateOk(quark) == false)
+			return CommandExecutionResult.error("The state " + quark.getName()
 					+ " has been created in a concurrent state : it cannot be used here.");
 
-		final IEntity ent = diagram.getOrCreateLeaf(diagram.buildLeafIdent(idShort), code, type, null);
+		EntityImp ent = (EntityImp) quark.getData();
+		if (ent == null)
+			ent = diagram.reallyCreateLeaf(quark, Display.getWithNewlines(display), type, null);
+
 		ent.setDisplay(Display.getWithNewlines(display));
 
 		if (stereotype != null)

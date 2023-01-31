@@ -52,8 +52,7 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import net.sourceforge.plantuml.baraye.IEntity;
-import net.sourceforge.plantuml.cucadiagram.GroupRoot;
+import net.sourceforge.plantuml.baraye.EntityImp;
 import net.sourceforge.plantuml.descdiagram.DescriptionDiagram;
 import net.sourceforge.plantuml.xmi.XmlDiagramTransformer;
 import net.sourceforge.plantuml.xml.XmlFactories;
@@ -81,21 +80,21 @@ public class GraphmlDescriptionDiagram implements XmlDiagramTransformer {
 		graph.setAttribute("edgedefault", "undirected");
 		graphml.appendChild(graph);
 
-		for (final IEntity ent : diagram.getLeafsvalues())
-			if (ent.getParentContainer() instanceof GroupRoot)
+		for (final EntityImp ent : diagram.getLeafsvalues())
+			if (ent.getParentContainer().instanceofGroupRoot())
 				addElement(ent, graph);
 
 	}
 
-	private void addElement(IEntity tobeAdded, Element container) {
+	private void addElement(EntityImp tobeAdded, Element container) {
 		final Element element = createEntityNode(tobeAdded);
 		container.appendChild(element);
 
 	}
 
-	private Element createEntityNode(IEntity entity) {
+	private Element createEntityNode(EntityImp entity) {
 		final Element cla = document.createElement("node");
-		cla.setAttribute("id", entity.getCode().getName());
+		cla.setAttribute("id", entity.getCode());
 		return cla;
 	}
 

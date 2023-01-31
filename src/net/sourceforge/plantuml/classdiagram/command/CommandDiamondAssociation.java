@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.classdiagram.command;
 
+import net.sourceforge.plantuml.baraye.Quark;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -42,9 +43,7 @@ import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.utils.LineLocation;
 
@@ -65,13 +64,14 @@ public class CommandDiamondAssociation extends SingleLineCommand2<ClassDiagram> 
 	@Override
 	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg) {
 		final String idShort = arg.get("CODE", 0);
-		final Ident ident = diagram.buildLeafIdent(idShort);
-		final Code code = diagram.buildCode(idShort);
-		final boolean leafExist = diagram.leafExist(code);
-		if (leafExist)
-			return CommandExecutionResult.error("Already existing : " + code.getName());
+		final Quark quark = diagram.quarkInContext(diagram.cleanIdForQuark(idShort), false);
+//		final Quark ident = diagram.buildFromName(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(idShort));
+//		final Quark code = diagram.buildFromFullPath(idShort);
+//		final boolean leafExist = diagram.leafExist(code);
+		if (quark.getData() != null)
+			return CommandExecutionResult.error("Already existing : " + quark.getName());
 
-		diagram.createLeaf(ident, code, Display.NULL, LeafType.ASSOCIATION, null);
+		diagram.reallyCreateLeaf(quark, Display.getWithNewlines(""), LeafType.ASSOCIATION, null);
 
 		return CommandExecutionResult.ok();
 	}

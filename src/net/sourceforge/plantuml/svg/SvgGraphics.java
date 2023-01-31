@@ -73,7 +73,6 @@ import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.security.SecurityProfile;
 import net.sourceforge.plantuml.security.SecurityUtils;
-import net.sourceforge.plantuml.tikz.TikzGraphics;
 import net.sourceforge.plantuml.ugraphic.UGroupType;
 import net.sourceforge.plantuml.ugraphic.UImageSvg;
 import net.sourceforge.plantuml.ugraphic.UPath;
@@ -803,8 +802,17 @@ public class SvgGraphics {
 		ensureVisible(x2, y2);
 	}
 
-	private String format(double x) {
-		return TikzGraphics.format(x * scale);
+	private String format(double xx) {
+		final double x = xx * scale;
+		if (x == 0)
+			return "0";
+
+		String s = String.format(Locale.US, "%1.4f", x);
+		s = s.replaceAll("(\\.\\d*?)0+$", "$1");
+		if (s.endsWith("."))
+			s = s.substring(0, s.length() - 1);
+
+		return s;
 	}
 
 	private String formatBoolean(double x) {

@@ -40,7 +40,7 @@ import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
-import net.sourceforge.plantuml.baraye.ILeaf;
+import net.sourceforge.plantuml.baraye.EntityImp;
 import net.sourceforge.plantuml.cucadiagram.EntityPosition;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -64,7 +64,7 @@ public class EntityImagePort extends AbstractEntityImageBorder {
 
 	private final SName sname;
 
-	public EntityImagePort(ILeaf leaf, ISkinParam skinParam, Cluster parent, Bibliotekon bibliotekon, SName sname) {
+	public EntityImagePort(EntityImp leaf, ISkinParam skinParam, Cluster parent, Bibliotekon bibliotekon, SName sname) {
 		super(leaf, skinParam, parent, bibliotekon, FontParam.BOUNDARY);
 		this.sname = sname;
 	}

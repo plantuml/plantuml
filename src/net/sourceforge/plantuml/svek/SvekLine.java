@@ -55,8 +55,6 @@ import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.baraye.EntityImp;
-import net.sourceforge.plantuml.baraye.IEntity;
-import net.sourceforge.plantuml.baraye.IGroup;
 import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.CucaNote;
@@ -206,7 +204,7 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		return ang;
 	}
 
-	private Cluster getCluster2(Bibliotekon bibliotekon, IEntity entityMutable) {
+	private Cluster getCluster2(Bibliotekon bibliotekon, EntityImp entityMutable) {
 		for (Cluster cl : bibliotekon.allCluster())
 			if (cl.getGroups().contains(entityMutable))
 				return cl;
@@ -217,11 +215,13 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 	public SvekLine(Link link, ColorSequence colorSequence, ISkinParam skinParam, StringBounder stringBounder,
 			FontConfiguration font, Bibliotekon bibliotekon, Pragma pragma, GraphvizVersion graphvizVersion) {
 
+		// ::comment when WASM
 		if (graphvizVersion.useShieldForQuantifier() && link.getLinkArg().getQuantifier1() != null)
-			((EntityImp) link.getEntity1()).ensureMargins(Margins.uniform(16));
+			link.getEntity1().ensureMargins(Margins.uniform(16));
 
 		if (graphvizVersion.useShieldForQuantifier() && link.getLinkArg().getQuantifier2() != null)
-			((EntityImp) link.getEntity2()).ensureMargins(Margins.uniform(16));
+			link.getEntity2().ensureMargins(Margins.uniform(16));
+		// ::done
 
 		if (link.getLinkArg().getKal1() != null)
 			this.kal1 = new Kal(this, link.getLinkArg().getKal1(), font, skinParam, (EntityImp) link.getEntity1(), link,
@@ -361,6 +361,7 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		return link.getLinkArrow();
 	}
 
+	// ::comment when WASM
 	public void appendLine(GraphvizVersion graphvizVersion, StringBuilder sb, DotMode dotMode, DotSplines dotSplines) {
 		// Log.println("inverted=" + isInverted());
 		// if (isInverted()) {
@@ -438,6 +439,7 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		sb.append("];");
 		SvekUtils.println(sb);
 	}
+	// ::done
 
 	private XDimension2D eventuallyDivideByTwo(XDimension2D dim) {
 		if (divideLabelWidthByTwo)
@@ -672,7 +674,7 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 			ug.startUrl(url);
 
 		if (link.isAutoLinkOfAGroup()) {
-			final Cluster cl = bibliotekon.getCluster((IGroup) link.getEntity1());
+			final Cluster cl = bibliotekon.getCluster((EntityImp) link.getEntity1());
 			if (cl != null) {
 				x += cl.getClusterPosition().getWidth();
 				x -= dotPath.getStartPoint().getX() - cl.getClusterPosition().getMinX();
@@ -712,7 +714,7 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 
 		DotPath todraw = dotPath;
 		if (link.getEntity2().isGroup() && link.getEntity2().getUSymbol() instanceof USymbolFolder) {
-			final Cluster endCluster = bibliotekon.getCluster((IGroup) link.getEntity2());
+			final Cluster endCluster = bibliotekon.getCluster((EntityImp) link.getEntity2());
 			if (endCluster != null) {
 				final double deltaFolderH = endCluster.checkFolderPosition(dotPath.getEndPoint(),
 						ug.getStringBounder());
@@ -993,7 +995,7 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		return link.isHorizontalSolitary();
 	}
 
-	public boolean isLinkFromOrTo(IEntity group) {
+	public boolean isLinkFromOrTo(EntityImp group) {
 		return link.getEntity1() == group || link.getEntity2() == group;
 	}
 
@@ -1018,7 +1020,7 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		return link.getEntity1() == link.getEntity2();
 	}
 
-	public XPoint2D getMyPoint(IEntity entity) {
+	public XPoint2D getMyPoint(EntityImp entity) {
 		if (link.getEntity1() == entity)
 			return moveDelta(dotPath.getStartPoint());
 
@@ -1054,7 +1056,7 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		return new XPoint2D(dx + end.getX(), dy + end.getY());
 	}
 
-	public IEntity getOther(IEntity entity) {
+	public EntityImp getOther(EntityImp entity) {
 		if (link.contains(entity))
 			return link.getOther(entity);
 

@@ -7,6 +7,7 @@ import java.util.Set;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 
 public final class Quantizer {
+	// ::remove folder when WASM
 	private static final int MAX_COLOR_COUNT = 256;
 
 	private static QImage quantizeNow(QImage image) throws IOException {

@@ -40,7 +40,7 @@ import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
-import net.sourceforge.plantuml.baraye.ILeaf;
+import net.sourceforge.plantuml.baraye.EntityImp;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.EntityPortion;
@@ -72,7 +72,7 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 
 	final private HeaderLayout headerLayout;
 
-	public EntityImageClassHeader(ILeaf entity, ISkinParam skinParam, PortionShower portionShower) {
+	public EntityImageClassHeader(EntityImp entity, ISkinParam skinParam, PortionShower portionShower) {
 		super(entity, skinParam);
 
 		final boolean italic = entity.getLeafType() == LeafType.ABSTRACT_CLASS
@@ -137,7 +137,7 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 		}
 
 		final TextBlock circledCharacter;
-		if (portionShower.showPortion(EntityPortion.CIRCLED_CHARACTER, (ILeaf) getEntity()))
+		if (portionShower.showPortion(EntityPortion.CIRCLED_CHARACTER, (EntityImp) getEntity()))
 			circledCharacter = TextBlockUtils.withMargin(getCircledCharacter(entity, skinParam), 4, 0, 5, 5);
 		else
 			circledCharacter = null;
@@ -145,7 +145,7 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 		this.headerLayout = new HeaderLayout(circledCharacter, stereo, name, genericBlock);
 	}
 
-	private TextBlock getCircledCharacter(ILeaf entity, ISkinParam skinParam) {
+	private TextBlock getCircledCharacter(EntityImp entity, ISkinParam skinParam) {
 		final Stereotype stereotype = entity.getStereotype();
 		if (stereotype != null && stereotype.getSprite(skinParam) != null)
 			return stereotype.getSprite(skinParam);

@@ -60,6 +60,7 @@ import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.utils.Log;
 
 public class DriverTextAsPathG2d implements UDriver<UText, Graphics2D> {
+	// ::remove file when SPAM
 
 	private final EnsureVisible visible;
 	private final StringBounder stringBounder;

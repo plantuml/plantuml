@@ -42,7 +42,8 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlMode;
-import net.sourceforge.plantuml.baraye.ILeaf;
+import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Quark;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
@@ -52,9 +53,7 @@ import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.USymbol;
@@ -163,14 +162,18 @@ public class CommandCreateElementMultilines extends CommandMultilines2<AbstractE
 
 		final String stereotype = line0.get("STEREO", 0);
 
-		final Ident ident = diagram.buildLeafIdent(idShort);
-		final Code code = diagram.buildCode(idShort);
-		if (CommandCreateElementFull.existsWithBadType3(diagram, code, ident, type, usymbol))
-			return CommandExecutionResult.error("This element (" + code.getName() + ") is already defined");
+//		final Quark ident = diagram.buildFromName(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(idShort));
+//		final Quark code_ = diagram.buildFromFullPath(idShort);
+//		if (CommandCreateElementFull.existsWithBadType3(diagram, code, type, usymbol))
+//			return CommandExecutionResult.error("This element (" + code.getName() + ") is already defined");
 
-		final ILeaf result = diagram.createLeaf(ident, code, display, type, usymbol);
-		if (result == null)
-			return CommandExecutionResult.error("This element (" + code.getName() + ") is already defined");
+		final Quark quark = diagram.quarkInContext(diagram.cleanIdForQuark(idShort), false);
+		EntityImp result = (EntityImp) quark.getData();
+		if (quark.getData() == null)
+			result = diagram.reallyCreateLeaf(quark, display, type, usymbol);
+
+		if (CommandCreateElementFull.existsWithBadType3(diagram, quark, type, usymbol))
+			return CommandExecutionResult.error("This element (" + quark.getName() + ") is already defined");
 
 		result.setUSymbol(usymbol);
 		if (stereotype != null)

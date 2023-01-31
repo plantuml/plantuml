@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.stats.api.StatsLine;
 import net.sourceforge.plantuml.stats.api.StatsTable;
 
 public class CreoleConverter {
+	// ::remove folder when WASM
 
 	private final DateFormat formatter = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM);
 

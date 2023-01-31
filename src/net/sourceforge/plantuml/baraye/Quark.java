@@ -38,50 +38,46 @@ package net.sourceforge.plantuml.baraye;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.plantuml.cucadiagram.Code;
-import net.sourceforge.plantuml.cucadiagram.Ident;
-
-public class Quark extends Ident implements Code {
+public class Quark {
 
 	private final Plasma plasma;
 	private /* final */ Quark parent;
-	// private final List<String> parts;
+	private final String name;
 	private Object data;
 
-	Quark(Plasma plasma, Quark parent, List<String> parts) {
-		super(new ArrayList<String>(parts));
+	Quark(Plasma plasma, Quark parent, String name) {
+		this.name = name;
 		this.plasma = plasma;
 		this.parent = parent;
-		if (parent == null) {
-			if (parts.size() != 0)
-				throw new IllegalStateException();
-		} else {
-			if (parent.parts.equals(parts.subList(0, parts.size() - 1)) == false)
-				throw new IllegalStateException();
-
-		}
-		// this.parts = new ArrayList<String>(parts);
 	}
 
 	public Quark getParent() {
 		return parent;
-//		if (parts.size() == 0)
-//			return null;
-//		return plasma.ensurePresent(parts.subList(0, parts.size() - 1));
 	}
 
 	@Override
 	public String toString() {
 		// return parts.toString() + "(parent=" + parent + ")";
-		return parts.toString();
+		return getSignature().toString();
 	}
 
 	public List<String> getSignature() {
-		return new ArrayList<>(parts);
+		final List<String> result = new ArrayList<>();
+		if (parent != null)
+			result.addAll(parent.getSignature());
+		result.add(name);
+		return result;
+	}
+
+	public List<String> parts() {
+		return getSignature();
 	}
 
 	public boolean containsLarge(Quark other) {
-		return other.parts.size() > this.parts.size() && other.parts.subList(0, this.parts.size()).equals(this.parts);
+		final List<String> signature = this.parts();
+		final List<String> otherSignature = other.parts();
+		return otherSignature.size() > signature.size()
+				&& otherSignature.subList(0, signature.size()).equals(signature);
 	}
 
 //	@Override
@@ -97,23 +93,12 @@ public class Quark extends Ident implements Code {
 //		return parts.hashCode();
 //	}
 
-	public boolean startsWith(Quark other) {
-		if (other.parts.size() > this.parts.size())
-			return false;
-
-		for (int i = 0; i < other.parts.size(); i++)
-			if (other.parts.get(i).equals(this.parts.get(i)) == false)
-				return false;
-
-		return true;
-	}
-
 	public String toString(String sep) {
 		if (sep == null)
 			sep = ".";
 
 		final StringBuilder sb = new StringBuilder();
-		for (String s : parts) {
+		for (String s : parts()) {
 			if (sb.length() > 0)
 				sb.append(sep);
 
@@ -123,23 +108,20 @@ public class Quark extends Ident implements Code {
 	}
 
 	public String getName() {
-		if (parts.size() == 0)
-			return "";
+		return name;
+	}
 
-		return parts.get(parts.size() - 1);
+	public String getQualifiedName() {
+		if (plasma.hasSeparator())
+			return toString(plasma.getSeparator());
+		return name;
 	}
 
 	public boolean isRoot() {
-		return parts.size() == 0;
+		return parent == null;
+		// throw new UnsupportedOperationException();
+		// return parts.size() == 0;
 	}
-
-	public int getDepth() {
-		return parts.size();
-	}
-
-//	public int size() {
-//		return parts.size();
-//	}
 
 	public final Plasma getPlasma() {
 		return plasma;
@@ -153,26 +135,14 @@ public class Quark extends Ident implements Code {
 		this.data = data;
 	}
 
-	@Override
-	public Ident eventuallyRemoveStartingAndEndingDoubleQuote(String format) {
-		return this;
-		// throw new UnsupportedOperationException();
-	}
-
 	public Quark childIfExists(String name) {
 		final List<String> sig = new ArrayList<>(getSignature());
 		sig.add(name);
 		return plasma.getIfExists(sig);
 	}
 
-	public Quark parse(Quark path) {
-		final List<String> sig = new ArrayList<>(getSignature());
-		sig.addAll(path.getSignature());
-		return plasma.ensurePresent(sig);
-	}
-
-	public Quark child(String name) {
-		return plasma.parse(this, name);
+	public Quark child(String full) {
+		return plasma.parse(this, full);
 	}
 
 	public int countChildren() {
@@ -183,20 +153,28 @@ public class Quark extends Ident implements Code {
 		return plasma.getChildren(this);
 	}
 
-	public void moveTo(Quark dest) {
-		plasma.moveAllTo(this, dest);
+	public String forXmi() {
+		final StringBuilder sb = new StringBuilder();
+		for (String s : parts()) {
+			if (sb.length() > 0)
+				sb.append(".");
+
+			sb.append(s);
+		}
+		return sb.toString();
 	}
 
-	public void internalMove(Quark src, Quark dest) {
-		System.err.print("Intermal move from " + this + " to ");
-		if (src.getDepth() + 1 != dest.getDepth())
-			throw new UnsupportedOperationException("to be finished");
-		final List<String> previous = this.getSignature();
-		parts.clear();
-		parts.addAll(dest.getSignature());
-		parts.addAll(previous.subList(src.getDepth(), previous.size()));
-		this.parent = plasma.ensurePresent(parts.subList(0, parts.size() - 1));
-		System.err.println(toString());
+	public String getPortMember() {
+		final String last = getName();
+		final int x = last.lastIndexOf("::");
+		if (x == -1) {
+			return null;
+		}
+		return last.substring(x + 2);
+	}
+
+	void setParent(Quark newFather) {
+		this.parent = newFather;
 	}
 
 }

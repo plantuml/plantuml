@@ -54,6 +54,7 @@ import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.openiconic.data.DummyIcon;
 
 public class PSystemListOpenIconic extends PlainDiagram {
+	// ::remove file when WASM
 
 	public PSystemListOpenIconic(UmlSource source) {
 		super(source);

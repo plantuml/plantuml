@@ -148,11 +148,13 @@ public class PSystemBuilder {
 			result = PSystemErrorUtils.merge(errors);
 			return result;
 		} finally {
+			// ::comment when WASM
 			if (result != null && OptionFlags.getInstance().isEnableStats()) {
 				StatsUtilsIncrement.onceMoreParse(System.currentTimeMillis() - now, result.getClass());
 			}
 			Log.info("Compilation duration " + (System.currentTimeMillis() - now));
 			RegexConcat.printCacheInfo();
+			// ::done
 		}
 	}
 
@@ -174,46 +176,63 @@ public class PSystemBuilder {
 		factories.add(new PSystemVersionFactory());
 		factories.add(new PSystemDonorsFactory());
 		factories.add(new PSystemSkinparameterListFactory());
+		// ::comment when WASM
 		factories.add(new PSystemListFontsFactory());
+		// ::done
 		factories.add(new PSystemListEmojiFactory());
+		// ::comment when WASM
 		factories.add(new PSystemOpenIconicFactory());
 		factories.add(new PSystemListOpenIconicFactory());
 		factories.add(new PSystemListInternalSpritesFactory());
+		// ::done
 		factories.add(new PSystemSaltFactory2(DiagramType.SALT));
 		factories.add(new PSystemSaltFactory2(DiagramType.UML));
+		// ::comment when WASM
 		factories.add(new PSystemDotFactory(DiagramType.DOT));
 		factories.add(new PSystemDotFactory(DiagramType.UML));
+		// ::done
 		factories.add(new NwDiagramFactory(DiagramType.NW));
 		factories.add(new NwDiagramFactory(DiagramType.UML));
 		factories.add(new MindMapDiagramFactory());
 		factories.add(new WBSDiagramFactory());
+		// ::comment when WASM
 		factories.add(new PSystemDitaaFactory(DiagramType.DITAA));
 		factories.add(new PSystemDitaaFactory(DiagramType.UML));
+		// ::done
 		if (License.getCurrent() == License.GPL || License.getCurrent() == License.GPLV2) {
+			// ::comment when WASM
 			factories.add(new PSystemJcckitFactory(DiagramType.JCCKIT));
 			factories.add(new PSystemJcckitFactory(DiagramType.UML));
+			// ::done
 			// factories.add(new PSystemLogoFactory());
 			factories.add(new PSystemSudokuFactory());
 		}
+		// ::comment when WASM
 		factories.add(new PSystemDefinitionFactory());
+		// ::done
 		factories.add(new ListSpriteDiagramFactory());
+		// ::comment when WASM
 		factories.add(new StdlibDiagramFactory());
 		factories.add(new PSystemMathFactory(DiagramType.MATH));
 		factories.add(new PSystemLatexFactory(DiagramType.LATEX));
+		// ::done
 		// factories.add(new PSystemStatsFactory());
 		factories.add(new PSystemCreoleFactory());
 		factories.add(new PSystemEggFactory());
 		factories.add(new PSystemAppleTwoFactory());
 		factories.add(new PSystemRIPFactory());
 		// factories.add(new PSystemLostFactory());
-		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE) {
+		// ::comment when WASM
+		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE)
 			factories.add(new PSystemPathFactory());
-		}
+		// ::done
 		factories.add(new PSystemOregonFactory());
 		factories.add(new PSystemCharlieFactory());
+		// ::comment when WASM
 		if (License.getCurrent() == License.GPL || License.getCurrent() == License.GPLV2) {
 			factories.add(new PSystemXearthFactory());
 		}
+		// ::done
 		factories.add(new GanttDiagramFactory());
 		factories.add(new FlowDiagramFactory());
 		// factories.add(new PSystemTreeFactory(DiagramType.JUNGLE));

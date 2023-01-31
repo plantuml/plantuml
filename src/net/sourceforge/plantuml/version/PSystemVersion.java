@@ -159,12 +159,13 @@ public class PSystemVersion extends PlainStringsDiagram {
 	public static PSystemVersion createShowVersion2(UmlSource source) {
 		final List<String> strings = new ArrayList<>();
 		strings.add("<b>PlantUML version " + Version.versionString() + "</b> (" + Version.compileTimeString() + ")");
+		// :: comment when WASM
 		strings.add("(" + License.getCurrent() + " source distribution)");
 		GraphvizCrash.checkOldVersionWarning(strings);
 		if (OptionFlags.ALLOW_INCLUDE) {
-			if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE) {
+			if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE)
 				strings.add("Loaded from " + Version.getJarPath());
-			}
+
 			if (OptionFlags.getInstance().isWord()) {
 				strings.add("Word Mode");
 				strings.add("Command Line: " + Run.getCommandLine());
@@ -179,16 +180,18 @@ public class PSystemVersion extends PlainStringsDiagram {
 
 		GraphvizUtils.addDotStatus(strings, true);
 		strings.add(" ");
-		for (String name : OptionPrint.interestingProperties()) {
+		for (String name : OptionPrint.interestingProperties())
 			strings.add(name);
-		}
-		for (String v : OptionPrint.interestingValues()) {
+
+		for (String v : OptionPrint.interestingValues())
 			strings.add(v);
-		}
+
+		// ::done
 
 		return new PSystemVersion(source, true, strings);
 	}
 
+	// :: comment when WASM
 	public static PSystemVersion createStdLib(UmlSource source) {
 		final List<String> strings = new ArrayList<>();
 		Stdlib.addInfoVersion(strings, true);
@@ -196,6 +199,7 @@ public class PSystemVersion extends PlainStringsDiagram {
 
 		return new PSystemVersion(source, true, strings);
 	}
+	// ::done
 
 	public static PSystemVersion createShowAuthors2(UmlSource source) {
 		// Duplicate in OptionPrint
@@ -221,6 +225,7 @@ public class PSystemVersion extends PlainStringsDiagram {
 		add(strings, "<u>Stdlib Icons</u>: tupadr3", withTag);
 		add(strings, "<u>Site design</u>: Raphael Cotisson", withTag);
 		add(strings, "<u>Logo</u>: Benjamin Croizet", withTag);
+		add(strings, "<u>Web Assembly</u>: Sakir Temel", withTag);
 
 		add(strings, " ", withTag);
 		add(strings, "https://plantuml.com", withTag);
@@ -229,19 +234,21 @@ public class PSystemVersion extends PlainStringsDiagram {
 	}
 
 	private static void add(List<String> result, String s, boolean withTag) {
-		if (withTag == false) {
+		if (withTag == false)
 			s = s.replaceAll("\\</?\\w+\\>", "");
-		}
+
 		result.add(s);
 
 	}
 
+	// ::comment when WASM
 	public static PSystemVersion createTestDot(UmlSource source) throws IOException {
 		final List<String> strings = new ArrayList<>();
 		strings.add(Version.fullDescription());
 		GraphvizUtils.addDotStatus(strings, true);
 		return new PSystemVersion(source, false, strings);
 	}
+	// ::done
 
 //	public static PSystemVersion createDumpStackTrace() throws IOException {
 //		final List<String> strings = new ArrayList<>();
@@ -253,6 +260,7 @@ public class PSystemVersion extends PlainStringsDiagram {
 //		return new PSystemVersion(false, strings);
 //	}
 
+	// ::comment when WASM
 	public static PSystemVersion createKeyDistributor(UmlSource source) throws IOException {
 		final LicenseInfo license = LicenseInfo.retrieveDistributor();
 		BufferedImage im = null;
@@ -268,6 +276,7 @@ public class PSystemVersion extends PlainStringsDiagram {
 		}
 		return new PSystemVersion(source, strings, im);
 	}
+	// ::done
 
 //	public static PSystemVersion createPath(UmlSource source) throws IOException {
 //		final List<String> strings = new ArrayList<>();

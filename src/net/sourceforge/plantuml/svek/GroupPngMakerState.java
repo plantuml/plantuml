@@ -42,8 +42,6 @@ import java.util.List;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.baraye.EntityImp;
 import net.sourceforge.plantuml.baraye.EntityUtils;
-import net.sourceforge.plantuml.baraye.IGroup;
-import net.sourceforge.plantuml.baraye.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.GroupHierarchy;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
@@ -68,29 +66,29 @@ import net.sourceforge.plantuml.ugraphic.color.HColor;
 public final class GroupPngMakerState {
 
 	private final ICucaDiagram diagram;
-	private final IGroup group;
+	private final EntityImp group;
 	private final StringBounder stringBounder;
 
 	class InnerGroupHierarchy implements GroupHierarchy {
 
-		public IGroup getRootGroup() {
+		public EntityImp getRootGroup() {
 			throw new UnsupportedOperationException();
 		}
 
-		public Collection<IGroup> getChildrenGroups(IGroup parent) {
-			if (EntityUtils.groupRoot(parent))
+		public Collection<EntityImp> getChildrenGroups(EntityImp parent) {
+			if (parent.getQuark().isRoot())
 				return diagram.getChildrenGroups(group);
 
 			return diagram.getChildrenGroups(parent);
 		}
 
-		public boolean isEmpty(IGroup g) {
+		public boolean isEmpty(EntityImp g) {
 			return diagram.isEmpty(g);
 		}
 
 	}
 
-	public GroupPngMakerState(ICucaDiagram diagram, IGroup group, StringBounder stringBounder) {
+	public GroupPngMakerState(ICucaDiagram diagram, EntityImp group, StringBounder stringBounder) {
 		this.diagram = diagram;
 		this.stringBounder = stringBounder;
 		this.group = group;
@@ -173,7 +171,7 @@ public final class GroupPngMakerState {
 
 	private IEntityImage buildImageForConcurrentState(DotData dotData) {
 		final List<IEntityImage> inners = new ArrayList<>();
-		for (ILeaf inner : dotData.getLeafs())
+		for (EntityImp inner : dotData.getLeafs())
 			inners.add(inner.getSvekImage());
 
 		return new CucaDiagramFileMakerSvek2InternalImage(inners, dotData.getTopParent().getConcurrentSeparator(),
@@ -182,11 +180,11 @@ public final class GroupPngMakerState {
 	}
 
 	private boolean containsOnlyConcurrentStates(DotData dotData) {
-		for (ILeaf leaf : dotData.getLeafs()) {
-			if (leaf instanceof IGroup == false)
+		for (EntityImp leaf : dotData.getLeafs()) {
+			if (leaf instanceof EntityImp == false)
 				return false;
 
-			if (((IGroup) leaf).getLeafType() != LeafType.STATE_CONCURRENT)
+			if (((EntityImp) leaf).getLeafType() != LeafType.STATE_CONCURRENT)
 				return false;
 
 		}

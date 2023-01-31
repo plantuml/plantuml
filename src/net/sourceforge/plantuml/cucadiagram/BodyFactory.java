@@ -41,7 +41,7 @@ import java.util.Set;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.LineBreakStrategy;
-import net.sourceforge.plantuml.baraye.ILeaf;
+import net.sourceforge.plantuml.baraye.EntityImp;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -64,12 +64,12 @@ public class BodyFactory {
 	}
 
 	public static TextBlock create1(HorizontalAlignment align, List<CharSequence> rawBody, ISkinParam skinParam,
-			Stereotype stereotype, ILeaf entity, Style style) {
+			Stereotype stereotype, EntityImp entity, Style style) {
 		return new BodyEnhanced1(align, rawBody, skinParam, entity, style);
 	}
 
 	public static TextBlock create2(HorizontalAlignment align, Display display, ISkinParam skinParam,
-			Stereotype stereotype, ILeaf entity, Style style) {
+			Stereotype stereotype, EntityImp entity, Style style) {
 		return new BodyEnhanced1(align, display, skinParam, entity, style);
 	}
 

@@ -47,7 +47,6 @@ import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
 import net.sourceforge.plantuml.flashcode.FlashCodeFactory;
-import net.sourceforge.plantuml.flashcode.FlashCodeUtils;
 import net.sourceforge.plantuml.fun.IconLoader;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.GraphicPosition;
@@ -69,15 +68,18 @@ import net.sourceforge.plantuml.version.Version;
 public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 
 	private final TextBlock text1;
-	private final BufferedImage flashCode;
 	private final String text;
+	// ::comment when WASM
+	private final BufferedImage flashCode;
 	private final boolean graphviz244onWindows;
+	// ::done
 
 	public GraphvizCrash(String text, boolean graphviz244onWindows, Throwable rootCause) {
 		this.text = text;
+		// ::comment when WASM
 		this.graphviz244onWindows = graphviz244onWindows;
-		final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();
-		this.flashCode = utils.exportFlashcode(text, Color.BLACK, Color.WHITE);
+		this.flashCode = FlashCodeFactory.getFlashCodeUtils().exportFlashcode(text, Color.BLACK, Color.WHITE);
+		// ::done
 		this.text1 = GraphicStrings.createBlackOnWhite(init(rootCause), IconLoader.getRandom(),
 				GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT);
 	}
@@ -147,16 +149,20 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 		strings.add(" ");
 		addProperties(strings);
 		strings.add(" ");
+		// ::comment when WASM
 		try {
 			final String dotVersion = GraphvizUtils.dotVersion();
 			strings.add("Default dot version: " + dotVersion);
 		} catch (Throwable e) {
 			strings.add("Cannot determine dot version: " + e.toString());
 		}
+		// ::done
 		pleaseGoTo(strings);
 		youShouldSendThisDiagram(strings);
+		// ::comment when WASM
 		if (flashCode != null)
 			addDecodeHint(strings);
+		// ::done
 
 		return strings;
 	}
@@ -183,8 +189,10 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 	}
 
 	public static void addProperties(final List<String> strings) {
+		// ::comment when WASM
 		strings.addAll(OptionPrint.interestingProperties());
 		strings.addAll(OptionPrint.interestingValues());
+		// ::done
 	}
 
 	public boolean isHidden() {
@@ -205,6 +213,7 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 
 	private TextBlock getMain() {
 		TextBlock result = text1;
+		// ::comment when WASM
 		if (flashCode != null) {
 			final UImage flash = new UImage(new PixelImage(flashCode, AffineTransformType.TYPE_NEAREST_NEIGHBOR))
 					.scale(3);
@@ -224,6 +233,7 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 			final UImage dotd = new UImage(new PixelImage(PSystemVersion.getDotd(), AffineTransformType.TYPE_BILINEAR));
 			result = TextBlockUtils.mergeTB(result, dotd, HorizontalAlignment.LEFT);
 		}
+		// ::done
 
 		return result;
 	}

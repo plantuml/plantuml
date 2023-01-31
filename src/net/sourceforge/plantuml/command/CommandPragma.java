@@ -78,23 +78,25 @@ public class CommandPragma extends SingleLineCommand2<TitledDiagram> {
 			}
 		} else {
 			system.getPragma().define(name, value);
-			if (name.equalsIgnoreCase("graphviz_dot") && value.equalsIgnoreCase("jdot")) {
+			// ::comment when WASM
+			if (name.equalsIgnoreCase("graphviz_dot") && value.equalsIgnoreCase("jdot"))
 				return CommandExecutionResult.error(
 						"This directive has been renamed to '!pragma layout smetana'. Please update your diagram.");
-			}
-			if (name.equalsIgnoreCase("graphviz_dot")) {
+
+			if (name.equalsIgnoreCase("graphviz_dot"))
 				return CommandExecutionResult.error("This directive has been renamed to '!pragma layout " + value
 						+ "'. Please update your diagram.");
-			}
-			if (name.equalsIgnoreCase("layout") && value.equalsIgnoreCase("smetana")) {
+
+			if (name.equalsIgnoreCase("layout") && value.equalsIgnoreCase("smetana"))
 				system.setUseSmetana(true);
-			}
-			if (name.equalsIgnoreCase("layout") && value.equalsIgnoreCase("elk")) {
+
+			if (name.equalsIgnoreCase("layout") && value.equalsIgnoreCase("elk"))
 				system.setUseElk(true);
-			}
-			if (name.equalsIgnoreCase("layout") && value.equalsIgnoreCase(GraphvizUtils.VIZJS)) {
+
+			if (name.equalsIgnoreCase("layout") && value.equalsIgnoreCase(GraphvizUtils.VIZJS))
 				system.getSkinParam().setUseVizJs(true);
-			}
+			// ::done
+
 		}
 		return CommandExecutionResult.ok();
 	}

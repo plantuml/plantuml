@@ -253,12 +253,13 @@ public class SequenceDiagram extends UmlDiagram {
 	private FileMaker getSequenceDiagramPngMaker(int index, FileFormatOption fileFormatOption) {
 
 		final FileFormat fileFormat = fileFormatOption.getFileFormat();
-
+		// ::comment when WASM
 		if (fileFormat == FileFormat.ATXT || fileFormat == FileFormat.UTXT)
 			return new SequenceDiagramTxtMaker(this, fileFormat);
 
 		if (fileFormat.name().startsWith("XMI"))
 			return new SequenceDiagramXmiMaker(this, fileFormat);
+		// ::done
 
 		if (modeTeoz())
 			return new SequenceDiagramFileMakerTeoz(this, skin2, fileFormatOption, index);
@@ -440,13 +441,17 @@ public class SequenceDiagram extends UmlDiagram {
 
 	@Override
 	public int getNbImages() {
+		// ::comment when WASM
 		try {
 			// The DEBUG StringBounder is ok just to compute the number of pages here.
 			return getSequenceDiagramPngMaker(1, new FileFormatOption(FileFormat.DEBUG)).getNbPages();
 		} catch (Throwable t) {
 			Logme.error(t);
+			// ::done
 			return 1;
+			// ::comment when WASM
 		}
+		// ::done
 	}
 
 	public void removeHiddenParticipants() {

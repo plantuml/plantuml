@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class PSystemOpenIconic extends PlainDiagram {
+	// ::remove file when WASM
 
 	private final String iconName;
 	private final double factor;

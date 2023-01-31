@@ -54,6 +54,7 @@ import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.utils.Log;
 
 public class LicenseInfo {
+	// ::comment when WASM
 
 	private final static Preferences prefs = Preferences.userNodeForPackage(LicenseInfo.class);
 	public final static LicenseInfo NONE = new LicenseInfo(LicenseType.NONE, 0, 0, null, null, null);
@@ -270,5 +271,6 @@ public class LicenseInfo {
 	public final String getContext() {
 		return context;
 	}
+	// ::done
 
 }

@@ -47,6 +47,7 @@ public class SpriteUtils {
 	private SpriteUtils() {
 	}
 
+	// ::comment when SPAM
 	public static String encodeColor(BufferedImage img, String name) {
 		final StringBuilder sb = new StringBuilder();
 		sb.append("sprite $" + name + " [" + img.getWidth() + "x" + img.getHeight() + "/color] {\n");
@@ -61,8 +62,8 @@ public class SpriteUtils {
 
 	public static String encode(BufferedImage img, String name, SpriteGrayLevel level) {
 		final StringBuilder sb = new StringBuilder();
-		sb.append("sprite $" + name + " [" + img.getWidth() + "x" + img.getHeight() + "/" + level.getNbColor()
-				+ "] {\n");
+		sb.append(
+				"sprite $" + name + " [" + img.getWidth() + "x" + img.getHeight() + "/" + level.getNbColor() + "] {\n");
 		final List<String> result = level.encode(img);
 		for (String s : result) {
 			sb.append(s);
@@ -89,5 +90,6 @@ public class SpriteUtils {
 		}
 		return sb.toString();
 	}
+	// ::done
 
 }

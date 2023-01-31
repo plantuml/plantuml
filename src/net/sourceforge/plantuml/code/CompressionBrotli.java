@@ -44,16 +44,15 @@ import net.sourceforge.plantuml.brotli.BrotliInputStream;
 import net.sourceforge.plantuml.log.Logme;
 
 public class CompressionBrotli implements Compression {
+	// ::remove file when WASM
 
 	public byte[] compress(byte[] in) {
 		throw new UnsupportedOperationException();
 	}
 
 	public ByteArray decompress(byte[] in) throws NoPlantumlCompressionException {
-		try (
-				final BrotliInputStream brotli = new BrotliInputStream(new ByteArrayInputStream(in));
-				final ByteArrayOutputStream result = new ByteArrayOutputStream();
-		) {
+		try (final BrotliInputStream brotli = new BrotliInputStream(new ByteArrayInputStream(in));
+				final ByteArrayOutputStream result = new ByteArrayOutputStream();) {
 			FileUtils.copyToStream(brotli, result);
 			return ByteArray.from(result.toByteArray());
 		} catch (IOException e) {

@@ -40,7 +40,8 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlMode;
-import net.sourceforge.plantuml.baraye.IEntity;
+import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Quark;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.classdiagram.command.CommandCreateClassMultilines;
 import net.sourceforge.plantuml.command.Command;
@@ -55,8 +56,6 @@ import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.cucadiagram.Code;
-import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkArg;
@@ -211,23 +210,25 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 
 	private CommandExecutionResult executeInternal(RegexResult line0, AbstractEntityDiagram diagram, Url url,
 			BlocLines strings) throws NoSuchColorException {
-
 		final String pos = line0.get("POSITION", 0);
-
-		final String idShort = line0.get("ENTITY", 0);
-		final IEntity cl1;
+		final String idShort = diagram.cleanIdForQuark(line0.get("ENTITY", 0));
+		final EntityImp cl1;
 		if (idShort == null) {
 			cl1 = diagram.getLastEntity();
 			if (cl1 == null)
 				return CommandExecutionResult.error("Nothing to note to");
 
 		} else {
-			final Ident ident = diagram.buildLeafIdent(idShort);
-			final Code code = diagram.buildCode(idShort);
-			if (diagram.isGroup(code))
-				cl1 = diagram.getGroup(code);
-			else
-				cl1 = diagram.getOrCreateLeaf(ident, code, null, null);
+			final Quark quark = diagram.quarkInContext(idShort, false);
+			cl1 = (EntityImp) quark.getData();
+			if (cl1 == null)
+				return CommandExecutionResult.error("Not known: " + idShort);
+//			final Quark ident = diagram.buildFromName(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(idShort));
+//			final Quark code = diagram.buildFromFullPath(idShort);
+//			if (diagram.isGroup(idShort))
+//				cl1 = diagram.getGroup(idShort);
+//			else
+//				cl1 = diagram.getOrCreateLeaf(ident, code, null, null);
 
 		}
 
@@ -249,9 +250,8 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 		}
 
 		final String tmp = diagram.getUniqueSequence("GMN");
-		final Ident idNewLong = diagram.buildLeafIdent(tmp);
-		final IEntity note = diagram.createLeaf(idNewLong, diagram.buildCode(tmp), strings.toDisplay(), LeafType.NOTE,
-				null);
+		final Quark quark = diagram.quarkInContext(tmp, false);
+		final EntityImp note = diagram.reallyCreateLeaf(quark, strings.toDisplay(), LeafType.NOTE, null);
 
 		if (stereotypeString != null)
 			note.setStereotype(stereotype);
@@ -266,18 +266,18 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 
 		final LinkType type = new LinkType(LinkDecor.NONE, LinkDecor.NONE).goDashed();
 		if (position == Position.RIGHT) {
-			link = new Link(diagram.getIEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(), cl1, note,
+			link = new Link(diagram.getEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(), cl1, note,
 					type, LinkArg.noDisplay(1));
 			link.setHorizontalSolitary(true);
 		} else if (position == Position.LEFT) {
-			link = new Link(diagram.getIEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(), note, cl1,
+			link = new Link(diagram.getEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(), note, cl1,
 					type, LinkArg.noDisplay(1));
 			link.setHorizontalSolitary(true);
 		} else if (position == Position.BOTTOM) {
-			link = new Link(diagram.getIEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(), cl1, note,
+			link = new Link(diagram.getEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(), cl1, note,
 					type, LinkArg.noDisplay(2));
 		} else if (position == Position.TOP) {
-			link = new Link(diagram.getIEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(), note, cl1,
+			link = new Link(diagram.getEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(), note, cl1,
 					type, LinkArg.noDisplay(2));
 		} else {
 			throw new IllegalArgumentException();

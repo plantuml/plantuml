@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.cucadiagram;
 
-import net.sourceforge.plantuml.baraye.ILeaf;
+import net.sourceforge.plantuml.baraye.EntityImp;
 
 public class HideOrShow2 {
 
@@ -47,7 +47,7 @@ public class HideOrShow2 {
 		return what + " (" + show + ")";
 	}
 
-	private boolean isApplyable(ILeaf leaf) {
+	private boolean isApplyable(EntityImp leaf) {
 		if (what.startsWith("$"))
 			return isApplyableTag(leaf, what.substring(1));
 
@@ -72,7 +72,7 @@ public class HideOrShow2 {
 		return what.equalsIgnoreCase("@unlinked");
 	}
 
-	private boolean isApplyableUnlinked(ILeaf leaf) {
+	private boolean isApplyableUnlinked(EntityImp leaf) {
 		if (leaf.isAloneAndUnlinked())
 			return true;
 
@@ -90,7 +90,7 @@ public class HideOrShow2 {
 		return false;
 	}
 
-	private boolean isApplyableTag(ILeaf leaf, String pattern) {
+	private boolean isApplyableTag(EntityImp leaf, String pattern) {
 		for (Stereotag tag : leaf.stereotags())
 			if (match(tag.getName(), pattern))
 				return true;
@@ -115,7 +115,7 @@ public class HideOrShow2 {
 		this.show = show;
 	}
 
-	public boolean apply(boolean hidden, ILeaf leaf) {
+	public boolean apply(boolean hidden, EntityImp leaf) {
 		if (isApplyable(leaf))
 			return !show;
 

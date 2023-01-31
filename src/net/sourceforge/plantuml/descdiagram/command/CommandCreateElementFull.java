@@ -41,9 +41,9 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlMode;
+import net.sourceforge.plantuml.baraye.EntityImp;
 import net.sourceforge.plantuml.baraye.EntityUtils;
-import net.sourceforge.plantuml.baraye.IEntity;
-import net.sourceforge.plantuml.baraye.ILeaf;
+import net.sourceforge.plantuml.baraye.Quark;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.classdiagram.command.CommandCreateClassMultilines;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -54,9 +54,7 @@ import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexOptional;
 import net.sourceforge.plantuml.command.regex.RegexOr;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.cucadiagram.Code;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Stereotag;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
@@ -228,25 +226,30 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 
 		}
 
-		final String idShort = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(codeRaw);
-		final Ident ident = diagram.buildLeafIdent(idShort);
-		final Code code = diagram.buildCode(idShort);
-		if (diagram.isGroup(code))
-			return CommandExecutionResult.error("This element (" + code.getName() + ") is already defined");
+//		final String idShort = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(codeRaw);
+//		final Quark ident = diagram.buildFromName(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(idShort));
+//		final Quark code = diagram.buildFromFullPath(idShort);
+		final Quark quark = diagram.quarkInContext(diagram.cleanIdForQuark(codeRaw), false);
+
+		if (diagram.isGroup(quark))
+			return CommandExecutionResult.error("This element (" + quark.getName() + ") is already defined");
 
 		String display = displayRaw;
 		if (display == null)
-			display = code.getName();
+			display = quark.getName();
 
 		display = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(display);
 		final String stereotype = arg.getLazzy("STEREOTYPE", 0);
-		if (existsWithBadType3(diagram, code, ident, type, usymbol))
-			return CommandExecutionResult.error("This element (" + code.getName() + ") is already defined");
+		if (existsWithBadType3(diagram, quark, type, usymbol))
+			return CommandExecutionResult.error("This element (" + quark.getName() + ") is already defined");
 
-		if ((type == LeafType.PORTIN || type == LeafType.PORTOUT) && EntityUtils.groupRoot(diagram.getCurrentGroup()))
+		if ((type == LeafType.PORTIN || type == LeafType.PORTOUT) && diagram.getCurrentGroup().getQuark().isRoot())
 			return CommandExecutionResult.error("Port can only be used inside an element and not at root level");
 
-		final IEntity entity = diagram.getOrCreateLeaf(ident, code, type, usymbol);
+		EntityImp entity = (EntityImp) quark.getData();
+		if (entity == null)
+			entity = diagram.reallyCreateLeaf(quark, Display.getWithNewlines(display), type, usymbol);
+
 		entity.setDisplay(Display.getWithNewlines(display));
 		entity.setUSymbol(usymbol);
 		if (stereotype != null)
@@ -278,12 +281,13 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 		return CommandExecutionResult.ok();
 	}
 
-	public static boolean existsWithBadType3(AbstractEntityDiagram diagram, Code code, Ident ident, LeafType type,
+	public static boolean existsWithBadType3(AbstractEntityDiagram diagram, Quark code, LeafType type,
 			USymbol usymbol) {
-		if (diagram.leafExist(code) == false)
+		if (code.getData() == null)
 			return false;
 
-		final ILeaf other = diagram.getLeaf(code);
+		// final ILeaf other = diagram.getLeafFromName(code.getName());
+		final EntityImp other = (EntityImp) code.getData();
 		if (other.getLeafType() != type)
 			return true;
 

@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.svek.image;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
-import net.sourceforge.plantuml.baraye.IEntity;
+import net.sourceforge.plantuml.baraye.EntityImp;
 import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UStroke;
@@ -48,7 +48,7 @@ public class EntityImageStateEmptyDescription extends EntityImageStateCommon {
 	final private static int MIN_WIDTH = 50;
 	final private static int MIN_HEIGHT = 40;
 
-	public EntityImageStateEmptyDescription(IEntity entity, ISkinParam skinParam) {
+	public EntityImageStateEmptyDescription(EntityImp entity, ISkinParam skinParam) {
 		super(entity, skinParam);
 
 	}

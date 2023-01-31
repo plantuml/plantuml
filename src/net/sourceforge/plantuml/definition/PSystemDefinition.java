@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class PSystemDefinition extends PlainDiagram implements UDrawable {
+	// ::remove folder when WASM
 
 	private final List<String> lines = new ArrayList<>();
 	private final String startLine;

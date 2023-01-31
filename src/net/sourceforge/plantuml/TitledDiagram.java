@@ -81,7 +81,9 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 
 	private final SkinParam skinParam;
 
+	// ::comment when WASM
 	private Animation animation;
+	// ::done
 
 	private final Pragma pragma = new Pragma();
 
@@ -252,6 +254,7 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 		return ClockwiseTopRightBottomLeft.same(10);
 	}
 
+	// ::comment when WASM
 	final public void setAnimation(Iterable<CharSequence> animationData) {
 //		try {
 		final AnimationDecoder animationDecoder = new AnimationDecoder(animationData);
@@ -264,6 +267,7 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 	final public Animation getAnimation() {
 		return animation;
 	}
+	// ::done
 
 	@Override
 	public ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) throws IOException {

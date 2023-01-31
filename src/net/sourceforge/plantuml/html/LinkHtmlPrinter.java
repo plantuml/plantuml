@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.html;
 import java.io.PrintWriter;
 
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.baraye.IEntity;
+import net.sourceforge.plantuml.baraye.EntityImp;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
@@ -49,7 +49,7 @@ public final class LinkHtmlPrinter {
 	// private final Entity entity;
 	private final boolean chiral;
 
-	public LinkHtmlPrinter(Link link, IEntity entity) {
+	public LinkHtmlPrinter(Link link, EntityImp entity) {
 		this.link = link;
 		if (link.getEntity1() == entity) {
 			this.chiral = false;
@@ -165,7 +165,7 @@ public final class LinkHtmlPrinter {
 		return ent1 + " " + decor1 + "-" + decor2 + " " + ent2;
 	}
 
-	static String htmlLink(IEntity ent) {
+	static String htmlLink(EntityImp ent) {
 		final StringBuilder sb = new StringBuilder();
 		sb.append("<a href=\"");
 		sb.append(urlOf(ent));
@@ -175,7 +175,7 @@ public final class LinkHtmlPrinter {
 		return sb.toString();
 	}
 
-	static String urlOf(IEntity ent) {
+	static String urlOf(EntityImp ent) {
 		if (ent.getLeafType() == LeafType.NOTE) {
 			throw new IllegalArgumentException();
 		}

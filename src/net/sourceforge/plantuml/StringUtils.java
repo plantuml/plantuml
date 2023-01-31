@@ -353,6 +353,7 @@ public class StringUtils {
 		return result;
 	}
 
+	// ::comment when WASM
 	public static int getWcWidth(Display stringsToDisplay) {
 		int result = 1;
 		for (CharSequence s : stringsToDisplay) {
@@ -366,6 +367,7 @@ public class StringUtils {
 		}
 		return result;
 	}
+	// ::done
 
 	public static int getHeight(List<? extends CharSequence> stringsToDisplay) {
 		return stringsToDisplay.size();

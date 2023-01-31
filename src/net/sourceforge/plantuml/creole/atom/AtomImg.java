@@ -48,7 +48,6 @@ import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.code.Base64Coder;
 import net.sourceforge.plantuml.creole.legacy.AtomTextUtils;
 import net.sourceforge.plantuml.flashcode.FlashCodeFactory;
-import net.sourceforge.plantuml.flashcode.FlashCodeUtils;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.ImgValign;
 import net.sourceforge.plantuml.graphic.StringBounder;
@@ -82,9 +81,11 @@ public class AtomImg extends AbstractAtom implements Atom {
 	}
 
 	public static Atom createQrcode(String flash, double scale) {
-		final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();
-		BufferedImage im = utils.exportFlashcode(flash, Color.BLACK, Color.WHITE);
+		BufferedImage im = null;
+		// :: comment when WASM
+		im = FlashCodeFactory.getFlashCodeUtils().exportFlashcode(flash, Color.BLACK, Color.WHITE);
 		if (im == null)
+			// ::done
 			im = new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB);
 
 		return new AtomImg(

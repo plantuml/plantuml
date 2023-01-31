@@ -54,10 +54,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import net.sourceforge.plantuml.Guillemet;
-import net.sourceforge.plantuml.baraye.EntityUtils;
-import net.sourceforge.plantuml.baraye.IEntity;
-import net.sourceforge.plantuml.baraye.IGroup;
-import net.sourceforge.plantuml.baraye.ILeaf;
+import net.sourceforge.plantuml.baraye.EntityImp;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
@@ -66,6 +63,7 @@ import net.sourceforge.plantuml.statediagram.StateDiagram;
 import net.sourceforge.plantuml.xml.XmlFactories;
 
 public class ScxmlStateDiagramStandard {
+	// ::remove folder when WASM
 
 	private final StateDiagram diagram;
 	private final Document document;
@@ -87,45 +85,45 @@ public class ScxmlStateDiagramStandard {
 
 		document.appendChild(scxml);
 
-		for (final IEntity ent : diagram.getLeafsvalues())
-			if (EntityUtils.groupRoot(ent.getParentContainer()))
+		for (final EntityImp ent : diagram.getLeafsvalues())
+			if (ent.getParentContainer().getQuark().isRoot())
 				scxml.appendChild(createState(ent));
 
-		for (IGroup ent : diagram.getGroups(false))
-			if (EntityUtils.groupRoot(ent.getParentContainer()))
+		for (EntityImp ent : diagram.getGroups(false))
+			if (ent.getParentContainer().getQuark().isRoot())
 				exportGroup(scxml, ent);
 
 	}
 
-	private Element exportGroup(Element dest, IGroup ent) {
+	private Element exportGroup(Element dest, EntityImp ent) {
 		final Element gr = createGroup(ent);
 		dest.appendChild(gr);
-		for (ILeaf leaf : ent.getLeafsDirect())
+		for (EntityImp leaf : ent.getLeafsDirect())
 			gr.appendChild(createState(leaf));
-		for (IGroup child : ent.getChildren())
+		for (EntityImp child : ent.getChildren())
 			exportGroup(gr, child);
 		return gr;
 	}
 
 	private String getInitial() {
-		for (final IEntity ent : diagram.getLeafsvalues())
+		for (final EntityImp ent : diagram.getLeafsvalues())
 			if (ent.getLeafType() == LeafType.CIRCLE_START)
 				return getId(ent);
 
 		return null;
 	}
 
-	private Element createGroup(IEntity entity) {
+	private Element createGroup(EntityImp entity) {
 		return createState(entity);
 	}
 
-	private Element createState(IEntity entity) {
+	private Element createState(EntityImp entity) {
 		final LeafType type = entity.getLeafType();
 
 		final Element state = document.createElement("state");
 		if (type == LeafType.NOTE) {
 			state.setAttribute("stereotype", "note");
-			state.setAttribute("id", entity.getCode().getName());
+			state.setAttribute("id", entity.getCode());
 			final Display display = entity.getDisplay();
 			final StringBuilder sb = new StringBuilder();
 			for (CharSequence s : display) {
@@ -163,7 +161,7 @@ public class ScxmlStateDiagramStandard {
 
 	}
 
-	private String getId(IEntity entity) {
+	private String getId(EntityImp entity) {
 		String result = entity.getDisplay().get(0).toString();
 		result = result.replaceAll("\\*", "");
 		return result;

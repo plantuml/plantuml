@@ -40,6 +40,7 @@ import net.sourceforge.plantuml.ugraphic.UParam;
 import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 
 public class DriverDotPathVdx implements UDriver<DotPath, VisioGraphics> {
+	// ::remove folder when WASM
 
 	public void draw(DotPath path, double x, double y, ColorMapper mapper, UParam param, VisioGraphics visio) {
 		visio.upath(x, y, path.toUPath());

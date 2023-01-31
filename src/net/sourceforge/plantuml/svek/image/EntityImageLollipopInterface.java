@@ -41,7 +41,7 @@ import java.util.Map;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
-import net.sourceforge.plantuml.baraye.ILeaf;
+import net.sourceforge.plantuml.baraye.EntityImp;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -77,7 +77,7 @@ public class EntityImageLollipopInterface extends AbstractEntityImage {
 		return new UStroke(1.5);
 	}
 
-	public EntityImageLollipopInterface(ILeaf entity, ISkinParam skinParam, SName sname) {
+	public EntityImageLollipopInterface(EntityImp entity, ISkinParam skinParam, SName sname) {
 		super(entity, skinParam);
 		this.sname = sname;
 

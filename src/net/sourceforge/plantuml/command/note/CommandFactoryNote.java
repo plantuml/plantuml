@@ -35,7 +35,8 @@
  */
 package net.sourceforge.plantuml.command.note;
 
-import net.sourceforge.plantuml.baraye.IEntity;
+import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Quark;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.classdiagram.command.CommandCreateClassMultilines;
 import net.sourceforge.plantuml.command.Command;
@@ -48,8 +49,6 @@ import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.cucadiagram.Code;
-import net.sourceforge.plantuml.cucadiagram.Ident;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Stereotag;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
@@ -136,13 +135,19 @@ public final class CommandFactoryNote implements SingleMultiFactoryCommand<Abstr
 	private CommandExecutionResult executeInternal(AbstractEntityDiagram diagram, RegexResult arg, BlocLines display)
 			throws NoSuchColorException {
 		final String idShort = arg.get("CODE", 0);
-		final Ident ident = diagram.buildLeafIdent(idShort);
-		final Code code = diagram.buildCode(idShort);
-		final boolean leafExist = diagram.leafExist(code);
-		if (leafExist)
-			return CommandExecutionResult.error("Note already created: " + code.getName());
+		final Quark quark = diagram.quarkInContext(diagram.cleanIdForQuark(idShort), false);
+//		final Quark ident = diagram.buildFromName(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(idShort));
+//		final Quark code = diagram.buildFromFullPath(idShort);
+//		final boolean leafExist = diagram.leafExist(code);
+		if (quark.getData() != null)
+			return CommandExecutionResult.error("Note already created: " + quark.getName());
 
-		final IEntity entity = diagram.createLeaf(ident, code, display.toDisplay(), LeafType.NOTE, null);
+		final EntityImp entity = diagram.reallyCreateLeaf(quark, display.toDisplay(), LeafType.NOTE, null);
+//		final Quark quark = diagram.getPlasma().getIfExistsFromName(idShort);
+//		if (quark != null && quark.getData() != null)
+//			entity = diagram.getFromName(idShort);
+//		else
+//			entity = diagram.reallyCreateLeaf(ident, display.toDisplay(), LeafType.NOTE, null);
 		assert entity != null;
 		final String s = arg.get("COLOR", 0);
 		entity.setSpecificColorTOBEREMOVED(ColorType.BACK,

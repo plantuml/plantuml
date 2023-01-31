@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.math.ScientificEquationSafe;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 public class StripeLatex implements StripeRaw {
-
+	// ::remove file when WASM
 	final private FontConfiguration fontConfiguration;
 	final private StringBuilder formula = new StringBuilder();
 	private AtomMath atom;

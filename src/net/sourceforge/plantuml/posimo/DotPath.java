@@ -282,21 +282,21 @@ public class DotPath implements UShape, Moveable {
 		double result = Double.MAX_VALUE;
 		for (XCubicCurve2D c : beziers) {
 			final double d1 = ref.distance(c.x1, c.y1);
-			if (d1 < result) 
+			if (d1 < result)
 				result = d1;
-			
+
 			final double d2 = ref.distance(c.x2, c.y2);
-			if (d2 < result) 
+			if (d2 < result)
 				result = d2;
-			
+
 			final double d3 = ref.distance(c.ctrlx1, c.ctrly1);
-			if (d3 < result) 
+			if (d3 < result)
 				result = d3;
-			
+
 			final double d4 = ref.distance(c.ctrlx2, c.ctrly2);
-			if (d4 < result) 
+			if (d4 < result)
 				result = d4;
-			
+
 		}
 		return result;
 
@@ -378,6 +378,7 @@ public class DotPath implements UShape, Moveable {
 
 	}
 
+	// ::comment when WASM
 	public void drawOk(EpsGraphics eps, double x, double y) {
 		// boolean first = true;
 		for (XCubicCurve2D bez : beziers) {
@@ -403,6 +404,18 @@ public class DotPath implements UShape, Moveable {
 		eps.closepathDot();
 	}
 
+	public void draw(BasicCharArea area, double pixelXPerChar, double pixelYPerChar) {
+		for (XCubicCurve2D bez : beziers)
+			if (bez.x1 == bez.x2)
+				area.drawVLine('|', (int) (bez.x1 / pixelXPerChar), (int) (bez.y1 / pixelYPerChar),
+						(int) (bez.y2 / pixelYPerChar));
+			else if (bez.y1 == bez.y2)
+				area.drawHLine('-', (int) (bez.y1 / pixelYPerChar), (int) (bez.x1 / pixelXPerChar),
+						(int) (bez.x2 / pixelXPerChar));
+
+	}
+	// ::done
+
 	public UPath toUPath() {
 		final UPath result = new UPath(comment, codeLine);
 		boolean start = true;
@@ -416,17 +429,6 @@ public class DotPath implements UShape, Moveable {
 
 		}
 		return result;
-	}
-
-	public void draw(BasicCharArea area, double pixelXPerChar, double pixelYPerChar) {
-		for (XCubicCurve2D bez : beziers)
-			if (bez.x1 == bez.x2)
-				area.drawVLine('|', (int) (bez.x1 / pixelXPerChar), (int) (bez.y1 / pixelYPerChar),
-						(int) (bez.y2 / pixelYPerChar));
-			else if (bez.y1 == bez.y2)
-				area.drawHLine('-', (int) (bez.y1 / pixelYPerChar), (int) (bez.x1 / pixelXPerChar),
-						(int) (bez.x2 / pixelXPerChar));
-
 	}
 
 	static String toString(XCubicCurve2D c) {

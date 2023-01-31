@@ -53,16 +53,18 @@ public class PSystemSudoku extends AbstractPSystem {
 	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
 			throws IOException {
 		final GraphicsSudoku sud = new GraphicsSudoku(sudoku);
-		if (fileFormat.getFileFormat() == FileFormat.EPS) {
+		// ::comment when WASM
+		if (fileFormat.getFileFormat() == FileFormat.EPS)
 			return sud.writeImageEps(os);
-		}
-		if (fileFormat.getFileFormat() == FileFormat.SVG) {
-			return sud.writeImageSvg(os);
-		}
+
 		if (fileFormat.getFileFormat() == FileFormat.LATEX
-				|| fileFormat.getFileFormat() == FileFormat.LATEX_NO_PREAMBLE) {
+				|| fileFormat.getFileFormat() == FileFormat.LATEX_NO_PREAMBLE)
 			return sud.writeImageLatex(os, fileFormat.getFileFormat());
-		}
+		// ::done
+
+		if (fileFormat.getFileFormat() == FileFormat.SVG)
+			return sud.writeImageSvg(os);
+
 		return sud.writeImagePng(os);
 	}
 

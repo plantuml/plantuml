@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.graphic.Splitter;
 import net.sourceforge.plantuml.math.ScientificEquationSafe;
 
 public class CommandCreoleLatex implements Command {
+	// ::remove file when WASM
 
 	@Override
 	public String startingChars() {

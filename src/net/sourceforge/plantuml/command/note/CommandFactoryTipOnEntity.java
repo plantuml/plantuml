@@ -40,7 +40,8 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlMode;
-import net.sourceforge.plantuml.baraye.IEntity;
+import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Quark;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -52,8 +53,7 @@ import net.sourceforge.plantuml.command.regex.IRegex;
 import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.command.regex.RegexResult;
-import net.sourceforge.plantuml.cucadiagram.Code;
-import net.sourceforge.plantuml.cucadiagram.Ident;
+import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkArg;
@@ -169,29 +169,39 @@ public final class CommandFactoryTipOnEntity implements SingleMultiFactoryComman
 		final String pos = line0.get("POSITION", 0);
 
 		final String idShort = line0.get("ENTITY", 0);
-		final Ident identShort = diagram.buildLeafIdent(idShort);
-		final Code codeShort = diagram.buildCode(idShort);
 		final String member = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(line0.get("ENTITY", 1));
-		if (codeShort == null) {
-			assert false;
+		
+		final Quark quark = diagram.quarkInContext(idShort, false);
+		final EntityImp cl1 = (EntityImp) quark.getData();
+		if (cl1 == null) 
 			return CommandExecutionResult.error("Nothing to note to");
-		}
-		final IEntity cl1 = diagram.getOrCreateLeaf(identShort, codeShort, null, null);
+		
+		
+//		final Quark identShort = diagram.buildFromName(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(idShort));
+//		final Quark codeShort = diagram.buildFromFullPath(idShort);
+//		if (codeShort == null) {
+//			assert false;
+//			return CommandExecutionResult.error("Nothing to note to");
+//		}
+//		final IEntity cl1 = diagram.getOrCreateLeaf(identShort, codeShort, null, null);
 		final Position position = Position.valueOf(StringUtils.goUpperCase(pos))
 				.withRankdir(diagram.getSkinParam().getRankdir());
 
-		final Ident identTip = diagram.buildLeafIdent(idShort + "$$$" + position.name());
-		IEntity tips = diagram.getLeafStrict(identTip);
+		final String tmp = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(idShort + "$$$" + position.name());
+		final Quark identTip = diagram.quarkInContext(tmp, false);
+		EntityImp tips = (EntityImp) identTip.getData();
+		// final Quark identTip = diagram.buildFromName(tmp);
+		//IEntity tips = diagram.getLeafFromName(idShort + "$$$" + position.name());
 		if (tips == null) {
-			tips = diagram.getOrCreateLeaf(identTip, identTip.toCode(diagram), LeafType.TIPS, null);
+			tips = diagram.reallyCreateLeaf(identTip, Display.getWithNewlines(""), LeafType.TIPS, null);
 			final LinkType type = new LinkType(LinkDecor.NONE, LinkDecor.NONE).getInvisible();
 			final Link link;
 			if (position == Position.RIGHT)
-				link = new Link(diagram.getIEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(), cl1,
-						(IEntity) tips, type, LinkArg.noDisplay(1));
+				link = new Link(diagram.getEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(), cl1,
+						(EntityImp) tips, type, LinkArg.noDisplay(1));
 			else
-				link = new Link(diagram.getIEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(),
-						(IEntity) tips, cl1, type, LinkArg.noDisplay(1));
+				link = new Link(diagram.getEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(),
+						(EntityImp) tips, cl1, type, LinkArg.noDisplay(1));
 
 			diagram.addLink(link);
 		}

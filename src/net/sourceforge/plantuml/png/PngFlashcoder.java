@@ -43,6 +43,7 @@ import java.util.List;
 import net.sourceforge.plantuml.ugraphic.UAntiAliasing;
 
 public class PngFlashcoder {
+	// ::remove file when WASM
 
 	private final List<BufferedImage> flashcodes;
 

@@ -86,7 +86,9 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> implements EnsureV
 	private List<Url> urls = new ArrayList<>();
 	private Set<Url> allUrls = new HashSet<>();
 
+	// ::comment when WASM
 	private final boolean hasAffineTransform;
+	// ::done
 
 	public final Set<Url> getAllUrlsEncountered() {
 		return Collections.unmodifiableSet(allUrls);
@@ -108,7 +110,9 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> implements EnsureV
 
 	private UGraphicG2d(UGraphicG2d other) {
 		super(other);
+		// ::comment when WASM
 		this.hasAffineTransform = other.hasAffineTransform;
+		// ::done
 		this.dpiFactor = other.dpiFactor;
 		this.bufferedImage = other.bufferedImage;
 		this.urls = other.urls;
@@ -119,30 +123,46 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> implements EnsureV
 
 	public UGraphicG2d(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder, Graphics2D g2d,
 			double dpiFactor) {
+		// ::comment when WASM
 		this(defaultBackground, colorMapper, stringBounder, g2d, dpiFactor, null, 0, 0);
+		// ::done
+		// ::uncomment when WASM
+		// this(defaultBackground, colorMapper, stringBounder, g2d, dpiFactor, 0, 0);
+		// ::done
 	}
 
+	// ::comment when WASM
 	public UGraphicG2d(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder, Graphics2D g2d,
 			double dpiFactor, AffineTransformation affineTransform, double dx, double dy) {
+		// ::done
+		// ::uncomment when WASM
+		// public UGraphicG2d(HColor defaultBackground, ColorMapper colorMapper,
+		// StringBounder stringBounder, Graphics2D g2d,
+		// double dpiFactor, double dx, double dy) {
+		// ::done
 		super(defaultBackground, colorMapper, stringBounder, g2d);
-		this.hasAffineTransform = affineTransform != null;
 		this.dpiFactor = dpiFactor;
 		if (dpiFactor != 1.0)
 			g2d.scale(dpiFactor, dpiFactor);
 
+		// ::comment when WASM
+		this.hasAffineTransform = affineTransform != null;
 		if (this.hasAffineTransform) {
 			if (dx != 0 || dy != 0)
 				getGraphicObject().transform(AffineTransform.getTranslateInstance(dx, dy));
 			getGraphicObject().transform(affineTransform.getAffineTransform());
 		}
+		// ::done
 		register(dpiFactor);
 	}
 
 	private void register(double dpiFactor) {
 		registerDriver(URectangle.class, new DriverRectangleG2d(dpiFactor, this));
+		// ::comment when SPAM
 		if (this.hasAffineTransform || dpiFactor != 1.0)
 			registerDriver(UText.class, new DriverTextAsPathG2d(this, getStringBounder()));
 		else
+			// ::done
 			registerDriver(UText.class, new DriverTextG2d(this, getStringBounder()));
 
 		registerDriver(ULine.class, new DriverLineG2d(dpiFactor));

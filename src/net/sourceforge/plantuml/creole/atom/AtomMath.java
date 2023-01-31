@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.ugraphic.color.HColorSimple;
 
 public class AtomMath extends AbstractAtom implements Atom {
+	// ::remove file when WASM
 
 	private final ScientificEquationSafe math;
 	private final HColor foreground;

@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.cucadiagram.dot;
 
 public interface GraphvizVersion {
+	// ::comment when WASM
 	public boolean useShieldForQuantifier();
 
 	public boolean useProtectionWhenThereALinkFromOrToGroup();
@@ -43,7 +44,8 @@ public interface GraphvizVersion {
 	public boolean useXLabelInsteadOfLabel();
 
 	public boolean isVizjs();
-	
+
 	public boolean ignoreHorizontalLinks();
+	// ::done
 
 }

@@ -52,10 +52,8 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import net.sourceforge.plantuml.baraye.IEntity;
-import net.sourceforge.plantuml.baraye.IGroup;
+import net.sourceforge.plantuml.baraye.EntityImp;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.cucadiagram.GroupRoot;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.statediagram.StateDiagram;
@@ -100,14 +98,14 @@ public class XmiStateDiagram implements XmlDiagramTransformer {
 		this.ownedElement = document.createElement("UML:Namespace.ownedElement");
 		model.appendChild(ownedElement);
 
-		for (final IGroup gr : diagram.getGroups(false)) {
-			if (gr.getParentContainer() instanceof GroupRoot) {
+		for (final EntityImp gr : diagram.getGroups(false)) {
+			if (gr.getParentContainer().instanceofGroupRoot()) {
 				addState(gr, ownedElement);
 			}
 		}
 
-		for (final IEntity ent : diagram.getLeafsvalues()) {
-			if (ent.getParentContainer() instanceof GroupRoot) {
+		for (final EntityImp ent : diagram.getLeafsvalues()) {
+			if (ent.getParentContainer().instanceofGroupRoot()) {
 				addState(ent, ownedElement);
 			}
 		}
@@ -117,15 +115,15 @@ public class XmiStateDiagram implements XmlDiagramTransformer {
 		}
 	}
 
-	private void addState(final IEntity tobeAdded, Element container) {
+	private void addState(final EntityImp tobeAdded, Element container) {
 		final Element elementState = createEntityNode(tobeAdded);
 		container.appendChild(elementState);
-		for (final IEntity ent : diagram.getGroups(false)) {
+		for (final EntityImp ent : diagram.getGroups(false)) {
 			if (ent.getParentContainer() == tobeAdded) {
 				addState(ent, elementState);
 			}
 		}
-		for (final IEntity ent : diagram.getLeafsvalues()) {
+		for (final EntityImp ent : diagram.getLeafsvalues()) {
 			if (ent.getParentContainer() == tobeAdded) {
 				addState(ent, elementState);
 			}
@@ -194,7 +192,7 @@ public class XmiStateDiagram implements XmlDiagramTransformer {
 
 	}
 
-	private Element createEntityNode(IEntity entity) {
+	private Element createEntityNode(EntityImp entity) {
 		// <UML:Class xmi.id="UMLClass.5" name="Class1" visibility="public"
 		// isSpecification="false"
 		// namespace="UMLModel.4" isRoot="false" isLeaf="false"

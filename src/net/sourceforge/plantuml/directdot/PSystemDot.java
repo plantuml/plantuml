@@ -57,6 +57,7 @@ import net.sourceforge.plantuml.graphic.GraphicStrings;
 import net.sourceforge.plantuml.graphic.TextBlock;
 
 public class PSystemDot extends AbstractPSystem {
+	// ::remove folder when WASM
 
 	private final String data;
 

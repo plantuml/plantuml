@@ -46,7 +46,7 @@ import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineBreakStrategy;
-import net.sourceforge.plantuml.baraye.ILeaf;
+import net.sourceforge.plantuml.baraye.EntityImp;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.style.Style;
@@ -55,7 +55,7 @@ public class BodierMap implements Bodier {
 
 	private final List<CharSequence> rawBody = new ArrayList<>();
 	private final Map<String, String> map = new LinkedHashMap<String, String>();
-	private ILeaf leaf;
+	private EntityImp leaf;
 
 	@Override
 	public void muteClassToObject() {
@@ -66,7 +66,7 @@ public class BodierMap implements Bodier {
 	}
 
 	@Override
-	public void setLeaf(ILeaf leaf) {
+	public void setLeaf(EntityImp leaf) {
 		this.leaf = Objects.requireNonNull(leaf);
 
 	}

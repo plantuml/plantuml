@@ -78,10 +78,12 @@ public abstract class AbstractPSystem implements Diagram {
 		toAppend.append(Version.versionString());
 		toAppend.append("(" + Version.compileTimeString() + ")\n");
 		toAppend.append("(" + License.getCurrent() + " source distribution)\n");
+		// ::comment when WASM
 		for (String name : OptionPrint.interestingProperties()) {
 			toAppend.append(name);
 			toAppend.append(BackSlash.CHAR_NEWLINE);
 		}
+		// ::done
 		return toAppend.toString();
 	}
 
@@ -178,10 +180,12 @@ public abstract class AbstractPSystem implements Diagram {
 //			}
 			return exportDiagramNow(os, index, fileFormatOption);
 		} finally {
-			if (OptionFlags.getInstance().isEnableStats()) {
+			// ::comment when WASM
+			if (OptionFlags.getInstance().isEnableStats())
 				StatsUtilsIncrement.onceMoreGenerate(System.currentTimeMillis() - now, getClass(),
 						fileFormatOption.getFileFormat());
-			}
+
+			// ::done
 		}
 	}
 

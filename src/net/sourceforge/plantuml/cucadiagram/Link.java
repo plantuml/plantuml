@@ -41,13 +41,9 @@ import net.sourceforge.plantuml.Hideable;
 import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.Removeable;
-import net.sourceforge.plantuml.SpecificBackcolorable;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.baraye.EntityImp;
-import net.sourceforge.plantuml.baraye.IEntity;
-import net.sourceforge.plantuml.baraye.IGroup;
-import net.sourceforge.plantuml.baraye.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.entity.IEntityFactory;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.HorizontalAlignment;
@@ -67,8 +63,8 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 		return styleBuilder;
 	}
 
-	final private IEntity cl1;
-	final private IEntity cl2;
+	final private EntityImp cl1;
+	final private EntityImp cl2;
 
 	private String port1;
 	private String port2;
@@ -113,7 +109,7 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 		return new UComment("link " + getEntity1().getCodeGetName() + " to " + getEntity2().getCodeGetName());
 	}
 
-	public Link(IEntityFactory entityFactory, StyleBuilder styleBuilder, IEntity cl1, IEntity cl2, LinkType type,
+	public Link(IEntityFactory entityFactory, StyleBuilder styleBuilder, EntityImp cl1, EntityImp cl2, LinkType type,
 			LinkArg linkArg) {
 		if (linkArg.getLength() < 1)
 			throw new IllegalArgumentException();
@@ -177,7 +173,7 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 		this.invis = invis;
 	}
 
-	public boolean isBetween(IEntity cl1, IEntity cl2) {
+	public boolean isBetween(EntityImp cl1, EntityImp cl2) {
 		if (cl1.equals(this.cl1) && cl2.equals(this.cl2))
 			return true;
 
@@ -192,31 +188,23 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 		return super.toString() + " {" + linkArg.getLength() + "} " + cl1 + "-->" + cl2;
 	}
 
-	public SpecificBackcolorable getZEntity1() {
+	public EntityImp getEntity1() {
 		return cl1;
 	}
 
-	public SpecificBackcolorable getZEntity2() {
-		return cl2;
-	}
-
-	public IEntity getEntity1() {
-		return cl1;
-	}
-
-	public IEntity getEntity2() {
+	public EntityImp getEntity2() {
 		return cl2;
 	}
 
 	public EntityPort getEntityPort1(Bibliotekon bibliotekon) {
-		return getEntityPort((ILeaf) cl1, port1, bibliotekon);
+		return getEntityPort(cl1, port1, bibliotekon);
 	}
 
 	public EntityPort getEntityPort2(Bibliotekon bibliotekon) {
-		return getEntityPort((ILeaf) cl2, port2, bibliotekon);
+		return getEntityPort(cl2, port2, bibliotekon);
 	}
 
-	private EntityPort getEntityPort(ILeaf leaf, String port, Bibliotekon bibliotekon) {
+	private EntityPort getEntityPort(EntityImp leaf, String port, Bibliotekon bibliotekon) {
 		if (leaf.getEntityPosition().usePortP())
 			return EntityPort.forPort(bibliotekon.getNodeUid(leaf));
 		return EntityPort.create(bibliotekon.getNodeUid(leaf), port);
@@ -242,11 +230,11 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 		return result;
 	}
 
-	private boolean isReallyGroup(IEntity ent) {
+	private boolean isReallyGroup(EntityImp ent) {
 		if (ent.isGroup() == false)
 			return false;
 
-		final IGroup group = (IGroup) ent;
+		final EntityImp group = (EntityImp) ent;
 		return group.getChildren().size() + group.getLeafsDirect().size() > 0;
 	}
 
@@ -277,7 +265,7 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 		return result;
 	}
 
-	private boolean isLollipopInterfaceEye(IEntity ent) {
+	private boolean isLollipopInterfaceEye(EntityImp ent) {
 		return ent.getUSymbol() instanceof USymbolInterface;
 	}
 
@@ -342,7 +330,7 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 		return false;
 	}
 
-	public boolean contains(IEntity entity) {
+	public boolean contains(EntityImp entity) {
 		if (isSame(getEntity1(), entity))
 			return true;
 		if (isSame(getEntity2(), entity))
@@ -351,17 +339,11 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 		return false;
 	}
 
-	static private boolean isSame(IEntity a, IEntity b) {
-		if (a == b)
-			return true;
-		if (((EntityImp) a).getOriginalGroup() == b)
-			return true;
-		if (((EntityImp) b).getOriginalGroup() == a)
-			return true;
-		return false;
+	static private boolean isSame(EntityImp a, EntityImp b) {
+		return a == b;
 	}
 
-	public IEntity getOther(IEntity entity) {
+	public EntityImp getOther(EntityImp entity) {
 		if (isSame(getEntity1(), entity))
 			return getEntity2();
 
@@ -510,10 +492,10 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 		this.port1 = port1;
 		this.port2 = port2;
 		if (port1 != null)
-			((ILeaf) cl1).addPortShortName(port1);
+			((EntityImp) cl1).addPortShortName(port1);
 
 		if (port2 != null)
-			((ILeaf) cl2).addPortShortName(port2);
+			((EntityImp) cl2).addPortShortName(port2);
 
 	}
 

@@ -52,6 +52,7 @@ import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.SpriteContainer;
 import net.sourceforge.plantuml.UrlBuilder;
 import net.sourceforge.plantuml.UrlMode;
+import net.sourceforge.plantuml.baraye.Quark;
 import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.command.regex.MyPattern;
 import net.sourceforge.plantuml.command.regex.Pattern2;
@@ -102,6 +103,8 @@ public class Display implements Iterable<CharSequence> {
 //	}
 
 	public boolean equalsLike(Display other) {
+		if (isNull(this))
+			return isNull(other);
 		return this.displayData.equals(other.displayData);
 	}
 
@@ -197,7 +200,7 @@ public class Display implements Iterable<CharSequence> {
 		return new Display(true, other, null, false, CreoleMode.FULL);
 	}
 
-	public static Display getWithNewlines(Code s) {
+	public static Display getWithNewlines(Quark s) {
 		return getWithNewlines(s.getName());
 	}
 

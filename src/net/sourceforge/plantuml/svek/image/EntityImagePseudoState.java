@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.svek.image;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
-import net.sourceforge.plantuml.baraye.ILeaf;
+import net.sourceforge.plantuml.baraye.EntityImp;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -63,7 +63,7 @@ public class EntityImagePseudoState extends AbstractEntityImage {
 	private final TextBlock desc;
 	private final SName sname;
 
-	public EntityImagePseudoState(ILeaf entity, ISkinParam skinParam, SName sname) {
+	public EntityImagePseudoState(EntityImp entity, ISkinParam skinParam, SName sname) {
 		this(entity, skinParam, "H", sname);
 	}
 
@@ -75,7 +75,7 @@ public class EntityImagePseudoState extends AbstractEntityImage {
 		return StyleSignatureBasic.of(SName.root, SName.element, sname, SName.diamond);
 	}
 
-	public EntityImagePseudoState(ILeaf entity, ISkinParam skinParam, String historyText, SName sname) {
+	public EntityImagePseudoState(EntityImp entity, ISkinParam skinParam, String historyText, SName sname) {
 		super(entity, skinParam);
 		this.sname = sname;
 		final Stereotype stereotype = entity.getStereotype();

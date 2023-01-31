@@ -93,9 +93,11 @@ public class Url implements EnsureVisible {
 	}
 
 	public String getCoords(double scale) {
-		if (DotMaker2.isJunit() && visible.getCoords(1.0).contains("0,0,0,0")) {
+		// ::comment when WASM
+		if (DotMaker2.isJunit() && visible.getCoords(1.0).contains("0,0,0,0"))
 			throw new IllegalStateException(toString());
-		}
+		// ::done
+
 		return visible.getCoords(scale);
 	}
 

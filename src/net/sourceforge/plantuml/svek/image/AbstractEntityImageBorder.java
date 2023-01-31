@@ -39,7 +39,7 @@ package net.sourceforge.plantuml.svek.image;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
-import net.sourceforge.plantuml.baraye.ILeaf;
+import net.sourceforge.plantuml.baraye.EntityImp;
 import net.sourceforge.plantuml.cucadiagram.EntityPosition;
 import net.sourceforge.plantuml.cucadiagram.Rankdir;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
@@ -63,12 +63,12 @@ public abstract class AbstractEntityImageBorder extends AbstractEntityImage {
 	protected abstract StyleSignatureBasic getSignature();
 
 	final protected Style getStyle() {
-		final ILeaf leaf = (ILeaf) getEntity();
+		final EntityImp leaf = (EntityImp) getEntity();
 		final Stereotype stereotype = leaf.getStereotype();
 		return getSignature().withTOBECHANGED(stereotype).getMergedStyle(getSkinParam().getCurrentStyleBuilder());
 	}
 
-	AbstractEntityImageBorder(ILeaf leaf, ISkinParam skinParam, Cluster parent, Bibliotekon bibliotekon,
+	AbstractEntityImageBorder(EntityImp leaf, ISkinParam skinParam, Cluster parent, Bibliotekon bibliotekon,
 			FontParam fontParam) {
 		super(leaf, skinParam);
 
@@ -82,7 +82,7 @@ public abstract class AbstractEntityImageBorder extends AbstractEntityImage {
 	}
 
 	protected final TextBlock getDesc() {
-		final ILeaf leaf = (ILeaf) getEntity();
+		final EntityImp leaf = (EntityImp) getEntity();
 		final FontConfiguration fc = FontConfiguration.create(getSkinParam(), getStyle());
 		return leaf.getDisplay().create(fc, HorizontalAlignment.CENTER, getSkinParam());
 	}

@@ -47,9 +47,7 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.Pragma;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.baraye.EntityFactory;
-import net.sourceforge.plantuml.baraye.IEntity;
-import net.sourceforge.plantuml.baraye.IGroup;
-import net.sourceforge.plantuml.baraye.ILeaf;
+import net.sourceforge.plantuml.baraye.EntityImp;
 import net.sourceforge.plantuml.cucadiagram.EntityPortion;
 import net.sourceforge.plantuml.cucadiagram.GroupHierarchy;
 import net.sourceforge.plantuml.cucadiagram.Link;
@@ -59,12 +57,12 @@ import net.sourceforge.plantuml.svek.DotMode;
 final public class DotData implements PortionShower {
 
 	final private List<Link> links;
-	final private Collection<ILeaf> leafs;
+	final private Collection<EntityImp> leafs;
 	final private UmlDiagramType umlDiagramType;
 	final private ISkinParam skinParam;
 	// final private Rankdir rankdir;
 	final private GroupHierarchy groupHierarchy;
-	final private IGroup topParent;
+	final private EntityImp topParent;
 	final private PortionShower portionShower;
 	final private boolean isHideEmptyDescriptionForState;
 	final private DotMode dotMode;
@@ -77,7 +75,7 @@ final public class DotData implements PortionShower {
 		return entityFactory;
 	}
 
-	public DotData(IGroup topParent, List<Link> links, Collection<ILeaf> leafs, UmlDiagramType umlDiagramType,
+	public DotData(EntityImp topParent, List<Link> links, Collection<EntityImp> leafs, UmlDiagramType umlDiagramType,
 			ISkinParam skinParam, GroupHierarchy groupHierarchy, PortionShower portionShower,
 			EntityFactory entityFactory, boolean isHideEmptyDescriptionForState, DotMode dotMode,
 			String namespaceSeparator, Pragma pragma) {
@@ -96,11 +94,11 @@ final public class DotData implements PortionShower {
 		this.entityFactory = entityFactory;
 	}
 
-	public DotData(IGroup topParent, List<Link> links, Collection<ILeaf> leafs, UmlDiagramType umlDiagramType,
+	public DotData(EntityImp topParent, List<Link> links, Collection<EntityImp> leafs, UmlDiagramType umlDiagramType,
 			ISkinParam skinParam, GroupHierarchy groupHierarchy, EntityFactory entityFactory,
 			boolean isHideEmptyDescriptionForState, DotMode dotMode, String namespaceSeparator, Pragma pragma) {
 		this(topParent, links, leafs, umlDiagramType, skinParam, groupHierarchy, new PortionShower() {
-			public boolean showPortion(EntityPortion portion, IEntity entity) {
+			public boolean showPortion(EntityPortion portion, EntityImp entity) {
 				return true;
 			}
 		}, entityFactory, isHideEmptyDescriptionForState, dotMode, namespaceSeparator, pragma);
@@ -122,23 +120,23 @@ final public class DotData implements PortionShower {
 		return links;
 	}
 
-	public Collection<ILeaf> getLeafs() {
+	public Collection<EntityImp> getLeafs() {
 		return leafs;
 	}
 
-	public final IGroup getTopParent() {
+	public final EntityImp getTopParent() {
 		return topParent;
 	}
 
-	public boolean isEmpty(IGroup g) {
+	public boolean isEmpty(EntityImp g) {
 		return groupHierarchy.isEmpty(g);
 	}
 
-	public boolean showPortion(EntityPortion portion, IEntity entity) {
+	public boolean showPortion(EntityPortion portion, EntityImp entity) {
 		return portionShower.showPortion(portion, entity);
 	}
 
-	public IGroup getRootGroup() {
+	public EntityImp getRootGroup() {
 		return entityFactory.getRootGroup();
 	}
 
@@ -188,7 +186,7 @@ final public class DotData implements PortionShower {
 						some.add(link);
 					}
 				}
-				final ILeaf leaf = getLeaf(key);
+				final EntityImp leaf = getLeaf(key);
 				final Neighborhood neighborhood = new Neighborhood(leaf, some, getLinksOfThisLeaf(leaf));
 				leaf.setNeighborhood(neighborhood);
 			}
@@ -205,7 +203,7 @@ final public class DotData implements PortionShower {
 		}
 	}
 
-	private List<Link> getLinksOfThisLeaf(ILeaf leaf) {
+	private List<Link> getLinksOfThisLeaf(EntityImp leaf) {
 		final List<Link> result = new ArrayList<>();
 		for (Link link : links) {
 			if (link.contains(leaf)) {
@@ -215,8 +213,8 @@ final public class DotData implements PortionShower {
 		return result;
 	}
 
-	private ILeaf getLeaf(String key) {
-		for (ILeaf entity : leafs) {
+	private EntityImp getLeaf(String key) {
+		for (EntityImp entity : leafs) {
 			if (entity.getUid().equals(key)) {
 				return entity;
 			}

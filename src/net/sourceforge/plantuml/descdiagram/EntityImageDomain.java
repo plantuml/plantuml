@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
-import net.sourceforge.plantuml.baraye.ILeaf;
+import net.sourceforge.plantuml.baraye.EntityImp;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.FontConfiguration;
@@ -69,7 +69,7 @@ public class EntityImageDomain extends AbstractEntityImage {
 	final private TextBlock stereo;
 	final private Url url;
 
-	public EntityImageDomain(ILeaf entity, ISkinParam skinParam, char typeLetter) {
+	public EntityImageDomain(EntityImp entity, ISkinParam skinParam, char typeLetter) {
 		super(entity, skinParam);
 		final Stereotype stereotype = entity.getStereotype();
 		FontConfiguration fc = FontConfiguration.create(getSkinParam(), FontParam.DESIGNED_DOMAIN, stereotype);

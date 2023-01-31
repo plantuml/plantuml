@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
-import net.sourceforge.plantuml.baraye.ILeaf;
+import net.sourceforge.plantuml.baraye.EntityImp;
 import net.sourceforge.plantuml.creole.Stencil;
 import net.sourceforge.plantuml.cucadiagram.BodyFactory;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -83,7 +83,7 @@ public class EntityImageUseCase extends AbstractEntityImage {
 
 	final private Url url;
 
-	public EntityImageUseCase(ILeaf entity, ISkinParam skinParam2, PortionShower portionShower) {
+	public EntityImageUseCase(EntityImp entity, ISkinParam skinParam2, PortionShower portionShower) {
 		super(entity, entity.getColors().mute(skinParam2));
 		final Stereotype stereotype = entity.getStereotype();
 
