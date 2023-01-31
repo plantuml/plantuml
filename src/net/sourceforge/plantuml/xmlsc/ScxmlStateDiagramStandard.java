@@ -55,6 +55,7 @@ import org.w3c.dom.Element;
 
 import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Quark;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
@@ -162,9 +163,8 @@ public class ScxmlStateDiagramStandard {
 	}
 
 	private String getId(EntityImp entity) {
-		String result = entity.getDisplay().get(0).toString();
-		result = result.replaceAll("\\*", "");
-		return result;
+		final Quark quark = entity.getQuark();
+		return quark.getName().replaceAll("\\*", "");
 	}
 
 	public void transformerXml(OutputStream os) throws TransformerException, ParserConfigurationException {
