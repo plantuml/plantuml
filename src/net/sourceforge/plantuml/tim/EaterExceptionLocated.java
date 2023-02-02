@@ -36,7 +36,7 @@ package net.sourceforge.plantuml.tim;
 
 import java.util.Objects;
 
-import net.sourceforge.plantuml.utils.StringLocated;
+import net.sourceforge.plantuml.text.StringLocated;
 
 public class EaterExceptionLocated extends Exception {
 

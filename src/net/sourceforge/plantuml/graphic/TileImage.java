@@ -39,11 +39,12 @@ import java.awt.image.BufferedImage;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.UImage;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.ugraphic.AffineTransformType;
 import net.sourceforge.plantuml.ugraphic.PixelImage;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.UImage;
-import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class TileImage extends AbstractTextBlock implements TextBlock {
 

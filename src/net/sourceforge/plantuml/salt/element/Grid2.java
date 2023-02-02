@@ -37,9 +37,9 @@ package net.sourceforge.plantuml.salt.element;
 
 import java.util.List;
 
+import net.sourceforge.plantuml.klimt.ULine;
+import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.ULine;
-import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class Grid2 {
 

@@ -47,15 +47,15 @@ import net.sourceforge.plantuml.activitydiagram3.gtile.Gtile;
 import net.sourceforge.plantuml.activitydiagram3.gtile.GtileGroup;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class InstructionGroup extends AbstractInstruction implements Instruction, InstructionCollection {
 
@@ -90,11 +90,13 @@ public class InstructionGroup extends AbstractInstruction implements Instruction
 		return list.add(ins);
 	}
 
+	// ::comment when WASM
 	@Override
 	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
 		Gtile tmp = list.createGtile(skinParam, stringBounder);
 		return new GtileGroup(tmp, title, null, HColors.BLUE, backColor, tmp.skinParam(), type, style);
 	}
+	// ::done
 
 	@Override
 	public Ftile createFtile(FtileFactory factory) {

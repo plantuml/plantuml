@@ -228,6 +228,7 @@ public class OptionFlags {
 		// ::done
 	}
 
+	// ::comment when WASM
 	public final void setLogData(SFile logData) {
 		this.logData = logData;
 		logData.delete();
@@ -258,6 +259,7 @@ public class OptionFlags {
 	public final void setEncodesprite(boolean encodesprite) {
 		this.encodesprite = encodesprite;
 	}
+	// ::done
 
 	public final boolean isOverwrite() {
 		return overwrite;

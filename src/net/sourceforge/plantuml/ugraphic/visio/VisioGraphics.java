@@ -43,10 +43,10 @@ import java.util.Map;
 
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.golem.MinMaxDouble;
-import net.sourceforge.plantuml.ugraphic.UPath;
-import net.sourceforge.plantuml.ugraphic.UPolygon;
-import net.sourceforge.plantuml.ugraphic.USegment;
-import net.sourceforge.plantuml.ugraphic.USegmentType;
+import net.sourceforge.plantuml.klimt.UPath;
+import net.sourceforge.plantuml.klimt.UPolygon;
+import net.sourceforge.plantuml.klimt.geom.USegment;
+import net.sourceforge.plantuml.klimt.geom.USegmentType;
 import net.sourceforge.plantuml.utils.Log;
 
 public class VisioGraphics {

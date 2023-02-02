@@ -35,8 +35,8 @@
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
-import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.UDrawable;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
 
 public abstract class CommonTile implements Tile, UDrawable {
 

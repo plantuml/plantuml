@@ -35,12 +35,12 @@
  */
 package net.sourceforge.plantuml.salt.factory;
 
-import net.sourceforge.plantuml.ISkinSimple;
+import net.atmp.ISkinSimple;
+import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.salt.DataSource;
 import net.sourceforge.plantuml.salt.Terminated;
 import net.sourceforge.plantuml.salt.element.Element;
 import net.sourceforge.plantuml.salt.element.ElementButton;
-import net.sourceforge.plantuml.ugraphic.UFont;
 
 public class ElementFactoryButton implements ElementFactory {
 

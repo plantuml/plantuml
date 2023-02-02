@@ -39,7 +39,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
-import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.klimt.UTranslate;
 
 public class GtileWithOutgoingArrow extends GtileWithMargin implements Gtile {
 

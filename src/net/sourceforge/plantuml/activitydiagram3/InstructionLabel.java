@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.gtile.Gtile;
 import net.sourceforge.plantuml.activitydiagram3.gtile.GtileEmpty;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
 
 public class InstructionLabel extends MonoSwimable implements Instruction {
 
@@ -59,10 +59,12 @@ public class InstructionLabel extends MonoSwimable implements Instruction {
 		return new FtileLabel(factory.skinParam(), getSwimlaneIn(), name);
 	}
 	
+	// ::comment when WASM
 	@Override
 	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
 		return new GtileEmpty(stringBounder, skinParam);
 	}
+	// ::done
 
 	@Override
 	public CommandExecutionResult add(Instruction other) {

@@ -39,13 +39,13 @@ import java.io.IOException;
 import java.io.StringReader;
 
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.command.regex.Matcher2;
-import net.sourceforge.plantuml.command.regex.MyPattern;
-import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.preproc.ReadLine;
 import net.sourceforge.plantuml.preproc.ReadLineReader;
 import net.sourceforge.plantuml.preproc.UncommentReadLine;
-import net.sourceforge.plantuml.utils.StringLocated;
+import net.sourceforge.plantuml.regex.Matcher2;
+import net.sourceforge.plantuml.regex.MyPattern;
+import net.sourceforge.plantuml.regex.Pattern2;
+import net.sourceforge.plantuml.text.StringLocated;
 
 public class ArobaseStringCompressor implements StringCompressor {
 

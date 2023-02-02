@@ -45,12 +45,12 @@ import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.awt.geom.XRectangle2D;
 import net.sourceforge.plantuml.baraye.EntityImp;
 import net.sourceforge.plantuml.cucadiagram.Link;
+import net.sourceforge.plantuml.klimt.ULine;
+import net.sourceforge.plantuml.klimt.UPolygon;
+import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.SvekLine;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.ULine;
-import net.sourceforge.plantuml.ugraphic.UPolygon;
-import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class Neighborhood {
 

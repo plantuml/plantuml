@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.sprite;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
-import net.sourceforge.plantuml.BackSlash;
+import net.sourceforge.plantuml.text.BackSlash;
 
 public class SpriteUtils {
 

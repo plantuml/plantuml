@@ -40,14 +40,14 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.url.Url;
 
 public class Reference extends AbstractEvent implements Event {
 

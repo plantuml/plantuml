@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.compositediagram;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.plantuml.ISkinSimple;
+import net.atmp.ISkinSimple;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommonCommands;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;

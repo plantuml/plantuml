@@ -36,9 +36,9 @@
 package net.sourceforge.plantuml.svek.extremity;
 
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.UPolygon;
+import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.UPolygon;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 class ExtremityExtends extends Extremity {
 

@@ -39,7 +39,6 @@ import java.util.List;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SpecificBackcolorable;
-import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.color.Colors;
@@ -47,6 +46,7 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.style.WithStyle;
+import net.sourceforge.plantuml.url.Url;
 
 final public class Note extends AbstractEvent implements Event, SpecificBackcolorable, WithStyle {
 

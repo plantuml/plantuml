@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.syntax;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.BlockUml;
 import net.sourceforge.plantuml.ErrorUml;
 import net.sourceforge.plantuml.OptionFlags;
@@ -47,6 +46,7 @@ import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.preproc.Defines;
+import net.sourceforge.plantuml.text.BackSlash;
 import net.sourceforge.plantuml.utils.LineLocation;
 import net.sourceforge.plantuml.utils.LineLocationImpl;
 

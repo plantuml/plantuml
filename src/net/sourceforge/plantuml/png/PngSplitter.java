@@ -44,9 +44,9 @@ import java.util.List;
 
 import net.sourceforge.plantuml.SplitParam;
 import net.sourceforge.plantuml.SuggestedFile;
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SImageIO;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.utils.Log;
 
 public class PngSplitter {

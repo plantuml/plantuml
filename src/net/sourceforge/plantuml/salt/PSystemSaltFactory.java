@@ -30,44 +30,43 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.salt;
 
-import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.command.PSystemBasicFactory;
+import java.util.List;
+import java.util.Map;
+
+import net.sourceforge.plantuml.command.Command;
+import net.sourceforge.plantuml.command.CommonCommands;
+import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 
-public class PSystemSaltFactory extends PSystemBasicFactory<PSystemSalt> {
+public class PSystemSaltFactory extends PSystemCommandFactory {
 
-	public PSystemSaltFactory(DiagramType diagramType) {
-		super(diagramType);
+	public PSystemSaltFactory(DiagramType init) {
+		super(init);
 	}
 
 	@Override
-	public PSystemSalt initDiagram(UmlSource source, String startLine) {
-		if (getDiagramType() == DiagramType.UML) {
-			return null;
-		} else if (getDiagramType() == DiagramType.SALT) {
-			return new PSystemSalt(source);
-		} else {
-			throw new IllegalStateException(getDiagramType().name());
-		}
+	protected void initCommandsList(List<Command> cmds) {
+		if (getDiagramType() == DiagramType.UML)
+			cmds.add(new CommandSalt());
 
+		CommonCommands.addCommonCommands2(cmds);
+		CommonCommands.addTitleCommands(cmds);
+		cmds.add(new CommandAnything());
 	}
 
 	@Override
-	public PSystemSalt executeLine(UmlSource source, PSystemSalt system, String line) {
-		if (system == null && line.replace('\t', ' ').trim().equals("salt")) {
-			return new PSystemSalt(source);
+	public PSystemSalt createEmptyDiagram(UmlSource source, Map<String, String> skinParam) {
+		final PSystemSalt result = new PSystemSalt(source);
+		if (getDiagramType() == DiagramType.SALT) {
+			result.setIamSalt(true);
 		}
-		if (system == null) {
-			return null;
-		}
-		system.add(StringUtils.trin(line));
-		return system;
+		return result;
 	}
 
 }

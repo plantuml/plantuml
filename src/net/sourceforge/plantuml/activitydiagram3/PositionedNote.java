@@ -36,7 +36,7 @@
 package net.sourceforge.plantuml.activitydiagram3;
 
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
-import net.sourceforge.plantuml.annotation.HaxeIgnored;
+
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
@@ -58,7 +58,7 @@ public class PositionedNote {
 		this.swimlaneNote = swimlaneNote;
 	}
 
-	@HaxeIgnored
+	
 	public PositionedNote(Display note, NotePosition position, NoteType type, Swimlane swimlaneNote) {
 		this(note, position, type, swimlaneNote, null);
 	}

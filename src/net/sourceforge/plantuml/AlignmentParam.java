@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml;
 
-import net.sourceforge.plantuml.graphic.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 
 
 public enum AlignmentParam {

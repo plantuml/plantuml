@@ -48,6 +48,9 @@ import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.utils.Log;
+// ::uncomment when WASM
+//import java.util.Collections;
+//  ::done
 
 public class ImportedFiles {
 
@@ -107,13 +110,20 @@ public class ImportedFiles {
 
 	public List<SFile> getPath() {
 		final List<SFile> result = new ArrayList<>(imported);
+		// ::comment when WASM
 		result.addAll(includePath());
 		result.addAll(SecurityUtils.getPath(SecurityUtils.PATHS_CLASSES));
+		// ::done
 		return result;
 	}
 
 	private List<SFile> includePath() {
+		// ::comment when WASM
 		return SecurityUtils.getPath(SecurityUtils.PATHS_INCLUDES);
+		// ::done
+		// ::uncomment when WASM
+		// return Collections.emptyList();
+		// ::done
 	}
 
 	private boolean isAbsolute(String nameOrPath) {

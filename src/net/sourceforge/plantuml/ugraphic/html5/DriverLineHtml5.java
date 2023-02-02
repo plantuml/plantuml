@@ -36,12 +36,12 @@ package net.sourceforge.plantuml.ugraphic.html5;
 
 import java.awt.geom.Line2D;
 
+import net.sourceforge.plantuml.klimt.UClip;
+import net.sourceforge.plantuml.klimt.ULine;
+import net.sourceforge.plantuml.klimt.UParam;
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.ClipContainer;
-import net.sourceforge.plantuml.ugraphic.UClip;
 import net.sourceforge.plantuml.ugraphic.UDriver;
-import net.sourceforge.plantuml.ugraphic.ULine;
-import net.sourceforge.plantuml.ugraphic.UParam;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 
 public class DriverLineHtml5 implements UDriver<ULine, Html5Drawer> {
 	// ::remove folder when WASM

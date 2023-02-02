@@ -38,8 +38,8 @@ package net.sourceforge.plantuml.creole.command;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import net.sourceforge.plantuml.command.regex.MyPattern;
-import net.sourceforge.plantuml.command.regex.Pattern2;
+import net.sourceforge.plantuml.regex.MyPattern;
+import net.sourceforge.plantuml.regex.Pattern2;
 
 abstract class CommandCreoleCache implements Command {
 

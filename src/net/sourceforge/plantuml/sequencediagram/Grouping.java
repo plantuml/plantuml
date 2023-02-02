@@ -35,13 +35,13 @@
  */
 package net.sourceforge.plantuml.sequencediagram;
 
+import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.style.WithStyle;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public abstract class Grouping extends AbstractEvent implements Event, WithStyle {
 

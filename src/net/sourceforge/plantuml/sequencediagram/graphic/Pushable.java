@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.sequencediagram.graphic;
 
 import java.util.Collection;
 
-import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
 
 public interface Pushable {
 

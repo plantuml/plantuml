@@ -38,10 +38,10 @@ package net.sourceforge.plantuml.salt.element;
 import java.util.List;
 
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
-import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.klimt.UPixel;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.UPixel;
-import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class ElementImage extends AbstractElement {
 

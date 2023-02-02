@@ -39,7 +39,6 @@ import java.util.Collection;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
@@ -52,9 +51,10 @@ import net.sourceforge.plantuml.activitydiagram3.gtile.GtileWithNotes;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
-import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.url.Url;
 
 public class InstructionSimple extends MonoSwimable implements Instruction {
 
@@ -82,6 +82,7 @@ public class InstructionSimple extends MonoSwimable implements Instruction {
 		this.colors = Objects.requireNonNull(colors);
 	}
 
+	// ::comment when WASM
 	@Override
 	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
 		GtileBox result = GtileBox.create(stringBounder, colors.mute(skinParam), label, getSwimlaneIn(), style,
@@ -98,6 +99,7 @@ public class InstructionSimple extends MonoSwimable implements Instruction {
 		}
 		return result;
 	}
+	// ::done
 
 	@Override
 	public Ftile createFtile(FtileFactory factory) {

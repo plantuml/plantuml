@@ -41,7 +41,7 @@ import java.util.Set;
 
 import net.sourceforge.plantuml.awt.geom.XCubicCurve2D;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
-import net.sourceforge.plantuml.posimo.DotPath;
+import net.sourceforge.plantuml.klimt.DotPath;
 
 public class BrailleGrid {
 

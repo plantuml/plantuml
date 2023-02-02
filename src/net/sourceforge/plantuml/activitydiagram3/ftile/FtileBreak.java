@@ -40,7 +40,7 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
 
 public class FtileBreak extends FtileEmpty implements WeldingPoint {
 

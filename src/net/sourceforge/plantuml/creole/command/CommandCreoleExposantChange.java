@@ -35,10 +35,10 @@
  */
 package net.sourceforge.plantuml.creole.command;
 
-import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.creole.legacy.StripeSimple;
-import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.FontPosition;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.regex.Matcher2;
 
 public class CommandCreoleExposantChange extends CommandCreoleCache implements Command {
 

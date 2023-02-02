@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.creole;
 
-import net.sourceforge.plantuml.ugraphic.UShape;
+import net.sourceforge.plantuml.klimt.UShape;
 
 public interface UCreole extends UShape {
 }

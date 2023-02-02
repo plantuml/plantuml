@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.sequencediagram;
 
-import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.url.Url;
 
 public abstract class AbstractEvent implements Event {
 

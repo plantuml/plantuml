@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.command;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.plantuml.utils.StringLocated;
+import net.sourceforge.plantuml.text.StringLocated;
 
 public enum MultilinesStrategy {
 	REMOVE_STARTING_QUOTE, KEEP_STARTING_QUOTE;

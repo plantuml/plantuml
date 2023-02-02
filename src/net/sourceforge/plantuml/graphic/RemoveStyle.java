@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.graphic;
 
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+
 class RemoveStyle implements FontChange {
 
 	private final FontStyle style;

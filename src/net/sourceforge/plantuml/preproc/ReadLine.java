@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.preproc;
 import java.io.Closeable;
 import java.io.IOException;
 
-import net.sourceforge.plantuml.utils.StringLocated;
+import net.sourceforge.plantuml.text.StringLocated;
 
 public interface ReadLine extends Closeable {
 

@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 
 public class BpmDiagram extends UmlDiagram {
+	// ::remove folder when WASM
 
 	private void cleanGrid(Grid grid) {
 		while (true) {

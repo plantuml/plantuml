@@ -38,8 +38,8 @@ package net.sourceforge.plantuml.preproc;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.LineLocation;
-import net.sourceforge.plantuml.utils.StringLocated;
 
 public class ReadLineList implements ReadLine {
 

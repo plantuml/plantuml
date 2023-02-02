@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.creole;
 
 import net.sourceforge.plantuml.creole.atom.Atom;
 import net.sourceforge.plantuml.creole.legacy.AtomText;
-import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
 
 public class Neutron {
 

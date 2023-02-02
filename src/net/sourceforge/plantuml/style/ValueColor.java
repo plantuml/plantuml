@@ -35,8 +35,8 @@
  */
 package net.sourceforge.plantuml.style;
 
-import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorSet;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColorSet;
 
 public class ValueColor extends ValueAbstract {
 

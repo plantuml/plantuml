@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.utils;
 
 import java.util.Objects;
 
-import net.sourceforge.plantuml.annotation.HaxeIgnored;
+
 
 public class LineLocationImpl implements LineLocation {
 
@@ -54,7 +54,7 @@ public class LineLocationImpl implements LineLocation {
 		this(desc, parent, -1);
 	}
 
-	@HaxeIgnored
+	
 	private LineLocationImpl(String desc, LineLocation parent, int position) {
 		this.parent = parent;
 		this.desc = Objects.requireNonNull(desc);

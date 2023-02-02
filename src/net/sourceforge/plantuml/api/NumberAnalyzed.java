@@ -33,10 +33,10 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.prefs.Preferences;
 
-import net.sourceforge.plantuml.annotation.HaxeIgnored;
+
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.utils.Log;
-@HaxeIgnored
+
 public class NumberAnalyzed implements INumberAnalyzed {
 
 	private static final int SLIDING_WINDOW = 1024;

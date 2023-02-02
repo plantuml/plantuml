@@ -37,6 +37,8 @@ package net.sourceforge.plantuml.ugraphic;
 
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.AbstractShadowable;
+import net.sourceforge.plantuml.klimt.UShapeSized;
 
 public class UEllipse extends AbstractShadowable implements UShapeSized {
 

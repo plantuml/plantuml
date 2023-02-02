@@ -47,12 +47,17 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import net.sourceforge.plantuml.emoji.data.Dummy;
+import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 // Emojji from https://twemoji.twitter.com/
 // Shorcut from https://api.github.com/emojis
+
+// ::uncomment when WASM
+//import com.plantuml.wasm.RunInit;
+//import java.io.FileInputStream;
+// ::done
 
 public class Emoji {
 	private final static Map<String, Emoji> ALL = new HashMap<>();
@@ -111,8 +116,14 @@ public class Emoji {
 			return;
 
 		final List<String> data = new ArrayList<String>();
+		// ::uncomment when WASM
+//		final String fullpath = RunInit.cheerpjPath + "emoji/" + unicode + ".svg";
+//		try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fullpath)))) {
+		// ::done
+		// ::comment when WASM
 		try (BufferedReader br = new BufferedReader(
 				new InputStreamReader(Dummy.class.getResourceAsStream(unicode + ".svg")))) {
+			// ::done
 			final String singleLine = br.readLine();
 			data.add(singleLine);
 		}

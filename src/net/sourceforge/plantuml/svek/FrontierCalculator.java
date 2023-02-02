@@ -39,6 +39,7 @@ import java.util.Collection;
 
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.cucadiagram.EntityPosition;
+import net.sourceforge.plantuml.klimt.geom.ClusterPosition;
 
 public class FrontierCalculator {
 

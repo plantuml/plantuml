@@ -41,8 +41,8 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.baraye.EntityImp;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
-import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
 
 public abstract class AbstractEntityImage extends AbstractTextBlock implements IEntityImage {
 

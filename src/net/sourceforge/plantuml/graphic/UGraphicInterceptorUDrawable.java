@@ -35,9 +35,9 @@
  */
 package net.sourceforge.plantuml.graphic;
 
-import net.sourceforge.plantuml.ugraphic.UChange;
+import net.sourceforge.plantuml.klimt.UChange;
+import net.sourceforge.plantuml.klimt.UShape;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.UShape;
 
 public class UGraphicInterceptorUDrawable extends UGraphicDelegator {
 

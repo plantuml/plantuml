@@ -40,7 +40,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import net.sourceforge.plantuml.utils.StringLocated;
+import net.sourceforge.plantuml.text.StringLocated;
 
 public class FunctionsSet {
 

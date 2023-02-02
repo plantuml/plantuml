@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile;
 
-import net.sourceforge.plantuml.graphic.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 
 public abstract class AbstractConnection implements Connection {
 

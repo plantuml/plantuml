@@ -47,7 +47,6 @@ import net.sourceforge.plantuml.api.PSystemFactory;
 import net.sourceforge.plantuml.board.BoardDiagramFactory;
 import net.sourceforge.plantuml.bpm.BpmDiagramFactory;
 import net.sourceforge.plantuml.classdiagram.ClassDiagramFactory;
-import net.sourceforge.plantuml.command.regex.RegexConcat;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
@@ -85,8 +84,9 @@ import net.sourceforge.plantuml.openiconic.PSystemListOpenIconicFactory;
 import net.sourceforge.plantuml.openiconic.PSystemOpenIconicFactory;
 import net.sourceforge.plantuml.oregon.PSystemOregonFactory;
 import net.sourceforge.plantuml.project.GanttDiagramFactory;
-import net.sourceforge.plantuml.regex.PSystemRegexFactory;
-import net.sourceforge.plantuml.salt.PSystemSaltFactory2;
+import net.sourceforge.plantuml.regex.RegexConcat;
+import net.sourceforge.plantuml.regexdiagram.PSystemRegexFactory;
+import net.sourceforge.plantuml.salt.PSystemSaltFactory;
 import net.sourceforge.plantuml.security.SecurityProfile;
 import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagramFactory;
@@ -96,9 +96,9 @@ import net.sourceforge.plantuml.sprite.StdlibDiagramFactory;
 import net.sourceforge.plantuml.statediagram.StateDiagramFactory;
 import net.sourceforge.plantuml.stats.StatsUtilsIncrement;
 import net.sourceforge.plantuml.sudoku.PSystemSudokuFactory;
+import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.timingdiagram.TimingDiagramFactory;
 import net.sourceforge.plantuml.utils.Log;
-import net.sourceforge.plantuml.utils.StringLocated;
 import net.sourceforge.plantuml.version.License;
 import net.sourceforge.plantuml.version.PSystemLicenseFactory;
 import net.sourceforge.plantuml.version.PSystemVersionFactory;
@@ -169,64 +169,59 @@ public class PSystemBuilder {
 		factories.add(new DescriptionDiagramFactory());
 		factories.add(new StateDiagramFactory());
 		factories.add(new ActivityDiagramFactory3());
-		// factories.add(new CompositeDiagramFactory(skinParam));
+
+		// ::comment when WASM
 		factories.add(new BpmDiagramFactory(DiagramType.BPM));
+		// ::done
+		
 		// factories.add(new PostIdDiagramFactory());
 		factories.add(new PSystemLicenseFactory());
 		factories.add(new PSystemVersionFactory());
 		factories.add(new PSystemDonorsFactory());
+		// ::comment when WASM
 		factories.add(new PSystemSkinparameterListFactory());
-		// ::comment when WASM
 		factories.add(new PSystemListFontsFactory());
-		// ::done
 		factories.add(new PSystemListEmojiFactory());
-		// ::comment when WASM
 		factories.add(new PSystemOpenIconicFactory());
 		factories.add(new PSystemListOpenIconicFactory());
 		factories.add(new PSystemListInternalSpritesFactory());
 		// ::done
-		factories.add(new PSystemSaltFactory2(DiagramType.SALT));
-		factories.add(new PSystemSaltFactory2(DiagramType.UML));
+		factories.add(new PSystemSaltFactory(DiagramType.UML));
+		factories.add(new PSystemSaltFactory(DiagramType.SALT));
 		// ::comment when WASM
 		factories.add(new PSystemDotFactory(DiagramType.DOT));
 		factories.add(new PSystemDotFactory(DiagramType.UML));
 		// ::done
-		factories.add(new NwDiagramFactory(DiagramType.NW));
 		factories.add(new NwDiagramFactory(DiagramType.UML));
+		factories.add(new NwDiagramFactory(DiagramType.NW));
 		factories.add(new MindMapDiagramFactory());
 		factories.add(new WBSDiagramFactory());
 		// ::comment when WASM
-		factories.add(new PSystemDitaaFactory(DiagramType.DITAA));
-		factories.add(new PSystemDitaaFactory(DiagramType.UML));
+		factories.add(new PSystemDitaaFactory());
 		// ::done
 		if (License.getCurrent() == License.GPL || License.getCurrent() == License.GPLV2) {
 			// ::comment when WASM
-			factories.add(new PSystemJcckitFactory(DiagramType.JCCKIT));
-			factories.add(new PSystemJcckitFactory(DiagramType.UML));
+			factories.add(new PSystemJcckitFactory());
 			// ::done
 			// factories.add(new PSystemLogoFactory());
 			factories.add(new PSystemSudokuFactory());
 		}
 		// ::comment when WASM
 		factories.add(new PSystemDefinitionFactory());
-		// ::done
 		factories.add(new ListSpriteDiagramFactory());
-		// ::comment when WASM
 		factories.add(new StdlibDiagramFactory());
 		factories.add(new PSystemMathFactory(DiagramType.MATH));
 		factories.add(new PSystemLatexFactory(DiagramType.LATEX));
-		// ::done
 		// factories.add(new PSystemStatsFactory());
 		factories.add(new PSystemCreoleFactory());
 		factories.add(new PSystemEggFactory());
 		factories.add(new PSystemAppleTwoFactory());
 		factories.add(new PSystemRIPFactory());
 		// factories.add(new PSystemLostFactory());
-		// ::comment when WASM
 		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE)
 			factories.add(new PSystemPathFactory());
-		// ::done
 		factories.add(new PSystemOregonFactory());
+		// ::done
 		factories.add(new PSystemCharlieFactory());
 		// ::comment when WASM
 		if (License.getCurrent() == License.GPL || License.getCurrent() == License.GPLV2) {
@@ -237,13 +232,19 @@ public class PSystemBuilder {
 		factories.add(new FlowDiagramFactory());
 		// factories.add(new PSystemTreeFactory(DiagramType.JUNGLE));
 		// factories.add(new PSystemCuteFactory(DiagramType.CUTE));
+		// ::comment when WASM
 		factories.add(new PSystemDedicationFactory());
+		// ::done
 		factories.add(new TimingDiagramFactory());
+		// ::comment when WASM
 		factories.add(new HelpFactory());
 		factories.add(new WireDiagramFactory());
+		// ::done
 		factories.add(new JsonDiagramFactory());
 		factories.add(new GitDiagramFactory());
+		// ::comment when WASM
 		factories.add(new BoardDiagramFactory());
+		// ::done
 		factories.add(new YamlDiagramFactory());
 		factories.add(new HclDiagramFactory());
 		factories.add(new PSystemEbnfFactory());

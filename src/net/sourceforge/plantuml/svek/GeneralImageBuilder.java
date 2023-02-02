@@ -47,7 +47,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.BaseFile;
-import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.OptionFlags;
@@ -76,12 +75,15 @@ import net.sourceforge.plantuml.descdiagram.EntityImageDesignedDomain;
 import net.sourceforge.plantuml.descdiagram.EntityImageDomain;
 import net.sourceforge.plantuml.descdiagram.EntityImageMachine;
 import net.sourceforge.plantuml.descdiagram.EntityImageRequirement;
-import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
-import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.USymbolHexagon;
 import net.sourceforge.plantuml.graphic.USymbolInterface;
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SecurityProfile;
 import net.sourceforge.plantuml.security.SecurityUtils;
@@ -118,10 +120,8 @@ import net.sourceforge.plantuml.svek.image.EntityImageStateEmptyDescription;
 import net.sourceforge.plantuml.svek.image.EntityImageSynchroBar;
 import net.sourceforge.plantuml.svek.image.EntityImageTips;
 import net.sourceforge.plantuml.svek.image.EntityImageUseCase;
-import net.sourceforge.plantuml.ugraphic.MinMax;
+import net.sourceforge.plantuml.text.Guillemet;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.UStroke;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.utils.Log;
 
 public final class GeneralImageBuilder {

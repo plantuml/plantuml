@@ -37,11 +37,14 @@ package net.sourceforge.plantuml.svek;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.awt.geom.XCubicCurve2D;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.DotPath;
 
 public class SvgResult {
 
@@ -133,4 +136,43 @@ public class SvgResult {
 	public final String getSvg() {
 		return svg;
 	}
+
+	public DotPath toDotPath() {
+		if (isPathConsistent() == false)
+			throw new IllegalArgumentException();
+
+		final List<XCubicCurve2D> beziers = new ArrayList<>();
+
+		final int posC = this.indexOf("C", 0);
+		if (posC == -1)
+			throw new IllegalArgumentException();
+
+		final XPoint2D start = this.substring(1, posC).getNextPoint();
+
+		final List<DotPath.TriPoints> triPoints = new ArrayList<>();
+		for (Iterator<XPoint2D> it = this.substring(posC + 1).getPoints(" ").iterator(); it.hasNext();) {
+			final XPoint2D p1 = it.next();
+			final XPoint2D p2 = it.next();
+			final XPoint2D p = it.next();
+			triPoints.add(new DotPath.TriPoints(p1, p2, p));
+		}
+		double x = start.getX();
+		double y = start.getY();
+		for (DotPath.TriPoints p : triPoints) {
+			final XCubicCurve2D bezier = new XCubicCurve2D(x, y, p.x1, p.y1, p.x2, p.y2, p.x, p.y);
+			beziers.add(bezier);
+			x = p.x;
+			y = p.y;
+		}
+
+		return DotPath.fromBeziers(beziers);
+	}
+
+	public boolean isPathConsistent() {
+		if (this.getSvg().startsWith("M") == false)
+			return false;
+
+		return true;
+	}
+
 }

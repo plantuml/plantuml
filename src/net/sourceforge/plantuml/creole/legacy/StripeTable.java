@@ -40,8 +40,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import net.sourceforge.plantuml.BackSlash;
-import net.sourceforge.plantuml.ISkinSimple;
+import net.atmp.ISkinSimple;
 import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.creole.CreoleContext;
 import net.sourceforge.plantuml.creole.CreoleMode;
@@ -53,9 +52,10 @@ import net.sourceforge.plantuml.creole.StripeStyleType;
 import net.sourceforge.plantuml.creole.atom.Atom;
 import net.sourceforge.plantuml.creole.atom.AtomTable;
 import net.sourceforge.plantuml.creole.atom.AtomWithMargin;
-import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.text.BackSlash;
 
 public class StripeTable implements Stripe {
 

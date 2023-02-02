@@ -36,7 +36,7 @@
 package net.sourceforge.plantuml.activitydiagram3.ftile;
 
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
 
 public class FtileGoto extends FtileEmpty {
 

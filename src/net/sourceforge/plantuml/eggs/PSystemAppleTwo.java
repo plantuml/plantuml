@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.graphic.GraphicPosition;
 import net.sourceforge.plantuml.version.PSystemVersion;
 
 public class PSystemAppleTwo extends PlainStringsDiagram {
+	// ::remove file when WASM
 
 	public PSystemAppleTwo(UmlSource source) throws IOException {
 		super(source);

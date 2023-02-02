@@ -42,10 +42,10 @@ import java.util.EnumSet;
 import java.util.List;
 
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.command.regex.Matcher2;
-import net.sourceforge.plantuml.command.regex.MyPattern;
-import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.emoji.Emoji;
+import net.sourceforge.plantuml.regex.Matcher2;
+import net.sourceforge.plantuml.regex.MyPattern;
+import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.sprite.SpriteUtils;
 
 public class Splitter {

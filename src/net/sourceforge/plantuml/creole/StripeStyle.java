@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.creole;
 import net.sourceforge.plantuml.creole.atom.Atom;
 import net.sourceforge.plantuml.creole.atom.Bullet;
 import net.sourceforge.plantuml.creole.legacy.AtomTextUtils;
-import net.sourceforge.plantuml.graphic.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 
 public class StripeStyle {
 

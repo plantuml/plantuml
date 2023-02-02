@@ -36,9 +36,9 @@ package net.sourceforge.plantuml.ugraphic.hand;
 
 import java.util.Random;
 
-import net.sourceforge.plantuml.ugraphic.Shadowable;
-import net.sourceforge.plantuml.ugraphic.UPolygon;
-import net.sourceforge.plantuml.ugraphic.URectangle;
+import net.sourceforge.plantuml.klimt.Shadowable;
+import net.sourceforge.plantuml.klimt.UPolygon;
+import net.sourceforge.plantuml.klimt.URectangle;
 
 public class URectangleHand {
 

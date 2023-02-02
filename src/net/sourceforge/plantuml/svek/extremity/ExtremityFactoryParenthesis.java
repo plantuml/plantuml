@@ -38,8 +38,8 @@ package net.sourceforge.plantuml.svek.extremity;
 import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.graphic.UDrawable;
+import net.sourceforge.plantuml.klimt.geom.Side;
 import net.sourceforge.plantuml.svek.AbstractExtremityFactory;
-import net.sourceforge.plantuml.svek.Side;
 
 public class ExtremityFactoryParenthesis extends AbstractExtremityFactory implements ExtremityFactory {
 

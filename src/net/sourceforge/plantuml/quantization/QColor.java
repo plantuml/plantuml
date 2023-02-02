@@ -2,7 +2,7 @@ package net.sourceforge.plantuml.quantization;
 
 import java.util.Collection;
 
-import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
 
 /**
  * An RGB representation of a color, which stores each component as a double in

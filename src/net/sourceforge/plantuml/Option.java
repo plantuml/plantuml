@@ -46,19 +46,19 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.plantuml.annotation.HaxeIgnored;
+
 import net.sourceforge.plantuml.api.ApiWarning;
-import net.sourceforge.plantuml.command.regex.Matcher2;
-import net.sourceforge.plantuml.command.regex.MyPattern;
-import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.preproc.Defines;
+import net.sourceforge.plantuml.regex.Matcher2;
+import net.sourceforge.plantuml.regex.MyPattern;
+import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.stats.StatsUtils;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 import net.sourceforge.plantuml.utils.Log;
 
-@HaxeIgnored
+
 public class Option {
 
 	private final List<String> excludes = new ArrayList<>();
@@ -407,6 +407,7 @@ public class Option {
 	// ::done
 
 	public Stdrpt getStdrpt() {
+		// ::comment when WASM
 		if (stdrpt == 1)
 			return new StdrptV1();
 
@@ -416,6 +417,7 @@ public class Option {
 		// Legacy case
 		if (isPipe() || isPipeMap() || isSyntax())
 			return new StdrptPipe0();
+		// ::done
 
 		return new StdrptNull();
 	}

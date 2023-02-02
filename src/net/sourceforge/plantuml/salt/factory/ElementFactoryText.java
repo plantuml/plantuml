@@ -37,13 +37,13 @@ package net.sourceforge.plantuml.salt.factory;
 
 import java.util.Arrays;
 
-import net.sourceforge.plantuml.ISkinSimple;
+import net.atmp.ISkinSimple;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.salt.DataSource;
 import net.sourceforge.plantuml.salt.Terminated;
 import net.sourceforge.plantuml.salt.element.Element;
 import net.sourceforge.plantuml.salt.element.ElementText;
-import net.sourceforge.plantuml.ugraphic.UFont;
 
 public class ElementFactoryText implements ElementFactory {
 

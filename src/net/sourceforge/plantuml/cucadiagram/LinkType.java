@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.cucadiagram;
 
 import java.util.Objects;
 
-import net.sourceforge.plantuml.ugraphic.UStroke;
+import net.sourceforge.plantuml.klimt.UStroke;
 
 public class LinkType {
 

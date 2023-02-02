@@ -35,7 +35,7 @@
 package net.sourceforge.plantuml.tim;
 
 import net.sourceforge.plantuml.preproc2.PreprocessorIncludeStrategy;
-import net.sourceforge.plantuml.utils.StringLocated;
+import net.sourceforge.plantuml.text.StringLocated;
 
 public class EaterInclude extends Eater {
 

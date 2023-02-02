@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.ugraphic.g2d;
 
 import java.awt.geom.PathIterator;
 
-import net.sourceforge.plantuml.ugraphic.USegmentType;
+import net.sourceforge.plantuml.klimt.geom.USegmentType;
 
 
 /*

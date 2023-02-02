@@ -36,7 +36,7 @@
 package net.sourceforge.plantuml.project.draw;
 
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
-import net.sourceforge.plantuml.ugraphic.UPath;
+import net.sourceforge.plantuml.klimt.UPath;
 
 public class PathUtils {
 

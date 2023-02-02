@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.utils.Log;
 
 public class PSystemRIPFactory extends PSystemSingleLineFactory {
+	// ::remove file when WASM
 
 	@Override
 	protected AbstractPSystem executeLine(UmlSource source, String line) {

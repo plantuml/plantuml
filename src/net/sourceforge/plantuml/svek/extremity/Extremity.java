@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.svek.extremity;
 
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.graphic.UDrawable;
-import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.klimt.UTranslate;
 
 public abstract class Extremity implements UDrawable {
 

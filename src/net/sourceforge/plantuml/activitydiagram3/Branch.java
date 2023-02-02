@@ -48,13 +48,14 @@ import net.sourceforge.plantuml.activitydiagram3.gtile.Gtile;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.Rainbow;
-import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
 import net.sourceforge.plantuml.style.PName;
@@ -62,7 +63,6 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class Branch {
 
@@ -78,7 +78,9 @@ public class Branch {
 	private final HColor color;
 
 	private Ftile ftile;
+	// ::comment when WASM
 	private Gtile gtile;
+	// ::done
 
 	public StyleSignatureBasic getDefaultStyleDefinitionArrow() {
 		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.arrow);
@@ -130,9 +132,11 @@ public class Branch {
 		this.ftile = factory.decorateOut(list.createFtile(factory), inlinkRendering);
 	}
 
+	// ::comment when WASM
 	public void updateGtile(ISkinParam skinParam, StringBounder stringBounder) {
 		this.gtile = list.createGtile(skinParam, stringBounder);
 	}
+	// ::done
 
 	public Collection<? extends Swimlane> getSwimlanes() {
 		return list.getSwimlanes();
@@ -186,13 +190,17 @@ public class Branch {
 		return ftile;
 	}
 
+	// ::comment when WASM
 	public Gtile getGtile() {
 		return gtile;
 	}
-
+	// ::done
+	
 	public ISkinParam skinParam() {
+		// ::comment when WASM
 		if (gtile != null)
 			return gtile.skinParam();
+		// ::done
 		return ftile.skinParam();
 	}
 

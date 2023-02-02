@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
 import net.sourceforge.plantuml.core.UmlSource;
 
 public class PSystemEggFactory extends PSystemSingleLineFactory {
+	// ::remove file when WASM
 
 	final static private List<byte[]> all = Arrays
 			.asList(EggUtils

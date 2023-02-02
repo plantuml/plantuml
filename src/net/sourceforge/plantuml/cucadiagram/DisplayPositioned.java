@@ -35,8 +35,8 @@
  */
 package net.sourceforge.plantuml.cucadiagram;
 
-import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 
 public class DisplayPositioned extends DisplayPositionned {
 

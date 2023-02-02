@@ -36,10 +36,10 @@ package net.sourceforge.plantuml.tim.iterator;
 
 import java.util.List;
 
+import net.sourceforge.plantuml.text.StringLocated;
+import net.sourceforge.plantuml.text.TLineType;
 import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.EaterExceptionLocated;
-import net.sourceforge.plantuml.tim.TLineType;
-import net.sourceforge.plantuml.utils.StringLocated;
 
 public class CodeIteratorShortComment extends AbstractCodeIterator {
 

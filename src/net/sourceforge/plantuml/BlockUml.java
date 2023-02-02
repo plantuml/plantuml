@@ -48,20 +48,22 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.atmp.ISkinSimple;
 import net.sourceforge.plantuml.code.AsciiEncoder;
 import net.sourceforge.plantuml.code.Transcoder;
 import net.sourceforge.plantuml.code.TranscoderUtil;
-import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.error.PSystemErrorPreprocessor;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.preproc.FileWithSuffix;
 import net.sourceforge.plantuml.preproc2.PreprocessorModeSet;
+import net.sourceforge.plantuml.regex.Matcher2;
+import net.sourceforge.plantuml.text.BackSlash;
+import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.tim.TimLoader;
 import net.sourceforge.plantuml.utils.LineLocationImpl;
 import net.sourceforge.plantuml.utils.StartUtils;
-import net.sourceforge.plantuml.utils.StringLocated;
 import net.sourceforge.plantuml.version.Version;
 
 public class BlockUml {

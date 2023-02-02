@@ -34,7 +34,7 @@
  */
 package net.sourceforge.plantuml.nwdiag.core;
 
-import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColor;
 
 public interface NStackable {
 

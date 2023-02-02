@@ -38,10 +38,10 @@ package net.sourceforge.plantuml.ugraphic;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import net.sourceforge.plantuml.EnsureVisible;
 import net.sourceforge.plantuml.FileFormat;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
-import net.sourceforge.plantuml.ugraphic.color.HColors;
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.geom.EnsureVisible;
 
 public class UGraphicNull extends AbstractUGraphic<String> implements EnsureVisible {
 

@@ -62,6 +62,7 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.EntityPortion;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.SymbolContext;
+import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.sequencediagram.graphic.FileMaker;
 import net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramFileMakerPuma2;
@@ -70,7 +71,6 @@ import net.sourceforge.plantuml.sequencediagram.teoz.SequenceDiagramFileMakerTeo
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
 import net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
 
 public class SequenceDiagram extends UmlDiagram {

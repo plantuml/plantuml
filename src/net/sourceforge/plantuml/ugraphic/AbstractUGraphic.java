@@ -39,10 +39,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import net.sourceforge.plantuml.graphic.SpecialText;
-import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.atmp.SpecialText;
+import net.sourceforge.plantuml.klimt.UComment;
+import net.sourceforge.plantuml.klimt.UParam;
+import net.sourceforge.plantuml.klimt.UShape;
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
 
 public abstract class AbstractUGraphic<O> extends AbstractCommonUGraphic {
 

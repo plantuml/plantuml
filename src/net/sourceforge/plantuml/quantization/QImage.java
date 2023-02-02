@@ -2,7 +2,7 @@ package net.sourceforge.plantuml.quantization;
 
 import java.awt.image.BufferedImage;
 
-import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
 
 /**
  * An immutable grid of pixel colors.

@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.ugraphic;
 
+import net.sourceforge.plantuml.klimt.UShape;
+import net.sourceforge.plantuml.klimt.font.UFont;
+
 public class UCenteredCharacter implements UShape {
 
 	private final char c;

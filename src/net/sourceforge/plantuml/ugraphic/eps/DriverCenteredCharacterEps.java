@@ -40,11 +40,11 @@ import java.awt.font.TextLayout;
 
 import net.sourceforge.plantuml.eps.EpsGraphics;
 import net.sourceforge.plantuml.graphic.UnusedSpace;
+import net.sourceforge.plantuml.klimt.UParam;
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
+import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.ugraphic.UCenteredCharacter;
 import net.sourceforge.plantuml.ugraphic.UDriver;
-import net.sourceforge.plantuml.ugraphic.UFont;
-import net.sourceforge.plantuml.ugraphic.UParam;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 
 public class DriverCenteredCharacterEps implements UDriver<UCenteredCharacter, EpsGraphics> {
 	// ::remove folder when WASM

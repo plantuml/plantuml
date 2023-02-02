@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.baraye.EntityImp;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
 import net.sourceforge.plantuml.cucadiagram.ICucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
-import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.svek.GroupPngMakerState;
 import net.sourceforge.plantuml.svek.IEntityImage;
 

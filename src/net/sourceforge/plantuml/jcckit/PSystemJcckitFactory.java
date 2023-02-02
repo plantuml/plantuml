@@ -39,15 +39,15 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.Properties;
 
-import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.PSystemBasicFactory;
-import net.sourceforge.plantuml.command.regex.Matcher2;
-import net.sourceforge.plantuml.command.regex.MyPattern;
-import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.regex.Matcher2;
+import net.sourceforge.plantuml.regex.MyPattern;
+import net.sourceforge.plantuml.regex.Pattern2;
+import net.sourceforge.plantuml.text.BackSlash;
 import net.sourceforge.plantuml.utils.Log;
 
 public class PSystemJcckitFactory extends PSystemBasicFactory<PSystemJcckit> {
@@ -56,8 +56,8 @@ public class PSystemJcckitFactory extends PSystemBasicFactory<PSystemJcckit> {
 	private int width;
 	private int height;
 
-	public PSystemJcckitFactory(DiagramType diagramType) {
-		super(diagramType);
+	public PSystemJcckitFactory() {
+		super(DiagramType.JCCKIT);
 	}
 
 	@Override
@@ -65,15 +65,9 @@ public class PSystemJcckitFactory extends PSystemBasicFactory<PSystemJcckit> {
 		this.data = null;
 		this.width = 640;
 		this.height = 400;
-		if (getDiagramType() == DiagramType.UML) {
-			return null;
-		} else if (getDiagramType() == DiagramType.JCCKIT) {
-			extractDimension(startLine);
-			data = new StringBuilder();
-			return createSystem(source);
-		} else {
-			throw new IllegalStateException(getDiagramType().name());
-		}
+		extractDimension(startLine);
+		data = new StringBuilder();
+		return createSystem(source);
 
 	}
 

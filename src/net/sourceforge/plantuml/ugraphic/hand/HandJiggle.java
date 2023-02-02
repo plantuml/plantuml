@@ -40,8 +40,8 @@ import java.util.Random;
 
 import net.sourceforge.plantuml.awt.geom.XCubicCurve2D;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
-import net.sourceforge.plantuml.ugraphic.UPath;
-import net.sourceforge.plantuml.ugraphic.UPolygon;
+import net.sourceforge.plantuml.klimt.UPath;
+import net.sourceforge.plantuml.klimt.UPolygon;
 
 public class HandJiggle {
 	private final Collection<XPoint2D> points = new ArrayList<>();

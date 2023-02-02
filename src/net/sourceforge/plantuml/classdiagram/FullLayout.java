@@ -39,8 +39,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.graphic.UDrawable;
+import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class FullLayout implements UDrawable {
 

@@ -36,10 +36,10 @@
 package net.sourceforge.plantuml.ugraphic.eps;
 
 import net.sourceforge.plantuml.eps.EpsGraphics;
-import net.sourceforge.plantuml.posimo.DotPath;
+import net.sourceforge.plantuml.klimt.DotPath;
+import net.sourceforge.plantuml.klimt.UParam;
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UDriver;
-import net.sourceforge.plantuml.ugraphic.UParam;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 
 public class DriverDotPathEps implements UDriver<DotPath, EpsGraphics> {
 
@@ -50,7 +50,7 @@ public class DriverDotPathEps implements UDriver<DotPath, EpsGraphics> {
 			eps.setStrokeColor(param.getColor().toColor(mapper));
 			eps.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDashVisible(),
 					param.getStroke().getDashSpace());
-			shape.draw(eps, x, y);
+			eps.drawBezier(shape.getBeziers(), x, y);
 		}
 	}
 }

@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.svek;
 
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.graphic.UDrawable;
+import net.sourceforge.plantuml.klimt.geom.Side;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactory;
 
 public abstract class AbstractExtremityFactory implements ExtremityFactory {

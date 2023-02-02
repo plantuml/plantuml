@@ -37,9 +37,9 @@ package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.graphic.UGraphicDelegator;
-import net.sourceforge.plantuml.ugraphic.UChange;
+import net.sourceforge.plantuml.klimt.UChange;
+import net.sourceforge.plantuml.klimt.UShape;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.UShape;
 
 public class UGraphicInterceptorGoto extends UGraphicDelegator {
 

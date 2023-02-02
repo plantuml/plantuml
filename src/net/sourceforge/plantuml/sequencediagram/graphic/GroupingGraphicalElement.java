@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.sequencediagram.graphic;
 
 import java.util.Objects;
 
-import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.sequencediagram.InGroupableList;
 
 abstract class GroupingGraphicalElement extends GraphicalElement {

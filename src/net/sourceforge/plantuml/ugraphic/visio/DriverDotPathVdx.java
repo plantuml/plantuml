@@ -34,10 +34,10 @@
  */
 package net.sourceforge.plantuml.ugraphic.visio;
 
-import net.sourceforge.plantuml.posimo.DotPath;
+import net.sourceforge.plantuml.klimt.DotPath;
+import net.sourceforge.plantuml.klimt.UParam;
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UDriver;
-import net.sourceforge.plantuml.ugraphic.UParam;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 
 public class DriverDotPathVdx implements UDriver<DotPath, VisioGraphics> {
 	// ::remove folder when WASM

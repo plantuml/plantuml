@@ -38,17 +38,20 @@ package net.sourceforge.plantuml.eps;
 import java.awt.Color;
 import java.awt.geom.PathIterator;
 import java.awt.image.BufferedImage;
+import java.util.List;
 import java.util.Locale;
 import java.util.StringTokenizer;
 
-import net.sourceforge.plantuml.BackSlash;
+import net.sourceforge.plantuml.awt.geom.XCubicCurve2D;
+import net.sourceforge.plantuml.klimt.DotPath;
+import net.sourceforge.plantuml.klimt.UPath;
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
+import net.sourceforge.plantuml.klimt.color.HColorGradient;
+import net.sourceforge.plantuml.klimt.geom.USegment;
+import net.sourceforge.plantuml.klimt.geom.USegmentType;
 import net.sourceforge.plantuml.security.SecurityUtils;
+import net.sourceforge.plantuml.text.BackSlash;
 import net.sourceforge.plantuml.ugraphic.ShadowManager;
-import net.sourceforge.plantuml.ugraphic.UPath;
-import net.sourceforge.plantuml.ugraphic.USegment;
-import net.sourceforge.plantuml.ugraphic.USegmentType;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
-import net.sourceforge.plantuml.ugraphic.color.HColorGradient;
 import net.sourceforge.plantuml.utils.Log;
 import net.sourceforge.plantuml.utils.MathUtils;
 import net.sourceforge.plantuml.version.Version;
@@ -838,6 +841,31 @@ public class EpsGraphics {
 			final double diff = i;
 			epsEllipse(x + deltaShadow, y + deltaShadow, xRadius - diff, yRadius - diff);
 		}
+	}
+
+	public void drawOk(DotPath dotPath, double x, double y) {
+		// boolean first = true;
+		for (XCubicCurve2D bez : dotPath.getBeziers()) {
+			bez = new XCubicCurve2D(x + bez.x1, y + bez.y1, x + bez.ctrlx1, y + bez.ctrly1, x + bez.ctrlx2,
+					y + bez.ctrly2, x + bez.x2, y + bez.y2);
+			this.epsLine(bez.x1, bez.y1, bez.x2, bez.y2);
+		}
+	}
+
+	public void drawBezier(List<XCubicCurve2D> beziers, double x, double y) {
+		this.newpathDot();
+		final boolean dashed = false;
+		boolean first = true;
+		for (XCubicCurve2D bez : beziers) {
+			bez = new XCubicCurve2D(x + bez.x1, y + bez.y1, x + bez.ctrlx1, y + bez.ctrly1, x + bez.ctrlx2,
+					y + bez.ctrly2, x + bez.x2, y + bez.y2);
+			if (first) {
+				this.movetoNoMacro(bez.x1, bez.y1);
+				first = dashed;
+			}
+			this.curvetoNoMacro(bez.ctrlx1, bez.ctrly1, bez.ctrlx2, bez.ctrly2, bez.x2, bez.y2);
+		}
+		this.closepathDot();
 	}
 
 }

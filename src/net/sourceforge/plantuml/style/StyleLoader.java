@@ -78,6 +78,13 @@ public class StyleLoader {
 	}
 
 	public static InputStream getInputStreamForStyle(String filename) throws IOException {
+		//::uncomment when WASM
+//		final String res = "/skin/" + filename;
+//		final InputStream is = StyleLoader.class.getResourceAsStream(res);
+//		return is;
+		//::done
+
+		//::comment when WASM
 		InputStream internalIs = null;
 		SFile localFile = new SFile(filename);
 		Log.info("Trying to load style " + filename);
@@ -100,6 +107,7 @@ public class StyleLoader {
 
 		}
 		return internalIs;
+		//::done
 	}
 
 	private void loadSkinInternal(final BlocLines lines) throws StyleParsingException {

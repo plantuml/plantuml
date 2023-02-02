@@ -40,8 +40,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
-import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
 
 public abstract class AbstractPlacementStrategy implements PlacementStrategy {
 

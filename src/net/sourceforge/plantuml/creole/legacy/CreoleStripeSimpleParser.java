@@ -37,18 +37,18 @@ package net.sourceforge.plantuml.creole.legacy;
 
 import java.util.Objects;
 
-import net.sourceforge.plantuml.BackSlash;
-import net.sourceforge.plantuml.ISkinSimple;
+import net.atmp.ISkinSimple;
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.command.regex.Matcher2;
-import net.sourceforge.plantuml.command.regex.MyPattern;
-import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.creole.CreoleContext;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.creole.Stripe;
 import net.sourceforge.plantuml.creole.StripeStyle;
 import net.sourceforge.plantuml.creole.StripeStyleType;
-import net.sourceforge.plantuml.graphic.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.regex.Matcher2;
+import net.sourceforge.plantuml.regex.MyPattern;
+import net.sourceforge.plantuml.regex.Pattern2;
+import net.sourceforge.plantuml.text.BackSlash;
 import net.sourceforge.plantuml.utils.CharHidder;
 
 public class CreoleStripeSimpleParser {

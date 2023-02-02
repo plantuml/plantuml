@@ -40,11 +40,11 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.stats.api.Stats;
 import net.sourceforge.plantuml.stats.api.StatsColumn;
 import net.sourceforge.plantuml.stats.api.StatsLine;
 import net.sourceforge.plantuml.stats.api.StatsTable;
+import net.sourceforge.plantuml.text.BackSlash;
 
 public class HtmlConverter {
 

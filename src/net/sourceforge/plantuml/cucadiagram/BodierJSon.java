@@ -40,11 +40,11 @@ import java.util.Objects;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.baraye.EntityImp;
-import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.json.JsonValue;
+import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
 public class BodierJSon implements Bodier {
 

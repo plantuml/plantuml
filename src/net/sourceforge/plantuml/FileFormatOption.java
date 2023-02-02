@@ -39,9 +39,9 @@ import java.awt.geom.AffineTransform;
 import java.io.Serializable;
 import java.util.Objects;
 
-import net.sourceforge.plantuml.annotation.HaxeIgnored;
-import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.text.SvgCharSizeHack;
 
 /**
  * A FileFormat with some parameters.
@@ -67,13 +67,13 @@ public final class FileFormatOption implements Serializable {
 		return scale;
 	}
 
-	@HaxeIgnored
+	
 	public FileFormatOption(FileFormat fileFormat) {
 		this(fileFormat, true, false, null, false, null, TikzFontDistortion.getDefault(), 1.0, null, null,
 				ColorMapper.IDENTITY);
 	}
 
-	@HaxeIgnored
+	
 	public FileFormatOption(FileFormat fileFormat, boolean withMetadata) {
 		this(fileFormat, withMetadata, false, null, false, null, TikzFontDistortion.getDefault(), 1.0, null, null,
 				ColorMapper.IDENTITY);

@@ -40,13 +40,13 @@ import java.util.Map;
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.ErrorUml;
 import net.sourceforge.plantuml.ErrorUmlType;
-import net.sourceforge.plantuml.annotation.HaxeIgnored;
+
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.error.PSystemErrorUtils;
+import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.StartUtils;
-import net.sourceforge.plantuml.utils.StringLocated;
 import net.sourceforge.plantuml.version.IteratorCounter2;
 
 public abstract class PSystemBasicFactory<P extends AbstractPSystem> extends PSystemAbstractFactory {
@@ -55,7 +55,7 @@ public abstract class PSystemBasicFactory<P extends AbstractPSystem> extends PSy
 		super(diagramType);
 	}
 
-	@HaxeIgnored
+	
 	public PSystemBasicFactory() {
 		this(DiagramType.UML);
 	}

@@ -40,8 +40,8 @@ import java.util.List;
 
 import net.sourceforge.plantuml.preproc.ReadLine;
 import net.sourceforge.plantuml.preproc.ReadLineList;
+import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.StartUtils;
-import net.sourceforge.plantuml.utils.StringLocated;
 
 public class ReadFilterAddConfig implements ReadFilter {
 

@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.oregon;
 
 public interface BasicGame {
+	// ::remove folder when WASM
 
 	void run(Keyboard keyboard) throws NoInputException;
 

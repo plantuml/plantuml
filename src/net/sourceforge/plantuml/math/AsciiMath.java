@@ -42,7 +42,7 @@ import java.lang.reflect.InvocationTargetException;
 import javax.script.ScriptException;
 
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
-import net.sourceforge.plantuml.ugraphic.MutableImage;
+import net.sourceforge.plantuml.klimt.MutableImage;
 import net.sourceforge.plantuml.ugraphic.UImageSvg;
 
 public class AsciiMath implements ScientificEquation {

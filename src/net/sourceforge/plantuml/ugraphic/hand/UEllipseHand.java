@@ -37,9 +37,9 @@ package net.sourceforge.plantuml.ugraphic.hand;
 import java.util.Random;
 
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
-import net.sourceforge.plantuml.ugraphic.Shadowable;
+import net.sourceforge.plantuml.klimt.Shadowable;
+import net.sourceforge.plantuml.klimt.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
-import net.sourceforge.plantuml.ugraphic.UPolygon;
 
 public class UEllipseHand {
 

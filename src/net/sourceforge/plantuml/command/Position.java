@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.command;
 
 import java.util.Objects;
 
-import net.sourceforge.plantuml.cucadiagram.Rankdir;
+import net.sourceforge.plantuml.klimt.geom.Rankdir;
 import net.sourceforge.plantuml.utils.Direction;
 
 public enum Position {

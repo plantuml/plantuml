@@ -36,11 +36,10 @@ package net.sourceforge.plantuml.ugraphic.debug;
 
 import java.util.Random;
 
-import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
-import net.sourceforge.plantuml.graphic.StringBounderRaw;
-import net.sourceforge.plantuml.ugraphic.UFont;
+import net.sourceforge.plantuml.klimt.font.StringBounderRaw;
+import net.sourceforge.plantuml.klimt.font.UFont;
 
 public class StringBounderDebug extends StringBounderRaw {
 	// ::remove folder when WASM
@@ -63,8 +62,8 @@ public class StringBounderDebug extends StringBounderRaw {
 	}
 
 	@Override
-	public FileFormat getNativeFormat() {
-		return FileFormat.PNG;
+	public boolean matchesProperty(String propertyName) {
+		return false;
 	}
 
 }

@@ -37,12 +37,13 @@ package net.sourceforge.plantuml.activitydiagram3;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.activitydiagram3.gtile.Gtile;
-import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
 
 abstract class AbstractInstruction {
 
+	// ::comment when WASM
 	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
 		throw new UnsupportedOperationException("" + getClass());
 	}
-
+	// ::done
 }

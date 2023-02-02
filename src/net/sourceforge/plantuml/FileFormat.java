@@ -46,13 +46,14 @@ import java.io.IOException;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.braille.BrailleCharFactory;
 import net.sourceforge.plantuml.braille.UGraphicBraille;
-import net.sourceforge.plantuml.graphic.StringBounder;
-import net.sourceforge.plantuml.graphic.StringBounderRaw;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.font.StringBounderRaw;
+import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.png.MetadataTag;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.svg.SvgGraphics;
-import net.sourceforge.plantuml.ugraphic.UFont;
+import net.sourceforge.plantuml.text.SvgCharSizeHack;
 import net.sourceforge.plantuml.ugraphic.debug.StringBounderDebug;
 
 /**
@@ -168,8 +169,8 @@ public enum FileFormat {
 				return getJavaDimension(font, text);
 			}
 
-			public FileFormat getNativeFormat() {
-				return FileFormat.this;
+			public boolean matchesProperty(String propertyName) {
+				return "SVG".equalsIgnoreCase(propertyName);
 			}
 
 		};
@@ -185,8 +186,8 @@ public enum FileFormat {
 				return getJavaDimension(font, text);
 			}
 
-			public FileFormat getNativeFormat() {
-				return FileFormat.this;
+			public boolean matchesProperty(String propertyName) {
+				return false;
 			}
 
 		};
@@ -219,8 +220,8 @@ public enum FileFormat {
 				return UGraphicBraille.QUANTA;
 			}
 
-			public FileFormat getNativeFormat() {
-				return FileFormat.this;
+			public boolean matchesProperty(String propertyName) {
+				return false;
 			}
 
 		};
@@ -244,8 +245,8 @@ public enum FileFormat {
 				return w2.withWidth(Math.max(w1.getWidth(), magnify * w2.getWidth() - delta));
 			}
 
-			public FileFormat getNativeFormat() {
-				return FileFormat.this;
+			public boolean matchesProperty(String propertyName) {
+				return false;
 			}
 		};
 	}
@@ -273,13 +274,13 @@ public enum FileFormat {
 				OptionFlags.getInstance().getFileSeparator() + String.format("%03d", cpt) + getFileSuffix());
 	}
 
-	private SFile computeFilename(SFile pngFile, int i) {
-		if (i == 0)
-			return pngFile;
-
-		final SFile dir = pngFile.getParentFile();
-		return dir.file(computeFilenameInternal(pngFile.getName(), i));
-	}
+//	private SFile computeFilename(SFile pngFile, int i) {
+//		if (i == 0)
+//			return pngFile;
+//
+//		final SFile dir = pngFile.getParentFile();
+//		return dir.file(computeFilenameInternal(pngFile.getName(), i));
+//	}
 
 	private String changeName(String fileName, String replacement) {
 		String result = fileName.replaceAll("\\.\\w+$", replacement);
@@ -289,13 +290,13 @@ public enum FileFormat {
 		return result;
 	}
 
-	private String computeFilenameInternal(String name, int i) {
-		if (i == 0)
-			return name;
-
-		return name.replaceAll("\\" + getFileSuffix() + "$",
-				OptionFlags.getInstance().getFileSeparator() + String.format("%03d", i) + getFileSuffix());
-	}
+//	private String computeFilenameInternal(String name, int i) {
+//		if (i == 0)
+//			return name;
+//
+//		return name.replaceAll("\\" + getFileSuffix() + "$",
+//				OptionFlags.getInstance().getFileSeparator() + String.format("%03d", i) + getFileSuffix());
+//	}
 
 	public boolean doesSupportMetadata() {
 		return this == PNG || this == SVG;

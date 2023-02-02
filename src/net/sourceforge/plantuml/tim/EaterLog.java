@@ -34,8 +34,8 @@
  */
 package net.sourceforge.plantuml.tim;
 
+import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.Log;
-import net.sourceforge.plantuml.utils.StringLocated;
 
 public class EaterLog extends Eater {
 

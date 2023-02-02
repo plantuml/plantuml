@@ -37,8 +37,8 @@ package net.sourceforge.plantuml;
 
 import java.awt.Color;
 
-import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorSimple;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColorSimple;
 
 public class SplitParam {
 

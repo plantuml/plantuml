@@ -48,11 +48,11 @@ import net.sourceforge.plantuml.baraye.CucaDiagram;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.html.CucaDiagramHtmlMaker;
+import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.png.PngSplitter;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
-import net.sourceforge.plantuml.ugraphic.color.HColors;
 import net.sourceforge.plantuml.utils.Log;
 
 public class PSystemUtils {

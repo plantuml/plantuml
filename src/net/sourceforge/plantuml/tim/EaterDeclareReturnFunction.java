@@ -34,8 +34,8 @@
  */
 package net.sourceforge.plantuml.tim;
 
+import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.LineLocation;
-import net.sourceforge.plantuml.utils.StringLocated;
 
 public class EaterDeclareReturnFunction extends Eater {
 

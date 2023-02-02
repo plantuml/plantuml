@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 
 public class BoardDiagramFactory extends PSystemCommandFactory {
+	// ::remove folder when WASM
 
 	public BoardDiagramFactory() {
 		super(DiagramType.BOARD);

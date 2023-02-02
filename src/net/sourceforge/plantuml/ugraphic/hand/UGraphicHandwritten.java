@@ -37,15 +37,15 @@ package net.sourceforge.plantuml.ugraphic.hand;
 import java.util.Random;
 
 import net.sourceforge.plantuml.graphic.UGraphicDelegator;
-import net.sourceforge.plantuml.posimo.DotPath;
-import net.sourceforge.plantuml.ugraphic.UChange;
+import net.sourceforge.plantuml.klimt.DotPath;
+import net.sourceforge.plantuml.klimt.UChange;
+import net.sourceforge.plantuml.klimt.ULine;
+import net.sourceforge.plantuml.klimt.UPath;
+import net.sourceforge.plantuml.klimt.UPolygon;
+import net.sourceforge.plantuml.klimt.URectangle;
+import net.sourceforge.plantuml.klimt.UShape;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.ULine;
-import net.sourceforge.plantuml.ugraphic.UPath;
-import net.sourceforge.plantuml.ugraphic.UPolygon;
-import net.sourceforge.plantuml.ugraphic.URectangle;
-import net.sourceforge.plantuml.ugraphic.UShape;
 import net.sourceforge.plantuml.ugraphic.svg.UGraphicSvg;
 
 public class UGraphicHandwritten extends UGraphicDelegator implements UGraphic {

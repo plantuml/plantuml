@@ -40,7 +40,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.sequencediagram.graphic.GroupingGraphicalElementElse;
 import net.sourceforge.plantuml.sequencediagram.graphic.LivingParticipantBox;
 import net.sourceforge.plantuml.sequencediagram.graphic.MessageExoArrow;

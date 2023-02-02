@@ -35,8 +35,9 @@
  */
 package net.sourceforge.plantuml.graphic;
 
-import net.sourceforge.plantuml.SpriteContainer;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.sprite.SpriteContainer;
 
 public class DisplayUtils {
 

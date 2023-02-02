@@ -37,7 +37,9 @@ package net.sourceforge.plantuml.ugraphic;
 
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.creole.Stencil;
-import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
 
 public class UGraphicStencil extends AbstractUGraphicHorizontalLine {
 

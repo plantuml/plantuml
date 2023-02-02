@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.graphic;
 
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.style.SName;
 
 public abstract class USymbol {

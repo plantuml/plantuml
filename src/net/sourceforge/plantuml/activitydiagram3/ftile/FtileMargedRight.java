@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.activitydiagram3.ftile;
 import java.util.Set;
 
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
-import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 public class FtileMargedRight extends AbstractFtile {

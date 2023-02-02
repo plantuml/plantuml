@@ -35,12 +35,12 @@
  */
 package net.sourceforge.plantuml;
 
-import net.sourceforge.plantuml.annotation.HaxeIgnored;
-import net.sourceforge.plantuml.graphic.color.ColorType;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColors;
 
-@HaxeIgnored
+import net.sourceforge.plantuml.klimt.color.ColorType;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColors;
+
+
 public enum ColorParam {
 	background(HColors.WHITE, true, ColorType.BACK), 
 	hyperlink(HColors.BLUE),

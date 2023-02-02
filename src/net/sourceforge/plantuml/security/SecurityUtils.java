@@ -78,11 +78,38 @@ import net.sourceforge.plantuml.utils.Log;
 
 public class SecurityUtils {
 
+	// ::uncomment when WASM
+//	public static SecurityProfile getSecurityProfile() {
+//		return SecurityProfile.UNSECURE;
+//	}
+	// ::done
+
+	public static boolean ignoreThisLink(String url) {
+		// ::comment when WASM
+		if (allowJavascriptInLink() == false && isJavascriptLink(url))
+			return true;
+		// ::done
+		return false;
+	}
+
 	/**
 	 * Indicates, that we have no authentication and credentials to access the URL.
 	 */
 	public static final String NO_CREDENTIALS = "<none>";
 
+	public synchronized static BufferedImage readRasterImage(final ImageIcon imageIcon) {
+		final Image tmpImage = imageIcon.getImage();
+		if (imageIcon.getIconWidth() == -1)
+			return null;
+
+		final BufferedImage image = new BufferedImage(imageIcon.getIconWidth(), imageIcon.getIconHeight(),
+				BufferedImage.TYPE_INT_ARGB);
+		image.getGraphics().drawImage(tmpImage, 0, 0, null);
+		tmpImage.flush();
+		return image;
+	}
+
+	// ::comment when WASM
 	/**
 	 * Java class paths to import files from.
 	 */
@@ -97,7 +124,7 @@ public class SecurityUtils {
 	 * Whitelist of paths from where scripts can load data.
 	 */
 	public static final String ALLOWLIST_LOCAL_PATHS = "plantuml.allowlist.path";
-	
+
 	/**
 	 * Whitelist of urls
 	 */
@@ -171,12 +198,6 @@ public class SecurityUtils {
 			current = SecurityProfile.init();
 
 		return current;
-	}
-
-	public static boolean ignoreThisLink(String url) {
-		if (allowJavascriptInLink() == false && isJavascriptLink(url))
-			return true;
-		return false;
 	}
 
 	private static boolean isJavascriptLink(String url) {
@@ -263,18 +284,6 @@ public class SecurityUtils {
 	public static PrintStream createPrintStream(OutputStream os, boolean autoFlush, Charset charset)
 			throws UnsupportedEncodingException {
 		return new PrintStream(os, autoFlush, charset.name());
-	}
-
-	public synchronized static BufferedImage readRasterImage(final ImageIcon imageIcon) {
-		final Image tmpImage = imageIcon.getImage();
-		if (imageIcon.getIconWidth() == -1)
-			return null;
-
-		final BufferedImage image = new BufferedImage(imageIcon.getIconWidth(), imageIcon.getIconHeight(),
-				BufferedImage.TYPE_INT_ARGB);
-		image.getGraphics().drawImage(tmpImage, 0, 0, null);
-		tmpImage.flush();
-		return image;
 	}
 
 	// ----
@@ -432,5 +441,6 @@ public class SecurityUtils {
 		}
 		return Json.object();
 	}
+	// ::done
 
 }

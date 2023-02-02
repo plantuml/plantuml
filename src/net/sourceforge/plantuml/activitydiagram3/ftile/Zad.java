@@ -38,9 +38,9 @@ package net.sourceforge.plantuml.activitydiagram3.ftile;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.plantuml.ugraphic.MinMax;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class Zad {
 

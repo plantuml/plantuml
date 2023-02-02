@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Set;
 
-import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
 
 public final class Quantizer {
 	// ::remove folder when WASM

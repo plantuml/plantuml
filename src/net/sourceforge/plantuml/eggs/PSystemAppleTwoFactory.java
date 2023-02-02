@@ -44,12 +44,12 @@ import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.utils.Log;
 
 public class PSystemAppleTwoFactory extends PSystemSingleLineFactory {
+	// ::remove file when WASM
 
 	@Override
 	protected AbstractPSystem executeLine(UmlSource source, String line) {
-		if (line.equalsIgnoreCase("apple //e") || line.equalsIgnoreCase("apple ][")
-				|| line.equalsIgnoreCase("apple II") || line.equalsIgnoreCase("Steve Jobs")
-				|| line.equalsIgnoreCase("Steve Wozniak")) {
+		if (line.equalsIgnoreCase("apple //e") || line.equalsIgnoreCase("apple ][") || line.equalsIgnoreCase("apple II")
+				|| line.equalsIgnoreCase("Steve Jobs") || line.equalsIgnoreCase("Steve Wozniak")) {
 			try {
 				return new PSystemAppleTwo(source);
 			} catch (IOException e) {

@@ -40,7 +40,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.command.PSystemAbstractFactory;
 import net.sourceforge.plantuml.core.Diagram;
@@ -51,6 +50,7 @@ import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.json.ParseException;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.style.parser.StyleParsingException;
+import net.sourceforge.plantuml.text.BackSlash;
 import net.sourceforge.plantuml.yaml.Highlighted;
 
 public class JsonDiagramFactory extends PSystemAbstractFactory {

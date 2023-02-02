@@ -40,7 +40,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
-import net.sourceforge.plantuml.ugraphic.MutableImage;
+import net.sourceforge.plantuml.klimt.MutableImage;
 import net.sourceforge.plantuml.ugraphic.UImageSvg;
 
 public interface ScientificEquation {

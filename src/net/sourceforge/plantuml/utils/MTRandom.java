@@ -29,7 +29,7 @@ package net.sourceforge.plantuml.utils;
 
 import java.util.Random;
 
-import net.sourceforge.plantuml.annotation.HaxeIgnored;
+
 
 /**
  * @version 1.0
@@ -83,7 +83,7 @@ import net.sourceforge.plantuml.annotation.HaxeIgnored;
  * -->
  * 
  */
-@HaxeIgnored
+
 public class MTRandom extends Random {
 
 	/**

@@ -42,11 +42,11 @@ import java.util.Map;
 
 import ext.plantuml.com.ctreber.acearth.plugins.markers.Marker;
 import net.sourceforge.plantuml.command.PSystemBasicFactory;
-import net.sourceforge.plantuml.command.regex.Matcher2;
-import net.sourceforge.plantuml.command.regex.MyPattern;
-import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.regex.Matcher2;
+import net.sourceforge.plantuml.regex.MyPattern;
+import net.sourceforge.plantuml.regex.Pattern2;
 
 public class PSystemXearthFactory extends PSystemBasicFactory<PSystemXearth> {
 

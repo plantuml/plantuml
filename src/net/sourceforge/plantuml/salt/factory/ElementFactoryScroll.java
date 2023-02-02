@@ -36,7 +36,7 @@
 package net.sourceforge.plantuml.salt.factory;
 
 import net.sourceforge.plantuml.salt.DataSource;
-import net.sourceforge.plantuml.salt.Dictionary;
+import net.sourceforge.plantuml.salt.SaltDictionary;
 import net.sourceforge.plantuml.salt.Positionner2;
 import net.sourceforge.plantuml.salt.Terminated;
 import net.sourceforge.plantuml.salt.element.Element;
@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.salt.element.ElementPyramidScrolled;
 
 public class ElementFactoryScroll extends AbstractElementFactoryComplex {
 
-	public ElementFactoryScroll(DataSource dataSource, Dictionary dictionary) {
+	public ElementFactoryScroll(DataSource dataSource, SaltDictionary dictionary) {
 		super(dataSource, dictionary);
 	}
 

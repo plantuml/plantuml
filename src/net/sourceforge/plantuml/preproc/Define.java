@@ -41,7 +41,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.AParentFolder;
-import net.sourceforge.plantuml.BackSlash;
+import net.sourceforge.plantuml.text.BackSlash;
 import net.sourceforge.plantuml.tim.expression.TValue;
 
 public class Define {

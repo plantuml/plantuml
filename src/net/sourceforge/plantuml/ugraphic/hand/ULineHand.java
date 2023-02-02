@@ -36,8 +36,8 @@ package net.sourceforge.plantuml.ugraphic.hand;
 
 import java.util.Random;
 
-import net.sourceforge.plantuml.ugraphic.ULine;
-import net.sourceforge.plantuml.ugraphic.UPath;
+import net.sourceforge.plantuml.klimt.ULine;
+import net.sourceforge.plantuml.klimt.UPath;
 
 public class ULineHand {
 

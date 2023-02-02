@@ -36,7 +36,7 @@
 package net.sourceforge.plantuml.svek.extremity;
 
 import net.sourceforge.plantuml.graphic.UDrawable;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColor;
 
 public class MiddleFactoryCircle implements MiddleFactory {
 	

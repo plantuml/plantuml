@@ -37,16 +37,19 @@ package net.sourceforge.plantuml;
 
 import java.util.Map;
 
+import net.atmp.ISkinSimple;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.creole.Parser;
 import net.sourceforge.plantuml.creole.SheetBuilder;
 import net.sourceforge.plantuml.creole.legacy.CreoleParser;
-import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.color.HColorSet;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.sprite.Sprite;
+import net.sourceforge.plantuml.sprite.SpriteContainer;
 import net.sourceforge.plantuml.sprite.SpriteImage;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.ugraphic.color.HColorSet;
+import net.sourceforge.plantuml.text.Guillemet;
 
 public class SpriteContainerEmpty implements SpriteContainer, ISkinSimple {
 

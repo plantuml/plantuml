@@ -37,9 +37,9 @@ package net.sourceforge.plantuml.nwdiag;
 import java.util.Set;
 
 import net.sourceforge.plantuml.graphic.UDrawable;
+import net.sourceforge.plantuml.klimt.UPath;
+import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.UPath;
-import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class VerticalLine implements UDrawable {
 

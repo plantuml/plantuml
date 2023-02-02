@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.creole;
 
-import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
 
 public interface Stencil {
 

@@ -34,8 +34,8 @@
  */
 package net.sourceforge.plantuml.nwdiag.core;
 
+import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.nwdiag.next.NStage;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class Network implements NStackable {
 

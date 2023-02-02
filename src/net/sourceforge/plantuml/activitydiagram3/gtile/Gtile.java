@@ -38,11 +38,12 @@ package net.sourceforge.plantuml.activitydiagram3.gtile;
 import java.util.Collection;
 
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
 
 public interface Gtile extends Swimable2, TextBlock {
+	// ::remove folder when WASM
 
 	public static final boolean USE_GTILE = false;
 

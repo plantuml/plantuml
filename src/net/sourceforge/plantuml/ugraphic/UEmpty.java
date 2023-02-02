@@ -35,6 +35,7 @@
 package net.sourceforge.plantuml.ugraphic;
 
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.UShape;
 
 public class UEmpty implements UShape {
 

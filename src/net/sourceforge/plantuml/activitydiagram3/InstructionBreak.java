@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.gtile.Gtile;
 import net.sourceforge.plantuml.activitydiagram3.gtile.GtileBreak;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
 
 public class InstructionBreak extends MonoSwimable implements Instruction {
 
@@ -61,10 +61,12 @@ public class InstructionBreak extends MonoSwimable implements Instruction {
 		return new FtileBreak(factory.skinParam(), getSwimlaneIn());
 	}
 
+	// ::comment when WASM
 	@Override
 	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
 		return new GtileBreak(stringBounder, skinParam, getSwimlaneIn());
 	}
+	// ::done
 
 	@Override
 	public CommandExecutionResult add(Instruction other) {

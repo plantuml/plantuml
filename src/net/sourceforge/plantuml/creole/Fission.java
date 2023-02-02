@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.creole.atom.AbstractAtom;
 import net.sourceforge.plantuml.creole.atom.Atom;
-import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 public class Fission {

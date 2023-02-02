@@ -41,15 +41,15 @@ import net.sourceforge.plantuml.activitydiagram3.gtile.Gtile;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.graphic.UGraphicDelegator;
+import net.sourceforge.plantuml.klimt.UChange;
+import net.sourceforge.plantuml.klimt.ULine;
+import net.sourceforge.plantuml.klimt.UShape;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.svek.UGraphicForSnake;
-import net.sourceforge.plantuml.ugraphic.UChange;
 import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.ULine;
-import net.sourceforge.plantuml.ugraphic.UShape;
-import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColors;
 
 public class UGraphicInterceptorUDrawable2 extends UGraphicDelegator {
 
@@ -61,11 +61,14 @@ public class UGraphicInterceptorUDrawable2 extends UGraphicDelegator {
 	}
 
 	public void draw(UShape shape) {
+		// :: comment when WASM
 		if (shape instanceof Gtile) {
 			final Gtile gtile = (Gtile) shape;
 			// System.err.println("gtile=" + gtile);
 			gtile.drawU(this);
-		} else if (shape instanceof Ftile) {
+		} else
+		// :: done
+		if (shape instanceof Ftile) {
 			final Ftile ftile = (Ftile) shape;
 			// System.err.println("ftile=" + ftile);
 			ftile.drawU(this);

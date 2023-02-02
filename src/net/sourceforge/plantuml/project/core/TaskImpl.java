@@ -45,7 +45,6 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.project.Load;
 import net.sourceforge.plantuml.project.LoadPlanable;
@@ -56,6 +55,7 @@ import net.sourceforge.plantuml.project.solver.SolverImpl;
 import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.time.DayOfWeek;
 import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.url.Url;
 
 public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 

@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
-import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
 
 public abstract class FtileDimensionMemoize extends AbstractFtile {
 

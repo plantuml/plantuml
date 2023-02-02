@@ -41,15 +41,13 @@ import java.util.Random;
 
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.UPath;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UGraphicStencil;
-import net.sourceforge.plantuml.ugraphic.UPath;
-import net.sourceforge.plantuml.ugraphic.UTranslate;
-// https://stackoverflow.com/questions/39552127/algorithm-for-drawing-random-comic-style-clouds
-// http://martin-oehm.de/data/cloud.html
-// https://stackoverflow.com/questions/34623855/what-is-the-algorithm-behind-the-pdf-cloud-annotation
-// https://stackoverflow.com/questions/3177121/how-do-i-paint-clouds
 
 class USymbolCloud extends USymbol {
 

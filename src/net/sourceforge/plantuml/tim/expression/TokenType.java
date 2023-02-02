@@ -34,9 +34,9 @@
  */
 package net.sourceforge.plantuml.tim.expression;
 
+import net.sourceforge.plantuml.text.TLineType;
 import net.sourceforge.plantuml.tim.Eater;
 import net.sourceforge.plantuml.tim.EaterException;
-import net.sourceforge.plantuml.tim.TLineType;
 
 public enum TokenType {
 	QUOTED_STRING, JSON_DATA, OPERATOR, OPEN_PAREN_MATH, COMMA, CLOSE_PAREN_MATH, NUMBER, PLAIN_TEXT, SPACES,

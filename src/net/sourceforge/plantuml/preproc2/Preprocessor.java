@@ -40,7 +40,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.preproc.ReadLine;
 import net.sourceforge.plantuml.preproc.ReadLineNumbered;
-import net.sourceforge.plantuml.utils.StringLocated;
+import net.sourceforge.plantuml.text.StringLocated;
 
 public class Preprocessor implements ReadLineNumbered {
 

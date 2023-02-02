@@ -36,12 +36,12 @@
 package net.sourceforge.plantuml.project.lang;
 
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.project.GanttConstraint;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.core.TaskAttribute;
 import net.sourceforge.plantuml.project.core.TaskInstant;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class SentenceTaskStartsWithColor extends SentenceSimple {
 

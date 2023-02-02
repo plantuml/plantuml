@@ -37,11 +37,11 @@ package net.sourceforge.plantuml.ugraphic.g2d;
 
 import java.awt.Graphics2D;
 
-import net.sourceforge.plantuml.EnsureVisible;
-import net.sourceforge.plantuml.posimo.DotPath;
+import net.sourceforge.plantuml.klimt.DotPath;
+import net.sourceforge.plantuml.klimt.UParam;
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
+import net.sourceforge.plantuml.klimt.geom.EnsureVisible;
 import net.sourceforge.plantuml.ugraphic.UDriver;
-import net.sourceforge.plantuml.ugraphic.UParam;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 
 public class DriverDotPathG2d implements UDriver<DotPath, Graphics2D> {
 

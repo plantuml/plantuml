@@ -40,6 +40,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import java.io.UnsupportedEncodingException;
 
 public class SentenceDecoder {
+	// ::remove file when WASM
 
 	private final String secret;
 

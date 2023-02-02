@@ -41,7 +41,7 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
-import net.sourceforge.plantuml.ugraphic.MinMax;
+import net.sourceforge.plantuml.klimt.geom.MinMax;
 
 public class Animation {
 

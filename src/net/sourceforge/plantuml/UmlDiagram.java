@@ -65,6 +65,9 @@ import net.sourceforge.plantuml.fun.IconLoader;
 import net.sourceforge.plantuml.graphic.GraphicPosition;
 import net.sourceforge.plantuml.graphic.GraphicStrings;
 import net.sourceforge.plantuml.graphic.UDrawable;
+import net.sourceforge.plantuml.klimt.UImage;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.font.FontParam;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.mjpeg.MJPEGGenerator;
 import net.sourceforge.plantuml.pdf.PdfConverter;
@@ -78,8 +81,6 @@ import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.AffineTransformType;
 import net.sourceforge.plantuml.ugraphic.PixelImage;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.UImage;
-import net.sourceforge.plantuml.ugraphic.UTranslate;
 import net.sourceforge.plantuml.utils.Log;
 import net.sourceforge.plantuml.version.Version;
 
@@ -200,6 +201,7 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 		plainImageBuilder(drawable, fileFormat).metadata(metadata).seed(seed).write(os);
 	}
 
+	// ::comment when WASM
 	private static void exportDiagramErrorText(OutputStream os, Throwable exception, List<String> strings) {
 		final PrintWriter pw = SecurityUtils.createPrintWriter(os);
 		exception.printStackTrace(pw);
@@ -211,6 +213,7 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 		}
 		pw.flush();
 	}
+	// ::done
 
 	public String getFlashData() {
 		final UmlSource source = getSource();

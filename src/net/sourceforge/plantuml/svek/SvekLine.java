@@ -51,7 +51,6 @@ import net.sourceforge.plantuml.LineParam;
 import net.sourceforge.plantuml.Pragma;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
-import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.baraye.EntityImp;
@@ -71,22 +70,31 @@ import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.cucadiagram.dot.DotSplines;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizVersion;
 import net.sourceforge.plantuml.descdiagram.command.StringWithArrow;
-import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.Rainbow;
-import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.TextBlockUtils;
 import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.graphic.USymbolFolder;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
-import net.sourceforge.plantuml.graphic.color.ColorType;
 import net.sourceforge.plantuml.graphic.color.Colors;
-import net.sourceforge.plantuml.posimo.BezierUtils;
-import net.sourceforge.plantuml.posimo.DotPath;
-import net.sourceforge.plantuml.posimo.Moveable;
-import net.sourceforge.plantuml.posimo.Positionable;
-import net.sourceforge.plantuml.posimo.PositionableUtils;
+import net.sourceforge.plantuml.klimt.DotPath;
+import net.sourceforge.plantuml.klimt.UGroupType;
+import net.sourceforge.plantuml.klimt.ULine;
+import net.sourceforge.plantuml.klimt.UPolygon;
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.ColorType;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.BezierUtils;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.Moveable;
+import net.sourceforge.plantuml.klimt.geom.PointAndAngle;
+import net.sourceforge.plantuml.klimt.geom.Positionable;
+import net.sourceforge.plantuml.klimt.geom.PositionableUtils;
+import net.sourceforge.plantuml.klimt.geom.Side;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.StyleBuilder;
@@ -97,13 +105,7 @@ import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryExtends;
 import net.sourceforge.plantuml.svek.extremity.ExtremityOther;
 import net.sourceforge.plantuml.svek.image.EntityImageNoteLink;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.UGroupType;
-import net.sourceforge.plantuml.ugraphic.ULine;
-import net.sourceforge.plantuml.ugraphic.UPolygon;
-import net.sourceforge.plantuml.ugraphic.UStroke;
-import net.sourceforge.plantuml.ugraphic.UTranslate;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColors;
+import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.utils.Direction;
 import net.sourceforge.plantuml.utils.Log;
 
@@ -552,10 +554,10 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		final int end = fullSvg.indexOf("\"", idx + 3);
 		final SvgResult path = fullSvg.substring(idx + 3, end);
 
-		if (DotPath.isPathConsistent(path.getSvg()) == false)
+		if (path.isPathConsistent() == false)
 			return;
 
-		dotPath = new DotPath(path);
+		dotPath = path.toDotPath();
 
 		if (projectionCluster != null) {
 			// System.err.println("Line::solveLine1 projectionCluster=" +
@@ -568,7 +570,8 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 			// if (ltail != null)
 			// System.err.println("Line::solveLine ltail=" + ltail.getClusterPosition());
 		}
-		dotPath = dotPath.simulateCompound(lhead, ltail);
+		dotPath = dotPath.simulateCompound(lhead == null ? null : lhead.getClusterPosition(),
+				ltail == null ? null : ltail.getClusterPosition());
 
 		final SvgResult lineSvg = fullSvg.substring(end);
 		PointListIterator pointListIterator = lineSvg.getPointsWithThisColor(lineColor);

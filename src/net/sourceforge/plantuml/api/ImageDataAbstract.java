@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.api;
 
-import net.sourceforge.plantuml.annotation.HaxeIgnored;
+
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.core.ImageData;
 
@@ -50,7 +50,7 @@ public abstract class ImageDataAbstract implements ImageData {
 		this.height = height;
 	}
 	
-	@HaxeIgnored
+	
 	public ImageDataAbstract(XDimension2D dim) {
 		this((int) dim.getWidth(), (int) dim.getHeight());
 	}

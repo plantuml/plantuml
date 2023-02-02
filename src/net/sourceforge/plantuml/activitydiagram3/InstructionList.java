@@ -53,9 +53,9 @@ import net.sourceforge.plantuml.activitydiagram3.gtile.GtileAssembly;
 import net.sourceforge.plantuml.activitydiagram3.gtile.GtileEmpty;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
 
@@ -101,6 +101,7 @@ public class InstructionList extends WithNote implements Instruction, Instructio
 		return CommandExecutionResult.ok();
 	}
 
+	// ::comment when WASM
 	@Override
 	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
 		if (all.size() == 0)
@@ -118,6 +119,7 @@ public class InstructionList extends WithNote implements Instruction, Instructio
 		}
 		return result;
 	}
+	// ::done
 
 	@Override
 	public Ftile createFtile(FtileFactory factory) {

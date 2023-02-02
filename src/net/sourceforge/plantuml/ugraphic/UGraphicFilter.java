@@ -39,6 +39,8 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import net.sourceforge.plantuml.graphic.UGraphicDelegator;
+import net.sourceforge.plantuml.klimt.UChange;
+import net.sourceforge.plantuml.klimt.UShape;
 
 public class UGraphicFilter extends UGraphicDelegator {
 

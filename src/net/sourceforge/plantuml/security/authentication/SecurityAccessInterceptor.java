@@ -38,16 +38,19 @@ package net.sourceforge.plantuml.security.authentication;
 import java.net.URLConnection;
 
 /**
- * The security access interceptor applies the authentication information to a HTTP connection. This can be a
- * user/password combination for BasicAuth or a bearer token for OAuth2.
+ * The security access interceptor applies the authentication information to a
+ * HTTP connection. This can be a user/password combination for BasicAuth or a
+ * bearer token for OAuth2.
  *
  * @author Aljoscha Rittner
  */
 public interface SecurityAccessInterceptor {
+	// ::remove folder when WASM
 	/**
 	 * Applies to a connection the authentication information.
 	 *
-	 * @param authentication the determined authentication data to authorize for the endpoint access
+	 * @param authentication the determined authentication data to authorize for the
+	 *                       endpoint access
 	 * @param connection     the connection to the endpoint
 	 */
 	void apply(SecurityAuthentication authentication, URLConnection connection);

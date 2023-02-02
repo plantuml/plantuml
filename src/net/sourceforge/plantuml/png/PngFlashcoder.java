@@ -40,7 +40,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
-import net.sourceforge.plantuml.ugraphic.UAntiAliasing;
+import net.sourceforge.plantuml.klimt.UAntiAliasing;
 
 public class PngFlashcoder {
 	// ::remove file when WASM

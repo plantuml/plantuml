@@ -53,7 +53,6 @@ import org.w3c.dom.Comment;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.baraye.EntityImp;
 import net.sourceforge.plantuml.baraye.Quark;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -61,6 +60,7 @@ import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.statediagram.StateDiagram;
+import net.sourceforge.plantuml.text.Guillemet;
 import net.sourceforge.plantuml.xml.XmlFactories;
 
 public class ScxmlStateDiagramStandard {

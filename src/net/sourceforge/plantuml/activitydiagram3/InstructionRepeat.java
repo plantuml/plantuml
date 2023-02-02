@@ -52,12 +52,12 @@ import net.sourceforge.plantuml.activitydiagram3.gtile.GtileBox;
 import net.sourceforge.plantuml.activitydiagram3.gtile.GtileRepeat;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public class InstructionRepeat extends AbstractInstruction implements Instruction {
 
@@ -127,6 +127,7 @@ public class InstructionRepeat extends AbstractInstruction implements Instructio
 		return repeatList.add(ins);
 	}
 
+	// ::comment when WASM
 	@Override
 	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
 
@@ -146,6 +147,7 @@ public class InstructionRepeat extends AbstractInstruction implements Instructio
 //		}
 		return result;
 	}
+	// ::done
 
 	public Ftile createFtile(FtileFactory factory) {
 		final Ftile back = getFtileBackward(factory);

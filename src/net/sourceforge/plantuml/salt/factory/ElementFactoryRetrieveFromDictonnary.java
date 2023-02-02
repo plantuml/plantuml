@@ -38,16 +38,16 @@ package net.sourceforge.plantuml.salt.factory;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.salt.DataSource;
-import net.sourceforge.plantuml.salt.Dictionary;
+import net.sourceforge.plantuml.salt.SaltDictionary;
 import net.sourceforge.plantuml.salt.Terminated;
 import net.sourceforge.plantuml.salt.element.Element;
 
 public class ElementFactoryRetrieveFromDictonnary implements ElementFactory {
 
-	private final Dictionary dictionary;
+	private final SaltDictionary dictionary;
 	private final DataSource dataSource;
 
-	public ElementFactoryRetrieveFromDictonnary(DataSource dataSource, Dictionary dictionary) {
+	public ElementFactoryRetrieveFromDictonnary(DataSource dataSource, SaltDictionary dictionary) {
 		this.dataSource = dataSource;
 		this.dictionary = dictionary;
 	}

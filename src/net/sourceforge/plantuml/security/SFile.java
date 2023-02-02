@@ -258,6 +258,7 @@ public class SFile implements Comparable<SFile> {
 	 * Check SecurityProfile to see if this file can be open.
 	 */
 	private boolean isFileOk() {
+		// ::comment when WASM
 		if (SecurityUtils.getSecurityProfile() == SecurityProfile.SANDBOX)
 			// In SANDBOX, we cannot read any files
 			return false;
@@ -294,6 +295,7 @@ public class SFile implements Comparable<SFile> {
 				return false;
 
 		}
+		// ::done
 		return true;
 	}
 
@@ -314,12 +316,14 @@ public class SFile implements Comparable<SFile> {
 	 * @throws IOException If an I/O error occurs, which is possible because the
 	 *                     check the pathname may require filesystem queries
 	 */
+	// ::comment when WASM
 	private boolean isDenied() throws IOException {
 		SFile securityPath = SecurityUtils.getSecurityPath();
 		if (securityPath == null)
 			return false;
 		return getSanitizedPath().startsWith(securityPath.getSanitizedPath());
 	}
+	// ::done
 
 	/**
 	 * Returns a sanitized, canonical and normalized Path to a file.
@@ -350,9 +354,11 @@ public class SFile implements Comparable<SFile> {
 		// https://stackoverflow.com/questions/18743790/can-java-load-images-with-transparency
 		if (isFileOk())
 			try {
+				// ::comment when WASM
 				if (internal.getName().endsWith(".webp"))
 					return readWebp();
 				else
+					// ::done
 					return SecurityUtils.readRasterImage(new ImageIcon(this.getAbsolutePath()));
 			} catch (Exception e) {
 				Logme.error(e);
@@ -360,6 +366,7 @@ public class SFile implements Comparable<SFile> {
 		return null;
 	}
 
+	// ::comment when WASM
 	private BufferedImage readWebp() throws IOException {
 		try (InputStream is = openFile()) {
 			final int riff = read32(is);
@@ -405,6 +412,7 @@ public class SFile implements Comparable<SFile> {
 			return null;
 		}
 	}
+	// ::done
 
 	public BufferedReader openBufferedReader() {
 		if (isFileOk()) {

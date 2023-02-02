@@ -35,10 +35,10 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
-import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.Task;
+import net.sourceforge.plantuml.url.Url;
 
 public class SentenceLinksTo extends SentenceSimple {
 

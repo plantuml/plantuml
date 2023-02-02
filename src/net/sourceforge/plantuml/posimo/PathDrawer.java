@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.posimo;
 
+import net.sourceforge.plantuml.klimt.geom.Positionable;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 public interface PathDrawer {

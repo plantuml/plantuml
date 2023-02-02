@@ -37,10 +37,10 @@ package net.sourceforge.plantuml.ugraphic.g2d;
 
 import java.awt.Graphics2D;
 
+import net.sourceforge.plantuml.klimt.UParam;
+import net.sourceforge.plantuml.klimt.UPixel;
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.ugraphic.UDriver;
-import net.sourceforge.plantuml.ugraphic.UParam;
-import net.sourceforge.plantuml.ugraphic.UPixel;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
 
 public class DriverPixelG2d implements UDriver<UPixel, Graphics2D> {
 

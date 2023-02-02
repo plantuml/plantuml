@@ -50,8 +50,8 @@ import net.sourceforge.plantuml.code.CompressionZopfliZlib;
 import net.sourceforge.plantuml.code.NoPlantumlCompressionException;
 import net.sourceforge.plantuml.code.PairInt;
 import net.sourceforge.plantuml.code.SpiralOnRectangle;
+import net.sourceforge.plantuml.klimt.color.ColorUtils;
 import net.sourceforge.plantuml.log.Logme;
-import net.sourceforge.plantuml.ugraphic.color.ColorUtils;
 
 public enum SpriteGrayLevel {
 

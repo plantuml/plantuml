@@ -45,7 +45,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.AbstractPSystem;
-import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.UmlDiagram;
@@ -56,6 +55,7 @@ import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.svek.GraphvizCrash;
+import net.sourceforge.plantuml.text.BackSlash;
 
 public class PSystemDitaa extends AbstractPSystem {
 	// ::remove folder when WASM

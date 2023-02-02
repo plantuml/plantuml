@@ -58,7 +58,11 @@ import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
-import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.salt.element.Element;
 import net.sourceforge.plantuml.salt.factory.AbstractElementFactoryComplex;
@@ -83,18 +87,14 @@ import net.sourceforge.plantuml.salt.factory.ElementFactoryTree;
 import net.sourceforge.plantuml.sprite.Sprite;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
-import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColors;
-import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.Log;
 
 public class PSystemSalt extends TitledDiagram implements WithSprite {
 
 	private final List<String> data;
-	private final Dictionary dictionary = new Dictionary();
+	private final SaltDictionary dictionary = new SaltDictionary();
 
 	@Deprecated
 	public PSystemSalt(UmlSource source, List<String> data) {
@@ -226,7 +226,7 @@ public class PSystemSalt extends TitledDiagram implements WithSprite {
 	}
 
 	private static void addSimpleFactory(final AbstractElementFactoryComplex cpxFactory, final DataSource source,
-			Dictionary dictionary) {
+			SaltDictionary dictionary) {
 		cpxFactory.addFactory(new ElementFactoryMenu(source, dictionary));
 		cpxFactory.addFactory(new ElementFactoryTree(source, dictionary));
 		cpxFactory.addFactory(new ElementFactoryTab(source, dictionary));

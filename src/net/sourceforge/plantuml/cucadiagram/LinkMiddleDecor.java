@@ -35,11 +35,11 @@
  */
 package net.sourceforge.plantuml.cucadiagram;
 
+import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.svek.extremity.MiddleCircleCircledMode;
 import net.sourceforge.plantuml.svek.extremity.MiddleFactory;
 import net.sourceforge.plantuml.svek.extremity.MiddleFactoryCircle;
 import net.sourceforge.plantuml.svek.extremity.MiddleFactoryCircleCircled;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public enum LinkMiddleDecor {
 

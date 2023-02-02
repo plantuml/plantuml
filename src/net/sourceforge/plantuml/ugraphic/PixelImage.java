@@ -41,7 +41,8 @@ import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.util.Objects;
 
-import net.sourceforge.plantuml.ugraphic.color.ColorUtils;
+import net.sourceforge.plantuml.klimt.MutableImage;
+import net.sourceforge.plantuml.klimt.color.ColorUtils;
 
 public class PixelImage implements MutableImage {
 

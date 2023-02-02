@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.graphic;
 
-import net.sourceforge.plantuml.ugraphic.UFont;
+import net.sourceforge.plantuml.klimt.font.UFont;
 
 public enum FontPosition {
 	NORMAL, EXPOSANT, INDICE;

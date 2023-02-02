@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.mindmap;
 
 import java.awt.geom.Line2D;
 
-import net.sourceforge.plantuml.annotation.HaxeIgnored;
+
 
 public class SymetricalTeePositioned {
 
@@ -49,7 +49,7 @@ public class SymetricalTeePositioned {
 		return "y=" + y + " " + tee;
 	}
 
-	@HaxeIgnored
+	
 	public SymetricalTeePositioned(SymetricalTee tee) {
 		this(tee, 0);
 	}

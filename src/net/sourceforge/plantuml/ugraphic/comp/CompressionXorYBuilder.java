@@ -35,8 +35,9 @@
  */
 package net.sourceforge.plantuml.ugraphic.comp;
 
-import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.klimt.comp.CompressionMode;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
 
 public class CompressionXorYBuilder {
 

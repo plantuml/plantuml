@@ -35,8 +35,8 @@
  */
 package net.sourceforge.plantuml.mindmap;
 
-import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.UDrawable;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
 
 public interface Finger extends UDrawable {
 

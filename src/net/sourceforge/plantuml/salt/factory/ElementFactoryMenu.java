@@ -35,17 +35,17 @@
  */
 package net.sourceforge.plantuml.salt.factory;
 
+import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.salt.DataSource;
-import net.sourceforge.plantuml.salt.Dictionary;
+import net.sourceforge.plantuml.salt.SaltDictionary;
 import net.sourceforge.plantuml.salt.Terminated;
 import net.sourceforge.plantuml.salt.Terminator;
 import net.sourceforge.plantuml.salt.element.Element;
 import net.sourceforge.plantuml.salt.element.ElementMenuBar;
-import net.sourceforge.plantuml.ugraphic.UFont;
 
 public class ElementFactoryMenu extends AbstractElementFactoryComplex {
 
-	public ElementFactoryMenu(DataSource dataSource, Dictionary dictionary) {
+	public ElementFactoryMenu(DataSource dataSource, SaltDictionary dictionary) {
 		super(dataSource, dictionary);
 	}
 

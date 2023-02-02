@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.graphic;
 
-import net.sourceforge.plantuml.BackSlash;
+import net.sourceforge.plantuml.text.BackSlash;
 
 public class Text implements HtmlCommand {
 

@@ -36,6 +36,8 @@ package net.sourceforge.plantuml.tim.iterator;
 
 import java.util.List;
 
+import net.sourceforge.plantuml.text.StringLocated;
+import net.sourceforge.plantuml.text.TLineType;
 import net.sourceforge.plantuml.tim.EaterElseIf;
 import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.EaterExceptionLocated;
@@ -44,9 +46,7 @@ import net.sourceforge.plantuml.tim.EaterIfdef;
 import net.sourceforge.plantuml.tim.EaterIfndef;
 import net.sourceforge.plantuml.tim.ExecutionContextIf;
 import net.sourceforge.plantuml.tim.TContext;
-import net.sourceforge.plantuml.tim.TLineType;
 import net.sourceforge.plantuml.tim.TMemory;
-import net.sourceforge.plantuml.utils.StringLocated;
 
 public class CodeIteratorIf extends AbstractCodeIterator {
 

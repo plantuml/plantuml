@@ -36,6 +36,10 @@
 package net.sourceforge.plantuml.ugraphic;
 
 import net.sourceforge.plantuml.graphic.UGraphicDelegator;
+import net.sourceforge.plantuml.klimt.UChange;
+import net.sourceforge.plantuml.klimt.UClip;
+import net.sourceforge.plantuml.klimt.UShape;
+import net.sourceforge.plantuml.klimt.UTranslate;
 
 public abstract class AbstractUGraphicHorizontalLine extends UGraphicDelegator {
 

@@ -40,8 +40,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.sourceforge.plantuml.ISkinSimple;
-import net.sourceforge.plantuml.Url;
+import net.atmp.ISkinSimple;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.creole.Parser;
 import net.sourceforge.plantuml.creole.atom.Atom;
@@ -52,12 +51,13 @@ import net.sourceforge.plantuml.creole.atom.AtomSprite;
 import net.sourceforge.plantuml.creole.atom.AtomVerticalTexts;
 import net.sourceforge.plantuml.creole.legacy.AtomText.DelayedDouble;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.ImgValign;
 import net.sourceforge.plantuml.graphic.Splitter;
-import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.openiconic.OpenIcon;
 import net.sourceforge.plantuml.sprite.Sprite;
+import net.sourceforge.plantuml.url.Url;
 
 public class AtomTextUtils {
 

@@ -42,7 +42,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import net.sourceforge.plantuml.SkinParam;
-import net.sourceforge.plantuml.ugraphic.color.HColorSet;
+import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.utils.Cypher;
 
 public class LanguageDescriptor {

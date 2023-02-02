@@ -44,9 +44,9 @@ import java.nio.charset.Charset;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.preproc2.ReadFilterMergeLines;
 import net.sourceforge.plantuml.security.SURL;
+import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.Log;
 import net.sourceforge.plantuml.utils.StartUtils;
-import net.sourceforge.plantuml.utils.StringLocated;
 
 public class StartDiagramExtractReader implements ReadLine {
 

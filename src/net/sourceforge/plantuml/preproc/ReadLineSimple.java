@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.preproc;
 
-import net.sourceforge.plantuml.utils.StringLocated;
+import net.sourceforge.plantuml.text.StringLocated;
 
 public class ReadLineSimple implements ReadLine {
 

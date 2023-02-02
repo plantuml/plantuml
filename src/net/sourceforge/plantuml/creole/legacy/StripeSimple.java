@@ -42,9 +42,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import net.sourceforge.plantuml.BackSlash;
-import net.sourceforge.plantuml.ISkinSimple;
-import net.sourceforge.plantuml.Url;
+import net.atmp.ISkinSimple;
 import net.sourceforge.plantuml.creole.CreoleContext;
 import net.sourceforge.plantuml.creole.CreoleHorizontalLine;
 import net.sourceforge.plantuml.creole.CreoleMode;
@@ -77,17 +75,19 @@ import net.sourceforge.plantuml.creole.command.CommandCreoleStyle;
 import net.sourceforge.plantuml.creole.command.CommandCreoleSvgAttributeChange;
 import net.sourceforge.plantuml.creole.command.CommandCreoleUrl;
 import net.sourceforge.plantuml.emoji.Emoji;
-import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.FontPosition;
 import net.sourceforge.plantuml.graphic.FontStyle;
-import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.ImgValign;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.math.ScientificEquationSafe;
 import net.sourceforge.plantuml.openiconic.OpenIcon;
 import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.sprite.Sprite;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
+import net.sourceforge.plantuml.text.BackSlash;
+import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.utils.CharHidder;
 
 public class StripeSimple implements Stripe {
@@ -172,8 +172,10 @@ public class StripeSimple implements Stripe {
 		addCommand(CommandCreoleFontFamilyChange.createEol());
 		addCommand(CommandCreoleMonospaced.create());
 		addCommand(CommandCreoleUrl.create());
+		// ::comment when WASM
 		if (SecurityUtils.allowSvgText())
 			addCommand(CommandCreoleSvgAttributeChange.create());
+		// ::done
 
 		this.header = style.getHeader(fontConfiguration, context);
 

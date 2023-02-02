@@ -97,6 +97,7 @@ public class PSystemVersion extends PlainStringsDiagram {
 		return getImage("favicon.png");
 	}
 
+	// ::comment when WASM
 	public static BufferedImage getArecibo() {
 		return getImage("arecibo.png");
 	}
@@ -112,6 +113,7 @@ public class PSystemVersion extends PlainStringsDiagram {
 	public static BufferedImage getApple2Image() {
 		return getImageWebp("apple2.png");
 	}
+	// ::done
 
 	private static BufferedImage getImage(final String name) {
 		try {
@@ -125,6 +127,7 @@ public class PSystemVersion extends PlainStringsDiagram {
 		return new BufferedImage(10, 10, BufferedImage.TYPE_INT_ARGB);
 	}
 
+	// ::comment when WASM
 	private static BufferedImage getImageWebp(final String name) {
 		try (InputStream is = PSystemVersion.class.getResourceAsStream(name)) {
 			return SFile.getBufferedImageFromWebpButHeader(is);
@@ -133,6 +136,7 @@ public class PSystemVersion extends PlainStringsDiagram {
 		}
 		return new BufferedImage(10, 10, BufferedImage.TYPE_INT_ARGB);
 	}
+	// ::done
 
 	private static BufferedImage transparentIcon;
 

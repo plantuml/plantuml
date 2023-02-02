@@ -42,22 +42,22 @@ import java.util.Map;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.LineBreakStrategy;
-import net.sourceforge.plantuml.annotation.HaxeIgnored;
+
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.awt.geom.XRectangle2D;
 import net.sourceforge.plantuml.creole.atom.Atom;
 import net.sourceforge.plantuml.creole.legacy.StripeSimple;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
-import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
-import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.ugraphic.MinMax;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class SheetBlock1 extends AbstractTextBlock implements TextBlock, Atom, Stencil {
 
@@ -74,7 +74,7 @@ public class SheetBlock1 extends AbstractTextBlock implements TextBlock, Atom, S
 	private Class<? extends StringBounder> lastCaller;
 	private double minimumWidth;
 
-	@HaxeIgnored
+	
 	public SheetBlock1(Sheet sheet, LineBreakStrategy maxWidth, double padding) {
 		this(sheet, maxWidth, ClockwiseTopRightBottomLeft.same(padding), 0, 0);
 	}

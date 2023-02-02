@@ -72,8 +72,8 @@ import net.sourceforge.plantuml.json.JsonArray;
 import net.sourceforge.plantuml.json.JsonObject;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.LineLocationImpl;
-import net.sourceforge.plantuml.utils.StringLocated;
 import net.sourceforge.plantuml.version.Version;
 
 public class PicoWebServer implements Runnable {

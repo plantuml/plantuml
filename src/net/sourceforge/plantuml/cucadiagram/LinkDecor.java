@@ -37,6 +37,7 @@
 package net.sourceforge.plantuml.cucadiagram;
 
 import net.sourceforge.plantuml.OptionFlags;
+import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactory;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryArrow;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryArrowAndCircle;
@@ -56,7 +57,6 @@ import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryParenthesis;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryPlus;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactorySquare;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryTriangle;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
 
 public enum LinkDecor {
 

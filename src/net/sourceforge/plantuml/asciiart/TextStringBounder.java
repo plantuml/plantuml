@@ -35,10 +35,9 @@
  */
 package net.sourceforge.plantuml.asciiart;
 
-import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
-import net.sourceforge.plantuml.graphic.StringBounderRaw;
-import net.sourceforge.plantuml.ugraphic.UFont;
+import net.sourceforge.plantuml.klimt.font.StringBounderRaw;
+import net.sourceforge.plantuml.klimt.font.UFont;
 
 public class TextStringBounder extends StringBounderRaw {
 
@@ -50,8 +49,8 @@ public class TextStringBounder extends StringBounderRaw {
 	}
 
 	@Override
-	public FileFormat getNativeFormat() {
-		return FileFormat.ATXT;
+	public boolean matchesProperty(String propertyName) {
+		return false;
 	}
 
 }

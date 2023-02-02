@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.cucadiagram;
 
-import net.sourceforge.plantuml.ugraphic.UStroke;
+import net.sourceforge.plantuml.klimt.UStroke;
 
 public class LinkStyle {
 

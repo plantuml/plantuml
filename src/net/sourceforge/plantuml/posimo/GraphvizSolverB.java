@@ -50,8 +50,9 @@ import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.cucadiagram.dot.Graphviz;
 import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
 import net.sourceforge.plantuml.cucadiagram.dot.ProcessState;
+import net.sourceforge.plantuml.klimt.DotPath;
+import net.sourceforge.plantuml.klimt.geom.MinFinder;
 import net.sourceforge.plantuml.security.SFile;
-import net.sourceforge.plantuml.svek.MinFinder;
 import net.sourceforge.plantuml.svek.SvgResult;
 import net.sourceforge.plantuml.svek.YDelta;
 
@@ -164,7 +165,7 @@ public class GraphvizSolverB {
 			final int p2 = s.indexOf(" d=\"", p1);
 			final int p3 = s.indexOf("\"", p2 + " d=\"".length());
 			final String points = s.substring(p2 + " d=\"".length(), p3);
-			final DotPath dotPath = new DotPath(new SvgResult(points, yDelta));
+			final DotPath dotPath = new SvgResult(points, yDelta).toDotPath();
 			p.setDotPath(dotPath);
 			minMax.manage(dotPath.getMinFinder());
 

@@ -39,12 +39,13 @@ import java.util.List;
 
 import net.sourceforge.plantuml.json.Json;
 import net.sourceforge.plantuml.json.JsonValue;
+import net.sourceforge.plantuml.text.StringLocated;
+import net.sourceforge.plantuml.text.TLineType;
 import net.sourceforge.plantuml.tim.expression.TValue;
 import net.sourceforge.plantuml.tim.expression.Token;
 import net.sourceforge.plantuml.tim.expression.TokenStack;
 import net.sourceforge.plantuml.tim.expression.TokenType;
 import net.sourceforge.plantuml.utils.LineLocation;
-import net.sourceforge.plantuml.utils.StringLocated;
 
 public abstract class Eater {
 

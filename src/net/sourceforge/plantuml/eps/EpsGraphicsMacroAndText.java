@@ -37,9 +37,9 @@ package net.sourceforge.plantuml.eps;
 
 import java.io.UnsupportedEncodingException;
 
-import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.ugraphic.UFont;
-import net.sourceforge.plantuml.ugraphic.UFontContext;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontContext;
 
 public class EpsGraphicsMacroAndText extends EpsGraphicsMacro {
 

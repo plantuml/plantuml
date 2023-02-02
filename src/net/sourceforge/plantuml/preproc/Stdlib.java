@@ -45,7 +45,7 @@ public class Stdlib {
 //		fullname = fullname.replace(".puml", "");
 //		fullname = fullname.replace("awslib/", "awslib14/");
 //
-//		final String fullpath = RunInit.pathStdlib + fullname + ".puml";
+//		final String fullpath = RunInit.cheerpjPath + "stdlib/" + fullname + ".puml";
 //		System.err.println("Trying to read " + fullpath);
 //		// See https://docs.leaningtech.com/cheerpj/File-System-support
 //		try {

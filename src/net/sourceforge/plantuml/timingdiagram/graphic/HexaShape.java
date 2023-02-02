@@ -36,8 +36,8 @@ package net.sourceforge.plantuml.timingdiagram.graphic;
 
 import net.sourceforge.plantuml.graphic.SymbolContext;
 import net.sourceforge.plantuml.graphic.UDrawable;
+import net.sourceforge.plantuml.klimt.UPolygon;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.UPolygon;
 
 public class HexaShape implements UDrawable {
 

@@ -49,8 +49,8 @@ import net.sourceforge.plantuml.preproc.ReadLine;
 import net.sourceforge.plantuml.preproc.ReadLineReader;
 import net.sourceforge.plantuml.preproc2.PreprocessorUtils;
 import net.sourceforge.plantuml.security.SURL;
+import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.theme.ThemeUtils;
-import net.sourceforge.plantuml.utils.StringLocated;
 
 public class EaterTheme extends Eater {
 
@@ -85,11 +85,11 @@ public class EaterTheme extends Eater {
 
 	public final ReadLine getTheme() throws EaterException {
 		if (from == null) {
-			final ReadLine reader = ThemeUtils.getReaderTheme(realName);
-			if (reader != null)
-				return reader;
-
 			try {
+				final ReadLine reader = ThemeUtils.getReaderTheme(realName);
+				if (reader != null)
+					return reader;
+
 				final AFile localFile = importedFiles.getAFile(ThemeUtils.getFilename(realName));
 				if (localFile != null && localFile.isOk()) {
 					final BufferedReader br = localFile.getUnderlyingFile().openBufferedReader();

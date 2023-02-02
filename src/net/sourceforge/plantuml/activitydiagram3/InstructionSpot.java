@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.activitydiagram3;
 
 import java.util.Objects;
 
-import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
@@ -46,10 +45,11 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.gtile.Gtile;
 import net.sourceforge.plantuml.activitydiagram3.gtile.GtileCircleSpot;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
-import net.sourceforge.plantuml.ugraphic.UFont;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.font.FontParam;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.font.UFont;
 
 public class InstructionSpot extends MonoSwimable implements Instruction {
 
@@ -80,13 +80,15 @@ public class InstructionSpot extends MonoSwimable implements Instruction {
 		return result;
 	}
 
+	// ::comment when WASM
 	@Override
 	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
 		final UFont font = skinParam.getFont(null, false, FontParam.ACTIVITY);
 		return new GtileCircleSpot(stringBounder, skinParam, color, getSwimlaneIn(), spot, font);
 
 	}
-
+	// ::done
+	
 	@Override
 	public CommandExecutionResult add(Instruction other) {
 		throw new UnsupportedOperationException();

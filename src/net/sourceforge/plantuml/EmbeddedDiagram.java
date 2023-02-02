@@ -43,24 +43,25 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+import net.atmp.ISkinSimple;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.creole.Neutron;
 import net.sourceforge.plantuml.creole.atom.Atom;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
-import net.sourceforge.plantuml.graphic.HorizontalAlignment;
 import net.sourceforge.plantuml.graphic.Line;
-import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.klimt.UImage;
+import net.sourceforge.plantuml.klimt.UShape;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.security.SImageIO;
+import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.ugraphic.AffineTransformType;
 import net.sourceforge.plantuml.ugraphic.PixelImage;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.UImage;
 import net.sourceforge.plantuml.ugraphic.UImageSvg;
-import net.sourceforge.plantuml.ugraphic.UShape;
-import net.sourceforge.plantuml.utils.StringLocated;
 
 public class EmbeddedDiagram extends AbstractTextBlock implements Line, Atom {
 
@@ -154,7 +155,7 @@ public class EmbeddedDiagram extends AbstractTextBlock implements Line, Atom {
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		try {
-			if (stringBounder.getNativeFormat() == FileFormat.SVG) {
+			if (stringBounder.matchesProperty("SVG")) {
 				final String imageSvg = getImageSvg();
 				final UImageSvg svg = new UImageSvg(imageSvg, 1);
 				return new XDimension2D(svg.getWidth(), svg.getHeight());

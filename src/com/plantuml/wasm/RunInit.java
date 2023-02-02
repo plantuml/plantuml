@@ -41,12 +41,12 @@ import net.sourceforge.plantuml.version.Version;
 
 public class RunInit {
 
-	public static String pathStdlib;
+	public static String cheerpjPath;
 
 	public static void main(String[] argsArray) throws IOException {
-		pathStdlib = argsArray[0];
+		cheerpjPath = argsArray[0];
 		System.err.println("RunInit: " + Version.versionString());
-		System.err.println("Internal path for stblib: " + pathStdlib);
+		System.err.println("cheerpjPath is " + cheerpjPath);
 	}
 
 }

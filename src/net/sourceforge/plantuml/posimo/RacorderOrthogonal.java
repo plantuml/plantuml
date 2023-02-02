@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.awt.geom.XCubicCurve2D;
 import net.sourceforge.plantuml.awt.geom.XLine2D;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.awt.geom.XRectangle2D;
+import net.sourceforge.plantuml.klimt.DotPath;
 
 public class RacorderOrthogonal extends RacorderAbstract implements Racorder {
 

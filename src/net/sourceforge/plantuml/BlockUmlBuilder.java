@@ -55,8 +55,8 @@ import net.sourceforge.plantuml.preproc.ReadLineReader;
 import net.sourceforge.plantuml.preproc.UncommentReadLine;
 import net.sourceforge.plantuml.preproc2.Preprocessor;
 import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.StartUtils;
-import net.sourceforge.plantuml.utils.StringLocated;
 
 public final class BlockUmlBuilder implements DefinitionsContainer {
 

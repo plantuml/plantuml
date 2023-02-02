@@ -7,7 +7,7 @@ import java.util.Comparator;
 
 import org.opentest4j.AssertionFailedError;
 
-import net.sourceforge.plantuml.graphic.color.ColorHSB;
+import net.sourceforge.plantuml.klimt.color.ColorHSB;
 
 // Beware there is also https://github.com/assertj/assertj-swing which has some image comparisons that might help us.
 // It does not compare using HSB, so we have built that ourselves.

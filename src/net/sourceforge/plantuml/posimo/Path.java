@@ -37,6 +37,8 @@ package net.sourceforge.plantuml.posimo;
 
 import java.util.Objects;
 
+import net.sourceforge.plantuml.klimt.DotPath;
+
 public class Path {
 
 	private final Label label;

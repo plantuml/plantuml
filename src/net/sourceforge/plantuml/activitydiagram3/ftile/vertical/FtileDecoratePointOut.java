@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.activitydiagram3.ftile.vertical;
 
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
-import net.sourceforge.plantuml.graphic.StringBounder;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
 
 public class FtileDecoratePointOut extends FtileDecorate {
 

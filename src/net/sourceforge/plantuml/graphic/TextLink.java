@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.graphic;
 
 import java.util.Objects;
 
-import net.sourceforge.plantuml.Url;
+import net.sourceforge.plantuml.url.Url;
 
 public class TextLink implements HtmlCommand {
 

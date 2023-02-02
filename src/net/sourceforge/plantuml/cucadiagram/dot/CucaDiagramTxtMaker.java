@@ -46,9 +46,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.plantuml.BackSlash;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.asciiart.BasicCharArea;
+import net.sourceforge.plantuml.awt.geom.XCubicCurve2D;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.baraye.EntityImp;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -56,13 +57,15 @@ import net.sourceforge.plantuml.cucadiagram.EntityPortion;
 import net.sourceforge.plantuml.cucadiagram.ICucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.PortionShower;
+import net.sourceforge.plantuml.klimt.DotPath;
+import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.posimo.Block;
 import net.sourceforge.plantuml.posimo.Cluster;
 import net.sourceforge.plantuml.posimo.GraphvizSolverB;
 import net.sourceforge.plantuml.posimo.Path;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SecurityUtils;
-import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.text.BackSlash;
 import net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt;
 
 public final class CucaDiagramTxtMaker {
@@ -119,7 +122,7 @@ public final class CucaDiagramTxtMaker {
 			if (p.isInvis()) {
 				continue;
 			}
-			p.getDotPath().draw(globalUg.getCharArea(), getXPixelPerChar(), getYPixelPerChar());
+			drawDotPath(p.getDotPath(), globalUg.getCharArea(), getXPixelPerChar(), getYPixelPerChar());
 		}
 		for (EntityImp ent : diagram.getLeafsvalues()) {
 			final Block b = blocks.get(ent);
@@ -127,6 +130,17 @@ public final class CucaDiagramTxtMaker {
 			printClass(ent, (UGraphicTxt) globalUg
 					.apply(new UTranslate(p.getX() / getXPixelPerChar(), p.getY() / getYPixelPerChar())));
 		}
+
+	}
+
+	private void drawDotPath(DotPath dotPath, BasicCharArea area, double pixelXPerChar, double pixelYPerChar) {
+		for (XCubicCurve2D bez : dotPath.getBeziers())
+			if (bez.x1 == bez.x2)
+				area.drawVLine('|', (int) (bez.x1 / pixelXPerChar), (int) (bez.y1 / pixelYPerChar),
+						(int) (bez.y2 / pixelYPerChar));
+			else if (bez.y1 == bez.y2)
+				area.drawHLine('-', (int) (bez.y1 / pixelYPerChar), (int) (bez.x1 / pixelXPerChar),
+						(int) (bez.x2 / pixelXPerChar));
 
 	}
 

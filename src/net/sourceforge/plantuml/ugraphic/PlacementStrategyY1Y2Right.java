@@ -40,8 +40,8 @@ import java.util.Map;
 
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
-import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
 
 public class PlacementStrategyY1Y2Right extends AbstractPlacementStrategy {
 

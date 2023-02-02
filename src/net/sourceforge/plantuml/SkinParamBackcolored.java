@@ -38,11 +38,11 @@ package net.sourceforge.plantuml;
 import java.util.EnumMap;
 import java.util.Map;
 
-import net.sourceforge.plantuml.annotation.HaxeIgnored;
-import net.sourceforge.plantuml.cucadiagram.Stereotype;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
 
-@HaxeIgnored
+import net.sourceforge.plantuml.cucadiagram.Stereotype;
+import net.sourceforge.plantuml.klimt.color.HColor;
+
+
 public class SkinParamBackcolored extends SkinParamDelegator {
 
 	final private HColor backColorElement;

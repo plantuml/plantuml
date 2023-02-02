@@ -35,7 +35,7 @@
 package net.sourceforge.plantuml.timingdiagram.graphic;
 
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
-import net.sourceforge.plantuml.ugraphic.UTranslate;
+import net.sourceforge.plantuml.klimt.UTranslate;
 
 public class IntricatedPoint {
 

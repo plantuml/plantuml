@@ -36,7 +36,7 @@
 package net.sourceforge.plantuml;
 
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColor;
 
 public class SkinParamForceColor extends SkinParamDelegator {
 

@@ -2,9 +2,9 @@ package net.sourceforge.plantuml.awt.geom;
 
 import net.sourceforge.plantuml.awt.XShape;
 import net.sourceforge.plantuml.graphic.UDrawable;
+import net.sourceforge.plantuml.klimt.ULine;
+import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.ULine;
-import net.sourceforge.plantuml.ugraphic.UTranslate;
 
 public class XLine2D implements XShape, UDrawable {
 

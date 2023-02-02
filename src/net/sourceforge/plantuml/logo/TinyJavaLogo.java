@@ -38,8 +38,8 @@ package net.sourceforge.plantuml.logo;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorSet;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColorSet;
 
 public class TinyJavaLogo {
 	private final LogoScanner scanner = new LogoScanner();

@@ -37,24 +37,24 @@ package net.sourceforge.plantuml.cucadiagram;
 
 import java.util.Objects;
 
+import net.atmp.ISkinSimple;
 import net.sourceforge.plantuml.Hideable;
-import net.sourceforge.plantuml.ISkinSimple;
 import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.Removeable;
-import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.baraye.EntityImp;
 import net.sourceforge.plantuml.cucadiagram.entity.IEntityFactory;
-import net.sourceforge.plantuml.graphic.FontConfiguration;
-import net.sourceforge.plantuml.graphic.HorizontalAlignment;
-import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.USymbolInterface;
+import net.sourceforge.plantuml.klimt.UComment;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.svek.Bibliotekon;
-import net.sourceforge.plantuml.ugraphic.UComment;
-import net.sourceforge.plantuml.ugraphic.UFont;
+import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class Link extends WithLinkType implements Hideable, Removeable {

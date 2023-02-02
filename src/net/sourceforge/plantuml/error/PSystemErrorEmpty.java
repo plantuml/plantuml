@@ -38,7 +38,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.ErrorUml;
 import net.sourceforge.plantuml.core.UmlSource;
-import net.sourceforge.plantuml.utils.StringLocated;
+import net.sourceforge.plantuml.text.StringLocated;
 
 public class PSystemErrorEmpty extends PSystemError {
 

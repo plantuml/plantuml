@@ -40,6 +40,7 @@ import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
 import net.sourceforge.plantuml.core.UmlSource;
 
 public class PSystemSkinparameterListFactory extends PSystemSingleLineFactory {
+	// ::remove file when WASM
 
 	@Override
 	protected AbstractPSystem executeLine(UmlSource source, String line) {

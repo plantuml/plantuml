@@ -37,9 +37,9 @@ package net.sourceforge.plantuml.activitydiagram3.ftile;
 
 import java.util.Objects;
 
-import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDecorate;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.url.Url;
 
 public class FtileWithUrl extends FtileDecorate {
 

@@ -37,15 +37,32 @@ package net.sourceforge.plantuml.ugraphic;
 
 import static net.sourceforge.plantuml.utils.ObjectUtils.instanceOfAny;
 
-import net.sourceforge.plantuml.FileFormat;
+import net.atmp.SpecialText;
 import net.sourceforge.plantuml.activitydiagram3.ftile.CenteredText;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
-import net.sourceforge.plantuml.graphic.SpecialText;
-import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.posimo.DotPath;
-import net.sourceforge.plantuml.ugraphic.color.ColorMapper;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.klimt.DotPath;
+import net.sourceforge.plantuml.klimt.UAntiAliasing;
+import net.sourceforge.plantuml.klimt.UBackground;
+import net.sourceforge.plantuml.klimt.UChange;
+import net.sourceforge.plantuml.klimt.UClip;
+import net.sourceforge.plantuml.klimt.UComment;
+import net.sourceforge.plantuml.klimt.UHidden;
+import net.sourceforge.plantuml.klimt.UImage;
+import net.sourceforge.plantuml.klimt.ULine;
+import net.sourceforge.plantuml.klimt.UPath;
+import net.sourceforge.plantuml.klimt.UPixel;
+import net.sourceforge.plantuml.klimt.UPolygon;
+import net.sourceforge.plantuml.klimt.URectangle;
+import net.sourceforge.plantuml.klimt.UShape;
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.UText;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.MinMax;
+import net.sourceforge.plantuml.klimt.geom.MinMaxMutable;
 
 public class LimitFinder extends UGraphicNo {
 
@@ -63,7 +80,6 @@ public class LimitFinder extends UGraphicNo {
 
 	private final MinMaxMutable minmax;
 	private UClip clip;
-	private final FileFormat format;
 
 	public static LimitFinder create(StringBounder stringBounder, boolean initToZero) {
 		final LimitFinder result = new LimitFinder(stringBounder, new UTranslate(), MinMaxMutable.getEmpty(initToZero));
@@ -74,7 +90,6 @@ public class LimitFinder extends UGraphicNo {
 	private LimitFinder(StringBounder stringBounder, UTranslate translate, MinMaxMutable minmax) {
 		super(stringBounder, translate);
 		this.minmax = minmax;
-		this.format = stringBounder.getNativeFormat();
 	}
 
 	private void addPoint(double x, double y) {

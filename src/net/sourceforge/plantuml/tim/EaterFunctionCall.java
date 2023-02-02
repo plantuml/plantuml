@@ -40,9 +40,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.tim.expression.TValue;
 import net.sourceforge.plantuml.tim.expression.TokenStack;
-import net.sourceforge.plantuml.utils.StringLocated;
 
 public class EaterFunctionCall extends Eater {
 

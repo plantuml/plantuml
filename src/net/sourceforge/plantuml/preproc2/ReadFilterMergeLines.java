@@ -40,8 +40,8 @@ import java.io.IOException;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.preproc.ReadLine;
+import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.StartUtils;
-import net.sourceforge.plantuml.utils.StringLocated;
 
 public class ReadFilterMergeLines implements ReadFilter {
 

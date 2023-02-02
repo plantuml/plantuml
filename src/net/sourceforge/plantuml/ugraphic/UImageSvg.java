@@ -40,6 +40,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.SignatureUtils;
+import net.sourceforge.plantuml.klimt.UShape;
 
 public class UImageSvg implements UShape {
 

@@ -34,9 +34,9 @@
  */
 package net.sourceforge.plantuml.tim.iterator;
 
+import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.EaterExceptionLocated;
-import net.sourceforge.plantuml.utils.StringLocated;
 
 public interface CodeIterator {
 

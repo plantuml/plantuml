@@ -36,7 +36,7 @@
 package net.sourceforge.plantuml.command;
 
 import net.sourceforge.plantuml.core.Diagram;
-import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
+import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.utils.BlocLines;
 
 public interface Command<D extends Diagram> {

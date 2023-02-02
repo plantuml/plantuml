@@ -35,10 +35,10 @@
  */
 package net.sourceforge.plantuml.command;
 
-import net.sourceforge.plantuml.command.regex.Matcher2;
-import net.sourceforge.plantuml.command.regex.MyPattern;
-import net.sourceforge.plantuml.command.regex.Pattern2;
 import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.regex.Matcher2;
+import net.sourceforge.plantuml.regex.MyPattern;
+import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.utils.BlocLines;
 
 public abstract class CommandMultilines<S extends Diagram> implements Command<S> {

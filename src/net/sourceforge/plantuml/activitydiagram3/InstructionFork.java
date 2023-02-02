@@ -52,9 +52,9 @@ import net.sourceforge.plantuml.activitydiagram3.gtile.Gtiles;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.graphic.Rainbow;
-import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
 
@@ -98,6 +98,7 @@ public class InstructionFork extends WithNote implements Instruction {
 		return getLastList().add(ins);
 	}
 
+	// ::comment when WASM
 	@Override
 	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
 		final List<Gtile> all = new ArrayList<>();
@@ -110,6 +111,7 @@ public class InstructionFork extends WithNote implements Instruction {
 
 		return new GtileSplit(all, swimlaneIn, getInLinkRenderingColor(skinParam).getColor());
 	}
+	// ::done
 
 	private Rainbow getInLinkRenderingColor(ISkinParam skinParam) {
 		Rainbow color;

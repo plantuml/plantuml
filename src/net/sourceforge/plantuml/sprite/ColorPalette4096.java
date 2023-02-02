@@ -38,9 +38,9 @@ package net.sourceforge.plantuml.sprite;
 import java.awt.Color;
 import java.util.Objects;
 
-import net.sourceforge.plantuml.ugraphic.color.HColor;
-import net.sourceforge.plantuml.ugraphic.color.HColorSimple;
-import net.sourceforge.plantuml.ugraphic.color.HColors;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColorSimple;
+import net.sourceforge.plantuml.klimt.color.HColors;
 
 public class ColorPalette4096 {
 

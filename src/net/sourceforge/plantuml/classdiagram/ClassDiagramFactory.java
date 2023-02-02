@@ -70,7 +70,6 @@ import net.sourceforge.plantuml.command.note.CommandFactoryNote;
 import net.sourceforge.plantuml.command.note.CommandFactoryNoteOnEntity;
 import net.sourceforge.plantuml.command.note.CommandFactoryNoteOnLink;
 import net.sourceforge.plantuml.command.note.CommandFactoryTipOnEntity;
-import net.sourceforge.plantuml.command.regex.RegexLeaf;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.descdiagram.command.CommandCreateElementMultilines;
 import net.sourceforge.plantuml.descdiagram.command.CommandCreateElementParenthesis;
@@ -82,6 +81,7 @@ import net.sourceforge.plantuml.objectdiagram.command.CommandCreateEntityObjectM
 import net.sourceforge.plantuml.objectdiagram.command.CommandCreateJson;
 import net.sourceforge.plantuml.objectdiagram.command.CommandCreateJsonSingleLine;
 import net.sourceforge.plantuml.objectdiagram.command.CommandCreateMap;
+import net.sourceforge.plantuml.regex.RegexLeaf;
 
 public class ClassDiagramFactory extends PSystemCommandFactory {
 

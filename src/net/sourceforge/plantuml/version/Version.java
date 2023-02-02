@@ -104,6 +104,7 @@ public class Version {
 		return new Date(Version.compileTime()).toString();
 	}
 
+	// ::comment when WASM
 	public static String getJarPath() {
 		try {
 			final ClassLoader loader = Version.class.getClassLoader();
@@ -122,5 +123,6 @@ public class Version {
 			return t.toString();
 		}
 	}
+	// ::done
 
 }

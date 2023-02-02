@@ -43,7 +43,6 @@ import java.util.Objects;
 import java.util.Set;
 
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.Url;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileDecorateWelding;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
@@ -55,12 +54,13 @@ import net.sourceforge.plantuml.activitydiagram3.gtile.GtileIfAlone;
 import net.sourceforge.plantuml.activitydiagram3.gtile.GtileIfHexagon;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.StringBounder;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
 import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.url.Url;
 
 public class InstructionIf extends WithNote implements Instruction, InstructionCollection {
 
@@ -108,6 +108,7 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 		return current.add(ins);
 	}
 
+	// ::comment when WASM
 	@Override
 	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
 		for (Branch branch : thens)
@@ -129,6 +130,7 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 			return new GtileIfAlone(swimlane, gtiles.get(0), branches.get(0));
 		return GtileIfHexagon.build(swimlane, gtiles, branches);
 	}
+	// ::done
 
 	@Override
 	public Ftile createFtile(FtileFactory factory) {

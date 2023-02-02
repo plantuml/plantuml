@@ -38,8 +38,8 @@ import java.util.List;
 import java.util.Random;
 
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
-import net.sourceforge.plantuml.ugraphic.Shadowable;
-import net.sourceforge.plantuml.ugraphic.UPolygon;
+import net.sourceforge.plantuml.klimt.Shadowable;
+import net.sourceforge.plantuml.klimt.UPolygon;
 
 public class UPolygonHand {
 

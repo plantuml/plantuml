@@ -35,12 +35,12 @@
  */
 package net.sourceforge.plantuml.creole.command;
 
-import net.sourceforge.plantuml.command.regex.Matcher2;
 import net.sourceforge.plantuml.creole.legacy.StripeSimple;
 import net.sourceforge.plantuml.graphic.AddStyle;
-import net.sourceforge.plantuml.graphic.FontConfiguration;
 import net.sourceforge.plantuml.graphic.FontStyle;
-import net.sourceforge.plantuml.ugraphic.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.regex.Matcher2;
 
 public class CommandCreoleStyle extends CommandCreoleCache implements Command {
 
