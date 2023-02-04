@@ -41,6 +41,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Objects;
 
+import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ProtectedCommand;
@@ -51,13 +52,18 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.DisplayPositioned;
 import net.sourceforge.plantuml.cucadiagram.DisplayPositionned;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
+import net.sourceforge.plantuml.klimt.UText;
+import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.stats.StatsUtilsIncrement;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.text.BackSlash;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
+import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.version.License;
 import net.sourceforge.plantuml.version.Version;
@@ -219,6 +225,15 @@ public abstract class AbstractPSystem implements Diagram {
 	@Override
 	public Display getTitleDisplay() {
 		return null;
+	}
+
+	@Override
+	public ImageData exportDiagramGraphic(UGraphic ug) {
+		final UFont font = UFont.monospaced(14);
+		final FontConfiguration fc = FontConfiguration.blackBlueTrue(font);
+		final UText text = new UText("Not implemented yet for " + getClass().getName(), fc);
+		ug.apply(new UTranslate(10, 10)).draw(text);
+		return new ImageDataSimple(100, 100);
 	}
 
 }

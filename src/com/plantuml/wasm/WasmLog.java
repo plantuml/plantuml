@@ -35,19 +35,31 @@
  */
 package com.plantuml.wasm;
 
-import java.io.IOException;
+//::uncomment when WASM
+//import com.leaningtech.client.Document;
+//import com.leaningtech.client.Element;
+//import com.leaningtech.client.Global;
+//::done
 
-import net.sourceforge.plantuml.version.Version;
+public class WasmLog {
 
-public class RunInit {
+	public static long start;
 
-	public static String cheerpjPath;
-
-	public static void main(String[] argsArray) throws IOException {
-		cheerpjPath = argsArray[0];
-		System.err.println("RunInit: " + Version.versionString());
-		System.err.println("cheerpjPath is " + cheerpjPath);
-		WasmLog.log("Loading completed!");
+	public static void log(String message) {
+		// ::uncomment when WASM
+//		if (start > 0) {
+//			final long duration = System.currentTimeMillis() - start;
+//			message = "(" + duration + " ms) " + message;
+//		}
+//		System.err.print(message);
+//		final Document document = Global.document;
+//		if (document == null)
+//			return;
+//		final Element messageJava = document.getElementById(Global.JSString("message-java"));
+//		if (messageJava == null)
+//			return;
+//		messageJava.set_textContent(Global.JSString(message));
+		// ::done
 	}
 
 }

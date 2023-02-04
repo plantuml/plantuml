@@ -37,6 +37,8 @@ package net.sourceforge.plantuml.command;
 
 import java.util.Objects;
 
+import com.plantuml.wasm.WasmLog;
+
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.utils.BlocLines;
@@ -53,6 +55,7 @@ public class ProtectedCommand<S extends Diagram> implements Command<S> {
 
 	public CommandExecutionResult execute(S system, BlocLines lines) {
 		try {
+			WasmLog.log("...running " + cmd.getClass().getName() + " ...");
 			final CommandExecutionResult result = cmd.execute(system, lines);
 			// if (result.isOk()) {
 			// // TRACECOMMAND

@@ -338,6 +338,25 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 		}
 	}
 
+	@Override
+	public ImageData createOneGraphic(UGraphic ug) {
+		for (EntityImp leaf : diagram.getLeafsvalues())
+			printEntityNew(leaf);
+
+		Z.open();
+		try {
+			final TextBlock textBlock = getTextBlock();
+			textBlock.drawU(ug);
+			final XDimension2D dim = textBlock.calculateDimension(ug.getStringBounder());
+			return new ImageDataSimple(dim);
+		} catch (Throwable e) {
+			SmetanaDebug.printMe();
+			return ImageDataSimple.error();
+		} finally {
+			Z.close();
+		}
+	}
+
 	private ImageData createFileLocked(OutputStream os, List<String> dotStrings, FileFormatOption fileFormatOption)
 			throws IOException {
 
@@ -346,48 +365,7 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 
 		Z.open();
 		try {
-			final ST_Agraph_s g = agopen(new CString("g"), Z.z().Agdirected, null);
-
-			// printCluster(g, root);
-			exportEntities(g, getUnpackagedEntities());
-			exportGroups(g, diagram.getEntityFactory().getRootGroup());
-
-			// for (ILeaf leaf : diagram.getLeafsvalues()) {
-			// final Shape shape = bibliotekon.getShape(leaf);
-			// final Agnode_s node = agnode(g, new CString(shape.getUid()), true);
-			// agsafeset(node, new CString("shape"), new CString("box"), new CString(""));
-			// final String width = "" + (shape.getWidth() / 72);
-			// final String height = "" + (shape.getHeight() / 72);
-			// agsafeset(node, new CString("width"), new CString(width), new CString(""));
-			// agsafeset(node, new CString("height"), new CString(height), new CString(""));
-			// nodes.put(leaf, node);
-			// // System.err
-			// // .println("NODE " + leaf.getUid() + " [shape=box, width=" + width + ",
-			// height=" + height + "]");
-			// }
-			//
-			for (Link link : diagram.getLinks()) {
-				// System.err.println("link=" + link);
-				final ST_Agedge_s e = createEdge(g, link);
-				// System.err.println("Agedge_s=" + e);
-				if (e != null)
-					edges.put(link, e);
-
-			}
-
-			final ST_GVC_s gvc = gvContext();
-			SmetanaDebug.reset();
-			gvLayoutJobs(gvc, g);
-			SmetanaDebug.printMe();
-
-			// for (Agedge_s e : edges.values()) {
-			// DebugUtils.printDebugEdge(e);
-			// }
-
-			final MinMax minMax = TextBlockUtils.getMinMax(new Drawing(null, null), stringBounder, false);
-
-			// imageBuilder.setUDrawable(new Drawing(new YMirror(dim.getHeight())));
-			final TextBlock drawable = new Drawing(new YMirror(minMax.getMaxY()), minMax);
+			final TextBlock drawable = getTextBlock();
 			return diagram.createImageBuilder(fileFormatOption).drawable(drawable).write(os);
 		} catch (Throwable e) {
 			SmetanaDebug.printMe();
@@ -397,6 +375,52 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 		} finally {
 			Z.close();
 		}
+	}
+
+	private TextBlock getTextBlock() {
+		final ST_Agraph_s g = agopen(new CString("g"), Z.z().Agdirected, null);
+
+		// printCluster(g, root);
+		exportEntities(g, getUnpackagedEntities());
+		exportGroups(g, diagram.getEntityFactory().getRootGroup());
+
+		// for (ILeaf leaf : diagram.getLeafsvalues()) {
+		// final Shape shape = bibliotekon.getShape(leaf);
+		// final Agnode_s node = agnode(g, new CString(shape.getUid()), true);
+		// agsafeset(node, new CString("shape"), new CString("box"), new CString(""));
+		// final String width = "" + (shape.getWidth() / 72);
+		// final String height = "" + (shape.getHeight() / 72);
+		// agsafeset(node, new CString("width"), new CString(width), new CString(""));
+		// agsafeset(node, new CString("height"), new CString(height), new CString(""));
+		// nodes.put(leaf, node);
+		// // System.err
+		// // .println("NODE " + leaf.getUid() + " [shape=box, width=" + width + ",
+		// height=" + height + "]");
+		// }
+		//
+		for (Link link : diagram.getLinks()) {
+			// System.err.println("link=" + link);
+			final ST_Agedge_s e = createEdge(g, link);
+			// System.err.println("Agedge_s=" + e);
+			if (e != null)
+				edges.put(link, e);
+
+		}
+
+		final ST_GVC_s gvc = gvContext();
+		SmetanaDebug.reset();
+		gvLayoutJobs(gvc, g);
+		SmetanaDebug.printMe();
+
+		// for (Agedge_s e : edges.values()) {
+		// DebugUtils.printDebugEdge(e);
+		// }
+
+		final MinMax minMax = TextBlockUtils.getMinMax(new Drawing(null, null), stringBounder, false);
+
+		// imageBuilder.setUDrawable(new Drawing(new YMirror(dim.getHeight())));
+		final TextBlock drawable = new Drawing(new YMirror(minMax.getMaxY()), minMax);
+		return drawable;
 	}
 
 	private void exportGroups(ST_Agraph_s graph, EntityImp parent) {

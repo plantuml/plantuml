@@ -45,6 +45,7 @@ import java.util.Map;
 import net.sourceforge.plantuml.AnnotatedBuilder;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.ISkinParam;
+import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -133,8 +134,21 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 				newpageHeight, title);
 	}
 
-	public ImageData createOne(OutputStream os, final int index, boolean isWithMetadata) throws IOException {
+	@Override
+	public ImageData createOneGraphic(UGraphic ug) {
+		final UDrawable drawable = createUDrawable(0);
+		drawable.drawU(ug);
+		return new ImageDataSimple(100, 100);
 
+	}
+
+	@Override
+	public ImageData createOne(OutputStream os, final int index, boolean isWithMetadata) throws IOException {
+		final UDrawable drawable = createUDrawable(index);
+		return diagram.createImageBuilder(fileFormatOption).drawable(drawable).write(os);
+	}
+
+	private UDrawable createUDrawable(final int index) {
 		final Page page = pages.get(index);
 		final AnnotatedBuilder builder = new AnnotatedBuilder(diagram, diagram.getSkinParam(), stringBounder);
 		double pageHeight = page.getHeight();
@@ -206,7 +220,7 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 			}
 
 		};
-		return diagram.createImageBuilder(fileFormatOption).drawable(drawable).write(os);
+		return drawable;
 	}
 
 	private void drawFooter(SequenceDiagramArea area, UGraphic ug, int page) {

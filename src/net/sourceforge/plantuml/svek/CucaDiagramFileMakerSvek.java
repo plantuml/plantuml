@@ -54,6 +54,7 @@ import net.sourceforge.plantuml.cucadiagram.dot.CucaDiagramSimplifierState;
 import net.sourceforge.plantuml.cucadiagram.dot.DotData;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 	// ::remove file when WASM
@@ -72,6 +73,11 @@ public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 			Logme.error(e);
 			throw new IOException(e);
 		}
+	}
+
+	@Override
+	public ImageData createOneGraphic(UGraphic ug) {
+		throw new UnsupportedOperationException();
 	}
 
 	private GeneralImageBuilder createDotDataImageBuilder(DotMode dotMode, StringBounder stringBounder) {

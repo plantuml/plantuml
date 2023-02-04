@@ -41,6 +41,7 @@ import java.io.OutputStream;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.api.ApiStable;
 import net.sourceforge.plantuml.cucadiagram.Display;
+import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 /**
  * Represents a single diagram. A Diagram could be a UML (sequence diagram,
@@ -66,6 +67,8 @@ public interface Diagram {
 	 * @throws IOException
 	 */
 	ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormat) throws IOException;
+
+	ImageData exportDiagramGraphic(UGraphic ug);
 
 	/**
 	 * Number of images in this diagram (usually, 1)

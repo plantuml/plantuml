@@ -83,6 +83,7 @@ import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.svek.CucaDiagramFileMaker;
 import net.sourceforge.plantuml.svek.CucaDiagramFileMakerSvek;
 import net.sourceforge.plantuml.text.BackSlash;
+import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.xmi.CucaDiagramXmiMaker;
 import net.sourceforge.plantuml.xmlsc.StateDiagramScxmlMaker;
 
@@ -421,6 +422,13 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		maker.createFiles(os, index);
 	}
 	// ::done
+
+	@Override
+	final public ImageData exportDiagramGraphic(UGraphic ug) {
+
+		final CucaDiagramFileMaker maker = new CucaDiagramFileMakerSmetana(this, ug.getStringBounder());
+		return maker.createOneGraphic(ug);
+	}
 
 	@Override
 	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)

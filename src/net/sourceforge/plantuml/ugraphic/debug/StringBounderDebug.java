@@ -36,6 +36,7 @@ package net.sourceforge.plantuml.ugraphic.debug;
 
 import java.util.Random;
 
+import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.font.StringBounderRaw;
@@ -43,6 +44,10 @@ import net.sourceforge.plantuml.klimt.font.UFont;
 
 public class StringBounderDebug extends StringBounderRaw {
 	// ::remove folder when WASM
+
+	public StringBounderDebug() {
+		super(FileFormat.gg.getFontRenderContext());
+	}
 
 	@Override
 	protected XDimension2D calculateDimensionInternal(UFont font, String text) {

@@ -558,4 +558,9 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 		return ent.getSvekImage();
 	}
 
+	@Override
+	public ImageData createOneGraphic(UGraphic ug) {
+		throw new UnsupportedOperationException();
+	}
+
 }

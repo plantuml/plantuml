@@ -285,4 +285,9 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 		printAligned(ug, diagram.getFooterOrHeaderTeoz(FontParam.FOOTER).getHorizontalAlignment(), footer);
 	}
 
+	@Override
+	public ImageData createOneGraphic(UGraphic ug) {
+		throw new UnsupportedOperationException();
+	}
+
 }

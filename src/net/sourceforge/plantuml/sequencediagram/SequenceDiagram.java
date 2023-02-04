@@ -71,6 +71,7 @@ import net.sourceforge.plantuml.sequencediagram.teoz.SequenceDiagramFileMakerTeo
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.ugraphic.ImageBuilder;
+import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
 
 public class SequenceDiagram extends UmlDiagram {
@@ -281,6 +282,12 @@ public class SequenceDiagram extends UmlDiagram {
 			throws IOException {
 		final FileMaker sequenceDiagramPngMaker = getSequenceDiagramPngMaker(index, fileFormat);
 		return sequenceDiagramPngMaker.createOne(os, index, fileFormat.isWithMetadata());
+	}
+
+	@Override
+	final public ImageData exportDiagramGraphic(UGraphic ug) {
+		final FileMaker sequenceDiagramPngMaker = getSequenceDiagramPngMaker(0, new FileFormatOption(FileFormat.PNG));
+		return sequenceDiagramPngMaker.createOneGraphic(ug);
 	}
 
 	// support for CommandReturn

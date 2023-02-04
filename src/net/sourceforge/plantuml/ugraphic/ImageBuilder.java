@@ -50,6 +50,8 @@ import java.util.Set;
 
 import javax.swing.ImageIcon;
 
+import com.plantuml.wasm.WasmLog;
+
 import net.sourceforge.plantuml.AnimatedGifEncoder;
 import net.sourceforge.plantuml.AnnotatedBuilder;
 import net.sourceforge.plantuml.AnnotatedWorker;
@@ -291,7 +293,7 @@ public class ImageBuilder {
 				/ 96.0;
 		if (scaleFactor <= 0)
 			throw new IllegalStateException("Bad scaleFactor");
-
+		WasmLog.log("...image drawing...");
 		// ::comment when WASM
 		UGraphic ug = createUGraphic(dim, animationArg, dx, dy, scaleFactor,
 				titledDiagram == null ? new Pragma() : titledDiagram.getPragma());

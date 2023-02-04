@@ -40,6 +40,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import com.plantuml.wasm.WasmLog;
+
 import net.sourceforge.plantuml.acearth.PSystemXearthFactory;
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagramFactory;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagramFactory3;
@@ -113,6 +115,8 @@ public class PSystemBuilder {
 	final public Diagram createPSystem(List<StringLocated> source, List<StringLocated> rawSource,
 			Map<String, String> skinParam) {
 
+		WasmLog.log("..compiling diagram...");
+
 		final long now = System.currentTimeMillis();
 
 		Diagram result = null;
@@ -137,6 +141,7 @@ public class PSystemBuilder {
 				if (diagramType != systemFactory.getDiagramType())
 					continue;
 
+				WasmLog.log("...trying " + systemFactory.getClass().getName() + " ...");
 				final Diagram sys = systemFactory.createSystem(umlSource, skinParam);
 				if (isOk(sys)) {
 					result = sys;
@@ -173,7 +178,7 @@ public class PSystemBuilder {
 		// ::comment when WASM
 		factories.add(new BpmDiagramFactory(DiagramType.BPM));
 		// ::done
-		
+
 		// factories.add(new PostIdDiagramFactory());
 		factories.add(new PSystemLicenseFactory());
 		factories.add(new PSystemVersionFactory());

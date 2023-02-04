@@ -38,12 +38,17 @@ package net.sourceforge.plantuml.klimt.font;
 import java.awt.font.FontRenderContext;
 import java.awt.font.LineMetrics;
 
-import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.text.RichText;
 import net.sourceforge.plantuml.text.StyledString;
 
 public abstract class StringBounderRaw implements StringBounder {
+
+	private final FontRenderContext frc;
+
+	protected StringBounderRaw(FontRenderContext frc) {
+		this.frc = frc;
+	}
 
 	public final XDimension2D calculateDimension(UFont font, String text) {
 		if (RichText.isRich(text)) {
@@ -63,7 +68,6 @@ public abstract class StringBounderRaw implements StringBounder {
 	protected abstract XDimension2D calculateDimensionInternal(UFont font, String text);
 
 	public double getDescent(UFont font, String text) {
-		final FontRenderContext frc = FileFormat.gg.getFontRenderContext();
 		final LineMetrics lineMetrics = font.getUnderlayingFont().getLineMetrics(text, frc);
 		final double descent = lineMetrics.getDescent();
 		return descent;

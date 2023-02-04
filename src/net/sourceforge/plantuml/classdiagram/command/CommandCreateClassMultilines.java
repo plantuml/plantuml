@@ -169,18 +169,18 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 
 		final Quark quark = diagram.quarkInContext(idShort, true);
 
-		Display display = Display.getWithNewlines(displayString);
-		if (Display.isNull(display))
-			display = Display.getWithNewlines(quark.getName()).withCreoleMode(CreoleMode.SIMPLE_LINE);
-
 		EntityImp entity = (EntityImp) quark.getData();
 
+		Display display = Display.getWithNewlines(displayString);
 		if (entity == null) {
+			if (Display.isNull(display))
+				display = Display.getWithNewlines(quark.getName()).withCreoleMode(CreoleMode.SIMPLE_LINE);
 			entity = diagram.reallyCreateLeaf(quark, display, type, null);
 		} else {
 			if (entity.muteToType(type, null) == false)
 				return CommandExecutionResult.error("Cannot create " + idShort + " because it already exists");
-			entity.setDisplay(display);
+			if (Display.isNull(display) == false)
+				entity.setDisplay(display);
 		}
 
 		diagram.setLastEntity(entity);

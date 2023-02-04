@@ -129,7 +129,7 @@ public enum FileFormat {
 		return "." + StringUtils.goLowerCase(name());
 	}
 
-	final static private BufferedImage imDummy = new BufferedImage(800, 100, BufferedImage.TYPE_INT_RGB);
+	final static private BufferedImage imDummy = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
 	final static public Graphics2D gg = imDummy.createGraphics();
 	static {
 		// KEY_FRACTIONALMETRICS
@@ -159,7 +159,7 @@ public enum FileFormat {
 	}
 
 	private StringBounder getSvgStringBounder(final SvgCharSizeHack charSizeHack) {
-		return new StringBounderRaw() {
+		return new StringBounderRaw(FileFormat.gg.getFontRenderContext()) {
 			public String toString() {
 				return "FileFormat::getSvgStringBounder";
 			}
@@ -177,7 +177,7 @@ public enum FileFormat {
 	}
 
 	private StringBounder getNormalStringBounder() {
-		return new StringBounderRaw() {
+		return new StringBounderRaw(FileFormat.gg.getFontRenderContext()) {
 			public String toString() {
 				return "FileFormat::getNormalStringBounder";
 			}
@@ -202,7 +202,7 @@ public enum FileFormat {
 
 	// ::comment when WASM
 	private StringBounder getBrailleStringBounder() {
-		return new StringBounderRaw() {
+		return new StringBounderRaw(FileFormat.gg.getFontRenderContext()) {
 			public String toString() {
 				return "FileFormat::getBrailleStringBounder";
 			}
@@ -228,7 +228,7 @@ public enum FileFormat {
 	}
 
 	private StringBounder getTikzStringBounder(final TikzFontDistortion tikzFontDistortion) {
-		return new StringBounderRaw() {
+		return new StringBounderRaw(FileFormat.gg.getFontRenderContext()) {
 			public String toString() {
 				return "FileFormat::getTikzStringBounder";
 			}

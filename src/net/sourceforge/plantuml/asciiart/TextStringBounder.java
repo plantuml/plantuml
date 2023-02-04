@@ -35,11 +35,16 @@
  */
 package net.sourceforge.plantuml.asciiart;
 
+import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.font.StringBounderRaw;
 import net.sourceforge.plantuml.klimt.font.UFont;
 
 public class TextStringBounder extends StringBounderRaw {
+
+	public TextStringBounder() {
+		super(FileFormat.gg.getFontRenderContext());
+	}
 
 	protected XDimension2D calculateDimensionInternal(UFont font, String text) {
 		final int length1 = text.codePointCount(0, text.length());

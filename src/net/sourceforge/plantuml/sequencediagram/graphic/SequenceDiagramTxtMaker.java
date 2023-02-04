@@ -56,6 +56,7 @@ import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
+import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt;
 
 public class SequenceDiagramTxtMaker implements FileMaker {
@@ -141,4 +142,10 @@ public class SequenceDiagramTxtMaker implements FileMaker {
 	public int getNbPages() {
 		return 1;
 	}
+
+	@Override
+	public ImageData createOneGraphic(UGraphic ug) {
+		throw new UnsupportedOperationException();
+	}
+
 }
