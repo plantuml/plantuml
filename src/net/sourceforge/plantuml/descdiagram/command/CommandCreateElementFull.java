@@ -37,9 +37,8 @@
 package net.sourceforge.plantuml.descdiagram.command;
 
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.baraye.EntityUtils;
-import net.sourceforge.plantuml.baraye.Quark;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.classdiagram.command.CommandCreateClassMultilines;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -57,6 +56,7 @@ import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.font.FontParam;
+import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -243,10 +243,10 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 		if (existsWithBadType3(diagram, quark, type, usymbol))
 			return CommandExecutionResult.error("This element (" + quark.getName() + ") is already defined");
 
-		if ((type == LeafType.PORTIN || type == LeafType.PORTOUT) && diagram.getCurrentGroup().getQuark().isRoot())
+		if ((type == LeafType.PORTIN || type == LeafType.PORTOUT) && diagram.getCurrentGroup().isRoot())
 			return CommandExecutionResult.error("Port can only be used inside an element and not at root level");
 
-		EntityImp entity = (EntityImp) quark.getData();
+		Entity entity = (Entity) quark.getData();
 		if (entity == null)
 			entity = diagram.reallyCreateLeaf(quark, Display.getWithNewlines(display), type, usymbol);
 
@@ -287,7 +287,7 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 			return false;
 
 		// final ILeaf other = diagram.getLeafFromName(code.getName());
-		final EntityImp other = (EntityImp) code.getData();
+		final Entity other = (Entity) code.getData();
 		if (other.getLeafType() != type)
 			return true;
 

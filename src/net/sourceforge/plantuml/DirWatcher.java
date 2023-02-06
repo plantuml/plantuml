@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.preproc.FileWithSuffix;
 
 @Deprecated
 public class DirWatcher {
-	// ::remove file when WASM
+	// ::remove file when CORE
 
 	final private File dir;
 	final private Option option;

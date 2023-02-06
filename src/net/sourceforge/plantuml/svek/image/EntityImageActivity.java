@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.svek.image;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
-import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.klimt.Shadowable;
@@ -70,7 +70,7 @@ public class EntityImageActivity extends AbstractEntityImage {
 	final private Url url;
 	private final Bibliotekon bibliotekon;
 
-	public EntityImageActivity(EntityImp entity, ISkinParam skinParam, Bibliotekon bibliotekon) {
+	public EntityImageActivity(Entity entity, ISkinParam skinParam, Bibliotekon bibliotekon) {
 		super(entity, skinParam);
 		this.bibliotekon = bibliotekon;
 

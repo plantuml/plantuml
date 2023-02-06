@@ -65,7 +65,7 @@ public class FileSystem {
 	}
 
 	public SFile getCurrentDir() {
-		// ::comment when WASM
+		// ::comment when CORE
 		final String path = this.currentDir.get();
 		if (path != null)
 			return new SFile(path);
@@ -75,11 +75,11 @@ public class FileSystem {
 	}
 
 	public SFile getFile(String nameOrPath) throws IOException {
-		// ::uncomment when WASM
+		// ::uncomment when CORE
 		// return null;
 		// ::done
 
-		// ::comment when WASM
+		// ::comment when CORE
 		if (isAbsolute(nameOrPath)) {
 			final SFile result = new SFile(nameOrPath);
 			Log.info("Trying " + result.getAbsolutePath());
@@ -117,7 +117,7 @@ public class FileSystem {
 		// ::done
 	}
 
-	// ::comment when WASM
+	// ::comment when CORE
 	private boolean isAbsolute(String nameOrPath) {
 		final SFile f = new SFile(nameOrPath);
 		return f.isAbsolute();

@@ -115,7 +115,7 @@ public class Option {
 		this.fileFormatOption = newFormat;
 	}
 
-	// ::comment when WASM
+	// ::comment when CORE
 	public Option(String... arg) throws InterruptedException, IOException {
 		if (arg.length == 0)
 			OptionFlags.getInstance().setGui(true);
@@ -407,7 +407,7 @@ public class Option {
 	// ::done
 
 	public Stdrpt getStdrpt() {
-		// ::comment when WASM
+		// ::comment when CORE
 		if (stdrpt == 1)
 			return new StdrptV1();
 

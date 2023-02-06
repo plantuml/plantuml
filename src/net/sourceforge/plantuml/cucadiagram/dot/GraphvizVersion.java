@@ -36,7 +36,7 @@
 package net.sourceforge.plantuml.cucadiagram.dot;
 
 public interface GraphvizVersion {
-	// ::comment when WASM
+	// ::comment when CORE
 	public boolean useShieldForQuantifier();
 
 	public boolean useProtectionWhenThereALinkFromOrToGroup();

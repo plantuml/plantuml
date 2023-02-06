@@ -60,7 +60,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt;
 
 public class SequenceDiagramTxtMaker implements FileMaker {
-	// ::remove file when WASM
+	// ::remove file when CORE
 
 	private final SequenceDiagram diagram;
 	private final DrawableSet drawableSet;

@@ -39,7 +39,7 @@ import java.util.Collections;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
-import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
@@ -68,7 +68,7 @@ public class EntityImageState extends EntityImageStateCommon {
 	final static private double smallMarginX = 7;
 	final static private double smallMarginY = 4;
 
-	public EntityImageState(EntityImp entity, ISkinParam skinParam) {
+	public EntityImageState(Entity entity, ISkinParam skinParam) {
 		super(entity, skinParam);
 
 		final Stereotype stereotype = entity.getStereotype();

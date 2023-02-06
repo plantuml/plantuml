@@ -97,7 +97,7 @@ public class PSystemVersion extends PlainStringsDiagram {
 		return getImage("favicon.png");
 	}
 
-	// ::comment when WASM
+	// ::comment when CORE
 	public static BufferedImage getArecibo() {
 		return getImage("arecibo.png");
 	}
@@ -127,7 +127,7 @@ public class PSystemVersion extends PlainStringsDiagram {
 		return new BufferedImage(10, 10, BufferedImage.TYPE_INT_ARGB);
 	}
 
-	// ::comment when WASM
+	// ::comment when CORE
 	private static BufferedImage getImageWebp(final String name) {
 		try (InputStream is = PSystemVersion.class.getResourceAsStream(name)) {
 			return SFile.getBufferedImageFromWebpButHeader(is);
@@ -163,7 +163,7 @@ public class PSystemVersion extends PlainStringsDiagram {
 	public static PSystemVersion createShowVersion2(UmlSource source) {
 		final List<String> strings = new ArrayList<>();
 		strings.add("<b>PlantUML version " + Version.versionString() + "</b> (" + Version.compileTimeString() + ")");
-		// :: comment when WASM
+		// :: comment when CORE
 		strings.add("(" + License.getCurrent() + " source distribution)");
 		GraphvizCrash.checkOldVersionWarning(strings);
 		if (OptionFlags.ALLOW_INCLUDE) {
@@ -195,7 +195,7 @@ public class PSystemVersion extends PlainStringsDiagram {
 		return new PSystemVersion(source, true, strings);
 	}
 
-	// :: comment when WASM
+	// :: comment when CORE
 	public static PSystemVersion createStdLib(UmlSource source) {
 		final List<String> strings = new ArrayList<>();
 		Stdlib.addInfoVersion(strings, true);
@@ -245,7 +245,7 @@ public class PSystemVersion extends PlainStringsDiagram {
 
 	}
 
-	// ::comment when WASM
+	// ::comment when CORE
 	public static PSystemVersion createTestDot(UmlSource source) throws IOException {
 		final List<String> strings = new ArrayList<>();
 		strings.add(Version.fullDescription());
@@ -264,7 +264,7 @@ public class PSystemVersion extends PlainStringsDiagram {
 //		return new PSystemVersion(false, strings);
 //	}
 
-	// ::comment when WASM
+	// ::comment when CORE
 	public static PSystemVersion createKeyDistributor(UmlSource source) throws IOException {
 		final LicenseInfo license = LicenseInfo.retrieveDistributor();
 		BufferedImage im = null;

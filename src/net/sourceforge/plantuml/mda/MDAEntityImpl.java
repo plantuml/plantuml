@@ -36,18 +36,18 @@
 package net.sourceforge.plantuml.mda;
 
 import net.sourceforge.plantuml.api.mda.option2.MDAEntity;
-import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Entity;
 
 public class MDAEntityImpl implements MDAEntity {
 
-	private final EntityImp leaf;
+	private final Entity leaf;
 
-	public MDAEntityImpl(EntityImp leaf) {
+	public MDAEntityImpl(Entity leaf) {
 		this.leaf = leaf;
 	}
 
 	public String getName() {
-		return leaf.getCodeGetName();
+		return leaf.getName();
 	}
 
 }

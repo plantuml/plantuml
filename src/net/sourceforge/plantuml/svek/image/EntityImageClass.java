@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineConfigurable;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.awt.geom.XRectangle2D;
-import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.creole.Stencil;
 import net.sourceforge.plantuml.cucadiagram.EntityPortion;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
@@ -85,7 +85,7 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 
 	final private LineConfigurable lineConfig;
 
-	public EntityImageClass(EntityImp entity, ISkinParam skinParam, PortionShower portionShower) {
+	public EntityImageClass(Entity entity, ISkinParam skinParam, PortionShower portionShower) {
 		super(entity, entity.getColors().mute(skinParam));
 		this.leafType = entity.getLeafType();
 		this.lineConfig = entity;
@@ -121,10 +121,10 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 	private double getKalWidth() {
 		double widthUp = 0;
 		double widthDown = 0;
-		for (Kal kal : ((EntityImp) getEntity()).getKals(Direction.UP))
+		for (Kal kal : ((Entity) getEntity()).getKals(Direction.UP))
 			widthUp += kal.getDimension().getWidth();
 
-		for (Kal kal : ((EntityImp) getEntity()).getKals(Direction.DOWN))
+		for (Kal kal : ((Entity) getEntity()).getKals(Direction.DOWN))
 			widthDown += kal.getDimension().getWidth();
 
 		return Math.max(widthUp, widthDown);
@@ -143,13 +143,13 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 	}
 
 	final public void drawU(UGraphic ug) {
-		ug.draw(new UComment("class " + getEntity().getCodeGetName()));
+		ug.draw(new UComment("class " + getEntity().getName()));
 		if (url != null)
 			ug.startUrl(url);
 
 		final Map<UGroupType, String> typeIDent = new EnumMap<>(UGroupType.class);
-		typeIDent.put(UGroupType.CLASS, "elem " + getEntity().getCode() + " selected");
-		typeIDent.put(UGroupType.ID, "elem_" + getEntity().getCode());
+		typeIDent.put(UGroupType.CLASS, "elem " + getEntity().getName() + " selected");
+		typeIDent.put(UGroupType.ID, "elem_" + getEntity().getName());
 		ug.startGroup(typeIDent);
 		drawInternal(ug);
 		ug.closeGroup();
@@ -181,7 +181,7 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 		final double widthTotal = dimTotal.getWidth();
 		final double heightTotal = dimTotal.getHeight();
 		final Shadowable rect = new URectangle(widthTotal, heightTotal).rounded(roundCorner)
-				.withCommentAndCodeLine(getEntity().getCodeGetName(), getEntity().getCodeLine());
+				.withCommentAndCodeLine(getEntity().getName(), getEntity().getCodeLine());
 
 		double shadow = 0;
 
@@ -248,7 +248,7 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 	}
 
 	public ShapeType getShapeType() {
-		if (((EntityImp) getEntity()).getPortShortNames().size() > 0)
+		if (((Entity) getEntity()).getPortShortNames().size() > 0)
 			return ShapeType.RECTANGLE_HTML_FOR_PORTS;
 
 		return ShapeType.RECTANGLE;
@@ -256,7 +256,7 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 
 	@Override
 	public Margins getShield(StringBounder stringBounder) {
-		return ((EntityImp) getEntity()).getMargins();
+		return ((Entity) getEntity()).getMargins();
 	}
 
 	public double getStartingX(StringBounder stringBounder, double y) {

@@ -40,7 +40,7 @@ import java.util.Map;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
-import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.klimt.UGroupType;
 import net.sourceforge.plantuml.klimt.UPolygon;
 import net.sourceforge.plantuml.klimt.UStroke;
@@ -58,7 +58,7 @@ public class EntityImageBranch extends AbstractEntityImage {
 
 	final private static int SIZE = 12;
 
-	public EntityImageBranch(EntityImp entity, ISkinParam skinParam) {
+	public EntityImageBranch(Entity entity, ISkinParam skinParam) {
 		super(entity, skinParam);
 	}
 
@@ -86,8 +86,8 @@ public class EntityImageBranch extends AbstractEntityImage {
 
 		diams.setDeltaShadow(shadowing);
 		final Map<UGroupType, String> typeIDent = new EnumMap<>(UGroupType.class);
-		typeIDent.put(UGroupType.CLASS, "elem " + getEntity().getCode() + " selected");
-		typeIDent.put(UGroupType.ID, "elem_" + getEntity().getCode());
+		typeIDent.put(UGroupType.CLASS, "elem " + getEntity().getName() + " selected");
+		typeIDent.put(UGroupType.ID, "elem_" + getEntity().getName());
 		ug.startGroup(typeIDent);
 		ug.apply(border).apply(back.bg()).apply(stroke).draw(diams);
 		ug.closeGroup();

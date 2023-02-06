@@ -78,7 +78,7 @@ public class CommandPragma extends SingleLineCommand2<TitledDiagram> {
 			}
 		} else {
 			system.getPragma().define(name, value);
-			// ::comment when WASM
+			// ::comment when CORE
 			if (name.equalsIgnoreCase("graphviz_dot") && value.equalsIgnoreCase("jdot"))
 				return CommandExecutionResult.error(
 						"This directive has been renamed to '!pragma layout smetana'. Please update your diagram.");

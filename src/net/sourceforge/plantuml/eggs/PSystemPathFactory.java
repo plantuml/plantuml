@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.regex.MyPattern;
 import net.sourceforge.plantuml.regex.Pattern2;
 
 public class PSystemPathFactory extends PSystemSingleLineFactory {
-	// ::remove file when WASM
+	// ::remove file when CORE
 
 	final private static Pattern2 p = MyPattern.cmpile("^path[%s]+([0-9A-Za-z]+)$");
 

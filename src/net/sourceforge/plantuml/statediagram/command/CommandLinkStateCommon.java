@@ -37,8 +37,7 @@
 package net.sourceforge.plantuml.statediagram.command;
 
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.baraye.EntityImp;
-import net.sourceforge.plantuml.baraye.Quark;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -50,6 +49,7 @@ import net.sourceforge.plantuml.cucadiagram.LinkType;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
@@ -74,12 +74,12 @@ abstract class CommandLinkStateCommon extends SingleLineCommand2<StateDiagram> {
 		final String ent1 = arg.get("ENT1", 0);
 		final String ent2 = arg.get("ENT2", 0);
 
-		final EntityImp cl1 = getEntityStart(diagram, ent1);
+		final Entity cl1 = getEntityStart(diagram, ent1);
 		if (cl1 == null)
 			return CommandExecutionResult
 					.error("The state " + ent1 + " has been created in a concurrent state : it cannot be used here.");
 
-		final EntityImp cl2 = getEntityEnd(diagram, ent2);
+		final Entity cl2 = getEntityEnd(diagram, ent2);
 		if (cl2 == null)
 			return CommandExecutionResult
 					.error("The state " + ent2 + " has been created in a concurrent state : it cannot be used here.");
@@ -137,21 +137,21 @@ abstract class CommandLinkStateCommon extends SingleLineCommand2<StateDiagram> {
 		return null;
 	}
 
-	private EntityImp getEntityStart(StateDiagram diagram, final String code) {
+	private Entity getEntityStart(StateDiagram diagram, final String code) {
 		if (code.startsWith("[*]"))
 			return diagram.getStart();
 
 		return getEntity(diagram, code);
 	}
 
-	private EntityImp getEntityEnd(StateDiagram diagram, final String code) {
+	private Entity getEntityEnd(StateDiagram diagram, final String code) {
 		if (code.startsWith("[*]"))
 			return diagram.getEnd();
 
 		return getEntity(diagram, code);
 	}
 
-	private EntityImp getEntity(StateDiagram diagram, final String code) {
+	private Entity getEntity(StateDiagram diagram, final String code) {
 		if (code.equalsIgnoreCase("[H]"))
 			return diagram.getHistorical();
 
@@ -168,19 +168,19 @@ abstract class CommandLinkStateCommon extends SingleLineCommand2<StateDiagram> {
 			final String codeString1 = removeEquals(code);
 			final Quark quark = diagram.quarkInContext(diagram.cleanIdForQuark(codeString1), false);
 			if (quark.getData() != null)
-				return (EntityImp) quark.getData();
+				return (Entity) quark.getData();
 			return diagram.reallyCreateLeaf(quark, Display.getWithNewlines(quark), LeafType.SYNCHRO_BAR, null);
 		}
 
 		if (diagram.currentQuark().getName().equals(code) && diagram.currentQuark().getData() != null)
-			return (EntityImp) diagram.currentQuark().getData();
+			return (Entity) diagram.currentQuark().getData();
 
 		final Quark quark = diagram.quarkInContext(diagram.cleanIdForQuark(code), false);
 		if (diagram.checkConcurrentStateOk(quark) == false)
 			return null;
 
 		if (quark.getData() != null)
-			return (EntityImp) quark.getData();
+			return (Entity) quark.getData();
 		return diagram.reallyCreateLeaf(quark, Display.getWithNewlines(quark.getName()), LeafType.STATE, null);
 	}
 

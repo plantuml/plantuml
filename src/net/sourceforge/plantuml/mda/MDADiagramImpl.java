@@ -45,12 +45,12 @@ import net.sourceforge.plantuml.SourceStringReader;
 import net.sourceforge.plantuml.api.mda.option2.MDADiagram;
 import net.sourceforge.plantuml.api.mda.option2.MDAPackage;
 import net.sourceforge.plantuml.baraye.EntityFactory;
-import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.core.Diagram;
 
 public class MDADiagramImpl implements MDADiagram {
-	// ::remove folder when WASM
+	// ::remove folder when CORE
 	public static MDADiagram create(String uml) {
 		List<BlockUml> blocks = new SourceStringReader(uml).getBlocks();
 		if (blocks.size() == 0) {
@@ -73,7 +73,7 @@ public class MDADiagramImpl implements MDADiagram {
 	private MDADiagramImpl(ClassDiagram classDiagram) {
 		final EntityFactory entityFactory = classDiagram.getEntityFactory();
 		packages.add(new MDAPackageImpl(entityFactory.getRootGroup()));
-		for (EntityImp group : entityFactory.groups()) {
+		for (Entity group : entityFactory.groups()) {
 			packages.add(new MDAPackageImpl(group));
 		}
 	}

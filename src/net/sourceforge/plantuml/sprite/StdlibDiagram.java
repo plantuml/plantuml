@@ -69,7 +69,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.utils.BlocLines;
 
 public class StdlibDiagram extends UmlDiagram {
-	// ::remove file when WASM
+	// ::remove file when CORE
 
 	private static final int WIDTH = 1800;
 	private String name;

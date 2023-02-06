@@ -57,7 +57,7 @@ import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
-	// ::remove file when WASM
+	// ::remove file when CORE
 
 	private final ICucaDiagram diagram;
 
@@ -82,8 +82,8 @@ public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 
 	private GeneralImageBuilder createDotDataImageBuilder(DotMode dotMode, StringBounder stringBounder) {
 		final DotData dotData = new DotData(diagram.getEntityFactory().getRootGroup(), getOrderedLinks(),
-				diagram.getLeafsvalues(), diagram.getUmlDiagramType(), diagram.getSkinParam(), diagram, diagram,
-				diagram.getEntityFactory(), diagram.isHideEmptyDescriptionForState(), dotMode,
+				diagram.getEntityFactory().leafs(), diagram.getUmlDiagramType(), diagram.getSkinParam(), diagram,
+				diagram, diagram.getEntityFactory(), diagram.isHideEmptyDescriptionForState(), dotMode,
 				diagram.getNamespaceSeparator(), diagram.getPragma());
 		return new GeneralImageBuilder(dotData, diagram.getEntityFactory(), diagram.getSource(), diagram.getPragma(),
 				stringBounder, diagram.getUmlDiagramType().getStyleName());

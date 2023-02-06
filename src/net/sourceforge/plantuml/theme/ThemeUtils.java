@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.preproc.Stdlib;
 import net.sourceforge.plantuml.sprite.ResourcesUtils;
 import net.sourceforge.plantuml.utils.Log;
 
-// ::uncomment when WASM
+// ::uncomment when CORE
 //import com.plantuml.wasm.RunInit;
 //import java.io.FileInputStream;
 //import java.io.FileNotFoundException;
@@ -64,7 +64,7 @@ public class ThemeUtils {
 
 	private static final String THEME_PATH = "themes";
 
-	// ::uncomment when WASM
+	// ::uncomment when CORE
 //	public static ReadLine getReaderTheme(String filename) throws FileNotFoundException {
 //	Log.info("Loading theme " + filename);
 //	final String fullpath = RunInit.cheerpjPath + THEME_PATH + "/" + THEME_FILE_PREFIX + filename
@@ -77,7 +77,7 @@ public class ThemeUtils {
 //}
 	// ::done
 
-	// ::comment when WASM
+	// ::comment when CORE
 	public static ReadLine getReaderTheme(String filename) {
 		Log.info("Loading theme " + filename);
 		final String res = "/" + THEME_PATH + "/" + THEME_FILE_PREFIX + filename + THEME_FILE_SUFFIX;

@@ -55,7 +55,7 @@ import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 
 public class PSystemCreole extends PlainDiagram {
-	// ::remove file when WASM
+	// ::remove file when CORE
 
 	private final List<String> lines = new ArrayList<>();
 

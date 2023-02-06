@@ -35,8 +35,7 @@
  */
 package net.sourceforge.plantuml.objectdiagram.command;
 
-import net.sourceforge.plantuml.baraye.EntityImp;
-import net.sourceforge.plantuml.baraye.Quark;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
@@ -57,6 +56,7 @@ import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.font.FontParam;
+import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -105,7 +105,7 @@ public class CommandCreateMap extends CommandMultilines2<AbstractEntityDiagram> 
 			throws NoSuchColorException {
 		lines = lines.trim().removeEmptyLines();
 		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
-		final EntityImp entity1 = executeArg0(diagram, line0);
+		final Entity entity1 = executeArg0(diagram, line0);
 		if (entity1 == null)
 			return CommandExecutionResult.error("No such entity");
 
@@ -123,7 +123,7 @@ public class CommandCreateMap extends CommandMultilines2<AbstractEntityDiagram> 
 				final String key = line.substring(0, x).trim();
 				final String dest = line.substring(x + linkStr.length()).trim();
 				final Quark ident2 = diagram.quarkInContext(dest, false);
-				final EntityImp entity2 = (EntityImp) ident2.getData();
+				final Entity entity2 = (Entity) ident2.getData();
 				if (entity2 == null)
 					return CommandExecutionResult.error("No such entity " + ident2.getName());
 
@@ -138,7 +138,7 @@ public class CommandCreateMap extends CommandMultilines2<AbstractEntityDiagram> 
 		return CommandExecutionResult.ok();
 	}
 
-	private EntityImp executeArg0(AbstractEntityDiagram diagram, RegexResult line0) throws NoSuchColorException {
+	private Entity executeArg0(AbstractEntityDiagram diagram, RegexResult line0) throws NoSuchColorException {
 		final String name = line0.get("NAME", 1);
 //		final Quark ident = diagram.buildFromName(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(name));
 //		final Quark code = diagram.buildFromFullPath(name);
@@ -157,7 +157,7 @@ public class CommandCreateMap extends CommandMultilines2<AbstractEntityDiagram> 
 		if (Display.isNull(display))
 			display = Display.getWithNewlines(name).withCreoleMode(CreoleMode.SIMPLE_LINE);
 
-		final EntityImp entity = diagram.reallyCreateLeaf(quark, display, LeafType.MAP, null);
+		final Entity entity = diagram.reallyCreateLeaf(quark, display, LeafType.MAP, null);
 		if (stereotype != null)
 			entity.setStereotype(Stereotype.build(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),
 					diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),

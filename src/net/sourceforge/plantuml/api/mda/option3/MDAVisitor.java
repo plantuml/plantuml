@@ -36,5 +36,5 @@
 package net.sourceforge.plantuml.api.mda.option3;
 
 public interface MDAVisitor {
-	// ::remove folder when WASM
+	// ::remove folder when CORE
 }

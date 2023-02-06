@@ -239,7 +239,7 @@ public enum SpriteGrayLevel {
 		return result;
 	}
 
-	// ::comment when WASM
+	// ::comment when CORE
 	public List<String> encodeZ(BufferedImage img) {
 		final int width = img.getWidth();
 		final int height = img.getHeight();

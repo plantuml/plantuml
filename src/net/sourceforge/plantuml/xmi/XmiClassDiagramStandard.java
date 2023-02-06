@@ -39,7 +39,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Element;
 
-import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 
 public class XmiClassDiagramStandard extends XmiClassDiagramAbstract implements XmlDiagramTransformer {
@@ -47,7 +47,7 @@ public class XmiClassDiagramStandard extends XmiClassDiagramAbstract implements 
 	public XmiClassDiagramStandard(ClassDiagram classDiagram) throws ParserConfigurationException {
 		super(classDiagram);
 
-		for (final EntityImp ent : classDiagram.getLeafsvalues()) {
+		for (final Entity ent : classDiagram.getEntityFactory().leafs()) {
 			// if (fileFormat == FileFormat.XMI_ARGO && isStandalone(ent) == false) {
 			// continue;
 			// }

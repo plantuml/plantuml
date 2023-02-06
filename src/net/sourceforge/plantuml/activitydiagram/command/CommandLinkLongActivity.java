@@ -39,8 +39,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagram;
-import net.sourceforge.plantuml.baraye.EntityImp;
-import net.sourceforge.plantuml.baraye.Quark;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.classdiagram.command.CommandLinkClass;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
@@ -57,6 +56,7 @@ import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.descdiagram.command.CommandLinkElement;
 import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.MyPattern;
 import net.sourceforge.plantuml.regex.RegexConcat;
@@ -120,7 +120,7 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 		lines = lines.trim();
 		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 
-		final EntityImp entity1 = CommandLinkActivity.getEntity(diagram, line0, true);
+		final Entity entity1 = CommandLinkActivity.getEntity(diagram, line0, true);
 		if (entity1 == null)
 			return CommandExecutionResult.error("No such entity");
 
@@ -181,7 +181,7 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 		}
 		final Quark ident = diagram.quarkInContext(diagram.cleanIdForQuark(idShort), false);
 
-		EntityImp entity2 = (EntityImp) ident.getData();
+		Entity entity2 = (Entity) ident.getData();
 		if (entity2 == null)
 			entity2 = diagram.reallyCreateLeaf(ident, Display.getWithNewlines(display), LeafType.ACTIVITY, null);
 

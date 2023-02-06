@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.windowsdot.WindowsDotArchive;
 
 class GraphvizWindowsOld extends AbstractGraphviz {
-	// ::remove file when WASM
+	// ::remove file when CORE
 
 	static private File specificDotExe;
 

@@ -39,7 +39,7 @@ import net.sourceforge.plantuml.cucadiagram.Link;
 
 public abstract class EntityUtils {
 
-	private static boolean isParent(EntityImp groupToBeTested, EntityImp parentGroup) {
+	private static boolean isParent(Entity groupToBeTested, Entity parentGroup) {
 		if (groupToBeTested.isGroup() == false)
 			// Very strange!
 			return false;
@@ -47,7 +47,7 @@ public abstract class EntityUtils {
 		if (groupToBeTested.isGroup() == false)
 			throw new IllegalArgumentException();
 
-		while (groupToBeTested.getQuark().isRoot() == false) {
+		while (groupToBeTested.isRoot() == false) {
 			if (groupToBeTested == parentGroup)
 				return true;
 
@@ -60,14 +60,14 @@ public abstract class EntityUtils {
 		return false;
 	}
 
-	public static boolean isPureInnerLink12(EntityImp group, Link link) {
+	public static boolean isPureInnerLink12(Entity group, Link link) {
 		if (group.isGroup() == false)
 			throw new IllegalArgumentException();
 
-		final EntityImp e1 = link.getEntity1();
-		final EntityImp e2 = link.getEntity2();
-		final EntityImp group1 = e1.getParentContainer();
-		final EntityImp group2 = e2.getParentContainer();
+		final Entity e1 = link.getEntity1();
+		final Entity e2 = link.getEntity2();
+		final Entity group1 = e1.getParentContainer();
+		final Entity group2 = e2.getParentContainer();
 
 		if (isParent(group1, group) && isParent(group2, group))
 			return true;
@@ -75,44 +75,14 @@ public abstract class EntityUtils {
 		return false;
 	}
 
-//	public static boolean isPureInnerLink12(EntityImp group, Link link) {
-//		if (group.isGroup() == false)
-//			throw new IllegalArgumentException();
-//
-//		final EntityImp e1 = (EntityImp) link.getZEntity1();
-//		final EntityImp e2 = (EntityImp) link.getZEntity2();
-//		final Quark group1 = e1.getQuark().getParent();
-//		final Quark group2 = e2.getQuark().getParent();
-//		if (group.getQuark().containsLarge(group1) && group.getQuark().containsLarge(group2))
-//			return true;
-////		if (isParent(group1, group) && isParent(group2, group))
-////			return true;
-//
-//		return false;
-//	}
-//
-//	public static boolean isPureInnerLink12(EntityImp group, Link link) {
-//		if (group.isGroup() == false)
-//			throw new IllegalArgumentException();
-//
-//		final EntityImp e1 = link.getEntity1();
-//		final EntityImp e2 = link.getEntity2();
-//		final EntityImp group1 = e1.getParentContainer();
-//		final EntityImp group2 = e2.getParentContainer();
-//		if (isParent(group1, group) && isParent(group2, group))
-//			return true;
-//
-//		return false;
-//	}
-
-	public static boolean isPureInnerLink3(EntityImp group, Link link) {
+	public static boolean isPureInnerLink3(Entity group, Link link) {
 		if (group.isGroup() == false)
 			throw new IllegalArgumentException();
 
-		final EntityImp e1 = link.getEntity1();
-		final EntityImp e2 = link.getEntity2();
-		final EntityImp group1 = e1.getParentContainer();
-		final EntityImp group2 = e2.getParentContainer();
+		final Entity e1 = link.getEntity1();
+		final Entity e2 = link.getEntity2();
+		final Entity group1 = e1.getParentContainer();
+		final Entity group2 = e2.getParentContainer();
 		if (isParent(group2, group) == isParent(group1, group))
 			return true;
 

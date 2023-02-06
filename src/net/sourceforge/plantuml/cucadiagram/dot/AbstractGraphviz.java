@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.utils.Log;
 
 abstract class AbstractGraphviz implements Graphviz {
-	// ::remove file when WASM
+	// ::remove file when CORE
 
 	private final File dotExe;
 	private final String dotString;

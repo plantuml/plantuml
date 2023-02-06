@@ -95,7 +95,7 @@ public class Url implements EnsureVisible {
 	}
 
 	public String getCoords(double scale) {
-		// ::comment when WASM
+		// ::comment when CORE
 		if (Check.isJunit() && visible.getCoords(1.0).contains("0,0,0,0"))
 			throw new IllegalStateException(toString());
 		// ::done

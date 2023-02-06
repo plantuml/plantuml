@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.awt.geom.XRectangle2D;
-import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.cucadiagram.BodyFactory;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -79,7 +79,7 @@ public class EntityImageTips extends AbstractEntityImage {
 
 	private final double ySpacing = 10;
 
-	public EntityImageTips(EntityImp entity, ISkinParam skinParam, Bibliotekon bibliotekon, UmlDiagramType type) {
+	public EntityImageTips(Entity entity, ISkinParam skinParam, Bibliotekon bibliotekon, UmlDiagramType type) {
 		super(entity, EntityImageNote.getSkin(skinParam, entity));
 		this.skinParam = skinParam;
 		this.bibliotekon = bibliotekon;
@@ -99,7 +99,7 @@ public class EntityImageTips extends AbstractEntityImage {
 	}
 
 	private Position getPosition() {
-		if (getEntity().getCodeGetName().endsWith(Position.RIGHT.name()))
+		if (getEntity().getName().endsWith(Position.RIGHT.name()))
 			return Position.RIGHT;
 
 		return Position.LEFT;
@@ -125,7 +125,7 @@ public class EntityImageTips extends AbstractEntityImage {
 	public void drawU(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
 
-		final EntityImp other = bibliotekon.getOnlyOther(getEntity());
+		final Entity other = bibliotekon.getOnlyOther(getEntity());
 
 		final SvekNode nodeMe = bibliotekon.getNode(getEntity());
 		final SvekNode nodeOther = bibliotekon.getNode(other);

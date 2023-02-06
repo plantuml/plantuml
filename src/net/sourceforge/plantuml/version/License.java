@@ -264,7 +264,7 @@ public enum License {
 	}
 
 	private void addSupplementary(final LicenseInfo licenseInfo, final List<String> text) {
-		// ::comment when WASM
+		// ::comment when CORE
 		if (licenseInfo.isValid() == false) {
 			text.add("PlantUML can occasionally display sponsored or advertising messages. Those");
 			text.add("messages are usually generated on welcome or error images and never on");
@@ -279,7 +279,7 @@ public enum License {
 	}
 
 	private void header1(final List<String> text, LicenseInfo licenseInfo) {
-		// ::comment when WASM
+		// ::comment when CORE
 		if (licenseInfo.isNone()) {
 			// ::done
 			text.add("+=======================================================================");
@@ -287,7 +287,7 @@ public enum License {
 			text.add("|      PlantUML : a free UML diagram generator");
 			text.add("| ");
 			text.add("+=======================================================================");
-			// ::comment when WASM
+			// ::comment when CORE
 		} else {
 			text.add("+=======================================================================");
 			text.add("| ");
@@ -307,7 +307,7 @@ public enum License {
 		text.add("Project Info:  https://plantuml.com");
 		text.add(" ");
 
-		// ::comment when WASM
+		// ::comment when CORE
 		if (licenseInfo.isValid() == false) {
 			text.add("If you like this project or if you find it useful, you can support us at:");
 			text.add(" ");
@@ -326,7 +326,7 @@ public enum License {
 	}
 
 	public static void addLicenseInfo(final List<String> text, LicenseInfo licenseInfo) {
-		// ::comment when WASM
+		// ::comment when CORE
 		if (licenseInfo.getLicenseType() == LicenseType.NAMED) {
 			text.add("| ");
 			text.add("|      LICENSED TO : " + licenseInfo.getOwner());
@@ -478,7 +478,7 @@ public enum License {
 
 	public List<String> getTextFull() {
 		final List<String> text = new ArrayList<>();
-		// ::comment when WASM
+		// ::comment when CORE
 		final LicenseInfo licenseInfo = LicenseInfo.retrieveQuick();
 		header1(text, licenseInfo);
 		header2(text, licenseInfo, false);
@@ -524,7 +524,7 @@ public enum License {
 			text.add("(more info on https://plantuml.com/statistics-report)");
 		}
 		text.add(" ");
-		// ::comment when WASM
+		// ::comment when CORE
 		if (WindowsDotArchive.getInstance().isThereArchive()) {
 			text.add("This distribution bundles a minimal set of GraphViz files and may install them");
 			text.add(" if needed in the local temporary directory.");

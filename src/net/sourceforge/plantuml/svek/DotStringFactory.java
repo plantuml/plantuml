@@ -51,7 +51,7 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.baraye.EntityFactory;
-import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.cucadiagram.ICucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.dot.DotData;
@@ -134,7 +134,7 @@ public class DotStringFactory implements Moveable {
 		return max / 10;
 	}
 
-	// ::comment when WASM
+	// ::comment when CORE
 	String createDotString(String... dotStrings) {
 		final StringBuilder sb = new StringBuilder();
 
@@ -280,12 +280,12 @@ public class DotStringFactory implements Moveable {
 		return 35;
 	}
 
-	// ::uncomment when WASM
+	// ::uncomment when CORE
 	// public GraphvizVersion getGraphvizVersion() {
 	// return null;
 	// }
 	// ::done
-	// ::comment when WASM
+	// ::comment when CORE
 	private GraphvizVersion graphvizVersion;
 
 	public GraphvizVersion getGraphvizVersion() {
@@ -469,7 +469,7 @@ public class DotStringFactory implements Moveable {
 	}
 	// ::done
 
-	public void openCluster(EntityImp g, ClusterHeader clusterHeader) {
+	public void openCluster(Entity g, ClusterHeader clusterHeader) {
 		this.current = current.createChild(clusterHeader, colorSequence, skinParam, g);
 		bibliotekon.addCluster(this.current);
 	}

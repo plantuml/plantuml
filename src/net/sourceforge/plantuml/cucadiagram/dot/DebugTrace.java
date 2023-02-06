@@ -41,7 +41,7 @@ import java.io.PrintWriter;
 import net.sourceforge.plantuml.security.SFile;
 
 public class DebugTrace {
-	// ::remove file when WASM
+	// ::remove file when CORE
 
 	private static final SFile out = new SFile("debug" + System.currentTimeMillis() + ".txt");
 

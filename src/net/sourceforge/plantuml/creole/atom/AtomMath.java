@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.ugraphic.UImageSvg;
 
 public class AtomMath extends AbstractAtom implements Atom {
-	// ::remove file when WASM
+	// ::remove file when CORE
 
 	private final ScientificEquationSafe math;
 	private final HColor foreground;

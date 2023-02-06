@@ -81,7 +81,7 @@ public class Version {
 	}
 
 	public static int beta() {
-		final int beta = 2;
+		final int beta = 3;
 		return beta;
 	}
 
@@ -104,7 +104,7 @@ public class Version {
 		return new Date(Version.compileTime()).toString();
 	}
 
-	// ::comment when WASM
+	// ::comment when CORE
 	public static String getJarPath() {
 		try {
 			final ClassLoader loader = Version.class.getClassLoader();

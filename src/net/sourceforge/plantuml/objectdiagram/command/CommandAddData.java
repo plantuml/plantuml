@@ -35,12 +35,12 @@
  */
 package net.sourceforge.plantuml.objectdiagram.command;
 
-import net.sourceforge.plantuml.baraye.EntityImp;
-import net.sourceforge.plantuml.baraye.Quark;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
+import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -68,7 +68,7 @@ public class CommandAddData extends SingleLineCommand2<AbstractClassOrObjectDiag
 			RegexResult arg) throws NoSuchColorException {
 		final String name = arg.get("NAME", 0);
 		final Quark quark = diagram.quarkInContext(diagram.cleanIdForQuark(name), false);
-		final EntityImp entity = (EntityImp) quark.getData();
+		final Entity entity = (Entity) quark.getData();
 		if (entity == null)
 			return CommandExecutionResult.error("No such entity " + quark.getName());
 		// final IEntity entity = diagram.getOrCreateLeaf(quark,

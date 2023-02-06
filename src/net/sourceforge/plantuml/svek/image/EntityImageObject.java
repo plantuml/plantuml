@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.LineConfigurable;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.awt.geom.XRectangle2D;
-import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.creole.Stencil;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.EntityPortion;
@@ -90,7 +90,7 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil, W
 
 	final private LineConfigurable lineConfig;
 
-	public EntityImageObject(EntityImp entity, ISkinParam skinParam, PortionShower portionShower) {
+	public EntityImageObject(Entity entity, ISkinParam skinParam, PortionShower portionShower) {
 		super(entity, skinParam);
 		this.lineConfig = entity;
 		final Stereotype stereotype = entity.getStereotype();
@@ -131,7 +131,7 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil, W
 				.withTOBECHANGED(getEntity().getStereotype()).getMergedStyle(getSkinParam().getCurrentStyleBuilder());
 	}
 
-	private Display getUnderlinedName(EntityImp entity) {
+	private Display getUnderlinedName(Entity entity) {
 		if (getSkinParam().strictUmlStyle())
 			return entity.getDisplay().underlinedName();
 
@@ -184,8 +184,8 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil, W
 			ug.startUrl(url);
 
 		final Map<UGroupType, String> typeIDent = new EnumMap<>(UGroupType.class);
-		typeIDent.put(UGroupType.CLASS, "elem " + getEntity().getCode() + " selected");
-		typeIDent.put(UGroupType.ID, "elem_" + getEntity().getCode());
+		typeIDent.put(UGroupType.CLASS, "elem " + getEntity().getName() + " selected");
+		typeIDent.put(UGroupType.ID, "elem_" + getEntity().getName());
 		ug.startGroup(typeIDent);
 		ug.apply(stroke).draw(rect);
 
@@ -240,7 +240,7 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil, W
 	}
 
 	public ShapeType getShapeType() {
-		if (((EntityImp) getEntity()).getPortShortNames().size() > 0)
+		if (((Entity) getEntity()).getPortShortNames().size() > 0)
 			return ShapeType.RECTANGLE_HTML_FOR_PORTS;
 
 		return ShapeType.RECTANGLE;

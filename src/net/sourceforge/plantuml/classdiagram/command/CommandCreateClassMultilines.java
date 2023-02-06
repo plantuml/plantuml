@@ -36,8 +36,7 @@
 package net.sourceforge.plantuml.classdiagram.command;
 
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.baraye.EntityImp;
-import net.sourceforge.plantuml.baraye.Quark;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
@@ -58,6 +57,7 @@ import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.font.FontParam;
+import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -169,7 +169,7 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 
 		final Quark quark = diagram.quarkInContext(idShort, true);
 
-		EntityImp entity = (EntityImp) quark.getData();
+		Entity entity = (Entity) quark.getData();
 
 		Display display = Display.getWithNewlines(displayString);
 		if (entity == null) {
@@ -250,7 +250,7 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 		return CommandExecutionResult.ok();
 	}
 
-	public static void addTags(EntityImp entity, String tags) {
+	public static void addTags(Entity entity, String tags) {
 		if (tags == null)
 			return;
 
@@ -261,7 +261,7 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 		}
 	}
 
-	public static void manageExtends(String keyword, ClassDiagram diagram, RegexResult arg, final EntityImp entity) {
+	public static void manageExtends(String keyword, ClassDiagram diagram, RegexResult arg, final Entity entity) {
 		if (arg.get(keyword, 0) != null) {
 			final Mode mode = arg.get(keyword, 0).equalsIgnoreCase("extends") ? Mode.EXTENDS : Mode.IMPLEMENTS;
 			LeafType type2 = LeafType.CLASS;
@@ -280,7 +280,7 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 //				final IEntity cl2 = diagram.getOrCreateLeaf(ident, other, type2, null);
 
 				final Quark quark = diagram.quarkInContext(diagram.cleanIdForQuark(idShort), true);
-				EntityImp cl2 = (EntityImp) quark.getData();
+				Entity cl2 = (Entity) quark.getData();
 				if (cl2 == null)
 					cl2 = diagram.reallyCreateLeaf(quark, Display.getWithNewlines(quark.getName()), type2, null);
 
@@ -297,7 +297,7 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 		}
 	}
 
-	private EntityImp executeArg0(ClassDiagram diagram, RegexResult line0) throws NoSuchColorException {
+	private Entity executeArg0(ClassDiagram diagram, RegexResult line0) throws NoSuchColorException {
 
 		final String typeString = StringUtils.goUpperCase(line0.get("TYPE", 0));
 		final LeafType type = LeafType.getLeafType(typeString);
@@ -320,7 +320,7 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 		if (Display.isNull(display))
 			display = Display.getWithNewlines(quark.getName()).withCreoleMode(CreoleMode.SIMPLE_LINE);
 
-		EntityImp entity = (EntityImp) quark.getData();
+		Entity entity = (Entity) quark.getData();
 
 		if (entity == null) {
 			entity = diagram.reallyCreateLeaf(quark, display, type, null);

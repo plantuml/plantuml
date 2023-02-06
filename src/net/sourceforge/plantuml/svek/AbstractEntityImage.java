@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.svek;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -46,10 +46,10 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 
 public abstract class AbstractEntityImage extends AbstractTextBlock implements IEntityImage {
 
-	private final EntityImp entity;
+	private final Entity entity;
 	private final ISkinParam skinParam;
 
-	public AbstractEntityImage(EntityImp entity, ISkinParam skinParam) {
+	public AbstractEntityImage(Entity entity, ISkinParam skinParam) {
 		this.entity = Objects.requireNonNull(entity);
 		this.skinParam = Objects.requireNonNull(skinParam);
 	}
@@ -59,7 +59,7 @@ public abstract class AbstractEntityImage extends AbstractTextBlock implements I
 		return entity.isHidden();
 	}
 
-	protected final EntityImp getEntity() {
+	protected final Entity getEntity() {
 		return entity;
 	}
 

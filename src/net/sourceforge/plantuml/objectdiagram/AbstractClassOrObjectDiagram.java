@@ -40,8 +40,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.plantuml.UmlDiagramType;
-import net.sourceforge.plantuml.baraye.EntityImp;
-import net.sourceforge.plantuml.baraye.Quark;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.UmlSource;
@@ -53,6 +52,7 @@ import net.sourceforge.plantuml.cucadiagram.LinkArg;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
 import net.sourceforge.plantuml.cucadiagram.NoteLinkStrategy;
+import net.sourceforge.plantuml.plasma.Quark;
 
 public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram {
 
@@ -60,7 +60,7 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 		super(source, type, orig);
 	}
 
-	final public boolean insertBetween(EntityImp entity1, EntityImp entity2, EntityImp node) {
+	final public boolean insertBetween(Entity entity1, Entity entity2, Entity node) {
 		final Link link = foundLink(entity1, entity2);
 		if (link == null)
 			return false;
@@ -81,7 +81,7 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 		return true;
 	}
 
-	private Link foundLink(EntityImp entity1, EntityImp entity2) {
+	private Link foundLink(Entity entity1, Entity entity2) {
 		final List<Link> links = getLinks();
 		for (int i = links.size() - 1; i >= 0; i--) {
 			final Link l = links.get(i);
@@ -92,7 +92,7 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 		return null;
 	}
 
-	public int getNbOfHozizontalLollipop(EntityImp entity) {
+	public int getNbOfHozizontalLollipop(Entity entity) {
 		if (entity.getLeafType() == LeafType.LOLLIPOP_FULL || entity.getLeafType() == LeafType.LOLLIPOP_HALF)
 			throw new IllegalArgumentException();
 
@@ -108,8 +108,8 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 
 	private final List<Association> associations = new ArrayList<>();
 
-	public CommandExecutionResult associationClass(EntityImp entity1A, EntityImp entity1B, EntityImp entity2A,
-			EntityImp entity2B, LinkType linkType, Display label) {
+	public CommandExecutionResult associationClass(Entity entity1A, Entity entity1B, Entity entity2A,
+			Entity entity2B, LinkType linkType, Display label) {
 //		final Quark ident1A = buildFromName(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(name1A));
 //		final Quark ident1B = buildFromName(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(name1B));
 //		final Quark ident2A = buildFromName(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(name2A));
@@ -135,10 +135,10 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 //			final IEntity point2 = getOrCreateLeaf(ident2, code2, LeafType.POINT_FOR_ASSOCIATION, null);
 
 			final Quark code1 = currentQuark().child(tmp1);
-			final EntityImp point1 = reallyCreateLeaf(code1, Display.getWithNewlines(""), LeafType.POINT_FOR_ASSOCIATION,
+			final Entity point1 = reallyCreateLeaf(code1, Display.getWithNewlines(""), LeafType.POINT_FOR_ASSOCIATION,
 					null);
 			final Quark code2 = currentQuark().child(tmp2);
-			final EntityImp point2 = reallyCreateLeaf(code2, Display.getWithNewlines(""), LeafType.POINT_FOR_ASSOCIATION,
+			final Entity point2 = reallyCreateLeaf(code2, Display.getWithNewlines(""), LeafType.POINT_FOR_ASSOCIATION,
 					null);
 
 			insertPointBetween(entity1A, entity1B, point1);
@@ -154,7 +154,7 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 		return CommandExecutionResult.error("Cannot link two associations points");
 	}
 
-	private void insertPointBetween(final EntityImp entity1A, final EntityImp entity1B, final EntityImp point1) {
+	private void insertPointBetween(final Entity entity1A, final Entity entity1B, final Entity point1) {
 		Link existingLink1 = foundLink(entity1A, entity1B);
 		if (existingLink1 == null)
 			existingLink1 = new Link(getEntityFactory(), getSkinParam().getCurrentStyleBuilder(), entity1A, entity1B,
@@ -162,9 +162,9 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 		else
 			removeLink(existingLink1);
 
-		final EntityImp entity1real = existingLink1.isInverted() ? existingLink1.getEntity2()
+		final Entity entity1real = existingLink1.isInverted() ? existingLink1.getEntity2()
 				: existingLink1.getEntity1();
-		final EntityImp entity2real = existingLink1.isInverted() ? existingLink1.getEntity1()
+		final Entity entity2real = existingLink1.isInverted() ? existingLink1.getEntity1()
 				: existingLink1.getEntity2();
 
 		final Link entity1ToPoint = new Link(getEntityFactory(), getSkinParam().getCurrentStyleBuilder(), entity1real,
@@ -190,7 +190,7 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 		addLink(pointToEntity2);
 	}
 
-	public boolean associationClass(int mode, EntityImp entity1, EntityImp entity2, EntityImp associed, LinkType linkType,
+	public boolean associationClass(int mode, Entity entity1, Entity entity2, Entity associed, LinkType linkType,
 			Display label) {
 //		final Quark ident1 = buildFromName(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(name1));
 //		final Quark ident2 = buildFromName(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(name2));
@@ -216,7 +216,7 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 		return true;
 	}
 
-	private List<Association> getExistingAssociatedPoints(final EntityImp entity1, final EntityImp entity2) {
+	private List<Association> getExistingAssociatedPoints(final Entity entity1, final Entity entity2) {
 		final List<Association> same = new ArrayList<>();
 		for (Association existing : associations)
 			if (existing.sameCouple(entity1, entity2))
@@ -226,10 +226,10 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 	}
 
 	class Association {
-		private EntityImp entity1;
-		private EntityImp entity2;
-		private EntityImp associed;
-		private EntityImp point;
+		private Entity entity1;
+		private Entity entity2;
+		private Entity associed;
+		private Entity point;
 
 		private Link existingLink;
 
@@ -239,7 +239,7 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 
 		private Association other;
 
-		public Association(int mode, EntityImp entity1, EntityImp entity2, EntityImp associed) {
+		public Association(int mode, Entity entity1, Entity entity2, Entity associed) {
 			this.entity1 = entity1;
 			this.entity2 = entity2;
 			this.associed = associed;
@@ -253,7 +253,7 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 
 		}
 
-		public Association createSecondAssociation(int mode2, EntityImp associed2, Display label) {
+		public Association createSecondAssociation(int mode2, Entity associed2, Display label) {
 			final Association result = new Association(mode2, entity1, entity2, associed2);
 			result.existingLink = this.existingLink;
 			result.other = this;
@@ -274,9 +274,9 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 			else
 				removeLink(existingLink);
 
-			final EntityImp entity1real = existingLink.isInverted() ? existingLink.getEntity2()
+			final Entity entity1real = existingLink.isInverted() ? existingLink.getEntity2()
 					: existingLink.getEntity1();
-			final EntityImp entity2real = existingLink.isInverted() ? existingLink.getEntity1()
+			final Entity entity2real = existingLink.isInverted() ? existingLink.getEntity1()
 					: existingLink.getEntity2();
 
 			entity1ToPoint = new Link(getEntityFactory(), getSkinParam().getCurrentStyleBuilder(), entity1real, point,
@@ -354,7 +354,7 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 
 		}
 
-		boolean sameCouple(EntityImp entity1, EntityImp entity2) {
+		boolean sameCouple(Entity entity1, Entity entity2) {
 			if (this.entity1 == entity1 && this.entity2 == entity2)
 				return true;
 
@@ -368,9 +368,9 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 	@Override
 	public void setLegend(DisplayPositioned legend) {
 
-		final EntityImp currentGroup = this.getCurrentGroup();
+		final Entity currentGroup = this.getCurrentGroup();
 
-		if (currentGroup.instanceofGroupRoot()) {
+		if (currentGroup.isRoot()) {
 			super.setLegend(legend);
 			return;
 		}

@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.klimt.font.StringBounderRaw;
 import net.sourceforge.plantuml.klimt.font.UFont;
 
 public class StringBounderDebug extends StringBounderRaw {
-	// ::remove folder when WASM
+	// ::remove folder when CORE
 
 	public StringBounderDebug() {
 		super(FileFormat.gg.getFontRenderContext());

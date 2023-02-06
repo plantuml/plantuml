@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.awt.geom.XLine2D;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
-import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.creole.Stencil;
 import net.sourceforge.plantuml.cucadiagram.BodyFactory;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -94,7 +94,7 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 
 	private final TextBlock textBlock;
 
-	public EntityImageNote(EntityImp entity, ISkinParam skinParam, UmlDiagramType umlDiagramType) {
+	public EntityImageNote(Entity entity, ISkinParam skinParam, UmlDiagramType umlDiagramType) {
 		super(entity, getSkin(getISkinParam(skinParam, entity), entity));
 		this.skinParam = getISkinParam(skinParam, entity);
 
@@ -121,14 +121,14 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 
 	}
 
-	private static ISkinParam getISkinParam(ISkinParam skinParam, EntityImp entity) {
+	private static ISkinParam getISkinParam(ISkinParam skinParam, Entity entity) {
 		if (entity.getColors() != null)
 			return entity.getColors().mute(skinParam);
 
 		return skinParam;
 	}
 
-	static ISkinParam getSkin(ISkinParam skinParam, EntityImp entity) {
+	static ISkinParam getSkin(ISkinParam skinParam, Entity entity) {
 		final Stereotype stereotype = entity.getStereotype();
 		HColor back = entity.getColors().getColor(ColorType.BACK);
 		if (back != null)
@@ -193,8 +193,8 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 		final Url url = getEntity().getUrl99();
 
 		final Map<UGroupType, String> typeIDent = new EnumMap<>(UGroupType.class);
-		typeIDent.put(UGroupType.CLASS, "elem " + getEntity().getCode() + " selected");
-		typeIDent.put(UGroupType.ID, "elem_" + getEntity().getCode());
+		typeIDent.put(UGroupType.CLASS, "elem " + getEntity().getName() + " selected");
+		typeIDent.put(UGroupType.ID, "elem_" + getEntity().getName());
 		ug.startGroup(typeIDent);
 
 		if (url != null)

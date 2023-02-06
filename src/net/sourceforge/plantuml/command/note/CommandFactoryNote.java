@@ -35,8 +35,7 @@
  */
 package net.sourceforge.plantuml.command.note;
 
-import net.sourceforge.plantuml.baraye.EntityImp;
-import net.sourceforge.plantuml.baraye.Quark;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.classdiagram.command.CommandCreateClassMultilines;
 import net.sourceforge.plantuml.command.Command;
@@ -51,6 +50,7 @@ import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.klimt.color.ColorParser;
 import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -142,7 +142,7 @@ public final class CommandFactoryNote implements SingleMultiFactoryCommand<Abstr
 		if (quark.getData() != null)
 			return CommandExecutionResult.error("Note already created: " + quark.getName());
 
-		final EntityImp entity = diagram.reallyCreateLeaf(quark, display.toDisplay(), LeafType.NOTE, null);
+		final Entity entity = diagram.reallyCreateLeaf(quark, display.toDisplay(), LeafType.NOTE, null);
 //		final Quark quark = diagram.getPlasma().getIfExistsFromName(idShort);
 //		if (quark != null && quark.getData() != null)
 //			entity = diagram.getFromName(idShort);

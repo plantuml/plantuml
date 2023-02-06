@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.svek.image;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
-import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.klimt.UPolygon;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -55,7 +55,7 @@ public class EntityImageAssociation extends AbstractEntityImage {
 	final private static int SIZE = 12;
 	private final SName sname;
 
-	public EntityImageAssociation(EntityImp entity, ISkinParam skinParam, SName sname) {
+	public EntityImageAssociation(Entity entity, ISkinParam skinParam, SName sname) {
 		super(entity, skinParam);
 		this.sname = sname;
 	}

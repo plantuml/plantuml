@@ -82,7 +82,7 @@ public class AtomImg extends AbstractAtom implements Atom {
 
 	public static Atom createQrcode(String flash, double scale) {
 		BufferedImage im = null;
-		// :: comment when WASM
+		// :: comment when CORE
 		im = FlashCodeFactory.getFlashCodeUtils().exportFlashcode(flash, Color.BLACK, Color.WHITE);
 		if (im == null)
 			// ::done

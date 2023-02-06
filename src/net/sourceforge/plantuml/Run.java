@@ -75,7 +75,7 @@ import net.sourceforge.plantuml.utils.Log;
 import net.sourceforge.plantuml.version.Version;
 
 public class Run {
-	// ::remove file when WASM
+	// ::remove file when CORE
 
 	private static Cypher cypher;
 

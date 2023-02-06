@@ -52,7 +52,7 @@ import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 public class PSystemListEmoji extends PlainDiagram {
-	// ::remove file when WASM
+	// ::remove file when CORE
 
 	private final String text;
 

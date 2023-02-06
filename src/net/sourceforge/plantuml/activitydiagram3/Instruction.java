@@ -52,7 +52,7 @@ public interface Instruction extends Swimable {
 
 	public Ftile createFtile(FtileFactory factory);
 
-	// ::comment when WASM
+	// ::comment when CORE
 	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder);
 	// ::done
 	

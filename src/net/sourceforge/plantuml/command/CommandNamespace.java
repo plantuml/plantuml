@@ -35,8 +35,7 @@
  */
 package net.sourceforge.plantuml.command;
 
-import net.sourceforge.plantuml.baraye.EntityImp;
-import net.sourceforge.plantuml.baraye.Quark;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
@@ -46,6 +45,7 @@ import net.sourceforge.plantuml.graphic.USymbols;
 import net.sourceforge.plantuml.klimt.color.ColorParser;
 import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -82,14 +82,12 @@ public class CommandNamespace extends SingleLineCommand2<ClassDiagram> {
 	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg)
 			throws NoSuchColorException {
 		final String idShort = arg.get("NAME", 0);
-//		final Quark current = diagram.currentQuark();
-//		final Quark idNewLong = current.child(idShort);
 		final Quark quark = diagram.quarkInContext(diagram.cleanIdForQuark(idShort), true);
-		final CommandExecutionResult status = diagram.gotoGroup(quark,
-				Display.getWithNewlines(quark.getQualifiedName()), GroupType.PACKAGE);
+		final CommandExecutionResult status = diagram.gotoGroup(quark, Display.getWithNewlines(quark.getName()),
+				GroupType.PACKAGE);
 		if (status.isOk() == false)
 			return status;
-		final EntityImp p = diagram.getCurrentGroup();
+		final Entity p = diagram.getCurrentGroup();
 		final String stereotype = arg.get("STEREOTYPE", 0);
 		if (stereotype != null) {
 			final USymbol usymbol = USymbols.fromString(stereotype, diagram.getSkinParam().actorStyle(),

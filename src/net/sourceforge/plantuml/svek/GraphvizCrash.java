@@ -69,14 +69,14 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 
 	private final TextBlock text1;
 	private final String text;
-	// ::comment when WASM
+	// ::comment when CORE
 	private final BufferedImage flashCode;
 	private final boolean graphviz244onWindows;
 	// ::done
 
 	public GraphvizCrash(String text, boolean graphviz244onWindows, Throwable rootCause) {
 		this.text = text;
-		// ::comment when WASM
+		// ::comment when CORE
 		this.graphviz244onWindows = graphviz244onWindows;
 		this.flashCode = FlashCodeFactory.getFlashCodeUtils().exportFlashcode(text, Color.BLACK, Color.WHITE);
 		// ::done
@@ -149,7 +149,7 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 		strings.add(" ");
 		addProperties(strings);
 		strings.add(" ");
-		// ::comment when WASM
+		// ::comment when CORE
 		try {
 			final String dotVersion = GraphvizUtils.dotVersion();
 			strings.add("Default dot version: " + dotVersion);
@@ -159,7 +159,7 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 		// ::done
 		pleaseGoTo(strings);
 		youShouldSendThisDiagram(strings);
-		// ::comment when WASM
+		// ::comment when CORE
 		if (flashCode != null)
 			addDecodeHint(strings);
 		// ::done
@@ -189,7 +189,7 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 	}
 
 	public static void addProperties(final List<String> strings) {
-		// ::comment when WASM
+		// ::comment when CORE
 		strings.addAll(OptionPrint.interestingProperties());
 		strings.addAll(OptionPrint.interestingValues());
 		// ::done
@@ -213,7 +213,7 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 
 	private TextBlock getMain() {
 		TextBlock result = text1;
-		// ::comment when WASM
+		// ::comment when CORE
 		if (flashCode != null) {
 			final UImage flash = new UImage(new PixelImage(flashCode, AffineTransformType.TYPE_NEAREST_NEIGHBOR))
 					.scale(3);

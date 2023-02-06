@@ -64,7 +64,7 @@ import net.sourceforge.plantuml.ugraphic.debug.StringBounderDebug;
  */
 public enum FileFormat {
 
-	// ::comment when WASM
+	// ::comment when CORE
 	EPS("application/postscript"), //
 	EPS_TEXT("application/postscript"), //
 	ATXT("text/plain"), //
@@ -106,7 +106,7 @@ public enum FileFormat {
 	 * @return a string starting by a point.
 	 */
 	public String getFileSuffix() {
-		// ::comment when WASM
+		// ::comment when CORE
 		if (name().startsWith("XMI"))
 			return ".xmi";
 
@@ -141,7 +141,7 @@ public enum FileFormat {
 	}
 
 	public StringBounder getDefaultStringBounder(TikzFontDistortion tikzFontDistortion, SvgCharSizeHack charSizeHack) {
-		// ::comment when WASM
+		// ::comment when CORE
 		if (this == LATEX || this == LATEX_NO_PREAMBLE)
 			return getTikzStringBounder(tikzFontDistortion);
 
@@ -200,7 +200,7 @@ public enum FileFormat {
 		return new XDimension2D(rect.getWidth(), rect.getHeight());
 	}
 
-	// ::comment when WASM
+	// ::comment when CORE
 	private StringBounder getBrailleStringBounder() {
 		return new StringBounderRaw(FileFormat.gg.getFontRenderContext()) {
 			public String toString() {

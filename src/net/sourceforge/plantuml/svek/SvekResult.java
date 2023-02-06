@@ -59,7 +59,7 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 public final class SvekResult extends AbstractTextBlock implements IEntityImage {
-	// ::remove file when WASM
+	// ::remove file when CORE
 
 	private final DotData dotData;
 	private final DotStringFactory dotStringFactory;

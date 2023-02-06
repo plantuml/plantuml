@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.cucadiagram;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SFile;
 
@@ -50,17 +50,17 @@ public class GroupPrinter {
 		this.pw = pw;
 	}
 
-	private void printGroup(EntityImp group) {
+	private void printGroup(Entity group) {
 		pw.println("<table border=1 cellpadding=8 cellspacing=0>");
 		pw.println("<tr>");
 		pw.println("<td bgcolor=#DDDDDD>");
-		pw.println(group.getCodeGetName());
+		pw.println(group.getName());
 		pw.println("<tr>");
 		pw.println("<td>");
-		if (group.getLeafsDirect().size() == 0) {
+		if (group.leafs().size() == 0) {
 			pw.println("<i>No direct leaf</i>");
 		} else {
-			for (EntityImp leaf : group.getLeafsDirect()) {
+			for (Entity leaf : group.leafs()) {
 				pw.println("<ul>");
 				printLeaf(leaf);
 				pw.println("</ul>");
@@ -68,10 +68,10 @@ public class GroupPrinter {
 		}
 		pw.println("</td>");
 		pw.println("</tr>");
-		if (group.getChildren().size() > 0) {
+		if (group.groups().size() > 0) {
 			pw.println("<tr>");
 			pw.println("<td>");
-			for (EntityImp g : group.getChildren()) {
+			for (Entity g : group.groups()) {
 				pw.println("<br>");
 				printGroup(g);
 				pw.println("<br>");
@@ -82,11 +82,11 @@ public class GroupPrinter {
 		pw.println("</table>");
 	}
 
-	private void printLeaf(EntityImp leaf) {
-		pw.println("<li>" + leaf.getCodeGetName());
+	private void printLeaf(Entity leaf) {
+		pw.println("<li>" + leaf.getName());
 	}
 
-	public static void print(SFile f, EntityImp rootGroup) {
+	public static void print(SFile f, Entity rootGroup) {
 		try (PrintWriter pw = f.createPrintWriter()) {
 			pw.println("<html>");
 			new GroupPrinter(pw).printGroup(rootGroup);

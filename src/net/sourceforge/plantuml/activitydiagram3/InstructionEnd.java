@@ -57,7 +57,7 @@ public class InstructionEnd extends MonoSwimable implements Instruction {
 		this.inlinkRendering = Objects.requireNonNull(inlinkRendering);
 	}
 
-	// ::comment when WASM
+	// ::comment when CORE
 	@Override
 	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
 		return new GtileCircleStart(stringBounder, skinParam, HColors.BLACK, getSwimlaneIn());

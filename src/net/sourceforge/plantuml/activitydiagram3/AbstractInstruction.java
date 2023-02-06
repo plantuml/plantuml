@@ -41,7 +41,7 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 
 abstract class AbstractInstruction {
 
-	// ::comment when WASM
+	// ::comment when CORE
 	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
 		throw new UnsupportedOperationException("" + getClass());
 	}

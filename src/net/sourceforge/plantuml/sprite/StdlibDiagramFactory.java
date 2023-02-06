@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.core.UmlSource;
 
 public class StdlibDiagramFactory extends PSystemCommandFactory {
-	// ::remove file when WASM
+	// ::remove file when CORE
 
 	@Override
 	protected void initCommandsList(List<Command> cmds) {

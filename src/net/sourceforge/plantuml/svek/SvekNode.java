@@ -41,7 +41,7 @@ import net.sourceforge.plantuml.Hideable;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
-import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.cucadiagram.EntityPosition;
 import net.sourceforge.plantuml.cucadiagram.Together;
 import net.sourceforge.plantuml.klimt.Shadowable;
@@ -91,7 +91,7 @@ public class SvekNode implements Positionable, Hideable {
 		return super.toString() + " " + image + " " + type;
 	}
 
-	private final EntityImp leaf;
+	private final Entity leaf;
 
 	public final Together getTogether() {
 		if (leaf == null)
@@ -99,7 +99,7 @@ public class SvekNode implements Positionable, Hideable {
 		return leaf.getTogether();
 	}
 
-	SvekNode(EntityImp ent, IEntityImage image, ColorSequence colorSequence, StringBounder stringBounder) {
+	SvekNode(Entity ent, IEntityImage image, ColorSequence colorSequence, StringBounder stringBounder) {
 		this.stringBounder = stringBounder;
 		this.entityPosition = ent.getEntityPosition();
 		this.image = image;
@@ -424,22 +424,22 @@ public class SvekNode implements Positionable, Hideable {
 	}
 
 	public void drawKals(UGraphic ug) {
-		if (leaf instanceof EntityImp == false)
+		if (leaf instanceof Entity == false)
 			return;
 
-		drawList(ug, ((EntityImp) leaf).getKals(Direction.DOWN));
-		drawList(ug, ((EntityImp) leaf).getKals(Direction.UP));
-		drawList(ug, ((EntityImp) leaf).getKals(Direction.LEFT));
-		drawList(ug, ((EntityImp) leaf).getKals(Direction.RIGHT));
+		drawList(ug, ((Entity) leaf).getKals(Direction.DOWN));
+		drawList(ug, ((Entity) leaf).getKals(Direction.UP));
+		drawList(ug, ((Entity) leaf).getKals(Direction.LEFT));
+		drawList(ug, ((Entity) leaf).getKals(Direction.RIGHT));
 
 	}
 
 	public void fixOverlap() {
-		if (leaf instanceof EntityImp == false)
+		if (leaf instanceof Entity == false)
 			return;
 
-		fixHoverlap(((EntityImp) leaf).getKals(Direction.DOWN));
-		fixHoverlap(((EntityImp) leaf).getKals(Direction.UP));
+		fixHoverlap(((Entity) leaf).getKals(Direction.DOWN));
+		fixHoverlap(((Entity) leaf).getKals(Direction.UP));
 	}
 
 	private void fixHoverlap(final List<Kal> list) {

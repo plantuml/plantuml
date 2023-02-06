@@ -56,7 +56,7 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 
 public class ClusterDotStringKermor {
-	// ::remove file when WASM
+	// ::remove file when CORE
 
 	private final Cluster cluster;
 	private final ISkinParam skinParam;

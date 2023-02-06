@@ -41,7 +41,7 @@ import java.util.Map;
 
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.UmlDiagramType;
-import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.cucadiagram.Link;
@@ -139,14 +139,14 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 
 	private RowLayout getRawLayout(int raw) {
 		final RowLayout rawLayout = new RowLayout();
-		for (EntityImp leaf : entityFactory.leafs())
+		for (Entity leaf : entityFactory.leafs())
 			if (leaf.getRawLayout() == raw)
 				rawLayout.addLeaf(getEntityImageClass(leaf));
 
 		return rawLayout;
 	}
 
-	private TextBlock getEntityImageClass(EntityImp entity) {
+	private TextBlock getEntityImageClass(Entity entity) {
 		return new EntityImageClass(entity, getSkinParam(), this);
 	}
 

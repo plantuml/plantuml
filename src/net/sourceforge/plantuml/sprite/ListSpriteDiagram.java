@@ -60,7 +60,7 @@ import net.sourceforge.plantuml.ugraphic.ImageBuilder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 public class ListSpriteDiagram extends UmlDiagram {
-	// ::remove file when WASM
+	// ::remove file when CORE
 
 	public ListSpriteDiagram(UmlSource source, Map<String, String> skinParam) {
 		super(source, UmlDiagramType.HELP, skinParam);

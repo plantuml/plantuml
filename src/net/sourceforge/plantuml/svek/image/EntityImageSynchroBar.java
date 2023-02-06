@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.svek.image;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
-import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.klimt.Shadowable;
 import net.sourceforge.plantuml.klimt.URectangle;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -56,7 +56,7 @@ public class EntityImageSynchroBar extends AbstractEntityImage {
 
 	// private final SName styleName;
 
-	public EntityImageSynchroBar(EntityImp entity, ISkinParam skinParam, SName styleName) {
+	public EntityImageSynchroBar(Entity entity, ISkinParam skinParam, SName styleName) {
 		super(entity, skinParam);
 		// this.styleName = styleName;
 	}

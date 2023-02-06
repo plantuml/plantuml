@@ -35,8 +35,7 @@
  */
 package net.sourceforge.plantuml.statediagram.command;
 
-import net.sourceforge.plantuml.baraye.EntityImp;
-import net.sourceforge.plantuml.baraye.Quark;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.classdiagram.command.CommandCreateClassMultilines;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -49,6 +48,7 @@ import net.sourceforge.plantuml.klimt.color.ColorParser;
 import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -129,7 +129,7 @@ public class CommandCreateState extends SingleLineCommand2<StateDiagram> {
 			return CommandExecutionResult.error("The state " + quark.getName()
 					+ " has been created in a concurrent state : it cannot be used here.");
 
-		EntityImp ent = (EntityImp) quark.getData();
+		Entity ent = (Entity) quark.getData();
 		if (ent == null)
 			ent = diagram.reallyCreateLeaf(quark, Display.getWithNewlines(display), type, null);
 

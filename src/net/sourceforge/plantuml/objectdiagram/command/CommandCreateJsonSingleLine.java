@@ -35,8 +35,7 @@
  */
 package net.sourceforge.plantuml.objectdiagram.command;
 
-import net.sourceforge.plantuml.baraye.EntityImp;
-import net.sourceforge.plantuml.baraye.Quark;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.creole.CreoleMode;
@@ -52,6 +51,7 @@ import net.sourceforge.plantuml.klimt.font.FontParam;
 import net.sourceforge.plantuml.json.JsonParser;
 import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
+import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -86,7 +86,7 @@ public class CommandCreateJsonSingleLine extends SingleLineCommand2<AbstractClas
 			RegexResult arg) throws NoSuchColorException {
 		final String name = arg.get("NAME", 1);
 		final String data = arg.get("DATA", 0);
-		final EntityImp entity1 = executeArg0(diagram, arg);
+		final Entity entity1 = executeArg0(diagram, arg);
 		if (entity1 == null)
 			return CommandExecutionResult.error("No such entity");
 
@@ -110,7 +110,7 @@ public class CommandCreateJsonSingleLine extends SingleLineCommand2<AbstractClas
 		}
 	}
 
-	private EntityImp executeArg0(AbstractClassOrObjectDiagram diagram, RegexResult line0) throws NoSuchColorException {
+	private Entity executeArg0(AbstractClassOrObjectDiagram diagram, RegexResult line0) throws NoSuchColorException {
 		final String name = line0.get("NAME", 1);
 
 		final Quark quark = diagram.quarkInContext(diagram.cleanIdForQuark(name), true);
@@ -131,7 +131,7 @@ public class CommandCreateJsonSingleLine extends SingleLineCommand2<AbstractClas
 		if (Display.isNull(display))
 			display = Display.getWithNewlines(name).withCreoleMode(CreoleMode.SIMPLE_LINE);
 
-		final EntityImp entity = diagram.reallyCreateLeaf(quark, display, LeafType.JSON, null);
+		final Entity entity = diagram.reallyCreateLeaf(quark, display, LeafType.JSON, null);
 		if (stereotype != null)
 			entity.setStereotype(Stereotype.build(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),
 					diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),

@@ -60,7 +60,7 @@ import net.sourceforge.plantuml.ugraphic.UEllipse;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 public class Block extends AbstractTextBlock {
-	// ::remove folder when WASM
+	// ::remove folder when CORE
 
 	static class Pos {
 		final double x;

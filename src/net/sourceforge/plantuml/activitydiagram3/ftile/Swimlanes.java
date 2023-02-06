@@ -192,7 +192,7 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock, Styleable
 					final ConnectionCross connectionCross = new ConnectionCross(connection);
 					connectionCross.drawU(getUg());
 				}
-				// ::comment when WASM
+				// ::comment when CORE
 			} else if (shape instanceof Gtile) {
 				final Gtile tile = (Gtile) shape;
 				tile.drawU(this);
@@ -222,7 +222,7 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock, Styleable
 	}
 
 	public final void drawU(UGraphic ug) {
-		// ::comment when WASM
+		// ::comment when CORE
 		if (Gtile.USE_GTILE) {
 			drawGtile(ug);
 			return;
@@ -242,7 +242,7 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock, Styleable
 		}
 	}
 
-	// ::comment when WASM
+	// ::comment when CORE
 	private void drawGtile(UGraphic ug) {
 		TextBlock full = root.createGtile(skinParam, ug.getStringBounder());
 

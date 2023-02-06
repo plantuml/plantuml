@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.utils.Log;
 import net.sourceforge.plantuml.xmi.XmlDiagramTransformer;
 
 public final class CucaDiagramGraphmlMaker {
-	// ::remove folder when WASM
+	// ::remove folder when CORE
 
 	private final ICucaDiagram diagram;
 

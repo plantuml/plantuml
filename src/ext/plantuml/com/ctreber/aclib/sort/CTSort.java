@@ -11,7 +11,7 @@ import java.util.Comparator;
  */
 abstract public class CTSort
 {
-  // :: remove folder when WASM
+  // :: remove folder when CORE
   public void sort(Object[] items)
   {
     sort(items, new DefaultComparator());

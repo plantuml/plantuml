@@ -36,8 +36,7 @@
 package net.sourceforge.plantuml.activitydiagram.command;
 
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagram;
-import net.sourceforge.plantuml.baraye.EntityImp;
-import net.sourceforge.plantuml.baraye.Quark;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -47,6 +46,7 @@ import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.klimt.color.ColorParser;
 import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -89,7 +89,7 @@ public class CommandPartition extends SingleLineCommand2<ActivityDiagram> {
 //		final Quark code = diagram.buildFromFullPath(idShort);
 
 		diagram.gotoGroup(quark, Display.getWithNewlines(quark.getName()), GroupType.PACKAGE);
-		final EntityImp p = diagram.getCurrentGroup();
+		final Entity p = diagram.getCurrentGroup();
 
 		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
 		if (colors.isEmpty() == false) {

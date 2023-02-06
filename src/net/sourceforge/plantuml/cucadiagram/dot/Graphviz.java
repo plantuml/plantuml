@@ -39,7 +39,7 @@ import java.io.File;
 import java.io.OutputStream;
 
 public interface Graphviz {
-	// ::remove file when WASM
+	// ::remove file when CORE
 
 	public ProcessState createFile3(OutputStream os);
 

@@ -35,8 +35,7 @@
  */
 package net.sourceforge.plantuml.objectdiagram.command;
 
-import net.sourceforge.plantuml.baraye.EntityImp;
-import net.sourceforge.plantuml.baraye.Quark;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.creole.CreoleMode;
@@ -48,6 +47,7 @@ import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.font.FontParam;
 import net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
+import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -93,7 +93,7 @@ public class CommandCreateEntityObject extends SingleLineCommand2<AbstractClassO
 		if (Display.isNull(display))
 			display = Display.getWithNewlines(idShort).withCreoleMode(CreoleMode.SIMPLE_LINE);
 
-		final EntityImp entity = diagram.reallyCreateLeaf(quark, display, LeafType.OBJECT, null);
+		final Entity entity = diagram.reallyCreateLeaf(quark, display, LeafType.OBJECT, null);
 		if (stereotype != null) {
 			entity.setStereotype(Stereotype.build(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),
 					diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),

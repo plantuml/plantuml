@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.activitydiagram.command;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagram;
-import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.classdiagram.command.CommandLinkClass;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -94,7 +94,7 @@ public class CommandIf extends SingleLineCommand2<ActivityDiagram> {
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram diagram, LineLocation location, RegexResult arg) {
-		final EntityImp entity1 = CommandLinkActivity.getEntity(diagram, arg, true);
+		final Entity entity1 = CommandLinkActivity.getEntity(diagram, arg, true);
 		if (entity1 == null)
 			return CommandExecutionResult.error("No if possible at this point");
 
@@ -122,7 +122,7 @@ public class CommandIf extends SingleLineCommand2<ActivityDiagram> {
 			lenght = arrow.length() - 1;
 		}
 
-		final EntityImp branch = diagram.getCurrentContext().getBranch();
+		final Entity branch = diagram.getCurrentContext().getBranch();
 
 		final LinkArg linkArg = LinkArg.build(Display.getWithNewlines(arg.get("BRACKET", 0)), lenght);
 		Link link = new Link(diagram.getEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(), entity1,

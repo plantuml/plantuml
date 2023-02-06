@@ -37,8 +37,7 @@ package net.sourceforge.plantuml.command.note;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.baraye.EntityImp;
-import net.sourceforge.plantuml.baraye.Quark;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -58,6 +57,7 @@ import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.klimt.color.ColorParser;
 import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -172,7 +172,7 @@ public final class CommandFactoryTipOnEntity implements SingleMultiFactoryComman
 		final String member = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(line0.get("ENTITY", 1));
 		
 		final Quark quark = diagram.quarkInContext(idShort, false);
-		final EntityImp cl1 = (EntityImp) quark.getData();
+		final Entity cl1 = (Entity) quark.getData();
 		if (cl1 == null) 
 			return CommandExecutionResult.error("Nothing to note to");
 		
@@ -189,7 +189,7 @@ public final class CommandFactoryTipOnEntity implements SingleMultiFactoryComman
 
 		final String tmp = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(idShort + "$$$" + position.name());
 		final Quark identTip = diagram.quarkInContext(tmp, false);
-		EntityImp tips = (EntityImp) identTip.getData();
+		Entity tips = (Entity) identTip.getData();
 		// final Quark identTip = diagram.buildFromName(tmp);
 		//IEntity tips = diagram.getLeafFromName(idShort + "$$$" + position.name());
 		if (tips == null) {
@@ -198,10 +198,10 @@ public final class CommandFactoryTipOnEntity implements SingleMultiFactoryComman
 			final Link link;
 			if (position == Position.RIGHT)
 				link = new Link(diagram.getEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(), cl1,
-						(EntityImp) tips, type, LinkArg.noDisplay(1));
+						(Entity) tips, type, LinkArg.noDisplay(1));
 			else
 				link = new Link(diagram.getEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(),
-						(EntityImp) tips, cl1, type, LinkArg.noDisplay(1));
+						(Entity) tips, cl1, type, LinkArg.noDisplay(1));
 
 			diagram.addLink(link);
 		}

@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 
 public class PSystemOpenIconic extends PlainDiagram {
-	// ::remove file when WASM
+	// ::remove file when CORE
 
 	private final String iconName;
 	private final double factor;

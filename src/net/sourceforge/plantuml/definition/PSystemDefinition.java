@@ -53,7 +53,7 @@ import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 public class PSystemDefinition extends PlainDiagram implements UDrawable {
-	// ::remove folder when WASM
+	// ::remove folder when CORE
 
 	private final List<String> lines = new ArrayList<>();
 	private final String startLine;

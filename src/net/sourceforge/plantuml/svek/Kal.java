@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.svek;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
-import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.Link;
@@ -61,10 +61,10 @@ public class Kal implements UDrawable {
 	private XDimension2D dim;
 	private UTranslate translate;
 	private final SvekLine svekLine;
-	private final EntityImp entity;
+	private final Entity entity;
 	private final Link link;
 
-	public Kal(SvekLine svekLine, String text, FontConfiguration font, ISkinParam skinParam, EntityImp entity,
+	public Kal(SvekLine svekLine, String text, FontConfiguration font, ISkinParam skinParam, Entity entity,
 			Link link, StringBounder stringBounder) {
 		this.svekLine = svekLine;
 		this.entity = entity;

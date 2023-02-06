@@ -37,9 +37,8 @@ package net.sourceforge.plantuml.classdiagram.command;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagram;
-import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.baraye.EntityUtils;
-import net.sourceforge.plantuml.baraye.Quark;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.cucadiagram.EntityGender;
@@ -48,6 +47,7 @@ import net.sourceforge.plantuml.cucadiagram.EntityPortion;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.descdiagram.DescriptionDiagram;
 import net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
+import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -150,7 +150,7 @@ public class CommandHideShowByGender extends SingleLineCommand2<UmlDiagram> {
 				return CommandExecutionResult.error("No such element " + quark.getName());
 			// final IEntity entity = diagram.getOrCreateLeaf(quark,
 			// diagram.buildFromFullPath(arg1), null, null);
-			final EntityImp entity = (EntityImp) quark.getData();
+			final Entity entity = (Entity) quark.getData();
 			gender = EntityGenderUtils.byEntityAlone(entity);
 		}
 
@@ -193,7 +193,7 @@ public class CommandHideShowByGender extends SingleLineCommand2<UmlDiagram> {
 		} else {
 			arg1 = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg1);
 			final Quark quark = diagram.quarkInContext(diagram.cleanIdForQuark(arg1), false);
-			EntityImp entity = (EntityImp) quark.getData();
+			Entity entity = (Entity) quark.getData();
 			if (entity == null)
 				return CommandExecutionResult.error("No such element " + quark.getName());
 			// entity = diagram.reallyCreateLeaf(quark,
@@ -209,7 +209,7 @@ public class CommandHideShowByGender extends SingleLineCommand2<UmlDiagram> {
 			if (empty == true && emptyMembers == false) {
 				gender = EntityGenderUtils.and(gender, emptyByGender(portion));
 			}
-			if (diagram.getCurrentGroup().getQuark().isRoot() == false) {
+			if (diagram.getCurrentGroup().isRoot() == false) {
 				gender = EntityGenderUtils.and(gender, EntityGenderUtils.byPackage(diagram.getCurrentGroup()));
 			}
 

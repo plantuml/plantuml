@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.graphic.GraphicPosition;
 import net.sourceforge.plantuml.security.SImageIO;
 
 public class PSystemRIP extends PlainStringsDiagram {
-	// ::remove file when WASM
+	// ::remove file when CORE
 
 	public PSystemRIP(UmlSource source) throws IOException {
 		super(source);

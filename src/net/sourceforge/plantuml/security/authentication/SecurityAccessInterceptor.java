@@ -45,7 +45,7 @@ import java.net.URLConnection;
  * @author Aljoscha Rittner
  */
 public interface SecurityAccessInterceptor {
-	// ::remove folder when WASM
+	// ::remove folder when CORE
 	/**
 	 * Applies to a connection the authentication information.
 	 *

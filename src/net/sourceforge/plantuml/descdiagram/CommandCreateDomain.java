@@ -35,8 +35,7 @@
  */
 package net.sourceforge.plantuml.descdiagram;
 
-import net.sourceforge.plantuml.baraye.EntityImp;
-import net.sourceforge.plantuml.baraye.Quark;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.classdiagram.command.GenericRegexProducer;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -49,6 +48,7 @@ import net.sourceforge.plantuml.graphic.USymbols;
 import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.font.FontParam;
+import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -108,9 +108,9 @@ public class CommandCreateDomain extends SingleLineCommand2<DescriptionDiagram> 
 		Display display = Display.getWithNewlines(displayString);
 		final String urlString = arg.get("URL", 0);
 		final String group = arg.get("GROUP", 0);
-		EntityImp entity;
+		Entity entity;
 		if (group != null) {
-			final EntityImp currentGroup = diagram.getCurrentGroup();
+			final Entity currentGroup = diagram.getCurrentGroup();
 			diagram.gotoGroup(quark, display, type);
 			entity = diagram.getCurrentGroup();
 		} else {

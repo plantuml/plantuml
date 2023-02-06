@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 
 public interface Gtile extends Swimable2, TextBlock {
-	// ::remove folder when WASM
+	// ::remove folder when CORE
 
 	public static final boolean USE_GTILE = false;
 

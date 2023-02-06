@@ -98,7 +98,7 @@ public class InstructionFork extends WithNote implements Instruction {
 		return getLastList().add(ins);
 	}
 
-	// ::comment when WASM
+	// ::comment when CORE
 	@Override
 	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
 		final List<Gtile> all = new ArrayList<>();

@@ -37,8 +37,7 @@ package net.sourceforge.plantuml.classdiagram.command;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
-import net.sourceforge.plantuml.baraye.EntityImp;
-import net.sourceforge.plantuml.baraye.Quark;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -48,6 +47,7 @@ import net.sourceforge.plantuml.cucadiagram.LinkArg;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
 import net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
+import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.MyPattern;
 import net.sourceforge.plantuml.regex.Pattern2;
@@ -118,15 +118,15 @@ final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassO
 		final String ent1 = arg.get("ENT1", 1);
 		final String ent2 = arg.get("ENT2", 1);
 
-		final EntityImp cl1;
-		final EntityImp cl2;
-		final EntityImp normalEntity;
+		final Entity cl1;
+		final Entity cl2;
+		final Entity normalEntity;
 
 		final String suffix = "lol" + diagram.getUniqueSequence();
 		if (arg.get("LOL_THEN_ENT", 1) == null) {
 
 			final Quark quark = diagram.quarkInContext(diagram.cleanIdForQuark(ent1), false);
-			cl1 = (EntityImp) quark.getData();
+			cl1 = (Entity) quark.getData();
 			if (cl1 == null)
 				return CommandExecutionResult.error("No class " + quark.getName());
 
@@ -145,7 +145,7 @@ final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassO
 //			normalEntity = cl1;
 		} else {
 			final Quark quark = diagram.quarkInContext(diagram.cleanIdForQuark(ent2), false);
-			cl2 = (EntityImp) quark.getData();
+			cl2 = (Entity) quark.getData();
 			if (cl2 == null)
 				return CommandExecutionResult.error("No class " + quark.getName());
 

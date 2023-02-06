@@ -35,7 +35,7 @@
  */
 package com.plantuml.wasm;
 
-//::uncomment when WASM
+//::uncomment when CORE
 //import com.leaningtech.client.Document;
 //import com.leaningtech.client.Element;
 //import com.leaningtech.client.Global;
@@ -46,7 +46,7 @@ public class WasmLog {
 	public static long start;
 
 	public static void log(String message) {
-		// ::uncomment when WASM
+		// ::uncomment when CORE
 //		if (start > 0) {
 //			final long duration = System.currentTimeMillis() - start;
 //			message = "(" + duration + " ms) " + message;

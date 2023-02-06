@@ -26,7 +26,7 @@ import java.util.HashMap;
 import org.stathissideris.ascii2image.graphics.CustomShapeDefinition;
 
 public class ConfigurationParser {
-	// ::remove folder when WASM
+	// ::remove folder when CORE
 
 	private static final boolean DEBUG = false;
 

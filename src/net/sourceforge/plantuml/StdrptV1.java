@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.utils.Log;
 
 public class StdrptV1 implements Stdrpt {
-	// ::remove file when WASM
+	// ::remove file when CORE
 
 	public void printInfo(final PrintStream output, Diagram sys) {
 		if (sys instanceof PSystemWelcome) {

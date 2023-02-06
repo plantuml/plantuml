@@ -77,7 +77,7 @@ public class OptionFlags {
 
 	// static public final boolean LINK_BETWEEN_FIELDS = true;
 
-	// ::comment when WASM
+	// ::comment when CORE
 	public void reset() {
 		reset(false);
 		GraphvizUtils.setDotExecutable(null);
@@ -197,7 +197,7 @@ public class OptionFlags {
 	private final AtomicBoolean logDataInitized = new AtomicBoolean(false);
 
 	public void logData(final SFile file, Diagram system) {
-		// ::comment when WASM
+		// ::comment when CORE
 		final String warnOrError = system.getWarningOrError();
 		if (warnOrError == null) {
 			return;
@@ -228,7 +228,7 @@ public class OptionFlags {
 		// ::done
 	}
 
-	// ::comment when WASM
+	// ::comment when CORE
 	public final void setLogData(SFile logData) {
 		this.logData = logData;
 		logData.delete();

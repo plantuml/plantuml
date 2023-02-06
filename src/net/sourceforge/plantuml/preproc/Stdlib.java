@@ -32,7 +32,7 @@ import net.sourceforge.plantuml.creole.atom.AtomImg;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.utils.Log;
-// ::uncomment when WASM
+// ::uncomment when CORE
 //import java.io.FileInputStream;
 //import java.io.FileNotFoundException;
 //import com.plantuml.wasm.RunInit;
@@ -40,7 +40,7 @@ import net.sourceforge.plantuml.utils.Log;
 
 public class Stdlib {
 
-	// ::uncomment when WASM
+	// ::uncomment when CORE
 //	public static InputStream getResourceAsStream(String fullname) {
 //		fullname = fullname.replace(".puml", "");
 //		fullname = fullname.replace("awslib/", "awslib14/");
@@ -57,7 +57,7 @@ public class Stdlib {
 //	}
 	// ::done
 
-	// ::comment when WASM
+	// ::comment when CORE
 	private static final Map<String, Stdlib> all = new ConcurrentHashMap<String, Stdlib>();
 	private static final String SEPARATOR = "\uF8FF";
 	private static final Pattern sizePattern = Pattern.compile("\\[(\\d+)x(\\d+)/16\\]");

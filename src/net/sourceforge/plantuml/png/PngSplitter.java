@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.utils.Log;
 
 public class PngSplitter {
-	// ::remove file when WASM
+	// ::remove file when CORE
 
 	private final List<SFile> files = new ArrayList<>();
 

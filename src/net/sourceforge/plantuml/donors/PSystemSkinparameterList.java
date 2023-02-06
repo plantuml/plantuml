@@ -53,7 +53,7 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 public class PSystemSkinparameterList extends PlainDiagram {
-	// ::remove file when WASM
+	// ::remove file when CORE
 
 	public PSystemSkinparameterList(UmlSource source) {
 		super(source);

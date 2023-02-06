@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.cucadiagram.dot.ProcessState;
 import net.sourceforge.plantuml.log.Logme;
 
 public class GraphvizJs implements Graphviz {
-	// ::remove folder when WASM
+	// ::remove folder when CORE
 
 	private final static ExecutorService executorService = Executors
 			.newSingleThreadScheduledExecutor(new ThreadFactory() {

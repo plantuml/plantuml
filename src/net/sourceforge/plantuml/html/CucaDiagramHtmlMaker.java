@@ -46,14 +46,14 @@ import java.util.List;
 import net.sourceforge.plantuml.FileImageData;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.baraye.CucaDiagram;
-import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.security.SFile;
 
 public final class CucaDiagramHtmlMaker {
-	// ::remove folder when WASM
+	// ::remove folder when CORE
 
 	private final CucaDiagram diagram;
 	private final SFile dir;
@@ -83,7 +83,7 @@ public final class CucaDiagramHtmlMaker {
 	private void printAllType(final PrintWriter pw, LeafType type) throws IOException {
 		if (hasSome(type)) {
 			pw.println("<h2>" + type.toHtml() + "</h2>");
-			for (final EntityImp ent : diagram.getLeafsvalues()) {
+			for (final Entity ent : diagram.getEntityFactory().leafs()) {
 				if (ent.getLeafType() != type) {
 					continue;
 				}
@@ -106,7 +106,7 @@ public final class CucaDiagramHtmlMaker {
 	}
 
 	private boolean hasSome(final LeafType type) {
-		for (EntityImp ent : diagram.getLeafsvalues()) {
+		for (Entity ent : diagram.getEntityFactory().leafs()) {
 			if (ent.getLeafType() == type) {
 				return true;
 			}
@@ -114,11 +114,11 @@ public final class CucaDiagramHtmlMaker {
 		return false;
 	}
 
-	private void export(EntityImp entity) throws IOException {
+	private void export(Entity entity) throws IOException {
 		final SFile f = dir.file(LinkHtmlPrinter.urlOf(entity));
 		final PrintWriter pw = f.createPrintWriter();
 		pw.println("<html>");
-		pw.println("<title>" + StringUtils.unicodeForHtml(entity.getCodeGetName()) + "</title>");
+		pw.println("<title>" + StringUtils.unicodeForHtml(entity.getName()) + "</title>");
 		pw.println("<h2>" + entity.getLeafType().toHtml() + "</h2>");
 		for (CharSequence s : entity.getDisplay()) {
 			pw.println(StringUtils.unicodeForHtml(s.toString()));
@@ -177,12 +177,12 @@ public final class CucaDiagramHtmlMaker {
 			pw.println("</ul>");
 		}
 
-		final Collection<EntityImp> notes = getNotes(entity);
+		final Collection<Entity> notes = getNotes(entity);
 		if (notes.size() > 0) {
 			pw.println("<hr>");
 			pw.println("<h2>Notes:</h2>");
 			pw.println("<ul>");
-			for (EntityImp note : notes) {
+			for (Entity note : notes) {
 				pw.println("<li>");
 				for (CharSequence s : note.getDisplay()) {
 					pw.println(StringUtils.unicodeForHtml(s.toString()));
@@ -204,8 +204,8 @@ public final class CucaDiagramHtmlMaker {
 		pw.close();
 	}
 
-	private Collection<EntityImp> getNotes(EntityImp ent) {
-		final List<EntityImp> result = new ArrayList<>();
+	private Collection<Entity> getNotes(Entity ent) {
+		final List<Entity> result = new ArrayList<>();
 		for (Link link : diagram.getLinks()) {
 			if (link.contains(ent) == false) {
 				continue;
@@ -217,7 +217,7 @@ public final class CucaDiagramHtmlMaker {
 		return Collections.unmodifiableList(result);
 	}
 
-	private Collection<Link> getLinksButNotes(EntityImp ent) {
+	private Collection<Link> getLinksButNotes(Entity ent) {
 		final List<Link> result = new ArrayList<>();
 		for (Link link : diagram.getLinks()) {
 			if (link.contains(ent) == false) {

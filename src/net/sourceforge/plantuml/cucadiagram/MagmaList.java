@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.cucadiagram;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Entity;
 
 public class MagmaList {
 
@@ -48,7 +48,7 @@ public class MagmaList {
 		all.add(magma);
 	}
 
-	public MagmaList getMagmas(EntityImp group) {
+	public MagmaList getMagmas(Entity group) {
 		final MagmaList result = new MagmaList();
 		for (Magma m : all) {
 			if (m.getContainer() == group) {

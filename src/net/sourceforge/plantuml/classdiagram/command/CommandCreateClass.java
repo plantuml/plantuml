@@ -36,8 +36,7 @@
 package net.sourceforge.plantuml.classdiagram.command;
 
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.baraye.EntityImp;
-import net.sourceforge.plantuml.baraye.Quark;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -52,6 +51,7 @@ import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.font.FontParam;
+import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -141,55 +141,18 @@ public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 
 		final Quark quark = diagram.quarkInContext(idShort, true);
 
-		Display display = Display.getWithNewlines(displayString);
-		if (Display.isNull(display))
-			display = Display.getWithNewlines(quark.getName()).withCreoleMode(CreoleMode.SIMPLE_LINE);
-
-		EntityImp entity = (EntityImp) quark.getData();
+		Entity entity = (Entity) quark.getData();
 
 		if (entity == null) {
+			Display display = Display.getWithNewlines(displayString);
+			if (Display.isNull(display))
+				display = Display.getWithNewlines(quark.getName()).withCreoleMode(CreoleMode.SIMPLE_LINE);
 			entity = diagram.reallyCreateLeaf(quark, display, type, null);
 		} else {
 			if (entity.muteToType(type, null) == false)
 				return CommandExecutionResult.error("Bad name");
-			entity.setDisplay(display);
 
 		}
-//		final Quark quark = diagram.getPlasma().getIfExistsFromName(idShort);
-//		if (quark != null && quark.getData() != null)
-//			entity = diagram.getFromName(idShort);
-//		else
-
-		// } else
-//			entity = (ILeaf) quark.getData();
-//		if (entity == null || entity.isGroup()) {
-//			for (Quark tmp : diagram.getPlasma().quarks())
-//				if (tmp.getData() instanceof EntityImp) {
-//					final EntityImp tmp2 = (EntityImp) tmp.getData();
-//					if (tmp2 != null && tmp.getName().equals(idShort) && tmp2.isGroup() == false) {
-//						entity = (ILeaf) tmp.getData();
-//						break;
-//					}
-//				}
-//		}
-//		if (entity == null) {
-//			entity = diagram.reallyCreateLeaf(quark, display, type, null);
-//		} else {
-//			if (entity.muteToType(type, null) == false)
-//				return CommandExecutionResult.error("Bad name");
-//		}
-//		} else {
-//			final Quark idNewLong = diagram.buildLeafIdent(idShort);
-//			final Quark code = diagram.buildCode(idShort);
-//			if (diagram.leafExist(code)) {
-//				entity = diagram.getOrCreateLeaf(idNewLong, code, type, null);
-//				if (entity.muteToType(type, null) == false)
-//					return CommandExecutionResult.error("Bad name");
-//
-//			} else {
-//				entity = diagram.createLeaf(idNewLong, code, Display.getWithNewlines(display), type, null);
-//			}
-//		}
 		diagram.setLastEntity(entity);
 		if (stereo != null) {
 			entity.setStereotype(Stereotype.build(stereo, diagram.getSkinParam().getCircledCharacterRadius(),

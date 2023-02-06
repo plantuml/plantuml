@@ -53,7 +53,7 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
-import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.command.Position;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.cucadiagram.CucaNote;
@@ -206,7 +206,7 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		return ang;
 	}
 
-	private Cluster getCluster2(Bibliotekon bibliotekon, EntityImp entityMutable) {
+	private Cluster getCluster2(Bibliotekon bibliotekon, Entity entityMutable) {
 		for (Cluster cl : bibliotekon.allCluster())
 			if (cl.getGroups().contains(entityMutable))
 				return cl;
@@ -217,7 +217,7 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 	public SvekLine(Link link, ColorSequence colorSequence, ISkinParam skinParam, StringBounder stringBounder,
 			FontConfiguration font, Bibliotekon bibliotekon, Pragma pragma, GraphvizVersion graphvizVersion) {
 
-		// ::comment when WASM
+		// ::comment when CORE
 		if (graphvizVersion.useShieldForQuantifier() && link.getLinkArg().getQuantifier1() != null)
 			link.getEntity1().ensureMargins(Margins.uniform(16));
 
@@ -226,11 +226,11 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		// ::done
 
 		if (link.getLinkArg().getKal1() != null)
-			this.kal1 = new Kal(this, link.getLinkArg().getKal1(), font, skinParam, (EntityImp) link.getEntity1(), link,
+			this.kal1 = new Kal(this, link.getLinkArg().getKal1(), font, skinParam, (Entity) link.getEntity1(), link,
 					stringBounder);
 
 		if (link.getLinkArg().getKal2() != null)
-			this.kal2 = new Kal(this, link.getLinkArg().getKal2(), font, skinParam, (EntityImp) link.getEntity2(), link,
+			this.kal2 = new Kal(this, link.getLinkArg().getKal2(), font, skinParam, (Entity) link.getEntity2(), link,
 					stringBounder);
 
 		this.type = skinParam.getUmlDiagramType();
@@ -363,7 +363,7 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		return link.getLinkArrow();
 	}
 
-	// ::comment when WASM
+	// ::comment when CORE
 	public void appendLine(GraphvizVersion graphvizVersion, StringBuilder sb, DotMode dotMode, DotSplines dotSplines) {
 		// Log.println("inverted=" + isInverted());
 		// if (isInverted()) {
@@ -667,8 +667,8 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		ug.draw(link.commentForSvg());
 		final Map<UGroupType, String> typeIDent = new EnumMap<>(UGroupType.class);
 		typeIDent.put(UGroupType.CLASS,
-				"link " + link.getEntity1().getCode() + " " + link.getEntity2().getCode() + " selected");
-		typeIDent.put(UGroupType.ID, "link_" + link.getEntity1().getCode() + "_" + link.getEntity2().getCode());
+				"link " + link.getEntity1().getName() + " " + link.getEntity2().getName() + " selected");
+		typeIDent.put(UGroupType.ID, "link_" + link.getEntity1().getName() + "_" + link.getEntity2().getName());
 		ug.startGroup(typeIDent);
 		double x = 0;
 		double y = 0;
@@ -677,7 +677,7 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 			ug.startUrl(url);
 
 		if (link.isAutoLinkOfAGroup()) {
-			final Cluster cl = bibliotekon.getCluster((EntityImp) link.getEntity1());
+			final Cluster cl = bibliotekon.getCluster((Entity) link.getEntity1());
 			if (cl != null) {
 				x += cl.getClusterPosition().getWidth();
 				x -= dotPath.getStartPoint().getX() - cl.getClusterPosition().getMinX();
@@ -717,7 +717,7 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 
 		DotPath todraw = dotPath;
 		if (link.getEntity2().isGroup() && link.getEntity2().getUSymbol() instanceof USymbolFolder) {
-			final Cluster endCluster = bibliotekon.getCluster((EntityImp) link.getEntity2());
+			final Cluster endCluster = bibliotekon.getCluster((Entity) link.getEntity2());
 			if (endCluster != null) {
 				final double deltaFolderH = endCluster.checkFolderPosition(dotPath.getEndPoint(),
 						ug.getStringBounder());
@@ -998,7 +998,7 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		return link.isHorizontalSolitary();
 	}
 
-	public boolean isLinkFromOrTo(EntityImp group) {
+	public boolean isLinkFromOrTo(Entity group) {
 		return link.getEntity1() == group || link.getEntity2() == group;
 	}
 
@@ -1023,7 +1023,7 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		return link.getEntity1() == link.getEntity2();
 	}
 
-	public XPoint2D getMyPoint(EntityImp entity) {
+	public XPoint2D getMyPoint(Entity entity) {
 		if (link.getEntity1() == entity)
 			return moveDelta(dotPath.getStartPoint());
 
@@ -1059,7 +1059,7 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		return new XPoint2D(dx + end.getX(), dy + end.getY());
 	}
 
-	public EntityImp getOther(EntityImp entity) {
+	public Entity getOther(Entity entity) {
 		if (link.contains(entity))
 			return link.getOther(entity);
 

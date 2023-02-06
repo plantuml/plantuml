@@ -130,7 +130,7 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 
 		fileFormatOption = fileFormatOption.withTikzFontDistortion(getSkinParam().getTikzFontDistortion());
 
-		// ::comment when WASM
+		// ::comment when CORE
 		if (fileFormatOption.getFileFormat() == FileFormat.PDF)
 			return exportDiagramInternalPdf(os, index);
 		// ::done
@@ -161,7 +161,7 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 	public static void exportDiagramError(OutputStream os, Throwable exception, FileFormatOption fileFormat, long seed,
 			String metadata, String flash, List<String> strings) throws IOException {
 
-		// ::comment when WASM
+		// ::comment when CORE
 		if (fileFormat.getFileFormat() == FileFormat.ATXT || fileFormat.getFileFormat() == FileFormat.UTXT) {
 			exportDiagramErrorText(os, exception, strings);
 			return;
@@ -171,7 +171,7 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 		strings.addAll(CommandExecutionResult.getStackTrace(exception));
 
 		BufferedImage im2 = null;
-		// ::comment when WASM
+		// ::comment when CORE
 		if (flash != null) {
 			final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();
 			try {
@@ -201,7 +201,7 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 		plainImageBuilder(drawable, fileFormat).metadata(metadata).seed(seed).write(os);
 	}
 
-	// ::comment when WASM
+	// ::comment when CORE
 	private static void exportDiagramErrorText(OutputStream os, Throwable exception, List<String> strings) {
 		final PrintWriter pw = SecurityUtils.createPrintWriter(os);
 		exception.printStackTrace(pw);
@@ -254,7 +254,7 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 		return strings;
 	}
 
-	// ::comment when WASM
+	// ::comment when CORE
 	private void exportDiagramInternalMjpeg(OutputStream os) throws IOException {
 		final SFile f = new SFile("c:/test.avi");
 		final int nb = 150;

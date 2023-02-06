@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.security.SFile;
 
 public class SourceFileReaderHardFile extends SourceFileReaderAbstract implements ISourceFileReader {
-	// ::remove file when WASM
+	// ::remove file when CORE
 
 	private final File outputFile;
 

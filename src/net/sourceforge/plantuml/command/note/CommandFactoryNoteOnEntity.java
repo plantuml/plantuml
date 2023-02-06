@@ -37,8 +37,7 @@ package net.sourceforge.plantuml.command.note;
 
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.baraye.EntityImp;
-import net.sourceforge.plantuml.baraye.Quark;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.classdiagram.command.CommandCreateClassMultilines;
 import net.sourceforge.plantuml.command.Command;
@@ -59,6 +58,7 @@ import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.klimt.color.ColorParser;
 import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -212,7 +212,7 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 			BlocLines strings) throws NoSuchColorException {
 		final String pos = line0.get("POSITION", 0);
 		final String idShort = diagram.cleanIdForQuark(line0.get("ENTITY", 0));
-		final EntityImp cl1;
+		final Entity cl1;
 		if (idShort == null) {
 			cl1 = diagram.getLastEntity();
 			if (cl1 == null)
@@ -220,7 +220,7 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 
 		} else {
 			final Quark quark = diagram.quarkInContext(idShort, false);
-			cl1 = (EntityImp) quark.getData();
+			cl1 = (Entity) quark.getData();
 			if (cl1 == null)
 				return CommandExecutionResult.error("Not known: " + idShort);
 //			final Quark ident = diagram.buildFromName(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(idShort));
@@ -251,7 +251,7 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 
 		final String tmp = diagram.getUniqueSequence("GMN");
 		final Quark quark = diagram.quarkInContext(tmp, false);
-		final EntityImp note = diagram.reallyCreateLeaf(quark, strings.toDisplay(), LeafType.NOTE, null);
+		final Entity note = diagram.reallyCreateLeaf(quark, strings.toDisplay(), LeafType.NOTE, null);
 
 		if (stereotypeString != null)
 			note.setStereotype(stereotype);

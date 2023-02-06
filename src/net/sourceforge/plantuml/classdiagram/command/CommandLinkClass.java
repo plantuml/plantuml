@@ -38,8 +38,7 @@ package net.sourceforge.plantuml.classdiagram.command;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
-import net.sourceforge.plantuml.baraye.EntityImp;
-import net.sourceforge.plantuml.baraye.Quark;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -54,6 +53,7 @@ import net.sourceforge.plantuml.klimt.color.ColorParser;
 import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
+import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -175,12 +175,12 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		String port1 = null;
 		String port2 = null;
 		final LinkType linkType = getLinkType(arg);
-		if (ent1String.contains("::") && diagram.getPlasma().getIfExistsFromName(ent1String) == null) {
+		if (ent1String.contains("::") && diagram.getPlasma().firstWithName(ent1String) == null) {
 			port1 = diagram.getPortId(ent1String);
 			ent1String = diagram.removePortId(ent1String);
 		}
 
-		if (ent2String.contains("::") && diagram.getPlasma().getIfExistsFromName(ent2String) == null) {
+		if (ent2String.contains("::") && diagram.getPlasma().firstWithName(ent2String) == null) {
 			port2 = diagram.getPortId(ent2String);
 			ent2String = diagram.removePortId(ent2String);
 		}
@@ -188,10 +188,10 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		final Quark quark1 = diagram.quarkInContext(ent1String, false);
 		final Quark quark2 = diagram.quarkInContext(ent2String, false);
 
-		EntityImp cl1 = (EntityImp) quark1.getData();
+		Entity cl1 = (Entity) quark1.getData();
 		if (cl1 == null)
 			cl1 = diagram.reallyCreateLeaf(quark1, Display.getWithNewlines(quark1.getName()), LeafType.CLASS, null);
-		EntityImp cl2 = (EntityImp) quark2.getData();
+		Entity cl2 = (Entity) quark2.getData();
 		if (cl2 == null)
 			cl2 = diagram.reallyCreateLeaf(quark2, Display.getWithNewlines(quark2.getName()), LeafType.CLASS, null);
 
@@ -268,8 +268,8 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 			throws NoSuchColorException {
 		final String ent1String = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("ENT1", 0), "\"");
 		final String ent2String = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("ENT2", 0), "\"");
-		final EntityImp cl1 = diagram.getGroup(ent1String);
-		final EntityImp cl2 = diagram.getGroup(ent2String);
+		final Entity cl1 = diagram.getGroup(ent1String);
+		final Entity cl2 = diagram.getGroup(ent2String);
 
 		final LinkType linkType = getLinkType(arg);
 		final Direction dir = getDirection(arg);
@@ -309,13 +309,13 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		if (quark1B.getData() != null == false)
 			return CommandExecutionResult.error("No class " + name1B);
 
-		EntityImp cl1A = (EntityImp) quark1A.getData();
-		EntityImp cl1B = (EntityImp) quark1B.getData();
+		Entity cl1A = (Entity) quark1A.getData();
+		Entity cl1B = (Entity) quark1B.getData();
 
 		final String id2 = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("ENT2", 0), "\"");
 		final Quark ent2 = diagram.quarkInContext(id2, false);
 
-		EntityImp cl2 = (EntityImp) ent2.getData();
+		Entity cl2 = (Entity) ent2.getData();
 		if (cl2 == null)
 			cl2 = diagram.reallyCreateLeaf(ent2, Display.getWithNewlines(ent2.getName()), LeafType.CLASS, null);
 
@@ -342,13 +342,13 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		if (quark2B.getData() != null == false)
 			return CommandExecutionResult.error("No class " + name2B);
 
-		final EntityImp cl2A = (EntityImp) quark2A.getData();
-		final EntityImp cl2B = (EntityImp) quark2B.getData();
+		final Entity cl2A = (Entity) quark2A.getData();
+		final Entity cl2B = (Entity) quark2B.getData();
 
 		final String id1 = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("ENT1", 0), "\"");
 		final Quark ent1 = diagram.quarkInContext(id1, false);
 
-		EntityImp cl1 = (EntityImp) ent1.getData();
+		Entity cl1 = (Entity) ent1.getData();
 		if (cl1 == null)
 			cl1 = diagram.reallyCreateLeaf(ent1, Display.getWithNewlines(ent1.getName()), LeafType.CLASS, null);
 
@@ -383,10 +383,10 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		if (quark2B.getData() != null == false)
 			return CommandExecutionResult.error("No class " + name2B);
 
-		final EntityImp cl1A = (EntityImp) quark1A.getData();
-		final EntityImp cl1B = (EntityImp) quark1B.getData();
-		final EntityImp cl2A = (EntityImp) quark2A.getData();
-		final EntityImp cl2B = (EntityImp) quark2B.getData();
+		final Entity cl1A = (Entity) quark1A.getData();
+		final Entity cl1B = (Entity) quark1B.getData();
+		final Entity cl2A = (Entity) quark2A.getData();
+		final Entity cl2B = (Entity) quark2B.getData();
 
 		final LinkType linkType = getLinkType(arg);
 		final Display label = Display.getWithNewlines(arg.get("LABEL_LINK", 0));

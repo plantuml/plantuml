@@ -40,7 +40,7 @@ import java.util.Map;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
-import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.klimt.UGroupType;
@@ -77,7 +77,7 @@ public class EntityImageLollipopInterface extends AbstractEntityImage {
 		return new UStroke(1.5);
 	}
 
-	public EntityImageLollipopInterface(EntityImp entity, ISkinParam skinParam, SName sname) {
+	public EntityImageLollipopInterface(Entity entity, ISkinParam skinParam, SName sname) {
 		super(entity, skinParam);
 		this.sname = sname;
 
@@ -114,8 +114,8 @@ public class EntityImageLollipopInterface extends AbstractEntityImage {
 			ug.startUrl(url);
 
 		final Map<UGroupType, String> typeIDent = new EnumMap<>(UGroupType.class);
-		typeIDent.put(UGroupType.CLASS, "elem " + getEntity().getCode() + " selected");
-		typeIDent.put(UGroupType.ID, "elem_" + getEntity().getCode());
+		typeIDent.put(UGroupType.CLASS, "elem " + getEntity().getName() + " selected");
+		typeIDent.put(UGroupType.ID, "elem_" + getEntity().getName());
 		ug.startGroup(typeIDent);
 		ug.apply(getUStroke()).draw(circle);
 		ug.closeGroup();

@@ -53,7 +53,7 @@ import net.sourceforge.plantuml.SourceStringReader;
 import net.sourceforge.plantuml.core.DiagramDescription;
 
 public class FtpConnexion {
-	// ::remove folder when WASM
+	// ::remove folder when CORE
 
 	private final String user;
 	private final Map<String, String> incoming = new HashMap<String, String>();

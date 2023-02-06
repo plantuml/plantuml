@@ -39,7 +39,7 @@ import java.util.List;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
@@ -48,7 +48,7 @@ import net.sourceforge.plantuml.style.Style;
 
 public class BodierJSon implements Bodier {
 
-	private EntityImp leaf;
+	private Entity leaf;
 	private JsonValue json;
 
 	@Override
@@ -60,7 +60,7 @@ public class BodierJSon implements Bodier {
 	}
 
 	@Override
-	public void setLeaf(EntityImp leaf) {
+	public void setLeaf(Entity leaf) {
 		this.leaf = Objects.requireNonNull(leaf);
 
 	}

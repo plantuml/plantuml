@@ -104,7 +104,7 @@ public class CreoleParser implements SheetBuilder {
 			return new StripeTree(fontConfiguration, skinParam, line);
 		} else if (Parser.isCodeStart(line)) {
 			return new StripeCode(fontConfiguration.changeFamily(Parser.MONOSPACED));
-			// ::comment when WASM
+			// ::comment when CORE
 		} else if (Parser.isLatexStart(line)) {
 			return new StripeLatex(fontConfiguration);
 			// ::done

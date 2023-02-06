@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.svek.image;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
-import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -58,7 +58,7 @@ public class EntityImageArcCircle extends AbstractEntityImage {
 	private final TextBlock name;
 	private final TextBlock stereo;
 
-	public EntityImageArcCircle(EntityImp entity, ISkinParam skinParam) {
+	public EntityImageArcCircle(Entity entity, ISkinParam skinParam) {
 		super(entity, skinParam);
 
 		final Stereotype stereotype = entity.getStereotype();

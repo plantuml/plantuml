@@ -42,7 +42,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.cucadiagram.Bodier;
 import net.sourceforge.plantuml.cucadiagram.BodierJSon;
 import net.sourceforge.plantuml.cucadiagram.BodierMap;
@@ -55,6 +54,8 @@ import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.cucadiagram.entity.IEntityFactory;
+import net.sourceforge.plantuml.plasma.Plasma;
+import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 
 public final class EntityFactory implements IEntityFactory {
@@ -65,38 +66,24 @@ public final class EntityFactory implements IEntityFactory {
 
 	private final Plasma plasma;
 
-	private final EntityImp rootGroup;
+	private final Entity rootGroup;
 
 	private final List<HideOrShow2> hides2;
 	private final List<HideOrShow2> removed;
-	/* private */ final public ICucaDiagram namespaceSeparator;
+	final private ICucaDiagram namespaceSeparator;
 
-	public EntityImp getLeafForEmptyGroup(EntityImp g) {
-		throw new UnsupportedOperationException();
-	}
-
-	public EntityImp createLeafForEmptyGroup(EntityImp g, ISkinParam skinPdaram) {
-		final EntityImp ent = (EntityImp) g;
-		ent.muteToType2(LeafType.EMPTY_PACKAGE);
-		return ent;
-	}
-
-//
-	public EntityImp isIntricated(EntityImp parent) {
-		throw new UnsupportedOperationException();
-	}
-
+	//
 	public EntityFactory(List<HideOrShow2> hides2, List<HideOrShow2> removed, ICucaDiagram namespaceSeparator) {
 		this.hides2 = hides2;
 		this.removed = removed;
 		this.namespaceSeparator = namespaceSeparator;
 		this.plasma = new Plasma(".");
-		this.rootGroup = new EntityImp(this.plasma.root(), this, null, GroupType.ROOT, 0);
+		this.rootGroup = new Entity(this.plasma.root(), this, null, GroupType.ROOT, 0);
 		this.plasma.root().setData(rootGroup);
 	}
 
-	public boolean isHidden(EntityImp leaf) {
-		final EntityImp other = isNoteWithSingleLinkAttachedTo(leaf);
+	public boolean isHidden(Entity leaf) {
+		final Entity other = isNoteWithSingleLinkAttachedTo(leaf);
 		if (other != null && other != leaf)
 			return isHidden(other);
 
@@ -115,10 +102,10 @@ public final class EntityFactory implements IEntityFactory {
 		return result;
 	}
 
-	public boolean isRemoved(EntityImp leaf) {
-		final EntityImp other = isNoteWithSingleLinkAttachedTo(leaf);
-		if (other instanceof EntityImp)
-			return isRemoved((EntityImp) other);
+	public boolean isRemoved(Entity leaf) {
+		final Entity other = isNoteWithSingleLinkAttachedTo(leaf);
+		if (other instanceof Entity)
+			return isRemoved((Entity) other);
 
 		boolean result = false;
 		for (HideOrShow2 hide : removed)
@@ -127,11 +114,11 @@ public final class EntityFactory implements IEntityFactory {
 		return result;
 	}
 
-	private EntityImp isNoteWithSingleLinkAttachedTo(EntityImp note) {
+	private Entity isNoteWithSingleLinkAttachedTo(Entity note) {
 		if (note.getLeafType() != LeafType.NOTE)
 			return null;
 		assert note.getLeafType() == LeafType.NOTE;
-		EntityImp other = null;
+		Entity other = null;
 		for (Link link : this.getLinks()) {
 			if (link.getType().isInvisible())
 				continue;
@@ -148,7 +135,7 @@ public final class EntityFactory implements IEntityFactory {
 
 	}
 
-	public boolean isRemovedIgnoreUnlinked(EntityImp leaf) {
+	public boolean isRemovedIgnoreUnlinked(Entity leaf) {
 		boolean result = false;
 		for (HideOrShow2 hide : removed)
 			if (hide.isAboutUnlinked() == false)
@@ -157,8 +144,7 @@ public final class EntityFactory implements IEntityFactory {
 		return result;
 	}
 
-	final public EntityImp createLeaf(Quark quark, Display display, LeafType entityType,
-			Set<VisibilityModifier> hides) {
+	final public Entity createLeaf(Quark quark, LeafType entityType, Set<VisibilityModifier> hides) {
 		final Bodier bodier;
 		if (Objects.requireNonNull(entityType) == LeafType.MAP)
 			bodier = new BodierMap();
@@ -167,49 +153,33 @@ public final class EntityFactory implements IEntityFactory {
 		else
 			bodier = BodyFactory.createLeaf(entityType, hides);
 
-		final EntityImp result = new EntityImp(quark, this, bodier, entityType, rawLayout);
+		final Entity result = new Entity(quark, this, bodier, entityType, rawLayout);
 		bodier.setLeaf(result);
-		result.setDisplay(display);
 		return result;
 	}
 
-	public EntityImp createGroup(Quark quark, Display display, GroupType groupType, Set<VisibilityModifier> hides) {
+	public Entity createGroup(Quark quark, GroupType groupType, Set<VisibilityModifier> hides) {
 		Objects.requireNonNull(groupType);
 		if (quark.getData() != null)
-			return (EntityImp) quark.getData();
-//		for (Entry<Ident, IGroup> ent : groups2.entrySet())
-//			if (ent.getKey().equals(ident))
-//				return ent.getValue();
+			return (Entity) quark.getData();
 
 		final Bodier bodier = BodyFactory.createGroup(hides);
-		final EntityImp result = new EntityImp(quark, this, bodier, groupType, rawLayout);
-		if (Display.isNull(display) == false)
-			result.setDisplay(display);
+		final Entity result = new Entity(quark, this, bodier, groupType, rawLayout);
 
 		return result;
 	}
 
-	public EntityImp getRootGroup() {
+	public Entity getRootGroup() {
 		return rootGroup;
 	}
 
-	public final EntityImp getLeafStrict(Quark ident) {
-		if (ident instanceof Quark == false)
-			throw new UnsupportedOperationException();
-		final Quark quark = (Quark) ident;
-		final EntityImp result = (EntityImp) quark.getData();
-		if (result == null)
-			throw new UnsupportedOperationException();
-		return result;
-	}
+	public final Collection<Entity> leafs() {
 
-	public final Collection<EntityImp> leafs() {
-
-		final List<EntityImp> result = new ArrayList<>();
+		final List<Entity> result = new ArrayList<>();
 		for (Quark quark : getPlasma().quarks()) {
 			if (quark.isRoot())
 				continue;
-			final EntityImp data = (EntityImp) quark.getData();
+			final Entity data = (Entity) quark.getData();
 			if (data != null && data.isGroup() == false)
 				result.add(data);
 		}
@@ -217,18 +187,27 @@ public final class EntityFactory implements IEntityFactory {
 
 	}
 
-	public final Collection<EntityImp> groups() {
-		final List<EntityImp> result = new ArrayList<>();
+	public final Collection<Entity> groups() {
+		final List<Entity> result = new ArrayList<>();
 		for (Quark quark : getPlasma().quarks()) {
 			if (quark.isRoot())
 				continue;
-			final EntityImp data = (EntityImp) quark.getData();
+
+			final Entity data = (Entity) quark.getData();
 			if (data != null && data.isGroup())
 				result.add(data);
 		}
-		// System.err.println("GROUPS=" + result.size());
 		return Collections.unmodifiableCollection(result);
+	}
 
+	public final Collection<Entity> groupsAndRoot() {
+		final List<Entity> result = new ArrayList<>();
+		for (Quark quark : getPlasma().quarks()) {
+			final Entity data = (Entity) quark.getData();
+			if (data != null && data.isGroup())
+				result.add(data);
+		}
+		return Collections.unmodifiableCollection(result);
 	}
 
 	public void incRawLayout() {

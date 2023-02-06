@@ -38,6 +38,6 @@ package net.sourceforge.plantuml.api.mda.option2;
 import java.util.Collection;
 
 public interface MDADiagram {
-	// ::remove folder when WASM
+	// ::remove folder when CORE
 	public Collection<MDAPackage> getPackages();
 }

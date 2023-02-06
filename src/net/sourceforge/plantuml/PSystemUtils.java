@@ -56,7 +56,7 @@ import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 import net.sourceforge.plantuml.utils.Log;
 
 public class PSystemUtils {
-	// :: remove file when WASM
+	// :: remove file when CORE
 
 	public static List<FileImageData> exportDiagrams(Diagram system, SuggestedFile suggested,
 			FileFormatOption fileFormatOption) throws IOException {
@@ -66,7 +66,7 @@ public class PSystemUtils {
 	public static List<FileImageData> exportDiagrams(Diagram system, SuggestedFile suggestedFile,
 			FileFormatOption fileFormatOption, boolean checkMetadata) throws IOException {
 
-		// ::comment when WASM
+		// ::comment when CORE
 		final SFile existingFile = suggestedFile.getFile(0);
 		if (checkMetadata && fileFormatOption.getFileFormat().doesSupportMetadata() && existingFile.exists()) {
 			// && system.getNbImages() == 1) {
@@ -85,7 +85,7 @@ public class PSystemUtils {
 		if (system instanceof SequenceDiagram)
 			return exportDiagramsSequence((SequenceDiagram) system, suggestedFile, fileFormatOption);
 
-		// ::comment when WASM
+		// ::comment when CORE
 		if (system instanceof CucaDiagram && fileFormatOption.getFileFormat() == FileFormat.HTML)
 			return createFilesHtml((CucaDiagram) system, suggestedFile);
 		// ::done

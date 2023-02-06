@@ -36,8 +36,7 @@
 package net.sourceforge.plantuml.descdiagram.command;
 
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.baraye.EntityImp;
-import net.sourceforge.plantuml.baraye.Quark;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -53,6 +52,7 @@ import net.sourceforge.plantuml.graphic.USymbols;
 import net.sourceforge.plantuml.klimt.color.ColorParser;
 import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -263,8 +263,8 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 
 		final Labels labels = new Labels(arg);
 
-		final EntityImp cl1;
-		final EntityImp cl2;
+		final Entity cl1;
+		final Entity cl2;
 		if (diagram.isGroup(ent1clean) && diagram.isGroup(ent2clean)) {
 			cl1 = diagram.getGroup(ent1clean);
 			cl2 = diagram.getGroup(ent2clean);
@@ -297,12 +297,12 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 //		return s;
 //	}
 
-	private EntityImp getDummy(DescriptionDiagram diagram, String ident) {
+	private Entity getDummy(DescriptionDiagram diagram, String ident) {
 		if (ident.startsWith("()")) {
 			ident = diagram.cleanIdForQuark(ident);
 			final Quark quark = diagram.quarkInContext(ident, false);
 			if (quark.getData() != null)
-				return (EntityImp) quark.getData();
+				return (Entity) quark.getData();
 			return diagram.reallyCreateLeaf(quark, Display.getWithNewlines(quark.getName()), LeafType.DESCRIPTION,
 					USymbols.INTERFACE);
 		}
@@ -312,22 +312,22 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 		final Quark quark = diagram.quarkInContext(ident, false);
 
 		if (diagram.isGroup(quark))
-			return (EntityImp) quark.getData();
+			return (Entity) quark.getData();
 		if (quark.getData() != null)
-			return (EntityImp) quark.getData();
+			return (Entity) quark.getData();
 		final Display display = Display.getWithNewlines(quark.getName());
 
 		if (codeChar == '(') {
-			return (EntityImp) diagram.reallyCreateLeaf(quark, display, LeafType.USECASE, USymbols.USECASE);
+			return (Entity) diagram.reallyCreateLeaf(quark, display, LeafType.USECASE, USymbols.USECASE);
 		} else if (codeChar == ':') {
-			return (EntityImp) diagram.reallyCreateLeaf(quark, display, LeafType.DESCRIPTION,
+			return (Entity) diagram.reallyCreateLeaf(quark, display, LeafType.DESCRIPTION,
 					diagram.getSkinParam().actorStyle().toUSymbol());
 		} else if (codeChar == '[') {
 			final USymbol sym = diagram.getSkinParam().componentStyle().toUSymbol();
-			return (EntityImp) diagram.reallyCreateLeaf(quark, display, LeafType.DESCRIPTION, sym);
+			return (Entity) diagram.reallyCreateLeaf(quark, display, LeafType.DESCRIPTION, sym);
 		}
 
-		return (EntityImp) diagram.reallyCreateLeaf(quark, display, LeafType.STILL_UNKNOWN, null);
+		return (Entity) diagram.reallyCreateLeaf(quark, display, LeafType.STILL_UNKNOWN, null);
 	}
 
 }

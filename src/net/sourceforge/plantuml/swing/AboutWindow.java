@@ -61,7 +61,7 @@ import net.sourceforge.plantuml.version.PSystemVersion;
 import net.sourceforge.plantuml.version.Version;
 
 class AboutWindow extends JFrame {
-	// :: remove folder when WASM
+	// :: remove folder when CORE
 
 	public AboutWindow() {
 		super();

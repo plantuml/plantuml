@@ -73,7 +73,7 @@ public class UGraphicInterceptorOneSwimlane extends UGraphicDelegator {
 				tile.drawU(this);
 				// drawGoto();
 			}
-			// ::comment when WASM
+			// ::comment when CORE
 		} else if (shape instanceof Gtile) {
 			final Gtile tile = (Gtile) shape;
 			final Set<Swimlane> swinlanes = tile.getSwimlanes();

@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SImageIO;
 
 public class Metadata {
-	// ::remove file when WASM
+	// ::remove file when CORE
 
 	public static void main(String[] args) throws IOException {
 		final Metadata meta = new Metadata();

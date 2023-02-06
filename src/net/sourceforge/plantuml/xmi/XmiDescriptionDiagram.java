@@ -52,7 +52,7 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
@@ -97,12 +97,12 @@ public class XmiDescriptionDiagram implements XmlDiagramTransformer {
 		this.ownedElement = document.createElement("UML:Namespace.ownedElement");
 		model.appendChild(ownedElement);
 
-		for (final EntityImp gr : diagram.getGroups(false))
-			if (gr.getParentContainer().instanceofGroupRoot())
+		for (final Entity gr : diagram.getEntityFactory().groups())
+			if (gr.getParentContainer().isRoot())
 				addElement(gr, ownedElement);
 
-		for (final EntityImp ent : diagram.getLeafsvalues())
-			if (ent.getParentContainer().instanceofGroupRoot())
+		for (final Entity ent : diagram.getEntityFactory().leafs())
+			if (ent.getParentContainer().isRoot())
 				addElement(ent, ownedElement);
 
 		for (final Link link : diagram.getLinks())
@@ -110,14 +110,14 @@ public class XmiDescriptionDiagram implements XmlDiagramTransformer {
 
 	}
 
-	private void addElement(final EntityImp tobeAdded, Element container) {
+	private void addElement(final Entity tobeAdded, Element container) {
 		final Element element = createEntityNode(tobeAdded);
 		container.appendChild(element);
-		for (final EntityImp ent : diagram.getGroups(false))
+		for (final Entity ent : diagram.getEntityFactory().groups())
 			if (ent.getParentContainer() == tobeAdded)
 				addElement(ent, element);
 
-		for (final EntityImp ent : diagram.getLeafsvalues())
+		for (final Entity ent : diagram.getEntityFactory().leafs())
 			if (ent.getParentContainer() == tobeAdded)
 				addElement(ent, element);
 
@@ -182,7 +182,7 @@ public class XmiDescriptionDiagram implements XmlDiagramTransformer {
 
 	}
 
-	private Element createEntityNode(EntityImp entity) {
+	private Element createEntityNode(Entity entity) {
 		final Element cla = document.createElement("UML:Component");
 
 		cla.setAttribute("xmi.id", entity.getUid());

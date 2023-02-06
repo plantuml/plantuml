@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandStdlib extends SingleLineCommand2<StdlibDiagram> {
-	// ::remove file when WASM
+	// ::remove file when CORE
 
 	public CommandStdlib() {
 		super(getRegexConcat());

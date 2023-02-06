@@ -55,11 +55,12 @@ import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.baraye.EntityFactory;
-import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
 import net.sourceforge.plantuml.cucadiagram.ICucaDiagram;
+import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
 
 /*
@@ -144,14 +145,14 @@ https://rtsys.informatik.uni-kiel.de/~biblio/downloads/theses/yab-bt.pdf
 https://rtsys.informatik.uni-kiel.de/~biblio/downloads/theses/thw-bt.pdf
  */
 public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
-	// ::remove folder when WASM
+	// ::remove folder when CORE
 
 	private final ICucaDiagram diagram;
 	private final StringBounder stringBounder;
 	private final DotStringFactory dotStringFactory;
 
-	private final Map<EntityImp, ElkNode> nodes = new LinkedHashMap<EntityImp, ElkNode>();
-	private final Map<EntityImp, ElkNode> clusters = new LinkedHashMap<EntityImp, ElkNode>();
+	private final Map<Entity, ElkNode> nodes = new LinkedHashMap<Entity, ElkNode>();
+	private final Map<Entity, ElkNode> clusters = new LinkedHashMap<Entity, ElkNode>();
 	private final Map<Link, ElkEdge> edges = new LinkedHashMap<Link, ElkEdge>();
 
 	public CucaDiagramFileMakerElk(ICucaDiagram diagram, StringBounder stringBounder) {
@@ -225,13 +226,13 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 		}
 
 		private void drawAllClusters(UGraphic ug) {
-			for (Entry<EntityImp, ElkNode> ent : clusters.entrySet())
+			for (Entry<Entity, ElkNode> ent : clusters.entrySet())
 				drawSingleCluster(ug, ent.getKey(), ent.getValue());
 
 		}
 
 		private void drawAllNodes(UGraphic ug) {
-			for (Entry<EntityImp, ElkNode> ent : nodes.entrySet())
+			for (Entry<Entity, ElkNode> ent : nodes.entrySet())
 				drawSingleNode(ug, ent.getKey(), ent.getValue());
 
 		}
@@ -246,7 +247,7 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 			}
 		}
 
-		private void drawSingleCluster(UGraphic ug, EntityImp group, ElkNode elkNode) {
+		private void drawSingleCluster(UGraphic ug, Entity group, ElkNode elkNode) {
 			final XPoint2D corner = getPosition(elkNode);
 			final URectangle rect = new URectangle(elkNode.getWidth(), elkNode.getHeight());
 
@@ -286,7 +287,7 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 //			ug.apply(HColorUtils.BLACK).apply(new UStroke(1.5)).apply(new UTranslate(corner)).draw(rect);
 		}
 
-		private TextBlock getTitleBlock(EntityImp g) {
+		private TextBlock getTitleBlock(Entity g) {
 			final Display label = g.getDisplay();
 			if (label == null)
 				return TextBlockUtils.empty(0, 0);
@@ -300,7 +301,7 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 			return null;
 		}
 
-		private void drawSingleNode(UGraphic ug, EntityImp leaf, ElkNode elkNode) {
+		private void drawSingleNode(UGraphic ug, Entity leaf, ElkNode elkNode) {
 			final IEntityImage image = printEntityInternal(leaf);
 			// Retrieve coord from ELK
 			final XPoint2D corner = getPosition(elkNode);
@@ -314,7 +315,7 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 			final XPoint2D translate = getPosition(edge.getContainingNode());
 
 			final double magicY2 = 0;
-			final EntityImp dest = link.getEntity2();
+			final Entity dest = link.getEntity2();
 			if (dest.getUSymbol() instanceof USymbolFolder) {
 //				System.err.println("dest=" + dest);
 //				final IEntityImage image = printEntityInternal((ILeaf) dest);
@@ -339,16 +340,16 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 
 	}
 
-	private Collection<EntityImp> getUnpackagedEntities() {
-		final List<EntityImp> result = new ArrayList<>();
-		for (EntityImp ent : diagram.getLeafsvalues())
+	private Collection<Entity> getUnpackagedEntities() {
+		final List<Entity> result = new ArrayList<>();
+		for (Entity ent : diagram.getEntityFactory().leafs())
 			if (diagram.getEntityFactory().getRootGroup() == ent.getParentContainer())
 				result.add(ent);
 
 		return result;
 	}
 
-	private ElkNode getElkNode(final EntityImp entity) {
+	private ElkNode getElkNode(final Entity entity) {
 		ElkNode node = nodes.get(entity);
 		if (node == null)
 			node = clusters.get(entity);
@@ -388,15 +389,13 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 
 	}
 
-	private void printAllSubgroups(ElkNode cluster, EntityImp group) {
-		for (EntityImp g : diagram.getChildrenGroups(group)) {
+	private void printAllSubgroups(ElkNode cluster, Entity group) {
+		for (Entity g : diagram.getChildrenGroups(group)) {
 			if (g.isRemoved()) {
 				continue;
 			}
 			if (diagram.isEmpty(g) && g.getGroupType() == GroupType.PACKAGE) {
-				final ISkinParam skinParam = diagram.getSkinParam();
-				final EntityFactory entityFactory = diagram.getEntityFactory();
-				final EntityImp folder = entityFactory.createLeafForEmptyGroup(g, skinParam);
+				g.muteToType(LeafType.EMPTY_PACKAGE);
 				System.err.println("STILL IN PROGRESS");
 				// printEntityNew(folder);
 			} else {
@@ -418,17 +417,17 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 
 	}
 
-	private void printSingleGroup(EntityImp g) {
+	private void printSingleGroup(Entity g) {
 		if (g.getGroupType() == GroupType.CONCURRENT_STATE)
 			return;
 
-		this.printEntities(clusters.get(g), g.getLeafsDirect());
+		this.printEntities(clusters.get(g), g.leafs());
 		printAllSubgroups(clusters.get(g), g);
 	}
 
-	private void printEntities(ElkNode parent, Collection<EntityImp> entities) {
+	private void printEntities(ElkNode parent, Collection<Entity> entities) {
 		// Convert all "leaf" to ELK node
-		for (EntityImp ent : entities) {
+		for (Entity ent : entities) {
 			if (ent.isRemoved())
 				continue;
 
@@ -443,7 +442,7 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 
 	}
 
-	private void manageSingleNode(final ElkNode root, EntityImp leaf) {
+	private void manageSingleNode(final ElkNode root, Entity leaf) {
 		final IEntityImage image = printEntityInternal(leaf);
 
 		// Expected dimension of the node
@@ -543,7 +542,7 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 		return dotStringFactory.getBibliotekon();
 	}
 
-	private IEntityImage printEntityInternal(EntityImp ent) {
+	private IEntityImage printEntityInternal(Entity ent) {
 		if (ent.isRemoved())
 			throw new IllegalStateException();
 

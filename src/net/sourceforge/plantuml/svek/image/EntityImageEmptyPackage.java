@@ -39,7 +39,7 @@ import net.sourceforge.plantuml.AlignmentParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.activitydiagram3.ftile.EntityImageLegend;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
-import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.DisplayPositioned;
 import net.sourceforge.plantuml.cucadiagram.EntityPortion;
@@ -88,7 +88,7 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 				.withTOBECHANGED(stereotype).getMergedStyle(getSkinParam().getCurrentStyleBuilder());
 	}
 
-	public EntityImageEmptyPackage(EntityImp entity, ISkinParam skinParam, PortionShower portionShower, SName sname) {
+	public EntityImageEmptyPackage(Entity entity, ISkinParam skinParam, PortionShower portionShower, SName sname) {
 		super(entity, skinParam);
 		this.sname = sname;
 
@@ -114,7 +114,7 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 
 		this.desc = entity.getDisplay().create(titleFontConfiguration, titleHorizontalAlignment, skinParam);
 
-		final DisplayPositioned legend = ((EntityImp) entity).getLegend();
+		final DisplayPositioned legend = ((Entity) entity).getLegend();
 		if (legend != null) {
 			final TextBlock legendBlock = EntityImageLegend.create(legend.getDisplay(), skinParam);
 			stereoBlock = legendBlock;

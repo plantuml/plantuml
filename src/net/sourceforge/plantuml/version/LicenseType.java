@@ -35,7 +35,7 @@
 package net.sourceforge.plantuml.version;
 
 public enum LicenseType {
-	// ::remove file when WASM
+	// ::remove file when CORE
 
 	NONE, NAMED, DISTRIBUTOR, UNKNOWN;
 

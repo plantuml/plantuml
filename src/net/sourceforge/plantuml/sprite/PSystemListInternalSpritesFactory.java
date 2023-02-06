@@ -41,7 +41,7 @@ import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
 import net.sourceforge.plantuml.core.UmlSource;
 
 public class PSystemListInternalSpritesFactory extends PSystemSingleLineFactory {
-	// ::remove file when WASM
+	// ::remove file when CORE
 
 	@Override
 	protected AbstractPSystem executeLine(UmlSource source, String line) {

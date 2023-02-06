@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.graphic.UDrawable;
 import net.sourceforge.plantuml.graphic.VerticalAlignment;
 
 public class PSystemListInternalSprites extends PlainDiagram {
-	// ::remove file when WASM
+	// ::remove file when CORE
 
 	public PSystemListInternalSprites(UmlSource source) {
 		super(source);

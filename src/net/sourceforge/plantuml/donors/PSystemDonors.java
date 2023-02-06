@@ -144,7 +144,7 @@ public class PSystemDonors extends PlainDiagram {
 
 	private List<String> getDonors() throws IOException {
 		final List<String> lines = new ArrayList<>();
-		// ::comment when WASM
+		// ::comment when CORE
 		final Transcoder t = TranscoderImpl.utf8(new AsciiEncoder(), new StringCompressorNone(),
 				new CompressionBrotli());
 		try {

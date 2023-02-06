@@ -37,8 +37,7 @@
 package net.sourceforge.plantuml.classdiagram.command;
 
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.baraye.EntityImp;
-import net.sourceforge.plantuml.baraye.Quark;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -53,6 +52,7 @@ import net.sourceforge.plantuml.klimt.color.ColorParser;
 import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.font.FontParam;
+import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -207,7 +207,7 @@ public class CommandCreateElementFull2 extends SingleLineCommand2<ClassDiagram> 
 		final String idShort = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(codeRaw);
 		final Display display = Display.getWithNewlines(displayRaw == null ? idShort : displayRaw);
 		final Quark quark = diagram.quarkInContext(idShort, false);
-		EntityImp entity = (EntityImp) quark.getData();
+		Entity entity = (Entity) quark.getData();
 		if (entity == null)
 			entity = diagram.reallyCreateLeaf(quark, display, type, usymbol);
 

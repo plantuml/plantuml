@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.cucadiagram.dot;
 import java.io.File;
 
 public enum ExeState {
-	// ::remove file when WASM
+	// ::remove file when CORE
 
 	NULL_UNDEFINED, OK, DOES_NOT_EXIST, IS_A_DIRECTORY, NOT_A_FILE, CANNOT_BE_READ;
 

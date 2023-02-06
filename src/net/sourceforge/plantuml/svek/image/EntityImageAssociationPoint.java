@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.svek.image;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
-import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.klimt.UShape;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
@@ -55,7 +55,7 @@ public class EntityImageAssociationPoint extends AbstractEntityImage {
 
 	private static final int SIZE = 4;
 
-	public EntityImageAssociationPoint(EntityImp entity, ISkinParam skinParam) {
+	public EntityImageAssociationPoint(Entity entity, ISkinParam skinParam) {
 		super(entity, skinParam);
 	}
 

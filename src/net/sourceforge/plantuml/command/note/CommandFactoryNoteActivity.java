@@ -37,8 +37,7 @@ package net.sourceforge.plantuml.command.note;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagram;
-import net.sourceforge.plantuml.baraye.EntityImp;
-import net.sourceforge.plantuml.baraye.Quark;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
@@ -55,6 +54,7 @@ import net.sourceforge.plantuml.cucadiagram.LinkType;
 import net.sourceforge.plantuml.klimt.color.ColorParser;
 import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -123,7 +123,7 @@ public final class CommandFactoryNoteActivity implements SingleMultiFactoryComma
 				final String codeString = diagram.getUniqueSequence("GMN");
 				final Quark quark = diagram.quarkInContext(codeString, false);
 				// final Quark code = diagram.buildCode(codeString);
-				final EntityImp note = diagram.reallyCreateLeaf(quark, strings, LeafType.NOTE, null);
+				final Entity note = diagram.reallyCreateLeaf(quark, strings, LeafType.NOTE, null);
 				if (url != null)
 					note.addUrl(url);
 
@@ -143,20 +143,20 @@ public final class CommandFactoryNoteActivity implements SingleMultiFactoryComma
 //				final Quark ident = diagram
 //						.buildFromName(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(tmp));
 				// final Quark code = diagram.buildCode(tmp);
-				final EntityImp note = diagram.createNote(quark, tmp, Display.getWithNewlines(arg.get("NOTE", 0)));
+				final Entity note = diagram.createNote(quark, tmp, Display.getWithNewlines(arg.get("NOTE", 0)));
 				return executeInternal(diagram, arg, note);
 			}
 		};
 	}
 
-	private CommandExecutionResult executeInternal(ActivityDiagram diagram, RegexResult arg, EntityImp note)
+	private CommandExecutionResult executeInternal(ActivityDiagram diagram, RegexResult arg, Entity note)
 			throws NoSuchColorException {
 
 		final String s = arg.get("COLOR", 0);
 		note.setSpecificColorTOBEREMOVED(ColorType.BACK,
 				s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s));
 
-		EntityImp activity = diagram.getLastEntityConsulted();
+		Entity activity = diagram.getLastEntityConsulted();
 		if (activity == null)
 			activity = diagram.getStart();
 

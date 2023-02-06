@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.Hideable;
 import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.Removeable;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
-import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.cucadiagram.entity.IEntityFactory;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.graphic.USymbolInterface;
@@ -63,8 +63,8 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 		return styleBuilder;
 	}
 
-	final private EntityImp cl1;
-	final private EntityImp cl2;
+	final private Entity cl1;
+	final private Entity cl2;
 
 	private String port1;
 	private String port2;
@@ -93,23 +93,23 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 
 	public String idCommentForSvg() {
 		if (type.looksLikeRevertedForSvg())
-			return getEntity1().getCodeGetName() + "-backto-" + getEntity2().getCodeGetName();
+			return getEntity1().getName() + "-backto-" + getEntity2().getName();
 
 		if (type.looksLikeNoDecorAtAllSvg())
-			return getEntity1().getCodeGetName() + "-" + getEntity2().getCodeGetName();
+			return getEntity1().getName() + "-" + getEntity2().getName();
 
-		return getEntity1().getCodeGetName() + "-to-" + getEntity2().getCodeGetName();
+		return getEntity1().getName() + "-to-" + getEntity2().getName();
 	}
 
 	public UComment commentForSvg() {
 		if (type.looksLikeRevertedForSvg())
 			return new UComment(
-					"reverse link " + getEntity1().getCodeGetName() + " to " + getEntity2().getCodeGetName());
+					"reverse link " + getEntity1().getName() + " to " + getEntity2().getName());
 
-		return new UComment("link " + getEntity1().getCodeGetName() + " to " + getEntity2().getCodeGetName());
+		return new UComment("link " + getEntity1().getName() + " to " + getEntity2().getName());
 	}
 
-	public Link(IEntityFactory entityFactory, StyleBuilder styleBuilder, EntityImp cl1, EntityImp cl2, LinkType type,
+	public Link(IEntityFactory entityFactory, StyleBuilder styleBuilder, Entity cl1, Entity cl2, LinkType type,
 			LinkArg linkArg) {
 		if (linkArg.getLength() < 1)
 			throw new IllegalArgumentException();
@@ -120,7 +120,7 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 		this.cl2 = Objects.requireNonNull(cl2);
 
 		this.type = type;
-		final ICucaDiagram diagram = ((EntityImp) cl1).getDiagram();
+		final ICucaDiagram diagram = ((Entity) cl1).getDiagram();
 		this.uid = "LNK" + diagram.getUniqueSequence();
 
 		this.linkArg = linkArg;
@@ -173,7 +173,7 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 		this.invis = invis;
 	}
 
-	public boolean isBetween(EntityImp cl1, EntityImp cl2) {
+	public boolean isBetween(Entity cl1, Entity cl2) {
 		if (cl1.equals(this.cl1) && cl2.equals(this.cl2))
 			return true;
 
@@ -188,11 +188,11 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 		return super.toString() + " {" + linkArg.getLength() + "} " + cl1 + "-->" + cl2;
 	}
 
-	public EntityImp getEntity1() {
+	public Entity getEntity1() {
 		return cl1;
 	}
 
-	public EntityImp getEntity2() {
+	public Entity getEntity2() {
 		return cl2;
 	}
 
@@ -204,7 +204,7 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 		return getEntityPort(cl2, port2, bibliotekon);
 	}
 
-	private EntityPort getEntityPort(EntityImp leaf, String port, Bibliotekon bibliotekon) {
+	private EntityPort getEntityPort(Entity leaf, String port, Bibliotekon bibliotekon) {
 		if (leaf.getEntityPosition().usePortP())
 			return EntityPort.forPort(bibliotekon.getNodeUid(leaf));
 		return EntityPort.create(bibliotekon.getNodeUid(leaf), port);
@@ -230,12 +230,12 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 		return result;
 	}
 
-	private boolean isReallyGroup(EntityImp ent) {
+	private boolean isReallyGroup(Entity ent) {
 		if (ent.isGroup() == false)
 			return false;
 
-		final EntityImp group = (EntityImp) ent;
-		return group.getChildren().size() + group.getLeafsDirect().size() > 0;
+		final Entity group = (Entity) ent;
+		return group.groups().size() + group.leafs().size() > 0;
 	}
 
 	public LinkType getTypePatchCluster() {
@@ -265,7 +265,7 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 		return result;
 	}
 
-	private boolean isLollipopInterfaceEye(EntityImp ent) {
+	private boolean isLollipopInterfaceEye(Entity ent) {
 		return ent.getUSymbol() instanceof USymbolInterface;
 	}
 
@@ -330,7 +330,7 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 		return false;
 	}
 
-	public boolean contains(EntityImp entity) {
+	public boolean contains(Entity entity) {
 		if (isSame(getEntity1(), entity))
 			return true;
 		if (isSame(getEntity2(), entity))
@@ -339,11 +339,11 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 		return false;
 	}
 
-	static private boolean isSame(EntityImp a, EntityImp b) {
+	static private boolean isSame(Entity a, Entity b) {
 		return a == b;
 	}
 
-	public EntityImp getOther(EntityImp entity) {
+	public Entity getOther(Entity entity) {
 		if (isSame(getEntity1(), entity))
 			return getEntity2();
 
@@ -492,10 +492,10 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 		this.port1 = port1;
 		this.port2 = port2;
 		if (port1 != null)
-			((EntityImp) cl1).addPortShortName(port1);
+			((Entity) cl1).addPortShortName(port1);
 
 		if (port2 != null)
-			((EntityImp) cl2).addPortShortName(port2);
+			((Entity) cl2).addPortShortName(port2);
 
 	}
 

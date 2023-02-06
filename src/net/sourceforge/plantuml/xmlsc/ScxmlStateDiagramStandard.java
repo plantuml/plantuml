@@ -53,18 +53,18 @@ import org.w3c.dom.Comment;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import net.sourceforge.plantuml.baraye.EntityImp;
-import net.sourceforge.plantuml.baraye.Quark;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
+import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.statediagram.StateDiagram;
 import net.sourceforge.plantuml.text.Guillemet;
 import net.sourceforge.plantuml.xml.XmlFactories;
 
 public class ScxmlStateDiagramStandard {
-	// ::remove folder when WASM
+	// ::remove folder when CORE
 
 	private final StateDiagram diagram;
 	private final Document document;
@@ -86,45 +86,45 @@ public class ScxmlStateDiagramStandard {
 
 		document.appendChild(scxml);
 
-		for (final EntityImp ent : diagram.getLeafsvalues())
-			if (ent.getParentContainer().getQuark().isRoot())
+		for (final Entity ent : diagram.getEntityFactory().leafs())
+			if (ent.getParentContainer().isRoot())
 				scxml.appendChild(createState(ent));
 
-		for (EntityImp ent : diagram.getGroups(false))
-			if (ent.getParentContainer().getQuark().isRoot())
+		for (Entity ent : diagram.getEntityFactory().groups())
+			if (ent.getParentContainer().isRoot())
 				exportGroup(scxml, ent);
 
 	}
 
-	private Element exportGroup(Element dest, EntityImp ent) {
+	private Element exportGroup(Element dest, Entity ent) {
 		final Element gr = createGroup(ent);
 		dest.appendChild(gr);
-		for (EntityImp leaf : ent.getLeafsDirect())
+		for (Entity leaf : ent.leafs())
 			gr.appendChild(createState(leaf));
-		for (EntityImp child : ent.getChildren())
+		for (Entity child : ent.groups())
 			exportGroup(gr, child);
 		return gr;
 	}
 
 	private String getInitial() {
-		for (final EntityImp ent : diagram.getLeafsvalues())
+		for (final Entity ent : diagram.getEntityFactory().leafs())
 			if (ent.getLeafType() == LeafType.CIRCLE_START)
 				return getId(ent);
 
 		return null;
 	}
 
-	private Element createGroup(EntityImp entity) {
+	private Element createGroup(Entity entity) {
 		return createState(entity);
 	}
 
-	private Element createState(EntityImp entity) {
+	private Element createState(Entity entity) {
 		final LeafType type = entity.getLeafType();
 
 		final Element state = document.createElement("state");
 		if (type == LeafType.NOTE) {
 			state.setAttribute("stereotype", "note");
-			state.setAttribute("id", entity.getCode());
+			state.setAttribute("id", entity.getName());
 			final Display display = entity.getDisplay();
 			final StringBuilder sb = new StringBuilder();
 			for (CharSequence s : display) {
@@ -162,7 +162,7 @@ public class ScxmlStateDiagramStandard {
 
 	}
 
-	private String getId(EntityImp entity) {
+	private String getId(Entity entity) {
 		final Quark quark = entity.getQuark();
 		return quark.getName().replaceAll("\\*", "");
 	}

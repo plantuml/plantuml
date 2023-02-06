@@ -56,7 +56,7 @@ import net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
 import net.sourceforge.plantuml.ugraphic.ClipContainer;
 
 public class UGraphicTxt extends AbstractCommonUGraphic implements ClipContainer {
-	// ::remove folder when WASM
+	// ::remove folder when CORE
 
 	private final UmlCharArea charArea;
 

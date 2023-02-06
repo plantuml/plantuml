@@ -103,7 +103,7 @@ public class InstructionWhile extends WithNote implements Instruction, Instructi
 		return repeatList.add(ins);
 	}
 
-	// ::comment when WASM
+	// ::comment when CORE
 	@Override
 	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
 		final Gtile back = null;

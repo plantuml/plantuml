@@ -35,11 +35,11 @@
  */
 package net.sourceforge.plantuml.classdiagram.command;
 
-import net.sourceforge.plantuml.baraye.EntityImp;
-import net.sourceforge.plantuml.baraye.Quark;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -78,7 +78,7 @@ public class CommandUrl extends SingleLineCommand2<AbstractEntityDiagram> {
 //		final Quark code = diagram.buildFromFullPath(idShort);
 
 		final Quark quark = diagram.quarkInContext(diagram.cleanIdForQuark(idShort), false);
-		final EntityImp entity = (EntityImp) quark.getData();
+		final Entity entity = (Entity) quark.getData();
 		if (entity == null)
 			return CommandExecutionResult.error(quark.getName() + " does not exist");
 

@@ -54,7 +54,7 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 // Emojji from https://twemoji.twitter.com/
 // Shorcut from https://api.github.com/emojis
 
-// ::uncomment when WASM
+// ::uncomment when CORE
 //import com.plantuml.wasm.RunInit;
 //import java.io.FileInputStream;
 // ::done
@@ -116,11 +116,11 @@ public class Emoji {
 			return;
 
 		final List<String> data = new ArrayList<String>();
-		// ::uncomment when WASM
+		// ::uncomment when CORE
 //		final String fullpath = RunInit.cheerpjPath + "emoji/" + unicode + ".svg";
 //		try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fullpath)))) {
 		// ::done
-		// ::comment when WASM
+		// ::comment when CORE
 		try (BufferedReader br = new BufferedReader(
 				new InputStreamReader(Dummy.class.getResourceAsStream(unicode + ".svg")))) {
 			// ::done

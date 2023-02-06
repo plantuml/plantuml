@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
 
 public class PSystemEgg extends PlainStringsDiagram {
-	// ::remove file when WASM
+	// ::remove file when CORE
 
 	PSystemEgg(UmlSource source, String sentence) {
 		super(source);

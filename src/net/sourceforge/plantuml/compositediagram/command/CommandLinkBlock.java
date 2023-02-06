@@ -34,8 +34,7 @@
  */
 package net.sourceforge.plantuml.compositediagram.command;
 
-import net.sourceforge.plantuml.baraye.EntityImp;
-import net.sourceforge.plantuml.baraye.Quark;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.compositediagram.CompositeDiagram;
@@ -44,6 +43,7 @@ import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkArg;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
+import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -81,11 +81,11 @@ public class CommandLinkBlock extends SingleLineCommand2<CompositeDiagram> {
 		final String ent2 = arg.get("ENT2", 0);
 		final Quark quark1 = diagram.quarkInContext(diagram.cleanIdForQuark(ent1), false);
 		final Quark quark2 = diagram.quarkInContext(diagram.cleanIdForQuark(ent2), false);
-		final EntityImp cl1 = (EntityImp) quark1.getData();
+		final Entity cl1 = (Entity) quark1.getData();
 		if (cl1 == null)
 			return CommandExecutionResult.error("No such element " + quark1.getName());
 
-		final EntityImp cl2 = (EntityImp) quark2.getData();
+		final Entity cl2 = (Entity) quark2.getData();
 		if (cl2 == null)
 			return CommandExecutionResult.error("No such element " + quark2.getName());
 //		final IEntity cl1 = diagram.getOrCreateLeaf(quark1, diagram.buildFromFullPath(ent1), null, null);

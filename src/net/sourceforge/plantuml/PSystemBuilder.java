@@ -153,7 +153,7 @@ public class PSystemBuilder {
 			result = PSystemErrorUtils.merge(errors);
 			return result;
 		} finally {
-			// ::comment when WASM
+			// ::comment when CORE
 			if (result != null && OptionFlags.getInstance().isEnableStats()) {
 				StatsUtilsIncrement.onceMoreParse(System.currentTimeMillis() - now, result.getClass());
 			}
@@ -175,7 +175,7 @@ public class PSystemBuilder {
 		factories.add(new StateDiagramFactory());
 		factories.add(new ActivityDiagramFactory3());
 
-		// ::comment when WASM
+		// ::comment when CORE
 		factories.add(new BpmDiagramFactory(DiagramType.BPM));
 		// ::done
 
@@ -183,7 +183,7 @@ public class PSystemBuilder {
 		factories.add(new PSystemLicenseFactory());
 		factories.add(new PSystemVersionFactory());
 		factories.add(new PSystemDonorsFactory());
-		// ::comment when WASM
+		// ::comment when CORE
 		factories.add(new PSystemSkinparameterListFactory());
 		factories.add(new PSystemListFontsFactory());
 		factories.add(new PSystemListEmojiFactory());
@@ -193,7 +193,7 @@ public class PSystemBuilder {
 		// ::done
 		factories.add(new PSystemSaltFactory(DiagramType.UML));
 		factories.add(new PSystemSaltFactory(DiagramType.SALT));
-		// ::comment when WASM
+		// ::comment when CORE
 		factories.add(new PSystemDotFactory(DiagramType.DOT));
 		factories.add(new PSystemDotFactory(DiagramType.UML));
 		// ::done
@@ -201,17 +201,17 @@ public class PSystemBuilder {
 		factories.add(new NwDiagramFactory(DiagramType.NW));
 		factories.add(new MindMapDiagramFactory());
 		factories.add(new WBSDiagramFactory());
-		// ::comment when WASM
+		// ::comment when CORE
 		factories.add(new PSystemDitaaFactory());
 		// ::done
 		if (License.getCurrent() == License.GPL || License.getCurrent() == License.GPLV2) {
-			// ::comment when WASM
+			// ::comment when CORE
 			factories.add(new PSystemJcckitFactory());
 			// ::done
 			// factories.add(new PSystemLogoFactory());
 			factories.add(new PSystemSudokuFactory());
 		}
-		// ::comment when WASM
+		// ::comment when CORE
 		factories.add(new PSystemDefinitionFactory());
 		factories.add(new ListSpriteDiagramFactory());
 		factories.add(new StdlibDiagramFactory());
@@ -228,7 +228,7 @@ public class PSystemBuilder {
 		factories.add(new PSystemOregonFactory());
 		// ::done
 		factories.add(new PSystemCharlieFactory());
-		// ::comment when WASM
+		// ::comment when CORE
 		if (License.getCurrent() == License.GPL || License.getCurrent() == License.GPLV2) {
 			factories.add(new PSystemXearthFactory());
 		}
@@ -237,17 +237,17 @@ public class PSystemBuilder {
 		factories.add(new FlowDiagramFactory());
 		// factories.add(new PSystemTreeFactory(DiagramType.JUNGLE));
 		// factories.add(new PSystemCuteFactory(DiagramType.CUTE));
-		// ::comment when WASM
+		// ::comment when CORE
 		factories.add(new PSystemDedicationFactory());
 		// ::done
 		factories.add(new TimingDiagramFactory());
-		// ::comment when WASM
+		// ::comment when CORE
 		factories.add(new HelpFactory());
 		factories.add(new WireDiagramFactory());
 		// ::done
 		factories.add(new JsonDiagramFactory());
 		factories.add(new GitDiagramFactory());
-		// ::comment when WASM
+		// ::comment when CORE
 		factories.add(new BoardDiagramFactory());
 		// ::done
 		factories.add(new YamlDiagramFactory());

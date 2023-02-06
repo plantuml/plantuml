@@ -45,7 +45,7 @@ import java.util.regex.Pattern;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.awt.geom.XRectangle2D;
-import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.creole.Parser;
 import net.sourceforge.plantuml.creole.legacy.CreoleParser;
@@ -70,11 +70,11 @@ public class BodyEnhanced1 extends BodyEnhancedAbstract implements TextBlock, Wi
 	private final boolean lineFirst;
 	private final List<Url> urls = new ArrayList<>();
 
-	private final EntityImp entity;
+	private final Entity entity;
 	private final boolean inEllipse;
 	private final Style style;
 
-	BodyEnhanced1(HorizontalAlignment align, List<CharSequence> rawBody, ISkinParam skinParam, EntityImp entity,
+	BodyEnhanced1(HorizontalAlignment align, List<CharSequence> rawBody, ISkinParam skinParam, Entity entity,
 			Style style) {
 		super(align, style.getFontConfiguration(skinParam.getIHtmlColorSet(), entity.getColors()), style);
 		this.style = style;
@@ -88,7 +88,7 @@ public class BodyEnhanced1 extends BodyEnhancedAbstract implements TextBlock, Wi
 		this.inEllipse = false;
 	}
 
-	BodyEnhanced1(HorizontalAlignment align, Display display, ISkinParam skinParam, EntityImp entity, Style style) {
+	BodyEnhanced1(HorizontalAlignment align, Display display, ISkinParam skinParam, Entity entity, Style style) {
 		super(align, style.getFontConfiguration(skinParam.getIHtmlColorSet(), entity.getColors()), style);
 
 		this.style = style;

@@ -40,7 +40,7 @@ import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
 
 public class PSystemLost extends PlainStringsDiagram {
-	// ::remove file when WASM
+	// ::remove file when CORE
 
 	public PSystemLost(UmlSource source) {
 		super(source);

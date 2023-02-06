@@ -78,7 +78,7 @@ public class Branch {
 	private final HColor color;
 
 	private Ftile ftile;
-	// ::comment when WASM
+	// ::comment when CORE
 	private Gtile gtile;
 	// ::done
 
@@ -132,7 +132,7 @@ public class Branch {
 		this.ftile = factory.decorateOut(list.createFtile(factory), inlinkRendering);
 	}
 
-	// ::comment when WASM
+	// ::comment when CORE
 	public void updateGtile(ISkinParam skinParam, StringBounder stringBounder) {
 		this.gtile = list.createGtile(skinParam, stringBounder);
 	}
@@ -190,14 +190,14 @@ public class Branch {
 		return ftile;
 	}
 
-	// ::comment when WASM
+	// ::comment when CORE
 	public Gtile getGtile() {
 		return gtile;
 	}
 	// ::done
 	
 	public ISkinParam skinParam() {
-		// ::comment when WASM
+		// ::comment when CORE
 		if (gtile != null)
 			return gtile.skinParam();
 		// ::done

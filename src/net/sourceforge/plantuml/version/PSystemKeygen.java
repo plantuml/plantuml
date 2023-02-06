@@ -60,7 +60,7 @@ import net.sourceforge.plantuml.ugraphic.PixelImage;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 public class PSystemKeygen extends PlainDiagram {
-	// ::remove file when WASM
+	// ::remove file when CORE
 
 	final private String key;
 

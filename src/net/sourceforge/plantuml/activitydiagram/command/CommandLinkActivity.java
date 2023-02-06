@@ -37,8 +37,7 @@ package net.sourceforge.plantuml.activitydiagram.command;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagram;
-import net.sourceforge.plantuml.baraye.EntityImp;
-import net.sourceforge.plantuml.baraye.Quark;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.classdiagram.command.CommandLinkClass;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -54,6 +53,7 @@ import net.sourceforge.plantuml.descdiagram.command.CommandLinkElement;
 import net.sourceforge.plantuml.klimt.color.ColorParser;
 import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -122,7 +122,7 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram diagram, LineLocation location, RegexResult arg)
 			throws NoSuchColorException {
-		final EntityImp entity1 = getEntity(diagram, arg, true);
+		final Entity entity1 = getEntity(diagram, arg, true);
 
 		if (entity1 == null)
 			return CommandExecutionResult.error("No such activity");
@@ -135,7 +135,7 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 			entity1.setSpecificColorTOBEREMOVED(ColorType.BACK, diagram.getSkinParam().getIHtmlColorSet().getColor(s));
 		}
 
-		final EntityImp entity2 = getEntity(diagram, arg, false);
+		final Entity entity2 = getEntity(diagram, arg, false);
 		if (entity2 == null)
 			return CommandExecutionResult.error("No such activity");
 
@@ -186,7 +186,7 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 
 	}
 
-	static EntityImp getEntity(ActivityDiagram diagram, RegexResult arg, final boolean start) {
+	static Entity getEntity(ActivityDiagram diagram, RegexResult arg, final boolean start) {
 		final String suf = start ? "" : "2";
 
 		final String openBracket2 = arg.get("OPENBRACKET" + suf, 0);
@@ -215,7 +215,7 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 			final Quark ident = diagram.quarkInContext(diagram.cleanIdForQuark(idShort), false);
 
 			final LeafType type = getTypeIfExisting(diagram, ident);
-			EntityImp result = (EntityImp) ident.getData();
+			Entity result = (Entity) ident.getData();
 			if (result == null)
 				result = diagram.reallyCreateLeaf(ident, Display.getWithNewlines(idShort), type, null);
 
@@ -227,7 +227,7 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 		final String bar = arg.get("BAR" + suf, 0);
 		if (bar != null) {
 			final Quark quark = diagram.quarkInContext(diagram.cleanIdForQuark(bar), false);
-			EntityImp result = (EntityImp) quark.getData();
+			Entity result = (Entity) quark.getData();
 			if (result == null)
 				result = diagram.reallyCreateLeaf(quark, Display.getWithNewlines(bar), LeafType.SYNCHRO_BAR, null);
 			return result;
@@ -243,7 +243,7 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 			final Quark quark = diagram.quarkInContext(diagram.cleanIdForQuark(quotedString), false);
 
 			final LeafType type = getTypeIfExisting(diagram, quark);
-			EntityImp result = (EntityImp) quark.getData();
+			Entity result = (Entity) quark.getData();
 			if (result == null)
 				result = diagram.reallyCreateLeaf(quark, Display.getWithNewlines(quoted.get(0)), type, null);
 			if (partition != null)
@@ -258,7 +258,7 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 				diagram.gotoGroup(quark, Display.getWithNewlines(quark), GroupType.PACKAGE);
 			}
 			final Quark identInvisible = diagram.quarkInContext(diagram.cleanIdForQuark(quoteInvisibleString), false);
-			EntityImp result = (EntityImp) identInvisible.getData();
+			Entity result = (Entity) identInvisible.getData();
 			if (result == null)
 				result = diagram.reallyCreateLeaf(identInvisible, Display.getWithNewlines(identInvisible.getName()),
 						LeafType.ACTIVITY, null);

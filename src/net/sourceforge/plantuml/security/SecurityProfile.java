@@ -105,7 +105,7 @@ public enum SecurityProfile {
 	 * @return the value
 	 */
 	static SecurityProfile init() {
-		// ::comment when WASM
+		// ::comment when CORE
 		final String env = SecurityUtils.getenv("PLANTUML_SECURITY_PROFILE");
 		if ("SANDBOX".equalsIgnoreCase(env))
 			return SANDBOX;
@@ -116,7 +116,7 @@ public enum SecurityProfile {
 		else if ("UNSECURE".equalsIgnoreCase(env))
 			// ::done
 			return UNSECURE;
-		// ::comment when WASM
+		// ::comment when CORE
 
 		return LEGACY;
 		// ::done

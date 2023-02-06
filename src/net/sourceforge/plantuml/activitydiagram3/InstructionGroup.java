@@ -90,7 +90,7 @@ public class InstructionGroup extends AbstractInstruction implements Instruction
 		return list.add(ins);
 	}
 
-	// ::comment when WASM
+	// ::comment when CORE
 	@Override
 	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
 		Gtile tmp = list.createGtile(skinParam, stringBounder);

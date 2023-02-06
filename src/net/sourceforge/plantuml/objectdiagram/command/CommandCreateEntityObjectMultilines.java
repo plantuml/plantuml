@@ -35,8 +35,7 @@
  */
 package net.sourceforge.plantuml.objectdiagram.command;
 
-import net.sourceforge.plantuml.baraye.EntityImp;
-import net.sourceforge.plantuml.baraye.Quark;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
@@ -50,6 +49,7 @@ import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.font.FontParam;
 import net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
+import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -91,7 +91,7 @@ public class CommandCreateEntityObjectMultilines extends CommandMultilines2<Abst
 			throws NoSuchColorException {
 		lines = lines.trim().removeEmptyLines();
 		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
-		final EntityImp entity = executeArg0(diagram, line0);
+		final Entity entity = executeArg0(diagram, line0);
 		if (entity == null)
 			return CommandExecutionResult.error("No such entity");
 
@@ -106,7 +106,7 @@ public class CommandCreateEntityObjectMultilines extends CommandMultilines2<Abst
 		return CommandExecutionResult.ok();
 	}
 
-	private EntityImp executeArg0(AbstractClassOrObjectDiagram diagram, RegexResult line0) throws NoSuchColorException {
+	private Entity executeArg0(AbstractClassOrObjectDiagram diagram, RegexResult line0) throws NoSuchColorException {
 		final String name = line0.get("NAME", 1);
 		final Quark quark = diagram.quarkInContext(diagram.cleanIdForQuark(name), false);
 //		final Quark ident = diagram.buildFromName(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(name));
@@ -119,7 +119,7 @@ public class CommandCreateEntityObjectMultilines extends CommandMultilines2<Abst
 		Display display = Display.getWithNewlines(displayString);
 		if (Display.isNull(display))
 			display = Display.getWithNewlines(name).withCreoleMode(CreoleMode.SIMPLE_LINE);
-		EntityImp entity = (EntityImp) quark.getData();
+		Entity entity = (Entity) quark.getData();
 		if (entity == null)
 			entity = diagram.reallyCreateLeaf(quark, display, LeafType.OBJECT, null);
 

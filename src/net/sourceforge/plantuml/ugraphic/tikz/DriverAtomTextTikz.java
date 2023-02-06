@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.tikz.TikzGraphics;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 
 public class DriverAtomTextTikz implements UDriver<AtomText, TikzGraphics> {
-	// ::remove folder when WASM
+	// ::remove folder when CORE
 
 	public void draw(AtomText text, double x, double y, ColorMapper mapper, UParam param, TikzGraphics tikz) {
 		final FontConfiguration fontConfiguration = text.getFontConfiguration();

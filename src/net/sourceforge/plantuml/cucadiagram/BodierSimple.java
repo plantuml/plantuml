@@ -41,7 +41,7 @@ import java.util.List;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
@@ -51,7 +51,7 @@ import net.sourceforge.plantuml.style.Style;
 public class BodierSimple implements Bodier {
 
 	private final List<CharSequence> rawBody = new ArrayList<>();
-	private EntityImp leaf;
+	private Entity leaf;
 
 	@Override
 	public void muteClassToObject() {
@@ -62,7 +62,7 @@ public class BodierSimple implements Bodier {
 	}
 
 	@Override
-	public void setLeaf(EntityImp leaf) {
+	public void setLeaf(Entity leaf) {
 		this.leaf = Objects.requireNonNull(leaf);
 	}
 

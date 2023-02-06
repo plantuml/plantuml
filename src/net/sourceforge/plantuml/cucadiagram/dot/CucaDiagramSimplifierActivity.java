@@ -40,7 +40,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.cucadiagram.ICucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
@@ -59,8 +59,8 @@ public final class CucaDiagramSimplifierActivity {
 		boolean changed;
 		do {
 			changed = false;
-			final Collection<EntityImp> groups = new ArrayList<>(diagram.getGroups(false));
-			for (EntityImp g : groups) {
+			final Collection<Entity> groups = new ArrayList<>(diagram.getEntityFactory().groups());
+			for (Entity g : groups) {
 				if (diagram.isAutarkic(g)) {
 					// final EntityType type;
 					// if (g.zgetGroupType() == GroupType.INNER_ACTIVITY) {
@@ -80,13 +80,14 @@ public final class CucaDiagramSimplifierActivity {
 		} while (changed);
 	}
 
-	// private void computeImageGroup(EntityMutable g, EntityMutable proxy, List<String> dotStrings) throws IOException,
+	// private void computeImageGroup(EntityMutable g, EntityMutable proxy,
+	// List<String> dotStrings) throws IOException,
 	// InterruptedException {
 	// final GroupPngMakerActivity maker = new GroupPngMakerActivity(diagram, g);
 	// proxy.setSvekImage(maker.getImage());
 	// }
 
-	private IEntityImage computeImage(EntityImp g) throws IOException, InterruptedException {
+	private IEntityImage computeImage(Entity g) throws IOException, InterruptedException {
 		final GroupPngMakerActivity maker = new GroupPngMakerActivity(diagram, g, stringBounder);
 		return maker.getImage();
 	}

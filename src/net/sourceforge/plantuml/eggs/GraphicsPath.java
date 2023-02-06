@@ -54,7 +54,7 @@ import net.sourceforge.plantuml.png.PngIO;
 import net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d;
 
 public class GraphicsPath {
-	// ::remove file when WASM
+	// ::remove file when CORE
 
 	private final String path;
 	private final ColorMapper colorMapper;

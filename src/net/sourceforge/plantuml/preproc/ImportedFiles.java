@@ -48,7 +48,7 @@ import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.utils.Log;
-// ::uncomment when WASM
+// ::uncomment when CORE
 //import java.util.Collections;
 //  ::done
 
@@ -110,7 +110,7 @@ public class ImportedFiles {
 
 	public List<SFile> getPath() {
 		final List<SFile> result = new ArrayList<>(imported);
-		// ::comment when WASM
+		// ::comment when CORE
 		result.addAll(includePath());
 		result.addAll(SecurityUtils.getPath(SecurityUtils.PATHS_CLASSES));
 		// ::done
@@ -118,10 +118,10 @@ public class ImportedFiles {
 	}
 
 	private List<SFile> includePath() {
-		// ::comment when WASM
+		// ::comment when CORE
 		return SecurityUtils.getPath(SecurityUtils.PATHS_INCLUDES);
 		// ::done
-		// ::uncomment when WASM
+		// ::uncomment when CORE
 		// return Collections.emptyList();
 		// ::done
 	}

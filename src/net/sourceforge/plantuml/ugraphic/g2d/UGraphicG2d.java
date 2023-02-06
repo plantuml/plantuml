@@ -86,7 +86,7 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> implements EnsureV
 	private List<Url> urls = new ArrayList<>();
 	private Set<Url> allUrls = new HashSet<>();
 
-	// ::comment when WASM
+	// ::comment when CORE
 	private final boolean hasAffineTransform;
 	// ::done
 
@@ -110,7 +110,7 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> implements EnsureV
 
 	private UGraphicG2d(UGraphicG2d other) {
 		super(other);
-		// ::comment when WASM
+		// ::comment when CORE
 		this.hasAffineTransform = other.hasAffineTransform;
 		// ::done
 		this.dpiFactor = other.dpiFactor;
@@ -123,19 +123,19 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> implements EnsureV
 
 	public UGraphicG2d(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder, Graphics2D g2d,
 			double dpiFactor) {
-		// ::comment when WASM
+		// ::comment when CORE
 		this(defaultBackground, colorMapper, stringBounder, g2d, dpiFactor, null, 0, 0);
 		// ::done
-		// ::uncomment when WASM
+		// ::uncomment when CORE
 		// this(defaultBackground, colorMapper, stringBounder, g2d, dpiFactor, 0, 0);
 		// ::done
 	}
 
-	// ::comment when WASM
+	// ::comment when CORE
 	public UGraphicG2d(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder, Graphics2D g2d,
 			double dpiFactor, AffineTransformation affineTransform, double dx, double dy) {
 		// ::done
-		// ::uncomment when WASM
+		// ::uncomment when CORE
 		// public UGraphicG2d(HColor defaultBackground, ColorMapper colorMapper,
 		// StringBounder stringBounder, Graphics2D g2d,
 		// double dpiFactor, double dx, double dy) {
@@ -145,7 +145,7 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> implements EnsureV
 		if (dpiFactor != 1.0)
 			g2d.scale(dpiFactor, dpiFactor);
 
-		// ::comment when WASM
+		// ::comment when CORE
 		this.hasAffineTransform = affineTransform != null;
 		if (this.hasAffineTransform) {
 			if (dx != 0 || dy != 0)

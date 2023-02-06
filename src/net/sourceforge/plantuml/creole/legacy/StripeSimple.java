@@ -162,7 +162,7 @@ public class StripeSimple implements Stripe {
 		addCommand(CommandCreoleQrcode.create());
 		addCommand(CommandCreoleOpenIcon.create());
 		addCommand(CommandCreoleEmoji.create());
-		// ::comment when WASM
+		// ::comment when CORE
 		addCommand(CommandCreoleMath.create());
 		addCommand(CommandCreoleLatex.create());
 		// ::done
@@ -172,7 +172,7 @@ public class StripeSimple implements Stripe {
 		addCommand(CommandCreoleFontFamilyChange.createEol());
 		addCommand(CommandCreoleMonospaced.create());
 		addCommand(CommandCreoleUrl.create());
-		// ::comment when WASM
+		// ::comment when CORE
 		if (SecurityUtils.allowSvgText())
 			addCommand(CommandCreoleSvgAttributeChange.create());
 		// ::done
@@ -288,7 +288,7 @@ public class StripeSimple implements Stripe {
 		atoms.add(new AtomEmoji(emoji, 1, fontConfiguration.getSize2D(), col));
 	}
 
-	// ::comment when WASM
+	// ::comment when CORE
 	public void addMath(ScientificEquationSafe math) {
 		atoms.add(new AtomMath(math, fontConfiguration.getColor(), fontConfiguration.getExtendedColor()));
 	}

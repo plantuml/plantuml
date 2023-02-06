@@ -43,7 +43,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 
@@ -51,13 +51,13 @@ public class Bibliotekon {
 
 	private final List<Cluster> allCluster = new ArrayList<>();
 
-	private final Map<EntityImp, SvekNode> nodeMap = new LinkedHashMap<EntityImp, SvekNode>();
+	private final Map<Entity, SvekNode> nodeMap = new LinkedHashMap<Entity, SvekNode>();
 
 	private final List<SvekLine> lines0 = new ArrayList<>();
 	private final List<SvekLine> lines1 = new ArrayList<>();
 	private final List<SvekLine> allLines = new ArrayList<>();
 
-	public SvekNode createNode(EntityImp ent, IEntityImage image, ColorSequence colorSequence,
+	public SvekNode createNode(Entity ent, IEntityImage image, ColorSequence colorSequence,
 			StringBounder stringBounder) {
 		final SvekNode node = new SvekNode(ent, image, colorSequence, stringBounder);
 		nodeMap.put(ent, node);
@@ -65,7 +65,7 @@ public class Bibliotekon {
 		return node;
 	}
 
-	public Cluster getCluster(EntityImp ent) {
+	public Cluster getCluster(Entity ent) {
 		for (Cluster cl : allCluster)
 			if (cl.getGroups().contains(ent))
 				return cl;
@@ -106,11 +106,11 @@ public class Bibliotekon {
 		allCluster.add(current);
 	}
 
-	public SvekNode getNode(EntityImp ent) {
+	public SvekNode getNode(Entity ent) {
 		return nodeMap.get(ent);
 	}
 
-	public String getNodeUid(EntityImp ent) {
+	public String getNodeUid(Entity ent) {
 		// System.err.println("Getting for " + ent);
 		final SvekNode result = getNode(ent);
 		if (result != null) {
@@ -120,24 +120,20 @@ public class Bibliotekon {
 
 			return uid;
 		}
-		assert result == null;
-		if (ent.isGroup()) {
-			for (EntityImp i : nodeMap.keySet())
-				if (ent.getQuark().equals(i.getQuark()))
-					return getNode(i).getUid();
+		if (ent.isGroup())
 			return Cluster.getSpecialPointId(ent);
-		}
+
 		throw new IllegalStateException();
 	}
 
 	public String getWarningOrError(int warningOrError) {
 		final StringBuilder sb = new StringBuilder();
-		for (Map.Entry<EntityImp, SvekNode> ent : nodeMap.entrySet()) {
+		for (Map.Entry<Entity, SvekNode> ent : nodeMap.entrySet()) {
 			final SvekNode sh = ent.getValue();
 			final double maxX = sh.getMinX() + sh.getWidth();
 			if (maxX > warningOrError) {
-				final EntityImp entity = ent.getKey();
-				sb.append(entity.getCodeGetName() + " is overpassing the width limit.");
+				final Entity entity = ent.getKey();
+				sb.append(entity.getName() + " is overpassing the width limit.");
 				sb.append("\n");
 			}
 
@@ -147,11 +143,11 @@ public class Bibliotekon {
 
 	public Map<String, Double> getMaxX() {
 		final Map<String, Double> result = new HashMap<String, Double>();
-		for (Map.Entry<EntityImp, SvekNode> ent : nodeMap.entrySet()) {
+		for (Map.Entry<Entity, SvekNode> ent : nodeMap.entrySet()) {
 			final SvekNode sh = ent.getValue();
 			final double maxX = sh.getMinX() + sh.getWidth();
-			final EntityImp entity = ent.getKey();
-			result.put(entity.getCodeGetName(), maxX);
+			final Entity entity = ent.getKey();
+			result.put(entity.getName(), maxX);
 		}
 		return Collections.unmodifiableMap(result);
 	}
@@ -176,7 +172,7 @@ public class Bibliotekon {
 		return Collections.unmodifiableCollection(nodeMap.values());
 	}
 
-	public List<SvekLine> getAllLineConnectedTo(EntityImp leaf) {
+	public List<SvekLine> getAllLineConnectedTo(Entity leaf) {
 		final List<SvekLine> result = new ArrayList<>();
 		for (SvekLine line : allLines)
 			if (line.isLinkFromOrTo(leaf))
@@ -193,9 +189,9 @@ public class Bibliotekon {
 		throw new IllegalArgumentException();
 	}
 
-	public EntityImp getOnlyOther(EntityImp entity) {
+	public Entity getOnlyOther(Entity entity) {
 		for (SvekLine line : allLines) {
-			final EntityImp other = line.getOther(entity);
+			final Entity other = line.getOther(entity);
 			if (other != null)
 				return other;
 
@@ -203,8 +199,8 @@ public class Bibliotekon {
 		return null;
 	}
 
-	public EntityImp getLeaf(SvekNode node) {
-		for (Map.Entry<EntityImp, SvekNode> ent : nodeMap.entrySet())
+	public Entity getLeaf(SvekNode node) {
+		for (Map.Entry<Entity, SvekNode> ent : nodeMap.entrySet())
 			if (ent.getValue() == node)
 				return ent.getKey();
 

@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.klimt.MutableImage;
 import net.sourceforge.plantuml.ugraphic.UImageSvg;
 
 public class AsciiMath implements ScientificEquation {
-	// ::remove folder when WASM
+	// ::remove folder when CORE
 
 	private final LatexBuilder builder;
 	private final String tex;

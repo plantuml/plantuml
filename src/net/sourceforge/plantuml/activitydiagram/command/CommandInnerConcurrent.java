@@ -61,7 +61,7 @@ public class CommandInnerConcurrent extends SingleLineCommand2<ActivityDiagram> 
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram diagram, LineLocation location, RegexResult arg) {
-		if (diagram.getCurrentGroup().getQuark().isRoot()) {
+		if (diagram.getCurrentGroup().isRoot()) {
 			return CommandExecutionResult.error("No inner activity");
 		}
 		diagram.concurrentActivity(arg.get("NAME", 0));

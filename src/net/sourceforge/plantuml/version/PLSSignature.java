@@ -57,7 +57,7 @@ import net.sourceforge.plantuml.dedication.TurningBytes;
 import net.sourceforge.plantuml.log.Logme;
 
 public class PLSSignature {
-	// ::remove file when WASM
+	// ::remove file when CORE
 
 	private final int type;
 	private final byte[] sha;

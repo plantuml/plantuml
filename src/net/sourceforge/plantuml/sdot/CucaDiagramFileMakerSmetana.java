@@ -68,12 +68,13 @@ import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.baraye.EntityFactory;
-import net.sourceforge.plantuml.baraye.EntityImp;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
 import net.sourceforge.plantuml.cucadiagram.ICucaDiagram;
+import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.QuoteUtils;
@@ -111,9 +112,9 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 	private final ICucaDiagram diagram;
 
 	private final StringBounder stringBounder;
-	private final Map<EntityImp, ST_Agnode_s> nodes = new LinkedHashMap<EntityImp, ST_Agnode_s>();
+	private final Map<Entity, ST_Agnode_s> nodes = new LinkedHashMap<Entity, ST_Agnode_s>();
 	private final Map<Link, ST_Agedge_s> edges = new LinkedHashMap<Link, ST_Agedge_s>();
-	private final Map<EntityImp, ST_Agraph_s> clusters = new LinkedHashMap<EntityImp, ST_Agraph_s>();
+	private final Map<Entity, ST_Agraph_s> clusters = new LinkedHashMap<Entity, ST_Agraph_s>();
 
 	private final DotStringFactory dotStringFactory;
 
@@ -135,11 +136,11 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 				ug = ug.apply(new UTranslate(6 - minMax.getMinX(), 6));
 			}
 
-			for (Map.Entry<EntityImp, ST_Agraph_s> ent : clusters.entrySet())
+			for (Map.Entry<Entity, ST_Agraph_s> ent : clusters.entrySet())
 				drawGroup(ug, ymirror, ent.getKey(), ent.getValue());
 
-			for (Map.Entry<EntityImp, ST_Agnode_s> ent : nodes.entrySet()) {
-				final EntityImp leaf = ent.getKey();
+			for (Map.Entry<Entity, ST_Agnode_s> ent : nodes.entrySet()) {
+				final Entity leaf = ent.getKey();
 				final ST_Agnode_s agnode = ent.getValue();
 				final XPoint2D corner = getCorner(agnode);
 
@@ -195,7 +196,7 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 
 	}
 
-	public void drawGroup(UGraphic ug, YMirror ymirror, EntityImp group, ST_Agraph_s gr) {
+	public void drawGroup(UGraphic ug, YMirror ymirror, Entity group, ST_Agraph_s gr) {
 		JUtils.LOG2("drawGroup");
 		try {
 			final ST_Agrec_s tmp1 = Macro.AGDATA(gr);
@@ -229,38 +230,36 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 		}
 	}
 
-	private void printAllSubgroups(EntityImp parent) {
-		for (EntityImp g : diagram.getChildrenGroups(parent)) {
+	private void printAllSubgroups(Entity parent) {
+		for (Entity g : diagram.getChildrenGroups(parent)) {
 			if (g.isRemoved())
 				continue;
 
 			if (diagram.isEmpty(g) && g.getGroupType() == GroupType.PACKAGE) {
-				final ISkinParam skinParam = diagram.getSkinParam();
-				final EntityFactory entityFactory = diagram.getEntityFactory();
-				final EntityImp folder = entityFactory.createLeafForEmptyGroup(g, skinParam);
-				printEntityNew(folder);
+				g.muteToType(LeafType.EMPTY_PACKAGE);
+				printEntityNew(g);
 			} else {
 				printSingleGroup(g);
 			}
 		}
 	}
 
-	private void printSingleGroup(EntityImp g) {
+	private void printSingleGroup(Entity g) {
 		if (g.getGroupType() == GroupType.CONCURRENT_STATE)
 			return;
 
-		final ClusterHeader clusterHeader = new ClusterHeader((EntityImp) g, diagram.getSkinParam(), diagram,
+		final ClusterHeader clusterHeader = new ClusterHeader((Entity) g, diagram.getSkinParam(), diagram,
 				stringBounder);
 		dotStringFactory.openCluster(g, clusterHeader);
-		this.printEntities(g.getLeafsDirect());
+		this.printEntities(g.leafs());
 
 		printAllSubgroups(g);
 
 		dotStringFactory.closeCluster();
 	}
 
-	private void printEntities(Collection<EntityImp> entities) {
-		for (EntityImp ent : entities) {
+	private void printEntities(Collection<Entity> entities) {
+		for (Entity ent : entities) {
 			if (ent.isRemoved())
 				continue;
 
@@ -268,15 +267,15 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 		}
 	}
 
-	private void exportEntities(ST_Agraph_s g, Collection<EntityImp> entities) {
-		for (EntityImp ent : entities) {
+	private void exportEntities(ST_Agraph_s g, Collection<Entity> entities) {
+		for (Entity ent : entities) {
 			if (ent.isRemoved())
 				continue;
 			exportEntity(g, ent);
 		}
 	}
 
-	private void exportEntity(ST_Agraph_s g, EntityImp leaf) {
+	private void exportEntity(ST_Agraph_s g, Entity leaf) {
 		final SvekNode node = dotStringFactory.getBibliotekon().getNode(leaf);
 		if (node == null) {
 			System.err.println("CANNOT FIND NODE");
@@ -293,7 +292,7 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 		nodes.put(leaf, agnode);
 	}
 
-	private void printEntity(EntityImp ent) {
+	private void printEntity(Entity ent) {
 		if (ent.isRemoved())
 			throw new IllegalStateException();
 
@@ -303,9 +302,9 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 		dotStringFactory.addNode(node);
 	}
 
-	private Collection<EntityImp> getUnpackagedEntities() {
-		final List<EntityImp> result = new ArrayList<>();
-		for (EntityImp ent : diagram.getLeafsvalues())
+	private Collection<Entity> getUnpackagedEntities() {
+		final List<Entity> result = new ArrayList<>();
+		for (Entity ent : diagram.getEntityFactory().leafs())
 			if (diagram.getEntityFactory().getRootGroup() == ent.getParentContainer())
 				result.add(ent);
 
@@ -320,7 +319,7 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 			final String height = "" + (node.getHeight() / 72);
 			agsafeset(agnode, new CString("width"), new CString(width), new CString(""));
 			agsafeset(agnode, new CString("height"), new CString(height), new CString(""));
-			final EntityImp leaf = dotStringFactory.getBibliotekon().getLeaf(node);
+			final Entity leaf = dotStringFactory.getBibliotekon().getLeaf(node);
 			nodes.put(leaf, agnode);
 		}
 
@@ -340,7 +339,7 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 
 	@Override
 	public ImageData createOneGraphic(UGraphic ug) {
-		for (EntityImp leaf : diagram.getLeafsvalues())
+		for (Entity leaf : diagram.getEntityFactory().leafs())
 			printEntityNew(leaf);
 
 		Z.open();
@@ -360,7 +359,7 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 	private ImageData createFileLocked(OutputStream os, List<String> dotStrings, FileFormatOption fileFormatOption)
 			throws IOException {
 
-		for (EntityImp leaf : diagram.getLeafsvalues())
+		for (Entity leaf : diagram.getEntityFactory().leafs())
 			printEntityNew(leaf);
 
 		Z.open();
@@ -423,15 +422,15 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 		return drawable;
 	}
 
-	private void exportGroups(ST_Agraph_s graph, EntityImp parent) {
-		for (EntityImp g : diagram.getChildrenGroups(parent)) {
+	private void exportGroups(ST_Agraph_s graph, Entity parent) {
+		for (Entity g : diagram.getChildrenGroups(parent)) {
 			if (g.isRemoved())
 				continue;
 
 			if (diagram.isEmpty(g) && g.getGroupType() == GroupType.PACKAGE) {
-				final EntityFactory entityFactory = diagram.getEntityFactory();
-				final EntityImp folder = entityFactory.getLeafForEmptyGroup(g);
-				exportEntity(graph, folder);
+				// final EntityFactory entityFactory = diagram.getEntityFactory();
+				// final EntityImp folder = entityFactory.getLeafForEmptyGroup(g);
+				exportEntity(graph, g);
 			} else {
 				exportGroup(graph, g);
 			}
@@ -439,7 +438,7 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 
 	}
 
-	private void exportGroup(ST_Agraph_s graph, EntityImp group) {
+	private void exportGroup(ST_Agraph_s graph, Entity group) {
 		final Cluster cluster = getBibliotekon().getCluster(group);
 		if (cluster == null) {
 			System.err.println("CucaDiagramFileMakerJDot::exportGroup issue");
@@ -453,7 +452,7 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 			agsafeset(cluster1, new CString("label"), Macro.createHackInitDimensionFromLabel((int) width, (int) height),
 					new CString(""));
 		}
-		this.exportEntities(cluster1, group.getLeafsDirect());
+		this.exportEntities(cluster1, group.leafs());
 		this.clusters.put(group, cluster1);
 		this.exportGroups(cluster1, group);
 	}
@@ -494,14 +493,14 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 		return TextBlockUtils.withMargin(label, marginLabel, marginLabel);
 	}
 
-	private ST_Agnode_s getAgnodeFromLeaf(EntityImp entity) {
+	private ST_Agnode_s getAgnodeFromLeaf(Entity entity) {
 		final ST_Agnode_s n = nodes.get(entity);
 		if (n != null)
 			return n;
 
 		try {
-			final String id = getBibliotekon().getNodeUid((EntityImp) entity);
-			for (Map.Entry<EntityImp, ST_Agnode_s> ent : nodes.entrySet())
+			final String id = getBibliotekon().getNodeUid((Entity) entity);
+			for (Map.Entry<Entity, ST_Agnode_s> ent : nodes.entrySet())
 				if (id.equals(getBibliotekon().getNodeUid(ent.getKey())))
 					return ent.getValue();
 
@@ -582,7 +581,7 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 		return strings;
 	}
 
-	private void printEntityNew(EntityImp ent) {
+	private void printEntityNew(Entity ent) {
 		if (ent.isRemoved()) {
 			System.err.println("Jdot STRANGE: entity is removed");
 			return;
@@ -597,7 +596,7 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 		return dotStringFactory.getBibliotekon();
 	}
 
-	private IEntityImage printEntityInternal(EntityImp ent) {
+	private IEntityImage printEntityInternal(Entity ent) {
 		if (ent.isRemoved())
 			throw new IllegalStateException();
 

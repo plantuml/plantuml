@@ -81,7 +81,7 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 
 	private final SkinParam skinParam;
 
-	// ::comment when WASM
+	// ::comment when CORE
 	private Animation animation;
 	// ::done
 
@@ -254,7 +254,7 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 		return ClockwiseTopRightBottomLeft.same(10);
 	}
 
-	// ::comment when WASM
+	// ::comment when CORE
 	final public void setAnimation(Iterable<CharSequence> animationData) {
 //		try {
 		final AnimationDecoder animationDecoder = new AnimationDecoder(animationData);

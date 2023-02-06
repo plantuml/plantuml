@@ -7,7 +7,7 @@ import java.util.Set;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 
 public final class Quantizer {
-	// ::remove folder when WASM
+	// ::remove folder when CORE
 	private static final int MAX_COLOR_COUNT = 256;
 
 	private static QImage quantizeNow(QImage image) throws IOException {

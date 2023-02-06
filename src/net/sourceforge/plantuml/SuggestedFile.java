@@ -38,7 +38,7 @@ package net.sourceforge.plantuml;
 import net.sourceforge.plantuml.security.SFile;
 
 public class SuggestedFile {
-	// ::remove file when WASM
+	// ::remove file when CORE
 
 	private final FileFormat fileFormat;
 	private final int initialCpt;

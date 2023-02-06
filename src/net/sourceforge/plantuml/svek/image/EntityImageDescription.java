@@ -45,7 +45,7 @@ import java.util.Set;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
-import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.cucadiagram.BodyFactory;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.EntityPortion;
@@ -103,7 +103,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 	private final Bibliotekon bibliotekon;
 	private final SymbolContext ctx;
 
-	public EntityImageDescription(EntityImp entity, ISkinParam skinParam2, PortionShower portionShower,
+	public EntityImageDescription(Entity entity, ISkinParam skinParam2, PortionShower portionShower,
 			Collection<Link> links, SName styleName, Bibliotekon bibliotekon) {
 		super(entity, entity.getColors().mute(skinParam2));
 		this.useRankSame = getSkinParam().useRankSame();
@@ -160,7 +160,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 		ctx = new SymbolContext(backcolor, forecolor).withStroke(stroke).withShadow(deltaShadow).withCorner(roundCorner,
 				diagonalCorner);
 
-		final Display codeDisplay = Display.getWithNewlines(entity.getCodeGetName());
+		final Display codeDisplay = Display.getWithNewlines(entity.getName());
 		if ((entity.getDisplay().equalsLike(codeDisplay) && symbol.getSName() == SName.package_)
 				|| entity.getDisplay().isWhite())
 			desc = TextBlockUtils.empty(style.value(PName.MinimumWidth).asDouble(), 0);
@@ -188,7 +188,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 
 	}
 
-	private USymbol getUSymbol(EntityImp entity) {
+	private USymbol getUSymbol(Entity entity) {
 		final USymbol result = entity.getUSymbol() == null ? getSkinParam().componentStyle().toUSymbol()
 				: entity.getUSymbol();
 		return Objects.requireNonNull(result);
@@ -210,13 +210,13 @@ public class EntityImageDescription extends AbstractEntityImage {
 		if (hideText == false)
 			return Margins.NONE;
 
-		if (isThereADoubleLink((EntityImp) getEntity(), links))
+		if (isThereADoubleLink((Entity) getEntity(), links))
 			return Margins.NONE;
 
-		if (fixCircleLabelOverlapping == false && hasSomeHorizontalLinkVisible((EntityImp) getEntity(), links))
+		if (fixCircleLabelOverlapping == false && hasSomeHorizontalLinkVisible((Entity) getEntity(), links))
 			return Margins.NONE;
 
-		if (hasSomeHorizontalLinkDoubleDecorated((EntityImp) getEntity(), links))
+		if (hasSomeHorizontalLinkDoubleDecorated((Entity) getEntity(), links))
 			return Margins.NONE;
 
 		final XDimension2D dimStereo = stereo.calculateDimension(stringBounder);
@@ -231,7 +231,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 		return new Margins(suppX / 2, suppX / 2, y, y);
 	}
 
-	private boolean hasSomeHorizontalLinkVisible(EntityImp leaf, Collection<Link> links) {
+	private boolean hasSomeHorizontalLinkVisible(Entity leaf, Collection<Link> links) {
 		for (Link link : links)
 			if (link.getLength() == 1 && link.contains(leaf) && link.isInvis() == false)
 				return true;
@@ -239,11 +239,11 @@ public class EntityImageDescription extends AbstractEntityImage {
 		return false;
 	}
 
-	private boolean isThereADoubleLink(EntityImp leaf, Collection<Link> links) {
-		final Set<EntityImp> others = new HashSet<>();
+	private boolean isThereADoubleLink(Entity leaf, Collection<Link> links) {
+		final Set<Entity> others = new HashSet<>();
 		for (Link link : links) {
 			if (link.contains(leaf)) {
-				final EntityImp other = link.getOther(leaf);
+				final Entity other = link.getOther(leaf);
 				final boolean changed = others.add(other);
 				if (changed == false)
 					return true;
@@ -253,7 +253,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 		return false;
 	}
 
-	private boolean hasSomeHorizontalLinkDoubleDecorated(EntityImp leaf, Collection<Link> links) {
+	private boolean hasSomeHorizontalLinkDoubleDecorated(Entity leaf, Collection<Link> links) {
 		for (Link link : links)
 			if (link.getLength() == 1 && link.contains(leaf) && link.getType().isDoubleDecorated())
 				return true;
@@ -262,10 +262,10 @@ public class EntityImageDescription extends AbstractEntityImage {
 	}
 
 	final public void drawU(UGraphic ug) {
-		ug.draw(new UComment("entity " + getEntity().getCodeGetName()));
+		ug.draw(new UComment("entity " + getEntity().getName()));
 		final Map<UGroupType, String> typeIDent = new EnumMap<>(UGroupType.class);
-		typeIDent.put(UGroupType.CLASS, "elem " + getEntity().getCode() + " selected");
-		typeIDent.put(UGroupType.ID, "elem_" + getEntity().getCode());
+		typeIDent.put(UGroupType.CLASS, "elem " + getEntity().getName() + " selected");
+		typeIDent.put(UGroupType.ID, "elem_" + getEntity().getName());
 		ug.startGroup(typeIDent);
 
 		if (url != null)

@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.ugraphic.ClipContainer;
 import net.sourceforge.plantuml.ugraphic.UDriver;
 
 public class DriverLineHtml5 implements UDriver<ULine, Html5Drawer> {
-	// ::remove folder when WASM
+	// ::remove folder when CORE
 
 	private final ClipContainer clipContainer;
 

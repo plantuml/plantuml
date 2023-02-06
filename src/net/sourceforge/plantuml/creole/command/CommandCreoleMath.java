@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.regex.MyPattern;
 import net.sourceforge.plantuml.regex.Pattern2;
 
 public class CommandCreoleMath implements Command {
-	// ::remove file when WASM
+	// ::remove file when CORE
 
 	@Override
 	public String startingChars() {

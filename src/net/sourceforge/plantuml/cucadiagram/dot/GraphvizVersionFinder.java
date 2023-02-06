@@ -42,7 +42,7 @@ import java.util.regex.Pattern;
 import net.sourceforge.plantuml.StringUtils;
 
 public class GraphvizVersionFinder {
-	// ::remove file when WASM
+	// ::remove file when CORE
 
 	final private File dotExe;
 	final public static GraphvizVersion DEFAULT = new GraphvizVersion() {

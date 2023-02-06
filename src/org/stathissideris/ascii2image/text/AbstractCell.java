@@ -25,7 +25,7 @@ package org.stathissideris.ascii2image.text;
  * @author Efstathios Sideris
  */
 public class AbstractCell {
-	// ::remove folder when WASM
+	// ::remove folder when CORE
 
 	public int rows[][] = new int[3][3];
 	{

@@ -39,7 +39,7 @@ import java.util.Map;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagramType;
-import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
@@ -52,23 +52,6 @@ public class DescriptionDiagram extends AbstractEntityDiagram {
 		super(source, UmlDiagramType.DESCRIPTION, skinParam);
 	}
 
-//	@Override
-//	public Ident cleanIdent(Ident ident) {
-//		String codeString = ident.getName();
-//		if (codeString.startsWith("[") && codeString.endsWith("]")) {
-//			return ident.eventuallyRemoveStartingAndEndingDoubleQuote("\"([:");
-//		}
-//		if (codeString.startsWith(":") && codeString.endsWith(":")) {
-//			return ident.eventuallyRemoveStartingAndEndingDoubleQuote("\"([:");
-//		}
-//		if (codeString.startsWith("()")) {
-//			codeString = StringUtils.trin(codeString.substring(2));
-//			codeString = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(codeString);
-//			return ident.parent().add(Ident.empty().add(codeString, null));
-//		}
-//		return ident;
-//	}
-
 	@Override
 	public String cleanIdForQuark(String id) {
 		if (id == null)
@@ -78,50 +61,8 @@ public class DescriptionDiagram extends AbstractEntityDiagram {
 		return super.cleanIdForQuark(id);
 	}
 
-//	@Override
-//	protected ILeaf getOrCreateLeaf2(Quark ident, Quark code, LeafType type, USymbol symbol) {
-//		Objects.requireNonNull(ident);
-//		if (type == null) {
-//			String codeString = code.getName();
-//			if (codeString.startsWith("[") && codeString.endsWith("]")) {
-//				final USymbol sym = getSkinParam().componentStyle().toUSymbol();
-//				final Quark idNewLong = ident.eventuallyRemoveStartingAndEndingDoubleQuote("\"([:");
-//				if (idNewLong.getData() != null)
-//					return (ILeaf) idNewLong.getData();
-//				return reallyCreateLeaf(idNewLong, Display.getWithNewlines(idNewLong.getName()), LeafType.DESCRIPTION,
-//						sym);
-//			}
-//			if (codeString.startsWith(":") && codeString.endsWith(":")) {
-//				final Quark idNewLong = ident.eventuallyRemoveStartingAndEndingDoubleQuote("\"([:");
-//				if (idNewLong.getData() != null)
-//					return (ILeaf) idNewLong.getData();
-//				return reallyCreateLeaf(idNewLong, Display.getWithNewlines(idNewLong.getName()), LeafType.DESCRIPTION,
-//						getSkinParam().actorStyle().toUSymbol());
-//			}
-//			if (codeString.startsWith("()")) {
-//				codeString = StringUtils.trin(codeString.substring(2));
-//				codeString = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(codeString);
-//				final Quark idNewLong = buildFromName(
-//						StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(codeString));
-//				if (idNewLong.getData() != null)
-//					return (ILeaf) idNewLong.getData();
-//				return reallyCreateLeaf(idNewLong, Display.getWithNewlines(codeString), LeafType.DESCRIPTION,
-//						USymbols.INTERFACE);
-//			}
-//			final String tmp4 = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(code.getName(), "\"([:");
-//			final Quark idNewLong = ident.eventuallyRemoveStartingAndEndingDoubleQuote("\"([:");
-//			code = buildFromFullPath(tmp4);
-//			if (idNewLong.getData() != null)
-//				return (ILeaf) idNewLong.getData();
-//			return reallyCreateLeaf(idNewLong, Display.getWithNewlines(tmp4), LeafType.STILL_UNKNOWN, symbol);
-//		}
-//		if (ident.getData() != null)
-//			return (ILeaf) ident.getData();
-//		return reallyCreateLeaf(ident, Display.getWithNewlines(code.getName()), type, symbol);
-//	}
-
 	private boolean isUsecase() {
-		for (EntityImp leaf : getLeafsvalues()) {
+		for (Entity leaf : getEntityFactory().leafs()) {
 			final LeafType type = leaf.getLeafType();
 			final USymbol usymbol = leaf.getUSymbol();
 			if (type == LeafType.USECASE || usymbol == getSkinParam().actorStyle().toUSymbol()) {
@@ -136,7 +77,7 @@ public class DescriptionDiagram extends AbstractEntityDiagram {
 		super.makeDiagramReady();
 		final LeafType defaultType = LeafType.DESCRIPTION;
 		final USymbol defaultSymbol = isUsecase() ? getSkinParam().actorStyle().toUSymbol() : USymbols.INTERFACE;
-		for (EntityImp leaf : getLeafsvalues()) {
+		for (Entity leaf : getEntityFactory().leafs()) {
 			if (leaf.getLeafType() == LeafType.STILL_UNKNOWN) {
 				leaf.muteToType(defaultType, defaultSymbol);
 			}

@@ -43,7 +43,7 @@ import java.util.Set;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.awt.geom.XRectangle2D;
-import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.klimt.ULine;
 import net.sourceforge.plantuml.klimt.UPolygon;
@@ -54,11 +54,11 @@ import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 public class Neighborhood {
 
-	private final EntityImp leaf;
+	private final Entity leaf;
 	private final List<Link> sametailLinks;
 	private final List<Link> allButSametails;
 
-	public Neighborhood(EntityImp leaf, List<Link> sametailLinks, List<Link> all) {
+	public Neighborhood(Entity leaf, List<Link> sametailLinks, List<Link> all) {
 		this.leaf = leaf;
 		this.sametailLinks = sametailLinks;
 		this.allButSametails = new ArrayList<>(all);

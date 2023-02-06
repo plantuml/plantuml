@@ -53,7 +53,7 @@ import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.preproc.FileWithSuffix;
 
 public class DirWatcher2 {
-	// ::remove file when WASM
+	// ::remove file when CORE
 
 	final private File dir;
 	final private Option option;

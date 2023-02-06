@@ -353,7 +353,7 @@ public class StringUtils {
 		return result;
 	}
 
-	// ::comment when WASM
+	// ::comment when CORE
 	public static int getWcWidth(Display stringsToDisplay) {
 		int result = 1;
 		for (CharSequence s : stringsToDisplay) {

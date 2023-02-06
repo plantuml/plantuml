@@ -39,7 +39,7 @@ import java.io.IOException;
 import java.util.List;
 
 public interface ISourceFileReader {
-	// ::remove file when WASM
+	// ::remove file when CORE
 
 	public List<GeneratedImage> getGeneratedImages() throws IOException;
 

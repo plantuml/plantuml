@@ -66,7 +66,7 @@ public class Canvas {
 	private static int frameWidth;
 	private static int frameHeight;
 
-	public static int initCanvas(int width, int height) throws IOException {
+	public static int initCanvas(int width, int height) {
 		WasmLog.start = System.currentTimeMillis();
 		WasmLog.log("initCanvas");
 		if (g2d == null) {
@@ -83,6 +83,37 @@ public class Canvas {
 		}
 		WasmLog.log("initCanvas skipped because it has already been done");
 		return 47;
+	}
+
+	public static int convert(String text) throws IOException {
+		WasmLog.start = System.currentTimeMillis();
+		final BlockUmlBuilder builder = new BlockUmlBuilder(Collections.<String>emptyList(), UTF_8,
+				Defines.createEmpty(), new StringReader(text), null, "string");
+		List<BlockUml> blocks = builder.getBlockUmls();
+
+		WasmLog.log("...loading data...");
+
+		final Diagram system = blocks.get(0).getDiagram();
+
+		if (system instanceof PSystemError) {
+			final ErrorUml error = ((PSystemError) system).getFirstError();
+			WasmLog.log("[" + error.getPosition() + "] " + error.getError());
+			return -242;
+		}
+		WasmLog.log("...processing...");
+
+		final HColor back = HColors.simple(Color.WHITE);
+		final StringBounder stringBounder = new StringBounderCanvas(g2d);
+		final UGraphicG2d ug = new UGraphicG2d(back, ColorMapper.IDENTITY, stringBounder, g2d, 1.0);
+		// ug.apply(back).apply(back.bg()).draw(new URectangle(frameWidth,
+		// frameHeight));
+		ug.apply(HColors.RED).apply(back.bg()).draw(new URectangle(frameWidth, frameHeight));
+		WasmLog.log("system= " + system.getClass().getName());
+
+		system.exportDiagramGraphic(ug);
+
+		return 45;
+
 	}
 
 	public static int convertCanvas(int width, int height, String text) throws IOException {

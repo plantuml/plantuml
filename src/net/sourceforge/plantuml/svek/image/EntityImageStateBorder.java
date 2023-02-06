@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.svek.image;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
-import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.cucadiagram.EntityPosition;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.klimt.UStroke;
@@ -60,7 +60,7 @@ public class EntityImageStateBorder extends AbstractEntityImageBorder {
 
 	private final SName sname;
 
-	public EntityImageStateBorder(EntityImp leaf, ISkinParam skinParam, Cluster stateParent, final Bibliotekon bibliotekon,
+	public EntityImageStateBorder(Entity leaf, ISkinParam skinParam, Cluster stateParent, final Bibliotekon bibliotekon,
 			SName sname) {
 		super(leaf, skinParam, stateParent, bibliotekon, FontParam.STATE);
 		this.sname = sname;

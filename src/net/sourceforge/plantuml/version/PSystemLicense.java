@@ -77,19 +77,19 @@ public class PSystemLicense extends PlainDiagram implements UDrawable {
 
 	public void drawU(UGraphic ug) {
 
-		// ::comment when WASM
+		// ::comment when CORE
 		final LicenseInfo licenseInfo = LicenseInfo.retrieveQuick();
 		final BufferedImage logo = LicenseInfo.retrieveDistributorImage(licenseInfo);
 
 		if (logo == null) {
 			// ::done
 			final List<String> strings = new ArrayList<>();
-			// ::comment when WASM
+			// ::comment when CORE
 			strings.addAll(License.getCurrent().getText1(licenseInfo));
 			strings.addAll(License.getCurrent().getText2(licenseInfo));
 			// ::done
 			getGraphicStrings(strings).drawU(ug);
-			// ::comment when WASM
+			// ::comment when CORE
 		} else {
 			final List<String> strings1 = new ArrayList<>();
 			final List<String> strings2 = new ArrayList<>();

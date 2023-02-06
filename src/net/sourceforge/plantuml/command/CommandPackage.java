@@ -36,8 +36,7 @@
 package net.sourceforge.plantuml.command;
 
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.baraye.EntityImp;
-import net.sourceforge.plantuml.baraye.Quark;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.classdiagram.command.CommandCreateClassMultilines;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -50,6 +49,7 @@ import net.sourceforge.plantuml.graphic.color.Colors;
 import net.sourceforge.plantuml.klimt.color.ColorParser;
 import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -117,16 +117,14 @@ public class CommandPackage extends SingleLineCommand2<AbstractEntityDiagram> {
 				display = idShort;
 			}
 		} else {
-			display = name;		
+			display = name;
 			idShort = arg.get("AS", 0);
 		}
 
-//		final Quark current = diagram.currentQuark();
-//		final Quark ident = current.child(idShort);
 		final Quark quark;
 		if (arg.get("AS", 0) == null) {
 			quark = diagram.quarkInContext(diagram.cleanIdForQuark(name), true);
-			display = quark.getQualifiedName();
+			display = quark.getName();
 		} else {
 			quark = diagram.quarkInContext(diagram.cleanIdForQuark(arg.get("AS", 0)), true);
 			display = name;
@@ -137,7 +135,7 @@ public class CommandPackage extends SingleLineCommand2<AbstractEntityDiagram> {
 		if (status.isOk() == false)
 			return status;
 
-		final EntityImp p = diagram.getCurrentGroup();
+		final Entity p = diagram.getCurrentGroup();
 
 		final String stereotype = arg.get("STEREOTYPE", 0);
 

@@ -54,7 +54,7 @@ import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SecurityUtils;
 
 public class CheckZipTask extends Task {
-	// ::remove folder when WASM
+	// ::remove folder when CORE
 
 	private String zipfile = null;
 	private List<FileSet> filesets = new ArrayList<>();

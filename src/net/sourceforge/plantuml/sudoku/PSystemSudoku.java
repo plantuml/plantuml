@@ -53,7 +53,7 @@ public class PSystemSudoku extends AbstractPSystem {
 	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
 			throws IOException {
 		final GraphicsSudoku sud = new GraphicsSudoku(sudoku);
-		// ::comment when WASM
+		// ::comment when CORE
 		if (fileFormat.getFileFormat() == FileFormat.EPS)
 			return sud.writeImageEps(os);
 

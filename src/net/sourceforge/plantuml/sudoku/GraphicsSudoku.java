@@ -78,7 +78,7 @@ public class GraphicsSudoku {
 		this.sudoku = sudoku;
 	}
 
-	// ::comment when WASM
+	// ::comment when CORE
 	public ImageData writeImageEps(OutputStream os) throws IOException {
 		final UGraphicEps ug = new UGraphicEps(HColors.WHITE, ColorMapper.IDENTITY,
 				FileFormat.EPS_TEXT.getDefaultStringBounder(), EpsStrategy.WITH_MACRO_AND_TEXT);

@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.SkinParamUtils;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.awt.geom.XPoint2D;
-import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.klimt.UStroke;
@@ -67,7 +67,7 @@ public class EntityImageLollipopInterfaceEye1 extends AbstractEntityImage {
 	private final Bibliotekon bibliotekon;
 	final private Url url;
 
-	public EntityImageLollipopInterfaceEye1(EntityImp entity, ISkinParam skinParam, Bibliotekon bibliotekon) {
+	public EntityImageLollipopInterfaceEye1(Entity entity, ISkinParam skinParam, Bibliotekon bibliotekon) {
 		super(entity, skinParam);
 		this.bibliotekon = bibliotekon;
 		final Stereotype stereotype = entity.getStereotype();

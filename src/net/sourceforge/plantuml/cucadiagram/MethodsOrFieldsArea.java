@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.awt.geom.XRectangle2D;
-import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.InnerStrategy;
@@ -88,14 +88,14 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlock,
 	private final HorizontalAlignment align;
 	private final List<EmbeddedDiagram> embeddeds = new ArrayList<>();
 
-	private final EntityImp leaf;
+	private final Entity leaf;
 	private final Style style;
 
-	public MethodsOrFieldsArea(Display members, ISkinParam skinParam, EntityImp leaf, Style style) {
+	public MethodsOrFieldsArea(Display members, ISkinParam skinParam, Entity leaf, Style style) {
 		this(members, skinParam, HorizontalAlignment.LEFT, leaf, style);
 	}
 
-	public MethodsOrFieldsArea(Display members, ISkinParam skinParam, HorizontalAlignment align, EntityImp leaf,
+	public MethodsOrFieldsArea(Display members, ISkinParam skinParam, HorizontalAlignment align, Entity leaf,
 			Style style) {
 		this.style = style;
 		this.leaf = leaf;

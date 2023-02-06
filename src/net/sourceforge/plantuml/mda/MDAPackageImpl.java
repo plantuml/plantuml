@@ -41,16 +41,16 @@ import java.util.Collections;
 
 import net.sourceforge.plantuml.api.mda.option2.MDAEntity;
 import net.sourceforge.plantuml.api.mda.option2.MDAPackage;
-import net.sourceforge.plantuml.baraye.EntityImp;
+import net.sourceforge.plantuml.baraye.Entity;
 
 public class MDAPackageImpl implements MDAPackage {
 
 	private final Collection<MDAEntity> entities = new ArrayList<>();
-	private final EntityImp group;
+	private final Entity group;
 
-	public MDAPackageImpl(EntityImp group) {
+	public MDAPackageImpl(Entity group) {
 		this.group = group;
-		for (EntityImp leaf : group.getLeafsDirect()) {
+		for (Entity leaf : group.leafs()) {
 			entities.add(new MDAEntityImpl(leaf));
 		}
 	}
@@ -60,10 +60,10 @@ public class MDAPackageImpl implements MDAPackage {
 	}
 
 	public String getName() {
-		if (group.instanceofGroupRoot()) {
+		if (group.isRoot()) {
 			return "";
 		}
-		return group.getCodeGetName();
+		return group.getName();
 	}
 
 }
