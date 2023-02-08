@@ -39,7 +39,6 @@ import java.awt.Font;
 
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.UmlDiagramType;
-
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 

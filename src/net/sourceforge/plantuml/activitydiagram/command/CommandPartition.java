@@ -83,10 +83,7 @@ public class CommandPartition extends SingleLineCommand2<ActivityDiagram> {
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram diagram, LineLocation location, RegexResult arg)
 			throws NoSuchColorException {
-		final Quark quark = diagram.quarkInContext(diagram.cleanIdForQuark(arg.get("NAME", 0)), false);
-//		final String idShort = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("NAME", 0));
-//		final Quark ident = diagram.buildFromName(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(idShort));
-//		final Quark code = diagram.buildFromFullPath(idShort);
+		final Quark<Entity> quark = diagram.quarkInContext(diagram.cleanId(arg.get("NAME", 0)), false);
 
 		diagram.gotoGroup(quark, Display.getWithNewlines(quark.getName()), GroupType.PACKAGE);
 		final Entity p = diagram.getCurrentGroup();

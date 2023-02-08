@@ -53,12 +53,12 @@ public class DescriptionDiagram extends AbstractEntityDiagram {
 	}
 
 	@Override
-	public String cleanIdForQuark(String id) {
+	public String cleanId(String id) {
 		if (id == null)
 			return null;
 		if (id.startsWith("()"))
 			id = StringUtils.trin(id.substring(2));
-		return super.cleanIdForQuark(id);
+		return super.cleanId(id);
 	}
 
 	private boolean isUsecase() {

@@ -122,8 +122,8 @@ public class CommandCreateMap extends CommandMultilines2<AbstractEntityDiagram> 
 				final int x = line.indexOf(linkStr);
 				final String key = line.substring(0, x).trim();
 				final String dest = line.substring(x + linkStr.length()).trim();
-				final Quark ident2 = diagram.quarkInContext(dest, false);
-				final Entity entity2 = (Entity) ident2.getData();
+				final Quark<Entity> ident2 = diagram.quarkInContext(dest, false);
+				final Entity entity2 = ident2.getData();
 				if (entity2 == null)
 					return CommandExecutionResult.error("No such entity " + ident2.getName());
 
@@ -140,16 +140,11 @@ public class CommandCreateMap extends CommandMultilines2<AbstractEntityDiagram> 
 
 	private Entity executeArg0(AbstractEntityDiagram diagram, RegexResult line0) throws NoSuchColorException {
 		final String name = line0.get("NAME", 1);
-//		final Quark ident = diagram.buildFromName(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(name));
-//		final Quark code = diagram.buildFromFullPath(name);
-		final Quark quark = diagram.quarkInContext(diagram.cleanIdForQuark(name), false);
+
+		final Quark<Entity> quark = diagram.quarkInContext(diagram.cleanId(name), false);
 		final String displayString = line0.get("NAME", 0);
 		final String stereotype = line0.get("STEREO", 0);
-		// final boolean leafExist = diagram.leafExist(code);
-//		if (leafExist)
-//			return diagram.getOrCreateLeaf(
-//					diagram.buildFromName(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(name)), code,
-//					LeafType.MAP, null);
+
 		if (quark.getData() != null)
 			return null;
 

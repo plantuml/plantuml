@@ -72,13 +72,13 @@ public class CommandAddField extends SingleLineCommand2<StateDiagram> {
 			throws NoSuchColorException {
 		final String codeString = arg.getLazzy("CODE", 0);
 
-		final Quark quark;
-		if (diagram.currentQuark().getName().equals(codeString) && diagram.currentQuark().getData() != null)
-			quark = diagram.currentQuark();
+		final Quark<Entity> quark;
+		if (diagram.getCurrentGroup().getName().equals(codeString))
+			quark = diagram.getCurrentGroup().getQuark();
 		else
-			quark = diagram.quarkInContext(diagram.cleanIdForQuark(codeString), false);
+			quark = diagram.quarkInContext(diagram.cleanId(codeString), false);
 
-		Entity entity = (Entity) quark.getData();
+		Entity entity = quark.getData();
 		if (entity == null)
 			entity = diagram.reallyCreateLeaf(quark, Display.getWithNewlines(quark), LeafType.STATE, null);
 

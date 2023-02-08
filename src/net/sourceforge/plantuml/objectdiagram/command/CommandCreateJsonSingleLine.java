@@ -44,12 +44,12 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.json.Json.DefaultHandler;
+import net.sourceforge.plantuml.json.JsonParser;
+import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.klimt.color.ColorParser;
 import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.font.FontParam;
-import net.sourceforge.plantuml.json.JsonParser;
-import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
 import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
@@ -113,19 +113,12 @@ public class CommandCreateJsonSingleLine extends SingleLineCommand2<AbstractClas
 	private Entity executeArg0(AbstractClassOrObjectDiagram diagram, RegexResult line0) throws NoSuchColorException {
 		final String name = line0.get("NAME", 1);
 
-		final Quark quark = diagram.quarkInContext(diagram.cleanIdForQuark(name), true);
+		final Quark<Entity> quark = diagram.quarkInContext(diagram.cleanId(name), true);
 		if (quark.getData() != null)
 			return null;
 
-//		final Quark ident = diagram.buildFromName(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(name));
-//		final Quark code = diagram.buildFromFullPath(name);
 		final String displayString = line0.get("NAME", 0);
 		final String stereotype = line0.get("STEREO", 0);
-//		final boolean leafExist = code.getData() != null;
-//		if (leafExist)
-//			return diagram.getOrCreateLeaf(
-//					diagram.buildFromName(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(name)), code,
-//					LeafType.JSON, null);
 
 		Display display = Display.getWithNewlines(displayString);
 		if (Display.isNull(display))

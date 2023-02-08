@@ -59,7 +59,6 @@ import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.EntityGender;
 import net.sourceforge.plantuml.cucadiagram.EntityPortion;
-import net.sourceforge.plantuml.cucadiagram.EntityPosition;
 import net.sourceforge.plantuml.cucadiagram.GroupHierarchy;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
 import net.sourceforge.plantuml.cucadiagram.HideOrShow2;
@@ -75,7 +74,6 @@ import net.sourceforge.plantuml.cucadiagram.dot.CucaDiagramTxtMaker;
 import net.sourceforge.plantuml.elk.CucaDiagramFileMakerElk;
 import net.sourceforge.plantuml.graphic.USymbol;
 import net.sourceforge.plantuml.graphml.CucaDiagramGraphmlMaker;
-import net.sourceforge.plantuml.plasma.Plasma;
 import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana;
 import net.sourceforge.plantuml.security.SecurityUtils;
@@ -94,26 +92,20 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 	private String namespaceSeparator = null;
 	private boolean namespaceSeparatorHasBeenSet = false;
 
-	public final boolean mergeIntricated() {
-		return false;
-	}
-
 	private final List<HideOrShow2> hides2 = new ArrayList<>();
 	private final List<HideOrShow2> removed = new ArrayList<>();
 	protected final EntityFactory entityFactory = new EntityFactory(hides2, removed, this);
 
-	private List<Quark> stacks = new ArrayList<>();
+	private List<Bag> stacks = new ArrayList<>();
 
 	private boolean visibilityModifierPresent;
 
-	private Together currentTogether;
-
 	public CucaDiagram(UmlSource source, UmlDiagramType type, Map<String, String> orig) {
 		super(source, type, orig);
-		this.stacks.add(entityFactory.getPlasma().root());
+		this.stacks.add(entityFactory.root().getData());
 	}
 
-	public String getPortFor(String entString, Quark ident) {
+	public String getPortFor(String entString, Quark<Entity> ident) {
 		final int x = entString.lastIndexOf("::");
 		if (x == -1)
 			return null;
@@ -122,11 +114,26 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		return null;
 	}
 
-	public Quark currentQuark() {
-		return this.stacks.get(stacks.size() - 1);
+	public final Entity getCurrentGroup() {
+		int pos = stacks.size() - 1;
+		while (pos >= 0) {
+			final Bag tmp = this.stacks.get(pos);
+			if (tmp instanceof Entity)
+				return (Entity) tmp;
+			pos--;
+		}
+		throw new IllegalStateException();
 	}
 
-	public String cleanIdForQuark(String id) {
+	public final Together currentTogether() {
+		final int pos = stacks.size() - 1;
+		final Bag tmp = this.stacks.get(pos);
+		if (tmp instanceof Together)
+			return (Together) tmp;
+		return null;
+	}
+
+	public String cleanId(String id) {
 		if (id == null)
 			return null;
 		return StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(id);
@@ -135,7 +142,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 	final public void setNamespaceSeparator(String namespaceSeparator) {
 		this.namespaceSeparatorHasBeenSet = true;
 		this.namespaceSeparator = namespaceSeparator;
-		getPlasma().setSeparator(namespaceSeparator);
+		entityFactory.setSeparator(namespaceSeparator);
 	}
 
 	final public String getNamespaceSeparator() {
@@ -147,8 +154,8 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 
 	@Override
 	public boolean hasUrl() {
-		for (Quark quark : getPlasma().quarks()) {
-			final Entity ent = (Entity) quark.getData();
+		for (Quark<Entity> quark : entityFactory.quarks()) {
+			final Entity ent = quark.getData();
 			if (ent != null && ent.hasUrl())
 				return true;
 		}
@@ -163,7 +170,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 	protected void updateLasts(Entity result) {
 	}
 
-	final public Entity reallyCreateLeaf(Quark ident, Display display, LeafType type, USymbol symbol) {
+	final public Entity reallyCreateLeaf(Quark<Entity> ident, Display display, LeafType type, USymbol symbol) {
 		Objects.requireNonNull(type);
 		if (ident.getData() != null)
 			throw new IllegalStateException();
@@ -172,33 +179,38 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 
 		final Entity result = entityFactory.createLeaf(ident, type, getHides());
 		result.setUSymbol(symbol);
-		ident.setData(result);
 		this.lastEntity = result;
-		result.setTogether(currentTogether);
+
+		result.setTogether(currentTogether());
+
 		updateLasts(result);
 //			if (type == LeafType.OBJECT)
 //				((EntityImp) parent.getData()).muteToType2(type);
 		result.setDisplay(display);
+
+		if (type.isLikeClass())
+			eventuallyBuildPhantomGroups();
+
 		return result;
 
 	}
 
-	final public Quark quarkInContext(String full, boolean specialForCreateClass) {
+	final public Quark<Entity> quarkInContext(String full, boolean specialForCreateClass) {
 		final String sep = getNamespaceSeparator();
 		if (sep == null) {
-			final Quark result = getPlasma().firstWithName(full);
+			final Quark<Entity> result = entityFactory.firstWithName(full);
 			if (result != null)
 				return result;
-			return currentQuark().child(full);
+			return getCurrentGroup().getQuark().child(full);
 		}
 
-		final Quark currentQuark = currentQuark();
+		final Quark<Entity> currentQuark = getCurrentGroup().getQuark();
 		if (full.startsWith(sep))
-			return getPlasma().root().child(full.substring(sep.length()));
+			return entityFactory.root().child(full.substring(sep.length()));
 		final int x = full.indexOf(sep);
 		if (x == -1) {
-			if (specialForCreateClass == false && getPlasma().countByName(full) == 1) {
-				final Quark byName = getPlasma().firstWithName(full);
+			if (specialForCreateClass == false && entityFactory.countByName(full) == 1) {
+				final Quark<Entity> byName = entityFactory.firstWithName(full);
 				assert byName != null;
 				if (byName != currentQuark)
 					return byName;
@@ -207,10 +219,10 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		}
 
 		final String first = full.substring(0, x);
-		final boolean firstPackageDoesExist = getPlasma().root().childIfExists(first) != null;
+		final boolean firstPackageDoesExist = entityFactory.root().childIfExists(first) != null;
 
 		if (firstPackageDoesExist)
-			return getPlasma().root().child(full);
+			return entityFactory.root().child(full);
 		return currentQuark.child(full);
 
 	}
@@ -235,17 +247,17 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		return id.substring(x + 2);
 	}
 
-	// protected Plasma getPlasma() {
-	public /* protected */ Plasma getPlasma() {
-		return entityFactory.getPlasma();
+	public Quark<Entity> firstWithName(String name) {
+		return entityFactory.firstWithName(name);
 	}
 
+	@Override
 	final public Collection<Entity> getChildrenGroups(Entity entity) {
 		return entity.groups();
 	}
 
 	private void eventuallyBuildPhantomGroups() {
-		for (Quark quark : getPlasma().quarks()) {
+		for (Quark<Entity> quark : entityFactory.quarks()) {
 			if (quark.getData() != null)
 				continue;
 			int countChildren = quark.countChildren();
@@ -254,80 +266,63 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 				final Display display = Display.getWithNewlines(quark.getName());
 				final Entity result = entityFactory.createGroup(quark, GroupType.PACKAGE, getHides());
 				result.setDisplay(display);
-				quark.setData(result);
 			}
 		}
 	}
 
 	final public CommandExecutionResult gotoTogether() {
-		if (currentTogether != null)
-			return CommandExecutionResult.error("Cannot nest together");
-
-		this.currentTogether = new Together();
+		this.stacks.add(new Together(currentTogether()));
 		return CommandExecutionResult.ok();
 	}
 
-	final public CommandExecutionResult gotoGroup(Quark quark, Display display, GroupType type) {
-		if (currentTogether != null)
-			return CommandExecutionResult.error("Cannot be done inside 'together'");
-
+	final public CommandExecutionResult gotoGroup(Quark<Entity> quark, Display display, GroupType type) {
 		if (quark.getData() == null) {
 			final Entity result = entityFactory.createGroup(quark, type, getHides());
+			result.setTogether(currentTogether());
 			result.setDisplay(display);
-			quark.setData(result);
 		}
-		final Entity ent = (Entity) quark.getData();
+		final Entity ent = quark.getData();
 		ent.muteToGroupType(type);
 
-		this.stacks.add(quark);
+		this.stacks.add(quark.getData());
 
 		return CommandExecutionResult.ok();
 
 	}
 
 	public boolean endGroup() {
-
-		if (this.currentTogether != null) {
-			this.currentTogether = null;
-			return true;
-		}
-
 		if (stacks.size() > 0) {
 			stacks.remove(stacks.size() - 1);
 			return true;
 		}
-
 		return false;
 
 	}
 
-	public final Entity getCurrentGroup() {
-		return (Entity) currentQuark().getData();
-	}
-
 	public final Entity getGroup(String code) {
-		final Quark quark = getPlasma().firstWithName(code);
+		final Quark<Entity> quark = entityFactory.firstWithName(code);
 		if (quark == null)
 			return null;
-		return (Entity) quark.getData();
+		return quark.getData();
 	}
 
 	public final boolean isGroup(String code) {
-		final Quark quark = getPlasma().firstWithName(code);
+		final Quark<Entity> quark = entityFactory.firstWithName(code);
 		if (quark == null)
 			return false;
 		return isGroup(quark);
 	}
 
-	public final boolean isGroup(Quark quark) {
-		final Entity ent = (Entity) quark.getData();
+	public final boolean isGroup(Quark<Entity> quark) {
+		final Entity ent = quark.getData();
 		if (ent == null)
 			return false;
 		return ent.isGroup();
 	}
 
+	@Override
 	public Entity getRootGroup() {
-		return (Entity) getPlasma().root().getData();
+		return entityFactory.root().getData();
 	}
 
 	final public void addLink(Link link) {
@@ -462,33 +457,6 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		return generalWarningOrError + BackSlash.NEWLINE + warningOrError;
 	}
 
-	public boolean isAutarkic(Entity g) {
-		if (g.getGroupType() == GroupType.PACKAGE)
-			return false;
-
-		if (g.getGroupType() == GroupType.INNER_ACTIVITY)
-			return true;
-
-		if (g.getGroupType() == GroupType.CONCURRENT_ACTIVITY)
-			return true;
-
-		if (g.getGroupType() == GroupType.CONCURRENT_STATE)
-			return true;
-
-		if (getChildrenGroups(g).size() > 0)
-			return false;
-
-		for (Link link : getLinks())
-			if (EntityUtils.isPureInnerLink3(g, link) == false)
-				return false;
-
-		for (Entity leaf : g.leafs())
-			if (leaf.getEntityPosition() != EntityPosition.NORMAL)
-				return false;
-
-		return true;
-	}
-
 	private static boolean isNumber(String s) {
 		return s.matches("[+-]?(\\.?\\d+|\\d+\\.\\d*)");
 	}
@@ -532,6 +500,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		return "25";
 	}
 
+	@Override
 	final public boolean isEmpty(Entity entity) {
 		return entity.isEmpty();
 	}

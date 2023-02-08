@@ -52,7 +52,7 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.ugraphic.UGraphic;
 
-public final class CucaDiagramFileMakerSvek2InternalImage extends AbstractTextBlock implements IEntityImage {
+public final class ConcurrentStates extends AbstractTextBlock implements IEntityImage {
 
 	private final List<IEntityImage> inners;
 	private final Separator separator;
@@ -100,7 +100,7 @@ public final class CucaDiagramFileMakerSvek2InternalImage extends AbstractTextBl
 		}
 	}
 
-	public CucaDiagramFileMakerSvek2InternalImage(List<IEntityImage> inners, char concurrentSeparator,
+	public ConcurrentStates(List<IEntityImage> inners, char concurrentSeparator,
 			ISkinParam skinParam, Stereotype stereotype) {
 		this.separator = Separator.fromChar(concurrentSeparator);
 		this.skinParam = skinParam;

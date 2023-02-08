@@ -125,12 +125,12 @@ final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassO
 		final String suffix = "lol" + diagram.getUniqueSequence();
 		if (arg.get("LOL_THEN_ENT", 1) == null) {
 
-			final Quark quark = diagram.quarkInContext(diagram.cleanIdForQuark(ent1), false);
-			cl1 = (Entity) quark.getData();
+			final Quark<Entity> quark = diagram.quarkInContext(diagram.cleanId(ent1), false);
+			cl1 = quark.getData();
 			if (cl1 == null)
 				return CommandExecutionResult.error("No class " + quark.getName());
 
-			final Quark idNewLong = diagram.quarkInContext(diagram.cleanIdForQuark(ent1) + suffix, false);
+			final Quark<Entity> idNewLong = diagram.quarkInContext(diagram.cleanId(ent1) + suffix, false);
 			final LeafType type = getType(arg.get("ENT_THEN_LOL", 1));
 			cl2 = diagram.reallyCreateLeaf(idNewLong, Display.getWithNewlines(ent2), type, null);
 			normalEntity = cl1;
@@ -144,12 +144,12 @@ final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassO
 //					getType(arg.get("ENT_THEN_LOL", 1)), null);
 //			normalEntity = cl1;
 		} else {
-			final Quark quark = diagram.quarkInContext(diagram.cleanIdForQuark(ent2), false);
-			cl2 = (Entity) quark.getData();
+			final Quark<Entity> quark = diagram.quarkInContext(diagram.cleanId(ent2), false);
+			cl2 = quark.getData();
 			if (cl2 == null)
 				return CommandExecutionResult.error("No class " + quark.getName());
 
-			final Quark idNewLong = diagram.quarkInContext(diagram.cleanIdForQuark(ent2) + suffix, false);
+			final Quark<Entity> idNewLong = diagram.quarkInContext(diagram.cleanId(ent2) + suffix, false);
 			final LeafType type = getType(arg.get("LOL_THEN_ENT", 0));
 			cl1 = diagram.reallyCreateLeaf(idNewLong, Display.getWithNewlines(ent1), type, null);
 			normalEntity = cl2;

@@ -156,7 +156,7 @@ public class CommandCreateElementFull2 extends SingleLineCommand2<ClassDiagram> 
 			return CommandExecutionResult.error("Use 'allowmixing' if you want to mix classes and other UML elements.");
 
 		String codeRaw = arg.getLazzy("CODE", 0);
-		final String displayRaw = arg.getLazzy("DISPLAY", 0);
+		final String displayRaw = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.getLazzy("DISPLAY", 0));
 		final char codeChar = getCharEncoding(codeRaw);
 		final char codeDisplay = getCharEncoding(displayRaw);
 		final String symbol;
@@ -206,20 +206,13 @@ public class CommandCreateElementFull2 extends SingleLineCommand2<ClassDiagram> 
 
 		final String idShort = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(codeRaw);
 		final Display display = Display.getWithNewlines(displayRaw == null ? idShort : displayRaw);
-		final Quark quark = diagram.quarkInContext(idShort, false);
-		Entity entity = (Entity) quark.getData();
+		final Quark<Entity> quark = diagram.quarkInContext(idShort, false);
+		Entity entity = quark.getData();
 		if (entity == null)
 			entity = diagram.reallyCreateLeaf(quark, display, type, usymbol);
 
-//		final Quark ident = diagram.buildFromName(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(idShort));
-//		final Quark code = diagram.buildFromFullPath(idShort);
-//		String display = displayRaw;
-//		if (display == null)
-//			display = code.getName();
-//
-//		display = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(display);
 		final String stereotype = arg.getLazzy("STEREOTYPE", 0);
-//		final IEntity entity = diagram.getOrCreateLeaf(ident, code, type, usymbol);
+
 		entity.setDisplay(display);
 		entity.setUSymbol(usymbol);
 		if (stereotype != null)

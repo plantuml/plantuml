@@ -35,59 +35,45 @@
  */
 package net.sourceforge.plantuml.plasma;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
-public class Quark {
+public class Quark<DATA> {
 
-	private final Plasma plasma;
-	private /* final */ Quark parent;
+	private final Plasma<DATA> plasma;
+	private final Quark<DATA> parent;
 	private final String name;
-	private Object data;
+	private DATA data;
+	private final Map<String, Quark<DATA>> children = new LinkedHashMap<>();
+	private final String qualifiedName;
 
-	Quark(Plasma plasma, Quark parent, String name) {
+	Quark(Plasma<DATA> plasma, Quark<DATA> parent, String name) {
 		this.name = name;
 		this.plasma = plasma;
 		this.parent = parent;
+		if (parent == null || parent.parent == null)
+			this.qualifiedName = name;
+		else
+			this.qualifiedName = parent.qualifiedName + plasma.getSeparator() + name;
+		this.plasma.register(this);
 	}
 
-	public Quark getParent() {
+	public Quark<DATA> getParent() {
 		return parent;
 	}
 
 	@Override
 	public String toString() {
-		// return parts.toString() + "(parent=" + parent + ")";
-		return getSignature().toString();
+		return qualifiedName;
 	}
 
-	List<String> getSignature() {
-		final List<String> result = new ArrayList<>();
-		if (parent != null)
-			result.addAll(parent.getSignature());
-		result.add(name);
-		return result;
-	}
+	public String toStringPoint() {
+		if (parent == null || parent.parent == null)
+			return name;
 
-	public boolean containsLarge(Quark other) {
-		final List<String> signature = this.getSignature();
-		final List<String> otherSignature = other.getSignature();
-		return otherSignature.size() > signature.size()
-				&& otherSignature.subList(0, signature.size()).equals(signature);
-	}
-
-	public String toString(String sep) {
-		if (sep == null)
-			sep = ".";
-
-		final StringBuilder sb = new StringBuilder();
-		for (String s : getSignature()) {
-			if (sb.length() > 0)
-				sb.append(sep);
-
-			sb.append(s);
-		}
-		return sb.toString();
+		return parent.toStringPoint() + "." + name;
 	}
 
 	public String getName() {
@@ -95,47 +81,76 @@ public class Quark {
 	}
 
 	public String getQualifiedName() {
-		if (plasma.hasSeparator())
-			return toString(plasma.getSeparator());
-		return name;
+		return qualifiedName;
 	}
 
 	public boolean isRoot() {
 		return parent == null;
 	}
 
-	public final Plasma getPlasma() {
+	public final Plasma<DATA> getPlasma() {
 		return plasma;
 	}
 
-	public final Object getData() {
+	public final DATA getData() {
 		return data;
 	}
 
-	public final void setData(Object data) {
+	public final void setData(DATA data) {
+		if (this.data != null)
+			throw new IllegalStateException();
 		this.data = data;
 	}
 
-	public Quark childIfExists(String name) {
-		final List<String> sig = new ArrayList<>(getSignature());
-		sig.add(name);
-		return plasma.getIfExists(sig);
+	public Quark<DATA> childIfExists(String name) {
+		if (plasma.hasSeparator() && name.contains(plasma.getSeparator()))
+			throw new IllegalArgumentException();
+		return children.get(name);
 	}
 
-	public Quark child(String full) {
-		return plasma.parse(this, full);
+	public Quark<DATA> child(String full) {
+		if (plasma.hasSeparator() == false)
+			return getDirectChild(full);
+
+		full = clean(full);
+		final String separator = plasma.getSeparator();
+		Quark<DATA> current = this;
+		while (true) {
+			int idx = full.indexOf(separator);
+			if (idx == -1)
+				return current.getDirectChild(full);
+
+			final String first = full.substring(0, idx);
+			current = current.getDirectChild(first);
+			full = clean(full.substring(idx + separator.length()));
+		}
+	}
+
+	private Quark<DATA> getDirectChild(String name) {
+		Quark<DATA> result = children.get(name);
+		if (result == null) {
+			result = new Quark<DATA>(plasma, this, name);
+			children.put(name, result);
+		}
+		return result;
+	}
+
+	private String clean(String full) {
+		final String separator = plasma.getSeparator();
+		while (full.startsWith(separator))
+			full = full.substring(separator.length());
+		while (full.endsWith(separator))
+			full = full.substring(0, full.length() - separator.length());
+
+		return full;
+	}
+
+	public Collection<Quark<DATA>> getChildren() {
+		return Collections.unmodifiableCollection(children.values());
 	}
 
 	public int countChildren() {
-		return plasma.countChildren(this);
-	}
-
-	public List<Quark> getChildren() {
-		return plasma.getChildren(this);
-	}
-
-	void setParent(Quark newFather) {
-		this.parent = newFather;
+		return children.size();
 	}
 
 }

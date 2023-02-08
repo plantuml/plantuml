@@ -74,24 +74,14 @@ public class CommandUrl extends SingleLineCommand2<AbstractEntityDiagram> {
 	@Override
 	protected CommandExecutionResult executeArg(AbstractEntityDiagram diagram, LineLocation location, RegexResult arg) {
 		final String idShort = arg.get("CODE", 0);
-//		final Quark ident = diagram.buildFromName(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(idShort));
-//		final Quark code = diagram.buildFromFullPath(idShort);
 
-		final Quark quark = diagram.quarkInContext(diagram.cleanIdForQuark(idShort), false);
-		final Entity entity = (Entity) quark.getData();
+		final Quark<Entity> quark = diagram.quarkInContext(diagram.cleanId(idShort), false);
+		final Entity entity = quark.getData();
 		if (entity == null)
 			return CommandExecutionResult.error(quark.getName() + " does not exist");
 
 		final String urlString = arg.get("URL", 0);
-//		final boolean leafExist = code.getData() != null;
-//		if (leafExist)
-//			entity = diagram.getOrCreateLeaf(ident, code, null, null);
-//		else if (diagram.isGroup(idShort))
-//			entity = diagram.getGroup(idShort);
-//		else
-//			return CommandExecutionResult.error(code + " does not exist");
 
-		// final IEntity entity = diagram.getOrCreateLeaf(code, null);
 		final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), UrlMode.STRICT);
 		final Url url = urlBuilder.getUrl(urlString);
 		entity.addUrl(url);

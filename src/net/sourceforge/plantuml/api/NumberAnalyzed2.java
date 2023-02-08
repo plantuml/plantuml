@@ -32,7 +32,6 @@ import java.util.StringTokenizer;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.prefs.Preferences;
 
-
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.utils.Log;
 

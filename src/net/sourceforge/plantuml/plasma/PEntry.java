@@ -30,42 +30,18 @@
  *
  *
  * Original Author:  Arnaud Roques
- *
+ * 
  *
  */
-package net.sourceforge.plantuml.activitydiagram.command;
+package net.sourceforge.plantuml.plasma;
 
-import net.sourceforge.plantuml.activitydiagram.ActivityDiagram;
-import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.SingleLineCommand2;
-import net.sourceforge.plantuml.regex.IRegex;
-import net.sourceforge.plantuml.regex.RegexConcat;
-import net.sourceforge.plantuml.regex.RegexLeaf;
-import net.sourceforge.plantuml.regex.RegexResult;
-import net.sourceforge.plantuml.utils.LineLocation;
+class PEntry<DATA> {
 
-public class CommandInnerConcurrent extends SingleLineCommand2<ActivityDiagram> {
+	final Quark<DATA> first;
+	int counter = 1;
 
-	public CommandInnerConcurrent() {
-		super(getRegexConcat());
-	}
-
-	static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandInnerConcurrent.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("--"), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("NAME", "(.*)"), //
-				RegexLeaf.end()); //
-	}
-
-	@Override
-	protected CommandExecutionResult executeArg(ActivityDiagram diagram, LineLocation location, RegexResult arg) {
-		if (diagram.getCurrentGroup().isRoot()) {
-			return CommandExecutionResult.error("No inner activity");
-		}
-		diagram.concurrentActivity(arg.get("NAME", 0));
-
-		return CommandExecutionResult.ok();
+	PEntry(Quark<DATA> first) {
+		this.first = first;
 	}
 
 }

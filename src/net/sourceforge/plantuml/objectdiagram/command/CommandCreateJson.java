@@ -48,6 +48,8 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.json.Json.DefaultHandler;
+import net.sourceforge.plantuml.json.JsonParser;
+import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.klimt.color.ColorParser;
 import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
@@ -58,8 +60,6 @@ import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.text.StringLocated;
-import net.sourceforge.plantuml.json.JsonParser;
-import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.url.UrlBuilder;
 import net.sourceforge.plantuml.utils.BlocLines;
 
@@ -143,16 +143,12 @@ public class CommandCreateJson extends CommandMultilines2<AbstractEntityDiagram>
 
 	private Entity executeArg0(AbstractEntityDiagram diagram, RegexResult line0) throws NoSuchColorException {
 		final String name = line0.get("NAME", 1);
-//		final Quark ident = diagram.buildFromName(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(name));
-//		final Quark code = diagram.buildFromFullPath(name);
-		final Quark quark = diagram.quarkInContext(diagram.cleanIdForQuark(name), false);
+
+		final Quark<Entity> quark = diagram.quarkInContext(diagram.cleanId(name), false);
 		if (quark.getData() != null)
 			return null;
 		final String displayString = line0.get("NAME", 0);
 		final String stereotype = line0.get("STEREO", 0);
-//		final boolean leafExist = diagram.leafExist(code);
-//		if (leafExist)
-//			return diagram.getOrCreateLeaf(diagram.buildFromName(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(name)), code, LeafType.JSON, null);
 
 		Display display = Display.getWithNewlines(displayString);
 		if (Display.isNull(display))

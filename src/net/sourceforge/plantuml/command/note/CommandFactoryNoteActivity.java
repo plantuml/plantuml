@@ -114,15 +114,11 @@ public final class CommandFactoryNoteActivity implements SingleMultiFactoryComma
 							UrlMode.STRICT);
 					url = urlBuilder.getUrl(strings.get(0).toString());
 				}
-				if (url != null) {
+				if (url != null)
 					strings = strings.subList(1, strings.size());
-				}
-
-				// final String s = StringUtils.getMergedLines(strings);
 
 				final String codeString = diagram.getUniqueSequence("GMN");
-				final Quark quark = diagram.quarkInContext(codeString, false);
-				// final Quark code = diagram.buildCode(codeString);
+				final Quark<Entity> quark = diagram.quarkInContext(codeString, false);
 				final Entity note = diagram.reallyCreateLeaf(quark, strings, LeafType.NOTE, null);
 				if (url != null)
 					note.addUrl(url);
@@ -139,10 +135,8 @@ public final class CommandFactoryNoteActivity implements SingleMultiFactoryComma
 			protected CommandExecutionResult executeArg(final ActivityDiagram diagram, LineLocation location,
 					RegexResult arg) throws NoSuchColorException {
 				final String tmp = diagram.getUniqueSequence("GN");
-				final Quark quark = diagram.quarkInContext(diagram.cleanIdForQuark(tmp), false);
-//				final Quark ident = diagram
-//						.buildFromName(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(tmp));
-				// final Quark code = diagram.buildCode(tmp);
+				final Quark<Entity> quark = diagram.quarkInContext(diagram.cleanId(tmp), false);
+
 				final Entity note = diagram.createNote(quark, tmp, Display.getWithNewlines(arg.get("NOTE", 0)));
 				return executeInternal(diagram, arg, note);
 			}

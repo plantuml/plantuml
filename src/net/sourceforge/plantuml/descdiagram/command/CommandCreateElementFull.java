@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.descdiagram.command;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.baraye.Entity;
-import net.sourceforge.plantuml.baraye.EntityUtils;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.classdiagram.command.CommandCreateClassMultilines;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -226,10 +225,7 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 
 		}
 
-//		final String idShort = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(codeRaw);
-//		final Quark ident = diagram.buildFromName(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(idShort));
-//		final Quark code = diagram.buildFromFullPath(idShort);
-		final Quark quark = diagram.quarkInContext(diagram.cleanIdForQuark(codeRaw), false);
+		final Quark<Entity> quark = diagram.quarkInContext(diagram.cleanId(codeRaw), false);
 
 		if (diagram.isGroup(quark))
 			return CommandExecutionResult.error("This element (" + quark.getName() + ") is already defined");
@@ -246,7 +242,7 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 		if ((type == LeafType.PORTIN || type == LeafType.PORTOUT) && diagram.getCurrentGroup().isRoot())
 			return CommandExecutionResult.error("Port can only be used inside an element and not at root level");
 
-		Entity entity = (Entity) quark.getData();
+		Entity entity = quark.getData();
 		if (entity == null)
 			entity = diagram.reallyCreateLeaf(quark, Display.getWithNewlines(display), type, usymbol);
 
@@ -275,19 +271,14 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 
 		entity.setColors(colors);
 
-		// entity.setSpecificColorTOBEREMOVED(ColorType.BACK,
-		// diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR",
-		// 0)));
 		return CommandExecutionResult.ok();
 	}
 
-	public static boolean existsWithBadType3(AbstractEntityDiagram diagram, Quark code, LeafType type,
-			USymbol usymbol) {
+	public static boolean existsWithBadType3(AbstractEntityDiagram diagram, Quark<Entity> code, LeafType type, USymbol usymbol) {
 		if (code.getData() == null)
 			return false;
 
-		// final ILeaf other = diagram.getLeafFromName(code.getName());
-		final Entity other = (Entity) code.getData();
+		final Entity other = code.getData();
 		if (other.getLeafType() != type)
 			return true;
 

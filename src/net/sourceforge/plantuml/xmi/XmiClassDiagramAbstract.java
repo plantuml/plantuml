@@ -139,7 +139,7 @@ abstract class XmiClassDiagramAbstract implements XmlDiagramTransformer {
 
 		cla.setAttribute("xmi.id", entity.getUid());
 		cla.setAttribute("name", entity.getDisplay().get(0).toString());
-		final String parentCode = entity.getQuark().getParent().toString(".");
+		final String parentCode = entity.getQuark().getParent().toStringPoint();
 
 		if (parentCode.length() == 0)
 			cla.setAttribute("namespace", CucaDiagramXmiMaker.getModel(classDiagram));

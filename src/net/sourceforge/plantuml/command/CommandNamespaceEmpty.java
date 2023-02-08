@@ -82,13 +82,9 @@ public class CommandNamespaceEmpty extends SingleLineCommand2<ClassDiagram> {
 			throws NoSuchColorException {
 		final String idShort = arg.get("NAME", 0);
 
-		final Quark quark = diagram.quarkInContext(diagram.cleanIdForQuark(idShort), true);
+		final Quark<Entity> quark = diagram.quarkInContext(diagram.cleanId(idShort), true);
 		if (quark.getData() != null)
 			return CommandExecutionResult.error("Already exists " + quark.getName());
-
-//		final Quark idNewLong = diagram
-//				.buildFromName(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(idShort));
-//		final Quark code = diagram.buildFromFullPath(idShort);
 
 		final Display display = Display.getWithNewlines(quark.getQualifiedName());
 		final CommandExecutionResult status = diagram.gotoGroup(quark, display, GroupType.PACKAGE);

@@ -39,7 +39,6 @@ import java.util.Map;
 
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.baraye.Entity;
-import net.sourceforge.plantuml.baraye.EntityUtils;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.cucadiagram.Display;
@@ -57,86 +56,81 @@ public class StateDiagram extends AbstractEntityDiagram {
 		// setNamespaceSeparator(null);
 	}
 
-	public boolean checkConcurrentStateOk(Quark code) {
+	public boolean checkConcurrentStateOk(Quark<Entity> code) {
 		final boolean result = checkConcurrentStateOkInternal(code);
-		// System.err.println("checkConcurrentStateOk " + code + " " + ident + " " +
-		// result);
 		return result;
 	}
 
-	private boolean checkConcurrentStateOkInternal(Quark code) {
-		if (code.getData() == null) {
+	private boolean checkConcurrentStateOkInternal(Quark<Entity> code) {
+		if (code.getData() == null)
 			return true;
-		}
-		// final IEntity existing = this.getLeafFromName(code.getName());
-		final Entity existing = (Entity) code.getData();
+
+		final Entity existing = code.getData();
 		if (getCurrentGroup().getGroupType() == GroupType.CONCURRENT_STATE
-				&& getCurrentGroup() != existing.getParentContainer()) {
+				&& getCurrentGroup() != existing.getParentContainer())
 			return false;
-		}
+
 		if (existing.getParentContainer().getGroupType() == GroupType.CONCURRENT_STATE
-				&& getCurrentGroup() != existing.getParentContainer()) {
+				&& getCurrentGroup() != existing.getParentContainer())
 			return false;
-		}
+
 		return true;
 	}
-
-
 
 	public Entity getStart() {
 		final Entity g = getCurrentGroup();
 		if (g.isRoot()) {
 			final String idShort = "*start*";
-			final Quark quark = quarkInContext(cleanIdForQuark(idShort), false);
+			final Quark<Entity> quark = quarkInContext(cleanId(idShort), false);
 			if (quark.getData() == null)
-				quark.setData(reallyCreateLeaf(quark, Display.getWithNewlines(""), LeafType.CIRCLE_START, null));
-			return (Entity) quark.getData();
+				reallyCreateLeaf(quark, Display.getWithNewlines(""), LeafType.CIRCLE_START, null);
+			return quark.getData();
 		}
 		final String idShort = "*start*" + g.getName();
-		final Quark quark = quarkInContext(cleanIdForQuark(idShort), false);
+		final Quark<Entity> quark = quarkInContext(cleanId(idShort), false);
 		if (quark.getData() == null)
-			quark.setData(reallyCreateLeaf(quark, Display.getWithNewlines(""), LeafType.CIRCLE_START, null));
-		return (Entity) quark.getData();
+			reallyCreateLeaf(quark, Display.getWithNewlines(""), LeafType.CIRCLE_START, null);
+		return quark.getData();
 	}
 
 	public Entity getEnd() {
 		final Entity p = getCurrentGroup();
 		if (p.isRoot()) {
 			final String idShort = "*end*";
-			final Quark quark = quarkInContext(cleanIdForQuark(idShort), false);
+			final Quark<Entity> quark = quarkInContext(cleanId(idShort), false);
 			if (quark.getData() == null)
-				quark.setData(reallyCreateLeaf(quark, Display.getWithNewlines(""), LeafType.CIRCLE_END, null));
-			return (Entity) quark.getData();
+				reallyCreateLeaf(quark, Display.getWithNewlines(""), LeafType.CIRCLE_END, null);
+			return quark.getData();
 		}
 		final String idShort = "*end*" + p.getName();
-		final Quark quark = quarkInContext(cleanIdForQuark(idShort), false);
+		final Quark<Entity> quark = quarkInContext(cleanId(idShort), false);
 		if (quark.getData() == null)
-			quark.setData(reallyCreateLeaf(quark, Display.getWithNewlines(""), LeafType.CIRCLE_END, null));
-		return (Entity) quark.getData();
+			reallyCreateLeaf(quark, Display.getWithNewlines(""), LeafType.CIRCLE_END, null);
+		return quark.getData();
 	}
 
 	public Entity getHistorical() {
 		final Entity g = getCurrentGroup();
 		if (g.isRoot()) {
 			final String idShort = "*historical*";
-			final Quark quark = quarkInContext(cleanIdForQuark(idShort), false);
+			final Quark<Entity> quark = quarkInContext(cleanId(idShort), false);
 			if (quark.getData() == null)
-				quark.setData(reallyCreateLeaf(quark, Display.getWithNewlines(""), LeafType.PSEUDO_STATE, null));
-			return (Entity) quark.getData();
+				reallyCreateLeaf(quark, Display.getWithNewlines(""), LeafType.PSEUDO_STATE, null);
+			return quark.getData();
 		}
 		final String idShort = "*historical*" + g.getName();
-		final Quark quark = quarkInContext(cleanIdForQuark(idShort), false);
+		final Quark<Entity> quark = quarkInContext(cleanId(idShort), false);
 		if (quark.getData() == null)
-			quark.setData(reallyCreateLeaf(quark, Display.getWithNewlines(""), LeafType.PSEUDO_STATE, null));
-		return (Entity) quark.getData();
+			reallyCreateLeaf(quark, Display.getWithNewlines(""), LeafType.PSEUDO_STATE, null);
+		return quark.getData();
 	}
 
 	public Entity getHistorical(String idShort) {
-		final Quark quark = quarkInContext(cleanIdForQuark(idShort), false);
+		final Quark<Entity> quark = quarkInContext(cleanId(idShort), false);
 		gotoGroup(quark, Display.getWithNewlines(quark), GroupType.STATE);
 		final Entity g = getCurrentGroup();
 		final String tmp = "*historical*" + g.getName();
-		final Quark ident = quarkInContext(tmp, false);
+		final Quark<Entity> ident = quarkInContext(tmp, false);
 		final Entity result = reallyCreateLeaf(ident, Display.getWithNewlines(ident), LeafType.PSEUDO_STATE, null);
 		endGroup();
 		return result;
@@ -146,27 +140,27 @@ public class StateDiagram extends AbstractEntityDiagram {
 		final Entity g = getCurrentGroup();
 		if (g.isRoot()) {
 			final String idShort = "*deephistory*";
-			final Quark quark = quarkInContext(cleanIdForQuark(idShort), false);
+			final Quark<Entity> quark = quarkInContext(cleanId(idShort), false);
 			if (quark.getData() == null)
-				quark.setData(reallyCreateLeaf(quark, Display.getWithNewlines(""), LeafType.DEEP_HISTORY, null));
-			return (Entity) quark.getData();
+				reallyCreateLeaf(quark, Display.getWithNewlines(""), LeafType.DEEP_HISTORY, null);
+			return quark.getData();
 		}
 
 		final String idShort = "*deephistory*" + g.getName();
-		final Quark quark = quarkInContext(cleanIdForQuark(idShort), false);
+		final Quark<Entity> quark = quarkInContext(cleanId(idShort), false);
 		if (quark.getData() == null)
-			quark.setData(reallyCreateLeaf(quark, Display.getWithNewlines(""), LeafType.DEEP_HISTORY, null));
-		return (Entity) quark.getData();
+			reallyCreateLeaf(quark, Display.getWithNewlines(""), LeafType.DEEP_HISTORY, null);
+		return quark.getData();
 
 	}
 
 	public Entity getDeepHistory(String idShort) {
-		final Quark quark = quarkInContext(cleanIdForQuark(idShort), false);
-		// final Quark codeGroup = buildFromFullPath(idShort);
+		final Quark<Entity> quark = quarkInContext(cleanId(idShort), false);
+
 		gotoGroup(quark, Display.getWithNewlines(quark), GroupType.STATE);
 		final Entity g = getCurrentGroup();
 		final String tmp = "*deephistory*" + g.getName();
-		final Quark ident = quarkInContext(cleanIdForQuark(tmp), false);
+		final Quark<Entity> ident = quarkInContext(cleanId(tmp), false);
 		final Entity result = reallyCreateLeaf(ident, Display.getWithNewlines(""), LeafType.DEEP_HISTORY, null);
 		endGroup();
 		return result;
@@ -174,42 +168,34 @@ public class StateDiagram extends AbstractEntityDiagram {
 
 	public boolean concurrentState(char direction) {
 		final Entity cur = getCurrentGroup();
-		// printlink("BEFORE");
-		if (cur.isRoot() == false && cur.getGroupType() == GroupType.CONCURRENT_STATE) {
-			super.endGroup();
-		}
 		getCurrentGroup().setConcurrentSeparator(direction);
+
+		if (cur.getGroupType() == GroupType.CONCURRENT_STATE)
+			super.endGroup();
+
 		final String tmp1 = this.getUniqueSequence(CONCURRENT_PREFIX);
-		final Quark ident1 = quarkInContext(cleanIdForQuark(tmp1), false);
+		final Quark<Entity> ident1 = quarkInContext(cleanId(tmp1), false);
 
 		gotoGroup(ident1, Display.create(""), GroupType.CONCURRENT_STATE);
-		final Entity conc1 = getCurrentGroup();
-		if (cur.isRoot() == false && cur.getGroupType() == GroupType.STATE) {
-			// cur.moveEntitiesTo(conc1);
-			getPlasma().moveAllChildOfToAnewFather(cur.getQuark(), conc1.getQuark());
-			super.endGroup();
+		getCurrentGroup().setConcurrentSeparator(direction);
+//		// final Entity conc1 = getCurrentGroup();
+//		if (cur.getGroupType() == GroupType.STATE) {
+//
+////			moveAllChildOfToAnewFather(cur.getQuark(), conc1.getQuark());
+////			super.endGroup();
+//
+//			final String tmp2 = this.getUniqueSequence(CONCURRENT_PREFIX);
+//			final Quark<Entity> ident2 = quarkInContext(tmp2, false);
+//			gotoGroup(ident2, Display.create(""), GroupType.CONCURRENT_STATE);
+//		}
 
-			final String tmp2 = this.getUniqueSequence(CONCURRENT_PREFIX);
-
-			final Quark ident2 = quarkInContext(tmp2, false);
-
-			gotoGroup(ident2, Display.create(""), GroupType.CONCURRENT_STATE);
-		}
-		// printlink("AFTER");
 		return true;
 	}
-
-	// private void printlink(String comment) {
-	// Log.println("COMMENT="+comment);
-	// for (Link l : getLinks()) {
-	// Log.println(l);
-	// }
-	// }
 
 	@Override
 	public boolean endGroup() {
 		final Entity cur = getCurrentGroup();
-		if (cur.isRoot() == false && cur.getGroupType() == GroupType.CONCURRENT_STATE)
+		if (cur.getGroupType() == GroupType.CONCURRENT_STATE)
 			super.endGroup();
 
 		return super.endGroup();
@@ -231,21 +217,21 @@ public class StateDiagram extends AbstractEntityDiagram {
 		for (Link link : this.getLinks()) {
 			final Entity parent1 = getGroupParentIfItIsConcurrentState(link.getEntity1());
 			final Entity parent2 = getGroupParentIfItIsConcurrentState(link.getEntity2());
-			if (isCompatible(parent1, parent2) == false) {
+			if (isCompatible(parent1, parent2) == false)
 				return "State within concurrent state cannot be linked out of this concurrent state (between "
 						+ link.getEntity1().getName() + " and " + link.getEntity2().getName() + ")";
-			}
+
 		}
 		return super.checkFinalError();
 	}
 
 	private static boolean isCompatible(Entity parent1, Entity parent2) {
-		if (parent1 == null && parent2 == null) {
+		if (parent1 == null && parent2 == null)
 			return true;
-		}
-		if (parent1 != null ^ parent2 != null) {
+
+		if (parent1 != null ^ parent2 != null)
 			return false;
-		}
+
 		assert parent1 != null && parent2 != null;
 		return parent1 == parent2;
 	}
@@ -253,9 +239,9 @@ public class StateDiagram extends AbstractEntityDiagram {
 	private static Entity getGroupParentIfItIsConcurrentState(Entity ent) {
 		Entity parent = ent.getParentContainer();
 		while (parent != null) {
-			if (parent.getGroupType() == GroupType.CONCURRENT_STATE) {
+			if (parent.getGroupType() == GroupType.CONCURRENT_STATE)
 				return parent;
-			}
+
 			parent = parent.getParentContainer();
 		}
 		return null;

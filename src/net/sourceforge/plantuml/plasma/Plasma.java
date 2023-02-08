@@ -38,21 +38,34 @@ package net.sourceforge.plantuml.plasma;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class Plasma {
+public class Plasma<DATA> {
 
 	private String separator;
-	private final Quark root;
-	private final List<Quark> quarks = new ArrayList<>();
+	private final Quark<DATA> root;
+	private final List<Quark<DATA>> quarks = new ArrayList<>();
+	private final Map<String, PEntry<DATA>> stats = new HashMap<String, PEntry<DATA>>();
 
 	public Plasma(String separator) {
-		this.root = new Quark(this, null, "");
 		this.separator = separator;
-		this.quarks.add(root);
+		this.root = new Quark<DATA>(this, null, "");
 	}
 
-	public Quark root() {
+	protected void register(Quark<DATA> quark) {
+		quarks.add(quark);
+		PEntry<DATA> ent = stats.get(quark.getName());
+		if (ent == null) {
+			ent = new PEntry<DATA>(quark);
+			stats.put(quark.getName(), ent);
+		} else {
+			ent.counter++;
+		}
+	}
+
+	public Quark<DATA> root() {
 		return root;
 	}
 
@@ -70,100 +83,22 @@ public class Plasma {
 		return this.separator != null && this.separator != "\u0000";
 	}
 
-	public Quark parse(Quark root, String full) {
-
-		final List<String> result = root.getSignature();
-		while (true) {
-			int idx = full.indexOf(separator);
-			if (idx == -1) {
-				result.add(full);
-				return ensurePresent(result);
-			}
-			if (idx > 0) {
-				result.add(full.substring(0, idx));
-				ensurePresent(new ArrayList<>(result));
-			}
-
-			full = full.substring(idx + separator.length());
-		}
-	}
-
-	Quark ensurePresent(List<String> result) {
-		Quark quark = getIfExists(result);
-		if (quark == null) {
-			if (result.size() == 0) {
-				// quark = new Quark(this, null, result);
-				throw new UnsupportedOperationException();
-			} else {
-				final Quark parent = ensurePresent(result.subList(0, result.size() - 1));
-				quark = new Quark(this, parent, result.get(result.size() - 1));
-			}
-			// System.err.println("PUTTING " + quark);
-			quarks.add(quark);
-		}
-		return quark;
-
-	}
-
-	public Collection<Quark> quarks() {
+	public Collection<Quark<DATA>> quarks() {
 		return Collections.unmodifiableCollection(quarks);
 	}
 
-	public Quark firstWithName(String name) {
-		for (Quark quark : quarks)
-			if (quark.getName().equals(name))
-				return quark;
-
-		return null;
+	public Quark<DATA> firstWithName(String name) {
+		final PEntry<DATA> ent = stats.get(name);
+		if (ent == null)
+			return null;
+		return ent.first;
 	}
 
 	public int countByName(String name) {
-		int count = 0;
-		for (Quark quark : quarks)
-			if (quark.getName().equals(name))
-				count++;
-		return count;
-	}
-
-	public Quark getIfExistsFromFullPath(String full) {
-		for (Quark quark : quarks)
-			if (quark.toString(separator).equals(full))
-				return quark;
-		return null;
-	}
-
-	public Quark getIfExists(List<String> signature) {
-		for (Quark quark : quarks)
-			if (quark.getSignature().equals(signature))
-				return quark;
-		return null;
-	}
-
-	public int countChildren(Quark parent) {
-		int count = 0;
-		for (Quark quark : quarks)
-			if (quark.getParent() == parent)
-				count++;
-		return count;
-	}
-
-	public List<Quark> getChildren(Quark parent) {
-		final List<Quark> result = new ArrayList<>();
-		for (Quark quark : quarks)
-			if (quark.getParent() == parent)
-				result.add(quark);
-		return Collections.unmodifiableList(result);
-	}
-
-	public void moveAllChildOfToAnewFather(Quark oldFather, Quark newFather) {
-		for (Quark quark : quarks) {
-			if (quark == newFather)
-				continue;
-
-			if (quark.getParent() == oldFather)
-				quark.setParent(newFather);
-		}
-
+		final PEntry<DATA> ent = stats.get(name);
+		if (ent == null)
+			return 0;
+		return ent.counter;
 	}
 
 }

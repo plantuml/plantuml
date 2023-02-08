@@ -108,36 +108,19 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 
 	private final List<Association> associations = new ArrayList<>();
 
-	public CommandExecutionResult associationClass(Entity entity1A, Entity entity1B, Entity entity2A,
-			Entity entity2B, LinkType linkType, Display label) {
-//		final Quark ident1A = buildFromName(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(name1A));
-//		final Quark ident1B = buildFromName(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(name1B));
-//		final Quark ident2A = buildFromName(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(name2A));
-//		final Quark ident2B = buildFromName(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(name2B));
-//		final Quark code1A = buildFromFullPath(name1A);
-//		final Quark code1B = buildFromFullPath(name1B);
-//		final Quark code2A = buildFromFullPath(name2A);
-//		final Quark code2B = buildFromFullPath(name2B);
-//		final IEntity entity1A = getOrCreateLeaf(ident1A, code1A, null, null);
-//		final IEntity entity1B = getOrCreateLeaf(ident1B, code1B, null, null);
-//		final IEntity entity2A = getOrCreateLeaf(ident2A, code2A, null, null);
-//		final IEntity entity2B = getOrCreateLeaf(ident2B, code2B, null, null);
+	public CommandExecutionResult associationClass(Entity entity1A, Entity entity1B, Entity entity2A, Entity entity2B,
+			LinkType linkType, Display label) {
+
 		final List<Association> same1 = getExistingAssociatedPoints(entity1A, entity1B);
 		final List<Association> same2 = getExistingAssociatedPoints(entity2A, entity2B);
 		if (same1.size() == 0 && same2.size() == 0) {
 			final String tmp1 = this.getUniqueSequence("apoint");
 			final String tmp2 = this.getUniqueSequence("apoint");
-//			final Quark ident1 = buildFromName(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(tmp1));
-//			final Quark ident2 = buildFromName(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(tmp2));
-//			final Quark code1 = buildFromFullPath(tmp1);
-//			final Quark code2 = buildFromFullPath(tmp2);
-//			final IEntity point1 = getOrCreateLeaf(ident1, code1, LeafType.POINT_FOR_ASSOCIATION, null);
-//			final IEntity point2 = getOrCreateLeaf(ident2, code2, LeafType.POINT_FOR_ASSOCIATION, null);
 
-			final Quark code1 = currentQuark().child(tmp1);
+			final Quark<Entity> code1 = getCurrentGroup().getQuark().child(tmp1);
 			final Entity point1 = reallyCreateLeaf(code1, Display.getWithNewlines(""), LeafType.POINT_FOR_ASSOCIATION,
 					null);
-			final Quark code2 = currentQuark().child(tmp2);
+			final Quark<Entity> code2 = getCurrentGroup().getQuark().child(tmp2);
 			final Entity point2 = reallyCreateLeaf(code2, Display.getWithNewlines(""), LeafType.POINT_FOR_ASSOCIATION,
 					null);
 
@@ -162,10 +145,8 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 		else
 			removeLink(existingLink1);
 
-		final Entity entity1real = existingLink1.isInverted() ? existingLink1.getEntity2()
-				: existingLink1.getEntity1();
-		final Entity entity2real = existingLink1.isInverted() ? existingLink1.getEntity1()
-				: existingLink1.getEntity2();
+		final Entity entity1real = existingLink1.isInverted() ? existingLink1.getEntity2() : existingLink1.getEntity1();
+		final Entity entity2real = existingLink1.isInverted() ? existingLink1.getEntity1() : existingLink1.getEntity2();
 
 		final Link entity1ToPoint = new Link(getEntityFactory(), getSkinParam().getCurrentStyleBuilder(), entity1real,
 				point1, existingLink1.getType().getPart2(),
@@ -192,12 +173,6 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 
 	public boolean associationClass(int mode, Entity entity1, Entity entity2, Entity associed, LinkType linkType,
 			Display label) {
-//		final Quark ident1 = buildFromName(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(name1));
-//		final Quark ident2 = buildFromName(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(name2));
-//		final Quark code1 = buildFromFullPath(name1);
-//		final Quark code2 = buildFromFullPath(name2);
-//		final IEntity entity1 = getOrCreateLeaf(ident1, code1, null, null);
-//		final IEntity entity2 = getOrCreateLeaf(ident2, code2, null, null);
 		final List<Association> same = getExistingAssociatedPoints(entity1, entity2);
 		if (same.size() > 1) {
 			return false;
@@ -244,12 +219,8 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 			this.entity2 = entity2;
 			this.associed = associed;
 			final String idShort = AbstractClassOrObjectDiagram.this.getUniqueSequence("apoint");
-			final Quark quark = quarkInContext(cleanIdForQuark(idShort), false);
+			final Quark<Entity> quark = quarkInContext(cleanId(idShort), false);
 			point = reallyCreateLeaf(quark, Display.getWithNewlines(""), LeafType.POINT_FOR_ASSOCIATION, null);
-
-//			final Quark ident = buildFromName(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(idShort));
-//			final Quark code = buildFromFullPath(idShort);
-//			point = getOrCreateLeaf(ident, code, LeafType.POINT_FOR_ASSOCIATION, null);
 
 		}
 

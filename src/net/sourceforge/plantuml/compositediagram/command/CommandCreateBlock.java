@@ -73,7 +73,7 @@ public class CommandCreateBlock extends SingleLineCommand2<CompositeDiagram> {
 	protected CommandExecutionResult executeArg(CompositeDiagram diagram, LineLocation location, RegexResult arg) {
 		String display = arg.get("DISPLAY", 0);
 		final String idShort = arg.get("CODE", 0);
-		final Quark quark = diagram.quarkInContext(idShort, false);
+		final Quark<Entity> quark = diagram.quarkInContext(idShort, false);
 		if (display == null)
 			display = quark.getName();
 
@@ -81,7 +81,7 @@ public class CommandCreateBlock extends SingleLineCommand2<CompositeDiagram> {
 			return CommandExecutionResult.error("Already exists " + quark.getName());
 
 		final Entity ent = diagram.reallyCreateLeaf(quark, Display.getWithNewlines(quark), LeafType.BLOCK, null);
-		// ent.setDisplay(Display.getWithNewlines(display));
+
 		return CommandExecutionResult.ok();
 	}
 

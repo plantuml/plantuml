@@ -211,7 +211,7 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 	private CommandExecutionResult executeInternal(RegexResult line0, AbstractEntityDiagram diagram, Url url,
 			BlocLines strings) throws NoSuchColorException {
 		final String pos = line0.get("POSITION", 0);
-		final String idShort = diagram.cleanIdForQuark(line0.get("ENTITY", 0));
+		final String idShort = diagram.cleanId(line0.get("ENTITY", 0));
 		final Entity cl1;
 		if (idShort == null) {
 			cl1 = diagram.getLastEntity();
@@ -219,17 +219,10 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 				return CommandExecutionResult.error("Nothing to note to");
 
 		} else {
-			final Quark quark = diagram.quarkInContext(idShort, false);
-			cl1 = (Entity) quark.getData();
+			final Quark<Entity> quark = diagram.quarkInContext(idShort, false);
+			cl1 = quark.getData();
 			if (cl1 == null)
 				return CommandExecutionResult.error("Not known: " + idShort);
-//			final Quark ident = diagram.buildFromName(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(idShort));
-//			final Quark code = diagram.buildFromFullPath(idShort);
-//			if (diagram.isGroup(idShort))
-//				cl1 = diagram.getGroup(idShort);
-//			else
-//				cl1 = diagram.getOrCreateLeaf(ident, code, null, null);
-
 		}
 
 		final Position position = Position.valueOf(StringUtils.goUpperCase(pos))
@@ -250,7 +243,7 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 		}
 
 		final String tmp = diagram.getUniqueSequence("GMN");
-		final Quark quark = diagram.quarkInContext(tmp, false);
+		final Quark<Entity> quark = diagram.quarkInContext(tmp, false);
 		final Entity note = diagram.reallyCreateLeaf(quark, strings.toDisplay(), LeafType.NOTE, null);
 
 		if (stereotypeString != null)

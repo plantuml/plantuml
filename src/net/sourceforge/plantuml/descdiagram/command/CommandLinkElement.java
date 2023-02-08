@@ -242,8 +242,8 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 			throws NoSuchColorException {
 		final String ent1 = arg.get("ENT1", 0);
 		final String ent2 = arg.get("ENT2", 0);
-		final String ent1clean = diagram.cleanIdForQuark(ent1);
-		final String ent2clean = diagram.cleanIdForQuark(ent2);
+		final String ent1clean = diagram.cleanId(ent1);
+		final String ent2clean = diagram.cleanId(ent2);
 //		final String ent1 = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(ent1String);
 //		final String ent2 = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(ent2String);
 //		final Quark ident1 = diagram.buildFullyQualified(ent1);
@@ -299,35 +299,35 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 
 	private Entity getDummy(DescriptionDiagram diagram, String ident) {
 		if (ident.startsWith("()")) {
-			ident = diagram.cleanIdForQuark(ident);
-			final Quark quark = diagram.quarkInContext(ident, false);
+			ident = diagram.cleanId(ident);
+			final Quark<Entity> quark = diagram.quarkInContext(ident, false);
 			if (quark.getData() != null)
-				return (Entity) quark.getData();
+				return quark.getData();
 			return diagram.reallyCreateLeaf(quark, Display.getWithNewlines(quark.getName()), LeafType.DESCRIPTION,
 					USymbols.INTERFACE);
 		}
 
 		final char codeChar = ident.length() > 2 ? ident.charAt(0) : 0;
-		ident = diagram.cleanIdForQuark(ident);
-		final Quark quark = diagram.quarkInContext(ident, false);
+		ident = diagram.cleanId(ident);
+		final Quark<Entity> quark = diagram.quarkInContext(ident, false);
 
 		if (diagram.isGroup(quark))
-			return (Entity) quark.getData();
+			return quark.getData();
 		if (quark.getData() != null)
-			return (Entity) quark.getData();
+			return quark.getData();
 		final Display display = Display.getWithNewlines(quark.getName());
 
 		if (codeChar == '(') {
-			return (Entity) diagram.reallyCreateLeaf(quark, display, LeafType.USECASE, USymbols.USECASE);
+			return diagram.reallyCreateLeaf(quark, display, LeafType.USECASE, USymbols.USECASE);
 		} else if (codeChar == ':') {
-			return (Entity) diagram.reallyCreateLeaf(quark, display, LeafType.DESCRIPTION,
+			return diagram.reallyCreateLeaf(quark, display, LeafType.DESCRIPTION,
 					diagram.getSkinParam().actorStyle().toUSymbol());
 		} else if (codeChar == '[') {
 			final USymbol sym = diagram.getSkinParam().componentStyle().toUSymbol();
-			return (Entity) diagram.reallyCreateLeaf(quark, display, LeafType.DESCRIPTION, sym);
+			return diagram.reallyCreateLeaf(quark, display, LeafType.DESCRIPTION, sym);
 		}
 
-		return (Entity) diagram.reallyCreateLeaf(quark, display, LeafType.STILL_UNKNOWN, null);
+		return diagram.reallyCreateLeaf(quark, display, LeafType.STILL_UNKNOWN, null);
 	}
 
 }

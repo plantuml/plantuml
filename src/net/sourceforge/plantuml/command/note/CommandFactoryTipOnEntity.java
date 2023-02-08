@@ -170,28 +170,19 @@ public final class CommandFactoryTipOnEntity implements SingleMultiFactoryComman
 
 		final String idShort = line0.get("ENTITY", 0);
 		final String member = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(line0.get("ENTITY", 1));
-		
-		final Quark quark = diagram.quarkInContext(idShort, false);
-		final Entity cl1 = (Entity) quark.getData();
-		if (cl1 == null) 
+
+		final Quark<Entity> quark = diagram.quarkInContext(idShort, false);
+		final Entity cl1 = quark.getData();
+		if (cl1 == null)
 			return CommandExecutionResult.error("Nothing to note to");
-		
-		
-//		final Quark identShort = diagram.buildFromName(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(idShort));
-//		final Quark codeShort = diagram.buildFromFullPath(idShort);
-//		if (codeShort == null) {
-//			assert false;
-//			return CommandExecutionResult.error("Nothing to note to");
-//		}
-//		final IEntity cl1 = diagram.getOrCreateLeaf(identShort, codeShort, null, null);
+
 		final Position position = Position.valueOf(StringUtils.goUpperCase(pos))
 				.withRankdir(diagram.getSkinParam().getRankdir());
 
 		final String tmp = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(idShort + "$$$" + position.name());
-		final Quark identTip = diagram.quarkInContext(tmp, false);
-		Entity tips = (Entity) identTip.getData();
-		// final Quark identTip = diagram.buildFromName(tmp);
-		//IEntity tips = diagram.getLeafFromName(idShort + "$$$" + position.name());
+		final Quark<Entity> identTip = diagram.quarkInContext(tmp, false);
+		Entity tips = identTip.getData();
+
 		if (tips == null) {
 			tips = diagram.reallyCreateLeaf(identTip, Display.getWithNewlines(""), LeafType.TIPS, null);
 			final LinkType type = new LinkType(LinkDecor.NONE, LinkDecor.NONE).getInvisible();

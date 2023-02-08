@@ -157,8 +157,8 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 	protected CommandExecutionResult executeArg(AbstractClassOrObjectDiagram diagram, LineLocation location,
 			RegexResult arg) throws NoSuchColorException {
 
-		String ent1String = diagram.cleanIdForQuark(arg.get("ENT1", 0));
-		String ent2String = diagram.cleanIdForQuark(arg.get("ENT2", 0));
+		String ent1String = diagram.cleanId(arg.get("ENT1", 0));
+		String ent2String = diagram.cleanId(arg.get("ENT2", 0));
 		if (ent1String == null && ent2String == null)
 			return executeArgSpecial3(diagram, arg);
 
@@ -175,23 +175,23 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		String port1 = null;
 		String port2 = null;
 		final LinkType linkType = getLinkType(arg);
-		if (ent1String.contains("::") && diagram.getPlasma().firstWithName(ent1String) == null) {
+		if (ent1String.contains("::") && diagram.firstWithName(ent1String) == null) {
 			port1 = diagram.getPortId(ent1String);
 			ent1String = diagram.removePortId(ent1String);
 		}
 
-		if (ent2String.contains("::") && diagram.getPlasma().firstWithName(ent2String) == null) {
+		if (ent2String.contains("::") && diagram.firstWithName(ent2String) == null) {
 			port2 = diagram.getPortId(ent2String);
 			ent2String = diagram.removePortId(ent2String);
 		}
 
-		final Quark quark1 = diagram.quarkInContext(ent1String, false);
-		final Quark quark2 = diagram.quarkInContext(ent2String, false);
+		final Quark<Entity> quark1 = diagram.quarkInContext(ent1String, false);
+		final Quark<Entity> quark2 = diagram.quarkInContext(ent2String, false);
 
-		Entity cl1 = (Entity) quark1.getData();
+		Entity cl1 = quark1.getData();
 		if (cl1 == null)
 			cl1 = diagram.reallyCreateLeaf(quark1, Display.getWithNewlines(quark1.getName()), LeafType.CLASS, null);
-		Entity cl2 = (Entity) quark2.getData();
+		Entity cl2 = quark2.getData();
 		if (cl2 == null)
 			cl2 = diagram.reallyCreateLeaf(quark2, Display.getWithNewlines(quark2.getName()), LeafType.CLASS, null);
 
@@ -240,7 +240,6 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 //
 //		return diagram.isGroup(code);
 //	}
-
 
 	private void addLink(AbstractClassOrObjectDiagram diagram, Link link, String weight) {
 		diagram.addLink(link);
@@ -300,8 +299,8 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		final String name1A = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("COUPLE1", 0));
 		final String name1B = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("COUPLE1", 1));
 
-		Quark quark1A = diagram.quarkInContext(name1A, false);
-		Quark quark1B = diagram.quarkInContext(name1B, false);
+		Quark<Entity> quark1A = diagram.quarkInContext(name1A, false);
+		Quark<Entity> quark1B = diagram.quarkInContext(name1B, false);
 
 		if (quark1A.getData() != null == false)
 			return CommandExecutionResult.error("No class " + name1A);
@@ -309,13 +308,13 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		if (quark1B.getData() != null == false)
 			return CommandExecutionResult.error("No class " + name1B);
 
-		Entity cl1A = (Entity) quark1A.getData();
-		Entity cl1B = (Entity) quark1B.getData();
+		Entity cl1A = quark1A.getData();
+		Entity cl1B = quark1B.getData();
 
 		final String id2 = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("ENT2", 0), "\"");
-		final Quark ent2 = diagram.quarkInContext(id2, false);
+		final Quark<Entity> ent2 = diagram.quarkInContext(id2, false);
 
-		Entity cl2 = (Entity) ent2.getData();
+		Entity cl2 = ent2.getData();
 		if (cl2 == null)
 			cl2 = diagram.reallyCreateLeaf(ent2, Display.getWithNewlines(ent2.getName()), LeafType.CLASS, null);
 
@@ -333,8 +332,8 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		final String name2A = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("COUPLE2", 0));
 		final String name2B = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("COUPLE2", 1));
 
-		final Quark quark2A = diagram.quarkInContext(name2A, false);
-		final Quark quark2B = diagram.quarkInContext(name2B, false);
+		final Quark<Entity> quark2A = diagram.quarkInContext(name2A, false);
+		final Quark<Entity> quark2B = diagram.quarkInContext(name2B, false);
 
 		if (quark2A.getData() != null == false)
 			return CommandExecutionResult.error("No class " + name2A);
@@ -342,11 +341,11 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		if (quark2B.getData() != null == false)
 			return CommandExecutionResult.error("No class " + name2B);
 
-		final Entity cl2A = (Entity) quark2A.getData();
-		final Entity cl2B = (Entity) quark2B.getData();
+		final Entity cl2A = quark2A.getData();
+		final Entity cl2B = quark2B.getData();
 
 		final String id1 = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("ENT1", 0), "\"");
-		final Quark ent1 = diagram.quarkInContext(id1, false);
+		final Quark<Entity> ent1 = diagram.quarkInContext(id1, false);
 
 		Entity cl1 = (Entity) ent1.getData();
 		if (cl1 == null)
@@ -369,10 +368,10 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		final String name2A = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("COUPLE2", 0));
 		final String name2B = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("COUPLE2", 1));
 
-		final Quark quark1A = diagram.quarkInContext(name1A, false);
-		final Quark quark1B = diagram.quarkInContext(name1B, false);
-		final Quark quark2A = diagram.quarkInContext(name2A, false);
-		final Quark quark2B = diagram.quarkInContext(name2B, false);
+		final Quark<Entity> quark1A = diagram.quarkInContext(name1A, false);
+		final Quark<Entity> quark1B = diagram.quarkInContext(name1B, false);
+		final Quark<Entity> quark2A = diagram.quarkInContext(name2A, false);
+		final Quark<Entity> quark2B = diagram.quarkInContext(name2B, false);
 
 		if (quark1A.getData() != null == false)
 			return CommandExecutionResult.error("No class " + name1A);

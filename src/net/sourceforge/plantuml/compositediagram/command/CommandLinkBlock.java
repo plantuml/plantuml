@@ -79,17 +79,15 @@ public class CommandLinkBlock extends SingleLineCommand2<CompositeDiagram> {
 	protected CommandExecutionResult executeArg(CompositeDiagram diagram, LineLocation location, RegexResult arg) {
 		final String ent1 = arg.get("ENT1", 0);
 		final String ent2 = arg.get("ENT2", 0);
-		final Quark quark1 = diagram.quarkInContext(diagram.cleanIdForQuark(ent1), false);
-		final Quark quark2 = diagram.quarkInContext(diagram.cleanIdForQuark(ent2), false);
-		final Entity cl1 = (Entity) quark1.getData();
+		final Quark<Entity> quark1 = diagram.quarkInContext(diagram.cleanId(ent1), false);
+		final Quark<Entity> quark2 = diagram.quarkInContext(diagram.cleanId(ent2), false);
+		final Entity cl1 = quark1.getData();
 		if (cl1 == null)
 			return CommandExecutionResult.error("No such element " + quark1.getName());
 
-		final Entity cl2 = (Entity) quark2.getData();
+		final Entity cl2 = quark2.getData();
 		if (cl2 == null)
 			return CommandExecutionResult.error("No such element " + quark2.getName());
-//		final IEntity cl1 = diagram.getOrCreateLeaf(quark1, diagram.buildFromFullPath(ent1), null, null);
-//		final IEntity cl2 = diagram.getOrCreateLeaf(quark2, diagram.buildFromFullPath(ent2), null, null);
 
 		final String deco1 = arg.get("DECO1", 0);
 		final String deco2 = arg.get("DECO2", 0);

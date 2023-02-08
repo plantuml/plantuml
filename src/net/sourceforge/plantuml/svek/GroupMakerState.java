@@ -48,7 +48,6 @@ import net.sourceforge.plantuml.cucadiagram.GroupType;
 import net.sourceforge.plantuml.cucadiagram.ICucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
-import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.cucadiagram.dot.DotData;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.klimt.UStroke;
@@ -63,7 +62,7 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.svek.image.EntityImageState;
 import net.sourceforge.plantuml.svek.image.EntityImageStateCommon;
 
-public final class GroupPngMakerState {
+public final class GroupMakerState {
 
 	private final ICucaDiagram diagram;
 	private final Entity group;
@@ -77,9 +76,18 @@ public final class GroupPngMakerState {
 
 		public Collection<Entity> getChildrenGroups(Entity parent) {
 			if (parent.isRoot())
-				return diagram.getChildrenGroups(group);
+				return filter(diagram.getChildrenGroups(group));
 
-			return diagram.getChildrenGroups(parent);
+			return filter(diagram.getChildrenGroups(parent));
+		}
+
+		private Collection<Entity> filter(Collection<Entity> groups) {
+			final List<Entity> result = new ArrayList<>();
+			for (Entity g : groups)
+				if (g.getGroupType() != GroupType.CONCURRENT_STATE)
+					result.add(g);
+
+			return result;
 		}
 
 		public boolean isEmpty(Entity g) {
@@ -88,7 +96,7 @@ public final class GroupPngMakerState {
 
 	}
 
-	public GroupPngMakerState(ICucaDiagram diagram, Entity group, StringBounder stringBounder) {
+	public GroupMakerState(ICucaDiagram diagram, Entity group, StringBounder stringBounder) {
 		this.diagram = diagram;
 		this.stringBounder = stringBounder;
 		this.group = group;
@@ -111,8 +119,7 @@ public final class GroupPngMakerState {
 		final ISkinParam skinParam = diagram.getSkinParam();
 
 		final Style style = EntityImageStateCommon.getStyleState(group, skinParam);
-		// final Style styleHeader = EntityImageStateCommon.getStyleStateHeader(group,
-		// skinParam);
+
 		final Style styleTitle = EntityImageStateCommon.getStyleStateTitle(group, skinParam);
 		final Style styleBody = EntityImageStateCommon.getStyleStateBody(group, skinParam);
 
@@ -125,18 +132,8 @@ public final class GroupPngMakerState {
 		if (group.countChildren() == 0 && group.groups().size() == 0)
 			return new EntityImageState(group, diagram.getSkinParam());
 
-		final List<Link> links = getPureInnerLinks();
-
-		final DotData dotData = new DotData(group, links, group.leafs(), diagram.getUmlDiagramType(),
-				skinParam, new InnerGroupHierarchy(), diagram.getEntityFactory(),
-				diagram.isHideEmptyDescriptionForState(), DotMode.NORMAL, diagram.getNamespaceSeparator(),
-				diagram.getPragma());
-
-		final GeneralImageBuilder svek2 = new GeneralImageBuilder(dotData, diagram.getEntityFactory(),
-				diagram.getSource(), diagram.getPragma(), stringBounder, SName.stateDiagram);
-
 		if (group.getGroupType() == GroupType.CONCURRENT_STATE)
-			return svek2.buildImage(null, new String[0]);
+			return createGeneralImageBuilder(group.leafs(), skinParam).buildImage(null, new String[0]);
 
 		if (group.getGroupType() != GroupType.STATE)
 			throw new UnsupportedOperationException(group.getGroupType().toString());
@@ -145,7 +142,6 @@ public final class GroupPngMakerState {
 		if (borderColor == null)
 			borderColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 
-		final Stereotype stereo = group.getStereotype();
 		HColor backColor = group.getColors().getColor(ColorType.BACK);
 		if (backColor == null)
 			backColor = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
@@ -154,41 +150,49 @@ public final class GroupPngMakerState {
 		if (stroke == null)
 			stroke = style.getStroke();
 
-		final TextBlock attribute = ((Entity) group).getStateHeader(skinParam);
-
-		final Stereotype stereotype = group.getStereotype();
-		final boolean withSymbol = stereotype != null && stereotype.isWithOOSymbol();
-
-		final boolean containsOnlyConcurrentStates = containsOnlyConcurrentStates(dotData);
-		final IEntityImage image = containsOnlyConcurrentStates ? buildImageForConcurrentState(dotData)
-				: svek2.buildImage(null, new String[0]);
+		final IEntityImage image;
+		if (containsSomeConcurrentStates()) {
+			final List<IEntityImage> inners = new ArrayList<>();
+			inners.add(createGeneralImageBuilder(filter(group.leafs()), skinParam).buildImage(null, new String[0]));
+			for (Entity inner : group.leafs())
+				if (inner.getLeafType() == LeafType.STATE_CONCURRENT)
+					inners.add(inner.getSvekImage());
+			image = new ConcurrentStates(inners, group.getConcurrentSeparator(), skinParam, group.getStereotype());
+		} else {
+			image = createGeneralImageBuilder(filter(group.leafs()), skinParam).buildImage(null, new String[0]);
+		}
 
 		final HColor bodyColor = styleBody.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
-		return new InnerStateAutonom(image, title, attribute, borderColor, backColor, group.getUrl99(), withSymbol,
-				stroke, rounded, shadowing, bodyColor);
+		final boolean withSymbol = group.getStereotype() != null && group.getStereotype().isWithOOSymbol();
+		return new InnerStateAutonom(image, title, group.getStateHeader(skinParam), borderColor, backColor,
+				group.getUrl99(), withSymbol, stroke, rounded, shadowing, bodyColor);
 
 	}
 
-	private IEntityImage buildImageForConcurrentState(DotData dotData) {
-		final List<IEntityImage> inners = new ArrayList<>();
-		for (Entity inner : dotData.getLeafs())
-			inners.add(inner.getSvekImage());
+	protected GeneralImageBuilder createGeneralImageBuilder(Collection<Entity> leafs, ISkinParam skinParam) {
+		final DotData dotData = new DotData(group, getPureInnerLinks(), leafs, diagram.getUmlDiagramType(), skinParam,
+				new InnerGroupHierarchy(), diagram.getEntityFactory(), diagram.isHideEmptyDescriptionForState(),
+				DotMode.NORMAL, diagram.getNamespaceSeparator(), diagram.getPragma());
 
-		return new CucaDiagramFileMakerSvek2InternalImage(inners, dotData.getTopParent().getConcurrentSeparator(),
-				dotData.getSkinParam(), group.getStereotype());
-
+		return new GeneralImageBuilder(dotData, diagram.getEntityFactory(), diagram.getSource(), diagram.getPragma(),
+				stringBounder, SName.stateDiagram);
 	}
 
-	private boolean containsOnlyConcurrentStates(DotData dotData) {
-		for (Entity leaf : dotData.getLeafs()) {
-			if (leaf instanceof Entity == false)
-				return false;
+	private Collection<Entity> filter(Collection<Entity> leafs) {
+		final List<Entity> result = new ArrayList<>();
+		for (Entity leaf : leafs)
+			if (leaf.getLeafType() != LeafType.STATE_CONCURRENT)
+				result.add(leaf);
 
-			if (((Entity) leaf).getLeafType() != LeafType.STATE_CONCURRENT)
-				return false;
+		return result;
+	}
 
-		}
-		return true;
+	private boolean containsSomeConcurrentStates() {
+		for (Entity entity : group.leafs())
+			if (entity.getLeafType() == LeafType.STATE_CONCURRENT)
+				return true;
+
+		return false;
 	}
 
 }

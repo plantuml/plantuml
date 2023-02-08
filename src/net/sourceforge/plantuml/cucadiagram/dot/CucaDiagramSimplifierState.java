@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.cucadiagram.GroupType;
 import net.sourceforge.plantuml.cucadiagram.ICucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
-import net.sourceforge.plantuml.svek.GroupPngMakerState;
+import net.sourceforge.plantuml.svek.GroupMakerState;
 import net.sourceforge.plantuml.svek.IEntityImage;
 
 public final class CucaDiagramSimplifierState {
@@ -63,7 +63,7 @@ public final class CucaDiagramSimplifierState {
 			changed = false;
 			final Collection<Entity> groups = getOrdered(diagram.getRootGroup());
 			for (Entity g : groups)
-				if (diagram.isAutarkic(g)) {
+				if (g.isAutarkic()) {
 					final IEntityImage img = computeImage(g);
 					g.overrideImage(img, g.getGroupType() == GroupType.CONCURRENT_STATE ? LeafType.STATE_CONCURRENT
 							: LeafType.STATE);
@@ -109,7 +109,7 @@ public final class CucaDiagramSimplifierState {
 	}
 
 	private IEntityImage computeImage(Entity g) throws IOException, InterruptedException {
-		final GroupPngMakerState maker = new GroupPngMakerState(diagram, g, stringBounder);
+		final GroupMakerState maker = new GroupMakerState(diagram, g, stringBounder);
 		return maker.getImage();
 	}
 

@@ -36,6 +36,18 @@
  */
 package net.sourceforge.plantuml.cucadiagram;
 
-final public class Together {
+import net.sourceforge.plantuml.baraye.Bag;
+
+final public class Together implements Bag {
+
+	private final Together parent;
+
+	public Together(Together parent) {
+		this.parent = parent;
+	}
+
+	public final Together getParent() {
+		return parent;
+	}
 
 }

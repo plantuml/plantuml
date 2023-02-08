@@ -42,7 +42,6 @@ import java.util.Map;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.LineBreakStrategy;
-
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.awt.geom.XRectangle2D;
 import net.sourceforge.plantuml.creole.atom.Atom;

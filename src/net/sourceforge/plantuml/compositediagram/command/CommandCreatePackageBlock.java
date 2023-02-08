@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.compositediagram.command;
 
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.compositediagram.CompositeDiagram;
@@ -74,7 +75,7 @@ public class CommandCreatePackageBlock extends SingleLineCommand2<CompositeDiagr
 
 		String display = arg.get("DISPLAY", 0);
 		final String idShort = arg.get("CODE", 0);
-		final Quark quark = diagram.quarkInContext(idShort, false);
+		final Quark<Entity> quark = diagram.quarkInContext(idShort, false);
 		if (display == null)
 			display = quark.getName();
 

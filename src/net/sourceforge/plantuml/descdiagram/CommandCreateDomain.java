@@ -90,18 +90,11 @@ public class CommandCreateDomain extends SingleLineCommand2<DescriptionDiagram> 
 		if (codeString == null)
 			codeString = displayString;
 
-		// final String genericOption = arg.getLazzy("DISPLAY", 1);
-		// final String generic = genericOption != null ? genericOption :
-		// arg.get("GENERIC", 0);
-
 		final String stereotype = arg.get("STEREO", 0);
 		final GroupType type = typeString.equalsIgnoreCase("domain") ? GroupType.DOMAIN : GroupType.REQUIREMENT;
 		final LeafType type2 = typeString.equalsIgnoreCase("domain") ? LeafType.DOMAIN : LeafType.REQUIREMENT;
 
-		final Quark quark = diagram.quarkInContext(diagram.cleanIdForQuark(codeString), false);
-
-//		final Quark ident = diagram.buildFromName(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(codeString));
-//		final Quark code = diagram.buildFromFullPath(codeString);
+		final Quark<Entity> quark = diagram.quarkInContext(diagram.cleanId(codeString), false);
 		if (quark.getData() != null)
 			return CommandExecutionResult.error("Object already exists : " + codeString);
 
@@ -110,17 +103,17 @@ public class CommandCreateDomain extends SingleLineCommand2<DescriptionDiagram> 
 		final String group = arg.get("GROUP", 0);
 		Entity entity;
 		if (group != null) {
-			final Entity currentGroup = diagram.getCurrentGroup();
+			// final Entity currentGroup = diagram.getCurrentGroup();
 			diagram.gotoGroup(quark, display, type);
 			entity = diagram.getCurrentGroup();
 		} else {
 			entity = diagram.reallyCreateLeaf(quark, display, type2, null);
 		}
-		if (stereotype != null) {
+		if (stereotype != null)
 			entity.setStereotype(Stereotype.build(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),
 					diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),
 					diagram.getSkinParam().getIHtmlColorSet()));
-		}
+
 		if (urlString != null) {
 			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), UrlMode.STRICT);
 			final Url url = urlBuilder.getUrl(urlString);

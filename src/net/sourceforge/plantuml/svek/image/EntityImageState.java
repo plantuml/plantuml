@@ -85,7 +85,8 @@ public class EntityImageState extends EntityImageStateCommon {
 	}
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-		final XDimension2D dim = title.calculateDimension(stringBounder).mergeTB(fields.calculateDimension(stringBounder));
+		final XDimension2D dim = title.calculateDimension(stringBounder)
+				.mergeTB(fields.calculateDimension(stringBounder));
 		double heightSymbol = 0;
 		if (withSymbol)
 			heightSymbol += 2 * smallRadius + smallMarginY;
@@ -95,7 +96,7 @@ public class EntityImageState extends EntityImageStateCommon {
 	}
 
 	final public void drawU(UGraphic ug) {
-		ug.startGroup(Collections.singletonMap(UGroupType.ID, getEntity().getQuark().toString(".")));
+		ug.startGroup(Collections.singletonMap(UGroupType.ID, getEntity().getQuark().toStringPoint()));
 		if (url != null)
 			ug.startUrl(url);
 

@@ -94,11 +94,11 @@ import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.utils.Direction;
 import net.sourceforge.plantuml.utils.LineLocation;
 
-final public class Entity implements SpecificBackcolorable, Hideable, Removeable, LineConfigurable {
+final public class Entity implements SpecificBackcolorable, Hideable, Removeable, LineConfigurable, Bag {
 
 	private final EntityFactory entityFactory;
 
-	private Quark quark;
+	private final Quark<Entity> quark;
 
 	private Url url;
 
@@ -157,7 +157,7 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 	}
 
 	// Back to Entity
-	private Entity(Quark quark, EntityFactory entityFactory, Bodier bodier, int rawLayout) {
+	private Entity(Quark<Entity> quark, EntityFactory entityFactory, Bodier bodier, int rawLayout) {
 		this.quark = Objects.requireNonNull(quark);
 		if (quark.isRoot())
 			this.uid = "clroot";
@@ -166,14 +166,15 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 		this.entityFactory = entityFactory;
 		this.bodier = bodier;
 		this.rawLayout = rawLayout;
+		this.quark.setData(this);
 	}
 
-	Entity(Quark quark, EntityFactory entityFactory, Bodier bodier, LeafType leafType, int rawLayout) {
+	Entity(Quark<Entity> quark, EntityFactory entityFactory, Bodier bodier, LeafType leafType, int rawLayout) {
 		this(Objects.requireNonNull(quark), entityFactory, bodier, rawLayout);
 		this.leafType = leafType;
 	}
 
-	Entity(Quark quark, EntityFactory entityFactory, Bodier bodier, GroupType groupType, int rawLayout) {
+	Entity(Quark<Entity> quark, EntityFactory entityFactory, Bodier bodier, GroupType groupType, int rawLayout) {
 		this(Objects.requireNonNull(quark), entityFactory, bodier, rawLayout);
 		this.groupType = groupType;
 	}
@@ -220,7 +221,7 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 		return true;
 	}
 
-	public Quark getQuark() {
+	public Quark<Entity> getQuark() {
 		return quark;
 	}
 
@@ -652,24 +653,24 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 
 	}
 
-	public Together getTogether() {
-		return together;
-	}
-
 	public void setTogether(Together together) {
 		this.together = together;
+	}
+
+	public Together getTogether() {
+		return this.together;
 	}
 
 	public Entity getParentContainer() {
 		if (quark.isRoot())
 			return null;
-		return (Entity) quark.getParent().getData();
+		return quark.getParent().getData();
 	}
 
 	public Collection<Entity> leafs() {
 		final List<Entity> result = new ArrayList<>();
-		for (Quark quark : quark.getChildren()) {
-			final Entity data = (Entity) quark.getData();
+		for (Quark<Entity> child : quark.getChildren()) {
+			final Entity data = child.getData();
 			if (data != null && data.isGroup() == false)
 				result.add(data);
 		}
@@ -678,8 +679,8 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 
 	public Collection<Entity> groups() {
 		final List<Entity> result = new ArrayList<>();
-		for (Quark quark : quark.getChildren()) {
-			final Entity data = (Entity) quark.getData();
+		for (Quark<Entity> child : quark.getChildren()) {
+			final Entity data = child.getData();
 			if (data != null && data.isGroup())
 				result.add(data);
 		}
@@ -700,6 +701,33 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 
 	public String getName() {
 		return getQuark().getName();
+	}
+
+	public boolean isAutarkic() {
+		if (getGroupType() == GroupType.PACKAGE)
+			return false;
+
+		if (getGroupType() == GroupType.INNER_ACTIVITY)
+			return true;
+
+		if (getGroupType() == GroupType.CONCURRENT_ACTIVITY)
+			return true;
+
+		if (getGroupType() == GroupType.CONCURRENT_STATE)
+			return true;
+
+//		if (diag.getChildrenGroups(this).size() > 0)
+//			return false;
+
+		for (Link link : entityFactory.getLinks())
+			if (EntityUtils.isPureInnerLink3(this, link) == false)
+				return false;
+
+		for (Entity leaf : leafs())
+			if (leaf.getEntityPosition() != EntityPosition.NORMAL)
+				return false;
+
+		return true;
 	}
 
 }

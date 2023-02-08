@@ -162,13 +162,8 @@ public class CommandCreateElementMultilines extends CommandMultilines2<AbstractE
 
 		final String stereotype = line0.get("STEREO", 0);
 
-//		final Quark ident = diagram.buildFromName(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(idShort));
-//		final Quark code_ = diagram.buildFromFullPath(idShort);
-//		if (CommandCreateElementFull.existsWithBadType3(diagram, code, type, usymbol))
-//			return CommandExecutionResult.error("This element (" + code.getName() + ") is already defined");
-
-		final Quark quark = diagram.quarkInContext(diagram.cleanIdForQuark(idShort), false);
-		Entity result = (Entity) quark.getData();
+		final Quark<Entity> quark = diagram.quarkInContext(diagram.cleanId(idShort), false);
+		Entity result = quark.getData();
 		if (quark.getData() == null)
 			result = diagram.reallyCreateLeaf(quark, display, type, usymbol);
 

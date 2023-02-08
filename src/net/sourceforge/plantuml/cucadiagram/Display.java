@@ -47,6 +47,7 @@ import java.util.regex.Pattern;
 
 import net.atmp.ISkinSimple;
 import net.sourceforge.plantuml.LineBreakStrategy;
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.creole.CreoleMode;
 import net.sourceforge.plantuml.creole.Sheet;
 import net.sourceforge.plantuml.creole.SheetBlock1;
@@ -200,7 +201,7 @@ public class Display implements Iterable<CharSequence> {
 		return new Display(true, other, null, false, CreoleMode.FULL);
 	}
 
-	public static Display getWithNewlines(Quark s) {
+	public static Display getWithNewlines(Quark<Entity> s) {
 		return getWithNewlines(s.getName());
 	}
 

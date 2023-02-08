@@ -79,7 +79,7 @@ public interface ICucaDiagram extends GroupHierarchy, PortionShower, Annotated {
 
 	String[] getDotStringSkek();
 
-	boolean isAutarkic(Entity g);
+	// boolean isAutarkic(Entity g);
 
 	int getUniqueSequence();
 

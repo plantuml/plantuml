@@ -43,7 +43,6 @@ import java.util.List;
 import net.sourceforge.plantuml.ColorParam;
 import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.baraye.Entity;
-import net.sourceforge.plantuml.baraye.EntityUtils;
 import net.sourceforge.plantuml.cucadiagram.GroupHierarchy;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
 import net.sourceforge.plantuml.cucadiagram.ICucaDiagram;
@@ -60,7 +59,7 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.image.EntityImageState;
 
-public final class GroupPngMakerActivity {
+public final class GroupMakerActivity {
 
 	private final ICucaDiagram diagram;
 	private final Entity group;
@@ -73,9 +72,9 @@ public final class GroupPngMakerActivity {
 		}
 
 		public Collection<Entity> getChildrenGroups(Entity parent) {
-			if (parent.isRoot()) 
+			if (parent.isRoot())
 				return diagram.getChildrenGroups(group);
-			
+
 			return diagram.getChildrenGroups(parent);
 		}
 
@@ -85,7 +84,7 @@ public final class GroupPngMakerActivity {
 
 	}
 
-	public GroupPngMakerActivity(ICucaDiagram diagram, Entity group, StringBounder stringBounder) {
+	public GroupMakerActivity(ICucaDiagram diagram, Entity group, StringBounder stringBounder) {
 		this.diagram = diagram;
 		this.group = group;
 		this.stringBounder = stringBounder;
@@ -94,12 +93,12 @@ public final class GroupPngMakerActivity {
 	private List<Link> getPureInnerLinks() {
 		final List<Link> result = new ArrayList<>();
 		for (Link link : diagram.getLinks()) {
-			final Entity e1 = (Entity) link.getEntity1();
-			final Entity e2 = (Entity) link.getEntity2();
+			final Entity e1 = link.getEntity1();
+			final Entity e2 = link.getEntity2();
 			if (e1.getParentContainer() == group && e1.isGroup() == false && e2.getParentContainer() == group
-					&& e2.isGroup() == false) 
+					&& e2.isGroup() == false)
 				result.add(link);
-			
+
 		}
 		return result;
 	}
@@ -109,14 +108,14 @@ public final class GroupPngMakerActivity {
 	}
 
 	public IEntityImage getImage() throws IOException, InterruptedException {
-		if (group.countChildren() == 0) {
+		if (group.countChildren() == 0)
 			return new EntityImageState(group, diagram.getSkinParam());
-		}
+
 		final List<Link> links = getPureInnerLinks();
 		final ISkinParam skinParam = diagram.getSkinParam();
 
-		final DotData dotData = new DotData(group, links, group.leafs(), diagram.getUmlDiagramType(),
-				skinParam, new InnerGroupHierarchy(), diagram.getEntityFactory(), false, DotMode.NORMAL,
+		final DotData dotData = new DotData(group, links, group.leafs(), diagram.getUmlDiagramType(), skinParam,
+				new InnerGroupHierarchy(), diagram.getEntityFactory(), false, DotMode.NORMAL,
 				diagram.getNamespaceSeparator(), diagram.getPragma());
 
 		final GeneralImageBuilder svek2 = new GeneralImageBuilder(dotData, diagram.getEntityFactory(),

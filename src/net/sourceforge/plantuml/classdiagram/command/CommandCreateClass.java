@@ -132,16 +132,16 @@ public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 			throws NoSuchColorException {
 		final String typeString = StringUtils.goUpperCase(arg.get("TYPE", 0));
 		final LeafType type = LeafType.getLeafType(typeString);
-		final String idShort = diagram.cleanIdForQuark(arg.getLazzy("CODE", 0));
+		final String idShort = diagram.cleanId(arg.getLazzy("CODE", 0));
 		final String displayString = arg.getLazzy("DISPLAY", 0);
 		final String genericOption = arg.getLazzy("DISPLAY", 1);
 		final String generic = genericOption != null ? genericOption : arg.get("GENERIC", 0);
 
 		final String stereo = arg.get("STEREO", 0);
 
-		final Quark quark = diagram.quarkInContext(idShort, true);
+		final Quark<Entity> quark = diagram.quarkInContext(idShort, true);
 
-		Entity entity = (Entity) quark.getData();
+		Entity entity = quark.getData();
 
 		if (entity == null) {
 			Display display = Display.getWithNewlines(displayString);
@@ -151,8 +151,12 @@ public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 		} else {
 			if (entity.muteToType(type, null) == false)
 				return CommandExecutionResult.error("Bad name");
-
 		}
+
+		final CommandExecutionResult check1 = diagram.checkIfPackageHierarchyIfOk(entity);
+		if (check1.isOk() == false)
+			return check1;
+
 		diagram.setLastEntity(entity);
 		if (stereo != null) {
 			entity.setStereotype(Stereotype.build(stereo, diagram.getSkinParam().getCircledCharacterRadius(),

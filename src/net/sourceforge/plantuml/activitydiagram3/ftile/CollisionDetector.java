@@ -40,7 +40,6 @@ import static net.sourceforge.plantuml.utils.ObjectUtils.instanceOfAny;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import net.sourceforge.plantuml.awt.geom.XLine2D;
 import net.sourceforge.plantuml.klimt.UBackground;
 import net.sourceforge.plantuml.klimt.UChange;

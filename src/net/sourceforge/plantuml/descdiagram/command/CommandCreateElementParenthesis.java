@@ -149,16 +149,9 @@ public class CommandCreateElementParenthesis extends SingleLineCommand2<ClassDia
 		type = LeafType.DESCRIPTION;
 		usymbol = USymbols.fromString(symbol, diagram.getSkinParam());
 
-//		final String idShort = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(codeRaw);
-//		final Quark ident = diagram.buildFromName(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(idShort));
-//		final Quark code = diagram.buildFromFullPath(idShort);
-
-		final Quark quark = diagram.quarkInContext(diagram.cleanIdForQuark(codeRaw), true);
+		final Quark<Entity> quark = diagram.quarkInContext(diagram.cleanId(codeRaw), true);
 		if (quark.getData() != null)
 			return CommandExecutionResult.error("This element (" + quark.getName() + ") is already defined");
-
-//		if (diagram.isGroup(idShort))
-//			return CommandExecutionResult.error("This element (" + code.getName() + ") is already defined");
 
 		String display = displayRaw;
 		if (display == null)
@@ -172,11 +165,10 @@ public class CommandCreateElementParenthesis extends SingleLineCommand2<ClassDia
 		final Entity entity = diagram.reallyCreateLeaf(quark, Display.getWithNewlines(display), type, usymbol);
 		entity.setDisplay(Display.getWithNewlines(display));
 		entity.setUSymbol(usymbol);
-		if (stereotype != null) {
+		if (stereotype != null)
 			entity.setStereotype(Stereotype.build(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),
 					diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),
 					diagram.getSkinParam().getIHtmlColorSet()));
-		}
 
 		final String urlString = arg.get("URL", 0);
 		if (urlString != null) {

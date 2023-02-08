@@ -42,11 +42,13 @@ import java.util.Map;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.UmlDiagramType;
 import net.sourceforge.plantuml.baraye.Entity;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.graphic.TextBlock;
 import net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
+import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.svek.image.EntityImageClass;
 
 public class ClassDiagram extends AbstractClassOrObjectDiagram {
@@ -54,50 +56,6 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 	public ClassDiagram(UmlSource source, Map<String, String> skinParam) {
 		super(source, UmlDiagramType.CLASS, skinParam);
 	}
-
-//	@Override
-//	protected ILeaf getOrCreateLeaf2(Quark ident, Quark code, LeafType type, USymbol symbol) {
-//		Objects.requireNonNull(ident);
-//		if (type == null) {
-//			code = code.eventuallyRemoveStartingAndEndingDoubleQuote("\"([:");
-//			if (code.getData() != null)
-//				return (ILeaf) code.getData();
-//			if (getNamespaceSeparator() == null)
-//				return reallyCreateLeaf(ident, Display.getWithNewlines(code.getName()), LeafType.CLASS, symbol);
-//			// return getOrCreateLeafDefault(ident, code.getName(), LeafType.CLASS, symbol);
-//
-//			if (ident.getData() != null)
-//				return (ILeaf) ident.getData();
-//			final ILeaf result = reallyCreateLeaf(ident, Display.getWithNewlines(ident.getName()), LeafType.CLASS, symbol);
-//			this.lastEntity = (EntityImp) result;
-//			return result;
-//		}
-//		if (code.getData() != null)
-//			return (ILeaf) code.getData();
-//		if (getNamespaceSeparator() == null)
-//			return reallyCreateLeaf(ident, Display.getWithNewlines(code.getName()), type, symbol);
-//		// return getOrCreateLeafDefault(ident, code.getName(), type, symbol);
-//
-//		final ILeaf result = reallyCreateLeaf(ident, Display.getWithNewlines(ident.getName()), type, symbol);
-//		this.lastEntity = (EntityImp) result;
-//		return result;
-//	}
-
-//	@Override
-//	public ILeaf createLeaf(Quark idNewLong, String displayString, Display display, LeafType type, USymbol symbol) {
-//		Objects.requireNonNull(idNewLong);
-//		if (type != LeafType.ABSTRACT_CLASS && type != LeafType.ANNOTATION && type != LeafType.CLASS
-//				&& type != LeafType.INTERFACE && type != LeafType.ENUM && type != LeafType.LOLLIPOP_FULL
-//				&& type != LeafType.LOLLIPOP_HALF && type != LeafType.NOTE)
-//			return super.createLeaf(idNewLong, displayString, display, type, symbol);
-//
-//		if (getNamespaceSeparator() == null)
-//			return super.createLeaf(idNewLong, displayString, display, type, symbol);
-//
-//		final ILeaf result = createLeafInternal(idNewLong, display, type, symbol);
-//		this.lastEntity = (EntityImp) result;
-//		return result;
-//	}
 
 	private boolean allowMixing;
 
@@ -162,6 +120,16 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 		}
 		this.applySingleStrategy();
 		return super.checkFinalError();
+	}
+
+	public CommandExecutionResult checkIfPackageHierarchyIfOk(Entity entity) {
+		Quark<Entity> current = entity.getQuark().getParent();
+		while (current.isRoot() == false) {
+			if (current.getData() != null && current.getData().isGroup() == false)
+				return CommandExecutionResult.error("Bad hierarchy for class " + entity.getQuark().getQualifiedName());
+			current = current.getParent();
+		}
+		return CommandExecutionResult.ok();
 	}
 
 }

@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.svek;
 
+import java.util.Objects;
+
 import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.graphic.AbstractTextBlock;
 import net.sourceforge.plantuml.graphic.TextBlock;
@@ -63,7 +65,7 @@ public final class InnerStateAutonom extends AbstractTextBlock implements IEntit
 	public InnerStateAutonom(IEntityImage im, TextBlock title, TextBlock attribute, HColor borderColor,
 			HColor backColor, Url url, boolean withSymbol, UStroke stroke, double rounded, double shadowing,
 			HColor bodyColor) {
-		this.im = im;
+		this.im = Objects.requireNonNull(im);
 		this.withSymbol = withSymbol;
 		this.title = title;
 		this.borderColor = borderColor;
@@ -83,7 +85,7 @@ public final class InnerStateAutonom extends AbstractTextBlock implements IEntit
 		final double marginForFields = attr.getHeight() > 0 ? IEntityImage.MARGIN : 0;
 
 		final double titreHeight = IEntityImage.MARGIN + text.getHeight() + IEntityImage.MARGIN_LINE;
-		// final HColor foo = im.getBackcolor();
+
 		final RoundedContainer r = new RoundedContainer(total, titreHeight, attr.getHeight() + marginForFields,
 				borderColor, backColor, bodyColor, stroke, rounded, shadowing);
 

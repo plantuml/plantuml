@@ -123,10 +123,7 @@ public class CommandArchimate extends SingleLineCommand2<DescriptionDiagram> {
 			throws NoSuchColorException {
 		final String codeRaw = arg.getLazzy("CODE", 0);
 
-//		final String idShort = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(codeRaw);
-//		final Quark ident = diagram.buildFromName(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(idShort));
-//		final Quark code = diagram.buildFromFullPath(idShort);
-		final Quark quark = diagram.quarkInContext(diagram.cleanIdForQuark(codeRaw), false);
+		final Quark<Entity> quark = diagram.quarkInContext(diagram.cleanId(codeRaw), false);
 
 		String display = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.getLazzy("DISPLAY", 0));
 		if (display == null)

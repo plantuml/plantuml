@@ -115,16 +115,15 @@ public class CommandCreatePackageState extends SingleLineCommand2<StateDiagram> 
 			throws NoSuchColorException {
 
 		final String idShort = getNotNull(arg, "CODE1", "CODE2");
-		final Quark quark = diagram.quarkInContext(idShort, false);
-//		final Quark idNewLong = diagram.buildFullyQualified(idShort);
-//		final Quark code = diagram.buildFromFullPath(idShort);
-		
-		String display = getNotNull(arg, "DISPLAY1", "DISPLAY2");
-		if (display == null)
-			display = quark.getName();
+		final Quark<Entity> quark = diagram.quarkInContext(idShort, false);
 
-		diagram.gotoGroup(quark, Display.getWithNewlines(display), GroupType.STATE);
+		final String display = getNotNull(arg, "DISPLAY1", "DISPLAY2");
+
+		diagram.gotoGroup(quark, Display.getWithNewlines(display == null ? quark.getName() : display), GroupType.STATE);
 		final Entity p = diagram.getCurrentGroup();
+		if (display != null)
+			p.setDisplay(Display.getWithNewlines(display));
+
 		final String stereotype = arg.get("STEREOTYPE", 0);
 		if (stereotype != null)
 			p.setStereotype(Stereotype.build(stereotype));

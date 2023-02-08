@@ -44,6 +44,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -469,41 +470,52 @@ public class Cluster implements Moveable {
 
 	}
 
+	private int togetherCounter = 0;
+
+	private void printTogether(Together together, StringBuilder sb, List<SvekNode> nodesOrderedWithoutTop,
+			StringBounder stringBounder, Collection<SvekLine> lines, DotMode dotMode, GraphvizVersion graphvizVersion,
+			UmlDiagramType type) {
+		sb.append("subgraph " + getClusterId() + "t" + togetherCounter + " {\n");
+		for (SvekNode node : nodesOrderedWithoutTop)
+			if (node.getTogether() == together)
+				node.appendShape(sb, stringBounder);
+
+		for (Cluster child : children)
+			if (child.group.getTogether() == together)
+				child.printInternal(sb, lines, stringBounder, dotMode, graphvizVersion, type);
+
+		sb.append("}\n");
+		togetherCounter++;
+
+	}
+
 	public SvekNode printCluster2(StringBuilder sb, Collection<SvekLine> lines, StringBounder stringBounder,
 			DotMode dotMode, GraphvizVersion graphvizVersion, UmlDiagramType type) {
 
 		SvekNode added = null;
-		final Map<Together, List<SvekNode>> togethers = new LinkedHashMap<>();
-		for (SvekNode node : getNodesOrderedWithoutTop(lines)) {
+		final Collection<Together> togethers = new LinkedHashSet<>();
+		final List<SvekNode> nodesOrderedWithoutTop = getNodesOrderedWithoutTop(lines);
+		for (SvekNode node : nodesOrderedWithoutTop) {
 			final Together together = node.getTogether();
 			if (together == null) {
 				node.appendShape(sb, stringBounder);
 			} else {
-				List<SvekNode> list = togethers.get(together);
-				if (list == null) {
-					list = new ArrayList<>();
-					togethers.put(together, list);
-				}
-				list.add(node);
+				togethers.add(together);
 			}
 			added = node;
 		}
 
-		int t = 0;
-		for (List<SvekNode> list : togethers.values()) {
-			sb.append("subgraph " + getClusterId() + "t" + t + " {\n");
-			for (SvekNode node : list)
-				node.appendShape(sb, stringBounder);
-			sb.append("}\n");
-			t++;
-		}
+		for (Together together : togethers)
+			printTogether(together, sb, nodesOrderedWithoutTop, stringBounder, lines, dotMode, graphvizVersion, type);
 
 		if (skinParam.useRankSame() && dotMode != DotMode.NO_LEFT_RIGHT_AND_XLABEL
 				&& graphvizVersion.ignoreHorizontalLinks() == false)
 			appendRankSame(sb, lines);
 
-		for (Cluster child : getChildren())
-			child.printInternal(sb, lines, stringBounder, dotMode, graphvizVersion, type);
+		for (Cluster child : children) {
+			if (child.group.getTogether() == null)
+				child.printInternal(sb, lines, stringBounder, dotMode, graphvizVersion, type);
+		}
 
 		return added;
 	}
@@ -605,21 +617,7 @@ public class Cluster implements Moveable {
 		if (result != null)
 			return result;
 
-		final Stereotype stereo = group.getStereotype();
-
 		return style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
-
-//		final USymbol sym = group.getUSymbol() == null ? USymbols.PACKAGE : group.getUSymbol();
-//		final ColorParam backparam = umlDiagramType == UmlDiagramType.ACTIVITY ? ColorParam.partitionBackground
-//				: sym.getColorParamBack();
-//		final HColor c1 = skinParam.getHtmlColor(backparam, stereo, false);
-//		if (c1 != null)
-//			return c1;
-//
-//		if (parentCluster == null)
-//			return null;
-//
-//		return parentCluster.getBackColor(umlDiagramType, style);
 	}
 
 	boolean isClusterOf(Entity ent) {

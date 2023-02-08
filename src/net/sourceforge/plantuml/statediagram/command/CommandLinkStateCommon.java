@@ -166,21 +166,21 @@ abstract class CommandLinkStateCommon extends SingleLineCommand2<StateDiagram> {
 
 		if (code.startsWith("=") && code.endsWith("=")) {
 			final String codeString1 = removeEquals(code);
-			final Quark quark = diagram.quarkInContext(diagram.cleanIdForQuark(codeString1), false);
+			final Quark<Entity> quark = diagram.quarkInContext(diagram.cleanId(codeString1), false);
 			if (quark.getData() != null)
-				return (Entity) quark.getData();
+				return quark.getData();
 			return diagram.reallyCreateLeaf(quark, Display.getWithNewlines(quark), LeafType.SYNCHRO_BAR, null);
 		}
 
-		if (diagram.currentQuark().getName().equals(code) && diagram.currentQuark().getData() != null)
-			return (Entity) diagram.currentQuark().getData();
+		if (diagram.getCurrentGroup().getName().equals(code))
+			return diagram.getCurrentGroup();
 
-		final Quark quark = diagram.quarkInContext(diagram.cleanIdForQuark(code), false);
+		final Quark<Entity> quark = diagram.quarkInContext(diagram.cleanId(code), false);
 		if (diagram.checkConcurrentStateOk(quark) == false)
 			return null;
 
 		if (quark.getData() != null)
-			return (Entity) quark.getData();
+			return quark.getData();
 		return diagram.reallyCreateLeaf(quark, Display.getWithNewlines(quark.getName()), LeafType.STATE, null);
 	}
 

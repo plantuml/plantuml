@@ -46,7 +46,6 @@ import net.sourceforge.plantuml.cucadiagram.Bodier;
 import net.sourceforge.plantuml.cucadiagram.BodierJSon;
 import net.sourceforge.plantuml.cucadiagram.BodierMap;
 import net.sourceforge.plantuml.cucadiagram.BodyFactory;
-import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.GroupType;
 import net.sourceforge.plantuml.cucadiagram.HideOrShow2;
 import net.sourceforge.plantuml.cucadiagram.ICucaDiagram;
@@ -64,22 +63,24 @@ public final class EntityFactory implements IEntityFactory {
 
 	private int rawLayout;
 
-	private final Plasma plasma;
+	private final Plasma<Entity> namespace;
+	private final Quark<Entity> root;
 
 	private final Entity rootGroup;
 
 	private final List<HideOrShow2> hides2;
 	private final List<HideOrShow2> removed;
-	final private ICucaDiagram namespaceSeparator;
+	final private ICucaDiagram diagram;
 
 	//
-	public EntityFactory(List<HideOrShow2> hides2, List<HideOrShow2> removed, ICucaDiagram namespaceSeparator) {
+	public EntityFactory(List<HideOrShow2> hides2, List<HideOrShow2> removed, ICucaDiagram diagram) {
 		this.hides2 = hides2;
 		this.removed = removed;
-		this.namespaceSeparator = namespaceSeparator;
-		this.plasma = new Plasma(".");
-		this.rootGroup = new Entity(this.plasma.root(), this, null, GroupType.ROOT, 0);
-		this.plasma.root().setData(rootGroup);
+		this.diagram = diagram;
+		this.namespace = new Plasma<Entity>(".");
+		// this.printspace = new Plasma<Entity>(".");
+		this.root = namespace.root();
+		this.rootGroup = new Entity(this.root, this, null, GroupType.ROOT, 0);
 	}
 
 	public boolean isHidden(Entity leaf) {
@@ -144,7 +145,7 @@ public final class EntityFactory implements IEntityFactory {
 		return result;
 	}
 
-	final public Entity createLeaf(Quark quark, LeafType entityType, Set<VisibilityModifier> hides) {
+	final public Entity createLeaf(Quark<Entity> quark, LeafType entityType, Set<VisibilityModifier> hides) {
 		final Bodier bodier;
 		if (Objects.requireNonNull(entityType) == LeafType.MAP)
 			bodier = new BodierMap();
@@ -158,10 +159,10 @@ public final class EntityFactory implements IEntityFactory {
 		return result;
 	}
 
-	public Entity createGroup(Quark quark, GroupType groupType, Set<VisibilityModifier> hides) {
+	public Entity createGroup(Quark<Entity> quark, GroupType groupType, Set<VisibilityModifier> hides) {
 		Objects.requireNonNull(groupType);
 		if (quark.getData() != null)
-			return (Entity) quark.getData();
+			return quark.getData();
 
 		final Bodier bodier = BodyFactory.createGroup(hides);
 		final Entity result = new Entity(quark, this, bodier, groupType, rawLayout);
@@ -176,10 +177,10 @@ public final class EntityFactory implements IEntityFactory {
 	public final Collection<Entity> leafs() {
 
 		final List<Entity> result = new ArrayList<>();
-		for (Quark quark : getPlasma().quarks()) {
+		for (Quark<Entity> quark : quarks()) {
 			if (quark.isRoot())
 				continue;
-			final Entity data = (Entity) quark.getData();
+			final Entity data = quark.getData();
 			if (data != null && data.isGroup() == false)
 				result.add(data);
 		}
@@ -189,11 +190,11 @@ public final class EntityFactory implements IEntityFactory {
 
 	public final Collection<Entity> groups() {
 		final List<Entity> result = new ArrayList<>();
-		for (Quark quark : getPlasma().quarks()) {
+		for (Quark<Entity> quark : quarks()) {
 			if (quark.isRoot())
 				continue;
 
-			final Entity data = (Entity) quark.getData();
+			final Entity data = quark.getData();
 			if (data != null && data.isGroup())
 				result.add(data);
 		}
@@ -202,8 +203,8 @@ public final class EntityFactory implements IEntityFactory {
 
 	public final Collection<Entity> groupsAndRoot() {
 		final List<Entity> result = new ArrayList<>();
-		for (Quark quark : getPlasma().quarks()) {
-			final Entity data = (Entity) quark.getData();
+		for (Quark<Entity> quark : quarks()) {
+			final Entity data = quark.getData();
 			if (data != null && data.isGroup())
 				result.add(data);
 		}
@@ -241,10 +242,35 @@ public final class EntityFactory implements IEntityFactory {
 	}
 
 	public ICucaDiagram getDiagram() {
-		return namespaceSeparator;
+		return diagram;
 	}
 
-	public Plasma getPlasma() {
-		return plasma;
+	// ----------
+
+	Collection<Quark<Entity>> quarks() {
+		final List<Quark<Entity>> result = new ArrayList<>();
+		for (Quark<Entity> quark : namespace.quarks()) {
+			result.add(quark);
+		}
+		return result;
 	}
+
+	public Quark<Entity> root() {
+		return root;
+	}
+
+	public void setSeparator(String namespaceSeparator) {
+		namespace.setSeparator(namespaceSeparator);
+		// printspace.setSeparator(namespaceSeparator);
+	}
+
+	public Quark<Entity> firstWithName(String full) {
+		final Quark<Entity> tmp = namespace.firstWithName(full);
+		return tmp;
+	}
+
+	public int countByName(String full) {
+		return namespace.countByName(full);
+	}
+
 }

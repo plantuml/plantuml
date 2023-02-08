@@ -159,7 +159,7 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 		if (visibilityString != null)
 			visibilityModifier = VisibilityModifier.getVisibilityModifier(visibilityString + "FOO", false);
 
-		final String idShort = diagram.cleanIdForQuark(line0.getLazzy("CODE", 0));
+		final String idShort = diagram.cleanId(line0.getLazzy("CODE", 0));
 
 		final String displayString = line0.getLazzy("DISPLAY", 0);
 		final String genericOption = line0.getLazzy("DISPLAY", 1);
@@ -167,9 +167,9 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 
 		final String stereotype = line0.get("STEREO", 0);
 
-		final Quark quark = diagram.quarkInContext(idShort, true);
+		final Quark<Entity> quark = diagram.quarkInContext(idShort, true);
 
-		Entity entity = (Entity) quark.getData();
+		Entity entity = quark.getData();
 
 		Display display = Display.getWithNewlines(displayString);
 		if (entity == null) {
@@ -182,6 +182,9 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 			if (Display.isNull(display) == false)
 				entity.setDisplay(display);
 		}
+		final CommandExecutionResult check1 = diagram.checkIfPackageHierarchyIfOk(entity);
+		if (check1.isOk() == false)
+			return check1;
 
 		diagram.setLastEntity(entity);
 
@@ -274,13 +277,9 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 			final String codes = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(keyword, 1));
 			for (String s : codes.split(",")) {
 				final String idShort = StringUtils.trin(s);
-//				final Quark ident = diagram
-//						.buildFromName(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(idShort));
-//				final Quark other = diagram.buildFromFullPath(idShort);
-//				final IEntity cl2 = diagram.getOrCreateLeaf(ident, other, type2, null);
 
-				final Quark quark = diagram.quarkInContext(diagram.cleanIdForQuark(idShort), true);
-				Entity cl2 = (Entity) quark.getData();
+				final Quark<Entity> quark = diagram.quarkInContext(diagram.cleanId(idShort), true);
+				Entity cl2 = quark.getData();
 				if (cl2 == null)
 					cl2 = diagram.reallyCreateLeaf(quark, Display.getWithNewlines(quark.getName()), type2, null);
 
@@ -306,7 +305,7 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 		if (visibilityString != null)
 			visibilityModifier = VisibilityModifier.getVisibilityModifier(visibilityString + "FOO", false);
 
-		final String idShort = diagram.cleanIdForQuark(line0.getLazzy("CODE", 0));
+		final String idShort = diagram.cleanId(line0.getLazzy("CODE", 0));
 
 		final String displayString = line0.getLazzy("DISPLAY", 0);
 		final String genericOption = line0.getLazzy("DISPLAY", 1);
@@ -314,13 +313,13 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 
 		final String stereotype = line0.get("STEREO", 0);
 
-		final Quark quark = diagram.quarkInContext(idShort, true);
+		final Quark<Entity> quark = diagram.quarkInContext(idShort, true);
 
 		Display display = Display.getWithNewlines(displayString);
 		if (Display.isNull(display))
 			display = Display.getWithNewlines(quark.getName()).withCreoleMode(CreoleMode.SIMPLE_LINE);
 
-		Entity entity = (Entity) quark.getData();
+		Entity entity = quark.getData();
 
 		if (entity == null) {
 			entity = diagram.reallyCreateLeaf(quark, display, type, null);

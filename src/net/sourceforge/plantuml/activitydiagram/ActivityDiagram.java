@@ -68,7 +68,7 @@ public class ActivityDiagram extends CucaDiagram {
 
 	public void startIf(String optionalCodeString) {
 		final String idShort = optionalCodeString == null ? getAutoBranch() : optionalCodeString;
-		final Quark quark = quarkInContext(cleanIdForQuark(idShort), false);
+		final Quark<Entity> quark = quarkInContext(cleanId(idShort), false);
 		final Entity br = reallyCreateLeaf(quark, Display.create(""), LeafType.BRANCH, null);
 		currentContext = new ConditionalContext(currentContext, br, Direction.DOWN);
 	}
@@ -78,20 +78,20 @@ public class ActivityDiagram extends CucaDiagram {
 	}
 
 	public Entity getStart() {
-		final Quark quark = quarkInContext("start", false);
+		final Quark<Entity> quark = quarkInContext("start", false);
 		if (quark.getData() == null)
-			quark.setData(reallyCreateLeaf(quark, Display.getWithNewlines("start"), LeafType.CIRCLE_START, null));
+			reallyCreateLeaf(quark, Display.getWithNewlines("start"), LeafType.CIRCLE_START, null);
 
-		return (Entity) quark.getData();
+		return quark.getData();
 	}
 
 	public Entity getEnd(String suppId) {
 		final String tmp = suppId == null ? "end" : "end$" + suppId;
-		final Quark quark = quarkInContext(tmp, false);
+		final Quark<Entity> quark = quarkInContext(tmp, false);
 		if (quark.getData() == null)
-			quark.setData(reallyCreateLeaf(quark, Display.getWithNewlines("end"), LeafType.CIRCLE_END, null));
+			reallyCreateLeaf(quark, Display.getWithNewlines("end"), LeafType.CIRCLE_END, null);
 
-		return (Entity) quark.getData();
+		return quark.getData();
 	}
 
 	@Override
@@ -106,7 +106,7 @@ public class ActivityDiagram extends CucaDiagram {
 
 	}
 
-	public Entity createNote(Quark idNewLong, String code__, Display display) {
+	public Entity createNote(Quark<Entity> idNewLong, String code__, Display display) {
 		return reallyCreateLeaf(Objects.requireNonNull(idNewLong), display, LeafType.NOTE, null);
 	}
 
@@ -141,7 +141,7 @@ public class ActivityDiagram extends CucaDiagram {
 
 		final String idShort = "##" + this.getUniqueSequence();
 
-		final Quark quark = quarkInContext(idShort, false);
+		final Quark<Entity> quark = quarkInContext(idShort, false);
 		gotoGroup(quark, Display.getWithNewlines(quark.getName()), GroupType.INNER_ACTIVITY);
 		final Entity g = getCurrentGroup();
 
@@ -160,7 +160,7 @@ public class ActivityDiagram extends CucaDiagram {
 		if (getCurrentGroup().getGroupType() != GroupType.INNER_ACTIVITY)
 			throw new IllegalStateException("type=" + getCurrentGroup().getGroupType());
 
-		final Quark idNewLong = quarkInContext(idShort, false);
+		final Quark<Entity> idNewLong = quarkInContext(idShort, false);
 		gotoGroup(idNewLong, Display.getWithNewlines("code"), GroupType.CONCURRENT_ACTIVITY);
 		lastEntityConsulted = null;
 		lastEntityBrancheConsulted = null;

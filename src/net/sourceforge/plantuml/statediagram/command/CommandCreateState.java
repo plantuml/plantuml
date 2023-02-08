@@ -113,10 +113,8 @@ public class CommandCreateState extends SingleLineCommand2<StateDiagram> {
 			throws NoSuchColorException {
 		final String idShort = arg.getLazzy("CODE", 0);
 
-		final Quark quark = diagram.quarkInContext(diagram.cleanIdForQuark(idShort), false);
-//
-//		final Quark ident = diagram.buildFromName(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(idShort));
-//		final Quark code = diagram.buildFromFullPath(idShort);
+		final Quark<Entity> quark = diagram.quarkInContext(diagram.cleanId(idShort), false);
+
 		String display = arg.getLazzy("DISPLAY", 0);
 		if (display == null)
 			display = quark.getName();
@@ -129,7 +127,7 @@ public class CommandCreateState extends SingleLineCommand2<StateDiagram> {
 			return CommandExecutionResult.error("The state " + quark.getName()
 					+ " has been created in a concurrent state : it cannot be used here.");
 
-		Entity ent = (Entity) quark.getData();
+		Entity ent = quark.getData();
 		if (ent == null)
 			ent = diagram.reallyCreateLeaf(quark, Display.getWithNewlines(display), type, null);
 

@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.classdiagram.command;
 
+import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -64,10 +65,8 @@ public class CommandDiamondAssociation extends SingleLineCommand2<ClassDiagram> 
 	@Override
 	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg) {
 		final String idShort = arg.get("CODE", 0);
-		final Quark quark = diagram.quarkInContext(diagram.cleanIdForQuark(idShort), false);
-//		final Quark ident = diagram.buildFromName(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(idShort));
-//		final Quark code = diagram.buildFromFullPath(idShort);
-//		final boolean leafExist = diagram.leafExist(code);
+		final Quark<Entity> quark = diagram.quarkInContext(diagram.cleanId(idShort), false);
+
 		if (quark.getData() != null)
 			return CommandExecutionResult.error("Already existing : " + quark.getName());
 

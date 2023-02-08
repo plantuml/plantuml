@@ -80,12 +80,11 @@ public class CommandCreateEntityObject extends SingleLineCommand2<AbstractClassO
 	protected CommandExecutionResult executeArg(AbstractClassOrObjectDiagram diagram, LineLocation location,
 			RegexResult arg) throws NoSuchColorException {
 		final String idShort = arg.get("NAME", 1);
-//		final Quark ident = diagram.buildFromName(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(idShort));
-//		final Quark code = diagram.buildFromFullPath(idShort);
-		final Quark quark = diagram.quarkInContext(diagram.cleanIdForQuark(idShort), false);
+
+		final Quark<Entity> quark = diagram.quarkInContext(diagram.cleanId(idShort), false);
 		final String displayString = arg.get("NAME", 0);
 		final String stereotype = arg.get("STEREO", 0);
-		// final boolean leafExist = diagram.leafExist(code);
+
 		if (quark.getData() != null)
 			return CommandExecutionResult.error("Object already exists : " + quark.getData());
 
@@ -94,11 +93,11 @@ public class CommandCreateEntityObject extends SingleLineCommand2<AbstractClassO
 			display = Display.getWithNewlines(idShort).withCreoleMode(CreoleMode.SIMPLE_LINE);
 
 		final Entity entity = diagram.reallyCreateLeaf(quark, display, LeafType.OBJECT, null);
-		if (stereotype != null) {
+		if (stereotype != null)
 			entity.setStereotype(Stereotype.build(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),
 					diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),
 					diagram.getSkinParam().getIHtmlColorSet()));
-		}
+
 		final String urlString = arg.get("URL", 0);
 		if (urlString != null) {
 			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), UrlMode.STRICT);

@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.cucadiagram.ICucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
-import net.sourceforge.plantuml.svek.GroupPngMakerActivity;
+import net.sourceforge.plantuml.svek.GroupMakerActivity;
 import net.sourceforge.plantuml.svek.IEntityImage;
 
 public final class CucaDiagramSimplifierActivity {
@@ -60,35 +60,19 @@ public final class CucaDiagramSimplifierActivity {
 		do {
 			changed = false;
 			final Collection<Entity> groups = new ArrayList<>(diagram.getEntityFactory().groups());
-			for (Entity g : groups) {
-				if (diagram.isAutarkic(g)) {
-					// final EntityType type;
-					// if (g.zgetGroupType() == GroupType.INNER_ACTIVITY) {
-					// type = EntityType.ACTIVITY;
-					// } else if (g.zgetGroupType() == GroupType.CONCURRENT_ACTIVITY) {
-					// type = EntityType.ACTIVITY_CONCURRENT;
-					// } else {
-					// throw new IllegalStateException();
-					// }
-
+			for (Entity g : groups)
+				if (g.isAutarkic()) {
 					final IEntityImage img = computeImage(g);
 					g.overrideImage(img, LeafType.ACTIVITY);
 
 					changed = true;
 				}
-			}
+
 		} while (changed);
 	}
 
-	// private void computeImageGroup(EntityMutable g, EntityMutable proxy,
-	// List<String> dotStrings) throws IOException,
-	// InterruptedException {
-	// final GroupPngMakerActivity maker = new GroupPngMakerActivity(diagram, g);
-	// proxy.setSvekImage(maker.getImage());
-	// }
-
 	private IEntityImage computeImage(Entity g) throws IOException, InterruptedException {
-		final GroupPngMakerActivity maker = new GroupPngMakerActivity(diagram, g, stringBounder);
+		final GroupMakerActivity maker = new GroupMakerActivity(diagram, g, stringBounder);
 		return maker.getImage();
 	}
 

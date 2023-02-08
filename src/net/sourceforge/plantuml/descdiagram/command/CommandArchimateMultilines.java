@@ -104,18 +104,14 @@ public class CommandArchimateMultilines extends CommandMultilines2<AbstractEntit
 		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 		final String codeRaw = line0.getLazzy("CODE", 0);
 
-//		final String idShort = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(codeRaw);
-//		final Quark ident = diagram.buildFromName(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(idShort));
-//		final Quark code = diagram.buildFromFullPath(idShort);
-
-		final Quark quark = diagram.quarkInContext(diagram.cleanIdForQuark(codeRaw), true);
+		final Quark<Entity> quark = diagram.quarkInContext(diagram.cleanId(codeRaw), true);
 		if (quark.getData() != null)
 			return CommandExecutionResult.error("Already exists " + quark.getName());
 
 		final String icon = line0.getLazzy("STEREOTYPE", 0);
 
-		final Entity entity = diagram.reallyCreateLeaf(quark,
-				Display.getWithNewlines(quark), LeafType.DESCRIPTION, USymbols.RECTANGLE);
+		final Entity entity = diagram.reallyCreateLeaf(quark, Display.getWithNewlines(quark), LeafType.DESCRIPTION,
+				USymbols.RECTANGLE);
 
 		lines = lines.subExtract(1, 1);
 		Display display = lines.toDisplay();

@@ -121,12 +121,12 @@ public class CommandPackage extends SingleLineCommand2<AbstractEntityDiagram> {
 			idShort = arg.get("AS", 0);
 		}
 
-		final Quark quark;
+		final Quark<Entity> quark;
 		if (arg.get("AS", 0) == null) {
-			quark = diagram.quarkInContext(diagram.cleanIdForQuark(name), true);
+			quark = diagram.quarkInContext(diagram.cleanId(name), true);
 			display = quark.getName();
 		} else {
-			quark = diagram.quarkInContext(diagram.cleanIdForQuark(arg.get("AS", 0)), true);
+			quark = diagram.quarkInContext(diagram.cleanId(arg.get("AS", 0)), true);
 			display = name;
 		}
 

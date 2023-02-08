@@ -58,7 +58,6 @@ import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
-import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.statediagram.StateDiagram;
 import net.sourceforge.plantuml.text.Guillemet;
 import net.sourceforge.plantuml.xml.XmlFactories;
@@ -163,8 +162,7 @@ public class ScxmlStateDiagramStandard {
 	}
 
 	private String getId(Entity entity) {
-		final Quark quark = entity.getQuark();
-		return quark.getName().replaceAll("\\*", "");
+		return entity.getName().replaceAll("\\*", "");
 	}
 
 	public void transformerXml(OutputStream os) throws TransformerException, ParserConfigurationException {
