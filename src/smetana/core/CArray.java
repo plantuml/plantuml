@@ -2,17 +2,17 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  *
  * If you like this project or if you find it useful, you can support us at:
  *
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  *
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2009-2024, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program.
  *
@@ -36,47 +36,55 @@
 
 package smetana.core;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.plantuml.api.cheerpj.WasmLog;
 
-import net.sourceforge.plantuml.log.Logme;
+final public class CArray<O> extends UnsupportedC {
 
-public class CArray<O> extends UnsupportedC {
-
-	private final Class<O> cl;
-	private final List<O> data;
+	private final ZType type;
+	private final Object[] data;
 	private final int offset;
 
 	@Override
 	public String toString() {
-		return "Array " + cl + " offset=" + offset + " [" + data.size() + "]" + data;
+		return "Array " + type + " offset=" + offset + " [" + data.length + "]" + data;
 	}
 
-	public static <O> CArray<O> ALLOC__(int size, Class<O> cl) {
-		final CArray<O> result = new CArray<O>(new ArrayList<O>(), 0, cl);
-		result.reallocWithStructure(size);
+	public static <O> CArray<O> ALLOC__(int size, ZType type) {
+		// WasmLog.log("ALLOC " + size);
+		final CArray<O> result = new CArray<O>(new Object[size], 0, type);
+		for (int i = 0; i < size; i++)
+			result.data[i] = type.create();
 		return result;
 	}
 
-	public static <O> CArray<O> REALLOC__(int size, CArray<O> old, Class<O> cl) {
-		if (old == null) {
-			return ALLOC__(size, cl);
-		}
-		old.reallocWithStructure(size);
-		return old;
+	public static <O> CArray<O> REALLOC__(int size, CArray<O> old, ZType type) {
+		// WasmLog.log("REALLOC " + size);
+		if (old == null)
+			return ALLOC__(size, type);
+
+		if (size <= old.data.length)
+			return old;
+
+		if (old.offset != 0)
+			throw new IllegalStateException();
+
+		WasmLog.log("Realloc from " + old.data.length + " to " + size);
+
+		final CArray<O> result = new CArray<O>(new Object[size], 0, type);
+		System.arraycopy(old.data, 0, result.data, 0, old.data.length);
+		for (int i = old.data.length; i < result.data.length; i++)
+			result.data[i] = type.create();
+		return result;
 	}
 
-	private CArray(List<O> data, int offset, Class<O> cl) {
-		if (offset > 0) {
-			// JUtilsDebug.LOG("offset=" + offset);
-		}
+	private CArray(Object[] data, int offset, ZType type) {
 		this.data = data;
 		this.offset = offset;
-		this.cl = cl;
+		this.type = type;
 	}
 
 	public CArray<O> plus_(int delta) {
-		return new CArray<O>(data, offset + delta, cl);
+		return new CArray<O>(data, offset + delta, type);
 	}
 
 	public int minus_(CArray<O> other) {
@@ -87,21 +95,7 @@ public class CArray<O> extends UnsupportedC {
 	}
 
 	public O get__(int i) {
-		return data.get(i + offset);
-	}
-
-	private void reallocWithStructure(int size) {
-		if (offset != 0) {
-			throw new IllegalStateException();
-		}
-		try {
-			for (int i = 0; i < size; i++) {
-				data.add(cl.getDeclaredConstructor().newInstance());
-			}
-		} catch (Exception e) {
-			Logme.error(e);
-			throw new UnsupportedOperationException();
-		}
+		return (O) data[i + offset];
 	}
 
 }

@@ -2,14 +2,14 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2009-2024, Arnaud Roques
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of PlantUML.
  *
@@ -35,25 +35,25 @@
  */
 package net.sourceforge.plantuml.svek;
 
-import net.sourceforge.plantuml.awt.geom.XDimension2D;
-import net.sourceforge.plantuml.graphic.AbstractTextBlock;
-import net.sourceforge.plantuml.graphic.SymbolContext;
-import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.klimt.UPolygon;
+import net.sourceforge.plantuml.klimt.Fashion;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
-import net.sourceforge.plantuml.ugraphic.UEllipse;
-import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.UEllipse;
+import net.sourceforge.plantuml.klimt.shape.UPolygon;
 
 public class Control extends AbstractTextBlock implements TextBlock {
 
 	private final double margin = 4;
 
 	private final double radius = 12;
-	private final SymbolContext symbolContext;
+	private final Fashion symbolContext;
 
-	public Control(SymbolContext symbolContext) {
+	public Control(Fashion symbolContext) {
 		this.symbolContext = symbolContext;
 	}
 
@@ -67,7 +67,7 @@ public class Control extends AbstractTextBlock implements TextBlock {
 		circle.setDeltaShadow(symbolContext.getDeltaShadow());
 		ug.apply(new UTranslate(x, y)).draw(circle);
 		ug = ug.apply(new UStroke());
-		
+
 		ug = ug.apply(symbolContext.getForeColor().bg());
 		final UPolygon polygon = new UPolygon();
 		polygon.addPoint(0, 0);
@@ -78,7 +78,7 @@ public class Control extends AbstractTextBlock implements TextBlock {
 		polygon.addPoint(xContact, 0);
 		polygon.addPoint(xWing, yAperture);
 		polygon.addPoint(0, 0);
-		
+
 		ug.apply(new UTranslate(x + radius - xContact, y)).draw(polygon);
 	}
 

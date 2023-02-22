@@ -2,14 +2,14 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2009-2024, Arnaud Roques
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of PlantUML.
  *
@@ -57,19 +57,19 @@ public class StripeFrontier {
 	}
 
 	public boolean contains(double x, double y) {
-		for (Stripe stripe : stripes) 
-			if (stripe.contains(x)) 
+		for (Stripe stripe : stripes)
+			if (stripe.contains(x))
 				return y <= stripe.getValue();
-			
+
 		throw new UnsupportedOperationException();
 	}
 
 	public double getContact(double x1, double x2) {
 		final SortedSet<Stripe> collisions = collisionning(x1, x2);
 		double result = -Double.MAX_VALUE;
-		for (Stripe strip : collisions) 
+		for (Stripe strip : collisions)
 			result = Math.max(result, strip.getValue());
-		
+
 		return result;
 
 	}
@@ -103,35 +103,35 @@ public class StripeFrontier {
 	}
 
 	private void addSingleInternal(double x1, double x2, double value, final Stripe touch) {
-		if (value <= touch.getValue()) 
+		if (value <= touch.getValue())
 			return;
-		
+
 		final boolean ok = this.stripes.remove(touch);
 		assert ok;
-		if (touch.getStart() != x1) 
+		if (touch.getStart() != x1)
 			this.stripes.add(new Stripe(touch.getStart(), x1, touch.getValue()));
-		
+
 		this.stripes.add(new Stripe(x1, x2, value));
-		if (x2 != touch.getEnd()) 
+		if (x2 != touch.getEnd())
 			this.stripes.add(new Stripe(x2, touch.getEnd(), touch.getValue()));
-		
+
 		assert checkConsistent();
 	}
 
 	private boolean checkConsistent() {
 		Stripe last = null;
 		for (Stripe stripe : stripes) {
-			if (last == null && stripe.getStart() != -Double.MAX_VALUE) 
+			if (last == null && stripe.getStart() != -Double.MAX_VALUE)
 				return false;
-			
-			if (last != null && last.getEnd() != stripe.getStart()) 
+
+			if (last != null && last.getEnd() != stripe.getStart())
 				return false;
-			
+
 			last = stripe;
 		}
-		if (last.getEnd() != Double.MAX_VALUE) 
+		if (last.getEnd() != Double.MAX_VALUE)
 			return false;
-		
+
 		return true;
 	}
 
@@ -139,13 +139,13 @@ public class StripeFrontier {
 		final SortedSet<Stripe> result = new TreeSet<>();
 		for (Iterator<Stripe> it = stripes.iterator(); it.hasNext();) {
 			Stripe stripe = it.next();
-			if (x1 >= stripe.getEnd()) 
+			if (x1 >= stripe.getEnd())
 				continue;
-			
+
 			result.add(stripe);
-			if (x2 <= stripe.getEnd()) 
+			if (x2 <= stripe.getEnd())
 				return result;
-			
+
 		}
 		throw new UnsupportedOperationException();
 	}

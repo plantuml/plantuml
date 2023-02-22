@@ -53,8 +53,7 @@ public class MacroBlock {
 					left = ySubBlocks[j - 1][i];
 				if (i > 0)
 					above = ySubBlocks[j][i - 1];
-				ySubBlocks[j][i] = new SubBlock(this, above, left,
-						SubBlock.PLANE.Y1);
+				ySubBlocks[j][i] = new SubBlock(this, above, left, SubBlock.PLANE.Y1);
 			}
 		}
 
@@ -66,8 +65,7 @@ public class MacroBlock {
 					left = uSubBlocks[j - 1][i];
 				if (i > 0)
 					above = uSubBlocks[j][i - 1];
-				uSubBlocks[j][i] = new SubBlock(this, above, left,
-						SubBlock.PLANE.U);
+				uSubBlocks[j][i] = new SubBlock(this, above, left, SubBlock.PLANE.U);
 			}
 		}
 
@@ -79,8 +77,7 @@ public class MacroBlock {
 					left = vSubBlocks[j - 1][i];
 				if (i > 0)
 					above = vSubBlocks[j][i - 1];
-				vSubBlocks[j][i] = new SubBlock(this, above, left,
-						SubBlock.PLANE.V);
+				vSubBlocks[j][i] = new SubBlock(this, above, left, SubBlock.PLANE.V);
 			}
 		}
 		y2SubBlock = new SubBlock(this, null, null, SubBlock.PLANE.Y2);
@@ -99,24 +96,19 @@ public class MacroBlock {
 		}
 	}
 
-	private void decodeMacroBlockTokens(VP8Frame frame, boolean withY2)
-			throws IOException {
+	private void decodeMacroBlockTokens(VP8Frame frame, boolean withY2) throws IOException {
 		skipInnerLoopFilter = false;
 		if (withY2) {
-			skipInnerLoopFilter = skipInnerLoopFilter
-					| decodePlaneTokens(frame, 1, SubBlock.PLANE.Y2, false);
+			skipInnerLoopFilter = skipInnerLoopFilter | decodePlaneTokens(frame, 1, SubBlock.PLANE.Y2, false);
 		}
-		skipInnerLoopFilter = skipInnerLoopFilter
-				| decodePlaneTokens(frame, 4, SubBlock.PLANE.Y1, withY2);
-		skipInnerLoopFilter = skipInnerLoopFilter
-				| decodePlaneTokens(frame, 2, SubBlock.PLANE.U, false);
-		skipInnerLoopFilter = skipInnerLoopFilter
-				| decodePlaneTokens(frame, 2, SubBlock.PLANE.V, false);
+		skipInnerLoopFilter = skipInnerLoopFilter | decodePlaneTokens(frame, 4, SubBlock.PLANE.Y1, withY2);
+		skipInnerLoopFilter = skipInnerLoopFilter | decodePlaneTokens(frame, 2, SubBlock.PLANE.U, false);
+		skipInnerLoopFilter = skipInnerLoopFilter | decodePlaneTokens(frame, 2, SubBlock.PLANE.V, false);
 		skipInnerLoopFilter = !skipInnerLoopFilter;
 	}
 
-	private boolean decodePlaneTokens(VP8Frame frame, int dimentions,
-			SubBlock.PLANE plane, boolean withY2) throws IOException {
+	private boolean decodePlaneTokens(VP8Frame frame, int dimentions, SubBlock.PLANE plane, boolean withY2)
+			throws IOException {
 		MacroBlock mb = this;
 		boolean r = false;
 		for (int y = 0; y < dimentions; y++) {
@@ -140,8 +132,7 @@ public class MacroBlock {
 				}
 
 				lc += A;
-				sb.decodeSubBlock(frame.getTokenBoolDecoder(),
-						frame.getCoefProbs(), lc,
+				sb.decodeSubBlock(frame.getTokenBoolDecoder(), frame.getCoefProbs(), lc,
 						SubBlock.planeToType(plane, withY2), withY2);
 				r = r | sb.hasNoZeroToken();
 			}
@@ -153,8 +144,7 @@ public class MacroBlock {
 		MacroBlock mb = this;
 		if (mb.getYMode() != Globals.B_PRED) {
 			SubBlock sb = mb.getY2SubBlock();
-			int acQValue = frame.getSegmentQuants().getSegQuants()[this.getSegmentId()]
-					.getY2ac_delta_q();
+			int acQValue = frame.getSegmentQuants().getSegQuants()[this.getSegmentId()].getY2ac_delta_q();
 			int dcQValue = frame.getSegmentQuants().getSegQuants()[this.getSegmentId()].getY2dc();
 
 			int input[] = new int[16];
@@ -479,10 +469,8 @@ public class MacroBlock {
 					int vblock[][] = new int[4][4];
 					for (int j = 0; j < 4; j++)
 						for (int i = 0; i < 4; i++) {
-							ublock[j][i] = aboveUSb[y]
-									.getMacroBlockPredict(Globals.V_PRED)[j][3];
-							vblock[j][i] = aboveVSb[y]
-									.getMacroBlockPredict(Globals.V_PRED)[j][3];
+							ublock[j][i] = aboveUSb[y].getMacroBlockPredict(Globals.V_PRED)[j][3];
+							vblock[j][i] = aboveVSb[y].getMacroBlockPredict(Globals.V_PRED)[j][3];
 						}
 					usb.setPredict(ublock);
 					vsb.setPredict(vblock);
@@ -508,10 +496,8 @@ public class MacroBlock {
 					int vblock[][] = new int[4][4];
 					for (int j = 0; j < 4; j++)
 						for (int i = 0; i < 4; i++) {
-							ublock[i][j] = leftUSb[y]
-									.getMacroBlockPredict(Globals.H_PRED)[3][j];
-							vblock[i][j] = leftVSb[y]
-									.getMacroBlockPredict(Globals.H_PRED)[3][j];
+							ublock[i][j] = leftUSb[y].getMacroBlockPredict(Globals.H_PRED)[3][j];
+							vblock[i][j] = leftVSb[y].getMacroBlockPredict(Globals.H_PRED)[3][j];
 						}
 					usb.setPredict(ublock);
 					vsb.setPredict(vblock);
@@ -543,13 +529,11 @@ public class MacroBlock {
 					for (int d = 0; d < 2; d++) {
 						for (int c = 0; c < 4; c++) {
 
-							int upred = leftUSb[b].getDest()[3][a]
-									+ aboveUSb[d].getDest()[c][3] - alu;
+							int upred = leftUSb[b].getDest()[3][a] + aboveUSb[d].getDest()[c][3] - alu;
 							upred = Globals.clamp(upred, 255);
 							uSubBlocks[d][b].setPixel(c, a, upred);
 
-							int vpred = leftVSb[b].getDest()[3][a]
-									+ aboveVSb[d].getDest()[c][3] - alv;
+							int vpred = leftVSb[b].getDest()[3][a] + aboveVSb[d].getDest()[c][3] - alv;
 							vpred = Globals.clamp(vpred, 255);
 							vSubBlocks[d][b].setPixel(c, a, vpred);
 
@@ -637,8 +621,7 @@ public class MacroBlock {
 					int block[][] = new int[4][4];
 					for (int j = 0; j < 4; j++)
 						for (int i = 0; i < 4; i++) {
-							block[i][j] = aboveYSb[x].getPredict(
-									Globals.B_VE_PRED, false)[i][3];
+							block[i][j] = aboveYSb[x].getPredict(Globals.B_VE_PRED, false)[i][3];
 						}
 					sb.setPredict(block);
 
@@ -660,8 +643,7 @@ public class MacroBlock {
 					int block[][] = new int[4][4];
 					for (int j = 0; j < 4; j++)
 						for (int i = 0; i < 4; i++) {
-							block[i][j] = leftYSb[y].getPredict(
-									Globals.B_DC_PRED, true)[3][j];
+							block[i][j] = leftYSb[y].getPredict(Globals.B_DC_PRED, true)[3][j];
 						}
 					sb.setPredict(block);
 				}
@@ -691,11 +673,9 @@ public class MacroBlock {
 					for (int d = 0; d < 4; d++) {
 						for (int c = 0; c < 4; c++) {
 
-							int pred = leftYSb[b].getDest()[3][a]
-									+ aboveYSb[d].getDest()[c][3] - al;
+							int pred = leftYSb[b].getDest()[3][a] + aboveYSb[d].getDest()[c][3] - al;
 
-							ySubBlocks[d][b].setPixel(c, a,
-									Globals.clamp(pred, 255));
+							ySubBlocks[d][b].setPixel(c, a, Globals.clamp(pred, 255));
 
 						}
 					}

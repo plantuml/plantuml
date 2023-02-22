@@ -2,14 +2,14 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2009-2024, Arnaud Roques
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of PlantUML.
  *
@@ -37,20 +37,20 @@ package net.sourceforge.plantuml.svek;
 
 import java.util.List;
 
-import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.awt.geom.XDimension2D;
-import net.sourceforge.plantuml.cucadiagram.Stereotype;
-import net.sourceforge.plantuml.graphic.AbstractTextBlock;
-import net.sourceforge.plantuml.klimt.ULine;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
+import net.sourceforge.plantuml.klimt.shape.ULine;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
-import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 public final class ConcurrentStates extends AbstractTextBlock implements IEntityImage {
 
@@ -84,8 +84,7 @@ public final class ConcurrentStates extends AbstractTextBlock implements IEntity
 				return new XDimension2D(orig.getWidth() + other.getWidth(),
 						Math.max(orig.getHeight(), other.getHeight()));
 
-			return new XDimension2D(Math.max(orig.getWidth(), other.getWidth()),
-					orig.getHeight() + other.getHeight());
+			return new XDimension2D(Math.max(orig.getWidth(), other.getWidth()), orig.getHeight() + other.getHeight());
 		}
 
 		void drawSeparator(UGraphic ug, XDimension2D dimTotal) {
@@ -100,8 +99,8 @@ public final class ConcurrentStates extends AbstractTextBlock implements IEntity
 		}
 	}
 
-	public ConcurrentStates(List<IEntityImage> inners, char concurrentSeparator,
-			ISkinParam skinParam, Stereotype stereotype) {
+	public ConcurrentStates(List<IEntityImage> inners, char concurrentSeparator, ISkinParam skinParam,
+			Stereotype stereotype) {
 		this.separator = Separator.fromChar(concurrentSeparator);
 		this.skinParam = skinParam;
 		this.stereotype = stereotype;

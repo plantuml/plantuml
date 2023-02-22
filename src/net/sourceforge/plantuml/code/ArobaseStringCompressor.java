@@ -2,14 +2,14 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2009-2024, Arnaud Roques
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of PlantUML.
  *
@@ -49,7 +49,8 @@ import net.sourceforge.plantuml.text.StringLocated;
 
 public class ArobaseStringCompressor implements StringCompressor {
 
-	private final static Pattern2 p = MyPattern.cmpile("(?s)^[%s]*(@startuml[^\\n\\r]*)?[%s]*(.*?)[%s]*(@enduml)?[%s]*$");
+	private final static Pattern2 pattern = MyPattern
+			.cmpile("(?s)^[%s]*(@startuml[^\\n\\r]*)?[%s]*(.*?)[%s]*(@enduml)?[%s]*$");
 
 	public String compress(final String data) throws IOException {
 		final ReadLine r = new UncommentReadLine(ReadLineReader.create(new StringReader(data), "COMPRESS"));
@@ -81,7 +82,7 @@ public class ArobaseStringCompressor implements StringCompressor {
 	}
 
 	private String compressOld(String s) throws IOException {
-		final Matcher2 m = p.matcher(s);
+		final Matcher2 m = pattern.matcher(s);
 		if (m.find()) {
 			return clean(m.group(2));
 		}
@@ -112,10 +113,10 @@ public class ArobaseStringCompressor implements StringCompressor {
 	}
 
 	private String clean1(String s) {
-		final Matcher2 m = p.matcher(s);
-		if (m.matches()) {
+		final Matcher2 m = pattern.matcher(s);
+		if (m.matches())
 			return m.group(2);
-		}
+
 		return s;
 	}
 

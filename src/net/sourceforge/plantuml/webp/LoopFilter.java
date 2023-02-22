@@ -31,41 +31,38 @@ public class LoopFilter {
 	}
 
 	private static int common_adjust(boolean use_outer_taps, /*
-															 * filter is 2 or 4
-															 * taps wide
-															 */
-	Segment seg) {
+																 * filter is 2 or 4 taps wide
+																 */
+			Segment seg) {
 		int p1 = u2s(seg.P1); /* retrieve and convert all 4 pixels */
 		int p0 = u2s(seg.P0);
 		int q0 = u2s(seg.Q0);
 		int q1 = u2s(seg.Q1);
 
 		/*
-		 * Disregarding clamping, when "use_outer_taps" is false, "a" is
-		 * 3*(q0-p0). Since we are about to divide "a" by 8, in this case we end
-		 * up multiplying the edge difference by 5/8. When "use_outer_taps" is
-		 * true (as for the simple filter), "a" is p1 - 3*p0 + 3*q0 - q1, which
-		 * can be thought of as a refinement of 2*(q0 - p0) and the adjustment
-		 * is something like (q0 - p0)/4.
+		 * Disregarding clamping, when "use_outer_taps" is false, "a" is 3*(q0-p0).
+		 * Since we are about to divide "a" by 8, in this case we end up multiplying the
+		 * edge difference by 5/8. When "use_outer_taps" is true (as for the simple
+		 * filter), "a" is p1 - 3*p0 + 3*q0 - q1, which can be thought of as a
+		 * refinement of 2*(q0 - p0) and the adjustment is something like (q0 - p0)/4.
 		 */
 		int a = c((use_outer_taps ? c(p1 - q1) : 0) + 3 * (q0 - p0));
 		/*
-		 * b is used to balance the rounding of a/8 in the case where the
-		 * "fractional" part "f" of a/8 is exactly 1/2.
+		 * b is used to balance the rounding of a/8 in the case where the "fractional"
+		 * part "f" of a/8 is exactly 1/2.
 		 */
 		int b = (c(a + 3)) >> 3;
 		/*
-		 * Divide a by 8, rounding up when f >= 1/2. Although not strictly part
-		 * of the "C" language, the right-shift is assumed to propagate the sign
-		 * bit.
+		 * Divide a by 8, rounding up when f >= 1/2. Although not strictly part of the
+		 * "C" language, the right-shift is assumed to propagate the sign bit.
 		 */
 		a = c(a + 4) >> 3;
 		/* Subtract "a" from q0, "bringing it closer" to p0. */
 		seg.Q0 = s2u(q0 - a);
 		/*
-		 * Add "a" (with adjustment "b") to p0, "bringing it closer" to q0. The
-		 * clamp of "a+b", while present in the reference decoder, is
-		 * superfluous; we have -16 <= a <= 15 at this point.
+		 * Add "a" (with adjustment "b") to p0, "bringing it closer" to q0. The clamp of
+		 * "a+b", while present in the reference decoder, is superfluous; we have -16 <=
+		 * a <= 15 at this point.
 		 */
 		seg.P0 = s2u(p0 + b);
 
@@ -73,27 +70,25 @@ public class LoopFilter {
 	}
 
 	/*
-	 * All functions take (among other things) a segment (of length at most 4 +
-	 * 4 = 8) symmetrically straddling an edge. The pixel values (or pointers)
-	 * are always given in order, from the "beforemost" to the "aftermost". So,
-	 * for a horizontal edge (written "|"), an 8-pixel segment would be ordered
-	 * p3 p2 p1 p0 | q0 q1 q2 q3.
+	 * All functions take (among other things) a segment (of length at most 4 + 4 =
+	 * 8) symmetrically straddling an edge. The pixel values (or pointers) are
+	 * always given in order, from the "beforemost" to the "aftermost". So, for a
+	 * horizontal edge (written "|"), an 8-pixel segment would be ordered p3 p2 p1
+	 * p0 | q0 q1 q2 q3.
 	 */
 	/*
-	 * Filtering is disabled if the difference between any two adjacent
-	 * "interior" pixels in the 8-pixel segment exceeds the relevant threshold
-	 * (I). A more complex thresholding calculation is done for the group of
-	 * four pixels that straddle the edge, in line with the calculation in
-	 * simple_segment() above.
+	 * Filtering is disabled if the difference between any two adjacent "interior"
+	 * pixels in the 8-pixel segment exceeds the relevant threshold (I). A more
+	 * complex thresholding calculation is done for the group of four pixels that
+	 * straddle the edge, in line with the calculation in simple_segment() above.
 	 */
 	public static boolean filter_yes(int I, /* limit on interior differences */
-	int E, /* limit at the edge */
-	int p3, int p2, int p1, int p0, /* pixels before edge */
-	int q0, int q1, int q2, int q3 /* pixels after edge */
+			int E, /* limit at the edge */
+			int p3, int p2, int p1, int p0, /* pixels before edge */
+			int q0, int q1, int q2, int q3 /* pixels after edge */
 	) {
-		return (abs(p0 - q0) * 2 + abs(p1 - q1) / 2) <= E && abs(p3 - p2) <= I
-				&& abs(p2 - p1) <= I && abs(p1 - p0) <= I && abs(q3 - q2) <= I
-				&& abs(q2 - q1) <= I && abs(q1 - q0) <= I;
+		return (abs(p0 - q0) * 2 + abs(p1 - q1) / 2) <= E && abs(p3 - p2) <= I && abs(p2 - p1) <= I && abs(p1 - p0) <= I
+				&& abs(q3 - q2) <= I && abs(q2 - q1) <= I && abs(q1 - q0) <= I;
 	}
 
 	private static Segment getSegH(SubBlock rsb, SubBlock lsb, int a) {
@@ -128,14 +123,13 @@ public class LoopFilter {
 	}
 
 	/*
-	 * Filtering is altered if (at least) one of the differences on either side
-	 * of the edge exceeds a threshold (we have "high edge variance").
+	 * Filtering is altered if (at least) one of the differences on either side of
+	 * the edge exceeds a threshold (we have "high edge variance").
 	 */
 	public static boolean hev(int threshold, int p1, int p0, /*
-															 * pixels before
-															 * edge
-															 */
-	int q0, int q1 /* pixels after edge */
+																 * pixels before edge
+																 */
+			int q0, int q1 /* pixels after edge */
 	) {
 		return abs(p1 - p0) > threshold || abs(q1 - q0) > threshold;
 	}
@@ -154,19 +148,18 @@ public class LoopFilter {
 
 	public static void loopFilterSimple(VP8Frame frame) {
 		for (int y = 0; y < frame.getMacroBlockRows(); y++) {
-			frame.fireLFProgressUpdate((100.0f * ((float) (y + 1) / (float) (frame
-					.getMacroBlockRows()))));
+			frame.fireLFProgressUpdate((100.0f * ((float) (y + 1) / (float) (frame.getMacroBlockRows()))));
 			for (int x = 0; x < frame.getMacroBlockCols(); x++) {
 				// System.out.println("x: "+x+" y: "+y);
 				MacroBlock rmb = frame.getMacroBlock(x, y);
 				MacroBlock bmb = frame.getMacroBlock(x, y);
 
 				int loop_filter_level = rmb.getFilterLevel();
-				if(loop_filter_level!=0) {
+				if (loop_filter_level != 0) {
 					int interior_limit = rmb.getFilterLevel();
 
 					int sharpnessLevel = frame.getSharpnessLevel();
-					if (sharpnessLevel  > 0) {
+					if (sharpnessLevel > 0) {
 						interior_limit >>= sharpnessLevel > 4 ? 2 : 1;
 						if (interior_limit > 9 - sharpnessLevel)
 							interior_limit = 9 - sharpnessLevel;
@@ -176,11 +169,11 @@ public class LoopFilter {
 
 					/* Luma and Chroma use the same inter-subblock edge limit */
 					int sub_bedge_limit = (loop_filter_level * 2) + interior_limit;
-					if(sub_bedge_limit < 1)
+					if (sub_bedge_limit < 1)
 						sub_bedge_limit = 1;
 
 					/* Luma and Chroma use the same inter-macroblock edge limit */
-					int mbedge_limit = sub_bedge_limit+4;
+					int mbedge_limit = sub_bedge_limit + 4;
 
 					// left
 					if (x > 0) {
@@ -204,10 +197,8 @@ public class LoopFilter {
 
 						for (int a = 1; a < 4; a++) {
 							for (int b = 0; b < 4; b++) {
-								SubBlock lsb = rmb.getSubBlock(SubBlock.PLANE.Y1,
-										a - 1, b);
-								SubBlock rsb = rmb.getSubBlock(SubBlock.PLANE.Y1,
-										a, b);
+								SubBlock lsb = rmb.getSubBlock(SubBlock.PLANE.Y1, a - 1, b);
+								SubBlock rsb = rmb.getSubBlock(SubBlock.PLANE.Y1, a, b);
 								for (int c = 0; c < 4; c++) {
 									// System.out.println("sbleft a:"+a+" b:"+b+" c:"+c);
 									Segment seg = getSegH(rsb, lsb, c);
@@ -242,10 +233,8 @@ public class LoopFilter {
 					if (!rmb.isSkip_inner_lf()) {
 						for (int a = 1; a < 4; a++) {
 							for (int b = 0; b < 4; b++) {
-								SubBlock tsb = bmb.getSubBlock(SubBlock.PLANE.Y1,
-										b, a - 1);
-								SubBlock bsb = bmb.getSubBlock(SubBlock.PLANE.Y1,
-										b, a);
+								SubBlock tsb = bmb.getSubBlock(SubBlock.PLANE.Y1, b, a - 1);
+								SubBlock bsb = bmb.getSubBlock(SubBlock.PLANE.Y1, b, a);
 								for (int c = 0; c < 4; c++) {
 									// System.out.println("sbtop");
 									Segment seg = getSegV(bsb, tsb, c);
@@ -265,14 +254,13 @@ public class LoopFilter {
 
 	public static void loopFilterUV(VP8Frame frame) {
 		for (int y = 0; y < frame.getMacroBlockRows(); y++) {
-			frame.fireLFProgressUpdate((100.0f * ((float) (y + 1) / (float) (frame
-					.getMacroBlockRows()))) / 2);
+			frame.fireLFProgressUpdate((100.0f * ((float) (y + 1) / (float) (frame.getMacroBlockRows()))) / 2);
 			for (int x = 0; x < frame.getMacroBlockCols(); x++) {
 				MacroBlock rmb = frame.getMacroBlock(x, y);
 				MacroBlock bmb = frame.getMacroBlock(x, y);
 				int sharpnessLevel = frame.getSharpnessLevel();
 				int loop_filter_level = rmb.getFilterLevel();
-				if(loop_filter_level!=0) {
+				if (loop_filter_level != 0) {
 					int interior_limit = rmb.getFilterLevel();
 					if (sharpnessLevel > 0) {
 						interior_limit >>= sharpnessLevel > 4 ? 2 : 1;
@@ -300,8 +288,7 @@ public class LoopFilter {
 					}
 
 					/* Luma and Chroma use the same inter-macroblock edge limit */
-					int mbedge_limit = ((loop_filter_level + 2) * 2)
-					+ interior_limit;
+					int mbedge_limit = ((loop_filter_level + 2) * 2) + interior_limit;
 					/* Luma and Chroma use the same inter-subblock edge limit */
 					int sub_bedge_limit = (loop_filter_level * 2) + interior_limit;
 
@@ -314,12 +301,10 @@ public class LoopFilter {
 							SubBlock lsbV = lmb.getSubBlock(SubBlock.PLANE.V, 1, b);
 							for (int a = 0; a < 4; a++) {
 								Segment seg = getSegH(rsbU, lsbU, a);
-								MBfilter(hev_threshold, interior_limit,
-										mbedge_limit, seg);
+								MBfilter(hev_threshold, interior_limit, mbedge_limit, seg);
 								setSegH(rsbU, lsbU, seg, a);
 								seg = getSegH(rsbV, lsbV, a);
-								MBfilter(hev_threshold, interior_limit,
-										mbedge_limit, seg);
+								MBfilter(hev_threshold, interior_limit, mbedge_limit, seg);
 								setSegH(rsbV, lsbV, seg, a);
 
 							}
@@ -330,22 +315,16 @@ public class LoopFilter {
 					if (!rmb.isSkip_inner_lf()) {
 						for (int a = 1; a < 2; a++) {
 							for (int b = 0; b < 2; b++) {
-								SubBlock lsbU = rmb.getSubBlock(SubBlock.PLANE.U,
-										a - 1, b);
-								SubBlock rsbU = rmb.getSubBlock(SubBlock.PLANE.U,
-										a, b);
-								SubBlock lsbV = rmb.getSubBlock(SubBlock.PLANE.V,
-										a - 1, b);
-								SubBlock rsbV = rmb.getSubBlock(SubBlock.PLANE.V,
-										a, b);
+								SubBlock lsbU = rmb.getSubBlock(SubBlock.PLANE.U, a - 1, b);
+								SubBlock rsbU = rmb.getSubBlock(SubBlock.PLANE.U, a, b);
+								SubBlock lsbV = rmb.getSubBlock(SubBlock.PLANE.V, a - 1, b);
+								SubBlock rsbV = rmb.getSubBlock(SubBlock.PLANE.V, a, b);
 								for (int c = 0; c < 4; c++) {
 									Segment seg = getSegH(rsbU, lsbU, c);
-									subblock_filter(hev_threshold, interior_limit,
-											sub_bedge_limit, seg);
+									subblock_filter(hev_threshold, interior_limit, sub_bedge_limit, seg);
 									setSegH(rsbU, lsbU, seg, c);
 									seg = getSegH(rsbV, lsbV, c);
-									subblock_filter(hev_threshold, interior_limit,
-											sub_bedge_limit, seg);
+									subblock_filter(hev_threshold, interior_limit, sub_bedge_limit, seg);
 									setSegH(rsbV, lsbV, seg, c);
 								}
 							}
@@ -362,12 +341,10 @@ public class LoopFilter {
 							for (int a = 0; a < 4; a++) {
 								// System.out.println("l");
 								Segment seg = getSegV(bsbU, tsbU, a);
-								MBfilter(hev_threshold, interior_limit,
-										mbedge_limit, seg);
+								MBfilter(hev_threshold, interior_limit, mbedge_limit, seg);
 								setSegV(bsbU, tsbU, seg, a);
 								seg = getSegV(bsbV, tsbV, a);
-								MBfilter(hev_threshold, interior_limit,
-										mbedge_limit, seg);
+								MBfilter(hev_threshold, interior_limit, mbedge_limit, seg);
 								setSegV(bsbV, tsbV, seg, a);
 							}
 						}
@@ -377,22 +354,16 @@ public class LoopFilter {
 					if (!rmb.isSkip_inner_lf()) {
 						for (int a = 1; a < 2; a++) {
 							for (int b = 0; b < 2; b++) {
-								SubBlock tsbU = bmb.getSubBlock(SubBlock.PLANE.U,
-										b, a - 1);
-								SubBlock bsbU = bmb.getSubBlock(SubBlock.PLANE.U,
-										b, a);
-								SubBlock tsbV = bmb.getSubBlock(SubBlock.PLANE.V,
-										b, a - 1);
-								SubBlock bsbV = bmb.getSubBlock(SubBlock.PLANE.V,
-										b, a);
+								SubBlock tsbU = bmb.getSubBlock(SubBlock.PLANE.U, b, a - 1);
+								SubBlock bsbU = bmb.getSubBlock(SubBlock.PLANE.U, b, a);
+								SubBlock tsbV = bmb.getSubBlock(SubBlock.PLANE.V, b, a - 1);
+								SubBlock bsbV = bmb.getSubBlock(SubBlock.PLANE.V, b, a);
 								for (int c = 0; c < 4; c++) {
 									Segment seg = getSegV(bsbU, tsbU, c);
-									subblock_filter(hev_threshold, interior_limit,
-											sub_bedge_limit, seg);
+									subblock_filter(hev_threshold, interior_limit, sub_bedge_limit, seg);
 									setSegV(bsbU, tsbU, seg, c);
 									seg = getSegV(bsbV, tsbV, c);
-									subblock_filter(hev_threshold, interior_limit,
-											sub_bedge_limit, seg);
+									subblock_filter(hev_threshold, interior_limit, sub_bedge_limit, seg);
 									setSegV(bsbV, tsbV, seg, c);
 								}
 							}
@@ -405,15 +376,14 @@ public class LoopFilter {
 
 	public static void loopFilterY(VP8Frame frame) {
 		for (int y = 0; y < frame.getMacroBlockRows(); y++) {
-			frame.fireLFProgressUpdate(50 + (100.0f * ((float) (y + 1) / (float) (frame
-					.getMacroBlockRows()))) / 2);
+			frame.fireLFProgressUpdate(50 + (100.0f * ((float) (y + 1) / (float) (frame.getMacroBlockRows()))) / 2);
 			for (int x = 0; x < frame.getMacroBlockCols(); x++) {
 				MacroBlock rmb = frame.getMacroBlock(x, y);
 				MacroBlock bmb = frame.getMacroBlock(x, y);
 				int sharpnessLevel = frame.getSharpnessLevel();
 				int loop_filter_level = rmb.getFilterLevel();
 
-				if(loop_filter_level!=0) {
+				if (loop_filter_level != 0) {
 					int interior_limit = rmb.getFilterLevel();
 
 					if (sharpnessLevel > 0) {
@@ -442,8 +412,7 @@ public class LoopFilter {
 					}
 
 					/* Luma and Chroma use the same inter-macroblock edge limit */
-					int mbedge_limit = ((loop_filter_level + 2) * 2)
-					+ interior_limit;
+					int mbedge_limit = ((loop_filter_level + 2) * 2) + interior_limit;
 					/* Luma and Chroma use the same inter-subblock edge limit */
 					int sub_bedge_limit = (loop_filter_level * 2) + interior_limit;
 
@@ -455,8 +424,7 @@ public class LoopFilter {
 							SubBlock lsb = lmb.getSubBlock(SubBlock.PLANE.Y1, 3, b);
 							for (int a = 0; a < 4; a++) {
 								Segment seg = getSegH(rsb, lsb, a);
-								MBfilter(hev_threshold, interior_limit,
-										mbedge_limit, seg);
+								MBfilter(hev_threshold, interior_limit, mbedge_limit, seg);
 								setSegH(rsb, lsb, seg, a);
 							}
 						}
@@ -465,15 +433,12 @@ public class LoopFilter {
 					if (!rmb.isSkip_inner_lf()) {
 						for (int a = 1; a < 4; a++) {
 							for (int b = 0; b < 4; b++) {
-								SubBlock lsb = rmb.getSubBlock(SubBlock.PLANE.Y1,
-										a - 1, b);
-								SubBlock rsb = rmb.getSubBlock(SubBlock.PLANE.Y1,
-										a, b);
+								SubBlock lsb = rmb.getSubBlock(SubBlock.PLANE.Y1, a - 1, b);
+								SubBlock rsb = rmb.getSubBlock(SubBlock.PLANE.Y1, a, b);
 								for (int c = 0; c < 4; c++) {
 									// System.out.println("sbleft a:"+a+" b:"+b+" c:"+c);
 									Segment seg = getSegH(rsb, lsb, c);
-									subblock_filter(hev_threshold, interior_limit,
-											sub_bedge_limit, seg);
+									subblock_filter(hev_threshold, interior_limit, sub_bedge_limit, seg);
 									setSegH(rsb, lsb, seg, c);
 								}
 							}
@@ -487,8 +452,7 @@ public class LoopFilter {
 							SubBlock bsb = bmb.getSubBlock(SubBlock.PLANE.Y1, b, 0);
 							for (int a = 0; a < 4; a++) {
 								Segment seg = getSegV(bsb, tsb, a);
-								MBfilter(hev_threshold, interior_limit,
-										mbedge_limit, seg);
+								MBfilter(hev_threshold, interior_limit, mbedge_limit, seg);
 								setSegV(bsb, tsb, seg, a);
 							}
 						}
@@ -497,14 +461,11 @@ public class LoopFilter {
 					if (!rmb.isSkip_inner_lf()) {
 						for (int a = 1; a < 4; a++) {
 							for (int b = 0; b < 4; b++) {
-								SubBlock tsb = bmb.getSubBlock(SubBlock.PLANE.Y1,
-										b, a - 1);
-								SubBlock bsb = bmb.getSubBlock(SubBlock.PLANE.Y1,
-										b, a);
+								SubBlock tsb = bmb.getSubBlock(SubBlock.PLANE.Y1, b, a - 1);
+								SubBlock bsb = bmb.getSubBlock(SubBlock.PLANE.Y1, b, a);
 								for (int c = 0; c < 4; c++) {
 									Segment seg = getSegV(bsb, tsb, c);
-									subblock_filter(hev_threshold, interior_limit,
-											sub_bedge_limit, seg);
+									subblock_filter(hev_threshold, interior_limit, sub_bedge_limit, seg);
 									setSegV(bsb, tsb, seg, c);
 								}
 							}
@@ -516,12 +477,11 @@ public class LoopFilter {
 	}
 
 	static void MBfilter(int hev_threshold, /* detect high edge variance */
-	int interior_limit, /* possibly disable filter */
-	int edge_limit, Segment seg) {
+			int interior_limit, /* possibly disable filter */
+			int edge_limit, Segment seg) {
 		int p3 = u2s(seg.P3), p2 = u2s(seg.P2), p1 = u2s(seg.P1), p0 = u2s(seg.P0);
 		int q0 = u2s(seg.Q0), q1 = u2s(seg.Q1), q2 = u2s(seg.Q2), q3 = u2s(seg.Q3);
-		if (filter_yes(interior_limit, edge_limit, q3, q2, q1, q0, p0, p1, p2,
-				p3)) {
+		if (filter_yes(interior_limit, edge_limit, q3, q2, q1, q0, p0, p1, p2, p3)) {
 			if (!hev(hev_threshold, p1, p0, q0, q1)) {
 				// Same as the initial calculation in "common_adjust",
 				// w is something like twice the edge difference
@@ -583,11 +543,9 @@ public class LoopFilter {
 	}
 
 	private static void simple_segment(int edge_limit, /*
-														 * do nothing if edge
-														 * difference exceeds
-														 * limit
+														 * do nothing if edge difference exceeds limit
 														 */
-	Segment seg) {
+			Segment seg) {
 		if ((abs(seg.P0 - seg.Q0) * 2 + abs(seg.P1 - seg.Q1) / 2) <= edge_limit) {
 			common_adjust(true, seg); /* use outer taps */
 		} else {
@@ -595,15 +553,13 @@ public class LoopFilter {
 	}
 
 	public static void subblock_filter(int hev_threshold, /*
-														 * detect high edge
-														 * variance
-														 */
-	int interior_limit, /* possibly disable filter */
-	int edge_limit, Segment seg) {
+															 * detect high edge variance
+															 */
+			int interior_limit, /* possibly disable filter */
+			int edge_limit, Segment seg) {
 		int p3 = u2s(seg.P3), p2 = u2s(seg.P2), p1 = u2s(seg.P1), p0 = u2s(seg.P0);
 		int q0 = u2s(seg.Q0), q1 = u2s(seg.Q1), q2 = u2s(seg.Q2), q3 = u2s(seg.Q3);
-		if (filter_yes(interior_limit, edge_limit, q3, q2, q1, q0, p0, p1, p2,
-				p3)) {
+		if (filter_yes(interior_limit, edge_limit, q3, q2, q1, q0, p0, p1, p2, p3)) {
 			boolean hv = hev(hev_threshold, p1, p0, q0, q1);
 			int a = (common_adjust(hv, seg) + 1) >> 1;
 			if (!hv) {

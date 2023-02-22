@@ -2,12 +2,12 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2009-2024, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program.
  * 
@@ -30,11 +30,11 @@
  */
 package net.sourceforge.plantuml.jsondiagram;
 
-import net.sourceforge.plantuml.awt.geom.XPoint2D;
-import net.sourceforge.plantuml.klimt.ULine;
 import net.sourceforge.plantuml.klimt.UPath;
 import net.sourceforge.plantuml.klimt.UStroke;
-import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.shape.ULine;
 
 public class Arrow {
 
@@ -56,12 +56,11 @@ public class Arrow {
 
 		final double factor = .4;
 		final double factor2 = .3;
-		
+
 		final XPoint2D p3 = getPoint(p1, alpha + Math.PI / 2, dist * factor);
 		final XPoint2D p4 = getPoint(p1, alpha - Math.PI / 2, dist * factor);
 		final XPoint2D p11 = getPoint(p1, alpha, dist * factor2);
 
-		
 		final UPath path = new UPath();
 		path.moveTo(p4);
 		path.lineTo(p11);

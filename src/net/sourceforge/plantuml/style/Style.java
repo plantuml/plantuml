@@ -2,14 +2,14 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2009-2024, Arnaud Roques
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of PlantUML.
  *
@@ -40,23 +40,22 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.StringTokenizer;
 
-import net.atmp.ISkinSimple;
-import net.sourceforge.plantuml.LineBreakStrategy;
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.graphic.SymbolContext;
-import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.graphic.TextBlockUtils;
-import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.klimt.Fashion;
+import net.sourceforge.plantuml.klimt.LineBreakStrategy;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.color.ColorType;
+import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
-import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 
 public class Style {
 
@@ -164,7 +163,7 @@ public class Style {
 		return result;
 	}
 
-	public Style eventuallyOverride(SymbolContext symbolContext) {
+	public Style eventuallyOverride(Fashion symbolContext) {
 		Style result = this;
 		if (symbolContext != null) {
 			final HColor back = symbolContext.getBackColor();
@@ -204,7 +203,7 @@ public class Style {
 		return FontConfiguration.create(font, color, hyperlinkColor, stroke);
 	}
 
-	public SymbolContext getSymbolContext(HColorSet set, Colors colors) {
+	public Fashion getSymbolContext(HColorSet set, Colors colors) {
 		HColor backColor = colors == null ? null : colors.getColor(ColorType.BACK);
 		if (backColor == null)
 			backColor = value(PName.BackGroundColor).asColor(set);
@@ -214,11 +213,11 @@ public class Style {
 		final double deltaShadowing = value(PName.Shadowing).asDouble();
 		final double roundCorner = value(PName.RoundCorner).asDouble();
 		final double diagonalCorner = value(PName.DiagonalCorner).asDouble();
-		return new SymbolContext(backColor, foreColor).withStroke(getStroke()).withDeltaShadow(deltaShadowing)
+		return new Fashion(backColor, foreColor).withStroke(getStroke()).withDeltaShadow(deltaShadowing)
 				.withCorner(roundCorner, diagonalCorner);
 	}
 
-	public SymbolContext getSymbolContext(HColorSet set) {
+	public Fashion getSymbolContext(HColorSet set) {
 		return getSymbolContext(set, null);
 	}
 

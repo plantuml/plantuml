@@ -106,8 +106,9 @@ public class Jasic {
 	// Tokenizing (lexing) -----------------------------------------------------
 
 	/**
-	 * This function takes a script as a string of characters and chunks it into a sequence of tokens. Each token is a
-	 * meaningful unit of program, like a variable name, a number, a string, or an operator.
+	 * This function takes a script as a string of characters and chunks it into a
+	 * sequence of tokens. Each token is a meaningful unit of program, like a
+	 * variable name, a number, a string, or an operator.
 	 */
 	private static List<Token> tokenize(String source) {
 		List<Token> tokens = new ArrayList<>();
@@ -198,18 +199,21 @@ public class Jasic {
 	// Token data --------------------------------------------------------------
 
 	/**
-	 * This defines the different kinds of tokens or meaningful chunks of code that the parser knows how to consume.
-	 * These let us distinguish, for example, between a string "foo" and a variable named "foo".
+	 * This defines the different kinds of tokens or meaningful chunks of code that
+	 * the parser knows how to consume. These let us distinguish, for example,
+	 * between a string "foo" and a variable named "foo".
 	 * 
-	 * HACK: A typical tokenizer would actually have unique token types for each keyword (print, goto, etc.) so that the
-	 * parser doesn't have to look at the names, but Jasic is a little more crude.
+	 * HACK: A typical tokenizer would actually have unique token types for each
+	 * keyword (print, goto, etc.) so that the parser doesn't have to look at the
+	 * names, but Jasic is a little more crude.
 	 */
 	private enum TokenType {
 		WORD, NUMBER, STRING, LABEL, LINE, EQUALS, OPERATOR, LEFT_PAREN, RIGHT_PAREN, EOF
 	}
 
 	/**
-	 * This is a single meaningful chunk of code. It is created by the tokenizer and consumed by the parser.
+	 * This is a single meaningful chunk of code. It is created by the tokenizer and
+	 * consumed by the parser.
 	 */
 	private static class Token {
 		public Token(String text, TokenType type) {
@@ -222,13 +226,15 @@ public class Jasic {
 	}
 
 	/**
-	 * This defines the different states the tokenizer can be in while it's scanning through the source code. Tokenizers
-	 * are state machines, which means the only data they need to store is where they are in the source code and this
-	 * one "state" or mode value.
+	 * This defines the different states the tokenizer can be in while it's scanning
+	 * through the source code. Tokenizers are state machines, which means the only
+	 * data they need to store is where they are in the source code and this one
+	 * "state" or mode value.
 	 * 
-	 * One of the main differences between tokenizing and parsing is this regularity. Because the tokenizer stores only
-	 * this one state value, it can't handle nesting (which would require also storing a number to identify how deeply
-	 * nested you are). The parser is able to handle that.
+	 * One of the main differences between tokenizing and parsing is this
+	 * regularity. Because the tokenizer stores only this one state value, it can't
+	 * handle nesting (which would require also storing a number to identify how
+	 * deeply nested you are). The parser is able to handle that.
 	 */
 	private enum TokenizeState {
 		DEFAULT, WORD, NUMBER, STRING, COMMENT
@@ -237,13 +243,14 @@ public class Jasic {
 	// Parsing -----------------------------------------------------------------
 
 	/**
-	 * This defines the Jasic parser. The parser takes in a sequence of tokens and generates an abstract syntax tree.
-	 * This is the nested data structure that represents the series of statements, and the expressions (which can nest
-	 * arbitrarily deeply) that they evaluate. In technical terms, what we have is a recursive descent parser, the
-	 * simplest kind to hand-write.
+	 * This defines the Jasic parser. The parser takes in a sequence of tokens and
+	 * generates an abstract syntax tree. This is the nested data structure that
+	 * represents the series of statements, and the expressions (which can nest
+	 * arbitrarily deeply) that they evaluate. In technical terms, what we have is a
+	 * recursive descent parser, the simplest kind to hand-write.
 	 *
-	 * As a side-effect, this phase also stores off the line numbers for each label in the program. It's a bit gross,
-	 * but it works.
+	 * As a side-effect, this phase also stores off the line numbers for each label
+	 * in the program. It's a bit gross, but it works.
 	 */
 	private class Parser {
 		public Parser(List<Token> tokens) {
@@ -252,11 +259,12 @@ public class Jasic {
 		}
 
 		/**
-		 * The top-level function to start parsing. This will keep consuming tokens and routing to the other parse
-		 * functions for the different grammar syntax until we run out of code to parse.
+		 * The top-level function to start parsing. This will keep consuming tokens and
+		 * routing to the other parse functions for the different grammar syntax until
+		 * we run out of code to parse.
 		 * 
-		 * @param labels
-		 *            A map of label names to statement indexes. The parser will fill this in as it scans the code.
+		 * @param labels A map of label names to statement indexes. The parser will fill
+		 *               this in as it scans the code.
 		 * @return The list of parsed statements.
 		 */
 		public List<Statement> parse(Map<String, Integer> labels) {
@@ -297,8 +305,9 @@ public class Jasic {
 		// noun() and verb().
 
 		/**
-		 * Parses a single expression. Recursive descent parsers start with the lowest-precedent term and moves towards
-		 * higher precedence. For Jasic, binary operators (+, -, etc.) are the lowest.
+		 * Parses a single expression. Recursive descent parsers start with the
+		 * lowest-precedent term and moves towards higher precedence. For Jasic, binary
+		 * operators (+, -, etc.) are the lowest.
 		 * 
 		 * @return The parsed expression.
 		 */
@@ -307,16 +316,19 @@ public class Jasic {
 		}
 
 		/**
-		 * Parses a series of binary operator expressions into a single expression. In Jasic, all operators have the
-		 * same predecence and associate left-to-right. That means it will interpret: 1 + 2 * 3 - 4 / 5 like: ((((1 + 2)
-		 * * 3) - 4) / 5)
+		 * Parses a series of binary operator expressions into a single expression. In
+		 * Jasic, all operators have the same predecence and associate left-to-right.
+		 * That means it will interpret: 1 + 2 * 3 - 4 / 5 like: ((((1 + 2) * 3) - 4) /
+		 * 5)
 		 * 
-		 * It works by building the expression tree one at a time. So, given this code: 1 + 2 * 3, this will:
+		 * It works by building the expression tree one at a time. So, given this code:
+		 * 1 + 2 * 3, this will:
 		 * 
-		 * 1. Parse (1) as an atomic expression. 2. See the (+) and start a new operator expression. 3. Parse (2) as an
-		 * atomic expression. 4. Build a (1 + 2) expression and replace (1) with it. 5. See the (*) and start a new
-		 * operator expression. 6. Parse (3) as an atomic expression. 7. Build a ((1 + 2) * 3) expression and replace (1
-		 * + 2) with it. 8. Return the last expression built.
+		 * 1. Parse (1) as an atomic expression. 2. See the (+) and start a new operator
+		 * expression. 3. Parse (2) as an atomic expression. 4. Build a (1 + 2)
+		 * expression and replace (1) with it. 5. See the (*) and start a new operator
+		 * expression. 6. Parse (3) as an atomic expression. 7. Build a ((1 + 2) * 3)
+		 * expression and replace (1 + 2) with it. 8. Return the last expression built.
 		 * 
 		 * @return The parsed expression.
 		 */
@@ -334,8 +346,9 @@ public class Jasic {
 		}
 
 		/**
-		 * Parses an "atomic" expression. This is the highest level of precedence and contains single literal tokens
-		 * like 123 and "foo", as well as parenthesized expressions.
+		 * Parses an "atomic" expression. This is the highest level of precedence and
+		 * contains single literal tokens like 123 and "foo", as well as parenthesized
+		 * expressions.
 		 * 
 		 * @return The parsed expression.
 		 */
@@ -364,12 +377,11 @@ public class Jasic {
 		// the token stream.
 
 		/**
-		 * Consumes the next two tokens if they are the given type (in order). Consumes no tokens if either check fais.
+		 * Consumes the next two tokens if they are the given type (in order). Consumes
+		 * no tokens if either check fais.
 		 * 
-		 * @param type1
-		 *            Expected type of the next token.
-		 * @param type2
-		 *            Expected type of the subsequent token.
+		 * @param type1 Expected type of the next token.
+		 * @param type2 Expected type of the subsequent token.
 		 * @return True if tokens were consumed.
 		 */
 		private boolean match(TokenType type1, TokenType type2) {
@@ -384,8 +396,7 @@ public class Jasic {
 		/**
 		 * Consumes the next token if it's the given type.
 		 * 
-		 * @param type
-		 *            Expected type of the next token.
+		 * @param type Expected type of the next token.
 		 * @return True if the token was consumed.
 		 */
 		private boolean match(TokenType type) {
@@ -398,8 +409,7 @@ public class Jasic {
 		/**
 		 * Consumes the next token if it's a word token with the given name.
 		 * 
-		 * @param name
-		 *            Expected name of the next word token.
+		 * @param name Expected name of the next word token.
 		 * @return True if the token was consumed.
 		 */
 		private boolean match(String name) {
@@ -412,11 +422,11 @@ public class Jasic {
 		}
 
 		/**
-		 * Consumes the next token if it's the given type. If not, throws an exception. This is for cases where the
-		 * parser demands a token of a certain type in a certain position, for example a matching ) after an opening (.
+		 * Consumes the next token if it's the given type. If not, throws an exception.
+		 * This is for cases where the parser demands a token of a certain type in a
+		 * certain position, for example a matching ) after an opening (.
 		 * 
-		 * @param type
-		 *            Expected type of the next token.
+		 * @param type Expected type of the next token.
 		 * @return The consumed token.
 		 */
 		private Token consume(TokenType type) {
@@ -426,10 +436,10 @@ public class Jasic {
 		}
 
 		/**
-		 * Consumes the next token if it's a word with the given name. If not, throws an exception.
+		 * Consumes the next token if it's a word with the given name. If not, throws an
+		 * exception.
 		 * 
-		 * @param name
-		 *            Expected name of the next word token.
+		 * @param name Expected name of the next word token.
 		 * @return The consumed token.
 		 */
 		private Token consume(String name) {
@@ -439,11 +449,10 @@ public class Jasic {
 		}
 
 		/**
-		 * Gets a previously consumed token, indexing backwards. last(1) will be the token just consumed, last(2) the
-		 * one before that, etc.
+		 * Gets a previously consumed token, indexing backwards. last(1) will be the
+		 * token just consumed, last(2) the one before that, etc.
 		 * 
-		 * @param offset
-		 *            How far back in the token stream to look.
+		 * @param offset How far back in the token stream to look.
 		 * @return The consumed token.
 		 */
 		private Token last(int offset) {
@@ -451,11 +460,10 @@ public class Jasic {
 		}
 
 		/**
-		 * Gets an unconsumed token, indexing forward. get(0) will be the next token to be consumed, get(1) the one
-		 * after that, etc.
+		 * Gets an unconsumed token, indexing forward. get(0) will be the next token to
+		 * be consumed, get(1) the one after that, etc.
 		 * 
-		 * @param offset
-		 *            How far forward in the token stream to look.
+		 * @param offset How far forward in the token stream to look.
 		 * @return The yet-to-be-consumed token.
 		 */
 		private Token get(int offset) {
@@ -480,25 +488,29 @@ public class Jasic {
 	// separated out so that the AST us just a static data structure.
 
 	/**
-	 * Base interface for a Jasic statement. The different supported statement types like "print" and "goto" implement
-	 * this.
+	 * Base interface for a Jasic statement. The different supported statement types
+	 * like "print" and "goto" implement this.
 	 */
 	public interface Statement {
 		/**
-		 * Statements implement this to actually perform whatever behavior the statement causes. "print" statements will
-		 * display text here, "goto" statements will change the current statement, etc.
+		 * Statements implement this to actually perform whatever behavior the statement
+		 * causes. "print" statements will display text here, "goto" statements will
+		 * change the current statement, etc.
 		 */
 		void execute();
 	}
 
 	/**
-	 * Base interface for an expression. An expression is like a statement except that it also returns a value when
-	 * executed. Expressions do not appear at the top level in Jasic programs, but are used in many statements. For
-	 * example, the value printed by a "print" statement is an expression. Unlike statements, expressions can nest.
+	 * Base interface for an expression. An expression is like a statement except
+	 * that it also returns a value when executed. Expressions do not appear at the
+	 * top level in Jasic programs, but are used in many statements. For example,
+	 * the value printed by a "print" statement is an expression. Unlike statements,
+	 * expressions can nest.
 	 */
 	public interface Expression {
 		/**
-		 * Expression classes implement this to evaluate the expression and return the value.
+		 * Expression classes implement this to evaluate the expression and return the
+		 * value.
 		 * 
 		 * @return The value of the calculated expression.
 		 */
@@ -506,7 +518,8 @@ public class Jasic {
 	}
 
 	/**
-	 * A "print" statement evaluates an expression, converts the result to a string, and displays it to the user.
+	 * A "print" statement evaluates an expression, converts the result to a string,
+	 * and displays it to the user.
 	 */
 	public class PrintStatement implements Statement {
 		public PrintStatement(Expression expression) {
@@ -548,7 +561,8 @@ public class Jasic {
 	}
 
 	/**
-	 * An assignment statement evaluates an expression and stores the result in a variable.
+	 * An assignment statement evaluates an expression and stores the result in a
+	 * variable.
 	 */
 	public class AssignStatement implements Statement {
 		public AssignStatement(String name, Expression value) {
@@ -582,8 +596,8 @@ public class Jasic {
 	}
 
 	/**
-	 * An if then statement jumps execution to another place in the program, but only if an expression evaluates to
-	 * something other than 0.
+	 * An if then statement jumps execution to another place in the program, but
+	 * only if an expression evaluates to something other than 0.
 	 */
 	public class IfThenStatement implements Statement {
 		public IfThenStatement(Expression condition, String label) {
@@ -623,7 +637,8 @@ public class Jasic {
 	}
 
 	/**
-	 * An operator expression evaluates two expressions and then performs some arithmetic operation on the results.
+	 * An operator expression evaluates two expressions and then performs some
+	 * arithmetic operation on the results.
 	 */
 	public class OperatorExpression implements Expression {
 		public OperatorExpression(Expression left, char operator, Expression right) {
@@ -684,16 +699,18 @@ public class Jasic {
 	// Value types -------------------------------------------------------------
 
 	/**
-	 * This is the base interface for a value. Values are the data that the interpreter processes. They are what gets
-	 * stored in variables, printed, and operated on.
+	 * This is the base interface for a value. Values are the data that the
+	 * interpreter processes. They are what gets stored in variables, printed, and
+	 * operated on.
 	 * 
-	 * There is an implementation of this interface for each of the different primitive types (really just double and
-	 * string) that Jasic supports. Wrapping them in a single Value interface lets Jasic be dynamically-typed and
-	 * convert between different representations as needed.
+	 * There is an implementation of this interface for each of the different
+	 * primitive types (really just double and string) that Jasic supports. Wrapping
+	 * them in a single Value interface lets Jasic be dynamically-typed and convert
+	 * between different representations as needed.
 	 * 
-	 * Note that Value extends Expression. This is a bit of a hack, but it lets us use values (which are typically only
-	 * ever seen by the interpreter and not the parser) as both runtime values, and as object representing literals in
-	 * code.
+	 * Note that Value extends Expression. This is a bit of a hack, but it lets us
+	 * use values (which are typically only ever seen by the interpreter and not the
+	 * parser) as both runtime values, and as object representing literals in code.
 	 */
 	public interface Value extends Expression {
 		/**
@@ -758,8 +775,9 @@ public class Jasic {
 	// Interpreter -------------------------------------------------------------
 
 	/**
-	 * Constructs a new Jasic instance. The instance stores the global state of the interpreter such as the values of
-	 * all of the variables and the current statement.
+	 * Constructs a new Jasic instance. The instance stores the global state of the
+	 * interpreter such as the values of all of the variables and the current
+	 * statement.
 	 */
 	public Jasic() {
 		variables = new HashMap<String, Value>();
@@ -770,15 +788,17 @@ public class Jasic {
 	}
 
 	/**
-	 * This is where the magic happens. This runs the code through the parsing pipeline to generate the AST. Then it
-	 * executes each statement. It keeps track of the current line in a member variable that the statement objects have
-	 * access to. This lets "goto" and "if then" do flow control by simply setting the index of the current statement.
+	 * This is where the magic happens. This runs the code through the parsing
+	 * pipeline to generate the AST. Then it executes each statement. It keeps track
+	 * of the current line in a member variable that the statement objects have
+	 * access to. This lets "goto" and "if then" do flow control by simply setting
+	 * the index of the current statement.
 	 *
-	 * In an interpreter that didn't mix the interpretation logic in with the AST node classes, this would be doing a
-	 * lot more work.
+	 * In an interpreter that didn't mix the interpretation logic in with the AST
+	 * node classes, this would be doing a lot more work.
 	 * 
-	 * @param source
-	 *            A string containing the source code of a .jas script to interpret.
+	 * @param source A string containing the source code of a .jas script to
+	 *               interpret.
 	 */
 	public void interpret(String source) {
 		// Tokenize.

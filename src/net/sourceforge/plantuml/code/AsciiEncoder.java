@@ -2,14 +2,14 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2009-2024, Arnaud Roques
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of PlantUML.
  *
@@ -49,14 +49,14 @@ public class AsciiEncoder implements URLEncoder {
 	}
 
 	public String encode(byte data[]) {
-		if (data == null) {
+		if (data == null)
 			return "";
-		}
+
 		final StringBuilder result = new StringBuilder((data.length * 4 + 2) / 3);
-		for (int i = 0; i < data.length; i += 3) {
+		for (int i = 0; i < data.length; i += 3)
 			append3bytes(result, data[i] & 0xFF, i + 1 < data.length ? data[i + 1] & 0xFF : 0,
 					i + 2 < data.length ? data[i + 2] & 0xFF : 0);
-		}
+
 		return result.toString();
 	}
 
@@ -78,9 +78,9 @@ public class AsciiEncoder implements URLEncoder {
 		// length++;
 		// }
 		final int r = length % 4;
-		if (r != 0) {
+		if (r != 0)
 			length += 4 - r;
-		}
+
 		// System.err.println("length=" + length);
 		// System.err.println("length1=" + (length % 4));
 		// length += length % 4;
@@ -90,9 +90,9 @@ public class AsciiEncoder implements URLEncoder {
 	}
 
 	private char scharAt(String s, int i) {
-		if (i >= s.length()) {
+		if (i >= s.length())
 			return '0';
-		}
+
 		return s.charAt(i);
 	}
 
@@ -102,21 +102,21 @@ public class AsciiEncoder implements URLEncoder {
 
 	public static char encode6bit(byte b) {
 		assert b >= 0 && b < 64;
-		if (b < 10) {
+		if (b < 10)
 			return (char) ('0' + b);
-		}
+
 		b -= 10;
-		if (b < 26) {
+		if (b < 26)
 			return (char) ('A' + b);
-		}
+
 		b -= 26;
-		if (b < 26) {
+		if (b < 26)
 			return (char) ('a' + b);
-		}
+
 		b -= 26;
-		if (b == 0) {
+		if (b == 0)
 			return '-';
-		}
+
 		if (b == 1) {
 			return '_';
 		}

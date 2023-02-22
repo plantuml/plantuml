@@ -19,8 +19,7 @@ import java.io.IOException;
 
 public class SegmentQuants {
 
-	private static DeltaQ get_delta_q(BoolDecoder bc, int prev)
-			throws IOException {
+	private static DeltaQ get_delta_q(BoolDecoder bc, int prev) throws IOException {
 		DeltaQ ret = new DeltaQ();
 		ret.v = 0;
 		ret.update = false;
@@ -56,8 +55,7 @@ public class SegmentQuants {
 		return segQuants;
 	}
 
-	public void parse(BoolDecoder bc, boolean segmentation_enabled,
-			boolean mb_segement_abs_delta) throws IOException {
+	public void parse(BoolDecoder bc, boolean segmentation_enabled, boolean mb_segement_abs_delta) throws IOException {
 		qIndex = bc.readLiteral(7);
 		boolean q_update = false;
 		DeltaQ v = get_delta_q(bc, 0);

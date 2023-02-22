@@ -2,12 +2,12 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
@@ -57,15 +57,10 @@ import static gen.lib.cgraph.obj__c.agmethod_init;
 import static gen.lib.cgraph.obj__c.agroot;
 import static gen.lib.cgraph.subg__c.agparent;
 import static gen.lib.cgraph.utils__c.agdtopen;
-import static smetana.core.JUtils.EQ;
-import static smetana.core.JUtils.sizeof;
 import static smetana.core.Macro.AGID;
 import static smetana.core.Macro.AGRAPH;
 import static smetana.core.Macro.AGSEQ;
 import static smetana.core.Macro.AGTYPE;
-import static smetana.core.Macro.ASINT;
-import static smetana.core.Macro.N;
-import static smetana.core.Macro.NOT;
 import static smetana.core.debug.SmetanaDebug.ENTERING;
 import static smetana.core.debug.SmetanaDebug.LEAVING;
 
@@ -87,8 +82,10 @@ import smetana.core.CFunction;
 import smetana.core.CFunctionAbstract;
 import smetana.core.CStarStar;
 import smetana.core.CString;
-import smetana.core.Z;
+import smetana.core.Globals;
+import smetana.core.ZType;
 import smetana.core.__ptr__;
+import smetana.core.size_t;
 
 public class graph__c {
 
@@ -97,22 +94,22 @@ public class graph__c {
 // static Agclos_t *agclos(Agdisc_t * proto) 
 @Unused
 @Original(version="2.38.0", path="lib/cgraph/graph.c", name="", key="bb2bu9iyqx0u6xx44l282vmch", definition="static Agclos_t *agclos(Agdisc_t * proto)")
-public static ST_Agclos_s agclos(ST_Agdisc_s proto) {
+public static ST_Agclos_s agclos(Globals zz, ST_Agdisc_s proto) {
 ENTERING("bb2bu9iyqx0u6xx44l282vmch","agclos");
 try {
 	ST_Agmemdisc_s memdisc;
 		__ptr__  memclosure;
 		ST_Agclos_s rv;
 		/* establish an allocation arena */
-		memdisc = (ST_Agmemdisc_s) ((proto != null && proto.mem != null) ? proto.mem : Z.z().AgMemDisc);
-		memclosure = (__ptr__) memdisc.open.exe(proto);
-		rv = (ST_Agclos_s) memdisc.alloc.exe(memclosure, sizeof(ST_Agclos_s.class));
+		memdisc = (ST_Agmemdisc_s) ((proto != null && proto.mem != null) ? proto.mem : zz.AgMemDisc);
+		memclosure = (__ptr__) memdisc.open.exe(zz, proto);
+		rv = (ST_Agclos_s) memdisc.alloc.exe(zz, memclosure, new size_t(ZType.ST_Agclos_s));
 		rv.disc.mem = memdisc;
 		rv.state.mem = memclosure;
-		rv.disc.id = ((proto != null && proto.id != null) ? proto.id : Z.z().AgIdDisc);
+		rv.disc.id = ((proto != null && proto.id != null) ? proto.id : zz.AgIdDisc);
 		// Translation bug in next line: should be AgIoDisc and not AgIdDisc
 		// rv.disc.io = ((proto != null && proto.getPtr("io") != null) ? proto.getPtr("io") : Z.z().AgIoDisc));
-		rv.callbacks_enabled = (N(0));
+		rv.callbacks_enabled = (true);
 		return rv;
 } finally {
 LEAVING("bb2bu9iyqx0u6xx44l282vmch","agclos");
@@ -126,29 +123,29 @@ LEAVING("bb2bu9iyqx0u6xx44l282vmch","agclos");
 // Agraph_t *agopen(char *name, Agdesc_t desc, Agdisc_t * arg_disc) 
 @Unused
 @Original(version="2.38.0", path="lib/cgraph/graph.c", name="", key="d5yqn56yii8cdoahswt4n6bug", definition="Agraph_t *agopen(char *name, Agdesc_t desc, Agdisc_t * arg_disc)")
-public static ST_Agraph_s agopen(CString name, final ST_Agdesc_s desc, ST_Agdisc_s arg_disc) {
+public static ST_Agraph_s agopen(Globals zz, CString name, final ST_Agdesc_s desc, ST_Agdisc_s arg_disc) {
 // WARNING!! STRUCT
-return agopen_w_(name, (ST_Agdesc_s) desc.copy(), arg_disc);
+return agopen_w_(zz, name, (ST_Agdesc_s) desc.copy(), arg_disc);
 }
-private static ST_Agraph_s agopen_w_(CString name, final ST_Agdesc_s desc, ST_Agdisc_s arg_disc) {
+private static ST_Agraph_s agopen_w_(Globals zz, CString name, final ST_Agdesc_s desc, ST_Agdisc_s arg_disc) {
 ENTERING("d5yqn56yii8cdoahswt4n6bug","agopen");
 try {
 		ST_Agraph_s g;
 		ST_Agclos_s clos;
 		int gid[] = new int[1];
-		clos = agclos(arg_disc);
-		g = (ST_Agraph_s) clos.disc.mem.alloc.exe(clos.state.mem, sizeof(ST_Agraph_s.class));
+		clos = agclos(zz, arg_disc);
+		g = (ST_Agraph_s) clos.disc.mem.alloc.exe(zz, clos.state.mem, new size_t(ZType.ST_Agraph_s));
     	AGTYPE(g, AGRAPH);
 		g.clos = clos;
 		g.desc.___(desc);
-		((ST_Agdesc_s)g.desc).maingraph = ASINT((N(0)));
+		((ST_Agdesc_s)g.desc).maingraph = (true) ? 1 : 0;
 		g.root = g;
-		g.clos.state.id = (__ptr__) g.clos.disc.id.open.exe(g, arg_disc);
-		 if (agmapnametoid(g, AGRAPH, name, gid, (N(0)))!=0)
+		g.clos.state.id = (__ptr__) g.clos.disc.id.open.exe(zz, g, arg_disc);
+		 if (agmapnametoid(zz, g, AGRAPH, name, gid, (true))!=0)
 		   AGID(g, gid[0]);
 		// /* else AGID(g) = 0 because we have no alternatives */
-		g = agopen1(g);
-		agregister(g, AGRAPH, g);
+		g = agopen1(zz, g);
+		agregister(zz, g, AGRAPH, g);
 		return g;
 } finally {
 LEAVING("d5yqn56yii8cdoahswt4n6bug","agopen");
@@ -162,22 +159,22 @@ LEAVING("d5yqn56yii8cdoahswt4n6bug","agopen");
 // Agraph_t *agopen1(Agraph_t * g) 
 @Unused
 @Original(version="2.38.0", path="lib/cgraph/graph.c", name="", key="8jyhwfdfm0a877qfz8cjlb8rk", definition="Agraph_t *agopen1(Agraph_t * g)")
-public static ST_Agraph_s agopen1(ST_Agraph_s g) {
+public static ST_Agraph_s agopen1(Globals zz, ST_Agraph_s g) {
 ENTERING("8jyhwfdfm0a877qfz8cjlb8rk","agopen1");
 try {
     ST_Agraph_s par;
-    g.n_seq = agdtopen(g, Z.z().Ag_subnode_seq_disc, Z.z().Dttree);
-    g.n_id = agdtopen(g, Z.z().Ag_subnode_id_disc, Z.z().Dttree);
-    g.e_seq = agdtopen(g, EQ(g, agroot(g))? Z.z().Ag_mainedge_seq_disc : Z.z().Ag_subedge_seq_disc, Z.z().Dttree);
-    g.e_id = agdtopen(g, EQ(g, agroot(g))? Z.z().Ag_mainedge_id_disc : Z.z().Ag_subedge_id_disc, Z.z().Dttree);
-    g.g_dict = agdtopen(g, Z.z().Ag_subgraph_id_disc, Z.z().Dttree);
+    g.n_seq = agdtopen(zz, g, zz.Ag_subnode_seq_disc, zz.Dttree);
+    g.n_id = agdtopen(zz, g, zz.Ag_subnode_id_disc, zz.Dttree);
+    g.e_seq = agdtopen(zz, g, g == agroot(g)? zz.Ag_mainedge_seq_disc : zz.Ag_subedge_seq_disc, zz.Dttree);
+    g.e_id = agdtopen(zz, g, g == agroot(g)? zz.Ag_mainedge_id_disc : zz.Ag_subedge_id_disc, zz.Dttree);
+    g.g_dict = agdtopen(zz, g, zz.Ag_subgraph_id_disc, zz.Dttree);
     par = agparent(g);
     if (par!=null) {
 	AGSEQ(g, agnextseq(par, AGRAPH));
-  	par.g_dict.searchf.exe(par.g_dict,g,0000001);
+  	par.g_dict.searchf.exe(zz, par.g_dict,g,0000001);
     }				/* else AGSEQ=0 */
-    if (N(par) || ((ST_Agdesc_s)par.desc).has_attrs!=0)
-	agraphattr_init(g);
+    if ((par) == null || ((ST_Agdesc_s)par.desc).has_attrs!=0)
+	agraphattr_init(zz, g);
     agmethod_init(g, g);
     return g;
 } finally {
@@ -223,14 +220,14 @@ LEAVING("688euygrkbl10cveflgwalo2n","agnnodes");
 
 @Reviewed(when = "14/11/2020")
 @Original(version="2.38.0", path="lib/cgraph/graph.c", name="agnedges", key="8zjne7uv8rfpmbv5t96zhnr4u", definition="int agnedges(Agraph_t * g)")
-public static int agnedges(ST_Agraph_s g) {
+public static int agnedges(Globals zz, ST_Agraph_s g) {
 ENTERING("8zjne7uv8rfpmbv5t96zhnr4u","agnedges");
 try {
     ST_Agnode_s n;
     int rv = 0;
     
-    for (n = agfstnode(g); n!=null; n = agnxtnode(g, n))
-	rv += agdegree(g, n, false, true);	/* must use OUT to get self-arcs */
+    for (n = agfstnode(zz, g); n!=null; n = agnxtnode(zz, g, n))
+	rv += agdegree(zz, g, n, false, true);	/* must use OUT to get self-arcs */
     return rv;
 } finally {
 LEAVING("8zjne7uv8rfpmbv5t96zhnr4u","agnedges");
@@ -259,7 +256,7 @@ LEAVING("blvn1w3v0icnucu5m5xvbrba1","agisdirected");
 public static boolean agisundirected(ST_Agraph_s g) {
 ENTERING("8thgds4eioot64flko26m8ns0","agisundirected");
 try {
-    return NOT(agisdirected(g));
+    return !agisdirected(g);
 } finally {
 LEAVING("8thgds4eioot64flko26m8ns0","agisundirected");
 }
@@ -302,13 +299,13 @@ LEAVING("abaldeo2ie6zi60cazxp7rv47","cnt");
 @Difficult
 @Reviewed(when = "14/11/2020")
 @Original(version="2.38.0", path="lib/cgraph/graph.c", name="agdegree", key="2bz40qf0qo7pd6er1ut25gthp", definition="int agdegree(Agraph_t * g, Agnode_t * n, int want_in, int want_out)")
-public static int agdegree(ST_Agraph_s g, ST_Agnode_s n, boolean want_in, boolean want_out) {
+public static int agdegree(Globals zz, ST_Agraph_s g, ST_Agnode_s n, boolean want_in, boolean want_out) {
 ENTERING("2bz40qf0qo7pd6er1ut25gthp","agdegree");
 try {
 	ST_Agsubnode_s sn;
     int rv = 0;
     
-    sn = agsubrep(g, n);
+    sn = agsubrep(zz, g, n);
     if (sn!=null) {
 	if (want_out) rv += cnt(g.e_seq, sn.out_seq_AMP());
 	if (want_in) rv += cnt(g.e_seq, sn.in_seq_AMP());
@@ -323,7 +320,7 @@ LEAVING("2bz40qf0qo7pd6er1ut25gthp","agdegree");
 
 public static CFunction agraphidcmpf = new CFunctionAbstract("agraphidcmpf") {
 	
-	public Object exe(Object... args) {
+	public Object exe(Globals zz, Object... args) {
 		return agraphidcmpf((ST_dt_s)args[0], (ST_Agraph_s)args[1], (ST_Agraph_s)args[2], (ST_dtdisc_s)args[3]);
 	}};
 	
@@ -338,7 +335,7 @@ try {
     ST_Agraph_s sg0, sg1;
     sg0 = (ST_Agraph_s) arg0;
     sg1 = (ST_Agraph_s) arg1;
-    v = (AGID(sg0) - AGID(sg1));
+    v = (sg0.tag.id - sg1.tag.id);
     return ((v==0)?0:(v<0?-1:1));
 } finally {
 LEAVING("dhbtfzzp8n5yygqmhmluo9bxl","agraphidcmpf");

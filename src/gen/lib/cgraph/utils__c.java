@@ -2,12 +2,12 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
@@ -46,7 +46,6 @@
 package gen.lib.cgraph;
 import static gen.lib.cdt.dtdisc__c.dtdisc;
 import static gen.lib.cdt.dtopen__c.dtopen;
-import static smetana.core.JUtils.NEQ;
 import static smetana.core.Macro.UNSUPPORTED;
 import static smetana.core.Macro.dtdelete;
 import static smetana.core.debug.SmetanaDebug.ENTERING;
@@ -61,7 +60,7 @@ import h.ST_dtdisc_s;
 import h.ST_dtmethod_s;
 import smetana.core.CFunction;
 import smetana.core.CFunctionAbstract;
-import smetana.core.Z;
+import smetana.core.Globals;
 import smetana.core.__ptr__;
 import smetana.core.size_t;
 
@@ -69,7 +68,7 @@ public class utils__c {
 	
 public static CFunction agdictobjmem = new CFunctionAbstract("agdictobjmem") {
 	
-	public Object exe(Object... args) {
+	public Object exe(Globals zz, Object... args) {
 		return agdictobjmem((ST_dt_s)args[0], args[1], (size_t)args[2], (ST_dtdisc_s)args[3]);
 	}};
 		
@@ -102,7 +101,7 @@ LEAVING("7dkudp41c9byhicatk2sxtxqk","agdictobjmem");
 
 public static CFunction agdictobjfree = new CFunctionAbstract("agdictobjfree") {
 	
-	public Object exe(Object... args) {
+	public Object exe(Globals zz, Object... args) {
 		return agdictobjfree(args);
 	}};
 	
@@ -128,17 +127,17 @@ throw new UnsupportedOperationException();
 
 
 @Original(version="2.38.0", path="lib/cgraph/utils.c", name="agdtopen", key="48ox0bg1qmasrer8np51uwsyk", definition="Dict_t *agdtopen(Agraph_t * g, Dtdisc_t * disc, Dtmethod_t * method)")
-public static ST_dt_s agdtopen(ST_Agraph_s g, ST_dtdisc_s disc, ST_dtmethod_s method) {
+public static ST_dt_s agdtopen(Globals zz, ST_Agraph_s g, ST_dtdisc_s disc, ST_dtmethod_s method) {
 ENTERING("48ox0bg1qmasrer8np51uwsyk","agdtopen");
 try {
 	CFunction memf;
     ST_dt_s d;
     memf = disc.memoryf;
     disc.memoryf = utils__c.agdictobjmem;
-    Z.z().Ag_dictop_G = g;
-    d = dtopen(disc, method);
+    zz.Ag_dictop_G = g;
+    d = dtopen(zz, disc, method);
     disc.memoryf = (CFunction) memf;
-    Z.z().Ag_dictop_G = null;
+    zz.Ag_dictop_G = null;
     return d;
 } finally {
 LEAVING("48ox0bg1qmasrer8np51uwsyk","agdtopen");
@@ -150,11 +149,11 @@ LEAVING("48ox0bg1qmasrer8np51uwsyk","agdtopen");
 
 @Unused
 @Original(version="2.38.0", path="lib/cgraph/utils.c", name="agdtdelete", key="6pbz2fsmebq8iy7if4way3ct2", definition="long agdtdelete(Agraph_t * g, Dict_t * dict, void *obj)")
-public static __ptr__ agdtdelete(ST_Agraph_s g, ST_dt_s dict, __ptr__ obj) {
+public static __ptr__ agdtdelete(Globals zz, ST_Agraph_s g, ST_dt_s dict, __ptr__ obj) {
 ENTERING("6pbz2fsmebq8iy7if4way3ct2","agdtdelete");
 try {
-	Z.z().Ag_dictop_G = g;
-	return (__ptr__) dtdelete(dict, obj);
+	zz.Ag_dictop_G = g;
+	return (__ptr__) dtdelete(zz, dict, obj);
 } finally {
 LEAVING("6pbz2fsmebq8iy7if4way3ct2","agdtdelete");
 }
@@ -164,11 +163,11 @@ LEAVING("6pbz2fsmebq8iy7if4way3ct2","agdtdelete");
 
 
 @Original(version="2.38.0", path="lib/cgraph/utils.c", name="agdtdisc", key="cym72wvu6zffc0vzoa93zha8", definition="void agdtdisc(Agraph_t * g, Dict_t * dict, Dtdisc_t * disc)")
-public static void agdtdisc(ST_Agraph_s g, ST_dt_s dict, ST_dtdisc_s disc) {
+public static void agdtdisc(Globals zz, ST_Agraph_s g, ST_dt_s dict, ST_dtdisc_s disc) {
 ENTERING("cym72wvu6zffc0vzoa93zha8","agdtdisc");
 try {
-    if (disc!=null && NEQ(dtdisc(dict, null, 0), disc)) {
-	dtdisc(dict, disc, 0);
+    if (disc!=null && (dtdisc(zz, dict, null, 0) != disc)) {
+	dtdisc(zz, dict, disc, 0);
     }
     /* else unchanged, disc is same as old disc */
 } finally {

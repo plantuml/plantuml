@@ -2,12 +2,12 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
@@ -45,7 +45,6 @@
  */
 package gen.lib.dotgen;
 import static gen.lib.cgraph.attr__c.agget;
-import static smetana.core.Macro.N;
 import static smetana.core.Macro.UNSUPPORTED;
 import static smetana.core.debug.SmetanaDebug.ENTERING;
 import static smetana.core.debug.SmetanaDebug.LEAVING;
@@ -56,6 +55,7 @@ import gen.annotation.Unused;
 import h.ST_Agraph_s;
 import h.ST_aspect_t;
 import smetana.core.CString;
+import smetana.core.Globals;
 
 public class aspect__c {
 	
@@ -81,14 +81,14 @@ throw new UnsupportedOperationException();
 // aspect_t* setAspect (Agraph_t * g, aspect_t* adata) 
 @Reviewed(when = "12/11/2020")
 @Original(version="2.38.0", path="lib/dotgen/aspect.c", name="setAspect", key="5srsfxqlego6qiyj5mm8m4ql2", definition="aspect_t* setAspect (Agraph_t * g, aspect_t* adata)")
-public static ST_aspect_t setAspect(ST_Agraph_s g, ST_aspect_t adata) {
+public static ST_aspect_t setAspect(Globals zz, ST_Agraph_s g, ST_aspect_t adata) {
 ENTERING("5srsfxqlego6qiyj5mm8m4ql2","setAspect");
 try {
     double rv;
     CString p;
     int r, passes = DEF_PASSES;
-    p = agget (g, new CString("aspect"));
-    if (N(p) || UNSUPPORTED("(r = sscanf (p, %lf,%d, &rv, &passes)) <= 0)")==null) {
+    p = agget (zz, g, new CString("aspect"));
+    if ((p) == null || UNSUPPORTED("(r = sscanf (p, %lf,%d, &rv, &passes)) <= 0)")==null) {
 	adata.nextIter = 0;
 	adata.badGraph = 0;
 	return null;

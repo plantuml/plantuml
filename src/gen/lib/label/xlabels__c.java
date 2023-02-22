@@ -2,12 +2,12 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
@@ -51,8 +51,6 @@ import static gen.lib.label.index__c.RTreeInsert;
 import static gen.lib.label.index__c.RTreeLeafListFree;
 import static gen.lib.label.index__c.RTreeOpen;
 import static gen.lib.label.index__c.RTreeSearch;
-import static smetana.core.JUtils.EQ;
-import static smetana.core.Macro.N;
 import static smetana.core.Macro.UNSUPPORTED;
 import static smetana.core.debug.SmetanaDebug.ENTERING;
 import static smetana.core.debug.SmetanaDebug.LEAVING;
@@ -76,15 +74,15 @@ import h.ST_xlabel_t;
 import smetana.core.CArray;
 import smetana.core.CFunction;
 import smetana.core.CFunctionAbstract;
+import smetana.core.Globals;
 import smetana.core.Memory;
-import smetana.core.Z;
 
 
 public class xlabels__c {
 
 public static CFunction icompare = new CFunctionAbstract("icompare") {
 	
-	public Object exe(Object... args) {
+	public Object exe(Globals zz, Object... args) {
 		return icompare((ST_dt_s)args[0], (Object)args[1], (Object)args[2], (ST_dtdisc_s)args[3]);
 	}};
 	
@@ -110,20 +108,20 @@ LEAVING("5p3ac8qk4gnne5hj1dc21ysi","icompare");
 // static XLabels_t *xlnew(object_t * objs, int n_objs, 			xlabel_t * lbls, int n_lbls, 			label_params_t * params) 
 @Unused
 @Original(version="2.38.0", path="lib/label/xlabels.c", name="", key="88mbfm305igsr7cew5qx6yldp", definition="static XLabels_t *xlnew(object_t * objs, int n_objs, 			xlabel_t * lbls, int n_lbls, 			label_params_t * params)")
-public static ST_XLabels_t xlnew(CArray<ST_object_t> objs, int n_objs, CArray<ST_xlabel_t> lbls, int n_lbls, ST_label_params_t params) {
+public static ST_XLabels_t xlnew(Globals zz, CArray<ST_object_t> objs, int n_objs, CArray<ST_xlabel_t> lbls, int n_lbls, ST_label_params_t params) {
 ENTERING("88mbfm305igsr7cew5qx6yldp","xlnew");
 try {
 ST_XLabels_t xlp;
 xlp = new ST_XLabels_t();
 /* used to load the rtree in hilbert space filling curve order */
-xlp.hdx = dtopen(Z.z().Hdisc, Z.z().Dtobag);
-if (N(xlp.hdx)) {
+xlp.hdx = dtopen(zz, zz.Hdisc, zz.Dtobag);
+if ((xlp.hdx) == null) {
 UNSUPPORTED("4t1y5iinm4310lkpvbal1spve"); // 	fprintf(stderr, "out of memory\n");
 UNSUPPORTED("3m406diamp5s5kwcqtwo4pshf"); // 	goto bad;
 }
 /* for querying intersection candidates */
 xlp.spdx = RTreeOpen();
-if (N(xlp.spdx)) {
+if ((xlp.spdx) == null) {
 UNSUPPORTED("4t1y5iinm4310lkpvbal1spve"); // 	fprintf(stderr, "out of memory\n");
 UNSUPPORTED("3m406diamp5s5kwcqtwo4pshf"); // 	goto bad;
      }
@@ -299,7 +297,7 @@ ENTERING("2g71cq6f8w5jbmbnn2x9y5qfq","lblenclosing");
 try {
 	CArray<ST_xlabel_t> xlp = objp.lbl;
 //   assert(objp1->sz.x == 0 && objp1->sz.y == 0);
-   if(N(xlp)) return false;
+   if((xlp) == null) return false;
       return objp1.pos.x > xlp.get__(0).pos.x &&
     		  objp1.pos.x < (xlp.get__(0).pos.x + xlp.get__(0).sz.y) &&
     		  objp1.pos.y > xlp.get__(0).pos.y &&
@@ -539,7 +537,7 @@ private static ST_BestPos_t xlintersections_(ST_XLabels_t xlp, ST_object_t objp,
     bp.pos.___(objp.lbl.get__(0).pos);
 
      for(i=0; i<xlp.n_objs; i++) {
-    	       if (EQ(objp, xlp.objs.get__(i))) continue;
+    	       if (objp == xlp.objs.get__(i)) continue;
        if(xlp.objs.get__(i).sz.x > 0 && xlp.objs.get__(i).sz.y > 0) continue;
        if(lblenclosing(objp, xlp.objs.get__(i))) {
     	 	  bp.n = bp.n+1;
@@ -549,7 +547,7 @@ private static ST_BestPos_t xlintersections_(ST_XLabels_t xlp, ST_object_t objp,
      objplp2rect(objp, rect);
      
      llp = RTreeSearch(xlp.spdx, xlp.spdx.root, rect);
-     if (N(llp))
+     if ((llp) == null)
  	return bp;
      
      for (ilp = llp; ilp!=null; ilp = ilp.next) {
@@ -559,7 +557,7 @@ private static ST_BestPos_t xlintersections_(ST_XLabels_t xlp, ST_object_t objp,
  	// So in Java version, ST_Leaf_t has been removed and ST_Branch_t is used instead
  	ST_object_t cp = (ST_object_t) ilp.leaf.child;
  	
- 	if (EQ(cp, objp))
+ 	if (cp == objp)
  	    continue;
  	
    /*label-object intersect */
@@ -571,7 +569,7 @@ private static ST_BestPos_t xlintersections_(ST_XLabels_t xlp, ST_object_t objp,
 	  bp.area += ra;
  	}
  	/*label-label intersect */
- 	if (N(cp.lbl) || N(cp.lbl.get__(0).set))
+ 	if ((cp.lbl) == null || cp.lbl.get__(0).set == 0)
  	    continue;
  	objplp2rect(cp, srect);
  	a = aabbaabb(rect, srect);
@@ -702,7 +700,7 @@ UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
  	lp.get__(0).pos.x = objp.pos.x + objp.sz.x;
 	lp.get__(0).pos.y = objp.pos.y - lp.get__(0).sz.y;
      if (intrsx[2]!=null || intrsx[1]!=null || intrsx[0]!=null || intrsx[5]!=null || intrsx[8]!=null) {	/* have to move */
- 	if (N(intrsx[1]) && N(intrsx[0])) {	/* some room left? */
+ 	if ((intrsx[1]) == null && (intrsx[0]) == null) {	/* some room left? */
  	    /* slide along lower edge */
  	    for (lp.get__(0).pos.x = (objp.pos.x + objp.sz.x),
  		 lp.get__(0).pos.y = objp.pos.y - lp.get__(0).sz.y;
@@ -715,7 +713,7 @@ UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
  			    bp.___(nbp);
  	    }
  	}
- 	if (N(intrsx[5]) && N(intrsx[8])) {	/* some room up? */
+ 	if ((intrsx[5]) == null && (intrsx[8]) == null) {	/* some room up? */
 UNSUPPORTED("4bcpk3ixfwrlr0yzrjv2efigj"); // 	    /* slide up right edge */
 UNSUPPORTED("7natp0873pfsvymhhhvki1sev"); // 	    for (lp->pos.x = objp->pos.x + objp->sz.x,
 UNSUPPORTED("56ycmo0ljb7e86mnezdx3regh"); // 		 lp->pos.y = objp->pos.y - lp->sz.y;
@@ -739,7 +737,7 @@ UNSUPPORTED("6t98dcecgbvbvtpycwiq2ynnj"); // 	    }
 // static int xlhdxload(XLabels_t * xlp) 
 @Unused
 @Original(version="2.38.0", path="lib/label/xlabels.c", name="xlhdxload", key="e29g2hwlogx0zchsnvi464c7t", definition="static int xlhdxload(XLabels_t * xlp)")
-public static int xlhdxload(ST_XLabels_t xlp) {
+public static int xlhdxload(Globals zz, ST_XLabels_t xlp) {
 ENTERING("e29g2hwlogx0zchsnvi464c7t","xlhdxload");
 try {
      int i;
@@ -757,7 +755,7 @@ try {
 		   (hp.d.rect.boundary[3] - hp.d.rect.boundary[1]) / 2;
 		  
 		  hp.key = hd_hil_s_from_xy(pi, order);
-		  if (N(xlp.hdx.searchf.exe(xlp.hdx, hp, 0000001)))
+		  if ((xlp.hdx.searchf.exe(zz, xlp.hdx, hp, 0000001)) == null)
 			  
  	    return -1;
      }
@@ -803,12 +801,12 @@ LEAVING("26qpvnyd6tmdut8i2wo4itza3","xlhdxunload");
 // static int xlspdxload(XLabels_t * xlp) 
 @Unused
 @Original(version="2.38.0", path="lib/label/xlabels.c", name="xlspdxload", key="3wrxwwd3y5ts0ekr32o8vhuvv", definition="static int xlspdxload(XLabels_t * xlp)")
-public static int xlspdxload(ST_XLabels_t xlp) {
+public static int xlspdxload(Globals zz, ST_XLabels_t xlp) {
 ENTERING("3wrxwwd3y5ts0ekr32o8vhuvv","xlspdxload");
 try {
      ST_HDict_t op=null;
-     for (op = (ST_HDict_t) xlp.hdx.searchf.exe(xlp.hdx, null, 0000200); op!=null;
-    		 op = (ST_HDict_t) xlp.hdx.searchf.exe(xlp.hdx, op, 0000010)) {
+     for (op = (ST_HDict_t) xlp.hdx.searchf.exe(zz, xlp.hdx, null, 0000200); op!=null;
+    		 op = (ST_HDict_t) xlp.hdx.searchf.exe(zz, xlp.hdx, op, 0000010)) {
    	/*          tree       rectangle    data        node             lvl */
 //    	 	RTreeInsert(xlp->spdx, &op->d.rect, op->d.data, &xlp->spdx->root, 0);
     	 // WARNING ARRAY
@@ -831,16 +829,16 @@ LEAVING("3wrxwwd3y5ts0ekr32o8vhuvv","xlspdxload");
 // static int xlinitialize(XLabels_t * xlp) 
 @Unused
 @Original(version="2.38.0", path="lib/label/xlabels.c", name="xlinitialize", key="6d3fqrllm55toeo3wscwvv4ty", definition="static int xlinitialize(XLabels_t * xlp)")
-public static int xlinitialize(ST_XLabels_t xlp) {
+public static int xlinitialize(Globals zz, ST_XLabels_t xlp) {
 ENTERING("6d3fqrllm55toeo3wscwvv4ty","xlinitialize");
 try {
      int r=0;
-     if ((r = xlhdxload(xlp)) < 0)
+     if ((r = xlhdxload(zz, xlp)) < 0)
  	return r;
-     if ((r = xlspdxload(xlp)) < 0)
+     if ((r = xlspdxload(zz, xlp)) < 0)
  	return r;
      xlhdxunload(xlp);
-     return dtclose((ST_dt_s) xlp.hdx);
+     return dtclose(zz, (ST_dt_s) xlp.hdx);
 } finally {
 LEAVING("6d3fqrllm55toeo3wscwvv4ty","xlinitialize");
 }
@@ -853,13 +851,13 @@ LEAVING("6d3fqrllm55toeo3wscwvv4ty","xlinitialize");
 // int placeLabels(object_t * objs, int n_objs, 	    xlabel_t * lbls, int n_lbls, label_params_t * params) 
 @Unused
 @Original(version="2.38.0", path="lib/label/xlabels.c", name="placeLabels", key="brqgbskh3z4ah8infjompibvu", definition="int placeLabels(object_t * objs, int n_objs, 	    xlabel_t * lbls, int n_lbls, label_params_t * params)")
-public static int placeLabels(CArray<ST_object_t> objs, int n_objs, CArray<ST_xlabel_t> lbls, int n_lbls, ST_label_params_t params) {
+public static int placeLabels(Globals zz, CArray<ST_object_t> objs, int n_objs, CArray<ST_xlabel_t> lbls, int n_lbls, ST_label_params_t params) {
 ENTERING("brqgbskh3z4ah8infjompibvu","placeLabels");
 try {
 int r, i;
 final ST_BestPos_t bp = new ST_BestPos_t();
-ST_XLabels_t xlp = xlnew(objs, n_objs, lbls, n_lbls, params);
-     if ((r = xlinitialize(xlp)) < 0)
+ST_XLabels_t xlp = xlnew(zz, objs, n_objs, lbls, n_lbls, params);
+     if ((r = xlinitialize(zz, xlp)) < 0)
  	return r;
      /* Place xlabel_t* lp near lp->obj so that the rectangle whose lower-left
       * corner is lp->pos, and size is lp->sz does not intersect any object

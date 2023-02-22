@@ -1,11 +1,12 @@
 package net.sourceforge.plantuml.security.authentication.basicauth;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import org.junit.jupiter.api.Test;
+
 import net.sourceforge.plantuml.security.authentication.SecurityAuthentication;
 import net.sourceforge.plantuml.security.authentication.SecurityAuthorizeManager;
 import net.sourceforge.plantuml.security.authentication.SecurityCredentials;
-import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 class BasicAuthAuthorizeManagerTest {
 

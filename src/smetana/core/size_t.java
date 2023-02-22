@@ -2,17 +2,17 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2009-2024, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program.
  * 
@@ -37,30 +37,29 @@
 package smetana.core;
 
 /**
- * "Pseudo size" of a C structure. In C, this is the actual size of the structure. In Java, this is an indication to
- * know which structure we are going to allocate.
+ * "Pseudo size" of a C structure. In C, this is the actual size of the
+ * structure. In Java, this is an indication to know which structure we are
+ * going to allocate.
  * 
  * @author Arnaud Roques
  * 
  */
-public class size_t {
+final public class size_t {
 
-	public final Class tobeAllocated;
-	
+	public final ZType tobeAllocated;
+
 	@Override
 	public String toString() {
-		return super.toString()+" "+tobeAllocated;
+		return super.toString() + " " + tobeAllocated;
 	}
 
-	public size_t(Class tobeAllocated) {
+	public size_t(ZType tobeAllocated) {
 		this.tobeAllocated = tobeAllocated;
 	}
-
 
 	public size_t negate() {
 		throw new UnsupportedOperationException();
 	}
-
 
 	public size_t multiply(int sz) {
 		throw new UnsupportedOperationException();
@@ -74,17 +73,12 @@ public class size_t {
 		throw new UnsupportedOperationException();
 	}
 
-
-
-	public final Class getTobeAllocated() {
+	public final ZType getTobeAllocated() {
 		return tobeAllocated;
 	}
 
 	public __ptr__ malloc() {
-		if (tobeAllocated != null) {
-			return Memory.malloc(tobeAllocated);
-		}
-		throw new UnsupportedOperationException();
+		return tobeAllocated.create();
 	}
 
 	public size_t plus(int strlen) {
@@ -95,15 +89,12 @@ public class size_t {
 		return false;
 	}
 
-	
 	public __ptr__ realloc(Object old) {
 		throw new UnsupportedOperationException();
 	}
 
-
 	public int getInternalNb() {
 		throw new UnsupportedOperationException();
 	}
-
 
 }

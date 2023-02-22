@@ -2,14 +2,14 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2009-2024, Arnaud Roques
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of PlantUML.
  *
@@ -74,7 +74,8 @@ public class CleanerInterleavingLines implements GridCleaner {
 			// c++;
 			final Placeable cell1 = grid.getCell(line1, col).getData();
 			final Placeable cell2 = grid.getCell(line2, col).getData();
-			// System.err.println("cells=" + cell1 + " " + cell2 + " " + mergeable(cell1, cell2));
+			// System.err.println("cells=" + cell1 + " " + cell2 + " " + mergeable(cell1,
+			// cell2));
 			if (mergeable(cell1, cell2) == false) {
 				return false;
 			}

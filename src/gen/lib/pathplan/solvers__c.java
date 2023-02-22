@@ -2,12 +2,12 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
@@ -44,10 +44,6 @@
  *
  */
 package gen.lib.pathplan;
-import static smetana.core.JUtils.atan2;
-import static smetana.core.JUtils.cos;
-import static smetana.core.JUtils.pow;
-import static smetana.core.JUtils.sqrt;
 import static smetana.core.debug.SmetanaDebug.ENTERING;
 import static smetana.core.debug.SmetanaDebug.LEAVING;
 
@@ -79,17 +75,17 @@ try {
     p = c_over_a / 3 - p;
     disc = q * q + 4 * p * p * p;
     if (disc < 0) {
-	r = .5 * sqrt(-disc + q * q);
-	theta = atan2(sqrt(-disc), -q);
-	temp = 2 * ((r < 0) ? (-1*pow(-r, 1.0/3.0)) : pow (r, 1.0/3.0));
-	roots[0] = temp * cos(theta / 3);
-	roots[1] = temp * cos((theta + 3.14159265358979323846 + 3.14159265358979323846) / 3);
-	roots[2] = temp * cos((theta - 3.14159265358979323846 - 3.14159265358979323846) / 3);
+	r = .5 * Math.sqrt(-disc + q * q);
+	theta = Math.atan2(Math.sqrt(-disc), -q);
+	temp = 2 * ((r < 0) ? (-1*Math.pow(-r, 1.0/3.0)) : Math.pow(r, 1.0/3.0));
+	roots[0] = temp * Math.cos(theta / 3);
+	roots[1] = temp * Math.cos((theta + 3.14159265358979323846 + 3.14159265358979323846) / 3);
+	roots[2] = temp * Math.cos((theta - 3.14159265358979323846 - 3.14159265358979323846) / 3);
 	rootn = 3;
     } else {
-	alpha = .5 * (sqrt(disc) - q);
+	alpha = .5 * (Math.sqrt(disc) - q);
 	beta = -q - alpha;
-	roots[0] = ((alpha < 0) ? (-1*pow(-alpha, 1.0/3.0)) : pow (alpha, 1.0/3.0)) + ((beta < 0) ? (-1*pow(-beta, 1.0/3.0)) : pow (beta, 1.0/3.0));
+	roots[0] = ((alpha < 0) ? (-1*Math.pow(-alpha, 1.0/3.0)) : Math.pow(alpha, 1.0/3.0)) + ((beta < 0) ? (-1*Math.pow(-beta, 1.0/3.0)) : Math.pow(beta, 1.0/3.0));
 	if (disc > 0)
 	    rootn = 1;
 	else
@@ -127,7 +123,7 @@ try {
 	roots[0] = -b_over_2a;
 	return 1;
     } else {
-	roots[0] = -b_over_2a + sqrt(disc);
+	roots[0] = -b_over_2a + Math.sqrt(disc);
 	roots[1] = -2 * b_over_2a - roots[0];
 	return 2;
     }

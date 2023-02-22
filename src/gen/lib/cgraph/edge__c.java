@@ -2,12 +2,12 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
@@ -59,9 +59,6 @@ import static gen.lib.cgraph.obj__c.agmethod_init;
 import static gen.lib.cgraph.obj__c.agroot;
 import static gen.lib.cgraph.rec__c.agbindrec;
 import static gen.lib.cgraph.subg__c.agparent;
-import static smetana.core.JUtils.EQ;
-import static smetana.core.JUtils.NEQ;
-import static smetana.core.JUtils.sizeof;
 import static smetana.core.Macro.AGEDGE;
 import static smetana.core.Macro.AGHEAD;
 import static smetana.core.Macro.AGID;
@@ -71,11 +68,8 @@ import static smetana.core.Macro.AGMKOUT;
 import static smetana.core.Macro.AGOPP;
 import static smetana.core.Macro.AGOUTEDGE;
 import static smetana.core.Macro.AGSEQ;
-import static smetana.core.Macro.AGTAG;
 import static smetana.core.Macro.AGTAIL;
 import static smetana.core.Macro.AGTYPE;
-import static smetana.core.Macro.N;
-import static smetana.core.Macro.NOT;
 import static smetana.core.Macro.UNSUPPORTED;
 import static smetana.core.Macro.dtfirst;
 import static smetana.core.Macro.dtinsert;
@@ -87,7 +81,6 @@ import static smetana.core.debug.SmetanaDebug.LEAVING;
 import gen.annotation.Original;
 import gen.annotation.Reviewed;
 import gen.annotation.Unused;
-import h.ST_Agattr_s;
 import h.ST_Agdesc_s;
 import h.ST_Agedge_s;
 import h.ST_Agedgepair_s;
@@ -102,23 +95,25 @@ import smetana.core.CFunction;
 import smetana.core.CFunctionAbstract;
 import smetana.core.CStarStar;
 import smetana.core.CString;
-import smetana.core.Z;
+import smetana.core.Globals;
+import smetana.core.ZType;
 import smetana.core.__ptr__;
+import smetana.core.size_t;
 
 public class edge__c {
 
 @Reviewed(when = "13/11/2020")
 @Original(version="2.38.0", path="lib/cgraph/edge.c", name="", key="9vamtktowqtk4955i546z9obw", definition="Agedge_t *agfstout(Agraph_t * g, Agnode_t * n)")
-public static ST_Agedge_s agfstout(ST_Agraph_s g, ST_Agnode_s n) {
+public static ST_Agedge_s agfstout(Globals zz, ST_Agraph_s g, ST_Agnode_s n) {
 ENTERING("9vamtktowqtk4955i546z9obw","agfstout");
 try {
 	ST_Agsubnode_s sn;
 	ST_Agedge_s e = null;
 	
-    sn = agsubrep(g, n);
+    sn = agsubrep(zz, g, n);
     if (sn!=null) {
 		dtrestore(g.e_seq, sn.out_seq);
-		e = (ST_Agedge_s) dtfirst(g.e_seq);
+		e = (ST_Agedge_s) dtfirst(zz, g.e_seq);
 		sn.out_seq = dtextract(g.e_seq);
 	}
     return e;
@@ -133,7 +128,7 @@ LEAVING("9vamtktowqtk4955i546z9obw","agfstout");
 /* return outedge that follows <e> of <n> */
 @Reviewed(when = "13/11/2020")
 @Original(version="2.38.0", path="lib/cgraph/edge.c", name="", key="1qh7mgqwomkdqvczauv4ex1lu", definition="Agedge_t *agnxtout(Agraph_t * g, Agedge_t * e)")
-public static ST_Agedge_s agnxtout(ST_Agraph_s g, ST_Agedge_s e) {
+public static ST_Agedge_s agnxtout(Globals zz, ST_Agraph_s g, ST_Agedge_s e) {
 ENTERING("1qh7mgqwomkdqvczauv4ex1lu","agnxtout");
 try {
     ST_Agnode_s n;
@@ -141,10 +136,10 @@ try {
     ST_Agedge_s f = null;
     
     n = AGTAIL(e);
-    sn = agsubrep(g, n);
+    sn = agsubrep(zz, g, n);
     if (sn!=null) {
 		dtrestore(g.e_seq, sn.out_seq);
-		f = (ST_Agedge_s) dtnext(g.e_seq, e);
+		f = (ST_Agedge_s) dtnext(zz, g.e_seq, e);
 		sn.out_seq = dtextract(g.e_seq);
 	}
     return f;
@@ -158,16 +153,16 @@ LEAVING("1qh7mgqwomkdqvczauv4ex1lu","agnxtout");
 
 @Reviewed(when = "15/11/2020")
 @Original(version="2.38.0", path="lib/cgraph/edge.c", name="", key="c60qt3ycq0xweabgtqt16xe93", definition="Agedge_t *agfstin(Agraph_t * g, Agnode_t * n)")
-public static ST_Agedge_s agfstin(ST_Agraph_s g, ST_Agnode_s n) {
+public static ST_Agedge_s agfstin(Globals zz, ST_Agraph_s g, ST_Agnode_s n) {
 ENTERING("c60qt3ycq0xweabgtqt16xe93","agfstin");
 try {
 	ST_Agsubnode_s sn;
 	ST_Agedge_s e = null;
 	
-    sn = agsubrep(g, n);
+    sn = agsubrep(zz, g, n);
 	if (sn!=null) {
 		dtrestore(g.e_seq, sn.in_seq);
-		e = (ST_Agedge_s) dtfirst(g.e_seq);
+		e = (ST_Agedge_s) dtfirst(zz, g.e_seq);
 		sn.in_seq = dtextract(g.e_seq);
 	}
     return e;
@@ -181,7 +176,7 @@ LEAVING("c60qt3ycq0xweabgtqt16xe93","agfstin");
 
 @Reviewed(when = "15/11/2020")
 @Original(version="2.38.0", path="lib/cgraph/edge.c", name="", key="f2af4x97mqn16npd6alsw7avs", definition="Agedge_t *agnxtin(Agraph_t * g, Agedge_t * e)")
-public static ST_Agedge_s agnxtin(ST_Agraph_s g, ST_Agedge_s e) {
+public static ST_Agedge_s agnxtin(Globals zz, ST_Agraph_s g, ST_Agedge_s e) {
 ENTERING("f2af4x97mqn16npd6alsw7avs","agnxtin");
 try {
     ST_Agnode_s n;
@@ -189,10 +184,10 @@ try {
     ST_Agedge_s f = null;
     
     n = AGHEAD(e);
-    sn = agsubrep(g, n);
+    sn = agsubrep(zz, g, n);
 	if (sn!=null) {
 		dtrestore(g.e_seq, sn.in_seq);
-		f = (ST_Agedge_s) dtnext(g.e_seq, e);
+		f = (ST_Agedge_s) dtnext(zz, g.e_seq, e);
 		sn.in_seq = dtextract(g.e_seq);
 	}
 	return f;
@@ -206,13 +201,13 @@ LEAVING("f2af4x97mqn16npd6alsw7avs","agnxtin");
 
 @Reviewed(when = "15/11/2020")
 @Original(version="2.38.0", path="lib/cgraph/edge.c", name="", key="6nwyo5bklramr0d093aa1h25o", definition="Agedge_t *agfstedge(Agraph_t * g, Agnode_t * n)")
-public static ST_Agedge_s agfstedge(ST_Agraph_s g, ST_Agnode_s n) {
+public static ST_Agedge_s agfstedge(Globals zz, ST_Agraph_s g, ST_Agnode_s n) {
 ENTERING("6nwyo5bklramr0d093aa1h25o","agfstedge");
 try {
     ST_Agedge_s rv;
-    rv = agfstout(g, n);
+    rv = agfstout(zz, g, n);
     if (rv == null)
-	rv = agfstin(g, n);
+	rv = agfstin(zz, g, n);
     return rv;
 } finally {
 LEAVING("6nwyo5bklramr0d093aa1h25o","agfstedge");
@@ -224,23 +219,23 @@ LEAVING("6nwyo5bklramr0d093aa1h25o","agfstedge");
 
 @Reviewed(when = "15/11/2020")
 @Original(version="2.38.0", path="lib/cgraph/edge.c", name="", key="8zy2u6gsi2xzv2ffv8o4v4uvf", definition="Agedge_t *agnxtedge(Agraph_t * g, Agedge_t * e, Agnode_t * n)")
-public static ST_Agedge_s agnxtedge(ST_Agraph_s g, ST_Agedge_s e, ST_Agnode_s n) {
+public static ST_Agedge_s agnxtedge(Globals zz, ST_Agraph_s g, ST_Agedge_s e, ST_Agnode_s n) {
 ENTERING("8zy2u6gsi2xzv2ffv8o4v4uvf","agnxtedge");
 try {
     ST_Agedge_s rv;
     
-    if (AGTYPE(e) == AGOUTEDGE) {
-	rv = agnxtout(g, e);
+    if (e.tag.objtype == AGOUTEDGE) {
+	rv = agnxtout(zz, g, e);
 	if (rv == null) {
 	    do {
-		rv = N(rv) ? agfstin(g, n) : agnxtin(g,rv);
-	    } while (rv!=null && EQ(rv.node, n));
+		rv = (rv) == null ? agfstin(zz, g, n) : agnxtin(zz, g,rv);
+	    } while (rv!=null && rv.node == n);
 	}
     } else {
 	do {
-	    rv = agnxtin(g, e);		/* so that we only see each edge once, */
+	    rv = agnxtin(zz, g, e);		/* so that we only see each edge once, */
 		e = rv;
-	} while (rv!=null && EQ(rv.node, n));	/* ignore loops as in-edges */
+	} while (rv!=null && rv.node == n);	/* ignore loops as in-edges */
     }
     return rv;
 } finally {
@@ -254,11 +249,11 @@ LEAVING("8zy2u6gsi2xzv2ffv8o4v4uvf","agnxtedge");
 /* internal edge set lookup */
 @Reviewed(when = "13/11/2020")
 @Original(version="2.38.0", path="lib/cgraph/edge.c", name="", key="c175o6j61jqmfnl4o1g1h1mie", definition="static Agedge_t *agfindedge_by_key(Agraph_t * g, Agnode_t * t, Agnode_t * h, 			    Agtag_t key)")
-public static ST_Agedge_s agfindedge_by_key(ST_Agraph_s g, ST_Agnode_s t, ST_Agnode_s h,  final ST_Agtag_s key) {
+public static ST_Agedge_s agfindedge_by_key(Globals zz, ST_Agraph_s g, ST_Agnode_s t, ST_Agnode_s h,  final ST_Agtag_s key) {
 // WARNING!! STRUCT
-return agfindedge_by_key_w_(g, t, h, key.copy());
+return agfindedge_by_key_w_(zz, g, t, h, key.copy());
 }
-private static ST_Agedge_s agfindedge_by_key_w_(ST_Agraph_s g, ST_Agnode_s t, ST_Agnode_s h,  final ST_Agtag_s key) {
+private static ST_Agedge_s agfindedge_by_key_w_(Globals zz, ST_Agraph_s g, ST_Agnode_s t, ST_Agnode_s h,  final ST_Agtag_s key) {
 ENTERING("c175o6j61jqmfnl4o1g1h1mie","agfindedge_by_key");
 try {
 	ST_Agedge_s e;
@@ -269,11 +264,11 @@ try {
 	return null;
     template.base.tag.___(key);
     template.node = t;		/* guess that fan-in < fan-out */
-    sn = agsubrep(g, h);
-    if (N(sn)) e = null;
+    sn = agsubrep(zz, g, h);
+    if ((sn) == null) e = null;
     else {
 	    dtrestore(g.e_id, sn.in_id);
-	    e = (ST_Agedge_s) dtsearch(g.e_id, template);
+	    e = (ST_Agedge_s) dtsearch(zz, g.e_id, template);
 	    sn.in_id = dtextract(g.e_id);
     }
     return e;
@@ -286,15 +281,15 @@ LEAVING("c175o6j61jqmfnl4o1g1h1mie","agfindedge_by_key");
 
 @Reviewed(when = "12/11/2020")
 @Original(version="2.38.0", path="lib/cgraph/edge.c", name="agsubrep", key="b32ssm6ex1pdz1b3nt4fwlhul", definition="Agsubnode_t *agsubrep(Agraph_t * g, Agnode_t * n)")
-public static ST_Agsubnode_s agsubrep(ST_Agraph_s g, ST_Agnode_s n) {
+public static ST_Agsubnode_s agsubrep(Globals zz, ST_Agraph_s g, ST_Agnode_s n) {
 ENTERING("b32ssm6ex1pdz1b3nt4fwlhul","agsubrep");
 try {
 	ST_Agsubnode_s sn;
     final ST_Agsubnode_s template = new ST_Agsubnode_s();
-	if (EQ(g, n.root)) sn = n.mainsub;
+	if (g == n.root) sn = n.mainsub;
 	else {
 			template.node = n;
-			sn = (ST_Agsubnode_s) dtsearch(g.n_id, template);
+			sn = (ST_Agsubnode_s) dtsearch(zz, g.n_id, template);
 	}
     return sn;
 } finally {
@@ -306,11 +301,11 @@ LEAVING("b32ssm6ex1pdz1b3nt4fwlhul","agsubrep");
 
 @Reviewed(when = "13/11/2020")
 @Original(version="2.38.0", path="lib/cgraph/edge.c", name="ins", key="6u0niow33w9gva780waluva4n", definition="static void ins(Dict_t * d, Dtlink_t ** set, Agedge_t * e)")
-public static void ins(ST_dt_s d, CStarStar<ST_dtlink_s> set, ST_Agedge_s e) {
+public static void ins(Globals zz, ST_dt_s d, CStarStar<ST_dtlink_s> set, ST_Agedge_s e) {
 ENTERING("6u0niow33w9gva780waluva4n","ins");
 try {
     dtrestore(d, set.star());
-    dtinsert(d, e);
+    dtinsert(zz, d, e);
     set.star(dtextract(d));
 } finally {
 LEAVING("6u0niow33w9gva780waluva4n","ins");
@@ -323,7 +318,7 @@ LEAVING("6u0niow33w9gva780waluva4n","ins");
 
 @Reviewed(when = "13/11/2020")
 @Original(version="2.38.0", path="lib/cgraph/edge.c", name="installedge", key="8kizmg7gziussfgx8zs3qvkfw", definition="static void installedge(Agraph_t * g, Agedge_t * e)")
-public static void installedge(ST_Agraph_s g, ST_Agedge_s e) {
+public static void installedge(Globals zz, ST_Agraph_s g, ST_Agedge_s e) {
 ENTERING("8kizmg7gziussfgx8zs3qvkfw","installedge");
 try {
     ST_Agnode_s t, h;
@@ -336,13 +331,13 @@ try {
     t = agtail(e);
     h = aghead(e);
     while (g!=null) {
-	if (agfindedge_by_key(g, t, h, AGTAG(e))!=null) break;
-	sn = agsubrep(g, t);
-	ins(g.e_seq, sn.out_seq_AMP(), out);
-	ins(g.e_id, sn.out_id_AMP(), out);
-	sn = agsubrep(g, h); 
-	ins(g.e_seq, sn.in_seq_AMP(), in);
-	ins(g.e_id, sn.in_id_AMP(), in);
+	if (agfindedge_by_key(zz, g, t, h, e.tag)!=null) break;
+	sn = agsubrep(zz, g, t);
+	ins(zz, g.e_seq, sn.out_seq_AMP(), out);
+	ins(zz, g.e_id, sn.out_id_AMP(), out);
+	sn = agsubrep(zz, g, h); 
+	ins(zz, g.e_seq, sn.in_seq_AMP(), in);
+	ins(zz, g.e_id, sn.in_id_AMP(), in);
 	g = agparent(g);
     }
 } finally {
@@ -374,15 +369,15 @@ throw new UnsupportedOperationException();
 // static Agedge_t *newedge(Agraph_t * g, Agnode_t * t, Agnode_t * h, 			 unsigned long id) 
 @Unused
 @Original(version="2.38.0", path="lib/cgraph/edge.c", name="", key="4rzjui6oo0k009o64bxwgjmvq", definition="static Agedge_t *newedge(Agraph_t * g, Agnode_t * t, Agnode_t * h, 			 unsigned long id)")
-public static ST_Agedge_s newedge(ST_Agraph_s g, ST_Agnode_s t, ST_Agnode_s h, int id) {
+public static ST_Agedge_s newedge(Globals zz, ST_Agraph_s g, ST_Agnode_s t, ST_Agnode_s h, int id) {
 ENTERING("4rzjui6oo0k009o64bxwgjmvq","newedge");
 try {
 	ST_Agedgepair_s e2;
     ST_Agedge_s in, out;
     int seq;
-    agsubnode(g,t,(N(0)));
-    agsubnode(g,h,(N(0)));
-    e2 = (ST_Agedgepair_s) agalloc(g, sizeof(ST_Agedgepair_s.class));
+    agsubnode(zz, g,t,(true));
+    agsubnode(zz, g,h,(true));
+    e2 = (ST_Agedgepair_s) agalloc(g, new size_t(ZType.ST_Agedgepair_s));
     in = (ST_Agedge_s) e2.in;
     out = (ST_Agedge_s) e2.out;
     seq = agnextseq(g, AGEDGE);
@@ -394,10 +389,10 @@ try {
     AGSEQ(out, seq);
     in.node = t;
     out.node = h;
-    installedge(g, out);
+    installedge(zz, g, out);
     if (((ST_Agdesc_s)g.desc).has_attrs!=0) {
-	  agbindrec(out, AgDataRecName, sizeof(ST_Agattr_s.class), false);
-	  agedgeattr_init(g, out);
+	  agbindrec(zz, out, AgDataRecName, new size_t(ZType.ST_Agattr_s), false);
+	  agedgeattr_init(zz, g, out);
     }
     agmethod_init(g, out);
     return out;
@@ -413,20 +408,20 @@ LEAVING("4rzjui6oo0k009o64bxwgjmvq","newedge");
 // static int ok_to_make_edge(Agraph_t * g, Agnode_t * t, Agnode_t * h) 
 @Unused
 @Original(version="2.38.0", path="lib/cgraph/edge.c", name="ok_to_make_edge", key="1ufxhg5xnmll1pe5339477823", definition="static int ok_to_make_edge(Agraph_t * g, Agnode_t * t, Agnode_t * h)")
-public static boolean ok_to_make_edge(ST_Agraph_s g, ST_Agnode_s t, ST_Agnode_s h) {
+public static boolean ok_to_make_edge(Globals zz, ST_Agraph_s g, ST_Agnode_s t, ST_Agnode_s h) {
 ENTERING("1ufxhg5xnmll1pe5339477823","ok_to_make_edge");
 try {
     final ST_Agtag_s key = new ST_Agtag_s();
     /* protect against self, multi-edges in strict graphs */
     if (agisstrict(g)) {
-	if (g.desc.no_loop!=0 && (EQ(t, h))) /* simple graphs */
+	if (g.desc.no_loop!=0 && (t == h)) /* simple graphs */
 	    return false;
-	key.___(Z.z().Tag);
+	key.___(zz.Tag);
 	key.objtype = 0;	/* wild card */
-	if (agfindedge_by_key(g, t, h, key)!=null)
+	if (agfindedge_by_key(zz, g, t, h, key)!=null)
 	    return false;
     }
-    return (N(0));
+    return (true);
 } finally {
 LEAVING("1ufxhg5xnmll1pe5339477823","ok_to_make_edge");
 }
@@ -440,17 +435,17 @@ LEAVING("1ufxhg5xnmll1pe5339477823","ok_to_make_edge");
 // Agedge_t *agedge(Agraph_t * g, Agnode_t * t, Agnode_t * h, char *name, 		 int cflag) 
 @Unused
 @Original(version="2.38.0", path="lib/cgraph/edge.c", name="", key="4361pvzr3ozft2ov0fgx6t8bo", definition="Agedge_t *agedge(Agraph_t * g, Agnode_t * t, Agnode_t * h, char *name, 		 int cflag)")
-public static ST_Agedge_s agedge(ST_Agraph_s g, ST_Agnode_s t, ST_Agnode_s h, CString name, boolean cflag) {
+public static ST_Agedge_s agedge(Globals zz, ST_Agraph_s g, ST_Agnode_s t, ST_Agnode_s h, CString name, boolean cflag) {
 ENTERING("4361pvzr3ozft2ov0fgx6t8bo","agedge");
 try {
     ST_Agedge_s e;
     int id[] = new int[1];
     int have_id;
-    have_id = agmapnametoid(g, AGEDGE, name, id, false);
-    if (have_id!=0 || ((name == null) && ((NOT(cflag)) || agisstrict(g)))) {
+    have_id = agmapnametoid(zz, g, AGEDGE, name, id, false);
+    if (have_id!=0 || ((name == null) && ((!cflag) || agisstrict(g)))) {
 	/* probe for pre-existing edge */
 	final ST_Agtag_s key = new ST_Agtag_s();
-	key.___(Z.z().Tag);
+	key.___(zz.Tag);
 	if (have_id!=0) {
 	    key.id = id[0];
 	    key.objtype = AGEDGE;
@@ -459,25 +454,25 @@ try {
 	    key.objtype = 0;
 	}
 	/* might already exist locally */
-	e = agfindedge_by_key(g, t, h, key);
+	e = agfindedge_by_key(zz, g, t, h, key);
 	if ((e == null && agisundirected(g)))
-	    e = agfindedge_by_key(g, h, t, key);
+	    e = agfindedge_by_key(zz, g, h, t, key);
 	if (e!=null)
 	    return e;
 	if (cflag) {
-	    e = agfindedge_by_key(agroot(g), t, h, key);
+	    e = agfindedge_by_key(zz, agroot(g), t, h, key);
 	    if ((e == null) && agisundirected(g))
-		e = agfindedge_by_key(agroot(g), h, t, key);
+		e = agfindedge_by_key(zz, agroot(g), h, t, key);
 	    if (e!=null) {
 		subedge(g,e);
 		return e;
 	    }
  	}
     }
-    if (cflag && ok_to_make_edge(g, t, h)
-	&& (agmapnametoid(g, AGEDGE, name, id, (N(0))))!=0) { /* reserve id */
-	e = newedge(g, t, h, id[0]);
-	agregister(g, AGEDGE, e); /* register new object in external namespace */
+    if (cflag && ok_to_make_edge(zz, g, t, h)
+	&& (agmapnametoid(zz, g, AGEDGE, name, id, (true)))!=0) { /* reserve id */
+	e = newedge(zz, g, t, h, id[0]);
+	agregister(zz, g, AGEDGE, e); /* register new object in external namespace */
     }
     else
 	e = null;
@@ -492,22 +487,22 @@ LEAVING("4361pvzr3ozft2ov0fgx6t8bo","agedge");
 
 @Reviewed(when = "13/11/2020")
 @Original(version="2.38.0", path="lib/cgraph/edge.c", name="", key="30v8z3tlda81fbqbkzx6m9fkn", definition="Agedge_t *agsubedge(Agraph_t * g, Agedge_t * e, int cflag)")
-public static ST_Agedge_s agsubedge(ST_Agraph_s g, ST_Agedge_s e, boolean cflag) {
+public static ST_Agedge_s agsubedge(Globals zz, ST_Agraph_s g, ST_Agedge_s e, boolean cflag) {
 ENTERING("30v8z3tlda81fbqbkzx6m9fkn","agsubedge");
 try {
     ST_Agnode_s t, h;
     ST_Agedge_s rv;
     
     rv = null;
-    t = agsubnode(g, AGTAIL(e), cflag);
-    h = agsubnode(g, AGHEAD(e), cflag);
+    t = agsubnode(zz, g, AGTAIL(e), cflag);
+    h = agsubnode(zz, g, AGHEAD(e), cflag);
     if (t!=null && h!=null) {
-	rv = agfindedge_by_key(g, t, h, AGTAG(e));
+	rv = agfindedge_by_key(zz, g, t, h, e.tag);
 	if (cflag && (rv == null)) {
-	installedge(g, e);
+	installedge(zz, g, e);
 	rv = e;
 	}
-	if (rv!=null && (AGTYPE(rv) != AGTYPE(e)))
+	if (rv!=null && (rv.tag.objtype != e.tag.objtype))
 	    rv = AGOPP(rv);
     }
     return rv;
@@ -519,7 +514,7 @@ LEAVING("30v8z3tlda81fbqbkzx6m9fkn","agsubedge");
 
 public static CFunction agedgeidcmpf = new CFunctionAbstract("agedgeidcmpf") {
 	
-	public Object exe(Object... args) {
+	public Object exe(Globals zz, Object... args) {
 		return agedgeidcmpf((ST_dt_s)args[0], (ST_Agedge_s)args[1], (ST_Agedge_s)args[2], (ST_dtdisc_s)args[3]);
 	}};
 	
@@ -534,12 +529,12 @@ try {
     ST_Agedge_s e0, e1;
     e0 = (ST_Agedge_s) arg_e0;
     e1 = (ST_Agedge_s) arg_e1;
-    v = AGID(e0.node) - AGID(e1.node);
+    v = e0.node.tag.id - e1.node.tag.id;
     if (v == 0) {		/* same node */
-	if ((AGTYPE(e0) == 0) || (AGTYPE(e1) == 0))
+	if ((e0.tag.objtype == 0) || (e1.tag.objtype == 0))
 	    v = 0;
 	else
-	    v = AGID(e0) - AGID(e1);
+	    v = e0.tag.id - e1.tag.id;
     }
     return ((v==0)?0:(v<0?-1:1));
 } finally {
@@ -550,7 +545,7 @@ LEAVING("avk47eh26r45qk2dtoipwiqvz","agedgeidcmpf");
 
 public static CFunction agedgeseqcmpf = new CFunctionAbstract("agedgeseqcmpf") {
 	
-	public Object exe(Object... args) {
+	public Object exe(Globals zz, Object... args) {
 		return agedgeseqcmpf((ST_dt_s)args[0], (ST_Agedge_s)args[1], (ST_Agedge_s)args[2], (ST_dtdisc_s)args[3]);
 	}};
 	
@@ -565,8 +560,8 @@ try {
     ST_Agedge_s e0, e1;
     e0 = (ST_Agedge_s) arg_e0;
     e1 = (ST_Agedge_s) arg_e1;
-	if (NEQ(e0.node, e1.node)) v = AGSEQ(e0.node) - AGSEQ(e1.node);
-	else v = (AGSEQ(e0) - AGSEQ(e1));
+	if (e0.node != e1.node) v = e0.node.tag.seq - e1.node.tag.seq;
+	else v = (e0.tag.seq - e1.tag.seq);
     return ((v==0)?0:(v<0?-1:1));
 } finally {
 LEAVING("b6jhzc16xvrknu4e7jp6zx0ue","agedgeseqcmpf");

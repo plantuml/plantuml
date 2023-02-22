@@ -2,12 +2,12 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
@@ -44,12 +44,9 @@
  *
  */
 package gen.lib.pathplan;
-import static smetana.core.JUtils.EQ;
 import static smetana.core.JUtils.LOG2;
-import static smetana.core.JUtils.NEQ;
 import static smetana.core.JUtils.setjmp;
 import static smetana.core.Macro.HUGE_VAL;
-import static smetana.core.Macro.N;
 import static smetana.core.Macro.UNSUPPORTED;
 import static smetana.core.debug.SmetanaDebug.ENTERING;
 import static smetana.core.debug.SmetanaDebug.LEAVING;
@@ -61,7 +58,8 @@ import h.ST_pointf;
 import h.ST_pointnlink_t;
 import h.ST_triangle_t;
 import smetana.core.CArray;
-import smetana.core.Z;
+import smetana.core.Globals;
+import smetana.core.ZType;
 import smetana.core.__ptr__;
 import smetana.core.jmp_buf;
 
@@ -89,7 +87,7 @@ private static jmp_buf jbuf = new jmp_buf();
 // int Pshortestpath(Ppoly_t * polyp, Ppoint_t * eps, Ppolyline_t * output) 
 @Unused
 @Original(version="2.38.0", path="lib/pathplan/shortest.c", name="Pshortestpath", key="2gub5b19vo2qexn56nw23wage", definition="int Pshortestpath(Ppoly_t * polyp, Ppoint_t * eps, Ppolyline_t * output)")
-public static int Pshortestpath(ST_Ppoly_t polyp, CArray<ST_pointf> eps, ST_Ppoly_t output) {
+public static int Pshortestpath(Globals zz, ST_Ppoly_t polyp, CArray<ST_pointf> eps, ST_Ppoly_t output) {
 ENTERING("2gub5b19vo2qexn56nw23wage","Pshortestpath");
 try {
     int pi, minpi;
@@ -105,12 +103,12 @@ try {
     if (setjmp(jbuf)!=0)
 	return -2;
     /* make space */
-    growpnls(polyp.pn);
-    Z.z().pnll = 0;
-    Z.z().tril = 0;
-    growdq(polyp.pn * 2);
-    Z.z().dq.fpnlpi = Z.z().dq.pnlpn / 2;
-    Z.z().dq.lpnlpi = Z.z().dq.fpnlpi - 1;
+    growpnls(zz, polyp.pn);
+    zz.pnll = 0;
+    zz.tril = 0;
+    growdq(zz, polyp.pn * 2);
+    zz.dq.fpnlpi = zz.dq.pnlpn / 2;
+    zz.dq.lpnlpi = zz.dq.fpnlpi - 1;
     
     
     /* make sure polygon is CCW and load pnls array */
@@ -129,59 +127,59 @@ try {
 		&& polyp.ps.get__(pi).x == polyp.ps.get__(pi+1).x
 		&& polyp.ps.get__(pi).y == polyp.ps.get__(pi+1).y)
 		continue;
-	    Z.z().pnls[Z.z().pnll].pp = polyp.ps.get__(pi);
-	    Z.z().pnls[Z.z().pnll].link = Z.z().pnls[Z.z().pnll % polyp.pn];
-	    Z.z().pnlps[Z.z().pnll] = Z.z().pnls[Z.z().pnll];
-	    Z.z().pnll++;
+	    zz.pnls[zz.pnll].pp = polyp.ps.get__(pi);
+	    zz.pnls[zz.pnll].link = zz.pnls[zz.pnll % polyp.pn];
+	    zz.pnlps[zz.pnll] = zz.pnls[zz.pnll];
+	    zz.pnll++;
 	}
     } else {
 	for (pi = 0; pi < polyp.pn; pi++) {
 	    if (pi > 0 && polyp.ps.get__(pi).x == polyp.ps.get__(pi - 1).x &&
 		polyp.ps.get__(pi).y == polyp.ps.get__(pi - 1).y)
 		continue;
-	    Z.z().pnls[Z.z().pnll].pp = polyp.ps.get__(pi);
-	    Z.z().pnls[Z.z().pnll].link = Z.z().pnls[Z.z().pnll % polyp.pn];
-	    Z.z().pnlps[Z.z().pnll] = Z.z().pnls[Z.z().pnll];
-	    Z.z().pnll++;
+	    zz.pnls[zz.pnll].pp = polyp.ps.get__(pi);
+	    zz.pnls[zz.pnll].link = zz.pnls[zz.pnll % polyp.pn];
+	    zz.pnlps[zz.pnll] = zz.pnls[zz.pnll];
+	    zz.pnll++;
 	}
     }
     
     
     /* generate list of triangles */
-    triangulate(Z.z().pnlps, Z.z().pnll);
+    triangulate(zz, zz.pnlps, zz.pnll);
     
     /* connect all pairs of triangles that share an edge */
-    for (trii = 0; trii < Z.z().tril; trii++)
-	for (trij = trii + 1; trij < Z.z().tril; trij++)
-	    connecttris(trii, trij);
+    for (trii = 0; trii < zz.tril; trii++)
+	for (trij = trii + 1; trij < zz.tril; trij++)
+	    connecttris(zz, trii, trij);
     
     /* find first and last triangles */
-    for (trii = 0; trii < Z.z().tril; trii++)
-	if (pointintri(trii, eps.get__(0)))
+    for (trii = 0; trii < zz.tril; trii++)
+	if (pointintri(zz, trii, eps.get__(0)))
 	    break;
-    if (trii == Z.z().tril) {
+    if (trii == zz.tril) {
 UNSUPPORTED("4ma3y8l4lmjcsw49kmsgknig6"); // 	fprintf (stderr, "libpath/%s:%d: %s\n", "graphviz-2.38.0\\lib\\pathplan\\shortest.c", 26, ("source point not in any triangle"));
 UNSUPPORTED("8d9xfgejx5vgd6shva5wk5k06"); // 	return -1;
     }
     ftrii = trii;
-    for (trii = 0; trii < Z.z().tril; trii++)
-	if (pointintri(trii, eps.get__(1)))
+    for (trii = 0; trii < zz.tril; trii++)
+	if (pointintri(zz, trii, eps.get__(1)))
 	    break;
-    if (trii == Z.z().tril) {
+    if (trii == zz.tril) {
         System.err.println("libpath/%s:%d: %s\n" + "graphviz-2.38.0\\lib\\pathplan\\shortest.c" + 26 + ("destination point not in any triangle"));
         return -1;
     }
     ltrii = trii;
     
     /* mark the strip of triangles from eps[0] to eps[1] */
-    if (N(marktripath(ftrii, ltrii))) {
+    if (!marktripath(zz, ftrii, ltrii)) {
 	System.err.println("libpath/%s:%d: %s" + "graphviz-2.38.0\\lib\\pathplan\\shortest.c" + 26 + ("cannot find triangle path"));
 	/* a straight line is better than failing */
-	growops(2);
+	growops(zz, 2);
 	output.pn = 2;
-	Z.z().ops_shortest.get__(0).___(eps.get__(0));
-	Z.z().ops_shortest.get__(1).___(eps.get__(1));
-	output.ps = Z.z().ops_shortest;
+	zz.ops_shortest.get__(0).___(eps.get__(0));
+	zz.ops_shortest.get__(1).___(eps.get__(1));
+	output.ps = zz.ops_shortest;
 	return 0;
     }
     
@@ -199,11 +197,11 @@ UNSUPPORTED("c9ckhc8veujmwcw0ar3u3zld4"); // 	return 0;
     epnls[0].link = null;
     epnls[1].pp = eps.get__(1);
     epnls[1].link = null;
-    add2dq(1, epnls[0]);
-    Z.z().dq.apex = Z.z().dq.fpnlpi;
+    add2dq(zz, 1, epnls[0]);
+    zz.dq.apex = zz.dq.fpnlpi;
     trii = ftrii;
     while (trii != -1) {
-	trip = Z.z().tris.plus_(trii);
+	trip = zz.tris.plus_(trii);
 	trip.get__(0).mark = 2;
 	
 	/* find the left and right points of the exiting edge */
@@ -212,14 +210,14 @@ UNSUPPORTED("c9ckhc8veujmwcw0ar3u3zld4"); // 	return 0;
 	    		trip.get__(0).e[ei].rtp.get__(0).mark == 1)
 		break;
 	if (ei == 3) {		/* in last triangle */
-	    if (ccw(eps.get__(1), Z.z().dq.pnlps[Z.z().dq.fpnlpi].pp,
-		    Z.z().dq.pnlps[Z.z().dq.lpnlpi].pp) == 1)
+	    if (ccw(eps.get__(1), zz.dq.pnlps[zz.dq.fpnlpi].pp,
+		    zz.dq.pnlps[zz.dq.lpnlpi].pp) == 1)
 		{
-		lpnlp = Z.z().dq.pnlps[Z.z().dq.lpnlpi];
+		lpnlp = zz.dq.pnlps[zz.dq.lpnlpi];
 		rpnlp = epnls[1];
 	    } else {
 		lpnlp = epnls[1];
-		rpnlp = Z.z().dq.pnlps[Z.z().dq.lpnlpi];
+		rpnlp = zz.dq.pnlps[zz.dq.lpnlpi];
 		}
 	} else {
 	    pnlp = trip.get__(0).e[(ei + 1) % 3].pnl1p;
@@ -235,33 +233,33 @@ UNSUPPORTED("2cii65lhw4wb8nyvjv702v7md"); // 		lpnlp = trip->e[ei].pnl1p, rpnlp 
 	
 	/* update deque */
 	if (trii == ftrii) {
-	    add2dq(2, lpnlp);
-	    add2dq(1, rpnlp);
+	    add2dq(zz, 2, lpnlp);
+	    add2dq(zz, 1, rpnlp);
 	} else {
-	    if (NEQ(Z.z().dq.pnlps[Z.z().dq.fpnlpi], rpnlp)
-		&& NEQ(Z.z().dq.pnlps[Z.z().dq.lpnlpi], rpnlp)) {
+	    if ((zz.dq.pnlps[zz.dq.fpnlpi] != rpnlp)
+		&& (zz.dq.pnlps[zz.dq.lpnlpi] != rpnlp)) {
 		/* add right point to deque */
-		splitindex = finddqsplit(rpnlp);
-		splitdq(2, splitindex);
-		add2dq(1, rpnlp);
+		splitindex = finddqsplit(zz, rpnlp);
+		splitdq(zz, 2, splitindex);
+		add2dq(zz, 1, rpnlp);
 		/* if the split is behind the apex, then reset apex */
-		if (splitindex > Z.z().dq.apex)
-		    Z.z().dq.apex = splitindex;
+		if (splitindex > zz.dq.apex)
+		    zz.dq.apex = splitindex;
 	    } else {
 		/* add left point to deque */
-		splitindex = finddqsplit(lpnlp);
-		splitdq(1, splitindex);
-		add2dq(2, lpnlp);
+		splitindex = finddqsplit(zz, lpnlp);
+		splitdq(zz, 1, splitindex);
+		add2dq(zz, 2, lpnlp);
 		/* if the split is in front of the apex, then reset apex */
-		if (splitindex < Z.z().dq.apex)
-		    Z.z().dq.apex = splitindex;
+		if (splitindex < zz.dq.apex)
+		    zz.dq.apex = splitindex;
 	    }
 	}
 	trii = -1;
 	for (ei = 0; ei < 3; ei++)
 	    if (trip.get__(0).e[ei].rtp!=null && 
 	    		trip.get__(0).e[ei].rtp.get__(0).mark == 1) {
-		trii = trip.get__(0).e[ei].rtp.minus_(Z.z().tris);
+		trii = trip.get__(0).e[ei].rtp.minus_(zz.tris);
 		break;
 	    }
     }
@@ -269,11 +267,11 @@ UNSUPPORTED("2cii65lhw4wb8nyvjv702v7md"); // 		lpnlp = trip->e[ei].pnl1p, rpnlp 
     
     for (pi = 0, pnlp = epnls[1]; pnlp!=null; pnlp = pnlp.link)
 	pi++;
-    growops(pi);
+    growops(zz, pi);
     output.pn = pi;
     for (pi = pi - 1, pnlp = epnls[1]; pnlp!=null; pi--, pnlp = pnlp.link)
-	Z.z().ops_shortest.get__(pi).___(pnlp.pp);
-    output.ps = Z.z().ops_shortest;
+	zz.ops_shortest.get__(pi).___(pnlp.pp);
+    output.ps = zz.ops_shortest;
     
     return 0;
 } finally {
@@ -288,7 +286,7 @@ LEAVING("2gub5b19vo2qexn56nw23wage","Pshortestpath");
 // static void triangulate(pointnlink_t ** pnlps, int pnln) 
 @Unused
 @Original(version="2.38.0", path="lib/pathplan/shortest.c", name="triangulate", key="73cr7m3mqvtuotpzrmaw2y8zm", definition="static void triangulate(pointnlink_t ** pnlps, int pnln)")
-public static void triangulate(ST_pointnlink_t pnlps[], int pnln) {
+public static void triangulate(Globals zz, ST_pointnlink_t pnlps[], int pnln) {
 ENTERING("73cr7m3mqvtuotpzrmaw2y8zm","triangulate");
 try {
     int pnli, pnlip1, pnlip2;
@@ -301,17 +299,17 @@ try {
 			pnlip2 = (pnli + 2) % pnln;
 			if (isdiagonal(pnli, pnlip2, pnlps, pnln)) 
 			{
-				loadtriangle(pnlps[pnli], pnlps[pnlip1], pnlps[pnlip2]);
+				loadtriangle(zz, pnlps[pnli], pnlps[pnlip1], pnlps[pnlip2]);
 				for (pnli = pnlip1; pnli < pnln - 1; pnli++)
 					pnlps[pnli] = pnlps[pnli + 1];
-				triangulate(pnlps, pnln - 1);
+				triangulate(zz, pnlps, pnln - 1);
 				return;
 			}
 		}
 		throw new IllegalStateException("libpath/%s:%d: %s\n" + "graphviz-2.38.0\\lib\\pathplan\\shortest.c" + 26 + ("triangulation failed"));
     } 
 	else
-		loadtriangle(pnlps[0], pnlps[1], pnlps[2]);
+		loadtriangle(zz, pnlps[0], pnlps[1], pnlps[2]);
 } finally {
 LEAVING("73cr7m3mqvtuotpzrmaw2y8zm","triangulate");
 }
@@ -344,13 +342,13 @@ try {
     else
 	res = ccw(pnlps[pnli].pp, pnlps[pnlip2].pp,
 		   pnlps[pnlip1].pp) == 2;
-    if (N(res))
+    if (!res)
 	return false;
     /* check against all other edges */
     for (pnlj = 0; pnlj < pnln; pnlj++) {
 	pnljp1 = (pnlj + 1) % pnln;
-	if (N((pnlj == pnli) || (pnljp1 == pnli) ||
-	      (pnlj == pnlip2) || (pnljp1 == pnlip2)))
+	if (!((pnlj == pnli) || (pnljp1 == pnli) ||
+	  (pnlj == pnlip2) || (pnljp1 == pnlip2)))
 	    if (intersects(pnlps[pnli].pp, pnlps[pnlip2].pp,
 			   pnlps[pnlj].pp, pnlps[pnljp1].pp))
 		return false;
@@ -368,15 +366,15 @@ LEAVING("72of3cd7shtwokglxapw04oe9","isdiagonal");
 // static void loadtriangle(pointnlink_t * pnlap, pointnlink_t * pnlbp, 			 pointnlink_t * pnlcp) 
 @Unused
 @Original(version="2.38.0", path="lib/pathplan/shortest.c", name="loadtriangle", key="7vf9jtj9i8rg0cxrstbqswuck", definition="static void loadtriangle(pointnlink_t * pnlap, pointnlink_t * pnlbp, 			 pointnlink_t * pnlcp)")
-public static void loadtriangle(__ptr__ pnlap, __ptr__ pnlbp, __ptr__ pnlcp) {
+public static void loadtriangle(Globals zz, __ptr__ pnlap, __ptr__ pnlbp, __ptr__ pnlcp) {
 ENTERING("7vf9jtj9i8rg0cxrstbqswuck","loadtriangle");
 try {
 	CArray<ST_triangle_t> trip;
     int ei;
     /* make space */
-    if (Z.z().tril >= Z.z().trin)
-	growtris(Z.z().trin + 20);
-    trip = Z.z().tris.plus_(Z.z().tril++);
+    if (zz.tril >= zz.trin)
+	growtris(zz, zz.trin + 20);
+    trip = zz.tris.plus_(zz.tril++);
     trip.get__(0).mark = 0;
     trip.get__(0).e[0].pnl0p = (ST_pointnlink_t) pnlap;
     trip.get__(0).e[0].pnl1p = (ST_pointnlink_t) pnlbp;
@@ -402,7 +400,7 @@ LEAVING("7vf9jtj9i8rg0cxrstbqswuck","loadtriangle");
 /* connect a pair of triangles at their common edge (if any) */
 @Unused
 @Original(version="2.38.0", path="lib/pathplan/shortest.c", name="connecttris", key="6coujw0qksrgu5sxj0r39qm1u", definition="static void connecttris(int tri1, int tri2)")
-public static void connecttris(int tri1, int tri2) {
+public static void connecttris(Globals zz, int tri1, int tri2) {
 ENTERING("6coujw0qksrgu5sxj0r39qm1u","connecttris");
 try {
 	CArray<ST_triangle_t> tri1p;
@@ -410,16 +408,12 @@ try {
     int ei, ej;
     for (ei = 0; ei < 3; ei++) {
 	for (ej = 0; ej < 3; ej++) {
-	    tri1p = Z.z().tris.plus_(tri1);
-	    tri2p = Z.z().tris.plus_(tri2);
-	    if ((EQ(tri1p.get__(0).e[ei].pnl0p.pp,
-	    		tri2p.get__(0).e[ej].pnl0p.pp) &&
-		 EQ(tri1p.get__(0).e[ei].pnl1p.pp,
-				 tri2p.get__(0).e[ej].pnl1p.pp)) ||
-		(EQ(tri1p.get__(0).e[ei].pnl0p.pp,
-				tri2p.get__(0).e[ej].pnl1p.pp) &&
-		 EQ(tri1p.get__(0).e[ei].pnl1p.pp,
-				 tri2p.get__(0).e[ej].pnl0p.pp)))
+	    tri1p = zz.tris.plus_(tri1);
+	    tri2p = zz.tris.plus_(tri2);
+	    if ((tri1p.get__(0).e[ei].pnl0p.pp == tri2p.get__(0).e[ej].pnl0p.pp &&
+		 tri1p.get__(0).e[ei].pnl1p.pp == tri2p.get__(0).e[ej].pnl1p.pp) ||
+		(tri1p.get__(0).e[ei].pnl0p.pp == tri2p.get__(0).e[ej].pnl1p.pp &&
+		 tri1p.get__(0).e[ei].pnl1p.pp == tri2p.get__(0).e[ej].pnl0p.pp))
 		 {
 	    	tri1p.get__(0).e[ei].rtp = tri2p;
 	    	tri2p.get__(0).e[ej].rtp = tri1p;
@@ -438,21 +432,21 @@ LEAVING("6coujw0qksrgu5sxj0r39qm1u","connecttris");
 // static int marktripath(int trii, int trij) 
 @Unused
 @Original(version="2.38.0", path="lib/pathplan/shortest.c", name="marktripath", key="3waxf5wy3mwt12wpg5hxg3o9c", definition="static int marktripath(int trii, int trij)")
-public static boolean marktripath(int trii, int trij) {
+public static boolean marktripath(Globals zz, int trii, int trij) {
 ENTERING("3waxf5wy3mwt12wpg5hxg3o9c","marktripath");
 try {
     int ei;
     
-    if (Z.z().tris.get__(trii).mark!=0)
+    if (zz.tris.get__(trii).mark!=0)
 	return false;
-    Z.z().tris.get__(trii).mark = 1;
+    zz.tris.get__(trii).mark = 1;
     if (trii == trij)
 	return true;
     for (ei = 0; ei < 3; ei++)
-	if ((Z.z().tris.get__(trii).e[ei].rtp!=null &&
-	    marktripath(Z.z().tris.get__(trii).e[ei].rtp.minus_(Z.z().tris), trij)))
+	if ((zz.tris.get__(trii).e[ei].rtp!=null &&
+	    marktripath(zz, zz.tris.get__(trii).e[ei].rtp.minus_(zz.tris), trij)))
 	    return true;
-    Z.z().tris.get__(trii).mark = 0;
+    zz.tris.get__(trii).mark = 0;
     return false;
 } finally {
 LEAVING("3waxf5wy3mwt12wpg5hxg3o9c","marktripath");
@@ -466,21 +460,21 @@ LEAVING("3waxf5wy3mwt12wpg5hxg3o9c","marktripath");
 // static void add2dq(int side, pointnlink_t * pnlp) 
 @Unused
 @Original(version="2.38.0", path="lib/pathplan/shortest.c", name="add2dq", key="44szdl31mg8mt5qrfj70kb2sn", definition="static void add2dq(int side, pointnlink_t * pnlp)")
-public static void add2dq(int side, ST_pointnlink_t pnlp) {
+public static void add2dq(Globals zz, int side, ST_pointnlink_t pnlp) {
 ENTERING("44szdl31mg8mt5qrfj70kb2sn","add2dq");
 try {
     if (side == 1) {
-	if (Z.z().dq.lpnlpi - Z.z().dq.fpnlpi >= 0)
-	    pnlp.link = Z.z().dq.pnlps[Z.z().dq.fpnlpi];
+	if (zz.dq.lpnlpi - zz.dq.fpnlpi >= 0)
+	    pnlp.link = zz.dq.pnlps[zz.dq.fpnlpi];
 	    /* shortest path links */
-	Z.z().dq.fpnlpi = Z.z().dq.fpnlpi-1;
-	Z.z().dq.pnlps[Z.z().dq.fpnlpi] = pnlp;
+	zz.dq.fpnlpi = zz.dq.fpnlpi-1;
+	zz.dq.pnlps[zz.dq.fpnlpi] = pnlp;
     } else {
-	if (Z.z().dq.lpnlpi - Z.z().dq.fpnlpi >= 0)
-	    pnlp.link = Z.z().dq.pnlps[Z.z().dq.lpnlpi];
+	if (zz.dq.lpnlpi - zz.dq.fpnlpi >= 0)
+	    pnlp.link = zz.dq.pnlps[zz.dq.lpnlpi];
 	    /* shortest path links */
-	Z.z().dq.lpnlpi = Z.z().dq.lpnlpi+1;
-	Z.z().dq.pnlps[Z.z().dq.lpnlpi] = pnlp;
+	zz.dq.lpnlpi = zz.dq.lpnlpi+1;
+	zz.dq.pnlps[zz.dq.lpnlpi] = pnlp;
     }
 } finally {
 LEAVING("44szdl31mg8mt5qrfj70kb2sn","add2dq");
@@ -494,13 +488,13 @@ LEAVING("44szdl31mg8mt5qrfj70kb2sn","add2dq");
 // static void splitdq(int side, int index) 
 @Unused
 @Original(version="2.38.0", path="lib/pathplan/shortest.c", name="splitdq", key="572sssdz1se16w790xceiy5vr", definition="static void splitdq(int side, int index)")
-public static void splitdq(int side, int index) {
+public static void splitdq(Globals zz, int side, int index) {
 ENTERING("572sssdz1se16w790xceiy5vr","splitdq");
 try {
     if (side == 1)
-	Z.z().dq.lpnlpi = index;
+	zz.dq.lpnlpi = index;
     else
-	Z.z().dq.fpnlpi = index;
+	zz.dq.fpnlpi = index;
 } finally {
 LEAVING("572sssdz1se16w790xceiy5vr","splitdq");
 }
@@ -513,19 +507,19 @@ LEAVING("572sssdz1se16w790xceiy5vr","splitdq");
 // static int finddqsplit(pointnlink_t * pnlp) 
 @Unused
 @Original(version="2.38.0", path="lib/pathplan/shortest.c", name="finddqsplit", key="9dnrc8vqpffp5t3bmsackgqtl", definition="static int finddqsplit(pointnlink_t * pnlp)")
-public static int finddqsplit(ST_pointnlink_t pnlp) {
+public static int finddqsplit(Globals zz, ST_pointnlink_t pnlp) {
 ENTERING("9dnrc8vqpffp5t3bmsackgqtl","finddqsplit");
 try {
     int index;
-    for (index = Z.z().dq.fpnlpi; index < Z.z().dq.apex; index++)
-	if (ccw(Z.z().dq.pnlps[index + 1].pp, Z.z().dq.pnlps[index].pp, pnlp.pp) ==
+    for (index = zz.dq.fpnlpi; index < zz.dq.apex; index++)
+	if (ccw(zz.dq.pnlps[index + 1].pp, zz.dq.pnlps[index].pp, pnlp.pp) ==
 	    1)
 	    return index;
-    for (index = Z.z().dq.lpnlpi; index > Z.z().dq.apex; index--)
-	if (ccw(Z.z().dq.pnlps[index - 1].pp, Z.z().dq.pnlps[index].pp, pnlp.pp) ==
+    for (index = zz.dq.lpnlpi; index > zz.dq.apex; index--)
+	if (ccw(zz.dq.pnlps[index - 1].pp, zz.dq.pnlps[index].pp, pnlp.pp) ==
 	    2)
 	    return index;
-    return Z.z().dq.apex;
+    return zz.dq.apex;
 } finally {
 LEAVING("9dnrc8vqpffp5t3bmsackgqtl","finddqsplit");
 }
@@ -610,13 +604,13 @@ LEAVING("uh5n18rzyevtb4cwpni70qpc","between");
 // static int pointintri(int trii, Ppoint_t * pp) 
 @Unused
 @Original(version="2.38.0", path="lib/pathplan/shortest.c", name="pointintri", key="zti1mzm2m7tr2xwnbf7e8u3d", definition="static int pointintri(int trii, Ppoint_t * pp)")
-public static boolean pointintri(int trii, ST_pointf pp) {
+public static boolean pointintri(Globals zz, int trii, ST_pointf pp) {
 ENTERING("zti1mzm2m7tr2xwnbf7e8u3d","pointintri");
 try {
     int ei, sum;
     for (ei = 0, sum = 0; ei < 3; ei++)
-	if (ccw(Z.z().tris.get__(trii).e[ei].pnl0p.pp,
-			Z.z().tris.get__(trii).e[ei].pnl1p.pp, pp) != 2)
+	if (ccw(zz.tris.get__(trii).e[ei].pnl0p.pp,
+			zz.tris.get__(trii).e[ei].pnl1p.pp, pp) != 2)
 	    sum++;
     return (sum == 3 || sum == 0);
 } finally {
@@ -631,31 +625,31 @@ LEAVING("zti1mzm2m7tr2xwnbf7e8u3d","pointintri");
 // static void growpnls(int newpnln) 
 @Unused
 @Original(version="2.38.0", path="lib/pathplan/shortest.c", name="growpnls", key="85wstb60jkjd0kbh9tyninm4h", definition="static void growpnls(int newpnln)")
-public static void growpnls(int newpnln) {
+public static void growpnls(Globals zz, int newpnln) {
 ENTERING("85wstb60jkjd0kbh9tyninm4h","growpnls");
 try {
-    if (newpnln <= Z.z().pnln)
+    if (newpnln <= zz.pnln)
 	return;
-    if (N(Z.z().pnls)) {
-	if (N(Z.z().pnls = malloc(newpnln))) {
+    if ((zz.pnls) == null) {
+	if ((zz.pnls = malloc(newpnln)) == null) {
 UNSUPPORTED("9zyfc4bjg3i6rrna9vqf8doys"); // 	    fprintf (stderr, "libpath/%s:%d: %s\n", "graphviz-2.38.0\\lib\\pathplan\\shortest.c", 26, ("cannot malloc pnls"));
 UNSUPPORTED("1r6uhbnmxv8c6msnscw07w0qx"); // 	    longjmp(jbuf,1);
 	}
-	if (N(Z.z().pnlps = malloc(newpnln))) {
+	if ((zz.pnlps = malloc(newpnln)) == null) {
 UNSUPPORTED("1etar0wd2cbbvqo4jnmbvjiz4"); // 	    fprintf (stderr, "libpath/%s:%d: %s\n", "graphviz-2.38.0\\lib\\pathplan\\shortest.c", 26, ("cannot malloc pnlps"));
 UNSUPPORTED("1r6uhbnmxv8c6msnscw07w0qx"); // 	    longjmp(jbuf,1);
 	}
     } else {
-	if (N(Z.z().pnls = realloc(Z.z().pnls, newpnln))) {
+	if (((zz.pnls = realloc(zz.pnls, newpnln)))==null) {
 UNSUPPORTED("105nogpkt0qqut0yu4alvkk1u"); // 	    fprintf (stderr, "libpath/%s:%d: %s\n", "graphviz-2.38.0\\lib\\pathplan\\shortest.c", 26, ("cannot realloc pnls"));
 UNSUPPORTED("1r6uhbnmxv8c6msnscw07w0qx"); // 	    longjmp(jbuf,1);
 	}
-	if (N(Z.z().pnlps = realloc(Z.z().pnlps, newpnln))) {
+	if (((zz.pnlps = realloc(zz.pnlps, newpnln)))==null) {
 UNSUPPORTED("be84alh84ub40x4um989aj20d"); // 	    fprintf (stderr, "libpath/%s:%d: %s\n", "graphviz-2.38.0\\lib\\pathplan\\shortest.c", 26, ("cannot realloc pnlps"));
 UNSUPPORTED("1r6uhbnmxv8c6msnscw07w0qx"); // 	    longjmp(jbuf,1);
 	}
     }
-    Z.z().pnln = newpnln;
+    zz.pnln = newpnln;
 } finally {
 LEAVING("85wstb60jkjd0kbh9tyninm4h","growpnls");
 }
@@ -685,23 +679,23 @@ private static ST_pointnlink_t[] realloc(ST_pointnlink_t orig[], int nb) {
 // static void growtris(int newtrin) 
 @Unused
 @Original(version="2.38.0", path="lib/pathplan/shortest.c", name="growtris", key="c5q8ult6w26jppe5ifzgcoq82", definition="static void growtris(int newtrin)")
-public static void growtris(int newtrin) {
+public static void growtris(Globals zz, int newtrin) {
 ENTERING("c5q8ult6w26jppe5ifzgcoq82","growtris");
 try {
-    if (newtrin <= Z.z().trin)
+    if (newtrin <= zz.trin)
 	return;
-    if (N(Z.z().tris)) {
-	if (N(Z.z().tris = CArray.<ST_triangle_t>ALLOC__(newtrin, ST_triangle_t.class))) {
+    if ((zz.tris) == null) {
+	if ((zz.tris = CArray.<ST_triangle_t>ALLOC__(newtrin, ZType.ST_triangle_t)) == null) {
 	UNSUPPORTED("5782e28cjpaa3dpf8up4zmtq7"); // 	    fprintf (stderr, "libpath/%s:%d: %s\n", "graphviz-2.38.0\\lib\\pathplan\\shortest.c", 26, ("cannot malloc tris"));
 	UNSUPPORTED("1r6uhbnmxv8c6msnscw07w0qx"); // 	    longjmp(jbuf,1);
 	}
     } else {
-	if (N(Z.z().tris = CArray.<ST_triangle_t>REALLOC__(newtrin, Z.z().tris, ST_triangle_t.class))) {
+	if (((zz.tris = CArray.<ST_triangle_t>REALLOC__(newtrin, zz.tris, ZType.ST_triangle_t)))==null) {
 	UNSUPPORTED("d3fgu54pn5tydfhn7z73v73ra"); // 	    fprintf (stderr, "libpath/%s:%d: %s\n", "graphviz-2.38.0\\lib\\pathplan\\shortest.c", 26, ("cannot realloc tris"));
 	UNSUPPORTED("1r6uhbnmxv8c6msnscw07w0qx"); // 	    longjmp(jbuf,1);
 	}
     }
-    Z.z().trin = newtrin;
+    zz.trin = newtrin;
 } finally {
 LEAVING("c5q8ult6w26jppe5ifzgcoq82","growtris");
 }
@@ -732,24 +726,23 @@ private static ST_triangle_t[] realloc2(ST_triangle_t orig[], int nb) {
 // static void growdq(int newdqn) 
 @Unused
 @Original(version="2.38.0", path="lib/pathplan/shortest.c", name="growdq", key="bzym9u6dtatii1vp4hcmofc80", definition="static void growdq(int newdqn)")
-public static void growdq(int newdqn) {
+public static void growdq(Globals zz, int newdqn) {
 ENTERING("bzym9u6dtatii1vp4hcmofc80","growdq");
 try {
-    if (newdqn <= Z.z().dq.pnlpn)
+    if (newdqn <= zz.dq.pnlpn)
 	return;
-    if (N(Z.z().dq.pnlps)) {
-	if (N
-	    (Z.z().dq.malloc(newdqn))) {
+    if ((zz.dq.pnlps) == null) {
+	if (!zz.dq.malloc(newdqn)) {
 UNSUPPORTED("88fwpb40wz9jc8jiz7u032s4t"); // 	    fprintf (stderr, "libpath/%s:%d: %s\n", "graphviz-2.38.0\\lib\\pathplan\\shortest.c", 26, ("cannot malloc dq.pnls"));
 UNSUPPORTED("1r6uhbnmxv8c6msnscw07w0qx"); // 	    longjmp(jbuf,1);
 	}
     } else {
-	if (N(Z.z().dq.realloc(newdqn))) {
+	if (!zz.dq.realloc(newdqn)) {
 UNSUPPORTED("exqx4ck7h15m8whgip6xpnhoo"); // 	    fprintf (stderr, "libpath/%s:%d: %s\n", "graphviz-2.38.0\\lib\\pathplan\\shortest.c", 26, ("cannot realloc dq.pnls"));
 UNSUPPORTED("1r6uhbnmxv8c6msnscw07w0qx"); // 	    longjmp(jbuf,1);
 	}
     }
-    Z.z().dq.pnlpn = newdqn;
+    zz.dq.pnlpn = newdqn;
 } finally {
 LEAVING("bzym9u6dtatii1vp4hcmofc80","growdq");
 }
@@ -762,23 +755,23 @@ LEAVING("bzym9u6dtatii1vp4hcmofc80","growdq");
 // static void growops(int newopn) 
 @Unused
 @Original(version="2.38.0", path="lib/pathplan/shortest.c", name="growops", key="d7vtt8xqxbdnx9kwtt1zzof75", definition="static void growops(int newopn)")
-public static void growops(int newopn) {
+public static void growops(Globals zz, int newopn) {
 ENTERING("d7vtt8xqxbdnx9kwtt1zzof75","growops");
 try {
-    if (newopn <= Z.z().opn_shortest)
+    if (newopn <= zz.opn_shortest)
 	return;
-    if (N(Z.z().ops_shortest)) {
-	if (N(Z.z().ops_shortest = CArray.<ST_pointf>ALLOC__(newopn, ST_pointf.class))) {
+    if ((zz.ops_shortest) == null) {
+	if ((zz.ops_shortest = CArray.<ST_pointf>ALLOC__(newopn, ZType.ST_pointf)) == null) {
 UNSUPPORTED("7wxgcgah7iy6vetj5yszoq4k4"); // 	    fprintf (stderr, "libpath/%s:%d: %s\n", "graphviz-2.38.0\\lib\\pathplan\\shortest.c", 26, ("cannot malloc ops"));
 UNSUPPORTED("1r6uhbnmxv8c6msnscw07w0qx"); // 	    longjmp(jbuf,1);
 	}
     } else {
-	if (N(Z.z().ops_shortest = CArray.<ST_pointf>REALLOC__(newopn, Z.z().ops_shortest, ST_pointf.class))) {
+	if (((zz.ops_shortest = CArray.<ST_pointf>REALLOC__(newopn, zz.ops_shortest, ZType.ST_pointf)))==null) {
 UNSUPPORTED("7azrdo5s3kc44taqmtmeu1s33"); // 	    fprintf (stderr, "libpath/%s:%d: %s\n", "graphviz-2.38.0\\lib\\pathplan\\shortest.c", 26, ("cannot realloc ops"));
 UNSUPPORTED("1r6uhbnmxv8c6msnscw07w0qx"); // 	    longjmp(jbuf,1);
     }
     }
-    Z.z().opn_shortest = newopn;
+    zz.opn_shortest = newopn;
 } finally {
 LEAVING("d7vtt8xqxbdnx9kwtt1zzof75","growops");
 }

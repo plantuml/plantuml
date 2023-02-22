@@ -2,14 +2,14 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2009-2024, Arnaud Roques
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of PlantUML.
  *
@@ -53,7 +53,7 @@ public abstract class HColor implements UChange {
 	public Color toColor(ColorMapper mapper) {
 		throw new UnsupportedOperationException();
 	}
-	
+
 	final public String toRGB(ColorMapper mapper) {
 		final Color color = toColor(mapper);
 		return StringUtils.sharp000000(color.getRGB());
@@ -72,8 +72,6 @@ public abstract class HColor implements UChange {
 		s = s.substring(s.length() - 2);
 		return toRGB(mapper) + s;
 	}
-
-
 
 	public HColor lighten(int ratio) {
 		return this;

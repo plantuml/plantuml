@@ -1,16 +1,16 @@
 package net.sourceforge.plantuml.security.authentication.token;
 
-import net.sourceforge.plantuml.security.authentication.SecurityAuthentication;
-import net.sourceforge.plantuml.security.authentication.SecurityAuthorizeManager;
-import net.sourceforge.plantuml.security.authentication.SecurityCredentials;
-import net.sourceforge.plantuml.security.authentication.basicauth.BasicAuthAuthorizeManager;
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.net.Proxy;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
+
+import net.sourceforge.plantuml.security.authentication.SecurityAuthentication;
+import net.sourceforge.plantuml.security.authentication.SecurityAuthorizeManager;
+import net.sourceforge.plantuml.security.authentication.SecurityCredentials;
 
 class TokenAuthAuthorizeManagerTest {
 

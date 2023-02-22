@@ -2,14 +2,14 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2009-2024, Arnaud Roques
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of PlantUML.
  *
@@ -62,17 +62,21 @@ public class TranscoderImpl implements Transcoder {
 		return new TranscoderImpl(urlEncoder, stringCompressor, compression, Format.UTF8);
 	}
 
+	// ::comment when CORE
 	public static Transcoder upf9(URLEncoder urlEncoder, StringCompressor stringCompressor, Compression compression) {
 		return new TranscoderImpl(urlEncoder, stringCompressor, compression, Format.UPF9);
 	}
+	// ::done
 
 	public String encode(String text) throws IOException {
 		final String stringAnnoted = stringCompressor.compress(text);
 		final byte[] data;
-		if (format == Format.UTF8)
-			data = stringAnnoted.getBytes(UTF_8);
-		else
+		// ::comment when CORE
+		if (format == Format.UPF9)
 			data = Upf9Encoder.getBytes(stringAnnoted);
+		else
+			// ::done
+			data = stringAnnoted.getBytes(UTF_8);
 
 		final byte[] compressedData = compression.compress(data);
 
@@ -83,7 +87,13 @@ public class TranscoderImpl implements Transcoder {
 		try {
 			final byte compressedData[] = urlEncoder.decode(code);
 			final ByteArray data = compression.decompress(compressedData);
-			final String string = format == Format.UTF8 ? data.toUFT8String() : data.toUPF9String();
+			final String string;
+			// ::comment when CORE
+			if (format == Format.UPF9)
+				string = data.toUPF9String();
+			else
+				// ::done
+				string = data.toUFT8String();
 			return stringCompressor.decompress(string);
 		} catch (Exception e) {
 			// System.err.println("Cannot decode string");

@@ -2,12 +2,12 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
@@ -56,8 +56,6 @@ import static gen.lib.common.utils__c.Bezier;
 import static gen.lib.common.utils__c.dotneato_closest;
 import static h.ST_pointf.add_pointf;
 import static h.ST_pointf.pointfof;
-import static smetana.core.JUtils.EQ;
-import static smetana.core.Macro.ABS;
 import static smetana.core.Macro.APPROXEQPT;
 import static smetana.core.Macro.BOTTOM;
 import static smetana.core.Macro.ED_edge_type;
@@ -71,10 +69,7 @@ import static smetana.core.Macro.GD_bb;
 import static smetana.core.Macro.GD_flags;
 import static smetana.core.Macro.GD_flip;
 import static smetana.core.Macro.LEFT;
-import static smetana.core.Macro.MAX;
 import static smetana.core.Macro.MILLIPOINT;
-import static smetana.core.Macro.MIN;
-import static smetana.core.Macro.N;
 import static smetana.core.Macro.ND_coord;
 import static smetana.core.Macro.ND_ht;
 import static smetana.core.Macro.ND_node_type;
@@ -83,7 +78,6 @@ import static smetana.core.Macro.ND_rank;
 import static smetana.core.Macro.ND_rw;
 import static smetana.core.Macro.ND_shape;
 import static smetana.core.Macro.NORMAL;
-import static smetana.core.Macro.NOTI;
 import static smetana.core.Macro.REGULAREDGE;
 import static smetana.core.Macro.RIGHT;
 import static smetana.core.Macro.SELFEDGE;
@@ -112,6 +106,8 @@ import h.ST_textlabel_t;
 import smetana.core.CArray;
 import smetana.core.CArrayOfStar;
 import smetana.core.CFunction;
+import smetana.core.Globals;
+import smetana.core.ZType;
 import smetana.core.__ptr__;
 
 public class splines__c {
@@ -122,7 +118,7 @@ public class splines__c {
 // static void arrow_clip(edge_t * fe, node_t * hn, 	   pointf * ps, int *startp, int *endp, 	   bezier * spl, splineInfo * info) 
 @Unused
 @Original(version="2.38.0", path="lib/common/splines.c", name="arrow_clip", key="6izm0fbkejw7odmiw4zaw1ycp", definition="static void arrow_clip(edge_t * fe, node_t * hn, 	   pointf * ps, int *startp, int *endp, 	   bezier * spl, splineInfo * info)")
-public static void arrow_clip(ST_Agedge_s fe, ST_Agnode_s hn, CArray<ST_pointf> ps, int startp[], int endp[], ST_bezier spl, ST_splineInfo info) {
+public static void arrow_clip(Globals zz, ST_Agedge_s fe, ST_Agnode_s hn, CArray<ST_pointf> ps, int startp[], int endp[], ST_bezier spl, ST_splineInfo info) {
 ENTERING("6izm0fbkejw7odmiw4zaw1ycp","arrow_clip");
 try {
     ST_Agedge_s e;
@@ -134,11 +130,11 @@ try {
     if (info.ignoreSwap)
 	j = false;
     else
-	j = (Boolean) info.swapEnds.exe(e);
-    arrow_flags(e, sflag, eflag);
-    if ((Boolean) info.splineMerge.exe(hn))
+	j = (Boolean) info.swapEnds.exe(zz, e);
+    arrow_flags(zz, e, sflag, eflag);
+    if ((Boolean) info.splineMerge.exe(zz, hn))
 	eflag[0] = 0;
-    if ((Boolean) info.splineMerge.exe(agtail(fe)))
+    if ((Boolean) info.splineMerge.exe(zz, agtail(fe)))
 	sflag[0] = 0;
     /* swap the two ends */
     if (j) {
@@ -153,10 +149,10 @@ UNSUPPORTED("dzbrwr2ulubtjkbd8j2o4yyov"); // 	    arrowOrthoClip(e, ps, *startp,
     else {
 	if (sflag[0]!=0)
 		startp[0] =
-		arrowStartClip(e, ps, startp[0], endp[0], spl, sflag[0]);
+		arrowStartClip(zz, e, ps, startp[0], endp[0], spl, sflag[0]);
 	if (eflag[0]!=0)
 	    endp[0] =
-		arrowEndClip(e, ps, startp[0], endp[0], spl, eflag[0]);
+		arrowEndClip(zz, e, ps, startp[0], endp[0], spl, eflag[0]);
     }
 } finally {
 LEAVING("6izm0fbkejw7odmiw4zaw1ycp","arrow_clip");
@@ -178,11 +174,11 @@ LEAVING("6izm0fbkejw7odmiw4zaw1ycp","arrow_clip");
 // void bezier_clip(inside_t * inside_context, 		 boolean(*inside) (inside_t * inside_context, pointf p), 		 pointf * sp, boolean left_inside) 
 @Unused
 @Original(version="2.38.0", path="lib/common/splines.c", name="bezier_clip", key="q4t1ywnk3wm1vyh5seoj7xye", definition="void bezier_clip(inside_t * inside_context, 		 boolean(*inside) (inside_t * inside_context, pointf p), 		 pointf * sp, boolean left_inside)")
-public static void bezier_clip(__ptr__ inside_context, __ptr__ inside, CArray<ST_pointf> sp, boolean left_inside) {
+public static void bezier_clip(Globals zz, __ptr__ inside_context, __ptr__ inside, CArray<ST_pointf> sp, boolean left_inside) {
 ENTERING("q4t1ywnk3wm1vyh5seoj7xye","bezier_clip");
 try {
-    final CArray<ST_pointf> seg = CArray.<ST_pointf>ALLOC__(4, ST_pointf.class);
-    final CArray<ST_pointf> best = CArray.<ST_pointf>ALLOC__(4, ST_pointf.class);
+    final CArray<ST_pointf> seg = CArray.<ST_pointf>ALLOC__(4, ZType.ST_pointf);
+    final CArray<ST_pointf> best = CArray.<ST_pointf>ALLOC__(4, ZType.ST_pointf);
     final ST_pointf pt = new ST_pointf(), opt = new ST_pointf();
     CArray<ST_pointf> left, right;
     double t;
@@ -212,7 +208,7 @@ try {
 	opt.___(pt);
 	t = (high[0] + low[0]) / 2.0;
 	pt.___(Bezier(sp, 3, t, left, right));
-	if ((Boolean) ((CFunction)inside).exe(inside_context, pt)) {
+	if ((Boolean) ((CFunction)inside).exe(zz, inside_context, pt)) {
 	    idir[0] = t;
 	} else {
 	    for (i = 0; i < 4; i++)
@@ -220,7 +216,7 @@ try {
 	    found = true;
 	    odir[0] = t;
 	}
-    } while (ABS(opt.x - pt.x) > .5 || ABS(opt.y - pt.y) > .5);
+    } while (Math.abs(opt.x - pt.x) > .5 || Math.abs(opt.y - pt.y) > .5);
     if (found)
 	for (i = 0; i < 4; i++)
 	    sp.get__(i).___(best.get__(i));
@@ -246,12 +242,12 @@ LEAVING("q4t1ywnk3wm1vyh5seoj7xye","bezier_clip");
 // static void shape_clip0(inside_t * inside_context, node_t * n, pointf curve[4], 	    boolean left_inside) 
 @Unused
 @Original(version="2.38.0", path="lib/common/splines.c", name="shape_clip0", key="1fjkj1ydhtlf13pqj5r041orq", definition="static void shape_clip0(inside_t * inside_context, node_t * n, pointf curve[4], 	    boolean left_inside)")
-public static void shape_clip0(__ptr__ inside_context, ST_Agnode_s n, CArray<ST_pointf> curve, boolean left_inside) {
+public static void shape_clip0(Globals zz, __ptr__ inside_context, ST_Agnode_s n, CArray<ST_pointf> curve, boolean left_inside) {
 ENTERING("1fjkj1ydhtlf13pqj5r041orq","shape_clip0");
 try {
     int i;
     double save_real_size;
-    final CArray<ST_pointf> c = CArray.<ST_pointf>ALLOC__(4, ST_pointf.class);
+    final CArray<ST_pointf> c = CArray.<ST_pointf>ALLOC__(4, ZType.ST_pointf);
     
     save_real_size = ND_rw(n);
     for (i = 0; i < 4; i++) {
@@ -259,7 +255,7 @@ try {
 	c.get__(i).y = curve.get__(i).y - ND_coord(n).y;
     }
     
-    bezier_clip(inside_context, ND_shape(n).fns.insidefn, c,
+    bezier_clip(zz, inside_context, ND_shape(n).fns.insidefn, c,
 		left_inside);
     
     for (i = 0; i < 4; i++) {
@@ -288,9 +284,9 @@ try {
 	e = ED_to_orig(e);
     if (ED_spl(e) == null)
 	ED_spl(e, new ST_splines());
-    ED_spl(e).list = CArray.<ST_bezier> REALLOC__(ED_spl(e).size + 1, ED_spl(e).list, ST_bezier.class);
+    ED_spl(e).list = CArray.<ST_bezier> REALLOC__(ED_spl(e).size + 1, ED_spl(e).list, ZType.ST_bezier);
     rv = ED_spl(e).list.get__(ED_spl(e).size++);
-    rv.list = CArray.<ST_pointf>ALLOC__(sz, ST_pointf.class);
+    rv.list = CArray.<ST_pointf>ALLOC__(sz, ZType.ST_pointf);
     rv.size = sz;
     rv.sflag = 0;
     rv.eflag = 0;
@@ -317,7 +313,7 @@ LEAVING("bdirexg1qdtophlh0ofjvsmj7","new_spline");
 // void clip_and_install(edge_t * fe, node_t * hn, pointf * ps, int pn, 		 splineInfo * info) 
 @Unused
 @Original(version="2.38.0", path="lib/common/splines.c", name="clip_and_install", key="duednxyuvf6xrff752uuv620f", definition="void clip_and_install(edge_t * fe, node_t * hn, pointf * ps, int pn, 		 splineInfo * info)")
-public static void clip_and_install(ST_Agedge_s fe, ST_Agnode_s hn, CArray<ST_pointf> ps, int pn, ST_splineInfo info) {
+public static void clip_and_install(Globals zz, ST_Agedge_s fe, ST_Agnode_s hn, CArray<ST_pointf> ps, int pn, ST_splineInfo info) {
 ENTERING("duednxyuvf6xrff752uuv620f","clip_and_install");
 try {
     final ST_pointf p2 = new ST_pointf();
@@ -339,13 +335,13 @@ try {
     for (orig = fe; ED_edge_type(orig) != NORMAL; orig = ED_to_orig(orig));
 
     /* may be a reversed flat edge */
-    if (N(info.ignoreSwap) && (ND_rank(tn) == ND_rank(hn)) && (ND_order(tn) > ND_order(hn))) {
+    if (!info.ignoreSwap && (ND_rank(tn) == ND_rank(hn)) && (ND_order(tn) > ND_order(hn))) {
 	ST_Agnode_s tmp;
 	tmp = hn;
 	hn = tn;
 	tn = tmp;
     }
-    if (EQ(tn, agtail(orig))) {
+    if (tn == agtail(orig)) {
 	clipTail = ED_tail_port(orig).clip;
 	clipHead = ED_head_port(orig).clip;
 	tbox = ED_tail_port(orig).bp;
@@ -365,10 +361,10 @@ try {
 	for (start[0] = 0; start[0] < pn - 4; start[0] += 3) {
 	    p2.x = ps.get__(start[0] + 3).x - ND_coord(tn).x;
 	    p2.y = ps.get__(start[0] + 3).y - ND_coord(tn).y;
-	    if (((Boolean)ND_shape(tn).fns.insidefn.exe(inside_context, p2)) == false)
+	    if (((Boolean)ND_shape(tn).fns.insidefn.exe(zz, inside_context, p2)) == false)
 		break;
 	}
-	shape_clip0(inside_context, tn, ps.plus_(start[0]), true);
+	shape_clip0(zz, inside_context, tn, ps.plus_(start[0]), true);
     } else
 	start[0] = 0;
     if(clipHead && ND_shape(hn)!=null && ND_shape(hn).fns.insidefn!=null) {
@@ -377,22 +373,22 @@ try {
 	for (end[0] = pn - 4; end[0] > 0; end[0] -= 3) {
 	    p2.x = ps.get__(end[0]).x - ND_coord(hn).x;
 	    p2.y = ps.get__(end[0]).y - ND_coord(hn).y;
-	    if (((Boolean)ND_shape(hn).fns.insidefn.exe(inside_context, p2)) == false)
+	    if (((Boolean)ND_shape(hn).fns.insidefn.exe(zz, inside_context, p2)) == false)
 		break;
 	}
-	shape_clip0(inside_context, hn, ps.plus_(end[0]), false);
+	shape_clip0(zz, inside_context, hn, ps.plus_(end[0]), false);
     } else
 	end[0] = pn - 4;
     for (; start[0] < pn - 4; start[0] += 3) 
-	if (N(APPROXEQPT(ps.get__(start[0]), ps.get__(start[0] + 3), MILLIPOINT)))
+	if (!APPROXEQPT(ps.get__(start[0]), ps.get__(start[0] + 3), MILLIPOINT))
 	    break;
     for (; end[0] > 0; end[0] -= 3)
-	if (N(APPROXEQPT(ps.get__(end[0]), ps.get__(end[0] + 3), MILLIPOINT)))
+	if (!APPROXEQPT(ps.get__(end[0]), ps.get__(end[0] + 3), MILLIPOINT))
 	    break;
-   arrow_clip(fe, hn, ps, start, end, newspl, info);
+   arrow_clip(zz, fe, hn, ps, start, end, newspl, info);
 
     for (i = start[0]; i < end[0] + 4; ) {
-	final CArray<ST_pointf> cp = CArray.<ST_pointf>ALLOC__(4, ST_pointf.class);
+	final CArray<ST_pointf> cp = CArray.<ST_pointf>ALLOC__(4, ZType.ST_pointf);
 //	if (UnsupportedStarStruct.SPY_ME!=null)
 //		System.err.println("TOTO 41 =" + UnsupportedStarStruct.SPY_ME + " " +ps.get__(i).UID);
 	newspl.list.get__(i - start[0]).___(ps.get__(i));
@@ -518,7 +514,7 @@ LEAVING("egq4f4tmy1dhyj6jpj92r7xhu","add_box");
 @Reviewed(when = "02/12/2020")
 @Comment(comment = "Side choice?")
 @Original(version="2.38.0", path="lib/common/splines.c", name="beginpath", key="7pc43ifcw5g56449d101qf590", definition="void beginpath(path * P, edge_t * e, int et, pathend_t * endp, boolean merge)")
-public static void beginpath(ST_path P, ST_Agedge_s e, int et, final ST_pathend_t endp, boolean merge) {
+public static void beginpath(Globals zz, ST_path P, ST_Agedge_s e, int et, final ST_pathend_t endp, boolean merge) {
 ENTERING("7pc43ifcw5g56449d101qf590","beginpath");
 try {
     int side, mask;
@@ -584,7 +580,7 @@ UNSUPPORTED("4v7mmisc358r5tpq14qp4dx0f"); // 	    endp->boxn = 2;
 	}
 	else if ((side & BOTTOM)!=0) {
 	    endp.sidemask = BOTTOM;
-	    b.UR.y = MAX(b.UR.y,P.start.p.y);
+	    b.UR.y = Math.max(b.UR.y,P.start.p.y);
 	    endp.boxes[0].___(b);
 	    endp.boxn[0] = 1;
 	    P.start.p.y -= 1;
@@ -608,7 +604,7 @@ UNSUPPORTED("4v7mmisc358r5tpq14qp4dx0f"); // 	    endp->boxn = 2;
 	    P.start.p.x += 1;
 	}
 	for (orig = e; ED_edge_type(orig) != 0; orig = ED_to_orig(orig));
-	if (EQ(n, agtail(orig)))
+	if (n == agtail(orig))
 	    ED_tail_port(orig).clip = false;
 	else
 UNSUPPORTED("2tw6ymudedo6qij3ux424ydsi"); // 	    ED_head_port(orig).clip = 0;
@@ -684,7 +680,7 @@ UNSUPPORTED("a7fgam0j0jm7bar0mblsv3no4"); // 	return;
     if (et == REGULAREDGE) side = BOTTOM;
     else side = endp.sidemask;  /* for flat edges */
     if (pboxfn!=null
-	&& (mask = (Integer) pboxfn.exe(n, ED_tail_port(e), side, endp.boxes[0], endp.boxn))!=0)
+	&& (mask = (Integer) pboxfn.exe(zz, n, ED_tail_port(e), side, endp.boxes[0], endp.boxn))!=0)
 	endp.sidemask = mask;
     else {
     endp.boxes[0].___(endp.nb);
@@ -731,7 +727,7 @@ private static double HT2(ST_Agnode_s n) {
 @Unused
 @Reviewed(when = "02/12/2020")
 @Original(version="2.38.0", path="lib/common/splines.c", name="endpath", key="79dr5om55xs3n5lgai1sf58vu", definition="void endpath(path * P, edge_t * e, int et, pathend_t * endp, boolean merge)")
-public static void endpath(ST_path P, ST_Agedge_s e, int et, final ST_pathend_t endp, boolean merge) {
+public static void endpath(Globals zz, ST_path P, ST_Agedge_s e, int et, final ST_pathend_t endp, boolean merge) {
 ENTERING("79dr5om55xs3n5lgai1sf58vu","endpath");
 try {
     int side, mask;
@@ -765,7 +761,7 @@ UNSUPPORTED("2w0c22i5xgcch77xd9jg104nw"); // 	P->end.constrained = NOT(0);
 	final ST_boxf b0 = new ST_boxf(), b = endp.nb.copy();
 	if ((side & TOP)!=0) {
 	    endp.sidemask = TOP;
-	    b.LL.y = MIN(b.LL.y,P.end.p.y);
+	    b.LL.y = Math.min(b.LL.y,P.end.p.y);
 	    endp.boxes[0].___(b);
 	    endp.boxn[0] = 1;
 	    P.end.p.y += 1;
@@ -820,7 +816,7 @@ UNSUPPORTED("5j92wv3nt0b7hnlf3ktengoom"); // 	    P->end.p.x -= 1;
 	    P.end.p.x += 1;
 	}
 	for (orig = e; ED_edge_type(orig) != NORMAL; orig = ED_to_orig(orig));
-	if (EQ(n, aghead(orig)))
+	if (n == aghead(orig))
 	    ED_head_port(orig).clip = false;
 	else
 UNSUPPORTED("dk49xvmby8949ngdmft4sgrox"); // 	    ED_tail_port(orig).clip = 0;
@@ -897,7 +893,7 @@ UNSUPPORTED("a7fgam0j0jm7bar0mblsv3no4"); // 	return;
     if (et == REGULAREDGE) side = TOP;
     else side = endp.sidemask;  /* for flat edges */
     if (pboxfn!=null
-	&& (mask = (Integer) pboxfn.exe(n, ED_head_port(e), side, endp.boxes[0], endp.boxn))!=0)
+	&& (mask = (Integer) pboxfn.exe(zz, n, ED_head_port(e), side, endp.boxes[0], endp.boxn))!=0)
 	endp.sidemask = mask;
     else {
     	endp.boxes[0].___(endp.nb);
@@ -1167,7 +1163,7 @@ throw new UnsupportedOperationException();
 // static void selfRight (edge_t* edges[], int ind, int cnt, double stepx, double sizey,            splineInfo* sinfo)  
 @Unused
 @Original(version="2.38.0", path="lib/common/splines.c", name="selfRight", key="3sr8gvj4141qql0v12lb89cyt", definition="static void selfRight (edge_t* edges[], int ind, int cnt, double stepx, double sizey,            splineInfo* sinfo)")
-public static void selfRight(CArrayOfStar<ST_Agedge_s> edges, int ind, int cnt, double stepx, double sizey, ST_splineInfo sinfo) {
+public static void selfRight(Globals zz, CArrayOfStar<ST_Agedge_s> edges, int ind, int cnt, double stepx, double sizey, ST_splineInfo sinfo) {
 ENTERING("3sr8gvj4141qql0v12lb89cyt","selfRight");
 try {
     int i, sgn, point_pair;
@@ -1175,12 +1171,12 @@ try {
     final ST_pointf tp = new ST_pointf(), hp = new ST_pointf(), np = new ST_pointf();
     ST_Agnode_s n;
     ST_Agedge_s e;
-    final CArray<ST_pointf> points = CArray.<ST_pointf>ALLOC__(1000, ST_pointf.class);
+    final CArray<ST_pointf> points = CArray.<ST_pointf>ALLOC__(1000, ZType.ST_pointf);
     int pointn;
     e = edges.get_(ind);
     n = agtail(e);
     stepy = (sizey / 2.) / cnt;
-    stepy = MAX(stepy, 2.);
+    stepy = Math.max(stepy, 2.);
     pointn = 0;
     np.___(ND_coord(n));
     tp.___(ED_tail_port(e).p);
@@ -1204,8 +1200,8 @@ try {
       default:
 		break;
     }
-    tx = MIN(dx, 3*(np.x + dx - tp.x));
-    hx = MIN(dx, 3*(np.x + dx - hp.x));
+    tx = Math.min(dx, 3*(np.x + dx - tp.x));
+    hx = Math.min(dx, 3*(np.x + dx - hp.x));
     for (i = 0; i < cnt; i++) {
         e = edges.get_(ind++);
         dx += stepx; tx += stepx; hx += stepx; dy += sgn*stepy;
@@ -1227,11 +1223,11 @@ try {
 	    }
 	    ED_label(e).pos.x = ND_coord(n).x + dx + width / 2.0;
 	    ED_label(e).pos.y = ND_coord(n).y;
-	    ED_label(e).set= NOTI(false);
+	    ED_label(e).set= false ? 0 : 1;
 	    if (width > stepx)
 		dx += width - stepx;
         }
-	clip_and_install(e, aghead(e), points, pointn, sinfo);
+	clip_and_install(zz, e, aghead(e), points, pointn, sinfo);
     }
     return;
 } finally {
@@ -1332,12 +1328,12 @@ try {
     int sw=0;
     double label_width;
     ST_textlabel_t l = ED_label(e);
-    if ((N(ED_tail_port(e).defined) && N(ED_head_port(e).defined)) ||
+    if ((!ED_tail_port(e).defined && !ED_head_port(e).defined) ||
         (
-		N(ED_tail_port(e).side & (1<<3)) && 
-         N(ED_head_port(e).side & (1<<3)) &&
+		(ED_tail_port(e).side & (1<<3)) == 0 && 
+         (ED_head_port(e).side & (1<<3)) == 0 &&
           ((ED_tail_port(e).side != ED_head_port(e).side) || 
-          (N(ED_tail_port(e).side & ((1<<2)|(1<<0)))))
+          ((ED_tail_port(e).side & ((1<<2)|(1<<0))) == 0))
 		  )) {
 	sw = 18;
 	if (l!=null) {
@@ -1359,7 +1355,7 @@ LEAVING("678whq05s481ertx02jloteu3","selfRightSpace");
 // void makeSelfEdge(path * P, edge_t * edges[], int ind, int cnt, double sizex, 	     double sizey, splineInfo * sinfo) 
 @Unused
 @Original(version="2.38.0", path="lib/common/splines.c", name="makeSelfEdge", key="bt3fwgprixbc5rceeewozdqr9", definition="void makeSelfEdge(path * P, edge_t * edges[], int ind, int cnt, double sizex, 	     double sizey, splineInfo * sinfo)")
-public static void makeSelfEdge(ST_path P, CArrayOfStar<ST_Agedge_s> edges, int ind, int cnt, double sizex, double sizey, ST_splineInfo sinfo) {
+public static void makeSelfEdge(Globals zz, ST_path P, CArrayOfStar<ST_Agedge_s> edges, int ind, int cnt, double sizex, double sizey, ST_splineInfo sinfo) {
 ENTERING("bt3fwgprixbc5rceeewozdqr9","makeSelfEdge");
 try {
     ST_Agedge_s e;
@@ -1368,13 +1364,13 @@ try {
      * self edge with all ports inside, on the right, or at most 1 on top 
      * and at most 1 on bottom 
      */
-    if ((N(ED_tail_port(e).defined) && N(ED_head_port(e).defined)) ||
+    if ((!ED_tail_port(e).defined && !ED_head_port(e).defined) ||
         (
-		N(ED_tail_port(e).side & (1<<3)) && 
-         N(ED_head_port(e).side & (1<<3)) &&
+		(ED_tail_port(e).side & (1<<3)) == 0 && 
+         (ED_head_port(e).side & (1<<3)) == 0 &&
           ((ED_tail_port(e).side != ED_head_port(e).side) || 
-          (N(ED_tail_port(e).side & ((1<<2)|(1<<0))))))) {
-	selfRight(edges, ind, cnt, sizex, sizey, sinfo);
+          ((ED_tail_port(e).side & ((1<<2)|(1<<0))) == 0)))) {
+	selfRight(zz, edges, ind, cnt, sizex, sizey, sinfo);
     }
     /* self edge with port on left side */
     else if ((ED_tail_port(e).side & (1<<3))!=0 || (ED_head_port(e).side & (1<<3))!=0) {
@@ -1481,7 +1477,7 @@ ENTERING("2tbz9tbkzx8os72qiyhgnby67","getsplinepoints");
 try {
     ST_Agedge_s le;
     ST_splines sp;
-    for (le = e; N(sp = ED_spl(le)) && ED_edge_type(le) != 0;
+    for (le = e; (sp = ED_spl(le)) == null && ED_edge_type(le) != 0;
 	 le = ED_to_orig(le));
     if (sp == null) 
 UNSUPPORTED("8oq6gemxrb07hmmw0gtux7os5"); // 	agerr (AGERR, "getsplinepoints: no spline points available for edge (%s,%s)\n",

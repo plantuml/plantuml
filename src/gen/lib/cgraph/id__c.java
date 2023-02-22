@@ -2,12 +2,12 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
@@ -53,10 +53,6 @@ import static gen.lib.cgraph.refstr__c.agstrdup;
 import static smetana.core.Macro.AGCLOS_id;
 import static smetana.core.Macro.AGDISC_id;
 import static smetana.core.Macro.AGEDGE;
-import static smetana.core.Macro.AGID;
-import static smetana.core.Macro.AGTYPE;
-import static smetana.core.Macro.ASINT;
-import static smetana.core.Macro.N;
 import static smetana.core.Macro.UNSUPPORTED;
 import static smetana.core.debug.SmetanaDebug.ENTERING;
 import static smetana.core.debug.SmetanaDebug.LEAVING;
@@ -72,15 +68,15 @@ import h.ST_dt_s;
 import smetana.core.CFunction;
 import smetana.core.CFunctionAbstract;
 import smetana.core.CString;
+import smetana.core.Globals;
 import smetana.core.Memory;
-import smetana.core.Z;
 import smetana.core.__ptr__;
 
 public class id__c {
 
 public static CFunction idopen = new CFunctionAbstract("idopen") {
 	
-	public Object exe(Object... args) {
+	public Object exe(Globals zz, Object... args) {
 		return idopen((ST_Agraph_s)args[0], (ST_Agdisc_s)args[1]);
 	}};
 		
@@ -102,8 +98,8 @@ LEAVING("a0a2zxsu8n019hzm1rwf1jc7f","idopen");
 
 public static CFunction idmap = new CFunctionAbstract("idmap") {
 	
-	public Object exe(Object... args) {
-		return idmap((Object)args[0], (Integer)args[1], (CString)args[2], (int[])args[3], (Boolean)args[4]);
+	public Object exe(Globals zz, Object... args) {
+		return idmap(zz, (Object)args[0], (Integer)args[1], (CString)args[2], (int[])args[3], (Boolean)args[4]);
 	}};
 
 //3 lsl0c1gejls1wv04ga6xy2cf
@@ -111,7 +107,7 @@ public static CFunction idmap = new CFunctionAbstract("idmap") {
 //static int ctr = 1;
 @Unused
 @Original(version="2.38.0", path="lib/cgraph/id.c", name="", key="", definition="")
-public static int idmap(Object state, int objtype, CString str, int id[], boolean createflag) {
+public static int idmap(Globals zz, Object state, int objtype, CString str, int id[], boolean createflag) {
 ENTERING("lsl0c1gejls1wv04ga6xy2cf","idmap");
 try {
     CString s;
@@ -119,15 +115,15 @@ try {
 	ST_Agraph_s g;
 	g = (ST_Agraph_s) state;
 	if (createflag)
-	    s = agstrdup(g, str);
+	    s = agstrdup(zz, g, str);
 	else
-	    s = agstrbind(g, str);
-	id[0] = Memory.identityHashCode(s);
+	    s = agstrbind(zz, g, str);
+	id[0] = Memory.identityHashCode(zz, s);
     } else {
-	id[0] = Z.z().ctr;
-	Z.z().ctr += 2;
+	id[0] = zz.ctr;
+	zz.ctr += 2;
     }
-    return ASINT(N(0));
+    return true ? 1 : 0;
 } finally {
 LEAVING("lsl0c1gejls1wv04ga6xy2cf","idmap");
 }
@@ -137,7 +133,7 @@ LEAVING("lsl0c1gejls1wv04ga6xy2cf","idmap");
 
 public static CFunction idalloc = new CFunctionAbstract("idalloc") {
 	
-	public Object exe(Object... args) {
+	public Object exe(Globals zz, Object... args) {
 		return idalloc(args);
 	}};
 
@@ -161,7 +157,7 @@ throw new UnsupportedOperationException();
 
 public static CFunction idfree = new CFunctionAbstract("idfree") {
 	
-	public Object exe(Object... args) {
+	public Object exe(Globals zz, Object... args) {
 		return idfree(args);
 	}};
 
@@ -184,18 +180,18 @@ throw new UnsupportedOperationException();
 
 public static CFunction idprint = new CFunctionAbstract("idprint") {
 	
-	public Object exe(Object... args) {
-		return idprint((__ptr__)args[0], (Integer)args[1], (Integer)args[2]);
+	public Object exe(Globals zz, Object... args) {
+		return idprint(zz, (__ptr__)args[0], (Integer)args[1], (Integer)args[2]);
 	}};
 
 @Difficult
 @Reviewed(when = "12/11/2020")
 @Original(version="2.38.0", path="lib/cgraph/id.c", name="", key="8143j507ej7uqqjzw5i32xej5", definition="static char *idprint(void *state, int objtype, unsigned long id)")
-public static CString idprint(__ptr__ state, int objtype, int id) {
+public static CString idprint(Globals zz, __ptr__ state, int objtype, int id) {
 ENTERING("8143j507ej7uqqjzw5i32xej5","idprint");
 try {
     if (id % 2 == 0)
-	return (CString) Memory.fromIdentityHashCode(id);
+	return (CString) Memory.fromIdentityHashCode(zz, id);
     else
 	return null;
 } finally {
@@ -207,7 +203,7 @@ LEAVING("8143j507ej7uqqjzw5i32xej5","idprint");
 
 public static CFunction idclose = new CFunctionAbstract("idclose") {
 	
-	public Object exe(Object... args) {
+	public Object exe(Globals zz, Object... args) {
 		return idclose((ST_dt_s)args[0], (__ptr__)args[1], (Integer)args[2]);
 	}};
 
@@ -228,7 +224,7 @@ throw new UnsupportedOperationException();
 
 public static CFunction idregister = new CFunctionAbstract("idregister") {
 	
-	public Object exe(Object... args) {
+	public Object exe(Globals zz, Object... args) {
 		idregister((Object)args[0], (Integer)args[1], (Object)args[2]);
 		return null;
 	}};
@@ -252,12 +248,12 @@ LEAVING("5bjqo0ihl0x25vaspoiehmwzk","idregister");
 // int agmapnametoid(Agraph_t * g, int objtype, char *str, 		  unsigned long *result, int createflag) 
 @Unused
 @Original(version="2.38.0", path="lib/cgraph/id.c", name="agmapnametoid", key="aq30wwcj4ugatsgx0zdtdmeed", definition="int agmapnametoid(Agraph_t * g, int objtype, char *str, 		  unsigned long *result, int createflag)")
-public static int agmapnametoid(ST_Agraph_s g, int objtype, CString str, final int result[], boolean createflag) {
+public static int agmapnametoid(Globals zz, ST_Agraph_s g, int objtype, CString str, final int result[], boolean createflag) {
 ENTERING("aq30wwcj4ugatsgx0zdtdmeed","agmapnametoid");
 try {
     int rv;
     if (str!=null && (str.charAt(0) != '%')) {
-    	rv = (Integer) AGDISC_id(g).map.exe(AGCLOS_id(g), objtype, str, result, createflag);
+    	rv = (Integer) AGDISC_id(g).map.exe(zz, AGCLOS_id(g), objtype, str, result, createflag);
 	if (rv!=0)
 	    return rv;
     }
@@ -270,7 +266,7 @@ try {
 	rv = 0;
     if (createflag) {
 	/* get a new anonymous ID, and store in the internal map */
-	rv = (Integer) AGDISC_id(g).map.exe(AGCLOS_id(g), objtype, null, result,
+	rv = (Integer) AGDISC_id(g).map.exe(zz, AGCLOS_id(g), objtype, null, result,
 				createflag);
 	if (rv!=0 && str!=null)
 	    aginternalmapinsert(g, objtype, str, result[0]);
@@ -295,22 +291,22 @@ LEAVING("aq30wwcj4ugatsgx0zdtdmeed","agmapnametoid");
  */
 @Reviewed(when = "12/11/2020")
 @Original(version="2.38.0", path="lib/cgraph/id.c", name="agnameof", key="cctsybrl54fy799aynfej4iiy", definition="char *agnameof(void *obj)")
-public static CString agnameof(ST_Agobj_s obj) {
+public static CString agnameof(Globals zz, ST_Agobj_s obj) {
 ENTERING("cctsybrl54fy799aynfej4iiy","agnameof");
 try {
     ST_Agraph_s g;
     CString rv;
     /* perform internal lookup first */
     g = agraphof(obj);
-    if ((rv = aginternalmapprint(g, AGTYPE(obj), AGID(obj)))!=null)
+    if ((rv = aginternalmapprint(g, obj.tag.objtype, obj.tag.id))!=null)
 	return rv;
     if (AGDISC_id(g).print!=null) {
 	if ((rv =
-	     (CString) AGDISC_id(g).print.exe(AGCLOS_id(g), AGTYPE(obj), AGID(obj)))!=null)
+	     (CString) AGDISC_id(g).print.exe(zz, AGCLOS_id(g), obj.tag.objtype, obj.tag.id))!=null)
 	    return rv;
     }
-    if (AGTYPE(obj) != AGEDGE) {
-      rv = new CString("%"+AGID(obj));
+    if (obj.tag.objtype != AGEDGE) {
+      rv = new CString("%"+obj.tag.id);
     }
     else
 	rv = null;
@@ -329,10 +325,10 @@ LEAVING("cctsybrl54fy799aynfej4iiy","agnameof");
 
 @Reviewed(when = "12/11/2020")
 @Original(version="2.38.0", path="lib/cgraph/id.c", name="agregister", key="emt63ldde99jnwe2vvjal9kt9", definition="void agregister(Agraph_t * g, int objtype, void *obj)")
-public static void agregister(ST_Agraph_s g, int objtype, Object obj) {
+public static void agregister(Globals zz, ST_Agraph_s g, int objtype, Object obj) {
 ENTERING("emt63ldde99jnwe2vvjal9kt9","agregister");
 try {
-	AGDISC_id(g).idregister.exe(AGCLOS_id(g), objtype, obj);
+	AGDISC_id(g).idregister.exe(zz, AGCLOS_id(g), objtype, obj);
 } finally {
 LEAVING("emt63ldde99jnwe2vvjal9kt9","agregister");
 }

@@ -2,14 +2,14 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2009-2024, Arnaud Roques
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of PlantUML.
  *
@@ -37,8 +37,8 @@ package net.sourceforge.plantuml.klimt.font;
 
 import java.awt.Font;
 
-import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.UmlDiagramType;
+import net.sourceforge.plantuml.skin.UmlDiagramType;
+import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
@@ -46,7 +46,6 @@ interface FontParamConstant {
 	String FAMILY = "SansSerif";
 	String COLOR = "black";
 }
-
 
 public enum FontParam {
 	TIMING(12, Font.PLAIN), //

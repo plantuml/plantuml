@@ -4,12 +4,12 @@
  *
  * (C) Copyright 2009-2021, Arnaud Roques
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  *
  * If you like this project or if you find it useful, you can support us at:
  *
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  *
  * This file is part of PlantUML.
  *
@@ -44,8 +44,8 @@ import net.sourceforge.plantuml.security.authentication.SecurityCredentials;
 import net.sourceforge.plantuml.security.authentication.basicauth.BasicAuthAuthorizeManager;
 
 /**
- * Authorize the principal (from {@link SecurityCredentials} and creates a {@link SecurityAuthentication} object with a
- * bearer token secret.
+ * Authorize the principal (from {@link SecurityCredentials} and creates a
+ * {@link SecurityAuthentication} object with a bearer token secret.
  *
  * @author Aljoscha Rittner
  */
@@ -70,9 +70,7 @@ public class OAuth2ClientAccessAuthorizeManager extends AbstractOAuth2AccessAuth
 		try {
 			SURL tokenService = SURL.create(accessTokenUri);
 
-			StringBuilder content = new StringBuilder()
-					.append("grant_type=")
-					.append(urlEncode(grantType));
+			StringBuilder content = new StringBuilder().append("grant_type=").append(urlEncode(grantType));
 			if (StringUtils.isNotEmpty(requestScope)) {
 				content.append("&scope=").append(urlEncode(requestScope));
 			}
@@ -80,19 +78,18 @@ public class OAuth2ClientAccessAuthorizeManager extends AbstractOAuth2AccessAuth
 			SecurityAuthentication basicAuth;
 			if (identifier != null) {
 				// OAuth2 with extra Endpoint BasicAuth credentials
-				basicAuth = basicAuthManager.create(
-						SecurityCredentials.basicAuth(identifier, secret));
+				basicAuth = basicAuthManager.create(SecurityCredentials.basicAuth(identifier, secret));
 				// We need to add the principal to the form
-				content.append("&client_id").append(urlEncode(credentials.getIdentifier()))
-						.append("&client_secret").append(urlEncode(new String(credentials.getSecret())));
+				content.append("&client_id").append(urlEncode(credentials.getIdentifier())).append("&client_secret")
+						.append(urlEncode(new String(credentials.getSecret())));
 			} else {
 				// OAuth2 with BasicAuth via principal (standard)
-				basicAuth = basicAuthManager.create(
-						SecurityCredentials.basicAuth(credentials.getIdentifier(), credentials.getSecret()));
+				basicAuth = basicAuthManager
+						.create(SecurityCredentials.basicAuth(credentials.getIdentifier(), credentials.getSecret()));
 			}
 
-			return requestAndCreateAuthFromResponse(
-					credentials.getProxy(), grantType, tokenType, tokenService, content.toString(), basicAuth);
+			return requestAndCreateAuthFromResponse(credentials.getProxy(), grantType, tokenType, tokenService,
+					content.toString(), basicAuth);
 		} finally {
 			if (secret != null && secret.length > 0) {
 				Arrays.fill(secret, '*');

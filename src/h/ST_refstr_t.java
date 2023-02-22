@@ -2,12 +2,12 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
@@ -46,22 +46,21 @@
 package h;
 
 import smetana.core.CString;
-import smetana.core.OFFSET;
+import smetana.core.FieldOffset;
 
 final public class ST_refstr_t extends ST_dtlink_s {
 
 	public int refcnt;
 	public CString s;
 
-
 	@Override
-	public Object getTheField(OFFSET offset) {
-		if (offset == null || offset.getSign()==0) {
+	public Object getTheField(FieldOffset offset) {
+		if (offset == null || offset.getSign() == 0)
 			return this;
-		}
-		if (offset.getField().equals("s")) {
+
+		if (offset == FieldOffset.s)
 			return s;
-		}
+
 		throw new UnsupportedOperationException();
 	}
 

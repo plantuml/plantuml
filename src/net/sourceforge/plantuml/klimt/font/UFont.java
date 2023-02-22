@@ -2,14 +2,14 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2009-2024, Arnaud Roques
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of PlantUML.
  *
@@ -41,6 +41,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.font.Roboto;
 
 public class UFont {
 
@@ -50,6 +51,11 @@ public class UFont {
 	private static final Set<String> names = new HashSet<>();
 
 	static {
+//		try {
+//			Roboto.registerFonts();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 		for (String name : GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames())
 			names.add(name.toLowerCase());
 
@@ -68,14 +74,14 @@ public class UFont {
 	}
 
 	private static Font buildFont(String fontFamily, int fontStyle, int fontSize) {
-		if (fontFamily.contains(",")) {
+		if (fontFamily.contains(","))
 			for (String name : fontFamily.split(",")) {
 				name = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(name).trim();
 				if (doesFamilyExists(name))
 					return new Font(fontFamily, fontStyle, fontSize);
 
 			}
-		}
+
 		return new Font(fontFamily, fontStyle, fontSize);
 	}
 
@@ -112,7 +118,7 @@ public class UFont {
 		this.family = family;
 	}
 
-	public final Font getUnderlayingFont() {
+	public final Font getUnderlayingFont(UFontContext context) {
 		return font;
 	}
 

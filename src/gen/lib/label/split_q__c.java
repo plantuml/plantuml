@@ -2,12 +2,12 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
@@ -50,7 +50,6 @@ import static gen.lib.label.node__c.RTreeNewNode;
 import static gen.lib.label.rectangle__c.CombineRect;
 import static gen.lib.label.rectangle__c.NullRect;
 import static gen.lib.label.rectangle__c.RectArea;
-import static smetana.core.Macro.N;
 import static smetana.core.Macro.NODECARD;
 import static smetana.core.Macro.UNSUPPORTED;
 import static smetana.core.debug.SmetanaDebug.ENTERING;
@@ -96,7 +95,7 @@ UNSUPPORTED("2cjo6wz1rmxfm5k7u7rw5dqpj"); // 	    rtp->InSplitCount++;
      MethodZero(rtp);
      area = RectArea((ST_Rect_t)p.cover[0]) + RectArea((ST_Rect_t)p.cover[1]);
      /* record how good the split was for statistics */
-     if (rtp.StatFlag!=0 && N(rtp.Deleting) && area!=0)
+     if (rtp.StatFlag!=0 && rtp.Deleting == 0 && area!=0)
 UNSUPPORTED("z7xk6s3hzi3qcoiq2exj9hpv"); // 	rtp->SplitMeritSum += (float) rtp->split.CoverSplitArea / area;
      /* put branches from buffer into 2 nodes according to chosen partition */
      nn[0] = RTreeNewNode(rtp);
@@ -164,7 +163,7 @@ try {
  	   64 + 1 - rtp.MinFill) {
  	biggestDiff = -1;
  	for (i = 0; i < 64 + 1; i++) {
- 	    if (N(rtp.split.Partitions[0].taken[i])) {
+ 	    if (rtp.split.Partitions[0].taken[i] == 0) {
  		final ST_Rect_t rect = new ST_Rect_t();
  		r = (ST_Rect_t) rtp.split.BranchBuf[i].rect;
  		/* growth0 = RectArea(&CombineRect(r,

@@ -2,12 +2,12 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
@@ -45,7 +45,7 @@
  */
 package h;
 
-import smetana.core.OFFSET;
+import smetana.core.FieldOffset;
 import smetana.core.UnsupportedStarStruct;
 
 final public class ST_HDict_t extends UnsupportedStarStruct {
@@ -53,18 +53,17 @@ final public class ST_HDict_t extends UnsupportedStarStruct {
 	public final ST_dtlink_s link = new ST_dtlink_s(this);
 	public int key;
 	public final ST_Branch_t d = new ST_Branch_t(); /* Should be ST_Leaf_t */
-	
+
 	@Override
-	public Object getTheField(OFFSET offset) {
-		if (offset == null || offset.getSign()==0) {
+	public Object getTheField(FieldOffset offset) {
+		if (offset == null || offset.getSign() == 0)
 			return this;
-		}
-		if (offset.getField().equals("key")) {
+
+		if (offset == FieldOffset.key)
 			return key;
-		}
+
 		throw new UnsupportedOperationException();
 	}
-
 
 }
 

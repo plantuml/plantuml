@@ -2,14 +2,14 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2009-2024, Arnaud Roques
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of PlantUML.
  *
@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.utils.LineLocation;
 import net.sourceforge.plantuml.utils.LineLocationImpl;
 
 public class SyntaxChecker {
+	// ::remove file when CORE
 
 	public static SyntaxResult checkSyntax(List<String> source) {
 		final StringBuilder sb = new StringBuilder();
@@ -99,7 +100,6 @@ public class SyntaxChecker {
 			result.setSystemError(sys);
 			for (ErrorUml er : sys.getErrorsUml())
 				result.addErrorText(er.getError());
-
 		} else {
 			result.setDescription(system.getDescription().getDescription());
 		}
@@ -140,21 +140,19 @@ public class SyntaxChecker {
 
 	private static int lastLineNumber(String source) {
 		int result = 0;
-		for (int i = 0; i < source.length(); i++) {
-			if (source.charAt(i) == '\n') {
+		for (int i = 0; i < source.length(); i++)
+			if (source.charAt(i) == '\n')
 				result++;
-			}
-		}
+
 		return result;
 	}
 
 	private static LineLocation lastLineNumber2(String source) {
 		LineLocationImpl result = new LineLocationImpl("", null).oneLineRead();
-		for (int i = 0; i < source.length(); i++) {
-			if (source.charAt(i) == '\n') {
+		for (int i = 0; i < source.length(); i++)
+			if (source.charAt(i) == '\n')
 				result = result.oneLineRead();
-			}
-		}
+
 		return result;
 	}
 }

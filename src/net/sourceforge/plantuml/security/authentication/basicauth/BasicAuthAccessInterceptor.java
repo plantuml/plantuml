@@ -4,12 +4,12 @@
  *
  * (C) Copyright 2009-2021, Arnaud Roques
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  *
  * If you like this project or if you find it useful, you can support us at:
  *
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  *
  * This file is part of PlantUML.
  *
@@ -38,23 +38,26 @@ package net.sourceforge.plantuml.security.authentication.basicauth;
 import java.net.URLConnection;
 
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.code.Base64Coder;
 import net.sourceforge.plantuml.security.authentication.SecurityAccessInterceptor;
 import net.sourceforge.plantuml.security.authentication.SecurityAuthentication;
+import net.sourceforge.plantuml.utils.Base64Coder;
 
 /**
- * Applies from {@link SecurityAuthentication} data a BasicAuth authentication access header.
+ * Applies from {@link SecurityAuthentication} data a BasicAuth authentication
+ * access header.
  *
  * @author Aljoscha Rittner
  */
 public class BasicAuthAccessInterceptor implements SecurityAccessInterceptor {
 
 	/**
-	 * Applies from {@link SecurityAuthentication} data a BasicAuth authentication access header.
+	 * Applies from {@link SecurityAuthentication} data a BasicAuth authentication
+	 * access header.
 	 * <p>
 	 * Expects "identifier" and "secret" to build a Authorization header.
 	 *
-	 * @param authentication the determined authentication data to authorize for the endpoint access
+	 * @param authentication the determined authentication data to authorize for the
+	 *                       endpoint access
 	 * @param connection     the connection to the endpoint
 	 */
 	@Override

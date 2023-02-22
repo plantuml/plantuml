@@ -2,14 +2,14 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2009-2024, Arnaud Roques
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  *
  * If you like this project or if you find it useful, you can support us at:
  *
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  *
  * This file is part of PlantUML.
  *
@@ -49,7 +49,8 @@ import gen.annotation.HasND_Rank;
 import gen.annotation.Original;
 import gen.annotation.Reviewed;
 
-public class Purify {
+public final class Purify {
+	// ::remove file when CORE
 
 	private final Map<String, Method> methods = new LinkedHashMap<>();
 	private final File out2 = new File("../out-smetana", "smetana.txt");
@@ -100,8 +101,8 @@ public class Purify {
 		final Method m = methods.get(signature);
 		final String line = String.format("(%02d) %-26.26s [%-10.10s] %s", currentLevel, signature, getReviewedWhen(m),
 				methodNameDeclared);
-		if (SmetanaDebug.VERY_VERBOSE)
-			System.err.println(line);
+//		if (SmetanaDebug.VERY_VERBOSE)
+//			System.err.println(line);
 		if (pw == null)
 			return;
 		pw.println(line);
@@ -170,8 +171,8 @@ public class Purify {
 			final String version = getVersion(m);
 			final String path = getPath(m);
 			final String hasND_Rank = hasND_Rank(m) ? "*" : " ";
-			System.err.printf("%-8s %-26s %-12s %s %-30s %s%n", version, signature, reviewedWhen,
-					hasND_Rank, m.getName(), path);
+			System.err.printf("%-8s %-26s %-12s %s %-30s %s%n", version, signature, reviewedWhen, hasND_Rank,
+					m.getName(), path);
 		}
 	}
 

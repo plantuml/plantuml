@@ -38,8 +38,8 @@ class dlx_solver {
 
 	int A0[][] = new int[M2 + 9][M2 + 9], A[][] = new int[M2 + 9][M2 + 9], Rows[] = new int[4 * M4 + 9],
 			Cols[] = new int[M2 * M4 + 9], Row[][] = new int[4 * M4 + 9][M2 + 9];
-	int Col[][] = new int[M2 * M4 + 9][5], Ur[] = new int[M2 * M4 + 9], Uc[] = new int[4 * M4 + 9], V[] = new int[M2
-			* M4 + 9];
+	int Col[][] = new int[M2 * M4 + 9][5], Ur[] = new int[M2 * M4 + 9], Uc[] = new int[4 * M4 + 9],
+			V[] = new int[M2 * M4 + 9];
 	int C[] = new int[M4 + 9], I[] = new int[M4 + 9], T[] = new int[M2 * M4 + 9], P[] = new int[M2 * M4 + 9];
 	int Mr[] = { 0, 1, 63, 1023, 4095, 16383, 46655, 131071, 262143 };
 	int Mc[] = { 0, 1, 63, 511, 1023, 4095, 8191, 16383, 16383 };
@@ -68,8 +68,7 @@ class dlx_solver {
 	static final int END = 30;
 
 	/**
-	 * Solver function. Input parameter: A puzzle to solve Output: The solved
-	 * puzzle
+	 * Solver function. Input parameter: A puzzle to solve Output: The solved puzzle
 	 */
 	String solve(String puzzle) {
 		String result = new String();
@@ -425,8 +424,8 @@ class dlx_solver {
 						result = result.concat("More than " + solutions + " solutions ( bad sudoku!! ), rating "
 								+ (100 * tnodes / solutions) + ", time " + x1 + " ms");
 					else if (solutions == 1)
-						result = result.concat(solutions + " solution, rating " + (100 * tnodes) + ", time " + x1
-								+ " ms");
+						result = result
+								.concat(solutions + " solution, rating " + (100 * tnodes) + ", time " + x1 + " ms");
 					else if (solutions == 0)
 						result = result.concat("0 solutions, no rating possible, time " + x1 + " ms");
 					else

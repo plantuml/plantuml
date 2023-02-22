@@ -2,12 +2,12 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
@@ -64,8 +64,6 @@ import static gen.lib.dotgen.fastgr__c.virtual_edge;
 import static gen.lib.dotgen.fastgr__c.virtual_node;
 import static gen.lib.dotgen.mincross__c.virtual_weight;
 import static gen.lib.dotgen.position__c.ports_eq;
-import static smetana.core.JUtils.EQ;
-import static smetana.core.JUtils.NEQ;
 import static smetana.core.Macro.CLUSTER;
 import static smetana.core.Macro.CLUSTER_EDGE;
 import static smetana.core.Macro.ED_conc_opp_flag;
@@ -85,8 +83,6 @@ import static smetana.core.Macro.GD_nlist;
 import static smetana.core.Macro.GD_nodesep;
 import static smetana.core.Macro.GD_rankleader;
 import static smetana.core.Macro.IGNORED;
-import static smetana.core.Macro.MAX;
-import static smetana.core.Macro.N;
 import static smetana.core.Macro.ND_clust;
 import static smetana.core.Macro.ND_ht;
 import static smetana.core.Macro.ND_label;
@@ -111,7 +107,8 @@ import h.ST_Agnode_s;
 import h.ST_Agraph_s;
 import h.ST_pointf;
 import smetana.core.CArrayOfStar;
-import smetana.core.Z;
+import smetana.core.Globals;
+import smetana.core.ZType;
 
 /* classify edges for mincross/nodepos/splines, using given ranks */
 public class class2__c {
@@ -129,7 +126,7 @@ try {
     v = virtual_node(g);
     ND_label(v, ED_label(orig));
     ND_lw(v, GD_nodesep(agroot(v)));
-    if (N(ED_label_ontop(orig))) {
+    if (!ED_label_ontop(orig)) {
 	if (GD_flip(agroot(g))) {
 	    ND_ht(v, dimen.x);
 	    ND_rw(v, dimen.y);
@@ -263,7 +260,7 @@ try {
 	t = h;
 	h = t0;
     }
-    if (NEQ(ND_clust(t), ND_clust(h))) {
+    if ((ND_clust(t) != ND_clust(h))) {
 	if ((ve = find_fast_edge(t, h))!=null) {
 	    merge_chain(g, e, ve, true);
 	    return;
@@ -309,7 +306,7 @@ public static void merge_chain(ST_Agraph_s g, ST_Agedge_s e, ST_Agedge_s f, bool
 ENTERING("c45973dtaighb3u0auuekcs1y","merge_chain");
 try {
     ST_Agedge_s rep;
-    int lastrank = MAX(ND_rank(agtail(e)), ND_rank(aghead(e)));
+    int lastrank = Math.max(ND_rank(agtail(e)), ND_rank(aghead(e)));
     //assert(ED_to_virt(e) == NULL);
     ED_to_virt(e, f);
     rep = f;
@@ -338,8 +335,8 @@ LEAVING("c45973dtaighb3u0auuekcs1y","merge_chain");
 public static boolean mergeable(ST_Agedge_s e, ST_Agedge_s f) {
 ENTERING("bg5r9wlego0d8pv0hr96zt45c","mergeable");
 try {
-    if (e!=null && f!=null && EQ(agtail(e), agtail(f)) && EQ(aghead(e), aghead(f)) &&
-	EQ(ED_label(e), ED_label(f)) && ports_eq(e, f))
+    if (e!=null && f!=null && agtail(e) == agtail(f) && aghead(e) == aghead(f) &&
+	ED_label(e) == ED_label(f) && ports_eq(e, f))
 	return true;
     return false;
 } finally {
@@ -354,7 +351,7 @@ LEAVING("bg5r9wlego0d8pv0hr96zt45c","mergeable");
 @Reviewed(when = "15/11/2020")
 @Difficult
 @Original(version="2.38.0", path="lib/dotgen/class2.c", name="class2", key="d0bxlkysxucmww7t74u9krrgz", definition="void class2(graph_t * g)")
-public static void class2(ST_Agraph_s g) {
+public static void class2(Globals zz, ST_Agraph_s g) {
 ENTERING("d0bxlkysxucmww7t74u9krrgz","class2");
 try {
     int c;
@@ -365,25 +362,25 @@ try {
     
     GD_n_nodes(g, 0);		/* new */
     
-    mark_clusters(g);
+    mark_clusters(zz, g);
     for (c = 1; c <= GD_n_cluster(g); c++)
-	build_skeleton(g, GD_clust(g).get_(c));
-    for (n = agfstnode(g); n!=null; n = agnxtnode(g, n))
-	for (e = agfstout(g, n); e!=null; e = agnxtout(g, e)) {
+	build_skeleton(zz, g, GD_clust(g).get_(c));
+    for (n = agfstnode(zz, g); n!=null; n = agnxtnode(zz, g, n))
+	for (e = agfstout(zz, g, n); e!=null; e = agnxtout(zz, g, e)) {
 	    if (ND_weight_class(aghead(e)) <= 2)
 		ND_weight_class(aghead(e), ND_weight_class(aghead(e)) + 1);
 	    if (ND_weight_class(agtail(e)) <= 2)
 		ND_weight_class(agtail(e), ND_weight_class(agtail(e)) + 1);
 	}
     
-    for (n = agfstnode(g); n!=null; n = agnxtnode(g, n)) {
+    for (n = agfstnode(zz, g); n!=null; n = agnxtnode(zz, g, n)) {
 
-	if ((ND_clust(n) == null) && (EQ(n, UF_find(n)))) {
+	if ((ND_clust(n) == null) && (n == UF_find(n))) {
 	    fast_node(g, n);
 	    GD_n_nodes(g, GD_n_nodes(g) + 1);
 	}
 	prev = null;
-	for (e = agfstout(g, n); e!=null; e = agnxtout(g, e)) {
+	for (e = agfstout(zz, g, n); e!=null; e = agnxtout(zz, g, e)) {
 		
 	    /* already processed */
 	    if (ED_to_virt(e)!=null) {
@@ -410,7 +407,7 @@ try {
 		continue;
 	    }
 	    /* merge multi-edges */
-	    if (prev!=null && EQ(agtail(e), agtail(prev)) && EQ(aghead(e), aghead(prev))) {
+	    if (prev!=null && agtail(e) == agtail(prev) && aghead(e) == aghead(prev)) {
 		if (ND_rank(agtail(e)) == ND_rank(aghead(e))) {
 		    merge_oneway(e, prev);
 		    other_edge(e);
@@ -418,7 +415,7 @@ try {
 		}
 		if ((ED_label(e) == null) && (ED_label(prev) == null)
 		    && ports_eq(e, prev)) {
-		    if (Z.z().Concentrate)
+		    if (zz.Concentrate)
 			ED_edge_type(e, IGNORED);
 		    else {
 			merge_chain(g, e, ED_to_virt(prev), true);
@@ -430,7 +427,7 @@ try {
 	    }
 	    
 	    /* self edges */
-	    if (EQ(agtail(e), aghead(e))) {
+	    if (agtail(e) == aghead(e)) {
 		other_edge(e);
 		prev = e;
 		continue;
@@ -441,7 +438,7 @@ try {
 	    h = UF_find(aghead(e));
 	    
 	    /* non-leader leaf nodes */
-	    if (NEQ(agtail(e), t) || NEQ(aghead(e), h)) {
+	    if ((agtail(e) != t) || (aghead(e) != h)) {
 		/* FIX need to merge stuff */
 		continue;
 	    }
@@ -463,13 +460,13 @@ try {
 	    else {
 		/*other_edge(e); */
 		/* avoid when opp==e in undirected graph */
-		if ((opp = agfindedge(g, aghead(e), agtail(e)))!=null && NEQ(aghead(opp), aghead(e))) {
+		if ((opp = agfindedge(zz, g, aghead(e), agtail(e)))!=null && (aghead(opp) != aghead(e))) {
 		    /* shadows a forward edge */
 		    if (ED_to_virt(opp) == null)
 			make_chain(g, agtail(opp), aghead(opp), opp);
 		    if ((ED_label(e) == null) && (ED_label(opp) == null)
 			&& ports_eq(e, opp)) {
-			if (Z.z().Concentrate) {
+			if (zz.Concentrate) {
 			    ED_edge_type(e, IGNORED);
 			    ED_conc_opp_flag(opp, true);
 			} else {	/* see above.  this is getting out of hand */
@@ -486,8 +483,8 @@ try {
 
     }
     /* since decompose() is not called on subgraphs */
-    if (NEQ(g, dot_root(g))) {
-    GD_comp(g).list = CArrayOfStar.<ST_Agnode_s>REALLOC(1, GD_comp(g).list, ST_Agnode_s.class);
+    if ((g != dot_root(g))) {
+    GD_comp(g).list = CArrayOfStar.<ST_Agnode_s>REALLOC(1, GD_comp(g).list, ZType.ST_Agnode_s);
 	GD_comp(g).list.set_(0, GD_nlist(g));
     }
 } finally {

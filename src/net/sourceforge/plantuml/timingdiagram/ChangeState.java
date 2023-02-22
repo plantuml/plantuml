@@ -2,14 +2,14 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2009-2024, Arnaud Roques
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of PlantUML.
  *
@@ -38,12 +38,12 @@ package net.sourceforge.plantuml.timingdiagram;
 import java.util.Arrays;
 import java.util.List;
 
-import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.graphic.SymbolContext;
-import net.sourceforge.plantuml.graphic.color.Colors;
+import net.sourceforge.plantuml.klimt.Fashion;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.color.ColorType;
+import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 
@@ -102,9 +102,8 @@ public class ChangeState implements Comparable<ChangeState> {
 		return style.getStroke();
 	}
 
-	public SymbolContext getContext(ISkinParam skinParam, Style style) {
-		return new SymbolContext(getBackColor(skinParam, style), getLineColor(skinParam, style))
-				.withStroke(getStroke(style));
+	public Fashion getContext(ISkinParam skinParam, Style style) {
+		return new Fashion(getBackColor(skinParam, style), getLineColor(skinParam, style)).withStroke(getStroke(style));
 	}
 
 	public final boolean isBlank() {

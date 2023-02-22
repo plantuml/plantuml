@@ -2,12 +2,12 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
@@ -49,7 +49,6 @@ import static smetana.core.Macro.DT_FLATTEN;
 import static smetana.core.Macro.DT_OBAG;
 import static smetana.core.Macro.DT_OSET;
 import static smetana.core.Macro.DT_SET;
-import static smetana.core.Macro.N;
 import static smetana.core.Macro.UNSUPPORTED;
 import static smetana.core.debug.SmetanaDebug.ENTERING;
 import static smetana.core.debug.SmetanaDebug.LEAVING;
@@ -80,8 +79,8 @@ try {
 	
 	
 	type = dt.data.type&DT_FLATTEN;
-	if(N(list)) /* restoring a flattened dictionary */
-	{	if(N(type))
+	if((list) == null) /* restoring a flattened dictionary */
+	{	if(type == 0)
 			return -1;
 		list = dt.data.here;
 	}
@@ -119,7 +118,7 @@ UNSUPPORTED("6eq5kf0bj692bokt0bixy1ixh"); // 		}
 {UNSUPPORTED("79wu0m7edfdq02msgoqkzb32"); // 		{	dt->data->here = ((Dtlink_t*)0);
 UNSUPPORTED("c8q10nh3f6o4rjxtacmbgjxqj"); // 			dt->data->hh._head = list;
 		}
-		if(N(type))
+		if(type == 0)
 			dt.data.size = -1;
 	}
 	

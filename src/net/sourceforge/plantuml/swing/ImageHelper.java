@@ -2,14 +2,14 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2009-2024, Arnaud Roques
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  *
  * This file is part of PlantUML.
  *
@@ -43,24 +43,25 @@ import java.awt.Transparency;
 import java.awt.image.BufferedImage;
 
 /**
- * A collection of methods to help with processing images. A majority of this code was originally found online.
+ * A collection of methods to help with processing images. A majority of this
+ * code was originally found online.
  */
 public class ImageHelper {
 	/**
 	 * Returns a scaled instance of a {@code BufferedImage}.
 	 * 
-	 * Modified from: https://today.java.net/pub/a/today/2007/04/03/perils-of-image-getscaledinstance.html
+	 * Modified from:
+	 * https://today.java.net/pub/a/today/2007/04/03/perils-of-image-getscaledinstance.html
 	 * 
-	 * @param img
-	 *            the original image to be scaled
-	 * @param targetDim
-	 *            the desired dimensions of the scaled instance, in pixels
-	 * @param hints
-	 *            RenderingHints used when scaling the image
-	 * @param higherQuality
-	 *            if true, this method will use a multi-step scaling technique that provides higher quality than the
-	 *            usual one-step technique (only useful in downscaling cases, targetDim is smaller than the original
-	 *            dimensions, and generally only when the {@code BILINEAR} hint is specified)
+	 * @param img           the original image to be scaled
+	 * @param targetDim     the desired dimensions of the scaled instance, in pixels
+	 * @param hints         RenderingHints used when scaling the image
+	 * @param higherQuality if true, this method will use a multi-step scaling
+	 *                      technique that provides higher quality than the usual
+	 *                      one-step technique (only useful in downscaling cases,
+	 *                      targetDim is smaller than the original dimensions, and
+	 *                      generally only when the {@code BILINEAR} hint is
+	 *                      specified)
 	 * @return a scaled version of the original {@code BufferedImage}
 	 */
 	public static BufferedImage getScaledInstance(BufferedImage img, Dimension targetDim, RenderingHints hints,
@@ -115,7 +116,8 @@ public class ImageHelper {
 	/**
 	 * Converts an Image to a BufferedImage.
 	 * 
-	 * From: http://stackoverflow.com/questions/13605248/java-converting-image-to-bufferedimage
+	 * From:
+	 * http://stackoverflow.com/questions/13605248/java-converting-image-to-bufferedimage
 	 */
 	public static BufferedImage toBufferedImage(Image img) {
 		if (img instanceof BufferedImage) {
@@ -134,15 +136,14 @@ public class ImageHelper {
 	}
 
 	/**
-	 * Calculates the dimensions of a scaled image given the dimensions of an image and the area it is to be drawn in
-	 * while preserving aspect ratio.
+	 * Calculates the dimensions of a scaled image given the dimensions of an image
+	 * and the area it is to be drawn in while preserving aspect ratio.
 	 * 
-	 * From: http://stackoverflow.com/questions/10245220/java-image-resize-maintain-aspect-ratio
+	 * From:
+	 * http://stackoverflow.com/questions/10245220/java-image-resize-maintain-aspect-ratio
 	 * 
-	 * @param imgSize
-	 *            dimensions of the original image.
-	 * @param boundary
-	 *            dimensions of the area the image is to be drawn in.
+	 * @param imgSize  dimensions of the original image.
+	 * @param boundary dimensions of the area the image is to be drawn in.
 	 */
 	public static Dimension getScaledDimension(Dimension imgSize, Dimension boundary) {
 		final int originalWidth = imgSize.width;

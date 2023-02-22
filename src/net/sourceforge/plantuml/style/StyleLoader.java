@@ -2,14 +2,14 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2009-2024, Arnaud Roques
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of PlantUML.
  *
@@ -42,8 +42,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import net.sourceforge.plantuml.FileSystem;
-import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.skin.SkinParam;
 import net.sourceforge.plantuml.style.parser.StyleParser;
 import net.sourceforge.plantuml.style.parser.StyleParsingException;
 import net.sourceforge.plantuml.utils.BlocLines;
@@ -78,13 +78,13 @@ public class StyleLoader {
 	}
 
 	public static InputStream getInputStreamForStyle(String filename) throws IOException {
-		//::uncomment when CORE
+		// ::uncomment when CORE
 //		final String res = "/skin/" + filename;
 //		final InputStream is = StyleLoader.class.getResourceAsStream(res);
 //		return is;
-		//::done
+		// ::done
 
-		//::comment when CORE
+		// ::comment when CORE
 		InputStream internalIs = null;
 		SFile localFile = new SFile(filename);
 		Log.info("Trying to load style " + filename);
@@ -107,7 +107,7 @@ public class StyleLoader {
 
 		}
 		return internalIs;
-		//::done
+		// ::done
 	}
 
 	private void loadSkinInternal(final BlocLines lines) throws StyleParsingException {

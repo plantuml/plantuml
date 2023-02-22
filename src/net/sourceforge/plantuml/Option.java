@@ -2,14 +2,14 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2009-2024, Arnaud Roques
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of PlantUML.
  *
@@ -47,7 +47,8 @@ import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.plantuml.api.ApiWarning;
-import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
+import net.sourceforge.plantuml.dot.GraphvizUtils;
+import net.sourceforge.plantuml.file.FileGroup;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.regex.Matcher2;
@@ -57,14 +58,15 @@ import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.stats.StatsUtils;
 import net.sourceforge.plantuml.utils.Log;
 
-
 public class Option {
+	// ::remove file when CORE
 
 	private final List<String> excludes = new ArrayList<>();
 	private final List<String> config = new ArrayList<>();
 	private final Map<String, String> defines = new LinkedHashMap<String, String>();
 
 	private String charset;
+	// ::comment when CORE
 	private boolean computeurl = false;
 	private boolean decodeurl = false;
 	private boolean pipe = false;
@@ -73,6 +75,8 @@ public class Option {
 	private boolean pipeNoStdErr = false;
 	private boolean syntax = false;
 	private boolean checkOnly = false;
+	// ::done
+
 	private OptionPreprocOutputMode preprocessorOutput = null;
 	private boolean failfast = false;
 	private boolean failfast2 = false;
@@ -80,22 +84,25 @@ public class Option {
 
 	private boolean duration = false;
 	private boolean debugsvek = false;
+	private int nbThreads = 0;
+
+	// ::comment when CORE
 	private boolean splash = false;
 	private boolean textProgressBar = false;
-	private int nbThreads = 0;
 	private int ftpPort = -1;
 	private String picowebBindAddress = null;
 	private int picowebPort = -1;
 	private boolean picowebEnableStop = false;
+	private int stdrpt = 0;
 	private boolean hideMetadata = false;
 	private boolean checkMetadata = false;
-	private int stdrpt = 0;
+	private String filename;
+	// ::done
 	private int imageIndex = 0;
 	private String fileDir;
 
 	private File outputDir = null;
 	private File outputFile = null;
-	private String filename;
 
 	private final List<String> result = new ArrayList<>();
 
@@ -403,10 +410,8 @@ public class Option {
 			}
 		}
 	}
-	// ::done
 
 	public Stdrpt getStdrpt() {
-		// ::comment when CORE
 		if (stdrpt == 1)
 			return new StdrptV1();
 
@@ -416,7 +421,6 @@ public class Option {
 		// Legacy case
 		if (isPipe() || isPipeMap() || isSyntax())
 			return new StdrptPipe0();
-		// ::done
 
 		return new StdrptNull();
 	}
@@ -436,6 +440,7 @@ public class Option {
 	public boolean getPicowebEnableStop() {
 		return picowebEnableStop;
 	}
+	// ::done
 
 	private void addInConfig(BufferedReader br) throws IOException {
 		if (br == null)
@@ -522,6 +527,7 @@ public class Option {
 		return Collections.unmodifiableList(excludes);
 	}
 
+	// ::comment when CORE
 	public Defines getDefaultDefines(SFile f) {
 		final Defines result = Defines.createWithFileName(f);
 		for (Map.Entry<String, String> ent : defines.entrySet()) {
@@ -554,6 +560,7 @@ public class Option {
 
 		return result;
 	}
+	// ::done
 
 	public void define(String name, String value) {
 		defines.put(name, value);
@@ -576,6 +583,7 @@ public class Option {
 
 	}
 
+	// ::comment when CORE
 	public final boolean isComputeurl() {
 		return computeurl;
 	}
@@ -605,6 +613,7 @@ public class Option {
 
 		return fileFormatOption;
 	}
+	// ::done
 
 	public final boolean isDuration() {
 		return duration;
@@ -622,6 +631,7 @@ public class Option {
 		return Runtime.getRuntime().availableProcessors();
 	}
 
+	// ::comment when CORE
 	public final boolean isCheckOnly() {
 		return checkOnly;
 	}
@@ -629,6 +639,7 @@ public class Option {
 	public final void setCheckOnly(boolean checkOnly) {
 		this.checkOnly = checkOnly;
 	}
+	// ::done
 
 	public final boolean isFailfastOrFailfast2() {
 		return failfast || failfast2;
@@ -666,6 +677,7 @@ public class Option {
 		return debugsvek;
 	}
 
+	// ::comment when CORE
 	public final boolean isSplash() {
 		return splash;
 	}
@@ -686,16 +698,18 @@ public class Option {
 		return pipeNoStdErr;
 	}
 
-	public final int getImageIndex() {
-		return imageIndex;
+	public final boolean isCheckMetadata() {
+		return checkMetadata;
 	}
 
 	public final void setFilename(String filename) {
 		this.filename = filename;
 	}
 
-	public final boolean isCheckMetadata() {
-		return checkMetadata;
+	// ::done
+
+	public final int getImageIndex() {
+		return imageIndex;
 	}
 
 	public final OptionPreprocOutputMode getPreprocessorOutputMode() {

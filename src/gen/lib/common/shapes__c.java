@@ -2,12 +2,12 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
@@ -56,15 +56,7 @@ import static gen.lib.common.utils__c.late_string;
 import static gen.lib.common.utils__c.mapbool;
 import static gen.lib.common.utils__c.safefile;
 import static h.ST_pointf.pointfof;
-import static smetana.core.JUtils.EQ;
-import static smetana.core.JUtils.NEQ;
-import static smetana.core.JUtils.abs;
-import static smetana.core.JUtils.atan2;
-import static smetana.core.JUtils.cos;
-import static smetana.core.JUtils.sin;
-import static smetana.core.JUtils.sqrt;
 import static smetana.core.JUtils.strcmp;
-import static smetana.core.JUtils.strlen;
 import static smetana.core.Macro.BETWEEN;
 import static smetana.core.Macro.BOTTOM;
 import static smetana.core.Macro.DIST2;
@@ -77,9 +69,7 @@ import static smetana.core.Macro.INSIDE;
 import static smetana.core.Macro.LEFT;
 import static smetana.core.Macro.LT_HTML;
 import static smetana.core.Macro.LT_NONE;
-import static smetana.core.Macro.MAX;
 import static smetana.core.Macro.M_PI;
-import static smetana.core.Macro.N;
 import static smetana.core.Macro.ND_coord;
 import static smetana.core.Macro.ND_has_port;
 import static smetana.core.Macro.ND_height;
@@ -90,7 +80,6 @@ import static smetana.core.Macro.ND_rw;
 import static smetana.core.Macro.ND_shape;
 import static smetana.core.Macro.ND_shape_info;
 import static smetana.core.Macro.ND_width;
-import static smetana.core.Macro.NOT;
 import static smetana.core.Macro.PAD;
 import static smetana.core.Macro.PF2P;
 import static smetana.core.Macro.POINTS;
@@ -102,7 +91,6 @@ import static smetana.core.Macro.SQR;
 import static smetana.core.Macro.SQRT2;
 import static smetana.core.Macro.TOP;
 import static smetana.core.Macro.UNSUPPORTED;
-import static smetana.core.Macro.fabs;
 import static smetana.core.Macro.hypot;
 import static smetana.core.debug.SmetanaDebug.ENTERING;
 import static smetana.core.debug.SmetanaDebug.LEAVING;
@@ -128,8 +116,9 @@ import smetana.core.CArrayOfStar;
 import smetana.core.CFunction;
 import smetana.core.CFunctionAbstract;
 import smetana.core.CString;
+import smetana.core.Globals;
 import smetana.core.Memory;
-import smetana.core.Z;
+import smetana.core.ZType;
 
 public class shapes__c {
 
@@ -171,7 +160,7 @@ try {
 	ST_shape_desc sh = (ST_shape_desc) ND_shape(n);
     CFunction ifn; //void (*ifn) (node_t *);
     
-    if (N(sh))
+    if ((sh) == null)
 	return EN_shape_kind.SH_UNSET;
     ifn = ND_shape(n).fns.initfn;
     if (ifn.getName().equals("poly_init"))
@@ -211,14 +200,14 @@ throw new UnsupportedOperationException();
 
 public static CFunction poly_init = new CFunctionAbstract("poly_init") {
 	
-	public Object exe(Object... args) {
-		poly_init((ST_Agnode_s)args[0]);
+	public Object exe(Globals zz, Object... args) {
+		poly_init(zz, (ST_Agnode_s)args[0]);
 		return null;
 	}};
 @Reviewed(when = "13/11/2020")
 @Difficult
 @Original(version="2.38.0", path="lib/common/shapes.c", name="poly_init", key="a11xv6duihbr3d6gkgo2ye2j5", definition="static void poly_init(node_t * n)")
-public static void poly_init(ST_Agnode_s n) {
+public static void poly_init(Globals zz, ST_Agnode_s n) {
 ENTERING("a11xv6duihbr3d6gkgo2ye2j5","poly_init");
 try {
     final ST_pointf dimen = new ST_pointf(), min_bb = new ST_pointf(), bb = new ST_pointf();
@@ -242,7 +231,7 @@ try {
     orientation = ND_shape(n).polygon.orientation;
     skew = ND_shape(n).polygon.skew;
     distortion = ND_shape(n).polygon.distortion;
-    regular |= mapbool(agget(n, new CString("regular")));
+    regular |= mapbool(agget(zz, n, new CString("regular")));
     
     /* all calculations in floating point POINTS */
 
@@ -266,8 +255,8 @@ UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
     }
     
     
-    peripheries = late_int(n, Z.z().N_peripheries, peripheries, 0);
-    orientation += late_double(n, Z.z().N_orientation, 0.0, -360.0);
+    peripheries = late_int(n, zz.N_peripheries, peripheries, 0);
+    orientation += late_double(n, zz.N_orientation, 0.0, -360.0);
     if (sides == 0) {		/* not for builtins */
 UNSUPPORTED("dd178b113cb8130tl6q70lcp3"); // 	skew = late_double(n, N_skew, 0.0, -100.0);
 UNSUPPORTED("cp83hdn3dp0a7rp9bauc3bgki"); // 	sides = late_int(n, N_sides, 4, 0);
@@ -280,9 +269,9 @@ UNSUPPORTED("abmuc3vqirf3i48480fj0k14g"); // 	distortion = late_double(n, N_dist
     
     
     /* minimal whitespace around label */
-    if (ROUND(abs(dimen.x))!=0 || ROUND(abs(dimen.y))!=0) {
+    if (ROUND(Math.abs(dimen.x))!=0 || ROUND(Math.abs(dimen.y))!=0) {
     	/* padding */
-	if ((p = agget(n, new CString("margin")))!=null) {
+	if ((p = agget(zz, n, new CString("margin")))!=null) {
 UNSUPPORTED("4dlqwm3pklzgz2e777dm56n03"); // 	    marginx = marginy = 0;
 UNSUPPORTED("r186dwelv54pq63p2yo4czig"); // 	    i = sscanf(p, "%lf,%lf", &marginx, &marginy);
 UNSUPPORTED("bjp5a2wbzhormf75ov5fumqto"); // 	    if (marginx < 0)
@@ -331,7 +320,7 @@ UNSUPPORTED("3nl4wsbxuqlad4tcg8vmg99rx"); // 		imagesize.x += 2;	/* some fixed p
 UNSUPPORTED("da00oaavfp6fwqwgshhrodz2r"); // 		imagesize.y += 2;
 UNSUPPORTED("6t98dcecgbvbvtpycwiq2ynnj"); // 	    }
 UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
-    } else if ((sfile = agget(n, new CString("image")))!=null && (sfile.charAt(0) != '\0')) {
+    } else if ((sfile = agget(zz, n, new CString("image")))!=null && (sfile.charAt(0) != '\0')) {
 UNSUPPORTED("76t38i30025xohbzg8w9z4pn9"); // 	imagesize = gvusershape_size(agraphof(n), sfile);
 UNSUPPORTED("b8spvmvtuxcciaejq8j1xhu5s"); // 	if ((imagesize.x == -1) && (imagesize.y == -1)) {
 UNSUPPORTED("cw5grwj6gbj94jcztvnp2ooyj"); // 	    agerr(AGWARN,
@@ -347,8 +336,8 @@ UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
     
     
     /* initialize node bb to labelsize */
-    bb.x = MAX(dimen.x, imagesize.x);
-    bb.y = MAX(dimen.y, imagesize.y);
+    bb.x = Math.max(dimen.x, imagesize.x);
+    bb.y = Math.max(dimen.y, imagesize.y);
     
     
     /* I don't know how to distort or skew ellipses in postscript */
@@ -359,7 +348,7 @@ UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
     
     
     /* extra sizing depends on if label is centered vertically */
-    p = agget(n, new CString("labelloc"));
+    p = agget(zz, n, new CString("labelloc"));
     if (p!=null && (p.charAt(0) == 't' || p.charAt(0) == 'b'))
     ND_label(n).valign = p.charAt(0);
     else
@@ -384,13 +373,13 @@ UNSUPPORTED("1fjwgzo5xkijo98ycmzhal8yv"); // 	bb = pd->size_gen(bb);
 	    /* if there is height to spare
 	     * and the label is centered vertically
 	     * then just pad x in proportion to the spare height */
-	    bb.x *= sqrt(1. / (1. - SQR(bb.y / height)));
+	    bb.x *= Math.sqrt(1. / (1. - SQR(bb.y / height)));
 	} else {
 	    bb.x *= SQRT2;
 	    bb.y = temp;
 	}
 	if (sides > 2) {
-	    temp = cos(M_PI / sides);
+	    temp = Math.cos(M_PI / sides);
 	    bb.x /= temp;
 	    bb.y /= temp;
 	    /* FIXME - for odd-sided polygons, e.g. triangles, there
@@ -405,8 +394,8 @@ UNSUPPORTED("1fjwgzo5xkijo98ycmzhal8yv"); // 	bb = pd->size_gen(bb);
     
     
     /* increase node size to width/height if needed */
-    fxd = late_string(n, Z.z().N_fixed, new CString("false"));
-    if ((fxd.charAt(0) == 's') && (N(strcmp(fxd,new CString("shape"))))) {
+    fxd = late_string(n, zz.N_fixed, new CString("false"));
+    if ((fxd.charAt(0) == 's') && (strcmp(fxd,new CString("shape")) == 0)) {
 	bb.x = width;
 	bb.y = height;
 	poly.option |= FIXEDSHAPE;
@@ -419,8 +408,8 @@ UNSUPPORTED("1fjwgzo5xkijo98ycmzhal8yv"); // 	bb = pd->size_gen(bb);
 	bb.x = width;
 	bb.y = height;
     } else {
-	bb.x = width = MAX(width, bb.x);
-	bb.y = height = MAX(height, bb.y);
+	bb.x = width = Math.max(width, bb.x);
+	bb.y = height = Math.max(height, bb.y);
     }
     
     
@@ -428,18 +417,18 @@ UNSUPPORTED("1fjwgzo5xkijo98ycmzhal8yv"); // 	bb = pd->size_gen(bb);
      * Need this to guarantee final node size is regular.
      */
     if (regular) {
-	width = height = bb.x = bb.y = MAX(bb.x, bb.y);
+	width = height = bb.x = bb.y = Math.max(bb.x, bb.y);
     }
     
     
     /* Compute space available for label.  Provides the justification borders */
-    if (N(mapbool(late_string(n, Z.z().N_nojustify, new CString("false"))))) {
+    if (!mapbool(late_string(n, zz.N_nojustify, new CString("false")))) {
 	if (isBox) {
-	    ND_label(n).space.x = MAX(dimen.x,bb.x) - spacex;
+	    ND_label(n).space.x = Math.max(dimen.x,bb.x) - spacex;
 	}
 	else if (dimen.y < bb.y) {
-	    temp = bb.x * sqrt(1.0 - SQR(dimen.y) / SQR(bb.y));
-	    ND_label(n).space.x = MAX(dimen.x,temp) - spacex;
+	    temp = bb.x * Math.sqrt(1.0 - SQR(dimen.y) / SQR(bb.y));
+	    ND_label(n).space.x = Math.max(dimen.x,temp) - spacex;
         }
 	else
 	    ND_label(n).space.x = dimen.x - spacex;
@@ -461,7 +450,7 @@ UNSUPPORTED("1fjwgzo5xkijo98ycmzhal8yv"); // 	bb = pd->size_gen(bb);
 	outp = 1;
     if (sides < 3) {		/* ellipses */
 	sides = 2;
-	vertices = CArray.<ST_pointf> ALLOC__(outp * sides, ST_pointf.class);
+	vertices = CArray.<ST_pointf> ALLOC__(outp * sides, ZType.ST_pointf);
 	P.x = bb.x / 2.;
 	P.y = bb.y / 2.;
 	vertices.get__(0).x = -P.x;
@@ -496,7 +485,7 @@ UNSUPPORTED("b5z0hw4dacenv33xsaex70g8d"); // 	    bb.y = 2. * P.y;
  *   It needs to find the point where the two lines, parallel to
  *   the current segments, and outside by GAP distance, intersect.   
  */
-	vertices = CArray.<ST_pointf>ALLOC__(outp * sides, ST_pointf.class);
+	vertices = CArray.<ST_pointf>ALLOC__(outp * sides, ZType.ST_pointf);
 	if (ND_shape(n).polygon.vertices!=null) {
 UNSUPPORTED("3ghle84ieryaenfnlbzrfv7bw"); // 	    poly_desc_t* pd = (poly_desc_t*)(((Agnodeinfo_t*)(((Agobj_t*)(n))->data))->shape)->polygon->vertices;
 UNSUPPORTED("227lpcg9dt83m2bm8yshb4djf"); // 	    pd->vertex_gen (vertices, &bb);
@@ -504,12 +493,12 @@ UNSUPPORTED("cc3jvnwvbhjhro4adeet363yd"); // 	    xmax = bb.x/2;
 UNSUPPORTED("39rdmp8vl9muqtv7xs1xwtrwk"); // 	    ymax = bb.y/2;
 	} else {
 	    sectorangle = 2. * M_PI / sides;
-	    sidelength = sin(sectorangle / 2.);
-	    skewdist = hypot(fabs(distortion) + fabs(skew), 1.);
-	    gdistortion = distortion * SQRT2 / cos(sectorangle / 2.);
+	    sidelength = Math.sin(sectorangle / 2.);
+	    skewdist = hypot(Math.abs(distortion) + Math.abs(skew), 1.);
+	    gdistortion = distortion * SQRT2 / Math.cos(sectorangle / 2.);
 	    gskew = skew / 2.;
 	    angle = (sectorangle - M_PI) / 2.;
-	    sinx = sin(angle); cosx = cos(angle);
+	    sinx = Math.sin(angle); cosx = Math.cos(angle);
 	    R.x = .5 * cosx;
 	    R.y = .5 * sinx;
 	    xmax = ymax = 0.;
@@ -521,7 +510,7 @@ UNSUPPORTED("39rdmp8vl9muqtv7xs1xwtrwk"); // 	    ymax = bb.y/2;
 	    	
 	    /*next regular vertex */
 		angle += sectorangle;
-	    sinx = sin(angle); cosx = cos(angle);
+	    sinx = Math.sin(angle); cosx = Math.cos(angle);
 		R.x += sidelength * cosx;
 		R.y += sidelength * sinx;
 	    
@@ -532,8 +521,8 @@ UNSUPPORTED("39rdmp8vl9muqtv7xs1xwtrwk"); // 	    ymax = bb.y/2;
 	    
 	    
 	    /*orient P.x,P.y */
-		alpha = RADIANS(orientation) + atan2(P.y, P.x);
-	    sinx = sin(alpha); cosx = cos(alpha);
+		alpha = RADIANS(orientation) + Math.atan2(P.y, P.x);
+	    sinx = Math.sin(alpha); cosx = Math.cos(alpha);
 		P.x = P.y = hypot(P.x, P.y);
 		P.x *= cosx;
 		P.y *= sinx;
@@ -545,8 +534,8 @@ UNSUPPORTED("39rdmp8vl9muqtv7xs1xwtrwk"); // 	    ymax = bb.y/2;
 	    
 	    
 	    /*find max for bounding box */
-		xmax = MAX(fabs(P.x), xmax);
-		ymax = MAX(fabs(P.y), ymax);
+		xmax = Math.max(Math.abs(P.x), xmax);
+		ymax = Math.max(Math.abs(P.y), ymax);
 		
 		
 	    /* store result in array of points */
@@ -568,8 +557,8 @@ UNSUPPORTED("39rdmp8vl9muqtv7xs1xwtrwk"); // 	    ymax = bb.y/2;
 	/* apply minimum dimensions */
 	xmax *= 2.;
 	ymax *= 2.;
-	bb.x = MAX(width, xmax);
-	bb.y = MAX(height, ymax);
+	bb.x = Math.max(width, xmax);
+	bb.y = Math.max(height, ymax);
 	scalex = bb.x / xmax;
 	scaley = bb.y / ymax;
 	
@@ -641,7 +630,7 @@ LEAVING("a11xv6duihbr3d6gkgo2ye2j5","poly_init");
 
 public static CFunction poly_free = new CFunctionAbstract("poly_free") {
 	
-	public Object exe(Object... args) {
+	public Object exe(Globals zz, Object... args) {
 		return poly_free(args);
 	}};
 //3 63sj12avbdw6e27zf3sedls1r
@@ -667,16 +656,16 @@ throw new UnsupportedOperationException();
 
 public static CFunction poly_inside = new CFunctionAbstract("poly_inside") {
 	
-	public Object exe(Object... args) {
-		return poly_inside((ST_inside_t)args[0], (ST_pointf)args[1]);
+	public Object exe(Globals zz, Object... args) {
+		return poly_inside(zz, (ST_inside_t)args[0], (ST_pointf)args[1]);
 	}};
 @Unused
 @Original(version="2.38.0", path="lib/common/shapes.c", name="poly_inside", key="570t4xovyyfqipaikkf63crmk", definition="tatic boolean poly_inside(inside_t * inside_context, pointf p)")
-public static boolean poly_inside(ST_inside_t inside_context, ST_pointf p) {
+public static boolean poly_inside(Globals zz, ST_inside_t inside_context, ST_pointf p) {
 // WARNING!! STRUCT
-return poly_inside_w_(inside_context, p.copy());
+return poly_inside_w_(zz, inside_context, p.copy());
 }
-private static boolean poly_inside_w_(ST_inside_t inside_context, final ST_pointf p) {
+private static boolean poly_inside_w_(Globals zz, ST_inside_t inside_context, final ST_pointf p) {
 ENTERING("570t4xovyyfqipaikkf63crmk","poly_inside");
 try {
     int i, i1, j;
@@ -691,12 +680,12 @@ try {
 	bbox.___(bp);
 	return INSIDE(P, bbox);
     }
-    if (NEQ(n, Z.z().lastn)) {
+    if ((n != zz.lastn)) {
 	double n_width = 0, n_height = 0;
-	Z.z().poly = (ST_polygon_t) ND_shape_info(n);
-	Z.z().vertex = Z.z().poly.vertices;
-	Z.z().sides = Z.z().poly.sides;
-	if ((Z.z().poly.option & (1 << 11))!=0) {
+	zz.poly = (ST_polygon_t) ND_shape_info(n);
+	zz.vertex = zz.poly.vertices;
+	zz.sides = zz.poly.sides;
+	if ((zz.poly.option & (1 << 11))!=0) {
 UNSUPPORTED("18yw1scg4sol8bhyf1vedj9kn"); // 	   boxf bb = polyBB(poly); 
 UNSUPPORTED("7rz7vxyxao0efec2nvd6g19m1"); // 	    n_width = bb.UR.x - bb.LL.x;
 UNSUPPORTED("4h0k2wroz3xqx1ljokdbaqaad"); // 	    n_height = bb.UR.y - bb.LL.y;
@@ -714,64 +703,64 @@ UNSUPPORTED("6t98dcecgbvbvtpycwiq2ynnj"); // 	    }
 UNSUPPORTED("dapvd4c0ggliaqcj08jvao221"); // 		ysize = ND_lw(n) + ND_rw(n);
 UNSUPPORTED("8t3g4d9acruono62leh5a8hxh"); // 		xsize = ND_ht(n);
 	    } else {
-		Z.z().xsize = ND_lw(n) + ND_rw(n);
-		Z.z().ysize = ND_ht(n);
+		zz.xsize = ND_lw(n) + ND_rw(n);
+		zz.ysize = ND_ht(n);
 	    }
 	    n_width = (ROUND((ND_width(n))*72));
 	    n_height = (ROUND((ND_height(n))*72));
 	}
 	/* scale */
-	if (Z.z().xsize == 0.0)
-	    Z.z().xsize = 1.0;
-	if (Z.z().ysize == 0.0)
-	    Z.z().ysize = 1.0;
-	Z.z().scalex = n_width / Z.z().xsize;
-	Z.z().scaley = n_height / Z.z().ysize;
-	Z.z().box_URx = n_width / 2.0;
-	Z.z().box_URy = n_height / 2.0;
+	if (zz.xsize == 0.0)
+	    zz.xsize = 1.0;
+	if (zz.ysize == 0.0)
+	    zz.ysize = 1.0;
+	zz.scalex = n_width / zz.xsize;
+	zz.scaley = n_height / zz.ysize;
+	zz.box_URx = n_width / 2.0;
+	zz.box_URy = n_height / 2.0;
 	/* index to outer-periphery */
-	Z.z().outp = (Z.z().poly.peripheries - 1) * Z.z().sides;
-	if (Z.z().outp < 0)
-	    Z.z().outp = 0;
-	Z.z().lastn = (ST_Agnode_s) n;
+	zz.outp = (zz.poly.peripheries - 1) * zz.sides;
+	if (zz.outp < 0)
+	    zz.outp = 0;
+	zz.lastn = (ST_Agnode_s) n;
     }
     /* scale */
-    P.x = (P.x * Z.z().scalex);
-    P.y = (P.y * Z.z().scaley);
+    P.x = (P.x * zz.scalex);
+    P.y = (P.y * zz.scaley);
     /* inside bounding box? */
-    if ((fabs(P.x) > Z.z().box_URx) || (fabs(P.y) > Z.z().box_URy))
+    if ((Math.abs(P.x) > zz.box_URx) || (Math.abs(P.y) > zz.box_URy))
 	return false;
     /* ellipses */
-    if (Z.z().sides <= 2)
-	return (hypot(P.x / Z.z().box_URx, P.y / Z.z().box_URy) < 1.);
+    if (zz.sides <= 2)
+	return (hypot(P.x / zz.box_URx, P.y / zz.box_URy) < 1.);
     
     /* use fast test in case we are converging on a segment */
-    i = Z.z().last % Z.z().sides;		/* in case last left over from larger polygon */
-    i1 = (i + 1) % Z.z().sides;
-    Q.___(Z.z().vertex.get__(i + Z.z().outp));
-    R.___(Z.z().vertex.get__(i1 + Z.z().outp));
-    if (N(same_side(P, Z.z().O, Q, R)))   /* false if outside the segment's face */
+    i = zz.last % zz.sides;		/* in case last left over from larger polygon */
+    i1 = (i + 1) % zz.sides;
+    Q.___(zz.vertex.get__(i + zz.outp));
+    R.___(zz.vertex.get__(i1 + zz.outp));
+    if (!same_side(P, zz.O, Q, R))   /* false if outside the segment's face */
 	return false;
     /* else inside the segment face... */
-    if ((s = same_side(P, Q, R, Z.z().O)) && (same_side(P, R, Z.z().O, Q))) /* true if between the segment's sides */
-	return NOT(0);
+    if ((s = same_side(P, Q, R, zz.O)) && (same_side(P, R, zz.O, Q)))
+		return true;
     /* else maybe in another segment */
-    for (j = 1; j < Z.z().sides; j++) { /* iterate over remaining segments */
+    for (j = 1; j < zz.sides; j++) { /* iterate over remaining segments */
 	if (s) { /* clockwise */
 	    i = i1;
-	    i1 = (i + 1) % Z.z().sides;
+	    i1 = (i + 1) % zz.sides;
 	} else { /* counter clockwise */
 	    i1 = i;
-	    i = (i + Z.z().sides - 1) % Z.z().sides;
+	    i = (i + zz.sides - 1) % zz.sides;
 	}
-	if (N(same_side(P, Z.z().O, Z.z().vertex.get__(i + Z.z().outp), Z.z().vertex.get__(i1 + Z.z().outp)))) { /* false if outside any other segment's face */
-	    Z.z().last = i;
+	if (!same_side(P, zz.O, zz.vertex.get__(i + zz.outp), zz.vertex.get__(i1 + zz.outp))) { /* false if outside any other segment's face */
+	    zz.last = i;
 	    return false;
 	}
     }
     /* inside all segments' faces */
-    Z.z().last = i;			/* in case next edge is to same side */
-    return NOT(0);
+    zz.last = i;			/* in case next edge is to same side */
+    return true;
 } finally {
 LEAVING("570t4xovyyfqipaikkf63crmk","poly_inside");
 }
@@ -781,7 +770,7 @@ LEAVING("570t4xovyyfqipaikkf63crmk","poly_inside");
 
 public static CFunction poly_path = new CFunctionAbstract("poly_path") {
 	
-	public Object exe(Object... args) {
+	public Object exe(Globals zz, Object... args) {
 		return poly_path((ST_Agnode_s)args[0], (ST_port)args[1], (Integer)args[2], (Object)args[3], (Object)args[4]);
 	}};
 //3 5mmuhvq40xadw0g9mzlauyztq
@@ -949,7 +938,7 @@ public static boolean compassPort(ST_Agnode_s n, ST_boxf bp, ST_port pp, CString
     boolean constrain = false;
     boolean dyna = false;
     int side = 0;
-    boolean clip = NOT(0);
+    boolean clip = true;
     boolean defined = false;
     double maxv;  /* sufficiently large value outside of range of node */
     if (bp!=null) {
@@ -971,7 +960,7 @@ UNSUPPORTED("922vazdrkwhoxxy4yw5axu6i7"); // 	    b.LL.y = -b.UR.y;
 	}
 	defined = false;
     }
-    maxv = MAX(b.UR.x,b.UR.y);
+    maxv = Math.max(b.UR.x,b.UR.y);
     maxv *= 4.0;
     ctr.___(p);
     if (compass!=null && compass.charAt(0)!=0) {
@@ -987,20 +976,20 @@ UNSUPPORTED("8whok6jl4olniblvibxhrbbre"); //                     p = compassPoin
                 else
 		    p.x = b.UR.x;
 		theta = 0.0;
-		constrain = NOT(0);
-		defined = NOT(0);
+		constrain = true;
+		defined = true;
 		clip = false;
 		side = sides & RIGHT;
 	    }
 	    break;
 	case 's':
 	    p.y = b.LL.y;
-	    constrain = NOT(0);
+	    constrain = true;
 	    clip = false;
 	    switch (compass.charAt(0)) {
 	    case '\0':
 		theta = -M_PI * 0.5;
-		defined = NOT(0);
+		defined = true;
                 if (ictxt!=null)
 UNSUPPORTED("2iohu3tvlkzx2emq04ycxkhta"); //                     p = compassPoint(ictxt, -maxv, ctr.x);
                 else
@@ -1050,11 +1039,11 @@ UNSUPPORTED("dkdxl90pni5x4m9rsi9l4fkml"); //                     p = compassPoin
 	    break;
 	case 'n':
 	    p.y = b.UR.y;
-	    constrain = NOT(0);
+	    constrain = true;
 	    clip = false;
 	    switch (compass.charAt(0)) {
 	    case '\0':
-		defined = NOT(0);
+		defined = true;
 		theta = M_PI * 0.5;
                 if (ictxt!=null)
 UNSUPPORTED("6l60lhko2eg8jry5mf4wpknho"); //                     p = compassPoint(ictxt, maxv, ctr.x);
@@ -1089,7 +1078,7 @@ UNSUPPORTED("9ekmvj13iaml5ndszqyxa8eq"); // 		break;
 	    }
 	    break;
 	case '_':
-	    dyna = NOT(0);
+	    dyna = true;
 	    side = sides;
 	    break;
 	case 'c':
@@ -1111,7 +1100,7 @@ UNSUPPORTED("ai3czg6gaaxspsmndknpyvuiu"); // 	    break;
 	pp.order = 256 / 2;
     else {
 	/* compute angle with 0 at north pole, increasing CCW */
-	double angle = atan2(p.y, p.x) + 1.5 * M_PI;
+	double angle = Math.atan2(p.y, p.x) + 1.5 * M_PI;
 	if (angle >= 2 * M_PI)
 	    angle -= 2 * M_PI;
 	pp.order = (int) ((256 * angle) / (2 * M_PI));
@@ -1139,16 +1128,16 @@ LEAVING("a7copj498to9ai2kxtg728mex","unrecognized");
 
 public static CFunction poly_port = new CFunctionAbstract("poly_port") {
 	
-	public Object exe(Object... args) {
-		return poly_port((ST_Agnode_s)args[0], (CString)args[1], (CString)args[2]);
+	public Object exe(Globals zz, Object... args) {
+		return poly_port(zz, (ST_Agnode_s)args[0], (CString)args[1], (CString)args[2]);
 	}};
 @Reviewed(when = "13/11/2020")
 @Original(version="2.38.0", path="lib/common/shapes.c", name="poly_port", key="5k2b9gfpwm2tj3zmzniuz9azt", definition="static port poly_port(node_t * n, char *portname, char *compass)")
-public static ST_port poly_port(ST_Agnode_s n, CString portname, CString compass) {
+public static ST_port poly_port(Globals zz, ST_Agnode_s n, CString portname, CString compass) {
 // WARNING!! STRUCT
-return poly_port_w_(n, portname, compass).copy();
+return poly_port_w_(zz, n, portname, compass).copy();
 }
-private static ST_port poly_port_w_(ST_Agnode_s n, CString portname, CString compass) {
+private static ST_port poly_port_w_(Globals zz, ST_Agnode_s n, CString portname, CString compass) {
 ENTERING("5k2b9gfpwm2tj3zmzniuz9azt","poly_port");
 try {
     final ST_port rv= new ST_port();
@@ -1156,7 +1145,7 @@ try {
     int sides[] = new int[1];			/* bitmap of which sides the port lies along */
     
     if (portname.charAt(0) == '\0')
-	return Z.z().Center;
+	return zz.Center;
     
     if (compass == null)
 	compass = new CString("_");
@@ -1171,7 +1160,7 @@ UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
 	ST_inside_t ictxtp = null;
 	final ST_inside_t ictxt = new ST_inside_t();
 	
-	if (IS_BOX(n))
+	if (IS_BOX(zz, n))
 	    ictxtp = null;
 	else {
 UNSUPPORTED("17pbmb7rfq2rdapm13ww6pefz"); // 	    ictxt.s.n = n;
@@ -1190,14 +1179,14 @@ LEAVING("5k2b9gfpwm2tj3zmzniuz9azt","poly_port");
 
 
 
-private static boolean IS_BOX(ST_Agnode_s n) {
-	return EQ(ND_shape(n).polygon, Z.z().p_box);
+private static boolean IS_BOX(Globals zz, ST_Agnode_s n) {
+	return ND_shape(n).polygon == zz.p_box;
 }
 
 
 public static CFunction poly_gencode = new CFunctionAbstract("poly_gencode") {
 	
-	public Object exe(Object... args) {
+	public Object exe(Globals zz, Object... args) {
 		return poly_gencode(args);
 	}};
 //3 1tks71z165dy9pzfshnjejpx3
@@ -1447,7 +1436,7 @@ private final static int INPORT = 16;
 // static field_t *parse_reclbl(node_t * n, int LR, int flag, char *text) 
 @Unused
 @Original(version="2.38.0", path="lib/common/shapes.c", name="", key="7zxlp1fmrq3zt4fprrtesdbg3", definition="static field_t *parse_reclbl(node_t * n, int LR, int flag, char *text)")
-public static ST_field_t parse_reclbl(ST_Agnode_s n, boolean LR, boolean flag, CString text) {
+public static ST_field_t parse_reclbl(Globals zz, ST_Agnode_s n, boolean LR, boolean flag, CString text) {
 ENTERING("7zxlp1fmrq3zt4fprrtesdbg3","parse_reclbl");
 try {
     ST_field_t fp;
@@ -1459,7 +1448,7 @@ try {
     ST_textlabel_t lbl = ND_label(n);
     
     fp = null;
-    for (maxf = 1, cnt = 0, sp = Z.z().reclblp; sp.charAt(0)!=0; sp = sp.plus_(1)) {
+    for (maxf = 1, cnt = 0, sp = zz.reclblp; sp.charAt(0)!=0; sp = sp.plus_(1)) {
  	if (sp.charAt(0) == '\\') {
 	    sp = sp.plus_(1);
 	    if (sp.charAt(0)!=0
@@ -1475,32 +1464,32 @@ UNSUPPORTED("6hyelvzskqfqa07xtgjtvg2is"); // 		continue;
  	if (cnt < 0)
  	    break;
     }
-	rv.fld = CArrayOfStar.<ST_field_t>ALLOC(maxf, ST_field_t.class);
+	rv.fld = CArrayOfStar.<ST_field_t>ALLOC(maxf, ZType.ST_field_t);
     rv.LR = LR;
     mode = 0;
     fi = 0;
     hstsp = tsp = text;
-    wflag = NOT(0);
+    wflag = true;
     ishardspace = false;
     while (wflag) {
-	if ((Z.z().reclblp.charAt(0) < ' ') && Z.z().reclblp.charAt(0)!=0) {    /* Ignore non-0 control characters */
-		Z.z().reclblp = Z.z().reclblp.plus_(1);
+	if ((zz.reclblp.charAt(0) < ' ') && zz.reclblp.charAt(0)!=0) {    /* Ignore non-0 control characters */
+		zz.reclblp = zz.reclblp.plus_(1);
 	    continue;
 	}
- 	switch (Z.z().reclblp.charAt(0)) {
+ 	switch (zz.reclblp.charAt(0)) {
  	case '<':
 	    if ((mode & (HASTABLE | HASPORT))!=0)
 UNSUPPORTED("7zw1csy7lc9a9gq1nhizs470m"); // 		return parse_error(rv, tmpport);
 	    if (lbl.html)
 UNSUPPORTED("75bwqdnezjvhazmryfatc4819"); // 		goto dotext;
 	    mode |= (HASPORT | INPORT);
-	    Z.z().reclblp = Z.z().reclblp.plus_(1);
+	    zz.reclblp = zz.reclblp.plus_(1);
 	    hspsp = psp = text;
 	    break;
  	case '>':
 	    if (lbl.html)
 UNSUPPORTED("75bwqdnezjvhazmryfatc4819"); // 		goto dotext;
-	    if (N(mode & INPORT))
+	    if ((mode & INPORT) == 0)
 UNSUPPORTED("7zw1csy7lc9a9gq1nhizs470m"); // 		return parse_error(rv, tmpport);
  // 	    if (psp > text + 1 && psp - 1 != hspsp && *(psp - 1) == ' ')
 	    if (psp.comparePointer(text.plus_(1)) > 0 && psp.plus_(-1).comparePointer(hspsp) != 0 && psp.charAt(-1) == ' ')
@@ -1508,23 +1497,23 @@ UNSUPPORTED("7v2hf4x5nsnlq1l025dplo0vo"); // 		psp--;
 	    psp.setCharAt(0, '\000');
 	    tmpport = text.strdup();
 	    mode &= ~INPORT;
-	    Z.z().reclblp = Z.z().reclblp.plus_(1);
+	    zz.reclblp = zz.reclblp.plus_(1);
 	    break;
  	case '{':
-	    Z.z().reclblp = Z.z().reclblp.plus_(1);
-	    if (mode != 0 || N(Z.z().reclblp.charAt(0)))
+	    zz.reclblp = zz.reclblp.plus_(1);
+	    if (mode != 0 || (int) zz.reclblp.charAt(0) == 0)
 UNSUPPORTED("7zw1csy7lc9a9gq1nhizs470m"); // 		return parse_error(rv, tmpport);
 	    mode = 4;
-	    rv.fld.set_(fi, parse_reclbl(n, NOT(LR), false, text));
-	    if (N(rv.fld.get_(fi++)))
+	    rv.fld.set_(fi, parse_reclbl(zz, n, !LR, false, text));
+	    if ((rv.fld.get_(fi++)) == null)
 UNSUPPORTED("7zw1csy7lc9a9gq1nhizs470m"); // 		return parse_error(rv, tmpport);
 	    break;
  	case '}':
 	case '|':
 	case '\000':
-	    if ((N(Z.z().reclblp.charAt(0)) && !flag) || (mode & INPORT)!=0)
+	    if (((int) zz.reclblp.charAt(0) == 0 && !flag) || (mode & INPORT)!=0)
 UNSUPPORTED("7zw1csy7lc9a9gq1nhizs470m"); // 		return parse_error(rv, tmpport);
-	    if (N(mode & HASTABLE))
+	    if ((mode & HASTABLE) == 0)
 	    {
 	    	fp = new ST_field_t();
 	    	rv.fld.set_(fi++, fp);
@@ -1533,7 +1522,7 @@ UNSUPPORTED("7zw1csy7lc9a9gq1nhizs470m"); // 		return parse_error(rv, tmpport);
 		fp.id = tmpport;
 		tmpport = null;
 	    }
-	    if (N(mode & (HASTEXT | HASTABLE)))
+	    if ((mode & (HASTEXT | HASTABLE)) == 0)
  		{mode |= 1; tsp.setCharAt(0, ' ');tsp=tsp.plus_(1); }
 	    if ((mode & HASTEXT)!=0) {
 		if (tsp.comparePointer(text.plus_(1))  > 0 &&
@@ -1541,21 +1530,21 @@ UNSUPPORTED("7zw1csy7lc9a9gq1nhizs470m"); // 		return parse_error(rv, tmpport);
 		    tsp = tsp.plus_(-1);
 		tsp.setCharAt(0, '\000');
 		fp.lp =
-				make_label(n, text.strdup(),
+				make_label(zz, n, text.strdup(),
 						(lbl.html ? LT_HTML : LT_NONE),
 						lbl.fontsize, lbl.fontname,
 						lbl.fontcolor);
-		fp.LR = NOT(0);
+		fp.LR = true;
 		hstsp = tsp = text;
 	    }
-	    if (Z.z().reclblp.charAt(0)!=0) {
-		if (Z.z().reclblp.charAt(0) == '}') {
-		    Z.z().reclblp = Z.z().reclblp.plus_(1);
+	    if (zz.reclblp.charAt(0)!=0) {
+		if (zz.reclblp.charAt(0) == '}') {
+		    zz.reclblp = zz.reclblp.plus_(1);
 		    rv.n_flds = fi;
 		    return rv;
 		}
 		mode = 0;
-		Z.z().reclblp = Z.z().reclblp.plus_(1);
+		zz.reclblp = zz.reclblp.plus_(1);
 	    } else
 		wflag = false;
 	    break;
@@ -1574,32 +1563,31 @@ UNSUPPORTED("6t98dcecgbvbvtpycwiq2ynnj"); // 	    }
 UNSUPPORTED("dg5yg97t3vto8m73vvwj8jnb2"); // 	    /* falling through ... */
  	default:
 //UNSUPPORTED("2d4vmvpowhgj7h9539m0qrxsy"); // 	  dotext:
-	    if ((mode & HASTABLE)!=0 && Z.z().reclblp.charAt(0) != ' ')
+	    if ((mode & HASTABLE)!=0 && zz.reclblp.charAt(0) != ' ')
 UNSUPPORTED("7zw1csy7lc9a9gq1nhizs470m"); // 		return parse_error(rv, tmpport);
-	    if (N(mode & (INTEXT | INPORT)) && Z.z().reclblp.charAt(0) != ' ')
+	    if ((mode & (INTEXT | INPORT)) == 0 && zz.reclblp.charAt(0) != ' ')
 		mode |= (INTEXT | HASTEXT);
 	    if ((mode & INTEXT)!=0) {
-		if (N
-		    (Z.z().reclblp.charAt(0) == ' ' && !ishardspace && tsp.charAt(-1) == ' '
-		     && N(lbl.html)))
+		if (!(zz.reclblp.charAt(0) == ' ' && !ishardspace && tsp.charAt(-1) == ' '
+		 && !lbl.html))
 		{
-			tsp.setCharAt(0, Z.z().reclblp.charAt(0));
+			tsp.setCharAt(0, zz.reclblp.charAt(0));
 			tsp = tsp.plus_(1);
 		}
 		if (ishardspace)
 UNSUPPORTED("atuokfvkmomvi6gvwvpbxggoz"); // 		    hstsp = tsp - 1;
 	    } else if ((mode & INPORT)!=0) {
-		if (!(Z.z().reclblp.charAt(0) == ' ' && !ishardspace &&
+		if (!(zz.reclblp.charAt(0) == ' ' && !ishardspace &&
 		      (psp == text || psp.charAt(-1) == ' ')))
 		{
-			psp.setCharAt(0, Z.z().reclblp.charAt(0));
+			psp.setCharAt(0, zz.reclblp.charAt(0));
 			psp = psp.plus_(1);
 		}
 		if (ishardspace)
 UNSUPPORTED("5u5h7cb6egued2g1q7w8yhb1n"); // 		    hspsp = psp - 1;
 	    }
-	    Z.z().reclblp = Z.z().reclblp.plus_(1);
-	    while ((Z.z().reclblp.charAt(0) & 128)!=0)
+	    zz.reclblp = zz.reclblp.plus_(1);
+	    while ((zz.reclblp.charAt(0) & 128)!=0)
 UNSUPPORTED("86nc3qdu6nuyt7u67d0kblb9w"); // 		*tsp++ = *reclblp++;
 	    break;
  	}
@@ -1620,11 +1608,11 @@ LEAVING("7zxlp1fmrq3zt4fprrtesdbg3","poly_init");
 @Unused
 @Doc("?")
 @Original(version="2.38.0", path="lib/common/shapes.c", name="size_reclbl", key="dwk0rh74bwfd7mky5hg9t1epj", definition="static pointf size_reclbl(node_t * n, field_t * f)")
-public static ST_pointf size_reclbl(ST_Agnode_s n, ST_field_t f) {
+public static ST_pointf size_reclbl(Globals zz, ST_Agnode_s n, ST_field_t f) {
 	// WARNING!! STRUCT
-	return size_reclbl_(n, f).copy();
+	return size_reclbl_(zz, n, f).copy();
 }
-private static ST_pointf size_reclbl_(ST_Agnode_s n, ST_field_t f) {
+private static ST_pointf size_reclbl_(Globals zz, ST_Agnode_s n, ST_field_t f) {
 	ENTERING("dwk0rh74bwfd7mky5hg9t1epj","size_reclbl_");
 	try {
     int i;
@@ -1637,7 +1625,7 @@ private static ST_pointf size_reclbl_(ST_Agnode_s n, ST_field_t f) {
 	/* minimal whitespace around label */
 	if ((dimen.x > 0.0) || (dimen.y > 0.0)) {
 	    /* padding */
-	    if ((p = agget(n, new CString("margin")))!=null) {
+	    if ((p = agget(zz, n, new CString("margin")))!=null) {
 UNSUPPORTED("bfyy3iw4z9ebf4m89x69tn1eb"); // 		i = sscanf(p, "%lf,%lf", &marginx, &marginy);
 UNSUPPORTED("ebo7omz8ev8wu69ub10b4o890"); // 		if (i > 0) {
 UNSUPPORTED("efcgckeemzkbxh32pc2qcdv0d"); // 		    dimen.x += 2 * (ROUND((marginx)*72));
@@ -1654,13 +1642,13 @@ UNSUPPORTED("b12tl2a8tebl71ewuz3jms9jv"); // 		    {((dimen).x += 4*4); ((dimen)
     } else {
 	d.x = d.y = 0;
 	for (i = 0; i < f.n_flds; i++) {
-	    d0.___(size_reclbl(n, f.fld.get_(i)));
+	    d0.___(size_reclbl(zz, n, f.fld.get_(i)));
 	    if (f.LR) {
 		d.x += d0.x;
-		d.y = MAX(d.y, d0.y);
+		d.y = Math.max(d.y, d0.y);
 	    } else {
 		d.y += d0.y;
-		d.x = MAX(d.x, d0.x);
+		d.x = Math.max(d.x, d0.x);
 	    }
 	}
     }
@@ -1774,8 +1762,8 @@ UNSUPPORTED("rvq6ubzk0rezd88243ailv84"); // 			mask = TOP | BOTTOM | RIGHT | LEF
 
 public static CFunction record_init = new CFunctionAbstract("record_init") {
 	
-	public Object exe(Object... args) {
-		record_init((ST_Agnode_s)args[0]);
+	public Object exe(Globals zz, Object... args) {
+		record_init(zz, (ST_Agnode_s)args[0]);
 		return null;
 	}};
 	
@@ -1783,7 +1771,7 @@ public static CFunction record_init = new CFunctionAbstract("record_init") {
 @Doc("Init 'record' node")
 @Reviewed(when = "02/12/2020")
 @Original(version="2.38.0", path="lib/common/shapes.c", name="record_init", key="h2lcuthzwljbcjwdeidw1jiv", definition="static void record_init(node_t * n)")
-public static void record_init(ST_Agnode_s n) {
+public static void record_init(Globals zz, ST_Agnode_s n) {
 ENTERING("h2lcuthzwljbcjwdeidw1jiv","record_init");
 try {
 	ST_field_t info;
@@ -1794,34 +1782,34 @@ try {
     
 	int sides = BOTTOM | RIGHT | TOP | LEFT;
 	/* Always use rankdir to determine how records are laid out */
-	flip = NOT(GD_realflip(agraphof(n)));
-	Z.z().reclblp = ND_label(n).text;
-    len = strlen(Z.z().reclblp);
+	flip = GD_realflip(agraphof(n)) == 0;
+	zz.reclblp = ND_label(n).text;
+    len = zz.reclblp.length();
     /* For some forgotten reason, an empty label is parsed into a space, so
      * we need at least two bytes in textbuf.
      */
-     len = MAX(len, 1);
+     len = Math.max(len, 1);
      textbuf = CString.gmalloc(len + 1);
-    if (N(info = parse_reclbl(n, flip, NOT(0), textbuf))) {
+    if (((info = parse_reclbl(zz, n, flip, true, textbuf)))==null) {
 UNSUPPORTED("7iezaksu9hyxhmv3r4cp4o529"); // 	agerr(AGERR, "bad label format %s\n", ND_label(n)->text);
 UNSUPPORTED("8f1id7rqm71svssnxbjo0uwcu"); // 	reclblp = "\\N";
 UNSUPPORTED("2wv3zfqhq53941rwk4vu9p9th"); // 	info = parse_reclbl(n, flip, NOT(0), textbuf);
     }
     Memory.free(textbuf);
-    size_reclbl(n, info);
+    size_reclbl(zz, n, info);
     sz.x = POINTS(ND_width(n));;
     sz.y = POINTS(ND_height(n));
-    if (mapbool(late_string(n, Z.z().N_fixed, new CString("false")))) {
+    if (mapbool(late_string(n, zz.N_fixed, new CString("false")))) {
 UNSUPPORTED("8iu51xbtntpdf5sc00g91djym"); // 	if ((sz.x < info->size.x) || (sz.y < info->size.y)) {
 UNSUPPORTED("4vs5u30jzsrn6fpjd327xjf7r"); // /* should check that the record really won't fit, e.g., there may be no text.
 UNSUPPORTED("7k6yytek9nu1ihxix2880667g"); // 			agerr(AGWARN, "node '%s' size may be too small\n", agnameof(n));
 UNSUPPORTED("bnetqzovnscxile7ao44kc0qd"); // */
 UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
     } else {
-	sz.x = MAX(info.size.x, sz.x);
-	sz.y = MAX(info.size.y, sz.y);
+	sz.x = Math.max(info.size.x, sz.x);
+	sz.y = Math.max(info.size.y, sz.y);
     }
-    resize_reclbl(info, sz, mapbool(late_string(n, Z.z().N_nojustify, new CString("false"))));
+    resize_reclbl(info, sz, mapbool(late_string(n, zz.N_nojustify, new CString("false"))));
     ul.___(pointfof(-sz.x / 2., sz.y / 2.));	/* FIXME - is this still true:    suspected to introduce ronding error - see Kluge below */
     pos_reclbl(info, ul, sides);
     ND_width(n, PS2INCH(info.size.x));
@@ -1838,7 +1826,7 @@ LEAVING("h2lcuthzwljbcjwdeidw1jiv","poly_init");
 
 public static CFunction record_free = new CFunctionAbstract("record_free") {
 	
-	public Object exe(Object... args) {
+	public Object exe(Globals zz, Object... args) {
 		return record_free(args);
 	}}; 
 @Unused
@@ -1880,18 +1868,18 @@ public static ST_field_t map_rec_port(ST_field_t f, CString str) {
 
 public static CFunction record_port = new CFunctionAbstract("record_port") {
 	
-	public Object exe(Object... args) {
-		return record_port((ST_Agnode_s)args[0], (CString)args[1], (CString)args[2]);
+	public Object exe(Globals zz, Object... args) {
+		return record_port(zz, (ST_Agnode_s)args[0], (CString)args[1], (CString)args[2]);
 	}};
 @Unused
 @Original(version="2.38.0", path="lib/common/shapes.c", name="record_port", key="chsi0jlfodruvkjj5dlrv5ur3", definition="static port record_port(node_t * n, char *portname, char *compass)")
-public static ST_port record_port(ST_Agnode_s n, CString portname, CString compass) {
+public static ST_port record_port(Globals zz, ST_Agnode_s n, CString portname, CString compass) {
     ST_field_t f;
     ST_field_t subf;
     final ST_port rv = new ST_port();
     int sides;			/* bitmap of which sides the port lies along */
     if (portname.charAt(0) == '\0')
-	return Z.z().Center;
+	return zz.Center;
     sides = BOTTOM | RIGHT | TOP | LEFT;
     if (compass == null)
 	compass = new CString("_");
@@ -1913,7 +1901,7 @@ UNSUPPORTED("cmo03yl2q1wgn0c1r45y1ay5e"); // 		  agnameof(n), portname, compass)
 
 public static CFunction record_inside = new CFunctionAbstract("record_inside") {
 	
-	public Object exe(Object... args) {
+	public Object exe(Globals zz, Object... args) {
 		return record_inside((ST_inside_t)args[0], (ST_pointf)args[1]);
 	}};
 @Unused
@@ -1947,7 +1935,7 @@ LEAVING("1f7b6eq3csywqv96raw75jqxr","record_inside_");
 
 public static CFunction record_path = new CFunctionAbstract("record_path") {
 	
-	public Object exe(Object... args) {
+	public Object exe(Globals zz, Object... args) {
 		return record_path((ST_Agnode_s)args[0], (ST_port)args[1], (Integer)args[2], (ST_boxf)args[3], (int[])args[4]);
 	}};
 @Unused
@@ -1956,12 +1944,12 @@ public static int record_path(ST_Agnode_s n, ST_port prt, int side, ST_boxf rv, 
     int i, ls=0, rs=0;
     final ST_pointf p = new ST_pointf();
     ST_field_t info;
-    if (N(prt.defined))
+    if (!prt.defined)
 	return 0;
     p.___(prt.p);
     info = (ST_field_t) ND_shape_info(n);
     for (i = 0; i < info.n_flds; i++) {
-	if (N(GD_flip(agraphof(n)))) {
+	if (!GD_flip(agraphof(n))) {
 	    ls = (int) info.fld.get_(i).b.LL.x;
 	    rs = (int) info.fld.get_(i).b.UR.x;
 	} else {
@@ -1990,7 +1978,7 @@ UNSUPPORTED("8p9z8b0nypgkzi1b3k7sx0fyz"); // 		rv[0] = flip_rec_boxf(info->fld[i
 
 public static CFunction record_gencode = new CFunctionAbstract("record_gencode") {
 	
-	public Object exe(Object... args) {
+	public Object exe(Globals zz, Object... args) {
 		return record_gencode(args);
 	}};
 @Unused
@@ -2102,19 +2090,19 @@ throw new UnsupportedOperationException();
 
 @Reviewed(when = "12/11/2020")
 @Original(version="2.38.0", path="lib/common/shapes.c", name="", key="bmt148wdf0a7gslm7hmp043jy", definition="shape_desc *bind_shape(char *name, node_t * np)")
-public static ST_shape_desc bind_shape(CString name, ST_Agnode_s np) {
+public static ST_shape_desc bind_shape(Globals zz, CString name, ST_Agnode_s np) {
 ENTERING("bmt148wdf0a7gslm7hmp043jy","bind_shape");
 try {
 	ST_shape_desc rv = null;
     CString str;
     
-    str = safefile(agget(np, new CString("shapefile")));
+    str = safefile(agget(zz, np, new CString("shapefile")));
     /* If shapefile is defined and not epsf, set shape = custom */
     if (str!=null && UNSUPPORTED("!(*(name)==*(\"epsf\")&&!strcmp(name,\"epsf\"))")!=null)
 	name = new CString("custom");
-    if (N(name.charAt(0)=='c' && N(strcmp(name,new CString("custom"))))) {
-	for (ST_shape_desc ptr : Z.z().Shapes) {
-	    if ((N(strcmp(ptr.name,name)))) {
+    if (!(name.charAt(0)=='c' && strcmp(name,new CString("custom")) == 0)) {
+	for (ST_shape_desc ptr : zz.Shapes) {
+	    if ((strcmp(ptr.name,name) == 0)) {
 		rv = ptr;
 		break;
 	    }
@@ -2401,7 +2389,7 @@ UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
 	p.x += pt.x;
 	p.y += pt.y;
 	d = (int) DIST2(p, opt);
-	if (N(rv) || (d < mind)) {
+	if ((rv) == null || (d < mind)) {
 	    mind = d;
 	    rv = side_port[i];
 	}

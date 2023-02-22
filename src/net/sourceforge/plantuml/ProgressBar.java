@@ -2,14 +2,14 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2009-2024, Arnaud Roques
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  *
  * If you like this project or if you find it useful, you can support us at:
  *
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  *
  * This file is part of PlantUML.
  *
@@ -41,6 +41,7 @@ import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
 public class ProgressBar {
+	// :: remove file when CORE
 
 	private static final java.util.logging.Logger logger;
 
@@ -133,8 +134,8 @@ public class ProgressBar {
 		}
 
 		/**
-		 * Override {@code StreamHandler.close} to do a flush but not to close the output stream.
-		 * That is, we do <b>not</b> close {@code System.err}.
+		 * Override {@code StreamHandler.close} to do a flush but not to close the
+		 * output stream. That is, we do <b>not</b> close {@code System.err}.
 		 */
 		@Override
 		public void close() {

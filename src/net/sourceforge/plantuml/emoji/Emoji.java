@@ -2,14 +2,14 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2009-2024, Arnaud Roques
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of PlantUML.
  *
@@ -48,14 +48,14 @@ import java.util.TreeMap;
 
 import net.sourceforge.plantuml.emoji.data.Dummy;
 import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.log.Logme;
-import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 // Emojji from https://twemoji.twitter.com/
 // Shorcut from https://api.github.com/emojis
 
 // ::uncomment when CORE
-//import com.plantuml.wasm.RunInit;
+//import static com.plantuml.api.cheerpj.StaticMemory.cheerpjPath;
 //import java.io.FileInputStream;
 // ::done
 
@@ -64,14 +64,15 @@ public class Emoji {
 
 	static {
 		final InputStream is = Dummy.class.getResourceAsStream("emoji.txt");
-		try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
-			String s = null;
-			while ((s = br.readLine()) != null) {
-				new Emoji(s);
+		if (is != null)
+			try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
+				String s = null;
+				while ((s = br.readLine()) != null)
+					new Emoji(s);
+
+			} catch (IOException e) {
+				Logme.error(e);
 			}
-		} catch (IOException e) {
-			Logme.error(e);
-		}
 	}
 
 	public static Map<String, Emoji> getAll() {
@@ -117,7 +118,7 @@ public class Emoji {
 
 		final List<String> data = new ArrayList<String>();
 		// ::uncomment when CORE
-//		final String fullpath = RunInit.cheerpjPath + "emoji/" + unicode + ".svg";
+//		final String fullpath = cheerpjPath + "emoji/" + unicode + ".svg";
 //		try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fullpath)))) {
 		// ::done
 		// ::comment when CORE

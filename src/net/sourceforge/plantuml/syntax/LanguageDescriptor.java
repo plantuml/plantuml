@@ -2,14 +2,14 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2009-2024, Arnaud Roques
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of PlantUML.
  *
@@ -41,8 +41,8 @@ import java.util.Collections;
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.sourceforge.plantuml.SkinParam;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
+import net.sourceforge.plantuml.skin.SkinParam;
 import net.sourceforge.plantuml.utils.Cypher;
 
 public class LanguageDescriptor {
@@ -208,7 +208,7 @@ public class LanguageDescriptor {
 		keyword.add("stereotype");
 		keyword.add("split");
 		keyword.add("style");
-		keyword.add("sprite");		
+		keyword.add("sprite");
 		keyword.add("circle");
 		keyword.add("empty");
 		keyword.add("members");
@@ -224,7 +224,6 @@ public class LanguageDescriptor {
 		keyword.add("dashed");
 		keyword.add("bold");
 		keyword.add("map");
-
 
 		preproc.add("!exit");
 		preproc.add("!include");

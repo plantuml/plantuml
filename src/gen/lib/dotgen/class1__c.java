@@ -2,12 +2,12 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
@@ -59,7 +59,6 @@ import static gen.lib.dotgen.fastgr__c.merge_oneway;
 import static gen.lib.dotgen.fastgr__c.virtual_edge;
 import static gen.lib.dotgen.fastgr__c.virtual_node;
 import static gen.lib.dotgen.position__c.make_aux_edge;
-import static smetana.core.JUtils.EQ;
 import static smetana.core.Macro.ED_minlen;
 import static smetana.core.Macro.ED_to_orig;
 import static smetana.core.Macro.ED_to_virt;
@@ -78,19 +77,19 @@ import h.ST_Agedge_s;
 import h.ST_Agnode_s;
 import h.ST_Agraph_s;
 import smetana.core.CString;
-import smetana.core.Z;
+import smetana.core.Globals;
 
 public class class1__c {
 
 
 @Reviewed(when = "13/11/2020")
 @Original(version="2.38.0", path="lib/dotgen/class1.c", name="nonconstraint_edge", key="2luyof8ca7ewf9r08z3os3lk7", definition="int nonconstraint_edge(edge_t * e)")
-public static boolean nonconstraint_edge(ST_Agedge_s e) {
+public static boolean nonconstraint_edge(Globals zz, ST_Agedge_s e) {
 ENTERING("2luyof8ca7ewf9r08z3os3lk7","nonconstraint_edge");
 try {
     CString constr;
     
-    if (Z.z().E_constr!=null && (constr = agxget(e, Z.z().E_constr))!=null) {
+    if (zz.E_constr!=null && (constr = agxget(e, zz.E_constr))!=null) {
 	if (constr.charAt(0)!='\0' && mapbool(constr) == false)
 	    return true;
     }
@@ -147,29 +146,29 @@ LEAVING("dpimuv55sylui7jx8fh3ic1qc","interclust1");
 
 @Reviewed(when = "13/11/2020")
 @Original(version="2.38.0", path="lib/dotgen/class1.c", name="class1", key="acy5ct6402jgf0ga5oeeskx5m", definition="void class1(graph_t * g)")
-public static void class1_(ST_Agraph_s g) {
+public static void class1_(Globals zz, ST_Agraph_s g) {
 ENTERING("acy5ct6402jgf0ga5oeeskx5m","class1_");
 try {
     ST_Agnode_s n, t, h;
     ST_Agedge_s e, rep;
     
-    mark_clusters(g);
-    for (n = agfstnode(g); n!=null; n = agnxtnode(g, n)) {
-	for (e = agfstout(g, n); e!=null; e = agnxtout(g, e)) {
+    mark_clusters(zz, g);
+    for (n = agfstnode(zz, g); n!=null; n = agnxtnode(zz, g, n)) {
+	for (e = agfstout(zz, g, n); e!=null; e = agnxtout(zz, g, e)) {
 		
 	    /* skip edges already processed */
 	    if (ED_to_virt(e)!=null)
 		continue;
 	    
 	    /* skip edges that we want to ignore in this phase */
-	    if (nonconstraint_edge(e))
+	    if (nonconstraint_edge(zz, e))
 		continue;
 	    
 	    t = UF_find(agtail(e));
 	    
 	    h = UF_find(aghead(e));
 	    /* skip self, flat, and intra-cluster edges */
-	    if (EQ(t, h))
+	    if (t == h)
 		continue;
 	    
 	    

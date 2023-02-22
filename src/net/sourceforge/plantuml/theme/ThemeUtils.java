@@ -4,12 +4,12 @@
  *
  * (C) Copyright 2009-2021, Arnaud Roques
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  *
  * If you like this project or if you find it useful, you can support us at:
  *
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  *
  * This file is part of PlantUML.
  *
@@ -44,14 +44,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+import net.sourceforge.plantuml.klimt.sprite.ResourcesUtils;
 import net.sourceforge.plantuml.preproc.ReadLine;
 import net.sourceforge.plantuml.preproc.ReadLineReader;
 import net.sourceforge.plantuml.preproc.Stdlib;
-import net.sourceforge.plantuml.sprite.ResourcesUtils;
 import net.sourceforge.plantuml.utils.Log;
 
 // ::uncomment when CORE
-//import com.plantuml.wasm.RunInit;
+//import static com.plantuml.api.cheerpj.StaticMemory.cheerpjPath;
 //import java.io.FileInputStream;
 //import java.io.FileNotFoundException;
 // ::done
@@ -67,7 +67,7 @@ public class ThemeUtils {
 	// ::uncomment when CORE
 //	public static ReadLine getReaderTheme(String filename) throws FileNotFoundException {
 //	Log.info("Loading theme " + filename);
-//	final String fullpath = RunInit.cheerpjPath + THEME_PATH + "/" + THEME_FILE_PREFIX + filename
+//	final String fullpath = cheerpjPath + THEME_PATH + "/" + THEME_FILE_PREFIX + filename
 //			+ THEME_FILE_SUFFIX;
 //
 //	final String res = "/" + THEME_PATH + "/" + THEME_FILE_PREFIX + filename + THEME_FILE_SUFFIX;

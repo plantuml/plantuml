@@ -2,14 +2,14 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2009-2024, Arnaud Roques
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of PlantUML.
  *
@@ -60,10 +60,56 @@ public class FileUtils {
 		counter = new AtomicInteger(0);
 	}
 
-	static public File createTempFileLegacy(String prefix, String suffix) throws IOException {
-		if (suffix.startsWith(".") == false) {
-			throw new IllegalArgumentException();
+	static public String readSvg(SFile svgFile) throws IOException {
+		final BufferedReader br = svgFile.openBufferedReader();
+		if (br == null)
+			return null;
+
+		return readSvg(br, false, true);
+	}
+
+	static public String readSvg(InputStream is) throws IOException {
+		final BufferedReader br = new BufferedReader(new InputStreamReader(is));
+		return readSvg(br, false, false);
+	}
+
+	static public void copyInternal(final InputStream fis, final OutputStream fos, boolean close) throws IOException {
+		final byte[] buf = new byte[10240];
+		int len;
+		while ((len = fis.read(buf)) > 0)
+			fos.write(buf, 0, len);
+
+		if (close) {
+			fos.close();
+			fis.close();
 		}
+	}
+
+	private static String readSvg(BufferedReader br, boolean withNewline, boolean withClose) throws IOException {
+		final StringBuilder sb = new StringBuilder();
+		String s;
+		while ((s = br.readLine()) != null) {
+			sb.append(s);
+			if (withNewline)
+				sb.append("\n");
+
+		}
+		if (withClose)
+			br.close();
+
+		return sb.toString();
+	}
+
+	static public String readText(InputStream is) throws IOException {
+		final BufferedReader br = new BufferedReader(new InputStreamReader(is));
+		return readSvg(br, true, true);
+	}
+
+	// ::comment when CORE
+	static public File createTempFileLegacy(String prefix, String suffix) throws IOException {
+		if (suffix.startsWith(".") == false)
+			throw new IllegalArgumentException();
+
 		Objects.requireNonNull(prefix);
 		final File f;
 		if (counter == null) {
@@ -78,9 +124,9 @@ public class FileUtils {
 	}
 
 	static public SFile createTempFile(String prefix, String suffix) throws IOException {
-		if (suffix.startsWith(".") == false) {
+		if (suffix.startsWith(".") == false)
 			throw new IllegalArgumentException();
-		}
+
 		Objects.requireNonNull(prefix);
 		final SFile f;
 		if (counter == null) {
@@ -94,35 +140,23 @@ public class FileUtils {
 		return f;
 	}
 
-	static public void copyInternal(final InputStream fis, final OutputStream fos, boolean close) throws IOException {
-		final byte[] buf = new byte[10240];
-		int len;
-		while ((len = fis.read(buf)) > 0) {
-			fos.write(buf, 0, len);
-		}
-		if (close) {
-			fos.close();
-			fis.close();
-		}
-	}
-
 	static public void copyToFile(SFile src, SFile dest) throws IOException {
-		if (dest.isDirectory()) {
+		if (dest.isDirectory())
 			dest = dest.file(src.getName());
-		}
+
 		final InputStream fis = src.openFile();
-		if (fis == null) {
+		if (fis == null)
 			throw new FileNotFoundException();
-		}
+
 		final OutputStream fos = dest.createBufferedOutputStream();
 		copyInternal(fis, fos, true);
 	}
 
 	static public void copyToStream(SFile src, OutputStream os) throws IOException {
 		final InputStream fis = src.openFile();
-		if (fis == null) {
+		if (fis == null)
 			throw new FileNotFoundException();
-		}
+
 		final OutputStream fos = new BufferedOutputStream(os);
 		copyInternal(fis, fos, true);
 	}
@@ -145,45 +179,13 @@ public class FileUtils {
 		}
 	}
 
-	static public String readSvg(SFile svgFile) throws IOException {
-		final BufferedReader br = svgFile.openBufferedReader();
-		if (br == null) {
-			return null;
-		}
-		return readSvg(br, false, true);
-	}
-
-	static public String readSvg(InputStream is) throws IOException {
-		final BufferedReader br = new BufferedReader(new InputStreamReader(is));
-		return readSvg(br, false, false);
-	}
-
-	static public String readText(InputStream is) throws IOException {
-		final BufferedReader br = new BufferedReader(new InputStreamReader(is));
-		return readSvg(br, true, true);
-	}
-
 	static public String readFile(SFile svgFile) throws IOException {
 		final BufferedReader br = svgFile.openBufferedReader();
-		if (br == null) {
+		if (br == null)
 			return null;
-		}
+
 		return readSvg(br, true, true);
 	}
-
-	private static String readSvg(BufferedReader br, boolean withNewline, boolean withClose) throws IOException {
-		final StringBuilder sb = new StringBuilder();
-		String s;
-		while ((s = br.readLine()) != null) {
-			sb.append(s);
-			if (withNewline) {
-				sb.append("\n");
-			}
-		}
-		if (withClose) {
-			br.close();
-		}
-		return sb.toString();
-	}
+	// ::done
 
 }

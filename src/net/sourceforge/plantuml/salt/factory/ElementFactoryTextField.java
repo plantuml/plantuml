@@ -2,14 +2,14 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2009-2024, Arnaud Roques
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of PlantUML.
  *
@@ -35,12 +35,12 @@
  */
 package net.sourceforge.plantuml.salt.factory;
 
-import net.atmp.ISkinSimple;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.salt.DataSource;
 import net.sourceforge.plantuml.salt.Terminated;
 import net.sourceforge.plantuml.salt.element.Element;
 import net.sourceforge.plantuml.salt.element.ElementTextField;
+import net.sourceforge.plantuml.style.ISkinSimple;
 
 public class ElementFactoryTextField implements ElementFactory {
 
@@ -60,7 +60,8 @@ public class ElementFactoryTextField implements ElementFactory {
 		final String text = next.getElement();
 		final UFont font = UFont.byDefault(12);
 		return new Terminated<Element>(
-				new ElementTextField(text.substring(1, text.length() - 1), font, spriteContainer), next.getTerminator());
+				new ElementTextField(text.substring(1, text.length() - 1), font, spriteContainer),
+				next.getTerminator());
 	}
 
 	public boolean ready() {

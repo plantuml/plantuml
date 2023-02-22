@@ -2,12 +2,12 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
@@ -45,7 +45,6 @@
  */
 package gen.lib.cdt;
 import static gen.lib.cdt.dtsize__c.dtsize_;
-import static smetana.core.Macro.N;
 import static smetana.core.Macro.UNSUPPORTED;
 import static smetana.core.debug.SmetanaDebug.ENTERING;
 import static smetana.core.debug.SmetanaDebug.LEAVING;
@@ -54,6 +53,7 @@ import gen.annotation.Original;
 import gen.annotation.Unused;
 import h.ST_dt_s;
 import h.ST_dtdisc_s;
+import smetana.core.Globals;
 import smetana.core.Memory;
 
 public class dtclose__c {
@@ -127,27 +127,27 @@ public class dtclose__c {
 // int dtclose(register Dt_t* dt)     
 @Unused
 @Original(version="2.38.0", path="lib/cdt/dtclose.c", name="dtclose", key="7ggbhlblmrfr1wq1k20npwyxb", definition="int dtclose(register Dt_t* dt)")
-public static int dtclose(ST_dt_s dt) {
+public static int dtclose(Globals zz, ST_dt_s dt) {
 ENTERING("7ggbhlblmrfr1wq1k20npwyxb","dtclose");
 	try {
  	ST_dtdisc_s	disc;
  	int		ev = 0;
- 	if(N(dt) || dt.nview > 0 ) /* can't close if being viewed */
+ 	if((dt) == null || dt.nview > 0 ) /* can't close if being viewed */
  		return -1;
  	/* announce the close event to see if we should continue */
  	disc = (ST_dtdisc_s) dt.disc;
  	if(disc.eventf!=null &&
- 	   (ev = (Integer)disc.eventf.exe(dt, 2, null, disc)) < 0)
+ 	   (ev = (Integer)disc.eventf.exe(zz, dt, 2, null, disc)) < 0)
  		return -1;
  	if(dt.view!=null)	/* turn off viewing */
 UNSUPPORTED("1xbo7gf92fmqmu2tzpfeuc0wk"); // 		dtview(dt,((Dt_t*)0));
  	if(ev == 0) /* release all allocated data */ {
- 		dt.meth.searchf.exe(dt, null, 0000100);
+ 		dt.meth.searchf.exe(zz, dt, null, 0000100);
  		if(dtsize_(dt) > 0)
  			return -1;
 if(dt.data.ntab > 0)
 UNSUPPORTED("4ugmcpi8vkb013vuo4wykn0a3"); // 			(*dt->memoryf)(dt,(void*)dt->data->hh._htab,0,disc);
-dt.memoryf.exe(dt, dt.data, null, disc);
+dt.memoryf.exe(zz, dt, dt.data, null, disc);
  	}
  	if(dt.type == 0)
  		Memory.free(dt);

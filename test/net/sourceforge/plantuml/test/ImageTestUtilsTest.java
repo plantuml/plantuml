@@ -1,7 +1,7 @@
 package net.sourceforge.plantuml.test;
 
-import static net.sourceforge.plantuml.test.ImageTestUtils.assertImagesEqual;
 import static net.sourceforge.plantuml.test.ImageTestUtils.assertImageSizeEqual;
+import static net.sourceforge.plantuml.test.ImageTestUtils.assertImagesEqual;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 

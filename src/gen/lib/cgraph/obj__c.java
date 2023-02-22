@@ -2,12 +2,12 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
@@ -47,13 +47,10 @@ package gen.lib.cgraph;
 import static gen.lib.cgraph.edge__c.agsubedge;
 import static gen.lib.cgraph.node__c.agidnode;
 import static gen.lib.cgraph.pend__c.agrecord_callback;
-import static smetana.core.JUtils.NEQ;
-import static smetana.core.Macro.AGID;
 import static smetana.core.Macro.AGINEDGE;
 import static smetana.core.Macro.AGNODE;
 import static smetana.core.Macro.AGOUTEDGE;
 import static smetana.core.Macro.AGRAPH;
-import static smetana.core.Macro.AGTYPE;
 import static smetana.core.Macro.CB_UPDATE;
 import static smetana.core.Macro.UNSUPPORTED;
 import static smetana.core.debug.SmetanaDebug.ENTERING;
@@ -68,6 +65,7 @@ import h.ST_Agnode_s;
 import h.ST_Agobj_s;
 import h.ST_Agraph_s;
 import h.ST_Agsym_s;
+import smetana.core.Globals;
 import smetana.core.__ptr__;
 
 public class obj__c {
@@ -187,7 +185,7 @@ LEAVING("8t9rkcpdvmxph6krjvfmz3s51","agupdcb");
 public static ST_Agraph_s agroot(ST_Agobj_s obj) {
 ENTERING("53858x47ifwq7ldf9ukvpdc5r","agroot");
 try {
-    switch (AGTYPE(obj)) {
+    switch (obj.tag.objtype) {
     case AGINEDGE:
     case AGOUTEDGE:
 	return (ST_Agraph_s) ((ST_Agedge_s)obj).node.root;
@@ -211,7 +209,7 @@ LEAVING("53858x47ifwq7ldf9ukvpdc5r","agroot");
 public static ST_Agraph_s agraphof(ST_Agobj_s obj) {
 ENTERING("brxx6qho8cw09dg7o27lc7c6z","agraphof");
 try {
-    switch (AGTYPE(obj)) {
+    switch (obj.tag.objtype) {
     case AGINEDGE:
     case AGOUTEDGE:
     return (ST_Agraph_s) ((ST_Agedge_s)obj).node.root;
@@ -233,12 +231,12 @@ LEAVING("brxx6qho8cw09dg7o27lc7c6z","agraphof");
 
 @Reviewed(when = "12/11/2020")
 @Original(version="2.38.0", path="lib/cgraph/obj.c", name="agcontains", key="91ej8cxcc0kzgkg2yk3pdiifs", definition = "int agcontains(Agraph_t* g, void* obj)")
-public static boolean agcontains(ST_Agraph_s g, ST_Agobj_s obj) {
+public static boolean agcontains(Globals zz, ST_Agraph_s g, ST_Agobj_s obj) {
 ENTERING("91ej8cxcc0kzgkg2yk3pdiifs","agcontains");
 try {
     ST_Agraph_s subg;
-    if (NEQ(agroot(g), agroot(obj))) return false;
-    switch (AGTYPE(obj)) {
+    if ((agroot(g) != agroot(obj))) return false;
+    switch (obj.tag.objtype) {
     case AGRAPH:
 UNSUPPORTED("5fyr1r26q15uog4pl9eo2iohc"); // 	subg = (Agraph_t *) obj;
 UNSUPPORTED("8vxyvy38lzpbd83cu26nejaan"); // 	do {
@@ -246,9 +244,9 @@ UNSUPPORTED("dqlpdwxfm3o0e4atzaam04f9m"); // 	    if (subg == g) return 1;
 UNSUPPORTED("4oqg7vqjjx3n3761fp7f2xld9"); // 	} while ((subg = agparent (subg)));
 UNSUPPORTED("c9ckhc8veujmwcw0ar3u3zld4"); // 	return 0;
     case AGNODE: 
-        return (agidnode(g, AGID(obj), 0) != null);
+        return (agidnode(zz, g, obj.tag.id, 0) != null);
     default:
-        return (agsubedge(g, (ST_Agedge_s) obj, false) != null);
+        return (agsubedge(zz, g, (ST_Agedge_s) obj, false) != null);
     }
 } finally {
 LEAVING("91ej8cxcc0kzgkg2yk3pdiifs","agcontains");
@@ -262,7 +260,7 @@ LEAVING("91ej8cxcc0kzgkg2yk3pdiifs","agcontains");
 public static int agobjkind(ST_Agobj_s arg) {
 ENTERING("bbe1e9wqmcr8dz9pswpxff0fr","agobjkind");
 try {
-	return AGTYPE(arg);
+	return arg.tag.objtype;
 } finally {
 LEAVING("bbe1e9wqmcr8dz9pswpxff0fr","agobjkind");
 }

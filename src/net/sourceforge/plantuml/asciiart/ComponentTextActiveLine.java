@@ -2,14 +2,14 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2009-2024, Arnaud Roques
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of PlantUML.
  *
@@ -36,12 +36,12 @@
 package net.sourceforge.plantuml.asciiart;
 
 import net.sourceforge.plantuml.FileFormat;
-import net.sourceforge.plantuml.awt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.drawing.txt.UGraphicTxt;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.Context2D;
-import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt;
 
 public class ComponentTextActiveLine extends AbstractComponentText {
 
@@ -59,8 +59,8 @@ public class ComponentTextActiveLine extends AbstractComponentText {
 		if (fileFormat == FileFormat.UTXT) {
 			charArea.fillRect(' ', 0, 0, width, height);
 			charArea.drawBoxSimpleUnicode(0, 0, width, height);
-			charArea.drawChar('\u2534', width/2, 0);
-			charArea.drawChar('\u252c', width/2, height-1);
+			charArea.drawChar('\u2534', width / 2, 0);
+			charArea.drawChar('\u252c', width / 2, height - 1);
 		} else {
 			charArea.fillRect('X', 0, 0, width, height);
 			charArea.drawBoxSimple(0, 0, width, height);

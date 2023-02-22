@@ -2,14 +2,14 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2009-2024, Arnaud Roques
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of PlantUML.
  *
@@ -42,7 +42,7 @@ import java.util.Iterator;
 public class KeyboardList implements Keyboard {
 
 	private final Iterator<String> data;
-	
+
 	public KeyboardList(String... inputs) {
 		this(Arrays.asList(inputs));
 	}
@@ -50,7 +50,6 @@ public class KeyboardList implements Keyboard {
 	public KeyboardList(Collection<String> inputs) {
 		data = inputs.iterator();
 	}
-
 
 	public String input() throws NoInputException {
 		if (data.hasNext()) {

@@ -2,12 +2,12 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
@@ -49,14 +49,11 @@ import static gen.lib.cgraph.rec__c.agbindrec;
 import static gen.lib.common.emit__c.gv_fixLocale;
 import static gen.lib.common.input__c.graph_init;
 import static smetana.core.JUtils.LOG2;
-import static smetana.core.JUtils.NEQ;
-import static smetana.core.JUtils.sizeof;
 import static smetana.core.Macro.GD_cleanup;
 import static smetana.core.Macro.GD_drawing;
 import static smetana.core.Macro.GD_gvc;
 import static smetana.core.Macro.GVRENDER_PLUGIN;
 import static smetana.core.Macro.LAYOUT_USES_RANKDIR;
-import static smetana.core.Macro.N;
 import static smetana.core.Macro.UNSUPPORTED;
 import static smetana.core.debug.SmetanaDebug.ENTERING;
 import static smetana.core.debug.SmetanaDebug.LEAVING;
@@ -65,12 +62,14 @@ import gen.annotation.Original;
 import gen.annotation.Reviewed;
 import h.EN_layout_type;
 import h.ST_Agraph_s;
-import h.ST_Agraphinfo_t;
 import h.ST_GVC_s;
 import h.ST_gvlayout_engine_s;
 import h.ST_gvlayout_features_t;
 import h.ST_gvplugin_installed_t;
 import smetana.core.CString;
+import smetana.core.Globals;
+import smetana.core.ZType;
+import smetana.core.size_t;
 
 public class gvlayout__c {
 
@@ -119,15 +118,15 @@ LEAVING("2g20jitdi8afuoei8p1mcfg9l","gvlayout_select");
 
 @Reviewed(when = "11/11/2020")
 @Original(version="2.38.0", path="lib/gvc/gvlayout.c", name="gvLayoutJobs", key="991b7t7n0x8ifkp49zotjs78x", definition="int gvLayoutJobs(GVC_t * gvc, Agraph_t * g)")
-public static int gvLayoutJobs(ST_GVC_s gvc, ST_Agraph_s g) {
+public static int gvLayoutJobs(Globals zz, ST_GVC_s gvc, ST_Agraph_s g) {
 ENTERING("991b7t7n0x8ifkp49zotjs78x","gvLayoutJobs");
 try {
 	ST_gvlayout_engine_s gvle;
     CString p = null;
     int rc;
-    agbindrec(g, new CString("Agraphinfo_t"), sizeof(ST_Agraphinfo_t.class), true);
+    agbindrec(zz, g, new CString("Agraphinfo_t"), new size_t(ZType.ST_Agraphinfo_t), true);
     GD_gvc(g, gvc);
-    if (NEQ(g, agroot(g)))
+    if ((g != agroot(g)))
 UNSUPPORTED("ah9ygbaap1fyxr97z734juk0j"); // 	GD_gvc(agroot(g)) = gvc;
 /*    if ((p = agget(g, new CString("layout")))!=null) {
 UNSUPPORTED("dlm1jil8gt2pv7p8yrit1tuls"); //         gvc->layout.engine = NULL;
@@ -142,15 +141,15 @@ UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
     rc = gvlayout_select(gvc, p); //Let's force things
     
     gvle = (ST_gvlayout_engine_s) gvc.layout.engine;
-    if (N(gvle))
+    if ((gvle) == null)
 	UNSUPPORTED("return -1;");
     
     
     gv_fixLocale (1);
-    graph_init(g, (gvc.layout.features.flags & LAYOUT_USES_RANKDIR)!=0);
+    graph_init(zz, g, (gvc.layout.features.flags & LAYOUT_USES_RANKDIR)!=0);
     GD_drawing(agroot(g), GD_drawing(g));
     if (gvle!=null && gvle.layout!=null) {
-	gvle.layout.exe(g);
+	gvle.layout.exe(zz, g);
 
 	
 	

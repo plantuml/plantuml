@@ -2,14 +2,14 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2009-2024, Arnaud Roques
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of PlantUML.
  *
@@ -58,9 +58,11 @@ public class ByteArray {
 		return new String(data, 0, length, UTF_8);
 	}
 
+	// ::comment when CORE
 	public String toUPF9String() throws IOException {
 		return Upf9Decoder.decodeString(data, length);
 	}
+	// ::done
 
 	public int getByteAt(int i) {
 		return data[i];

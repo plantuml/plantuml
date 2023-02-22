@@ -2,14 +2,14 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2009-2024, Arnaud Roques
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of PlantUML.
  *
@@ -34,7 +34,7 @@
  */
 package net.sourceforge.plantuml.version;
 
-import static net.sourceforge.plantuml.graphic.GraphicPosition.BACKGROUND_CORNER_BOTTOM_RIGHT;
+import static net.sourceforge.plantuml.klimt.geom.GraphicPosition.BACKGROUND_CORNER_BOTTOM_RIGHT;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.PlainStringsDiagram;
 import net.sourceforge.plantuml.Run;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
-import net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils;
+import net.sourceforge.plantuml.dot.GraphvizUtils;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.preproc.Stdlib;
 import net.sourceforge.plantuml.preproc2.PreprocessorUtils;
@@ -64,9 +64,13 @@ public class PSystemVersion extends PlainStringsDiagram {
 	PSystemVersion(UmlSource source, boolean withImage, List<String> args) {
 		super(source);
 		this.strings.addAll(args);
-		if (withImage) {
-			this.image = getPlantumlImage();
-			this.imagePosition = BACKGROUND_CORNER_BOTTOM_RIGHT;
+		try {
+			if (withImage) {
+				this.image = getPlantumlImage();
+				this.imagePosition = BACKGROUND_CORNER_BOTTOM_RIGHT;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -81,16 +85,16 @@ public class PSystemVersion extends PlainStringsDiagram {
 		return getImage("logo.png");
 	}
 
-	public static BufferedImage getCharlieImage() {
-		return getImage("charlie.png");
-	}
-
 	public static BufferedImage getTime01() {
 		return getImage("time01.png");
 	}
 
 	public static BufferedImage getTime15() {
 		return getImage("time15.png");
+	}
+
+	public static BufferedImage getCharlieImage() {
+		return getImage("charlie.png");
 	}
 
 	public static BufferedImage getPlantumlSmallIcon() {
@@ -163,8 +167,13 @@ public class PSystemVersion extends PlainStringsDiagram {
 	public static PSystemVersion createShowVersion2(UmlSource source) {
 		final List<String> strings = new ArrayList<>();
 		strings.add("<b>PlantUML version " + Version.versionString() + "</b> (" + Version.compileTimeString() + ")");
-		// :: comment when CORE
 		strings.add("(" + License.getCurrent() + " source distribution)");
+		// :: uncomment when CORE
+//		strings.add(" ");
+//		strings.add("Compiled with CheerpJ 2.3");
+//		strings.add("Powered by CheerpJ, a Leaning Technologies Java tool");
+		// :: done
+		// :: comment when CORE
 		GraphvizCrash.checkOldVersionWarning(strings);
 		if (OptionFlags.ALLOW_INCLUDE) {
 			if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE)
@@ -178,9 +187,6 @@ public class PSystemVersion extends PlainStringsDiagram {
 			}
 		}
 		strings.add(" ");
-		// strings.add("<b>Stdlib:");
-		// Stdlib.addInfoVersion(strings, false);
-		// strings.add(" ");
 
 		GraphvizUtils.addDotStatus(strings, true);
 		strings.add(" ");

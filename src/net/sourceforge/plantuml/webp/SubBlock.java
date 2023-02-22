@@ -57,8 +57,7 @@ public class SubBlock {
 	private int predict[][];
 	private int tokens[];
 
-	public SubBlock(MacroBlock macroBlock, SubBlock above, SubBlock left,
-			SubBlock.PLANE plane) {
+	public SubBlock(MacroBlock macroBlock, SubBlock above, SubBlock left, SubBlock.PLANE plane) {
 		this.macroBlock = macroBlock;
 		this.plane = plane;
 		this.above = above;
@@ -79,8 +78,8 @@ public class SubBlock {
 		return v;
 	}
 
-	public void decodeSubBlock(BoolDecoder bc2, int[][][][] coef_probs,
-			int ilc, int type, boolean withY2) throws IOException {
+	public void decodeSubBlock(BoolDecoder bc2, int[][][][] coef_probs, int ilc, int type, boolean withY2)
+			throws IOException {
 		SubBlock sb = this;
 		int startAt = 0;
 		if (withY2)
@@ -94,13 +93,9 @@ public class SubBlock {
 		while (!(v == Globals.dct_eob) && c + startAt < 16) {
 
 			if (!skip)
-				v = bc2.readTree(Globals.vp8CoefTree,
-						coef_probs[type][Globals.vp8CoefBands[c + startAt]][lc]);
+				v = bc2.readTree(Globals.vp8CoefTree, coef_probs[type][Globals.vp8CoefBands[c + startAt]][lc]);
 			else
-				v = bc2.readTreeSkip(
-						Globals.vp8CoefTree,
-						coef_probs[type][Globals.vp8CoefBands[c + startAt]][lc],
-						1);
+				v = bc2.readTreeSkip(Globals.vp8CoefTree, coef_probs[type][Globals.vp8CoefBands[c + startAt]][lc], 1);
 
 			int dv = decodeToken(bc2, v);
 			lc = 0;
@@ -160,16 +155,14 @@ public class SubBlock {
 		for (int i = 0; i < 16; i++) {
 			int QValue;
 			if (plane == PLANE.U || plane == PLANE.V) {
-				QValue = frame.getSegmentQuants().getSegQuants()[this.getMacroBlock().getSegmentId()]
-						.getUvac_delta_q();
+				QValue = frame.getSegmentQuants().getSegQuants()[this.getMacroBlock().getSegmentId()].getUvac_delta_q();
 				if (i == 0)
 					QValue = frame.getSegmentQuants().getSegQuants()[this.getMacroBlock().getSegmentId()]
 							.getUvdc_delta_q();
 			} else {
 				QValue = frame.getSegmentQuants().getSegQuants()[this.getMacroBlock().getSegmentId()].getY1ac();
 				if (i == 0)
-					QValue = frame.getSegmentQuants().getSegQuants()[this.getMacroBlock().getSegmentId()]
-							.getY1dc();
+					QValue = frame.getSegmentQuants().getSegQuants()[this.getMacroBlock().getSegmentId()].getY1dc();
 			}
 
 			int inputValue = sb.getTokens()[i];
@@ -226,8 +219,7 @@ public class SubBlock {
 	public String getDebugString() {
 		String r = new String();
 		r = r + "  " + plane;
-		if (getMacroBlock().getYMode() == Globals.B_PRED
-				&& plane == SubBlock.PLANE.Y1)
+		if (getMacroBlock().getYMode() == Globals.B_PRED && plane == SubBlock.PLANE.Y1)
 			r = r + "\n  " + Globals.getSubBlockModeAsString(mode);
 		return r;
 	}
@@ -291,13 +283,10 @@ public class SubBlock {
 		else {
 			int rv = 127;
 
-			if ((intra_bmode == Globals.B_TM_PRED
-					|| intra_bmode == Globals.B_DC_PRED
-					|| intra_bmode == Globals.B_VE_PRED
-					|| intra_bmode == Globals.B_HE_PRED
-					|| intra_bmode == Globals.B_VR_PRED
-					|| intra_bmode == Globals.B_RD_PRED || intra_bmode == Globals.B_HD_PRED)
-					&& left)
+			if ((intra_bmode == Globals.B_TM_PRED || intra_bmode == Globals.B_DC_PRED
+					|| intra_bmode == Globals.B_VE_PRED || intra_bmode == Globals.B_HE_PRED
+					|| intra_bmode == Globals.B_VR_PRED || intra_bmode == Globals.B_RD_PRED
+					|| intra_bmode == Globals.B_HD_PRED) && left)
 
 				rv = 129;
 			int r[][] = new int[4][4];
@@ -432,8 +421,7 @@ public class SubBlock {
 			p[0][0] = (above[0] + above[1] * 2 + above[2] + 2) >> 2;
 			p[1][0] = p[0][1] = (above[1] + above[2] * 2 + above[3] + 2) >> 2;
 			p[2][0] = p[1][1] = p[0][2] = (above[2] + above[3] * 2 + ar[0] + 2) >> 2;
-			p[3][0] = p[2][1] = p[1][2] = p[0][3] = (above[3] + ar[0] * 2
-					+ ar[1] + 2) >> 2;
+			p[3][0] = p[2][1] = p[1][2] = p[0][3] = (above[3] + ar[0] * 2 + ar[1] + 2) >> 2;
 			p[3][1] = p[2][2] = p[1][3] = (ar[0] + ar[1] * 2 + ar[2] + 2) >> 2;
 			p[3][2] = p[2][3] = (ar[1] + ar[2] * 2 + ar[3] + 2) >> 2;
 			p[3][3] = (ar[2] + ar[3] * 2 + ar[3] + 2) >> 2;

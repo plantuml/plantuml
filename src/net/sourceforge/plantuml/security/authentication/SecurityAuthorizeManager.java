@@ -4,12 +4,12 @@
  *
  * (C) Copyright 2009-2021, Arnaud Roques
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  *
  * If you like this project or if you find it useful, you can support us at:
  *
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  *
  * This file is part of PlantUML.
  *
@@ -36,16 +36,17 @@
 package net.sourceforge.plantuml.security.authentication;
 
 /**
- * Creates from credentials a {@link SecurityAuthentication} object or authorize as principal to retrieve an
- * authentication object.
+ * Creates from credentials a {@link SecurityAuthentication} object or authorize
+ * as principal to retrieve an authentication object.
  *
  * @author Aljoscha Rittner
  */
 public interface SecurityAuthorizeManager {
 	/**
-	 * Creates from the credentials the authentication object to access an endpoint. If the credentials defines a
-	 * principal (e.g. in OAuth2), the create method should authorize the principal and get the final authentication
-	 * data to access an endpoint.
+	 * Creates from the credentials the authentication object to access an endpoint.
+	 * If the credentials defines a principal (e.g. in OAuth2), the create method
+	 * should authorize the principal and get the final authentication data to
+	 * access an endpoint.
 	 *
 	 * @param credentials the configured credentials
 	 * @return the authentication object.

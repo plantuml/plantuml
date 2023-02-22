@@ -2,12 +2,12 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
@@ -49,16 +49,10 @@ import static gen.lib.cgraph.edge__c.agtail;
 import static gen.lib.pathplan.route__c.Proutespline;
 import static gen.lib.pathplan.shortest__c.Pshortestpath;
 import static gen.lib.pathplan.util__c.make_polyline;
-import static smetana.core.JUtils.NEQ;
-import static smetana.core.JUtils.cos;
-import static smetana.core.JUtils.sin;
-import static smetana.core.Macro.ABS;
 import static smetana.core.Macro.ED_edge_type;
 import static smetana.core.Macro.ED_to_orig;
 import static smetana.core.Macro.INT_MAX;
 import static smetana.core.Macro.INT_MIN;
-import static smetana.core.Macro.MIN;
-import static smetana.core.Macro.N;
 import static smetana.core.Macro.UNSUPPORTED;
 import static smetana.core.debug.SmetanaDebug.ENTERING;
 import static smetana.core.debug.SmetanaDebug.LEAVING;
@@ -72,8 +66,9 @@ import h.ST_boxf;
 import h.ST_path;
 import h.ST_pointf;
 import smetana.core.CArray;
+import smetana.core.Globals;
 import smetana.core.Memory;
-import smetana.core.Z;
+import smetana.core.ZType;
 
 public class routespl__c {
 
@@ -83,48 +78,48 @@ public class routespl__c {
 // pointf* simpleSplineRoute (pointf tp, pointf hp, Ppoly_t poly, int* n_spl_pts,     int polyline) 
 @Unused
 @Original(version="2.38.0", path="lib/common/routespl.c", name="simpleSplineRoute", key="7ebl6qohcfpf1b9ucih5r9qgp", definition="pointf* simpleSplineRoute (pointf tp, pointf hp, Ppoly_t poly, int* n_spl_pts,     int polyline)")
-public static CArray<ST_pointf> simpleSplineRoute(final ST_pointf tp, final ST_pointf hp, final ST_Ppoly_t poly, int[] n_spl_pts, boolean polyline) {
+public static CArray<ST_pointf> simpleSplineRoute(Globals zz, final ST_pointf tp, final ST_pointf hp, final ST_Ppoly_t poly, int[] n_spl_pts, boolean polyline) {
 // WARNING!! STRUCT
-return simpleSplineRoute_w_(tp.copy(), hp.copy(), (ST_Ppoly_t) poly.copy(), n_spl_pts, polyline);
+return simpleSplineRoute_w_(zz, tp.copy(), hp.copy(), (ST_Ppoly_t) poly.copy(), n_spl_pts, polyline);
 }
-private static CArray<ST_pointf> simpleSplineRoute_w_(final ST_pointf tp, final ST_pointf hp, final ST_Ppoly_t poly, int[] n_spl_pts, boolean polyline) {
+private static CArray<ST_pointf> simpleSplineRoute_w_(Globals zz, final ST_pointf tp, final ST_pointf hp, final ST_Ppoly_t poly, int[] n_spl_pts, boolean polyline) {
 ENTERING("7ebl6qohcfpf1b9ucih5r9qgp","simpleSplineRoute");
 try {
     final ST_Ppoly_t pl = new ST_Ppoly_t(), spl = new ST_Ppoly_t();
-    final CArray<ST_pointf> eps = CArray.<ST_pointf>ALLOC__(2, ST_pointf.class);
-    final CArray<ST_pointf> evs = CArray.<ST_pointf>ALLOC__(2, ST_pointf.class);
+    final CArray<ST_pointf> eps = CArray.<ST_pointf>ALLOC__(2, ZType.ST_pointf);
+    final CArray<ST_pointf> evs = CArray.<ST_pointf>ALLOC__(2, ZType.ST_pointf);
     int i;
     eps.get__(0).x = tp.x;
     eps.get__(0).y = tp.y;
     eps.get__(1).x = hp.x;
     eps.get__(1).y = hp.y;
-    if (Pshortestpath(poly, eps, pl) < 0)
+    if (Pshortestpath(zz, poly, eps, pl) < 0)
         return null;
     if (polyline)
-	make_polyline (pl, spl);
+	make_polyline (zz, pl, spl);
     else {
-	if (poly.pn > Z.z().edgen) {
-	    Z.z().edges = CArray.<ST_Pedge_t>REALLOC__(poly.pn, Z.z().edges, ST_Pedge_t.class);
-	    Z.z().edgen = poly.pn;
+	if (poly.pn > zz.edgen) {
+	    zz.edges = CArray.<ST_Pedge_t>REALLOC__(poly.pn, zz.edges, ZType.ST_Pedge_t);
+	    zz.edgen = poly.pn;
 	}
 	for (i = 0; i < poly.pn; i++) {
-	    Z.z().edges.get__(i).a.___(poly.ps.get__(i));
-	    Z.z().edges.get__(i).b.___(poly.ps.get__((i + 1) % poly.pn));
+	    zz.edges.get__(i).a.___(poly.ps.get__(i));
+	    zz.edges.get__(i).b.___(poly.ps.get__((i + 1) % poly.pn));
 	}
 	    evs.get__(0).x = 0;
 	    evs.get__(0).y = 0;
 	    evs.get__(1).x = 0;
 	    evs.get__(1).y = 0;
-	if (Proutespline(Z.z().edges, poly.pn, pl, evs, spl) < 0)
+	if (Proutespline(zz, zz.edges, poly.pn, pl, evs, spl) < 0)
             return null;
     }
-    if (mkspacep(spl.pn))
+    if (mkspacep(zz, spl.pn))
 	return null;
     for (i = 0; i < spl.pn; i++) {
-        Z.z().ps.get__(i).___(spl.ps.get__(i));
+        zz.ps.get__(i).___(spl.ps.get__(i));
     }
     n_spl_pts[0] = spl.pn;
-    return Z.z().ps;
+    return zz.ps;
 } finally {
 LEAVING("7ebl6qohcfpf1b9ucih5r9qgp","simpleSplineRoute");
 }
@@ -141,17 +136,17 @@ LEAVING("7ebl6qohcfpf1b9ucih5r9qgp","simpleSplineRoute");
 // int routesplinesinit() 
 @Unused
 @Original(version="2.38.0", path="lib/common/routespl.c", name="routesplinesinit", key="bfsrazjf3vkf12stnke48vc8t", definition="int routesplinesinit()")
-public static int routesplinesinit() {
+public static int routesplinesinit(Globals zz) {
 ENTERING("bfsrazjf3vkf12stnke48vc8t","routesplinesinit");
 try {
-    if (++Z.z().routeinit > 1) return 0;
-    if (N(Z.z().ps = CArray.<ST_pointf>ALLOC__(300, ST_pointf.class))) {
+    if (++zz.routeinit > 1) return 0;
+    if ((zz.ps = CArray.<ST_pointf>ALLOC__(300, ZType.ST_pointf)) == null) {
 UNSUPPORTED("2qoo3na2ur9oh7hmvt6xv1txd"); // 	agerr(AGERR, "routesplinesinit: cannot allocate ps\n");
 UNSUPPORTED("eleqpc2p2r3hvma6tipoy7tr"); // 	return 1;
     }
-    Z.z().maxpn = 300;
-    Z.z().nedges = 0;
-    Z.z().nboxes = 0;
+    zz.maxpn = 300;
+    zz.nedges = 0;
+    zz.nboxes = 0;
     /*if (Verbose)
 	start_timer();*/
     return 0;
@@ -167,11 +162,11 @@ LEAVING("bfsrazjf3vkf12stnke48vc8t","routesplinesinit");
 // void routesplinesterm() 
 @Unused
 @Original(version="2.38.0", path="lib/common/routespl.c", name="routesplinesterm", key="55j3tny5cxemrsvrt3m21jxg8", definition="void routesplinesterm()")
-public static void routesplinesterm() {
+public static void routesplinesterm(Globals zz) {
 ENTERING("55j3tny5cxemrsvrt3m21jxg8","routesplinesterm");
 try {
-    if (--Z.z().routeinit > 0) return;
-    Memory.free(Z.z().ps);
+    if (--zz.routeinit > 0) return;
+    Memory.free(zz.ps);
     /*if (Verbose)
 	fprintf(stderr,
 		"routesplines: %d edges, %d boxes %.2f sec\n",
@@ -193,7 +188,7 @@ ENTERING("cu8ssjizw7ileqe9u7tcclq7k","limitBoxes");
 try {
     int bi, si, splinepi;
     double t;
-    final CArray<ST_pointf> sp = CArray.<ST_pointf>ALLOC__(4, ST_pointf.class);
+    final CArray<ST_pointf> sp = CArray.<ST_pointf>ALLOC__(4, ZType.ST_pointf);
     int num_div = delta * boxn;
     for (splinepi = 0; splinepi + 3 < pn; splinepi += 3) {
 	for (si = 0; si <= num_div; si++) {
@@ -238,14 +233,14 @@ LEAVING("cu8ssjizw7ileqe9u7tcclq7k","limitBoxes");
 // static pointf *_routesplines(path * pp, int *npoints, int polyline) 
 @Unused
 @Original(version="2.38.0", path="lib/common/routespl.c", name="", key="3mcnemqisisnqtd4mr72ej76y", definition="static pointf *_routesplines(path * pp, int *npoints, int polyline)")
-public static CArray<ST_pointf> _routesplines(ST_path pp, int npoints[], int polyline) {
+public static CArray<ST_pointf> _routesplines(Globals zz, ST_path pp, int npoints[], int polyline) {
 ENTERING("3mcnemqisisnqtd4mr72ej76y","_routesplines");
 try {
     final ST_Ppoly_t poly = new ST_Ppoly_t();
     final ST_Ppoly_t pl  = new ST_Ppoly_t(), spl = new ST_Ppoly_t();
     int splinepi;
-    final CArray<ST_pointf> eps = CArray.<ST_pointf>ALLOC__(2, ST_pointf.class);
-    final CArray<ST_pointf> evs = CArray.<ST_pointf>ALLOC__(2, ST_pointf.class);
+    final CArray<ST_pointf> eps = CArray.<ST_pointf>ALLOC__(2, ZType.ST_pointf);
+    final CArray<ST_pointf> evs = CArray.<ST_pointf>ALLOC__(2, ZType.ST_pointf);
     int edgei, prev, next;
     int pi=0, bi;
     ST_boxf[] boxes;
@@ -255,13 +250,13 @@ try {
     int loopcnt, delta = 10;
     boolean unbounded;
     
-    Z.z().nedges++;
-    Z.z().nboxes += pp.nbox;
+    zz.nedges++;
+    zz.nboxes += pp.nbox;
     
     for (realedge = (ST_Agedge_s) pp.data;
 	 realedge!=null && ED_edge_type(realedge) != 0;
 	 realedge = ED_to_orig(realedge));
-    if (N(realedge)) {
+    if ((realedge) == null) {
 	UNSUPPORTED("agerr(AGERR, _in routesplines, cannot find NORMAL edge");
 	return null;
     }
@@ -272,9 +267,9 @@ try {
     if (checkpath(boxn, boxes, pp)!=0)
 	return null;
     
-    if (boxn * 8 > Z.z().polypointn) {
-	Z.z().polypoints = CArray.<ST_pointf>REALLOC__(boxn * 8, Z.z().polypoints, ST_pointf.class);
-	Z.z().polypointn = boxn * 8;
+    if (boxn * 8 > zz.polypointn) {
+	zz.polypoints = CArray.<ST_pointf>REALLOC__(boxn * 8, zz.polypoints, ZType.ST_pointf);
+	zz.polypointn = boxn * 8;
     }
     
     if ((boxn > 1) && (((ST_boxf)boxes[0]).LL.y > ((ST_boxf)boxes[1]).LL.y)) {
@@ -287,7 +282,7 @@ try {
     }
     else flip = 0;
     
-    if (NEQ(agtail(realedge), aghead(realedge))) {
+    if ((agtail(realedge) != aghead(realedge))) {
 	/* I assume that the path goes either down only or
 	   up - right - down */
 	for (bi = 0, pi = 0; bi < boxn; bi++) {
@@ -298,15 +293,15 @@ try {
 		next = (((ST_boxf)boxes[bi+1]).LL.y > ((ST_boxf)boxes[bi]).LL.y) ? 1 : -1;
 	    if (prev != next) {
 		if (next == -1 || prev == 1) {
-		    Z.z().polypoints.get__(pi).x = boxes[bi].LL.x;
-		    Z.z().polypoints.get__(pi++).y = boxes[bi].UR.y;
-		    Z.z().polypoints.get__(pi).x = boxes[bi].LL.x;
-		    Z.z().polypoints.get__(pi++).y =boxes[bi].LL.y;
+		    zz.polypoints.get__(pi).x = boxes[bi].LL.x;
+		    zz.polypoints.get__(pi++).y = boxes[bi].UR.y;
+		    zz.polypoints.get__(pi).x = boxes[bi].LL.x;
+		    zz.polypoints.get__(pi++).y =boxes[bi].LL.y;
 		} else {
-		    Z.z().polypoints.get__(pi).x = boxes[bi].UR.x;
-		    Z.z().polypoints.get__(pi++).y = boxes[bi].LL.y;
-		    Z.z().polypoints.get__(pi).x = boxes[bi].UR.x;
-		    Z.z().polypoints.get__(pi++).y = boxes[bi].UR.y;
+		    zz.polypoints.get__(pi).x = boxes[bi].UR.x;
+		    zz.polypoints.get__(pi++).y = boxes[bi].LL.y;
+		    zz.polypoints.get__(pi).x = boxes[bi].UR.x;
+		    zz.polypoints.get__(pi++).y = boxes[bi].UR.y;
 		}
 	    }
 	    else if (prev == 0) { /* single box */
@@ -316,7 +311,7 @@ UNSUPPORTED("2bfai79qe7cec0rljrn56jg2f"); // 		polypoints[pi].x = boxes[bi].LL.x
 UNSUPPORTED("99xeozpks5v0iza4sv2occuuq"); // 		polypoints[pi++].y = boxes[bi].LL.y;
 	    } 
 	    else {
- 		if (N(prev == -1 && next == -1)) {
+ 		if (!(prev == -1 && next == -1)) {
 UNSUPPORTED("cgpvvfb9phbipyhij0cjh1nmi"); // 		    agerr(AGERR, "in routesplines, illegal values of prev %d and next %d, line %d\n", prev, next, 444);
 UNSUPPORTED("9idk92zg2ysz316lfwzvvvde6"); // 		    return NULL;
  		}
@@ -330,15 +325,15 @@ UNSUPPORTED("9idk92zg2ysz316lfwzvvvde6"); // 		    return NULL;
 		next = (((ST_boxf)boxes[bi-1]).LL.y > ((ST_boxf)boxes[bi]).LL.y) ? 1 : -1;
 	    if (prev != next) {
 		if (next == -1 || prev == 1 ) {
-		    Z.z().polypoints.get__(pi).x = boxes[bi].LL.x;
-		    Z.z().polypoints.get__(pi++).y = boxes[bi].UR.y;
-		    Z.z().polypoints.get__(pi).x = boxes[bi].LL.x;
-		    Z.z().polypoints.get__(pi++).y = boxes[bi].LL.y;
+		    zz.polypoints.get__(pi).x = boxes[bi].LL.x;
+		    zz.polypoints.get__(pi++).y = boxes[bi].UR.y;
+		    zz.polypoints.get__(pi).x = boxes[bi].LL.x;
+		    zz.polypoints.get__(pi++).y = boxes[bi].LL.y;
 		} else {
-		    Z.z().polypoints.get__(pi).x = boxes[bi].UR.x;
-		    Z.z().polypoints.get__(pi++).y = boxes[bi].LL.y;
-		    Z.z().polypoints.get__(pi).x = boxes[bi].UR.x;
-		    Z.z().polypoints.get__(pi++).y = boxes[bi].UR.y;
+		    zz.polypoints.get__(pi).x = boxes[bi].UR.x;
+		    zz.polypoints.get__(pi++).y = boxes[bi].LL.y;
+		    zz.polypoints.get__(pi).x = boxes[bi].UR.x;
+		    zz.polypoints.get__(pi++).y = boxes[bi].UR.y;
 		}
 	    } 
 	    else if (prev == 0) { /* single box */
@@ -348,19 +343,19 @@ UNSUPPORTED("ya84m81ogarx28l99om39lba"); // 		polypoints[pi].x = boxes[bi].UR.x;
 UNSUPPORTED("cjppvcr7k9pknjrjugccsky56"); // 		polypoints[pi++].y = boxes[bi].UR.y;
 	    }
 	    else {
-		if (N(prev == -1 && next == -1)) {
+		if (!(prev == -1 && next == -1)) {
 UNSUPPORTED("87y5d0ts6xdjyx905bha50f3s"); // 		    /* it went badly, e.g. degenerate box in boxlist */
 UNSUPPORTED("1qt7hixteu3pt64wk1sqw352a"); // 		    agerr(AGERR, "in routesplines, illegal values of prev %d and next %d, line %d\n", prev, next, 476);
 UNSUPPORTED("35untdbpd42pt4c74gjbxqx7q"); // 		    return NULL; /* for correctness sake, it's best to just stop */
 		}
-		Z.z().polypoints.get__(pi).x = boxes[bi].UR.x;
-		Z.z().polypoints.get__(pi++).y = boxes[bi].LL.y;
-		Z.z().polypoints.get__(pi).x = boxes[bi].UR.x;
-		Z.z().polypoints.get__(pi++).y = boxes[bi].UR.y;
-		Z.z().polypoints.get__(pi).x = boxes[bi].LL.x;
-		Z.z().polypoints.get__(pi++).y = boxes[bi].UR.y;
-		Z.z().polypoints.get__(pi).x = boxes[bi].LL.x;
-		Z.z().polypoints.get__(pi++).y = boxes[bi].LL.y;
+		zz.polypoints.get__(pi).x = boxes[bi].UR.x;
+		zz.polypoints.get__(pi++).y = boxes[bi].LL.y;
+		zz.polypoints.get__(pi).x = boxes[bi].UR.x;
+		zz.polypoints.get__(pi++).y = boxes[bi].UR.y;
+		zz.polypoints.get__(pi).x = boxes[bi].LL.x;
+		zz.polypoints.get__(pi++).y = boxes[bi].UR.y;
+		zz.polypoints.get__(pi).x = boxes[bi].LL.x;
+		zz.polypoints.get__(pi++).y = boxes[bi].LL.y;
 	    }
 	}
     }
@@ -377,58 +372,58 @@ UNSUPPORTED("11hwqop4xebvtcskop4uhpp01"); // 	return NULL;
 	    boxes[bi].LL.y = -v;
 	}
 	for (i = 0; i < pi; i++)
-	    Z.z().polypoints.get__(i).y = -1 * Z.z().polypoints.get__(i).y;
+	    zz.polypoints.get__(i).y = -1 * zz.polypoints.get__(i).y;
     }
     for (bi = 0; bi < boxn; bi++) {
 	boxes[bi].LL.x = INT_MAX;
 	boxes[bi].UR.x = INT_MIN;
 	}
-    poly.ps = Z.z().polypoints;
+    poly.ps = zz.polypoints;
     poly.pn = pi;
     eps.get__(0).x = pp.start.p.x;
     eps.get__(0).y = pp.start.p.y;
     eps.get__(1).x = pp.end.p.x;
     eps.get__(1).y = pp.end.p.y;
-    if (Pshortestpath(poly, eps, pl) < 0) {
+    if (Pshortestpath(zz, poly, eps, pl) < 0) {
 		System.err.println("in routesplines, Pshortestpath failed\n");
 		return null;
     }
     
     
     if (polyline!=0) {
-	make_polyline (pl, spl);
+	make_polyline (zz, pl, spl);
     }
     else {
-	if (poly.pn > Z.z().edgen) {
-	    Z.z().edges = CArray.<ST_Pedge_t>REALLOC__(poly.pn, Z.z().edges, ST_Pedge_t.class);
-	    Z.z().edgen = poly.pn;
+	if (poly.pn > zz.edgen) {
+	    zz.edges = CArray.<ST_Pedge_t>REALLOC__(poly.pn, zz.edges, ZType.ST_Pedge_t);
+	    zz.edgen = poly.pn;
 	}
 	for (edgei = 0; edgei < poly.pn; edgei++) {
-	    Z.z().edges.get__(edgei).a.___(Z.z().polypoints.get__(edgei));
-	    Z.z().edges.get__(edgei).b.___(Z.z().polypoints.get__((edgei + 1) % poly.pn));
+	    zz.edges.get__(edgei).a.___(zz.polypoints.get__(edgei));
+	    zz.edges.get__(edgei).b.___(zz.polypoints.get__((edgei + 1) % poly.pn));
 	}
 	if (pp.start.constrained) {
- 	    evs.get__(0).x = cos(pp.start.theta);
- 	    evs.get__(0).y = sin(pp.start.theta);
+ 	    evs.get__(0).x = Math.cos(pp.start.theta);
+ 	    evs.get__(0).y = Math.sin(pp.start.theta);
 	} else
 	{
 	    evs.get__(0).x = evs.get__(0).y = 0;
     }
 	if (pp.end.constrained) {
- 	    evs.get__(1).x = -cos(pp.end.theta);
- 	    evs.get__(1).y = -sin(pp.end.theta);
+ 	    evs.get__(1).x = -Math.cos(pp.end.theta);
+ 	    evs.get__(1).y = -Math.sin(pp.end.theta);
 	} else
 	{
 	    evs.get__(1).x = evs.get__(1).y = 0;
 	}
 	
 	
-	if (Proutespline(Z.z().edges, poly.pn, pl, evs, spl) < 0) {
+	if (Proutespline(zz, zz.edges, poly.pn, pl, evs, spl) < 0) {
 UNSUPPORTED("elkeyywrfd4hq75w7toc94rzs"); // 	    agerr(AGERR, "in routesplines, Proutespline failed\n");
 UNSUPPORTED("7t3fvwp9cv90qu5bdjdglcgtk"); // 	    return NULL;
 	}
     }
-    if (mkspacep(spl.pn))
+    if (mkspacep(zz, spl.pn))
 UNSUPPORTED("7x5kpcbvg4va887hky7ufm45y"); // 	return NULL;  /* Bailout if no memory left */
     for (bi = 0; bi < boxn; bi++) {
     	boxes[bi].LL.x = INT_MAX;
@@ -436,12 +431,12 @@ UNSUPPORTED("7x5kpcbvg4va887hky7ufm45y"); // 	return NULL;  /* Bailout if no mem
     }
     unbounded = true;
     for (splinepi = 0; splinepi < spl.pn; splinepi++) {
-	Z.z().ps.get__(splinepi).___(spl.ps.get__(splinepi));
+	zz.ps.get__(splinepi).___(spl.ps.get__(splinepi));
     }
     
     
     for (loopcnt = 0; unbounded && (loopcnt < 15); loopcnt++) {
-	limitBoxes (boxes, boxn, Z.z().ps, spl.pn, delta);
+	limitBoxes (boxes, boxn, zz.ps, spl.pn, delta);
 	
     /* The following check is necessary because if a box is not very 
      * high, it is possible that the sampling above might miss it.
@@ -469,13 +464,13 @@ UNSUPPORTED("7x5kpcbvg4va887hky7ufm45y"); // 	return NULL;  /* Bailout if no mem
 	 */
 	final ST_Ppoly_t polyspl = new ST_Ppoly_t();
 	System.err.println("Unable to reclaim box space in spline routing for edge \"%s\" -> \"%s\". Something is probably seriously wrong.\n");
-	make_polyline (pl, polyspl);
+	make_polyline (zz, pl, polyspl);
 	limitBoxes (boxes, boxn, polyspl.ps, polyspl.pn, 10);
 	Memory.free (polyspl.ps);
     }
     
     npoints[0] = spl.pn;
-    return Z.z().ps;
+    return zz.ps;
 } finally {
 LEAVING("3mcnemqisisnqtd4mr72ej76y","_routesplines");
 }
@@ -488,10 +483,10 @@ LEAVING("3mcnemqisisnqtd4mr72ej76y","_routesplines");
 // pointf *routesplines(path * pp, int *npoints) 
 @Unused
 @Original(version="2.38.0", path="lib/common/routespl.c", name="", key="axqoytp2rpr8crajhkuvns6q9", definition="pointf *routesplines(path * pp, int *npoints)")
-public static CArray<ST_pointf> routesplines(ST_path pp, int npoints[]) {
+public static CArray<ST_pointf> routesplines(Globals zz, ST_path pp, int npoints[]) {
 ENTERING("axqoytp2rpr8crajhkuvns6q9","routesplines");
 try {
-    return _routesplines (pp, npoints, 0);
+    return _routesplines (zz, pp, npoints, 0);
 } finally {
 LEAVING("axqoytp2rpr8crajhkuvns6q9","routesplines");
 }
@@ -504,10 +499,10 @@ LEAVING("axqoytp2rpr8crajhkuvns6q9","routesplines");
 // pointf *routepolylines(path * pp, int *npoints) 
 @Unused
 @Original(version="2.38.0", path="lib/common/routespl.c", name="", key="2v22s41xitwnnsljk9n01nrcy", definition="pointf *routepolylines(path * pp, int *npoints)")
-public static CArray<ST_pointf> routepolylines(ST_path pp, int npoints[]) {
+public static CArray<ST_pointf> routepolylines(Globals zz,ST_path pp, int npoints[]) {
 ENTERING("2v22s41xitwnnsljk9n01nrcy","routepolylines");
 try {
-    return _routesplines (pp, npoints, 1);
+    return _routesplines (zz, pp, npoints, 1);
 } finally {
 LEAVING("2v22s41xitwnnsljk9n01nrcy","routepolylines");
 }
@@ -535,7 +530,7 @@ try {
 	return (j1 - i0);
     if ((j0 <= i1) && (i1 <= j1))
 	return (i1 - j0);
-    return MIN(i1 - i0, j1 - j0);
+    return Math.min(i1 - i0, j1 - j0);
 } finally {
 LEAVING("65qv6x7ghwyt6hey5qd8cgizn","overlap");
 }
@@ -557,9 +552,9 @@ try {
     /* remove degenerate boxes. */
     i = 0;
     for (bi = 0; bi < boxn; bi++) {
-	if (ABS(((ST_boxf)boxes[bi]).LL.y - ((ST_boxf)boxes[bi]).UR.y) < .01)
+	if (Math.abs(((ST_boxf)boxes[bi]).LL.y - ((ST_boxf)boxes[bi]).UR.y) < .01)
 	    continue;
-	if (ABS(((ST_boxf)boxes[bi]).LL.x - ((ST_boxf)boxes[bi]).UR.x) < .01)
+	if (Math.abs(((ST_boxf)boxes[bi]).LL.x - ((ST_boxf)boxes[bi]).UR.x) < .01)
 	    continue;
 	if (i != bi)
 	    boxes[i].___(boxes[bi]);
@@ -711,17 +706,17 @@ LEAVING("dxqjhiid5f58b9gjxp0v3j97b","checkpath");
 // static int mkspacep(int size) 
 @Unused
 @Original(version="2.38.0", path="lib/common/routespl.c", name="mkspacep", key="de6jvvw786rx88318tuuqywgq", definition="static int mkspacep(int size)")
-public static boolean mkspacep(int size) {
+public static boolean mkspacep(Globals zz, int size) {
 ENTERING("de6jvvw786rx88318tuuqywgq","mkspacep");
 try {
-    if (size > Z.z().maxpn) {
-	int newmax = Z.z().maxpn + (size / 300 + 1) * 300;
-	Z.z().ps = CArray.<ST_pointf>REALLOC__(newmax, Z.z().ps, ST_pointf.class);
-	if (N(Z.z().ps)) {
+    if (size > zz.maxpn) {
+	int newmax = zz.maxpn + (size / 300 + 1) * 300;
+	zz.ps = CArray.<ST_pointf>REALLOC__(newmax, zz.ps, ZType.ST_pointf);
+	if ((zz.ps) == null) {
 UNSUPPORTED("ds2v91aohji00tc7zmjuc3v6q"); // 	    agerr(AGERR, "cannot re-allocate ps\n");
 UNSUPPORTED("btmwubugs9vkexo4yb7a5nqel"); // 	    return 1;
 	}
-	Z.z().maxpn = newmax;
+	zz.maxpn = newmax;
     }
     return false;
 } finally {

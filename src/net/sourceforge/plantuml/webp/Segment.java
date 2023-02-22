@@ -20,9 +20,7 @@ public class Segment {
 	int Q0, Q1, Q2, Q3;
 
 	public String toString() {
-		return "" + Globals.toHex(P3) + " " + Globals.toHex(P2) + " "
-				+ Globals.toHex(P1) + " " + Globals.toHex(P0) + " "
-				+ Globals.toHex(Q0) + " " + Globals.toHex(Q1) + " "
-				+ Globals.toHex(Q2) + " " + Globals.toHex(Q3);
+		return "" + Globals.toHex(P3) + " " + Globals.toHex(P2) + " " + Globals.toHex(P1) + " " + Globals.toHex(P0)
+				+ " " + Globals.toHex(Q0) + " " + Globals.toHex(Q1) + " " + Globals.toHex(Q2) + " " + Globals.toHex(Q3);
 	}
 }

@@ -2,17 +2,17 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2009-2024, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program.
  * 
@@ -36,40 +36,20 @@
 
 package smetana.core;
 
-import h.ST_Agattr_s;
-import h.ST_Agclos_s;
-import h.ST_Agdatadict_s;
+import com.plantuml.api.cheerpj.WasmLog;
+
 import h.ST_Agedge_s;
 import h.ST_Agedgeinfo_t;
-import h.ST_Agedgepair_s;
-import h.ST_Agnode_s;
-import h.ST_Agnodeinfo_t;
-import h.ST_Agraph_s;
-import h.ST_Agraphinfo_t;
-import h.ST_Agsubnode_s;
-import h.ST_Agsym_s;
 import h.ST_bezier;
-import h.ST_dtdata_s;
-import h.ST_dthold_s;
-import h.ST_path;
 import h.ST_pointf;
 import h.ST_splines;
-import smetana.core.debug.SmetanaDebug;
 
 // http://docs.oracle.com/javase/specs/jls/se5.0/html/expressions.html#15.7.4
 // http://www.jbox.dk/sanos/source/lib/string.c.html
 
-public class JUtils {
+final public class JUtils {
 
 	public static int USHRT_MAX = 65535;
-
-	public static size_t sizeof(Class cl) {
-		return new size_t(cl);
-	}
-
-	public static size_t sizeof(String name, int sz) {
-		throw new UnsupportedOperationException();
-	}
 
 	public static int strcmp(CString s1, CString s2) {
 		return s1.strcmp(s2);
@@ -120,34 +100,6 @@ public class JUtils {
 		}
 	}
 
-	public static int strlen(CString s) {
-		return s.length();
-	}
-
-	public static double abs(double x) {
-		return Math.abs(x);
-	}
-
-	public static double cos(double x) {
-		return Math.cos(x);
-	}
-
-	public static double sin(double x) {
-		return Math.sin(x);
-	}
-
-	public static double sqrt(double x) {
-		return Math.sqrt(x);
-	}
-
-	public static double atan2(double a, double b) {
-		return Math.atan2(a, b);
-	}
-
-	public static double pow(double a, double b) {
-		return Math.pow(a, b);
-	}
-
 	public static boolean isdigit(char c) {
 		return Character.isDigit(c);
 	}
@@ -172,84 +124,85 @@ public class JUtils {
 		// System.err.println(s);
 	}
 
-	public static boolean EQ(Object o1, Object o2) {
-		final boolean result = EQ_(o1, o2);
-		if (o1 instanceof UnsupportedStarStruct && o2 instanceof UnsupportedStarStruct) {
-			UnsupportedStarStruct ooo1 = (UnsupportedStarStruct) o1;
-			UnsupportedStarStruct ooo2 = (UnsupportedStarStruct) o2;
-			if ((ooo1.UID == ooo2.UID) != result) {
-				throw new UnsupportedOperationException();
-			}
-		}
-		return result;
-	}
-
-	private static boolean EQ_(Object o1, Object o2) {
-		if (o1 == o2) {
+	public static boolean EQ_ARRAY(CArrayOfStar o1, CArrayOfStar o2) {
+		if (o1 == o2)
 			return true;
-		}
-		if (o1 == null && o2 != null) {
-			return false;
-		}
-		if (o2 == null && o1 != null) {
-			return false;
-		}
-		if (o1 instanceof CString && o2 instanceof CString) {
-			return ((CString) o1).isSameThan((CString) o2);
-		}
-		if (o1 instanceof CArrayOfStar && o2 instanceof CArrayOfStar) {
-			return ((CArrayOfStar) o1).comparePointer_((CArrayOfStar) o2) == 0;
-		}
-		if (o1 instanceof __ptr__ && o2 instanceof __ptr__) {
-			return ((__ptr__) o1).isSameThan((__ptr__) o2);
-		}
-
-		System.err.println("o1=" + o1.getClass() + " " + o1);
-		System.err.println("o2=" + o2.getClass() + " " + o2);
-		throw new UnsupportedOperationException();
+		if (o1 != null && o2 != null)
+			return o1.comparePointer_(o2) == 0;
+		return false;
 	}
 
-	public static boolean NEQ(Object o1, Object o2) {
-		return EQ(o1, o2) == false;
+	public static boolean EQ_CSTRING(CString o1, CString o2) {
+		if (o1 == o2)
+			return true;
+		if (o1 != null && o2 != null)
+			return o1.isSameThan(o2);
+		return false;
 	}
 
-	public static void qsort1(CArrayOfStar array, int nb, CFunction compare) {
-		SmetanaDebug.LOG("qsort1 "+nb);
-		boolean change;
-		do {
-			change = false;
-			for (int i = 0; i < nb - 1; i++) {
-				__ptr__ element1 = array.plus_(i);
-				__ptr__ element2 = array.plus_(i + 1);
-				Integer cmp = (Integer) compare.exe(element1, element2);
-				if (cmp.intValue() > 0) {
-					change = true;
-					array._swap(i, i + 1);
+	public static void qsort(Globals zz, CArrayOfStar array, int nb, CFunction compare) {
+		WasmLog.log("bubble sort objects " + nb);
+		try {
+			for (int pass = 0; pass < nb - 1; pass++) {
+				boolean change = false;
+				for (int i = 0; i < nb - 1; i++) {
+					final __ptr__ element1 = array.plus_(i);
+					final __ptr__ element2 = array.plus_(i + 1);
+					final Integer cmp = (Integer) compare.exe(zz, element1, element2);
+					if (cmp.intValue() > 0) {
+						change = true;
+						array._swap(i, i + 1);
+					}
 				}
+				if (change == false)
+					return;
 			}
-		} while (change);
-		SmetanaDebug.LOG("qsort1 ok");
+		} finally {
+			WasmLog.log("sort done");
+			// ::comment when CORE
+			for (int i = 0; i < nb - 1; i++) {
+				final __ptr__ element1 = array.plus_(i);
+				final __ptr__ element2 = array.plus_(i + 1);
+				final Integer cmp = (Integer) compare.exe(zz, element1, element2);
+				if (cmp.intValue() > 0)
+					throw new IllegalStateException();
+			}
+			// ::done
+		}
 
 	}
 
-	public static void qsort2(int array[], int nb, CFunction compare) {
-		SmetanaDebug.LOG("qsort2 "+nb);
-		boolean change;
-		do {
-			change = false;
-			for (int i = 0; i < nb - 1; i++) {
-				Integer element1 = array[i];
-				Integer element2 = array[i + 1];
-				Integer cmp = (Integer) compare.exe(element1, element2);
-				if (cmp.intValue() > 0) {
-					change = true;
-					final int tmp = array[i];
-					array[i] = array[i + 1];
-					array[i + 1] = tmp;
+	public static void qsortInt(Globals zz, int array[], int nb, CFunction compare) {
+		WasmLog.log("bubble sort int[] " + nb);
+		try {
+			for (int pass = 0; pass < nb - 1; pass++) {
+				boolean change = false;
+				for (int i = 0; i < nb - 1; i++) {
+					final Integer element1 = array[i];
+					final Integer element2 = array[i + 1];
+					final Integer cmp = (Integer) compare.exe(zz, element1, element2);
+					if (cmp.intValue() > 0) {
+						change = true;
+						final int tmp = array[i];
+						array[i] = array[i + 1];
+						array[i + 1] = tmp;
+					}
 				}
+				if (change == false)
+					return;
 			}
-		} while (change);
-		SmetanaDebug.LOG("qsort2 ok");
+		} finally {
+			WasmLog.log("sort done");
+			// ::comment when CORE
+			for (int i = 0; i < nb - 1; i++) {
+				final Integer element1 = array[i];
+				final Integer element2 = array[i + 1];
+				final Integer cmp = (Integer) compare.exe(zz, element1, element2);
+				if (cmp.intValue() > 0)
+					throw new IllegalStateException();
+			}
+			// ::done
+		}
 
 	}
 
@@ -265,7 +218,7 @@ public class JUtils {
 
 	public static void printDebugEdge(ST_Agedge_s e) {
 		System.err.println("*********** PRINT EDGE ********** ");
-		final ST_Agedgeinfo_t data = (ST_Agedgeinfo_t) Macro.AGDATA(e).castTo(ST_Agedgeinfo_t.class);
+		final ST_Agedgeinfo_t data = (ST_Agedgeinfo_t) e.data.castTo(ST_Agedgeinfo_t.class);
 		final ST_splines splines = (ST_splines) data.spl;
 		// ST_boxf bb = (ST_boxf) splines.bb;
 		final ST_bezier list = splines.list.get__(0);
@@ -296,52 +249,6 @@ public class JUtils {
 			final ST_pointf pt = bezier.list.get__(i);
 			System.err.println("pt=" + pointftoString(pt));
 		}
-	}
-
-	public static __ptr__ create(Class theClass, __ptr__ parent) {
-		if (theClass == ST_Agedgepair_s.class) {
-			return new ST_Agedgepair_s();
-		}
-		if (theClass == ST_Agsym_s.class) {
-			return new ST_Agsym_s();
-		}
-		if (theClass == ST_dthold_s.class) {
-			return new ST_dthold_s();
-		}
-		if (theClass == ST_path.class) {
-			return new ST_path();
-		}
-		if (theClass == ST_Agedgeinfo_t.class) {
-			return new ST_Agedgeinfo_t();
-		}
-		if (theClass == ST_Agnodeinfo_t.class) {
-			return new ST_Agnodeinfo_t();
-		}
-		if (theClass == ST_Agraphinfo_t.class) {
-			return new ST_Agraphinfo_t();
-		}
-		if (theClass == ST_Agattr_s.class) {
-			return new ST_Agattr_s();
-		}
-		if (theClass == ST_Agdatadict_s.class) {
-			return new ST_Agdatadict_s();
-		}
-		if (theClass == ST_dtdata_s.class) {
-			return new ST_dtdata_s();
-		}
-		if (theClass == ST_Agraph_s.class) {
-			return new ST_Agraph_s();
-		}
-		if (theClass == ST_Agsubnode_s.class) {
-			return new ST_Agsubnode_s();
-		}
-		if (theClass == ST_Agnode_s.class) {
-			return new ST_Agnode_s();
-		}
-		if (theClass == ST_Agclos_s.class) {
-			return new ST_Agclos_s();
-		}
-		throw new UnsupportedOperationException(theClass.toString());
 	}
 
 }

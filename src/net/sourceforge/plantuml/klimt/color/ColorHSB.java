@@ -37,8 +37,7 @@ public class ColorHSB extends Color {
 
 	@Override
 	public String toString() {
-		return String.format(Locale.US, "%s[a=%02X r=%02X g=%02X b=%02X / h=%f s=%f b=%f]",
-				getClass().getSimpleName(), getAlpha(), getRed(), getGreen(), getBlue(), getHue(), getSaturation(), getBrightness()
-		);
+		return String.format(Locale.US, "%s[a=%02X r=%02X g=%02X b=%02X / h=%f s=%f b=%f]", getClass().getSimpleName(),
+				getAlpha(), getRed(), getGreen(), getBlue(), getHue(), getSaturation(), getBrightness());
 	}
 }

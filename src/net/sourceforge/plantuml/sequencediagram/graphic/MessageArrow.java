@@ -2,14 +2,14 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2009-2024, Arnaud Roques
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of PlantUML.
  *
@@ -37,16 +37,16 @@ package net.sourceforge.plantuml.sequencediagram.graphic;
 
 import java.util.Objects;
 
-import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.ArrowComponent;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.skin.rose.Rose;
-import net.sourceforge.plantuml.ugraphic.UGraphic;
 import net.sourceforge.plantuml.url.Url;
 
 class MessageArrow extends Arrow {
@@ -55,8 +55,8 @@ class MessageArrow extends Arrow {
 	private final LivingParticipantBox p2;
 	private final Component compAliveBox;
 
-	public MessageArrow(double startingY, Rose skin, ArrowComponent arrow, LivingParticipantBox p1, LivingParticipantBox p2,
-			Url url, Component compAliveBox) {
+	public MessageArrow(double startingY, Rose skin, ArrowComponent arrow, LivingParticipantBox p1,
+			LivingParticipantBox p2, Url url, Component compAliveBox) {
 		super(startingY, skin, arrow, url);
 
 		if (p1 == p2) {
@@ -80,8 +80,8 @@ class MessageArrow extends Arrow {
 	}
 
 	private double getRightEndInternal(StringBounder stringBounder) {
-		final Segment segment = getParticipantAt(stringBounder, NotePosition.RIGHT).getLiveThicknessAt(stringBounder,
-				getArrowYStartLevel(stringBounder)).getSegment();
+		final Segment segment = getParticipantAt(stringBounder, NotePosition.RIGHT)
+				.getLiveThicknessAt(stringBounder, getArrowYStartLevel(stringBounder)).getSegment();
 		if (segment.getLength() == 0) {
 			return segment.getPos1();
 		}
@@ -141,8 +141,8 @@ class MessageArrow extends Arrow {
 	}
 
 	private XDimension2D getActualDimension(StringBounder stringBounder) {
-		return new XDimension2D(getActualWidth(stringBounder) - getPaddingArrowHead(), getArrowComponent()
-				.getPreferredHeight(stringBounder));
+		return new XDimension2D(getActualWidth(stringBounder) - getPaddingArrowHead(),
+				getArrowComponent().getPreferredHeight(stringBounder));
 	}
 
 	@Override

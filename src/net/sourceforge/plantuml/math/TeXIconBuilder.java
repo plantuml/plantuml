@@ -2,14 +2,14 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2009-2024, Arnaud Roques
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of PlantUML.
  *
@@ -45,15 +45,16 @@ public class TeXIconBuilder {
 
 	private Icon icon;
 
-	public TeXIconBuilder(String tex, Color foregroundColor) throws ClassNotFoundException, NoSuchMethodException,
-			SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException,
-			InvocationTargetException {
+	public TeXIconBuilder(String tex, Color foregroundColor)
+			throws ClassNotFoundException, NoSuchMethodException, SecurityException, InstantiationException,
+			IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 
 		// TeXFormula formula = new TeXFormula(latex);
 		final Class<?> clTeXFormula = Class.forName("org.scilab.forge.jlatexmath.TeXFormula");
 		final Object formula = clTeXFormula.getConstructor(String.class).newInstance(tex);
 
-		// TeXIcon icon = formula.new TeXIconBuilder().setStyle(TeXConstants.STYLE_DISPLAY).setSize(20).build();
+		// TeXIcon icon = formula.new
+		// TeXIconBuilder().setStyle(TeXConstants.STYLE_DISPLAY).setSize(20).build();
 		final Class<?> clTeXIconBuilder = clTeXFormula.getClasses()[0];
 		final Object builder = clTeXIconBuilder.getConstructors()[0].newInstance(formula);
 		clTeXIconBuilder.getMethod("setStyle", int.class).invoke(builder, 0);

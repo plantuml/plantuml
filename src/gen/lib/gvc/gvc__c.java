@@ -2,12 +2,12 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
@@ -49,7 +49,6 @@ import static gen.lib.common.textspan__c.textfont_dict_open;
 import static gen.lib.gvc.gvcontext__c.gvNEWcontext;
 import static gen.lib.gvc.gvtextlayout__c.gvtextlayout_select;
 import static smetana.core.Macro.AGNODE;
-import static smetana.core.Macro.NOT;
 import static smetana.core.debug.SmetanaDebug.ENTERING;
 import static smetana.core.debug.SmetanaDebug.LEAVING;
 
@@ -57,6 +56,7 @@ import gen.annotation.Original;
 import gen.annotation.Unused;
 import h.ST_GVC_s;
 import smetana.core.CString;
+import smetana.core.Globals;
 
 public class gvc__c {
 
@@ -65,13 +65,13 @@ public class gvc__c {
 // GVC_t *gvContext(void) 
 @Unused
 @Original(version="2.38.0", path="lib/gvc/gvc.c", name="", key="f3vdhir2c7dz3pvmx9d3m4lx1", definition="GVC_t *gvContext(void)")
-public static ST_GVC_s gvContext(Object... arg_) {
+public static ST_GVC_s gvContext(Globals zz, Object... arg_) {
 ENTERING("f3vdhir2c7dz3pvmx9d3m4lx1","gvContext");
 try {
 	ST_GVC_s gvc;
-    agattr(null, AGNODE, new CString("label"), new CString("\\N"));
+    agattr(zz, null, AGNODE, new CString("label"), new CString("\\N"));
     /* default to no builtins, demand loading enabled */
-    gvc = (ST_GVC_s) gvNEWcontext(null, (NOT(0)));
+    gvc = (ST_GVC_s) gvNEWcontext(null, (true));
     /* builtins don't require LTDL */
     gvc.config_found = 0;
     gvtextlayout_select(gvc);   /* choose best available textlayout plugin immediately */

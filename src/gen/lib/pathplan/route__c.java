@@ -2,12 +2,12 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
@@ -46,9 +46,7 @@
 package gen.lib.pathplan;
 import static gen.lib.pathplan.solvers__c.solve3;
 import static smetana.core.JUtils.setjmp;
-import static smetana.core.JUtils.sqrt;
 import static smetana.core.Macro.DISTSQ;
-import static smetana.core.Macro.N;
 import static smetana.core.Macro.UNSUPPORTED;
 import static smetana.core.debug.SmetanaDebug.ENTERING;
 import static smetana.core.debug.SmetanaDebug.LEAVING;
@@ -61,7 +59,8 @@ import h.ST_Ppoly_t;
 import h.ST_pointf;
 import h.ST_tna_t;
 import smetana.core.CArray;
-import smetana.core.Z;
+import smetana.core.Globals;
+import smetana.core.ZType;
 import smetana.core.jmp_buf;
 
 public class route__c {
@@ -92,11 +91,11 @@ private static jmp_buf jbuf = new jmp_buf();
 // int Proutespline(Pedge_t * edges, int edgen, Ppolyline_t input, 		 Ppoint_t * evs, Ppolyline_t * output) 
 @Unused
 @Original(version="2.38.0", path="lib/pathplan/route.c", name="Proutespline", key="9stmrdqlmufyk2wutp3totr5j", definition="int Proutespline(Pedge_t * edges, int edgen, Ppolyline_t input, 		 Ppoint_t * evs, Ppolyline_t * output)")
-public static int Proutespline(CArray<ST_Pedge_t> edges, int edgen, ST_Ppoly_t input, CArray<ST_pointf> evs, ST_Ppoly_t output) {
+public static int Proutespline(Globals zz, CArray<ST_Pedge_t> edges, int edgen, ST_Ppoly_t input, CArray<ST_pointf> evs, ST_Ppoly_t output) {
 // WARNING!! STRUCT
-return Proutespline_w_(edges, edgen, (ST_Ppoly_t) input.copy(), evs, output);
+return Proutespline_w_(zz, edges, edgen, (ST_Ppoly_t) input.copy(), evs, output);
 }
-private static int Proutespline_w_(CArray<ST_Pedge_t> edges, int edgen, final ST_Ppoly_t input, CArray<ST_pointf> evs, ST_Ppoly_t output) {
+private static int Proutespline_w_(Globals zz, CArray<ST_Pedge_t> edges, int edgen, final ST_Ppoly_t input, CArray<ST_pointf> evs, ST_Ppoly_t output) {
 ENTERING("9stmrdqlmufyk2wutp3totr5j","Proutespline");
 try {
 	CArray<ST_pointf> inps;
@@ -109,14 +108,14 @@ UNSUPPORTED("8d9xfgejx5vgd6shva5wk5k06"); // 	return -1;
     /* generate the splines */
     evs.get__(0).___(normv(evs.get__(0)));
     evs.get__(1).___(normv(evs.get__(1)));
-    Z.z().opl = 0;
-    growops(4);
-    Z.z().ops_route.get__(Z.z().opl).___(inps.get__(0));
-    Z.z().opl++;
-    if (reallyroutespline(edges, edgen, inps, inpn, evs.get__(0), evs.get__(1)) == -1)
+    zz.opl = 0;
+    growops(zz, 4);
+    zz.ops_route.get__(zz.opl).___(inps.get__(0));
+    zz.opl++;
+    if (reallyroutespline(zz, edges, edgen, inps, inpn, evs.get__(0), evs.get__(1)) == -1)
 	return -1;
-    output.pn = Z.z().opl;
-    output.ps = Z.z().ops_route;
+    output.pn = zz.opl;
+    output.ps = zz.ops_route;
     return 0;
 } finally {
 LEAVING("9stmrdqlmufyk2wutp3totr5j","Proutespline");
@@ -132,44 +131,44 @@ LEAVING("9stmrdqlmufyk2wutp3totr5j","Proutespline");
 //private static int tnan;
 @Unused
 @Original(version="2.38.0", path="lib/pathplan/route.c", name="", key="", definition="")
-public static int reallyroutespline(CArray<ST_Pedge_t> edges, int edgen, CArray<ST_pointf> inps, int inpn, final ST_pointf ev0, final ST_pointf ev1) {
+public static int reallyroutespline(Globals zz, CArray<ST_Pedge_t> edges, int edgen, CArray<ST_pointf> inps, int inpn, final ST_pointf ev0, final ST_pointf ev1) {
 // WARNING!! STRUCT
-return reallyroutespline_w_(edges, edgen, inps, inpn, ev0.copy(), ev1.copy());
+return reallyroutespline_w_(zz, edges, edgen, inps, inpn, ev0.copy(), ev1.copy());
 }
-private static int reallyroutespline_w_(CArray<ST_Pedge_t> edges, int edgen, CArray<ST_pointf> inps, int inpn, final ST_pointf ev0, final ST_pointf ev1) {
+private static int reallyroutespline_w_(Globals zz, CArray<ST_Pedge_t> edges, int edgen, CArray<ST_pointf> inps, int inpn, final ST_pointf ev0, final ST_pointf ev1) {
 ENTERING("13dxqzbgtpl4ubnnvw6ehzzi9","reallyroutespline");
 try {
     final ST_pointf p1 = new ST_pointf(), p2 = new ST_pointf(), cp1 = new ST_pointf(), cp2 = new ST_pointf(), p = new ST_pointf();
     final ST_pointf v1 = new ST_pointf(), v2 = new ST_pointf(), splitv = new ST_pointf(), splitv1 = new ST_pointf(), splitv2 = new ST_pointf();
     double maxd, d, t;
     int maxi, i, spliti;
-    if (Z.z().tnan < inpn) {
-	if (N(Z.z().tnas)) {
-	    if (N(Z.z().tnas = CArray.<ST_tna_t>ALLOC__(inpn, ST_tna_t.class)))
+    if (zz.tnan < inpn) {
+	if ((zz.tnas) == null) {
+	    if ((zz.tnas = CArray.<ST_tna_t>ALLOC__(inpn, ZType.ST_tna_t)) == null)
 		return -1;
 	} else {
-	    if (N(Z.z().tnas = CArray.<ST_tna_t>REALLOC__(inpn, Z.z().tnas, ST_tna_t.class)))
+	    if (((zz.tnas = CArray.<ST_tna_t>REALLOC__(inpn, zz.tnas, ZType.ST_tna_t)))==null)
 		return -1;
 	}
-	Z.z().tnan = inpn;
+	zz.tnan = inpn;
     }
-    Z.z().tnas.get__(0).t = 0;
+    zz.tnas.get__(0).t = 0;
     for (i = 1; i < inpn; i++)
-	Z.z().tnas.get__(i).t = (Z.z().tnas.get__(i-1).t + dist(inps.get__(i), inps.get__(i-1)));
+	zz.tnas.get__(i).t = (zz.tnas.get__(i-1).t + dist(inps.get__(i), inps.get__(i-1)));
     for (i = 1; i < inpn; i++)
-	Z.z().tnas.get__(i).t = (Z.z().tnas.get__(i).t / Z.z().tnas.get__(inpn - 1).t);
+	zz.tnas.get__(i).t = (zz.tnas.get__(i).t / zz.tnas.get__(inpn - 1).t);
     for (i = 0; i < inpn; i++) {
-	Z.z().tnas.get__(i).a[0].___(scale(ev0, B1(Z.z().tnas.get__(i).t)));
-	Z.z().tnas.get__(i).a[1].___(scale(ev1, B2(Z.z().tnas.get__(i).t)));
+	zz.tnas.get__(i).a[0].___(scale(ev0, B1(zz.tnas.get__(i).t)));
+	zz.tnas.get__(i).a[1].___(scale(ev1, B2(zz.tnas.get__(i).t)));
     }
-    if (mkspline(inps, inpn, Z.z().tnas, ev0, ev1, p1, v1, p2, v2) == -1)
+    if (mkspline(inps, inpn, zz.tnas, ev0, ev1, p1, v1, p2, v2) == -1)
 	return -1;
-    if (splinefits(edges, edgen, p1, v1, p2, v2, inps, inpn)!=0)
+    if (splinefits(zz, edges, edgen, p1, v1, p2, v2, inps, inpn)!=0)
 	return 0;
     cp1.___(add(p1, scale(v1, 1 / 3.0)));
     cp2.___(sub(p2, scale(v2, 1 / 3.0)));
     for (maxd = -1, maxi = -1, i = 1; i < inpn - 1; i++) {
-	t = Z.z().tnas.get__(i).t;
+	t = zz.tnas.get__(i).t;
 	p.x = (B0(t) * p1.x + B1(t) * cp1.x + B2(t) * cp2.x + B3(t) * p2.x);
 	p.y = (B0(t) * p1.y + B1(t) * cp1.y + B2(t) * cp2.y + B3(t) * p2.y);
 	if ((d = dist(p, inps.get__(i))) > maxd)
@@ -179,8 +178,8 @@ try {
     splitv1.___(normv(sub(inps.get__(spliti), inps.get__(spliti - 1))));
     splitv2.___(normv(sub(inps.get__(spliti + 1), inps.get__(spliti))));
     splitv.___(normv(add(splitv1, splitv2)));
-    reallyroutespline(edges, edgen, inps, spliti + 1, ev0, splitv);
-    reallyroutespline(edges, edgen, inps.plus_(spliti), inpn - spliti, splitv,
+    reallyroutespline(zz, edges, edgen, inps, spliti + 1, ev0, splitv);
+    reallyroutespline(zz, edges, edgen, inps.plus_(spliti), inpn - spliti, splitv,
 		      ev1);
     return 0;
 } finally {
@@ -258,7 +257,7 @@ try {
     rv = 0.0;
     for (i = 1; i < n; i++) {
 	rv +=
-	    sqrt((p.get__(i).x - p.get__(i - 1).x) * (p.get__(i).x - p.get__(i - 1).x)+
+	    Math.sqrt((p.get__(i).x - p.get__(i - 1).x) * (p.get__(i).x - p.get__(i - 1).x)+
 		 (p.get__(i).y - p.get__(i - 1).y) * (p.get__(i).y - p.get__(i - 1).y));
     }
     return rv;
@@ -274,14 +273,14 @@ LEAVING("ea6jsc0rwfyjtmmuxax6r5ngk","dist_n");
 // static int splinefits(Pedge_t * edges, int edgen, Ppoint_t pa, 		      Pvector_t va, Ppoint_t pb, Pvector_t vb, 		      Ppoint_t * inps, int inpn) 
 @Unused
 @Original(version="2.38.0", path="lib/pathplan/route.c", name="splinefits", key="987ednrgu5qo9dzhpiox47mhb", definition="static int splinefits(Pedge_t * edges, int edgen, Ppoint_t pa, 		      Pvector_t va, Ppoint_t pb, Pvector_t vb, 		      Ppoint_t * inps, int inpn)")
-public static int splinefits(CArray<ST_Pedge_t> edges, int edgen, final ST_pointf pa, final ST_pointf va, final ST_pointf pb, final ST_pointf vb, CArray<ST_pointf> inps, int inpn) {
+public static int splinefits(Globals zz, CArray<ST_Pedge_t> edges, int edgen, final ST_pointf pa, final ST_pointf va, final ST_pointf pb, final ST_pointf vb, CArray<ST_pointf> inps, int inpn) {
 // WARNING!! STRUCT
-return splinefits_w_(edges, edgen, pa.copy(), va.copy(), pb.copy(), vb.copy(), inps, inpn);
+return splinefits_w_(zz, edges, edgen, pa.copy(), va.copy(), pb.copy(), vb.copy(), inps, inpn);
 }
-private static int splinefits_w_(CArray<ST_Pedge_t> edges, int edgen, final ST_pointf pa, final ST_pointf va, final ST_pointf pb, final ST_pointf vb, CArray<ST_pointf> inps, int inpn) {
+private static int splinefits_w_(Globals zz, CArray<ST_Pedge_t> edges, int edgen, final ST_pointf pa, final ST_pointf va, final ST_pointf pb, final ST_pointf vb, CArray<ST_pointf> inps, int inpn) {
 ENTERING("987ednrgu5qo9dzhpiox47mhb","splinefits");
 try {
-    final CArray<ST_pointf> sps = CArray.<ST_pointf>ALLOC__(4, ST_pointf.class);
+    final CArray<ST_pointf> sps = CArray.<ST_pointf>ALLOC__(4, ZType.ST_pointf);
     double a, b;
     int pi;
     int forceflag;
@@ -313,22 +312,22 @@ try {
 	first = 0;
 	
 	if (splineisinside(edges, edgen, sps)) {
-	    growops(Z.z().opl + 4);
+	    growops(zz, zz.opl + 4);
 	    for (pi = 1; pi < 4; pi++) {
-		Z.z().ops_route.get__(Z.z().opl).x = sps.get__(pi).x;
-		Z.z().ops_route.get__(Z.z().opl).y = sps.get__(pi).y;
-		Z.z().opl++;
+		zz.ops_route.get__(zz.opl).x = sps.get__(pi).x;
+		zz.ops_route.get__(zz.opl).y = sps.get__(pi).y;
+		zz.opl++;
 		}
 	    return 1;
 	}
 	if (a == 0 && b == 0) {
 	    if (forceflag!=0) {
-		growops(Z.z().opl + 4);
+		growops(zz, zz.opl + 4);
 		for (pi = 1; pi < 4; pi++)
 		{
-			Z.z().ops_route.get__(Z.z().opl).x = sps.get__(pi).x;
-			Z.z().ops_route.get__(Z.z().opl).y = sps.get__(pi).y;
-		    Z.z().opl++;
+			zz.ops_route.get__(zz.opl).x = sps.get__(pi).x;
+			zz.ops_route.get__(zz.opl).y = sps.get__(pi).y;
+		    zz.opl++;
 		}
 		return 1;
 	    }
@@ -361,7 +360,7 @@ try {
     final double roots[] = new double[4];
     int rooti, rootn;
     int ei;
-    final CArray<ST_pointf> lps = CArray.<ST_pointf>ALLOC__(2, ST_pointf.class);
+    final CArray<ST_pointf> lps = CArray.<ST_pointf>ALLOC__(2, ZType.ST_pointf);
     final ST_pointf ip = new ST_pointf();
     
     double t, ta, tb, tc, td;
@@ -545,7 +544,7 @@ try {
     double d;
     d = v.x * v.x + v.y * v.y;
     if (d > 1e-6) {
-	d = sqrt(d);
+	d = Math.sqrt(d);
 	v.x = v.x / d;
 	v.y = v.y / d;
     }
@@ -562,23 +561,23 @@ LEAVING("3i8m1m9fg7qmnt8jloorwlu8e","normv");
 // static void growops(int newopn) 
 @Unused
 @Original(version="2.38.0", path="lib/pathplan/route.c", name="growops", key="d59jcnpi1y0wr8e9uwxny2fvk", definition="static void growops(int newopn)")
-public static void growops(int newopn) {
+public static void growops(Globals zz, int newopn) {
 ENTERING("d59jcnpi1y0wr8e9uwxny2fvk","growops");
 try {
-    if (newopn <= Z.z().opn_route)
+    if (newopn <= zz.opn_route)
 	return;
-    if (N(Z.z().ops_route)) {
-	if (N(Z.z().ops_route = CArray.<ST_pointf>ALLOC__(newopn, ST_pointf.class))) {
+    if ((zz.ops_route) == null) {
+	if ((zz.ops_route = CArray.<ST_pointf>ALLOC__(newopn, ZType.ST_pointf)) == null) {
 UNSUPPORTED("413an1hqgkb4ezaec6qdsdplx"); // 	    fprintf (stderr, "libpath/%s:%d: %s\n", "graphviz-2.38.0\\lib\\pathplan\\route.c", 32, ("cannot malloc ops"));
 UNSUPPORTED("1r6uhbnmxv8c6msnscw07w0qx"); // 	    longjmp(jbuf,1);
 	}
     } else {
-	if (N(Z.z().ops_route = CArray.<ST_pointf>REALLOC__(newopn, Z.z().ops_route, ST_pointf.class))) {
+	if (((zz.ops_route = CArray.<ST_pointf>REALLOC__(newopn, zz.ops_route, ZType.ST_pointf)))==null) {
 UNSUPPORTED("8u0qgahxvk5pplf90thmhwxhl"); // 	    fprintf (stderr, "libpath/%s:%d: %s\n", "graphviz-2.38.0\\lib\\pathplan\\route.c", 32, ("cannot realloc ops"));
 UNSUPPORTED("1r6uhbnmxv8c6msnscw07w0qx"); // 	    longjmp(jbuf,1);
 	}
     }
-    Z.z().opn_route = newopn;
+    zz.opn_route = newopn;
 } finally {
 LEAVING("d59jcnpi1y0wr8e9uwxny2fvk","growops");
 }
@@ -645,7 +644,7 @@ try {
     double dx, dy;
     dx = p2.x - p1.x;
     dy = p2.y - p1.y;
-    return sqrt(dx * dx + dy * dy);
+    return Math.sqrt(dx * dx + dy * dy);
 } finally {
 LEAVING("dqnlz0tceriykws4ngudl94w9","dist");
 }

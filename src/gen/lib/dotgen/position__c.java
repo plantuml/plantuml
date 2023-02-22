@@ -2,12 +2,12 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
@@ -61,8 +61,6 @@ import static gen.lib.dotgen.fastgr__c.find_fast_edge;
 import static gen.lib.dotgen.fastgr__c.virtual_node;
 import static gen.lib.dotgen.fastgr__c.zapinlist;
 import static gen.lib.dotgen.flat__c.flat_edges;
-import static smetana.core.JUtils.EQ;
-import static smetana.core.JUtils.NEQ;
 import static smetana.core.JUtils.USHRT_MAX;
 import static smetana.core.JUtils.atof;
 import static smetana.core.Macro.AGINEDGE;
@@ -98,11 +96,8 @@ import static smetana.core.Macro.GD_ranksep;
 import static smetana.core.Macro.GD_rn;
 import static smetana.core.Macro.INT_MAX;
 import static smetana.core.Macro.LEAFSET;
-import static smetana.core.Macro.MAX;
-import static smetana.core.Macro.MIN;
 import static smetana.core.Macro.M_aghead;
 import static smetana.core.Macro.M_agtail;
-import static smetana.core.Macro.N;
 import static smetana.core.Macro.ND_UF_size;
 import static smetana.core.Macro.ND_alg;
 import static smetana.core.Macro.ND_clust;
@@ -153,8 +148,9 @@ import h.ST_rank_t;
 import smetana.core.CArray;
 import smetana.core.CArrayOfStar;
 import smetana.core.CString;
+import smetana.core.Globals;
 import smetana.core.Memory;
-import smetana.core.Z;
+import smetana.core.ZType;
 
 
 /*
@@ -231,7 +227,7 @@ try {
 		if (found!=0) break;
 	    }
 	}
-	if (found!=0 || N(tp)) continue;
+	if (found!=0 || (tp) == null) continue;
 	tp = rp.get__(0).v.get_(0);
 	if (r < GD_maxrank(g)) hp = (ST_Agnode_s) rp.get__(1).v.get_(0);
 	else hp = (ST_Agnode_s) rp.get__(-1).v.get_(0);
@@ -240,7 +236,7 @@ try {
 	ND_node_type(sn, 2);
 	make_aux_edge(sn, tp, 0, 0);
 	make_aux_edge(sn, hp, 0, 0);
-	ND_rank(sn, MIN(ND_rank(tp), ND_rank(hp)));
+	ND_rank(sn, Math.min(ND_rank(tp), ND_rank(hp)));
     }
 } finally {
 LEAVING("ccowbxkwmrj75tojopmhcmubx","connectGraph");
@@ -252,20 +248,20 @@ LEAVING("ccowbxkwmrj75tojopmhcmubx","connectGraph");
 
 @Reviewed(when = "15/11/2020")
 @Original(version="2.38.0", path="lib/dotgen/position.c", name="dot_position", key="33snzyd9z0loienur06dnily9", definition="void dot_position(graph_t * g, aspect_t* asp)")
-public static void dot_position(ST_Agraph_s g, ST_aspect_t asp) {
+public static void dot_position(Globals zz, ST_Agraph_s g, ST_aspect_t asp) {
 ENTERING("33snzyd9z0loienur06dnily9","dot_position");
 try {
     if (GD_nlist(g) == null)
 	return;			/* ignore empty graph */
-    mark_lowclusters(g);	/* we could remove from splines.c now */
-    set_ycoords(g);
-    if (Z.z().Concentrate)
+    mark_lowclusters(zz, g);	/* we could remove from splines.c now */
+    set_ycoords(zz, g);
+    if (zz.Concentrate)
 	dot_concentrate(g);
     expand_leaves(g);
-    if (flat_edges(g))
-	set_ycoords(g);
-    create_aux_edges(g);
-    if (rank(g, 2, nsiter2(g))!=0) { /* LR balance == 2 */
+    if (flat_edges(zz, g))
+	set_ycoords(zz, g);
+    create_aux_edges(zz, g);
+    if (rank(zz, g, 2, nsiter2(zz, g))!=0) { /* LR balance == 2 */
 	connectGraph (g);
 	//assert(rank(g, 2, nsiter2(g)) == 0);
     }
@@ -286,12 +282,12 @@ LEAVING("33snzyd9z0loienur06dnily9","dot_position");
 // static int nsiter2(graph_t * g) 
 @Unused
 @Original(version="2.38.0", path="lib/dotgen/position.c", name="nsiter2", key="90vn63m6v0w9fn9a2dgfxxx3h", definition="static int nsiter2(graph_t * g)")
-public static int nsiter2(ST_Agraph_s g) {
+public static int nsiter2(Globals zz, ST_Agraph_s g) {
 ENTERING("90vn63m6v0w9fn9a2dgfxxx3h","nsiter2");
 try {
     int maxiter = INT_MAX;
     CString s;
-    if ((s = agget(g, new CString("nslimit")))!=null)
+    if ((s = agget(zz, g, new CString("nslimit")))!=null)
 	maxiter = (int)(atof(s) * agnnodes(g));
     return maxiter;
 } finally {
@@ -311,7 +307,7 @@ ENTERING("5bax8ut6nnk4pr7yxdumk9chl","go");
 try {
     int i;
     ST_Agedge_s e;
-    if (EQ(u, v))
+    if (u == v)
 	return true;
     for (i = 0; (e = (ST_Agedge_s) ND_out(u).list.get_(i))!=null; i++) {
 	if (go(aghead(e), v))
@@ -443,7 +439,7 @@ try {
                  */
 		sw = 0;
 		for (k = 0; (e = (ST_Agedge_s) ND_other(u).list.get_(k))!=null; k++) {
-		    if (EQ(agtail(e), aghead(e))) {
+		    if (agtail(e) == aghead(e)) {
 			sw += selfRightSpace (e);
 		    }
 		}
@@ -493,13 +489,13 @@ try {
 		    /* flat edge between adjacent neighbors 
                      * ED_dist contains the largest label width.
                      */
-		    m0 = MAX(m0, (int)(width + GD_nodesep(g) + ROUND(ED_dist(e))));
+		    m0 = Math.max(m0, (int)(width + GD_nodesep(g) + ROUND(ED_dist(e))));
 		    if (m0 > USHRT_MAX)
 			m0 = (int) largeMinlen (m0);
-		    ED_minlen(e0, MAX(ED_minlen(e0), m0));
-		    ED_weight(e0, MAX(ED_weight(e0), ED_weight(e)));
+		    ED_minlen(e0, Math.max(ED_minlen(e0), m0));
+		    ED_weight(e0, Math.max(ED_weight(e0), ED_weight(e)));
 		}
-		else if (N(ED_label(e))) {
+		else if ((ED_label(e)) == null) {
 		    /* unlabeled flat edge between non-neighbors 
 		     * ED_minlen(e) is max of ED_minlen of all equivalent 
                      * edges.
@@ -546,7 +542,7 @@ try {
 		make_aux_edge(sn, agtail(e), m0 + 1, ED_weight(e));
 		make_aux_edge(sn, aghead(e), m1 + 1, ED_weight(e));
 		ND_rank(sn,
-		    MIN(ND_rank(agtail(e)) - m0 - 1,
+		    Math.min(ND_rank(agtail(e)) - m0 - 1,
 			ND_rank(aghead(e)) - m1 - 1));
 	    }
     }
@@ -562,20 +558,20 @@ LEAVING("6uruo8mutxgcni9fm8jcrw4cr","make_edge_pairs");
 // static void contain_clustnodes(graph_t * g) 
 @Unused
 @Original(version="2.38.0", path="lib/dotgen/position.c", name="contain_clustnodes", key="79v3omwzni0nm3h05l3onjsbz", definition="static void contain_clustnodes(graph_t * g)")
-public static void contain_clustnodes(ST_Agraph_s g) {
+public static void contain_clustnodes(Globals zz, ST_Agraph_s g) {
 ENTERING("79v3omwzni0nm3h05l3onjsbz","contain_clustnodes");
 try {
     int c;
     ST_Agedge_s e;
-    if (NEQ(g, dot_root(g))) {
-	contain_nodes(g);
+    if ((g != dot_root(g))) {
+	contain_nodes(zz, g);
 	if ((e = find_fast_edge(GD_ln(g),GD_rn(g)))!=null)	/* maybe from lrvn()?*/
 	    ED_weight(e, ED_weight(e) + 128);
 	else
 	    make_aux_edge(GD_ln(g), GD_rn(g), 1, 128);	/* clust compaction edge */
     }
     for (c = 1; c <= GD_n_cluster(g); c++)
-	contain_clustnodes((ST_Agraph_s) GD_clust(g).get_(c));
+	contain_clustnodes(zz, (ST_Agraph_s) GD_clust(g).get_(c));
 } finally {
 LEAVING("79v3omwzni0nm3h05l3onjsbz","contain_clustnodes");
 }
@@ -588,16 +584,16 @@ LEAVING("79v3omwzni0nm3h05l3onjsbz","contain_clustnodes");
 // static int vnode_not_related_to(graph_t * g, node_t * v) 
 @Unused
 @Original(version="2.38.0", path="lib/dotgen/position.c", name="vnode_not_related_to", key="24yfgklubun581fbfyx62lzsm", definition="static int vnode_not_related_to(graph_t * g, node_t * v)")
-public static boolean vnode_not_related_to(ST_Agraph_s g, ST_Agnode_s v) {
+public static boolean vnode_not_related_to(Globals zz, ST_Agraph_s g, ST_Agnode_s v) {
 ENTERING("24yfgklubun581fbfyx62lzsm","vnode_not_related_to");
 try {
     ST_Agedge_s e;
     if (ND_node_type(v) != 1)
 	return false;
     for (e = (ST_Agedge_s) ND_save_out(v).list.get_(0); ED_to_orig(e)!=null; e = ED_to_orig(e));
-    if (agcontains(g, agtail(e)))
+    if (agcontains(zz, g, agtail(e)))
 	return false;
-    if (agcontains(g, aghead(e)))
+    if (agcontains(zz, g, aghead(e)))
 	return false;
     return true;
 } finally {
@@ -612,12 +608,12 @@ LEAVING("24yfgklubun581fbfyx62lzsm","vnode_not_related_to");
 // static void keepout_othernodes(graph_t * g) 
 @Unused
 @Original(version="2.38.0", path="lib/dotgen/position.c", name="keepout_othernodes", key="73cdgjl47ohty2va766evbo4", definition="static void keepout_othernodes(graph_t * g)")
-public static void keepout_othernodes(ST_Agraph_s g) {
+public static void keepout_othernodes(Globals zz, ST_Agraph_s g) {
 ENTERING("73cdgjl47ohty2va766evbo4","keepout_othernodes");
 try {
     int i, c, r, margin;
     ST_Agnode_s u, v;
-    margin = late_int (g, Z.z().G_margin, 8, 0);
+    margin = late_int (g, zz.G_margin, 8, 0);
     for (r = GD_minrank(g); r <= GD_maxrank(g); r++) {
 	if (GD_rank(g).get__(r).n == 0)
 	    continue;
@@ -627,7 +623,7 @@ try {
 	for (i = ND_order(v) - 1; i >= 0; i--) {
 	    u = (ST_Agnode_s) GD_rank(dot_root(g)).get__(r).v.get_(i);
 	    /* can't use "is_a_vnode_of" because elists are swapped */
-	    if ((ND_node_type(u) == 0) || vnode_not_related_to(g, u)) {
+	    if ((ND_node_type(u) == 0) || vnode_not_related_to(zz, g, u)) {
 		make_aux_edge(u, GD_ln(g), margin + ND_rw(u), 0);
 		break;
 	    }
@@ -635,14 +631,14 @@ try {
 	for (i = ND_order(v) + GD_rank(g).get__(r).n; i < GD_rank(dot_root(g)).get__(r).n;
 	     i++) {
 	    u = (ST_Agnode_s) GD_rank(dot_root(g)).get__(r).v.get_(i);
-	    if ((ND_node_type(u) == 0) || vnode_not_related_to(g, u)) {
+	    if ((ND_node_type(u) == 0) || vnode_not_related_to(zz, g, u)) {
 		make_aux_edge(GD_rn(g), u, margin + ND_lw(u), 0);
 		break;
 	    }
 	}
     }
     for (c = 1; c <= GD_n_cluster(g); c++)
-	keepout_othernodes((ST_Agraph_s) GD_clust(g).get_(c));
+	keepout_othernodes(zz, (ST_Agraph_s) GD_clust(g).get_(c));
 } finally {
 LEAVING("73cdgjl47ohty2va766evbo4","keepout_othernodes");
 }
@@ -655,12 +651,12 @@ LEAVING("73cdgjl47ohty2va766evbo4","keepout_othernodes");
 // static void contain_subclust(graph_t * g) 
 @Unused
 @Original(version="2.38.0", path="lib/dotgen/position.c", name="contain_subclust", key="c734mx1638sfqtl7vh7itaxyx", definition="static void contain_subclust(graph_t * g)")
-public static void contain_subclust(ST_Agraph_s g) {
+public static void contain_subclust(Globals zz, ST_Agraph_s g) {
 ENTERING("c734mx1638sfqtl7vh7itaxyx","contain_subclust");
 try {
     int margin, c;
     ST_Agraph_s subg;
-    margin = late_int (g, Z.z().G_margin, 8, 0);
+    margin = late_int (g, zz.G_margin, 8, 0);
     make_lrvn(g);
     for (c = 1; c <= GD_n_cluster(g); c++) {
 	subg = (ST_Agraph_s) GD_clust(g).get_(c);
@@ -669,7 +665,7 @@ try {
 		      margin + GD_border(g)[3].x, 0);
 	make_aux_edge(GD_rn(subg), GD_rn(g),
 		      margin + GD_border(g)[1].x, 0);
-	contain_subclust(subg);
+	contain_subclust(zz, subg);
     }
 } finally {
 LEAVING("c734mx1638sfqtl7vh7itaxyx","contain_subclust");
@@ -683,13 +679,13 @@ LEAVING("c734mx1638sfqtl7vh7itaxyx","contain_subclust");
 // static void separate_subclust(graph_t * g) 
 @Unused
 @Original(version="2.38.0", path="lib/dotgen/position.c", name="separate_subclust", key="6oruu1p1b7kxr5moh3kmcmvr3", definition="static void separate_subclust(graph_t * g)")
-public static void separate_subclust(ST_Agraph_s g) {
+public static void separate_subclust(Globals zz, ST_Agraph_s g) {
 ENTERING("6oruu1p1b7kxr5moh3kmcmvr3","separate_subclust");
 try {
     int i, j, margin;
     ST_Agraph_s low, high;
     ST_Agraph_s left, right;
-    margin = late_int (g, Z.z().G_margin, 8, 0);
+    margin = late_int (g, zz.G_margin, 8, 0);
     for (i = 1; i <= GD_n_cluster(g); i++)
 	make_lrvn((ST_Agraph_s) GD_clust(g).get_(i));
     for (i = 1; i <= GD_n_cluster(g); i++) {
@@ -713,7 +709,7 @@ try {
 	    }
 	    make_aux_edge(GD_rn(left), GD_ln(right), margin, 0);
 	}
-	separate_subclust((ST_Agraph_s) GD_clust(g).get_(i));
+	separate_subclust(zz, (ST_Agraph_s) GD_clust(g).get_(i));
     }
 } finally {
 LEAVING("6oruu1p1b7kxr5moh3kmcmvr3","separate_subclust");
@@ -727,14 +723,14 @@ LEAVING("6oruu1p1b7kxr5moh3kmcmvr3","separate_subclust");
 // static void pos_clusters(graph_t * g) 
 @Unused
 @Original(version="2.38.0", path="lib/dotgen/position.c", name="pos_clusters", key="8f8gs2zivo4pnd3hmtb9g23x4", definition="static void pos_clusters(graph_t * g)")
-public static void pos_clusters(ST_Agraph_s g) {
+public static void pos_clusters(Globals zz, ST_Agraph_s g) {
 ENTERING("8f8gs2zivo4pnd3hmtb9g23x4","pos_clusters");
 try {
     if (GD_n_cluster(g) > 0) {
-	contain_clustnodes(g);
-	keepout_othernodes(g);
-	contain_subclust(g);
-	separate_subclust(g);
+	contain_clustnodes(zz, g);
+	keepout_othernodes(zz, g);
+	contain_subclust(zz, g);
+	separate_subclust(zz, g);
     }
 } finally {
 LEAVING("8f8gs2zivo4pnd3hmtb9g23x4","pos_clusters");
@@ -784,13 +780,13 @@ LEAVING("fywsxto7yvl5wa2dfu7u7jj1","compress_graph");
 // static void create_aux_edges(graph_t * g) 
 @Unused
 @Original(version="2.38.0", path="lib/dotgen/position.c", name="create_aux_edges", key="b7y0htx4svbhaqb1a12dihlue", definition="static void create_aux_edges(graph_t * g)")
-public static void create_aux_edges(ST_Agraph_s g) {
+public static void create_aux_edges(Globals zz, ST_Agraph_s g) {
 ENTERING("b7y0htx4svbhaqb1a12dihlue","create_aux_edges");
 try {
     allocate_aux_edges(g);
     make_LR_constraints(g);
     make_edge_pairs(g);
-    pos_clusters(g);
+    pos_clusters(zz, g);
     compress_graph(g);
 } finally {
 LEAVING("b7y0htx4svbhaqb1a12dihlue","create_aux_edges");
@@ -880,7 +876,7 @@ LEAVING("1oobmglea9t819y95xeel37h8","set_xcoords");
  */
 @Reviewed(when = "15/11/2020")
 @Original(version="2.38.0", path="lib/dotgen/position.c", name="clust_ht", key="emtrqv582hdma5aajqtjd76m1", definition="static int clust_ht(Agraph_t * g)")
-public static int clust_ht(ST_Agraph_s g) {
+public static int clust_ht(Globals zz, ST_Agraph_s g) {
 ENTERING("emtrqv582hdma5aajqtjd76m1","clust_ht");
 try {
     int c;
@@ -889,10 +885,10 @@ try {
     CArray<ST_rank_t> rank = GD_rank(dot_root(g));
     int margin, haveClustLabel = 0;
     
-    if (EQ(g, dot_root(g))) 
+    if (g == dot_root(g)) 
 	margin = CL_OFFSET;
     else
-	margin = late_int (g, Z.z().G_margin, CL_OFFSET, 0);
+	margin = late_int (g, zz.G_margin, CL_OFFSET, 0);
     
     ht1 = GD_ht1(g);
     ht2 = GD_ht2(g);
@@ -900,18 +896,18 @@ try {
     /* account for sub-clusters */
     for (c = 1; c <= GD_n_cluster(g); c++) {
 	subg = GD_clust(g).get_(c);
-	haveClustLabel |= clust_ht(subg);
+	haveClustLabel |= clust_ht(zz, subg);
 	if (GD_maxrank(subg) == GD_maxrank(g))
-	    ht1 = MAX(ht1, GD_ht1(subg) + margin);
+	    ht1 = Math.max(ht1, GD_ht1(subg) + margin);
 	if (GD_minrank(subg) == GD_minrank(g))
-	    ht2 = MAX(ht2, GD_ht2(subg) + margin);
+	    ht2 = Math.max(ht2, GD_ht2(subg) + margin);
     }
     
     /* account for a possible cluster label in clusters */
     /* room for root graph label is handled in dotneato_postprocess */
-    if (NEQ(g, dot_root(g)) && GD_label(g)!=null) {
+    if ((g != dot_root(g)) && GD_label(g)!=null) {
 	haveClustLabel = 1;
-	if (N(GD_flip(agroot(g)))) {
+	if (!GD_flip(agroot(g))) {
 	    ht1 += GD_border(g)[BOTTOM_IX].y;
 	    ht2 += GD_border(g)[TOP_IX].y;
 	}
@@ -920,9 +916,9 @@ try {
     GD_ht2(g, ht2);
     
     /* update the global ranks */
-    if (NEQ(g, dot_root(g))) {
-	rank.get__(GD_minrank(g)).ht2 = MAX(rank.get__(GD_minrank(g)).ht2, ht2);
-	rank.get__(GD_maxrank(g)).ht1 = MAX(rank.get__(GD_maxrank(g)).ht1, ht1);
+    if ((g != dot_root(g))) {
+	rank.get__(GD_minrank(g)).ht2 = Math.max(rank.get__(GD_minrank(g)).ht2, ht2);
+	rank.get__(GD_maxrank(g)).ht1 = Math.max(rank.get__(GD_maxrank(g)).ht1, ht1);
     }
     return haveClustLabel;
 } finally {
@@ -936,7 +932,7 @@ LEAVING("emtrqv582hdma5aajqtjd76m1","clust_ht");
 @Reviewed(when = "15/11/2020")
 @Difficult
 @Original(version="2.38.0", path="lib/dotgen/position.c", name="set_ycoords", key="bp8vmol4ncadervcfossysdtd", definition="static void set_ycoords(graph_t * g)")
-public static void set_ycoords(ST_Agraph_s g) {
+public static void set_ycoords(Globals zz, ST_Agraph_s g) {
 ENTERING("bp8vmol4ncadervcfossysdtd","set_ycoords");
 try {
     int i, j, r;
@@ -961,9 +957,9 @@ try {
 	    /* have to look for high self-edge labels, too */
 	    if (ND_other(n).list!=null)
 		for (j = 0; (e = (ST_Agedge_s) ND_other(n).list.get_(j))!=null; j++) {
-		    if (EQ(agtail(e), aghead(e))) {
+		    if (agtail(e) == aghead(e)) {
 			if (ED_label(e)!=null)
-			    ht2 = MAX(ht2, ED_label(e).dimen.y / 2);
+			    ht2 = Math.max(ht2, ED_label(e).dimen.y / 2);
 		    }
 		}
 	    
@@ -979,17 +975,17 @@ try {
 	    
 	    /* update nearest enclosing cluster rank ht */
 	    if ((clust = ND_clust(n))!=null) {
-		int yoff = (clust == g ? 0 : late_int (clust, Z.z().G_margin, CL_OFFSET, 0));
+		int yoff = (clust == g ? 0 : late_int (clust, zz.G_margin, CL_OFFSET, 0));
 		if (ND_rank(n) == GD_minrank(clust))
-		    GD_ht2(clust, MAX(GD_ht2(clust), ht2 + yoff));
+		    GD_ht2(clust, Math.max(GD_ht2(clust), ht2 + yoff));
 		if (ND_rank(n) == GD_maxrank(clust))
-		    GD_ht1(clust, MAX(GD_ht1(clust), ht2 + yoff));
+		    GD_ht1(clust, Math.max(GD_ht1(clust), ht2 + yoff));
 	    }
 	}
     }
     
     /* scan sub-clusters */
-    lbl = clust_ht(g);
+    lbl = clust_ht(zz, g);
     
     /* make the initial assignment of ycoords to leftmost nodes by ranks */
     maxht = 0;
@@ -998,10 +994,10 @@ try {
     while (--r >= GD_minrank(g)) {
 	d0 = rank.get__(r + 1).pht2 + rank.get__(r).pht1 + GD_ranksep(g);	/* prim node sep */
 	d1 = rank.get__(r + 1).ht2 + rank.get__(r).ht1 + CL_OFFSET;	/* cluster sep */
-	delta = MAX(d0, d1);
+	delta = Math.max(d0, d1);
 	if (rank.get__(r).n > 0)	/* this may reflect some problem */
 		ND_coord(rank.get__(r).v.get_(0)).y = (ND_coord(rank.get__(r + 1).v.get_(0))).y + delta;
-	maxht = MAX(maxht, delta);
+	maxht = Math.max(maxht, delta);
     }
     
     /* If there are cluster labels and the drawing is rotated, we need special processing to
@@ -1063,7 +1059,7 @@ try {
  ST_Agnode_s v;
  final ST_pointf LL = new ST_pointf();
  final ST_pointf UR = new ST_pointf();
- if (EQ(g, dot_root(g))) {
+ if (g == dot_root(g)) {
 	LL.x = INT_MAX;
 	UR.x = -((double)INT_MAX);
 	for (r = GD_minrank(g); r <= GD_maxrank(g); r++) {
@@ -1076,7 +1072,7 @@ try {
 		v = (ST_Agnode_s) GD_rank(g).get__(r).v.get_(c);
 	    if (ND_node_type(v) == 0) {
 		x = ND_coord(v).x - ND_lw(v);
-		LL.x = (MIN(LL.x, x));
+		LL.x = (Math.min(LL.x, x));
 	    }
 	    else continue;
 		/* At this point, we know the rank contains a NORMAL node */
@@ -1084,14 +1080,14 @@ try {
 	    for (c = rnkn-2; ND_node_type(v) != 0; c--)
 		v = (ST_Agnode_s) GD_rank(g).get__(r).v.get_(c);
 	    x = ND_coord(v).x + ND_rw(v);
-	    UR.x = MAX(UR.x, x);
+	    UR.x = Math.max(UR.x, x);
 	}
 	offset = 8;
 	for (c = 1; c <= GD_n_cluster(g); c++) {
 	    x = (double)(GD_bb(GD_clust(g).get_(c)).LL.x - offset);
-	    LL.x = MIN(LL.x, x);
+	    LL.x = Math.min(LL.x, x);
 	    x = (double)(GD_bb(GD_clust(g).get_(c)).UR.x + offset);
-	    UR.x = MAX(UR.x, x);
+	    UR.x = Math.max(UR.x, x);
 	}
  } else {
 	LL.x = (double)(ND_rank(GD_ln(g)));
@@ -1276,7 +1272,7 @@ try {
 	}
 	if (j <= GD_rank(g).get__(r).n)
 	    continue;
-	GD_rank(g).get__(r).v = CArrayOfStar.<ST_Agnode_s>REALLOC(j + 1, GD_rank(g).get__(r).v, ST_Agnode_s.class);
+	GD_rank(g).get__(r).v = CArrayOfStar.<ST_Agnode_s>REALLOC(j + 1, GD_rank(g).get__(r).v, ZType.ST_Agnode_s);
 	for (i = GD_rank(g).get__(r).n - 1; i >= 0; i--) {
 	    v = GD_rank(g).get__(r).v.get_(i);
 	    GD_rank(g).get__(r).v.set_(ND_order(v), v);
@@ -1415,8 +1411,8 @@ try {
     ND_node_type(ln, 2);
     rn = virtual_node(dot_root(g));
     ND_node_type(rn, 2);
-    if (GD_label(g)!=null && NEQ(g, dot_root(g)) && N(GD_flip(agroot(g)))) {
-	int w = MAX((int)GD_border(g)[0].x, (int)GD_border(g)[2].x);
+    if (GD_label(g)!=null && (g != dot_root(g)) && !GD_flip(agroot(g))) {
+	int w = Math.max((int)GD_border(g)[0].x, (int)GD_border(g)[2].x);
 	make_aux_edge(ln, rn, w, 0);
     }
     GD_ln(g, ln);
@@ -1433,12 +1429,12 @@ LEAVING("d4b57ugpwxy567pfmxn14ed8d","make_lrvn");
 // static void contain_nodes(graph_t * g) 
 @Unused
 @Original(version="2.38.0", path="lib/dotgen/position.c", name="contain_nodes", key="daz786541idcxnywckcbncazb", definition="static void contain_nodes(graph_t * g)")
-public static void contain_nodes(ST_Agraph_s  g) {
+public static void contain_nodes(Globals zz, ST_Agraph_s  g) {
 ENTERING("daz786541idcxnywckcbncazb","contain_nodes");
 try {
     int margin, r;
     ST_Agnode_s ln, rn, v;
-    margin = late_int (g, Z.z().G_margin, 8, 0);
+    margin = late_int (g, zz.G_margin, 8, 0);
     make_lrvn(g);
     ln = GD_ln(g);
     rn = GD_rn(g);

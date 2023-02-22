@@ -2,14 +2,14 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2009-2024, Arnaud Roques
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of PlantUML.
  *
@@ -41,29 +41,29 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.plantuml.ColorParam;
-import net.sourceforge.plantuml.ISkinParam;
-import net.sourceforge.plantuml.SkinParamBackcolored;
-import net.sourceforge.plantuml.SkinParamForceColor;
-import net.sourceforge.plantuml.graphic.SymbolContext;
+import net.sourceforge.plantuml.klimt.Fashion;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.skin.ColorParam;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
+import net.sourceforge.plantuml.skin.SkinParamBackcolored;
+import net.sourceforge.plantuml.skin.SkinParamForceColor;
 import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 public class LifeLine {
 
 	static class Variation {
 		final private LifeSegmentVariation type;
-		final private SymbolContext colors;
+		final private Fashion colors;
 		final private double y;
 
-		Variation(LifeSegmentVariation type, double y, SymbolContext backcolor) {
+		Variation(LifeSegmentVariation type, double y, Fashion backcolor) {
 			this.type = type;
 			this.y = y;
 			this.colors = backcolor;
@@ -89,7 +89,7 @@ public class LifeLine {
 		this.shadowing = shadowing;
 	}
 
-	public void addSegmentVariation(LifeSegmentVariation type, double y, SymbolContext colors) {
+	public void addSegmentVariation(LifeSegmentVariation type, double y, Fashion colors) {
 		if (events.size() > 0) {
 			final Variation last = events.get(events.size() - 1);
 			if (y < last.y) {
@@ -258,7 +258,7 @@ public class LifeLine {
 		return shadowing;
 	}
 
-	public SymbolContext getColors() {
+	public Fashion getColors() {
 		if (events.size() == 0) {
 			return null;
 		}

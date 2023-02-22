@@ -2,12 +2,12 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
@@ -68,11 +68,9 @@ import static gen.lib.dotgen.fastgr__c.delete_flat_edge;
 import static gen.lib.dotgen.fastgr__c.flat_edge;
 import static gen.lib.dotgen.fastgr__c.merge_oneway;
 import static gen.lib.dotgen.fastgr__c.new_virtual_edge;
-import static smetana.core.JUtils.EQ;
-import static smetana.core.JUtils.NEQ;
 import static smetana.core.JUtils.atof;
-import static smetana.core.JUtils.qsort1;
-import static smetana.core.JUtils.qsort2;
+import static smetana.core.JUtils.qsort;
+import static smetana.core.JUtils.qsortInt;
 import static smetana.core.Macro.ALLOC_INT;
 import static smetana.core.Macro.CLUSTER;
 import static smetana.core.Macro.ED_edge_type;
@@ -97,8 +95,6 @@ import static smetana.core.Macro.GD_nlist;
 import static smetana.core.Macro.GD_rank;
 import static smetana.core.Macro.GD_rankleader;
 import static smetana.core.Macro.INT_MAX;
-import static smetana.core.Macro.MIN;
-import static smetana.core.Macro.N;
 import static smetana.core.Macro.ND_clust;
 import static smetana.core.Macro.ND_coord;
 import static smetana.core.Macro.ND_flat_in;
@@ -120,7 +116,6 @@ import static smetana.core.Macro.ND_ranktype;
 import static smetana.core.Macro.ND_weight_class;
 import static smetana.core.Macro.NEW_RANK;
 import static smetana.core.Macro.NORMAL;
-import static smetana.core.Macro.NOT;
 import static smetana.core.Macro.UNSUPPORTED;
 import static smetana.core.Macro.VIRTUAL;
 import static smetana.core.Macro.elist_append;
@@ -144,8 +139,9 @@ import smetana.core.CArrayOfStar;
 import smetana.core.CFunction;
 import smetana.core.CFunctionAbstract;
 import smetana.core.CString;
+import smetana.core.Globals;
 import smetana.core.Memory;
-import smetana.core.Z;
+import smetana.core.ZType;
 
 /* 
  * dot_mincross(g) takes a ranked graphs, and finds an ordering
@@ -165,35 +161,35 @@ public class mincross__c {
 @Unused
 @Reviewed(when = "14/11/2020")
 @Original(version="2.38.0", path="lib/dotgen/mincross.c", name="dot_mincross", key="e876vp4hgkzshluz6qk77cjwk", definition="void dot_mincross(graph_t * g, int doBalance)")
-public static void dot_mincross(ST_Agraph_s g, boolean doBalance) {
+public static void dot_mincross(Globals zz, ST_Agraph_s g, boolean doBalance) {
 ENTERING("e876vp4hgkzshluz6qk77cjwk","dot_mincross");
 try {
     int c, nc;
     CString s;
     
-    init_mincross(g);
+    init_mincross(zz, g);
     
     for (nc = c = 0; c < GD_comp(g).size; c++) {
 	init_mccomp(g, c);
-	nc += mincross_(g, 0, 2, doBalance);
+	nc += mincross_(zz, g, 0, 2, doBalance);
     }
     
-    merge2(g);
+    merge2(zz, g);
     
     /* run mincross on contents of each cluster */
     for (c = 1; c <= GD_n_cluster(g); c++) {
-	nc += mincross_clust(g, GD_clust(g).get_(c), doBalance);
+	nc += mincross_clust(zz, g, GD_clust(g).get_(c), doBalance);
     }
     
     
     
     if ((GD_n_cluster(g) > 0)
-	&& (N(s = agget(g, new CString("remincross"))) || (mapbool(s)))) {
-	mark_lowclusters(g);
-	Z.z().ReMincross = true;
-	nc = mincross_(g, 2, 2, doBalance);
+	&& (((s = agget(zz, g, new CString("remincross"))))==null || (mapbool(s)))) {
+	mark_lowclusters(zz, g);
+	zz.ReMincross = true;
+	nc = mincross_(zz, g, 2, 2, doBalance);
     }
-    cleanup2(g, nc);
+    cleanup2(zz, g, nc);
 } finally {
 LEAVING("e876vp4hgkzshluz6qk77cjwk","dot_mincross");
 }
@@ -270,11 +266,11 @@ LEAVING("49vw7fkn99wbojtfksugvuruh","init_mccomp");
  */
 @Reviewed(when = "15/11/2020")
 @Original(version="2.38.0", path="lib/dotgen/mincross.c", name="ordered_edges", key="hzoz2czb672i0nbjvjhbc3na", definition="static void ordered_edges(graph_t * g)")
-public static void ordered_edges(ST_Agraph_s g) {
+public static void ordered_edges(Globals zz, ST_Agraph_s g) {
 ENTERING("hzoz2czb672i0nbjvjhbc3na","ordered_edges");
 try {
     CString ordering;
-    if (N(Z.z().G_ordering) && N(Z.z().N_ordering))
+    if ((zz.G_ordering) == null && (zz.N_ordering) == null)
 	return;
 UNSUPPORTED("98iqppixxkdndoz210i5ejppy"); //     if ((ordering = late_string(g, G_ordering, NULL))) {
 UNSUPPORTED("lhhw62wj3on36enoy6ug6u1p"); // 	if ((*(ordering)==*("out")&&!strcmp(ordering,"out")))
@@ -307,19 +303,19 @@ LEAVING("hzoz2czb672i0nbjvjhbc3na","ordered_edges");
 
 @Reviewed(when = "15/11/2020")
 @Original(version="2.38.0", path="lib/dotgen/mincross.c", name="mincross_clust", key="crwc5qe7fmrpgcqh1a80toyvo", definition="static int mincross_clust(graph_t * par, graph_t * g, int doBalance)")
-public static int mincross_clust(ST_Agraph_s par, ST_Agraph_s g, boolean doBalance) {
+public static int mincross_clust(Globals zz, ST_Agraph_s par, ST_Agraph_s g, boolean doBalance) {
 ENTERING("crwc5qe7fmrpgcqh1a80toyvo","mincross_clust");
 try {
     int c, nc;
     
-    expand_cluster(g);
-    ordered_edges(g);
-    flat_breakcycles(g);
-    flat_reorder(g);
-    nc = mincross_(g, 2, 2, doBalance);
+    expand_cluster(zz, g);
+    ordered_edges(zz, g);
+    flat_breakcycles(zz, g);
+    flat_reorder(zz, g);
+    nc = mincross_(zz, g, 2, 2, doBalance);
     
     for (c = 1; c <= GD_n_cluster(g); c++)
-	nc += mincross_clust(g, GD_clust(g).get_(c), doBalance);
+	nc += mincross_clust(zz, g, GD_clust(g).get_(c), doBalance);
     
     save_vlist(g);
     return nc;
@@ -335,14 +331,14 @@ LEAVING("crwc5qe7fmrpgcqh1a80toyvo","mincross_clust");
 // static int left2right(graph_t * g, node_t * v, node_t * w) 
 @Unused
 @Original(version="2.38.0", path="lib/dotgen/mincross.c", name="left2right", key="657v773m21j5w3g3v94o7464t", definition="static int left2right(graph_t * g, node_t * v, node_t * w)")
-public static boolean left2right(ST_Agraph_s g, ST_Agnode_s v, ST_Agnode_s w) {
+public static boolean left2right(Globals zz, ST_Agraph_s g, ST_Agnode_s v, ST_Agnode_s w) {
 ENTERING("657v773m21j5w3g3v94o7464t","left2right");
 try {
 	ST_adjmatrix_t M;
     boolean rv=false;
     /* CLUSTER indicates orig nodes of clusters, and vnodes of skeletons */
-    if (Z.z().ReMincross == false) {
-	if (NEQ(ND_clust(v), ND_clust(w)) && (ND_clust(v)!=null) && (ND_clust(w)!=null)) {
+    if (zz.ReMincross == false) {
+	if ((ND_clust(v) != ND_clust(w)) && (ND_clust(v)!=null) && (ND_clust(w)!=null)) {
 	    /* the following allows cluster skeletons to be swapped */
 	    if ((ND_ranktype(v) == 7)
 		&& (ND_node_type(v) == 1))
@@ -354,8 +350,8 @@ try {
 	    /*return ((ND_ranktype(v) != CLUSTER) && (ND_ranktype(w) != CLUSTER)); */
 	}
     } else {
- 	if (NEQ(ND_clust(v), ND_clust(w)))
- 	    return NOT(0);
+ 	if ((ND_clust(v) != ND_clust(w)))
+		return true;
     }
     M = GD_rank(g).get__(ND_rank(v)).flat;
     if (M == null)
@@ -441,7 +437,7 @@ LEAVING("b7mf74np8ewrgzwd5u0o8fqod","out_cross");
 @Difficult
 @Unused
 @Original(version="2.38.0", path="lib/dotgen/mincross.c", name="exchange", key="ba4tbr57wips1dzpgxzx3b6ja", definition="static void exchange(node_t * v, node_t * w)")
-public static void exchange(ST_Agnode_s v, ST_Agnode_s w) {
+public static void exchange(Globals zz, ST_Agnode_s v, ST_Agnode_s w) {
 ENTERING("ba4tbr57wips1dzpgxzx3b6ja","exchange");
 try {
     int vi, wi, r;
@@ -450,9 +446,9 @@ try {
     vi = ND_order(v);
     wi = ND_order(w);
     ND_order(v, wi);
-    GD_rank(Z.z().Root).get__(r).v.set_(wi, v);
+    GD_rank(zz.Root).get__(r).v.set_(wi, v);
     ND_order(w, vi);
-    GD_rank(Z.z().Root).get__(r).v.set_(vi, w);
+    GD_rank(zz.Root).get__(r).v.set_(vi, w);
 } finally {
 LEAVING("ba4tbr57wips1dzpgxzx3b6ja","exchange");
 }
@@ -508,7 +504,7 @@ throw new UnsupportedOperationException();
 // static int transpose_step(graph_t * g, int r, int reverse) 
 @Unused
 @Original(version="2.38.0", path="lib/dotgen/mincross.c", name="transpose_step", key="bxwzx4m9ejausu58u7abr6fm0", definition="static int transpose_step(graph_t * g, int r, int reverse)")
-public static int transpose_step(ST_Agraph_s g, int r, boolean reverse) {
+public static int transpose_step(Globals zz, ST_Agraph_s g, int r, boolean reverse) {
 ENTERING("bxwzx4m9ejausu58u7abr6fm0","transpose_step");
 try {
     int i, c0, c1, rv;
@@ -519,7 +515,7 @@ try {
 	v = GD_rank(g).get__(r).v.get_(i);
 	w = GD_rank(g).get__(r).v.get_(i + 1);
 	//assert(ND_order(v) < ND_order(w));
-	if (left2right(g, v, w))
+	if (left2right(zz, g, v, w))
 	    continue;
 	c0 = c1 = 0;
 	if (r > 0) {
@@ -531,16 +527,16 @@ try {
 	    c1 += out_cross(w, v);
 	}
 	if ((c1 < c0) || ((c0 > 0) && reverse && (c1 == c0))) {
-	    exchange(v, w);
+	    exchange(zz, v, w);
 	    rv += (c0 - c1);
-	    GD_rank(Z.z().Root).get__(r).valid= 0;
+	    GD_rank(zz.Root).get__(r).valid= 0;
 	    GD_rank(g).get__(r).candidate= true;
 	    if (r > GD_minrank(g)) {
-		GD_rank(Z.z().Root).get__(r - 1).valid= 0;
+		GD_rank(zz.Root).get__(r - 1).valid= 0;
 		GD_rank(g).get__(r - 1).candidate= true;
 	    }
 	    if (r < GD_maxrank(g)) {
-		GD_rank(Z.z().Root).get__(r + 1).valid= 0;
+		GD_rank(zz.Root).get__(r + 1).valid= 0;
 		GD_rank(g).get__(r + 1).candidate= true;
 	    }
 	}
@@ -558,7 +554,7 @@ LEAVING("bxwzx4m9ejausu58u7abr6fm0","transpose_step");
 // static void transpose(graph_t * g, int reverse) 
 @Unused
 @Original(version="2.38.0", path="lib/dotgen/mincross.c", name="transpose", key="2i22bxgg5y7v5c5d40k5zppky", definition="static void transpose(graph_t * g, int reverse)")
-public static void transpose(ST_Agraph_s g, boolean reverse) {
+public static void transpose(Globals zz, ST_Agraph_s g, boolean reverse) {
 ENTERING("2i22bxgg5y7v5c5d40k5zppky","transpose");
 try {
     int r, delta;
@@ -568,7 +564,7 @@ try {
 	delta = 0;
 	for (r = GD_minrank(g); r <= GD_maxrank(g); r++) {
 	    if (GD_rank(g).get__(r).candidate) {
-		delta += transpose_step(g, r, reverse);
+		delta += transpose_step(zz, g, r, reverse);
 	    }
 	}
 	/*} while (delta > ncross(g)*(1.0 - Convergence)); */
@@ -583,35 +579,35 @@ LEAVING("2i22bxgg5y7v5c5d40k5zppky","transpose");
 
 @Reviewed(when = "15/11/2020")
 @Original(version="2.38.0", path="lib/dotgen/mincross.c", name="mincross", key="7lrk2rxqnwwdau8cx85oqkpmv", definition="static int mincross(graph_t * g, int startpass, int endpass, int doBalance)")
-public static int mincross_(ST_Agraph_s g, int startpass, int endpass, boolean doBalance) {
+public static int mincross_(Globals zz, ST_Agraph_s g, int startpass, int endpass, boolean doBalance) {
 ENTERING("7lrk2rxqnwwdau8cx85oqkpmv","mincross_");
 try {
     int maxthispass=0, iter, trying, pass;
     int cur_cross, best_cross;
     
     if (startpass > 1) {
-	cur_cross = best_cross = ncross(g);
+	cur_cross = best_cross = ncross(zz, g);
 	save_best(g);
     } else
 	cur_cross = best_cross = INT_MAX;
     for (pass = startpass; pass <= endpass; pass++) {
 	if (pass <= 1) {
-	    maxthispass = MIN(4, Z.z().MaxIter);
-	    if (EQ(g, dot_root(g)))
-		build_ranks(g, pass);
+	    maxthispass = Math.min(4, zz.MaxIter);
+	    if (g == dot_root(g))
+		build_ranks(zz, g, pass);
 	    if (pass == 0)
-		flat_breakcycles(g);
-	    flat_reorder(g);
+		flat_breakcycles(zz, g);
+	    flat_reorder(zz, g);
 	    
-	    if ((cur_cross = ncross(g)) <= best_cross) {
+	    if ((cur_cross = ncross(zz, g)) <= best_cross) {
 		save_best(g);
 		best_cross = cur_cross;
 	    }
 	    trying = 0;
 	} else {
-	    maxthispass = Z.z().MaxIter;
+	    maxthispass = zz.MaxIter;
 	    if (cur_cross > best_cross)
-		restore_best(g);
+		restore_best(zz, g);
 	    cur_cross = best_cross;
 	}
 	trying = 0;
@@ -620,14 +616,14 @@ try {
 		fprintf(stderr,
 			"mincross: pass %d iter %d trying %d cur_cross %d best_cross %d\n",
 			pass, iter, trying, cur_cross, best_cross);*/
-	    if (trying++ >= Z.z().MinQuit)
+	    if (trying++ >= zz.MinQuit)
 		break;
 	    if (cur_cross == 0)
 		break;
-	    mincross_step(g, iter);
-	    if ((cur_cross = ncross(g)) <= best_cross) {
+	    mincross_step(zz, g, iter);
+	    if ((cur_cross = ncross(zz, g)) <= best_cross) {
 		save_best(g);
-		if (cur_cross < Z.z().Convergence * best_cross)
+		if (cur_cross < zz.Convergence * best_cross)
 		    trying = 0;
 		best_cross = cur_cross;
 	    }
@@ -636,10 +632,10 @@ try {
 	    break;
     }
     if (cur_cross > best_cross)
-	restore_best(g);
+	restore_best(zz, g);
     if (best_cross > 0) {
-	transpose(g, false);
-	best_cross = ncross(g);
+	transpose(zz, g, false);
+	best_cross = ncross(zz, g);
     }
     if (doBalance) {
 	for (iter = 0; iter < maxthispass; iter++)
@@ -657,7 +653,7 @@ LEAVING("7lrk2rxqnwwdau8cx85oqkpmv","mincross_");
 
 @Reviewed(when = "15/11/2020")
 @Original(version="2.38.0", path="lib/dotgen/mincross.c", name="restore_best", key="520049zkz9mafaeklgvm6s8e5", definition="static void restore_best(graph_t * g)")
-public static void restore_best(ST_Agraph_s g) {
+public static void restore_best(Globals zz, ST_Agraph_s g) {
 ENTERING("520049zkz9mafaeklgvm6s8e5","restore_best");
 try {
     ST_Agnode_s n;
@@ -666,8 +662,8 @@ try {
     for (n = GD_nlist(g); n!=null; n = ND_next(n))
 	ND_order(n, (int)ND_coord(n).x);
     for (r = GD_minrank(g); r <= GD_maxrank(g); r++) {
-	GD_rank(Z.z().Root).get__(r).valid= 0;
-    qsort1(GD_rank(g).get__(r).v,
+	GD_rank(zz.Root).get__(r).valid= 0;
+    qsort(zz, GD_rank(g).get__(r).v,
     	    GD_rank(g).get__(r).n,
     	    mincross__c.nodeposcmpf);
     }
@@ -698,7 +694,7 @@ LEAVING("8uyqc48j0oul206l3np85wj9p","save_best");
 /* merges the connected components of g */
 @Reviewed(when = "15/11/2020")
 @Original(version="2.38.0", path="lib/dotgen/mincross.c", name="merge_components", key="6d08fwi4dsk6ikk5d0gy6rq2h", definition="static void merge_components(graph_t * g)")
-public static void merge_components(ST_Agraph_s g) {
+public static void merge_components(Globals zz, ST_Agraph_s g) {
 ENTERING("6d08fwi4dsk6ikk5d0gy6rq2h","merge_components");
 try {
     int c;
@@ -719,8 +715,8 @@ try {
     }
     GD_comp(g).size = 1;
     GD_nlist(g, GD_comp(g).list.get_(0));
-    GD_minrank(g, Z.z().GlobalMinRank);
-    GD_maxrank(g, Z.z().GlobalMaxRank);
+    GD_minrank(g, zz.GlobalMinRank);
+    GD_maxrank(g, zz.GlobalMaxRank);
 } finally {
 LEAVING("6d08fwi4dsk6ikk5d0gy6rq2h","merge_components");
 }
@@ -732,14 +728,14 @@ LEAVING("6d08fwi4dsk6ikk5d0gy6rq2h","merge_components");
 /* merge connected components, create globally consistent rank lists */
 @Reviewed(when = "15/11/2020")
 @Original(version="2.38.0", path="lib/dotgen/mincross.c", name="merge2", key="91vebcdl3q3y0uyxef0iw71n9", definition="static void merge2(graph_t * g)")
-public static void merge2(ST_Agraph_s g) {
+public static void merge2(Globals zz, ST_Agraph_s g) {
 ENTERING("91vebcdl3q3y0uyxef0iw71n9","merge2");
 try {
     int i, r;
     ST_Agnode_s v;
     
     /* merge the components and rank limits */
-    merge_components(g);
+    merge_components(zz, g);
     
     /* install complete ranks */
     for (r = GD_minrank(g); r <= GD_maxrank(g); r++) {
@@ -768,24 +764,24 @@ LEAVING("91vebcdl3q3y0uyxef0iw71n9","merge2");
 
 @Reviewed(when = "15/11/2020")
 @Original(version="2.38.0", path="lib/dotgen/mincross.c", name="cleanup2", key="3cwiyyk1d1jkoo9iqwb5bge4x", definition="static void cleanup2(graph_t * g, int nc)")
-public static void cleanup2(ST_Agraph_s g, int nc) {
+public static void cleanup2(Globals zz, ST_Agraph_s g, int nc) {
 ENTERING("3cwiyyk1d1jkoo9iqwb5bge4x","cleanup2");
 try {
     int i, j, r, c;
     ST_Agnode_s v;
     ST_Agedge_s e;
     
-    if (Z.z().TI_list!=null) {
-	Memory.free(Z.z().TI_list);
-	Z.z().TI_list = null;
+    if (zz.TI_list!=null) {
+	Memory.free(zz.TI_list);
+	zz.TI_list = null;
     }
-    if (Z.z().TE_list!=null) {
-	Memory.free(Z.z().TE_list);
-	Z.z().TE_list = null;
+    if (zz.TE_list!=null) {
+	Memory.free(zz.TE_list);
+	zz.TE_list = null;
     }
     /* fix vlists of clusters */
     for (c = 1; c <= GD_n_cluster(g); c++)
-	rec_reset_vlists(GD_clust(g).get_(c));
+	rec_reset_vlists(zz, GD_clust(g).get_(c));
     
     /* remove node temporary edges for ordering nodes */
     for (r = GD_minrank(g); r <= GD_maxrank(g); r++) {
@@ -817,7 +813,7 @@ LEAVING("3cwiyyk1d1jkoo9iqwb5bge4x","cleanup2");
 
 @Reviewed(when = "15/11/2020")
 @Original(version="2.38.0", path="lib/dotgen/mincross.c", name="", key="arax68kzcf86dr2xu0gp962gq", definition="static node_t *neighbor(node_t * v, int dir)")
-public static ST_Agnode_s neighbor(ST_Agnode_s v, int dir) {
+public static ST_Agnode_s neighbor(Globals zz, ST_Agnode_s v, int dir) {
 ENTERING("arax68kzcf86dr2xu0gp962gq","neighbor");
 try {
     ST_Agnode_s rv;
@@ -826,9 +822,9 @@ try {
 assert(v!=null);
     if (dir < 0) {
 	if (ND_order(v) > 0)
-	    rv = GD_rank(Z.z().Root).get__(ND_rank(v)).v.get_(ND_order(v) - 1);
+	    rv = GD_rank(zz.Root).get__(ND_rank(v)).v.get_(ND_order(v) - 1);
     } else
-	rv = GD_rank(Z.z().Root).get__(ND_rank(v)).v.get_(ND_order(v) + 1);
+	rv = GD_rank(zz.Root).get__(ND_rank(v)).v.get_(ND_order(v) + 1);
 assert((rv == null) || (ND_order(rv)-ND_order(v))*dir > 0);
     return rv;
 } finally {
@@ -841,10 +837,10 @@ LEAVING("arax68kzcf86dr2xu0gp962gq","neighbor");
 
 @Reviewed(when = "15/11/2020")
 @Original(version="2.38.0", path="lib/dotgen/mincross.c", name="is_a_normal_node_of", key="1waqm8z71hi389dt1wqh0bmhr", definition="static int is_a_normal_node_of(graph_t * g, node_t * v)")
-public static boolean is_a_normal_node_of(ST_Agraph_s g, ST_Agnode_s v) {
+public static boolean is_a_normal_node_of(Globals zz, ST_Agraph_s g, ST_Agnode_s v) {
 ENTERING("1waqm8z71hi389dt1wqh0bmhr","is_a_normal_node_of");
 try {
-    return ((ND_node_type(v) == NORMAL) && agcontains(g, v));
+    return ((ND_node_type(v) == NORMAL) && agcontains(zz, g, v));
 } finally {
 LEAVING("1waqm8z71hi389dt1wqh0bmhr","is_a_normal_node_of");
 }
@@ -855,7 +851,7 @@ LEAVING("1waqm8z71hi389dt1wqh0bmhr","is_a_normal_node_of");
 
 @Reviewed(when = "15/11/2020")
 @Original(version="2.38.0", path="lib/dotgen/mincross.c", name="is_a_vnode_of_an_edge_of", key="9f8atyi1unmleplge3rijdt4s", definition="static int is_a_vnode_of_an_edge_of(graph_t * g, node_t * v)")
-public static boolean is_a_vnode_of_an_edge_of(ST_Agraph_s g, ST_Agnode_s v) {
+public static boolean is_a_vnode_of_an_edge_of(Globals zz, ST_Agraph_s g, ST_Agnode_s v) {
 ENTERING("9f8atyi1unmleplge3rijdt4s","is_a_vnode_of_an_edge_of");
 try {
     if ((ND_node_type(v) == VIRTUAL)
@@ -863,7 +859,7 @@ try {
 	ST_Agedge_s e = (ST_Agedge_s) ND_out(v).list.get_(0);
 	while (ED_edge_type(e) != NORMAL)
 	    e = ED_to_orig(e);
-	if (agcontains(g, e))
+	if (agcontains(zz, g, e))
 	    return true;
     }
     return false;
@@ -877,10 +873,10 @@ LEAVING("9f8atyi1unmleplge3rijdt4s","is_a_vnode_of_an_edge_of");
 
 @Reviewed(when = "15/11/2020")
 @Original(version="2.38.0", path="lib/dotgen/mincross.c", name="inside_cluster", key="eo7ulc8vwmoaig0j479yapve2", definition="static int inside_cluster(graph_t * g, node_t * v)")
-public static boolean inside_cluster(ST_Agraph_s g, ST_Agnode_s v) {
+public static boolean inside_cluster(Globals zz, ST_Agraph_s g, ST_Agnode_s v) {
 ENTERING("eo7ulc8vwmoaig0j479yapve2","inside_cluster");
 try {
-    return (is_a_normal_node_of(g, v) | is_a_vnode_of_an_edge_of(g, v));
+    return (is_a_normal_node_of(zz, g, v) | is_a_vnode_of_an_edge_of(zz, g, v));
 } finally {
 LEAVING("eo7ulc8vwmoaig0j479yapve2","inside_cluster");
 }
@@ -891,16 +887,16 @@ LEAVING("eo7ulc8vwmoaig0j479yapve2","inside_cluster");
 
 @Reviewed(when = "15/11/2020")
 @Original(version="2.38.0", path="lib/dotgen/mincross.c", name="", key="8xkmkt4r6gfqj8gk0mokszoz0", definition="static node_t *furthestnode(graph_t * g, node_t * v, int dir)")
-public static ST_Agnode_s furthestnode(ST_Agraph_s g, ST_Agnode_s v, int dir) {
+public static ST_Agnode_s furthestnode(Globals zz, ST_Agraph_s g, ST_Agnode_s v, int dir) {
 ENTERING("8xkmkt4r6gfqj8gk0mokszoz0","furthestnode");
 try {
     ST_Agnode_s u, rv;
     
     rv = u = v;
-    while ((u = neighbor(u, dir))!=null) {
-	if (is_a_normal_node_of(g, u))
+    while ((u = neighbor(zz, u, dir))!=null) {
+	if (is_a_normal_node_of(zz, g, u))
 	    rv = u;
-	else if (is_a_vnode_of_an_edge_of(g, u))
+	else if (is_a_vnode_of_an_edge_of(zz, g, u))
 	    rv = u;
     }
     return rv;
@@ -951,7 +947,7 @@ LEAVING("hwdxg97sefkuyd25x2q4pgzg","rec_save_vlists");
 
 @Reviewed(when = "15/11/2020")
 @Original(version="2.38.0", path="lib/dotgen/mincross.c", name="rec_reset_vlists", key="f3b4wat4uxn5oil720i5mwq4v", definition="void rec_reset_vlists(graph_t * g)")
-public static void rec_reset_vlists(ST_Agraph_s g) {
+public static void rec_reset_vlists(Globals zz, ST_Agraph_s g) {
 ENTERING("f3b4wat4uxn5oil720i5mwq4v","rec_reset_vlists");
 try {
     int r, c;
@@ -959,13 +955,13 @@ try {
     
     /* fix vlists of sub-clusters */
     for (c = 1; c <= GD_n_cluster(g); c++)
-	rec_reset_vlists(GD_clust(g).get_(c));
+	rec_reset_vlists(zz, GD_clust(g).get_(c));
     
     if (GD_rankleader(g)!=null)
 	for (r = GD_minrank(g); r <= GD_maxrank(g); r++) {
 	    v = GD_rankleader(g).get_(r);
-	    u = furthestnode(g, v, -1);
-	    w = furthestnode(g, v, 1);
+	    u = furthestnode(zz, g, v, -1);
+	    w = furthestnode(zz, g, v, 1);
 	    GD_rankleader(g).set_(r, u);
 	    GD_rank(g).get__(r).v = GD_rank(dot_root(g)).get__(r).v.plus_(ND_order(u));
 	    GD_rank(g).get__(r).n = ND_order(w) - ND_order(u) + 1;
@@ -1054,30 +1050,30 @@ LEAVING("1qy9bupreg1pax62owznr98k","fillRanks");
 @Reviewed(when = "14/11/2020")
 @Difficult
 @Original(version="2.38.0", path="lib/dotgen/mincross.c", name="init_mincross", key="7fy4chyk12o7bgp1rv3h27yl3", definition="static void init_mincross(graph_t * g)")
-public static void init_mincross(ST_Agraph_s g) {
+public static void init_mincross(Globals zz, ST_Agraph_s g) {
 ENTERING("7fy4chyk12o7bgp1rv3h27yl3","init_mincross");
 try {
     int size;
     //if (Verbose)
 	//start_timer();
     
-    Z.z().ReMincross = false;
-    Z.z().Root = g;
+    zz.ReMincross = false;
+    zz.Root = g;
     /* alloc +1 for the null terminator usage in do_ordering() */
     /* also, the +1 avoids attempts to alloc 0 sizes, something
        that efence complains about */
-    size = agnedges(dot_root(g)) + 1;
-    Z.z().TE_list = CArrayOfStar.<ST_Agedge_s>ALLOC(size, ST_Agedge_s.class);
-    Z.z().TI_list = new int[size];
-    mincross_options(g);
+    size = agnedges(zz, dot_root(g)) + 1;
+    zz.TE_list = CArrayOfStar.<ST_Agedge_s>ALLOC(size, ZType.ST_Agedge_s);
+    zz.TI_list = new int[size];
+    mincross_options(zz, g);
     if ((GD_flags(g) & NEW_RANK)!=0)
 	fillRanks (g);
-    class2(g);
-    decompose(g, 1);
-    allocate_ranks(g);
-    ordered_edges(g);
-    Z.z().GlobalMinRank = GD_minrank(g);
-    Z.z().GlobalMaxRank = GD_maxrank(g);
+    class2(zz, g);
+    decompose(zz, g, 1);
+    allocate_ranks(zz, g);
+    ordered_edges(zz, g);
+    zz.GlobalMinRank = GD_minrank(g);
+    zz.GlobalMaxRank = GD_maxrank(g);
 } finally {
 LEAVING("7fy4chyk12o7bgp1rv3h27yl3","init_mincross");
 }
@@ -1095,12 +1091,11 @@ ENTERING("6fprrp93vmz0jn3l4ro0iropp","flat_rev");
 try {
     int j;
     ST_Agedge_s rev;
-    if (N(ND_flat_out(aghead(e)).list))
-    // if (N(ND_flat_out(aghead(e)).list))
+    if (((ND_flat_out(aghead(e)).list))==null)
 	rev = null;
     else
 	for (j = 0; (rev = (ST_Agedge_s) ND_flat_out(aghead(e)).list.get_(j))!=null; j++)
-	    if (EQ(aghead(rev), agtail(e)))
+	    if (aghead(rev) == agtail(e))
 		break;
     if (rev!=null) {
 	merge_oneway(e, rev);
@@ -1130,7 +1125,7 @@ LEAVING("6fprrp93vmz0jn3l4ro0iropp","flat_rev");
 @Reviewed(when = "15/11/2020")
 @Difficult
 @Original(version="2.38.0", path="lib/dotgen/mincross.c", name="flat_search", key="63ol0ch6cgln1nvl5oiz6n1v0", definition="static void flat_search(graph_t * g, node_t * v)")
-public static void flat_search(ST_Agraph_s g, ST_Agnode_s v) {
+public static void flat_search(Globals zz, ST_Agraph_s g, ST_Agnode_s v) {
 ENTERING("63ol0ch6cgln1nvl5oiz6n1v0","flat_search");
 try {
     int i;
@@ -1144,7 +1139,7 @@ try {
     if (ND_flat_out(v).list!=null)
 	for (i = 0; (e = (ST_Agedge_s) ND_flat_out(v).list.get_(i))!=null; i++) {
 	    if (hascl
-		&& NOT(agcontains(g, agtail(e)) && agcontains(g, aghead(e))))
+		&& !(agcontains(zz, g, agtail(e)) && agcontains(zz, g, aghead(e))))
 		continue;
 	    if (ED_weight(e) == 0)
 		continue;
@@ -1162,7 +1157,7 @@ try {
 		assert(ND_low(agtail(e)) < M.ncols);
 		M.data[ND_low(agtail(e))][ND_low(aghead(e))]=1;
 		if (ND_mark(aghead(e)) == 0)
-		    flat_search(g, aghead(e));
+		    flat_search(zz, g, aghead(e));
 	    }
 	}
     ND_onstack(v, 0);
@@ -1177,7 +1172,7 @@ LEAVING("63ol0ch6cgln1nvl5oiz6n1v0","flat_search");
 @Reviewed(when = "15/11/2020")
 @Difficult
 @Original(version="2.38.0", path="lib/dotgen/mincross.c", name="flat_breakcycles", key="3v5h7z4vqivibvpt913lg8at0", definition="static void flat_breakcycles(graph_t * g)")
-public static void flat_breakcycles(ST_Agraph_s g) {
+public static void flat_breakcycles(Globals zz, ST_Agraph_s g) {
 ENTERING("3v5h7z4vqivibvpt913lg8at0","flat_breakcycles");
 try {
     int i, r, flat;
@@ -1199,7 +1194,7 @@ try {
 	    for (i = 0; i < GD_rank(g).get__(r).n; i++) {
 		v = GD_rank(g).get__(r).v.get_(i);
 		if (ND_mark(v) == 0)
-		    flat_search(g, v);
+		    flat_search(zz, g, v);
 	    }
 	}
     }
@@ -1217,7 +1212,7 @@ LEAVING("3v5h7z4vqivibvpt913lg8at0","flat_breakcycles");
 @Difficult
 @Reviewed(when = "15/11/2020")
 @Original(version="2.38.0", path="lib/dotgen/mincross.c", name="allocate_ranks", key="d5vb6jiw8mhkaa8gjwn4eqfyn", definition="void allocate_ranks(graph_t * g)")
-public static void allocate_ranks(ST_Agraph_s g) {
+public static void allocate_ranks(Globals zz, ST_Agraph_s g) {
 ENTERING("d5vb6jiw8mhkaa8gjwn4eqfyn","allocate_ranks");
 try {
     int r, low, high;
@@ -1227,9 +1222,9 @@ try {
     
 	cn = new int[GD_maxrank(g) + 2];
 	/* must be 0 based, not GD_minrank */
-    for (n = agfstnode(g); n!=null; n = agnxtnode(g, n)) {
+    for (n = agfstnode(zz, g); n!=null; n = agnxtnode(zz, g, n)) {
    	cn[ND_rank(n)]++;
-	for (e = agfstout(g, n); e!=null; e = agnxtout(g, e)) {
+	for (e = agfstout(zz, g, n); e!=null; e = agnxtout(zz, g, e)) {
 	    low = ND_rank(agtail(e));
 	    high = ND_rank(aghead(e));
 	    if (low > high) {
@@ -1241,11 +1236,11 @@ try {
 			cn[r]++;
 	}
     }
-    GD_rank(g, CArray.<ST_rank_t>ALLOC__(GD_maxrank(g) + 2, ST_rank_t.class));
+    GD_rank(g, CArray.<ST_rank_t>ALLOC__(GD_maxrank(g) + 2, ZType.ST_rank_t));
     for (r = GD_minrank(g); r <= GD_maxrank(g); r++) {
 	GD_rank(g).get__(r).n = cn[r];
 	GD_rank(g).get__(r).an = cn[r];
-	CArrayOfStar<ST_Agnode_s> tmp = CArrayOfStar.<ST_Agnode_s>ALLOC(cn[r] + 1, ST_Agnode_s.class);
+	CArrayOfStar<ST_Agnode_s> tmp = CArrayOfStar.<ST_Agnode_s>ALLOC(cn[r] + 1, ZType.ST_Agnode_s);
 	GD_rank(g).get__(r).v = tmp;
 	GD_rank(g).get__(r).av = tmp;
     }
@@ -1261,7 +1256,7 @@ LEAVING("d5vb6jiw8mhkaa8gjwn4eqfyn","allocate_ranks");
 /* install a node at the current right end of its rank */
 @Reviewed(when = "15/11/2020")
 @Original(version="2.38.0", path="lib/dotgen/mincross.c", name="install_in_rank", key="3lxoqxhiri9fgt20zc5jz3aa5", definition="void install_in_rank(graph_t * g, node_t * n)")
-public static void install_in_rank(ST_Agraph_s g, ST_Agnode_s n) {
+public static void install_in_rank(Globals zz, ST_Agraph_s g, ST_Agnode_s n) {
 ENTERING("3lxoqxhiri9fgt20zc5jz3aa5","install_in_rank");
 try {
     int i, r;
@@ -1278,7 +1273,7 @@ try {
     ND_order(n, i);
     GD_rank(g).get__(r).n++;
     assert(GD_rank(g).get__(r).n <= GD_rank(g).get__(r).an);
-    if (ND_order(n) > GD_rank(Z.z().Root).get__(r).an) {
+    if (ND_order(n) > GD_rank(zz.Root).get__(r).an) {
 	UNSUPPORTED("399szcw1txekt1xssyw7s2x07"); // 	agerr(AGERR, "install_in_rank, line %d: ND_order(%s) [%d] > GD_rank(Root)[%d].an [%d]\n",
 	UNSUPPORTED("9puojrmsk6vb1qc0jtr8ge4g8"); // 	      1052, agnameof(n), ND_order(n), r, GD_rank(Root)[r].an);
 	return;
@@ -1289,7 +1284,7 @@ try {
 	return;
     }
     if (GD_rank(g).get__(r).v.plus_(ND_order(n)).comparePointer_(
-	GD_rank(g).get__(r).av.plus_(GD_rank(Z.z().Root).get__(r).an))>0) {
+	GD_rank(g).get__(r).av.plus_(GD_rank(zz.Root).get__(r).an))>0) {
 	UNSUPPORTED("3eb32nc5czs5auwzz5p5mtl04"); // 	agerr(AGERR, "install_in_rank, line %d: GD_rank(g)[%d].v + ND_order(%s) [%d] > GD_rank(g)[%d].av + GD_rank(Root)[%d].an [%d]\n",
 	UNSUPPORTED("3qe3qpw5h6vse39xs1ca9sjmo"); // 	      1062, r, agnameof(n),GD_rank(g)[r].v + ND_order(n), r, r, GD_rank(g)[r].av+GD_rank(Root)[r].an);
 	return;
@@ -1309,7 +1304,7 @@ LEAVING("3lxoqxhiri9fgt20zc5jz3aa5","install_in_rank");
 @Reviewed(when = "15/11/2020")
 @Difficult
 @Original(version="2.38.0", path="lib/dotgen/mincross.c", name="build_ranks", key="7t49bz6lfcbd9v63ds2x3518z", definition="void build_ranks(graph_t * g, int pass)")
-public static void build_ranks(ST_Agraph_s g, int pass) {
+public static void build_ranks(Globals zz, ST_Agraph_s g, int pass) {
 ENTERING("7t49bz6lfcbd9v63ds2x3518z","build_ranks");
 try {
     int i, j;
@@ -1333,10 +1328,10 @@ try {
 	    enqueue(q, n);
 	    while ((n0 = dequeue(q))!=null) {
 		if (ND_ranktype(n0) != CLUSTER) {
-		    install_in_rank(g, n0);
+		    install_in_rank(zz, g, n0);
 		    enqueue_neighbors(q, n0, pass);
 		} else {
-		    install_cluster(g, n0, pass, q);
+		    install_cluster(zz, g, n0, pass, q);
 		}
 	    }
 	}
@@ -1344,20 +1339,20 @@ try {
     if (dequeue(q)!=null)
     UNSUPPORTED("1b3hbd5artrq77i58q2o9kgz3"); // 	agerr(AGERR, "surprise\n");
     for (i = GD_minrank(g); i <= GD_maxrank(g); i++) {
-	GD_rank(Z.z().Root).get__(i).valid = 0;
+	GD_rank(zz.Root).get__(i).valid = 0;
 	if (GD_flip(g) && (GD_rank(g).get__(i).n > 0)) {
 	    int nn, ndiv2;
 	    CArrayOfStar<ST_Agnode_s> vlist = GD_rank(g).get__(i).v;
 	    nn = GD_rank(g).get__(i).n - 1;
 	    ndiv2 = nn / 2;
 	    for (j = 0; j <= ndiv2; j++)
-		exchange(vlist.get_(j), vlist.get_(nn - j));
+		exchange(zz, vlist.get_(j), vlist.get_(nn - j));
 	}
     }
     
     
-    if (EQ(g, dot_root(g)) && ncross(g) > 0)
-	transpose(g, false);
+    if (g == dot_root(g) && ncross(zz, g) > 0)
+	transpose(zz, g, false);
     free_queue(q);
 } finally {
 LEAVING("7t49bz6lfcbd9v63ds2x3518z","build_ranks");
@@ -1402,12 +1397,12 @@ LEAVING("bmjlneqxex6a9silzkkidkx6s","enqueue_neighbors");
 
 @Reviewed(when = "15/11/2020")
 @Original(version="2.38.0", path="lib/dotgen/mincross.c", name="constraining_flat_edge", key="c8nqj0v20api63pikohsbx92u", definition="static int constraining_flat_edge(Agraph_t *g, Agnode_t *v, Agedge_t *e)")
-public static boolean constraining_flat_edge(ST_Agraph_s g, ST_Agnode_s v, ST_Agedge_s e) {
+public static boolean constraining_flat_edge(Globals zz, ST_Agraph_s g, ST_Agnode_s v, ST_Agedge_s e) {
 ENTERING("c8nqj0v20api63pikohsbx92u","constraining_flat_edge");
 try {
 	if (ED_weight(e) == 0) return false;
-	if (N(inside_cluster(g,agtail(e)))) return false;
-	if (N(inside_cluster(g,aghead(e)))) return false;
+	if (!inside_cluster(zz, g,agtail(e))) return false;
+	if (!inside_cluster(zz, g,aghead(e))) return false;
 	return true;
 } finally {
 LEAVING("c8nqj0v20api63pikohsbx92u","constraining_flat_edge");
@@ -1422,7 +1417,7 @@ LEAVING("c8nqj0v20api63pikohsbx92u","constraining_flat_edge");
 */
 @Reviewed(when = "15/11/2020")
 @Original(version="2.38.0", path="lib/dotgen/mincross.c", name="postorder", key="46to0pkk188af2dlkik2ab7e3", definition="static int postorder(graph_t * g, node_t * v, node_t ** list, int r)")
-public static int postorder(ST_Agraph_s g, ST_Agnode_s v, CArrayOfStar<ST_Agnode_s> list, int r) {
+public static int postorder(Globals zz, ST_Agraph_s g, ST_Agnode_s v, CArrayOfStar<ST_Agnode_s> list, int r) {
 ENTERING("46to0pkk188af2dlkik2ab7e3","postorder");
 try {
     ST_Agedge_s e;
@@ -1431,9 +1426,9 @@ try {
     ND_mark(v, true);
     if (ND_flat_out(v).size > 0) {
 	for (i = 0; (e = (ST_Agedge_s) ND_flat_out(v).list.get_(i))!=null; i++) {
-	    if (N(constraining_flat_edge(g,v,e))) continue;
+	    if (!constraining_flat_edge(zz, g,v,e)) continue;
 	    if ((ND_mark(aghead(e))) == 0)
-		cnt += postorder(g, aghead(e), list.plus_(cnt), r);
+		cnt += postorder(zz, g, aghead(e), list.plus_(cnt), r);
 	}
     }
     assert(ND_rank(v) == r);
@@ -1450,7 +1445,7 @@ LEAVING("46to0pkk188af2dlkik2ab7e3","postorder");
 @Reviewed(when = "15/11/2020")
 @Difficult
 @Original(version="2.38.0", path="lib/dotgen/mincross.c", name="flat_reorder", key="zuxoswju917kyl08a5f0gtp6", definition="static void flat_reorder(graph_t * g)")
-public static void flat_reorder(ST_Agraph_s g) {
+public static void flat_reorder(Globals zz, ST_Agraph_s g) {
 ENTERING("zuxoswju917kyl08a5f0gtp6","flat_reorder");
 try {
     int i, j, r, pos, n_search, local_in_cnt, local_out_cnt, base_order;
@@ -1466,7 +1461,7 @@ try {
 	base_order = ND_order(GD_rank(g).get__(r).v.get_(0));
 	for (i = 0; i < GD_rank(g).get__(r).n; i++)
 	    ND_mark(GD_rank(g).get__(r).v.get_(i), 0);
-	temprank = CArrayOfStar.<ST_Agnode_s>REALLOC(i + 1, temprank, ST_Agnode_s.class);
+	temprank = CArrayOfStar.<ST_Agnode_s>REALLOC(i + 1, temprank, ZType.ST_Agnode_s);
 	pos = 0;
 	
 	/* construct reverse topological sort order in temprank */
@@ -1477,18 +1472,18 @@ try {
 	    local_in_cnt = local_out_cnt = 0;
 	    for (j = 0; j < ND_flat_in(v).size; j++) {
 		flat_e = (ST_Agedge_s) ND_flat_in(v).list.get_(j);
-		if (constraining_flat_edge(g,v,flat_e)) local_in_cnt++;
+		if (constraining_flat_edge(zz, g,v,flat_e)) local_in_cnt++;
 	    }
 	    for (j = 0; j < ND_flat_out(v).size; j++) {
 		flat_e = (ST_Agedge_s) ND_flat_out(v).list.get_(j);
-		if (constraining_flat_edge(g,v,flat_e)) local_out_cnt++;
+		if (constraining_flat_edge(zz, g,v,flat_e)) local_out_cnt++;
 	    }
 	    if ((local_in_cnt == 0) && (local_out_cnt == 0))
 		temprank.set_(pos++, v);
 	    else {
 		if ((ND_mark(v) == 0) && (local_in_cnt == 0)) {
 		    left = temprank.plus_(pos);
-		    n_search = postorder(g, v, left, r);
+		    n_search = postorder(zz, g, v, left, r);
 		    pos += n_search;
 		}
 	    }
@@ -1519,7 +1514,7 @@ try {
 		    for (j = 0; (e = (ST_Agedge_s) ND_flat_out(v).list.get_(j))!=null; j++) {
 			if ( ((GD_flip(g) == false) && (ND_order(aghead(e)) < ND_order(agtail(e)))) ||
 				 ( (GD_flip(g)) && (ND_order(aghead(e)) > ND_order(agtail(e)) ))) {
-			    assert(constraining_flat_edge(g,v,e) == false);
+			    assert(constraining_flat_edge(zz, g,v,e) == false);
 			    delete_flat_edge(e);
 			    j--;
 			    flat_rev(g, e);
@@ -1530,7 +1525,7 @@ try {
 	    /* postprocess to restore intended order */
 	}
 	/* else do no harm! */
-	GD_rank(Z.z().Root).get__(r).valid = 0;
+	GD_rank(zz.Root).get__(r).valid = 0;
     }
     if (temprank!=null)
 	Memory.free(temprank);
@@ -1544,7 +1539,7 @@ LEAVING("zuxoswju917kyl08a5f0gtp6","flat_reorder");
 
 @Reviewed(when = "16/11/2020")
 @Original(version="2.38.0", path="lib/dotgen/mincross.c", name="reorder", key="inv6wazjcnh4xkzzphsdcmg4", definition="static void reorder(graph_t * g, int r, int reverse, int hasfixed)")
-public static void reorder(ST_Agraph_s g, int r, boolean reverse, boolean hasfixed) {
+public static void reorder(Globals zz, ST_Agraph_s g, int r, boolean reverse, boolean hasfixed) {
 ENTERING("inv6wazjcnh4xkzzphsdcmg4","reorder");
 try {
     boolean changed = false;
@@ -1566,7 +1561,7 @@ try {
 	    for (rp = lp.plus_(1); rp.comparePointer_(ep) < 0; rp=rp.plus_(1)) {
 		if (sawclust && ND_clust(rp.get_(0))!=null)
 		    continue;	/* ### */
-		if (left2right(g, lp.get_(0), rp.get_(0))) {
+		if (left2right(zz, g, lp.get_(0), rp.get_(0))) {
 		    muststay = true;
 		    break;
 		}
@@ -1581,7 +1576,7 @@ try {
 		int p1 = (int) (ND_mval(lp.get_(0)));
 		int p2 = (int) (ND_mval(rp.get_(0)));
 		if ((p1 > p2) || ((p1 == p2) && (reverse))) {
-		    exchange(lp.get_(0), rp.get_(0));
+		    exchange(zz, lp.get_(0), rp.get_(0));
 		    changed=true;
 		}
 	    }
@@ -1591,9 +1586,9 @@ try {
 	    ep = ep.plus_(-1);
     }
     if (changed) {
-	GD_rank(Z.z().Root).get__(r).valid= 0;
+	GD_rank(zz.Root).get__(r).valid= 0;
 	if (r > 0)
-	    GD_rank(Z.z().Root).get__(r - 1).valid= 0;
+	    GD_rank(zz.Root).get__(r - 1).valid= 0;
     }
 } finally {
 LEAVING("inv6wazjcnh4xkzzphsdcmg4","reorder");
@@ -1607,7 +1602,7 @@ LEAVING("inv6wazjcnh4xkzzphsdcmg4","reorder");
 // static void mincross_step(graph_t * g, int pass) 
 @Unused
 @Original(version="2.38.0", path="lib/dotgen/mincross.c", name="mincross_step", key="14t80owwvm7io4ou6czb9ba9", definition="static void mincross_step(graph_t * g, int pass)")
-public static void mincross_step(ST_Agraph_s g, int pass) {
+public static void mincross_step(Globals zz, ST_Agraph_s g, int pass) {
 ENTERING("14t80owwvm7io4ou6czb9ba9","mincross_step");
 try {
     int r, other, first, last, dir;
@@ -1626,23 +1621,23 @@ try {
     }				/* down pass */
     if (pass % 2 == 0) {	/* down pass */
 	first = GD_minrank(g) + 1;
-	if (GD_minrank(g) > GD_minrank(Z.z().Root))
+	if (GD_minrank(g) > GD_minrank(zz.Root))
 	    first--;
 	last = GD_maxrank(g);
 	dir = 1;
     } else {			/* up pass */
 	first = GD_maxrank(g) - 1;
 	last = GD_minrank(g);
-	if (GD_maxrank(g) < GD_maxrank(Z.z().Root))
+	if (GD_maxrank(g) < GD_maxrank(zz.Root))
 	    first++;
 	dir = -1;
     }
     for (r = first; r != last + dir; r += dir) {
 	other = r - dir;
-	hasfixed = medians(g, r, other);
-	reorder(g, r, reverse, hasfixed);
+	hasfixed = medians(zz, g, r, other);
+	reorder(zz, g, r, reverse, hasfixed);
     }
-    transpose(g, NOT(reverse));
+    transpose(zz, g, !reverse);
 } finally {
 LEAVING("14t80owwvm7io4ou6czb9ba9","mincross_step");
 }
@@ -1697,7 +1692,7 @@ LEAVING("aq18oa4k4grixvfjx7r2qnl6r","local_cross");
 // static int rcross(graph_t * g, int r) 
 @Unused
 @Original(version="2.38.0", path="lib/dotgen/mincross.c", name="rcross", key="bk5nklhfqgg0uwkv7tv6dn8r2", definition="static int rcross(graph_t * g, int r)")
-public static int rcross(ST_Agraph_s g, int r) {
+public static int rcross(Globals zz, ST_Agraph_s g, int r) {
 ENTERING("bk5nklhfqgg0uwkv7tv6dn8r2","rcross");
 try {
     int top, bot, cross, max, i, k;
@@ -1708,27 +1703,27 @@ try {
     max = 0;
     rtop = GD_rank(g).get__(r).v;
     
-    if (Z.z().C <= GD_rank(Z.z().Root).get__(r + 1).n) {
-	Z.z().C = GD_rank(Z.z().Root).get__(r + 1).n + 1;
-	Z.z().Count = ALLOC_INT(Z.z().C, Z.z().Count);
+    if (zz.C <= GD_rank(zz.Root).get__(r + 1).n) {
+	zz.C = GD_rank(zz.Root).get__(r + 1).n + 1;
+	zz.Count = ALLOC_INT(zz.C, zz.Count);
     }
     
     for (i = 0; i < GD_rank(g).get__(r + 1).n; i++)
-    	Z.z().Count[i] = 0;
+    	zz.Count[i] = 0;
     
     for (top = 0; top < GD_rank(g).get__(r).n; top++) {
 	ST_Agedge_s e;
 	if (max > 0) {
 	    for (i = 0; (e = (ST_Agedge_s) ND_out(rtop.get_(top)).list.get_(i))!=null; i++) {
 		for (k = ND_order(aghead(e)) + 1; k <= max; k++)
-		    cross += Z.z().Count[k] * ED_xpenalty(e);
+		    cross += zz.Count[k] * ED_xpenalty(e);
 	    }
 	}
 	for (i = 0; (e = (ST_Agedge_s) ND_out(rtop.get_(top)).list.get_(i))!=null; i++) {
 	    int inv = ND_order(aghead(e));
 	    if (inv > max)
 		max = inv;
-	    Z.z().Count[inv] += ED_xpenalty(e);
+	    zz.Count[inv] += ED_xpenalty(e);
 	}
     }
     for (top = 0; top < GD_rank(g).get__(r).n; top++) {
@@ -1752,18 +1747,18 @@ LEAVING("bk5nklhfqgg0uwkv7tv6dn8r2","rcross");
 
 @Reviewed(when = "15/11/2020")
 @Original(version="2.38.0", path="lib/dotgen/mincross.c", name="ncross", key="dbjmz2tnii2pn9sxg26ap6w5r", definition="int ncross(graph_t * g)")
-public static int ncross(ST_Agraph_s g) {
+public static int ncross(Globals zz, ST_Agraph_s g) {
 ENTERING("dbjmz2tnii2pn9sxg26ap6w5r","ncross");
 try {
     int r, count, nc;
     
-    g = Z.z().Root;
+    g = zz.Root;
     count = 0;
     for (r = GD_minrank(g); r < GD_maxrank(g); r++) {
 	if (GD_rank(g).get__(r).valid!=0)
 	    count += GD_rank(g).get__(r).cache_nc;
 	else {
-	    nc = rcross(g, r);
+	    nc = rcross(zz, g, r);
 	    GD_rank(g).get__(r).cache_nc = nc;
 	    count += nc;
 	    GD_rank(g).get__(r).valid = 1;
@@ -1780,7 +1775,7 @@ LEAVING("dbjmz2tnii2pn9sxg26ap6w5r","ncross");
 
 public static CFunction ordercmpf = new CFunctionAbstract("ordercmpf") {
 	
-	public Object exe(Object... args) {
+	public Object exe(Globals zz, Object... args) {
 		return ordercmpf((Integer)args[0], (Integer)args[1]);
 	}};
 
@@ -1843,7 +1838,7 @@ LEAVING("7397kynkpqf2m1jkpmi8pgf0n","flat_mval");
 // static boolean medians(graph_t * g, int r0, int r1) 
 @Unused
 @Original(version="2.38.0", path="lib/dotgen/mincross.c", name="medians", key="azvdpixwwxspl31wp7f4k4fmh", definition="static boolean medians(graph_t * g, int r0, int r1)")
-public static boolean medians(ST_Agraph_s g, int r0, int r1) {
+public static boolean medians(Globals zz, ST_Agraph_s g, int r0, int r1) {
 ENTERING("azvdpixwwxspl31wp7f4k4fmh","medians");
 try {
     int i, j, j0, lm, rm, lspan, rspan;
@@ -1852,7 +1847,7 @@ try {
     CArrayOfStar<ST_Agnode_s> v;
     ST_Agedge_s e;
     boolean hasfixed = false;
-    list = Z.z().TI_list;
+    list = zz.TI_list;
     v = GD_rank(g).get__(r0).v;
     for (i = 0; i < GD_rank(g).get__(r0).n; i++) {
 	n = v.get_(i);
@@ -1877,7 +1872,7 @@ try {
 	    ND_mval(n, (list[0] + list[1]) / 2);
 	    break;
 	default:
-	    qsort2(list,
+	    qsortInt(zz, list,
 	    	    j,
 	    	    mincross__c.ordercmpf);
 	    if (j % 2!=0)
@@ -1913,7 +1908,7 @@ LEAVING("azvdpixwwxspl31wp7f4k4fmh","medians");
 
 public static CFunction nodeposcmpf = new CFunctionAbstract("nodeposcmpf") {
 	
-	public Object exe(Object... args) {
+	public Object exe(Globals zz, Object... args) {
 		return nodeposcmpf((CArrayOfStar<ST_Agnode_s>)args[0], (CArrayOfStar<ST_Agnode_s>)args[1]);
 	}};
 
@@ -1980,18 +1975,18 @@ LEAVING("es57bn7ga4wc9tqtcixpn0451","virtual_weight");
 
 @Reviewed(when = "14/11/2020")
 @Original(version="2.38.0", path="lib/dotgen/mincross.c", name="mincross_options", key="7ru09oqbudpeofsthzveig2m2", definition="static void mincross_options(graph_t * g)")
-public static void mincross_options(ST_Agraph_s g) {
+public static void mincross_options(Globals zz, ST_Agraph_s g) {
 ENTERING("7ru09oqbudpeofsthzveig2m2","mincross_options");
 try {
     CString p;
     double f;
     
     /* set default values */
-    Z.z().MinQuit = 8;
-    Z.z().MaxIter = 24;
-    Z.z().Convergence = .995;
+    zz.MinQuit = 8;
+    zz.MaxIter = 24;
+    zz.Convergence = .995;
     
-    p = agget(g, new CString("mclimit"));
+    p = agget(zz, g, new CString("mclimit"));
     if (p!=null && ((f = atof(p)) > 0.0)) {
 UNSUPPORTED("4iu53eiz077u6joqgwawca8ya"); // 	MinQuit = ((1)>(MinQuit * f)?(1):(MinQuit * f));
 UNSUPPORTED("38po81l36cibw6jc3qlsscpcu"); // 	MaxIter = ((1)>(MaxIter * f)?(1):(MaxIter * f));

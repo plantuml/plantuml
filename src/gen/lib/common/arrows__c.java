@@ -2,12 +2,12 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
@@ -49,9 +49,7 @@ import static gen.lib.cgraph.graph__c.agisdirected;
 import static gen.lib.cgraph.obj__c.agraphof;
 import static gen.lib.common.splines__c.bezier_clip;
 import static gen.lib.common.utils__c.late_double;
-import static smetana.core.JUtils.EQ;
-import static smetana.core.JUtils.NEQ;
-import static smetana.core.JUtils.strlen;
+import static smetana.core.JUtils.EQ_CSTRING;
 import static smetana.core.JUtils.strncmp;
 import static smetana.core.Macro.ARR_TYPE_GAP;
 import static smetana.core.Macro.ARR_TYPE_NONE;
@@ -60,7 +58,6 @@ import static smetana.core.Macro.BITS_PER_ARROW;
 import static smetana.core.Macro.BITS_PER_ARROW_TYPE;
 import static smetana.core.Macro.DIST2;
 import static smetana.core.Macro.ED_conc_opp_flag;
-import static smetana.core.Macro.N;
 import static smetana.core.Macro.UNSUPPORTED;
 import static smetana.core.debug.SmetanaDebug.ENTERING;
 import static smetana.core.debug.SmetanaDebug.LEAVING;
@@ -79,7 +76,8 @@ import smetana.core.CArray;
 import smetana.core.CFunction;
 import smetana.core.CFunctionAbstract;
 import smetana.core.CString;
-import smetana.core.Z;
+import smetana.core.Globals;
+import smetana.core.ZType;
 
 public class arrows__c {
 
@@ -95,7 +93,7 @@ try {
     CString rest = name;
 
     for (arrowname = 0; arrownames[arrowname].name!=null; arrowname++) {
-	namelen = strlen(arrownames[arrowname].name);
+	namelen = arrownames[arrowname].name.length();
 	if (strncmp(name, arrownames[arrowname].name, namelen) == 0) {
 	    flag[0] |= arrownames[arrowname].type;
 	    rest =  rest.plus_(namelen);
@@ -115,20 +113,20 @@ LEAVING("3apnay8wumntfkvud64ov7fcf","arrow_match_name_frag");
 // static char *arrow_match_shape(char *name, int *flag) 
 @Unused
 @Original(version="2.38.0", path="lib/common/arrows.c", name="", key="b669zec8aznq4obnil98j5lby", definition="static char *arrow_match_shape(char *name, int *flag)")
-public static CString arrow_match_shape(CString name, int flag[]) {
+public static CString arrow_match_shape(Globals zz, CString name, int flag[]) {
 ENTERING("b669zec8aznq4obnil98j5lby","arrow_match_shape");
 try {
     CString next=null, rest=null;
     int f[] = new int[] {0};
-    rest = arrow_match_name_frag(name, Z.z().Arrowsynonyms, f);
-    if (EQ(rest, name)) {
+    rest = arrow_match_name_frag(name, zz.Arrowsynonyms, f);
+    if (EQ_CSTRING(rest, name)) {
 	do {
 	    next = rest;
-	    rest = arrow_match_name_frag(next, Z.z().Arrowmods, f);
-	} while (NEQ(next,rest));
-	rest = arrow_match_name_frag(rest, Z.z().Arrownames, f);
+	    rest = arrow_match_name_frag(next, zz.Arrowmods, f);
+	} while (!EQ_CSTRING(next,rest));
+	rest = arrow_match_name_frag(rest, zz.Arrownames, f);
     }
-    if (f[0]!=0 && N(f[0] & ((1 << BITS_PER_ARROW_TYPE) - 1)))
+    if (f[0]!=0 && (f[0] & ((1 << BITS_PER_ARROW_TYPE) - 1)) == 0)
 UNSUPPORTED("2mly07gipiope02mgflzcie3e"); // 	f |= 1;
     flag[0] |= f[0];
     return rest;
@@ -148,7 +146,7 @@ private static final int NUMB_OF_ARROW_HEADS = 4;
 @Doc("update flags for arrow. Warning: implementation changed in Java")
 @Todo(what = "Check why C is strange")
 @Original(version="2.38.0", path="lib/common/arrows.c", name="arrow_match_name", key="2pveqb5qcgfxcqp410ub942eg", definition="static void arrow_match_name(char *name, int *flag)")
-public static void arrow_match_name(CString name, int flag[]) {
+public static void arrow_match_name(Globals zz, CString name, int flag[]) {
 ENTERING("2pveqb5qcgfxcqp410ub942eg","arrow_match_name");
 try {
     CString rest = name;
@@ -158,7 +156,7 @@ try {
     for (i = 0; rest.charAt(0) != '\0' && i < NUMB_OF_ARROW_HEADS; ) {
 	f[0] = ARR_TYPE_NONE;
 	next = rest;
-        rest = arrow_match_shape(next, f);
+        rest = arrow_match_shape(zz, next, f);
 	if (f[0] == ARR_TYPE_NONE) {
 	    System.err.println("Arrow type \"%s\" unknown - ignoring\n");
 	    return;
@@ -185,7 +183,7 @@ LEAVING("2pveqb5qcgfxcqp410ub942eg","arrow_match_name");
 @Doc("update flags for arrow. Warning: implementation changed in Java")
 @Todo(what = "Check why C is strange")
 @Original(version="2.38.0", path="lib/common/arrows.c", name="arrow_flags", key="2szgwtfieaw58pea2ohjyu8ea", definition="void arrow_flags(Agedge_t * e, int *sflag, int *eflag)")
-public static void arrow_flags(ST_Agedge_s e, int sflag[], int eflag[]) {
+public static void arrow_flags(Globals zz, ST_Agedge_s e, int sflag[], int eflag[]) {
 ENTERING("2szgwtfieaw58pea2ohjyu8ea","arrow_flags");
 try {
     CString attr;
@@ -196,7 +194,7 @@ try {
     sflag[0] = ARR_TYPE_NORM;
     eflag[0] = ARR_TYPE_NORM;
 
-    if (Z.z().E_dir!=null && ((attr = agxget(e, Z.z().E_dir))).charAt(0)!='\0') {
+    if (zz.E_dir!=null && ((attr = agxget(e, zz.E_dir))).charAt(0)!='\0') {
 UNSUPPORTED("em7x45v09orjeey5u06gf9b4s"); // 	for (arrowdir = Arrowdirs; arrowdir->dir; arrowdir++) {
 UNSUPPORTED("dhaookuw0a1xqmh07lldcvlgi"); // 	    if ((*(attr)==*(arrowdir->dir)&&!strcmp(attr,arrowdir->dir))) {
 UNSUPPORTED("1d32qbc447n7nmmvedj3bnhr4"); // 		*sflag = arrowdir->sflag;
@@ -205,10 +203,10 @@ UNSUPPORTED("9ekmvj13iaml5ndszqyxa8eq"); // 		break;
 UNSUPPORTED("6t98dcecgbvbvtpycwiq2ynnj"); // 	    }
 UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
     }
-    if (Z.z().E_arrowhead!=null && (eflag[0] == ARR_TYPE_NORM) && ((attr = agxget(e,Z.z().E_arrowhead))).charAt(0)!='\0')
-	arrow_match_name(attr, eflag);
-    if (Z.z().E_arrowtail!=null && (sflag[0] == ARR_TYPE_NORM) && ((attr = agxget(e, Z.z().E_arrowtail))).charAt(0)!='\0')
-	arrow_match_name(attr, sflag);
+    if (zz.E_arrowhead!=null && (eflag[0] == ARR_TYPE_NORM) && ((attr = agxget(e,zz.E_arrowhead))).charAt(0)!='\0')
+	arrow_match_name(zz, attr, eflag);
+    if (zz.E_arrowtail!=null && (sflag[0] == ARR_TYPE_NORM) && ((attr = agxget(e, zz.E_arrowtail))).charAt(0)!='\0')
+	arrow_match_name(zz, attr, sflag);
     if (ED_conc_opp_flag(e)) {
 UNSUPPORTED("1p2usipxeqlorwroqo37t3yfy"); // 	edge_t *f;
 UNSUPPORTED("6ne3pu2bnhx6tyx81t4td4up6"); // 	int s0, e0;
@@ -230,7 +228,7 @@ LEAVING("2szgwtfieaw58pea2ohjyu8ea","arrow_flags");
 // double arrow_length(edge_t * e, int flag) 
 @Unused
 @Original(version="2.38.0", path="lib/common/arrows.c", name="arrow_length", key="1yk5wl46i7rlzcern0tefd24s", definition="double arrow_length(edge_t * e, int flag)")
-public static double arrow_length(ST_Agedge_s e, int flag) {
+public static double arrow_length(Globals zz, ST_Agedge_s e, int flag) {
 ENTERING("1yk5wl46i7rlzcern0tefd24s","arrow_length");
 try {
     double lenfact = 0.0;
@@ -238,16 +236,16 @@ try {
     for (i = 0; i < NUMB_OF_ARROW_HEADS; i++) {
         /* we don't simply index with flag because arrowtypes are not necessarily sorted */
         f = (flag >> (i * BITS_PER_ARROW)) & ((1 << BITS_PER_ARROW_TYPE) - 1);
-        for (int arrowtype = 0; Z.z().Arrowtypes[arrowtype].gen!=null; arrowtype++) {
-	    if (f == Z.z().Arrowtypes[arrowtype].type) {
-	        lenfact += Z.z().Arrowtypes[arrowtype].lenfact;
+        for (int arrowtype = 0; zz.Arrowtypes[arrowtype].gen!=null; arrowtype++) {
+	    if (f == zz.Arrowtypes[arrowtype].type) {
+	        lenfact += zz.Arrowtypes[arrowtype].lenfact;
 	        break;
 	    }
         }
     }
     /* The original was missing the factor E_arrowsz, but I believe it
        should be here for correct arrow clipping */
-    return 10. * lenfact * late_double(e, Z.z().E_arrowsz, 1.0, 0.0);
+    return 10. * lenfact * late_double(e, zz.E_arrowsz, 1.0, 0.0);
 } finally {
 LEAVING("1yk5wl46i7rlzcern0tefd24s","arrow_length");
 }
@@ -258,7 +256,7 @@ LEAVING("1yk5wl46i7rlzcern0tefd24s","arrow_length");
 
 public static CFunction inside = new CFunctionAbstract("inside") {
 	
-	public Object exe(Object... args) {
+	public Object exe(Globals zz, Object... args) {
 		return inside((ST_inside_t)args[0], (ST_pointf)args[1]);
 	}};
 
@@ -284,15 +282,15 @@ LEAVING("7ymcsnwqkr1crisrga0kezh1f","inside");
 // int arrowEndClip(edge_t* e, pointf * ps, int startp, 		 int endp, bezier * spl, int eflag) 
 @Unused
 @Original(version="2.38.0", path="lib/common/arrows.c", name="arrowEndClip", key="9eellwhg4gsa2pdszpeqihs2d", definition="int arrowEndClip(edge_t* e, pointf * ps, int startp, 		 int endp, bezier * spl, int eflag)")
-public static int arrowEndClip(ST_Agedge_s e, CArray<ST_pointf> ps, int startp, int endp, ST_bezier spl, int eflag) {
+public static int arrowEndClip(Globals zz, ST_Agedge_s e, CArray<ST_pointf> ps, int startp, int endp, ST_bezier spl, int eflag) {
 ENTERING("9eellwhg4gsa2pdszpeqihs2d","arrowEndClip");
 try {
     final ST_inside_t inside_context = new ST_inside_t();
-    final CArray<ST_pointf> sp = CArray.<ST_pointf>ALLOC__(4, ST_pointf.class);
+    final CArray<ST_pointf> sp = CArray.<ST_pointf>ALLOC__(4, ZType.ST_pointf);
     double elen;
     final double elen2[] = new double[] {0};
     
-    elen = arrow_length(e, eflag);
+    elen = arrow_length(zz, e, eflag);
     elen2[0] =elen * elen;
     spl.eflag = eflag;
     spl.ep.___(ps.get__(endp + 3));
@@ -306,7 +304,7 @@ try {
     
     inside_context.a_p = sp;
     inside_context.a_r = elen2;
-    bezier_clip(inside_context, arrows__c.inside, sp, true);
+    bezier_clip(zz, inside_context, arrows__c.inside, sp, true);
     
     ps.get__(endp).___(sp.get__(3));
     ps.get__(endp+1).___(sp.get__(2));
@@ -325,15 +323,15 @@ LEAVING("9eellwhg4gsa2pdszpeqihs2d","arrowEndClip");
 // int arrowStartClip(edge_t* e, pointf * ps, int startp, 		   int endp, bezier * spl, int sflag) 
 @Unused
 @Original(version="2.38.0", path="lib/common/arrows.c", name="arrowStartClip", key="q7y4oxn0paexbgynmtg2zmiv", definition="int arrowStartClip(edge_t* e, pointf * ps, int startp, 		   int endp, bezier * spl, int sflag)")
-public static int arrowStartClip(ST_Agedge_s e, CArray<ST_pointf> ps, int startp, int endp, ST_bezier spl, int sflag) {
+public static int arrowStartClip(Globals zz, ST_Agedge_s e, CArray<ST_pointf> ps, int startp, int endp, ST_bezier spl, int sflag) {
 ENTERING("q7y4oxn0paexbgynmtg2zmiv","arrowStartClip");
 try {
     final ST_inside_t inside_context = new ST_inside_t();
-    final CArray<ST_pointf> sp = CArray.<ST_pointf>ALLOC__(4, ST_pointf.class);
+    final CArray<ST_pointf> sp = CArray.<ST_pointf>ALLOC__(4, ZType.ST_pointf);
     double slen;
     
     final double[] slen2 = new double[] {0};
-    slen = arrow_length(e, sflag);
+    slen = arrow_length(zz, e, sflag);
     slen2[0] = slen * slen;
     spl.sflag = sflag;
     spl.sp.___(ps.get__(startp));
@@ -347,7 +345,7 @@ try {
     
     inside_context.a_p = sp.plus_(3);
     inside_context.a_r = slen2;
-    bezier_clip(inside_context, arrows__c.inside, sp, false);
+    bezier_clip(zz, inside_context, arrows__c.inside, sp, false);
     
     ps.get__(startp).___(sp.get__(3));
     ps.get__(startp+1).___(sp.get__(2));
@@ -466,7 +464,7 @@ throw new UnsupportedOperationException();
 
 public static CFunction arrow_type_normal = new CFunctionAbstract("arrow_type_normal") {
 	
-	public Object exe(Object... args) {
+	public Object exe(Globals zz, Object... args) {
 		return arrow_type_normal(args);
 	}};
 @Unused
@@ -514,7 +512,7 @@ throw new UnsupportedOperationException();
 
 public static CFunction arrow_type_crow = new CFunctionAbstract("arrow_type_crow") {
 	
-	public Object exe(Object... args) {
+	public Object exe(Globals zz, Object... args) {
 		return arrow_type_crow(args);
 	}};
 @Unused
@@ -585,7 +583,7 @@ throw new UnsupportedOperationException();
 
 public static CFunction arrow_type_gap = new CFunctionAbstract("arrow_type_gap") {
 	
-	public Object exe(Object... args) {
+	public Object exe(Globals zz, Object... args) {
 		return arrow_type_gap(args);
 	}};
 @Unused
@@ -609,7 +607,7 @@ throw new UnsupportedOperationException();
 
 public static CFunction arrow_type_tee = new CFunctionAbstract("arrow_type_tee") {
 	
-	public Object exe(Object... args) {
+	public Object exe(Globals zz, Object... args) {
 		return arrow_type_tee(args);
 	}};
 @Unused
@@ -655,7 +653,7 @@ throw new UnsupportedOperationException();
 
 public static CFunction arrow_type_box = new CFunctionAbstract("arrow_type_box") {
 	
-	public Object exe(Object... args) {
+	public Object exe(Globals zz, Object... args) {
 		return arrow_type_box(args);
 	}};
 @Unused
@@ -699,7 +697,7 @@ throw new UnsupportedOperationException();
 
 public static CFunction arrow_type_diamond = new CFunctionAbstract("arrow_type_diamond") {
 	
-	public Object exe(Object... args) {
+	public Object exe(Globals zz, Object... args) {
 		return arrow_type_diamond(args);
 	}};
 @Unused
@@ -736,7 +734,7 @@ throw new UnsupportedOperationException();
 
 public static CFunction arrow_type_dot = new CFunctionAbstract("arrow_type_dot") {
 	
-	public Object exe(Object... args) {
+	public Object exe(Globals zz, Object... args) {
 		return arrow_type_dot(args);
 	}};
 @Unused
@@ -762,7 +760,7 @@ throw new UnsupportedOperationException();
 
 public static CFunction arrow_type_curve = new CFunctionAbstract("arrow_type_curve") {
 	
-	public Object exe(Object... args) {
+	public Object exe(Globals zz, Object... args) {
 		return arrow_type_curve(args);
 	}};
 @Unused

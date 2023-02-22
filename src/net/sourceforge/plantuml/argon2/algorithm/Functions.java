@@ -15,158 +15,146 @@ import net.sourceforge.plantuml.argon2.model.Block;
 
 class Functions {
 
+	/**
+	 * H0 = H64(p, \u03c4, m, t, v, y, |P|, P, |S|, S, |L|, K, |X|, X) -> 64 byte
+	 * (ARGON2_PREHASH_DIGEST_LENGTH)
+	 */
+	static byte[] initialHash(byte[] lanes, byte[] outputLength, byte[] memory, byte[] iterations, byte[] version,
+			byte[] type, byte[] passwordLength, byte[] password, byte[] saltLength, byte[] salt, byte[] secretLength,
+			byte[] secret, byte[] additionalLength, byte[] additional) {
 
-    /**
-     * H0 = H64(p, \u03c4, m, t, v, y, |P|, P, |S|, S, |L|, K, |X|, X)
-     * -> 64 byte (ARGON2_PREHASH_DIGEST_LENGTH)
-     */
-    static byte[] initialHash(byte[] lanes, byte[] outputLength,
-                              byte[] memory, byte[] iterations,
-                              byte[] version, byte[] type,
-                              byte[] passwordLength, byte[] password,
-                              byte[] saltLength, byte[] salt,
-                              byte[] secretLength, byte[] secret,
-                              byte[] additionalLength, byte[] additional) {
+		Blake2b.Param params = new Blake2b.Param().setDigestLength(ARGON2_PREHASH_DIGEST_LENGTH);
 
+		final Blake2b blake2b = Blake2b.Digest.newInstance(params);
 
-        Blake2b.Param params = new Blake2b.Param()
-                .setDigestLength(ARGON2_PREHASH_DIGEST_LENGTH);
+		blake2b.update(lanes);
+		blake2b.update(outputLength);
+		blake2b.update(memory);
+		blake2b.update(iterations);
+		blake2b.update(version);
+		blake2b.update(type);
 
-        final Blake2b blake2b = Blake2b.Digest.newInstance(params);
+		blake2b.update(passwordLength);
+		if (password != null) {
+			blake2b.update(password);
+		}
 
-        blake2b.update(lanes);
-        blake2b.update(outputLength);
-        blake2b.update(memory);
-        blake2b.update(iterations);
-        blake2b.update(version);
-        blake2b.update(type);
+		blake2b.update(saltLength);
+		if (salt != null) {
+			blake2b.update(salt);
+		}
 
-        blake2b.update(passwordLength);
-        if (password != null) {
-            blake2b.update(password);
-        }
+		blake2b.update(secretLength);
+		if (secret != null) {
+			blake2b.update(secret);
+		}
 
-        blake2b.update(saltLength);
-        if (salt != null) {
-            blake2b.update(salt);
-        }
+		blake2b.update(additionalLength);
+		if (additional != null) {
+			blake2b.update(additional);
+		}
 
-        blake2b.update(secretLength);
-        if (secret != null) {
-            blake2b.update(secret);
-        }
+		byte[] blake2hash = blake2b.digest();
+		assert (blake2hash.length == 64);
 
-        blake2b.update(additionalLength);
-        if (additional != null) {
-            blake2b.update(additional);
-        }
+		return blake2hash;
+	}
 
-        byte[] blake2hash = blake2b.digest();
-        assert (blake2hash.length == 64);
+	/**
+	 * H' - blake2bLong - variable length hash function
+	 */
+	static byte[] blake2bLong(byte[] input, int outputLength) {
 
-        return blake2hash;
-    }
+		assert (input.length == ARGON2_PREHASH_SEED_LENGTH || input.length == ARGON2_BLOCK_SIZE);
 
+		byte[] result = new byte[outputLength];
+		byte[] outlenBytes = Util.intToLittleEndianBytes(outputLength);
 
-    /**
-     * H' - blake2bLong - variable length hash function
-     */
-    static byte[] blake2bLong(byte[] input, int outputLength) {
+		int blake2bLength = 64;
 
-        assert (input.length == ARGON2_PREHASH_SEED_LENGTH || input.length == ARGON2_BLOCK_SIZE);
+		if (outputLength <= blake2bLength) {
+			result = blake2b(input, outlenBytes, outputLength);
+		} else {
+			byte[] outBuffer;
 
-        byte[] result = new byte[outputLength];
-        byte[] outlenBytes = Util.intToLittleEndianBytes(outputLength);
+			/* V1 */
+			outBuffer = blake2b(input, outlenBytes, blake2bLength);
+			System.arraycopy(outBuffer, 0, result, 0, blake2bLength / 2);
 
-        int blake2bLength = 64;
+			int r = (outputLength / 32) + (outputLength % 32 == 0 ? 0 : 1) - 2;
 
-        if (outputLength <= blake2bLength) {
-            result = blake2b(input, outlenBytes, outputLength);
-        } else {
-            byte[] outBuffer;
+			int position = blake2bLength / 2;
+			for (int i = 2; i <= r; i++, position += blake2bLength / 2) {
+				/* V2 to Vr */
+				outBuffer = blake2b(outBuffer, null, blake2bLength);
+				System.arraycopy(outBuffer, 0, result, position, blake2bLength / 2);
+			}
 
-            /* V1 */
-            outBuffer = blake2b(input, outlenBytes, blake2bLength);
-            System.arraycopy(outBuffer, 0, result, 0, blake2bLength / 2);
+			int lastLength = outputLength - 32 * r;
 
-            int r = (outputLength / 32) + (outputLength % 32 == 0 ? 0 : 1) - 2;
+			/* Vr+1 */
+			outBuffer = blake2b(outBuffer, null, lastLength);
+			System.arraycopy(outBuffer, 0, result, position, lastLength);
+		}
 
-            int position = blake2bLength / 2;
-            for (int i = 2; i <= r; i++, position += blake2bLength / 2) {
-                /* V2 to Vr */
-                outBuffer = blake2b(outBuffer, null, blake2bLength);
-                System.arraycopy(outBuffer, 0, result, position, blake2bLength / 2);
-            }
+		assert (result.length == outputLength);
+		return result;
+	}
 
-            int lastLength = outputLength - 32 * r;
+	private static byte[] blake2b(byte[] input, byte[] outlenBytes, int outputLength) {
+		Blake2b.Param params = new Blake2b.Param().setDigestLength(outputLength);
 
-            /* Vr+1 */
-            outBuffer = blake2b(outBuffer, null, lastLength);
-            System.arraycopy(outBuffer, 0, result, position, lastLength);
-        }
+		final Blake2b blake2b = Blake2b.Digest.newInstance(params);
 
-        assert (result.length == outputLength);
-        return result;
-    }
+		if (outlenBytes != null)
+			blake2b.update(outlenBytes);
 
-    private static byte[] blake2b(byte[] input, byte[] outlenBytes, int outputLength) {
-        Blake2b.Param params = new Blake2b.Param()
-                .setDigestLength(outputLength);
+		blake2b.update(input);
 
-        final Blake2b blake2b = Blake2b.Digest.newInstance(params);
+		return blake2b.digest();
+	}
 
-        if (outlenBytes != null)
-            blake2b.update(outlenBytes);
+	static void roundFunction(Block block, int v0, int v1, int v2, int v3, int v4, int v5, int v6, int v7, int v8,
+			int v9, int v10, int v11, int v12, int v13, int v14, int v15) {
 
-        blake2b.update(input);
+		F(block, v0, v4, v8, v12);
+		F(block, v1, v5, v9, v13);
+		F(block, v2, v6, v10, v14);
+		F(block, v3, v7, v11, v15);
 
-        return blake2b.digest();
-    }
+		F(block, v0, v5, v10, v15);
+		F(block, v1, v6, v11, v12);
+		F(block, v2, v7, v8, v13);
+		F(block, v3, v4, v9, v14);
+	}
 
-    static void roundFunction(Block block,
-                              int v0, int v1, int v2, int v3,
-                              int v4, int v5, int v6, int v7,
-                              int v8, int v9, int v10, int v11,
-                              int v12, int v13, int v14, int v15) {
+	private static void F(Block block, int a, int b, int c, int d) {
+		fBlaMka(block, a, b);
+		rotr64(block, d, a, 32);
 
-        F(block, v0, v4, v8, v12);
-        F(block, v1, v5, v9, v13);
-        F(block, v2, v6, v10, v14);
-        F(block, v3, v7, v11, v15);
+		fBlaMka(block, c, d);
+		rotr64(block, b, c, 24);
 
-        F(block, v0, v5, v10, v15);
-        F(block, v1, v6, v11, v12);
-        F(block, v2, v7, v8, v13);
-        F(block, v3, v4, v9, v14);
-    }
+		fBlaMka(block, a, b);
+		rotr64(block, d, a, 16);
 
-    private static void F(Block block, int a, int b, int c, int d) {
-        fBlaMka(block, a, b);
-        rotr64(block, d, a, 32);
+		fBlaMka(block, c, d);
+		rotr64(block, b, c, 63);
+	}
 
-        fBlaMka(block, c, d);
-        rotr64(block, b, c, 24);
+	/* designed by the Lyra PHC team */
+	/*
+	 * a <- a + b + 2*aL*bL + == addition modulo 2^64 aL = least 32 bit
+	 */
+	private static void fBlaMka(Block block, int x, int y) {
+		final long m = 0xFFFFFFFFL;
+		final long xy = (block.v[x] & m) * (block.v[y] & m);
 
-        fBlaMka(block, a, b);
-        rotr64(block, d, a, 16);
+		block.v[x] = block.v[x] + block.v[y] + 2 * xy;
+	}
 
-        fBlaMka(block, c, d);
-        rotr64(block, b, c, 63);
-    }
-
-    /*designed by the Lyra PHC team */
-    /* a <- a + b + 2*aL*bL
-     * + == addition modulo 2^64
-     * aL = least 32 bit */
-    private static void fBlaMka(Block block, int x, int y) {
-        final long m = 0xFFFFFFFFL;
-        final long xy = (block.v[x] & m) * (block.v[y] & m);
-
-        block.v[x] = block.v[x] + block.v[y] + 2 * xy;
-    }
-
-    private static void rotr64(Block block, int v, int w, long c) {
-        final long temp = block.v[v] ^ block.v[w];
-        block.v[v] = (temp >>> c) | (temp << (64 - c));
-    }
+	private static void rotr64(Block block, int v, int w, long c) {
+		final long temp = block.v[v] ^ block.v[w];
+		block.v[v] = (temp >>> c) | (temp << (64 - c));
+	}
 }

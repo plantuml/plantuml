@@ -2,14 +2,14 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2009-2024, Arnaud Roques
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of PlantUML.
  *
@@ -62,30 +62,31 @@ import h.ST_Agrec_s;
 import h.ST_GVC_s;
 import h.ST_boxf;
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.ISkinParam;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.abel.GroupType;
+import net.sourceforge.plantuml.abel.LeafType;
+import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.api.ImageDataSimple;
-import net.sourceforge.plantuml.awt.geom.XDimension2D;
-import net.sourceforge.plantuml.awt.geom.XPoint2D;
-import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.core.ImageData;
-import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.cucadiagram.GroupType;
 import net.sourceforge.plantuml.cucadiagram.ICucaDiagram;
-import net.sourceforge.plantuml.cucadiagram.LeafType;
-import net.sourceforge.plantuml.cucadiagram.Link;
-import net.sourceforge.plantuml.graphic.AbstractTextBlock;
-import net.sourceforge.plantuml.graphic.QuoteUtils;
-import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.graphic.TextBlockUtils;
+import net.sourceforge.plantuml.eggs.QuoteUtils;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
-import net.sourceforge.plantuml.klimt.geom.MinMax;
+import net.sourceforge.plantuml.klimt.geom.MinMaxMutable;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
@@ -99,11 +100,10 @@ import net.sourceforge.plantuml.svek.GraphvizCrash;
 import net.sourceforge.plantuml.svek.IEntityImage;
 import net.sourceforge.plantuml.svek.SvekNode;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
-import net.sourceforge.plantuml.ugraphic.UGraphic;
 import smetana.core.CString;
+import smetana.core.Globals;
 import smetana.core.JUtils;
 import smetana.core.Macro;
-import smetana.core.Z;
 import smetana.core.debug.SmetanaDebug;
 
 public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
@@ -117,23 +117,49 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 
 	private final DotStringFactory dotStringFactory;
 
+	private MinMaxMutable getSmetanaMinMax() {
+		final MinMaxMutable result = MinMaxMutable.getEmpty(false);
+		for (ST_Agnode_s n : nodes.values()) {
+			final ST_Agnodeinfo_t data = (ST_Agnodeinfo_t) n.data;
+			final double width = data.width * 72;
+			final double height = data.height * 72;
+			final double x = data.coord.x;
+			final double y = data.coord.y;
+			result.addPoint(x - width / 2, y - height / 2);
+			result.addPoint(x + width / 2, y + height / 2);
+		}
+		for (ST_Agraph_s gr : clusters.values()) {
+			final ST_Agrec_s tmp1 = gr.data;
+			if (tmp1 instanceof ST_Agraphinfo_t == false) {
+				System.err.println("ERROR IN CucaDiagramFileMakerSmetana");
+				continue;
+			}
+			final ST_Agraphinfo_t data = (ST_Agraphinfo_t) tmp1;
+			final ST_boxf bb = (ST_boxf) data.bb;
+			final double llx = bb.LL.x;
+			final double lly = bb.LL.y;
+			final double urx = bb.UR.x;
+			final double ury = bb.UR.y;
+
+			result.addPoint(llx, lly);
+			result.addPoint(urx, ury);
+
+		}
+		return result;
+	}
+
 	class Drawing extends AbstractTextBlock implements TextBlockBackcolored {
 
 		private final YMirror ymirror;
-		private final MinMax minMax;
+		private final MinMaxMutable minMax;
 
-		public Drawing(YMirror ymirror, MinMax minMax) {
-			this.ymirror = ymirror;
-			this.minMax = minMax;
+		public Drawing() {
+			this.minMax = getSmetanaMinMax();
+			this.ymirror = new YMirror(minMax.getMaxY() + 6);
 		}
 
 		public void drawU(UGraphic ug) {
-			if (minMax != null) {
-				// Matches the adjustment in SvekResult.calculateDimension() except no need to
-				// adjust for minY because
-				// mirroring takes care of that
-				ug = ug.apply(new UTranslate(6 - minMax.getMinX(), 6));
-			}
+			ug = ug.apply(new UTranslate(6, 6 - minMax.getMinY()));
 
 			for (Map.Entry<Entity, ST_Agraph_s> ent : clusters.entrySet())
 				drawGroup(ug, ymirror, ent.getKey(), ent.getValue());
@@ -160,21 +186,15 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 		}
 
 		public XDimension2D calculateDimension(StringBounder stringBounder) {
-			if (minMax == null)
-				throw new UnsupportedOperationException();
-
-			return minMax.getDimension();
+			return minMax.getDimension().delta(6);
 		}
 
 		private XPoint2D getCorner(ST_Agnode_s n) {
-			final ST_Agnodeinfo_t data = (ST_Agnodeinfo_t) Macro.AGDATA(n);
+			final ST_Agnodeinfo_t data = (ST_Agnodeinfo_t) n.data;
 			final double width = data.width * 72;
 			final double height = data.height * 72;
 			final double x = data.coord.x;
 			final double y = data.coord.y;
-
-			if (ymirror == null)
-				return new XPoint2D(x - width / 2, y - height / 2);
 
 			return ymirror.getMirrored(new XPoint2D(x - width / 2, y + height / 2));
 		}
@@ -195,21 +215,16 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 
 	}
 
-	public void drawGroup(UGraphic ug, YMirror ymirror, Entity group, ST_Agraph_s gr) {
+	private void drawGroup(UGraphic ug, YMirror ymirror, Entity group, ST_Agraph_s gr) {
 		JUtils.LOG2("drawGroup");
 		try {
-			final ST_Agrec_s tmp1 = Macro.AGDATA(gr);
+			final ST_Agrec_s tmp1 = gr.data;
 			final ST_Agraphinfo_t data = (ST_Agraphinfo_t) tmp1;
 			final ST_boxf bb = (ST_boxf) data.bb;
 			final double llx = bb.LL.x;
-			double lly = bb.LL.y;
+			final double ury = ymirror.getMirrored(bb.LL.y);
+			final double lly = ymirror.getMirrored(bb.UR.y);
 			final double urx = bb.UR.x;
-			double ury = bb.UR.y;
-			if (ymirror != null) {
-				final double tmpUry = ury;
-				ury = ymirror.getMirrored(lly);
-				lly = ymirror.getMirrored(tmpUry);
-			}
 
 			final Cluster cluster = dotStringFactory.getBibliotekon().getCluster(group);
 			cluster.setPosition(new XPoint2D(llx, lly), new XPoint2D(urx, ury));
@@ -220,10 +235,9 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 				cluster.setTitlePosition(new XPoint2D(x, lly));
 			}
 			JUtils.LOG2("cluster=" + cluster);
-			// ug.apply(new UTranslate(llx, lly)).apply(new
-			// UChangeColor(HtmlColorUtils.BLUE))
-			// .draw(new URectangle(urx - llx, ury - lly));
 			cluster.drawU(ug, diagram.getUmlDiagramType(), diagram.getSkinParam());
+			// ug.apply(new UTranslate(llx, lly)).apply(HColors.BLUE).draw(new
+			// URectangle(urx - llx, ury - lly));
 		} catch (Exception e) {
 			System.err.println("CANNOT DRAW GROUP");
 		}
@@ -266,27 +280,27 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 		}
 	}
 
-	private void exportEntities(ST_Agraph_s g, Collection<Entity> entities) {
+	private void exportEntities(Globals zz, ST_Agraph_s g, Collection<Entity> entities) {
 		for (Entity ent : entities) {
 			if (ent.isRemoved())
 				continue;
-			exportEntity(g, ent);
+			exportEntity(zz, g, ent);
 		}
 	}
 
-	private void exportEntity(ST_Agraph_s g, Entity leaf) {
+	private void exportEntity(Globals zz, ST_Agraph_s g, Entity leaf) {
 		final SvekNode node = dotStringFactory.getBibliotekon().getNode(leaf);
 		if (node == null) {
 			System.err.println("CANNOT FIND NODE");
 			return;
 		}
 		// System.err.println("exportEntity " + leaf);
-		final ST_Agnode_s agnode = agnode(g, new CString(node.getUid()), true);
-		agsafeset(agnode, new CString("shape"), new CString("box"), new CString(""));
+		final ST_Agnode_s agnode = agnode(zz, g, new CString(node.getUid()), true);
+		agsafeset(zz, agnode, new CString("shape"), new CString("box"), new CString(""));
 		final String width = "" + (node.getWidth() / 72);
 		final String height = "" + (node.getHeight() / 72);
-		agsafeset(agnode, new CString("width"), new CString(width), new CString(""));
-		agsafeset(agnode, new CString("height"), new CString(height), new CString(""));
+		agsafeset(zz, agnode, new CString("width"), new CString(width), new CString(""));
+		agsafeset(zz, agnode, new CString("height"), new CString(height), new CString(""));
 		// System.err.println("NODE " + leaf.getUid() + " " + width + " " + height);
 		nodes.put(leaf, agnode);
 	}
@@ -310,14 +324,14 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 		return result;
 	}
 
-	private void printCluster(ST_Agraph_s g, Cluster cluster) {
+	private void printCluster(Globals zz, ST_Agraph_s g, Cluster cluster) {
 		for (SvekNode node : cluster.getNodes()) {
-			final ST_Agnode_s agnode = agnode(g, new CString(node.getUid()), true);
-			agsafeset(agnode, new CString("shape"), new CString("box"), new CString(""));
+			final ST_Agnode_s agnode = agnode(zz, g, new CString(node.getUid()), true);
+			agsafeset(zz, agnode, new CString("shape"), new CString("box"), new CString(""));
 			final String width = "" + (node.getWidth() / 72);
 			final String height = "" + (node.getHeight() / 72);
-			agsafeset(agnode, new CString("width"), new CString(width), new CString(""));
-			agsafeset(agnode, new CString("height"), new CString(height), new CString(""));
+			agsafeset(zz, agnode, new CString("width"), new CString(width), new CString(""));
+			agsafeset(zz, agnode, new CString("height"), new CString(height), new CString(""));
 			final Entity leaf = dotStringFactory.getBibliotekon().getLeaf(node);
 			nodes.put(leaf, agnode);
 		}
@@ -337,21 +351,18 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 	}
 
 	@Override
-	public ImageData createOneGraphic(UGraphic ug) {
+	public void createOneGraphic(UGraphic ug) {
 		for (Entity leaf : diagram.getEntityFactory().leafs())
 			printEntityNew(leaf);
 
-		Z.open();
+		final Globals zz = Globals.open();
 		try {
-			final TextBlock textBlock = getTextBlock();
+			final TextBlock textBlock = getTextBlock(zz);
 			textBlock.drawU(ug);
-			final XDimension2D dim = textBlock.calculateDimension(ug.getStringBounder());
-			return new ImageDataSimple(dim);
 		} catch (Throwable e) {
 			SmetanaDebug.printMe();
-			return ImageDataSimple.error();
 		} finally {
-			Z.close();
+			Globals.close();
 		}
 	}
 
@@ -361,9 +372,9 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 		for (Entity leaf : diagram.getEntityFactory().leafs())
 			printEntityNew(leaf);
 
-		Z.open();
+		final Globals zz = Globals.open();
 		try {
-			final TextBlock drawable = getTextBlock();
+			final TextBlock drawable = getTextBlock(zz);
 			return diagram.createImageBuilder(fileFormatOption).drawable(drawable).write(os);
 		} catch (Throwable e) {
 			SmetanaDebug.printMe();
@@ -371,89 +382,63 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 					diagram.getFlashData(), getFailureText3(e));
 			return ImageDataSimple.error();
 		} finally {
-			Z.close();
+			Globals.close();
 		}
 	}
 
-	private TextBlock getTextBlock() {
-		final ST_Agraph_s g = agopen(new CString("g"), Z.z().Agdirected, null);
+	private TextBlock getTextBlock(Globals zz) {
+		final ST_Agraph_s g = agopen(zz, new CString("g"), zz.Agdirected, null);
 
-		// printCluster(g, root);
-		exportEntities(g, getUnpackagedEntities());
-		exportGroups(g, diagram.getEntityFactory().getRootGroup());
+		exportEntities(zz, g, getUnpackagedEntities());
+		exportGroups(zz, g, diagram.getEntityFactory().getRootGroup());
 
-		// for (ILeaf leaf : diagram.getLeafsvalues()) {
-		// final Shape shape = bibliotekon.getShape(leaf);
-		// final Agnode_s node = agnode(g, new CString(shape.getUid()), true);
-		// agsafeset(node, new CString("shape"), new CString("box"), new CString(""));
-		// final String width = "" + (shape.getWidth() / 72);
-		// final String height = "" + (shape.getHeight() / 72);
-		// agsafeset(node, new CString("width"), new CString(width), new CString(""));
-		// agsafeset(node, new CString("height"), new CString(height), new CString(""));
-		// nodes.put(leaf, node);
-		// // System.err
-		// // .println("NODE " + leaf.getUid() + " [shape=box, width=" + width + ",
-		// height=" + height + "]");
-		// }
-		//
 		for (Link link : diagram.getLinks()) {
-			// System.err.println("link=" + link);
-			final ST_Agedge_s e = createEdge(g, link);
-			// System.err.println("Agedge_s=" + e);
+			final ST_Agedge_s e = createEdge(zz, g, link);
 			if (e != null)
 				edges.put(link, e);
 
 		}
 
-		final ST_GVC_s gvc = gvContext();
+		final ST_GVC_s gvc = gvContext(zz);
 		SmetanaDebug.reset();
-		gvLayoutJobs(gvc, g);
+		gvLayoutJobs(zz, gvc, g);
 		SmetanaDebug.printMe();
 
-		// for (Agedge_s e : edges.values()) {
-		// DebugUtils.printDebugEdge(e);
-		// }
-
-		final MinMax minMax = TextBlockUtils.getMinMax(new Drawing(null, null), stringBounder, false);
-
-		// imageBuilder.setUDrawable(new Drawing(new YMirror(dim.getHeight())));
-		final TextBlock drawable = new Drawing(new YMirror(minMax.getMaxY()), minMax);
+		final TextBlock drawable = new Drawing();
 		return drawable;
 	}
 
-	private void exportGroups(ST_Agraph_s graph, Entity parent) {
+	private void exportGroups(Globals zz, ST_Agraph_s graph, Entity parent) {
 		for (Entity g : diagram.getChildrenGroups(parent)) {
 			if (g.isRemoved())
 				continue;
 
-			if (diagram.isEmpty(g) && g.getGroupType() == GroupType.PACKAGE) {
-				// final EntityFactory entityFactory = diagram.getEntityFactory();
-				// final EntityImp folder = entityFactory.getLeafForEmptyGroup(g);
-				exportEntity(graph, g);
-			} else {
-				exportGroup(graph, g);
-			}
+			if (diagram.isEmpty(g) && g.getGroupType() == GroupType.PACKAGE)
+				exportEntity(zz, graph, g);
+			else
+				exportGroup(zz, graph, g);
+
 		}
 
 	}
 
-	private void exportGroup(ST_Agraph_s graph, Entity group) {
+	private void exportGroup(Globals zz, ST_Agraph_s graph, Entity group) {
 		final Cluster cluster = getBibliotekon().getCluster(group);
 		if (cluster == null) {
 			System.err.println("CucaDiagramFileMakerJDot::exportGroup issue");
 			return;
 		}
 		JUtils.LOG2("cluster = " + cluster.getClusterId());
-		final ST_Agraph_s cluster1 = agsubg(graph, new CString(cluster.getClusterId()), true);
+		final ST_Agraph_s cluster1 = agsubg(zz, graph, new CString(cluster.getClusterId()), true);
 		if (cluster.isLabel()) {
 			final double width = cluster.getTitleAndAttributeWidth();
 			final double height = cluster.getTitleAndAttributeHeight() - 5;
-			agsafeset(cluster1, new CString("label"), Macro.createHackInitDimensionFromLabel((int) width, (int) height),
-					new CString(""));
+			agsafeset(zz, cluster1, new CString("label"),
+					Macro.createHackInitDimensionFromLabel((int) width, (int) height), new CString(""));
 		}
-		this.exportEntities(cluster1, group.leafs());
+		this.exportEntities(zz, cluster1, group.leafs());
 		this.clusters.put(group, cluster1);
-		this.exportGroups(cluster1, group);
+		this.exportGroups(zz, cluster1, group);
 	}
 
 	private Style getStyle() {
@@ -510,7 +495,7 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 
 	}
 
-	private ST_Agedge_s createEdge(final ST_Agraph_s g, Link link) {
+	private ST_Agedge_s createEdge(Globals zz, final ST_Agraph_s g, Link link) {
 		final ST_Agnode_s n = getAgnodeFromLeaf(link.getEntity1());
 		final ST_Agnode_s m = getAgnodeFromLeaf(link.getEntity2());
 		if (n == null)
@@ -519,16 +504,16 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 		if (m == null)
 			return null;
 
-		final ST_Agedge_s e = agedge(g, n, m, null, true);
+		final ST_Agedge_s e = agedge(zz, g, n, m, null, true);
 		// System.err.println("createEdge " + link);
-		agsafeset(e, new CString("arrowtail"), new CString("none"), new CString(""));
-		agsafeset(e, new CString("arrowhead"), new CString("none"), new CString(""));
+		agsafeset(zz, e, new CString("arrowtail"), new CString("none"), new CString(""));
+		agsafeset(zz, e, new CString("arrowhead"), new CString("none"), new CString(""));
 
 		int length = link.getLength();
 		// System.err.println("length=" + length);
 		// if (/* pragma.horizontalLineBetweenDifferentPackageAllowed() ||
 		// */link.isInvis() || length != 1) {
-		agsafeset(e, new CString("minlen"), new CString("" + (length - 1)), new CString(""));
+		agsafeset(zz, e, new CString("minlen"), new CString("" + (length - 1)), new CString(""));
 		// }
 		// System.err.print("EDGE " + link.getEntity1().getUid() + "->" +
 		// link.getEntity2().getUid() + " minlen="
@@ -540,7 +525,7 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 			// System.err.println("dimLabel = " + dimLabel);
 			final CString hackDim = Macro.createHackInitDimensionFromLabel((int) dimLabel.getWidth(),
 					(int) dimLabel.getHeight());
-			agsafeset(e, new CString("label"), hackDim, new CString(""));
+			agsafeset(zz, e, new CString("label"), hackDim, new CString(""));
 			// System.err.print("label=" + hackDim.getContent());
 		}
 		final TextBlock q1 = getQuantifier(link, 1);
@@ -549,7 +534,7 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 			// System.err.println("dimLabel = " + dimLabel);
 			final CString hackDim = Macro.createHackInitDimensionFromLabel((int) dimLabel.getWidth(),
 					(int) dimLabel.getHeight());
-			agsafeset(e, new CString("taillabel"), hackDim, new CString(""));
+			agsafeset(zz, e, new CString("taillabel"), hackDim, new CString(""));
 		}
 		final TextBlock q2 = getQuantifier(link, 2);
 		if (q2 != null) {
@@ -557,7 +542,7 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 			// System.err.println("dimLabel = " + dimLabel);
 			final CString hackDim = Macro.createHackInitDimensionFromLabel((int) dimLabel.getWidth(),
 					(int) dimLabel.getHeight());
-			agsafeset(e, new CString("headlabel"), hackDim, new CString(""));
+			agsafeset(zz, e, new CString("headlabel"), hackDim, new CString(""));
 		}
 		// System.err.println();
 		return e;
@@ -575,7 +560,7 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 		strings.add("Sorry, the subproject Smetana is not finished yet...");
 		strings.add(" ");
 		strings.add("You should send this diagram and this image to <b>plantuml@gmail.com</b> or");
-		strings.add("post to <b>http://plantuml.com/qa</b> to solve this issue.");
+		strings.add("post to <b>https://plantuml.com/qa</b> to solve this issue.");
 		strings.add(" ");
 		return strings;
 	}

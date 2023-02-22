@@ -4,12 +4,12 @@
  *
  * (C) Copyright 2009-2021, Arnaud Roques
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  *
  * If you like this project or if you find it useful, you can support us at:
  *
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  *
  * This file is part of PlantUML.
  *
@@ -58,8 +58,10 @@ import net.sourceforge.plantuml.security.authentication.SecurityAuthorizeManager
 public abstract class AbstractOAuth2AccessAuthorizeManager implements SecurityAuthorizeManager {
 
 	/**
-	 * Default headers for token service access.<p>
+	 * Default headers for token service access.
+	 * <p>
 	 * Initialize with:
+	 * 
 	 * <pre>
 	 * "Content-Type"="application/x-www-form-urlencoded; charset=UTF-8"
 	 * "Accept"="application/json"
@@ -140,7 +142,8 @@ public abstract class AbstractOAuth2AccessAuthorizeManager implements SecurityAu
 	}
 
 	/**
-	 * Calls the endpoint to load the token response and create a SecurityAuthentication.
+	 * Calls the endpoint to load the token response and create a
+	 * SecurityAuthentication.
 	 *
 	 * @param proxy        Proxy for the access
 	 * @param grantType    grant type
@@ -150,8 +153,7 @@ public abstract class AbstractOAuth2AccessAuthorizeManager implements SecurityAu
 	 * @param basicAuth    principal basicAuth
 	 * @return the authentication object to access resources (or null)
 	 */
-	protected SecurityAuthentication requestAndCreateAuthFromResponse(
-			Proxy proxy, String grantType, String tokenType,
+	protected SecurityAuthentication requestAndCreateAuthFromResponse(Proxy proxy, String grantType, String tokenType,
 			SURL tokenService, String content, SecurityAuthentication basicAuth) {
 		byte[] bytes = tokenService.getBytesOnPost(proxy, basicAuth, content, headers());
 		if (bytes != null) {

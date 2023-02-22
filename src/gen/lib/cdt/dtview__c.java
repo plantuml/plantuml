@@ -2,12 +2,12 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
@@ -44,8 +44,6 @@
  *
  */
 package gen.lib.cdt;
-import static smetana.core.JUtils.EQ;
-import static smetana.core.JUtils.NEQ;
 import static smetana.core.Macro.DT_CLEAR;
 import static smetana.core.Macro.DT_DELETE;
 import static smetana.core.Macro.DT_FIRST;
@@ -58,7 +56,6 @@ import static smetana.core.Macro.DT_OSET;
 import static smetana.core.Macro.DT_PREV;
 import static smetana.core.Macro.DT_RENEW;
 import static smetana.core.Macro.DT_SEARCH;
-import static smetana.core.Macro.N;
 import static smetana.core.Macro.UNFLATTEN;
 import static smetana.core.Macro.UNSUPPORTED;
 import static smetana.core.Macro._DTCMP;
@@ -71,15 +68,16 @@ import gen.annotation.Reviewed;
 import h.ST_dt_s;
 import smetana.core.CFunction;
 import smetana.core.CFunctionAbstract;
-import smetana.core.OFFSET;
+import smetana.core.FieldOffset;
+import smetana.core.Globals;
 import smetana.core.__ptr__;
 
 public class dtview__c {
 
 public static CFunction dtvsearch = new CFunctionAbstract("dtvsearch") {
 	
-	public Object exe(Object... args) {
-		return dtvsearch((ST_dt_s)args[0], (__ptr__)args[1], (Integer)args[2]);
+	public Object exe(Globals zz, Object... args) {
+		return dtvsearch(zz, (ST_dt_s)args[0], (__ptr__)args[1], (Integer)args[2]);
 	}};
 
 /*	Set a view path from dict to view.
@@ -88,24 +86,24 @@ public static CFunction dtvsearch = new CFunctionAbstract("dtvsearch") {
 */
 @Reviewed(when = "13/11/2020")
 @Original(version="2.38.0", path="lib/cdt/dtview.c", name="dtvsearch", key="6spidg45w8teb64726drdswaa", definition="static void* dtvsearch(Dt_t* dt, register void* obj, register int type)")
-public static __ptr__ dtvsearch(ST_dt_s dt, __ptr__ obj, int type) {
+public static __ptr__ dtvsearch(Globals zz, ST_dt_s dt, __ptr__ obj, int type) {
 ENTERING("6spidg45w8teb64726drdswaa","dtvsearch");
 try {
 	ST_dt_s		d, p;
 	__ptr__		o=null, n, ok, nk;
-	int		cmp, sz; OFFSET lk, ky;
+	int		cmp, sz; FieldOffset lk, ky;
 	CFunction	cmpf;
 	
 	
 	/* these operations only happen at the top level */
 	if ((type&(DT_INSERT|DT_DELETE|DT_CLEAR|DT_RENEW))!=0)
-		return (__ptr__) dt.meth.searchf.exe(dt, obj, type);
+		return (__ptr__) dt.meth.searchf.exe(zz, dt, obj, type);
 	
 	
 	if(((type&(DT_MATCH|DT_SEARCH))!=0) || /* order sets first/last done below */
-	   (((type&(DT_FIRST|DT_LAST))!=0) && N(dt.meth.type&(DT_OBAG|DT_OSET)) ) )
+	   (((type&(DT_FIRST|DT_LAST))!=0) && (dt.meth.type&(DT_OBAG|DT_OSET)) == 0 ) )
 	{	for(d = dt; d!=null; d = d.view)
-			if((o = (__ptr__) d.meth.searchf.exe(d,obj,type))!=null )
+			if((o = (__ptr__) d.meth.searchf.exe(zz, d,obj,type))!=null )
 				break;
 		dt.walk = d;
 		return o;
@@ -113,13 +111,13 @@ try {
 	
 	
 	if((dt.meth.type & (DT_OBAG|DT_OSET) )!=0)
-	{	if(N(type & (DT_FIRST|DT_LAST|DT_NEXT|DT_PREV)) )
+	{	if((type & (DT_FIRST|DT_LAST|DT_NEXT|DT_PREV)) == 0 )
 			return null;
 	
 	
 		n = nk = null; p = null;
 		for(d = dt; d!=null; d = d.view)
-		{	if(N(o = (__ptr__) d.meth.searchf.exe(d, obj, type) ))
+		{	if((o = (__ptr__) d.meth.searchf.exe(zz, d, obj, type) ) == null)
 				continue;
 			ky = d.disc.key;
 			sz = d.disc.size;
@@ -129,7 +127,7 @@ try {
 			
 			
 			if(n!=null) /* get the right one among all dictionaries */
-			{	cmp = _DTCMP(d, ok, nk, d.disc, cmpf, sz);
+			{	cmp = _DTCMP(zz, d, ok, nk, d.disc, cmpf, sz);
 				if(((type & (DT_NEXT|DT_FIRST))!=0 && cmp < 0) ||
 				   ((type & (DT_PREV|DT_LAST))!=0 && cmp > 0) )
 UNSUPPORTED("5o3u9aaanyd9yh74sjfkkofmo"); // 					goto a_dj;
@@ -192,14 +190,14 @@ try {
 	UNFLATTEN(dt);
 	if(view!=null)
 	{	UNFLATTEN(view);
-		if(NEQ(view.meth, dt.meth)) /* must use the same method */
+		if(view.meth != dt.meth) /* must use the same method */
 			UNSUPPORTED("return null;");
 	}
 	
 	
 	/* make sure there won't be a cycle */
 	for(d = view; d!=null; d = (ST_dt_s)d.view)
-		if(EQ(d, dt))
+		if(d == dt)
 			return null;
 	
 	
@@ -208,7 +206,7 @@ try {
 		d.nview -= 1;
 	dt.view = dt.walk = null;
 
-	if(N(view))
+	if((view) == null)
 	{	dt.searchf = dt.meth.searchf;
 		return d;
 	}

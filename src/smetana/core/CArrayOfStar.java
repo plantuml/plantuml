@@ -2,17 +2,17 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2009-2024, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program.
  * 
@@ -36,63 +36,58 @@
 
 package smetana.core;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.plantuml.api.cheerpj.WasmLog;
 
-public class CArrayOfStar<O> extends UnsupportedC {
+final public class CArrayOfStar<O> extends UnsupportedC {
 
-	private final List<O> data;
+	private final Object[] data;
 	private final int offset;
-	
-	
+
 	@Override
 	public String toString() {
-		return "*Array offset=" + offset + " [" + data.size() + "]" + data;
+		return "*Array offset=" + offset + " [" + data.length + "]" + data;
 	}
 
-
-	private CArrayOfStar(List<O> data, int offset) {
+	private CArrayOfStar(Object data[], int offset) {
 		this.data = data;
 		this.offset = offset;
 	}
 
-	public static <O> CArrayOfStar<O> ALLOC(int size, Class cl) {
-		final CArrayOfStar<O> result = new CArrayOfStar<O>(new ArrayList<O>(), 0);
-		result.realloc(size);
+	public static <O> CArrayOfStar<O> ALLOC(int size, ZType type) {
+		final CArrayOfStar<O> result = new CArrayOfStar<O>(new Object[size], 0);
 		return result;
 	}
 
-	public static <O> CArrayOfStar<O> REALLOC(int size, CArrayOfStar<O> old, Class<O> cl) {
-		if (old==null) {
-			return ALLOC(size, cl);
-		}
-		old.realloc(size);
-		return old;
+	public static <O> CArrayOfStar<O> REALLOC(int size, CArrayOfStar<O> old, ZType type) {
+		if (old == null)
+			return ALLOC(size, type);
+
+		if (size <= old.data.length)
+			return old;
+
+		if (old.offset != 0)
+			throw new IllegalStateException();
+
+		WasmLog.log("Realloc* from " + old.data.length + " to " + size);
+
+		final CArrayOfStar<O> result = ALLOC(size, type);
+		System.arraycopy(old.data, 0, result.data, 0, old.data.length);
+		return result;
 	}
 
-
 	public int comparePointer_(CArrayOfStar<O> other) {
-		if (this.data != other.data) {
+		if (this.data != other.data)
 			throw new IllegalArgumentException();
-		}
+
 		return this.offset - other.offset;
 	}
 
 	public O get_(int i) {
-		return data.get(i + offset);
+		return (O) data[i + offset];
 	}
 
 	public void set_(int i, O value) {
-		data.set(i + offset, value);
-	}
-
-	public void realloc(int size) {
-		if (offset != 0) {
-			throw new IllegalStateException();
-		}
-		for (int i = 0; i < size; i++) {
-			data.add(null);
-		}
+		data[i + offset] = value;
 	}
 
 	public CArrayOfStar<O> plus_(int delta) {
@@ -100,13 +95,12 @@ public class CArrayOfStar<O> extends UnsupportedC {
 	}
 
 	public void _swap(int i, int j) {
-		if (offset != 0) {
+		if (offset != 0)
 			throw new IllegalStateException();
-		}
-		final O e1 = data.get(i);
-		final O e2 = data.get(j);
-		data.set(i, e2);
-		data.set(j, e1);
+
+		final Object tmp = data[i];
+		data[i] = data[j];
+		data[j] = tmp;
 	}
 
 }

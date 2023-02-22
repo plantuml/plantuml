@@ -2,14 +2,14 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2009-2024, Arnaud Roques
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of PlantUML.
  *
@@ -48,7 +48,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.atmp.ISkinSimple;
 import net.sourceforge.plantuml.code.AsciiEncoder;
 import net.sourceforge.plantuml.code.Transcoder;
 import net.sourceforge.plantuml.code.TranscoderUtil;
@@ -59,6 +58,7 @@ import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.preproc.FileWithSuffix;
 import net.sourceforge.plantuml.preproc2.PreprocessorModeSet;
 import net.sourceforge.plantuml.regex.Matcher2;
+import net.sourceforge.plantuml.style.ISkinSimple;
 import net.sourceforge.plantuml.text.BackSlash;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.tim.TimLoader;
@@ -85,12 +85,14 @@ public class BlockUml {
 		this(convert(strings), Defines.createEmpty(), null, null, null);
 	}
 
+	// ::comment when CORE
 	public String getEncodedUrl() throws IOException {
 		final Transcoder transcoder = TranscoderUtil.getDefaultTranscoder();
 		final String source = getDiagram().getSource().getPlainString();
 		final String encoded = transcoder.encode(source);
 		return encoded;
 	}
+	// ::done
 
 	public String getFlashData() {
 		final StringBuilder sb = new StringBuilder();
@@ -148,6 +150,7 @@ public class BlockUml {
 		}
 	}
 
+	// ::comment when CORE
 	public String getFileOrDirname() {
 		if (OptionFlags.getInstance().isWord())
 			return null;
@@ -174,6 +177,7 @@ public class BlockUml {
 		result = result.replaceAll("\\.\\w\\w\\w$", "");
 		return result;
 	}
+	// ::done
 
 	public Diagram getDiagram() {
 		if (system == null) {
@@ -190,6 +194,7 @@ public class BlockUml {
 		return data;
 	}
 
+	// ::comment when CORE
 	private String internalEtag() {
 		try {
 			final AsciiEncoder coder = new AsciiEncoder();
@@ -208,6 +213,7 @@ public class BlockUml {
 	public String etag() {
 		return Version.etag() + internalEtag();
 	}
+	// ::done
 
 	public long lastModified() {
 		return (Version.compileTime() / 1000L / 60) * 1000L * 60 + Version.beta() * 1000L * 3600;

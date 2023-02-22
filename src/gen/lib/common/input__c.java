@@ -2,12 +2,12 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
@@ -57,8 +57,6 @@ import static gen.lib.common.utils__c.late_nnstring;
 import static gen.lib.common.utils__c.late_string;
 import static gen.lib.common.utils__c.mapbool;
 import static gen.lib.common.utils__c.maptoken;
-import static smetana.core.JUtils.EQ;
-import static smetana.core.JUtils.NEQ;
 import static smetana.core.JUtils.atof;
 import static smetana.core.JUtils.atoi;
 import static smetana.core.JUtils.getenv;
@@ -90,7 +88,6 @@ import static smetana.core.Macro.LT_HTML;
 import static smetana.core.Macro.LT_NONE;
 import static smetana.core.Macro.MIN_NODESEP;
 import static smetana.core.Macro.MYHUGE;
-import static smetana.core.Macro.N;
 import static smetana.core.Macro.NOCLUST;
 import static smetana.core.Macro.NODENAME_ESC;
 import static smetana.core.Macro.PAD;
@@ -111,7 +108,7 @@ import h.ST_Agraph_s;
 import h.ST_layout_t;
 import h.ST_pointf;
 import smetana.core.CString;
-import smetana.core.Z;
+import smetana.core.Globals;
 
 public class input__c {
 
@@ -124,7 +121,7 @@ public class input__c {
  */
 @Reviewed(when = "12/11/2020")
 @Original(version="2.38.0", path="lib/common/input.c", name="getdoubles2ptf", key="72no6ayfvjinlnupyn5jlmayg", definition="static boolean getdoubles2ptf(graph_t * g, char *name, pointf * result)")
-public static boolean getdoubles2ptf(ST_Agraph_s g, CString name, ST_pointf result) {
+public static boolean getdoubles2ptf(Globals zz, ST_Agraph_s g, CString name, ST_pointf result) {
 ENTERING("72no6ayfvjinlnupyn5jlmayg","getdoubles2ptf");
 try {
     CString p;
@@ -132,7 +129,7 @@ try {
     double xf, yf;
     char c = '\0';
     boolean rv = false;
-    if ((p = agget(g, name))!=null) {
+    if ((p = agget(zz, g, name))!=null) {
 UNSUPPORTED("21b2kes0vrizyai71yj9e2os3"); // 	i = sscanf(p, "%lf,%lf%c", &xf, &yf, &c);
 UNSUPPORTED("9wua6uiybfvqd70huuo0yatcf"); // 	if ((i > 1) && (xf > 0) && (yf > 0)) {
 UNSUPPORTED("8z2huopqt4m1rvfcd7vqatka4"); // 	    result->x = ((((xf)*72>=0)?(int)((xf)*72 + .5):(int)((xf)*72 - .5)));
@@ -176,13 +173,13 @@ LEAVING("9t08dr2ks9qz1pyfz99awla6x","findCharset");
  */
 @Reviewed(when = "12/11/2020")
 @Original(version="2.38.0", path="lib/common/input.c", name="setRatio", key="3bnmjpvynh1j9oh2p2vi0vh2m", definition="static void setRatio(graph_t * g)")
-public static void setRatio(ST_Agraph_s g) {
+public static void setRatio(Globals zz, ST_Agraph_s g) {
 ENTERING("3bnmjpvynh1j9oh2p2vi0vh2m","setRatio");
 try {
     CString p;
     char c;
     double ratio;
-    if ((p = agget(g, new CString("ratio")))!=null && ((c = p.charAt(0))!='\0')) {
+    if ((p = agget(zz, g, new CString("ratio")))!=null && ((c = p.charAt(0))!='\0')) {
 UNSUPPORTED("7rk995hpmaqbbasmi40mqg0yw"); // 	switch (c) {
 UNSUPPORTED("2v5u3irq50r1n2ccuna0y09lk"); // 	case 'a':
 UNSUPPORTED("3jv8xrrloj92axkpkgolzwgo6"); // 	    if ((*(p)==*("auto")&&!strcmp(p,"auto")))
@@ -225,7 +222,7 @@ static int fontnamecodes[] = {EN_fontname_kind.NATIVEFONTS.ordinal(), EN_fontnam
 
 @Reviewed(when = "11/11/2020")
 @Original(version="2.38.0", path="lib/common/input.c", name="graph_init", key="8gzdr3oil2d0e2o7m84wsszfg", definition="void graph_init(graph_t * g, boolean use_rankdir)")
-public static void graph_init(ST_Agraph_s g, boolean use_rankdir) {
+public static void graph_init(Globals zz, ST_Agraph_s g, boolean use_rankdir) {
 ENTERING("8gzdr3oil2d0e2o7m84wsszfg","graph_init");
 try {
     CString p;
@@ -233,7 +230,7 @@ try {
     int rankdir;
     GD_drawing(g, new ST_layout_t());
     /* set this up fairly early in case any string sizes are needed */
-    if ((p = agget(g, new CString("fontpath")))!=null || (p = getenv(new CString("DOTFONTPATH")))!=null) {
+    if ((p = agget(zz, g, new CString("fontpath")))!=null || (p = getenv(new CString("DOTFONTPATH")))!=null) {
 UNSUPPORTED("81bz3jcukzyotxiqgrlhn9cbq"); // 	/* overide GDFONTPATH in local environment if dot
 UNSUPPORTED("6jgl7atk1m9yeam4auh127azw"); // 	 * wants its own */
 UNSUPPORTED("dyk0vc64gdzy1uwvsc2jqnjdw"); // 	static char *buf = 0;
@@ -246,7 +243,7 @@ UNSUPPORTED("abkxekvux4nramryfw2e8vcru"); // 	putenv(buf);
     
     GD_charset(g, findCharset (g));
     GD_drawing(g).quantum =
- 	late_double(g, agfindgraphattr(g, "quantum"), 0.0, 0.0);
+ 	late_double(g, agfindgraphattr(zz, g, "quantum"), 0.0, 0.0);
     
     /* setting rankdir=LR is only defined in dot,
      * but having it set causes shape code and others to use it. 
@@ -256,7 +253,7 @@ UNSUPPORTED("abkxekvux4nramryfw2e8vcru"); // 	putenv(buf);
      * with record shapes, so we store the real rankdir in the next 2 bits.
      */
     rankdir = RANKDIR_TB;
-    if ((p = agget(g, new CString("rankdir")))!=null) {
+    if ((p = agget(zz, g, new CString("rankdir")))!=null) {
 UNSUPPORTED("sp7zcza7w0dn7t66aj8rf4wn"); // 	if ((*(p)==*("LR")&&!strcmp(p,"LR")))
 UNSUPPORTED("bjd2vk1jssqehllmgnqv601qd"); // 	    rankdir = 1;
 UNSUPPORTED("ry8itlrmblmuegdwk1iu1t0x"); // 	else if ((*(p)==*("BT")&&!strcmp(p,"BT")))
@@ -269,12 +266,12 @@ UNSUPPORTED("7vlda224wrgcdhr0ts3mndh5q"); // 	    rankdir = 3;
     else
 	GD_rankdir2(g, (rankdir << 2));
     
-    xf = late_double(g, agfindgraphattr(g, "nodesep"),
+    xf = late_double(g, agfindgraphattr(zz, g, "nodesep"),
     	DEFAULT_NODESEP, MIN_NODESEP);
     GD_nodesep(g, POINTS(xf));
     
     
-    p = late_string(g, agfindgraphattr(g, "ranksep"), null);
+    p = late_string(g, agfindgraphattr(zz, g, "ranksep"), null);
     if (p!=null) {
     	xf = atof(p);
     	if (xf < 0.02)
@@ -287,130 +284,130 @@ UNSUPPORTED("7vlda224wrgcdhr0ts3mndh5q"); // 	    rankdir = 3;
     GD_ranksep(g, POINTS(xf));
     
     
-    GD_showboxes(g, late_int(g, agfindgraphattr(g, "showboxes"), 0, 0));
-    p = late_string(g, agfindgraphattr(g, "fontnames"), null);
+    GD_showboxes(g, late_int(g, agfindgraphattr(zz, g, "showboxes"), 0, 0));
+    p = late_string(g, agfindgraphattr(zz, g, "fontnames"), null);
     GD_fontnames(g, maptoken(p, fontnamenames, fontnamecodes));
     
     
-    setRatio(g);
+    setRatio(zz, g);
     GD_drawing(g).filled = 
-	getdoubles2ptf(g, new CString("size"), GD_drawing(g).size);
-    getdoubles2ptf(g, new CString("page"), GD_drawing(g).page);
+	getdoubles2ptf(zz, g, new CString("size"), GD_drawing(g).size);
+    getdoubles2ptf(zz, g, new CString("page"), GD_drawing(g).page);
     
     
-    GD_drawing(g).centered = mapbool(agget(g, new CString("center")));
+    GD_drawing(g).centered = mapbool(agget(zz, g, new CString("center")));
     
     
-    if ((p = agget(g, new CString("rotate")))!=null)
+    if ((p = agget(zz, g, new CString("rotate")))!=null)
 	GD_drawing(g).landscape= (atoi(p) == 90);
-    else if ((p = agget(g, new CString("orientation")))!=null)
+    else if ((p = agget(zz, g, new CString("orientation")))!=null)
 	GD_drawing(g).landscape= ((p.charAt(0) == 'l') || (p.charAt(0) == 'L'));
-    else if ((p = agget(g, new CString("landscape")))!=null)
+    else if ((p = agget(zz, g, new CString("landscape")))!=null)
 	GD_drawing(g).landscape= mapbool(p);
     
     
-    p = agget(g, new CString("clusterrank"));
-    Z.z().CL_type = maptoken(p, rankname, rankcode);
-    p = agget(g, new CString("concentrate"));
-    Z.z().Concentrate = mapbool(p);
-    Z.z().State = GVBEGIN;
-    Z.z().EdgeLabelsDone = 0;
+    p = agget(zz, g, new CString("clusterrank"));
+    zz.CL_type = maptoken(p, rankname, rankcode);
+    p = agget(zz, g, new CString("concentrate"));
+    zz.Concentrate = mapbool(p);
+    zz.State = GVBEGIN;
+    zz.EdgeLabelsDone = 0;
     
     
     GD_drawing(g).dpi = 0.0;
-    if (((p = agget(g, new CString("dpi")))!=null && p.charAt(0)!='\0')
-	|| ((p = agget(g, new CString("resolution")))!=null && p.charAt(0)!='\0'))
+    if (((p = agget(zz, g, new CString("dpi")))!=null && p.charAt(0)!='\0')
+	|| ((p = agget(zz, g, new CString("resolution")))!=null && p.charAt(0)!='\0'))
 	GD_drawing(g).dpi = atof(p);
     
     
-    do_graph_label(g);
+    do_graph_label(zz, g);
     
     
-    Z.z().Initial_dist = MYHUGE;
+    zz.Initial_dist = MYHUGE;
     
-    Z.z().G_ordering = agfindgraphattr(g, "ordering");
-    Z.z().G_gradientangle = agfindgraphattr(g,"gradientangle");
-    Z.z().G_margin = agfindgraphattr(g, "margin");
+    zz.G_ordering = agfindgraphattr(zz, g, "ordering");
+    zz.G_gradientangle = agfindgraphattr(zz, g,"gradientangle");
+    zz.G_margin = agfindgraphattr(zz, g, "margin");
 
     /* initialize nodes */
-    Z.z().N_height = agfindnodeattr(g, "height");
-    Z.z().N_width = agfindnodeattr(g, "width");
-    Z.z().N_shape = agfindnodeattr(g, "shape");
-    Z.z().N_color = agfindnodeattr(g, "color");
-    Z.z().N_fillcolor = agfindnodeattr(g, "fillcolor");
-    Z.z().N_style = agfindnodeattr(g, "style");
-    Z.z().N_fontsize = agfindnodeattr(g, "fontsize");
-    Z.z().N_fontname = agfindnodeattr(g, "fontname");
-    Z.z().N_fontcolor = agfindnodeattr(g, "fontcolor");
-    Z.z().N_label = agfindnodeattr(g, "label");
-    if (N(Z.z().N_label))
-	Z.z().N_label = agattr(g, AGNODE, new CString("label"), new CString(NODENAME_ESC));
-    Z.z().N_xlabel = agfindnodeattr(g, "xlabel");
-    Z.z().N_showboxes = agfindnodeattr(g, "showboxes");
-    Z.z().N_penwidth = agfindnodeattr(g, "penwidth");
-    Z.z().N_ordering = agfindnodeattr(g, "ordering");
-    Z.z().N_margin = agfindnodeattr(g, "margin");
+    zz.N_height = agfindnodeattr(zz, g, "height");
+    zz.N_width = agfindnodeattr(zz, g, "width");
+    zz.N_shape = agfindnodeattr(zz, g, "shape");
+    zz.N_color = agfindnodeattr(zz, g, "color");
+    zz.N_fillcolor = agfindnodeattr(zz, g, "fillcolor");
+    zz.N_style = agfindnodeattr(zz, g, "style");
+    zz.N_fontsize = agfindnodeattr(zz, g, "fontsize");
+    zz.N_fontname = agfindnodeattr(zz, g, "fontname");
+    zz.N_fontcolor = agfindnodeattr(zz, g, "fontcolor");
+    zz.N_label = agfindnodeattr(zz, g, "label");
+    if ((zz.N_label) == null)
+	zz.N_label = agattr(zz, g, AGNODE, new CString("label"), new CString(NODENAME_ESC));
+    zz.N_xlabel = agfindnodeattr(zz, g, "xlabel");
+    zz.N_showboxes = agfindnodeattr(zz, g, "showboxes");
+    zz.N_penwidth = agfindnodeattr(zz, g, "penwidth");
+    zz.N_ordering = agfindnodeattr(zz, g, "ordering");
+    zz.N_margin = agfindnodeattr(zz, g, "margin");
     
     
     /* attribs for polygon shapes */
-    Z.z().N_sides = agfindnodeattr(g, "sides");
-    Z.z().N_peripheries = agfindnodeattr(g, "peripheries");
-    Z.z().N_skew = agfindnodeattr(g, "skew");
-    Z.z().N_orientation = agfindnodeattr(g, "orientation");
-    Z.z().N_distortion = agfindnodeattr(g, "distortion");
-    Z.z().N_fixed = agfindnodeattr(g, "fixedsize");
-    Z.z().N_imagescale = agfindnodeattr(g, "imagescale");
-    Z.z().N_nojustify = agfindnodeattr(g, "nojustify");
-    Z.z().N_layer = agfindnodeattr(g, "layer");
-    Z.z().N_group = agfindnodeattr(g, "group");
-    Z.z().N_comment = agfindnodeattr(g, "comment");
-    Z.z().N_vertices = agfindnodeattr(g, "vertices");
-    Z.z().N_z = agfindnodeattr(g, "z");
-    Z.z().N_gradientangle = agfindnodeattr(g,"gradientangle");
+    zz.N_sides = agfindnodeattr(zz, g, "sides");
+    zz.N_peripheries = agfindnodeattr(zz, g, "peripheries");
+    zz.N_skew = agfindnodeattr(zz, g, "skew");
+    zz.N_orientation = agfindnodeattr(zz, g, "orientation");
+    zz.N_distortion = agfindnodeattr(zz, g, "distortion");
+    zz.N_fixed = agfindnodeattr(zz, g, "fixedsize");
+    zz.N_imagescale = agfindnodeattr(zz, g, "imagescale");
+    zz.N_nojustify = agfindnodeattr(zz, g, "nojustify");
+    zz.N_layer = agfindnodeattr(zz, g, "layer");
+    zz.N_group = agfindnodeattr(zz, g, "group");
+    zz.N_comment = agfindnodeattr(zz, g, "comment");
+    zz.N_vertices = agfindnodeattr(zz, g, "vertices");
+    zz.N_z = agfindnodeattr(zz, g, "z");
+    zz.N_gradientangle = agfindnodeattr(zz, g,"gradientangle");
     
     
     /* initialize edges */
-    Z.z().E_weight = agfindedgeattr(g, "weight");
-    Z.z().E_color = agfindedgeattr(g, "color");
-    Z.z().E_fillcolor = agfindedgeattr(g, "fillcolor");
-    Z.z().E_fontsize = agfindedgeattr(g, "fontsize");
-    Z.z().E_fontname = agfindedgeattr(g, "fontname");
-    Z.z().E_fontcolor = agfindedgeattr(g, "fontcolor");
-    Z.z().E_label = agfindedgeattr(g, "label");
-    Z.z().E_xlabel = agfindedgeattr(g, "xlabel");
-    Z.z().E_label_float = agfindedgeattr(g, "labelfloat");
+    zz.E_weight = agfindedgeattr(zz, g, "weight");
+    zz.E_color = agfindedgeattr(zz, g, "color");
+    zz.E_fillcolor = agfindedgeattr(zz, g, "fillcolor");
+    zz.E_fontsize = agfindedgeattr(zz, g, "fontsize");
+    zz.E_fontname = agfindedgeattr(zz, g, "fontname");
+    zz.E_fontcolor = agfindedgeattr(zz, g, "fontcolor");
+    zz.E_label = agfindedgeattr(zz, g, "label");
+    zz.E_xlabel = agfindedgeattr(zz, g, "xlabel");
+    zz.E_label_float = agfindedgeattr(zz, g, "labelfloat");
     /* vladimir */
-    Z.z().E_dir = agfindedgeattr(g, "dir");
-    Z.z().E_arrowhead = agfindedgeattr(g, "arrowhead");
-    Z.z().E_arrowtail = agfindedgeattr(g, "arrowtail");
-    Z.z().E_headlabel = agfindedgeattr(g, "headlabel");
-    Z.z().E_taillabel = agfindedgeattr(g, "taillabel");
-    Z.z().E_labelfontsize = agfindedgeattr(g, "labelfontsize");
-    Z.z().E_labelfontname = agfindedgeattr(g, "labelfontname");
-    Z.z().E_labelfontcolor = agfindedgeattr(g, "labelfontcolor");
-    Z.z().E_labeldistance = agfindedgeattr(g, "labeldistance");
-    Z.z().E_labelangle = agfindedgeattr(g, "labelangle");
+    zz.E_dir = agfindedgeattr(zz, g, "dir");
+    zz.E_arrowhead = agfindedgeattr(zz, g, "arrowhead");
+    zz.E_arrowtail = agfindedgeattr(zz, g, "arrowtail");
+    zz.E_headlabel = agfindedgeattr(zz, g, "headlabel");
+    zz.E_taillabel = agfindedgeattr(zz, g, "taillabel");
+    zz.E_labelfontsize = agfindedgeattr(zz, g, "labelfontsize");
+    zz.E_labelfontname = agfindedgeattr(zz, g, "labelfontname");
+    zz.E_labelfontcolor = agfindedgeattr(zz, g, "labelfontcolor");
+    zz.E_labeldistance = agfindedgeattr(zz, g, "labeldistance");
+    zz.E_labelangle = agfindedgeattr(zz, g, "labelangle");
     /* end vladimir */
-    Z.z().E_minlen = agfindedgeattr(g, "minlen");
-    Z.z().E_showboxes = agfindedgeattr(g, "showboxes");
-    Z.z().E_style = agfindedgeattr(g, "style");
-    Z.z().E_decorate = agfindedgeattr(g, "decorate");
-    Z.z().E_arrowsz = agfindedgeattr(g, "arrowsize");
-    Z.z().E_constr = agfindedgeattr(g, "constraint");
-    Z.z().E_layer = agfindedgeattr(g, "layer");
-    Z.z().E_comment = agfindedgeattr(g, "comment");
-    Z.z().E_tailclip = agfindedgeattr(g, "tailclip");
-    Z.z().E_headclip = agfindedgeattr(g, "headclip");
-    Z.z().E_penwidth = agfindedgeattr(g, "penwidth");
+    zz.E_minlen = agfindedgeattr(zz, g, "minlen");
+    zz.E_showboxes = agfindedgeattr(zz, g, "showboxes");
+    zz.E_style = agfindedgeattr(zz, g, "style");
+    zz.E_decorate = agfindedgeattr(zz, g, "decorate");
+    zz.E_arrowsz = agfindedgeattr(zz, g, "arrowsize");
+    zz.E_constr = agfindedgeattr(zz, g, "constraint");
+    zz.E_layer = agfindedgeattr(zz, g, "layer");
+    zz.E_comment = agfindedgeattr(zz, g, "comment");
+    zz.E_tailclip = agfindedgeattr(zz, g, "tailclip");
+    zz.E_headclip = agfindedgeattr(zz, g, "headclip");
+    zz.E_penwidth = agfindedgeattr(zz, g, "penwidth");
     
     
     /* background */
-    GD_drawing(g).xdots = init_xdot (g);
+    GD_drawing(g).xdots = init_xdot (zz, g);
     
     
     /* initialize id, if any */
     
-    if ((p = agget(g, new CString("id")))!=null && p.charAt(0)!='\0')
+    if ((p = agget(zz, g, new CString("id")))!=null && p.charAt(0)!='\0')
 	GD_drawing(g).id = strdup_and_subst_obj(p, g);
 } finally {
 LEAVING("8gzdr3oil2d0e2o7m84wsszfg","graph_init");
@@ -429,30 +426,30 @@ LEAVING("8gzdr3oil2d0e2o7m84wsszfg","graph_init");
  */
 @Reviewed(when = "12/11/2020")
 @Original(version="2.38.0", path="lib/common/input.c", name="do_graph_label", key="5vks1zdadu5vjinaivs0j2bkb", definition="void do_graph_label(graph_t * sg)")
-public static void do_graph_label(ST_Agraph_s  sg) {
+public static void do_graph_label(Globals zz, ST_Agraph_s  sg) {
 ENTERING("5vks1zdadu5vjinaivs0j2bkb","do_graph_label");
 try {
     CString str, pos, just;
     int pos_ix;
     
     /* it would be nice to allow multiple graph labels in the future */
-    if ((str = agget(sg, new CString("label")))!=null && (str.charAt(0) != '\0')) {
+    if ((str = agget(zz, sg, new CString("label")))!=null && (str.charAt(0) != '\0')) {
 	char pos_flag=0;
 	final ST_pointf dimen = new ST_pointf();
 	
 	GD_has_labels(sg.root, GD_has_labels(sg.root) | GRAPH_LABEL);
 	
-	GD_label(sg, make_label(sg, str, (aghtmlstr(str)!=0 ? LT_HTML : LT_NONE),
-	    late_double(sg, (agattr(sg,AGRAPH,new CString("fontsize"),null)),
+	GD_label(sg, make_label(zz, sg, str, (aghtmlstr(zz, str)!=0 ? LT_HTML : LT_NONE),
+	    late_double(sg, (agattr(zz, sg,AGRAPH,new CString("fontsize"),null)),
 			14.0, 1.0),
-	    late_nnstring(sg, (agattr(sg,AGRAPH,new CString("fontname"),null)),
+	    late_nnstring(sg, (agattr(zz, sg,AGRAPH,new CString("fontname"),null)),
 			new CString("Times-Roman")),
-	    late_nnstring(sg, (agattr(sg,AGRAPH,new CString("fontcolor"),null)),
+	    late_nnstring(sg, (agattr(zz, sg,AGRAPH,new CString("fontcolor"),null)),
 			new CString("black"))));
 	
 	/* set label position */
-	pos = agget(sg, new CString("labelloc"));
-	if (NEQ(sg, agroot(sg))) {
+	pos = agget(zz, sg, new CString("labelloc"));
+	if ((sg != agroot(sg))) {
 	    if (pos!=null && (pos.charAt(0) == 'b'))
 		pos_flag = LABEL_AT_BOTTOM;
 	    else
@@ -463,7 +460,7 @@ UNSUPPORTED("bxai2kktsidvda3696ctyk63c"); // 		pos_flag = 1;
 UNSUPPORTED("5c97f6vfxny0zz35l2bu4maox"); // 	    else
 UNSUPPORTED("6m5sy5ew8izdy8i10zb5o2dvu"); // 		pos_flag = 0;
 	}
-	just = agget(sg, new CString("labeljust"));
+	just = agget(zz, sg, new CString("labeljust"));
 	if (just!=null) {
 UNSUPPORTED("3gxohpfqzahytaf7f9apn58az"); // 	    if (just[0] == 'l')
 UNSUPPORTED("ch7sydr4cg29o8ky9fbk5vnlg"); // 		pos_flag |= 2;
@@ -473,7 +470,7 @@ UNSUPPORTED("evu9w6pw3kkh7z8w7t4rx4qxc"); // 		pos_flag |= 4;
 	GD_label_pos(sg, pos_flag);
 	
 	
-	if (EQ(sg, agroot(sg)))
+	if (sg == agroot(sg))
 	    return;
 	
 	
@@ -482,7 +479,7 @@ UNSUPPORTED("evu9w6pw3kkh7z8w7t4rx4qxc"); // 		pos_flag |= 4;
 	
 	dimen.___(GD_label(sg).dimen);
 	PAD(dimen);
-	if (N(GD_flip(agroot(sg)))) {
+	if (!GD_flip(agroot(sg))) {
 	    if ((GD_label_pos(sg) & LABEL_AT_TOP)!=0)
 		pos_ix = TOP_IX;
 	    else

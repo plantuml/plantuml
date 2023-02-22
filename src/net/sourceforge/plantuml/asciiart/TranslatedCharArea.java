@@ -2,14 +2,14 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2009-2024, Arnaud Roques
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of PlantUML.
  *
@@ -59,7 +59,7 @@ public class TranslatedCharArea implements UmlCharArea {
 	public void drawBoxSimpleUnicode(int x, int y, int width, int height) {
 		charArea.drawBoxSimpleUnicode(x + dx, y + dy, width, height);
 	}
-	
+
 	public void drawNoteSimple(int x, int y, int width, int height) {
 		charArea.drawNoteSimple(x + dx, y + dy, width, height);
 	}
@@ -68,11 +68,10 @@ public class TranslatedCharArea implements UmlCharArea {
 		charArea.drawNoteSimpleUnicode(x + dx, y + dy, width, height);
 	}
 
-
 	public void drawShape(AsciiShape shape, int x, int y) {
 		charArea.drawShape(shape, x + dx, y + dy);
 	}
-	
+
 	public void drawChar(char c, int x, int y) {
 		charArea.drawChar(c, x + dx, y + dy);
 	}
@@ -80,6 +79,7 @@ public class TranslatedCharArea implements UmlCharArea {
 	public void drawHLine(char c, int line, int col1, int col2) {
 		charArea.drawHLine(c, line + dy, col1 + dx, col2 + dx);
 	}
+
 	public void drawHLine(char c, int line, int col1, int col2, char ifFound, char thenUse) {
 		charArea.drawHLine(c, line + dy, col1 + dx, col2 + dx, ifFound, thenUse);
 	}
@@ -127,7 +127,5 @@ public class TranslatedCharArea implements UmlCharArea {
 	public void fillRect(char c, int x, int y, int width, int height) {
 		charArea.fillRect(c, x + dx, y + dy, width, height);
 	}
-
-
 
 }

@@ -2,12 +2,12 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
@@ -76,8 +76,6 @@ import static gen.lib.dotgen.mincross__c.build_ranks;
 import static gen.lib.dotgen.mincross__c.enqueue_neighbors;
 import static gen.lib.dotgen.mincross__c.install_in_rank;
 import static gen.lib.dotgen.position__c.ports_eq;
-import static smetana.core.JUtils.EQ;
-import static smetana.core.JUtils.NEQ;
 import static smetana.core.Macro.AGMKOUT;
 import static smetana.core.Macro.CLUSTER;
 import static smetana.core.Macro.CL_CROSS;
@@ -97,7 +95,6 @@ import static smetana.core.Macro.GD_n_nodes;
 import static smetana.core.Macro.GD_nlist;
 import static smetana.core.Macro.GD_rank;
 import static smetana.core.Macro.GD_rankleader;
-import static smetana.core.Macro.N;
 import static smetana.core.Macro.ND_UF_size;
 import static smetana.core.Macro.ND_clust;
 import static smetana.core.Macro.ND_in;
@@ -123,6 +120,8 @@ import h.ST_Agnode_s;
 import h.ST_Agraph_s;
 import h.ST_nodequeue;
 import smetana.core.CArrayOfStar;
+import smetana.core.Globals;
+import smetana.core.ZType;
 
 public class cluster__c {
 
@@ -226,7 +225,7 @@ try {
     ST_Agnode_s u, v;
     ST_Agedge_s e;
     assert(ND_rank(from) < ND_rank(to));
-    if (EQ(agtail(ve), from) && EQ(aghead(ve), to))
+    if (agtail(ve) == from && aghead(ve) == to)
 	return;
     if (ED_count(ve) > 1) {
 	ED_to_virt(orig, null);
@@ -269,7 +268,7 @@ try {
 	}
 	if (ND_rank(to) - ND_rank(from) > 1) {
 	    e = ve;
-	    if (NEQ(agtail(ve), from)) {
+	    if ((agtail(ve) != from)) {
 		ED_to_virt(orig, null);
 		e = virtual_edge(from, aghead(ve), orig);
 		ED_to_virt(orig, e);
@@ -278,7 +277,7 @@ try {
 		e = ve;
 	    while (ND_rank(aghead(e)) != ND_rank(to))
 		e = (ST_Agedge_s) ND_out(aghead(e)).list.get_(0);
-	    if (NEQ(aghead(e), to)) {
+	    if ((aghead(e) != to)) {
 		ve = e;
 		e = virtual_edge(agtail(e), to, orig);
 		ED_edge_type(e, type);
@@ -305,7 +304,7 @@ try {
     ST_Agnode_s u, v;
     u = map_interclust_node(from);
     v = map_interclust_node(to);
-    if (EQ(u, from) && EQ(v, to))
+    if (u == from && v == to)
 	newtype = 1;
     else
 	newtype = 5;
@@ -325,7 +324,7 @@ LEAVING("69xbflgja0gvrsl5xcv7o7dia","make_interclust_chain");
 @Unused
 @Reviewed(when = "15/11/2020")
 @Original(version="2.38.0", path="lib/dotgen/cluster.c", name="interclexp", key="6g2m2y44x66lajznvnon2gubv", definition="void interclexp(graph_t * subg)")
-public static void interclexp(ST_Agraph_s subg) {
+public static void interclexp(Globals zz, ST_Agraph_s subg) {
 ENTERING("6g2m2y44x66lajznvnon2gubv","interclexp");
 try {
     ST_Agraph_s g;
@@ -333,13 +332,13 @@ try {
     ST_Agedge_s e, prev, next;
     
     g = dot_root(subg);
-    for (n = agfstnode(subg); n!=null; n = agnxtnode(subg, n)) {
+    for (n = agfstnode(zz, subg); n!=null; n = agnxtnode(zz, subg, n)) {
     
 	/* N.B. n may be in a sub-cluster of subg */
 	prev = null;
-	for (e = agfstedge(g, n); e!=null; e = next) {
-	    next = agnxtedge(g, e, n);
-	    if (agcontains(subg, e))
+	for (e = agfstedge(zz, g, n); e!=null; e = next) {
+	    next = agnxtedge(zz, g, e, n);
+	    if (agcontains(zz, subg, e))
 		continue;
 	    
 	    /* canonicalize edge */
@@ -363,9 +362,9 @@ try {
 		if ((fe = find_flat_edge(agtail(e), aghead(e))) == null) {
 		    flat_edge(g, e);
 		    prev = e;
-		} else if (NEQ(e, fe)) {
+		} else if ((e != fe)) {
 		 		    safe_other_edge(e);
-		 		    if (N(ED_to_virt(e))) merge_oneway(e, fe);
+		 		    if ((ED_to_virt(e)) == null) merge_oneway(e, fe);
 		}
 		continue;
 	    }
@@ -470,19 +469,19 @@ LEAVING("c9p7dm16i13qktnh95os0sv58","remove_rankleaders");
 /* delete virtual nodes of a cluster, and install real nodes or sub-clusters */
 @Reviewed(when = "15/11/2020")
 @Original(version="2.38.0", path="lib/dotgen/cluster.c", name="expand_cluster", key="ecrplg8hsyl484f9kxc5xp0go", definition="void expand_cluster(graph_t * subg)")
-public static void expand_cluster(ST_Agraph_s subg) {
+public static void expand_cluster(Globals zz, ST_Agraph_s subg) {
 ENTERING("ecrplg8hsyl484f9kxc5xp0go","expand_cluster");
 try {
     /* build internal structure of the cluster */
-    class2(subg);
+    class2(zz, subg);
     GD_comp(subg).size = 1;
     GD_comp(subg).list.set_(0, GD_nlist(subg));
-    allocate_ranks(subg);
-    build_ranks(subg, 0);
+    allocate_ranks(zz, subg);
+    build_ranks(zz, subg, 0);
     merge_ranks(subg);
     
     /* build external structure of the cluster */
-    interclexp(subg);
+    interclexp(zz, subg);
     remove_rankleaders(subg);
 } finally {
 LEAVING("ecrplg8hsyl484f9kxc5xp0go","expand_cluster");
@@ -494,7 +493,7 @@ LEAVING("ecrplg8hsyl484f9kxc5xp0go","expand_cluster");
 /* this function marks every node in <g> with its top-level cluster under <g> */
 @Reviewed(when = "13/11/2020")
 @Original(version="2.38.0", path="lib/dotgen/cluster.c", name="mark_clusters", key="cxuirggihlap2iv2khmb1w5l5", definition="void mark_clusters(graph_t * g)")
-public static void mark_clusters(ST_Agraph_s g) {
+public static void mark_clusters(Globals zz, ST_Agraph_s g) {
 ENTERING("cxuirggihlap2iv2khmb1w5l5","mark_clusters");
 try {
     int c;
@@ -504,7 +503,7 @@ try {
     
     
     /* remove sub-clusters below this level */
-    for (n = agfstnode(g); n!=null; n = agnxtnode(g, n)) {
+    for (n = agfstnode(zz, g); n!=null; n = agnxtnode(zz, g, n)) {
 	if (ND_ranktype(n) == CLUSTER)
 	    UF_singleton(n);
 	ND_clust(n, null);
@@ -513,8 +512,8 @@ try {
     
     for (c = 1; c <= GD_n_cluster(g); c++) {
 	clust = GD_clust(g).get_(c);
-	for (n = agfstnode(clust); n!=null; n = nn) {
-		nn = agnxtnode(clust,n);
+	for (n = agfstnode(zz, clust); n!=null; n = nn) {
+		nn = agnxtnode(zz, clust,n);
 	    if (ND_ranktype(n) != NORMAL) {
 		UNSUPPORTED("5l8jenkv77ax02t47zzxyv1k0"); // 		agerr(AGWARN,
 		UNSUPPORTED("2ipl4umxgijawr7756ysp9hhd"); // 		      "%s was already in a rankset, deleted from cluster %s\n",
@@ -528,8 +527,8 @@ try {
 	    
 	    
 	    /* here we mark the vnodes of edges in the cluster */
-	    for (orig = agfstout(clust, n); orig!=null;
-		 orig = agnxtout(clust, orig)) {
+	    for (orig = agfstout(zz, clust, n); orig!=null;
+		 orig = agnxtout(zz, clust, orig)) {
 		if ((e = ED_to_virt(orig))!=null) {
 		    while (e!=null && ND_node_type(vn =aghead(e)) == VIRTUAL) {
 			ND_clust(vn, clust);
@@ -551,7 +550,7 @@ LEAVING("cxuirggihlap2iv2khmb1w5l5","mark_clusters");
 @Reviewed(when = "15/11/2020")
 @HasND_Rank
 @Original(version="2.38.0", path="lib/dotgen/cluster.c", name="build_skeleton", key="bwrw5u0gi2rgah1cn9h0glpse", definition="void build_skeleton(graph_t * g, graph_t * subg)")
-public static void build_skeleton(ST_Agraph_s g, ST_Agraph_s subg) {
+public static void build_skeleton(Globals zz, ST_Agraph_s g, ST_Agraph_s subg) {
 ENTERING("bwrw5u0gi2rgah1cn9h0glpse","build_skeleton");
 try {
     int r;
@@ -559,7 +558,7 @@ try {
     ST_Agedge_s e;
     
     prev = null;
-    GD_rankleader(subg, CArrayOfStar.<ST_Agnode_s>ALLOC(GD_maxrank(subg) + 2, ST_Agnode_s.class));
+    GD_rankleader(subg, CArrayOfStar.<ST_Agnode_s>ALLOC(GD_maxrank(subg) + 2, ZType.ST_Agnode_s));
     for (r = GD_minrank(subg); r <= GD_maxrank(subg); r++) {
 	v = virtual_node(g);
 	GD_rankleader(subg).set_(r, v);
@@ -575,10 +574,10 @@ try {
     
     
     /* set the counts on virtual edges of the cluster skeleton */
-    for (v = agfstnode(subg); v!=null; v = agnxtnode(subg, v)) {
+    for (v = agfstnode(zz, subg); v!=null; v = agnxtnode(zz, subg, v)) {
 	rl = GD_rankleader(subg).get_(ND_rank(v));
 	ND_UF_size(rl, ND_UF_size(rl)+1);
-	for (e = agfstout(subg, v); e!=null; e = agnxtout(subg, e)) {
+	for (e = agfstout(zz, subg, v); e!=null; e = agnxtout(zz, subg, e)) {
 	    for (r = ND_rank(agtail(e)); r < ND_rank(aghead(e)); r++) {
 		ED_count(ND_out(rl).list.get_(0), ED_count(ND_out(rl).list.get_(0))+1);
 	    }
@@ -599,7 +598,7 @@ LEAVING("bwrw5u0gi2rgah1cn9h0glpse","build_skeleton");
 
 @Reviewed(when = "15/11/2020")
 @Original(version="2.38.0", path="lib/dotgen/cluster.c", name="install_cluster", key="75yt3xwcwnxipi827t1r8zcmn", definition="void install_cluster(graph_t * g, node_t * n, int pass, nodequeue * q)")
-public static void install_cluster(ST_Agraph_s g, ST_Agnode_s n, int pass, ST_nodequeue q) {
+public static void install_cluster(Globals zz, ST_Agraph_s g, ST_Agnode_s n, int pass, ST_nodequeue q) {
 ENTERING("75yt3xwcwnxipi827t1r8zcmn","install_cluster");
 try {
     int r;
@@ -608,7 +607,7 @@ try {
     
     if (GD_installed(clust) != pass + 1) {
 	for (r = GD_minrank(clust); r <= GD_maxrank(clust); r++)
-	    install_in_rank(g, GD_rankleader(clust).get_(r));
+	    install_in_rank(zz, g, GD_rankleader(clust).get_(r));
 	for (r = GD_minrank(clust); r <= GD_maxrank(clust); r++)
 	    enqueue_neighbors(q, GD_rankleader(clust).get_(r), pass);
 	GD_installed(clust, pass + 1);
@@ -623,16 +622,16 @@ LEAVING("75yt3xwcwnxipi827t1r8zcmn","install_cluster");
 
 @Reviewed(when = "15/11/2020")
 @Original(version="2.38.0", path="lib/dotgen/cluster.c", name="mark_lowclusters", key="4muksvb3ec03mt6cvaqpb5c7a", definition="void mark_lowclusters(Agraph_t * root)")
-public static void mark_lowclusters(ST_Agraph_s root) {
+public static void mark_lowclusters(Globals zz, ST_Agraph_s root) {
 ENTERING("4muksvb3ec03mt6cvaqpb5c7a","mark_lowclusters");
 try {
     ST_Agnode_s n, vn;
     ST_Agedge_s orig, e;
     
     /* first, zap any previous cluster labelings */
-    for (n = agfstnode(root); n!=null; n = agnxtnode(root, n)) {
+    for (n = agfstnode(zz, root); n!=null; n = agnxtnode(zz, root, n)) {
 	ND_clust(n, null);
-	for (orig = agfstout(root, n); orig!=null; orig = agnxtout(root, orig)) {
+	for (orig = agfstout(zz, root, n); orig!=null; orig = agnxtout(zz, root, orig)) {
 	    if ((e = ED_to_virt(orig))!=null) {
 		while (e!=null && (ND_node_type(vn = aghead(e))) == VIRTUAL) {
 		    ND_clust(vn, null);
@@ -644,7 +643,7 @@ try {
     
     
     /* do the recursion */
-    mark_lowcluster_basic(root);
+    mark_lowcluster_basic(zz, root);
 } finally {
 LEAVING("4muksvb3ec03mt6cvaqpb5c7a","mark_lowclusters");
 }
@@ -655,7 +654,7 @@ LEAVING("4muksvb3ec03mt6cvaqpb5c7a","mark_lowclusters");
 
 @Reviewed(when = "16/11/2020")
 @Original(version="2.38.0", path="lib/dotgen/cluster.c", name="mark_lowcluster_basic", key="48j6fdymvkcgeh4wde060ctac", definition="static void mark_lowcluster_basic(Agraph_t * g)")
-public static void mark_lowcluster_basic(ST_Agraph_s g) {
+public static void mark_lowcluster_basic(Globals zz, ST_Agraph_s g) {
 ENTERING("48j6fdymvkcgeh4wde060ctac","mark_lowcluster_basic");
 try {
     ST_Agraph_s clust;
@@ -665,13 +664,13 @@ try {
     int c;
     for (c = 1; c <= GD_n_cluster(g); c++) {
 	clust = GD_clust(g).get_(c);
-	mark_lowcluster_basic(clust);
+	mark_lowcluster_basic(zz, clust);
     }
     /* see what belongs to this graph that wasn't already marked */
-    for (n = agfstnode(g); n!=null; n = agnxtnode(g, n)) {
+    for (n = agfstnode(zz, g); n!=null; n = agnxtnode(zz, g, n)) {
 	if (ND_clust(n) == null)
 	    ND_clust(n, g);
-	for (orig = agfstout(g, n); orig!=null; orig = agnxtout(g, orig)) {
+	for (orig = agfstout(zz, g, n); orig!=null; orig = agnxtout(zz, g, orig)) {
 	    if ((e = ED_to_virt(orig))!=null) {
 		while (e!=null && (ND_node_type(vn = aghead(e))) == VIRTUAL) {
 		    if (ND_clust(vn) == null)

@@ -2,14 +2,14 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2009-2024, Arnaud Roques
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of PlantUML.
  *
@@ -41,28 +41,28 @@ import java.io.OutputStream;
 // Modified by Maxime Sinclair
 public class NullOutputStream extends OutputStream {
 
-    /**
-     * Writes to nowhere
-     */
-    @Override
-    public void write(int b) throws IOException {
-        // Do nothing silently
-    }
+	/**
+	 * Writes to nowhere
+	 */
+	@Override
+	public void write(int b) throws IOException {
+		// Do nothing silently
+	}
 
-    /**
-     * Overridden for performance reason
-     */
-    @Override
-    public void write(byte b[]) throws IOException {
-        // Do nothing silently
-    }
+	/**
+	 * Overridden for performance reason
+	 */
+	@Override
+	public void write(byte b[]) throws IOException {
+		// Do nothing silently
+	}
 
-    /**
-     * Overridden for performance reason
-     */
-    @Override
-    public void write(byte b[], int off, int len) throws IOException {
-        // Do nothing silently
-    }
+	/**
+	 * Overridden for performance reason
+	 */
+	@Override
+	public void write(byte b[], int off, int len) throws IOException {
+		// Do nothing silently
+	}
 
 }

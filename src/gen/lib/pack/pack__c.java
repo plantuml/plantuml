@@ -2,12 +2,12 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
@@ -55,6 +55,7 @@ import h.EN_pack_mode;
 import h.ST_Agraph_s;
 import h.ST_pack_info;
 import smetana.core.CString;
+import smetana.core.Globals;
 
 public class pack__c {
 
@@ -131,10 +132,10 @@ LEAVING("dyb1n3lhbi0wnr9kvmu6onux9","parsePackModeInfo");
  */
 @Reviewed(when = "12/11/2020")
 @Original(version="2.38.0", path="lib/pack/pack.c", name="getPackModeInfo", key="bnxqpsmvz6tyekstfjte4pzwj", definition="pack_mode  getPackModeInfo(Agraph_t * g, pack_mode dflt, pack_info* pinfo)")
-public static EN_pack_mode getPackModeInfo(ST_Agraph_s g, EN_pack_mode dflt, ST_pack_info pinfo) {
+public static EN_pack_mode getPackModeInfo(Globals zz, ST_Agraph_s g, EN_pack_mode dflt, ST_pack_info pinfo) {
 ENTERING("bnxqpsmvz6tyekstfjte4pzwj","getPackModeInfo");
 try {
-    return parsePackModeInfo (agget(g, new CString("packmode")), dflt, pinfo);
+    return parsePackModeInfo (agget(zz, g, new CString("packmode")), dflt, pinfo);
 } finally {
 LEAVING("bnxqpsmvz6tyekstfjte4pzwj","getPackModeInfo");
 }
@@ -151,13 +152,13 @@ LEAVING("bnxqpsmvz6tyekstfjte4pzwj","getPackModeInfo");
  */
 @Reviewed(when = "12/11/2020")
 @Original(version="2.38.0", path="lib/pack/pack.c", name="getPack", key="ata97fmix5q1oikrmk5pezvrf", definition="int getPack(Agraph_t * g, int not_def, int dflt)")
-public static int getPack(ST_Agraph_s g, int not_def, int dflt) {
+public static int getPack(Globals zz, ST_Agraph_s g, int not_def, int dflt) {
 ENTERING("ata97fmix5q1oikrmk5pezvrf","getPack");
 try {
     CString p;
     int i;
     int v = not_def;
-    if ((p = agget(g, new CString("pack")))!=null) {
+    if ((p = agget(zz, g, new CString("pack")))!=null) {
 UNSUPPORTED("enpqar7c7okvibe7xhe0vjtfn"); // 	if ((sscanf(p, "%d", &i) == 1) && (i >= 0))
 UNSUPPORTED("3puzxwczcmpxvlw8cvmeyio74"); // 	    v = i;
 UNSUPPORTED("65w8fxtw319slbg2c6nvtmow8"); // 	else if ((*p == 't') || (*p == 'T'))
@@ -174,16 +175,16 @@ LEAVING("ata97fmix5q1oikrmk5pezvrf","getPack");
 
 @Reviewed(when = "12/11/2020")
 @Original(version="2.38.0", path="lib/pack/pack.c", name="getPackInfo", key="ce4a70w8ddkj4l9efi74h61s6", definition="pack_mode  getPackInfo(Agraph_t * g, pack_mode dflt, int dfltMargin, pack_info* pinfo)")
-public static EN_pack_mode getPackInfo(ST_Agraph_s g, EN_pack_mode dflt, int dfltMargin, ST_pack_info pinfo) {
+public static EN_pack_mode getPackInfo(Globals zz, ST_Agraph_s g, EN_pack_mode dflt, int dfltMargin, ST_pack_info pinfo) {
 ENTERING("ce4a70w8ddkj4l9efi74h61s6","getPackInfo");
 try {
-    pinfo.margin = getPack(g, dfltMargin, dfltMargin);
+    pinfo.margin = getPack(zz, g, dfltMargin, dfltMargin);
     //if (Verbose) {
 	//fprintf (stderr, "  margin %d\n", pinfo->margin);
     //}
     pinfo.doSplines = 0;
     pinfo.fixed = null;
-    getPackModeInfo(g, dflt, pinfo);
+    getPackModeInfo(zz, g, dflt, pinfo);
     return pinfo.mode;
 } finally {
 LEAVING("ce4a70w8ddkj4l9efi74h61s6","getPackInfo");

@@ -6,8 +6,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * This indicates that an element will be stable over PlantUML version.
- * Third party tools can then use it safely.
+ * This indicates that an element will be stable over PlantUML version. Third
+ * party tools can then use it safely.
  */
 @Retention(RetentionPolicy.SOURCE)
 @Target({ ElementType.CONSTRUCTOR, ElementType.METHOD, ElementType.TYPE })

@@ -2,14 +2,14 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2009-2024, Arnaud Roques
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of PlantUML.
  *
@@ -35,16 +35,16 @@
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
-import net.sourceforge.plantuml.graphic.SymbolContext;
+import net.sourceforge.plantuml.klimt.Fashion;
 
 public class Step {
 
 	private final double value;
 	private final boolean destroy;
 	private final int indent;
-	private final SymbolContext color;
+	private final Fashion color;
 
-	public Step(double value, boolean destroy, int indent, SymbolContext color) {
+	public Step(double value, boolean destroy, int indent, Fashion color) {
 		if (indent < 0) {
 			throw new IllegalArgumentException();
 		}
@@ -61,14 +61,13 @@ public class Step {
 	public boolean isDestroy() {
 		return destroy;
 	}
-	
+
 	public int getIndent() {
 		return indent;
 	}
 
-	public SymbolContext getColors() {
+	public Fashion getColors() {
 		return color;
 	}
-
 
 }

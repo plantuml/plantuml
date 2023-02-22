@@ -2,14 +2,14 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2009-2024, Arnaud Roques
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  *
  * If you like this project or if you find it useful, you can support us at:
  *
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  *
  * This file is part of PlantUML.
  *
@@ -45,28 +45,27 @@ import java.util.List;
 
 import net.sourceforge.plantuml.EmptyImageBuilder;
 import net.sourceforge.plantuml.FileFormat;
-import net.sourceforge.plantuml.SpriteContainerEmpty;
 import net.sourceforge.plantuml.api.ImageDataSimple;
-import net.sourceforge.plantuml.awt.geom.XDimension2D;
 import net.sourceforge.plantuml.core.ImageData;
-import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.eps.EpsStrategy;
-import net.sourceforge.plantuml.graphic.TextBlock;
-import net.sourceforge.plantuml.klimt.URectangle;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.drawing.eps.EpsStrategy;
+import net.sourceforge.plantuml.klimt.drawing.eps.UGraphicEps;
+import net.sourceforge.plantuml.klimt.drawing.g2d.UGraphicG2d;
+import net.sourceforge.plantuml.klimt.drawing.svg.SvgOption;
+import net.sourceforge.plantuml.klimt.drawing.svg.UGraphicSvg;
+import net.sourceforge.plantuml.klimt.drawing.tikz.UGraphicTikz;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
 import net.sourceforge.plantuml.png.PngIO;
-import net.sourceforge.plantuml.svg.LengthAdjust;
-import net.sourceforge.plantuml.ugraphic.UGraphic;
-import net.sourceforge.plantuml.ugraphic.eps.UGraphicEps;
-import net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d;
-import net.sourceforge.plantuml.ugraphic.svg.UGraphicSvg;
-import net.sourceforge.plantuml.ugraphic.tikz.UGraphicTikz;
 
 public class GraphicsSudoku {
 
@@ -97,22 +96,23 @@ public class GraphicsSudoku {
 	// ::done
 
 	public ImageData writeImageSvg(OutputStream os) throws IOException {
-		final UGraphicSvg ug = new UGraphicSvg(HColors.WHITE, true, new XDimension2D(0, 0), ColorMapper.IDENTITY, false,
-				1.0, null, null, 0, "none", FileFormat.SVG.getDefaultStringBounder(), LengthAdjust.defaultValue(),
-				false);
+		final SvgOption option = SvgOption.basic().withBackcolor(HColors.WHITE);
+		final UGraphicSvg ug = new UGraphicSvg(option, false, 0, FileFormat.SVG.getDefaultStringBounder());
 		drawInternal(ug);
 		ug.writeToStream(os, null, -1); // dpi param is not used
 		return ImageDataSimple.ok();
 	}
 
+	final StringBounder stringBounder = FileFormat.PNG.getDefaultStringBounder();
+
 	public ImageData writeImagePng(OutputStream os) throws IOException {
-		final StringBounder stringBounder = FileFormat.PNG.getDefaultStringBounder();
 		final EmptyImageBuilder builder = new EmptyImageBuilder(null, sudoWidth, sudoHeight + textTotalHeight,
 				Color.WHITE, stringBounder);
 		final BufferedImage im = builder.getBufferedImage();
 		final Graphics2D g3d = builder.getGraphics2D();
 
-		final UGraphic ug = new UGraphicG2d(HColors.WHITE, ColorMapper.IDENTITY, stringBounder, g3d, 1.0);
+		final UGraphic ug = new UGraphicG2d(HColors.WHITE, ColorMapper.IDENTITY, stringBounder, g3d, 1.0,
+				FileFormat.PNG);
 
 		drawInternal(ug);
 		g3d.dispose();
@@ -135,7 +135,7 @@ public class GraphicsSudoku {
 	final private int sudoHeight = 9 * cellHeight + 2 * yOffset + boldWidth;
 	final private int sudoWidth = 9 * cellWidth + 2 * xOffset + boldWidth;
 
-	private void drawInternal(UGraphic ug) {
+	public void drawInternal(UGraphic ug) {
 		ug = ug.apply(new UTranslate(xOffset, yOffset));
 
 		for (int x = 0; x < 9; x++) {
@@ -164,7 +164,7 @@ public class GraphicsSudoku {
 
 		ug = ug.apply(UTranslate.dy(sudoHeight));
 		final List<String> texts = new ArrayList<>();
-		texts.add("http://plantuml.com");
+		texts.add("https://plantuml.com");
 		texts.add("Seed " + Long.toString(sudoku.getSeed(), 36));
 		texts.add("Difficulty " + sudoku.getRatting());
 		final TextBlock textBlock = Display.create(texts).create(FontConfiguration.blackBlueTrue(font),

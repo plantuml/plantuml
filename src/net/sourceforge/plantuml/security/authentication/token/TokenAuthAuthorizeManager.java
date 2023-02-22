@@ -4,12 +4,12 @@
  *
  * (C) Copyright 2009-2021, Arnaud Roques
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  *
  * If you like this project or if you find it useful, you can support us at:
  *
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  *
  * This file is part of PlantUML.
  *
@@ -42,8 +42,8 @@ import net.sourceforge.plantuml.security.authentication.SecurityAuthorizeManager
 import net.sourceforge.plantuml.security.authentication.SecurityCredentials;
 
 /**
- * The {@link TokenAuthAuthorizeManager} creates the authentication on the fly from the credentials without
- * any access to other services.
+ * The {@link TokenAuthAuthorizeManager} creates the authentication on the fly
+ * from the credentials without any access to other services.
  *
  * @author Aljoscha Rittner
  */

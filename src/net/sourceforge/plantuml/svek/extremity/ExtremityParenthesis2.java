@@ -2,14 +2,14 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2009-2024, Arnaud Roques
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of PlantUML.
  *
@@ -35,11 +35,11 @@
  */
 package net.sourceforge.plantuml.svek.extremity;
 
-import net.sourceforge.plantuml.awt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.shape.UEllipse;
 import net.sourceforge.plantuml.svek.image.EntityImageLollipopInterfaceEye2;
-import net.sourceforge.plantuml.ugraphic.UEllipse;
-import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 class ExtremityParenthesis2 extends Extremity {
 
@@ -59,24 +59,28 @@ class ExtremityParenthesis2 extends Extremity {
 		final double len = Math.round(distance1 + EntityImageLollipopInterfaceEye2.SIZE / 2);
 		this.center = new XPoint2D(contact.getX() + dx / distance1 * len, contact.getY() + dy / distance1 * len);
 	}
-	
+
 	@Override
 	public XPoint2D somePoint() {
 		return contact;
 	}
 
-
 	public void drawU(UGraphic ug) {
 		final double deg = -ortho * 180 / Math.PI + 90 - ang;
-		// final XPoint2D other = new XPoint2D(contact.getX() + 10 * Math.cos(deg), contact.getY() + 10
+		// final XPoint2D other = new XPoint2D(contact.getX() + 10 * Math.cos(deg),
+		// contact.getY() + 10
 		// * Math.sin(deg));
 		// final ULine line = new ULine(1, 1);
-		// ug.apply(UChangeColor.nnn(HtmlColorUtils.GREEN)).apply(new UTranslate(contact.getX(), contact.getY()))
+		// ug.apply(UChangeColor.nnn(HtmlColorUtils.GREEN)).apply(new
+		// UTranslate(contact.getX(), contact.getY()))
 		// .draw(line);
-		// ug.apply(UChangeColor.nnn(HtmlColorUtils.BLACK)).apply(new UTranslate(center.getX(),
+		// ug.apply(UChangeColor.nnn(HtmlColorUtils.BLACK)).apply(new
+		// UTranslate(center.getX(),
 		// center.getY())).draw(line);
-		// // final UEllipse arc1 = new UEllipse(2 * radius2, 2 * radius2, deg, 2 * ang);
-		// // ug.apply(new UStroke(1.5)).apply(new UTranslate(dest.getX() - radius2, dest.getY() - radius2)).draw(arc1);
+		// // final UEllipse arc1 = new UEllipse(2 * radius2, 2 * radius2, deg, 2 *
+		// ang);
+		// // ug.apply(new UStroke(1.5)).apply(new UTranslate(dest.getX() - radius2,
+		// dest.getY() - radius2)).draw(arc1);
 		//
 		final double size = Math.round(contact.distance(center));
 		// System.err.println("size=" + size);

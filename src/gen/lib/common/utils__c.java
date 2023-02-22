@@ -2,12 +2,12 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
@@ -54,8 +54,8 @@ import static gen.lib.common.labels__c.make_label;
 import static gen.lib.common.shapes__c.bind_shape;
 import static gen.lib.common.shapes__c.shapeOf;
 import static gen.lib.common.strcasecmp__c.strcasecmp;
-import static smetana.core.JUtils.EQ;
-import static smetana.core.JUtils.NEQ;
+import static smetana.core.JUtils.EQ_ARRAY;
+import static smetana.core.JUtils.EQ_CSTRING;
 import static smetana.core.JUtils.atoi;
 import static smetana.core.JUtils.isdigit;
 import static smetana.core.JUtils.strchr;
@@ -88,7 +88,6 @@ import static smetana.core.Macro.LT_RECD;
 import static smetana.core.Macro.MIN_FONTSIZE;
 import static smetana.core.Macro.MIN_NODEHEIGHT;
 import static smetana.core.Macro.MIN_NODEWIDTH;
-import static smetana.core.Macro.N;
 import static smetana.core.Macro.ND_UF_parent;
 import static smetana.core.Macro.ND_UF_size;
 import static smetana.core.Macro.ND_has_port;
@@ -106,7 +105,6 @@ import static smetana.core.Macro.NORMAL;
 import static smetana.core.Macro.TAIL_ID;
 import static smetana.core.Macro.TAIL_LABEL;
 import static smetana.core.Macro.UNSUPPORTED;
-import static smetana.core.Macro.fabs;
 import static smetana.core.debug.SmetanaDebug.ENTERING;
 import static smetana.core.debug.SmetanaDebug.LEAVING;
 
@@ -131,8 +129,9 @@ import smetana.core.CArray;
 import smetana.core.CArrayOfStar;
 import smetana.core.CFunction;
 import smetana.core.CString;
+import smetana.core.Globals;
 import smetana.core.Memory;
-import smetana.core.Z;
+import smetana.core.ZType;
 import smetana.core.__ptr__;
 
 public class utils__c {
@@ -154,7 +153,7 @@ try {
     
     if (sz <= 1)
 	sz = 2;
-    q.head = q.tail = q.store = CArrayOfStar.<ST_Agnode_s>ALLOC(sz, ST_Agnode_s.class);
+    q.head = q.tail = q.store = CArrayOfStar.<ST_Agnode_s>ALLOC(sz, ZType.ST_Agnode_s);
 	q.limit = q.store.plus_(sz);
     return q;
 } finally {
@@ -203,7 +202,7 @@ public static ST_Agnode_s dequeue(ST_nodequeue q) {
 ENTERING("b612nmtf16au96ztbs8pike9r","dequeue");
 try {
     ST_Agnode_s n;
-    if (EQ(q.head, q.tail))
+    if (EQ_ARRAY(q.head, q.tail))
 	n = null;
     else {
 	n = q.head.get_(0);
@@ -232,10 +231,10 @@ try {
     if (attr == null)
 	return def;
     p = agxget(obj,attr);
-    if (N(p) || p.length()==0)
+    if ((p) == null || p.length()==0)
 	return def;
     rv = strtol (p, endp, 10);
-    if (EQ(p, endp[0])) return def;  /* invalid int format */
+    if (EQ_CSTRING(p, endp[0])) return def;  /* invalid int format */
     if (rv < low) return low;
     else return rv;
 } finally {
@@ -255,10 +254,10 @@ try {
     CString endp[] = new CString[1];
     double rv;
     
-    if (N(attr) || N(obj))
+    if ((attr) == null || (obj) == null)
 	return def;
     p = agxget(obj,attr);
-    if (N(p) || p.charAt(0) == '\0')
+    if ((p) == null || p.charAt(0) == '\0')
 	return def;
     rv = strtod (p, endp);
     if (p == endp[0]) return def;  /* invalid double format */
@@ -277,7 +276,7 @@ LEAVING("d68314e4f20r79tt0cnmxugme","late_double");
 public static CString late_string(__ptr__ obj, ST_Agsym_s attr, CString def) {
 ENTERING("83xm6yc9q5h1bzufhsnv0v2up","late_string");
 try {
-    if (N(attr) || N(obj))
+    if ((attr) == null || (obj) == null)
 	return def;
     return agxget(obj, attr);
 } finally {
@@ -293,7 +292,7 @@ public static CString late_nnstring(__ptr__ obj, ST_Agsym_s attr, CString def) {
 ENTERING("8oon4q1mrublaru177xfntqgd","late_nnstring");
 try {
     CString rv = late_string(obj, attr, def);
-    if (N(rv) || (rv.charAt(0) == '\0'))
+    if ((rv) == null || (rv.charAt(0) == '\0'))
 	rv = def;
     return rv;
 } finally {
@@ -329,7 +328,7 @@ LEAVING("87ifze04q7qzigjj1fb9y9by2","late_bool");
 public static ST_Agnode_s UF_find(ST_Agnode_s n) {
 ENTERING("aeq0acpkhfv3gd5jx8op4jf18","UF_find");
 try {
-    while (ND_UF_parent(n)!=null && NEQ(ND_UF_parent(n), n)) {
+    while (ND_UF_parent(n)!=null && (ND_UF_parent(n) != n)) {
 	if (ND_UF_parent(ND_UF_parent(n))!=null)
 	    ND_UF_parent(n, ND_UF_parent(ND_UF_parent(n)));
 	n = ND_UF_parent(n);
@@ -348,7 +347,7 @@ LEAVING("aeq0acpkhfv3gd5jx8op4jf18","UF_find");
 public static ST_Agnode_s UF_union(ST_Agnode_s u, ST_Agnode_s v) {
 ENTERING("9ldxwfr4vvijrvfcvs1hvdzrt","UF_union");
 try {
-    if (EQ(u, v))
+    if (u == v)
 	return u;
     if (ND_UF_parent(u) == null) {
 	ND_UF_parent(u, u);
@@ -398,7 +397,7 @@ LEAVING("22k0u1imxyw06k9rizqlfz153","UF_singleton");
 public static void UF_setname(ST_Agnode_s u, ST_Agnode_s v) {
 ENTERING("e0fn8xuzkdt0q8xoofl6j1txb","UF_setname");
 try {
-    assert(EQ(u, UF_find(u)));
+    assert(u == UF_find(u));
     ND_UF_parent(u, v);
     ND_UF_size(v, ND_UF_size(v) + ND_UF_size(u));
 } finally {
@@ -429,12 +428,12 @@ private static ST_pointf Bezier_w_(CArray<ST_pointf> V, int degree, double t, CA
 ENTERING("6p0ey2c2ujk2o7h221p0b4xon","Bezier");
 try {
     int i, j;			/* Index variables      */
-    final CArray<ST_pointf> Vtemp[] = new CArray[] { CArray.ALLOC__(W_DEGREE+1,ST_pointf.class),
-    		CArray.ALLOC__(W_DEGREE+1,ST_pointf.class),
-    		CArray.ALLOC__(W_DEGREE+1,ST_pointf.class),
-    		CArray.ALLOC__(W_DEGREE+1,ST_pointf.class),
-    		CArray.ALLOC__(W_DEGREE+1,ST_pointf.class),
-    		CArray.ALLOC__(W_DEGREE+1,ST_pointf.class)};
+    final CArray<ST_pointf> Vtemp[] = new CArray[] { CArray.ALLOC__(W_DEGREE+1,ZType.ST_pointf),
+    		CArray.ALLOC__(W_DEGREE+1,ZType.ST_pointf),
+    		CArray.ALLOC__(W_DEGREE+1,ZType.ST_pointf),
+    		CArray.ALLOC__(W_DEGREE+1,ZType.ST_pointf),
+    		CArray.ALLOC__(W_DEGREE+1,ZType.ST_pointf),
+    		CArray.ALLOC__(W_DEGREE+1,ZType.ST_pointf)};
 
     /* Copy control points  */
     for (j = 0; j <= degree; j++) {
@@ -487,7 +486,7 @@ try {
     int i;
     CString q;
     for (i = 0; (q = name[i]) != null; i++)
-	if (p!=null && (N(strcmp(p,q))))
+	if (p!=null && (strcmp(p,q) == 0))
 	    break;
     return val[i];
 } finally {
@@ -503,16 +502,16 @@ LEAVING("2ihv17oajyaaaycirwsbgz1m7","maptoken");
 public static boolean mapBool(CString p, boolean dflt) {
 ENTERING("4esyuq2yqdaqoddgfqs24m5m3","mapBool");
 try {
-    if (N(p) || (p.charAt(0) == '\0'))
+    if ((p) == null || (p.charAt(0) == '\0'))
 	return dflt;
-    if (N(strcasecmp(p, new CString("false"))))
+    if (strcasecmp(p, new CString("false")) == 0)
 	return false;
-    if (N(strcasecmp(p, new CString("no"))))
+    if (strcasecmp(p, new CString("no")) == 0)
 	return false;
-    if (N(strcasecmp(p, new CString("true"))))
-	return (N(0));
-    if (N(strcasecmp(p, new CString("yes"))))
-	return (N(0));
+    if (strcasecmp(p, new CString("true")) == 0)
+	return (true);
+    if (strcasecmp(p, new CString("yes")) == 0)
+	return (true);
     if (isdigit(p.charAt(0)))
 	return atoi(p)!=0;
     else
@@ -556,7 +555,7 @@ private static ST_pointf dotneato_closest_(ST_splines spl, final ST_pointf pt) {
      double bestdist2, d2, dlow2, dhigh2; /* squares of distances */
      double low, high, t;
      // final ST_pointf c[] = new ST_pointf[] {new ST_pointf(),new ST_pointf(),new ST_pointf(),new ST_pointf()};
-	 final CArray<ST_pointf> c = CArray.<ST_pointf>ALLOC__(4, ST_pointf.class);
+	 final CArray<ST_pointf> c = CArray.<ST_pointf>ALLOC__(4, ZType.ST_pointf);
      final ST_pointf pt2 = new ST_pointf();
      final ST_bezier bz = new ST_bezier();
      besti = bestj = -1;
@@ -594,9 +593,9 @@ private static ST_pointf dotneato_closest_(ST_splines spl, final ST_pointf pt) {
      do {
  	t = (low + high) / 2.0;
  	pt2.___(Bezier(c, 3, t, null, null));
- 	if (fabs(dlow2 - dhigh2) < 1.0)
+ 	if (Math.abs(dlow2 - dhigh2) < 1.0)
  	    break;
- 	if (fabs(high - low) < .00001)
+ 	if (Math.abs(high - low) < .00001)
  	    break;
 UNSUPPORTED("6apa9aoby9j8a0eanbfhy5mn2"); // 	if (dlow2 < dhigh2) {
 UNSUPPORTED("6jttyuryfaxa193mme86dqf58"); // 	    high = t;
@@ -616,32 +615,32 @@ UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
 
 @Reviewed(when = "12/11/2020")
 @Original(version="2.38.0", path="lib/common/utils.c", name="common_init_node", key="cr81drt18h5feqzxyh3jb0u49", definition="void common_init_node(node_t * n)")
-public static void common_init_node(ST_Agnode_s n) {
+public static void common_init_node(Globals zz, ST_Agnode_s n) {
 ENTERING("cr81drt18h5feqzxyh3jb0u49","common_init_node");
 try {
 	ST_fontinfo fi = new ST_fontinfo();
     CString str;
     ND_width(n,
-	late_double(n, Z.z().N_width, DEFAULT_NODEWIDTH, MIN_NODEWIDTH));
+	late_double(n, zz.N_width, DEFAULT_NODEWIDTH, MIN_NODEWIDTH));
     ND_height(n,
-	late_double(n, Z.z().N_height, DEFAULT_NODEHEIGHT, MIN_NODEHEIGHT));
+	late_double(n, zz.N_height, DEFAULT_NODEHEIGHT, MIN_NODEHEIGHT));
     ND_shape(n,
-	bind_shape(late_nnstring(n, Z.z().N_shape, new CString(DEFAULT_NODESHAPE)), n));
-    str = agxget(n, Z.z().N_label);
-    fi.fontsize = late_double(n, Z.z().N_fontsize, DEFAULT_FONTSIZE, MIN_FONTSIZE);
-    fi.fontname = late_nnstring(n, Z.z().N_fontname, new CString("Times-Roman"));
-    fi.fontcolor = late_nnstring(n, Z.z().N_fontcolor, new CString("black"));
-    ND_label(n, make_label(n, str,
-	        ((aghtmlstr(str)!=0 ? LT_HTML : LT_NONE) | ( (shapeOf(n) == EN_shape_kind.SH_RECORD) ? LT_RECD : LT_NONE)),
+	bind_shape(zz, late_nnstring(n, zz.N_shape, new CString(DEFAULT_NODESHAPE)), n));
+    str = agxget(n, zz.N_label);
+    fi.fontsize = late_double(n, zz.N_fontsize, DEFAULT_FONTSIZE, MIN_FONTSIZE);
+    fi.fontname = late_nnstring(n, zz.N_fontname, new CString("Times-Roman"));
+    fi.fontcolor = late_nnstring(n, zz.N_fontcolor, new CString("black"));
+    ND_label(n, make_label(zz, n, str,
+	        ((aghtmlstr(zz, str)!=0 ? LT_HTML : LT_NONE) | ( (shapeOf(n) == EN_shape_kind.SH_RECORD) ? LT_RECD : LT_NONE)),
 		fi.fontsize, fi.fontname, fi.fontcolor));
-    if (Z.z().N_xlabel!=null && (str = agxget(n, Z.z().N_xlabel))!=null && (str.charAt(0)!='\0')) {
+    if (zz.N_xlabel!=null && (str = agxget(n, zz.N_xlabel))!=null && (str.charAt(0)!='\0')) {
 UNSUPPORTED("4ua9vld76wpovsm1celv2ff6e"); // 	ND_xlabel(n) = make_label((void*)n, str, (aghtmlstr(str) ? (1 << 1) : (0 << 1)),
 UNSUPPORTED("b0zm6fkpjlt9jacykbgugjodg"); // 				fi.fontsize, fi.fontname, fi.fontcolor);
 UNSUPPORTED("ail0d4qmxj2aqh2q721inwgqu"); // 	GD_has_labels(agraphof(n)) |= (1 << 4);
     }
     
-    ND_showboxes(n, late_int(n, Z.z().N_showboxes, 0, 0));
-    ND_shape(n).fns.initfn.exe(n);
+    ND_showboxes(n, late_int(n, zz.N_showboxes, 0, 0));
+    ND_shape(n).fns.initfn.exe(zz, n);
 } finally {
 LEAVING("cr81drt18h5feqzxyh3jb0u49","common_init_node");
 }
@@ -652,12 +651,12 @@ LEAVING("cr81drt18h5feqzxyh3jb0u49","common_init_node");
 
 @Reviewed(when = "13/11/2020")
 @Original(version="2.38.0", path="lib/common/utils.c", name="initFontEdgeAttr", key="d2v8l80y27ue2fag5c0qplah8", definition="static void initFontEdgeAttr(edge_t * e, struct fontinfo *fi)")
-public static void initFontEdgeAttr(ST_Agedge_s e, ST_fontinfo fi) {
+public static void initFontEdgeAttr(Globals zz, ST_Agedge_s e, ST_fontinfo fi) {
 ENTERING("d2v8l80y27ue2fag5c0qplah8","initFontEdgeAttr");
 try {
-    fi.fontsize = late_double(e, Z.z().E_fontsize, DEFAULT_FONTSIZE, MIN_FONTSIZE);
-    fi.fontname = late_nnstring(e, Z.z().E_fontname, new CString("Times-Roman"));
-    fi.fontcolor = late_nnstring(e, Z.z().E_fontcolor, new CString("black"));
+    fi.fontsize = late_double(e, zz.E_fontsize, DEFAULT_FONTSIZE, MIN_FONTSIZE);
+    fi.fontname = late_nnstring(e, zz.E_fontname, new CString("Times-Roman"));
+    fi.fontcolor = late_nnstring(e, zz.E_fontcolor, new CString("black"));
 } finally {
 LEAVING("d2v8l80y27ue2fag5c0qplah8","initFontEdgeAttr");
 }
@@ -668,13 +667,13 @@ LEAVING("d2v8l80y27ue2fag5c0qplah8","initFontEdgeAttr");
 
 @Reviewed(when = "13/11/2020")
 @Original(version="2.38.0", path="lib/common/utils.c", name="initFontLabelEdgeAttr", key="ak3pxrdrq900wymudwnjmbito", definition="static void initFontLabelEdgeAttr(edge_t * e, struct fontinfo *fi, 		      struct fontinfo *lfi)")
-public static void initFontLabelEdgeAttr(ST_Agedge_s e, ST_fontinfo fi, ST_fontinfo lfi) {
+public static void initFontLabelEdgeAttr(Globals zz, ST_Agedge_s e, ST_fontinfo fi, ST_fontinfo lfi) {
 ENTERING("ak3pxrdrq900wymudwnjmbito","initFontLabelEdgeAttr");
 try {
-	if (N(fi.fontname)) initFontEdgeAttr(e, fi);
-    lfi.fontsize = late_double(e, Z.z().E_labelfontsize, fi.fontsize, MIN_FONTSIZE);
-    lfi.fontname = late_nnstring(e, Z.z().E_labelfontname, fi.fontname);
-    lfi.fontcolor = late_nnstring(e, Z.z().E_labelfontcolor, fi.fontcolor);
+	if ((fi.fontname) == null) initFontEdgeAttr(zz, e, fi);
+    lfi.fontsize = late_double(e, zz.E_labelfontsize, fi.fontsize, MIN_FONTSIZE);
+    lfi.fontname = late_nnstring(e, zz.E_labelfontname, fi.fontname);
+    lfi.fontcolor = late_nnstring(e, zz.E_labelfontcolor, fi.fontcolor);
 } finally {
 LEAVING("ak3pxrdrq900wymudwnjmbito","initFontLabelEdgeAttr");
 }
@@ -711,11 +710,11 @@ LEAVING("bgnk1zwht9rwx6thmly98iofb","noClip");
 
 @Reviewed(when = "13/11/2020")
 @Original(version="2.38.0", path="lib/common/utils.c", name="chkPort", key="9vnr1bc7p533acazoxbhbfmx3", definition="static port chkPort (port (*pf)(node_t*, char*, char*), node_t* n, char* s)")
-public static ST_port chkPort(CFunction pf, ST_Agnode_s n, CString s) {
+public static ST_port chkPort(Globals zz, CFunction pf, ST_Agnode_s n, CString s) {
 // WARNING!! STRUCT
-return chkPort_w_(pf, n, s).copy();
+return chkPort_w_(zz, pf, n, s).copy();
 }
-private static ST_port chkPort_w_(CFunction pf, ST_Agnode_s n, CString s) {
+private static ST_port chkPort_w_(Globals zz, CFunction pf, ST_Agnode_s n, CString s) {
 ENTERING("9vnr1bc7p533acazoxbhbfmx3","chkPort");
 try {
     final ST_port pt = new ST_port();
@@ -729,7 +728,7 @@ try {
 	UNSUPPORTED("2o9oidtrr5gspl1dh6vnz7mlz"); // 	pt.name = cp+1;
     }
     else
-	pt.___((ST_port) pf.exe(n, s, null));
+	pt.___((ST_port) pf.exe(zz, n, s, null));
 	pt.name = s;
     return pt;
 } finally {
@@ -741,7 +740,7 @@ LEAVING("9vnr1bc7p533acazoxbhbfmx3","chkPort");
 
 @Reviewed(when = "13/11/2020")
 @Original(version="2.38.0", path="lib/common/utils.c", name="common_init_edge", key="3aqh64lxwv4da2snfe7fvr45b", definition="int common_init_edge(edge_t * e)")
-public static int common_init_edge(ST_Agedge_s e) {
+public static int common_init_edge(Globals zz, ST_Agedge_s e) {
 ENTERING("3aqh64lxwv4da2snfe7fvr45b","common_init_edge");
 try {
     CString str;
@@ -752,18 +751,18 @@ try {
     
     fi.fontname = null;
     lfi.fontname = null;
-    if (Z.z().E_label!=null && (str = agxget(e, Z.z().E_label))!=null && (str.charAt(0)!='\0')) {
+    if (zz.E_label!=null && (str = agxget(e, zz.E_label))!=null && (str.charAt(0)!='\0')) {
 	r = 1;
-	initFontEdgeAttr(e, fi);
-	ED_label(e, make_label(e, str, (aghtmlstr(str)!=0 ? LT_HTML : LT_NONE),
+	initFontEdgeAttr(zz, e, fi);
+	ED_label(e, make_label(zz, e, str, (aghtmlstr(zz, str)!=0 ? LT_HTML : LT_NONE),
 				fi.fontsize, fi.fontname, fi.fontcolor));
 	GD_has_labels(sg, GD_has_labels(sg) | EDGE_LABEL);
 	ED_label_ontop(e,
-	    mapbool(late_string(e, Z.z().E_label_float, new CString("false"))));
+	    mapbool(late_string(e, zz.E_label_float, new CString("false"))));
     }
     
     
-    if (Z.z().E_xlabel!=null && (str = agxget(e, Z.z().E_xlabel))!=null && (str.charAt(0)!='\0')) {
+    if (zz.E_xlabel!=null && (str = agxget(e, zz.E_xlabel))!=null && (str.charAt(0)!='\0')) {
 UNSUPPORTED("1j3mhgq7abuh3n19q2jtjddbc"); // 	if (!fi.fontname)
 UNSUPPORTED("bmqo2g5g107quod3h31r8iudr"); // 	    initFontEdgeAttr(e, &fi);
 UNSUPPORTED("3s7kg9x748riuy3tm697s6e8t"); // 	(((Agedgeinfo_t*)(((Agobj_t*)(e))->data))->xlabel) = make_label((void*)e, str, (aghtmlstr(str) ? (1 << 1) : (0 << 1)),
@@ -773,15 +772,15 @@ UNSUPPORTED("c078bypfszv0nsvp1nc0x28wx"); // 	(((Agraphinfo_t*)(((Agobj_t*)(sg))
     
     
     /* vladimir */
-    if (Z.z().E_headlabel!=null && (str = agxget(e, Z.z().E_headlabel))!=null && (str.charAt(0)!='\0')) {
-    	initFontLabelEdgeAttr(e, fi, lfi);
-    	ED_head_label(e, make_label(e, str, (aghtmlstr(str)!=0 ? LT_HTML : LT_NONE),
+    if (zz.E_headlabel!=null && (str = agxget(e, zz.E_headlabel))!=null && (str.charAt(0)!='\0')) {
+    	initFontLabelEdgeAttr(zz, e, fi, lfi);
+    	ED_head_label(e, make_label(zz, e, str, (aghtmlstr(zz, str)!=0 ? LT_HTML : LT_NONE),
 				lfi.fontsize, lfi.fontname, lfi.fontcolor));
     	GD_has_labels(sg, GD_has_labels(sg) | HEAD_LABEL);
     }
-    if (Z.z().E_taillabel!=null && (str = agxget(e, Z.z().E_taillabel))!=null && (str.charAt(0)!='\0')) {
-    	initFontLabelEdgeAttr(e, fi, lfi);
-    	ED_tail_label(e, make_label(e, str, (aghtmlstr(str)!=0 ? LT_HTML : LT_NONE),
+    if (zz.E_taillabel!=null && (str = agxget(e, zz.E_taillabel))!=null && (str.charAt(0)!='\0')) {
+    	initFontLabelEdgeAttr(zz, e, fi, lfi);
+    	ED_tail_label(e, make_label(zz, e, str, (aghtmlstr(zz, str)!=0 ? LT_HTML : LT_NONE),
 				lfi.fontsize, lfi.fontname, lfi.fontcolor));
     	GD_has_labels(sg, GD_has_labels(sg) | TAIL_LABEL);
     }
@@ -791,22 +790,22 @@ UNSUPPORTED("c078bypfszv0nsvp1nc0x28wx"); // 	(((Agraphinfo_t*)(((Agobj_t*)(sg))
      * That is, we allow tailport = ":abc" as well as the preferred 
      * tailport = "abc".
      */
-    str = agget(e, TAIL_ID);
+    str = agget(zz, e, TAIL_ID);
     /* libgraph always defines tailport/headport; libcgraph doesn't */
-    if (N(str)) str = new CString("");
+    if ((str) == null) str = new CString("");
     if (str!=null && str.charAt(0)!='\0')
     ND_has_port(agtail(e), true);
-    ED_tail_port(e, chkPort (ND_shape(agtail(e)).fns.portfn, agtail(e), str));
-    if (noClip(e, Z.z().E_tailclip))
+    ED_tail_port(e, chkPort (zz, ND_shape(agtail(e)).fns.portfn, agtail(e), str));
+    if (noClip(e, zz.E_tailclip))
     UNSUPPORTED("cg4z67u0dm6h9nrcx8kkalnlt"); // 	ED_tail_port(e).clip = FALSE;
-    str = agget(e, HEAD_ID);
+    str = agget(zz, e, HEAD_ID);
     
     /* libgraph always defines tailport/headport; libcgraph doesn't */
-    if (N(str)) str = new CString("");
+    if ((str) == null) str = new CString("");
     if (str!=null && str.charAt(0)!='\0')
     ND_has_port(aghead(e), true);
-    ED_head_port(e, chkPort(ND_shape(aghead(e)).fns.portfn, aghead(e), str));
-    if (noClip(e, Z.z().E_headclip))
+    ED_head_port(e, chkPort(zz, ND_shape(aghead(e)).fns.portfn, aghead(e), str));
+    if (noClip(e, zz.E_headclip))
     UNSUPPORTED("ayqscz30ekhcje94wh4ib1hcu"); // 	ED_head_port(e).clip = FALSE;
     return r;
 } finally {
@@ -1087,13 +1086,13 @@ LEAVING("ckavkcnz5rcrqs17lleds1uxu","edgeType");
  */
 @Reviewed(when = "12/11/2020")
 @Original(version="2.38.0", path="lib/common/utils.c", name="setEdgeType", key="13cpqbf2ztcjdfz4a6v7nv00u", definition="void setEdgeType (graph_t* g, int dflt)")
-public static void setEdgeType(ST_Agraph_s g, int dflt) {
+public static void setEdgeType(Globals zz, ST_Agraph_s g, int dflt) {
 ENTERING("13cpqbf2ztcjdfz4a6v7nv00u","setEdgeType");
 try {
-    CString s = agget(g, new CString("splines"));
+    CString s = agget(zz, g, new CString("splines"));
     int et;
     
-    if (N(s)) {
+    if ((s) == null) {
 	et = dflt;
     }
     else if (s.charAt(0) == '\0') {

@@ -2,14 +2,14 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2009-2024, Arnaud Roques
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of PlantUML.
  *
@@ -37,8 +37,6 @@ package net.sourceforge.plantuml.command;
 
 import java.util.Objects;
 
-import com.plantuml.wasm.WasmLog;
-
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.utils.BlocLines;
@@ -55,7 +53,7 @@ public class ProtectedCommand<S extends Diagram> implements Command<S> {
 
 	public CommandExecutionResult execute(S system, BlocLines lines) {
 		try {
-			WasmLog.log("...running " + cmd.getClass().getName() + " ...");
+			// WasmLog.log("...running " + cmd.getClass().getName() + " ...");
 			final CommandExecutionResult result = cmd.execute(system, lines);
 			// if (result.isOk()) {
 			// // TRACECOMMAND
@@ -65,7 +63,7 @@ public class ProtectedCommand<S extends Diagram> implements Command<S> {
 		} catch (Throwable t) {
 			Log.error("Error " + t);
 			Logme.error(t);
-			String msg = "You should send a mail to plantuml@gmail.com or post to http://plantuml.com/qa with this log (V"
+			String msg = "You should send a mail to plantuml@gmail.com or post to https://plantuml.com/qa with this log (V"
 					+ Version.versionString() + ")";
 			Log.error(msg);
 			msg += " " + t.toString();

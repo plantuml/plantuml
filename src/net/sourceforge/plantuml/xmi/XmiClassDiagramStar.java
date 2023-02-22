@@ -2,14 +2,14 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2009-2024, Arnaud Roques
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of PlantUML.
  *
@@ -39,11 +39,11 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Element;
 
-import net.sourceforge.plantuml.baraye.Entity;
+import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
-import net.sourceforge.plantuml.cucadiagram.Display;
-import net.sourceforge.plantuml.cucadiagram.Link;
-import net.sourceforge.plantuml.cucadiagram.LinkDecor;
+import net.sourceforge.plantuml.decoration.LinkDecor;
+import net.sourceforge.plantuml.klimt.creole.Display;
 
 public class XmiClassDiagramStar extends XmiClassDiagramAbstract implements XmlDiagramTransformer {
 
@@ -55,7 +55,7 @@ public class XmiClassDiagramStar extends XmiClassDiagramAbstract implements XmlD
 			if (cla == null)
 				continue;
 
-			ownedElement.appendChild(cla);
+			ownedElementRoot.appendChild(cla);
 			done.add(ent);
 		}
 
@@ -118,7 +118,7 @@ public class XmiClassDiagramStar extends XmiClassDiagramAbstract implements XmlD
 
 		association.appendChild(connection);
 
-		ownedElement.appendChild(association);
+		ownedElementRoot.appendChild(association);
 
 	}
 
@@ -138,7 +138,7 @@ public class XmiClassDiagramStar extends XmiClassDiagramAbstract implements XmlD
 		} else {
 			throw new IllegalStateException();
 		}
-		ownedElement.appendChild(association);
+		ownedElementRoot.appendChild(association);
 
 	}
 

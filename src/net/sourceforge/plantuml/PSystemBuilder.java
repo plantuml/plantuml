@@ -2,14 +2,14 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2009-2024, Arnaud Roques
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of PlantUML.
  *
@@ -40,7 +40,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import com.plantuml.wasm.WasmLog;
+import com.plantuml.api.cheerpj.WasmLog;
 
 import net.sourceforge.plantuml.acearth.PSystemXearthFactory;
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagramFactory;
@@ -52,7 +52,6 @@ import net.sourceforge.plantuml.classdiagram.ClassDiagramFactory;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
-import net.sourceforge.plantuml.creole.legacy.PSystemCreoleFactory;
 import net.sourceforge.plantuml.dedication.PSystemDedicationFactory;
 import net.sourceforge.plantuml.definition.PSystemDefinitionFactory;
 import net.sourceforge.plantuml.descdiagram.DescriptionDiagramFactory;
@@ -78,6 +77,10 @@ import net.sourceforge.plantuml.hcl.HclDiagramFactory;
 import net.sourceforge.plantuml.help.HelpFactory;
 import net.sourceforge.plantuml.jcckit.PSystemJcckitFactory;
 import net.sourceforge.plantuml.jsondiagram.JsonDiagramFactory;
+import net.sourceforge.plantuml.klimt.creole.legacy.PSystemCreoleFactory;
+import net.sourceforge.plantuml.klimt.sprite.ListSpriteDiagramFactory;
+import net.sourceforge.plantuml.klimt.sprite.PSystemListInternalSpritesFactory;
+import net.sourceforge.plantuml.klimt.sprite.StdlibDiagramFactory;
 import net.sourceforge.plantuml.math.PSystemLatexFactory;
 import net.sourceforge.plantuml.math.PSystemMathFactory;
 import net.sourceforge.plantuml.mindmap.MindMapDiagramFactory;
@@ -92,9 +95,6 @@ import net.sourceforge.plantuml.salt.PSystemSaltFactory;
 import net.sourceforge.plantuml.security.SecurityProfile;
 import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagramFactory;
-import net.sourceforge.plantuml.sprite.ListSpriteDiagramFactory;
-import net.sourceforge.plantuml.sprite.PSystemListInternalSpritesFactory;
-import net.sourceforge.plantuml.sprite.StdlibDiagramFactory;
 import net.sourceforge.plantuml.statediagram.StateDiagramFactory;
 import net.sourceforge.plantuml.stats.StatsUtilsIncrement;
 import net.sourceforge.plantuml.sudoku.PSystemSudokuFactory;
@@ -141,7 +141,7 @@ public class PSystemBuilder {
 				if (diagramType != systemFactory.getDiagramType())
 					continue;
 
-				WasmLog.log("...trying " + systemFactory.getClass().getName() + " ...");
+				// WasmLog.log("...trying " + systemFactory.getClass().getName() + " ...");
 				final Diagram sys = systemFactory.createSystem(umlSource, skinParam);
 				if (isOk(sys)) {
 					result = sys;
@@ -153,6 +153,7 @@ public class PSystemBuilder {
 			result = PSystemErrorUtils.merge(errors);
 			return result;
 		} finally {
+			WasmLog.log("...parsing ok...");
 			// ::comment when CORE
 			if (result != null && OptionFlags.getInstance().isEnableStats()) {
 				StatsUtilsIncrement.onceMoreParse(System.currentTimeMillis() - now, result.getClass());
@@ -182,8 +183,8 @@ public class PSystemBuilder {
 		// factories.add(new PostIdDiagramFactory());
 		factories.add(new PSystemLicenseFactory());
 		factories.add(new PSystemVersionFactory());
-		factories.add(new PSystemDonorsFactory());
 		// ::comment when CORE
+		factories.add(new PSystemDonorsFactory());
 		factories.add(new PSystemSkinparameterListFactory());
 		factories.add(new PSystemListFontsFactory());
 		factories.add(new PSystemListEmojiFactory());
@@ -201,17 +202,16 @@ public class PSystemBuilder {
 		factories.add(new NwDiagramFactory(DiagramType.NW));
 		factories.add(new MindMapDiagramFactory());
 		factories.add(new WBSDiagramFactory());
+		// ::uncomment when CORE
+		// factories.add(new PSystemSudokuFactory());
+		// ::done
 		// ::comment when CORE
 		factories.add(new PSystemDitaaFactory());
-		// ::done
 		if (License.getCurrent() == License.GPL || License.getCurrent() == License.GPLV2) {
-			// ::comment when CORE
 			factories.add(new PSystemJcckitFactory());
-			// ::done
 			// factories.add(new PSystemLogoFactory());
 			factories.add(new PSystemSudokuFactory());
 		}
-		// ::comment when CORE
 		factories.add(new PSystemDefinitionFactory());
 		factories.add(new ListSpriteDiagramFactory());
 		factories.add(new StdlibDiagramFactory());

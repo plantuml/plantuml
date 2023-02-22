@@ -1,18 +1,20 @@
 package net.sourceforge.plantuml.ugraphic;
 
-import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.PlainDiagram;
-import net.sourceforge.plantuml.core.UmlSource;
-import net.sourceforge.plantuml.creole.legacy.PSystemCreole;
-import net.sourceforge.plantuml.text.StringLocated;
-import net.sourceforge.plantuml.wbs.WBSDiagram;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
-
 import static net.sourceforge.plantuml.FileFormat.DEBUG;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
+
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+
+import net.atmp.ImageBuilder;
+import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.PlainDiagram;
+import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.klimt.creole.legacy.PSystemCreole;
+import net.sourceforge.plantuml.text.StringLocated;
+import net.sourceforge.plantuml.wbs.WBSDiagram;
 
 class ImageBuilderTest {
 

@@ -2,12 +2,12 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
@@ -61,7 +61,6 @@ import static gen.lib.common.utils__c.late_bool;
 import static gen.lib.common.utils__c.updateBB;
 import static gen.lib.label.xlabels__c.placeLabels;
 import static h.ST_pointf.pointfof;
-import static smetana.core.JUtils.NEQ;
 import static smetana.core.Macro.AGRAPH;
 import static smetana.core.Macro.EDGE_LABEL;
 import static smetana.core.Macro.EDGE_XLABEL;
@@ -86,15 +85,11 @@ import static smetana.core.Macro.GRAPH_LABEL;
 import static smetana.core.Macro.HEAD_LABEL;
 import static smetana.core.Macro.IGNORED;
 import static smetana.core.Macro.INT_MAX;
-import static smetana.core.Macro.MAX;
-import static smetana.core.Macro.MIN;
-import static smetana.core.Macro.N;
 import static smetana.core.Macro.ND_coord;
 import static smetana.core.Macro.ND_height;
 import static smetana.core.Macro.ND_width;
 import static smetana.core.Macro.ND_xlabel;
 import static smetana.core.Macro.NODE_XLABEL;
-import static smetana.core.Macro.NOTI;
 import static smetana.core.Macro.TAIL_LABEL;
 import static smetana.core.Macro.UNSUPPORTED;
 import static smetana.core.debug.SmetanaDebug.ENTERING;
@@ -118,8 +113,9 @@ import h.ST_textlabel_t;
 import h.ST_xlabel_t;
 import smetana.core.CArray;
 import smetana.core.CString;
+import smetana.core.Globals;
 import smetana.core.Memory;
-import smetana.core.Z;
+import smetana.core.ZType;
 
 public class postproc__c {
 
@@ -127,16 +123,16 @@ public class postproc__c {
 // static pointf map_point(pointf p) 
 @Unused
 @Original(version="2.38.0", path="lib/common/postproc.c", name="map_point", key="dajapw16wus3rwimkrk5ihi2b", definition="static pointf map_point(pointf p)")
-public static ST_pointf map_point(final ST_pointf p) {
+public static ST_pointf map_point(Globals zz, final ST_pointf p) {
 // WARNING!! STRUCT
-return map_point_w_(p.copy()).copy();
+return map_point_w_(zz, p.copy()).copy();
 }
-private static ST_pointf map_point_w_(final ST_pointf p) {
+private static ST_pointf map_point_w_(Globals zz, final ST_pointf p) {
 ENTERING("dajapw16wus3rwimkrk5ihi2b","map_point");
 try {
-    p.___(ccwrotatepf(p, Z.z().Rankdir * 90));
-    p.x -= Z.z().Offset.x;
-    p.y -= Z.z().Offset.y;
+    p.___(ccwrotatepf(p, zz.Rankdir * 90));
+    p.x -= zz.Offset.x;
+    p.y -= zz.Offset.y;
     return p;
 } finally {
 LEAVING("dajapw16wus3rwimkrk5ihi2b","map_point");
@@ -150,38 +146,38 @@ LEAVING("dajapw16wus3rwimkrk5ihi2b","map_point");
 // static void map_edge(edge_t * e) 
 @Unused
 @Original(version="2.38.0", path="lib/common/postproc.c", name="map_edge", key="bvq3vvonvotn47mfe5zsvchie", definition="static void map_edge(edge_t * e)")
-public static void map_edge(ST_Agedge_s e) {
+public static void map_edge(Globals zz, ST_Agedge_s e) {
 ENTERING("bvq3vvonvotn47mfe5zsvchie","map_edge");
 try {
     int j, k;
     final ST_bezier bz = new ST_bezier();
     
     if (ED_spl(e) == null) {
-	if ((Z.z().Concentrate == false) && (ED_edge_type(e) != IGNORED))
-	    System.err.println("lost %s %s edge\n"+ agnameof(agtail(e))+
-		  agnameof(aghead(e)));
+	if ((zz.Concentrate == false) && (ED_edge_type(e) != IGNORED))
+	    System.err.println("lost %s %s edge\n"+ agnameof(zz, agtail(e))+
+		  agnameof(zz, aghead(e)));
 	return;
     }
     for (j = 0; j < ED_spl(e).size; j++) {
 	bz.___(ED_spl(e).list.get__(j));
 	for (k = 0; k < bz.size; k++) {
-	    bz.list.get__(k).___(map_point(bz.list.get__(k)));
+	    bz.list.get__(k).___(map_point(zz, bz.list.get__(k)));
 	}
 	if (bz.sflag!=0)
-	    ED_spl(e).list.get__(j).sp.___(map_point(ED_spl(e).list.get__(j).sp));
+	    ED_spl(e).list.get__(j).sp.___(map_point(zz, ED_spl(e).list.get__(j).sp));
 	if (bz.eflag!=0) {
-	    ED_spl(e).list.get__(j).ep.___(map_point(ED_spl(e).list.get__(j).ep));
+	    ED_spl(e).list.get__(j).ep.___(map_point(zz, ED_spl(e).list.get__(j).ep));
     }
     }
     if (ED_label(e)!=null)
-	ED_label(e).pos.___(map_point(ED_label(e).pos));
+	ED_label(e).pos.___(map_point(zz, ED_label(e).pos));
     if (ED_xlabel(e)!=null)
 UNSUPPORTED("al3tnq9zjjqeq1ll7qdxyu3ja"); // 	ED_xlabel(e)->pos = map_point(ED_xlabel(e)->pos);
     /* vladimir */
     if (ED_head_label(e)!=null)
-    	ED_head_label(e).pos.___(map_point(ED_head_label(e).pos));
+    	ED_head_label(e).pos.___(map_point(zz, ED_head_label(e).pos));
     if (ED_tail_label(e)!=null)
-    	ED_tail_label(e).pos.___(map_point(ED_tail_label(e).pos));
+    	ED_tail_label(e).pos.___(map_point(zz, ED_tail_label(e).pos));
 } finally {
 LEAVING("bvq3vvonvotn47mfe5zsvchie","map_edge");
 }
@@ -194,7 +190,7 @@ LEAVING("bvq3vvonvotn47mfe5zsvchie","map_edge");
 // void translate_bb(graph_t * g, int rankdir) 
 @Unused
 @Original(version="2.38.0", path="lib/common/postproc.c", name="translate_bb", key="a3hf82rxsojxbunj6p8a6bkse", definition="void translate_bb(graph_t * g, int rankdir)")
-public static void translate_bb(ST_Agraph_s g, int rankdir) {
+public static void translate_bb(Globals zz, ST_Agraph_s g, int rankdir) {
 ENTERING("a3hf82rxsojxbunj6p8a6bkse","translate_bb");
 try {
     int c;
@@ -204,15 +200,15 @@ try {
 UNSUPPORTED("d4wrtj0h7lkb0e0vernd9czq9"); // 	new_bb.LL = map_point(pointfof(bb.LL.x, bb.UR.y));
 UNSUPPORTED("crysiae5zxc69cj3v2ygfs8xn"); // 	new_bb.UR = map_point(pointfof(bb.UR.x, bb.LL.y));
     } else {
-	new_bb.LL.___(map_point(pointfof(bb.LL.x, bb.LL.y)));
-	new_bb.UR.___(map_point(pointfof(bb.UR.x, bb.UR.y)));
+	new_bb.LL.___(map_point(zz, pointfof(bb.LL.x, bb.LL.y)));
+	new_bb.UR.___(map_point(zz, pointfof(bb.UR.x, bb.UR.y)));
     }
     GD_bb(g).___(new_bb);
     if (GD_label(g)!=null) {
-	GD_label(g).pos.___(map_point(GD_label(g).pos));
+	GD_label(g).pos.___(map_point(zz, GD_label(g).pos));
     }
     for (c = 1; c <= GD_n_cluster(g); c++)
-	translate_bb((ST_Agraph_s) GD_clust(g).get_(c), rankdir);
+	translate_bb(zz, (ST_Agraph_s) GD_clust(g).get_(c), rankdir);
 } finally {
 LEAVING("a3hf82rxsojxbunj6p8a6bkse","translate_bb");
 }
@@ -225,25 +221,25 @@ LEAVING("a3hf82rxsojxbunj6p8a6bkse","translate_bb");
 // static void translate_drawing(graph_t * g) 
 @Unused
 @Original(version="2.38.0", path="lib/common/postproc.c", name="translate_drawing", key="h4i5qxnd7hlrew919abswd13", definition="static void translate_drawing(graph_t * g)")
-public static void translate_drawing(ST_Agraph_s g) {
+public static void translate_drawing(Globals zz, ST_Agraph_s g) {
 ENTERING("h4i5qxnd7hlrew919abswd13","translate_drawing");
 try {
     ST_Agnode_s v;
     ST_Agedge_s e;
-    boolean shift = (Z.z().Offset.x!=0.0 || Z.z().Offset.y!=0.0);
-    if (N(shift) && N(Z.z().Rankdir))
+    boolean shift = (zz.Offset.x!=0.0 || zz.Offset.y!=0.0);
+    if (!shift && zz.Rankdir == 0)
 	return;
-    for (v = agfstnode(g); v!=null; v = agnxtnode(g, v)) {
-	if (Z.z().Rankdir!=0)
+    for (v = agfstnode(zz, g); v!=null; v = agnxtnode(zz, g, v)) {
+	if (zz.Rankdir!=0)
 UNSUPPORTED("e0j848r4j1j7sojfht5gwikvi"); // 	    gv_nodesize(v, 0);
-	ND_coord(v).___(map_point(ND_coord(v)));
+	ND_coord(v).___(map_point(zz, ND_coord(v)));
 	if (ND_xlabel(v)!=null)
 UNSUPPORTED("3fy0l7w2v24hzrvlpstpknwl7"); // 	    ND_xlabel(v)->pos = map_point(ND_xlabel(v)->pos);
-	if (Z.z().State == 1)
-	    for (e = agfstout(g, v); e!=null; e = agnxtout(g, e))
-		map_edge(e);
+	if (zz.State == 1)
+	    for (e = agfstout(zz, g, v); e!=null; e = agnxtout(zz, g, e))
+		map_edge(zz, e);
     }
-    translate_bb(g, GD_rankdir(g));
+    translate_bb(zz, g, GD_rankdir(g));
 } finally {
 LEAVING("h4i5qxnd7hlrew919abswd13","translate_drawing");
 }
@@ -361,12 +357,12 @@ LEAVING("1ca6fh8ns5bgzfzcz8al4eh4k","adjustBB");
 private static ST_boxf adjustBB_(CArray<ST_object_t> objp, ST_boxf bb) {
 	final ST_pointf ur = new ST_pointf();
 	/* Adjust bounding box */
-	bb.LL.x = MIN(bb.LL.x, objp.get__(0).pos.x);
-	bb.LL.y = MIN(bb.LL.y, objp.get__(0).pos.y);
+	bb.LL.x = Math.min(bb.LL.x, objp.get__(0).pos.x);
+	bb.LL.y = Math.min(bb.LL.y, objp.get__(0).pos.y);
 	ur.x = objp.get__(0).pos.x + objp.get__(0).sz.x;
 	ur.y = objp.get__(0).pos.y + objp.get__(0).sz.y;
-	bb.UR.x = MAX(bb.UR.x, ur.x);
-	bb.UR.y = MAX(bb.UR.y, ur.y);
+	bb.UR.x = Math.max(bb.UR.x, ur.x);
+	bb.UR.y = Math.max(bb.UR.y, ur.y);
 	return bb;
 }
 
@@ -381,22 +377,22 @@ private static ST_boxf adjustBB_(CArray<ST_object_t> objp, ST_boxf bb) {
  */
 @Unused
 @Original(version="2.38.0", path="lib/common/postproc.c", name="addXLabel", key="3mefe722uemyoa0czmkkw6hjb", definition="static void addXLabel (textlabel_t* lp, object_t* objp, xlabel_t* xlp, int initObj, pointf pos)")
-public static void addXLabel(ST_textlabel_t lp, CArray<ST_object_t> objp, CArray<ST_xlabel_t> xlp, int initObj, ST_pointf pos) {
+public static void addXLabel(Globals zz, ST_textlabel_t lp, CArray<ST_object_t> objp, CArray<ST_xlabel_t> xlp, int initObj, ST_pointf pos) {
 ENTERING("3mefe722uemyoa0czmkkw6hjb","addXLabel");
 try {
-	addXLabel_(lp, objp, xlp, initObj, pos.copy());
+	addXLabel_(zz, lp, objp, xlp, initObj, pos.copy());
 } finally {
 LEAVING("3mefe722uemyoa0czmkkw6hjb","addXLabel");
 }
 }
-private static void addXLabel_(ST_textlabel_t lp, CArray<ST_object_t> objp, CArray<ST_xlabel_t> xlp, int initObj, ST_pointf pos) {
+private static void addXLabel_(Globals zz, ST_textlabel_t lp, CArray<ST_object_t> objp, CArray<ST_xlabel_t> xlp, int initObj, ST_pointf pos) {
 	if (initObj!=0) {
 		objp.get__(0).sz.x = 0;
 		objp.get__(0).sz.y = 0;
 		objp.get__(0).pos.___(pos);
 	}
 	
-	if (Z.z().Flip) {
+	if (zz.Flip) {
 	UNSUPPORTED("99tzt7erbvtfsbo0jbdz0lc8m"); // 	xlp->sz.x = lp->dimen.y;
 	UNSUPPORTED("6v5t3ysaisj27bwc0r9zg3rpd"); // 	xlp->sz.y = lp->dimen.x;
 	}
@@ -421,14 +417,14 @@ private static void addXLabel_(ST_textlabel_t lp, CArray<ST_object_t> objp, CArr
 // static boxf addLabelObj (textlabel_t* lp, object_t* objp, boxf bb) 
 @Unused
 @Original(version="2.38.0", path="lib/common/postproc.c", name="addLabelObj", key="dwxd5kvlanbcxqfuncjg0ea54", definition="static boxf addLabelObj (textlabel_t* lp, object_t* objp, boxf bb)")
-public static ST_boxf addLabelObj(ST_textlabel_t lp, CArray<ST_object_t> objp, final ST_boxf bb) {
+public static ST_boxf addLabelObj(Globals zz, ST_textlabel_t lp, CArray<ST_object_t> objp, final ST_boxf bb) {
 	// WARNING!! STRUCT
-	return addLabelObj_(lp, objp, bb.copy()).copy();
+	return addLabelObj_(zz, lp, objp, bb.copy()).copy();
 }
-private static ST_boxf addLabelObj_(ST_textlabel_t lp, CArray<ST_object_t> objp, final ST_boxf bb) {
+private static ST_boxf addLabelObj_(Globals zz, ST_textlabel_t lp, CArray<ST_object_t> objp, final ST_boxf bb) {
 ENTERING("dwxd5kvlanbcxqfuncjg0ea54","addLabelObj");
 try {
-	if (Z.z().Flip) {
+	if (zz.Flip) {
 	UNSUPPORTED("6z2yrwq81gtsk3q9c5pofow1x"); // 	objp->sz.x = lp->dimen.y; 
 	UNSUPPORTED("8xsm9kavrekjrsydqe1wh1pu"); // 	objp->sz.y = lp->dimen.x;
 	}
@@ -453,16 +449,16 @@ try {
 // static boxf addNodeObj (node_t* np, object_t* objp, boxf bb) 
 @Unused
 @Original(version="2.38.0", path="lib/common/postproc.c", name="addNodeObj", key="b8tjygxnwny5qoiir1mha1d62", definition="static boxf addNodeObj (node_t* np, object_t* objp, boxf bb)")
-public static ST_boxf addNodeObj(ST_Agnode_s np, CArray<ST_object_t> objp, final ST_boxf bb) {
+public static ST_boxf addNodeObj(Globals zz, ST_Agnode_s np, CArray<ST_object_t> objp, final ST_boxf bb) {
 	// WARNING!! STRUCT
-	return addNodeObj_(np, objp, bb.copy()).copy();
+	return addNodeObj_(zz, np, objp, bb.copy()).copy();
 }
 @Unused
 @Original(version="2.38.0", path="lib/common/postproc.c", name="", key="", definition="")
-public static ST_boxf addNodeObj_(ST_Agnode_s np, CArray<ST_object_t> objp, final ST_boxf bb) {
+public static ST_boxf addNodeObj_(Globals zz, ST_Agnode_s np, CArray<ST_object_t> objp, final ST_boxf bb) {
 ENTERING("b8tjygxnwny5qoiir1mha1d62","addNodeObj");
 try {
-	if (Z.z().Flip) {
+	if (zz.Flip) {
 	UNSUPPORTED("1ri5uimcd1z58iix8tp528l1m"); // 	objp->sz.x = ((ND_height(np))*(double)72);
 	UNSUPPORTED("6r5gwwhz3sjxrssh8yo3v5c3v"); // 	objp->sz.y = ((ND_width(np))*(double)72);
 	}
@@ -487,21 +483,21 @@ try {
 // static cinfo_t addClusterObj (Agraph_t* g, cinfo_t info) 
 @Unused
 @Original(version="2.38.0", path="lib/common/postproc.c", name="addClusterObj", key="6kx3lin2ig9o2otk2bqzdvd4t", definition="static cinfo_t addClusterObj (Agraph_t* g, cinfo_t info)")
-public static ST_cinfo_t addClusterObj(ST_Agraph_s g, ST_cinfo_t info) {
+public static ST_cinfo_t addClusterObj(Globals zz, ST_Agraph_s g, ST_cinfo_t info) {
 ENTERING("6kx3lin2ig9o2otk2bqzdvd4t","addClusterObj");
 try {
-	return addClusterObj_(g, info.copy()).copy();
+	return addClusterObj_(zz, g, info.copy()).copy();
 } finally {
 LEAVING("6kx3lin2ig9o2otk2bqzdvd4t","addClusterObj");
 }
 }
-private static ST_cinfo_t addClusterObj_(ST_Agraph_s g, ST_cinfo_t info) {
+private static ST_cinfo_t addClusterObj_(Globals zz, ST_Agraph_s g, ST_cinfo_t info) {
      int c;
      for (c = 1; c <= GD_n_cluster(g); c++)
- 	info.___(addClusterObj (GD_clust(g).get_(c), info));
-     if (NEQ(g, agroot(g)) && (GD_label(g)!=null) && GD_label(g).set!=0) {
+ 	info.___(addClusterObj (zz, GD_clust(g).get_(c), info));
+     if ((g != agroot(g)) && (GD_label(g)!=null) && GD_label(g).set!=0) {
     	 CArray<ST_object_t> objp = info.objp;
-    	 info.bb.___(addLabelObj (GD_label(g), objp, info.bb));
+    	 info.bb.___(addLabelObj (zz, GD_label(g), objp, info.bb));
     	 info.objp = info.objp.plus_(1);
 //UNSUPPORTED("dcgq2zlh4t0m1gno12t6h7ouy"); // 	object_t* objp = info.objp;
 //UNSUPPORTED("ddz79zm5235krd6smukq1gza0"); // 	info.bb = addLabelObj (GD_label(g), objp, info.bb);
@@ -519,7 +515,7 @@ public static int countClusterLabels(ST_Agraph_s g) {
 ENTERING("2tdbzvdtkwxp75kj0iufsynm5","countClusterLabels");
 try {
 	int c, i = 0;
-	if (NEQ(g, agroot(g)) && GD_label(g)!=null && GD_label(g).set!=0)
+	if ((g != agroot(g)) && GD_label(g)!=null && GD_label(g).set!=0)
 	i++;
 	for (c = 1; c <= GD_n_cluster(g); c++)
 	i += countClusterLabels(GD_clust(g).get_(c));
@@ -540,7 +536,7 @@ private static boolean HAVE_EDGE(ST_Agedge_s ep, int et) {
 // static void addXLabels(Agraph_t * gp) 
 @Unused
 @Original(version="2.38.0", path="lib/common/postproc.c", name="addXLabels", key="d4215jd9wukfn6t0iknwzjcof", definition="static void addXLabels(Agraph_t * gp)")
-public static void addXLabels(ST_Agraph_s gp) {
+public static void addXLabels(Globals zz, ST_Agraph_s gp) {
 ENTERING("d4215jd9wukfn6t0iknwzjcof","addXLabels");
 try {
     ST_Agnode_s np;
@@ -561,21 +557,21 @@ try {
     ST_Agsym_s force;
     int et = (GD_flags(gp) & (7 << 1));
     
-    if (N(GD_has_labels(gp) & NODE_XLABEL) &&
-	N(GD_has_labels(gp) & EDGE_XLABEL) &&
-	N(GD_has_labels(gp) & TAIL_LABEL) &&
-	N(GD_has_labels(gp) & HEAD_LABEL) &&
-	(N(GD_has_labels(gp) & EDGE_LABEL) || Z.z().EdgeLabelsDone!=0))
+    if ((GD_has_labels(gp) & NODE_XLABEL) == 0 &&
+	(GD_has_labels(gp) & EDGE_XLABEL) == 0 &&
+	(GD_has_labels(gp) & TAIL_LABEL) == 0 &&
+	(GD_has_labels(gp) & HEAD_LABEL) == 0 &&
+	((GD_has_labels(gp) & EDGE_LABEL) == 0 || zz.EdgeLabelsDone!=0))
 	return;
     
-	for (np = agfstnode(gp); np!=null; np = agnxtnode(gp, np)) {
+	for (np = agfstnode(zz, gp); np!=null; np = agnxtnode(zz, gp, np)) {
 	if (ND_xlabel(np)!=null) {
 UNSUPPORTED("6oje33bnpp4jv5mclsrrhl005"); // 	    if (ND_xlabel(np)->set)
 UNSUPPORTED("cfkrw6t4lrs7dfgx86sgrz26"); // 		n_set_lbls++;
 UNSUPPORTED("5c97f6vfxny0zz35l2bu4maox"); // 	    else
 UNSUPPORTED("26eewzzknvqt2nbcrqds5fmti"); // 		n_nlbls++;
 	}
-	for (ep = agfstout(gp, np); ep!=null; ep = agnxtout(gp, ep)) {
+	for (ep = agfstout(zz, gp, np); ep!=null; ep = agnxtout(zz, gp, ep)) {
 		if (ED_xlabel(ep)!=null) {
 UNSUPPORTED("appkettxihy2o612jk6fahbnh"); // 		if (ED_xlabel(ep)->set)
 UNSUPPORTED("8k2rclvg6eaoph9r2pz4620xq"); // 		    n_set_lbls++;
@@ -611,14 +607,14 @@ UNSUPPORTED("q3t8uxncrxc4n8rtuabtzxya"); // 		    n_elbls++;
 	 * and all unset edge labels and xlabels.
 	 */
 	n_objs = agnnodes(gp) + n_set_lbls + n_clbls + n_elbls;
-	objs = CArray.<ST_object_t>ALLOC__(n_objs, ST_object_t.class);
+	objs = CArray.<ST_object_t>ALLOC__(n_objs, ZType.ST_object_t);
 	objp = objs;
-	lbls = CArray.<ST_xlabel_t>ALLOC__(n_lbls, ST_xlabel_t.class);
+	lbls = CArray.<ST_xlabel_t>ALLOC__(n_lbls, ZType.ST_xlabel_t);
 	xlp = lbls;
 	bb.LL.___(pointfof(INT_MAX, INT_MAX));
 	bb.UR.___(pointfof(-INT_MAX, -INT_MAX));
-	for (np = agfstnode(gp); np!=null; np = agnxtnode(gp, np)) {
-		bb.___(addNodeObj (np, objp, bb));
+	for (np = agfstnode(zz, gp); np!=null; np = agnxtnode(zz, gp, np)) {
+		bb.___(addNodeObj (zz, np, objp, bb));
 		lp = ND_xlabel(np);
 		if (lp != null) {
 UNSUPPORTED("d5pjy3dwui27jfdz550cy0cln"); // 	    if (lp->set) {
@@ -631,14 +627,14 @@ UNSUPPORTED("1zpq9rd3nn9kjrmun8ivs9zx5"); // 		xlp++;
 UNSUPPORTED("6t98dcecgbvbvtpycwiq2ynnj"); // 	    }
     }
 	objp = objp.plus_(1);
-    for (ep = agfstout(gp, np); ep!=null; ep = agnxtout(gp, ep)) {
+    for (ep = agfstout(zz, gp, np); ep!=null; ep = agnxtout(zz, gp, ep)) {
     	lp = ED_label(ep);
     	if (lp != null) {
     		if (lp.set!=0) {
-    			bb.___(addLabelObj (lp, objp, bb));
+    			bb.___(addLabelObj (zz, lp, objp, bb));
     	    }
     		else if (HAVE_EDGE(ep, et)) {
- 		    addXLabel (lp, objp, xlp, 1, edgeMidpoint(gp, ep)); 
+ 		    addXLabel (zz, lp, objp, xlp, 1, edgeMidpoint(gp, ep)); 
  		    xlp = xlp.plus_(1);
 }
 else {
@@ -654,7 +650,7 @@ if (lp.set!=0) {
 UNSUPPORTED("7rwrlod7lkgin3rnnzy3iw2rw"); // 		    bb = addLabelObj (lp, objp, bb);
 }
  		else if (HAVE_EDGE(ep, et)) {
- 		    addXLabel (lp, objp, xlp, 1, edgeTailpoint(ep)); 
+ 		    addXLabel (zz, lp, objp, xlp, 1, edgeTailpoint(ep)); 
  		    xlp = xlp.plus_(1);
  		}
  		else {
@@ -670,7 +666,7 @@ if (lp.set!=0) {
 UNSUPPORTED("7rwrlod7lkgin3rnnzy3iw2rw"); // 		    bb = addLabelObj (lp, objp, bb);
 }
 else if (HAVE_EDGE(ep, et)) {
-addXLabel (lp, objp, xlp, 1, edgeHeadpoint(ep));
+addXLabel (zz, lp, objp, xlp, 1, edgeHeadpoint(ep));
 xlp = xlp.plus_(1);
 }
 else {
@@ -702,13 +698,13 @@ if (n_clbls!=0) {
     final ST_cinfo_t info = new ST_cinfo_t();
     info.bb.___(bb);
     info.objp = objp;
-    info.___(addClusterObj (gp, info));
+    info.___(addClusterObj (zz, gp, info));
     bb.___(info.bb);
 }
-force = (agattr(gp,AGRAPH,new CString("forcelabels"),null));
+force = (agattr(zz, gp,AGRAPH,new CString("forcelabels"),null));
 params.force = late_bool(gp, force, 1);
 params.bb.___(bb);
-placeLabels(objs, n_objs, lbls, n_lbls, params);
+placeLabels(zz, objs, n_objs, lbls, n_lbls, params);
 //     if (Verbose)
 // 	printData(objs, n_objs, lbls, n_lbls, &params);
      xlp = lbls;
@@ -743,24 +739,24 @@ LEAVING("d4215jd9wukfn6t0iknwzjcof","addXLabels");
 // void gv_postprocess(Agraph_t * g, int allowTranslation) 
 @Unused
 @Original(version="2.38.0", path="lib/common/postproc.c", name="gv_postprocess", key="8fc0zxg8y7hec3n4evx3jw6cq", definition="void gv_postprocess(Agraph_t * g, int allowTranslation)")
-public static void gv_postprocess(ST_Agraph_s g, int allowTranslation) {
+public static void gv_postprocess(Globals zz, ST_Agraph_s g, int allowTranslation) {
 ENTERING("8fc0zxg8y7hec3n4evx3jw6cq","gv_postprocess");
 try {
     double diff;
     final ST_pointf dimen = new ST_pointf();
-    Z.z().Rankdir = GD_rankdir(g);
-    Z.z().Flip = GD_flip(g);
+    zz.Rankdir = GD_rankdir(g);
+    zz.Flip = GD_flip(g);
     /* Handle cluster labels */
-    if (Z.z().Flip)
+    if (zz.Flip)
 UNSUPPORTED("4hxky2sp978rmy6018sfmts6m"); // 	place_flip_graph_label(g);
     else
 	place_graph_label(g);
     /* Everything has been placed except the root graph label, if any.
      * The graph positions have not yet been rotated back if necessary.
      */
-    addXLabels(g);
+    addXLabels(zz, g);
     /* Add space for graph label if necessary */
-    if (GD_label(g)!=null && N(GD_label(g).set)) {
+    if (GD_label(g)!=null && GD_label(g).set == 0) {
 UNSUPPORTED("crj0py2wme4b5l8apvbxqcmqa"); // 	dimen = GD_label(g)->dimen;
 UNSUPPORTED("22jhn709g4c5wh0gb6v40rh19"); // 	{((dimen).x += 4*4); ((dimen).y += 2*4);};
 UNSUPPORTED("9k69y89jybam5elefg45va3ey"); // 	if (Flip) {
@@ -796,9 +792,9 @@ UNSUPPORTED("6t98dcecgbvbvtpycwiq2ynnj"); // 	    }
 UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
     }
     if (allowTranslation!=0) {
-	switch (Z.z().Rankdir) {
+	switch (zz.Rankdir) {
 	case 0:
-	    Z.z().Offset.___(GD_bb(g).LL);
+	    zz.Offset.___(GD_bb(g).LL);
 	    break;
 	case 1:
 UNSUPPORTED("5t3j9lrc86kd5ouaqgzvz3qcm"); // 	    Offset = pointfof(-GD_bb(g).UR.y, GD_bb(g).LL.x);
@@ -810,11 +806,11 @@ UNSUPPORTED("96ajwnh79ja9g57xmut6dmh9d"); // 	    Offset = pointfof(GD_bb(g).LL.
 UNSUPPORTED("3xtu7zkpqq7nsx9oe68oi6ebt"); // 	    Offset = pointfof(GD_bb(g).LL.y, GD_bb(g).LL.x);
 	    break;
 	}
-	translate_drawing(g);
+	translate_drawing(zz, g);
     }
-    if (GD_label(g)!=null && N(GD_label(g).set))
+    if (GD_label(g)!=null && GD_label(g).set == 0)
 UNSUPPORTED("6dds0zsvqw48u510zcy954fh1"); // 	place_root_label(g, dimen);
-    if (Z.z().Show_boxes!=null) {
+    if (zz.Show_boxes!=null) {
 UNSUPPORTED("8c7x8di5w36ib05qan9z4sl9"); // 	char buf[BUFSIZ];
 UNSUPPORTED("83qqprhiseoxlwtwi991aag0c"); // 	if (Flip)
 UNSUPPORTED("86tova7pv19alt02nlk0d17oj"); // 	    sprintf(buf, "/pathbox {\n    /X exch neg %.5g sub def\n    /Y exch %.5g sub def\n    /x exch neg %.5g sub def\n    /y exch %.5g sub def\n    newpath x y moveto\n    X y lineto\n    X Y lineto\n    x Y lineto\n    closepath stroke\n} def\n", Offset.x, Offset.y, Offset.x, Offset.y);
@@ -835,10 +831,10 @@ LEAVING("8fc0zxg8y7hec3n4evx3jw6cq","gv_postprocess");
 // void dotneato_postprocess(Agraph_t * g) 
 @Unused
 @Original(version="2.38.0", path="lib/common/postproc.c", name="dotneato_postprocess", key="3qbbvlnq1b06ylgr0yj2slbhm", definition="void dotneato_postprocess(Agraph_t * g)")
-public static void dotneato_postprocess(ST_Agraph_s g) {
+public static void dotneato_postprocess(Globals zz, ST_Agraph_s g) {
 ENTERING("3qbbvlnq1b06ylgr0yj2slbhm","dotneato_postprocess");
 try {
-    gv_postprocess(g, 1);
+    gv_postprocess(zz, g, 1);
 } finally {
 LEAVING("3qbbvlnq1b06ylgr0yj2slbhm","dotneato_postprocess");
 }
@@ -859,7 +855,7 @@ ENTERING("72zw1alhd5vd0g6mhum507rvx","place_graph_label");
 try {
     int c;
     final ST_pointf p = new ST_pointf(), d = new ST_pointf();
-    if (NEQ(g, agroot(g)) && (GD_label(g)!=null) && N(GD_label(g).set)) {
+    if ((g != agroot(g)) && (GD_label(g)!=null) && GD_label(g).set == 0) {
 	if ((GD_label_pos(g) & 1)!=0) {
 	    d.___(GD_border(g)[2]);
 	    p.y = GD_bb(g).UR.y - d.y / 2;
@@ -875,7 +871,7 @@ UNSUPPORTED("7ictv9eqmjvxjii5lqlyw8nu"); // 	    p.x = GD_bb(g).LL.x + d.x / 2;
 	    p.x = ((GD_bb(g).LL.x + GD_bb(g).UR.x) / 2);
 	}
 	GD_label(g).pos.___(p);
-	GD_label(g).set= NOTI(false);
+	GD_label(g).set= false ? 0 : 1;
     }
     for (c = 1; c <= GD_n_cluster(g); c++)
 	place_graph_label((ST_Agraph_s) GD_clust(g).get_(c));

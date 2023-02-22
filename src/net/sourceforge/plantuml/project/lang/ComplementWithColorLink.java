@@ -2,14 +2,14 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2009-2024, Arnaud Roques
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of PlantUML.
  *
@@ -54,8 +54,7 @@ public class ComplementWithColorLink implements Something {
 		final String style0 = arg.get("COMPLEMENT" + suffix, 0);
 		final String color1 = arg.get("COMPLEMENT" + suffix, 1);
 		final String style2 = arg.get("COMPLEMENT" + suffix, 2);
-		final HColor col1 = color1 == null ? null
-				: diagram.getIHtmlColorSet().getColorOrWhite(color1);
+		final HColor col1 = color1 == null ? null : diagram.getIHtmlColorSet().getColorOrWhite(color1);
 		final String style = style0 == null ? style2 : style0;
 		return Failable.ok(new CenterBorderColor(col1, col1, style));
 	}

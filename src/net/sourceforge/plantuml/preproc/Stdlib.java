@@ -27,15 +27,15 @@ import java.util.regex.Pattern;
 import javax.imageio.ImageIO;
 
 import net.sourceforge.plantuml.brotli.BrotliInputStream;
-import net.sourceforge.plantuml.code.Base64Coder;
-import net.sourceforge.plantuml.creole.atom.AtomImg;
+import net.sourceforge.plantuml.klimt.creole.atom.AtomImg;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.utils.Base64Coder;
 import net.sourceforge.plantuml.utils.Log;
 // ::uncomment when CORE
 //import java.io.FileInputStream;
 //import java.io.FileNotFoundException;
-//import com.plantuml.wasm.RunInit;
+//import static com.plantuml.api.cheerpj.StaticMemory.cheerpjPath;
 // ::done
 
 public class Stdlib {
@@ -45,7 +45,7 @@ public class Stdlib {
 //		fullname = fullname.replace(".puml", "");
 //		fullname = fullname.replace("awslib/", "awslib14/");
 //
-//		final String fullpath = RunInit.cheerpjPath + "stdlib/" + fullname + ".puml";
+//		final String fullpath = cheerpjPath + "stdlib/" + fullname + ".puml";
 //		System.err.println("Trying to read " + fullpath);
 //		// See https://docs.leaningtech.com/cheerpj/File-System-support
 //		try {

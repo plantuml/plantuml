@@ -90,9 +90,9 @@ public class BoolDecoder {
 	}
 
 	/*
-	 * Convenience function reads a "literal", that is, a "num_bits" wide
-	 * unsigned value whose bits come high- to low-order, with each bit encoded
-	 * at probability 128 (i.e., 1/2).
+	 * Convenience function reads a "literal", that is, a "num_bits" wide unsigned
+	 * value whose bits come high- to low-order, with each bit encoded at
+	 * probability 128 (i.e., 1/2).
 	 */
 	public int readLiteral(int num_bits) throws IOException {
 		int v = 0;
@@ -102,7 +102,7 @@ public class BoolDecoder {
 	}
 
 	int readTree(int t[], /* tree specification */
-	int p[] /* corresponding interior node probabilities */
+			int p[] /* corresponding interior node probabilities */
 	) throws IOException {
 		int i = 0; /* begin at root */
 
@@ -114,8 +114,8 @@ public class BoolDecoder {
 	}
 
 	int readTreeSkip(int t[], /* tree specification */
-	int p[], /* corresponding interior node probabilities */
-	int skip_branches) throws IOException {
+			int p[], /* corresponding interior node probabilities */
+			int skip_branches) throws IOException {
 		int i = skip_branches * 2; /* begin at root */
 
 		/* Descend tree until leaf is reached */

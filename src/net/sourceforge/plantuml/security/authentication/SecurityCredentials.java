@@ -4,12 +4,12 @@
  *
  * (C) Copyright 2009-2021, Arnaud Roques
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  *
  * If you like this project or if you find it useful, you can support us at:
  *
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  *
  * This file is part of PlantUML.
  *
@@ -82,9 +82,11 @@ public class SecurityCredentials implements SecurityCredentialsContainer {
 	 */
 	private final Map<String, Object> properties = new HashMap<String, Object>();
 	/**
-	 * Proxy configuration.<p>
+	 * Proxy configuration.
 	 * <p>
-	 * {@link Proxy#NO_PROXY} means, we want direct access. null means, we use the system proxy configuration.
+	 * <p>
+	 * {@link Proxy#NO_PROXY} means, we want direct access. null means, we use the
+	 * system proxy configuration.
 	 */
 	private final Proxy proxy;
 
@@ -92,7 +94,8 @@ public class SecurityCredentials implements SecurityCredentialsContainer {
 	 * Creates BasicAuth credentials without a proxy.
 	 *
 	 * @param name       Name of the credentials
-	 * @param type       The type of authentication and access process (e.g. "basicauth" or "oauth2")
+	 * @param type       The type of authentication and access process (e.g.
+	 *                   "basicauth" or "oauth2")
 	 * @param identifier username, clientId, ...
 	 * @param secret     the secret information to authenticate the client or user
 	 */
@@ -104,13 +107,14 @@ public class SecurityCredentials implements SecurityCredentialsContainer {
 	 * Creates BasicAuth credentials with a proxy.
 	 *
 	 * @param name       Name of the credentials
-	 * @param type       The type of authentication and access process (e.g. "basicauth" or "oauth2")
+	 * @param type       The type of authentication and access process (e.g.
+	 *                   "basicauth" or "oauth2")
 	 * @param identifier username, clientId, ...
 	 * @param secret     the secret information to authenticate the client or user
 	 * @param proxy      proxy configuration
 	 */
 	public SecurityCredentials(String name, String type, String identifier, char[] secret,
-							   Map<String, Object> properties, Proxy proxy) {
+			Map<String, Object> properties, Proxy proxy) {
 		if (name == null) {
 			throw new NullPointerException("Credential name should not be null");
 		}
@@ -137,6 +141,7 @@ public class SecurityCredentials implements SecurityCredentialsContainer {
 	 * Creates a SecurityCredentials from a JSON.
 	 * <p>
 	 * Example:
+	 * 
 	 * <pre>
 	 *     {
 	 *         "name": "jenkins",
@@ -165,12 +170,11 @@ public class SecurityCredentials implements SecurityCredentialsContainer {
 			buildProperties("", securityObject.get("properties"), map);
 
 			if (type != null && !type.isNull() && "tokenauth".equals(type.asString())) {
-				return new SecurityCredentials(name.asString(), "tokenauth",
-						null, null, map, proxyFromJson(securityObject.get("proxy")));
+				return new SecurityCredentials(name.asString(), "tokenauth", null, null, map,
+						proxyFromJson(securityObject.get("proxy")));
 			} else if (StringUtils.isNotEmpty(name.asString()) && StringUtils.isNotEmpty(identifier.asString())) {
 				String authType = type != null && !type.isNull() ? type.asString() : "basicauth";
-				return new SecurityCredentials(name.asString(), authType,
-						identifier.asString(), extractSecret(secret),
+				return new SecurityCredentials(name.asString(), authType, identifier.asString(), extractSecret(secret),
 						map, proxyFromJson(securityObject.get("proxy")));
 			}
 
@@ -184,6 +188,7 @@ public class SecurityCredentials implements SecurityCredentialsContainer {
 	 * Creates a Proxy object from a JSON value.
 	 * <p>
 	 * Example:
+	 * 
 	 * <pre>
 	 *     {
 	 *         "type": "socket",
@@ -239,6 +244,7 @@ public class SecurityCredentials implements SecurityCredentialsContainer {
 	 * Creates a properties map from all given key/values.
 	 * <p>
 	 * Example:<br/>
+	 * 
 	 * <pre>
 	 *     {
 	 *         "grantType": "client_credentials",
@@ -396,8 +402,10 @@ public class SecurityCredentials implements SecurityCredentialsContainer {
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (!(o instanceof SecurityCredentials)) return false;
+		if (this == o)
+			return true;
+		if (!(o instanceof SecurityCredentials))
+			return false;
 		SecurityCredentials that = (SecurityCredentials) o;
 		return getName().equals(that.getName());
 	}

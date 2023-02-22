@@ -2,14 +2,14 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2009-2024, Arnaud Roques
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of PlantUML.
  *
@@ -39,18 +39,18 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.atmp.PixelImage;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.PlainDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
-import net.sourceforge.plantuml.graphic.GraphicStrings;
-import net.sourceforge.plantuml.graphic.UDrawable;
-import net.sourceforge.plantuml.klimt.UImage;
+import net.sourceforge.plantuml.klimt.AffineTransformType;
 import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
+import net.sourceforge.plantuml.klimt.shape.UDrawable;
+import net.sourceforge.plantuml.klimt.shape.UImage;
 import net.sourceforge.plantuml.svek.TextBlockBackcolored;
-import net.sourceforge.plantuml.ugraphic.AffineTransformType;
-import net.sourceforge.plantuml.ugraphic.PixelImage;
-import net.sourceforge.plantuml.ugraphic.UGraphic;
 
 public class PSystemLicense extends PlainDiagram implements UDrawable {
 
@@ -75,20 +75,21 @@ public class PSystemLicense extends PlainDiagram implements UDrawable {
 		return new DiagramDescription("(License)");
 	}
 
+	@Override
+	public void exportDiagramGraphic(UGraphic ug) {
+		final LicenseInfo licenseInfo = LicenseInfo.retrieveQuick();
+		getTextBlock(licenseInfo).drawU(ug);
+	}
+
 	public void drawU(UGraphic ug) {
 
-		// ::comment when CORE
 		final LicenseInfo licenseInfo = LicenseInfo.retrieveQuick();
+		// ::comment when CORE
 		final BufferedImage logo = LicenseInfo.retrieveDistributorImage(licenseInfo);
 
 		if (logo == null) {
 			// ::done
-			final List<String> strings = new ArrayList<>();
-			// ::comment when CORE
-			strings.addAll(License.getCurrent().getText1(licenseInfo));
-			strings.addAll(License.getCurrent().getText2(licenseInfo));
-			// ::done
-			getGraphicStrings(strings).drawU(ug);
+			getTextBlock(licenseInfo).drawU(ug);
 			// ::comment when CORE
 		} else {
 			final List<String> strings1 = new ArrayList<>();
@@ -109,4 +110,12 @@ public class PSystemLicense extends PlainDiagram implements UDrawable {
 		}
 		// ::done
 	}
+
+	protected TextBlockBackcolored getTextBlock(final LicenseInfo licenseInfo) {
+		final List<String> strings = new ArrayList<>();
+		strings.addAll(License.getCurrent().getText1(licenseInfo));
+		strings.addAll(License.getCurrent().getText2(licenseInfo));
+		return getGraphicStrings(strings);
+	}
+
 }

@@ -2,14 +2,14 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2009-2024, Arnaud Roques
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of PlantUML.
  *
@@ -46,14 +46,18 @@ public abstract class Log {
 	}
 
 	public synchronized static void info(String s) {
+		// ::comment when CORE
 		if (OptionFlags.getInstance().isVerbose()) {
 			ProgressBar.clear();
 			System.err.println(format(s));
 		}
+		// ::done
 	}
 
 	public synchronized static void error(String s) {
+		// ::comment when CORE
 		ProgressBar.clear();
+		// ::done
 		System.err.println(s);
 	}
 

@@ -2,17 +2,17 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
  *
- * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2009-2024, Arnaud Roques
  *
  * This translation is distributed under the same Licence as the original C program.
  * 
@@ -36,44 +36,22 @@
 
 package smetana.core.debug;
 
-public class SmetanaDebug {
-
-	public static boolean TRACE = false;
-	public static boolean TRACE_FINAL_CALL = false;
-	public static boolean VERY_VERBOSE = false;
-
-	private static Purify purify;
-
-	private static Purify purify() {
-		if (purify == null)
-			purify = new Purify();
-		return purify;
-	}
+public final class SmetanaDebug {
 
 	static public void LOG(String s) {
-		if (TRACE)
-			purify().logline(s);
 
 	}
 
 	static public void ENTERING(String signature, String methodName) {
-		if (TRACE)
-			purify().entering(signature, methodName);
 	}
 
 	static public void LEAVING(String signature, String methodName) {
-		if (TRACE)
-			purify().leaving(signature, methodName);
 	}
 
 	public static void reset() {
-		if (TRACE)
-			purify().reset();
 	}
 
 	public static void printMe() {
-		if (TRACE && TRACE_FINAL_CALL)
-			purify().printMe();
 	}
 
 }

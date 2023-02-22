@@ -2,14 +2,14 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2009-2024, Arnaud Roques
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of PlantUML.
  *
@@ -37,8 +37,6 @@ package net.sourceforge.plantuml.mindmap;
 
 import java.awt.geom.Line2D;
 
-
-
 public class SymetricalTeePositioned {
 
 	private final SymetricalTee tee;
@@ -49,7 +47,6 @@ public class SymetricalTeePositioned {
 		return "y=" + y + " " + tee;
 	}
 
-	
 	public SymetricalTeePositioned(SymetricalTee tee) {
 		this(tee, 0);
 	}
@@ -82,13 +79,13 @@ public class SymetricalTeePositioned {
 	}
 
 	public Line2D getSegmentA2() {
-		return new Line2D.Double(tee.getElongation1(), y - tee.getThickness2() / 2, tee.getElongation1()
-				+ tee.getElongation2(), y - tee.getThickness2() / 2);
+		return new Line2D.Double(tee.getElongation1(), y - tee.getThickness2() / 2,
+				tee.getElongation1() + tee.getElongation2(), y - tee.getThickness2() / 2);
 	}
 
 	public Line2D getSegmentB2() {
-		return new Line2D.Double(tee.getElongation1(), y + tee.getThickness2() / 2, tee.getElongation1()
-				+ tee.getElongation2(), y + tee.getThickness2() / 2);
+		return new Line2D.Double(tee.getElongation1(), y + tee.getThickness2() / 2,
+				tee.getElongation1() + tee.getElongation2(), y + tee.getThickness2() / 2);
 	}
 
 	public double getMaxX() {
@@ -108,12 +105,12 @@ public class SymetricalTeePositioned {
 	}
 
 	public SymetricalTeePositioned getMax(SymetricalTeePositioned other) {
-		if (this.tee != other.tee) 
+		if (this.tee != other.tee)
 			throw new IllegalArgumentException();
-		
-		if (other.y > this.y) 
+
+		if (other.y > this.y)
 			return other;
-		
+
 		return this;
 	}
 

@@ -2,12 +2,12 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
@@ -67,8 +67,6 @@ import static gen.lib.dotgen.aspect__c.rank3;
 import static gen.lib.dotgen.class1__c.class1_;
 import static gen.lib.dotgen.decomp__c.decompose;
 import static gen.lib.dotgen.dotinit__c.dot_root;
-import static smetana.core.JUtils.EQ;
-import static smetana.core.JUtils.NEQ;
 import static smetana.core.JUtils.strncmp;
 import static smetana.core.Macro.CLUSTER;
 import static smetana.core.Macro.EDGE_LABEL;
@@ -94,7 +92,6 @@ import static smetana.core.Macro.LOCAL;
 import static smetana.core.Macro.MAXRANK;
 import static smetana.core.Macro.MAXSHORT;
 import static smetana.core.Macro.MINRANK;
-import static smetana.core.Macro.N;
 import static smetana.core.Macro.ND_clust;
 import static smetana.core.Macro.ND_in;
 import static smetana.core.Macro.ND_mark;
@@ -126,8 +123,9 @@ import h.ST_elist;
 import h.ST_point;
 import smetana.core.CArrayOfStar;
 import smetana.core.CString;
+import smetana.core.Globals;
 import smetana.core.Memory;
-import smetana.core.Z;
+import smetana.core.ZType;
 
 public class rank__c {
 
@@ -156,7 +154,7 @@ LEAVING("3f1re3nfkhxwjjb90kppwuupr","renewlist");
 @Reviewed(when = "14/11/2020")
 @Todo(what = "check why GD_comp(g).resetList comes from GD_comp(g).list = NULL")
 @Original(version="2.38.0", path="lib/dotgen/rank.c", name="cleanup1", key="1xov2qhuxj1f9nbzu3xsa6679", definition="static void  cleanup1(graph_t * g)")
-public static void cleanup1(ST_Agraph_s g) {
+public static void cleanup1(Globals zz, ST_Agraph_s g) {
 ENTERING("1xov2qhuxj1f9nbzu3xsa6679","cleanup1");
 try {
     ST_Agnode_s n;
@@ -171,21 +169,21 @@ try {
 	    ND_mark(n, 0);
 	}
     }
-    for (n = agfstnode(g); n!=null; n = agnxtnode(g, n)) {
-	for (e = agfstout(g, n); e!=null; e = agnxtout(g, e)) {
+    for (n = agfstnode(zz, g); n!=null; n = agnxtnode(zz, g, n)) {
+	for (e = agfstout(zz, g, n); e!=null; e = agnxtout(zz, g, e)) {
 	    f = ED_to_virt(e);
 	    /* Null out any other references to f to make sure we don't 
 	     * handle it a second time. For example, parallel multiedges 
 	     * share a virtual edge.
 	     */
-	    if (f!=null && (EQ(e, ED_to_orig(f)))) {
+	    if (f!=null && (e == ED_to_orig(f))) {
 		ST_Agedge_s e1, f1;
 		ST_Agnode_s n1;
-		for (n1 = agfstnode(g); n1!=null; n1 = agnxtnode(g, n1)) {
-		    for (e1 = agfstout(g, n1); e1!=null; e1 = agnxtout(g, e1)) {
-			if (NEQ(e, e1)) {
+		for (n1 = agfstnode(zz, g); n1!=null; n1 = agnxtnode(zz, g, n1)) {
+		    for (e1 = agfstout(zz, g, n1); e1!=null; e1 = agnxtout(zz, g, e1)) {
+			if ((e != e1)) {
 			    f1 = ED_to_virt(e1);
-			    if (f1!=null && EQ(f, f1)) {
+			    if (f1!=null && f == f1) {
 				ED_to_virt(e1, null);
 			    }
 			}
@@ -213,15 +211,15 @@ LEAVING("1xov2qhuxj1f9nbzu3xsa6679","cleanup1");
  */
 @Reviewed(when = "13/11/2020")
 @Original(version="2.38.0", path="lib/dotgen/rank.c", name="edgelabel_ranks", key="bxjf5g7g953ii1hfodl1j0y4u", definition="static void  edgelabel_ranks(graph_t * g)")
-public static void edgelabel_ranks(ST_Agraph_s g) {
+public static void edgelabel_ranks(Globals zz, ST_Agraph_s g) {
 ENTERING("bxjf5g7g953ii1hfodl1j0y4u","edgelabel_ranks");
 try {
     ST_Agnode_s n;
     ST_Agedge_s e;
     
     if ((GD_has_labels(g) & EDGE_LABEL)!=0) {
-	for (n = agfstnode(g); n!=null; n = agnxtnode(g, n))
-	    for (e = agfstout(g, n); e!=null; e = agnxtout(g, e))
+	for (n = agfstnode(zz, g); n!=null; n = agnxtnode(zz, g, n))
+	    for (e = agfstout(zz, g, n); e!=null; e = agnxtout(zz, g, e))
 		ED_minlen(e, ED_minlen(e) * 2);
 	GD_ranksep(g, (GD_ranksep(g) + 1) / 2);
     }
@@ -284,7 +282,7 @@ throw new UnsupportedOperationException();
 
 @Reviewed(when = "13/11/2020")
 @Original(version="2.38.0", path="lib/dotgen/rank.c", name="rank_set_class", key="65qi5f0bxp6d6vahhlcolpk88", definition="static int  rank_set_class(graph_t * g)")
-public static int rank_set_class(ST_Agraph_s g) {
+public static int rank_set_class(Globals zz, ST_Agraph_s g) {
 ENTERING("65qi5f0bxp6d6vahhlcolpk88","rank_set_class");
 try {
     CString name[] = new CString[] { new CString("same"), new CString("min"), new CString("source"), new CString("max"), new CString("sink"), null };
@@ -292,9 +290,9 @@ try {
     { SAMERANK, MINRANK, SOURCERANK, MAXRANK, SINKRANK, 0 };
     int val;
     
-    if (is_cluster(g))
+    if (is_cluster(zz, g))
 	return CLUSTER;
-    val = maptoken(agget(g, new CString("rank")), name, class_);
+    val = maptoken(agget(zz, g, new CString("rank")), name, class_);
     GD_set_type(g, val);
     return val;
 } finally {
@@ -307,15 +305,15 @@ LEAVING("65qi5f0bxp6d6vahhlcolpk88","rank_set_class");
 @Difficult
 @Reviewed(when = "13/11/2020")
 @Original(version="2.38.0", path="lib/dotgen/rank.c", name="make_new_cluster", key="5189iviqj57iztftckz86y6jj", definition="static int  make_new_cluster(graph_t * g, graph_t * subg)")
-public static int make_new_cluster(ST_Agraph_s g, ST_Agraph_s subg) {
+public static int make_new_cluster(Globals zz, ST_Agraph_s g, ST_Agraph_s subg) {
 ENTERING("5189iviqj57iztftckz86y6jj","make_new_cluster");
 try {
     int cno;
     GD_n_cluster(g, GD_n_cluster(g)+1);
     cno = GD_n_cluster(g);
-    GD_clust(g, CArrayOfStar.<ST_Agraph_s>REALLOC(cno + 1, GD_clust(g), ST_Agraph_s.class));
+    GD_clust(g, CArrayOfStar.<ST_Agraph_s>REALLOC(cno + 1, GD_clust(g), ZType.ST_Agraph_s));
     GD_clust(g).set_(cno, subg);
-    do_graph_label(subg);
+    do_graph_label(zz, subg);
     return cno;
 } finally {
 LEAVING("5189iviqj57iztftckz86y6jj","make_new_cluster");
@@ -326,7 +324,7 @@ LEAVING("5189iviqj57iztftckz86y6jj","make_new_cluster");
 
 @Reviewed(when = "13/11/2020")
 @Original(version="2.38.0", path="lib/dotgen/rank.c", name="node_induce", key="9lvm2ufqjzl2bsbpo0zg9go58", definition="static void  node_induce(graph_t * par, graph_t * g)")
-public static void node_induce(ST_Agraph_s par, ST_Agraph_s g) {
+public static void node_induce(Globals zz, ST_Agraph_s par, ST_Agraph_s g) {
 ENTERING("9lvm2ufqjzl2bsbpo0zg9go58","node_induce");
 try {
     ST_Agnode_s n, nn;
@@ -334,24 +332,24 @@ try {
     int i;
 
     /* enforce that a node is in at most one cluster at this level */
-    for (n = agfstnode(g); n!=null; n = nn) {
-	nn = agnxtnode(g, n);
+    for (n = agfstnode(zz, g); n!=null; n = nn) {
+	nn = agnxtnode(zz, g, n);
 	if (ND_ranktype(n)!=0) {
 	    agdelete(g, n);
 	    continue;
 	}
 	for (i = 1; i < GD_n_cluster(par); i++)
-	    if (agcontains(GD_clust(par).get_(i), n))
+	    if (agcontains(zz, GD_clust(par).get_(i), n))
 		break;
 	if (i < GD_n_cluster(par))
 	    agdelete(g, n);
 	ND_clust(n, null);
     }
     
-    for (n = agfstnode(g); n!=null; n = agnxtnode(g, n)) {
-	for (e = agfstout(dot_root(g), n); e!=null; e = agnxtout(dot_root(g), e)) {
-	    if (agcontains(g, aghead(e)))
-		agsubedge(g,e,true);
+    for (n = agfstnode(zz, g); n!=null; n = agnxtnode(zz, g, n)) {
+	for (e = agfstout(zz, dot_root(g), n); e!=null; e = agnxtout(zz, dot_root(g), e)) {
+	    if (agcontains(zz, g, aghead(e)))
+		agsubedge(zz, g,e,true);
 	}
     }
 } finally {
@@ -364,7 +362,7 @@ LEAVING("9lvm2ufqjzl2bsbpo0zg9go58","node_induce");
 
 @Reviewed(when = "14/11/2020")
 @Original(version="2.38.0", path="lib/dotgen/rank.c", name="cluster_leader", key="2rbs5deyvlh5s7lkhv6zouqbe", definition="static void cluster_leader(graph_t * clust)")
-public static void cluster_leader(ST_Agraph_s clust) {
+public static void cluster_leader(Globals zz, ST_Agraph_s clust) {
 ENTERING("2rbs5deyvlh5s7lkhv6zouqbe","cluster_leader");
 try {
     ST_Agnode_s leader, n;
@@ -381,7 +379,7 @@ try {
     assert(leader != null);
     GD_leader(clust, leader);
     
-    for (n = agfstnode(clust); n!=null; n = agnxtnode(clust, n)) {
+    for (n = agfstnode(zz, clust); n!=null; n = agnxtnode(zz, clust, n)) {
 	//assert((ND_UF_size(n) <= 1) || (n == leader));
 	UF_union(n, leader);
 	ND_ranktype(n, CLUSTER);
@@ -402,20 +400,20 @@ LEAVING("2rbs5deyvlh5s7lkhv6zouqbe","cluster_leader");
  */
 @Reviewed(when = "13/11/2020")
 @Original(version="2.38.0", path="lib/dotgen/rank.c", name="collapse_cluster", key="f3sl627dqmre3kru883bpdxc3", definition="static void  collapse_cluster(graph_t * g, graph_t * subg)")
-public static void collapse_cluster(ST_Agraph_s g, ST_Agraph_s subg) {
+public static void collapse_cluster(Globals zz, ST_Agraph_s g, ST_Agraph_s subg) {
 ENTERING("f3sl627dqmre3kru883bpdxc3","collapse_cluster");
 try {
     if (GD_parent(subg)!=null) {
 	return;
     }
     GD_parent(subg, g);
-    node_induce(g, subg);
-    if (agfstnode(subg) == null)
+    node_induce(zz, g, subg);
+    if (agfstnode(zz, subg) == null)
 	return;
-    make_new_cluster(g, subg);
-    if (Z.z().CL_type == LOCAL) {
-	dot1_rank(subg, null);
-	cluster_leader(subg);
+    make_new_cluster(zz, g, subg);
+    if (zz.CL_type == LOCAL) {
+	dot1_rank(zz, subg, null);
+	cluster_leader(zz, subg);
     } else
     UNSUPPORTED("1os84mtyrb110i4sd8bdjrwk"); // 	dot_scan_ranks(subg);
     
@@ -430,21 +428,21 @@ LEAVING("f3sl627dqmre3kru883bpdxc3","collapse_cluster");
 /* Execute union commands for "same rank" subgraphs and clusters. */
 @Reviewed(when = "13/11/2020")
 @Original(version="2.38.0", path="lib/dotgen/rank.c", name="collapse_sets", key="din4qnipewrwnelaimzvlplft", definition="static void  collapse_sets(graph_t *rg, graph_t *g)")
-public static void collapse_sets(ST_Agraph_s rg, ST_Agraph_s g) {
+public static void collapse_sets(Globals zz, ST_Agraph_s rg, ST_Agraph_s g) {
 ENTERING("din4qnipewrwnelaimzvlplft","collapse_sets");
 try {
     int c;
     ST_Agraph_s  subg;
     
-    for (subg = agfstsubg(g); subg!=null; subg = agnxtsubg(subg)) {
-	c = rank_set_class(subg);
+    for (subg = agfstsubg(zz, g); subg!=null; subg = agnxtsubg(zz, subg)) {
+	c = rank_set_class(zz, subg);
 	if (c!=0) {
-	    if ((c == CLUSTER) && Z.z().CL_type == LOCAL)
-		collapse_cluster(rg, subg);
+	    if ((c == CLUSTER) && zz.CL_type == LOCAL)
+		collapse_cluster(zz, rg, subg);
 	    else
 		collapse_rankset(rg, subg, c);
 	}
-	else collapse_sets(rg, subg);
+	else collapse_sets(zz, rg, subg);
 	
 	
 	
@@ -583,18 +581,18 @@ LEAVING("1rmlm1wo3t94wyet9rlwrmith","minmax_edges2");
 
 @Reviewed(when = "14/11/2020")
 @Original(version="2.38.0", path="lib/dotgen/rank.c", name="rank1", key="3vpthwso788idvycelpnqijys", definition="void rank1(graph_t * g)")
-public static void rank1(ST_Agraph_s g) {
+public static void rank1(Globals zz, ST_Agraph_s g) {
 ENTERING("3vpthwso788idvycelpnqijys","rank1");
 try {
     int maxiter = Integer.MAX_VALUE;
     int c;
     CString s;
     
-    if ((s = agget(g, new CString("nslimit1")))!=null)
+    if ((s = agget(zz, g, new CString("nslimit1")))!=null)
     UNSUPPORTED("9tp2zk1tsr4ce9rwsr0is9u3o"); // 	maxiter = atof(s) * agnnodes(g);
     for (c = 0; c < GD_comp(g).size; c++) {
 	GD_nlist(g, GD_comp(g).list.get_(c));
-	rank(g, (GD_n_cluster(g) == 0 ? 1 : 0), maxiter);	/* TB balance */
+	rank(zz, g, (GD_n_cluster(g) == 0 ? 1 : 0), maxiter);	/* TB balance */
     }
 } finally {
 LEAVING("3vpthwso788idvycelpnqijys","rank1");
@@ -613,13 +611,13 @@ LEAVING("3vpthwso788idvycelpnqijys","rank1");
 @Reviewed(when = "14/11/2020")
 @HasND_Rank
 @Original(version="2.38.0", path="lib/dotgen/rank.c", name="expand_ranksets", key="cdh8wnb99v90dy6efpbzmrjix", definition="static void expand_ranksets(graph_t * g, aspect_t* asp)")
-public static void expand_ranksets(ST_Agraph_s g, ST_aspect_t asp) {
+public static void expand_ranksets(Globals zz, ST_Agraph_s g, ST_aspect_t asp) {
 ENTERING("cdh8wnb99v90dy6efpbzmrjix","expand_ranksets");
 try {
     int c;
     ST_Agnode_s n, leader;
     
-    if ((n = agfstnode(g))!=null) {
+    if ((n = agfstnode(zz, g))!=null) {
 	GD_minrank(g, MAXSHORT);
 	GD_maxrank(g, -1);
 	while (n!=null) {
@@ -627,7 +625,7 @@ try {
 	    /* The following works because ND_rank(n) == 0 if n is not in a
 	     * cluster, and ND_rank(n) = the local rank offset if n is in
 	     * a cluster. */
-	    if (NEQ(leader, n) && (N(asp) || (ND_rank(n) == 0)))
+	    if ((leader != n) && ((asp) == null || (ND_rank(n) == 0)))
 		ND_rank(n, ND_rank(n) + ND_rank(leader));
 	    
 	    if (GD_maxrank(g) < ND_rank(n))
@@ -637,10 +635,10 @@ try {
 	    
 	    if (ND_ranktype(n)!=0 && (ND_ranktype(n) != LEAFSET))
 		UF_singleton(n);
-	    n = agnxtnode(g, n);
+	    n = agnxtnode(zz, g, n);
 	}
-	if (EQ(g, dot_root(g))) {
-	    if (Z.z().CL_type == LOCAL) {
+	if (g == dot_root(g)) {
+	    if (zz.CL_type == LOCAL) {
 		for (c = 1; c <= GD_n_cluster(g); c++)
 		    set_minmax(GD_clust(g).get_(c));
 	    } else {
@@ -663,12 +661,12 @@ LEAVING("cdh8wnb99v90dy6efpbzmrjix","expand_ranksets");
  */
 @Reviewed(when = "13/11/2020")
 @Original(version="2.38.0", path="lib/dotgen/rank.c", name="dot1_rank", key="2o4rmb4o6f6zh46ak3se91rwr", definition="static void dot1_rank(graph_t * g, aspect_t* asp)")
-public static void dot1_rank(ST_Agraph_s g, ST_aspect_t asp) {
+public static void dot1_rank(Globals zz, ST_Agraph_s g, ST_aspect_t asp) {
 ENTERING("2o4rmb4o6f6zh46ak3se91rwr","dot1_rank");
 try {
     final ST_point p = new ST_point();
     
-    edgelabel_ranks(g);
+    edgelabel_ranks(zz, g);
     
     if (asp!=null) {
 	UNSUPPORTED("kh7e20nqwuserrnpf3zpvuyl"); // 	init_UF_size(g);
@@ -676,11 +674,11 @@ try {
     }
     
     
-    collapse_sets(g,g);
+    collapse_sets(zz, g,g);
     /*collapse_leaves(g); */
-    class1_(g);
+    class1_(zz, g);
     p.___(minmax_edges(g));
-    decompose(g, 0);
+    decompose(zz, g, 0);
     if (asp!=null && ((GD_comp(g).size > 1)||(GD_n_cluster(g) > 0))) {
 	UNSUPPORTED("evcjt85irnaa02v8cam07i009"); // 	asp->badGraph = 1;
 	UNSUPPORTED("45nxv6kczal9hnytkfcyt2jk8"); // 	asp = NULL;
@@ -691,10 +689,10 @@ try {
     if (asp!=null)
 	rank3(g, asp);
     else
-	rank1(g);
+	rank1(zz, g);
     
-    expand_ranksets(g, asp);
-    cleanup1(g);
+    expand_ranksets(zz, g, asp);
+    cleanup1(zz, g);
 } finally {
 LEAVING("2o4rmb4o6f6zh46ak3se91rwr","dot1_rank");
 }
@@ -705,15 +703,15 @@ LEAVING("2o4rmb4o6f6zh46ak3se91rwr","dot1_rank");
 
 @Reviewed(when = "13/11/2020")
 @Original(version="2.38.0", path="lib/dotgen/rank.c", name="dot_rank", key="asyfujgwqa407ffvqn5psbtsc", definition="void dot_rank(graph_t * g, aspect_t* asp)")
-public static void dot_rank(ST_Agraph_s g, ST_aspect_t asp) {
+public static void dot_rank(Globals zz, ST_Agraph_s g, ST_aspect_t asp) {
 ENTERING("asyfujgwqa407ffvqn5psbtsc","dot_rank");
 try {
-    if (agget (g, new CString("newrank"))!=null) {
+    if (agget (zz, g, new CString("newrank"))!=null) {
 	GD_flags(g, GD_flags(g) | NEW_RANK);
 	dot2_rank (g, asp);
     }
     else
-	dot1_rank (g, asp);
+	dot1_rank (zz, g, asp);
     //if (Verbose)
 	//fprintf (stderr, "Maxrank = %d, minrank = %d\n", (((Agraphinfo_t*)(((Agobj_t*)(g))->data))->maxrank), (((Agraphinfo_t*)(((Agobj_t*)(g))->data))->minrank));
 } finally {
@@ -726,10 +724,10 @@ LEAVING("asyfujgwqa407ffvqn5psbtsc","dot_rank");
 
 @Reviewed(when = "13/11/2020")
 @Original(version="2.38.0", path="lib/dotgen/rank.c", name="is_cluster", key="cdncou6d2ng5i48rd1mk2cpnw", definition="int is_cluster(graph_t * g)")
-public static boolean is_cluster(ST_Agraph_s g) {
+public static boolean is_cluster(Globals zz, ST_Agraph_s g) {
 ENTERING("cdncou6d2ng5i48rd1mk2cpnw","is_cluster");
 try {
-    return (strncmp(agnameof(g), new CString("cluster"), 7) == 0);
+    return (strncmp(agnameof(zz, g), new CString("cluster"), 7) == 0);
 } finally {
 LEAVING("cdncou6d2ng5i48rd1mk2cpnw","is_cluster");
 }

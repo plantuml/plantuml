@@ -2,14 +2,14 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2009-2024, Arnaud Roques
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of PlantUML.
  *
@@ -34,26 +34,25 @@
  */
 package net.sourceforge.plantuml.braille;
 
-import static net.sourceforge.plantuml.ugraphic.ImageBuilder.plainPngBuilder;
-
 import java.io.IOException;
 import java.io.OutputStream;
 
-import net.sourceforge.plantuml.klimt.DotPath;
-import net.sourceforge.plantuml.klimt.UImage;
-import net.sourceforge.plantuml.klimt.ULine;
+import net.atmp.ImageBuilder;
+import net.sourceforge.plantuml.klimt.ClipContainer;
 import net.sourceforge.plantuml.klimt.UPath;
-import net.sourceforge.plantuml.klimt.UPolygon;
-import net.sourceforge.plantuml.klimt.URectangle;
-import net.sourceforge.plantuml.klimt.UText;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.drawing.AbstractCommonUGraphic;
+import net.sourceforge.plantuml.klimt.drawing.AbstractUGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
-import net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
-import net.sourceforge.plantuml.ugraphic.AbstractUGraphic;
-import net.sourceforge.plantuml.ugraphic.ClipContainer;
-import net.sourceforge.plantuml.ugraphic.UCenteredCharacter;
-import net.sourceforge.plantuml.ugraphic.UEllipse;
+import net.sourceforge.plantuml.klimt.shape.DotPath;
+import net.sourceforge.plantuml.klimt.shape.UCenteredCharacter;
+import net.sourceforge.plantuml.klimt.shape.UEllipse;
+import net.sourceforge.plantuml.klimt.shape.UImage;
+import net.sourceforge.plantuml.klimt.shape.ULine;
+import net.sourceforge.plantuml.klimt.shape.UPolygon;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.klimt.shape.UText;
 
 // https://www.branah.com/braille-translator
 public class UGraphicBraille extends AbstractUGraphic<BrailleGrid> implements ClipContainer {
@@ -110,8 +109,6 @@ public class UGraphicBraille extends AbstractUGraphic<BrailleGrid> implements Cl
 
 	@Override
 	public void writeToStream(OutputStream os, String metadata, int dpi) throws IOException {
-		plainPngBuilder(new BrailleDrawer(getGraphicObject()))
-				.metadata(metadata)
-				.write(os);
+		ImageBuilder.plainPngBuilder(new BrailleDrawer(getGraphicObject())).metadata(metadata).write(os);
 	}
 }

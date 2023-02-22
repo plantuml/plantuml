@@ -2,12 +2,12 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
@@ -50,8 +50,6 @@ import static smetana.core.Macro.AGINEDGE;
 import static smetana.core.Macro.AGNODE;
 import static smetana.core.Macro.AGOUTEDGE;
 import static smetana.core.Macro.AGRAPH;
-import static smetana.core.Macro.AGTYPE;
-import static smetana.core.Macro.N;
 import static smetana.core.Macro.UNSUPPORTED;
 import static smetana.core.debug.SmetanaDebug.ENTERING;
 import static smetana.core.debug.SmetanaDebug.LEAVING;
@@ -62,6 +60,7 @@ import h.ST_Agobj_s;
 import h.ST_Agraph_s;
 import smetana.core.CFunction;
 import smetana.core.CFunctionAbstract;
+import smetana.core.Globals;
 import smetana.core.__ptr__;
 
 public class apply__c {
@@ -71,7 +70,7 @@ public class apply__c {
 
 public static CFunction subgraph_search = new CFunctionAbstract("subgraph_search") {
 	
-	public Object exe(Object... args) {
+	public Object exe(Globals zz, Object... args) {
 		return subgraph_search((ST_Agraph_s)args[0], (ST_Agobj_s)args[1]);
 	}};
 @Unused
@@ -92,19 +91,19 @@ LEAVING("95y4aknoddh42lieikrb72vxw","subgraph_search");
 // static void rec_apply(Agraph_t * g, Agobj_t * obj, agobjfn_t fn, void *arg, 		      agobjsearchfn_t objsearch, int preorder) 
 @Unused
 @Original(version="2.38.0", path="lib/cgraph/apply.c", name="rec_apply", key="8s9l15wqucf1glmbeb6fmya8e", definition="static void rec_apply(Agraph_t * g, Agobj_t * obj, agobjfn_t fn, void *arg, 		      agobjsearchfn_t objsearch, int preorder)")
-public static void rec_apply(ST_Agraph_s g, ST_Agobj_s obj, CFunction fn, __ptr__ arg, CFunction objsearch, boolean preorder) {
+public static void rec_apply(Globals zz, ST_Agraph_s g, ST_Agobj_s obj, CFunction fn, __ptr__ arg, CFunction objsearch, boolean preorder) {
 ENTERING("8s9l15wqucf1glmbeb6fmya8e","rec_apply");
 try {
     ST_Agraph_s sub;
     ST_Agobj_s subobj;
     if (preorder)
-	fn.exe(g, obj, arg);
-    for (sub = agfstsubg(g); sub!=null; sub = agnxtsubg(sub)) {
-    if ((subobj = (ST_Agobj_s) objsearch.exe(sub, obj))!=null)
-	    rec_apply(sub, subobj, fn, arg, objsearch, preorder);
+	fn.exe(zz, g, obj, arg);
+    for (sub = agfstsubg(zz, g); sub!=null; sub = agnxtsubg(zz, sub)) {
+    if ((subobj = (ST_Agobj_s) objsearch.exe(zz, sub, obj))!=null)
+	    rec_apply(zz, sub, subobj, fn, arg, objsearch, preorder);
     }
-    if (N(preorder))
-	fn.exe(g, obj, arg);
+    if (!preorder)
+	fn.exe(zz, g, obj, arg);
 } finally {
 LEAVING("8s9l15wqucf1glmbeb6fmya8e","rec_apply");
 }
@@ -117,12 +116,12 @@ LEAVING("8s9l15wqucf1glmbeb6fmya8e","rec_apply");
 // int agapply(Agraph_t * g, Agobj_t * obj, agobjfn_t fn, void *arg, 	    int preorder) 
 @Unused
 @Original(version="2.38.0", path="lib/cgraph/apply.c", name="agapply", key="9hqql178zpl8iudlf6sgnv7aj", definition="int agapply(Agraph_t * g, Agobj_t * obj, agobjfn_t fn, void *arg, 	    int preorder)")
-public static int agapply(ST_Agraph_s g, ST_Agobj_s obj, CFunction fn, __ptr__ arg, boolean preorder) {
+public static int agapply(Globals zz, ST_Agraph_s g, ST_Agobj_s obj, CFunction fn, __ptr__ arg, boolean preorder) {
 ENTERING("9hqql178zpl8iudlf6sgnv7aj","agapply");
 try {
 	ST_Agobj_s subobj;
     CFunction objsearch=null;
-    switch (AGTYPE(obj)) {
+    switch (obj.tag.objtype) {
     case AGRAPH:
  	objsearch = apply__c.subgraph_search;
 	break;
@@ -138,8 +137,8 @@ UNSUPPORTED("2pc67byzirrkhe1cmdoguh6i1"); // 	agerr(AGERR, "agapply: unknown obj
 UNSUPPORTED("8d9xfgejx5vgd6shva5wk5k06"); // 	return -1;
 	break;
     }
-    if ((subobj = (ST_Agobj_s) objsearch.exe(g, obj))!=null) {
-	rec_apply(g, subobj, fn, arg, objsearch, preorder);
+    if ((subobj = (ST_Agobj_s) objsearch.exe(zz, g, obj))!=null) {
+	rec_apply(zz, g, subobj, fn, arg, objsearch, preorder);
 	return 0;
     } else
 UNSUPPORTED("8d9xfgejx5vgd6shva5wk5k06"); // 	return -1;

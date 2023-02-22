@@ -2,12 +2,12 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
@@ -52,7 +52,8 @@ import gen.annotation.Unused;
 import h.ST_Ppoly_t;
 import h.ST_pointf;
 import smetana.core.CArray;
-import smetana.core.Z;
+import smetana.core.Globals;
+import smetana.core.ZType;
 
 public class util__c {
 
@@ -61,38 +62,38 @@ public class util__c {
 // void make_polyline(Ppolyline_t line, Ppolyline_t* sline) 
 @Unused
 @Original(version="2.38.0", path="lib/pathplan/util.c", name="make_polyline", key="ct6tszngugakbl42zkaqrt7p1", definition="void make_polyline(Ppolyline_t line, Ppolyline_t* sline)")
-public static void make_polyline(ST_Ppoly_t line, ST_Ppoly_t sline) {
-	make_polyline_(line.copy(), sline);
+public static void make_polyline(Globals zz, ST_Ppoly_t line, ST_Ppoly_t sline) {
+	make_polyline_(zz, line.copy(), sline);
 }
 
 
-private static void make_polyline_(ST_Ppoly_t line, ST_Ppoly_t sline) {
+private static void make_polyline_(Globals zz, ST_Ppoly_t line, ST_Ppoly_t sline) {
 ENTERING("ct6tszngugakbl42zkaqrt7p1","make_polyline_");
 try {
 
     int i, j;
     int npts = 4 + 3*(line.pn-2);
 
-    if (npts > Z.z().isz) {
-	Z.z().ispline = CArray.<ST_pointf>REALLOC__(npts, Z.z().ispline, ST_pointf.class); 
-	Z.z().isz = npts;
+    if (npts > zz.isz) {
+	zz.ispline = CArray.<ST_pointf>REALLOC__(npts, zz.ispline, ZType.ST_pointf); 
+	zz.isz = npts;
     }
 
     j = i = 0;
-    Z.z().ispline.get__(j+1).___(line.ps.get__(i));
-    Z.z().ispline.get__(j  ).___(line.ps.get__(i));
+    zz.ispline.get__(j+1).___(line.ps.get__(i));
+    zz.ispline.get__(j  ).___(line.ps.get__(i));
     j += 2;
     i++;
     for (; i < line.pn-1; i++) {
-        Z.z().ispline.get__(j+2).___(line.ps.get__(i));
-        Z.z().ispline.get__(j+1).___(line.ps.get__(i));
-        Z.z().ispline.get__(j  ).___(line.ps.get__(i));
+        zz.ispline.get__(j+2).___(line.ps.get__(i));
+        zz.ispline.get__(j+1).___(line.ps.get__(i));
+        zz.ispline.get__(j  ).___(line.ps.get__(i));
 	j += 3;
     }
-    Z.z().ispline.get__(j+1).___(line.ps.get__(i));
-    Z.z().ispline.get__(j  ).___(line.ps.get__(i));
+    zz.ispline.get__(j+1).___(line.ps.get__(i));
+    zz.ispline.get__(j  ).___(line.ps.get__(i));
     sline.pn = npts;
-    sline.ps = Z.z().ispline;
+    sline.ps = zz.ispline;
 
 } finally {
 LEAVING("ct6tszngugakbl42zkaqrt7p1","make_polyline_");

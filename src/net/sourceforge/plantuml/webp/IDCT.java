@@ -35,13 +35,11 @@ public class IDCT {
 			b1 = input[offset + 0] - input[offset + 8];
 
 			temp1 = (input[offset + 4] * sinpi8sqrt2) >> 16;
-			temp2 = input[offset + 12]
-					+ ((input[offset + 12] * cospi8sqrt2minus1) >> 16);
+			temp2 = input[offset + 12] + ((input[offset + 12] * cospi8sqrt2minus1) >> 16);
 
 			c1 = temp1 - temp2;
 
-			temp1 = input[offset + 4]
-					+ ((input[offset + 4] * cospi8sqrt2minus1) >> 16);
+			temp1 = input[offset + 4] + ((input[offset + 4] * cospi8sqrt2minus1) >> 16);
 			temp2 = (input[offset + 12] * sinpi8sqrt2) >> 16;
 			d1 = temp1 + temp2;
 
@@ -61,12 +59,10 @@ public class IDCT {
 			b1 = output[(offset * 4) + 0] - output[(offset * 4) + 2];
 
 			temp1 = (output[(offset * 4) + 1] * sinpi8sqrt2) >> 16;
-			temp2 = output[(offset * 4) + 3]
-					+ ((output[(offset * 4) + 3] * cospi8sqrt2minus1) >> 16);
+			temp2 = output[(offset * 4) + 3] + ((output[(offset * 4) + 3] * cospi8sqrt2minus1) >> 16);
 			c1 = temp1 - temp2;
 
-			temp1 = output[(offset * 4) + 1]
-					+ ((output[(offset * 4) + 1] * cospi8sqrt2minus1) >> 16);
+			temp1 = output[(offset * 4) + 1] + ((output[(offset * 4) + 1] * cospi8sqrt2minus1) >> 16);
 			temp2 = (output[(offset * 4) + 3] * sinpi8sqrt2) >> 16;
 			d1 = temp1 + temp2;
 

@@ -2,12 +2,12 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
@@ -51,7 +51,6 @@ import static gen.lib.label.node__c.PickBranch;
 import static gen.lib.label.node__c.RTreeNewNode;
 import static gen.lib.label.rectangle__c.CombineRect;
 import static gen.lib.label.rectangle__c.Overlap;
-import static smetana.core.Macro.N;
 import static smetana.core.Macro.UNSUPPORTED;
 import static smetana.core.debug.SmetanaDebug.ENTERING;
 import static smetana.core.debug.SmetanaDebug.LEAVING;
@@ -106,7 +105,7 @@ public static ST_LeafList_t RTreeLeafListAdd(ST_LeafList_t llp, ST_Branch_t lp) 
 ENTERING("6pvstz7axi8a7saeqe3nrrmg5","RTreeLeafListAdd");
 try {
      ST_LeafList_t nlp;
-     if (N(lp))
+     if ((lp) == null)
  	return llp;
      nlp = RTreeNewLeafList(lp);
      nlp.next = llp;
@@ -209,9 +208,9 @@ try {
 
     if (n.level > 0) {
 	for (i = 0; i < 64; i++) {
-	    if (N(n.branch[i].child))
+	    if ((n.branch[i].child) == null)
 		continue;
-	    if (N(RTreeClose2(rtp, (ST_Node_t___) n.branch[i].child))) {
+	    if (RTreeClose2(rtp, (ST_Node_t___) n.branch[i].child) == 0) {
 		Memory.free(n.branch[i].child);
 		DisconBranch(n, i);
 	    rtp.EntryCount = rtp.EntryCount-1;
@@ -221,7 +220,7 @@ try {
 	}
     } else {
 	for (i = 0; i < 64; i++) {
-		if (N(n.branch[i].child))
+		if ((n.branch[i].child) == null)
 		continue;
 	    // free(n->branch[i].child);
 	    DisconBranch(n, i);
@@ -338,7 +337,7 @@ UNSUPPORTED("bzb1oqc35evr96528iv16glb0"); // 	    rtp->ReInsertCount++;
 UNSUPPORTED("9352ql3e58qs4fzapgjfrms2s"); // 	else
 UNSUPPORTED("3kxquse3qg2crme5dzybg9jxe"); // 	    rtp->InsertCount++;
 }
-     if (N(rtp.Deleting))
+     if (rtp.Deleting == 0)
  	rtp.RectCount = rtp.RectCount+1;
      if (RTreeInsert2(rtp, r, data, n[0], newnode, level)!=0) {	/* root was split */
  	if (rtp.StatFlag!=0) {
@@ -396,7 +395,7 @@ UNSUPPORTED("1um729vqiy3529kbsrzyl9u3y"); // 	    rtp->InTouchCount++;
 /* Still above level for insertion, go down tree recursively */
      if (n.level > level) {
  	i = PickBranch(r, n);
- 	if (N(RTreeInsert2(rtp, r, data, (ST_Node_t___) n.branch[i].child, n2, level))) {
+ 	if (RTreeInsert2(rtp, r, data, (ST_Node_t___) n.branch[i].child, n2, level) == 0) {
 /* recurse: child was not split */
  	    n.branch[i].rect.___(
  	    		CombineRect((ST_Rect_t)r, (ST_Rect_t) n.branch[i].rect));

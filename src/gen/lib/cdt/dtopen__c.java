@@ -2,12 +2,12 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
@@ -45,8 +45,6 @@
  */
 package gen.lib.cdt;
 import static gen.lib.cdt.dtdisc__c.dtdisc;
-import static smetana.core.JUtils.sizeof;
-import static smetana.core.Macro.N;
 import static smetana.core.debug.SmetanaDebug.ENTERING;
 import static smetana.core.debug.SmetanaDebug.LEAVING;
 
@@ -56,7 +54,10 @@ import h.ST_dt_s;
 import h.ST_dtdata_s;
 import h.ST_dtdisc_s;
 import h.ST_dtmethod_s;
+import smetana.core.Globals;
 import smetana.core.Memory;
+import smetana.core.ZType;
+import smetana.core.size_t;
 
 public class dtopen__c {
 //1 9k44uhd5foylaeoekf3llonjq
@@ -133,22 +134,22 @@ public class dtopen__c {
 // Dt_t* dtopen(Dtdisc_t* disc, Dtmethod_t* meth)      
 @Unused
 @Original(version="2.38.0", path="lib/cdt/dtopen.c", name="dtopen", key="34nbfbdgwe34hb4vmfr5p6kbh", definition="Dt_t* dtopen(Dtdisc_t* disc, Dtmethod_t* meth)")
-public static ST_dt_s dtopen(ST_dtdisc_s disc, ST_dtmethod_s meth) {
+public static ST_dt_s dtopen(Globals zz, ST_dtdisc_s disc, ST_dtmethod_s meth) {
 ENTERING("34nbfbdgwe34hb4vmfr5p6kbh","dtopen");
 try {
 	ST_dt_s		dt = null;
 	int		e;
 	ST_dtdata_s	data;
-	if(N(disc) || N(meth))
+	if((disc) == null || (meth) == null)
 		return null;
 	/* allocate space for dictionary */
-	if(N(dt = new ST_dt_s()))
+	if((dt = new ST_dt_s()) == null)
 		return null;
 //	/* initialize all absolutely private data */
 	dt.searchf = null;
 	dt.meth = null;
 	dt.disc = null;
-	dtdisc(dt,disc,0);
+	dtdisc(zz, dt,disc,0);
 	dt.type = 0;
 	dt.nview = 0;
 	dt.view = null;
@@ -181,7 +182,7 @@ try {
 //		}
 	}
 	/* allocate sharable data */
-	if(N(data = (ST_dtdata_s) (dt.memoryf.exe(dt,null,sizeof(ST_dtdata_s.class),disc)) ))
+	if(((data = (ST_dtdata_s) (dt.memoryf.exe(zz, dt,null,new size_t(ZType.ST_dtdata_s),disc)) ))==null)
 	{ err_open:
 		Memory.free(dt);
 		return (null);

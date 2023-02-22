@@ -2,12 +2,12 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
@@ -52,8 +52,7 @@ import static gen.lib.cgraph.obj__c.agraphof;
 import static gen.lib.cgraph.obj__c.agroot;
 import static gen.lib.common.htmltable__c.make_html_label;
 import static gen.lib.common.utils__c.htmlEntityUTF8;
-import static smetana.core.JUtils.NEQ;
-import static smetana.core.JUtils.strlen;
+import static smetana.core.JUtils.EQ_CSTRING;
 import static smetana.core.Macro.AGEDGE;
 import static smetana.core.Macro.AGNODE;
 import static smetana.core.Macro.AGRAPH;
@@ -65,9 +64,7 @@ import static smetana.core.Macro.GD_gvc;
 import static smetana.core.Macro.GD_label;
 import static smetana.core.Macro.LT_HTML;
 import static smetana.core.Macro.LT_RECD;
-import static smetana.core.Macro.MAX;
 import static smetana.core.Macro.M_agtail;
-import static smetana.core.Macro.N;
 import static smetana.core.Macro.ND_label;
 import static smetana.core.Macro.UNSUPPORTED;
 import static smetana.core.Macro.hackInitDimensionFromLabel;
@@ -90,8 +87,9 @@ import h.ST_textlabel_t;
 import h.ST_textspan_t;
 import smetana.core.CArray;
 import smetana.core.CString;
+import smetana.core.Globals;
 import smetana.core.Memory;
-import smetana.core.Z;
+import smetana.core.ZType;
 import smetana.core.__ptr__;
 import smetana.core.debug.SmetanaDebug;
 
@@ -104,21 +102,21 @@ public class labels__c {
 @Difficult
 @Doc("Compute size of a string and store size")
 @Original(version="2.38.0", path="lib/common/labels.c", name="storeline", key="4wkeqik2dt7ecr64ej6ltbnvb", definition="static void storeline(GVC_t *gvc, textlabel_t *lp, char *line, char terminator)")
-public static void storeline(ST_GVC_s gvc, ST_textlabel_t lp, CString line, char terminator) {
+public static void storeline(Globals zz, ST_GVC_s gvc, ST_textlabel_t lp, CString line, char terminator) {
 ENTERING("4wkeqik2dt7ecr64ej6ltbnvb","storeline");
 try {
     final ST_pointf size = new ST_pointf();
     ST_textspan_t span = null;
     int oldsz = lp.nspans + 1;
     
-    lp.span = CArray.<ST_textspan_t>REALLOC__(oldsz + 1, lp.span, ST_textspan_t.class);
+    lp.span = CArray.<ST_textspan_t>REALLOC__(oldsz + 1, lp.span, ZType.ST_textspan_t);
     span = lp.span.get__(lp.nspans);
     span.str = line;
     span.just = terminator;
 
 	// WE CHEAT
-	Z.z().tf.name = lp.fontname;
-	Z.z().tf.size = lp.fontsize;
+	zz.tf.name = lp.fontname;
+	zz.tf.size = lp.fontsize;
 	size.x = 0.0;
 	size.y = (int)(lp.fontsize * 1.20);
 	hackInitDimensionFromLabel(size, line.getContent());
@@ -127,7 +125,7 @@ try {
 
     lp.nspans++;
     /* width = max line width */
-    lp.dimen.x = MAX(lp.dimen.x, size.x);
+    lp.dimen.x = Math.max(lp.dimen.x, size.x);
     /* accumulate height */
     lp.dimen.y = lp.dimen.y + size.y;
     SmetanaDebug.LOG("storeline "+lp);
@@ -142,7 +140,7 @@ LEAVING("4wkeqik2dt7ecr64ej6ltbnvb","storeline");
 @Reviewed(when = "12/11/2020")
 @Doc("Parse simple label")
 @Original(version="2.38.0", path="lib/common/labels.c", name="make_simple_label", key="22ar72ye93a8ntj8pagnt5b5k", definition="void make_simple_label(GVC_t * gvc, textlabel_t * lp)")
-public static void make_simple_label(ST_GVC_s gvc, ST_textlabel_t lp) {
+public static void make_simple_label(Globals zz, ST_GVC_s gvc, ST_textlabel_t lp) {
 ENTERING("22ar72ye93a8ntj8pagnt5b5k","make_simple_label");
 try {
     char c;
@@ -155,7 +153,7 @@ try {
     
     line = lineptr = null;
     p = str;
-    line = lineptr = CString.gmalloc((strlen(p) + 1));
+    line = lineptr = CString.gmalloc((p.length() + 1));
     line.setCharAt(0, '\0');
     while ((c = p.charAt(0))!='\0') {
     p = p.plus_(1);
@@ -179,7 +177,7 @@ UNSUPPORTED("9ekmvj13iaml5ndszqyxa8eq"); // 		break;
 		case 'r':
 		    lineptr.setCharAt(0, '\0');
 		    lineptr = lineptr.plus_(1);
-		    storeline(gvc, lp, line, p.charAt(0));
+		    storeline(zz, gvc, lp, line, p.charAt(0));
 		    line = lineptr;
 		    break;
 		default:
@@ -192,7 +190,7 @@ UNSUPPORTED("9ekmvj13iaml5ndszqyxa8eq"); // 		break;
 	    } else if (c == '\n') {
 		    lineptr.setCharAt(0, '\0');
 		    lineptr = lineptr.plus_(1);
-		storeline(gvc, lp, line, 'n');
+		storeline(zz, gvc, lp, line, 'n');
 		line = lineptr;
 	    } else {
 	    lineptr.setCharAt(0, c);
@@ -202,10 +200,10 @@ UNSUPPORTED("9ekmvj13iaml5ndszqyxa8eq"); // 		break;
     }
     
     
-    if (NEQ(line, lineptr)) {
+    if (!EQ_CSTRING(line, lineptr)) {
 	lineptr.setCharAt(0, '\0');
 	lineptr = lineptr.plus_(1);
-	storeline(gvc, lp, line, 'n');
+	storeline(zz, gvc, lp, line, 'n');
     }
     
     lp.space.___(lp.dimen);
@@ -219,7 +217,7 @@ LEAVING("22ar72ye93a8ntj8pagnt5b5k","make_simple_label");
 
 @Reviewed(when = "12/11/2020")
 @Original(version="2.38.0", path="lib/common/labels.c", name="", key="ecq5lydlrjrlaz8o6vm6svc8i", definition="textlabel_t *make_label(void *obj, char *str, int kind, double fontsize, char *fontname, char *fontcolor)")
-public static ST_textlabel_t make_label(ST_Agobj_s obj, CString str, int kind, double fontsize, CString fontname, CString fontcolor) {
+public static ST_textlabel_t make_label(Globals zz, ST_Agobj_s obj, CString str, int kind, double fontsize, CString fontname, CString fontcolor) {
 ENTERING("ecq5lydlrjrlaz8o6vm6svc8i","make_label");
 try {
 	ST_textlabel_t rv = new ST_textlabel_t();
@@ -250,7 +248,7 @@ try {
     if ((kind & LT_RECD)!=0) {
 	rv.text = str.strdup();
         if ((kind & LT_HTML)!=0) {
-	    rv.html = (N(0));
+	    rv.html = (true);
 	}
     }
     else if (kind == LT_HTML) {
@@ -276,7 +274,7 @@ try {
 	/* This call just processes the graph object based escape sequences. The formatting escape
          * sequences (\n, \l, \r) are processed in make_simple_label. That call also replaces \\ with \.
          */
-	rv.text = strdup_and_subst_obj0(str, obj, 0);
+	rv.text = strdup_and_subst_obj0(zz, str, obj, 0);
         switch (rv.charset) {
     case 1:
 	    UNSUPPORTED("s = latin1ToUTF8(rv->text);");
@@ -287,7 +285,7 @@ try {
 	}
         Memory.free(rv.text);
         rv.text = s;
-	make_simple_label(GD_gvc(g), rv);
+	make_simple_label(zz, GD_gvc(g), rv);
     }
     return rv;
 } finally {
@@ -307,7 +305,7 @@ LEAVING("ecq5lydlrjrlaz8o6vm6svc8i","make_label");
 @Difficult
 @Reviewed(when = "12/11/2020")
 @Original(version="2.38.0", path="lib/common/labels.c", name="", key="ajohywvjbrvkc7zca2uew6ghm", definition="static char *strdup_and_subst_obj0 (char *str, void *obj, int escBackslash)")
-public static CString strdup_and_subst_obj0(CString str, ST_Agobj_s obj, int escBackslash) {
+public static CString strdup_and_subst_obj0(Globals zz, CString str, ST_Agobj_s obj, int escBackslash) {
 ENTERING("ajohywvjbrvkc7zca2uew6ghm","strdup_and_subst_obj0");
 try {
     char c; CString s, p, t, newstr;
@@ -326,44 +324,44 @@ try {
     /* prepare substitution strings */
     switch (agobjkind(obj)) {
 	case AGRAPH:
-	    g_str = agnameof((ST_Agraph_s)obj);
-	    g_len = strlen(g_str);
+	    g_str = agnameof(zz, (ST_Agraph_s)obj);
+	    g_len = g_str.length();
 	    tl = GD_label((ST_Agraph_s)obj);
 	    if (tl!=null) {
 		l_str = tl.text;
-	    	if (str!=null) l_len = strlen(l_str);
+	    	if (str!=null) l_len = l_str.length();
 	    }
 	    break;
 	case AGNODE:
-	    g_str = agnameof(agraphof(obj));
-	    g_len = strlen(g_str);
-	    n_str = agnameof(obj);
-	    n_len = strlen(n_str);
+	    g_str = agnameof(zz, agraphof(obj));
+	    g_len = g_str.length();
+	    n_str = agnameof(zz, obj);
+	    n_len = n_str.length();
 	    tl = ND_label((ST_Agnode_s)obj);
 	    if (tl!=null) {
 		l_str = tl.text;
-	    	if (str!=null) l_len = strlen(l_str);
+	    	if (str!=null) l_len = l_str.length();
 	    }
 	    break;
 	case AGEDGE:
 	    isEdge = 1;
-	    g_str = agnameof(agroot(agraphof((M_agtail((ST_Agedge_s)obj)))));
-	    g_len = strlen(g_str);
-	    t_str = agnameof(M_agtail((ST_Agedge_s)obj));
-	    t_len = strlen(t_str);
+	    g_str = agnameof(zz, agroot(agraphof((M_agtail((ST_Agedge_s)obj)))));
+	    g_len = g_str.length();
+	    t_str = agnameof(zz, M_agtail((ST_Agedge_s)obj));
+	    t_len = t_str.length();
 	    pt.___(ED_tail_port((ST_Agedge_s)obj));
 	    if ((tp_str = pt.name)!=null)
-	        tp_len = strlen(tp_str);
-	    h_str = agnameof(aghead((obj)));
-	    h_len = strlen(h_str);
+	        tp_len = tp_str.length();
+	    h_str = agnameof(zz, aghead((obj)));
+	    h_len = h_str.length();
 	    pt.___(ED_head_port((ST_Agedge_s)obj));
 	    if ((hp_str = pt.name)!=null)
-		hp_len = strlen(hp_str);
-	    h_len = strlen(h_str);
+		hp_len = hp_str.length();
+	    h_len = h_str.length();
 	    tl = ED_label((ST_Agedge_s)obj);
 	    if (tl!=null) {
 	    	l_str = tl.text;
-	    	if (str!=null) l_len = strlen(l_str);
+	    	if (str!=null) l_len = l_str.length();
 	    }
 	    if (agisdirected(agroot(agraphof(M_agtail((ST_Agedge_s)obj)))))
 		e_str = new CString("->");

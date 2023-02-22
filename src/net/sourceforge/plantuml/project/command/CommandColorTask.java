@@ -2,14 +2,14 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2009-2024, Arnaud Roques
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of PlantUML.
  *
@@ -74,10 +74,8 @@ public class CommandColorTask extends SingleLineCommand2<GanttDiagram> {
 
 		final String color1 = arg.get("COLORS", 0);
 		final String color2 = arg.get("COLORS", 1);
-		final HColor col1 = color1 == null ? null
-				: diagram.getIHtmlColorSet().getColor(color1);
-		final HColor col2 = color2 == null ? null
-				: diagram.getIHtmlColorSet().getColor(color2);
+		final HColor col1 = color1 == null ? null : diagram.getIHtmlColorSet().getColor(color1);
+		final HColor col2 = color2 == null ? null : diagram.getIHtmlColorSet().getColor(color2);
 		task.setColors(new CenterBorderColor(col1, col2));
 
 		return CommandExecutionResult.ok();

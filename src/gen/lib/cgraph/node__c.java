@@ -2,12 +2,12 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of Smetana.
  * Smetana is a partial translation of Graphviz/Dot sources from C to Java.
@@ -56,14 +56,10 @@ import static gen.lib.cgraph.obj__c.agmethod_init;
 import static gen.lib.cgraph.obj__c.agroot;
 import static gen.lib.cgraph.rec__c.agbindrec;
 import static gen.lib.cgraph.subg__c.agparent;
-import static smetana.core.JUtils.EQ;
-import static smetana.core.JUtils.NEQ;
-import static smetana.core.JUtils.sizeof;
 import static smetana.core.Macro.AGID;
 import static smetana.core.Macro.AGNODE;
 import static smetana.core.Macro.AGSEQ;
 import static smetana.core.Macro.AGTYPE;
-import static smetana.core.Macro.N;
 import static smetana.core.Macro.UNSUPPORTED;
 import static smetana.core.Macro.dtfirst;
 import static smetana.core.Macro.dtnext;
@@ -74,7 +70,6 @@ import static smetana.core.debug.SmetanaDebug.LEAVING;
 import gen.annotation.Original;
 import gen.annotation.Reviewed;
 import gen.annotation.Unused;
-import h.ST_Agattr_s;
 import h.ST_Agdesc_s;
 import h.ST_Agnode_s;
 import h.ST_Agraph_s;
@@ -84,8 +79,10 @@ import h.ST_dtdisc_s;
 import smetana.core.CFunction;
 import smetana.core.CFunctionAbstract;
 import smetana.core.CString;
-import smetana.core.Z;
+import smetana.core.Globals;
+import smetana.core.ZType;
 import smetana.core.__ptr__;
+import smetana.core.size_t;
 
 public class node__c {
 
@@ -93,15 +90,15 @@ public class node__c {
 
 @Reviewed(when = "13/11/2020")
 @Original(version="2.38.0", path="lib/cgraph/node.c", name="", key="4w89du6uel405pm3vxsr3ayxt", definition="Agnode_t *agfindnode_by_id(Agraph_t * g, unsigned long id)")
-public static ST_Agnode_s agfindnode_by_id(ST_Agraph_s g, int id) {
+public static ST_Agnode_s agfindnode_by_id(Globals zz, ST_Agraph_s g, int id) {
 ENTERING("4w89du6uel405pm3vxsr3ayxt","agfindnode_by_id");
 try {
     ST_Agsubnode_s sn;
     
     
-    Z.z().dummy.base.tag.id = id;
-    Z.z().template.node = Z.z().dummy;
-    sn = (ST_Agsubnode_s) dtsearch(g.n_id, Z.z().template);
+    zz.dummy.base.tag.id = id;
+    zz.template.node = zz.dummy;
+    sn = (ST_Agsubnode_s) dtsearch(zz, g.n_id, zz.template);
     return sn!=null ? sn.node : null;
 } finally {
 LEAVING("4w89du6uel405pm3vxsr3ayxt","agfindnode_by_id");
@@ -112,11 +109,11 @@ LEAVING("4w89du6uel405pm3vxsr3ayxt","agfindnode_by_id");
 
 @Reviewed(when = "12/11/2020")
 @Original(version="2.38.0", path="lib/cgraph/node.c", name="agfstnode", key="55wopi2gd93zpmycxoywlxm0y", definition="Agnode_t *agfstnode(Agraph_t * g)")
-public static ST_Agnode_s agfstnode(ST_Agraph_s g) {
+public static ST_Agnode_s agfstnode(Globals zz, ST_Agraph_s g) {
 ENTERING("55wopi2gd93zpmycxoywlxm0y","agfstnode");
 try {
 	ST_Agsubnode_s sn;
-    sn = (ST_Agsubnode_s) dtfirst(g.n_seq);
+    sn = (ST_Agsubnode_s) dtfirst(zz, g.n_seq);
     return sn!=null ? sn.node : null;
 } finally {
 LEAVING("55wopi2gd93zpmycxoywlxm0y","agfstnode");
@@ -130,12 +127,12 @@ LEAVING("55wopi2gd93zpmycxoywlxm0y","agfstnode");
 
 @Reviewed(when = "12/11/2020")
 @Original(version="2.38.0", path="lib/cgraph/node.c", name="agnxtnode", key="bek79ccvjys1j9q404i3y6oh8", definition="Agnode_t *agnxtnode(Agraph_t * g, Agnode_t * n)")
-public static ST_Agnode_s agnxtnode(ST_Agraph_s g, ST_Agnode_s n) {
+public static ST_Agnode_s agnxtnode(Globals zz, ST_Agraph_s g, ST_Agnode_s n) {
 ENTERING("bek79ccvjys1j9q404i3y6oh8","agnxtnode");
 try {
     ST_Agsubnode_s sn;
-    sn = agsubrep(g, n);
-    if (sn!=null) sn = (ST_Agsubnode_s) dtnext(g.n_seq, sn);
+    sn = agsubrep(zz, g, n);
+    if (sn!=null) sn = (ST_Agsubnode_s) dtnext(zz, g.n_seq, sn);
     return sn!=null ? sn.node : null;
 } finally {
 LEAVING("bek79ccvjys1j9q404i3y6oh8","agnxtnode");
@@ -148,17 +145,17 @@ LEAVING("bek79ccvjys1j9q404i3y6oh8","agnxtnode");
 // static Agnode_t *newnode(Agraph_t * g, unsigned long id, unsigned long seq) 
 @Unused
 @Original(version="2.38.0", path="lib/cgraph/node.c", name="", key="dzb7m0p5xsngvtyr8zs912og4", definition="static Agnode_t *newnode(Agraph_t * g, unsigned long id, unsigned long seq)")
-public static ST_Agnode_s newnode(ST_Agraph_s g, int id, int seq) {
+public static ST_Agnode_s newnode(Globals zz, ST_Agraph_s g, int id, int seq) {
 ENTERING("dzb7m0p5xsngvtyr8zs912og4","newnode");
 try {
     ST_Agnode_s n;
-    n = (ST_Agnode_s) ((__ptr__)agalloc(g, sizeof(ST_Agnode_s.class)));
+    n = (ST_Agnode_s) ((__ptr__)agalloc(g, new size_t(ZType.ST_Agnode_s)));
     AGTYPE(n, AGNODE);
     AGID(n, id);
     AGSEQ(n, seq);
     n.root = agroot(g);
     if (((ST_Agdesc_s)agroot(g).desc).has_attrs!=0)
-	  agbindrec(n, AgDataRecName, sizeof(ST_Agattr_s.class), false);
+	  agbindrec(zz, n, AgDataRecName, new size_t(ZType.ST_Agattr_s), false);
     /* nodeattr_init and method_init will be called later, from the
      * subgraph where the node was actually created, but first it has
      * to be installed in all the (sub)graphs up to root. */
@@ -175,17 +172,17 @@ LEAVING("dzb7m0p5xsngvtyr8zs912og4","newnode");
 // static void installnode(Agraph_t * g, Agnode_t * n) 
 @Unused
 @Original(version="2.38.0", path="lib/cgraph/node.c", name="installnode", key="4m26dpgaiw44hcleugjy71eus", definition="static void installnode(Agraph_t * g, Agnode_t * n)")
-public static void installnode(ST_Agraph_s g, ST_Agnode_s n) {
+public static void installnode(Globals zz, ST_Agraph_s g, ST_Agnode_s n) {
 ENTERING("4m26dpgaiw44hcleugjy71eus","installnode");
 try {
 	ST_Agsubnode_s sn;
     int osize;
     osize = dtsize_((ST_dt_s)g.n_id);
-    if (EQ(g, agroot(g))) sn = (ST_Agsubnode_s) n.mainsub;
-    else sn = (ST_Agsubnode_s) ((__ptr__)agalloc(g, sizeof(ST_Agsubnode_s.class))).castTo(ST_Agsubnode_s.class);
+    if (g == agroot(g)) sn = (ST_Agsubnode_s) n.mainsub;
+    else sn = (ST_Agsubnode_s) ((__ptr__)agalloc(g, new size_t(ZType.ST_Agsubnode_s))).castTo(ST_Agsubnode_s.class);
     sn.node = n;
-    g.n_id.searchf.exe(g.n_id,sn,0000001);
-    g.n_seq.searchf.exe(g.n_seq,sn,0000001);
+    g.n_id.searchf.exe(zz, g.n_id,sn,0000001);
+    g.n_seq.searchf.exe(zz, g.n_seq,sn,0000001);
 } finally {
 LEAVING("4m26dpgaiw44hcleugjy71eus","installnode");
 }
@@ -198,13 +195,13 @@ LEAVING("4m26dpgaiw44hcleugjy71eus","installnode");
 // static void installnodetoroot(Agraph_t * g, Agnode_t * n) 
 @Unused
 @Original(version="2.38.0", path="lib/cgraph/node.c", name="installnodetoroot", key="3mfxjcaeepn8nitirs3yoqaed", definition="static void installnodetoroot(Agraph_t * g, Agnode_t * n)")
-public static void installnodetoroot(ST_Agraph_s g, ST_Agnode_s n) {
+public static void installnodetoroot(Globals zz, ST_Agraph_s g, ST_Agnode_s n) {
 ENTERING("3mfxjcaeepn8nitirs3yoqaed","installnodetoroot");
 try {
     ST_Agraph_s par;
-    installnode(g, n);
+    installnode(zz, g, n);
     if ((par = agparent(g))!=null)
-	installnodetoroot(par, n);
+	installnodetoroot(zz, par, n);
 } finally {
 LEAVING("3mfxjcaeepn8nitirs3yoqaed","installnodetoroot");
 }
@@ -217,11 +214,11 @@ LEAVING("3mfxjcaeepn8nitirs3yoqaed","installnodetoroot");
 // static void initnode(Agraph_t * g, Agnode_t * n) 
 @Unused
 @Original(version="2.38.0", path="lib/cgraph/node.c", name="initnode", key="85bb9mezhsgtzar3kqz95mq1", definition="static void initnode(Agraph_t * g, Agnode_t * n)")
-public static void initnode(ST_Agraph_s g, ST_Agnode_s n) {
+public static void initnode(Globals zz, ST_Agraph_s g, ST_Agnode_s n) {
 ENTERING("85bb9mezhsgtzar3kqz95mq1","initnode");
 try {
     if (((ST_Agdesc_s)agroot(g).desc).has_attrs!=0)
-	agnodeattr_init(g,n);
+	agnodeattr_init(zz, g,n);
     agmethod_init(g, n);
 } finally {
 LEAVING("85bb9mezhsgtzar3kqz95mq1","initnode");
@@ -234,13 +231,13 @@ LEAVING("85bb9mezhsgtzar3kqz95mq1","initnode");
 /* external node constructor - create by id */
 @Reviewed(when = "13/11/2020")
 @Original(version="2.38.0", path="lib/cgraph/node.c", name="", key="1m6sl9df2yaolmufyq5i577a3", definition="Agnode_t *agidnode(Agraph_t * g, unsigned long id, int cflag)")
-public static ST_Agnode_s agidnode(ST_Agraph_s g, int id, int cflag) {
+public static ST_Agnode_s agidnode(Globals zz, ST_Agraph_s g, int id, int cflag) {
 ENTERING("1m6sl9df2yaolmufyq5i577a3","agidnode");
 try {
     ST_Agraph_s root;
     ST_Agnode_s n;
     
-    n = agfindnode_by_id(g, id);
+    n = agfindnode_by_id(zz, g, id);
     if ((n == null) && cflag!=0) {
 UNSUPPORTED("7zol2448bccu90sqoxkvnbuif"); // 	root = agroot(g);
 UNSUPPORTED("1zcb29h7sxm7axw8qeuz9f38w"); // 	if ((g != root) && ((n = agfindnode_by_id(root, id))))	/*old */
@@ -268,7 +265,7 @@ LEAVING("1m6sl9df2yaolmufyq5i577a3","agidnode");
 // Agnode_t *agnode(Agraph_t * g, char *name, int cflag) 
 @Unused
 @Original(version="2.38.0", path="lib/cgraph/node.c", name="", key="4yh1h1cwoitzb1t8869b79e3g", definition="Agnode_t *agnode(Agraph_t * g, char *name, int cflag)")
-public static ST_Agnode_s agnode(ST_Agraph_s g, CString name, boolean cflag) {
+public static ST_Agnode_s agnode(Globals zz, ST_Agraph_s g, CString name, boolean cflag) {
 ENTERING("4yh1h1cwoitzb1t8869b79e3g","agnode");
 try {
     ST_Agraph_s root;
@@ -276,20 +273,20 @@ try {
     int id[] = new int[1];
     root = agroot(g);
     /* probe for existing node */
-    if (agmapnametoid(g, AGNODE, name, id, false)!=0) {
-	if ((n = agfindnode_by_id(g, id[0]))!=null)
+    if (agmapnametoid(zz, g, AGNODE, name, id, false)!=0) {
+	if ((n = agfindnode_by_id(zz, g, id[0]))!=null)
 	    return n;
 	/* might already exist globally, but need to insert locally */
-	if (cflag && NEQ(g, root) && ((n = agfindnode_by_id(root, id[0])))!=null) {
-	    return agsubnode(g, n, (N(0)));
+	if (cflag && (g != root) && ((n = agfindnode_by_id(zz, root, id[0])))!=null) {
+	    return agsubnode(zz, g, n, (true));
     }
     }
-    if (cflag && agmapnametoid(g, AGNODE, name, id, (N(0)))!=0) {	/* reserve id */
-	n = newnode(g, id[0], agnextseq(g, AGNODE));
-	installnodetoroot(g, n);
-	initnode(g, n);
+    if (cflag && agmapnametoid(zz, g, AGNODE, name, id, (true))!=0) {	/* reserve id */
+	n = newnode(zz, g, id[0], agnextseq(g, AGNODE));
+	installnodetoroot(zz, g, n);
+	initnode(zz, g, n);
 
-	agregister(g, AGNODE, n); /* register in external namespace */
+	agregister(zz, g, AGNODE, n); /* register in external namespace */
 	return n;
     }
     return null;
@@ -303,19 +300,19 @@ LEAVING("4yh1h1cwoitzb1t8869b79e3g","agnode");
 /* lookup or insert <n> in <g> */
 @Reviewed(when = "13/11/2020")
 @Original(version="2.38.0", path="lib/cgraph/node.c", name="", key="d5farp22buvesyi4pydjam4g2", definition="Agnode_t *agsubnode(Agraph_t * g, Agnode_t * n0, int cflag)")
-public static ST_Agnode_s agsubnode(ST_Agraph_s g, ST_Agnode_s n0, boolean cflag) {
+public static ST_Agnode_s agsubnode(Globals zz, ST_Agraph_s g, ST_Agnode_s n0, boolean cflag) {
 ENTERING("d5farp22buvesyi4pydjam4g2","agsubnode");
 try {
     ST_Agraph_s par;
     ST_Agnode_s n;
     
-    if (NEQ(agroot(g), n0.root))
+    if ((agroot(g) != n0.root))
 	return null;
-    n = agfindnode_by_id(g, AGID(n0));
+    n = agfindnode_by_id(zz, g, n0.tag.id);
     if ((n == null) && cflag) {
 	if ((par = agparent(g))!=null) {
-	    n = agsubnode(par, n0, cflag);
-	    installnode(g, n);
+	    n = agsubnode(zz, par, n0, cflag);
+	    installnode(zz, g, n);
 	    /* no callback for existing node insertion in subgraph (?) */
 	}
 	/* else impossible that <n> doesn't belong to <g> */
@@ -330,7 +327,7 @@ LEAVING("d5farp22buvesyi4pydjam4g2","agsubnode");
 
 public static CFunction agsubnodeidcmpf = new CFunctionAbstract("agsubnodeidcmpf") {
 	
-	public Object exe(Object... args) {
+	public Object exe(Globals zz, Object... args) {
 		return agsubnodeidcmpf((ST_dt_s)args[0], (__ptr__)args[1], (__ptr__)args[2], (ST_dtdisc_s)args[3]);
 	}};
 
@@ -343,7 +340,7 @@ try {
     ST_Agsubnode_s sn0, sn1;
     sn0 = (ST_Agsubnode_s) arg0.castTo(ST_Agsubnode_s.class);
     sn1 = (ST_Agsubnode_s) arg1.castTo(ST_Agsubnode_s.class);
-    v = (AGID(sn0.node) - AGID(sn1.node));
+    v = (sn0.node.tag.id - sn1.node.tag.id);
     return ((v==0)?0:(v<0?-1:1));
 } finally {
 LEAVING("awwiazixy9c76hvyxlkvvb3vo","agsubnodeidcmpf");
@@ -354,7 +351,7 @@ LEAVING("awwiazixy9c76hvyxlkvvb3vo","agsubnodeidcmpf");
 
 public static CFunction agsubnodeseqcmpf = new CFunctionAbstract("agsubnodeseqcmpf") {
 	
-	public Object exe(Object... args) {
+	public Object exe(Globals zz, Object... args) {
 		return agsubnodeseqcmpf((ST_dt_s)args[0], (__ptr__)args[1], (__ptr__)args[2], (ST_dtdisc_s)args[3]);
 	}};
 	
@@ -367,7 +364,7 @@ try {
     int	v;
     sn0 = (ST_Agsubnode_s) arg0.castTo(ST_Agsubnode_s.class);
     sn1 = (ST_Agsubnode_s) arg1.castTo(ST_Agsubnode_s.class);
-    v = (AGSEQ(sn0.node) - AGSEQ(sn1.node));
+    v = (sn0.node.tag.seq - sn1.node.tag.seq);
     return ((v==0)?0:(v<0?-1:1));
 } finally {
 LEAVING("41fjseux0nxzpr0aq7igym9ux","agsubnodeseqcmpf");
@@ -379,7 +376,7 @@ LEAVING("41fjseux0nxzpr0aq7igym9ux","agsubnodeseqcmpf");
 
 public static CFunction free_subnode = new CFunctionAbstract("free_subnode") {
 	
-	public Object exe(Object... args) {
+	public Object exe(Globals zz, Object... args) {
 		return free_subnode(args);
 	}};
 @Unused

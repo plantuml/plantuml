@@ -2,14 +2,14 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2009-2024, Arnaud Roques
  *
- * Project Info:  http://plantuml.com
+ * Project Info:  https://plantuml.com
  * 
  * If you like this project or if you find it useful, you can support us at:
  * 
- * http://plantuml.com/patreon (only 1$ per month!)
- * http://plantuml.com/paypal
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
  * 
  * This file is part of PlantUML.
  *
@@ -36,12 +36,12 @@ package net.sourceforge.plantuml.braille;
 
 import java.awt.geom.Line2D;
 
+import net.sourceforge.plantuml.klimt.ClipContainer;
 import net.sourceforge.plantuml.klimt.UClip;
-import net.sourceforge.plantuml.klimt.ULine;
 import net.sourceforge.plantuml.klimt.UParam;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
-import net.sourceforge.plantuml.ugraphic.ClipContainer;
-import net.sourceforge.plantuml.ugraphic.UDriver;
+import net.sourceforge.plantuml.klimt.drawing.UDriver;
+import net.sourceforge.plantuml.klimt.shape.ULine;
 
 public class DriverLineBraille implements UDriver<ULine, BrailleGrid> {
 
@@ -51,7 +51,7 @@ public class DriverLineBraille implements UDriver<ULine, BrailleGrid> {
 		this.clipContainer = clipContainer;
 	}
 
-	public void draw(ULine shape , double x, double y, ColorMapper mapper, UParam param, BrailleGrid grid) {
+	public void draw(ULine shape, double x, double y, ColorMapper mapper, UParam param, BrailleGrid grid) {
 		double x2 = x + shape.getDX();
 		double y2 = y + shape.getDY();
 
