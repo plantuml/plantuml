@@ -52,8 +52,8 @@ public class XmiClassDiagramArgo extends XmiClassDiagramAbstract implements XmlD
 
 		addPackage(ownedElementRoot, classDiagram.getRootGroup());
 
-//		for (final Link link : classDiagram.getLinks())
-//			addLink(link);
+		for (final Link link : classDiagram.getLinks())
+			addLink(link);
 
 	}
 
@@ -152,7 +152,6 @@ public class XmiClassDiagramArgo extends XmiClassDiagramAbstract implements XmlD
 	private void addExtension(Link link, String assId) {
 		final Element association = document.createElement("UML:Generalization");
 		association.setAttribute("xmi.id", assId);
-		association.setAttribute("namespace", CucaDiagramXmiMaker.getModel(classDiagram));
 		if (link.getLabel() != null)
 			association.setAttribute("name", forXMI(link.getLabel()));
 
@@ -181,8 +180,8 @@ public class XmiClassDiagramArgo extends XmiClassDiagramAbstract implements XmlD
 		
 		association.appendChild(child);
 		association.appendChild(parent);
-		association.setAttribute("child", uidChild);
-		association.setAttribute("parent", uidParent);
+//		association.setAttribute("child", uidChild);
+//		association.setAttribute("parent", uidParent);
 
 	}
 
