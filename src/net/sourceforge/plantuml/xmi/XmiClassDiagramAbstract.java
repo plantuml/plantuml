@@ -74,7 +74,7 @@ abstract class XmiClassDiagramAbstract implements XmlDiagramTransformer {
 	protected final ClassDiagram classDiagram;
 	protected final XmlStackBuilderThingy s;
 	protected final Document document;
-	protected Element ownedElement;
+	//protected Element ownedElement;
 
 	protected final Set<Entity> done = new HashSet<>();
 
@@ -151,76 +151,95 @@ abstract class XmiClassDiagramAbstract implements XmlDiagramTransformer {
 		transformer.transform(source, resultat);
 	}
 
+	// UGLY: temporary hack until I can replace all calls to createEntityNode.
 	final protected Element createEntityNode(Entity entity) {
-		final Element cla = document.createElement("UML:Class");
-		if (entity.getLeafType() == LeafType.NOTE)
-			return null;
-
-		cla.setAttribute("xmi.id", entity.getUid());
-		cla.setAttribute("name", entity.getDisplay().get(0).toString());
-		final String parentCode = entity.getQuark().getParent().toStringPoint();
-
-		if (parentCode.length() == 0)
-			cla.setAttribute("namespace", CucaDiagramXmiMaker.getModel(classDiagram));
+		int levels = addEntityNode(entity);
+		if (levels > 1)
+			throw new java.lang.RuntimeException("oops, I forgot how to Java");
+		else if (levels == 1)
+			return s.pop();
 		else
-			cla.setAttribute("namespace", parentCode);
+			return null;
+	}
+
+	final protected int addEntityNode(IEntity entity) {
+		if (entity == null)
+		//final String parentCode = entity.getIdent().parent().forXmi();
+		//final String parentCode = entity.getQuark().getParent().toStringPoint();
+			return 0;
+
+		s.push(document.createElement("UML:Class"));
+		if (entity.getLeafType() == LeafType.NOTE) {
+			return 1; // UML:Class
+		}
+
+		String parentCode = entity.getIdent().parent().forXmi();
+		if (parentCode.length() == 0)
+			parentCode = CucaDiagramXmiMaker.getModel(classDiagram);
+
+		s.peek().setAttribute("xmi.id", entity.getUid());
+		s.peek().setAttribute("name", entity.getDisplay().get(0).toString());
+		s.peek().setAttribute("name", entity.getDisplay().get(0).toString());
+		s.peek().setAttribute("namespace", parentCode);
 
 		final Stereotype stereotype = entity.getStereotype();
 		if (stereotype != null) {
-			final Element stereo = document.createElement("UML:ModelElement.stereotype");
-			for (String s : stereotype.getMultipleLabels()) {
-				final Element name = document.createElement("UML:Stereotype");
-				name.setAttribute("name", s);
-				stereo.appendChild(name);
+			s.push(document.createElement("UML:ModelElement.stereotype"));
+			for (String str : stereotype.getMultipleLabels()) {
+				s.push(document.createElement("UML:Stereotype"));
+				s.peek().setAttribute("name", str);
+				s.pop(); // UML:Stereotype
 			}
-			cla.appendChild(stereo);
+			s.pop(); // UML:ModelElement.stereotype
 		}
 
 		final LeafType type = entity.getLeafType();
 		if (type == LeafType.ABSTRACT_CLASS)
-			cla.setAttribute("isAbstract", "true");
+			s.peek().setAttribute("isAbstract", "true");
 		else if (type == LeafType.INTERFACE)
-			cla.setAttribute("isInterface", "true");
+			s.peek().setAttribute("isInterface", "true");
 
 		if (((Entity) entity).isStatic())
-			cla.setAttribute("isStatic", "true");
+			s.peek().setAttribute("isStatic", "true");
 
 		if (((Entity) entity).getVisibilityModifier() == VisibilityModifier.PRIVATE_FIELD
 				|| ((Entity) entity).getVisibilityModifier() == VisibilityModifier.PRIVATE_METHOD)
-			cla.setAttribute("visibility", ((Entity) entity).getVisibilityModifier().getXmiVisibility());
+			//cla.setAttribute("visibility", ((ILeaf) entity).getVisibilityModifier().getXmiVisibility());
+			//cla.setAttribute("visibility", ((Entity) entity).getVisibilityModifier().getXmiVisibility());
+			s.peek().setAttribute("visibility", ((ILeaf) entity).getVisibilityModifier().getXmiVisibility());
 
-		final Element feature = document.createElement("UML:Classifier.feature");
-		cla.appendChild(feature);
+		s.push(document.createElement("UML:Classifier.feature"));
 
 		for (CharSequence cs : entity.getBodier().getFieldsToDisplay()) {
 			final Member m = (Member) cs;
 
-			final Element attribute = document.createElement("UML:Attribute");
-			attribute.setAttribute("xmi.id", "att" + classDiagram.getUniqueSequence());
-			attribute.setAttribute("name", m.getDisplay(false));
+			s.push(document.createElement("UML:Attribute"));
+			s.peek().setAttribute("xmi.id", "att" + classDiagram.getUniqueSequence());
+			s.peek().setAttribute("name", m.getDisplay(false));
 			final VisibilityModifier visibility = m.getVisibilityModifier();
 			if (visibility != null)
-				attribute.setAttribute("visibility", visibility.getXmiVisibility());
+				s.peek().setAttribute("visibility", visibility.getXmiVisibility());
 			if (m.isStatic())
-				attribute.setAttribute("isStatic", "true");
+				s.peek().setAttribute("isStatic", "true");
 
-			feature.appendChild(attribute);
+			s.pop(); // UML:Attribute
 		}
 
 		for (CharSequence cs : entity.getBodier().getMethodsToDisplay()) {
 			final Member m = (Member) cs;
-			final Element operation = document.createElement("UML:Operation");
-			operation.setAttribute("xmi.id", "att" + classDiagram.getUniqueSequence());
-			operation.setAttribute("name", m.getDisplay(false));
+
+			s.push(document.createElement("UML:Operation"));
+			s.peek().setAttribute("xmi.id", "att" + classDiagram.getUniqueSequence());
+			s.peek().setAttribute("name", m.getDisplay(false));
 			final VisibilityModifier visibility = m.getVisibilityModifier();
 			if (visibility != null)
-				operation.setAttribute("visibility", visibility.getXmiVisibility());
+				s.peek().setAttribute("visibility", visibility.getXmiVisibility());
 			if (m.isStatic())
-				operation.setAttribute("isStatic", "true");
+				s.peek().setAttribute("isStatic", "true");
 
-			feature.appendChild(operation);
+			s.pop(); // UML:Operation
 		}
-		return cla;
-	}
 
+		return 1; // UML:Class
+	}
 }
