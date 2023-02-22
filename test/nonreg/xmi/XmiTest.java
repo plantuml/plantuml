@@ -27,7 +27,7 @@ public class XmiTest {
 
 	protected void checkXmlAndDescription(final String expectedDescription)
 			throws IOException, UnsupportedEncodingException {
-		final String star = runPlantUML(expectedDescription, FileFormat.XMI_STAR);
+		final String star = removeVersion(runPlantUML(expectedDescription, FileFormat.XMI_STAR));
 		final String starExpected = readStringFromSourceFile(getDiagramFile(), "{{{star", "}}}star");
 
 		// This is really a hack. Since XML generation does not guarantee the order of
@@ -39,13 +39,17 @@ public class XmiTest {
 			assertEquals(starExpected, star, "XmiStar: Generated GraphML is not ok");
 		}
 
-		final String argo = runPlantUML(expectedDescription, FileFormat.XMI_ARGO);
+		final String argo = removeVersion(runPlantUML(expectedDescription, FileFormat.XMI_ARGO));
 		final String argoExpected = readStringFromSourceFile(getDiagramFile(), "{{{argo", "}}}argo");
 
 		if (sortString(argo).equals(sortString(argoExpected)) == false) {
 			assertEquals(argoExpected, argo, "XmiArgo: Generated GraphML is not ok");
 		}
 
+	}
+
+	private String removeVersion(String xmi) {
+		return xmi.replaceFirst("\\<XMI.exporterVersion\\>.*\\</XMI.exporterVersion\\>", "");
 	}
 
 	private String sortString(String s) {
