@@ -81,7 +81,7 @@ public class Run {
 
 	public static void main(String[] argsArray)
 			throws NoPlantumlCompressionException, IOException, InterruptedException {
-		System.setProperty("log4j.debug", "false");
+		System.setProperty("log4j.debug", "true");
 		final long start = System.currentTimeMillis();
 		if (argsArray.length > 0 && argsArray[0].equalsIgnoreCase("-headless")) {
 			System.setProperty("java.awt.headless", "true");

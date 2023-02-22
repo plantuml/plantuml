@@ -146,7 +146,7 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 			Logme.error(e);
 			exportDiagramError(os, e.getCause(), fileFormatOption, e.getGraphvizVersion());
 		} catch (Throwable e) {
-			// Logme.error(e);
+			Logme.error(e);
 			exportDiagramError(os, e, fileFormatOption, null);
 		}
 		return ImageDataSimple.error();

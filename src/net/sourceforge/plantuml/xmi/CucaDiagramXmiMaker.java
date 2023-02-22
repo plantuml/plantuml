@@ -90,6 +90,10 @@ public final class CucaDiagramXmiMaker {
 			Log.error(e.toString());
 			Logme.error(e);
 			throw new IOException(e.toString());
+		} catch (Throwable e) {
+			Log.error(e.toString());
+			Logme.error(e);
+			throw e;
 		}
 	}
 
