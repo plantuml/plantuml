@@ -52,25 +52,23 @@ public class XmiClassDiagramArgo extends XmiClassDiagramAbstract implements XmlD
 
 		addPackage(ownedElementRoot, classDiagram.getRootGroup());
 
-		for (final Link link : classDiagram.getLinks())
-			addLink(link);
+//		for (final Link link : classDiagram.getLinks())
+//			addLink(link);
 
 	}
 
 	final protected Element createElementPackage(Entity group) {
-		final Element ownedElement1 = document.createElement("UML:Namespace.ownedElement");
 		final Element umlPackage = document.createElement("UML:Package");
-		ownedElement1.appendChild(umlPackage);
 
 		umlPackage.setAttribute("xmi.id", group.getUid());
 		umlPackage.setAttribute("name", group.getDisplay().get(0).toString());
 
-		final Element ownedElement2 = document.createElement("UML:Namespace.ownedElement");
-		umlPackage.appendChild(ownedElement2);
+		final Element namespaceOwnedElement = document.createElement("UML:Namespace.ownedElement");
+		umlPackage.appendChild(namespaceOwnedElement);
 
-		addPackage(ownedElement2, group);
+		addPackage(namespaceOwnedElement, group);
 
-		return ownedElement1;
+		return umlPackage;
 
 	}
 
