@@ -16,7 +16,7 @@ public class XmlStackBuilderThingy extends Stack<Element> {
 
 	@Override
 	public Element push(Element e) {
-		if (!this.empty())
+		if (this.empty())
 			this.doc.appendChild(e);
 		else
 			super.peek().appendChild(e);
