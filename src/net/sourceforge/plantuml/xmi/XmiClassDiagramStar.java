@@ -55,7 +55,6 @@ public class XmiClassDiagramStar extends XmiClassDiagramAbstract implements XmlD
 			if (cla == null)
 				continue;
 
-			ownedElement.appendChild(cla);
 			done.add(ent);
 		}
 
@@ -73,11 +72,11 @@ public class XmiClassDiagramStar extends XmiClassDiagramAbstract implements XmlD
 			addExtension(link, assId);
 			return;
 		}
-		final Element association = document.createElement("UML:Association");
-		association.setAttribute("xmi.id", assId);
-		association.setAttribute("namespace", CucaDiagramXmiMaker.getModel(classDiagram));
+		s.push(document.createElement("UML:Association"));
+		s.peek().setAttribute("xmi.id", assId);
+		s.peek().setAttribute("namespace", CucaDiagramXmiMaker.getModel(classDiagram));
 		if (Display.isNull(link.getLabel()) == false)
-			association.setAttribute("name", forXMI(link.getLabel()));
+			s.peek().setAttribute("name", forXMI(link.getLabel()));
 
 		final Element connection = document.createElement("UML:Association.connection");
 		final Element end1 = document.createElement("UML:AssociationEnd");
@@ -116,29 +115,28 @@ public class XmiClassDiagramStar extends XmiClassDiagramAbstract implements XmlD
 		end2.appendChild(endparticipant2);
 		connection.appendChild(end2);
 
-		association.appendChild(connection);
+		s.peek().appendChild(connection);
 
-		ownedElement.appendChild(association);
-
+		s.pop(); // UML:Association
 	}
 
 	private void addExtension(Link link, String assId) {
-		final Element association = document.createElement("UML:Generalization");
-		association.setAttribute("xmi.id", assId);
-		association.setAttribute("namespace", CucaDiagramXmiMaker.getModel(classDiagram));
+		s.push(document.createElement("UML:Generalization"));
+		s.peek().setAttribute("xmi.id", assId);
+		s.peek().setAttribute("namespace", CucaDiagramXmiMaker.getModel(classDiagram));
 		if (link.getLabel() != null)
-			association.setAttribute("name", forXMI(link.getLabel()));
+			s.peek().setAttribute("name", forXMI(link.getLabel()));
 
 		if (link.getType().getDecor1() == LinkDecor.EXTENDS) {
-			association.setAttribute("child", link.getEntity1().getUid());
-			association.setAttribute("parent", link.getEntity2().getUid());
+			s.peek().setAttribute("child", link.getEntity1().getUid());
+			s.peek().setAttribute("parent", link.getEntity2().getUid());
 		} else if (link.getType().getDecor2() == LinkDecor.EXTENDS) {
-			association.setAttribute("child", link.getEntity2().getUid());
-			association.setAttribute("parent", link.getEntity1().getUid());
+			s.peek().setAttribute("child", link.getEntity2().getUid());
+			s.peek().setAttribute("parent", link.getEntity1().getUid());
 		} else {
 			throw new IllegalStateException();
 		}
-		ownedElement.appendChild(association);
+		s.pop(); // UML:Generalization
 
 	}
 

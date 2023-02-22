@@ -56,7 +56,6 @@ public class XmiClassDiagramArgo extends XmiClassDiagramAbstract implements XmlD
 			if (cla == null)
 				continue;
 
-			ownedElement.appendChild(cla);
 			done.add(ent);
 		}
 
@@ -70,11 +69,11 @@ public class XmiClassDiagramArgo extends XmiClassDiagramAbstract implements XmlD
 
 		final String assId = "ass" + classDiagram.getUniqueSequence();
 
-		final Element association = document.createElement("UML:Association");
-		association.setAttribute("xmi.id", assId);
-		association.setAttribute("namespace", CucaDiagramXmiMaker.getModel(classDiagram));
+		s.push(document.createElement("UML:Association"));
+		s.peek().setAttribute("xmi.id", assId);
+		s.peek().setAttribute("namespace", CucaDiagramXmiMaker.getModel(classDiagram));
 		if (link.getLabel() != null)
-			association.setAttribute("name", forXMI(link.getLabel()));
+			s.peek().setAttribute("name", forXMI(link.getLabel()));
 
 		final Element connection = document.createElement("UML:Association.connection");
 		final Element end1 = document.createElement("UML:AssociationEnd");
@@ -123,9 +122,9 @@ public class XmiClassDiagramArgo extends XmiClassDiagramAbstract implements XmlD
 		end2.appendChild(endparticipant2);
 		connection.appendChild(end2);
 
-		association.appendChild(connection);
+		s.peek().appendChild(connection);
 
-		ownedElement.appendChild(association);
+		s.pop(); // UML:Association
 
 	}
 
