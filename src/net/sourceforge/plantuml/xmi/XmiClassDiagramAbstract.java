@@ -3,6 +3,7 @@
  * ========================================================================
  *
  * (C) Copyright 2009-2023, Arnaud Roques
+ * (C) Copyright 2023 Daniel Santos
  *
  * Project Info:  http://plantuml.com
  * 
@@ -62,6 +63,8 @@ import net.sourceforge.plantuml.cucadiagram.Member;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.xml.XmlFactories;
+import net.sourceforge.plantuml.xml.XmlStackBuilderThingy;
+
 
 abstract class XmiClassDiagramAbstract implements XmlDiagramTransformer {
 
@@ -69,6 +72,7 @@ abstract class XmiClassDiagramAbstract implements XmlDiagramTransformer {
 	// http://pierre.ree7.fr/blog/?p=5
 
 	protected final ClassDiagram classDiagram;
+	protected final XmlStackBuilderThingy s;
 	protected final Document document;
 	protected Element ownedElement;
 
@@ -76,37 +80,52 @@ abstract class XmiClassDiagramAbstract implements XmlDiagramTransformer {
 
 	public XmiClassDiagramAbstract(ClassDiagram classDiagram) throws ParserConfigurationException {
 		this.classDiagram = classDiagram;
-
+		/* <?xml version='1.0' encoding='UTF-8' ?>
+		 * <XMI xmi.version='1.2' xmlns:UML='org.omg.xmi.namespace.UML'>
+		 *   <XMI.header>
+		 *     <XMI.documentation>
+		 *       <XMI.exporter>PlantUML</XMI.exporter>
+		 *       <XMI.exporterVersion>PlantUML 1.2022</XMI.exporterVersion>
+		 *     </XMI.documentation>
+		 *     <XMI.metamodel xmi.name="UML" xmi.version="1.4"/>
+		 *   </XMI.header>
+		 *   <XMI.content>
+		 *     <UML:Model xmi.id='model1' name='PlantUML'>
+		 */
 		final DocumentBuilder builder = XmlFactories.newDocumentBuilder();
 		this.document = builder.newDocument();
 		document.setXmlVersion("1.0");
 		document.setXmlStandalone(true);
 
-		final Element xmi = document.createElement("XMI");
-		xmi.setAttribute("xmi.version", "1.1");
-		xmi.setAttribute("xmlns:UML", "href://org.omg/UML/1.3");
-		document.appendChild(xmi);
+		final XmlStackBuilderThingy s = new XmlStackBuilderThingy(document);
 
-		final Element header = document.createElement("XMI.header");
-		xmi.appendChild(header);
+		s.push(document.createElement("XMI"));
+		s.peek().setAttribute("xmi.version", "1.2");
+		// s.peek().setAttribute("xmlns:UML", "href://org.omg/UML/1.3");
+		s.peek().setAttribute("xmlns:UML", "org.omg.xmi.namespace.UML");
 
-		final Element metamodel = document.createElement("XMI.metamodel");
-		metamodel.setAttribute("xmi.name", "UML");
-		metamodel.setAttribute("xmi.version", "1.3");
-		header.appendChild(metamodel);
+		s.push(document.createElement("XMI.header"));
 
-		final Element content = document.createElement("XMI.content");
-		xmi.appendChild(content);
+		s.push(document.createElement("XMI.documentation"));
+		s.push(document.createElement("XMI.exporter"));
+		s.peek().appendChild(document.createTextNode("PlantUML"));
+		s.pop(); // XMI.exporter
+		s.push(document.createElement("XMI.exporterVersion"));
+		s.peek().appendChild(document.createTextNode("PlantUML 1.2022"));	// FIXME
+		s.pop(); // XMI.documentation
 
-		final Element model = document.createElement("UML:Model");
-		model.setAttribute("xmi.id", CucaDiagramXmiMaker.getModel(classDiagram));
-		model.setAttribute("name", "PlantUML");
-		content.appendChild(model);
+		s.push(document.createElement("XMI.metamodel"));
+		s.peek().setAttribute("xmi.name", "UML");
+		s.peek().setAttribute("xmi.version", "1.4");
+		s.pop(); // XMI.metamodel
+		s.pop(); // XMI.header
 
-		// <UML:Namespace.ownedElement>
-		this.ownedElement = document.createElement("UML:Namespace.ownedElement");
-		model.appendChild(ownedElement);
+		s.push(document.createElement("XMI.content"));
+		s.push(document.createElement("UML:Model"));
+		s.peek().setAttribute("xmi.id", CucaDiagramXmiMaker.getModel(classDiagram));
+		s.peek().setAttribute("name", "PlantUML");
 
+		this.s = s;
 	}
 
 	final protected String forXMI(String s) {
