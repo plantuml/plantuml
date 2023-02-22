@@ -40,73 +40,65 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Element;
 
 import net.sourceforge.plantuml.baraye.Entity;
-import net.sourceforge.plantuml.baraye.IGroup;
-import net.sourceforge.plantuml.baraye.ILeaf;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
+import net.sourceforge.plantuml.plasma.Quark;
 
 public class XmiClassDiagramStandard extends XmiClassDiagramAbstract implements XmlDiagramTransformer {
+	/*
+     * <UML:Package xmi.id='pkg001' name='name'>
+     *   <UML:Namespace.ownedElement>
+     */
 	private int renderPackage(String name) {
 		s.push(document.createElement("UML:Package"));
 		s.peek().setAttribute("xmi.id", "pkg" + classDiagram.getUniqueSequence());
 		s.peek().setAttribute("name", name);
-		return 1;
+		s.pushNamespace();
+		return 2;
 	}
 
-	/*
-     *       <UML:Namespace.ownedElement>
-     *         <UML:Package xmi.id='11A2' name='a'>
-     *           <UML:Namespace.ownedElement>
-     *             <UML:Class xmi.id='cl0001' name='ClassName'>
-     */
-	private int renderEntity(IEntity entity) {
+	private int renderEntity(Entity entity) {
+		LeafType leafType = entity.getLeafType();
 		int levels = 0;
 
-		//for (final IEntity ent : classDiagram.getLeafsvalues()) {
-		//for (final Entity ent : classDiagram.getEntityFactory().leafs()) {
-		if (entity == null) {
-			throw new NullPointerException("oops, entity is null");//levels += renderPackage()
-		}
-
-		LeafType leafType = entity.getLeafType();
-
-		// This may or may not be needed. It's possible for a logical hierarchy to not match a
-		// naming hierarchy.  If that's not the case in this code then please remove this check
-		// and always add the UML:Namespace
-		String name = entity.getDisplay().get(0).toString();
-		if (name != null && name != "") {
-			s.push(document.createElement("UML:Namespace.ownedElement"));
-			++levels;
+		if (leafType == null || leafType == LeafType.EMPTY_PACKAGE) {
+			levels += renderPackage(entity.getName());
+			return levels;
 		}
 
 		switch (leafType) {
-		case EMPTY_PACKAGE:
-			levels += renderPackage(name);
-
-		//	return levels;
 		default:
-			levels += addEntityNode(entity);
+			break;
 		}
 
+		levels += addEntityNode(entity);
 		return levels;
 	}
 
-	private void renderGroup(IEntity entity, IGroup parent) {
+	private void renderQuark(Quark<Entity> quark) {
 		int levels = 0;
-		IGroup group = null;
 
-		if (entity != null)
-			levels = renderEntity(entity);
+		// FIXME: Maybe move UML:Model generation here?
+		if (quark.isRoot()) {
+			// parent = "";
+		} else {
+			Entity entity = quark.getData();
+			if (entity == null) {
+				throw new RuntimeException("oops");//levels += renderPackage()
+			}
+			levels = renderEntity(quark.getData());
+			//parent += "." + "s";
+			done.add(entity);
+		}
 
-		if (entity.isGroup())
-			group = (IGroup) entity;
-
-		for (final IEntity child : group.getLeafsDirect()) {
+		for (final Quark<Entity> child : quark.getChildren()) {
+			Entity entity = child.getData();
 
 			// UGLY: Stealing logic from EntityFactory.leafs(), breaking encapsulation.
-			//if (entity == null && entity.isGroup())
-			//	continue;
-			renderGroup(child, group);
+			if (entity == null /* && entity.isGroup()*/)
+				continue;
+
+			renderQuark(child);
 		}
 
 		for (int i = 0; i < levels; ++i)
@@ -115,58 +107,6 @@ public class XmiClassDiagramStandard extends XmiClassDiagramAbstract implements 
 
 	public XmiClassDiagramStandard(ClassDiagram classDiagram) throws ParserConfigurationException {
 		super(classDiagram);
-		IGroup rootGroup = classDiagram.getEntityFactory().getRootGroup();
-		for (ILeaf leaf : rootGroup.getLeafsDirect()) {
-			renderGroup(leaf, rootGroup);
-		}
-		//classDiagram.getRootGroup()classDiagram.leaf
-
-		//for (final IEntity ent : classDiagram.getLeafsvalues()) {}
-		//getLeafsDirect
-		//renderQuark(.getQuark());
-
-		// if (fileFormat != FileFormat.XMI_STANDARD) {
-		// for (final Link link : classDiagram.getLinks()) {
-		// addLink(link);
-		// }
-		// }
+		renderQuark(classDiagram.getEntityFactory().getRootGroup().getQuark());
 	}
-
-	/*
-	for (final IEntity ent : classDiagram.getLeafsvalues()) {
-		-			// if (fileFormat == FileFormat.XMI_ARGO && isStandalone(ent) == false) {
-		-			// continue;
-		-			// }
-		 			final Element cla = createEntityNode(ent);
-		 			if (cla == null) {
-		 				continue;
-
-final String parentCode = entity.getQuark().getParent().toStringPoint();
--
--					if (parentCode.length() == 0)
--						cla.setAttribute("namespace", CucaDiagramXmiMaker.getModel(classDiagram));
--					else
--						cla.setAttribute("namespace", parentCode);
--
--					break;
--				default:
--					continue;
--				}
--
--			final Element cla = createEntityNode(ent);
--			if (cla == null) {
--				continue;
--			}
--			ownedElement.appendChild(cla);
--			done.add(ent);
-*/
-	// private boolean isStandalone(IEntity ent) {
-	// for (final Link link : classDiagram.getLinks()) {
-	// if (link.getEntity1() == ent || link.getEntity2() == ent) {
-	// return false;
-	// }
-	// }
-	// return true;
-	// }
-
 }

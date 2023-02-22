@@ -59,6 +59,9 @@ import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.cucadiagram.Display;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
+import net.sourceforge.plantuml.cucadiagram.Link;
+import net.sourceforge.plantuml.cucadiagram.LinkDecor;
+import net.sourceforge.plantuml.cucadiagram.LinkStyle;
 import net.sourceforge.plantuml.cucadiagram.Member;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
@@ -91,6 +94,7 @@ abstract class XmiClassDiagramAbstract implements XmlDiagramTransformer {
 		 *   </XMI.header>
 		 *   <XMI.content>
 		 *     <UML:Model xmi.id='model1' name='PlantUML'>
+		 *       <UML:Namespace.ownedElement>
 		 */
 		final DocumentBuilder builder = XmlFactories.newDocumentBuilder();
 		this.document = builder.newDocument();
@@ -101,7 +105,6 @@ abstract class XmiClassDiagramAbstract implements XmlDiagramTransformer {
 
 		s.push(document.createElement("XMI"));
 		s.peek().setAttribute("xmi.version", "1.2");
-		// s.peek().setAttribute("xmlns:UML", "href://org.omg/UML/1.3");
 		s.peek().setAttribute("xmlns:UML", "org.omg.xmi.namespace.UML");
 
 		s.push(document.createElement("XMI.header"));
@@ -112,6 +115,7 @@ abstract class XmiClassDiagramAbstract implements XmlDiagramTransformer {
 		s.pop(); // XMI.exporter
 		s.push(document.createElement("XMI.exporterVersion"));
 		s.peek().appendChild(document.createTextNode("PlantUML 1.2022"));	// FIXME
+		s.pop(); // XMI.exporterVersion
 		s.pop(); // XMI.documentation
 
 		s.push(document.createElement("XMI.metamodel"));
@@ -124,6 +128,7 @@ abstract class XmiClassDiagramAbstract implements XmlDiagramTransformer {
 		s.push(document.createElement("UML:Model"));
 		s.peek().setAttribute("xmi.id", CucaDiagramXmiMaker.getModel(classDiagram));
 		s.peek().setAttribute("name", "PlantUML");
+		s.pushNamespace();
 
 		this.s = s;
 	}
@@ -162,24 +167,18 @@ abstract class XmiClassDiagramAbstract implements XmlDiagramTransformer {
 			return null;
 	}
 
-	final protected int addEntityNode(IEntity entity) {
+	final protected int addEntityNode(Entity entity) {
 		if (entity == null)
-		//final String parentCode = entity.getIdent().parent().forXmi();
-		//final String parentCode = entity.getQuark().getParent().toStringPoint();
 			return 0;
 
 		s.push(document.createElement("UML:Class"));
 		if (entity.getLeafType() == LeafType.NOTE) {
+			// FIXME: uhh... what? Why did I do this?
 			return 1; // UML:Class
 		}
 
-		String parentCode = entity.getIdent().parent().forXmi();
-		if (parentCode.length() == 0)
-			parentCode = CucaDiagramXmiMaker.getModel(classDiagram);
-
 		s.peek().setAttribute("xmi.id", entity.getUid());
 		s.peek().setAttribute("name", entity.getDisplay().get(0).toString());
-		s.peek().setAttribute("namespace", parentCode);
 
 		final Stereotype stereotype = entity.getStereotype();
 		if (stereotype != null) {
@@ -203,9 +202,13 @@ abstract class XmiClassDiagramAbstract implements XmlDiagramTransformer {
 
 		if (((Entity) entity).getVisibilityModifier() == VisibilityModifier.PRIVATE_FIELD
 				|| ((Entity) entity).getVisibilityModifier() == VisibilityModifier.PRIVATE_METHOD)
-			//cla.setAttribute("visibility", ((ILeaf) entity).getVisibilityModifier().getXmiVisibility());
-			//cla.setAttribute("visibility", ((Entity) entity).getVisibilityModifier().getXmiVisibility());
-			s.peek().setAttribute("visibility", ((ILeaf) entity).getVisibilityModifier().getXmiVisibility());
+			s.peek().setAttribute("visibility", ((Entity) entity).getVisibilityModifier().getXmiVisibility());
+
+		for (final Link link : classDiagram.getLinks()) {
+			if (link.getEntity2() != entity)
+				continue;
+			addLink(link);
+		}
 
 		s.push(document.createElement("UML:Classifier.feature"));
 
@@ -238,7 +241,142 @@ abstract class XmiClassDiagramAbstract implements XmlDiagramTransformer {
 
 			s.pop(); // UML:Operation
 		}
+		s.pop(); // UML:Classifier.feature
 
+		// For this to be useful for inner classes, etc., would probably need a namespace?
 		return 1; // UML:Class
+	}
+
+	private void addLink(Link link) {
+		if (link.isHidden() || link.isInvis())
+			return;
+
+		final String assId = "ass" + classDiagram.getUniqueSequence();
+		final LinkStyle.Type linkStyleType = link.getType().getStyle().getType();
+		final boolean isExtends = link.getType().getDecor2() == LinkDecor.EXTENDS;
+		final boolean isRealization = isExtends && linkStyleType == LinkStyle.Type.DASHED;
+
+		if (isRealization) {
+			addAbstraction(link, assId);
+		} else if (isExtends) {
+			addGeneralization(link, assId);
+		} else {
+			throw new RuntimeException("oops, I don't know how to do this link yet.");
+		}
+	}
+
+	/*
+	 * Defined within type:
+	 * 
+	 * <UML:GeneralizableElement.generalization>
+	 *   <UML:Generalization xmi.idref='generalization id'/>
+	 * </UML:GeneralizableElement.generalization>
+	 * 
+	 * Defined at namespace level of type:
+	 *
+	 * <UML:Generalization xmi.id='generalization id'>
+	 *   <UML:Generalization.child>
+	 *     <UML:Class xmi.idref='class id1'/>
+	 *   </UML:Generalization.child>
+	 *   <UML:Generalization.parent>
+	 *     <UML:Class xmi.idref='class id2'/>
+	 *   </UML:Generalization.parent>
+	 * </UML:Generalization>
+	 */
+	public void addGeneralization(Link link, String assId) {
+		s.push(document.createElement("UML:ModelElement.clientDependency"));
+		s.push(document.createElement("UML:Abstraction"));
+		s.peek().setAttribute("xmi.idref", assId);
+		s.pop(); // UML:Abstraction
+		s.pop(); // UML:ModelElement.clientDependency
+
+		XmlStackBuilderThingy ns = s.getNamespace();
+		final String stereoId = "ste" + classDiagram.getUniqueSequence();
+
+		ns.push(document.createElement("UML:Generalization"));
+
+		ns.push(document.createElement("UML:Generalization.child"));
+		ns.push(document.createElement("UML:Class"));
+		ns.peek().setAttribute("xmi.idref", link.getEntity2().getUid());
+		ns.pop(); // UML:Class
+		ns.pop(); // UML:Generalization.child
+
+		ns.push(document.createElement("UML:Generalization.parent"));
+		ns.push(document.createElement("UML:Class"));
+		ns.peek().setAttribute("xmi.idref", link.getEntity1().getUid());
+		ns.pop(); // UML:Class
+		ns.pop(); // UML:Generalization.parent
+		ns.pop(); // UML:Generalization
+
+
+		ns.push(document.createElement("UML:Stereotype"));
+		ns.peek().setAttribute("xmi.id", stereoId);
+		ns.push(document.createElement("UML:Stereotype.baseClass"));
+		ns.peek().setTextContent("Abstraction");
+		ns.pop(); // UML:Stereotype.baseClass
+		ns.pop(); // UML:Stereotype
+	}
+
+	/*
+	 * Defined within type:
+	 * 
+	 * <UML:ModelElement.clientDependency>
+	 *   <UML:Abstraction xmi.idref='abstraction id'/>
+	 * </UML:ModelElement.clientDependency>
+	 * 
+	 * Defined at namespace level of type:
+	 * 
+	 * <UML:Abstraction xmi.id='abstraction id'>
+	 *   <UML:ModelElement.stereotype>
+	 *     <UML:Stereotype xmi.idref='stereotype id'/>
+	 *   </UML:ModelElement.stereotype>
+	 *   <UML:Dependency.client>
+	 *     <UML:Class xmi.idref='class id1'/>
+	 *   </UML:Dependency.client>
+	 *   <UML:Dependency.supplier>
+	 *     <UML:Class xmi.idref='class id2'/>
+	 *   </UML:Dependency.supplier>
+	 * </UML:Abstraction>
+	 * <UML:Stereotype xmi.id='stereotype id' name='realize'>
+	 *   <UML:Stereotype.baseClass>Abstraction</UML:Stereotype.baseClass>
+	 * </UML:Stereotype>
+	 */
+	public void addAbstraction(Link link, String assId) {
+		s.push(document.createElement("UML:ModelElement.clientDependency"));
+		s.push(document.createElement("UML:Abstraction"));
+		s.peek().setAttribute("xmi.idref", assId);
+		s.pop(); // UML:Abstraction
+		s.pop(); // UML:ModelElement.clientDependency
+
+		XmlStackBuilderThingy ns = s.getNamespace();
+		final String stereoId = "ste" + classDiagram.getUniqueSequence();
+
+		ns.push(document.createElement("UML:Abstraction"));
+		ns.peek().setAttribute("xmi.id", assId);
+		ns.push(document.createElement("UML:ModelElement.stereotype"));
+		ns.push(document.createElement("UML:Stereotype"));
+		ns.peek().setAttribute("xmi.idref", stereoId);
+		ns.pop(); // UML:Stereotype
+		ns.pop(); // UML:ModelElement.stereotype
+
+		ns.push(document.createElement("UML:Dependency.client"));
+		ns.push(document.createElement("UML:Class"));
+		ns.peek().setAttribute("xmi.idref", link.getEntity2().getUid());
+		ns.pop(); // UML:Dependency.client
+		ns.pop(); // UML:Class
+
+		ns.push(document.createElement("UML:Dependency.supplier"));
+		ns.push(document.createElement("UML:Class"));
+		ns.peek().setAttribute("xmi.idref", link.getEntity1().getUid());
+		ns.pop(); // UML:Class
+		ns.pop(); // UML:Dependency.supplier
+		ns.pop(); // UML:Abstraction
+
+		ns.push(document.createElement("UML:Stereotype"));
+		ns.peek().setAttribute("xmi.id", stereoId);
+		ns.push(document.createElement("UML:Stereotype.baseClass"));
+		ns.peek().setTextContent("Abstraction");
+		ns.pop(); // UML:Stereotype.baseClass
+		ns.pop(); // UML:Stereotype
 	}
 }

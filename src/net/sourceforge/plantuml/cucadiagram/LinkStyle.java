@@ -39,7 +39,7 @@ import net.sourceforge.plantuml.klimt.UStroke;
 
 public class LinkStyle {
 
-	static enum Type {
+	public static enum Type {
 		NORMAL, DASHED, DOTTED, BOLD, INVISIBLE;
 	}
 
@@ -62,6 +62,10 @@ public class LinkStyle {
 	// private UStroke getStroke2() {
 	// return getStroke2(1);
 	// }
+
+	public Type getType() {
+		return type;
+	}
 
 	public boolean isNormal() {
 		return type == Type.NORMAL;
