@@ -179,7 +179,6 @@ abstract class XmiClassDiagramAbstract implements XmlDiagramTransformer {
 
 		s.peek().setAttribute("xmi.id", entity.getUid());
 		s.peek().setAttribute("name", entity.getDisplay().get(0).toString());
-		s.peek().setAttribute("name", entity.getDisplay().get(0).toString());
 		s.peek().setAttribute("namespace", parentCode);
 
 		final Stereotype stereotype = entity.getStereotype();
