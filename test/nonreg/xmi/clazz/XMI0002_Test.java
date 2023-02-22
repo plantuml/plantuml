@@ -31,15 +31,19 @@ Expected result MUST be put between triple brackets
 {{{star
 <?xml version="1.0" encoding="UTF-8"?><XMI xmlns:UML="href://org.omg/UML/1.3" xmi.version="1.1">
     <XMI.header>
-        <XMI.metamodel xmi.name="UML" xmi.version="1.3"/>
+        <XMI.documentation>
+            <XMI.exporter>PlantUML</XMI.exporter>
+            <XMI.exporterVersion>1.2023.2beta7</XMI.exporterVersion>
+        </XMI.documentation>
+        <XMI.metamodel xmi.name="UML" xmi.version="1.4"/>
     </XMI.header>
     <XMI.content>
         <UML:Model name="PlantUML" xmi.id="model1">
             <UML:Namespace.ownedElement>
-                <UML:Class name="A" namespace="model1" xmi.id="cl0002">
+                <UML:Class name="A" xmi.id="cl0002">
                     <UML:Classifier.feature/>
                 </UML:Class>
-                <UML:Class name="B" namespace="model1" xmi.id="cl0003">
+                <UML:Class name="B" xmi.id="cl0003">
                     <UML:Classifier.feature/>
                 </UML:Class>
                 <UML:Association namespace="model1" xmi.id="ass5">
@@ -61,26 +65,28 @@ Expected result MUST be put between triple brackets
 {{{argo
 <?xml version="1.0" encoding="UTF-8"?><XMI xmlns:UML="href://org.omg/UML/1.3" xmi.version="1.1">
     <XMI.header>
-        <XMI.metamodel xmi.name="UML" xmi.version="1.3"/>
+        <XMI.documentation>
+            <XMI.exporter>PlantUML</XMI.exporter>
+            <XMI.exporterVersion>1.2023.2beta7</XMI.exporterVersion>
+        </XMI.documentation>
+        <XMI.metamodel xmi.name="UML" xmi.version="1.4"/>
     </XMI.header>
     <XMI.content>
         <UML:Model name="PlantUML" xmi.id="model1">
             <UML:Namespace.ownedElement>
-                <UML:Association name="" namespace="model1" xmi.id="ass5">
+                <UML:Class name="A" xmi.id="cl0002">
+                    <UML:Classifier.feature/>
+                </UML:Class>
+                <UML:Class name="B" xmi.id="cl0003">
+                    <UML:Classifier.feature/>
+                </UML:Class>
+                <UML:Association xmi.id="ass5">
                     <UML:Association.connection>
                         <UML:AssociationEnd association="ass5" type="cl0002" xmi.id="end6">
-                            <UML:AssociationEnd.participant>
-                                <UML:Class name="A" namespace="model1" xmi.id="cl0002">
-                                    <UML:Classifier.feature/>
-                                </UML:Class>
-                            </UML:AssociationEnd.participant>
+                            <UML:AssociationEnd.participant/>
                         </UML:AssociationEnd>
                         <UML:AssociationEnd association="ass5" type="cl0003" xmi.id="end7">
-                            <UML:AssociationEnd.participant>
-                                <UML:Class name="B" namespace="model1" xmi.id="cl0003">
-                                    <UML:Classifier.feature/>
-                                </UML:Class>
-                            </UML:AssociationEnd.participant>
+                            <UML:AssociationEnd.participant/>
                         </UML:AssociationEnd>
                     </UML:Association.connection>
                 </UML:Association>

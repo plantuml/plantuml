@@ -33,45 +33,54 @@ Expected result MUST be put between triple brackets
 {{{star
 <?xml version="1.0" encoding="UTF-8"?><XMI xmlns:UML="href://org.omg/UML/1.3" xmi.version="1.1">
     <XMI.header>
-        <XMI.metamodel xmi.name="UML" xmi.version="1.3"/>
+        <XMI.documentation>
+            <XMI.exporter>PlantUML</XMI.exporter>
+            <XMI.exporterVersion>1.2023.2beta7</XMI.exporterVersion>
+        </XMI.documentation>
+        <XMI.metamodel xmi.name="UML" xmi.version="1.4"/>
     </XMI.header>
     <XMI.content>
         <UML:Model name="PlantUML" xmi.id="model1">
             <UML:Namespace.ownedElement>
-                <UML:Class name="A" namespace="model1" xmi.id="cl0002">
+                <UML:Class name="A" xmi.id="cl0002">
                     <UML:Classifier.feature>
                         <UML:Operation isStatic="true" name="method" visibility="public" xmi.id="att7"/>
                     </UML:Classifier.feature>
                 </UML:Class>
-                <UML:Class isAbstract="true" name="B" namespace="model1" xmi.id="cl0003">
+                <UML:Class isAbstract="true" name="B" xmi.id="cl0003">
                     <UML:Classifier.feature/>
                 </UML:Class>
-                <UML:Class isStatic="true" name="C" namespace="model1" xmi.id="cl0004">
+                <UML:Class isStatic="true" name="C" xmi.id="cl0004">
                     <UML:Classifier.feature/>
                 </UML:Class>
             </UML:Namespace.ownedElement>
         </UML:Model>
     </XMI.content>
 </XMI>
+
 }}}star
 
 {{{argo
 <?xml version="1.0" encoding="UTF-8"?><XMI xmlns:UML="href://org.omg/UML/1.3" xmi.version="1.1">
     <XMI.header>
-        <XMI.metamodel xmi.name="UML" xmi.version="1.3"/>
+        <XMI.documentation>
+            <XMI.exporter>PlantUML</XMI.exporter>
+            <XMI.exporterVersion>1.2023.2beta7</XMI.exporterVersion>
+        </XMI.documentation>
+        <XMI.metamodel xmi.name="UML" xmi.version="1.4"/>
     </XMI.header>
     <XMI.content>
         <UML:Model name="PlantUML" xmi.id="model1">
             <UML:Namespace.ownedElement>
-                <UML:Class name="A" namespace="model1" xmi.id="cl0002">
+                <UML:Class name="A" xmi.id="cl0002">
                     <UML:Classifier.feature>
                         <UML:Operation isStatic="true" name="method" visibility="public" xmi.id="att7"/>
                     </UML:Classifier.feature>
                 </UML:Class>
-                <UML:Class isAbstract="true" name="B" namespace="model1" xmi.id="cl0003">
+                <UML:Class isAbstract="true" name="B" xmi.id="cl0003">
                     <UML:Classifier.feature/>
                 </UML:Class>
-                <UML:Class isStatic="true" name="C" namespace="model1" xmi.id="cl0004">
+                <UML:Class isStatic="true" name="C" xmi.id="cl0004">
                     <UML:Classifier.feature/>
                 </UML:Class>
             </UML:Namespace.ownedElement>
