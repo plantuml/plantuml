@@ -58,6 +58,58 @@ import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class Link extends WithLinkType implements Hideable, Removeable {
+	
+	public static enum Typish {
+		GENERALIZATION,
+		REALIZATION,
+		COMPOSITION,
+		AGGREGATION,
+		ASSOCIATION,
+		UNIASSOCIATION,
+		DUNNO,
+		ALIAS,
+	}
+	
+	public Typish getTypish() {
+		LinkType type = getType();
+		LinkStyle style = type.getStyle();
+		LinkDecor d1 = type.getDecor1();
+		LinkDecor d2 = type.getDecor2();
+		
+		switch (style.getType()) {
+		case DASHED:
+			switch (d2) {
+			case SQUARE:
+				return Typish.ALIAS;
+			case ARROW:
+				return Typish.REALIZATION;
+			}
+			return Typish.DUNNO;
+ 
+		case NORMAL:
+			switch (d2) {
+			case EXTENDS:
+				return Typish.GENERALIZATION;
+			case NONE:
+				switch (d1) {
+				case NONE:
+					return Typish.ASSOCIATION;
+				case ARROW:
+					return Typish.UNIASSOCIATION; 
+				}
+				break;
+
+			case COMPOSITION:
+				return Typish.COMPOSITION;
+
+			case AGREGATION:
+				return Typish.AGGREGATION;
+			}
+			return Typish.DUNNO;	
+		}
+
+		return Typish.DUNNO;
+	}
 
 	public final StyleBuilder getStyleBuilder() {
 		return styleBuilder;

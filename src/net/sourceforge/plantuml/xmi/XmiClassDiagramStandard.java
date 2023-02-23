@@ -37,8 +37,6 @@ package net.sourceforge.plantuml.xmi;
 
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.w3c.dom.Element;
-
 import net.sourceforge.plantuml.baraye.Entity;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
@@ -78,24 +76,20 @@ public class XmiClassDiagramStandard extends XmiClassDiagramAbstract implements 
 	private void renderQuark(Quark<Entity> quark) {
 		int levels = 0;
 
-		// FIXME: Maybe move UML:Model generation here?
-		if (quark.isRoot()) {
-			// parent = "";
-		} else {
+		if (!quark.isRoot()) {
 			Entity entity = quark.getData();
 			if (entity == null) {
-				throw new RuntimeException("oops");//levels += renderPackage()
+				throw new RuntimeException("oops");
 			}
 			levels = renderEntity(quark.getData());
-			//parent += "." + "s";
+
 			done.add(entity);
 		}
 
 		for (final Quark<Entity> child : quark.getChildren()) {
 			Entity entity = child.getData();
 
-			// UGLY: Stealing logic from EntityFactory.leafs(), breaking encapsulation.
-			if (entity == null /* && entity.isGroup()*/)
+			if (entity == null)
 				continue;
 
 			renderQuark(child);

@@ -252,16 +252,25 @@ abstract class XmiClassDiagramAbstract implements XmlDiagramTransformer {
 			return;
 
 		final String assId = "ass" + classDiagram.getUniqueSequence();
-		final LinkStyle.Type linkStyleType = link.getType().getStyle().getType();
-		final boolean isExtends = link.getType().getDecor2() == LinkDecor.EXTENDS;
-		final boolean isRealization = isExtends && linkStyleType == LinkStyle.Type.DASHED;
+//		final LinkStyle.Type linkStyleType = link.getType().getStyle().getType();
+	//	final boolean isExtends = link.getType().getDecor2() == LinkDecor.EXTENDS;
+		//final boolean isRealization = isExtends && linkStyleType == LinkStyle.Type.DASHED;
+		//final String st = link.getStereotype().toString();
 
-		if (isRealization) {
-			addAbstraction(link, assId);
-		} else if (isExtends) {
+		switch (link.getTypish()) {
+		case GENERALIZATION:
 			addGeneralization(link, assId);
-		} else {
-			throw new RuntimeException("oops, I don't know how to do this link yet.");
+			break;
+		case REALIZATION:
+			addAbstraction(link, assId);
+			break;
+		case COMPOSITION:
+		case AGGREGATION:
+		case ASSOCIATION:
+		case UNIASSOCIATION:
+		case ALIAS:
+		default:
+			break;
 		}
 	}
 
