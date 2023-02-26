@@ -40,8 +40,10 @@ import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.MagneticBorder;
 import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
 import net.sourceforge.plantuml.klimt.shape.UEmpty;
 
@@ -85,6 +87,16 @@ public class EntityImageDegenerated implements IEntityImage {
 		final XDimension2D dim = calculateDimension(ug.getStringBounder());
 		ug.apply(new UTranslate(dim.getWidth() - delta, dim.getHeight() - delta)).draw(new UEmpty(delta, delta));
 
+	}
+
+	@Override
+	public MagneticBorder getMagneticBorder() {
+		return new MagneticBorder() {
+			@Override
+			public UTranslate getForceAt(StringBounder stringBounder, XPoint2D position) {
+				return orig.getMagneticBorder().getForceAt(stringBounder, position.move(delta, delta));
+			}
+		};
 	}
 
 	public ShapeType getShapeType() {

@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.drawing.UGraphicStencil;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.MagneticBorder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
@@ -81,16 +82,11 @@ public class USymbolFolder extends USymbol {
 		return sname;
 	}
 
-	private void drawFolder(UGraphic ug, double width, double height, XDimension2D dimTitle, double shadowing,
+	private void drawFolder(UGraphic ug, double width, double height, XDimension2D dimName, double shadowing,
 			double roundCorner) {
 
-		final double wtitle;
-		if (dimTitle.getWidth() == 0) {
-			wtitle = Math.max(30, width / 4);
-		} else {
-			wtitle = dimTitle.getWidth() + marginTitleX1 + marginTitleX2;
-		}
-		final double htitle = getHTitle(dimTitle);
+		final double wtitle = getWTitle(width, dimName);
+		final double htitle = getHTitle(dimName);
 
 		final Shadowable shape;
 		if (roundCorner == 0) {
@@ -128,13 +124,22 @@ public class USymbolFolder extends USymbol {
 		ug.apply(UTranslate.dy(htitle)).draw(ULine.hline(wtitle + marginTitleX3));
 	}
 
+	private double getWTitle(double width, XDimension2D dimTitle) {
+		final double wtitle;
+		if (dimTitle.getWidth() == 0)
+			wtitle = Math.max(30, width / 4);
+		else
+			wtitle = dimTitle.getWidth() + marginTitleX1 + marginTitleX2;
+		return wtitle;
+	}
+
 	private double getHTitle(XDimension2D dimTitle) {
 		final double htitle;
-		if (dimTitle.getWidth() == 0) {
+		if (dimTitle.getWidth() == 0)
 			htitle = 10;
-		} else {
+		else
 			htitle = dimTitle.getHeight() + marginTitleY1 + marginTitleY2;
-		}
+
 		return htitle;
 	}
 
@@ -157,9 +162,9 @@ public class USymbolFolder extends USymbol {
 						symbolContext.getRoundCorner());
 				final Margin margin = getMargin();
 				final TextBlock tb = TextBlockUtils.mergeTB(stereotype, label, HorizontalAlignment.CENTER);
-				if (showTitle) {
+				if (showTitle)
 					name.drawU(ug.apply(new UTranslate(4, 3)));
-				}
+
 				tb.drawU(ug.apply(new UTranslate(margin.getX1(), margin.getY1() + dimName.getHeight())));
 			}
 
@@ -172,6 +177,35 @@ public class USymbolFolder extends USymbol {
 				final XDimension2D dimLabel = label.calculateDimension(stringBounder);
 				final XDimension2D dimStereo = stereotype.calculateDimension(stringBounder);
 				return getMargin().addDimension(dimName.mergeTB(dimStereo, dimLabel));
+			}
+
+			@Override
+			public MagneticBorder getMagneticBorder() {
+				return new MagneticBorder() {
+
+					@Override
+					public UTranslate getForceAt(StringBounder stringBounder, XPoint2D position) {
+						final XDimension2D dim = calculateDimension(stringBounder);
+						final XDimension2D dimName = getDimName(stringBounder);
+						final double wtitle = getWTitle(dim.getWidth(), dimName);
+						final double htitle = getHTitle(dimName);
+
+						if (position.getX() >= wtitle && position.getY() >= 0 && position.getY() <= htitle)
+							return new UTranslate(0, htitle);
+
+						if (position.getY() <= 0 && position.getX() >= wtitle + marginTitleX3)
+							return new UTranslate(0, htitle);
+
+						if (position.getY() <= 0 && position.getX() >= wtitle - marginTitleX3) {
+							final double delta = position.getX() - (wtitle - marginTitleX3);
+							final double how = delta / (2 * marginTitleX3);
+							return new UTranslate(0, htitle * how);
+						}
+
+						return new UTranslate();
+					}
+				};
+
 			}
 		};
 	}

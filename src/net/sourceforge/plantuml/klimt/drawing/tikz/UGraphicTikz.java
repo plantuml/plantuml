@@ -107,9 +107,9 @@ public class UGraphicTikz extends AbstractUGraphic<TikzGraphics> implements Clip
 
 	@Override
 	public boolean matchesProperty(String propertyName) {
-		if ("SPECIALTXT".equalsIgnoreCase(propertyName)) {
+		if ("SPECIALTXT".equalsIgnoreCase(propertyName))
 			return true;
-		}
+
 		return false;
 	}
 

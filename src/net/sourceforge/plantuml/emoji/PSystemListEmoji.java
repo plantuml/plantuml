@@ -48,8 +48,8 @@ import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
-import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 
 public class PSystemListEmoji extends PlainDiagram {
 	// ::remove file when CORE
@@ -60,7 +60,7 @@ public class PSystemListEmoji extends PlainDiagram {
 	protected UDrawable getRootDrawable(FileFormatOption fileFormatOption) throws IOException {
 		return new UDrawable() {
 			public void drawU(UGraphic ug) {
-				final TextBlockBackcolored header = GraphicStrings
+				final TextBlock header = GraphicStrings
 						.createBlackOnWhite(Arrays.asList("<b><size:16>Emoji available on Unicode Block " + text,
 								"(Blocks available: 26, 27, 1F3, 1F4, 1F5, 1F6, 1F9)"));
 				header.drawU(ug);
@@ -92,7 +92,7 @@ public class PSystemListEmoji extends PlainDiagram {
 						sb.append("\"\"<U+003C>:" + shortcut + ":<U+003E> \"\"");
 					}
 
-					final TextBlockBackcolored tmp = GraphicStrings.createBlackOnWhite(Arrays.asList(sb.toString()));
+					final TextBlock tmp = GraphicStrings.createBlackOnWhite(Arrays.asList(sb.toString()));
 					tmp.drawU(ug);
 					ug = ug.apply(UTranslate.dy(tmp.calculateDimension(stringBounder).getHeight()));
 

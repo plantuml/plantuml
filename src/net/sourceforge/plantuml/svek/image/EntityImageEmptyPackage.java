@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.FontParam;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
-import net.sourceforge.plantuml.klimt.geom.ClusterPosition;
+import net.sourceforge.plantuml.klimt.geom.RectangleArea;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
@@ -149,9 +149,9 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 		final double widthTotal = dimTotal.getWidth();
 		final double heightTotal = dimTotal.getHeight();
 
-		final ClusterPosition clusterPosition = new ClusterPosition(0, 0, widthTotal, heightTotal);
+		final RectangleArea rectangleArea = new RectangleArea(0, 0, widthTotal, heightTotal);
 		final ClusterDecoration decoration = new ClusterDecoration(getSkinParam().packageStyle(), null, desc,
-				stereoBlock, clusterPosition, stroke);
+				stereoBlock, rectangleArea, stroke);
 
 		final HorizontalAlignment horizontalAlignment = getSkinParam()
 				.getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null, false, null);

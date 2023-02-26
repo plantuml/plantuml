@@ -47,7 +47,6 @@ import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
 import net.sourceforge.plantuml.svek.Ports;
-import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.svek.WithPorts;
 
 public class TextBlockVertical2 extends AbstractTextBlock implements TextBlock, WithPorts {
@@ -100,13 +99,12 @@ public class TextBlockVertical2 extends AbstractTextBlock implements TextBlock, 
 
 		for (TextBlock block : blocks) {
 			final XDimension2D dimb = block.calculateDimension(ug.getStringBounder());
-			if (block instanceof TextBlockBackcolored) {
-				final HColor back = ((TextBlockBackcolored) block).getBackcolor();
-				if (back != null && back.isTransparent() == false)
-					ug.apply(UTranslate.dy(y)).apply(back).apply(back.bg())
-							.draw(new URectangle(dimtotal.getWidth(), dimb.getHeight()));
 
-			}
+			final HColor back = block.getBackcolor();
+			if (back != null && back.isTransparent() == false)
+				ug.apply(UTranslate.dy(y)).apply(back).apply(back.bg())
+						.draw(new URectangle(dimtotal.getWidth(), dimb.getHeight()));
+
 			if (horizontalAlignment == HorizontalAlignment.LEFT) {
 				block.drawU(ug.apply(UTranslate.dy(y)));
 			} else if (horizontalAlignment == HorizontalAlignment.CENTER) {

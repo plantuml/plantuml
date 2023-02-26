@@ -40,7 +40,6 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.atmp.InnerStrategy;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.UmlDiagram;
@@ -53,12 +52,10 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
-import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
+import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
-import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 
 public class WireDiagram extends UmlDiagram {
 
@@ -84,14 +81,10 @@ public class WireDiagram extends UmlDiagram {
 
 	@Override
 	protected TextBlock getTextBlock() {
-		return new TextBlockBackcolored() {
+		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
 				drawMe(ug);
-			}
-
-			public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
-				return null;
 			}
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
@@ -100,13 +93,6 @@ public class WireDiagram extends UmlDiagram {
 
 			}
 
-			public MinMax getMinMax(StringBounder stringBounder) {
-				throw new UnsupportedOperationException();
-			}
-
-			public HColor getBackcolor() {
-				return null;
-			}
 		};
 	}
 

@@ -99,7 +99,6 @@ import net.sourceforge.plantuml.svek.GeneralImageBuilder;
 import net.sourceforge.plantuml.svek.GraphvizCrash;
 import net.sourceforge.plantuml.svek.IEntityImage;
 import net.sourceforge.plantuml.svek.SvekNode;
-import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import smetana.core.CString;
 import smetana.core.Globals;
 import smetana.core.JUtils;
@@ -148,7 +147,7 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 		return result;
 	}
 
-	class Drawing extends AbstractTextBlock implements TextBlockBackcolored {
+	class Drawing extends AbstractTextBlock {
 
 		private final YMirror ymirror;
 		private final MinMaxMutable minMax;

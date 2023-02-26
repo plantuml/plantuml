@@ -107,7 +107,6 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
-import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.text.SvgCharSizeHack;
 import net.sourceforge.plantuml.url.CMapData;
 import net.sourceforge.plantuml.url.Url;
@@ -175,8 +174,8 @@ public class ImageBuilder {
 
 	public ImageBuilder drawable(UDrawable drawable) {
 		this.udrawable = drawable;
-		if (backcolor == null && drawable instanceof TextBlockBackcolored)
-			backcolor = ((TextBlockBackcolored) drawable).getBackcolor();
+		if (backcolor == null && drawable instanceof TextBlock)
+			backcolor = ((TextBlock) drawable).getBackcolor();
 
 		return this;
 	}

@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.klimt.drawing.LimitFinder;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.MagneticBorder;
 import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.klimt.geom.Positionable;
 import net.sourceforge.plantuml.klimt.geom.PositionableImpl;
@@ -50,7 +51,6 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
-import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 
 public class TextBlockUtils {
 
@@ -176,11 +176,19 @@ public class TextBlockUtils {
 				return null;
 			}
 
+			public MagneticBorder getMagneticBorder() {
+				return bloc.getMagneticBorder();
+			}
+
+			public HColor getBackcolor() {
+				return bloc.getBackcolor();
+			}
+
 		};
 	}
 
-	public static TextBlockBackcolored addBackcolor(final TextBlock text, final HColor backColor) {
-		return new TextBlockBackcolored() {
+	public static TextBlock addBackcolor(final TextBlock text, final HColor backColor) {
+		return new TextBlock() {
 			public void drawU(UGraphic ug) {
 				text.drawU(ug);
 			}
@@ -200,11 +208,15 @@ public class TextBlockUtils {
 			public HColor getBackcolor() {
 				return backColor;
 			}
+
+			public MagneticBorder getMagneticBorder() {
+				return text.getMagneticBorder();
+			}
 		};
 	}
 
 	public static TextBlock fromUImage(final UImage image) {
-		return new TextBlock() {
+		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
 				ug.draw(image);
@@ -216,10 +228,6 @@ public class TextBlockUtils {
 
 			public MinMax getMinMax(StringBounder stringBounder) {
 				return MinMax.fromMax(image.getWidth(), image.getHeight());
-			}
-
-			public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
-				return null;
 			}
 
 		};

@@ -206,26 +206,25 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 		} else {
 			final StringBounder stringBounder = ug.getStringBounder();
 			DotPath path = opaleLine.getDotPath();
+
+			final UTranslate force1 = getMagneticBorder().getForceAt(stringBounder, path.getStartPoint());
+			final UTranslate force2 = other.getMagneticBorder().getForceAt(stringBounder, path.getEndPoint());
+
 			path.moveSvek(-node.getMinX(), -node.getMinY());
-			XPoint2D p1 = path.getStartPoint();
-			XPoint2D p2 = path.getEndPoint();
+
 			final double textWidth = getTextWidth(stringBounder);
 			final double textHeight = getTextHeight(stringBounder);
 			final XPoint2D center = new XPoint2D(textWidth / 2, textHeight / 2);
-			if (p1.distance(center) > p2.distance(center)) {
+			if (path.getStartPoint().distance(center) > path.getEndPoint().distance(center))
 				path = path.reverse();
-				p1 = path.getStartPoint();
-				// p2 = path.getEndPoint();
-			}
-			final Direction strategy = getOpaleStrategy(textWidth, textHeight, p1);
-			final XPoint2D pp1 = path.getStartPoint();
-			final XPoint2D pp2 = path.getEndPoint();
-			final XPoint2D newRefpp2 = move(pp2, node.getMinX(), node.getMinY());
-			final XPoint2D projection = move(other.projection(newRefpp2, stringBounder), -node.getMinX(),
-					-node.getMinY());
+
+			final Direction strategy = getOpaleStrategy(textWidth, textHeight, path.getStartPoint());
+			final XPoint2D pp1 = force1.getTranslated(path.getStartPoint());
+			final XPoint2D pp2 = force2.getTranslated(path.getEndPoint());
+
 			final Opale opale = new Opale(shadowing, borderColor, noteBackgroundColor, textBlock, true, getStroke());
 			opale.setRoundCorner(getRoundCorner());
-			opale.setOpale(strategy, pp1, projection);
+			opale.setOpale(strategy, pp1, pp2);
 			final UGraphic stroked = applyStroke(ug2);
 			opale.drawU(Colors.applyStroke(stroked, getEntity().getColors()));
 		}
@@ -237,10 +236,6 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 
 	private double getRoundCorner() {
 		return skinParam.getRoundCorner(CornerParam.DEFAULT, null);
-	}
-
-	private static XPoint2D move(XPoint2D pt, double dx, double dy) {
-		return new XPoint2D(pt.getX() + dx, pt.getY() + dy);
 	}
 
 	private void drawNormal(UGraphic ug) {

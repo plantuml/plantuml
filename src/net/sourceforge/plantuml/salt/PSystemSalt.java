@@ -42,7 +42,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import net.atmp.InnerStrategy;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.ScaleSimple;
@@ -61,9 +60,8 @@ import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
-import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
+import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.sprite.Sprite;
 import net.sourceforge.plantuml.log.Logme;
@@ -89,7 +87,6 @@ import net.sourceforge.plantuml.salt.factory.ElementFactoryTextField;
 import net.sourceforge.plantuml.salt.factory.ElementFactoryTree;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
-import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.Log;
 
@@ -137,8 +134,8 @@ public class PSystemSalt extends TitledDiagram implements WithSprite {
 		return getTextBlock(salt, size);
 	}
 
-	private TextBlockBackcolored getTextBlock(final Element salt, final XDimension2D size) {
-		return new TextBlockBackcolored() {
+	private TextBlock getTextBlock(final Element salt, final XDimension2D size) {
+		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
 				ug = ug.apply(getBlack());
@@ -148,14 +145,6 @@ public class PSystemSalt extends TitledDiagram implements WithSprite {
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
 				return size;
-			}
-
-			public MinMax getMinMax(StringBounder stringBounder) {
-				throw new UnsupportedOperationException();
-			}
-
-			public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
-				return null;
 			}
 
 			public HColor getBackcolor() {

@@ -57,7 +57,6 @@ import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
 import net.sourceforge.plantuml.svek.IEntityImage;
 import net.sourceforge.plantuml.svek.Margins;
 import net.sourceforge.plantuml.svek.ShapeType;
-import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 
 public class GraphicStrings extends AbstractTextBlock implements IEntityImage {
 
@@ -97,21 +96,20 @@ public class GraphicStrings extends AbstractTextBlock implements IEntityImage {
 		return HColors.BLACK;
 	}
 
-	public static TextBlockBackcolored createGreenOnBlackMonospaced(List<String> strings) {
+	public static TextBlock createGreenOnBlackMonospaced(List<String> strings) {
 		return new GraphicStrings(strings, monospaced14(HColors.GREEN), HColors.BLACK, null, null,
 				CreoleMode.SIMPLE_LINE);
 	}
 
-	public static TextBlockBackcolored createBlackOnWhite(List<String> strings) {
+	public static TextBlock createBlackOnWhite(List<String> strings) {
 		return new GraphicStrings(strings, sansSerif12(HColors.BLACK), HColors.WHITE, null, null, CreoleMode.FULL);
 	}
 
-	public static TextBlockBackcolored createBlackOnWhiteMonospaced(List<String> strings) {
+	public static TextBlock createBlackOnWhiteMonospaced(List<String> strings) {
 		return new GraphicStrings(strings, monospaced14(HColors.BLACK), HColors.WHITE, null, null, CreoleMode.FULL);
 	}
 
-	public static TextBlockBackcolored createBlackOnWhite(List<String> strings, BufferedImage image,
-			GraphicPosition position) {
+	public static TextBlock createBlackOnWhite(List<String> strings, BufferedImage image, GraphicPosition position) {
 		return new GraphicStrings(strings, sansSerif12(HColors.BLACK), HColors.WHITE, image, position,
 				CreoleMode.FULL_BUT_UNDERSCORE);
 	}

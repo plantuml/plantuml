@@ -67,8 +67,8 @@ import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
-import net.sourceforge.plantuml.klimt.geom.ClusterPosition;
 import net.sourceforge.plantuml.klimt.geom.Moveable;
+import net.sourceforge.plantuml.klimt.geom.RectangleArea;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
@@ -114,7 +114,7 @@ public class Cluster implements Moveable {
 	private XPoint2D xyNoteTop;
 	private XPoint2D xyNoteBottom;
 
-	private ClusterPosition clusterPosition;
+	private RectangleArea rectangleArea;
 
 	public void moveSvek(double deltaX, double deltaY) {
 		if (this.xyNoteTop != null)
@@ -123,8 +123,8 @@ public class Cluster implements Moveable {
 			this.xyNoteBottom = this.xyNoteBottom.move(deltaX, deltaY);
 		if (this.xyTitle != null)
 			this.xyTitle = this.xyTitle.move(deltaX, deltaY);
-		if (this.clusterPosition != null)
-			this.clusterPosition = this.clusterPosition.move(deltaX, deltaY);
+		if (this.rectangleArea != null)
+			this.rectangleArea = this.rectangleArea.move(deltaX, deltaY);
 
 	}
 
@@ -257,8 +257,8 @@ public class Cluster implements Moveable {
 		return clusterHeader.getTitleAndAttributeHeight();
 	}
 
-	public ClusterPosition getClusterPosition() {
-		return clusterPosition;
+	public RectangleArea getRectangleArea() {
+		return rectangleArea;
 	}
 
 	public void setTitlePosition(XPoint2D pos) {
@@ -339,7 +339,7 @@ public class Cluster implements Moveable {
 					group.getUSymbol(), skinParam.getCurrentStyleBuilder(), skinParam.getIHtmlColorSet());
 
 			final ClusterDecoration decoration = new ClusterDecoration(packageStyle, group.getUSymbol(),
-					clusterHeader.getTitle(), clusterHeader.getStereo(), clusterPosition, stroke);
+					clusterHeader.getTitle(), clusterHeader.getStereo(), rectangleArea, stroke);
 			decoration.drawU(ug, backColor, borderColor, shadowing, rounded,
 					skinParam.getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null, false, null),
 					skinParam.getStereotypeAlignment(), diagonalCorner);
@@ -371,43 +371,44 @@ public class Cluster implements Moveable {
 	}
 
 	void manageEntryExitPoint(StringBounder stringBounder) {
-		final Collection<ClusterPosition> insides = new ArrayList<>();
+		final Collection<RectangleArea> insides = new ArrayList<>();
 		final List<XPoint2D> points = new ArrayList<>();
 		for (SvekNode sh : nodes)
 			if (isNormalPosition(sh))
-				insides.add(sh.getClusterPosition());
+				insides.add(sh.getRectangleArea());
 			else
-				points.add(sh.getClusterPosition().getPointCenter());
+				points.add(sh.getRectangleArea().getPointCenter());
 
 		for (Cluster in : children)
-			insides.add(in.getClusterPosition());
+			insides.add(in.getRectangleArea());
 
-		final FrontierCalculator frontierCalculator = new FrontierCalculator(getClusterPosition(), insides, points);
+		final FrontierCalculator frontierCalculator = new FrontierCalculator(getRectangleArea(), insides, points,
+				skinParam.getRankdir());
 		if (getTitleAndAttributeWidth() > 0 && getTitleAndAttributeHeight() > 0)
 			frontierCalculator.ensureMinWidth(getTitleAndAttributeWidth() + 10);
 
-		this.clusterPosition = frontierCalculator.getSuggestedPosition();
+		this.rectangleArea = frontierCalculator.getSuggestedPosition();
 
 		final double widthTitle = clusterHeader.getTitle().calculateDimension(stringBounder).getWidth();
-		final double minX = clusterPosition.getMinX();
-		final double minY = clusterPosition.getMinY();
-		this.xyTitle = new XPoint2D(minX + ((clusterPosition.getWidth() - widthTitle) / 2), minY + IEntityImage.MARGIN);
+		final double minX = rectangleArea.getMinX();
+		final double minY = rectangleArea.getMinY();
+		this.xyTitle = new XPoint2D(minX + ((rectangleArea.getWidth() - widthTitle) / 2), minY + IEntityImage.MARGIN);
 	}
 
 	private void drawSwinLinesState(UGraphic ug, HColor borderColor) {
 		clusterHeader.getTitle().drawU(ug.apply(UTranslate.dx(xyTitle.x)));
 
-		final ULine line = ULine.vline(clusterPosition.getHeight());
+		final ULine line = ULine.vline(rectangleArea.getHeight());
 		ug = ug.apply(borderColor);
-		ug.apply(UTranslate.dx(clusterPosition.getMinX())).draw(line);
-		ug.apply(UTranslate.dx(clusterPosition.getMaxX())).draw(line);
+		ug.apply(UTranslate.dx(rectangleArea.getMinX())).draw(line);
+		ug.apply(UTranslate.dx(rectangleArea.getMaxX())).draw(line);
 
 	}
 
 	// GroupPngMakerState
 
 	private void drawUState(UGraphic ug, UmlDiagramType umlDiagramType, double rounded, double shadowing) {
-		final XDimension2D total = clusterPosition.getDimension();
+		final XDimension2D total = rectangleArea.getDimension();
 		final double suppY = clusterHeader.getTitle().calculateDimension(ug.getStringBounder()).getHeight()
 				+ IEntityImage.MARGIN;
 
@@ -438,23 +439,23 @@ public class Cluster implements Moveable {
 		final RoundedContainer r = new RoundedContainer(total, suppY,
 				attributeHeight + (attributeHeight > 0 ? IEntityImage.MARGIN : 0), borderColor, backColor, imgBackcolor,
 				stroke, rounded, shadowing);
-		r.drawU(ug.apply(clusterPosition.getPosition()));
+		r.drawU(ug.apply(rectangleArea.getPosition()));
 
 		clusterHeader.getTitle().drawU(ug.apply(new UTranslate(xyTitle)));
 
 		if (attributeHeight > 0)
-			attribute.drawU(ug.apply(new UTranslate(clusterPosition.getMinX() + IEntityImage.MARGIN,
-					clusterPosition.getMinY() + suppY + IEntityImage.MARGIN / 2.0)));
+			attribute.drawU(ug.apply(new UTranslate(rectangleArea.getMinX() + IEntityImage.MARGIN,
+					rectangleArea.getMinY() + suppY + IEntityImage.MARGIN / 2.0)));
 
 		final Stereotype stereotype = group.getStereotype();
 		final boolean withSymbol = stereotype != null && stereotype.isWithOOSymbol();
 		if (withSymbol)
-			EntityImageState.drawSymbol(ug.apply(borderColor), clusterPosition.getMaxX(), clusterPosition.getMaxY());
+			EntityImageState.drawSymbol(ug.apply(borderColor), rectangleArea.getMaxX(), rectangleArea.getMaxY());
 
 	}
 
 	public void setPosition(XPoint2D min, XPoint2D max) {
-		this.clusterPosition = new ClusterPosition(min, max);
+		this.rectangleArea = new RectangleArea(min, max);
 	}
 
 	// ::comment when CORE
@@ -641,18 +642,18 @@ public class Cluster implements Moveable {
 		return backColor;
 	}
 
-	double checkFolderPosition(XPoint2D pt, StringBounder stringBounder) {
-		if (getClusterPosition().isPointJustUpper(pt)) {
-
-			final XDimension2D dimTitle = clusterHeader.getTitle().calculateDimension(stringBounder);
-
-			if (pt.getX() < getClusterPosition().getMinX() + dimTitle.getWidth())
-				return 0;
-
-			return getClusterPosition().getMinY() - pt.getY() + dimTitle.getHeight();
-		}
-		return 0;
-	}
+//	double checkFolderPosition(XPoint2D pt, StringBounder stringBounder) {
+//		if (getClusterPosition().isPointJustUpper(pt)) {
+//
+//			final XDimension2D dimTitle = clusterHeader.getTitle().calculateDimension(stringBounder);
+//
+//			if (pt.getX() < getClusterPosition().getMinX() + dimTitle.getWidth())
+//				return 0;
+//
+//			return getClusterPosition().getMinY() - pt.getY() + dimTitle.getHeight();
+//		}
+//		return 0;
+//	}
 
 	public final int getColorNoteTop() {
 		return colorNoteTop;

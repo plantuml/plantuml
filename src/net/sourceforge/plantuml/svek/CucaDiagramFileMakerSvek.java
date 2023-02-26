@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.dot.CucaDiagramSimplifierState;
 import net.sourceforge.plantuml.dot.DotData;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
@@ -101,7 +102,7 @@ public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 		if (fileFormatOption.isDebugSvek() && os instanceof NamedOutputStream)
 			basefile = ((NamedOutputStream) os).getBasefile();
 
-		TextBlockBackcolored result = svek2.buildImage(basefile, diagram.getDotStringSkek());
+		TextBlock result = svek2.buildImage(basefile, diagram.getDotStringSkek());
 		if (result instanceof GraphvizCrash) {
 			svek2 = createDotDataImageBuilder(DotMode.NO_LEFT_RIGHT_AND_XLABEL, stringBounder);
 			result = svek2.buildImage(basefile, diagram.getDotStringSkek());

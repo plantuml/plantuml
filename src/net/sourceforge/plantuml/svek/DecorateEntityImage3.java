@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 
-public class DecorateEntityImage3 extends AbstractTextBlock implements TextBlockBackcolored {
+public class DecorateEntityImage3 extends AbstractTextBlock {
 
 	private final TextBlock original;
 	private final HColor color;

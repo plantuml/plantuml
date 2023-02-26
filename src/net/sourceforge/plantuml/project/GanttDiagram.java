@@ -51,7 +51,6 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.atmp.InnerStrategy;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.TitledDiagram;
@@ -68,9 +67,8 @@ import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
-import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
+import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
@@ -115,7 +113,6 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.GraphvizCrash;
-import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 
 public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprite {
 
@@ -211,7 +208,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		return getTextBlock(stringBounder);
 	}
 
-	private TextBlockBackcolored getTextBlock(StringBounder stringBounder) {
+	private TextBlock getTextBlock(StringBounder stringBounder) {
 		if (printStart == null) {
 			initMinMax();
 		} else {
@@ -220,7 +217,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		}
 		final TimeHeader timeHeader = getTimeHeader();
 		initTaskAndResourceDraws(timeHeader.getTimeScale(), timeHeader.getFullHeaderHeight(), stringBounder);
-		return new TextBlockBackcolored() {
+		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
 				try {
@@ -279,10 +276,6 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 				return width;
 			}
 
-			public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
-				return null;
-			}
-
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
 				return new XDimension2D(getTitlesColumnWidth(stringBounder) + getBarsColumnWidth(timeHeader),
 						getTotalHeight(timeHeader));
@@ -294,13 +287,6 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 				return xmax - xmin;
 			}
 
-			public MinMax getMinMax(StringBounder stringBounder) {
-				throw new UnsupportedOperationException();
-			}
-
-			public HColor getBackcolor() {
-				return null;
-			}
 		};
 	}
 

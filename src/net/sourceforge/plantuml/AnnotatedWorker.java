@@ -41,7 +41,6 @@ import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.svek.DecorateEntityImage;
-import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 
 public class AnnotatedWorker {
 
@@ -58,13 +57,13 @@ public class AnnotatedWorker {
 		this.builder = builder;
 	}
 
-	public TextBlockBackcolored addAdd(TextBlock result) {
+	public TextBlock addAdd(TextBlock result) {
 		result = builder.decoreWithFrame(result);
 		result = addLegend(result);
 		result = addTitle(result);
 		result = addCaption(result);
 		result = builder.addHeaderAndFooter(result);
-		return (TextBlockBackcolored) result;
+		return (TextBlock) result;
 	}
 
 	public TextBlock addLegend(TextBlock original) {

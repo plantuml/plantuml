@@ -57,7 +57,6 @@ import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.CharInspector;
 
@@ -102,7 +101,7 @@ public class PSystemEbnf extends TitledDiagram {
 	}
 
 	@Override
-	protected TextBlockBackcolored getTextBlock() {
+	protected TextBlock getTextBlock() {
 		if (expressions.size() == 0) {
 			final Style style = ETile.getStyleSignature().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
 			final FontConfiguration fc = style.getFontConfiguration(getSkinParam().getIHtmlColorSet());

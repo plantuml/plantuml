@@ -54,10 +54,10 @@ import net.sourceforge.plantuml.klimt.AffineTransformType;
 import net.sourceforge.plantuml.klimt.MutableImage;
 import net.sourceforge.plantuml.klimt.drawing.eps.EpsGraphics;
 import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UImageSvg;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SImageIO;
-import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.utils.Log;
 
 public class ScientificEquationSafe {
@@ -133,7 +133,7 @@ public class ScientificEquationSafe {
 		Logme.error(e);
 	}
 
-	private TextBlockBackcolored getRollback() {
+	private TextBlock getRollback() {
 		return GraphicStrings.createBlackOnWhiteMonospaced(Arrays.asList(formula));
 	}
 

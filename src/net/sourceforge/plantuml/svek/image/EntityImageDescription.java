@@ -64,7 +64,10 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphicStencil;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.MagneticBorder;
+import net.sourceforge.plantuml.klimt.geom.MagneticBorderNone;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.klimt.shape.UComment;
@@ -324,5 +327,27 @@ public class EntityImageDescription extends AbstractEntityImage {
 			return MathUtils.max(-posx1, -posx2, 0);
 		}
 		return 0;
+	}
+
+	@Override
+	public MagneticBorder getMagneticBorder() {
+		if (shapeType == ShapeType.FOLDER)
+			return asSmall.getMagneticBorder();
+//			return new MagneticBorder() {
+//
+//				@Override
+//				public UTranslate getForceAt(StringBounder stringBounder, XPoint2D pt) {
+//					if ((pt.getX() >= 0 && pt.getX() <= 0 + calculateDimension(stringBounder).getWidth()
+//							&& pt.getY() <= 0)) {
+//						final XDimension2D dimName = getNameDimension(stringBounder);
+//						if (pt.getX() < 0 + dimName.getWidth())
+//							return new UTranslate();
+//
+//						return new UTranslate(0, dimName.getHeight() + 4);
+//					}
+//					return new UTranslate();
+//				}
+//			};
+		return new MagneticBorderNone();
 	}
 }

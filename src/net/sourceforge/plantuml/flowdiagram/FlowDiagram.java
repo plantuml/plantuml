@@ -58,9 +58,12 @@ import net.sourceforge.plantuml.golem.TileGeometry;
 import net.sourceforge.plantuml.golem.TilesField;
 import net.sourceforge.plantuml.klimt.UShape;
 import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.MagneticBorder;
+import net.sourceforge.plantuml.klimt.geom.MagneticBorderNone;
 import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
@@ -228,5 +231,15 @@ public class FlowDiagram extends UmlDiagram implements TextBlock {
 	@Override
 	protected TextBlock getTextBlock() {
 		return this;
+	}
+
+	@Override
+	public MagneticBorder getMagneticBorder() {
+		return new MagneticBorderNone();
+	}
+
+	@Override
+	public HColor getBackcolor() {
+		return null;
 	}
 }

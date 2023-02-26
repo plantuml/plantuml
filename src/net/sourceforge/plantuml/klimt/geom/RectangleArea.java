@@ -37,26 +37,26 @@ package net.sourceforge.plantuml.klimt.geom;
 
 import net.sourceforge.plantuml.klimt.UTranslate;
 
-public class ClusterPosition {
+public class RectangleArea {
 
 	private final double minX;
 	private final double minY;
 	private final double maxX;
 	private final double maxY;
 
-	public ClusterPosition(double minX, double minY, double maxX, double maxY) {
+	public RectangleArea(double minX, double minY, double maxX, double maxY) {
 		this.minX = minX;
 		this.minY = minY;
 		this.maxX = maxX;
 		this.maxY = maxY;
 	}
 
-	public ClusterPosition(XPoint2D min, XPoint2D max) {
+	public RectangleArea(XPoint2D min, XPoint2D max) {
 		this(min.x, min.y, max.x, max.y);
 	}
 
-	public ClusterPosition move(double deltaX, double deltaY) {
-		return new ClusterPosition(minX + deltaX, minY + deltaY, maxX + deltaX, maxY + deltaY);
+	public RectangleArea move(double deltaX, double deltaY) {
+		return new RectangleArea(minX + deltaX, minY + deltaY, maxX + deltaX, maxY + deltaY);
 	}
 
 	public double getWidth() {
@@ -71,15 +71,15 @@ public class ClusterPosition {
 		return x >= minX && x < maxX && y >= minY && y < maxY;
 	}
 
-	public ClusterPosition merge(ClusterPosition other) {
-		return new ClusterPosition(Math.min(this.minX, other.minX), Math.min(this.minY, other.minY),
+	public RectangleArea merge(RectangleArea other) {
+		return new RectangleArea(Math.min(this.minX, other.minX), Math.min(this.minY, other.minY),
 				Math.max(this.maxX, other.maxX), Math.max(this.maxY, other.maxY));
 	}
 
-	public ClusterPosition merge(XPoint2D point) {
+	public RectangleArea merge(XPoint2D point) {
 		final double x = point.getX();
 		final double y = point.getY();
-		return new ClusterPosition(Math.min(this.minX, x), Math.min(this.minY, y), Math.max(this.maxX, x),
+		return new RectangleArea(Math.min(this.minX, x), Math.min(this.minY, y), Math.max(this.maxX, x),
 				Math.max(this.maxY, y));
 	}
 
@@ -135,58 +135,58 @@ public class ClusterPosition {
 		return new XPoint2D((minX + maxX) / 2, (minY + maxY) / 2);
 	}
 
-	public ClusterPosition withMinX(double d) {
-		return new ClusterPosition(d, minY, maxX, maxY);
+	public RectangleArea withMinX(double d) {
+		return new RectangleArea(d, minY, maxX, maxY);
 	}
 
-	public ClusterPosition withMaxX(double d) {
-		return new ClusterPosition(minX, minY, d, maxY);
+	public RectangleArea withMaxX(double d) {
+		return new RectangleArea(minX, minY, d, maxY);
 	}
 
-	public ClusterPosition addMaxX(double d) {
-		return new ClusterPosition(minX, minY, maxX + d, maxY);
+	public RectangleArea addMaxX(double d) {
+		return new RectangleArea(minX, minY, maxX + d, maxY);
 	}
 
-	public ClusterPosition addMaxY(double d) {
-		return new ClusterPosition(minX, minY, maxX, maxY + d);
+	public RectangleArea addMaxY(double d) {
+		return new RectangleArea(minX, minY, maxX, maxY + d);
 	}
 
-	public ClusterPosition addMinX(double d) {
-		return new ClusterPosition(minX + d, minY, maxX, maxY);
+	public RectangleArea addMinX(double d) {
+		return new RectangleArea(minX + d, minY, maxX, maxY);
 	}
 
-	public ClusterPosition addMinY(double d) {
-		return new ClusterPosition(minX, minY + d, maxX, maxY);
+	public RectangleArea addMinY(double d) {
+		return new RectangleArea(minX, minY + d, maxX, maxY);
 	}
 
-	public ClusterPosition withMinY(double d) {
-		return new ClusterPosition(minX, d, maxX, maxY);
+	public RectangleArea withMinY(double d) {
+		return new RectangleArea(minX, d, maxX, maxY);
 	}
 
-	public ClusterPosition withMaxY(double d) {
-		return new ClusterPosition(minX, minY, maxX, d);
+	public RectangleArea withMaxY(double d) {
+		return new RectangleArea(minX, minY, maxX, d);
 	}
 
-	public XPoint2D getProjectionOnFrontier(XPoint2D pt) {
-		final double x = pt.getX();
-		final double y = pt.getY();
-		if (x > maxX && y >= minY && y <= maxY)
-			return new XPoint2D(maxX - 1, y);
+//	public XPoint2D getProjectionOnFrontier(XPoint2D pt) {
+//		final double x = pt.getX();
+//		final double y = pt.getY();
+//		if (x > maxX && y >= minY && y <= maxY)
+//			return new XPoint2D(maxX - 1, y);
+//
+//		if (x < minX && y >= minY && y <= maxY)
+//			return new XPoint2D(minX + 1, y);
+//
+//		if (y > maxY && x >= minX && x <= maxX)
+//			return new XPoint2D(x, maxY - 1);
+//
+//		if (y < minY && x >= minX && x <= maxX)
+//			return new XPoint2D(x, minY + 1);
+//
+//		return new XPoint2D(x, y);
+//	}
 
-		if (x < minX && y >= minY && y <= maxY)
-			return new XPoint2D(minX + 1, y);
-
-		if (y > maxY && x >= minX && x <= maxX)
-			return new XPoint2D(x, maxY - 1);
-
-		if (y < minY && x >= minX && x <= maxX)
-			return new XPoint2D(x, minY + 1);
-
-		return new XPoint2D(x, y);
-	}
-
-	public ClusterPosition delta(double m1, double m2) {
-		return new ClusterPosition(minX, minY, maxX + m1, maxY + m2);
+	public RectangleArea delta(double m1, double m2) {
+		return new RectangleArea(minX, minY, maxX + m1, maxY + m2);
 	}
 
 	public XDimension2D getDimension() {
@@ -197,12 +197,12 @@ public class ClusterPosition {
 		return new UTranslate(getMinX(), getMinY());
 	}
 
-	public boolean isPointJustUpper(XPoint2D pt) {
-		if (pt.getX() >= minX && pt.getX() <= maxX && pt.getY() <= minY) {
-			return true;
-		}
-		return false;
-	}
+//	public boolean isPointJustUpper(XPoint2D pt) {
+//		if (pt.getX() >= minX && pt.getX() <= maxX && pt.getY() <= minY) {
+//			return true;
+//		}
+//		return false;
+//	}
 
 	public Side getClosestSide(XPoint2D pt) {
 		final double distNorth = Math.abs(minY - pt.getY());

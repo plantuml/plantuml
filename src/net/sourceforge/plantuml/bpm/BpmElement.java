@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
+import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.skin.ColorParam;
@@ -94,7 +95,7 @@ public class BpmElement extends AbstractConnectorPuzzle implements ConnectorPuzz
 
 	public TextBlock toTextBlock(ISkinParam skinParam) {
 		final TextBlock raw = toTextBlockInternal(skinParam);
-		return new TextBlock() {
+		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
 				raw.drawU(ug);

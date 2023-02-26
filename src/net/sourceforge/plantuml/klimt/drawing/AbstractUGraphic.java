@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.klimt.UPath;
 import net.sourceforge.plantuml.klimt.UShape;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.creole.legacy.AtomText;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.klimt.geom.MinMaxMutable;
@@ -142,6 +143,10 @@ public abstract class AbstractUGraphic<O> extends AbstractCommonUGraphic {
 	}
 
 	private void updateMinMax(UShape shape) {
+		if (matchesProperty("SPECIALTXT") && shape instanceof AtomText) {
+			return;
+		}
+
 		final double x = getTranslate().getDx();
 		final double y = getTranslate().getDy();
 		if (shape instanceof UText) {
@@ -179,8 +184,7 @@ public abstract class AbstractUGraphic<O> extends AbstractCommonUGraphic {
 		} else if (shape instanceof UPixel) {
 			addPoint(x, y);
 		} else {
-			System.err.println("ERROR ignoring " + shape.getClass().getName());
-			// throw new UnsupportedOperationException(shape.getClass().getName());
+			throw new UnsupportedOperationException(shape.getClass().getName());
 		}
 	}
 

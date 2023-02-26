@@ -37,9 +37,12 @@ package net.sourceforge.plantuml.bpm;
 
 import net.atmp.InnerStrategy;
 import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.MagneticBorder;
+import net.sourceforge.plantuml.klimt.geom.MagneticBorderNone;
 import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
@@ -119,6 +122,16 @@ public class ConnectorPuzzleEmpty extends AbstractConnectorPuzzle implements Pla
 	}
 
 	public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
+		return null;
+	}
+
+	@Override
+	public MagneticBorder getMagneticBorder() {
+		return new MagneticBorderNone();
+	}
+
+	@Override
+	public HColor getBackcolor() {
 		return null;
 	}
 

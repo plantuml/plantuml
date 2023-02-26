@@ -448,9 +448,6 @@ public class DotStringFactory implements Moveable {
 		for (SvekLine line : bibliotekon.allLines())
 			line.manageCollision(bibliotekon.allNodes());
 
-		// corner1.manage(0, 0);
-//		return new ClusterPosition(corner1.getMinX(), corner1.getMinY(), fullWidth, fullHeight);
-//		// return new ClusterPosition(0, 0, fullWidth, fullHeight);
 	}
 
 	private int getClusterIndex(final String svg, int colorInt) {

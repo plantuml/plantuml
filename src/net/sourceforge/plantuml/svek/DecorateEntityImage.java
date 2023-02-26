@@ -48,7 +48,7 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 
-public class DecorateEntityImage extends AbstractTextBlock implements TextBlockBackcolored {
+public class DecorateEntityImage extends AbstractTextBlock {
 
 	private final TextBlock original;
 	private final HorizontalAlignment horizontal1;
@@ -134,10 +134,7 @@ public class DecorateEntityImage extends AbstractTextBlock implements TextBlockB
 	}
 
 	public HColor getBackcolor() {
-		if (original instanceof TextBlockBackcolored)
-			return ((TextBlockBackcolored) original).getBackcolor();
-
-		throw new UnsupportedOperationException();
+		return original.getBackcolor();
 	}
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {

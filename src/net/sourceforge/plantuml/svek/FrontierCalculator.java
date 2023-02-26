@@ -38,19 +38,20 @@ package net.sourceforge.plantuml.svek;
 import java.util.Collection;
 
 import net.sourceforge.plantuml.abel.EntityPosition;
-import net.sourceforge.plantuml.klimt.geom.ClusterPosition;
+import net.sourceforge.plantuml.klimt.geom.Rankdir;
+import net.sourceforge.plantuml.klimt.geom.RectangleArea;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 
 public class FrontierCalculator {
 
 	private static final double DELTA = 3 * EntityPosition.RADIUS;
-	private ClusterPosition core;
-	private final ClusterPosition initial;
+	private RectangleArea core;
+	private final RectangleArea initial;
 
-	public FrontierCalculator(final ClusterPosition initial, Collection<ClusterPosition> insides,
-			Collection<XPoint2D> points) {
+	public FrontierCalculator(RectangleArea initial, Collection<RectangleArea> insides, Collection<XPoint2D> points,
+			Rankdir rankdir) {
 		this.initial = initial;
-		for (ClusterPosition in : insides)
+		for (RectangleArea in : insides)
 			if (core == null)
 				core = in;
 			else
@@ -58,7 +59,7 @@ public class FrontierCalculator {
 
 		if (core == null) {
 			final XPoint2D center = initial.getPointCenter();
-			core = new ClusterPosition(center.getX() - 1, center.getY() - 1, center.getX() + 1, center.getY() + 1);
+			core = new RectangleArea(center.getX() - 1, center.getY() - 1, center.getX() + 1, center.getY() + 1);
 		}
 		for (XPoint2D p : points)
 			core = core.merge(p);
@@ -116,11 +117,20 @@ public class FrontierCalculator {
 			}
 		}
 		for (XPoint2D p : points) {
-			if (p.getY() == core.getMinY() && (p.getX() == core.getMinX() || p.getX() == core.getMaxX()))
-				pushMinY = false;
+			if (rankdir == Rankdir.LEFT_TO_RIGHT) {
+				if (p.getX() == core.getMinX() && (p.getY() == core.getMinY() || p.getY() == core.getMaxY()))
+					pushMinX = false;
 
-			if (p.getY() == core.getMaxY() && (p.getX() == core.getMinX() || p.getX() == core.getMaxX()))
-				pushMaxY = false;
+				if (p.getX() == core.getMaxX() && (p.getY() == core.getMinY() || p.getY() == core.getMaxY()))
+					pushMaxX = false;
+			} else {
+
+				if (p.getY() == core.getMinY() && (p.getX() == core.getMinX() || p.getX() == core.getMaxX()))
+					pushMinY = false;
+
+				if (p.getY() == core.getMaxY() && (p.getX() == core.getMinX() || p.getX() == core.getMaxX()))
+					pushMaxY = false;
+			}
 
 		}
 		if (pushMaxX)
@@ -137,7 +147,7 @@ public class FrontierCalculator {
 
 	}
 
-	public ClusterPosition getSuggestedPosition() {
+	public RectangleArea getSuggestedPosition() {
 		return core;
 	}
 

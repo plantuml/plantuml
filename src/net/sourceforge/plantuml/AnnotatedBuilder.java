@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
+import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.BigFrame;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
@@ -60,7 +61,6 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.DecorateEntityImage;
-import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 
 public class AnnotatedBuilder {
 
@@ -125,15 +125,11 @@ public class AnnotatedBuilder {
 
 		final TextBlock frame = new BigFrame(title, width, height, symbolContext);
 
-		return new TextBlockBackcolored() {
+		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
 				frame.drawU(ug.apply(margin.getTranslate()));
 				original.drawU(ug.apply(margin.getTranslate().compose(padding.getTranslate().compose(delta))));
-			}
-
-			public MinMax getMinMax(StringBounder stringBounder) {
-				throw new UnsupportedOperationException();
 			}
 
 			public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {

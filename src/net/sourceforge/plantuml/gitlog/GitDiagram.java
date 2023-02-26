@@ -38,20 +38,17 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Collection;
 
-import net.atmp.InnerStrategy;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
-import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
-import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
+import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
-import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 
 public class GitDiagram extends UmlDiagram {
 
@@ -87,28 +84,17 @@ public class GitDiagram extends UmlDiagram {
 	}
 
 	@Override
-	protected TextBlockBackcolored getTextBlock() {
-		return new TextBlockBackcolored() {
+	protected TextBlock getTextBlock() {
+		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
 				drawInternal(ug);
-			}
-
-			public MinMax getMinMax(StringBounder stringBounder) {
-				return null;
-			}
-
-			public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
-				return null;
 			}
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
 				return null;
 			}
 
-			public HColor getBackcolor() {
-				return null;
-			}
 		};
 	}
 

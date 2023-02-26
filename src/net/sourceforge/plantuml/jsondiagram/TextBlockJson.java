@@ -66,11 +66,10 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
-import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.yaml.Highlighted;
 
 //See TextBlockMap
-public class TextBlockJson extends AbstractTextBlock implements TextBlockBackcolored {
+public class TextBlockJson extends AbstractTextBlock {
 
 	private final List<Line> lines = new ArrayList<>();
 

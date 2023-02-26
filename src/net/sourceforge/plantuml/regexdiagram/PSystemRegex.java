@@ -71,7 +71,6 @@ import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.CharInspector;
 
@@ -127,7 +126,7 @@ public class PSystemRegex extends TitledDiagram {
 	}
 
 	@Override
-	protected TextBlockBackcolored getTextBlock() {
+	protected TextBlock getTextBlock() {
 //		while (stack.size() > 1)
 //			concatenation();
 		final ETile peekFirst = stack.peekFirst();

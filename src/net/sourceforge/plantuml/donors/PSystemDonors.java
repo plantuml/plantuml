@@ -62,7 +62,6 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.UImage;
 import net.sourceforge.plantuml.log.Logme;
-import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.text.BackSlash;
 import net.sourceforge.plantuml.version.PSystemVersion;
 
@@ -111,7 +110,7 @@ public class PSystemDonors extends PlainDiagram {
 		final List<TextBlock> cols = getCols(getDonors(), COLS, FREE_LINES);
 		return new UDrawable() {
 			public void drawU(UGraphic ug) {
-				final TextBlockBackcolored header = GraphicStrings
+				final TextBlock header = GraphicStrings
 						.createBlackOnWhite(Arrays.asList("<b>Special thanks to our sponsors and donors !"));
 				header.drawU(ug);
 				final StringBounder stringBounder = ug.getStringBounder();

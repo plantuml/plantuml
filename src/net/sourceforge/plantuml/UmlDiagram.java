@@ -70,6 +70,7 @@ import net.sourceforge.plantuml.klimt.font.FontParam;
 import net.sourceforge.plantuml.klimt.geom.GraphicPosition;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.UImage;
 import net.sourceforge.plantuml.log.Logme;
@@ -82,7 +83,6 @@ import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.style.NoStyleAvailableException;
 import net.sourceforge.plantuml.svek.EmptySvgException;
 import net.sourceforge.plantuml.svek.GraphvizCrash;
-import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.utils.Log;
 import net.sourceforge.plantuml.version.Version;
 
@@ -188,7 +188,7 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 		// ::done
 
 		final BufferedImage im = im2;
-		final TextBlockBackcolored graphicStrings = GraphicStrings.createBlackOnWhite(strings, IconLoader.getRandom(),
+		final TextBlock graphicStrings = GraphicStrings.createBlackOnWhite(strings, IconLoader.getRandom(),
 				GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT);
 
 		final UDrawable drawable = (im == null) ? graphicStrings : new UDrawable() {

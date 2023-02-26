@@ -45,7 +45,6 @@ import java.util.Collections;
 import java.util.List;
 
 import net.atmp.ImageBuilder;
-import net.atmp.InnerStrategy;
 import net.atmp.PixelImage;
 import net.sourceforge.plantuml.ErrorUml;
 import net.sourceforge.plantuml.FileFormat;
@@ -76,7 +75,7 @@ import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
+import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockRaw;
@@ -86,7 +85,6 @@ import net.sourceforge.plantuml.klimt.shape.UImage;
 import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
 import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.svek.GraphvizCrash;
-import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.text.BackSlash;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.LineLocation;
@@ -144,7 +142,7 @@ public abstract class PSystemError extends PlainDiagram {
 		return sb.toString();
 	}
 
-	private TextBlockBackcolored getGraphicalFormatted() {
+	private TextBlock getGraphicalFormatted() {
 		final FontConfiguration fc0 = GraphicStrings.sansSerif14(HColors.BLACK).bold();
 		final FontConfiguration fc1 = GraphicStrings.sansSerif14(HColors.MY_GREEN).bold();
 		final FontConfiguration fc2 = GraphicStrings.sansSerif14(HColors.RED).bold();
@@ -247,7 +245,7 @@ public abstract class PSystemError extends PlainDiagram {
 
 	@Override
 	protected UDrawable getRootDrawable(FileFormatOption fileFormatOption) throws IOException {
-		final TextBlockBackcolored result = getGraphicalFormatted();
+		final TextBlock result = getGraphicalFormatted();
 
 		TextBlock udrawable;
 		if (getSource().getTotalLineCountLessThan5()) {
@@ -291,12 +289,12 @@ public abstract class PSystemError extends PlainDiagram {
 		return full.subList(full.size() - 1, full.size());
 	}
 
-	private TextBlockBackcolored getWelcome() throws IOException {
+	private TextBlock getWelcome() throws IOException {
 		return new PSystemWelcome(getSource(), GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT).getGraphicStrings();
 	}
 
-	private TextBlock addWelcome(final TextBlockBackcolored result) throws IOException {
-		final TextBlockBackcolored welcome = getWelcome();
+	private TextBlock addWelcome(final TextBlock result) throws IOException {
+		final TextBlock welcome = getWelcome();
 		return TextBlockUtils.mergeTB(welcome, result, HorizontalAlignment.LEFT);
 	}
 
@@ -353,7 +351,7 @@ public abstract class PSystemError extends PlainDiagram {
 	}
 	// ::done
 
-	private TextBlockBackcolored getMessageDedication() {
+	private TextBlock getMessageDedication() {
 		final HColorSimple backColor = (HColorSimple) HColorSet.instance().getColorOrWhite("#eae2c9");
 
 		// ::comment when CORE
@@ -382,7 +380,7 @@ public abstract class PSystemError extends PlainDiagram {
 
 	}
 
-	private TextBlockBackcolored getMessageAdopt() {
+	private TextBlock getMessageAdopt() {
 		final HColor backColor = HColorSet.instance().getColorOrWhite("#eff4d2");
 
 		final Display disp = Display.create("<b>Adopt-a-Word and put your message here!", " ",
@@ -398,7 +396,7 @@ public abstract class PSystemError extends PlainDiagram {
 
 	}
 
-	private TextBlockBackcolored getMessagePatreon() {
+	private TextBlock getMessagePatreon() {
 		final UImage message = new UImage(
 				new PixelImage(PSystemVersion.getTime01(), AffineTransformType.TYPE_BILINEAR));
 		final Color back = new Color(message.getImage(1).getRGB(0, 0));
@@ -424,7 +422,7 @@ public abstract class PSystemError extends PlainDiagram {
 			imHeight = Math.max(message.getHeight(), qrcode.getHeight() * scale + 10);
 		}
 		// ::done
-		return new TextBlockBackcolored() {
+		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
 				// ::comment when CORE
@@ -439,10 +437,6 @@ public abstract class PSystemError extends PlainDiagram {
 					ug.apply(new UTranslate(1 + message.getWidth(), (imHeight - qr.getHeight()) / 2)).draw(qr);
 				}
 				// ::done
-			}
-
-			public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
-				return null;
 			}
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
@@ -460,7 +454,7 @@ public abstract class PSystemError extends PlainDiagram {
 
 	}
 
-	private TextBlockBackcolored getMessageLiberapay() {
+	private TextBlock getMessageLiberapay() {
 		final UImage message = new UImage(
 				new PixelImage(PSystemVersion.getTime15(), AffineTransformType.TYPE_BILINEAR));
 		final Color back = new Color(message.getImage(1).getRGB(0, 0));
@@ -487,7 +481,7 @@ public abstract class PSystemError extends PlainDiagram {
 		}
 		// ::done
 
-		return new TextBlockBackcolored() {
+		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
 				// ::comment when CORE
@@ -502,10 +496,6 @@ public abstract class PSystemError extends PlainDiagram {
 					ug.apply(new UTranslate(1 + message.getWidth(), (imHeight - qr.getHeight()) / 2)).draw(qr);
 				}
 				// ::done
-			}
-
-			public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
-				return null;
 			}
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {

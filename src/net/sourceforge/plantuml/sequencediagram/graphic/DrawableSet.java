@@ -45,16 +45,14 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import net.atmp.InnerStrategy;
 import net.sourceforge.plantuml.klimt.UClip;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.drawing.txt.UGraphicTxt;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
-import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
+import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.sequencediagram.Doll;
 import net.sourceforge.plantuml.sequencediagram.Event;
@@ -245,7 +243,7 @@ public class DrawableSet {
 	}
 
 	TextBlock asTextBlock(final double delta, final double width, final Page page, final boolean showTail) {
-		return new TextBlock() {
+		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
 				drawU22(ug, delta, width, page, showTail);
@@ -254,14 +252,6 @@ public class DrawableSet {
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
 				final double height = page.getHeight();
 				return new XDimension2D(width, height);
-			}
-
-			public MinMax getMinMax(StringBounder stringBounder) {
-				throw new UnsupportedOperationException();
-			}
-
-			public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
-				throw new UnsupportedOperationException();
 			}
 
 		};

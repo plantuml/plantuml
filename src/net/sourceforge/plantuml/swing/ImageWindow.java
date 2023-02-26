@@ -69,10 +69,10 @@ import javax.swing.WindowConstants;
 import net.atmp.ImageBuilder;
 import net.sourceforge.plantuml.GeneratedImage;
 import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SImageIO;
-import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.version.PSystemVersion;
 
 class ImageWindow extends JFrame {
@@ -334,7 +334,7 @@ class ImageWindow extends JFrame {
 			}
 		} catch (IOException ex) {
 			final String msg = "Error reading file: " + ex.toString();
-			final TextBlockBackcolored error = GraphicStrings.createForError(Arrays.asList(msg), false);
+			final TextBlock error = GraphicStrings.createForError(Arrays.asList(msg), false);
 			try {
 				final byte[] bytes = ImageBuilder.plainPngBuilder(error).writeByteArray();
 				image = SImageIO.read(bytes);

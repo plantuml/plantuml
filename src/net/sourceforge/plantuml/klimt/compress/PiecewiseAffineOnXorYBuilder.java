@@ -43,9 +43,8 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
-import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 
-public class PiecewiseAffineOnXorYBuilder extends AbstractTextBlock implements TextBlock, TextBlockBackcolored {
+public class PiecewiseAffineOnXorYBuilder extends AbstractTextBlock {
 
 	private final TextBlock textBlock;
 	private final CompressionMode mode;

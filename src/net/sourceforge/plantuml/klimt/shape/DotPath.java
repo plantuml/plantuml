@@ -49,8 +49,9 @@ import java.util.Set;
 
 import net.sourceforge.plantuml.klimt.UPath;
 import net.sourceforge.plantuml.klimt.UShape;
+import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.geom.BezierUtils;
-import net.sourceforge.plantuml.klimt.geom.ClusterPosition;
+import net.sourceforge.plantuml.klimt.geom.RectangleArea;
 import net.sourceforge.plantuml.klimt.geom.EnsureVisible;
 import net.sourceforge.plantuml.klimt.geom.MinFinder;
 import net.sourceforge.plantuml.klimt.geom.MinMax;
@@ -191,6 +192,14 @@ public class DotPath implements UShape, Moveable {
 		beziers.get(0).y1 = y;
 		beziers.get(0).ctrlx1 = x;
 		beziers.get(0).ctrly1 = y;
+	}
+
+	public void moveStartPoint(UTranslate move) {
+		moveStartPoint(move.getDx(), move.getDy());
+	}
+
+	public void moveEndPoint(UTranslate move) {
+		moveEndPoint(move.getDx(), move.getDy());
 	}
 
 	public void moveStartPoint(double dx, double dy) {
@@ -400,7 +409,7 @@ public class DotPath implements UShape, Moveable {
 		return Collections.unmodifiableList(beziers);
 	}
 
-	public DotPath simulateCompound(ClusterPosition head, ClusterPosition tail) {
+	public DotPath simulateCompound(RectangleArea head, RectangleArea tail) {
 		if (head == null && tail == null)
 			return this;
 

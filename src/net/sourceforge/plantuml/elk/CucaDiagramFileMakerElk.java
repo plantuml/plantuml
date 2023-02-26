@@ -105,9 +105,9 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.FontParam;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
-import net.sourceforge.plantuml.klimt.geom.ClusterPosition;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.MinMax;
+import net.sourceforge.plantuml.klimt.geom.RectangleArea;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
@@ -130,7 +130,6 @@ import net.sourceforge.plantuml.svek.GeneralImageBuilder;
 import net.sourceforge.plantuml.svek.GraphvizCrash;
 import net.sourceforge.plantuml.svek.IEntityImage;
 import net.sourceforge.plantuml.svek.PackageStyle;
-import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 
 /*
  * Some notes:
@@ -209,7 +208,7 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 	}
 
 	// The Drawing class does the real drawing
-	class Drawing extends AbstractTextBlock implements TextBlockBackcolored {
+	class Drawing extends AbstractTextBlock {
 
 		// min and max of all coord
 		private final MinMax minMax;
@@ -273,9 +272,9 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 			final TextBlock ztitle = getTitleBlock(group);
 			final TextBlock zstereo = TextBlockUtils.empty(0, 0);
 
-			final ClusterPosition clusterPosition = new ClusterPosition(0, 0, elkNode.getWidth(), elkNode.getHeight());
+			final RectangleArea rectangleArea = new RectangleArea(0, 0, elkNode.getWidth(), elkNode.getHeight());
 			final ClusterDecoration decoration = new ClusterDecoration(packageStyle, group.getUSymbol(), ztitle,
-					zstereo, clusterPosition, stroke);
+					zstereo, rectangleArea, stroke);
 
 			final HColor borderColor = HColors.BLACK;
 			decoration.drawU(ug.apply(new UTranslate(corner)), backColor, borderColor, shadowing, roundCorner,

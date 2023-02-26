@@ -489,11 +489,11 @@ root {
   HyperLinkColor blue
   FontColor white
   LineColor #e7e7e7
-  BackGroundColor #303030
+  BackGroundColor #313139
 }
 
 document {
-  BackGroundColor black
+  BackGroundColor #1B1B1B
   header {
     FontColor #7
   }

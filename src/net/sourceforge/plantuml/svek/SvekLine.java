@@ -56,7 +56,6 @@ import net.sourceforge.plantuml.decoration.LinkDecor;
 import net.sourceforge.plantuml.decoration.LinkMiddleDecor;
 import net.sourceforge.plantuml.decoration.LinkType;
 import net.sourceforge.plantuml.decoration.Rainbow;
-import net.sourceforge.plantuml.decoration.symbol.USymbolFolder;
 import net.sourceforge.plantuml.descdiagram.command.StringWithArrow;
 import net.sourceforge.plantuml.dot.DotSplines;
 import net.sourceforge.plantuml.dot.GraphvizVersion;
@@ -74,6 +73,7 @@ import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.BezierUtils;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.MagneticBorder;
 import net.sourceforge.plantuml.klimt.geom.Moveable;
 import net.sourceforge.plantuml.klimt.geom.PointAndAngle;
 import net.sourceforge.plantuml.klimt.geom.Positionable;
@@ -139,8 +139,8 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 	private Positionable endHeadLabelXY;
 	private Positionable labelXY;
 
-	private UDrawable extremity2;
 	private UDrawable extremity1;
+	private UDrawable extremity2;
 
 	private double dx;
 	private double dy;
@@ -490,7 +490,7 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		return endUid.getPrefix();
 	}
 
-	private UDrawable getExtremity(LinkDecor decor, PointListIterator pointListIterator, final XPoint2D center,
+	private UDrawable getExtremity(final XPoint2D center, LinkDecor decor, PointListIterator pointListIterator,
 			double angle, Cluster cluster, SvekNode nodeContact) {
 		final ExtremityFactory extremityFactory = decor.getExtremityFactory(backgroundColor);
 
@@ -515,7 +515,7 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 			final XPoint2D p2 = points.get(2);
 			Side side = null;
 			if (nodeContact != null)
-				side = nodeContact.getClusterPosition().getClosestSide(p1);
+				side = nodeContact.getRectangleArea().getClosestSide(p1);
 
 			return extremityFactory.createUDrawable(p0, p1, p2, side);
 		} else if (decor == LinkDecor.NONE) {
@@ -570,23 +570,23 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 			// if (ltail != null)
 			// System.err.println("Line::solveLine ltail=" + ltail.getClusterPosition());
 		}
-		dotPath = dotPath.simulateCompound(lhead == null ? null : lhead.getClusterPosition(),
-				ltail == null ? null : ltail.getClusterPosition());
+		dotPath = dotPath.simulateCompound(lhead == null ? null : lhead.getRectangleArea(),
+				ltail == null ? null : ltail.getRectangleArea());
 
 		final SvgResult lineSvg = fullSvg.substring(end);
 		PointListIterator pointListIterator = lineSvg.getPointsWithThisColor(lineColor);
 
 		final LinkType linkType = link.getType();
-		this.extremity1 = getExtremity(linkType.getDecor2(), pointListIterator, dotPath.getStartPoint(),
-				dotPath.getStartAngle() + Math.PI, ltail, bibliotekon.getNode(link.getEntity1()));
-		this.extremity2 = getExtremity(linkType.getDecor1(), pointListIterator, dotPath.getEndPoint(),
-				dotPath.getEndAngle(), lhead, bibliotekon.getNode(link.getEntity2()));
+		this.extremity1 = getExtremity(dotPath.getStartPoint(), linkType.getDecor2(), pointListIterator,
+				dotPath.getStartAngle() + Math.PI, ltail, getSvekNode1());
+		this.extremity2 = getExtremity(dotPath.getEndPoint(), linkType.getDecor1(), pointListIterator,
+				dotPath.getEndAngle(), lhead, getSvekNode2());
 
 		if (link.getEntity1().getLeafType() == LeafType.LOLLIPOP_HALF)
-			bibliotekon.getNode(link.getEntity1()).addImpact(dotPath.getStartAngle() + Math.PI);
+			getSvekNode1().addImpact(dotPath.getStartAngle() + Math.PI);
 
 		if (link.getEntity2().getLeafType() == LeafType.LOLLIPOP_HALF)
-			bibliotekon.getNode(link.getEntity2()).addImpact(dotPath.getEndAngle());
+			getSvekNode2().addImpact(dotPath.getEndAngle());
 
 		if (extremity1 instanceof Extremity && extremity2 instanceof Extremity) {
 			final XPoint2D p1 = ((Extremity) extremity1).somePoint();
@@ -599,10 +599,10 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 				final double dist2end = p2.distance(dotPath.getEndPoint());
 				if (dist1start > dist1end && dist2end > dist2start) {
 					pointListIterator = lineSvg.getPointsWithThisColor(lineColor);
-					this.extremity2 = getExtremity(linkType.getDecor1(), pointListIterator, dotPath.getEndPoint(),
-							dotPath.getEndAngle(), lhead, bibliotekon.getNode(link.getEntity2()));
-					this.extremity1 = getExtremity(linkType.getDecor2(), pointListIterator, dotPath.getStartPoint(),
-							dotPath.getStartAngle() + Math.PI, ltail, bibliotekon.getNode(link.getEntity1()));
+					this.extremity2 = getExtremity(dotPath.getEndPoint(), linkType.getDecor1(), pointListIterator,
+							dotPath.getEndAngle(), lhead, getSvekNode2());
+					this.extremity1 = getExtremity(dotPath.getStartPoint(), linkType.getDecor2(), pointListIterator,
+							dotPath.getStartAngle() + Math.PI, ltail, getSvekNode1());
 				}
 			}
 
@@ -637,6 +637,14 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		if (isOpalisable() == false)
 			setOpale(false);
 
+	}
+
+	private SvekNode getSvekNode2() {
+		return bibliotekon.getNode(link.getEntity2());
+	}
+
+	private SvekNode getSvekNode1() {
+		return bibliotekon.getNode(link.getEntity1());
 	}
 
 	private boolean isOpalisable() {
@@ -679,8 +687,8 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		if (link.isAutoLinkOfAGroup()) {
 			final Cluster cl = bibliotekon.getCluster((Entity) link.getEntity1());
 			if (cl != null) {
-				x += cl.getClusterPosition().getWidth();
-				x -= dotPath.getStartPoint().getX() - cl.getClusterPosition().getMinX();
+				x += cl.getRectangleArea().getWidth();
+				x -= dotPath.getStartPoint().getX() - cl.getRectangleArea().getMinX();
 			}
 		}
 
@@ -715,37 +723,54 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		ug = ug.apply(stroke);
 		// double moveEndY = 0;
 
-		DotPath todraw = dotPath;
-		if (link.getEntity2().isGroup() && link.getEntity2().getUSymbol() instanceof USymbolFolder) {
-			final Cluster endCluster = bibliotekon.getCluster((Entity) link.getEntity2());
-			if (endCluster != null) {
-				final double deltaFolderH = endCluster.checkFolderPosition(dotPath.getEndPoint(),
-						ug.getStringBounder());
-				todraw = dotPath.copy();
-				todraw.moveEndPoint(0, deltaFolderH);
-				// moveEndY = deltaFolderH;
-			}
+		DotPath todraw = dotPath.copy();
+
+		UTranslate magneticForce1 = new UTranslate();
+		if (getSvekNode1() != null) {
+			final MagneticBorder magneticBorder1 = getSvekNode1().getMagneticBorder();
+			magneticForce1 = magneticBorder1.getForceAt(ug.getStringBounder(), todraw.getStartPoint());
+			todraw.moveStartPoint(magneticForce1);
 		}
 
-		if (extremity1 instanceof Extremity && extremity2 instanceof Extremity) {
-			// http://forum.plantuml.net/9421/arrow-inversion-with-skinparam-linetype-ortho-missing-arrow
-			final XPoint2D p1 = ((Extremity) extremity1)
-					.isTooSmallSoGiveThePointCloserToThisOne(todraw.getStartPoint());
-			if (p1 != null)
-				todraw.forceStartPoint(p1.getX(), p1.getY());
-
-			final XPoint2D p2 = ((Extremity) extremity2).isTooSmallSoGiveThePointCloserToThisOne(todraw.getEndPoint());
-			if (p2 != null)
-				todraw.forceEndPoint(p2.getX(), p2.getY());
-
+		UTranslate magneticForce2 = new UTranslate();
+		if (getSvekNode2() != null) {
+			final MagneticBorder magneticBorder2 = getSvekNode2().getMagneticBorder();
+			magneticForce2 = magneticBorder2.getForceAt(ug.getStringBounder(), todraw.getEndPoint());
+			todraw.moveEndPoint(magneticForce2);
 		}
+
+//		final MagneticBorder magneticBorder2 = getSvekNode2().getMagneticBorder();
+
+//		if (link.getEntity2().isGroup() && link.getEntity2().getUSymbol() instanceof USymbolFolder) {
+//			final Cluster endCluster = bibliotekon.getCluster((Entity) link.getEntity2());
+//			if (endCluster != null) {
+//				final double deltaFolderH = endCluster.checkFolderPosition(dotPath.getEndPoint(),
+//						ug.getStringBounder());
+//				todraw = dotPath.copy();
+//				todraw.moveEndPoint(0, deltaFolderH);
+//				// moveEndY = deltaFolderH;
+//			}
+//		}
+
+//		if (extremity1 instanceof Extremity && extremity2 instanceof Extremity) {
+//			// http://forum.plantuml.net/9421/arrow-inversion-with-skinparam-linetype-ortho-missing-arrow
+//			final XPoint2D p1 = ((Extremity) extremity1)
+//					.isTooSmallSoGiveThePointCloserToThisOne(todraw.getStartPoint());
+//			if (p1 != null)
+//				todraw.forceStartPoint(p1.getX(), p1.getY());
+//
+//			final XPoint2D p2 = ((Extremity) extremity2).isTooSmallSoGiveThePointCloserToThisOne(todraw.getEndPoint());
+//			if (p2 != null)
+//				todraw.forceEndPoint(p2.getX(), p2.getY());
+//
+//		}
 
 		final String comment = link.idCommentForSvg();
 		final String tmp = uniq(ids, comment);
 		todraw.setCommentAndCodeLine(tmp, link.getCodeLine());
 
 		drawRainbow(ug.apply(new UTranslate(x, y)), color, arrowHeadColor, todraw, link.getSupplementaryColors(),
-				stroke);
+				stroke, magneticForce1, magneticForce2);
 
 		ug = ug.apply(new UStroke()).apply(color);
 
@@ -779,7 +804,7 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 			final double yConstraint = y + this.labelXY.getPosition().getY();
 //			ug.apply(new UTranslate(xConstraint, yConstraint)).draw(new URectangle(10, 10));
 			final List<XPoint2D> square = getSquare(xConstraint, yConstraint);
-			final Set<XPoint2D> bez = dotPath.sample();
+			final Set<XPoint2D> bez = todraw.sample();
 			XPoint2D minPt = null;
 			double minDist = Double.MAX_VALUE;
 			for (XPoint2D pt : square)
@@ -839,14 +864,14 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 	}
 
 	private void drawRainbow(UGraphic ug, HColor color, HColor headColor, DotPath todraw,
-			List<Colors> supplementaryColors, UStroke stroke) {
+			List<Colors> supplementaryColors, UStroke stroke, UTranslate magneticForce1, UTranslate magneticForce2) {
 		ug.draw(todraw);
 		final LinkType linkType = link.getType();
 
 		if (headColor.isTransparent()) {
 			if (this.extremity1 instanceof ExtremityArrow) {
 				final UGraphic ugHead = ug.apply(color).apply(stroke.onlyThickness());
-				((ExtremityArrow) this.extremity1).drawLineIfTransparent(ugHead);
+				((ExtremityArrow) this.extremity1).drawLineIfTransparent(ugHead.apply(magneticForce1));
 			}
 		} else if (this.extremity1 != null) {
 			UGraphic ugHead = ug.apply(headColor).apply(stroke.onlyThickness());
@@ -854,13 +879,13 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 				ugHead = ugHead.apply(color.bg());
 			else
 				ugHead = ugHead.apply(HColors.none().bg());
-			this.extremity1.drawU(ugHead);
+			this.extremity1.drawU(ugHead.apply(magneticForce1));
 		}
 
 		if (headColor.isTransparent()) {
 			if (this.extremity2 instanceof ExtremityArrow) {
 				final UGraphic ugHead = ug.apply(color).apply(stroke.onlyThickness());
-				((ExtremityArrow) this.extremity2).drawLineIfTransparent(ugHead);
+				((ExtremityArrow) this.extremity2).drawLineIfTransparent(ugHead.apply(magneticForce2));
 			}
 		} else if (this.extremity2 != null) {
 			UGraphic ugHead = ug.apply(headColor).apply(stroke.onlyThickness());
@@ -868,7 +893,7 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 				ugHead = ugHead.apply(color.bg());
 			else
 				ugHead = ugHead.apply(HColors.none().bg());
-			this.extremity2.drawU(ugHead);
+			this.extremity2.drawU(ugHead.apply(magneticForce2));
 		}
 
 		int i = 0;

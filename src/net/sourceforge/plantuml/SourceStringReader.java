@@ -51,9 +51,9 @@ import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.security.SFile;
-import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.utils.Log;
 
 public class SourceStringReader {
@@ -230,7 +230,7 @@ public class SourceStringReader {
 	}
 
 	public ImageData noStartumlFound(OutputStream os, FileFormatOption fileFormatOption) throws IOException {
-		final TextBlockBackcolored error = GraphicStrings.createForError(Arrays.asList("No @startuml/@enduml found"),
+		final TextBlock error = GraphicStrings.createForError(Arrays.asList("No @startuml/@enduml found"),
 				fileFormatOption.isUseRedForError());
 
 		return plainImageBuilder(error, fileFormatOption).write(os);

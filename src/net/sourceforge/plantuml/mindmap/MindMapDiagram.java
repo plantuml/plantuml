@@ -40,7 +40,6 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.atmp.InnerStrategy;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -52,13 +51,12 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
-import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.klimt.geom.Rankdir;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
+import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.skin.SkinParam;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
-import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.utils.Direction;
 
 public class MindMapDiagram extends UmlDiagram {
@@ -89,8 +87,8 @@ public class MindMapDiagram extends UmlDiagram {
 	}
 
 	@Override
-	protected TextBlockBackcolored getTextBlock() {
-		return new TextBlockBackcolored() {
+	protected TextBlock getTextBlock() {
+		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
 				for (MindMap mindmap : mindmaps) {
@@ -98,10 +96,6 @@ public class MindMapDiagram extends UmlDiagram {
 					final XDimension2D dim = mindmap.calculateDimension(ug.getStringBounder());
 					ug = ug.apply(UTranslate.dy(dim.getHeight()));
 				}
-			}
-
-			public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
-				return null;
 			}
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
@@ -115,13 +109,6 @@ public class MindMapDiagram extends UmlDiagram {
 				return new XDimension2D(width, height);
 			}
 
-			public MinMax getMinMax(StringBounder stringBounder) {
-				throw new UnsupportedOperationException();
-			}
-
-			public HColor getBackcolor() {
-				return null;
-			}
 		};
 	}
 

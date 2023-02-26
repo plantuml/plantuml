@@ -75,7 +75,7 @@ public class EntityImageStateBorder extends AbstractEntityImageBorder {
 		if (parent == null)
 			return false;
 
-		final XPoint2D clusterCenter = parent.getClusterPosition().getPointCenter();
+		final XPoint2D clusterCenter = parent.getRectangleArea().getPointCenter();
 		final SvekNode node = bibliotekon.getNode(getEntity());
 		return node.getMinY() < clusterCenter.getY();
 	}

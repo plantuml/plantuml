@@ -74,6 +74,8 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.MagneticBorder;
+import net.sourceforge.plantuml.klimt.geom.MagneticBorderNone;
 import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
@@ -370,6 +372,11 @@ public final class GeneralImageBuilder {
 
 		public double getOverscanX(StringBounder stringBounder) {
 			return 0;
+		}
+
+		@Override
+		public MagneticBorder getMagneticBorder() {
+			return new MagneticBorderNone();
 		}
 
 	}

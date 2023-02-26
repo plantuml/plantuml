@@ -41,7 +41,7 @@ import net.sourceforge.plantuml.klimt.Fashion;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
-import net.sourceforge.plantuml.klimt.geom.ClusterPosition;
+import net.sourceforge.plantuml.klimt.geom.RectangleArea;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 
@@ -52,14 +52,14 @@ public class ClusterDecoration {
 	final private TextBlock title;
 	final private TextBlock stereo;
 
-	final private ClusterPosition clusterPosition;
+	final private RectangleArea rectangleArea;
 
 	public ClusterDecoration(PackageStyle style, USymbol symbol, TextBlock title, TextBlock stereo,
-			ClusterPosition clusterPosition, UStroke stroke) {
+			RectangleArea rectangleArea, UStroke stroke) {
 		this.symbol = guess(symbol, style);
 		this.stereo = stereo;
 		this.title = title;
-		this.clusterPosition = clusterPosition;
+		this.rectangleArea = rectangleArea;
 		this.defaultStroke = stroke;
 	}
 
@@ -78,8 +78,8 @@ public class ClusterDecoration {
 
 		final Fashion symbolContext = biColor.withShadow(shadowing).withStroke(defaultStroke).withCorner(roundCorner,
 				diagonalCorner);
-		symbol.asBig(title, titleAlignment, stereo, clusterPosition.getWidth(), clusterPosition.getHeight(),
-				symbolContext, stereoAlignment).drawU(ug.apply(clusterPosition.getPosition()));
+		symbol.asBig(title, titleAlignment, stereo, rectangleArea.getWidth(), rectangleArea.getHeight(),
+				symbolContext, stereoAlignment).drawU(ug.apply(rectangleArea.getPosition()));
 	}
 
 }

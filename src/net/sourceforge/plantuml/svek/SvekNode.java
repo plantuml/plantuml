@@ -43,14 +43,15 @@ import net.sourceforge.plantuml.abel.EntityPosition;
 import net.sourceforge.plantuml.abel.Hideable;
 import net.sourceforge.plantuml.abel.Together;
 import net.sourceforge.plantuml.klimt.Shadowable;
+import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
-import net.sourceforge.plantuml.klimt.geom.ClusterPosition;
+import net.sourceforge.plantuml.klimt.geom.MagneticBorder;
 import net.sourceforge.plantuml.klimt.geom.Positionable;
+import net.sourceforge.plantuml.klimt.geom.RectangleArea;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.UPolygon;
-import net.sourceforge.plantuml.svek.image.EntityImageDescription;
 import net.sourceforge.plantuml.svek.image.EntityImageLollipopInterface;
 import net.sourceforge.plantuml.svek.image.EntityImagePort;
 import net.sourceforge.plantuml.svek.image.EntityImageStateBorder;
@@ -369,8 +370,8 @@ public class SvekNode implements Positionable, Hideable {
 		return getDimImage();
 	}
 
-	public ClusterPosition getClusterPosition() {
-		return new ClusterPosition(minX, minY, minX + getWidth(), minY + getHeight());
+	public RectangleArea getRectangleArea() {
+		return new RectangleArea(minX, minY, minX + getWidth(), minY + getHeight());
 	}
 
 	public boolean isShielded() {
@@ -400,21 +401,6 @@ public class SvekNode implements Positionable, Hideable {
 		return new XPoint2D(minX + x, minY + y);
 	}
 
-	public XPoint2D projection(XPoint2D pt, StringBounder stringBounder) {
-		if (getType() != ShapeType.FOLDER)
-			return pt;
-
-		final ClusterPosition clusterPosition = new ClusterPosition(minX, minY, minX + getWidth(), minY + getHeight());
-		if (clusterPosition.isPointJustUpper(pt)) {
-			final XDimension2D dimName = ((EntityImageDescription) image).getNameDimension(stringBounder);
-			if (pt.getX() < minX + dimName.getWidth())
-				return pt;
-
-			return new XPoint2D(pt.getX(), pt.getY() + dimName.getHeight() + 4);
-		}
-		return pt;
-	}
-
 	public double getOverscanX(StringBounder stringBounder) {
 		return image.getOverscanX(stringBounder);
 	}
@@ -427,10 +413,10 @@ public class SvekNode implements Positionable, Hideable {
 		if (leaf instanceof Entity == false)
 			return;
 
-		drawList(ug, ((Entity) leaf).getKals(Direction.DOWN));
-		drawList(ug, ((Entity) leaf).getKals(Direction.UP));
-		drawList(ug, ((Entity) leaf).getKals(Direction.LEFT));
-		drawList(ug, ((Entity) leaf).getKals(Direction.RIGHT));
+		drawList(ug, leaf.getKals(Direction.DOWN));
+		drawList(ug, leaf.getKals(Direction.UP));
+		drawList(ug, leaf.getKals(Direction.LEFT));
+		drawList(ug, leaf.getKals(Direction.RIGHT));
 
 	}
 
@@ -438,8 +424,8 @@ public class SvekNode implements Positionable, Hideable {
 		if (leaf instanceof Entity == false)
 			return;
 
-		fixHoverlap(((Entity) leaf).getKals(Direction.DOWN));
-		fixHoverlap(((Entity) leaf).getKals(Direction.UP));
+		fixHoverlap(leaf.getKals(Direction.DOWN));
+		fixHoverlap(leaf.getKals(Direction.UP));
 	}
 
 	private void fixHoverlap(final List<Kal> list) {
@@ -459,4 +445,46 @@ public class SvekNode implements Positionable, Hideable {
 		for (Kal kal : list)
 			kal.drawU(ug);
 	}
+
+//	public XPoint2D projection(XPoint2D pt, StringBounder stringBounder) {
+//	if (getType() != ShapeType.FOLDER)
+//		return pt;
+//
+////	final ClusterPosition clusterPosition = new ClusterPosition(minX, minY, minX + getWidth(), minY + getHeight());
+////	if (clusterPosition.isPointJustUpper(pt)) {
+////		final XDimension2D dimName = ((EntityImageDescription) image).getNameDimension(stringBounder);
+////		if (pt.getX() < minX + dimName.getWidth())
+////			return pt;
+////
+////		return new XPoint2D(pt.getX(), pt.getY() + dimName.getHeight() + 4);
+////	}
+//	return pt;
+//}
+
+	public MagneticBorder getMagneticBorder() {
+		return new MagneticBorder() {
+			public UTranslate getForceAt(StringBounder stringBounder, XPoint2D position) {
+				final MagneticBorder orig = image.getMagneticBorder();
+				return orig.getForceAt(stringBounder, position.move(-minX, -minY));
+			}
+		};
+//		return image.getMagneticBorder();
+//		if (getType() != ShapeType.FOLDER)
+//			return new MagneticBorderNone();
+//
+//		return new MagneticBorder() {
+//			@Override
+//			public UTranslate getForceAt(XPoint2D pt) {
+//				if ((pt.getX() >= minX && pt.getX() <= minX + getWidth() && pt.getY() <= minY)) {
+//					final XDimension2D dimName = ((EntityImageDescription) image).getNameDimension(stringBounder);
+//					if (pt.getX() < minX + dimName.getWidth())
+//						return new UTranslate();
+//
+//					return new UTranslate(0, dimName.getHeight() + 4);
+//				}
+//				return new UTranslate();
+//			}
+//		};
+	}
+
 }

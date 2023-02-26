@@ -41,9 +41,8 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 
-public class TextBlockRecentred extends AbstractTextBlock implements TextBlockBackcolored {
+public class TextBlockRecentred extends AbstractTextBlock {
 
 	private final TextBlock textBlock;
 
@@ -80,10 +79,7 @@ public class TextBlockRecentred extends AbstractTextBlock implements TextBlockBa
 	}
 
 	public HColor getBackcolor() {
-		if (textBlock instanceof TextBlockBackcolored) {
-			return ((TextBlockBackcolored) textBlock).getBackcolor();
-		}
-		return null;
+		return textBlock.getBackcolor();
 	}
 
 }

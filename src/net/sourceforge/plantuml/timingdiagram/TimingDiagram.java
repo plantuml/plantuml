@@ -45,7 +45,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import net.atmp.InnerStrategy;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -59,9 +58,8 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
-import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
+import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
@@ -70,7 +68,6 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
-import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 import net.sourceforge.plantuml.timingdiagram.graphic.IntricatedPoint;
 import net.sourceforge.plantuml.timingdiagram.graphic.TimeArrow;
 
@@ -106,15 +103,11 @@ public class TimingDiagram extends UmlDiagram implements Clocks {
 	}
 
 	@Override
-	protected TextBlockBackcolored getTextBlock() {
-		return new TextBlockBackcolored() {
+	protected TextBlock getTextBlock() {
+		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
 				drawInternal(ug);
-			}
-
-			public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
-				return null;
 			}
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
@@ -123,13 +116,6 @@ public class TimingDiagram extends UmlDiagram implements Clocks {
 				return new XDimension2D(totalWith, getHeightTotal(stringBounder));
 			}
 
-			public MinMax getMinMax(StringBounder stringBounder) {
-				throw new UnsupportedOperationException();
-			}
-
-			public HColor getBackcolor() {
-				return null;
-			}
 		};
 	}
 

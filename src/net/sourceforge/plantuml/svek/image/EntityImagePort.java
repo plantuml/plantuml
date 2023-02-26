@@ -75,7 +75,7 @@ public class EntityImagePort extends AbstractEntityImageBorder {
 	}
 
 	private boolean upPosition() {
-		final XPoint2D clusterCenter = parent.getClusterPosition().getPointCenter();
+		final XPoint2D clusterCenter = parent.getRectangleArea().getPointCenter();
 		final SvekNode node = bibliotekon.getNode(getEntity());
 		return node.getMinY() < clusterCenter.getY();
 	}

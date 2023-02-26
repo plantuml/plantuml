@@ -33,13 +33,16 @@
  *
  * 
  */
-package net.sourceforge.plantuml.svek;
+package net.sourceforge.plantuml.klimt.geom;
 
-import net.sourceforge.plantuml.klimt.color.HColor;
-import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
 
-public interface TextBlockBackcolored extends TextBlock {
+public class MagneticBorderNone implements MagneticBorder {
 
-	HColor getBackcolor();
+	@Override
+	public UTranslate getForceAt(StringBounder stringBounder, XPoint2D position) {
+		return new UTranslate();
+	}
 
 }

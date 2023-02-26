@@ -48,9 +48,9 @@ import net.sourceforge.plantuml.klimt.AffineTransformType;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.UImage;
-import net.sourceforge.plantuml.svek.TextBlockBackcolored;
 
 public class PSystemLicense extends PlainDiagram implements UDrawable {
 
@@ -67,7 +67,7 @@ public class PSystemLicense extends PlainDiagram implements UDrawable {
 		super(source);
 	}
 
-	private TextBlockBackcolored getGraphicStrings(List<String> strings) {
+	private TextBlock getGraphicStrings(List<String> strings) {
 		return GraphicStrings.createBlackOnWhite(strings);
 	}
 
@@ -98,20 +98,20 @@ public class PSystemLicense extends PlainDiagram implements UDrawable {
 			strings1.addAll(License.getCurrent().getText1(licenseInfo));
 			strings2.addAll(License.getCurrent().getText2(licenseInfo));
 
-			final TextBlockBackcolored result1 = getGraphicStrings(strings1);
+			final TextBlock result1 = getGraphicStrings(strings1);
 			result1.drawU(ug);
 			ug = ug.apply(UTranslate.dy(4 + result1.calculateDimension(ug.getStringBounder()).getHeight()));
 			UImage im = new UImage(new PixelImage(logo, AffineTransformType.TYPE_BILINEAR));
 			ug.apply(UTranslate.dx(20)).draw(im);
 
 			ug = ug.apply(UTranslate.dy(im.getHeight()));
-			final TextBlockBackcolored result2 = getGraphicStrings(strings2);
+			final TextBlock result2 = getGraphicStrings(strings2);
 			result2.drawU(ug);
 		}
 		// ::done
 	}
 
-	protected TextBlockBackcolored getTextBlock(final LicenseInfo licenseInfo) {
+	protected TextBlock getTextBlock(final LicenseInfo licenseInfo) {
 		final List<String> strings = new ArrayList<>();
 		strings.addAll(License.getCurrent().getText1(licenseInfo));
 		strings.addAll(License.getCurrent().getText2(licenseInfo));

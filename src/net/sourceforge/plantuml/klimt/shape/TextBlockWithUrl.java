@@ -36,8 +36,10 @@
 package net.sourceforge.plantuml.klimt.shape;
 
 import net.atmp.InnerStrategy;
+import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.MagneticBorder;
 import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
@@ -49,9 +51,9 @@ public class TextBlockWithUrl implements TextBlock {
 	private final Url url;
 
 	public static TextBlock withUrl(TextBlock block, Url url) {
-		if (url == null) {
+		if (url == null)
 			return block;
-		}
+
 		return new TextBlockWithUrl(block, url);
 
 	}
@@ -77,6 +79,16 @@ public class TextBlockWithUrl implements TextBlock {
 
 	public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
 		return block.getInnerPosition(member, stringBounder, strategy);
+	}
+
+	@Override
+	public MagneticBorder getMagneticBorder() {
+		return block.getMagneticBorder();
+	}
+
+	@Override
+	public HColor getBackcolor() {
+		return block.getBackcolor();
 	}
 
 }
