@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.ProgressBar;
 
 public abstract class Log {
+	// ::remove file when __HAXE__
 
 	private static final long start = System.currentTimeMillis();
 
@@ -46,7 +47,7 @@ public abstract class Log {
 	}
 
 	public synchronized static void info(String s) {
-		// ::comment when CORE
+		// ::comment when __CORE__
 		if (OptionFlags.getInstance().isVerbose()) {
 			ProgressBar.clear();
 			System.err.println(format(s));
@@ -55,7 +56,7 @@ public abstract class Log {
 	}
 
 	public synchronized static void error(String s) {
-		// ::comment when CORE
+		// ::comment when __CORE__
 		ProgressBar.clear();
 		// ::done
 		System.err.println(s);

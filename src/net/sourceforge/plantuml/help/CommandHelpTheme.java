@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.utils.LineLocation;
 import net.sourceforge.plantuml.utils.Log;
 
 public class CommandHelpTheme extends SingleLineCommand2<Help> {
+    // ::remove folder when __HAXE__
 
 	public CommandHelpTheme() {
 		super(getRegexConcat());

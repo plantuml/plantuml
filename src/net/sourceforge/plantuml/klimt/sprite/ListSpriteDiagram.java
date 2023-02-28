@@ -60,7 +60,7 @@ import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class ListSpriteDiagram extends UmlDiagram {
-	// ::remove file when CORE
+	// ::remove file when __CORE__
 
 	public ListSpriteDiagram(UmlSource source, Map<String, String> skinParam) {
 		super(source, UmlDiagramType.HELP, skinParam);

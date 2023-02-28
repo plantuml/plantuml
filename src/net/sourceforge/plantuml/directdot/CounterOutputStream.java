@@ -39,6 +39,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 public class CounterOutputStream extends OutputStream {
+    // ::remove folder when __HAXE__
 
 	private int length;
 	private final OutputStream os;

@@ -48,7 +48,7 @@ import net.sourceforge.plantuml.file.AParentFolder;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.utils.Log;
-// ::uncomment when CORE
+// ::uncomment when __CORE__
 //import java.util.Collections;
 //  ::done
 
@@ -110,7 +110,7 @@ public class ImportedFiles {
 
 	public List<SFile> getPath() {
 		final List<SFile> result = new ArrayList<>(imported);
-		// ::comment when CORE
+		// ::comment when __CORE__
 		result.addAll(includePath());
 		result.addAll(SecurityUtils.getPath(SecurityUtils.PATHS_CLASSES));
 		// ::done
@@ -118,10 +118,10 @@ public class ImportedFiles {
 	}
 
 	private List<SFile> includePath() {
-		// ::comment when CORE
+		// ::comment when __CORE__
 		return SecurityUtils.getPath(SecurityUtils.PATHS_INCLUDES);
 		// ::done
-		// ::uncomment when CORE
+		// ::uncomment when __CORE__
 		// return Collections.emptyList();
 		// ::done
 	}
@@ -157,7 +157,7 @@ public class ImportedFiles {
 	}
 
 	private boolean isAllowed(AFile file) throws IOException {
-		// ::comment when CORE
+		// ::comment when __CORE__
 		if (OptionFlags.ALLOW_INCLUDE)
 			return true;
 

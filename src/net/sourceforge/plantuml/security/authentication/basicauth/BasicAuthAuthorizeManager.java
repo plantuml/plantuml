@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.security.authentication.SecurityCredentials;
  * @author Aljoscha Rittner
  */
 public class BasicAuthAuthorizeManager implements SecurityAuthorizeManager {
+    // ::remove folder when __HAXE__
 	@Override
 	public SecurityAuthentication create(SecurityCredentials credentials) {
 		String type = credentials.getType();

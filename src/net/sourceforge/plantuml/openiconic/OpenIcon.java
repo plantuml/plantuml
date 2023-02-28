@@ -99,7 +99,7 @@ public class OpenIcon {
 
 	}
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	void saveCopy(SFile fnew) throws IOException {
 		try (PrintWriter pw = fnew.createPrintWriter()) {
 			pw.println(rawData.get(0));

@@ -54,6 +54,7 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.svek.image.Opale;
 
 final public class ComponentRoseNote extends AbstractTextualComponent implements Stencil {
+    // ::remove folder when __HAXE__
 
 	private final double paddingX;
 	private final double paddingY;
@@ -117,7 +118,7 @@ final public class ComponentRoseNote extends AbstractTextualComponent implements
 		ug.draw(polygon);
 
 		ug.draw(Opale.getCorner(x2, roundCorner));
-		UGraphic ug2 = UGraphicStencil.create(ug, this, new UStroke());
+		UGraphic ug2 = UGraphicStencil.create(ug, this, UStroke.simple());
 
 		if (position == HorizontalAlignment.LEFT) {
 			ug2 = ug2.apply(new UTranslate(getMarginX1(), getMarginY()));

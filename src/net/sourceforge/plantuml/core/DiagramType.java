@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.core;
 import net.sourceforge.plantuml.utils.StartUtils;
 
 public enum DiagramType {
+    // ::remove folder when __HAXE__
 	UML, BPM, DITAA, DOT, PROJECT, JCCKIT, SALT, FLOW, CREOLE, JUNGLE, CUTE, MATH, LATEX, DEFINITION, GANTT, NW,
 	MINDMAP, WBS, WIRE, JSON, GIT, BOARD, YAML, HCL, EBNF, REGEX, UNKNOWN;
 

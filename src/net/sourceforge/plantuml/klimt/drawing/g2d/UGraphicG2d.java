@@ -88,7 +88,7 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> implements EnsureV
 	private List<Url> urls = new ArrayList<>();
 	private Set<Url> allUrls = new HashSet<>();
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	private final boolean hasAffineTransform;
 	// ::done
 
@@ -112,7 +112,7 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> implements EnsureV
 
 	private UGraphicG2d(UGraphicG2d other) {
 		super(other);
-		// ::comment when CORE
+		// ::comment when __CORE__
 		this.hasAffineTransform = other.hasAffineTransform;
 		// ::done
 		this.dpiFactor = other.dpiFactor;
@@ -126,20 +126,20 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> implements EnsureV
 
 	public UGraphicG2d(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder, Graphics2D g2d,
 			double dpiFactor, FileFormat format) {
-		// ::comment when CORE
+		// ::comment when __CORE__
 		this(defaultBackground, colorMapper, stringBounder, g2d, dpiFactor, null, 0, 0, format);
 		// ::done
-		// ::uncomment when CORE
+		// ::uncomment when __CORE__
 		// this(defaultBackground, colorMapper, stringBounder, g2d, dpiFactor, 0, 0,
 		// format);
 		// ::done
 	}
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	public UGraphicG2d(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder, Graphics2D g2d,
 			double dpiFactor, AffineTransformation affineTransform, double dx, double dy, FileFormat format) {
 		// ::done
-		// ::uncomment when CORE
+		// ::uncomment when __CORE__
 		// public UGraphicG2d(HColor defaultBackground, ColorMapper colorMapper,
 		// StringBounder stringBounder, Graphics2D g2d,
 		// double dpiFactor, double dx, double dy, FileFormat format) {
@@ -150,7 +150,7 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> implements EnsureV
 		if (dpiFactor != 1.0)
 			g2d.scale(dpiFactor, dpiFactor);
 
-		// ::comment when CORE
+		// ::comment when __CORE__
 		this.hasAffineTransform = affineTransform != null;
 		if (this.hasAffineTransform) {
 			if (dx != 0 || dy != 0)
@@ -163,7 +163,7 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> implements EnsureV
 
 	private void register(double dpiFactor) {
 		registerDriver(URectangle.class, new DriverRectangleG2d(dpiFactor, this));
-		// ::comment when CORE
+		// ::comment when __CORE__
 		if (this.hasAffineTransform || dpiFactor != 1.0)
 			registerDriver(UText.class, new DriverTextAsPathG2d(this, getStringBounder()));
 		else

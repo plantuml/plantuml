@@ -40,7 +40,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class Upf9Decoder {
-	// ::remove file when CORE
+	// ::remove file when __CORE__
 
 	private Upf9Decoder() {
 	}

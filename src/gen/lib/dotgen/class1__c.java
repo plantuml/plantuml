@@ -80,6 +80,7 @@ import smetana.core.CString;
 import smetana.core.Globals;
 
 public class class1__c {
+    // ::remove folder when __HAXE__
 
 
 @Reviewed(when = "13/11/2020")

@@ -22,6 +22,7 @@ import ext.plantuml.com.ctreber.aclib.gui.MonitoredObject;
  * 
  */
 public class Configuration {
+    // ::remove folder when __HAXE__
 	private Map fValues = new HashMap();
 
 	/**

@@ -59,14 +59,15 @@ import net.sourceforge.plantuml.stats.StatsUtils;
 import net.sourceforge.plantuml.utils.Log;
 
 public class Option {
-	// ::remove file when CORE
+	// ::remove file when __CORE__
+	// ::remove file when __HAXE__
 
 	private final List<String> excludes = new ArrayList<>();
 	private final List<String> config = new ArrayList<>();
 	private final Map<String, String> defines = new LinkedHashMap<String, String>();
 
 	private String charset;
-	// ::comment when CORE
+	// ::comment when __CORE__
 	private boolean computeurl = false;
 	private boolean decodeurl = false;
 	private boolean pipe = false;
@@ -86,7 +87,7 @@ public class Option {
 	private boolean debugsvek = false;
 	private int nbThreads = 0;
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	private boolean splash = false;
 	private boolean textProgressBar = false;
 	private int ftpPort = -1;
@@ -121,7 +122,7 @@ public class Option {
 		this.fileFormatOption = newFormat;
 	}
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	public Option(String... arg) throws InterruptedException, IOException {
 		if (arg.length == 0)
 			OptionFlags.getInstance().setGui(true);
@@ -527,7 +528,7 @@ public class Option {
 		return Collections.unmodifiableList(excludes);
 	}
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	public Defines getDefaultDefines(SFile f) {
 		final Defines result = Defines.createWithFileName(f);
 		for (Map.Entry<String, String> ent : defines.entrySet()) {
@@ -583,7 +584,7 @@ public class Option {
 
 	}
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	public final boolean isComputeurl() {
 		return computeurl;
 	}
@@ -631,7 +632,7 @@ public class Option {
 		return Runtime.getRuntime().availableProcessors();
 	}
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	public final boolean isCheckOnly() {
 		return checkOnly;
 	}
@@ -677,7 +678,7 @@ public class Option {
 		return debugsvek;
 	}
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	public final boolean isSplash() {
 		return splash;
 	}

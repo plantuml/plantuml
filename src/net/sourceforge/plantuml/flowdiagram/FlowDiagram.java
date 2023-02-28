@@ -75,6 +75,7 @@ import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 
 public class FlowDiagram extends UmlDiagram implements TextBlock {
+    // ::remove folder when __HAXE__
 
 	private static double SINGLE_SIZE_X = 100;
 	private static double SINGLE_SIZE_Y = 35;

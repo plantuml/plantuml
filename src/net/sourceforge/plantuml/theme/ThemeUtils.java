@@ -50,13 +50,14 @@ import net.sourceforge.plantuml.preproc.ReadLineReader;
 import net.sourceforge.plantuml.preproc.Stdlib;
 import net.sourceforge.plantuml.utils.Log;
 
-// ::uncomment when CORE
+// ::uncomment when __CORE__
 //import static com.plantuml.api.cheerpj.StaticMemory.cheerpjPath;
 //import java.io.FileInputStream;
 //import java.io.FileNotFoundException;
 // ::done
 
 public class ThemeUtils {
+    // ::remove folder when __HAXE__
 
 	private static final String THEME_FILE_PREFIX = "puml-theme-";
 
@@ -64,7 +65,7 @@ public class ThemeUtils {
 
 	private static final String THEME_PATH = "themes";
 
-	// ::uncomment when CORE
+	// ::uncomment when __CORE__
 //	public static ReadLine getReaderTheme(String filename) throws FileNotFoundException {
 //	Log.info("Loading theme " + filename);
 //	final String fullpath = cheerpjPath + THEME_PATH + "/" + THEME_FILE_PREFIX + filename
@@ -77,7 +78,7 @@ public class ThemeUtils {
 //}
 	// ::done
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	public static ReadLine getReaderTheme(String filename) {
 		Log.info("Loading theme " + filename);
 		final String res = "/" + THEME_PATH + "/" + THEME_FILE_PREFIX + filename + THEME_FILE_SUFFIX;

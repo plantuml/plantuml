@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.statediagram.StateDiagram;
 import net.sourceforge.plantuml.utils.Log;
 
 public final class StateDiagramScxmlMaker {
+    // ::remove folder when __HAXE__
 
 	private final StateDiagram diagram;
 

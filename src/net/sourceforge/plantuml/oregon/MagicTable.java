@@ -43,6 +43,7 @@ import java.util.Random;
 import net.sourceforge.plantuml.utils.Log;
 
 public class MagicTable {
+    // ::remove folder when __HAXE__
 
 	static enum Oc {
 		USED, NEAR

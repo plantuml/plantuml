@@ -39,7 +39,7 @@ import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.security.SFile;
 
 public class SuggestedFile {
-	// ::remove file when CORE
+	// ::remove file when __CORE__
 
 	private final FileFormat fileFormat;
 	private final int initialCpt;

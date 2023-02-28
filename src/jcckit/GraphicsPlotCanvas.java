@@ -48,7 +48,8 @@ import jcckit.util.Factory;
  * @author Franz-Josef Elmer
  */
 public class GraphicsPlotCanvas extends PlotCanvas {
-	// ::remove folder when CORE
+	// ::remove folder when __CORE__
+	// ::remove folder when __HAXE__
 	/** Key of a configuration parameter. */
 	public static final String BACKGROUND_KEY = "background";
 	public static final String FOREGROUND_KEY = "foreground";

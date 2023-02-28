@@ -58,7 +58,7 @@ class USymbolActor extends USymbolSimpleAbstract {
 	protected TextBlock getDrawing(Fashion symbolContext) {
 		// final double deltaShadow = symbolContext.isShadowing() ? 4.0 : 0.0;
 		// final SymbolContext tmp =
-		// symbolContext.withDeltaShadow(deltaShadow).withStroke(new UStroke(2));
+		// symbolContext.withDeltaShadow(deltaShadow).withStroke(UStroke.withThickness(2));
 		return actorStyle.getTextBlock(symbolContext);
 	}
 

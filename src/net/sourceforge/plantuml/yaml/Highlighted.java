@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.stereo.Stereotype;
 
 public class Highlighted {
+    // ::remove folder when __HAXE__
 
 	public static final String HIGHLIGHTED = "#highlight ";
 	private final static Pattern pattern = Pattern.compile("^([^<>]+)(\\<\\<.*\\>\\>)?$");

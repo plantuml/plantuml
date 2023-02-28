@@ -65,7 +65,7 @@ class ExtremityCircleCross extends Extremity {
 
 	public void drawU(UGraphic ug) {
 		ug = ug.apply(backgroundColor.bg());
-		ug.apply(new UStroke(1.5)).apply(new UTranslate(dest.getX() - radius, dest.getY() - radius))
+		ug.apply(UStroke.withThickness(1.5)).apply(new UTranslate(dest.getX() - radius, dest.getY() - radius))
 				.draw(new UEllipse(radius * 2, radius * 2));
 		drawLine(ug, 0, 0, getPointOnCircle(Math.PI / 4), getPointOnCircle(Math.PI + Math.PI / 4));
 		drawLine(ug, 0, 0, getPointOnCircle(-Math.PI / 4), getPointOnCircle(Math.PI - Math.PI / 4));

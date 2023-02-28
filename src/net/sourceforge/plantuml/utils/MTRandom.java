@@ -84,6 +84,7 @@ import java.util.Random;
  */
 
 public class MTRandom extends Random {
+	// ::remove file when __HAXE__
 
 	/**
 	 * Auto-generated serial version UID. Note that MTRandom does NOT support

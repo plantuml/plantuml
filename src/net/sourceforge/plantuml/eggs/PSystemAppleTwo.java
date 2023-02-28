@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.klimt.geom.GraphicPosition;
 import net.sourceforge.plantuml.version.PSystemVersion;
 
 public class PSystemAppleTwo extends PlainStringsDiagram {
-	// ::remove file when CORE
+	// ::remove file when __CORE__
 
 	public PSystemAppleTwo(UmlSource source) throws IOException {
 		super(source);

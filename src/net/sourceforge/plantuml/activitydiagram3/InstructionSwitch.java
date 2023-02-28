@@ -58,6 +58,7 @@ import net.sourceforge.plantuml.sequencediagram.NoteType;
 import net.sourceforge.plantuml.style.ISkinParam;
 
 public class InstructionSwitch extends WithNote implements Instruction, InstructionCollection {
+    // ::remove folder when __HAXE__
 
 	private final List<Branch> switches = new ArrayList<>();
 	private final ISkinParam skinParam;
@@ -97,7 +98,7 @@ public class InstructionSwitch extends WithNote implements Instruction, Instruct
 		return current.add(ins);
 	}
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	@Override
 	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
 		for (Branch branch : switches)

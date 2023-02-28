@@ -106,6 +106,7 @@ import smetana.core.Macro;
 import smetana.core.debug.SmetanaDebug;
 
 public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
+    // ::remove folder when __HAXE__
 
 	private final ICucaDiagram diagram;
 

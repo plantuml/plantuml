@@ -76,6 +76,7 @@ import h.ST_textlabel_t;
 import smetana.core.debug.SmetanaDebug;
 
 final public class Macro {
+    // ::remove folder when __HAXE__
 
 	public static void UNSURE_ABOUT(String comment) {
 		System.err.println("UNSURE_ABOUT: " + comment);

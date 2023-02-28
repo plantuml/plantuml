@@ -9,6 +9,7 @@ package ext.plantuml.com.ctreber.acearth.scanbit;
  */
 abstract public class ScanBitGenerator
 {
+    // ::remove folder when __HAXE__
   int fImageHeight;
   int fImageWidth;
   protected ScanBit[] fScanBitsArray;

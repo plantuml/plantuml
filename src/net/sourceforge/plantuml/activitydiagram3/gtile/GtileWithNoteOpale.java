@@ -118,7 +118,7 @@ public class GtileWithNoteOpale extends AbstractGtile implements Stencil, Stylea
 				false, null);
 		final Sheet sheet = skinParam.sheet(fc, align, CreoleMode.FULL).createSheet(note.getDisplay());
 		final TextBlock text = new SheetBlock2(new SheetBlock1(sheet, wrapWidth, skinParam.getPadding()), this,
-				new UStroke(1));
+				UStroke.withThickness(1));
 		this.opale = new Opale(shadowing, borderColor, noteBackgroundColor, text, withLink, stroke);
 
 		this.dimNote = opale.calculateDimension(stringBounder);

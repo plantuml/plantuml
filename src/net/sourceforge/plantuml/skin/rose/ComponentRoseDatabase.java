@@ -65,7 +65,7 @@ public class ComponentRoseDatabase extends AbstractTextualComponent {
 		final Fashion biColor = style.getSymbolContext(getIHtmlColorSet());
 
 		final Fashion symbolContext = new Fashion(biColor.getBackColor(), biColor.getForeColor())
-				.withStroke(new UStroke(1.5)).withShadow(biColor.getDeltaShadow());
+				.withStroke(UStroke.withThickness(1.5)).withShadow(biColor.getDeltaShadow());
 		this.stickman = USymbols.DATABASE.asSmall(null, TextBlockUtils.empty(16, 17), TextBlockUtils.empty(0, 0),
 				symbolContext, HorizontalAlignment.CENTER);
 	}

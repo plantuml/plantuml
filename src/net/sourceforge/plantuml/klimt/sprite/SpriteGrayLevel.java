@@ -80,7 +80,7 @@ public enum SpriteGrayLevel {
 		return nbColor;
 	}
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	public List<String> encode(BufferedImage img) {
 		if (this == GRAY_16)
 			return encode16(img);
@@ -241,7 +241,7 @@ public enum SpriteGrayLevel {
 		return result;
 	}
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	public List<String> encodeZ(BufferedImage img) {
 		final int width = img.getWidth();
 		final int height = img.getHeight();

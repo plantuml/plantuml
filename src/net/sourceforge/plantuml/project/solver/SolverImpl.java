@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.project.core.TaskAttribute;
 import net.sourceforge.plantuml.project.time.Day;
 
 public class SolverImpl extends AbstractSolver implements Solver {
+    // ::remove folder when __HAXE__
 
 	private final LoadPlanable loadPlanable;
 

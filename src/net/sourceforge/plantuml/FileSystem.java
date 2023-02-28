@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.utils.Log;
 
 public class FileSystem {
+	// ::remove file when __HAXE__
 
 	private final static FileSystem singleton = new FileSystem();
 
@@ -65,7 +66,7 @@ public class FileSystem {
 	}
 
 	public SFile getCurrentDir() {
-		// ::comment when CORE
+		// ::comment when __CORE__
 		final String path = this.currentDir.get();
 		if (path != null)
 			return new SFile(path);
@@ -75,11 +76,11 @@ public class FileSystem {
 	}
 
 	public SFile getFile(String nameOrPath) throws IOException {
-		// ::uncomment when CORE
+		// ::uncomment when __CORE__
 		// return null;
 		// ::done
 
-		// ::comment when CORE
+		// ::comment when __CORE__
 		if (isAbsolute(nameOrPath)) {
 			final SFile result = new SFile(nameOrPath);
 			Log.info("Trying " + result.getAbsolutePath());
@@ -117,7 +118,7 @@ public class FileSystem {
 		// ::done
 	}
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	private boolean isAbsolute(String nameOrPath) {
 		final SFile f = new SFile(nameOrPath);
 		return f.isAbsolute();

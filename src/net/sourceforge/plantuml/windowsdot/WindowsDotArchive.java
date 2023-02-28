@@ -46,7 +46,8 @@ import net.sourceforge.plantuml.brotli.BrotliInputStream;
 import net.sourceforge.plantuml.log.Logme;
 
 public final class WindowsDotArchive {
-	// ::remove folder when CORE
+    // ::remove folder when __HAXE__
+	// ::remove folder when __CORE__
 
 	private static WindowsDotArchive singleton = null;
 

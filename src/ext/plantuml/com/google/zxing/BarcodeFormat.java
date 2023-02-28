@@ -24,7 +24,8 @@ import java.util.Hashtable;
  * @author Sean Owen
  */
 public final class BarcodeFormat {
-  // :: remove folder when CORE
+    // ::remove folder when __HAXE__
+  // :: remove folder when __CORE__
 
   // No, we can't use an enum here. J2ME doesn't support it.
 

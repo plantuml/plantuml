@@ -1008,7 +1008,7 @@ public class SvgGraphics {
 		this.hidden = hidden;
 	}
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	public static final String META_HEADER = "<!--SRC=[";
 
 	public static String getMetadataHex(String comment) {
@@ -1022,7 +1022,7 @@ public class SvgGraphics {
 	// ::done
 
 	public void addCommentMetadata(String metadata) {
-		// ::comment when CORE
+		// ::comment when __CORE__
 		final String signature = getMetadataHex(metadata);
 		final String comment = "SRC=[" + signature + "]";
 		final Comment commentElement = document.createComment(comment);

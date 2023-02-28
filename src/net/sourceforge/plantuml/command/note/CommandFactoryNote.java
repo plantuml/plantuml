@@ -59,6 +59,7 @@ import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public final class CommandFactoryNote implements SingleMultiFactoryCommand<AbstractEntityDiagram> {
+    // ::remove folder when __HAXE__
 
 	private IRegex getRegexConcatMultiLine() {
 		return RegexConcat.build(CommandFactoryNote.class.getName() + "multi", RegexLeaf.start(), //

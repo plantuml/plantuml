@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.stats.api.StatsLine;
 import net.sourceforge.plantuml.stats.api.StatsTable;
 
 public class CreoleConverter {
-	// ::remove folder when CORE
+	// ::remove folder when __CORE__
 
 	private final DateFormat formatter = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM);
 

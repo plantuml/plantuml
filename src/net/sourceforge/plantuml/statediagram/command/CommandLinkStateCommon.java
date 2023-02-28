@@ -58,6 +58,7 @@ import net.sourceforge.plantuml.utils.Direction;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 abstract class CommandLinkStateCommon extends SingleLineCommand2<StateDiagram> {
+    // ::remove folder when __HAXE__
 
 	CommandLinkStateCommon(IRegex pattern) {
 		super(pattern);

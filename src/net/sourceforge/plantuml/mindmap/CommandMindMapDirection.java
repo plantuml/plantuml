@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.utils.Direction;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandMindMapDirection extends SingleLineCommand2<MindMapDiagram> {
+    // ::remove folder when __HAXE__
 
 	public CommandMindMapDirection() {
 		super(getRegexConcat());

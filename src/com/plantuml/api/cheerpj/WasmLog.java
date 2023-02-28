@@ -37,7 +37,7 @@ package com.plantuml.api.cheerpj;
 
 import net.sourceforge.plantuml.utils.Log;
 
-//::uncomment when CORE
+//::uncomment when __CORE__
 //import com.leaningtech.client.Document;
 //import com.leaningtech.client.Element;
 //import com.leaningtech.client.Global;
@@ -48,10 +48,10 @@ public class WasmLog {
 	public static long start;
 
 	public static void log(String message) {
-		// ::comment when CORE
+		// ::comment when __CORE__
 		Log.info(message);
 		// ::done
-		// ::uncomment when CORE
+		// ::uncomment when __CORE__
 //		try {
 //			if (start > 0) {
 //				final long duration = System.currentTimeMillis() - start;

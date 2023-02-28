@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandMultilinesFooter extends CommandMultilines<TitledDiagram> {
+    // ::remove folder when __HAXE__
 
 	public static final CommandMultilinesFooter ME = new CommandMultilinesFooter();
 

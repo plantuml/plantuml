@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.core.Diagram;
 
 public class MDADiagramImpl implements MDADiagram {
-	// ::remove folder when CORE
+	// ::remove folder when __CORE__
 	public static MDADiagram create(String uml) {
 		List<BlockUml> blocks = new SourceStringReader(uml).getBlocks();
 		if (blocks.size() == 0) {

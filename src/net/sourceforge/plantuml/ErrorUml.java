@@ -40,6 +40,7 @@ import java.util.Objects;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class ErrorUml {
+	// ::remove file when __HAXE__
 
 	private final String error;
 	private final ErrorUmlType type;

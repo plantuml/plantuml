@@ -51,7 +51,7 @@ import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SImageIO;
 
 public class MetadataTag {
-	// ::remove file when CORE
+	// ::remove file when __CORE__
 
 	private final Object source;
 	private final String tag;

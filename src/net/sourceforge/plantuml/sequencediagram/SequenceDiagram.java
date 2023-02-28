@@ -255,7 +255,7 @@ public class SequenceDiagram extends UmlDiagram {
 	private FileMaker getSequenceDiagramPngMaker(int index, FileFormatOption fileFormatOption) {
 
 		final FileFormat fileFormat = fileFormatOption.getFileFormat();
-		// ::comment when CORE
+		// ::comment when __CORE__
 		if (fileFormat == FileFormat.ATXT || fileFormat == FileFormat.UTXT)
 			return new SequenceDiagramTxtMaker(this, fileFormat);
 
@@ -454,7 +454,7 @@ public class SequenceDiagram extends UmlDiagram {
 
 	@Override
 	public int getNbImages() {
-		// ::comment when CORE
+		// ::comment when __CORE__
 		try {
 			// The DEBUG StringBounder is ok just to compute the number of pages here.
 			return getSequenceDiagramPngMaker(1, new FileFormatOption(FileFormat.DEBUG)).getNbPages();
@@ -462,7 +462,7 @@ public class SequenceDiagram extends UmlDiagram {
 			Logme.error(t);
 			// ::done
 			return 1;
-			// ::comment when CORE
+			// ::comment when __CORE__
 		}
 		// ::done
 	}

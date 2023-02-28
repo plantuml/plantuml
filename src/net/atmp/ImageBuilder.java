@@ -113,7 +113,7 @@ import net.sourceforge.plantuml.url.Url;
 
 public class ImageBuilder {
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	private Animation animation;
 	// ::done
 	private boolean annotations;
@@ -223,7 +223,7 @@ public class ImageBuilder {
 	public ImageBuilder styled(TitledDiagram diagram) {
 		skinParam = diagram.getSkinParam();
 		stringBounder = fileFormatOption.getDefaultStringBounder(skinParam);
-		// ::comment when CORE
+		// ::comment when __CORE__
 		animation = diagram.getAnimation();
 		// ::done
 		annotations = true;
@@ -246,7 +246,7 @@ public class ImageBuilder {
 			udrawable = annotatedWorker.addAdd((TextBlock) udrawable);
 		}
 
-		// ::comment when CORE
+		// ::comment when __CORE__
 		switch (fileFormatOption.getFileFormat()) {
 		case MJPEG:
 			return writeImageMjpeg(os);
@@ -255,10 +255,10 @@ public class ImageBuilder {
 		default:
 			return writeImageInternal(os, animation);
 		// ::done
-		// ::uncomment when CORE
+		// ::uncomment when __CORE__
 		// return writeImageInternal(os);
 		// ::done
-		// ::comment when CORE
+		// ::comment when __CORE__
 		}
 		// ::done
 	}
@@ -270,16 +270,16 @@ public class ImageBuilder {
 		}
 	}
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	private ImageData writeImageInternal(OutputStream os, Animation animationArg) throws IOException {
 		// ::done
-		// ::uncomment when CORE
+		// ::uncomment when __CORE__
 		// private ImageData writeImageInternal(OutputStream os) throws IOException {
 		// ::done
 		XDimension2D dim = getFinalDimension();
 		double dx = 0;
 		double dy = 0;
-		// ::comment when CORE
+		// ::comment when __CORE__
 		if (animationArg != null) {
 			final MinMax minmax = animationArg.getMinMax(dim);
 			animationArg.setDimension(dim);
@@ -294,11 +294,11 @@ public class ImageBuilder {
 		if (scaleFactor <= 0)
 			throw new IllegalStateException("Bad scaleFactor");
 		WasmLog.log("...image drawing...");
-		// ::comment when CORE
+		// ::comment when __CORE__
 		UGraphic ug = createUGraphic(dim, animationArg, dx, dy, scaleFactor,
 				titledDiagram == null ? new Pragma() : titledDiagram.getPragma());
 		// ::done
-		// ::uncomment when CORE
+		// ::uncomment when __CORE__
 		// UGraphic ug = createUGraphic(dim, dx, dy, scaleFactor,
 		// titledDiagram == null ? new Pragma() : titledDiagram.getPragma());
 		// ::done
@@ -330,7 +330,7 @@ public class ImageBuilder {
 
 		UStroke stroke = skinParam.getThickness(LineParam.diagramBorder, null);
 		if (stroke == null && color != null)
-			stroke = new UStroke();
+			stroke = UStroke.simple();
 		if (stroke == null)
 			return;
 
@@ -368,7 +368,7 @@ public class ImageBuilder {
 		return ug;
 	}
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	private ImageData writeImageMjpeg(OutputStream os) throws IOException {
 
 		final XDimension2D dim = getFinalDimension();
@@ -427,11 +427,11 @@ public class ImageBuilder {
 	}
 	// ::done
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	private UGraphic createUGraphic(final XDimension2D dim, Animation animationArg, double dx, double dy,
 			double scaleFactor, Pragma pragma) {
 		// ::done
-		// ::uncomment when CORE
+		// ::uncomment when __CORE__
 		// private UGraphic createUGraphic(final XDimension2D dim, double dx, double dy,
 		// double scaleFactor, Pragma pragma) {
 		// ::done
@@ -439,17 +439,17 @@ public class ImageBuilder {
 		switch (fileFormatOption.getFileFormat()) {
 		case PNG:
 		case RAW:
-			// ::comment when CORE
+			// ::comment when __CORE__
 			return createUGraphicPNG(scaleFactor, dim, animationArg, dx, dy, fileFormatOption.getWatermark(),
 					fileFormatOption.getFileFormat());
 		// ::done
-		// ::uncomment when CORE
+		// ::uncomment when __CORE__
 		// return createUGraphicPNG(scaleFactor, dim, dx, dy,
 		// fileFormatOption.getWatermark(), fileFormatOption.getFileFormat());
 		// ::done
 		case SVG:
 			return createUGraphicSVG(scaleFactor, dim, pragma);
-		// ::comment when CORE
+		// ::comment when __CORE__
 		case EPS:
 			return new UGraphicEps(backcolor, colorMapper, stringBounder, EpsStrategy.getDefault2());
 		case EPS_TEXT:
@@ -498,11 +498,11 @@ public class ImageBuilder {
 
 	}
 
-	// ::uncomment when CORE
+	// ::uncomment when __CORE__
 	// private UGraphic createUGraphicPNG(double scaleFactor, final XDimension2D
 	// dim, double dx, double dy, String watermark, FileFormat format) {
 	// ::done
-	// ::comment when CORE
+	// ::comment when __CORE__
 	private UGraphic createUGraphicPNG(double scaleFactor, final XDimension2D dim, Animation affineTransforms,
 			double dx, double dy, String watermark, FileFormat format) {
 		// ::done
@@ -519,11 +519,11 @@ public class ImageBuilder {
 				(int) (dim.getHeight() * scaleFactor), pngBackColor, stringBounder);
 		final Graphics2D graphics2D = builder.getGraphics2D();
 
-		// ::comment when CORE
+		// ::comment when __CORE__
 		final UGraphicG2d ug = new UGraphicG2d(backcolor, fileFormatOption.getColorMapper(), stringBounder, graphics2D,
 				scaleFactor, affineTransforms == null ? null : affineTransforms.getFirst(), dx, dy, format);
 		// ::done
-		// ::uncomment when CORE
+		// ::uncomment when __CORE__
 		// final UGraphicG2d ug = new UGraphicG2d(backcolor,
 		// fileFormatOption.getColorMapper(), stringBounder, graphics2D,
 		// scaleFactor, dx, dy, format);

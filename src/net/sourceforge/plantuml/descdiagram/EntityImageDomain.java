@@ -92,7 +92,7 @@ public class EntityImageDomain extends AbstractEntityImage {
 		UStroke stroke = getSkinParam().getThickness(LineParam.domainBorder, getStereo());
 
 		if (stroke == null) {
-			stroke = new UStroke(1.5);
+			stroke = UStroke.withThickness(1.5);
 		}
 		return stroke;
 	}

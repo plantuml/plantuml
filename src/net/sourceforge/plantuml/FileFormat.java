@@ -64,8 +64,8 @@ import net.sourceforge.plantuml.text.SvgCharSizeHack;
  * 
  */
 public enum FileFormat {
-
-	// ::comment when CORE
+	// ::remove file when __HAXE__
+	// ::comment when __CORE__
 	EPS("application/postscript"), //
 	EPS_TEXT("application/postscript"), //
 	ATXT("text/plain"), //
@@ -108,7 +108,7 @@ public enum FileFormat {
 	 * @return a string starting by a point.
 	 */
 	public String getFileSuffix() {
-		// ::comment when CORE
+		// ::comment when __CORE__
 		if (name().startsWith("XMI"))
 			return ".xmi";
 
@@ -143,7 +143,7 @@ public enum FileFormat {
 	}
 
 	public StringBounder getDefaultStringBounder(TikzFontDistortion tikzFontDistortion, SvgCharSizeHack charSizeHack) {
-		// ::comment when CORE
+		// ::comment when __CORE__
 		if (this == LATEX || this == LATEX_NO_PREAMBLE)
 			return getTikzStringBounder(tikzFontDistortion);
 
@@ -202,7 +202,7 @@ public enum FileFormat {
 		return new XDimension2D(rect.getWidth(), rect.getHeight());
 	}
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	private StringBounder getBrailleStringBounder() {
 		return new StringBounderRaw(FileFormat.gg.getFontRenderContext()) {
 			public String toString() {

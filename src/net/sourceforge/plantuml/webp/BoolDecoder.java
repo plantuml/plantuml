@@ -20,7 +20,8 @@ import java.io.IOException;
 import javax.imageio.stream.ImageInputStream;
 
 public class BoolDecoder {
-	// ::remove folder when CORE
+    // ::remove folder when __HAXE__
+	// ::remove folder when __CORE__
 	int bit_count; /* # of bits shifted out of value, at most 7 */
 	ImageInputStream data;
 	private long offset; /* pointer to next compressed data byte */

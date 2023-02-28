@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
 public class UHorizontalLine implements UShape {
+    // ::remove folder when __HAXE__
 
 	private final double skipAtStart;
 	private final double skipAtEnd;
@@ -174,13 +175,13 @@ public class UHorizontalLine implements UShape {
 		if (style == '\0')
 			throw new IllegalStateException();
 		else if (style == '=')
-			return new UStroke();
+			return UStroke.simple();
 		else if (style == '.')
 			return new UStroke(1, 2, 1);
 		else if (style == '-')
-			return new UStroke();
+			return UStroke.simple();
 		else
-			return new UStroke(defaultThickness);
+			return UStroke.withThickness(defaultThickness);
 
 	}
 

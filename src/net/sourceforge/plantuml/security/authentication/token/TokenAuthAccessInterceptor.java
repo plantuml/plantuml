@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.security.authentication.SecurityAuthentication;
  * @author Aljoscha Rittner
  */
 public class TokenAuthAccessInterceptor implements SecurityAccessInterceptor {
+    // ::remove folder when __HAXE__
 
 	/**
 	 * Applies from {@link SecurityAuthentication} data plain token authentication

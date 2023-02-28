@@ -40,6 +40,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 
 public class FtileDecoratePointOut extends FtileDecorate {
+    // ::remove folder when __HAXE__
 
 	final private double dx;
 	final private double dy;

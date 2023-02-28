@@ -90,11 +90,13 @@ public class XDimension2D {
 		return new XDimension2D(width, height);
 	}
 
+	// ::comment when __HAXE__
 	public XDimension2D mergeTB(XDimension2D b, XDimension2D c) {
 		final double width = MathUtils.max(this.getWidth(), b.getWidth(), c.getWidth());
 		final double height = this.getHeight() + b.getHeight() + c.getHeight();
 		return new XDimension2D(width, height);
 	}
+	// ::done
 
 	public XDimension2D mergeLR(XDimension2D right) {
 		final double height = Math.max(this.getHeight(), right.getHeight());
@@ -121,11 +123,13 @@ public class XDimension2D {
 		return new XDimension2D(dimension.getWidth(), dimension.getHeight());
 	}
 
+	// ::comment when __HAXE__
 	public static XDimension2D mergeLayoutT12B3(XDimension2D top1, XDimension2D top2, XDimension2D bottom) {
 		final double width = MathUtils.max(top1.getWidth(), top2.getWidth(), bottom.getWidth());
 		final double height = top1.getHeight() + top2.getHeight() + bottom.getHeight();
 		return new XDimension2D(width, height);
 	}
+	// ::done
 
 	public static XDimension2D max(XDimension2D dim1, XDimension2D dim2) {
 		return dim1.atLeast(dim2.getWidth(), dim2.getHeight());

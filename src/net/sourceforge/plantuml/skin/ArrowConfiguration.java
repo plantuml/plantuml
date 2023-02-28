@@ -240,11 +240,11 @@ public class ArrowConfiguration {
 		if (isDotted())
 			return ug.apply(new UStroke(2, 2, thickness));
 
-		return ug.apply(new UStroke(thickness));
+		return ug.apply(UStroke.withThickness(thickness));
 	}
 
 	public UGraphic applyThicknessOnly(UGraphic ug) {
-		return ug.apply(new UStroke(thickness));
+		return ug.apply(UStroke.withThickness(thickness));
 	}
 
 	public ArrowConfiguration withThickness(double thickness) {

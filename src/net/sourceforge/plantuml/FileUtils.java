@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.utils.Log;
 
 // Used by the Eclipse Plugin, so do not change package location.
 public class FileUtils {
+	// ::remove file when __HAXE__
 
 	private static AtomicInteger counter;
 
@@ -105,7 +106,7 @@ public class FileUtils {
 		return readSvg(br, true, true);
 	}
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	static public File createTempFileLegacy(String prefix, String suffix) throws IOException {
 		if (suffix.startsWith(".") == false)
 			throw new IllegalArgumentException();

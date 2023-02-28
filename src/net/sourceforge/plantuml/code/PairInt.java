@@ -36,7 +36,7 @@
 package net.sourceforge.plantuml.code;
 
 public class PairInt {
-	// ::remove file when CORE
+	// ::remove file when __CORE__
 
 	private final int x;
 	private final int y;

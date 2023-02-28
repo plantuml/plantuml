@@ -56,7 +56,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.utils.Position;
 
 public class ClusterDotStringKermor {
-	// ::remove file when CORE
+	// ::remove file when __CORE__
 
 	private final Cluster cluster;
 	private final ISkinParam skinParam;

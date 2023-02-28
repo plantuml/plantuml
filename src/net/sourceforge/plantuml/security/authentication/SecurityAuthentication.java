@@ -45,6 +45,7 @@ import java.util.Map;
  * @author Aljoscha Rittner
  */
 public class SecurityAuthentication implements SecurityCredentialsContainer {
+    // ::remove folder when __HAXE__
 
 	/**
 	 * Type of authentication (e.g. basicauth, oauth2)

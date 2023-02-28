@@ -47,7 +47,7 @@ public class SpriteUtils {
 	private SpriteUtils() {
 	}
 
-	// ::comment when SPAM
+	// ::comment when __CORE__
 	public static String encodeColor(BufferedImage img, String name) {
 		final StringBuilder sb = new StringBuilder();
 		sb.append("sprite $" + name + " [" + img.getWidth() + "x" + img.getHeight() + "/color] {\n");

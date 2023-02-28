@@ -54,7 +54,7 @@ import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.openiconic.data.DummyIcon;
 
 public class PSystemListOpenIconic extends PlainDiagram {
-	// ::remove file when CORE
+	// ::remove file when __CORE__
 
 	public PSystemListOpenIconic(UmlSource source) {
 		super(source);

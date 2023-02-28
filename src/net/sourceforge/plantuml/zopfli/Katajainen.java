@@ -21,6 +21,7 @@ package net.sourceforge.plantuml.zopfli;
 import net.sourceforge.plantuml.zopfli.Cookie.Node;
 
 class Katajainen {
+    // ::remove folder when __HAXE__
 
 	static void lengthLimitedCodeLengths(Cookie cookie, int[] frequencies, int maxBits, int[] bitLengths) {
 		cookie.resetPool();

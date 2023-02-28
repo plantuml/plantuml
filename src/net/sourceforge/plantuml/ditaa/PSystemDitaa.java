@@ -58,7 +58,7 @@ import net.sourceforge.plantuml.svek.GraphvizCrash;
 import net.sourceforge.plantuml.text.BackSlash;
 
 public class PSystemDitaa extends AbstractPSystem {
-	// ::remove folder when CORE
+	// ::remove folder when __CORE__
 
 	// private ProcessingOptions processingOptions;
 	private Object processingOptions;

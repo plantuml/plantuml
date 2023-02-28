@@ -41,7 +41,8 @@ import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
 import net.sourceforge.plantuml.core.UmlSource;
 
 public class PSystemListOpenIconicFactory extends PSystemSingleLineFactory {
-	// ::remove file when CORE
+    // ::remove folder when __HAXE__
+	// ::remove file when __CORE__
 
 	@Override
 	protected AbstractPSystem executeLine(UmlSource source, String line) {

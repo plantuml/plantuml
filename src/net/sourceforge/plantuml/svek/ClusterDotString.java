@@ -55,7 +55,7 @@ import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.style.ISkinParam;
 
 public class ClusterDotString {
-	// ::remove file when CORE
+	// ::remove file when __CORE__
 
 	private final Cluster cluster;
 	private final ISkinParam skinParam;

@@ -81,7 +81,7 @@ public final class RoundedNorth implements UDrawable {
 			path.closePath();
 			header = path;
 		}
-		ug.apply(new UStroke()).apply(backColor).apply(backColor.bg()).draw(header);
+		ug.apply(UStroke.simple()).apply(backColor).apply(backColor.bg()).draw(header);
 
 	}
 }

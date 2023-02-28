@@ -59,6 +59,7 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 
 public class SheetBlock1 extends AbstractTextBlock implements TextBlock, Atom, Stencil {
+    // ::remove folder when __HAXE__
 
 	private final Sheet sheet;
 	private List<Stripe> stripes;

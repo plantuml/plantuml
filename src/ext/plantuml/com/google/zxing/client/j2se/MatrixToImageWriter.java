@@ -28,6 +28,7 @@ import ext.plantuml.com.google.zxing.common.BitMatrix;
  * @author Sean Owen
  */
 public final class MatrixToImageWriter {
+    // ::remove folder when __HAXE__
 
   private static final int BLACK = 0xFF000000;
   private static final int WHITE = 0xFFFFFFFF;

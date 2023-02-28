@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
 import net.sourceforge.plantuml.core.UmlSource;
 
 public class PSystemEggFactory extends PSystemSingleLineFactory {
-	// ::remove file when CORE
+	// ::remove file when __CORE__
 
 	final static private List<byte[]> all = Arrays.asList(EggUtils.toByteArrays(
 			"56092d35fce86a0dd88047a766c1d6541a7c5fd5ba212fa02db9a32a463422febd71a75a934eb135dec7d6c6325ddd17fd2fa437eba863462b28e3e92514998306a72790d93501335ed6b1262ea46ab79573142c28f8e92508978255a533d9cf7903394f9ab73a33b230a2b273033633adf16044888243b92f9bd8351f3d4f9aa2302fb264afa37546368424fa6a07919152bd2990d935092e49d9a02038b437aeb528"),

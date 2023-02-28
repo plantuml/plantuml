@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 
 public interface MagneticBorder {
+	// :: remove file when __HAXE__
 
 	public UTranslate getForceAt(StringBounder stringBounder, XPoint2D position);
 

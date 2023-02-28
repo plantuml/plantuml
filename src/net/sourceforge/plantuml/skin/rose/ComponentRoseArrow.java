@@ -192,7 +192,7 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 
 		if (decoration == ArrowDecoration.CIRCLE) {
 			final UEllipse circle = new UEllipse(diamCircle, diamCircle);
-			ug.apply(new UStroke(thinCircle)).apply(getForegroundColor())
+			ug.apply(UStroke.withThickness(thinCircle)).apply(getForegroundColor())
 					.apply(new UTranslate(-diamCircle / 2 - thinCircle, -diamCircle / 2 - thinCircle / 2)).draw(circle);
 			if (dressing.getHead() != ArrowHead.CROSSX)
 				ug = ug.apply(UTranslate.dx(diamCircle / 2 + thinCircle));
@@ -208,7 +208,7 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 						.draw(new ULine(getArrowDeltaX(), getArrowDeltaY()).rotate(Math.atan2(-inclination1, lenFull)));
 
 		} else if (dressing.getHead() == ArrowHead.CROSSX) {
-			ug = ug.apply(new UStroke(2));
+			ug = ug.apply(UStroke.withThickness(2));
 			ug.apply(new UTranslate(spaceCrossX, -getArrowDeltaX() / 2))
 					.draw(new ULine(getArrowDeltaX(), getArrowDeltaX()));
 			ug.apply(new UTranslate(spaceCrossX, getArrowDeltaX() / 2))
@@ -227,10 +227,10 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 	private void drawDressing2(UGraphic ug, ArrowDressing dressing, ArrowDecoration decoration, double lenFull) {
 
 		if (decoration == ArrowDecoration.CIRCLE) {
-			ug = ug.apply(new UStroke(thinCircle)).apply(getForegroundColor());
+			ug = ug.apply(UStroke.withThickness(thinCircle)).apply(getForegroundColor());
 			final UEllipse circle = new UEllipse(diamCircle, diamCircle);
 			ug.apply(new UTranslate(-diamCircle / 2 + thinCircle, -diamCircle / 2 - thinCircle / 2)).draw(circle);
-			ug = ug.apply(new UStroke());
+			ug = ug.apply(UStroke.simple());
 			ug = ug.apply(UTranslate.dx(-diamCircle / 2 - thinCircle));
 		}
 
@@ -244,7 +244,7 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 						.draw(new ULine(-getArrowDeltaX(), getArrowDeltaY()).rotate(Math.atan2(inclination2, lenFull)));
 
 		} else if (dressing.getHead() == ArrowHead.CROSSX) {
-			ug = ug.apply(new UStroke(2));
+			ug = ug.apply(UStroke.withThickness(2));
 			ug.apply(new UTranslate(-spaceCrossX - getArrowDeltaX(), -getArrowDeltaX() / 2))
 					.draw(new ULine(getArrowDeltaX(), getArrowDeltaX()));
 			ug.apply(new UTranslate(-spaceCrossX - getArrowDeltaX(), getArrowDeltaX() / 2))

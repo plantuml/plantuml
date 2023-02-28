@@ -56,6 +56,7 @@ import net.sourceforge.plantuml.security.authentication.SecurityAuthorizeManager
  * @author Aljoscha Rittner
  */
 public abstract class AbstractOAuth2AccessAuthorizeManager implements SecurityAuthorizeManager {
+    // ::remove folder when __HAXE__
 
 	/**
 	 * Default headers for token service access.

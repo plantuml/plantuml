@@ -3,6 +3,7 @@ package net.sourceforge.plantuml.utils;
 import java.nio.charset.Charset;
 
 public class CharsetUtils {
+	// ::remove file when __HAXE__
 
 	public static Charset charsetOrDefault(String charsetName) {
 

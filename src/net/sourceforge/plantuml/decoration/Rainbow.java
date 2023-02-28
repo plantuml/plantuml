@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.style.Value;
 import net.sourceforge.plantuml.style.ValueNull;
 
 public class Rainbow {
+    // ::remove folder when __HAXE__
 
 	private final List<HtmlColorAndStyle> colors = new ArrayList<>();
 	private final int colorArrowSeparationSpace;

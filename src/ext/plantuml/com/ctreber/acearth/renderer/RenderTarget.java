@@ -12,6 +12,7 @@ import java.awt.Color;
  * 
  */
 public interface RenderTarget {
+    // ::remove folder when __HAXE__
 
 	public void setPixel(int pX, int pY, int pA, int pR, int pG, int pB);
 

@@ -92,7 +92,7 @@ public class ActivityBox extends AbstractTextBlock {
 		final Shadowable rect = new URectangle(widthTotal, heightTotal).rounded(CORNER);
 		ug = ug.apply(HColors.MY_RED);
 		ug = ug.apply(HColors.MY_YELLOW.bg());
-		ug.apply(new UStroke(1.5)).draw(rect);
+		ug.apply(UStroke.withThickness(1.5)).draw(rect);
 
 		tb.drawU(ug.apply(new UTranslate(MARGIN, MARGIN)));
 	}

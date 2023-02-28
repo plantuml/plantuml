@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.klimt.drawing.UDriver;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 
 public class DriverLineHtml5 implements UDriver<ULine, Html5Drawer> {
-	// ::remove folder when CORE
+	// ::remove folder when __CORE__
 
 	private final ClipContainer clipContainer;
 

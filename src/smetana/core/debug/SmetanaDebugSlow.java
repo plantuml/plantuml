@@ -38,9 +38,9 @@ package smetana.core.debug;
 
 public final class SmetanaDebugSlow {
 
-	// ::remove file when CORE
+	// ::remove file when __CORE__
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	public static boolean TRACE = false;
 	public static boolean TRACE_FINAL_CALL = false;
 	public static boolean VERY_VERBOSE = false;
@@ -55,7 +55,7 @@ public final class SmetanaDebugSlow {
 	// ::done
 
 	static public void LOG(String s) {
-		// ::comment when CORE
+		// ::comment when __CORE__
 		if (TRACE)
 			purify().logline(s);
 		// ::done
@@ -63,28 +63,28 @@ public final class SmetanaDebugSlow {
 	}
 
 	static public void ENTERING(String signature, String methodName) {
-		// ::comment when CORE
+		// ::comment when __CORE__
 		if (TRACE)
 			purify().entering(signature, methodName);
 		// ::done
 	}
 
 	static public void LEAVING(String signature, String methodName) {
-		// ::comment when CORE
+		// ::comment when __CORE__
 		if (TRACE)
 			purify().leaving(signature, methodName);
 		// ::done
 	}
 
 	public static void reset() {
-		// ::comment when CORE
+		// ::comment when __CORE__
 		if (TRACE)
 			purify().reset();
 		// ::done
 	}
 
 	public static void printMe() {
-		// ::comment when CORE
+		// ::comment when __CORE__
 		if (TRACE && TRACE_FINAL_CALL)
 			purify().printMe();
 		// ::done

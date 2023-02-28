@@ -53,7 +53,7 @@ import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.skin.SkinParam;
 
 public class PSystemSkinparameterList extends PlainDiagram {
-	// ::remove file when CORE
+	// ::remove file when __CORE__
 
 	public PSystemSkinparameterList(UmlSource source) {
 		super(source);

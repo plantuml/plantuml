@@ -93,7 +93,7 @@ public class EntityImageLollipopInterfaceEye1 extends AbstractEntityImage {
 		if (getSkinParam().shadowing(getEntity().getStereotype())) {
 			// circle.setDeltaShadow(4);
 		}
-		ug.apply(new UStroke(1.5)).apply(new UTranslate(diff, diff)).draw(circle1);
+		ug.apply(UStroke.withThickness(1.5)).apply(new UTranslate(diff, diff)).draw(circle1);
 		ug = ug.apply(HColors.none().bg());
 
 		XPoint2D pos = bibliotekon.getNode(getEntity()).getPosition();
@@ -107,7 +107,7 @@ public class EntityImageLollipopInterfaceEye1 extends AbstractEntityImage {
 			connectedCircle.addSecondaryConnection(pt);
 
 		}
-		// connectedCircle.drawU(ug.apply(new UStroke(1.5)));
+		// connectedCircle.drawU(ug.apply(UStroke.withThickness(1.5)));
 		connectedCircle.drawU(ug);
 
 		//

@@ -981,7 +981,7 @@ public class SkinParam implements ISkinParam {
 	@Override
 	public UStroke useUnderlineForHyperlink() {
 		if (valueIs("hyperlinkunderline", "false") == false)
-			return new UStroke();
+			return UStroke.simple();
 		return null;
 	}
 

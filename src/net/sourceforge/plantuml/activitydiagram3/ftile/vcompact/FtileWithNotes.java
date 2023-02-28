@@ -129,7 +129,7 @@ public class FtileWithNotes extends AbstractFtile {
 				public double getEndingX(StringBounder stringBounder, double y) {
 					return sheet1.getEndingX(stringBounder, y) + 15;
 				}
-			}, new UStroke());
+			}, UStroke.simple());
 
 			final Opale opale = new Opale(shadowing, borderColor, noteBackgroundColor, sheet2, false, stroke);
 			final TextBlock opaleMarged = TextBlockUtils.withMargin(opale, 10, 10);

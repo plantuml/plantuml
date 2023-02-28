@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.project.core;
 import net.sourceforge.plantuml.project.time.Day;
 
 public interface Moment {
+    // ::remove folder when __HAXE__
 
 	public Day getStart();
 

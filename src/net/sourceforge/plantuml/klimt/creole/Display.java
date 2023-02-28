@@ -594,7 +594,7 @@ public class Display implements Iterable<CharSequence> {
 				.sheet(fontConfiguration, horizontalAlignment, creoleMode, stereotypeConfiguration).createSheet(this);
 		final double padding = spriteContainer == null ? 0 : spriteContainer.getPadding();
 		final SheetBlock1 sheetBlock1 = new SheetBlock1(sheet, maxMessageSize, padding, marginX1, marginX2);
-		return new SheetBlock2(sheetBlock1, sheetBlock1, new UStroke(1.5));
+		return new SheetBlock2(sheetBlock1, sheetBlock1, UStroke.withThickness(1.5));
 	}
 
 	private TextBlock createMessageNumber(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,

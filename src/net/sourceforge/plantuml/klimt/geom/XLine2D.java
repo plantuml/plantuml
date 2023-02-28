@@ -5,7 +5,8 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 
-public class XLine2D implements XShape, UDrawable {
+public class XLine2D implements UDrawable {
+	// :: remove file when __HAXE__
 
 	final public double x1;
 	final public double y1;

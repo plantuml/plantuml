@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.utils;
 
 public class CharHidder {
+	// ::remove file when __HAXE__
 
 	public static String addTileAtBegin(String s) {
 		return "~" + s;

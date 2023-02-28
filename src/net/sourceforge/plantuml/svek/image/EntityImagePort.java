@@ -127,7 +127,7 @@ public class EntityImagePort extends AbstractEntityImageBorder {
 	}
 
 	private UStroke getUStroke() {
-		return new UStroke(1.5);
+		return UStroke.withThickness(1.5);
 	}
 
 	public ShapeType getShapeType() {

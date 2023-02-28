@@ -72,6 +72,7 @@ import net.sourceforge.plantuml.style.StyleLoader;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
 public abstract class TitledDiagram extends AbstractPSystem implements Diagram, Annotated {
+	// ::remove file when __HAXE__
 
 	public static boolean FORCE_SMETANA = false;
 	public static boolean FORCE_ELK = false;
@@ -87,7 +88,7 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 
 	private final SkinParam skinParam;
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	private Animation animation;
 	// ::done
 
@@ -217,7 +218,7 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 		return ClockwiseTopRightBottomLeft.same(10);
 	}
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	final public void setAnimation(Iterable<CharSequence> animationData) {
 //		try {
 		final AnimationDecoder animationDecoder = new AnimationDecoder(animationData);

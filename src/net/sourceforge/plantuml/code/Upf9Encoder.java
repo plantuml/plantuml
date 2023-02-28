@@ -42,7 +42,7 @@ import java.io.IOException;
 import net.sourceforge.plantuml.log.Logme;
 
 public class Upf9Encoder {
-	// ::remove file when CORE
+	// ::remove file when __CORE__
 
 	private Upf9Encoder() {
 

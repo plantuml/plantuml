@@ -53,7 +53,8 @@ import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
 
 public class PSystemDefinition extends PlainDiagram implements UDrawable {
-	// ::remove folder when CORE
+    // ::remove folder when __HAXE__
+	// ::remove folder when __CORE__
 
 	private final List<String> lines = new ArrayList<>();
 	private final String startLine;

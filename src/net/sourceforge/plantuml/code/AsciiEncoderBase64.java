@@ -36,7 +36,7 @@
 package net.sourceforge.plantuml.code;
 
 public class AsciiEncoderBase64 implements URLEncoder {
-	// ::remove file when CORE
+	// ::remove file when __CORE__
 
 	final static private char encode6bit[] = new char[64];
 	final static private byte decode6bit[] = new byte[128];

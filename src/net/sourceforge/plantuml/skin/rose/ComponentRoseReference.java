@@ -123,7 +123,7 @@ public class ComponentRoseReference extends AbstractTextualComponent {
 		ug = symbolContextHeader.apply(ug);
 		ug.apply(UTranslate.dx(xMargin)).draw(corner);
 
-		ug = ug.apply(new UStroke());
+		ug = ug.apply(UStroke.simple());
 
 		textHeader.drawU(ug.apply(new UTranslate(15, 2)));
 		final double textPos;

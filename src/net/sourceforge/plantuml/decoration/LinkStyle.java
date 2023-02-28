@@ -103,9 +103,9 @@ public class LinkStyle {
 			return new UStroke(1, 3, nonZeroThickness());
 		}
 		if (type == Type.BOLD) {
-			return new UStroke(2);
+			return UStroke.withThickness(2);
 		}
-		return new UStroke(nonZeroThickness());
+		return UStroke.withThickness(nonZeroThickness());
 	}
 
 	public UStroke muteStroke(UStroke stroke) {

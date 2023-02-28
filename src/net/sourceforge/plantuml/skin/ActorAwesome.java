@@ -58,7 +58,7 @@ public class ActorAwesome extends AbstractTextBlock implements TextBlock {
 	private final Fashion symbolContext;
 
 	public ActorAwesome(Fashion symbolContext) {
-		this.symbolContext = symbolContext.withStroke(new UStroke(1.5));
+		this.symbolContext = symbolContext.withStroke(UStroke.withThickness(1.5));
 	}
 
 	public void drawU(UGraphic ug) {

@@ -51,7 +51,8 @@ import net.sourceforge.plantuml.utils.LineLocation;
 import net.sourceforge.plantuml.utils.LineLocationImpl;
 
 public class SyntaxChecker {
-	// ::remove file when CORE
+    // ::remove folder when __HAXE__
+	// ::remove file when __CORE__
 
 	public static SyntaxResult checkSyntax(List<String> source) {
 		final StringBuilder sb = new StringBuilder();

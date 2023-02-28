@@ -89,7 +89,7 @@ public class InstructionSplit extends AbstractInstruction implements Instruction
 		return getLast().add(ins);
 	}
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	@Override
 	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
 		final List<Gtile> all = new ArrayList<>();

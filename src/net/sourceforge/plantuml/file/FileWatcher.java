@@ -41,7 +41,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class FileWatcher {
-	// ::remove file when CORE
+	// ::remove file when __CORE__
 
 	private final Map<File, Long> modified2 = new HashMap<File, Long>();
 

@@ -53,7 +53,7 @@ public class PSystemVersionFactory extends PSystemSingleLineFactory {
 			if (line.matches("(?i)^version\\s*$"))
 				return PSystemVersion.createShowVersion2(source);
 
-			// ::comment when CORE
+			// ::comment when __CORE__
 			if (line.matches("(?i)^stdlib\\s*$"))
 				return PSystemVersion.createStdLib(source);
 

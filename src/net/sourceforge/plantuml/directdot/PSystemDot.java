@@ -56,7 +56,7 @@ import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 
 public class PSystemDot extends AbstractPSystem {
-	// ::remove folder when CORE
+	// ::remove folder when __CORE__
 
 	private final String data;
 

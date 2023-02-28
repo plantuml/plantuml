@@ -108,7 +108,7 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 		return current.add(ins);
 	}
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	@Override
 	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
 		for (Branch branch : thens)

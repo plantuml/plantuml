@@ -94,7 +94,7 @@ public class PreprocessorUtils {
 		return result;
 	}
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	public static ReadLine getReaderNonstandardInclude(StringLocated s, String filename) {
 		if (filename.endsWith(".puml") == false)
 			filename = filename + ".puml";

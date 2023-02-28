@@ -74,7 +74,7 @@ public class BodierMap implements Bodier {
 	}
 
 	public static String getLinkedEntry(String s) {
-		final Pattern p = Pattern.compile("(\\*-+_*\\>)");
+		final Pattern p = Pattern.compile("(\\*[-_]+\\>)");
 		final Matcher m = p.matcher(s);
 		if (m.find()) {
 			return m.group(1);

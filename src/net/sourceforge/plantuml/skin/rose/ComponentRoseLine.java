@@ -67,7 +67,7 @@ public class ComponentRoseLine extends AbstractComponent {
 		ug = ug.apply(color);
 		ug = ug.apply(stroke);
 //		if (continueLine)
-//			ug = ug.apply(new UStroke());
+//			ug = ug.apply(UStroke.simple());
 
 		final int x = (int) (dimensionToUse.getWidth() / 2);
 		ug.apply(UTranslate.dx(x)).draw(ULine.vline(dimensionToUse.getHeight()));

@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.dot;
 import java.io.IOException;
 
 public class ProcessState {
-	// ::remove file when CORE
+	// ::remove file when __CORE__
 
 	private final String name;
 	private final IOException cause;

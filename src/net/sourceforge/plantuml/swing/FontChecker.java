@@ -67,7 +67,8 @@ import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SImageIO;
 
 public class FontChecker {
-	// ::remove file when CORE
+    // ::remove folder when __HAXE__
+	// ::remove file when __CORE__
 
 	final private UFont font;
 	private static final Set<String> SQUARE = new HashSet<>(Arrays.asList("MI=I=XM=I=IX", "MI=I=XM=I=IXMI=I=XM=I=IX"));

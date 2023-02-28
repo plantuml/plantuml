@@ -64,6 +64,7 @@ import smetana.core.__ptr__;
 import smetana.core.jmp_buf;
 
 public class shortest__c {
+    // ::remove folder when __HAXE__
 //1 baedz5i9est5csw3epz3cv7z
 // typedef Ppoly_t Ppolyline_t
 

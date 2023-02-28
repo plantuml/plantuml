@@ -21,6 +21,7 @@ package ext.plantuml.com.google.zxing.qrcode.encoder;
  * @author dswitkin@google.com (Daniel Switkin) - ported from C++
  */
 public final class MaskUtil {
+    // ::remove folder when __HAXE__
 
   private MaskUtil() {
     // do nothing

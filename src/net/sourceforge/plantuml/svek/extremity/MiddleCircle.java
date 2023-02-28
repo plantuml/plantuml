@@ -58,7 +58,7 @@ class MiddleCircle extends Extremity {
 	}
 
 	public void drawU(UGraphic ug) {
-		ug.apply(backColor.bg()).apply(new UStroke(1.5)).apply(new UTranslate(-radius, -radius)).draw(circle);
+		ug.apply(backColor.bg()).apply(UStroke.withThickness(1.5)).apply(new UTranslate(-radius, -radius)).draw(circle);
 	}
 
 }

@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.code;
 import java.io.IOException;
 
 public class StringCompressorNone implements StringCompressor {
-	// ::remove file when CORE
+	// ::remove file when __CORE__
 
 	public String compress(String s) throws IOException {
 		return s;

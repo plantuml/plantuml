@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.core.UmlSource;
 
 public class ListSpriteDiagramFactory extends PSystemCommandFactory {
-	// ::remove file when CORE
+	// ::remove file when __CORE__
 
 	@Override
 	protected void initCommandsList(List<Command> cmds) {

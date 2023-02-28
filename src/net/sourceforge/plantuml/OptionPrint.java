@@ -56,7 +56,8 @@ import net.sourceforge.plantuml.version.PSystemVersion;
 import net.sourceforge.plantuml.version.Version;
 
 public class OptionPrint {
-	// ::remove file when CORE
+	// ::remove file when __CORE__
+	// ::remove file when __HAXE__
 
 	static public void printTestDot() throws InterruptedException {
 		final List<String> result = new ArrayList<>();

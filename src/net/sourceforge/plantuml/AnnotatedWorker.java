@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.svek.DecorateEntityImage;
 
 public class AnnotatedWorker {
+	// ::remove file when __HAXE__
 
 	private final Annotated annotated;
 	private final ISkinParam skinParam;

@@ -66,7 +66,7 @@ public class Control extends AbstractTextBlock implements TextBlock {
 		final UEllipse circle = new UEllipse(radius * 2, radius * 2);
 		circle.setDeltaShadow(symbolContext.getDeltaShadow());
 		ug.apply(new UTranslate(x, y)).draw(circle);
-		ug = ug.apply(new UStroke());
+		ug = ug.apply(UStroke.simple());
 
 		ug = ug.apply(symbolContext.getForeColor().bg());
 		final UPolygon polygon = new UPolygon();

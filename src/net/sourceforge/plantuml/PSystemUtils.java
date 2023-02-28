@@ -58,7 +58,8 @@ import net.sourceforge.plantuml.skin.SplitParam;
 import net.sourceforge.plantuml.utils.Log;
 
 public class PSystemUtils {
-	// :: remove file when CORE
+	// :: remove file when __CORE__
+	// ::remove file when __HAXE__
 
 	public static List<FileImageData> exportDiagrams(Diagram system, SuggestedFile suggested,
 			FileFormatOption fileFormatOption) throws IOException {
@@ -68,7 +69,7 @@ public class PSystemUtils {
 	public static List<FileImageData> exportDiagrams(Diagram system, SuggestedFile suggestedFile,
 			FileFormatOption fileFormatOption, boolean checkMetadata) throws IOException {
 
-		// ::comment when CORE
+		// ::comment when __CORE__
 		final SFile existingFile = suggestedFile.getFile(0);
 		if (checkMetadata && fileFormatOption.getFileFormat().doesSupportMetadata() && existingFile.exists()) {
 			// && system.getNbImages() == 1) {
@@ -87,7 +88,7 @@ public class PSystemUtils {
 		if (system instanceof SequenceDiagram)
 			return exportDiagramsSequence((SequenceDiagram) system, suggestedFile, fileFormatOption);
 
-		// ::comment when CORE
+		// ::comment when __CORE__
 		if (system instanceof CucaDiagram && fileFormatOption.getFileFormat() == FileFormat.HTML)
 			return createFilesHtml((CucaDiagram) system, suggestedFile);
 		// ::done
@@ -153,7 +154,7 @@ public class PSystemUtils {
 			} finally {
 				fos.close();
 			}
-			// ::comment when SPAM
+			// ::comment when __CORE__
 			if (cmap != null && cmap.containsCMapData())
 				system.exportCmap(suggestedFile, i, cmap);
 
@@ -209,7 +210,7 @@ public class PSystemUtils {
 		if (imageData == null)
 			return emptyList();
 
-		// ::comment when SPAM
+		// ::comment when __CORE__
 		if (imageData.containsCMapData() && system instanceof UmlDiagram)
 			((UmlDiagram) system).exportCmap(suggestedFile, 0, imageData);
 		// ::done

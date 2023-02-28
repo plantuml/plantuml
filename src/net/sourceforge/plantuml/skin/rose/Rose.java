@@ -326,7 +326,7 @@ public class Rose {
 	static public UStroke getStroke(ISkinParam param, LineParam lineParam, double defaultValue) {
 		final UStroke result = param.getThickness(lineParam, null);
 		if (result == null)
-			return new UStroke(defaultValue);
+			return UStroke.withThickness(defaultValue);
 
 		return result;
 	}

@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.UImageSvg;
 
 public class AsciiMath implements ScientificEquation {
-	// ::remove folder when CORE
+	// ::remove folder when __CORE__
 
 	private final LatexBuilder builder;
 	private final String tex;

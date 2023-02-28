@@ -56,7 +56,7 @@ import net.sourceforge.plantuml.utils.SignatureUtils;
 public class LicenseInfo {
 
 	public static synchronized LicenseInfo retrieveQuick() {
-		// ::comment when CORE
+		// ::comment when __CORE__
 		if (cache == null)
 			cache = retrieveDistributor();
 
@@ -64,21 +64,21 @@ public class LicenseInfo {
 			cache = retrieveNamedSlow();
 		return cache;
 		// ::done
-		// ::uncomment when CORE
+		// ::uncomment when __CORE__
 		// return new LicenseInfo();
 		// ::done
 	}
 
 	public boolean isValid() {
-		// ::comment when CORE
+		// ::comment when __CORE__
 		return owner != null && System.currentTimeMillis() <= this.expirationDate;
 		// ::done
-		// ::uncomment when CORE
+		// ::uncomment when __CORE__
 		// return false;
 		// ::done
 	}
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	private static LicenseInfo cache;
 
 	private final static Preferences prefs = Preferences.userNodeForPackage(LicenseInfo.class);

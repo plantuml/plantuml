@@ -126,20 +126,20 @@ public class Worm implements Iterable<XPoint2D> {
 		ug = ug.apply(arrowHeadColor.bg());
 
 		if (startDecoration != null) {
-			ug = ug.apply(new UStroke(1.5));
+			ug = ug.apply(UStroke.withThickness(1.5));
 			final XPoint2D start = points.get(0);
 			if (ignoreForCompression)
 				startDecoration.setCompressionMode(CompressionMode.ON_X);
 
-			ug.apply(new UTranslate(start)).apply(new UStroke()).draw(startDecoration);
+			ug.apply(new UTranslate(start)).apply(UStroke.simple()).draw(startDecoration);
 		}
 		if (endDecoration != null) {
-			ug = ug.apply(new UStroke(1.5));
+			ug = ug.apply(UStroke.withThickness(1.5));
 			final XPoint2D end = points.get(points.size() - 1);
 			if (ignoreForCompression)
 				endDecoration.setCompressionMode(CompressionMode.ON_X);
 
-			ug.apply(new UTranslate(end)).apply(new UStroke()).draw(endDecoration);
+			ug.apply(new UTranslate(end)).apply(UStroke.simple()).draw(endDecoration);
 		}
 	}
 

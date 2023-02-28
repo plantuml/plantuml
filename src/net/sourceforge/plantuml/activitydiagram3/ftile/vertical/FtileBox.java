@@ -172,7 +172,7 @@ public class FtileBox extends AbstractFtile {
 		final Sheet sheet = skinParam.sheet(fc, skinParam.getDefaultTextAlignment(horizontalAlignment), CreoleMode.FULL)
 				.createSheet(label);
 		this.tb = new SheetBlock2(new SheetBlock1(sheet, wrapWidth, skinParam.getPadding()), new MyStencil(),
-				new UStroke(1));
+				UStroke.withThickness(1));
 		this.print = label.toString();
 
 	}

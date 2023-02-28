@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.StartUtils;
 
 public class ReadFilterAddConfig implements ReadFilter {
+    // ::remove folder when __HAXE__
 
 	private final List<String> config;
 

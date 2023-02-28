@@ -60,7 +60,7 @@ public class CircleInterface implements UDrawable {
 	public void drawU(UGraphic ug) {
 		final UEllipse head = new UEllipse(headDiam, headDiam);
 
-		ug.apply(new UStroke(thickness)).apply(backgroundColor.bg()).apply(foregroundColor)
+		ug.apply(UStroke.withThickness(thickness)).apply(backgroundColor.bg()).apply(foregroundColor)
 				.apply(new UTranslate(thickness, thickness)).draw(head);
 	}
 

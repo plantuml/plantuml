@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.klimt.shape.UImageSvg;
 import net.sourceforge.plantuml.math.ScientificEquationSafe;
 
 public class AtomMath extends AbstractAtom implements Atom {
-	// ::remove file when CORE
+	// ::remove file when __CORE__
 
 	private final ScientificEquationSafe math;
 	private final HColor foreground;

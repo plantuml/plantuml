@@ -67,7 +67,8 @@ import java.io.OutputStream;
  */
 
 public class AnimatedGifEncoder {
-	// ::remove file when CORE
+	// ::remove file when __CORE__
+	// ::remove file when __HAXE__
 
 	protected int width; // image size
 

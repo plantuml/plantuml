@@ -67,6 +67,7 @@ import smetana.core.Memory;
 import smetana.core.__ptr__;
 
 public class index__c {
+    // ::remove folder when __HAXE__
 
 
 //3 1rfaqe5urty5uyp5xb2r0idce

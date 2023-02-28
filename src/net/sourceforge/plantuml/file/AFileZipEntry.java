@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SFile;
 
 public class AFileZipEntry implements AFile {
+    // ::remove folder when __HAXE__
 
 	private final SFile zipFile;
 	private final String entry;

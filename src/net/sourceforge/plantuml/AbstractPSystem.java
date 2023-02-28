@@ -68,6 +68,7 @@ import net.sourceforge.plantuml.version.License;
 import net.sourceforge.plantuml.version.Version;
 
 public abstract class AbstractPSystem implements Diagram {
+	// ::remove file when __HAXE__
 
 	private final UmlSource source;
 	private Scale scale;
@@ -84,7 +85,7 @@ public abstract class AbstractPSystem implements Diagram {
 		toAppend.append(Version.versionString());
 		toAppend.append("(" + Version.compileTimeString() + ")\n");
 		toAppend.append("(" + License.getCurrent() + " source distribution)\n");
-		// ::comment when CORE
+		// ::comment when __CORE__
 		for (String name : OptionPrint.interestingProperties()) {
 			toAppend.append(name);
 			toAppend.append(BackSlash.CHAR_NEWLINE);
@@ -186,7 +187,7 @@ public abstract class AbstractPSystem implements Diagram {
 //			}
 			return exportDiagramNow(os, index, fileFormatOption);
 		} finally {
-			// ::comment when CORE
+			// ::comment when __CORE__
 			if (OptionFlags.getInstance().isEnableStats())
 				StatsUtilsIncrement.onceMoreGenerate(System.currentTimeMillis() - now, getClass(),
 						fileFormatOption.getFileFormat());

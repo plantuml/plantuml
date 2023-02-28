@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.log.Logme;
 
 public class PSystemMath extends AbstractPSystem {
+    // ::remove folder when __HAXE__
 
 	private String math = "";
 	private float scale = 1;

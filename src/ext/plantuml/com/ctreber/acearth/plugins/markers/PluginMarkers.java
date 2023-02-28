@@ -15,6 +15,7 @@ import ext.plantuml.com.ctreber.acearth.plugins.Plugin;
  * 
  */
 public class PluginMarkers extends Plugin {
+    // ::remove folder when __HAXE__
 	private List fMarkers;
 
 	// private String fMarkerFileName = ACearth.getHomeDir() +

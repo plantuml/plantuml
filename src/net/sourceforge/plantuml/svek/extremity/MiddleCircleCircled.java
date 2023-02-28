@@ -74,7 +74,7 @@ class MiddleCircleCircled extends Extremity {
 		}
 
 		ug = ug.apply(backColor.bg());
-		ug = ug.apply(new UStroke(1.5));
+		ug = ug.apply(UStroke.withThickness(1.5));
 
 		final double d = 0;
 		if (mode == MiddleCircleCircledMode.MODE1 || mode == MiddleCircleCircledMode.BOTH) {

@@ -42,6 +42,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class SpriteColorBuilder {
+    // ::remove folder when __HAXE__
 
 	private final static ColorPalette COLOR_PALETTE = new ColorPalette();
 

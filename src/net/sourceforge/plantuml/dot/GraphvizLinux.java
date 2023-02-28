@@ -40,7 +40,7 @@ import java.io.File;
 import net.sourceforge.plantuml.style.ISkinParam;
 
 class GraphvizLinux extends AbstractGraphviz {
-	// ::remove file when CORE
+	// ::remove file when __CORE__
 
 	GraphvizLinux(ISkinParam skinParam, String dotString, String... type) {
 		super(skinParam, dotString, type);

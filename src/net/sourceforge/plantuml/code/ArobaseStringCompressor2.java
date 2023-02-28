@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.code;
 import net.sourceforge.plantuml.StringUtils;
 
 public class ArobaseStringCompressor2 implements StringCompressor {
-	// ::remove file when CORE
+	// ::remove file when __CORE__
 
 	public String compress(String data) {
 		return clean2(data);

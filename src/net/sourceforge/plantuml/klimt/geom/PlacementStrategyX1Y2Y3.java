@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 
 public class PlacementStrategyX1Y2Y3 extends AbstractPlacementStrategy {
+	// :: remove file when __HAXE__
 
 	public PlacementStrategyX1Y2Y3(StringBounder stringBounder) {
 		super(stringBounder);

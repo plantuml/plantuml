@@ -105,7 +105,7 @@ public class ComponentRoseGroupingElse extends AbstractTextualComponent {
 		final XDimension2D dimensionToUse = area.getDimensionToUse();
 		ug = ArrowConfiguration.stroke(ug, 2, 2, 1).apply(groupBorder);
 		ug.apply(UTranslate.dy(1)).draw(ULine.hline(dimensionToUse.getWidth()));
-		ug = ug.apply(new UStroke());
+		ug = ug.apply(UStroke.simple());
 		if (teoz)
 			getTextBlock().drawU(ug.apply(new UTranslate(getMarginX1(), getMarginY() + 2)));
 		else

@@ -41,6 +41,8 @@ public class UStroke implements UChange {
 	private final double dashSpace;
 	private final double thickness;
 
+	// ::comment when __HAXE__
+
 	@Override
 	public int hashCode() {
 		return Double.hashCode(dashVisible) + Double.hashCode(dashSpace) + Double.hashCode(thickness);
@@ -53,6 +55,8 @@ public class UStroke implements UChange {
 				&& this.thickness == other.thickness;
 	}
 
+	// ::done
+
 	@Override
 	public String toString() {
 		return "" + dashVisible + "-" + dashSpace + "-" + thickness;
@@ -64,23 +68,16 @@ public class UStroke implements UChange {
 		this.thickness = thickness;
 	}
 
-	public UStroke(double thickness) {
-		this(0, 0, thickness);
+	public static UStroke withThickness(double thickness) {
+		return new UStroke(0, 0, thickness);
 	}
 
-	public UStroke() {
-		this(1.0);
+	public static UStroke simple() {
+		return new UStroke(0, 0, 1.0);
 	}
 
 	public UStroke onlyThickness() {
-		return new UStroke(thickness);
-	}
-
-	private UStroke applyThickness(UStroke thickness) {
-		if (thickness == null)
-			return this;
-
-		return new UStroke(dashVisible, dashSpace, thickness.thickness);
+		return new UStroke(0, 0, thickness);
 	}
 
 	public double getDashVisible() {

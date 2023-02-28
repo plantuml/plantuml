@@ -55,7 +55,8 @@ import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.security.SFile;
 
 public class Pipe {
-	// ::remove file when CORE
+	// ::remove file when __CORE__
+	// ::remove file when __HAXE__
 
 	private final Option option;
 	private final BufferedReader br;

@@ -40,6 +40,7 @@ import java.util.Arrays;
 
 /**  */
 public interface Blake2b {
+    // ::remove folder when __HAXE__
 	/** */
 	void update(byte[] input);
 

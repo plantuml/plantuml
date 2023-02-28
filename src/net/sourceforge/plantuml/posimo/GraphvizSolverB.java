@@ -57,7 +57,7 @@ import net.sourceforge.plantuml.svek.SvgResult;
 import net.sourceforge.plantuml.svek.YDelta;
 
 public class GraphvizSolverB {
-	// ::remove file when CORE
+	// ::remove file when __CORE__
 
 	// static private void traceDotString(String dotString) throws IOException {
 	// final File f = SecurityUtils.File("dottmpfile" + UniqueSequence.getValue() +

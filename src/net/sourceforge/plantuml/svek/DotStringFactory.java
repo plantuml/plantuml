@@ -133,7 +133,7 @@ public class DotStringFactory implements Moveable {
 		return max / 10;
 	}
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	String createDotString(String... dotStrings) {
 		final StringBuilder sb = new StringBuilder();
 
@@ -279,12 +279,12 @@ public class DotStringFactory implements Moveable {
 		return 35;
 	}
 
-	// ::uncomment when CORE
+	// ::uncomment when __CORE__
 	// public GraphvizVersion getGraphvizVersion() {
 	// return null;
 	// }
 	// ::done
-	// ::comment when CORE
+	// ::comment when __CORE__
 	private GraphvizVersion graphvizVersion;
 
 	public GraphvizVersion getGraphvizVersion() {

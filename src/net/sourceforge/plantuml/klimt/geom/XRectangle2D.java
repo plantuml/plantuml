@@ -1,6 +1,7 @@
 package net.sourceforge.plantuml.klimt.geom;
 
-public class XRectangle2D implements XShape {
+public class XRectangle2D {
+	// :: remove file when __HAXE__
 
 	public final double x;
 	public final double y;

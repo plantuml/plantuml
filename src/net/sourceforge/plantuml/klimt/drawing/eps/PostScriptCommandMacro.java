@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.klimt.drawing.eps;
 
 public class PostScriptCommandMacro implements PostScriptCommand {
+    // ::remove folder when __HAXE__
 
 	final private String name;
 	final private PostScriptData data = new PostScriptData();

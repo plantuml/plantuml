@@ -56,6 +56,7 @@ import net.sourceforge.plantuml.command.note.CommandFactoryNoteOnLink;
 import net.sourceforge.plantuml.core.UmlSource;
 
 public class ActivityDiagramFactory extends PSystemCommandFactory {
+    // ::remove folder when __HAXE__
 
 	@Override
 	public ActivityDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinParam) {

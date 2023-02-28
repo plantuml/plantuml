@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 
 public class MinMax {
+	// :: remove file when __HAXE__
 
 	private final double maxX;
 	private final double maxY;

@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.decoration.LinkDecor;
 
 public final class LinkHtmlPrinter {
+    // ::remove folder when __HAXE__
 
 	private final Link link;
 	// private final Entity entity;

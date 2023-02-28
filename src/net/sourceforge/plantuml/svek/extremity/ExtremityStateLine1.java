@@ -75,7 +75,7 @@ class ExtremityStateLine1 extends Extremity {
 		ug.apply(ug.getParam().getColor().bg())
 				.apply(new UTranslate(-radius * Math.cos(angle), -radius * Math.sin(angle))).draw(polygon);
 		ug = ug.apply(HColors.WHITE.bg());
-		ug.apply(new UStroke(1.5)).apply(new UTranslate(dest.getX() - radius, dest.getY() - radius))
+		ug.apply(UStroke.withThickness(1.5)).apply(new UTranslate(dest.getX() - radius, dest.getY() - radius))
 				.draw(new UEllipse(radius * 2, radius * 2));
 		drawLine(ug, getPointOnCircle(dest.getX(), dest.getY(), Math.PI / 4),
 				getPointOnCircle(dest.getX(), dest.getY(), Math.PI + Math.PI / 4));

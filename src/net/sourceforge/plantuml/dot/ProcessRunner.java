@@ -48,7 +48,7 @@ import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SFile;
 
 public class ProcessRunner {
-	// ::remove file when CORE
+	// ::remove file when __CORE__
 
 	private final String[] cmd;
 

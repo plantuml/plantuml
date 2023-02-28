@@ -62,7 +62,7 @@ public class TranscoderImpl implements Transcoder {
 		return new TranscoderImpl(urlEncoder, stringCompressor, compression, Format.UTF8);
 	}
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	public static Transcoder upf9(URLEncoder urlEncoder, StringCompressor stringCompressor, Compression compression) {
 		return new TranscoderImpl(urlEncoder, stringCompressor, compression, Format.UPF9);
 	}
@@ -71,7 +71,7 @@ public class TranscoderImpl implements Transcoder {
 	public String encode(String text) throws IOException {
 		final String stringAnnoted = stringCompressor.compress(text);
 		final byte[] data;
-		// ::comment when CORE
+		// ::comment when __CORE__
 		if (format == Format.UPF9)
 			data = Upf9Encoder.getBytes(stringAnnoted);
 		else
@@ -88,7 +88,7 @@ public class TranscoderImpl implements Transcoder {
 			final byte compressedData[] = urlEncoder.decode(code);
 			final ByteArray data = compression.decompress(compressedData);
 			final String string;
-			// ::comment when CORE
+			// ::comment when __CORE__
 			if (format == Format.UPF9)
 				string = data.toUPF9String();
 			else

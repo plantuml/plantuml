@@ -121,7 +121,7 @@ public class FontConfiguration {
 	}
 
 	public static FontConfiguration blackBlueTrue(UFont font) {
-		return create(font, HColors.BLACK.withDark(HColors.WHITE), HColors.BLUE, new UStroke(), 8);
+		return create(font, HColors.BLACK.withDark(HColors.WHITE), HColors.BLUE, UStroke.simple(), 8);
 	}
 
 	public static FontConfiguration create(ISkinParam skinParam, FontParam fontParam, Stereotype stereo) {
@@ -332,7 +332,7 @@ public class FontConfiguration {
 
 	public UStroke getUnderlineStroke() {
 		return hyperlinkUnderlineStroke;
-		// return new UStroke();
+		// return UStroke.simple();
 		// return new UStroke(3, 5, 2);
 	}
 

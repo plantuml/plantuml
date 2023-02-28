@@ -57,7 +57,7 @@ public class Bullet extends AbstractAtom implements Atom {
 
 	public void drawU(UGraphic ug) {
 		final HColor color = fontConfiguration.getColor();
-		ug = ug.apply(color).apply(color.bg()).apply(new UStroke(0));
+		ug = ug.apply(color).apply(color.bg()).apply(UStroke.withThickness(0));
 		if (order == 0) {
 			ug = ug.apply(UTranslate.dx(3));
 			ug.draw(new UEllipse(5, 5));

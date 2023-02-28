@@ -92,7 +92,7 @@ public class FtileThinSplit extends AbstractFtile {
 		} else {
 			ug = ug.apply(colorBar);
 		}
-		ug.apply(new UStroke(1.5)).draw(rect);
+		ug.apply(UStroke.withThickness(1.5)).draw(rect);
 	}
 
 	public Set<Swimlane> getSwimlanes() {

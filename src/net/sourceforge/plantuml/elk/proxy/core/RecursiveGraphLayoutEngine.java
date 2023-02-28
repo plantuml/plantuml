@@ -5,6 +5,7 @@ import net.sourceforge.plantuml.elk.proxy.core.util.NullElkProgressMonitor;
 import net.sourceforge.plantuml.elk.proxy.graph.ElkNode;
 
 public class RecursiveGraphLayoutEngine {
+    // ::remove folder when __HAXE__
 
 	private final Object obj = Reflect.newInstance("org.eclipse.elk.core.RecursiveGraphLayoutEngine");
 

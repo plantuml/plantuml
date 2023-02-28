@@ -14,6 +14,7 @@ import net.sourceforge.plantuml.argon2.Util;
 import net.sourceforge.plantuml.argon2.model.Instance;
 
 public class Initialize {
+    // ::remove folder when __HAXE__
 
 	public static void initialize(Instance instance, Argon2 argon2) {
 		byte[] initialHash = Functions.initialHash(Util.intToLittleEndianBytes(argon2.getLanes()),

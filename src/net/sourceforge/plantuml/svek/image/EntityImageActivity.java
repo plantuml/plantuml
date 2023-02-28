@@ -112,7 +112,7 @@ public class EntityImageActivity extends AbstractEntityImage {
 
 		octagon.setDeltaShadow(shadowing);
 		ug = applyColors(ug);
-		ug.apply(new UStroke(1.5)).draw(octagon);
+		ug.apply(UStroke.withThickness(1.5)).draw(octagon);
 		desc.drawU(ug.apply(new UTranslate(MARGIN, MARGIN)));
 		return ug;
 

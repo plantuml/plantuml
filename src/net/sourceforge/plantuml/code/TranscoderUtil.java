@@ -40,7 +40,7 @@ public class TranscoderUtil {
 		return new TranscoderSmart();
 	}
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	public static Transcoder getDefaultTranscoderProtected() {
 		return new TranscoderSmartProtected();
 	}

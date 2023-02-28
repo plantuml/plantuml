@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.utils.Log;
 
 public class PSystemAppleTwoFactory extends PSystemSingleLineFactory {
-	// ::remove file when CORE
+	// ::remove file when __CORE__
 
 	@Override
 	protected AbstractPSystem executeLine(UmlSource source, String line) {

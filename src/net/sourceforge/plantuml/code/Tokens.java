@@ -41,7 +41,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 public class Tokens {
-	// ::remove file when CORE
+	// ::remove file when __CORE__
 
 	private final List<String> keywords = new ArrayList<>();
 

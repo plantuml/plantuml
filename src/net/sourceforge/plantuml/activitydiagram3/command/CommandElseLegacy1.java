@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandElseLegacy1 extends SingleLineCommand2<ActivityDiagram3> {
+    // ::remove folder when __HAXE__
 
 	public CommandElseLegacy1() {
 		super(getRegexConcat());

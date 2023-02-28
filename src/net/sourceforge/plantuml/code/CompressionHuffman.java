@@ -43,7 +43,7 @@ import java.util.zip.DeflaterOutputStream;
 import java.util.zip.InflaterInputStream;
 
 public class CompressionHuffman implements Compression {
-	// ::remove file when CORE
+	// ::remove file when __CORE__
 
 	public byte[] compress(byte[] in) {
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();

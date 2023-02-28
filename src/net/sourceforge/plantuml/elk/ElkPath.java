@@ -85,6 +85,7 @@ import net.sourceforge.plantuml.svek.extremity.ExtremityFactory;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryExtends;
 
 public class ElkPath implements UDrawable {
+    // ::remove folder when __HAXE__
 
 	private final Link link;
 	private final ElkEdge edge;

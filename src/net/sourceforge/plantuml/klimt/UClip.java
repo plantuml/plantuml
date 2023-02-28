@@ -40,6 +40,7 @@ import java.awt.geom.Rectangle2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 
 public class UClip implements UChange {
+	// ::remove file when __HAXE__
 
 	private final double x;
 	private final double y;

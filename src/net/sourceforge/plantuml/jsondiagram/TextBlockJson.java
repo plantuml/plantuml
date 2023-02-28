@@ -70,6 +70,7 @@ import net.sourceforge.plantuml.yaml.Highlighted;
 
 //See TextBlockMap
 public class TextBlockJson extends AbstractTextBlock {
+    // ::remove folder when __HAXE__
 
 	private final List<Line> lines = new ArrayList<>();
 

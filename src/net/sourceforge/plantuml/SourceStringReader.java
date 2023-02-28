@@ -57,6 +57,7 @@ import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.utils.Log;
 
 public class SourceStringReader {
+	// ::remove file when __HAXE__
 
 	final private List<BlockUml> blocks;
 
@@ -114,7 +115,7 @@ public class SourceStringReader {
 		return outputImage(os, 0);
 	}
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	@Deprecated
 	public String generateImage(SFile f) throws IOException {
 		return outputImage(f).getDescription();

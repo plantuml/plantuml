@@ -40,7 +40,7 @@ import net.sourceforge.plantuml.klimt.drawing.UDriver;
 import net.sourceforge.plantuml.klimt.shape.DotPath;
 
 public class DriverDotPathVdx implements UDriver<DotPath, VisioGraphics> {
-	// ::remove folder when CORE
+	// ::remove folder when __CORE__
 
 	public void draw(DotPath path, double x, double y, ColorMapper mapper, UParam param, VisioGraphics visio) {
 		visio.upath(x, y, path.toUPath());

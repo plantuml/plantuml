@@ -17,6 +17,7 @@ import ext.plantuml.com.ctreber.acearth.util.Point3D;
  */
 abstract public class Shader
 {
+    // ::remove folder when __HAXE__
   private static final Color COLOR_SPACE = Color.black;
   private static final Color COLOR_STAR = Color.white;
   private static final Color COLOR_WATER = Color.blue;

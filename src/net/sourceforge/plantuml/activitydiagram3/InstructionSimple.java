@@ -82,7 +82,7 @@ public class InstructionSimple extends MonoSwimable implements Instruction {
 		this.colors = Objects.requireNonNull(colors);
 	}
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	@Override
 	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
 		GtileBox result = GtileBox.create(stringBounder, colors.mute(skinParam), label, getSwimlaneIn(), style,

@@ -264,7 +264,7 @@ public class EntityImageUseCase extends AbstractEntityImage {
 
 		@Override
 		protected void drawHline(UGraphic ug, UHorizontalLine line, UTranslate translate) {
-			final UStroke stroke = new UStroke(1.5);
+			final UStroke stroke = UStroke.withThickness(1.5);
 			line.drawLineInternal(ug.apply(translate), getStencil2(translate), 0, stroke);
 		}
 

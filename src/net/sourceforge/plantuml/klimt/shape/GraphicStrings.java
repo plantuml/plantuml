@@ -66,7 +66,7 @@ public class GraphicStrings extends AbstractTextBlock implements IEntityImage {
 
 	private final static HColor hyperlinkColor = HColors.BLUE;
 
-	private final static UStroke useUnderlineForHyperlink = new UStroke();
+	private final static UStroke useUnderlineForHyperlink = UStroke.simple();
 
 	private final List<String> strings;
 

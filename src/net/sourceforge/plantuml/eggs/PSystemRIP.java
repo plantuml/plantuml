@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.klimt.geom.GraphicPosition;
 import net.sourceforge.plantuml.security.SImageIO;
 
 public class PSystemRIP extends PlainStringsDiagram {
-	// ::remove file when CORE
+	// ::remove file when __CORE__
 
 	public PSystemRIP(UmlSource source) throws IOException {
 		super(source);

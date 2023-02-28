@@ -36,6 +36,7 @@ import jcckit.graphic.GraphPoint;
  *  @author Franz-Josef Elmer
  */
 public class Transformation {
+    // ::remove folder when __HAXE__
   private final double _scale, _x0, _y0;
   
   public String toString() {

@@ -62,6 +62,7 @@ import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.StartUtils;
 
 public final class BlockUmlBuilder implements DefinitionsContainer {
+	// ::remove file when __HAXE__
 
 	private final List<BlockUml> blocks = new ArrayList<>();
 	private Set<FileWithSuffix> usedFiles = new HashSet<>();

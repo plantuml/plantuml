@@ -55,7 +55,7 @@ import net.sourceforge.plantuml.skin.SkinParam;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class PSystemCreole extends PlainDiagram {
-	// ::remove file when CORE
+	// ::remove file when __CORE__
 
 	private final List<String> lines = new ArrayList<>();
 

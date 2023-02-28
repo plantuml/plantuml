@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class FunctionExists extends SimpleReturnFunction {
+    // ::remove folder when __HAXE__
 
 	public TFunctionSignature getSignature() {
 		return new TFunctionSignature("%function_exists", 1);

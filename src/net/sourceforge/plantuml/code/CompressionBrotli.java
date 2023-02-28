@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.brotli.BrotliInputStream;
 import net.sourceforge.plantuml.log.Logme;
 
 public class CompressionBrotli implements Compression {
-	// ::remove file when CORE
+	// ::remove file when __CORE__
 
 	public byte[] compress(byte[] in) {
 		throw new UnsupportedOperationException();

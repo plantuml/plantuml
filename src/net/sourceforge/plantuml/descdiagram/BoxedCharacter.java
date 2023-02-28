@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.klimt.shape.UCenteredCharacter;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 
 public class BoxedCharacter extends AbstractTextBlock implements TextBlock {
+    // ::remove folder when __HAXE__
 
 	private final String c;
 	private final UFont font;

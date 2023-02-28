@@ -166,7 +166,7 @@ public class FtileBoxOld extends AbstractFtile {
 
 		final Sheet sheet = skinParam.sheet(fc, horizontalAlignment, CreoleMode.FULL).createSheet(label);
 
-		this.tb = new SheetBlock2(new SheetBlock1(sheet, wrapWidth, style), new MyStencil(), new UStroke(1));
+		this.tb = new SheetBlock2(new SheetBlock1(sheet, wrapWidth, style), new MyStencil(), UStroke.withThickness(1));
 		this.print = label.toString();
 
 	}

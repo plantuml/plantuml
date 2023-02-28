@@ -41,6 +41,7 @@ import java.util.Iterator;
 import java.util.List;
 
 public class HclSource implements Iterable<Character> {
+    // ::remove folder when __HAXE__
 
 	final private List<Character> all = new ArrayList<>();
 

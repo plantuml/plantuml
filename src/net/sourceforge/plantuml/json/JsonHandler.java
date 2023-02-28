@@ -58,6 +58,7 @@ package net.sourceforge.plantuml.json;
  * @see JsonParser
  */
 public abstract class JsonHandler<A, O> {
+    // ::remove folder when __HAXE__
 
 	JsonParser parser;
 

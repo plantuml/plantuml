@@ -40,10 +40,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class UnsupportedStarStruct implements __struct__, __ptr__ {
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	public final static AtomicInteger CPT = new AtomicInteger();
 	// ::done
-	// ::uncomment when CORE
+	// ::uncomment when __CORE__
 	// public static int CPT;
 	// ::done
 	public final int UID;
@@ -51,10 +51,10 @@ public class UnsupportedStarStruct implements __struct__, __ptr__ {
 	public static UnsupportedStarStruct SPY_ME;
 
 	public UnsupportedStarStruct() {
-		// ::comment when CORE
+		// ::comment when __CORE__
 		this.UID = CPT.incrementAndGet();
 		// ::done
-		// ::uncomment when CORE
+		// ::uncomment when __CORE__
 		// this.UID = CPT++;
 		// ::done
 	}

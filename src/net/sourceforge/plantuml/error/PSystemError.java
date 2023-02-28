@@ -93,6 +93,7 @@ import net.sourceforge.plantuml.version.PSystemVersion;
 import net.sourceforge.plantuml.version.Version;
 
 public abstract class PSystemError extends PlainDiagram {
+    // ::remove folder when __HAXE__
 
 	// Dodgy kludge for testing - we will need a different approach if we want to
 	// test addMessageDedication() etc.
@@ -230,7 +231,7 @@ public abstract class PSystemError extends PlainDiagram {
 	@Override
 	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
 			throws IOException {
-		// ::comment when CORE
+		// ::comment when __CORE__
 		if (fileFormat.getFileFormat() == FileFormat.ATXT || fileFormat.getFileFormat() == FileFormat.UTXT) {
 			final UGraphicTxt ugt = new UGraphicTxt();
 			final UmlCharArea area = ugt.getCharArea();
@@ -263,7 +264,7 @@ public abstract class PSystemError extends PlainDiagram {
 			udrawable = addMessageLiberapay(udrawable);
 		} else if (min == 30 || min == 39 || min == 48) {
 			udrawable = addMessageDedication(udrawable);
-			// ::comment when CORE
+			// ::comment when __CORE__
 		} else if (getSource().containsIgnoreCase("arecibo")) {
 			udrawable = addMessageArecibo(udrawable);
 			// ::done
@@ -299,7 +300,7 @@ public abstract class PSystemError extends PlainDiagram {
 	}
 
 	private TextBlock addMessageLiberapay(final TextBlock source) throws IOException {
-		// ::comment when CORE
+		// ::comment when __CORE__
 		if (LicenseInfo.retrieveNamedOrDistributorQuickIsValid())
 			return source;
 		// ::done
@@ -311,7 +312,7 @@ public abstract class PSystemError extends PlainDiagram {
 	}
 
 	private TextBlock addMessagePatreon(final TextBlock source) throws IOException {
-		// ::comment when CORE
+		// ::comment when __CORE__
 		if (LicenseInfo.retrieveNamedOrDistributorQuickIsValid())
 			return source;
 		// ::done
@@ -323,7 +324,7 @@ public abstract class PSystemError extends PlainDiagram {
 	}
 
 	private TextBlock addMessageDedication(final TextBlock source) throws IOException {
-		// ::comment when CORE
+		// ::comment when __CORE__
 		if (LicenseInfo.retrieveNamedOrDistributorQuickIsValid())
 			return source;
 		// ::done
@@ -333,7 +334,7 @@ public abstract class PSystemError extends PlainDiagram {
 		return result;
 	}
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	private TextBlock addMessageAdopt(final TextBlock source) throws IOException {
 		if (LicenseInfo.retrieveNamedOrDistributorQuickIsValid()) {
 			return source;
@@ -354,7 +355,7 @@ public abstract class PSystemError extends PlainDiagram {
 	private TextBlock getMessageDedication() {
 		final HColorSimple backColor = (HColorSimple) HColorSet.instance().getColorOrWhite("#eae2c9");
 
-		// ::comment when CORE
+		// ::comment when __CORE__
 		final BufferedImage qrcode = smaller(FlashCodeFactory.getFlashCodeUtils()
 				.exportFlashcode("https://plantuml.com/dedication", Color.BLACK, backColor.getAwtColor()));
 		// ::done
@@ -366,11 +367,11 @@ public abstract class PSystemError extends PlainDiagram {
 		final TextBlock text = TextBlockUtils
 				.withMargin(disp.create(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty()), 10, 0);
 		final TextBlock result;
-		// ::comment when CORE
+		// ::comment when __CORE__
 		if (qrcode == null) {
 			// ::done
 			result = text;
-			// ::comment when CORE
+			// ::comment when __CORE__
 		} else {
 			final UImage qr = new UImage(new PixelImage(qrcode, AffineTransformType.TYPE_NEAREST_NEIGHBOR)).scale(3);
 			result = TextBlockUtils.mergeLR(text, TextBlockUtils.fromUImage(qr), VerticalAlignment.CENTER);
@@ -402,7 +403,7 @@ public abstract class PSystemError extends PlainDiagram {
 		final Color back = new Color(message.getImage(1).getRGB(0, 0));
 		final HColor backColor = HColors.simple(back);
 
-		// ::comment when CORE
+		// ::comment when __CORE__
 		final BufferedImage qrcode = smaller(FlashCodeFactory.getFlashCodeUtils()
 				.exportFlashcode("https://plantuml.com/patreon", Color.BLACK, Color.WHITE));
 		// ::done
@@ -411,12 +412,12 @@ public abstract class PSystemError extends PlainDiagram {
 
 		final double imWidth;
 		final double imHeight;
-		// ::comment when CORE
+		// ::comment when __CORE__
 		if (qrcode == null) {
 			// ::done
 			imWidth = message.getWidth();
 			imHeight = message.getHeight();
-			// ::comment when CORE
+			// ::comment when __CORE__
 		} else {
 			imWidth = message.getWidth() + qrcode.getWidth() * scale + 20;
 			imHeight = Math.max(message.getHeight(), qrcode.getHeight() * scale + 10);
@@ -425,11 +426,11 @@ public abstract class PSystemError extends PlainDiagram {
 		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
-				// ::comment when CORE
+				// ::comment when __CORE__
 				if (qrcode == null) {
 					// ::done
 					ug.apply(new UTranslate(1, 1)).draw(message);
-					// ::comment when CORE
+					// ::comment when __CORE__
 				} else {
 					final UImage qr = new UImage(new PixelImage(qrcode, AffineTransformType.TYPE_NEAREST_NEIGHBOR))
 							.scale(scale);
@@ -460,7 +461,7 @@ public abstract class PSystemError extends PlainDiagram {
 		final Color back = new Color(message.getImage(1).getRGB(0, 0));
 		final HColor backColor = HColors.simple(back);
 
-		// ::comment when CORE
+		// ::comment when __CORE__
 		final BufferedImage qrcode = smaller(FlashCodeFactory.getFlashCodeUtils()
 				.exportFlashcode("https://plantuml.com/lp", Color.BLACK, Color.WHITE));
 		// ::done
@@ -469,12 +470,12 @@ public abstract class PSystemError extends PlainDiagram {
 
 		final double imWidth;
 		final double imHeight;
-		// ::comment when CORE
+		// ::comment when __CORE__
 		if (qrcode == null) {
 			// ::done
 			imWidth = message.getWidth();
 			imHeight = message.getHeight();
-			// ::comment when CORE
+			// ::comment when __CORE__
 		} else {
 			imWidth = message.getWidth() + qrcode.getWidth() * scale + 20;
 			imHeight = Math.max(message.getHeight(), qrcode.getHeight() * scale + 10);
@@ -484,11 +485,11 @@ public abstract class PSystemError extends PlainDiagram {
 		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
-				// ::comment when CORE
+				// ::comment when __CORE__
 				if (qrcode == null) {
 					// ::done
 					ug.apply(new UTranslate(1, 1)).draw(message);
-					// ::comment when CORE
+					// ::comment when __CORE__
 				} else {
 					final UImage qr = new UImage(new PixelImage(qrcode, AffineTransformType.TYPE_NEAREST_NEIGHBOR))
 							.scale(scale);

@@ -63,7 +63,7 @@ public class ComponentRoseDestroy extends AbstractComponent {
 
 	@Override
 	protected void drawInternalU(UGraphic ug, Area area) {
-		ug = ug.apply(new UStroke(2)).apply(foregroundColor);
+		ug = ug.apply(UStroke.withThickness(2)).apply(foregroundColor);
 
 		ug.draw(new ULine(2 * crossSize, 2 * crossSize));
 		ug.apply(UTranslate.dy(2 * crossSize)).draw(new ULine(2 * crossSize, -2 * crossSize));

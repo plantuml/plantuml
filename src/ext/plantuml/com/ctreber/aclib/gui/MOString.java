@@ -11,6 +11,7 @@ package ext.plantuml.com.ctreber.aclib.gui;
  */
 public class MOString extends MonitoredObject
 {
+    // ::remove folder when __HAXE__
   private String fString;
 
   public MOString(String pString)

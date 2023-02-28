@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.utils.Log;
 
 public class OptionFlags {
+	// ::remove file when __HAXE__
 
 	private static final OptionFlags singleton = new OptionFlags();
 	static public final boolean STRICT_SELFMESSAGE_POSITION = true;
@@ -68,7 +69,7 @@ public class OptionFlags {
 		this.replaceWhiteBackgroundByTransparent = replaceWhiteBackgroundByTransparent;
 	}
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	// static public final boolean PBBACK = false;
 	// static public boolean GRAPHVIZCACHE = false;
 	// static public final boolean TRACE_DOT = false;

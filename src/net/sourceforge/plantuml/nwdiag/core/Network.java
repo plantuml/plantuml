@@ -38,6 +38,7 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.nwdiag.next.NStage;
 
 public class Network implements NStackable {
+    // ::remove folder when __HAXE__
 
 	private final String name;
 	private String description;

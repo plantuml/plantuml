@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.utils.BlocLines;
 
 public class NewpagedDiagram extends AbstractPSystem {
+	// ::remove file when __HAXE__
 
 	private final List<Diagram> diagrams = new ArrayList<>();
 

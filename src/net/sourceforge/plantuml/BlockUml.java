@@ -67,6 +67,7 @@ import net.sourceforge.plantuml.utils.StartUtils;
 import net.sourceforge.plantuml.version.Version;
 
 public class BlockUml {
+	// ::remove file when __HAXE__
 
 	private final List<StringLocated> rawSource;
 	private final List<StringLocated> data;
@@ -85,7 +86,7 @@ public class BlockUml {
 		this(convert(strings), Defines.createEmpty(), null, null, null);
 	}
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	public String getEncodedUrl() throws IOException {
 		final Transcoder transcoder = TranscoderUtil.getDefaultTranscoder();
 		final String source = getDiagram().getSource().getPlainString();
@@ -150,7 +151,7 @@ public class BlockUml {
 		}
 	}
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	public String getFileOrDirname() {
 		if (OptionFlags.getInstance().isWord())
 			return null;
@@ -194,7 +195,7 @@ public class BlockUml {
 		return data;
 	}
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	private String internalEtag() {
 		try {
 			final AsciiEncoder coder = new AsciiEncoder();

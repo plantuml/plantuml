@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.regex.MyPattern;
 import net.sourceforge.plantuml.regex.Pattern2;
 
 public class PSystemXearthFactory extends PSystemBasicFactory<PSystemXearth> {
+    // ::remove folder when __HAXE__
 
 	private final Map<String, String> config = new LinkedHashMap<>();
 	private final List<Marker> markers = new ArrayList<>();

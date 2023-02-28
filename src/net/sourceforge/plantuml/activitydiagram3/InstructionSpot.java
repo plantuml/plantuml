@@ -80,7 +80,7 @@ public class InstructionSpot extends MonoSwimable implements Instruction {
 		return result;
 	}
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	@Override
 	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
 		final UFont font = skinParam.getFont(null, false, FontParam.ACTIVITY);

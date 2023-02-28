@@ -37,6 +37,7 @@ import org.stathissideris.ascii2image.text.TextGrid;
  * @author Efstathios Sideris
  */
 public class Diagram {
+    // ::remove folder when __HAXE__
 
 	private static final boolean DEBUG = false;
 	private static final boolean VERBOSE_DEBUG = false;

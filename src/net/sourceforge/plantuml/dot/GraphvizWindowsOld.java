@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.windowsdot.WindowsDotArchive;
 
 class GraphvizWindowsOld extends AbstractGraphviz {
-	// ::remove file when CORE
+	// ::remove file when __CORE__
 
 	static private File specificDotExe;
 

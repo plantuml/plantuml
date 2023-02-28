@@ -56,7 +56,7 @@ import net.sourceforge.plantuml.utils.MathUtils;
 import net.sourceforge.plantuml.version.Version;
 
 public class EpsGraphics {
-	// ::remove folder when CORE
+	// ::remove folder when __CORE__
 
 	public static final String END_OF_FILE = "%plantuml done";
 	protected static final long COEF = 100L;

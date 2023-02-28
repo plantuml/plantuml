@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.windowsdot.WindowsDotArchive;
 
 public enum License {
 
-	// ::uncomment when CORE
+	// ::uncomment when __CORE__
 //	MIT;
 //
 //	public static License getCurrent() {
@@ -53,7 +53,7 @@ public enum License {
 //
 	// ::done
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 
 	GPL, GPLV2, LGPL, APACHE, EPL, MIT, BSD;
 	// ::done
@@ -73,7 +73,7 @@ public enum License {
 
 	private void header1(final List<String> text, LicenseInfo licenseInfo) {
 
-		// ::comment when CORE
+		// ::comment when __CORE__
 		if (licenseInfo.isNone()) {
 			// ::done
 			text.add("+=======================================================================");
@@ -81,7 +81,7 @@ public enum License {
 			text.add("|      PlantUML : a free UML diagram generator");
 			text.add("| ");
 			text.add("+=======================================================================");
-			// ::comment when CORE
+			// ::comment when __CORE__
 		} else {
 			text.add("+=======================================================================");
 			text.add("| ");
@@ -107,7 +107,7 @@ public enum License {
 			text.add("https://plantuml.com/patreon (only 1$ per month!)");
 			text.add("https://plantuml.com/liberapay (only 1\u20ac per month!)");
 			text.add("https://plantuml.com/paypal");
-			// ::comment when CORE
+			// ::comment when __CORE__
 			if (withQrcode) {
 				text.add(
 						"\t<qrcode:https://plantuml.com/patreon>\t\t<qrcode:https://plantuml.com/lp>\t\t<qrcode:https://plantuml.com/paypal>");
@@ -115,14 +115,14 @@ public enum License {
 				// ::done
 				text.add("");
 				text.add(" ");
-				// ::comment when CORE
+				// ::comment when __CORE__
 			}
 			// ::done
 		}
 	}
 
 	private void addMit(final LicenseInfo licenseInfo, final List<String> text) {
-		// ::uncomment when CORE
+		// ::uncomment when __CORE__
 //		text.add("Powered by CheerpJ, a Leaning Technologies Java tool.");
 //		text.add("This library is running using CheerpJ for PlantUML License provided by Leaning Technologies Limited.");
 //		text.add(" ");
@@ -178,7 +178,7 @@ public enum License {
 	}
 
 	private void end3(final LicenseInfo licenseInfo, final List<String> text) {
-		// ::comment when CORE
+		// ::comment when __CORE__
 		if (this == License.GPL)
 			addGpl(licenseInfo, text);
 		else if (this == License.GPLV2)
@@ -186,7 +186,7 @@ public enum License {
 		else if (this == License.MIT)
 			// ::done
 			addMit(licenseInfo, text);
-		// ::comment when CORE
+		// ::comment when __CORE__
 		else if (this == License.EPL)
 			addEpl(licenseInfo, text);
 		else if (this == License.BSD)
@@ -227,7 +227,7 @@ public enum License {
 		text.add(" ");
 	}
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 
 	public static License getCurrent() {
 		return GPL;

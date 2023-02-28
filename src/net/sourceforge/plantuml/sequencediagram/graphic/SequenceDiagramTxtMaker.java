@@ -60,7 +60,7 @@ import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 
 public class SequenceDiagramTxtMaker implements FileMaker {
-	// ::remove file when CORE
+	// ::remove file when __CORE__
 
 	private final SequenceDiagram diagram;
 	private final DrawableSet drawableSet;

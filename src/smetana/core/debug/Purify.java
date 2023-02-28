@@ -50,7 +50,7 @@ import gen.annotation.Original;
 import gen.annotation.Reviewed;
 
 public final class Purify {
-	// ::remove file when CORE
+	// ::remove file when __CORE__
 
 	private final Map<String, Method> methods = new LinkedHashMap<>();
 	private final File out2 = new File("../out-smetana", "smetana.txt");

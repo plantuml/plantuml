@@ -113,12 +113,12 @@ public class ComponentRoseDivider extends AbstractTextualComponent {
 		final URectangle rectLong = new URectangle(width, 3).rounded(roundCorner);
 		rectLong.setDeltaShadow(shadow);
 
-		ug = ug.apply(new UStroke());
+		ug = ug.apply(UStroke.simple());
 		ug.draw(rectLong);
 	}
 
 	private void drawDoubleLine(UGraphic ug, final double width) {
-		ug = ug.apply(new UStroke(stroke.getThickness() / 2)).apply(borderColor);
+		ug = ug.apply(UStroke.withThickness(stroke.getThickness() / 2)).apply(borderColor);
 		final ULine line = ULine.hline(width);
 		ug.apply(UTranslate.dy(-1)).draw(line);
 		ug.apply(UTranslate.dy(2)).draw(line);

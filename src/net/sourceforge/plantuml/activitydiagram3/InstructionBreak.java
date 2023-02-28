@@ -61,7 +61,7 @@ public class InstructionBreak extends MonoSwimable implements Instruction {
 		return new FtileBreak(factory.skinParam(), getSwimlaneIn());
 	}
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	@Override
 	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
 		return new GtileBreak(stringBounder, skinParam, getSwimlaneIn());

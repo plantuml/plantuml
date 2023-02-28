@@ -36,7 +36,7 @@
 package net.sourceforge.plantuml.oregon;
 
 public interface BasicGame {
-	// ::remove folder when CORE
+	// ::remove folder when __CORE__
 
 	void run(Keyboard keyboard) throws NoInputException;
 

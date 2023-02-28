@@ -40,6 +40,7 @@ import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 
 public class Fashion {
+	// ::remove file when __HAXE__
 
 	private final HColor backColor;
 	private final HColor foreColor;
@@ -87,7 +88,7 @@ public class Fashion {
 	}
 
 	public Fashion(HColor backColor, HColor foreColor) {
-		this(backColor, foreColor, new UStroke(), 0, 0, 0);
+		this(backColor, foreColor, UStroke.simple(), 0, 0, 0);
 	}
 
 	public Fashion withShadow(double deltaShadow2) {

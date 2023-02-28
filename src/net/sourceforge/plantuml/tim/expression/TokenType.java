@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.tim.Eater;
 import net.sourceforge.plantuml.tim.EaterException;
 
 public enum TokenType {
+    // ::remove folder when __HAXE__
 	QUOTED_STRING, JSON_DATA, OPERATOR, OPEN_PAREN_MATH, COMMA, CLOSE_PAREN_MATH, NUMBER, PLAIN_TEXT, SPACES,
 	FUNCTION_NAME, OPEN_PAREN_FUNC, CLOSE_PAREN_FUNC;
 

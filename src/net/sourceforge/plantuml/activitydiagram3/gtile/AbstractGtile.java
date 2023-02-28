@@ -116,7 +116,7 @@ public abstract class AbstractGtile extends AbstractGtileRoot implements Gtile {
 	public final UStroke getThickness() {
 		UStroke thickness = skinParam().getThickness(LineParam.activityBorder, null);
 		if (thickness == null) {
-			thickness = new UStroke(1.5);
+			thickness = UStroke.withThickness(1.5);
 		}
 		return thickness;
 	}

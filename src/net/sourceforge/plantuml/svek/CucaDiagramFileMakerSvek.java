@@ -56,7 +56,7 @@ import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
-	// ::remove file when CORE
+	// ::remove file when __CORE__
 
 	private final ICucaDiagram diagram;
 

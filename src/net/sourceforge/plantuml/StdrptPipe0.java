@@ -43,7 +43,8 @@ import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.utils.Log;
 
 public class StdrptPipe0 implements Stdrpt {
-	// ::remove file when CORE
+	// ::remove file when __CORE__
+	// ::remove file when __HAXE__
 
 	public void printInfo(final PrintStream output, final Diagram sys) {
 		if (sys instanceof PSystemError) {

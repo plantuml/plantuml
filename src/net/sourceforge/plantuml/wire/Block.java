@@ -60,7 +60,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.utils.Position;
 
 public class Block extends AbstractTextBlock {
-	// ::remove folder when CORE
+	// ::remove folder when __CORE__
 
 	static class Pos {
 		final double x;

@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.timingdiagram.TimingDiagram;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandChangeStateByPlayerCode extends CommandChangeState {
+    // ::remove folder when __HAXE__
 
 	public CommandChangeStateByPlayerCode() {
 		super(getRegexConcat());

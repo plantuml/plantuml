@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
 
 public class UParamNull implements UParam {
+	// ::remove file when __HAXE__
 
 	public HColor getColor() {
 		return HColors.BLACK;
@@ -49,7 +50,7 @@ public class UParamNull implements UParam {
 	}
 
 	public UStroke getStroke() {
-		return new UStroke();
+		return UStroke.simple();
 	}
 
 	public boolean isHidden() {

@@ -59,7 +59,7 @@ public class InstructionGoto extends MonoSwimable implements Instruction {
 		return new FtileGoto(factory.skinParam(), getSwimlaneIn(), name);
 	}
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	@Override
 	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
 		return new GtileEmpty(stringBounder, skinParam);

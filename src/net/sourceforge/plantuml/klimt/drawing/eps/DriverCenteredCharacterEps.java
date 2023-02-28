@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.klimt.shape.UCenteredCharacter;
 
 public class DriverCenteredCharacterEps implements UDriver<UCenteredCharacter, EpsGraphics> {
-	// ::remove folder when CORE
+	// ::remove folder when __CORE__
 
 	public void draw(UCenteredCharacter centeredCharacter, double x, double y, ColorMapper mapper, UParam param,
 			EpsGraphics eps) {

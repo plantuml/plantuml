@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.stats.api;
 
 public enum StatsColumn {
+    // ::remove folder when __HAXE__
 	SESSION_ID("Session ID"), DIAGRAM_TYPE("Diagram type"), FORMAT("Format"), VERSION("Version"), STARTING("Starting"),
 	LAST("Last"), DURATION_STRING("Duration"), PARSED_COUNT("# Parsed"), PARSED_MEAN_TIME("Mean parsing\\ntime (ms)"),
 	PARSED_STANDARD_DEVIATION("Standard\\ndeviation (ms)"), PARSED_MAX_TIME("Max parsing\\ntime (ms)"),

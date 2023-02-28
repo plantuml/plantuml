@@ -11,6 +11,7 @@ import java.util.Random;
  */
 public class DotGeneratorStars extends ScanDotGenerator
 {
+    // ::remove folder when __HAXE__
   private final int fImageWidth;
   private final int fImageHeight;
   private int fBigStars;

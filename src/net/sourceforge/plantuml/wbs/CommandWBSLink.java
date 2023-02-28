@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandWBSLink extends SingleLineCommand2<WBSDiagram> {
+    // ::remove folder when __HAXE__
 
 	public CommandWBSLink() {
 		super(getRegexConcat());

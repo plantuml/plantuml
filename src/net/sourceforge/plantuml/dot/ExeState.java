@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.dot;
 import java.io.File;
 
 public enum ExeState {
-	// ::remove file when CORE
+	// ::remove file when __CORE__
 
 	NULL_UNDEFINED, OK, DOES_NOT_EXIST, IS_A_DIRECTORY, NOT_A_FILE, CANNOT_BE_READ;
 

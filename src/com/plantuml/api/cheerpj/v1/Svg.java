@@ -57,11 +57,12 @@ import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.preproc.Defines;
 
-//::uncomment when CORE
+//::uncomment when __CORE__
 //import com.leaningtech.client.Global;
 //::done
 
 public class Svg {
+    // ::remove folder when __HAXE__
 
 	public static Object convert(String mode, String text) {
 		final long start = System.currentTimeMillis();
@@ -97,10 +98,10 @@ public class Svg {
 			WasmLog.log("Done!");
 			svgos.close();
 			final String svg = svgos.toString();
-			// ::comment when CORE
+			// ::comment when __CORE__
 			return svg;
 			// ::done
-			// ::uncomment when CORE
+			// ::uncomment when __CORE__
 			// return Global.JSString(svg);
 			// ::done
 

@@ -8,4 +8,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.SOURCE)
 @Target({ ElementType.CONSTRUCTOR, ElementType.METHOD, ElementType.TYPE })
 public @interface Foo {
+    // ::remove folder when __HAXE__
 }

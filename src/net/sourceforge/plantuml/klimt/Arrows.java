@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.klimt.shape.UPolygon;
 import net.sourceforge.plantuml.utils.Direction;
 
 public abstract class Arrows {
+	// ::remove file when __HAXE__
 
 	public abstract UPolygon asToUp();
 

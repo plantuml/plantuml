@@ -78,7 +78,8 @@ import net.sourceforge.plantuml.utils.Log;
 import net.sourceforge.plantuml.version.Version;
 
 public class Run {
-	// ::remove file when CORE
+	// ::remove file when __CORE__
+	// ::remove file when __HAXE__
 
 	private static Cypher cypher;
 

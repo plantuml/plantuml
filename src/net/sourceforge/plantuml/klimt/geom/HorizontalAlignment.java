@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 
 public enum HorizontalAlignment {
+	// :: remove file when __HAXE__
 
 	LEFT, CENTER, RIGHT;
 

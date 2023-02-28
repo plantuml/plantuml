@@ -47,7 +47,7 @@ import org.stathissideris.ascii2image.core.Shape3DOrderingComparator;
  * @author Efstathios Sideris
  */
 public class BitmapRenderer {
-	// ::remove folder when CORE
+	// ::remove folder when __CORE__
 
 	private static final boolean DEBUG = false;
 

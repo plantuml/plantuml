@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandCreateBlock extends SingleLineCommand2<CompositeDiagram> {
+    // ::remove folder when __HAXE__
 
 	public CommandCreateBlock() {
 		super(getRegexConcat());

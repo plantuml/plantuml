@@ -43,6 +43,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class QBlocks {
+    // ::remove folder when __HAXE__
 
 	private final List<QBlock> all = new ArrayList<>();
 

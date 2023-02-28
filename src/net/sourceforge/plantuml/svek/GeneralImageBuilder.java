@@ -280,7 +280,7 @@ public final class GeneralImageBuilder {
 	public static UStroke getForcedStroke(Stereotype stereotype, ISkinParam skinParam) {
 		UStroke stroke = skinParam.getThickness(LineParam.packageBorder, stereotype);
 		if (stroke == null)
-			stroke = new UStroke(1.5);
+			stroke = UStroke.withThickness(1.5);
 
 		return stroke;
 	}
@@ -389,7 +389,7 @@ public final class GeneralImageBuilder {
 	}
 
 	public IEntityImage buildImage(BaseFile basefile, String dotStrings[]) {
-		// ::comment when CORE
+		// ::comment when __CORE__
 		if (dotData.isDegeneratedWithFewEntities(0))
 			return new EntityImageSimpleEmpty(dotData.getSkinParam().getBackgroundColor());
 
@@ -472,7 +472,7 @@ public final class GeneralImageBuilder {
 			throw new UnparsableGraphvizException(e, graphvizVersion, svg, source.getPlainString());
 		}
 		// ::done
-		// ::uncomment when CORE
+		// ::uncomment when __CORE__
 		// return null;
 		// ::done
 
@@ -512,7 +512,7 @@ public final class GeneralImageBuilder {
 		return single;
 	}
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	private IEntityImage error(File dotExe) {
 		final List<String> msg = new ArrayList<>();
 		msg.add("Dot Executable: " + dotExe);

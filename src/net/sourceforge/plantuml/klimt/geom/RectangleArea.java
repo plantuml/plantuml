@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.klimt.geom;
 import net.sourceforge.plantuml.klimt.UTranslate;
 
 public class RectangleArea {
+	// :: remove file when __HAXE__
 
 	private final double minX;
 	private final double minY;

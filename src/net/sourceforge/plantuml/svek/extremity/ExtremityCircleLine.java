@@ -78,7 +78,7 @@ class ExtremityCircleLine extends Extremity {
 		circleBase = circleBase.transform(rotate);
 
 		drawLine(ug, contact.getX(), contact.getY(), base, middle);
-		final UStroke stroke = new UStroke(thickness);
+		final UStroke stroke = UStroke.withThickness(thickness);
 		ug.apply(new UTranslate(contact.getX() + circleBase.getX() - radius,
 				contact.getY() + circleBase.getY() - radius)).apply(stroke).draw(new UEllipse(2 * radius, 2 * radius));
 		drawLine(ug.apply(stroke), contact.getX(), contact.getY(), lineTop, lineBottom);

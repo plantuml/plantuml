@@ -40,6 +40,7 @@ import java.util.List;
 import net.sourceforge.plantuml.tikz.TikzGraphics;
 
 public class Html5Drawer {
+    // ::remove folder when __HAXE__
 
 	private int maxX = 10;
 	private int maxY = 10;

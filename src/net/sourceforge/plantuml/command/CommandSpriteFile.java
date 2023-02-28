@@ -76,7 +76,7 @@ public class CommandSpriteFile extends SingleLineCommand2<TitledDiagram> {
 
 	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram system, LineLocation location, RegexResult arg) {
-		// ::comment when CORE
+		// ::comment when __CORE__
 		final String src = arg.get("FILE", 0);
 		final Sprite sprite;
 		try {
@@ -126,7 +126,7 @@ public class CommandSpriteFile extends SingleLineCommand2<TitledDiagram> {
 		return CommandExecutionResult.ok();
 	}
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	private Sprite getImageFromZip(SFile f, String name) throws IOException {
 		final InputStream tmp = f.openFile();
 		if (tmp == null) {

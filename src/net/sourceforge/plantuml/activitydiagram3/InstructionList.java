@@ -101,7 +101,7 @@ public class InstructionList extends WithNote implements Instruction, Instructio
 		return CommandExecutionResult.ok();
 	}
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	@Override
 	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
 		if (all.size() == 0)

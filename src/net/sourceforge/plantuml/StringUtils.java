@@ -108,6 +108,7 @@ public class StringUtils {
 
 	}
 
+	// ::comment when __HAXE__
 	final static public List<String> getSplit(Pattern2 pattern, String line) {
 		final Matcher2 m = pattern.matcher(line);
 		if (m.find() == false)
@@ -119,6 +120,7 @@ public class StringUtils {
 
 		return result;
 	}
+	// ::done
 
 	public static boolean isNotEmpty(CharSequence s) {
 		return !isEmpty(s);
@@ -173,6 +175,7 @@ public class StringUtils {
 		return result.toString();
 	}
 
+	// ::comment when __HAXE__
 	public static String unicodeForHtml(Display display) {
 		final StringBuilder result = new StringBuilder();
 		for (int i = 0; i < display.size(); i++) {
@@ -183,6 +186,7 @@ public class StringUtils {
 		}
 		return result.toString();
 	}
+	// ::done
 
 	public static String manageArrowForSequence(String s) {
 		s = s.replace('=', '-').toLowerCase();
@@ -318,11 +322,13 @@ public class StringUtils {
 		return c == '\"' || c == '\u201c' || c == '\u201d' || c == '\u00ab' || c == '\u00bb';
 	}
 
+	// ::comment when __HAXE__
 	public static boolean isCJK(char c) {
 		final Character.UnicodeBlock block = Character.UnicodeBlock.of(c);
 		Log.println("block=" + block);
 		return false;
 	}
+	// ::done
 
 	public static char hiddenLesserThan() {
 		return '\u0005';
@@ -344,16 +350,16 @@ public class StringUtils {
 		return s;
 	}
 
-	private static int getWidth(Display stringsToDisplay) {
-		int result = 1;
-		for (CharSequence s : stringsToDisplay)
-			if (s != null && result < s.length())
-				result = s.length();
+//	private static int getWidth(Display stringsToDisplay) {
+//		int result = 1;
+//		for (CharSequence s : stringsToDisplay)
+//			if (s != null && result < s.length())
+//				result = s.length();
+//
+//		return result;
+//	}
 
-		return result;
-	}
-
-	// ::comment when CORE
+	// ::comment when __CORE__ or __HAXE__
 	public static int getWcWidth(Display stringsToDisplay) {
 		int result = 1;
 		for (CharSequence s : stringsToDisplay) {
@@ -373,9 +379,11 @@ public class StringUtils {
 		return stringsToDisplay.size();
 	}
 
+	// ::comment when __HAXE__
 	public static int getHeight(Display stringsToDisplay) {
 		return stringsToDisplay.size();
 	}
+	// ::done
 
 	public static boolean isDiagramCacheable(String uml) {
 		if (uml.length() < 35)
@@ -429,6 +437,7 @@ public class StringUtils {
 		return Integer.parseInt(uml.substring(x1, x2));
 	}
 
+	// ::comment when __HAXE__
 	public static List<String> splitComma(String s) {
 		s = trin(s);
 		final List<String> result = new ArrayList<>();
@@ -439,6 +448,7 @@ public class StringUtils {
 
 		return Collections.unmodifiableList(result);
 	}
+	// ::done
 
 	public static String getUid(String uid1, int uid2) {
 		return uid1 + String.format("%04d", uid2);

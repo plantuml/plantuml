@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.utils;
 import java.util.List;
 
 public abstract class InspectorUtils {
+	// ::remove file when __HAXE__
 
 	private InspectorUtils() {
 

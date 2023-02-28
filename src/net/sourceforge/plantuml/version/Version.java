@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SURL;
 
 public class Version {
+    // ::remove folder when __HAXE__
 
 	private static final int MAJOR_SEPARATOR = 1000000;
 
@@ -81,7 +82,7 @@ public class Version {
 	}
 
 	public static int beta() {
-		final int beta = 0;
+		final int beta = 2;
 		return beta;
 	}
 
@@ -104,7 +105,7 @@ public class Version {
 		return new Date(Version.compileTime()).toString();
 	}
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	public static String getJarPath() {
 		try {
 			final ClassLoader loader = Version.class.getClassLoader();

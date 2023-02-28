@@ -87,6 +87,7 @@ import net.sourceforge.plantuml.utils.Log;
 import net.sourceforge.plantuml.version.Version;
 
 public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annotated, WithSprite {
+	// ::remove file when __HAXE__
 
 	private boolean rotation;
 
@@ -132,7 +133,7 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 
 		fileFormatOption = fileFormatOption.withTikzFontDistortion(getSkinParam().getTikzFontDistortion());
 
-		// ::comment when CORE
+		// ::comment when __CORE__
 		if (fileFormatOption.getFileFormat() == FileFormat.PDF)
 			return exportDiagramInternalPdf(os, index);
 		// ::done
@@ -163,7 +164,7 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 	public static void exportDiagramError(OutputStream os, Throwable exception, FileFormatOption fileFormat, long seed,
 			String metadata, String flash, List<String> strings) throws IOException {
 
-		// ::comment when CORE
+		// ::comment when __CORE__
 		if (fileFormat.getFileFormat() == FileFormat.ATXT || fileFormat.getFileFormat() == FileFormat.UTXT) {
 			exportDiagramErrorText(os, exception, strings);
 			return;
@@ -173,7 +174,7 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 		strings.addAll(CommandExecutionResult.getStackTrace(exception));
 
 		BufferedImage im2 = null;
-		// ::comment when CORE
+		// ::comment when __CORE__
 		if (flash != null) {
 			final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();
 			try {
@@ -203,7 +204,7 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 		plainImageBuilder(drawable, fileFormat).metadata(metadata).seed(seed).write(os);
 	}
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	private static void exportDiagramErrorText(OutputStream os, Throwable exception, List<String> strings) {
 		final PrintWriter pw = SecurityUtils.createPrintWriter(os);
 		exception.printStackTrace(pw);
@@ -256,7 +257,7 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 		return strings;
 	}
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	private void exportDiagramInternalMjpeg(OutputStream os) throws IOException {
 		final SFile f = new SFile("c:/test.avi");
 		final int nb = 150;

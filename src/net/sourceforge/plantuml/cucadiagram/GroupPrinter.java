@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SFile;
 
 public class GroupPrinter {
-	// ::remove file when CORE
+	// ::remove file when __CORE__
 
 	private final PrintWriter pw;
 

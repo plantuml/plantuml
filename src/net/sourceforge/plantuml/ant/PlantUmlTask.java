@@ -77,6 +77,7 @@ import net.sourceforge.plantuml.stats.StatsUtils;
 // Carriage Return in UTF-8 XML: &#13;
 // Line Feed in UTF-8 XML: &#10;
 public class PlantUmlTask extends Task {
+    // ::remove folder when __HAXE__
 
 	private String dir = null;
 	private final Option option = new Option();

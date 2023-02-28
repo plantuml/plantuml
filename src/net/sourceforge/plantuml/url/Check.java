@@ -36,7 +36,7 @@
 package net.sourceforge.plantuml.url;
 
 final public class Check {
-	// ::remove file when CORE
+	// ::remove file when __CORE__
 
 	private static boolean isJunit = false;
 

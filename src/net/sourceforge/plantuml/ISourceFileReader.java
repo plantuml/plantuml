@@ -39,7 +39,8 @@ import java.io.IOException;
 import java.util.List;
 
 public interface ISourceFileReader {
-	// ::remove file when CORE
+	// ::remove file when __CORE__
+	// ::remove file when __HAXE__
 
 	public List<GeneratedImage> getGeneratedImages() throws IOException;
 

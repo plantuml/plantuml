@@ -299,8 +299,8 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		final String name1A = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("COUPLE1", 0));
 		final String name1B = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("COUPLE1", 1));
 
-		Quark<Entity> quark1A = diagram.quarkInContext(name1A, false);
-		Quark<Entity> quark1B = diagram.quarkInContext(name1B, false);
+		final Quark<Entity> quark1A = diagram.quarkInContext(name1A, false);
+		final Quark<Entity> quark1B = diagram.quarkInContext(name1B, false);
 
 		if (quark1A.getData() != null == false)
 			return CommandExecutionResult.error("No class " + name1A);
@@ -308,8 +308,8 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		if (quark1B.getData() != null == false)
 			return CommandExecutionResult.error("No class " + name1B);
 
-		Entity cl1A = quark1A.getData();
-		Entity cl1B = quark1B.getData();
+		final Entity cl1A = quark1A.getData();
+		final Entity cl1B = quark1B.getData();
 
 		final String id2 = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("ENT2", 0), "\"");
 		final Quark<Entity> ent2 = diagram.quarkInContext(id2, false);

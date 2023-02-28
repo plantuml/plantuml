@@ -52,7 +52,7 @@ public class UGraphicStencil extends AbstractUGraphicHorizontalLine {
 	}
 
 	public static UGraphic create(UGraphic ug, XDimension2D dim) {
-		return new UGraphicStencil(ug, getRectangleStencil(dim), new UStroke());
+		return new UGraphicStencil(ug, getRectangleStencil(dim), UStroke.simple());
 	}
 
 	private static Stencil getRectangleStencil(final XDimension2D dim) {

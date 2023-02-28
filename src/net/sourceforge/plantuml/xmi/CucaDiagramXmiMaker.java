@@ -51,7 +51,7 @@ import net.sourceforge.plantuml.statediagram.StateDiagram;
 import net.sourceforge.plantuml.utils.Log;
 
 public final class CucaDiagramXmiMaker {
-	// ::remove folder when CORE
+	// ::remove folder when __CORE__
 
 	private final ICucaDiagram diagram;
 	private final FileFormat fileFormat;

@@ -39,6 +39,7 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 
 public interface FlashCodeUtils {
+    // ::remove folder when __HAXE__
 
 	public BufferedImage exportFlashcode(String s, Color fore, Color back);
 

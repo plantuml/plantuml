@@ -72,12 +72,12 @@ public class ErrorStatus {
 	}
 
 	public int getExitCode() {
-		if (isNoData()) {
+		if (isNoData()) 
 			return 100;
-		}
-		if (hasErrors) {
+		
+		if (hasErrors) 
 			return 200;
-		}
+		
 		return 0;
 	}
 

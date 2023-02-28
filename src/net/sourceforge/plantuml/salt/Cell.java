@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.salt;
 
 public class Cell {
+    // ::remove folder when __HAXE__
 
 	private int minRow;
 	private int maxRow;

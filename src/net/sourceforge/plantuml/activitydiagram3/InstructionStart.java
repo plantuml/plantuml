@@ -62,7 +62,7 @@ public class InstructionStart extends MonoSwimable implements Instruction {
 		return false;
 	}
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	@Override
 	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
 		return new GtileCircleStart(stringBounder, skinParam, HColors.BLACK, getSwimlaneIn());

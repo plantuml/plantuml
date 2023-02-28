@@ -37,6 +37,7 @@
 package smetana.core.debug;
 
 public final class SmetanaDebug {
+    // ::remove folder when __HAXE__
 
 	static public void LOG(String s) {
 

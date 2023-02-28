@@ -44,6 +44,7 @@ import java.util.List;
 import java.util.Map;
 
 public class GNodeBuilder {
+    // ::remove folder when __HAXE__
 
 	private final List<GNode> all = new ArrayList<>();
 

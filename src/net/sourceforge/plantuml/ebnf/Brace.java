@@ -53,7 +53,7 @@ public class Brace implements UDrawable {
 
 	@Override
 	public void drawU(UGraphic ug) {
-		ug = ug.apply(new UStroke(0.5));
+		ug = ug.apply(UStroke.withThickness(0.5));
 
 		final double cinq = 5;
 		CornerCurved.createNW(cinq).drawU(ug);

@@ -87,7 +87,7 @@ public class ElementRadioCheckbox extends AbstractElement {
 		final XDimension2D dim = getPreferredDimension(ug.getStringBounder(), 0, 0);
 		final double height = dim.getHeight();
 
-		ug = ug.apply(new UStroke(stroke));
+		ug = ug.apply(UStroke.withThickness(stroke));
 		if (radio) {
 			drawRadio(ug, height);
 		} else {

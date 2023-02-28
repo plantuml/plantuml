@@ -58,7 +58,7 @@ public class ByteArray {
 		return new String(data, 0, length, UTF_8);
 	}
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	public String toUPF9String() throws IOException {
 		return Upf9Decoder.decodeString(data, length);
 	}

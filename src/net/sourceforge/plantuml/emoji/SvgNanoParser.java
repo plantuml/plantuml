@@ -175,7 +175,7 @@ public class SvgNanoParser implements Sprite {
 			final String strokeWidth = extractData("stroke-width", s);
 			if (strokeWidth != null) {
 				final double scale = ugs.getScale();
-				ugs = ugs.apply(new UStroke(scale * Double.parseDouble(strokeWidth)));
+				ugs = ugs.apply(UStroke.withThickness(scale * Double.parseDouble(strokeWidth)));
 			}
 
 		} else {

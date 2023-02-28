@@ -104,12 +104,12 @@ public class FtileCircleEnd extends AbstractFtile {
 		circle.setDeltaShadow(shadowing);
 		ug = ug.apply(borderColor);
 		final double thickness = 2.5;
-		ug.apply(backColor.bg()).apply(new UStroke(1.5)).apply(new UTranslate(xTheoricalPosition, yTheoricalPosition))
+		ug.apply(backColor.bg()).apply(UStroke.withThickness(1.5)).apply(new UTranslate(xTheoricalPosition, yTheoricalPosition))
 				.draw(circle);
 
 		final double size2 = (SIZE - thickness) / Math.sqrt(2);
 		final double delta = (SIZE - size2) / 2;
-		ug = ug.apply(new UStroke(thickness));
+		ug = ug.apply(UStroke.withThickness(thickness));
 		ug.apply(new UTranslate(delta, delta)).draw(new ULine(size2, size2));
 		ug.apply(new UTranslate(delta, SIZE - delta)).draw(new ULine(size2, -size2));
 

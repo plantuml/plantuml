@@ -46,6 +46,7 @@
 package gen.plugin.dot_layout;
 
 public class gvlayout_dot_layout__c {
+    // ::remove folder when __HAXE__
 //1 2digov3edok6d5srhgtlmrycs
 // extern lt_symlist_t lt_preloaded_symbols[]
 

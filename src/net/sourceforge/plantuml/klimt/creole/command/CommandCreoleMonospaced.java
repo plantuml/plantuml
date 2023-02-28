@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.regex.MyPattern;
 import net.sourceforge.plantuml.regex.Pattern2;
 
 public class CommandCreoleMonospaced implements Command {
+    // ::remove folder when __HAXE__
 
 	@Override
 	public String startingChars() {

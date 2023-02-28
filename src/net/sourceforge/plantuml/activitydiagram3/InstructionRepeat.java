@@ -127,7 +127,7 @@ public class InstructionRepeat extends AbstractInstruction implements Instructio
 		return repeatList.add(ins);
 	}
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	@Override
 	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
 

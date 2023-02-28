@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.text.StringLocated;
 
 public class StartUtils {
+	// ::remove file when __HAXE__
 
 	public static final Pattern2 patternFilename = MyPattern
 			.cmpile("^[@\\\\]start[^%s{}%g]+[%s{][%s%g]*([^%g]*?)[%s}%g]*$");

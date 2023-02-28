@@ -56,7 +56,7 @@ import net.sourceforge.plantuml.url.Url;
 
 public abstract class AbstractCommonUGraphic implements UGraphic {
 
-	private UStroke stroke = new UStroke();
+	private UStroke stroke = UStroke.simple();
 	private UPattern pattern = UPattern.FULL;
 	private boolean hidden = false;
 	private HColor backColor = HColors.none();

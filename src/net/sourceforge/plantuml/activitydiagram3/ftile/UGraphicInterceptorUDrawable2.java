@@ -61,7 +61,7 @@ public class UGraphicInterceptorUDrawable2 extends UGraphicDelegator {
 	}
 
 	public void draw(UShape shape) {
-		// :: comment when CORE
+		// :: comment when __CORE__
 		if (shape instanceof Gtile) {
 			final Gtile gtile = (Gtile) shape;
 			// System.err.println("gtile=" + gtile);

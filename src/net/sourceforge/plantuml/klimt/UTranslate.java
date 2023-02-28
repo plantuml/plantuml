@@ -40,6 +40,7 @@ import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
 
 public class UTranslate implements UChange {
+	// ::remove file when __HAXE__
 
 	private final double dx;
 	private final double dy;

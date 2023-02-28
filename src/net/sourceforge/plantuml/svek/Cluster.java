@@ -458,7 +458,7 @@ public class Cluster implements Moveable {
 		this.rectangleArea = new RectangleArea(min, max);
 	}
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	public boolean printCluster1(StringBuilder sb, Collection<SvekLine> lines, StringBounder stringBounder) {
 		final List<SvekNode> tmp = getNodesOrderedTop(lines);
 		if (tmp.size() == 0)

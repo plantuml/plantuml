@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.math.ScientificEquationSafe;
 
 public class StripeLatex implements StripeRaw {
-	// ::remove file when CORE
+	// ::remove file when __CORE__
 	final private FontConfiguration fontConfiguration;
 	final private StringBuilder formula = new StringBuilder();
 	private AtomMath atom;

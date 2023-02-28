@@ -47,7 +47,7 @@ public class Arrow {
 	}
 
 	public void drawArrow(UGraphic ug) {
-		ug = ug.apply(new UStroke());
+		ug = ug.apply(UStroke.simple());
 
 		final ULine p1p2 = new ULine(p1, p2);
 		final double dist = p1.distance(p2);

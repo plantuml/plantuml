@@ -39,6 +39,7 @@ import java.util.EnumSet;
 import java.util.Set;
 
 abstract class AbstractConnectorPuzzle implements ConnectorPuzzle {
+    // ::remove folder when __HAXE__
 
 	private final EnumSet<Where> connections = EnumSet.noneOf(Where.class);
 

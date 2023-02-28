@@ -84,14 +84,14 @@ public class ComponentRoseSelfArrow extends AbstractComponentRoseArrow {
 		final double arrowHeight = getArrowOnlyHeight(stringBounder);
 		final UEllipse circle = new UEllipse(ComponentRoseArrow.diamCircle, ComponentRoseArrow.diamCircle);
 		if (getArrowConfiguration().getDecoration1() == ArrowDecoration.CIRCLE) {
-			ug2.apply(new UStroke(ComponentRoseArrow.thinCircle)).apply(getForegroundColor())
+			ug2.apply(UStroke.withThickness(ComponentRoseArrow.thinCircle)).apply(getForegroundColor())
 					.apply(new UTranslate(x1 + 1 - ComponentRoseArrow.diamCircle / 2 - ComponentRoseArrow.thinCircle,
 							textHeight - ComponentRoseArrow.diamCircle / 2 - ComponentRoseArrow.thinCircle / 2))
 					.draw(circle);
 			x1 += ComponentRoseArrow.diamCircle / 2;
 		}
 		if (getArrowConfiguration().getDecoration2() == ArrowDecoration.CIRCLE) {
-			ug2.apply(new UStroke(ComponentRoseArrow.thinCircle)).apply(getForegroundColor()).apply(new UTranslate(
+			ug2.apply(UStroke.withThickness(ComponentRoseArrow.thinCircle)).apply(getForegroundColor()).apply(new UTranslate(
 					x2 - ComponentRoseArrow.diamCircle / 2 - ComponentRoseArrow.thinCircle,
 					textHeight + arrowHeight - ComponentRoseArrow.diamCircle / 2 - ComponentRoseArrow.thinCircle / 2))
 					.draw(circle);
@@ -118,10 +118,10 @@ public class ComponentRoseSelfArrow extends AbstractComponentRoseArrow {
 			ug2.apply(new UTranslate(x2, textHeight + arrowHeight)).draw(ULine.hline(xRight - x2));
 
 			if (hasStartingCrossX) {
-				ug.apply(new UStroke(2))
+				ug.apply(UStroke.withThickness(2))
 						.apply(new UTranslate(ComponentRoseArrow.spaceCrossX, textHeight - getArrowDeltaX() / 2))
 						.draw(new ULine(getArrowDeltaX(), getArrowDeltaX()));
-				ug.apply(new UStroke(2))
+				ug.apply(UStroke.withThickness(2))
 						.apply(new UTranslate(ComponentRoseArrow.spaceCrossX, textHeight + getArrowDeltaX() / 2))
 						.draw(new ULine(getArrowDeltaX(), -getArrowDeltaX()));
 			} else if (getArrowConfiguration().getDressing1().getHead() == ArrowHead.NORMAL) {
@@ -130,11 +130,11 @@ public class ComponentRoseSelfArrow extends AbstractComponentRoseArrow {
 			}
 
 			if (hasFinalCrossX) {
-				ug.apply(new UStroke(2))
+				ug.apply(UStroke.withThickness(2))
 						.apply(new UTranslate(ComponentRoseArrow.spaceCrossX,
 								textHeight - getArrowDeltaX() / 2 + arrowHeight))
 						.draw(new ULine(getArrowDeltaX(), getArrowDeltaX()));
-				ug.apply(new UStroke(2))
+				ug.apply(UStroke.withThickness(2))
 						.apply(new UTranslate(ComponentRoseArrow.spaceCrossX,
 								textHeight + getArrowDeltaX() / 2 + arrowHeight))
 						.draw(new ULine(getArrowDeltaX(), -getArrowDeltaX()));

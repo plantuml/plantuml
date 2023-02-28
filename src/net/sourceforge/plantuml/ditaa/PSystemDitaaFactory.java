@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 
 public class PSystemDitaaFactory extends PSystemBasicFactory<PSystemDitaa> {
+    // ::remove folder when __HAXE__
 
 	// private StringBuilder data;
 	// // -E,--no-separation

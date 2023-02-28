@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.klimt.geom;
 
 public class PositionableUtils {
+	// :: remove file when __HAXE__
 
 	static private XRectangle2D convert(Positionable positionable) {
 		final XPoint2D position = positionable.getPosition();

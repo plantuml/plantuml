@@ -80,7 +80,7 @@ public class GtileSplit extends GtileColumns {
 		final double xLast = gtiles.get(last).getCoord(GPoint.NORTH_HOOK).compose(getPosition(last)).getDx();
 		final ULine hline = ULine.hline(xLast - x0);
 
-		ug = ug.apply(lineColor).apply(new UStroke(1.5));
+		ug = ug.apply(lineColor).apply(UStroke.withThickness(1.5));
 		ug.apply(UTranslate.dx(x0)).draw(hline);
 
 		final double y = getCoord(GPoint.SOUTH_BORDER).getDy();

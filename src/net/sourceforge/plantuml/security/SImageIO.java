@@ -50,7 +50,7 @@ import javax.imageio.stream.ImageOutputStream;
 
 public class SImageIO {
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	public static ImageOutputStream createImageOutputStream(OutputStream os) throws IOException {
 		return javax.imageio.ImageIO.createImageOutputStream(os);
 	}
@@ -60,7 +60,7 @@ public class SImageIO {
 		javax.imageio.ImageIO.write(image, format, os);
 	}
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	public static void write(RenderedImage image, String format, SFile file) throws IOException {
 		javax.imageio.ImageIO.write(image, format, file.conv());
 	}
@@ -82,7 +82,7 @@ public class SImageIO {
 		return javax.imageio.ImageIO.read(new ByteArrayInputStream(bytes));
 	}
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	public static ImageInputStream createImageInputStream(SFile file) throws IOException {
 		return javax.imageio.ImageIO.createImageInputStream(file.conv());
 	}

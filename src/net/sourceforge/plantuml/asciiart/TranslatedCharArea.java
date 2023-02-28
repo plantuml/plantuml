@@ -40,6 +40,7 @@ import java.util.Collection;
 import java.util.List;
 
 public class TranslatedCharArea implements UmlCharArea {
+    // ::remove folder when __HAXE__
 
 	private final int dx;
 	private final int dy;

@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.klimt.geom.GraphicPosition;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 
 public abstract class PlainStringsDiagram extends PlainDiagram {
+	// ::remove file when __HAXE__
 
 	protected BufferedImage image = null;
 	protected GraphicPosition imagePosition = null;

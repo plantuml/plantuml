@@ -12,7 +12,7 @@ package net.sourceforge.plantuml.brotli;
  * Bit reading helpers.
  */
 final class BitReader {
-	// ::remove folder when CORE
+	// ::remove folder when __CORE__
 
 	// Added by Arnaud... not very beautifull
 	private static final boolean CHECK_UNUSED_BYTES_AFTER_END = false;

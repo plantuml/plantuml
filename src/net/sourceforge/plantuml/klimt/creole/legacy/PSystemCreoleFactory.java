@@ -40,7 +40,7 @@ import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 
 public class PSystemCreoleFactory extends PSystemBasicFactory<PSystemCreole> {
-	// ::remove file when CORE
+	// ::remove file when __CORE__
 
 	public PSystemCreoleFactory() {
 		super(DiagramType.CREOLE);

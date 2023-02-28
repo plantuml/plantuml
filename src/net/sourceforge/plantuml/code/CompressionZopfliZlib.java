@@ -41,7 +41,7 @@ import net.sourceforge.plantuml.zopfli.Options.OutputFormat;
 import net.sourceforge.plantuml.zopfli.Zopfli;
 
 public class CompressionZopfliZlib implements Compression {
-	// ::remove file when CORE
+	// ::remove file when __CORE__
 
 	public byte[] compress(byte[] in) {
 		if (in.length == 0)

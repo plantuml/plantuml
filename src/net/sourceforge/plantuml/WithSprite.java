@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.klimt.sprite.Sprite;
 
 public interface WithSprite extends Diagram {
+	// ::remove file when __HAXE__
 
 	public void addSprite(String name, Sprite sprite);
 }

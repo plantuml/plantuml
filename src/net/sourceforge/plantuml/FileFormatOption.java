@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.text.SvgCharSizeHack;
  * 
  */
 public final class FileFormatOption implements Serializable {
+	// ::remove file when __HAXE__
 
 	private final FileFormat fileFormat;
 	private boolean withMetadata;

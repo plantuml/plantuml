@@ -40,6 +40,7 @@ import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.drawing.UDriver;
 
 public class DriverPathVdx implements UDriver<UPath, VisioGraphics> {
+    // ::remove folder when __HAXE__
 
 	public void draw(UPath path, double x, double y, ColorMapper mapper, UParam param, VisioGraphics visio) {
 		visio.upath(x, y, path);

@@ -101,7 +101,8 @@ import java.util.Map;
  * @author Bob Nystrom
  */
 public class Jasic {
-	// ::remove folder when CORE
+    // ::remove folder when __HAXE__
+	// ::remove folder when __CORE__
 
 	// Tokenizing (lexing) -----------------------------------------------------
 

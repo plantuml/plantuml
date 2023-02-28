@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandAddData extends SingleLineCommand2<AbstractClassOrObjectDiagram> {
+    // ::remove folder when __HAXE__
 
 	public CommandAddData() {
 		super(getRegexConcat());

@@ -68,14 +68,14 @@ public class ElementLine extends AbstractElement {
 
 	private static void drawLine(UGraphic ug, double x, double y, double widthToUse, char separator) {
 		if (separator == '=') {
-			ug.apply(new UStroke()).apply(new UTranslate(x, y)).draw(ULine.hline(widthToUse));
-			ug.apply(new UStroke()).apply(new UTranslate(x, y + 2)).draw(ULine.hline(widthToUse));
+			ug.apply(UStroke.simple()).apply(new UTranslate(x, y)).draw(ULine.hline(widthToUse));
+			ug.apply(UStroke.simple()).apply(new UTranslate(x, y + 2)).draw(ULine.hline(widthToUse));
 		} else if (separator == '.') {
 			ug.apply(new UStroke(1, 2, 1)).apply(new UTranslate(x, y)).draw(ULine.hline(widthToUse));
 		} else if (separator == '-') {
-			ug.apply(new UStroke()).apply(new UTranslate(x, y)).draw(ULine.hline(widthToUse));
+			ug.apply(UStroke.simple()).apply(new UTranslate(x, y)).draw(ULine.hline(widthToUse));
 		} else {
-			ug.apply(new UStroke(1.5)).apply(new UTranslate(x, y)).draw(ULine.hline(widthToUse));
+			ug.apply(UStroke.withThickness(1.5)).apply(new UTranslate(x, y)).draw(ULine.hline(widthToUse));
 		}
 	}
 

@@ -91,7 +91,7 @@ abstract class ExtremityExtendsLike extends Extremity {
 
 	static class Redefines extends ExtremityExtendsLike {
 		private static final double XSUFFIX = XLEN * 1.2;
-		private final UStroke barStroke = new UStroke(2.0);
+		private final UStroke barStroke = UStroke.withThickness(2.0);
 		private final UTranslate pos;
 		private final ULine bar;
 

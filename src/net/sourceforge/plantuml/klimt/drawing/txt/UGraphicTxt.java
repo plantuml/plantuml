@@ -56,7 +56,8 @@ import net.sourceforge.plantuml.klimt.shape.UText;
 import net.sourceforge.plantuml.security.SecurityUtils;
 
 public class UGraphicTxt extends AbstractCommonUGraphic implements ClipContainer {
-	// ::remove folder when CORE
+    // ::remove folder when __HAXE__
+	// ::remove folder when __CORE__
 
 	private final UmlCharArea charArea;
 

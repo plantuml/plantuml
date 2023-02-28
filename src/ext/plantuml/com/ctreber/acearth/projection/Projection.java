@@ -14,6 +14,7 @@ import ext.plantuml.com.ctreber.acearth.util.Toolkit;
  */
 abstract public class Projection
 {
+    // ::remove folder when __HAXE__
   // Target information
   int fImageHeight;
   int fImageWidth;

@@ -113,7 +113,7 @@ public class JsonCurve {
 	public void drawSpot(UGraphic ug) {
 		final double size = 3;
 		ug = ug.apply(new UTranslate(getVeryFirst()).compose(new UTranslate(-size, -size)));
-		ug.apply(new UStroke()).draw(new UEllipse(2 * size, 2 * size));
+		ug.apply(UStroke.simple()).draw(new UEllipse(2 * size, 2 * size));
 	}
 
 	private XPoint2D getVeryFirst() {

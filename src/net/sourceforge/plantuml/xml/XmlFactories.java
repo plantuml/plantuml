@@ -8,6 +8,7 @@ import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerFactory;
 
 public class XmlFactories {
+    // ::remove folder when __HAXE__
 
 	private XmlFactories() {
 	}

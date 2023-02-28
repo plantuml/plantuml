@@ -30,6 +30,7 @@ import ext.plantuml.com.google.zxing.common.BitMatrix;
  * @author Sean Owen
  */
 abstract class DataMask {
+    // ::remove folder when __HAXE__
 
   /**
    * See ISO 18004:2006 6.8.1

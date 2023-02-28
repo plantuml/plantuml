@@ -29,6 +29,7 @@ import org.stathissideris.ascii2image.graphics.CustomShapeDefinition;
  *
  */
 public class ProcessingOptions {
+    // ::remove folder when __HAXE__
 
 	private HashMap<String, CustomShapeDefinition> customShapes = new HashMap<String, CustomShapeDefinition>();
 	

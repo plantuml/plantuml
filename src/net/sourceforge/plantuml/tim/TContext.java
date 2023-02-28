@@ -660,7 +660,7 @@ public class TContext {
 				reader = PreprocessorUtils.getReaderIncludeUrl(url, s, suf, charset);
 			} else if (location.startsWith("<") && location.endsWith(">")) {
 				reader = PreprocessorUtils.getReaderStdlibInclude(s, location.substring(1, location.length() - 1));
-				// ::comment when CORE
+				// ::comment when __CORE__
 			} else if (location.startsWith("[") && location.endsWith("]")) {
 				reader = PreprocessorUtils.getReaderNonstandardInclude(s, location.substring(1, location.length() - 1));
 				// ::done

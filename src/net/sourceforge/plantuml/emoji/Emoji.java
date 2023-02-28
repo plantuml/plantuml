@@ -54,12 +54,13 @@ import net.sourceforge.plantuml.log.Logme;
 // Emojji from https://twemoji.twitter.com/
 // Shorcut from https://api.github.com/emojis
 
-// ::uncomment when CORE
+// ::uncomment when __CORE__
 //import static com.plantuml.api.cheerpj.StaticMemory.cheerpjPath;
 //import java.io.FileInputStream;
 // ::done
 
 public class Emoji {
+	// :: remove folder when __HAXE__
 	private final static Map<String, Emoji> ALL = new HashMap<>();
 
 	static {
@@ -117,11 +118,11 @@ public class Emoji {
 			return;
 
 		final List<String> data = new ArrayList<String>();
-		// ::uncomment when CORE
+		// ::uncomment when __CORE__
 //		final String fullpath = cheerpjPath + "emoji/" + unicode + ".svg";
 //		try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fullpath)))) {
 		// ::done
-		// ::comment when CORE
+		// ::comment when __CORE__
 		try (BufferedReader br = new BufferedReader(
 				new InputStreamReader(Dummy.class.getResourceAsStream(unicode + ".svg")))) {
 			// ::done

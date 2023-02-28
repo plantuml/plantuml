@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.sequencediagram.teoz;
 import net.sourceforge.plantuml.klimt.Fashion;
 
 public class Step {
+    // ::remove folder when __HAXE__
 
 	private final double value;
 	private final boolean destroy;

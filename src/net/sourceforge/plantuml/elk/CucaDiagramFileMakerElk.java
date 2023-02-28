@@ -143,7 +143,7 @@ https://rtsys.informatik.uni-kiel.de/~biblio/downloads/theses/yab-bt.pdf
 https://rtsys.informatik.uni-kiel.de/~biblio/downloads/theses/thw-bt.pdf
  */
 public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
-	// ::remove folder when CORE
+	// ::remove folder when __CORE__
 
 	private final ICucaDiagram diagram;
 	private final StringBounder stringBounder;
@@ -282,7 +282,7 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 					skinParam.getStereotypeAlignment(), 0);
 
 //			// Print a simple rectangle right now
-//			ug.apply(HColorUtils.BLACK).apply(new UStroke(1.5)).apply(new UTranslate(corner)).draw(rect);
+//			ug.apply(HColorUtils.BLACK).apply(UStroke.withThickness(1.5)).apply(new UTranslate(corner)).draw(rect);
 		}
 
 		private TextBlock getTitleBlock(Entity g) {

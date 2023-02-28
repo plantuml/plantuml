@@ -65,7 +65,7 @@ public class ElementButton extends AbstractElementText implements Element {
 			return;
 
 		final XDimension2D dim = getPreferredDimension(ug.getStringBounder(), 0, 0);
-		ug = ug.apply(new UStroke(stroke));
+		ug = ug.apply(UStroke.withThickness(stroke));
 		ug = ug.apply(getColorEE().bg()).apply(getBlack());
 		ug.apply(new UTranslate(stroke, stroke))
 				.draw(new URectangle(dim.getWidth() - 2 * stroke, dim.getHeight() - 2 * stroke).rounded(10));

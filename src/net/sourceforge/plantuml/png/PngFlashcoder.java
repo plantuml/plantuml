@@ -43,7 +43,7 @@ import java.util.List;
 import net.sourceforge.plantuml.klimt.UAntiAliasing;
 
 public class PngFlashcoder {
-	// ::remove file when CORE
+	// ::remove file when __CORE__
 
 	private final List<BufferedImage> flashcodes;
 

@@ -63,7 +63,7 @@ import net.sourceforge.plantuml.text.Guillemet;
 import net.sourceforge.plantuml.xml.XmlFactories;
 
 public class ScxmlStateDiagramStandard {
-	// ::remove folder when CORE
+	// ::remove folder when __CORE__
 
 	private final StateDiagram diagram;
 	private final Document document;

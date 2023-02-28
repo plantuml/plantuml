@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandEndif extends SingleLineCommand2<ActivityDiagram> {
+    // ::remove folder when __HAXE__
 
 	public CommandEndif() {
 		super(getRegexConcat());

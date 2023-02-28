@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.regex.MyPattern;
 import net.sourceforge.plantuml.regex.Pattern2;
 
 public class PSystemSudokuFactory extends PSystemSingleLineFactory {
+    // ::remove folder when __HAXE__
 
 	final private static Pattern2 p = MyPattern.cmpile("^sudoku(?:[%s]+([0-9a-zA-Z]+))?[%s]*$");
 

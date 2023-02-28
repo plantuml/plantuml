@@ -76,16 +76,16 @@ public class ETileWithCircles extends ETile {
 	public void drawU(UGraphic ug) {
 		final double linePos = getH1(ug.getStringBounder());
 		final XDimension2D fullDim = calculateDimension(ug.getStringBounder());
-		ug = ug.apply(lineColor).apply(new UStroke(1.5));
+		ug = ug.apply(lineColor).apply(UStroke.withThickness(1.5));
 		orig.drawU(ug.apply(UTranslate.dx(deltax)));
 
 		final UEllipse circle = new UEllipse(SIZE, SIZE);
 
-		ug.apply(new UStroke(2)).apply(new UTranslate(0, linePos - SIZE / 2)).draw(circle);
-		ug.apply(new UStroke(1)).apply(new CopyForegroundColorToBackgroundColor())
+		ug.apply(UStroke.withThickness(2)).apply(new UTranslate(0, linePos - SIZE / 2)).draw(circle);
+		ug.apply(UStroke.withThickness(1)).apply(new CopyForegroundColorToBackgroundColor())
 				.apply(new UTranslate(fullDim.getWidth() - SIZE / 2, linePos - SIZE / 2)).draw(circle);
 
-		ug = ug.apply(new UStroke(1.5));
+		ug = ug.apply(UStroke.withThickness(1.5));
 		drawHlineDirected(ug, linePos, SIZE, deltax, 0.5);
 		drawHlineDirected(ug, linePos, fullDim.getWidth() - deltax, fullDim.getWidth() - SIZE / 2, 0.5);
 	}

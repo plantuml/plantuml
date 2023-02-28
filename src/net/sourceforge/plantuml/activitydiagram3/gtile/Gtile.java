@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.style.ISkinParam;
 
 public interface Gtile extends Swimable2, TextBlock {
-	// ::remove folder when CORE
+	// ::remove folder when __CORE__
 
 	public static final boolean USE_GTILE = false;
 

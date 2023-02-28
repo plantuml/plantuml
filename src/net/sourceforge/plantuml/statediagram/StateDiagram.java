@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class StateDiagram extends AbstractEntityDiagram {
+	// :: remove folder when __HAXE__
 
 	private static final String CONCURRENT_PREFIX = "CONC";
 

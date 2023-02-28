@@ -60,7 +60,7 @@ import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.utils.SignatureUtils;
 
 public class PSystemKeycheck extends PlainDiagram {
-	// ::remove file when CORE
+	// ::remove file when __CORE__
 
 	final private String key;
 	final private String sig;

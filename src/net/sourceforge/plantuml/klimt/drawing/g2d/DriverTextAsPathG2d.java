@@ -60,7 +60,7 @@ import net.sourceforge.plantuml.klimt.shape.UText;
 import net.sourceforge.plantuml.utils.Log;
 
 public class DriverTextAsPathG2d implements UDriver<UText, Graphics2D> {
-	// ::remove file when SPAM
+	// ::remove file when __CORE__
 
 	private final EnsureVisible visible;
 	private final StringBounder stringBounder;

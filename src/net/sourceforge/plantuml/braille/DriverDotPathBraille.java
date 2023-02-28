@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.klimt.drawing.UDriver;
 import net.sourceforge.plantuml.klimt.shape.DotPath;
 
 public class DriverDotPathBraille implements UDriver<DotPath, BrailleGrid> {
+    // ::remove folder when __HAXE__
 
 	public void draw(DotPath shape, double x, double y, ColorMapper mapper, UParam param, BrailleGrid grid) {
 		if (param.getColor().isTransparent() == false)

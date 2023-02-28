@@ -168,7 +168,7 @@ public class LoadJson extends SimpleReturnFunction {
 			if (url == null)
 				throw EaterException.located("load JSON: Invalid URL " + path);
 			byteData = url.getBytes();
-			// ::comment when CORE
+			// ::comment when __CORE__
 		} else {
 			try {
 				final SFile file = FileSystem.getInstance().getFile(path);

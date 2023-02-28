@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.text.BackSlash;
 import net.sourceforge.plantuml.utils.Log;
 
 public class PSystemJcckitFactory extends PSystemBasicFactory<PSystemJcckit> {
+    // ::remove folder when __HAXE__
 
 	private StringBuilder data;
 	private int width;

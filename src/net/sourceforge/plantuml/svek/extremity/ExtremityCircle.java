@@ -72,7 +72,7 @@ class ExtremityCircle extends Extremity {
 
 	public void drawU(UGraphic ug) {
 
-		ug = ug.apply(new UStroke(1.5));
+		ug = ug.apply(UStroke.withThickness(1.5));
 		if (fill) {
 			ug = ug.apply(HColors.changeBack(ug));
 		} else {

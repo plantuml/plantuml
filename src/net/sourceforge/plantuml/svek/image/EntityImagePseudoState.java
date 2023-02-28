@@ -103,7 +103,7 @@ public class EntityImagePseudoState extends AbstractEntityImage {
 		ug = ug.apply(stroke);
 		ug = ug.apply(backgroundColor.bg()).apply(borderColor);
 		ug.draw(circle);
-		// ug = ug.apply(new UStroke());
+		// ug = ug.apply(UStroke.simple());
 
 		final XDimension2D dimDesc = desc.calculateDimension(ug.getStringBounder());
 		final double widthDesc = dimDesc.getWidth();

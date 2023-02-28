@@ -31,6 +31,7 @@ import jcckit.util.Util;
  *  @author Franz-Josef Elmer
  */
 public class CartesianTransformation implements Transformation {
+    // ::remove folder when __HAXE__
   private final boolean _xLogScale;
   private final double _xOffset;
   private final double _xScale;

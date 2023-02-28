@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.regex.MyPattern;
 import net.sourceforge.plantuml.regex.Pattern2;
 
 public class SvgAttributes {
+	// ::remove file when __HAXE__
 
 	private final Map<String, String> attributes = new TreeMap<String, String>();
 

@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 
 public abstract class AbstractPlacementStrategy implements PlacementStrategy {
+	// ::remove file when __HAXE__
 
 	private final StringBounder stringBounder;
 	private final Map<TextBlock, XDimension2D> dimensions = new LinkedHashMap<TextBlock, XDimension2D>();

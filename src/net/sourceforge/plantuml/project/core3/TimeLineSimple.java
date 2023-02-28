@@ -40,6 +40,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class TimeLineSimple implements TimeLine {
+    // ::remove folder when __HAXE__
 
 	private final List<Long> events = new ArrayList<>();
 

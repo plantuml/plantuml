@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandHelp extends SingleLineCommand2<Help> {
-	// ::remove folder when CORE
+	// ::remove folder when __CORE__
 
 	public CommandHelp() {
 		super(getRegexConcat());

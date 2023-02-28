@@ -77,7 +77,7 @@ import net.sourceforge.plantuml.utils.LineLocationImpl;
 import net.sourceforge.plantuml.version.Version;
 
 public class PicoWebServer implements Runnable {
-	// ::remove folder when CORE
+	// ::remove folder when __CORE__
 
 	private final Socket connect;
 	private static boolean enableStop;

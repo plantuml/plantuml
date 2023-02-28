@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
 
 public class PSystemListFonts extends PlainStringsDiagram {
-	// ::remove folder when CORE
+	// ::remove folder when __CORE__
 
 	public PSystemListFonts(UmlSource source, String text) {
 		super(source);

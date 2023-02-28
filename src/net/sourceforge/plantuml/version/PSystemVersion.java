@@ -101,7 +101,7 @@ public class PSystemVersion extends PlainStringsDiagram {
 		return getImage("favicon.png");
 	}
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	public static BufferedImage getArecibo() {
 		return getImage("arecibo.png");
 	}
@@ -131,7 +131,7 @@ public class PSystemVersion extends PlainStringsDiagram {
 		return new BufferedImage(10, 10, BufferedImage.TYPE_INT_ARGB);
 	}
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	private static BufferedImage getImageWebp(final String name) {
 		try (InputStream is = PSystemVersion.class.getResourceAsStream(name)) {
 			return SFile.getBufferedImageFromWebpButHeader(is);
@@ -168,12 +168,12 @@ public class PSystemVersion extends PlainStringsDiagram {
 		final List<String> strings = new ArrayList<>();
 		strings.add("<b>PlantUML version " + Version.versionString() + "</b> (" + Version.compileTimeString() + ")");
 		strings.add("(" + License.getCurrent() + " source distribution)");
-		// :: uncomment when CORE
+		// :: uncomment when __CORE__
 //		strings.add(" ");
 //		strings.add("Compiled with CheerpJ 2.3");
 //		strings.add("Powered by CheerpJ, a Leaning Technologies Java tool");
 		// :: done
-		// :: comment when CORE
+		// :: comment when __CORE__
 		GraphvizCrash.checkOldVersionWarning(strings);
 		if (OptionFlags.ALLOW_INCLUDE) {
 			if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE)
@@ -201,7 +201,7 @@ public class PSystemVersion extends PlainStringsDiagram {
 		return new PSystemVersion(source, true, strings);
 	}
 
-	// :: comment when CORE
+	// :: comment when __CORE__
 	public static PSystemVersion createStdLib(UmlSource source) {
 		final List<String> strings = new ArrayList<>();
 		Stdlib.addInfoVersion(strings, true);
@@ -251,7 +251,7 @@ public class PSystemVersion extends PlainStringsDiagram {
 
 	}
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	public static PSystemVersion createTestDot(UmlSource source) throws IOException {
 		final List<String> strings = new ArrayList<>();
 		strings.add(Version.fullDescription());
@@ -270,7 +270,7 @@ public class PSystemVersion extends PlainStringsDiagram {
 //		return new PSystemVersion(false, strings);
 //	}
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	public static PSystemVersion createKeyDistributor(UmlSource source) throws IOException {
 		final LicenseInfo license = LicenseInfo.retrieveDistributor();
 		BufferedImage im = null;

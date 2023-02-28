@@ -217,7 +217,7 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 	public SvekLine(Link link, ColorSequence colorSequence, ISkinParam skinParam, StringBounder stringBounder,
 			FontConfiguration font, Bibliotekon bibliotekon, Pragma pragma, GraphvizVersion graphvizVersion) {
 
-		// ::comment when CORE
+		// ::comment when __CORE__
 		if (graphvizVersion.useShieldForQuantifier() && link.getLinkArg().getQuantifier1() != null)
 			link.getEntity1().ensureMargins(Margins.uniform(16));
 
@@ -363,7 +363,7 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		return link.getLinkArrow();
 	}
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	public void appendLine(GraphvizVersion graphvizVersion, StringBuilder sb, DotMode dotMode, DotSplines dotSplines) {
 		// Log.println("inverted=" + isInverted());
 		// if (isInverted()) {
@@ -772,7 +772,7 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		drawRainbow(ug.apply(new UTranslate(x, y)), color, arrowHeadColor, todraw, link.getSupplementaryColors(),
 				stroke, magneticForce1, magneticForce2);
 
-		ug = ug.apply(new UStroke()).apply(color);
+		ug = ug.apply(UStroke.simple()).apply(color);
 
 		if (hasNoteLabelText() && this.labelXY != null
 				&& (link.getNote() == null || link.getNote().getStrategy() != NoteLinkStrategy.HALF_NOT_PRINTED))

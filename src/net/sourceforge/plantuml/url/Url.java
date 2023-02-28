@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.klimt.geom.EnsureVisible;
 import net.sourceforge.plantuml.text.BackSlash;
 
 public class Url implements EnsureVisible {
+    // ::remove folder when __HAXE__
 
 	private final String url;
 	private final String tooltip;
@@ -94,7 +95,7 @@ public class Url implements EnsureVisible {
 	}
 
 	public String getCoords(double scale) {
-		// ::comment when CORE
+		// ::comment when __CORE__
 		if (Check.isJunit() && visible.getCoords(1.0).contains("0,0,0,0"))
 			throw new IllegalStateException(toString());
 		// ::done

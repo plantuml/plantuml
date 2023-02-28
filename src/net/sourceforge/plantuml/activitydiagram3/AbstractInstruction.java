@@ -41,7 +41,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 
 abstract class AbstractInstruction {
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
 		throw new UnsupportedOperationException("" + getClass());
 	}

@@ -39,7 +39,8 @@ import java.io.File;
 import java.io.OutputStream;
 
 public interface Graphviz {
-	// ::remove file when CORE
+    // ::remove folder when __HAXE__
+	// ::remove file when __CORE__
 
 	public ProcessState createFile3(OutputStream os);
 

@@ -62,7 +62,7 @@ public class CommandAffineTransform extends SingleLineCommand2<UmlDiagram> {
 	@Override
 	protected CommandExecutionResult executeArg(UmlDiagram diagram, LineLocation location, RegexResult arg) {
 		final CharSequence value = arg.get("ANIMATION", 0);
-		// ::comment when CORE
+		// ::comment when __CORE__
 		diagram.setAnimation(Collections.singletonList(value));
 		// ::done
 		return CommandExecutionResult.ok();

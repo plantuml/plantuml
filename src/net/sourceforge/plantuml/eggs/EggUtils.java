@@ -40,7 +40,7 @@ import java.math.BigInteger;
 import net.sourceforge.plantuml.StringUtils;
 
 public class EggUtils {
-	// ::remove file when CORE
+	// ::remove file when __CORE__
 
 	public static String fromByteArrays(byte data[]) {
 		final StringBuilder sb = new StringBuilder();

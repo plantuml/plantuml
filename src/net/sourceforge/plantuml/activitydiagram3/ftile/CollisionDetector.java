@@ -97,7 +97,7 @@ public class CollisionDetector extends UGraphicNo {
 					minmax.drawGray(ug);
 
 			final HColor color = HColors.BLACK;
-			ug = ug.apply(color).apply(new UStroke(5));
+			ug = ug.apply(color).apply(UStroke.withThickness(5));
 			for (Snake snake : snakes)
 				for (XLine2D line : snake.getHorizontalLines())
 					if (collision(line))

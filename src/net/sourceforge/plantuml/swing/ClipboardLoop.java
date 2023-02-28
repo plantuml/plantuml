@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.utils.Log;
 
 public class ClipboardLoop {
-	// ::remove file when CORE
+	// ::remove file when __CORE__
 
 	public static void runLoop() throws IOException, InterruptedException {
 		final ClipboardLoop clipboardLoop = new ClipboardLoop();

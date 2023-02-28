@@ -43,18 +43,18 @@ public class BasicEnsureVisible implements EnsureVisible {
 	private double maxY = -Double.MAX_VALUE;
 
 	public void ensureVisible(double x, double y) {
-		if (x > maxX) {
+		if (x > maxX)
 			maxX = x;
-		}
-		if (x < minX) {
+
+		if (x < minX)
 			minX = x;
-		}
-		if (y > maxY) {
+
+		if (y > maxY)
 			maxY = y;
-		}
-		if (y < minY) {
+
+		if (y < minY)
 			minY = y;
-		}
+
 	}
 
 	public boolean hasData() {
@@ -62,9 +62,9 @@ public class BasicEnsureVisible implements EnsureVisible {
 	}
 
 	public String getCoords(double scale) {
-		if (minX == Double.MAX_VALUE) {
+		if (minX == Double.MAX_VALUE)
 			return "0,0,0,0";
-		}
+
 		final int x1 = (int) (minX * scale);
 		final int y1 = (int) (minY * scale);
 		final int x2 = (int) (maxX * scale);
@@ -73,9 +73,9 @@ public class BasicEnsureVisible implements EnsureVisible {
 	}
 
 	public double getSurface() {
-		if (minX == Double.MAX_VALUE) {
+		if (minX == Double.MAX_VALUE)
 			return 0;
-		}
+
 		return (maxX - minX) * (maxY - minY);
 	}
 

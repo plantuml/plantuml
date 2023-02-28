@@ -63,6 +63,7 @@ import net.sourceforge.plantuml.svek.Ports;
 import net.sourceforge.plantuml.svek.WithPorts;
 
 public class TextBlockMap extends AbstractTextBlock implements WithPorts {
+    // ::remove folder when __HAXE__
 
 	private final ISkinParam skinParam;
 	private final FontConfiguration fontConfiguration;

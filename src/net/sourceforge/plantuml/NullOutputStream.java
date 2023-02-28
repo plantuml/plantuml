@@ -40,6 +40,7 @@ import java.io.OutputStream;
 
 // Modified by Maxime Sinclair
 public class NullOutputStream extends OutputStream {
+	// ::remove file when __HAXE__
 
 	/**
 	 * Writes to nowhere

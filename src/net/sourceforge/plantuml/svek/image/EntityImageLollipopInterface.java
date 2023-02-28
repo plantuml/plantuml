@@ -62,6 +62,7 @@ import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.url.Url;
 
 public class EntityImageLollipopInterface extends AbstractEntityImage {
+    // ::remove folder when __HAXE__
 
 	private static final int SIZE = 10;
 
@@ -74,7 +75,7 @@ public class EntityImageLollipopInterface extends AbstractEntityImage {
 	}
 
 	private UStroke getUStroke() {
-		return new UStroke(1.5);
+		return UStroke.withThickness(1.5);
 	}
 
 	public EntityImageLollipopInterface(Entity entity, ISkinParam skinParam, SName sname) {

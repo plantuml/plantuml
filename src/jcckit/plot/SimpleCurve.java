@@ -36,6 +36,7 @@ import jcckit.util.Factory;
  *  @author Franz-Josef Elmer
  */
 public class SimpleCurve implements Curve {
+    // ::remove folder when __HAXE__
   /** Configuration parameter key. */
   public static final String SYMBOL_FACTORY_KEY = "symbolFactory",
                              WITH_LINE_KEY = "withLine",

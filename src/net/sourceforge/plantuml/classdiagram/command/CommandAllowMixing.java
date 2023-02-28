@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandAllowMixing extends SingleLineCommand2<ClassDiagram> {
+    // ::remove folder when __HAXE__
 
 	public CommandAllowMixing() {
 		super(getRegexConcat());

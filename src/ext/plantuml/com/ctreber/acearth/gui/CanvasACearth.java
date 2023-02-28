@@ -15,6 +15,7 @@ import ext.plantuml.com.ctreber.acearth.ACearth;
  * 
  */
 public class CanvasACearth extends PixelCanvas {
+    // ::remove folder when __HAXE__
 	public CanvasACearth(ACearth pParent, int pWidth, int pHeight) {
 		super(pWidth, pHeight);
 	}

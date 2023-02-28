@@ -9,6 +9,7 @@ package ext.plantuml.com.ctreber.acearth.util;
  */
 public class Point3D
 {
+    // ::remove folder when __HAXE__
   private double fX;
   private double fY;
   private double fZ;

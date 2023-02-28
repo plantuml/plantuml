@@ -7,6 +7,7 @@ import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 
 public abstract class XmiSequenceDiagram {
+    // ::remove folder when __HAXE__
 
 	protected final SequenceDiagram diagram;
 

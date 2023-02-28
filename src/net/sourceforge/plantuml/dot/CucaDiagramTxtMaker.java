@@ -69,7 +69,7 @@ import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.text.BackSlash;
 
 public final class CucaDiagramTxtMaker {
-	// ::remove file when CORE
+	// ::remove file when __CORE__
 
 	// private final CucaDiagram diagram;
 	private final FileFormat fileFormat;

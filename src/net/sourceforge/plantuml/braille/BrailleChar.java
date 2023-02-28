@@ -36,7 +36,7 @@
 package net.sourceforge.plantuml.braille;
 
 public class BrailleChar {
-	// ::remove folder when CORE
+	// ::remove folder when __CORE__
 
 	private final int id;
 

@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.klimt.shape.UCenteredCharacter;
 import net.sourceforge.plantuml.tikz.TikzGraphics;
 
 public class DriverCenteredCharacterTikz implements UDriver<UCenteredCharacter, TikzGraphics> {
+    // ::remove folder when __HAXE__
 
 	public void draw(UCenteredCharacter centeredCharacter, double x, double y, ColorMapper mapper, UParam param,
 			TikzGraphics tikz) {

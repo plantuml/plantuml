@@ -69,7 +69,7 @@ import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.utils.BlocLines;
 
 public class StdlibDiagram extends UmlDiagram {
-	// ::remove file when CORE
+	// ::remove file when __CORE__
 
 	private static final int WIDTH = 1800;
 	private String name;

@@ -147,6 +147,8 @@ public class NServer {
 	}
 
 	public void connectTo(Network network, String address) {
+		if (network == null)
+			throw new IllegalArgumentException();
 		if (address == null)
 			address = "";
 		if (address.length() == 0 && connections.containsKey(network))

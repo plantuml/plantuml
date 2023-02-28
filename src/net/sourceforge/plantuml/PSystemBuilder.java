@@ -109,6 +109,7 @@ import net.sourceforge.plantuml.wire.WireDiagramFactory;
 import net.sourceforge.plantuml.yaml.YamlDiagramFactory;
 
 public class PSystemBuilder {
+	// ::remove file when __HAXE__
 
 	public static final long startTime = System.currentTimeMillis();
 
@@ -154,7 +155,7 @@ public class PSystemBuilder {
 			return result;
 		} finally {
 			WasmLog.log("...parsing ok...");
-			// ::comment when CORE
+			// ::comment when __CORE__
 			if (result != null && OptionFlags.getInstance().isEnableStats()) {
 				StatsUtilsIncrement.onceMoreParse(System.currentTimeMillis() - now, result.getClass());
 			}
@@ -176,14 +177,14 @@ public class PSystemBuilder {
 		factories.add(new StateDiagramFactory());
 		factories.add(new ActivityDiagramFactory3());
 
-		// ::comment when CORE
+		// ::comment when __CORE__
 		factories.add(new BpmDiagramFactory(DiagramType.BPM));
 		// ::done
 
 		// factories.add(new PostIdDiagramFactory());
 		factories.add(new PSystemLicenseFactory());
 		factories.add(new PSystemVersionFactory());
-		// ::comment when CORE
+		// ::comment when __CORE__
 		factories.add(new PSystemDonorsFactory());
 		factories.add(new PSystemSkinparameterListFactory());
 		factories.add(new PSystemListFontsFactory());
@@ -194,7 +195,7 @@ public class PSystemBuilder {
 		// ::done
 		factories.add(new PSystemSaltFactory(DiagramType.UML));
 		factories.add(new PSystemSaltFactory(DiagramType.SALT));
-		// ::comment when CORE
+		// ::comment when __CORE__
 		factories.add(new PSystemDotFactory(DiagramType.DOT));
 		factories.add(new PSystemDotFactory(DiagramType.UML));
 		// ::done
@@ -202,10 +203,10 @@ public class PSystemBuilder {
 		factories.add(new NwDiagramFactory(DiagramType.NW));
 		factories.add(new MindMapDiagramFactory());
 		factories.add(new WBSDiagramFactory());
-		// ::uncomment when CORE
+		// ::uncomment when __CORE__
 		// factories.add(new PSystemSudokuFactory());
 		// ::done
-		// ::comment when CORE
+		// ::comment when __CORE__
 		factories.add(new PSystemDitaaFactory());
 		if (License.getCurrent() == License.GPL || License.getCurrent() == License.GPLV2) {
 			factories.add(new PSystemJcckitFactory());
@@ -228,7 +229,7 @@ public class PSystemBuilder {
 		factories.add(new PSystemOregonFactory());
 		// ::done
 		factories.add(new PSystemCharlieFactory());
-		// ::comment when CORE
+		// ::comment when __CORE__
 		if (License.getCurrent() == License.GPL || License.getCurrent() == License.GPLV2) {
 			factories.add(new PSystemXearthFactory());
 		}
@@ -237,17 +238,17 @@ public class PSystemBuilder {
 		factories.add(new FlowDiagramFactory());
 		// factories.add(new PSystemTreeFactory(DiagramType.JUNGLE));
 		// factories.add(new PSystemCuteFactory(DiagramType.CUTE));
-		// ::comment when CORE
+		// ::comment when __CORE__
 		factories.add(new PSystemDedicationFactory());
 		// ::done
 		factories.add(new TimingDiagramFactory());
-		// ::comment when CORE
+		// ::comment when __CORE__
 		factories.add(new HelpFactory());
 		factories.add(new WireDiagramFactory());
 		// ::done
 		factories.add(new JsonDiagramFactory());
 		factories.add(new GitDiagramFactory());
-		// ::comment when CORE
+		// ::comment when __CORE__
 		factories.add(new BoardDiagramFactory());
 		// ::done
 		factories.add(new YamlDiagramFactory());

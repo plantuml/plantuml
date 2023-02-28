@@ -78,13 +78,13 @@ public class StyleLoader {
 	}
 
 	public static InputStream getInputStreamForStyle(String filename) throws IOException {
-		// ::uncomment when CORE
+		// ::uncomment when __CORE__
 //		final String res = "/skin/" + filename;
 //		final InputStream is = StyleLoader.class.getResourceAsStream(res);
 //		return is;
 		// ::done
 
-		// ::comment when CORE
+		// ::comment when __CORE__
 		InputStream internalIs = null;
 		SFile localFile = new SFile(filename);
 		Log.info("Trying to load style " + filename);

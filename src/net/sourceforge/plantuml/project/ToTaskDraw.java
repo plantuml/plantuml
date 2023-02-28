@@ -40,6 +40,7 @@ import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.draw.TaskDraw;
 
 public interface ToTaskDraw {
+    // ::remove folder when __HAXE__
 
 	public TaskDraw getTaskDraw(Task task);
 

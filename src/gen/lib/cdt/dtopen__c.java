@@ -60,6 +60,7 @@ import smetana.core.ZType;
 import smetana.core.size_t;
 
 public class dtopen__c {
+    // ::remove folder when __HAXE__
 //1 9k44uhd5foylaeoekf3llonjq
 // extern Dtmethod_t* 	Dtset
 

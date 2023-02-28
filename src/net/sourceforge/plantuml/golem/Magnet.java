@@ -36,4 +36,5 @@
 package net.sourceforge.plantuml.golem;
 
 public class Magnet {
+    // ::remove folder when __HAXE__
 }

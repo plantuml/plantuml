@@ -54,6 +54,7 @@ import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SFile;
 
 public class SignatureUtils {
+	// ::remove file when __HAXE__
 
 	// private static byte[] salting(String pass, byte[] salt) throws
 	// NoSuchAlgorithmException, InvalidKeySpecException,
@@ -73,7 +74,7 @@ public class SignatureUtils {
 		return tmp;
 	}
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	public static String getSignature(String s) {
 		try {
 			final byte[] digest = getMD5raw(s);
@@ -147,7 +148,7 @@ public class SignatureUtils {
 		return msgDigest.digest();
 	}
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	public static String getSignatureSha512(SFile f) throws IOException {
 		try (InputStream is = f.openFile()) {
 			return getSignatureSha512(is);
@@ -186,7 +187,7 @@ public class SignatureUtils {
 		return s;
 	}
 
-	// ::comment when CORE
+	// ::comment when __CORE__
 	public static synchronized String getSignature(SFile f) throws IOException {
 		try (final InputStream is = f.openFile()) {
 			final MessageDigest msgDigest = MessageDigest.getInstance("MD5");

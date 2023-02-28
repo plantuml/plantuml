@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.klimt.UBackground;
 import net.sourceforge.plantuml.klimt.UChange;
 
 public abstract class HColor implements UChange {
+	// ::remove folder when __HAXE__
 
 	public UBackground bg() {
 		return new UBackground() {

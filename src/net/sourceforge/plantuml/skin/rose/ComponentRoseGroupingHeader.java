@@ -144,7 +144,7 @@ public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 				.rounded(roundCorner);
 		ug.draw(rect);
 
-		ug = ug.apply(new UStroke());
+		ug = ug.apply(UStroke.simple());
 
 		getTextBlock().drawU(ug.apply(new UTranslate(getMarginX1(), getMarginY())));
 

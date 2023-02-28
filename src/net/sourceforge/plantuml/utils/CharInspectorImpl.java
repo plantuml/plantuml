@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.utils;
 
 public class CharInspectorImpl implements CharInspector {
+	// ::remove file when __HAXE__
 
 	final private BlocLines data;
 	final private boolean insertNewlines;

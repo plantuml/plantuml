@@ -36,7 +36,7 @@
 package net.sourceforge.plantuml.code;
 
 public class Spiral {
-	// ::remove file when CORE
+	// ::remove file when __CORE__
 
 	private PairInt current = new PairInt(0, 0);
 	private PairInt direction = new PairInt(1, 0);

@@ -71,7 +71,7 @@ public class Gtiles {
 				.sheet(fcTest, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT), CreoleMode.FULL)
 				.createSheet(label);
 		final SheetBlock1 sheetBlock1 = new SheetBlock1(sheet, LineBreakStrategy.NONE, skinParam.getPadding());
-		final TextBlock tbTest = new SheetBlock2(sheetBlock1, Hexagon.asStencil(sheetBlock1), new UStroke());
+		final TextBlock tbTest = new SheetBlock2(sheetBlock1, Hexagon.asStencil(sheetBlock1), UStroke.simple());
 
 		return new GtileHexagonInside(stringBounder, tbTest, skinParam, backColor, borderColor, swimlane);
 	}

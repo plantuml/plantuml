@@ -240,7 +240,7 @@ public class Style {
 		final double thickness = value(thicknessParam).asDouble();
 		final String dash = value(styleParam).asString();
 		if (dash.length() == 0)
-			return new UStroke(thickness);
+			return UStroke.withThickness(thickness);
 
 		try {
 			final StringTokenizer st = new StringTokenizer(dash, "-;,");
@@ -251,7 +251,7 @@ public class Style {
 
 			return new UStroke(dashVisible, dashSpace, thickness);
 		} catch (Exception e) {
-			return new UStroke(thickness);
+			return UStroke.withThickness(thickness);
 		}
 	}
 
