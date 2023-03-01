@@ -86,7 +86,6 @@ public class NwDiagram extends UmlDiagram {
 	private final List<Network> networks = new ArrayList<>();
 	private final List<NwGroup> groups = new ArrayList<>();
 	private final List<NStackable> stack = new ArrayList<NStackable>();
-	// private NwGroup currentGroup = null;
 
 	private final NPlayField playField = new NPlayField();
 
@@ -114,6 +113,15 @@ public class NwDiagram extends UmlDiagram {
 		if (stack.size() > 0 && stack.get(0) instanceof NwGroup)
 			return (NwGroup) stack.get(0);
 		return null;
+	}
+
+	@Override
+	public void makeDiagramReady() {
+		super.makeDiagramReady();
+		for (NServer server : servers.values()) {
+			server.connectMeIfAlone(networks.get(0));
+			playField.addInPlayfield(server.getBar());
+		}
 	}
 
 	public CommandExecutionResult openGroup(String name) {
@@ -169,19 +177,24 @@ public class NwDiagram extends UmlDiagram {
 		if (server1 == null) {
 			if (networks.size() == 0)
 				return veryFirstLink(name1, name2);
-			return CommandExecutionResult.error("what " + name1);
+			return CommandExecutionResult.error("what about " + name1);
 		}
 		NServer server2 = servers.get(name2);
+		final Network network = createNetwork("");
+		network.goInvisible();
 		if (server2 == null) {
 			// server2 = NServer.create(name2, getSkinParam());
 			server2 = new NServer(name2, server1.getBar(), getSkinParam());
 			servers.put(name2, server2);
-			Network network = createNetwork("");
-			network.goInvisible();
-			server2.connectTo(network, "");
 			server1.connectTo(network, "");
-			playField.addInPlayfield(server2.getBar());
+			server2.connectTo(network, "");
+		} else {
+			server1.blankSomeAddress();
+			server1.connectTo(network, server1.someAddress());
+			server2.connectTo(network, server2.someAddress());
+
 		}
+		playField.addInPlayfield(server2.getBar());
 
 		return CommandExecutionResult.ok();
 	}
@@ -195,7 +208,7 @@ public class NwDiagram extends UmlDiagram {
 		return CommandExecutionResult.ok();
 	}
 
-	public CommandExecutionResult linkOld(String name1, String name2) {
+	private CommandExecutionResult linkOld(String name1, String name2) {
 		if (initDone == false)
 			return errorNoInit();
 
@@ -238,39 +251,47 @@ public class NwDiagram extends UmlDiagram {
 		if (initDone == false)
 			return errorNoInit();
 
-		if (currentGroup() != null) {
-			if (alreadyInSomeGroup(name))
-				return CommandExecutionResult.error("Element already in another group.");
-
-			currentGroup().addName(name);
-			if (currentNetwork() == null)
-				return CommandExecutionResult.ok();
-		}
-
+		final Map<String, String> props = toSet(definition);
 		NServer server = servers.get(name);
 		if (server == null) {
 			server = NServer.create(name, getSkinParam());
 			servers.put(name, server);
 		}
 
-		final Map<String, String> props = toSet(definition);
+		if (currentGroup() != null) {
+			if (alreadyInSomeGroup(name))
+				return CommandExecutionResult.error("Element already in another group.");
+
+			currentGroup().addName(name);
+			if (currentNetwork() == null) {
+				server.updateProperties(props);
+				return CommandExecutionResult.ok();
+			}
+		}
+
 		if (networks.size() == 0) {
-			Network network = createNetwork("");
+			final Network network = createNetwork("");
 			network.goInvisible();
 			server.connectTo(network, props.get("address"));
+			playField.addInPlayfield(server.getBar());
 			server.doNotPrintFirstLink();
 		} else {
-			if (networks.size() == 1)
-				server.connectTo(networks.get(0), props.get("address"));
-			else if (currentNetwork() != null)
+			/*
+			 * if (networks.size() == 1) server.connectTo(networks.get(0),
+			 * props.get("address")); else
+			 */
+			if (currentNetwork() != null) {
 				server.connectTo(currentNetwork(), props.get("address"));
+				playField.addInPlayfield(server.getBar());
+			} else {
+				server.learnThisAddress(props.get("address"));
+			}
 		}
 		server.updateProperties(props);
-		playField.addInPlayfield(server.getBar());
 		return CommandExecutionResult.ok();
 	}
 
-	public CommandExecutionResult addElementOld(String name, String definition) {
+	private CommandExecutionResult addElementOld(String name, String definition) {
 		if (initDone == false)
 			return errorNoInit();
 

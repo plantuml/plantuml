@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.nwdiag.core;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import net.sourceforge.plantuml.decoration.symbol.USymbol;
 import net.sourceforge.plantuml.decoration.symbol.USymbols;
@@ -69,6 +70,7 @@ public class NServer {
 	private String backcolor;
 	private final NBar bar;
 	private final ISkinParam skinParam;
+	private String declaredAddress;
 
 	private boolean printFirstLink = true;
 
@@ -76,9 +78,19 @@ public class NServer {
 		this.printFirstLink = false;
 	}
 
+	public void connectMeIfAlone(Network network) {
+		if (connections.size() == 0) {
+			connectTo(network, "");
+			if (network.isVisible() == false)
+				this.doNotPrintFirstLink();
+		}
+	}
+
 	public String someAddress() {
-		if (connections.size() > 0)
+		if (connections.size() > 0 && connections.values().iterator().next().length() > 0)
 			return connections.values().iterator().next();
+		if (declaredAddress != null)
+			return declaredAddress;
 		return "";
 	}
 
@@ -93,6 +105,16 @@ public class NServer {
 			final Network it = connections.keySet().iterator().next();
 			connections.put(it, "");
 		}
+	}
+
+	public void learnThisAddress(String address) {
+		for (Entry<Network, String> ent : connections.entrySet()) {
+			if (ent.getValue().length() == 0) {
+				connections.put(ent.getKey(), address);
+				return;
+			}
+		}
+
 	}
 
 	public final boolean printFirstLink() {
@@ -164,7 +186,12 @@ public class NServer {
 	public void updateProperties(Map<String, String> props) {
 		if (props.get("description") != null)
 			this.description = props.get("description");
-		this.backcolor = props.get("color");
+
+		if (props.get("color") != null)
+			this.backcolor = props.get("color");
+
+		if (props.get("address") != null)
+			this.declaredAddress = props.get("address");
 
 		final String shape = props.get("shape");
 		if (shape != null) {
