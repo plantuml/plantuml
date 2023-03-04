@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.skin.SkinParam;
 import net.sourceforge.plantuml.utils.Log;
 
 public class StyleBuilder implements AutomaticCounter {
-    // ::remove folder when __HAXE__
+    // ::remove file when __HAXE__
 
 	private final Map<StyleSignatureBasic, Style> stylesMap = new LinkedHashMap<StyleSignatureBasic, Style>();
 	private final Set<StyleSignatureBasic> printedForLog;

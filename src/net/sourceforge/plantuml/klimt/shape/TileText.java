@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.utils.Log;
 
 public class TileText extends AbstractTextBlock implements TextBlock {
+    // ::remove file when __HAXE__
 
 	private final String text;
 	private final FontConfiguration fontConfiguration;

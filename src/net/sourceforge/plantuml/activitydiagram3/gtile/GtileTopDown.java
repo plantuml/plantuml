@@ -79,7 +79,7 @@ public class GtileTopDown extends AbstractGtile {
 	}
 
 	protected UTranslate supplementaryMove() {
-		return new UTranslate();
+		return UTranslate.none();
 	}
 
 	@Override
@@ -116,8 +116,8 @@ public class GtileTopDown extends AbstractGtile {
 
 	@Override
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-		final XDimension2D corner1 = getPos1().getTranslated(dim1);
-		final XDimension2D corner2 = getPos2().getTranslated(dim2);
+		final XDimension2D corner1 = dim1.applyTranslate(getPos1());
+		final XDimension2D corner2 = dim2.applyTranslate(getPos2());
 		return MathUtils.max(corner1, corner2);
 	}
 

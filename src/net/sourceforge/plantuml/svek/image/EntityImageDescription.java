@@ -341,11 +341,11 @@ public class EntityImageDescription extends AbstractEntityImage {
 //							&& pt.getY() <= 0)) {
 //						final XDimension2D dimName = getNameDimension(stringBounder);
 //						if (pt.getX() < 0 + dimName.getWidth())
-//							return new UTranslate();
+//							return UTranslate.none();
 //
 //						return new UTranslate(0, dimName.getHeight() + 4);
 //					}
-//					return new UTranslate();
+//					return UTranslate.none();
 //				}
 //			};
 		return new MagneticBorderNone();

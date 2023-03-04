@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandStyleImport extends SingleLineCommand2<TitledDiagram> {
+    // ::remove file when __HAXE__
 
 	public static final CommandStyleImport ME = new CommandStyleImport();
 

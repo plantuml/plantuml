@@ -64,7 +64,7 @@ public abstract class AbstractCommonUGraphic implements UGraphic {
 	private boolean enlargeClip = false;
 
 	private final StringBounder stringBounder;
-	private UTranslate translate = new UTranslate();
+	private UTranslate translate = UTranslate.none();
 
 	private final ColorMapper colorMapper;
 	private UClip clip;

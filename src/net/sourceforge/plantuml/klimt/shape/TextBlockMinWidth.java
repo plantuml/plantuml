@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
 class TextBlockMinWidth extends AbstractTextBlock implements TextBlock {
+    // ::remove file when __HAXE__
 
 	private final TextBlock textBlock;
 	private final double minWidth;

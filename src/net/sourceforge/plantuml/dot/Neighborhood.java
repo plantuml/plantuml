@@ -112,7 +112,7 @@ public class Neighborhood {
 		poly.addPoint(7, 20);
 		poly.addPoint(-7, 20);
 		poly.rotate(theta);
-		final UTranslate translate = new UTranslate(contact);
+		final UTranslate translate = UTranslate.point(contact);
 		ug.apply(translate).draw(poly);
 		final XPoint2D p1 = translate.getTranslated(poly.getPoints().get(1));
 		final XPoint2D p2 = translate.getTranslated(poly.getPoints().get(2));

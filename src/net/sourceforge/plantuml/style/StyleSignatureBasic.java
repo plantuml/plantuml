@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.stereo.StereotypeDecoration;
 import net.sourceforge.plantuml.url.Url;
 
 public class StyleSignatureBasic implements StyleSignature {
+    // ::remove file when __HAXE__
 
 	private final Set<String> names = new LinkedHashSet<>();
 	private final boolean withDot;

@@ -75,7 +75,7 @@ public abstract class Extremity implements UDrawable {
 	}
 
 	public UTranslate getDeltaForKal() {
-		return new UTranslate();
+		return UTranslate.none();
 	}
 
 }

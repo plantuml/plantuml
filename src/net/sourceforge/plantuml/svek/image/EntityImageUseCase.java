@@ -170,7 +170,7 @@ public class EntityImageUseCase extends AbstractEntityImage {
 	}
 
 	private void drawLine(UGraphic ug, final XPoint2D p1, final XPoint2D p2) {
-		ug = ug.apply(new UTranslate(p1));
+		ug = ug.apply(UTranslate.point(p1));
 		ug.draw(new ULine(p2.getX() - p1.getX(), p2.getY() - p1.getY()));
 	}
 

@@ -35,18 +35,17 @@
  */
 package net.sourceforge.plantuml.klimt.geom;
 
+// ::comment when __HAXE__
 import java.awt.Dimension;
+// ::done
 
+import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.utils.MathUtils;
 
 public class XDimension2D {
 
 	final private double width;
 	final private double height;
-
-	public XDimension2D() {
-		this(0, 0);
-	}
 
 	public XDimension2D(double width, double height) {
 		if (Double.isNaN(width) || Double.isNaN(height))
@@ -75,6 +74,10 @@ public class XDimension2D {
 
 	public XDimension2D withWidth(double newWidth) {
 		return new XDimension2D(newWidth, height);
+	}
+
+	public XDimension2D applyTranslate(UTranslate translate) {
+		return new XDimension2D(width + translate.getDx(), height + translate.getDy());
 	}
 
 	public XDimension2D delta(double deltaWidth, double deltaHeight) {
@@ -119,11 +122,11 @@ public class XDimension2D {
 		return new XDimension2D(w, h);
 	}
 
+	// ::comment when __HAXE__
 	public static XDimension2D fromDimension(Dimension dimension) {
 		return new XDimension2D(dimension.getWidth(), dimension.getHeight());
 	}
 
-	// ::comment when __HAXE__
 	public static XDimension2D mergeLayoutT12B3(XDimension2D top1, XDimension2D top2, XDimension2D bottom) {
 		final double width = MathUtils.max(top1.getWidth(), top2.getWidth(), bottom.getWidth());
 		final double height = top1.getHeight() + top2.getHeight() + bottom.getHeight();

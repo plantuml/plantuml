@@ -317,7 +317,7 @@ public class Histogram implements PDrawing {
 		final double minY = Math.min(pt1.getY(), pt2.getY());
 		final double maxY = Math.max(pt1.getY(), pt2.getY());
 		final XPoint2D pt = new XPoint2D(pt1.getX(), minY);
-		ug = ug.apply(new UTranslate(pt));
+		ug = ug.apply(UTranslate.point(pt));
 		ug.draw(new URectangle(len, maxY - minY));
 		for (double x = 0; x < len; x += 5)
 			ug.apply(UTranslate.dx(x)).draw(ULine.vline(maxY - minY));
@@ -325,14 +325,14 @@ public class Histogram implements PDrawing {
 	}
 
 	private void drawHLine(UGraphic ug, final XPoint2D pt, final double len) {
-		ug.apply(new UTranslate(pt)).draw(ULine.hline(len));
+		ug.apply(UTranslate.point(pt)).draw(ULine.hline(len));
 	}
 
 	private void drawVlines(UGraphic ug) {
 		if (initialState != null) {
 			final XPoint2D before = getInitialPoint();
 			final XPoint2D current = getPoints(0)[0];
-			ug.apply(new UTranslate(current)).draw(ULine.vline(before.getY() - current.getY()));
+			ug.apply(UTranslate.point(current)).draw(ULine.vline(before.getY() - current.getY()));
 		}
 		for (int i = 1; i < changes.size(); i++) {
 			if (changes.get(i - 1).isCompletelyHidden() || changes.get(i).isCompletelyHidden())
@@ -353,7 +353,7 @@ public class Histogram implements PDrawing {
 
 			final TextBlock label = getTextBlock(comment);
 			final XDimension2D dim = label.calculateDimension(ug.getStringBounder());
-			label.drawU(ug.apply(new UTranslate(ptLabel).compose(new UTranslate(2, -dim.getHeight()))));
+			label.drawU(ug.apply(UTranslate.point(ptLabel).compose(new UTranslate(2, -dim.getHeight()))));
 		}
 	}
 

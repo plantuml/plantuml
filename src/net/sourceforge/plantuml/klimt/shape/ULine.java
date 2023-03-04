@@ -35,7 +35,9 @@
  */
 package net.sourceforge.plantuml.klimt.shape;
 
+//::comment when __HAXE__
 import java.awt.geom.AffineTransform;
+//::done
 
 import net.sourceforge.plantuml.klimt.AbstractShadowable;
 import net.sourceforge.plantuml.klimt.UShapeSized;
@@ -55,6 +57,7 @@ public class ULine extends AbstractShadowable implements UShapeSized {
 		this.dy = dy;
 	}
 
+	// ::comment when __HAXE__
 	public ULine rotate(double theta) {
 		if (theta == 0)
 			return this;
@@ -62,6 +65,7 @@ public class ULine extends AbstractShadowable implements UShapeSized {
 		final XPoint2D tmp = new XPoint2D(dx, dy).transform(rot);
 		return new ULine(tmp.getX(), tmp.getY());
 	}
+	// ::done
 
 	public static ULine hline(double dx) {
 		return new ULine(dx, 0);

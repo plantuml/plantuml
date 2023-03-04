@@ -122,10 +122,12 @@ public class ClockwiseTopRightBottomLeft {
 		return left;
 	}
 
+	// ::comment when __HAXE__
 	public static ClockwiseTopRightBottomLeft marginForDocument(StyleBuilder styleBuilder) {
 		final Style style = StyleSignatureBasic.of(SName.root, SName.document).getMergedStyle(styleBuilder);
 		return style.getMargin();
 	}
+	// ::done
 
 	public UTranslate getTranslate() {
 		return new UTranslate(left, top);

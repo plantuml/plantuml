@@ -43,8 +43,6 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 
 public enum HorizontalAlignment {
-	// :: remove file when __HAXE__
-
 	LEFT, CENTER, RIGHT;
 
 	public static HorizontalAlignment fromString(String s) {
@@ -73,6 +71,7 @@ public enum HorizontalAlignment {
 		return result;
 	}
 
+	// ::comment when __HAXE__
 	public String getGraphVizValue() {
 		return toString().substring(0, 1).toLowerCase();
 	}
@@ -89,5 +88,6 @@ public enum HorizontalAlignment {
 		}
 
 	}
+	// ::done
 
 }

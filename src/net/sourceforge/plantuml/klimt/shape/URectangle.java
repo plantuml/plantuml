@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
 public class URectangle extends AbstractShadowable implements UShapeSized, UShapeIgnorableForCompression {
+    // ::remove file when __HAXE__
 
 	private final double width;
 	private final double height;

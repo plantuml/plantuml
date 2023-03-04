@@ -66,7 +66,7 @@ public class CollisionDetector extends UGraphicNo {
 	private final Context context;
 
 	private static CollisionDetector create(StringBounder stringBounder) {
-		return new CollisionDetector(stringBounder, new UTranslate(), new Context());
+		return new CollisionDetector(stringBounder, UTranslate.none(), new Context());
 	}
 
 	private CollisionDetector(StringBounder stringBounder, UTranslate translate, Context context) {

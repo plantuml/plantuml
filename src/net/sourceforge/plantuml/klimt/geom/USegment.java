@@ -35,10 +35,13 @@
  */
 package net.sourceforge.plantuml.klimt.geom;
 
+// ::comment when __HAXE__
 import java.awt.geom.AffineTransform;
+// ::done
 import java.util.Arrays;
 
 public class USegment {
+	// ::remove file when __HAXE__
 
 	private final double coord[];
 	private final USegmentType pathType;
@@ -75,6 +78,7 @@ public class USegment {
 		return new USegment(new double[] { p1.getX(), p1.getY() }, pathType);
 	}
 
+	// ::comment when __HAXE__
 	public USegment rotate(double theta) {
 		if (coord.length != 2)
 			throw new UnsupportedOperationException();
@@ -105,5 +109,6 @@ public class USegment {
 
 		return new USegment(new double[] { p1.getX(), p1.getY() }, pathType);
 	}
+	// ::done
 
 }

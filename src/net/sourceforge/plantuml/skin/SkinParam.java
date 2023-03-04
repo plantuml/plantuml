@@ -488,7 +488,7 @@ public class SkinParam implements ISkinParam {
 		final String fontFamily = getFontFamily(stereotype, fontParam);
 		final int fontStyle = getFontStyle(stereotype, inPackageTitle, fontParam);
 		final int fontSize = getFontSize(stereotype, fontParam);
-		return new UFont(fontFamily, fontStyle, fontSize);
+		return UFont.build(fontFamily, fontStyle, fontSize);
 	}
 
 	@Override

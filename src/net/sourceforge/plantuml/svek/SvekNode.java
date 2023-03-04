@@ -478,11 +478,11 @@ public class SvekNode implements Positionable, Hideable {
 //				if ((pt.getX() >= minX && pt.getX() <= minX + getWidth() && pt.getY() <= minY)) {
 //					final XDimension2D dimName = ((EntityImageDescription) image).getNameDimension(stringBounder);
 //					if (pt.getX() < minX + dimName.getWidth())
-//						return new UTranslate();
+//						return UTranslate.none();
 //
 //					return new UTranslate(0, dimName.getHeight() + 4);
 //				}
-//				return new UTranslate();
+//				return UTranslate.none();
 //			}
 //		};
 	}

@@ -76,7 +76,7 @@ public class Genealogy {
 
 	public UTranslate getTranslate(Ftile child, StringBounder stringBounder) {
 		Ftile current = child;
-		UTranslate result = new UTranslate();
+		UTranslate result = UTranslate.none();
 		while (current != root) {
 			final Ftile father = getMyFather(current);
 			final UTranslate tr = father.getTranslateFor(current, stringBounder);

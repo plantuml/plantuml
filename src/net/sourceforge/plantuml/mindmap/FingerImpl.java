@@ -127,7 +127,7 @@ public class FingerImpl implements Finger, UDrawable {
 			else
 				p2 = new XPoint2D(direction * (dimPhalanx.getWidth() + getX12()), stp.getY());
 
-			child.drawU(ug.apply(new UTranslate(p2)));
+			child.drawU(ug.apply(UTranslate.point(p2)));
 			final HColor linkColor = getLinkColor();
 			if (linkColor.isTransparent() == false)
 				drawLine(ug.apply(linkColor).apply(getUStroke()), p1, p2);

@@ -207,7 +207,8 @@ try {
     rv.nrows = i;
     rv.ncols = j;
     // Arnaud 15/09/2022: the j+1 is needed in some case to avoid ArrayIndexOutOfBoundsException
-    rv.data = new int[i][j+1]; // Or maybe new int[j][i] ?
+    // Arnaud 02/03/2023: the j+3 is needed in some case to avoid ArrayIndexOutOfBoundsException
+    rv.data = new int[i][j+3]; // Or maybe new int[j][i] ?
     return rv;
 } finally {
 LEAVING("756bre1tpxb1tq68p7xhkrxkc","new_matrix");

@@ -51,7 +51,7 @@ public class Swimlane implements SpecificBackcolorable, Comparable<Swimlane> {
 	private final int order;
 	private Display display;
 
-	private UTranslate translate = new UTranslate();
+	private UTranslate translate = UTranslate.none();
 	private double actualWidth;
 
 	public Swimlane(String name, int order) {

@@ -39,6 +39,7 @@ import java.awt.geom.PathIterator;
 import java.util.EnumSet;
 
 public enum USegmentType {
+	// ::remove file when __HAXE__
 
 	SEG_MOVETO(PathIterator.SEG_MOVETO), //
 	SEG_LINETO(PathIterator.SEG_LINETO), //

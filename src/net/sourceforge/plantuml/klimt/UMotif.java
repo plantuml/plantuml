@@ -57,7 +57,7 @@ public class UMotif {
 	}
 
 	public UMotif(String s) {
-		XPoint2D last = new XPoint2D();
+		XPoint2D last = new XPoint2D(0, 0);
 		for (int i = 0; i < s.length(); i++) {
 			final XPoint2D read = convertPoint(s.charAt(i));
 			last = last.move(read);

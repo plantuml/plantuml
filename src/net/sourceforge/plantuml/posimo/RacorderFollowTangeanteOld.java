@@ -49,7 +49,7 @@ public class RacorderFollowTangeanteOld extends RacorderAbstract implements Raco
 		final DotPath result = new DotPath();
 
 		final XPoint2D center = new XPoint2D(rect.getCenterX(), rect.getCenterY());
-		final XLine2D line = new XLine2D(tangeante.getP1(), center);
+		final XLine2D line = XLine2D.line(tangeante.getP1(), center);
 		final XPoint2D inter = BezierUtils.intersect(line, rect);
 
 		final XCubicCurve2D curv = new XCubicCurve2D(tangeante.getX1(), tangeante.getY1(), tangeante.getX2(),

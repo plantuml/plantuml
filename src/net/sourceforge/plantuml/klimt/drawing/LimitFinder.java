@@ -87,7 +87,7 @@ public final class LimitFinder extends UGraphicNo {
 	private UClip clip;
 
 	public static LimitFinder create(StringBounder stringBounder, boolean initToZero) {
-		final LimitFinder result = new LimitFinder(stringBounder, new UTranslate(), MinMaxMutable.getEmpty(initToZero));
+		final LimitFinder result = new LimitFinder(stringBounder, UTranslate.none(), MinMaxMutable.getEmpty(initToZero));
 		result.clip = null;
 		return result;
 	}

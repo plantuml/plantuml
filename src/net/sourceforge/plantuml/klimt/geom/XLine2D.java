@@ -6,16 +6,11 @@ import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 
 public class XLine2D implements UDrawable {
-	// :: remove file when __HAXE__
 
 	final public double x1;
 	final public double y1;
 	final public double x2;
 	final public double y2;
-
-	public XLine2D() {
-		this(0, 0, 0, 0);
-	}
 
 	public XLine2D(double x1, double y1, double x2, double y2) {
 		this.x1 = x1;
@@ -24,8 +19,8 @@ public class XLine2D implements UDrawable {
 		this.y2 = y2;
 	}
 
-	public XLine2D(XPoint2D p1, XPoint2D p2) {
-		this(p1.getX(), p1.getY(), p2.getX(), p2.getY());
+	public static XLine2D line(XPoint2D p1, XPoint2D p2) {
+		return new XLine2D(p1.getX(), p1.getY(), p2.getX(), p2.getY());
 	}
 
 	public XPoint2D getMiddle() {
@@ -150,11 +145,13 @@ public class XLine2D implements UDrawable {
 		return null;
 	}
 
+	// ::comment when __HAXE__
 	public void drawU(UGraphic ug) {
 		ug = ug.apply(new UTranslate(x1, y1));
 		final ULine line = new ULine(x2 - x1, y2 - y1);
 		ug.draw(line);
 	}
+	// ::done
 
 	public double getAngle() {
 		return Math.atan2(y2 - y1, x2 - x1);

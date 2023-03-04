@@ -71,7 +71,7 @@ public class UGraphicCompressOnXorY extends UGraphicDelegator {
 
 	public static UGraphicCompressOnXorY create(CompressionMode mode, UGraphic ug,
 			PiecewiseAffineTransform compressionTransform) {
-		return new UGraphicCompressOnXorY(mode, ug, compressionTransform, new UTranslate());
+		return new UGraphicCompressOnXorY(mode, ug, compressionTransform, UTranslate.none());
 	}
 
 	private UGraphicCompressOnXorY(CompressionMode mode, UGraphic ug, PiecewiseAffineTransform compressionTransform,

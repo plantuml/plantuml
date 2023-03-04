@@ -130,7 +130,7 @@ public abstract class FtileDecorate extends AbstractTextBlock implements Ftile {
 	@Override
 	public UTranslate getTranslateFor(Ftile child, StringBounder stringBounder) {
 		if (child == ftile)
-			return new UTranslate();
+			return UTranslate.none();
 
 		return ftile.getTranslateFor(child, stringBounder);
 	}

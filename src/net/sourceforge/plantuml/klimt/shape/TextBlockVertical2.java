@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.svek.Ports;
 import net.sourceforge.plantuml.svek.WithPorts;
 
 public class TextBlockVertical2 extends AbstractTextBlock implements TextBlock, WithPorts {
+    // ::remove file when __HAXE__
 
 	private final List<TextBlock> blocks = new ArrayList<>();
 	private final HorizontalAlignment horizontalAlignment;

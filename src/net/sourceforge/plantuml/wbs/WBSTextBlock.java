@@ -66,7 +66,7 @@ abstract class WBSTextBlock extends AbstractTextBlock {
 
 	final protected void drawLine(UGraphic ug, XPoint2D p1, XPoint2D p2) {
 		final ULine line = new ULine(p1, p2);
-		getStyleUsed().applyStrokeAndLineColor(ug.apply(new UTranslate(p1)), skinParam.getIHtmlColorSet()).draw(line);
+		getStyleUsed().applyStrokeAndLineColor(ug.apply(UTranslate.point(p1)), skinParam.getIHtmlColorSet()).draw(line);
 	}
 
 	private Style getStyleUsed() {

@@ -287,9 +287,9 @@ public class Cluster implements Moveable {
 
 		if (diagram.getPragma().useKermor()) {
 			if (xyNoteTop != null)
-				getCucaNote(Position.TOP).drawU(ug.apply(new UTranslate(xyNoteTop)));
+				getCucaNote(Position.TOP).drawU(ug.apply(UTranslate.point(xyNoteTop)));
 			if (xyNoteBottom != null)
-				getCucaNote(Position.BOTTOM).drawU(ug.apply(new UTranslate(xyNoteBottom)));
+				getCucaNote(Position.BOTTOM).drawU(ug.apply(UTranslate.point(xyNoteBottom)));
 		}
 
 		final String fullName = group.getName();
@@ -380,7 +380,10 @@ public class Cluster implements Moveable {
 				points.add(sh.getRectangleArea().getPointCenter());
 
 		for (Cluster in : children)
-			insides.add(in.getRectangleArea());
+			if (in.getRectangleArea() == null)
+				System.err.println("Frontier null for " + in);
+			else
+				insides.add(in.getRectangleArea());
 
 		final FrontierCalculator frontierCalculator = new FrontierCalculator(getRectangleArea(), insides, points,
 				skinParam.getRankdir());
@@ -441,7 +444,7 @@ public class Cluster implements Moveable {
 				stroke, rounded, shadowing);
 		r.drawU(ug.apply(rectangleArea.getPosition()));
 
-		clusterHeader.getTitle().drawU(ug.apply(new UTranslate(xyTitle)));
+		clusterHeader.getTitle().drawU(ug.apply(UTranslate.point(xyTitle)));
 
 		if (attributeHeight > 0)
 			attribute.drawU(ug.apply(new UTranslate(rectangleArea.getMinX() + IEntityImage.MARGIN,

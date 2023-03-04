@@ -49,10 +49,10 @@ public class LineRectIntersection {
 		final XPoint2D p3 = new XPoint2D(rect.getMaxX(), rect.getMaxY());
 		final XPoint2D p4 = new XPoint2D(rect.getMinX(), rect.getMaxY());
 
-		final XPoint2D inter1 = new LineSegmentIntersection(new XLine2D(p1, p2), line).getIntersection();
-		final XPoint2D inter2 = new LineSegmentIntersection(new XLine2D(p2, p3), line).getIntersection();
-		final XPoint2D inter3 = new LineSegmentIntersection(new XLine2D(p3, p4), line).getIntersection();
-		final XPoint2D inter4 = new LineSegmentIntersection(new XLine2D(p4, p1), line).getIntersection();
+		final XPoint2D inter1 = new LineSegmentIntersection(XLine2D.line(p1, p2), line).getIntersection();
+		final XPoint2D inter2 = new LineSegmentIntersection(XLine2D.line(p2, p3), line).getIntersection();
+		final XPoint2D inter3 = new LineSegmentIntersection(XLine2D.line(p3, p4), line).getIntersection();
+		final XPoint2D inter4 = new LineSegmentIntersection(XLine2D.line(p4, p1), line).getIntersection();
 
 		final XPoint2D o = line.getP1();
 		inter = getCloser(o, inter1, inter2, inter3, inter4);

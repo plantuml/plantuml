@@ -39,6 +39,8 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 
 public interface UDrawable {
 
+	// ::comment when __HAXE__
 	public void drawU(UGraphic ug);
+	// ::done
 
 }

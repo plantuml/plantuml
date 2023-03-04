@@ -87,6 +87,7 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil, W
 	final private TextBlock fields;
 	final private Url url;
 	final private double roundCorner;
+	private final boolean showFields;
 
 	final private LineConfigurable lineConfig;
 
@@ -100,6 +101,7 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil, W
 
 		final TextBlock tmp = getUnderlinedName(entity).create(fcHeader, HorizontalAlignment.CENTER, skinParam);
 		this.name = TextBlockUtils.withMargin(tmp, 2, 2);
+
 		if (stereotype == null || stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) == null
 				|| portionShower.showPortion(EntityPortion.STEREOTYPE, entity) == false)
 			this.stereo = null;
@@ -108,9 +110,9 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil, W
 					FontConfiguration.create(getSkinParam(), FontParam.OBJECT_STEREOTYPE, stereotype),
 					HorizontalAlignment.CENTER, skinParam);
 
-		final boolean showFields = portionShower.showPortion(EntityPortion.FIELD, entity);
+		showFields = portionShower.showPortion(EntityPortion.FIELD, entity);
 
-		if (entity.getBodier().getFieldsToDisplay().size() == 0)
+		if (entity.getBodier().getFieldsToDisplay().size() == 0 && showFields)
 			this.fields = new TextBlockLineBefore(getStyle().value(PName.LineThickness).asDouble(),
 					new TextBlockEmpty(10, 16));
 		else
@@ -218,7 +220,7 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil, W
 
 	private double getMethodOrFieldHeight(final XDimension2D dim) {
 		final double fieldsHeight = dim.getHeight();
-		if (fieldsHeight == 0)
+		if (fieldsHeight == 0 && showFields)
 			return marginEmptyFieldsOrMethod;
 
 		return fieldsHeight;

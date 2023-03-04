@@ -525,7 +525,7 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 				return new UDrawable() {
 					public void drawU(UGraphic ug) {
 						ULine line = new ULine(contact.getX() - center.getX(), contact.getY() - center.getY());
-						ug = ug.apply(new UTranslate(center));
+						ug = ug.apply(UTranslate.point(center));
 						ug.draw(line);
 					}
 				};
@@ -725,14 +725,14 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 
 		DotPath todraw = dotPath.copy();
 
-		UTranslate magneticForce1 = new UTranslate();
+		UTranslate magneticForce1 = UTranslate.none();
 		if (getSvekNode1() != null) {
 			final MagneticBorder magneticBorder1 = getSvekNode1().getMagneticBorder();
 			magneticForce1 = magneticBorder1.getForceAt(ug.getStringBounder(), todraw.getStartPoint());
 			todraw.moveStartPoint(magneticForce1);
 		}
 
-		UTranslate magneticForce2 = new UTranslate();
+		UTranslate magneticForce2 = UTranslate.none();
 		if (getSvekNode2() != null) {
 			final MagneticBorder magneticBorder2 = getSvekNode2().getMagneticBorder();
 			magneticForce2 = magneticBorder2.getForceAt(ug.getStringBounder(), todraw.getEndPoint());
@@ -825,11 +825,11 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 
 	public void computeKal() {
 		if (kal1 != null) {
-			final UTranslate tr = new UTranslate(dotPath.getStartPoint()).compose(new UTranslate(dx, dy));
+			final UTranslate tr = UTranslate.point(dotPath.getStartPoint()).compose(new UTranslate(dx, dy));
 			kal1.setTranslate(tr, extremity1);
 		}
 		if (kal2 != null) {
-			final UTranslate tr = new UTranslate(dotPath.getEndPoint()).compose(new UTranslate(dx, dy));
+			final UTranslate tr = UTranslate.point(dotPath.getEndPoint()).compose(new UTranslate(dx, dy));
 			kal2.setTranslate(tr, extremity2);
 		}
 	}

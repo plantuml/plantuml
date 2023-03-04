@@ -44,7 +44,7 @@ public class Circle {
 	private double radius;
 
 	public Circle() {
-		this(new XPoint2D());
+		this(new XPoint2D(0, 0));
 	}
 
 	public Circle(XPoint2D center) {

@@ -118,7 +118,7 @@ public class TimeArrow implements UDrawable {
 
 		ug = ug.apply(type.getSpecificColor()).apply(type.getUStroke());
 		final ULine line = new ULine(end.getX() - start.getX(), end.getY() - start.getY());
-		ug.apply(new UTranslate(start)).draw(line);
+		ug.apply(UTranslate.point(start)).draw(line);
 
 		final double delta = 20.0 * Math.PI / 180.0;
 		final XPoint2D pt1 = onCircle(end, angle + delta);

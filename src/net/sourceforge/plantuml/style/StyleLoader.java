@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.utils.LineLocationImpl;
 import net.sourceforge.plantuml.utils.Log;
 
 public class StyleLoader {
+    // ::remove file when __HAXE__
 
 	private final SkinParam skinParam;
 

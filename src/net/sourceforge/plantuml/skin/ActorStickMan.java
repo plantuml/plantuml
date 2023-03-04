@@ -98,7 +98,7 @@ public class ActorStickMan extends AbstractTextBlock implements TextBlock {
 		final double alpha = 21 * Math.PI / 64;
 		final XPoint2D p1 = getOnCircle(Math.PI / 4 + alpha);
 		final XPoint2D p2 = getOnCircle(Math.PI / 4 - alpha);
-		ug = ug.apply(new UTranslate(p1));
+		ug = ug.apply(UTranslate.point(p1));
 		ug.draw(new ULine(p2.getX() - p1.getX(), p2.getY() - p1.getY()));
 	}
 

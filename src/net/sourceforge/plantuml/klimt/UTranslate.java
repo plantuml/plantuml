@@ -40,8 +40,6 @@ import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
 
 public class UTranslate implements UChange {
-	// ::remove file when __HAXE__
-
 	private final double dx;
 	private final double dy;
 
@@ -67,12 +65,8 @@ public class UTranslate implements UChange {
 		return new UTranslate(0, dy);
 	}
 
-	public UTranslate(XPoint2D p) {
-		this(p.getX(), p.getY());
-	}
-
-	public UTranslate() {
-		this(0, 0);
+	public static UTranslate point(XPoint2D p) {
+		return new UTranslate(p.getX(), p.getY());
 	}
 
 	public double getDx() {
@@ -92,10 +86,6 @@ public class UTranslate implements UChange {
 			return null;
 
 		return new XPoint2D(p.getX() + dx, p.getY() + dy);
-	}
-
-	public XDimension2D getTranslated(XDimension2D dim) {
-		return new XDimension2D(dim.getWidth() + dx, dim.getHeight() + dy);
 	}
 
 	public UTranslate scaled(double scale) {

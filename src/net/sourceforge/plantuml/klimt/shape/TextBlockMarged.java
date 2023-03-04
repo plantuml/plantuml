@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.svek.Ports;
 import net.sourceforge.plantuml.svek.WithPorts;
 
 class TextBlockMarged extends AbstractTextBlock implements TextBlock, WithPorts {
+    // ::remove file when __HAXE__
 
 	private final TextBlock textBlock;
 	private final double top;

@@ -1,7 +1,6 @@
 package net.sourceforge.plantuml.klimt.geom;
 
 public class XRectangle2D {
-	// :: remove file when __HAXE__
 
 	public final double x;
 	public final double y;
@@ -80,10 +79,10 @@ public class XRectangle2D {
 		final XPoint2D b = new XPoint2D(x + width, y);
 		final XPoint2D c = new XPoint2D(x + width, y + height);
 		final XPoint2D d = new XPoint2D(x, y + height);
-		final XLine2D line1 = new XLine2D(a, b);
-		final XLine2D line2 = new XLine2D(b, c);
-		final XLine2D line3 = new XLine2D(c, d);
-		final XLine2D line4 = new XLine2D(d, a);
+		final XLine2D line1 = XLine2D.line(a, b);
+		final XLine2D line2 = XLine2D.line(b, c);
+		final XLine2D line3 = XLine2D.line(c, d);
+		final XLine2D line4 = XLine2D.line(d, a);
 
 		XPoint2D result = line.intersect(line1);
 		if (result != null)

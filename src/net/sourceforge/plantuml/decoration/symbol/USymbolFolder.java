@@ -202,7 +202,7 @@ public class USymbolFolder extends USymbol {
 							return new UTranslate(0, htitle * how);
 						}
 
-						return new UTranslate();
+						return UTranslate.none();
 					}
 				};
 

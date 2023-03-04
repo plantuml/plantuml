@@ -42,6 +42,8 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
+// ::remove file when __HAXE__
+
 interface FontParamConstant {
 	String FAMILY = "SansSerif";
 	String COLOR = "black";

@@ -43,7 +43,7 @@ public class MagneticBorderNone implements MagneticBorder {
 
 	@Override
 	public UTranslate getForceAt(StringBounder stringBounder, XPoint2D position) {
-		return new UTranslate();
+		return UTranslate.none();
 	}
 
 }

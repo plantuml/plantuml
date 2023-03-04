@@ -231,7 +231,9 @@ public class BodierLikeClassOrObject implements Bodier {
 
 		if (type == LeafType.OBJECT) {
 			if (showFields == false)
-				return new TextBlockLineBefore(style.value(PName.LineThickness).asDouble(), TextBlockUtils.empty(0, 0));
+				// return new TextBlockLineBefore(style.value(PName.LineThickness).asDouble(),
+				// TextBlockUtils.empty(0, 0));
+				return TextBlockUtils.empty(0, 0);
 
 			return BodyFactory.create1(skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT),
 					rawBodyWithoutHidden(), skinParam, stereotype, leaf, style);

@@ -62,6 +62,7 @@ import net.sourceforge.plantuml.klimt.geom.XCubicCurve2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 
 public class DotPath implements UShape, Moveable {
+    // ::remove file when __HAXE__
 
 	public static class TriPoints {
 		public TriPoints(XPoint2D p1, XPoint2D p2, XPoint2D p) {

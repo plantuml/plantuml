@@ -40,7 +40,7 @@ import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 
 public class WCursor {
 
-	private UTranslate position = new UTranslate();
+	private UTranslate position = UTranslate.none();
 
 	public XPoint2D getPosition() {
 		return position.getPosition();

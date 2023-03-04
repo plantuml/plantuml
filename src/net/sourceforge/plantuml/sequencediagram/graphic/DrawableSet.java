@@ -282,7 +282,7 @@ public class DrawableSet {
 		if (delta > 0)
 			return UTranslate.dy(-delta);
 
-		return new UTranslate();
+		return UTranslate.none();
 	}
 
 	private void drawLineU22(UGraphic ug, boolean showTail, Page page) {

@@ -102,10 +102,10 @@ public class GtileHexagonInsideLabelled extends GtileWithMargin {
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		final XDimension2D tmp = super.calculateDimension(stringBounder);
 		final UTranslate south = getCoord(GPoint.SOUTH_HOOK);
-		final XDimension2D southCorner = south.getTranslated(southLabel.calculateDimension(stringBounder));
+		final XDimension2D southCorner = southLabel.calculateDimension(stringBounder).applyTranslate(south);
 
 		final UTranslate east = getCoord(GPoint.EAST_HOOK);
-		final XDimension2D eastCorner = east.getTranslated(eastLabel.calculateDimension(stringBounder));
+		final XDimension2D eastCorner = eastLabel.calculateDimension(stringBounder).applyTranslate(east);
 
 		return MathUtils.max(tmp, southCorner, eastCorner);
 	}

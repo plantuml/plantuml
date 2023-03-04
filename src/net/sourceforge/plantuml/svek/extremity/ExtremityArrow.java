@@ -94,7 +94,7 @@ public class ExtremityArrow extends Extremity {
 
 		ug.draw(polygon);
 		if (line != null && line.getLength() > 2)
-			ug.apply(new UTranslate(contact)).draw(line);
+			ug.apply(UTranslate.point(contact)).draw(line);
 
 	}
 
@@ -102,7 +102,7 @@ public class ExtremityArrow extends Extremity {
 		final XPoint2D pt1 = polygon.getPoint(0);
 		final XPoint2D pt2 = polygon.getPoint(2);
 		final ULine line = new ULine(pt1, pt2);
-		ug.apply(new UTranslate(pt1)).draw(line);
+		ug.apply(UTranslate.point(pt1)).draw(line);
 
 	}
 

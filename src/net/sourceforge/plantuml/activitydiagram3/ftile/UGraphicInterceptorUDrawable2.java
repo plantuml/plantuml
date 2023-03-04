@@ -99,7 +99,7 @@ public class UGraphicInterceptorUDrawable2 extends UGraphicDelegator {
 		final FtileGeometry geom = ftile.calculateDimension(getStringBounder());
 		final XPoint2D pt = geom.getPointIn();
 		UGraphic ugGoto = getUg().apply(gotoColor).apply(gotoColor.bg());
-		ugGoto = ugGoto.apply(new UTranslate(pt));
+		ugGoto = ugGoto.apply(UTranslate.point(pt));
 		final UTranslate posNow = getPosition();
 		final UTranslate dest = positions.get(ftile.getName());
 		if (dest == null)

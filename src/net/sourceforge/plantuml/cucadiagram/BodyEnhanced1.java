@@ -133,17 +133,6 @@ public class BodyEnhanced1 extends BodyEnhancedAbstract implements TextBlock, Wi
 		Display display = null;
 		for (ListIterator<CharSequence> it = rawBody2.iterator(); it.hasNext();) {
 			final CharSequence cs = it.next();
-//			if (cs instanceof EmbeddedDiagram) {
-//				if (display == null)
-//					display = Display.empty();
-//				if (display.size() > 0 || separator != 0) {
-//					blocks.add(buildTextBlock(display, separator, title, stringBounder));
-//					separator = 0;
-//					title = null;
-//					display = null;
-//				}
-//				blocks.add(TextBlockUtils.withMargin(((EmbeddedDiagram) cs).asDraw(), 2, 2));
-//			} else {
 			final String s = cs.toString();
 			if (isBlockSeparator(s)) {
 				if (display == null)

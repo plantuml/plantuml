@@ -40,6 +40,7 @@ import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 
 public class UText implements UShape {
+	// ::remove file when __HAXE__
 
 	private final String text;
 	private final FontConfiguration font;

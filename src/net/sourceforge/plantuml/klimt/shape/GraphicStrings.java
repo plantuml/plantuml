@@ -59,6 +59,7 @@ import net.sourceforge.plantuml.svek.Margins;
 import net.sourceforge.plantuml.svek.ShapeType;
 
 public class GraphicStrings extends AbstractTextBlock implements IEntityImage {
+    // ::remove file when __HAXE__
 
 	private final double margin = 5;
 

@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.text.RichText;
 import net.sourceforge.plantuml.text.StyledString;
 
 public abstract class StringBounderRaw implements StringBounder {
+	// ::remove file when __HAXE__
 
 	private final FontRenderContext frc;
 

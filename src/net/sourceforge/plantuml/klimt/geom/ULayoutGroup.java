@@ -58,7 +58,7 @@ public class ULayoutGroup {
 		for (Map.Entry<TextBlock, XPoint2D> ent : placementStrategy.getPositions(width, height).entrySet()) {
 			final TextBlock block = ent.getKey();
 			final XPoint2D pos = ent.getValue();
-			block.drawU(ug.apply(new UTranslate(pos)));
+			block.drawU(ug.apply(UTranslate.point(pos)));
 		}
 	}
 
@@ -82,7 +82,7 @@ public class ULayoutGroup {
 			final TextBlock block = ent.getKey();
 			final XRectangle2D result = block.getInnerPosition(member, stringBounder, mode);
 			if (result != null) {
-				final UTranslate translate = new UTranslate(ent.getValue());
+				final UTranslate translate = UTranslate.point(ent.getValue());
 				return translate.apply(result);
 			}
 		}

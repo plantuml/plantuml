@@ -58,6 +58,7 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 
 public class Style {
+    // ::remove file when __HAXE__
 
 	private final Map<PName, Value> map;
 	private final StyleSignatureBasic signature;
@@ -185,7 +186,7 @@ public class Style {
 		int size = value(PName.FontSize).asInt(true);
 		if (size == -1)
 			size = 14;
-		return new UFont(family, fontStyle, size);
+		return UFont.build(family, fontStyle, size);
 	}
 
 	public FontConfiguration getFontConfiguration(HColorSet set) {

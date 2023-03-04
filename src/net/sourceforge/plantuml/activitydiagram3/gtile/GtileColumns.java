@@ -103,7 +103,7 @@ public class GtileColumns extends AbstractGtile {
 		for (int i = 0; i < gtiles.size(); i++) {
 			final XDimension2D dim = gtiles.get(i).calculateDimension(stringBounder);
 			final UTranslate pos = getPosition(i);
-			final XDimension2D corner = pos.getTranslated(dim);
+			final XDimension2D corner = dim.applyTranslate(pos);
 			result = MathUtils.max(result, corner);
 		}
 		return result;

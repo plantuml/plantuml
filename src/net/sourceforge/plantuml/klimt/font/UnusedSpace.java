@@ -44,6 +44,7 @@ import java.util.List;
 import java.util.Map;
 
 public class UnusedSpace {
+	// ::remove file when __HAXE__
 
 	static class Point {
 		final private double x;

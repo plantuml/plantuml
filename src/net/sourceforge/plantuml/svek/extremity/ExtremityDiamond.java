@@ -65,7 +65,7 @@ class ExtremityDiamond extends Extremity {
 		polygon.addPoint(-xWing, yAperture);
 		polygon.addPoint(0, 0);
 		polygon.rotate(angle + Math.PI / 2);
-		this.deltaForKal = new UTranslate(polygon.getPoint(2)).reverse();
+		this.deltaForKal = UTranslate.point(polygon.getPoint(2)).reverse();
 		polygon = polygon.translate(p1.getX(), p1.getY());
 	}
 

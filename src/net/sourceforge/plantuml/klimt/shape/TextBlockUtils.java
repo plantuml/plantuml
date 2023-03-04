@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 
 public class TextBlockUtils {
+    // ::remove file when __HAXE__
 
 	public static final TextBlock EMPTY_TEXT_BLOCK = TextBlockUtils.empty(0, 0);
 

@@ -171,7 +171,7 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 
 				final SvekNode node = dotStringFactory.getBibliotekon().getNode(leaf);
 				final IEntityImage image = node.getImage();
-				image.drawU(ug.apply(new UTranslate(corner)));
+				image.drawU(ug.apply(UTranslate.point(corner)));
 			}
 
 			for (Map.Entry<Link, ST_Agedge_s> ent : edges.entrySet()) {

@@ -99,7 +99,7 @@ public class EntityImageLollipopInterfaceEye1 extends AbstractEntityImage {
 		XPoint2D pos = bibliotekon.getNode(getEntity()).getPosition();
 
 		final List<SvekLine> lines = bibliotekon.getAllLineConnectedTo(getEntity());
-		final UTranslate reverse = new UTranslate(pos).reverse();
+		final UTranslate reverse = UTranslate.point(pos).reverse();
 		final ConnectedCircle connectedCircle = new ConnectedCircle(SIZE / 2);
 		for (SvekLine line : lines) {
 			XPoint2D pt = line.getMyPoint(getEntity());

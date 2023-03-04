@@ -106,7 +106,7 @@ public class Worm implements Iterable<XPoint2D> {
 		for (int i = 0; i < points.size() - 1; i++) {
 			final XPoint2D p1 = points.get(i);
 			final XPoint2D p2 = points.get(i + 1);
-			final XLine2D line = new XLine2D(p1, p2);
+			final XLine2D line = XLine2D.line(p1, p2);
 			if (drawn == false && emphasizeDirection != null && Direction.fromVector(p1, p2) == emphasizeDirection) {
 				drawLine(ug, line, emphasizeDirection);
 				drawn = true;
@@ -131,7 +131,7 @@ public class Worm implements Iterable<XPoint2D> {
 			if (ignoreForCompression)
 				startDecoration.setCompressionMode(CompressionMode.ON_X);
 
-			ug.apply(new UTranslate(start)).apply(UStroke.simple()).draw(startDecoration);
+			ug.apply(UTranslate.point(start)).apply(UStroke.simple()).draw(startDecoration);
 		}
 		if (endDecoration != null) {
 			ug = ug.apply(UStroke.withThickness(1.5));
@@ -139,7 +139,7 @@ public class Worm implements Iterable<XPoint2D> {
 			if (ignoreForCompression)
 				endDecoration.setCompressionMode(CompressionMode.ON_X);
 
-			ug.apply(new UTranslate(end)).apply(UStroke.simple()).draw(endDecoration);
+			ug.apply(UTranslate.point(end)).apply(UStroke.simple()).draw(endDecoration);
 		}
 	}
 

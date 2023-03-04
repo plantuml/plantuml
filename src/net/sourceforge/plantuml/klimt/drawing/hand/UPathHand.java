@@ -51,7 +51,7 @@ public class UPathHand {
 
 		final UPath result = new UPath();
 
-		XPoint2D last = new XPoint2D();
+		XPoint2D last = new XPoint2D(0, 0);
 
 		for (USegment segment : source) {
 			final USegmentType type = segment.getSegmentType();

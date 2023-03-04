@@ -86,7 +86,7 @@ class WBSLink implements UDrawable {
 			final XPoint2D c1 = rect1.intersect(line);
 			final XPoint2D c2 = rect2.intersect(line);
 
-			line = new XLine2D(c1, c2);
+			line = XLine2D.line(c1, c2);
 			ug = ug.apply(color);
 			line.drawU(ug);
 

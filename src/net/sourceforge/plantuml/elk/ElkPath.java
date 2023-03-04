@@ -173,13 +173,13 @@ public class ElkPath implements UDrawable {
 	private UDrawable getDecors(LinkDecor decors, double angle, HColor backColor) {
 		// For legacy reason, extends are treated differently
 		if (decors == LinkDecor.EXTENDS)
-			return new ExtremityFactoryExtends(backColor).createUDrawable(new XPoint2D(), angle, null);
+			return new ExtremityFactoryExtends(backColor).createUDrawable(new XPoint2D(0, 0), angle, null);
 
 		final ExtremityFactory extremityFactory = decors.getExtremityFactory(backColor);
 		if (extremityFactory == null)
 			return null;
 
-		return extremityFactory.createUDrawable(new XPoint2D(), angle, null);
+		return extremityFactory.createUDrawable(new XPoint2D(0, 0), angle, null);
 	}
 
 	private void drawLabels(UGraphic ug) {

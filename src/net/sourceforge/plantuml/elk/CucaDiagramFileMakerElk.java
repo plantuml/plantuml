@@ -277,7 +277,7 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 					zstereo, rectangleArea, stroke);
 
 			final HColor borderColor = HColors.BLACK;
-			decoration.drawU(ug.apply(new UTranslate(corner)), backColor, borderColor, shadowing, roundCorner,
+			decoration.drawU(ug.apply(UTranslate.point(corner)), backColor, borderColor, shadowing, roundCorner,
 					skinParam.getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null, false, null),
 					skinParam.getStereotypeAlignment(), 0);
 
@@ -305,7 +305,7 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 			final XPoint2D corner = getPosition(elkNode);
 
 			// Print the node image at right coord
-			image.drawU(ug.apply(new UTranslate(corner)));
+			image.drawU(ug.apply(UTranslate.point(corner)));
 		}
 
 		private void drawSingleEdge(UGraphic ug, Link link, ElkEdge edge) {
@@ -322,7 +322,7 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 			}
 			final ElkPath elkPath = new ElkPath(diagram, SName.classDiagram, link, edge, getLabel(link),
 					getQuantifier(link, 1), getQuantifier(link, 2), magicY2);
-			elkPath.drawU(ug.apply(new UTranslate(translate)));
+			elkPath.drawU(ug.apply(UTranslate.point(translate)));
 		}
 
 		public XDimension2D calculateDimension(StringBounder stringBounder) {

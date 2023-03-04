@@ -46,6 +46,7 @@ import java.util.StringTokenizer;
 import net.sourceforge.plantuml.stereo.StereotypeDecoration;
 
 public class FromSkinparamToStyle {
+    // ::remove file when __HAXE__
 
 	static class Data {
 		final private SName[] styleNames;

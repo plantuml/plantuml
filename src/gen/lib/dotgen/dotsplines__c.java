@@ -1014,22 +1014,22 @@ try {
 	    points.get__(7).y = tp.y;
 	}
 	else {   /* up */
-UNSUPPORTED("7owdudualx55z2cnm9x3iio0w"); // 	    points[0] = tp;
-UNSUPPORTED("43w0zont6q3y1axlcy96rzm5x"); // 	    points[1].x = uminx;
-UNSUPPORTED("285u4l65puy5nr3pgq6acl4i2"); // 	    points[1].y = tp.y;
-UNSUPPORTED("uctdrwzmec4w6vmirs9on197"); // 	    points[2].x = uminx;
-UNSUPPORTED("d9b8e2upja8koam9memys7nj1"); // 	    points[2].y = maxy;
-UNSUPPORTED("e8a8ucdpq7sgmbi3qyldleb1s"); // 	    points[3].x = umaxx;
-UNSUPPORTED("d7xd9vzbdbezltrxsp9a3byuc"); // 	    points[3].y = maxy;
-UNSUPPORTED("59abeyxxk9ow1g6m45t4ahih7"); // 	    points[4].x = umaxx;
-UNSUPPORTED("2lzgl5468xguophz9d5wyer2x"); // 	    points[4].y = hp.y;
-UNSUPPORTED("41u0uroraw4xanvpgg6l74kyh"); // 	    points[5].x = hp.x;
-UNSUPPORTED("cwkk5bnko3e1udrx4cb720zss"); // 	    points[5].y = hp.y;
-UNSUPPORTED("eev7hf3617k74bnq18uiedyb0"); // 	    points[6].x = hp.x;
-UNSUPPORTED("aqxt1dvgfq5zcptjwgx1b3mmq"); // 	    points[6].y = maxy + 6;
-UNSUPPORTED("5s3o04yf5lzca6ruuygfxngj2"); // 	    points[7].x = tp.x;
-UNSUPPORTED("56zheeat0b8mo4uvlcbvgbu80"); // 	    points[7].y = maxy + 6;
-UNSUPPORTED("7un2qk34mmmhqi296vl50bacs"); // 	    maxy += + 6;
+	    points.get__(0).___(tp);
+	    points.get__(1).x = uminx;
+	    points.get__(1).y = tp.y;
+	    points.get__(2).x = uminx;
+	    points.get__(2).y = maxy;
+	    points.get__(3).x = umaxx;
+	    points.get__(3).y = maxy;
+	    points.get__(4).x = umaxx;
+	    points.get__(4).y = hp.y;
+	    points.get__(5).x = hp.x;
+	    points.get__(5).y = hp.y;
+	    points.get__(6).x = hp.x;
+	    points.get__(6).y = maxy + 6;
+	    points.get__(7).x = tp.x;
+	    points.get__(7).y = maxy + 6;
+	    maxy += + 6;
 	}
 	poly.pn = 8;
 	poly.ps = points;

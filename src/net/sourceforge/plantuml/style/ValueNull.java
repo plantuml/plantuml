@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 
 public class ValueNull extends ValueAbstract implements Value {
+    // ::remove file when __HAXE__
 
 	public static final Value NULL = new ValueNull();
 

@@ -63,7 +63,7 @@ public class ZadBuilder extends UGraphicNo {
 	}
 
 	public ZadBuilder(StringBounder stringBounder) {
-		super(stringBounder, new UTranslate());
+		super(stringBounder, UTranslate.none());
 		this.context = new Context();
 	}
 

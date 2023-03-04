@@ -68,6 +68,7 @@ import net.sourceforge.plantuml.svek.PackageStyle;
 import net.sourceforge.plantuml.text.Guillemet;
 
 public interface ISkinParam extends ISkinSimple {
+    // ::remove file when __HAXE__
 
 	public static final int SWIMLANE_WIDTH_SAME = -1;
 

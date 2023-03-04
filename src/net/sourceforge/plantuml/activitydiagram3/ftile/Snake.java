@@ -239,7 +239,7 @@ public class Snake implements UShape {
 		for (Text text : texts)
 			if (text.hasText(ug.getStringBounder())) {
 				final XPoint2D position = getTextBlockPosition(ug.getStringBounder(), text);
-				text.textBlock.drawU(ug.apply(new UTranslate(position)));
+				text.textBlock.drawU(ug.apply(UTranslate.point(position)));
 			}
 	}
 
@@ -290,7 +290,7 @@ public class Snake implements UShape {
 			final XPoint2D pt1 = worm.get(i);
 			final XPoint2D pt2 = worm.get(i + 1);
 			if (pt1.getY() == pt2.getY()) {
-				final XLine2D line = new XLine2D(pt1, pt2);
+				final XLine2D line = XLine2D.line(pt1, pt2);
 				result.add(line);
 			}
 		}

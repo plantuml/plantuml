@@ -76,7 +76,7 @@ public class Footprint {
 		private final List<XPoint2D> all;
 
 		public MyUGraphic() {
-			super(stringBounder, new UTranslate());
+			super(stringBounder, UTranslate.none());
 			this.all = new ArrayList<>();
 		}
 

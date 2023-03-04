@@ -98,7 +98,7 @@ public class FtileMargedRight extends AbstractFtile {
 	@Override
 	public UTranslate getTranslateFor(Ftile child, StringBounder stringBounder) {
 		if (child == tile)
-			return new UTranslate();
+			return UTranslate.none();
 		return super.getTranslateFor(child, stringBounder);
 	}
 

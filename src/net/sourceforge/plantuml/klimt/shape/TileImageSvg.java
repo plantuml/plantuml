@@ -40,6 +40,7 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
 public class TileImageSvg extends AbstractTextBlock implements TextBlock {
+    // ::remove file when __HAXE__
 
 	private final UImageSvg svg;
 	private final double scale;

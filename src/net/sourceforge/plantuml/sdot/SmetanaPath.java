@@ -199,7 +199,7 @@ public class SmetanaPath implements UDrawable {
 			if (ymirror != null)
 				pt = ymirror.getMirrored(pt);
 
-			ug.apply(new UTranslate(pt).compose(new UTranslate(-1, -1))).draw(new UEllipse(3, 3));
+			ug.apply(UTranslate.point(pt).compose(new UTranslate(-1, -1))).draw(new UEllipse(3, 3));
 		}
 		if (getLabelRectangleTranslate("label") != null && getLabelURectangle() != null) {
 			ug = ug.apply(HColors.BLUE).apply(HColors.none().bg());

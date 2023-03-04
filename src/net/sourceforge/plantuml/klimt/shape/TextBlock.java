@@ -48,6 +48,7 @@ public interface TextBlock extends UDrawable, UShape {
 
 	public XDimension2D calculateDimension(StringBounder stringBounder);
 
+	// ::comment when __HAXE__
 	public MinMax getMinMax(StringBounder stringBounder);
 
 	public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy);
@@ -55,5 +56,6 @@ public interface TextBlock extends UDrawable, UShape {
 	public MagneticBorder getMagneticBorder();
 
 	public HColor getBackcolor();
+	// ::done
 
 }

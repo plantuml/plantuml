@@ -1,16 +1,14 @@
 package net.sourceforge.plantuml.klimt.geom;
 
+// ::comment when __HAXE__
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
+// ::done
 
 public class XPoint2D {
 
 	final public double x;
 	final public double y;
-
-	public XPoint2D() {
-		this(0, 0);
-	}
 
 	@Override
 	public String toString() {
@@ -22,6 +20,7 @@ public class XPoint2D {
 		this.y = y;
 	}
 
+	// ::comment when __HAXE__
 	@Override
 	public boolean equals(Object obj) {
 		final XPoint2D other = (XPoint2D) obj;
@@ -32,6 +31,13 @@ public class XPoint2D {
 	public int hashCode() {
 		return Double.valueOf(x).hashCode() + Double.valueOf(y).hashCode();
 	}
+
+	public XPoint2D transform(AffineTransform rotate) {
+		final Point2D.Double tmp = new Point2D.Double(x, y);
+		rotate.transform(tmp, tmp);
+		return new XPoint2D(tmp.x, tmp.y);
+	}
+	// ::done
 
 	public final double getX() {
 		return x;
@@ -69,14 +75,8 @@ public class XPoint2D {
 		return new XPoint2D(x + dx, y + dy);
 	}
 
-	public XPoint2D transform(AffineTransform rotate) {
-		final Point2D.Double tmp = new Point2D.Double(x, y);
-		rotate.transform(tmp, tmp);
-		return new XPoint2D(tmp.x, tmp.y);
-	}
-
 	public XPoint2D move(XPoint2D delta) {
-		return new XPoint2D(delta.x, delta.y);
+		return new XPoint2D(x + delta.x, y + delta.y);
 	}
 
 }

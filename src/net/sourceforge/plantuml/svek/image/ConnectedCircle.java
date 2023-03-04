@@ -65,7 +65,7 @@ public class ConnectedCircle implements UDrawable {
 		}
 		ug = ug.apply(HColors.GREEN).apply(HColors.GREEN.bg());
 		for (XPoint2D pt : points) {
-			final UTranslate tr = new UTranslate(pt);
+			final UTranslate tr = UTranslate.point(pt);
 			// ug.apply(tr).draw(new UEllipse(2, 2));
 		}
 

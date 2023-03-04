@@ -41,13 +41,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.font.Roboto;
 
 public class UFont {
 
 	private final Font font;
 	private final String family;
 
+	// ::comment when __HAXE__
 	private static final Set<String> names = new HashSet<>();
 
 	static {
@@ -58,8 +58,8 @@ public class UFont {
 //		}
 		for (String name : GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames())
 			names.add(name.toLowerCase());
-
 	}
+	// ::done
 
 	public String toStringDebug() {
 		final StringBuilder sb = new StringBuilder();
@@ -69,8 +69,13 @@ public class UFont {
 		return sb.toString();
 	}
 
-	public UFont(String fontFamily, int fontStyle, int fontSize) {
-		this(buildFont(fontFamily, fontStyle, fontSize), fontFamily);
+	public static UFont build(String fontFamily, int fontStyle, int fontSize) {
+		return new UFont(buildFont(fontFamily, fontStyle, fontSize), fontFamily);
+	}
+
+	private UFont(Font font, String family) {
+		this.font = font;
+		this.family = family;
 	}
 
 	private static Font buildFont(String fontFamily, int fontStyle, int fontSize) {
@@ -86,19 +91,24 @@ public class UFont {
 	}
 
 	private static boolean doesFamilyExists(String name) {
+		// ::comment when __HAXE__
 		return names.contains(name.toLowerCase());
+		// ::done
+		// ::uncomment when __HAXE__
+		// return true;
+		// ::done
 	}
 
 	public static UFont serif(int size) {
-		return new UFont("Serif", Font.PLAIN, size);
+		return UFont.build("Serif", Font.PLAIN, size);
 	}
 
 	public static UFont sansSerif(int size) {
-		return new UFont("SansSerif", Font.PLAIN, size);
+		return UFont.build("SansSerif", Font.PLAIN, size);
 	}
 
 	public static UFont courier(int size) {
-		return new UFont("Courier", Font.PLAIN, size);
+		return UFont.build("Courier", Font.PLAIN, size);
 	}
 
 	public static UFont byDefault(int size) {
@@ -110,12 +120,7 @@ public class UFont {
 	}
 
 	public static UFont monospaced(int size) {
-		return new UFont("Monospaced", Font.PLAIN, size);
-	}
-
-	private UFont(Font font, String family) {
-		this.font = font;
-		this.family = family;
+		return UFont.build("Monospaced", Font.PLAIN, size);
 	}
 
 	public final Font getUnderlayingFont(UFontContext context) {
@@ -194,6 +199,8 @@ public class UFont {
 		return font.toString()/* + " " + font.getPSName() */;
 	}
 
+	// ::comment when __HAXE__
+
 	@Override
 	public int hashCode() {
 		return font.hashCode();
@@ -206,5 +213,6 @@ public class UFont {
 
 		return this.font.equals(((UFont) obj).font);
 	}
+	// ::done
 
 }

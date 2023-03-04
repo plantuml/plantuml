@@ -71,7 +71,7 @@ public class SlotFinder extends UGraphicNo {
 	private final CompressionMode mode;
 
 	public static SlotFinder create(CompressionMode mode, StringBounder stringBounder) {
-		return new SlotFinder(stringBounder, new UTranslate(), new SlotSet(), mode);
+		return new SlotFinder(stringBounder, UTranslate.none(), new SlotSet(), mode);
 	}
 
 	private SlotFinder(StringBounder stringBounder, UTranslate translate, SlotSet slot, CompressionMode mode) {

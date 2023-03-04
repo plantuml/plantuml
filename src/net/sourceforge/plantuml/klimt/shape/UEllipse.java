@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 
 public class UEllipse extends AbstractShadowable implements UShapeSized {
+    // ::remove file when __HAXE__
 
 	private final double width;
 	private final double height;

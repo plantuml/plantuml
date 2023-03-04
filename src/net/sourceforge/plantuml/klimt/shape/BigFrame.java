@@ -46,6 +46,8 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
 public class BigFrame extends AbstractTextBlock {
+    // ::remove file when __HAXE__
+	
 	private final TextBlock title;
 	private final double width;
 	private final double height;

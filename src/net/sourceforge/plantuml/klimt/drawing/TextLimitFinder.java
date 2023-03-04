@@ -62,7 +62,7 @@ public class TextLimitFinder extends UGraphicNo {
 	}
 
 	public static TextLimitFinder create(StringBounder stringBounder, boolean initToZero) {
-		return new TextLimitFinder(stringBounder, new UTranslate(), MinMaxMutable.getEmpty(initToZero));
+		return new TextLimitFinder(stringBounder, UTranslate.none(), MinMaxMutable.getEmpty(initToZero));
 	}
 
 	private TextLimitFinder(StringBounder stringBounder, UTranslate translate, MinMaxMutable minmax) {

@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.klimt.UShape;
 import net.sourceforge.plantuml.klimt.font.UFont;
 
 public class UCenteredCharacter implements UShape {
+	// ::remove file when __HAXE__
 
 	private final char c;
 	private final UFont font;

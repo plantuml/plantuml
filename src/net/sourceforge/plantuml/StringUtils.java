@@ -53,6 +53,48 @@ import net.sourceforge.plantuml.utils.Log;
 // Do not move
 public class StringUtils {
 
+	public static String goUpperCase(String s) {
+		// ::comment when __HAXE__
+		return s.toUpperCase(Locale.ENGLISH);
+		// ::done
+		// ::uncomment when __HAXE__
+		// return s.toUpperCase();
+		// ::done
+	}
+
+	public static String eventuallyRemoveStartingAndEndingDoubleQuote(String s, String format) {
+		if (s == null)
+			return null;
+
+		if (format.contains("\"") && s.length() > 1 && isDoubleQuote(s.charAt(0))
+				&& isDoubleQuote(s.charAt(s.length() - 1)))
+			return s.substring(1, s.length() - 1);
+
+		if (format.contains("(") && s.startsWith("(") && s.endsWith(")"))
+			return s.substring(1, s.length() - 1);
+
+		if (format.contains("[") && s.startsWith("[") && s.endsWith("]"))
+			return s.substring(1, s.length() - 1);
+
+		if (format.contains(":") && s.startsWith(":") && s.endsWith(":"))
+			return s.substring(1, s.length() - 1);
+
+		return s;
+	}
+
+	public static String eventuallyRemoveStartingAndEndingDoubleQuote(String s) {
+		if (s == null)
+			return s;
+
+		return eventuallyRemoveStartingAndEndingDoubleQuote(s, "\"([:");
+	}
+
+	private static boolean isDoubleQuote(char c) {
+		return c == '\"' || c == '\u201c' || c == '\u201d' || c == '\u00ab' || c == '\u00bb';
+	}
+
+	// ::comment when __HAXE__
+
 	public static final char USER_NEWLINE = '\uEE00';
 	public static final char USER_TAB = '\uEE01';
 
@@ -108,7 +150,6 @@ public class StringUtils {
 
 	}
 
-	// ::comment when __HAXE__
 	final static public List<String> getSplit(Pattern2 pattern, String line) {
 		final Matcher2 m = pattern.matcher(line);
 		if (m.find() == false)
@@ -120,7 +161,6 @@ public class StringUtils {
 
 		return result;
 	}
-	// ::done
 
 	public static boolean isNotEmpty(CharSequence s) {
 		return !isEmpty(s);
@@ -175,7 +215,6 @@ public class StringUtils {
 		return result.toString();
 	}
 
-	// ::comment when __HAXE__
 	public static String unicodeForHtml(Display display) {
 		final StringBuilder result = new StringBuilder();
 		for (int i = 0; i < display.size(); i++) {
@@ -186,7 +225,6 @@ public class StringUtils {
 		}
 		return result.toString();
 	}
-	// ::done
 
 	public static String manageArrowForSequence(String s) {
 		s = s.replace('=', '-').toLowerCase();
@@ -195,10 +233,6 @@ public class StringUtils {
 
 	public static String capitalize(String s) {
 		return s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase();
-	}
-
-	public static String goUpperCase(String s) {
-		return s.toUpperCase(Locale.ENGLISH);
 	}
 
 	public static char goUpperCase(char c) {
@@ -291,44 +325,11 @@ public class StringUtils {
 	// return Code.of(eventuallyRemoveStartingAndEndingDoubleQuote(s.getCode()));
 	// }
 
-	public static String eventuallyRemoveStartingAndEndingDoubleQuote(String s, String format) {
-		if (s == null)
-			return null;
-
-		if (format.contains("\"") && s.length() > 1 && isDoubleQuote(s.charAt(0))
-				&& isDoubleQuote(s.charAt(s.length() - 1)))
-			return s.substring(1, s.length() - 1);
-
-		if (format.contains("(") && s.startsWith("(") && s.endsWith(")"))
-			return s.substring(1, s.length() - 1);
-
-		if (format.contains("[") && s.startsWith("[") && s.endsWith("]"))
-			return s.substring(1, s.length() - 1);
-
-		if (format.contains(":") && s.startsWith(":") && s.endsWith(":"))
-			return s.substring(1, s.length() - 1);
-
-		return s;
-	}
-
-	public static String eventuallyRemoveStartingAndEndingDoubleQuote(String s) {
-		if (s == null)
-			return s;
-
-		return eventuallyRemoveStartingAndEndingDoubleQuote(s, "\"([:");
-	}
-
-	private static boolean isDoubleQuote(char c) {
-		return c == '\"' || c == '\u201c' || c == '\u201d' || c == '\u00ab' || c == '\u00bb';
-	}
-
-	// ::comment when __HAXE__
 	public static boolean isCJK(char c) {
 		final Character.UnicodeBlock block = Character.UnicodeBlock.of(c);
 		Log.println("block=" + block);
 		return false;
 	}
-	// ::done
 
 	public static char hiddenLesserThan() {
 		return '\u0005';
@@ -359,31 +360,13 @@ public class StringUtils {
 //		return result;
 //	}
 
-	// ::comment when __CORE__ or __HAXE__
-	public static int getWcWidth(Display stringsToDisplay) {
-		int result = 1;
-		for (CharSequence s : stringsToDisplay) {
-			if (s == null)
-				continue;
-
-			final int length = Wcwidth.length(s);
-			if (result < length)
-				result = length;
-
-		}
-		return result;
-	}
-	// ::done
-
 	public static int getHeight(List<? extends CharSequence> stringsToDisplay) {
 		return stringsToDisplay.size();
 	}
 
-	// ::comment when __HAXE__
 	public static int getHeight(Display stringsToDisplay) {
 		return stringsToDisplay.size();
 	}
-	// ::done
 
 	public static boolean isDiagramCacheable(String uml) {
 		if (uml.length() < 35)
@@ -437,7 +420,6 @@ public class StringUtils {
 		return Integer.parseInt(uml.substring(x1, x2));
 	}
 
-	// ::comment when __HAXE__
 	public static List<String> splitComma(String s) {
 		s = trin(s);
 		final List<String> result = new ArrayList<>();
@@ -448,7 +430,6 @@ public class StringUtils {
 
 		return Collections.unmodifiableList(result);
 	}
-	// ::done
 
 	public static String getUid(String uid1, int uid2) {
 		return uid1 + String.format("%04d", uid2);
@@ -573,6 +554,23 @@ public class StringUtils {
 		s = s.substring(s.length() - 6);
 		return "#" + s;
 	}
+	// ::done
+
+	// ::comment when __CORE__ or __HAXE__
+	public static int getWcWidth(Display stringsToDisplay) {
+		int result = 1;
+		for (CharSequence s : stringsToDisplay) {
+			if (s == null)
+				continue;
+
+			final int length = Wcwidth.length(s);
+			if (result < length)
+				result = length;
+
+		}
+		return result;
+	}
+	// ::done
 
 	// http://docs.oracle.com/javase/tutorial/i18n/format/dateFormat.html
 }

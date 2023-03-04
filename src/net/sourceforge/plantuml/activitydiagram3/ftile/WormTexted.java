@@ -51,7 +51,7 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.utils.Direction;
 
 public class WormTexted implements Iterable<XPoint2D> {
-    // ::remove folder when __HAXE__
+	// ::remove folder when __HAXE__
 
 	private final Worm worm;
 	private TextBlock textBlock;
@@ -138,7 +138,7 @@ public class WormTexted implements Iterable<XPoint2D> {
 	void drawInternalLabel(UGraphic ug) {
 		if (textBlock != null) {
 			final XPoint2D position = getTextBlockPosition(ug.getStringBounder());
-			textBlock.drawU(ug.apply(new UTranslate(position)));
+			textBlock.drawU(ug.apply(UTranslate.point(position)));
 		}
 	}
 

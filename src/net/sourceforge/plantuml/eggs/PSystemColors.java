@@ -147,7 +147,7 @@ public class PSystemColors extends PlainDiagram implements UDrawable {
 	private void drawOneHexa(UGraphic ug, String colorName, int i, int j, UPolygon hexa) {
 		final HColor color = colors.getColorOrWhite(colorName);
 		ug = applyColor(ug, color);
-		ug = ug.apply(new UTranslate(centerHexa(i, j)));
+		ug = ug.apply(UTranslate.point(centerHexa(i, j)));
 		ug.draw(hexa);
 
 		final UFont font = UFont.sansSerif(14).bold();

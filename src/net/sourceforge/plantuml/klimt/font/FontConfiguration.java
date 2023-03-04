@@ -52,6 +52,7 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 
 public class FontConfiguration {
+	// ::remove file when __HAXE__
 
 	private final EnumSet<FontStyle> styles;
 	private final UFont currentFont;
@@ -237,7 +238,7 @@ public class FontConfiguration {
 
 	public FontConfiguration changeFamily(String family) {
 		return new FontConfiguration(styles, motherFont, motherColor,
-				new UFont(family, currentFont.getStyle(), currentFont.getSize()), currentColor, extendedColor,
+				UFont.build(family, currentFont.getStyle(), currentFont.getSize()), currentColor, extendedColor,
 				fontPosition, svgAttributes, hyperlinkColor, hyperlinkUnderlineStroke, tabSize);
 	}
 
@@ -296,9 +297,9 @@ public class FontConfiguration {
 
 	public UFont getFont() {
 		UFont result = currentFont;
-		for (FontStyle style : styles) 
+		for (FontStyle style : styles)
 			result = style.mutateFont(result);
-		
+
 		return fontPosition.mute(result);
 	}
 

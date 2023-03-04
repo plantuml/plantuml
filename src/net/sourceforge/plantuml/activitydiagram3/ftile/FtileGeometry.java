@@ -97,6 +97,7 @@ public class FtileGeometry extends XDimension2D {
 	}
 
 	public FtileGeometry(double width, double height, double left, double inY, double outY) {
+		super(width, height);
 		this.left = left;
 		this.inY = inY;
 		this.outY = outY;

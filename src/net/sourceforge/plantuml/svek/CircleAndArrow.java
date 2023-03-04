@@ -77,7 +77,7 @@ class CircleAndArrow implements UDrawable {
 
 	private XPoint2D putOnCircle(XPoint2D p) {
 		p = p.transform(at);
-		final double coef = p.distance(new XPoint2D()) / radius;
+		final double coef = p.distance(new XPoint2D(0, 0)) / radius;
 		p = new XPoint2D(p.getX() / coef, p.getY() / coef);
 		return p.transform(at2);
 	}

@@ -59,7 +59,7 @@ import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class WireDiagram extends UmlDiagram {
 
-	private final WBlock root = new WBlock("", new UTranslate(), 0, 0, null);
+	private final WBlock root = new WBlock("", UTranslate.none(), 0, 0, null);
 	private final List<Spot> spots = new ArrayList<>();
 	private final List<WLinkHorizontal> hlinks = new ArrayList<>();
 	private final List<WLinkVertical> vlinks = new ArrayList<>();
