@@ -43,7 +43,7 @@ sourceSets {
 			srcDirs("src")
 		}
 		resources {
-			srcDirs("src")
+			srcDirs("resources/from_src")
 			include("**/graphviz.dat")
 			include("**/*.png")
 			include("**/*.svg")
