@@ -55,7 +55,7 @@ sourceSets {
 			srcDirs("test")
 		}
 		resources {
-			srcDirs(".")
+			srcDirs("resources")
 			include("skin/**/*.skin")
 			include("themes/**/*.puml")
 		}
@@ -77,10 +77,10 @@ tasks.withType<Jar>().configureEach {
 		attributes["Build-Jdk-Spec"] = System.getProperty("java.specification.version")
 		from("manifest.txt")
 	}
-	from("skin") { into("skin") }
+	from("resources/skin") { into("skin") }
 	from("stdlib") { into("stdlib") }
 	from("svg") { into("svg") }
-	from("themes") { into("themes") }
+	from("resources/themes") { into("themes") }
 	// source sets for java and resources are on "src", only put once into the jar
 	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
