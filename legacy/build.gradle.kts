@@ -78,8 +78,8 @@ tasks.withType<Jar>().configureEach {
 		from("manifest.txt")
 	}
 	from("resources/skin") { into("skin") }
-	from("stdlib") { into("stdlib") }
-	from("svg") { into("svg") }
+	from("resources/stdlib") { into("stdlib") }
+	from("resources/svg") { into("svg") }
 	from("resources/themes") { into("themes") }
 	// source sets for java and resources are on "src", only put once into the jar
 	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
