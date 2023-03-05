@@ -13,9 +13,11 @@ plantuml.jar
 # Maven target folder
 target/
 
-# Gradle build folders
-/.gradle
-build/
+# Gradle
+# Ignore Gradle project-specific cache directory
+.gradle
+# Ignore Gradle build output directory
+build
 
 # Eclipse Project files
 .settings/

@@ -1,19 +1,9 @@
-//    permits to start the build setting the javac release parameter, no parameter means build for java8:
-// gradle clean build -x javaDoc -PjavacRelease=8
-// gradle clean build -x javaDoc -PjavacRelease=17
-//    also supported is to build first, with java17, then switch the java version, and run the test with java8:
-// gradle clean build -x javaDoc -x test
-// gradle test
-val javacRelease = (project.findProperty("javacRelease") ?: "8") as String
 
 plugins {
-	java
+	id("net.sourceforge.plantuml.java-legacy-conventions")
 	`maven-publish`
 	signing
 }
-
-group = "net.sourceforge.plantuml"
-description = "PlantUML"
 
 java {
 	withSourcesJar()
@@ -25,16 +15,9 @@ java {
 
 dependencies {
 	compileOnly("org.apache.ant:ant:1.10.13")
-	testImplementation("org.assertj:assertj-core:3.24.2")
-	testImplementation("org.junit.jupiter:junit-jupiter:5.9.2")
 	testImplementation("org.scilab.forge:jlatexmath:1.0.7")
 	"pdfRuntimeOnly"("org.apache.xmlgraphics:fop:2.8")
 	"pdfRuntimeOnly"("org.apache.xmlgraphics:batik-all:1.16")
-}
-
-repositories {
-	mavenLocal()
-	mavenCentral()
 }
 
 sourceSets {
@@ -59,14 +42,6 @@ sourceSets {
 			include("skin/**/*.skin")
 			include("themes/**/*.puml")
 		}
-	}
-}
-
-tasks.compileJava {
-	if (JavaVersion.current().isJava8) {
-		java.targetCompatibility = JavaVersion.VERSION_1_8
-	} else {
-		options.release.set(Integer.parseInt(javacRelease))
 	}
 }
 
@@ -127,10 +102,6 @@ publishing {
 	}
 }
 
-tasks.withType<JavaCompile>().configureEach {
-	options.encoding = "UTF-8"
-}
-
 tasks.withType<Javadoc>().configureEach {
 	options {
 		this as StandardJavadocDocletOptions
@@ -139,11 +110,6 @@ tasks.withType<Javadoc>().configureEach {
 		encoding = "UTF-8"
 		isUse = true
 	}
-}
-
-tasks.test {
-	useJUnitPlatform()
-	testLogging.showStandardStreams = true
 }
 
 val pdfJar by tasks.registering(Jar::class) {
