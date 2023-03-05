@@ -20,31 +20,6 @@ dependencies {
 	"pdfRuntimeOnly"("org.apache.xmlgraphics:batik-all:1.16")
 }
 
-sourceSets {
-	main {
-		java {
-			srcDirs("src")
-		}
-		resources {
-			srcDirs("resources/from_src")
-			include("**/graphviz.dat")
-			include("**/*.png")
-			include("**/*.svg")
-			include("**/*.txt")
-		}
-	}
-	test {
-		java {
-			srcDirs("test")
-		}
-		resources {
-			srcDirs("resources")
-			include("skin/**/*.skin")
-			include("themes/**/*.puml")
-		}
-	}
-}
-
 tasks.withType<Jar>().configureEach {
 	manifest {
 		attributes["Main-Class"] = "net.sourceforge.plantuml.Run"
@@ -110,6 +85,11 @@ tasks.withType<Javadoc>().configureEach {
 		encoding = "UTF-8"
 		isUse = true
 	}
+}
+
+tasks.test{
+	val testJavaSourceDir = project.layout.projectDirectory.dir("src/test/java").asFile.absolutePath
+	systemProperty("nonreg.graphml.sources.directory", testJavaSourceDir)
 }
 
 val pdfJar by tasks.registering(Jar::class) {
