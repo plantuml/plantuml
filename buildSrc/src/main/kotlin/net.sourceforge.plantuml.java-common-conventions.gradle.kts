@@ -3,8 +3,8 @@
  */
 
 plugins {
-    // Apply the java Plugin to add support for Java.
-    java
+	// Apply the java Plugin to add support for Java.
+	java
 }
 
 //    permits to start the build setting the javac release parameter, no parameter means build for java8:
@@ -19,24 +19,24 @@ group = "net.sourceforge.plantuml"
 description = "PlantUML"
 
 repositories {
-		mavenLocal()
-    mavenCentral()
+	mavenLocal()
+	mavenCentral()
 }
 
 dependencies {
-    constraints {
-        // Define dependency versions as constraints
-        implementation("org.apache.commons:commons-text:1.9")
-    }
-    // Use JUnit Jupiter for testing.
-		testImplementation("org.junit.jupiter:junit-jupiter:5.9.2")
-		testImplementation("org.assertj:assertj-core:3.24.2")
+	constraints {
+		// Define dependency versions as constraints
+		implementation("org.apache.commons:commons-text:1.9")
+	}
+	// Use JUnit Jupiter for testing.
+	testImplementation("org.junit.jupiter:junit-jupiter:5.9.2")
+	testImplementation("org.assertj:assertj-core:3.24.2")
 }
 
 tasks.named<Test>("test") {
-    // Use JUnit Platform for unit tests.
-    useJUnitPlatform()
-		testLogging.showStandardStreams = true
+	// Use JUnit Platform for unit tests.
+	useJUnitPlatform()
+	testLogging.showStandardStreams = true
 }
 
 tasks.withType<JavaCompile>().configureEach {
@@ -49,4 +49,11 @@ tasks.compileJava {
 	} else {
 		options.release.set(Integer.parseInt(javacRelease))
 	}
+}
+
+val explodedJar by tasks.registering(Sync::class) {
+	group = "build"
+	description = "create an exloded version of the jar"
+	into("${buildDir}/exploded")
+	with(tasks.jar.get())
 }
