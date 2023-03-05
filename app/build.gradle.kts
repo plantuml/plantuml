@@ -4,12 +4,17 @@
 
 plugins {
 	id("net.sourceforge.plantuml.java-application-conventions")
+	id("net.sourceforge.plantuml.java-intTest-conventions")
 }
 
 dependencies {
 	implementation("org.apache.commons:commons-text")
 	implementation(project(":legacy"))
 	implementation(project(":utilities"))
+	// https://github.com/romankh3/image-comparison image comparison tool
+	intTestImplementation("com.github.romankh3:image-comparison:4.4.0")
+	// https://github.com/stefanbirkner/system-lambda Junit extension to handle System.exit()
+	intTestImplementation("com.github.stefanbirkner:system-lambda:1.2.1")
 }
 
 application {
