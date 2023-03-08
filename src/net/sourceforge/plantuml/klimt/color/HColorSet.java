@@ -228,37 +228,55 @@ public class HColorSet {
 		names.add(s);
 	}
 
-	class Gradient {
+	public HColor getColorOrWhite(String s) {
+		if (isColorValid(Objects.requireNonNull(s)) == false)
+			return HColors.WHITE;
+
+		try {
+			return getColor(s);
+		} catch (NoSuchColorException e) {
+			assert false;
+			return HColors.WHITE;
+		}
+	}
+
+	static class Gradient {
 		private final String s1;
 		private final char sep;
 		private final String s2;
+		private final HColorSet me;
 
-		Gradient(String s1, char sep, String s2) {
+		Gradient(HColorSet me, String s1, char sep, String s2) {
+			this.me = me;
 			this.s1 = s1;
 			this.sep = sep;
 			this.s2 = s2;
 		}
 
 		boolean isValid() {
-			return isColorValid(s1) && isColorValid(s2);
+			return me.isColorValid(s1) && me.isColorValid(s2);
 		}
 
+		// ::comment when __HAXE__
 		HColorGradient buildInternal() {
-			return HColors.gradient(build(s1), build(s2), sep);
+			return HColors.gradient(me.build(s1), me.build(s2), sep);
 		}
+		// ::done
 
 	}
 
-	class Automatic {
+	static class Automatic {
 		private final String[] colors;
+		private final HColorSet me;
 
-		public Automatic(String[] colors) {
+		public Automatic(HColorSet me, String[] colors) {
+			this.me = me;
 			this.colors = colors;
 		}
 
 		boolean isValid() {
 			for (String color : colors)
-				if (isColorValid(color) == false)
+				if (me.isColorValid(color) == false)
 					return false;
 
 			return true;
@@ -266,22 +284,24 @@ public class HColorSet {
 
 		HColorScheme buildInternal() {
 			if (colors.length == 2)
-				return new HColorScheme(build(colors[0]), build(colors[1]), null);
+				return new HColorScheme(me.build(colors[0]), me.build(colors[1]), null);
 
-			return new HColorScheme(build(colors[0]), build(colors[1]), build(colors[2]));
+			return new HColorScheme(me.build(colors[0]), me.build(colors[1]), me.build(colors[2]));
 		}
 
 	}
 
 	private Gradient gradientFromString(String s) {
+		// ::comment when __HAXE__
 		final Matcher2 m = MyPattern.cmpile("[-\\\\|/]").matcher(s);
 		if (m.find()) {
 			final char sep = m.group(0).charAt(0);
 			final int idx = s.indexOf(sep);
 			final String s1 = s.substring(0, idx);
 			final String s2 = s.substring(idx + 1);
-			return new Gradient(s1, sep, s2);
+			return new Gradient(this, s1, sep, s2);
 		}
+		// ::done
 		return null;
 	}
 
@@ -294,21 +314,9 @@ public class HColorSet {
 
 		final int idx = s.indexOf(':');
 		if (idx != -1)
-			return new Automatic(s.substring(1).split(":"));
+			return new Automatic(this, s.substring(1).split(":"));
 
 		return null;
-	}
-
-	public HColor getColorOrWhite(String s) {
-		if (isColorValid(Objects.requireNonNull(s)) == false)
-			return HColors.WHITE;
-
-		try {
-			return getColor(s);
-		} catch (NoSuchColorException e) {
-			assert false;
-			return HColors.WHITE;
-		}
 	}
 
 	public HColor getColorLEGACY(String s) throws NoSuchColorException {
@@ -323,9 +331,11 @@ public class HColorSet {
 		if (automatic != null)
 			return automatic.buildInternal();
 
+		// ::comment when __HAXE__
 		final Gradient gradient = gradientFromString(s);
 		if (gradient != null)
 			return gradient.buildInternal();
+		// ::done
 
 		if (s.equalsIgnoreCase("#transparent") || s.equalsIgnoreCase("transparent"))
 			s = "#00000000";
@@ -358,8 +368,10 @@ public class HColorSet {
 		final Color color;
 		if (s.equalsIgnoreCase("transparent") || s.equalsIgnoreCase("background")) {
 			return HColors.none();
+			// ::comment when __HAXE__
 		} else if (s.equalsIgnoreCase("automatic")) {
 			return new HColorAutomagic();
+			// ::done
 		} else if (s.matches("[0-9A-Fa-f]")) {
 			s = "" + s.charAt(0) + s.charAt(0) + s.charAt(0) + s.charAt(0) + s.charAt(0) + s.charAt(0);
 			color = new Color(Integer.parseInt(s, 16));
@@ -396,5 +408,4 @@ public class HColorSet {
 
 		return s;
 	}
-
 }

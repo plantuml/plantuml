@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
 
 public class UrlBuilder {
+    // ::remove file when __HAXE__
 
 	public static final IRegex MANDATORY = new RegexLeaf("URL", "(" + UrlBuilder.getRegexp() + ")");
 	public static final IRegex OPTIONAL = new RegexOptional(MANDATORY);

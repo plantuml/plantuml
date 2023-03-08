@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 
 public class Colors {
+	// ::remove file when __HAXE__
 
 	private final Map<ColorType, HColor> map = new EnumMap<ColorType, HColor>(ColorType.class);
 	private LinkStyle lineStyle = null;

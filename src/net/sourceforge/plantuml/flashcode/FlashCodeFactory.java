@@ -36,7 +36,7 @@
 package net.sourceforge.plantuml.flashcode;
 
 public class FlashCodeFactory {
-	// :: remove folder when __CORE__
+	// ::remove folder when __CORE__
 
 	public static FlashCodeUtils getFlashCodeUtils() {
 		final String name = "net.sourceforge.plantuml.flashcode.FlashCodeUtilsZxing";

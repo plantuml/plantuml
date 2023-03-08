@@ -37,22 +37,18 @@ package net.sourceforge.plantuml.klimt.color;
 
 import java.awt.Color;
 
+import net.sourceforge.plantuml.utils.MathUtils;
+
 public class ColorUtils {
 
 	public static int getGrayScale(Color color) {
-		return getGrayScale(color.getRed(), color.getGreen(), color.getBlue());
+		return getGrayScaleInternalFromRGB(color.getRed(), color.getGreen(), color.getBlue());
 	}
 
-	public static int getGrayScale(int red, int green, int blue) {
+	private static int getGrayScaleInternalFromRGB(int red, int green, int blue) {
 		// YIQ equation from http://24ways.org/2010/calculating-color-contrast
-		return getGrayScaleInternal(red, green, blue) / 1000;
-	}
-
-	public static int distance(Color c1, Color c2) {
-		final int diffRed = Math.abs(c1.getRed() - c2.getRed());
-		final int diffGreen = Math.abs(c1.getGreen() - c2.getGreen());
-		final int diffBlue = Math.abs(c1.getBlue() - c2.getBlue());
-		return getGrayScaleInternal(diffRed, diffGreen, diffBlue);
+		final int result = getGrayScaleInternal(red, green, blue) / 1000;
+		return result;
 	}
 
 	private static int getGrayScaleInternal(int red, int green, int blue) {
@@ -60,11 +56,11 @@ public class ColorUtils {
 		return red * 299 + green * 587 + blue * 114;
 	}
 
-	public static int getGrayScale(int rgb) {
+	public static int getGrayScaleFromRGB(int rgb) {
 		final int red = (rgb & 0x00FF0000) >> 16;
 		final int green = (rgb & 0x0000FF00) >> 8;
 		final int blue = (rgb & 0x000000FF);
-		return getGrayScale(red, green, blue);
+		return getGrayScaleInternalFromRGB(red, green, blue);
 	}
 
 	public static Color getGrayScaleColor(Color color) {
@@ -76,6 +72,15 @@ public class ColorUtils {
 		final int grayScale = 255 - getGrayScale(color);
 		return new Color(grayScale, grayScale, grayScale);
 	}
+
+	public static int distance(Color c1, Color c2) {
+		final int diffRed = MathUtils.abs(c1.getRed() - c2.getRed());
+		final int diffGreen = MathUtils.abs(c1.getGreen() - c2.getGreen());
+		final int diffBlue = MathUtils.abs(c1.getBlue() - c2.getBlue());
+		return getGrayScaleInternal(diffRed, diffGreen, diffBlue);
+	}
+
+	// ::comment when __HAXE__
 
 	/*
 	 * This code is still experimental. If you can improve it, please go ahead :-)
@@ -170,5 +175,6 @@ public class ColorUtils {
 
 		return result;
 	}
+	// ::done
 
 }

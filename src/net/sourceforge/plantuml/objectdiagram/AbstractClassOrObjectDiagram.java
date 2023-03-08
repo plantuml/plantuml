@@ -59,6 +59,7 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 
 	public AbstractClassOrObjectDiagram(UmlSource source, UmlDiagramType type, Map<String, String> orig) {
 		super(source, type, orig);
+		setNamespaceSeparator(".");
 	}
 
 	final public boolean insertBetween(Entity entity1, Entity entity2, Entity node) {

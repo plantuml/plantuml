@@ -155,8 +155,6 @@ public class ClassDiagramFactory extends PSystemCommandFactory {
 
 		cmds.add(new CommandDiamondAssociation());
 
-		cmds.add(new CommandNamespaceSeparator());
-
 		cmds.add(new CommandCreateElementMultilines(0));
 		cmds.add(new CommandCreateElementMultilines(1));
 		CommonCommands.addTitleCommands(cmds);

@@ -38,8 +38,6 @@ package net.sourceforge.plantuml.klimt;
 import net.sourceforge.plantuml.klimt.color.HColor;
 
 public interface UParam {
-	// ::remove file when __HAXE__
-
 	public HColor getColor();
 
 	public HColor getBackcolor();

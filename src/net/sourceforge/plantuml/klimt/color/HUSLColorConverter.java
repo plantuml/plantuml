@@ -16,6 +16,7 @@ import java.util.List;
  *
  */
 public class HUSLColorConverter {
+	// ::remove file when __HAXE__
 	private static double[][] m = new double[][] {
 			new double[] { 3.240969941904521, -1.537383177570093, -0.498610760293 },
 			new double[] { -0.96924363628087, 1.87596750150772, 0.041555057407175 },

@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 
 public class PlacementStrategyVisibility extends AbstractPlacementStrategy {
-	// :: remove file when __HAXE__
+	// ::remove file when __HAXE__
 
 	private final int col2;
 

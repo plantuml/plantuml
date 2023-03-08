@@ -60,7 +60,7 @@ import net.sourceforge.plantuml.log.Logme;
 // ::done
 
 public class Emoji {
-	// :: remove folder when __HAXE__
+	// ::remove folder when __HAXE__
 	private final static Map<String, Emoji> ALL = new HashMap<>();
 
 	static {

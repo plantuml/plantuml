@@ -118,6 +118,18 @@ public class HColors {
 
 	}
 
+	private static final HColorSimple TRANSPARENT = HColorSimple.create(new Color(0, 0, 0, 0));
+
+	public static HColor transparent() {
+		return TRANSPARENT;
+	}
+
+	public static HColor none() {
+		return TRANSPARENT;
+	}
+
+	// ::comment when __HAXE__
+
 	public static HColor noGradient(HColor color) {
 		if (color instanceof HColorGradient)
 			return ((HColorGradient) color).getColor1();
@@ -131,16 +143,6 @@ public class HColors {
 			return HColors.none().bg();
 
 		return color.bg();
-	}
-
-	private static final HColorSimple TRANSPARENT = new HColorSimple(new Color(0, 0, 0, 0));
-
-	public static HColor transparent() {
-		return TRANSPARENT;
-	}
-
-	public static HColor none() {
-		return TRANSPARENT;
 	}
 
 	public static HColor unlinear(HColor color1, HColor color2, int completion) {
@@ -163,9 +165,10 @@ public class HColors {
 	public static HColorGradient gradient(HColor color1, HColor color2, char policy) {
 		return new HColorGradient(color1, color2, policy);
 	}
+	// ::done
 
 	public static HColor simple(Color c) {
-		return new HColorSimple(c);
+		return HColorSimple.create(c);
 	}
 
 }

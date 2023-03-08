@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.shape.UHorizontalLine;
 
 public abstract class AbstractUGraphicHorizontalLine extends UGraphicDelegator {
+    // ::remove file when __HAXE__
 
 	private UTranslate translate = UTranslate.none();
 

@@ -36,7 +36,7 @@
 package net.sourceforge.plantuml.klimt.geom;
 
 public class BezierUtils {
-	// :: remove file when __HAXE__
+	// ::remove file when __HAXE__
 
 	static public double getEndingAngle(final XCubicCurve2D left) {
 		if (left.getCtrlP2().equals(left.getP2())) {

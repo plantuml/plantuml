@@ -75,6 +75,16 @@ public abstract class AbstractPSystem implements Diagram {
 	private int splitPagesHorizontal = 1;
 	private int splitPagesVertical = 1;
 
+	private String namespaceSeparator = null;
+
+	public void setNamespaceSeparator(String namespaceSeparator) {
+		this.namespaceSeparator = namespaceSeparator;
+	}
+
+	final public String getNamespaceSeparator() {
+		return namespaceSeparator;
+	}
+
 	public AbstractPSystem(UmlSource source) {
 		this.source = Objects.requireNonNull(source);
 	}

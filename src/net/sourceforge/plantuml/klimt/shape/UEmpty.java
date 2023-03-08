@@ -43,15 +43,15 @@ public class UEmpty implements UShape {
 	private final double height;
 
 	public UEmpty(double width, double height) {
-		if (width == 0) {
+		if (width == 0)
 			throw new IllegalArgumentException();
-		}
+
 		this.width = width;
 		this.height = height;
 	}
 
-	public UEmpty(XDimension2D dim) {
-		this(dim.getWidth(), dim.getHeight());
+	public static UEmpty create(XDimension2D dim) {
+		return new UEmpty(dim.getWidth(), dim.getHeight());
 	}
 
 	public double getWidth() {

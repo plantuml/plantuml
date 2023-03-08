@@ -53,7 +53,7 @@ import net.sourceforge.plantuml.vizjs.GraphvizJs;
 import net.sourceforge.plantuml.vizjs.VizJsEngine;
 
 public class GraphvizUtils {
-	// :: remove file when __CORE__
+	// ::remove file when __CORE__
 
 	public static final String VIZJS = "vizjs";
 	private static int DOT_VERSION_LIMIT = 226;

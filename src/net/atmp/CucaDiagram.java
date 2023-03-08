@@ -93,9 +93,6 @@ import net.sourceforge.plantuml.xmlsc.StateDiagramScxmlMaker;
 
 public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, PortionShower, ICucaDiagram {
 
-	private String namespaceSeparator = null;
-	private boolean namespaceSeparatorHasBeenSet = false;
-
 	private final List<HideOrShow2> hides2 = new ArrayList<>();
 	private final List<HideOrShow2> removed = new ArrayList<>();
 	protected final EntityFactory entityFactory = new EntityFactory(hides2, removed, this);
@@ -103,6 +100,12 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 	private List<Bag> stacks = new ArrayList<>();
 
 	private boolean visibilityModifierPresent;
+
+	@Override
+	final public void setNamespaceSeparator(String namespaceSeparator) {
+		super.setNamespaceSeparator(namespaceSeparator);
+		entityFactory.setSeparator(namespaceSeparator);
+	}
 
 	public CucaDiagram(UmlSource source, UmlDiagramType type, Map<String, String> orig) {
 		super(source, type, orig);
@@ -141,19 +144,6 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		if (id == null)
 			return null;
 		return StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(id);
-	}
-
-	final public void setNamespaceSeparator(String namespaceSeparator) {
-		this.namespaceSeparatorHasBeenSet = true;
-		this.namespaceSeparator = namespaceSeparator;
-		entityFactory.setSeparator(namespaceSeparator);
-	}
-
-	final public String getNamespaceSeparator() {
-		if (namespaceSeparatorHasBeenSet == false)
-			return ".";
-
-		return namespaceSeparator;
 	}
 
 	@Override
@@ -233,7 +223,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 
 	public String removePortId(String id) {
 		// To be kept
-		if ("::".equals(namespaceSeparator))
+		if ("::".equals(getNamespaceSeparator()))
 			return id;
 		final int x = id.lastIndexOf("::");
 		if (x == -1)
@@ -243,7 +233,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 
 	public String getPortId(String id) {
 		// To be kept
-		if ("::".equals(namespaceSeparator))
+		if ("::".equals(getNamespaceSeparator()))
 			return null;
 		final int x = id.lastIndexOf("::");
 		if (x == -1)

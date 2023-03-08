@@ -76,7 +76,6 @@ public class DescriptionDiagramFactory extends PSystemCommandFactory {
 	@Override
 	protected void initCommandsList(List<Command> cmds) {
 		cmds.add(new CommandFootboxIgnored());
-		cmds.add(new CommandNamespaceSeparator());
 		cmds.add(new CommandRankDir());
 		cmds.add(new CommandNewpage(this));
 		CommonCommands.addCommonCommands1(cmds);

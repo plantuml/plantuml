@@ -45,14 +45,9 @@ public class HColorSimple extends HColor {
 	private final HColor dark;
 
 	@Override
-	public int hashCode() {
-		return color.hashCode();
-	}
-
-	@Override
 	public String toString() {
 
-		final boolean withDark = this != dark;
+		final boolean withDark = dark != null;
 
 		final StringBuilder sb = new StringBuilder();
 		if (withDark)
@@ -65,6 +60,7 @@ public class HColorSimple extends HColor {
 		return sb.toString();
 	}
 
+	// ::comment when __HAXE__
 	@Override
 	public String asString() {
 		if (isTransparent())
@@ -77,28 +73,42 @@ public class HColorSimple extends HColor {
 	}
 
 	@Override
+	public boolean equals(Object other) {
+		if (other instanceof HColorSimple == false)
+			return false;
+
+		return this.color.equals(((HColorSimple) other).color);
+	}
+
+	@Override
+	public int hashCode() {
+		return color.hashCode();
+	}
+
+	@Override
 	public HColor lighten(int ratio) {
 		final float[] hsl = new HSLColor(color).getHSL();
 		hsl[2] += hsl[2] * (ratio / 100.0);
-		return new HColorSimple(new HSLColor(hsl).getRGB());
+		return HColorSimple.create(new HSLColor(hsl).getRGB());
 	}
 
 	@Override
 	public HColor darken(int ratio) {
 		final float[] hsl = new HSLColor(color).getHSL();
 		hsl[2] -= hsl[2] * (ratio / 100.0);
-		return new HColorSimple(new HSLColor(hsl).getRGB());
+		return HColorSimple.create(new HSLColor(hsl).getRGB());
 	}
 
 	@Override
 	public HColor reverseHsluv() {
-		return new HColorSimple(ColorUtils.reverseHsluv(color));
+		return HColorSimple.create(ColorUtils.reverseHsluv(color));
 	}
 
 	@Override
 	public HColor reverse() {
-		return new HColorSimple(ColorOrder.RGB.getReverse(color));
+		return HColorSimple.create(ColorOrder.RGB.getReverse(color));
 	}
+	// ::done
 
 	@Override
 	public boolean isDark() {
@@ -110,17 +120,8 @@ public class HColorSimple extends HColor {
 		return color.getAlpha() == 0;
 	}
 
-	@Override
-	public boolean equals(Object other) {
-		if (other instanceof HColorSimple == false)
-			return false;
-
-		return this.color.equals(((HColorSimple) other).color);
-	}
-
-	HColorSimple(Color c) {
-		this.color = c;
-		this.dark = this;
+	public static HColorSimple create(Color c) {
+		return new HColorSimple(c, null);
 	}
 
 	private HColorSimple(Color c, HColor dark) {
@@ -133,9 +134,10 @@ public class HColorSimple extends HColor {
 	}
 
 	public HColor asMonochrome() {
-		return new HColorSimple(ColorUtils.getGrayScaleColor(color));
+		return HColorSimple.create(ColorUtils.getGrayScaleColor(color));
 	}
 
+	// ::comment when __HAXE__
 	public HColor asMonochrome(HColorSimple colorForMonochrome, double minGray, double maxGray) {
 		final Color tmp = ColorUtils.getGrayScaleColor(color);
 		final int gray = tmp.getGreen();
@@ -144,22 +146,14 @@ public class HColorSimple extends HColor {
 
 		final double coef = (gray - minGray) / 256.0;
 		final Color result = ColorUtils.grayToColor(coef, colorForMonochrome.color);
-		return new HColorSimple(result);
+		return HColorSimple.create(result);
 	}
 
 	@Override
-	public HColor opposite() {
-		final Color mono = ColorUtils.getGrayScaleColor(color);
-		final int grayScale = 255 - mono.getGreen() > 127 ? 255 : 0;
-		return new HColorSimple(new Color(grayScale, grayScale, grayScale));
-	}
-
-	public int distanceTo(HColorSimple other) {
-		return ColorUtils.distance(this.color, other.color);
-	}
-
-	public boolean isGray() {
-		return color.getRed() == color.getGreen() && color.getGreen() == color.getBlue();
+	public Color toColor(ColorMapper mapper) {
+		if (this.isTransparent())
+			return getAwtColor();
+		return mapper.fromColorSimple(this);
 	}
 
 	public static HColorSimple unlinear(HColorSimple color1, HColorSimple color2, int completionInt) {
@@ -178,7 +172,7 @@ public class HColorSimple extends HColor {
 
 		final HSLColor col = new HSLColor(hsl);
 
-		return new HColorSimple(col.getRGB());
+		return HColorSimple.create(col.getRGB());
 	}
 
 	private static float[] linear(float factor, float[] hsl1, float[] hsl2) {
@@ -192,6 +186,23 @@ public class HColorSimple extends HColor {
 		return x + (y - x) * factor;
 	}
 
+	// ::done
+
+	@Override
+	public HColor opposite() {
+		final Color mono = ColorUtils.getGrayScaleColor(color);
+		final int grayScale = 255 - mono.getGreen() > 127 ? 255 : 0;
+		return HColorSimple.create(new Color(grayScale, grayScale, grayScale));
+	}
+
+	public int distanceTo(HColorSimple other) {
+		return ColorUtils.distance(this.color, other.color);
+	}
+
+	public boolean isGray() {
+		return color.getRed() == color.getGreen() && color.getGreen() == color.getBlue();
+	}
+
 	@Override
 	public HColor withDark(HColor dark) {
 		return new HColorSimple(color, dark);
@@ -199,14 +210,9 @@ public class HColorSimple extends HColor {
 
 	@Override
 	public HColor darkSchemeTheme() {
+		if (dark == null)
+			return this;
 		return dark;
-	}
-
-	@Override
-	public Color toColor(ColorMapper mapper) {
-		if (this.isTransparent())
-			return getAwtColor();
-		return mapper.fromColorSimple(this);
 	}
 
 }

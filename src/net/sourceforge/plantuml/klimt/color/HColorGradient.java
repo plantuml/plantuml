@@ -38,6 +38,7 @@ import java.awt.Color;
 import java.util.Objects;
 
 public class HColorGradient extends HColor {
+	// ::remove file when __HAXE__
 
 	private final HColor color1;
 	private final HColor color2;

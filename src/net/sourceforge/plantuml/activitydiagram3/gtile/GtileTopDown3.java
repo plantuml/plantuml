@@ -121,7 +121,7 @@ public class GtileTopDown3 extends AbstractGtile {
 		final XDimension2D corner1 = dim1.applyTranslate(getPos1());
 		final XDimension2D corner2 = dim2.applyTranslate(getPos2());
 		final XDimension2D corner3 = dim3.applyTranslate(getPos3());
-		return MathUtils.max(corner1, corner2, corner3);
+		return MathUtils.maxDim(corner1, corner2, corner3);
 	}
 
 	@Override

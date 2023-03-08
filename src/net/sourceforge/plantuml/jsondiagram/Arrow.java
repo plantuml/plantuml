@@ -49,7 +49,7 @@ public class Arrow {
 	public void drawArrow(UGraphic ug) {
 		ug = ug.apply(UStroke.simple());
 
-		final ULine p1p2 = new ULine(p1, p2);
+		final ULine p1p2 = ULine.create(p1, p2);
 		final double dist = p1.distance(p2);
 
 		final double alpha = Math.atan2(p1p2.getDX(), p1p2.getDY());

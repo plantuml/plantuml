@@ -50,6 +50,7 @@ public abstract class ColorMapper {
 			return simple.getAwtColor();
 		}
 	};
+	// ::comment when __HAXE__
 	public final static ColorMapper DARK_MODE = new ColorMapper() {
 		@Override
 		public Color fromColorSimple(HColorSimple simple) {
@@ -83,5 +84,7 @@ public abstract class ColorMapper {
 			}
 		};
 	}
+
+	// ::done
 
 }

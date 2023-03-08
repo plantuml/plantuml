@@ -48,13 +48,13 @@ import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class StateDiagram extends AbstractEntityDiagram {
-	// :: remove folder when __HAXE__
+	// ::remove folder when __HAXE__
 
 	private static final String CONCURRENT_PREFIX = "CONC";
 
 	public StateDiagram(UmlSource source, Map<String, String> skinParam) {
 		super(source, UmlDiagramType.STATE, skinParam);
-		// setNamespaceSeparator(null);
+		setNamespaceSeparator(".");
 	}
 
 	public boolean checkConcurrentStateOk(Quark<Entity> code) {

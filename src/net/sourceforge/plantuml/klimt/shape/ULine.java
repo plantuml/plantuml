@@ -48,8 +48,8 @@ public class ULine extends AbstractShadowable implements UShapeSized {
 	private final double dx;
 	private final double dy;
 
-	public ULine(XPoint2D p1, XPoint2D p2) {
-		this(p2.getX() - p1.getX(), p2.getY() - p1.getY());
+	public static ULine create(XPoint2D p1, XPoint2D p2) {
+		return new ULine(p2.getX() - p1.getX(), p2.getY() - p1.getY());
 	}
 
 	public ULine(double dx, double dy) {

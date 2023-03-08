@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.MyPattern;
 
 public enum FontStyle {
-	// :: remove file when __HAXE__
+	// ::remove file when __HAXE__
 	PLAIN, ITALIC, BOLD, UNDERLINE, STRIKE, WAVE, BACKCOLOR;
 
 	public UFont mutateFont(UFont font) {

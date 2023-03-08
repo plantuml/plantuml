@@ -23,6 +23,7 @@ import java.awt.Color;
  * a color by adjusting the luminance value.
  */
 public class HSLColor {
+	// ::remove file when __HAXE__
 	private Color rgb;
 	private float[] hsl;
 	private float alpha;

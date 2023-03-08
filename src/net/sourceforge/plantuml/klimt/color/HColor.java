@@ -40,15 +40,24 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.klimt.UBackground;
 import net.sourceforge.plantuml.klimt.UChange;
 
+class Back implements UBackground {
+
+	private final HColor hColor;
+
+	public Back(HColor hColor) {
+		this.hColor = hColor;
+	}
+
+	@Override
+	public HColor getBackColor() {
+		return hColor;
+	}
+}
+
 public abstract class HColor implements UChange {
-	// ::remove folder when __HAXE__
 
 	public UBackground bg() {
-		return new UBackground() {
-			public HColor getBackColor() {
-				return HColor.this;
-			}
-		};
+		return new Back(this);
 	}
 
 	public Color toColor(ColorMapper mapper) {
@@ -94,9 +103,11 @@ public abstract class HColor implements UChange {
 		return true;
 	}
 
+	// ::comment when __HAXE__
 	public String asString() {
 		return "?" + getClass().getSimpleName();
 	}
+	// ::done
 
 	public HColor darkSchemeTheme() {
 		return this;

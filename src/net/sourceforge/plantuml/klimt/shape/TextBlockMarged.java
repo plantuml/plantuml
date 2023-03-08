@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.svek.Ports;
 import net.sourceforge.plantuml.svek.WithPorts;
 
 class TextBlockMarged extends AbstractTextBlock implements TextBlock, WithPorts {
-    // ::remove file when __HAXE__
+	// ::remove file when __HAXE__
 
 	private final TextBlock textBlock;
 	private final double top;
@@ -80,7 +80,7 @@ class TextBlockMarged extends AbstractTextBlock implements TextBlock, WithPorts 
 		// URectangle(calculateDimension(ug.getStringBounder())));
 		final XDimension2D dim = calculateDimension(ug.getStringBounder());
 		if (dim.getWidth() > 0) {
-			ug.draw(new UEmpty(dim));
+			ug.draw(UEmpty.create(dim));
 			final UTranslate translate = new UTranslate(left, top);
 			textBlock.drawU(ug.apply(translate));
 		}

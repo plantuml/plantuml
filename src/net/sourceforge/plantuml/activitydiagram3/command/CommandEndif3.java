@@ -53,7 +53,9 @@ public class CommandEndif3 extends SingleLineCommand2<ActivityDiagram3> {
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandEndif3.class.getName(), //
 				RegexLeaf.start(), //
-				new RegexLeaf("endif"), //
+				new RegexLeaf("end"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("if"), //
 				new RegexLeaf(";?"), //
 				RegexLeaf.end());
 	}

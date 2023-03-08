@@ -62,6 +62,15 @@ public class StringUtils {
 		// ::done
 	}
 
+	public static String goLowerCase(String s) {
+		// ::comment when __HAXE__
+		return s.toLowerCase(Locale.ENGLISH);
+		// ::done
+		// ::uncomment when __HAXE__
+		// return s.toLowerCase();
+		// ::done
+	}
+
 	public static String eventuallyRemoveStartingAndEndingDoubleQuote(String s, String format) {
 		if (s == null)
 			return null;
@@ -237,10 +246,6 @@ public class StringUtils {
 
 	public static char goUpperCase(char c) {
 		return goUpperCase("" + c).charAt(0);
-	}
-
-	public static String goLowerCase(String s) {
-		return s.toLowerCase(Locale.ENGLISH);
 	}
 
 	public static char goLowerCase(char c) {
@@ -548,13 +553,14 @@ public class StringUtils {
 		return h;
 	}
 
+	// ::done
+
 	public static String sharp000000(int color) {
 		final int v = 0xFFFFFF & color;
 		String s = "000000" + Integer.toHexString(v).toUpperCase();
 		s = s.substring(s.length() - 6);
 		return "#" + s;
 	}
-	// ::done
 
 	// ::comment when __CORE__ or __HAXE__
 	public static int getWcWidth(Display stringsToDisplay) {

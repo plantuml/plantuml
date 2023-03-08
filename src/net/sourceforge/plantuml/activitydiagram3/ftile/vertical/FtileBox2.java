@@ -192,7 +192,7 @@ public class FtileBox2 extends AbstractFtile {
 		final UDrawable shape = boxStyle.getUDrawable(widthTotal, heightTotal, shadowing, roundCorner);
 
 		final XDimension2D dimTotal = calculateDimension(ug.getStringBounder());
-		ug.draw(new UEmpty(dimTotal));
+		ug.draw(UEmpty.create(dimTotal));
 
 		final UStroke thickness = style.getStroke();
 

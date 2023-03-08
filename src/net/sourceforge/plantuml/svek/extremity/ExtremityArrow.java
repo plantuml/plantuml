@@ -101,7 +101,7 @@ public class ExtremityArrow extends Extremity {
 	public void drawLineIfTransparent(UGraphic ug) {
 		final XPoint2D pt1 = polygon.getPoint(0);
 		final XPoint2D pt2 = polygon.getPoint(2);
-		final ULine line = new ULine(pt1, pt2);
+		final ULine line = ULine.create(pt1, pt2);
 		ug.apply(UTranslate.point(pt1)).draw(line);
 
 	}

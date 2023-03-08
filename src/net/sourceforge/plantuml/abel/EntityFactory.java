@@ -73,8 +73,7 @@ public final class EntityFactory implements IEntityFactory {
 		this.hides2 = hides2;
 		this.removed = removed;
 		this.diagram = diagram;
-		this.namespace = new Plasma<Entity>(".");
-		// this.printspace = new Plasma<Entity>(".");
+		this.namespace = new Plasma<Entity>();
 		this.root = namespace.root();
 		this.rootGroup = new Entity(this.root, this, null, GroupType.ROOT, 0);
 	}

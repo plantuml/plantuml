@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
 import net.sourceforge.plantuml.plasma.Quark;
+import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
@@ -101,16 +102,16 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 
 				new RegexConcat(
 						//
-						new RegexLeaf("ARROW_HEAD1",
-								"((?<=[%s])+[ox]|[)#\\[<*+^}]|\\<_|\\<\\|[\\:\\|]|[<\\[]\\||\\}o|\\}\\||\\|o|\\|\\|)?"), //
+						optionalHead("ARROW_HEAD1", "(?<=[%s])+[ox]", "[)#\\[<*+^}]_?", "\\<_?\\|[\\:\\|]", "[<\\[]\\|",
+								"\\}o", "\\}\\|", "\\|o", "\\|\\|"),
 						new RegexLeaf("ARROW_BODY1", "([-=.]+)"), //
 						new RegexLeaf("ARROW_STYLE1", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
 						new RegexLeaf("ARROW_DIRECTION", "(left|right|up|down|le?|ri?|up?|do?)?"), //
 						new RegexOptional(new RegexLeaf("INSIDE", "(0|\\(0\\)|\\(0|0\\))(?=[-=.~])")), //
 						new RegexLeaf("ARROW_STYLE2", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
 						new RegexLeaf("ARROW_BODY2", "([-=.]*)"), //
-						new RegexLeaf("ARROW_HEAD2",
-								"([ox][%s]+|:\\>\\>?|_\\>|[(#\\]>*+^\\{]|[\\|\\:]\\|\\>|\\|[>\\]]|o\\{|\\|\\{|o\\||\\|\\|)?")), //
+						optionalHead("ARROW_HEAD2", "[ox][%s]+", ":\\>\\>?", "_?\\>", "[(#\\]*+^\\{]", "[\\|:]\\|\\>",
+								"\\|[>\\]]", "o\\{", "\\|\\{", "o\\|", "\\|\\|")), //
 
 				RegexLeaf.spaceZeroOrMore(), //
 
@@ -141,6 +142,18 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 						)), RegexLeaf.end());
 	}
 
+	private static IRegex optionalHead(String name, String... options) {
+		final StringBuilder sb = new StringBuilder();
+		sb.append("(");
+		for (String s : options) {
+			if (sb.length() > 1)
+				sb.append("|");
+			sb.append(s);
+		}
+		sb.append(")?");
+		return new RegexLeaf(name, sb.toString());
+	}
+
 	private static ColorParser color() {
 		return ColorParser.simpleColor(ColorType.LINE);
 	}
@@ -156,7 +169,6 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 	@Override
 	protected CommandExecutionResult executeArg(AbstractClassOrObjectDiagram diagram, LineLocation location,
 			RegexResult arg) throws NoSuchColorException {
-
 		String ent1String = diagram.cleanId(arg.get("ENT1", 0));
 		String ent2String = diagram.cleanId(arg.get("ENT2", 0));
 		if (ent1String == null && ent2String == null)
@@ -561,7 +573,7 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 	}
 
 	private String getArrowHead(RegexResult arg, final String key) {
-		return notNull(arg.get(key, 0));
+		return notNull(arg.get(key, 0)).replaceAll("_", "");
 	}
 
 	private String getFullArrow(RegexResult arg) {

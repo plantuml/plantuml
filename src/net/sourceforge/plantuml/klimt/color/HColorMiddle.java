@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.klimt.color;
 import java.awt.Color;
 
 public class HColorMiddle extends HColor {
+	// ::remove file when __HAXE__
 
 	private final HColor color1;
 	private final HColor color2;

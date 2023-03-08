@@ -12,7 +12,7 @@ import java.util.Comparator;
 abstract public class CTSort
 {
     // ::remove folder when __HAXE__
-  // :: remove folder when __CORE__
+  // ::remove folder when __CORE__
   public void sort(Object[] items)
   {
     sort(items, new DefaultComparator());

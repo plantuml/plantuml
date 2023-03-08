@@ -40,6 +40,7 @@ import net.sourceforge.plantuml.klimt.UShape;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 
 public class UGraphicInterceptorUDrawable extends UGraphicDelegator {
+    // ::remove file when __HAXE__
 
 	public UGraphicInterceptorUDrawable(UGraphic ug) {
 		super(ug);

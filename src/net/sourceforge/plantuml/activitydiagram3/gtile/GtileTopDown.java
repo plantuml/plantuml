@@ -118,7 +118,7 @@ public class GtileTopDown extends AbstractGtile {
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		final XDimension2D corner1 = dim1.applyTranslate(getPos1());
 		final XDimension2D corner2 = dim2.applyTranslate(getPos2());
-		return MathUtils.max(corner1, corner2);
+		return MathUtils.maxDim(corner1, corner2);
 	}
 
 	public Set<Swimlane> getSwimlanes() {

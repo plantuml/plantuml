@@ -41,7 +41,7 @@ import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
 public class ProgressBar {
-	// :: remove file when __CORE__
+	// ::remove file when __CORE__
 	// ::remove file when __HAXE__
 
 	private static final java.util.logging.Logger logger;

@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.geom.EnsureVisible;
 
 public class UGraphicNull extends AbstractUGraphic<String> implements EnsureVisible {
+    // ::remove file when __HAXE__
 
 	@Override
 	protected AbstractCommonUGraphic copyUGraphic() {

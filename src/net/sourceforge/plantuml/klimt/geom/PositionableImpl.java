@@ -46,8 +46,8 @@ public final class PositionableImpl implements Positionable {
 		this.dim = dim;
 	}
 
-	public PositionableImpl(XPoint2D pt, XDimension2D dim) {
-		this(pt.getX(), pt.getY(), dim);
+	public static PositionableImpl create(XPoint2D pt, XDimension2D dim) {
+		return new PositionableImpl(pt.getX(), pt.getY(), dim);
 	}
 
 	public XPoint2D getPosition() {

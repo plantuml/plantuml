@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.klimt.color;
 import java.awt.Color;
 
 public enum ColorOrder {
+	// ::remove file when __HAXE__
 	RGB, RBG, GRB, GBR, BRG, BGR;
 
 	public Color getColor(Color color) {

@@ -91,7 +91,7 @@ public class PixelImage implements MutableImage {
 			for (int j = 0; j < bufferedImageScale1.getHeight(); j++) {
 				final int color = bufferedImageScale1.getRGB(i, j);
 				final int rgb = getRgb(color);
-				final int grayScale = ColorUtils.getGrayScale(rgb);
+				final int grayScale = ColorUtils.getGrayScaleFromRGB(rgb);
 				final int gray = grayScale + grayScale << 8 + grayScale << 16;
 				final int a = getA(color);
 				copy.setRGB(i, j, gray + a);
@@ -150,8 +150,8 @@ public class PixelImage implements MutableImage {
 				// if (isTransparent(color)) {
 				// continue;
 				// }
-				final int gray = ColorUtils.getGrayScale(rgb);
-				if (darkerRgb == -1 || gray < ColorUtils.getGrayScale(darkerRgb))
+				final int gray = ColorUtils.getGrayScaleFromRGB(rgb);
+				if (darkerRgb == -1 || gray < ColorUtils.getGrayScaleFromRGB(darkerRgb))
 					darkerRgb = rgb;
 
 			}
