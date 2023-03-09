@@ -91,10 +91,8 @@ public class UFont {
 	}
 
 	private static boolean doesFamilyExists(String name) {
-		// ::comment when __HAXE__
+		// ::revert when __HAXE__
 		return names.contains(name.toLowerCase());
-		// ::done
-		// ::uncomment when __HAXE__
 		// return true;
 		// ::done
 	}

@@ -51,13 +51,11 @@ public class Url implements EnsureVisible {
 	public Url(String url, String tooltip, String label) {
 		url = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(url, "\"");
 		this.url = url;
-		// ::comment when __HAXE__
+		// ::revert when __HAXE__
 		if (tooltip == null)
 			this.tooltip = url;
 		else
 			this.tooltip = BackSlash.manageNewLine(tooltip);
-		// ::done
-		// ::uncomment when __HAXE__
 		// this.tooltip = url;
 		// ::done
 

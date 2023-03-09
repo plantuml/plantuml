@@ -270,10 +270,8 @@ public class ImageBuilder {
 		}
 	}
 
-	// ::comment when __CORE__
+	// ::revert when __CORE__
 	private ImageData writeImageInternal(OutputStream os, Animation animationArg) throws IOException {
-		// ::done
-		// ::uncomment when __CORE__
 		// private ImageData writeImageInternal(OutputStream os) throws IOException {
 		// ::done
 		XDimension2D dim = getFinalDimension();
@@ -294,11 +292,9 @@ public class ImageBuilder {
 		if (scaleFactor <= 0)
 			throw new IllegalStateException("Bad scaleFactor");
 		WasmLog.log("...image drawing...");
-		// ::comment when __CORE__
+		// ::revert when __CORE__
 		UGraphic ug = createUGraphic(dim, animationArg, dx, dy, scaleFactor,
 				titledDiagram == null ? new Pragma() : titledDiagram.getPragma());
-		// ::done
-		// ::uncomment when __CORE__
 		// UGraphic ug = createUGraphic(dim, dx, dy, scaleFactor,
 		// titledDiagram == null ? new Pragma() : titledDiagram.getPragma());
 		// ::done
@@ -427,11 +423,9 @@ public class ImageBuilder {
 	}
 	// ::done
 
-	// ::comment when __CORE__
+	// ::revert when __CORE__
 	private UGraphic createUGraphic(final XDimension2D dim, Animation animationArg, double dx, double dy,
 			double scaleFactor, Pragma pragma) {
-		// ::done
-		// ::uncomment when __CORE__
 		// private UGraphic createUGraphic(final XDimension2D dim, double dx, double dy,
 		// double scaleFactor, Pragma pragma) {
 		// ::done

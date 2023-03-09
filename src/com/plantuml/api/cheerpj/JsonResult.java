@@ -40,7 +40,7 @@ import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.error.PSystemError;
 
-//::uncomment when __CORE__
+//::revert when __CORE__
 //import com.leaningtech.client.Global;
 //::done
 
@@ -55,10 +55,8 @@ public class JsonResult {
 
 	private Object done() {
 		sb.append("}");
-		// ::comment when __CORE__
+		// ::revert when __CORE__
 		return sb.toString();
-		// ::done
-		// ::uncomment when __CORE__
 		// return Global.JSString(sb.toString());
 		// ::done
 	}

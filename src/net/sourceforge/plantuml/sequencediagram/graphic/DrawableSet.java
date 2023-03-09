@@ -287,10 +287,8 @@ public class DrawableSet {
 
 	private void drawLineU22(UGraphic ug, boolean showTail, Page page) {
 		// http://plantuml.sourceforge.net/qa/?qa=4826/lifelines-broken-for-txt-seq-diagrams-when-create-is-used
-		// ::comment when __CORE__
+		// ::revert when __CORE__
 		final boolean isTxt = ug instanceof UGraphicTxt;
-		// ::done
-		// ::uncomment when __CORE__
 		// final boolean isTxt = false;
 		// ::done
 		for (LivingParticipantBox box : getAllLivingParticipantBox()) {

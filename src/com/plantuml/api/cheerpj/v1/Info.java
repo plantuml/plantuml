@@ -55,7 +55,7 @@ import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.preproc.Defines;
 
-//::uncomment when __CORE__
+//::revert when __CORE__
 //import com.leaningtech.client.Global;
 //::done
 
@@ -69,10 +69,8 @@ public class Info {
 			e.printStackTrace();
 			result = "";
 		}
-		// ::comment when __CORE__
+		// ::revert when __CORE__
 		return result;
-		// ::done
-		// ::uncomment when __CORE__
 		// return Global.JSString(result);
 		// ::done
 	}
@@ -85,10 +83,8 @@ public class Info {
 			e.printStackTrace();
 			result = "";
 		}
-		// ::comment when __CORE__
+		// ::revert when __CORE__
 		return result;
-		// ::done
-		// ::uncomment when __CORE__
 		// return Global.JSString(result);
 		// ::done
 	}

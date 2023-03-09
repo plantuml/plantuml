@@ -54,19 +54,15 @@ import net.sourceforge.plantuml.utils.Log;
 public class StringUtils {
 
 	public static String goUpperCase(String s) {
-		// ::comment when __HAXE__
+		// ::revert when __HAXE__
 		return s.toUpperCase(Locale.ENGLISH);
-		// ::done
-		// ::uncomment when __HAXE__
 		// return s.toUpperCase();
 		// ::done
 	}
 
 	public static String goLowerCase(String s) {
-		// ::comment when __HAXE__
+		// ::revert when __HAXE__
 		return s.toLowerCase(Locale.ENGLISH);
-		// ::done
-		// ::uncomment when __HAXE__
 		// return s.toLowerCase();
 		// ::done
 	}

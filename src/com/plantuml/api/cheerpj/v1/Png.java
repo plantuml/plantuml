@@ -59,7 +59,7 @@ import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.preproc.Defines;
 
-//::uncomment when __CORE__
+//::revert when __CORE__
 //import com.leaningtech.client.Global;
 //::done
 
@@ -142,10 +142,8 @@ public class Png {
 			os64.close();
 
 			final String base64 = os64.toString();
-			// ::comment when __CORE__
+			// ::revert when __CORE__
 			return base64;
-			// ::done
-			// ::uncomment when __CORE__
 			// return Global.JSString(base64);
 			// ::done
 
