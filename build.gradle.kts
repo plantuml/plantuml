@@ -89,6 +89,8 @@ publishing {
 	publications.create<MavenPublication>("maven") {
 		from(components["java"])
 		pom {
+			name.set("PlantUML")
+            description.set("PlantUML is a component that allows to quickly write diagrams from text.")
 			groupId = project.group as String
 			artifactId = project.name
 			version = project.version as String
