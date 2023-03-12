@@ -40,7 +40,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 
-import net.sourceforge.plantuml.asciiart.TextStringBounder;
 import net.sourceforge.plantuml.asciiart.TranslatedCharArea;
 import net.sourceforge.plantuml.asciiart.UmlCharArea;
 import net.sourceforge.plantuml.asciiart.UmlCharAreaImpl;
@@ -49,6 +48,7 @@ import net.sourceforge.plantuml.klimt.UShape;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.drawing.AbstractCommonUGraphic;
+import net.sourceforge.plantuml.klimt.drawing.debug.StringBounderDebug;
 import net.sourceforge.plantuml.klimt.font.FontStyle;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.UImage;
@@ -56,7 +56,7 @@ import net.sourceforge.plantuml.klimt.shape.UText;
 import net.sourceforge.plantuml.security.SecurityUtils;
 
 public class UGraphicTxt extends AbstractCommonUGraphic implements ClipContainer {
-    // ::remove folder when __HAXE__
+	// ::remove folder when __HAXE__
 	// ::remove folder when __CORE__
 
 	private final UmlCharArea charArea;
@@ -68,12 +68,14 @@ public class UGraphicTxt extends AbstractCommonUGraphic implements ClipContainer
 	}
 
 	private UGraphicTxt(UGraphicTxt other) {
+		super(other.getStringBounder());
 		basicCopy(other);
 		this.charArea = other.charArea;
 	}
 
 	public UGraphicTxt() {
-		basicCopy(HColors.BLACK, ColorMapper.IDENTITY, new TextStringBounder());
+		super(new StringBounderDebug());
+		basicCopy(HColors.BLACK, ColorMapper.IDENTITY);
 		this.charArea = new UmlCharAreaImpl();
 	}
 

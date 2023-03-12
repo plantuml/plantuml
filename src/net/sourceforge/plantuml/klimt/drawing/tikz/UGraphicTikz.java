@@ -61,7 +61,8 @@ public class UGraphicTikz extends AbstractUGraphic<TikzGraphics> implements Clip
 
 	public UGraphicTikz(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder, double scale,
 			boolean withPreamble) {
-		copy(defaultBackground, colorMapper, stringBounder, new TikzGraphics(scale, withPreamble, colorMapper));
+		super(stringBounder);
+		copy(defaultBackground, colorMapper, new TikzGraphics(scale, withPreamble, colorMapper));
 		register();
 	}
 
@@ -72,6 +73,7 @@ public class UGraphicTikz extends AbstractUGraphic<TikzGraphics> implements Clip
 	}
 
 	private UGraphicTikz(UGraphicTikz other) {
+		super(other.getStringBounder());
 		copy(other);
 		register();
 	}

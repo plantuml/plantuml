@@ -63,25 +63,27 @@ public abstract class AbstractCommonUGraphic implements UGraphic {
 	private HColor color = HColors.none();
 	private boolean enlargeClip = false;
 
-	private /*final*/ StringBounder stringBounder;
+	private final StringBounder stringBounder;
 	private UTranslate translate = UTranslate.none();
 
-	private /*final*/ ColorMapper colorMapper;
+	private /* final */ ColorMapper colorMapper;
 	private UClip clip;
 
-	private /*final*/ HColor defaultBackground;
+	private /* final */ HColor defaultBackground;
 
-	public void basicCopy(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder) {
+	protected AbstractCommonUGraphic(StringBounder stringBounder) {
+		this.stringBounder = stringBounder;
+	}
+
+	public void basicCopy(HColor defaultBackground, ColorMapper colorMapper) {
 		this.colorMapper = colorMapper;
 		this.defaultBackground = Objects.requireNonNull(defaultBackground);
-		this.stringBounder = stringBounder;
 	}
 
 	protected void basicCopy(AbstractCommonUGraphic other) {
 		this.defaultBackground = Objects.requireNonNull(other.defaultBackground);
 		this.enlargeClip = other.enlargeClip;
 		this.colorMapper = other.colorMapper;
-		this.stringBounder = other.stringBounder;
 		this.translate = other.translate;
 		this.clip = other.clip;
 
@@ -93,7 +95,6 @@ public abstract class AbstractCommonUGraphic implements UGraphic {
 	}
 
 	protected abstract AbstractCommonUGraphic copyUGraphic();
-
 
 	@Override
 	public HColor getDefaultBackground() {

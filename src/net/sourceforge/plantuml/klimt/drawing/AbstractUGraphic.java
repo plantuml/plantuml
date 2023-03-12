@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.klimt.drawing;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 import net.atmp.SpecialText;
 import net.sourceforge.plantuml.activitydiagram3.ftile.CenteredText;
@@ -67,10 +66,10 @@ import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.klimt.shape.UText;
 
 public abstract class AbstractUGraphic<O> extends AbstractCommonUGraphic {
-    // ::remove file when __HAXE__
+	// ::remove file when __HAXE__
 
-	private /*final*/ O graphic;
-	private /*final*/ MinMaxMutable minmax;
+	private /* final */ O graphic;
+	private /* final */ MinMaxMutable minmax;
 
 	// It would be nice to do something like this but not sure how:
 	// Map<Class<SHAPE>, UDriver<SHAPE, O>>
@@ -78,9 +77,12 @@ public abstract class AbstractUGraphic<O> extends AbstractCommonUGraphic {
 	// https://stackoverflow.com/questions/416540/java-map-with-values-limited-by-keys-type-parameter
 	private final Map<Class<? extends UShape>, UDriver<?, O>> drivers = new HashMap<>();
 
-	public void copy(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder, O graphic) {
-		basicCopy(defaultBackground, colorMapper, stringBounder);
-		// super(Objects.requireNonNull(defaultBackground), colorMapper, stringBounder);
+	protected AbstractUGraphic(StringBounder stringBounder) {
+		super(stringBounder);
+	}
+
+	public void copy(HColor defaultBackground, ColorMapper colorMapper, O graphic) {
+		basicCopy(defaultBackground, colorMapper);
 		this.graphic = graphic;
 		this.minmax = MinMaxMutable.getEmpty(true);
 	}
@@ -90,7 +92,6 @@ public abstract class AbstractUGraphic<O> extends AbstractCommonUGraphic {
 		this.graphic = other.graphic;
 		this.minmax = other.minmax;
 	}
-
 
 	protected final O getGraphicObject() {
 		return graphic;

@@ -51,12 +51,14 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.UText;
 
 public class DriverTextSvg implements UDriver<UText, SvgGraphics> {
-    // ::remove file when __HAXE__
+	// ::remove file when __HAXE__
 
 	private final StringBounder stringBounder;
 	private final ClipContainer clipContainer;
 
 	public DriverTextSvg(StringBounder stringBounder, ClipContainer clipContainer) {
+		if (stringBounder == null)
+			System.err.println("stringBounder=" + stringBounder);
 		this.stringBounder = stringBounder;
 		this.clipContainer = clipContainer;
 	}

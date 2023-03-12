@@ -62,7 +62,8 @@ public class UGraphicVdx extends AbstractUGraphic<VisioGraphics> implements Clip
 	}
 
 	public UGraphicVdx(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder) {
-		copy(defaultBackground, colorMapper, stringBounder, new VisioGraphics());
+		super(stringBounder);
+		copy(defaultBackground, colorMapper, new VisioGraphics());
 		register();
 	}
 
@@ -73,6 +74,7 @@ public class UGraphicVdx extends AbstractUGraphic<VisioGraphics> implements Clip
 	}
 
 	private UGraphicVdx(UGraphicVdx other) {
+		super(other.getStringBounder());
 		copy(other);
 		register();
 	}

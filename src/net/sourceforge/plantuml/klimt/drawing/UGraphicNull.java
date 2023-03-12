@@ -53,11 +53,13 @@ public class UGraphicNull extends AbstractUGraphic<String> implements EnsureVisi
 	}
 
 	private UGraphicNull(UGraphicNull other) {
+		super(FileFormat.PNG.getDefaultStringBounder());
 		copy(other);
 	}
 
 	public UGraphicNull() {
-		copy(HColors.BLACK, ColorMapper.IDENTITY, FileFormat.PNG.getDefaultStringBounder(), "foo");
+		super(FileFormat.PNG.getDefaultStringBounder());
+		copy(HColors.BLACK, ColorMapper.IDENTITY, "foo");
 	}
 
 	@Override

@@ -60,9 +60,9 @@ import net.sourceforge.plantuml.klimt.shape.UText;
 import net.sourceforge.plantuml.url.Url;
 
 public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipContainer {
-    // ::remove file when __HAXE__
+	// ::remove file when __HAXE__
 
-	private /* final */ boolean textAsPath;
+	private final boolean textAsPath;
 	private /* final */ SvgOption option;
 
 	public double dpiFactor() {
@@ -71,21 +71,21 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 
 	@Override
 	protected AbstractCommonUGraphic copyUGraphic() {
-		final UGraphicSvg result = new UGraphicSvg();
+		final UGraphicSvg result = new UGraphicSvg(getStringBounder(), textAsPath);
 		result.copy(this);
-		result.textAsPath = this.textAsPath;
 		result.option = this.option;
 		return result;
 	}
 
-	private UGraphicSvg() {
+	private UGraphicSvg(StringBounder stringBounder, boolean textAsPath) {
+		super(stringBounder);
+		this.textAsPath = textAsPath;
 		register();
 	}
 
 	public static UGraphicSvg build(SvgOption option, boolean textAsPath, long seed, StringBounder stringBounder) {
-		final UGraphicSvg result = new UGraphicSvg();
-		result.copy(option.getBackcolor(), option.getColorMapper(), stringBounder, new SvgGraphics(seed, option));
-		result.textAsPath = textAsPath;
+		final UGraphicSvg result = new UGraphicSvg(stringBounder, textAsPath);
+		result.copy(option.getBackcolor(), option.getColorMapper(), new SvgGraphics(seed, option));
 		result.option = option;
 		return result;
 	}

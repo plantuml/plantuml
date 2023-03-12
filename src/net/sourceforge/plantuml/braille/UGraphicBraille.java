@@ -66,11 +66,13 @@ public class UGraphicBraille extends AbstractUGraphic<BrailleGrid> implements Cl
 	}
 
 	public UGraphicBraille(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder) {
-		copy(defaultBackground, colorMapper, stringBounder, new BrailleGrid(QUANTA));
+		super(stringBounder);
+		copy(defaultBackground, colorMapper, new BrailleGrid(QUANTA));
 		register();
 	}
 
 	private UGraphicBraille(UGraphicBraille other) {
+		super(other.getStringBounder());
 		copy(other);
 		register();
 	}

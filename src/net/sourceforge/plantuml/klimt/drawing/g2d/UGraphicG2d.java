@@ -112,6 +112,7 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> implements EnsureV
 	}
 
 	private UGraphicG2d(UGraphicG2d other) {
+		super(other.getStringBounder());
 		copy(other);
 		// ::comment when __CORE__
 		this.hasAffineTransform = other.hasAffineTransform;
@@ -141,7 +142,8 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> implements EnsureV
 		// StringBounder stringBounder, Graphics2D g2d,
 		// double dpiFactor, double dx, double dy, FileFormat format) {
 		// ::done
-		copy(defaultBackground, colorMapper, stringBounder, g2d);
+		super(stringBounder);
+		copy(defaultBackground, colorMapper, g2d);
 		this.format = format;
 		this.dpiFactor = dpiFactor;
 		if (dpiFactor != 1.0)

@@ -67,6 +67,7 @@ public class UGraphicEps extends AbstractUGraphic<EpsGraphics> implements ClipCo
 	}
 
 	protected UGraphicEps(UGraphicEps other) {
+		super(other.getStringBounder());
 		copy(other);
 		this.strategyTOBEREMOVED = other.strategyTOBEREMOVED;
 		register();
@@ -74,7 +75,8 @@ public class UGraphicEps extends AbstractUGraphic<EpsGraphics> implements ClipCo
 
 	public UGraphicEps(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder,
 			EpsStrategy strategy) {
-		copy(defaultBackground, colorMapper, stringBounder, strategy.creatEpsGraphics());
+		super(stringBounder);
+		copy(defaultBackground, colorMapper, strategy.creatEpsGraphics());
 		this.strategyTOBEREMOVED = strategy;
 		register();
 	}
