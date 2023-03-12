@@ -56,7 +56,7 @@ public class ETileOneOrMore extends ETile {
 	public ETileOneOrMore(ETile orig, String loop, FontConfiguration fc, ISkinParam skinParam) {
 		this.orig = orig;
 		this.fc = fc;
-		this.loop = loop == null ? null : new UText(loop, fc);
+		this.loop = loop == null ? null : UText.build(loop, fc);
 	}
 
 	public ETileOneOrMore(ETile orig) {
@@ -92,7 +92,7 @@ public class ETileOneOrMore extends ETile {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final XDimension2D fullDim = calculateDimension(stringBounder);
 		if (TRACE)
-			ug.apply(HColors.RED).draw(new URectangle(fullDim));
+			ug.apply(HColors.RED).draw(URectangle.build(fullDim));
 
 		final double h1 = getH1(stringBounder);
 

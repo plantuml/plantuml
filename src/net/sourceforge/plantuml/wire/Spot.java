@@ -60,7 +60,7 @@ public class Spot {
 
 		final UTranslate pos = block.getAbsolutePosition(x, y);
 		final UTranslate tr = pos.compose(new UTranslate(-2, -2));
-		final UShape circle = new UEllipse(5, 5);
+		final UShape circle = UEllipse.build(5, 5);
 
 		ug = ug.apply(color).apply(color.bg());
 		ug.apply(tr).draw(circle);

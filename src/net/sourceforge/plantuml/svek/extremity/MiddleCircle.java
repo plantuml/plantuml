@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.klimt.shape.UEllipse;
 class MiddleCircle extends Extremity {
 
 	private final double radius = 6;
-	private final UEllipse circle = new UEllipse(2 * radius, 2 * radius);
+	private final UEllipse circle = UEllipse.build(2 * radius, 2 * radius);
 	private final HColor backColor;
 
 	public MiddleCircle(HColor backColor) {

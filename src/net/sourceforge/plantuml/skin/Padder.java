@@ -127,7 +127,7 @@ public class Padder {
 					ug2 = ug2.apply(backgroundColor.bg());
 				}
 				final XDimension2D originalDim = orig.calculateDimension(ug.getStringBounder());
-				final URectangle rect = new URectangle(originalDim.delta(2 * padding)).rounded(roundCorner);
+				final URectangle rect = URectangle.build(originalDim.delta(2 * padding)).rounded(roundCorner);
 				ug2.draw(rect);
 				orig.drawU(ug.apply(new UTranslate(padding, padding)));
 			}

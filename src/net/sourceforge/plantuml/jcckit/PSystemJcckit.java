@@ -54,6 +54,7 @@ import net.sourceforge.plantuml.security.SImageIO;
 
 public class PSystemJcckit extends AbstractPSystem {
 	// ::remove folder when __CORE__
+	// ::remove folder when __MIT__
 
 	private final PropertiesBasedConfigData prop;
 	private final int width;

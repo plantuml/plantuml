@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.MyPattern;
 
 public enum FontStyle {
-	// ::remove file when __HAXE__
+
 	PLAIN, ITALIC, BOLD, UNDERLINE, STRIKE, WAVE, BACKCOLOR;
 
 	public UFont mutateFont(UFont font) {
@@ -121,6 +121,7 @@ public enum FontStyle {
 		throw new UnsupportedOperationException();
 	}
 
+	// ::comment when __HAXE__
 	public HColor getExtendedColor(String s) {
 		final Matcher2 m = MyPattern.cmpile(getActivationPattern()).matcher(s);
 		if (m.find() == false || m.groupCount() != 1)
@@ -132,6 +133,7 @@ public enum FontStyle {
 
 		return HColorSet.instance().getColorOrWhite(color);
 	}
+	// ::done
 
 	public String getDeactivationPattern() {
 		if (this == PLAIN)

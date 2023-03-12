@@ -131,7 +131,7 @@ public class Opale extends AbstractTextBlock implements TextBlock {
 	}
 
 	public static UPath getCorner(double width, double roundCorner) {
-		final UPath path = new UPath();
+		final UPath path = UPath.none();
 		path.moveTo(width - cornersize, 0);
 		if (roundCorner == 0) {
 			path.lineTo(width - cornersize, cornersize);
@@ -146,7 +146,7 @@ public class Opale extends AbstractTextBlock implements TextBlock {
 	}
 
 	public static UPath getPolygonNormal(double width, double height, double roundCorner) {
-		final UPath polygon = new UPath();
+		final UPath polygon = UPath.none();
 		if (roundCorner == 0) {
 			polygon.moveTo(0, 0);
 			polygon.lineTo(0, height);
@@ -172,7 +172,7 @@ public class Opale extends AbstractTextBlock implements TextBlock {
 	private final double delta = 4;
 
 	private UPath getPolygonLeft(final StringBounder stringBounder, final XPoint2D pp1, final XPoint2D pp2) {
-		final UPath polygon = new UPath();
+		final UPath polygon = UPath.none();
 		polygon.moveTo(0, roundCorner / 2);
 
 		double y1 = pp1.getY() - delta;
@@ -195,7 +195,7 @@ public class Opale extends AbstractTextBlock implements TextBlock {
 	}
 
 	private UPath getPolygonRight(final StringBounder stringBounder, final XPoint2D pp1, final XPoint2D pp2) {
-		final UPath polygon = new UPath();
+		final UPath polygon = UPath.none();
 		polygon.moveTo(0, roundCorner / 2);
 		polygon.lineTo(0, getHeight(stringBounder) - roundCorner / 2);
 		polygon.arcTo(new XPoint2D(roundCorner / 2, getHeight(stringBounder)), roundCorner / 2, 0, 0);
@@ -218,7 +218,7 @@ public class Opale extends AbstractTextBlock implements TextBlock {
 	}
 
 	private UPath getPolygonUp(final StringBounder stringBounder, final XPoint2D pp1, final XPoint2D pp2) {
-		final UPath polygon = new UPath();
+		final UPath polygon = UPath.none();
 		polygon.moveTo(0, roundCorner / 2);
 		polygon.lineTo(0, getHeight(stringBounder) - roundCorner / 2);
 		polygon.arcTo(new XPoint2D(roundCorner / 2, getHeight(stringBounder)), roundCorner / 2, 0, 0);
@@ -241,7 +241,7 @@ public class Opale extends AbstractTextBlock implements TextBlock {
 	}
 
 	private UPath getPolygonDown(final StringBounder stringBounder, final XPoint2D pp1, final XPoint2D pp2) {
-		final UPath polygon = new UPath();
+		final UPath polygon = UPath.none();
 		polygon.moveTo(0, roundCorner / 2);
 		polygon.lineTo(0, getHeight(stringBounder) - roundCorner / 2);
 		polygon.arcTo(new XPoint2D(roundCorner / 2, getHeight(stringBounder)), roundCorner / 2, 0, 0);

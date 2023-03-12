@@ -93,7 +93,7 @@ public class ETileOptional extends ETile {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final XDimension2D dim = calculateDimension(stringBounder);
 		if (TRACE)
-			ug.apply(HColors.BLUE).draw(new URectangle(dim));
+			ug.apply(HColors.BLUE).draw(URectangle.build(dim));
 
 		final double linePos = getH1(stringBounder);
 

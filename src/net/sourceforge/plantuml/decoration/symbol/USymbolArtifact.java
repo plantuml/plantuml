@@ -60,7 +60,7 @@ class USymbolArtifact extends USymbol {
 	private void drawArtifact(UGraphic ug, double widthTotal, double heightTotal, double shadowing,
 			double roundCorner) {
 
-		final URectangle form = new URectangle(widthTotal, heightTotal).rounded(roundCorner);
+		final URectangle form = URectangle.build(widthTotal, heightTotal).rounded(roundCorner);
 		form.setDeltaShadow(shadowing);
 
 		ug.draw(form);

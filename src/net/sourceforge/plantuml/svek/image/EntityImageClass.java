@@ -180,7 +180,7 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 
 		final double widthTotal = dimTotal.getWidth();
 		final double heightTotal = dimTotal.getHeight();
-		final Shadowable rect = new URectangle(widthTotal, heightTotal).rounded(roundCorner)
+		final Shadowable rect = URectangle.build(widthTotal, heightTotal).rounded(roundCorner)
 				.withCommentAndCodeLine(getEntity().getName(), getEntity().getCodeLine());
 
 		double shadow = 0;
@@ -212,14 +212,14 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 		UGraphic ugHeader = ug;
 		if (roundCorner == 0 && headerBackcolor != null && backcolor.equals(headerBackcolor) == false) {
 			ug.apply(stroke).draw(rect);
-			final Shadowable rect2 = new URectangle(widthTotal, dimHeader.getHeight());
+			final Shadowable rect2 = URectangle.build(widthTotal, dimHeader.getHeight());
 			rect2.setDeltaShadow(0);
 			ugHeader = ugHeader.apply(headerBackcolor.bg());
 			ugHeader.apply(stroke).draw(rect2);
 		} else if (roundCorner != 0 && headerBackcolor != null && backcolor.equals(headerBackcolor) == false) {
 			ug.apply(stroke).draw(rect);
-			final Shadowable rect2 = new URectangle(widthTotal, dimHeader.getHeight()).rounded(roundCorner);
-			final URectangle rect3 = new URectangle(widthTotal, roundCorner / 2);
+			final Shadowable rect2 = URectangle.build(widthTotal, dimHeader.getHeight()).rounded(roundCorner);
+			final URectangle rect3 = URectangle.build(widthTotal, roundCorner / 2);
 			rect2.setDeltaShadow(0);
 			rect3.setDeltaShadow(0);
 			ugHeader = ugHeader.apply(headerBackcolor.bg()).apply(headerBackcolor);

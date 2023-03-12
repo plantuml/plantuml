@@ -80,7 +80,7 @@ class ExtremityCircle extends Extremity {
 		}
 
 		ug = ug.apply(new UTranslate(dest.getX() - radius, dest.getY() - radius));
-		ug.draw(new UEllipse(radius * 2, radius * 2));
+		ug.draw(UEllipse.build(radius * 2, radius * 2));
 	}
 
 }

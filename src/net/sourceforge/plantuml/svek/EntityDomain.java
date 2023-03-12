@@ -63,7 +63,7 @@ public class EntityDomain extends AbstractTextBlock implements TextBlock {
 		x += margin;
 		y += margin;
 		ug = symbolContext.apply(ug);
-		final UEllipse circle = new UEllipse(radius * 2, radius * 2);
+		final UEllipse circle = UEllipse.build(radius * 2, radius * 2);
 		circle.setDeltaShadow(symbolContext.getDeltaShadow());
 		ug.apply(new UTranslate(x, y)).draw(circle);
 		ug.apply(new UTranslate(x, y + 2 * radius + suppY)).draw(ULine.hline(2 * radius));

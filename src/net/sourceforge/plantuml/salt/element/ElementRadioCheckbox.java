@@ -96,7 +96,7 @@ public class ElementRadioCheckbox extends AbstractElement {
 	}
 
 	private void drawOther(UGraphic ug, final double height) {
-		ug.apply(new UTranslate(2, (height - RECTANGLE) / 2)).draw(new URectangle(RECTANGLE, RECTANGLE));
+		ug.apply(new UTranslate(2, (height - RECTANGLE) / 2)).draw(URectangle.build(RECTANGLE, RECTANGLE));
 		if (checked) {
 			final UPolygon poly = new UPolygon();
 			poly.addPoint(0, 0);
@@ -110,11 +110,11 @@ public class ElementRadioCheckbox extends AbstractElement {
 	}
 
 	private void drawRadio(UGraphic ug, final double height) {
-		ug.apply(new UTranslate(2, (height - ELLIPSE) / 2)).draw(new UEllipse(ELLIPSE, ELLIPSE));
+		ug.apply(new UTranslate(2, (height - ELLIPSE) / 2)).draw(UEllipse.build(ELLIPSE, ELLIPSE));
 		if (checked) {
 			ug = ug.apply(HColors.changeBack(ug));
 			ug = ug.apply(new UTranslate(2 + (ELLIPSE - ELLIPSE2) / 2, (height - ELLIPSE2) / 2));
-			ug.draw(new UEllipse(ELLIPSE2, ELLIPSE2));
+			ug.draw(UEllipse.build(ELLIPSE2, ELLIPSE2));
 		}
 	}
 }

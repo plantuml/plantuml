@@ -94,13 +94,13 @@ public class FtileCircleStop extends AbstractFtile {
 	}
 
 	public void drawU(UGraphic ug) {
-		final UEllipse circle = new UEllipse(SIZE, SIZE);
+		final UEllipse circle = UEllipse.build(SIZE, SIZE);
 		circle.setDeltaShadow(shadowing);
 
 		ug.apply(borderColor).apply(backColor.bg()).draw(circle);
 
 		final double delta = 5;
-		final UEllipse circleSmall = new UEllipse(SIZE - delta * 2, SIZE - delta * 2);
+		final UEllipse circleSmall = UEllipse.build(SIZE - delta * 2, SIZE - delta * 2);
 		// if (skinParam().shadowing(null)) {
 		// circleSmall.setDeltaShadow(3);
 		// }

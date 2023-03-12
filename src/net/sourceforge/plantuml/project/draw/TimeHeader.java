@@ -172,7 +172,7 @@ public abstract class TimeHeader {
 
 		ug = ug.apply(HColors.none());
 		ug = ug.apply(new UTranslate(x1, getFullHeaderHeight()));
-		ug.draw(new URectangle(x2 - x1, height));
+		ug.draw(URectangle.build(x2 - x1, height));
 	}
 
 	protected final UGraphic goBold(UGraphic ug) {

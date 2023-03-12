@@ -68,7 +68,7 @@ public class PentaBShape implements UDrawable {
 
 		context.withForeColor(context.getBackColor()).apply(ug).draw(polygon);
 
-		final UPath path = new UPath();
+		final UPath path = UPath.none();
 		path.moveTo(width, 0);
 		path.lineTo(delta, 0);
 		path.lineTo(0, height / 2);

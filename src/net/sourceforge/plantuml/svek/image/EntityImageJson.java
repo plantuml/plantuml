@@ -151,7 +151,7 @@ public class EntityImageJson extends AbstractEntityImage implements Stencil, Wit
 
 		final double widthTotal = dimTotal.getWidth();
 		final double heightTotal = dimTotal.getHeight();
-		final Shadowable rect = new URectangle(widthTotal, heightTotal).rounded(roundCorner);
+		final Shadowable rect = URectangle.build(widthTotal, heightTotal).rounded(roundCorner);
 
 		HColor backcolor = getEntity().getColors().getColor(ColorType.BACK);
 

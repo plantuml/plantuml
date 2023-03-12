@@ -36,14 +36,15 @@
 package net.sourceforge.plantuml.klimt.compress;
 
 public class Slot implements Comparable<Slot> {
+    // ::remove file when __HAXE__
 
 	private final double start;
 	private final double end;
 
 	public Slot(double start, double end) {
-		if (start >= end) {
+		if (start >= end) 
 			throw new IllegalArgumentException();
-		}
+		
 		this.start = start;
 		this.end = end;
 	}
@@ -78,22 +79,22 @@ public class Slot implements Comparable<Slot> {
 	}
 
 	public Slot intersect(double otherStart, double otherEnd) {
-		if (otherStart >= end) {
+		if (otherStart >= end) 
 			return null;
-		}
-		if (otherEnd <= start) {
+		
+		if (otherEnd <= start) 
 			return null;
-		}
+		
 		return new Slot(Math.max(start, otherStart), Math.min(end, otherEnd));
 	}
 
 	public int compareTo(Slot other) {
-		if (this.start < other.start) {
+		if (this.start < other.start) 
 			return -1;
-		}
-		if (this.start > other.start) {
+		
+		if (this.start > other.start) 
 			return 1;
-		}
+		
 		return 0;
 	}
 

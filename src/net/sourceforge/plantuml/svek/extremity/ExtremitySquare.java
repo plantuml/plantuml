@@ -62,7 +62,7 @@ class ExtremitySquare extends Extremity {
 	public void drawU(UGraphic ug) {
 		ug.apply(UStroke.withThickness(1.5)).apply(backgroundColor.bg())
 				.apply(new UTranslate(dest.getX() - radius, dest.getY() - radius))
-				.draw(new URectangle(radius * 2, radius * 2));
+				.draw(URectangle.build(radius * 2, radius * 2));
 	}
 
 }

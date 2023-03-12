@@ -96,7 +96,7 @@ public class WLinkVertical {
 
 	private void drawBusArrow(UGraphic ug) {
 		final double dy = destination - start.getDy() - 2;
-		final UPath path = new UPath();
+		final UPath path = UPath.none();
 		if (direction == WArrowDirection.NONE) {
 			path.moveTo(0, 0);
 			path.lineTo(0, dy);
@@ -150,7 +150,7 @@ public class WLinkVertical {
 	private void drawNormalArrow(UGraphic ug) {
 		final double dy = destination - start.getDy() - 2;
 		if (direction == WArrowDirection.BOTH || direction == WArrowDirection.NORMAL) {
-			final UPath path = new UPath();
+			final UPath path = UPath.none();
 			path.moveTo(0, 0);
 			path.lineTo(5, -5);
 			path.lineTo(-5, -5);
@@ -159,7 +159,7 @@ public class WLinkVertical {
 			ug.apply(start.compose(UTranslate.dy(dy))).draw(path);
 		}
 		if (direction == WArrowDirection.BOTH || direction == WArrowDirection.REVERSE) {
-			final UPath path = new UPath();
+			final UPath path = UPath.none();
 			path.moveTo(0, 0);
 			path.lineTo(5, 5);
 			path.lineTo(-5, 5);

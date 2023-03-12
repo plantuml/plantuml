@@ -41,7 +41,7 @@ import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 
 class ExtremityNotNavigable extends Extremity {
 
-	private UPath path = new UPath();
+	private UPath path = UPath.none();
 	private final XPoint2D contact;
 
 	@Override

@@ -146,7 +146,7 @@ public final class AtomText extends AbstractAtom implements Atom {
 					} else {
 						final XDimension2D dim = ug.getStringBounder().calculateDimension(fontConfiguration.getFont(),
 								s);
-						final UText utext = new UText(s, useFontConfiguration);
+						final UText utext = UText.build(s, useFontConfiguration);
 						ug.apply(new UTranslate(x, ypos)).draw(utext);
 						x += dim.getWidth();
 					}

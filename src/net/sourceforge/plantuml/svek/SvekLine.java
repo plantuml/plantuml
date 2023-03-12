@@ -802,7 +802,7 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		if (link.getLinkConstraint() != null) {
 			final double xConstraint = x + this.labelXY.getPosition().getX();
 			final double yConstraint = y + this.labelXY.getPosition().getY();
-//			ug.apply(new UTranslate(xConstraint, yConstraint)).draw(new URectangle(10, 10));
+//			ug.apply(new UTranslate(xConstraint, yConstraint)).draw(URectangle.build(10, 10));
 			final List<XPoint2D> square = getSquare(xConstraint, yConstraint);
 			final Set<XPoint2D> bez = todraw.sample();
 			XPoint2D minPt = null;

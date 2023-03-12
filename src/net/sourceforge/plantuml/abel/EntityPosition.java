@@ -83,7 +83,7 @@ public enum EntityPosition {
 		if (this == NORMAL) {
 			throw new IllegalStateException();
 		} else if (this == ENTRY_POINT || this == EXIT_POINT) {
-			final Shadowable circle = new UEllipse(RADIUS * 2, RADIUS * 2);
+			final Shadowable circle = UEllipse.build(RADIUS * 2, RADIUS * 2);
 			ug.draw(circle);
 			if (this == EntityPosition.EXIT_POINT) {
 				final double xc = 0 + RADIUS + .5;
@@ -95,18 +95,18 @@ public enum EntityPosition {
 						getPointOnCircle(xc, yc, Math.PI - Math.PI / 4, radius));
 			}
 		} else if (this == INPUT_PIN || this == OUTPUT_PIN /* || this == PORT */) {
-			final Shadowable rectangle = new URectangle(RADIUS * 2, RADIUS * 2);
+			final Shadowable rectangle = URectangle.build(RADIUS * 2, RADIUS * 2);
 			ug.draw(rectangle);
 		} else if (this == EXPANSION_INPUT || this == EXPANSION_OUTPUT) {
 			if (rankdir == Rankdir.TOP_TO_BOTTOM) {
-				final Shadowable rectangle = new URectangle(RADIUS * 2 * 4, RADIUS * 2);
+				final Shadowable rectangle = URectangle.build(RADIUS * 2 * 4, RADIUS * 2);
 				ug.draw(rectangle);
 				final ULine vline = ULine.vline(RADIUS * 2);
 				ug.apply(UTranslate.dx(RADIUS * 2)).draw(vline);
 				ug.apply(UTranslate.dx(RADIUS * 2 * 2)).draw(vline);
 				ug.apply(UTranslate.dx(RADIUS * 2 * 3)).draw(vline);
 			} else {
-				final Shadowable rectangle = new URectangle(RADIUS * 2, RADIUS * 2 * 4);
+				final Shadowable rectangle = URectangle.build(RADIUS * 2, RADIUS * 2 * 4);
 				ug.apply(UTranslate.dy(0)).draw(rectangle);
 				final ULine hline = ULine.hline(RADIUS * 2);
 				ug.apply(UTranslate.dy(RADIUS * 2)).draw(hline);

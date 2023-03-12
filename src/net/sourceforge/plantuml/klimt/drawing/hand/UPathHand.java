@@ -49,7 +49,7 @@ public class UPathHand {
 
 	public UPathHand(UPath source, Random rnd) {
 
-		final UPath result = new UPath();
+		final UPath result = UPath.none();
 
 		XPoint2D last = new XPoint2D(0, 0);
 

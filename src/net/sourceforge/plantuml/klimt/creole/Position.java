@@ -97,7 +97,7 @@ public class Position {
 	public void drawDebug(UGraphic ug) {
 		ug = ug.apply(HColors.BLACK).apply(HColors.none().bg());
 		ug = ug.apply(new UTranslate(x, y));
-		ug.draw(new URectangle(dim));
+		ug.draw(URectangle.build(dim));
 	}
 
 	public double getHeight() {

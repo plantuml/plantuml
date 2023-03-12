@@ -78,7 +78,7 @@ public class ETileBox extends ETile {
 		this.skinParam = skinParam;
 		this.value = value;
 		this.fc = fc;
-		this.utext = new UText(value, fc);
+		this.utext = UText.build(value, fc);
 		this.style = style;
 		this.colorSet = colorSet;
 	}
@@ -155,17 +155,17 @@ public class ETileBox extends ETile {
 		final double posxBox = (dim.getWidth() - dimBox.getWidth()) / 2;
 
 		if (symbol == Symbol.TERMINAL_STRING1 || symbol == Symbol.TERMINAL_STRING2) {
-			final URectangle rect = new URectangle(dimBox);
+			final URectangle rect = URectangle.build(dimBox);
 			ug.apply(new UTranslate(posxBox, posy)).apply(lineColor).apply(UStroke.withThickness(0.5)).draw(rect);
 		} else if (symbol == Symbol.SPECIAL_SEQUENCE) {
-			final URectangle rect = new URectangle(dimBox);
+			final URectangle rect = URectangle.build(dimBox);
 			ug.apply(new UTranslate(posxBox, posy)).apply(lineColor).apply(new UStroke(5, 5, 1)).draw(rect);
-//			final URectangle rect1 = new URectangle(dimBox.delta(2)).rounded(12);
-//			final URectangle rect2 = new URectangle(dimBox.delta(-2)).rounded(8);
+//			final URectangle rect1 = URectangle.build(dimBox.delta(2)).rounded(12);
+//			final URectangle rect2 = URectangle.build(dimBox.delta(-2)).rounded(8);
 //			ug.apply(new UTranslate(posxBox - 1, posy - 1)).apply(lineColor).apply(new UStroke(5.0, 5.0, 1.0)).draw(rect1);
 //			ug.apply(new UTranslate(posxBox + 1, posy + 1)).apply(lineColor).apply(UStroke.withThickness(0.5)).draw(rect2);
 		} else {
-			final URectangle rect = new URectangle(dimBox).rounded(10);
+			final URectangle rect = URectangle.build(dimBox).rounded(10);
 			ug.apply(new UTranslate(posxBox, posy)).apply(lineColor).apply(backgroundColor.bg()).apply(UStroke.withThickness(1.5))
 					.draw(rect);
 		}

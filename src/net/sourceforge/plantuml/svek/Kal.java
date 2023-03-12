@@ -103,7 +103,7 @@ public class Kal implements UDrawable {
 
 	@Override
 	public void drawU(UGraphic ug) {
-		final URectangle rect = new URectangle(dim);
+		final URectangle rect = URectangle.build(dim);
 		ug = ug.apply(getTranslate());
 		ug.apply(HColors.WHITE.bg()).apply(HColors.BLACK).apply(UStroke.withThickness(0.5)).draw(rect);
 		textBlock.drawU(ug.apply(new UTranslate(2, 1)));

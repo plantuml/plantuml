@@ -136,7 +136,7 @@ public class EntityImageState extends EntityImageStateCommon {
 	public static void drawSymbol(UGraphic ug, double xSymbol, double ySymbol) {
 		xSymbol -= 4 * smallRadius + smallLine + smallMarginX;
 		ySymbol -= 2 * smallRadius + smallMarginY;
-		final UEllipse small = new UEllipse(2 * smallRadius, 2 * smallRadius);
+		final UEllipse small = UEllipse.build(2 * smallRadius, 2 * smallRadius);
 		ug.apply(new UTranslate(xSymbol, ySymbol)).draw(small);
 		ug.apply(new UTranslate(xSymbol + smallLine + 2 * smallRadius, ySymbol)).draw(small);
 		ug.apply(new UTranslate(xSymbol + 2 * smallRadius, ySymbol + smallLine)).draw(ULine.hline(smallLine));

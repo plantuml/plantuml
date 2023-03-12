@@ -120,7 +120,7 @@ public class Raw {
 			}
 			final UGraphicG2d ug = new UGraphicG2d(back, mapper, stringBounder, g2d, 1.0, FileFormat.RAW);
 			WasmLog.log("...cleaning...");
-			ug.apply(back).apply(back.bg()).draw(new URectangle(MAX, MAX));
+			ug.apply(back).apply(back.bg()).draw(URectangle.build(MAX, MAX));
 			ug.resetMax();
 			WasmLog.log("...drawing...");
 
@@ -204,7 +204,7 @@ public class Raw {
 			}
 			final UGraphicG2d ug = new UGraphicG2d(back, mapper, stringBounder, g2d, 1.0, FileFormat.RAW);
 			WasmLog.log("...cleaning...");
-			ug.apply(back).apply(back.bg()).draw(new URectangle(MAX, MAX));
+			ug.apply(back).apply(back.bg()).draw(URectangle.build(MAX, MAX));
 			ug.resetMax();
 			WasmLog.log("...drawing...");
 

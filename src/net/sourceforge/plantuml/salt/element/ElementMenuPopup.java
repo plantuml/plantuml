@@ -79,7 +79,7 @@ public class ElementMenuPopup extends AbstractElement {
 
 		ug = ug.apply(getBlack());
 
-		ug.apply(getColorDD().bg()).draw(new URectangle(dimToUse.getWidth(), dimToUse.getHeight()));
+		ug.apply(getColorDD().bg()).draw(URectangle.build(dimToUse.getWidth(), dimToUse.getHeight()));
 
 		double y1 = 0;
 		for (ElementMenuEntry entry : entries) {

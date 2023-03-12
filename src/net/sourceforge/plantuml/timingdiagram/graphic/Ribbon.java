@@ -281,7 +281,7 @@ public class Ribbon implements PDrawing {
 		ug = context.apply(ug);
 
 		final double height = getRibbonHeight();
-		final URectangle rect = new URectangle(len, height);
+		final URectangle rect = URectangle.build(len, height);
 		ug.draw(rect);
 
 		final ULine border = ULine.hline(len);

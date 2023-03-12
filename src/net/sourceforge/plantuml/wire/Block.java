@@ -135,7 +135,7 @@ public class Block extends AbstractTextBlock {
 				ent.getKey().drawU(ent.getValue().move(ug));
 			}
 		}
-		ug.draw(new URectangle(calculateDimension(ug.getStringBounder())));
+		ug.draw(URectangle.build(calculateDimension(ug.getStringBounder())));
 
 		drawPins(Position.BOTTOM, ug);
 		drawPins(Position.TOP, ug);
@@ -163,7 +163,7 @@ public class Block extends AbstractTextBlock {
 			py = calculateDimension(ug.getStringBounder()).getHeight() - 2;
 		}
 		for (String pin : getPins(pos)) {
-			ug.apply(new UTranslate(px, py)).draw(new UEllipse(4, 4));
+			ug.apply(new UTranslate(px, py)).draw(UEllipse.build(4, 4));
 			if (pos == Position.LEFT || pos == Position.RIGHT) {
 				py += 15;
 			} else {

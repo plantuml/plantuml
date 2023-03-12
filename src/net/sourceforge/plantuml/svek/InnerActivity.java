@@ -63,7 +63,7 @@ public final class InnerActivity extends AbstractTextBlock implements IEntityIma
 		final XDimension2D total = calculateDimension(ug.getStringBounder());
 
 		ug = ug.apply(backColor.bg()).apply(borderColor).apply(UStroke.withThickness(THICKNESS_BORDER));
-		final URectangle rect = new URectangle(total.getWidth(), total.getHeight()).rounded(IEntityImage.CORNER);
+		final URectangle rect = URectangle.build(total.getWidth(), total.getHeight()).rounded(IEntityImage.CORNER);
 		rect.setDeltaShadow(shadowing);
 		ug.draw(rect);
 		ug = ug.apply(UStroke.simple());

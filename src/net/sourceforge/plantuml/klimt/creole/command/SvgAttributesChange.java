@@ -51,7 +51,7 @@ class SvgAttributesChange implements FontChange {
 		if (m.find() == false) {
 			throw new IllegalStateException();
 		}
-		attributes = new SvgAttributes(m.group(1));
+		attributes = SvgAttributes.build(m.group(1));
 	}
 
 	public FontConfiguration apply(FontConfiguration initial) {

@@ -82,9 +82,9 @@ public class ComponentRoseGroupingElse extends AbstractTextualComponent {
 		final double height = dimensionToUse.getHeight();
 		final UShape rect;
 		if (roundCorner == 0) {
-			rect = new URectangle(width, height);
+			rect = URectangle.build(width, height);
 		} else {
-			final UPath path = new UPath();
+			final UPath path = UPath.none();
 			path.moveTo(0, 0);
 			path.lineTo(width, 0);
 

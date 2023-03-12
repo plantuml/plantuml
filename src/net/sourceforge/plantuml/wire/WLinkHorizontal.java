@@ -118,7 +118,7 @@ public class WLinkHorizontal {
 				break;
 			}
 			if (type == WLinkType.NORMAL)
-				ugText.apply(getWhite()).apply(getWhite().bg()).draw(new URectangle(dimText));
+				ugText.apply(getWhite()).apply(getWhite().bg()).draw(URectangle.build(dimText));
 
 			textBlock.drawU(ugText);
 		}
@@ -127,7 +127,7 @@ public class WLinkHorizontal {
 
 	private void drawBusArrow(UGraphic ug) {
 		final double dx = destination - start.getDx() - 2;
-		final UPath path = new UPath();
+		final UPath path = UPath.none();
 		if (direction == WArrowDirection.NONE) {
 			path.moveTo(0, 0);
 			path.lineTo(dx, 0);
@@ -181,7 +181,7 @@ public class WLinkHorizontal {
 	private void drawNormalArrow(UGraphic ug) {
 		final double dx = destination - start.getDx() - 2;
 		if (direction == WArrowDirection.BOTH || direction == WArrowDirection.NORMAL) {
-			final UPath path = new UPath();
+			final UPath path = UPath.none();
 			path.moveTo(0, 0);
 			path.lineTo(-5, -5);
 			path.lineTo(-5, 5);
@@ -190,7 +190,7 @@ public class WLinkHorizontal {
 			ug.apply(start.compose(UTranslate.dx(dx))).draw(path);
 		}
 		if (direction == WArrowDirection.BOTH || direction == WArrowDirection.REVERSE) {
-			final UPath path = new UPath();
+			final UPath path = UPath.none();
 			path.moveTo(0, 0);
 			path.lineTo(5, -5);
 			path.lineTo(5, 5);

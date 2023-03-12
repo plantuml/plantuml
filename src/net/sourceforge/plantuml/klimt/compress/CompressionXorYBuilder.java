@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 
 public class CompressionXorYBuilder {
+    // ::remove file when __HAXE__
 
 	public static TextBlock build(CompressionMode mode, TextBlock textBlock, StringBounder stringBounder) {
 		final PiecewiseAffineTransform affine = getPiecewiseAffineTransform(mode, textBlock, stringBounder);

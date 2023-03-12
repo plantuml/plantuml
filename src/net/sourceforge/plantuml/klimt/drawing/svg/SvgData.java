@@ -42,6 +42,7 @@ import java.util.regex.Pattern;
 import net.sourceforge.plantuml.StringUtils;
 
 public final class SvgData {
+    // ::remove file when __HAXE__
 
 	private String svg;
 	private double startX;

@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.klimt.drawing.UDriver;
 import net.sourceforge.plantuml.klimt.shape.UPixel;
 
 public class DriverPixelSvg implements UDriver<UPixel, SvgGraphics> {
+    // ::remove file when __HAXE__
 
 	public void draw(UPixel pixel, double x, double y, ColorMapper mapper, UParam param, SvgGraphics svg) {
 		final HColor color = param.getColor();

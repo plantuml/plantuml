@@ -318,7 +318,7 @@ public class Histogram implements PDrawing {
 		final double maxY = Math.max(pt1.getY(), pt2.getY());
 		final XPoint2D pt = new XPoint2D(pt1.getX(), minY);
 		ug = ug.apply(UTranslate.point(pt));
-		ug.draw(new URectangle(len, maxY - minY));
+		ug.draw(URectangle.build(len, maxY - minY));
 		for (double x = 0; x < len; x += 5)
 			ug.apply(UTranslate.dx(x)).draw(ULine.vline(maxY - minY));
 

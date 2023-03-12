@@ -50,6 +50,7 @@ import ext.plantuml.com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import net.sourceforge.plantuml.utils.Log;
 
 public class FlashCodeUtilsZxing implements FlashCodeUtils {
+    // ::remove file when __MIT__
 
 	private static final Lock lock = new ReentrantLock();
 

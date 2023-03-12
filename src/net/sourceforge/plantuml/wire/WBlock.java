@@ -249,7 +249,7 @@ public class WBlock {
 	private void drawBox(UGraphic ug) {
 		ug = ug.apply(getBlack());
 		if (name.length() > 0) {
-			final URectangle rect = new URectangle(getMaxDimension());
+			final URectangle rect = URectangle.build(getMaxDimension());
 			UGraphic ugRect = ug;
 			if (color != null) {
 				ugRect = ugRect.apply(color.bg());

@@ -121,8 +121,8 @@ public class EntityImageDesignedDomain extends AbstractEntityImage {
 
 		final double widthTotal = dimTotal.getWidth();
 		final double heightTotal = dimTotal.getHeight();
-		final URectangle rect = new URectangle(widthTotal, heightTotal);
-		URectangle rect2 = new URectangle(4, heightTotal);
+		final URectangle rect = URectangle.build(widthTotal, heightTotal);
+		URectangle rect2 = URectangle.build(4, heightTotal);
 
 		ug = ug.apply(SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.designedBorder));
 		HColor backcolor = getEntity().getColors().getColor(ColorType.BACK);

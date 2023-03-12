@@ -62,18 +62,19 @@ public class UGraphicEps extends AbstractUGraphic<EpsGraphics> implements ClipCo
 
 	@Override
 	protected AbstractCommonUGraphic copyUGraphic() {
-		return new UGraphicEps(this);
+		final UGraphicEps result = new UGraphicEps(this);
+		return result;
 	}
 
 	protected UGraphicEps(UGraphicEps other) {
-		super(other);
+		copy(other);
 		this.strategyTOBEREMOVED = other.strategyTOBEREMOVED;
 		register();
 	}
 
 	public UGraphicEps(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder,
 			EpsStrategy strategy) {
-		super(defaultBackground, colorMapper, stringBounder, strategy.creatEpsGraphics());
+		copy(defaultBackground, colorMapper, stringBounder, strategy.creatEpsGraphics());
 		this.strategyTOBEREMOVED = strategy;
 		register();
 	}

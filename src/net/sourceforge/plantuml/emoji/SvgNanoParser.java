@@ -232,7 +232,7 @@ public class SvgNanoParser implements Sprite {
 		final double ry = Double.parseDouble(extractData("r", s)) * scaley;
 
 		final UTranslate translate = new UTranslate(deltax + cx - rx, deltay + cy - ry);
-		ugs.apply(translate).draw(new UEllipse(rx * 2, ry * 2));
+		ugs.apply(translate).draw(UEllipse.build(rx * 2, ry * 2));
 	}
 
 	private void drawEllipse(UGraphicWithScale ugs, String s, HColor colorForMonochrome) {
@@ -245,7 +245,7 @@ public class SvgNanoParser implements Sprite {
 		final double rx = Double.parseDouble(extractData("rx", s));
 		final double ry = Double.parseDouble(extractData("ry", s));
 
-		UPath path = new UPath();
+		UPath path = UPath.none();
 		path.moveTo(0, ry);
 
 		if (debug)
@@ -289,7 +289,7 @@ public class SvgNanoParser implements Sprite {
 			final String text = m.group(1);
 			HColor color = HColorSet.instance().getColorOrWhite(fill);
 			final FontConfiguration fc = FontConfiguration.create(UFont.sansSerif(fontSize), color, color, null);
-			final UText utext = new UText(text, fc);
+			final UText utext = UText.build(text, fc);
 			UGraphic ug = ugs.getUg();
 			ug = ug.apply(new UTranslate(x, y));
 			ug.draw(utext);

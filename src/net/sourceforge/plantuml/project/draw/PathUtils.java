@@ -42,7 +42,7 @@ public class PathUtils {
 
 	public static UPath UtoRight(double width, double height, double round) {
 		final double halfRound = round / 2;
-		final UPath result = new UPath();
+		final UPath result = UPath.none();
 		result.moveTo(0, 0);
 		result.lineTo(width - halfRound, 0);
 		result.arcTo(new XPoint2D(width, halfRound), halfRound, 0, 1);
@@ -54,7 +54,7 @@ public class PathUtils {
 
 	public static UPath UtoLeft(double width, double height, double round) {
 		final double halfRound = round / 2;
-		final UPath result = new UPath();
+		final UPath result = UPath.none();
 		result.moveTo(width, height);
 		result.lineTo(halfRound, height);
 		result.arcTo(new XPoint2D(0, height - halfRound), halfRound, 0, 1);

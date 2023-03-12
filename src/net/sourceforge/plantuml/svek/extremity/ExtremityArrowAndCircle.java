@@ -79,7 +79,7 @@ class ExtremityArrowAndCircle extends Extremity {
 		ug.apply(HColors.changeBack(ug)).draw(polygon);
 		ug.apply(UStroke.withThickness(1.5)).apply(backgroundColor.bg())
 				.apply(new UTranslate(dest.getX() - radius, dest.getY() - radius))
-				.draw(new UEllipse(radius * 2, radius * 2));
+				.draw(UEllipse.build(radius * 2, radius * 2));
 	}
 
 }

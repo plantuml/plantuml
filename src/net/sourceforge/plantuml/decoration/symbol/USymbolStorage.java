@@ -56,7 +56,7 @@ class USymbolStorage extends USymbol {
 	}
 
 	private void drawStorage(UGraphic ug, double width, double height, double shadowing) {
-		final URectangle shape = new URectangle(width, height).rounded(70);
+		final URectangle shape = URectangle.build(width, height).rounded(70);
 		shape.setDeltaShadow(shadowing);
 
 		ug.draw(shape);

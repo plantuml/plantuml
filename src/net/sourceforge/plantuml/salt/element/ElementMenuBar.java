@@ -105,7 +105,7 @@ public class ElementMenuBar extends AbstractElement {
 
 		double x1 = 0;
 		if (zIndex == 0) {
-			ug.apply(getColorDD().bg()).draw(new URectangle(dimToUse.getWidth(), dimToUse.getHeight()));
+			ug.apply(getColorDD().bg()).draw(URectangle.build(dimToUse.getWidth(), dimToUse.getHeight()));
 			for (ElementMenuEntry entry : entries) {
 				entry.drawU(ug.apply(UTranslate.dx(x1)), zIndex, dimToUse);
 				final double w = entry.getPreferredDimension(ug.getStringBounder(), x1, 0).getWidth();

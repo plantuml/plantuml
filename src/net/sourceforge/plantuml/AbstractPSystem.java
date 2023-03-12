@@ -241,7 +241,7 @@ public abstract class AbstractPSystem implements Diagram {
 	public void exportDiagramGraphic(UGraphic ug) {
 		final UFont font = UFont.monospaced(14);
 		final FontConfiguration fc = FontConfiguration.blackBlueTrue(font);
-		final UText text = new UText("Not implemented yet for " + getClass().getName(), fc);
+		final UText text = UText.build("Not implemented yet for " + getClass().getName(), fc);
 		ug.apply(new UTranslate(10, 10)).draw(text);
 	}
 

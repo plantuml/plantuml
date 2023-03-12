@@ -178,10 +178,10 @@ public class FontChecker {
 		final UDrawable drawable = new UDrawable() {
 			public void drawU(UGraphic ug) {
 				ug = ug.apply(HColors.BLACK);
-				ug.draw(new URectangle(dim - 1, dim - 1));
+				ug.draw(URectangle.build(dim - 1, dim - 1));
 				if (!(ug instanceof LimitFinder)) {
 					ug = ug.apply(new UTranslate(dim / 3, 2 * dim / 3));
-					final UText text = new UText("" + c, FontConfiguration.blackBlueTrue(font));
+					final UText text = UText.build("" + c, FontConfiguration.blackBlueTrue(font));
 					ug.draw(text);
 				}
 			}
@@ -195,7 +195,7 @@ public class FontChecker {
 	// UGraphic2 ug = new FileFormatOption(FileFormat.PNG).createUGraphic(new
 	// Dimension2DDouble(dim, dim));
 	// ug = (UGraphic2) ug.apply(UChangeColor.nnn(HtmlColorUtils.BLACK));
-	// ug.draw(new URectangle(dim - 1, dim - 1));
+	// ug.draw(URectangle.build(dim - 1, dim - 1));
 	// ug = (UGraphic2) ug.apply(new UTranslate(dim / 3, 2 * dim / 3));
 	// final UText text = new UText("" + c, FontConfiguration.create(font,
 	// HtmlColorUtils.BLACK));

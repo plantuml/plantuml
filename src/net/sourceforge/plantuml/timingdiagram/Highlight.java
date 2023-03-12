@@ -120,7 +120,7 @@ public class Highlight {
 		ug = ug.apply(HColors.none()).apply(getBackColor().bg());
 		final double start = ruler.getPosInPixel(this.getTickFrom());
 		final double end = ruler.getPosInPixel(this.getTickTo());
-		final URectangle rect = new URectangle(end - start, height);
+		final URectangle rect = URectangle.build(end - start, height);
 		ug.apply(UTranslate.dx(start)).draw(rect);
 	}
 

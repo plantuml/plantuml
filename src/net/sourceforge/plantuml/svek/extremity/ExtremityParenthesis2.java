@@ -77,7 +77,7 @@ class ExtremityParenthesis2 extends Extremity {
 		// ug.apply(UChangeColor.nnn(HtmlColorUtils.BLACK)).apply(new
 		// UTranslate(center.getX(),
 		// center.getY())).draw(line);
-		// // final UEllipse arc1 = new UEllipse(2 * radius2, 2 * radius2, deg, 2 *
+		// // final UEllipse arc1 = UEllipse.build(2 * radius2, 2 * radius2, deg, 2 *
 		// ang);
 		// // ug.apply(UStroke.withThickness(1.5)).apply(new UTranslate(dest.getX() - radius2,
 		// dest.getY() - radius2)).draw(arc1);

@@ -63,16 +63,17 @@ public class UGraphicTxt extends AbstractCommonUGraphic implements ClipContainer
 
 	@Override
 	protected AbstractCommonUGraphic copyUGraphic() {
-		return new UGraphicTxt(this);
+		final UGraphicTxt result = new UGraphicTxt(this);
+		return result;
 	}
 
 	private UGraphicTxt(UGraphicTxt other) {
-		super(other);
+		basicCopy(other);
 		this.charArea = other.charArea;
 	}
 
 	public UGraphicTxt() {
-		super(HColors.BLACK, ColorMapper.IDENTITY, new TextStringBounder());
+		basicCopy(HColors.BLACK, ColorMapper.IDENTITY, new TextStringBounder());
 		this.charArea = new UmlCharAreaImpl();
 	}
 

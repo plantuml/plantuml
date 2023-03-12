@@ -74,12 +74,12 @@ public class RectangleTask {
 		if (widthCompletion == -1 || widthCompletion == 0) {
 			if (widthCompletion == 0)
 				ug = ug.apply(documentBackground.bg());
-			final URectangle rect = new URectangle(width, height);
+			final URectangle rect = URectangle.build(width, height);
 			ug.draw(rect);
 		} else {
-			final URectangle rect1 = new URectangle(widthCompletion, height);
+			final URectangle rect1 = URectangle.build(widthCompletion, height);
 			ug.draw(rect1);
-			final URectangle rect2 = new URectangle(width - widthCompletion, height);
+			final URectangle rect2 = URectangle.build(width - widthCompletion, height);
 			ug.apply(documentBackground.bg()).apply(UTranslate.dx(widthCompletion)).draw(rect2);
 		}
 	}
@@ -101,7 +101,7 @@ public class RectangleTask {
 		final Segment segment = segments.get(0);
 
 		final double width = segment.getLength();
-		final URectangle partial = new URectangle(width, height).rounded(round);
+		final URectangle partial = URectangle.build(width, height).rounded(round);
 		if (completion == 100 || completion == 0) {
 			if (completion == 0)
 				ug = ug.apply(documentBackground.bg());

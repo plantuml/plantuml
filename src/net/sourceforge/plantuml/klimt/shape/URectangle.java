@@ -48,7 +48,6 @@ import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
 public class URectangle extends AbstractShadowable implements UShapeSized, UShapeIgnorableForCompression {
-    // ::remove file when __HAXE__
 
 	private final double width;
 	private final double height;
@@ -90,7 +89,7 @@ public class URectangle extends AbstractShadowable implements UShapeSized, UShap
 		if (diagonalCorner == 0)
 			return this;
 
-		final UPath result = new UPath();
+		final UPath result = UPath.none();
 		result.moveTo(diagonalCorner, 0);
 		result.lineTo(width - diagonalCorner, 0);
 		result.lineTo(width, diagonalCorner);
@@ -111,12 +110,12 @@ public class URectangle extends AbstractShadowable implements UShapeSized, UShap
 		return new URectangle(width, height, rx, ry, comment, ignoreForCompressionOnX, true, codeLine);
 	}
 
-	public URectangle(double width, double height) {
-		this(width, height, 0, 0, null, false, false, null);
+	public static URectangle build(double width, double height) {
+		return new URectangle(width, height, 0, 0, null, false, false, null);
 	}
 
-	public URectangle(XDimension2D dim) {
-		this(dim.getWidth(), dim.getHeight());
+	public static URectangle build(XDimension2D dim) {
+		return build(dim.getWidth(), dim.getHeight());
 	}
 
 	private URectangle(double width, double height, double rx, double ry, String comment,

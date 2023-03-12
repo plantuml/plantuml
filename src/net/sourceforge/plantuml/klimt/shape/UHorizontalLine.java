@@ -162,7 +162,7 @@ public class UHorizontalLine implements UShape {
 		final double y1 = y - dimTitle.getHeight() / 2 - 0.5;
 		ug = ug.apply(new UTranslate(x1, y1));
 		if (clearArea) {
-			ug.apply(getStroke()).draw(new URectangle(dimTitle));
+			ug.apply(getStroke()).draw(URectangle.build(dimTitle));
 		}
 		title.drawU(ug);
 	}

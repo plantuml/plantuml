@@ -63,10 +63,10 @@ public class ActorAwesome extends AbstractTextBlock implements TextBlock {
 
 	public void drawU(UGraphic ug) {
 
-		final UEllipse head = new UEllipse(headDiam, headDiam);
+		final UEllipse head = UEllipse.build(headDiam, headDiam);
 		final double centerX = getPreferredWidth() / 2;
 
-		final UPath path = new UPath();
+		final UPath path = UPath.none();
 		path.moveTo(0, collar);
 		path.cubicTo(collar, collar, bodyWidth / 2 - shoulder - collar, collar, bodyWidth / 2 - shoulder, 0);
 		path.cubicTo(bodyWidth / 2 - shoulder / 2, 0, bodyWidth / 2, shoulder / 2, bodyWidth / 2, shoulder);

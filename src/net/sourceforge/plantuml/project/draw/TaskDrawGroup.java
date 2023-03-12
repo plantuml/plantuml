@@ -196,7 +196,7 @@ public class TaskDrawGroup extends AbstractTaskDraw {
 	final private double height = 10;
 
 	private UPath getShape(final double startPos, final double endPos) {
-		final UPath rect = new UPath();
+		final UPath rect = UPath.none();
 
 		final double thick = 2;
 		final double y1 = (height - thick) / 2;
@@ -218,7 +218,7 @@ public class TaskDrawGroup extends AbstractTaskDraw {
 	}
 
 	private UPath getShapeOld2(final double startPos, final double endPos) {
-		final UPath rect = new UPath();
+		final UPath rect = UPath.none();
 
 		final double height1 = 9;
 		final double height2 = 7;
@@ -237,7 +237,7 @@ public class TaskDrawGroup extends AbstractTaskDraw {
 	}
 
 	private UPath getShapeOld(final double startPos, final double endPos) {
-		final UPath rect = new UPath();
+		final UPath rect = UPath.none();
 
 		final double height1 = 9;
 		final double height2 = 2;

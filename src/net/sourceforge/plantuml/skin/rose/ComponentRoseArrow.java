@@ -191,7 +191,7 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 	private void drawDressing1(UGraphic ug, ArrowDressing dressing, ArrowDecoration decoration, double lenFull) {
 
 		if (decoration == ArrowDecoration.CIRCLE) {
-			final UEllipse circle = new UEllipse(diamCircle, diamCircle);
+			final UEllipse circle = UEllipse.build(diamCircle, diamCircle);
 			ug.apply(UStroke.withThickness(thinCircle)).apply(getForegroundColor())
 					.apply(new UTranslate(-diamCircle / 2 - thinCircle, -diamCircle / 2 - thinCircle / 2)).draw(circle);
 			if (dressing.getHead() != ArrowHead.CROSSX)
@@ -228,7 +228,7 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 
 		if (decoration == ArrowDecoration.CIRCLE) {
 			ug = ug.apply(UStroke.withThickness(thinCircle)).apply(getForegroundColor());
-			final UEllipse circle = new UEllipse(diamCircle, diamCircle);
+			final UEllipse circle = UEllipse.build(diamCircle, diamCircle);
 			ug.apply(new UTranslate(-diamCircle / 2 + thinCircle, -diamCircle / 2 - thinCircle / 2)).draw(circle);
 			ug = ug.apply(UStroke.simple());
 			ug = ug.apply(UTranslate.dx(-diamCircle / 2 - thinCircle));

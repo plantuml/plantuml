@@ -95,7 +95,7 @@ public class ComponentRoseDivider extends AbstractTextualComponent {
 
 			ug = ug.apply(borderColor);
 			ug = ug.apply(stroke);
-			final URectangle rect = new URectangle(textWidth + deltaX, textHeight).rounded(roundCorner);
+			final URectangle rect = URectangle.build(textWidth + deltaX, textHeight).rounded(roundCorner);
 			rect.setDeltaShadow(shadow);
 
 			ug.apply(new UTranslate(xpos, ypos)).draw(rect);
@@ -110,7 +110,7 @@ public class ComponentRoseDivider extends AbstractTextualComponent {
 	}
 
 	private void drawRectLong(UGraphic ug, double width) {
-		final URectangle rectLong = new URectangle(width, 3).rounded(roundCorner);
+		final URectangle rectLong = URectangle.build(width, 3).rounded(roundCorner);
 		rectLong.setDeltaShadow(shadow);
 
 		ug = ug.apply(UStroke.simple());

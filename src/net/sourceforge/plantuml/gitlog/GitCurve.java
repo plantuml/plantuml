@@ -87,7 +87,7 @@ public class GitCurve {
 
 	public void drawCurve(HColor color, UGraphic ug) {
 		ug = ug.apply(new UStroke(2, 2, 1));
-		final UPath path = new UPath();
+		final UPath path = UPath.none();
 
 		path.moveTo(xMirror.invGit(points.get(0)));
 

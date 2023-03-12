@@ -144,7 +144,7 @@ public class GridTextBlockDecorated extends GridTextBlockSimple {
 			computeMixMax(data.getLine(i), stringBounder, network);
 
 			final double width = Math.max(GridTextBlockSimple.MINIMUM_WIDTH, network.getXmax() - network.getXmin());
-			final URectangle rect = new URectangle(width, NETWORK_THIN);
+			final URectangle rect = URectangle.build(width, NETWORK_THIN);
 
 			UGraphic ug2 = ug.apply(new UTranslate(network.getXmin(), y));
 			final StyleBuilder styleBuilder = getSkinParam().getCurrentStyleBuilder();

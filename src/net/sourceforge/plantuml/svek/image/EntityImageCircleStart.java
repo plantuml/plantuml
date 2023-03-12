@@ -68,7 +68,7 @@ public class EntityImageCircleStart extends AbstractEntityImage {
 	}
 
 	final public void drawU(UGraphic ug) {
-		final UEllipse circle = new UEllipse(SIZE, SIZE);
+		final UEllipse circle = UEllipse.build(SIZE, SIZE);
 
 		final Style style = getDefaultStyleDefinitionCircle().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
 		HColor color = getEntity().getColors().getColor(ColorType.BACK);

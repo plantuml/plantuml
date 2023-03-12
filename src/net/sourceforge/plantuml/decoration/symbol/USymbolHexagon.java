@@ -81,8 +81,8 @@ public class USymbolHexagon extends USymbol {
 
 	private void drawRect(UGraphic ug, double width, double height, double shadowing, double roundCorner,
 			double diagonalCorner) {
-//		final UShape shape = new URectangle(width, height);
-		final UPath shape = new UPath();
+//		final UShape shape = URectangle.build(width, height);
+		final UPath shape = UPath.none();
 		final double dx = width / 8;
 		shape.moveTo(0, height / 2);
 		shape.lineTo(dx, 0);

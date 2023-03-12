@@ -62,7 +62,8 @@ class ExtremityParenthesis extends Extremity {
 	public void drawU(UGraphic ug) {
 		final double deg = -ortho * 180 / Math.PI + 90 - ang;
 		final UEllipse arc1 = new UEllipse(2 * radius2, 2 * radius2, deg, 2 * ang);
-		ug.apply(UStroke.withThickness(1.5)).apply(new UTranslate(dest.getX() - radius2, dest.getY() - radius2)).draw(arc1);
+		ug.apply(UStroke.withThickness(1.5)).apply(new UTranslate(dest.getX() - radius2, dest.getY() - radius2))
+				.draw(arc1);
 	}
 
 }

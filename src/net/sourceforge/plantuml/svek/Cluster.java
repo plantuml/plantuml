@@ -458,7 +458,7 @@ public class Cluster implements Moveable {
 	}
 
 	public void setPosition(XPoint2D min, XPoint2D max) {
-		this.rectangleArea = new RectangleArea(min, max);
+		this.rectangleArea = RectangleArea.build(min, max);
 	}
 
 	// ::comment when __CORE__

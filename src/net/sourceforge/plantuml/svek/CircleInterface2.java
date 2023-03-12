@@ -67,7 +67,7 @@ public class CircleInterface2 extends AbstractTextBlock implements TextBlock {
 		x += margin;
 		y += margin;
 		ug = ug.apply(backgroundColor.bg()).apply(foregroundColor);
-		final UEllipse circle = new UEllipse(radius * 2, radius * 2);
+		final UEllipse circle = UEllipse.build(radius * 2, radius * 2);
 		circle.setDeltaShadow(deltaShadow);
 		ug.apply(new UTranslate(x, y)).draw(circle);
 	}

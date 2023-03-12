@@ -102,7 +102,7 @@ public class Grid {
 
 		if (dim.getWidth() > 0 && dim.getHeight() > 0) {
 			final UGraphic ug2 = ug.apply(new UTranslate(x + 6, y - dim.getHeight() * 0));
-			ug2.apply(white.bg()).apply(white).draw(new URectangle(dim));
+			ug2.apply(white.bg()).apply(white).draw(URectangle.build(dim));
 			title.drawU(ug2);
 		}
 

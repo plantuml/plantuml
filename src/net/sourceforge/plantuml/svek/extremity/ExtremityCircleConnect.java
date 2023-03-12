@@ -67,7 +67,7 @@ class ExtremityCircleConnect extends Extremity {
 
 	public void drawU(UGraphic ug) {
 		ug = ug.apply(UStroke.withThickness(1.5)).apply(backgroundColor.bg());
-		ug.apply(new UTranslate(dest.getX() - radius, dest.getY() - radius)).draw(new UEllipse(radius * 2, radius * 2));
+		ug.apply(new UTranslate(dest.getX() - radius, dest.getY() - radius)).draw(UEllipse.build(radius * 2, radius * 2));
 
 		final double deg = -ortho * 180 / Math.PI + 90 - 45;
 		final UEllipse arc1 = new UEllipse(2 * radius2, 2 * radius2, deg, 90);

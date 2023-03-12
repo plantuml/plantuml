@@ -189,7 +189,7 @@ public class TextBlockMap extends AbstractTextBlock implements WithPorts {
 		}
 
 		public void drawU(UGraphic ug) {
-			final UShape point = new UEllipse(getDiameter(), getDiameter());
+			final UShape point = UEllipse.build(getDiameter(), getDiameter());
 			ug = ug.apply(color).apply(color.bg());
 			ug.draw(point);
 		}

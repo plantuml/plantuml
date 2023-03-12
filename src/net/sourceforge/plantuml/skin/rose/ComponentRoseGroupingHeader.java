@@ -124,7 +124,7 @@ public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 	protected void drawBackgroundInternalU(UGraphic ug, Area area) {
 		final XDimension2D dimensionToUse = area.getDimensionToUse();
 		ug = symbolContext.applyStroke(ug).apply(symbolContext.getForeColor());
-		final URectangle rect = new URectangle(dimensionToUse.getWidth(), dimensionToUse.getHeight())
+		final URectangle rect = URectangle.build(dimensionToUse.getWidth(), dimensionToUse.getHeight())
 				.rounded(roundCorner);
 		rect.setDeltaShadow(symbolContext.getDeltaShadow());
 		ug.apply(background.bg()).draw(rect);
@@ -140,7 +140,7 @@ public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 		symbolContextCorner.apply(ug).draw(getCorner(textWidth, textHeight));
 
 		ug = symbolContext.applyStroke(ug).apply(symbolContext.getForeColor());
-		final URectangle rect = new URectangle(dimensionToUse.getWidth(), dimensionToUse.getHeight())
+		final URectangle rect = URectangle.build(dimensionToUse.getWidth(), dimensionToUse.getHeight())
 				.rounded(roundCorner);
 		ug.draw(rect);
 
@@ -157,7 +157,7 @@ public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 	}
 
 	private UPath getCorner(final double width, final double height) {
-		final UPath polygon = new UPath();
+		final UPath polygon = UPath.none();
 		if (roundCorner == 0) {
 			polygon.moveTo(0, 0);
 			polygon.lineTo(width, 0);

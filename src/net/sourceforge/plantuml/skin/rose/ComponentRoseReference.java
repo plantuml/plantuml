@@ -88,7 +88,7 @@ public class ComponentRoseReference extends AbstractTextualComponent {
 		final int textHeaderWidth = (int) (getHeaderWidth(stringBounder));
 		final int textHeaderHeight = (int) (getHeaderHeight(stringBounder));
 
-		URectangle rect = new URectangle(dimensionToUse.getWidth() - xMargin * 2 - symbolContextBody.getDeltaShadow(),
+		URectangle rect = URectangle.build(dimensionToUse.getWidth() - xMargin * 2 - symbolContextBody.getDeltaShadow(),
 				dimensionToUse.getHeight() - heightFooter);
 		if (this.roundCorner != 0)
 			rect = rect.rounded(this.roundCorner);
@@ -97,7 +97,7 @@ public class ComponentRoseReference extends AbstractTextualComponent {
 		ug = symbolContextBody.apply(ug);
 		ug.apply(UTranslate.dx(xMargin)).draw(rect);
 
-		final UPath corner = new UPath();
+		final UPath corner = UPath.none();
 		if (this.roundCorner == 0) {
 			corner.moveTo(0, 0);
 			corner.lineTo(textHeaderWidth, 0);

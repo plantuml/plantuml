@@ -107,11 +107,12 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> implements EnsureV
 
 	@Override
 	protected AbstractCommonUGraphic copyUGraphic() {
-		return new UGraphicG2d(this);
+		final UGraphicG2d result = new UGraphicG2d(this);
+		return result;
 	}
 
 	private UGraphicG2d(UGraphicG2d other) {
-		super(other);
+		copy(other);
 		// ::comment when __CORE__
 		this.hasAffineTransform = other.hasAffineTransform;
 		// ::done
@@ -126,25 +127,21 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> implements EnsureV
 
 	public UGraphicG2d(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder, Graphics2D g2d,
 			double dpiFactor, FileFormat format) {
-		// ::comment when __CORE__
-		this(defaultBackground, colorMapper, stringBounder, g2d, dpiFactor, null, 0, 0, format);
-		// ::done
-		// ::uncomment when __CORE__
+		// ::revert when __CORE__
+		this(defaultBackground, colorMapper, stringBounder, g2d, dpiFactor, 0, 0, format, null);
 		// this(defaultBackground, colorMapper, stringBounder, g2d, dpiFactor, 0, 0,
 		// format);
 		// ::done
 	}
 
-	// ::comment when __CORE__
+	// ::revert when __CORE__
 	public UGraphicG2d(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder, Graphics2D g2d,
-			double dpiFactor, AffineTransformation affineTransform, double dx, double dy, FileFormat format) {
-		// ::done
-		// ::uncomment when __CORE__
+			double dpiFactor, double dx, double dy, FileFormat format, AffineTransformation affineTransform) {
 		// public UGraphicG2d(HColor defaultBackground, ColorMapper colorMapper,
 		// StringBounder stringBounder, Graphics2D g2d,
 		// double dpiFactor, double dx, double dy, FileFormat format) {
 		// ::done
-		super(defaultBackground, colorMapper, stringBounder, g2d);
+		copy(defaultBackground, colorMapper, stringBounder, g2d);
 		this.format = format;
 		this.dpiFactor = dpiFactor;
 		if (dpiFactor != 1.0)

@@ -153,7 +153,7 @@ public class EntityImageMap extends AbstractEntityImage implements Stencil, With
 
 		final double widthTotal = dimTotal.getWidth();
 		final double heightTotal = dimTotal.getHeight();
-		final Shadowable rect = new URectangle(widthTotal, heightTotal).rounded(roundCorner);
+		final Shadowable rect = URectangle.build(widthTotal, heightTotal).rounded(roundCorner);
 
 		HColor borderColor = lineConfig.getColors().getColor(ColorType.LINE);
 		HColor backcolor = getEntity().getColors().getColor(ColorType.BACK);
@@ -187,7 +187,7 @@ public class EntityImageMap extends AbstractEntityImage implements Stencil, With
 		ug.apply(stroke).draw(rect);
 
 		if (roundCorner == 0 && headerBackcolor != null && backcolor.equals(headerBackcolor) == false) {
-			final Shadowable rect2 = new URectangle(widthTotal, dimTitle.getHeight());
+			final Shadowable rect2 = URectangle.build(widthTotal, dimTitle.getHeight());
 			final UGraphic ugHeader = ug.apply(headerBackcolor.bg());
 			ugHeader.apply(stroke).draw(rect2);
 		}

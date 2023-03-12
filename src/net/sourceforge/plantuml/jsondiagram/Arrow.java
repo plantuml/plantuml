@@ -61,7 +61,7 @@ public class Arrow {
 		final XPoint2D p4 = getPoint(p1, alpha - Math.PI / 2, dist * factor);
 		final XPoint2D p11 = getPoint(p1, alpha, dist * factor2);
 
-		final UPath path = new UPath();
+		final UPath path = UPath.none();
 		path.moveTo(p4);
 		path.lineTo(p11);
 		path.lineTo(p3);

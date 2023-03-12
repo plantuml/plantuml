@@ -69,7 +69,7 @@ public class EntityImageAssociationPoint extends AbstractEntityImage {
 	}
 
 	final public void drawU(UGraphic ug) {
-		final UShape circle = new UEllipse(SIZE, SIZE);
+		final UShape circle = UEllipse.build(SIZE, SIZE);
 
 		final HColor color = getStyle().value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
 		ug.apply(color).apply(new CopyForegroundColorToBackgroundColor()).draw(circle);

@@ -57,8 +57,8 @@ class USymbolPerson extends USymbol {
 	}
 
 	private void drawHeadAndBody(UGraphic ug, double shadowing, XDimension2D dimBody, double headSize) {
-		final UEllipse head = new UEllipse(headSize, headSize);
-		final URectangle body = new URectangle(dimBody).rounded(headSize);
+		final UEllipse head = UEllipse.build(headSize, headSize);
+		final URectangle body = URectangle.build(dimBody).rounded(headSize);
 
 		body.setDeltaShadow(shadowing);
 		head.setDeltaShadow(shadowing);

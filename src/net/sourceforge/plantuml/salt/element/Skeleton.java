@@ -57,7 +57,7 @@ public class Skeleton {
 		}
 
 		public void drawRectangle(UGraphic ug) {
-			ug.apply(new UTranslate(xpos, ypos)).draw(new URectangle(2, 2));
+			ug.apply(new UTranslate(xpos, ypos)).draw(URectangle.build(2, 2));
 		}
 	}
 

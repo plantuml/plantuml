@@ -74,7 +74,7 @@ public final class RoundedContainer {
 
 	public void drawU(UGraphic ug) {
 		ug = ug.apply(backColor.bg()).apply(borderColor).apply(stroke);
-		final URectangle rect = new URectangle(dim.getWidth(), dim.getHeight()).rounded(rounded);
+		final URectangle rect = URectangle.build(dim.getWidth(), dim.getHeight()).rounded(rounded);
 
 		if (shadowing > 0) {
 			rect.setDeltaShadow(shadowing);

@@ -91,7 +91,7 @@ public class EntityImagePseudoState extends AbstractEntityImage {
 	}
 
 	final public void drawU(UGraphic ug) {
-		final UEllipse circle = new UEllipse(SIZE, SIZE);
+		final UEllipse circle = UEllipse.build(SIZE, SIZE);
 
 		final Style style = getStyle();
 		final HColor borderColor = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());

@@ -60,6 +60,6 @@ class SimpleTextBlockBordered extends AbstractTextBlock implements TextBlock {
 	public void drawU(UGraphic ug) {
 		final XDimension2D dim = textBlock.calculateDimension(ug.getStringBounder());
 		textBlock.drawU(ug.apply(new UTranslate(1, 1)));
-		ug.apply(color).draw(new URectangle(dim.getWidth(), dim.getHeight()));
+		ug.apply(color).draw(URectangle.build(dim.getWidth(), dim.getHeight()));
 	}
 }

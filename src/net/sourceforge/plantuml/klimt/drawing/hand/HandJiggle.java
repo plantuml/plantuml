@@ -121,8 +121,8 @@ public class HandJiggle {
 		final double flatness = curve.getFlatness();
 		final double dist = curve.getP1().distance(curve.getP2());
 		if (flatness > 0.1 && dist > 20) {
-			final XCubicCurve2D left = new XCubicCurve2D();
-			final XCubicCurve2D right = new XCubicCurve2D();
+			final XCubicCurve2D left = XCubicCurve2D.none();
+			final XCubicCurve2D right = XCubicCurve2D.none();
 			curve.subdivide(left, right);
 			curveTo(left);
 			curveTo(right);
@@ -143,7 +143,7 @@ public class HandJiggle {
 		UPath path = null;
 		for (XPoint2D p : points) {
 			if (path == null) {
-				path = new UPath();
+				path = UPath.none();
 				path.moveTo(p);
 			} else {
 				path.lineTo(p);

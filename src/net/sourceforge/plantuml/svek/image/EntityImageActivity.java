@@ -124,7 +124,7 @@ public class EntityImageActivity extends AbstractEntityImage {
 
 		final double widthTotal = dimTotal.getWidth();
 		final double heightTotal = dimTotal.getHeight();
-		final Shadowable rect = new URectangle(widthTotal, heightTotal).rounded(CORNER);
+		final Shadowable rect = URectangle.build(widthTotal, heightTotal).rounded(CORNER);
 		rect.setDeltaShadow(shadowing);
 
 		ug = applyColors(ug);

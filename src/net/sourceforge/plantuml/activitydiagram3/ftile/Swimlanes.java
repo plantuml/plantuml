@@ -311,7 +311,7 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock, Styleable
 						.apply(UTranslate.dx(xpos - divider1.getX2()));
 				final double width = swimlane.getActualWidth() + divider1.getX2() + divider2.getX1();
 				final double height = dimensionFull.getHeight() + titleHeightTranslate.getDy();
-				background.draw(new URectangle(width, height).ignoreForCompressionOnX().ignoreForCompressionOnY());
+				background.draw(URectangle.build(width, height).ignoreForCompressionOnX().ignoreForCompressionOnY());
 			}
 
 			full.drawU(new UGraphicInterceptorOneSwimlane(ug, swimlane, swimlanes()).apply(swimlane.getTranslate())
@@ -336,7 +336,7 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock, Styleable
 		if (color != null) {
 			final double titleHeight = getTitlesHeight(ug.getStringBounder());
 			double fullWidth = swimlanesSpecial().get(swimlanesSpecial().size() - 1).getTranslate().getDx() - 2 * 5 - 1;
-			final URectangle back = new URectangle(fullWidth, titleHeight).ignoreForCompressionOnX()
+			final URectangle back = URectangle.build(fullWidth, titleHeight).ignoreForCompressionOnX()
 					.ignoreForCompressionOnY();
 			ug.apply(UTranslate.dx(5)).apply(color.bg()).apply(color).draw(back);
 		}

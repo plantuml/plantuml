@@ -106,8 +106,8 @@ public class UGraphicInterceptorUDrawable2 extends UGraphicDelegator {
 			return;
 		final double dx = dest.getDx() - posNow.getDx();
 		final double dy = dest.getDy() - posNow.getDy();
-		ugGoto.draw(new UEllipse(3, 3));
-		ugGoto.apply(new UTranslate(dx, dy)).draw(new UEllipse(3, 3));
+		ugGoto.draw(UEllipse.build(3, 3));
+		ugGoto.apply(new UTranslate(dx, dy)).draw(UEllipse.build(3, 3));
 		ugGoto.draw(ULine.hline(dx));
 		ugGoto.apply(UTranslate.dx(dx)).draw(ULine.vline(dy));
 		// ugGoto.draw(new ULine(dx, dy));

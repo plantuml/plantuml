@@ -90,7 +90,7 @@ public class ComponentRoseParticipant extends AbstractTextualComponent {
 		if (back != null)
 			ug = ug.apply(back.bg());
 		ug = ug.apply(stroke);
-		final Shadowable rect = new URectangle(getTextWidth(stringBounder), getTextHeight(stringBounder))
+		final Shadowable rect = URectangle.build(getTextWidth(stringBounder), getTextHeight(stringBounder))
 				.rounded(roundCorner).diagonalCorner(diagonalCorner);
 		rect.setDeltaShadow(deltaShadow);
 		if (collections) {

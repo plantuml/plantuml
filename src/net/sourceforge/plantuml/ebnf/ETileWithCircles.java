@@ -79,7 +79,7 @@ public class ETileWithCircles extends ETile {
 		ug = ug.apply(lineColor).apply(UStroke.withThickness(1.5));
 		orig.drawU(ug.apply(UTranslate.dx(deltax)));
 
-		final UEllipse circle = new UEllipse(SIZE, SIZE);
+		final UEllipse circle = UEllipse.build(SIZE, SIZE);
 
 		ug.apply(UStroke.withThickness(2)).apply(new UTranslate(0, linePos - SIZE / 2)).draw(circle);
 		ug.apply(UStroke.withThickness(1)).apply(new CopyForegroundColorToBackgroundColor())

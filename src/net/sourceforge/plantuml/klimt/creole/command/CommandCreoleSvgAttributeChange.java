@@ -85,7 +85,7 @@ public class CommandCreoleSvgAttributeChange implements Command {
 		final FontConfiguration fc1 = stripe.getActualFontConfiguration();
 		FontConfiguration fc2 = fc1;
 		if (m.group(2) != null) {
-			fc2 = fc2.changeAttributes(new SvgAttributes(m.group(2)));
+			fc2 = fc2.changeAttributes(SvgAttributes.build(m.group(2)));
 		}
 
 		stripe.setActualFontConfiguration(fc2);

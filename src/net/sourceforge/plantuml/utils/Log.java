@@ -39,28 +39,8 @@ import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.ProgressBar;
 
 public abstract class Log {
-	// ::remove file when __HAXE__
-
+	// ::comment when __HAXE__
 	private static final long start = System.currentTimeMillis();
-
-	public synchronized static void debug(String s) {
-	}
-
-	public synchronized static void info(String s) {
-		// ::comment when __CORE__
-		if (OptionFlags.getInstance().isVerbose()) {
-			ProgressBar.clear();
-			System.err.println(format(s));
-		}
-		// ::done
-	}
-
-	public synchronized static void error(String s) {
-		// ::comment when __CORE__
-		ProgressBar.clear();
-		// ::done
-		System.err.println(s);
-	}
 
 	private static String format(String s) {
 		final long delta = System.currentTimeMillis() - start;
@@ -101,20 +81,31 @@ public abstract class Log {
 		sb.append(" Mo - ");
 		sb.append(s);
 		return sb.toString();
-
 	}
-
+	
 	public static void println(Object s) {
-		// if (header2.get() == null) {
-		// System.err.println("L = " + s);
-		// } else {
-		// System.err.println(header2.get() + " " + s);
-		// }
+	}
+	// ::done
+
+	public synchronized static void debug(String s) {
 	}
 
-	// private static final ThreadLocal<String> header2 = new ThreadLocal<>();
-	//
+	public synchronized static void info(String s) {
+		// ::comment when __CORE__ or __HAXE__
+		if (OptionFlags.getInstance().isVerbose()) {
+			ProgressBar.clear();
+			System.err.println(format(s));
+		}
+		// ::done
+	}
+
+	public synchronized static void error(String s) {
+		// ::comment when __CORE__ or __HAXE__
+		ProgressBar.clear();
+		// ::done
+		System.err.println(s);
+	}
+
 	public static void header(String s) {
-		// header2.set(s);
 	}
 }

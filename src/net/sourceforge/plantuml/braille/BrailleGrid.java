@@ -151,8 +151,8 @@ public class BrailleGrid {
 		drawPointInternal(x, y, bez.getP1());
 		drawPointInternal(x, y, bez.getP2());
 		if (bez.getP1().distance(bez.getP2()) > quanta) {
-			final XCubicCurve2D part1 = new XCubicCurve2D();
-			final XCubicCurve2D part2 = new XCubicCurve2D();
+			final XCubicCurve2D part1 = XCubicCurve2D.none();
+			final XCubicCurve2D part2 = XCubicCurve2D.none();
 			bez.subdivide(part1, part2);
 			drawCubic(x, y, part1);
 			drawCubic(x, y, part2);

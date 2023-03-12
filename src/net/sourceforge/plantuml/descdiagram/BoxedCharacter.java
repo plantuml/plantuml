@@ -75,7 +75,7 @@ public class BoxedCharacter extends AbstractTextBlock implements TextBlock {
 		} else {
 			ug = ug.apply(innerCircle.bg());
 		}
-		ug.draw(new URectangle(2 * radius, 2 * radius));
+		ug.draw(URectangle.build(2 * radius, 2 * radius));
 		ug = ug.apply(fontColor);
 		ug = ug.apply(new UTranslate(radius, radius));
 		ug.draw(new UCenteredCharacter(c.charAt(0), font));

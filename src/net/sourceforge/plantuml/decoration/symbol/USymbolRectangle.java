@@ -64,7 +64,7 @@ class USymbolRectangle extends USymbol {
 
 	private void drawRect(UGraphic ug, double width, double height, double shadowing, double roundCorner,
 			double diagonalCorner) {
-		final URectangle rect = new URectangle(width, height);
+		final URectangle rect = URectangle.build(width, height);
 		final Shadowable shape = diagonalCorner > 0 ? rect.diagonalCorner(diagonalCorner) : rect.rounded(roundCorner);
 		shape.setDeltaShadow(shadowing);
 		ug.draw(shape);

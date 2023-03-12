@@ -65,10 +65,10 @@ public class ActorHollow extends AbstractTextBlock implements TextBlock {
 
 	public void drawU(UGraphic ug) {
 
-		final UEllipse head = new UEllipse(headDiam, headDiam);
+		final UEllipse head = UEllipse.build(headDiam, headDiam);
 		final double centerX = getPreferredWidth() / 2;
 
-		final UPath path = new UPath();
+		final UPath path = UPath.none();
 		path.moveTo(-bodyWidth / 2, 0);
 		path.lineTo(-bodyWidth / 2, armThickness);
 		path.lineTo(-bodyThickness / 2, armThickness);

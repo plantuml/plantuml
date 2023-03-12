@@ -161,7 +161,7 @@ public class FlowDiagram extends UmlDiagram implements TextBlock {
 		}
 		ug = ug.apply(HColors.MY_RED);
 		ug = ug.apply(HColors.MY_RED.bg());
-		final UShape arrow = new UEllipse(7, 7);
+		final UShape arrow = UEllipse.build(7, 7);
 		for (Path p : field.getPaths()) {
 			final TileArea start = p.getStart();
 			final TileArea dest = p.getDest();

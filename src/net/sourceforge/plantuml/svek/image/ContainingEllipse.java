@@ -74,7 +74,7 @@ public class ContainingEllipse {
 	}
 
 	public UEllipse asUEllipse() {
-		final UEllipse ellipse = new UEllipse(getWidth(), getHeight());
+		final UEllipse ellipse = UEllipse.build(getWidth(), getHeight());
 		ellipse.setDeltaShadow(deltaShadow);
 		return ellipse;
 	}

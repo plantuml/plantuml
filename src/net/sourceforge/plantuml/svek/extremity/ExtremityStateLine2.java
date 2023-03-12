@@ -75,7 +75,7 @@ class ExtremityStateLine2 extends Extremity {
 				.apply(new UTranslate(-radius * Math.cos(angle), -radius * Math.sin(angle))).draw(polygon);
 		ug.apply(UStroke.withThickness(1.5)).apply(HColors.WHITE.bg())
 				.apply(new UTranslate(dest.getX() - radius, dest.getY() - radius))
-				.draw(new UEllipse(radius * 2, radius * 2));
+				.draw(UEllipse.build(radius * 2, radius * 2));
 	}
 
 }

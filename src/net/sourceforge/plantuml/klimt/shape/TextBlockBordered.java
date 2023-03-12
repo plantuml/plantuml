@@ -144,7 +144,7 @@ public class TextBlockBordered extends AbstractTextBlock implements TextBlock {
 	private Shadowable getPolygonNormal(final StringBounder stringBounder) {
 		final double height = getTextHeight(stringBounder);
 		final double width = getTextWidth(stringBounder);
-		return new URectangle(width, height).rounded(cornersize).withCommentAndCodeLine(id, null);
+		return URectangle.build(width, height).rounded(cornersize).withCommentAndCodeLine(id, null);
 	}
 
 }

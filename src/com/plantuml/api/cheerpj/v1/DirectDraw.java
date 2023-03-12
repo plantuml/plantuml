@@ -119,7 +119,7 @@ public class DirectDraw {
 			final StringBounder stringBounder = new StringBounderCanvas(g2d);
 			final UGraphicG2d ug = new UGraphicG2d(back, ColorMapper.IDENTITY, stringBounder, g2d, 1.0, FileFormat.PNG);
 			WasmLog.log("...cleaning...");
-			ug.apply(back).apply(back.bg()).draw(new URectangle(frameWidth, frameHeight));
+			ug.apply(back).apply(back.bg()).draw(URectangle.build(frameWidth, frameHeight));
 			WasmLog.log("...drawing...");
 
 			system.exportDiagramGraphic(ug);

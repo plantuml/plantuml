@@ -60,10 +60,10 @@ public class Bullet extends AbstractAtom implements Atom {
 		ug = ug.apply(color).apply(color.bg()).apply(UStroke.withThickness(0));
 		if (order == 0) {
 			ug = ug.apply(UTranslate.dx(3));
-			ug.draw(new UEllipse(5, 5));
+			ug.draw(UEllipse.build(5, 5));
 		} else {
 			ug = ug.apply(UTranslate.dx(1 + 8 * order));
-			ug.draw(new URectangle(3.5, 3.5));
+			ug.draw(URectangle.build(3.5, 3.5));
 		}
 
 	}

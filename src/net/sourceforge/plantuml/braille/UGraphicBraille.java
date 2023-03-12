@@ -61,16 +61,17 @@ public class UGraphicBraille extends AbstractUGraphic<BrailleGrid> implements Cl
 
 	@Override
 	protected AbstractCommonUGraphic copyUGraphic() {
-		return new UGraphicBraille(this);
+		final UGraphicBraille result = new UGraphicBraille(this);
+		return result;
 	}
 
 	public UGraphicBraille(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder) {
-		super(defaultBackground, colorMapper, stringBounder, new BrailleGrid(QUANTA));
+		copy(defaultBackground, colorMapper, stringBounder, new BrailleGrid(QUANTA));
 		register();
 	}
 
 	private UGraphicBraille(UGraphicBraille other) {
-		super(other);
+		copy(other);
 		register();
 	}
 

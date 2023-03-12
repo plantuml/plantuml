@@ -41,7 +41,6 @@ import java.awt.geom.AffineTransform;
 import java.util.Arrays;
 
 public class USegment {
-	// ::remove file when __HAXE__
 
 	private final double coord[];
 	private final USegmentType pathType;
@@ -51,10 +50,12 @@ public class USegment {
 		this.pathType = pathType;
 	}
 
+	// ::comment when __HAXE__
 	@Override
 	public String toString() {
 		return pathType.toString() + " " + Arrays.toString(coord);
 	}
+	// ::done
 
 	public final double[] getCoord() {
 		return coord;

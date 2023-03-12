@@ -199,7 +199,7 @@ public class SmetanaPath implements UDrawable {
 			if (ymirror != null)
 				pt = ymirror.getMirrored(pt);
 
-			ug.apply(UTranslate.point(pt).compose(new UTranslate(-1, -1))).draw(new UEllipse(3, 3));
+			ug.apply(UTranslate.point(pt).compose(new UTranslate(-1, -1))).draw(UEllipse.build(3, 3));
 		}
 		if (getLabelRectangleTranslate("label") != null && getLabelURectangle() != null) {
 			ug = ug.apply(HColors.BLUE).apply(HColors.none().bg());
@@ -221,7 +221,7 @@ public class SmetanaPath implements UDrawable {
 		final double y = pos.y;
 		final double width = dimen.x;
 		final double height = dimen.y;
-		return new URectangle(width, height);
+		return URectangle.build(width, height);
 	}
 
 	private UTranslate getLabelRectangleTranslate(String fieldName) {

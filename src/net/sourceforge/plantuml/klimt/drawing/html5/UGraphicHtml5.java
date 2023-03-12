@@ -56,7 +56,7 @@ public class UGraphicHtml5 extends AbstractUGraphic<Html5Drawer> implements Clip
 	}
 
 	public UGraphicHtml5(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder) {
-		super(defaultBackground, colorMapper, stringBounder, new Html5Drawer());
+		copy(defaultBackground, colorMapper, stringBounder, new Html5Drawer());
 		registerDriver(URectangle.class, new DriverRectangleHtml5(this));
 		// registerDriver(UText.class, new DriverTextEps(imDummy, this, strategy));
 		ignoreShape(UText.class);

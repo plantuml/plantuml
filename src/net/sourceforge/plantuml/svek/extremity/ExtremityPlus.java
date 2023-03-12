@@ -54,7 +54,7 @@ class ExtremityPlus extends Extremity {
 
 	private ExtremityPlus(double x, double y, double angle, HColor backgroundColor) {
 		this.angle = angle;
-		this.circle = new UEllipse(2 * radius, 2 * radius);
+		this.circle = UEllipse.build(2 * radius, 2 * radius);
 		this.px = x;
 		this.py = y;
 		this.backgroundColor = backgroundColor;

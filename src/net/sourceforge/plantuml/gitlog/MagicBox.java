@@ -95,7 +95,7 @@ public class MagicBox {
 
 		final double moveY = comment.calculateDimension(ug.getStringBounder()).getHeight();
 
-		final URectangle rect = new URectangle(sizeInDot.getWidth(), sizeInDot.getHeight() - moveY).rounded(8);
+		final URectangle rect = URectangle.build(sizeInDot.getWidth(), sizeInDot.getHeight() - moveY).rounded(8);
 		ug.apply(UStroke.withThickness(1.5)).apply(UTranslate.dy(moveY)).draw(rect);
 
 		comment.drawU(ug);

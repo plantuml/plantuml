@@ -70,7 +70,7 @@ public class EntityImageCircleEnd extends AbstractEntityImage {
 	}
 
 	final public void drawU(UGraphic ug) {
-		final UEllipse circle = new UEllipse(SIZE, SIZE);
+		final UEllipse circle = UEllipse.build(SIZE, SIZE);
 
 		final Style style = getDefaultStyleDefinitionCircle().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
 		HColor color = getEntity().getColors().getColor(ColorType.BACK);
@@ -82,7 +82,7 @@ public class EntityImageCircleEnd extends AbstractEntityImage {
 		ug.apply(HColors.none().bg()).apply(color).draw(circle);
 
 		final double delta = 4;
-		final UShape circleSmall = new UEllipse(SIZE - delta * 2, SIZE - delta * 2);
+		final UShape circleSmall = UEllipse.build(SIZE - delta * 2, SIZE - delta * 2);
 		ug.apply(color.bg()).apply(HColors.none()).apply(new UTranslate(delta + 0.5, delta + 0.5)).draw(circleSmall);
 	}
 

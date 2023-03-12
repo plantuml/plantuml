@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 
 public class SlotSet implements Iterable<Slot> {
+    // ::remove file when __HAXE__
 
 	private final List<Slot> all = new ArrayList<>();
 
@@ -52,9 +53,9 @@ public class SlotSet implements Iterable<Slot> {
 		final SlotSet result = new SlotSet();
 		for (Slot slot : all) {
 			final Slot intersec = slot.intersect(start, end);
-			if (intersec != null) {
+			if (intersec != null) 
 				result.all.add(intersec);
-			}
+			
 		}
 		return result;
 	}
@@ -73,18 +74,18 @@ public class SlotSet implements Iterable<Slot> {
 				collisions.add(s);
 			}
 		}
-		for (Slot s : collisions) {
+		for (Slot s : collisions) 
 			newSlot = newSlot.merge(s);
-		}
+		
 		all.add(newSlot);
 	}
 
 	public SlotSet smaller(double margin) {
 		final SlotSet result = new SlotSet();
 		for (Slot sl : all) {
-			if (sl.size() <= 2 * margin) {
+			if (sl.size() <= 2 * margin) 
 				continue;
-			}
+			
 			result.addSlot(sl.getStart() + margin, sl.getEnd() - margin);
 		}
 		return result;
@@ -108,9 +109,9 @@ public class SlotSet implements Iterable<Slot> {
 		Collections.sort(all);
 		Slot last = null;
 		for (Slot slot : all) {
-			if (last != null) {
+			if (last != null) 
 				result.addSlot(last.getEnd(), slot.getStart());
-			}
+			
 			last = slot;
 		}
 		return result;
@@ -118,7 +119,7 @@ public class SlotSet implements Iterable<Slot> {
 
 	public void drawDebugX(UGraphic ug, double size) {
 		for (Slot slot : all) {
-			final URectangle rect = new URectangle(slot.getEnd() - slot.getStart(), size);
+			final URectangle rect = URectangle.build(slot.getEnd() - slot.getStart(), size);
 			ug.apply(UTranslate.dx(slot.getStart())).draw(rect);
 		}
 	}

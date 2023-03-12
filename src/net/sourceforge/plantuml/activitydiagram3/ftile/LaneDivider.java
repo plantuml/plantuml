@@ -83,7 +83,7 @@ public class LaneDivider extends AbstractTextBlock {
 	}
 
 	public void drawU(UGraphic ug) {
-//		final UShape back = new URectangle(x1 + x2, height).ignoreForCompressionOnY();
+//		final UShape back = URectangle.build(x1 + x2, height).ignoreForCompressionOnY();
 //		ug.apply(UChangeColor.nnn(HColorUtils.BLUE)).draw(back);
 		final UShape back = new UEmpty(x1 + x2, 1);
 		ug.draw(back);

@@ -87,8 +87,8 @@ public class Tile extends AbstractTextBlock implements TextBlock {
 		final double diffx2 = dimTotal.getWidth() - radius;
 		final double diffy2 = dimTotal.getHeight() - radius;
 		n.drawU(ug.apply(new UTranslate((diffx / 2), (diffy / 2))));
-		ug.draw(new URectangle(SIZE, SIZE));
-		ug.apply(new UTranslate(diffx2 / 2, diffy2 / 2)).draw(new UEllipse(radius, radius));
+		ug.draw(URectangle.build(SIZE, SIZE));
+		ug.apply(new UTranslate(diffx2 / 2, diffy2 / 2)).draw(UEllipse.build(radius, radius));
 	}
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {

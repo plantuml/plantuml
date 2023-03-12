@@ -83,7 +83,7 @@ class CircleAndArrow implements UDrawable {
 	}
 
 	public void drawU(UGraphic ug) {
-		final UShape circle = new UEllipse(radius * 2, radius * 2);
+		final UShape circle = UEllipse.build(radius * 2, radius * 2);
 		ug.apply(new UTranslate(center.getX() - radius, center.getY() - radius)).draw(circle);
 		// drawLine(ug, x, y, p1, p2);
 		// drawLine(ug, x, y, p3, p4);

@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.klimt.compress;
 import java.util.List;
 
 public class CompressionTransform implements PiecewiseAffineTransform {
+    // ::remove file when __HAXE__
 
 	private final List<Slot> all;
 

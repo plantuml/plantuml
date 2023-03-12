@@ -247,7 +247,7 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 
 		private void drawSingleCluster(UGraphic ug, Entity group, ElkNode elkNode) {
 			final XPoint2D corner = getPosition(elkNode);
-			final URectangle rect = new URectangle(elkNode.getWidth(), elkNode.getHeight());
+			final URectangle rect = URectangle.build(elkNode.getWidth(), elkNode.getHeight());
 
 			PackageStyle packageStyle = group.getPackageStyle();
 			final ISkinParam skinParam = diagram.getSkinParam();

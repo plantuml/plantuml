@@ -100,7 +100,7 @@ public class FtileCircleEnd extends AbstractFtile {
 		xTheoricalPosition = Math.round(xTheoricalPosition);
 		yTheoricalPosition = Math.round(yTheoricalPosition);
 
-		final UEllipse circle = new UEllipse(SIZE, SIZE);
+		final UEllipse circle = UEllipse.build(SIZE, SIZE);
 		circle.setDeltaShadow(shadowing);
 		ug = ug.apply(borderColor);
 		final double thickness = 2.5;

@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.UText;
 
 public class DriverTextSvg implements UDriver<UText, SvgGraphics> {
+    // ::remove file when __HAXE__
 
 	private final StringBounder stringBounder;
 	private final ClipContainer clipContainer;

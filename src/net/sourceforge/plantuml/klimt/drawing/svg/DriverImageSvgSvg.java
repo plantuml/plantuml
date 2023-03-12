@@ -40,6 +40,7 @@ import net.sourceforge.plantuml.klimt.drawing.UDriver;
 import net.sourceforge.plantuml.klimt.shape.UImageSvg;
 
 public class DriverImageSvgSvg implements UDriver<UImageSvg, SvgGraphics> {
+    // ::remove file when __HAXE__
 
 	public void draw(UImageSvg image, double x, double y, ColorMapper mapper, UParam param, SvgGraphics svg) {
 		svg.svgImage(image, x, y);

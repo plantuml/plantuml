@@ -35,7 +35,5 @@
 package net.sourceforge.plantuml.klimt;
 
 public interface ClipContainer {
-	// ::remove file when __HAXE__
-
 	public UClip getClip();
 }

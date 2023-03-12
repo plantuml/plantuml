@@ -82,7 +82,7 @@ public class ComponentRoseSelfArrow extends AbstractComponentRoseArrow {
 		double x2 = area.getDeltaX1() > 0 ? -area.getDeltaX1() : 0 + 1;
 
 		final double arrowHeight = getArrowOnlyHeight(stringBounder);
-		final UEllipse circle = new UEllipse(ComponentRoseArrow.diamCircle, ComponentRoseArrow.diamCircle);
+		final UEllipse circle = UEllipse.build(ComponentRoseArrow.diamCircle, ComponentRoseArrow.diamCircle);
 		if (getArrowConfiguration().getDecoration1() == ArrowDecoration.CIRCLE) {
 			ug2.apply(UStroke.withThickness(ComponentRoseArrow.thinCircle)).apply(getForegroundColor())
 					.apply(new UTranslate(x1 + 1 - ComponentRoseArrow.diamCircle / 2 - ComponentRoseArrow.thinCircle,

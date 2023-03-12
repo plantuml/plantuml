@@ -96,7 +96,7 @@ public class FtileBlackBlock extends AbstractFtile {
 	}
 
 	public void drawU(UGraphic ug) {
-		final URectangle rect = new URectangle(width, height).rounded(5).ignoreForCompressionOnX();
+		final URectangle rect = URectangle.build(width, height).rounded(5).ignoreForCompressionOnX();
 
 		final Style style = getSignature().getMergedStyle(skinParam().getCurrentStyleBuilder());
 		final double shadowing = style.value(PName.Shadowing).asDouble();

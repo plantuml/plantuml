@@ -62,7 +62,6 @@ import net.sourceforge.plantuml.klimt.geom.XCubicCurve2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 
 public class DotPath implements UShape, Moveable {
-    // ::remove file when __HAXE__
 
 	public static class TriPoints {
 		public TriPoints(XPoint2D p1, XPoint2D p2, XPoint2D p) {
@@ -140,8 +139,8 @@ public class DotPath implements UShape, Moveable {
 		final XPoint2D p1 = bez.getCtrlP1();
 		final XPoint2D p2 = bez.getCtrlP2();
 		if (bez.getFlatnessSq() > 0.5 || p1.distance(p2) > 4) {
-			final XCubicCurve2D left = new XCubicCurve2D();
-			final XCubicCurve2D right = new XCubicCurve2D();
+			final XCubicCurve2D left = XCubicCurve2D.none();
+			final XCubicCurve2D right = XCubicCurve2D.none();
 			bez.subdivide(left, right);
 			sample(left, result);
 			sample(right, result);
@@ -155,8 +154,8 @@ public class DotPath implements UShape, Moveable {
 		XPoint2D result = null;
 		double angle = 0;
 		for (XCubicCurve2D bez : beziers) {
-			final XCubicCurve2D left = new XCubicCurve2D();
-			final XCubicCurve2D right = new XCubicCurve2D();
+			final XCubicCurve2D left = XCubicCurve2D.none();
+			final XCubicCurve2D right = XCubicCurve2D.none();
 			bez.subdivide(left, right);
 			final XPoint2D p1 = left.getP1();
 			final XPoint2D p2 = left.getP2();
@@ -434,8 +433,8 @@ public class DotPath implements UShape, Moveable {
 					assert tail.contains(this.beziers.get(idx).getP2()) == false;
 					XCubicCurve2D current = this.beziers.get(idx);
 					for (int k = 0; k < 8; k++) {
-						final XCubicCurve2D part1 = new XCubicCurve2D();
-						final XCubicCurve2D part2 = new XCubicCurve2D();
+						final XCubicCurve2D part1 = XCubicCurve2D.none();
+						final XCubicCurve2D part2 = XCubicCurve2D.none();
 						current.subdivide(part1, part2);
 						assert part1.getP2().equals(part2.getP1());
 						if (tail.contains(part1.getP2())) {
@@ -465,8 +464,8 @@ public class DotPath implements UShape, Moveable {
 						assert head.contains(current.getP1()) == false;
 						assert head.contains(current.getP2());
 						for (int k = 0; k < 8; k++) {
-							final XCubicCurve2D part1 = new XCubicCurve2D();
-							final XCubicCurve2D part2 = new XCubicCurve2D();
+							final XCubicCurve2D part1 = XCubicCurve2D.none();
+							final XCubicCurve2D part2 = XCubicCurve2D.none();
 							current.subdivide(part1, part2);
 							assert part1.getP2().equals(part2.getP1());
 							if (head.contains(part1.getP2())) {

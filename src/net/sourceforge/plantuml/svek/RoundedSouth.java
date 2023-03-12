@@ -68,9 +68,9 @@ public final class RoundedSouth implements UDrawable {
 
 		final UShape header;
 		if (rounded == 0) {
-			header = new URectangle(width, height);
+			header = URectangle.build(width, height);
 		} else {
-			final UPath path = new UPath();
+			final UPath path = UPath.none();
 			path.moveTo(0, 0);
 			path.lineTo(width, 0);
 			path.lineTo(width, height - rounded / 2);

@@ -121,7 +121,7 @@ public class EntityImageLollipopInterfaceEye2 extends AbstractEntityImage {
 		if (url != null) {
 			ug.startUrl(url);
 		}
-		final UEllipse circle = new UEllipse(SIZE, SIZE);
+		final UEllipse circle = UEllipse.build(SIZE, SIZE);
 		if (getSkinParam().shadowing(getEntity().getStereotype())) {
 			circle.setDeltaShadow(4);
 		}

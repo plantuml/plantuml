@@ -80,13 +80,14 @@ public class UGraphicDebug extends AbstractCommonUGraphic implements ClipContain
 
 	@Override
 	protected AbstractCommonUGraphic copyUGraphic() {
-		return new UGraphicDebug(this, output, scaleFactor, dim, svgLinkTarget, hoverPathColorRGB, seed,
+		final UGraphicDebug result = new UGraphicDebug(this, output, scaleFactor, dim, svgLinkTarget, hoverPathColorRGB, seed,
 				preserveAspectRatio);
+		return result;
 	}
 
 	private UGraphicDebug(UGraphicDebug other, List<String> output, double scaleFactor, XDimension2D dim,
 			String svgLinkTarget, String hoverPathColorRGB, long seed, String preserveAspectRatio) {
-		super(other);
+		basicCopy(other);
 		this.output = output;
 		this.scaleFactor = scaleFactor;
 		this.dim = dim;
@@ -98,7 +99,7 @@ public class UGraphicDebug extends AbstractCommonUGraphic implements ClipContain
 
 	public UGraphicDebug(double scaleFactor, XDimension2D dim, String svgLinkTarget, String hoverPathColorRGB,
 			long seed, String preserveAspectRatio) {
-		super(HColors.WHITE, ColorMapper.IDENTITY, new StringBounderDebug());
+		basicCopy(HColors.WHITE, ColorMapper.IDENTITY, new StringBounderDebug());
 		this.output = new ArrayList<>();
 		this.scaleFactor = scaleFactor;
 		this.dim = dim;

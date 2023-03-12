@@ -49,10 +49,10 @@ class MiddleCircleCircled extends Extremity {
 	private final double angle;
 	private final MiddleCircleCircledMode mode;
 	private final double radius1 = 6;
-	private final UEllipse circle = new UEllipse(2 * radius1, 2 * radius1);
+	private final UEllipse circle = UEllipse.build(2 * radius1, 2 * radius1);
 
 	private final double radius2 = 10;
-	private final UEllipse bigcircle = new UEllipse(2 * radius2, 2 * radius2);
+	private final UEllipse bigcircle = UEllipse.build(2 * radius2, 2 * radius2);
 	private final HColor backColor;
 
 	public MiddleCircleCircled(double angle, MiddleCircleCircledMode mode, HColor backColor, HColor diagramBackColor) {

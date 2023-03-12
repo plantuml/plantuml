@@ -92,7 +92,7 @@ public class EntityImagePort extends AbstractEntityImageBorder {
 	}
 
 	private void drawSymbol(UGraphic ug) {
-		final Shadowable rect = new URectangle(EntityPosition.RADIUS * 2, EntityPosition.RADIUS * 2);
+		final Shadowable rect = URectangle.build(EntityPosition.RADIUS * 2, EntityPosition.RADIUS * 2);
 		ug.draw(rect);
 	}
 

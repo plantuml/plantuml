@@ -53,7 +53,7 @@ public class TitleBox extends AbstractTextBlock {
 	public TitleBox(String value, FontConfiguration fc) {
 		this.value = value;
 		this.fc = fc.add(FontStyle.BOLD);
-		this.utext = new UText(value, this.fc);
+		this.utext = UText.build(value, this.fc);
 	}
 
 	@Override

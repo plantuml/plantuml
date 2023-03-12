@@ -231,11 +231,11 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 
 					final HColor back = timelineStyle.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
 					if (back.isTransparent() == false) {
-						final URectangle rect1 = new URectangle(calculateDimension(ug.getStringBounder()).getWidth(),
+						final URectangle rect1 = URectangle.build(calculateDimension(ug.getStringBounder()).getWidth(),
 								timeHeader.getTimeHeaderHeight());
 						ug.apply(back.bg()).draw(rect1);
 						if (showFootbox) {
-							final URectangle rect2 = new URectangle(
+							final URectangle rect2 = URectangle.build(
 									calculateDimension(ug.getStringBounder()).getWidth(),
 									timeHeader.getTimeFooterHeight());
 							ug.apply(back.bg()).apply(UTranslate.dy(totalHeightWithoutFooter)).draw(rect2);

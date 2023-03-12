@@ -105,7 +105,7 @@ public class EntityImageLollipopInterface extends AbstractEntityImage {
 		if (getEntity().getLeafType() == LeafType.LOLLIPOP_HALF) {
 			circle = new UEllipse(SIZE, SIZE, angle - 90, 180);
 		} else {
-			circle = new UEllipse(SIZE, SIZE);
+			circle = UEllipse.build(SIZE, SIZE);
 			if (getSkinParam().shadowing(getEntity().getStereotype()))
 				circle.setDeltaShadow(shadow);
 		}

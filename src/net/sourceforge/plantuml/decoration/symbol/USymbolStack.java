@@ -61,10 +61,10 @@ class USymbolStack extends USymbol {
 	private void drawQueue(UGraphic ug, double width, double height, double shadowing, double roundCorner) {
 		final double border = 15;
 
-		final URectangle rect = new URectangle(width - 2 * border, height).rounded(roundCorner);
+		final URectangle rect = URectangle.build(width - 2 * border, height).rounded(roundCorner);
 		ug.apply(HColors.none()).apply(UTranslate.dx(border)).draw(rect);
 
-		final UPath path = new UPath();
+		final UPath path = UPath.none();
 		if (roundCorner == 0) {
 			path.moveTo(0, 0);
 			path.lineTo(border, 0);

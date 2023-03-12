@@ -78,9 +78,9 @@ public class ETileZeroOrMore extends ETile {
 		final XDimension2D fullDim = calculateDimension(stringBounder);
 		if (TRACE) {
 			if (specialForAlternate)
-				ug.apply(HColors.COL_B38D22).draw(new URectangle(fullDim));
+				ug.apply(HColors.COL_B38D22).draw(URectangle.build(fullDim));
 			else
-				ug.apply(HColors.GREEN).draw(new URectangle(fullDim));
+				ug.apply(HColors.GREEN).draw(URectangle.build(fullDim));
 		}
 
 		final double linePos = getH1(stringBounder);

@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.klimt.drawing.UDriver;
 import net.sourceforge.plantuml.klimt.shape.UEllipse;
 
 public class DriverEllipseSvg implements UDriver<UEllipse, SvgGraphics> {
+    // ::remove file when __HAXE__
 
 	private final ClipContainer clipContainer;
 

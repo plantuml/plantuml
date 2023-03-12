@@ -89,7 +89,7 @@ public class ActivityBox extends AbstractTextBlock {
 
 		final double widthTotal = dimTotal.getWidth();
 		final double heightTotal = dimTotal.getHeight();
-		final Shadowable rect = new URectangle(widthTotal, heightTotal).rounded(CORNER);
+		final Shadowable rect = URectangle.build(widthTotal, heightTotal).rounded(CORNER);
 		ug = ug.apply(HColors.MY_RED);
 		ug = ug.apply(HColors.MY_YELLOW.bg());
 		ug.apply(UStroke.withThickness(1.5)).draw(rect);

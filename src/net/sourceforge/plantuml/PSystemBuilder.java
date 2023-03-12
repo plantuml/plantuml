@@ -203,33 +203,36 @@ public class PSystemBuilder {
 		factories.add(new NwDiagramFactory(DiagramType.NW));
 		factories.add(new MindMapDiagramFactory());
 		factories.add(new WBSDiagramFactory());
+
 		// ::uncomment when __CORE__
 		// factories.add(new PSystemSudokuFactory());
 		// ::done
-		// ::comment when __CORE__
+
+		// ::comment when __CORE__ or __MIT__
 		factories.add(new PSystemDitaaFactory());
 		if (License.getCurrent() == License.GPL || License.getCurrent() == License.GPLV2) {
 			factories.add(new PSystemJcckitFactory());
-			// factories.add(new PSystemLogoFactory());
 			factories.add(new PSystemSudokuFactory());
 		}
+		// ::done
+
+		// ::comment when __CORE__
 		factories.add(new PSystemDefinitionFactory());
 		factories.add(new ListSpriteDiagramFactory());
 		factories.add(new StdlibDiagramFactory());
 		factories.add(new PSystemMathFactory(DiagramType.MATH));
 		factories.add(new PSystemLatexFactory(DiagramType.LATEX));
-		// factories.add(new PSystemStatsFactory());
 		factories.add(new PSystemCreoleFactory());
 		factories.add(new PSystemEggFactory());
 		factories.add(new PSystemAppleTwoFactory());
 		factories.add(new PSystemRIPFactory());
-		// factories.add(new PSystemLostFactory());
 		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE)
 			factories.add(new PSystemPathFactory());
 		factories.add(new PSystemOregonFactory());
 		// ::done
+
 		factories.add(new PSystemCharlieFactory());
-		// ::comment when __CORE__
+		// ::comment when __CORE__ or __MIT__
 		if (License.getCurrent() == License.GPL || License.getCurrent() == License.GPLV2) {
 			factories.add(new PSystemXearthFactory());
 		}

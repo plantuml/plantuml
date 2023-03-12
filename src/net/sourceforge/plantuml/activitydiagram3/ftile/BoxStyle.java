@@ -50,7 +50,7 @@ public enum BoxStyle {
 	PLAIN(null, '\0', 0) {
 		@Override
 		protected Shadowable getShape(double width, double height, double roundCorner) {
-			return new URectangle(width, height).rounded(roundCorner);
+			return URectangle.build(width, height).rounded(roundCorner);
 		}
 	},
 	SDL_INPUT("input", '<', 10) {
@@ -80,7 +80,7 @@ public enum BoxStyle {
 	SDL_PROCEDURE("procedure", '|', 0) {
 		@Override
 		protected void drawInternal(UGraphic ug, double width, double height, double shadowing, double roundCorner) {
-			final URectangle rect = new URectangle(width, height);
+			final URectangle rect = URectangle.build(width, height);
 			rect.setDeltaShadow(shadowing);
 			ug.draw(rect);
 			final ULine vline = ULine.vline(height);
@@ -113,7 +113,7 @@ public enum BoxStyle {
 	SDL_CONTINUOUS("continuous", '}', 0) {
 		@Override
 		protected Shadowable getShape(double width, double height, double roundCorner) {
-			final UPath result = new UPath();
+			final UPath result = UPath.none();
 			final double c1[] = { DELTA_CONTINUOUS, 0 };
 			final double c2[] = { 0, height / 2 };
 			final double c3[] = { DELTA_CONTINUOUS, height };
@@ -135,7 +135,7 @@ public enum BoxStyle {
 	SDL_TASK("task", ']', 0) {
 		@Override
 		protected Shadowable getShape(double width, double height, double roundCorner) {
-			return new URectangle(width, height);
+			return URectangle.build(width, height);
 		}
 	};
 

@@ -87,8 +87,8 @@ public class LinkConstraint {
 			return;
 		}
 		ug = ug.apply(HColors.BLACK);
-//		ug.apply(new UTranslate(x1, y1)).draw(new URectangle(10, 10));
-//		ug.apply(new UTranslate(x2, y2)).draw(new URectangle(10, 10));
+//		ug.apply(new UTranslate(x1, y1)).draw(URectangle.build(10, 10));
+//		ug.apply(new UTranslate(x2, y2)).draw(URectangle.build(10, 10));
 
 		final ULine line = new ULine(x2 - x1, y2 - y1);
 		ug = ug.apply(new UStroke(3, 3, 1));

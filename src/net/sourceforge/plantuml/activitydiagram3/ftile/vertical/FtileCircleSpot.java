@@ -97,7 +97,7 @@ public class FtileCircleSpot extends AbstractFtile {
 	}
 
 	public void drawU(UGraphic ug) {
-		final UEllipse circle = new UEllipse(SIZE, SIZE);
+		final UEllipse circle = UEllipse.build(SIZE, SIZE);
 
 		final HColor backColor = this.backColor == null ? style.value(PName.BackGroundColor).asColor(getIHtmlColorSet())
 				: this.backColor;

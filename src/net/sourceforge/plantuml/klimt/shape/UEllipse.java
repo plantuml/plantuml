@@ -41,15 +41,14 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 
 public class UEllipse extends AbstractShadowable implements UShapeSized {
-    // ::remove file when __HAXE__
 
 	private final double width;
 	private final double height;
 	private final double start;
 	private final double extend;
 
-	public UEllipse(double width, double height) {
-		this(width, height, 0, 0);
+	public static UEllipse build(double width, double height) {
+		return new UEllipse(width, height, 0, 0);
 	}
 
 	public UEllipse(double width, double height, double start, double extend) {
@@ -80,13 +79,13 @@ public class UEllipse extends AbstractShadowable implements UShapeSized {
 	}
 
 	public UEllipse bigger(double more) {
-		final UEllipse result = new UEllipse(width + more, height + more);
+		final UEllipse result = UEllipse.build(width + more, height + more);
 		result.setDeltaShadow(getDeltaShadow());
 		return result;
 	}
 
 	public UEllipse scale(double factor) {
-		final UEllipse result = new UEllipse(width * factor, height * factor);
+		final UEllipse result = UEllipse.build(width * factor, height * factor);
 		result.setDeltaShadow(getDeltaShadow());
 		return result;
 	}

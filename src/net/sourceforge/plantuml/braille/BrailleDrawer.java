@@ -76,7 +76,7 @@ public class BrailleDrawer implements UDrawable {
 	private void drawCircle(UGraphic ug, int x, int y) {
 		final double cx = x * step;
 		final double cy = y * step;
-		ug.apply(new UTranslate(cx, cy)).draw(new UEllipse(spotSize, spotSize));
+		ug.apply(new UTranslate(cx, cy)).draw(UEllipse.build(spotSize, spotSize));
 	}
 
 }

@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 
 public class PiecewiseAffineOnXorYBuilder extends AbstractTextBlock {
+    // ::remove file when __HAXE__
 
 	private final TextBlock textBlock;
 	private final CompressionMode mode;

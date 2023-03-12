@@ -69,10 +69,10 @@ public class ActorStickMan extends AbstractTextBlock implements TextBlock {
 
 		final double startX = Math.max(armsLenght, legsX) - headDiam / 2.0 + thickness();
 
-		final UEllipse head = new UEllipse(headDiam, headDiam);
+		final UEllipse head = UEllipse.build(headDiam, headDiam);
 		final double centerX = startX + headDiam / 2;
 
-		final UPath path = new UPath();
+		final UPath path = UPath.none();
 		path.moveTo(0, 0);
 		path.lineTo(0, bodyLenght);
 		path.moveTo(-armsLenght, armsY);

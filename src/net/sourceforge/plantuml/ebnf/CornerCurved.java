@@ -85,7 +85,7 @@ public class CornerCurved implements UDrawable {
 
 	@Override
 	public void drawU(UGraphic ug) {
-		final UPath path = new UPath();
+		final UPath path = UPath.none();
 		final double a = delta / 4;
 
 		switch (type) {

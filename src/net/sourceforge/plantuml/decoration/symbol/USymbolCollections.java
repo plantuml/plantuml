@@ -56,7 +56,7 @@ class USymbolCollections extends USymbol {
 	}
 
 	private void drawCollections(UGraphic ug, double width, double height, double shadowing, double roundCorner) {
-		final URectangle small = new URectangle(width - getDeltaCollection(), height - getDeltaCollection())
+		final URectangle small = URectangle.build(width - getDeltaCollection(), height - getDeltaCollection())
 				.rounded(roundCorner);
 		small.setDeltaShadow(shadowing);
 

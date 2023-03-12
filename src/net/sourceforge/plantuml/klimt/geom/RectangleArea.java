@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.klimt.geom;
 import net.sourceforge.plantuml.klimt.UTranslate;
 
 public class RectangleArea {
-	// ::remove file when __HAXE__
 
 	private final double minX;
 	private final double minY;
@@ -52,8 +51,8 @@ public class RectangleArea {
 		this.maxY = maxY;
 	}
 
-	public RectangleArea(XPoint2D min, XPoint2D max) {
-		this(min.x, min.y, max.x, max.y);
+	public static RectangleArea build(XPoint2D min, XPoint2D max) {
+		return new RectangleArea(min.x, min.y, max.x, max.y);
 	}
 
 	public RectangleArea move(double deltaX, double deltaY) {
@@ -118,8 +117,8 @@ public class RectangleArea {
 			final double angle = BezierUtils.getStartingAngle(bez);
 			return new PointDirected(bez.getP1(), angle);
 		}
-		final XCubicCurve2D left = new XCubicCurve2D();
-		final XCubicCurve2D right = new XCubicCurve2D();
+		final XCubicCurve2D left = XCubicCurve2D.none();
+		final XCubicCurve2D right = XCubicCurve2D.none();
 		bez.subdivide(left, right);
 		final PointDirected int1 = getIntersection(left);
 		if (int1 != null)

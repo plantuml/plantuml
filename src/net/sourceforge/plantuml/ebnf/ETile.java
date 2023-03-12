@@ -108,7 +108,7 @@ public abstract class ETile extends AbstractTextBlock {
 	}
 
 	static UPath getArrowToLeft() {
-		final UPath arrow = new UPath();
+		final UPath arrow = UPath.none();
 		arrow.moveTo(0, 0);
 		arrow.lineTo(0, -3);
 		arrow.lineTo(-6, 0);
@@ -119,7 +119,7 @@ public abstract class ETile extends AbstractTextBlock {
 	}
 
 	static UPath getArrowToRight() {
-		final UPath arrow = new UPath();
+		final UPath arrow = UPath.none();
 		arrow.moveTo(0, 0);
 		arrow.lineTo(0, -3);
 		arrow.lineTo(6, 0);
@@ -130,7 +130,7 @@ public abstract class ETile extends AbstractTextBlock {
 	}
 
 	static UPath getArrowToBottom() {
-		final UPath arrow = new UPath();
+		final UPath arrow = UPath.none();
 		arrow.moveTo(0, 0);
 		arrow.lineTo(3, 0);
 		arrow.lineTo(0, 6);
@@ -141,7 +141,7 @@ public abstract class ETile extends AbstractTextBlock {
 	}
 
 	static UPath getArrowToTop() {
-		final UPath arrow = new UPath();
+		final UPath arrow = UPath.none();
 		arrow.moveTo(0, 0);
 		arrow.lineTo(3, 0);
 		arrow.lineTo(0, -6);

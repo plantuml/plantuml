@@ -67,7 +67,7 @@ class USymbolFrame extends USymbol {
 
 	private void drawFrame(UGraphic ug, double width, double height, XDimension2D dimTitle, double shadowing,
 			double roundCorner) {
-		final Shadowable rectangle = new URectangle(width, height).rounded(roundCorner).ignoreForCompressionOnX()
+		final Shadowable rectangle = URectangle.build(width, height).rounded(roundCorner).ignoreForCompressionOnX()
 				.ignoreForCompressionOnY();
 		rectangle.setDeltaShadow(shadowing);
 
@@ -84,7 +84,7 @@ class USymbolFrame extends USymbol {
 		}
 		final double textHeight = getYpos(dimTitle);
 
-		final UPath line = new UPath();
+		final UPath line = UPath.none();
 		line.setIgnoreForCompressionOnX();
 		line.moveTo(textWidth, 0);
 

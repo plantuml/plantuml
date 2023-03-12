@@ -48,15 +48,16 @@ public class UGraphicNull extends AbstractUGraphic<String> implements EnsureVisi
 
 	@Override
 	protected AbstractCommonUGraphic copyUGraphic() {
-		return new UGraphicNull(this);
+		final UGraphicNull result = new UGraphicNull(this);
+		return result;
 	}
 
 	private UGraphicNull(UGraphicNull other) {
-		super(other);
+		copy(other);
 	}
 
 	public UGraphicNull() {
-		super(HColors.BLACK, ColorMapper.IDENTITY, FileFormat.PNG.getDefaultStringBounder(), "foo");
+		copy(HColors.BLACK, ColorMapper.IDENTITY, FileFormat.PNG.getDefaultStringBounder(), "foo");
 	}
 
 	@Override

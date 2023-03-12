@@ -61,7 +61,7 @@ class USymbolQueue extends USymbol {
 	private final double dx = 5;
 
 	private void drawQueue(UGraphic ug, double width, double height, double shadowing) {
-		final UPath shape = new UPath();
+		final UPath shape = UPath.none();
 		shape.setDeltaShadow(shadowing);
 
 		shape.moveTo(dx, 0);
@@ -81,7 +81,7 @@ class USymbolQueue extends USymbol {
 	}
 
 	private UPath getClosingPath(double width, double height) {
-		final UPath closing = new UPath();
+		final UPath closing = UPath.none();
 		closing.moveTo(width - dx, 0);
 		closing.cubicTo(width - dx * 2, 0, width - dx * 2, height / 2, width - dx * 2, height / 2);
 		closing.cubicTo(width - dx * 2, height, width - dx, height, width - dx, height);

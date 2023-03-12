@@ -57,7 +57,7 @@ class USymbolCard extends USymbol {
 	}
 
 	private void drawCard(UGraphic ug, double width, double height, double shadowing, double top, double roundCorner) {
-		final URectangle shape = new URectangle(width, height).rounded(roundCorner);
+		final URectangle shape = URectangle.build(width, height).rounded(roundCorner);
 		shape.setDeltaShadow(shadowing);
 
 		ug.draw(shape);

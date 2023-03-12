@@ -101,7 +101,7 @@ public class USymbolFolder extends USymbol {
 			poly.addPoint(0, 0);
 			shape = poly;
 		} else {
-			final UPath path = new UPath();
+			final UPath path = UPath.none();
 			path.moveTo(roundCorner / 2, 0);
 			path.lineTo(wtitle - roundCorner / 2, 0);
 			// path.lineTo(wtitle, roundCorner / 2);

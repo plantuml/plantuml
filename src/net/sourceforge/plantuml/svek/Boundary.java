@@ -64,15 +64,15 @@ public class Boundary extends AbstractTextBlock {
 		x += margin;
 		y += margin;
 		ug = symbolContext.apply(ug);
-		final UEllipse circle = new UEllipse(radius * 2, radius * 2);
+		final UEllipse circle = UEllipse.build(radius * 2, radius * 2);
 		circle.setDeltaShadow(symbolContext.getDeltaShadow());
 
-		final UPath path1 = new UPath();
+		final UPath path1 = UPath.none();
 		path1.moveTo(0, 0);
 		path1.lineTo(0, radius * 2);
 		path1.setDeltaShadow(symbolContext.getDeltaShadow());
 
-		final UPath path = new UPath();
+		final UPath path = UPath.none();
 		path.moveTo(0, 0);
 		path.lineTo(0, radius * 2);
 		path.moveTo(0, radius);

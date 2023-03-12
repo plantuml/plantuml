@@ -40,8 +40,6 @@ import java.awt.geom.Rectangle2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 
 public class UClip implements UChange {
-	// ::remove file when __HAXE__
-
 	private final double x;
 	private final double y;
 	private final double width;
@@ -113,27 +111,28 @@ public class UClip implements UChange {
 		return true;
 	}
 
+	// ::comment when __HAXE__
 	public Rectangle2D.Double getClippedRectangle(Rectangle2D.Double r) {
 		return (Rectangle2D.Double) r.createIntersection(new Rectangle2D.Double(x, y, width, height));
 	}
 
 	public Line2D.Double getClippedLine(Line2D.Double line) {
-		if (isInside(line.x1, line.y1) && isInside(line.x2, line.y2)) {
+		if (isInside(line.x1, line.y1) && isInside(line.x2, line.y2))
 			return line;
-		}
+
 		if (isInside(line.x1, line.y1) == false && isInside(line.x2, line.y2) == false) {
 			if (line.x1 == line.x2) {
 				final double newy1 = getClippedY(line.y1);
 				final double newy2 = getClippedY(line.y2);
-				if (newy1 != newy2) {
+				if (newy1 != newy2)
 					return new Line2D.Double(line.x1, newy1, line.x2, newy2);
-				}
+
 			}
 			return null;
 		}
-		if (line.x1 != line.x2 && line.y1 != line.y2) {
+		if (line.x1 != line.x2 && line.y1 != line.y2)
 			return null;
-		}
+
 		assert line.x1 == line.x2 || line.y1 == line.y2;
 		if (line.y1 == line.y2) {
 			final double newx1 = getClippedX(line.x1);
@@ -148,28 +147,29 @@ public class UClip implements UChange {
 		throw new IllegalStateException();
 	}
 
+	public boolean isInside(double x, double y, UPath shape) {
+		return isInside(x + shape.getMinX(), y + shape.getMinY()) && isInside(x + shape.getMaxX(), y + shape.getMaxY());
+	}
+	// ::done
+
 	private double getClippedX(double xp) {
-		if (xp < x) {
+		if (xp < x)
 			return x;
-		}
-		if (xp > x + width) {
+
+		if (xp > x + width)
 			return x + width;
-		}
+
 		return xp;
 	}
 
 	private double getClippedY(double yp) {
-		if (yp < y) {
+		if (yp < y)
 			return y;
-		}
-		if (yp > y + height) {
-			return y + height;
-		}
-		return yp;
-	}
 
-	public boolean isInside(double x, double y, UPath shape) {
-		return isInside(x + shape.getMinX(), y + shape.getMinY()) && isInside(x + shape.getMaxX(), y + shape.getMaxY());
+		if (yp > y + height)
+			return y + height;
+
+		return yp;
 	}
 
 }

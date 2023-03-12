@@ -1,7 +1,6 @@
 package net.sourceforge.plantuml.klimt.geom;
 
 public class XCubicCurve2D {
-	// ::remove file when __HAXE__
 
 	public double x1;
 	public double y1;
@@ -12,8 +11,8 @@ public class XCubicCurve2D {
 	public double x2;
 	public double y2;
 
-	public XCubicCurve2D() {
-		this(0, 0, 0, 0, 0, 0, 0, 0);
+	public static XCubicCurve2D none() {
+		return new XCubicCurve2D(0, 0, 0, 0, 0, 0, 0, 0);
 	}
 
 	public XCubicCurve2D(double x1, double y1, double ctrlx1, double ctrly1, double ctrlx2, double ctrly2, double x2,

@@ -59,7 +59,7 @@ class USymbolDatabase extends USymbol {
 	}
 
 	private void drawDatabase(UGraphic ug, double width, double height, double shadowing) {
-		final UPath shape = new UPath();
+		final UPath shape = UPath.none();
 		shape.setDeltaShadow(shadowing);
 
 		shape.moveTo(0, 10);
@@ -79,7 +79,7 @@ class USymbolDatabase extends USymbol {
 	}
 
 	private UPath getClosingPath(double width) {
-		final UPath closing = new UPath();
+		final UPath closing = UPath.none();
 		closing.moveTo(0, 10);
 		closing.cubicTo(0, 20, width / 2, 20, width / 2, 20);
 		closing.cubicTo(width / 2, 20, width, 20, width, 10);

@@ -45,23 +45,32 @@ import net.sourceforge.plantuml.regex.MyPattern;
 import net.sourceforge.plantuml.regex.Pattern2;
 
 public class SvgAttributes {
-	// ::remove file when __HAXE__
 
 	private final Map<String, String> attributes = new TreeMap<String, String>();
 
-	public SvgAttributes() {
+	private SvgAttributes cloneMe() {
+		final SvgAttributes result = new SvgAttributes();
+		result.attributes.putAll(this.attributes);
+		return result;
 	}
 
-	private SvgAttributes(SvgAttributes other) {
-		this.attributes.putAll(other.attributes);
+	private SvgAttributes() {
 	}
 
-	public SvgAttributes(String args) {
+	public static SvgAttributes empty() {
+		return new SvgAttributes();
+	}
+
+	public static SvgAttributes build(String args) {
+		final SvgAttributes result = new SvgAttributes();
+		// ::comment when __HAXE__
 		final Pattern2 p = MyPattern.cmpile("(\\w+)\\s*=\\s*([%g][^%g]*[%g]|(?:\\w+))");
 		final Matcher2 m = p.matcher(args);
-		while (m.find()) {
-			attributes.put(m.group(1), StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(m.group(2)));
-		}
+		while (m.find())
+			result.attributes.put(m.group(1), StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(m.group(2)));
+		// ::done
+
+		return result;
 	}
 
 	public Map<String, String> attributes() {
@@ -69,13 +78,13 @@ public class SvgAttributes {
 	}
 
 	public SvgAttributes add(String key, String value) {
-		final SvgAttributes result = new SvgAttributes(this);
+		final SvgAttributes result = cloneMe();
 		result.attributes.put(key, value);
 		return result;
 	}
 
 	public SvgAttributes add(SvgAttributes toBeAdded) {
-		final SvgAttributes result = new SvgAttributes(this);
+		final SvgAttributes result = cloneMe();
 		result.attributes.putAll(toBeAdded.attributes);
 		return result;
 	}

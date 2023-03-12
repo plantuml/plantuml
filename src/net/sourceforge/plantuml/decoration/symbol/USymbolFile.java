@@ -73,7 +73,7 @@ class USymbolFile extends USymbol {
 			polygon.addPoint(0, 0);
 			out = polygon;
 		} else {
-			final UPath path = new UPath();
+			final UPath path = UPath.none();
 			path.moveTo(0, roundCorner / 2);
 			path.lineTo(0, height - roundCorner / 2);
 			path.arcTo(new XPoint2D(roundCorner / 2, height), roundCorner / 2, 0, 0);
@@ -89,7 +89,7 @@ class USymbolFile extends USymbol {
 		out.setDeltaShadow(shadowing);
 		ug.draw(out);
 
-		final UPath path = new UPath();
+		final UPath path = UPath.none();
 		path.moveTo(width - cornersize, 0);
 		if (roundCorner == 0) {
 			path.lineTo(width - cornersize, cornersize);

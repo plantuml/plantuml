@@ -50,7 +50,6 @@ import net.sourceforge.plantuml.klimt.geom.USegmentType;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 
 public class UPath extends AbstractShadowable implements Iterable<USegment>, UShapeIgnorableForCompression {
-	// ::remove file when __HAXE__
 
 	private final String comment;
 	private final String codeLine;
@@ -66,8 +65,8 @@ public class UPath extends AbstractShadowable implements Iterable<USegment>, USh
 		this.codeLine = codeLine;
 	}
 
-	public UPath() {
-		this(null, null);
+	public static UPath none() {
+		return new UPath(null, null);
 	}
 
 	public void add(double[] coord, USegmentType pathType) {
@@ -100,6 +99,7 @@ public class UPath extends AbstractShadowable implements Iterable<USegment>, USh
 		return result;
 	}
 
+	// ::comment when __HAXE__
 	public UPath rotate(double theta) {
 		final UPath result = new UPath(comment, codeLine);
 		for (USegment seg : segments)
@@ -115,6 +115,7 @@ public class UPath extends AbstractShadowable implements Iterable<USegment>, USh
 
 		return result;
 	}
+	// ::done
 
 	public void moveTo(XPoint2D pt) {
 		moveTo(pt.getX(), pt.getY());
@@ -180,10 +181,12 @@ public class UPath extends AbstractShadowable implements Iterable<USegment>, USh
 		return minmax.getMinY();
 	}
 
+	// ::comment when __HAXE__
 	@Override
 	public String toString() {
 		return segments.toString();
 	}
+	// ::done
 
 	public Iterator<USegment> iterator() {
 		return segments.iterator();

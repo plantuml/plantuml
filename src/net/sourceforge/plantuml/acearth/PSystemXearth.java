@@ -59,6 +59,7 @@ import net.sourceforge.plantuml.core.UmlSource;
 
 public class PSystemXearth extends AbstractPSystem {
 	// ::remove folder when __CORE__
+	// ::remove folder when __MIT__
 
 	final private int width;
 	final private int height;

@@ -102,7 +102,7 @@ public class StripeCode implements StripeRaw {
 	public void drawU(UGraphic ug) {
 		double y = 0;
 		for (String s : raw) {
-			final UText shape = new UText(s, fontConfiguration);
+			final UText shape = UText.build(s, fontConfiguration);
 			final StringBounder stringBounder = ug.getStringBounder();
 			final XDimension2D dim = stringBounder.calculateDimension(fontConfiguration.getFont(), s);
 			y += dim.getHeight();

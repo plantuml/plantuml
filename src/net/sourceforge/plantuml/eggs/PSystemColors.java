@@ -244,7 +244,7 @@ public class PSystemColors extends PlainDiagram implements UDrawable {
 		for (String name : colors.names()) {
 			UGraphic tmp = getPositioned(ug, i, j);
 			final HColor color = colors.getColorOrWhite(name);
-			applyColor(tmp, color).draw(new URectangle(rectangleWidth, rectangleHeight));
+			applyColor(tmp, color).draw(URectangle.build(rectangleWidth, rectangleHeight));
 			final TextBlock tt = getTextName(font, name, color);
 			final XDimension2D dimText = tt.calculateDimension(ug.getStringBounder());
 			final double dy = (rectangleHeight - dimText.getHeight()) / 2;

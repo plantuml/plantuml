@@ -86,7 +86,7 @@ public class GtileCircleSpot extends AbstractGtile {
 				? SkinParamUtils.getColor(skinParam(), null, ColorParam.activityBackground)
 				: this.backColor;
 
-		final UEllipse circle = new UEllipse(SIZE, SIZE);
+		final UEllipse circle = UEllipse.build(SIZE, SIZE);
 		circle.setDeltaShadow(shadowing);
 		ug.apply(borderColor).apply(backColor.bg()).apply(getThickness()).draw(circle);
 

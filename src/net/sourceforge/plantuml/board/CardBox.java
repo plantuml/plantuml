@@ -67,7 +67,7 @@ public class CardBox extends AbstractTextBlock {
 	}
 
 	public void drawU(UGraphic ug) {
-		final URectangle rect = new URectangle(calculateDimension(ug.getStringBounder()));
+		final URectangle rect = URectangle.build(calculateDimension(ug.getStringBounder()));
 		rect.setDeltaShadow(1);
 
 		ug.apply(HColors.BLACK).apply(HColors.LIGHT_GRAY.bg()).draw(rect);

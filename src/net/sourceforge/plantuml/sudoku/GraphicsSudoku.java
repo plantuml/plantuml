@@ -68,6 +68,7 @@ import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
 import net.sourceforge.plantuml.png.PngIO;
 
 public class GraphicsSudoku {
+    // ::remove folder when __MIT__
 
 	private final ISudoku sudoku;
 	private final UFont numberFont = UFont.sansSerif(20).bold();
@@ -97,7 +98,7 @@ public class GraphicsSudoku {
 
 	public ImageData writeImageSvg(OutputStream os) throws IOException {
 		final SvgOption option = SvgOption.basic().withBackcolor(HColors.WHITE);
-		final UGraphicSvg ug = new UGraphicSvg(option, false, 0, FileFormat.SVG.getDefaultStringBounder());
+		final UGraphicSvg ug = UGraphicSvg.build(option, false, 0, FileFormat.SVG.getDefaultStringBounder());
 		drawInternal(ug);
 		ug.writeToStream(os, null, -1); // dpi param is not used
 		return ImageDataSimple.ok();
@@ -154,12 +155,12 @@ public class GraphicsSudoku {
 		for (int i = 0; i < 10; i++) {
 			final boolean bold = i % boldWidth == 0;
 			final int w = bold ? boldWidth : 1;
-			ug.apply(UTranslate.dy(i * cellHeight)).draw(new URectangle(9 * cellWidth + boldWidth, w));
+			ug.apply(UTranslate.dy(i * cellHeight)).draw(URectangle.build(9 * cellWidth + boldWidth, w));
 		}
 		for (int i = 0; i < 10; i++) {
 			final boolean bold = i % boldWidth == 0;
 			final int w = bold ? boldWidth : 1;
-			ug.apply(UTranslate.dx(i * cellWidth)).draw(new URectangle(w, 9 * cellHeight + boldWidth));
+			ug.apply(UTranslate.dx(i * cellWidth)).draw(URectangle.build(w, 9 * cellHeight + boldWidth));
 		}
 
 		ug = ug.apply(UTranslate.dy(sudoHeight));

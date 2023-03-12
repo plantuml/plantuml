@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 
 public class UGraphicCompressOnXorY extends UGraphicDelegator {
+    // ::remove file when __HAXE__
 
 	public UGraphic apply(UChange change) {
 		if (change instanceof UTranslate)

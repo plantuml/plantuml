@@ -59,11 +59,11 @@ class USymbolComponent2 extends USymbol {
 	private void drawComponent2(UGraphic ug, double widthTotal, double heightTotal, double shadowing,
 			double roundCorner) {
 
-		final URectangle form = new URectangle(widthTotal, heightTotal).rounded(roundCorner);
+		final URectangle form = URectangle.build(widthTotal, heightTotal).rounded(roundCorner);
 		form.setDeltaShadow(shadowing);
 
-		final UShape small = new URectangle(15, 10);
-		final UShape tiny = new URectangle(4, 2);
+		final UShape small = URectangle.build(15, 10);
+		final UShape tiny = URectangle.build(4, 2);
 
 		ug.draw(form);
 

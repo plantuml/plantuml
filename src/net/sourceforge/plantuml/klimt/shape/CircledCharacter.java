@@ -67,7 +67,7 @@ public class CircledCharacter extends AbstractTextBlock implements TextBlock {
 			ug = ug.apply(spotBorder);
 
 		ug = ug.apply(spotBackColor.bg());
-		ug.draw(new UEllipse(radius * 2, radius * 2));
+		ug.draw(UEllipse.build(radius * 2, radius * 2));
 		ug = ug.apply(fontColor);
 		ug = ug.apply(new UTranslate(radius, radius));
 		ug.draw(new UCenteredCharacter(c.charAt(0), font));

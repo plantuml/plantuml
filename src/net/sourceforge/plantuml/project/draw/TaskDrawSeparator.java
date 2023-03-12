@@ -143,7 +143,7 @@ public class TaskDrawSeparator implements TaskDraw {
 		if (backColor.isTransparent() == false) {
 			final double height = padding.getTop() + getTextHeight(stringBounder) + padding.getBottom();
 			if (height > 0) {
-				final URectangle rect = new URectangle(end - start, height);
+				final URectangle rect = URectangle.build(end - start, height);
 				ug.apply(backColor.bg()).draw(rect);
 			}
 		}

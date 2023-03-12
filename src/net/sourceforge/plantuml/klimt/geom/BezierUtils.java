@@ -36,12 +36,10 @@
 package net.sourceforge.plantuml.klimt.geom;
 
 public class BezierUtils {
-	// ::remove file when __HAXE__
-
 	static public double getEndingAngle(final XCubicCurve2D left) {
-		if (left.getCtrlP2().equals(left.getP2())) {
+		if (left.getCtrlP2().equals(left.getP2()))
 			return getAngle(left.getP1(), left.getP2());
-		}
+
 		return getAngle(left.getCtrlP2(), left.getP2());
 	}
 
@@ -75,8 +73,8 @@ public class BezierUtils {
 			bez.setCurve(bez.x2, bez.y2, bez.ctrlx2, bez.ctrly2, bez.ctrlx1, bez.ctrly1, bez.x1, bez.y1);
 
 		assert shape.contains(bez.x1, bez.y1) && shape.contains(bez.x2, bez.y2) == false;
-		final XCubicCurve2D left = new XCubicCurve2D();
-		final XCubicCurve2D right = new XCubicCurve2D();
+		final XCubicCurve2D left = XCubicCurve2D.none();
+		final XCubicCurve2D right = XCubicCurve2D.none();
 		subdivide(bez, left, right, 0.5);
 
 		if (isCutting(left, shape) ^ isCutting(right, shape) == false)

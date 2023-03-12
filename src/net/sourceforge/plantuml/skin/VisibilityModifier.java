@@ -105,7 +105,7 @@ public enum VisibilityModifier {
 
 			public void drawU(UGraphic ug) {
 				if (withInvisibleRectanble)
-					ug.apply(HColors.none()).draw(new URectangle(size * 2, size));
+					ug.apply(HColors.none()).draw(URectangle.build(size * 2, size));
 
 				drawInternal(ug, size, foregroundColor, backgoundColor, 0, 0);
 			}
@@ -164,11 +164,11 @@ public enum VisibilityModifier {
 	}
 
 	private void drawSquare(UGraphic ug, boolean filled, int size, double x, double y) {
-		ug.apply(new UTranslate(x + 2, y + 2)).draw(new URectangle(size - 4, size - 4));
+		ug.apply(new UTranslate(x + 2, y + 2)).draw(URectangle.build(size - 4, size - 4));
 	}
 
 	private void drawCircle(UGraphic ug, boolean filled, int size, double x, double y) {
-		ug.apply(new UTranslate(x + 2, y + 2)).draw(new UEllipse(size - 4, size - 4));
+		ug.apply(new UTranslate(x + 2, y + 2)).draw(UEllipse.build(size - 4, size - 4));
 	}
 
 	static private int ensureEven(int n) {

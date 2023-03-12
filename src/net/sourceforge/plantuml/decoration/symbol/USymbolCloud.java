@@ -95,7 +95,7 @@ class USymbolCloud extends USymbol {
 
 		points.add(points.get(0));
 
-		final UPath result = new UPath();
+		final UPath result = UPath.none();
 		result.moveTo(points.get(0));
 		for (int i = 0; i < points.size() - 1; i++) {
 			if (DEBUG) {
@@ -188,7 +188,7 @@ class USymbolCloud extends USymbol {
 		if (NEW) {
 			return getSpecificFrontierForCloudNew(width, height);
 		}
-		final UPath path = new UPath();
+		final UPath path = UPath.none();
 		path.moveTo(0, 10);
 		double x = 0;
 		for (int i = 0; i < width - 9; i += 10) {

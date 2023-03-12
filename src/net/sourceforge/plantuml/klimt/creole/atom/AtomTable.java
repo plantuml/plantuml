@@ -107,7 +107,7 @@ public class AtomTable extends AbstractAtom implements Atom {
 				final double x1 = getStartingX(0);
 				final double x2 = getStartingX(getNbCols());
 				ug.apply(HColors.none()).apply(line.lineBackColor.bg()).apply(new UTranslate(x1, y1))
-						.draw(new URectangle(x2 - x1, y2 - y1));
+						.draw(URectangle.build(x2 - x1, y2 - y1));
 			}
 			for (int j = 0; j < getNbCols(); j++) {
 				if (j >= line.cells.size()) {
@@ -126,7 +126,7 @@ public class AtomTable extends AbstractAtom implements Atom {
 					final double y1 = getStartingY(i);
 					final double y2 = getStartingY(i + 1);
 					ug.apply(HColors.none()).apply(cellBackColor.bg()).apply(new UTranslate(x1, y1))
-							.draw(new URectangle(x2 - x1, y2 - y1));
+							.draw(URectangle.build(x2 - x1, y2 - y1));
 				}
 				final Position pos = positions.get(cell);
 				final XDimension2D dimCell = cell.calculateDimension(ug.getStringBounder());

@@ -330,7 +330,7 @@ public class ImageBuilder {
 		if (stroke == null)
 			return;
 
-		final URectangle rectangle = new URectangle(dim.getWidth() - stroke.getThickness(),
+		final URectangle rectangle = URectangle.build(dim.getWidth() - stroke.getThickness(),
 				dim.getHeight() - stroke.getThickness())
 						.rounded(skinParam.getRoundCorner(CornerParam.diagramBorder, null));
 
@@ -344,7 +344,7 @@ public class ImageBuilder {
 		final int blue = rnd.nextInt(40);
 		final Color c = new Color(red, green, blue);
 		final HColor color = HColors.simple(c);
-		ug2.apply(color).apply(color.bg()).draw(new URectangle(1, 1));
+		ug2.apply(color).apply(color.bg()).draw(URectangle.build(1, 1));
 	}
 
 	private XDimension2D getFinalDimension() {
@@ -487,7 +487,7 @@ public class ImageBuilder {
 			option = option.withSvgDimensionStyle(skinParam.svgDimensionStyle());
 		}
 
-		final UGraphicSvg ug = new UGraphicSvg(option, false, seed, stringBounder);
+		final UGraphicSvg ug = UGraphicSvg.build(option, false, seed, stringBounder);
 		return ug;
 
 	}
@@ -515,7 +515,7 @@ public class ImageBuilder {
 
 		// ::comment when __CORE__
 		final UGraphicG2d ug = new UGraphicG2d(backcolor, fileFormatOption.getColorMapper(), stringBounder, graphics2D,
-				scaleFactor, affineTransforms == null ? null : affineTransforms.getFirst(), dx, dy, format);
+				scaleFactor, dx, dy, format, affineTransforms == null ? null : affineTransforms.getFirst());
 		// ::done
 		// ::uncomment when __CORE__
 		// final UGraphicG2d ug = new UGraphicG2d(backcolor,
@@ -526,7 +526,7 @@ public class ImageBuilder {
 		final BufferedImage im = ug.getBufferedImage();
 		if (this.backcolor instanceof HColorGradient)
 			ug.apply(this.backcolor.bg())
-					.draw(new URectangle(im.getWidth() / scaleFactor, im.getHeight() / scaleFactor));
+					.draw(URectangle.build(im.getWidth() / scaleFactor, im.getHeight() / scaleFactor));
 
 		return ug;
 	}

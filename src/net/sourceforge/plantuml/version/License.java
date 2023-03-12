@@ -44,19 +44,23 @@ import net.sourceforge.plantuml.windowsdot.WindowsDotArchive;
 
 public enum License {
 
-	// ::uncomment when __CORE__
+	// ::uncomment when __CORE__ or __MIT__
 //	MIT;
-//
-//	public static License getCurrent() {
-//		return MIT;
-//	}
-//
 	// ::done
 
-	// ::comment when __CORE__
-
+	// ::comment when __CORE__ or __MIT__
 	GPL, GPLV2, LGPL, APACHE, EPL, MIT, BSD;
 	// ::done
+
+	public static License getCurrent() {
+		// ::uncomment when __CORE__ or __MIT__
+		// return MIT;
+		// ::done
+
+		// ::comment when __CORE__ or __MIT__
+		return GPL;
+		// ::done
+	}
 
 	public List<String> getText1(LicenseInfo licenseInfo) {
 		final List<String> text = new ArrayList<>();
@@ -178,7 +182,7 @@ public enum License {
 	}
 
 	private void end3(final LicenseInfo licenseInfo, final List<String> text) {
-		// ::comment when __CORE__
+		// ::comment when __CORE__ or __MIT__
 		if (this == License.GPL)
 			addGpl(licenseInfo, text);
 		else if (this == License.GPLV2)
@@ -186,7 +190,7 @@ public enum License {
 		else if (this == License.MIT)
 			// ::done
 			addMit(licenseInfo, text);
-		// ::comment when __CORE__
+		// ::comment when __CORE__ or __MIT__
 		else if (this == License.EPL)
 			addEpl(licenseInfo, text);
 		else if (this == License.BSD)
@@ -197,7 +201,9 @@ public enum License {
 			addLgpl(licenseInfo, text);
 		else
 			throw new IllegalStateException();
+		// ::done
 
+		// ::comment when __CORE__
 		if (OptionFlags.getInstance().isEnableStats()) {
 			text.add(" ");
 			text.add("This version of PlantUML records general local statistics about usage.");
@@ -228,11 +234,6 @@ public enum License {
 	}
 
 	// ::comment when __CORE__
-
-	public static License getCurrent() {
-		return GPL;
-	}
-
 	private void addEpl(final LicenseInfo licenseInfo, final List<String> text) {
 		text.add("PlantUML is free software; you can redistribute it and/or modify it");
 		text.add("under the terms of the Eclipse Public License.");
@@ -429,6 +430,7 @@ public enum License {
 		}
 	}
 
+	// ::comment when __MIT__
 	public List<String> getJavaHeader(List<String> contributors) {
 		final List<String> h = new ArrayList<>();
 		h.add("/* ========================================================================");
@@ -559,6 +561,7 @@ public enum License {
 		h.add(" */");
 		return Collections.unmodifiableList(h);
 	}
+	// ::done
 
 	public List<String> getTextFull() {
 		final List<String> text = new ArrayList<>();
@@ -568,7 +571,4 @@ public enum License {
 		end3(licenseInfo, text);
 		return text;
 	}
-
-	// ::done
-
 }

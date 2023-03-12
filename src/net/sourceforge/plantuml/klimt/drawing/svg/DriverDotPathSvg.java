@@ -41,9 +41,9 @@ import net.sourceforge.plantuml.klimt.drawing.UDriver;
 import net.sourceforge.plantuml.klimt.shape.DotPath;
 
 public class DriverDotPathSvg implements UDriver<DotPath, SvgGraphics> {
+    // ::remove file when __HAXE__
 
 	public void draw(DotPath shape, double x, double y, ColorMapper mapper, UParam param, SvgGraphics svg) {
-		// DriverLineG2d.manageStroke(param, g2d);
 
 		if (param.getColor().isTransparent() == false) {
 			DriverRectangleSvg.applyStrokeColor(svg, mapper, param);

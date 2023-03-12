@@ -160,7 +160,7 @@ public class MinMax {
 	public void draw(UGraphic ug, HColor color) {
 		ug = ug.apply(color).apply(color.bg());
 		ug = ug.apply(new UTranslate(minX, minY));
-		ug.draw(new URectangle(getWidth(), getHeight()));
+		ug.draw(URectangle.build(getWidth(), getHeight()));
 	}
 	// ::done
 

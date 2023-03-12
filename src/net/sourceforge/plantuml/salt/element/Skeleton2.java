@@ -60,7 +60,7 @@ public class Skeleton2 {
 
 		void drawHline(UGraphic ug) {
 			final double xpos = getXStartForLevel(level);
-			ug.apply(new UTranslate(xpos + sizeX - 1, ypos - 1)).draw(new URectangle(2, 2));
+			ug.apply(new UTranslate(xpos + sizeX - 1, ypos - 1)).draw(URectangle.build(2, 2));
 			ug.apply(new UTranslate(xpos, ypos)).draw(ULine.hline(sizeX));
 		}
 

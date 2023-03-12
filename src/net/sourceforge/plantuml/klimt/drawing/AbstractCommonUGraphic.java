@@ -55,7 +55,6 @@ import net.sourceforge.plantuml.klimt.shape.UHidden;
 import net.sourceforge.plantuml.url.Url;
 
 public abstract class AbstractCommonUGraphic implements UGraphic {
-    // ::remove file when __HAXE__
 
 	private UStroke stroke = UStroke.simple();
 	private UPattern pattern = UPattern.FULL;
@@ -64,13 +63,37 @@ public abstract class AbstractCommonUGraphic implements UGraphic {
 	private HColor color = HColors.none();
 	private boolean enlargeClip = false;
 
-	private final StringBounder stringBounder;
+	private /*final*/ StringBounder stringBounder;
 	private UTranslate translate = UTranslate.none();
 
-	private final ColorMapper colorMapper;
+	private /*final*/ ColorMapper colorMapper;
 	private UClip clip;
 
-	private final HColor defaultBackground;
+	private /*final*/ HColor defaultBackground;
+
+	public void basicCopy(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder) {
+		this.colorMapper = colorMapper;
+		this.defaultBackground = Objects.requireNonNull(defaultBackground);
+		this.stringBounder = stringBounder;
+	}
+
+	protected void basicCopy(AbstractCommonUGraphic other) {
+		this.defaultBackground = Objects.requireNonNull(other.defaultBackground);
+		this.enlargeClip = other.enlargeClip;
+		this.colorMapper = other.colorMapper;
+		this.stringBounder = other.stringBounder;
+		this.translate = other.translate;
+		this.clip = other.clip;
+
+		this.stroke = other.stroke;
+		this.pattern = other.pattern;
+		this.hidden = other.hidden;
+		this.color = other.color;
+		this.backColor = other.backColor;
+	}
+
+	protected abstract AbstractCommonUGraphic copyUGraphic();
+
 
 	@Override
 	public HColor getDefaultBackground() {
@@ -115,34 +138,6 @@ public abstract class AbstractCommonUGraphic implements UGraphic {
 	final public void enlargeClip() {
 		this.enlargeClip = true;
 	}
-
-	public AbstractCommonUGraphic(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder) {
-		if (defaultBackground == null)
-			throw new IllegalArgumentException();
-
-		this.colorMapper = colorMapper;
-		this.defaultBackground = defaultBackground;
-		this.stringBounder = stringBounder;
-	}
-
-	protected AbstractCommonUGraphic(AbstractCommonUGraphic other) {
-		this.defaultBackground = other.defaultBackground;
-		if (defaultBackground == null)
-			throw new IllegalArgumentException();
-		this.enlargeClip = other.enlargeClip;
-		this.colorMapper = other.colorMapper;
-		this.stringBounder = other.stringBounder;
-		this.translate = other.translate;
-		this.clip = other.clip;
-
-		this.stroke = other.stroke;
-		this.pattern = other.pattern;
-		this.hidden = other.hidden;
-		this.color = other.color;
-		this.backColor = other.backColor;
-	}
-
-	protected abstract AbstractCommonUGraphic copyUGraphic();
 
 	final public UParam getParam() {
 		return new UParam() {

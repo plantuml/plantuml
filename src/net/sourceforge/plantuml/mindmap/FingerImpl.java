@@ -146,7 +146,7 @@ public class FingerImpl implements Finger, UDrawable {
 	}
 
 	private void drawLine(UGraphic ug, XPoint2D p1, XPoint2D p2) {
-		final UPath path = new UPath();
+		final UPath path = UPath.none();
 		path.moveTo(p1);
 		if (isTopToBottom()) {
 			final double delta1 = direction * 3;

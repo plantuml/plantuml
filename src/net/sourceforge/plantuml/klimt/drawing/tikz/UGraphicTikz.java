@@ -61,17 +61,18 @@ public class UGraphicTikz extends AbstractUGraphic<TikzGraphics> implements Clip
 
 	public UGraphicTikz(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder, double scale,
 			boolean withPreamble) {
-		super(defaultBackground, colorMapper, stringBounder, new TikzGraphics(scale, withPreamble, colorMapper));
+		copy(defaultBackground, colorMapper, stringBounder, new TikzGraphics(scale, withPreamble, colorMapper));
 		register();
 	}
 
 	@Override
 	protected AbstractCommonUGraphic copyUGraphic() {
-		return new UGraphicTikz(this);
+		final UGraphicTikz result = new UGraphicTikz(this);
+		return result;
 	}
 
 	private UGraphicTikz(UGraphicTikz other) {
-		super(other);
+		copy(other);
 		register();
 	}
 
