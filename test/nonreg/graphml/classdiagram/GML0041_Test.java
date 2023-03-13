@@ -49,8 +49,8 @@ Test diagram MUST be put between triple quotes
 ' Note on field and methods
 ' NOT SUPPORTED FEATURE
 class A {
-{static} int counter
-+void {abstract} start(int timeout)
+{static} counter
++ {abstract} start()
 }
 note right of A::counter
   This member is annotated
@@ -68,6 +68,10 @@ Expected result MUST be put between triple brackets
 <key attr.name="label" attr.type="string" for="node" id="d0"/>
 <key attr.name="type" attr.type="string" for="node" id="d1"/>
 <key attr.name="entityType" attr.type="string" for="node" id="d2"/>
+<key attr.name="style" attr.type="string" for="node" id="d3"/>
+<key attr.name="sourceDecor" attr.type="string" for="node" id="d4"/>
+<key attr.name="targetDecor" attr.type="string" for="node" id="d5"/>
+<key attr.name="direction" attr.type="string" for="node" id="d9"/>
 <key attr.name="static" attr.type="boolean" for="node" id="d10"/>
 <key attr.name="abstract" attr.type="boolean" for="node" id="d11"/>
 <key attr.name="visibility" attr.type="string" for="node" id="d12"/>
@@ -95,15 +99,42 @@ Expected result MUST be put between triple brackets
 </node>
 <node id="5">
 <data key="d1">Leaf</data>
-<data key="d2">UNKNOWN</data>
-<data key="d0">A$$$RIGHT</data>
-<data key="d20">cl0003</data>
-<data key="d21">./nonreg/graphml/classdiagram/GML0041_Test/0/cl0003</data>
+<data key="d2">NOTE</data>
+<data key="d0">This member is annotated</data>
+<data key="d20">cl0003_t0</data>
+<data key="d21">./nonreg/graphml/classdiagram/GML0041_Test/0/cl0003_t0</data>
+</node>
+<node id="6">
+<data key="d1">Leaf</data>
+<data key="d2">NOTE</data>
+<data key="d0">This method is now explained in a UML note</data>
+<data key="d20">cl0003_t1</data>
+<data key="d21">./nonreg/graphml/classdiagram/GML0041_Test/0/cl0003_t1</data>
+</node>
+<node id="7">
+<data key="d1">Link</data>
+<data key="d2">LINK</data>
+<data key="d20">cl0003_t0_LNK4_cl0002_f0</data>
+<data key="d21">./nonreg/graphml/classdiagram/GML0041_Test/0/cl0003_t0_LNK4_cl0002_f0</data>
+<data key="d3">DASHED</data>
+<data key="d4">NONE</data>
+<data key="d5">NONE</data>
+<data key="d9">NONE_OR_SEVERAL</data>
+</node>
+<node id="8">
+<data key="d1">Link</data>
+<data key="d2">LINK</data>
+<data key="d20">cl0003_t1_LNK4_cl0002_m0</data>
+<data key="d21">./nonreg/graphml/classdiagram/GML0041_Test/0/cl0003_t1_LNK4_cl0002_m0</data>
+<data key="d3">DASHED</data>
+<data key="d4">NONE</data>
+<data key="d5">NONE</data>
+<data key="d9">NONE_OR_SEVERAL</data>
 </node>
 <node id="3">
 <data key="d1">Member</data>
 <data key="d2">METHOD</data>
-<data key="d0">void  start(int timeout)</data>
+<data key="d0">start()</data>
 <data key="d20">cl0002_m0</data>
 <data key="d21">./nonreg/graphml/classdiagram/GML0041_Test/0/cl0002_m0</data>
 <data key="d10">false</data>
@@ -113,7 +144,7 @@ Expected result MUST be put between triple brackets
 <node id="4">
 <data key="d1">Member</data>
 <data key="d2">FIELD</data>
-<data key="d0">int counter</data>
+<data key="d0">counter</data>
 <data key="d20">cl0002_f0</data>
 <data key="d21">./nonreg/graphml/classdiagram/GML0041_Test/0/cl0002_f0</data>
 <data key="d10">true</data>
@@ -126,16 +157,37 @@ Expected result MUST be put between triple brackets
 <edge id="2" source="2" target="4">
 <data key="d13">MEMBER</data>
 </edge>
-<edge id="3" source="1" target="2">
+<edge id="3" source="4" target="7">
+<data key="d13">IS_SOURCE</data>
+</edge>
+<edge id="4" source="5" target="7">
+<data key="d13">IS_TARGET</data>
+</edge>
+<edge id="5" source="3" target="8">
+<data key="d13">IS_SOURCE</data>
+</edge>
+<edge id="6" source="6" target="8">
+<data key="d13">IS_TARGET</data>
+</edge>
+<edge id="7" source="1" target="2">
 <data key="d13">DIAGRAM_CONTAINS</data>
 </edge>
-<edge id="4" source="1" target="5">
+<edge id="8" source="1" target="5">
 <data key="d13">DIAGRAM_CONTAINS</data>
 </edge>
-<edge id="5" source="1" target="3">
+<edge id="9" source="1" target="6">
 <data key="d13">DIAGRAM_CONTAINS</data>
 </edge>
-<edge id="6" source="1" target="4">
+<edge id="10" source="1" target="7">
+<data key="d13">DIAGRAM_CONTAINS</data>
+</edge>
+<edge id="11" source="1" target="8">
+<data key="d13">DIAGRAM_CONTAINS</data>
+</edge>
+<edge id="12" source="1" target="3">
+<data key="d13">DIAGRAM_CONTAINS</data>
+</edge>
+<edge id="13" source="1" target="4">
 <data key="d13">DIAGRAM_CONTAINS</data>
 </edge>
 </graph>

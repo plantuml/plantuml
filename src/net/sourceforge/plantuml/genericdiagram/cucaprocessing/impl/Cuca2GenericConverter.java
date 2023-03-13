@@ -48,6 +48,7 @@ import java.util.stream.Collectors;
 
 import net.sourceforge.plantuml.Guillemet;
 import net.sourceforge.plantuml.baraye.CucaDiagram;
+import net.sourceforge.plantuml.baraye.EntityImp;
 import net.sourceforge.plantuml.baraye.IEntity;
 import net.sourceforge.plantuml.baraye.IGroup;
 import net.sourceforge.plantuml.baraye.ILeaf;
@@ -72,6 +73,8 @@ import net.sourceforge.plantuml.genericdiagram.GenericLinkArrow;
 import net.sourceforge.plantuml.genericdiagram.GenericLinkDecor;
 import net.sourceforge.plantuml.genericdiagram.GenericLinkStyle;
 import net.sourceforge.plantuml.genericdiagram.IGenericEdge;
+import net.sourceforge.plantuml.genericdiagram.IGenericLeaf;
+import net.sourceforge.plantuml.genericdiagram.IGenericMember;
 import net.sourceforge.plantuml.genericdiagram.IGenericModelElement;
 import net.sourceforge.plantuml.genericdiagram.MemberVisibility;
 import net.sourceforge.plantuml.genericdiagram.cucaprocessing.ICucaDiagramVisitor;
@@ -129,15 +132,14 @@ public class Cuca2GenericConverter implements ICucaDiagramVisitor {
 		checkgraphmlRootDir();
 	}
 
-	private void checkgraphmlRootDir(){
+	private void checkgraphmlRootDir() {
 
 		// Verify the root and file name match
 		// Verify that root is a directory
-		if (this.graphmlRootDir == null)
-		{
+		if (this.graphmlRootDir == null) {
 			throw new IllegalArgumentException("missing command line parameter -graphml-root-dir");
 		}
-		File root  = new File(this.graphmlRootDir);
+		File root = new File(this.graphmlRootDir);
 		File sourceFile = this.sourceFile;
 		boolean ok = root.exists() &&
 						root.isDirectory() &&
@@ -151,6 +153,7 @@ public class Cuca2GenericConverter implements ICucaDiagramVisitor {
 			throw new IllegalArgumentException("file and graphml-root-dir don't match");
 		}
 	}
+
 	private void initCollector() {
 		processedCucaElementsMap = new HashMap<>();
 		collector.reset();
@@ -192,6 +195,7 @@ public class Cuca2GenericConverter implements ICucaDiagramVisitor {
 		visibilityMap.put('~', MemberVisibility.PACKAGE_PRIVATE);
 		visibilityMap.put('+', MemberVisibility.PUBLIC);
 	}
+
 	private void initDecorMap() {
 
 		this.decorMap = new HashMap<>();
@@ -308,6 +312,7 @@ public class Cuca2GenericConverter implements ICucaDiagramVisitor {
 			collector.addEdge(genEdge);
 		}
 	}
+
 	private Boolean isAbstractMember(String member) {
 		return member.contains("{abstract}");
 	}
@@ -320,7 +325,14 @@ public class Cuca2GenericConverter implements ICucaDiagramVisitor {
 		// remove visibility and other modifiers from the member name
 		return member.replaceAll("([+|#|\\-|~]|\\{static\\}|\\{abstract\\})", "").trim();
 	}
+
 	private GenericLeaf processLeaf(ICucaLeafWrapper leaf) {
+
+		// Annotations on members of classes
+		if (this.isTIPSLeaf(leaf)) {
+			this.processTIPSLeaf(leaf);
+			return null;
+		}
 
 		GenericLeaf genericLeaf = getOrCreateGenericLeaf(leaf.getLeaf());
 		collector.addLeaf(genericLeaf);
@@ -338,6 +350,69 @@ public class Cuca2GenericConverter implements ICucaDiagramVisitor {
 		return genericLeaf;
 	}
 
+
+	private void processTIPSLeaf(ICucaLeafWrapper leaf) {
+
+		int index = 0;
+		for (Display display : ((EntityImp) leaf.getLeaf()).getTips().values()) {
+			GenericLeaf genLeaf = elementFactory.genericLeafSupplier.get();
+			String id = leaf.getLeaf().getUid() + "_t" + index;
+			genLeaf.setType(GenericEntityType.NOTE);
+			genLeaf.setPumlId(id);
+			genLeaf.setPumlRootPath(this.getPumlElementRootPath());
+			genLeaf.setLabel(displayToString(display));
+			collector.addLeaf(genLeaf);
+			index++;
+		}
+	}
+
+	private void processTIPSLink(ICucaLinkWrapper link) {
+		int index = 0;
+		for (Map.Entry<String, Display> e : link.getLink().getEntity2().getTips().entrySet()) {
+			String featureName = e.getKey();
+			String id = link.getLink().getEntity2().getUid() + "_t" + index;
+
+			// find member ... may fail, if method and property have the same name ...
+			IGenericMember member = null;
+			List<IGenericMember> featureList = ((SimpleGenericModel) collector).getMembers().stream()
+							.filter(m -> m.getLabel().equals(featureName) || m.getLabel().equals(featureName + "()"))
+							.collect(Collectors.toList());
+			if (featureList.size() > 0) {
+				member = featureList.get(0);
+			}
+
+			// find annotation ...
+			IGenericLeaf note = null;
+			List<IGenericLeaf> annotationList = ((SimpleGenericModel) collector).getLeafs().stream()
+							.filter(l -> l.getPumlId().equals(id))
+							.collect(Collectors.toList());
+			if (annotationList.size() > 0) {
+				note = annotationList.get(0);
+			}
+
+			// create edge
+			GenericLink genericLink = createGenericLink(link.getLink());
+			String pumlId = note.getPumlId() + '_' + genericLink.getPumlId().split("_")[1] + '_' + member.getPumlId();
+			genericLink.setStyle(GenericLinkStyle.DASHED);   // make it a comment link.
+			genericLink.setPumlId(pumlId);
+
+			IGenericEdge sourceEdge = createGenericEdge(member,
+							GenericEdgeType.IS_SOURCE, genericLink);
+			IGenericEdge targetEdge = createGenericEdge(note,
+							GenericEdgeType.IS_TARGET, genericLink);
+
+
+			collector.addLink(genericLink);
+			collector.addEdge(sourceEdge);
+			collector.addEdge(targetEdge);
+
+			index++;
+		}
+	}
+
+	private boolean isTIPSLeaf(ICucaLeafWrapper leaf) {
+		return leaf.getLeaf().getLeafType().equals(LeafType.TIPS);
+	}
 
 	private void processLink(ICucaLinkWrapper link) {
 
@@ -359,23 +434,24 @@ public class Cuca2GenericConverter implements ICucaDiagramVisitor {
 			collector.addEdge(sourceEdge);
 			collector.addEdge(targetEdge);
 		}
-		if (isTipsLink(link)){
-			Log.error("Comments on fields, methods and links not supported");
+		if (isTipsLink(link)) {
+			this.processTIPSLink(link);
 		}
 	}
 
-	private boolean isPumlLayoutLink(ICucaLinkWrapper link){
+	private boolean isPumlLayoutLink(ICucaLinkWrapper link) {
 		// plantUML adds some links for layout purposes,
 		// these should not be added to the graphML output
 		// because they are not user defined links
 		return "NONE-INVISIBLE(null)-NONE".equals(link.getLink().getType().toString());
 	}
 
-	private boolean isTipsLink(ICucaLinkWrapper link){
+	private boolean isTipsLink(ICucaLinkWrapper link) {
 		// Notes on fields and methods are realized as invisible links of type TIPS
 		CucaNote note = link.getLink().getNote();
 		return link.getLink().toString().contains("](TIPS)[") || (note != null);
 	}
+
 	private List<ICucaLeafWrapper> getLeafsToProcess(ICucaGroupWrapper group) {
 		// only direct children ... other leafs are processed when iterating over the child groups
 		return group.getLeafs().stream()
@@ -529,6 +605,7 @@ public class Cuca2GenericConverter implements ICucaDiagramVisitor {
 							.collect(Collectors.toList()));
 		}
 	}
+
 	private String stringToJSONString(String text) {
 		// puml uses Lists for textual representations
 		// where the user has created line breaks
@@ -559,6 +636,7 @@ public class Cuca2GenericConverter implements ICucaDiagramVisitor {
 							.collect(Collectors.joining(",", "{[", "]}"));
 		}
 	}
+
 	private GenericGroup getOrCreateGenericGroup(IGroup group) {
 		GenericModelElement elem = processedCucaElementsMap.get(group.getUid());
 		if (elem != null) {
@@ -578,7 +656,7 @@ public class Cuca2GenericConverter implements ICucaDiagramVisitor {
 
 	}
 
-	private void transferCommonAttributes(GenericModelElement genericModelElement, IEntity entity){
+	private void transferCommonAttributes(GenericModelElement genericModelElement, IEntity entity) {
 
 		genericModelElement.setPumlId(entity.getUid());
 		genericModelElement.setPumlRootPath(this.getPumlElementRootPath());
@@ -751,6 +829,7 @@ public class Cuca2GenericConverter implements ICucaDiagramVisitor {
 		return ("./" + relPath.toString()).replace("\\", "/");
 
 	}
+
 	private String getSourceFileName() {
 
 		return sourceFile.getName();
