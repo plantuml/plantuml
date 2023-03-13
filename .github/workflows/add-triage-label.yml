@@ -1,17 +1,23 @@
+# https://docs.github.com/en/actions/managing-issues-and-pull-requests/adding-labels-to-issues
+
+name: Label issues
 on:
   issues:
     types:
       - reopened
       - opened
-
-name: Add triage label
-
 jobs:
-  automate-issues-labels:
-    name: Add triage label to issue
+  label_issues:
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
     steps:
-      - name: initial labeling
-        uses: andymckay/labeler@1.0.4
+      - uses: actions/github-script@v6
         with:
-          add-labels: "triage"
+          script: |
+            github.rest.issues.addLabels({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: ["triage"]
+            })
