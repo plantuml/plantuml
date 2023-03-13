@@ -49,6 +49,7 @@ public enum SName {
 	boundary, //
 	box, //
 	boxless, //
+	business, //
 	caption, //
 	card, //
 	circle, //

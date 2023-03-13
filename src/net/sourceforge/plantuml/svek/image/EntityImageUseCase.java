@@ -194,6 +194,11 @@ public class EntityImageUseCase extends AbstractEntityImage {
 	}
 
 	private StyleSignature getDefaultStyleDefinition() {
+		final LeafType type = getEntity().getLeafType();
+		if (type == LeafType.USECASE_BUSINESS)
+			return StyleSignatureBasic
+					.of(SName.root, SName.element, SName.componentDiagram, SName.usecase, SName.business)
+					.withTOBECHANGED(getStereo());
 		return StyleSignatureBasic.of(SName.root, SName.element, SName.componentDiagram, SName.usecase)
 				.withTOBECHANGED(getStereo());
 	}

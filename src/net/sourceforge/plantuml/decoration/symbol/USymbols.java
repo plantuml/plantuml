@@ -77,8 +77,7 @@ public abstract class USymbols {
 	public final static USymbol COLLECTIONS = record("COLLECTIONS", new USymbolCollections());
 	public final static USymbol AGENT = record("AGENT", new USymbolRectangle(SName.agent));
 	public final static USymbol ACTOR_STICKMAN = record("ACTOR_STICKMAN", new USymbolActor(ActorStyle.STICKMAN));
-	public final static USymbol ACTOR_STICKMAN_BUSINESS = record("ACTOR_STICKMAN_BUSINESS",
-			new USymbolActor(ActorStyle.STICKMAN_BUSINESS));
+	public final static USymbol ACTOR_STICKMAN_BUSINESS = record("ACTOR_STICKMAN_BUSINESS", new USymbolActorBusiness());
 	public final static USymbol ACTOR_AWESOME = record("ACTOR_AWESOME", new USymbolActor(ActorStyle.AWESOME));
 	public final static USymbol ACTOR_HOLLOW = record("ACTOR_HOLLOW", new USymbolActor(ActorStyle.HOLLOW));
 	public final static USymbol USECASE = null;

@@ -48,8 +48,6 @@ public enum FontPosition {
 		return 0;
 	}
 
-	// ::comment when __HAXE__
-
 	public UFont mute(UFont font) {
 		if (this == NORMAL)
 			return font;
@@ -61,6 +59,7 @@ public enum FontPosition {
 		return font.withSize((float) size);
 	}
 
+	// ::comment when __HAXE__
 	public String getHtmlTag() {
 		if (this == EXPOSANT)
 			return "sup";

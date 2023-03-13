@@ -57,6 +57,7 @@ import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
 import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.skin.ActorStyle;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.utils.Direction;
 import net.sourceforge.plantuml.utils.LineLocation;
@@ -77,9 +78,13 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandLinkElement.class.getName(), RegexLeaf.start(), //
 				getGroup("ENT1"), //
+
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexLeaf("FIRST_LABEL", "[%g]([^%g]+)[%g]")), //
 				RegexLeaf.spaceZeroOrMore(), //
+//				new RegexOptional(new RegexLeaf("STEREO1", "(\\<\\<.*\\>\\>)")), //
+//				RegexLeaf.spaceZeroOrMore(), //
+
 				new RegexLeaf("HEAD2", "(0\\)|<<|<_|[<^*+#0@)]|<\\|[\\|\\:]?|[%s]+o)?"), //
 				new RegexLeaf("BODY1", "([-=.~]+)"), //
 				new RegexLeaf("ARROW_STYLE1", "(?:\\[(" + LINE_STYLE_MUTILPLES + ")\\])?"), //
@@ -88,11 +93,16 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 				new RegexLeaf("ARROW_STYLE2", "(?:\\[(" + LINE_STYLE + ")\\])?"), //
 				new RegexLeaf("BODY2", "([-=.~]*)"), //
 				new RegexLeaf("HEAD1", "(\\(0|>>|_>|[>^*+#0@(]|[\\:\\|]?\\|>|\\\\\\\\|o[%s]+)?"), //
+
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexLeaf("SECOND_LABEL", "[%g]([^%g]+)[%g]")), //
 				RegexLeaf.spaceZeroOrMore(), //
+
 				getGroup("ENT2"), //
 				RegexLeaf.spaceZeroOrMore(), //
+//				new RegexOptional(new RegexLeaf("STEREO2", "(\\<\\<.*\\>\\>)")), //
+//				RegexLeaf.spaceZeroOrMore(), //
+
 				color().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("STEREOTYPE", "(\\<\\<.*\\>\\>)?"), //
@@ -229,11 +239,11 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 				"|" + //
 				"\\(\\)[%s]*[%g][^%g]+[%g]" + //
 				"|" + //
-				":[^:]+:" + //
+				":[^:]+:/?" + //
 				"|" + //
 				"(?!\\[\\*\\])\\[[^\\[\\]]+\\]" + //
 				"|" + //
-				"\\((?!\\*\\))[^)]+\\)" + //
+				"\\((?!\\*\\))[^)]+\\)/?" + //
 				")");
 	}
 
@@ -244,14 +254,6 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 		final String ent2 = arg.get("ENT2", 0);
 		final String ent1clean = diagram.cleanId(ent1);
 		final String ent2clean = diagram.cleanId(ent2);
-//		final String ent1 = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(ent1String);
-//		final String ent2 = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(ent2String);
-//		final Quark ident1 = diagram.buildFullyQualified(ent1);
-//		final Quark ident2 = diagram.buildFullyQualified(ent2);
-//		Quark ident1pure = diagram.getPlasma().root().child(ent1);
-//		Quark ident2pure = diagram.getPlasma().root().child(ent2);
-//		final Quark code1 = diagram.buildFromFullPath(ent1String);
-//		final Quark code2 = diagram.buildFromFullPath(ent2String);
 
 		final LinkType linkType = getLinkType(arg);
 		final Direction dir = getDirection(arg);
@@ -308,6 +310,7 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 		}
 
 		final char codeChar = ident.length() > 2 ? ident.charAt(0) : 0;
+		final boolean endWithSlash = ident.endsWith("/");
 		ident = diagram.cleanId(ident);
 		final Quark<Entity> quark = diagram.quarkInContext(ident, false);
 
@@ -318,10 +321,18 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 		final Display display = Display.getWithNewlines(quark.getName());
 
 		if (codeChar == '(') {
-			return diagram.reallyCreateLeaf(quark, display, LeafType.USECASE, USymbols.USECASE);
+			if (endWithSlash)
+				return diagram.reallyCreateLeaf(quark, display, LeafType.USECASE_BUSINESS, USymbols.USECASE);
+			else
+				return diagram.reallyCreateLeaf(quark, display, LeafType.USECASE, USymbols.USECASE);
 		} else if (codeChar == ':') {
-			return diagram.reallyCreateLeaf(quark, display, LeafType.DESCRIPTION,
-					diagram.getSkinParam().actorStyle().toUSymbol());
+			if (endWithSlash)
+				return diagram.reallyCreateLeaf(quark, display, LeafType.DESCRIPTION,
+						ActorStyle.STICKMAN_BUSINESS.toUSymbol());
+			else
+				return diagram.reallyCreateLeaf(quark, display, LeafType.DESCRIPTION,
+						diagram.getSkinParam().actorStyle().toUSymbol());
+
 		} else if (codeChar == '[') {
 			final USymbol sym = diagram.getSkinParam().componentStyle().toUSymbol();
 			return diagram.reallyCreateLeaf(quark, display, LeafType.DESCRIPTION, sym);

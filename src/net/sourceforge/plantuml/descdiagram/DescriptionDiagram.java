@@ -58,6 +58,10 @@ public class DescriptionDiagram extends AbstractEntityDiagram {
 			return null;
 		if (id.startsWith("()"))
 			id = StringUtils.trin(id.substring(2));
+		if (id.startsWith(":") && id.endsWith(":/"))
+			return id.substring(1, id.length() - 2);
+		if (id.startsWith("(") && id.endsWith(")/"))
+			return id.substring(1, id.length() - 2);
 		return super.cleanId(id);
 	}
 

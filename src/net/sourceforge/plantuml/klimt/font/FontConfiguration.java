@@ -53,12 +53,6 @@ import net.sourceforge.plantuml.style.Style;
 
 public class FontConfiguration {
 
-	// ::uncomment when __HAXE__
-//	public UFont getFont() {
-//		return null;
-//	}
-	// ::done__
-
 	public static FontConfiguration create(UFont font, HColor color, HColor hyperlinkColor,
 			UStroke hyperlinkUnderlineStroke, int tabSize) {
 		return new FontConfiguration(getStyles(font), font, color, font, color, null, FontPosition.NORMAL,
@@ -87,7 +81,6 @@ public class FontConfiguration {
 	private FontConfiguration(EnumSet<FontStyle> styles, UFont motherFont, HColor motherColor, UFont currentFont,
 			HColor currentColor, HColor extendedColor, FontPosition fontPosition, SvgAttributes svgAttributes,
 			HColor hyperlinkColor, UStroke hyperlinkUnderlineStroke, int tabSize) {
-		// ::comment when __HAXE__
 		this.styles = styles;
 		this.currentFont = currentFont;
 		this.motherFont = motherFont;
@@ -99,10 +92,16 @@ public class FontConfiguration {
 		this.hyperlinkColor = hyperlinkColor;
 		this.hyperlinkUnderlineStroke = hyperlinkUnderlineStroke;
 		this.tabSize = tabSize;
-		// ::done
 	}
 
-	// ::comment when __HAXE__
+	public UFont getFont() {
+		UFont result = currentFont;
+		for (FontStyle style : styles)
+			result = style.mutateFont(result);
+
+		return fontPosition.mute(result);
+	}
+
 	private final EnumSet<FontStyle> styles;
 	private final UFont currentFont;
 	private final UFont motherFont;
@@ -117,6 +116,7 @@ public class FontConfiguration {
 
 	private final int tabSize;
 
+	// ::comment when __HAXE__
 	public String toStringDebug() {
 		return getFont().toStringDebug() + " " + styles.toString();
 //		return "" + currentFont + " " + styles.toString() + currentColor + extendedColor + hyperlinkColor
@@ -301,14 +301,6 @@ public class FontConfiguration {
 		r.remove(style);
 		return new FontConfiguration(r, motherFont, motherColor, currentFont, currentColor, extendedColor, fontPosition,
 				svgAttributes, hyperlinkColor, hyperlinkUnderlineStroke, tabSize);
-	}
-
-	public UFont getFont() {
-		UFont result = currentFont;
-		for (FontStyle style : styles)
-			result = style.mutateFont(result);
-
-		return fontPosition.mute(result);
 	}
 
 	public HColor getColor() {

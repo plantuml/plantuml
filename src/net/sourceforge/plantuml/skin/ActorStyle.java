@@ -51,6 +51,8 @@ public enum ActorStyle {
 			return USymbols.ACTOR_AWESOME;
 		else if (this == HOLLOW)
 			return USymbols.ACTOR_HOLLOW;
+		else if (this == STICKMAN_BUSINESS)
+			return USymbols.ACTOR_STICKMAN_BUSINESS;
 
 		throw new IllegalStateException();
 	}
