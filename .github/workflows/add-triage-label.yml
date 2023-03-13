@@ -1,0 +1,17 @@
+on:
+  issues:
+    types:
+      - reopened
+      - opened
+
+name: Add triage label
+
+jobs:
+  automate-issues-labels:
+    name: Add triage label to issue
+    runs-on: ubuntu-latest
+    steps:
+      - name: initial labeling
+        uses: andymckay/labeler@1.0.4
+        with:
+          add-labels: "triage"
