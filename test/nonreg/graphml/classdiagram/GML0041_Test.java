@@ -106,8 +106,8 @@ Expected result MUST be put between triple brackets
 <data key="d0">void  start(int timeout)</data>
 <data key="d20">cl0002_m0</data>
 <data key="d21">./nonreg/graphml/classdiagram/GML0041_Test/0/cl0002_m0</data>
-<data key="d10">true</data>
-<data key="d11">false</data>
+<data key="d10">false</data>
+<data key="d11">true</data>
 <data key="d12">PUBLIC</data>
 </node>
 <node id="4">
@@ -116,8 +116,8 @@ Expected result MUST be put between triple brackets
 <data key="d0">int counter</data>
 <data key="d20">cl0002_f0</data>
 <data key="d21">./nonreg/graphml/classdiagram/GML0041_Test/0/cl0002_f0</data>
-<data key="d10">false</data>
-<data key="d11">true</data>
+<data key="d10">true</data>
+<data key="d11">false</data>
 <data key="d12">UNDEFINED</data>
 </node>
 <edge id="1" source="2" target="3">

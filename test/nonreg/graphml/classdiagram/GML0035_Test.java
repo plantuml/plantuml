@@ -95,8 +95,8 @@ Expected result MUST be put between triple brackets
 <data key="d0">field1</data>
 <data key="d20">cl0002_f0</data>
 <data key="d21">./nonreg/graphml/classdiagram/GML0035_Test/0/cl0002_f0</data>
-<data key="d10">false</data>
-<data key="d11">true</data>
+<data key="d10">true</data>
+<data key="d11">false</data>
 <data key="d12">PROTECTED</data>
 </node>
 <node id="4">
@@ -105,8 +105,8 @@ Expected result MUST be put between triple brackets
 <data key="d0">field2</data>
 <data key="d20">cl0002_f1</data>
 <data key="d21">./nonreg/graphml/classdiagram/GML0035_Test/0/cl0002_f1</data>
-<data key="d10">false</data>
-<data key="d11">true</data>
+<data key="d10">true</data>
+<data key="d11">false</data>
 <data key="d12">PROTECTED</data>
 </node>
 <node id="5">
@@ -115,8 +115,8 @@ Expected result MUST be put between triple brackets
 <data key="d0">field3</data>
 <data key="d20">cl0002_f2</data>
 <data key="d21">./nonreg/graphml/classdiagram/GML0035_Test/0/cl0002_f2</data>
-<data key="d10">false</data>
-<data key="d11">true</data>
+<data key="d10">true</data>
+<data key="d11">false</data>
 <data key="d12">UNDEFINED</data>
 </node>
 <edge id="1" source="2" target="3">

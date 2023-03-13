@@ -280,8 +280,8 @@ public class GraphMLExporter implements IGenericDiagramVisitor, XmlDiagramTransf
 
 		Element domNode = createNode(member);
 		addCommonAttributes(member, domNode);
-		addDataNode(domNode, GML_KEY_MEMBER_STATIC, member.isAbstract().toString().toLowerCase());
-		addDataNode(domNode, GML_KEY_MEMBER_ABSTRACT, member.isStatic().toString().toLowerCase());
+		addDataNode(domNode, GML_KEY_MEMBER_STATIC, member.isStatic().toString().toLowerCase());
+		addDataNode(domNode, GML_KEY_MEMBER_ABSTRACT, member.isAbstract().toString().toLowerCase());
 		addDataNode(domNode, GML_KEY_MEMBER_VISIBILITY, member.getVisibility().toString());
 		domNodes.add(domNode);
 
