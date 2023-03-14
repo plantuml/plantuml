@@ -76,7 +76,7 @@ public class CommandAddField extends SingleLineCommand2<StateDiagram> {
 		if (diagram.getCurrentGroup().getName().equals(codeString))
 			quark = diagram.getCurrentGroup().getQuark();
 		else
-			quark = diagram.quarkInContext(diagram.cleanId(codeString), false);
+			quark = diagram.quarkInContext(true, diagram.cleanId(codeString));
 
 		Entity entity = quark.getData();
 		if (entity == null)

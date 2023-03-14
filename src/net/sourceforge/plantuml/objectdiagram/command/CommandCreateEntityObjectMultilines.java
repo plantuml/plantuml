@@ -108,7 +108,7 @@ public class CommandCreateEntityObjectMultilines extends CommandMultilines2<Abst
 
 	private Entity executeArg0(AbstractClassOrObjectDiagram diagram, RegexResult line0) throws NoSuchColorException {
 		final String name = line0.get("NAME", 1);
-		final Quark<Entity> quark = diagram.quarkInContext(diagram.cleanId(name), false);
+		final Quark<Entity> quark = diagram.quarkInContext(true, diagram.cleanId(name));
 
 		final String displayString = line0.get("NAME", 0);
 		final String stereotype = line0.get("STEREO", 0);

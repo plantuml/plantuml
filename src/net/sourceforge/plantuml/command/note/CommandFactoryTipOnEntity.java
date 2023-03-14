@@ -171,7 +171,7 @@ public final class CommandFactoryTipOnEntity implements SingleMultiFactoryComman
 		final String idShort = line0.get("ENTITY", 0);
 		final String member = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(line0.get("ENTITY", 1));
 
-		final Quark<Entity> quark = diagram.quarkInContext(idShort, false);
+		final Quark<Entity> quark = diagram.quarkInContext(true, idShort);
 		final Entity cl1 = quark.getData();
 		if (cl1 == null)
 			return CommandExecutionResult.error("Nothing to note to");
@@ -180,7 +180,7 @@ public final class CommandFactoryTipOnEntity implements SingleMultiFactoryComman
 				.withRankdir(diagram.getSkinParam().getRankdir());
 
 		final String tmp = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(idShort + "$$$" + position.name());
-		final Quark<Entity> identTip = diagram.quarkInContext(tmp, false);
+		final Quark<Entity> identTip = diagram.quarkInContext(true, tmp);
 		Entity tips = identTip.getData();
 
 		if (tips == null) {

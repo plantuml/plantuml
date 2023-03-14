@@ -197,8 +197,8 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 			ent2String = diagram.removePortId(ent2String);
 		}
 
-		final Quark<Entity> quark1 = diagram.quarkInContext(ent1String, false);
-		final Quark<Entity> quark2 = diagram.quarkInContext(ent2String, false);
+		final Quark<Entity> quark1 = diagram.quarkInContext(true, ent1String);
+		final Quark<Entity> quark2 = diagram.quarkInContext(true, ent2String);
 
 		Entity cl1 = quark1.getData();
 		if (cl1 == null)
@@ -311,8 +311,8 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		final String name1A = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("COUPLE1", 0));
 		final String name1B = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("COUPLE1", 1));
 
-		final Quark<Entity> quark1A = diagram.quarkInContext(name1A, false);
-		final Quark<Entity> quark1B = diagram.quarkInContext(name1B, false);
+		final Quark<Entity> quark1A = diagram.quarkInContext(true, name1A);
+		final Quark<Entity> quark1B = diagram.quarkInContext(true, name1B);
 
 		if (quark1A.getData() != null == false)
 			return CommandExecutionResult.error("No class " + name1A);
@@ -324,7 +324,7 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		final Entity cl1B = quark1B.getData();
 
 		final String id2 = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("ENT2", 0), "\"");
-		final Quark<Entity> ent2 = diagram.quarkInContext(id2, false);
+		final Quark<Entity> ent2 = diagram.quarkInContext(true, id2);
 
 		Entity cl2 = ent2.getData();
 		if (cl2 == null)
@@ -344,8 +344,8 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		final String name2A = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("COUPLE2", 0));
 		final String name2B = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("COUPLE2", 1));
 
-		final Quark<Entity> quark2A = diagram.quarkInContext(name2A, false);
-		final Quark<Entity> quark2B = diagram.quarkInContext(name2B, false);
+		final Quark<Entity> quark2A = diagram.quarkInContext(true, name2A);
+		final Quark<Entity> quark2B = diagram.quarkInContext(true, name2B);
 
 		if (quark2A.getData() != null == false)
 			return CommandExecutionResult.error("No class " + name2A);
@@ -357,7 +357,7 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		final Entity cl2B = quark2B.getData();
 
 		final String id1 = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("ENT1", 0), "\"");
-		final Quark<Entity> ent1 = diagram.quarkInContext(id1, false);
+		final Quark<Entity> ent1 = diagram.quarkInContext(true, id1);
 
 		Entity cl1 = (Entity) ent1.getData();
 		if (cl1 == null)
@@ -380,10 +380,10 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		final String name2A = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("COUPLE2", 0));
 		final String name2B = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("COUPLE2", 1));
 
-		final Quark<Entity> quark1A = diagram.quarkInContext(name1A, false);
-		final Quark<Entity> quark1B = diagram.quarkInContext(name1B, false);
-		final Quark<Entity> quark2A = diagram.quarkInContext(name2A, false);
-		final Quark<Entity> quark2B = diagram.quarkInContext(name2B, false);
+		final Quark<Entity> quark1A = diagram.quarkInContext(true, name1A);
+		final Quark<Entity> quark1B = diagram.quarkInContext(true, name1B);
+		final Quark<Entity> quark2A = diagram.quarkInContext(true, name2A);
+		final Quark<Entity> quark2B = diagram.quarkInContext(true, name2B);
 
 		if (quark1A.getData() != null == false)
 			return CommandExecutionResult.error("No class " + name1A);

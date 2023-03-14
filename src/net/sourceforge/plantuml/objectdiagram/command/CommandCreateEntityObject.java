@@ -81,7 +81,7 @@ public class CommandCreateEntityObject extends SingleLineCommand2<AbstractClassO
 			RegexResult arg) throws NoSuchColorException {
 		final String idShort = arg.get("NAME", 1);
 
-		final Quark<Entity> quark = diagram.quarkInContext(diagram.cleanId(idShort), false);
+		final Quark<Entity> quark = diagram.quarkInContext(true, diagram.cleanId(idShort));
 		final String displayString = arg.get("NAME", 0);
 		final String stereotype = arg.get("STEREO", 0);
 

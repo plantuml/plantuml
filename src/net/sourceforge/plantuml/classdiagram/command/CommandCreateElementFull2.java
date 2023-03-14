@@ -206,7 +206,7 @@ public class CommandCreateElementFull2 extends SingleLineCommand2<ClassDiagram> 
 
 		final String idShort = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(codeRaw);
 		final Display display = Display.getWithNewlines(displayRaw == null ? idShort : displayRaw);
-		final Quark<Entity> quark = diagram.quarkInContext(idShort, false);
+		final Quark<Entity> quark = diagram.quarkInContext(true, idShort);
 		Entity entity = quark.getData();
 		if (entity == null)
 			entity = diagram.reallyCreateLeaf(quark, display, type, usymbol);

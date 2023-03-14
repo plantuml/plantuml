@@ -167,7 +167,7 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 
 		final String stereotype = line0.get("STEREO", 0);
 
-		final Quark<Entity> quark = diagram.quarkInContext(idShort, true);
+		final Quark<Entity> quark = diagram.quarkInContext(false, idShort);
 
 		Entity entity = quark.getData();
 
@@ -278,7 +278,7 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 			for (String s : codes.split(",")) {
 				final String idShort = StringUtils.trin(s);
 
-				final Quark<Entity> quark = diagram.quarkInContext(diagram.cleanId(idShort), true);
+				final Quark<Entity> quark = diagram.quarkInContext(false, diagram.cleanId(idShort));
 				Entity cl2 = quark.getData();
 				if (cl2 == null)
 					cl2 = diagram.reallyCreateLeaf(quark, Display.getWithNewlines(quark.getName()), type2, null);
@@ -313,7 +313,7 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 
 		final String stereotype = line0.get("STEREO", 0);
 
-		final Quark<Entity> quark = diagram.quarkInContext(idShort, true);
+		final Quark<Entity> quark = diagram.quarkInContext(false, idShort);
 
 		Display display = Display.getWithNewlines(displayString);
 		if (Display.isNull(display))

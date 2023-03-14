@@ -149,7 +149,7 @@ public class CommandCreateElementParenthesis extends SingleLineCommand2<ClassDia
 		type = LeafType.DESCRIPTION;
 		usymbol = USymbols.fromString(symbol, diagram.getSkinParam());
 
-		final Quark<Entity> quark = diagram.quarkInContext(diagram.cleanId(codeRaw), true);
+		final Quark<Entity> quark = diagram.quarkInContext(false, diagram.cleanId(codeRaw));
 		if (quark.getData() != null)
 			return CommandExecutionResult.error("This element (" + quark.getName() + ") is already defined");
 

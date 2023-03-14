@@ -189,7 +189,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 
 	}
 
-	final public Quark<Entity> quarkInContext(String full, boolean specialForCreateClass) {
+	final public Quark<Entity> quarkInContext(boolean reuseExistingChild, String full) {
 		final String sep = getNamespaceSeparator();
 		if (sep == null) {
 			final Quark<Entity> result = entityFactory.firstWithName(full);
@@ -203,7 +203,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 			return entityFactory.root().child(full.substring(sep.length()));
 		final int x = full.indexOf(sep);
 		if (x == -1) {
-			if (specialForCreateClass == false && entityFactory.countByName(full) == 1) {
+			if (reuseExistingChild && entityFactory.countByName(full) == 1) {
 				final Quark<Entity> byName = entityFactory.firstWithName(full);
 				assert byName != null;
 				if (byName != currentQuark)

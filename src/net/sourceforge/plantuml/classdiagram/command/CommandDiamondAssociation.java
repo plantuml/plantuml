@@ -65,7 +65,7 @@ public class CommandDiamondAssociation extends SingleLineCommand2<ClassDiagram> 
 	@Override
 	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg) {
 		final String idShort = arg.get("CODE", 0);
-		final Quark<Entity> quark = diagram.quarkInContext(diagram.cleanId(idShort), false);
+		final Quark<Entity> quark = diagram.quarkInContext(true, diagram.cleanId(idShort));
 
 		if (quark.getData() != null)
 			return CommandExecutionResult.error("Already existing : " + quark.getName());

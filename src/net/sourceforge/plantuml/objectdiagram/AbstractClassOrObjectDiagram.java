@@ -225,7 +225,7 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 			if (entity1.getQuark().getParent() == entity2.getQuark().getParent())
 				quark = entity1.getQuark().getParent().child(idShort);
 			else
-				quark = quarkInContext(cleanId(idShort), false);
+				quark = quarkInContext(true, cleanId(idShort));
 			point = reallyCreateLeaf(quark, Display.getWithNewlines(""), LeafType.POINT_FOR_ASSOCIATION, null);
 
 		}

@@ -150,7 +150,7 @@ public class CommandPackageWithUSymbol extends SingleLineCommand2<AbstractEntity
 
 		}
 
-		final Quark<Entity> ident = diagram.quarkInContext(diagram.cleanId(idShort), true);
+		final Quark<Entity> ident = diagram.quarkInContext(false, diagram.cleanId(idShort));
 
 		final CommandExecutionResult status = diagram.gotoGroup(ident, Display.getWithNewlines(display),
 				GroupType.PACKAGE);

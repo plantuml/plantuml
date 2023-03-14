@@ -176,10 +176,10 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 			partition = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(partition);
 		}
 		if (partition != null) {
-			final Quark<Entity> idNewLong = diagram.quarkInContext(diagram.cleanId(partition), false);
+			final Quark<Entity> idNewLong = diagram.quarkInContext(true, diagram.cleanId(partition));
 			diagram.gotoGroup(idNewLong, Display.getWithNewlines(partition), GroupType.PACKAGE);
 		}
-		final Quark<Entity> ident = diagram.quarkInContext(diagram.cleanId(idShort), false);
+		final Quark<Entity> ident = diagram.quarkInContext(true, diagram.cleanId(idShort));
 
 		Entity entity2 = ident.getData();
 		if (entity2 == null)

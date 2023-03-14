@@ -225,7 +225,7 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 
 		}
 
-		final Quark<Entity> quark = diagram.quarkInContext(diagram.cleanId(codeRaw), false);
+		final Quark<Entity> quark = diagram.quarkInContext(false, diagram.cleanId(codeRaw));
 
 		if (diagram.isGroup(quark))
 			return CommandExecutionResult.error("This element (" + quark.getName() + ") is already defined");

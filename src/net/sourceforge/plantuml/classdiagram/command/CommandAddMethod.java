@@ -70,7 +70,7 @@ public class CommandAddMethod extends SingleLineCommand2<ClassDiagram> {
 	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg)
 			throws NoSuchColorException {
 		final String idShort = arg.get("NAME", 0);
-		final Quark<Entity> quark = diagram.quarkInContext(diagram.cleanId(idShort), false);
+		final Quark<Entity> quark = diagram.quarkInContext(true, diagram.cleanId(idShort));
 		Entity entity = quark.getData();
 		if (entity == null)
 			entity = diagram.reallyCreateLeaf(quark, Display.getWithNewlines(quark), LeafType.CLASS, null);

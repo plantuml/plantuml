@@ -162,7 +162,7 @@ public class CommandCreateElementMultilines extends CommandMultilines2<AbstractE
 
 		final String stereotype = line0.get("STEREO", 0);
 
-		final Quark<Entity> quark = diagram.quarkInContext(diagram.cleanId(idShort), false);
+		final Quark<Entity> quark = diagram.quarkInContext(true, diagram.cleanId(idShort));
 		Entity result = quark.getData();
 		if (quark.getData() == null)
 			result = diagram.reallyCreateLeaf(quark, display, type, usymbol);

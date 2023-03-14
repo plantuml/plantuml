@@ -75,7 +75,7 @@ public class CommandUrl extends SingleLineCommand2<AbstractEntityDiagram> {
 	protected CommandExecutionResult executeArg(AbstractEntityDiagram diagram, LineLocation location, RegexResult arg) {
 		final String idShort = arg.get("CODE", 0);
 
-		final Quark<Entity> quark = diagram.quarkInContext(diagram.cleanId(idShort), false);
+		final Quark<Entity> quark = diagram.quarkInContext(true, diagram.cleanId(idShort));
 		final Entity entity = quark.getData();
 		if (entity == null)
 			return CommandExecutionResult.error(quark.getName() + " does not exist");

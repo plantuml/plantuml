@@ -68,7 +68,7 @@ public class CommandAddData extends SingleLineCommand2<AbstractClassOrObjectDiag
 	protected CommandExecutionResult executeArg(AbstractClassOrObjectDiagram diagram, LineLocation location,
 			RegexResult arg) throws NoSuchColorException {
 		final String name = arg.get("NAME", 0);
-		final Quark<Entity> quark = diagram.quarkInContext(diagram.cleanId(name), false);
+		final Quark<Entity> quark = diagram.quarkInContext(true, diagram.cleanId(name));
 		final Entity entity = quark.getData();
 		if (entity == null)
 			return CommandExecutionResult.error("No such entity " + quark.getName());

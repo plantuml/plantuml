@@ -115,7 +115,7 @@ public class CommandCreatePackageState extends SingleLineCommand2<StateDiagram> 
 			throws NoSuchColorException {
 
 		final String idShort = getNotNull(arg, "CODE1", "CODE2");
-		final Quark<Entity> quark = diagram.quarkInContext(idShort, false);
+		final Quark<Entity> quark = diagram.quarkInContext(true, idShort);
 
 		final String display = getNotNull(arg, "DISPLAY1", "DISPLAY2");
 

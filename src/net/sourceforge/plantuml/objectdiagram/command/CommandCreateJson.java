@@ -144,7 +144,7 @@ public class CommandCreateJson extends CommandMultilines2<AbstractEntityDiagram>
 	private Entity executeArg0(AbstractEntityDiagram diagram, RegexResult line0) throws NoSuchColorException {
 		final String name = line0.get("NAME", 1);
 
-		final Quark<Entity> quark = diagram.quarkInContext(diagram.cleanId(name), false);
+		final Quark<Entity> quark = diagram.quarkInContext(true, diagram.cleanId(name));
 		if (quark.getData() != null)
 			return null;
 		final String displayString = line0.get("NAME", 0);

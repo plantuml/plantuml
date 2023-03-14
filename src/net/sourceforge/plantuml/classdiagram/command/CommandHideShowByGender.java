@@ -144,7 +144,7 @@ public class CommandHideShowByGender extends SingleLineCommand2<UmlDiagram> {
 		} else if (arg1.startsWith("<<")) {
 			gender = EntityGenderUtils.byStereotype(arg1);
 		} else {
-			final Quark<Entity> quark = diagram.quarkInContext(diagram.cleanId(arg1), false);
+			final Quark<Entity> quark = diagram.quarkInContext(true, diagram.cleanId(arg1));
 			if (quark.getData() == null)
 				return CommandExecutionResult.error("No such element " + quark.getName());
 			final Entity entity = quark.getData();
@@ -189,7 +189,7 @@ public class CommandHideShowByGender extends SingleLineCommand2<UmlDiagram> {
 			gender = EntityGenderUtils.byStereotype(arg1);
 		} else {
 			arg1 = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg1);
-			final Quark<Entity> quark = diagram.quarkInContext(diagram.cleanId(arg1), false);
+			final Quark<Entity> quark = diagram.quarkInContext(true, diagram.cleanId(arg1));
 			Entity entity = quark.getData();
 			if (entity == null)
 				return CommandExecutionResult.error("No such element " + quark.getName());

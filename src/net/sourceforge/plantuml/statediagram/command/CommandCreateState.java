@@ -113,7 +113,7 @@ public class CommandCreateState extends SingleLineCommand2<StateDiagram> {
 			throws NoSuchColorException {
 		final String idShort = arg.getLazzy("CODE", 0);
 
-		final Quark<Entity> quark = diagram.quarkInContext(diagram.cleanId(idShort), false);
+		final Quark<Entity> quark = diagram.quarkInContext(true, diagram.cleanId(idShort));
 
 		String display = arg.getLazzy("DISPLAY", 0);
 		if (display == null)

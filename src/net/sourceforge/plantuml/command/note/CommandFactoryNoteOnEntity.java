@@ -219,7 +219,7 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 				return CommandExecutionResult.error("Nothing to note to");
 
 		} else {
-			final Quark<Entity> quark = diagram.quarkInContext(idShort, false);
+			final Quark<Entity> quark = diagram.quarkInContext(true, idShort);
 			cl1 = quark.getData();
 			if (cl1 == null)
 				return CommandExecutionResult.error("Not known: " + idShort);
@@ -243,7 +243,7 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 		}
 
 		final String tmp = diagram.getUniqueSequence("GMN");
-		final Quark<Entity> quark = diagram.quarkInContext(tmp, false);
+		final Quark<Entity> quark = diagram.quarkInContext(true, tmp);
 		final Entity note = diagram.reallyCreateLeaf(quark, strings.toDisplay(), LeafType.NOTE, null);
 
 		if (stereotypeString != null)

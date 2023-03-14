@@ -139,7 +139,7 @@ public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 
 		final String stereo = arg.get("STEREO", 0);
 
-		final Quark<Entity> quark = diagram.quarkInContext(idShort, true);
+		final Quark<Entity> quark = diagram.quarkInContext(false, idShort);
 
 		Entity entity = quark.getData();
 

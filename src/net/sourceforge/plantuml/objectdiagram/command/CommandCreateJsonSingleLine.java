@@ -113,7 +113,7 @@ public class CommandCreateJsonSingleLine extends SingleLineCommand2<AbstractClas
 	private Entity executeArg0(AbstractClassOrObjectDiagram diagram, RegexResult line0) throws NoSuchColorException {
 		final String name = line0.get("NAME", 1);
 
-		final Quark<Entity> quark = diagram.quarkInContext(diagram.cleanId(name), true);
+		final Quark<Entity> quark = diagram.quarkInContext(false, diagram.cleanId(name));
 		if (quark.getData() != null)
 			return null;
 

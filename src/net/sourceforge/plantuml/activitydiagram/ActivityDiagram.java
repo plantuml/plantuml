@@ -68,7 +68,7 @@ public class ActivityDiagram extends CucaDiagram {
 
 	public void startIf(String optionalCodeString) {
 		final String idShort = optionalCodeString == null ? getAutoBranch() : optionalCodeString;
-		final Quark<Entity> quark = quarkInContext(cleanId(idShort), false);
+		final Quark<Entity> quark = quarkInContext(true, cleanId(idShort));
 		final Entity br = reallyCreateLeaf(quark, Display.create(""), LeafType.BRANCH, null);
 		currentContext = new ConditionalContext(currentContext, br, Direction.DOWN);
 	}
@@ -78,7 +78,7 @@ public class ActivityDiagram extends CucaDiagram {
 	}
 
 	public Entity getStart() {
-		final Quark<Entity> quark = quarkInContext("start", false);
+		final Quark<Entity> quark = quarkInContext(true, "start");
 		if (quark.getData() == null)
 			reallyCreateLeaf(quark, Display.getWithNewlines("start"), LeafType.CIRCLE_START, null);
 
@@ -87,7 +87,7 @@ public class ActivityDiagram extends CucaDiagram {
 
 	public Entity getEnd(String suppId) {
 		final String tmp = suppId == null ? "end" : "end$" + suppId;
-		final Quark<Entity> quark = quarkInContext(tmp, false);
+		final Quark<Entity> quark = quarkInContext(true, tmp);
 		if (quark.getData() == null)
 			reallyCreateLeaf(quark, Display.getWithNewlines("end"), LeafType.CIRCLE_END, null);
 
@@ -141,7 +141,7 @@ public class ActivityDiagram extends CucaDiagram {
 
 		final String idShort = "##" + this.getUniqueSequence();
 
-		final Quark<Entity> quark = quarkInContext(idShort, false);
+		final Quark<Entity> quark = quarkInContext(true, idShort);
 		gotoGroup(quark, Display.getWithNewlines(quark.getName()), GroupType.INNER_ACTIVITY);
 		final Entity g = getCurrentGroup();
 
@@ -160,7 +160,7 @@ public class ActivityDiagram extends CucaDiagram {
 		if (getCurrentGroup().getGroupType() != GroupType.INNER_ACTIVITY)
 			throw new IllegalStateException("type=" + getCurrentGroup().getGroupType());
 
-		final Quark<Entity> idNewLong = quarkInContext(idShort, false);
+		final Quark<Entity> idNewLong = quarkInContext(true, idShort);
 		gotoGroup(idNewLong, Display.getWithNewlines("code"), GroupType.CONCURRENT_ACTIVITY);
 		lastEntityConsulted = null;
 		lastEntityBrancheConsulted = null;

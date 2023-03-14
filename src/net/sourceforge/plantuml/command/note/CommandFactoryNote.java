@@ -136,7 +136,7 @@ public final class CommandFactoryNote implements SingleMultiFactoryCommand<Abstr
 	private CommandExecutionResult executeInternal(AbstractEntityDiagram diagram, RegexResult arg, BlocLines display)
 			throws NoSuchColorException {
 		final String idShort = arg.get("CODE", 0);
-		final Quark<Entity> quark = diagram.quarkInContext(diagram.cleanId(idShort), false);
+		final Quark<Entity> quark = diagram.quarkInContext(true, diagram.cleanId(idShort));
 
 		if (quark.getData() != null)
 			return CommandExecutionResult.error("Note already created: " + quark.getName());

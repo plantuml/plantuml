@@ -209,10 +209,10 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 		final String idShort = arg.get("CODE" + suf, 0);
 		if (idShort != null) {
 			if (partition != null) {
-				final Quark<Entity> quark = diagram.quarkInContext(diagram.cleanId(partition), false);
+				final Quark<Entity> quark = diagram.quarkInContext(true, diagram.cleanId(partition));
 				diagram.gotoGroup(quark, Display.getWithNewlines(quark), GroupType.PACKAGE);
 			}
-			final Quark<Entity> ident = diagram.quarkInContext(diagram.cleanId(idShort), false);
+			final Quark<Entity> ident = diagram.quarkInContext(true, diagram.cleanId(idShort));
 
 			final LeafType type = getTypeIfExisting(diagram, ident);
 			Entity result = ident.getData();
@@ -226,7 +226,7 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 		}
 		final String bar = arg.get("BAR" + suf, 0);
 		if (bar != null) {
-			final Quark<Entity> quark = diagram.quarkInContext(diagram.cleanId(bar), false);
+			final Quark<Entity> quark = diagram.quarkInContext(true, diagram.cleanId(bar));
 			Entity result = quark.getData();
 			if (result == null)
 				result = diagram.reallyCreateLeaf(quark, Display.getWithNewlines(bar), LeafType.SYNCHRO_BAR, null);
@@ -236,11 +236,11 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 		if (quoted.get(0) != null) {
 			final String quotedString = quoted.get(1) == null ? quoted.get(0) : quoted.get(1);
 			if (partition != null) {
-				final Quark<Entity> quark = diagram.quarkInContext(diagram.cleanId(partition), false);
+				final Quark<Entity> quark = diagram.quarkInContext(true, diagram.cleanId(partition));
 				diagram.gotoGroup(quark, Display.getWithNewlines(partition), GroupType.PACKAGE);
 			}
 
-			final Quark<Entity> quark = diagram.quarkInContext(diagram.cleanId(quotedString), false);
+			final Quark<Entity> quark = diagram.quarkInContext(true, diagram.cleanId(quotedString));
 
 			final LeafType type = getTypeIfExisting(diagram, quark);
 			Entity result = quark.getData();
@@ -254,10 +254,10 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 		final String quoteInvisibleString = arg.get("QUOTED_INVISIBLE" + suf, 0);
 		if (quoteInvisibleString != null) {
 			if (partition != null) {
-				final Quark<Entity> quark = diagram.quarkInContext(diagram.cleanId(partition), false);
+				final Quark<Entity> quark = diagram.quarkInContext(true, diagram.cleanId(partition));
 				diagram.gotoGroup(quark, Display.getWithNewlines(quark), GroupType.PACKAGE);
 			}
-			final Quark<Entity> identInvisible = diagram.quarkInContext(diagram.cleanId(quoteInvisibleString), false);
+			final Quark<Entity> identInvisible = diagram.quarkInContext(true, diagram.cleanId(quoteInvisibleString));
 			Entity result = identInvisible.getData();
 			if (result == null)
 				result = diagram.reallyCreateLeaf(identInvisible, Display.getWithNewlines(identInvisible.getName()),

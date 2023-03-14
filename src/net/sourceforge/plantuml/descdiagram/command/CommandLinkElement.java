@@ -302,7 +302,7 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 	private Entity getDummy(DescriptionDiagram diagram, String ident) {
 		if (ident.startsWith("()")) {
 			ident = diagram.cleanId(ident);
-			final Quark<Entity> quark = diagram.quarkInContext(ident, false);
+			final Quark<Entity> quark = diagram.quarkInContext(true, ident);
 			if (quark.getData() != null)
 				return quark.getData();
 			return diagram.reallyCreateLeaf(quark, Display.getWithNewlines(quark.getName()), LeafType.DESCRIPTION,
@@ -312,7 +312,7 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 		final char codeChar = ident.length() > 2 ? ident.charAt(0) : 0;
 		final boolean endWithSlash = ident.endsWith("/");
 		ident = diagram.cleanId(ident);
-		final Quark<Entity> quark = diagram.quarkInContext(ident, false);
+		final Quark<Entity> quark = diagram.quarkInContext(true, ident);
 
 		if (diagram.isGroup(quark))
 			return quark.getData();

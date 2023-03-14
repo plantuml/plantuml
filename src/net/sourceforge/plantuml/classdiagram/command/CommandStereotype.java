@@ -69,7 +69,7 @@ public class CommandStereotype extends SingleLineCommand2<ClassDiagram> {
 		final String name = arg.get("NAME", 0);
 		final String stereotype = arg.get("STEREO", 0);
 
-		final Quark<Entity> quark = diagram.quarkInContext(diagram.cleanId(name), false);
+		final Quark<Entity> quark = diagram.quarkInContext(true, diagram.cleanId(name));
 		final Entity entity = quark.getData();
 		if (entity == null)
 			return CommandExecutionResult.error("No such class " + quark.getName());

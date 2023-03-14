@@ -94,7 +94,7 @@ public class CommandCreateDomain extends SingleLineCommand2<DescriptionDiagram> 
 		final GroupType type = typeString.equalsIgnoreCase("domain") ? GroupType.DOMAIN : GroupType.REQUIREMENT;
 		final LeafType type2 = typeString.equalsIgnoreCase("domain") ? LeafType.DOMAIN : LeafType.REQUIREMENT;
 
-		final Quark<Entity> quark = diagram.quarkInContext(diagram.cleanId(codeString), false);
+		final Quark<Entity> quark = diagram.quarkInContext(true, diagram.cleanId(codeString));
 		if (quark.getData() != null)
 			return CommandExecutionResult.error("Object already exists : " + codeString);
 
