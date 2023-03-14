@@ -223,7 +223,7 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 		if (source == null)
 			return "";
 
-		return source.getPlainString();
+		return source.getPlainString("\n");
 	}
 
 	static private List<String> getFailureText1(Throwable exception, String graphvizVersion, String textDiagram) {

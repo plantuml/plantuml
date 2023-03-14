@@ -109,7 +109,7 @@ public class PSystemDitaa extends AbstractPSystem {
 	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
 			throws IOException {
 		if (fileFormat.getFileFormat() == FileFormat.ATXT) {
-			os.write(getSource().getPlainString().getBytes());
+			os.write(getSource().getPlainString(BackSlash.lineSeparator()).getBytes());
 			return ImageDataSimple.ok();
 		}
 

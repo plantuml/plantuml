@@ -47,6 +47,10 @@ public class BackSlash {
 	public static final String BS_BS_N = "\\n";
 	public static final String NEWLINE = "\n";
 	public static final char CHAR_NEWLINE = '\n';
+	
+	public static final String lineSeparator() {
+		return System.lineSeparator();
+	}
 
 	public static char hiddenNewLine() {
 		return StringUtils.PRIVATE_BLOCK + BackSlash.CHAR_NEWLINE;
@@ -67,9 +71,9 @@ public class BackSlash {
 	}
 
 	public static List<String> getWithNewlines(CharSequence s) {
-		if (s == null) {
+		if (s == null) 
 			return null;
-		}
+		
 		final List<String> result = new ArrayList<>();
 		final StringBuilder current = new StringBuilder();
 		for (int i = 0; i < s.length(); i++) {
@@ -94,9 +98,9 @@ public class BackSlash {
 	}
 
 	public static String translateBackSlashes(CharSequence s) {
-		if (s == null) {
+		if (s == null) 
 			return null;
-		}
+		
 		// final String tmps = s.toString();
 		// if (tmps.indexOf('\\') == -1) {
 		// return tmps;
@@ -121,24 +125,24 @@ public class BackSlash {
 	}
 
 	public static String untranslateBackSlashes(CharSequence s) {
-		if (s == null) {
+		if (s == null) 
 			return null;
-		}
+		
 		final StringBuilder result = new StringBuilder();
 		for (int i = 0; i < s.length(); i++) {
 			char c = s.charAt(i);
-			if (c > StringUtils.PRIVATE_BLOCK && c < '\uE07F') {
+			if (c > StringUtils.PRIVATE_BLOCK && c < '\uE07F') 
 				c = (char) (c - StringUtils.PRIVATE_BLOCK);
-			}
+			
 			result.append(c);
 		}
 		return result.toString();
 	}
 
 	private static char translateChar(char c) {
-		if (c > 128) {
+		if (c > 128) 
 			throw new IllegalArgumentException();
-		}
+		
 		return (char) (StringUtils.PRIVATE_BLOCK + c);
 	}
 

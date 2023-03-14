@@ -89,7 +89,7 @@ public class BlockUml {
 	// ::comment when __CORE__
 	public String getEncodedUrl() throws IOException {
 		final Transcoder transcoder = TranscoderUtil.getDefaultTranscoder();
-		final String source = getDiagram().getSource().getPlainString();
+		final String source = getDiagram().getSource().getPlainString("\n");
 		final String encoded = transcoder.encode(source);
 		return encoded;
 	}

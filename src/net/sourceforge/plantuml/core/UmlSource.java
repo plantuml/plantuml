@@ -160,32 +160,30 @@ final public class UmlSource {
 //	}
 
 	/**
-	 * Return the source as a single String with <code>\n</code> as line separator.
+	 * Return the source as a single String.
 	 *
 	 * @return the whole diagram source
 	 */
-	public String getPlainString() {
+	public String getPlainString(String separator) {
 		final StringBuilder sb = new StringBuilder();
 		for (StringLocated s : source) {
 			sb.append(s.getString());
-			sb.append('\r');
-			sb.append(BackSlash.CHAR_NEWLINE);
+			sb.append(separator);
 		}
 		return sb.toString();
 	}
 
-	public String getRawString() {
+	public String getRawString(String separator) {
 		final StringBuilder sb = new StringBuilder();
 		for (StringLocated s : rawSource) {
 			sb.append(s.getString());
-			sb.append('\r');
-			sb.append(BackSlash.CHAR_NEWLINE);
+			sb.append(separator);
 		}
 		return sb.toString();
 	}
 
 	public long seed() {
-		return StringUtils.seed(getPlainString());
+		return StringUtils.seed(getPlainString("\n"));
 	}
 
 	public String getLine(LineLocation n) {

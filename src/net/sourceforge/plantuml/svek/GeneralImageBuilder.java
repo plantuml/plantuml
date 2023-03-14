@@ -122,6 +122,7 @@ import net.sourceforge.plantuml.svek.image.EntityImageStateEmptyDescription;
 import net.sourceforge.plantuml.svek.image.EntityImageSynchroBar;
 import net.sourceforge.plantuml.svek.image.EntityImageTips;
 import net.sourceforge.plantuml.svek.image.EntityImageUseCase;
+import net.sourceforge.plantuml.text.BackSlash;
 import net.sourceforge.plantuml.text.Guillemet;
 import net.sourceforge.plantuml.utils.Log;
 
@@ -455,11 +456,12 @@ public final class GeneralImageBuilder {
 		try {
 			svg = dotStringFactory.getSvg(basefile, dotStrings);
 		} catch (IOException e) {
-			return new GraphvizCrash(source.getPlainString(), GraphvizUtils.graphviz244onWindows(), e);
+			return new GraphvizCrash(source.getPlainString(BackSlash.lineSeparator()),
+					GraphvizUtils.graphviz244onWindows(), e);
 		}
 		if (svg.length() == 0)
-			return new GraphvizCrash(source.getPlainString(), GraphvizUtils.graphviz244onWindows(),
-					new EmptySvgException());
+			return new GraphvizCrash(source.getPlainString(BackSlash.lineSeparator()),
+					GraphvizUtils.graphviz244onWindows(), new EmptySvgException());
 
 		final String graphvizVersion = extractGraphvizVersion(svg);
 		try {
@@ -469,7 +471,8 @@ public final class GeneralImageBuilder {
 			return result;
 		} catch (Exception e) {
 			Log.error("Exception " + e);
-			throw new UnparsableGraphvizException(e, graphvizVersion, svg, source.getPlainString());
+			throw new UnparsableGraphvizException(e, graphvizVersion, svg,
+					source.getPlainString(BackSlash.lineSeparator()));
 		}
 		// ::done
 		// ::uncomment when __CORE__

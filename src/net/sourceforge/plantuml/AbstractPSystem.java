@@ -105,14 +105,14 @@ public abstract class AbstractPSystem implements Diagram {
 	}
 
 	final public String getMetadata() {
-		if (source == null) {
+		if (source == null) 
 			return getVersion();
-		}
-		final String rawString = source.getRawString();
-		final String plainString = source.getPlainString();
-		if (rawString != null && rawString.equals(plainString)) {
+		
+		final String rawString = source.getRawString("\n");
+		final String plainString = source.getPlainString("\n");
+		if (rawString != null && rawString.equals(plainString)) 
 			return rawString + BackSlash.NEWLINE + getVersion();
-		}
+		
 		return rawString + BackSlash.NEWLINE + plainString + BackSlash.NEWLINE + getVersion();
 	}
 
@@ -121,9 +121,9 @@ public abstract class AbstractPSystem implements Diagram {
 	}
 
 	final public long seed() {
-		if (source == null) {
+		if (source == null) 
 			return 42;
-		}
+		
 		return getSource().seed();
 	}
 
@@ -150,9 +150,9 @@ public abstract class AbstractPSystem implements Diagram {
 	}
 
 	public DisplayPositionned getTitle() {
-		if (source == null) {
+		if (source == null) 
 			return DisplayPositioned.single(Display.empty(), HorizontalAlignment.CENTER, VerticalAlignment.TOP);
-		}
+		
 		return DisplayPositioned.single(source.getTitle(), HorizontalAlignment.CENTER, VerticalAlignment.TOP);
 	}
 

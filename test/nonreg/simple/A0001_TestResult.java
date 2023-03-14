@@ -7,7 +7,7 @@ public class A0001_TestResult {
 DPI: 96
 dimension: [ 296.7331 ; 285.0000 ]
 scaleFactor: 1.0000
-seed: -1212656935193060805
+seed: 1230863714434809965
 svgLinkTarget: _top
 hoverPathColorRGB: null
 preserveAspectRatio: none

@@ -113,6 +113,7 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.GraphvizCrash;
+import net.sourceforge.plantuml.text.BackSlash;
 
 public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprite {
 
@@ -256,7 +257,8 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 
 				} catch (Throwable t) {
 					Logme.error(t);
-					final UDrawable crash = new GraphvizCrash(getSource().getPlainString(), false, t);
+					final UDrawable crash = new GraphvizCrash(getSource().getPlainString(BackSlash.lineSeparator()),
+							false, t);
 					crash.drawU(ug);
 
 				}
