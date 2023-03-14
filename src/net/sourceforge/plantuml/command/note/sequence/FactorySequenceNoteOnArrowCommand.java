@@ -75,9 +75,11 @@ public final class FactorySequenceNoteOnArrowCommand implements SingleMultiFacto
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("STYLE", "(note|hnote|rnote)"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("STEREO", "(\\<\\<.*\\>\\>)?"), //
+				new RegexLeaf("STEREO1", "(\\<\\<.*\\>\\>)?"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("POSITION", "(right|left|bottom|top)"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("STEREO2", "(\\<\\<.*\\>\\>)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				ColorParser.exp1(), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -90,9 +92,11 @@ public final class FactorySequenceNoteOnArrowCommand implements SingleMultiFacto
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("STYLE", "(note|hnote|rnote)"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("STEREO", "(\\<\\<.*\\>\\>)?"), //
+				new RegexLeaf("STEREO1", "(\\<\\<.*\\>\\>)?"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("POSITION", "(right|left|bottom|top)"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("STEREO2", "(\\<\\<.*\\>\\>)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				ColorParser.exp1(), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -152,7 +156,7 @@ public final class FactorySequenceNoteOnArrowCommand implements SingleMultiFacto
 			Colors colors = Colors.empty().add(ColorType.BACK,
 					backcolor0 == null ? null : HColorSet.instance().getColor(backcolor0));
 			final Note note = new Note(display, position, style, diagram.getSkinParam().getCurrentStyleBuilder());
-			final String stereotypeString = line0.get("STEREO", 0);
+			final String stereotypeString = line0.getLazzy("STEREO", 0);
 			if (stereotypeString != null) {
 				final Stereotype stereotype = Stereotype.build(stereotypeString);
 				colors = colors.applyStereotypeForNote(stereotype, diagram.getSkinParam(), ColorParam.noteBackground,

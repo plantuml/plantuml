@@ -10,6 +10,7 @@ package ext.plantuml.com.ctreber.aclib.gui;
 public class MOBoolean extends MonitoredObject
 {
   // ::remove folder when __CORE__
+  // ::remove folder when __MIT__
   private boolean fBoolean;
 
   public MOBoolean()

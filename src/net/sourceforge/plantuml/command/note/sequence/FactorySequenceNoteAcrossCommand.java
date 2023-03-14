@@ -71,9 +71,11 @@ public final class FactorySequenceNoteAcrossCommand implements SingleMultiFactor
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("STYLE", "(note|hnote|rnote)"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("STEREO", "(\\<\\<.*\\>\\>)?"), //
+				new RegexLeaf("STEREO1", "(\\<\\<.*\\>\\>)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("ACROSS", "(accross|across)"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("STEREO2", "(\\<\\<.*\\>\\>)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				color().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -88,9 +90,11 @@ public final class FactorySequenceNoteAcrossCommand implements SingleMultiFactor
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("STYLE", "(note|hnote|rnote)"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("STEREO", "(\\<\\<.*\\>\\>)?"), //
+				new RegexLeaf("STEREO1", "(\\<\\<.*\\>\\>)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("ACROSS", "(accross|across)"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("STEREO2", "(\\<\\<.*\\>\\>)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				color().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -157,7 +161,7 @@ public final class FactorySequenceNoteAcrossCommand implements SingleMultiFactor
 			final Note note = new Note((Participant) null, (Participant) null, display,
 					diagram.getSkinParam().getCurrentStyleBuilder());
 			Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());
-			final String stereotypeString = line0.get("STEREO", 0);
+			final String stereotypeString = line0.getLazzy("STEREO", 0);
 			if (stereotypeString != null) {
 				final Stereotype stereotype = Stereotype.build(stereotypeString);
 				colors = colors.applyStereotypeForNote(stereotype, diagram.getSkinParam(), ColorParam.noteBackground,

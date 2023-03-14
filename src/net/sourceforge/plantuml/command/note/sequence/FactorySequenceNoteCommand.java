@@ -75,11 +75,13 @@ public final class FactorySequenceNoteCommand implements SingleMultiFactoryComma
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("STYLE", "(note|hnote|rnote)"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("STEREO", "(\\<\\<.*\\>\\>)?"), //
+				new RegexLeaf("STEREO1", "(\\<\\<.*\\>\\>)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("POSITION", "(right|left|over)"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("PARTICIPANT", "(?:of[%s]+)?([%pLN_.@]+|[%g][^%g]+[%g])"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("STEREO2", "(\\<\\<.*\\>\\>)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				color().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -94,11 +96,13 @@ public final class FactorySequenceNoteCommand implements SingleMultiFactoryComma
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("STYLE", "(note|hnote|rnote)"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("STEREO", "(\\<\\<.*\\>\\>)?"), //
+				new RegexLeaf("STEREO1", "(\\<\\<.*\\>\\>)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("POSITION", "(right|left|over)"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("PARTICIPANT", "(?:of[%s])?([%pLN_.@]+|[%g][^%g]+[%g])"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("STEREO2", "(\\<\\<.*\\>\\>)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				color().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -157,7 +161,7 @@ public final class FactorySequenceNoteCommand implements SingleMultiFactoryComma
 			final Display display = diagram.manageVariable(strings.toDisplay());
 			final Note note = new Note(p, position, display, diagram.getSkinParam().getCurrentStyleBuilder());
 			Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
-			final String stereotypeString = arg.get("STEREO", 0);
+			final String stereotypeString = arg.getLazzy("STEREO", 0);
 			if (stereotypeString != null) {
 				final Stereotype stereotype = Stereotype.build(stereotypeString);
 				colors = colors.applyStereotypeForNote(stereotype, diagram.getSkinParam(), ColorParam.noteBackground,
