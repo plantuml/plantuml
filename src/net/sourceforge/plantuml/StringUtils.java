@@ -498,6 +498,22 @@ public class StringUtils {
 		return s.toString().trim();
 	}
 
+	public static String manageEscapedTabs(String s) {
+		return s.replace("\\t", "\t");
+	}
+
+	public static long seed(String string) {
+		long h = 1125899906842597L; // prime
+		final int len = string.length();
+
+		for (int i = 0; i < len; i++)
+			h = 31 * h + string.charAt(i);
+
+		return h;
+	}
+
+	// ::done
+
 	public static String trin(String arg) {
 		if (arg.length() == 0)
 			return arg;
@@ -534,22 +550,6 @@ public class StringUtils {
 	private static boolean isSpaceOrTabOrNull(char c) {
 		return c == ' ' || c == '\t' || c == '\r' || c == '\n' || c == '\0';
 	}
-
-	public static String manageEscapedTabs(String s) {
-		return s.replace("\\t", "\t");
-	}
-
-	public static long seed(String string) {
-		long h = 1125899906842597L; // prime
-		final int len = string.length();
-
-		for (int i = 0; i < len; i++)
-			h = 31 * h + string.charAt(i);
-
-		return h;
-	}
-
-	// ::done
 
 	public static String sharp000000(int color) {
 		final int v = 0xFFFFFF & color;

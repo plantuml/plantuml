@@ -159,9 +159,12 @@ public class FontConfiguration {
 				&& fontPosition.equals(other.fontPosition) && tabSize == other.tabSize;
 	}
 
-	public static FontConfiguration create(UFont font, HColor color, HColor hyperlinkColor,
-			UStroke hyperlinkUnderlineStroke) {
-		return create(font, color, hyperlinkColor, hyperlinkUnderlineStroke, 8);
+	public FontConfiguration mute(Colors colors) {
+		final HColor color = Objects.requireNonNull(colors).getColor(ColorType.TEXT);
+		if (color == null)
+			return this;
+
+		return changeColor(color);
 	}
 
 	public static FontConfiguration create(ISkinParam skinParam, FontParam fontParam, Stereotype stereo) {
@@ -183,12 +186,19 @@ public class FontConfiguration {
 		return create(style.getUFont(), color, hyperlinkColor, hyperlinkUnderlineStroke, skinParam.getTabSize());
 	}
 
-	// ---
-
 	@Override
 	public String toString() {
 		return styles.toString() + " " + currentColor;
 	}
+
+	// ::done
+
+	public static FontConfiguration create(UFont font, HColor color, HColor hyperlinkColor,
+			UStroke hyperlinkUnderlineStroke) {
+		return create(font, color, hyperlinkColor, hyperlinkUnderlineStroke, 8);
+	}
+
+	// ---
 
 	public FontConfiguration forceFont(UFont newFont, HColor htmlColorForStereotype) {
 		if (newFont == null)
@@ -215,14 +225,6 @@ public class FontConfiguration {
 	public FontConfiguration changeColor(HColor newHtmlColor) {
 		return new FontConfiguration(styles, motherFont, motherColor, currentFont, newHtmlColor, extendedColor,
 				fontPosition, svgAttributes, hyperlinkColor, hyperlinkUnderlineStroke, tabSize);
-	}
-
-	public FontConfiguration mute(Colors colors) {
-		final HColor color = Objects.requireNonNull(colors).getColor(ColorType.TEXT);
-		if (color == null)
-			return this;
-
-		return changeColor(color);
 	}
 
 	public FontConfiguration changeExtendedColor(HColor newExtendedColor) {
@@ -336,7 +338,5 @@ public class FontConfiguration {
 		// return UStroke.simple();
 		// return new UStroke(3, 5, 2);
 	}
-
-	// ::done
 
 }

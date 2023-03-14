@@ -161,11 +161,11 @@ public class HColors {
 	public static HColor middle(HColor c1, HColor c2) {
 		return new HColorMiddle(c1, c2);
 	}
+	// ::done
 
 	public static HColorGradient gradient(HColor color1, HColor color2, char policy) {
 		return new HColorGradient(color1, color2, policy);
 	}
-	// ::done
 
 	public static HColor simple(Color c) {
 		return HColorSimple.create(c);
