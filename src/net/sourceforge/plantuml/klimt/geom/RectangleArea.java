@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.klimt.geom;
 
 import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.utils.MathUtils;
 
 public class RectangleArea {
 
@@ -51,8 +52,9 @@ public class RectangleArea {
 		this.maxY = maxY;
 	}
 
-	public static RectangleArea build(XPoint2D min, XPoint2D max) {
-		return new RectangleArea(min.x, min.y, max.x, max.y);
+	public static RectangleArea build(XPoint2D pt1, XPoint2D pt2) {
+		return new RectangleArea(MathUtils.min(pt1.x, pt2.x), MathUtils.min(pt1.y, pt2.y), MathUtils.max(pt1.x, pt2.x),
+				MathUtils.max(pt1.y, pt2.y));
 	}
 
 	public RectangleArea move(double deltaX, double deltaY) {

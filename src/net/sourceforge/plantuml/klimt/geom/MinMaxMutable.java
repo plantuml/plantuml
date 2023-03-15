@@ -90,6 +90,10 @@ public class MinMaxMutable {
 		this.minY = Math.min(y, minY);
 	}
 
+	public void addPoint(XPoint2D pt) {
+		addPoint(pt.getX(), pt.getY());
+	}
+
 	public static MinMaxMutable fromMax(double maxX, double maxY) {
 		if (Double.isNaN(maxX))
 			throw new IllegalArgumentException();

@@ -377,7 +377,13 @@ public class Histogram implements PDrawing {
 	}
 
 	public double getFullHeight(StringBounder stringBounder) {
-		return getHeightForConstraints(stringBounder) + stepHeight() * (allStates.size() - 1) + getBottomMargin();
+		double height = getHeightForConstraints(stringBounder);
+
+		if (allStates.size() > 0)
+			height += stepHeight() * (allStates.size() - 1);
+
+		height += getBottomMargin();
+		return height;
 	}
 
 	private double getBottomMargin() {

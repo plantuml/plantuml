@@ -57,6 +57,7 @@ import static gen.lib.cgraph.obj__c.agroot;
 import static gen.lib.common.geom__c.ccwrotatepf;
 import static gen.lib.common.splines__c.edgeMidpoint;
 import static gen.lib.common.splines__c.getsplinepoints;
+import static gen.lib.common.utils__c.gv_nodesize;
 import static gen.lib.common.utils__c.late_bool;
 import static gen.lib.common.utils__c.updateBB;
 import static gen.lib.label.xlabels__c.placeLabels;
@@ -84,12 +85,22 @@ import static smetana.core.Macro.GD_rankdir;
 import static smetana.core.Macro.GRAPH_LABEL;
 import static smetana.core.Macro.HEAD_LABEL;
 import static smetana.core.Macro.IGNORED;
+import static smetana.core.Macro.INCH2PS;
 import static smetana.core.Macro.INT_MAX;
+import static smetana.core.Macro.LABEL_AT_LEFT;
+import static smetana.core.Macro.LABEL_AT_RIGHT;
+import static smetana.core.Macro.LABEL_AT_TOP;
+import static smetana.core.Macro.LEFT_IX;
 import static smetana.core.Macro.ND_coord;
 import static smetana.core.Macro.ND_height;
 import static smetana.core.Macro.ND_width;
 import static smetana.core.Macro.ND_xlabel;
 import static smetana.core.Macro.NODE_XLABEL;
+import static smetana.core.Macro.RANKDIR_BT;
+import static smetana.core.Macro.RANKDIR_LR;
+import static smetana.core.Macro.RANKDIR_RL;
+import static smetana.core.Macro.RANKDIR_TB;
+import static smetana.core.Macro.RIGHT_IX;
 import static smetana.core.Macro.TAIL_LABEL;
 import static smetana.core.Macro.UNSUPPORTED;
 import static smetana.core.debug.SmetanaDebug.ENTERING;
@@ -196,9 +207,9 @@ try {
     int c;
     final ST_boxf bb = new ST_boxf(), new_bb = new ST_boxf();
     bb.___(GD_bb(g));
-    if (rankdir == 1 || rankdir == 2) {
-UNSUPPORTED("d4wrtj0h7lkb0e0vernd9czq9"); // 	new_bb.LL = map_point(pointfof(bb.LL.x, bb.UR.y));
-UNSUPPORTED("crysiae5zxc69cj3v2ygfs8xn"); // 	new_bb.UR = map_point(pointfof(bb.UR.x, bb.LL.y));
+    if (rankdir == RANKDIR_LR || rankdir == RANKDIR_BT) {
+    	new_bb.LL.___(map_point(zz, pointfof(bb.LL.x, bb.UR.y)));
+    	new_bb.UR.___(map_point(zz, pointfof(bb.UR.x, bb.LL.y)));
     } else {
 	new_bb.LL.___(map_point(zz, pointfof(bb.LL.x, bb.LL.y)));
 	new_bb.UR.___(map_point(zz, pointfof(bb.UR.x, bb.UR.y)));
@@ -231,7 +242,7 @@ try {
 	return;
     for (v = agfstnode(zz, g); v!=null; v = agnxtnode(zz, g, v)) {
 	if (zz.Rankdir!=0)
-UNSUPPORTED("e0j848r4j1j7sojfht5gwikvi"); // 	    gv_nodesize(v, 0);
+	    gv_nodesize(v, false);
 	ND_coord(v).___(map_point(zz, ND_coord(v)));
 	if (ND_xlabel(v)!=null)
 UNSUPPORTED("3fy0l7w2v24hzrvlpstpknwl7"); // 	    ND_xlabel(v)->pos = map_point(ND_xlabel(v)->pos);
@@ -393,8 +404,8 @@ private static void addXLabel_(Globals zz, ST_textlabel_t lp, CArray<ST_object_t
 	}
 	
 	if (zz.Flip) {
-	UNSUPPORTED("99tzt7erbvtfsbo0jbdz0lc8m"); // 	xlp->sz.x = lp->dimen.y;
-	UNSUPPORTED("6v5t3ysaisj27bwc0r9zg3rpd"); // 	xlp->sz.y = lp->dimen.x;
+	xlp.get__(0).sz.x = lp.dimen.y;
+	xlp.get__(0).sz.y = lp.dimen.x;
 	}
 	else {
 	xlp.get__(0).sz.___(lp.dimen);
@@ -425,8 +436,8 @@ private static ST_boxf addLabelObj_(Globals zz, ST_textlabel_t lp, CArray<ST_obj
 ENTERING("dwxd5kvlanbcxqfuncjg0ea54","addLabelObj");
 try {
 	if (zz.Flip) {
-	UNSUPPORTED("6z2yrwq81gtsk3q9c5pofow1x"); // 	objp->sz.x = lp->dimen.y; 
-	UNSUPPORTED("8xsm9kavrekjrsydqe1wh1pu"); // 	objp->sz.y = lp->dimen.x;
+	objp.get__(0).sz.x = lp.dimen.y; 
+	objp.get__(0).sz.y = lp.dimen.x;
 	}
 	else {
 	objp.get__(0).sz.x = lp.dimen.x; 
@@ -459,12 +470,12 @@ public static ST_boxf addNodeObj_(Globals zz, ST_Agnode_s np, CArray<ST_object_t
 ENTERING("b8tjygxnwny5qoiir1mha1d62","addNodeObj");
 try {
 	if (zz.Flip) {
-	UNSUPPORTED("1ri5uimcd1z58iix8tp528l1m"); // 	objp->sz.x = ((ND_height(np))*(double)72);
-	UNSUPPORTED("6r5gwwhz3sjxrssh8yo3v5c3v"); // 	objp->sz.y = ((ND_width(np))*(double)72);
+		objp.get__(0).sz.x = INCH2PS(ND_height(np));
+		objp.get__(0).sz.y = INCH2PS(ND_width(np));
 	}
 	else {
-		  objp.get__(0).sz.x = ((ND_width(np))*(double)72);
-		  objp.get__(0).sz.y = ((ND_height(np))*(double)72);
+		  objp.get__(0).sz.x = INCH2PS(ND_width(np));
+		  objp.get__(0).sz.y = INCH2PS(ND_height(np));
 	}
 	objp.get__(0).pos.___(ND_coord(np));
 	objp.get__(0).pos.x -= (objp.get__(0).sz.x) / 2.0;
@@ -748,7 +759,7 @@ try {
     zz.Flip = GD_flip(g);
     /* Handle cluster labels */
     if (zz.Flip)
-UNSUPPORTED("4hxky2sp978rmy6018sfmts6m"); // 	place_flip_graph_label(g);
+   	place_flip_graph_label(g);
     else
 	place_graph_label(g);
     /* Everything has been placed except the root graph label, if any.
@@ -793,16 +804,16 @@ UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
     }
     if (allowTranslation!=0) {
 	switch (zz.Rankdir) {
-	case 0:
+	case RANKDIR_TB:
 	    zz.Offset.___(GD_bb(g).LL);
 	    break;
-	case 1:
-UNSUPPORTED("5t3j9lrc86kd5ouaqgzvz3qcm"); // 	    Offset = pointfof(-GD_bb(g).UR.y, GD_bb(g).LL.x);
+	case RANKDIR_LR:
+	    zz.Offset.___(pointfof(-GD_bb(g).UR.y, GD_bb(g).LL.x));
 	    break;
-	case 2:
+	case RANKDIR_BT:
 UNSUPPORTED("96ajwnh79ja9g57xmut6dmh9d"); // 	    Offset = pointfof(GD_bb(g).LL.x, -GD_bb(g).UR.y);
 	    break;
-	case 3:
+	case RANKDIR_RL:
 UNSUPPORTED("3xtu7zkpqq7nsx9oe68oi6ebt"); // 	    Offset = pointfof(GD_bb(g).LL.y, GD_bb(g).LL.x);
 	    break;
 	}
@@ -840,6 +851,48 @@ LEAVING("3qbbvlnq1b06ylgr0yj2slbhm","dotneato_postprocess");
 }
 }
 
+
+
+
+/* place_flip_graph_label:
+ * Put cluster labels recursively in the flip case.
+ */
+//3 ehe7n8wkl4thn86tisjzdotpq
+//static void place_flip_graph_label(graph_t * g) 
+@Unused
+@Original(version="2.38.0", path="lib/common/postproc.c", name="place_flip_graph_label", key="ehe7n8wkl4thn86tisjzdotpq", definition="static void place_flip_graph_label(graph_t * g)")
+public static void place_flip_graph_label(ST_Agraph_s g) {
+	ENTERING("3zsjtcmcfxhkmaagi0on4dy20","place_flip_graph_label");
+	try {
+	    int c;
+	    final ST_pointf p = new ST_pointf(), d = new ST_pointf();
+
+	    if ((g != agroot(g)) && (GD_label(g)!=null) && GD_label(g).set==0) {
+	    	if ((GD_label_pos(g) & LABEL_AT_TOP)!=0) {
+	    	    d.___(GD_border(g)[RIGHT_IX]);
+	    	    p.x = GD_bb(g).UR.x - d.x / 2;
+	    	} else {
+	    	    d.___(GD_border(g)[LEFT_IX]);
+	    	    p.x = GD_bb(g).LL.x + d.x / 2;
+	    	}
+
+	    	if ((GD_label_pos(g) & LABEL_AT_RIGHT)!=0) {
+	    	    p.y = GD_bb(g).LL.y + d.y / 2;
+	    	} else if ((GD_label_pos(g) & LABEL_AT_LEFT)!=0) {
+	    	    p.y = GD_bb(g).UR.y - d.y / 2;
+	    	} else {
+	    	    p.y = (GD_bb(g).LL.y + GD_bb(g).UR.y) / 2;
+	    	}
+	    	GD_label(g).pos.___(p);
+	    	GD_label(g).set = 1;
+	        }
+	    
+	    for (c = 1; c <= GD_n_cluster(g); c++)
+	    	place_flip_graph_label(GD_clust(g).get_(c));
+	} finally {
+		LEAVING("72zw1alhd5vd0g6mhum507rvx", "place_graph_label");
+	}
+}
 
 
 

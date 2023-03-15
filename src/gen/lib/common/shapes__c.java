@@ -700,8 +700,8 @@ UNSUPPORTED("6t98dcecgbvbvtpycwiq2ynnj"); // 	    }
 	} else {
 	    /* get point and node size adjusted for rankdir=LR */
 	    if (GD_flip(agraphof(n))) {
-UNSUPPORTED("dapvd4c0ggliaqcj08jvao221"); // 		ysize = ND_lw(n) + ND_rw(n);
-UNSUPPORTED("8t3g4d9acruono62leh5a8hxh"); // 		xsize = ND_ht(n);
+		zz.ysize = ND_lw(n) + ND_rw(n);
+		zz.xsize = ND_ht(n);
 	    } else {
 		zz.xsize = ND_lw(n) + ND_rw(n);
 		zz.ysize = ND_ht(n);

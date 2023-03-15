@@ -48,6 +48,10 @@ public class XDimension2D {
 	final private double height;
 
 	public XDimension2D(double width, double height) {
+		if (width < 0)
+			throw new IllegalArgumentException();
+		if (height < 0)
+			throw new IllegalArgumentException();
 		if (Double.isNaN(width) || Double.isNaN(height))
 			throw new IllegalArgumentException();
 

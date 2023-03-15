@@ -83,6 +83,7 @@ import static smetana.core.Macro.GRAPH_LABEL;
 import static smetana.core.Macro.GVBEGIN;
 import static smetana.core.Macro.LABEL_AT_BOTTOM;
 import static smetana.core.Macro.LABEL_AT_TOP;
+import static smetana.core.Macro.LEFT_IX;
 import static smetana.core.Macro.LOCAL;
 import static smetana.core.Macro.LT_HTML;
 import static smetana.core.Macro.LT_NONE;
@@ -92,12 +93,15 @@ import static smetana.core.Macro.NOCLUST;
 import static smetana.core.Macro.NODENAME_ESC;
 import static smetana.core.Macro.PAD;
 import static smetana.core.Macro.POINTS;
+import static smetana.core.Macro.RANKDIR_LR;
 import static smetana.core.Macro.RANKDIR_TB;
+import static smetana.core.Macro.RIGHT_IX;
 import static smetana.core.Macro.TOP_IX;
 import static smetana.core.Macro.UNSUPPORTED;
 import static smetana.core.Macro.agfindedgeattr;
 import static smetana.core.Macro.agfindgraphattr;
 import static smetana.core.Macro.agfindnodeattr;
+import static smetana.core.Macro.streq;
 import static smetana.core.debug.SmetanaDebug.ENTERING;
 import static smetana.core.debug.SmetanaDebug.LEAVING;
 
@@ -254,12 +258,12 @@ UNSUPPORTED("abkxekvux4nramryfw2e8vcru"); // 	putenv(buf);
      */
     rankdir = RANKDIR_TB;
     if ((p = agget(zz, g, new CString("rankdir")))!=null) {
-UNSUPPORTED("sp7zcza7w0dn7t66aj8rf4wn"); // 	if ((*(p)==*("LR")&&!strcmp(p,"LR")))
-UNSUPPORTED("bjd2vk1jssqehllmgnqv601qd"); // 	    rankdir = 1;
-UNSUPPORTED("ry8itlrmblmuegdwk1iu1t0x"); // 	else if ((*(p)==*("BT")&&!strcmp(p,"BT")))
-UNSUPPORTED("5hno0xn18yt443qg815w3c2s2"); // 	    rankdir = 2;
-UNSUPPORTED("aal39mi047mhafrsrxoutcffk"); // 	else if ((*(p)==*("RL")&&!strcmp(p,"RL")))
-UNSUPPORTED("7vlda224wrgcdhr0ts3mndh5q"); // 	    rankdir = 3;
+    	if (streq(p, "LR"))
+    	    rankdir = RANKDIR_LR;
+//UNSUPPORTED("ry8itlrmblmuegdwk1iu1t0x"); // 	else if ((*(p)==*("BT")&&!strcmp(p,"BT")))
+//UNSUPPORTED("5hno0xn18yt443qg815w3c2s2"); // 	    rankdir = 2;
+//UNSUPPORTED("aal39mi047mhafrsrxoutcffk"); // 	else if ((*(p)==*("RL")&&!strcmp(p,"RL")))
+//UNSUPPORTED("7vlda224wrgcdhr0ts3mndh5q"); // 	    rankdir = 3;
     }
     if (use_rankdir)
 	GD_rankdir2(g, (rankdir << 2) | rankdir);
@@ -487,13 +491,12 @@ UNSUPPORTED("evu9w6pw3kkh7z8w7t4rx4qxc"); // 		pos_flag |= 4;
 	    GD_border(sg)[pos_ix].___(dimen);
 	} else {
 	    /* when rotated, the labels will be restored to TOP or BOTTOM  */
-UNSUPPORTED("cabz6xbjdvz5vmjulzrhlxh48"); // 	    if ((((Agraphinfo_t*)(((Agobj_t*)(sg))->data))->label_pos) & 1)
-UNSUPPORTED("dx7v6663o9o0x1j5r8z4wumxb"); // 		pos_ix = 1;
-UNSUPPORTED("5c97f6vfxny0zz35l2bu4maox"); // 	    else
-UNSUPPORTED("97dtv6k7yw1qvfzgs65cj2v0l"); // 		pos_ix = 3;
-UNSUPPORTED("21iuie8b11x65je8vampstgt6"); // 	    (((Agraphinfo_t*)(((Agobj_t*)(sg))->data))->border)[pos_ix].x = dimen.y;
-UNSUPPORTED("8cawl3kik853hkvgm39y34urs"); // 	    (((Agraphinfo_t*)(((Agobj_t*)(sg))->data))->border)[pos_ix].y = dimen.x;
-	}
+	    if ((GD_label_pos(sg) & LABEL_AT_TOP)!=0)
+		pos_ix = RIGHT_IX;
+	    else
+		pos_ix = LEFT_IX;
+	    GD_border(sg)[pos_ix].x = dimen.y;
+	    GD_border(sg)[pos_ix].y = dimen.x;	}
     }
 } finally {
 LEAVING("5vks1zdadu5vjinaivs0j2bkb","do_graph_label");
