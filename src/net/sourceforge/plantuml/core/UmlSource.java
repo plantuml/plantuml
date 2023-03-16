@@ -159,6 +159,12 @@ final public class UmlSource {
 //		return Collections.unmodifiableCollection(rawSource).iterator();
 //	}
 
+	
+	@Deprecated()
+	public String getPlainString() {
+		return getPlainString("\n");
+	}
+
 	/**
 	 * Return the source as a single String.
 	 *

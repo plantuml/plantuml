@@ -62,13 +62,12 @@ public class OptionPrint {
 	static public void printTestDot() throws InterruptedException {
 		final List<String> result = new ArrayList<>();
 		final int errorCode = GraphvizUtils.addDotStatus(result, false);
-		for (String s : result) {
-			if (errorCode == 0) {
+		for (String s : result)
+			if (errorCode == 0)
 				System.out.println(s);
-			} else {
+			else
 				System.err.println(s);
-			}
-		}
+
 		exit(errorCode);
 	}
 
@@ -169,35 +168,34 @@ public class OptionPrint {
 	}
 
 	static private void exit(int errorCode) throws InterruptedException {
-		if (OptionFlags.getInstance().isSystemExit() || errorCode != 0) {
+		if (OptionFlags.getInstance().isSystemExit() || errorCode != 0)
 			System.exit(errorCode);
-		}
+
 		throw new InterruptedException("exit");
 	}
 
 	public static void printLicense() throws InterruptedException {
-		for (String s : License.getCurrent().getTextFull()) {
+		for (String s : License.getCurrent().getTextFull())
 			System.out.println(s);
-		}
-		exit(0);
+		System.exit(0);
 	}
 
 	public static void printVersion() throws InterruptedException {
 		System.out.println(Version.fullDescription());
 		System.out.println("(" + License.getCurrent() + " source distribution)");
-		for (String v : interestingProperties()) {
+		for (String v : interestingProperties())
 			System.out.println(v);
-		}
-		for (String v : interestingValues()) {
+
+		for (String v : interestingValues())
 			System.out.println(v);
-		}
+
 		System.out.println();
 		final List<String> result = new ArrayList<>();
 		final int errorCode = GraphvizUtils.addDotStatus(result, false);
-		for (String s : result) {
+		for (String s : result)
 			System.out.println(s);
-		}
-		exit(errorCode);
+
+		System.exit(0);
 	}
 
 	public static Collection<String> interestingProperties() {
