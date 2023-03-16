@@ -1,0 +1,48 @@
+name: ci-mit
+'on':
+  create: null
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+    paths-ignore:
+      - '*.md'
+      - docs/**
+  push:
+    branches:
+      - master
+    paths-ignore:
+      - '*.md'
+      - docs/**
+  workflow_dispatch: null
+defaults:
+  run:
+    shell: bash
+jobs:
+  workflow_config:
+    runs-on: ubuntu-latest
+    outputs:
+      do_release: '${{ steps.config.outputs.do_release }}'
+      do_snapshot_release: '${{ steps.config.outputs.do_snapshot_release }}'
+      pom_version: '${{ steps.config.outputs.pom_version }}'
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+      - name: Run pre-processor
+        run: |
+          ls -l
+          java -jar sjpp.jar
+          java -jar sjpp.jar src src-mit __MIT__
+          ls -l
+      - name: Rename build-mit.gradle
+        run: |
+          ls -l *.kts
+          cp build-mit.gradle.kts build.gradle.kts
+          ls -l *.kts
+      - name: Compile
+        run: gradle -q compileJava --no-daemon	  
+      - name: print version
+        run: |
+          ls -l build/libs
+          java -version build/libs/*.jar
