@@ -43,34 +43,34 @@ public enum ExeState {
 	NULL_UNDEFINED, OK, DOES_NOT_EXIST, IS_A_DIRECTORY, NOT_A_FILE, CANNOT_BE_READ;
 
 	public static ExeState checkFile(File dotExe) {
-		if (dotExe == null) {
+		if (dotExe == null)
 			return NULL_UNDEFINED;
-		} else if (dotExe.exists() == false) {
+		else if (dotExe.exists() == false)
 			return DOES_NOT_EXIST;
-		} else if (dotExe.isDirectory()) {
+		else if (dotExe.isDirectory())
 			return IS_A_DIRECTORY;
-		} else if (dotExe.isFile() == false) {
+		else if (dotExe.isFile() == false)
 			return NOT_A_FILE;
-		} else if (dotExe.canRead() == false) {
+		else if (dotExe.canRead() == false)
 			return CANNOT_BE_READ;
-		}
+
 		return OK;
 	}
 
 	public String getTextMessage() {
 		switch (this) {
 		case OK:
-			return "File OK";
+			return "Dot executable OK";
 		case NULL_UNDEFINED:
 			return "No dot executable found";
 		case DOES_NOT_EXIST:
-			return "File does not exist";
+			return "Dot executable does not exist";
 		case IS_A_DIRECTORY:
-			return "It should be an executable, not a directory";
+			return "Dot executable should be an executable, not a directory";
 		case NOT_A_FILE:
-			return "Not a valid file";
+			return "Dot executable is not a valid file";
 		case CANNOT_BE_READ:
-			return "File cannot be read";
+			return "Dot executable cannot be read";
 		}
 		throw new IllegalStateException();
 	}
