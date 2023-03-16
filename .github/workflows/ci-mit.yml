@@ -46,4 +46,4 @@ jobs:
         run: |
           ls -l
           ls -l build/libs
-          java -version build/libs/*.jar
+          java -version build/libs/plantuml-M.YYYY.m-SNAPSHOT.jar
