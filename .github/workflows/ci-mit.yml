@@ -41,8 +41,9 @@ jobs:
           cp build-mit.gradle.kts build.gradle.kts
           ls -l *.kts
       - name: Compile
-        run: gradle -q compileJava --no-daemon	  
+        run: gradle jar --no-daemon	  
       - name: print version
         run: |
+          ls -l
           ls -l build/libs
           java -version build/libs/*.jar
