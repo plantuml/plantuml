@@ -62,6 +62,7 @@ import h.ST_GVC_s;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.abel.CucaNote;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.GroupType;
 import net.sourceforge.plantuml.abel.LeafType;
@@ -79,6 +80,7 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.MinMaxMutable;
 import net.sourceforge.plantuml.klimt.geom.Rankdir;
+import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
@@ -98,6 +100,8 @@ import net.sourceforge.plantuml.svek.GeneralImageBuilder;
 import net.sourceforge.plantuml.svek.GraphvizCrash;
 import net.sourceforge.plantuml.svek.IEntityImage;
 import net.sourceforge.plantuml.svek.SvekNode;
+import net.sourceforge.plantuml.svek.image.EntityImageNoteLink;
+import net.sourceforge.plantuml.utils.Position;
 import smetana.core.CString;
 import smetana.core.Globals;
 import smetana.core.JUtils;
@@ -461,16 +465,32 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 	}
 
 	private TextBlock getLabel(Link link) {
-		final double marginLabel = 1; // startUid.equals(endUid) ? 6 : 1;
 		ISkinParam skinParam = diagram.getSkinParam();
+		final double marginLabel = 1; // startUid.equals(endUid) ? 6 : 1;
 		final Style style = getStyle();
-		final FontConfiguration labelFont = style.getFontConfiguration(skinParam.getIHtmlColorSet());
-		final TextBlock label = link.getLabel().create(labelFont,
-				skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), skinParam);
-		if (TextBlockUtils.isEmpty(label, stringBounder))
-			return label;
 
-		return TextBlockUtils.withMargin(label, marginLabel, marginLabel);
+		final FontConfiguration labelFont = style.getFontConfiguration(skinParam.getIHtmlColorSet());
+		TextBlock labelOnly = link.getLabel().create(labelFont,
+				skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), skinParam);
+
+		final CucaNote note = link.getNote();
+		if (note == null) {
+			if (TextBlockUtils.isEmpty(labelOnly, stringBounder) == false)
+				labelOnly = TextBlockUtils.withMargin(labelOnly, marginLabel, marginLabel);
+			return labelOnly;
+		}
+		final TextBlock noteOnly = new EntityImageNoteLink(note.getDisplay(), note.getColors(), skinParam,
+				link.getStyleBuilder());
+
+		if (note.getPosition() == Position.LEFT)
+			return TextBlockUtils.mergeLR(noteOnly, labelOnly, VerticalAlignment.CENTER);
+		else if (note.getPosition() == Position.RIGHT)
+			return TextBlockUtils.mergeLR(labelOnly, noteOnly, VerticalAlignment.CENTER);
+		else if (note.getPosition() == Position.TOP)
+			return TextBlockUtils.mergeTB(noteOnly, labelOnly, HorizontalAlignment.CENTER);
+		else
+			return TextBlockUtils.mergeTB(labelOnly, noteOnly, HorizontalAlignment.CENTER);
+
 	}
 
 	private TextBlock getQuantifier(Link link, int n) {
