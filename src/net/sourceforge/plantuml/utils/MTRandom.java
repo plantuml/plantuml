@@ -53,33 +53,6 @@ import java.util.Random;
  *         and should <b>not</b> be used for cryptographic systems or in any
  *         other situation where true random numbers are required.
  *         <p>
- *         <!-- Creative Commons License -->
- *         <a href="http://creativecommons.org/licenses/LGPL/2.1/"><img alt=
- *         "CC-GNU LGPL" border="0" src=
- *         "http://creativecommons.org/images/public/cc-LGPL-a.png" /></a><br />
- *         This software is licensed under the
- *         <a href="http://creativecommons.org/licenses/LGPL/2.1/">CC-GNU
- *         LGPL</a>. <!-- /Creative Commons License -->
- * 
- *         <!-- <rdf:RDF xmlns="http://web.resource.org/cc/" xmlns:dc=
- *         "http://purl.org/dc/elements/1.1/" xmlns:rdf=
- *         "http://www.w3.org/1999/02/22-rdf-syntax-ns#">
- * 
- *         <Work rdf:about="">
- *         <license rdf:resource="http://creativecommons.org/licenses/LGPL/2.1/"
- *         /> <dc:type rdf:resource="http://purl.org/dc/dcmitype/Software" />
- *         </Work>
- * 
- *         <License rdf:about="http://creativecommons.org/licenses/LGPL/2.1/">
- *         <permits rdf:resource="http://web.resource.org/cc/Reproduction" />
- *         <permits rdf:resource="http://web.resource.org/cc/Distribution" />
- *         <requires rdf:resource="http://web.resource.org/cc/Notice" />
- *         <permits rdf:resource="http://web.resource.org/cc/DerivativeWorks" />
- *         <requires rdf:resource="http://web.resource.org/cc/ShareAlike" />
- *         <requires rdf:resource="http://web.resource.org/cc/SourceCode" />
- *         </License>
- * 
- *         </rdf:RDF> -->
  * 
  */
 

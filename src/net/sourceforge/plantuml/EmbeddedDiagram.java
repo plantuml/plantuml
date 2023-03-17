@@ -80,8 +80,8 @@ public class EmbeddedDiagram extends AbstractTextBlock implements Line, Atom {
 		if (s.equals(EMBEDDED_START))
 			return "uml";
 
-		if (s.equals(EMBEDDED_START))
-			return "uml";
+		if (s.equals(EMBEDDED_START + "ditaa"))
+			return "ditaa";
 
 		if (s.equals(EMBEDDED_START + "uml"))
 			return "uml";
