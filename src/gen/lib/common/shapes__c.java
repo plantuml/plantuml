@@ -1636,7 +1636,14 @@ UNSUPPORTED("2az12nq89f7txcsfmqdj8tly1"); // 			dimen.y += 2 * (ROUND((marginy)*
 UNSUPPORTED("738mi6h8ef0itznt34ngxe25o"); // 		} else
 UNSUPPORTED("b12tl2a8tebl71ewuz3jms9jv"); // 		    {((dimen).x += 4*4); ((dimen).y += 2*4);};
 	    } else
-		{dimen.x += 4*4; dimen.y += 2*4;};
+		{
+	    	// Modification by Arnaud 18/03/2023
+	    	// The next line is now commented
+	    	//
+	    	// dimen.x += 4*4; dimen.y += 2*4;
+	    	//
+	    	// This is because we don't want to add any margin in Smetana
+    	};
 	}
 	d.___(dimen);
     } else {
@@ -1797,7 +1804,7 @@ UNSUPPORTED("2wv3zfqhq53941rwk4vu9p9th"); // 	info = parse_reclbl(n, flip, NOT(0
     }
     Memory.free(textbuf);
     size_reclbl(zz, n, info);
-    sz.x = POINTS(ND_width(n));;
+    sz.x = POINTS(ND_width(n));
     sz.y = POINTS(ND_height(n));
     if (mapbool(late_string(n, zz.N_fixed, new CString("false")))) {
 UNSUPPORTED("8iu51xbtntpdf5sc00g91djym"); // 	if ((sz.x < info->size.x) || (sz.y < info->size.y)) {

@@ -269,7 +269,7 @@ public class SmetanaForJson {
 
 		for (int i = 0; i < size; i++) {
 			sb.append("<P" + i + ">");
-			sb.append("_dim_" + height + "_" + widthA + "_");
+			sb.append("_dim_" + lineHeights[i] + "_" + widthA + "_");
 			if (i < size - 1)
 				sb.append("|");
 		}
@@ -279,13 +279,15 @@ public class SmetanaForJson {
 
 	private String getDotLabelMap(double widthA, double widthB, double[] lineHeights) {
 		final int size = lineHeights.length;
-		final double height = 0;
+		double height = 0;
+		for (double h : lineHeights)
+			height += h;
 		final StringBuilder sb = new StringBuilder("");
 		sb.append("{_dim_" + height + "_" + widthA + "_|{");
 
 		for (int i = 0; i < size; i++) {
 			sb.append("<P" + i + ">");
-			sb.append("_dim_" + height + "_" + widthB + "_");
+			sb.append("_dim_" + lineHeights[i] + "_" + widthB + "_");
 			if (i < size - 1)
 				sb.append("|");
 		}
