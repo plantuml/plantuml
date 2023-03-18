@@ -76,7 +76,7 @@ import h.ST_textlabel_t;
 import smetana.core.debug.SmetanaDebug;
 
 final public class Macro {
-    // ::remove folder when __HAXE__
+	// ::remove folder when __HAXE__
 
 	public static void UNSURE_ABOUT(String comment) {
 		System.err.println("UNSURE_ABOUT: " + comment);
@@ -1290,19 +1290,16 @@ final public class Macro {
 	}
 
 	public static void hackInitDimensionFromLabel(ST_pointf size, String label) {
-		if (label.matches("_dim_\\d+_\\d+_")) {
-			Pattern p = Pattern.compile("_dim_(\\d+)_(\\d+)_");
-			Matcher m = p.matcher(label);
-			if (m.matches() == false) {
-				throw new IllegalStateException();
-			}
-			int ww = Integer.parseInt(m.group(1));
-			int hh = Integer.parseInt(m.group(2));
+		final Pattern p = Pattern.compile("_dim_([.\\d]+)_([\\d.]+)_");
+		final Matcher m = p.matcher(label);
+		if (m.matches()) {
+			final double ww = Double.parseDouble(m.group(1));
+			final double hh = Double.parseDouble(m.group(2));
 			size.x = ww;
 			size.y = hh;
 			JUtils.LOG2("Hacking dimension to width=" + ww + " height=" + hh);
-//		} else {
-//			throw new IllegalArgumentException(label);
+		} else {
+			JUtils.LOG2("Strange label " + label);
 		}
 	}
 
@@ -1671,7 +1668,8 @@ final public class Macro {
 		return (__ptr__) o.getTheField(ky);
 	}
 
-	public static int _DTCMP(Globals zz, ST_dt_s dt, __ptr__ k1, __ptr__ k2, final ST_dtdisc_s dc, CFunction cmpf, int sz) {
+	public static int _DTCMP(Globals zz, ST_dt_s dt, __ptr__ k1, __ptr__ k2, final ST_dtdisc_s dc, CFunction cmpf,
+			int sz) {
 		return cmpf != null ? (Integer) ((CFunction) cmpf).exe(zz, dt, k1, k2, dc)
 				: (sz <= 0 ? strcmp((CString) k1, (CString) k2) : UNSUPPORTED_INT("memcmp(ok,nk,sz)"));
 	}

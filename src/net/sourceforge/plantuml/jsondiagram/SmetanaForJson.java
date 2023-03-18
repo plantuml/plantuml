@@ -127,8 +127,9 @@ public class SmetanaForJson {
 
 	private ST_Agnode_s manageOneNode(Globals zz, JsonValue current, List<Highlighted> highlighted) {
 		final TextBlockJson block = new TextBlockJson(skinParam, current, highlighted);
-		final ST_Agnode_s node1 = createNode(zz, block.calculateDimension(stringBounder), block.size(),
-				current.isArray(), (int) block.getWidthColA(stringBounder), (int) block.getWidthColB(stringBounder));
+		final ST_Agnode_s node1 = createNode(zz, block.calculateDimension(stringBounder), current.isArray(),
+				block.getWidthColA(stringBounder), block.getWidthColB(stringBounder),
+				block.getAllHeights(stringBounder));
 		nodes.add(new InternalNode(block, node1));
 		final List<JsonValue> children = block.children();
 		final List<String> keys = block.keys();
@@ -222,16 +223,15 @@ public class SmetanaForJson {
 		agsafeset(zz, edge, new CString("arrowhead"), new CString("normal"), new CString(""));
 		agsafeset(zz, edge, new CString("tailport"), new CString("P" + num), new CString(""));
 
-		StringBuilder sb = new StringBuilder();
-		sb.append("N" + a0.UID + " -> N" + a1.UID + " [tailport=\"P" + num + "\", arrowsize=.75]");
-		if (NUM == 0 && printFirst)
-			System.err.println(sb);
+//		StringBuilder sb = new StringBuilder();
+//		sb.append("N" + a0.UID + " -> N" + a1.UID + " [tailport=\"P" + num + "\", arrowsize=.75]");
+//		System.err.println(sb);
 
 		return edge;
 	}
 
-	private ST_Agnode_s createNode(Globals zz, XDimension2D dim, int size, boolean isArray, int colAwidth,
-			int colBwidth) {
+	private ST_Agnode_s createNode(Globals zz, XDimension2D dim, boolean isArray, double colAwidth, double colBwidth,
+			double lineHeights[]) {
 		final String width = "" + (dim.getWidth() / 72);
 		final String height = "" + (dim.getHeight() / 72);
 
@@ -243,25 +243,45 @@ public class SmetanaForJson {
 		agsafeset(zz, node, new CString("height"), new CString("" + width), new CString(""));
 		agsafeset(zz, node, new CString("width"), new CString("" + height), new CString(""));
 
-		final int lineHeight = 0;
-		final String dotLabel = getDotLabel(size, isArray, colAwidth - 8, colBwidth - 8, lineHeight);
+		final int size = lineHeights.length;
+		final String dotLabel;
+		if (isArray)
+			dotLabel = getDotLabelArray(colAwidth - 8, colBwidth - 8, lineHeights);
+		else
+			dotLabel = getDotLabelMap(colAwidth - 8, colBwidth - 8, lineHeights);
+
 		if (size > 0)
 			agsafeset(zz, node, new CString("label"), new CString(dotLabel), new CString(""));
 
-		StringBuilder sb = new StringBuilder();
-		sb.append("N" + node.UID + " [");
-		sb.append("shape=record, height=" + width + ", width=" + height + ", label=\"" + dotLabel.replace('x', '.')
-				+ "\"]");
-		if (NUM == 0 && printFirst)
-			System.err.println(sb);
+//		StringBuilder sb = new StringBuilder();
+//		sb.append("N" + node.UID + " [");
+//		sb.append("shape=record, height=" + width + ", width=" + height + ", label=\"" + dotLabel.replace('x', '.')
+//				+ "\"]");
+//		System.err.println(sb);
 
 		return node;
 	}
 
-	private String getDotLabel(int size, boolean isArray, int widthA, int widthB, int height) {
+	private String getDotLabelArray(double widthA, double widthB, double[] lineHeights) {
+		final int size = lineHeights.length;
+		final double height = 0;
 		final StringBuilder sb = new StringBuilder("");
-		if (isArray == false)
-			sb.append("{_dim_" + height + "_" + widthA + "_|{");
+
+		for (int i = 0; i < size; i++) {
+			sb.append("<P" + i + ">");
+			sb.append("_dim_" + height + "_" + widthA + "_");
+			if (i < size - 1)
+				sb.append("|");
+		}
+
+		return sb.toString();
+	}
+
+	private String getDotLabelMap(double widthA, double widthB, double[] lineHeights) {
+		final int size = lineHeights.length;
+		final double height = 0;
+		final StringBuilder sb = new StringBuilder("");
+		sb.append("{_dim_" + height + "_" + widthA + "_|{");
 
 		for (int i = 0; i < size; i++) {
 			sb.append("<P" + i + ">");
@@ -269,8 +289,7 @@ public class SmetanaForJson {
 			if (i < size - 1)
 				sb.append("|");
 		}
-		if (isArray == false)
-			sb.append("}}");
+		sb.append("}}");
 
 		return sb.toString();
 	}

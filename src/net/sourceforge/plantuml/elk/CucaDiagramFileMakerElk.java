@@ -48,6 +48,7 @@ import java.util.Map.Entry;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.abel.CucaNote;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.GroupType;
 import net.sourceforge.plantuml.abel.LeafType;
@@ -108,6 +109,7 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.klimt.geom.RectangleArea;
+import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
@@ -121,6 +123,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.Cluster;
 import net.sourceforge.plantuml.svek.ClusterDecoration;
@@ -130,6 +133,8 @@ import net.sourceforge.plantuml.svek.GeneralImageBuilder;
 import net.sourceforge.plantuml.svek.GraphvizCrash;
 import net.sourceforge.plantuml.svek.IEntityImage;
 import net.sourceforge.plantuml.svek.PackageStyle;
+import net.sourceforge.plantuml.svek.image.EntityImageNoteLink;
+import net.sourceforge.plantuml.utils.Position;
 
 /*
  * Some notes:
@@ -160,18 +165,40 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 
 	}
 
-	private TextBlock getLabel(Link link) {
-		if (Display.isNull(link.getLabel())) {
-			return null;
-		}
-		final ISkinParam skinParam = diagram.getSkinParam();
-		final FontConfiguration labelFont = FontConfiguration.create(skinParam, FontParam.ARROW, null);
-		final TextBlock label = link.getLabel().create(labelFont,
-				skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), skinParam);
-		if (TextBlockUtils.isEmpty(label, stringBounder))
-			return null;
+	// Duplicate from CucaDiagramFileMakerSmetana
+	private Style getStyle() {
+		return StyleSignatureBasic
+				.of(SName.root, SName.element, diagram.getUmlDiagramType().getStyleName(), SName.arrow)
+				.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
+	}
 
-		return label;
+	private TextBlock getLabel(Link link) {
+		ISkinParam skinParam = diagram.getSkinParam();
+		final double marginLabel = 1; // startUid.equals(endUid) ? 6 : 1;
+		final Style style = getStyle();
+
+		final FontConfiguration labelFont = style.getFontConfiguration(skinParam.getIHtmlColorSet());
+		TextBlock labelOnly = link.getLabel().create(labelFont,
+				skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), skinParam);
+
+		final CucaNote note = link.getNote();
+		if (note == null) {
+			if (TextBlockUtils.isEmpty(labelOnly, stringBounder) == false)
+				labelOnly = TextBlockUtils.withMargin(labelOnly, marginLabel, marginLabel);
+			return labelOnly;
+		}
+		final TextBlock noteOnly = new EntityImageNoteLink(note.getDisplay(), note.getColors(), skinParam,
+				link.getStyleBuilder());
+
+		if (note.getPosition() == Position.LEFT)
+			return TextBlockUtils.mergeLR(noteOnly, labelOnly, VerticalAlignment.CENTER);
+		else if (note.getPosition() == Position.RIGHT)
+			return TextBlockUtils.mergeLR(labelOnly, noteOnly, VerticalAlignment.CENTER);
+		else if (note.getPosition() == Position.TOP)
+			return TextBlockUtils.mergeTB(noteOnly, labelOnly, HorizontalAlignment.CENTER);
+		else
+			return TextBlockUtils.mergeTB(labelOnly, noteOnly, HorizontalAlignment.CENTER);
+
 	}
 
 	private TextBlock getQuantifier(Link link, int n) {

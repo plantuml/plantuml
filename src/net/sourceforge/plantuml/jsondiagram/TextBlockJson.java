@@ -70,7 +70,7 @@ import net.sourceforge.plantuml.yaml.Highlighted;
 
 //See TextBlockMap
 public class TextBlockJson extends AbstractTextBlock {
-    // ::remove folder when __HAXE__
+	// ::remove folder when __HAXE__
 
 	private final List<Line> lines = new ArrayList<>();
 
@@ -321,6 +321,14 @@ public class TextBlockJson extends AbstractTextBlock {
 			height += line.getHeightOfRow(stringBounder);
 
 		return height;
+	}
+
+	public double[] getAllHeights(StringBounder stringBounder) {
+		final double result[] = new double[lines.size()];
+		for (int i = 0; i < lines.size(); i++)
+			result[i] = lines.get(i).getHeightOfRow(stringBounder);
+
+		return result;
 	}
 
 	private TextBlock getTextBlock(Style style, String key) {
