@@ -74,6 +74,7 @@ import net.sourceforge.plantuml.flowdiagram.FlowDiagramFactory;
 import net.sourceforge.plantuml.font.PSystemListFontsFactory;
 import net.sourceforge.plantuml.gitlog.GitDiagramFactory;
 import net.sourceforge.plantuml.hcl.HclDiagramFactory;
+import net.sourceforge.plantuml.help.HelpFactory;
 import net.sourceforge.plantuml.jcckit.PSystemJcckitFactory;
 import net.sourceforge.plantuml.jsondiagram.JsonDiagramFactory;
 import net.sourceforge.plantuml.klimt.creole.legacy.PSystemCreoleFactory;
@@ -247,6 +248,7 @@ public class PSystemBuilder {
 		factories.add(new TimingDiagramFactory());
 
 		// ::comment when __CORE__
+		factories.add(new HelpFactory());
 		factories.add(new WireDiagramFactory());
 		// ::done
 
