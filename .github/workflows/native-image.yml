@@ -1,0 +1,50 @@
+name: Native Image
+
+on:
+  push:
+    branches:
+      - native-image
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  workflow_config:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+
+      - name: Get jar
+        run: |
+          wget "https://github.com/plantuml/plantuml/releases/download/${PLANTUML_VERSION}/plantuml-${PLANTUML_VERSION#?}.jar" -O plantuml.jar
+        env:
+          PLANTUML_VERSION: "v1.2023.4"
+
+      - name: Install system requirements
+        run: sudo apt install build-essential libz-dev zlib1g-dev
+
+      - name: Get GraalVM
+        run: |
+          wget "https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-${GRAALVM_VERSION}/graalvm-ce-java17-linux-amd64-${GRAALVM_VERSION}.tar.gz" -O graalvm-ce.tar.gz
+          mkdir graalvm-ce
+          tar xvzf graalvm-ce.tar.gz -C graalvm-ce --strip-components 1
+          ./graalvm-ce/bin/gu install native-image
+        env:
+          GRAALVM_VERSION: "22.3.1"
+
+      - name: Generate GraalVM configuration
+        run: |
+          mkdir native-image-config-dir
+          echo 'Bob->Alice: Hello' | ./graalvm-ce/bin/java -agentlib:native-image-agent=config-output-dir=./native-image-config-dir -jar plantuml.jar -tpng -pipe > out.png
+
+      - name: Generate native image
+        run: |
+          ./graalvm-ce/bin/native-image -H:ConfigurationFileDirectories=./native-image-config-dir --no-fallback --report-unsupported-elements-at-runtime -jar plantuml.jar
+
+      - name: Upload native-image as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: linux-native-image
+          path: plantuml
