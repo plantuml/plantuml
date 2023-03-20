@@ -357,7 +357,7 @@ public class GraphMLExporter implements IGenericDiagramVisitor, XmlDiagramTransf
 
 			// add graph element
 			graph = document.createElement("graph");
-			graph.setAttribute("edgedefault", "undirected");
+			graph.setAttribute("edgedefault", "directed");
 			graphml.appendChild(graph);
 
 			// add dom Nodes

@@ -1,4 +1,3 @@
-
 /* ========================================================================
  * PlantUML : a free UML diagram generator
  * ========================================================================
@@ -35,11 +34,11 @@
  */
 package nonreg.graphml.classdiagram;
 
-import java.io.IOException;
+import nonreg.graphml.GraphmlTest;
 
 import org.junit.jupiter.api.Test;
 
-import nonreg.graphml.GraphmlTest;
+import java.io.IOException;
 
 /*
 
@@ -47,11 +46,13 @@ Test diagram MUST be put between triple quotes
 
 """
 @startuml
+' Association with multiplicity and name
 Class1 "1" -- "*" Class2: "relation"
 @enduml
 """
 
 Expected result MUST be put between triple brackets
+
 
 {{{
 <?xml version="1.0" encoding="UTF-8"?><graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
@@ -69,7 +70,7 @@ Expected result MUST be put between triple brackets
 <key attr.name="sourceFile" attr.type="string" for="node" id="d19"/>
 <key attr.name="pumlId" attr.type="string" for="node" id="d20"/>
 <key attr.name="pumlPath" attr.type="string" for="node" id="d21"/>
-<graph edgedefault="undirected">
+<graph edgedefault="directed">
 <node id="1">
 <data key="d1">Diagram</data>
 <data key="d2">DIAGRAM</data>
@@ -100,9 +101,9 @@ Expected result MUST be put between triple brackets
 <data key="d3">NORMAL</data>
 <data key="d4">NONE</data>
 <data key="d5">NONE</data>
-<data key="d9">NONE_OR_SEVERAL</data>
 <data key="d7">1</data>
 <data key="d8">*</data>
+<data key="d9">NONE_OR_SEVERAL</data>
 <data key="d20">cl0002_LNK4_cl0003</data>
 <data key="d21">./nonreg/graphml/classdiagram/GML0028_Test/0/cl0002_LNK4_cl0003</data>
 </node>
@@ -123,6 +124,7 @@ Expected result MUST be put between triple brackets
 </edge>
 </graph>
 </graphml>
+
 }}}
 
  */

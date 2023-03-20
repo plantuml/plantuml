@@ -1,4 +1,3 @@
-
 /* ========================================================================
  * PlantUML : a free UML diagram generator
  * ========================================================================
@@ -43,17 +42,17 @@ import java.io.IOException;
 
 /*
 
-Verify proper transfer of cardinality and name of association
-
 Test diagram MUST be put between triple quotes
 
 """
 @startuml
+' non UML Relation
 Class07 "1" .. "*" Class08: has
 @enduml
 """
 
 Expected result MUST be put between triple brackets
+
 
 {{{
 <?xml version="1.0" encoding="UTF-8"?><graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
@@ -71,7 +70,7 @@ Expected result MUST be put between triple brackets
 <key attr.name="sourceFile" attr.type="string" for="node" id="d19"/>
 <key attr.name="pumlId" attr.type="string" for="node" id="d20"/>
 <key attr.name="pumlPath" attr.type="string" for="node" id="d21"/>
-<graph edgedefault="undirected">
+<graph edgedefault="directed">
 <node id="1">
 <data key="d1">Diagram</data>
 <data key="d2">DIAGRAM</data>
@@ -104,9 +103,9 @@ Expected result MUST be put between triple brackets
 <data key="d3">DASHED</data>
 <data key="d4">NONE</data>
 <data key="d5">NONE</data>
-<data key="d9">NONE_OR_SEVERAL</data>
 <data key="d7">1</data>
 <data key="d8">*</data>
+<data key="d9">NONE_OR_SEVERAL</data>
 </node>
 <edge id="1" source="2" target="4">
 <data key="d13">IS_SOURCE</data>
@@ -125,6 +124,7 @@ Expected result MUST be put between triple brackets
 </edge>
 </graph>
 </graphml>
+
 }}}
 
  */
