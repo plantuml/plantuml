@@ -117,7 +117,6 @@ Expected result MUST be put between triple brackets
 <edge id="4" source="1" target="5">
 <data key="d13">DIAGRAM_CONTAINS</data>
 </edge>
-
 </graph>
 </graphml>
 }}}
@@ -127,7 +126,7 @@ public class GML0001b_Test extends GraphmlTest {
 
 	@Test
 	void testSimple() throws IOException, InterruptedException {
-		checkXmlAndDescription("(4 entities)");
+		checkXml();
 	}
 
 }

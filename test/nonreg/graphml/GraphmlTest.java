@@ -43,7 +43,6 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -60,8 +59,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import net.sourceforge.plantuml.utils.Log;
-
 import org.junit.jupiter.api.AfterEach;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -77,26 +74,27 @@ import net.sourceforge.plantuml.SourceFileReader;
 public class GraphmlTest {
 
 	@AfterEach
-	public  void cleanupTempFiles() {
-		getTempPumlFile().toFile().delete();
-		getTempGraphmlFile().toFile().delete();
+	public void cleanupTempFiles() {
+		assertTrue(getTempPlantUMLFile().toFile().delete());
+		assertTrue(getTempGraphmlFile().toFile().delete());
 	}
+
 	private static final String TRIPLE_QUOTE = "\"\"\"";
 
-	protected void checkXmlAndDescription(final String expectedDescription)
-			throws IOException, UnsupportedEncodingException , InterruptedException{
-		final String actualResult = runPlantUML(expectedDescription);
+	protected void checkXml()
+					throws IOException, InterruptedException {
+		final String actualResult = runPlantUML();
 		final String xmlExpected = readStringFromSourceFile(getDiagramFile(), "{{{", "}}}");
 
-		if (comparableXML(actualResult).equals(comparableXML(xmlExpected)) == false) {
+		if (!comparableXML(actualResult).equals(comparableXML(xmlExpected))) {
 			assertEquals(xmlExpected, actualResult, "Generated GraphML is not ok");
 		}
 	}
 
-	// for a simple comparision of the XML we create one line strings of each element in the XML file,
+	// for a simple comparison of the XML we create one line strings of each element in the XML file,
 	// sort them and append them into a single string ...
 	// should be good enough to detect when attributes show up at the wrong element
-	private String comparableXML(String xmlString){
+	private String comparableXML(String xmlString) {
 		try {
 
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -118,23 +116,18 @@ public class GraphmlTest {
 							.collect(Collectors.toList());
 
 			StringBuilder builder = new StringBuilder();
-			for(String xml : sortedXmlData){
+			for (String xml : sortedXmlData) {
 				builder.append(xml);
 			}
 
 			return builder.toString();
-		} catch (ParserConfigurationException e) {
-			new RuntimeException(e);
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		} catch (SAXException e) {
+		} catch (ParserConfigurationException | IOException | SAXException e) {
 			throw new RuntimeException(e);
 		}
-		return null;
 	}
 
 	// collect info from all elements of the name given by elementName
-	private List<String> collectElementStrings(Document doc, String elementName){
+	private List<String> collectElementStrings(Document doc, String elementName) {
 
 		List<String> elems = new ArrayList<>();
 		NodeList nodes = doc.getElementsByTagName(elementName);
@@ -146,7 +139,7 @@ public class GraphmlTest {
 	}
 
 	// aggregate info of a single node: name, attributes and values and data nodes ...
-	private String getNodeString(Node node){
+	private String getNodeString(Node node) {
 
 		StringBuilder builder = new StringBuilder();
 		builder.append(node.getNodeName());
@@ -157,7 +150,7 @@ public class GraphmlTest {
 		return builder.toString();
 	}
 
-	private String getAttributeString(Node node){
+	private String getAttributeString(Node node) {
 		StringBuilder builder = new StringBuilder();
 		SortedMap<String, String> attrMap = getAttributeMap(node);
 		addMapContents(attrMap, builder);
@@ -165,7 +158,7 @@ public class GraphmlTest {
 	}
 
 	// process "data" child nodes of XML
-	private String getDataString(Node node){
+	private String getDataString(Node node) {
 		StringBuilder builder = new StringBuilder();
 		SortedMap<String, String> dataMap = getDataMap(node);
 		addMapContents(dataMap, builder);
@@ -184,7 +177,8 @@ public class GraphmlTest {
 		}
 		return attributeMap;
 	}
-	private SortedMap<String,String> getDataMap(Node node) {
+
+	private SortedMap<String, String> getDataMap(Node node) {
 
 		SortedMap<String, String> dataEntryMap = new TreeMap<>();
 		if (node instanceof Element) {
@@ -200,14 +194,14 @@ public class GraphmlTest {
 		return dataEntryMap;
 	}
 
-		private void addMapContents(SortedMap<String , String> aMap, StringBuilder builder) {
+	private void addMapContents(SortedMap<String, String> aMap, StringBuilder builder) {
 
-			for (Entry<String, String> entry : aMap.entrySet()) {
-				builder
+		for (Entry<String, String> entry : aMap.entrySet()) {
+			builder
 							.append(entry.getKey())
 							.append(entry.getValue());
-			}
 		}
+	}
 
 	private String getLocalFolder() {
 		return "test/" + getPackageName().replace(".", "/");
@@ -221,7 +215,7 @@ public class GraphmlTest {
 		return Paths.get(getLocalFolder(), getClass().getSimpleName() + ".java");
 	}
 
-	private Path getTempPumlFile() {
+	private Path getTempPlantUMLFile() {
 		return Paths.get(getLocalFolder(), getClass().getSimpleName() + ".puml");
 	}
 
@@ -229,13 +223,13 @@ public class GraphmlTest {
 		return Paths.get(getLocalFolder(), getClass().getSimpleName() + ".graphml");
 	}
 
-	private String runPlantUML(String expectedDescription) throws IOException, UnsupportedEncodingException, InterruptedException {
+	private String runPlantUML() throws IOException, InterruptedException {
 		final String diagramText = readStringFromSourceFile(getDiagramFile(), TRIPLE_QUOTE, TRIPLE_QUOTE);
 
-		// i'd like to pass the reference to the original source file into the processing
+		// I'd like to pass the reference to the original source file into the processing
 		// did not find an easy way to add the suggestedFile into the processing chain
 		// ==> use workaround to create a temp puml file and call similar to main processing
-		final Path tmpTestFile = getTempPumlFile().toAbsolutePath();
+		final Path tmpTestFile = getTempPlantUMLFile().toAbsolutePath();
 		final Path rootDir = Paths.get("test").toAbsolutePath();
 
 		final FileOutputStream tmpTestFileOutStream = new FileOutputStream(tmpTestFile.toString());
@@ -245,27 +239,18 @@ public class GraphmlTest {
 		// Essential activities when calling graphML export from command line
 		// Reverse Engineered from Run.java
 
-		String[] args = new String[] {"-tgraphml", "-graphml-root-dir", rootDir.toString() , tmpTestFile.toString() };
+		String[] args = new String[]{"-tgraphml", "-graphml-root-dir", rootDir.toString(), tmpTestFile.toString()};
 		final Option option = new Option(args);
-		final File outputDir = null;
 		final File f = tmpTestFile.toFile();
-		SourceFileReader sourceFileReader = new SourceFileReader(option.getDefaultDefines(f), f, outputDir, option.getConfig(),
+		SourceFileReader sourceFileReader = new SourceFileReader(option.getDefaultDefines(f), f, null, option.getConfig(),
 						option.getCharset(), option.getFileFormatOption());
 		sourceFileReader.setCheckMetadata(option.isCheckMetadata());
 		final List<GeneratedImage> result = sourceFileReader.getGeneratedImages();
 		// Assume that we always have one image per test case
-		String descriptionWithFileName = result.get(0).getDescription();
-		String description = stripFileNameFromDescription(descriptionWithFileName);
-		assertEquals(expectedDescription, description, "Bad description");
+		int status = result.get(0).getStatus();
+		assertEquals(0, status, "Bad status");
 
-
-		final Path tmpGraphmlFile = getTempGraphmlFile();
-		final String xml = String.join("\n", Files.readAllLines(Paths.get(tmpGraphmlFile.toString())));
-		return xml;
-	}
-
-	private String stripFileNameFromDescription(String description) {
-		return description.substring(description.indexOf(']')+2); // +2 due to space after ']'
+		return String.join("\n", Files.readAllLines(Paths.get(getTempGraphmlFile().toString())));
 	}
 
 	private String readStringFromSourceFile(Path path, String startMarker, String endMarker) throws IOException {

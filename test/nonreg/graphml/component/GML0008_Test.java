@@ -126,7 +126,7 @@ public class GML0008_Test extends GraphmlTest {
 
 	@Test
 	void testSimple() throws IOException, InterruptedException {
-		checkXmlAndDescription("(2 entities)");
+		checkXml();
 	}
 
 }
