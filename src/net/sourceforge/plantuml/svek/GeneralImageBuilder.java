@@ -389,7 +389,7 @@ public final class GeneralImageBuilder {
 		return style.value(PName.BackGroundColor).asColor(dotData.getSkinParam().getIHtmlColorSet());
 	}
 
-	public IEntityImage buildImage(BaseFile basefile, String dotStrings[]) {
+	public IEntityImage buildImage(BaseFile basefile, String dotStrings[], boolean fileFormatOptionIsDebugSvek) {
 		// ::comment when __CORE__
 		if (dotData.isDegeneratedWithFewEntities(0))
 			return new EntityImageSimpleEmpty(dotData.getSkinParam().getBackgroundColor());
@@ -446,7 +446,7 @@ public final class GeneralImageBuilder {
 		if (dotStringFactory.illegalDotExe())
 			return error(dotStringFactory.getDotExe());
 
-		if (basefile == null && isSvekTrace()
+		if (basefile == null && (fileFormatOptionIsDebugSvek || isSvekTrace())
 				&& (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE
 						|| SecurityUtils.getSecurityProfile() == SecurityProfile.LEGACY
 						|| SecurityUtils.getSecurityProfile() == SecurityProfile.SANDBOX))

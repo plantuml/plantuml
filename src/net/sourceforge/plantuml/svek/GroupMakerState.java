@@ -133,7 +133,7 @@ public final class GroupMakerState {
 			return new EntityImageState(group, diagram.getSkinParam());
 
 		if (group.getGroupType() == GroupType.CONCURRENT_STATE)
-			return createGeneralImageBuilder(group.leafs(), skinParam).buildImage(null, new String[0]);
+			return createGeneralImageBuilder(group.leafs(), skinParam).buildImage(null, new String[0], false);
 
 		if (group.getGroupType() != GroupType.STATE)
 			throw new UnsupportedOperationException(group.getGroupType().toString());
@@ -153,13 +153,14 @@ public final class GroupMakerState {
 		final IEntityImage image;
 		if (containsSomeConcurrentStates()) {
 			final List<IEntityImage> inners = new ArrayList<>();
-			inners.add(createGeneralImageBuilder(filter(group.leafs()), skinParam).buildImage(null, new String[0]));
+			inners.add(
+					createGeneralImageBuilder(filter(group.leafs()), skinParam).buildImage(null, new String[0], false));
 			for (Entity inner : group.leafs())
 				if (inner.getLeafType() == LeafType.STATE_CONCURRENT)
 					inners.add(inner.getSvekImage());
 			image = new ConcurrentStates(inners, group.getConcurrentSeparator(), skinParam, group.getStereotype());
 		} else {
-			image = createGeneralImageBuilder(filter(group.leafs()), skinParam).buildImage(null, new String[0]);
+			image = createGeneralImageBuilder(filter(group.leafs()), skinParam).buildImage(null, new String[0], false);
 		}
 
 		final HColor bodyColor = styleBody.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());

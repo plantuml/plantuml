@@ -102,10 +102,10 @@ public final class CucaDiagramFileMakerSvek implements CucaDiagramFileMaker {
 		if (fileFormatOption.isDebugSvek() && os instanceof NamedOutputStream)
 			basefile = ((NamedOutputStream) os).getBasefile();
 
-		TextBlock result = svek2.buildImage(basefile, diagram.getDotStringSkek());
+		TextBlock result = svek2.buildImage(basefile, diagram.getDotStringSkek(), fileFormatOption.isDebugSvek());
 		if (result instanceof GraphvizCrash) {
 			svek2 = createDotDataImageBuilder(DotMode.NO_LEFT_RIGHT_AND_XLABEL, stringBounder);
-			result = svek2.buildImage(basefile, diagram.getDotStringSkek());
+			result = svek2.buildImage(basefile, diagram.getDotStringSkek(), fileFormatOption.isDebugSvek());
 		}
 		// TODO There is something strange with the left margin of mainframe, I think
 		// because AnnotatedWorker is used here

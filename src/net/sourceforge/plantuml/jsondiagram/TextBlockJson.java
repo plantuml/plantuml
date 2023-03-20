@@ -72,6 +72,9 @@ import net.sourceforge.plantuml.yaml.Highlighted;
 public class TextBlockJson extends AbstractTextBlock {
 	// ::remove folder when __HAXE__
 
+	private static final double MIN_WIDTH = 30;
+	private static final double MIN_HEIGHT = 15;
+
 	private final List<Line> lines = new ArrayList<>();
 
 	private final ISkinParam skinParam;
@@ -232,8 +235,9 @@ public class TextBlockJson extends AbstractTextBlock {
 	}
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-		return new XDimension2D(getWidthColA(stringBounder) + getWidthColB(stringBounder),
-				getTotalHeight(stringBounder));
+		final double width = getWidthColA(stringBounder) + getWidthColB(stringBounder);
+		final double height = getTotalHeight(stringBounder);
+		return new XDimension2D(width, height);
 	}
 
 	public double getWidthColA(StringBounder stringBounder) {
@@ -270,9 +274,9 @@ public class TextBlockJson extends AbstractTextBlock {
 			y += heightOfRow;
 		}
 		if (y == 0)
-			y = 15;
+			y = MIN_HEIGHT;
 		if (trueWidth == 0)
-			trueWidth = 30;
+			trueWidth = MIN_WIDTH;
 
 		final double round = styleNode.value(PName.RoundCorner).asDouble();
 		final URectangle fullNodeRectangle = URectangle.build(trueWidth, y).rounded(round);
@@ -320,6 +324,9 @@ public class TextBlockJson extends AbstractTextBlock {
 		for (Line line : lines)
 			height += line.getHeightOfRow(stringBounder);
 
+		if (height == 0)
+			return MIN_HEIGHT;
+		
 		return height;
 	}
 

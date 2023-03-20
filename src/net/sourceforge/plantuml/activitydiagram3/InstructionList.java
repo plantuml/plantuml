@@ -92,7 +92,13 @@ public class InstructionList extends WithNote implements Instruction, Instructio
 		if (getLast() instanceof InstructionSpot)
 			return true;
 
-		return getLast() instanceof InstructionStop && ((InstructionStop) getLast()).hasNotes() == false;
+		if (getLast() instanceof InstructionStop)
+			return ((InstructionStop) getLast()).hasNotes() == false;
+
+		if (getLast() instanceof InstructionEnd)
+			return ((InstructionEnd) getLast()).hasNotes() == false;
+
+		return false;
 	}
 
 	@Override

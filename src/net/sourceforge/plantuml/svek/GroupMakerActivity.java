@@ -131,7 +131,7 @@ public final class GroupMakerActivity {
 			final Style style = getDefaultStyleDefinitionGroup().getMergedStyle(skinParam.getCurrentStyleBuilder());
 			final double shadowing = style.value(PName.Shadowing).asDouble();
 
-			return new InnerActivity(svek2.buildImage(null, new String[0]), borderColor, backColor, shadowing);
+			return new InnerActivity(svek2.buildImage(null, new String[0], false), borderColor, backColor, shadowing);
 		}
 
 		throw new UnsupportedOperationException(group.getGroupType().toString());

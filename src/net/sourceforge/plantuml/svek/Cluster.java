@@ -75,6 +75,7 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UComment;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.skin.AlignmentParam;
+import net.sourceforge.plantuml.skin.ComponentStyle;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
@@ -281,7 +282,7 @@ public class Cluster implements Moveable {
 		return StyleSignatureBasic.of(SName.root, SName.element, diagramStyleName, SName.group, symbol.getSName());
 	}
 
-	public void drawU(UGraphic ug, UmlDiagramType umlDiagramType, ISkinParam skinParam2unused) {
+	public void drawU(UGraphic ug, UmlDiagramType umlDiagramType) {
 		if (group.isHidden())
 			return;
 
@@ -305,7 +306,11 @@ public class Cluster implements Moveable {
 			borderColor = group.getColors().getColor(ColorType.LINE);
 		else
 			borderColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
-		final double rounded = style.value(PName.RoundCorner).asDouble();
+		double rounded = style.value(PName.RoundCorner).asDouble();
+
+		if (skinParam.strictUmlStyle())
+			rounded = 0;
+
 		final double diagonalCorner = style.value(PName.DiagonalCorner).asDouble();
 
 		ug.startGroup(Collections.singletonMap(UGroupType.ID, "cluster_" + fullName));

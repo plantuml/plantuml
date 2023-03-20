@@ -225,7 +225,7 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 				cluster.setTitlePosition(new XPoint2D(x, Math.min(upperRight.getY(), lowerLeft.getY())));
 			}
 			JUtils.LOG2("cluster=" + cluster);
-			cluster.drawU(ug, diagram.getUmlDiagramType(), diagram.getSkinParam());
+			cluster.drawU(ug, diagram.getUmlDiagramType());
 			// ug.apply(new UTranslate(llx, lly)).apply(HColors.BLUE).draw(new
 			// URectangle(urx - llx, ury - lly));
 		} catch (Exception e) {
