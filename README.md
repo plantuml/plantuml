@@ -1,6 +1,7 @@
 PlantUML
 ========
 
+<a href="https://discord.gg/sXhzexAQGh"><img src="https://img.shields.io/discord/1083727021328306236?color=5865F2&logo=discord&logoColor=white" alt="Discord server" /></a>
 [![GitHub Sponsors](https://img.shields.io/github/sponsors/plantuml?logo=github)](https://github.com/sponsors/plantuml/)
 [![GitHub Org's stars](https://img.shields.io/github/stars/plantuml)](https://github.com/plantuml/plantuml/stargazers/)
 [![GitHub watchers](https://img.shields.io/github/watchers/plantuml/plantuml)](https://github.com/plantuml/plantuml/watchers/)
