@@ -1,4 +1,3 @@
-
 /* ========================================================================
  * PlantUML : a free UML diagram generator
  * ========================================================================
@@ -35,11 +34,11 @@
  */
 package nonreg.graphml.component;
 
-import java.io.IOException;
+import nonreg.graphml.GraphmlTest;
 
 import org.junit.jupiter.api.Test;
 
-import nonreg.graphml.GraphmlTest;
+import java.io.IOException;
 
 /*
 
@@ -47,11 +46,13 @@ Test diagram MUST be put between triple quotes
 
 """
 @startuml
+' Package with interface: provides interface relation
 intf1 - [comp1]
 @enduml
 """
 
 Expected result MUST be put between triple brackets
+
 
 {{{
 <?xml version="1.0" encoding="UTF-8"?><graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
@@ -67,7 +68,7 @@ Expected result MUST be put between triple brackets
 <key attr.name="sourceFile" attr.type="string" for="node" id="d19"/>
 <key attr.name="pumlId" attr.type="string" for="node" id="d20"/>
 <key attr.name="pumlPath" attr.type="string" for="node" id="d21"/>
-<graph edgedefault="undirected">
+<graph edgedefault="directed">
 <node id="1">
 <data key="d1">Diagram</data>
 <data key="d2">DIAGRAM</data>
@@ -118,6 +119,7 @@ Expected result MUST be put between triple brackets
 </edge>
 </graph>
 </graphml>
+
 }}}
 
  */
@@ -125,7 +127,7 @@ public class GML0005_Test extends GraphmlTest {
 
 	@Test
 	void testSimple() throws IOException, InterruptedException {
-		checkXmlAndDescription("(2 entities)");
+		checkXml();
 	}
 
 }

@@ -1,4 +1,3 @@
-
 /* ========================================================================
  * PlantUML : a free UML diagram generator
  * ========================================================================
@@ -43,12 +42,11 @@ import java.io.IOException;
 
 /*
 
-Verify proper method and field visibility and abstract / static analysis
-
 Test diagram MUST be put between triple quotes
 
 """
 @startuml
+' Class with fields: visibility and static mixed
 class MyClass {
 # {static} field1
 {static} # field2
@@ -58,6 +56,7 @@ class MyClass {
 """
 
 Expected result MUST be put between triple brackets
+
 
 {{{
 <?xml version="1.0" encoding="UTF-8"?><graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
@@ -72,7 +71,7 @@ Expected result MUST be put between triple brackets
 <key attr.name="sourceFile" attr.type="string" for="node" id="d19"/>
 <key attr.name="pumlId" attr.type="string" for="node" id="d20"/>
 <key attr.name="pumlPath" attr.type="string" for="node" id="d21"/>
-<graph edgedefault="undirected">
+<graph edgedefault="directed">
 <node id="1">
 <data key="d1">Diagram</data>
 <data key="d2">DIAGRAM</data>
@@ -95,8 +94,8 @@ Expected result MUST be put between triple brackets
 <data key="d0">field1</data>
 <data key="d20">cl0002_f0</data>
 <data key="d21">./nonreg/graphml/classdiagram/GML0035_Test/0/cl0002_f0</data>
-<data key="d10">false</data>
-<data key="d11">true</data>
+<data key="d10">true</data>
+<data key="d11">false</data>
 <data key="d12">PROTECTED</data>
 </node>
 <node id="4">
@@ -105,8 +104,8 @@ Expected result MUST be put between triple brackets
 <data key="d0">field2</data>
 <data key="d20">cl0002_f1</data>
 <data key="d21">./nonreg/graphml/classdiagram/GML0035_Test/0/cl0002_f1</data>
-<data key="d10">false</data>
-<data key="d11">true</data>
+<data key="d10">true</data>
+<data key="d11">false</data>
 <data key="d12">PROTECTED</data>
 </node>
 <node id="5">
@@ -115,8 +114,8 @@ Expected result MUST be put between triple brackets
 <data key="d0">field3</data>
 <data key="d20">cl0002_f2</data>
 <data key="d21">./nonreg/graphml/classdiagram/GML0035_Test/0/cl0002_f2</data>
-<data key="d10">false</data>
-<data key="d11">true</data>
+<data key="d10">true</data>
+<data key="d11">false</data>
 <data key="d12">UNDEFINED</data>
 </node>
 <edge id="1" source="2" target="3">
@@ -142,6 +141,7 @@ Expected result MUST be put between triple brackets
 </edge>
 </graph>
 </graphml>
+
 }}}
 
  */
@@ -149,7 +149,7 @@ public class GML0035_Test extends GraphmlTest {
 
 	@Test
 	void testSimple() throws IOException, InterruptedException {
-		checkXmlAndDescription("(1 entities)");
+		checkXml();
 	}
 
 }

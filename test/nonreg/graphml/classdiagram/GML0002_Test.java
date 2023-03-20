@@ -1,4 +1,3 @@
-
 /* ========================================================================
  * PlantUML : a free UML diagram generator
  * ========================================================================
@@ -48,13 +47,16 @@ Test diagram MUST be put between triple quotes
 """
 @startuml
 class class1 {
-String data
-void method()
+' Basic method and field
+' with types and parameters
+data:String
+method(x:int, y:int):int
 }
 @enduml
 """
 
 Expected result MUST be put between triple brackets
+
 
 {{{
 <?xml version="1.0" encoding="UTF-8"?><graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
@@ -69,7 +71,7 @@ Expected result MUST be put between triple brackets
 <key attr.name="sourceFile" attr.type="string" for="node" id="d19"/>
 <key attr.name="pumlId" attr.type="string" for="node" id="d20"/>
 <key attr.name="pumlPath" attr.type="string" for="node" id="d21"/>
-<graph edgedefault="undirected">
+<graph edgedefault="directed">
 <node id="1">
 <data key="d1">Diagram</data>
 <data key="d2">DIAGRAM</data>
@@ -89,7 +91,7 @@ Expected result MUST be put between triple brackets
 <node id="3">
 <data key="d1">Member</data>
 <data key="d2">METHOD</data>
-<data key="d0">void method()</data>
+<data key="d0">method(x:int, y:int):int</data>
 <data key="d10">false</data>
 <data key="d11">false</data>
 <data key="d12">UNDEFINED</data>
@@ -99,7 +101,7 @@ Expected result MUST be put between triple brackets
 <node id="4">
 <data key="d1">Member</data>
 <data key="d2">FIELD</data>
-<data key="d0">String data</data>
+<data key="d0">data:String</data>
 <data key="d10">false</data>
 <data key="d11">false</data>
 <data key="d12">UNDEFINED</data>
@@ -123,6 +125,7 @@ Expected result MUST be put between triple brackets
 </edge>
 </graph>
 </graphml>
+
 }}}
 
  */
@@ -130,7 +133,7 @@ public class GML0002_Test extends GraphmlTest {
 
 	@Test
 	void testSimple() throws IOException, InterruptedException {
-		checkXmlAndDescription("(1 entities)");
+		checkXml();
 	}
 
 }

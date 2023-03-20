@@ -46,8 +46,9 @@ Test diagram MUST be put between triple quotes
 
 """
 @startuml
-' Dependency
-Class15 ..> Class16
+' Aggregation
+' reversed order
+Class06 --o Class05
 @enduml
 """
 
@@ -72,34 +73,34 @@ Expected result MUST be put between triple brackets
 <node id="1">
 <data key="d1">Diagram</data>
 <data key="d2">DIAGRAM</data>
-<data key="d0">GML0020_Test.puml</data>
+<data key="d0">GML0015b_Test.puml</data>
 <data key="d20">diag0</data>
-<data key="d21">./nonreg/graphml/classdiagram/GML0020_Test/0/diag0</data>
+<data key="d21">./nonreg/graphml/classdiagram/GML0015b_Test/0/diag0</data>
 <data key="d18">CLASS</data>
-<data key="d19">./nonreg/graphml/classdiagram/GML0020_Test.puml</data>
+<data key="d19">./nonreg/graphml/classdiagram/GML0015b_Test.puml</data>
 </node>
 <node id="2">
 <data key="d1">Leaf</data>
 <data key="d2">CLASS</data>
-<data key="d0">Class15</data>
+<data key="d0">Class06</data>
 <data key="d20">cl0002</data>
-<data key="d21">./nonreg/graphml/classdiagram/GML0020_Test/0/cl0002</data>
+<data key="d21">./nonreg/graphml/classdiagram/GML0015b_Test/0/cl0002</data>
 </node>
 <node id="3">
 <data key="d1">Leaf</data>
 <data key="d2">CLASS</data>
-<data key="d0">Class16</data>
+<data key="d0">Class05</data>
 <data key="d20">cl0003</data>
-<data key="d21">./nonreg/graphml/classdiagram/GML0020_Test/0/cl0003</data>
+<data key="d21">./nonreg/graphml/classdiagram/GML0015b_Test/0/cl0003</data>
 </node>
 <node id="4">
 <data key="d1">Link</data>
 <data key="d2">LINK</data>
 <data key="d20">cl0002_LNK4_cl0003</data>
-<data key="d21">./nonreg/graphml/classdiagram/GML0020_Test/0/cl0002_LNK4_cl0003</data>
-<data key="d3">DASHED</data>
+<data key="d21">./nonreg/graphml/classdiagram/GML0015b_Test/0/cl0002_LNK4_cl0003</data>
+<data key="d3">NORMAL</data>
 <data key="d4">NONE</data>
-<data key="d5">ARROW</data>
+<data key="d5">AGGREGATION</data>
 <data key="d9">NONE_OR_SEVERAL</data>
 </node>
 <edge id="1" source="2" target="4">
@@ -123,7 +124,7 @@ Expected result MUST be put between triple brackets
 }}}
 
  */
-public class GML0020_Test extends GraphmlTest {
+public class GML0015b_Test extends GraphmlTest {
 
 	@Test
 	void testSimple() throws IOException, InterruptedException {

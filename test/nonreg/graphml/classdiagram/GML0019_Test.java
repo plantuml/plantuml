@@ -1,4 +1,3 @@
-
 /* ========================================================================
  * PlantUML : a free UML diagram generator
  * ========================================================================
@@ -45,15 +44,16 @@ import java.io.IOException;
 
 Test diagram MUST be put between triple quotes
 
-NOTE: need three elements to make relation part of a class diagram
 """
 @startuml
+' Association with Navigability
 class Class1
 Class13 --> Class14
 @enduml
 """
 
 Expected result MUST be put between triple brackets
+
 
 {{{
 <?xml version="1.0" encoding="UTF-8"?><graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
@@ -69,7 +69,7 @@ Expected result MUST be put between triple brackets
 <key attr.name="sourceFile" attr.type="string" for="node" id="d19"/>
 <key attr.name="pumlId" attr.type="string" for="node" id="d20"/>
 <key attr.name="pumlPath" attr.type="string" for="node" id="d21"/>
-<graph edgedefault="undirected">
+<graph edgedefault="directed">
 <node id="1">
 <data key="d1">Diagram</data>
 <data key="d2">DIAGRAM</data>
@@ -130,6 +130,7 @@ Expected result MUST be put between triple brackets
 </edge>
 </graph>
 </graphml>
+
 }}}
 
  */
@@ -137,7 +138,7 @@ public class GML0019_Test extends GraphmlTest {
 
 	@Test
 	void testSimple() throws IOException, InterruptedException {
-		checkXmlAndDescription("(3 entities)");
+		checkXml();
 	}
 
 }

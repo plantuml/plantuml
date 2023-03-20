@@ -1,4 +1,3 @@
-
 /* ========================================================================
  * PlantUML : a free UML diagram generator
  * ========================================================================
@@ -43,19 +42,19 @@ import java.io.IOException;
 
 /*
 
-Verify proper method and field visibility and abstract / static analysis
-
 Test diagram MUST be put between triple quotes
 
 """
 @startuml
-package "net.plantuml" <<Folder>> {
+' Package Style: non UML
+package "plantuml" <<Folder>> {
 class Class01
 }
 @enduml
 """
 
 Expected result MUST be put between triple brackets
+
 
 {{{
 <?xml version="1.0" encoding="UTF-8"?><graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
@@ -67,7 +66,7 @@ Expected result MUST be put between triple brackets
 <key attr.name="sourceFile" attr.type="string" for="node" id="d19"/>
 <key attr.name="pumlId" attr.type="string" for="node" id="d20"/>
 <key attr.name="pumlPath" attr.type="string" for="node" id="d21"/>
-<graph edgedefault="undirected">
+<graph edgedefault="directed">
 <node id="1">
 <data key="d1">Diagram</data>
 <data key="d2">DIAGRAM</data>
@@ -80,7 +79,7 @@ Expected result MUST be put between triple brackets
 <node id="2">
 <data key="d1">Group</data>
 <data key="d2">FOLDER</data>
-<data key="d0">net.plantuml</data>
+<data key="d0">plantuml</data>
 <data key="d20">cl0002</data>
 <data key="d21">./nonreg/graphml/classdiagram/GML0047_Test/0/cl0002</data>
 </node>
@@ -102,6 +101,7 @@ Expected result MUST be put between triple brackets
 </edge>
 </graph>
 </graphml>
+
 }}}
 
  */
@@ -109,7 +109,7 @@ public class GML0047_Test extends GraphmlTest {
 
 	@Test
 	void testSimple() throws IOException, InterruptedException {
-		checkXmlAndDescription("(1 entities)");
+		checkXml();
 	}
 
 }
