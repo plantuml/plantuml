@@ -68,10 +68,10 @@ final public class ST_Agraph_s extends ST_Agobj_s {
 	public String NAME;
 	private static int CPT = 0;
 
-	@Override
-	public String toString() {
-		return super.toString() + " " + NAME;
-	}
+//	@Override
+//	public String toString() {
+//		return super.toString() + " " + NAME;
+//	}
 
 	public ST_Agraph_s() {
 		this.NAME = "G" + CPT;

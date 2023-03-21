@@ -50,6 +50,7 @@ import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -100,6 +101,7 @@ import net.sourceforge.plantuml.svek.GeneralImageBuilder;
 import net.sourceforge.plantuml.svek.GraphvizCrash;
 import net.sourceforge.plantuml.svek.IEntityImage;
 import net.sourceforge.plantuml.svek.SvekNode;
+import net.sourceforge.plantuml.svek.image.EntityImageNote;
 import net.sourceforge.plantuml.svek.image.EntityImageNoteLink;
 import net.sourceforge.plantuml.utils.Position;
 import smetana.core.CString;
@@ -117,6 +119,7 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 	private final Map<Entity, ST_Agnode_s> nodes = new LinkedHashMap<Entity, ST_Agnode_s>();
 	private final Map<Entity, ST_Agnode_s> coreNodes = new LinkedHashMap<Entity, ST_Agnode_s>();
 	private final Map<Link, ST_Agedge_s> edges = new LinkedHashMap<Link, ST_Agedge_s>();
+	private final Map<Link, SmetanaPath> smetanaPathes = new LinkedHashMap<Link, SmetanaPath>();
 	private final Map<Entity, ST_Agraph_s> clusters = new LinkedHashMap<Entity, ST_Agraph_s>();
 
 	private final DotStringFactory dotStringFactory;
@@ -155,7 +158,21 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 		}
 
 		public void drawU(UGraphic ug) {
+
+			smetanaPathes.clear();
+
 			ug = ug.apply(new UTranslate(6, 6 - minMax.getMinY()));
+
+			for (Map.Entry<Link, ST_Agedge_s> ent : edges.entrySet()) {
+				final Link link = ent.getKey();
+				if (link.isInvis())
+					continue;
+
+				final ST_Agedge_s edge = ent.getValue();
+				final SmetanaPath smetanaPath = new SmetanaPath(link, edge, ymirror, diagram, getLabel(link),
+						getQuantifier(link, 1), getQuantifier(link, 2), dotStringFactory.getBibliotekon());
+				smetanaPathes.put(link, smetanaPath);
+			}
 
 			for (Map.Entry<Entity, ST_Agraph_s> ent : clusters.entrySet())
 				drawGroup(ug, ymirror, ent.getKey(), ent.getValue());
@@ -166,19 +183,16 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 				final XPoint2D corner = getCorner(agnode);
 
 				final SvekNode node = dotStringFactory.getBibliotekon().getNode(leaf);
+				node.resetMoveSvek();
+				node.moveSvek(corner.getX(), corner.getY());
 				final IEntityImage image = node.getImage();
 				image.drawU(ug.apply(UTranslate.point(corner)));
 			}
 
-			for (Map.Entry<Link, ST_Agedge_s> ent : edges.entrySet()) {
-				final Link link = ent.getKey();
-				if (link.isInvis())
-					continue;
+			for (Entry<Link, SmetanaPath> ent : smetanaPathes.entrySet())
+				if (ent.getKey().isOpale() == false)
+					ent.getValue().drawU(ug);
 
-				final ST_Agedge_s edge = ent.getValue();
-				new SmetanaPath(link, edge, ymirror, diagram, getLabel(link), getQuantifier(link, 1),
-						getQuantifier(link, 2), dotStringFactory.getBibliotekon()).drawU(ug);
-			}
 		}
 
 		public XDimension2D calculateDimension(StringBounder stringBounder) {
@@ -205,6 +219,59 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 		printAllSubgroups(diagram.getRootGroup());
 		printEntities(getUnpackagedEntities());
 
+		for (Link link : diagram.getLinks()) {
+			if (link.isRemoved())
+				continue;
+
+			if (isOpalisable(link.getEntity1())) {
+				final SvekNode node = dotStringFactory.getBibliotekon().getNode(link.getEntity1());
+				final SvekNode other = dotStringFactory.getBibliotekon().getNode(link.getEntity2());
+				if (other != null) {
+					((EntityImageNote) node.getImage()).setOpaleLink(link, node, other, smetanaPathes);
+					link.setOpale(true);
+				}
+			} else if (isOpalisable(link.getEntity2())) {
+				final SvekNode node = dotStringFactory.getBibliotekon().getNode(link.getEntity2());
+				final SvekNode other = dotStringFactory.getBibliotekon().getNode(link.getEntity1());
+				if (other != null) {
+					((EntityImageNote) node.getImage()).setOpaleLink(link, node, other, smetanaPathes);
+					link.setOpale(true);
+				}
+			}
+
+		}
+
+	}
+
+	// Duplicate GeneralImageBuilder
+	private boolean isOpalisable(Entity entity) {
+		if (entity.isGroup())
+			return false;
+
+		if (entity.getLeafType() != LeafType.NOTE)
+			return false;
+
+		final Link single = onlyOneLink(entity);
+		if (single == null)
+			return false;
+
+		return single.getOther(entity).getLeafType() != LeafType.NOTE;
+	}
+
+	// Duplicate GeneralImageBuilder
+	private Link onlyOneLink(Entity ent) {
+		Link single = null;
+		for (Link link : diagram.getLinks()) {
+			if (link.isInvis())
+				continue;
+			if (link.contains(ent) == false)
+				continue;
+
+			if (single != null)
+				return null;
+			single = link;
+		}
+		return single;
 	}
 
 	private void drawGroup(UGraphic ug, YMirror ymirror, Entity group, ST_Agraph_s gr) {
@@ -240,7 +307,6 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 
 			if (diagram.isEmpty(g) && g.getGroupType() == GroupType.PACKAGE) {
 				g.muteToType(LeafType.EMPTY_PACKAGE);
-				printEntityNew(g);
 			} else {
 				printSingleGroup(g);
 			}
@@ -307,7 +373,7 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 			System.err.println("CANNOT FIND NODE");
 			return;
 		}
-		// System.err.println("exportEntity " + leaf);
+		System.err.println("exportEntity " + leaf);
 		final ST_Agnode_s agnode = agnode(zz, cluster, new CString(node.getUid()), true);
 		agsafeset(zz, agnode, new CString("shape"), new CString("box"), new CString(""));
 		final XDimension2D dim = getDim(node);
@@ -337,19 +403,6 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 		return result;
 	}
 
-//	private void printCluster(Globals zz, ST_Agraph_s g, Cluster cluster) {
-//		for (SvekNode node : cluster.getNodes()) {
-//			final ST_Agnode_s agnode = agnode(zz, g, new CString(node.getUid()), true);
-//			agsafeset(zz, agnode, new CString("shape"), new CString("box"), new CString(""));
-//			final String width = "" + (node.getWidth() / 72);
-//			final String height = "" + (node.getHeight() / 72);
-//			agsafeset(zz, agnode, new CString("width"), new CString(width), new CString(""));
-//			agsafeset(zz, agnode, new CString("height"), new CString(height), new CString(""));
-//			final Entity leaf = dotStringFactory.getBibliotekon().getLeaf(node);
-//			nodes.put(leaf, agnode);
-//		}
-//	}
-
 	private static final Lock lock = new ReentrantLock();
 
 	public ImageData createFile(OutputStream os, List<String> dotStrings, FileFormatOption fileFormatOption)
@@ -364,9 +417,6 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 
 	@Override
 	public void createOneGraphic(UGraphic ug) {
-		for (Entity leaf : diagram.getEntityFactory().leafs())
-			printEntityNew(leaf);
-
 		final Globals zz = Globals.open();
 		try {
 			final TextBlock textBlock = getTextBlock(zz);
@@ -380,9 +430,6 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 
 	private ImageData createFileLocked(OutputStream os, List<String> dotStrings, FileFormatOption fileFormatOption)
 			throws IOException {
-
-		for (Entity leaf : diagram.getEntityFactory().leafs())
-			printEntityNew(leaf);
 
 		final Globals zz = Globals.open();
 		try {
@@ -544,7 +591,8 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 			node2 = getAgnodeFromLeaf(link.getEntity2());
 
 		if (node1 == null || node2 == null)
-			throw new IllegalStateException();
+			return null;
+		// throw new IllegalStateException();
 
 		final ST_Agedge_s e = agedge(zz, g, node1, node2, null, true);
 		agsafeset(zz, e, new CString("arrowtail"), new CString("none"), new CString(""));
@@ -591,17 +639,6 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 		return strings;
 	}
 
-	private void printEntityNew(Entity ent) {
-		if (ent.isRemoved()) {
-			System.err.println("Jdot STRANGE: entity is removed");
-			return;
-		}
-		final IEntityImage image = printEntityInternal(ent);
-		final SvekNode shape = getBibliotekon().createNode(ent, image, dotStringFactory.getColorSequence(),
-				stringBounder);
-		// dotStringFactory.addShape(shape);
-	}
-
 	private Bibliotekon getBibliotekon() {
 		return dotStringFactory.getBibliotekon();
 	}
@@ -619,8 +656,11 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 				// skinParam = new SkinParamSameClassWidth(dotData.getSkinParam(), width);
 			}
 
-			return GeneralImageBuilder.createEntityImageBlock(ent, skinParam, diagram.isHideEmptyDescriptionForState(),
-					diagram, getBibliotekon(), null, diagram.getUmlDiagramType(), diagram.getLinks());
+			final IEntityImage result = GeneralImageBuilder.createEntityImageBlock(ent, skinParam,
+					diagram.isHideEmptyDescriptionForState(), diagram, getBibliotekon(), null,
+					diagram.getUmlDiagramType(), diagram.getLinks());
+			ent.setSvekImage(result);
+			return result;
 		}
 		return ent.getSvekImage();
 	}

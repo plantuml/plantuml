@@ -125,19 +125,24 @@ public class EntityImageTips extends AbstractEntityImage {
 	public void drawU(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
 
-		final Entity other = bibliotekon.getOnlyOther(getEntity());
+		final Entity tmp = getEntity();
+		final Entity other = bibliotekon.getOnlyOther(tmp);
+		if (other == null) {
+			System.err.println("Error1 in EntityImageTips");
+			return;
+		}
 
 		final SvekNode nodeMe = bibliotekon.getNode(getEntity());
 		final SvekNode nodeOther = bibliotekon.getNode(other);
-		final XPoint2D positionMe = nodeMe.getPosition();
 		if (nodeOther == null) {
-			System.err.println("Error in EntityImageTips");
+			System.err.println("Error2 in EntityImageTips");
 			return;
 		}
 		final XPoint2D positionOther = nodeOther.getPosition();
 		bibliotekon.getNode(getEntity());
 		final Position position = getPosition();
 		Direction direction = position.reverseDirection();
+		final XPoint2D positionMe = nodeMe.getPosition();
 		double height = 0;
 		for (Map.Entry<String, Display> ent : getEntity().getTips().entrySet()) {
 			final Display display = ent.getValue();

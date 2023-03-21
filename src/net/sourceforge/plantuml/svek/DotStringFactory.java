@@ -69,7 +69,7 @@ import net.sourceforge.plantuml.vizjs.GraphvizJsRuntimeException;
 
 public class DotStringFactory implements Moveable {
 
-	private final Bibliotekon bibliotekon = new Bibliotekon();
+	private final Bibliotekon bibliotekon;
 
 	private final ColorSequence colorSequence;
 	private final Cluster root;
@@ -92,6 +92,7 @@ public class DotStringFactory implements Moveable {
 		this.root = new Cluster(dotData.getEntityFactory().getDiagram(), colorSequence, skinParam,
 				dotData.getRootGroup());
 		this.current = root;
+		this.bibliotekon = new Bibliotekon(dotData.getLinks());
 	}
 
 	public DotStringFactory(StringBounder stringBounder, ICucaDiagram diagram) {
@@ -103,6 +104,7 @@ public class DotStringFactory implements Moveable {
 		this.stringBounder = stringBounder;
 		this.root = new Cluster(diagram, colorSequence, skinParam, diagram.getEntityFactory().getRootGroup());
 		this.current = root;
+		this.bibliotekon = new Bibliotekon(diagram.getLinks());
 	}
 
 	public void addNode(SvekNode node) {

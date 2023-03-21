@@ -57,6 +57,12 @@ public class Bibliotekon {
 	private final List<SvekLine> lines1 = new ArrayList<>();
 	private final List<SvekLine> allLines = new ArrayList<>();
 
+	private final Collection<Link> links;
+
+	public Bibliotekon(Collection<Link> links) {
+		this.links = links;
+	}
+
 	public SvekNode createNode(Entity ent, IEntityImage image, ColorSequence colorSequence,
 			StringBounder stringBounder) {
 		final SvekNode node = new SvekNode(ent, image, colorSequence, stringBounder);
@@ -190,12 +196,13 @@ public class Bibliotekon {
 	}
 
 	public Entity getOnlyOther(Entity entity) {
-		for (SvekLine line : allLines) {
-			final Entity other = line.getOther(entity);
-			if (other != null)
-				return other;
+		for (Link link : links)
+			if (link.contains(entity)) {
+				final Entity other = link.getOther(entity);
+				if (other != null)
+					return other;
 
-		}
+			}
 		return null;
 	}
 

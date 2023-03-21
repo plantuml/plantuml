@@ -59,14 +59,14 @@ final public class ST_Agnode_s extends ST_Agobj_s {
 
 	public String NAME;
 
-	@Override
-	public String toString() {
-		try {
-			return NAME + " rank=" + ND_rank(this) + " order=" + ND_order(this);
-		} catch (Exception e) {
-			return NAME;
-		}
-	}
+//	@Override
+//	public String toString() {
+//		try {
+//			return NAME + " rank=" + ND_rank(this) + " order=" + ND_order(this);
+//		} catch (Exception e) {
+//			return NAME;
+//		}
+//	}
 
 	@Override
 	public void ___(__struct__ arg) {

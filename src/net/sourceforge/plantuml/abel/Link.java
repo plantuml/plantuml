@@ -541,4 +541,8 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 		return getLinkArg().getVisibilityModifier();
 	}
 
+	public final boolean isOpale() {
+		return opale;
+	}
+
 }

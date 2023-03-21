@@ -61,10 +61,10 @@ final public class ST_Agedge_s extends ST_Agobj_s {
 
 	public String NAME;
 
-	@Override
-	public String toString() {
-		return NAME;
-	}
+//	@Override
+//	public String toString() {
+//		return NAME;
+//	}
 
 	@Override
 	public void ___(__struct__ arg) {

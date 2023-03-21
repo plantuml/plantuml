@@ -101,7 +101,7 @@ public class SmetanaPath implements UDrawable {
 		} else if (this.link.getSpecificColor() != null)
 			color = this.link.getSpecificColor();
 
-		DotPath dotPath = getDotPath();
+		DotPath dotPath = getDotPathInternal();
 		if (ymirror != null && dotPath != null)
 			dotPath = ymirror.getMirrored(dotPath);
 
@@ -142,15 +142,33 @@ public class SmetanaPath implements UDrawable {
 				.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
 	}
 
+	public XPoint2D getStartPoint() {
+		final DotPath dotPath = getDotPathInternal();
+		XPoint2D pt = dotPath.getStartPoint();
+		if (ymirror != null)
+			pt = ymirror.getMirrored(pt);
+
+		return pt;
+	}
+
+	public XPoint2D getEndPoint() {
+		final DotPath dotPath = getDotPathInternal();
+		XPoint2D pt = dotPath.getEndPoint();
+		if (ymirror != null)
+			pt = ymirror.getMirrored(pt);
+
+		return pt;
+	}
+
 	private void printExtremityAtStart(UGraphic ug) {
 		final ExtremityFactory extremityFactory2 = link.getType().getDecor2()
 				.getExtremityFactoryComplete(diagram.getSkinParam().getBackgroundColor());
 		if (extremityFactory2 == null)
 			return;
 
-		DotPath s = getDotPath();
-		XPoint2D p0 = s.getStartPoint();
-		double startAngle = s.getStartAngle();
+		final DotPath dotPath = getDotPathInternal();
+		XPoint2D p0 = dotPath.getStartPoint();
+		double startAngle = dotPath.getStartAngle();
 		if (ymirror != null) {
 			p0 = ymirror.getMirrored(p0);
 			startAngle = -startAngle + Math.PI;
@@ -172,9 +190,9 @@ public class SmetanaPath implements UDrawable {
 		if (extremityFactory1 == null)
 			return;
 
-		DotPath s = getDotPath();
-		XPoint2D p0 = s.getEndPoint();
-		double endAngle = s.getEndAngle();
+		final DotPath dotPath = getDotPathInternal();
+		XPoint2D p0 = dotPath.getEndPoint();
+		double endAngle = dotPath.getEndAngle();
 		if (ymirror != null) {
 			p0 = ymirror.getMirrored(p0);
 			endAngle = -endAngle;
@@ -242,7 +260,7 @@ public class SmetanaPath implements UDrawable {
 
 	private DotPath dotPath;
 
-	private DotPath getDotPath() {
+	private DotPath getDotPathInternal() {
 		if (dotPath != null)
 			return dotPath;
 
@@ -267,7 +285,8 @@ public class SmetanaPath implements UDrawable {
 		if (link.getEntity2().isGroup()) {
 			final Cluster cluster2 = bibliotekon.getCluster(link.getEntity2());
 			// System.err.println("WARNING: a group " + cluster2.getRectangleArea());
-			// dotPath = dotPath.simulateCompound(cluster2.getRectangleArea(), cluster2.getRectangleArea());
+			// dotPath = dotPath.simulateCompound(cluster2.getRectangleArea(),
+			// cluster2.getRectangleArea());
 		}
 		return dotPath;
 	}

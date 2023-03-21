@@ -378,6 +378,11 @@ public class SvekNode implements Positionable, Hideable {
 		return shield().isZero() == false;
 	}
 
+	public void resetMoveSvek() {
+		this.minX = 0;
+		this.minY = 0;
+	}
+
 	public void moveSvek(double deltaX, double deltaY) {
 		this.minX += deltaX;
 		this.minY += deltaY;

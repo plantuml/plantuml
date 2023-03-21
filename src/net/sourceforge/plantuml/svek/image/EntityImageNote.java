@@ -40,6 +40,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.cucadiagram.BodyFactory;
 import net.sourceforge.plantuml.klimt.UGroupType;
 import net.sourceforge.plantuml.klimt.UPath;
@@ -61,6 +62,7 @@ import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.DotPath;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockEmpty;
+import net.sourceforge.plantuml.sdot.SmetanaPath;
 import net.sourceforge.plantuml.skin.ColorParam;
 import net.sourceforge.plantuml.skin.CornerParam;
 import net.sourceforge.plantuml.skin.SkinParamBackcolored;
@@ -201,7 +203,37 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 			ug.startUrl(url);
 
 		final UGraphic ug2 = UGraphicStencil.create(ug, this, UStroke.simple());
-		if (opaleLine == null || opaleLine.isOpale() == false) {
+		if (opaleLink != null) {
+			final StringBounder stringBounder = ug.getStringBounder();
+
+			final SmetanaPath smetanaEdged = smetanaPathes.get(opaleLink);
+			final UTranslate move = new UTranslate(-node.getMinX(), -node.getMinY());
+
+			final XPoint2D startPoint = move.getTranslated(smetanaEdged.getStartPoint());
+			final XPoint2D endPoint = move.getTranslated(smetanaEdged.getEndPoint());
+
+			final UTranslate force1 = getMagneticBorder().getForceAt(stringBounder, smetanaEdged.getStartPoint());
+			final UTranslate force2 = other.getMagneticBorder().getForceAt(stringBounder, smetanaEdged.getEndPoint());
+
+			final double textWidth = getTextWidth(stringBounder);
+			final double textHeight = getTextHeight(stringBounder);
+			final XPoint2D center = new XPoint2D(textWidth / 2, textHeight / 2);
+
+			XPoint2D pp1 = force2.getTranslated(startPoint);
+			XPoint2D pp2 = force1.getTranslated(endPoint);
+			if (pp1.distance(center) < pp2.distance(center)) {
+				pp1 = force1.getTranslated(endPoint);
+				pp2 = force2.getTranslated(startPoint);
+			}
+
+			final Direction strategy = getOpaleStrategy(textWidth, textHeight, pp2);
+			final Opale opale = new Opale(shadowing, borderColor, noteBackgroundColor, textBlock, true, getStroke());
+			opale.setRoundCorner(getRoundCorner());
+			opale.setOpale(strategy, pp2, pp1);
+			final UGraphic stroked = applyStroke(ug2);
+			opale.drawU(Colors.applyStroke(stroked, getEntity().getColors()));
+
+		} else if (opaleLine == null || opaleLine.isOpale() == false) {
 			drawNormal(ug2);
 		} else {
 			final StringBounder stringBounder = ug.getStringBounder();
@@ -306,13 +338,22 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 	}
 
 	private SvekLine opaleLine;
+	private Link opaleLink;
 	private SvekNode node;
 	private SvekNode other;
+	private Map<Link, SmetanaPath> smetanaPathes;
 
 	public void setOpaleLine(SvekLine line, SvekNode node, SvekNode other) {
 		this.opaleLine = line;
 		this.node = node;
 		this.other = Objects.requireNonNull(other);
+	}
+
+	public void setOpaleLink(Link link, SvekNode node, SvekNode other, Map<Link, SmetanaPath> edges) {
+		this.opaleLink = link;
+		this.node = node;
+		this.other = Objects.requireNonNull(other);
+		this.smetanaPathes = edges;
 	}
 
 	public double getStartingX(StringBounder stringBounder, double y) {

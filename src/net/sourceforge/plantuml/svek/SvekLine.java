@@ -1084,12 +1084,12 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		return new XPoint2D(dx + end.getX(), dy + end.getY());
 	}
 
-	public Entity getOther(Entity entity) {
-		if (link.contains(entity))
-			return link.getOther(entity);
-
-		return null;
-	}
+//	public Entity getOther(Entity entity) {
+//		if (link.contains(entity))
+//			return link.getOther(entity);
+//
+//		return null;
+//	}
 
 	public StyleBuilder getCurrentStyleBuilder() {
 		return link.getStyleBuilder();
