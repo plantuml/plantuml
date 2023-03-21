@@ -61,7 +61,10 @@ Expected result MUST be put between triple brackets
 
 
 {{{
-<?xml version="1.0" encoding="UTF-8"?><graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
 <key attr.name="label" attr.type="string" for="node" id="d0"/>
 <key attr.name="type" attr.type="string" for="node" id="d1"/>
 <key attr.name="entityType" attr.type="string" for="node" id="d2"/>
