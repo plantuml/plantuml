@@ -415,6 +415,9 @@ public class DotStringFactory implements Moveable {
 		}
 
 		for (Cluster cluster : bibliotekon.allCluster()) {
+			if (cluster.getGroup().isPacked())
+				continue;
+			
 			int idx = getClusterIndex(svg, cluster.getColor());
 			final int starting = idx;
 			final List<XPoint2D> points = svgResult.substring(starting).extractList(SvgResult.POINTS_EQUALS);

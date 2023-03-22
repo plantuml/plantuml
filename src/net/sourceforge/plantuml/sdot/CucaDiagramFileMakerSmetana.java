@@ -317,14 +317,18 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 		if (g.getGroupType() == GroupType.CONCURRENT_STATE)
 			return;
 
-		final ClusterHeader clusterHeader = new ClusterHeader((Entity) g, diagram.getSkinParam(), diagram,
-				stringBounder);
-		dotStringFactory.openCluster(g, clusterHeader);
+		if (g.isPacked() == false) {
+			final ClusterHeader clusterHeader = new ClusterHeader(g, diagram.getSkinParam(), diagram, stringBounder);
+			dotStringFactory.openCluster(g, clusterHeader);
+		}
+
 		this.printEntities(g.leafs());
 
 		printAllSubgroups(g);
 
-		dotStringFactory.closeCluster();
+		if (g.isPacked() == false) {
+			dotStringFactory.closeCluster();
+		}
 	}
 
 	private void printEntities(Collection<Entity> entities) {
@@ -361,8 +365,8 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 
 		result = agnode(zz, cluster, new CString("z" + group.getUid()), true);
 		agsafeset(zz, result, new CString("shape"), new CString("box"), new CString(""));
-		agsafeset(zz, result, new CString("width"), new CString("1"), new CString(""));
-		agsafeset(zz, result, new CString("height"), new CString("1"), new CString(""));
+		agsafeset(zz, result, new CString("width"), new CString("0.1"), new CString(""));
+		agsafeset(zz, result, new CString("height"), new CString("0.1"), new CString(""));
 		coreNodes.put(group, result);
 		return result;
 	}
@@ -373,7 +377,6 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 			System.err.println("CANNOT FIND NODE");
 			return;
 		}
-		System.err.println("exportEntity " + leaf);
 		final ST_Agnode_s agnode = agnode(zz, cluster, new CString(node.getUid()), true);
 		agsafeset(zz, agnode, new CString("shape"), new CString("box"), new CString(""));
 		final XDimension2D dim = getDim(node);
@@ -484,9 +487,14 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 	}
 
 	private void exportGroup(Globals zz, ST_Agraph_s graph, Entity group) {
+		if (group.isPacked()) {
+			this.exportEntities(zz, graph, group.leafs());
+			this.exportGroups(zz, graph, group);
+			return;
+		}
 		final Cluster cluster = getBibliotekon().getCluster(group);
 		if (cluster == null) {
-			System.err.println("CucaDiagramFileMakerJDot::exportGroup issue");
+			System.err.println("CucaDiagramFileMakerSmetana::exportGroup issue");
 			return;
 		}
 		JUtils.LOG2("cluster = " + cluster.getClusterId());

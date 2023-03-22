@@ -416,6 +416,12 @@ public class Display implements Iterable<CharSequence> {
 		return result;
 	}
 
+	public Display appendFirstLine(String appended) {
+		final Display result = new Display(this.showStereotype, this, this.defaultCreoleMode);
+		result.displayData.set(0, appended + result.displayData.get(0));
+		return result;
+	}
+
 	public Display add(CharSequence s) {
 		final Display result = new Display(this.showStereotype, this, this.defaultCreoleMode);
 		result.displayData.add(s);

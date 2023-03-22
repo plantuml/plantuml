@@ -334,23 +334,19 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 	}
 
 	public boolean contains(Entity entity) {
-		if (isSame(getEntity1(), entity))
+		if (getEntity1() == entity)
 			return true;
-		if (isSame(getEntity2(), entity))
+		if (getEntity2() == entity)
 			return true;
 
 		return false;
 	}
 
-	static private boolean isSame(Entity a, Entity b) {
-		return a == b;
-	}
-
 	public Entity getOther(Entity entity) {
-		if (isSame(getEntity1(), entity))
+		if (getEntity1() == entity)
 			return getEntity2();
 
-		if (isSame(getEntity2(), entity))
+		if (getEntity2() == entity)
 			return getEntity1();
 
 		throw new IllegalArgumentException();

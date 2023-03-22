@@ -74,6 +74,10 @@ public class Pragma {
 		return "true".equalsIgnoreCase(s) || "on".equalsIgnoreCase(s);
 	}
 
+	private boolean isFalse(final String s) {
+		return "false".equalsIgnoreCase(s) || "off".equalsIgnoreCase(s);
+	}
+
 	public boolean useVerticalIf() {
 		return isTrue(getValue("useverticalif"));
 	}
@@ -84,6 +88,10 @@ public class Pragma {
 
 	public boolean useKermor() {
 		return isTrue(getValue("kermor"));
+	}
+
+	public boolean useIntermediatePackages() {
+		return !isFalse(getValue("useintermediatepackages"));
 	}
 
 }

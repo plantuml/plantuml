@@ -66,12 +66,24 @@ public class ClusterDotString {
 		this.skinParam = skinParam;
 	}
 
+	private boolean isPacked() {
+		return cluster.getGroup().isPacked();
+	}
+
 	void printInternal(StringBuilder sb, Collection<SvekLine> lines, StringBounder stringBounder, DotMode dotMode,
 			GraphvizVersion graphvizVersion, UmlDiagramType type) {
 		if (cluster.diagram.getPragma().useKermor()) {
 			new ClusterDotStringKermor(cluster, skinParam).printInternal(sb, lines, stringBounder, dotMode,
 					graphvizVersion, type);
 			return;
+		}
+		final boolean packed = isPacked();
+
+		if (packed) {
+			cluster.printCluster1(sb, lines, stringBounder);
+			final SvekNode added = cluster.printCluster2(sb, lines, stringBounder, dotMode, graphvizVersion, type);
+			return;
+
 		}
 		final boolean thereALinkFromOrToGroup2 = isThereALinkFromOrToGroup(lines);
 		boolean thereALinkFromOrToGroup1 = thereALinkFromOrToGroup2;
@@ -154,6 +166,8 @@ public class ClusterDotString {
 			SvekUtils.println(sb);
 		}
 		SvekUtils.println(sb);
+
+		// -----------
 		cluster.printCluster1(sb, lines, stringBounder);
 
 		final SvekNode added = cluster.printCluster2(sb, lines, stringBounder, dotMode, graphvizVersion, type);
@@ -166,6 +180,8 @@ public class ClusterDotString {
 				sb.append(empty() + " [shape=point,width=.01,label=\"\"];");
 			}
 		SvekUtils.println(sb);
+
+		// -----------
 
 		sb.append("}");
 		if (protection1)

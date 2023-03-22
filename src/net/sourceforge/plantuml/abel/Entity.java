@@ -719,4 +719,32 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 		return true;
 	}
 
+	public boolean canBePacked() {
+		if (isPacked())
+			return false;
+		if (countChildren() != 1)
+			return false;
+		if (leafs().size() != 0)
+			return false;
+		for (Link link : entityFactory.getLinks())
+			if (link.contains(this))
+				return false;
+
+		final Entity child = groups().iterator().next();
+		if (child.countChildren() == 0)
+			return false;
+
+		return true;
+	}
+
+	private boolean packed;
+
+	public final void setPacked(boolean packed) {
+		this.packed = true;
+	}
+
+	public final boolean isPacked() {
+		return packed;
+	}
+
 }
