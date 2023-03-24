@@ -490,6 +490,12 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		return endUid.getPrefix();
 	}
 
+	private UDrawable getExtremitySpecial(final XPoint2D center, LinkDecor decor, double angle, Cluster cluster,
+			SvekNode nodeContact) {
+		final ExtremityFactory extremityFactory = decor.getExtremityFactory(backgroundColor);
+		return extremityFactory.createUDrawable(center, angle, null);
+	}
+
 	private UDrawable getExtremity(final XPoint2D center, LinkDecor decor, PointListIterator pointListIterator,
 			double angle, Cluster cluster, SvekNode nodeContact) {
 		final ExtremityFactory extremityFactory = decor.getExtremityFactory(backgroundColor);
@@ -508,11 +514,13 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		if (extremityFactory != null) {
 			final List<XPoint2D> points = pointListIterator.next();
 			if (points.size() == 0)
-				return extremityFactory.createUDrawable(center, angle, null);
+				throw new IllegalStateException();
+			// return extremityFactory.createUDrawable(center, angle, null);
 
 			final XPoint2D p0 = points.get(0);
 			final XPoint2D p1 = points.get(1);
 			final XPoint2D p2 = points.get(2);
+
 			Side side = null;
 			if (nodeContact != null)
 				side = nodeContact.getRectangleArea().getClosestSide(p1);
@@ -577,10 +585,30 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		PointListIterator pointListIterator = lineSvg.getPointsWithThisColor(lineColor);
 
 		final LinkType linkType = link.getType();
-		this.extremity1 = getExtremity(dotPath.getStartPoint(), linkType.getDecor2(), pointListIterator,
-				dotPath.getStartAngle() + Math.PI, ltail, getSvekNode1());
-		this.extremity2 = getExtremity(dotPath.getEndPoint(), linkType.getDecor1(), pointListIterator,
-				dotPath.getEndAngle(), lhead, getSvekNode2());
+		if (link.getLength() == 1 && isThereTwo(linkType) && count(pointListIterator.cloneMe()) == 2) {
+			// Sorry, this is ugly because of
+			// https://github.com/plantuml/plantuml/issues/1353
+
+			final List<XPoint2D> points = pointListIterator.next();
+			final XPoint2D p1 = points.get(1);
+
+			XPoint2D startPoint = dotPath.getStartPoint();
+			XPoint2D endPoint = dotPath.getEndPoint();
+			if (p1.distance(startPoint) < p1.distance(endPoint))
+				startPoint = p1;
+			else
+				endPoint = p1;
+
+			this.extremity1 = getExtremitySpecial(startPoint, linkType.getDecor2(), dotPath.getStartAngle() + Math.PI,
+					ltail, getSvekNode1());
+			this.extremity2 = getExtremitySpecial(endPoint, linkType.getDecor1(), dotPath.getEndAngle(), lhead,
+					getSvekNode2());
+		} else {
+			this.extremity1 = getExtremity(dotPath.getStartPoint(), linkType.getDecor2(), pointListIterator,
+					dotPath.getStartAngle() + Math.PI, ltail, getSvekNode1());
+			this.extremity2 = getExtremity(dotPath.getEndPoint(), linkType.getDecor1(), pointListIterator,
+					dotPath.getEndAngle(), lhead, getSvekNode2());
+		}
 
 		if (link.getEntity1().getLeafType() == LeafType.LOLLIPOP_HALF)
 			getSvekNode1().addImpact(dotPath.getStartAngle() + Math.PI);
@@ -637,6 +665,20 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		if (isOpalisable() == false)
 			setOpale(false);
 
+	}
+
+	private boolean isThereTwo(final LinkType linkType) {
+		return linkType.getDecor2().getExtremityFactory(backgroundColor) != null
+				&& linkType.getDecor1().getExtremityFactory(backgroundColor) != null;
+	}
+
+	private int count(PointListIterator it) {
+		int nb = 0;
+		while (it.hasNext()) {
+			it.next();
+			nb++;
+		}
+		return nb;
 	}
 
 	private SvekNode getSvekNode2() {

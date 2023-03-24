@@ -60,6 +60,7 @@ import net.sourceforge.plantuml.code.TranscoderUtil;
 import net.sourceforge.plantuml.file.FileGroup;
 import net.sourceforge.plantuml.file.SuggestedFile;
 import net.sourceforge.plantuml.ftp.FtpServer;
+import net.sourceforge.plantuml.klimt.drawing.svg.SvgGraphics;
 import net.sourceforge.plantuml.klimt.sprite.SpriteGrayLevel;
 import net.sourceforge.plantuml.klimt.sprite.SpriteUtils;
 import net.sourceforge.plantuml.log.Logme;
@@ -90,7 +91,7 @@ public class Run {
 		if (argsArray.length > 0 && argsArray[0].equalsIgnoreCase("-headless"))
 			System.setProperty("java.awt.headless", "true");
 		saveCommandLine(argsArray);
-		
+
 		final Option option = new Option(argsArray);
 		ProgressBar.setEnable(option.isTextProgressBar());
 		if (OptionFlags.getInstance().isClipboardLoop()) {
@@ -461,19 +462,8 @@ public class Run {
 			throws IOException, InterruptedException {
 		Log.info("Working on " + f.getPath());
 		if (OptionFlags.getInstance().isExtractFromMetadata()) {
-			System.out.println("------------------------");
-			System.out.println(f);
-			// new Metadata().readAndDisplayMetadata(f);
-			System.out.println();
 			error.goOk();
-			final String data = new MetadataTag(f, "plantuml").getData();
-			// File file = SecurityUtils.File("tmp.txt");
-			// PrintWriter pw = SecurityUtils.PrintWriter(file, "UTF-8");
-			// pw.println(NastyEncoder.fromISO_8859_1(data));
-			// pw.close();
-
-			System.out.println(data);
-			System.out.println("------------------------");
+			extractMetadata(f);
 			return;
 		}
 		final ISourceFileReader sourceFileReader;
@@ -577,16 +567,28 @@ public class Run {
 		error.goOk();
 	}
 
-//	public static void debugGantt() {
-//		final Locale locale = Locale.GERMAN;
-//		for (java.time.Month month : java.time.Month.values()) {
-//			System.err.println("Testing locale " + locale + " " + month);
-//			for (TextStyle style : TextStyle.values()) {
-//				final String s = month.getDisplayName(style, locale);
-//				System.err.println(style + " --> '" + s + "'");
-//
-//			}
-//		}
-//	}
+	private static void extractMetadata(File f) throws IOException {
+		System.out.println("------------------------");
+		System.out.println(f);
+		System.out.println();
+		if (f.getName().endsWith(".svg")) {
+			final SFile file = SFile.fromFile(f);
+			final String svg = FileUtils.readFile(file);
+			final int idx = svg.lastIndexOf(SvgGraphics.META_HEADER);
+			if (idx > 0) {
+				String part = svg.substring(idx + SvgGraphics.META_HEADER.length());
+				final int idxEnd = part.indexOf("]");
+				if (idxEnd > 0) {
+					part = part.substring(0, idxEnd);
+					final String decoded = TranscoderUtil.getDefaultTranscoderProtected().decode(part);
+					System.err.println(decoded);
+				}
+			}
+		} else {
+			final String data = new MetadataTag(f, "plantuml").getData();
+			System.out.println(data);
+		}
+		System.out.println("------------------------");
+	}
 
 }

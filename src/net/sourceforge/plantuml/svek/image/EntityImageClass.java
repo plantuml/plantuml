@@ -248,7 +248,7 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 	}
 
 	public ShapeType getShapeType() {
-		if (((Entity) getEntity()).getPortShortNames().size() > 0)
+		if (getEntity().getPortShortNames().size() > 0)
 			return ShapeType.RECTANGLE_HTML_FOR_PORTS;
 
 		return ShapeType.RECTANGLE;
@@ -256,7 +256,7 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 
 	@Override
 	public Margins getShield(StringBounder stringBounder) {
-		return ((Entity) getEntity()).getMargins();
+		return getEntity().getMargins();
 	}
 
 	public double getStartingX(StringBounder stringBounder, double y) {

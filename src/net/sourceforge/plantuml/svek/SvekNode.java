@@ -276,22 +276,28 @@ public class SvekNode implements Positionable, Hideable {
 		sb.append("label=<");
 		sb.append("<TABLE BGCOLOR=\"" + StringUtils.sharp000000(color)
 				+ "\" BORDER=\"0\" CELLBORDER=\"0\" CELLSPACING=\"0\" CELLPADDING=\"0\">");
-		double position = 0;
+		int sum = 0;
 		for (PortGeometry geom : ports.getAllPortGeometry()) {
 			final String portId = geom.getId();
-			final double missing = geom.getPosition() - position;
+			final int missing = (int) (geom.getPosition() - sum);
+
+			sum += missing;
 			appendTr(sb, null, missing);
-			appendTr(sb, portId, geom.getHeight());
-			position = geom.getLastY();
+			int intHeight = (int) geom.getHeight();
+
+			appendTr(sb, portId, intHeight);
+			sum += intHeight;
 		}
-		appendTr(sb, null, getHeight() - position);
+		final double diff = getHeight() - sum;
+		appendTr(sb, null, (int) diff);
+
 		sb.append("</TABLE>");
 		sb.append(">");
 		sb.append("];");
 		SvekUtils.println(sb);
 	}
 
-	private void appendTr(StringBuilder sb, String portId, double height) {
+	private void appendTr(StringBuilder sb, String portId, int height) {
 		if (height <= 0)
 			return;
 

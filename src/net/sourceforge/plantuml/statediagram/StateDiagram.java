@@ -71,7 +71,8 @@ public class StateDiagram extends AbstractEntityDiagram {
 				&& getCurrentGroup() != existing.getParentContainer())
 			return false;
 
-		if (existing.getParentContainer().getGroupType() == GroupType.CONCURRENT_STATE
+		if (existing.getParentContainer() != null
+				&& existing.getParentContainer().getGroupType() == GroupType.CONCURRENT_STATE
 				&& getCurrentGroup() != existing.getParentContainer())
 			return false;
 

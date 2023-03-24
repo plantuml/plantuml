@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.geom.RectangleArea;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.DotPath;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
@@ -102,10 +103,25 @@ public class SmetanaPath implements UDrawable {
 			color = this.link.getSpecificColor();
 
 		DotPath dotPath = getDotPathInternal();
-		if (ymirror != null && dotPath != null)
-			dotPath = ymirror.getMirrored(dotPath);
 
 		if (dotPath != null) {
+			if (ymirror != null)
+				dotPath = ymirror.getMirrored(dotPath);
+
+			RectangleArea rectangleArea1 = null;
+			RectangleArea rectangleArea2 = null;
+			if (link.getEntity1().isGroup()) {
+				final Cluster cluster1 = bibliotekon.getCluster(link.getEntity1());
+				rectangleArea1 = cluster1.getRectangleArea();
+
+			}
+			if (link.getEntity2().isGroup()) {
+				final Cluster cluster2 = bibliotekon.getCluster(link.getEntity2());
+				rectangleArea2 = cluster2.getRectangleArea();
+			}
+
+			dotPath = dotPath.simulateCompound(rectangleArea2, rectangleArea1);
+
 			final LinkType linkType = link.getType();
 			UStroke stroke = linkType.getStroke3(diagram.getSkinParam().getThickness(LineParam.arrow, null));
 			if (link.getColors() != null && link.getColors().getSpecificLineStroke() != null)
@@ -116,8 +132,8 @@ public class SmetanaPath implements UDrawable {
 				ug.startUrl(url);
 
 			ug.apply(stroke).apply(color).draw(dotPath);
-			printExtremityAtStart(ug.apply(color));
-			printExtremityAtEnd(ug.apply(color));
+			printExtremityAtStart(dotPath, ug.apply(color));
+			printExtremityAtEnd(dotPath, ug.apply(color));
 
 			if (url != null)
 				ug.closeUrl();
@@ -160,19 +176,15 @@ public class SmetanaPath implements UDrawable {
 		return pt;
 	}
 
-	private void printExtremityAtStart(UGraphic ug) {
+	private void printExtremityAtStart(DotPath dotPath, UGraphic ug) {
 		final ExtremityFactory extremityFactory2 = link.getType().getDecor2()
 				.getExtremityFactoryComplete(diagram.getSkinParam().getBackgroundColor());
 		if (extremityFactory2 == null)
 			return;
 
-		final DotPath dotPath = getDotPathInternal();
-		XPoint2D p0 = dotPath.getStartPoint();
-		double startAngle = dotPath.getStartAngle();
-		if (ymirror != null) {
-			p0 = ymirror.getMirrored(p0);
-			startAngle = -startAngle + Math.PI;
-		}
+		final XPoint2D p0 = dotPath.getStartPoint();
+		final double startAngle = dotPath.getStartAngle() + Math.PI;
+
 		try {
 			final UDrawable extremity2 = extremityFactory2.createUDrawable(p0, startAngle, null);
 			if (extremity2 != null)
@@ -184,19 +196,15 @@ public class SmetanaPath implements UDrawable {
 		}
 	}
 
-	private void printExtremityAtEnd(UGraphic ug) {
+	private void printExtremityAtEnd(DotPath dotPath, UGraphic ug) {
 		final ExtremityFactory extremityFactory1 = link.getType().getDecor1()
 				.getExtremityFactoryComplete(diagram.getSkinParam().getBackgroundColor());
 		if (extremityFactory1 == null)
 			return;
 
-		final DotPath dotPath = getDotPathInternal();
-		XPoint2D p0 = dotPath.getEndPoint();
-		double endAngle = dotPath.getEndAngle();
-		if (ymirror != null) {
-			p0 = ymirror.getMirrored(p0);
-			endAngle = -endAngle;
-		}
+		final XPoint2D p0 = dotPath.getEndPoint();
+		final double endAngle = dotPath.getEndAngle();
+
 		try {
 			final UDrawable extremity1 = extremityFactory1.createUDrawable(p0, endAngle, null);
 			if (extremity1 != null)
@@ -282,12 +290,6 @@ public class SmetanaPath implements UDrawable {
 			dotPath = dotPath.addCurve(ppt2, ppt3, ppt4);
 		}
 
-		if (link.getEntity2().isGroup()) {
-			final Cluster cluster2 = bibliotekon.getCluster(link.getEntity2());
-			// System.err.println("WARNING: a group " + cluster2.getRectangleArea());
-			// dotPath = dotPath.simulateCompound(cluster2.getRectangleArea(),
-			// cluster2.getRectangleArea());
-		}
 		return dotPath;
 	}
 

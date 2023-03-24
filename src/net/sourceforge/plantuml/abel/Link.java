@@ -177,10 +177,10 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 	}
 
 	public boolean isBetween(Entity cl1, Entity cl2) {
-		if (cl1.equals(this.cl1) && cl2.equals(this.cl2))
+		if (cl1 == this.cl1 && cl2 == this.cl2)
 			return true;
 
-		if (cl1.equals(this.cl2) && cl2.equals(this.cl1))
+		if (cl1 == this.cl2 && cl2 == this.cl1)
 			return true;
 
 		return false;
