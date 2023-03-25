@@ -142,8 +142,8 @@ jobs:
         uses: actions/cache/save@v3
         with:
           path: |
-            ./build/libs
-            ./build/publications
+            build/libs
+            build/publications
           key: "libs-${{ runner.os }}-${{ github.run_id }}"
 
   native_images:
