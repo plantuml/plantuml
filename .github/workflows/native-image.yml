@@ -1,26 +1,26 @@
 name: Native Image
 
 on:
-  push:
-    branches:
-      - native-image
-
-defaults:
-  run:
-    shell: bash
+  workflow_call:
+    inputs:
+      release-version:
+        required: true
+        type: string
 
 jobs:
-  workflow_config:
+  native_image_linux:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v3
 
-      - name: Get jar
-        run: |
-          wget "https://github.com/plantuml/plantuml/releases/download/${PLANTUML_VERSION}/plantuml-${PLANTUML_VERSION#?}.jar" -O plantuml.jar
-        env:
-          PLANTUML_VERSION: "v1.2023.4"
+      - uses: actions/cache/restore@v3
+        with:
+          path: |
+            build/libs
+            build/publications
+          key: "libs-${{ runner.os }}-${{ github.run_id }}"
+          fail-on-cache-miss: true
 
       - name: Install system requirements
         run: sudo apt install build-essential libz-dev zlib1g-dev
@@ -37,14 +37,18 @@ jobs:
       - name: Generate GraalVM configuration
         run: |
           mkdir native-image-config-dir
-          echo 'Bob->Alice: Hello' | ./graalvm-ce/bin/java -agentlib:native-image-agent=config-output-dir=./native-image-config-dir -jar plantuml.jar -tpng -pipe > out.png
+          echo 'Bob->Alice: Hello' | ./graalvm-ce/bin/java -agentlib:native-image-agent=config-output-dir=./native-image-config-dir -jar "./build/libs/plantuml-${RELEASE_VERSION}.jar" -tpng -pipe > out.png
+        env:
+          RELEASE_VERSION: ${{ inputs.release-version }}
 
       - name: Generate native image
         run: |
-          ./graalvm-ce/bin/native-image -H:ConfigurationFileDirectories=./native-image-config-dir --no-fallback --report-unsupported-elements-at-runtime -jar plantuml.jar
+          ./graalvm-ce/bin/native-image -H:ConfigurationFileDirectories=./native-image-config-dir --no-fallback --report-unsupported-elements-at-runtime -jar "./build/libs/plantuml-${RELEASE_VERSION}.jar" "./build/libs/plantuml-linux-amd64-${RELEASE_VERSION}"
+        env:
+          RELEASE_VERSION: ${{ inputs.release-version }}
 
-      - name: Upload native-image as artifact
-        uses: actions/upload-artifact@v3
+      - name: Cache native image
+        uses: actions/cache/save@v3
         with:
-          name: linux-native-image
-          path: plantuml
+          path: build/libs/plantuml-linux-amd64-*
+          key: "native-image-linux-${{ runner.os }}-${{ github.run_id }}"
