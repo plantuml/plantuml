@@ -220,7 +220,7 @@ jobs:
           gradle publish
 
   push_to_registry:
-    needs: [ workflow_config, test, upload ]
+    needs: [ workflow_config, upload ]
     if: needs.workflow_config.outputs.do_release == 'true'
     runs-on: ubuntu-latest
     steps:
