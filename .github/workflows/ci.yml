@@ -139,13 +139,12 @@ jobs:
         run: |
           echo "RELEASE_VERSION=$(gradle properties -q | grep "version:" | awk '{print $2}')" >> $GITHUB_OUTPUT
       - name: Cache libs
-        id: cache-builds
         uses: actions/cache/save@v3
         with:
           path: |
             ./build/libs
             ./build/publications
-          key: libs
+          key: "libs-${{ runner.os }}-${{ github.run_id }}"
 
   native_images:
     needs: build_artifacts
@@ -168,17 +167,15 @@ jobs:
           cache: gradle
 
       - uses: actions/cache/restore@v3
-        id: restore-builds
         with:
           path: ./build/*
-          key: libs
+          key: "libs-${{ runner.os }}-${{ github.run_id }}"
           fail-on-cache-miss: true
 
       - uses: actions/cache/restore@v3
-        id: restore-native-image
         with:
           path: ./build/libs/plantuml-linux-amd64-*
-          key: native-image-linux
+          key: "native-image-linux-${{ runner.os }}-${{ github.run_id }}"
           fail-on-cache-miss: true
 
       - name: Upload artifacts

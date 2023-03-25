@@ -15,10 +15,9 @@ jobs:
         uses: actions/checkout@v3
 
       - uses: actions/cache/restore@v3
-        id: restore-libs
         with:
-          path: ./build/libs
-          key: libs
+          path: ./build/*
+          key: "libs-${{ runner.os }}-${{ github.run_id }}"
           fail-on-cache-miss: true
 
       - name: Install system requirements
@@ -45,8 +44,7 @@ jobs:
           ./graalvm-ce/bin/native-image -H:ConfigurationFileDirectories=./native-image-config-dir --no-fallback --report-unsupported-elements-at-runtime -jar "./build/libs/plantuml-${RELEASE_VERSION}.jar" "./build/libs/plantuml-linux-amd64-${RELEASE_VERSION}"
 
       - name: Cache native image
-        id: save-native-image
         uses: actions/cache/save@v3
         with:
           path: ./build/libs/plantuml-linux-amd64-*
-          key: native-image-linux
+          key: "native-image-linux-${{ runner.os }}-${{ github.run_id }}"
