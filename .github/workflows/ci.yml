@@ -139,7 +139,7 @@ jobs:
         run: |
           echo "RELEASE_VERSION=$(gradle properties -q | grep "version:" | awk '{print $2}')" >> $GITHUB_OUTPUT
       - name: Cache libs
-        id: cache
+        id: cache-builds
         uses: actions/cache/save@v3
         with:
           path: |
@@ -168,14 +168,14 @@ jobs:
           cache: gradle
 
       - uses: actions/cache/restore@v3
-        id: cache
+        id: restore-builds
         with:
           path: ./build/*
           key: libs
           fail-on-cache-miss: true
 
       - uses: actions/cache/restore@v3
-        id: cache
+        id: restore-native-image
         with:
           path: ./build/libs/plantuml-linux-amd64-*
           key: native-image-linux
