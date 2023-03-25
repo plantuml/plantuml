@@ -35,4 +35,4 @@ jobs:
 
       - name: Generate native image
         run: |
-          ./graalvm-ce/bin/native-image -H:ConfigurationFileDirectories=./native-image-config-dir --no-fallback --report-unsupported-elements-at-runtime -jar "./build/libs/plantuml-${RELEASE_VERSION}.jar" "./build/github_release/plantuml-linux-amd64-${RELEASE_VERSION}"
+          ./graalvm-ce/bin/native-image -H:ConfigurationFileDirectories=./native-image-config-dir --no-fallback --report-unsupported-elements-at-runtime -jar "./build/libs/plantuml-${RELEASE_VERSION}.jar" "./build/libs/plantuml-linux-amd64-${RELEASE_VERSION}"

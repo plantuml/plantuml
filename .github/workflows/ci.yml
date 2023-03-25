@@ -140,6 +140,23 @@ jobs:
         run: |
           gradle -i signMavenPublication signPdfJar
 
+      - name: Set release version
+        run: |
+          echo "RELEASE_VERSION=$(gradle properties -q | grep "version:" | awk '{print $2}')" >> $GITHUB_ENV
+
+      - name: Build native images
+        #if: needs.workflow_config.outputs.do_snapshot_release == 'true' || needs.workflow_config.outputs.do_release == 'true'
+        uses: ./.github/workflows/native-image.yml
+        with:
+          release-version: ${{ env.RELEASE_VERSION }}
+
+      - name: Native image smoke tests
+        run: |
+          "./build/libs/plantuml-linux-amd64-${RELEASE_VERSION}" --version
+          echo 'Bob->Alice: Hello' | "./build/libs/plantuml-linux-amd64-${RELEASE_VERSION}" -tsvg -pipe | grep "Bob"
+        env:
+          RELEASE_VERSION: ${{ env.RELEASE_VERSION }}
+
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
@@ -148,16 +165,6 @@ jobs:
           path: |
             build/libs/*
             build/publications/maven/*
-
-      - name: Set release version
-        run: |
-          echo "RELEASE_VERSION=$(gradle properties -q | grep "version:" | awk '{print $2}')" >> $GITHUB_ENV
-
-      - name: Build native images
-        if: needs.workflow_config.outputs.do_snapshot_release == 'true' || needs.workflow_config.outputs.do_release == 'true'
-        uses: ./.github/workflows/native-image.yml
-        with:
-          release-version: ${{ env.RELEASE_VERSION }}
 
       - name: Create snapshot release
         if: needs.workflow_config.outputs.do_snapshot_release == 'true'
