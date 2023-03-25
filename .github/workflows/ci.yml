@@ -149,9 +149,20 @@ jobs:
             build/libs/*
             build/publications/maven/*
 
+      - name: Set release version
+        run: |
+          echo "RELEASE_VERSION=$(gradle properties -q | grep "version:" | awk '{print $2}')" >> $GITHUB_ENV
+
+      - name: Build native images
+        if: needs.workflow_config.outputs.do_snapshot_release == 'true' || needs.workflow_config.outputs.do_release == 'true'
+        uses: ./.github/workflows/native-image.yml
+        with:
+          release-version: ${{ env.RELEASE_VERSION }}
+
       - name: Create snapshot release
         if: needs.workflow_config.outputs.do_snapshot_release == 'true'
         env:
+          RELEASE_VERSION: ${{ env.RELEASE_VERSION }}
           GITHUB_TOKEN: ${{ github.token }}
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
@@ -165,6 +176,7 @@ jobs:
       - name: Create release in GitHub
         if: needs.workflow_config.outputs.do_release == 'true'
         env:
+          RELEASE_VERSION: ${{ env.RELEASE_VERSION }}
           GITHUB_TOKEN: ${{ github.token }}
           TAG: ${{ github.event.ref }}
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
