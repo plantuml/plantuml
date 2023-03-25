@@ -105,8 +105,56 @@ jobs:
           name: ${{ github.run_number }}-${{ matrix.os }}-java-${{ matrix.java_version }}-test-reports
           path: build/reports/tests/
 
-  upload:
+  build_artifacts:
     needs: [ workflow_config, test ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v2
+      - name: Set up java
+        uses: actions/setup-java@v3.10.0
+        with:
+          java-version: 17
+          distribution: temurin
+          cache: gradle
+      - name: Set version from tag
+        if: env.POM_VERSION
+        env:
+          POM_VERSION: ${{ needs.workflow_config.outputs.pom_version }}
+        run: sed -i "s/version = .*/version = $POM_VERSION/" gradle.properties
+      - name: Build artifacts
+        run: |
+          gradle -q clean build \
+            pdfJar \
+            generateMetadataFileForMavenPublication generatePomFileForMavenPublication \
+            -x test
+      - name: Sign artifacts
+        if: env.ORG_GRADLE_PROJECT_signingKey
+        env:
+          ORG_GRADLE_PROJECT_signingKey: ${{ secrets.ARTIFACT_SIGNING_KEY }}
+          ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.ARTIFACT_SIGNING_PASSPHRASE }}
+        run: |
+          gradle -i signMavenPublication signPdfJar
+      - name: Set release version
+        run: |
+          echo "RELEASE_VERSION=$(gradle properties -q | grep "version:" | awk '{print $2}')" >> $GITHUB_OUTPUT
+      - name: Cache libs
+        id: cache
+        uses: actions/cache/save@v3
+        with:
+          path: |
+            ./build/libs
+            ./build/publications
+          key: libs
+
+  native_images:
+    needs: build_artifacts
+    uses: ./.github/workflows/native-image.yml
+    with:
+      release-version: ${{ needs.build_artifacts.outputs.RELEASE_VERSION }}
+
+  upload:
+    needs: [ workflow_config, build_artifacts, native_images]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
@@ -119,43 +167,19 @@ jobs:
           distribution: temurin
           cache: gradle
 
-      - name: Set version from tag
-        if: env.POM_VERSION
-        env:
-          POM_VERSION: ${{ needs.workflow_config.outputs.pom_version }}
-        run: sed -i "s/version = .*/version = $POM_VERSION/" gradle.properties
-
-      - name: Build artifacts
-        run: |
-          gradle -q clean build \
-            pdfJar \
-            generateMetadataFileForMavenPublication generatePomFileForMavenPublication \
-            -x test
-
-      - name: Sign artifacts
-        if: env.ORG_GRADLE_PROJECT_signingKey
-        env:
-          ORG_GRADLE_PROJECT_signingKey: ${{ secrets.ARTIFACT_SIGNING_KEY }}
-          ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.ARTIFACT_SIGNING_PASSPHRASE }}
-        run: |
-          gradle -i signMavenPublication signPdfJar
-
-      - name: Set release version
-        run: |
-          echo "RELEASE_VERSION=$(gradle properties -q | grep "version:" | awk '{print $2}')" >> $GITHUB_ENV
-
-      - name: Build native images
-        #if: needs.workflow_config.outputs.do_snapshot_release == 'true' || needs.workflow_config.outputs.do_release == 'true'
-        uses: ./.github/workflows/native-image.yml
+      - uses: actions/cache/restore@v3
+        id: cache
         with:
-          release-version: ${{ env.RELEASE_VERSION }}
+          path: ./build/*
+          key: libs
+          fail-on-cache-miss: true
 
-      - name: Native image smoke tests
-        run: |
-          "./build/libs/plantuml-linux-amd64-${RELEASE_VERSION}" --version
-          echo 'Bob->Alice: Hello' | "./build/libs/plantuml-linux-amd64-${RELEASE_VERSION}" -tsvg -pipe | grep "Bob"
-        env:
-          RELEASE_VERSION: ${{ env.RELEASE_VERSION }}
+      - uses: actions/cache/restore@v3
+        id: cache
+        with:
+          path: ./build/libs/plantuml-linux-amd64-*
+          key: native-image-linux
+          fail-on-cache-miss: true
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
@@ -169,7 +193,7 @@ jobs:
       - name: Create snapshot release
         if: needs.workflow_config.outputs.do_snapshot_release == 'true'
         env:
-          RELEASE_VERSION: ${{ env.RELEASE_VERSION }}
+          RELEASE_VERSION: ${{ needs.build_artifacts.outputs.RELEASE_VERSION }}
           GITHUB_TOKEN: ${{ github.token }}
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
@@ -183,7 +207,7 @@ jobs:
       - name: Create release in GitHub
         if: needs.workflow_config.outputs.do_release == 'true'
         env:
-          RELEASE_VERSION: ${{ env.RELEASE_VERSION }}
+          RELEASE_VERSION: ${{ needs.build_artifacts.outputs.RELEASE_VERSION }}
           GITHUB_TOKEN: ${{ github.token }}
           TAG: ${{ github.event.ref }}
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
