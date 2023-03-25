@@ -16,7 +16,9 @@ jobs:
 
       - uses: actions/cache/restore@v3
         with:
-          path: ./build/*
+          path: |
+            ./build/libs
+            ./build/publications
           key: "libs-${{ runner.os }}-${{ github.run_id }}"
           fail-on-cache-miss: true
 
