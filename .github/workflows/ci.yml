@@ -147,7 +147,8 @@ jobs:
           path: |
             build/libs
             build/publications
-          key: "libs-${{ runner.os }}-${{ github.run_id }}"
+          key: "libs-${{ github.run_id }}"
+          enableCrossOsArchive: true
 
   native_images:
     needs: build_artifacts
@@ -174,14 +175,30 @@ jobs:
           path: |
             build/libs
             build/publications
-          key: "libs-${{ runner.os }}-${{ github.run_id }}"
+          key: "libs-${{ github.run_id }}"
           fail-on-cache-miss: true
+          enableCrossOsArchive: true
 
       - uses: actions/cache/restore@v3
         with:
-          path: build/libs/plantuml-linux-amd64-*
-          key: "native-image-linux-${{ runner.os }}-${{ github.run_id }}"
+          path: "build/libs/plantuml-darwin-amd64-*"
+          key: "native-image-darwin-amd64-${{ github.run_id }}"
           fail-on-cache-miss: true
+          enableCrossOsArchive: true
+
+      - uses: actions/cache/restore@v3
+        with:
+          path: "build/libs/plantuml-win-amd64-*"
+          key: "native-image-win-amd64-${{ github.run_id }}"
+          fail-on-cache-miss: true
+          enableCrossOsArchive: true
+
+      - uses: actions/cache/restore@v3
+        with:
+          path: "build/libs/plantuml-linux-amd64-*"
+          key: "native-image-linux-amd64-${{ github.run_id }}"
+          fail-on-cache-miss: true
+          enableCrossOsArchive: true
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
