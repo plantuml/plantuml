@@ -88,17 +88,17 @@ public class Display implements Iterable<CharSequence> {
 
 	public final static Display NULL = new Display(true, null, null, true, CreoleMode.FULL);
 
-//	@Override
-//	public int hashCode() {
-//		if (isNull)
-//			return 42;
-//		return displayData.hashCode();
-//	}
-//
-//	@Override
-//	public boolean equals(Object other) {
-//		return this.displayData.equals(((Display) other).displayData);
-//	}
+	@Override
+	public int hashCode() {
+		if (isNull)
+			return 42;
+		return displayData.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object other) {
+		return this.displayData.equals(((Display) other).displayData);
+	}
 
 	public boolean equalsLike(Display other) {
 		if (isNull(this))
