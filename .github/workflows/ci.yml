@@ -157,6 +157,12 @@ jobs:
     with:
       release-version: ${{ needs.build_artifacts.outputs.release_version }}
 
+  license-mit:
+    needs: build_artifacts
+    uses: ./.github/workflows/license-mit.yml
+    with:
+      release-version: ${{ needs.build_artifacts.outputs.release_version }}
+
   upload:
     if: needs.workflow_config.outputs.do_release == 'true'
     needs: [ workflow_config, build_artifacts, native_images]
@@ -199,6 +205,13 @@ jobs:
         with:
           path: "build/libs/plantuml-linux-amd64-*"
           key: "native-image-linux-amd64-${{ github.run_id }}"
+          fail-on-cache-miss: true
+          enableCrossOsArchive: true
+
+      - uses: actions/cache/restore@v3
+        with:
+          path: "build/libs/plantuml-mit-*"
+          key: "license-mit-${{ github.run_id }}"
           fail-on-cache-miss: true
           enableCrossOsArchive: true
 
