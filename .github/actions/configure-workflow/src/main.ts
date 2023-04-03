@@ -1,6 +1,6 @@
 import * as core from '@actions/core';
 import * as github from '@actions/github';
-import { PushEvent, WorkflowDispatchEvent } from '@octokit/webhooks-types';
+import {PullRequestEvent, PushEvent, ReleaseEvent, WorkflowDispatchEvent} from '@octokit/webhooks-types';
 
 import { wait } from "./wait";
 
@@ -19,25 +19,51 @@ async function run(): Promise<void> {
 	}
 }
 
-function hadnleEvent(): void {
+function onPullRequestEvent(payload: PullRequestEvent) {
+	switch(payload.action){
+		case "labeled":
+			console.log("pull request label "+payload.label)
+			break;
+		default:
+			console.log("pull request action "+payload.action)
+	}
+	console.info('pull request event:',payload)
+}
+
+function onWorkflowDispatchEvent(payload: WorkflowDispatchEvent): void {
+	console.info('workflow dispatch event:',payload)
+}
+
+function onPushEvent(payload: PushEvent): void {
+	console.info('push event:',payload)
+}
+
+function onReleaseEvent(payload: ReleaseEvent) {
+	console.info('onReleaseEvent:',payload)
+
+}
+
+function handleEvent(): void {
 	console.info(`eventName: ${github.context.eventName}`);
 	switch (github.context.eventName) {
 		case "workflow_dispatch":
 			onWorkflowDispatchEvent(github.context.payload as WorkflowDispatchEvent);
 			break;
 		case "push":
-			onPush(github.context.payload as PushEvent);
+			onPushEvent(github.context.payload as PushEvent);
+			break;
+		case "pull_request":
+			onPullRequestEvent(github.context.payload as PullRequestEvent)
+			break;
+			// case "pull_request_target":
+			// onPullRequestEvent(github.context.payload as PullRequestEvent)
+			// break;
+		case "release":
+			onReleaseEvent(github.context.payload as ReleaseEvent)
+		default:
 			break;
 	}
 }
 
-function onWorkflowDispatchEvent(payload: WorkflowDispatchEvent): void {
-	core.info(`The workflow is: ${payload.workflow}`);
-}
-
-function onPush(payload: PushEvent): void {
-	core.info(`The head commit is: ${payload.head_commit}`);
-}
-
-hadnleEvent();
+handleEvent();
 run();

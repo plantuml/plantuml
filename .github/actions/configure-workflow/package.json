@@ -1,6 +1,6 @@
 {
   "name": "typescript-action",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "private": true,
   "description": "TypeScript template action",
   "main": "lib/main.js",
@@ -12,7 +12,8 @@
     "package": "ncc build --source-map --license licenses.txt",
     "test": "jest",
     "all": "npm run build && npm run format && npm run lint && npm run package && npm test",
-		"test-job": "npm run build && npm run package &&  pushd ../../../ && act --job testing-workflow-config && popd"
+		"test-job": "npm run build && npm run package &&  pushd ../../../ && act --job testing-workflow-config && popd",
+		"clean": "rm -rf node_modules lib .idea"
   },
   "repository": {
     "type": "git",

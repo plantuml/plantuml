@@ -54,24 +54,47 @@ function run() {
         }
     });
 }
-function hadnleEvent() {
+function onPullRequestEvent(payload) {
+    switch (payload.action) {
+        case "labeled":
+            console.log("pull request label " + payload.label);
+            break;
+        default:
+            console.log("pull request action " + payload.action);
+    }
+    console.info('pull request event:', payload);
+}
+function onWorkflowDispatchEvent(payload) {
+    console.info('workflow dispatch event:', payload);
+}
+function onPushEvent(payload) {
+    console.info('push event:', payload);
+}
+function onReleaseEvent(payload) {
+    console.info('onReleaseEvent:', payload);
+}
+function handleEvent() {
     console.info(`eventName: ${github.context.eventName}`);
     switch (github.context.eventName) {
         case "workflow_dispatch":
             onWorkflowDispatchEvent(github.context.payload);
             break;
         case "push":
-            onPush(github.context.payload);
+            onPushEvent(github.context.payload);
+            break;
+        case "pull_request":
+            onPullRequestEvent(github.context.payload);
+            break;
+        // case "pull_request_target":
+        // onPullRequestEvent(github.context.payload as PullRequestEvent)
+        // break;
+        case "release":
+            onReleaseEvent(github.context.payload);
+        default:
             break;
     }
 }
-function onWorkflowDispatchEvent(payload) {
-    core.info(`The workflow is: ${payload.workflow}`);
-}
-function onPush(payload) {
-    core.info(`The head commit is: ${payload.head_commit}`);
-}
-hadnleEvent();
+handleEvent();
 run();
 
 
