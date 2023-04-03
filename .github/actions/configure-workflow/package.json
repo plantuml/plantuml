@@ -11,7 +11,8 @@
     "lint": "eslint src/**/*.ts",
     "package": "ncc build --source-map --license licenses.txt",
     "test": "jest",
-    "all": "npm run build && npm run format && npm run lint && npm run package && npm test"
+    "all": "npm run build && npm run format && npm run lint && npm run package && npm test",
+		"test-job": "npm run build && npm run package &&  pushd ../../../ && act --job testing-workflow-config && popd"
   },
   "repository": {
     "type": "git",
@@ -25,9 +26,11 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^1.10.0"
+    "@actions/core": "^1.10.0",
+    "@actions/github": "^5.1.1"
   },
   "devDependencies": {
+    "@octokit/webhooks-types": "^6.10.0",
     "@types/node": "^18.11.0",
     "@typescript-eslint/parser": "^4.33.0",
     "@vercel/ncc": "^0.31.1",
