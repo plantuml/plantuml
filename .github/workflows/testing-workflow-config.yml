@@ -1,0 +1,19 @@
+name: Testing workflow config action
+
+on:
+  workflow_dispatch:
+  push:
+  pull_request:
+  release:
+
+jobs:
+  testing-workflow-config:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: configure workflow
+        uses: ./.github/actions/configure-workflow
+        id: config
+        with:
+          milliseconds: 3000
