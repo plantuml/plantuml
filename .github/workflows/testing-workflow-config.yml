@@ -2,6 +2,9 @@ name: Testing workflow config action
 
 on:
   workflow_dispatch:
+  push:
+  pull_request:
+  release:
 
 jobs:
   testing-workflow-config:
