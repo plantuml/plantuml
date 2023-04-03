@@ -63,8 +63,7 @@ public abstract class AbstractEntityImageBorder extends AbstractEntityImage {
 	protected abstract StyleSignatureBasic getSignature();
 
 	final protected Style getStyle() {
-		final Entity leaf = (Entity) getEntity();
-		final Stereotype stereotype = leaf.getStereotype();
+		final Stereotype stereotype = getEntity().getStereotype();
 		return getSignature().withTOBECHANGED(stereotype).getMergedStyle(getSkinParam().getCurrentStyleBuilder());
 	}
 

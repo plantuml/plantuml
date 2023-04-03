@@ -58,17 +58,14 @@ import net.sourceforge.plantuml.svek.SvekNode;
 
 public class EntityImageStateBorder extends AbstractEntityImageBorder {
 
-	private final SName sname;
-
 	public EntityImageStateBorder(Entity leaf, ISkinParam skinParam, Cluster stateParent, final Bibliotekon bibliotekon,
 			SName sname) {
 		super(leaf, skinParam, stateParent, bibliotekon, FontParam.STATE);
-		this.sname = sname;
 	}
 
 	@Override
 	protected StyleSignatureBasic getSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, sname);
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.stateDiagram, SName.state);
 	}
 
 	private boolean upPosition() {

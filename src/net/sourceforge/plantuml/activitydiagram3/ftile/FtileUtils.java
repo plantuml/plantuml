@@ -44,9 +44,9 @@ public class FtileUtils {
 	}
 
 	public static Ftile addConnection(Ftile ftile, Collection<Connection> connections) {
-		if (connections.size() == 0) {
+		if (connections.size() == 0)
 			return ftile;
-		}
+
 		return new FtileWithConnection(ftile, connections);
 	}
 
@@ -59,23 +59,23 @@ public class FtileUtils {
 	}
 
 	public static Ftile addVerticalMargin(Ftile ftile, double marginTop, double marginBottom) {
-		if (marginTop == 0 && marginBottom == 0) {
+		if (marginTop == 0 && marginBottom == 0)
 			return ftile;
-		}
+
 		return new FtileMargedVertically(ftile, marginTop, marginBottom);
 	}
 
 	public static Ftile addHorizontalMargin(Ftile ftile, double margin1, double margin2) {
-		if (margin1 == 0 && margin2 == 0) {
+		if (margin1 == 0 && margin2 == 0)
 			return ftile;
-		}
+
 		return new FtileMarged(ftile, margin1, margin2);
 	}
 
 	public static Ftile addHorizontalMargin(Ftile ftile, double margin) {
-		if (margin == 0) {
+		if (margin == 0)
 			return ftile;
-		}
+
 		return new FtileMarged(ftile, margin, margin);
 	}
 

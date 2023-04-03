@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
@@ -95,37 +97,49 @@ public class FtileFactoryDelegatorRepeat extends FtileFactoryDelegator {
 
 		final List<WeldingPoint> weldingPoints = repeat.getWeldingPoints();
 		if (weldingPoints.size() > 0) {
-			// printAllChild(repeat);
 
 			final Ftile diamondBreak = new FtileDiamond(repeat.skinParam(), diamondColor, borderColor, swimlane);
 			result = assembly(FtileUtils.addHorizontalMargin(result, 10, 0), diamondBreak);
 			final Genealogy genealogy = new Genealogy(result);
 
-			final FtileBreak ftileBreak = (FtileBreak) weldingPoints.get(0);
+			final Collection<Connection> connections = new ArrayList<Connection>();
 
-			result = FtileUtils.addConnection(result, new Connection() {
-				public void drawU(UGraphic ug) {
-					final UTranslate tr1 = genealogy.getTranslate(ftileBreak, ug.getStringBounder());
-					final UTranslate tr2 = genealogy.getTranslate(diamondBreak, ug.getStringBounder());
-					final XDimension2D dimDiamond = diamondBreak.calculateDimension(ug.getStringBounder());
+			for (int i = 0; i < weldingPoints.size(); i++) {
+				final FtileBreak ftileBreak = (FtileBreak) weldingPoints.get(i);
+				final boolean first = i == 0;
+				connections.add(new Connection() {
+					public void drawU(UGraphic ug) {
+						final UTranslate tr1 = genealogy.getTranslate(ftileBreak, ug.getStringBounder());
+						final UTranslate tr2 = genealogy.getTranslate(diamondBreak, ug.getStringBounder());
+						final XDimension2D dimDiamond = diamondBreak.calculateDimension(ug.getStringBounder());
 
-					final Snake snake = Snake.create(skinParam(), arrowColor, skinParam().arrows().asToRight());
-					snake.addPoint(tr1.getDx(), tr1.getDy());
-					snake.addPoint(0, tr1.getDy());
-					snake.addPoint(0, tr2.getDy() + dimDiamond.getHeight() / 2);
-					snake.addPoint(tr2.getDx(), tr2.getDy() + dimDiamond.getHeight() / 2);
-					ug.draw(snake);
-				}
+						final Snake snake;
+						if (first) {
+							snake = Snake.create(skinParam(), arrowColor, skinParam().arrows().asToRight());
+							snake.addPoint(tr1.getDx(), tr1.getDy());
+							snake.addPoint(0, tr1.getDy());
+							snake.addPoint(0, tr2.getDy() + dimDiamond.getHeight() / 2);
+							snake.addPoint(tr2.getDx(), tr2.getDy() + dimDiamond.getHeight() / 2);
+						} else {
+							snake = Snake.create(skinParam(), arrowColor, skinParam().arrows().asToLeft());
+							snake.addPoint(tr1.getDx(), tr1.getDy());
+							snake.addPoint(0, tr1.getDy());
+						}
+						ug.draw(snake);
+					}
 
-				public Ftile getFtile1() {
-					return ftileBreak;
-				}
+					public Ftile getFtile1() {
+						return ftileBreak;
+					}
 
-				public Ftile getFtile2() {
-					return diamondBreak;
-				}
+					public Ftile getFtile2() {
+						return diamondBreak;
+					}
 
-			});
+				});
+			}
+
+			result = FtileUtils.addConnection(result, connections);
 
 		}
 		return result;

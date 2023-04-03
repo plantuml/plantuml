@@ -267,13 +267,15 @@ public class ArrowConfiguration {
 	}
 
 	public final int getInclination1() {
-		if (dressing2.getHead() == ArrowHead.NONE)
+		if (dressing2.getHead() == ArrowHead.NONE || dressing2.getHead() == ArrowHead.CROSSX)
 			return inclination;
 		return 0;
 	}
 
 	public final int getInclination2() {
-		if (dressing1.getHead() == ArrowHead.NONE)
+		if (dressing1.getHead() == ArrowHead.NONE || dressing1.getHead() == ArrowHead.CROSSX)
+			return inclination;
+		if (dressing1.getHead() == ArrowHead.NORMAL || dressing1.getHead() == ArrowHead.NORMAL)
 			return inclination;
 		return 0;
 	}
