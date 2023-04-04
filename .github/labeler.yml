@@ -1,0 +1,32 @@
+'m:release':
+- 'CHANGELOG.md'
+- 'gradle.properties'
+
+'m:docs':
+- '*.md'
+- 'docs/**/*'
+
+'m:workflow':
+- .github/**
+
+'m:gradle':
+- 'gradle*'
+- 'gradle/**'
+- '**/settings.gradle.*'
+- '**/build.gradle.*'
+- 'sjpp.jar'
+
+'m:source':
+- 'skin/**/*'
+- 'src/**/*'
+- 'stdlib/**/*'
+- 'svg/**/*'
+- 'test/**/*'
+- 'themes/**/*'
+- 'manifest.txt'
+
+'m:docker':
+- Dockerfile
+
+'m:native':
+- .github/workflows/native-image.yml
