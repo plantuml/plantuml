@@ -76,8 +76,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        java_version: [ 8, 11, 17 ]
-        os: [ ubuntu-20.04, ubuntu-22.04, windows-2019, windows-2022 ]
+        java_version: [ 8, 17 ]
+        os: [ ubuntu-latest, windows-latest ]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout the repository
@@ -151,12 +151,14 @@ jobs:
           enableCrossOsArchive: true
 
   native_images:
+    if: needs.workflow_config.outputs.do_release == 'true'
     needs: build_artifacts
     uses: ./.github/workflows/native-image.yml
     with:
       release-version: ${{ needs.build_artifacts.outputs.release_version }}
 
   upload:
+    if: needs.workflow_config.outputs.do_release == 'true'
     needs: [ workflow_config, build_artifacts, native_images]
     runs-on: ubuntu-latest
     steps:
