@@ -217,7 +217,7 @@ public class BlockUml {
 	// ::done
 
 	public long lastModified() {
-		return (Version.compileTime() / 1000L / 60) * 1000L * 60 + Version.beta() * 1000L * 3600;
+		return (Version.compileTime() / 1000L / 60) * 1000L * 60;
 	}
 
 	public boolean isStartDef(String name) {

@@ -35,73 +35,78 @@
  */
 package net.sourceforge.plantuml.version;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Date;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SURL;
+import net.sourceforge.plantuml.utils.SignatureUtils;
 
 public class Version {
-    // ::remove folder when __HAXE__
-
-	private static final int MAJOR_SEPARATOR = 1000000;
-
-	public static int version() {
-		return 1202305;
-	}
-
-	public static int versionPatched() {
-		if (beta() != 0) {
-			return version() + 1;
-		}
-		return version();
-	}
+	// ::remove folder when __HAXE__
 
 	public static String versionString() {
-		if (beta() != 0) {
-			return dotted(version() + 1) + "beta" + beta();
+		readVersionTxtIfNeeded();
+		return versionCache.get(0);
+	}
+
+	public static long compileTime() {
+		readVersionTxtIfNeeded();
+		return compileTimeCache.get(0);
+	}
+
+	private static List<String> versionCache = new CopyOnWriteArrayList<String>();
+	private static List<Long> compileTimeCache = new CopyOnWriteArrayList<Long>();
+	private static List<String> etagCache = new CopyOnWriteArrayList<String>();
+
+	private static void readVersionTxtIfNeeded() {
+		if (compileTimeCache.size() == 0 || versionCache.size() == 0) {
+			try {
+				final InputStream is = Version.class.getResourceAsStream("version.txt");
+				if (is != null)
+					try (final BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
+						versionCache.add(br.readLine());
+						compileTimeCache.add(Long.parseLong(br.readLine()));
+					}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			if (versionCache.size() == 0)
+				versionCache.add("Unknown version");
+			if (compileTimeCache.size() == 0)
+				compileTimeCache.add(0L);
 		}
-		return dotted(version());
+
 	}
 
 	public static String fullDescription() {
 		return "PlantUML version " + Version.versionString() + " (" + Version.compileTimeString() + ")";
 	}
 
-	private static String dotted(int nb) {
-		final String minor = "" + nb % MAJOR_SEPARATOR;
-		final String major = "" + nb / MAJOR_SEPARATOR;
-		return major + "." + minor.substring(0, 4) + "." + Integer.parseInt(minor.substring(4));
-	}
-
 	public static String versionString(int size) {
 		final StringBuilder sb = new StringBuilder(versionString());
-		while (sb.length() < size) {
+		while (sb.length() < size)
 			sb.append(' ');
-		}
+
 		return sb.toString();
 	}
 
-	public static int beta() {
-		final int beta = 2;
-		return beta;
-	}
-
 	public static String etag() {
-		return Integer.toString(version() % MAJOR_SEPARATOR - 201670, 36) + Integer.toString(beta(), 36);
+		if (etagCache.size() == 0)
+			etagCache.add(SignatureUtils.getMD5Hex(versionString()));
+
+		return etagCache.get(0);
 	}
 
 	public static String turningId() {
 		return etag();
 	}
 
-	public static long compileTime() {
-		return 1679680470757L;
-	}
-
 	public static String compileTimeString() {
-		if (beta() != 0) {
-			return "Unknown compile time";
-		}
 		return new Date(Version.compileTime()).toString();
 	}
 
@@ -109,13 +114,13 @@ public class Version {
 	public static String getJarPath() {
 		try {
 			final ClassLoader loader = Version.class.getClassLoader();
-			if (loader == null) {
+			if (loader == null)
 				return "No ClassLoader?";
-			}
+
 			final SURL url = SURL.create(loader.getResource("net/sourceforge/plantuml/version/Version.class"));
-			if (url == null) {
+			if (url == null)
 				return "No URL?";
-			}
+
 			String fullpath = url.toString();
 			fullpath = fullpath.replaceAll("net/sourceforge/plantuml/version/Version\\.class", "");
 			return fullpath;
