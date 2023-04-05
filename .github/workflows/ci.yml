@@ -147,6 +147,7 @@ jobs:
           path: |
             build/libs
             build/publications
+            plantuml-mit/build/libs
           key: "libs-${{ github.run_id }}"
           enableCrossOsArchive: true
 
@@ -172,30 +173,35 @@ jobs:
           distribution: temurin
           cache: gradle
 
-      - uses: actions/cache/restore@v3
+      - name: Restore Libs cache
+        uses: actions/cache/restore@v3
         with:
           path: |
             build/libs
             build/publications
+            plantuml-mit/build/libs
           key: "libs-${{ github.run_id }}"
           fail-on-cache-miss: true
           enableCrossOsArchive: true
 
-      - uses: actions/cache/restore@v3
+      - name: Restore Native-image-darwin-amd64 cache
+        uses: actions/cache/restore@v3
         with:
           path: "build/libs/plantuml-darwin-amd64-*"
           key: "native-image-darwin-amd64-${{ github.run_id }}"
           fail-on-cache-miss: true
           enableCrossOsArchive: true
 
-      - uses: actions/cache/restore@v3
+      - name: Restore Native-image-win-amd64 cache
+        uses: actions/cache/restore@v3
         with:
           path: "build/libs/plantuml-win-amd64-*"
           key: "native-image-win-amd64-${{ github.run_id }}"
           fail-on-cache-miss: true
           enableCrossOsArchive: true
 
-      - uses: actions/cache/restore@v3
+      - name: Restore Native-image-linux-amd64 cache
+        uses: actions/cache/restore@v3
         with:
           path: "build/libs/plantuml-linux-amd64-*"
           key: "native-image-linux-amd64-${{ github.run_id }}"
@@ -210,6 +216,7 @@ jobs:
           path: |
             build/libs/*
             build/publications/maven/*
+            plantuml-mit/build/libs/*
 
       - name: Create snapshot release
         if: needs.workflow_config.outputs.do_snapshot_release == 'true'

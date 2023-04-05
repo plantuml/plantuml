@@ -37,6 +37,7 @@ jobs:
           path: |
             build/libs
             build/publications
+            plantuml-mit/build/libs
           key: "libs-${{ github.run_id }}"
           fail-on-cache-miss: true
           enableCrossOsArchive: true
