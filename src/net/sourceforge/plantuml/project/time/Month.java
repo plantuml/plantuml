@@ -67,16 +67,17 @@ public enum Month {
 			return StringUtils.capitalize(name());
 
 		final java.time.Month javaTimeMonth = getJavaTimeMonth();
-		final String v1 = javaTimeMonth.getDisplayName(TextStyle.FULL_STANDALONE, locale);
-		final String v2 = javaTimeMonth.getDisplayName(TextStyle.FULL, locale);
-		return StringUtils.capitalize(longest(v1, v2));
+		return javaTimeMonth.getDisplayName(TextStyle.FULL_STANDALONE, locale);
+//		final String v1 = javaTimeMonth.getDisplayName(TextStyle.FULL_STANDALONE, locale);
+//		final String v2 = javaTimeMonth.getDisplayName(TextStyle.FULL, locale);
+//		return StringUtils.capitalize(longest(v1, v2));
 	}
 
-	private String longest(String v1, String v2) {
-		if (v1.length() > v2.length())
-			return v1;
-		return v2;
-	}
+//	private String longest(String v1, String v2) {
+//		if (v1.length() > v2.length())
+//			return v1;
+//		return v2;
+//	}
 
 	static public String getRegexString() {
 		final StringBuilder sb = new StringBuilder();
