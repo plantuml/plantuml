@@ -51,6 +51,7 @@ public class ErrorStatus {
 
 	// public synchronized void goNoData() {
 	// this.noData = true;
+	//
 	// }
 
 	public synchronized void goWithError() {
