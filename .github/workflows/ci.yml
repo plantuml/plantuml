@@ -159,7 +159,9 @@ jobs:
       release-version: ${{ needs.build_artifacts.outputs.release_version }}
 
   upload:
-    if: needs.workflow_config.outputs.do_release == 'true'
+    if: |
+      needs.workflow_config.outputs.do_release == 'true' ||
+      needs.workflow_config.outputs.do_snapshot_release == 'true'
     needs: [ workflow_config, build_artifacts, native_images]
     runs-on: ubuntu-latest
     steps:
