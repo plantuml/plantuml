@@ -674,6 +674,11 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		return openClose.getStartingDay();
 	}
 
+	public Day getEndingDate() {
+		initMinMax();
+		return max;
+	}
+
 	public int daysInWeek() {
 		return openClose.daysInWeek();
 	}
@@ -770,6 +775,13 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 
 	public void nameDay(Day day, String name) {
 		nameDays.put(day, name);
+	}
+
+	public Day getToday() {
+		if (today == null)
+			this.today = Day.today();
+
+		return today;
 	}
 
 	public void setTodayColors(CenterBorderColor colors) {

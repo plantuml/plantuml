@@ -95,4 +95,9 @@ public class HColorGradient extends HColor {
 		return color1.toColor(mapper);
 	}
 
+	@Override
+	public HColor opposite() {
+		return color1.opposite();
+	}
+
 }

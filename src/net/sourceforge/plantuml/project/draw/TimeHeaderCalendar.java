@@ -111,6 +111,10 @@ public abstract class TimeHeaderCalendar extends TimeHeader {
 
 			}
 		}
+
+		if (pending != null)
+			pending.draw(ug, height);
+
 	}
 
 }

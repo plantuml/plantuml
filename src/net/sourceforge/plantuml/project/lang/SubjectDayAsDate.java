@@ -75,8 +75,18 @@ public class SubjectDayAsDate implements Subject {
 	}
 
 	private Day resultE(GanttDiagram system, RegexResult arg) {
-		final int day = Integer.parseInt(arg.get("ECOUNT", 0));
-		return system.getStartingDate().addDays(day);
+		final String type = arg.get("ETYPE", 0).toUpperCase();
+		final String operation = arg.get("EOPERATION", 0);
+		int day = Integer.parseInt(arg.get("ECOUNT", 0));
+		if ("-".equals(operation))
+			day = -day;
+		if ("D".equals(type))
+			return system.getStartingDate().addDays(day);
+		if ("T".equals(type))
+			return system.getToday().addDays(day);
+		if ("E".equals(type))
+			return system.getEndingDate().addDays(day);
+		throw new IllegalStateException();
 	}
 
 	public Collection<? extends SentenceSimple> getSentences() {
@@ -138,7 +148,8 @@ public class SubjectDayAsDate implements Subject {
 
 	private IRegex toRegexE() {
 		return new RegexConcat( //
-				new RegexLeaf("[dD]\\+"), //
+				new RegexLeaf("ETYPE", "([dDtTeE])"), //
+				new RegexLeaf("EOPERATION", "([-+])"), //
 				new RegexLeaf("ECOUNT", "([\\d]+)") //
 		);
 	}
