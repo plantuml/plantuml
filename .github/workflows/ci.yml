@@ -152,7 +152,9 @@ jobs:
           enableCrossOsArchive: true
 
   native_images:
-    if: needs.workflow_config.outputs.do_release == 'true'
+    if: |
+      needs.workflow_config.outputs.do_release == 'true' ||
+      needs.workflow_config.outputs.do_snapshot_release == 'true'
     needs: build_artifacts
     uses: ./.github/workflows/native-image.yml
     with:
