@@ -150,20 +150,11 @@ jobs:
           key: "libs-${{ github.run_id }}"
           enableCrossOsArchive: true
 
-  native_images:
-    if: |
-      needs.workflow_config.outputs.do_release == 'true' ||
-      needs.workflow_config.outputs.do_snapshot_release == 'true'
-    needs: build_artifacts
-    uses: ./.github/workflows/native-image.yml
-    with:
-      release-version: ${{ needs.build_artifacts.outputs.release_version }}
-
   upload:
     if: |
       needs.workflow_config.outputs.do_release == 'true' ||
       needs.workflow_config.outputs.do_snapshot_release == 'true'
-    needs: [ workflow_config, build_artifacts, native_images]
+    needs: [ workflow_config, build_artifacts ]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
@@ -183,30 +174,6 @@ jobs:
             build/libs
             build/publications
           key: "libs-${{ github.run_id }}"
-          fail-on-cache-miss: true
-          enableCrossOsArchive: true
-
-      - name: Restore Native-image-darwin-amd64 cache
-        uses: actions/cache/restore@v3
-        with:
-          path: "build/libs/plantuml-darwin-amd64-*"
-          key: "native-image-darwin-amd64-${{ github.run_id }}"
-          fail-on-cache-miss: true
-          enableCrossOsArchive: true
-
-      - name: Restore Native-image-win-amd64 cache
-        uses: actions/cache/restore@v3
-        with:
-          path: "build/libs/plantuml-win-amd64-*"
-          key: "native-image-win-amd64-${{ github.run_id }}"
-          fail-on-cache-miss: true
-          enableCrossOsArchive: true
-
-      - name: Restore Native-image-linux-amd64 cache
-        uses: actions/cache/restore@v3
-        with:
-          path: "build/libs/plantuml-linux-amd64-*"
-          key: "native-image-linux-amd64-${{ github.run_id }}"
           fail-on-cache-miss: true
           enableCrossOsArchive: true
 
