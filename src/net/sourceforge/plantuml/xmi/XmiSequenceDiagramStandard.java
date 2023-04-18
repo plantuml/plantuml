@@ -150,7 +150,7 @@ public class XmiSequenceDiagramStandard extends XmiSequenceDiagram {
 			comment.setAttribute("annotatedElement", String.join(" ", annotated));
 		}
 		comment.appendChild(document.createElement("body"))
-				.appendChild(document.createTextNode(getDisplayString(note.getStrings())));
+				.appendChild(document.createTextNode(getDisplayString(note.getDisplay())));
 		packagedElement.appendChild(comment);
 	}
 

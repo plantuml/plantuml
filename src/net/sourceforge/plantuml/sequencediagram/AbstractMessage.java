@@ -53,7 +53,7 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.style.WithStyle;
 import net.sourceforge.plantuml.url.Url;
 
-public abstract class AbstractMessage extends AbstractEvent implements EventWithDeactivate, WithStyle {
+public abstract class AbstractMessage extends AbstractEvent implements EventWithDeactivate, WithStyle, EventWithNote {
 
 	private Stereotype stereotype;
 
@@ -199,7 +199,8 @@ public abstract class AbstractMessage extends AbstractEvent implements EventWith
 		return noteOnMessages;
 	}
 
-	public final void setNote(Note note) {
+	@Override
+	public final void addNote(Note note) {
 		if (note.getPosition() != NotePosition.LEFT && note.getPosition() != NotePosition.RIGHT
 				&& note.getPosition() != NotePosition.BOTTOM && note.getPosition() != NotePosition.TOP)
 			throw new IllegalArgumentException();

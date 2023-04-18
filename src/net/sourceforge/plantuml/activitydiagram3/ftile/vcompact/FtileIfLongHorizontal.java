@@ -60,8 +60,10 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamondInside2;
 import net.sourceforge.plantuml.decoration.Rainbow;
+import net.sourceforge.plantuml.klimt.LineBreakStrategy;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.creole.CreoleMode;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
@@ -70,6 +72,8 @@ import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 
 class FtileIfLongHorizontal extends AbstractFtile {
@@ -143,11 +147,17 @@ class FtileIfLongHorizontal extends AbstractFtile {
 		return getSwimlaneIn();
 	}
 
-	static Ftile create(Swimlane swimlane, HColor borderColor, HColor backColor, Rainbow arrowColor,
-			FtileFactory ftileFactory, ConditionStyle conditionStyle, List<Branch> thens, Branch branch2,
-			FontConfiguration fcArrow, LinkRendering topInlinkRendering, LinkRendering afterEndwhile,
-			FontConfiguration fcTest) {
+	static Ftile create(Swimlane swimlane, HColor backColor, FtileFactory ftileFactory, ConditionStyle conditionStyle,
+			List<Branch> thens, Branch branch2, LinkRendering topInlinkRendering, LinkRendering afterEndwhile,
+			Style styleArrow, Style styleDiamond) {
 		Objects.requireNonNull(afterEndwhile);
+
+		final HColor borderColor = styleDiamond.value(PName.LineColor)
+				.asColor(ftileFactory.skinParam().getIHtmlColorSet());
+		final Rainbow arrowColor = Rainbow.build(styleArrow, ftileFactory.skinParam().getIHtmlColorSet());
+		final FontConfiguration fcTest = styleDiamond.getFontConfiguration(ftileFactory.skinParam().getIHtmlColorSet());
+		final FontConfiguration fcArrow = styleArrow.getFontConfiguration(ftileFactory.skinParam().getIHtmlColorSet());
+
 		final List<Ftile> tiles = new ArrayList<>();
 
 		for (Branch branch : thens)
@@ -160,9 +170,10 @@ class FtileIfLongHorizontal extends AbstractFtile {
 		for (Branch branch : thens) {
 			final TextBlock tb1 = branch.getDisplayPositive().create(fcArrow, HorizontalAlignment.LEFT,
 					ftileFactory.skinParam());
-			final TextBlock tbTest = branch.getLabelTest().create(fcTest,
+			final LineBreakStrategy lineBreak = styleDiamond.wrapWidth();
+			final TextBlock tbTest = branch.getLabelTest().create0(fcTest,
 					ftileFactory.skinParam().getDefaultTextAlignment(HorizontalAlignment.LEFT),
-					ftileFactory.skinParam());
+					ftileFactory.skinParam(), lineBreak, CreoleMode.FULL, null, null);
 			final HColor diamondColor = branch.getColor() == null ? backColor : branch.getColor();
 
 			FtileDiamondInside2 diamond = new FtileDiamondInside2(tbTest, branch.skinParam(), diamondColor, borderColor,

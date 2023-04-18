@@ -481,9 +481,9 @@ public class StringUtils {
 		final Matcher matcher = pattern.matcher(s);
 		final StringBuffer result = new StringBuffer(); // Can't be switched to StringBuilder in order to support Java 8
 		while (matcher.find()) {
-			final String num = matcher.group(1);
-			final char c = (char) Integer.parseInt(num);
-			matcher.appendReplacement(result, "" + c);
+			final int codePoint = Integer.parseInt(matcher.group(1));
+			final String unicode = new String(Character.toChars(codePoint));
+			matcher.appendReplacement(result, unicode);
 		}
 		matcher.appendTail(result);
 		return result.toString();

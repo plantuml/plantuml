@@ -79,13 +79,16 @@ public class TaskDrawDiamond extends AbstractTaskDraw {
 
 	@Override
 	protected double getShapeHeight(StringBounder stringBounder) {
-//		final Style style = getStyle();
-//		final ClockwiseTopRightBottomLeft padding = style.getPadding();
+		final TextBlock title = getTitle();
+		final XDimension2D titleDim = title.calculateDimension(stringBounder);
+		return Math.max(titleDim.getHeight(), getDiamondHeight());
+	}
+
+	private double getDiamondHeight() {
 		int result = (int) getFontConfiguration().getFont().getSize2D();
 		if (result % 2 == 1)
 			result--;
 		return result;
-
 	}
 
 	@Override
@@ -115,7 +118,7 @@ public class TaskDrawDiamond extends AbstractTaskDraw {
 		} else {
 			final double x1 = timeScale.getStartingPosition(start);
 			final double x2 = timeScale.getEndingPosition(start);
-			final double width = getShapeHeight(ug.getStringBounder());
+			final double width = getDiamondHeight();
 			final double delta = x2 - x1 - width;
 			x = x2 - delta / 2 + padding.getLeft();
 		}
@@ -137,7 +140,7 @@ public class TaskDrawDiamond extends AbstractTaskDraw {
 
 		final double x1 = timeScale.getStartingPosition(start);
 		final double x2 = timeScale.getEndingPosition(start);
-		final double width = getShapeHeight(ug.getStringBounder());
+		final double width = getDiamondHeight();
 		final double delta = x2 - x1 - width;
 
 		if (url != null)
@@ -158,7 +161,7 @@ public class TaskDrawDiamond extends AbstractTaskDraw {
 	}
 
 	private void drawShape(UGraphic ug) {
-		ug.draw(getDiamond(ug.getStringBounder()));
+		ug.draw(getDiamond());
 	}
 
 	@Override
@@ -174,8 +177,8 @@ public class TaskDrawDiamond extends AbstractTaskDraw {
 				getY(stringBounder).getCurrentValue() + h);
 	}
 
-	private UShape getDiamond(StringBounder stringBounder) {
-		final double h = getShapeHeight(stringBounder);
+	private UShape getDiamond() {
+		final double h = getDiamondHeight();
 		final UPolygon result = new UPolygon();
 		result.addPoint(h / 2, 0);
 		result.addPoint(h, h / 2);
@@ -188,7 +191,7 @@ public class TaskDrawDiamond extends AbstractTaskDraw {
 	public double getX1(TaskAttribute taskAttribute) {
 		final double x1 = timeScale.getStartingPosition(start);
 		final double x2 = timeScale.getEndingPosition(start);
-		final double width = getShapeHeight(null);
+		final double width = getDiamondHeight();
 		final double delta = x2 - x1 - width;
 		return x1 + delta;
 	}
@@ -197,7 +200,7 @@ public class TaskDrawDiamond extends AbstractTaskDraw {
 	public double getX2(TaskAttribute taskAttribute) {
 		final double x1 = timeScale.getStartingPosition(start);
 		final double x2 = timeScale.getEndingPosition(start);
-		final double width = getShapeHeight(null);
+		final double width = getDiamondHeight();
 		final double delta = x2 - x1 - width;
 		return x2 - delta;
 	}

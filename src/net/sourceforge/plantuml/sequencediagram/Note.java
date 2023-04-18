@@ -58,9 +58,9 @@ final public class Note extends AbstractEvent implements Event, SpecificBackcolo
 	private/* final */NotePosition position;
 
 	public void temporaryProtectedUntilTeozIsStandard() {
-		if (position == NotePosition.BOTTOM || position == NotePosition.TOP) {
+		if (position == NotePosition.BOTTOM || position == NotePosition.TOP)
 			position = NotePosition.LEFT;
-		}
+
 	}
 
 	private final StyleBuilder styleBuilder;
@@ -129,7 +129,7 @@ final public class Note extends AbstractEvent implements Event, SpecificBackcolo
 		return p2;
 	}
 
-	public Display getStrings() {
+	public Display getDisplay() {
 		return strings;
 	}
 

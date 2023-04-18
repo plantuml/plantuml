@@ -53,10 +53,14 @@ class GraphicalReference extends GraphicalElement implements InGroupable {
 	private final LivingParticipantBox livingParticipantBox1;
 	private final LivingParticipantBox livingParticipantBox2;
 	private final Url url;
+	private final Component noteLeft;
+	private final Component noteRight;
 
 	public GraphicalReference(double startingY, Component comp, LivingParticipantBox livingParticipantBox1,
-			LivingParticipantBox livingParticipantBox2, Url url) {
+			LivingParticipantBox livingParticipantBox2, Url url, Component noteLeft, Component noteRight) {
 		super(startingY);
+		this.noteLeft = noteLeft;
+		this.noteRight = noteRight;
 		this.url = url;
 		this.comp = comp;
 		this.livingParticipantBox1 = Objects.requireNonNull(livingParticipantBox1);
@@ -67,22 +71,33 @@ class GraphicalReference extends GraphicalElement implements InGroupable {
 	protected void drawInternalU(UGraphic ug, double maxX, Context2D context) {
 
 		final StringBounder stringBounder = ug.getStringBounder();
-		final double posX = getMinX(stringBounder);
+		// final double posX = getMinX(stringBounder);
 
-		ug = ug.apply(new UTranslate(posX, getStartingY()));
-		final double preferredWidth = comp.getPreferredWidth(stringBounder);
-		final double w = getMaxX(stringBounder) - getMinX(stringBounder);
+		ug = ug.apply(UTranslate.dy(getStartingY()));
 
-		final double width = Math.max(preferredWidth, w);
-
-		final XDimension2D dim = new XDimension2D(width, comp.getPreferredHeight(stringBounder));
-		if (url != null) {
+		final double r1 = getR1(stringBounder);
+		final double r2 = getR2(stringBounder);
+		final XDimension2D dim = new XDimension2D(r2 - r1, comp.getPreferredHeight(stringBounder));
+		if (url != null)
 			ug.startUrl(url);
+
+		comp.drawU(ug.apply(UTranslate.dx(r1)), new Area(dim), context);
+
+		if (noteLeft != null) {
+			final double wn = noteLeft.getPreferredWidth(stringBounder);
+			final double hn = noteLeft.getPreferredHeight(stringBounder);
+			noteLeft.drawU(ug, new Area(new XDimension2D(wn, hn)), context);
 		}
-		comp.drawU(ug, new Area(dim), context);
-		if (url != null) {
+
+		if (noteRight != null) {
+			final double wn = noteRight.getPreferredWidth(stringBounder);
+			final double hn = noteRight.getPreferredHeight(stringBounder);
+			noteRight.drawU(ug.apply(UTranslate.dx(r2)), new Area(new XDimension2D(wn, hn)), context);
+		}
+
+		if (url != null)
 			ug.closeUrl();
-		}
+
 	}
 
 	@Override
@@ -92,7 +107,26 @@ class GraphicalReference extends GraphicalElement implements InGroupable {
 
 	@Override
 	public double getPreferredWidth(StringBounder stringBounder) {
-		return comp.getPreferredWidth(stringBounder);
+		double result = comp.getPreferredWidth(stringBounder);
+		if (noteLeft != null)
+			result += noteLeft.getPreferredWidth(stringBounder);
+		if (noteRight != null)
+			result += noteRight.getPreferredWidth(stringBounder);
+		return result;
+	}
+
+	private double getR1(StringBounder stringBounder) {
+		return Math.min(livingParticipantBox1.getMinX(stringBounder), livingParticipantBox2.getMinX(stringBounder));
+	}
+
+	private double getR2(StringBounder stringBounder) {
+		final double diff = Math.max(livingParticipantBox1.getMaxX(stringBounder),
+				livingParticipantBox2.getMaxX(stringBounder)) - getR1(stringBounder);
+
+		final double preferredWidth = comp.getPreferredWidth(stringBounder);
+		final double width = Math.max(diff, preferredWidth);
+
+		return getR1(stringBounder) + width;
 	}
 
 	@Override
@@ -100,12 +134,20 @@ class GraphicalReference extends GraphicalElement implements InGroupable {
 		return getMinX(stringBounder);
 	}
 
-	public double getMaxX(StringBounder stringBounder) {
-		return Math.max(livingParticipantBox1.getMaxX(stringBounder), livingParticipantBox2.getMaxX(stringBounder));
+	@Override
+	public double getMinX(StringBounder stringBounder) {
+		double result = getR1(stringBounder);
+		if (noteLeft != null)
+			result -= noteLeft.getPreferredWidth(stringBounder);
+		return result;
 	}
 
-	public double getMinX(StringBounder stringBounder) {
-		return Math.min(livingParticipantBox1.getMinX(stringBounder), livingParticipantBox2.getMinX(stringBounder));
+	@Override
+	public double getMaxX(StringBounder stringBounder) {
+		double result = getR2(stringBounder);
+		if (noteRight != null)
+			result += noteRight.getPreferredWidth(stringBounder);
+		return result;
 	}
 
 	public String toString(StringBounder stringBounder) {

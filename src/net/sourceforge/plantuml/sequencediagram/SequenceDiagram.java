@@ -126,13 +126,23 @@ public class SequenceDiagram extends UmlDiagram {
 	private EventWithDeactivate lastEventWithDeactivate;
 
 	public EventWithDeactivate getLastEventWithDeactivate() {
-		return lastEventWithDeactivate;
+		for (int i = events.size() - 1; i >= 0; i--)
+			if (events.get(i) instanceof EventWithDeactivate)
+				return (EventWithDeactivate) events.get(i);
+		return null;
+	}
+
+	public EventWithNote getLastEventWithNote() {
+		for (int i = events.size() - 1; i >= 0; i--)
+			if (events.get(i) instanceof EventWithNote)
+				return (EventWithNote) events.get(i);
+		return null;
 	}
 
 	public Participant createNewParticipant(ParticipantType type, String code, Display display, int order) {
-		if (participantsget(code) != null) {
+		if (participantsget(code) != null)
 			throw new IllegalArgumentException();
-		}
+
 		if (Display.isNull(display)) {
 			// display = Arrays.asList(code);
 			display = Display.getWithNewlines(code);

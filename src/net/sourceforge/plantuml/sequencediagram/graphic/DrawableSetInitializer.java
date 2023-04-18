@@ -59,6 +59,7 @@ import net.sourceforge.plantuml.sequencediagram.Message;
 import net.sourceforge.plantuml.sequencediagram.MessageExo;
 import net.sourceforge.plantuml.sequencediagram.Newpage;
 import net.sourceforge.plantuml.sequencediagram.Note;
+import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.Notes;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.ParticipantEnglober;
@@ -406,7 +407,7 @@ class DrawableSetInitializer {
 			for (Note noteOnMessage : m.getNoteOnMessages()) {
 				final ISkinParam sk = noteOnMessage.getSkinParamBackcolored(drawableSet.getSkinParam());
 				final Component note = drawableSet.getSkin().createComponentNote(noteOnMessage.getUsedStyles(),
-						noteOnMessage.getNoteStyle().getNoteComponentType(), sk, noteOnMessage.getStrings(),
+						noteOnMessage.getNoteStyle().getNoteComponentType(), sk, noteOnMessage.getDisplay(),
 						noteOnMessage.getColors());
 				notes.add(note);
 			}
@@ -465,7 +466,7 @@ class DrawableSetInitializer {
 			}
 
 		final Component component = drawableSet.getSkin().createComponentNote(n.getUsedStyles(), type, skinParam,
-				n.getStrings(), n.getColors(), n.getPosition());
+				n.getDisplay(), n.getColors(), n.getPosition());
 		final NoteBox noteBox = new NoteBox(freeY2.getFreeY(range), component, p1, p2, n.getPosition(), n.getUrl());
 		return noteBox;
 	}
@@ -557,10 +558,24 @@ class DrawableSetInitializer {
 		Display strings = Display.empty();
 		strings = strings.add("ref");
 		strings = strings.addAll(reference.getStrings());
+
+		Component noteLeft = null;
+		Component noteRight = null;
+		for (Note noteOnMessage : reference.getNoteOnMessages()) {
+			final ISkinParam skinParam2 = noteOnMessage.getSkinParamBackcolored(drawableSet.getSkinParam());
+			final Component note = drawableSet.getSkin().createComponentNote(noteOnMessage.getUsedStyles(),
+					noteOnMessage.getNoteStyle().getNoteComponentType(), skinParam2, noteOnMessage.getDisplay(),
+					noteOnMessage.getColors());
+			if (noteOnMessage.getPosition() == NotePosition.RIGHT)
+				noteRight = note;
+			else
+				noteLeft = note;
+		}
+
 		final Component comp = drawableSet.getSkin().createComponent(reference.getUsedStyles(), ComponentType.REFERENCE,
 				null, skinParam, strings);
 		final GraphicalReference graphicalReference = new GraphicalReference(freeY2.getFreeY(range), comp, p1, p2,
-				reference.getUrl());
+				reference.getUrl(), noteLeft, noteRight);
 
 		final ParticipantBox pbox1 = p1.getParticipantBox();
 		final ParticipantBox pbox2 = p2.getParticipantBox();

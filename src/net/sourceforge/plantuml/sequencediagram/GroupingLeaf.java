@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.url.Url;
 
-final public class GroupingLeaf extends Grouping implements EventWithDeactivate {
+final public class GroupingLeaf extends Grouping implements EventWithDeactivate, EventWithNote {
 
 	private final GroupingStart start;
 	private final HColor backColorGeneral;
@@ -58,12 +58,12 @@ final public class GroupingLeaf extends Grouping implements EventWithDeactivate 
 
 	public Grouping getJustAfter() {
 		final int idx = start.getChildren().indexOf(this);
-		if (idx == -1) {
+		if (idx == -1)
 			throw new IllegalStateException();
-		}
-		if (idx + 1 >= start.getChildren().size()) {
+
+		if (idx + 1 >= start.getChildren().size())
 			return null;
-		}
+
 		return start.getChildren().get(idx + 1);
 	}
 
@@ -117,10 +117,11 @@ final public class GroupingLeaf extends Grouping implements EventWithDeactivate 
 
 	private List<Note> noteOnMessages = new ArrayList<>();
 
-	public final void setNote(Note note) {
-		if (note.getPosition() != NotePosition.LEFT && note.getPosition() != NotePosition.RIGHT) {
+	@Override
+	public final void addNote(Note note) {
+		if (note.getPosition() != NotePosition.LEFT && note.getPosition() != NotePosition.RIGHT)
 			throw new IllegalArgumentException();
-		}
+
 		this.noteOnMessages.add(note);
 	}
 

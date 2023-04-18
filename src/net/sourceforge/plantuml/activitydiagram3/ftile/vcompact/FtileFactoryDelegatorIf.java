@@ -44,9 +44,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactoryDelegator;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond.ConditionalBuilder;
-import net.sourceforge.plantuml.decoration.Rainbow;
 import net.sourceforge.plantuml.klimt.color.HColor;
-import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.skin.Pragma;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
@@ -74,23 +72,19 @@ public class FtileFactoryDelegatorIf extends FtileFactoryDelegator {
 		final Style styleArrow = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam().getCurrentStyleBuilder());
 		final Style styleDiamond = getDefaultStyleDefinitionDiamond()
 				.getMergedStyle(skinParam().getCurrentStyleBuilder());
-		final HColor borderColor = styleDiamond.value(PName.LineColor).asColor(skinParam().getIHtmlColorSet());
 		final HColor backColor = branch0.getColor() == null
 				? styleDiamond.value(PName.BackGroundColor).asColor(skinParam().getIHtmlColorSet())
 				: branch0.getColor();
-		final Rainbow arrowColor = Rainbow.build(styleArrow, skinParam().getIHtmlColorSet());
-		final FontConfiguration fcTest = styleDiamond.getFontConfiguration(skinParam().getIHtmlColorSet());
-		final FontConfiguration fcArrow = styleArrow.getFontConfiguration(skinParam().getIHtmlColorSet());
 
 		if (thens.size() > 1) {
 			if (pragma.useVerticalIf()/* OptionFlags.USE_IF_VERTICAL */)
-				return FtileIfLongVertical.create(swimlane, borderColor, backColor, arrowColor, getFactory(),
-						conditionStyle, thens, elseBranch, fcArrow, topInlinkRendering, afterEndwhile);
-			return FtileIfLongHorizontal.create(swimlane, borderColor, backColor, arrowColor, getFactory(),
-					conditionStyle, thens, elseBranch, fcArrow, topInlinkRendering, afterEndwhile, fcTest);
+				return FtileIfLongVertical.create(swimlane, backColor, getFactory(), conditionStyle, thens, elseBranch,
+						topInlinkRendering, afterEndwhile, styleArrow, styleDiamond);
+			return FtileIfLongHorizontal.create(swimlane, backColor, getFactory(), conditionStyle, thens, elseBranch,
+					topInlinkRendering, afterEndwhile, styleArrow, styleDiamond);
 		}
-		return ConditionalBuilder.create(swimlane, borderColor, backColor, arrowColor, getFactory(), conditionStyle,
-				conditionEndStyle, thens.get(0), elseBranch, skinParam(), getStringBounder(), fcArrow, fcTest, url);
+		return ConditionalBuilder.create(swimlane, backColor, getFactory(), conditionStyle, conditionEndStyle,
+				thens.get(0), elseBranch, skinParam(), getStringBounder(), url, styleArrow, styleDiamond);
 	}
 
 }

@@ -53,9 +53,7 @@ import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
-import net.sourceforge.plantuml.sequencediagram.AbstractMessage;
-import net.sourceforge.plantuml.sequencediagram.EventWithDeactivate;
-import net.sourceforge.plantuml.sequencediagram.GroupingLeaf;
+import net.sourceforge.plantuml.sequencediagram.EventWithNote;
 import net.sourceforge.plantuml.sequencediagram.Note;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteStyle;
@@ -141,36 +139,33 @@ public final class FactorySequenceNoteOnArrowCommand implements SingleMultiFacto
 
 	private CommandExecutionResult executeInternal(SequenceDiagram diagram, final RegexResult line0, BlocLines lines)
 			throws NoSuchColorException {
-		final EventWithDeactivate m = diagram.getLastEventWithDeactivate();
-		if (m instanceof AbstractMessage || m instanceof GroupingLeaf) {
-			final NotePosition position = NotePosition.valueOf(StringUtils.goUpperCase(line0.get("POSITION", 0)));
-			Url url = null;
-			if (line0.get("URL", 0) != null) {
-				final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), UrlMode.STRICT);
-				url = urlBuilder.getUrl(line0.get("URL", 0));
-			}
+		final EventWithNote event = diagram.getLastEventWithNote();
+		if (event == null)
+			return CommandExecutionResult.ok();
 
-			final NoteStyle style = NoteStyle.getNoteStyle(line0.get("STYLE", 0));
-			final Display display = diagram.manageVariable(lines.toDisplay());
-			final String backcolor0 = line0.get("COLOR", 0);
-			Colors colors = Colors.empty().add(ColorType.BACK,
-					backcolor0 == null ? null : HColorSet.instance().getColor(backcolor0));
-			final Note note = new Note(display, position, style, diagram.getSkinParam().getCurrentStyleBuilder());
-			final String stereotypeString = line0.getLazzy("STEREO", 0);
-			if (stereotypeString != null) {
-				final Stereotype stereotype = Stereotype.build(stereotypeString);
-				colors = colors.applyStereotypeForNote(stereotype, diagram.getSkinParam(), ColorParam.noteBackground,
-						ColorParam.noteBorder);
-				note.setStereotype(stereotype);
-			}
-			note.setUrl(url);
-			note.setColors(colors);
-			if (m instanceof AbstractMessage) {
-				((AbstractMessage) m).setNote(note);
-			} else {
-				((GroupingLeaf) m).setNote(note);
-			}
+		final NotePosition position = NotePosition.valueOf(StringUtils.goUpperCase(line0.get("POSITION", 0)));
+		Url url = null;
+		if (line0.get("URL", 0) != null) {
+			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), UrlMode.STRICT);
+			url = urlBuilder.getUrl(line0.get("URL", 0));
 		}
+
+		final NoteStyle style = NoteStyle.getNoteStyle(line0.get("STYLE", 0));
+		final Display display = diagram.manageVariable(lines.toDisplay());
+		final String backcolor0 = line0.get("COLOR", 0);
+		Colors colors = Colors.empty().add(ColorType.BACK,
+				backcolor0 == null ? null : HColorSet.instance().getColor(backcolor0));
+		final Note note = new Note(display, position, style, diagram.getSkinParam().getCurrentStyleBuilder());
+		final String stereotypeString = line0.getLazzy("STEREO", 0);
+		if (stereotypeString != null) {
+			final Stereotype stereotype = Stereotype.build(stereotypeString);
+			colors = colors.applyStereotypeForNote(stereotype, diagram.getSkinParam(), ColorParam.noteBackground,
+					ColorParam.noteBorder);
+			note.setStereotype(stereotype);
+		}
+		note.setUrl(url);
+		note.setColors(colors);
+		event.addNote(note);
 
 		return CommandExecutionResult.ok();
 	}

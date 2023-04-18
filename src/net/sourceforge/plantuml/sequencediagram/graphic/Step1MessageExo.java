@@ -69,7 +69,7 @@ class Step1MessageExo extends Step1Abstract {
 		for (Note noteOnMessage : noteOnMessages) {
 			final ISkinParam skinParam = noteOnMessage.getSkinParamBackcolored(drawingSet.getSkinParam());
 			final Component note = drawingSet.getSkin().createComponentNote(noteOnMessage.getUsedStyles(),
-					ComponentType.NOTE, skinParam, noteOnMessage.getStrings(), noteOnMessage.getColors());
+					ComponentType.NOTE, skinParam, noteOnMessage.getDisplay(), noteOnMessage.getColors());
 			addNote(note);
 		}
 

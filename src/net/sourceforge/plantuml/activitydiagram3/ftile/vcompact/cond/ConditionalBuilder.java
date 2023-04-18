@@ -63,6 +63,7 @@ import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
@@ -100,27 +101,21 @@ public class ConditionalBuilder {
 		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.arrow);
 	}
 
-	public ConditionalBuilder(Swimlane swimlane, HColor borderColor, HColor backColor, Rainbow arrowColor,
-			FtileFactory ftileFactory, ConditionStyle conditionStyle, ConditionEndStyle conditionEndStyle,
-			Branch branch1, Branch branch2, ISkinParam skinParam, StringBounder stringBounder,
-			FontConfiguration fontArrow, FontConfiguration fontTest, Url url) {
+	public ConditionalBuilder(Swimlane swimlane, HColor backColor, FtileFactory ftileFactory,
+			ConditionStyle conditionStyle, ConditionEndStyle conditionEndStyle, Branch branch1, Branch branch2,
+			ISkinParam skinParam, StringBounder stringBounder, Url url, Style styleArrow, Style styleDiamond) {
 
 		if (backColor == null)
 			throw new IllegalArgumentException();
-		if (borderColor == null)
-			throw new IllegalArgumentException();
-		if (arrowColor == null)
-			throw new IllegalArgumentException();
 
-		final Style styleArrow = getStyleSignatureArrow().getMergedStyle(skinParam.getCurrentStyleBuilder());
-		final Style styleDiamond = getStyleSignatureDiamond().getMergedStyle(skinParam.getCurrentStyleBuilder());
 		this.fontTest = styleDiamond.getFontConfiguration(skinParam.getIHtmlColorSet());
 		this.fontArrow = styleArrow.getFontConfiguration(skinParam.getIHtmlColorSet());
 		this.diamondLineBreak = styleDiamond.wrapWidth();
 		this.labelLineBreak = styleArrow.wrapWidth();
-		this.borderColor = borderColor;
 		this.backColor = backColor;
-		this.arrowColor = arrowColor;
+
+		this.borderColor = styleDiamond.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
+		this.arrowColor = Rainbow.build(styleArrow, skinParam.getIHtmlColorSet());
 
 		this.ftileFactory = ftileFactory;
 		this.swimlane = swimlane;
@@ -137,13 +132,11 @@ public class ConditionalBuilder {
 
 	}
 
-	static public Ftile create(Swimlane swimlane, HColor borderColor, HColor backColor, Rainbow arrowColor,
-			FtileFactory ftileFactory, ConditionStyle conditionStyle, ConditionEndStyle conditionEndStyle,
-			Branch branch1, Branch branch2, ISkinParam skinParam, StringBounder stringBounder,
-			FontConfiguration fcArrow, FontConfiguration fcTest, Url url) {
-		final ConditionalBuilder builder = new ConditionalBuilder(swimlane, borderColor, backColor, arrowColor,
-				ftileFactory, conditionStyle, conditionEndStyle, branch1, branch2, skinParam, stringBounder, fcArrow,
-				fcTest, url);
+	static public Ftile create(Swimlane swimlane, HColor backColor, FtileFactory ftileFactory,
+			ConditionStyle conditionStyle, ConditionEndStyle conditionEndStyle, Branch branch1, Branch branch2,
+			ISkinParam skinParam, StringBounder stringBounder, Url url, Style styleArrow, Style styleDiamond) {
+		final ConditionalBuilder builder = new ConditionalBuilder(swimlane, backColor, ftileFactory, conditionStyle,
+				conditionEndStyle, branch1, branch2, skinParam, stringBounder, url, styleArrow, styleDiamond);
 		if (isEmptyOrOnlySingleStopOrSpot(branch2) && isEmptyOrOnlySingleStopOrSpot(branch1) == false)
 			return builder.createDown(builder.branch1, builder.branch2);
 

@@ -69,6 +69,8 @@ import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 
 class FtileIfLongVertical extends AbstractFtile {
@@ -126,17 +128,21 @@ class FtileIfLongVertical extends AbstractFtile {
 		return getSwimlaneIn();
 	}
 
-	static Ftile create(Swimlane swimlane, HColor borderColor, HColor backColor, Rainbow arrowColor,
-			FtileFactory ftileFactory, ConditionStyle conditionStyle, List<Branch> thens, Branch branch2,
-			FontConfiguration fc, LinkRendering topInlinkRendering, LinkRendering afterEndwhile) {
+	static Ftile create(Swimlane swimlane, HColor backColor, FtileFactory ftileFactory, ConditionStyle conditionStyle,
+			List<Branch> thens, Branch branch2, LinkRendering topInlinkRendering, LinkRendering afterEndwhile,
+			Style styleArrow, Style styleDiamond) {
+
+		final FontConfiguration fcArrow = styleArrow.getFontConfiguration(ftileFactory.skinParam().getIHtmlColorSet());
+		final HColor borderColor = styleDiamond.value(PName.LineColor).asColor(ftileFactory.skinParam().getIHtmlColorSet());
+		final Rainbow arrowColor = Rainbow.build(styleArrow, ftileFactory.skinParam().getIHtmlColorSet());
 
 		List<Ftile> diamonds = new ArrayList<>();
 
 		double west = 10;
 		for (Branch branch : thens) {
-			final TextBlock tb1 = branch.getDisplayPositive().create(fc, HorizontalAlignment.LEFT,
+			final TextBlock tb1 = branch.getDisplayPositive().create(fcArrow, HorizontalAlignment.LEFT,
 					ftileFactory.skinParam());
-			final TextBlock tbTest = branch.getLabelTest().create(fc,
+			final TextBlock tbTest = branch.getLabelTest().create(fcArrow,
 					ftileFactory.skinParam().getDefaultTextAlignment(HorizontalAlignment.LEFT),
 					ftileFactory.skinParam());
 			FtileDiamondInside2 diamond = new FtileDiamondInside2(tbTest, branch.skinParam(), backColor, borderColor,
@@ -146,7 +152,7 @@ class FtileIfLongVertical extends AbstractFtile {
 			diamonds.add(diamond);
 
 			if (Display.isNull(branch.getInlabel()) == false) {
-				final TextBlock tbInlabel = branch.getInlabel().create(fc, HorizontalAlignment.LEFT,
+				final TextBlock tbInlabel = branch.getInlabel().create(fcArrow, HorizontalAlignment.LEFT,
 						ftileFactory.skinParam());
 				west = Math.max(west, tbInlabel.calculateDimension(ftileFactory.getStringBounder()).getWidth());
 			}
@@ -178,7 +184,7 @@ class FtileIfLongVertical extends AbstractFtile {
 			final Branch branch = thens.get(i + 1);
 			TextBlock tbInlabel = null;
 			if (Display.isNull(branch.getInlabel()) == false)
-				tbInlabel = branch.getInlabel().create(fc, HorizontalAlignment.LEFT, ftileFactory.skinParam());
+				tbInlabel = branch.getInlabel().create(fcArrow, HorizontalAlignment.LEFT, ftileFactory.skinParam());
 
 			conns.add(result.new ConnectionVertical(diamonds.get(i), diamonds.get(i + 1), arrowColor, tbInlabel));
 		}
@@ -189,7 +195,7 @@ class FtileIfLongVertical extends AbstractFtile {
 		final Rainbow topInColor = topInlinkRendering.getRainbow(arrowColor);
 		conns.add(result.new ConnectionIn(topInColor));
 
-		final TextBlock tb2 = branch2.getDisplayPositive().create(fc, HorizontalAlignment.LEFT,
+		final TextBlock tb2 = branch2.getDisplayPositive().create(fcArrow, HorizontalAlignment.LEFT,
 				ftileFactory.skinParam());
 		conns.add(result.new ConnectionLastElse(topInColor, tb2));
 		conns.add(result.new ConnectionLastElseOut(arrowColor));

@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.url.Url;
 
-public class Reference extends AbstractEvent implements Event {
+public class Reference extends AbstractEvent implements EventWithNote {
 
 	private final List<Participant> participants;
 	private final Url url;
@@ -132,4 +132,19 @@ public class Reference extends AbstractEvent implements Event {
 	public final HColor getBackColorElement() {
 		return backColorElement;
 	}
+
+	private List<Note> noteOnMessages = new ArrayList<>();
+
+	@Override
+	public final void addNote(Note note) {
+		if (note.getPosition() != NotePosition.LEFT && note.getPosition() != NotePosition.RIGHT)
+			throw new IllegalArgumentException();
+
+		this.noteOnMessages.add(note);
+	}
+
+	public final List<Note> getNoteOnMessages() {
+		return noteOnMessages;
+	}
+
 }
