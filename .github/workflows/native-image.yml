@@ -48,7 +48,7 @@ jobs:
 
       - name: Generate native image
         run: |
-          echo '{"resources":{"includes":[{"pattern": ".*\\.txt$"}, {"pattern": ".*\\.png$"}]}}' > resource-config.json
+          echo '{"resources":{"includes":[{"pattern": ".*\\.js$"}, {"pattern": ".*\\.css$"}, {"pattern": ".*\\.repx$"}, {"pattern": ".*\\.puml$"}, {"pattern": ".*\\.skin$"}, {"pattern": ".*\\.txt$"}, {"pattern": ".*\\.png$"}]}}' > resource-config.json
           native-image -H:ResourceConfigurationFiles=resource-config.json -H:ConfigurationFileDirectories=native-image-config-dir --no-fallback --report-unsupported-elements-at-runtime -jar "build/libs/plantuml-pdf-${{ inputs.release-version }}.jar" -H:Path="build/libs" -H:Name="plantuml-${{ matrix.platform }}-${{ inputs.release-version }}"
 
       - name: Cache native image
