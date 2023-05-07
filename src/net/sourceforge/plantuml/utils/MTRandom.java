@@ -3,28 +3,13 @@
  *            pseudo random number generator algorithm based upon the
  *            original C code by Makoto Matsumoto and Takuji Nishimura.
  * Author   : David Beaumont
- * Email    : mersenne-at-www.goui.net
  * 
  * For the original C code, see:
  *     http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html
  *
  * This version, Copyright (C) 2005, David Beaumont.
  * 
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-
 package net.sourceforge.plantuml.utils;
 
 import java.util.Random;

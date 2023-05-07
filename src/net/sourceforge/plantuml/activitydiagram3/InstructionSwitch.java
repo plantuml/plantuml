@@ -176,8 +176,8 @@ public class InstructionSwitch extends WithNote implements Instruction, Instruct
 	}
 
 	public void endSwitch(LinkRendering nextLinkRenderer) {
-		// TODO Auto-generated method stub
-
+		if (this.current != null)
+			this.current.setSpecial(nextLinkRenderer);
 	}
 
 	@Override

@@ -148,30 +148,30 @@ public class Branch {
 	}
 
 	public final Rainbow getOut() {
-		if (special != null) {
+		if (special != null)
 			return special.getRainbow();
-		}
-//		if (labelPositive.getRainbow().size() > 0) {
+
+//		if (labelPositive.getRainbow().size() > 0)
 //			return labelPositive.getRainbow();
-//		}
-		if (inlinkRendering == null) {
+
+		if (inlinkRendering == null)
 			return null;
-		}
+
 		return inlinkRendering.getRainbow();
 	}
 
 	public Rainbow getInColor(Rainbow arrowColor) {
-		if (isEmpty()) {
+		if (isEmpty())
 			return getFtile().getOutLinkRendering().getRainbow(arrowColor);
-		}
-		if (labelPositive.getRainbow().size() > 0) {
+
+		if (labelPositive.getRainbow().size() > 0)
 			return labelPositive.getRainbow();
-		}
+
 		final LinkRendering linkIn = getFtile().getInLinkRendering();
 		final Rainbow color = linkIn.getRainbow(arrowColor);
-		if (color.size() == 0) {
+		if (color.size() == 0)
 			return arrowColor;
-		}
+
 		return color;
 	}
 
@@ -232,17 +232,17 @@ public class Branch {
 	public final Display getDisplayPositive() {
 		if (ftile != null) {
 			final LinkRendering in = ftile.getInLinkRendering();
-			if (in != null && Display.isNull(in.getDisplay()) == false) {
+			if (in != null && Display.isNull(in.getDisplay()) == false)
 				return in.getDisplay();
-			}
+
 		}
 		return labelPositive.getDisplay();
 	}
 
 	public Display getSpecialDisplay() {
-		if (special != null && Display.isNull(special.getDisplay()) == false) {
+		if (special != null && Display.isNull(special.getDisplay()) == false)
 			return special.getDisplay();
-		}
+
 		return null;
 	}
 
