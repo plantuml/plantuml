@@ -61,7 +61,7 @@ public class CommandActivity3 extends SingleLineCommand2<ActivityDiagram3> {
 
 	public static final String endingGroup() {
 		return "(" //
-				+ ";(?:[%s]*\\<\\<\\w+\\>\\>)?" //
+				+ ";(?:[%s]*(\\<\\<\\w+\\>\\>))?" //
 				+ "|" //
 				+ Matcher.quoteReplacement("\\\\") // that is simply \ character
 				+ "|" //
@@ -77,7 +77,7 @@ public class CommandActivity3 extends SingleLineCommand2<ActivityDiagram3> {
 
 	private static final String endingGroupShort() {
 		return "(" //
-				+ ";(?:[%s]*\\<\\<\\w+\\>\\>)?" //
+				+ ";(?:[%s]*(\\<\\<\\w+\\>\\>))?" //
 				+ "|" //
 				+ Matcher.quoteReplacement("\\\\") // that is simply \ character
 				+ "|" //
@@ -130,13 +130,19 @@ public class CommandActivity3 extends SingleLineCommand2<ActivityDiagram3> {
 		}
 
 		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
-		final String stereo = arg.get("STEREO", 0);
+		String stereo = arg.get("STEREO", 0);
+		if (stereo == null)
+			stereo = arg.get("STYLE", 1);
+
 		Stereotype stereotype = null;
 		if (stereo != null) {
 			stereotype = Stereotype.build(stereo);
 			colors = colors.applyStereotype(stereotype, diagram.getSkinParam(), ColorParam.activityBackground);
 		}
-		final BoxStyle style = BoxStyle.fromString(arg.get("STYLE", 0));
+		BoxStyle style = BoxStyle.fromString(arg.get("STEREO", 0));
+		if (style == BoxStyle.PLAIN)
+			style = BoxStyle.fromString(arg.get("STYLE", 0));
+
 		final Display display = Display.getWithNewlines2(arg.get("LABEL", 0));
 		return diagram.addActivity(display, style, url, colors, stereotype);
 	}

@@ -154,17 +154,18 @@ public enum BoxStyle {
 	}
 
 	public static BoxStyle fromString(String style) {
-		if (style.length() == 1)
+		if (style != null) {
+			if (style.length() == 1)
+				for (BoxStyle bs : BoxStyle.values())
+					if (bs.style == style.charAt(0))
+						return bs;
+
+			style = style.replaceAll("\\W", "");
+
 			for (BoxStyle bs : BoxStyle.values())
-				if (bs.style == style.charAt(0))
+				if (style.equalsIgnoreCase(bs.stereotype))
 					return bs;
-
-		style = style.replaceAll("\\W", "");
-
-		for (BoxStyle bs : BoxStyle.values())
-			if (style.equalsIgnoreCase(bs.stereotype))
-				return bs;
-
+		}
 		return PLAIN;
 	}
 
