@@ -1,0 +1,230 @@
+''
+'' A mostly monochrome theme with monospaced font, that adds more structure and tidiness with better shapes control, brought by monospaced font
+''
+'' Original Author: Denis Bondarenko feat Matthew Leather
+''
+
+!$THEME = "mono"
+
+' Theme colors
+
+!if %not(%variable_exists("$CLR_BG"))
+  !$CLR_BG = "white"
+!endif
+
+' For icons bg in legend. usage: <THM_BG>
+!ifndef THM_BG
+  !define THM_BG #$CLR_BG
+!endif
+
+' Highlighted background
+!if %not(%variable_exists("$CLR_BG_EMPH"))
+  !$CLR_BG_EMPH = "#eee"
+!endif
+
+' Main foreground color
+!if %not(%variable_exists("$CLR_FG"))
+  !$CLR_FG = "black"
+!endif
+
+' Less hued, 3 levels
+
+!if %not(%variable_exists("$CLR_FG_DIMMED"))
+  !$CLR_FG_DIMMED = "#666"
+!endif
+
+!if %not(%variable_exists("$CLR_FG_DIMMED_2"))
+  !$CLR_FG_DIMMED_2 = "#999"
+!endif
+
+!if %not(%variable_exists("$CLR_FG_DIMMED_3"))
+  !$CLR_FG_DIMMED_3 = "#ccc"
+!endif
+
+' Hyperlinks color
+!if %not(%variable_exists("$CLR_HYPERLINK"))
+  !$CLR_HYPERLINK = "#333"
+!endif
+
+' Theme fonts
+
+' Basic font
+!ifndef $FNT
+
+' Multiple fallback fonts defined
+  !$FNT_MONO = "Courier"
+  !$FNT_MONO = "Courier New"
+  !$FNT = "DejaVu Sans Mono"
+  !$FNT = "monospace"
+  !$FNT = "Rec Mono Linear"
+
+' The preferred theme font
+  !$FNT = "Hack"
+
+!endif
+
+' Monospaced font
+!ifndef $FNT_MONO
+
+' A different font can be used
+' !$FNT_MONO = "Rec Mono Semicasual"
+  !$FNT_MONO = $FNT
+!endif
+
+' Theme body
+
+<style>
+  root {
+    BackgroundColor $CLR_BG
+    FontColor $CLR_FG
+    FontName $FNT
+    HyperLinkColor $CLR_HYPERLINK
+    LineColor $CLR_FG
+    LineThickness 1
+    Margin 5
+  }
+  document {
+    caption {
+      LineThickness 0
+    }
+    footer {
+      LineThickness 0
+    }
+    header {
+      LineThickness 0
+    }
+    title {
+      FontSize 22
+      LineThickness 0
+    }
+  }
+  node {
+'    MaximumWidth 300
+  }
+  ganttDiagram {
+    closed {
+      BackGroundColor $CLR_BG_EMPH
+    }
+    task {
+      BackGroundColor $CLR_FG_DIMMED_2
+      LineColor $CLR_FG
+      unstarted {
+        BackGroundColor $CLR_FG_DIMMED_3
+        LineColor $CLR_FG
+      }
+    }
+    note {
+      LineThickness .5
+    }
+    timeline {
+      LineThickness .5
+      LineColor $CLR_FG_DIMMED_3
+    }
+    separator {
+    }
+  }
+</style>
+
+' skinparam is flattened to support YAML, JSON diagram types
+skinparam {
+
+  shadowing false
+  useBetaStyle true
+  arrowLollipopColor $CLR_FG
+  backgroundColor $CLR_BG
+  lifelineStrategy nosolid
+
+  defaultFontName $FNT
+  defaultMonospacedFontName $FNT_MONO
+
+  hyperlinkColor $CLR_HYPERLINK
+
+  headerFontColor $CLR_FG_DIMMED_2
+  headerFontName $FNT
+
+  footerFontColor $CLR_FG_DIMMED_2
+  footerFontName $FNT
+
+  legendBorderThickness 0
+  legendBorderColor transparent
+
+  noteFontColor $CLR_FG
+  noteFontName $FNT
+
+  packageBorderColor $CLR_FG
+  packageFontColor $CLR_FG
+  packageFontName $FNT
+
+  nodeStereotypeFontColor $CLR_FG_DIMMED
+  nodeStereotypeFontName $FNT
+  nodeStereotypeFontSize 10
+
+  componentStereotypeFontColor $CLR_FG_DIMMED
+  componentStereotypeFontName $FNT
+  componentStereotypeFontSize 10
+
+  participantPadding 10
+
+  actorStereotypeFontColor $CLR_FG_DIMMED
+  actorStereotypeFontName $FNT
+  actorStereotypeFontSize 10
+
+  useCaseStereoTypeFontColor $CLR_FG
+  useCaseStereoTypeFontName $FNT
+
+  classBackgroundColor $CLR_BG
+  classBorderColor $CLR_FG
+  classFontColor $CLR_FG
+  classFontName $FNT
+  classAttributeFontColor $CLR_FG
+  classAttributeFontName $FNT
+  classStereotypeFontColor $CLR_FG_DIMMED
+  classStereotypeFontName $FNT
+  classStereotypeFontSize 10
+
+  objectBorderColor $CLR_FG
+
+  activityBackgroundColor $CLR_BG
+  activityBarColor $CLR_FG
+  activityBorderColor $CLR_FG
+  activityFontColor $CLR_FG
+  activityFontName $FNT
+
+  sequenceLifeLineBorderColor $CLR_FG
+
+  stateBackgroundColor $CLR_BG
+  stateBorderColor $CLR_FG
+
+  boundaryFontColor $CLR_FG
+
+  boxPadding 5
+
+  circledCharacterFontColor $CLR_FG
+  circledCharacterFontName $FNT_MONO
+  circledCharacterFontSize 10
+  circledCharacterRadius 8
+
+  stereotypeFontColor $CLR_FG_DIMMED
+  stereotypeFontName $FNT
+  stereotypeFontSize 10
+  stereotypeABackgroundColor $CLR_BG
+  stereotypeABorderColor $CLR_FG
+  stereotypeCBackgroundColor $CLR_BG
+  stereotypeCBorderColor $CLR_FG
+  stereotypeEBackgroundColor $CLR_BG
+  stereotypeEBorderColor $CLR_FG
+  stereotypeIBackgroundColor $CLR_BG
+  stereotypeIBorderColor $CLR_FG
+  stereotypeNBackgroundColor $CLR_BG
+  stereotypeNBorderColor $CLR_FG
+
+  iconPackageColor $CLR_FG
+  iconPackageBackgroundColor $CLR_BG
+  iconPrivateColor $CLR_FG
+  iconPrivateBackgroundColor $CLR_BG
+  iconProtectedColor $CLR_FG
+  iconProtectedBackgroundColor $CLR_BG
+  iconPublicColor $CLR_FG
+  iconPublicBackgroundColor $CLR_BG
+
+}
