@@ -491,10 +491,10 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 		this.port1 = port1;
 		this.port2 = port2;
 		if (port1 != null)
-			((Entity) cl1).addPortShortName(port1);
+			cl1.addPortShortName(port1);
 
 		if (port2 != null)
-			((Entity) cl2).addPortShortName(port2);
+			cl2.addPortShortName(port2);
 
 	}
 

@@ -513,9 +513,10 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 
 		if (extremityFactory != null) {
 			final List<XPoint2D> points = pointListIterator.next();
-			if (points.size() == 0)
-				throw new IllegalStateException();
-			// return extremityFactory.createUDrawable(center, angle, null);
+			if (points.size() == 0) 
+				return null;
+				// throw new IllegalStateException();
+				// return extremityFactory.createUDrawable(center, angle, null);
 
 			final XPoint2D p0 = points.get(0);
 			final XPoint2D p1 = points.get(1);

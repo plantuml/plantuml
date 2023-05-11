@@ -242,7 +242,7 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil, W
 	}
 
 	public ShapeType getShapeType() {
-		if (((Entity) getEntity()).getPortShortNames().size() > 0)
+		if (getEntity().getPortShortNames().size() > 0)
 			return ShapeType.RECTANGLE_HTML_FOR_PORTS;
 
 		return ShapeType.RECTANGLE;

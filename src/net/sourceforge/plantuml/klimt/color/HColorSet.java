@@ -50,6 +50,8 @@ import net.sourceforge.plantuml.regex.MyPattern;
 
 public class HColorSet {
 
+	private static final String COLOR_GRADIENT_SEPARATOR = "[-\\\\|/]";
+
 	private final static HColorSet singleton = new HColorSet();
 
 	private final Map<String, String> htmlNames = new HashMap<String, String>();
@@ -293,7 +295,7 @@ public class HColorSet {
 
 	private Gradient gradientFromString(String s) {
 		// ::comment when __HAXE__
-		final Matcher2 m = MyPattern.cmpile("[-\\\\|/]").matcher(s);
+		final Matcher2 m = MyPattern.cmpile(COLOR_GRADIENT_SEPARATOR).matcher(s);
 		if (m.find()) {
 			final char sep = m.group(0).charAt(0);
 			final int idx = s.indexOf(sep);

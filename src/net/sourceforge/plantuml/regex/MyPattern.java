@@ -88,7 +88,8 @@ public abstract class MyPattern {
 
 	private static String transform(String p) {
 		// Replace ReadLineReader.java
-		p = p.replace("%pLN", "\\p{L}0-9"); // Unicode Letter, digit
+		// p = p.replace("%pLN", "\\p{L}0-9"); // Unicode Letter, digit
+		p = p.replace("%pLN", "\\p{L}\\p{N}"); // Unicode Letter, digit
 		p = p.replace("%s", "\\s\u00A0"); // space
 		p = p.replace("%q", "'\u2018\u2019"); // quote
 		p = p.replace("%g", "\"\u201c\u201d"); // double quote

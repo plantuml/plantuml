@@ -80,9 +80,9 @@ public class Colors {
 	}
 
 	public Colors(String data, HColorSet set, ColorType mainType) throws NoSuchColorException {
-		data = StringUtils.goLowerCase(data);
+		data = StringUtils.goLowerCase(data).replaceAll("#", "");
 
-		for (final StringTokenizer st = new StringTokenizer(data, "#;"); st.hasMoreTokens();) {
+		for (final StringTokenizer st = new StringTokenizer(data, ";"); st.hasMoreTokens();) {
 			final String s = st.nextToken();
 			final int x = s.indexOf(':');
 			if (x == -1) {
