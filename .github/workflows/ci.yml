@@ -256,7 +256,6 @@ jobs:
         run: |
           echo "RELEASE_VERSION=$RELEASE_VERSION"
           .github/scripts/release-snapshot.sh
-          gradle --debug publish
 
       - name: Create release in GitHub and OSSRH
         if: needs.workflow_config.outputs.do_release == 'true'
