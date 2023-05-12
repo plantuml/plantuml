@@ -74,7 +74,6 @@ jobs:
   # We run the tests on many OS / Java combinations but also the Compile step because some users build
   # their own jars from source, so it is good for CI to check that is working on all combinations.
   test:
-    if: needs.workflow_config.outputs.do_test == 'true'
     needs: workflow_config
     strategy:
       fail-fast: false
@@ -84,9 +83,11 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout the repository
+        if: needs.workflow_config.outputs.do_test == 'true'
         uses: actions/checkout@v3
 
       - name: Set up java
+        if: needs.workflow_config.outputs.do_test == 'true'
         uses: actions/setup-java@v3
         with:
           java-version: ${{ matrix.java_version }}
@@ -95,14 +96,16 @@ jobs:
 
       # Compile / Test / Package are separate steps so the reason for any failure is more obvious in GitHub UI
       - name: Compile
+        if: needs.workflow_config.outputs.do_test == 'true'
         run: gradle -q compileJava --no-daemon
 
       - name: Test
+        if: needs.workflow_config.outputs.do_test == 'true'
         run: gradle test --no-daemon -i
 
       - name: Upload test reports
         uses: actions/upload-artifact@v3
-        if: ${{ always() }}
+        if: needs.workflow_config.outputs.do_test == 'true'
         with:
           # Using github.run_number here to reduce confusion when downloading & comparing from several builds
           name: ${{ github.run_number }}-${{ matrix.os }}-java-${{ matrix.java_version }}-test-reports
@@ -160,7 +163,7 @@ jobs:
     if: |
       needs.workflow_config.outputs.do_release == 'true' ||
       needs.workflow_config.outputs.do_snapshot_release == 'true'
-    needs: [ workflow_config, build_artifacts ]
+    needs: [ workflow_config, build_artifacts, test ]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
