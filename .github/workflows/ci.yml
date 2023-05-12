@@ -239,6 +239,7 @@ jobs:
           path: |
             build/libs/*
             build/publications/maven/*
+            plantuml-mit/build/libs
 
       - name: Create snapshot
         if: needs.workflow_config.outputs.do_snapshot_release == 'true'
@@ -266,7 +267,7 @@ jobs:
           ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.ARTIFACT_SIGNING_PASSPHRASE }}
         run: |
           .github/scripts/release.sh
-          gradle publish
+          gradle --debug publish
 
   push_to_docker_registry:
     needs: [ workflow_config, upload, test_linux, test_windows ]
