@@ -31,6 +31,8 @@ if [[ -e "build/publications/maven/module.json.asc" ]]; then
   cp "build/libs/plantuml-${RELEASE_VERSION}-javadoc.jar.asc" "github_release/plantuml-SNAPSHOT-javadoc.jar.asc"
   cp "build/libs/plantuml-${RELEASE_VERSION}-sources.jar.asc" "github_release/plantuml-SNAPSHOT-sources.jar.asc"
   cp "build/libs/plantuml-pdf-${RELEASE_VERSION}.jar.asc" "github_release/plantuml-pdf-SNAPSHOT.jar.asc"
+  cp "plantuml-mit/build/libs/plantuml-mit-${RELEASE_VERSION}.jar.asc" "github_release/plantuml-mit-SNAPSHOT.jar.asc"
+  cp "plantuml-mit/build/libs/plantuml-mit-${RELEASE_VERSION}-sources.jar.asc" "github_release/plantuml-mit-SNAPSHOT-sources.jar.asc"
 fi
 
 echo -n "${DATE_TIME_UTC}" > "github_release/plantuml-SNAPSHOT.timestamp"
