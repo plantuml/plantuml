@@ -17,7 +17,7 @@ description = "PlantUML"
 
 java {
 	withSourcesJar()
-	//withJavadocJar()
+	withJavadocJar()
 	registerFeature("pdf") {
 		usingSourceSet(sourceSets["main"])
 	}
@@ -74,6 +74,16 @@ tasks.withType<Jar>().configureEach {
 
 tasks.withType<JavaCompile>().configureEach {
 	options.encoding = "UTF-8"
+}
+
+tasks.withType<Javadoc>().configureEach {
+	options {
+		this as StandardJavadocDocletOptions
+		addBooleanOption("Xdoclint:none", true)
+		addStringOption("Xmaxwarns", "1")
+		encoding = "UTF-8"
+		isUse = true
+	}
 }
 
 val syncSources by tasks.registering(Sync::class) {

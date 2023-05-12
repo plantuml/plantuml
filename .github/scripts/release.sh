@@ -15,6 +15,7 @@ cp "build/libs/plantuml-pdf-${RELEASE_VERSION}.jar" "github_release/plantuml-pdf
 #cp "build/libs/plantuml-darwin-amd64-${RELEASE_VERSION}" "github_release/plantuml-darwin-amd64-${RELEASE_VERSION}"
 #cp "build/libs/plantuml-win-amd64-${RELEASE_VERSION}.exe" "github_release/plantuml-win-amd64-${RELEASE_VERSION}.exe"
 cp "plantuml-mit/build/libs/plantuml-mit-${RELEASE_VERSION}.jar" "github_release/plantuml-mit-${RELEASE_VERSION}.jar"
+cp "plantuml-mit/build/libs/plantuml-mit-${RELEASE_VERSION}-javadoc.jar" "github_release/plantuml-mit-${RELEASE_VERSION}-javadoc.jar"
 cp "plantuml-mit/build/libs/plantuml-mit-${RELEASE_VERSION}-sources.jar" "github_release/plantuml-mit-${RELEASE_VERSION}-sources.jar"
 
 if [[ -e "build/publications/maven/module.json.asc" ]]; then
@@ -25,6 +26,7 @@ if [[ -e "build/publications/maven/module.json.asc" ]]; then
   cp "build/libs/plantuml-${RELEASE_VERSION}-sources.jar.asc" "github_release/plantuml-${RELEASE_VERSION}-sources.jar.asc"
   cp "build/libs/plantuml-pdf-${RELEASE_VERSION}.jar.asc" "github_release/plantuml-pdf-${RELEASE_VERSION}.jar.asc"
   cp "plantuml-mit/build/libs/plantuml-mit-${RELEASE_VERSION}.jar.asc" "github_release/plantuml-mit-${RELEASE_VERSION}.jar.asc"
+  cp "plantuml-mit/build/libs/plantuml-mit-${RELEASE_VERSION}-javadoc.jar.asc" "github_release/plantuml-mit-${RELEASE_VERSION}-javadoc.jar.asc"
   cp "plantuml-mit/build/libs/plantuml-mit-${RELEASE_VERSION}-sources.jar.asc" "github_release/plantuml-mit-${RELEASE_VERSION}-sources.jar.asc"
 fi
 
