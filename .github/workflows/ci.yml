@@ -69,7 +69,7 @@ jobs:
           else
             echo "This run will NOT make a release"
           fi
-          echo "do_test=false" >> $GITHUB_OUTPUT
+          echo "do_test=true" >> $GITHUB_OUTPUT
 
   # We run the tests on many OS / Java combinations but also the Compile step because some users build
   # their own jars from source, so it is good for CI to check that is working on all combinations.
