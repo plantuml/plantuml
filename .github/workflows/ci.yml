@@ -168,15 +168,17 @@ jobs:
           java-version: 17
           distribution: temurin
           cache: gradle
-      - name: Set version in gradle.properties
-        if: env.POM_VERSION
-        env:
-          POM_VERSION: ${{ needs.workflow_config.outputs.pom_version }}
-        run: |
-          sed -i "s/version = .*/version = $POM_VERSION/" gradle.properties
-          cat gradle.properties
+#      - name: Set version in gradle.properties
+#        if: env.POM_VERSION
+#        env:
+#          POM_VERSION: ${{ needs.workflow_config.outputs.pom_version }}
+#        run: |
+#          sed -i "s/version = .*/version = $POM_VERSION/" gradle.properties
+#          cat gradle.properties
       - name: Generate artifacts
         run: |
+          echo "print gradle.properties"
+          cat gradle.properties
           gradle clean build \
             pdfJar \
             generateMetadataFileForMavenPublication generatePomFileForMavenPublication \
@@ -254,6 +256,8 @@ jobs:
           ORG_GRADLE_PROJECT_signingKey: ${{ secrets.ARTIFACT_SIGNING_KEY }}
           ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.ARTIFACT_SIGNING_PASSPHRASE }}
         run: |
+          echo "print gradle.properties"
+          cat gradle.properties
           echo "RELEASE_VERSION=$RELEASE_VERSION"
           .github/scripts/release-snapshot.sh
           gradle --debug publish
@@ -270,6 +274,8 @@ jobs:
           ORG_GRADLE_PROJECT_signingKey: ${{ secrets.ARTIFACT_SIGNING_KEY }}
           ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.ARTIFACT_SIGNING_PASSPHRASE }}
         run: |
+          echo "print gradle.properties"
+          cat gradle.properties
           echo "RELEASE_VERSION=$RELEASE_VERSION"
           .github/scripts/release.sh
           gradle --debug publish
