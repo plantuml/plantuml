@@ -126,8 +126,8 @@ publishing {
 			url.set("https://plantuml.com/")
 			licenses {
 				license {
-					name.set("The GNU General Public License")
-					url.set("http://www.gnu.org/licenses/gpl.txt")
+					name.set("MIT License")
+					url.set("https://opensource.org/license/mit/")
 				}
 			}
 			developers {

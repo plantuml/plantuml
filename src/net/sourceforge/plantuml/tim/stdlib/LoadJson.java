@@ -86,7 +86,7 @@ import net.sourceforge.plantuml.utils.LineLocation;
  *     ' loads a remote JSON from an endpoint (and default, if not reachable)
  *     !$STATUS_NO_CONNECTION={"status": "No connection"}
  *     !$JSON_REMOTE_DEF=%load_json("https://localhost:7778/management/health", $STATUS_NO_CONNECTION)
- *     status -> $JSON_REMOTE_DEF.status
+ *     status -&gt; $JSON_REMOTE_DEF.status
  *     &#64; enduml
  * </pre>
  * 

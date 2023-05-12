@@ -77,7 +77,7 @@ public class XLine2D implements UDrawable {
 	 *           specified line segment
 	 * @return a double value that is the square of the distance from the specified
 	 *         point to the specified line segment.
-	 * @see #ptLineDistSq(double, double, double, double, double, double)
+	 *
 	 * @since 1.2
 	 */
 	public static double ptSegDistSq(double x1, double y1, double x2, double y2, double px, double py) {

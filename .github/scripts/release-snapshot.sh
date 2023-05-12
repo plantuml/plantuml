@@ -20,6 +20,8 @@ cp "build/libs/plantuml-${RELEASE_VERSION}.jar" "github_release/plantuml-SNAPSHO
 cp "build/libs/plantuml-${RELEASE_VERSION}-javadoc.jar" "github_release/plantuml-SNAPSHOT-javadoc.jar"
 cp "build/libs/plantuml-${RELEASE_VERSION}-sources.jar" "github_release/plantuml-SNAPSHOT-sources.jar"
 cp "build/libs/plantuml-pdf-${RELEASE_VERSION}.jar" "github_release/plantuml-pdf-SNAPSHOT.jar"
+cp "plantuml-mit/build/libs/plantuml-mit-${RELEASE_VERSION}.jar" "github_release/plantuml-mit-SNAPSHOT.jar"
+cp "plantuml-mit/build/libs/plantuml-mit-${RELEASE_VERSION}-sources.jar" "github_release/plantuml-mit-SNAPSHOT-sources.jar"
 
 if [[ -e "build/publications/maven/module.json.asc" ]]; then
   # signatures are optional so that forked repos can release snapshots without needing a gpg signing key
