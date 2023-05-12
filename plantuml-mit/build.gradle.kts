@@ -157,3 +157,16 @@ publishing {
 		}
 	}
 }
+
+signing {
+	if (hasProperty("signing.gnupg.keyName") && hasProperty("signing.gnupg.passphrase")) {
+		useGpgCmd()
+	} else if (hasProperty("signingKey") && hasProperty("signingPassword")) {
+		val signingKey: String? by project
+		val signingPassword: String? by project
+		useInMemoryPgpKeys(signingKey, signingPassword)
+	}
+	if (hasProperty("signing.gnupg.passphrase") || hasProperty("signingPassword")) {
+		sign(publishing.publications["maven"])
+	}
+}

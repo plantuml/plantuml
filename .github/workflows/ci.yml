@@ -146,6 +146,8 @@ jobs:
           ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.ARTIFACT_SIGNING_PASSPHRASE }}
         run: |
           gradle -i signMavenPublication signPdfJar
+          ls -l build/libs
+          ls -l plantuml-mit/build/libs
       - name: Get release version
         id: version
         run: |
