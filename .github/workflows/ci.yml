@@ -125,14 +125,14 @@ jobs:
           java-version: 17
           distribution: temurin
           cache: gradle
-      - name: Set version from tag
+      - name: Set version in gradle.properties
         if: env.POM_VERSION
         env:
           POM_VERSION: ${{ needs.workflow_config.outputs.pom_version }}
         run: |
           sed -i "s/version = .*/version = $POM_VERSION/" gradle.properties
           cat gradle.properties
-      - name: Build artifacts
+      - name: Generate artifacts
         run: |
           gradle clean build \
             pdfJar \
@@ -156,6 +156,7 @@ jobs:
           path: |
             build/libs
             build/publications
+            plantuml-mit/build/libs
           key: "libs-${{ github.run_id }}"
           enableCrossOsArchive: true
 
@@ -182,6 +183,7 @@ jobs:
           path: |
             build/libs
             build/publications
+            plantuml-mit/build/libs
           key: "libs-${{ github.run_id }}"
           fail-on-cache-miss: true
           enableCrossOsArchive: true
