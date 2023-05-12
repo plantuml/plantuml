@@ -126,10 +126,11 @@ jobs:
         run: sed -i "s/version = .*/version = $POM_VERSION/" gradle.properties
       - name: Build artifacts
         run: |
-          gradle -q clean build \
+          gradle clean build \
             pdfJar \
             generateMetadataFileForMavenPublication generatePomFileForMavenPublication \
             -x test
+          find . -name "*.jar"
       - name: Sign artifacts
         if: env.ORG_GRADLE_PROJECT_signingKey
         env:
