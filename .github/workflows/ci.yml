@@ -109,7 +109,7 @@ jobs:
           path: build/reports/tests/
 
   build_artifacts:
-    needs: [ workflow_config, test ]
+    needs: [ workflow_config ]
     runs-on: ubuntu-latest
     outputs:
       release_version: ${{ steps.version.outputs.release_version }}
