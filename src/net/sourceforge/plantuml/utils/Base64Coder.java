@@ -2,56 +2,25 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2024, Arnaud Roques
+ * Copyright 2003-2010 Christian d'Heureuse, Inventec Informatik AG, Zurich, Switzerland
+ * www.source-code.biz, www.inventec.ch/chdh
  *
- * Project Info:  https://plantuml.com
- * 
- * If you like this project or if you find it useful, you can support us at:
- * 
- * https://plantuml.com/patreon (only 1$ per month!)
- * https://plantuml.com/paypal
- * 
- * This file is part of PlantUML.
+ * This module is multi-licensed and may be used under the terms
+ * of any of the following licenses:
  *
- * PlantUML is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ *  EPL, Eclipse Public License, V1.0 or later, http://www.eclipse.org/legal
+ *  LGPL, GNU Lesser General Public License, V2.1 or later, http://www.gnu.org/licenses/lgpl.html
+ *  GPL, GNU General Public License, V2 or later, http://www.gnu.org/licenses/gpl.html
+ *  AGPL, GNU Affero General Public License V3 or later, http://www.gnu.org/licenses/agpl.html
+ *  AL, Apache License, V2.0 or later, http://www.apache.org/licenses
+ *  BSD, BSD License, http://www.opensource.org/licenses/bsd-license.php
+ *  MIT, MIT License, http://www.opensource.org/licenses/MIT
  *
- * PlantUML distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
- * License for more details.
+ * Please contact the author if you need another license.
+ * This module is provided "as is", without warranties of any kind.
  *
- * You should have received a copy of the GNU General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
- * USA.
- *
- *
- * Original Author:  Arnaud Roques
- *
- *
+ * Project home page: www.source-code.biz/base64coder/java
  */
-// Copyright 2003-2010 Christian d'Heureuse, Inventec Informatik AG, Zurich, Switzerland
-// www.source-code.biz, www.inventec.ch/chdh
-//
-// This module is multi-licensed and may be used under the terms
-// of any of the following licenses:
-//
-//  EPL, Eclipse Public License, V1.0 or later, http://www.eclipse.org/legal
-//  LGPL, GNU Lesser General Public License, V2.1 or later, http://www.gnu.org/licenses/lgpl.html
-//  GPL, GNU General Public License, V2 or later, http://www.gnu.org/licenses/gpl.html
-//  AGPL, GNU Affero General Public License V3 or later, http://www.gnu.org/licenses/agpl.html
-//  AL, Apache License, V2.0 or later, http://www.apache.org/licenses
-//  BSD, BSD License, http://www.opensource.org/licenses/bsd-license.php
-//  MIT, MIT License, http://www.opensource.org/licenses/MIT
-//
-// Please contact the author if you need another license.
-// This module is provided "as is", without warranties of any kind.
-//
-// Project home page: www.source-code.biz/base64coder/java
-
 package net.sourceforge.plantuml.utils;
 
 /**
@@ -64,11 +33,17 @@ package net.sourceforge.plantuml.utils;
  * Project home page: <a href=
  * "http://www.source-code.biz/base64coder/java/">www.source-code.biz/base64coder/java</a><br>
  * Author: Christian d'Heureuse, Inventec Informatik AG, Zurich, Switzerland<br>
- * Multi-licensed: EPL / LGPL / GPL / AL / BSD / MIT.
  * 
  * @author Christian d'Heureuse, Inventec Informatik AG, Zurich, Switzerland,
  *         www.source-code.biz
  */
+//::comment when __MIT__
+//Multi-licensed: EPL / LGPL / GPL / AL / BSD / MIT.
+//::done
+//::uncomment when __MIT__
+// // Used license: MIT.
+//::done
+
 public class Base64Coder {
 	// ::remove file when __HAXE__
 

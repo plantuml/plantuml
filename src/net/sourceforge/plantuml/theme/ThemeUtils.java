@@ -57,7 +57,7 @@ import net.sourceforge.plantuml.utils.Log;
 // ::done
 
 public class ThemeUtils {
-    // ::remove folder when __HAXE__
+	// ::remove folder when __HAXE__
 
 	private static final String THEME_FILE_PREFIX = "puml-theme-";
 
@@ -79,6 +79,17 @@ public class ThemeUtils {
 	// ::done
 
 	// ::comment when __CORE__
+	public static ReadLine getReaderTheme(String realName, String from) {
+		final String description = realName + " from " + from;
+		from = from.substring(1, from.length() - 1);
+		final String res = from + "/" + THEME_FILE_PREFIX + realName + THEME_FILE_SUFFIX;
+		final InputStream is = Stdlib.getResourceAsStream(res);
+		if (is == null)
+			return null;
+
+		return ReadLineReader.create(new InputStreamReader(is), description);
+	}
+
 	public static ReadLine getReaderTheme(String filename) {
 		Log.info("Loading theme " + filename);
 		final String res = "/" + THEME_PATH + "/" + THEME_FILE_PREFIX + filename + THEME_FILE_SUFFIX;

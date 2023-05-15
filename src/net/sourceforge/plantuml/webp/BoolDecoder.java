@@ -22,7 +22,7 @@ import javax.imageio.stream.ImageInputStream;
 public class BoolDecoder {
     // ::remove folder when __HAXE__
 	// ::remove folder when __CORE__
-    // ::remove folder when __MIT__
+    // ::remove folder when __MIT__ or __EPL__ or __BSD__ or __ASL__ or __LGPL__
 	int bit_count; /* # of bits shifted out of value, at most 7 */
 	ImageInputStream data;
 	private long offset; /* pointer to next compressed data byte */

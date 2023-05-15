@@ -103,7 +103,7 @@ import java.util.Map;
 public class Jasic {
     // ::remove folder when __HAXE__
 	// ::remove folder when __CORE__
-    // ::remove folder when __MIT__
+    // ::remove folder when __MIT__ or __EPL__ or __BSD__ or __ASL__ or __LGPL__
 
 	// Tokenizing (lexing) -----------------------------------------------------
 

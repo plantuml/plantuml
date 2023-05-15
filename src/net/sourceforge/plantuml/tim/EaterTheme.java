@@ -53,7 +53,7 @@ import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.theme.ThemeUtils;
 
 public class EaterTheme extends Eater {
-    // ::remove folder when __HAXE__
+	// ::remove folder when __HAXE__
 
 	private String realName;
 	private String name;
@@ -76,7 +76,7 @@ public class EaterTheme extends Eater {
 		final int x = this.name.toLowerCase().indexOf(" from ");
 		if (x != -1) {
 			this.from = this.name.substring(x + " from ".length());
-			this.name = this.name.substring(0, x);
+			this.name = this.name.substring(0, x).trim();
 			this.context = context;
 		}
 
@@ -102,6 +102,11 @@ public class EaterTheme extends Eater {
 			}
 			throw EaterException.located("Cannot load " + realName);
 
+		} else if (from.startsWith("<") && from.endsWith(">")) {
+			final ReadLine reader = ThemeUtils.getReaderTheme(realName, from);
+			if (reader == null)
+				throw EaterException.located("No such theme " + realName + " in " + from);
+			return reader;
 		} else if (from.startsWith("http://") || from.startsWith("https://")) {
 			final SURL url = SURL.create(ThemeUtils.getFullPath(from, realName));
 			if (url == null)

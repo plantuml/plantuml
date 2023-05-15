@@ -208,12 +208,10 @@ public class PSystemBuilder {
 		// factories.add(new PSystemSudokuFactory());
 		// ::done
 
-		// ::comment when __CORE__ or __MIT__
+		// ::comment when __CORE__ or __MIT__ or __EPL__ or __BSD__ or __ASL__ or __LGPL__
 		factories.add(new PSystemDitaaFactory());
-		if (License.getCurrent() == License.GPL || License.getCurrent() == License.GPLV2) {
-			factories.add(new PSystemJcckitFactory());
-			factories.add(new PSystemSudokuFactory());
-		}
+		factories.add(new PSystemJcckitFactory());
+		factories.add(new PSystemSudokuFactory());
 		// ::done
 
 		// ::comment when __CORE__
@@ -232,10 +230,8 @@ public class PSystemBuilder {
 		// ::done
 
 		factories.add(new PSystemCharlieFactory());
-		// ::comment when __CORE__ or __MIT__
-		if (License.getCurrent() == License.GPL || License.getCurrent() == License.GPLV2) {
-			factories.add(new PSystemXearthFactory());
-		}
+		// ::comment when __CORE__ or __MIT__ or __EPL__ or __BSD__ or __ASL__ or __LGPL__
+		factories.add(new PSystemXearthFactory());
 		// ::done
 
 		factories.add(new GanttDiagramFactory());

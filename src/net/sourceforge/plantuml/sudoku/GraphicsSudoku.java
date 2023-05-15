@@ -68,7 +68,7 @@ import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
 import net.sourceforge.plantuml.png.PngIO;
 
 public class GraphicsSudoku {
-    // ::remove folder when __MIT__
+    // ::remove folder when __MIT__ or __EPL__ or __BSD__ or __ASL__ or __LGPL__
 
 	private final ISudoku sudoku;
 	private final UFont numberFont = UFont.sansSerif(20).bold();

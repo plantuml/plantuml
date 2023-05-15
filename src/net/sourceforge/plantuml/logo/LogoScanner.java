@@ -41,7 +41,7 @@ import java.util.Map;
 class LogoScanner {
     // ::remove folder when __HAXE__
 	// ::remove folder when __CORE__
-	// ::remove folder when __MIT__
+	// ::remove folder when __MIT__ or __EPL__ or __BSD__ or __ASL__ or __LGPL__
 	final private Map<String, Integer> keywordTable = new HashMap<String, Integer>();
 	private char sourceString[];
 	private int sourceLength;

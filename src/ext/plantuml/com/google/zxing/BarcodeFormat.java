@@ -26,7 +26,7 @@ import java.util.Hashtable;
 public final class BarcodeFormat {
 	// ::remove folder when __HAXE__
 	// ::remove folder when __CORE__
-	// ::remove folder when __MIT__
+	// ::remove folder when __MIT__ or __EPL__ or __BSD__ or __ASL__ or __LGPL__
 
 	// No, we can't use an enum here. J2ME doesn't support it.
 

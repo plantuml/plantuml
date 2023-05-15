@@ -105,7 +105,7 @@ val preprocessLicenceAntTask by tasks.registering() {
 			"sjpp"(
 				"src" to project.layout.buildDirectory.dir("sources/sjpp/java").get().asFile.absolutePath,
 				"dest" to project.layout.buildDirectory.dir("generated/sjpp").get().asFile.absolutePath,
-				"define" to "__MIT__"
+				"define" to "__BSD__"
 			)
 		}
 	}
@@ -136,8 +136,8 @@ publishing {
 			url.set("https://plantuml.com/")
 			licenses {
 				license {
-					name.set("MIT License")
-					url.set("https://opensource.org/license/mit/")
+					name.set("BSD License")
+					url.set("https://opensource.org/license/bsd-2-clause/")
 				}
 			}
 			developers {
