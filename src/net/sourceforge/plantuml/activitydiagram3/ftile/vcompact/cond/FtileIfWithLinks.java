@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.MergeStrategy;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.UGraphicInterceptorOneSwimlane;
+import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamond;
 import net.sourceforge.plantuml.decoration.Rainbow;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
@@ -74,6 +75,14 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 		if (arrowColor.size() == 0)
 			throw new IllegalArgumentException();
 
+	}
+
+	@Override
+	protected double getYdeltaForLabels(StringBounder stringBounder) {
+		if (diamond2 instanceof FtileDiamond)
+			return ((FtileDiamond) diamond2).getWestEastLabelHeight(stringBounder);
+
+		return 0;
 	}
 
 	class ConnectionHorizontalThenVertical extends AbstractConnection implements ConnectionTranslatable {

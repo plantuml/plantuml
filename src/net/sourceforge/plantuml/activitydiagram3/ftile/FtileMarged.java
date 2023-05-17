@@ -55,6 +55,10 @@ public class FtileMarged extends AbstractFtile {
 		this.tile = tile;
 		this.margin1 = margin1;
 		this.margin2 = margin2;
+
+		if (TRACE)
+			System.err.println("TRACE FtileMarged for " + tile);
+
 	}
 
 	@Override

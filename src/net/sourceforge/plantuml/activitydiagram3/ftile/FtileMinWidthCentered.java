@@ -59,26 +59,26 @@ public class FtileMinWidthCentered extends FtileDecorate {
 
 	@Override
 	public FtileGeometry calculateDimension(StringBounder stringBounder) {
-		if (calculateDimensionInternal == null) {
+		if (calculateDimensionInternal == null) 
 			calculateDimensionInternal = calculateDimensionSlow(stringBounder);
-		}
+		
 		return calculateDimensionInternal;
 	}
 
 	private FtileGeometry calculateDimensionSlow(StringBounder stringBounder) {
 		final FtileGeometry geo = super.calculateDimension(stringBounder);
 		final double left = getPoint2(geo.getLeft(), stringBounder);
-		if (geo.hasPointOut() == false) {
+		if (geo.hasPointOut() == false) 
 			return new FtileGeometry(getDimensionInternal(stringBounder), left, geo.getInY());
-		}
+		
 		return new FtileGeometry(getDimensionInternal(stringBounder), left, geo.getInY(), geo.getOutY());
 	}
 
 	private XDimension2D getDimensionInternal(StringBounder stringBounder) {
 		final XDimension2D dim = getFtileDelegated().calculateDimension(stringBounder);
-		if (dim.getWidth() < minWidth) {
+		if (dim.getWidth() < minWidth) 
 			return new XDimension2D(minWidth, dim.getHeight());
-		}
+		
 		return dim;
 	}
 
@@ -90,9 +90,9 @@ public class FtileMinWidthCentered extends FtileDecorate {
 	}
 
 	public UTranslate getTranslateFor(Ftile child, StringBounder stringBounder) {
-		if (child == getFtileDelegated()) {
+		if (child == getFtileDelegated()) 
 			return getUTranslateInternal(stringBounder);
-		}
+		
 		return null;
 	}
 

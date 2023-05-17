@@ -176,6 +176,8 @@ public class PSystemRegex extends TitledDiagram {
 				repetitionOneOrMore();
 			else if (token.getType() == ReTokenType.QUANTIFIER && token.getData().startsWith("?"))
 				optional();
+			else if (token.getType() == ReTokenType.QUANTIFIER && token.getData().startsWith("{"))
+				repetitionOneOrMore(token.getData());
 			else
 				throw new UnsupportedOperationException(token.toString());
 
@@ -214,6 +216,12 @@ public class PSystemRegex extends TitledDiagram {
 	private void repetitionOneOrMore() {
 		final ETile arg1 = stack.removeFirst();
 		stack.addFirst(new ETileOneOrMore(arg1));
+	}
+
+	private void repetitionOneOrMore(String repetition) {
+		final ETile arg1 = stack.removeFirst();
+		stack.addFirst(new ETileOneOrMore(arg1, repetition, fontConfiguration.bigger(-2), getSkinParam()));
+
 	}
 
 	private void alternation() {

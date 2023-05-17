@@ -64,18 +64,20 @@ public class FtileIfWithDiamonds extends FtileIfNude {
 		return Arrays.asList(diamond1, diamond2, tile1, tile2);
 	}
 
-	public int getYdelta1a(StringBounder stringBounder) {
-		if (getSwimlanes().size() > 1) {
+	protected int getYdelta1a(StringBounder stringBounder) {
+		if (getSwimlanes().size() > 1)
 			return 20;
-		}
 		return 10;
 	}
 
-	public int getYdelta1b(StringBounder stringBounder) {
-		if (getSwimlanes().size() > 1) {
+	protected int getYdelta1b(StringBounder stringBounder) {
+		if (getSwimlanes().size() > 1)
 			return 10;
-		}
 		return hasTwoBranches(stringBounder) ? 6 : 0;
+	}
+
+	protected double getYdeltaForLabels(StringBounder stringBounder) {
+		return 0;
 	}
 
 	@Override
@@ -93,7 +95,8 @@ public class FtileIfWithDiamonds extends FtileIfNude {
 
 		final FtileGeometry all = dim1.appendBottom(dimNude).appendBottom(dim2);
 
-		return all.addDim(0, getYdelta1a(stringBounder) + getYdelta1b(stringBounder));
+		return all.addDim(0,
+				getYdelta1a(stringBounder) + getYdelta1b(stringBounder) + getYdeltaForLabels(stringBounder));
 
 	}
 
@@ -140,9 +143,9 @@ public class FtileIfWithDiamonds extends FtileIfNude {
 		final double widthLabelBranch1 = label1.getWidth();
 		final double dxDiamond = getTranslateDiamond1(stringBounder).getDx();
 		final double diff = widthLabelBranch1 - dxDiamond;
-		if (diff > 0) {
+		if (diff > 0)
 			return diff;
-		}
+
 		return 0;
 	}
 
@@ -151,9 +154,9 @@ public class FtileIfWithDiamonds extends FtileIfNude {
 		final double theoricalEndNeeded = getTranslateDiamond1(stringBounder).getDx()
 				+ diamond1.calculateDimension(stringBounder).getWidth() + widthLabelBranch2;
 		final double diff = theoricalEndNeeded - calculateDimension(stringBounder).getWidth();
-		if (diff > 0) {
+		if (diff > 0)
 			return diff;
-		}
+
 		return 0;
 	}
 
@@ -163,9 +166,9 @@ public class FtileIfWithDiamonds extends FtileIfNude {
 		final FtileGeometry dimDiamond1 = diamond1.calculateDimension(stringBounder);
 		final double dyDiamond = dimDiamond1.getHeight();
 		final double diff = heightLabels - dyDiamond;
-		if (diff > 0) {
+		if (diff > 0)
 			return diff;
-		}
+
 		return 0;
 	}
 

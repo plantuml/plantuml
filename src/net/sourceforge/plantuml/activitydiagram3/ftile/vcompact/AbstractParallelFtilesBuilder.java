@@ -40,7 +40,9 @@ import java.util.List;
 
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileHeightFixedCentered;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileHeightFixedMarged;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileUtils;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.klimt.creole.CreoleMode;
@@ -48,6 +50,7 @@ import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.ISkinParam;
@@ -76,26 +79,77 @@ public abstract class AbstractParallelFtilesBuilder {
 	public AbstractParallelFtilesBuilder(ISkinParam skinParam, StringBounder stringBounder, List<Ftile> all) {
 		this.skinParam = skinParam;
 		this.stringBounder = stringBounder;
-		this.list99.addAll(getFoo2(all));
+		this.list99.addAll(decorateAllTiles(all));
 	}
 
-	protected List<Ftile> getFoo2(List<Ftile> all) {
+	private List<Ftile> decorateAllTiles(List<Ftile> all) {
 		final double maxHeight = computeMaxHeight(all);
+		final double ymargin1 = getSuppSpace1(all, getStringBounder());
+		final double ymargin2 = getSuppSpace2(all, getStringBounder());
 		final List<Ftile> result = new ArrayList<>();
 		for (Ftile ftile : all) {
-			final Ftile newFtile = computeNewFtile(ftile, maxHeight);
+			final Ftile newFtile = computeNewFtile(ftile, maxHeight, ymargin1, ymargin2);
 			result.add(newFtile);
 		}
 		return result;
 	}
 
-	private Ftile computeNewFtile(Ftile ftile, double maxHeight) {
+	private double getSuppSpace1(List<Ftile> all, StringBounder stringBounder) {
+		double result = 0;
+		for (Ftile child : all) {
+			final TextBlock text = getTextBlock(child.getInLinkRendering().getDisplay());
+			if (text == null)
+				continue;
+
+			final XDimension2D dim = text.calculateDimension(stringBounder);
+			result = Math.max(result, dim.getHeight());
+
+		}
+		return result;
+	}
+
+	private double getSuppSpace2(List<Ftile> all, StringBounder stringBounder) {
+		double result = 0;
+		for (Ftile child : all) {
+			final TextBlock text = getTextBlock(child.getOutLinkRendering().getDisplay());
+			if (text == null)
+				continue;
+
+			final XDimension2D dim = text.calculateDimension(stringBounder);
+			result = Math.max(result, dim.getHeight());
+		}
+		return result;
+	}
+
+
+	private Ftile computeNewFtile(Ftile ftile, double maxHeight, double ymargin1, double ymargin2) {
 		final double spaceArroundBlackBar = 20;
 		final double xMargin = 14;
 		Ftile tmp;
-		tmp = FtileUtils.addHorizontalMargin(ftile, xMargin);
+		tmp = FtileUtils.addHorizontalMargin(ftile, xMargin, xMargin + getSuppForIncomingArrow(ftile));
 		tmp = new FtileHeightFixedCentered(tmp, maxHeight + 2 * spaceArroundBlackBar);
+		tmp = new FtileHeightFixedMarged(ymargin1, tmp, ymargin2);
 		return tmp;
+	}
+
+	private double getSuppForIncomingArrow(Ftile ftile) {
+		final double x1 = getXSuppForDisplay(ftile, ftile.getInLinkRendering().getDisplay());
+		final double x2 = getXSuppForDisplay(ftile, ftile.getOutLinkRendering().getDisplay());
+		return Math.max(x1, x2);
+	}
+
+	private double getXSuppForDisplay(Ftile ftile, Display label) {
+		final TextBlock text = getTextBlock(label);
+		if (text == null)
+			return 0;
+
+		final double textWidth = text.calculateDimension(getStringBounder()).getWidth();
+		final FtileGeometry ftileDim = ftile.calculateDimension(getStringBounder());
+		final double pos2 = ftileDim.getLeft() + textWidth;
+		if (pos2 > ftileDim.getWidth())
+			return pos2 - ftileDim.getWidth();
+
+		return 0;
 	}
 
 	final protected double computeMaxHeight(List<Ftile> all) {

@@ -91,9 +91,9 @@ public class FtileHeightFixedCentered extends AbstractFtile {
 
 	private UTranslate getTranslate(StringBounder stringBounder) {
 		final XDimension2D dim = tile.calculateDimension(stringBounder);
-		if (dim.getHeight() > fixedHeight) {
+		if (dim.getHeight() > fixedHeight)
 			throw new IllegalStateException();
-		}
+
 		return UTranslate.dy((fixedHeight - dim.getHeight()) / 2);
 	}
 

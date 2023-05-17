@@ -75,48 +75,6 @@ public class ParallelBuilderFork extends AbstractParallelFtilesBuilder {
 		this.out = out;
 	}
 
-	protected List<Ftile> getFoo2(List<Ftile> all) {
-		final double maxHeight = computeMaxHeight(all);
-		final double ymargin1 = getSuppSpace1(all, getStringBounder());
-		final double ymargin2 = getSuppSpace2(all, getStringBounder());
-		final List<Ftile> result = new ArrayList<>();
-		for (Ftile ftile : all) {
-			final Ftile newFtile = computeNewFtile(ftile, maxHeight, ymargin1, ymargin2);
-			result.add(newFtile);
-		}
-		return result;
-	}
-
-	private Ftile computeNewFtile(Ftile ftile, double maxHeight, double ymargin1, double ymargin2) {
-		final double spaceArroundBlackBar = 20;
-		final double xMargin = 14;
-		Ftile tmp;
-		tmp = FtileUtils.addHorizontalMargin(ftile, xMargin, xMargin + getSuppForIncomingArrow(ftile));
-		tmp = new FtileHeightFixedCentered(tmp, maxHeight + 2 * spaceArroundBlackBar);
-		tmp = new FtileHeightFixedMarged(ymargin1, tmp, ymargin2);
-		return tmp;
-	}
-
-	private double getSuppForIncomingArrow(Ftile ftile) {
-		final double x1 = getXSuppForDisplay(ftile, ftile.getInLinkRendering().getDisplay());
-		final double x2 = getXSuppForDisplay(ftile, ftile.getOutLinkRendering().getDisplay());
-		return Math.max(x1, x2);
-	}
-
-	private double getXSuppForDisplay(Ftile ftile, Display label) {
-		final TextBlock text = getTextBlock(label);
-		if (text == null)
-			return 0;
-
-		final double textWidth = text.calculateDimension(getStringBounder()).getWidth();
-		final FtileGeometry ftileDim = ftile.calculateDimension(getStringBounder());
-		final double pos2 = ftileDim.getLeft() + textWidth;
-		if (pos2 > ftileDim.getWidth())
-			return pos2 - ftileDim.getWidth();
-
-		return 0;
-	}
-
 	@Override
 	protected Swimlane swimlaneOutForStep2() {
 		return out;
@@ -145,33 +103,6 @@ public class ParallelBuilderFork extends AbstractParallelFtilesBuilder {
 		return new FtileAssemblySimple(black, result);
 	}
 
-	private double getSuppSpace1(List<Ftile> all, StringBounder stringBounder) {
-		double result = 0;
-		for (Ftile child : all) {
-			final TextBlock text = getTextBlock(child.getInLinkRendering().getDisplay());
-			if (text == null)
-				continue;
-
-			final XDimension2D dim = text.calculateDimension(stringBounder);
-			result = Math.max(result, dim.getHeight());
-
-		}
-		return result;
-	}
-
-	private double getSuppSpace2(List<Ftile> all, StringBounder stringBounder) {
-		double result = 0;
-		for (Ftile child : all) {
-			final TextBlock text = getTextBlock(child.getOutLinkRendering().getDisplay());
-			if (text == null)
-				continue;
-
-			final XDimension2D dim = text.calculateDimension(stringBounder);
-			result = Math.max(result, dim.getHeight());
-		}
-		return result;
-	}
-
 	private double getJustBeforeBar2(Ftile middle, StringBounder stringBounder) {
 		return barHeight + getHeightOfMiddle(middle);
 	}
@@ -181,7 +112,7 @@ public class ParallelBuilderFork extends AbstractParallelFtilesBuilder {
 		final Swimlane swimlaneBlack = out;
 		final Ftile out = new FtileBlackBlock(skinParam(), swimlaneBlack);
 		((FtileBlackBlock) out).setBlackBlockDimension(result.calculateDimension(getStringBounder()).getWidth(),
-				barHeight);
+				barHeight);	
 		if (label != null)
 			((FtileBlackBlock) out).setLabel(getTextBlock(Display.getWithNewlines(label)));
 

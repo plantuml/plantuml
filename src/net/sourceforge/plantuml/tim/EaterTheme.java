@@ -75,7 +75,8 @@ public class EaterTheme extends Eater {
 
 		final int x = this.name.toLowerCase().indexOf(" from ");
 		if (x != -1) {
-			this.from = this.name.substring(x + " from ".length());
+			final String fromTmp = this.name.substring(x + " from ".length());
+			this.from = context.applyFunctionsAndVariables(memory, getLineLocation(), fromTmp);
 			this.name = this.name.substring(0, x).trim();
 			this.context = context;
 		}
@@ -101,8 +102,9 @@ public class EaterTheme extends Eater {
 				Logme.error(e);
 			}
 			throw EaterException.located("Cannot load " + realName);
+		}
 
-		} else if (from.startsWith("<") && from.endsWith(">")) {
+		if (from.startsWith("<") && from.endsWith(">")) {
 			final ReadLine reader = ThemeUtils.getReaderTheme(realName, from);
 			if (reader == null)
 				throw EaterException.located("No such theme " + realName + " in " + from);

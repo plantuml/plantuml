@@ -202,8 +202,6 @@ public class ActivityDiagram3 extends UmlDiagram {
 	@Override
 	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
-		// BUG42
-		// COMPRESSION
 		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(getSkinParam());
 		TextBlock result = getTextBlock(stringBounder);
 		return createImageBuilder(fileFormatOption).drawable(result).write(os);
@@ -220,6 +218,8 @@ public class ActivityDiagram3 extends UmlDiagram {
 		swinlanes.computeSize(stringBounder);
 		TextBlock result = swinlanes;
 
+		// BUG42
+		// COMMENT TO DISABLE COMPRESS
 		result = CompressionXorYBuilder.build(CompressionMode.ON_X, result, stringBounder);
 		result = CompressionXorYBuilder.build(CompressionMode.ON_Y, result, stringBounder);
 

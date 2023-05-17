@@ -60,16 +60,16 @@ public class FtileDiamond extends FtileDiamondWIP {
 	}
 
 	public FtileDiamond withWest(TextBlock west1) {
-		if (west1 == null) {
+		if (west1 == null)
 			return this;
-		}
+
 		return new FtileDiamond(skinParam(), backColor, borderColor, swimlane, north, south, east, west1);
 	}
 
 	public FtileDiamond withEast(TextBlock east1) {
-		if (east1 == null) {
+		if (east1 == null)
 			return this;
-		}
+
 		return new FtileDiamond(skinParam(), backColor, borderColor, swimlane, north, south, east1, west);
 	}
 
@@ -113,6 +113,12 @@ public class FtileDiamond extends FtileDiamondWIP {
 
 	public Ftile withWestAndEast(TextBlock tb1, TextBlock tb2) {
 		return withWest(tb1).withEast(tb2);
+	}
+
+	public double getWestEastLabelHeight(StringBounder stringBounder) {
+		final XDimension2D dimEast = east.calculateDimension(stringBounder);
+		final XDimension2D dimWest = west.calculateDimension(stringBounder);
+		return Math.max(dimEast.getHeight(), dimWest.getHeight());
 	}
 
 	public double getEastLabelWidth(StringBounder stringBounder) {

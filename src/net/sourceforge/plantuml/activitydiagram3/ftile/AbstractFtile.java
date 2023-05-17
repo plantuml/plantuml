@@ -53,10 +53,15 @@ import net.sourceforge.plantuml.style.Style;
 
 public abstract class AbstractFtile extends AbstractTextBlock implements Ftile {
 
+	protected final boolean TRACE = false;
+
 	private final ISkinParam skinParam;
 
 	public AbstractFtile(ISkinParam skinParam) {
 		this.skinParam = skinParam;
+
+		if (TRACE)
+			System.err.println("TRACE Building " + this);
 	}
 
 	final public ISkinParam skinParam() {
@@ -105,9 +110,9 @@ public abstract class AbstractFtile extends AbstractTextBlock implements Ftile {
 	private FtileGeometry cachedGeometry;
 
 	final public FtileGeometry calculateDimension(StringBounder stringBounder) {
-		if (cachedGeometry == null) {
+		if (cachedGeometry == null)
 			cachedGeometry = calculateDimensionFtile(stringBounder);
-		}
+
 		return cachedGeometry;
 	}
 
