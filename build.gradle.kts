@@ -4,6 +4,9 @@
 //    also supported is to build first, with java17, then switch the java version, and run the test with java8:
 // gradle clean build -x javaDoc -x test
 // gradle test
+println("Running build.gradle.kts")
+println(project.version)
+
 val javacRelease = (project.findProperty("javacRelease") ?: "8") as String
 
 plugins {
