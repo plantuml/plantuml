@@ -44,6 +44,8 @@ import net.sourceforge.plantuml.utils.SignatureUtils;
 public class Version {
 	// ::remove folder when __HAXE__
 
+	// Warning, "version" should be the same in gradle.properties and Version.java
+	// Any idea anyone how to magically synchronize those :-) ?
 	private static final String version = "1.2023.8beta2";
 
 	public static String versionString() {
