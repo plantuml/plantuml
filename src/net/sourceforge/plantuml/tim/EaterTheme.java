@@ -75,7 +75,7 @@ public class EaterTheme extends Eater {
 
 		final int x = this.name.toLowerCase().indexOf(" from ");
 		if (x != -1) {
-			final String fromTmp = this.name.substring(x + " from ".length());
+			final String fromTmp = this.name.substring(x + " from ".length()).trim();
 			this.from = context.applyFunctionsAndVariables(memory, getLineLocation(), fromTmp);
 			this.name = this.name.substring(0, x).trim();
 			this.context = context;
