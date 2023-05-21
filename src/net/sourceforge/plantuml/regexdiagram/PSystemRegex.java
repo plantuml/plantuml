@@ -147,39 +147,44 @@ public class PSystemRegex extends TitledDiagram {
 	}
 
 	public CommandExecutionResult addBlocLines(BlocLines from) {
-		final CharInspector it = from.inspector();
-		final List<ReToken> parsed1 = RegexExpression.parse(it);
-		// System.err.println("parsed1=" + parsed1);
-		final List<ReToken> parsed2 = addImplicitConcatenation(parsed1);
-		// System.err.println("parsed2=" + parsed2);
-		final ShuntingYard shuntingYard = new ShuntingYard(parsed2.iterator());
-		final List<ReToken> result = shuntingYard.getOuputQueue();
-		// System.err.println("result=" + result);
-		for (ReToken token : result)
-			if (token.getType() == ReTokenType.SIMPLE_CHAR)
-				push(token, Symbol.TERMINAL_STRING1);
-			else if (token.getType() == ReTokenType.ESCAPED_CHAR)
-				push(token, Symbol.TERMINAL_STRING1);
-			else if (token.getType() == ReTokenType.GROUP)
-				push(token, Symbol.SPECIAL_SEQUENCE);
-			else if (token.getType() == ReTokenType.CLASS)
-				push(token, Symbol.LITTERAL);
-			else if (token.getType() == ReTokenType.ANCHOR)
-				push(token, Symbol.LITTERAL);
-			else if (token.getType() == ReTokenType.CONCATENATION_IMPLICIT)
-				concatenation();
-			else if (token.getType() == ReTokenType.ALTERNATIVE)
-				alternation();
-			else if (token.getType() == ReTokenType.QUANTIFIER && token.getData().startsWith("*"))
-				repetitionZeroOrMore(false);
-			else if (token.getType() == ReTokenType.QUANTIFIER && token.getData().startsWith("+"))
-				repetitionOneOrMore();
-			else if (token.getType() == ReTokenType.QUANTIFIER && token.getData().startsWith("?"))
-				optional();
-			else if (token.getType() == ReTokenType.QUANTIFIER && token.getData().startsWith("{"))
-				repetitionOneOrMore(token.getData());
-			else
-				throw new UnsupportedOperationException(token.toString());
+
+		try {
+			final CharInspector it = from.inspector();
+			final List<ReToken> parsed1 = RegexExpression.parse(it);
+			// System.err.println("parsed1=" + parsed1);
+			final List<ReToken> parsed2 = addImplicitConcatenation(parsed1);
+			// System.err.println("parsed2=" + parsed2);
+			final ShuntingYard shuntingYard = new ShuntingYard(parsed2.iterator());
+			final List<ReToken> result = shuntingYard.getOuputQueue();
+			// System.err.println("result=" + result);
+			for (ReToken token : result)
+				if (token.getType() == ReTokenType.SIMPLE_CHAR)
+					push(token, Symbol.TERMINAL_STRING1);
+				else if (token.getType() == ReTokenType.ESCAPED_CHAR)
+					push(token, Symbol.TERMINAL_STRING1);
+				else if (token.getType() == ReTokenType.GROUP)
+					push(token, Symbol.SPECIAL_SEQUENCE);
+				else if (token.getType() == ReTokenType.CLASS)
+					push(token, Symbol.LITTERAL);
+				else if (token.getType() == ReTokenType.ANCHOR)
+					push(token, Symbol.LITTERAL);
+				else if (token.getType() == ReTokenType.CONCATENATION_IMPLICIT)
+					concatenation();
+				else if (token.getType() == ReTokenType.ALTERNATIVE)
+					alternation();
+				else if (token.getType() == ReTokenType.QUANTIFIER && token.getData().startsWith("*"))
+					repetitionZeroOrMore(false);
+				else if (token.getType() == ReTokenType.QUANTIFIER && token.getData().startsWith("+"))
+					repetitionOneOrMore();
+				else if (token.getType() == ReTokenType.QUANTIFIER && token.getData().startsWith("?"))
+					optional();
+				else if (token.getType() == ReTokenType.QUANTIFIER && token.getData().startsWith("{"))
+					repetitionOneOrMore(token.getData());
+				else
+					throw new RegexParsingException(token.toString());
+		} catch (RegexParsingException ex) {
+			return CommandExecutionResult.error("Error parsing: " + ex.getMessage());
+		}
 
 		return CommandExecutionResult.ok();
 	}

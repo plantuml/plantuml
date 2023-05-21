@@ -141,9 +141,6 @@ public class Snake implements UShape {
 		if (textBlock != null && textBlock != TextBlockUtils.EMPTY_TEXT_BLOCK)
 			this.texts.add(new Text(textBlock, verticalAlignment, null));
 
-		if (verticalAlignment != VerticalAlignment.CENTER)
-			throw new UnsupportedOperationException();
-
 		return this;
 	}
 
@@ -264,8 +261,8 @@ public class Snake implements UShape {
 		final boolean zigzag = worm.getDirectionsCode().startsWith("DLD") || worm.getDirectionsCode().startsWith("DRD");
 		double y = (pt1.getY() + pt2.getY()) / 2 - dim.getHeight() / 2;
 		if (text.verticalAlignment == VerticalAlignment.BOTTOM) {
-			x = worm.getLast().getX();
-			throw new AssertionError();
+			x = worm.getMinX();
+			y = worm.getMaxY();
 		} else if (text.verticalAlignment == VerticalAlignment.CENTER) {
 			x = worm.getMinX();
 			y = (worm.getFirst().getY() + worm.getLast().getY() - 10) / 2 - dim.getHeight() / 2;

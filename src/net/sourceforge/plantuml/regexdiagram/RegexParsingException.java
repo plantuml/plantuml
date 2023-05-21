@@ -30,39 +30,15 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
  *
+ * 
  */
-package net.sourceforge.plantuml.dot;
+package net.sourceforge.plantuml.regexdiagram;
 
-import java.io.File;
+public class RegexParsingException extends Exception {
 
-import net.sourceforge.plantuml.style.ISkinParam;
-
-class GraphvizLinux extends AbstractGraphviz {
-	// ::remove file when __CORE__
-
-	GraphvizLinux(ISkinParam skinParam, String dotString, String... type) {
-		super(skinParam, dotString, type);
-	}
-
-	@Override
-	protected File specificDotExe() {
-		final File all[] = new File[] { new File("/usr/local/bin/dot"), new File("/usr/bin/dot"),
-				new File("/opt/homebrew/bin/dot") };
-		for (File f : all)
-			if (f.exists())
-				return f;
-		return new File("/opt/local/bin/dot");
-	}
-
-	@Override
-	protected String getExeName() {
-		return "dot";
-	}
-
-	public boolean graphviz244onWindows() {
-		return false;
+	public RegexParsingException(String msg) {
+		super(msg);
 	}
 
 }

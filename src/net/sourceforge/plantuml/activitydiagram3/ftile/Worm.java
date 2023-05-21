@@ -333,6 +333,13 @@ public class Worm implements Iterable<XPoint2D> {
 		return result;
 	}
 
+	public double getMaxY() {
+		double result = points.get(0).getY();
+		for (XPoint2D pt : points)
+			result = Math.max(result, pt.getY());
+		return result;
+	}
+
 	public Worm merge(Worm other, MergeStrategy merge) {
 		if (Snake.same(this.getLast(), other.getFirst()) == false)
 			throw new IllegalArgumentException();

@@ -67,6 +67,7 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
@@ -81,6 +82,7 @@ class FtileWhile extends AbstractFtile {
 	private final Ftile diamond1;
 	private final Ftile specialOut;
 	private final Ftile backward;
+	private TextBlock back1;
 
 	@Override
 	public Collection<Ftile> getMyChildren() {
@@ -141,8 +143,7 @@ class FtileWhile extends AbstractFtile {
 		final FtileWhile result = new FtileWhile(whileBlock, diamond1, special, backward);
 
 		final XDimension2D dim = whileBlock.calculateDimension(ftileFactory.getStringBounder());
-		final TextBlock back1 = incoming1.getDisplay().create(fontArrow, HorizontalAlignment.LEFT,
-				ftileFactory.skinParam());
+		result.back1 = incoming1.getDisplay().create(fontArrow, HorizontalAlignment.LEFT, ftileFactory.skinParam());
 
 		final List<Connection> conns = new ArrayList<>();
 		if (dim.getWidth() == 0 || dim.getHeight() == 0) {
@@ -150,11 +151,11 @@ class FtileWhile extends AbstractFtile {
 		} else {
 			conns.add(result.new ConnectionIn(whileBlock.getInLinkRendering().getRainbow(arrowColor)));
 			if (backward == null) {
-				conns.add(result.new ConnectionBackSimple(incoming1.getRainbow(), back1));
+				conns.add(result.new ConnectionBackSimple(incoming1.getRainbow(), result.back1));
 			} else {
 				final TextBlock back2 = incoming2.getDisplay().create(fontArrow, HorizontalAlignment.LEFT,
 						ftileFactory.skinParam());
-				conns.add(result.new ConnectionBackBackward1(incoming1.getRainbow(), back1));
+				conns.add(result.new ConnectionBackBackward1(incoming1.getRainbow(), result.back1));
 				conns.add(result.new ConnectionBackBackward2(incoming2.getRainbow(), back2));
 			}
 		}
@@ -257,7 +258,7 @@ class FtileWhile extends AbstractFtile {
 			final double y2 = p2.getY() + dimDiamond1.getInY() + half;
 
 			final Snake snake = Snake.create(skinParam(), endInlinkColor, skinParam().arrows().asToLeft())
-					.emphasizeDirection(Direction.UP).withLabel(back, arrowHorizontalAlignment());
+					.emphasizeDirection(Direction.UP).withLabel(back, VerticalAlignment.BOTTOM);
 			snake.addPoint(x1, y1);
 			final double y1bis = Math.max(y1, getBottom(stringBounder)) + Hexagon.hexagonHalfSize;
 			snake.addPoint(x1, y1bis);
@@ -350,7 +351,7 @@ class FtileWhile extends AbstractFtile {
 			final double y2 = p2.getY();
 
 			final Snake snake = Snake.create(skinParam(), endInlinkColor, skinParam().arrows().asToUp()).withLabel(back,
-					arrowHorizontalAlignment());
+					VerticalAlignment.BOTTOM);
 			snake.addPoint(x1, y1);
 			final double y1bis = Math.max(y1, getBottom(stringBounder)) + Hexagon.hexagonHalfSize;
 			snake.addPoint(x1, y1bis);
@@ -580,7 +581,7 @@ class FtileWhile extends AbstractFtile {
 			assert false;
 		}
 		final FtileGeometry geo = geoDiamond1.appendBottom(geoWhile);
-		final double height = geo.getHeight() + 4 * Hexagon.hexagonHalfSize;
+		final double height = geo.getHeight() + 4 * Hexagon.hexagonHalfSize + getSuppHeightForLabel(stringBounder);
 		final double dx = 2 * Hexagon.hexagonHalfSize;
 		double backwardWidth = 0;
 		if (backward != null)
@@ -590,6 +591,12 @@ class FtileWhile extends AbstractFtile {
 				xDeltaBecauseSpecial(stringBounder) + geo.getWidth() + dx + Hexagon.hexagonHalfSize + backwardWidth,
 				height, xDeltaBecauseSpecial(stringBounder) + geo.getLeft() + dx, geoDiamond1.getInY(), height);
 
+	}
+
+	private double getSuppHeightForLabel(StringBounder stringBounder) {
+		if (back1 != null)
+			return back1.calculateDimension(stringBounder).getHeight();
+		return 0;
 	}
 
 	private double xDeltaBecauseSpecial(StringBounder stringBounder) {
@@ -616,8 +623,8 @@ class FtileWhile extends AbstractFtile {
 		final FtileGeometry dimTotal = calculateDimension(stringBounder);
 		final FtileGeometry dimWhile = whileBlock.calculateDimension(stringBounder);
 
-		final double y = dimDiamond1.getHeight()
-				+ (dimTotal.getHeight() - dimDiamond1.getHeight() - dimWhile.getHeight()) / 2;
+		final double y = dimDiamond1.getHeight() + (dimTotal.getHeight() - dimDiamond1.getHeight()
+				- dimWhile.getHeight() - getSuppHeightForLabel(stringBounder)) / 2;
 
 		final double x = dimTotal.getLeft() - dimWhile.getLeft();
 		return new UTranslate(x, y);

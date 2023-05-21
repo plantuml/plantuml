@@ -41,9 +41,9 @@ import java.util.List;
 import net.sourceforge.plantuml.utils.CharInspector;
 
 public class RegexExpression {
-    // ::remove folder when __HAXE__
+	// ::remove folder when __HAXE__
 
-	public static List<ReToken> parse(CharInspector it) {
+	public static List<ReToken> parse(CharInspector it) throws RegexParsingException {
 		final List<ReToken> result = new ArrayList<>();
 		while (true) {
 			final char current = it.peek(0);
@@ -72,6 +72,15 @@ public class RegexExpression {
 			} else if (isStartQuantifier(it)) {
 				final String s = readQuantifier(it);
 				result.add(new ReToken(ReTokenType.QUANTIFIER, s));
+			} else if (isStartOctalEscape(it)) {
+				final String s = readUnicodeOrOctalEscape(it, 4);
+				result.add(new ReToken(ReTokenType.CLASS, s));
+			} else if (isStartUnicodeEscape(it)) {
+				final String s = readUnicodeOrOctalEscape(it, 5);
+				result.add(new ReToken(ReTokenType.CLASS, s));
+			} else if (isStartUnicodeClass(it)) {
+				final String s = readUnicodeClass(it);
+				result.add(new ReToken(ReTokenType.CLASS, s));
 			} else if (isStartClass(it)) {
 				final String s = readClass(it);
 				result.add(new ReToken(ReTokenType.CLASS, s));
@@ -119,24 +128,28 @@ public class RegexExpression {
 		return false;
 	}
 
-	private static String readQuantifier(CharInspector it) {
+	private static String readQuantifier(CharInspector it) throws RegexParsingException {
 		final char current0 = it.peek(0);
 		it.jump();
-		final StringBuilder result = new StringBuilder();
-		result.append(current0);
+		final StringBuilder tmp = new StringBuilder();
+		tmp.append(current0);
 		if (current0 == '{')
 			while (it.peek(0) != 0) {
 				final char ch = it.peek(0);
-				result.append(ch);
+				tmp.append(ch);
 				it.jump();
 				if (ch == '}')
 					break;
 			}
 		if (it.peek(0) == '?') {
-			result.append('?');
+			tmp.append('?');
 			it.jump();
 		}
-		return result.toString();
+		// System.err.println("RESULT=" + tmp);
+		final String result = tmp.toString();
+		if (result.startsWith("{") && result.matches("^\\{[0-9,]+\\}$") == false)
+			throw new RegexParsingException("Bad quantifier " + result);
+		return result;
 	}
 
 	private static boolean isEscapedChar(CharInspector it) {
@@ -173,6 +186,40 @@ public class RegexExpression {
 		return result.toString();
 	}
 
+	private static String readUnicodeClass(CharInspector it) throws RegexParsingException {
+		final char current0 = it.peek(0);
+		if (current0 != '\\')
+			throw new IllegalStateException();
+		it.jump();
+		final StringBuilder result = new StringBuilder();
+		result.append(current0);
+		while (it.peek(0) != 0) {
+			final char ch = it.peek(0);
+			it.jump();
+			result.append(ch);
+			if (ch == '}')
+				return result.toString();
+		}
+		throw new RegexParsingException("Unexpected end of data");
+	}
+
+	private static String readUnicodeOrOctalEscape(CharInspector it, int nb) throws RegexParsingException {
+		final char current0 = it.peek(0);
+		if (current0 != '\\')
+			throw new IllegalStateException();
+		it.jump();
+		final StringBuilder result = new StringBuilder();
+		result.append(current0);
+		for (int i = 0; i < nb; i++) {
+			final char ch = it.peek(0);
+			if (ch == 0)
+				throw new RegexParsingException("Unexpected end of data");
+			result.append(ch);
+			it.jump();
+		}
+		return result.toString();
+	}
+
 	private static String readClass(CharInspector it) {
 		final char current0 = it.peek(0);
 		if (current0 == '.') {
@@ -193,6 +240,26 @@ public class RegexExpression {
 		if (current0 == '.')
 			return true;
 		if (current0 == '\\')
+			return true;
+		return false;
+	}
+
+	private static boolean isStartUnicodeClass(CharInspector it) {
+		if (it.peek(0) == '\\' && it.peek(1) == 'p' && it.peek(2) == '{')
+			return true;
+		if (it.peek(0) == '\\' && it.peek(1) == 'x' && it.peek(2) == '{')
+			return true;
+		return false;
+	}
+
+	private static boolean isStartUnicodeEscape(CharInspector it) {
+		if (it.peek(0) == '\\' && it.peek(1) == 'u')
+			return true;
+		return false;
+	}
+
+	private static boolean isStartOctalEscape(CharInspector it) {
+		if (it.peek(0) == '\\' && it.peek(1) == '0')
 			return true;
 		return false;
 	}
