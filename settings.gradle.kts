@@ -10,9 +10,3 @@ println("Running settings.gradle.kts")
 println("Version is " + version)
 
 include("plantuml-mit")
-if (!version.contains("beta")) {
-  include("plantuml-epl")
-  include("plantuml-bsd")
-  include("plantuml-asl")
-  include("plantuml-lgpl")
-}
