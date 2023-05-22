@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.url.CMapData;
 
 public class Pipe {
 	// ::remove file when __CORE__
@@ -124,9 +125,10 @@ public class Pipe {
 		// https://forum.plantuml.net/10049/2019-pipemap-diagrams-containing-links-give-zero-exit-code
 		// We don't check errors
 		error.goOk();
-		if (result == null)
-			ps.println();
-		else
+		if (result == null) {
+			final CMapData empty = new CMapData();
+			ps.println(empty.asString("plantuml"));
+		} else
 			ps.println(result);
 
 	}
