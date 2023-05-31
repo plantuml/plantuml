@@ -307,6 +307,7 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 
 			if (diagram.isEmpty(g) && g.getGroupType() == GroupType.PACKAGE) {
 				g.muteToType(LeafType.EMPTY_PACKAGE);
+				printEntity(g);
 			} else {
 				printSingleGroup(g);
 			}

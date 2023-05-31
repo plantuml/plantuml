@@ -69,9 +69,9 @@ public class DescriptionDiagram extends AbstractEntityDiagram {
 		for (Entity leaf : getEntityFactory().leafs()) {
 			final LeafType type = leaf.getLeafType();
 			final USymbol usymbol = leaf.getUSymbol();
-			if (type == LeafType.USECASE || usymbol == getSkinParam().actorStyle().toUSymbol()) {
+			if (type == LeafType.USECASE || usymbol == getSkinParam().actorStyle().toUSymbol())
 				return true;
-			}
+
 		}
 		return false;
 	}
@@ -81,11 +81,9 @@ public class DescriptionDiagram extends AbstractEntityDiagram {
 		super.makeDiagramReady();
 		final LeafType defaultType = LeafType.DESCRIPTION;
 		final USymbol defaultSymbol = isUsecase() ? getSkinParam().actorStyle().toUSymbol() : USymbols.INTERFACE;
-		for (Entity leaf : getEntityFactory().leafs()) {
-			if (leaf.getLeafType() == LeafType.STILL_UNKNOWN) {
+		for (Entity leaf : getEntityFactory().leafs())
+			if (leaf.getLeafType() == LeafType.STILL_UNKNOWN)
 				leaf.muteToType(defaultType, defaultSymbol);
-			}
-		}
 	}
 
 	@Override

@@ -81,9 +81,9 @@ public class UFont {
 	private static Font buildFont(String fontFamily, int fontStyle, int fontSize) {
 		if (fontFamily.contains(","))
 			for (String name : fontFamily.split(",")) {
-				name = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(name).trim();
+				name = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(name.trim()).trim();
 				if (doesFamilyExists(name))
-					return new Font(fontFamily, fontStyle, fontSize);
+					return new Font(name, fontStyle, fontSize);
 
 			}
 
@@ -169,10 +169,10 @@ public class UFont {
 			return font.getPSName();
 		}
 		if (context == UFontContext.SVG) {
-			if (family.equalsIgnoreCase("sansserif"))
-				return "sans-serif";
+			String result = family.replace('\"', '\'');
+			result = result.replaceAll("(?i)sansserif", "sans-serif");
 
-			return family;
+			return result;
 		}
 		return family;
 	}

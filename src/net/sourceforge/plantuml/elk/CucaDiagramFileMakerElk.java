@@ -421,8 +421,7 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 			}
 			if (diagram.isEmpty(g) && g.getGroupType() == GroupType.PACKAGE) {
 				g.muteToType(LeafType.EMPTY_PACKAGE);
-				System.err.println("STILL IN PROGRESS");
-				// printEntityNew(folder);
+				manageSingleNode(cluster, g);
 			} else {
 
 				// We create the "cluster" in ELK for this group
@@ -467,14 +466,14 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 
 	}
 
-	private void manageSingleNode(final ElkNode root, Entity leaf) {
+	private void manageSingleNode(ElkNode parent, Entity leaf) {
 		final IEntityImage image = printEntityInternal(leaf);
 
 		// Expected dimension of the node
 		final XDimension2D dimension = image.calculateDimension(stringBounder);
 
 		// Here, we try to tell ELK to use this dimension as node dimension
-		final ElkNode node = ElkGraphUtil.createNode(root);
+		final ElkNode node = ElkGraphUtil.createNode(parent);
 		node.setDimensions(dimension.getWidth(), dimension.getHeight());
 
 		// There is no real "label" here

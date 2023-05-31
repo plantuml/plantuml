@@ -183,6 +183,9 @@ public class StyleParser {
 					result.append(' ');
 				result.append(current.getData());
 				ins.jump();
+			} else if (current.getType() == StyleTokenType.COMMA) {
+				result.append(current.getData());
+				ins.jump();
 			} else if (current.getType() == StyleTokenType.COLON) {
 				result.append(current.getData());
 				ins.jump();
