@@ -126,8 +126,9 @@ public class Pipe {
 		// We don't check errors
 		error.goOk();
 		if (result == null) {
-			final CMapData empty = new CMapData();
-			ps.println(empty.asString("plantuml"));
+//			final CMapData empty = new CMapData();
+//			ps.println(empty.asString("plantuml"));
+			ps.println();
 		} else
 			ps.println(result);
 
