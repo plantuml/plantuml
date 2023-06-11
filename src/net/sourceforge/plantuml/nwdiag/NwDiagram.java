@@ -118,6 +118,8 @@ public class NwDiagram extends UmlDiagram {
 	@Override
 	public void makeDiagramReady() {
 		super.makeDiagramReady();
+		if (networks.size() == 0)
+			createNetwork("").goInvisible();
 		for (NServer server : servers.values()) {
 			server.connectMeIfAlone(networks.get(0));
 			playField.addInPlayfield(server.getBar());
@@ -179,11 +181,26 @@ public class NwDiagram extends UmlDiagram {
 				return veryFirstLink(name1, name2);
 			return CommandExecutionResult.error("what about " + name1);
 		}
+
+		if (server1.isAlone()) {
+			if (networks.size() == 0)
+				createNetwork("").goInvisible();
+			server1.connectMeIfAlone(networks.get(0));
+		}
+
+		final Network tmp1 = server1.getMainNetworkNext();
+		final Network justAfter = justAfter(tmp1);
+
+		final Network network;
+		if (justAfter != null && justAfter.isVisible() == false)
+			network = justAfter;
+		else
+			network = createNetwork("");
+
 		NServer server2 = servers.get(name2);
-		final Network network = createNetwork("");
+
 		network.goInvisible();
 		if (server2 == null) {
-			// server2 = NServer.create(name2, getSkinParam());
 			server2 = new NServer(name2, server1.getBar(), getSkinParam());
 			servers.put(name2, server2);
 			server1.connectTo(network, "");
@@ -199,50 +216,18 @@ public class NwDiagram extends UmlDiagram {
 		return CommandExecutionResult.ok();
 	}
 
+	private Network justAfter(Network n) {
+		final int x = networks.indexOf(n);
+		if (x != -1 && x < networks.size() - 1)
+			return networks.get(x + 1);
+		return null;
+	}
+
 	private CommandExecutionResult veryFirstLink(String name1, String name2) {
 		Network network = createNetwork(name1);
 		NServer server2 = NServer.create(name2, getSkinParam());
 		servers.put(name2, server2);
 		server2.connectTo(network, "");
-		playField.addInPlayfield(server2.getBar());
-		return CommandExecutionResult.ok();
-	}
-
-	private CommandExecutionResult linkOld(String name1, String name2) {
-		if (initDone == false)
-			return errorNoInit();
-
-		String existingAddress = "";
-		final NServer server2;
-		Network created = null;
-		if (currentNetwork() == null && networks.size() == 0) {
-			created = createNetwork(name1);
-			server2 = NServer.create(name2, getSkinParam());
-		} else {
-			final NServer server1 = servers.get(name1);
-			final NServer previous2 = servers.get(name2);
-			if (previous2 != null)
-				existingAddress = previous2.someAddress();
-			created = createNetwork("");
-			created.goInvisible();
-			if (server1 != null) {
-				final Network someNetwork = server1.someNetwork();
-				if (someNetwork != null && someNetwork.isVisible() == false && someNetwork.getUp() == null) {
-					final String tmp = server1.someAddress();
-					server1.blankSomeAddress();
-					server1.connectTo(created, tmp);
-				} else {
-					server1.connectTo(created, "");
-				}
-			}
-
-			server2 = new NServer(name2, server1.getBar(), getSkinParam());
-		}
-		servers.put(name2, server2);
-		if (created == null)
-			server2.connectTo(currentNetwork(), existingAddress);
-		else
-			server2.connectTo(created, existingAddress);
 		playField.addInPlayfield(server2.getBar());
 		return CommandExecutionResult.ok();
 	}
@@ -269,6 +254,13 @@ public class NwDiagram extends UmlDiagram {
 			}
 		}
 
+		if (networks.size() == 0 || currentNetwork() == null) {
+			server.updateProperties(props);
+			server.learnThisAddress(props.get("address"));
+			return CommandExecutionResult.ok();
+
+		}
+
 		if (networks.size() == 0) {
 			final Network network = createNetwork("");
 			network.goInvisible();
@@ -288,46 +280,6 @@ public class NwDiagram extends UmlDiagram {
 			}
 		}
 		server.updateProperties(props);
-		return CommandExecutionResult.ok();
-	}
-
-	private CommandExecutionResult addElementOld(String name, String definition) {
-		if (initDone == false)
-			return errorNoInit();
-
-		if (currentGroup() != null) {
-			if (alreadyInSomeGroup(name))
-				return CommandExecutionResult.error("Element already in another group.");
-
-			currentGroup().addName(name);
-		}
-
-		NServer server = null;
-		Network created = null;
-		if (currentNetwork() == null) {
-			if (currentGroup() != null)
-				return CommandExecutionResult.ok();
-
-			assert currentGroup() == null;
-			created = createNetwork("");
-			created.goInvisible();
-			server = NServer.create(name, getSkinParam());
-			servers.put(name, server);
-			server.doNotPrintFirstLink();
-		} else {
-			server = servers.get(name);
-			if (server == null) {
-				server = NServer.create(name, getSkinParam());
-				servers.put(name, server);
-			}
-		}
-		final Map<String, String> props = toSet(definition);
-		if (created == null)
-			server.connectTo(currentNetwork(), props.get("address"));
-		else
-			server.connectTo(created, props.get("address"));
-		server.updateProperties(props);
-		playField.addInPlayfield(server.getBar());
 		return CommandExecutionResult.ok();
 	}
 

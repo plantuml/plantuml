@@ -31,63 +31,55 @@
  *
  * Original Author:  Arnaud Roques
  *
- *
  */
-package net.sourceforge.plantuml.gitlog;
+package net.sourceforge.plantuml.filesdiagram;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
 
-public class GNodeBuilder {
-	// ::remove folder when __HAXE__
+import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.skin.UmlDiagramType;
+import net.sourceforge.plantuml.text.StringLocated;
 
-	private final List<GNode> all = new ArrayList<>();
+public class FilesDiagram extends UmlDiagram {
 
-	public GNodeBuilder(List<Commit> allCommits) {
+	private final FilesListing list;
 
-		final Map<String, GNode> tmp = new LinkedHashMap<String, GNode>();
-		for (Commit commit : allCommits) {
-			final GNode node = new GNode();
-			node.setComment(commit.getComment());
-			node.addText(commit.getName());
-			tmp.put(commit.getName(), node);
-		}
+	public FilesDiagram(UmlSource source) {
+		super(source, UmlDiagramType.FILES, null);
+		this.list = new FilesListing(getSkinParam());
 
-		for (Commit commit : allCommits)
-			for (Commit parent : commit.getAncestors())
-				GNode.link(tmp.get(commit.getName()), tmp.get(parent.getName()));
-
-		this.all.addAll(tmp.values());
-
-		merge();
-
-	}
-
-	private void merge() {
+		final Iterator<StringLocated> it = source.iterator2();
+		it.next();
 		while (true) {
-			boolean changed = false;
-			for (Iterator<GNode> it = all.iterator(); it.hasNext();) {
-				final GNode node = it.next();
-				if (node.canEatTheNextOne()) {
-					final GNode removed = node.eatTheNextOne();
-					all.remove(removed);
-					changed = true;
-					break;
-				}
-			}
-			if (changed == false)
-				return;
-
+			final String line = it.next().getString();
+			if (it.hasNext() == false)
+				break;
+			this.list.add(line);
 		}
+
 	}
 
-	public Collection<GNode> getAllNodes() {
-		return Collections.unmodifiableCollection(all);
+	public DiagramDescription getDescription() {
+		return new DiagramDescription("(Files)");
+	}
+
+	@Override
+	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
+			throws IOException {
+
+		return createImageBuilder(fileFormatOption).drawable(getTextBlock()).write(os);
+	}
+
+	@Override
+	protected TextBlock getTextBlock() {
+		return list;
 	}
 
 }

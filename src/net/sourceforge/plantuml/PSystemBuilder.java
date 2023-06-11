@@ -70,6 +70,7 @@ import net.sourceforge.plantuml.eggs.PSystemWelcomeFactory;
 import net.sourceforge.plantuml.emoji.PSystemListEmojiFactory;
 import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.error.PSystemErrorUtils;
+import net.sourceforge.plantuml.filesdiagram.FilesDiagramFactory;
 import net.sourceforge.plantuml.flowdiagram.FlowDiagramFactory;
 import net.sourceforge.plantuml.font.PSystemListFontsFactory;
 import net.sourceforge.plantuml.gitlog.GitDiagramFactory;
@@ -101,7 +102,6 @@ import net.sourceforge.plantuml.sudoku.PSystemSudokuFactory;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.timingdiagram.TimingDiagramFactory;
 import net.sourceforge.plantuml.utils.Log;
-import net.sourceforge.plantuml.version.License;
 import net.sourceforge.plantuml.version.PSystemLicenseFactory;
 import net.sourceforge.plantuml.version.PSystemVersionFactory;
 import net.sourceforge.plantuml.wbs.WBSDiagramFactory;
@@ -251,6 +251,7 @@ public class PSystemBuilder {
 		factories.add(new JsonDiagramFactory());
 		factories.add(new GitDiagramFactory());
 		// ::comment when __CORE__
+		factories.add(new FilesDiagramFactory());
 		factories.add(new BoardDiagramFactory());
 		// ::done
 		factories.add(new YamlDiagramFactory());

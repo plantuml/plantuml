@@ -61,43 +61,43 @@ public class CursorPosition {
 	}
 
 	public boolean matches(String prefix) {
-		if (x < 0) {
+		if (x < 0)
 			return false;
-		}
+
 		final String line = getCurrentLine();
-		if (x > line.length()) {
+		if (x > line.length())
 			return false;
-		}
+
 		return line.substring(x).startsWith(prefix);
 	}
 
 	public String getCommentInLine() {
 		final String line = getCurrentLine();
 		final int x = line.indexOf("*");
-		if (x == -1) {
+		if (x == -1)
 			return null;
-		}
+
 		final int y = line.indexOf("(", x);
-		if (y == -1) {
+		if (y == -1)
 			return null;
-		}
+
 		final int z = line.indexOf(")", y);
-		if (z == -1) {
+		if (z == -1)
 			return null;
-		}
+
 		return line.substring(y + 1, z);
 	}
 
 	public static String getCommitNameInLine(String s) {
 		final int x = s.indexOf("*");
-		if (x == -1) {
+		if (x == -1)
 			return null;
-		}
+
 		s = s.replaceAll("[-.*|/\\\\]", "").trim();
 		final int space = s.indexOf(" ");
-		if (space == -1) {
+		if (space == -1)
 			return s;
-		}
+
 		final String name = s.substring(0, space);
 		return name;
 	}
@@ -116,9 +116,9 @@ public class CursorPosition {
 
 	private static CursorPosition getDownFromInternal(CursorPosition current) {
 		while (true) {
-			if (current.matches("* ")) {
+			if (current.matches("* "))
 				return current;
-			}
+
 			if (current.matches("/") && current.move(-2, 0).matches("_|/")) {
 				current = current.move(-2, 0);
 				continue;

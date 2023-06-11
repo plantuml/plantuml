@@ -63,13 +63,13 @@ public class HColorGradient extends HColor {
 		return color2;
 	}
 
-	public final Color getColor(ColorMapper mapper, double coeff) {
+	public final Color getColor(ColorMapper mapper, double coeff, int alpha) {
 		if (coeff > 1 || coeff < 0)
 			throw new IllegalArgumentException("c=" + coeff);
 
 		final Color c1 = color1.toColor(mapper);
 		final Color c2 = color2.toColor(mapper);
-	
+
 		final int diffRed = c2.getRed() - c1.getRed();
 		final int diffGreen = c2.getGreen() - c1.getGreen();
 		final int diffBlue = c2.getBlue() - c1.getBlue();
@@ -77,12 +77,12 @@ public class HColorGradient extends HColor {
 		final int vRed = (int) (coeff * diffRed);
 		final int vGreen = (int) (coeff * diffGreen);
 		final int vBlue = (int) (coeff * diffBlue);
-		
+
 		final int red = c1.getRed() + vRed;
 		final int green = c1.getGreen() + vGreen;
 		final int blue = c1.getBlue() + vBlue;
 
-		return new Color(red, green, blue);
+		return new Color(red, green, blue, alpha);
 
 	}
 

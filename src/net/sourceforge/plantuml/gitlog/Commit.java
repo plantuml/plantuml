@@ -49,9 +49,9 @@ public class Commit {
 		this.name = name;
 		this.position = position;
 		this.comment = position.getCommentInLine();
-		if (position.matches("* ") == false && position.matches("*-") == false) {
+		if (position.matches("* ") == false && position.matches("*-") == false)
 			throw new IllegalArgumentException();
-		}
+
 	}
 
 	public String getComment() {
@@ -94,15 +94,15 @@ public class Commit {
 	}
 
 	private static void addAbove(List<CursorPosition> result, CursorPosition here) {
-		if (here.move(0, 1).matches("|")) {
+		if (here.move(0, 1).matches("|"))
 			result.add(here.move(0, 1));
-		}
-		if (here.move(1, 1).matches("\\")) {
+
+		if (here.move(1, 1).matches("\\"))
 			result.add(here.move(1, 1));
-		}
-		if (here.move(-1, 1).matches("/")) {
+
+		if (here.move(-1, 1).matches("/"))
 			result.add(here.move(-1, 1));
-		}
+
 	}
 
 	public List<Commit> getAncestors() {

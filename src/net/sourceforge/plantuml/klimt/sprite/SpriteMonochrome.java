@@ -184,26 +184,23 @@ public class SpriteMonochrome implements Sprite {
 		if (color == null || color.isTransparent())
 			color = HColors.BLACK.withDark(HColors.WHITE);
 
-		final BufferedImage im = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+		final BufferedImage im = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		final HColorGradient gradient = HColors.gradient(backcolor, color, '\0');
-		for (int col = 0; col < width; col++) {
-			for (int line = 0; line < height; line++) {
-				final double coef = 1.0 * gray[line][col] / (grayLevel - 1);
-				final Color c = gradient.getColor(colorMapper, coef);
-				im.setRGB(col, line, c.getRGB());
-			}
-		}
-		return new UImage(new PixelImage(im, AffineTransformType.TYPE_BILINEAR));
-	}
+		double maxCoef = 0;
+		for (int col = 0; col < width; col++)
+			for (int line = 0; line < height; line++)
+				maxCoef = Math.max(maxCoef, 1.0 * gray[line][col] / (grayLevel - 1));
 
-	private UImage special(ColorMapper colorMapper, HColorGradient backcolor, HColor color) {
-		final BufferedImage im = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		for (int col = 0; col < width; col++) {
 			for (int line = 0; line < height; line++) {
-				final HColor backColorLocal = HColors.simple(backcolor.getColor(colorMapper, 1.0 * line / height));
-				final HColorGradient gradient = HColors.gradient(backColorLocal, color, '\0');
-				final double coef = 1.0 * gray[line][col] / (grayLevel - 1);
-				final Color c = gradient.getColor(colorMapper, coef);
+				final int grayValue = gray[line][col];
+				final double coef = 1.0 * grayValue / (grayLevel - 1);
+				final int alpha;
+				if (coef > maxCoef / 4)
+					alpha = 255;
+				else
+					alpha = (int) (255 * (coef * 4 / maxCoef));
+				final Color c = gradient.getColor(colorMapper, coef, alpha);
 				im.setRGB(col, line, c.getRGB());
 			}
 		}

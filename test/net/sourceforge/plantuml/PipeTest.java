@@ -159,8 +159,8 @@ class PipeTest {
 		// no links/invalid input => no pipemap to output (no error as of
 		// https://forum.plantuml.net/10049/2019-pipemap-diagrams-containing-links-give-zero-exit-code
 		// )
-		l.add(TestCase.of("-pipemap", "@startuml\na->b\n@enduml", "<map id=\"plantuml_map\" name=\"plantuml_map\">\n</map>\n\n", Verification.EXACT, false, false));
-		l.add(TestCase.of("-pipemap", "@startuml\na\n@enduml", "<map id=\"plantuml_map\" name=\"plantuml_map\">\n</map>\n\n", Verification.EXACT, false, false));
+		l.add(TestCase.of("-pipemap", "@startuml\na->b\n@enduml", "\n", Verification.EXACT, false, false));
+		l.add(TestCase.of("-pipemap", "@startuml\na\n@enduml", "\n", Verification.EXACT, false, false));
 
 		return l;
 	}

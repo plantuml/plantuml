@@ -99,7 +99,7 @@ public class SpriteColor implements Sprite {
 	}
 
 	public UImage toUImage(ColorMapper colorMapper, HColor backcolor, HColor forecolor) {
-		final BufferedImage im = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+		final BufferedImage im = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 
 		if (backcolor == null) {
 			backcolor = HColors.WHITE;
@@ -113,7 +113,7 @@ public class SpriteColor implements Sprite {
 				final int localColor = color[line][col];
 				if (localColor == -1) {
 					final double coef = 1.0 * gray[line][col] / (16 - 1);
-					final Color c = gradient.getColor(colorMapper, coef);
+					final Color c = gradient.getColor(colorMapper, coef, 255);
 					im.setRGB(col, line, c.getRGB());
 				} else {
 					im.setRGB(col, line, localColor);

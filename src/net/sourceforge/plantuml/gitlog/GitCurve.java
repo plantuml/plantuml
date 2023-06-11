@@ -57,25 +57,24 @@ public class GitCurve {
 	public GitCurve(ST_Agedgeinfo_t data, Mirror xMirror) {
 		this.xMirror = xMirror;
 		final ST_splines splines = data.spl;
-		if (splines.size != 1) {
+		if (splines.size != 1)
 			throw new IllegalStateException();
-		}
+
 		final ST_bezier beziers = splines.list.get__(0);
 		for (int i = 0; i < beziers.size; i++) {
 			final XPoint2D pt = getPoint(splines, i);
 			points.add(pt);
 		}
 
-		if (beziers.sp.x == 0 && beziers.sp.y == 0) {
+		if (beziers.sp.x == 0 && beziers.sp.y == 0)
 			sp = null;
-		} else {
+		else
 			sp = new XPoint2D(beziers.sp.x, beziers.sp.y);
-		}
-		if (beziers.ep.x == 0 && beziers.ep.y == 0) {
+
+		if (beziers.ep.x == 0 && beziers.ep.y == 0)
 			ep = null;
-		} else {
+		else
 			ep = new XPoint2D(beziers.ep.x, beziers.ep.y);
-		}
 
 	}
 

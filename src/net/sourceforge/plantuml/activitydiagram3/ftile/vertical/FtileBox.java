@@ -181,6 +181,8 @@ public class FtileBox extends AbstractFtile {
 
 	@Override
 	public String toString() {
+		if (print == null)
+			return super.toString();
 		return print;
 	}
 
