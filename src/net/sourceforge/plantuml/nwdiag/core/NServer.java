@@ -112,6 +112,8 @@ public class NServer {
 	}
 
 	public void learnThisAddress(String address) {
+		if (address == null)
+			address = "";
 		for (Entry<Network, String> ent : connections.entrySet()) {
 			if (ent.getValue().length() == 0) {
 				connections.put(ent.getKey(), address);

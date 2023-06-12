@@ -250,7 +250,7 @@ public class SURL {
 	/**
 	 * Regex to remove the UserInfo part from a URL.
 	 */
-	private static final Pattern PATTERN_USERINFO = Pattern.compile("(^https?://)([-_0-9a-zA-Z]+@)([^@]*)");
+	private static final Pattern PATTERN_USERINFO = Pattern.compile("(^https?://)([-_0-9a-zA-Z]+@)([^@]*)$");
 
 	private static final ExecutorService EXE = Executors.newCachedThreadPool(new ThreadFactory() {
 		public Thread newThread(Runnable r) {
@@ -292,6 +292,9 @@ public class SURL {
 	}
 
 	private boolean forbiddenURL(String full) {
+		// Thanks to Agasthya Kasturi
+		if (full.contains("@"))
+			return true;
 		if (full.startsWith("https://") == false && full.startsWith("http://") == false)
 			return true;
 		if (full.matches("^https?://[-#.0-9:\\[\\]+]+/.*"))
@@ -305,6 +308,9 @@ public class SURL {
 
 	private boolean isInUrlAllowList() {
 		final String full = cleanPath(internal.toString());
+		// Thanks to Agasthya Kasturi
+		if (full.contains("@"))
+			return false;
 		for (String allow : getUrlAllowList())
 			if (full.startsWith(cleanPath(allow)))
 				return true;

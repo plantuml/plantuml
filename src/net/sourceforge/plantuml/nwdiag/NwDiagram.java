@@ -150,9 +150,25 @@ public class NwDiagram extends UmlDiagram {
 		for (NStackable element : stack)
 			if (element instanceof Network)
 				return CommandExecutionResult.error("Cannot nest network");
+
+		if (networks.size() == 0 && groups.size() == 0)
+			eventuallyConnectAllStandaloneServersToHiddenNetwork();
+
 		final Network network = createNetwork(name);
 		stack.add(0, network);
 		return CommandExecutionResult.ok();
+	}
+
+	private void eventuallyConnectAllStandaloneServersToHiddenNetwork() {
+		Network first = null;
+		for (NServer server : servers.values())
+			if (server.isAlone()) {
+				if (first == null) {
+					first = createNetwork("");
+					first.goInvisible();
+				}
+				server.connectMeIfAlone(first);
+			}
 	}
 
 	public CommandExecutionResult closeSomething() {

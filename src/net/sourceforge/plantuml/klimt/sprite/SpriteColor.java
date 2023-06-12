@@ -66,26 +66,26 @@ public class SpriteColor implements Sprite {
 	}
 
 	public void setGray(int x, int y, int level) {
-		if (x < 0 || x >= width) {
+		if (x < 0 || x >= width)
 			return;
-		}
-		if (y < 0 || y >= height) {
+
+		if (y < 0 || y >= height)
 			return;
-		}
-		if (level < 0 || level >= 16) {
+
+		if (level < 0 || level >= 16)
 			throw new IllegalArgumentException();
-		}
+
 		gray[y][x] = level;
 		color[y][x] = -1;
 	}
 
 	public void setColor(int x, int y, int col) {
-		if (x < 0 || x >= width) {
+		if (x < 0 || x >= width)
 			return;
-		}
-		if (y < 0 || y >= height) {
+
+		if (y < 0 || y >= height)
 			return;
-		}
+
 		gray[y][x] = -1;
 		color[y][x] = col;
 	}
@@ -99,14 +99,14 @@ public class SpriteColor implements Sprite {
 	}
 
 	public UImage toUImage(ColorMapper colorMapper, HColor backcolor, HColor forecolor) {
-		final BufferedImage im = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		final BufferedImage im = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
-		if (backcolor == null) {
+		if (backcolor == null)
 			backcolor = HColors.WHITE;
-		}
-		if (forecolor == null) {
+
+		if (forecolor == null)
 			forecolor = HColors.BLACK;
-		}
+
 		final HColorGradient gradient = HColors.gradient(backcolor, forecolor, '\0');
 		for (int col = 0; col < width; col++) {
 			for (int line = 0; line < height; line++) {

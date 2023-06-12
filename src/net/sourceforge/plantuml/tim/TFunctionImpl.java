@@ -60,9 +60,9 @@ public class TFunctionImpl implements TFunction {
 	public TFunctionImpl(String functionName, List<TFunctionArgument> args, boolean unquoted,
 			TFunctionType functionType) {
 		final Set<String> names = new HashSet<>();
-		for (TFunctionArgument tmp : args) {
+		for (TFunctionArgument tmp : args)
 			names.add(tmp.getName());
-		}
+
 		this.signature = new TFunctionSignature(functionName, args.size(), names);
 		this.args = args;
 		this.unquoted = unquoted;
@@ -70,27 +70,26 @@ public class TFunctionImpl implements TFunction {
 	}
 
 	public boolean canCover(int nbArg, Set<String> namedArguments) {
-		for (String n : namedArguments) {
-			if (signature.getNamedArguments().contains(n) == false) {
+		for (String n : namedArguments)
+			if (signature.getNamedArguments().contains(n) == false)
 				return false;
-			}
-		}
-		if (nbArg > args.size()) {
+
+		if (nbArg > args.size())
 			return false;
-		}
+
 		assert nbArg <= args.size();
 		int neededArgument = 0;
 		for (TFunctionArgument arg : args) {
-			if (namedArguments.contains(arg.getName())) {
+			if (namedArguments.contains(arg.getName()))
 				continue;
-			}
-			if (arg.getOptionalDefaultValue() == null) {
+
+			if (arg.getOptionalDefaultValue() == null)
 				neededArgument++;
-			}
+
 		}
-		if (nbArg < neededArgument) {
+		if (nbArg < neededArgument)
 			return false;
-		}
+
 		assert nbArg >= neededArgument;
 		return true;
 	}
@@ -108,9 +107,9 @@ public class TFunctionImpl implements TFunction {
 			} else {
 				value = arg.getOptionalDefaultValue();
 			}
-			if (value == null) {
+			if (value == null)
 				throw new IllegalStateException();
-			}
+
 			result.put(arg.getName(), value);
 		}
 		return memory.forkFromGlobal(result);
@@ -125,11 +124,9 @@ public class TFunctionImpl implements TFunction {
 		body.add(s);
 		if (s.getType() == TLineType.RETURN) {
 			this.containsReturn = true;
-			if (functionType == TFunctionType.PROCEDURE) {
+			if (functionType == TFunctionType.PROCEDURE)
 				throw EaterExceptionLocated
 						.located("A procedure cannot have !return directive. Declare it as a function instead ?", s);
-				// this.functionType = TFunctionType.RETURN;
-			}
 		}
 	}
 
@@ -147,39 +144,39 @@ public class TFunctionImpl implements TFunction {
 
 	public void executeProcedureInternal(TContext context, TMemory memory, List<TValue> args, Map<String, TValue> named)
 			throws EaterException, EaterExceptionLocated {
-		if (functionType != TFunctionType.PROCEDURE && functionType != TFunctionType.LEGACY_DEFINELONG) {
+		if (functionType != TFunctionType.PROCEDURE && functionType != TFunctionType.LEGACY_DEFINELONG)
 			throw new IllegalStateException();
-		}
+
 		final TMemory copy = getNewMemory(memory, args, named);
 		context.executeLines(copy, body, TFunctionType.PROCEDURE, false);
 	}
 
 	public TValue executeReturnFunction(TContext context, TMemory memory, LineLocation location, List<TValue> args,
 			Map<String, TValue> named) throws EaterException, EaterExceptionLocated {
-		if (functionType == TFunctionType.LEGACY_DEFINE) {
+		if (functionType == TFunctionType.LEGACY_DEFINE)
 			return executeReturnLegacyDefine(location, context, memory, args);
-		}
-		if (functionType != TFunctionType.RETURN_FUNCTION) {
+
+		if (functionType != TFunctionType.RETURN_FUNCTION)
 			throw EaterException.unlocated("Illegal call here. Is there a return directive in your function?");
-		}
+
 		final TMemory copy = getNewMemory(memory, args, named);
 		final TValue result = context.executeLines(copy, body, TFunctionType.RETURN_FUNCTION, true);
-		if (result == null) {
+		if (result == null)
 			throw EaterException.unlocated("No return directive found in your function");
-		}
+
 		return result;
 	}
 
 	private TValue executeReturnLegacyDefine(LineLocation location, TContext context, TMemory memory, List<TValue> args)
 			throws EaterException, EaterExceptionLocated {
-		if (legacyDefinition == null) {
+		if (legacyDefinition == null)
 			throw new IllegalStateException();
-		}
+
 		final TMemory copy = getNewMemory(memory, args, Collections.<String, TValue>emptyMap());
 		final String tmp = context.applyFunctionsAndVariables(copy, location, legacyDefinition);
-		if (tmp == null) {
+		if (tmp == null)
 			return TValue.fromString("");
-		}
+
 		return TValue.fromString(tmp);
 		// eaterReturn.execute(context, copy);
 		// // System.err.println("s3=" + eaterReturn.getValue2());
@@ -211,9 +208,9 @@ public class TFunctionImpl implements TFunction {
 	}
 
 	public void finalizeEnddefinelong() {
-		if (functionType != TFunctionType.LEGACY_DEFINELONG) {
+		if (functionType != TFunctionType.LEGACY_DEFINELONG)
 			throw new UnsupportedOperationException();
-		}
+
 		if (body.size() == 1) {
 			this.functionType = TFunctionType.LEGACY_DEFINE;
 			this.legacyDefinition = body.get(0).getString();

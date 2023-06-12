@@ -34,38 +34,7 @@
  */
 package net.sourceforge.plantuml.filesdiagram;
 
-import net.sourceforge.plantuml.klimt.drawing.UGraphic;
-import net.sourceforge.plantuml.klimt.font.FontConfiguration;
-import net.sourceforge.plantuml.klimt.font.StringBounder;
-import net.sourceforge.plantuml.klimt.font.UFont;
-import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
-import net.sourceforge.plantuml.style.ISkinParam;
-
-public class FilesListing extends AbstractTextBlock {
-
-	private final ISkinParam skinParam;
-	private final FontConfiguration fontConfiguration = FontConfiguration.blackBlueTrue(UFont.courier(14));
-	private final FilesEntry root = new FilesEntry("", FilesType.FOLDER);
-
-	public FilesListing(ISkinParam skinParam) {
-		this.skinParam = skinParam;
-	}
-
-	@Override
-	public XDimension2D calculateDimension(StringBounder stringBounder) {
-		return new XDimension2D(200, 200);
-	}
-
-	@Override
-	public void drawU(UGraphic ug) {
-		for (FilesEntry ent : root)
-			ug = ent.drawAndMove(ug, fontConfiguration, skinParam, 0);
-	}
-
-	public void add(String line) {
-		if (line.startsWith("/"))
-			root.addRawEntry(line.substring(1));
-	}
+public enum FilesType {
+	FOLDER, DATA;
 
 }
