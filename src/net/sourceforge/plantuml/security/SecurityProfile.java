@@ -55,7 +55,7 @@ package net.sourceforge.plantuml.security;
  * 
  */
 public enum SecurityProfile {
-    // ::remove folder when __HAXE__
+	// ::remove folder when __HAXE__
 
 	/**
 	 * Running in SANDBOX mode is completely secure. No local file can be read
@@ -159,6 +159,19 @@ public enum SecurityProfile {
 			return 1000L * 60 * 5;
 		}
 		throw new AssertionError();
+	}
+
+	public boolean canWeReadThisEnvironmentVariable(String name) {
+		if (name == null)
+			return false;
+
+		if (this == UNSECURE)
+			return true;
+		
+		if (name.toLowerCase().startsWith("plantuml"))
+			return true;
+		
+		return true;
 	}
 
 }

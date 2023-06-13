@@ -38,7 +38,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.EaterExceptionLocated;
@@ -61,18 +60,13 @@ public class FileExists extends SimpleReturnFunction {
 	public TValue executeReturnFunction(TContext context, TMemory memory, LineLocation location, List<TValue> values,
 			Map<String, TValue> named) throws EaterException, EaterExceptionLocated {
 		// ::comment when __CORE__
-		if (OptionFlags.ALLOW_INCLUDE == false)
-			// ::done
-			return TValue.fromBoolean(false);
-		// ::comment when __CORE__
-
 		final String path = values.get(0).toString();
-		return TValue.fromBoolean(fileExists(path));
+		return TValue.fromBoolean(new SFile(path).exists());
+		// ::done
+
+		// ::uncomment when __CORE__
+		// return TValue.fromBoolean(false);
 		// ::done
 	}
 
-	private boolean fileExists(String path) {
-		final SFile f = new SFile(path);
-		return f.exists();
-	}
 }

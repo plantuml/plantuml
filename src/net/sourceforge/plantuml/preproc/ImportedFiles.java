@@ -40,7 +40,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.file.AFile;
 import net.sourceforge.plantuml.file.AFileRegular;
 import net.sourceforge.plantuml.file.AFileZipEntry;
@@ -63,9 +62,9 @@ public class ImportedFiles {
 	}
 
 	public ImportedFiles withCurrentDir(AParentFolder newCurrentDir) {
-		if (newCurrentDir == null) {
+		if (newCurrentDir == null) 
 			return this;
-		}
+		
 		return new ImportedFiles(imported, newCurrentDir);
 	}
 
@@ -82,27 +81,27 @@ public class ImportedFiles {
 		// Log.info("ImportedFiles::getAFile nameOrPath = " + nameOrPath);
 		// Log.info("ImportedFiles::getAFile currentDir = " + currentDir);
 		final AParentFolder dir = currentDir;
-		if (dir == null || isAbsolute(nameOrPath)) {
+		if (dir == null || isAbsolute(nameOrPath)) 
 			return new AFileRegular(new SFile(nameOrPath).getCanonicalFile());
-		}
+		
 		// final File filecurrent = SecurityUtils.File(dir.getAbsoluteFile(),
 		// nameOrPath);
 		final AFile filecurrent = dir.getAFile(nameOrPath);
 		Log.info("ImportedFiles::getAFile filecurrent = " + filecurrent);
-		if (filecurrent != null && filecurrent.isOk()) {
+		if (filecurrent != null && filecurrent.isOk()) 
 			return filecurrent;
-		}
+		
 		for (SFile d : getPath()) {
 			if (d.isDirectory()) {
 				final SFile file = d.file(nameOrPath);
-				if (file.exists()) {
+				if (file.exists()) 
 					return new AFileRegular(file.getCanonicalFile());
-				}
+				
 			} else if (d.isFile()) {
 				final AFileZipEntry zipEntry = new AFileZipEntry(d, nameOrPath);
-				if (zipEntry.isOk()) {
+				if (zipEntry.isOk()) 
 					return zipEntry;
-				}
+				
 			}
 		}
 		return filecurrent;
@@ -150,27 +149,25 @@ public class ImportedFiles {
 			file = getAFile(filename.substring(0, idx));
 			entry = filename.substring(idx + 1);
 		}
-		if (isAllowed(file) == false)
+		// if (isAllowed(file) == false)
+		if (file == null || file.getUnderlyingFile().isFileOk() == false)
 			return FileWithSuffix.none();
 
 		return new FileWithSuffix(filename, suffix, file, entry);
 	}
 
-	private boolean isAllowed(AFile file) throws IOException {
-		// ::comment when __CORE__
-		if (OptionFlags.ALLOW_INCLUDE)
-			return true;
-
-		if (file != null) {
-			final SFile folder = file.getSystemFolder();
-			// System.err.println("canonicalPath=" + path + " " + folder + " " +
-			// INCLUDE_PATH);
-			if (includePath().contains(folder))
-				return true;
-
-		}
-		// ::done
-		return false;
-	}
+//	private boolean isAllowed(AFile file) throws IOException {
+//		// ::comment when __CORE__
+//		if (file != null) {
+//			final SFile folder = file.getSystemFolder();
+//			// System.err.println("canonicalPath=" + path + " " + folder + " " +
+//			// INCLUDE_PATH);
+//			if (includePath().contains(folder) && folder.isFileOk())
+//				return true;
+//
+//		}
+//		// ::done
+//		return false;
+//	}
 
 }

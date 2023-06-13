@@ -165,9 +165,8 @@ public class LoadJson extends SimpleReturnFunction {
 		byte[] byteData = null;
 		if (path.startsWith("http://") || path.startsWith("https://")) {
 			final SURL url = SURL.create(path);
-			if (url == null)
-				throw EaterException.located("load JSON: Invalid URL " + path);
-			byteData = url.getBytes();
+			if (url != null)
+				byteData = url.getBytes();
 			// ::comment when __CORE__
 		} else {
 			try {
@@ -179,7 +178,6 @@ public class LoadJson extends SimpleReturnFunction {
 				}
 			} catch (IOException e) {
 				Logme.error(e);
-				throw EaterException.located("load JSON: Cannot read file " + path + ". " + e.getMessage());
 			}
 			// ::done
 		}

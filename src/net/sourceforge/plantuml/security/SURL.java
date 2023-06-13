@@ -216,7 +216,7 @@ public class SURL {
 	/**
 	 * Check SecurityProfile to see if this URL can be opened.
 	 */
-	private boolean isUrlOk() {
+	public boolean isUrlOk() {
 		// ::comment when __CORE__
 		if (SecurityUtils.getSecurityProfile() == SecurityProfile.SANDBOX)
 			// In SANDBOX, we cannot read any URL

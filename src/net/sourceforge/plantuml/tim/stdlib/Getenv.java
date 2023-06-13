@@ -38,7 +38,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.EaterExceptionLocated;
@@ -61,17 +60,15 @@ public class Getenv extends SimpleReturnFunction {
 	public TValue executeReturnFunction(TContext context, TMemory memory, LineLocation location, List<TValue> values,
 			Map<String, TValue> named) throws EaterException, EaterExceptionLocated {
 		// ::comment when __CORE__
-		if (OptionFlags.ALLOW_INCLUDE == false)
-			// ::done
-			return TValue.fromString("");
-		// ::comment when __CORE__
-
-		final String name = values.get(0).toString();
-		final String value = getenv(name);
+		final String value = getenv(values.get(0).toString());
 		if (value == null)
 			return TValue.fromString("");
 
 		return TValue.fromString(value);
+		// ::done
+
+		// ::uncomment when __CORE__
+		// return TValue.fromString("");
 		// ::done
 	}
 
@@ -81,8 +78,9 @@ public class Getenv extends SimpleReturnFunction {
 		// A plantuml server should have an own SecurityManager to
 		// avoid access to properties and environment variables, but we should
 		// also stop here in other deployments.
-		if (SecurityUtils.isSecurityEnv(name))
+		if (SecurityUtils.getSecurityProfile().canWeReadThisEnvironmentVariable(name) == false)
 			return null;
+		
 		final String env = System.getProperty(name);
 		if (env != null)
 			return env;

@@ -117,9 +117,9 @@ public class SFile implements Comparable<SFile> {
 	}
 
 	public static SFile fromFile(File internal) {
-		if (internal == null) {
+		if (internal == null)
 			return null;
-		}
+
 		return new SFile(internal);
 	}
 
@@ -257,7 +257,7 @@ public class SFile implements Comparable<SFile> {
 	/**
 	 * Check SecurityProfile to see if this file can be open.
 	 */
-	private boolean isFileOk() {
+	public boolean isFileOk() {
 		// ::comment when __CORE__
 		if (SecurityUtils.getSecurityProfile() == SecurityProfile.SANDBOX)
 			// In SANDBOX, we cannot read any files

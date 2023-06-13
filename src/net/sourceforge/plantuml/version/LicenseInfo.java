@@ -108,8 +108,8 @@ public class LicenseInfo {
 
 	public static synchronized LicenseInfo retrieveNamedSlow() {
 		cache = LicenseInfo.NONE;
-		if (OptionFlags.ALLOW_INCLUDE == false)
-			return cache;
+//		if (OptionFlags.ALLOW_INCLUDE == false)
+//			return cache;
 
 		final String key = prefs.get("license", "");
 		if (key.length() > 0) {

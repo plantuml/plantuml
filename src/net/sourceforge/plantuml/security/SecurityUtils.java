@@ -222,16 +222,16 @@ public class SecurityUtils {
 		return System.getenv(alternateName);
 	}
 
-	/**
-	 * Checks the environment variable and returns true if the variable is used in
-	 * security context. In this case, the value should not be displayed in scripts.
-	 *
-	 * @param name Environment variable to check
-	 * @return true, if this is a secret variable
-	 */
-	public static boolean isSecurityEnv(String name) {
-		return name != null && name.toLowerCase().startsWith("plantuml.security.");
-	}
+//	/**
+//	 * Checks the environment variable and returns true if the variable is used in
+//	 * security context. In this case, the value should not be displayed in scripts.
+//	 *
+//	 * @param name Environment variable to check
+//	 * @return true, if this is a secret variable
+//	 */
+//	public static boolean isSecurityEnv(String name) {
+//		return name != null && name.toLowerCase().startsWith("plantuml.security.");
+//	}
 
 	/**
 	 * Configuration for Non-SSL authentication methods.
