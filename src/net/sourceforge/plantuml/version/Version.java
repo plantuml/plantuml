@@ -46,7 +46,7 @@ public class Version {
 
 	// Warning, "version" should be the same in gradle.properties and Version.java
 	// Any idea anyone how to magically synchronize those :-) ?
-	private static final String version = "1.2023.9beta5";
+	private static final String version = "1.2023.9";
 
 	public static String versionString() {
 		return version;
@@ -80,7 +80,7 @@ public class Version {
 	}
 
 	public static long compileTime() {
-		return 1684658280620L;
+		return 1686680484235L;
 	}
 
 	public static String compileTimeString() {
