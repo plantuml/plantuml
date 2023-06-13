@@ -165,13 +165,17 @@ public enum SecurityProfile {
 		if (name == null)
 			return false;
 
-		if (this == UNSECURE)
+		final String lname = name.toLowerCase();
+		if (lname.startsWith("plantuml.security"))
+			return false;
+
+		if (lname.startsWith("plantuml"))
 			return true;
-		
-		if (name.toLowerCase().startsWith("plantuml"))
+
+		if (lname.equals("path.separator") || lname.equals("line.separator"))
 			return true;
-		
-		return true;
+
+		return this == UNSECURE;
 	}
 
 }

@@ -46,7 +46,6 @@ class GetenvTest {
 	 */
 	@ParameterizedTest
 	@ValueSource(strings = {
-			"java.version",
 			"path.separator",
 			"line.separator",
 	})
