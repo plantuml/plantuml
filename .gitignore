@@ -7,6 +7,9 @@
 *.iml
 out
 
+#vscode files
+/bin
+
 # Ant result file
 plantuml.jar
 
