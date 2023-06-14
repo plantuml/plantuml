@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -48,7 +48,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.net.URL;
+import java.net.URI;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import net.sourceforge.plantuml.log.Logme;
@@ -140,7 +140,7 @@ public class Splash extends Window implements MouseListener, MouseMotionListener
 	public void mouseClicked(MouseEvent event) {
 		if (link != LINK_NORMAL) {
 			try {
-				Desktop.getDesktop().browse(new URL("https://plantuml.com").toURI());
+				Desktop.getDesktop().browse(new URI("https://plantuml.com"));
 			} catch (Exception e) {
 				Logme.error(e);
 			}
