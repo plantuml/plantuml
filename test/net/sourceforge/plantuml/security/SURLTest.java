@@ -4,7 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.File;
 import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -66,6 +67,7 @@ class SURLTest {
 	 * Checks a SURL after removing the UserInfo part.
 	 *
 	 * @throws MalformedURLException this should not be happened
+	 * @throws URISyntaxException should not happen
 	 */
 	@ParameterizedTest
 	@ValueSource(strings = {
@@ -75,8 +77,8 @@ class SURLTest {
 			"https://localhost:8080/api",
 			"https://alice@localhost:8080/api",
 			"https://alice_secret@localhost:8080/api"})
-	void removeUserInfo(String url) throws MalformedURLException {
-		SURL surl = SURL.createWithoutUser(new URL(url));
+	void removeUserInfo(String url) throws MalformedURLException, URISyntaxException {
+		SURL surl = SURL.createWithoutUser(new URI(url).toURL());
 
 		assertThat(surl).isNotNull();
 		assertThat(surl.isAuthorizationConfigured()).isFalse();

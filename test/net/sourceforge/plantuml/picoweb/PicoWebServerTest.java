@@ -10,7 +10,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.URL;
+import java.net.URI;
 
 import javax.imageio.ImageIO;
 import javax.imageio.stream.MemoryCacheImageInputStream;
@@ -310,7 +310,7 @@ public class PicoWebServerTest {
 	}
 
 	private static HttpURLConnection urlConnection(String path) throws Exception {
-		final HttpURLConnection conn = (HttpURLConnection) new URL("http://localhost:" + port + path).openConnection();
+		final HttpURLConnection conn = (HttpURLConnection) new URI("http://localhost:" + port + path).toURL().openConnection();
 		conn.setInstanceFollowRedirects(false);
 		return conn;
 	}
