@@ -113,6 +113,12 @@ public class EmbeddedDiagram extends AbstractTextBlock implements Line, Atom {
 		if (s.equals(EMBEDDED_START + "ebnf"))
 			return "ebnf";
 
+		if (s.equals(EMBEDDED_START + "regex"))
+			return "regex";
+
+		if (s.equals(EMBEDDED_START + "files"))
+			return "files";
+
 		return null;
 	}
 
