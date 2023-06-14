@@ -42,6 +42,7 @@ The following non-UML diagrams are also supported:
  * [JSON data](http://plantuml.com/json)
  * [YAML data](http://plantuml.com/yaml)
  * [Extended Backus-Naur Form (EBNF) diagram](http://plantuml.com/ebnf)
+ * [Regular Expression (regex) diagram](http://plantuml.com/regex)
  * [Network diagram (nwdiag)](http://plantuml.com/nwdiag)
  * [Wireframe graphical interface or UI mockups (salt)](http://plantuml.com/salt)
  * [Archimate diagram](http://plantuml.com/archimate-diagram)
