@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.klimt.UShape;
 import net.sourceforge.plantuml.utils.SignatureUtils;
 
 public class UImageSvg implements UShape {
-    // ::remove file when __HAXE__
+	// ::remove file when __HAXE__
 
 	private final String svg;
 	private final double scale;
@@ -77,8 +77,12 @@ public class UImageSvg implements UShape {
 		final String style = extractSvgStyle();
 		if (style != null) {
 			final String background = extractBackground(style);
-			if (background != null)
-				result = result.replaceFirst("<g>", "<g><rect fill=\"" + background + "\" style=\"" + style + "\" /> ");
+			if (background != null) {
+				final int width = getData("width");
+				final int height = getData("height");
+				result = result.replaceFirst("<g>", "<g><rect fill=\"" + background + "\" style=\"" + style
+						+ "\" width=\"" + width + "\" height=\"" + height + "\"/> ");
+			}
 
 		}
 		if (result.startsWith("<svg>") == false)

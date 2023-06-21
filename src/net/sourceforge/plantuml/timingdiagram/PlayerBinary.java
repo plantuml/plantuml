@@ -58,6 +58,7 @@ import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.timingdiagram.graphic.IntricatedPoint;
@@ -72,6 +73,8 @@ public class PlayerBinary extends Player {
 	private final SortedMap<TimeTick, ChangeState> values = new TreeMap<>();
 	private ChangeState initialState;
 
+	private final List<TimingNote> notes = new ArrayList<>();
+
 	public PlayerBinary(String code, ISkinParam skinParam, TimingRuler ruler, boolean compact, Stereotype stereotype) {
 		super(code, skinParam, ruler, compact, stereotype);
 		this.suggestedHeight = 30;
@@ -81,8 +84,10 @@ public class PlayerBinary extends Player {
 		return TimeConstraint.getHeightForConstraints(stringBounder, constraints);
 	}
 
+	@Override
 	public double getFullHeight(StringBounder stringBounder) {
-		return getHeightForConstraints(stringBounder) + suggestedHeight;
+		return getHeightForConstraints(stringBounder) + getHeightForNotes(stringBounder, Position.TOP) + suggestedHeight
+				+ getHeightForNotes(stringBounder, Position.BOTTOM);
 	}
 
 	@Override
@@ -91,20 +96,28 @@ public class PlayerBinary extends Player {
 				.withTOBECHANGED(stereotype);
 	}
 
+	@Override
 	public IntricatedPoint getTimeProjection(StringBounder stringBounder, TimeTick tick) {
 		final double x = ruler.getPosInPixel(tick);
 		return new IntricatedPoint(new XPoint2D(x, getYpos(stringBounder, HIGH_STRING)),
 				new XPoint2D(x, getYpos(stringBounder, HIGH_STRING)));
 	}
 
+	@Override
 	public void addNote(TimeTick now, Display note, Position position) {
-		throw new UnsupportedOperationException();
+		final StyleSignatureBasic signature = StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram,
+				SName.note);
+		final Style style = signature.getMergedStyle(skinParam.getCurrentStyleBuilder());
+
+		this.notes.add(new TimingNote(now, this, note, position, skinParam, style));
 	}
 
+	@Override
 	public void defineState(String stateCode, String label) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void setState(TimeTick now, String comment, Colors color, String... states) {
 		final ChangeState cs = new ChangeState(now, comment, color, convert(states));
 		if (now == null)
@@ -139,14 +152,16 @@ public class PlayerBinary extends Player {
 		return getYhigh(stringBounder);
 	}
 
-	private double getYlow(StringBounder stringBounder) {
-		return getFullHeight(stringBounder) - ymargin;
-	}
-
 	private double getYhigh(StringBounder stringBounder) {
-		return ymargin + getHeightForConstraints(stringBounder);
+		return ymargin + getHeightForConstraints(stringBounder) + getHeightForNotes(stringBounder, Position.TOP);
 	}
 
+	private double getYlow(StringBounder stringBounder) {
+		return getHeightForConstraints(stringBounder) + getHeightForNotes(stringBounder, Position.TOP) + suggestedHeight
+				- ymargin;
+	}
+
+	@Override
 	public TextBlock getPart1(double fullAvailableWidth, double specialVSpace) {
 		return new AbstractTextBlock() {
 
@@ -165,6 +180,7 @@ public class PlayerBinary extends Player {
 		};
 	}
 
+	@Override
 	public UDrawable getPart2() {
 		return new UDrawable() {
 			public void drawU(UGraphic ug) {
@@ -204,6 +220,12 @@ public class PlayerBinary extends Player {
 
 				drawConstraints(ug.apply(UTranslate.dy(getHeightForConstraints(ug.getStringBounder()))));
 
+				drawNotes(ug.apply(UTranslate.dy(ymargin)), Position.TOP);
+				drawNotes(
+						ug.apply(UTranslate.dy(getHeightForConstraints(stringBounder)
+								+ getHeightForNotes(stringBounder, Position.TOP) + suggestedHeight - ymargin / 2)),
+						Position.BOTTOM);
+
 			}
 		};
 	}
@@ -219,9 +241,26 @@ public class PlayerBinary extends Player {
 	}
 
 	private void drawConstraints(final UGraphic ug) {
-		for (TimeConstraint constraint : constraints) {
+		for (TimeConstraint constraint : constraints)
 			constraint.drawU(ug, ruler);
-		}
+	}
+
+	private void drawNotes(UGraphic ug, final Position position) {
+		for (TimingNote note : notes)
+			if (note.getPosition() == position) {
+				final TimeTick when = note.getWhen();
+				final double x = when == null ? 0 : ruler.getPosInPixel(when);
+				note.drawU(ug.apply(UTranslate.dx(x)));
+			}
+	}
+
+	private double getHeightForNotes(StringBounder stringBounder, Position position) {
+		double height = 0;
+		for (TimingNote note : notes)
+			if (note.getPosition() == position)
+				height = Math.max(height, note.getHeight(stringBounder));
+
+		return height;
 	}
 
 }

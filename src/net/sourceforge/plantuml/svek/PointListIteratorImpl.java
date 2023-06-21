@@ -70,7 +70,7 @@ class PointListIteratorImpl implements PointListIterator {
 	}
 
 	public List<XPoint2D> next() {
-		if (pos == -1) {
+		if (pos < 0) {
 			pos = -2;
 			return Collections.emptyList();
 		}
@@ -83,7 +83,7 @@ class PointListIteratorImpl implements PointListIterator {
 				pos = svg.indexOf(SvgResult.POINTS_EQUALS, pos) + SvgResult.POINTS_EQUALS.length() + 1;
 			return result;
 		} catch (StringIndexOutOfBoundsException e) {
-			Log.error("Error " + e);
+			Log.error("ErrorString " + e);
 			return Collections.emptyList();
 		}
 	}

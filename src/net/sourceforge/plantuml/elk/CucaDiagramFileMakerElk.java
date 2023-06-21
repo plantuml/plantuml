@@ -283,14 +283,16 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 
 			final UmlDiagramType umlDiagramType = diagram.getUmlDiagramType();
 
-			final Style style = Cluster.getDefaultStyleDefinition(umlDiagramType.getStyleName(), group.getUSymbol())
+			final Style style = Cluster
+					.getDefaultStyleDefinition(umlDiagramType.getStyleName(), group.getUSymbol(), group.getGroupType())
 					.getMergedStyle(skinParam.getCurrentStyleBuilder());
 			final double shadowing = style.value(PName.Shadowing).asDouble();
 			final UStroke stroke = Cluster.getStrokeInternal(group, style);
 
 			HColor backColor = getBackColor(umlDiagramType);
 			backColor = Cluster.getBackColor(backColor, group.getStereotype(), umlDiagramType.getStyleName(),
-					group.getUSymbol(), skinParam.getCurrentStyleBuilder(), skinParam.getIHtmlColorSet());
+					group.getUSymbol(), skinParam.getCurrentStyleBuilder(), skinParam.getIHtmlColorSet(),
+					group.getGroupType());
 
 			final double roundCorner = style.value(PName.RoundCorner).asDouble();
 //			final double roundCorner = group.getUSymbol() == null ? 0

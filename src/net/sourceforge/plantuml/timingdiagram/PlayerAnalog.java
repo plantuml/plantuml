@@ -105,10 +105,12 @@ public class PlayerAnalog extends Player {
 		return max;
 	}
 
+	@Override
 	public double getFullHeight(StringBounder stringBounder) {
 		return getHeightForConstraints(stringBounder) + suggestedHeight;
 	}
 
+	@Override
 	public IntricatedPoint getTimeProjection(StringBounder stringBounder, TimeTick tick) {
 		final double x = ruler.getPosInPixel(tick);
 		final double value = getValueAt(stringBounder, tick);
@@ -139,14 +141,17 @@ public class PlayerAnalog extends Player {
 		return last.getValue();
 	}
 
+	@Override
 	public void addNote(TimeTick now, Display note, Position position) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void defineState(String stateCode, String label) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void setState(TimeTick now, String comment, Colors color, String... valueString) {
 		final double value = getState(valueString[0]);
 		if (now == null)
@@ -256,6 +261,7 @@ public class PlayerAnalog extends Player {
 
 	}
 
+	@Override
 	public UDrawable getPart2() {
 		return new UDrawable() {
 			public void drawU(UGraphic ug) {

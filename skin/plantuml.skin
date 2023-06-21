@@ -65,6 +65,14 @@ document {
   }
 }
 
+
+package {
+  title {
+    FontStyle bold
+  }
+}
+
+
 stereotype {
   FontStyle italic
 }

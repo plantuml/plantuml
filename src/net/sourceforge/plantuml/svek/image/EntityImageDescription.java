@@ -145,8 +145,9 @@ public class EntityImageDescription extends AbstractEntityImage {
 		final Style styleStereo = tmp.forStereotypeItself(stereotype)
 				.getMergedStyle(getSkinParam().getCurrentStyleBuilder());
 
-		final Style style = StyleSignatureBasic.of(SName.root, SName.element, styleName, symbol.getSName())
-				.withTOBECHANGED(stereotype).getMergedStyle(getSkinParam().getCurrentStyleBuilder())
+		final StyleSignatureBasic tmp2 = StyleSignatureBasic.of(SName.root, SName.element, styleName,
+				symbol.getSName());
+		final Style style = tmp2.withTOBECHANGED(stereotype).getMergedStyle(getSkinParam().getCurrentStyleBuilder())
 				.eventuallyOverride(colors);
 
 		final HColor forecolor = styleTitle.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
@@ -160,6 +161,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 		final double deltaShadow = styleTitle.value(PName.Shadowing).asDouble();
 		final UStroke stroke = styleTitle.getStroke(colors);
 		final FontConfiguration fcTitle = styleTitle.getFontConfiguration(getSkinParam().getIHtmlColorSet());
+		final FontConfiguration fc = style.getFontConfiguration(getSkinParam().getIHtmlColorSet());
 		final FontConfiguration fcStereo = styleStereo.getFontConfiguration(getSkinParam().getIHtmlColorSet());
 		final HorizontalAlignment defaultAlign = styleTitle.getHorizontalAlignment();
 
@@ -172,9 +174,11 @@ public class EntityImageDescription extends AbstractEntityImage {
 		if ((entity.getDisplay().equalsLike(codeDisplay) && symbol.getSName() == SName.package_)
 				|| entity.getDisplay().isWhite())
 			desc = TextBlockUtils.empty(style.value(PName.MinimumWidth).asDouble(), 0);
-		else
+		else if (entity.getDisplay().equalsLike(codeDisplay))
 			desc = BodyFactory.create3(entity.getDisplay(), getSkinParam(), defaultAlign, fcTitle, style.wrapWidth(),
 					styleTitle);
+		else
+			desc = BodyFactory.create3(entity.getDisplay(), getSkinParam(), defaultAlign, fc, style.wrapWidth(), style);
 
 		stereo = TextBlockUtils.empty(0, 0);
 

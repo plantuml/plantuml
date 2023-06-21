@@ -118,6 +118,8 @@ public final class ClusterHeader {
 		else if (uSymbol != null)
 			signature = StyleSignatureBasic.of(SName.root, SName.element, sname, uSymbol.getSName(), SName.composite,
 					SName.title);
+		else if (g.getGroupType() == GroupType.PACKAGE)
+			signature = StyleSignatureBasic.of(SName.root, SName.element, sname, SName.package_, SName.title);
 		else
 			signature = StyleSignatureBasic.of(SName.root, SName.element, sname, SName.composite, SName.title);
 
@@ -163,7 +165,7 @@ public final class ClusterHeader {
 			return TextBlockUtils.empty(0, 0);
 
 		final Style style = Cluster
-				.getDefaultStyleDefinition(skinParam.getUmlDiagramType().getStyleName(), g.getUSymbol())
+				.getDefaultStyleDefinition(skinParam.getUmlDiagramType().getStyleName(), g.getUSymbol(), g.getGroupType())
 				.forStereotypeItself(g.getStereotype()).getMergedStyle(skinParam.getCurrentStyleBuilder());
 
 		final FontConfiguration fontConfiguration = style.getFontConfiguration(skinParam.getIHtmlColorSet());

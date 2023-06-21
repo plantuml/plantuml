@@ -111,7 +111,8 @@ public class CommandPackage extends SingleLineCommand2<AbstractEntityDiagram> {
 			if (name.length() == 0) {
 				idShort = "##" + diagram.getUniqueSequence();
 				display = null;
-				throw new IllegalStateException("AS");
+				return CommandExecutionResult.error("Error in name");
+				// throw new IllegalStateException("AS");
 			} else {
 				idShort = name;
 				display = idShort;

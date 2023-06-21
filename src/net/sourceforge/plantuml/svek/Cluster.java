@@ -52,6 +52,7 @@ import java.util.Set;
 import net.sourceforge.plantuml.abel.CucaNote;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.EntityPosition;
+import net.sourceforge.plantuml.abel.GroupType;
 import net.sourceforge.plantuml.abel.Together;
 import net.sourceforge.plantuml.cucadiagram.ICucaDiagram;
 import net.sourceforge.plantuml.decoration.symbol.USymbol;
@@ -75,7 +76,6 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UComment;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.skin.AlignmentParam;
-import net.sourceforge.plantuml.skin.ComponentStyle;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
@@ -274,12 +274,16 @@ public class Cluster implements Moveable {
 		this.xyNoteBottom = pos;
 	}
 
-	static public StyleSignatureBasic getDefaultStyleDefinition(SName diagramStyleName, USymbol symbol) {
+	static public StyleSignatureBasic getDefaultStyleDefinition(SName diagramStyleName, USymbol symbol,
+			GroupType groupType) {
 		if (diagramStyleName == SName.stateDiagram)
 			return StyleSignatureBasic.of(SName.root, SName.element, SName.stateDiagram, SName.state, SName.group);
-		if (symbol == null)
-			return StyleSignatureBasic.of(SName.root, SName.element, diagramStyleName, SName.group);
-		return StyleSignatureBasic.of(SName.root, SName.element, diagramStyleName, SName.group, symbol.getSName());
+		if (symbol != null)
+			return StyleSignatureBasic.of(SName.root, SName.element, diagramStyleName, SName.group, symbol.getSName());
+		if (groupType == GroupType.PACKAGE)
+			return StyleSignatureBasic.of(SName.root, SName.element, diagramStyleName, SName.package_, SName.group);
+
+		return StyleSignatureBasic.of(SName.root, SName.element, diagramStyleName, SName.group);
 	}
 
 	public void drawU(UGraphic ug, UmlDiagramType umlDiagramType) {
@@ -298,7 +302,7 @@ public class Cluster implements Moveable {
 			ug.draw(new UComment("cluster " + fullName));
 
 		final USymbol uSymbol = group.getUSymbol() == null ? USymbols.PACKAGE : group.getUSymbol();
-		Style style = getDefaultStyleDefinition(umlDiagramType.getStyleName(), uSymbol)
+		Style style = getDefaultStyleDefinition(umlDiagramType.getStyleName(), uSymbol, group.getGroupType())
 				.withTOBECHANGED(group.getStereotype()).getMergedStyle(skinParam.getCurrentStyleBuilder());
 		final double shadowing = style.value(PName.Shadowing).asDouble();
 		HColor borderColor;
@@ -341,7 +345,8 @@ public class Cluster implements Moveable {
 
 			HColor backColor = getBackColor(umlDiagramType, style);
 			backColor = getBackColor(backColor, group.getStereotype(), umlDiagramType.getStyleName(),
-					group.getUSymbol(), skinParam.getCurrentStyleBuilder(), skinParam.getIHtmlColorSet());
+					group.getUSymbol(), skinParam.getCurrentStyleBuilder(), skinParam.getIHtmlColorSet(),
+					group.getGroupType());
 
 			final ClusterDecoration decoration = new ClusterDecoration(packageStyle, group.getUSymbol(),
 					clusterHeader.getTitle(), clusterHeader.getStereo(), rectangleArea, stroke);
@@ -638,9 +643,9 @@ public class Cluster implements Moveable {
 	}
 
 	public static HColor getBackColor(HColor backColor, Stereotype stereotype, SName styleName, USymbol symbol,
-			StyleBuilder styleBuilder, HColorSet colorSet) {
+			StyleBuilder styleBuilder, HColorSet colorSet, GroupType groupType) {
 
-		final Style style = getDefaultStyleDefinition(styleName, symbol).getMergedStyle(styleBuilder);
+		final Style style = getDefaultStyleDefinition(styleName, symbol, groupType).getMergedStyle(styleBuilder);
 		if (backColor == null)
 			backColor = style.value(PName.BackGroundColor).asColor(colorSet);
 

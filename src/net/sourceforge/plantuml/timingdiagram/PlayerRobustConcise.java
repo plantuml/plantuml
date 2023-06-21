@@ -115,6 +115,7 @@ public final class PlayerRobustConcise extends Player {
 		throw new IllegalStateException();
 	}
 
+	@Override
 	public final TextBlock getPart1(final double fullAvailableWidth, final double specialVSpace) {
 		return new AbstractTextBlock() {
 
@@ -132,6 +133,7 @@ public final class PlayerRobustConcise extends Player {
 		};
 	}
 
+	@Override
 	public UDrawable getPart2() {
 		return new UDrawable() {
 			public void drawU(UGraphic ug) {
@@ -145,6 +147,7 @@ public final class PlayerRobustConcise extends Player {
 		return UTranslate.dy(getTitleHeight(stringBounder));
 	}
 
+	@Override
 	public final double getFullHeight(StringBounder stringBounder) {
 		return getTitleHeight(stringBounder) + getZoneHeight(stringBounder);
 	}
@@ -179,6 +182,7 @@ public final class PlayerRobustConcise extends Player {
 		return getTimeDrawing().getFullHeight(stringBounder);
 	}
 
+	@Override
 	public final void setState(TimeTick now, String comment, Colors color, String... states) {
 		for (int i = 0; i < states.length; i++)
 			states[i] = decodeState(states[i]);
@@ -200,6 +204,7 @@ public final class PlayerRobustConcise extends Player {
 		return label;
 	}
 
+	@Override
 	public final IntricatedPoint getTimeProjection(StringBounder stringBounder, TimeTick tick) {
 		if (tick == null)
 			return null;
@@ -211,6 +216,7 @@ public final class PlayerRobustConcise extends Player {
 		return point.translated(translation);
 	}
 
+	@Override
 	public final void addNote(TimeTick now, Display note, Position position) {
 
 		final StyleSignatureBasic signature = StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram,
@@ -220,6 +226,7 @@ public final class PlayerRobustConcise extends Player {
 		this.notes.add(new TimingNote(now, this, note, position, skinParam, style));
 	}
 
+	@Override
 	public final void defineState(String stateCode, String label) {
 		statesLabel.put(stateCode, label);
 	}

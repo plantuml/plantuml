@@ -73,6 +73,7 @@ public class PlayerClock extends Player {
 		this.suggestedHeight = 30;
 	}
 
+	@Override
 	public double getFullHeight(StringBounder stringBounder) {
 		return suggestedHeight + getTitleHeight(stringBounder);
 	}
@@ -87,22 +88,27 @@ public class PlayerClock extends Player {
 		return 0;
 	}
 
+	@Override
 	protected StyleSignatureBasic getStyleSignature() {
 		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, SName.clock);
 	}
 
+	@Override
 	public IntricatedPoint getTimeProjection(StringBounder stringBounder, TimeTick tick) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void addNote(TimeTick now, Display note, Position position) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void defineState(String stateCode, String label) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void setState(TimeTick now, String comment, Colors color, String... states) {
 		throw new UnsupportedOperationException();
 	}
@@ -116,6 +122,7 @@ public class PlayerClock extends Player {
 		return period;
 	}
 
+	@Override
 	public TextBlock getPart1(double fullAvailableWidth, double specialVSpace) {
 		if (displayTitle)
 			return new AbstractTextBlock() {
@@ -131,6 +138,7 @@ public class PlayerClock extends Player {
 		return TextBlockUtils.empty(0, 0);
 	}
 
+	@Override
 	public UDrawable getPart2() {
 		return new UDrawable() {
 
