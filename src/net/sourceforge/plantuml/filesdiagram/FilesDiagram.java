@@ -36,7 +36,10 @@ package net.sourceforge.plantuml.filesdiagram;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.UmlDiagram;
@@ -57,13 +60,25 @@ public class FilesDiagram extends UmlDiagram {
 
 		final Iterator<StringLocated> it = source.iterator2();
 		it.next();
-		while (true) {
+		while (it.hasNext()) {
 			final String line = it.next().getString();
-			if (it.hasNext() == false)
-				break;
-			this.list.add(line);
+			if (line.startsWith("/"))
+				this.list.addRawEntry(line.substring(1));
+			else if (line.startsWith("<note>"))
+				this.list.addNote(getNote(it));
 		}
 
+	}
+
+	private List<String> getNote(Iterator<StringLocated> it) {
+		final List<String> result = new ArrayList<String>();
+		while (it.hasNext()) {
+			final String line = it.next().getString();
+			if (line.startsWith("</note>"))
+				return result;
+			result.add(line);
+		}
+		return Collections.unmodifiableList(result);
 	}
 
 	public DiagramDescription getDescription() {

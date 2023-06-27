@@ -70,7 +70,9 @@ public class UFont {
 	}
 
 	public static UFont build(String fontFamily, int fontStyle, int fontSize) {
-		return new UFont(buildFont(fontFamily, fontStyle, fontSize), fontFamily);
+		final String family = getExistingFontFamily(fontFamily);
+		final Font font = new Font(family, fontStyle, fontSize);
+		return new UFont(font, fontFamily);
 	}
 
 	private UFont(Font font, String family) {
@@ -78,16 +80,16 @@ public class UFont {
 		this.family = family;
 	}
 
-	private static Font buildFont(String fontFamily, int fontStyle, int fontSize) {
-		if (fontFamily.contains(","))
+	public static String getExistingFontFamily(String fontFamily) {
+		if (fontFamily.contains(",")) {
 			for (String name : fontFamily.split(",")) {
 				name = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(name.trim()).trim();
 				if (doesFamilyExists(name))
-					return new Font(name, fontStyle, fontSize);
-
+					return name;
 			}
-
-		return new Font(fontFamily, fontStyle, fontSize);
+			return "SansSerif";
+		}
+		return StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(fontFamily.trim()).trim();
 	}
 
 	private static boolean doesFamilyExists(String name) {

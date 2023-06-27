@@ -34,6 +34,8 @@
  */
 package net.sourceforge.plantuml.filesdiagram;
 
+import java.util.List;
+
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
@@ -46,10 +48,11 @@ public class FilesListing extends AbstractTextBlock {
 
 	private final ISkinParam skinParam;
 	private final FontConfiguration fontConfiguration = FontConfiguration.blackBlueTrue(UFont.courier(14));
-	private final FilesEntry root = new FilesEntry("", FilesType.FOLDER);
+	private final FEntry root;
 
 	public FilesListing(ISkinParam skinParam) {
 		this.skinParam = skinParam;
+		this.root = FEntry.createRoot(skinParam);
 	}
 
 	@Override
@@ -59,13 +62,16 @@ public class FilesListing extends AbstractTextBlock {
 
 	@Override
 	public void drawU(UGraphic ug) {
-		for (FilesEntry ent : root)
+		for (FEntry ent : root)
 			ug = ent.drawAndMove(ug, fontConfiguration, skinParam, 0);
 	}
 
-	public void add(String line) {
-		if (line.startsWith("/"))
-			root.addRawEntry(line.substring(1));
+	public void addRawEntry(String raw) {
+		root.addRawEntry(raw, skinParam);
+	}
+
+	public void addNote(List<String> note) {
+		root.addNote(note, skinParam);
 	}
 
 }

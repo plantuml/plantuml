@@ -35,6 +35,6 @@
 package net.sourceforge.plantuml.filesdiagram;
 
 public enum FilesType {
-	FOLDER, DATA;
+	FOLDER, DATA, NOTE;
 
 }
