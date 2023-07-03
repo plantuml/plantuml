@@ -192,6 +192,10 @@ jobs:
         run: |
           gradle -i signMavenPublication signPdfJar
           ls -l build/libs
+          ls -l plantuml-asl/build/libs
+          ls -l plantuml-bsd/build/libs
+          ls -l plantuml-epl/build/libs
+          ls -l plantuml-lgpl/build/libs
           ls -l plantuml-mit/build/libs
       - name: Get release version
         id: version
@@ -203,6 +207,10 @@ jobs:
           path: |
             build/libs
             build/publications
+            plantuml-asl/build/libs
+            plantuml-bsd/build/libs
+            plantuml-epl/build/libs
+            plantuml-lgpl/build/libs
             plantuml-mit/build/libs
           key: "libs-${{ github.run_id }}"
           enableCrossOsArchive: true
@@ -230,6 +238,10 @@ jobs:
           path: |
             build/libs
             build/publications
+            plantuml-asl/build/libs
+            plantuml-bsd/build/libs
+            plantuml-epl/build/libs
+            plantuml-lgpl/build/libs
             plantuml-mit/build/libs
           key: "libs-${{ github.run_id }}"
           fail-on-cache-miss: true
@@ -243,6 +255,10 @@ jobs:
           path: |
             build/libs/*
             build/publications/maven/*
+            plantuml-asl/build/libs
+            plantuml-bsd/build/libs
+            plantuml-epl/build/libs
+            plantuml-lgpl/build/libs
             plantuml-mit/build/libs
 
       - name: Create snapshot
