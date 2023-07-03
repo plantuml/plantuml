@@ -37,6 +37,8 @@ package net.sourceforge.plantuml.style;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import net.sourceforge.plantuml.FileSystem;
 import net.sourceforge.plantuml.TitledDiagram;
@@ -80,23 +82,32 @@ public class CommandStyleImport extends SingleLineCommand2<TitledDiagram> {
 	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg) {
 		final String path = arg.get("PATH", 0);
 		try {
-			final SFile f = FileSystem.getInstance().getFile(path);
 			BlocLines lines = null;
-			if (f.exists()) {
-				lines = BlocLines.load(f, location);
+			if (path.startsWith("http")) {
+				URL url = new URL(path);
+				try (InputStream remoteInputStream = url.openStream()) {
+					lines = BlocLines.load(remoteInputStream, location);
+				}
 			} else {
-				final InputStream internalIs = StyleLoader.class.getResourceAsStream("/skin/" + path);
-				if (internalIs != null)
-					lines = BlocLines.load(internalIs, location);
-
+				final SFile styleFile = FileSystem.getInstance().getFile(path);
+				if (styleFile.exists()) {
+					lines = BlocLines.load(styleFile, location);
+				} else {
+					final InputStream internalIs = StyleLoader.class.getResourceAsStream("/skin/" + path);
+					if (internalIs != null)
+						lines = BlocLines.load(internalIs, location);
+				}
 			}
-			if (lines == null)
+
+			if (lines == null || lines.size() == 0)
 				return CommandExecutionResult.error("Cannot read: " + path);
 
 			final StyleBuilder styleBuilder = diagram.getSkinParam().getCurrentStyleBuilder();
 			for (Style modifiedStyle : StyleParser.parse(lines, styleBuilder))
 				diagram.getSkinParam().muteStyle(modifiedStyle);
 
+		} catch (MalformedURLException e) {
+			return CommandExecutionResult.error("Invalid URL to style definition: " + e.getMessage());
 		} catch (StyleParsingException e) {
 			return CommandExecutionResult.error("Error in style definition: " + e.getMessage());
 		} catch (IOException e) {
