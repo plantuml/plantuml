@@ -37,6 +37,10 @@ jobs:
           path: |
             build/libs
             build/publications
+            plantuml-asl/build/libs
+            plantuml-bsd/build/libs
+            plantuml-epl/build/libs
+            plantuml-lgpl/build/libs
             plantuml-mit/build/libs
           key: "libs-${{ github.run_id }}"
           fail-on-cache-miss: true
