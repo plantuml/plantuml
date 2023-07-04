@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.style;
@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.security.SURL;
 import net.sourceforge.plantuml.style.parser.StyleParser;
 import net.sourceforge.plantuml.style.parser.StyleParsingException;
 import net.sourceforge.plantuml.utils.BlocLines;
@@ -84,7 +85,7 @@ public class CommandStyleImport extends SingleLineCommand2<TitledDiagram> {
 		try {
 			BlocLines lines = null;
 			if (path.startsWith("http")) {
-				URL url = new URL(path);
+				SURL url = SURL.create (path);
 				try (InputStream remoteInputStream = url.openStream()) {
 					lines = BlocLines.load(remoteInputStream, location);
 				}
