@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.security;
@@ -44,6 +44,8 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.Proxy;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.Charset;
@@ -87,11 +89,11 @@ import net.sourceforge.plantuml.security.authentication.SecurityCredentials;
  * host.
  * <p>
  * Example:<br/>
- * 
+ *
  * <pre>
  *     SURL url = SURL.create ("https://jenkins-access@jenkins.mycompany.com/api/json")
  * </pre>
- * 
+ *
  * The {@code jenkins-access} will checked against the Security context access
  * token configuration. If a configuration exists for this token name, the token
  * will be removed from the URL and the credentials will be added to the
@@ -131,7 +133,7 @@ public class SURL {
 	 * <p>
 	 * The url must be http or https. Return null in case of error or if
 	 * <code>url</code> is null
-	 * 
+	 *
 	 * @param url plain url starting by http:// or https//
 	 * @return the secure URL or null
 	 */
@@ -141,8 +143,8 @@ public class SURL {
 
 		if (url.startsWith("http://") || url.startsWith("https://"))
 			try {
-				return create(new URL(url));
-			} catch (MalformedURLException e) {
+				return create(new URI(url).toURL());
+			} catch (MalformedURLException | URISyntaxException e) {
 				Logme.error(e);
 			}
 		return null;
@@ -152,12 +154,13 @@ public class SURL {
 	 * Create a secure URL from a <code>java.net.URL</code> object.
 	 * <p>
 	 * It takes into account credentials.
-	 * 
+	 *
 	 * @param url
 	 * @return the secure URL
 	 * @throws MalformedURLException if <code>url</code> is null
+	 * @throws URISyntaxException
 	 */
-	public static SURL create(URL url) throws MalformedURLException {
+	public static SURL create(URL url) throws MalformedURLException, URISyntaxException {
 		if (url == null)
 			throw new MalformedURLException("URL cannot be null");
 
@@ -268,8 +271,9 @@ public class SURL {
 	 * @param url plain URL
 	 * @return SURL without any user credential information.
 	 * @throws MalformedURLException
+	 * @throws URISyntaxException
 	 */
-	static SURL createWithoutUser(URL url) throws MalformedURLException {
+	static SURL createWithoutUser(URL url) throws MalformedURLException, URISyntaxException {
 		return new SURL(removeUserInfo(url), WITHOUT_AUTHENTICATION);
 	}
 
@@ -457,7 +461,7 @@ public class SURL {
 
 	/**
 	 * Creates a GET request and response handler
-	 * 
+	 *
 	 * @param url            URL to request
 	 * @param proxy          proxy to apply
 	 * @param authentication the authentication to use
@@ -481,14 +485,14 @@ public class SURL {
 				return http;
 			}
 
-			public byte[] call() throws IOException {
+			public byte[] call() throws IOException, URISyntaxException {
 				HttpURLConnection http = openConnection(url);
 				final int responseCode = http.getResponseCode();
 
 				if (responseCode == HttpURLConnection.HTTP_MOVED_TEMP
 						|| responseCode == HttpURLConnection.HTTP_MOVED_PERM) {
 					final String newUrl = http.getHeaderField("Location");
-					http = openConnection(new URL(newUrl));
+					http = openConnection(new URI(newUrl).toURL());
 				}
 
 				return retrieveResponseAsBytes(http);
@@ -501,7 +505,7 @@ public class SURL {
 	 * content will be identified as form or JSON data. The charset encoding can be
 	 * set by header parameters or will be set to UTF-8. The method to some fancy
 	 * logic to simplify it for the user.
-	 * 
+	 *
 	 * @param url            URL to request via POST method
 	 * @param proxy          proxy to apply
 	 * @param authentication the authentication to use
@@ -577,7 +581,7 @@ public class SURL {
 
 	/**
 	 * Reads data in a byte[] array.
-	 * 
+	 *
 	 * @param input input stream
 	 * @return byte data
 	 * @throws IOException if something went wrong
@@ -595,7 +599,7 @@ public class SURL {
 
 	/**
 	 * Sends a request content payload to an endpoint.
-	 * 
+	 *
 	 * @param connection HTTP connection
 	 * @param data       data as byte array
 	 * @throws IOException if something went wrong
@@ -653,7 +657,7 @@ public class SURL {
 
 	/**
 	 * Set the headers for a URL connection
-	 * 
+	 *
 	 * @param headers map Keys with values (can be String or list of String)
 	 */
 	private static void applyAdditionalHeaders(URLConnection http, Map<String, Object> headers) {
@@ -675,19 +679,20 @@ public class SURL {
 	/**
 	 * Removes the userInfo part from the URL, because we want to use the
 	 * SecurityCredentials instead.
-	 * 
+	 *
 	 * @param url URL with UserInfo part
 	 * @return url without UserInfo part
 	 * @throws MalformedURLException
+	 * @throws URISyntaxException
 	 */
-	private static URL removeUserInfo(URL url) throws MalformedURLException {
-		return new URL(removeUserInfoFromUrlPath(url.toExternalForm()));
+	private static URL removeUserInfo(URL url) throws MalformedURLException, URISyntaxException {
+		return new URI(removeUserInfoFromUrlPath(url.toExternalForm())).toURL();
 	}
 
 	/**
 	 * Removes the userInfo part from the URL, because we want to use the
 	 * SecurityCredentials instead.
-	 * 
+	 *
 	 * @param url URL with UserInfo part
 	 * @return url without UserInfo part
 	 */
