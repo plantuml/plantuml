@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.style;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
-import java.net.URL;
 
 import net.sourceforge.plantuml.FileSystem;
 import net.sourceforge.plantuml.TitledDiagram;
@@ -56,7 +55,7 @@ import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandStyleImport extends SingleLineCommand2<TitledDiagram> {
-    // ::remove file when __HAXE__
+	// ::remove file when __HAXE__
 
 	public static final CommandStyleImport ME = new CommandStyleImport();
 
@@ -84,8 +83,8 @@ public class CommandStyleImport extends SingleLineCommand2<TitledDiagram> {
 		final String path = arg.get("PATH", 0);
 		try {
 			BlocLines lines = null;
-			if (path.startsWith("http")) {
-				SURL url = SURL.create (path);
+			if (path.startsWith("http://") || path.startsWith("https://")) {
+				SURL url = SURL.create(path);
 				try (InputStream remoteInputStream = url.openStream()) {
 					lines = BlocLines.load(remoteInputStream, location);
 				}

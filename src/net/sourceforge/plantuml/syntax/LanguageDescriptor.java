@@ -224,6 +224,7 @@ public class LanguageDescriptor {
 		keyword.add("dashed");
 		keyword.add("bold");
 		keyword.add("map");
+		keyword.add("together");
 
 		preproc.add("!exit");
 		preproc.add("!include");
@@ -255,21 +256,21 @@ public class LanguageDescriptor {
 
 	public Cypher getCypher() {
 		final Cypher cypher = new Cypher();
-		for (String s : type) {
+		for (String s : type)
 			cypher.addException(s);
-		}
-		for (String s : keyword) {
+
+		for (String s : keyword)
 			cypher.addException(s.replace("@", ""));
-		}
-		for (String s : preproc) {
+
+		for (String s : preproc)
 			cypher.addException(s.substring(1));
-		}
-		for (String s : SkinParam.getPossibleValues()) {
+
+		for (String s : SkinParam.getPossibleValues())
 			cypher.addException(s);
-		}
-		for (String s : HColorSet.instance().names()) {
+
+		for (String s : HColorSet.instance().names())
 			cypher.addException(s);
-		}
+
 		cypher.addException("o");
 		return cypher;
 	}
@@ -286,9 +287,9 @@ public class LanguageDescriptor {
 	private static void print(PrintStream ps, String name, Collection<String> data) {
 		ps.println(";" + name);
 		ps.println(";" + data.size());
-		for (String k : data) {
+		for (String k : data)
 			ps.println(k);
-		}
+
 		ps.println();
 	}
 
