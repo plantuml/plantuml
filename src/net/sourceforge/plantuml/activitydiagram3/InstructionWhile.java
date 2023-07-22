@@ -120,7 +120,7 @@ public class InstructionWhile extends WithNote implements Instruction, Instructi
 		Ftile tmp = repeatList.createFtile(factory);
 		tmp = factory.createWhile(outColor, swimlane, tmp, test, yes, color, specialOut, back, incoming1, incoming2);
 		if (getPositionedNotes().size() > 0)
-			tmp = FtileWithNoteOpale.create(tmp, getPositionedNotes(), skinParam, false, VerticalAlignment.CENTER);
+			tmp = FtileWithNoteOpale.create(tmp, getPositionedNotes(), false, VerticalAlignment.CENTER);
 
 		if (killed || specialOut != null)
 			return new FtileKilled(tmp);

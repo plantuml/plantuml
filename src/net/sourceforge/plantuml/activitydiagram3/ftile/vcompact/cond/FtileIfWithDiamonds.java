@@ -38,25 +38,81 @@ package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond;
 import java.util.Arrays;
 import java.util.Collection;
 
+import net.sourceforge.plantuml.activitydiagram3.PositionedNote;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.klimt.LineBreakStrategy;
+import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.creole.CreoleMode;
+import net.sourceforge.plantuml.klimt.creole.Sheet;
+import net.sourceforge.plantuml.klimt.creole.SheetBlock1;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.skin.AlignmentParam;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.svek.image.Opale;
 
 public class FtileIfWithDiamonds extends FtileIfNude {
 
 	private static final double SUPP_WIDTH = 20;
 	protected final Ftile diamond1;
 	protected final Ftile diamond2;
+	final private TextBlock opale;
 
 	public FtileIfWithDiamonds(Ftile diamond1, Ftile tile1, Ftile tile2, Ftile diamond2, Swimlane in,
-			StringBounder stringBounder) {
+			StringBounder stringBounder, Collection<PositionedNote> notes) {
 		super(tile1, tile2, in);
 		this.diamond1 = diamond1;
 		this.diamond2 = diamond2;
+		if (notes.size() == 1) {
+			final PositionedNote first = notes.iterator().next();
+			this.opale = createOpale(first, skinParam());
+			final double pos1 = getTranslateDiamond1(stringBounder).getDx();
+			final XDimension2D dimOpale = opale.calculateDimension(stringBounder);
+			final double opaleWith = dimOpale.getWidth();
+			if (opaleWith > pos1)
+				xDeltaNote = opaleWith - pos1;
+
+			yDeltaNote = dimOpale.getHeight();
+			clearCacheDimensionInternal();
+		} else {
+			this.opale = TextBlockUtils.EMPTY_TEXT_BLOCK;
+		}
+
+	}
+
+	public static Opale createOpale(final PositionedNote first, ISkinParam skinParam) {
+		final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder())
+				.eventuallyOverride(first.getColors());
+		final HColor noteBackgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
+		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
+		final FontConfiguration fc = style.getFontConfiguration(skinParam.getIHtmlColorSet());
+		final double shadowing = style.value(PName.Shadowing).asDouble();
+		final LineBreakStrategy wrapWidth = style.wrapWidth();
+		final UStroke stroke = style.getStroke();
+
+		final HorizontalAlignment align = skinParam.getHorizontalAlignment(AlignmentParam.noteTextAlignment, null,
+				false, null);
+		final Sheet sheet = skinParam.sheet(fc, align, CreoleMode.FULL).createSheet(first.getDisplay());
+		final SheetBlock1 tmp1 = new SheetBlock1(sheet, wrapWidth, skinParam.getPadding());
+		// final TextBlock text = new SheetBlock2(tmp1, this, stroke);
+		return new Opale(shadowing, borderColor, noteBackgroundColor, tmp1, false, stroke);
+	}
+
+	private static StyleSignatureBasic getStyleSignature() {
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.note);
 	}
 
 	@Override
@@ -95,14 +151,27 @@ public class FtileIfWithDiamonds extends FtileIfNude {
 
 		final FtileGeometry all = dim1.appendBottom(dimNude).appendBottom(dim2);
 
-		return all.addDim(0,
-				getYdelta1a(stringBounder) + getYdelta1b(stringBounder) + getYdeltaForLabels(stringBounder));
+		final double deltaHeight = getYdelta1a(stringBounder) + getYdelta1b(stringBounder)
+				+ getYdeltaForLabels(stringBounder);
+
+		final FtileGeometry result = all.addDim(0, deltaHeight).incInY(yDeltaNote);
+		return result;
 
 	}
+
+//	protected double getSuppWidthForNotes(StringBounder stringBounder) {
+//		return opale.calculateDimension(stringBounder).getWidth();
+//	}
 
 	@Override
 	public void drawU(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
+
+		if (TextBlockUtils.isEmpty(opale, stringBounder) == false) {
+			final double xOpale = getTranslateDiamond1(stringBounder).getDx()
+					- opale.calculateDimension(stringBounder).getWidth();
+			opale.drawU(ug.apply(UTranslate.dx(xOpale)));
+		}
 
 		ug.apply(getTranslateDiamond1(stringBounder)).draw(diamond1);
 		super.drawU(ug);
@@ -110,21 +179,21 @@ public class FtileIfWithDiamonds extends FtileIfNude {
 	}
 
 	@Override
-	protected UTranslate getTranslate1(StringBounder stringBounder) {
+	protected UTranslate getTranslateBranch1(StringBounder stringBounder) {
 		final FtileGeometry dimDiamond1 = diamond1.calculateDimension(stringBounder);
-		return super.getTranslate1(stringBounder)
+		return super.getTranslateBranch1(stringBounder)
 				.compose(UTranslate.dy(dimDiamond1.getHeight() + getYdelta1a(stringBounder)));
 	}
 
 	@Override
-	protected UTranslate getTranslate2(StringBounder stringBounder) {
+	protected UTranslate getTranslateBranch2(StringBounder stringBounder) {
 		final FtileGeometry dimDiamond1 = diamond1.calculateDimension(stringBounder);
-		return super.getTranslate2(stringBounder)
+		return super.getTranslateBranch2(stringBounder)
 				.compose(UTranslate.dy(dimDiamond1.getHeight() + getYdelta1a(stringBounder)));
 	}
 
 	protected UTranslate getTranslateDiamond1(StringBounder stringBounder) {
-		final double y1 = 0;
+		final double y1 = yDeltaNote;
 		final FtileGeometry dimTotal = calculateDimensionInternal(stringBounder);
 		final FtileGeometry dimDiamond1 = diamond1.calculateDimension(stringBounder);
 		final double x1 = dimTotal.getLeft() - dimDiamond1.getLeft();
@@ -134,8 +203,8 @@ public class FtileIfWithDiamonds extends FtileIfNude {
 	protected UTranslate getTranslateDiamond2(StringBounder stringBounder) {
 		final FtileGeometry dimTotal = calculateDimensionInternal(stringBounder);
 		final FtileGeometry dimDiamond2 = diamond2.calculateDimension(stringBounder);
-		final double y2 = dimTotal.getHeight() - dimDiamond2.getHeight();
 		final double x2 = dimTotal.getLeft() - dimDiamond2.getWidth() / 2;
+		final double y2 = dimTotal.getHeight() - dimDiamond2.getHeight();
 		return new UTranslate(x2, y2);
 	}
 

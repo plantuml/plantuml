@@ -36,9 +36,11 @@
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.plantuml.activitydiagram3.Branch;
+import net.sourceforge.plantuml.activitydiagram3.PositionedNote;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractConnection;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Connection;
 import net.sourceforge.plantuml.activitydiagram3.ftile.ConnectionTranslatable;
@@ -68,8 +70,8 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 	private final Rainbow arrowColor;
 
 	public FtileIfWithLinks(Ftile diamond1, Ftile tile1, Ftile tile2, Ftile diamond2, Swimlane in, Rainbow arrowColor,
-			ConditionEndStyle conditionEndStyle, StringBounder stringBounder) {
-		super(diamond1, tile1, tile2, diamond2, in, stringBounder);
+			ConditionEndStyle conditionEndStyle, StringBounder stringBounder, Collection<PositionedNote> notes) {
+		super(diamond1, tile1, tile2, diamond2, in, stringBounder, notes);
 		this.arrowColor = arrowColor;
 		this.conditionEndStyle = conditionEndStyle;
 		if (arrowColor.size() == 0)
@@ -135,10 +137,10 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 
 		private UTranslate translate(StringBounder stringBounder) {
 			if (getFtile2() == tile1)
-				return getTranslate1(stringBounder);
+				return getTranslateBranch1(stringBounder);
 
 			if (getFtile2() == tile2)
-				return getTranslate2(stringBounder);
+				return getTranslateBranch2(stringBounder);
 
 			throw new IllegalStateException();
 		}
@@ -224,10 +226,10 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 
 		private UTranslate translate(StringBounder stringBounder) {
 			if (getFtile1() == tile1)
-				return getTranslate1(stringBounder);
+				return getTranslateBranch1(stringBounder);
 
 			if (getFtile1() == tile2)
-				return getTranslate2(stringBounder);
+				return getTranslateBranch2(stringBounder);
 
 			throw new IllegalStateException();
 		}
@@ -353,10 +355,10 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 
 		private UTranslate translate(StringBounder stringBounder) {
 			if (getFtile1() == tile1)
-				return getTranslate1(stringBounder);
+				return getTranslateBranch1(stringBounder);
 
 			if (getFtile1() == tile2)
-				return getTranslate2(stringBounder);
+				return getTranslateBranch2(stringBounder);
 
 			throw new IllegalStateException();
 		}
@@ -399,10 +401,10 @@ public class FtileIfWithLinks extends FtileIfWithDiamonds {
 
 		private UTranslate translate(StringBounder stringBounder) {
 			if (getFtile1() == tile1)
-				return getTranslate1(stringBounder);
+				return getTranslateBranch1(stringBounder);
 
 			if (getFtile1() == tile2)
-				return getTranslate2(stringBounder);
+				return getTranslateBranch2(stringBounder);
 
 			throw new IllegalStateException();
 		}

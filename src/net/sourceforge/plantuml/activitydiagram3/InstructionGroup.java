@@ -102,7 +102,7 @@ public class InstructionGroup extends AbstractInstruction implements Instruction
 	public Ftile createFtile(FtileFactory factory) {
 		Ftile tmp = list.createFtile(factory);
 		if (note != null)
-			tmp = new FtileWithNotes(tmp, Collections.singleton(note), factory.skinParam(), VerticalAlignment.CENTER);
+			tmp = new FtileWithNotes(tmp, Collections.singleton(note), VerticalAlignment.CENTER);
 
 		return factory.createGroup(tmp, title, backColor, null, type, style);
 	}

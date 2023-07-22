@@ -120,47 +120,58 @@ public class FtileFactoryDelegator implements FtileFactory {
 		this.factory = factory;
 	}
 
+	@Override
 	public Ftile start(Swimlane swimlane) {
 		return factory.start(swimlane);
 	}
 
+	@Override
 	public Ftile end(Swimlane swimlane) {
 		return factory.end(swimlane);
 	}
 
+	@Override
 	public Ftile stop(Swimlane swimlane) {
 		return factory.stop(swimlane);
 	}
 
+	@Override
 	public Ftile spot(Swimlane swimlane, String spot, HColor color) {
 		return factory.spot(swimlane, spot, color);
 	}
 
+	@Override
 	public Ftile activity(Display label, Swimlane swimlane, BoxStyle style, Colors colors, Stereotype stereotype) {
 		return factory.activity(label, swimlane, style, colors, stereotype);
 	}
 
+	@Override
 	public Ftile addNote(Ftile ftile, Swimlane swimlane, Collection<PositionedNote> notes,
 			VerticalAlignment verticalAlignment) {
 		return factory.addNote(ftile, swimlane, notes, verticalAlignment);
 	}
 
+	@Override
 	public Ftile addUrl(Ftile ftile, Url url) {
 		return factory.addUrl(ftile, url);
 	}
 
+	@Override
 	public Ftile decorateIn(Ftile ftile, LinkRendering linkRendering) {
 		return factory.decorateIn(ftile, Objects.requireNonNull(linkRendering));
 	}
 
+	@Override
 	public Ftile decorateOut(Ftile ftile, LinkRendering linkRendering) {
 		return factory.decorateOut(ftile, Objects.requireNonNull(linkRendering));
 	}
 
+	@Override
 	public Ftile assembly(Ftile tile1, Ftile tile2) {
 		return factory.assembly(tile1, tile2);
 	}
 
+	@Override
 	public Ftile repeat(BoxStyle boxStyleIn, Swimlane swimlane, Swimlane swimlaneOut, Display startLabel, Ftile repeat,
 			Display test, Display yes, Display out, Colors colors, Ftile backward, boolean noOut,
 			LinkRendering incoming1, LinkRendering incoming2) {
@@ -168,31 +179,37 @@ public class FtileFactoryDelegator implements FtileFactory {
 				noOut, incoming1, incoming2);
 	}
 
+	@Override
 	public Ftile createWhile(LinkRendering outColor, Swimlane swimlane, Ftile whileBlock, Display test, Display yes,
 			HColor color, Instruction specialOut, Ftile back, LinkRendering incoming1, LinkRendering incoming2) {
 		return factory.createWhile(outColor, swimlane, whileBlock, test, yes, color, specialOut, back, incoming1,
 				incoming2);
 	}
 
+	@Override
 	public Ftile createIf(Swimlane swimlane, List<Branch> thens, Branch elseBranch, LinkRendering afterEndwhile,
-			LinkRendering topInlinkRendering, Url url) {
-		return factory.createIf(swimlane, thens, elseBranch, afterEndwhile, topInlinkRendering, url);
+			LinkRendering topInlinkRendering, Url url, Collection<PositionedNote> notes) {
+		return factory.createIf(swimlane, thens, elseBranch, afterEndwhile, topInlinkRendering, url, notes);
 	}
 
+	@Override
 	public Ftile createSwitch(Swimlane swimlane, List<Branch> branches, LinkRendering afterEndwhile,
 			LinkRendering topInlinkRendering, Display labelTest) {
 		return factory.createSwitch(swimlane, branches, afterEndwhile, topInlinkRendering, labelTest);
 	}
 
+	@Override
 	public Ftile createParallel(List<Ftile> all, ForkStyle style, String label, Swimlane in, Swimlane out) {
 		return factory.createParallel(all, style, label, in, out);
 	}
 
+	@Override
 	public Ftile createGroup(Ftile list, Display name, HColor backColor, PositionedNote note, USymbol type,
 			Style style) {
 		return factory.createGroup(list, name, backColor, note, type, style);
 	}
 
+	@Override
 	public StringBounder getStringBounder() {
 		return factory.getStringBounder();
 	}
@@ -201,6 +218,7 @@ public class FtileFactoryDelegator implements FtileFactory {
 		return rose;
 	}
 
+	@Override
 	public final ISkinParam skinParam() {
 		return factory.skinParam();
 	}

@@ -152,6 +152,7 @@ public class LanguageDescriptor {
 		keyword.add("rnote");
 		keyword.add("hnote");
 		keyword.add("legend");
+		keyword.add("endlegend");
 		keyword.add("group");
 		keyword.add("left");
 		keyword.add("right");

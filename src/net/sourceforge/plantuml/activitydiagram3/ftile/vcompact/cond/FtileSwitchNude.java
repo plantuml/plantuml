@@ -131,7 +131,7 @@ public class FtileSwitchNude extends FtileDimensionMemoize {
 
 		result = result.delta(xSeparation * (tiles.size() - 1), 100);
 
-		return new FtileGeometry(result, result.getWidth() / 2, 0);
+		return new FtileGeometry(result.getWidth(), result.getHeight(), result.getWidth() / 2, 0);
 	}
 
 }

@@ -80,14 +80,13 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 
 	@Override
 	public boolean containsBreak() {
-		for (Branch branch : thens) {
-			if (branch.containsBreak()) {
+		for (Branch branch : thens)
+			if (branch.containsBreak())
 				return true;
-			}
-		}
-		if (elseBranch != null) {
+
+		if (elseBranch != null)
 			return elseBranch.containsBreak();
-		}
+
 		return false;
 	}
 
@@ -142,10 +141,10 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 					Display.NULL, null, LinkRendering.none());
 
 		elseBranch.updateFtile(factory);
-		Ftile result = factory.createIf(swimlane, thens, elseBranch, outColor, topInlinkRendering, url);
-		if (getPositionedNotes().size() > 0)
-			result = FtileWithNoteOpale.create(result, getPositionedNotes(), skinParam, false,
-					VerticalAlignment.CENTER);
+		Ftile result = factory.createIf(swimlane, thens, elseBranch, outColor, topInlinkRendering, url,
+				getPositionedNotes());
+//		if (getPositionedNotes().size() > 0)
+//			result = FtileWithNoteOpale.create(result, getPositionedNotes(), false, VerticalAlignment.CENTER);
 
 		final List<WeldingPoint> weldingPoints = new ArrayList<>();
 		for (Branch branch : thens)
@@ -198,7 +197,7 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 
 	@Override
 	final public boolean kill() {
-		if (endifCalled) {
+		if (endifCalled)
 			for (Branch branch : thens) {
 				if (branch.getLast() != null && branch.getLast().kill() == false)
 					return false;
@@ -208,7 +207,7 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 
 				return true;
 			}
-		}
+
 		return current.kill();
 	}
 

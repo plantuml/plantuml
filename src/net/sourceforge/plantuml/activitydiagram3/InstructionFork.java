@@ -72,11 +72,10 @@ public class InstructionFork extends WithNote implements Instruction {
 
 	@Override
 	public boolean containsBreak() {
-		for (InstructionList fork : forks) {
-			if (fork.containsBreak()) {
+		for (InstructionList fork : forks)
+			if (fork.containsBreak())
 				return true;
-			}
-		}
+
 		return false;
 	}
 
@@ -122,14 +121,13 @@ public class InstructionFork extends WithNote implements Instruction {
 	@Override
 	public Ftile createFtile(FtileFactory factory) {
 		final List<Ftile> all = new ArrayList<>();
-		for (InstructionList list : forks) {
+		for (InstructionList list : forks)
 			all.add(list.createFtile(factory));
-		}
+
 		Ftile result = factory.createParallel(all, style, label, swimlaneIn, swimlaneOut);
-		if (getPositionedNotes().size() > 0) {
-			result = FtileWithNoteOpale.create(result, getPositionedNotes(), skinParam, false,
-					VerticalAlignment.CENTER);
-		}
+		if (getPositionedNotes().size() > 0)
+			result = FtileWithNoteOpale.create(result, getPositionedNotes(), false, VerticalAlignment.CENTER);
+
 		return result;
 	}
 
@@ -154,12 +152,12 @@ public class InstructionFork extends WithNote implements Instruction {
 
 	@Override
 	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote) {
-		if (finished) {
+		if (finished)
 			return super.addNote(note, position, type, colors, swimlaneNote);
-		}
-		if (getLastList().getLast() == null) {
+
+		if (getLastList().getLast() == null)
 			return getLastList().addNote(note, position, type, colors, swimlaneNote);
-		}
+
 		return getLastList().addNote(note, position, type, colors, swimlaneNote);
 	}
 
@@ -182,12 +180,12 @@ public class InstructionFork extends WithNote implements Instruction {
 	}
 
 	public void manageOutRendering(LinkRendering nextLinkRenderer, boolean endFork) {
-		if (endFork) {
+		if (endFork)
 			this.finished = true;
-		}
-		if (nextLinkRenderer == null) {
+
+		if (nextLinkRenderer == null)
 			return;
-		}
+
 		getLastList().setOutRendering(nextLinkRenderer);
 	}
 

@@ -66,7 +66,6 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
 import net.sourceforge.plantuml.skin.AlignmentParam;
-import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
@@ -111,31 +110,28 @@ public class FtileWithNoteOpale extends AbstractFtile implements Stencil, Stylea
 		return Collections.singleton(tile);
 	}
 
-	public static Ftile create(Ftile tile, Collection<PositionedNote> notes, ISkinParam skinParam, boolean withLink,
+	public static Ftile create(Ftile tile, Collection<PositionedNote> notes, boolean withLink,
 			VerticalAlignment verticalAlignment) {
 		if (notes.size() > 1)
-			return new FtileWithNotes(tile, notes, skinParam, verticalAlignment);
+			return new FtileWithNotes(tile, notes, verticalAlignment);
 
 		if (notes.size() == 0)
 			throw new IllegalArgumentException();
 
-		return new FtileWithNoteOpale(tile, notes.iterator().next(), skinParam, withLink, verticalAlignment);
+		return new FtileWithNoteOpale(tile, notes.iterator().next(), withLink, verticalAlignment);
 	}
 
-	private FtileWithNoteOpale(Ftile tile, PositionedNote note, ISkinParam skinParam, boolean withLink,
-			VerticalAlignment verticalAlignment) {
-		super(tile.skinParam());
+	private FtileWithNoteOpale(Ftile tile, PositionedNote note, boolean withLink, VerticalAlignment verticalAlignment) {
+		super(note.getColors() == null ? tile.skinParam() : note.getColors().mute(tile.skinParam()));
 		this.verticalAlignment = verticalAlignment;
 		this.swimlaneNote = note.getSwimlaneNote();
-		if (note.getColors() != null)
-			skinParam = note.getColors().mute(skinParam);
 
 		this.tile = tile;
 		this.notePosition = note.getNotePosition();
 		if (note.getType() == NoteType.FLOATING_NOTE)
 			withLink = false;
 
-		final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder())
+		final Style style = getStyleSignature().getMergedStyle(skinParam().getCurrentStyleBuilder())
 				.eventuallyOverride(note.getColors());
 		final HColor noteBackgroundColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
 		final HColor borderColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());
@@ -144,10 +140,11 @@ public class FtileWithNoteOpale extends AbstractFtile implements Stencil, Stylea
 		final LineBreakStrategy wrapWidth = style.wrapWidth();
 		final UStroke stroke = style.getStroke();
 
-		final HorizontalAlignment align = skinParam.getHorizontalAlignment(AlignmentParam.noteTextAlignment, null,
+		final HorizontalAlignment align = skinParam().getHorizontalAlignment(AlignmentParam.noteTextAlignment, null,
 				false, null);
-		final Sheet sheet = skinParam.sheet(fc, align, CreoleMode.FULL).createSheet(note.getDisplay());
-		final TextBlock text = new SheetBlock2(new SheetBlock1(sheet, wrapWidth, skinParam.getPadding()), this, stroke);
+		final Sheet sheet = skinParam().sheet(fc, align, CreoleMode.FULL).createSheet(note.getDisplay());
+		final TextBlock text = new SheetBlock2(new SheetBlock1(sheet, wrapWidth, skinParam().getPadding()), this,
+				stroke);
 		opale = new Opale(shadowing, borderColor, noteBackgroundColor, text, withLink, stroke);
 
 	}

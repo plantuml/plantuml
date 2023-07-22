@@ -35,10 +35,12 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
 
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.plantuml.activitydiagram3.Branch;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
+import net.sourceforge.plantuml.activitydiagram3.PositionedNote;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactoryDelegator;
@@ -63,7 +65,7 @@ public class FtileFactoryDelegatorIf extends FtileFactoryDelegator {
 
 	@Override
 	public Ftile createIf(Swimlane swimlane, List<Branch> thens, Branch elseBranch, LinkRendering afterEndwhile,
-			LinkRendering topInlinkRendering, Url url) {
+			LinkRendering topInlinkRendering, Url url, Collection<PositionedNote> notes) {
 
 		final ConditionStyle conditionStyle = skinParam().getConditionStyle();
 		final ConditionEndStyle conditionEndStyle = skinParam().getConditionEndStyle();
@@ -84,7 +86,7 @@ public class FtileFactoryDelegatorIf extends FtileFactoryDelegator {
 					topInlinkRendering, afterEndwhile, styleArrow, styleDiamond);
 		}
 		return ConditionalBuilder.create(swimlane, backColor, getFactory(), conditionStyle, conditionEndStyle,
-				thens.get(0), elseBranch, skinParam(), getStringBounder(), url, styleArrow, styleDiamond);
+				thens.get(0), elseBranch, skinParam(), getStringBounder(), url, styleArrow, styleDiamond, notes);
 	}
 
 }

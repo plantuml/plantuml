@@ -35,7 +35,10 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond;
 
+import java.util.Collection;
+
 import net.sourceforge.plantuml.activitydiagram3.Branch;
+import net.sourceforge.plantuml.activitydiagram3.PositionedNote;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileEmpty;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
@@ -92,6 +95,7 @@ public class ConditionalBuilder {
 	private final Ftile tile1;
 	private final Ftile tile2;
 	private final Url url;
+	private final Collection<PositionedNote> notes;
 
 	private StyleSignatureBasic getStyleSignatureDiamond() {
 		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond);
@@ -103,7 +107,8 @@ public class ConditionalBuilder {
 
 	public ConditionalBuilder(Swimlane swimlane, HColor backColor, FtileFactory ftileFactory,
 			ConditionStyle conditionStyle, ConditionEndStyle conditionEndStyle, Branch branch1, Branch branch2,
-			ISkinParam skinParam, StringBounder stringBounder, Url url, Style styleArrow, Style styleDiamond) {
+			ISkinParam skinParam, StringBounder stringBounder, Url url, Style styleArrow, Style styleDiamond,
+			Collection<PositionedNote> notes) {
 
 		if (backColor == null)
 			throw new IllegalArgumentException();
@@ -113,6 +118,7 @@ public class ConditionalBuilder {
 		this.diamondLineBreak = styleDiamond.wrapWidth();
 		this.labelLineBreak = styleArrow.wrapWidth();
 		this.backColor = backColor;
+		this.notes = notes;
 
 		this.borderColor = styleDiamond.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 		this.arrowColor = Rainbow.build(styleArrow, skinParam.getIHtmlColorSet());
@@ -134,9 +140,10 @@ public class ConditionalBuilder {
 
 	static public Ftile create(Swimlane swimlane, HColor backColor, FtileFactory ftileFactory,
 			ConditionStyle conditionStyle, ConditionEndStyle conditionEndStyle, Branch branch1, Branch branch2,
-			ISkinParam skinParam, StringBounder stringBounder, Url url, Style styleArrow, Style styleDiamond) {
+			ISkinParam skinParam, StringBounder stringBounder, Url url, Style styleArrow, Style styleDiamond,
+			Collection<PositionedNote> notes) {
 		final ConditionalBuilder builder = new ConditionalBuilder(swimlane, backColor, ftileFactory, conditionStyle,
-				conditionEndStyle, branch1, branch2, skinParam, stringBounder, url, styleArrow, styleDiamond);
+				conditionEndStyle, branch1, branch2, skinParam, stringBounder, url, styleArrow, styleDiamond, notes);
 		if (isEmptyOrOnlySingleStopOrSpot(branch2) && isEmptyOrOnlySingleStopOrSpot(branch1) == false)
 			return builder.createDown(builder.branch1, builder.branch2);
 
@@ -167,18 +174,18 @@ public class ConditionalBuilder {
 		final Ftile diamond2 = getShape2(branch1, branch2, true);
 		if (branch2.isOnlySingleStopOrSpot())
 			return FtileIfDown.create(diamond1, diamond2, swimlane, FtileUtils.addHorizontalMargin(tile1, 10),
-					arrowColor, conditionEndStyle, ftileFactory, branch2.getFtile(), branch2.getOut());
+					arrowColor, conditionEndStyle, ftileFactory, branch2.getFtile(), branch2.getOut(), notes);
 
 		if (branch1.isOnlySingleStopOrSpot())
 			return FtileIfDown.create(diamond1, diamond2, swimlane, FtileUtils.addHorizontalMargin(tile2, 10),
-					arrowColor, conditionEndStyle, ftileFactory, branch1.getFtile(), branch1.getOut());
+					arrowColor, conditionEndStyle, ftileFactory, branch1.getFtile(), branch1.getOut(), notes);
 
 		if (branch1.isEmpty())
 			return FtileIfDown.create(diamond1, diamond2, swimlane, FtileUtils.addHorizontalMargin(tile2, 10),
-					arrowColor, conditionEndStyle, ftileFactory, null, null);
+					arrowColor, conditionEndStyle, ftileFactory, null, null, notes);
 
 		return FtileIfDown.create(diamond1, diamond2, swimlane, FtileUtils.addHorizontalMargin(tile1, 10), arrowColor,
-				conditionEndStyle, ftileFactory, null, branch2.getOut());
+				conditionEndStyle, ftileFactory, null, branch2.getOut(), notes);
 	}
 
 	private Ftile createNude() {
@@ -190,7 +197,7 @@ public class ConditionalBuilder {
 		final Ftile diamond1 = getDiamond1(true);
 		final Ftile diamond2 = getShape2(branch1, branch2, false);
 		final FtileIfWithDiamonds ftile = new FtileIfWithDiamonds(diamond1, tile1, tile2, diamond2, swimlane,
-				stringBounder);
+				stringBounder, notes);
 		final XDimension2D label1 = getLabelPositive(branch1).calculateDimension(stringBounder);
 		final XDimension2D label2 = getLabelPositive(branch2).calculateDimension(stringBounder);
 		final double diff1 = ftile.computeMarginNeedForBranchLabe1(stringBounder, label1);
@@ -210,7 +217,7 @@ public class ConditionalBuilder {
 		final Ftile tmp1 = FtileUtils.addHorizontalMargin(tile1, 10);
 		final Ftile tmp2 = FtileUtils.addHorizontalMargin(tile2, 10);
 		final FtileIfWithLinks ftile = new FtileIfWithLinks(diamond1, tmp1, tmp2, diamond2, swimlane, arrowColor,
-				conditionEndStyle, stringBounder);
+				conditionEndStyle, stringBounder, notes);
 		final XDimension2D label1 = getLabelPositive(branch1).calculateDimension(stringBounder);
 		final XDimension2D label2 = getLabelPositive(branch2).calculateDimension(stringBounder);
 		final double diff1 = ftile.computeMarginNeedForBranchLabe1(stringBounder, label1);

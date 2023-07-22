@@ -56,30 +56,30 @@ public class FtileGeometry extends XDimension2D {
 	}
 
 	public XPoint2D getPointB() {
-		if (outY == Double.MIN_NORMAL) {
+		if (outY == Double.MIN_NORMAL)
 			throw new UnsupportedOperationException();
-		}
+
 		return new XPoint2D(width, (inY + outY) / 2);
 	}
 
 	public XPoint2D getPointC() {
-		if (outY == Double.MIN_NORMAL) {
+		if (outY == Double.MIN_NORMAL)
 			throw new UnsupportedOperationException();
-		}
+
 		return new XPoint2D(left, outY);
 	}
 
 	public XPoint2D getPointD() {
-		if (outY == Double.MIN_NORMAL) {
+		if (outY == Double.MIN_NORMAL)
 			throw new UnsupportedOperationException();
-		}
+
 		return new XPoint2D(0, (inY + outY) / 2);
 	}
 
 	public XPoint2D getPointOut() {
-		if (outY == Double.MIN_NORMAL) {
+		if (outY == Double.MIN_NORMAL)
 			throw new UnsupportedOperationException();
-		}
+
 		return new XPoint2D(left, outY);
 	}
 
@@ -134,6 +134,10 @@ public class FtileGeometry extends XDimension2D {
 				hasPointOut() ? outY + missing1 : outY);
 	}
 
+	public FtileGeometry incInY(double missing) {
+		return new FtileGeometry(width, height, left, inY + missing, outY);
+	}
+
 	public FtileGeometry(XDimension2D dim, double left, double inY, double outY) {
 		this(dim.getWidth(), dim.getHeight(), left, inY, outY);
 	}
@@ -149,9 +153,9 @@ public class FtileGeometry extends XDimension2D {
 	public FtileGeometry translate(UTranslate translate) {
 		final double dx = translate.getDx();
 		final double dy = translate.getDy();
-		if (this.outY == Double.MIN_NORMAL) {
+		if (this.outY == Double.MIN_NORMAL)
 			return new FtileGeometry(width, height, left + dx, inY + dy);
-		}
+
 		return new FtileGeometry(width, height, left + dx, inY + dy, outY + dy);
 	}
 
@@ -200,19 +204,18 @@ public class FtileGeometry extends XDimension2D {
 	}
 
 	public FtileGeometry ensureHeight(double newHeight) {
-		if (this.height > newHeight) {
+		if (this.height > newHeight)
 			return this;
-		}
+
 		return fixedHeight(newHeight);
 	}
 
-	private FtileGeometry ensureRightStrange(double newRight) {
-		final double right = this.width - this.left;
-		if (right > newRight) {
-			return this;
-		}
-		// return addMarginX(0, newRight - right);
-		return addMarginX(0, newRight);
-	}
+//	private FtileGeometry ensureRightStrange(double newRight) {
+//		final double right = this.width - this.left;
+//		if (right > newRight)
+//			return this;
+//
+//		return addMarginX(0, newRight);
+//	}
 
 }

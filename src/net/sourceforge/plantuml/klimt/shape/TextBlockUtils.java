@@ -147,9 +147,9 @@ public class TextBlockUtils {
 	}
 
 	public static boolean isEmpty(TextBlock text, StringBounder dummyStringBounder) {
-		if (text == null) {
+		if (text == null || text == EMPTY_TEXT_BLOCK)
 			return true;
-		}
+
 		final XDimension2D dim = text.calculateDimension(dummyStringBounder);
 		return dim.getHeight() == 0 && dim.getWidth() == 0;
 	}

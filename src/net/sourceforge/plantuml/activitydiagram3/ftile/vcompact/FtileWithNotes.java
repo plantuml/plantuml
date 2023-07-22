@@ -96,18 +96,17 @@ public class FtileWithNotes extends AbstractFtile {
 		return tile.getSwimlaneOut();
 	}
 
-	public FtileWithNotes(Ftile tile, Collection<PositionedNote> notes, ISkinParam skinParam,
-			VerticalAlignment verticalAlignment) {
+	public FtileWithNotes(Ftile tile, Collection<PositionedNote> notes, VerticalAlignment verticalAlignment) {
 		super(tile.skinParam());
 		this.verticalAlignment = verticalAlignment;
 		this.tile = tile;
 
 		for (PositionedNote note : notes) {
-			ISkinParam skinParam2 = skinParam;
+			ISkinParam skinParam2 = skinParam();
 			if (note.getColors() != null)
 				skinParam2 = note.getColors().mute(skinParam2);
 
-			final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder())
+			final Style style = getStyleSignature().getMergedStyle(skinParam().getCurrentStyleBuilder())
 					.eventuallyOverride(note.getColors());
 			final HColor noteBackgroundColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
 			final HColor borderColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());
@@ -116,10 +115,10 @@ public class FtileWithNotes extends AbstractFtile {
 			final LineBreakStrategy wrapWidth = style.wrapWidth();
 			final UStroke stroke = style.getStroke();
 
-			final Sheet sheet = skinParam
-					.sheet(fc, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT), CreoleMode.FULL)
+			final Sheet sheet = skinParam()
+					.sheet(fc, skinParam().getDefaultTextAlignment(HorizontalAlignment.LEFT), CreoleMode.FULL)
 					.createSheet(note.getDisplay());
-			final SheetBlock1 sheet1 = new SheetBlock1(sheet, wrapWidth, skinParam.getPadding());
+			final SheetBlock1 sheet1 = new SheetBlock1(sheet, wrapWidth, skinParam().getPadding());
 			final SheetBlock2 sheet2 = new SheetBlock2(sheet1, new Stencil() {
 				// -6 and 15 value comes from Opale: this is very ugly!
 				public double getStartingX(StringBounder stringBounder, double y) {

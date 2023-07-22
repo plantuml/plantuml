@@ -42,6 +42,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.plantuml.activitydiagram3.PositionedNote;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractConnection;
 import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Connection;
@@ -55,6 +56,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Hexagon;
 import net.sourceforge.plantuml.activitydiagram3.ftile.MergeStrategy;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Snake;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond.FtileIfWithDiamonds;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamond;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamondInside;
 import net.sourceforge.plantuml.decoration.Rainbow;
@@ -63,6 +65,8 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.klimt.shape.UEmpty;
 import net.sourceforge.plantuml.svek.ConditionEndStyle;
 import net.sourceforge.plantuml.utils.Direction;
@@ -74,6 +78,7 @@ public class FtileIfDown extends AbstractFtile {
 	private final Ftile diamond2;
 	private final Ftile optionalStop;
 	private final ConditionEndStyle conditionEndStyle;
+	final private TextBlock opale;
 
 	@Override
 	public Collection<Ftile> getMyChildren() {
@@ -101,23 +106,30 @@ public class FtileIfDown extends AbstractFtile {
 	}
 
 	private FtileIfDown(Ftile thenBlock, Ftile diamond1, Ftile diamond2, Ftile optionalStop,
-			ConditionEndStyle conditionEndStyle) {
+			ConditionEndStyle conditionEndStyle, Collection<PositionedNote> notes) {
 		super(thenBlock.skinParam());
 		this.thenBlock = thenBlock;
 		this.diamond1 = diamond1;
 		this.diamond2 = diamond2;
 		this.optionalStop = optionalStop;
 		this.conditionEndStyle = conditionEndStyle;
+		if (notes.size() == 1) {
+			final PositionedNote first = notes.iterator().next();
+			this.opale = FtileIfWithDiamonds.createOpale(first, skinParam());
+		} else {
+			this.opale = TextBlockUtils.EMPTY_TEXT_BLOCK;
+		}
 	}
 
 	public static Ftile create(Ftile diamond1, Ftile diamond2, Swimlane swimlane, Ftile thenBlock, Rainbow arrowColor,
-			ConditionEndStyle conditionEndStyle, FtileFactory ftileFactory, Ftile optionalStop, Rainbow elseColor) {
+			ConditionEndStyle conditionEndStyle, FtileFactory ftileFactory, Ftile optionalStop, Rainbow elseColor,
+			Collection<PositionedNote> notes) {
 
 		elseColor = elseColor.withDefault(arrowColor);
 
 		final FtileIfDown result = new FtileIfDown(thenBlock, diamond1,
 				optionalStop == null ? diamond2 : new FtileEmpty(ftileFactory.skinParam()), optionalStop,
-				conditionEndStyle);
+				conditionEndStyle, notes);
 
 		final List<Connection> conns = new ArrayList<>();
 		conns.add(result.new ConnectionIn(thenBlock.getInLinkRendering().getRainbow(arrowColor)));
@@ -511,6 +523,13 @@ public class FtileIfDown extends AbstractFtile {
 
 	public void drawU(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
+
+		if (TextBlockUtils.isEmpty(opale, stringBounder) == false) {
+			final double xOpale = getTranslateDiamond1(stringBounder).getDx()
+					- opale.calculateDimension(stringBounder).getWidth();
+			opale.drawU(ug.apply(UTranslate.dx(xOpale)));
+		}
+
 		ug.apply(getTranslateForThen(stringBounder)).draw(thenBlock);
 		ug.apply(getTranslateDiamond1(stringBounder)).draw(diamond1);
 		if (optionalStop == null)
@@ -522,17 +541,35 @@ public class FtileIfDown extends AbstractFtile {
 
 	@Override
 	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
+
+		final XDimension2D dimOpale = opale.calculateDimension(stringBounder);
+
 		final FtileGeometry geoDiamond1 = diamond1.calculateDimension(stringBounder);
 		final FtileGeometry geoThen = thenBlock.calculateDimension(stringBounder);
 		final FtileGeometry geoDiamond2 = diamond2.calculateDimension(stringBounder);
 		final FtileGeometry geo = geoDiamond1.appendBottom(geoThen).appendBottom(geoDiamond2);
+
+		final double opaleWidth = dimOpale.getWidth();
+		final double opaleHeight = dimOpale.getHeight();
+
 		final double height = geo.getHeight() + 3 * Hexagon.hexagonHalfSize
-				+ Math.max(Hexagon.hexagonHalfSize * 1, getSouthLabelHeight(stringBounder));
-		double width = geo.getWidth() + Hexagon.hexagonHalfSize;
+				+ Math.max(Hexagon.hexagonHalfSize * 1, getSouthLabelHeight(stringBounder)) + opaleHeight;
+
+		double supp = 0;
+		if (opaleWidth > geo.getLeft())
+			supp = opaleWidth - geo.getLeft();
+
+		double width = supp + geo.getWidth() + Hexagon.hexagonHalfSize;
 		if (optionalStop != null)
 			width += optionalStop.calculateDimension(stringBounder).getWidth() + getAdditionalWidth(stringBounder);
 
-		final FtileGeometry result = new FtileGeometry(width, height, geo.getLeft(), geoDiamond1.getInY(), height);
+		final FtileGeometry result;
+		if (supp > 0)
+			result = new FtileGeometry(width, height, opaleWidth + geoDiamond1.getLeft(),
+					geoDiamond1.getInY() + opaleHeight, height);
+		else
+			result = new FtileGeometry(width, height, geo.getLeft(), geoDiamond1.getInY() + opaleHeight, height);
+
 		if (geoThen.hasPointOut() == false && optionalStop != null)
 			return result.withoutPointOut();
 
@@ -591,8 +628,9 @@ public class FtileIfDown extends AbstractFtile {
 		final FtileGeometry dimTotal = calculateDimension(stringBounder);
 		final FtileGeometry dimThen = thenBlock.calculateDimension(stringBounder);
 
-		final double y = dimDiamond1.getHeight()
-				+ (dimTotal.getHeight() - dimDiamond1.getHeight() - dimDiamond2.getHeight() - dimThen.getHeight()) / 2;
+		final double opaleHeight = opale.calculateDimension(stringBounder).getHeight();
+		final double y = opaleHeight + dimDiamond1.getHeight() + (dimTotal.getHeight() - opaleHeight
+				- dimDiamond1.getHeight() - dimDiamond2.getHeight() - dimThen.getHeight()) / 2;
 
 		final double x = dimTotal.getLeft() - dimThen.getLeft();
 		return new UTranslate(x, y);
@@ -602,7 +640,7 @@ public class FtileIfDown extends AbstractFtile {
 	private UTranslate getTranslateDiamond1(StringBounder stringBounder) {
 		final FtileGeometry dimTotal = calculateDimension(stringBounder);
 		final FtileGeometry dimDiamond1 = diamond1.calculateDimension(stringBounder);
-		final double y1 = 0;
+		final double y1 = opale.calculateDimension(stringBounder).getHeight();
 		final double x1 = dimTotal.getLeft() - dimDiamond1.getLeft();
 		return new UTranslate(x1, y1);
 	}

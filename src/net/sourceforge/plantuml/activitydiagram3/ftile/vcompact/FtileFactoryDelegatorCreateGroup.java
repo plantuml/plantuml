@@ -58,7 +58,7 @@ public class FtileFactoryDelegatorCreateGroup extends FtileFactoryDelegator {
 			Style style) {
 		Ftile result = new FtileGroup(list, name, backColor, skinParam(), type, style);
 		if (note != null)
-			result = new FtileWithNotes(result, Collections.singleton(note), skinParam(), VerticalAlignment.CENTER);
+			result = new FtileWithNotes(result, Collections.singleton(note), VerticalAlignment.CENTER);
 
 		return result;
 	}
