@@ -223,7 +223,7 @@ public class SvekNode implements Positionable, Hideable {
 	private Margins shield() {
 		if (shield == null) {
 			this.shield = image.getShield(stringBounder);
-			if (shield.isZero() == false && type != ShapeType.RECTANGLE && type != ShapeType.RECTANGLE_HTML_FOR_PORTS
+			if (!shield.isZero() && type != ShapeType.RECTANGLE && type != ShapeType.RECTANGLE_HTML_FOR_PORTS
 					&& type != ShapeType.RECTANGLE_WITH_CIRCLE_INSIDE)
 				throw new IllegalStateException();
 		}
@@ -383,7 +383,7 @@ public class SvekNode implements Positionable, Hideable {
 
 	public boolean isShielded() {
 		if (this.shield != null) {
-			return this.shield.isZero() == false;
+			return !this.shield.isZero();
 		}
 
 		// Avoid calculating "shield" size through this.shield() before finishing creation of all SvekLines (#1467)
