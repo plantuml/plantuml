@@ -59,7 +59,8 @@ public class Ord extends SimpleReturnFunction {
 	public TValue executeReturnFunction(TContext context, TMemory memory, LineLocation location, List<TValue> values,
 			Map<String, TValue> named) throws EaterException, EaterExceptionLocated {
 		try {
-			final int value = (int) values.get(0).toString();
+			final char firstChar = values.get(0).toString().charAt(0);
+			final int value = (int) firstChar;
 			return TValue.fromInt(value);
 		} catch (Throwable t) {
 			return TValue.fromInt(0);
