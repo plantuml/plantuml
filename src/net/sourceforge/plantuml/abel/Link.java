@@ -59,7 +59,6 @@ import net.sourceforge.plantuml.style.ISkinSimple;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.url.Url;
-import net.sourceforge.plantuml.utils.Direction;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class Link extends WithLinkType implements Hideable, Removeable {

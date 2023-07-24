@@ -382,23 +382,18 @@ public class SvekNode implements Positionable, Hideable {
 	}
 
 	public boolean isShielded() {
-		if (this.shield != null) {
-			return !this.shield.isZero();
-		}
-
-		// Avoid calculating "shield" size through this.shield() before finishing creation of all SvekLines (#1467)
+		// Avoid calculating "shield" size through this.shield() before finishing
+		// creation of all SvekLines (https://github.com/plantuml/plantuml/issues/1467)
 		// Instead, only check if we will have a shield (size is irrelevant here)
-		// This node will have a shield if it is target of a qualified association (will have a qualifier label
+		// This node will have a shield if it is target of a qualified association (will
+		// have a qualifier label
 		// placed besides this type's bounding box.)
-		for (Link link: this.leaf.getDiagram().getLinks()) {
-			if (link.getEntity1() == this.leaf || link.getEntity2() == this.leaf) {
-				if ((this.leaf == link.getEntity1() && link.hasKal1())
-								|| (this.leaf == link.getEntity2() && link.hasKal2())) {
-					return true;
-				}
-			}
-		}
-		return false;
+		for (Link link : this.leaf.getDiagram().getLinks())
+			if ((this.leaf == link.getEntity1() && link.hasKal1())
+					|| (this.leaf == link.getEntity2() && link.hasKal2()))
+				return true;
+
+		return shield().isZero() == false;
 	}
 
 	public void resetMoveSvek() {
