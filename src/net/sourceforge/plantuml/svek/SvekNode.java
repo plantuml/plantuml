@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -31,7 +31,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * 
+ *
  */
 package net.sourceforge.plantuml.svek;
 
@@ -381,7 +381,18 @@ public class SvekNode implements Positionable, Hideable {
 	}
 
 	public boolean isShielded() {
-		return shield().isZero() == false;
+		if (this.shield != null) {
+			return this.shield.isZero() == false;
+		}
+
+		// Avoid calculating "shield" size through this.shield() before finishing creation of all SvekLines (#1467)
+		// Instead, only check if we will have a shield (size is irrelevant here)
+		// This node will have a shield if it is target of a qualified association (will have a qualifier label
+		// placed besides this type's bounding box.)
+		return this.leaf.getDiagram().getLinks().stream()
+						.filter(link -> link.getEntity1() == this.leaf || link.getEntity2() == this.leaf)
+						.anyMatch(link -> (this.leaf == link.getEntity1() && link.hasKal1())
+										|| (this.leaf == link.getEntity2() && link.hasKal2()));
 	}
 
 	public void resetMoveSvek() {
