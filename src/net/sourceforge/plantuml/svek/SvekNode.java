@@ -146,7 +146,7 @@ public class SvekNode implements Positionable, Hideable {
 			SvekUtils.println(sb);
 			return;
 		}
-		if (type == ShapeType.RECTANGLE && shield().isZero() == false) {
+		if (type == ShapeType.RECTANGLE && isShielded()) {
 			appendHtml(sb);
 			SvekUtils.println(sb);
 			return;
@@ -326,7 +326,7 @@ public class SvekNode implements Positionable, Hideable {
 	}
 
 	private void appendShapeInternal(StringBuilder sb) {
-		if (type == ShapeType.RECTANGLE && shield().isZero() == false)
+		if (type == ShapeType.RECTANGLE && isShielded())
 			throw new UnsupportedOperationException();
 		else if (type == ShapeType.RECTANGLE || type == ShapeType.RECTANGLE_WITH_CIRCLE_INSIDE
 				|| type == ShapeType.FOLDER)
