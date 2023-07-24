@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.EntityPosition;
 import net.sourceforge.plantuml.abel.Hideable;
+import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.abel.Together;
 import net.sourceforge.plantuml.klimt.Shadowable;
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -389,10 +390,15 @@ public class SvekNode implements Positionable, Hideable {
 		// Instead, only check if we will have a shield (size is irrelevant here)
 		// This node will have a shield if it is target of a qualified association (will have a qualifier label
 		// placed besides this type's bounding box.)
-		return this.leaf.getDiagram().getLinks().stream()
-						.filter(link -> link.getEntity1() == this.leaf || link.getEntity2() == this.leaf)
-						.anyMatch(link -> (this.leaf == link.getEntity1() && link.hasKal1())
-										|| (this.leaf == link.getEntity2() && link.hasKal2()));
+		for (Link link: this.leaf.getDiagram().getLinks()) {
+			if (link.getEntity1() == this.leaf || link.getEntity2() == this.leaf) {
+				if ((this.leaf == link.getEntity1() && link.hasKal1())
+								|| (this.leaf == link.getEntity2() && link.hasKal2())) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	public void resetMoveSvek() {
