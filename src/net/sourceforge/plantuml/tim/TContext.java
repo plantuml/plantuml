@@ -121,6 +121,7 @@ import net.sourceforge.plantuml.tim.stdlib.LogicalXor;
 import net.sourceforge.plantuml.tim.stdlib.Lower;
 import net.sourceforge.plantuml.tim.stdlib.Newline;
 import net.sourceforge.plantuml.tim.stdlib.Now;
+import net.sourceforge.plantuml.tim.stdlib.Ord;
 import net.sourceforge.plantuml.tim.stdlib.RetrieveProcedure;
 import net.sourceforge.plantuml.tim.stdlib.ReverseColor;
 import net.sourceforge.plantuml.tim.stdlib.ReverseHsluvColor;
@@ -206,6 +207,7 @@ public class TContext {
 		functionsSet.addFunction(new LogicalNand());
 		functionsSet.addFunction(new LogicalNor());
 		functionsSet.addFunction(new LogicalNxor());
+		functionsSet.addFunction(new Ord());
 		// %standard_exists_function
 		// %str_replace
 		// !exit
