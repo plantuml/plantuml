@@ -83,11 +83,11 @@ public class Kal implements UDrawable {
 
 		} else if (link.getEntity1() == entity) {
 			this.position = Direction.DOWN;
-			entity.ensureMargins(new Margins(0, 0, dim.getHeight(), 0));
+			entity.ensureMargins(new Margins(0, 0, 0, dim.getHeight()));
 
 		} else if (link.getEntity2() == entity) {
 			this.position = Direction.UP;
-			entity.ensureMargins(new Margins(0, 0, 0, dim.getHeight()));
+			entity.ensureMargins(new Margins(0, 0, dim.getHeight(),0 ));
 
 		} else {
 			throw new IllegalStateException();
