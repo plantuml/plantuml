@@ -103,8 +103,8 @@ public class LinkArg {
 	}
 
 	public LinkArg getInv() {
-		return new LinkArg(label, length, quantifier2, quantifier1, labeldistance, labelangle, visibilityModifier, kal1,
-				kal2);
+		return new LinkArg(label, length, quantifier2, quantifier1, labeldistance, labelangle, visibilityModifier, kal2,
+				kal1);
 	}
 
 	public final Display getLabel() {
