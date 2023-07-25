@@ -83,14 +83,14 @@ class ExtremityDiamond extends Extremity {
 		ug.draw(polygon);
 	}
 
-	@Override
-	public XPoint2D isTooSmallSoGiveThePointCloserToThisOne(XPoint2D pt) {
-		XPoint2D result = null;
-		for (XPoint2D p : polygon.getPoints())
-			if (result == null || p.distance(pt) < result.distance(pt))
-				result = p;
-
-		return result;
-	}
+//	@Override
+//	public XPoint2D isTooSmallSoGiveThePointCloserToThisOne(XPoint2D pt) {
+//		XPoint2D result = null;
+//		for (XPoint2D p : polygon.getPoints())
+//			if (result == null || p.distance(pt) < result.distance(pt))
+//				result = p;
+//
+//		return result;
+//	}
 
 }

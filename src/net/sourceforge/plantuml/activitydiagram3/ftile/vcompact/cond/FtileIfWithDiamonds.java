@@ -56,6 +56,7 @@ import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.skin.AlignmentParam;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
@@ -69,26 +70,40 @@ public class FtileIfWithDiamonds extends FtileIfNude {
 	private static final double SUPP_WIDTH = 20;
 	protected final Ftile diamond1;
 	protected final Ftile diamond2;
-	final private TextBlock opale;
+	private TextBlock opaleLeft = TextBlockUtils.EMPTY_TEXT_BLOCK;
+	private TextBlock opaleRight = TextBlockUtils.EMPTY_TEXT_BLOCK;
 
 	public FtileIfWithDiamonds(Ftile diamond1, Ftile tile1, Ftile tile2, Ftile diamond2, Swimlane in,
 			StringBounder stringBounder, Collection<PositionedNote> notes) {
 		super(tile1, tile2, in);
 		this.diamond1 = diamond1;
 		this.diamond2 = diamond2;
-		if (notes.size() == 1) {
-			final PositionedNote first = notes.iterator().next();
-			this.opale = createOpale(first, skinParam());
-			final double pos1 = getTranslateDiamond1(stringBounder).getDx();
-			final XDimension2D dimOpale = opale.calculateDimension(stringBounder);
-			final double opaleWith = dimOpale.getWidth();
-			if (opaleWith > pos1)
-				xDeltaNote = opaleWith - pos1;
+		for (PositionedNote first : notes) {
+			if (first.getNotePosition() == NotePosition.LEFT) {
+				if (this.opaleLeft != TextBlockUtils.EMPTY_TEXT_BLOCK)
+					continue;
+				this.opaleLeft = createOpale(first, skinParam());
+				final double pos1 = getTranslateDiamond1(stringBounder).getDx();
+				final XDimension2D dimOpale = opaleLeft.calculateDimension(stringBounder);
+				final double opaleWith = dimOpale.getWidth();
+				if (opaleWith > pos1)
+					xDeltaNote = opaleWith - pos1;
 
-			yDeltaNote = dimOpale.getHeight();
+				yDeltaNote = Math.max(yDeltaNote, dimOpale.getHeight());
+			} else if (first.getNotePosition() == NotePosition.RIGHT) {
+				if (this.opaleRight != TextBlockUtils.EMPTY_TEXT_BLOCK)
+					continue;
+				this.opaleRight = createOpale(first, skinParam());
+				final XDimension2D dimOpale = opaleRight.calculateDimension(stringBounder);
+				final double pos1 = getTranslateDiamond1(stringBounder).getDx()
+						+ diamond1.calculateDimension(stringBounder).getWidth() + dimOpale.getWidth();
+				final double pos2 = calculateDimensionInternalSlow(stringBounder).getWidth();
+				if (pos1 > pos2)
+					suppWidthNode = pos1 - pos2;
+
+				yDeltaNote = Math.max(yDeltaNote, dimOpale.getHeight());
+			}
 			clearCacheDimensionInternal();
-		} else {
-			this.opale = TextBlockUtils.EMPTY_TEXT_BLOCK;
 		}
 
 	}
@@ -167,10 +182,16 @@ public class FtileIfWithDiamonds extends FtileIfNude {
 	public void drawU(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
 
-		if (TextBlockUtils.isEmpty(opale, stringBounder) == false) {
+		if (TextBlockUtils.isEmpty(opaleLeft, stringBounder) == false) {
 			final double xOpale = getTranslateDiamond1(stringBounder).getDx()
-					- opale.calculateDimension(stringBounder).getWidth();
-			opale.drawU(ug.apply(UTranslate.dx(xOpale)));
+					- opaleLeft.calculateDimension(stringBounder).getWidth();
+			opaleLeft.drawU(ug.apply(UTranslate.dx(xOpale)));
+		}
+
+		if (TextBlockUtils.isEmpty(opaleRight, stringBounder) == false) {
+			final double xOpale = getTranslateDiamond1(stringBounder).getDx()
+					+ diamond1.calculateDimension(stringBounder).getWidth();
+			opaleRight.drawU(ug.apply(UTranslate.dx(xOpale)));
 		}
 
 		ug.apply(getTranslateDiamond1(stringBounder)).draw(diamond1);

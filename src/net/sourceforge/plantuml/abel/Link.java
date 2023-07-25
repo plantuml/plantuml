@@ -95,6 +95,11 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 
 	private Url url;
 
+	public LinkStrategy getLinkStrategy() {
+		return LinkStrategy.LEGACY;
+		// return LinkStrategy.SIMPLIER;
+	}
+
 	public String idCommentForSvg() {
 		if (type.looksLikeRevertedForSvg())
 			return getEntity1().getName() + "-backto-" + getEntity2().getName();
@@ -542,7 +547,7 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 	}
 
 	public final boolean hasKal1() {
-			return this.linkArg.getKal1() != null && !this.linkArg.getKal1().isEmpty();
+		return this.linkArg.getKal1() != null && !this.linkArg.getKal1().isEmpty();
 	}
 
 	public final boolean hasKal2() {

@@ -37,6 +37,7 @@
 package net.sourceforge.plantuml.decoration;
 
 import net.sourceforge.plantuml.OptionFlags;
+import net.sourceforge.plantuml.abel.LinkStrategy;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactory;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryArrow;
@@ -102,13 +103,13 @@ public enum LinkDecor {
 	}
 
 	public ExtremityFactory getExtremityFactoryComplete(HColor backgroundColor) {
-		if (this == EXTENDS) {
+		if (this == EXTENDS)
 			return new ExtremityFactoryTriangle(backgroundColor, 16, 6);
-		}
-		return getExtremityFactory(backgroundColor);
+
+		return getExtremityFactoryLegacy(backgroundColor);
 	}
 
-	public ExtremityFactory getExtremityFactory(HColor backgroundColor) {
+	public ExtremityFactory getExtremityFactoryLegacy(HColor backgroundColor) {
 		switch (this) {
 		case PLUS:
 			return new ExtremityFactoryPlus(backgroundColor);

@@ -57,6 +57,7 @@ public class FtileIfNude extends FtileDimensionMemoize {
 
 	protected double xDeltaNote = 0;
 	protected double yDeltaNote = 0;
+	protected double suppWidthNode = 0;
 
 	FtileIfNude(Ftile tile1, Ftile tile2, Swimlane in) {
 		super(tile1.skinParam());
@@ -103,7 +104,7 @@ public class FtileIfNude extends FtileDimensionMemoize {
 		final XDimension2D dimTotal = calculateDimensionInternal(stringBounder);
 		final XDimension2D dim2 = tile2.calculateDimension(stringBounder);
 
-		final double x2 = dimTotal.getWidth() - dim2.getWidth();
+		final double x2 = dimTotal.getWidth() - dim2.getWidth() - suppWidthNode;
 		final double y2 = yDeltaNote;
 		return new UTranslate(x2, y2);
 
@@ -143,7 +144,8 @@ public class FtileIfNude extends FtileDimensionMemoize {
 		final FtileGeometry dim2 = tile2.calculateDimension(stringBounder);
 
 		final double innerMargin = widthInner(stringBounder);
-		final double width = xDeltaNote + dim1.getLeft() + innerMargin + (dim2.getWidth() - dim2.getLeft());
+		final double width = xDeltaNote + dim1.getLeft() + innerMargin + (dim2.getWidth() - dim2.getLeft())
+				+ suppWidthNode;
 
 		final XDimension2D dim12 = dim1.mergeLR(dim2);
 

@@ -175,7 +175,7 @@ public class ElkPath implements UDrawable {
 		if (decors == LinkDecor.EXTENDS)
 			return new ExtremityFactoryExtends(backColor).createUDrawable(new XPoint2D(0, 0), angle, null);
 
-		final ExtremityFactory extremityFactory = decors.getExtremityFactory(backColor);
+		final ExtremityFactory extremityFactory = decors.getExtremityFactoryLegacy(backColor);
 		if (extremityFactory == null)
 			return null;
 

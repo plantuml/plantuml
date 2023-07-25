@@ -35,7 +35,8 @@
  */
 package net.sourceforge.plantuml.klimt;
 
-import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import java.awt.geom.AffineTransform;
+
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
 
@@ -114,6 +115,12 @@ public class UTranslate implements UChange {
 
 	public XPoint2D getPosition() {
 		return new XPoint2D(dx, dy);
+	}
+
+	public UTranslate rotate(double angle) {
+		final AffineTransform rotate = AffineTransform.getRotateInstance(angle);
+		return UTranslate.point(new XPoint2D(dx, dy).transform(rotate));
+
 	}
 
 }

@@ -59,6 +59,11 @@ class ExtremityCrowfoot extends Extremity {
 		this.angle = manageround(angle + Math.PI / 2);
 		this.side = side;
 	}
+	
+	@Override
+	public double getDecorationLength() {
+		return 8;
+	}
 
 	public void drawU(UGraphic ug) {
 		final int xWing = 8;

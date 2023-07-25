@@ -47,6 +47,7 @@ class ExtremityTriangle extends Extremity {
 	private final boolean fill;
 	private final HColor backgroundColor;
 	private final XPoint2D contact;
+	private final int xWing;
 
 	@Override
 	public XPoint2D somePoint() {
@@ -58,6 +59,7 @@ class ExtremityTriangle extends Extremity {
 		this.backgroundColor = backgroundColor;
 		this.fill = fill;
 		this.contact = new XPoint2D(p1.getX(), p1.getY());
+		this.xWing = xWing;
 		angle = manageround(angle);
 		polygon.addPoint(0, 0);
 
@@ -69,12 +71,16 @@ class ExtremityTriangle extends Extremity {
 	}
 
 	public void drawU(UGraphic ug) {
-		if (backgroundColor != null) {
+		if (backgroundColor != null)
 			ug = ug.apply(backgroundColor.bg());
-		} else if (fill) {
+		else if (fill)
 			ug = ug.apply(HColors.changeBack(ug));
-		}
 		ug.draw(polygon);
+	}
+
+	@Override
+	public double getDecorationLength() {
+		return xWing;
 	}
 
 }

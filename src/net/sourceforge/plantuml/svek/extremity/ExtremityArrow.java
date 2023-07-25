@@ -85,6 +85,11 @@ public class ExtremityArrow extends Extremity {
 		return xContact;
 	}
 
+	@Override
+	public double getDecorationLength() {
+		return 6;
+	}
+
 	public void drawU(UGraphic ug) {
 		final HColor color = ug.getParam().getColor();
 		if (color == null)

@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.decoration;
 
 import java.util.Objects;
 
+import net.sourceforge.plantuml.abel.LinkStrategy;
 import net.sourceforge.plantuml.klimt.UStroke;
 
 public class LinkType {
@@ -151,7 +152,11 @@ public class LinkType {
 		return new LinkType(decor1, decor2, middleDecor, LinkStyle.INVISIBLE());
 	}
 
-	public String getSpecificDecorationSvek() {
+	public String getSpecificDecorationSvek(LinkStrategy linkStrategy) {
+
+		if (linkStrategy == LinkStrategy.SIMPLIER)
+			return "arrowtail=none,arrowhead=none";
+
 		final StringBuilder sb = new StringBuilder();
 
 		final boolean isEmpty1 = decor1 == LinkDecor.NONE;

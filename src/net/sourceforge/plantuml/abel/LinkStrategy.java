@@ -30,56 +30,29 @@
  *
  *
  * Original Author:  Arnaud Roques
- *
  * 
+ *
  */
-package net.sourceforge.plantuml.svek.extremity;
+package net.sourceforge.plantuml.abel;
 
-import net.sourceforge.plantuml.klimt.UTranslate;
-import net.sourceforge.plantuml.klimt.geom.XPoint2D;
-import net.sourceforge.plantuml.klimt.shape.UDrawable;
+public enum LinkStrategy {
+	// Temporary class, while we are fixing
+	// https://github.com/plantuml/plantuml/issues/1491
 
-public abstract class Extremity implements UDrawable {
+	/*
+	 * In legacy mode, we are drawing arrow tail and arrow head in GraphViz
+	 * generated dot. (see LinkType::getSpecificDecorationSvek).
+	 * We then retrieve tail/head in generated SVG to compute link decoration angle.
+	 * 
+	 * Drawbacks: sometimes, GraphViz does NOT draw those decorations, which causes issues
+	 */
+	LEGACY,
 
-	protected double manageround(double angle) {
-		final double deg = angle * 180.0 / Math.PI;
-		if (isCloseTo(0, deg))
-			return 0;
-
-		if (isCloseTo(90, deg))
-			return 90.0 * Math.PI / 180.0;
-
-		if (isCloseTo(180, deg))
-			return 180.0 * Math.PI / 180.0;
-
-		if (isCloseTo(270, deg))
-			return 270.0 * Math.PI / 180.0;
-
-		if (isCloseTo(360, deg))
-			return 0;
-
-		return angle;
-	}
-
-	private boolean isCloseTo(double value, double variable) {
-		if (Math.abs(value - variable) < 0.05)
-			return true;
-
-		return false;
-	}
-
-	public abstract XPoint2D somePoint();
-
-//	public XPoint2D isTooSmallSoGiveThePointCloserToThisOne(XPoint2D pt) {
-//		return null;
-//	}
-
-	public UTranslate getDeltaForKal() {
-		return UTranslate.none();
-	}
-
-	public double getDecorationLength() {
-		return 15;
-	}
+	/*
+	 * In simplier mode, there are no tail/head in GraphViz generated dot.
+	 * The decoration angle is retrieve using Bezier data.
+	 * 
+	 */
+	SIMPLIER
 
 }
