@@ -50,9 +50,13 @@ public class ExtremityFactoryCircleCross extends AbstractExtremityFactory implem
 	}
 
 	@Override
-	public UDrawable createUDrawable(XPoint2D p0, XPoint2D p1, XPoint2D p2, Side side) {
-		// final double ortho = atan2(p0, p2);
+	public UDrawable createTBRDrawableLegacy(XPoint2D p0, XPoint2D p1, XPoint2D p2, Side side) {
 		return new ExtremityCircleCross(p1, backgroundColor);
+	}
+	
+	@Override
+	public UDrawable createUDrawable(XPoint2D p0, double angle, Side side) {
+		return new ExtremityCircleCross(p0, backgroundColor);
 	}
 
 }

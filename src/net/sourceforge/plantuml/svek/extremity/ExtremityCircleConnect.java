@@ -73,6 +73,11 @@ class ExtremityCircleConnect extends Extremity {
 		final UEllipse arc1 = new UEllipse(2 * radius2, 2 * radius2, deg, 90);
 		ug.apply(new UTranslate(dest.getX() - radius2, dest.getY() - radius2)).draw(arc1);
 	}
+	
+	@Override
+	public double getDecorationLength() {
+		return 10;
+	}
 
 	// private XPoint2D getPointOnCircle(double angle) {
 	// final double x = px + radius + radius2 * Math.cos(angle);

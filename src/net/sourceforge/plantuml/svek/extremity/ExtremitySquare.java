@@ -64,5 +64,10 @@ class ExtremitySquare extends Extremity {
 				.apply(new UTranslate(dest.getX() - radius, dest.getY() - radius))
 				.draw(URectangle.build(radius * 2, radius * 2));
 	}
+	
+	@Override
+	public double getDecorationLength() {
+		return 5;
+	}
 
 }

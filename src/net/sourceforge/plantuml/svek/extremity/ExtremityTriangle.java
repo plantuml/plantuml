@@ -47,19 +47,19 @@ class ExtremityTriangle extends Extremity {
 	private final boolean fill;
 	private final HColor backgroundColor;
 	private final XPoint2D contact;
-	private final int xWing;
+	private final int decorationLength;
 
 	@Override
 	public XPoint2D somePoint() {
 		return contact;
 	}
 
-	public ExtremityTriangle(XPoint2D p1, double angle, boolean fill, HColor backgroundColor, int xWing,
-			int yAperture) {
+	public ExtremityTriangle(XPoint2D p1, double angle, boolean fill, HColor backgroundColor, int xWing, int yAperture,
+			int decorationLength) {
 		this.backgroundColor = backgroundColor;
 		this.fill = fill;
 		this.contact = new XPoint2D(p1.getX(), p1.getY());
-		this.xWing = xWing;
+		this.decorationLength = decorationLength;
 		angle = manageround(angle);
 		polygon.addPoint(0, 0);
 
@@ -80,7 +80,7 @@ class ExtremityTriangle extends Extremity {
 
 	@Override
 	public double getDecorationLength() {
-		return xWing;
+		return decorationLength;
 	}
 
 }

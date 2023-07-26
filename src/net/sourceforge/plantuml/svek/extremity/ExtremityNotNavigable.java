@@ -67,5 +67,10 @@ class ExtremityNotNavigable extends Extremity {
 	public void drawU(UGraphic ug) {
 		ug.draw(path);
 	}
+	
+	@Override
+	public double getDecorationLength() {
+		return 8;
+	}
 
 }

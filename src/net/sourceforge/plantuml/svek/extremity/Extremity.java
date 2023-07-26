@@ -78,8 +78,18 @@ public abstract class Extremity implements UDrawable {
 		return UTranslate.none();
 	}
 
+	// public abstract double getDecorationLength();
+
 	public double getDecorationLength() {
-		return 15;
+		return 8;
 	}
+
+//	public double getDecorationLength() {
+//	// return 15;
+//	System.err.println("CLASS=" + getClass().getName());
+//	Thread.dumpStack();
+//	System.exit(0);
+//	throw new UnsupportedOperationException(getClass().getName());
+//}
 
 }

@@ -61,7 +61,7 @@ public class ExtremityFactoryExtendsLike extends AbstractExtremityFactory implem
 	}
 
 	@Override
-	public UDrawable createUDrawable(XPoint2D p0, XPoint2D p1, XPoint2D p2, Side side) {
+	public UDrawable createTBRDrawableLegacy(XPoint2D p0, XPoint2D p1, XPoint2D p2, Side side) {
 		final double ortho = atan2(p0, p2) + (Math.PI / 2.0);
 		if (definedBy) {
 			return new ExtremityExtendsLike.DefinedBy(p1, ortho, backgroundColor);

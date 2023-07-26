@@ -46,22 +46,25 @@ public class ExtremityFactoryTriangle extends AbstractExtremityFactory implement
 	private final HColor backgroundColor;
 	private final int xWing;
 	private final int yAperture;
+	private final int decorationLength;
 
-	public ExtremityFactoryTriangle(HColor backgroundColor, int xWing, int yAperture) {
+	public ExtremityFactoryTriangle(HColor backgroundColor, int xWing, int yAperture, int decorationLength) {
 		this.backgroundColor = backgroundColor;
 		this.xWing = xWing;
 		this.yAperture = yAperture;
+		this.decorationLength = decorationLength;
 	}
 
 	@Override
 	public UDrawable createUDrawable(XPoint2D p0, double angle, Side side) {
-		return new ExtremityTriangle(p0, angle - Math.PI / 2, false, backgroundColor, xWing, yAperture);
+		return new ExtremityTriangle(p0, angle - Math.PI / 2, false, backgroundColor, xWing, yAperture,
+				decorationLength);
 	}
 
 	@Override
-	public UDrawable createUDrawable(XPoint2D p0, XPoint2D p1, XPoint2D p2, Side side) {
+	public UDrawable createTBRDrawableLegacy(XPoint2D p0, XPoint2D p1, XPoint2D p2, Side side) {
 		final double ortho = atan2(p0, p2);
-		return new ExtremityTriangle(p1, ortho, true, backgroundColor, xWing, yAperture);
+		return new ExtremityTriangle(p1, ortho, true, backgroundColor, xWing, yAperture, decorationLength);
 	}
 
 }

@@ -69,5 +69,11 @@ class ExtremityExtends extends Extremity {
 		ug = ug.apply(fill.bg());
 		ug.draw(polygon);
 	}
+	
+	@Override
+	public double getDecorationLength() {
+		return 18;
+	}
+
 
 }

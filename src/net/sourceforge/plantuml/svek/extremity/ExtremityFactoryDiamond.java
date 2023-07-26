@@ -54,7 +54,7 @@ public class ExtremityFactoryDiamond extends AbstractExtremityFactory implements
 	}
 
 	@Override
-	public UDrawable createUDrawable(XPoint2D p0, XPoint2D p1, XPoint2D p2, Side side) {
+	public UDrawable createTBRDrawableLegacy(XPoint2D p0, XPoint2D p1, XPoint2D p2, Side side) {
 		final double ortho = atan2(p0, p2);
 		return new ExtremityDiamond(p1, ortho, fill);
 	}

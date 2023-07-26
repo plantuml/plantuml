@@ -42,6 +42,7 @@ import h.ST_pointf;
 import h.ST_splines;
 import h.ST_textlabel_t;
 import net.sourceforge.plantuml.abel.Link;
+import net.sourceforge.plantuml.abel.LinkStrategy;
 import net.sourceforge.plantuml.cucadiagram.ICucaDiagram;
 import net.sourceforge.plantuml.decoration.LinkType;
 import net.sourceforge.plantuml.klimt.UStroke;
@@ -62,6 +63,7 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.Cluster;
+import net.sourceforge.plantuml.svek.extremity.Extremity;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactory;
 import net.sourceforge.plantuml.url.Url;
 
@@ -86,6 +88,10 @@ public class SmetanaPath implements UDrawable {
 		this.label = label;
 		this.tailLabel = tailLabel;
 		this.headLabel = headLabel;
+	}
+
+	private LinkStrategy getLinkStrategy() {
+		return link.getLinkStrategy();
 	}
 
 	public void drawU(UGraphic ug) {
@@ -131,9 +137,9 @@ public class SmetanaPath implements UDrawable {
 			if (url != null)
 				ug.startUrl(url);
 
-			ug.apply(stroke).apply(color).draw(dotPath);
 			printExtremityAtStart(dotPath, ug.apply(color));
 			printExtremityAtEnd(dotPath, ug.apply(color));
+			ug.apply(stroke).apply(color).draw(dotPath);
 
 			if (url != null)
 				ug.closeUrl();
@@ -186,9 +192,14 @@ public class SmetanaPath implements UDrawable {
 		final double startAngle = dotPath.getStartAngle() + Math.PI;
 
 		try {
-			final UDrawable extremity2 = extremityFactory2.createUDrawable(p0, startAngle, null);
-			if (extremity2 != null)
+			final Extremity extremity2 = (Extremity) extremityFactory2.createUDrawable(p0, startAngle, null);
+			if (extremity2 != null) {
+				if (getLinkStrategy() == LinkStrategy.SIMPLIER) {
+					final double decorationLength = extremity2.getDecorationLength();
+					dotPath.moveStartPoint(new UTranslate(decorationLength, 0).rotate(startAngle - Math.PI));
+				}
 				extremity2.drawU(ug);
+			}
 
 		} catch (UnsupportedOperationException e) {
 			e.printStackTrace();
@@ -206,9 +217,14 @@ public class SmetanaPath implements UDrawable {
 		final double endAngle = dotPath.getEndAngle();
 
 		try {
-			final UDrawable extremity1 = extremityFactory1.createUDrawable(p0, endAngle, null);
-			if (extremity1 != null)
+			final Extremity extremity1 = (Extremity) extremityFactory1.createUDrawable(p0, endAngle, null);
+			if (extremity1 != null) {
+				if (getLinkStrategy() == LinkStrategy.SIMPLIER) {
+					final double decorationLength = extremity1.getDecorationLength();
+					dotPath.moveEndPoint(new UTranslate(decorationLength, 0).rotate(endAngle - Math.PI));
+				}
 				extremity1.drawU(ug);
+			}
 
 		} catch (UnsupportedOperationException e) {
 			e.printStackTrace();
@@ -266,16 +282,16 @@ public class SmetanaPath implements UDrawable {
 		return ymirror.getMirrored(UTranslate.point(boxInfo.getLowerLeft()));
 	}
 
-	private DotPath dotPath;
+	// private DotPath dotPath;
 
 	private DotPath getDotPathInternal() {
-		if (dotPath != null)
-			return dotPath;
+//		if (dotPath != null)
+//			return dotPath;
 
 		final ST_Agedgeinfo_t data = (ST_Agedgeinfo_t) edge.data;
 		final ST_splines splines = data.spl;
 
-		dotPath = new DotPath();
+		DotPath dotPath = new DotPath();
 		final ST_bezier beziers = (ST_bezier) splines.list.get__(0);
 		final XPoint2D pt1 = getPoint(splines, 0);
 		final XPoint2D pt2 = getPoint(splines, 1);

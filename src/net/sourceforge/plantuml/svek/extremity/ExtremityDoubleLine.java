@@ -80,6 +80,11 @@ class ExtremityDoubleLine extends Extremity {
 		drawLine(ug, contact.getX(), contact.getY(), secondLineTop, secondLineBottom);
 		drawLine(ug, contact.getX(), contact.getY(), base, middle);
 	}
+	
+	@Override
+	public double getDecorationLength() {
+		return 8;
+	}
 
 	static private void drawLine(UGraphic ug, double x, double y, XPoint2D p1, XPoint2D p2) {
 		final double dx = p2.getX() - p1.getX();

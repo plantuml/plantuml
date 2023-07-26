@@ -51,12 +51,12 @@ import net.sourceforge.plantuml.klimt.UPath;
 import net.sourceforge.plantuml.klimt.UShape;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.geom.BezierUtils;
-import net.sourceforge.plantuml.klimt.geom.RectangleArea;
 import net.sourceforge.plantuml.klimt.geom.EnsureVisible;
 import net.sourceforge.plantuml.klimt.geom.MinFinder;
 import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.klimt.geom.Moveable;
 import net.sourceforge.plantuml.klimt.geom.PointAndAngle;
+import net.sourceforge.plantuml.klimt.geom.RectangleArea;
 import net.sourceforge.plantuml.klimt.geom.USegmentType;
 import net.sourceforge.plantuml.klimt.geom.XCubicCurve2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
@@ -187,12 +187,12 @@ public class DotPath implements UShape, Moveable {
 		return pt.distanceSq(start) + pt.distanceSq(end);
 	}
 
-	public void forceStartPoint(double x, double y) {
-		beziers.get(0).x1 = x;
-		beziers.get(0).y1 = y;
-		beziers.get(0).ctrlx1 = x;
-		beziers.get(0).ctrly1 = y;
-	}
+//	public void forceStartPoint(double x, double y) {
+//		beziers.get(0).x1 = x;
+//		beziers.get(0).y1 = y;
+//		beziers.get(0).ctrlx1 = x;
+//		beziers.get(0).ctrly1 = y;
+//	}
 
 	public void moveStartPoint(UTranslate move) {
 		moveStartPoint(move.getDx(), move.getDy());
@@ -203,6 +203,11 @@ public class DotPath implements UShape, Moveable {
 	}
 
 	public void moveStartPoint(double dx, double dy) {
+		if (beziers.size() > 1 && Math.sqrt(dx * dx + dy * dy) >= beziers.get(0).getLength()) {
+			dx -= beziers.get(1).x1 - beziers.get(0).x1;
+			dy -= beziers.get(1).y1 - beziers.get(0).y1;
+			beziers.remove(0);
+		}
 		beziers.get(0).x1 += dx;
 		beziers.get(0).y1 += dy;
 		beziers.get(0).ctrlx1 += dx;
@@ -213,12 +218,12 @@ public class DotPath implements UShape, Moveable {
 		return beziers.get(beziers.size() - 1).getP2();
 	}
 
-	public void forceEndPoint(double x, double y) {
-		beziers.get(beziers.size() - 1).x2 = x;
-		beziers.get(beziers.size() - 1).y2 = y;
-		beziers.get(beziers.size() - 1).ctrlx2 = x;
-		beziers.get(beziers.size() - 1).ctrly2 = y;
-	}
+//	public void forceEndPoint(double x, double y) {
+//		beziers.get(beziers.size() - 1).x2 = x;
+//		beziers.get(beziers.size() - 1).y2 = y;
+//		beziers.get(beziers.size() - 1).ctrlx2 = x;
+//		beziers.get(beziers.size() - 1).ctrly2 = y;
+//	}
 
 	public void moveEndPoint(double dx, double dy) {
 		beziers.get(beziers.size() - 1).x2 += dx;

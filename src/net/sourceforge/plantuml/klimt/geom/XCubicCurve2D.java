@@ -49,6 +49,12 @@ public class XCubicCurve2D {
 
 	}
 
+	public double getLength() {
+		final double dx = this.x2 - this.x1;
+		final double dy = this.y2 - this.y1;
+		return Math.sqrt(dx * dx + dy * dy);
+	}
+
 	public void setCurve(XCubicCurve2D other) {
 		setCurve(other.x1, other.y1, other.ctrlx1, other.ctrly1, other.ctrlx2, other.ctrly2, other.ctrlx2,
 				other.ctrly2);

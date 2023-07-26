@@ -89,5 +89,10 @@ class ExtremityCircleLine extends Extremity {
 		final double dy = p2.getY() - p1.getY();
 		ug.apply(new UTranslate(x + p1.getX(), y + p1.getY())).draw(new ULine(dx, dy));
 	}
+	
+	@Override
+	public double getDecorationLength() {
+		return 15;
+	}
 
 }

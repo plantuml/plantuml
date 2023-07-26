@@ -169,5 +169,10 @@ abstract class ExtremityExtendsLike extends Extremity {
 	public void drawU(UGraphic ug) {
 		ug.apply(back).draw(trig);
 	}
+	
+	@Override
+	public double getDecorationLength() {
+		return 18;
+	}
 
 }

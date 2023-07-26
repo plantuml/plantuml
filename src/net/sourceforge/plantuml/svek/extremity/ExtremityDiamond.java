@@ -82,6 +82,11 @@ class ExtremityDiamond extends Extremity {
 
 		ug.draw(polygon);
 	}
+	
+	@Override
+	public double getDecorationLength() {
+		return 12;
+	}
 
 //	@Override
 //	public XPoint2D isTooSmallSoGiveThePointCloserToThisOne(XPoint2D pt) {

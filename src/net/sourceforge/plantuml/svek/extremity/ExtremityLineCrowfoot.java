@@ -88,4 +88,9 @@ class ExtremityLineCrowfoot extends Extremity {
 		ug.apply(new UTranslate(x + p1.getX(), y + p1.getY())).draw(new ULine(dx, dy));
 	}
 
+	@Override
+	public double getDecorationLength() {
+		return 8;
+	}
+
 }

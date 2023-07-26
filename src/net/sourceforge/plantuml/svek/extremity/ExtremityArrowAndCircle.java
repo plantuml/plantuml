@@ -57,7 +57,7 @@ class ExtremityArrowAndCircle extends Extremity {
 		return contact;
 	}
 
-	public ExtremityArrowAndCircle(XPoint2D p1, double angle, XPoint2D center, HColor backgroundColor) {
+	public ExtremityArrowAndCircle(XPoint2D p1, double angle, HColor backgroundColor) {
 		angle = manageround(angle);
 		polygon.addPoint(0, 0);
 		this.backgroundColor = backgroundColor;

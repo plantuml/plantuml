@@ -82,5 +82,10 @@ class ExtremityCircle extends Extremity {
 		ug = ug.apply(new UTranslate(dest.getX() - radius, dest.getY() - radius));
 		ug.draw(UEllipse.build(radius * 2, radius * 2));
 	}
+	
+	@Override
+	public double getDecorationLength() {
+		return 12;
+	}
 
 }

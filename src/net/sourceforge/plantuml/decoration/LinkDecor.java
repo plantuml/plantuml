@@ -104,7 +104,7 @@ public enum LinkDecor {
 
 	public ExtremityFactory getExtremityFactoryComplete(HColor backgroundColor) {
 		if (this == EXTENDS)
-			return new ExtremityFactoryTriangle(backgroundColor, 16, 6);
+			return new ExtremityFactoryTriangle(null, 18, 6, 18);
 
 		return getExtremityFactoryLegacy(backgroundColor);
 	}
@@ -120,7 +120,7 @@ public enum LinkDecor {
 		case HALF_ARROW:
 			return new ExtremityFactoryHalfArrow();
 		case ARROW_TRIANGLE:
-			return new ExtremityFactoryTriangle(null, 8, 3);
+			return new ExtremityFactoryTriangle(null, 8, 3, 8);
 		case CROWFOOT:
 			return new ExtremityFactoryCrowfoot();
 		case CIRCLE_CROWFOOT:

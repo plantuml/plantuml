@@ -194,18 +194,6 @@ EMPTY:
   pt1: [ 21.0468 ; 98.0000 ]
   pt2: [ 33.0468 ; 106.0000 ]
 
-PATH:
-   - type: SEG_MOVETO
-     pt1: [ 46.0000 ; 54.3837 ]
-   - type: SEG_CUBICTO
-     pt1: [ 46.0000 ; 65.1992 ]
-     pt2: [ 46.0000 ; 78.1811 ]
-     pt3: [ 46.0000 ; 89.7328 ]
-  stroke: 0.0-0.0-1.0
-  shadow: 0
-  color: ff181818
-  backcolor: NULL_COLOR
-
 POLYGON:
   points:
    - [ 67.0468 ; 141.7328 ]
@@ -217,6 +205,18 @@ POLYGON:
   shadow: 0
   color: ff181818
   backcolor: ff181818
+
+PATH:
+   - type: SEG_MOVETO
+     pt1: [ 46.0000 ; 54.3837 ]
+   - type: SEG_CUBICTO
+     pt1: [ 46.0000 ; 65.1992 ]
+     pt2: [ 46.0000 ; 72.1811 ]
+     pt3: [ 46.0000 ; 83.7328 ]
+  stroke: 0.0-0.0-1.0
+  shadow: 0
+  color: ff181818
+  backcolor: NULL_COLOR
 
 EMPTY:
   pt1: [ 0.0000 ; 198.0000 ]

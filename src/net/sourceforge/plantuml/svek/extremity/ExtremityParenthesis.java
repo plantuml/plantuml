@@ -65,5 +65,10 @@ class ExtremityParenthesis extends Extremity {
 		ug.apply(UStroke.withThickness(1.5)).apply(new UTranslate(dest.getX() - radius2, dest.getY() - radius2))
 				.draw(arc1);
 	}
+	
+	@Override
+	public double getDecorationLength() {
+		return 10;
+	}
 
 }

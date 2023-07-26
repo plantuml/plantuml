@@ -64,6 +64,21 @@ public class Kal implements UDrawable {
 	private final Entity entity;
 	private final Link link;
 
+	public UTranslate getTranslateForDecoration() {
+		switch (position) {
+		case RIGHT:
+			return UTranslate.dx(dim.getWidth());
+		case LEFT:
+			return UTranslate.dx(-dim.getWidth());
+		case DOWN:
+			return UTranslate.dy(dim.getHeight());
+		case UP:
+			return UTranslate.dy(-dim.getHeight());
+		default:
+			throw new IllegalStateException();
+		}
+	}
+
 	public Kal(SvekLine svekLine, String text, FontConfiguration font, ISkinParam skinParam, Entity entity, Link link,
 			StringBounder stringBounder) {
 		this.svekLine = svekLine;
@@ -87,7 +102,7 @@ public class Kal implements UDrawable {
 
 		} else if (link.getEntity2() == entity) {
 			this.position = Direction.UP;
-			entity.ensureMargins(new Margins(0, 0, dim.getHeight(),0 ));
+			entity.ensureMargins(new Margins(0, 0, dim.getHeight(), 0));
 
 		} else {
 			throw new IllegalStateException();
@@ -144,11 +159,11 @@ public class Kal implements UDrawable {
 
 	public void setTranslate(UTranslate translate, UDrawable decoration) {
 		this.translate = translate;
-		if (decoration instanceof Extremity) {
-			final Extremity extremity = (Extremity) decoration;
-			final UTranslate deltaForKal = extremity.getDeltaForKal();
-			// this.translate = this.translate.compose(deltaForKal);
-		}
+//		if (decoration instanceof Extremity) {
+//			final Extremity extremity = (Extremity) decoration;
+//			final UTranslate deltaForKal = extremity.getDeltaForKal();
+//			// this.translate = this.translate.compose(deltaForKal);
+//		}
 	}
 
 	public double overlapx(Kal other) {

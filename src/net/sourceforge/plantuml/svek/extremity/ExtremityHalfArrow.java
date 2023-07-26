@@ -68,14 +68,25 @@ class ExtremityHalfArrow extends Extremity {
 	}
 
 	public ExtremityHalfArrow(XPoint2D p0, double angle) {
-		throw new UnsupportedOperationException();
+		angle = manageround(angle);
+		final int xWing = 9;
+		final int yAperture = 4;
+
+		this.contact = p0;
+
+		final XPoint2D other = new XPoint2D(-xWing, -yAperture).transform(AffineTransform.getRotateInstance(angle));
+		final XPoint2D other2 = new XPoint2D(-8, 0).transform(AffineTransform.getRotateInstance(angle));
+
+		this.line = new ULine(other.getX(), other.getY());
+		this.otherLine = new ULine(other2.getX(), other2.getY());
 	}
 
 	public void drawU(UGraphic ug) {
 		ug = ug.apply(HColors.changeBack(ug));
 		if (line != null && line.getLength() > 2) {
-			ug.apply(new UTranslate(contact.getX(), contact.getY())).draw(line);
-			ug.apply(new UTranslate(contact.getX(), contact.getY())).draw(otherLine);
+			final UTranslate position = UTranslate.point(contact);
+			ug.apply(position).draw(line);
+			ug.apply(position).draw(otherLine);
 		}
 	}
 
