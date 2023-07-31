@@ -185,7 +185,7 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 	}
 
 	private boolean isBelowForResponse() {
-		return belowForResponse && getDirection2() == ArrowDirection.RIGHT_TO_LEFT_REVERSE;
+		return belowForResponse && getArrowConfiguration().isReverseDefine();
 	}
 
 	private void drawDressing1(UGraphic ug, ArrowDressing dressing, ArrowDecoration decoration, double lenFull) {
