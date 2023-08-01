@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -42,6 +42,19 @@ import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.windowsdot.WindowsDotArchive;
 
 public class License {
+
+	public static void main(String[] args) {
+		List<String> lines = License.getCurrent().getTextFull();
+		for (int line = 0; line < lines.size(); line++) {
+			if (line == 0) {
+				System.out.print("/* ");
+			} else {
+				System.out.print(" * ");
+			}
+			System.out.println(lines.get(line));
+		}
+		System.out.println(" */");
+	}
 
 	@Override
 	public String toString() {
