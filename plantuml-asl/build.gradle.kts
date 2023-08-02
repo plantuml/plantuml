@@ -105,7 +105,8 @@ val preprocessLicenceAntTask by tasks.registering() {
 			"sjpp"(
 				"src" to project.layout.buildDirectory.dir("sources/sjpp/java").get().asFile.absolutePath,
 				"dest" to project.layout.buildDirectory.dir("generated/sjpp").get().asFile.absolutePath,
-				"define" to "__ASL__"
+				"define" to "__ASL__",
+				"header" to project.layout.buildDirectory.file("../asl-license.txt").get().asFile.absolutePath
 			)
 		}
 	}
