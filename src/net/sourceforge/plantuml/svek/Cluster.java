@@ -485,7 +485,7 @@ public class Cluster implements Moveable {
 
 	private int togetherCounter = 0;
 
-	private void printTogether(Together together, StringBuilder sb, List<SvekNode> nodesOrderedWithoutTop,
+	private void printTogether(Together together, Collection<Together> otherTogethers, StringBuilder sb, List<SvekNode> nodesOrderedWithoutTop,
 			StringBounder stringBounder, Collection<SvekLine> lines, DotMode dotMode, GraphvizVersion graphvizVersion,
 			UmlDiagramType type) {
 		sb.append("subgraph " + getClusterId() + "t" + togetherCounter + " {\n");
@@ -495,7 +495,11 @@ public class Cluster implements Moveable {
 
 		for (Cluster child : children)
 			if (child.group.getTogether() == together)
-				child.printInternal(sb, lines, stringBounder, dotMode, graphvizVersion, type);
+				child.printInternal(sb, lines, stringBounder, dotMode, graphvizVersion, type, together);
+		
+		for (Together otherTogether : otherTogethers)
+			if (otherTogether.getParent() == together)
+				printTogether(otherTogether, otherTogethers, sb, nodesOrderedWithoutTop, stringBounder, lines, dotMode, graphvizVersion, type);
 
 		sb.append("}\n");
 		togetherCounter++;
@@ -503,7 +507,7 @@ public class Cluster implements Moveable {
 	}
 
 	public SvekNode printCluster2(StringBuilder sb, Collection<SvekLine> lines, StringBounder stringBounder,
-			DotMode dotMode, GraphvizVersion graphvizVersion, UmlDiagramType type) {
+			DotMode dotMode, GraphvizVersion graphvizVersion, UmlDiagramType type, Together parentTogether) {
 
 		SvekNode added = null;
 		final Collection<Together> togethers = new LinkedHashSet<>();
@@ -513,16 +517,17 @@ public class Cluster implements Moveable {
 			if (together == null)
 				node.appendShape(sb, stringBounder);
 			else
-				togethers.add(together);
+				addTogetherWithParents(togethers, together);
 
 			added = node;
 		}
 		for (Cluster child : children)
 			if (child.group.getTogether() != null)
-				togethers.add(child.group.getTogether());
+				addTogetherWithParents(togethers, child.group.getTogether());
 
 		for (Together together : togethers)
-			printTogether(together, sb, nodesOrderedWithoutTop, stringBounder, lines, dotMode, graphvizVersion, type);
+			if (together.getParent() == parentTogether)
+				printTogether(together, togethers, sb, nodesOrderedWithoutTop, stringBounder, lines, dotMode, graphvizVersion, type);
 
 		if (skinParam.useRankSame() && dotMode != DotMode.NO_LEFT_RIGHT_AND_XLABEL
 				&& graphvizVersion.ignoreHorizontalLinks() == false)
@@ -530,9 +535,17 @@ public class Cluster implements Moveable {
 
 		for (Cluster child : children)
 			if (child.group.getTogether() == null)
-				child.printInternal(sb, lines, stringBounder, dotMode, graphvizVersion, type);
+				child.printInternal(sb, lines, stringBounder, dotMode, graphvizVersion, type, parentTogether);
 
 		return added;
+	}
+
+	private static void addTogetherWithParents(Collection<Together> collection, Together together) {
+		Together t = together;
+		while (t != null) {
+			collection.add(t);
+			t = t.getParent();
+		}
 	}
 
 	public void printCluster3_forKermor(StringBuilder sb, Collection<SvekLine> lines, StringBounder stringBounder,
@@ -548,12 +561,12 @@ public class Cluster implements Moveable {
 		}
 
 		for (Cluster child : getChildren())
-			child.printInternal(sb, lines, stringBounder, dotMode, graphvizVersion, type);
+			child.printInternal(sb, lines, stringBounder, dotMode, graphvizVersion, type, null);
 	}
 
 	private void printInternal(StringBuilder sb, Collection<SvekLine> lines, StringBounder stringBounder,
-			DotMode dotMode, GraphvizVersion graphvizVersion, UmlDiagramType type) {
-		new ClusterDotString(this, skinParam).printInternal(sb, lines, stringBounder, dotMode, graphvizVersion, type);
+			DotMode dotMode, GraphvizVersion graphvizVersion, UmlDiagramType type, Together parentTogether) {
+		new ClusterDotString(this, skinParam).printInternal(sb, lines, stringBounder, dotMode, graphvizVersion, type, parentTogether);
 	}
 
 	private void appendRankSame(StringBuilder sb, Collection<SvekLine> lines) {
