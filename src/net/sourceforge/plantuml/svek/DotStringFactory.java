@@ -214,7 +214,7 @@ public class DotStringFactory implements Moveable {
 				line.appendLine(getGraphvizVersion(), sb, dotMode, dotSplines);
 
 			root.printCluster2(sb, bibliotekon.allLines(), stringBounder, dotMode, getGraphvizVersion(),
-					umlDiagramType, null);
+					umlDiagramType);
 
 			for (SvekLine line : bibliotekon.lines1())
 				line.appendLine(getGraphvizVersion(), sb, dotMode, dotSplines);

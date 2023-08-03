@@ -46,7 +46,6 @@ import java.util.Set;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.EntityPosition;
-import net.sourceforge.plantuml.abel.Together;
 import net.sourceforge.plantuml.decoration.symbol.USymbols;
 import net.sourceforge.plantuml.dot.GraphvizVersion;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
@@ -72,7 +71,7 @@ public class ClusterDotString {
 	}
 
 	void printInternal(StringBuilder sb, Collection<SvekLine> lines, StringBounder stringBounder, DotMode dotMode,
-			GraphvizVersion graphvizVersion, UmlDiagramType type, Together parentTogether) {
+			GraphvizVersion graphvizVersion, UmlDiagramType type) {
 		if (cluster.diagram.getPragma().useKermor()) {
 			new ClusterDotStringKermor(cluster, skinParam).printInternal(sb, lines, stringBounder, dotMode,
 					graphvizVersion, type);
@@ -82,7 +81,7 @@ public class ClusterDotString {
 
 		if (packed) {
 			cluster.printCluster1(sb, lines, stringBounder);
-			final SvekNode added = cluster.printCluster2(sb, lines, stringBounder, dotMode, graphvizVersion, type, parentTogether);
+			final SvekNode added = cluster.printCluster2(sb, lines, stringBounder, dotMode, graphvizVersion, type);
 			return;
 
 		}
@@ -171,7 +170,7 @@ public class ClusterDotString {
 		// -----------
 		cluster.printCluster1(sb, lines, stringBounder);
 
-		final SvekNode added = cluster.printCluster2(sb, lines, stringBounder, dotMode, graphvizVersion, type, parentTogether);
+		final SvekNode added = cluster.printCluster2(sb, lines, stringBounder, dotMode, graphvizVersion, type);
 		if (entityPositionsExceptNormal.size() > 0)
 			if (hasPort()) {
 				sb.append(empty() + " [shape=rect,width=.01,height=.01,label=");

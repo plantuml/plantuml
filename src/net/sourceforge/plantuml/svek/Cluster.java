@@ -495,7 +495,7 @@ public class Cluster implements Moveable {
 
 		for (Cluster child : children)
 			if (child.group.getTogether() == together)
-				child.printInternal(sb, lines, stringBounder, dotMode, graphvizVersion, type, together);
+				child.printInternal(sb, lines, stringBounder, dotMode, graphvizVersion, type);
 		
 		for (Together otherTogether : otherTogethers)
 			if (otherTogether.getParent() == together)
@@ -507,7 +507,7 @@ public class Cluster implements Moveable {
 	}
 
 	public SvekNode printCluster2(StringBuilder sb, Collection<SvekLine> lines, StringBounder stringBounder,
-			DotMode dotMode, GraphvizVersion graphvizVersion, UmlDiagramType type, Together parentTogether) {
+			DotMode dotMode, GraphvizVersion graphvizVersion, UmlDiagramType type) {
 
 		SvekNode added = null;
 		final Collection<Together> togethers = new LinkedHashSet<>();
@@ -526,7 +526,7 @@ public class Cluster implements Moveable {
 				addTogetherWithParents(togethers, child.group.getTogether());
 
 		for (Together together : togethers)
-			if (together.getParent() == parentTogether)
+			if (together.getParent() == null)
 				printTogether(together, togethers, sb, nodesOrderedWithoutTop, stringBounder, lines, dotMode, graphvizVersion, type);
 
 		if (skinParam.useRankSame() && dotMode != DotMode.NO_LEFT_RIGHT_AND_XLABEL
@@ -535,7 +535,7 @@ public class Cluster implements Moveable {
 
 		for (Cluster child : children)
 			if (child.group.getTogether() == null)
-				child.printInternal(sb, lines, stringBounder, dotMode, graphvizVersion, type, parentTogether);
+				child.printInternal(sb, lines, stringBounder, dotMode, graphvizVersion, type);
 
 		return added;
 	}
@@ -561,12 +561,12 @@ public class Cluster implements Moveable {
 		}
 
 		for (Cluster child : getChildren())
-			child.printInternal(sb, lines, stringBounder, dotMode, graphvizVersion, type, null);
+			child.printInternal(sb, lines, stringBounder, dotMode, graphvizVersion, type);
 	}
 
 	private void printInternal(StringBuilder sb, Collection<SvekLine> lines, StringBounder stringBounder,
-			DotMode dotMode, GraphvizVersion graphvizVersion, UmlDiagramType type, Together parentTogether) {
-		new ClusterDotString(this, skinParam).printInternal(sb, lines, stringBounder, dotMode, graphvizVersion, type, parentTogether);
+			DotMode dotMode, GraphvizVersion graphvizVersion, UmlDiagramType type) {
+		new ClusterDotString(this, skinParam).printInternal(sb, lines, stringBounder, dotMode, graphvizVersion, type);
 	}
 
 	private void appendRankSame(StringBuilder sb, Collection<SvekLine> lines) {
