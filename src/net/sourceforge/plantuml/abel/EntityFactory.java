@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.cucadiagram.Bodier;
 import net.sourceforge.plantuml.cucadiagram.BodierJSon;
 import net.sourceforge.plantuml.cucadiagram.BodierMap;
 import net.sourceforge.plantuml.cucadiagram.BodyFactory;
-import net.sourceforge.plantuml.cucadiagram.HideOrShow2;
+import net.sourceforge.plantuml.cucadiagram.HideOrShow;
 import net.sourceforge.plantuml.cucadiagram.ICucaDiagram;
 import net.sourceforge.plantuml.plasma.Plasma;
 import net.sourceforge.plantuml.plasma.Quark;
@@ -64,12 +64,12 @@ public final class EntityFactory implements IEntityFactory {
 
 	private final Entity rootGroup;
 
-	private final List<HideOrShow2> hides2;
-	private final List<HideOrShow2> removed;
+	private final List<HideOrShow> hides2;
+	private final List<HideOrShow> removed;
 	final private ICucaDiagram diagram;
 
 	//
-	public EntityFactory(List<HideOrShow2> hides2, List<HideOrShow2> removed, ICucaDiagram diagram) {
+	public EntityFactory(List<HideOrShow> hides2, List<HideOrShow> removed, ICucaDiagram diagram) {
 		this.hides2 = hides2;
 		this.removed = removed;
 		this.diagram = diagram;
@@ -84,7 +84,7 @@ public final class EntityFactory implements IEntityFactory {
 			return isHidden(other);
 
 		boolean hidden = false;
-		for (HideOrShow2 hide : hides2)
+		for (HideOrShow hide : hides2)
 			hidden = hide.apply(hidden, leaf);
 
 		return hidden;
@@ -92,7 +92,7 @@ public final class EntityFactory implements IEntityFactory {
 
 	public boolean isRemoved(Stereotype stereotype) {
 		boolean result = false;
-		for (HideOrShow2 hide : removed)
+		for (HideOrShow hide : removed)
 			result = hide.apply(result, stereotype);
 
 		return result;
@@ -104,7 +104,7 @@ public final class EntityFactory implements IEntityFactory {
 			return isRemoved((Entity) other);
 
 		boolean result = false;
-		for (HideOrShow2 hide : removed)
+		for (HideOrShow hide : removed)
 			result = hide.apply(result, leaf);
 
 		return result;
@@ -133,7 +133,7 @@ public final class EntityFactory implements IEntityFactory {
 
 	public boolean isRemovedIgnoreUnlinked(Entity leaf) {
 		boolean result = false;
-		for (HideOrShow2 hide : removed)
+		for (HideOrShow hide : removed)
 			if (hide.isAboutUnlinked() == false)
 				result = hide.apply(result, leaf);
 

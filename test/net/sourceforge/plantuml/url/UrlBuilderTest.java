@@ -1,13 +1,9 @@
-package net.sourceforge.plantuml;
+package net.sourceforge.plantuml.url;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-
-import net.sourceforge.plantuml.url.Url;
-import net.sourceforge.plantuml.url.UrlBuilder;
-import net.sourceforge.plantuml.url.UrlMode;
 
 class UrlBuilderTest {
 	@ParameterizedTest

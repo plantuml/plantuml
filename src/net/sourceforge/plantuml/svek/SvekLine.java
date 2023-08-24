@@ -683,7 +683,7 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		if (link.getEntity2().getLeafType() == LeafType.LOLLIPOP_HALF)
 			svekNode2.addImpact(dotPath.getEndAngle());
 
-		if (getLinkStrategy() == LinkStrategy.LEGACY && extremity1 instanceof Extremity
+		if (getLinkStrategy() == LinkStrategy.LEGACY_toberemoved && extremity1 instanceof Extremity
 				&& extremity2 instanceof Extremity) {
 			final XPoint2D p1 = ((Extremity) extremity1).somePoint();
 			final XPoint2D p2 = ((Extremity) extremity2).somePoint();

@@ -65,7 +65,7 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.cucadiagram.GroupHierarchy;
-import net.sourceforge.plantuml.cucadiagram.HideOrShow2;
+import net.sourceforge.plantuml.cucadiagram.HideOrShow;
 import net.sourceforge.plantuml.cucadiagram.ICucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.LinkConstraint;
 import net.sourceforge.plantuml.cucadiagram.Magma;
@@ -93,8 +93,8 @@ import net.sourceforge.plantuml.xmlsc.StateDiagramScxmlMaker;
 
 public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, PortionShower, ICucaDiagram {
 
-	private final List<HideOrShow2> hides2 = new ArrayList<>();
-	private final List<HideOrShow2> removed = new ArrayList<>();
+	private final List<HideOrShow> hides2 = new ArrayList<>();
+	private final List<HideOrShow> removed = new ArrayList<>();
 	protected final EntityFactory entityFactory = new EntityFactory(hides2, removed, this);
 
 	private List<Bag> stacks = new ArrayList<>();
@@ -516,7 +516,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 			return false;
 
 		boolean result = true;
-		for (HideOrShow cmd : hideOrShows)
+		for (EntityHideOrShow cmd : hideOrShows)
 			if (cmd.portion == portion && cmd.gender.contains(entity))
 				result = cmd.show;
 
@@ -525,7 +525,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 
 	public final void hideOrShow(EntityGender gender, EntityPortion portions, boolean show) {
 		for (EntityPortion portion : portions.asSet())
-			this.hideOrShows.add(new HideOrShow(gender, portion, show));
+			this.hideOrShows.add(new EntityHideOrShow(gender, portion, show));
 
 	}
 
@@ -537,22 +537,22 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 	}
 
 	public void hideOrShow2(String what, boolean show) {
-		this.hides2.add(new HideOrShow2(what, show));
+		this.hides2.add(new HideOrShow(what, show));
 	}
 
 	public void removeOrRestore(String what, boolean show) {
-		this.removed.add(new HideOrShow2(what, show));
+		this.removed.add(new HideOrShow(what, show));
 	}
 
-	private final List<HideOrShow> hideOrShows = new ArrayList<>();
+	private final List<EntityHideOrShow> hideOrShows = new ArrayList<>();
 	private final Set<VisibilityModifier> hides = new HashSet<>();
 
-	static class HideOrShow {
+	static class EntityHideOrShow {
 		private final EntityGender gender;
 		private final EntityPortion portion;
 		private final boolean show;
 
-		public HideOrShow(EntityGender gender, EntityPortion portion, boolean show) {
+		public EntityHideOrShow(EntityGender gender, EntityPortion portion, boolean show) {
 			this.gender = gender;
 			this.portion = portion;
 			this.show = show;

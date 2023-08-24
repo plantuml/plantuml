@@ -39,7 +39,7 @@ import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.stereo.Stereotag;
 import net.sourceforge.plantuml.stereo.Stereotype;
 
-public class HideOrShow2 {
+public class HideOrShow {
 
 	private final String what;
 	private final boolean show;
@@ -59,8 +59,8 @@ public class HideOrShow2 {
 		if (isAboutUnlinked())
 			return isApplyableUnlinked(leaf);
 
-		final String fullName = leaf.getName();
-		// System.err.println("fullName=" + fullName);
+		final String fullName = leaf.getQuark().getQualifiedName();
+		// System.err.println("isApplyable leaf=" + leaf + " fullName=" + fullName);
 		return match(fullName, what);
 	}
 
@@ -112,7 +112,7 @@ public class HideOrShow2 {
 		return s.equals(pattern);
 	}
 
-	public HideOrShow2(String what, boolean show) {
+	public HideOrShow(String what, boolean show) {
 		this.what = what;
 		this.show = show;
 	}

@@ -60,9 +60,9 @@ public class CommandEndState extends SingleLineCommand2<StateDiagram> {
 	@Override
 	protected CommandExecutionResult executeArg(StateDiagram diagram, LineLocation location, RegexResult arg) {
 		final Entity currentPackage = diagram.getCurrentGroup();
-		if (currentPackage == null) {
+		if (currentPackage == null || currentPackage.isRoot())
 			return CommandExecutionResult.error("No inner state defined");
-		}
+
 		diagram.endGroup();
 		return CommandExecutionResult.ok();
 	}

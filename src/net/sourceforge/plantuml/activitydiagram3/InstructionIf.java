@@ -162,6 +162,8 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 	}
 
 	public boolean swithToElse2(LinkRendering whenElse, LinkRendering nextLinkRenderer) {
+		this.current.setSpecial(nextLinkRenderer);
+
 		if (elseBranch != null)
 			return false;
 
@@ -177,7 +179,6 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 		if (elseBranch != null)
 			return false;
 
-		// this.current.setInlinkRendering(nextLinkRenderer);
 		this.current.setSpecial(nextLinkRenderer);
 		this.current = new Branch(skinParam.getCurrentStyleBuilder(), swimlane, whenThen, test, color, inlabel);
 		this.thens.add(current);

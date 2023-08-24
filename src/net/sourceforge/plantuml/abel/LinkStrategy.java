@@ -45,12 +45,13 @@ public enum LinkStrategy {
 	 * We then retrieve tail/head in generated SVG to compute link decoration angle.
 	 * 
 	 * Drawbacks: sometimes, GraphViz does NOT draw those decorations, which causes issues
+	 * This is to be removed
 	 */
-	LEGACY,
+	LEGACY_toberemoved,
 
 	/*
 	 * In simplier mode, there are no tail/head in GraphViz generated dot.
-	 * The decoration angle is retrieve using Bezier data.
+	 * The decoration angle is retrieved using Bezier data.
 	 * 
 	 */
 	SIMPLIER
