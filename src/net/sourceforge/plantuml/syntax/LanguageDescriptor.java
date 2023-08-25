@@ -87,6 +87,12 @@ public class LanguageDescriptor {
 		type.add("label");
 		type.add("person");
 		type.add("annotation");
+		type.add("protocol");
+		type.add("struct");
+		type.add("exception");
+		type.add("metaclass");
+		type.add("map");
+		type.add("json");
 
 		keyword.add("@startwire");
 		keyword.add("@startbpm");
@@ -111,6 +117,10 @@ public class LanguageDescriptor {
 		keyword.add("@startgit");
 		keyword.add("@startboard");
 		keyword.add("@startyaml");
+		keyword.add("@starthcl");
+		keyword.add("@startebnf");
+		keyword.add("@startregex");
+		keyword.add("@startfiles");
 		keyword.add("@endwire");
 		keyword.add("@endbpm");
 		keyword.add("@enduml");
@@ -134,11 +144,17 @@ public class LanguageDescriptor {
 		keyword.add("@endgit");
 		keyword.add("@endboard");
 		keyword.add("@endyaml");
+		keyword.add("@endhcl");
+		keyword.add("@endebnf");
+		keyword.add("@endregex");
+		keyword.add("@endfiles");
 		keyword.add("as");
 		keyword.add("also");
 		keyword.add("autonumber");
 		keyword.add("caption");
+		keyword.add("endcaption");
 		keyword.add("title");
+		keyword.add("endtitle");
 		keyword.add("newpage");
 		keyword.add("box");
 		keyword.add("alt");
@@ -186,7 +202,9 @@ public class LanguageDescriptor {
 		keyword.add("endif");
 		keyword.add("partition");
 		keyword.add("footer");
+		keyword.add("endfooter");
 		keyword.add("header");
+		keyword.add("endheader");
 		keyword.add("center");
 		keyword.add("rotate");
 		keyword.add("ref");
@@ -207,11 +225,15 @@ public class LanguageDescriptor {
 		keyword.add("mainframe");
 		keyword.add("across");
 		keyword.add("stereotype");
+		keyword.add("stereotypes");
 		keyword.add("split");
 		keyword.add("style");
 		keyword.add("sprite");
 		keyword.add("circle");
+		keyword.add("circles");
+		keyword.add("circled");
 		keyword.add("empty");
+		keyword.add("member");
 		keyword.add("members");
 		keyword.add("description");
 		keyword.add("true");
@@ -224,8 +246,16 @@ public class LanguageDescriptor {
 		keyword.add("dotted");
 		keyword.add("dashed");
 		keyword.add("bold");
-		keyword.add("map");
 		keyword.add("together");
+		keyword.add("attribute");
+		keyword.add("attributes");
+		keyword.add("field");
+		keyword.add("fields");
+		keyword.add("method");
+		keyword.add("methods");
+		keyword.add("public");
+		keyword.add("private");
+		keyword.add("protected");
 
 		preproc.add("!exit");
 		preproc.add("!include");
