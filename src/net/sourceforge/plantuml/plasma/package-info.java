@@ -29,30 +29,19 @@
  * USA.
  *
  *
- * Original Author:  Arnaud Roques
+ * Original Author:  Benjamin Davies
  * 
  *
  */
-package net.sourceforge.plantuml.plasma;
 
 /**
- * Keeps track of the {@link Quark} objects that have a given name. Short for
- * {@link Plasma} entry.
+ * Provides {@link Plasma} and {@link Quark} classes.
  * 
  * <p>
- * Tracks the first instace created with that name, as well as the number of
- * quarks with that name.
- *
- * @see Plasma#stats
+ * Class diagrams (and other free-form graphs) are represented as a tree of
+ * enities. The tree structure is represented using {@link Quark} objects, each
+ * of which corresponds to an {@link net.sourceforge.plantuml.abel.Entity}. The
+ * quark for an entity can be retrieved using a method on the entity, and
+ * vice-versa.
  */
-class PEntry<DATA> {
-    // ::remove folder when __HAXE__
-
-	final Quark<DATA> first;
-	int counter = 1;
-
-	PEntry(Quark<DATA> first) {
-		this.first = first;
-	}
-
-}
+package net.sourceforge.plantuml.plasma;

@@ -42,6 +42,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * A namespace for {@link Quark} objects.
+ *
+ * @see net.sourceforge.plantuml.plasma
+ */
 public class Plasma<DATA> {
 
 	private String separator = "\u0000";

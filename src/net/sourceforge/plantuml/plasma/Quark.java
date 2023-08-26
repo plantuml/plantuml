@@ -40,6 +40,11 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+/**
+ * A named node in the entity graph.
+ *
+ * @see net.sourceforge.plantuml.plasma
+ */
 public class Quark<DATA> {
 
 	private final Plasma<DATA> plasma;
