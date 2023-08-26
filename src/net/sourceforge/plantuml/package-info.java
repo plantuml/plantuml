@@ -38,7 +38,7 @@
  * Contains classes for processing PlantUML source files.
  *
  * <p>
- * The following is a typical control flow PlantUML:
+ * The following is a typical control flow for PlantUML:
  *
  * <ul>
  * <li>
