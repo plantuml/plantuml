@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileAssemblySimple;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileBox;
-import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileCircleEnd;
+import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileCircleEndCross;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileCircleSpot;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileCircleStart;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileCircleStop;
@@ -66,7 +66,6 @@ import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
-import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
@@ -111,17 +110,13 @@ public class VCompactFactory implements FtileFactory {
 	@Override
 	public Ftile start(Swimlane swimlane) {
 		final Style style = getSignatureCircleStart().getMergedStyle(skinParam.getCurrentStyleBuilder());
-		final HColor color = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
-
-		return new FtileCircleStart(skinParam(), color, swimlane, style);
+		return new FtileCircleStart(skinParam(), swimlane, style);
 	}
 
 	@Override
 	public Ftile stop(Swimlane swimlane) {
 		final Style style = getSignatureCircleStop().getMergedStyle(skinParam.getCurrentStyleBuilder());
-		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
-		final HColor backgroundColor = skinParam.getBackgroundColor();
-		return new FtileCircleStop(skinParam(), backgroundColor, borderColor, swimlane, style);
+		return new FtileCircleStop(skinParam(), swimlane, style);
 	}
 
 	@Override
@@ -134,10 +129,7 @@ public class VCompactFactory implements FtileFactory {
 	@Override
 	public Ftile end(Swimlane swimlane) {
 		final Style style = getSignatureCircleEnd().getMergedStyle(skinParam.getCurrentStyleBuilder());
-		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
-		final HColor backgroundColor = skinParam.getBackgroundColor();
-
-		return new FtileCircleEnd(skinParam(), backgroundColor, borderColor, swimlane, style);
+		return new FtileCircleEndCross(skinParam(), swimlane, style);
 	}
 
 	@Override

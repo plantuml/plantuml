@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.UEllipse;
@@ -54,12 +55,12 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 
-public class FtileCircleEnd extends AbstractFtile {
+public class FtileCircleEndCross extends AbstractFtile {
 
 	private static final int SIZE = 20;
 
-	private HColor borderColor;
-	private HColor backColor;
+	private final HColor lineColor;
+	private final HColor backColor;
 	private final Swimlane swimlane;
 	private double shadowing;
 
@@ -68,14 +69,12 @@ public class FtileCircleEnd extends AbstractFtile {
 		return Collections.emptyList();
 	}
 
-	public FtileCircleEnd(ISkinParam skinParam, HColor backColor, HColor borderColor, Swimlane swimlane, Style style) {
+	public FtileCircleEndCross(ISkinParam skinParam, Swimlane swimlane, Style style) {
 		super(skinParam);
-		this.borderColor = borderColor;
-		this.backColor = backColor;
 		this.swimlane = swimlane;
 		this.shadowing = style.value(PName.Shadowing).asDouble();
 		this.backColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
-		this.borderColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());
+		this.lineColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());
 
 	}
 
@@ -102,10 +101,11 @@ public class FtileCircleEnd extends AbstractFtile {
 
 		final UEllipse circle = UEllipse.build(SIZE, SIZE);
 		circle.setDeltaShadow(shadowing);
-		ug = ug.apply(borderColor);
+		ug = ug.apply(lineColor).apply(HColors.transparent().bg());
 		final double thickness = 2.5;
-		ug.apply(backColor.bg()).apply(UStroke.withThickness(1.5)).apply(new UTranslate(xTheoricalPosition, yTheoricalPosition))
-				.draw(circle);
+		ug.apply(UStroke.withThickness(1.5)).apply(new UTranslate(xTheoricalPosition, yTheoricalPosition)).draw(circle);
+
+		ug = ug.apply(backColor.bg());
 
 		final double size2 = (SIZE - thickness) / Math.sqrt(2);
 		final double delta = (SIZE - size2) / 2;

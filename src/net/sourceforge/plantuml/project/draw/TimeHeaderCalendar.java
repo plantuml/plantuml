@@ -53,6 +53,10 @@ public abstract class TimeHeaderCalendar extends TimeHeader {
 		this.thParam = thParam;
 	}
 
+	protected final boolean isBold(Day wink) {
+		return thParam.getVerticalSeparatorBefore().contains(wink);
+	}
+
 	protected final Locale locale() {
 		return thParam.getLocale();
 	}

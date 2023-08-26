@@ -33,62 +33,52 @@
  * 
  *
  */
-package net.sourceforge.plantuml.activitydiagram3.ftile.vertical;
+package net.sourceforge.plantuml.svek.image;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Set;
-
-import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
-import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
-import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
-import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.Colors;
+import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.UDrawable;
+import net.sourceforge.plantuml.klimt.shape.UEllipse;
 import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.svek.image.CircleStart;
 
-public class FtileCircleStart extends AbstractFtile {
+public class CircleStart implements UDrawable {
 
-	private final CircleStart circle;
-	private final Swimlane swimlane;
+	private static final int SIZE = 20;
 
-	public FtileCircleStart(ISkinParam skinParam, Swimlane swimlane, Style style) {
-		super(skinParam);
-		this.swimlane = swimlane;
-		this.circle = new CircleStart(skinParam, style, Colors.empty());
+	private final ISkinParam skinParam;
+	private final Style style;
+	private final Colors colors;
+
+	public CircleStart(ISkinParam skinParam, Style style, Colors colors) {
+		this.style = style;
+		this.colors = colors;
+		this.skinParam = skinParam;
 	}
 
-	@Override
-	public Collection<Ftile> getMyChildren() {
-		return Collections.emptyList();
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		return new XDimension2D(SIZE, SIZE);
 	}
 
-	public Set<Swimlane> getSwimlanes() {
-		if (swimlane == null)
-			return Collections.emptySet();
+	final public void drawU(UGraphic ug) {
+		final UEllipse circle = UEllipse.build(SIZE, SIZE);
 
-		return Collections.singleton(swimlane);
-	}
+		HColor backColor = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
+		HColor lineColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
+		if (colors.getColor(ColorType.BACK) != null) {
+			lineColor = colors.getColor(ColorType.BACK);
+			backColor = colors.getColor(ColorType.BACK);
+		}
 
-	public Swimlane getSwimlaneIn() {
-		return swimlane;
-	}
+		final double shadowing = style.value(PName.Shadowing).asDouble();
 
-	public Swimlane getSwimlaneOut() {
-		return swimlane;
-	}
-
-	public void drawU(UGraphic ug) {
-		circle.drawU(ug);
-	}
-
-	@Override
-	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
-		final double size = circle.calculateDimension(stringBounder).getWidth();
-		return new FtileGeometry(size, size, size / 2, 0, size);
+		circle.setDeltaShadow(shadowing);
+		ug.apply(lineColor).apply(backColor.bg()).draw(circle);
 	}
 
 }

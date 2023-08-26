@@ -36,17 +36,10 @@
 package net.sourceforge.plantuml.svek.image;
 
 import net.sourceforge.plantuml.abel.Entity;
-import net.sourceforge.plantuml.klimt.UShape;
-import net.sourceforge.plantuml.klimt.UTranslate;
-import net.sourceforge.plantuml.klimt.color.ColorType;
-import net.sourceforge.plantuml.klimt.color.HColor;
-import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.UEllipse;
 import net.sourceforge.plantuml.style.ISkinParam;
-import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
@@ -55,7 +48,8 @@ import net.sourceforge.plantuml.svek.ShapeType;
 
 public class EntityImageCircleEnd extends AbstractEntityImage {
 
-	private static final int SIZE = 20;
+	private static final int SIZE = 22;
+	private final CircleEnd circle;
 
 	public StyleSignatureBasic getDefaultStyleDefinitionCircle() {
 		return StyleSignatureBasic.of(SName.root, SName.element, getSkinParam().getUmlDiagramType().getStyleName(),
@@ -64,6 +58,8 @@ public class EntityImageCircleEnd extends AbstractEntityImage {
 
 	public EntityImageCircleEnd(Entity entity, ISkinParam skinParam) {
 		super(entity, skinParam);
+		final Style style = getDefaultStyleDefinitionCircle().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+		this.circle = new CircleEnd(skinParam, style, entity.getColors());
 	}
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
@@ -71,20 +67,7 @@ public class EntityImageCircleEnd extends AbstractEntityImage {
 	}
 
 	final public void drawU(UGraphic ug) {
-		final UEllipse circle = UEllipse.build(SIZE, SIZE);
-
-		final Style style = getDefaultStyleDefinitionCircle().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
-		HColor color = getEntity().getColors().getColor(ColorType.BACK);
-		if (color == null)
-			color = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
-		final double shadowing = style.value(PName.Shadowing).asDouble();
-
-		circle.setDeltaShadow(shadowing);
-		ug.apply(HColors.none().bg()).apply(color).draw(circle);
-
-		final double delta = 4;
-		final UShape circleSmall = UEllipse.build(SIZE - delta * 2, SIZE - delta * 2);
-		ug.apply(color.bg()).apply(HColors.none()).apply(new UTranslate(delta + 0.5, delta + 0.5)).draw(circleSmall);
+		circle.drawU(ug);
 	}
 
 	public ShapeType getShapeType() {
