@@ -108,6 +108,15 @@ import net.sourceforge.plantuml.wbs.WBSDiagramFactory;
 import net.sourceforge.plantuml.wire.WireDiagramFactory;
 import net.sourceforge.plantuml.yaml.YamlDiagramFactory;
 
+/**
+ * Builds a diagram from pre-processed PlantUML source.
+ *
+ * <p>
+ * Tries each of the factories (enumerated in the static block below) until one
+ * succeeds.
+ *
+ * @see AbstractPSystem
+ */
 public class PSystemBuilder {
 	// ::remove file when __HAXE__
 

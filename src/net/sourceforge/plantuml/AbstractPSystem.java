@@ -67,6 +67,15 @@ import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.version.License;
 import net.sourceforge.plantuml.version.Version;
 
+/**
+ * An abstract class for all diagram classes.
+ * 
+ * <p>
+ * Short for "{@link net.sourceforge.plantuml.plasma plasma} system", although
+ * most newer diagram types do not use entities stored in a plasma.
+ *
+ * @see PSystemBuilder
+ */
 public abstract class AbstractPSystem implements Diagram {
 	// ::remove file when __HAXE__
 

@@ -33,26 +33,21 @@
  * 
  *
  */
-package net.sourceforge.plantuml.plasma;
 
 /**
- * Keeps track of the {@link Quark} objects that have a given name. Short for
- * "{@link Plasma} entry".
+ * Provides classes used to compose regex partials.
  * 
  * <p>
- * Tracks the first instace created with that name, as well as the number of
- * quarks with that name.
- *
- * @see Plasma#stats
+ * PlantUML parses text using regular expressions. To aid in readability, these
+ * are sepecified as trees of {@link RegexComposed} branches and
+ * {@link RegexLeaf} leaves.
+ * 
+ * <p>
+ * Before a {@link RegexComposed} can be matched, it must first have each
+ * of its constituent parts concatenated into one large regex string using
+ * {@link RegexComposed#getFullSlow}. This string is then transformed by
+ * {@link MyPattern#transform} to replace some macros (e.g. %s
+ * for whitespace, %q for single quote) and compiled using
+ * {@link java.util.regex.Pattern#compile}.
  */
-class PEntry<DATA> {
-    // ::remove folder when __HAXE__
-
-	final Quark<DATA> first;
-	int counter = 1;
-
-	PEntry(Quark<DATA> first) {
-		this.first = first;
-	}
-
-}
+package net.sourceforge.plantuml.regex;

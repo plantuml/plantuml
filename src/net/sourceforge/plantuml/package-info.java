@@ -33,26 +33,33 @@
  * 
  *
  */
-package net.sourceforge.plantuml.plasma;
 
 /**
- * Keeps track of the {@link Quark} objects that have a given name. Short for
- * "{@link Plasma} entry".
- * 
- * <p>
- * Tracks the first instace created with that name, as well as the number of
- * quarks with that name.
+ * Contains classes for processing PlantUML source files.
  *
- * @see Plasma#stats
+ * <p>
+ * The following is a typical control flow for PlantUML:
+ *
+ * <ul>
+ * <li>
+ * Arguments are parsed ({@link Run} constructs {@link Option}),
+ * </li>
+ * <li>
+ * Files are read ({@link Run} constructs {@link SourceFileReaderAbstract}),
+ * </li>
+ * <li>
+ * Files are split into blocks ({@link SourceFileReaderAbstract} constructs
+ * {@link BlockUmlBuilder}),
+ * <li>
+ * Blocks are pre-processed ({@link BlockUml} uses
+ * {@link net.sourceforge.plantuml.tim.TimLoader}),
+ * </li>
+ * <li>
+ * Blocks are processed and the output images saved ({@link Run} calls
+ * {@link SourceFileReaderAbstract#getGeneratedImages()} which calls
+ * {@link BlockUml#getDiagram()} which uses
+ * {@link PSystemBuilder}),
+ * </li>
+ * </ul>
  */
-class PEntry<DATA> {
-    // ::remove folder when __HAXE__
-
-	final Quark<DATA> first;
-	int counter = 1;
-
-	PEntry(Quark<DATA> first) {
-		this.first = first;
-	}
-
-}
+package net.sourceforge.plantuml;
