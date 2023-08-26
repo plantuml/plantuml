@@ -35,11 +35,12 @@
  */
 
 /**
- * Provides classes used to compose regex fragments.
+ * Provides classes used to compose regex partials.
  * 
  * <p>
  * PlantUML parses text using regular expressions. To aid in readability, these
- * are sepecified as trees of {@link RegexComposed} fragments.
+ * are sepecified as trees of {@link RegexComposed} branches and
+ * {@link RegexLeaf} leaves.
  * 
  * <p>
  * Before a {@link RegexComposed} can be matched, it must first have each
