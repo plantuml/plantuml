@@ -35,19 +35,31 @@
  */
 
 /**
- * Provides classes used to compose regex partials.
- * 
+ * Contains classes for processing PlantUML source files.
+ *
  * <p>
- * PlantUML parses text using regular expressions. To aid in readability, these
- * are sepecified as trees of {@link RegexComposed} branches and
- * {@link RegexLeaf} leaves.
- * 
- * <p>
- * Before a {@link RegexComposed} can be matched, it must first have each
- * of its constituent parts concatenated into one large regex string using
- * {@link RegexComposed#getFullSlow}. This string is then transformed by
- * {@link MyPattern#transform} to replace some macros (e.g. %s
- * for whitespace, %q for single quote) and compiled using
- * {@link java.util.regex.Pattern#compile}.
+ * The following is a typical control flow PlantUML:
+ *
+ * <ul>
+ * <li>
+ * Arguments are parsed ({@link Run} constructs {@link Option}),
+ * </li>
+ * <li>
+ * Files are read ({@link Run} constructs {@link SourceFileReaderAbstract}),
+ * </li>
+ * <li>
+ * Files are split into blocks ({@link SourceFileReaderAbstract} constructs
+ * {@link BlockUmlBuilder}),
+ * <li>
+ * Blocks are pre-processed ({@link BlockUml} uses
+ * {@link net.sourceforge.plantuml.tim.TimLoader}),
+ * </li>
+ * <li>
+ * Blocks are processed and the output images saved ({@link Run} calls
+ * {@link SourceFileReaderAbstract#getGeneratedImages()} which calls
+ * {@link BlockUml#getDiagram()} which uses
+ * {@link PSystemBuilder}),
+ * </li>
+ * </ul>
  */
-package net.sourceforge.plantuml.regex;
+package net.sourceforge.plantuml;

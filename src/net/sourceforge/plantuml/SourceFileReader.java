@@ -147,7 +147,7 @@ public class SourceFileReader extends SourceFileReaderAbstract implements ISourc
 				suggested = SuggestedFile.fromOutputFile(new File(outputDirectory, newName),
 						getFileFormatOption().getFileFormat(), 0);
 			} else {
-				Log.info("We are going to create files in directory " + dir);
+				Log.info("We are going to create cypherfiles in directory " + dir);
 				suggested = SuggestedFile.fromOutputFile(new File(dir, getFileName()),
 						getFileFormatOption().getFileFormat(), 0);
 			}
