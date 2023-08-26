@@ -114,6 +114,8 @@ import net.sourceforge.plantuml.yaml.YamlDiagramFactory;
  * <p>
  * Tries each of the factories (enumerated in the static block below) until one
  * succeeds.
+ *
+ * @see AbstractPSystem
  */
 public class PSystemBuilder {
 	// ::remove file when __HAXE__
