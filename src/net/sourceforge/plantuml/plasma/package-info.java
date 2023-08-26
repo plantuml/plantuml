@@ -29,7 +29,7 @@
  * USA.
  *
  *
- * Original Author:  Benjamin Davies
+ * Original Author:  Arnaud Roques
  * 
  *
  */
