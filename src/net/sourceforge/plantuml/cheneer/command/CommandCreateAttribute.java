@@ -37,9 +37,13 @@ package net.sourceforge.plantuml.cheneer.command;
 
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
+import net.sourceforge.plantuml.abel.Link;
+import net.sourceforge.plantuml.abel.LinkArg;
 import net.sourceforge.plantuml.cheneer.ChenEerDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.decoration.LinkDecor;
+import net.sourceforge.plantuml.decoration.LinkType;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.plasma.Quark;
@@ -83,27 +87,37 @@ public class CommandCreateAttribute extends SingleLineCommand2<ChenEerDiagram> {
         new RegexOptional(//
             new RegexConcat( //
                 RegexLeaf.spaceZeroOrMore(), //
-                new RegexLeaf("COMPOSITE", "\\{"))), //
+                new RegexLeaf("COMPOSITE", "(\\{)"))), //
         RegexLeaf.end());
   }
 
   @Override
   protected CommandExecutionResult executeArg(ChenEerDiagram diagram, LineLocation location, RegexResult arg)
       throws NoSuchColorException {
-    final LeafType type = LeafType.OBJECT;
+    final Entity owner = diagram.peekOwner();
+    if (owner == null) {
+      return CommandExecutionResult.error("Attribute must be inside an entity, relationship or another attribute");
+    }
+
+    final LeafType type = LeafType.USECASE;
     final String name = diagram.cleanId(arg.get("NAME", 0));
-    final boolean composite = arg.get("COMPOSITE") != null;
+    final String id = owner.getName() + "/" + name;
+    final boolean composite = arg.get("COMPOSITE", 0) != null;
 
-    final Quark<Entity> quark = diagram.quarkInContext(true, name);
+    final Quark<Entity> quark = diagram.quarkInContext(true, id);
+
     Entity entity = quark.getData();
-
     if (entity == null) {
-      Display display = Display.getWithNewlines(name);
+      final Display display = Display.getWithNewlines(name);
       entity = diagram.reallyCreateLeaf(quark, display, type, null);
     } else {
-      if (entity.muteToType(type, null) == false)
-        return CommandExecutionResult.error("Bad name");
+      return CommandExecutionResult.error("Attribute already exists");
     }
+
+    final LinkType linkType = new LinkType(LinkDecor.NONE, LinkDecor.NONE);
+    final Link link = new Link(diagram.getEntityFactory(), diagram.getCurrentStyleBuilder(), entity, owner, linkType,
+        LinkArg.build(Display.NULL, 1));
+    diagram.addLink(link);
 
     if (composite) {
       diagram.pushOwner(entity);

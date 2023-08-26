@@ -35,10 +35,17 @@
  */
 package net.sourceforge.plantuml.cheneer.command;
 
+import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.abel.Link;
+import net.sourceforge.plantuml.abel.LinkArg;
 import net.sourceforge.plantuml.cheneer.ChenEerDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.decoration.LinkDecor;
+import net.sourceforge.plantuml.decoration.LinkType;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -64,11 +71,27 @@ public class CommandAssociateRelationship extends SingleLineCommand2<ChenEerDiag
   }
 
   @Override
-  protected CommandExecutionResult executeArg(ChenEerDiagram system, LineLocation location, RegexResult arg)
+  protected CommandExecutionResult executeArg(ChenEerDiagram diagram, LineLocation location, RegexResult arg)
       throws NoSuchColorException {
-    final String name = arg.get("NAME", 0);
+    final Entity relationship = diagram.peekOwner();
+    if (relationship == null) {
+      return CommandExecutionResult.error("Can only associate from a relationship");
+    }
 
-    System.out.println("- " + name);
+    final String entityName = diagram.cleanId(arg.get("NAME", 0));
+
+    final Quark<Entity> entityQuark = diagram.quarkInContext(true, entityName);
+    final Entity entity = entityQuark.getData();
+    if (entity == null) {
+      return CommandExecutionResult.error("No such entity: " + entityName);
+    }
+
+    final LinkType linkType = new LinkType(LinkDecor.NONE, LinkDecor.NONE);
+    final Link link = new Link(diagram.getEntityFactory(), diagram.getCurrentStyleBuilder(), relationship, entity,
+        linkType,
+        // TODO: Cardinality
+        LinkArg.build(Display.NULL, 1));
+    diagram.addLink(link);
 
     return CommandExecutionResult.ok();
   }
