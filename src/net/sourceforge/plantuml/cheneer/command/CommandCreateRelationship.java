@@ -35,10 +35,14 @@
  */
 package net.sourceforge.plantuml.cheneer.command;
 
+import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.cheneer.ChenEerDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -62,11 +66,23 @@ public class CommandCreateRelationship extends SingleLineCommand2<ChenEerDiagram
   }
 
   @Override
-  protected CommandExecutionResult executeArg(ChenEerDiagram system, LineLocation location, RegexResult arg)
+  protected CommandExecutionResult executeArg(ChenEerDiagram diagram, LineLocation location, RegexResult arg)
       throws NoSuchColorException {
-    final String name = arg.get("NAME", 0);
+    final LeafType type = LeafType.OBJECT;
+    final String name = diagram.cleanId(arg.get("NAME", 0));
 
-    System.out.println("relationship " + name);
+    final Quark<Entity> quark = diagram.quarkInContext(true, name);
+    Entity entity = quark.getData();
+
+    if (entity == null) {
+      Display display = Display.getWithNewlines(name);
+      entity = diagram.reallyCreateLeaf(quark, display, type, null);
+    } else {
+      if (entity.muteToType(type, null) == false)
+        return CommandExecutionResult.error("Bad name");
+    }
+
+    diagram.pushOwner(entity);
 
     return CommandExecutionResult.ok();
   }

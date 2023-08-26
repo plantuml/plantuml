@@ -34,32 +34,21 @@
  */
 package net.sourceforge.plantuml.cheneer;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
-import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.TitledDiagram;
+import net.atmp.CucaDiagram;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
-import net.sourceforge.plantuml.klimt.drawing.UGraphic;
-import net.sourceforge.plantuml.klimt.font.StringBounder;
-import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
-import net.sourceforge.plantuml.klimt.shape.TextBlock;
-import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
-public class ChenEerDiagram extends TitledDiagram {
+public class ChenEerDiagram extends CucaDiagram {
 
 	public ChenEerDiagram(UmlSource source, Map<String, String> skinParam) {
 		super(source, UmlDiagramType.CHEN_EER, skinParam);
-		// TODO
 	}
 
 	@Override
@@ -68,26 +57,30 @@ public class ChenEerDiagram extends TitledDiagram {
 	}
 
 	@Override
-	protected ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption)
-			throws IOException {
-		return createImageBuilder(fileFormatOption).drawable(getTextBlock()).write(os);
+	protected final List<String> getDotStrings() {
+		return Arrays.asList("nodesep=.20;", "ranksep=0.4;", "edge [fontsize=11,labelfontsize=11];",
+				"node [fontsize=11];");
 	}
 
-	private void drawInternal(UGraphic ug) {
-		// TODO
+	private final Stack<Entity> ownerStack = new Stack<Entity>();
+
+	public void pushOwner(Entity group) {
+		ownerStack.push(group);
 	}
 
-	@Override
-	protected TextBlock getTextBlock() {
-		return new AbstractTextBlock() {
-			public void drawU(UGraphic ug) {
-				drawInternal(ug);
-			}
+	public boolean popOwner() {
+		if (ownerStack.isEmpty()) {
+			return false;
+		}
+		ownerStack.pop();
+		return true;
+	}
 
-			public XDimension2D calculateDimension(StringBounder stringBounder) {
-				return TextBlockUtils.getMinMax(getTextBlock(), stringBounder, true).getDimension();
-			}
-		};
+	public Entity peekOwner() {
+		if (ownerStack.isEmpty()) {
+			return null;
+		}
+		return ownerStack.peek();
 	}
 
 }

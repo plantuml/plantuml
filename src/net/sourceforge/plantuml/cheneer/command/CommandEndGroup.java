@@ -58,7 +58,9 @@ public class CommandEndGroup extends SingleLineCommand2<ChenEerDiagram> {
 
 	@Override
 	protected CommandExecutionResult executeArg(ChenEerDiagram diagram, LineLocation location, RegexResult arg) {
-		// TODO
+		if (!diagram.popOwner()) {
+			return CommandExecutionResult.error("Unbalanced brackets");
+		}
 		return CommandExecutionResult.ok();
 	}
 
