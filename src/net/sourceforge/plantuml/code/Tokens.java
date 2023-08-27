@@ -40,6 +40,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import net.sourceforge.plantuml.annotation.DeadCode;
+
+@DeadCode(comment = "try for text diagram compression")
 public class Tokens {
 	// ::remove file when __CORE__
 
