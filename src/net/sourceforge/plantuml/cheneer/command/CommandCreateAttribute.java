@@ -116,7 +116,7 @@ public class CommandCreateAttribute extends SingleLineCommand2<ChenEerDiagram> {
 
     final LinkType linkType = new LinkType(LinkDecor.NONE, LinkDecor.NONE);
     final Link link = new Link(diagram.getEntityFactory(), diagram.getCurrentStyleBuilder(), entity, owner, linkType,
-        LinkArg.build(Display.NULL, 1));
+        LinkArg.build(Display.NULL, 2));
     diagram.addLink(link);
 
     if (composite) {

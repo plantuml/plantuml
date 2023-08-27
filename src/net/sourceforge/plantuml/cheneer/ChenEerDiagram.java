@@ -34,32 +34,18 @@
  */
 package net.sourceforge.plantuml.cheneer;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
-import net.atmp.CucaDiagram;
 import net.sourceforge.plantuml.abel.Entity;
-import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
-public class ChenEerDiagram extends CucaDiagram {
+public class ChenEerDiagram extends AbstractEntityDiagram {
 
 	public ChenEerDiagram(UmlSource source, Map<String, String> skinParam) {
 		super(source, UmlDiagramType.CHEN_EER, skinParam);
-	}
-
-	@Override
-	public DiagramDescription getDescription() {
-		return new DiagramDescription("(Chen EER)");
-	}
-
-	@Override
-	protected final List<String> getDotStrings() {
-		return Arrays.asList("nodesep=.20;", "ranksep=0.4;", "edge [fontsize=11,labelfontsize=11];",
-				"node [fontsize=11];");
 	}
 
 	private final Stack<Entity> ownerStack = new Stack<Entity>();

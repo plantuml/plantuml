@@ -90,7 +90,8 @@ public class CommandAssociateRelationship extends SingleLineCommand2<ChenEerDiag
     final Link link = new Link(diagram.getEntityFactory(), diagram.getCurrentStyleBuilder(), relationship, entity,
         linkType,
         // TODO: Cardinality
-        LinkArg.build(Display.NULL, 1));
+        LinkArg.build(Display.NULL, 3));
+    link.setPortMembers(diagram.getPortId(relationship.getName()), diagram.getPortId(entity.getName()));
     diagram.addLink(link);
 
     return CommandExecutionResult.ok();
