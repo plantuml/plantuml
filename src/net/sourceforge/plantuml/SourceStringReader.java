@@ -154,7 +154,7 @@ public class SourceStringReader {
 	public DiagramDescription outputImage(OutputStream os, int numImage, FileFormatOption fileFormatOption)
 			throws IOException {
 		if (blocks.size() == 0) {
-			noStartumlFound(os, fileFormatOption);
+			noValidStartFound(os, fileFormatOption);
 			return null;
 		}
 		for (BlockUml b : blocks) {
@@ -230,8 +230,8 @@ public class SourceStringReader {
 
 	}
 
-	public ImageData noStartumlFound(OutputStream os, FileFormatOption fileFormatOption) throws IOException {
-		final TextBlock error = GraphicStrings.createForError(Arrays.asList("No @startuml/@enduml found"),
+	public ImageData noValidStartFound(OutputStream os, FileFormatOption fileFormatOption) throws IOException {
+		final TextBlock error = GraphicStrings.createForError(Arrays.asList("No valid @start/@end found, please check the version"),
 				fileFormatOption.isUseRedForError());
 
 		return plainImageBuilder(error, fileFormatOption).write(os);
