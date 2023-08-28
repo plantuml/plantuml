@@ -47,13 +47,14 @@ import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.security.SFile;
-import net.sourceforge.plantuml.url.CMapData;
 
 public class Pipe {
 	// ::remove file when __CORE__
@@ -190,7 +191,12 @@ public class Pipe {
 				if (state == State.START_MARK_NOT_FOUND && line.startsWith("@start")) {
 					sb.setLength(0); // discard any previous input
 					state = State.START_MARK_FOUND;
-					expectedEnd = "@end" + line.substring(6).split("^[A-Za-z]")[0];
+					final Matcher m = Pattern.compile("@start([A-Za-z]*)").matcher(line);
+					if (m.matches())
+						expectedEnd = "@end" + m.group(1);
+					else
+						expectedEnd = "@end";
+
 				} else if (state == State.START_MARK_FOUND && line.startsWith(expectedEnd)) {
 					state = State.COMPLETE;
 				}

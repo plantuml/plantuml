@@ -251,8 +251,7 @@ class PipeTest {
 				"@startuml\nab\ncde\n@enduml\n"));
 		l.add(InputExpected.of("@startwhatever\nab\rcde\n@endwhatever", "@startwhatever\nab\ncde\n@endwhatever\n"));
 		l.add(InputExpected.of("@start\nab\rcde\n@end", "@start\nab\ncde\n@end\n"));
-		// TODO: fix `readSingleDiagram` to allow @startX/@endX, the corresponding test is here:
-		// l.add(InputExpected.of("@startX\nab\rcde\n@endX", "@startX\nab\ncde\n@endX\n"));
+		l.add(InputExpected.of("@startX\nab\rcde\n@endX", "@startX\nab\ncde\n@endX\n"));
 		l.add(InputExpected.of("@startXY\nab\rcde\n@endXY", "@startXY\nab\ncde\n@endXY\n"));
 		l.add(InputExpected.of("@startXYZ\nab\rcde\n@endXYZ", "@startXYZ\nab\ncde\n@endXYZ\n"));
 		l.add(InputExpected.of("@start1\nab\rcde\n@end1", "@start1\nab\ncde\n@end1\n"));
@@ -286,8 +285,8 @@ class PipeTest {
 				"@startuml\nab\ncde\n@enduml\n"));
 		l.add(InputExpected.of("@startwhatever\nab\rcde\n@endwhatever", "@startwhatever\nab\ncde\n@endwhatever\n"));
 		l.add(InputExpected.of("@start\nab\rcde\n@end", "@start\nab\ncde\n@end\n"));
-		// TODO: fix `readSingleDiagram` to allow @startX/@endX, the corresponding test is here:
-		// l.add(InputExpected.of("@startX\nab\rcde\n@endX", "@startX\nab\ncde\n@endX\n"));
+
+		l.add(InputExpected.of("@startX\nab\rcde\n@endX", "@startX\nab\ncde\n@endX\n"));
 		l.add(InputExpected.of("@startXY\nab\rcde\n@endXY", "@startXY\nab\ncde\n@endXY\n"));
 		l.add(InputExpected.of("@startXYZ\nab\rcde\n@endXYZ", "@startXYZ\nab\ncde\n@endXYZ\n"));
 		l.add(InputExpected.of("@start1\nab\rcde\n@end1", "@start1\nab\ncde\n@end1\n"));
