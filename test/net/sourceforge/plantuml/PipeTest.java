@@ -217,12 +217,15 @@ class PipeTest {
 	}
 
 	@ParameterizedTest
-	@ValueSource(strings = { "ab\nc", // *nix, macOsX
+	@ValueSource(strings = {
+			"ab\nc", // *nix, macOsX
 			"ab\rc", // pre-macOsX macs
 			"ab\r\nc", // Windows
 			// the case \n\r is handled as 2 new lines, thus not added
-
-			"ab\nc\n", "ab\nc\r", "ab\nc\r\n" })
+			"ab\nc\n",
+			"ab\nc\r",
+			"ab\nc\r\n"
+	})
 	void should_readFirstDiagram_decode_correctly_different_line_endings(String input) throws IOException {
 		pipe = new Pipe(option, null, new ByteArrayInputStream(input.getBytes(UTF_8)), UTF_8.name());
 
