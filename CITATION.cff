@@ -1,0 +1,7 @@
+cff-version: 1.2.0
+authors:
+- family-names: "Roques"
+  given-names: "Arnaud"
+- family-names: "PlantUML Contributors"
+title: "PlantUML Software"
+url: "https://github.com/plantuml/plantuml"
