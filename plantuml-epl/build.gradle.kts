@@ -41,7 +41,7 @@ sourceSets {
 			srcDirs("build/generated/sjpp")
 		}
 		resources {
-			srcDirs("build/generated/sjpp")
+			srcDirs("build/generated/sjpp", "build/copiedResources")
 			include("**/graphviz.dat")
 			include("**/*.png")
 			include("**/*.svg")
@@ -110,6 +110,13 @@ val preprocessLicenceAntTask by tasks.registering() {
 				"header" to project.layout.buildDirectory.file("../epl-license.txt").get().asFile.absolutePath
 			)
 		}
+		project.copy {
+			includeEmptyDirs = false
+			from(project.layout.buildDirectory.dir("sources/sjpp/java")) {
+				include("**/graphviz.dat")
+			}
+			into(project.layout.buildDirectory.dir("copiedResources"))
+		}
 	}
 }
 
@@ -124,7 +131,6 @@ tasks.compileJava{
 tasks.named("sourcesJar"){
 	dependsOn(preprocessLicenceAntTask)
 }
-
 
 publishing {
 	publications.create<MavenPublication>("maven") {
