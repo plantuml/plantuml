@@ -67,17 +67,10 @@ public class Dolls {
 	private void addParticipant(Participant p, ParticipantEnglober englober, TileArguments tileArguments) {
 		Doll already = alls.get(englober);
 		if (already == null) {
-			already = Doll.createTeoz(englober, tileArguments);
+			already = Doll.createTeoz(englober, tileArguments, alls);
 			alls.put(englober, already);
 		}
 		already.addParticipant(p);
-	}
-
-	private Doll getParent(Doll doll) {
-		final ParticipantEnglober parent = doll.getParticipantEnglober().getParent();
-		if (parent == null)
-			return null;
-		return alls.get(parent);
 	}
 
 	public int size() {
@@ -87,10 +80,9 @@ public class Dolls {
 	public double getOffsetForEnglobers(StringBounder stringBounder) {
 		double result = 0;
 		for (Doll doll : alls.values()) {
-			double height = doll.getTitlePreferredHeight();
-			final Doll group = getParent(doll);
-			if (group != null)
-				height += group.getTitlePreferredHeight();
+			double height = 0;
+			for (Doll current = doll; current != null; current = current.getParent())
+				height += current.getTitlePreferredHeight();
 
 			if (height > result)
 				result = height;
@@ -100,19 +92,17 @@ public class Dolls {
 	}
 
 	public void addConstraints(StringBounder stringBounder) {
-		for (Doll doll : alls.values()) {
+		for (Doll doll : alls.values())
 			doll.addInternalConstraints(stringBounder);
-		}
 
-		for (Doll doll : alls.values()) {
+		for (Doll doll : alls.values())
 			doll.addConstraintAfter(stringBounder);
-		}
 
 	}
 
 	public void drawEnglobers(UGraphic ug, double height, Context2D context) {
 		for (Doll doll : alls.values())
-			doll.drawMe(ug, height, context, getParent(doll));
+			doll.drawMe(ug, height, context, doll.getParent());
 
 	}
 

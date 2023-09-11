@@ -57,6 +57,7 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
+import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 
 public class InstructionRepeat extends AbstractInstruction implements Instruction {
@@ -74,6 +75,7 @@ public class InstructionRepeat extends AbstractInstruction implements Instructio
 
 	private Display backward = Display.NULL;
 
+	private Stereotype stereotype;
 	private LinkRendering incoming1 = LinkRendering.none();
 	private LinkRendering incoming2 = LinkRendering.none();
 	private List<PositionedNote> backwardNotes = new ArrayList<>();
@@ -110,12 +112,13 @@ public class InstructionRepeat extends AbstractInstruction implements Instructio
 	}
 
 	public void setBackward(Display label, Swimlane swimlaneBackward, BoxStyle boxStyle, LinkRendering incoming1,
-			LinkRendering incoming2) {
+			LinkRendering incoming2, Stereotype stereotype) {
 		this.backward = label;
 		this.swimlaneBackward = swimlaneBackward;
 		this.boxStyle = boxStyle;
 		this.incoming1 = incoming1;
 		this.incoming2 = incoming2;
+		this.stereotype = stereotype;
 	}
 
 	public boolean hasBackward() {
@@ -166,7 +169,7 @@ public class InstructionRepeat extends AbstractInstruction implements Instructio
 		if (Display.isNull(backward))
 			return null;
 
-		Ftile result = factory.activity(backward, swimlaneBackward, boxStyle, Colors.empty(), null);
+		Ftile result = factory.activity(backward, swimlaneBackward, boxStyle, Colors.empty(), stereotype);
 		if (backwardNotes.size() > 0)
 			result = factory.addNote(result, swimlaneBackward, backwardNotes, VerticalAlignment.CENTER);
 

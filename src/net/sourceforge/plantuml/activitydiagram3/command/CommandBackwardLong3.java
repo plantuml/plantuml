@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandBackwardLong3 extends CommandMultilines3<ActivityDiagram3> {
@@ -86,6 +87,11 @@ public class CommandBackwardLong3 extends CommandMultilines3<ActivityDiagram3> {
 		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 		final RegexResult lineLast = getPatternEnd2().matcher(lines.getLast().getString());
 		final String end = lineLast.get("END", 0);
+		final String stereo = lineLast.get("END", 1);
+
+		Stereotype stereotype = null;
+		if (stereo != null)
+			stereotype = Stereotype.build(stereo);
 
 		final BoxStyle style = BoxStyle.fromString(end);
 		lines = lines.removeStartingAndEnding(line0.get("DATA", 0), end.length());
@@ -93,6 +99,6 @@ public class CommandBackwardLong3 extends CommandMultilines3<ActivityDiagram3> {
 		final LinkRendering in = LinkRendering.none();
 		final LinkRendering out = LinkRendering.none();
 
-		return diagram.backward(lines.toDisplay(), style, in, out);
+		return diagram.backward(lines.toDisplay(), style, in, out, stereotype);
 	}
 }

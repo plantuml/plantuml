@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.sequencediagram;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -64,17 +65,21 @@ import net.sourceforge.plantuml.style.WithStyle;
 public class Doll implements WithStyle {
 
 	final private List<Participant> participants = new ArrayList<>();
+	// alls is only used for Teoz: refactor needed after puma will be removed
+	final private Map<ParticipantEnglober, Doll> alls;
 	final private ParticipantEnglober englober;
 	final private StyleBuilder styleBuilder;
 	final private TileArguments tileArguments;
 
 	public static Doll createPuma(ParticipantEnglober englober, Participant first, ISkinParam skinParam, Rose skin,
 			StringBounder stringBounder, StyleBuilder styleBuilder) {
-		return new Doll(englober, convertFunctionToBeRemoved(skinParam, skin, stringBounder), styleBuilder, first);
+		return new Doll(englober, convertFunctionToBeRemoved(skinParam, skin, stringBounder), styleBuilder, first,
+				null);
 	}
 
-	public static Doll createTeoz(ParticipantEnglober englober, TileArguments tileArguments) {
-		return new Doll(englober, tileArguments, tileArguments.getSkinParam().getCurrentStyleBuilder(), null);
+	public static Doll createTeoz(ParticipantEnglober englober, TileArguments tileArguments,
+			Map<ParticipantEnglober, Doll> alls) {
+		return new Doll(englober, tileArguments, tileArguments.getSkinParam().getCurrentStyleBuilder(), null, alls);
 	}
 
 	private static TileArguments convertFunctionToBeRemoved(ISkinParam skinParam, Rose skin,
@@ -83,10 +88,11 @@ public class Doll implements WithStyle {
 	}
 
 	private Doll(ParticipantEnglober englober, TileArguments tileArguments, StyleBuilder styleBuilder,
-			Participant first) {
+			Participant first, Map<ParticipantEnglober, Doll> alls) {
 		this.englober = Objects.requireNonNull(englober);
 		this.styleBuilder = styleBuilder;
 		this.tileArguments = Objects.requireNonNull(tileArguments);
+		this.alls = alls;
 
 		if (first != null)
 			this.participants.add(first);
@@ -186,14 +192,21 @@ public class Doll implements WithStyle {
 		final double x1 = getPosA(stringBounder).getCurrentValue() - 4;
 		final double x2 = getPosE(stringBounder).getCurrentValue() + 4;
 
-		if (group != null) {
-			final double titlePreferredHeight = group.getTitlePreferredHeight();
+		for (Doll current = group; current != null; current = current.getParent()) {
+			final double titlePreferredHeight = current.getTitlePreferredHeight();
 			ug = ug.apply(UTranslate.dy(titlePreferredHeight));
 			height -= titlePreferredHeight;
 		}
 
 		final XDimension2D dim = new XDimension2D(x2 - x1, height);
 		getComponent().drawU(ug.apply(new UTranslate(x1, 1)), new Area(dim), context);
+	}
+
+	public Doll getParent() {
+		final ParticipantEnglober parent = getParticipantEnglober().getParent();
+		if (parent == null)
+			return null;
+		return alls.get(parent);
 	}
 
 	public void addInternalConstraints(StringBounder stringBounder) {
