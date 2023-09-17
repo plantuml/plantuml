@@ -22,20 +22,21 @@ import net.sourceforge.plantuml.tim.TFunction;
  */
 @IndicativeSentencesGeneration(separator = ": ", generator = ReplaceUnderscores.class)
 
-// Change `XXX` by the name of the tim.stdlib Class Under Test
-@Disabled
-class XXXTest {
-	TFunction cut = new XXX();
-	final String cutName = "XXX";
+class GetJsonTypeTest {
+	TFunction cut = new GetJsonType();
+	final String cutName = "GetJsonType";
 
+	@Disabled
 	@Test
 	void Test_without_Param() throws EaterException, EaterExceptionLocated {
-		assertTimExpectedOutput(cut, "0"); // Change expected value here
+		assertTimExpectedOutput(cut, "0");
 	}
 
 	@ParameterizedTest(name = "[{index}] " + cutName + "(''{0}'') = {1}")
 	@CsvSource(nullValues = "null", value = {
-			" 0, 0", // Put test values here
+			" 0, string",
+			" a, string",
+			" -1, string",
 	})
 	void Test_with_String(String input, String expected) throws EaterException, EaterExceptionLocated {
 		assertTimExpectedOutputFromInput(cut, input, expected);
@@ -43,7 +44,8 @@ class XXXTest {
 
 	@ParameterizedTest(name = "[{index}] " + cutName + "({0}) = {1}")
 	@CsvSource(nullValues = "null", value = {
-			" 0, 0", // Put test values here
+			" 0, number",
+			" -1, number",
 	})
 	void Test_with_Integer(Integer input, String expected) throws EaterException, EaterExceptionLocated {
 		assertTimExpectedOutputFromInput(cut, input, expected);
@@ -51,7 +53,19 @@ class XXXTest {
 
 	@ParameterizedTest(name = "[{index}] " + cutName + "({0}) = {1}")
 	@CsvSource(value = {
-			" 0, 0", // Put test values here
+			" 0                 , number",
+			" 123               , number",
+			" \"abc\"           , string",
+			" \"string\"        , string",
+			" '[1, 2]'          , array",
+			" '[\"a\", \"b\"]'  , array",
+			" '{\"a\":[1, 2]}'  , object",
+			" '{\"a\":\"abc\"}' , object",
+			" true              , boolean ",
+			" false             , boolean ",
+			" 1                 , number ",
+			" null              , json ",
+			" '{\"a\":[1, 2], \"b\":\"abc\", \"b\":true}' , object",
 	})
 	void Test_with_Json(@ConvertWith(StringJsonConverter.class) JsonValue input, String expected) throws EaterException, EaterExceptionLocated {
 		assertTimExpectedOutputFromInput(cut, input, expected);

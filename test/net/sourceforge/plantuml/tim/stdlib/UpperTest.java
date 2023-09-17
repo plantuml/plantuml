@@ -22,20 +22,27 @@ import net.sourceforge.plantuml.tim.TFunction;
  */
 @IndicativeSentencesGeneration(separator = ": ", generator = ReplaceUnderscores.class)
 
-// Change `XXX` by the name of the tim.stdlib Class Under Test
-@Disabled
-class XXXTest {
-	TFunction cut = new XXX();
-	final String cutName = "XXX";
+class UpperTest {
+	TFunction cut = new Upper();
+	final String cutName = "Upper";
 
+	// TODO: Manage Upper function without param. (today: we observe `Function not found %upper`)
+	@Disabled
 	@Test
 	void Test_without_Param() throws EaterException, EaterExceptionLocated {
-		assertTimExpectedOutput(cut, "0"); // Change expected value here
+		assertTimExpectedOutput(cut, "");
 	}
 
 	@ParameterizedTest(name = "[{index}] " + cutName + "(''{0}'') = {1}")
 	@CsvSource(nullValues = "null", value = {
-			" 0, 0", // Put test values here
+			" 0    , 0 ",
+			" 1    , 1 ",
+			" a    , A ",
+			" A    , A ",
+			" f    , F ",
+			" g    , G ",
+			" é    , É ",
+			" 😀  , 😀 ",
 	})
 	void Test_with_String(String input, String expected) throws EaterException, EaterExceptionLocated {
 		assertTimExpectedOutputFromInput(cut, input, expected);
@@ -43,7 +50,10 @@ class XXXTest {
 
 	@ParameterizedTest(name = "[{index}] " + cutName + "({0}) = {1}")
 	@CsvSource(nullValues = "null", value = {
-			" 0, 0", // Put test values here
+			" 0    , 0 ",
+			" 1    , 1 ",
+			" 10   , 10 ",
+			" -1    , -1 ",
 	})
 	void Test_with_Integer(Integer input, String expected) throws EaterException, EaterExceptionLocated {
 		assertTimExpectedOutputFromInput(cut, input, expected);
@@ -51,7 +61,10 @@ class XXXTest {
 
 	@ParameterizedTest(name = "[{index}] " + cutName + "({0}) = {1}")
 	@CsvSource(value = {
-			" 0, 0", // Put test values here
+			" '{\"a\":[1, 2]}' , '{\"A\":[1,2]}'",
+			" '[1, 2]'         , '[1,2]'",
+			" '{\"a\":[1, 2], \"b\":\"abc\", \"b\":true}' , '{\"A\":[1,2],\"B\":\"ABC\",\"B\":TRUE}'",
+			" true             , TRUE ",
 	})
 	void Test_with_Json(@ConvertWith(StringJsonConverter.class) JsonValue input, String expected) throws EaterException, EaterExceptionLocated {
 		assertTimExpectedOutputFromInput(cut, input, expected);

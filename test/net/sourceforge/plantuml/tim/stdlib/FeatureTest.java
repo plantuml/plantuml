@@ -22,20 +22,26 @@ import net.sourceforge.plantuml.tim.TFunction;
  */
 @IndicativeSentencesGeneration(separator = ": ", generator = ReplaceUnderscores.class)
 
-// Change `XXX` by the name of the tim.stdlib Class Under Test
-@Disabled
-class XXXTest {
-	TFunction cut = new XXX();
-	final String cutName = "XXX";
+class FeatureTest {
+	TFunction cut = new Feature();
+	final String cutName = "Feature";
 
+	@Disabled
 	@Test
 	void Test_without_Param() throws EaterException, EaterExceptionLocated {
-		assertTimExpectedOutput(cut, "0"); // Change expected value here
+		assertTimExpectedOutput(cut, "0");
 	}
 
 	@ParameterizedTest(name = "[{index}] " + cutName + "(''{0}'') = {1}")
 	@CsvSource(nullValues = "null", value = {
-			" 0, 0", // Put test values here
+			" style, 1",
+			" theme, 1",
+			" Style, 1",
+			" Theme, 1",
+			" 0    , 0",
+			" 1    , 0",
+			" abc  , 0",
+
 	})
 	void Test_with_String(String input, String expected) throws EaterException, EaterExceptionLocated {
 		assertTimExpectedOutputFromInput(cut, input, expected);
@@ -43,7 +49,8 @@ class XXXTest {
 
 	@ParameterizedTest(name = "[{index}] " + cutName + "({0}) = {1}")
 	@CsvSource(nullValues = "null", value = {
-			" 0, 0", // Put test values here
+			" 0,  0",
+			" 10, 0",
 	})
 	void Test_with_Integer(Integer input, String expected) throws EaterException, EaterExceptionLocated {
 		assertTimExpectedOutputFromInput(cut, input, expected);
@@ -51,7 +58,9 @@ class XXXTest {
 
 	@ParameterizedTest(name = "[{index}] " + cutName + "({0}) = {1}")
 	@CsvSource(value = {
-			" 0, 0", // Put test values here
+			" \"style\", 1",
+			" \"theme\", 1",
+			" 0, 0",
 	})
 	void Test_with_Json(@ConvertWith(StringJsonConverter.class) JsonValue input, String expected) throws EaterException, EaterExceptionLocated {
 		assertTimExpectedOutputFromInput(cut, input, expected);

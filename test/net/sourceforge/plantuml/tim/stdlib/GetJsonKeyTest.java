@@ -22,28 +22,32 @@ import net.sourceforge.plantuml.tim.TFunction;
  */
 @IndicativeSentencesGeneration(separator = ": ", generator = ReplaceUnderscores.class)
 
-// Change `XXX` by the name of the tim.stdlib Class Under Test
-@Disabled
-class XXXTest {
-	TFunction cut = new XXX();
-	final String cutName = "XXX";
+class GetJsonKeyTest {
+	TFunction cut = new GetJsonKey();
+	final String cutName = "GetJsonKey";
 
+	@Disabled
 	@Test
 	void Test_without_Param() throws EaterException, EaterExceptionLocated {
-		assertTimExpectedOutput(cut, "0"); // Change expected value here
+		assertTimExpectedOutput(cut, "0");
 	}
 
+	@Disabled // EaterException: Not JSON data
 	@ParameterizedTest(name = "[{index}] " + cutName + "(''{0}'') = {1}")
 	@CsvSource(nullValues = "null", value = {
-			" 0, 0", // Put test values here
+			" 0, Not JSON data",
+			" a, Not JSON data",
+			" -1, Not JSON data",
 	})
 	void Test_with_String(String input, String expected) throws EaterException, EaterExceptionLocated {
 		assertTimExpectedOutputFromInput(cut, input, expected);
 	}
 
+	@Disabled // EaterException: Not JSON data
 	@ParameterizedTest(name = "[{index}] " + cutName + "({0}) = {1}")
 	@CsvSource(nullValues = "null", value = {
-			" 0, 0", // Put test values here
+			" 0,  Not JSON data",
+			" -1, Not JSON data",
 	})
 	void Test_with_Integer(Integer input, String expected) throws EaterException, EaterExceptionLocated {
 		assertTimExpectedOutputFromInput(cut, input, expected);
@@ -51,7 +55,17 @@ class XXXTest {
 
 	@ParameterizedTest(name = "[{index}] " + cutName + "({0}) = {1}")
 	@CsvSource(value = {
-			" 0, 0", // Put test values here
+			"  []  , []",
+			" '{\"a\":[1, 2]}'  , [\"a\"]",
+			" '[{\"a\":[1, 2]}]'  , [\"a\"]",
+			" '{\"a\":\"abc\"}' , [\"a\"]",
+			" '[{\"a\":[1, 2]}, {\"b\":[3, 4]}]'  , '[\"a\",\"b\"]'",
+			" '{\"a\":[1, 2], \"b\":\"abc\", \"b\":true}' , '[\"a\",\"b\",\"b\"]'",
+			// TODO: Manage Array with different type inside
+			// Ref.:
+			// - https://datatracker.ietf.org/doc/html/rfc8259#section-5
+			// - https://json-schema.org/understanding-json-schema/reference/array.html
+			//" '[3, \"different\", { \"types\" : \"of values\" }]', [\"types\"]",
 	})
 	void Test_with_Json(@ConvertWith(StringJsonConverter.class) JsonValue input, String expected) throws EaterException, EaterExceptionLocated {
 		assertTimExpectedOutputFromInput(cut, input, expected);
