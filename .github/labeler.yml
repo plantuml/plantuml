@@ -21,9 +21,14 @@
 - 'src/**/*'
 - 'stdlib/**/*'
 - 'svg/**/*'
-- 'test/**/*'
 - 'themes/**/*'
 - 'manifest.txt'
+
+'m:test':
+- 'test/**/*'
+
+'m:license':
+- '**/*license.txt'
 
 'm:docker':
 - Dockerfile
