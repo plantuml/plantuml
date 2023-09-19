@@ -74,6 +74,10 @@ For a more detailed overview, visit [PlantUML Official Website](https://plantuml
 
 Whether you're looking to use PlantUML as a standalone application or as a component in your own project, getting started is simple. Check out the official [PlantUML setup guide](https://plantuml.com/starting) for instructions on how to set up PlantUML on your system.
 
+## Building from Source
+
+To build PlantUML from source, you'll need to have certain prerequisites installed and follow a series of steps outlined in our build guide. Find detailed instructions in our [BUILDING.md](https://github.com/plantuml/plantuml/blob/master/BUILDING.md) file.
+
 ## Contributing
 
 PlantUML is an open-source project, and we welcome contributions of all kinds. Whether you're helping us fix bugs, improve the docs, or spread the word, we appreciate your support. See our [contributing guide](CONTRIBUTING.md) for more information on how to get started.
