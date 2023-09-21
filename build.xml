@@ -1,0 +1,137 @@
+<!-- 
+    ========================================================================
+                                PlantUML Build File
+    ========================================================================
+    Product:       PlantUML - A free UML diagram generator
+    Project Info:  https://plantuml.com
+
+    Copyright Information:
+    (C) Copyright 2009-2023, Arnaud Roques
+
+    Contributors:
+    - Original Author:  Arnaud Roques
+    - Script Author: Ilya V. Paramonov
+
+    ============================== Description ==============================
+	
+    This build file offers an alternative method to build PlantUML.
+    
+    While PlantUML is typically built using Gradle, this Ant build script
+    provides a fallback option for those who prefer or only have access to 
+    Ant.
+
+    Usage:
+    To build using this file, navigate to the directory containing this
+    build.xml and run "ant" in the command line. For more detailed build 
+    instructions and requirements, refer to:
+    https://github.com/plantuml/plantuml/blob/master/BUILDING.md
+    ========================================================================
+-->
+<project name="PlantUML" default="dist" basedir=".">
+	<description>
+        PlantUML Build File
+    </description>
+
+	<!-- Compile source code and copy necessary files -->
+	<target name="compile">
+		<!-- Prepare the build directory -->
+		<delete dir="build" />
+		<mkdir dir="build" />
+		
+		<!-- Compile Java sources -->
+		<javac target="1.8" source="1.8" srcdir="src" destdir="build" debug="on" />
+		
+		<!-- Copy resources. Grouped by type and directory for better clarity -->
+        <copy todir="build/net/sourceforge/plantuml/version">
+            <fileset dir="src/net/sourceforge/plantuml/version">
+                <include name="*.png" />
+            </fileset>
+        </copy>
+		
+		<copy todir="build/net/sourceforge/plantuml/openiconic/data">
+			<fileset dir="src/net/sourceforge/plantuml/openiconic/data">
+				<include name="*.txt" />
+				<include name="*.svg" />
+			</fileset>
+		</copy>
+		<copy todir="build/net/sourceforge/plantuml/emoji/data">
+			<fileset dir="src/net/sourceforge/plantuml/emoji/data">
+				<include name="*.txt" />
+				<include name="*.svg" />
+			</fileset>
+		</copy>
+		<copy todir="build/net/sourceforge/plantuml/fun">
+			<fileset dir="src/net/sourceforge/plantuml/fun">
+				<include name="*.png" />
+			</fileset>
+		</copy>
+		<copy todir="build/sprites/archimate">
+			<fileset dir="src/sprites/archimate">
+				<include name="*.png" />
+			</fileset>
+		</copy>
+		<copy todir="build/net/sourceforge/plantuml/dedication">
+			<fileset dir="src/net/sourceforge/plantuml/dedication">
+				<include name="*.png" />
+			</fileset>
+		</copy>
+		<copy todir="build/net/sourceforge/plantuml/math">
+			<fileset dir="src/net/sourceforge/plantuml/math">
+				<include name="*.js" />
+			</fileset>
+		</copy>
+		<copy todir="build/net/sourceforge/plantuml/utils">
+			<fileset dir="src/net/sourceforge/plantuml/utils">
+				<include name="*.txt" />
+			</fileset>
+		</copy>
+		<copy todir="build/net/sourceforge/plantuml/windowsdot">
+			<fileset dir="src/net/sourceforge/plantuml/windowsdot">
+				<include name="*.dat" />
+			</fileset>
+		</copy>
+		<copy todir="build/stdlib">
+			<fileset dir="stdlib">
+				<include name="**/*.repx" />
+			</fileset>
+		</copy>
+		<copy todir="build/skin">
+			<fileset dir="skin">
+				<include name="**/*.skin" />
+			</fileset>
+		</copy>
+		<copy todir="build/themes">
+			<fileset dir="themes">
+				<include name="**/*.puml" />
+			</fileset>
+		</copy>
+		<copy todir="build/svg">
+			<fileset dir="svg">
+				<include name="**/*.js" />
+				<include name="**/*.css" />
+			</fileset>
+		</copy>
+	</target>
+
+
+    <!-- Create distribution JAR and clean up -->
+	<target name="dist" depends="compile">
+	    <!-- Prepare the distribution directory -->
+		<delete dir="dist" />
+		<mkdir dir="dist" />
+		
+		<!-- Create JAR with required attributes in the manifest -->
+		<jar jarfile="plantuml.jar" basedir="build">
+			<manifest>
+				<attribute name="Automatic-Module-Name" value="net.sourceforge.plantuml" />
+				<attribute name="Main-Class" value="net.sourceforge.plantuml.Run" />
+				<attribute name="Class-Path" value="elk-full.jar avalon-framework-4.2.0.jar batik-all-1.7.jar commons-io-1.3.1.jar commons-logging-1.0.4.jar fop.jar xml-apis-ext-1.3.04.jar xmlgraphics-commons-1.4.jar jlatexmath-minimal-1.0.3.jar jlm_cyrillic.jar jlm_greek.jar vizjs.jar j2v8_win32_x86_64-3.1.6.jar j2v8_linux_x86_64-3.1.6.jar j2v8_macosx_x86_64-3.1.6.jar ditaa0_9.jar" />
+			</manifest>
+		</jar>
+		
+		<!-- Clean up the build and distribution directories -->
+		<delete dir="build" />
+		<delete dir="dist" />
+	</target>
+
+</project>
