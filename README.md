@@ -23,7 +23,8 @@ Generate UML diagrams from textual descriptions.
 ![GitHub last commit](https://img.shields.io/github/last-commit/plantuml/plantuml?color=chocolate)
 ![CI](https://github.com/plantuml/plantuml/actions/workflows/ci.yml/badge.svg?color=chocolate)
 
-[PlantUML is **not** affected by the log4j vulnerability.](https://github.com/plantuml/plantuml/issues/826)
+> [!IMPORTANT]
+> [PlantUML is **not** affected by the log4j vulnerability.](https://github.com/plantuml/plantuml/issues/826)
 
 ## About
 
@@ -36,7 +37,7 @@ PlantUML is a component that allows you to create various UML diagrams through s
   - [Use case](http://plantuml.com/use-case-diagram)
   - [Class](http://plantuml.com/class-diagram)
   - [Object](http://plantuml.com/object-diagram)
-  - [Activity (beta)](http://plantuml.com/activity-diagram-beta)
+  - [Activity](http://plantuml.com/activity-diagram-beta)
     - [Legacy syntax](http://plantuml.com/activity-diagram-legacy)
   - [Component](http://plantuml.com/component-diagram)
   - [Deployment](http://plantuml.com/deployment-diagram)
@@ -45,18 +46,18 @@ PlantUML is a component that allows you to create various UML diagrams through s
 - Non-UML Diagrams
   - [JSON data](http://plantuml.com/json)
   - [YAML data](http://plantuml.com/yaml)
-  - [EBNF](http://plantuml.com/ebnf)
-  - [Regex](http://plantuml.com/regex)
-  - [Network (nwdiag)](http://plantuml.com/nwdiag)
-  - [UI Mockups (salt)](http://plantuml.com/salt)
+  - [EBNF (Extended Backus-Naur Form)](http://plantuml.com/ebnf)
+  - [Regex (Regular Expression)](http://plantuml.com/regex)
+  - [Nwdiag (Network)](http://plantuml.com/nwdiag)
+  - [Salt (Wireframe graphical interface or UI Mockups)](http://plantuml.com/salt)
   - [Archimate](http://plantuml.com/archimate-diagram)
-  - [SDL](http://plantuml.com/activity-diagram-beta#sdl)
+  - [SDL (Specification and Description Language)](http://plantuml.com/activity-diagram-beta#sdl)
   - [Ditaa](http://plantuml.com/ditaa)
   - [Gantt](http://plantuml.com/gantt-diagram)
   - [MindMap](http://plantuml.com/mindmap-diagram)
-  - [WBS](http://plantuml.com/wbs-diagram)
+  - [WBS (Work Breakdown Structure)](http://plantuml.com/wbs-diagram)
   - [Mathematical Notations (AsciiMath, JLaTeXMath)](http://plantuml.com/ascii-math)
-  - [IE/ER](http://plantuml.com/ie-diagram)
+  - [IE/ER (Information Engineering/Entity Relationship)](http://plantuml.com/ie-diagram)
 
 ### Additional Features
 
@@ -64,7 +65,6 @@ PlantUML is a component that allows you to create various UML diagrams through s
 - [Rich text (Creole) with emoticons, unicode, and icons](http://plantuml.com/creole)
 - [OpenIconic icons](http://plantuml.com/openiconic)
 - [Sprite icons](http://plantuml.com/sprite)
-- [AsciiMath mathematical expressions](http://plantuml.com/ascii-math)
 
 ### Learn More
 
