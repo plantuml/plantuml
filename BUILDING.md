@@ -4,9 +4,9 @@ Thank you for your interest in contributing to PlantUML! This guide will help yo
 
 PlantUML can be built using either [Gradle](#building-plantuml-with-gradle) or [Ant](#building-plantuml-with-ant-alternative-method). It's recommended to use Gradle as the primary build tool for this project. You will find instructions for both methods, starting with Gradle.
 
-# Building PlantUML with Gradle
+## Building PlantUML with Gradle
 
-## Prerequisites
+### Prerequisites
 
 Ensure that you have the following installed on your system:
 
@@ -14,7 +14,7 @@ Ensure that you have the following installed on your system:
 - [Gradle](https://gradle.org/install/) - version 7.0 or newer
 - [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) - to clone the repository and manage the version control
 
-## Getting the Source Code
+### Getting the Source Code
 
 Clone the PlantUML repository to your local system. You can clone the repository by running the following command in your terminal or command prompt:
 
@@ -28,7 +28,7 @@ Navigate to the project root directory:
 cd plantuml
 ```
 
-## Building the Project
+### Building the Project
 
 To build the project, run the following command from the project root directory:
 
@@ -38,7 +38,7 @@ gradle build
 
 This command will build the project and create the necessary output files in the `build` directory.
 
-## Running Tests
+### Running Tests
 
 To run the tests included with the project, use the following command:
 
@@ -46,7 +46,7 @@ To run the tests included with the project, use the following command:
 gradle test
 ```
 
-## Creating a JAR File
+### Creating a JAR File
 
 To create a JAR file of the PlantUML project, run the following command:
 
@@ -56,17 +56,17 @@ gradle jar
 
 The JAR file will be created in the `build/libs` directory.
 
-## Contributing
+### Contributing
 
 After successfully building the project, you are ready to start contributing to PlantUML! If you have any changes to contribute, please submit a pull request through the [PlantUML GitHub repository](https://github.com/plantuml/plantuml).
 
-## Additional Resources
+### Additional Resources
 
 - [PlantUML Official Website](https://plantuml.com/)
 - [Gradle User Guide](https://docs.gradle.org/current/userguide/userguide.html)
 - [Java Development Kit (JDK) Documentation](https://docs.oracle.com/javase/11/)
 
-## Getting Help
+### Getting Help
 
 If you encounter any issues while building the project, feel free to ask for help on the [PlantUML Community Forum](https://forum.plantuml.net/) or open an issue on the [GitHub repository](https://github.com/plantuml/plantuml/issues).
 
