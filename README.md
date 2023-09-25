@@ -2,26 +2,26 @@
 
 Generate UML diagrams from textual descriptions.
 
-![Discord server](https://img.shields.io/discord/1083727021328306236?color=5865F2&logo=discord&logoColor=white)
-![GitHub Sponsors](https://img.shields.io/github/sponsors/plantuml?logo=github)
-![GitHub Org's stars](https://img.shields.io/github/stars/plantuml)
-![GitHub watchers](https://img.shields.io/github/watchers/plantuml/plantuml)
-![GitHub contributors](https://img.shields.io/github/contributors-anon/plantuml/plantuml?color=blue)
-![GitHub forks](https://img.shields.io/github/forks/plantuml/plantuml)
-![GitHub all releases](https://img.shields.io/sourceforge/dt/plantuml?color=blue)
+[![Discord server](https://img.shields.io/discord/1083727021328306236?color=5865F2&logo=discord&logoColor=white)](https://discord.gg/sXhzexAQGh)
+[![GitHub Sponsors](https://img.shields.io/github/sponsors/plantuml?logo=github)](https://github.com/sponsors/plantuml/)
+[![GitHub Org's stars](https://img.shields.io/github/stars/plantuml)](https://github.com/plantuml/plantuml/stargazers/)
+[![GitHub watchers](https://img.shields.io/github/watchers/plantuml/plantuml)](https://github.com/plantuml/plantuml/watchers/)
+[![GitHub contributors](https://img.shields.io/github/contributors-anon/plantuml/plantuml?color=blue)](https://github.com/plantuml/plantuml/graphs/contributors)
+[![GitHub forks](https://img.shields.io/github/forks/plantuml/plantuml)](https://github.com/plantuml/plantuml/network/)
+[![GitHub all releases](https://img.shields.io/sourceforge/dt/plantuml?color=blue)](https://github.com/plantuml/plantuml/releases)
 
-![online](https://img.shields.io/endpoint?url=https://www.plantuml.com/plantuml/badge)
-![rate](https://img.shields.io/endpoint?url=https://www.plantuml.com/plantuml/rate)
-![peak](https://img.shields.io/endpoint?url=https://www.plantuml.com/plantuml/rate?peak)
+[![online](https://img.shields.io/endpoint?url=https://www.plantuml.com/plantuml/badge)](https://www.plantuml.com/plantuml)
+[![rate](https://img.shields.io/endpoint?url=https://www.plantuml.com/plantuml/rate)](https://www.plantuml.com/plantuml)
+[![peak](https://img.shields.io/endpoint?url=https://www.plantuml.com/plantuml/rate?peak)](https://www.plantuml.com/plantuml)
 
-![Release (latest by date)](https://img.shields.io/github/v/release/plantuml/plantuml)
-![Release Date](https://img.shields.io/github/release-date/plantuml/plantuml?color=blue)
-![GitHub commits since latest release (by date)](https://img.shields.io/github/commits-since/plantuml/plantuml/latest)
+[![Release (latest by date)](https://img.shields.io/github/v/release/plantuml/plantuml)](https://github.com/plantuml/plantuml/releases/latest)
+[![Release Date](https://img.shields.io/github/release-date/plantuml/plantuml?color=blue)](https://github.com/plantuml/plantuml/releases/latest)
+[![GitHub commits since latest release (by date)](https://img.shields.io/github/commits-since/plantuml/plantuml/latest)](https://github.com/plantuml/plantuml/commits/)
 
-![Pre-release (latest by date)](https://img.shields.io/github/v/release/plantuml/plantuml?color=chocolate&include_prereleases)
-![Pre-release Date](https://img.shields.io/github/release-date-pre/plantuml/plantuml?color=chocolate)
-![GitHub last commit](https://img.shields.io/github/last-commit/plantuml/plantuml?color=chocolate)
-![CI](https://github.com/plantuml/plantuml/actions/workflows/ci.yml/badge.svg?color=chocolate)
+[![Pre-release (latest by date)](https://img.shields.io/github/v/release/plantuml/plantuml?color=chocolate&include_prereleases)](https://github.com/plantuml/plantuml/releases/tag/snapshot)
+[![Pre-release Date](https://img.shields.io/github/release-date-pre/plantuml/plantuml?color=chocolate)](https://github.com/plantuml/plantuml/releases/tag/snapshot)
+[![GitHub last commit](https://img.shields.io/github/last-commit/plantuml/plantuml?color=chocolate)](https://github.com/plantuml/plantuml/commits/)
+[![CI](https://github.com/plantuml/plantuml/actions/workflows/ci.yml/badge.svg?color=chocolate)](https://github.com/plantuml/plantuml/actions/workflows/ci.yml)
 
 > [!IMPORTANT]
 > [PlantUML is **not** affected by the log4j vulnerability.](https://github.com/plantuml/plantuml/issues/826)
