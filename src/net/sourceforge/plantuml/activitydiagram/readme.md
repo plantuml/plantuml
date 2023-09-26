@@ -3,7 +3,7 @@
 ## Description
 This package provides classes used to manage [Activity Diagram (legacy)](https://plantuml.com/activity-diagram-legacy)
 
-For new syntax see [`activitydiagram3`](./activitydiagram3)
+For new syntax see [`activitydiagram3`](../activitydiagram3)
 and [Activity Diagram (New Syntax)](https://plantuml.com/activity-diagram-beta)
 
 ## Link
