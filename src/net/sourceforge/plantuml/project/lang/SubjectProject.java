@@ -75,7 +75,7 @@ public class SubjectProject implements Subject {
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 			final Day start = (Day) complement;
 			assert project == subject;
-			project.setStartingDate(start);
+			project.setProjectStartingDate(start);
 			return CommandExecutionResult.ok();
 		}
 
