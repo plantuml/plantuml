@@ -13,6 +13,7 @@ plugins {
 	java
 	`maven-publish`
 	signing
+//	id("com.adarshr.test-logger") version "3.2.0"
 }
 
 group = "net.sourceforge.plantuml"
@@ -28,9 +29,14 @@ java {
 
 dependencies {
 	compileOnly("org.apache.ant:ant:1.10.13")
+
+	testImplementation("io.github.glytching:junit-extensions:2.6.0")
 	testImplementation("org.assertj:assertj-core:3.24.2")
 	testImplementation("org.junit.jupiter:junit-jupiter:5.9.2")
+	testImplementation("org.mockito:mockito-core:4.+")
+	testImplementation("org.mockito:mockito-junit-jupiter:4.+")
 	testImplementation("org.scilab.forge:jlatexmath:1.0.7")
+
 	"pdfRuntimeOnly"("org.apache.xmlgraphics:fop:2.8")
 	"pdfRuntimeOnly"("org.apache.xmlgraphics:batik-all:1.16")
 }
