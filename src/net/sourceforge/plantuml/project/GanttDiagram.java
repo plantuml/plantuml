@@ -662,7 +662,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		return colorSet;
 	}
 
-	public void setStartingDate(Day start) {
+	public void setProjectStartingDate(Day start) {
 		openClose.setStartingDay(start);
 		this.min = start;
 	}

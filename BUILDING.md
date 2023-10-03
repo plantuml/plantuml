@@ -107,3 +107,15 @@ ant
 ```
 
 If you have Ant set up correctly and the prerequisites are met, the build process should start, and the project will be built based on the instructions in the `build.xml`.
+
+
+## About the `graphviz.dat` file
+
+Within certain PlantUML releases, we've incorporated an embedded, compiled version of GraphViz specifically tailored for Windows. This initiative was taken to streamline the user experience for our Windows users, eliminating the need for them to undertake separate installations or configurations.
+
+This version of GraphViz is a product of the [graphviz-distributions project](https://github.com/plantuml/graphviz-distributions). For efficient distribution, it is compressed using Brotli and subsequently stored within the [graphviz.dat file](https://github.com/plantuml/plantuml/tree/master/src/net/sourceforge/plantuml/windowsdot).
+
+If you're not on a Windows platform (e.g., Linux users), you can safely remove this file. However, for Windows users, removing it implies you'd need to install GraphViz independently.
+
+To streamline our distribution process and given the existing six PlantUML versions resulting from varied licensing, we chose not to double this count to 12 with a dichotomy of versions containing the embedded GraphViz and those without. Instead, all our distributions, barring the LGPL one, come with the embedded GraphViz. For those who prefer a version without the embedded GraphViz, the LGPL distribution would be the go-to choice.
+

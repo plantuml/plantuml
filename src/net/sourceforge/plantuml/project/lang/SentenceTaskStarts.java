@@ -56,10 +56,10 @@ public class SentenceTaskStarts extends SentenceSimple {
 		HColor color = null;
 		when = (TaskInstant) complement;
 		task.setStart(when.getInstantPrecise());
-		if (when.isTask()) {
+		if (when.isTask())
 			project.addContraint(new GanttConstraint(project.getIHtmlColorSet(), project.getCurrentStyleBuilder(), when,
 					new TaskInstant(task, TaskAttribute.START), color));
-		}
+
 		return CommandExecutionResult.ok();
 
 	};
