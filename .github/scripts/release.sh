@@ -29,6 +29,9 @@ cp "plantuml-lgpl/build/libs/plantuml-lgpl-${RELEASE_VERSION}-sources.jar" "gith
 cp "plantuml-mit/build/libs/plantuml-mit-${RELEASE_VERSION}.jar" "github_release/plantuml-mit-${RELEASE_VERSION}.jar"
 cp "plantuml-mit/build/libs/plantuml-mit-${RELEASE_VERSION}-javadoc.jar" "github_release/plantuml-mit-${RELEASE_VERSION}-javadoc.jar"
 cp "plantuml-mit/build/libs/plantuml-mit-${RELEASE_VERSION}-sources.jar" "github_release/plantuml-mit-${RELEASE_VERSION}-sources.jar"
+cp "plantuml-gplv2/build/libs/plantuml-gplv2-${RELEASE_VERSION}.jar" "github_release/plantuml-gplv2-${RELEASE_VERSION}.jar"
+cp "plantuml-gplv2/build/libs/plantuml-gplv2-${RELEASE_VERSION}-javadoc.jar" "github_release/plantuml-gplv2-${RELEASE_VERSION}-javadoc.jar"
+cp "plantuml-gplv2/build/libs/plantuml-gplv2-${RELEASE_VERSION}-sources.jar" "github_release/plantuml-gplv2-${RELEASE_VERSION}-sources.jar"
 
 if [[ -e "build/publications/maven/module.json.asc" ]]; then
   # signatures are optional so that forked repos can release snapshots without needing a gpg signing key
@@ -52,6 +55,9 @@ if [[ -e "build/publications/maven/module.json.asc" ]]; then
   cp "plantuml-mit/build/libs/plantuml-mit-${RELEASE_VERSION}.jar.asc" "github_release/plantuml-mit-${RELEASE_VERSION}.jar.asc"
   cp "plantuml-mit/build/libs/plantuml-mit-${RELEASE_VERSION}-javadoc.jar.asc" "github_release/plantuml-mit-${RELEASE_VERSION}-javadoc.jar.asc"
   cp "plantuml-mit/build/libs/plantuml-mit-${RELEASE_VERSION}-sources.jar.asc" "github_release/plantuml-mit-${RELEASE_VERSION}-sources.jar.asc"
+  cp "plantuml-gplv2/build/libs/plantuml-gplv2-${RELEASE_VERSION}.jar.asc" "github_release/plantuml-gplv2-${RELEASE_VERSION}.jar.asc"
+  cp "plantuml-gplv2/build/libs/plantuml-gplv2-${RELEASE_VERSION}-javadoc.jar.asc" "github_release/plantuml-gplv2-${RELEASE_VERSION}-javadoc.jar.asc"
+  cp "plantuml-gplv2/build/libs/plantuml-gplv2-${RELEASE_VERSION}-sources.jar.asc" "github_release/plantuml-gplv2-${RELEASE_VERSION}-sources.jar.asc"
 fi
 
 gh release create \
