@@ -14,4 +14,6 @@ include("plantuml-bsd")
 include("plantuml-epl")
 include("plantuml-lgpl")
 include("plantuml-mit")
+include("plantuml-gplv2")
+
 
