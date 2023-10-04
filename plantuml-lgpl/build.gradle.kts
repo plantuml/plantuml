@@ -41,7 +41,7 @@ sourceSets {
 			srcDirs("build/generated/sjpp")
 		}
 		resources {
-			srcDirs("build/generated/sjpp")
+			srcDirs("build/sources/sjpp/java")
 			include("**/*.png")
 			include("**/*.svg")
 			include("**/*.txt")
