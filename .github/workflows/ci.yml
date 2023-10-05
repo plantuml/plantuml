@@ -312,7 +312,7 @@ jobs:
         uses: docker/setup-buildx-action@v3
       - name: Docker meta
         id: meta
-        uses: docker/metadata-action@v4
+        uses: docker/metadata-action@v5
         with:
           # list of Docker images to use as base name for tags
           images: |
