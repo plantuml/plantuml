@@ -110,13 +110,6 @@ val preprocessLicenceAntTask by tasks.registering() {
 				"header" to project.layout.buildDirectory.file("../epl-license.txt").get().asFile.absolutePath
 			)
 		}
-		project.copy {
-			includeEmptyDirs = false
-			from(project.layout.buildDirectory.dir("sources/sjpp/java")) {
-				include("**/graphviz.dat")
-			}
-			into(project.layout.buildDirectory.dir("copiedResources"))
-		}
 	}
 }
 

@@ -42,6 +42,7 @@ sourceSets {
 		}
 		resources {
 			srcDirs("build/sources/sjpp/java")
+			include("**/graphviz.dat")
 			include("**/*.png")
 			include("**/*.svg")
 			include("**/*.txt")
