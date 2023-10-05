@@ -153,6 +153,10 @@ tasks.withType<Javadoc>().configureEach {
 }
 
 tasks.test {
+	doFirst {
+		println("Java Home:" + System.getProperty("java.home"));
+		println("Java Version: " + System.getProperty("java.version"));
+	}
 	useJUnitPlatform()
 	testLogging.showStandardStreams = true
 }
