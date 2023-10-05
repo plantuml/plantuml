@@ -24,7 +24,7 @@ java {
 }
 
 dependencies {
-	compileOnly("org.apache.ant:ant:1.10.13")
+	compileOnly("org.apache.ant:ant:1.10.14")
 	testImplementation("org.assertj:assertj-core:3.24.2")
 	testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
 	testImplementation("org.scilab.forge:jlatexmath:1.0.7")
