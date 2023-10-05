@@ -4,6 +4,25 @@ Thank you for your interest in contributing to PlantUML! This guide will help yo
 
 PlantUML can be built using either [Gradle](#building-plantuml-with-gradle) or [Ant](#building-plantuml-with-ant-alternative-method). It's recommended to use Gradle as the primary build tool for this project. You will find instructions for both methods, starting with Gradle.
 
+## Java Compatibility and Development Notes
+
+🌱 **PlantUML & Java 8 Compatibility**
+
+We understand the ubiquity and prevalence of Java 8 in numerous environments and infrastructures. Thus, **PlantUML remains steadfastly compatible with Java 8**. Despite the version’s age and the availability of newer releases, we recognize that a substantial number of users and enterprises still depend on Java 8. Therefore, you can confidently run PlantUML in environments where Java 8 is installed, ensuring accessibility and functionality for a wide array of users.
+
+🔍 **Unitary Tests & Advanced Java Versions**
+
+While PlantUML maintains its compatibility with Java 8, our development and testing environments leverage the capabilities of more recent Java versions. All unitary tests are conducted using a newer Java version, not only to utilize advanced features and optimizations but also to ensure the robustness of PlantUML in more updated systems. 
+
+This means:
+- **For Users**: PlantUML can be compiled and used seamlessly with Java 8, providing a stable experience without necessitating an upgrade in your Java environment.
+  
+- **For Contributors/Developers**: If you wish to run unitary tests, a more recent version of Java will be required. This ensures that tests run efficiently and utilize the latest features/optimizations, but it in no way impedes the usage of PlantUML with older Java versions.
+
+🔄 **Your Contribution Matters**
+
+Whether you're using an old or a new version of Java, your feedback, contributions, and insights are valuable in enhancing PlantUML. We strive to maintain a balance between adopting new technology and ensuring accessibility for all users, and your experiences aid us in striking this balance effectively.
+
 ## Building PlantUML with Gradle
 
 ### Prerequisites
