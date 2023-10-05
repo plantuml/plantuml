@@ -32,7 +32,7 @@ dependencies {
 
 	testImplementation("io.github.glytching:junit-extensions:2.6.0")
 	testImplementation("org.assertj:assertj-core:3.24.2")
-	testImplementation("org.junit.jupiter:junit-jupiter:5.9.2")
+	testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
 	testImplementation("org.mockito:mockito-core:4.+")
 	testImplementation("org.mockito:mockito-junit-jupiter:4.+")
 	testImplementation("org.scilab.forge:jlatexmath:1.0.7")
