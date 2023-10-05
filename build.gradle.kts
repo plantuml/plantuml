@@ -34,7 +34,7 @@ dependencies {
 	testImplementation("org.assertj:assertj-core:3.24.2")
 	testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
 	if (JavaVersion.current().isJava8) {
-		testImplementation("org.mockito:mockito-core:4.+")
+		testImplementation("org.mockito:mockito-core:5.+")
 		testImplementation("org.mockito:mockito-junit-jupiter:4.+")
 	} else {
 		testImplementation("org.mockito:mockito-core:5.+")
