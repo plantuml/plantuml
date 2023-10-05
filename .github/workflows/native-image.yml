@@ -22,9 +22,6 @@ jobs:
             platform: 'win-amd64'
     runs-on: ${{matrix.os}}
     steps:
-      - name: Checkout the repository
-        uses: actions/checkout@v3
-
       - uses: graalvm/setup-graalvm@v1
         with:
           version: '22.3.1'
@@ -50,11 +47,14 @@ jobs:
       - name: Generate GraalVM configuration
         run: |
           mkdir native-image-config-dir
-          echo 'Bob->Alice: Hello' | java -agentlib:native-image-agent=config-output-dir=native-image-config-dir -jar "./build/libs/plantuml-${{ inputs.release-version }}.jar" -tpng -pipe > out.png
+          echo 'Bob->Alice: Hello' | java -agentlib:native-image-agent=config-output-dir=native-image-config-dir -jar "./build/libs/plantuml-pdf-${{ inputs.release-version }}.jar" -tpng -pipe > out.png
+          echo 'Bob->Alice: Hello' | java -agentlib:native-image-agent=config-output-dir=native-image-config-dir -jar "./build/libs/plantuml-pdf-${{ inputs.release-version }}.jar" -tpdf -pipe > out.pdf
+          echo 'error' | java -agentlib:native-image-agent=config-output-dir=native-image-config-dir -jar "./build/libs/plantuml-pdf-${{ inputs.release-version }}.jar" -tsvg -pipe > out.svg || true
 
       - name: Generate native image
         run: |
-          native-image -H:ConfigurationFileDirectories=native-image-config-dir --no-fallback --report-unsupported-elements-at-runtime -jar "build/libs/plantuml-${{ inputs.release-version }}.jar" -H:Path="build/libs" -H:Name="plantuml-${{ matrix.platform }}-${{ inputs.release-version }}"
+          echo '{"resources":{"includes":[{"pattern": ".*\\.js$"}, {"pattern": ".*\\.css$"}, {"pattern": ".*\\.repx$"}, {"pattern": ".*\\.puml$"}, {"pattern": ".*\\.skin$"}, {"pattern": ".*\\.txt$"}, {"pattern": ".*\\.png$"}]}}' > resource-config.json
+          native-image -H:ResourceConfigurationFiles=resource-config.json -H:ConfigurationFileDirectories=native-image-config-dir --no-fallback --report-unsupported-elements-at-runtime -jar "build/libs/plantuml-pdf-${{ inputs.release-version }}.jar" -H:Path="build/libs" -H:Name="plantuml-${{ matrix.platform }}-${{ inputs.release-version }}"
 
       - name: Cache native image
         uses: actions/cache/save@v3
