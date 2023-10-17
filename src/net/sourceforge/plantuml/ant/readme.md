@@ -5,5 +5,7 @@ This package provides classes used to manage [PlantUML Ant task](https://plantum
 
 ## Link
 - [PlantUML Ant task](https://plantuml.com/ant-task)
-- [Ant](https://ant.apache.org)
-- [Ant _(on Wikipedia)_](https://en.wikipedia.org/wiki/Apache_Ant)
+
+## Reference
+- [Apache Ant](https://ant.apache.org)
+- [Apache Ant _(on Wikipedia)_](https://en.wikipedia.org/wiki/Apache_Ant)
