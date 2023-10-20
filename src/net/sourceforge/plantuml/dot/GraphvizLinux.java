@@ -48,10 +48,10 @@ class GraphvizLinux extends AbstractGraphviz {
 
 	@Override
 	protected File specificDotExe() {
-		final File all[] = new File[] { new File("/usr/local/bin/dot"), new File("/usr/bin/dot"),
-				new File("/opt/homebrew/bin/dot") };
+		final File all[] = new File[] { new File("/usr/local/bin/dot"), new File("/opt/homebrew/bin/dot"),
+				new File("/opt/homebrew/opt/graphviz/bin/dot"), new File("/usr/bin/dot") };
 		for (File f : all)
-			if (f.exists())
+			if (f.exists() && f.canRead() && f.canExecute())
 				return f;
 		return new File("/opt/local/bin/dot");
 	}
