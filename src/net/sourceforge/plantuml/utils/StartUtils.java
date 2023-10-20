@@ -55,14 +55,14 @@ public class StartUtils {
 		boolean inside = false;
 		for (int i = 0; i < s.length(); i++) {
 			final String tmp = s.substring(i, s.length());
-			if (startsWithSymbolAnd("start", tmp)) {
+			if (startsWithSymbolAnd("start", tmp))
 				return s.substring(0, i);
-			}
+
 			final String single = s.substring(i, i + 1);
 			if (inside) {
-				if (single.equals(">")) {
+				if (single.equals(">"))
 					inside = false;
-				}
+
 				continue;
 			}
 			if (single.equals("<")) {
@@ -81,9 +81,9 @@ public class StartUtils {
 
 	public static boolean isArobaseStartDiagram(String s) {
 		final String s2 = StringUtils.trinNoTrace(s);
-		if (s2.startsWith("@") == false && s2.startsWith("\\") == false) {
+		if (s2.startsWith("@") == false && s2.startsWith("\\") == false)
 			return false;
-		}
+
 		return DiagramType.getTypeFromArobaseStart(s2) != DiagramType.UNKNOWN;
 	}
 
@@ -97,9 +97,9 @@ public class StartUtils {
 
 	public static boolean startOrEnd(final StringLocated s) {
 		final String s2 = StringUtils.trinNoTrace(s.getString());
-		if (s2.startsWith("@") == false && s2.startsWith("\\") == false) {
+		if (s2.startsWith("@") == false && s2.startsWith("\\") == false)
 			return false;
-		}
+
 		return startsWithSymbolAnd("end", s2) || DiagramType.getTypeFromArobaseStart(s2) != DiagramType.UNKNOWN;
 	}
 
