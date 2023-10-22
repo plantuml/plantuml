@@ -4,4 +4,6 @@ This document catalogs code that was previously part of PlantUML but has since b
 It serves as a historical reference to ensure we remember and understand past decisions.
 
 - [logo language](https://github.com/plantuml/plantuml/tree/v1.2023.12/src/net/sourceforge/plantuml/logo)
+- [basic language](https://github.com/plantuml/plantuml/tree/v1.2023.12/src/net/sourceforge/plantuml/jasic)
 - [mjpeg export](https://github.com/plantuml/plantuml/tree/v1.2023.12/src/net/sourceforge/plantuml/mjpeg)
+- [animation](https://github.com/plantuml/plantuml/tree/v1.2023.12/src/net/sourceforge/plantuml/anim)

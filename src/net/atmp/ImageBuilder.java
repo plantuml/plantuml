@@ -37,8 +37,6 @@ package net.atmp;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -46,22 +44,16 @@ import java.io.OutputStream;
 import java.util.Random;
 import java.util.Set;
 
-import javax.swing.ImageIcon;
-
 import com.plantuml.api.cheerpj.WasmLog;
 
-import net.sourceforge.plantuml.AnimatedGifEncoder;
 import net.sourceforge.plantuml.AnnotatedBuilder;
 import net.sourceforge.plantuml.AnnotatedWorker;
 import net.sourceforge.plantuml.EmptyImageBuilder;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.FileUtils;
 import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.Scale;
 import net.sourceforge.plantuml.TitledDiagram;
-import net.sourceforge.plantuml.anim.AffineTransformation;
-import net.sourceforge.plantuml.anim.Animation;
 import net.sourceforge.plantuml.api.ImageDataComplex;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.braille.UGraphicBraille;
@@ -87,14 +79,10 @@ import net.sourceforge.plantuml.klimt.drawing.tikz.UGraphicTikz;
 import net.sourceforge.plantuml.klimt.drawing.txt.UGraphicTxt;
 import net.sourceforge.plantuml.klimt.drawing.visio.UGraphicVdx;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
-import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
-import net.sourceforge.plantuml.mjpeg.MJPEGGenerator;
-import net.sourceforge.plantuml.security.SFile;
-import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.skin.ColorParam;
 import net.sourceforge.plantuml.skin.CornerParam;
 import net.sourceforge.plantuml.skin.LineParam;
@@ -113,9 +101,6 @@ import net.sourceforge.plantuml.url.Url;
 
 public class ImageBuilder {
 
-	// ::comment when __CORE__
-	private Animation animation;
-	// ::done
 	private boolean annotations;
 	private HColor backcolor = getDefaultHBackColor();
 
@@ -223,9 +208,6 @@ public class ImageBuilder {
 	public ImageBuilder styled(TitledDiagram diagram) {
 		skinParam = diagram.getSkinParam();
 		stringBounder = fileFormatOption.getDefaultStringBounder(skinParam);
-		// ::comment when __CORE__
-		animation = diagram.getAnimation();
-		// ::done
 		annotations = true;
 		backcolor = diagram.calculateBackColor();
 		margin = calculateMargin(diagram);
@@ -246,21 +228,7 @@ public class ImageBuilder {
 			udrawable = annotatedWorker.addAdd((TextBlock) udrawable);
 		}
 
-		// ::comment when __CORE__
-		switch (fileFormatOption.getFileFormat()) {
-		case MJPEG:
-			return writeImageMjpeg(os);
-		case ANIMATED_GIF:
-			return writeImageAnimatedGif(os);
-		default:
-			return writeImageInternal(os, animation);
-		// ::done
-		// ::uncomment when __CORE__
-		// return writeImageInternal(os);
-		// ::done
-		// ::comment when __CORE__
-		}
-		// ::done
+		return writeImageInternal(os);
 	}
 
 	public byte[] writeByteArray() throws IOException {
@@ -270,34 +238,19 @@ public class ImageBuilder {
 		}
 	}
 
-	// ::revert when __CORE__
-	private ImageData writeImageInternal(OutputStream os, Animation animationArg) throws IOException {
-		// private ImageData writeImageInternal(OutputStream os) throws IOException {
-		// ::done
+	private ImageData writeImageInternal(OutputStream os) throws IOException {
 		XDimension2D dim = getFinalDimension();
 		double dx = 0;
 		double dy = 0;
-		// ::comment when __CORE__
-		if (animationArg != null) {
-			final MinMax minmax = animationArg.getMinMax(dim);
-			animationArg.setDimension(dim);
-			dim = minmax.getDimension();
-			dx = -minmax.getMinX();
-			dy = -minmax.getMinY();
-		}
-		// ::done
+
 		final Scale scale = titledDiagram == null ? null : titledDiagram.getScale();
 		final double scaleFactor = (scale == null ? 1 : scale.getScale(dim.getWidth(), dim.getHeight())) * getDpi()
 				/ 96.0;
 		if (scaleFactor <= 0)
 			throw new IllegalStateException("Bad scaleFactor");
 		WasmLog.log("...image drawing...");
-		// ::revert when __CORE__
-		UGraphic ug = createUGraphic(dim, animationArg, dx, dy, scaleFactor,
+		UGraphic ug = createUGraphic(dim, dx, dy, scaleFactor,
 				titledDiagram == null ? new Pragma() : titledDiagram.getPragma());
-		// UGraphic ug = createUGraphic(dim, dx, dy, scaleFactor,
-		// titledDiagram == null ? new Pragma() : titledDiagram.getPragma());
-		// ::done
 		maybeDrawBorder(ug, dim);
 		if (randomPixel)
 			drawRandomPoint(ug);
@@ -330,9 +283,9 @@ public class ImageBuilder {
 		if (stroke == null)
 			return;
 
-		final URectangle rectangle = URectangle.build(dim.getWidth() - stroke.getThickness(),
-				dim.getHeight() - stroke.getThickness())
-						.rounded(skinParam.getRoundCorner(CornerParam.diagramBorder, null));
+		final URectangle rectangle = URectangle
+				.build(dim.getWidth() - stroke.getThickness(), dim.getHeight() - stroke.getThickness())
+				.rounded(skinParam.getRoundCorner(CornerParam.diagramBorder, null));
 
 		ug.apply(color == null ? HColors.BLACK : color).apply(stroke).draw(rectangle);
 	}
@@ -364,83 +317,13 @@ public class ImageBuilder {
 		return ug;
 	}
 
-	// ::comment when __CORE__
-	private ImageData writeImageMjpeg(OutputStream os) throws IOException {
-
-		final XDimension2D dim = getFinalDimension();
-
-		final SFile f = new SFile("c:/tmp.avi");
-
-		final int nbframe = 100;
-
-		final MJPEGGenerator m = new MJPEGGenerator(f, getAviImage(null).getWidth(null),
-				getAviImage(null).getHeight(null), 12.0, nbframe);
-		for (int i = 0; i < nbframe; i++) {
-			// AffineTransform at = AffineTransform.getRotateInstance(1.0);
-			AffineTransform at = AffineTransform.getTranslateInstance(dim.getWidth() / 2, dim.getHeight() / 2);
-			at.rotate(90.0 * Math.PI / 180.0 * i / 100);
-			at.translate(-dim.getWidth() / 2, -dim.getHeight() / 2);
-			// final AffineTransform at = AffineTransform.getTranslateInstance(i, 0);
-			// final ImageIcon ii = new ImageIcon(getAviImage(at));
-			// m.addImage(ii.getImage());
-			throw new UnsupportedOperationException();
-		}
-		m.finishAVI();
-
-		FileUtils.copyToStream(f, os);
-
-		return createImageData(dim);
-	}
-
-	private ImageData writeImageAnimatedGif(OutputStream os) throws IOException {
-
-		final XDimension2D dim = getFinalDimension();
-
-		final MinMax minmax = animation.getMinMax(dim);
-
-		final AnimatedGifEncoder e = new AnimatedGifEncoder();
-		// e.setQuality(1);
-		e.setRepeat(0);
-		e.start(os);
-		// e.setDelay(1000); // 1 frame per sec
-		// e.setDelay(100); // 10 frame per sec
-		e.setDelay(60); // 16 frame per sec
-		// e.setDelay(50); // 20 frame per sec
-
-		for (AffineTransformation at : animation.getAll()) {
-			final ImageIcon ii = new ImageIcon(getAviImage(at));
-			e.addFrame((BufferedImage) ii.getImage());
-		}
-		e.finish();
-		return createImageData(dim);
-	}
-
-	private Image getAviImage(AffineTransformation affineTransform) throws IOException {
-		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		writeImageInternal(baos, Animation.singleton(affineTransform));
-		baos.close();
-		return SImageIO.read(baos.toByteArray());
-	}
-	// ::done
-
-	// ::revert when __CORE__
-	private UGraphic createUGraphic(final XDimension2D dim, Animation animationArg, double dx, double dy,
-			double scaleFactor, Pragma pragma) {
-		// private UGraphic createUGraphic(final XDimension2D dim, double dx, double dy,
-		// double scaleFactor, Pragma pragma) {
-		// ::done
+	private UGraphic createUGraphic(final XDimension2D dim, double dx, double dy, double scaleFactor, Pragma pragma) {
 		final ColorMapper colorMapper = fileFormatOption.getColorMapper();
 		switch (fileFormatOption.getFileFormat()) {
 		case PNG:
 		case RAW:
-			// ::comment when __CORE__
-			return createUGraphicPNG(scaleFactor, dim, animationArg, dx, dy, fileFormatOption.getWatermark(),
+			return createUGraphicPNG(scaleFactor, dim, dx, dy, fileFormatOption.getWatermark(),
 					fileFormatOption.getFileFormat());
-		// ::done
-		// ::uncomment when __CORE__
-		// return createUGraphicPNG(scaleFactor, dim, dx, dy,
-		// fileFormatOption.getWatermark(), fileFormatOption.getFileFormat());
-		// ::done
 		case SVG:
 			return createUGraphicSVG(scaleFactor, dim, pragma);
 		// ::comment when __CORE__
@@ -492,13 +375,8 @@ public class ImageBuilder {
 
 	}
 
-	// ::uncomment when __CORE__
-	// private UGraphic createUGraphicPNG(double scaleFactor, final XDimension2D
-	// dim, double dx, double dy, String watermark, FileFormat format) {
-	// ::done
-	// ::comment when __CORE__
-	private UGraphic createUGraphicPNG(double scaleFactor, final XDimension2D dim, Animation affineTransforms,
-			double dx, double dy, String watermark, FileFormat format) {
+	private UGraphic createUGraphicPNG(double scaleFactor, final XDimension2D dim, double dx, double dy,
+			String watermark, FileFormat format) {
 		// ::done
 		Color pngBackColor = new Color(0, 0, 0, 0);
 
@@ -513,15 +391,9 @@ public class ImageBuilder {
 				(int) (dim.getHeight() * scaleFactor), pngBackColor, stringBounder);
 		final Graphics2D graphics2D = builder.getGraphics2D();
 
-		// ::comment when __CORE__
 		final UGraphicG2d ug = new UGraphicG2d(backcolor, fileFormatOption.getColorMapper(), stringBounder, graphics2D,
-				scaleFactor, dx, dy, format, affineTransforms == null ? null : affineTransforms.getFirst());
-		// ::done
-		// ::uncomment when __CORE__
-		// final UGraphicG2d ug = new UGraphicG2d(backcolor,
-		// fileFormatOption.getColorMapper(), stringBounder, graphics2D,
-		// scaleFactor, dx, dy, format);
-		// ::done
+				scaleFactor, dx, dy, format);
+
 		ug.setBufferedImage(builder.getBufferedImage());
 		final BufferedImage im = ug.getBufferedImage();
 		if (this.backcolor instanceof HColorGradient)

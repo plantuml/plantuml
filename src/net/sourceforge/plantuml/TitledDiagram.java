@@ -42,8 +42,6 @@ import java.util.Map;
 import net.atmp.ImageBuilder;
 import net.sourceforge.plantuml.abel.DisplayPositioned;
 import net.sourceforge.plantuml.abel.DisplayPositionned;
-import net.sourceforge.plantuml.anim.Animation;
-import net.sourceforge.plantuml.anim.AnimationDecoder;
 import net.sourceforge.plantuml.api.ApiStable;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.Diagram;
@@ -87,10 +85,6 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 	private final UmlDiagramType type;
 
 	private final SkinParam skinParam;
-
-	// ::comment when __CORE__
-	private Animation animation;
-	// ::done
 
 	private final Pragma pragma = new Pragma();
 
@@ -217,21 +211,6 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 	public ClockwiseTopRightBottomLeft getDefaultMargins() {
 		return ClockwiseTopRightBottomLeft.same(10);
 	}
-
-	// ::comment when __CORE__
-	final public void setAnimation(Iterable<CharSequence> animationData) {
-//		try {
-		final AnimationDecoder animationDecoder = new AnimationDecoder(animationData);
-		this.animation = Animation.create(animationDecoder.decode());
-//		} catch (ScriptException e) {
-//			Logme.error(e);
-//		}
-	}
-
-	final public Animation getAnimation() {
-		return animation;
-	}
-	// ::done
 
 	@Override
 	public ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) throws IOException {

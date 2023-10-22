@@ -38,10 +38,8 @@ package net.sourceforge.plantuml;
 import static net.atmp.ImageBuilder.plainImageBuilder;
 
 import java.awt.Color;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.BufferedOutputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -74,10 +72,8 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.UImage;
 import net.sourceforge.plantuml.log.Logme;
-import net.sourceforge.plantuml.mjpeg.MJPEGGenerator;
 import net.sourceforge.plantuml.pdf.PdfConverter;
 import net.sourceforge.plantuml.security.SFile;
-import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.style.NoStyleAvailableException;
@@ -258,27 +254,6 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 	}
 
 	// ::comment when __CORE__
-	private void exportDiagramInternalMjpeg(OutputStream os) throws IOException {
-		final SFile f = new SFile("c:/test.avi");
-		final int nb = 150;
-		final double framerate = 30;
-		final MJPEGGenerator m = new MJPEGGenerator(f, 640, 480, framerate, nb);
-
-		for (int i = 0; i < nb; i++) {
-			final AffineTransform at = new AffineTransform();
-			final double coef = (nb - 1 - i) * 1.0 / nb;
-			at.setToShear(coef, coef);
-			final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			// exportDiagramTOxxBEREMOVED(baos, null, 0, new
-			// FileFormatOption(FileFormat.PNG, at));
-			baos.close();
-			final BufferedImage im = SImageIO.read(baos.toByteArray());
-			m.addImage(im);
-		}
-		m.finishAVI();
-
-	}
-
 	private ImageData exportDiagramInternalPdf(OutputStream os, int index) throws IOException {
 		final File svg = FileUtils.createTempFileLegacy("pdf", ".svf");
 		final File pdfFile = FileUtils.createTempFileLegacy("pdf", ".pdf");
