@@ -119,11 +119,6 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> implements EnsureV
 
 	public UGraphicG2d(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder, Graphics2D g2d,
 			double dpiFactor, FileFormat format) {
-		this(defaultBackground, colorMapper, stringBounder, g2d, dpiFactor, 0, 0, format);
-	}
-
-	public UGraphicG2d(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder, Graphics2D g2d,
-			double dpiFactor, double dx, double dy, FileFormat format) {
 		super(stringBounder);
 		copy(defaultBackground, colorMapper, g2d);
 		this.format = format;

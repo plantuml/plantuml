@@ -7,3 +7,5 @@ It serves as a historical reference to ensure we remember and understand past de
 - [basic language](https://github.com/plantuml/plantuml/tree/v1.2023.12/src/net/sourceforge/plantuml/jasic)
 - [mjpeg export](https://github.com/plantuml/plantuml/tree/v1.2023.12/src/net/sourceforge/plantuml/mjpeg)
 - [animation](https://github.com/plantuml/plantuml/tree/v1.2023.12/src/net/sourceforge/plantuml/anim)
+- [ditherer quantization](https://github.com/plantuml/plantuml/tree/v1.2023.12/src/net/sourceforge/plantuml/quantization)
+- [syntax suggestion](https://github.com/plantuml/plantuml/blob/v1.2023.12/src/net/sourceforge/plantuml/syntax/SyntaxChecker.java)

@@ -33,7 +33,7 @@
  *
  *
  */
-package net.sourceforge.plantuml.eggs;
+package net.sourceforge.plantuml.error;
 
 import java.io.IOException;
 import java.util.ArrayList;

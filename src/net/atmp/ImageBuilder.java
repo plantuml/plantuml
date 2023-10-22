@@ -240,16 +240,13 @@ public class ImageBuilder {
 
 	private ImageData writeImageInternal(OutputStream os) throws IOException {
 		XDimension2D dim = getFinalDimension();
-		double dx = 0;
-		double dy = 0;
-
 		final Scale scale = titledDiagram == null ? null : titledDiagram.getScale();
 		final double scaleFactor = (scale == null ? 1 : scale.getScale(dim.getWidth(), dim.getHeight())) * getDpi()
 				/ 96.0;
 		if (scaleFactor <= 0)
 			throw new IllegalStateException("Bad scaleFactor");
 		WasmLog.log("...image drawing...");
-		UGraphic ug = createUGraphic(dim, dx, dy, scaleFactor,
+		UGraphic ug = createUGraphic(dim, scaleFactor,
 				titledDiagram == null ? new Pragma() : titledDiagram.getPragma());
 		maybeDrawBorder(ug, dim);
 		if (randomPixel)
@@ -317,12 +314,12 @@ public class ImageBuilder {
 		return ug;
 	}
 
-	private UGraphic createUGraphic(final XDimension2D dim, double dx, double dy, double scaleFactor, Pragma pragma) {
+	private UGraphic createUGraphic(final XDimension2D dim, double scaleFactor, Pragma pragma) {
 		final ColorMapper colorMapper = fileFormatOption.getColorMapper();
 		switch (fileFormatOption.getFileFormat()) {
 		case PNG:
 		case RAW:
-			return createUGraphicPNG(scaleFactor, dim, dx, dy, fileFormatOption.getWatermark(),
+			return createUGraphicPNG(scaleFactor, dim, fileFormatOption.getWatermark(),
 					fileFormatOption.getFileFormat());
 		case SVG:
 			return createUGraphicSVG(scaleFactor, dim, pragma);
@@ -375,9 +372,8 @@ public class ImageBuilder {
 
 	}
 
-	private UGraphic createUGraphicPNG(double scaleFactor, final XDimension2D dim, double dx, double dy,
-			String watermark, FileFormat format) {
-		// ::done
+	private UGraphic createUGraphicPNG(double scaleFactor, final XDimension2D dim, String watermark,
+			FileFormat format) {
 		Color pngBackColor = new Color(0, 0, 0, 0);
 
 		if (this.backcolor instanceof HColorSimple)
@@ -392,7 +388,7 @@ public class ImageBuilder {
 		final Graphics2D graphics2D = builder.getGraphics2D();
 
 		final UGraphicG2d ug = new UGraphicG2d(backcolor, fileFormatOption.getColorMapper(), stringBounder, graphics2D,
-				scaleFactor, dx, dy, format);
+				scaleFactor, format);
 
 		ug.setBufferedImage(builder.getBufferedImage());
 		final BufferedImage im = ug.getBufferedImage();
