@@ -46,6 +46,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
@@ -84,10 +85,12 @@ import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.statediagram.StateDiagram;
+import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.svek.CucaDiagramFileMaker;
 import net.sourceforge.plantuml.svek.CucaDiagramFileMakerSvek;
 import net.sourceforge.plantuml.text.BackSlash;
+import net.sourceforge.plantuml.text.Guillemet;
 import net.sourceforge.plantuml.xmi.CucaDiagramXmiMaker;
 import net.sourceforge.plantuml.xmlsc.StateDiagramScxmlMaker;
 
@@ -521,6 +524,35 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 				result = cmd.show;
 
 		return result;
+	}
+
+	@Override
+	public List<String> getVisibleStereotypeLabels(Entity entity) {
+		Stereotype stereotype = entity.getStereotype();
+
+		if (stereotype == null) {
+			return null;
+		}
+
+		List<EntityHideOrShow> commands = hideOrShows.stream()
+						.filter(cmd -> cmd.portion == EntityPortion.STEREOTYPE)
+						.collect(Collectors.toList());
+
+		return entity.getStereotype()
+						.getLabels(Guillemet.DOUBLE_COMPARATOR)
+						.stream()
+						.filter(stereoTypeLabel -> isHiddenStereotypeLabel(stereoTypeLabel, commands))
+						.collect(Collectors.toList());
+	}
+
+	private boolean isHiddenStereotypeLabel(String stereoTypeLabel, List<EntityHideOrShow> commands) {
+		for (EntityHideOrShow cmd : commands) {
+			String gender = cmd.gender.getGender();
+			if (gender != null && gender.equals(stereoTypeLabel)) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	public final void hideOrShow(EntityGender gender, EntityPortion portions, boolean show) {
