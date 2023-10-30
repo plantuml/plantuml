@@ -71,7 +71,14 @@ public class EntityGenderUtils {
 				if (test.getStereotype() == null) {
 					return false;
 				}
-				return test.getStereotype().getLabels(Guillemet.DOUBLE_COMPARATOR).stream().anyMatch(stereotype::equals);
+
+				for (String label : test.getStereotype().getLabels(Guillemet.DOUBLE_COMPARATOR)) {
+					if (label.equals(stereotype)) {
+						return true;
+					}
+				}
+
+				return false;
 			}
 
 			@Override
