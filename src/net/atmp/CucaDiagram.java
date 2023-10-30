@@ -534,15 +534,21 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 			return null;
 		}
 
-		List<EntityHideOrShow> commands = hideOrShows.stream()
-						.filter(cmd -> cmd.portion == EntityPortion.STEREOTYPE)
-						.collect(Collectors.toList());
+		List<EntityHideOrShow> commands = new ArrayList<>();
+		for (EntityHideOrShow hideOrShowEntry : hideOrShows) {
+			if (hideOrShowEntry.portion == EntityPortion.STEREOTYPE) {
+				commands.add(hideOrShowEntry);
+			}
+		}
 
-		return entity.getStereotype()
-						.getLabels(Guillemet.DOUBLE_COMPARATOR)
-						.stream()
-						.filter(stereoTypeLabel -> isHiddenStereotypeLabel(stereoTypeLabel, commands))
-						.collect(Collectors.toList());
+		List<String> visibleStereotypeLabels = new ArrayList<>();
+		for (String stereoTypeLabel: entity.getStereotype().getLabels(Guillemet.DOUBLE_COMPARATOR)) {
+			if (isHiddenStereotypeLabel(stereoTypeLabel, commands)) {
+				visibleStereotypeLabels.add(stereoTypeLabel);
+			}
+		}
+
+		return visibleStereotypeLabels;
 	}
 
 	private boolean isHiddenStereotypeLabel(String stereoTypeLabel, List<EntityHideOrShow> commands) {
