@@ -85,11 +85,6 @@ public class EntityGenderUtils {
 			public String getGender() {
 				return stereotype;
 			}
-
-			@Override
-			public String getGender() {
-				return stereotype;
-			}
 		};
 	}
 
