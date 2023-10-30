@@ -85,6 +85,11 @@ public class EntityGenderUtils {
 			public String getGender() {
 				return stereotype;
 			}
+
+			@Override
+			public String getGender() {
+				return stereotype;
+			}
 		};
 	}
 
@@ -163,4 +168,17 @@ public class EntityGenderUtils {
 		};
 	}
 
+	static public EntityGender byClassName(String className) {
+		return new EntityGender() {
+			@Override
+			public boolean contains(Entity test) {
+				return className.equals(test.getName());
+			}
+
+			@Override
+			public String getGender() {
+				return className;
+			}
+		};
+	}
 }
