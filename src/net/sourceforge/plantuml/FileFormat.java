@@ -76,8 +76,6 @@ public enum FileFormat {
 	SCXML("application/scxml+xml"), //
 	GRAPHML("application/graphml+xml"), //
 	PDF("application/pdf"), //
-	MJPEG("video/x-msvideo"), //
-	ANIMATED_GIF("image/gif"), //
 	HTML("text/html"), //
 	HTML5("text/html"), //
 	VDX("application/vnd.visio.xml"), //
@@ -112,14 +110,8 @@ public enum FileFormat {
 		if (name().startsWith("XMI"))
 			return ".xmi";
 
-		if (this == MJPEG)
-			return ".avi";
-
 		if (this == LATEX || this == LATEX_NO_PREAMBLE)
 			return ".tex";
-
-		if (this == ANIMATED_GIF)
-			return ".gif";
 
 		if (this == BRAILLE_PNG)
 			return ".braille.png";

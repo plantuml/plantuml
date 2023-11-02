@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,31 +30,47 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
-package net.sourceforge.plantuml.command;
+package net.sourceforge.plantuml.error;
 
-import net.sourceforge.plantuml.TitledDiagram;
-import net.sourceforge.plantuml.utils.BlocLines;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
-public class CommandAffineTransformMultiline extends CommandMultilines<TitledDiagram> {
+import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.PlainDiagram;
+import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.UDrawable;
+import net.sourceforge.plantuml.version.License;
+import net.sourceforge.plantuml.version.Version;
 
-	public static final CommandAffineTransformMultiline ME = new CommandAffineTransformMultiline();
+public class PSystemUnsupported extends PlainDiagram {
 
-	private CommandAffineTransformMultiline() {
-		super("^!transformation[%s]+\\{[%s]*$");
+	private final List<String> strings = new ArrayList<>();
+
+	public PSystemUnsupported(UmlSource source) {
+		super(source);
+		strings.add("<b>Diagram not supported by this release of PlantUML");
+		strings.add(Version.fullDescription());
+		strings.add("License " + new License().toString());
 	}
 
 	@Override
-	public String getPatternEnd() {
-		return "^[%s]*!\\}[%s]*$";
+	protected UDrawable getRootDrawable(FileFormatOption fileFormatOption) throws IOException {
+		return getGraphicStrings();
 	}
 
-	public CommandExecutionResult execute(final TitledDiagram diagram, BlocLines lines) {
-		// lines = lines.subExtract(1, 1);
-		// diagram.setAnimation(lines);
-		return CommandExecutionResult.error("Not yet implemented");
+	public TextBlock getGraphicStrings() {
+		return GraphicStrings.createBlackOnWhite(strings);
+	}
+
+	public DiagramDescription getDescription() {
+		return new DiagramDescription("(Unsupported)");
 	}
 
 }

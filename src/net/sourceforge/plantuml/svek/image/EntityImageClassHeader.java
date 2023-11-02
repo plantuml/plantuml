@@ -68,6 +68,8 @@ import net.sourceforge.plantuml.svek.HeaderLayout;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.text.Guillemet;
 
+import java.util.List;
+
 public class EntityImageClassHeader extends AbstractEntityImage {
 
 	final private HeaderLayout headerLayout;
@@ -112,11 +114,12 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 		}
 
 		final TextBlock stereo;
+		List<String> stereotypeLabels = portionShower.getVisibleStereotypeLabels(entity);
 		if (stereotype == null || stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) == null
-				|| portionShower.showPortion(EntityPortion.STEREOTYPE, entity) == false)
+				|| stereotypeLabels.isEmpty())
 			stereo = null;
 		else
-			stereo = TextBlockUtils.withMargin(Display.create(stereotype.getLabels(skinParam.guillemet())).create(
+			stereo = TextBlockUtils.withMargin(Display.create(stereotypeLabels).create(
 					FontConfiguration.create(getSkinParam(), FontParam.CLASS_STEREOTYPE, stereotype),
 					HorizontalAlignment.CENTER, skinParam), 1, 0);
 

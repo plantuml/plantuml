@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.dot;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -101,6 +102,11 @@ final public class DotData implements PortionShower {
 			public boolean showPortion(EntityPortion portion, Entity entity) {
 				return true;
 			}
+
+			public List<String> getVisibleStereotypeLabels(Entity entity) {
+				return Collections.emptyList();
+			}
+
 		}, entityFactory, isHideEmptyDescriptionForState, dotMode, namespaceSeparator, pragma);
 	}
 
@@ -134,6 +140,10 @@ final public class DotData implements PortionShower {
 
 	public boolean showPortion(EntityPortion portion, Entity entity) {
 		return portionShower.showPortion(portion, entity);
+	}
+
+	public List<String> getVisibleStereotypeLabels(Entity entity) {
+		return portionShower.getVisibleStereotypeLabels(entity);
 	}
 
 	public Entity getRootGroup() {

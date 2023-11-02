@@ -83,7 +83,7 @@ public class OptionFlags {
 	static public void setMaxPixel(int max) {
 	}
 
-	static public final boolean USE_HECTOR = false;
+	// static public final boolean USE_HECTOR = false;
 	static public boolean ADD_NICE_FOR_DOT = false;
 
 	// static public final boolean USE_IF_VERTICAL = true;

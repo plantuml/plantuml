@@ -70,6 +70,7 @@ import net.sourceforge.plantuml.eggs.PSystemWelcomeFactory;
 import net.sourceforge.plantuml.emoji.PSystemListEmojiFactory;
 import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.error.PSystemErrorUtils;
+import net.sourceforge.plantuml.error.PSystemUnsupported;
 import net.sourceforge.plantuml.filesdiagram.FilesDiagramFactory;
 import net.sourceforge.plantuml.flowdiagram.FlowDiagramFactory;
 import net.sourceforge.plantuml.font.PSystemListFontsFactory;
@@ -146,6 +147,9 @@ public class PSystemBuilder {
 			}
 
 			final DiagramType diagramType = umlSource.getDiagramType();
+			if (diagramType == DiagramType.UNKNOWN)
+				return new PSystemUnsupported(umlSource);
+
 			final List<PSystemError> errors = new ArrayList<>();
 			for (PSystemFactory systemFactory : factories) {
 				if (diagramType != systemFactory.getDiagramType())
@@ -159,6 +163,8 @@ public class PSystemBuilder {
 				}
 				errors.add((PSystemError) sys);
 			}
+			if (errors.size() == 0)
+				return new PSystemUnsupported(umlSource);
 
 			result = PSystemErrorUtils.merge(errors);
 			return result;

@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.klimt.drawing.g2d;
 
 import java.awt.Graphics2D;
 import java.awt.Shape;
-import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -50,7 +49,6 @@ import java.util.Objects;
 import java.util.Set;
 
 import net.sourceforge.plantuml.FileFormat;
-import net.sourceforge.plantuml.anim.AffineTransformation;
 import net.sourceforge.plantuml.klimt.UAntiAliasing;
 import net.sourceforge.plantuml.klimt.UChange;
 import net.sourceforge.plantuml.klimt.UClip;
@@ -88,10 +86,6 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> implements EnsureV
 	private List<Url> urls = new ArrayList<>();
 	private Set<Url> allUrls = new HashSet<>();
 
-	// ::comment when __CORE__
-	private final boolean hasAffineTransform;
-	// ::done
-
 	public final Set<Url> getAllUrlsEncountered() {
 		return Collections.unmodifiableSet(allUrls);
 	}
@@ -114,9 +108,6 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> implements EnsureV
 	private UGraphicG2d(UGraphicG2d other) {
 		super(other.getStringBounder());
 		copy(other);
-		// ::comment when __CORE__
-		this.hasAffineTransform = other.hasAffineTransform;
-		// ::done
 		this.dpiFactor = other.dpiFactor;
 		this.bufferedImage = other.bufferedImage;
 		this.urls = other.urls;
@@ -128,20 +119,6 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> implements EnsureV
 
 	public UGraphicG2d(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder, Graphics2D g2d,
 			double dpiFactor, FileFormat format) {
-		// ::revert when __CORE__
-		this(defaultBackground, colorMapper, stringBounder, g2d, dpiFactor, 0, 0, format, null);
-		// this(defaultBackground, colorMapper, stringBounder, g2d, dpiFactor, 0, 0,
-		// format);
-		// ::done
-	}
-
-	// ::revert when __CORE__
-	public UGraphicG2d(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder, Graphics2D g2d,
-			double dpiFactor, double dx, double dy, FileFormat format, AffineTransformation affineTransform) {
-		// public UGraphicG2d(HColor defaultBackground, ColorMapper colorMapper,
-		// StringBounder stringBounder, Graphics2D g2d,
-		// double dpiFactor, double dx, double dy, FileFormat format) {
-		// ::done
 		super(stringBounder);
 		copy(defaultBackground, colorMapper, g2d);
 		this.format = format;
@@ -149,21 +126,13 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> implements EnsureV
 		if (dpiFactor != 1.0)
 			g2d.scale(dpiFactor, dpiFactor);
 
-		// ::comment when __CORE__
-		this.hasAffineTransform = affineTransform != null;
-		if (this.hasAffineTransform) {
-			if (dx != 0 || dy != 0)
-				getGraphicObject().transform(AffineTransform.getTranslateInstance(dx, dy));
-			getGraphicObject().transform(affineTransform.getAffineTransform());
-		}
-		// ::done
 		register(dpiFactor);
 	}
 
 	private void register(double dpiFactor) {
 		registerDriver(URectangle.class, new DriverRectangleG2d(dpiFactor, this));
 		// ::comment when __CORE__
-		if (this.hasAffineTransform || dpiFactor != 1.0)
+		if (dpiFactor != 1.0)
 			registerDriver(UText.class, new DriverTextAsPathG2d(this, getStringBounder()));
 		else
 			// ::done
