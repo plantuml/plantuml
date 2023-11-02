@@ -22,5 +22,7 @@
  * </ul>
  * </p>
  *
+ * @see net.sourceforge.plantuml.argon2.blake2
+ * 
  */
 package net.sourceforge.plantuml.argon2;

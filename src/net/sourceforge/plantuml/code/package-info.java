@@ -1,9 +1,9 @@
 /**
  * Provides classes used to manage Coding and Compression.
  *
- * @see {@link net.sourceforge.plantuml.brotli}
- * @see {@link net.sourceforge.plantuml.code.deflate}
- * @see {@link net.sourceforge.plantuml.zopfli}
+ * @see net.sourceforge.plantuml.brotli
+ * @see net.sourceforge.plantuml.code.deflate
+ * @see net.sourceforge.plantuml.zopfli
  *
  */
 package net.sourceforge.plantuml.code;
