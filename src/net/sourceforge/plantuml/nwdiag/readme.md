@@ -11,6 +11,7 @@ This package provides classes used to manage [PlantUML Network Diagram (nwdiag)]
 
 ## Credit or Inspiration
 - [`nwdiag` of Takeshi Komiya](http://blockdiag.com/en/nwdiag/nwdiag-examples.html)
+- :octocat: [ Blockdiag/Nwdiag](https://github.com/blockdiag/nwdiag)
 
 ## Misc.
 

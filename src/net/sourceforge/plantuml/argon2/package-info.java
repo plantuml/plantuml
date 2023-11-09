@@ -1,5 +1,5 @@
 /**
- * Provides classes used to manage the password-hashing function nammed
+ * Provides classes used to manage the Password-Hashing Function nammed
  * <a href="https://github.com/andreas1327250/argon2-java" target="_top">
  * Argon2</a>.
  *

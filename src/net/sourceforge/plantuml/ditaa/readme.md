@@ -10,7 +10,7 @@ This package provides classes used to manage [PlantUML Ditaa Diagram](https://pl
 
 ## Credit
 - [`org.stathissideris.ascii2image`](../../../../org/stathissideris/ascii2image) _(included in PlantUML)_
-- [:octocat:stathissideris/ditaa](https://github.com/stathissideris/ditaa)
+- :octocat: [stathissideris/ditaa](https://github.com/stathissideris/ditaa)
 
 ## Misc.
 

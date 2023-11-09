@@ -11,9 +11,9 @@ This package provides classes used to manage [PlantUML ASCII Math](https://plant
 - [JLaTeXMath](https://scilab.gitlab.io/legacy_wiki/JLaTeXMath)
 
 ## Credit
-- [:octocat:Asciimath/Asciimathml](https://github.com/asciimath/asciimathml/tree/master/asciimath-based)
+- :octocat: [Asciimath/Asciimathml](https://github.com/asciimath/asciimathml/tree/master/asciimath-based)
 - [`ASCIIMathTeXImg.java`](./ASCIIMathTeXImg.java) is an internal port of [`ASCIIMathTeXImg.js`](https://github.com/asciimath/asciimathml/blob/master/asciimath-based/ASCIIMathTeXImg.js)
-- [:octocat:Opencollab/Jlatexmath](https://github.com/opencollab/jlatexmath)
+- :octocat: [Opencollab/Jlatexmath](https://github.com/opencollab/jlatexmath)
 
 ## Dependency _(if available)_
 - `org.scilab.forge.jlatexmath`

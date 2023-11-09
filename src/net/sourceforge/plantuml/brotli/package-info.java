@@ -11,5 +11,8 @@
  * </ul>
  * </p>
  * 
+ * @see net.sourceforge.plantuml.code.deflate
+ * @see net.sourceforge.plantuml.zopfli
+ * 
  */
 package net.sourceforge.plantuml.brotli;

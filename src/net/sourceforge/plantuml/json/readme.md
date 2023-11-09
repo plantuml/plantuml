@@ -9,7 +9,7 @@ This package provides classes used to manage [JSON](https://www.json.org) Data _
 - [JSON _(on Wikipedia)_](https://en.wikipedia.org/wiki/JSON)
 
 ## Credit
-- [:octocat:ralfstx/minimal-json](https://github.com/ralfstx/minimal-json)
+- :octocat: [ralfstx/minimal-json](https://github.com/ralfstx/minimal-json)
 - [`json`](../json/) _(included in PlantUML)_
 
 ## Misc.

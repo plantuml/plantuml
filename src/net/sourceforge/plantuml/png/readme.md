@@ -1,10 +1,10 @@
-# Directory Documentation for `pdf`
+# Directory Documentation for `png`
 
 ## Description
-This package provides classes used to export diagram to a [PDF](https://plantuml.com/pdf) output format.
+This package provides classes used to export diagram to a [PNG](https://plantuml.com/en/command-line#458de91d76a8569c) output format.
 
 ## Link
-- [PDF](https://plantuml.com/pdf)
+- [PNG output format](https://plantuml.com/en/command-line#458de91d76a8569c)
 
 ## Reference
-- [PDF _(on Wikipedia)_](https://en.wikipedia.org/wiki/PDF)
+- [PNG _(on Wikipedia)_](https://en.wikipedia.org/wiki/PNG)

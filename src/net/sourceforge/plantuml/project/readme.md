@@ -8,8 +8,3 @@ This package provides classes used to manage [PlantUML Gantt Diagram](https://pl
 
 ## Reference
 - [Gantt chart _(on Wikipedia)_](https://en.wikipedia.org/wiki/Gantt_chart)
-
-## Credit
-
-## Misc.
-
