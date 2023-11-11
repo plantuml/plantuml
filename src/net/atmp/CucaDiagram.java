@@ -46,7 +46,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
@@ -542,7 +541,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		}
 
 		List<String> visibleStereotypeLabels = new ArrayList<>();
-		for (String stereoTypeLabel: entity.getStereotype().getLabels(Guillemet.DOUBLE_COMPARATOR)) {
+		for (String stereoTypeLabel : entity.getStereotype().getLabels(Guillemet.DOUBLE_COMPARATOR)) {
 			if (isHiddenStereotypeLabel(stereoTypeLabel, commands)) {
 				visibleStereotypeLabels.add(stereoTypeLabel);
 			}

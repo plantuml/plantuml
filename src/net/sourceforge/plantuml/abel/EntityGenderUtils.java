@@ -163,7 +163,7 @@ public class EntityGenderUtils {
 		};
 	}
 
-	static public EntityGender byClassName(String className) {
+	static public EntityGender byClassName(final String className) {
 		return new EntityGender() {
 			@Override
 			public boolean contains(Entity test) {

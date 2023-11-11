@@ -191,6 +191,7 @@ public class CommandHideShowByGender extends SingleLineCommand2<UmlDiagram> {
 			arg1 = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg1);
 			final Quark<Entity> quark = diagram.quarkInContext(true, diagram.cleanId(arg1));
 			if (quark == null) {
+				// Not sure it could really happens... to be checked
 				return CommandExecutionResult.error("No such quark " + arg1);
 			}
 			if (portion == EntityPortion.METHOD) {
