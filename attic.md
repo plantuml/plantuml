@@ -9,3 +9,4 @@ It serves as a historical reference to ensure we remember and understand past de
 - [animation](https://github.com/plantuml/plantuml/tree/v1.2023.12/src/net/sourceforge/plantuml/anim)
 - [ditherer quantization](https://github.com/plantuml/plantuml/tree/v1.2023.12/src/net/sourceforge/plantuml/quantization)
 - [syntax suggestion](https://github.com/plantuml/plantuml/blob/v1.2023.12/src/net/sourceforge/plantuml/syntax/SyntaxChecker.java)
+- [a first try of GraphViz abstraction](https://github.com/plantuml/plantuml/blob/v1.2023.12/src/net/sourceforge/plantuml/posimo)
