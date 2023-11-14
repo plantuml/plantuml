@@ -217,6 +217,29 @@ jobs:
           key: "libs-${{ github.run_id }}"
           enableCrossOsArchive: true
 
+  deploy_javadoc:
+    needs: [ build_artifacts ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+
+      - name: Set up java
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: temurin
+
+      - name: Build Javadoc
+        run: gradle javadoc
+
+      - name: Deploy Javadoc to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build/docs/javadoc
+
+
   upload:
     if: |
       needs.workflow_config.outputs.do_release == 'true' ||
