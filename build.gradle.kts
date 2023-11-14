@@ -150,7 +150,6 @@ tasks.withType<JavaCompile>().configureEach {
 tasks.withType<Javadoc>().configureEach {
 	options {
 		this as StandardJavadocDocletOptions
-		addBooleanOption("frames", true)
 		addBooleanOption("Xdoclint:none", true)
 		addStringOption("Xmaxwarns", "1")
 		encoding = "UTF-8"
