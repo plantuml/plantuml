@@ -84,6 +84,8 @@ To build PlantUML from source, you'll need to have certain prerequisites install
 
 PlantUML is an open-source project, and we welcome contributions of all kinds. Whether you're helping us fix bugs, improve the docs, or spread the word, we appreciate your support. See our [contributing guide](CONTRIBUTING.md) for more information on how to get started.
 
+For comprehensive and detailed documentation on using PlantUML, refer to the [official Javadoc, available here](https://plantuml.github.io/plantuml/). Please note that this documentation is a work in progress and may not be complete. 
+
 ## 🧑‍🤝‍🧑 Support and Community
 
 - [GitHub issues](https://github.com/plantuml/plantuml/issues/)
